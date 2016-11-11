@@ -1,0 +1,29 @@
+{
+  "name": "decrediton",
+  "version": "0.0.0",
+  "description": "GUI for decred.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/decred/decrediton.git"
+  },
+  "keywords": [
+    "decred",
+    "cryptocurrency",
+    "wallet"
+  ],
+  "author": "The Decred Authors",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/decred/decrediton/issues"
+  },
+  "homepage": "https://github.com/decred/decrediton#readme",
+  "dependencies": {
+    "electron": "^1.4.6",
+    "grpc": "^1.0.1"
+  },
+  "engines" : { "node" : "~6.5.0" }
+}
