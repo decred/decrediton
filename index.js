@@ -42,8 +42,13 @@ document.getElementById('buttonArea').appendChild(getStakeInfoBtn)
 
 var getNextAddressBtn = document.createElement('button')
 getNextAddressBtn.textContent = 'Get Next Address'
-getNextAddressBtn.addEventListener('click', getNextAddress(resultText), false)
+getNextAddressBtn.addEventListener('click', getNextAddress, false)
 document.getElementById('buttonArea').appendChild(getNextAddressBtn)
+
+var rescanBtn = document.createElement('button')
+rescanBtn.textContent = 'Rescan'
+rescanBtn.addEventListener('click', rescan, false)
+document.getElementById('buttonArea').appendChild(rescanBtn)
 
 function getBalance() {
     // Balance
@@ -90,7 +95,9 @@ function getStakeInfo() {
             console.log('current stakeInfo', response);
         }
     });
+}
 
+function getPing() {
     // Ping
     var request = {};
 
@@ -114,7 +121,9 @@ function getNetwork() {
             console.log('network', response);
         }
     });
+}
 
+function getAccounts() {
     // Accounts
     var request = {};
 
@@ -159,8 +168,9 @@ function getTicketPrice() {
 }
 // Available GRPC control client examples
 
-function getNextAddress(resultText) {
-    // NextAddress
+function getNextAddress() {
+    console.log("getting new address")
+        // NextAddress
     var request = {
         account: 0
     };
@@ -169,7 +179,6 @@ function getNextAddress(resultText) {
         if (err) {
             console.error("nextAddress", err);
         } else {
-
             console.log('nextAddress', response);
         }
     });
@@ -193,19 +202,22 @@ function renameAccount(accountNumber, newName) {
 }
 
 
-// TODO rescan looks a little off
 function rescan() {
     // Rescan
     var request = {
         begin_height: 0
     };
 
-    client.rescan(request, function(err, response) {
-        if (err) {
-            console.error("rescan", err);
-        } else {
-            console.log('rescan', response);
-        }
+    var rescanCall = client.rescan(request);
+    recanCall.on('data', function(response) {
+        console.log("Rescanned thru", response.rescanned_through);
+    });
+    rescanCall.on('end', function() {
+        console.log("Rescan done")
+            // The server has finished sending
+    });
+    rescanCall.on('status', function(status) {
+        console.log("Rescan status:", status)
     });
 }
 
@@ -356,3 +368,46 @@ function purchaseTickets() {
         }
     });
 }
+
+
+// Register Notification Streams from Wallet
+var request = {};
+var transactionNtfns = client.transactionNotifications(request);
+transactionNtfns.on('data', function(response) {
+    console.log("Transaction received:", response);
+});
+transactionNtfns.on('end', function() {
+    console.log("Transaction notifications done")
+        // The server has finished sending
+});
+transactionNtfns.on('status', function(status) {
+    console.log("Transaction notifications status:", status)
+});
+
+var request = {
+	account: 0
+};
+var spentnessNtfns = client.spentnessNotifications(request);
+spentnessNtfns.on('data', function(response) {
+    console.log("Spentness notification received:", response);
+});
+spentnessNtfns.on('end', function() {
+    console.log("Spentness notifications done")
+        // The server has finished sending
+});
+spentnessNtfns.on('status', function(status) {
+    console.log("Spentness notifications status:", status)
+});
+
+var request = {};
+var accountNtfns = client.accountNotifications(request);
+accountNtfns.on('data', function(response) {
+    console.log("Account notification received:", response);
+});
+accountNtfns.on('end', function() {
+    console.log("Account notifications done")
+        // The server has finished sending
+});
+accountNtfns.on('status', function(status) {
+    console.log("Account notifications status:", status)
+});
