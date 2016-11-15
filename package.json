@@ -24,6 +24,7 @@
   "homepage": "https://github.com/decred/decrediton#readme",
   "dependencies": {
     "electron": "^1.4.6",
+    "buffer": "^5.0.1",
     "grpc": "^1.0.1"
   },
   "engines" : { "node" : "~6.5.0" }
