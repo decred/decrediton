@@ -5,7 +5,7 @@ import styles from './Overview.css'
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
 import SidebarContent from '../content/SideBarContent';
-import client from '../actions/client';
+
 
 const Overview = React.createClass({
   getInitialState() {
@@ -43,7 +43,7 @@ const Overview = React.createClass({
     incrementAsync: PropTypes.func.isRequired,
     decrement: PropTypes.func.isRequired,
     counter: PropTypes.number.isRequired,
-    //getBalance: PropTypes.func.isRequired,
+    getBalance: PropTypes.func.isRequired,
   },
 
   render() {
@@ -63,7 +63,7 @@ const Overview = React.createClass({
       onSetOpen: this.onSetOpen,
     };
 
-    const { increment, incrementIfOdd, incrementAsync, decrement, counter } = this.props;
+    const { increment, incrementIfOdd, incrementAsync, decrement, counter, getBalance } = this.props;
     return (      
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
@@ -79,7 +79,7 @@ const Overview = React.createClass({
               {counter}
             </div>
             <div className={styles.btnGroup}>
-              <button className={styles.btn} onClick={increment}>
+              <button className={styles.btn} onClick={getBalance}>
                 Add
               </button>
               <button className={styles.btn} onClick={decrement}>

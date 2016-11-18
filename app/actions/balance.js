@@ -1,5 +1,5 @@
 // @flow
-//import * as client from '../../client';
+import client from './client';
 export const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
 export const DECREMENT_COUNTER = 'DECREMENT_COUNTER';
 
@@ -34,7 +34,7 @@ export function incrementAsync(delay: number = 1000) {
         }, delay);
     };
 }
-/*
+
 export function getBalance(delay: number = 1000) {
     return (dispatch: Function) => {
         setTimeout(() => {
@@ -42,4 +42,3 @@ export function getBalance(delay: number = 1000) {
         }, delay);
     };
 }
-*/

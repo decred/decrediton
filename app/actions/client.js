@@ -24,7 +24,7 @@ var cert = fs.readFileSync(certPath);
 var creds = grpc.credentials.createInsecure();
 var client = new walletrpc.WalletService('localhost:19112', creds);
 
-console.log("here!");
+export function getBalance() {
     var request = {
         account_number: 0,
         required_confirmations: 1
@@ -37,6 +37,7 @@ console.log("here!");
             console.log('balance:', response);
         }
     });
+}
 /*
 function getAccountNumber() {
     // AccountNumber
