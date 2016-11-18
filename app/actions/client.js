@@ -9,11 +9,9 @@ import grpc from 'grpc';
 
 
 import Buffer from 'buffer';
-/*
-var protoDescriptor = grpc.load('/home/user/github.com/decred/decrediton/app/api.proto');
+var protoDescriptor = grpc.load('./app/api.proto');
 var walletrpc = protoDescriptor.walletrpc;
 
-console.log("herer!");
 var certPath = path.join(process.env.HOME, '.dcrwallet', 'rpc.cert');
 if (os.platform == 'win32') {
     certPath = path.join(process.env.LOCALAPPDATA, 'Dcrwallet', 'rpc.cert');
@@ -22,42 +20,11 @@ if (os.platform == 'win32') {
         'Dcrwallet', 'rpc.cert');
 }
 
-console.log("herer!");
 var cert = fs.readFileSync(certPath);
 var creds = grpc.credentials.createInsecure();
 var client = new walletrpc.WalletService('localhost:19112', creds);
-*/
-//return client;
-/*
-var resultText = document.createElement('div')
-document.body.appendChild(resultText)
 
-var getBalanceBtn = document.createElement('button')
-getBalanceBtn.textContent = 'Get Balance'
-getBalanceBtn.addEventListener('click', getBalance, false)
-document.getElementById('buttonArea').appendChild(getBalanceBtn)
-
-var getTicketPriceBtn = document.createElement('button')
-getTicketPriceBtn.textContent = 'Get Ticket Price'
-getTicketPriceBtn.addEventListener('click', getTicketPrice, false)
-document.getElementById('buttonArea').appendChild(getTicketPriceBtn)
-
-var getStakeInfoBtn = document.createElement('button')
-getStakeInfoBtn.textContent = 'Get Stake Info'
-getStakeInfoBtn.addEventListener('click', getStakeInfo, false)
-document.getElementById('buttonArea').appendChild(getStakeInfoBtn)
-
-var getNextAddressBtn = document.createElement('button')
-getNextAddressBtn.textContent = 'Get Next Address'
-getNextAddressBtn.addEventListener('click', getNextAddress, false)
-document.getElementById('buttonArea').appendChild(getNextAddressBtn)
-
-var rescanBtn = document.createElement('button')
-rescanBtn.textContent = 'Rescan'
-rescanBtn.addEventListener('click', rescan, false)
-document.getElementById('buttonArea').appendChild(rescanBtn)
-export function getBalance() {
-    // Balance
+console.log("here!");
     var request = {
         account_number: 0,
         required_confirmations: 1
@@ -70,10 +37,7 @@ export function getBalance() {
             console.log('balance:', response);
         }
     });
-}
-
-
-
+/*
 function getAccountNumber() {
     // AccountNumber
     var request = {
