@@ -5,6 +5,7 @@ import styles from './Overview.css'
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
 import SidebarContent from '../content/SideBarContent';
+import client from '../actions/client';
 
 const Overview = React.createClass({
   getInitialState() {

@@ -2,10 +2,13 @@
   "name": "decrediton",
   "version": "0.0.0",
   "description": "GUI for decred.",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start": "ENV=development electron main.js",
+    "start": "ENV=development electron ./app/main.js",
+    "hot-server": "cross-env NODE_ENV=development node --max_old_space_size=2096 -r babel-register server.js",
+    "start-hot": "electron -r babel-register -r babel-polyfill ./app/main.development",
     "server": "babel-node server.js",
+    "dev": "npm run hot-server -- --start-hot",
     "test": "npm test",
     "watch": "watchify app/app.js -t babelify -o public/js/bundle.js --debug --verbose"
   },
@@ -29,7 +32,9 @@
     "babel-preset-es2015": "^6.6.0",
     "babel-preset-react": "^6.5.0",
     "babelify": "^7.2.0",
+    "buffer": "^5.0.1",
     "electron": "^1.4.6",
+    "es6-promise": "^4.0.5",
     "font-awesome": "^4.7.0",
     "jquery": "^2.2.3",
     "react": "^15.3.2",
@@ -39,10 +44,9 @@
     "react-router": "^3.0.0",
     "react-router-redux": "^4.0.6",
     "redux": "^3.6.0",
+    "redux-logger": "^2.7.4",
     "redux-thunk": "^2.1.0",
-    "watchify": "^3.7.0",
-    "buffer": "^5.0.1",
-    "redux-logger": "^2.7.4"
+    "watchify": "^3.7.0"
   },
   "engines": {
     "node": "~6.5.0"
@@ -55,15 +59,26 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "body-parser": "^1.15.2",
+    "cross-env": "^3.1.3",
     "css-loader": "^0.26.0",
+    "electron-debug": "^1.1.0",
     "electron-rebuild": "^1.4.0",
+    "eslint-formatter-pretty": "^1.1.0",
     "express": "^4.14.0",
+    "file": "^0.2.2",
     "poisson-process": "^0.2.1",
     "postcss-loader": "^1.1.1",
+    "source-map-support": "^0.4.6",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.3",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-hot-middleware": "^2.13.2",
-    "webpack-target-electron-renderer": "^0.4.0"
+    "webpack-merge": "^0.17.0",
+    "webpack-target-electron-renderer": "^0.4.0",
+    "webpack-validator": "^2.2.9"
+  },
+  "devEngines": {
+    "node": ">=6.x",
+    "npm": ">=3.x"
   }
 }

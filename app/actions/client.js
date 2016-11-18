@@ -5,7 +5,7 @@ import url from 'url';
 import path from 'path';
 
 import os from 'os';
-//import grpc from 'grpc';
+import grpc from 'grpc';
 
 /*
 //import Buffer from 'buffer';
