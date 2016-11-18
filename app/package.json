@@ -11,6 +11,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "grpc": "file:../grpc"
+    "grpc": "file:../../grpc"
   }
 }

@@ -7,12 +7,10 @@ import path from 'path';
 import os from 'os';
 import grpc from 'grpc';
 
-/*
-//import Buffer from 'buffer';
 
-console.log("herer!");
-console.log("herer!");
-var protoDescriptor = grpc.load('../api.proto');
+import Buffer from 'buffer';
+/*
+var protoDescriptor = grpc.load('/home/user/github.com/decred/decrediton/app/api.proto');
 var walletrpc = protoDescriptor.walletrpc;
 
 console.log("herer!");
@@ -28,7 +26,7 @@ console.log("herer!");
 var cert = fs.readFileSync(certPath);
 var creds = grpc.credentials.createInsecure();
 var client = new walletrpc.WalletService('localhost:19112', creds);
-
+*/
 //return client;
 /*
 var resultText = document.createElement('div')
