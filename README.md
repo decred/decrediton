@@ -36,20 +36,15 @@ mkdir code
 cd code
 git clone https://github.com/decred/decrediton.git
 cd decrediton
-npm install
 cd ..
 git clone https://github.com/grpc/grpc
 cd grpc
 git remote add murg https://github.com/murgatroid99/grpc.git
 git fetch --all
 git checkout node_electron_build
-git submodule update --init
-cd tools/run_tests
-./build_node_electron.sh 1.4.6
-cd ../..
-cp build/Release/grpc_node.node  ../decrediton/node_modules/grpc/src/node/extension_binary
 cd ../decrediton
-./node_modules/.bin/electron .
+npm install
+npm run dev
 ```
 
 ## Contact

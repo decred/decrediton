@@ -1,65 +1,36 @@
-//process.env['GRPC_SSL_CIPHER_SUITES'] = 'HIGH+ECDSA';
+process.env['GRPC_SSL_CIPHER_SUITES'] = 'HIGH+ECDSA';
 
 import fs from 'fs';
 import url from 'url';
 import path from 'path';
 
 import os from 'os';
-//import grpc from 'grpc';
+import grpc from 'grpc';
 
-/*
-//import Buffer from 'buffer';
 
-console.log("herer!");
-console.log("herer!");
-var protoDescriptor = grpc.load('../api.proto');
-var walletrpc = protoDescriptor.walletrpc;
+import Buffer from 'buffer';
 
-console.log("herer!");
-var certPath = path.join(process.env.HOME, '.dcrwallet', 'rpc.cert');
-if (os.platform == 'win32') {
-    certPath = path.join(process.env.LOCALAPPDATA, 'Dcrwallet', 'rpc.cert');
-} else if (os.platform == 'darwin') {
-    certPath = path.join(process.env.HOME, 'Library', 'Application Support',
-        'Dcrwallet', 'rpc.cert');
+export function client() {
+    var protoDescriptor = grpc.load('./app/api.proto');
+    var walletrpc = protoDescriptor.walletrpc;
+
+    var certPath = path.join(process.env.HOME, '.dcrwallet', 'rpc.cert');
+    if (os.platform == 'win32') {
+        certPath = path.join(process.env.LOCALAPPDATA, 'Dcrwallet', 'rpc.cert');
+    } else if (os.platform == 'darwin') {
+        certPath = path.join(process.env.HOME, 'Library', 'Application Support',
+            'Dcrwallet', 'rpc.cert');
+    }
+
+    var cert = fs.readFileSync(certPath);
+    var creds = grpc.credentials.createInsecure();
+    var client = new walletrpc.WalletService('localhost:19112', creds);
+
+    return client;
 }
 
-console.log("herer!");
-var cert = fs.readFileSync(certPath);
-var creds = grpc.credentials.createInsecure();
-var client = new walletrpc.WalletService('localhost:19112', creds);
 
-//return client;
-/*
-var resultText = document.createElement('div')
-document.body.appendChild(resultText)
-
-var getBalanceBtn = document.createElement('button')
-getBalanceBtn.textContent = 'Get Balance'
-getBalanceBtn.addEventListener('click', getBalance, false)
-document.getElementById('buttonArea').appendChild(getBalanceBtn)
-
-var getTicketPriceBtn = document.createElement('button')
-getTicketPriceBtn.textContent = 'Get Ticket Price'
-getTicketPriceBtn.addEventListener('click', getTicketPrice, false)
-document.getElementById('buttonArea').appendChild(getTicketPriceBtn)
-
-var getStakeInfoBtn = document.createElement('button')
-getStakeInfoBtn.textContent = 'Get Stake Info'
-getStakeInfoBtn.addEventListener('click', getStakeInfo, false)
-document.getElementById('buttonArea').appendChild(getStakeInfoBtn)
-
-var getNextAddressBtn = document.createElement('button')
-getNextAddressBtn.textContent = 'Get Next Address'
-getNextAddressBtn.addEventListener('click', getNextAddress, false)
-document.getElementById('buttonArea').appendChild(getNextAddressBtn)
-
-var rescanBtn = document.createElement('button')
-rescanBtn.textContent = 'Rescan'
-rescanBtn.addEventListener('click', rescan, false)
-document.getElementById('buttonArea').appendChild(rescanBtn)
-export function getBalance() {
-    // Balance
+export function getBalance(client) {
     var request = {
         account_number: 0,
         required_confirmations: 1
@@ -73,9 +44,8 @@ export function getBalance() {
         }
     });
 }
-
-
-
+ 
+/*
 function getAccountNumber() {
     // AccountNumber
     var request = {
