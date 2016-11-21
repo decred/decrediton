@@ -6,8 +6,10 @@ import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
 
 import * as balanceActions from '../actions/balance';
+import * as loginActions from '../actions/login';
 
 const actionCreators = {
+  loginActions,
   balanceActions,
   push,
 };

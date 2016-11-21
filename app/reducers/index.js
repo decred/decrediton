@@ -6,7 +6,7 @@ import walletInfo from './walletInfo';
 
 const rootReducer = combineReducers({
   counter,
-  walletInfo: walletInfo,
+  walletInfo,
   routing
 });
 
