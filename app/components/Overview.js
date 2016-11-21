@@ -80,7 +80,7 @@ const Overview = React.createClass({
             </div>
             <div className={styles.btnGroup}>
               <button className={styles.btn} onClick={getClientBalance}>
-                Add
+                Get Balance
               </button>
               <button className={styles.btn} onClick={decrement}>
                 Subtract
