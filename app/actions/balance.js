@@ -1,5 +1,5 @@
 // @flow
-import client from './client';
+import {client, getBalance}  from './client';
 export const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
 export const DECREMENT_COUNTER = 'DECREMENT_COUNTER';
 
@@ -35,10 +35,12 @@ export function incrementAsync(delay: number = 1000) {
     };
 }
 
-export function getBalance(delay: number = 1000) {
+export function getClientBalance(delay: number = 1000) {
+    var grpcClient = client();
+    getBalance(grpcClient);
     return (dispatch: Function) => {
         setTimeout(() => {
-            dispatch(client.getBalance());
+            dispatch(increment());
         }, delay);
     };
 }

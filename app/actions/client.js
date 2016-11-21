@@ -1,4 +1,4 @@
-//process.env['GRPC_SSL_CIPHER_SUITES'] = 'HIGH+ECDSA';
+process.env['GRPC_SSL_CIPHER_SUITES'] = 'HIGH+ECDSA';
 
 import fs from 'fs';
 import url from 'url';
@@ -9,22 +9,28 @@ import grpc from 'grpc';
 
 
 import Buffer from 'buffer';
-var protoDescriptor = grpc.load('./app/api.proto');
-var walletrpc = protoDescriptor.walletrpc;
 
-var certPath = path.join(process.env.HOME, '.dcrwallet', 'rpc.cert');
-if (os.platform == 'win32') {
-    certPath = path.join(process.env.LOCALAPPDATA, 'Dcrwallet', 'rpc.cert');
-} else if (os.platform == 'darwin') {
-    certPath = path.join(process.env.HOME, 'Library', 'Application Support',
-        'Dcrwallet', 'rpc.cert');
+export function client() {
+    var protoDescriptor = grpc.load('./app/api.proto');
+    var walletrpc = protoDescriptor.walletrpc;
+
+    var certPath = path.join(process.env.HOME, '.dcrwallet', 'rpc.cert');
+    if (os.platform == 'win32') {
+        certPath = path.join(process.env.LOCALAPPDATA, 'Dcrwallet', 'rpc.cert');
+    } else if (os.platform == 'darwin') {
+        certPath = path.join(process.env.HOME, 'Library', 'Application Support',
+            'Dcrwallet', 'rpc.cert');
+    }
+
+    var cert = fs.readFileSync(certPath);
+    var creds = grpc.credentials.createInsecure();
+    var client = new walletrpc.WalletService('localhost:19112', creds);
+
+    return client;
 }
 
-var cert = fs.readFileSync(certPath);
-var creds = grpc.credentials.createInsecure();
-var client = new walletrpc.WalletService('localhost:19112', creds);
 
-export function getBalance() {
+export function getBalance(client) {
     var request = {
         account_number: 0,
         required_confirmations: 1
@@ -38,6 +44,7 @@ export function getBalance() {
         }
     });
 }
+ 
 /*
 function getAccountNumber() {
     // AccountNumber

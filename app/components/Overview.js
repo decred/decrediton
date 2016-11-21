@@ -43,7 +43,7 @@ const Overview = React.createClass({
     incrementAsync: PropTypes.func.isRequired,
     decrement: PropTypes.func.isRequired,
     counter: PropTypes.number.isRequired,
-    getBalance: PropTypes.func.isRequired,
+    getClientBalance: PropTypes.func.isRequired,
   },
 
   render() {
@@ -63,7 +63,7 @@ const Overview = React.createClass({
       onSetOpen: this.onSetOpen,
     };
 
-    const { increment, incrementIfOdd, incrementAsync, decrement, counter, getBalance } = this.props;
+    const { increment, incrementIfOdd, incrementAsync, decrement, counter, getClientBalance } = this.props;
     return (      
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
@@ -79,7 +79,7 @@ const Overview = React.createClass({
               {counter}
             </div>
             <div className={styles.btnGroup}>
-              <button className={styles.btn} onClick={getBalance}>
+              <button className={styles.btn} onClick={getClientBalance}>
                 Add
               </button>
               <button className={styles.btn} onClick={decrement}>
