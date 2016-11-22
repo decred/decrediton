@@ -9,6 +9,7 @@ const initialUserState = Immutable.fromJS({
   address: "",
   port: "",
   passphrase: "",
+  client: null,
 });
 
 const rootReducer = combineReducers({

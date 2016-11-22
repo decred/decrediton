@@ -24,7 +24,6 @@ export function client(address, port) {
 
     var cert = fs.readFileSync(certPath);
     var creds = grpc.credentials.createInsecure();
-    console.log('attempting to connect to wallet at', address + ':' + port)
     var client = new walletrpc.WalletService(address + ':' + port, creds);
 
     return client;

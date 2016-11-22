@@ -79,4 +79,3 @@ const Home = React.createClass({
 });
 
 export default Home;
-//ReactDOM.render(<App />, document.getElementById('cotent'));

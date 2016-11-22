@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 
 const SubmitButton = ({ user }) =>
   <button type="submit">
-    Connect to Wallet, {user.get('address')} {user.get('port')} {user.get('passphrase')}!
+    Connect to Wallet
   </button>;
 
 SubmitButton.propTypes = {

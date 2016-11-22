@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 import { Field, Form, Errors, actions } from 'react-redux-form/immutable';
 
 import SubmitButton from './SubmitButton';
-import { client, getBalance} from '../actions/client';
+import { client, getBalance } from '../actions/client';
 
 const isRequired = (val) => val && val.length > 0;
 const lessThan10 = (val) => {
@@ -32,12 +32,8 @@ class LoginForm extends React.Component {
       /* eslint-disable no-console */
       console.log(user.toJS());
       /* eslint-enable no-console */
-      console.log('calling out to client: ', user.toJS().address)
-      var clientGRPC = client(user.toJS().address, user.toJS().port);
-
-
-
-      getBalance(clientGRPC);
+      user.client = client(user.toJS().address, user.toJS().port);
+      getBalance(user.client);
       setTimeout(() => { resolve(true); }, 1000);
     });
     dispatch(actions.submit('user', somePromise));
