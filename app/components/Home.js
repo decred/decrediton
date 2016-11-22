@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
 import SidebarContent from '../content/SideBarContent';
-import LoginForm from '../containers/LoginForm';
+
 
 const styles = {
   contentHeaderMenuLink: {
@@ -70,7 +70,6 @@ const Home = React.createClass({
         <MaterialTitlePanel title={contentHeader}>
           <div style={styles.content}>
             <h1>Home Page</h1>
-            <LoginForm />
           </div>
         </MaterialTitlePanel>
       </Sidebar>
