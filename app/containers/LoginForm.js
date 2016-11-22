@@ -33,6 +33,7 @@ class LoginForm extends React.Component {
       console.log(user.toJS());
       /* eslint-enable no-console */
       user.client = client(user.toJS().address, user.toJS().port);
+      user.isloggedin = true;
       getBalance(user.client);
       setTimeout(() => { resolve(true); }, 1000);
     });
