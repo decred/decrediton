@@ -8,13 +8,7 @@ import routes from './routes';
 import configureStore from './store/configureStore';
 import './app.global.css';
 
-var initialState = {
-  address: "",
-  port: "",
-  passphrase: "",
-}
-
-const store = configureStore(initialState);
+const store = configureStore();
 const history = syncHistoryWithStore(hashHistory, store);
 
 render(
