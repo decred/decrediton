@@ -42,6 +42,9 @@ cd grpc
 git remote add murg https://github.com/murgatroid99/grpc.git
 git fetch --all
 git checkout node_electron_build
+git submodule update --init
+npm install
+npm run electron-build -- --target=1.4.6
 cd ../decrediton
 npm install
 npm run dev
