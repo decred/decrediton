@@ -8,7 +8,7 @@ export const GET_WALLET_ADDRESS = 'GET_WALLET_ADDRESS';
 export const GET_WALLET_PASSPHRASE = 'GET_WALLET_PASSPHRASE';
 
 
-export const fetchWalletW() {
+export function fetchWallet() {
     return (getState: Function) => {
         setTimeout(() => {
             dispatch(      
@@ -50,7 +50,11 @@ export function updateWalletPassphrase(passphrase) {
 
 export function getWalletInfo() {
     return (dispatch: Function, getState: Function) => {
-        const { walletInfo } = getState().walletInfo;
-        return
+        const { walletInfo } = getState();
+        setTimeout(() => {
+            dispatch(      
+                type: WALLET_PASSPHRASE,
+                payload: passphrase);
+        }, delay);
     };
 }

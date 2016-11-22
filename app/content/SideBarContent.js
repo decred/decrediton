@@ -38,7 +38,6 @@ const SidebarContent = (props) => {
   return (
     <MaterialTitlePanel title="Menu" style={style}>
       <div style={styles.content}>
-        <Link to="/overview" style={styles.sidebarLink}>Overview</Link>
         <Link to="/send" style={styles.sidebarLink}>Send Decred</Link>
         <Link to="/receive" style={styles.sidebarLink}>Receive Decred</Link>
         <Link to="/history" style={styles.sidebarLink}>Transaction History</Link>

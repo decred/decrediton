@@ -1,12 +1,19 @@
 // @flow
 import { combineReducers } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
-import counter from './counter';
-import walletInfo from './walletInfo';
+import { createForms } from 'react-redux-form';
+
+const initialUserState = {
+  address: "",
+  port: "",
+  passphrase: "",
+};
+
 
 const rootReducer = combineReducers({
-  counter,
-  walletInfo,
+  ...createForms({
+    user: initialUserState,
+  }),
   routing
 });
 
