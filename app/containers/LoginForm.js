@@ -65,7 +65,7 @@ class LoginForm extends React.Component {
             show={{ touched: true, focus: false }}
             model="user.address"
             messages={{
-              isRequired: 'Please provide a dcrwallet address.',
+              isRequired: 'Please provide your dcrwallet address.',
             }}
           />
         </Field>
@@ -78,7 +78,7 @@ class LoginForm extends React.Component {
             show={{ touched: true, focus: false }}
             model="user.port"
             messages={{
-              isRequired: 'Please provide a dcrwallet port.',
+              isRequired: 'Please provide your dcrwallet port.',
             }}
           />
         </Field>
@@ -91,7 +91,7 @@ class LoginForm extends React.Component {
             show={{ touched: true, focus: false }}
             model="user.passphrase"
             messages={{
-              isRequired: 'Please provide a dcrwallet passphrase.',
+              isRequired: 'Please provide your dcrwallet passphrase.',
             }}
           />
         </Field>
