@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
 import SidebarContent from '../content/SideBarContent';
-
+import { getBalance } from '../actions/client';
 
 const styles = {
   contentHeaderMenuLink: {
@@ -17,9 +17,11 @@ const styles = {
   },
 };
 
+const grpcClient = {}; 
+
 const Home = React.createClass({
   getInitialState() {
-    return {docked: false, open: false, loggedIn: false};
+    return {docked: false, open: false, isLoggedIn: false, grpcClient: null};
   },
 
   componentWillMount() {
@@ -37,7 +39,12 @@ const Home = React.createClass({
   },
 
   logIn(logIn) {
-    this.setState({loggedIn: logIn});
+    console.log("SADFASDF");
+    this.setState({isLoggedIn: logIn});
+  },
+
+  setGrpcClient(client) {
+    this.setState({grpcClient:client});
   },
 
   mediaQueryChanged() {
@@ -54,8 +61,10 @@ const Home = React.createClass({
 
   render() {
     const loginProps = {
-      isLoggedIn: this.loggedIn,
+      isLoggedIn: this.state.isLoggedIn,
       logIn: this.logIn,
+      setGrpcClient: this.setGrpcClient,
+      grpcClient: this.state.grpcClient,
     };
 
     const sidebar = <SidebarContent {...loginProps}/>;
@@ -74,12 +83,25 @@ const Home = React.createClass({
       onSetOpen: this.onSetOpen,
     };
 
+    const notLoggedInView = (
+      <div style={styles.content}>
+        <h1>Not logged in yet</h1>
+      </div>);
+
+    const loggedInView = (
+      <div style={styles.content}>
+        <h1>Home Page</h1>
+      </div>);
+    var view = {};
+    if (this.state.isLoggedIn) {
+      view = loggedInView;
+    } else {
+      view = notLoggedInView;
+    }
     return (
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
-          <div style={styles.content}>
-            <h1>Home Page</h1>
-          </div>
+          <div>{view}</div>
         </MaterialTitlePanel>
       </Sidebar>
     );

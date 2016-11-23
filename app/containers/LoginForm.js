@@ -19,10 +19,13 @@ class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    console.log(props);
+    console.log(this.props);
+    this.props = props;
   }
 
   handleSubmit(user) {  // user is an Immutable Map
-    const { dispatch, logIn } = this.props;
+    const { dispatch } = this.props;
 
     // Do whatever you like in here.
     // You can use actions such as:
@@ -33,20 +36,27 @@ class LoginForm extends React.Component {
       console.log(user.toJS());
       /* eslint-enable no-console */
       user.client = client(user.toJS().address, user.toJS().port);
-      
-      logIn(true);
-      getBalance(user.client);
+      if (user.client !== null) {
+        this.props.logIn(true);
+        this.props.setGrpcClient(user.client);
+      }
       setTimeout(() => { resolve(true); }, 1000);
     });
     dispatch(actions.submit('user', somePromise));
   }
 
   render() {
+    if (this.props.isLoggedIn) {
+      return (
+        <div></div>
+      );
+    }
     return (
       <Form
         model="user"
         onSubmit={this.handleSubmit}
       >
+        <label>logged in? -{ this.props.isLoggedIn }-</label>
         <Field model="user.address" validators={{ isRequired }}>
           <label>Address: </label>
           <input type="text" />
@@ -94,6 +104,10 @@ class LoginForm extends React.Component {
 
 LoginForm.propTypes = {
   dispatch: React.PropTypes.func.isRequired,
+  isLoggedIn: React.PropTypes.bool.isRequired,
+  logIn: React.PropTypes.func.isRequired,
+  setGrpcClient: React.PropTypes.func.isRequired,
+  //grpcClient: React.PropTypes.object.isRequired,
 };
 
 export default connect()(LoginForm);

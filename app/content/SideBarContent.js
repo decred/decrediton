@@ -29,7 +29,10 @@ const styles = {
 const SidebarContent = (props) => {
   const loginProps = {
     logIn: props.logIn,
+    isLoggedIn: props.isLoggedIn,
+    setGrpcClient: props.setGrpcClient,
   }
+  console.log("SidebarContent props:", loginProps);
   const style = props.style ? {...styles.sidebar, ...props.style} : styles.sidebar;
 
   return (
@@ -40,9 +43,7 @@ const SidebarContent = (props) => {
         <Link to="/history" style={styles.sidebarLink}>Transaction History</Link>
         <Link to="/stake" style={styles.sidebarLink}>Stake Information Page</Link>
         <div style={styles.divider} />
-        if (!isLoggedIn) {
-          <LoginForm />
-        }
+        <LoginForm {...loginProps}/>
       </div>
     </MaterialTitlePanel>
   );
@@ -52,6 +53,8 @@ SidebarContent.propTypes = {
   style: React.PropTypes.object,
   isLoggedIn: React.PropTypes.bool,
   logIn: React.PropTypes.func,
+  setGrpcClient: React.PropTypes.func,
+  grpcClient: React.PropTypes.object,
 };
 
 export default SidebarContent;

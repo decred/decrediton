@@ -10,7 +10,7 @@ const initialUserState = Immutable.fromJS({
   port: "",
   passphrase: "",
   client: null,
-  isloggedin: "false",
+  isloggedIn: "false",
 });
 
 const rootReducer = combineReducers({
