@@ -1,6 +1,7 @@
 import React from 'react';
 import MaterialTitlePanel from '../components/MaterialTitlePanel';
 import { Link } from 'react-router';
+import LoginForm from '../containers/LoginForm';
 
 const styles = {
   sidebar: {
@@ -21,29 +22,27 @@ const styles = {
   content: {
     padding: '16px',
     height: '100%',
-    backgroundColor: 'white',
+    backgroundColor: 'blue',
   },
 };
 
 const SidebarContent = (props) => {
-  const style = props.style ? {...styles.sidebar, ...props.style} : styles.sidebar;
-
-  const links = [];
-
-  for (let ind = 0; ind < 10; ind++) {
-    links.push(
-      <a key={ind} href="#" style={styles.sidebarLink}>Mock menu item {ind}</a>);
+  const loginProps = {
+    logIn: props.logIn,
+    isLoggedIn: props.isLoggedIn,
+    setGrpcClient: props.setGrpcClient,
   }
+  const style = props.style ? {...styles.sidebar, ...props.style} : styles.sidebar;
 
   return (
     <MaterialTitlePanel title="Menu" style={style}>
       <div style={styles.content}>
-        <Link to="/overview" style={styles.sidebarLink}>Overview</Link>
         <Link to="/send" style={styles.sidebarLink}>Send Decred</Link>
         <Link to="/receive" style={styles.sidebarLink}>Receive Decred</Link>
         <Link to="/history" style={styles.sidebarLink}>Transaction History</Link>
         <Link to="/stake" style={styles.sidebarLink}>Stake Information Page</Link>
         <div style={styles.divider} />
+        <LoginForm {...loginProps}/>
       </div>
     </MaterialTitlePanel>
   );
@@ -51,6 +50,10 @@ const SidebarContent = (props) => {
 
 SidebarContent.propTypes = {
   style: React.PropTypes.object,
+  isLoggedIn: React.PropTypes.bool,
+  logIn: React.PropTypes.func,
+  setGrpcClient: React.PropTypes.func,
+  grpcClient: React.PropTypes.object,
 };
 
 export default SidebarContent;

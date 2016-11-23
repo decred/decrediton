@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
 import SidebarContent from '../content/SideBarContent';
+import { getBalance } from '../actions/client';
 
 const styles = {
   contentHeaderMenuLink: {
@@ -16,9 +17,11 @@ const styles = {
   },
 };
 
+const grpcClient = {}; 
+
 const Home = React.createClass({
   getInitialState() {
-    return {docked: false, open: false};
+    return {docked: false, open: false, isLoggedIn: false, grpcClient: null};
   },
 
   componentWillMount() {
@@ -35,6 +38,15 @@ const Home = React.createClass({
     this.setState({open: open});
   },
 
+  logIn(logIn) {
+    console.log("SADFASDF");
+    this.setState({isLoggedIn: logIn});
+  },
+
+  setGrpcClient(client) {
+    this.setState({grpcClient:client});
+  },
+
   mediaQueryChanged() {
     this.setState({docked: this.state.mql.matches});
   },
@@ -48,7 +60,14 @@ const Home = React.createClass({
   },
 
   render() {
-    const sidebar = <SidebarContent />;
+    const loginProps = {
+      isLoggedIn: this.state.isLoggedIn,
+      logIn: this.logIn,
+      setGrpcClient: this.setGrpcClient,
+      grpcClient: this.state.grpcClient,
+    };
+
+    const sidebar = <SidebarContent {...loginProps}/>;
 
     const contentHeader = (
       <span>
@@ -64,11 +83,33 @@ const Home = React.createClass({
       onSetOpen: this.onSetOpen,
     };
 
+    var view = {};
+    var balance = {};
+
+    const notLoggedInView = (
+      <div style={styles.content}>
+        <h1>Not logged in yet</h1>
+      </div>);
+
+    const loggedInView = (
+      <div style={styles.content}>
+        <h1>Home Page</h1>
+      </div>);
+
+    var view = {};
+    var balance = {};
+    if (this.state.isLoggedIn) {
+      view = loggedInView;
+      getBalance(this.state.grpcClient);
+    } else {
+      view = notLoggedInView;
+    }
     return (
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
-          <div style={styles.content}>
-            <h1>Home Page</h1>
+          <div>
+          {view}
+          {balance}
           </div>
         </MaterialTitlePanel>
       </Sidebar>
@@ -77,4 +118,3 @@ const Home = React.createClass({
 });
 
 export default Home;
-//ReactDOM.render(<App />, document.getElementById('cotent'));

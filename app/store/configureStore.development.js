@@ -5,10 +5,7 @@ import { routerMiddleware, push } from 'react-router-redux';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
 
-import * as balanceActions from '../actions/balance';
-
 const actionCreators = {
-  balanceActions,
   push,
 };
 
