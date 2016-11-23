@@ -27,8 +27,10 @@ const styles = {
 };
 
 const SidebarContent = (props) => {
+  const loginProps = {
+    logIn: props.logIn,
+  }
   const style = props.style ? {...styles.sidebar, ...props.style} : styles.sidebar;
-
 
   return (
     <MaterialTitlePanel title="Menu" style={style}>
@@ -38,7 +40,9 @@ const SidebarContent = (props) => {
         <Link to="/history" style={styles.sidebarLink}>Transaction History</Link>
         <Link to="/stake" style={styles.sidebarLink}>Stake Information Page</Link>
         <div style={styles.divider} />
-        <LoginForm />
+        if (!isLoggedIn) {
+          <LoginForm />
+        }
       </div>
     </MaterialTitlePanel>
   );
@@ -46,6 +50,8 @@ const SidebarContent = (props) => {
 
 SidebarContent.propTypes = {
   style: React.PropTypes.object,
+  isLoggedIn: React.PropTypes.bool,
+  logIn: React.PropTypes.func,
 };
 
 export default SidebarContent;

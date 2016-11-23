@@ -22,7 +22,7 @@ class LoginForm extends React.Component {
   }
 
   handleSubmit(user) {  // user is an Immutable Map
-    const { dispatch } = this.props;
+    const { dispatch, logIn } = this.props;
 
     // Do whatever you like in here.
     // You can use actions such as:
@@ -33,7 +33,8 @@ class LoginForm extends React.Component {
       console.log(user.toJS());
       /* eslint-enable no-console */
       user.client = client(user.toJS().address, user.toJS().port);
-      user.isloggedin = true;
+      
+      logIn(true);
       getBalance(user.client);
       setTimeout(() => { resolve(true); }, 1000);
     });

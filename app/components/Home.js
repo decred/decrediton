@@ -19,7 +19,7 @@ const styles = {
 
 const Home = React.createClass({
   getInitialState() {
-    return {docked: false, open: false};
+    return {docked: false, open: false, loggedIn: false};
   },
 
   componentWillMount() {
@@ -36,6 +36,10 @@ const Home = React.createClass({
     this.setState({open: open});
   },
 
+  logIn(logIn) {
+    this.setState({loggedIn: logIn});
+  },
+
   mediaQueryChanged() {
     this.setState({docked: this.state.mql.matches});
   },
@@ -49,7 +53,12 @@ const Home = React.createClass({
   },
 
   render() {
-    const sidebar = <SidebarContent />;
+    const loginProps = {
+      isLoggedIn: this.loggedIn,
+      logIn: this.logIn,
+    };
+
+    const sidebar = <SidebarContent {...loginProps}/>;
 
     const contentHeader = (
       <span>
