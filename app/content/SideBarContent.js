@@ -32,7 +32,6 @@ const SidebarContent = (props) => {
     isLoggedIn: props.isLoggedIn,
     setGrpcClient: props.setGrpcClient,
   }
-  console.log("SidebarContent props:", loginProps);
   const style = props.style ? {...styles.sidebar, ...props.style} : styles.sidebar;
 
   return (

@@ -83,6 +83,9 @@ const Home = React.createClass({
       onSetOpen: this.onSetOpen,
     };
 
+    var view = {};
+    var balance = {};
+
     const notLoggedInView = (
       <div style={styles.content}>
         <h1>Not logged in yet</h1>
@@ -92,16 +95,22 @@ const Home = React.createClass({
       <div style={styles.content}>
         <h1>Home Page</h1>
       </div>);
+
     var view = {};
+    var balance = {};
     if (this.state.isLoggedIn) {
       view = loggedInView;
+      getBalance(this.state.grpcClient);
     } else {
       view = notLoggedInView;
     }
     return (
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
-          <div>{view}</div>
+          <div>
+          {view}
+          {balance}
+          </div>
         </MaterialTitlePanel>
       </Sidebar>
     );
