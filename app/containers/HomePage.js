@@ -14,7 +14,7 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispath) {
+function mapDispatchToProps(dispatch) {
   return bindActionCreators(LoginActions, dispatch);
 }
 

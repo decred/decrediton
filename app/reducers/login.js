@@ -1,12 +1,23 @@
-const login = (state, action) => {
+import { LOGIN, SET_CLIENT } from '../actions/LoginActions';
+
+const login = (state = {
+    address: "", 
+    port: "", 
+    passphrase: "",
+    loggedIn: false,
+    grpcClient: null
+    }, action) => {
     switch (action.type) {
-        case 'LOGIN':
+        case LOGIN:
             return {
                 address: action.address,
                 port: action.port,
                 passphrase: action.passphrase,
                 loggedIn: true,
-                grpcClient: action.client
+            }
+        case SET_CLIENT:
+            return {
+                client: action.client
             }
         default:
             return state

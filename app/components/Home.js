@@ -15,11 +15,11 @@ class Home extends Component{
     address: PropTypes.string,
     port: PropTypes.string,
     passphrase: PropTypes.string,
-    loggedIn: PropTypes.bool.isRequired
+    loggedIn: PropTypes.bool
   };
 
   render() {
-    const { setClient, getClient, login, client, address, port, passphrase } = this.props;
+    const { setClient, getClient, login, client, address, port, passphrase, loggedIn } = this.props;
     var view = {};
     var balance = {};
 
@@ -37,9 +37,9 @@ class Home extends Component{
       </div>);
 
     var view = {};
+    console.log({loggedIn});
     if ({loggedIn}) {
       view = loggedInView;
-      getBalance(this.state.grpcClient);
     } else {
       view = notLoggedInView;
     }
