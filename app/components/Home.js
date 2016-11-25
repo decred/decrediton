@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
 import SidebarContent from '../content/SideBarContent';
+import Login from './Login';
 import { getBalance } from '../actions/client';
 
 const styles = {
@@ -39,7 +40,6 @@ const Home = React.createClass({
   },
 
   logIn(logIn) {
-    console.log("SADFASDF");
     this.setState({isLoggedIn: logIn});
   },
 
@@ -88,13 +88,18 @@ const Home = React.createClass({
 
     const notLoggedInView = (
       <div style={styles.content}>
+        <Login {...loginProps}/>
         <h1>Not logged in yet</h1>
       </div>);
 
     const loggedInView = (
-      <div style={styles.content}>
-        <h1>Home Page</h1>
-      </div>);
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div>
+          <h1>Home Page</h1>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
 
     var view = {};
     var balance = {};
@@ -105,14 +110,7 @@ const Home = React.createClass({
       view = notLoggedInView;
     }
     return (
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div>
-          {view}
-          {balance}
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>
+      view
     );
   },
 });

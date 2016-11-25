@@ -1,7 +1,6 @@
 import React from 'react';
 import MaterialTitlePanel from '../components/MaterialTitlePanel';
 import { Link } from 'react-router';
-import LoginForm from '../containers/LoginForm';
 
 const styles = {
   sidebar: {
@@ -27,11 +26,6 @@ const styles = {
 };
 
 const SidebarContent = (props) => {
-  const loginProps = {
-    logIn: props.logIn,
-    isLoggedIn: props.isLoggedIn,
-    setGrpcClient: props.setGrpcClient,
-  }
   const style = props.style ? {...styles.sidebar, ...props.style} : styles.sidebar;
 
   return (
@@ -42,7 +36,6 @@ const SidebarContent = (props) => {
         <Link to="/history" style={styles.sidebarLink}>Transaction History</Link>
         <Link to="/stake" style={styles.sidebarLink}>Stake Information Page</Link>
         <div style={styles.divider} />
-        <LoginForm {...loginProps}/>
       </div>
     </MaterialTitlePanel>
   );
@@ -50,10 +43,6 @@ const SidebarContent = (props) => {
 
 SidebarContent.propTypes = {
   style: React.PropTypes.object,
-  isLoggedIn: React.PropTypes.bool,
-  logIn: React.PropTypes.func,
-  setGrpcClient: React.PropTypes.func,
-  grpcClient: React.PropTypes.object,
 };
 
 export default SidebarContent;
