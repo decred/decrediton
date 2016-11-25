@@ -102,7 +102,6 @@ const Home = React.createClass({
       </Sidebar>);
 
     var view = {};
-    var balance = {};
     if (this.state.isLoggedIn) {
       view = loggedInView;
       getBalance(this.state.grpcClient);

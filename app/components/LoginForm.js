@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
-import { Field, Form, Errors, actions } from 'react-redux-form/immutable';
+import { Field, Form, Errors, actions, Control } from 'react-redux-form/immutable';
 
 import SubmitButton from './SubmitButton';
-import { client, getBalance } from '../actions/client';
+import { client } from '../actions/client';
 
 const isRequired = (val) => val && val.length > 0;
 const lessThan10 = (val) => {
@@ -14,6 +14,8 @@ const lessThan10 = (val) => {
   }
   return false;
 };
+const defaultPort = "19112";
+const defaultAddress = "127.0.0.1";
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -33,7 +35,7 @@ class LoginForm extends React.Component {
     // etc.
     const somePromise = new Promise((resolve) => {
       /* eslint-disable no-console */
-      console.log(user.toJS());
+      console.log("login attempt", user.toJS());
       /* eslint-enable no-console */
       user.client = client(user.toJS().address, user.toJS().port);
       if (user.client !== null) {
@@ -56,45 +58,48 @@ class LoginForm extends React.Component {
         model="user"
         onSubmit={this.handleSubmit}
       >
-        <label>logged in? -{ this.props.isLoggedIn }-</label>
-        <Field model="user.address" validators={{ isRequired }}>
-          <label>Address: </label>
-          <input type="text" />
+        <label>Address: </label>
+        <Control.text
+          model="user.address"
+          validators={{ isRequired }}
+          />
           <Errors
             wrapper="span"
             show={{ touched: true, focus: false }}
-            model="user.address"
+            model=".address"
             messages={{
               isRequired: 'Please provide your dcrwallet address.',
             }}
           />
-        </Field>
-
-        <Field model="user.port" validators={{ isRequired }}>
-          <label>Port: </label>
-          <input type="text" />
-          <Errors
-            wrapper="span"
-            show={{ touched: true, focus: false }}
-            model="user.port"
-            messages={{
-              isRequired: 'Please provide your dcrwallet port.',
-            }}
+        <br/>
+        <label>Port: </label>
+        <Control.text 
+          model="user.port"
+          validators={{ isRequired }}
+        />
+        <Errors
+          wrapper="span"
+          show={{ touched: true, focus: false }}
+          model=".port"
+          messages={{
+            isRequired: 'Please provide your dcrwallet port.',
+          }}
+        />
+        <br/>
+        <label>Passphrase: </label>
+        <Control.text
+          model="user.passphrase"
+          validators={{ isRequired }}
           />
-        </Field>
-
-        <Field model="user.passphrase" validators={{ isRequired }}>
-          <label>Passphrase: </label>
-          <input type="password" />
-          <Errors
-            wrapper="span"
-            show={{ touched: true, focus: false }}
-            model="user.passphrase"
-            messages={{
-              isRequired: 'Please provide your dcrwallet passphrase.',
-            }}
-          />
-        </Field>
+        <Errors
+          wrapper="span"
+          show={{ touched: true, focus: false }}
+          model=".passphrase"
+          messages={{
+            isRequired: 'Please provide your dcrwallet passphrase.',
+          }}
+        />
+        <br/>
 
         <SubmitButton />
       </Form>
