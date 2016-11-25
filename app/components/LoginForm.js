@@ -21,9 +21,6 @@ class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    console.log(props);
-    console.log(this.props);
-    this.props = props;
   }
 
   handleSubmit(user) {  // user is an Immutable Map
