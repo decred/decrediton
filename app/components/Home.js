@@ -1,117 +1,53 @@
 // @flow
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Sidebar from './SideBar';
-import MaterialTitlePanel from './MaterialTitlePanel';
-import SidebarContent from '../content/SideBarContent';
 import Login from './Login';
 import { getBalance } from '../actions/client';
 
-const styles = {
-  contentHeaderMenuLink: {
-    textDecoration: 'none',
-    color: 'white',
-    padding: 8,
-  },
-  content: {
-    padding: '16px',
-  },
-};
-
 const grpcClient = {}; 
 
-const Home = React.createClass({
-  getInitialState() {
-    return {docked: false, open: false, isLoggedIn: false, grpcClient: null};
-  },
-
-  componentWillMount() {
-    const mql = window.matchMedia(`(min-width: 800px)`);
-    mql.addListener(this.mediaQueryChanged);
-    this.setState({mql: mql, docked: mql.matches});
-  },
-
-  componentWillUnmount() {
-    this.state.mql.removeListener(this.mediaQueryChanged);
-  },
-
-  onSetOpen(open) {
-    this.setState({open: open});
-  },
-
-  logIn(logIn) {
-    this.setState({isLoggedIn: logIn});
-  },
-
-  setGrpcClient(client) {
-    this.setState({grpcClient:client});
-  },
-
-  mediaQueryChanged() {
-    this.setState({docked: this.state.mql.matches});
-  },
-
-  toggleOpen(ev) {
-    this.setState({open: !this.state.open});
-
-    if (ev) {
-      ev.preventDefault();
-    }
-  },
+class Home extends Component{
+  static propTypes = {
+    getClient: PropTypes.func.isRequired,
+    setClient: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
+    client: PropTypes.object,
+    address: PropTypes.string,
+    port: PropTypes.string,
+    passphrase: PropTypes.string,
+    loggedIn: PropTypes.bool.isRequired
+  };
 
   render() {
-    const loginProps = {
-      isLoggedIn: this.state.isLoggedIn,
-      logIn: this.logIn,
-      setGrpcClient: this.setGrpcClient,
-      grpcClient: this.state.grpcClient,
-    };
-
-    const sidebar = <SidebarContent {...loginProps}/>;
-
-    const contentHeader = (
-      <span>
-        {!this.state.docked &&
-         <a onClick={this.toggleOpen} href="#" style={styles.contentHeaderMenuLink}>=</a>}
-        <span> Decrediton - Home</span>
-      </span>);
-
-    const sidebarProps = {
-      sidebar: sidebar,
-      docked: this.state.docked,
-      open: this.state.open,
-      onSetOpen: this.onSetOpen,
-    };
-
+    const { setClient, getClient, login, client, address, port, passphrase } = this.props;
     var view = {};
     var balance = {};
 
     const notLoggedInView = (
-      <div style={styles.content}>
-        <Login {...loginProps}/>
+      <div>
         <h1>Not logged in yet</h1>
       </div>);
 
     const loggedInView = (
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div>
-          <h1>Home Page</h1>
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>);
+      <div>
+        <h1>Home Page</h1>
+        <h3>{address}</h3>
+        <h3>{port}</h3>
+        <h3>{passphrase}</h3>
+      </div>);
 
     var view = {};
-    if (this.state.isLoggedIn) {
+    if ({loggedIn}) {
       view = loggedInView;
       getBalance(this.state.grpcClient);
     } else {
       view = notLoggedInView;
     }
+
     return (
       view
     );
-  },
-});
+  }
+};
 
 export default Home;

@@ -2,18 +2,10 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './containers/App';
-import Home from './components/Home';
-import SendPage from './containers/SendPage';
-import ReceivePage from './containers/ReceivePage';
-import HistoryPage from './containers/HistoryPage';
-import StakePage from './containers/StakePage';
+import HomePage from './containers/HomePage';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={Home} />
-    <Route path="/history" component={HistoryPage} />
-    <Route path="/send" component={SendPage} />
-    <Route path="/receive" component={ReceivePage} />
-    <Route path="/stake" component={StakePage} />
+    <IndexRoute component={HomePage} />
   </Route>
 );
