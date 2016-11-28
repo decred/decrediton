@@ -8,11 +8,10 @@ const login = (state = {}, action) => {
                     port: action.port,
                     passphrase: action.passphrase,
                     loggedIn: true,
-        
             };
         case SET_CLIENT:
             return {...state, 
-                    client: action.client
+                    client: action.client,
                 };
         default:
             return state
