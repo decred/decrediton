@@ -1,7 +1,7 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Login from './Login';
+import LoginForm from '../containers/LoginForm';
 import { getBalance } from '../actions/client';
 import { Link } from 'react-router';
 
@@ -54,7 +54,7 @@ class Home extends Component{
         <h3>address: {address}</h3>
         <h3>port: {port}</h3>
         <h3>passphrase: {passphrase}</h3>
-        <button onClick={this.handleLoginClick}>login</button>
+        <LoginForm />
       </div>);
 
     const loggedInView = (
