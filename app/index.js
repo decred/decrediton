@@ -8,7 +8,10 @@ import routes from './routes';
 import configureStore from './store/configureStore';
 import './app.global.css';
 
-const store = configureStore();
+var initialState = {
+  loggedIn: false
+}
+const store = configureStore(initialState);
 const history = syncHistoryWithStore(hashHistory, store);
 
 render(

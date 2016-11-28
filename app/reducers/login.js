@@ -1,11 +1,7 @@
 import { LOGIN, SET_CLIENT } from '../actions/LoginActions';
 
 const login = (state = {
-    address: "", 
-    port: "", 
-    passphrase: "",
     loggedIn: false,
-    grpcClient: null
     }, action) => {
     switch (action.type) {
         case LOGIN:
