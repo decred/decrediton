@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { login } from '../actions/LoginActions'
+import { Button } from 'react-bootstrap'
 
 let LoginForm = ({ dispatch }) => {
   let address, port, passphrase
@@ -35,9 +36,9 @@ let LoginForm = ({ dispatch }) => {
           passphrase = node
         }} />
         <br/>
-        <button type="submit">
+        <Button type="submit">
           Login
-        </button>
+        </Button>
       </form>
     </div>
   )
