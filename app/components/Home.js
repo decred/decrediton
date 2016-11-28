@@ -44,6 +44,7 @@ class Home extends Component{
         <h1>Client set!</h1>
         <h2>Balance:</h2>
         <h2>{getBalance(client)}</h2>
+        <Link to="\history">History</Link>
       </div>
     )
 

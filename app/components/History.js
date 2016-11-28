@@ -16,6 +16,7 @@ class History extends Component{
         <h1>History</h1>
         <h2>Balance:</h2>
         <h2>{getBalance(client)}</h2>
+        <Link to="\">Back Home</Link>
       </div>
     )
 
