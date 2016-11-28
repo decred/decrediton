@@ -1,5 +1,4 @@
 import React from 'react';
-import MaterialTitlePanel from '../components/MaterialTitlePanel';
 import { Link } from 'react-router';
 import LoginForm from './LoginForm';
 
