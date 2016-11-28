@@ -12,6 +12,7 @@ const login = (state = {}, action) => {
                 loggedIn: true,
             }
         case SET_CLIENT:
+        console.log("herer")
             return {
                 ...state,
                 client: action.client

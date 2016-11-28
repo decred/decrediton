@@ -20,9 +20,7 @@ export function setClient(grpcClient) {
 export function getClient() {
     return (dispatch: Function, getState: Function) => {
         const { address, port } = getState().login;
-        console.log(address, port);
         var grpcClient = client(address, port);
-        getBalance(grpcClient);
         dispatch(setClient(grpcClient));
     };
 }

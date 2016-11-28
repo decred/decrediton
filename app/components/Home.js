@@ -21,14 +21,14 @@ class Home extends Component{
     
   handleLoginClick = () => {
     const { login, address, port, passphrase } = this.props
-    login(address, port, "password1")
+    login(address, port, passphrase)
   }
 
   handleClientConnect = () => {
-    console.log("cclient connect attempt!")
     const { getClient, address, port, passphrase } = this.props
     getClient()
   }
+  
   render() {
     const { getClient, setClient, address, port, passphrase, loggedIn, client } = this.props;
     var view = {};

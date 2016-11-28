@@ -10,6 +10,7 @@ function mapStateToProps(state) {
     port: state.login.port,
     passphrase: state.login.passphrase,
     loggedIn: state.login.loggedIn,
+    client: state.login.client,
   };
 }
 
