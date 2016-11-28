@@ -1,11 +1,11 @@
 // @flow
-import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import History from '../components/History';
 
-export default class HistoryPage extends Component {
-  render() {
-    return (
-      <History />
-    );
-  }
+function mapStateToProps(state) {
+  return {
+    client: state.login.client,
+  };
 }
+
+export default connect(mapStateToProps)(History);

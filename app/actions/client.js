@@ -29,11 +29,13 @@ export function client(address, port) {
     return client;
 }
 
-
-export function getBalance(client) {
+export function getBalance(client, accountNumber, requiredConf) {
+    if (client === undefined) {
+        return
+    }
     var request = {
-        account_number: 0,
-        required_confirmations: 1
+        account_number: accountNumber,
+        required_confirmations: requiredConf
     };
 
     client.balance(request, function(err, response) {
@@ -45,11 +47,10 @@ export function getBalance(client) {
     });
 }
 
-/*
-function getAccountNumber() {
+export function getAccountNumber(client, accountName) {
     // AccountNumber
     var request = {
-        account_name: "default"
+        account_name: accountName
     };
 
     client.accountNumber(request, function(err, response) {
@@ -61,7 +62,7 @@ function getAccountNumber() {
     });
 }
 
-function getStakeInfo() {
+export function getStakeInfo(client) {
     // StakeInfo
     var request = {};
 
@@ -74,7 +75,7 @@ function getStakeInfo() {
     });
 }
 
-function getPing() {
+export function getPing(client) {
     // Ping
     var request = {};
 
@@ -87,7 +88,7 @@ function getPing() {
     });
 }
 
-function getNetwork() {
+export function getNetwork(client) {
     // Network
     var request = {};
 
@@ -100,7 +101,7 @@ function getNetwork() {
     });
 }
 
-function getAccounts() {
+export function getAccounts(client) {
     // Accounts
     var request = {};
 
@@ -113,13 +114,13 @@ function getAccounts() {
     });
 }
 
-function getTransactions() {
+export function getTransactions(client, start, end) {
     // Currently not working due to too large of messages
     // known issue by jrick.
     // GetTransactions
     var request = {
-        starting_block_height: 120000,
-        ending_block_height: 130000
+        starting_block_height: start,
+        ending_block_height: end
     };
 
     client.getTransactions(request, function(err, response) {
@@ -131,7 +132,7 @@ function getTransactions() {
     });
 }
 
-function getTicketPrice() {
+export function getTicketPrice(client) {
     // TicketPrice 
     var request = {};
 
@@ -145,11 +146,11 @@ function getTicketPrice() {
 }
 // Available GRPC control client examples
 
-function getNextAddress() {
+export function getNextAddress(client, acountNum) {
     console.log("getting new address")
         // NextAddress
     var request = {
-        account: 0
+        account: accountNum
     };
 
     client.nextAddress(request, function(err, response) {
@@ -162,10 +163,10 @@ function getNextAddress() {
 }
 
 
-function renameAccount(accountNumber, newName) {
+export function renameAccount(client, accountNumber, newName) {
     // RenameAccount
     var request = {
-        account_number: accountNumber,
+        account_number: accountNum,
         new_name: newName
     };
 
@@ -179,10 +180,10 @@ function renameAccount(accountNumber, newName) {
 }
 
 
-function rescan() {
+export function rescan(client, beginHeight) {
     // Rescan
     var request = {
-        begin_height: 0
+        begin_height: beginHeight
     };
 
     var rescanCall = client.rescan(request);
@@ -198,10 +199,10 @@ function rescan() {
     });
 }
 
-function getNextAccount(accountName) {
+export function getNextAccount(client, passphrase, accountName) {
     // NextAccount
     var request = {
-        passphrase: Buffer.from('password1'),
+        passphrase: Buffer.from(passphrase),
         account_name: accountName
     };
 
@@ -214,14 +215,14 @@ function getNextAccount(accountName) {
     });
 }
 
-function importPrivateKey() {
+export function importPrivateKey(client, passphrase, accountNum, wif, rescan, scanFrom) {
     // ImportPrivateKey
     var request = {
-        passphrase: Buffer.from('password1'),
-        account: 0,
-        private_key_wif: "< wif string >",
-        rescan: true,
-        scan_from: 133700
+        passphrase: Buffer.from(passphrase),
+        account: accountNum,
+        private_key_wif: wif,
+        rescan: rescan,
+        scan_from: scanFrom
     };
 
     client.importPrivateKey(request, function(err, response) {
@@ -233,14 +234,13 @@ function importPrivateKey() {
     });
 }
 
-function importScript() {
-
+export function importScript(client, passphrase, script, rescan, scanFrom) {
     // ImportScript
     var request = {
-        passphrase: Buffer.from('password1'),
-        script: "< script hash >",
-        rescan: true,
-        scan_from: 133700
+        passphrase: Buffer.from(passphrase),
+        script: script,
+        rescan: rescan,
+        scan_from: scanFrom
     };
 
     client.importScript(request, function(err, response) {
@@ -252,11 +252,11 @@ function importScript() {
     });
 }
 
-function changePassphrase() {
+export function changePassphrase(client, oldP, newP) {
     // ChangePassphrase 
     var request = {
-        old_passphrase: Buffer.from('password'),
-        new_passphrase: Buffer.from('password1')
+        old_passphrase: Buffer.from(oldP),
+        new_passphrase: Buffer.from(newP)
     };
 
     client.changePassphrase(request, function(err, response) {
@@ -273,12 +273,12 @@ function changePassphrase() {
 // sent to sign/publishTransaction
 //
 
-function getFundingTransaction() {
+export function getFundingTransaction(client, accountNum, targetAmount, requiredConf) {
     // FundTransaction
     var request = {
-        account: 0,
-        target_amount: 1,
-        required_confirmations: 1
+        account: accountNum,
+        target_amount: targetAmount,
+        required_confirmations: requiredConf
     };
 
     client.fundTransaction(request, function(err, response) {
@@ -290,10 +290,10 @@ function getFundingTransaction() {
     });
 }
 
-function signTransction(rawTx) {
+export function signTransction(client, passphrase, rawTx) {
     // SignTransaction
     var request = {
-        passphrase: Buffer.from('password1'),
+        passphrase: Buffer.from(passphrase),
         serialized_transaction: rawTx
     };
 
@@ -306,7 +306,7 @@ function signTransction(rawTx) {
     });
 }
 
-function publishTransaction(txId) {
+export function publishTransaction(client, txId) {
     // PublishTransaction
     var request = {
         signed_transaction: txId
@@ -321,20 +321,21 @@ function publishTransaction(txId) {
     });
 }
 
-function purchaseTickets() {
+export function purchaseTickets(client, passphrase, accountNum, spendLimit, requiredConf,
+ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
     // PurchaseTickets
     var request = {
-        passphrase: Buffer.from('password1'),
-        account: 0,
-        spend_limit: 5000000000000,
-        required_confirmations: 1,
-        ticket_address: "",
-        num_tickets: 10,
-        pool_address: "",
-        pool_fees: 0,
-        expiry: 0,
-        tx_fee: 0.01,
-        ticket_fee: 0.01
+        passphrase: Buffer.from(passphrase),
+        account: accountNum,
+        spend_limit: spendLimit,
+        required_confirmations: requiredConf,
+        ticket_address: ticketAddress,
+        num_tickets: numTickets,
+        pool_address: poolAddress,
+        pool_fees: poolFees,
+        expiry: expiry,
+        tx_fee: txFee,
+        ticket_fee: ticketFee
     };
 
     client.purchaseTickets(request, function(err, response) {
@@ -346,51 +347,50 @@ function purchaseTickets() {
     });
 }
 
-function transactionNtfs() {
-// Register Notification Streams from Wallet
-var request = {};
-var transactionNtfns = client.transactionNotifications(request);
-transactionNtfns.on('data', function(response) {
-    console.log("Transaction received:", response);
-});
-transactionNtfns.on('end', function() {
-    console.log("Transaction notifications done")
+export function transactionNtfs(client) {
+    // Register Notification Streams from Wallet
+    var request = {};
+    var transactionNtfns = client.transactionNotifications(request);
+    transactionNtfns.on('data', function(response) {
+        console.log("Transaction received:", response);
+    });
+    transactionNtfns.on('end', function() {
+        console.log("Transaction notifications done")
         // The server has finished sending
-});
-transactionNtfns.on('status', function(status) {
-    console.log("Transaction notifications status:", status)
-});
+    });
+    transactionNtfns.on('status', function(status) {
+        console.log("Transaction notifications status:", status)
+    });
 }
 
-function spentnessNtfs() {
-var request = {
-	account: 0
-};
-var spentnessNtfns = client.spentnessNotifications(request);
-spentnessNtfns.on('data', function(response) {
-    console.log("Spentness notification received:", response);
-});
-spentnessNtfns.on('end', function() {
-    console.log("Spentness notifications done")
+export function spentnessNtfs(client, accountNum) {
+    var request = {
+	    account: accountNum
+    };
+    var spentnessNtfns = client.spentnessNotifications(request);
+    spentnessNtfns.on('data', function(response) {
+        console.log("Spentness notification received:", response);
+    });
+    spentnessNtfns.on('end', function() {
+        console.log("Spentness notifications done")
         // The server has finished sending
-});
-spentnessNtfns.on('status', function(status) {
-    console.log("Spentness notifications status:", status)
-});
+    });
+    spentnessNtfns.on('status', function(status) {
+        console.log("Spentness notifications status:", status)
+    });
 }
 
-function accountNtfs() {
-var request = {};
-var accountNtfns = client.accountNotifications(request);
-accountNtfns.on('data', function(response) {
-    console.log("Account notification received:", response);
-});
-accountNtfns.on('end', function() {
-    console.log("Account notifications done")
+export function accountNtfs(client) {
+    var request = {};
+    var accountNtfns = client.accountNotifications(request);
+    accountNtfns.on('data', function(response) {
+        console.log("Account notification received:", response);
+    });
+    accountNtfns.on('end', function() {
+        console.log("Account notifications done")
         // The server has finished sending
-});
-accountNtfns.on('status', function(status) {
-    console.log("Account notifications status:", status)
-});
+    });
+    accountNtfns.on('status', function(status) {
+        console.log("Account notifications status:", status)
+    });
 }
-*/

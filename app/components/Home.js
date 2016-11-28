@@ -1,120 +1,87 @@
 // @flow
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Sidebar from './SideBar';
-import MaterialTitlePanel from './MaterialTitlePanel';
-import SidebarContent from '../content/SideBarContent';
+import Login from './Login';
 import { getBalance } from '../actions/client';
-
-const styles = {
-  contentHeaderMenuLink: {
-    textDecoration: 'none',
-    color: 'white',
-    padding: 8,
-  },
-  content: {
-    padding: '16px',
-  },
-};
+import { Link } from 'react-router';
 
 const grpcClient = {}; 
 
-const Home = React.createClass({
-  getInitialState() {
-    return {docked: false, open: false, isLoggedIn: false, grpcClient: null};
-  },
+class Home extends Component{
+  static propTypes = {
+    login: PropTypes.func.isRequired,
+    getClient: PropTypes.func.isRequired,
+    setClient: PropTypes.func.isRequired,
+    address: PropTypes.string.isRequired,
+    port: PropTypes.string.isRequired,
+    passphrase: PropTypes.string.isRequired,
+    loggedIn: PropTypes.bool.isRequired,
+    client: PropTypes.object
+  };
+    
+  handleLoginClick = () => {
+    const { login, address, port, passphrase } = this.props
+    login(address, port, passphrase)
+  }
 
-  componentWillMount() {
-    const mql = window.matchMedia(`(min-width: 800px)`);
-    mql.addListener(this.mediaQueryChanged);
-    this.setState({mql: mql, docked: mql.matches});
-  },
-
-  componentWillUnmount() {
-    this.state.mql.removeListener(this.mediaQueryChanged);
-  },
-
-  onSetOpen(open) {
-    this.setState({open: open});
-  },
-
-  logIn(logIn) {
-    console.log("SADFASDF");
-    this.setState({isLoggedIn: logIn});
-  },
-
-  setGrpcClient(client) {
-    this.setState({grpcClient:client});
-  },
-
-  mediaQueryChanged() {
-    this.setState({docked: this.state.mql.matches});
-  },
-
-  toggleOpen(ev) {
-    this.setState({open: !this.state.open});
-
-    if (ev) {
-      ev.preventDefault();
-    }
-  },
-
+  handleClientConnect = () => {
+    const { getClient, address, port, passphrase } = this.props
+    getClient()
+  }
+  
   render() {
-    const loginProps = {
-      isLoggedIn: this.state.isLoggedIn,
-      logIn: this.logIn,
-      setGrpcClient: this.setGrpcClient,
-      grpcClient: this.state.grpcClient,
-    };
-
-    const sidebar = <SidebarContent {...loginProps}/>;
-
-    const contentHeader = (
-      <span>
-        {!this.state.docked &&
-         <a onClick={this.toggleOpen} href="#" style={styles.contentHeaderMenuLink}>=</a>}
-        <span> Decrediton - Home</span>
-      </span>);
-
-    const sidebarProps = {
-      sidebar: sidebar,
-      docked: this.state.docked,
-      open: this.state.open,
-      onSetOpen: this.onSetOpen,
-    };
-
+    const { getClient, setClient, address, port, passphrase, loggedIn, client } = this.props;
     var view = {};
     var balance = {};
+    var clientOK = false;
+    if (client !== undefined) {
+      clientOK = true;
+    } else {
+      console.log("client undefined", this.props)
+    }
+    const clientSet = (
+      <div>
+        <h1>Client set!</h1>
+        <h2>{getBalance(client)}</h2>
+        <h3>Other pages:</h3>
+        <Link to="/history">Transaction History</Link>
+      </div>
+    )
 
     const notLoggedInView = (
-      <div style={styles.content}>
+      <div>
         <h1>Not logged in yet</h1>
+        <h3>address: {address}</h3>
+        <h3>port: {port}</h3>
+        <h3>passphrase: {passphrase}</h3>
+        <button onClick={this.handleLoginClick}>login</button>
       </div>);
 
     const loggedInView = (
-      <div style={styles.content}>
+      <div>
         <h1>Home Page</h1>
+        <h3>address: {address}</h3>
+        <h3>port: {port}</h3>
+        <h3>passphrase: {passphrase}</h3>
+        <button onClick={this.handleClientConnect}>client connect</button>
       </div>);
 
     var view = {};
-    var balance = {};
-    if (this.state.isLoggedIn) {
-      view = loggedInView;
-      getBalance(this.state.grpcClient);
+    console.log('logged in:', this.props);
+    if (loggedIn) {
+      if (clientOK) {
+        view = clientSet;
+      } else {
+        view = loggedInView;
+      }
     } else {
       view = notLoggedInView;
     }
+
     return (
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div>
-          {view}
-          {balance}
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>
+      view
     );
-  },
-});
+  }
+};
 
 export default Home;

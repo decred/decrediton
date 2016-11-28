@@ -4,8 +4,10 @@ import { hashHistory } from 'react-router';
 import { routerMiddleware, push } from 'react-router-redux';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
+import * as loginActions from '../actions/LoginActions';
 
 const actionCreators = {
+  ...loginActions,
   push,
 };
 
@@ -34,7 +36,7 @@ export default function configureStore(initialState: Object) {
 
   if (module.hot) {
     module.hot.accept('../reducers', () =>
-      store.replaceReducer(require('../reducers')) // eslint-disable-line global-require
+      store.replaceReducer(require('../reducers'))
     );
   }
 
