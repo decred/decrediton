@@ -1,7 +1,6 @@
 import { LOGIN, SET_CLIENT } from '../actions/LoginActions';
 
 const login = (state = {}, action) => {
-    
     switch (action.type) {
         case LOGIN:
             return {
@@ -12,7 +11,6 @@ const login = (state = {}, action) => {
                 loggedIn: true,
             }
         case SET_CLIENT:
-        console.log("herer")
             return {
                 ...state,
                 client: action.client

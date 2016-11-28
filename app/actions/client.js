@@ -30,6 +30,9 @@ export function client(address, port) {
 }
 
 export function getBalance(client, accountNumber, requiredConf) {
+    if (client === undefined) {
+        return
+    }
     var request = {
         account_number: accountNumber,
         required_confirmations: requiredConf

@@ -43,6 +43,7 @@ class Home extends Component{
       <div>
         <h1>Client set!</h1>
         <h2>Balance:</h2>
+        <h2>{getBalance(client)}</h2>
       </div>
     )
 
