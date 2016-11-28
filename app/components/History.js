@@ -2,10 +2,11 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { getBalance } from '../actions/client';
+import { Link } from 'react-router';
 
 class History extends Component{
   static propTypes = {
-    client: PropTypes.object.isRequired
+    client: PropTypes.object
   };
   
   render() {
@@ -16,12 +17,10 @@ class History extends Component{
         <h1>History</h1>
         <h2>Balance:</h2>
         <h2>{getBalance(client)}</h2>
-        <Link to="\">Back Home</Link>
+        <Link to="/">Back Home</Link>
       </div>
     )
-
-    console.log('history page:', this.props);
-
+    
     return (
       clientSet
     );

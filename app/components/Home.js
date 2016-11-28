@@ -37,14 +37,14 @@ class Home extends Component{
     if (client !== undefined) {
       clientOK = true;
     } else {
-      console.log("client", this.props)
+      console.log("client undefined", this.props)
     }
     const clientSet = (
       <div>
         <h1>Client set!</h1>
-        <h2>Balance:</h2>
         <h2>{getBalance(client)}</h2>
-        <Link to="/history">History</Link>
+        <h3>Other pages:</h3>
+        <Link to="/history">Transaction History</Link>
       </div>
     )
 
