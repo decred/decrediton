@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import LoginForm from '../containers/LoginForm';
 import { getBalance } from '../actions/client';
 import { Link } from 'react-router';
+import { Col, Navbar, Nav, NavItem } from 'react-bootstrap';
 
 const grpcClient = {}; 
 
@@ -47,17 +48,31 @@ class Home extends Component{
         <Link to="/history">Transaction History</Link>
       </div>
     )
-
+    const navbarInstance = (
+      <Navbar>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <a href="/">Decrediton</a>
+          </Navbar.Brand>
+        </Navbar.Header>
+        <Nav>
+          <NavItem href="x">Link</NavItem>
+        </Nav>
+      </Navbar>
+    )
     const notLoggedInView = (
       <div>
-        <h1>Not logged in yet</h1>
-        <h3>address: {address}</h3>
-        <h3>port: {port}</h3>
-        <h3>passphrase: {passphrase}</h3>
-        <LoginForm />
+        <Col sm={5} smPush={2}>
+          <h1>Not logged in yet</h1>
+          <h3>address: {address}</h3>
+          <h3>port: {port}</h3>
+          <h3>passphrase: {passphrase}</h3>
+          <LoginForm />
+        </Col>
       </div>);
 
     const loggedInView = (
+      {navbarInstance},
       <div>
         <h1>Home Page</h1>
         <h3>address: {address}</h3>
