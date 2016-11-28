@@ -9,7 +9,11 @@ import configureStore from './store/configureStore';
 import './app.global.css';
 
 var initialState = {
-  home: {loggedIn: false}
+  login: {
+    address: "127.0.0.1",
+    port: "19112", 
+    passphrase: "password",
+    loggedIn: false}
 }
 const store = configureStore(initialState);
 const history = syncHistoryWithStore(hashHistory, store);

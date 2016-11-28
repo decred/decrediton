@@ -2,8 +2,11 @@ import { client } from './client';
 export const LOGIN = 'LOGIN';
 export const SET_CLIENT = 'SET_CLIENT';
 
-export function login() {
+export function login(address, port, passphrase) {
     return {
+        address: address,
+        port: port,
+        passphrase: passphrase,
         type: LOGIN
     };
 }

@@ -1,8 +1,6 @@
 import { LOGIN, SET_CLIENT } from '../actions/LoginActions';
 
-const login = (state = {
-    loggedIn: false,
-    }, action) => {
+const login = (state = {}, action) => {
     switch (action.type) {
         case LOGIN:
             return {

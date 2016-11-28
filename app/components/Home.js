@@ -8,17 +8,27 @@ const grpcClient = {};
 
 class Home extends Component{
   static propTypes = {
-    loggedIn: PropTypes.bool.isRequired
+    login: PropTypes.func.isRequired,
+    getClient: PropTypes.func.isRequired,
+    setClient: PropTypes.func.isRequired,
+    address: PropTypes.string.isRequired,
+    port: PropTypes.string.isRequired,
+    passphrase: PropTypes.string.isRequired,
+    loggedIn: PropTypes.bool.isRequired,
+    client: PropTypes.object
   };
 
   render() {
-    const { loggedIn } = this.props;
+    const { login, getClient, setClient, address, port, passphrase, loggedIn } = this.props;
     var view = {};
     var balance = {};
 
     const notLoggedInView = (
       <div>
         <h1>Not logged in yet</h1>
+        <h3>address: {address}</h3>
+        <h3>port: {port}</h3>
+        <h3>passphrase: {passphrase}</h3>
       </div>);
 
     const loggedInView = (
@@ -28,7 +38,7 @@ class Home extends Component{
 
     var view = {};
     console.log('logged in:', this.props);
-    if ({loggedIn}) {
+    if (loggedIn) {
       view = loggedInView;
     } else {
       view = notLoggedInView;

@@ -6,12 +6,15 @@ import * as LoginActions from '../actions/LoginActions';
 
 function mapStateToProps(state) {
   return {
-    loggedIn: state.home.loggedIn,
+    address: state.login.address,
+    port: state.login.port,
+    passphrase: state.login.passphrase,
+    loggedIn: state.login.loggedIn,
   };
 }
-/*
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(LoginActions, dispatch);
 }
-*/
-export default connect(mapStateToProps)(Home);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
