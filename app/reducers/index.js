@@ -5,7 +5,6 @@ import login from './login'
 import home from './home'
 
 const rootReducer = combineReducers({
-  login,
   home,
   routing
 })

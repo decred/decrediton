@@ -9,11 +9,11 @@ import configureStore from './store/configureStore';
 import './app.global.css';
 
 var initialState = {
-  loggedIn: false
+  home: {loggedIn: false}
 }
 const store = configureStore(initialState);
 const history = syncHistoryWithStore(hashHistory, store);
-
+console.log(store.getState());
 render(
   <Provider store={store}>
     <Router history={history} routes={routes} />
