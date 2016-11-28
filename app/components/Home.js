@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Login from './Login';
 import { getBalance } from '../actions/client';
-
+import { Link } from 'react-router';
 
 const grpcClient = {}; 
 
