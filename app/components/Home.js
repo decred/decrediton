@@ -5,8 +5,6 @@ import LoginForm from '../containers/LoginForm';
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
 import SidebarContent from '../content/SideBarContent';
-import { getBalance } from '../actions/client';
-import { Link } from 'react-router';
 import { Col, Row, Navbar, Nav, NavItem } from 'react-bootstrap';
 
 const styles = {
@@ -28,14 +26,6 @@ class Home extends Component{
     loggedIn: PropTypes.bool.isRequired,
     client: PropTypes.object
   };
-
-  handleLoginClick = () => {
-    const { login, address, port, passphrase } = this.props
-    login(address, port, passphrase)
-    console.log("login!")
-    getClient();
-
-  }
 
   render() {
     const sidebar = <SidebarContent />;
@@ -85,18 +75,14 @@ class Home extends Component{
           </div>
         </MaterialTitlePanel>
       </Sidebar>);
-      
-    /* Check to see that client is not undefined */
-    var clientOK = false;
-    if (client !== undefined) {
-      clientOK = true;
-    } else {
-      console.log("client undefined", this.props)
-      return (getStarted)
-    }
 
-    if (clientOK) {
+    /* Check to see that client is not undefined */
+    if (loggedIn) {
+      if (client === undefined) {
+        return(getStarted);
+      } else {
         return(homeView);
+      }
     } else {
         return(getStarted);
     }

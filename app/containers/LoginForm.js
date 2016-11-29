@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { login } from '../actions/LoginActions'
+import { login, getClient } from '../actions/LoginActions'
 import { Button, Form, FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap'
 
 let LoginForm = ({ dispatch }) => {
@@ -17,6 +17,7 @@ let LoginForm = ({ dispatch }) => {
         address.value = ''
         port.value = ''
         passphrase.value = ''
+        dispatch(getClient())
       }}>
         <FormGroup controlId={address}>
           <Col componentClass={ControlLabel} sm={2}>
