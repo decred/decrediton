@@ -4,10 +4,18 @@ import ReactDOM from 'react-dom';
 import LoginForm from '../containers/LoginForm';
 import { getBalance } from '../actions/client';
 import { Link } from 'react-router';
-import { Col, Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Col, Row, Navbar, Nav, NavItem } from 'react-bootstrap';
 
 const grpcClient = {}; 
 
+const styles = {
+  mainArea: {
+    backgroundColor:"#2971ff"
+  },
+  sideBar: {
+    backgroundColor:"#2ed8a3"
+  }
+}
 class Home extends Component{
   static propTypes = {
     login: PropTypes.func.isRequired,
@@ -62,13 +70,17 @@ class Home extends Component{
     )
     const notLoggedInView = (
       <div>
-        <Col sm={5} smPush={2}>
-          <h1>Not logged in yet</h1>
-          <h3>address: {address}</h3>
-          <h3>port: {port}</h3>
-          <h3>passphrase: {passphrase}</h3>
-          <LoginForm />
-        </Col>
+        <Row>
+          <Col sm={10}>
+            <h3>Welcome to Decrediton</h3>
+            <h5>Please enter the information below to connect to you dcrwallet</h5>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={10}>
+            <LoginForm />
+          </Col>
+        </Row>
       </div>);
 
     const loggedInView = (
@@ -94,7 +106,16 @@ class Home extends Component{
     }
 
     return (
-      view
+      <div>
+        <Row>
+          <Col sm={3} style={styles.sideBar}>
+            <h3>Sidebar</h3>
+          </Col>
+          <Col sm={9} style={styles.mainArea}>
+            {view}
+          </Col>
+        </Row>
+      </div>
     );
   }
 };
