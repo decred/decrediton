@@ -54,7 +54,7 @@ class Home extends Component{
     const { getClient, setClient, address, port, passphrase, loggedIn, client } = this.props;
 
     /*  View that will be seen on fresh starts */
-    const notLoggedInView = (
+    const getStarted = (
       <div>
         <Row>
           <Col sm={10}>
@@ -70,7 +70,7 @@ class Home extends Component{
       </div>);
 
     /* View that will be seen when user has a set Client */
-    const loggedInView = (      
+    const homeView = (      
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
           <div style={styles.mainArea}>
@@ -85,19 +85,20 @@ class Home extends Component{
           </div>
         </MaterialTitlePanel>
       </Sidebar>);
+      
     /* Check to see that client is not undefined */
     var clientOK = false;
     if (client !== undefined) {
       clientOK = true;
     } else {
       console.log("client undefined", this.props)
-      return (notLoggedInView)
+      return (getStarted)
     }
 
     if (clientOK) {
-        return(loggedInView);
+        return(homeView);
     } else {
-        return(notLoggedInView);
+        return(getStarted);
     }
   }
 };
