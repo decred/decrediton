@@ -28,22 +28,34 @@ const styles = {
 const SidebarContent = (props) => {
   const style = props.style ? {...styles.sidebar, ...props.style} : styles.sidebar;
 
-  return (
-    //<MaterialTitlePanel title="Menu" style={style}>
-      <div style={styles.content}>
-        <div style={styles.divider} />
-        <Link to="/history" style={styles.sidebarLink}>Transaction History</Link>
-        <Link to="/send" style={styles.sidebarLink}>Send Decred</Link>
-        <Link to="/receive" style={styles.sidebarLink}>Receive Decred</Link>
-        <div style={styles.divider} />
-        <p>maybe decred balance stats down here?</p>
-      </div>
-    //</MaterialTitlePanel>
-  );
+  const loggedIn = ( 
+    <div style={styles.content}>
+      <div style={styles.divider} />
+      <Link to="/history" style={styles.sidebarLink}>Transaction History</Link>
+      <Link to="/send" style={styles.sidebarLink}>Send Decred</Link>
+      <Link to="/receive" style={styles.sidebarLink}>Receive Decred</Link>
+      <div style={styles.divider} />
+      <p>maybe decred balance stats down here?</p>
+    </div>);
+
+  const notLoggedIn = (
+    <div style={styles.content}>
+      <div style={styles.divider} />
+    </div>);
+  if (props.loggedIn) {
+    return (
+      loggedIn
+    );
+  } else {
+    return (
+      notLoggedIn
+    );
+  }
 };
 
 SidebarContent.propTypes = {
   style: React.PropTypes.object,
+  loggedIn: React.PropTypes.bool,
 };
 
 export default SidebarContent;

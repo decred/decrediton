@@ -26,9 +26,15 @@ class Home extends Component{
     loggedIn: PropTypes.bool.isRequired,
     client: PropTypes.object
   };
-
+  
   render() {
-    const sidebar = <SidebarContent />;
+    const { getClient, setClient, address, port, passphrase, loggedIn, client } = this.props;
+
+    const sideBarProps = {
+      loggedIn: loggedIn,
+    }
+    const sidebar = <SidebarContent {...sideBarProps}/>;
+    
     const contentHeader = (
       <span>
         <span> Decrediton - Home</span>
@@ -40,24 +46,28 @@ class Home extends Component{
       touch: false,
       shadow: false,
       pullRight: false,
+      loggedIn: loggedIn,
     };
-    const { getClient, setClient, address, port, passphrase, loggedIn, client } = this.props;
 
     /*  View that will be seen on fresh starts */
     const getStarted = (
-      <div>
-        <Row>
-          <Col sm={10}>
-            <h3>Welcome to Decrediton</h3>
-            <h5>Please enter the information below to connect to you dcrwallet</h5>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={10}>
-            <LoginForm />
-          </Col>
-        </Row>
-      </div>);
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div>
+            <Row>
+              <Col sm={10}>
+                <h3>Welcome to Decrediton</h3>
+                <h5>Please enter the information below to connect to you dcrwallet</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={10}>
+                <LoginForm />
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
 
     /* View that will be seen when user has a set Client */
     const homeView = (      

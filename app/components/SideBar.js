@@ -384,6 +384,9 @@ Sidebar.propTypes = {
 
   // callback called when the overlay is clicked
   onSetOpen: React.PropTypes.func,
+
+  // loggedIn
+  loggedIn: React.PropTypes.bool.isRequired
 };
 
 Sidebar.defaultProps = {
@@ -397,6 +400,7 @@ Sidebar.defaultProps = {
   dragToggleDistance: 30,
   onSetOpen: () => {},
   styles: {},
+  loggedIn: false,
 };
 
 export default Sidebar;
