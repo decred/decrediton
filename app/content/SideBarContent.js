@@ -1,7 +1,6 @@
 import React from 'react';
 import MaterialTitlePanel from '../components/MaterialTitlePanel';
 import { Link } from 'react-router';
-import LoginForm from '../containers/LoginForm';
 
 const styles = {
   sidebar: {
@@ -30,12 +29,16 @@ const SidebarContent = (props) => {
   const style = props.style ? {...styles.sidebar, ...props.style} : styles.sidebar;
 
   return (
-    <MaterialTitlePanel title="Menu" style={style}>
+    //<MaterialTitlePanel title="Menu" style={style}>
       <div style={styles.content}>
-        <Link to="/history" style={styles.sidebarLink}>Transaction History</Link>
         <div style={styles.divider} />
+        <Link to="/history" style={styles.sidebarLink}>Transaction History</Link>
+        <Link to="/send" style={styles.sidebarLink}>Send Decred</Link>
+        <Link to="/receive" style={styles.sidebarLink}>Receive Decred</Link>
+        <div style={styles.divider} />
+        <p>maybe decred balance stats down here?</p>
       </div>
-    </MaterialTitlePanel>
+    //</MaterialTitlePanel>
   );
 };
 

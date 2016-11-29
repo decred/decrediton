@@ -9,8 +9,6 @@ import { getBalance } from '../actions/client';
 import { Link } from 'react-router';
 import { Col, Row, Navbar, Nav, NavItem } from 'react-bootstrap';
 
-const grpcClient = {}; 
-
 const styles = {
   mainArea: {
     backgroundColor:"#2971ff"
@@ -34,18 +32,9 @@ class Home extends Component{
   handleLoginClick = () => {
     const { login, address, port, passphrase } = this.props
     login(address, port, passphrase)
-  }
+    console.log("login!")
+    getClient();
 
-  handleClientConnect = () => {
-    const { getClient, address, port, passphrase } = this.props
-    getClient()
-  }
-  static getInitialState = () => {
-    return {sidebarOpen: true};
-  }
-
-  onSetSidebarOpen = (open) => {
-    this.setState({sidebarOpen: open});
   }
 
   render() {
@@ -57,41 +46,14 @@ class Home extends Component{
     const sidebarProps = {
       sidebar: sidebar,
       docked: true,
-      sidebarClassName: 'custom-sidebar-class',
       open: true,
-      touch: true,
+      touch: false,
       shadow: false,
       pullRight: false,
     };
     const { getClient, setClient, address, port, passphrase, loggedIn, client } = this.props;
-    var view = {};
-    var balance = {};
-    var clientOK = false;
-    if (client !== undefined) {
-      clientOK = true;
-    } else {
-      console.log("client undefined", this.props)
-    }
-    const clientSet = (
-      <div>
-        <h1>Client set!</h1>
-        <h2>{getBalance(client)}</h2>
-        <h3>Other pages:</h3>
-        <Link to="/history">Transaction History</Link>
-      </div>
-    )
-    const navbarInstance = (
-      <Navbar>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <a href="/">Decrediton</a>
-          </Navbar.Brand>
-        </Navbar.Header>
-        <Nav>
-          <NavItem href="x">Link</NavItem>
-        </Nav>
-      </Navbar>
-    )
+
+    /*  View that will be seen on fresh starts */
     const notLoggedInView = (
       <div>
         <Row>
@@ -107,41 +69,36 @@ class Home extends Component{
         </Row>
       </div>);
 
-    const loggedInView = (
-      {navbarInstance},
-      <div>
-        <h1>Home Page</h1>
-        <h3>address: {address}</h3>
-        <h3>port: {port}</h3>
-        <h3>passphrase: {passphrase}</h3>
-        <button onClick={this.handleClientConnect}>client connect</button>
-      </div>);
-
-    var view = {};
-    console.log('logged in:', this.props);
-    if (loggedIn) {
-      if (clientOK) {
-        view = clientSet;
-      } else {
-        view = loggedInView;
-      }
-    } else {
-      view = notLoggedInView;
-    }
-    var sidebarContent = <b>Sidebar content</b>;
-    return (
+    /* View that will be seen when user has a set Client */
+    const loggedInView = (      
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
           <div style={styles.mainArea}>
             <Row>
               <Col sm={12} >
-                {view}
+                <h1>Home Page</h1>
+                <h3>address: {address}</h3>
+                <h3>port: {port}</h3>
+                <h3>passphrase: {passphrase}</h3>
               </Col>
             </Row>
           </div>
         </MaterialTitlePanel>
-      </Sidebar>
-    );
+      </Sidebar>);
+    /* Check to see that client is not undefined */
+    var clientOK = false;
+    if (client !== undefined) {
+      clientOK = true;
+    } else {
+      console.log("client undefined", this.props)
+      return (notLoggedInView)
+    }
+
+    if (clientOK) {
+        return(loggedInView);
+    } else {
+        return(notLoggedInView);
+    }
   }
 };
 

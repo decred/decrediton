@@ -10,9 +10,9 @@ import './bootstrap.min.css';
 
 var initialState = {
   login: {
-    address: "127.0.0.1",
-    port: "19112", 
-    passphrase: "password",
+    address: "",
+    port: "", 
+    passphrase: "",
     loggedIn: false}
 }
 const store = configureStore(initialState);
