@@ -2,6 +2,9 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import LoginForm from '../containers/LoginForm';
+import Sidebar from './SideBar';
+import MaterialTitlePanel from './MaterialTitlePanel';
+import SidebarContent from '../content/SideBarContent';
 import { getBalance } from '../actions/client';
 import { Link } from 'react-router';
 import { Col, Row, Navbar, Nav, NavItem } from 'react-bootstrap';
@@ -27,7 +30,7 @@ class Home extends Component{
     loggedIn: PropTypes.bool.isRequired,
     client: PropTypes.object
   };
-    
+
   handleLoginClick = () => {
     const { login, address, port, passphrase } = this.props
     login(address, port, passphrase)
@@ -37,8 +40,29 @@ class Home extends Component{
     const { getClient, address, port, passphrase } = this.props
     getClient()
   }
-  
+  static getInitialState = () => {
+    return {sidebarOpen: true};
+  }
+
+  onSetSidebarOpen = (open) => {
+    this.setState({sidebarOpen: open});
+  }
+
   render() {
+    const sidebar = <SidebarContent />;
+    const contentHeader = (
+      <span>
+        <span> Decrediton - Home</span>
+      </span>);
+    const sidebarProps = {
+      sidebar: sidebar,
+      docked: true,
+      sidebarClassName: 'custom-sidebar-class',
+      open: true,
+      touch: true,
+      shadow: false,
+      pullRight: false,
+    };
     const { getClient, setClient, address, port, passphrase, loggedIn, client } = this.props;
     var view = {};
     var balance = {};
@@ -104,18 +128,19 @@ class Home extends Component{
     } else {
       view = notLoggedInView;
     }
-
+    var sidebarContent = <b>Sidebar content</b>;
     return (
-      <div>
-        <Row>
-          <Col sm={3} style={styles.sideBar}>
-            <h3>Sidebar</h3>
-          </Col>
-          <Col sm={9} style={styles.mainArea}>
-            {view}
-          </Col>
-        </Row>
-      </div>
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.mainArea}>
+            <Row>
+              <Col sm={12} >
+                {view}
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>
     );
   }
 };

@@ -22,27 +22,18 @@ const styles = {
   content: {
     padding: '16px',
     height: '100%',
-    backgroundColor: 'blue',
+    backgroundColor: '#2ed8a3',
   },
 };
 
 const SidebarContent = (props) => {
-  const loginProps = {
-    logIn: props.logIn,
-    isLoggedIn: props.isLoggedIn,
-    setGrpcClient: props.setGrpcClient,
-  }
   const style = props.style ? {...styles.sidebar, ...props.style} : styles.sidebar;
 
   return (
     <MaterialTitlePanel title="Menu" style={style}>
       <div style={styles.content}>
-        <Link to="/send" style={styles.sidebarLink}>Send Decred</Link>
-        <Link to="/receive" style={styles.sidebarLink}>Receive Decred</Link>
         <Link to="/history" style={styles.sidebarLink}>Transaction History</Link>
-        <Link to="/stake" style={styles.sidebarLink}>Stake Information Page</Link>
         <div style={styles.divider} />
-        <LoginForm {...loginProps}/>
       </div>
     </MaterialTitlePanel>
   );
@@ -50,10 +41,6 @@ const SidebarContent = (props) => {
 
 SidebarContent.propTypes = {
   style: React.PropTypes.object,
-  isLoggedIn: React.PropTypes.bool,
-  logIn: React.PropTypes.func,
-  setGrpcClient: React.PropTypes.func,
-  grpcClient: React.PropTypes.object,
 };
 
 export default SidebarContent;
