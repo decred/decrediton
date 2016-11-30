@@ -4,64 +4,69 @@ import ReactDOM from 'react-dom';
 import { getBalance } from '../actions/client';
 import { Link } from 'react-router';
 import { Button, Row, Col, Table } from 'react-bootstrap';
+import Sidebar from './SideBar';
+import MaterialTitlePanel from './MaterialTitlePanel';
+import SidebarContent from '../content/SideBarContent';
 
 class Receive extends Component{
   static propTypes = {
-    client: PropTypes.object
+    client: PropTypes.object,
+    loggedIn: PropTypes.bool.isRequired
   };
   
   render() {
-    const { client } = this.props;
+    const { client, loggedIn } = this.props;
+
+    const sideBarProps = {
+      loggedIn: loggedIn,
+      page: "RECEIVE",
+    }
+    const sidebar = <SidebarContent {...sideBarProps}/>;
     
-    const clientSet = (
-      <div>
-        <Row>
-          <Col sm={2}>
-            <Link to="/">Back Home</Link>
-          </Col>
-          <Col sm={3}>
-            <h5>Receive</h5>
-          </Col>
-          <Col sm={7}>
-            <h5>Balance: {getBalance(client)}</h5>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={12}>
-          <Table striped bordered condensed hover>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>TXID</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>20:20:20 November 28th 2016</td>
-                <td>txid</td>
-                <td>200</td>
-              </tr>
-              <tr>
-                <td>20:20:20 November 28th 2016</td>
-                <td>txid</td>
-                <td>200</td>
-              </tr>
-              <tr>
-                <td>20:20:20 November 28th 2016</td>
-                <td>txid</td>
-                <td>200</td>
-              </tr>
-            </tbody>
-          </Table>
-          </Col>
-        </Row>
-      </div>
-    )
-    
-    return (
-      clientSet
-    );
+    const contentHeader = (
+      <span>
+        <span> Decrediton - Receive</span>
+      </span>);
+    const sidebarProps = {
+      sidebar: sidebar,
+      docked: true,
+      open: true,
+      touch: false,
+      shadow: false,
+      pullRight: false,
+      loggedIn: loggedIn,
+      transitions: false,
+      page: "RECEIVE",
+    };
+
+    /* View that will be seen when user has a set Client */
+    const receiveView = (      
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div>
+            <Row>
+              <Col sm={12} >
+                <h1>Receive Page</h1>
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
+
+    /* Check to see that client is not undefined */
+    if (loggedIn) {
+      if (client === undefined) {
+        <p>Error occurred, should have client available</p>
+      } else {
+        return(receiveView);
+      }
+    } else {
+        return(
+          <div>
+            <p>Error occurred, should be logged in</p>
+          </div>
+        );
+    }
   }
 };
 

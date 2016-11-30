@@ -47,6 +47,8 @@ class Home extends Component{
       shadow: false,
       pullRight: false,
       loggedIn: loggedIn,
+      transitions: false,
+      page: "HOME",
     };
 
     /*  View that will be seen on fresh starts */
