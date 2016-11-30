@@ -1,12 +1,20 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Login from './Login';
-import { getBalance } from '../actions/client';
-import { Link } from 'react-router';
+import LoginForm from '../containers/LoginForm';
+import Sidebar from './SideBar';
+import MaterialTitlePanel from './MaterialTitlePanel';
+import SidebarContent from '../content/SideBarContent';
+import { Col, Row, Navbar, Nav, NavItem } from 'react-bootstrap';
 
-const grpcClient = {}; 
-
+const styles = {
+  mainArea: {
+    backgroundColor:"#2971ff"
+  },
+  sideBar: {
+    backgroundColor:"#2ed8a3"
+  }
+}
 class Home extends Component{
   static propTypes = {
     login: PropTypes.func.isRequired,
@@ -18,69 +26,76 @@ class Home extends Component{
     loggedIn: PropTypes.bool.isRequired,
     client: PropTypes.object
   };
-    
-  handleLoginClick = () => {
-    const { login, address, port, passphrase } = this.props
-    login(address, port, passphrase)
-  }
-
-  handleClientConnect = () => {
-    const { getClient, address, port, passphrase } = this.props
-    getClient()
-  }
   
   render() {
     const { getClient, setClient, address, port, passphrase, loggedIn, client } = this.props;
-    var view = {};
-    var balance = {};
-    var clientOK = false;
-    if (client !== undefined) {
-      clientOK = true;
-    } else {
-      console.log("client undefined", this.props)
+
+    const sideBarProps = {
+      loggedIn: loggedIn,
     }
-    const clientSet = (
-      <div>
-        <h1>Client set!</h1>
-        <h2>{getBalance(client)}</h2>
-        <h3>Other pages:</h3>
-        <Link to="/history">Transaction History</Link>
-      </div>
-    )
+    const sidebar = <SidebarContent {...sideBarProps}/>;
+    
+    const contentHeader = (
+      <span>
+        <span> Decrediton - Home</span>
+      </span>);
+    const sidebarProps = {
+      sidebar: sidebar,
+      docked: true,
+      open: true,
+      touch: false,
+      shadow: false,
+      pullRight: false,
+      loggedIn: loggedIn,
+    };
 
-    const notLoggedInView = (
-      <div>
-        <h1>Not logged in yet</h1>
-        <h3>address: {address}</h3>
-        <h3>port: {port}</h3>
-        <h3>passphrase: {passphrase}</h3>
-        <button onClick={this.handleLoginClick}>login</button>
-      </div>);
+    /*  View that will be seen on fresh starts */
+    const getStarted = (
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div>
+            <Row>
+              <Col sm={10}>
+                <h3>Welcome to Decrediton</h3>
+                <h5>Please enter the information below to connect to you dcrwallet</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={10}>
+                <LoginForm />
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
 
-    const loggedInView = (
-      <div>
-        <h1>Home Page</h1>
-        <h3>address: {address}</h3>
-        <h3>port: {port}</h3>
-        <h3>passphrase: {passphrase}</h3>
-        <button onClick={this.handleClientConnect}>client connect</button>
-      </div>);
+    /* View that will be seen when user has a set Client */
+    const homeView = (      
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.mainArea}>
+            <Row>
+              <Col sm={12} >
+                <h1>Home Page</h1>
+                <h3>address: {address}</h3>
+                <h3>port: {port}</h3>
+                <h3>passphrase: {passphrase}</h3>
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
 
-    var view = {};
-    console.log('logged in:', this.props);
+    /* Check to see that client is not undefined */
     if (loggedIn) {
-      if (clientOK) {
-        view = clientSet;
+      if (client === undefined) {
+        return(getStarted);
       } else {
-        view = loggedInView;
+        return(homeView);
       }
     } else {
-      view = notLoggedInView;
+        return(getStarted);
     }
-
-    return (
-      view
-    );
   }
 };
 

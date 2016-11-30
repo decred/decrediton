@@ -6,13 +6,13 @@ import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import routes from './routes';
 import configureStore from './store/configureStore';
-import './app.global.css';
+import './bootstrap.min.css';
 
 var initialState = {
   login: {
-    address: "127.0.0.1",
-    port: "19112", 
-    passphrase: "password",
+    address: "",
+    port: "", 
+    passphrase: "",
     loggedIn: false}
 }
 const store = configureStore(initialState);

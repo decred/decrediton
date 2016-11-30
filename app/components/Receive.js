@@ -5,7 +5,7 @@ import { getBalance } from '../actions/client';
 import { Link } from 'react-router';
 import { Button, Row, Col, Table } from 'react-bootstrap';
 
-class History extends Component{
+class Receive extends Component{
   static propTypes = {
     client: PropTypes.object
   };
@@ -20,7 +20,7 @@ class History extends Component{
             <Link to="/">Back Home</Link>
           </Col>
           <Col sm={3}>
-            <h5>Transaction History</h5>
+            <h5>Receive</h5>
           </Col>
           <Col sm={7}>
             <h5>Balance: {getBalance(client)}</h5>
@@ -65,4 +65,4 @@ class History extends Component{
   }
 };
 
-export default History;
+export default Receive;
