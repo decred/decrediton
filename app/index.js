@@ -8,14 +8,7 @@ import routes from './routes';
 import configureStore from './store/configureStore';
 import './bootstrap.min.css';
 
-var initialState = {
-  login: {
-    address: "",
-    port: "", 
-    passphrase: "",
-    loggedIn: false}
-}
-const store = configureStore(initialState);
+const store = configureStore();
 const history = syncHistoryWithStore(hashHistory, store);
 console.log(store.getState());
 render(

@@ -9,7 +9,8 @@ function mapStateToProps(state) {
     address: state.login.address,
     port: state.login.port,
     passphrase: state.login.passphrase,
-    loggedIn: state.login.loggedIn,
+    loggedIn: state.login.isLoggedIn,
+    loggingIn: state.login.isLoggingIn,
     client: state.login.client,
   };
 }

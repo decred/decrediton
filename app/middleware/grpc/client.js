@@ -24,8 +24,8 @@ export function client(address, port) {
 
     var cert = fs.readFileSync(certPath);
     var creds = grpc.credentials.createInsecure();
-    var client = new walletrpc.WalletService(address + ':' + port, creds);
-
+    var client, err = new walletrpc.WalletService(address + ':' + port, creds);
+    console.log(err);
     return client;
 }
 
