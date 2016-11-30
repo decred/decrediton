@@ -5,6 +5,7 @@ import Receive from '../components/Receive';
 function mapStateToProps(state) {
   return {
     client: state.login.client,
+    loggedIn: state.login.loggedIn,
   };
 }
 
