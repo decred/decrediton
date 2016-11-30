@@ -29,7 +29,7 @@ export function client(address, port) {
     return client;
 }
 
-export function getBalance(client, accountNumber, requiredConf) {
+export function getBalance(client, accountNumber, requiredConf, cb) {
     if (client === undefined) {
         return
     }
@@ -43,6 +43,7 @@ export function getBalance(client, accountNumber, requiredConf) {
             console.error(err);
         } else {
             console.log('balance:', response);
+            cb(cb);
         }
     });
 }

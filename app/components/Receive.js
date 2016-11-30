@@ -1,7 +1,6 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { getBalance } from '../actions/client';
 import { Link } from 'react-router';
 import { Button, Row, Col, Table } from 'react-bootstrap';
 import Sidebar from './SideBar';
@@ -39,6 +38,12 @@ class Receive extends Component{
       page: "RECEIVE",
     };
 
+    var balance = {};
+
+    getBalance(client, 0, 1, function(response) {
+        balance = response;
+    });
+
     /* View that will be seen when user has a set Client */
     const receiveView = (      
       <Sidebar {...sidebarProps}>
@@ -47,6 +52,7 @@ class Receive extends Component{
             <Row>
               <Col sm={12} >
                 <h1>Receive Page</h1>
+                <h3>Current balance: {balance}</h3>
               </Col>
             </Row>
           </div>

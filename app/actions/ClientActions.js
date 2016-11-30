@@ -1,6 +1,4 @@
 import { client, getBalance } from '../middleware/grpc/client';
-export const LOGIN = 'LOGIN';
-export const SET_CLIENT = 'SET_CLIENT';
 
 export const login = (address, port, passphrase) => ({
     address: address,

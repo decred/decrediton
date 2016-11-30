@@ -1,7 +1,6 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { getBalance } from '../actions/client';
 import { Link } from 'react-router';
 import { Button, Row, Col, Table } from 'react-bootstrap';
 import Sidebar from './SideBar';
