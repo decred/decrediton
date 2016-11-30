@@ -32,6 +32,7 @@ class Home extends Component{
 
     const sideBarProps = {
       loggedIn: loggedIn,
+      page: "HOME",
     }
     const sidebar = <SidebarContent {...sideBarProps}/>;
     
@@ -52,18 +53,14 @@ class Home extends Component{
     };
 
     /*  View that will be seen on fresh starts */
-    const getStarted = (
+    const getStarted = (      
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
-          <div>
+          <div style={styles.mainArea}>
             <Row>
-              <Col sm={10}>
+              <Col sm={12} >
                 <h3>Welcome to Decrediton</h3>
                 <h5>Please enter the information below to connect to you dcrwallet</h5>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={10}>
                 <LoginForm />
               </Col>
             </Row>
