@@ -10,7 +10,7 @@ import grpc from 'grpc';
 
 import Buffer from 'buffer';
 
-export function client(address, port) {
+export function client(address, port, cb) {
     var protoDescriptor = grpc.load('./app/api.proto');
     var walletrpc = protoDescriptor.walletrpc;
 
@@ -24,9 +24,18 @@ export function client(address, port) {
 
     var cert = fs.readFileSync(certPath);
     var creds = grpc.credentials.createInsecure();
-    var client, err = new walletrpc.WalletService(address + ':' + port, creds);
-    console.log(err);
-    return client;
+    var client = new walletrpc.WalletService(address + ':' + port, creds);
+
+    var deadline = new Date();
+    var deadlineInSeconds = 2;
+    deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+    grpc.waitForClientReady(client, deadline, function(err) {
+        if (err) {
+            return cb(null, err);
+        } else { 
+            return cb(client);
+        }
+    });
 }
 
 export function getBalance(client, accountNumber, requiredConf, cb) {

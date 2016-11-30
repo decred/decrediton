@@ -18,20 +18,19 @@ const styles = {
 class Home extends Component{
   static propTypes = {
     login: PropTypes.func.isRequired,
-    getClient: PropTypes.func.isRequired,
-    setClient: PropTypes.func.isRequired,
     address: PropTypes.string.isRequired,
     port: PropTypes.string.isRequired,
     passphrase: PropTypes.string.isRequired,
-    loggedIn: PropTypes.bool.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
+    isLoggingIn: PropTypes.bool.isRequired,
     client: PropTypes.object
   };
   
   render() {
-    const { getClient, setClient, address, port, passphrase, loggedIn, client } = this.props;
+    const { address, port, passphrase, isLoggedIn, isLoggingIn, client } = this.props;
 
     const sideBarProps = {
-      loggedIn: loggedIn,
+      loggedIn: isLoggedIn,
       page: "HOME",
     }
     const sidebar = <SidebarContent {...sideBarProps}/>;
@@ -47,7 +46,7 @@ class Home extends Component{
       touch: false,
       shadow: false,
       pullRight: false,
-      loggedIn: loggedIn,
+      loggedIn: isLoggedIn,
       transitions: false,
       page: "HOME",
     };
@@ -86,7 +85,7 @@ class Home extends Component{
       </Sidebar>);
 
     /* Check to see that client is not undefined */
-    if (loggedIn) {
+    if (isLoggedIn) {
       if (client === undefined) {
         return(getStarted);
       } else {
