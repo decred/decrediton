@@ -11,25 +11,24 @@ function loginError(error) {
 function loginSuccess(client) {
   return dispatch => {
     dispatch({ client, type: LOGGED_SUCCESSFULLY });
-    //router.transitionTo('/');
   };
 }
 
-function loginRequest(address, port, passphrase) {
-  const login = {address: address, port: port, passphrase: passphrase};
-  return { login, type: LOGIN_ATTEMPT };
+export function loginRequest(address, port, passphrase) {
+  console.log(address, port, passphrase);
+  return { address: address, port: port, passphrase: passphrase, type: LOGIN_ATTEMPT };
 }
 
-export function login(address, port, passphrase) {
-  return dispatch =>
+export function login() {
+  return (dispatch, getState) => {
+    const { address, port } = getState().login;
     client(address, port, function(client, err) {
       if (err) {
-        console.log("in login action!", err);
-        const error = new Error(err);
-        dispatch(loginError(error));
-        throw err
+        dispatch(loginError(err + " Please try again"));
+        //throw err
       } else {
         dispatch(loginSuccess(client));
       }
     })
+  }
 }

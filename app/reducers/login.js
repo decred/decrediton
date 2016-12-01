@@ -6,7 +6,7 @@ export default function login(state = {}, action) {
       return {...state,
         isLoggingIn: true,
         isLoggedIn: false,
-        address: action.adress,
+        address: action.address,
         port: action.port,
         password: action.password,
       };
@@ -14,11 +14,14 @@ export default function login(state = {}, action) {
       return {...state,
         error: action.error,
         isLoggingIn: false,
-        isLoggedIn: false
+        isLoggedIn: false,
+        address: '',
+        port: '',
+        passphrase: ''
       };
     case LOGGED_SUCCESSFULLY:
       return {...state,
-        error: null,
+        error: "",
         client: action.client,
         isLoggingIn: false,
         isLoggedIn: true

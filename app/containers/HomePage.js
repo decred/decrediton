@@ -12,6 +12,7 @@ function mapStateToProps(state) {
     isLoggedIn: state.login.isLoggedIn,
     isLoggingIn: state.login.isLoggingIn,
     client: state.login.client,
+    error: state.login.error,
   };
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { login } from '../actions/LoginActions'
+import { login, loginRequest } from '../actions/LoginActions'
 import { Button, Form, FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap'
 
 let LoginForm = ({ dispatch }) => {
@@ -13,7 +13,8 @@ let LoginForm = ({ dispatch }) => {
         if (!address.value.trim() || !port.value.trim() || !passphrase.value.trim()) {
           return
         }
-        dispatch(login(address.value, port.value, passphrase.value))
+        dispatch(loginRequest(address.value, port.value, passphrase.value))
+        dispatch(login())
         address.value = ''
         port.value = ''
         passphrase.value = ''

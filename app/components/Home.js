@@ -13,6 +13,9 @@ const styles = {
   },
   sideBar: {
     backgroundColor:"#2ed8a3"
+  },
+  error: {
+    color:"red"
   }
 }
 class Home extends Component{
@@ -23,11 +26,12 @@ class Home extends Component{
     passphrase: PropTypes.string.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
     isLoggingIn: PropTypes.bool.isRequired,
-    client: PropTypes.object
+    client: PropTypes.object,
+    error: PropTypes.string
   };
   
   render() {
-    const { address, port, passphrase, isLoggedIn, isLoggingIn, client } = this.props;
+    const { address, port, passphrase, isLoggedIn, isLoggingIn, client, error } = this.props;
 
     const sideBarProps = {
       loggedIn: isLoggedIn,
@@ -57,10 +61,43 @@ class Home extends Component{
         <MaterialTitlePanel title={contentHeader}>
           <div style={styles.mainArea}>
             <Row>
+              <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
+                <Row>
+                  <p style={styles.error}>{error}</p>
+                </Row>
+                <Row>
+                  <h3>Welcome to Decrediton</h3>
+                  <h5>Please enter the information below to connect to you dcrwallet</h5>
+                  <LoginForm />
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
+
+    /*  View that will be when logging in is occuring */
+    const getStartedLoggingIn = (      
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.mainArea}>
+            <Row>
               <Col sm={12} >
-                <h3>Welcome to Decrediton</h3>
-                <h5>Please enter the information below to connect to you dcrwallet</h5>
-                <LoginForm />
+                Logging in!
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
+
+    /* View that will be shown when an error on logging in occured */
+    const getStartedError = (
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.mainArea}>
+            <Row>
+              <Col sm={12} >
+                Logging in!
               </Col>
             </Row>
           </div>
@@ -85,6 +122,9 @@ class Home extends Component{
       </Sidebar>);
 
     /* Check to see that client is not undefined */
+    if (isLoggingIn) {
+      return (getStartedLoggingIn);
+    }
     if (isLoggedIn) {
       if (client === undefined) {
         return(getStarted);

@@ -14,7 +14,9 @@ var initialState = {
     port: "", 
     passphrase: "",
     isLoggedIn: false,
-    isLoggingIn: false}
+    isLoggingIn: false,
+    error: "",
+  }
 };
 
 const store = configureStore(initialState);
