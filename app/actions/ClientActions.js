@@ -27,7 +27,6 @@ export function grpcBalance() {
         function(balance, err) {
       if (err) {
         dispatch(getBalanceError(err + " Please try again"));
-        //throw err
       } else {
         dispatch(getBalanceSuccess(balance));
       }

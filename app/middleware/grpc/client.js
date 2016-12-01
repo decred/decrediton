@@ -40,7 +40,7 @@ export function client(address, port, cb) {
 
 export function getBalance(client, accountNumber, requiredConf, cb) {
     if (client === undefined) {
-        return
+        return cb(null, new Error("Client not available to getBalance"));
     }
     var request = {
         account_number: accountNumber,
@@ -49,10 +49,11 @@ export function getBalance(client, accountNumber, requiredConf, cb) {
 
     client.balance(request, function(err, response) {
         if (err) {
-            console.error(err);
+            console.error(null, err);
+            return cb(null, err);
         } else {
             console.log('balance:', response);
-            cb(cb);
+            return cb(response);
         }
     });
 }

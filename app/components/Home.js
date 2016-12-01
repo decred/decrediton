@@ -45,7 +45,7 @@ class Home extends Component{
 
   render() {
     const { address, port, passphrase, isLoggedIn, isLoggingIn, client, error } = this.props;
-    const { isGettingBalance, getBalanceRequest, grpcBalance  } = this.props;
+    const { isGettingBalance, getBalanceRequest, grpcBalance, balance  } = this.props;
     const sideBarProps = {
       loggedIn: isLoggedIn,
       page: "HOME",
@@ -126,15 +126,14 @@ class Home extends Component{
             <Row>
               <Col sm={12} >
                 <h1>Home Page</h1>
-                <h3>address: {address}</h3>
-                <h3>port: {port}</h3>
-                <h3>passphrase: {passphrase}</h3>
+                <h3>Current balance: {balance === null ? 'Please refresh' : balance.total }</h3>
                 <Button 
                   bsStyle="primary"
                   disabled={isGettingBalance}
                   onClick={!isGettingBalance ? () => this.handleBalanceClick() : null}>
                   {isGettingBalance ? 'Getting Balance...' : 'Get Balance'}
                 </Button>
+
               </Col>
             </Row>
           </div>

@@ -23,6 +23,7 @@ var initialState = {
     isGettingBalance: false,
     isGotBalance: false,
     error: "",
+    balance: null,
   }
 };
 
