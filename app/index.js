@@ -16,6 +16,13 @@ var initialState = {
     isLoggedIn: false,
     isLoggingIn: false,
     error: "",
+  },
+  grpc: {
+    balanceAccountNumber: 0,
+    balanceRequiredConfs: 0,
+    isGettingBalance: false,
+    isGotBalance: false,
+    error: "",
   }
 };
 

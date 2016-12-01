@@ -9,13 +9,10 @@ function loginError(error) {
 }
 
 function loginSuccess(client) {
-  return dispatch => {
-    dispatch({ client, type: LOGGED_SUCCESSFULLY });
-  };
+  return { client, type: LOGGED_SUCCESSFULLY };
 }
 
 export function loginRequest(address, port, passphrase) {
-  console.log(address, port, passphrase);
   return { address: address, port: port, passphrase: passphrase, type: LOGIN_ATTEMPT };
 }
 

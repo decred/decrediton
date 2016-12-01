@@ -1,24 +1,35 @@
-import { client, getBalance } from '../middleware/grpc/client';
+import { getBalance, getStakeInfo } from '../middleware/grpc/client';
 
-export const login = (address, port, passphrase) => ({
-    address: address,
-    port: port,
-    passphrase: passphrase,
-    type: LOGIN
-})
+export const GETBALANCE_ATTEMPT = 'GETBALANCE_ATTEMPT';
+export const GETBALANCE_FAILED = 'GETBALANCE_FAILED';
+export const GETBALANCE_SUCCESS = 'GETBALANCE_SUCCESS';
 
-export function setClient(grpcClient) {
-    console.log("trying to set client!")
-    return {
-        client: grpcClient,
-        type: SET_CLIENT
-    };
+function getBalanceError(error) {
+  return { error, type: GETBALANCE_FAILED };
 }
 
-export function getClient() {
-    return (dispatch: Function, getState: Function) => {
-        const { address, port } = getState().login;
-        var grpcClient = client(address, port);
-        dispatch(setClient(grpcClient));
-    };
+function getBalanceSuccess(balance) {
+  return { balance, type: GETBALANCE_SUCCESS };
+}
+
+export function getBalanceRequest(accountNumber, requiredConfs) {
+  return { 
+      accountNumber: accountNumber,
+      requireConfs: requiredConfs,
+      type: GETBALANCE_ATTEMPT };
+}
+
+export function login() {
+  return (dispatch, getState) => {
+    const { balanceAccountNumber, balanceRequiredConfs } = getState().grpcClient;
+    getBalance(balanceAccountNumber, balanceRequiredConfs, 
+        function(balance, err) {
+      if (err) {
+        dispatch(getBalanceError(err + " Please try again"));
+        //throw err
+      } else {
+        dispatch(getBalanceSuccess(balance));
+      }
+    })
+  }
 }
