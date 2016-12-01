@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Home from '../components/Home';
 import * as LoginActions from '../actions/LoginActions';
+import * as ClientActions from '../actions/ClientActions';
 
 function mapStateToProps(state) {
   return {
@@ -13,11 +14,12 @@ function mapStateToProps(state) {
     isLoggingIn: state.login.isLoggingIn,
     client: state.login.client,
     error: state.login.error,
+    isGettingBalance: state.grpc.isGettingBalance,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(LoginActions, dispatch);
+  return bindActionCreators(Object.assign({}, LoginActions, ClientActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

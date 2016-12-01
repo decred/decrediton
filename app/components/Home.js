@@ -5,7 +5,7 @@ import LoginForm from '../containers/LoginForm';
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
 import SidebarContent from '../content/SideBarContent';
-import { Col, Row, Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Button, Col, Row, Navbar, Nav, NavItem } from 'react-bootstrap';
 
 const styles = {
   mainArea: {
@@ -26,13 +26,16 @@ class Home extends Component{
     passphrase: PropTypes.string.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
     isLoggingIn: PropTypes.bool.isRequired,
+    isGettingBalance: PropTypes.bool.isRequired,
     client: PropTypes.object,
-    error: PropTypes.string
-  };
-  
+    error: PropTypes.string,
+    getBalanceRequest: PropTypes.func.isRequired,
+    grpcBalance: PropTypes.func.isRequired,
+  }
+
   render() {
     const { address, port, passphrase, isLoggedIn, isLoggingIn, client, error } = this.props;
-
+    const { isGettingBalance, getBalanceRequest, grpcBalance  } = this.props;
     const sideBarProps = {
       loggedIn: isLoggedIn,
       page: "HOME",
@@ -54,6 +57,7 @@ class Home extends Component{
       transitions: false,
       page: "HOME",
     };
+
 
     /*  View that will be seen on fresh starts */
     const getStarted = (      
@@ -115,6 +119,12 @@ class Home extends Component{
                 <h3>address: {address}</h3>
                 <h3>port: {port}</h3>
                 <h3>passphrase: {passphrase}</h3>
+                <Button 
+                  bsStyle="primary"
+                  disabled={isGettingBalance}
+                  onClick={!isGettingBalance ? getBalanceRequest(0,1) : null}>
+                  {isGettingBalance ? 'Getting Balance...' : 'Get Balance'}
+                </Button>
               </Col>
             </Row>
           </div>

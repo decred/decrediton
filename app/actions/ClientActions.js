@@ -19,7 +19,7 @@ export function getBalanceRequest(accountNumber, requiredConfs) {
       type: GETBALANCE_ATTEMPT };
 }
 
-export function login() {
+export function grpcBalance() {
   return (dispatch, getState) => {
     const { balanceAccountNumber, balanceRequiredConfs } = getState().grpcClient;
     getBalance(balanceAccountNumber, balanceRequiredConfs, 
