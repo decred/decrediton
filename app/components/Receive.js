@@ -10,14 +10,14 @@ import SidebarContent from '../content/SideBarContent';
 class Receive extends Component{
   static propTypes = {
     client: PropTypes.object,
-    loggedIn: PropTypes.bool.isRequired
+    isLoggedIn: PropTypes.bool.isRequired
   };
   
   render() {
-    const { client, loggedIn } = this.props;
+    const { client, isLoggedIn } = this.props;
 
     const sideBarProps = {
-      loggedIn: loggedIn,
+      loggedIn: isLoggedIn,
       page: "RECEIVE",
     }
     const sidebar = <SidebarContent {...sideBarProps}/>;
@@ -33,16 +33,10 @@ class Receive extends Component{
       touch: false,
       shadow: false,
       pullRight: false,
-      loggedIn: loggedIn,
+      loggedIn: isLoggedIn,
       transitions: false,
       page: "RECEIVE",
     };
-
-    var balance = {};
-
-    getBalance(client, 0, 1, function(response) {
-        balance = response;
-    });
 
     /* View that will be seen when user has a set Client */
     const receiveView = (      
@@ -52,7 +46,6 @@ class Receive extends Component{
             <Row>
               <Col sm={12} >
                 <h1>Receive Page</h1>
-                <h3>Current balance: {balance}</h3>
               </Col>
             </Row>
           </div>
@@ -60,18 +53,18 @@ class Receive extends Component{
       </Sidebar>);
 
     /* Check to see that client is not undefined */
-    if (loggedIn) {
+    if (isLoggedIn) {
       if (client === undefined) {
         <p>Error occurred, should have client available</p>
       } else {
         return(receiveView);
       }
     } else {
-        return(
-          <div>
-            <p>Error occurred, should be logged in</p>
-          </div>
-        );
+      return(
+        <div>
+          <p>Error occurred, should be logged in</p>
+        </div>
+      );
     }
   }
 };

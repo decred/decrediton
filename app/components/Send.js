@@ -10,14 +10,14 @@ import SidebarContent from '../content/SideBarContent';
 class Send extends Component{
   static propTypes = {
     client: PropTypes.object,
-    loggedIn: PropTypes.bool.isRequired
+    isLoggedIn: PropTypes.bool.isRequired
   };
   
   render() {
-    const { client, loggedIn } = this.props;
+    const { client, isLoggedIn } = this.props;
 
     const sideBarProps = {
-      loggedIn: loggedIn,
+      loggedIn: isLoggedIn,
       page: "SEND",
     }
     const sidebar = <SidebarContent {...sideBarProps}/>;
@@ -33,7 +33,7 @@ class Send extends Component{
       touch: false,
       shadow: false,
       pullRight: false,
-      loggedIn: loggedIn,
+      loggedIn: isLoggedIn,
       transitions: false,
       page: "SEND",
     };
@@ -53,18 +53,18 @@ class Send extends Component{
       </Sidebar>);
 
     /* Check to see that client is not undefined */
-    if (loggedIn) {
+    if (isLoggedIn) {
       if (client === undefined) {
         <p>Error occurred, should have client available</p>
       } else {
         return(sendView);
       }
     } else {
-        return(
-          <div>
-            <p>Error occurred, should be logged in</p>
-          </div>
-        );
+      return(
+        <div>
+          <p>Error occurred, should be logged in</p>
+        </div>
+      );
     }
   }
 };

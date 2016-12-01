@@ -10,14 +10,14 @@ import SidebarContent from '../content/SideBarContent';
 class History extends Component{
   static propTypes = {
     client: PropTypes.object.isRequired,
-    loggedIn: PropTypes.bool.isRequired
+    isLoggedIn: PropTypes.bool.isRequired
   };
   
   render() {
-    const { client, loggedIn } = this.props;
+    const { client, isLoggedIn } = this.props;
 
     const sideBarProps = {
-      loggedIn: loggedIn,
+      loggedIn: isLoggedIn,
       page: "HISTORY",
     }
     const sidebar = <SidebarContent {...sideBarProps}/>;
@@ -33,7 +33,7 @@ class History extends Component{
       touch: false,
       shadow: false,
       pullRight: false,
-      loggedIn: loggedIn,
+      loggedIn: isLoggedIn,
       transitions: false,
       page: "HISTORY",
     };
@@ -79,18 +79,18 @@ class History extends Component{
       </Sidebar>);
 
     /* Check to see that client is not undefined */
-    if (loggedIn) {
+    if (isLoggedIn) {
       if (client === undefined) {
         <p>Error occurred, should have client available</p>
       } else {
         return(historyView);
       }
     } else {
-        return(
-          <div>
-            <p>Error occurred, should be logged in</p>
-          </div>
-        );
+      return(
+        <div>
+          <p>Error occurred, should be logged in</p>
+        </div>
+      );
     }
   }
 };
