@@ -1,4 +1,4 @@
-import { GETBALANCE_ATTEMPT, GETBALANCE_FAILED, GETBALANCE_SUCCESSFUL } from '../actions/ClientActions';
+import { GETBALANCE_ATTEMPT, GETBALANCE_FAILED, GETBALANCE_SUCCESS } from '../actions/ClientActions';
 
 export default function grpc(state = {}, action) {
   switch (action.type) {
@@ -17,7 +17,7 @@ export default function grpc(state = {}, action) {
         balanceAccountNumber: '',
         balanceRequiredConfs: '',
       };
-    case GETBALANCE_SUCCESSFUL:
+    case GETBALANCE_SUCCESS:
       return {...state,
         error: '',
         balance: action.balance,

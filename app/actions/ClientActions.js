@@ -21,8 +21,9 @@ export function getBalanceRequest(accountNumber, requiredConfs) {
 
 export function grpcBalance() {
   return (dispatch, getState) => {
-    const { balanceAccountNumber, balanceRequiredConfs } = getState().grpcClient;
-    getBalance(balanceAccountNumber, balanceRequiredConfs, 
+    const { client } = getState().login;
+    const { balanceAccountNumber, balanceRequiredConfs } = getState().grpc;
+    getBalance(client, balanceAccountNumber, balanceRequiredConfs, 
         function(balance, err) {
       if (err) {
         dispatch(getBalanceError(err + " Please try again"));

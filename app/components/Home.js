@@ -19,6 +19,11 @@ const styles = {
   }
 }
 class Home extends Component{
+  constructor(props) {
+    super(props);
+    //this.handleClick = this.handleClick.bind(this);
+  }
+
   static propTypes = {
     login: PropTypes.func.isRequired,
     address: PropTypes.string.isRequired,
@@ -31,6 +36,11 @@ class Home extends Component{
     error: PropTypes.string,
     getBalanceRequest: PropTypes.func.isRequired,
     grpcBalance: PropTypes.func.isRequired,
+  }
+
+  handleBalanceClick = () => {
+    this.props.getBalanceRequest(0,1);
+    this.props.grpcBalance();
   }
 
   render() {
@@ -122,7 +132,7 @@ class Home extends Component{
                 <Button 
                   bsStyle="primary"
                   disabled={isGettingBalance}
-                  onClick={!isGettingBalance ? getBalanceRequest(0,1) : null}>
+                  onClick={!isGettingBalance ? () => this.handleBalanceClick() : null}>
                   {isGettingBalance ? 'Getting Balance...' : 'Get Balance'}
                 </Button>
               </Col>
@@ -145,6 +155,8 @@ class Home extends Component{
         return(getStarted);
     }
   }
+
+
 };
 
 export default Home;

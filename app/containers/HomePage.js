@@ -15,6 +15,7 @@ function mapStateToProps(state) {
     client: state.login.client,
     error: state.login.error,
     isGettingBalance: state.grpc.isGettingBalance,
+    balance: state.grpc.balance,
   };
 }
 
