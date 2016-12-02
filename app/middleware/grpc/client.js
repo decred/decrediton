@@ -387,36 +387,13 @@ ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
     });
 }
 
-export function createWallet(client, pubPass, privPass, seed, cb) {
-    console.log(pubPass, privPass, seed);
+export function createWallet(loader, pubPass, privPass, seed, cb) {
     var request = {
         public_passphrase: Buffer.from(pubPass),
         private_passphrase: Buffer.from(privPass),
         seed: Buffer.from(seed),
     };
-    console.log(request);
-    var protoDescriptor = grpc.load('./app/api.proto');
-    var walletrpc = protoDescriptor.walletrpc;
-
-    var certPath = path.join(process.env.HOME, '.dcrwallet', 'rpc.cert');
-    if (os.platform == 'win32') {
-        certPath = path.join(process.env.LOCALAPPDATA, 'Dcrwallet', 'rpc.cert');
-    } else if (os.platform == 'darwin') {
-        certPath = path.join(process.env.HOME, 'Library', 'Application Support',
-            'Dcrwallet', 'rpc.cert');
-    }
-    /*
-    reform certify stagnate dictator dashboard telephone 
-    deckhand vagabond breadline decadence frighten Wichita 
-    playhouse microscope puppy aftermath eightball pharmacy 
-    commence bottomless southward decadence absurd Orlando 
-    pheasant revival rocker chambermaid hockey replica 
-    Geiger aggregate topmost 
-    */
-    //a329d04847de49f2284168fb938d9b0257af3d19c64101a091cbaf2a73c36a03
-    var cert = fs.readFileSync(certPath);
-    var creds = grpc.credentials.createInsecure();
-    var loader = new walletrpc.WalletLoaderService("127.0.0.1:19113", creds);
+   
     loader.createWallet(request, function(err, response) {
         if (err) {
             console.error(err);

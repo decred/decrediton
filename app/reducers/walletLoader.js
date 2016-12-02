@@ -20,7 +20,7 @@ export default function walletLoader(state = {}, action) {
     case LOADER_SUCCESS:
       return {...state,
         error: "",
-        client: action.client,
+        loader: action.loader,
         isGettingLoader: false,
 
       };
