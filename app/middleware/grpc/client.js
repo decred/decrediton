@@ -418,6 +418,21 @@ export function createWallet(loader, pubPass, privPass, seed, cb) {
     });
 }
 
+export function openWallet(loader, publicPass, cb) {
+    var request = {
+        public_passphrase: Buffer.from(publicPass),
+    };
+   
+    loader.openWallet(request, function(err, response) {
+        if (err) {
+            console.error(err);
+            return cb(err);
+        } else {
+            return cb(response);
+        }
+    });
+}
+
 export function transactionNtfs(client) {
     // Register Notification Streams from Wallet
     var request = {};

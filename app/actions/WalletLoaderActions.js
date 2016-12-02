@@ -96,3 +96,33 @@ export function createNewWallet() {
     })
   }
 }
+
+export const OPENWALLET_ATTEMPT = 'OPENWALLET_ATTEMPT';
+export const OPENWALLET_FAILED = 'OPENWALLET_FAILED';
+export const OPENWALLET_SUCCESS = 'OPENWALLET_SUCCESS';
+
+function openWalletError(error) {
+  return { error, type: OPENWALLET_FAILED };
+}
+
+function openWalletSuccess() {
+  return {type: OPENWALLET_SUCCESS };
+}
+
+export function openWalletRequest() {
+  return { type: OPENWALLET_ATTEMPT };
+}
+
+export function openWalletAction() {
+  return (dispatch, getState) => {
+    const { loader } = getState().walletLoader;
+    openWallet(loader,
+        function(exists, err) {
+      if (err) {
+        dispatch(openWalletError(err + " Please try again"));
+      } else {
+        dispatch(openWalletSuccess());
+      }
+    })
+  }
+}

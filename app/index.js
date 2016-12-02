@@ -38,6 +38,8 @@ var initialState = {
     isWalletExistRequest: false,
     isWalletExistComplete: false,
     exists: false,
+    isOpenWalletRequest: false,
+    isOpenWalletComplete: false,
   }
 };
 

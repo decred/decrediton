@@ -1,6 +1,7 @@
 import { CREATEWALLET_ATTEMPT, CREATEWALLET_FAILED, CREATEWALLET_SUCCESS } from '../actions/WalletLoaderActions';
 import { LOADER_ATTEMPT, LOADER_FAILED, LOADER_SUCCESS } from '../actions/WalletLoaderActions';
 import { WALLETEXIST_ATTEMPT, WALLETEXIST_FAILED, WALLETEXIST_SUCCESS } from '../actions/WalletLoaderActions';
+import { OPENWALLET_ATTEMPT, OPENWALLET_FAILED, OPENWALLET_SUCCESS } from '../actions/WalletLoaderActions';
 
 export default function walletLoader(state = {}, action) {
   switch (action.type) {
@@ -67,6 +68,23 @@ export default function walletLoader(state = {}, action) {
         isCreatingWallet: false,
         isCreatedWallet: true,
       };  
+    case OPENWALLET_ATTEMPT:
+      return {...state,
+        isOpenWalletRequest: true,
+        isOpenWalletComplete: false,
+      };
+    case WALLETEXIST_FAILED:
+      return {...state,
+        error: action.error,
+        isOpenWalletRequest: false,
+        isOpenWalletComplete: false,
+      };
+    case WALLETEXIST_SUCCESS:
+      return {...state,
+        error: '',
+        isOpenWalletRequest: false,
+        isOpenWalletComplete: true,
+      };   
     default:
       return state;
   }
