@@ -169,6 +169,7 @@ class Home extends Component{
         if (isCreatedWallet) {
           return(homeView);
         } else {
+          console.log(isCreatedWallet);
           return (homeViewCreateWallet);
         }
       }

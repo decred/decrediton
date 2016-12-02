@@ -8,7 +8,7 @@ function createWalletError(error) {
   return { error, type: CREATEWALLET_FAILED };
 }
 
-function getBalanceSuccess() {
+function createWalletSuccess() {
   return { type: CREATEWALLET_SUCCESS };
 }
 
