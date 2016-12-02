@@ -358,6 +358,39 @@ ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
     });
 }
 
+export function createWallet(client, pubPass, privPass, seed, cb) {
+    // PurchaseTickets
+    var request = {
+        public_passphrase: Buffer.from(pubPass),
+        private_passphrase: Buffer.from(privPass),
+        seed: Buffer.from(seed),
+    };
+    console.log(request);
+    var protoDescriptor = grpc.load('./app/api.proto');
+    var walletrpc = protoDescriptor.walletrpc;
+
+    var certPath = path.join(process.env.HOME, '.dcrwallet', 'rpc.cert');
+    if (os.platform == 'win32') {
+        certPath = path.join(process.env.LOCALAPPDATA, 'Dcrwallet', 'rpc.cert');
+    } else if (os.platform == 'darwin') {
+        certPath = path.join(process.env.HOME, 'Library', 'Application Support',
+            'Dcrwallet', 'rpc.cert');
+    }
+
+    var cert = fs.readFileSync(certPath);
+    var creds = grpc.credentials.createInsecure();
+    var loader = new walletrpc.WalletLoaderService("127.0.0.1:19113", creds);
+    loader.createWallet(request, function(err, response) {
+        if (err) {
+            console.error(err);
+            return cb(err);
+        } else {
+            console.log('created wallet');
+            return cb();
+        }
+    });
+}
+
 export function transactionNtfs(client) {
     // Register Notification Streams from Wallet
     var request = {};

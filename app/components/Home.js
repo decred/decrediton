@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import LoginForm from '../containers/LoginForm';
+import CreateWalletForm from '../containers/CreateWalletForm';
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
 import SidebarContent from '../content/SideBarContent';
@@ -36,6 +37,8 @@ class Home extends Component{
     error: PropTypes.string,
     getBalanceRequest: PropTypes.func.isRequired,
     grpcBalance: PropTypes.func.isRequired,
+    isCreatingWallet: PropTypes.bool.isRequired,
+    isCreatedWallet: PropTypes.bool.isRequired,
   }
 
   handleBalanceClick = () => {
@@ -44,7 +47,7 @@ class Home extends Component{
   }
 
   render() {
-    const { address, port, passphrase, isLoggedIn, isLoggingIn, client, error } = this.props;
+    const { address, port, passphrase, isLoggedIn, isLoggingIn, client, error, isCreatingWallet, isCreatedWallet } = this.props;
     const { isGettingBalance, getBalanceRequest, grpcBalance, balance  } = this.props;
     const sideBarProps = {
       loggedIn: isLoggedIn,
@@ -140,6 +143,21 @@ class Home extends Component{
         </MaterialTitlePanel>
       </Sidebar>);
 
+    /* View that will be seen when user has a set Client */
+    const homeViewCreateWallet = (      
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.mainArea}>
+            <Row>
+              <Col sm={12} >
+                <h1>Home Page</h1>
+                <h3>Try and createWallet</h3>
+                <CreateWalletForm />
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
     /* Check to see that client is not undefined */
     if (isLoggingIn) {
       return (getStartedLoggingIn);
@@ -148,7 +166,11 @@ class Home extends Component{
       if (client === undefined) {
         return(getStarted);
       } else {
-        return(homeView);
+        if (isCreatedWallet) {
+          return(homeView);
+        } else {
+          return (homeViewCreateWallet);
+        }
       }
     } else {
         return(getStarted);

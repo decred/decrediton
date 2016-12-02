@@ -16,6 +16,8 @@ function mapStateToProps(state) {
     error: state.login.error,
     isGettingBalance: state.grpc.isGettingBalance,
     balance: state.grpc.balance,
+    isCreatingWallet: state.grpc.isCreatingWallet,
+    isCreatedWallet: state.grpc.isCreatedWallet,
   };
 }
 

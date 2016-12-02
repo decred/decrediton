@@ -24,6 +24,11 @@ var initialState = {
     isGotBalance: false,
     error: "",
     balance: null,
+    isCreatingWallet: false,
+    isCreatedWallet: false,
+    privPass: "",
+    pubPass: "",
+    seed: "",
   }
 };
 

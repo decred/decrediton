@@ -1,4 +1,5 @@
 import { GETBALANCE_ATTEMPT, GETBALANCE_FAILED, GETBALANCE_SUCCESS } from '../actions/ClientActions';
+import { CREATEWALLET_ATTEMPT, CREATEWALLET_FAILED, CREATEWALLET_SUCCESS } from '../actions/ClientActions';
 
 export default function grpc(state = {}, action) {
   switch (action.type) {
@@ -24,6 +25,29 @@ export default function grpc(state = {}, action) {
         isGettingBalance: false,
         isGotBalance: true,
       };
+    case CREATEWALLET_ATTEMPT:
+      return {...state,
+        isCreatingWallet: true,
+        isCreatedWallet: false,
+        privPass: action.privPass,
+        pubPass: action.pubPass,
+        seed: action.seed,
+      };
+    case CREATEWALLET_FAILED:
+      return {...state,
+        error: action.error,
+        isCreatingWallet: false,
+        isCreatedWallet: false,
+        privPass: '',
+        pubPass: '',
+        seed: '',
+      };
+    case CREATEWALLET_SUCCESS:
+      return {...state,
+        error: '',
+        isCreatingWallet: false,
+        isCreatedWallet: true,
+      };  
     default:
       return state;
   }
