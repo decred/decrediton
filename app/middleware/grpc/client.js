@@ -39,6 +39,34 @@ export function client(address, port, cb) {
     });
 }
 
+export function loader(address, port, cb) {
+    var protoDescriptor = grpc.load('./app/api.proto');
+    var walletrpc = protoDescriptor.walletrpc;
+
+    var certPath = path.join(process.env.HOME, '.dcrwallet', 'rpc.cert');
+    if (os.platform == 'win32') {
+        certPath = path.join(process.env.LOCALAPPDATA, 'Dcrwallet', 'rpc.cert');
+    } else if (os.platform == 'darwin') {
+        certPath = path.join(process.env.HOME, 'Library', 'Application Support',
+            'Dcrwallet', 'rpc.cert');
+    }
+
+    var cert = fs.readFileSync(certPath);
+    var creds = grpc.credentials.createInsecure();
+    var loader = new walletrpc.WalletService(address + ':' + port, creds);
+
+    var deadline = new Date();
+    var deadlineInSeconds = 2;
+    deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+    grpc.waitForClientReady(loader, deadline, function(err) {
+        if (err) {
+            return cb(null, err);
+        } else { 
+            return cb(loader);
+        }
+    });
+}
+
 export function getBalance(client, accountNumber, requiredConf, cb) {
     if (client === undefined) {
         return cb(null, new Error("Client not available to getBalance"));

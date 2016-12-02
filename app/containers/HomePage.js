@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Home from '../components/Home';
 import * as LoginActions from '../actions/LoginActions';
 import * as ClientActions from '../actions/ClientActions';
+import * as WalletLoaderActions from '../actions/WalletLoaderActions';
 
 function mapStateToProps(state) {
   return {
@@ -16,13 +17,15 @@ function mapStateToProps(state) {
     error: state.login.error,
     isGettingBalance: state.grpc.isGettingBalance,
     balance: state.grpc.balance,
-    isCreatingWallet: state.grpc.isCreatingWallet,
-    isCreatedWallet: state.grpc.isCreatedWallet,
+    isCreatingWallet: state.walletLoader.isCreatingWallet,
+    isCreatedWallet: state.walletLoader.isCreatedWallet,
+    isWalletExists: state.walletLoader.isWalletExists,
+    isWalletExisting: state.walletLoader.isWalletExisting,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, LoginActions, ClientActions), dispatch);
+  return bindActionCreators(Object.assign({}, WalletLoaderActions, LoginActions, ClientActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
