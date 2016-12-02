@@ -1,4 +1,4 @@
-import { LOGIN_ATTEMPT, LOGGED_FAILED, LOGGED_SUCCESSFULLY } from '../actions/LoginActions';
+import { LOGIN_ATTEMPT, LOGIN_FAILED, LOGIN_SUCCESS } from '../actions/LoginActions';
 
 export default function login(state = {}, action) {
   switch (action.type) {
@@ -10,7 +10,7 @@ export default function login(state = {}, action) {
         port: action.port,
         password: action.password,
       };
-    case LOGGED_FAILED:
+    case LOGIN_FAILED:
       return {...state,
         error: action.error,
         isLoggingIn: false,
@@ -19,7 +19,7 @@ export default function login(state = {}, action) {
         port: '',
         passphrase: ''
       };
-    case LOGGED_SUCCESSFULLY:
+    case LOGIN_SUCCESS:
       return {...state,
         error: "",
         client: action.client,

@@ -1,15 +1,15 @@
 import { client } from '../middleware/grpc/client';
 
 export const LOGIN_ATTEMPT = 'LOGIN_ATTEMPT';
-export const LOGGED_FAILED = 'LOGGED_FAILED';
-export const LOGGED_SUCCESSFULLY = 'LOGGED_SUCCESSFULLY';
+export const LOGIN_FAILED = 'LOGIN_FAILED';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 
 function loginError(error) {
-  return { error, type: LOGGED_FAILED };
+  return { error, type: LOGIN_FAILED };
 }
 
 function loginSuccess(client) {
-  return { client, type: LOGGED_SUCCESSFULLY };
+  return { client, type: LOGIN_SUCCESS };
 }
 
 export function loginRequest(address, port, passphrase) {
