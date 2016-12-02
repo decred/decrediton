@@ -362,9 +362,9 @@ ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
 export function createWallet(client, pubPass, privPass, seed, cb) {
     console.log(pubPass, privPass, seed);
     var request = {
-        public_passphrase: Buffer.from("pub"),
-        private_passphrase: Buffer.from("priv"),
-        seed: Buffer.from("a329d04847de49f2284168fb938d9b0257af3d19c64101a091cbaf2a73c36a03"),
+        public_passphrase: Buffer.from(pubPass),
+        private_passphrase: Buffer.from(privPass),
+        seed: Buffer.from(seed),
     };
     console.log(request);
     var protoDescriptor = grpc.load('./app/api.proto');

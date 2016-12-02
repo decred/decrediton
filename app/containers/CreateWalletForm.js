@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createNewWallet, createWalletRequest } from '../actions/WalletActions'
+import { createNewWallet, createWalletRequest } from '../actions/ClientActions'
 import { Button, Form, FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap'
 
 let CreateWalletForm = ({ dispatch }) => {
