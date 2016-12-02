@@ -13,6 +13,12 @@ const styles = {
     color: '#757575',
     textDecoration: 'none',
   },
+  sidebarLinkCurrentPage: {
+    display: 'block',
+    padding: '16px 0px',
+    color: 'white',
+    textDecoration: 'bold',
+  },
   divider: {
     margin: '8px 0',
     height: 1,
@@ -27,21 +33,35 @@ const styles = {
 
 const SidebarContent = (props) => {
   const style = props.style ? {...styles.sidebar, ...props.style} : styles.sidebar;
+  const { page } = props;
 
   const loggedIn = ( 
-    <div style={styles.content}>
-      <div style={styles.divider} />
-      <Link to="/history" style={styles.sidebarLink}>Transaction History</Link>
-      <Link to="/send" style={styles.sidebarLink}>Send Decred</Link>
-      <Link to="/receive" style={styles.sidebarLink}>Receive Decred</Link>
-      <div style={styles.divider} />
-      <p>maybe decred balance stats down here?</p>
-    </div>);
+    <MaterialTitlePanel title="Menu" style={style}>
+      <div style={styles.content}>
+        <div style={styles.divider} />
+        {page !== 'HOME' && <Link to="/" style={styles.sidebarLink}>Home</Link>}
+        {page === 'HOME' && <span style={styles.sidebarLinkCurrentPage}>Home</span>}
+        {page !== 'HISTORY' && <Link to="/history" style={styles.sidebarLink}>Transaction History</Link>}
+        {page === 'HISTORY' && <span style={styles.sidebarLinkCurrentPage}>Transaction History</span>}
+        {page !== 'SEND' && <Link to="/send" style={styles.sidebarLink}>Send Decred</Link>}
+        {page === 'SEND' && <span style={styles.sidebarLinkCurrentPage}>Send Decred</span>}
+        {page !== 'RECEIVE' && <Link to="/receive" style={styles.sidebarLink}>Receive Decred</Link>}
+        {page === 'RECEIVE' && <span style={styles.sidebarLinkCurrentPage}>Receive Decred</span>}
+        <div style={styles.divider} />
+        <p>maybe decred balance stats down here?</p>
+      </div>
+    </MaterialTitlePanel>);
 
   const notLoggedIn = (
-    <div style={styles.content}>
-      <div style={styles.divider} />
-    </div>);
+    <MaterialTitlePanel style={style}>
+      <div style={styles.content}>
+        <div style={styles.divider} />
+        <span style={styles.sidebarLinkCurrentPage}>Get started</span>
+        <div style={styles.divider} />
+        <p>maybe decred getting started info stats down here?</p>
+      </div>
+    </MaterialTitlePanel>);
+
   if (props.loggedIn) {
     return (
       loggedIn
@@ -56,6 +76,7 @@ const SidebarContent = (props) => {
 SidebarContent.propTypes = {
   style: React.PropTypes.object,
   loggedIn: React.PropTypes.bool,
+  page: React.PropTypes.string,
 };
 
 export default SidebarContent;

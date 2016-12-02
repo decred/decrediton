@@ -13,8 +13,20 @@ var initialState = {
     address: "",
     port: "", 
     passphrase: "",
-    loggedIn: false}
-}
+    isLoggedIn: false,
+    isLoggingIn: false,
+    error: "",
+  },
+  grpc: {
+    balanceAccountNumber: 0,
+    balanceRequiredConfs: 0,
+    isGettingBalance: false,
+    isGotBalance: false,
+    error: "",
+    balance: null,
+  }
+};
+
 const store = configureStore(initialState);
 const history = syncHistoryWithStore(hashHistory, store);
 console.log(store.getState());

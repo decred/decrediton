@@ -1,26 +1,31 @@
-import { client, getBalance } from './client';
-export const LOGIN = 'LOGIN';
-export const SET_CLIENT = 'SET_CLIENT';
+import { client } from '../middleware/grpc/client';
 
-export const login = (address, port, passphrase) => ({
-    address: address,
-    port: port,
-    passphrase: passphrase,
-    type: LOGIN
-})
+export const LOGIN_ATTEMPT = 'LOGIN_ATTEMPT';
+export const LOGIN_FAILED = 'LOGIN_FAILED';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 
-export function setClient(grpcClient) {
-    console.log("trying to set client!")
-    return {
-        client: grpcClient,
-        type: SET_CLIENT
-    };
+function loginError(error) {
+  return { error, type: LOGIN_FAILED };
 }
 
-export function getClient() {
-    return (dispatch: Function, getState: Function) => {
-        const { address, port } = getState().login;
-        var grpcClient = client(address, port);
-        dispatch(setClient(grpcClient));
-    };
+function loginSuccess(client) {
+  return { client, type: LOGIN_SUCCESS };
+}
+
+export function loginRequest(address, port, passphrase) {
+  return { address: address, port: port, passphrase: passphrase, type: LOGIN_ATTEMPT };
+}
+
+export function login() {
+  return (dispatch, getState) => {
+    const { address, port } = getState().login;
+    client(address, port, function(client, err) {
+      if (err) {
+        dispatch(loginError(err + " Please try again"));
+        //throw err
+      } else {
+        dispatch(loginSuccess(client));
+      }
+    })
+  }
 }

@@ -10,7 +10,7 @@ import grpc from 'grpc';
 
 import Buffer from 'buffer';
 
-export function client(address, port) {
+export function client(address, port, cb) {
     var protoDescriptor = grpc.load('./app/api.proto');
     var walletrpc = protoDescriptor.walletrpc;
 
@@ -26,12 +26,21 @@ export function client(address, port) {
     var creds = grpc.credentials.createInsecure();
     var client = new walletrpc.WalletService(address + ':' + port, creds);
 
-    return client;
+    var deadline = new Date();
+    var deadlineInSeconds = 2;
+    deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+    grpc.waitForClientReady(client, deadline, function(err) {
+        if (err) {
+            return cb(null, err);
+        } else { 
+            return cb(client);
+        }
+    });
 }
 
-export function getBalance(client, accountNumber, requiredConf) {
+export function getBalance(client, accountNumber, requiredConf, cb) {
     if (client === undefined) {
-        return
+        return cb(null, new Error("Client not available to getBalance"));
     }
     var request = {
         account_number: accountNumber,
@@ -40,9 +49,11 @@ export function getBalance(client, accountNumber, requiredConf) {
 
     client.balance(request, function(err, response) {
         if (err) {
-            console.error(err);
+            console.error(null, err);
+            return cb(null, err);
         } else {
             console.log('balance:', response);
+            return cb(response);
         }
     });
 }

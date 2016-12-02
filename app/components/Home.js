@@ -5,7 +5,7 @@ import LoginForm from '../containers/LoginForm';
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
 import SidebarContent from '../content/SideBarContent';
-import { Col, Row, Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Button, Col, Row, Navbar, Nav, NavItem } from 'react-bootstrap';
 
 const styles = {
   mainArea: {
@@ -13,25 +13,42 @@ const styles = {
   },
   sideBar: {
     backgroundColor:"#2ed8a3"
+  },
+  error: {
+    color:"red"
   }
 }
+
 class Home extends Component{
+  constructor(props) {
+    super(props);
+  }
+
   static propTypes = {
     login: PropTypes.func.isRequired,
-    getClient: PropTypes.func.isRequired,
-    setClient: PropTypes.func.isRequired,
     address: PropTypes.string.isRequired,
     port: PropTypes.string.isRequired,
     passphrase: PropTypes.string.isRequired,
-    loggedIn: PropTypes.bool.isRequired,
-    client: PropTypes.object
-  };
-  
-  render() {
-    const { getClient, setClient, address, port, passphrase, loggedIn, client } = this.props;
+    isLoggedIn: PropTypes.bool.isRequired,
+    isLoggingIn: PropTypes.bool.isRequired,
+    isGettingBalance: PropTypes.bool.isRequired,
+    client: PropTypes.object,
+    error: PropTypes.string,
+    getBalanceRequest: PropTypes.func.isRequired,
+    grpcBalance: PropTypes.func.isRequired,
+  }
 
+  handleBalanceClick = () => {
+    this.props.getBalanceRequest(0,1);
+    this.props.grpcBalance();
+  }
+
+  render() {
+    const { address, port, passphrase, isLoggedIn, isLoggingIn, client, error } = this.props;
+    const { isGettingBalance, getBalanceRequest, grpcBalance, balance  } = this.props;
     const sideBarProps = {
-      loggedIn: loggedIn,
+      loggedIn: isLoggedIn,
+      page: "HOME",
     }
     const sidebar = <SidebarContent {...sideBarProps}/>;
     
@@ -46,23 +63,55 @@ class Home extends Component{
       touch: false,
       shadow: false,
       pullRight: false,
-      loggedIn: loggedIn,
+      loggedIn: isLoggedIn,
+      transitions: false,
+      page: "HOME",
     };
 
+
     /*  View that will be seen on fresh starts */
-    const getStarted = (
+    const getStarted = (      
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
-          <div>
+          <div style={styles.mainArea}>
             <Row>
-              <Col sm={10}>
-                <h3>Welcome to Decrediton</h3>
-                <h5>Please enter the information below to connect to you dcrwallet</h5>
+              <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
+                <Row>
+                  <p style={styles.error}>{error}</p>
+                </Row>
+                <Row>
+                  <h3>Welcome to Decrediton</h3>
+                  <h5>Please enter the information below to connect to you dcrwallet</h5>
+                  <LoginForm />
+                </Row>
               </Col>
             </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
+
+    /*  View that will be when logging in is occuring */
+    const getStartedLoggingIn = (      
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.mainArea}>
             <Row>
-              <Col sm={10}>
-                <LoginForm />
+              <Col sm={12} >
+                Logging in!
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
+
+    /* View that will be shown when an error on logging in occured */
+    const getStartedError = (
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.mainArea}>
+            <Row>
+              <Col sm={12} >
+                Logging in!
               </Col>
             </Row>
           </div>
@@ -77,9 +126,14 @@ class Home extends Component{
             <Row>
               <Col sm={12} >
                 <h1>Home Page</h1>
-                <h3>address: {address}</h3>
-                <h3>port: {port}</h3>
-                <h3>passphrase: {passphrase}</h3>
+                <h3>Current balance: {balance === null ? 'Please refresh' : balance.total }</h3>
+                <Button 
+                  bsStyle="primary"
+                  disabled={isGettingBalance}
+                  onClick={!isGettingBalance ? () => this.handleBalanceClick() : null}>
+                  {isGettingBalance ? 'Getting Balance...' : 'Get Balance'}
+                </Button>
+
               </Col>
             </Row>
           </div>
@@ -87,7 +141,10 @@ class Home extends Component{
       </Sidebar>);
 
     /* Check to see that client is not undefined */
-    if (loggedIn) {
+    if (isLoggingIn) {
+      return (getStartedLoggingIn);
+    }
+    if (isLoggedIn) {
       if (client === undefined) {
         return(getStarted);
       } else {
@@ -97,6 +154,8 @@ class Home extends Component{
         return(getStarted);
     }
   }
+
+
 };
 
 export default Home;

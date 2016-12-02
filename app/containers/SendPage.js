@@ -5,6 +5,7 @@ import Send from '../components/Send';
 function mapStateToProps(state) {
   return {
     client: state.login.client,
+    isLoggedIn: state.login.isLoggedIn,
   };
 }
 
