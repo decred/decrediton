@@ -48,8 +48,9 @@ class Home extends Component{
   }
 
   render() {
-    const { address, port, passphrase, isLoggedIn, isLoggingIn, client, error, isCreatingWallet, isCreatedWallet } = this.props;
+    const { isLoggedIn, isLoggingIn, client, error} = this.props;
     const { isGettingBalance, getBalanceRequest, grpcBalance, balance  } = this.props;
+    const { loader, isLoaderReady, isGettingLoader, isCreatingWallet, isCreatedWallet } = this.props; 
     const sideBarProps = {
       loggedIn: isLoggedIn,
       page: "HOME",
@@ -137,7 +138,6 @@ class Home extends Component{
                   onClick={!isGettingBalance ? () => this.handleBalanceClick() : null}>
                   {isGettingBalance ? 'Getting Balance...' : 'Get Balance'}
                 </Button>
-
               </Col>
             </Row>
           </div>
@@ -159,6 +159,27 @@ class Home extends Component{
           </div>
         </MaterialTitlePanel>
       </Sidebar>);
+
+    const getStartedLoader = (      
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.mainArea}>
+            <Row>
+              <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
+                <Row>
+                  <p style={styles.error}>{error}</p>
+                </Row>
+                <Row>
+                  <h3>Welcome to Decrediton</h3>
+                  <h5>Please enter the information below to connect to you dcrwallet</h5>
+                  <LoaderForm />
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
+
     /* Check to see that client is not undefined */
     if (isLoggingIn) {
       return (getStartedLoggingIn);
@@ -170,12 +191,15 @@ class Home extends Component{
         if (isCreatedWallet) {
           return(homeView);
         } else {
-          console.log(isCreatedWallet);
           return (homeViewCreateWallet);
         }
       }
     } else {
+      if (loader === undefined) {
+        return(getStartedLoader)
+      } else {
         return(getStarted);
+      }
     }
   }
 

@@ -19,8 +19,9 @@ function mapStateToProps(state) {
     balance: state.grpc.balance,
     isCreatingWallet: state.walletLoader.isCreatingWallet,
     isCreatedWallet: state.walletLoader.isCreatedWallet,
-    isWalletExists: state.walletLoader.isWalletExists,
-    isWalletExisting: state.walletLoader.isWalletExisting,
+    isLoaderReady: state.walletLoader.isLoaderReady,
+    isGettingLoader: state.walletLoader.isGettingLoader,
+    loader: state.walletLoader.loader,
   };
 }
 

@@ -19,7 +19,7 @@ export function loaderRequest(address, port) {
 export function getLoader() {
   return (dispatch, getState) => {
     const { address, port } = getState().walletLoader;
-    client(address, port, function(loader, err) {
+    loader(address, port, function(loader, err) {
       if (err) {
         dispatch(loaderError(err + " Please try again"));
         //throw err

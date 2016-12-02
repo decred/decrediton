@@ -17,7 +17,6 @@ let LoaderForm = ({ dispatch }) => {
         dispatch(getLoader())
         address.value = ''
         port.value = ''
-        passphrase.value = ''
       }}>
         <FormGroup controlId={address}>
           <Col componentClass={ControlLabel} sm={2}>

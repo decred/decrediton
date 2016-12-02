@@ -1,4 +1,5 @@
 import { CREATEWALLET_ATTEMPT, CREATEWALLET_FAILED, CREATEWALLET_SUCCESS } from '../actions/WalletLoaderActions';
+import { LOADER_ATTEMPT, LOADER_FAILED, LOADER_SUCCESS } from '../actions/WalletLoaderActions';
 
 export default function walletLoader(state = {}, action) {
   switch (action.type) {
@@ -22,7 +23,7 @@ export default function walletLoader(state = {}, action) {
         error: "",
         loader: action.loader,
         isGettingLoader: false,
-
+        isLoaderReady: true,
       };
     case CREATEWALLET_ATTEMPT:
       return {...state,

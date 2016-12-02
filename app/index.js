@@ -16,7 +16,6 @@ var initialState = {
     isLoggedIn: false,
     isLoggingIn: false,
     error: "",
-    client: null,
   },
   grpc: {
     balanceAccountNumber: 0,
@@ -31,7 +30,6 @@ var initialState = {
     port: "",
     isGettingLoader: false,
     isLoaderReady: false,
-    loader: null,
     isCreatingWallet: false,
     isCreatedWallet: false,
     privPass: "",
