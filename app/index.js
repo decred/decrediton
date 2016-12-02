@@ -35,6 +35,9 @@ var initialState = {
     privPass: "",
     pubPass: "",
     seed: "",
+    isWalletExistRequest: false,
+    isWalletExistComplete: false,
+    exists: false,
   }
 };
 

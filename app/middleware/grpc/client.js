@@ -387,6 +387,19 @@ ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
     });
 }
 
+export function walletExists(loader, cb) {
+    var request = {};
+   
+    loader.walletExists(request, function(err, response) {
+        if (err) {
+            console.error(err);
+            return cb(err);
+        } else {
+            return cb(response);
+        }
+    });
+}
+
 export function createWallet(loader, pubPass, privPass, seed, cb) {
     var request = {
         public_passphrase: Buffer.from(pubPass),

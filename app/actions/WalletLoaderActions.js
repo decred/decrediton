@@ -32,14 +32,14 @@ export function getLoader() {
 
 export const WALLETEXIST_ATTEMPT = 'WALLETEXIST_ATTEMPT';
 export const WALLETEXIST_FAILED = 'WALLETEXIST_FAILED';
-export const WALLETEXIT_SUCCESS = 'WALLETEXIST_SUCCESS';
+export const WALLETEXIST_SUCCESS = 'WALLETEXIST_SUCCESS';
 
 function walletExistError(error) {
   return { error, type: WALLETEXIST_FAILED };
 }
 
-function walletExistSuccess() {
-  return { type: WALLETEXIT_SUCCESS };
+function walletExistSuccess(exists) {
+  return {exists: exists, type: WALLETEXIST_SUCCESS };
 }
 
 export function walletExistRequest() {
@@ -49,12 +49,12 @@ export function walletExistRequest() {
 export function checkWalletExist() {
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
-    createWallet(loader,
-        function(err) {
+    walletExists(loader,
+        function(exists, err) {
       if (err) {
         dispatch(walletExistError(err + " Please try again"));
       } else {
-        dispatch(walletExistSuccess());
+        dispatch(walletExistSuccess(exists));
       }
     })
   }
