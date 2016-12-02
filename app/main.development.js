@@ -3,6 +3,7 @@ import { app, BrowserWindow, Menu, shell } from 'electron';
 let menu;
 let template;
 let mainWindow = null;
+var mainNet = true;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
@@ -16,10 +17,34 @@ if (process.env.NODE_ENV === 'development') {
   require('module').globalPaths.push(p); // eslint-disable-line
 }
 
+process.argv.some(function(element) {
+  if (element === '--testnet') {
+    mainNet = false;
+    return true;
+  }
+});
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
+function appDataDirectory() {
+  const path = require('path');
+  const os = require('os');
+
+  if (process.platform === 'darwin') {
+    return path.join(os.homedir(), 'Library','Application Data','Decrediton');
+  }
+
+  return path.join(os.homedir(),'.decrediton');
+}
+
+function RPCWalletPort() {
+  if (mainNet == true) {
+    return "9112"
+  }
+  return "19112"
+}
 
 const installExtensions = async () => {
   if (process.env.NODE_ENV === 'development') {
@@ -38,8 +63,93 @@ const installExtensions = async () => {
   }
 };
 
+const launchDCRD = () => {
+  var spawn = require('child_process').spawn;
+  var args = ['--rpcuser=USER','--rpcpass=PASSWORD'];
+
+  // The spawn() below opens a pipe on fd 3
+  args.push('--piperx=3');
+
+  if (mainNet == false) {
+     args.push('--testnet');
+  }
+
+  console.log(`Starting dcrd with ${args}`);
+  var dcrd = spawn('dcrd', args, { detached: true, stdio: [ 'ignore', 'pipe', 'pipe', 'pipe' ] });
+
+  dcrd.on('error', function (err) {
+    console.log('error starting dcrd: ' + err);
+  });
+
+  dcrd.on('close', (code) => {
+    console.log(`dcrd exited with code ${code}`);
+  });
+
+  dcrd.stdout.on('data', (data) => {
+    process.stdout.write(`${data}`);
+  });
+
+  dcrd.stderr.on('data', (data) => {
+    process.stderr.write(`${data}`);
+  });
+
+  dcrd.unref();
+}
+
+const launchDCRWallet = () => {
+  var spawn = require('child_process').spawn;
+  var args = ['--noinitialload','--tlscurve=P-256','--onetimetlskey'];
+
+  // RPC
+  args.push('--username=USER');
+  args.push('--password=PASSWORD');
+
+  // The spawn() below opens a pipe on fd 4
+  args.push('--piperx=4');
+
+  args.push('--appdata=' + appDataDirectory());
+  args.push('--experimentalrpclisten=127.0.0.1:' + RPCWalletPort());
+  if (mainNet == false) {
+     args.push('--testnet');
+  }
+  console.log(`Starting dcrwallet with ${args}`);
+  var dcrwallet = spawn('dcrwallet', args, { detached: true, stdio: [ 'ignore', 'pipe', 'pipe', 'ignore', 'pipe'  ] });
+
+  dcrwallet.on('error', function (err) {
+    console.log('error starting dcrwallet: ' + err);
+  });
+
+  dcrwallet.on('close', (code) => {
+    console.log(`dcrwallet exited with code ${code}`);
+  });
+
+  dcrwallet.stdout.on('data', (data) => {
+    process.stdout.write(`${data}`);
+  });
+
+  dcrwallet.stderr.on('data', (data) => {
+    process.stderr.write(`${data}`);
+  });
+
+  dcrwallet.unref();
+};
+
 app.on('ready', async () => {
   await installExtensions();
+
+
+  if (process.env.NODE_ENV === 'production') {
+    try {
+      launchDCRD();
+    } catch (e) {
+      console.log('error launching dcrd: ' + e);
+    }
+    try {
+      launchDCRWallet();
+    } catch (e) {
+      console.log('error launching dcrwallet: ' + e);
+    }
+  }
 
   mainWindow = new BrowserWindow({
     show: false,
