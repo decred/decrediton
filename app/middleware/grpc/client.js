@@ -433,6 +433,53 @@ export function openWallet(loader, publicPass, cb) {
     });
 }
 
+export function closeWallet(loader, cb) {
+    var request = {};
+   
+    loader.closeWallet(request, function(err, response) {
+        if (err) {
+            console.error(err);
+            return cb(err);
+        } else {
+            return cb(response);
+        }
+    });
+}
+
+export function startConsensusRpc(loader, dcrd_network, username, password, cert, cb) {
+    var request = {
+        network_address: dcrd_network,
+        username: username,
+        password: password,
+        certificate: cert,
+    };
+   
+    loader.startConsensusRpc(request, function(err, response) {
+        if (err) {
+            console.error(err);
+            return cb(err);
+        } else {
+            return cb(response);
+        }
+    });
+}
+
+export function discoverAddresses(loader, discoverAccounts, privPass,  cb) {
+    var request = {
+        discover_accounts: discoverAccounts,
+        private_passphrase: privPass,
+    };
+   
+    loader.discoverAddresses(request, function(err, response) {
+        if (err) {
+            console.error(err);
+            return cb(err);
+        } else {
+            return cb(response);
+        }
+    });
+}
+
 export function transactionNtfs(client) {
     // Register Notification Streams from Wallet
     var request = {};
