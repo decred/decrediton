@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import LoginForm from '../containers/LoginForm';
 import LoaderForm from '../containers/LoaderForm';
-import CreateWalletForm from '../containers/CreateWalletForm';
+//import CreateWalletForm from '../containers/CreateWalletForm';
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
 import SidebarContent from '../content/SideBarContent';
@@ -38,8 +38,10 @@ class Home extends Component{
     error: PropTypes.string,
     getBalanceRequest: PropTypes.func.isRequired,
     grpcBalance: PropTypes.func.isRequired,
+    /*
     isCreatingWallet: PropTypes.bool.isRequired,
     isCreatedWallet: PropTypes.bool.isRequired,
+    */
   }
 
   handleBalanceClick = () => {
@@ -50,7 +52,7 @@ class Home extends Component{
   render() {
     const { isLoggedIn, isLoggingIn, client, error} = this.props;
     const { isGettingBalance, getBalanceRequest, grpcBalance, balance  } = this.props;
-    const { loader, isLoaderReady, isGettingLoader, isCreatingWallet, isCreatedWallet } = this.props; 
+    //const { loader, isLoaderReady, isGettingLoader, isCreatingWallet, isCreatedWallet } = this.props; 
     const sideBarProps = {
       loggedIn: isLoggedIn,
       page: "HOME",
@@ -144,7 +146,7 @@ class Home extends Component{
         </MaterialTitlePanel>
       </Sidebar>);
 
-    /* View that will be seen when user has a set Client */
+    /* View that will be seen when user has a set Client 
     const homeViewCreateWallet = (      
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
@@ -179,7 +181,7 @@ class Home extends Component{
           </div>
         </MaterialTitlePanel>
       </Sidebar>);
-
+      */
     /* Check to see that client is not undefined */
     if (isLoggingIn) {
       return (getStartedLoggingIn);
@@ -188,18 +190,10 @@ class Home extends Component{
       if (client === undefined) {
         return(getStarted);
       } else {
-        if (isCreatedWallet) {
-          return(homeView);
-        } else {
-          return (homeViewCreateWallet);
-        }
+        return(homeView);
       }
     } else {
-      if (loader === undefined) {
-        return(getStartedLoader)
-      } else {
-        return(getStarted);
-      }
+      return(getStarted)
     }
   }
 

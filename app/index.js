@@ -25,6 +25,7 @@ var initialState = {
     error: "",
     balance: null,
   },
+  /*
   walletLoader: {
     address: "",
     port: "",
@@ -41,6 +42,7 @@ var initialState = {
     isOpenWalletRequest: false,
     isOpenWalletComplete: false,
   }
+  */
 };
 
 const store = configureStore(initialState);
