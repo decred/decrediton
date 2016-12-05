@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import LoginForm from '../containers/LoginForm';
-import LoaderForm from '../containers/LoaderForm';
+//import LoaderForm from '../containers/LoaderForm';
 //import CreateWalletForm from '../containers/CreateWalletForm';
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
