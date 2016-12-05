@@ -73,7 +73,6 @@ function createWalletSuccess() {
 }
 
 export function createWalletRequest(pubPass, privPass, seed) {
-  console.log("blah", pubPass, privPass, seed);
   return { 
       pubPass: pubPass,
       privPass: privPass,
@@ -83,10 +82,8 @@ export function createWalletRequest(pubPass, privPass, seed) {
 
 export function createNewWallet() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
-    const { pubPass, privPass, seed } = getState().grpc;
-    console.log(pubPass, privPass, seed);
-    createWallet(client, pubPass, privPass, seed, 
+    const { loader, pubPass, privPass, seed } = getState().walletLoader;
+    createWallet(loader, pubPass, privPass, seed, 
         function(err) {
       if (err) {
         dispatch(createWalletError(err + " Please try again"));
