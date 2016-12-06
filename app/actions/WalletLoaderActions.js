@@ -1,4 +1,5 @@
 import { loader, createWallet, walletExists, openWallet } from '../middleware/grpc/client';
+import { loginRequest } from './LoginActions';
 
 export const LOADER_ATTEMPT = 'LOADER_ATTEMPT';
 export const LOADER_FAILED = 'LOADER_FAILED';
@@ -9,7 +10,10 @@ function loaderError(error) {
 }
 
 function loaderSuccess(loader) {
-  return { loader, type: LOADER_SUCCESS };
+  return (dispatch) => {
+    dispatch({loader, type: LOADER_SUCCESS });
+    dispatch(walletExistRequest());
+  };
 }
 
 export function loaderRequest(address, port) {
@@ -42,7 +46,9 @@ function walletExistError(error) {
 }
 
 function walletExistSuccess(exists) {
-  return {exists: exists, type: WALLETEXIST_SUCCESS };
+  return (dispatch) => {
+    dispatch({exists: exists, type: WALLETEXIST_SUCCESS });
+  }
 }
 
 export function walletExistRequest() {
@@ -112,7 +118,10 @@ function openWalletError(error) {
 }
 
 function openWalletSuccess() {
-  return { type: OPENWALLET_SUCCESS };
+  return (dispatch) => {
+    dispatch({type: OPENWALLET_SUCCESS});
+    dispatch(loginRequest());
+  };
 }
 
 export function openWalletRequest(pubPass) {

@@ -45,6 +45,7 @@ class Home extends Component{
     */
     isWalletExist: PropTypes.bool.isRequired,
     isWalletOpen: PropTypes.bool.isRequired,
+    loaderRequest: PropTypes.func.isRequired,
   }
 
   handleBalanceClick = () => {
@@ -52,10 +53,11 @@ class Home extends Component{
   }
 
   render() {
+    const { address, port } = this.props;
     const { isLoggedIn, isLoggingIn, client, error} = this.props;
     const { isGettingBalance, getBalanceRequest, grpcBalance, balance  } = this.props;
-    const { loader, isLoaderReady, isGettingLoader } = this.props; 
-    const { isWalletExist, isWalletExistRequest, isWalletExistComplete } = this.props;
+    const { loader, isLoaderReady, isGettingLoader, loaderRequest } = this.props; 
+    const { isWalletExist, isWalletExistRequest, isWalletExistComplete, walletExistRequest } = this.props;
     const { isWalletOpen, isWalletOpenRequest } = this.props;
     const sideBarProps = {
       loggedIn: isLoggedIn,
@@ -165,7 +167,6 @@ class Home extends Component{
         </MaterialTitlePanel>
       </Sidebar>);
     
-
     const getStartedWalletLoader = (      
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
@@ -233,7 +234,6 @@ class Home extends Component{
                 </Row>
                 <Row>
                   <h3>Check if wallet exists</h3>
-                  <WalletExistForm />
                 </Row>
               </Col>
             </Row>

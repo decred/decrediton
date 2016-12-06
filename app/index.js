@@ -10,8 +10,8 @@ import './bootstrap.min.css';
 
 var initialState = {
   login: {
-    address: "",
-    port: "", 
+    address: "127.0.0.1",
+    port: "19113", 
     passphrase: "",
     isLoggedIn: false,
     isLoggingIn: false,
@@ -45,7 +45,7 @@ var initialState = {
 
 const store = configureStore(initialState);
 const history = syncHistoryWithStore(hashHistory, store);
-console.log(store.getState());
+
 render(
   <Provider store={store}>
     <Router history={history} routes={routes} />

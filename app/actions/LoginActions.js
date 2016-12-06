@@ -12,12 +12,13 @@ function loginSuccess(client) {
   return { client, type: LOGIN_SUCCESS };
 }
 
-export function loginRequest(address, port, passphrase) {
-  return (dispatch) => {
+export function loginRequest() {
+  return (dispatch, getState) => {
+    const { address, port } = getState().walletLoader;
     dispatch({
       address: address, 
       port: port, 
-      passphrase: passphrase, 
+      passphrase: '', 
       type: LOGIN_ATTEMPT })
     dispatch(login());
   }
