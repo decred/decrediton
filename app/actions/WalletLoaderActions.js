@@ -116,7 +116,7 @@ export function openWalletAction() {
     openWallet(loader, pubPass, 
         function(response, err) {
       if (err) {
-        dispatch(openWalletError(err + " Please try again"));
+        dispatch(openWalletError(pubPass + err + " Please try again"));
       } else {
         dispatch(openWalletSuccess());
       }

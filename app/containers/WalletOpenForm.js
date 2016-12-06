@@ -19,7 +19,7 @@ let LoaderForm = ({ dispatch }) => {
       }}>
         <FormGroup controlId={pubpass}>
           <Col componentClass={ControlLabel} sm={2}>
-            Address
+            Public Password
           </Col>
           <Col sm={10}>
             <FormControl type="text" inputRef={node => {pubpass = node}} placeholder="Public Password" />
