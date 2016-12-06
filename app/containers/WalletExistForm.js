@@ -11,7 +11,6 @@ let LoaderForm = ({ dispatch }) => {
       <Form horizontal onSubmit={e => {
         e.preventDefault()
         dispatch(walletExistRequest())
-        dispatch(checkWalletExist())
       }}>
         <Button type="submit">
           Check wallet exists

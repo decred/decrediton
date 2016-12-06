@@ -14,7 +14,6 @@ let CreateWalletForm = ({ dispatch }) => {
           return
         }
         dispatch(createWalletRequest(pubPass.value, privPass.value, seed.value))
-        dispatch(createNewWallet())
         pubPass.value = ''
         privPass.value = ''
         seed.value = ''

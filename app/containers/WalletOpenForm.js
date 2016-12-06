@@ -14,7 +14,6 @@ let LoaderForm = ({ dispatch }) => {
           return
         }
         dispatch(openWalletRequest(pubpass.value))
-        dispatch(openWalletAction())
         pubpass.value = ''
       }}>
         <FormGroup controlId={pubpass}>

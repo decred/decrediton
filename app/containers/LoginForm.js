@@ -14,7 +14,6 @@ let LoginForm = ({ dispatch }) => {
           return
         }
         dispatch(loginRequest(address.value, port.value, passphrase.value))
-        dispatch(login())
         address.value = ''
         port.value = ''
         passphrase.value = ''

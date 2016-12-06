@@ -13,16 +13,22 @@ function loginSuccess(client) {
 }
 
 export function loginRequest(address, port, passphrase) {
-  return { address: address, port: port, passphrase: passphrase, type: LOGIN_ATTEMPT };
+  return (dispatch) => {
+    dispatch({
+      address: address, 
+      port: port, 
+      passphrase: passphrase, 
+      type: LOGIN_ATTEMPT })
+    dispatch(login());
+  }
 }
 
-export function login() {
+function login() {
   return (dispatch, getState) => {
     const { address, port } = getState().login;
     client(address, port, function(client, err) {
       if (err) {
         dispatch(loginError(err + " Please try again"));
-        //throw err
       } else {
         dispatch(loginSuccess(client));
       }

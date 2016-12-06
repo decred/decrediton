@@ -13,10 +13,13 @@ function loaderSuccess(loader) {
 }
 
 export function loaderRequest(address, port) {
-  return { address: address, port: port, type: LOADER_ATTEMPT };
+  return (dispatch) => {
+    dispatch({address: address, port: port, type: LOADER_ATTEMPT });
+    dispatch(getLoader());
+  }
 }
 
-export function getLoader() {
+function getLoader() {
   return (dispatch, getState) => {
     const { address, port } = getState().walletLoader;
     loader(address, port, function(loader, err) {
@@ -43,10 +46,13 @@ function walletExistSuccess(exists) {
 }
 
 export function walletExistRequest() {
-  return { type: WALLETEXIST_ATTEMPT };
+  return (dispatch) => {
+    dispatch({type: WALLETEXIST_ATTEMPT });
+    dispatch(checkWalletExist());
+  }
 }
 
-export function checkWalletExist() {
+function checkWalletExist() {
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
     walletExists(loader,
@@ -73,14 +79,17 @@ function createWalletSuccess() {
 }
 
 export function createWalletRequest(pubPass, privPass, seed) {
-  return { 
+  return (dispatch) => { 
+    dispatch({
       pubPass: pubPass,
       privPass: privPass,
       seed: seed,
-      type: CREATEWALLET_ATTEMPT };
+      type: CREATEWALLET_ATTEMPT });
+    dispatch(createNewWallet());
+  }
 }
 
-export function createNewWallet() {
+function createNewWallet() {
   return (dispatch, getState) => {
     const { loader, pubPass, privPass, seed } = getState().walletLoader;
     createWallet(loader, pubPass, privPass, seed, 
@@ -107,10 +116,13 @@ function openWalletSuccess() {
 }
 
 export function openWalletRequest(pubPass) {
-  return { pubPass: pubPass, type: OPENWALLET_ATTEMPT };
+  return (dispatch) => {
+    dispatch({pubPass: pubPass, type: OPENWALLET_ATTEMPT});
+    dispatch(openWalletAction());
+  }
 }
 
-export function openWalletAction() {
+function openWalletAction() {
   return (dispatch, getState) => {
     const { loader, pubPass } = getState().walletLoader;
     openWallet(loader, pubPass, 

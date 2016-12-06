@@ -14,7 +14,6 @@ let LoaderForm = ({ dispatch }) => {
           return
         }
         dispatch(loaderRequest(address.value, port.value))
-        dispatch(getLoader())
         address.value = ''
         port.value = ''
       }}>
