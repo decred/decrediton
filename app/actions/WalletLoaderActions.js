@@ -1,4 +1,4 @@
-import { loader, createWallet, walletExists } from '../middleware/grpc/client';
+import { loader, createWallet, walletExists, openWallet } from '../middleware/grpc/client';
 
 export const LOADER_ATTEMPT = 'LOADER_ATTEMPT';
 export const LOADER_FAILED = 'LOADER_FAILED';

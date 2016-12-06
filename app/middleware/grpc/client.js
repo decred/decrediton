@@ -393,9 +393,9 @@ export function walletExists(loader, cb) {
     loader.walletExists(request, function(err, response) {
         if (err) {
             console.error(err);
-            return cb(err);
+            return cb(null, err);
         } else {
-            return cb(response);
+            return cb(response, null);
         }
     });
 }
@@ -426,9 +426,9 @@ export function openWallet(loader, publicPass, cb) {
     loader.openWallet(request, function(err, response) {
         if (err) {
             console.error(err);
-            return cb(err);
+            return cb(null, err);
         } else {
-            return cb(response);
+            return cb(response, null);
         }
     });
 }
@@ -439,9 +439,9 @@ export function closeWallet(loader, cb) {
     loader.closeWallet(request, function(err, response) {
         if (err) {
             console.error(err);
-            return cb(err);
+            return cb(null, err);
         } else {
-            return cb(response);
+            return cb(response, null);
         }
     });
 }
