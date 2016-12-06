@@ -25,24 +25,21 @@ var initialState = {
     error: "",
     balance: null,
   },
-  /*
   walletLoader: {
     address: "",
     port: "",
     isGettingLoader: false,
     isLoaderReady: false,
-    isCreatingWallet: false,
-    isCreatedWallet: false,
+    //isCreatingWallet: false,
+    //isCreatedWallet: false,
     privPass: "",
     pubPass: "",
-    seed: "",
+    //seed: "",
     isWalletExistRequest: false,
-    isWalletExistComplete: false,
-    exists: false,
-    isOpenWalletRequest: false,
-    isOpenWalletComplete: false,
+    isWalletExist: false,
+    isWalletOpenRequest: false,
+    isWalletOpen: false,
   }
-  */
 };
 
 const store = configureStore(initialState);

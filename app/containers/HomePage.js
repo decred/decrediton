@@ -20,10 +20,15 @@ function mapStateToProps(state) {
     /*
     isCreatingWallet: state.walletLoader.isCreatingWallet,
     isCreatedWallet: state.walletLoader.isCreatedWallet,
+    */
+    isWalletExistRequest: state.walletLoader.isWalletExistRequest,
+    isWalletExist: state.walletLoader.isWalletExist,
     isLoaderReady: state.walletLoader.isLoaderReady,
     isGettingLoader: state.walletLoader.isGettingLoader,
+    isWalletOpen: state.walletLoader.isWalletOpen,
+    isWalletOpenRequest: state.walletLoader.isWalletOpenRequest,
     loader: state.walletLoader.loader,
-    */
+    
   };
 }
 

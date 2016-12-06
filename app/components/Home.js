@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import LoginForm from '../containers/LoginForm';
-//import LoaderForm from '../containers/LoaderForm';
+import LoaderForm from '../containers/LoaderForm';
 //import CreateWalletForm from '../containers/CreateWalletForm';
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
@@ -38,10 +38,13 @@ class Home extends Component{
     error: PropTypes.string,
     getBalanceRequest: PropTypes.func.isRequired,
     grpcBalance: PropTypes.func.isRequired,
+
     /*
     isCreatingWallet: PropTypes.bool.isRequired,
     isCreatedWallet: PropTypes.bool.isRequired,
     */
+    isWalletExist: PropTypes.bool.isRequired,
+    isWalletOpen: PropTypes.bool.isRequired,
   }
 
   handleBalanceClick = () => {
@@ -52,7 +55,9 @@ class Home extends Component{
   render() {
     const { isLoggedIn, isLoggingIn, client, error} = this.props;
     const { isGettingBalance, getBalanceRequest, grpcBalance, balance  } = this.props;
-    //const { loader, isLoaderReady, isGettingLoader, isCreatingWallet, isCreatedWallet } = this.props; 
+    const { loader, isLoaderReady, isGettingLoader } = this.props; 
+    const { isWalletExist, isWalletExistRequest } = this.props;
+    const { isWalletOpen, isWalletOpenRequest } = this.props;
     const sideBarProps = {
       loggedIn: isLoggedIn,
       page: "HOME",
@@ -161,6 +166,7 @@ class Home extends Component{
           </div>
         </MaterialTitlePanel>
       </Sidebar>);
+    */
 
     const getStartedLoader = (      
       <Sidebar {...sidebarProps}>
@@ -181,8 +187,26 @@ class Home extends Component{
           </div>
         </MaterialTitlePanel>
       </Sidebar>);
-      */
-    /* Check to see that client is not undefined */
+
+    const getStartedWalletOpen = (      
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.mainArea}>
+            <Row>
+              <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
+                <Row>
+                  <p style={styles.error}>{error}</p>
+                </Row>
+                <Row>
+                  <h3>Welcome to Decrediton</h3>
+                  <h5>Please enter the information below to connect to you dcrwallet</h5>
+                  <LoaderForm />
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
     if (isLoggingIn) {
       return (getStartedLoggingIn);
     }
@@ -193,7 +217,15 @@ class Home extends Component{
         return(homeView);
       }
     } else {
-      return(getStarted)
+      if (isWalletOpen) {
+        return(getStarted);
+      } else {
+        if (isWalletExist) {
+          return(getStartedWalletOpen);
+        } else {
+          return(getStartedLoader);
+        }
+      }
     }
   }
 
