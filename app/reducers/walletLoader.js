@@ -30,19 +30,22 @@ export default function walletLoader(state = {}, action) {
     case WALLETEXIST_ATTEMPT:
       return {...state,
         isWalletExistRequest: true,
+        isWalletExistComplete: false,
         isWalletExist: false,
       };
     case WALLETEXIST_FAILED:
       return {...state,
         error: action.error,
         isWalletExistRequest: false,
+        isWalletExistComplete: false,
         isWalletExist: false,
       };
     case WALLETEXIST_SUCCESS:
       return {...state,
         error: '',
         isWalletExistRequest: false,
-        isWalletExist: true,
+        isWalletExistComplete: true,
+        isWalletExist: action.exists,
       };  
     case CREATEWALLET_ATTEMPT:
       return {...state,

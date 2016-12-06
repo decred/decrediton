@@ -5,7 +5,7 @@ import LoginForm from '../containers/LoginForm';
 import LoaderForm from '../containers/LoaderForm';
 import WalletExistForm from '../containers/WalletExistForm';
 import WalletOpenForm from '../containers/WalletOpenForm';
-//import CreateWalletForm from '../containers/CreateWalletForm';
+import CreateWalletForm from '../containers/CreateWalletForm';
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
 import SidebarContent from '../content/SideBarContent';
@@ -58,7 +58,7 @@ class Home extends Component{
     const { isLoggedIn, isLoggingIn, client, error} = this.props;
     const { isGettingBalance, getBalanceRequest, grpcBalance, balance  } = this.props;
     const { loader, isLoaderReady, isGettingLoader } = this.props; 
-    const { isWalletExist, isWalletExistRequest } = this.props;
+    const { isWalletExist, isWalletExistRequest, isWalletExistComplete } = this.props;
     const { isWalletOpen, isWalletOpenRequest } = this.props;
     const sideBarProps = {
       loggedIn: isLoggedIn,
@@ -153,8 +153,7 @@ class Home extends Component{
         </MaterialTitlePanel>
       </Sidebar>);
 
-    /* View that will be seen when user has a set Client 
-    const homeViewCreateWallet = (      
+    const getStartedCreateWallet = (      
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
           <div style={styles.mainArea}>
@@ -168,7 +167,7 @@ class Home extends Component{
           </div>
         </MaterialTitlePanel>
       </Sidebar>);
-    */
+    
 
     const getStartedWalletLoader = (      
       <Sidebar {...sidebarProps}>
@@ -190,6 +189,42 @@ class Home extends Component{
         </MaterialTitlePanel>
       </Sidebar>);
 
+    const getStartedGettingLoader = (      
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.mainArea}>
+            <Row>
+              <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
+                <Row>
+                  <p style={styles.error}>{error}</p>
+                </Row>
+                <Row>
+                  <h3>Getting wallet loader service</h3>
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
+      
+    const getStartedWalletExistRequest = (      
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.mainArea}>
+            <Row>
+              <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
+                <Row>
+                  <p style={styles.error}>{error}</p>
+                </Row>
+                <Row>
+                  <h3>Checking if wallet exists...</h3>
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
+
     const getStartedWalletExist = (      
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
@@ -200,7 +235,7 @@ class Home extends Component{
                   <p style={styles.error}>{error}</p>
                 </Row>
                 <Row>
-                  <h3>Got Loader</h3>
+                  <h3>Check if wallet exists</h3>
                   <WalletExistForm />
                 </Row>
               </Col>
@@ -229,38 +264,69 @@ class Home extends Component{
         </MaterialTitlePanel>
       </Sidebar>);
 
+    const getStartedOpeningWallet = (      
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.mainArea}>
+            <Row>
+              <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
+                <Row>
+                  <p style={styles.error}>{error}</p>
+                </Row>
+                <Row>
+                  <h3>Trying to open wallet</h3>
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
 
-    if (isLoggingIn) {
-      return (getStartedLoggingIn);
-    }
+    // Step 4 complete
     if (isLoggedIn) {
       if (client === undefined) {
         return(getStarted);
       } else {
         return(homeView);
       }
-    } else {
-      if (isWalletOpen) {
-        return(getStarted);
-      } else {
-        if (isWalletExist) {
-          return(getStartedWalletOpen);
-        } else {
-          if (isLoaderReady) {
-            return(getStartedWalletExist);
-          } else {
-            if (isGettingLoader) {
-              return (getStartedGettingLoader);
-            } else {
-              return (getStartedWalletLoader);
-            }
-          }
-        }
-      }
     }
+    // Step 4 action
+    if (isLoggingIn) {
+      return (getStartedLoggingIn);
+    }
+    // Step 3 complete/ Step 4 start
+    if (isWalletOpen) {
+      return(getStarted);
+    }
+    // Step 3 action
+    if (isWalletOpenRequest) {
+      return (getStartedOpeningWallet);
+    }
+    // Step 2 complete/ Step 3 start
+    if (isWalletExist) {
+      return(getStartedWalletOpen);
+    }
+    // Step 2 wallet exist action complete, though
+    // wallet does not exist
+    if (isWalletExistComplete) {
+      return(getStartedCreateWallet)
+    }
+    // Step 2 action
+    if (isWalletExistRequest) {
+      return(getStartedWalletExistRequest)
+    }
+    // Step 1 complete/ Step 2 start
+    if (isLoaderReady) {
+      return(getStartedWalletExist);
+    }
+
+    // Step 1 action
+    if (isGettingLoader) {
+      return (getStartedGettingLoader);
+    }
+    // Step 1 start
+    return (getStartedWalletLoader);
   }
-
-
 };
 
 export default Home;

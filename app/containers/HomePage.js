@@ -22,6 +22,7 @@ function mapStateToProps(state) {
     isCreatedWallet: state.walletLoader.isCreatedWallet,
     */
     isWalletExistRequest: state.walletLoader.isWalletExistRequest,
+    isWalletExistComplete: state.walletLoader.isWalletExistComplete,
     isWalletExist: state.walletLoader.isWalletExist,
     isLoaderReady: state.walletLoader.isLoaderReady,
     isGettingLoader: state.walletLoader.isGettingLoader,
