@@ -29,7 +29,6 @@ class Home extends Component{
   }
 
   static propTypes = {
-    login: PropTypes.func.isRequired,
     address: PropTypes.string.isRequired,
     port: PropTypes.string.isRequired,
     passphrase: PropTypes.string.isRequired,
@@ -39,7 +38,6 @@ class Home extends Component{
     client: PropTypes.object,
     error: PropTypes.string,
     getBalanceRequest: PropTypes.func.isRequired,
-    grpcBalance: PropTypes.func.isRequired,
 
     /*
     isCreatingWallet: PropTypes.bool.isRequired,
@@ -51,7 +49,6 @@ class Home extends Component{
 
   handleBalanceClick = () => {
     this.props.getBalanceRequest(0,1);
-    this.props.grpcBalance();
   }
 
   render() {
