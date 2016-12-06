@@ -425,8 +425,12 @@ export function openWallet(loader, publicPass, cb) {
    
     loader.openWallet(request, function(err, response) {
         if (err) {
-            console.error(err);
-            return cb(null, err);
+            console.error(err.message);
+            if (err.message.includes("wallet already loaded")) {
+                return cb(response, null);
+            } else {
+                return cb(null, err);
+            }
         } else {
             return cb(response, null);
         }

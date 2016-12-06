@@ -72,21 +72,21 @@ export default function walletLoader(state = {}, action) {
       };  
     case OPENWALLET_ATTEMPT:
       return {...state,
-        isOpenWalletRequest: true,
-        isOpenWalletComplete: false,
+        isWalletOpenRequest: true,
+        isWalletOpen: false,
         pubPass: action.pubPass,
       };
     case OPENWALLET_FAILED:
       return {...state,
         error: action.error,
-        isOpenWalletRequest: false,
-        isOpenWalletComplete: false,
+        isWalletOpenRequest: false,
+        isWalletOpen: false,
       };
     case OPENWALLET_SUCCESS:
       return {...state,
         error: '',
-        isOpenWalletRequest: false,
-        isOpenWalletComplete: true,
+        isWalletOpenRequest: false,
+        isWalletOpen: true,
       };   
     default:
       return state;
