@@ -53,7 +53,7 @@ export function loader(address, port, cb) {
 
     var cert = fs.readFileSync(certPath);
     var creds = grpc.credentials.createInsecure();
-    var loader = new walletrpc.WalletService(address + ':' + port, creds);
+    var loader = new walletrpc.WalletLoaderService(address + ':' + port, creds);
 
     var deadline = new Date();
     var deadlineInSeconds = 2;

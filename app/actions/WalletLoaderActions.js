@@ -1,4 +1,4 @@
-import { loader, createWallet, walletExist } from '../middleware/grpc/client';
+import { loader, createWallet, walletExists } from '../middleware/grpc/client';
 
 export const LOADER_ATTEMPT = 'LOADER_ATTEMPT';
 export const LOADER_FAILED = 'LOADER_FAILED';
@@ -103,18 +103,18 @@ function openWalletError(error) {
 }
 
 function openWalletSuccess() {
-  return {type: OPENWALLET_SUCCESS };
+  return { type: OPENWALLET_SUCCESS };
 }
 
-export function openWalletRequest() {
-  return { type: OPENWALLET_ATTEMPT };
+export function openWalletRequest(pubPass) {
+  return { pubPass: pubPass, type: OPENWALLET_ATTEMPT };
 }
 
 export function openWalletAction() {
   return (dispatch, getState) => {
-    const { loader } = getState().walletLoader;
-    openWallet(loader,
-        function(exists, err) {
+    const { loader, pubPass } = getState().walletLoader;
+    openWallet(loader, pubPass, 
+        function(response, err) {
       if (err) {
         dispatch(openWalletError(err + " Please try again"));
       } else {

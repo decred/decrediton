@@ -3,6 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import LoginForm from '../containers/LoginForm';
 import LoaderForm from '../containers/LoaderForm';
+import WalletExistForm from '../containers/WalletExistForm';
+import WalletOpenForm from '../containers/WalletOpenForm';
 //import CreateWalletForm from '../containers/CreateWalletForm';
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
@@ -168,7 +170,7 @@ class Home extends Component{
       </Sidebar>);
     */
 
-    const getStartedLoader = (      
+    const getStartedWalletLoader = (      
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
           <div style={styles.mainArea}>
@@ -188,6 +190,25 @@ class Home extends Component{
         </MaterialTitlePanel>
       </Sidebar>);
 
+    const getStartedWalletExist = (      
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.mainArea}>
+            <Row>
+              <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
+                <Row>
+                  <p style={styles.error}>{error}</p>
+                </Row>
+                <Row>
+                  <h3>Got Loader</h3>
+                  <WalletExistForm />
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
+
     const getStartedWalletOpen = (      
       <Sidebar {...sidebarProps}>
         <MaterialTitlePanel title={contentHeader}>
@@ -198,15 +219,17 @@ class Home extends Component{
                   <p style={styles.error}>{error}</p>
                 </Row>
                 <Row>
-                  <h3>Welcome to Decrediton</h3>
+                  <h3>Opening wallet</h3>
                   <h5>Please enter the information below to connect to you dcrwallet</h5>
-                  <LoaderForm />
+                  <WalletOpenForm />
                 </Row>
               </Col>
             </Row>
           </div>
         </MaterialTitlePanel>
       </Sidebar>);
+
+
     if (isLoggingIn) {
       return (getStartedLoggingIn);
     }
@@ -223,7 +246,15 @@ class Home extends Component{
         if (isWalletExist) {
           return(getStartedWalletOpen);
         } else {
-          return(getStartedLoader);
+          if (isLoaderReady) {
+            return(getStartedWalletExist);
+          } else {
+            if (isGettingLoader) {
+              return (getStartedGettingLoader);
+            } else {
+              return (getStartedWalletLoader);
+            }
+          }
         }
       }
     }
