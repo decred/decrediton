@@ -484,6 +484,19 @@ export function discoverAddresses(loader, discoverAccounts, privPass,  cb) {
     });
 }
 
+export function subscribeBlockNtfns(loader, cb) {
+    var request = {};
+   
+    loader.subscribeToBlockNotifications(request, function(err, response) {
+        if (err) {
+            console.error(err);
+            return cb(err);
+        } else {
+            return cb(response);
+        }
+    });
+}
+
 export function transactionNtfs(client) {
     // Register Notification Streams from Wallet
     var request = {};
