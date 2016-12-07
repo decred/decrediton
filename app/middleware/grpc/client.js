@@ -57,16 +57,15 @@ export function getBalance(client, accountNumber, requiredConf, cb) {
 
     client.balance(request, function(err, response) {
         if (err) {
-            console.error(null, err);
+            console.error(err);
             return cb(null, err);
         } else {
-            console.log('balance:', response);
             return cb(response);
         }
     });
 }
 
-export function getAccountNumber(client, accountName) {
+export function getAccountNumber(client, accountName, cb) {
     // AccountNumber
     var request = {
         account_name: accountName
@@ -75,65 +74,75 @@ export function getAccountNumber(client, accountName) {
     client.accountNumber(request, function(err, response) {
         if (err) {
             console.error(err);
+            return cb(null, err);
         } else {
             console.log('accountnumber{"default"} ==', response);
+            return cb(response);
         }
     });
 }
 
-export function getStakeInfo(client) {
+export function getStakeInfo(client, cb) {
     // StakeInfo
     var request = {};
 
     client.stakeInfo(request, function(err, response) {
         if (err) {
             console.error(err);
+            return cb(null, err);
         } else {
             console.log('current stakeInfo', response);
+            return cb(response);
         }
     });
 }
 
-export function getPing(client) {
+export function getPing(client, cb) {
     // Ping
     var request = {};
 
     client.ping(request, function(err, response) {
         if (err) {
             console.error(err);
+            return cb(null, err);
         } else {
             console.log('ping', response);
+            return cb(response);
         }
     });
 }
 
-export function getNetwork(client) {
+export function getNetwork(client, cb) {
     // Network
     var request = {};
 
     client.network(request, function(err, response) {
         if (err) {
             console.error(err);
+            return cb(null, err);
         } else {
             console.log('network', response);
+            return cb(response);
         }
     });
 }
 
-export function getAccounts(client) {
+export function getAccounts(client, cb) {
     // Accounts
     var request = {};
 
     client.accounts(request, function(err, response) {
         if (err) {
             console.error(err);
+            return cb(null, err);           
         } else {
             console.log('accounts', response);
+            return cb(response);
         }
     });
 }
 
-export function getTransactions(client, start, end) {
+export function getTransactions(client, start, end, cb) {
     // Currently not working due to too large of messages
     // known issue by jrick.
     // GetTransactions
@@ -142,22 +151,25 @@ export function getTransactions(client, start, end) {
         ending_block_height: end
     };
 
-    client.getTransactions(request, function(err, response) {
+    client.getTransactions(request, function(err, response, cb) {
         if (err) {
             console.error("getTransactions", err);
+            return cb(null, err);
         } else {
             console.log('getTransactions', response.mined_transactions.length);
+            return cb(response);
         }
     });
 }
 
-export function getTicketPrice(client) {
+export function getTicketPrice(client, cb) {
     // TicketPrice 
     var request = {};
 
     client.ticketPrice(request, function(err, response) {
         if (err) {
             console.error("ticketPrice", err);
+            return cb(null, err);
         } else {
             console.log('ticketPrice', response);
         }
@@ -165,7 +177,7 @@ export function getTicketPrice(client) {
 }
 // Available GRPC control client examples
 
-export function getNextAddress(client, acountNum) {
+export function getNextAddress(client, acountNum, cb) {
     console.log("getting new address")
         // NextAddress
     var request = {
@@ -175,14 +187,16 @@ export function getNextAddress(client, acountNum) {
     client.nextAddress(request, function(err, response) {
         if (err) {
             console.error("nextAddress", err);
+            return cb(null, err);
         } else {
             console.log('nextAddress', response);
+            return cb(response);
         }
     });
 }
 
 
-export function renameAccount(client, accountNumber, newName) {
+export function renameAccount(client, accountNumber, newName, cb) {
     // RenameAccount
     var request = {
         account_number: accountNum,
@@ -192,14 +206,16 @@ export function renameAccount(client, accountNumber, newName) {
     client.renameAccount(request, function(err, response) {
         if (err) {
             console.error("renameAccount", err);
+            return cb(null, err);
         } else {
             console.log('renameAccount', response);
+            return cb(response);
         }
     });
 }
 
 
-export function rescan(client, beginHeight) {
+export function rescan(client, beginHeight, cb) {
     // Rescan
     var request = {
         begin_height: beginHeight
@@ -218,7 +234,7 @@ export function rescan(client, beginHeight) {
     });
 }
 
-export function getNextAccount(client, passphrase, accountName) {
+export function getNextAccount(client, passphrase, accountName, cb) {
     // NextAccount
     var request = {
         passphrase: Buffer.from(passphrase),
@@ -228,13 +244,15 @@ export function getNextAccount(client, passphrase, accountName) {
     client.nextAccount(request, function(err, response) {
         if (err) {
             console.error("nextAccount", err);
+            return cb(null, err);
         } else {
             console.log('nextAccount', response);
+            return cb(response);
         }
     });
 }
 
-export function importPrivateKey(client, passphrase, accountNum, wif, rescan, scanFrom) {
+export function importPrivateKey(client, passphrase, accountNum, wif, rescan, scanFrom, cb) {
     // ImportPrivateKey
     var request = {
         passphrase: Buffer.from(passphrase),
@@ -247,13 +265,15 @@ export function importPrivateKey(client, passphrase, accountNum, wif, rescan, sc
     client.importPrivateKey(request, function(err, response) {
         if (err) {
             console.error("importPrivateKey", err);
+            return cb(null, err);
         } else {
             console.log('importePrivateKey', response);
+            return cb(response);
         }
     });
 }
 
-export function importScript(client, passphrase, script, rescan, scanFrom) {
+export function importScript(client, passphrase, script, rescan, scanFrom, cb) {
     // ImportScript
     var request = {
         passphrase: Buffer.from(passphrase),
@@ -265,13 +285,15 @@ export function importScript(client, passphrase, script, rescan, scanFrom) {
     client.importScript(request, function(err, response) {
         if (err) {
             console.error("importScript", err);
+            return cb(null, err);
         } else {
             console.log('importScript', response);
+            return cb(response);
         }
     });
 }
 
-export function changePassphrase(client, oldP, newP) {
+export function changePassphrase(client, oldP, newP, cb) {
     // ChangePassphrase 
     var request = {
         old_passphrase: Buffer.from(oldP),
@@ -281,8 +303,10 @@ export function changePassphrase(client, oldP, newP) {
     client.changePassphrase(request, function(err, response) {
         if (err) {
             console.error("changePassphrase", err);
+            return cb(null, err);
         } else {
             console.log('changePassphrase', response);
+            return cb(response);
         }
     });
 }
@@ -292,7 +316,7 @@ export function changePassphrase(client, oldP, newP) {
 // sent to sign/publishTransaction
 //
 
-export function getFundingTransaction(client, accountNum, targetAmount, requiredConf) {
+export function getFundingTransaction(client, accountNum, targetAmount, requiredConf, cb) {
     // FundTransaction
     var request = {
         account: accountNum,
@@ -303,13 +327,15 @@ export function getFundingTransaction(client, accountNum, targetAmount, required
     client.fundTransaction(request, function(err, response) {
         if (err) {
             console.error("fundTransaction", err);
+            return cb(null, err);
         } else {
             console.log('fundTransaction', response);
+            return cb(response);
         }
     });
 }
 
-export function signTransction(client, passphrase, rawTx) {
+export function signTransction(client, passphrase, rawTx, cb) {
     // SignTransaction
     var request = {
         passphrase: Buffer.from(passphrase),
@@ -319,13 +345,15 @@ export function signTransction(client, passphrase, rawTx) {
     client.signTransaction(request, function(err, response) {
         if (err) {
             console.error("signTransaction", err);
+            return cb(null, err);
         } else {
             console.log("signTransaction", response);
+            return cb(response);
         }
     });
 }
 
-export function publishTransaction(client, txId) {
+export function publishTransaction(client, txId, cb) {
     // PublishTransaction
     var request = {
         signed_transaction: txId
@@ -334,14 +362,16 @@ export function publishTransaction(client, txId) {
     client.publishTransaction(request, function(err, response) {
         if (err) {
             console.error("publishTransaction", err);
+            return cb(null, err);
         } else {
             console.log("publishTransaction", response);
+            return cb(response);
         }
     });
 }
 
 export function purchaseTickets(client, passphrase, accountNum, spendLimit, requiredConf,
-ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
+ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee, cb) {
     // PurchaseTickets
     var request = {
         passphrase: Buffer.from(passphrase),
@@ -360,8 +390,10 @@ ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
     client.purchaseTickets(request, function(err, response) {
         if (err) {
             console.error("purchaseTickets", err);
+            return cb(null, err);
         } else {
             console.log('purchaseTickets', response);
+            return cb(response);
         }
     });
 }
