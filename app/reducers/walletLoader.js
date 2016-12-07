@@ -53,8 +53,8 @@ export default function walletLoader(state = {}, action) {
       };  
     case CREATEWALLET_ATTEMPT:
       return {...state,
-        isCreatingWallet: true,
-        isCreatedWallet: false,
+        isWalletCreatedRequest: true,
+        isWalletCreated: false,
         privPass: action.privPass,
         pubPass: action.pubPass,
         seed: action.seed,
@@ -62,8 +62,8 @@ export default function walletLoader(state = {}, action) {
     case CREATEWALLET_FAILED:
       return {...state,
         error: action.error,
-        isCreatingWallet: false,
-        isCreatedWallet: false,
+        isWalletCreatedRequest: false,
+        isWalletCreated: false,
         privPass: '',
         pubPass: '',
         seed: '',
@@ -71,8 +71,9 @@ export default function walletLoader(state = {}, action) {
     case CREATEWALLET_SUCCESS:
       return {...state,
         error: '',
-        isCreatingWallet: false,
-        isCreatedWallet: true,
+        isWalletCreatedRequest: false,
+        isWalletCreated: true,
+        isWalletOpen: true,
       };  
     case OPENWALLET_ATTEMPT:
       return {...state,

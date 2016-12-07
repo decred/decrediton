@@ -81,7 +81,10 @@ function createWalletError(error) {
 }
 
 function createWalletSuccess() {
-  return { type: CREATEWALLET_SUCCESS };
+  return (dispatch) => {
+    dispatch({ type: CREATEWALLET_SUCCESS });
+    dispatch(loginRequest());
+  }
 }
 
 export function createWalletRequest(pubPass, privPass, seed) {

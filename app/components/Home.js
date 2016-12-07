@@ -39,10 +39,7 @@ class Home extends Component{
     error: PropTypes.string,
     getBalanceRequest: PropTypes.func.isRequired,
 
-    /*
-    isCreatingWallet: PropTypes.bool.isRequired,
-    isCreatedWallet: PropTypes.bool.isRequired,
-    */
+    isWalletCreated: PropTypes.bool.isRequired,    
     isWalletExist: PropTypes.bool.isRequired,
     isWalletOpen: PropTypes.bool.isRequired,
     loaderRequest: PropTypes.func.isRequired,
@@ -57,6 +54,7 @@ class Home extends Component{
     const { isLoggedIn, isLoggingIn, client, error} = this.props;
     const { isGettingBalance, getBalanceRequest, grpcBalance, balance  } = this.props;
     const { loader, isLoaderReady, isGettingLoader, loaderRequest } = this.props; 
+    const { isWalletCreatedRequest, isWalletCreated } = this.props
     const { isWalletExist, isWalletExistRequest, isWalletExistComplete, walletExistRequest } = this.props;
     const { isWalletOpen, isWalletOpenRequest } = this.props;
     const sideBarProps = {
@@ -161,6 +159,19 @@ class Home extends Component{
                 <h1>Home Page</h1>
                 <h3>Try and createWallet</h3>
                 <CreateWalletForm />
+              </Col>
+            </Row>
+          </div>
+        </MaterialTitlePanel>
+      </Sidebar>);
+
+    const getStartedWalletCreating = (      
+      <Sidebar {...sidebarProps}>
+        <MaterialTitlePanel title={contentHeader}>
+          <div style={styles.mainArea}>
+            <Row>
+              <Col sm={12} >
+                <p> Creating wallet </p>
               </Col>
             </Row>
           </div>
@@ -303,6 +314,10 @@ class Home extends Component{
     // Step 2 complete/ Step 3 start
     if (isWalletExist) {
       return(getStartedWalletOpen);
+    }
+    // Step 2b creating wallet
+    if (isWalletCreatedRequest) {
+      return(getStartedWalletCreating)
     }
     // Step 2 wallet exist action complete, though
     // wallet does not exist
