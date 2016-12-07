@@ -56,7 +56,7 @@ dcrd --testnet
 ```
 
 ```bash
-dcrwallet --testnet --experimentalrpclisten=:19113 --noinitialload --tlscurve=P-256 --onetimetlskey
+dcrwallet --testnet --experimentalrpclisten=127.0.0.1:19113 --noinitialload --tlscurve=P-256 --onetimetlskey
 ```
 
 Start decrediton
