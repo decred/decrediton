@@ -1,4 +1,4 @@
-import { loader, createWallet, walletExists, openWallet } from '../middleware/grpc/client';
+import { loader, createWallet, walletExists, openWallet, closeWallet, discoverAddresses, subscribeToConsensusRpc } from '../middleware/grpc/client';
 import { loginRequest } from './LoginActions';
 
 export const LOADER_ATTEMPT = 'LOADER_ATTEMPT';
@@ -140,6 +140,147 @@ function openWalletAction() {
         dispatch(openWalletError(pubPass + err + " Please try again"));
       } else {
         dispatch(openWalletSuccess());
+      }
+    })
+  }
+}
+
+export const CLOSEWALLET_ATTEMPT = 'CLOSEWALLET_ATTEMPT';
+export const CLOSEWALLET_FAILED = 'CLOSEWALLET_FAILED';
+export const CLOSEWALLET_SUCCESS = 'CLOSEWALLET_SUCCESS';
+
+function closeWalletError(error) {
+  return { error, type: CLOSEWALLET_FAILED };
+}
+
+function closeWalletSuccess() {
+  return (dispatch) => {
+    dispatch({type: CLOSEWALLET_SUCCESS});
+  };
+}
+
+export function closeWalletRequest() {
+  return (dispatch) => {
+    dispatch({type: CLOSEWALLET_ATTEMPT});
+    dispatch(closeWalletAction());
+  }
+}
+
+function closeWalletAction() {
+  return (dispatch, getState) => {
+    const { loader } = getState().walletLoader;
+    closeWallet(loader,
+        function(response, err) {
+      if (err) {
+        dispatch(closeWalletError(err + " Please try again"));
+      } else {
+        dispatch(closeWalletSuccess());
+      }
+    })
+  }
+}
+
+export const STARTRPC_ATTEMPT = 'STARTRPC_ATTEMPT';
+export const STARTRPC_FAILED = 'STARTRPC_FAILED';
+export const STARTRPC_SUCCESS = 'STARTRPC_SUCCESS';
+
+function startRpcError(error) {
+  return { error, type: STARTRPC_FAILED };
+}
+
+function startRpcSuccess() {
+  return (dispatch) => {
+    dispatch({type: STARTRPC_SUCCESS});
+  };
+}
+
+export function startRpcRequest() {
+  return (dispatch) => {
+    dispatch({type: STARTRPC_ATTEMPT});
+    dispatch(startRpcAction());
+  }
+}
+
+function startRpcAction() {
+  return (dispatch, getState) => {
+    const { loader } = getState().walletLoader;
+    startRpc(loader,
+        function(response, err) {
+      if (err) {
+        dispatch(startRpcError(err + " Please try again"));
+      } else {
+        dispatch(startRpcError());
+      }
+    })
+  }
+}
+
+export const DISCOVERADDRESS_ATTEMPT = 'DISCOVERADDRESS_ATTEMPT';
+export const DISCOVERADDRESS_FAILED = 'DISCOVERADDRESS_FAILED';
+export const DISCOVERADDRESS_SUCCESS = 'DISCOVERADDRESS_SUCCESS';
+
+function discoverAddressError(error) {
+  return { error, type: DISCOVERADDRESS_FAILED };
+}
+
+function discoverAddressSuccess() {
+  return (dispatch) => {
+    dispatch({type: DISCOVERADDRESS_SUCCESS});
+  };
+}
+
+export function discoverAddressRequest(discoverAccts, privPass) {
+  return (dispatch) => {
+    dispatch({discoverAccts: discoverAccts, privPass: privPass, type: DISCOVERADDRESS_ATTEMPT});
+    dispatch(discoverAddressAction());
+  }
+}
+
+function discoverAddressAction() {
+  return (dispatch, getState) => {
+    const { loader } = getState().walletLoader;
+    const { discoverAccts, privPass } = getState().walletLoader;
+    discoverAddresses(loader, discoverAccts, privPass, 
+        function(response, err) {
+      if (err) {
+        dispatch(discoverAddressError(err + " Please try again"));
+      } else {
+        dispatch(discoverAddressSuccess());
+      }
+    })
+  }
+}
+
+export const SUBSCRIBEBLOCKNTFNS_ATTEMPT = 'SUBSCRIBEBLOCKNTFNS_ATTEMPT';
+export const SUBSCRIBEBLOCKNTFNS_FAILED = 'SUBSCRIBEBLOCKNTFNS_FAILED';
+export const SUBSCRIBEBLOCKNTFNS_SUCCESS = 'SUBSCRIBEBLOCKNTFNS_SUCCESS';
+
+function subscribeBlockError(error) {
+  return { error, type: SUBSCRIBEBLOCKNTFNS_FAILED };
+}
+
+function subscribeBlockSuccess() {
+  return (dispatch) => {
+    dispatch({type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
+  };
+}
+
+export function subscribeBlockRequest() {
+  return (dispatch) => {
+    dispatch({type: SUBSCRIBEBLOCKNTFNS_ATTEMPT});
+    dispatch(subscribeBlockAction());
+  }
+}
+
+function subscribeBlockAction() {
+  return (dispatch, getState) => {
+    const { loader } = getState().walletLoader;
+    subscribeBlockNtfns(loader,
+        function(response, err) {
+      if (err) {
+        dispatch(subscribeBlockError(err + " Please try again"));
+      } else {
+        dispatch(subscribeBlockSuccess());
       }
     })
   }
