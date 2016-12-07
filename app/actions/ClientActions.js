@@ -1,4 +1,4 @@
-import { getBalance, getStakeInfo } from '../middleware/grpc/client';
+import { getBalance } from '../middleware/grpc/client';
 
 export const GETBALANCE_ATTEMPT = 'GETBALANCE_ATTEMPT';
 export const GETBALANCE_FAILED = 'GETBALANCE_FAILED';
@@ -13,13 +13,16 @@ function getBalanceSuccess(balance) {
 }
 
 export function getBalanceRequest(accountNumber, requiredConfs) {
-  return { 
+  return (dispatch) => {
+    dispatch({
       accountNumber: accountNumber,
       requireConfs: requiredConfs,
-      type: GETBALANCE_ATTEMPT };
+      type: GETBALANCE_ATTEMPT });
+    dispatch(grpcBalance());
+  }
 }
 
-export function grpcBalance() {
+function grpcBalance() {
   return (dispatch, getState) => {
     const { client } = getState().login;
     const { balanceAccountNumber, balanceRequiredConfs } = getState().grpc;
@@ -33,3 +36,4 @@ export function grpcBalance() {
     })
   }
 }
+

@@ -10,8 +10,8 @@ import './bootstrap.min.css';
 
 var initialState = {
   login: {
-    address: "",
-    port: "", 
+    address: "127.0.0.1",
+    port: "19113", 
     passphrase: "",
     isLoggedIn: false,
     isLoggingIn: false,
@@ -24,12 +24,36 @@ var initialState = {
     isGotBalance: false,
     error: "",
     balance: null,
+  },
+  walletLoader: {
+    address: "",
+    port: "",
+    privPass: "",
+    pubPass: "",
+    seed: "",
+    isGettingLoader: false,
+    isLoaderReady: false,
+    isWalletCreatedRequest: false,
+    isWalletCreated: false,
+    isWalletExistRequest: false,
+    isWalletExistComplete: false,
+    isWalletExist: false,
+    isWalletOpenRequest: false,
+    isWalletOpen: false,
+    isWalletClosedRequest: false,
+    isWalletClosed: false,
+    isStartRpcRequest: false,
+    isStartRpc: false,
+    isDiscoverAddressRequest: false,
+    isDiscoverAddress: false,
+    isSubscribeBlockNtfnsRequest: false,
+    isSubscribeBlockNtfns: false,
   }
 };
 
 const store = configureStore(initialState);
 const history = syncHistoryWithStore(hashHistory, store);
-console.log(store.getState());
+
 render(
   <Provider store={store}>
     <Router history={history} routes={routes} />
