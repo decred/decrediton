@@ -2,6 +2,10 @@ import { CREATEWALLET_ATTEMPT, CREATEWALLET_FAILED, CREATEWALLET_SUCCESS } from 
 import { LOADER_ATTEMPT, LOADER_FAILED, LOADER_SUCCESS } from '../actions/WalletLoaderActions';
 import { WALLETEXIST_ATTEMPT, WALLETEXIST_FAILED, WALLETEXIST_SUCCESS } from '../actions/WalletLoaderActions';
 import { OPENWALLET_ATTEMPT, OPENWALLET_FAILED, OPENWALLET_SUCCESS } from '../actions/WalletLoaderActions';
+import { CLOSEWALLET_ATTEMPT, CLOSEWALLET_FAILED, CLOSEWALLET_SUCCESS } from '../actions/WalletLoaderActions';
+import { STARTRPC_ATTEMPT, STARTRPC_FAILED, STARTRPC_SUCCESS } from '../actions/WalletLoaderActions';
+import { DISCOVERADDRESS_ATTEMPT, DISCOVERADDRESS_FAILED, DISCOVERADDRESS_SUCCESS } from '../actions/WalletLoaderActions';
+import { SUBSCRIBEBLOCKNTFNS_ATTEMPT, SUBSCRIBEBLOCKNTFNS_FAILED, SUBSCRIBEBLOCKNTFNS_SUCCESS } from '../actions/WalletLoaderActions';
 
 export default function walletLoader(state = {}, action) {
   switch (action.type) {
@@ -87,7 +91,76 @@ export default function walletLoader(state = {}, action) {
         error: '',
         isWalletOpenRequest: false,
         isWalletOpen: true,
-      };   
+      };  
+    case CLOSEWALLET_ATTEMPT:
+      return {...state,
+        isWalletClosedRequest: true,
+        isWalletClosed: false,
+      };
+    case CLOSEWALLET_FAILED:
+      return {...state,
+        error: action.error,
+        isWalletClosedRequest: false,
+        isWalletClosed: false,
+      };
+    case CLOSEWALLET_SUCCESS:
+      return {...state,
+        error: '',
+        isWalletClosedRequest: false,
+        isWalletClosed: true,
+      };  
+    case STARTRPC_ATTEMPT:
+      return {...state,
+        isStartRpcRequest: true,
+        isStartRpc: false,
+        // add startrpc fields
+      };
+    case STARTRPC_FAILED:
+      return {...state,
+        error: action.error,
+        isStartRpcRequest: false,
+        isStartRpc: false,
+      };
+    case STARTRPC_SUCCESS:
+      return {...state,
+        error: '',
+        isStartRpcRequest: false,
+        isStartRpc: true,
+      };        
+    case DISCOVERADDRESS_ATTEMPT:
+      return {...state,
+        isDiscoverAddressRequest: true,
+        isDiscoverAddress: false,
+      };
+    case DISCOVERADDRESS_FAILED:
+      return {...state,
+        error: action.error,
+        isDiscoverAddressRequest: false,
+        isDiscoverAddress: false,
+      };
+    case DISCOVERADDRESS_SUCCESS:
+      return {...state,
+        error: '',
+        isDiscoverAddressRequest: false,
+        isDiscoverAddress: true,
+      };
+    case SUBSCRIBEBLOCKNTFNS_ATTEMPT:
+      return {...state,
+        isSubscribeBlockNtfnsRequest: true,
+        isSubscribeBlockNtfns: false,
+      };
+    case SUBSCRIBEBLOCKNTFNS_FAILED:
+      return {...state,
+        error: action.error,
+        isSubscribeBlockNtfnsRequest: false,
+        isSubscribeBlockNtfns: false,
+      };
+    case SUBSCRIBEBLOCKNTFNS_SUCCESS:
+      return {...state,
+        error: '',
+        isSubscribeBlockNtfnsRequest: false,
+        isSubscribeBlockNtfns: true,
+      };          
     default:
       return state;
   }
