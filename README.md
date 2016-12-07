@@ -35,8 +35,6 @@ Adjust the following steps for the paths you want to use.
 mkdir code
 cd code
 git clone https://github.com/decred/decrediton.git
-cd decrediton
-cd ..
 git clone https://github.com/grpc/grpc
 cd grpc
 git remote add murg https://github.com/murgatroid99/grpc.git
@@ -47,6 +45,23 @@ npm install
 npm run electron-build -- --target=1.4.6
 cd ../decrediton
 npm install
+```
+
+Start dcrd and dcrwallet with the following options.  Note, you must
+NOT already have rpc certs from dcrwallet so it is easiest to start
+with an emtpy $HOME/.dcrwallet
+
+```bash
+dcrd --testnet
+```
+
+```bash
+dcrwallet --testnet --experimentalrpclisten=127.0.0.1:19113 --noinitialload --tlscurve=P-256 --onetimetlskey
+```
+
+Start decrediton
+
+```bash
 npm run dev
 ```
 

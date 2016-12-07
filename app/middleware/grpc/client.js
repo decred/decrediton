@@ -14,7 +14,6 @@ var Buffer = require('buffer/').Buffer;
 export function client(address, port, cb) {
     var protoDescriptor = grpc.load('./app/api.proto');
     var walletrpc = protoDescriptor.walletrpc;
-    /*
     var certPath = path.join(process.env.HOME, '.dcrwallet', 'rpc.cert');
     if (os.platform == 'win32') {
         certPath = path.join(process.env.LOCALAPPDATA, 'Dcrwallet', 'rpc.cert');
@@ -22,10 +21,9 @@ export function client(address, port, cb) {
         certPath = path.join(process.env.HOME, 'Library', 'Application Support',
             'Dcrwallet', 'rpc.cert');
     }
-    
     var cert = fs.readFileSync(certPath);
-    */
-    var creds = grpc.credentials.createInsecure();
+
+    var creds = grpc.credentials.createSsl(cert);
     var client = new walletrpc.WalletService(address + ':' + port, creds);
 
     var deadline = new Date();
@@ -34,7 +32,7 @@ export function client(address, port, cb) {
     grpc.waitForClientReady(client, deadline, function(err) {
         if (err) {
             return cb(null, err);
-        } else { 
+        } else {
             return cb(client);
         }
     });
@@ -43,7 +41,6 @@ export function client(address, port, cb) {
 export function loader(address, port, cb) {
     var protoDescriptor = grpc.load('./app/api.proto');
     var walletrpc = protoDescriptor.walletrpc;
-    /*
     var certPath = path.join(process.env.HOME, '.dcrwallet', 'rpc.cert');
     if (os.platform == 'win32') {
         certPath = path.join(process.env.LOCALAPPDATA, 'Dcrwallet', 'rpc.cert');
@@ -53,8 +50,7 @@ export function loader(address, port, cb) {
     }
 
     var cert = fs.readFileSync(certPath);
-    */
-    var creds = grpc.credentials.createInsecure();
+    var creds = grpc.credentials.createSsl(cert);
     var loader = new walletrpc.WalletLoaderService(address + ':' + port, creds);
 
     var deadline = new Date();
