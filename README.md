@@ -47,6 +47,23 @@ npm install
 npm run electron-build -- --target=1.4.6
 cd ../decrediton
 npm install
+```
+
+Start dcrd and dcrwallet with the following options.  Note, you must
+NOT already have rpc certs from dcrwallet so it is easiest to start
+with an emtpry $HOME/.dcrwallet
+
+```bash
+dcrd --testnet
+```
+
+```bash
+dcrwallet --testnet --experimentalrpclisten=:19113 --noinitialload --tlscurve=P-256 --onetimetlskey
+```
+
+Start decrediton
+
+```bash
 npm run dev
 ```
 
