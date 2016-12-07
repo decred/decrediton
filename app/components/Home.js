@@ -177,9 +177,10 @@ class Home extends Component{
                   <p style={styles.error}>{error}</p>
                 </Row>
                 <Row>
-                  <h3>Welcome to Decrediton</h3>
-                  <h5>Please enter the information below to connect to you dcrwallet</h5>
-                  <LoaderForm />
+                  <Button type="submit"
+                    onClick={() => {loaderRequest(address, port)}}>
+                    Get Started
+                  </Button>
                 </Row>
               </Col>
             </Row>
