@@ -35,8 +35,6 @@ Adjust the following steps for the paths you want to use.
 mkdir code
 cd code
 git clone https://github.com/decred/decrediton.git
-cd decrediton
-cd ..
 git clone https://github.com/grpc/grpc
 cd grpc
 git remote add murg https://github.com/murgatroid99/grpc.git
