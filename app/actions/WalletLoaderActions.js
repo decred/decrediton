@@ -1,4 +1,6 @@
-import { loader, createWallet, walletExists, openWallet, closeWallet, discoverAddresses, subscribeToConsensusRpc } from '../middleware/grpc/client';
+import { loader, createWallet, walletExists, openWallet, 
+  closeWallet, discoverAddresses, subscribeToConsensusRpc
+ } from '../middleware/grpc/loader';
 import { loginRequest } from './LoginActions';
 
 export const LOADER_ATTEMPT = 'LOADER_ATTEMPT';
