@@ -51,7 +51,7 @@ npm install
 
 Start dcrd and dcrwallet with the following options.  Note, you must
 NOT already have rpc certs from dcrwallet so it is easiest to start
-with an emtpry $HOME/.dcrwallet
+with an emtpy $HOME/.dcrwallet
 
 ```bash
 dcrd --testnet
