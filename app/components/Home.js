@@ -34,11 +34,10 @@ class Home extends Component{
     passphrase: PropTypes.string.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
     isLoggingIn: PropTypes.bool.isRequired,
-    isGettingBalance: PropTypes.bool.isRequired,
     client: PropTypes.object,
     error: PropTypes.string,
+    getBalanceRequestAttempt: PropTypes.bool.isRequired,
     getBalanceRequest: PropTypes.func.isRequired,
-
     isWalletCreated: PropTypes.bool.isRequired,    
     isWalletExist: PropTypes.bool.isRequired,
     isWalletOpen: PropTypes.bool.isRequired,
@@ -52,7 +51,7 @@ class Home extends Component{
   render() {
     const { address, port } = this.props;
     const { isLoggedIn, isLoggingIn, client, error} = this.props;
-    const { isGettingBalance, getBalanceRequest, grpcBalance, balance  } = this.props;
+    const { isGettingBalance, getBalanceRequestAttempt, grpcBalance, getBalanceResponse  } = this.props;
     const { loader, isLoaderReady, isGettingLoader, loaderRequest } = this.props; 
     const { isWalletCreatedRequest, isWalletCreated } = this.props
     const { isWalletExist, isWalletExistRequest, isWalletExistComplete, walletExistRequest } = this.props;
@@ -137,12 +136,12 @@ class Home extends Component{
             <Row>
               <Col sm={12} >
                 <h1>Home Page</h1>
-                <h3>Current balance: {balance === null ? 'Please refresh' : balance.total }</h3>
+                <h3>Current balance: {getBalanceResponse === null ? 'Please refresh' : getBalanceResponse.total }</h3>
                 <Button 
                   bsStyle="primary"
-                  disabled={isGettingBalance}
-                  onClick={!isGettingBalance ? () => this.handleBalanceClick() : null}>
-                  {isGettingBalance ? 'Getting Balance...' : 'Get Balance'}
+                  disabled={getBalanceRequestAttempt}
+                  onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}>
+                  {getBalanceRequestAttempt ? 'Getting Balance...' : 'Get Balance'}
                 </Button>
               </Col>
             </Row>

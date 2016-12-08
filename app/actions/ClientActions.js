@@ -8,8 +8,8 @@ function getBalanceError(error) {
   return { error, type: GETBALANCE_FAILED };
 }
 
-function getBalanceSuccess(balance) {
-  return { balance, type: GETBALANCE_SUCCESS };
+function getBalanceSuccess(balanceResponse) {
+  return { balanceResponse: balanceResponse, type: GETBALANCE_SUCCESS };
 }
 
 export function getBalanceRequest(accountNumber, requiredConfs) {
@@ -18,22 +18,21 @@ export function getBalanceRequest(accountNumber, requiredConfs) {
       accountNumber: accountNumber,
       requireConfs: requiredConfs,
       type: GETBALANCE_ATTEMPT });
-    dispatch(grpcBalance());
+    dispatch(balance());
   }
 }
 
-function grpcBalance() {
+function balance() {
   return (dispatch, getState) => {
     const { client } = getState().login;
-    const { balanceAccountNumber, balanceRequiredConfs } = getState().grpc;
-    getBalance(client, balanceAccountNumber, balanceRequiredConfs, 
-        function(balance, err) {
+    const { getBalanceAccountNumber, getBalanceRequiredConfs } = getState().grpc;
+    getBalance(client, getBalanceAccountNumber, getBalanceRequiredConfs, 
+        function(balanceResponse, err) {
       if (err) {
         dispatch(getBalanceError(err + " Please try again"));
       } else {
-        dispatch(getBalanceSuccess(balance));
+        dispatch(getBalanceSuccess(balanceResponse));
       }
     })
   }
 }
-

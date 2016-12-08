@@ -18,12 +18,12 @@ var initialState = {
     error: "",
   },
   grpc: {
-    balanceAccountNumber: 0,
-    balanceRequiredConfs: 0,
-    isGettingBalance: false,
-    isGotBalance: false,
-    error: "",
-    balance: null,
+    //Balance
+    getBalanceAccountNumber: 0,
+    getBalanceRequiredConfs: 0,
+    getBalanceError: "",
+    getBalanceRequestAttempt: false,
+    getBalanceResponse: null,
   },
   walletLoader: {
     address: "",

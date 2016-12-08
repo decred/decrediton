@@ -15,8 +15,12 @@ function mapStateToProps(state) {
     isLoggingIn: state.login.isLoggingIn,
     client: state.login.client,
     error: state.login.error,
-    isGettingBalance: state.grpc.isGettingBalance,
-    balance: state.grpc.balance,
+
+    // WalletServices
+    getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
+    getBalanceResponse: state.grpc.getBalanceResponse,
+
+    // WalletLoaderServices
     isWalletCreatedRequest: state.walletLoader.isWalletCreatedRequest,
     isWalletCreated: state.walletLoader.isWalletCreated,
     isWalletExistRequest: state.walletLoader.isWalletExistRequest,
