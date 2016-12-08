@@ -14,15 +14,17 @@ var Buffer = require('buffer/').Buffer;
 export function client(address, port, cb) {
     var protoDescriptor = grpc.load('./app/api.proto');
     var walletrpc = protoDescriptor.walletrpc;
-    var certPath = path.join(process.env.HOME, '.decrediton', 'rpc.cert');
+    var certPath = '';
     if (os.platform() == 'win32') {
         certPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'rpc.cert');
     } else if (os.platform() == 'darwin') {
         certPath = path.join(process.env.HOME, 'Library', 'Application Support',
             'Decrediton', 'rpc.cert');
+    } else {
+        var certPath = path.join(process.env.HOME, '.decrediton', 'rpc.cert');
     }
-    var cert = fs.readFileSync(certPath);
 
+    var cert = fs.readFileSync(certPath);
     var creds = grpc.credentials.createSsl(cert);
     var client = new walletrpc.WalletService(address + ':' + port, creds);
 
@@ -41,12 +43,14 @@ export function client(address, port, cb) {
 export function loader(address, port, cb) {
     var protoDescriptor = grpc.load('./app/api.proto');
     var walletrpc = protoDescriptor.walletrpc;
-    var certPath = path.join(process.env.HOME, '.decrediton', 'rpc.cert');
+    var certPath = '';
     if (os.platform() == 'win32') {
         certPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'rpc.cert');
     } else if (os.platform() == 'darwin') {
         certPath = path.join(process.env.HOME, 'Library', 'Application Support',
             'Decrediton', 'rpc.cert');
+    } else {
+        var certPath = path.join(process.env.HOME, '.decrediton', 'rpc.cert');
     }
 
     var cert = fs.readFileSync(certPath);
@@ -59,7 +63,7 @@ export function loader(address, port, cb) {
     grpc.waitForClientReady(loader, deadline, function(err) {
         if (err) {
             return cb(null, err);
-        } else { 
+        } else {
             return cb(loader);
         }
     });
