@@ -1,8 +1,8 @@
 {
   "name": "decrediton",
   "productName": "decrediton",
-  "version": "1.0.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "version": "0.0.1",
+  "description": "Cross-platform decred gui based on Electron and React",
   "main": "./main.js",
   "author": {
     "name": "Decred Team",
