@@ -36,8 +36,10 @@ class Home extends Component{
     isLoggingIn: PropTypes.bool.isRequired,
     client: PropTypes.object,
     error: PropTypes.string,
+
     getBalanceRequestAttempt: PropTypes.bool.isRequired,
-    getBalanceRequest: PropTypes.func.isRequired,
+    //getBalanceRequest: PropTypes.object.isRequired,
+
     isWalletCreated: PropTypes.bool.isRequired,    
     isWalletExist: PropTypes.bool.isRequired,
     isWalletOpen: PropTypes.bool.isRequired,
@@ -45,13 +47,13 @@ class Home extends Component{
   }
 
   handleBalanceClick = () => {
-    this.props.getBalanceRequest(0,1);
+    this.props.getBalanceAttempt(0,1);
   }
 
   render() {
     const { address, port } = this.props;
     const { isLoggedIn, isLoggingIn, client, error} = this.props;
-    const { isGettingBalance, getBalanceRequestAttempt, grpcBalance, getBalanceResponse  } = this.props;
+    const { getBalanceRequestAttempt, getBalanceResponse  } = this.props;
     const { loader, isLoaderReady, isGettingLoader, loaderRequest } = this.props; 
     const { isWalletCreatedRequest, isWalletCreated } = this.props
     const { isWalletExist, isWalletExistRequest, isWalletExistComplete, walletExistRequest } = this.props;

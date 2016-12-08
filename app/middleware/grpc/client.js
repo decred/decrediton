@@ -46,14 +46,10 @@ export function client(address, port, cb) {
     });
 }
 
-export function getBalance(client, accountNumber, requiredConf, cb) {
+export function getBalance(client, request, cb) {
     if (client === undefined) {
         return cb(null, new Error("Client not available to getBalance"));
     }
-    var request = {
-        account_number: accountNumber,
-        required_confirmations: requiredConf
-    };
 
     client.balance(request, function(err, response) {
         if (err) {
@@ -65,12 +61,7 @@ export function getBalance(client, accountNumber, requiredConf, cb) {
     });
 }
 
-export function getAccountNumber(client, accountName, cb) {
-    // AccountNumber
-    var request = {
-        account_name: accountName
-    };
-
+export function getAccountNumber(client, request, cb) {
     client.accountNumber(request, function(err, response) {
         if (err) {
             console.error(err);
@@ -82,10 +73,7 @@ export function getAccountNumber(client, accountName, cb) {
     });
 }
 
-export function getStakeInfo(client, cb) {
-    // StakeInfo
-    var request = {};
-
+export function getStakeInfo(client, request, cb) {
     client.stakeInfo(request, function(err, response) {
         if (err) {
             console.error(err);
@@ -97,10 +85,7 @@ export function getStakeInfo(client, cb) {
     });
 }
 
-export function getPing(client, cb) {
-    // Ping
-    var request = {};
-
+export function getPing(client, request, cb) {
     client.ping(request, function(err, response) {
         if (err) {
             console.error(err);
@@ -112,10 +97,7 @@ export function getPing(client, cb) {
     });
 }
 
-export function getNetwork(client, cb) {
-    // Network
-    var request = {};
-
+export function getNetwork(client, request, cb) {
     client.network(request, function(err, response) {
         if (err) {
             console.error(err);
@@ -127,7 +109,7 @@ export function getNetwork(client, cb) {
     });
 }
 
-export function getAccounts(client, cb) {
+export function getAccounts(client, request, cb) {
     // Accounts
     var request = {};
 
@@ -142,15 +124,7 @@ export function getAccounts(client, cb) {
     });
 }
 
-export function getTransactions(client, start, end, cb) {
-    // Currently not working due to too large of messages
-    // known issue by jrick.
-    // GetTransactions
-    var request = {
-        starting_block_height: start,
-        ending_block_height: end
-    };
-
+export function getTransactions(client, request, cb) {
     client.getTransactions(request, function(err, response, cb) {
         if (err) {
             console.error("getTransactions", err);
@@ -162,16 +136,14 @@ export function getTransactions(client, start, end, cb) {
     });
 }
 
-export function getTicketPrice(client, cb) {
-    // TicketPrice 
-    var request = {};
-
+export function getTicketPrice(client, request, cb) {
     client.ticketPrice(request, function(err, response) {
         if (err) {
             console.error("ticketPrice", err);
             return cb(null, err);
         } else {
             console.log('ticketPrice', response);
+            return cb(response);
         }
     });
 }

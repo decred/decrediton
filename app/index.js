@@ -18,12 +18,46 @@ var initialState = {
     error: "",
   },
   grpc: {
-    //Balance
-    getBalanceAccountNumber: 0,
-    getBalanceRequiredConfs: 0,
-    getBalanceError: "",
+    // Balance
+    getBalanceRequest: null,
+    getBalanceError: null,
     getBalanceRequestAttempt: false,
     getBalanceResponse: null,
+    // AccountNumber
+    getAccountNumberRequest: null,
+    getAccountNumberError: null,
+    getAccountNumberRequestAttempt: false,
+    getAccountNumberResponse: null,
+    // Network
+    getNetworkRequest: null,
+    getNetworkError: null,
+    getNetworkRequestAttempt: false,
+    getNetworkResponse: null,
+    // Ping
+    getPingRequest: null,
+    getPingError: null,
+    getPingRequestAttempt: false,
+    getPingResponse: null,
+    // StakeInfo
+    getStakeInfoRequest: null,
+    getStakeInfoError: null,
+    getStakeInfoRequestAttempt: false,
+    getStakeInfoResponse: null,
+    // TicketPrice
+    getTicketPriceRequest: null,
+    getTicketPriceError: null,
+    getTicketPriceRequestAttempt: false,
+    getTicketPriceResponse: null,
+    // Accounts
+    getAccountsRequest: null,
+    getAccountsError: null,
+    getAccountsRequestAttempt: false,
+    getAccountsResponse: null,
+    // Transactions
+    getTransactionsRequest: null,
+    getTransactionsError: null,
+    getTransactionsRequestAttempt: false,
+    getTransactionsResponse: null,
   },
   walletLoader: {
     address: "",
