@@ -1,7 +1,13 @@
 import { loader, createWallet, walletExists, openWallet, 
-  closeWallet, discoverAddresses, subscribeToConsensusRpc
- } from '../middleware/grpc/loader';
+  closeWallet, discoverAddresses, subscribeToConsensusRpc,
+  startConsensusRpc} from '../middleware/grpc/loader';
 import { loginRequest } from './LoginActions';
+import path from 'path';
+import os from 'os';
+import fs from 'fs';
+
+
+var Buffer = require('buffer/').Buffer;
 
 export const LOADER_ATTEMPT = 'LOADER_ATTEMPT';
 export const LOADER_FAILED = 'LOADER_FAILED';
@@ -13,22 +19,26 @@ function loaderError(error) {
 
 function loaderSuccess(loader) {
   return (dispatch) => {
-    dispatch({loader, type: LOADER_SUCCESS });
+    dispatch({loader: loader, type: LOADER_SUCCESS });
     dispatch(walletExistRequest());
   };
 }
 
 export function loaderRequest(address, port) {
+  var request = {
+    address: address,
+    port: port,
+  }
   return (dispatch) => {
-    dispatch({address: address, port: port, type: LOADER_ATTEMPT });
+    dispatch({request: request, type: LOADER_ATTEMPT });
     dispatch(getLoader());
   }
 }
 
 function getLoader() {
   return (dispatch, getState) => {
-    const { address, port } = getState().walletLoader;
-    loader(address, port, function(loader, err) {
+    const { getLoaderRequest } = getState().walletLoader;
+    loader(getLoaderRequest, function(loader, err) {
       if (err) {
         dispatch(loaderError(err + " Please try again"));
         //throw err
@@ -47,28 +57,29 @@ function walletExistError(error) {
   return { error, type: WALLETEXIST_FAILED };
 }
 
-function walletExistSuccess(exists) {
+function walletExistSuccess(response) {
   return (dispatch) => {
-    dispatch({exists: exists, type: WALLETEXIST_SUCCESS });
+    dispatch({response: response, type: WALLETEXIST_SUCCESS });
   }
 }
 
 export function walletExistRequest() {
+  var request = {};
   return (dispatch) => {
-    dispatch({type: WALLETEXIST_ATTEMPT });
+    dispatch({request: {}, type: WALLETEXIST_ATTEMPT });
     dispatch(checkWalletExist());
   }
 }
 
 function checkWalletExist() {
   return (dispatch, getState) => {
-    const { loader } = getState().walletLoader;
-    walletExists(loader,
-        function(exists, err) {
+    const { loader, walletExistRequest } = getState().walletLoader;
+    walletExists(loader, walletExistRequest, 
+        function(response, err) {
       if (err) {
         dispatch(walletExistError(err + " Please try again"));
       } else {
-        dispatch(walletExistSuccess(exists));
+        dispatch(walletExistSuccess(response));
       }
     })
   }
@@ -84,17 +95,21 @@ function createWalletError(error) {
 
 function createWalletSuccess() {
   return (dispatch) => {
-    dispatch({ type: CREATEWALLET_SUCCESS });
+    dispatch({response: {}, type: CREATEWALLET_SUCCESS });
+    dispatch(startRpcRequest());
     dispatch(loginRequest());
   }
 }
 
 export function createWalletRequest(pubPass, privPass, seed) {
+  var request = {
+    public_passphrase: Buffer.from(pubPass),
+    private_passphrase: Buffer.from(privPass),
+    seed: Buffer.from(seed),
+  };
   return (dispatch) => { 
     dispatch({
-      pubPass: pubPass,
-      privPass: privPass,
-      seed: seed,
+      request: request,
       type: CREATEWALLET_ATTEMPT });
     dispatch(createNewWallet());
   }
@@ -102,8 +117,8 @@ export function createWalletRequest(pubPass, privPass, seed) {
 
 function createNewWallet() {
   return (dispatch, getState) => {
-    const { loader, pubPass, privPass, seed } = getState().walletLoader;
-    createWallet(loader, pubPass, privPass, seed, 
+    const { loader, walletCreateRequest } = getState().walletLoader;
+    createWallet(loader, walletCreateRequest, 
         function(err) {
       if (err) {
         dispatch(createWalletError(err + " Please try again"));
@@ -124,23 +139,27 @@ function openWalletError(error) {
 
 function openWalletSuccess() {
   return (dispatch) => {
-    dispatch({type: OPENWALLET_SUCCESS});
+    dispatch({response: {}, type: OPENWALLET_SUCCESS});
+    dispatch(startRpcRequest());
     dispatch(loginRequest());
   };
 }
 
 export function openWalletRequest(pubPass) {
+  var request = {
+    public_passphrase: Buffer.from(pubPass),
+  }
   return (dispatch) => {
-    dispatch({pubPass: pubPass, type: OPENWALLET_ATTEMPT});
+    dispatch({request: request, type: OPENWALLET_ATTEMPT});
     dispatch(openWalletAction());
   }
 }
 
 function openWalletAction() {
   return (dispatch, getState) => {
-    const { loader, pubPass } = getState().walletLoader;
-    openWallet(loader, pubPass, 
-        function(response, err) {
+    const { loader, walletOpenRequest } = getState().walletLoader;
+    openWallet(loader, walletOpenRequest, 
+        function(err) {
       if (err) {
         dispatch(openWalletError(pubPass + err + " Please try again"));
       } else {
@@ -160,22 +179,22 @@ function closeWalletError(error) {
 
 function closeWalletSuccess() {
   return (dispatch) => {
-    dispatch({type: CLOSEWALLET_SUCCESS});
+    dispatch({response: {}, type: CLOSEWALLET_SUCCESS});
   };
 }
 
 export function closeWalletRequest() {
   return (dispatch) => {
-    dispatch({type: CLOSEWALLET_ATTEMPT});
+    dispatch({request: {}, type: CLOSEWALLET_ATTEMPT});
     dispatch(closeWalletAction());
   }
 }
 
 function closeWalletAction() {
   return (dispatch, getState) => {
-    const { loader } = getState().walletLoader;
-    closeWallet(loader,
-        function(response, err) {
+    const { loader, walletCloseRequest } = getState().walletLoader;
+    closeWallet(loader, walletCloseRequest,
+        function(err) {
       if (err) {
         dispatch(closeWalletError(err + " Please try again"));
       } else {
@@ -190,31 +209,46 @@ export const STARTRPC_FAILED = 'STARTRPC_FAILED';
 export const STARTRPC_SUCCESS = 'STARTRPC_SUCCESS';
 
 function startRpcError(error) {
-  return { error, type: STARTRPC_FAILED };
+  return { error: error, type: STARTRPC_FAILED };
 }
 
 function startRpcSuccess() {
   return (dispatch) => {
-    dispatch({type: STARTRPC_SUCCESS});
+    dispatch({response: {}, type: STARTRPC_SUCCESS});
   };
 }
 
 export function startRpcRequest() {
+  var certPath = path.join(process.env.HOME, '.dcrd', 'rpc.cert');
+  if (os.platform == 'win32') {
+    certPath = path.join(process.env.LOCALAPPDATA, 'Dcrd', 'rpc.cert');
+  } else if (os.platform == 'darwin') {
+    certPath = path.join(process.env.HOME, 'Library', 'Application Support',
+    'Dcrd', 'rpc.cert');
+  }
+
+  var cert = fs.readFileSync(certPath);
+  var request = {
+    network_address: "127.0.0.1:19109",
+    username: "USER",
+    password: "PASSWORD",
+    certificate: cert,
+  };
   return (dispatch) => {
-    dispatch({type: STARTRPC_ATTEMPT});
+    dispatch({request: request, type: STARTRPC_ATTEMPT});
     dispatch(startRpcAction());
   }
 }
 
 function startRpcAction() {
   return (dispatch, getState) => {
-    const { loader } = getState().walletLoader;
-    startRpc(loader,
-        function(response, err) {
+    const { loader, startRpcRequest } = getState().walletLoader;
+    startConsensusRpc(loader, startRpcRequest,
+        function(err) {
       if (err) {
         dispatch(startRpcError(err + " Please try again"));
       } else {
-        dispatch(startRpcError());
+        dispatch(startRpcSuccess());
       }
     })
   }
@@ -230,13 +264,17 @@ function discoverAddressError(error) {
 
 function discoverAddressSuccess() {
   return (dispatch) => {
-    dispatch({type: DISCOVERADDRESS_SUCCESS});
+    dispatch({response: {}, type: DISCOVERADDRESS_SUCCESS});
   };
 }
 
 export function discoverAddressRequest(discoverAccts, privPass) {
+  var request = {
+    discover_accounts: discoverAccts,
+    private_passphrase: privPass,
+  }
   return (dispatch) => {
-    dispatch({discoverAccts: discoverAccts, privPass: privPass, type: DISCOVERADDRESS_ATTEMPT});
+    dispatch({request: request, type: DISCOVERADDRESS_ATTEMPT});
     dispatch(discoverAddressAction());
   }
 }
@@ -244,9 +282,9 @@ export function discoverAddressRequest(discoverAccts, privPass) {
 function discoverAddressAction() {
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
-    const { discoverAccts, privPass } = getState().walletLoader;
-    discoverAddresses(loader, discoverAccts, privPass, 
-        function(response, err) {
+    const { discoverAddressRequest } = getState().walletLoader;
+    discoverAddresses(loader, discoverAddressRequest,
+        function(err) {
       if (err) {
         dispatch(discoverAddressError(err + " Please try again"));
       } else {
@@ -266,22 +304,22 @@ function subscribeBlockError(error) {
 
 function subscribeBlockSuccess() {
   return (dispatch) => {
-    dispatch({type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
+    dispatch({response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
   };
 }
 
 export function subscribeBlockRequest() {
   return (dispatch) => {
-    dispatch({type: SUBSCRIBEBLOCKNTFNS_ATTEMPT});
+    dispatch({request: {}, type: SUBSCRIBEBLOCKNTFNS_ATTEMPT});
     dispatch(subscribeBlockAction());
   }
 }
 
 function subscribeBlockAction() {
   return (dispatch, getState) => {
-    const { loader } = getState().walletLoader;
-    subscribeBlockNtfns(loader,
-        function(response, err) {
+    const { loader, subscribeBlockNtfnsRequest } = getState().walletLoader;
+    subscribeBlockNtfns(loader, subscribeBlockNtfnsRequest,
+        function(err) {
       if (err) {
         dispatch(subscribeBlockError(err + " Please try again"));
       } else {

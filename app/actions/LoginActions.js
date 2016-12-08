@@ -14,10 +14,10 @@ function loginSuccess(client) {
 
 export function loginRequest() {
   return (dispatch, getState) => {
-    const { address, port } = getState().walletLoader;
+    const { getLoaderRequest } = getState().walletLoader;
     dispatch({
-      address: address, 
-      port: port, 
+      address: getLoaderRequest.address, 
+      port: getLoaderRequest.port, 
       passphrase: '', 
       type: LOGIN_ATTEMPT })
     dispatch(login());

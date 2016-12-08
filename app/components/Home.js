@@ -38,13 +38,12 @@ class Home extends Component{
     error: PropTypes.string,
 
     getBalanceRequestAttempt: PropTypes.bool.isRequired,
-    //getBalanceRequest: PropTypes.object.isRequired,
     getStakeInfoRequestAttempt: PropTypes.bool.isRequired,
 
-    isWalletCreated: PropTypes.bool.isRequired,    
-    isWalletExist: PropTypes.bool.isRequired,
-    isWalletOpen: PropTypes.bool.isRequired,
-    loaderRequest: PropTypes.func.isRequired,
+    getLoaderRequestAttempt: PropTypes.bool.isRequired,
+    walletCreateRequestAttempt: PropTypes.bool.isRequired,    
+    walletExistRequestAttempt: PropTypes.bool.isRequired,
+    walletOpenRequestAttempt: PropTypes.bool.isRequired,
   }
 
   handleBalanceClick = () => {
@@ -54,12 +53,16 @@ class Home extends Component{
   render() {
     const { address, port } = this.props;
     const { isLoggedIn, isLoggingIn, client, error} = this.props;
+
     const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
     const { getStakeInfoRequestAttempt, getStakeInfoResponse } = this.props;
-    const { loader, isLoaderReady, isGettingLoader, loaderRequest } = this.props; 
-    const { isWalletCreatedRequest, isWalletCreated } = this.props;
-    const { isWalletExist, isWalletExistRequest, isWalletExistComplete, walletExistRequest } = this.props;
-    const { isWalletOpen, isWalletOpenRequest } = this.props;
+
+    const { loader, getLoaderRequestAttempt, getLoaderError, loaderRequest } = this.props; 
+    const { walletCreateResponse, walletCreateRequestAttempt, walletCreateError } = this.props;
+    const { walletOpenResponse, walletOpenRequestAttempt, walletOpenError } = this.props;
+    const { walletExistResponse, walletExistRequestAttempt, walletExistError } = this.props;
+    const { walletCloseResponse, walletCloseRequestAttempt, walletCloseError } = this.props;
+    const { startRpcResponse, startRpcRequestAttempt, startRpcError } = this.props;
 
     const sideBarProps = {
       loggedIn: isLoggedIn,
@@ -315,37 +318,38 @@ class Home extends Component{
       return (getStartedLoggingIn);
     }
     // Step 3 complete/ Step 4 start
-    if (isWalletOpen) {
+    if (walletOpenResponse !== null) {
       return(getStarted);
     }
     // Step 3 action
-    if (isWalletOpenRequest) {
+    if (walletOpenRequestAttempt) {
       return (getStartedOpeningWallet);
     }
     // Step 2 complete/ Step 3 start
-    if (isWalletExist) {
+    if (walletExistResponse !== null && walletExistResponse.exists) {
       return(getStartedWalletOpen);
     }
     // Step 2b creating wallet
-    if (isWalletCreatedRequest) {
+    if (walletCreateRequestAttempt) {
       return(getStartedWalletCreating)
     }
     // Step 2 wallet exist action complete, though
     // wallet does not exist
-    if (isWalletExistComplete) {
+    
+    if (walletExistResponse !== null && !walletExistResponse.exists) {
       return(getStartedCreateWallet)
     }
     // Step 2 action
-    if (isWalletExistRequest) {
+    if (walletExistRequestAttempt) {
       return(getStartedWalletExistRequest)
     }
     // Step 1 complete/ Step 2 start
-    if (isLoaderReady) {
+    if (loader !== null) {
       return(getStartedWalletExist);
     }
 
     // Step 1 action
-    if (isGettingLoader) {
+    if (getLoaderRequestAttempt) {
       return (getStartedGettingLoader);
     }
     // Step 1 start

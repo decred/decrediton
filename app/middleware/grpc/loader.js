@@ -9,13 +9,13 @@ import grpc from 'grpc';
 
 var Buffer = require('buffer/').Buffer;
 
-export function loader(address, port, cb) {
+export function loader(request, cb) {
     var protoDescriptor = grpc.load('./app/api.proto');
     var walletrpc = protoDescriptor.walletrpc;
 
     var cert = getCert();
     var creds = grpc.credentials.createSsl(cert);
-    var loader = new walletrpc.WalletLoaderService(address + ':' + port, creds);
+    var loader = new walletrpc.WalletLoaderService(request.address + ':' + request.port, creds);
 
     var deadline = new Date();
     var deadlineInSeconds = 2;
@@ -29,26 +29,18 @@ export function loader(address, port, cb) {
     });
 }
 
-export function walletExists(loader, cb) {
-    var request = {};
-   
+export function walletExists(loader, request, cb) {
     loader.walletExists(request, function(err, response) {
         if (err) {
             console.error(err);
             return cb(null, err);
         } else {
-            return cb(response.exists, null);
+            return cb(response);
         }
     });
 }
 
-export function createWallet(loader, pubPass, privPass, seed, cb) {
-    var request = {
-        public_passphrase: Buffer.from(pubPass),
-        private_passphrase: Buffer.from(privPass),
-        seed: Buffer.from(seed),
-    };
-   
+export function createWallet(loader, request, cb) {
     loader.createWallet(request, function(err, response) {
         if (err) {
             console.error(err);
@@ -60,11 +52,7 @@ export function createWallet(loader, pubPass, privPass, seed, cb) {
     });
 }
 
-export function openWallet(loader, publicPass, cb) {
-    var request = {
-        public_passphrase: Buffer.from(publicPass),
-    };
-   
+export function openWallet(loader, request, cb) {
     loader.openWallet(request, function(err, response) {
         if (err) {
             if (err.message.includes("wallet already loaded")) {
@@ -74,14 +62,12 @@ export function openWallet(loader, publicPass, cb) {
                 return cb(null, err);
             }
         } else {
-            return cb(response, null);
+            return cb();
         }
     });
 }
 
-export function closeWallet(loader, cb) {
-    var request = {};
-   
+export function closeWallet(loader,request, cb) {
     loader.closeWallet(request, function(err, response) {
         if (err) {
             console.error(err);
@@ -92,49 +78,35 @@ export function closeWallet(loader, cb) {
     });
 }
 
-export function startConsensusRpc(loader, dcrd_network, username, password, cert, cb) {
-    var request = {
-        network_address: dcrd_network,
-        username: username,
-        password: password,
-        certificate: cert,
-    };
-   
+export function startConsensusRpc(loader, request, cb) {
     loader.startConsensusRpc(request, function(err, response) {
         if (err) {
             console.error(err);
             return cb(err);
         } else {
-            return cb(response);
+            return cb();
         }
     });
 }
 
-export function discoverAddresses(loader, discoverAccounts, privPass,  cb) {
-    var request = {
-        discover_accounts: discoverAccounts,
-        private_passphrase: privPass,
-    };
-   
+export function discoverAddresses(loader, request, cb) {
     loader.discoverAddresses(request, function(err, response) {
         if (err) {
             console.error(err);
             return cb(err);
         } else {
-            return cb(response);
+            return cb();
         }
     });
 }
 
-export function subscribeBlockNtfns(loader, cb) {
-    var request = {};
-   
+export function subscribeBlockNtfns(loader, request, cb) {
     loader.subscribeToBlockNotifications(request, function(err, response) {
         if (err) {
             console.error(err);
             return cb(err);
         } else {
-            return cb(response);
+            return cb();
         }
     });
 }

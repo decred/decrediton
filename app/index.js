@@ -60,28 +60,46 @@ var initialState = {
     getTransactionsResponse: null,
   },
   walletLoader: {
-    address: "",
-    port: "",
-    privPass: "",
-    pubPass: "",
-    seed: "",
-    isGettingLoader: false,
-    isLoaderReady: false,
-    isWalletCreatedRequest: false,
-    isWalletCreated: false,
-    isWalletExistRequest: false,
-    isWalletExistComplete: false,
-    isWalletExist: false,
-    isWalletOpenRequest: false,
-    isWalletOpen: false,
-    isWalletClosedRequest: false,
-    isWalletClosed: false,
-    isStartRpcRequest: false,
-    isStartRpc: false,
-    isDiscoverAddressRequest: false,
-    isDiscoverAddress: false,
-    isSubscribeBlockNtfnsRequest: false,
-    isSubscribeBlockNtfns: false,
+    // Loader
+    getLoaderRequestAttempt: false,   
+    getLoaderRequest: null,
+    loader: null,
+    getLoaderError: null,
+    // WalletCreate
+    walletCreateRequestAttempt: false,
+    walletCreateRequest: false,
+    walletCreateResponse: null,
+    walletCreateError: null,
+    // WalletExist
+    walletExistRequestAttempt: false,
+    walletExistRequest: null,
+    walletExistResponse: null,
+    walletExistError: null,    
+    // WalletOpen
+    walletOpenRequestAttempt: false,
+    walletOpenRequest: null,
+    walletOpenResponse: null,
+    walletOpenError: null,
+    // WalletClose
+    walletCloseRequestAttempt: false,
+    walletClosedRequest: null,
+    walletClosedResponse: null,
+    walletClosedError: null,
+    // StartRpc
+    startRpcRequestAttempt: false,
+    startRpcRequest: null,
+    startRpcResponse: null,
+    startRpcError: null,
+    // DiscoverAddress
+    discoverAddressRequestAttempt: false,
+    discoverAddressRequest: null,
+    discoverAddressResponse: null,
+    discoverAddressError: null,
+    // SubscribeBlockNtfns
+    subscribeBlockNtfnsRequestAttempt: false,
+    subscribeBlockNtfnsRequest: null,
+    subscribeBlockNtfnsResponse: null,
+    subscribeBlockNtfnsError: null,
   }
 };
 
