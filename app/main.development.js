@@ -74,9 +74,9 @@ app.on('ready', async () => {
 
   if (process.platform === 'darwin') {
     template = [{
-      label: 'Electron',
+      label: 'Decrediton',
       submenu: [{
-        label: 'About ElectronReact',
+        label: 'About Decrediton',
         selector: 'orderFrontStandardAboutPanel:'
       }, {
         type: 'separator'
@@ -86,7 +86,7 @@ app.on('ready', async () => {
       }, {
         type: 'separator'
       }, {
-        label: 'Hide ElectronReact',
+        label: 'Hide Decrediton',
         accelerator: 'Command+H',
         selector: 'hide:'
       }, {
@@ -182,22 +182,22 @@ app.on('ready', async () => {
       submenu: [{
         label: 'Learn More',
         click() {
-          shell.openExternal('http://electron.atom.io');
+          shell.openExternal('https://decred.org');
         }
       }, {
         label: 'Documentation',
         click() {
-          shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
+          shell.openExternal('https://github.com/decred/decrediton');
         }
       }, {
         label: 'Community Discussions',
         click() {
-          shell.openExternal('https://discuss.atom.io/c/electron');
+          shell.openExternal('https://forum.decred.org');
         }
       }, {
         label: 'Search Issues',
         click() {
-          shell.openExternal('https://github.com/atom/electron/issues');
+          shell.openExternal('https://github.com/decred/decrediton/issues');
         }
       }]
     }];
@@ -249,22 +249,22 @@ app.on('ready', async () => {
       submenu: [{
         label: 'Learn More',
         click() {
-          shell.openExternal('http://electron.atom.io');
+          shell.openExternal('https://decred.org');
         }
       }, {
         label: 'Documentation',
         click() {
-          shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
+          shell.openExternal('https://github.com/decred/decrediton');
         }
       }, {
         label: 'Community Discussions',
         click() {
-          shell.openExternal('https://discuss.atom.io/c/electron');
+          shell.openExternal('https://forum.decred.org');
         }
       }, {
         label: 'Search Issues',
         click() {
-          shell.openExternal('https://github.com/atom/electron/issues');
+          shell.openExternal('https://github.com/decred/decrediton/issues');
         }
       }]
     }];

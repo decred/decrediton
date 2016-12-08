@@ -24,7 +24,7 @@
     "cleanup": "mop -v"
   },
   "build": {
-    "appId": "org.develar.ElectronReact",
+    "appId": "com.Electron.Decrediton",
     "category": "public.app-category.tools",
     "dmg": {
       "contents": [
@@ -69,9 +69,9 @@
     "url": "git+https://github.com/decred/decrediton.git"
   },
   "author": {
-    "name": "C. T. Lin",
-    "email": "chentsulin@gmail.com",
-    "url": "https://github.com/chentsulin"
+    "name": "The Decred developers",
+    "email": "info@decred.org",
+    "url": "https://github.com/decred"
   },
   "license": "MIT",
   "bugs": {
