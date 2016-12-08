@@ -56,7 +56,12 @@ dcrd --testnet
 ```
 
 ```bash
-dcrwallet --testnet --experimentalrpclisten=127.0.0.1:19113 --noinitialload --tlscurve=P-256 --onetimetlskey
+dcrwallet --testnet --experimentalrpclisten=127.0.0.1:19113 --noinitialload --tlscurve=P-256 --onetimetlskey --appdata=~/.decrediton
+```
+
+On macOS you should use:
+```bash
+dcrwallet --testnet --experimentalrpclisten=127.0.0.1:19113 --noinitialload --tlscurve=P-256 --onetimetlskey --appdata=$HOME/Library/Application\ Data/Decrediton
 ```
 
 Start decrediton

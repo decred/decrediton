@@ -14,12 +14,12 @@ var Buffer = require('buffer/').Buffer;
 export function client(address, port, cb) {
     var protoDescriptor = grpc.load('./app/api.proto');
     var walletrpc = protoDescriptor.walletrpc;
-    var certPath = path.join(process.env.HOME, '.dcrwallet', 'rpc.cert');
-    if (os.platform == 'win32') {
-        certPath = path.join(process.env.LOCALAPPDATA, 'Dcrwallet', 'rpc.cert');
-    } else if (os.platform == 'darwin') {
+    var certPath = path.join(process.env.HOME, '.decrediton', 'rpc.cert');
+    if (os.platform() == 'win32') {
+        certPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'rpc.cert');
+    } else if (os.platform() == 'darwin') {
         certPath = path.join(process.env.HOME, 'Library', 'Application Support',
-            'Dcrwallet', 'rpc.cert');
+            'Decrediton', 'rpc.cert');
     }
     var cert = fs.readFileSync(certPath);
 
@@ -41,12 +41,12 @@ export function client(address, port, cb) {
 export function loader(address, port, cb) {
     var protoDescriptor = grpc.load('./app/api.proto');
     var walletrpc = protoDescriptor.walletrpc;
-    var certPath = path.join(process.env.HOME, '.dcrwallet', 'rpc.cert');
-    if (os.platform == 'win32') {
-        certPath = path.join(process.env.LOCALAPPDATA, 'Dcrwallet', 'rpc.cert');
-    } else if (os.platform == 'darwin') {
+    var certPath = path.join(process.env.HOME, '.decrediton', 'rpc.cert');
+    if (os.platform() == 'win32') {
+        certPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'rpc.cert');
+    } else if (os.platform() == 'darwin') {
         certPath = path.join(process.env.HOME, 'Library', 'Application Support',
-            'Dcrwallet', 'rpc.cert');
+            'Decrediton', 'rpc.cert');
     }
 
     var cert = fs.readFileSync(certPath);
