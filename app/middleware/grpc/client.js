@@ -11,9 +11,7 @@ import grpc from 'grpc';
 //import Buffer from 'buffer';
 var Buffer = require('buffer/').Buffer;
 
-export function client(address, port, cb) {
-    var protoDescriptor = grpc.load('./app/api.proto');
-    var walletrpc = protoDescriptor.walletrpc;
+export function getCert() {
     var certPath = '';
     if (os.platform() == 'win32') {
         certPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'rpc.cert');
@@ -25,6 +23,14 @@ export function client(address, port, cb) {
     }
 
     var cert = fs.readFileSync(certPath);
+    return(cert)
+}
+
+export function client(address, port, cb) {
+    var protoDescriptor = grpc.load('./app/api.proto');
+    var walletrpc = protoDescriptor.walletrpc;
+
+    var cert = getCert();
     var creds = grpc.credentials.createSsl(cert);
     var client = new walletrpc.WalletService(address + ':' + port, creds);
 
@@ -43,17 +49,8 @@ export function client(address, port, cb) {
 export function loader(address, port, cb) {
     var protoDescriptor = grpc.load('./app/api.proto');
     var walletrpc = protoDescriptor.walletrpc;
-    var certPath = '';
-    if (os.platform() == 'win32') {
-        certPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'rpc.cert');
-    } else if (os.platform() == 'darwin') {
-        certPath = path.join(process.env.HOME, 'Library', 'Application Support',
-            'Decrediton', 'rpc.cert');
-    } else {
-        var certPath = path.join(process.env.HOME, '.decrediton', 'rpc.cert');
-    }
 
-    var cert = fs.readFileSync(certPath);
+    var cert = getCert();
     var creds = grpc.credentials.createSsl(cert);
     var loader = new walletrpc.WalletLoaderService(address + ':' + port, creds);
 
