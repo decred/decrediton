@@ -3,7 +3,7 @@ process.env['GRPC_SSL_CIPHER_SUITES'] = 'HIGH+ECDSA';
 import fs from 'fs';
 import url from 'url';
 import path from 'path';
-
+import { getCert } from './client';
 import os from 'os';
 import grpc from 'grpc';
 
@@ -20,7 +20,7 @@ export function seeder(request, cb) {
             'Dcrwallet', 'rpc.cert');
     }
 
-    var cert = fs.readFileSync(certPath);
+    var cert = getCert();
     var creds = grpc.credentials.createSsl(cert);
     var seeder = new walletrpc.SeedService(request.address + ':' + request.port, creds);
 
