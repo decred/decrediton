@@ -19,7 +19,9 @@ function mapStateToProps(state) {
     // WalletServices
     getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
     getBalanceResponse: state.grpc.getBalanceResponse,
-
+    getStakeInfoRequestAttempt: state.grpc.getStakeInfoRequestAttempt,
+    getStakeInfoResponse: state.grpc.getStakeInfoResponse,
+    
     // WalletLoaderServices
     isWalletCreatedRequest: state.walletLoader.isWalletCreatedRequest,
     isWalletCreated: state.walletLoader.isWalletCreated,

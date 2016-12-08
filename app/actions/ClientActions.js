@@ -129,7 +129,7 @@ function getPingSuccess(getPingResponse) {
   return { getPingResponse: getPingResponse, type: GETPING_SUCCESS };
 }
 
-export function getPingAttempt(accountNumber, requiredConfs) {
+export function getPingAttempt() {
   var request = {
   }
   return (dispatch) => {
@@ -167,7 +167,7 @@ function getStakeInfoSuccess(getStakeInfoResponse) {
   return { getStakeInfoResponse: getStakeInfoResponse, type: GETSTAKEINFO_SUCCESS };
 }
 
-export function getStakeInfoAttempt(accountNumber, requiredConfs) {
+export function getStakeInfoAttempt() {
   var request = {
   }
   return (dispatch) => {
@@ -205,7 +205,7 @@ function getTicketPriceSuccess(getTicketPriceResponse) {
   return { getTicketPriceResponse: getTicketPriceResponse, type: GETTICKETPRICE_SUCCESS };
 }
 
-export function getTicketPriceAttempt(accountNumber, requiredConfs) {
+export function getTicketPriceAttempt() {
   var request = {
   }
   return (dispatch) => {
@@ -243,7 +243,7 @@ function getAccountsSuccess(getAccountsResponse) {
   return { getAccountsResponse: getAccountsResponse, type: GETACCOUNTS_SUCCESS };
 }
 
-export function getAccountsAttempt(accountNumber, requiredConfs) {
+export function getAccountsAttempt() {
   var request = {
   }
   return (dispatch) => {

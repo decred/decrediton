@@ -39,6 +39,7 @@ class Home extends Component{
 
     getBalanceRequestAttempt: PropTypes.bool.isRequired,
     //getBalanceRequest: PropTypes.object.isRequired,
+    getStakeInfoRequestAttempt: PropTypes.bool.isRequired,
 
     isWalletCreated: PropTypes.bool.isRequired,    
     isWalletExist: PropTypes.bool.isRequired,
@@ -53,11 +54,13 @@ class Home extends Component{
   render() {
     const { address, port } = this.props;
     const { isLoggedIn, isLoggingIn, client, error} = this.props;
-    const { getBalanceRequestAttempt, getBalanceResponse  } = this.props;
+    const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
+    const { getStakeInfoRequestAttempt, getStakeInfoResponse } = this.props;
     const { loader, isLoaderReady, isGettingLoader, loaderRequest } = this.props; 
-    const { isWalletCreatedRequest, isWalletCreated } = this.props
+    const { isWalletCreatedRequest, isWalletCreated } = this.props;
     const { isWalletExist, isWalletExistRequest, isWalletExistComplete, walletExistRequest } = this.props;
     const { isWalletOpen, isWalletOpenRequest } = this.props;
+
     const sideBarProps = {
       loggedIn: isLoggedIn,
       page: "HOME",
@@ -144,6 +147,13 @@ class Home extends Component{
                   disabled={getBalanceRequestAttempt}
                   onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}>
                   {getBalanceRequestAttempt ? 'Getting Balance...' : 'Get Balance'}
+                </Button>
+                <h3>StakeInfo: {getStakeInfoResponse === null ? 'Please refresh' : getStakeInfoResponse}</h3>
+                <Button 
+                  bsStyle="primary"
+                  disabled={getStakeInfoRequestAttempt}
+                  onClick={!getStakeInfoRequestAttempt? () => this.props.getStakeInfoAttempt() : null}>
+                  {getStakeInfoRequestAttempt ? 'Getting Stake Info...' : 'Get Stake Info'}
                 </Button>
               </Col>
             </Row>
