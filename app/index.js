@@ -100,6 +100,22 @@ var initialState = {
     subscribeBlockNtfnsRequest: null,
     subscribeBlockNtfnsResponse: null,
     subscribeBlockNtfnsError: null,
+  },
+  seedService: {
+    getSeederRequestAttempt: false,
+    getSeederRequest: null,
+    seeder: null,
+    getSeederError: null,
+
+    generateRandomSeedRequestAttempt: false,
+    generateRandomSeedRequest: null,
+    generateRandomSeedResponse: null,
+    generateRandomSeedError: null,
+
+    decodeSeedRequestAttempt: false,
+    decodeSeedRequest: null,
+    decodeSeedResponse: null,
+    decodeSeedError: null,
   }
 };
 

@@ -2,6 +2,7 @@ import { loader, createWallet, walletExists, openWallet,
   closeWallet, discoverAddresses, subscribeToConsensusRpc,
   startConsensusRpc} from '../middleware/grpc/loader';
 import { loginRequest } from './LoginActions';
+import { seederRequest } from './SeedServiceActions';
 import path from 'path';
 import os from 'os';
 import fs from 'fs';
@@ -21,6 +22,7 @@ function loaderSuccess(loader) {
   return (dispatch) => {
     dispatch({loader: loader, type: LOADER_SUCCESS });
     dispatch(walletExistRequest());
+    dispatch(seederRequest());
   };
 }
 
