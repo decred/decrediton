@@ -7,11 +7,16 @@ import path from 'path';
 import os from 'os';
 import grpc from 'grpc';
 
+import { getCfg } from '../../config.js';
 
 //import Buffer from 'buffer';
 var Buffer = require('buffer/').Buffer;
 
 export function getCert() {
+    var cfg = getCfg();
+    if (cfg.cert_path != '') {
+      return(cfg.cert_path)
+    }
     var certPath = '';
     if (os.platform() == 'win32') {
         certPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'rpc.cert');
@@ -27,6 +32,10 @@ export function getCert() {
 }
 
 export function getDcrdCert() {
+    var cfg = getCfg();
+    if (cfg.daemon_cert_path != '') {
+      return(cfg.daemon_cert_path)
+    }
     var certPath = '';
     if (os.platform() == 'win32') {
         certPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'rpc.cert');

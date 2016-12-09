@@ -7,6 +7,7 @@ import path from 'path';
 import os from 'os';
 import fs from 'fs';
 import { getDcrdCert } from '../middleware/grpc/client';
+import { getCfg } from '../config.js';
 
 var Buffer = require('buffer/').Buffer;
 
@@ -228,19 +229,17 @@ function startRpcSuccess() {
 }
 
 export function startRpcRequest() {
-  var certPath = path.join(process.env.HOME, '.dcrd', 'rpc.cert');
-  if (os.platform == 'win32') {
-    certPath = path.join(process.env.LOCALAPPDATA, 'Dcrd', 'rpc.cert');
-  } else if (os.platform == 'darwin') {
-    certPath = path.join(process.env.HOME, 'Library', 'Application Support',
-    'Dcrd', 'rpc.cert');
+  var cfg = getCfg();
+  var rpcport = "";
+  if (cfg.network == "testnet") {
+    rpcport = cfg.daemon_port_testnet;
+  } else {
+    rpcport = cfg.daemon_port;
   }
-
-  var cert = fs.readFileSync(certPath);
   var request = {
-    network_address: "127.0.0.1:19109",
-    username: "USER",
-    password: Buffer.from("PASSWORD"),
+    network_address: "127.0.0.1:" + rpcport,
+    username: cfg.rpc_user,
+    password: Buffer.from(cfg.rpc_pass),
     certificate: getDcrdCert(),
   };
   return (dispatch) => {

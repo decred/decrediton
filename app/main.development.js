@@ -1,9 +1,9 @@
 import { app, BrowserWindow, Menu, shell } from 'electron';
+import { getCfg } from './config.js';
 
 let menu;
 let template;
 let mainWindow = null;
-var mainNet = true;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
@@ -17,12 +17,7 @@ if (process.env.NODE_ENV === 'development') {
   require('module').globalPaths.push(p); // eslint-disable-line
 }
 
-process.argv.some(function(element) {
-  if (element === '--testnet') {
-    mainNet = false;
-    return true;
-  }
-});
+var cfg = getCfg();
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
@@ -40,10 +35,10 @@ function appDataDirectory() {
 }
 
 function RPCWalletPort() {
-  if (mainNet == true) {
-    return "9112"
+  if (cfg.network == "mainnet") {
+    return cfg.wallet_port
   }
-  return "19112"
+  return cfg.wallet_port_testnet
 }
 
 const installExtensions = async () => {
@@ -65,12 +60,12 @@ const installExtensions = async () => {
 
 const launchDCRD = () => {
   var spawn = require('child_process').spawn;
-  var args = ['--rpcuser=USER','--rpcpass=PASSWORD'];
+  var args = ['--rpcuser='+cfg.rpc_user,'--rpcpass='+cfg.rpc_pass];
 
   // The spawn() below opens a pipe on fd 3
   args.push('--piperx=3');
 
-  if (mainNet == false) {
+  if (cfg.network == "testnet") {
      args.push('--testnet');
   }
 
@@ -109,7 +104,7 @@ const launchDCRWallet = () => {
 
   args.push('--appdata=' + appDataDirectory());
   args.push('--experimentalrpclisten=127.0.0.1:' + RPCWalletPort());
-  if (mainNet == false) {
+  if (cfg.network == "testnet") {
      args.push('--testnet');
   }
   console.log(`Starting dcrwallet with ${args}`);

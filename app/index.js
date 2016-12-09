@@ -7,11 +7,21 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import routes from './routes';
 import configureStore from './store/configureStore';
 import './bootstrap.min.css';
+import { getCfg } from './config.js';
+
+var cfg = getCfg();
+
+var grpcport = "";
+if (cfg.network == "testnet") {
+  grpcport = cfg.wallet_port_testnet;
+} else {
+  grpcport = cfg.wallet_port;
+}
 
 var initialState = {
   login: {
     address: "127.0.0.1",
-    port: "19113", 
+    port: grpcport,
     passphrase: "",
     isLoggedIn: false,
     isLoggingIn: false,

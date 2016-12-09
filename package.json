@@ -55,8 +55,7 @@
       "target": "nsis"
     },
     "linux": {
-      "target": [
-      ]
+      "target": []
     }
   },
   "directories": {
