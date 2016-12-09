@@ -15,18 +15,25 @@ function mapStateToProps(state) {
     isLoggingIn: state.login.isLoggingIn,
     client: state.login.client,
     error: state.login.error,
-    isGettingBalance: state.grpc.isGettingBalance,
-    balance: state.grpc.balance,
-    isWalletCreatedRequest: state.walletLoader.isWalletCreatedRequest,
-    isWalletCreated: state.walletLoader.isWalletCreated,
-    isWalletExistRequest: state.walletLoader.isWalletExistRequest,
-    isWalletExistComplete: state.walletLoader.isWalletExistComplete,
-    isWalletExist: state.walletLoader.isWalletExist,
-    isLoaderReady: state.walletLoader.isLoaderReady,
-    isGettingLoader: state.walletLoader.isGettingLoader,
-    isWalletOpen: state.walletLoader.isWalletOpen,
-    isWalletOpenRequest: state.walletLoader.isWalletOpenRequest,
+
+    // WalletServices
+    getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
+    getBalanceResponse: state.grpc.getBalanceResponse,
+    getStakeInfoRequestAttempt: state.grpc.getStakeInfoRequestAttempt,
+    getStakeInfoResponse: state.grpc.getStakeInfoResponse,
+
+    // WalletLoaderServices
+    walletCreateRequestAttempt: state.walletLoader.walletCreateRequestAttempt,
+    walletCreateResponse: state.walletLoader.walletCreateResponse,
+    walletExistRequestAttempt: state.walletLoader.walletExistRequestAttempt,
+    walletExistResponse: state.walletLoader.walletExistResponse,
+
+    getLoaderRequestAttempt: state.walletLoader.getLoaderRequestAttempt,
     loader: state.walletLoader.loader,
+
+    walletOpenRequestAttempt: state.walletLoader.walletOpenRequestAttempt,
+    walletOpenResponse: state.walletLoader.walletOpenResponse,
+
   
   };
 }

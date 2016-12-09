@@ -4,17 +4,18 @@ import { openWalletAction, openWalletRequest } from '../actions/WalletLoaderActi
 import { Button, Form, FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap'
 
 let LoaderForm = ({ dispatch }) => {
-  let pubpass
+  let pubpass, privpass
 
   return (
     <div>
       <Form horizontal onSubmit={e => {
         e.preventDefault()
-        if (!pubpass.value.trim()) {
+        if (!pubpass.value.trim() || !pubpass.value.trim()) {
           return
         }
-        dispatch(openWalletRequest(pubpass.value))
+        dispatch(openWalletRequest(pubpass.value, privpass.value))
         pubpass.value = ''
+        privpass.value = ''
       }}>
         <FormGroup controlId={pubpass}>
           <Col componentClass={ControlLabel} sm={2}>
@@ -22,6 +23,14 @@ let LoaderForm = ({ dispatch }) => {
           </Col>
           <Col sm={10}>
             <FormControl type="text" inputRef={node => {pubpass = node}} placeholder="Public Password" />
+          </Col>
+        </FormGroup>
+        <FormGroup controlId={privpass}>
+          <Col componentClass={ControlLabel} sm={2}>
+            Private Password
+          </Col>
+          <Col sm={10}>
+            <FormControl type="text" inputRef={node => {privpass = node}} placeholder="Private Password" />
           </Col>
         </FormGroup>
         <Button type="submit">

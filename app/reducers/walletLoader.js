@@ -6,162 +6,176 @@ import { CLOSEWALLET_ATTEMPT, CLOSEWALLET_FAILED, CLOSEWALLET_SUCCESS } from '..
 import { STARTRPC_ATTEMPT, STARTRPC_FAILED, STARTRPC_SUCCESS } from '../actions/WalletLoaderActions';
 import { DISCOVERADDRESS_ATTEMPT, DISCOVERADDRESS_FAILED, DISCOVERADDRESS_SUCCESS } from '../actions/WalletLoaderActions';
 import { SUBSCRIBEBLOCKNTFNS_ATTEMPT, SUBSCRIBEBLOCKNTFNS_FAILED, SUBSCRIBEBLOCKNTFNS_SUCCESS } from '../actions/WalletLoaderActions';
+import { FETCHHEADERS_ATTEMPT, FETCHHEADERS_FAILED, FETCHHEADERS_SUCCESS } from '../actions/WalletLoaderActions';
 
 export default function walletLoader(state = {}, action) {
   switch (action.type) {
     case LOADER_ATTEMPT:
       return {...state,
-        isGettingLoader: true,
-        isLoaderReady: false,
-        address: action.address,
-        port: action.port,
+        getLoaderRequestAttempt: true,
+        getLoaderRequest: action.request,
       };
     case LOADER_FAILED:
       return {...state,
-        error: action.error,
-        isGettingLoader: false,
-        isLoaderReady: false,
-        address: '',
-        port: '',
+        getLoaderError: action.error,
+        getLoaderRequestAttempt: false,
+        getLoaderRequest: null,
+        loader: null,
       };
     case LOADER_SUCCESS:
       return {...state,
-        error: "",
+        getLoaderError: null,
         loader: action.loader,
-        isGettingLoader: false,
-        isLoaderReady: true,
+        getLoaderRequestAttempt: false,
       };
     case WALLETEXIST_ATTEMPT:
       return {...state,
-        isWalletExistRequest: true,
-        isWalletExistComplete: false,
-        isWalletExist: false,
+        walletExistRequestAttempt: true,
+        walletExistRequest: action.request,
       };
     case WALLETEXIST_FAILED:
       return {...state,
-        error: action.error,
-        isWalletExistRequest: false,
-        isWalletExistComplete: false,
-        isWalletExist: false,
+        walletExistError: action.error,
+        walletExistRequestAttempt: false,
+        walletExistsResponse: null,
       };
     case WALLETEXIST_SUCCESS:
       return {...state,
-        error: '',
-        isWalletExistRequest: false,
-        isWalletExistComplete: true,
-        isWalletExist: action.exists,
+        walletExistError: null,
+        walletExistRequestAttempt: false,
+        walletExistResponse: action.response,
+        walletExistRequest: null,
       };  
     case CREATEWALLET_ATTEMPT:
       return {...state,
-        isWalletCreatedRequest: true,
-        isWalletCreated: false,
-        privPass: action.privPass,
-        pubPass: action.pubPass,
-        seed: action.seed,
+        walletCreateRequestAttempt: true,
+        walletCreateRequest: action.request,
+        privatePassphrase: action.privPass,
+        publicPassphrase: action.pubPass,
       };
     case CREATEWALLET_FAILED:
       return {...state,
-        error: action.error,
-        isWalletCreatedRequest: false,
-        isWalletCreated: false,
-        privPass: '',
-        pubPass: '',
-        seed: '',
+        walletCreateError: action.error,
+        walletCreateRequestAttempt: false,
+        walletCreateRequest: null,
       };
     case CREATEWALLET_SUCCESS:
       return {...state,
-        error: '',
-        isWalletCreatedRequest: false,
-        isWalletCreated: true,
-        isWalletOpen: true,
+        walletCreateError: null,
+        walletCreateRequestAttempt: false,
+        walletCreateRequest: null,
+        walletCreateResponse: action.response,
       };  
     case OPENWALLET_ATTEMPT:
       return {...state,
-        isWalletOpenRequest: true,
-        isWalletOpen: false,
-        pubPass: action.pubPass,
+        walletOpenRequestAttempt: true,
+        walletOpenRequest: action.request,
+        privatePassphrase: action.privPass,
+        publicPassphrase: action.pubPass,
       };
     case OPENWALLET_FAILED:
       return {...state,
-        error: action.error,
-        isWalletOpenRequest: false,
-        isWalletOpen: false,
+        walletOpenError: action.error,
+        walletOpenRequestAttempt: false,
+        walletOpenRequest: null,
       };
     case OPENWALLET_SUCCESS:
       return {...state,
-        error: '',
-        isWalletOpenRequest: false,
-        isWalletOpen: true,
+        walletOpenError: null,
+        walletOpenRequestAttempt: false,
+        walletOpenRequest: null,
+        walletOpenResponse: action.response,
       };  
     case CLOSEWALLET_ATTEMPT:
       return {...state,
-        isWalletClosedRequest: true,
-        isWalletClosed: false,
+        walletCloseRequestAttempt: true,
+        walletCloseRequest: action.request,
       };
     case CLOSEWALLET_FAILED:
       return {...state,
-        error: action.error,
-        isWalletClosedRequest: false,
-        isWalletClosed: false,
+        walletCloseError: action.error,
+        walletCloseRequestAttempt: false,
+        walletCloseRequest: null,
       };
     case CLOSEWALLET_SUCCESS:
       return {...state,
-        error: '',
-        isWalletClosedRequest: false,
-        isWalletClosed: true,
+        walletCloseError: null,
+        walletCloseRequestAttempt: false,
+        walletCloseRequest: null,
+        walletCloseResponse: action.response,
       };  
     case STARTRPC_ATTEMPT:
       return {...state,
-        isStartRpcRequest: true,
-        isStartRpc: false,
-        // add startrpc fields
+        startRpcRequestAttempt: true,
+        startRpcRequest: action.request,
       };
     case STARTRPC_FAILED:
       return {...state,
-        error: action.error,
-        isStartRpcRequest: false,
-        isStartRpc: false,
+        startRpcError: action.error,
+        startRpcRequestAttempt: false,
+        startRpcRequest: null,
       };
     case STARTRPC_SUCCESS:
       return {...state,
-        error: '',
-        isStartRpcRequest: false,
-        isStartRpc: true,
-      };        
+        startRpcError: null,
+        startRpcRequestAttempt: false,
+        startRpcRequest: null,
+        startRpcResponse: action.response,
+      };
     case DISCOVERADDRESS_ATTEMPT:
       return {...state,
-        isDiscoverAddressRequest: true,
-        isDiscoverAddress: false,
+        discoverAddressRequestAttempt: true,
+        discoverAddressRequest: action.request,
       };
     case DISCOVERADDRESS_FAILED:
       return {...state,
-        error: action.error,
-        isDiscoverAddressRequest: false,
-        isDiscoverAddress: false,
+        discoverAddressError: action.error,
+        discoverAddressRequestAttempt: false,
+        discoverAddressRequest: null
       };
     case DISCOVERADDRESS_SUCCESS:
       return {...state,
-        error: '',
-        isDiscoverAddressRequest: false,
-        isDiscoverAddress: true,
+        discoverAddressError: null,
+        discoverAddressRequestAttempt: false,
+        discoverAddressRequest: null,
+        discoverAddressResponse: action.response,
       };
     case SUBSCRIBEBLOCKNTFNS_ATTEMPT:
       return {...state,
-        isSubscribeBlockNtfnsRequest: true,
-        isSubscribeBlockNtfns: false,
+        subscribeBlockNtfnsRequestAttempt: true,
+        subscribeBlockNtfnsRequest: action.request,
       };
     case SUBSCRIBEBLOCKNTFNS_FAILED:
       return {...state,
-        error: action.error,
-        isSubscribeBlockNtfnsRequest: false,
-        isSubscribeBlockNtfns: false,
+        subscribeBlockNtfnsError: action.error,
+        subscribeBlockNtfnsRequestAttempt: false,
+        subscribeBlockNtfnsRequest: null,
       };
     case SUBSCRIBEBLOCKNTFNS_SUCCESS:
       return {...state,
-        error: '',
-        isSubscribeBlockNtfnsRequest: false,
-        isSubscribeBlockNtfns: true,
-      };          
+        subscribeBlockNtfnsError: null,
+        subscribeBlockNtfnsRequestAttempt: false,
+        subscribeBlockNtfnsRequest: null,
+        subscribeBlockNtfnsResponse: action.response,
+      };  
+    case FETCHHEADERS_ATTEMPT:
+      return {...state,
+        fetchHeadersRequestAttempt: true,
+        fetchHeadersRequest: action.request,
+      };
+    case FETCHHEADERS_FAILED:
+      return {...state,
+        fetchHeadersError: action.error,
+        fetchHeadersRequestAttempt: false,
+        fetchHeadersRequest: null,
+      };
+    case FETCHHEADERS_SUCCESS:
+      return {...state,
+        fetchHeadersError: null,
+        fetchHeadersRequestAttempt: false,
+        fetchHeadersRequest: null,
+        fetchHeadersResponse: action.response,
+      };         
     default:
       return state;
   }

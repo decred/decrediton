@@ -52,7 +52,7 @@ NOT already have rpc certs from dcrwallet so it is easiest to start
 with an emtpy $HOME/.dcrwallet
 
 ```bash
-dcrd --testnet
+dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19109 --rpccert=~/.dcrd/rpc.cert
 ```
 
 ```bash

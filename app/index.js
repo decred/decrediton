@@ -18,36 +18,115 @@ var initialState = {
     error: "",
   },
   grpc: {
-    balanceAccountNumber: 0,
-    balanceRequiredConfs: 0,
-    isGettingBalance: false,
-    isGotBalance: false,
-    error: "",
-    balance: null,
+    // Balance
+    getBalanceRequest: null,
+    getBalanceError: null,
+    getBalanceRequestAttempt: false,
+    getBalanceResponse: null,
+    // AccountNumber
+    getAccountNumberRequest: null,
+    getAccountNumberError: null,
+    getAccountNumberRequestAttempt: false,
+    getAccountNumberResponse: null,
+    // Network
+    getNetworkRequest: null,
+    getNetworkError: null,
+    getNetworkRequestAttempt: false,
+    getNetworkResponse: null,
+    // Ping
+    getPingRequest: null,
+    getPingError: null,
+    getPingRequestAttempt: false,
+    getPingResponse: null,
+    // StakeInfo
+    getStakeInfoRequest: null,
+    getStakeInfoError: null,
+    getStakeInfoRequestAttempt: false,
+    getStakeInfoResponse: null,
+    // TicketPrice
+    getTicketPriceRequest: null,
+    getTicketPriceError: null,
+    getTicketPriceRequestAttempt: false,
+    getTicketPriceResponse: null,
+    // Accounts
+    getAccountsRequest: null,
+    getAccountsError: null,
+    getAccountsRequestAttempt: false,
+    getAccountsResponse: null,
+    // Transactions
+    getTransactionsRequest: null,
+    getTransactionsError: null,
+    getTransactionsRequestAttempt: false,
+    getTransactionsResponse: null,
   },
   walletLoader: {
-    address: "",
-    port: "",
-    privPass: "",
-    pubPass: "",
-    seed: "",
-    isGettingLoader: false,
-    isLoaderReady: false,
-    isWalletCreatedRequest: false,
-    isWalletCreated: false,
-    isWalletExistRequest: false,
-    isWalletExistComplete: false,
-    isWalletExist: false,
-    isWalletOpenRequest: false,
-    isWalletOpen: false,
-    isWalletClosedRequest: false,
-    isWalletClosed: false,
-    isStartRpcRequest: false,
-    isStartRpc: false,
-    isDiscoverAddressRequest: false,
-    isDiscoverAddress: false,
-    isSubscribeBlockNtfnsRequest: false,
-    isSubscribeBlockNtfns: false,
+    // XXX Wallet Passphrases 
+    // We are storing these in state for dev ease, 
+    // but will construct an alternate system 
+    // to properly/securely/safely store passphrases.
+    privatePassphrase: "",
+    publicPassphrase: "",
+    // Loader
+    getLoaderRequestAttempt: false,   
+    getLoaderRequest: null,
+    loader: null,
+    getLoaderError: null,
+    // WalletCreate
+    walletCreateRequestAttempt: false,
+    walletCreateRequest: false,
+    walletCreateResponse: null,
+    walletCreateError: null,
+    // WalletExist
+    walletExistRequestAttempt: false,
+    walletExistRequest: null,
+    walletExistResponse: null,
+    walletExistError: null,    
+    // WalletOpen
+    walletOpenRequestAttempt: false,
+    walletOpenRequest: null,
+    walletOpenResponse: null,
+    walletOpenError: null,
+    // WalletClose
+    walletCloseRequestAttempt: false,
+    walletClosedRequest: null,
+    walletClosedResponse: null,
+    walletClosedError: null,
+    // StartRpc
+    startRpcRequestAttempt: false,
+    startRpcRequest: null,
+    startRpcResponse: null,
+    startRpcError: null,
+    // DiscoverAddress
+    discoverAddressRequestAttempt: false,
+    discoverAddressRequest: null,
+    discoverAddressResponse: null,
+    discoverAddressError: null,
+    // SubscribeBlockNtfns
+    subscribeBlockNtfnsRequestAttempt: false,
+    subscribeBlockNtfnsRequest: null,
+    subscribeBlockNtfnsResponse: null,
+    subscribeBlockNtfnsError: null,
+    // FetchHeaders
+    fetchHeadersRequestAttempt: false,
+    fetchHeadersRequest: null,
+    fetchHeadersResponse: null,
+    fetchHeadersError: null,
+  },
+  seedService: {
+    getSeederRequestAttempt: false,
+    getSeederRequest: null,
+    seeder: null,
+    getSeederError: null,
+
+    generateRandomSeedRequestAttempt: false,
+    generateRandomSeedRequest: null,
+    generateRandomSeedResponse: null,
+    generateRandomSeedError: null,
+
+    decodeSeedRequestAttempt: false,
+    decodeSeedRequest: null,
+    decodeSeedResponse: null,
+    decodeSeedError: null,
   }
 };
 
