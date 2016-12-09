@@ -97,8 +97,12 @@ function accountNtfnsData(response) {
   return { response: response, type: ACCOUNTNFTNS_DATA };
 }
 
-export function accountNftnsStart() {
-  var request = {}
+export function accountNftnsStart(accountNum) {
+  var request = {
+    account: accountNum,
+    no_notify_unspent: false,
+    no_notify_spent: false,
+  }
   return (dispatch) => {
     dispatch({request: request, type: ACCOUNTNFTNS_START });
     dispatch(startAccountNtfns());
