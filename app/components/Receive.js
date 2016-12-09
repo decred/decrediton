@@ -10,12 +10,14 @@ import SidebarContent from '../content/SideBarContent';
 class Receive extends Component{
   static propTypes = {
     client: PropTypes.object,
-    isLoggedIn: PropTypes.bool.isRequired
+    isLoggedIn: PropTypes.bool.isRequired,
+    getNextAddressResponse: PropTypes.object,
+    getNextAddressRequestAttempt: PropTypes.bool.isRequired,
   };
   
   render() {
     const { client, isLoggedIn } = this.props;
-
+    const { getNextAddressResponse, getNextAddressAttempt, getNextAddressRequestAttempt } = this.props;
     const sideBarProps = {
       loggedIn: isLoggedIn,
       page: "RECEIVE",
@@ -46,6 +48,13 @@ class Receive extends Component{
             <Row>
               <Col sm={12} >
                 <h1>Receive Page</h1>
+                <h3>Current address: {getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.address }</h3>
+                <Button 
+                  bsStyle="primary"
+                  disabled={getNextAddressRequestAttempt}
+                  onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}>
+                  {getNextAddressRequestAttempt ? 'Getting new address' : 'Get New Address'}
+                </Button>
               </Col>
             </Row>
           </div>

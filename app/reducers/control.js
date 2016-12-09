@@ -1,16 +1,16 @@
-import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS } from '../actions/ClientActions';
-import { RENAMEACCOUNT_ATTEMPT, RENAMEACCOUNT_FAILED, RENAMEACCOUNT_SUCCESS } from '../actions/ClientActions';
-import { RESCAN_ATTEMPT, RESCAN_FAILED, RESCAN_SUCCESS } from '../actions/ClientActions';
-import { GETNEXTACCOUNT_ATTEMPT, GETNEXTACCOUNT_FAILED, GETNEXTACCOUNT_SUCCESS } from '../actions/ClientActions';
-import { IMPORTPRIVKEY_ATTEMPT, IMPORTPRIVKEY_FAILED, IMPORTPRIVKEY_SUCCESS } from '../actions/ClientActions';
-import { IMPORTSCRIPT_ATTEMPT, IMPORTSCRIPT_FAILED, IMPORTSCRIPT_SUCCESS } from '../actions/ClientActions';
-import { CHANGEPASSPHRASE_ATTEMPT, CHANGEPASSPHRASE_FAILED, CHANGEPASSPHRASE_SUCCESS } from '../actions/ClientActions';
-import { GETFUNDTX_ATTEMPT, GETFUNDTX_FAILED, GETFUNDTX_SUCCESS } from '../actions/ClientActions';
-import { SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS } from '../actions/ClientActions';
-import { PUBLISHTX_ATTEMPT, PUBLISHTX_FAILED, PUBLISHTX_SUCCESS } from '../actions/ClientActions';
-import { PURCHASETICKET_ATTEMPT, PURCHASETICKET_FAILED, PURCHASETICKET_SUCCESS } from '../actions/ClientActions';
+import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS } from '../actions/ControlActions';
+import { RENAMEACCOUNT_ATTEMPT, RENAMEACCOUNT_FAILED, RENAMEACCOUNT_SUCCESS } from '../actions/ControlActions';
+import { RESCAN_ATTEMPT, RESCAN_FAILED, RESCAN_SUCCESS } from '../actions/ControlActions';
+import { GETNEXTACCOUNT_ATTEMPT, GETNEXTACCOUNT_FAILED, GETNEXTACCOUNT_SUCCESS } from '../actions/ControlActions';
+import { IMPORTPRIVKEY_ATTEMPT, IMPORTPRIVKEY_FAILED, IMPORTPRIVKEY_SUCCESS } from '../actions/ControlActions';
+import { IMPORTSCRIPT_ATTEMPT, IMPORTSCRIPT_FAILED, IMPORTSCRIPT_SUCCESS } from '../actions/ControlActions';
+import { CHANGEPASSPHRASE_ATTEMPT, CHANGEPASSPHRASE_FAILED, CHANGEPASSPHRASE_SUCCESS } from '../actions/ControlActions';
+import { FUNDTX_ATTEMPT, FUNDTX_FAILED, FUNDTX_SUCCESS } from '../actions/ControlActions';
+import { SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS } from '../actions/ControlActions';
+import { PUBLISHTX_ATTEMPT, PUBLISHTX_FAILED, PUBLISHTX_SUCCESS } from '../actions/ControlActions';
+import { PURCHASETICKET_ATTEMPT, PURCHASETICKET_FAILED, PURCHASETICKET_SUCCESS } from '../actions/ControlActions';
 
-export default function grpc(state = {}, action) {
+export default function control(state = {}, action) {
   switch (action.type) {
     case GETNEXTADDRESS_ATTEMPT:
       return {...state,
@@ -138,23 +138,23 @@ export default function grpc(state = {}, action) {
         changePassphraseRequestAttempt: false,
         changePassphraseResponse: action.changePassphraseResponse,
       };
-    case GETFUNDTX_ATTEMPT:
+    case FUNDTX_ATTEMPT:
       return {...state,
-        getFundTransactionError: null,
-        getFundTransactionRequestAttempt: true,
-        getFundTransactionRequest: action.request,
+        fundTransactionError: null,
+        fundTransactionRequestAttempt: true,
+        fundTransactionRequest: action.request,
       };
-    case GETFUNDTX_FAILED:
+    case FUNDTX_FAILED:
       return {...state,
-        getFundTransactionError: action.error,
-        getFundTransactionRequestAttempt: false,
-        getFundTransactionRequest: null,
+        fundTransactionError: action.error,
+        fundTransactionRequestAttempt: false,
+        fundTransactionRequest: null,
       };
-    case GETFUNDTX_SUCCESS:
+    case FUNDTX_SUCCESS:
       return {...state,
-        getFundTransactionError: '',
-        getFundTransactionRequestAttempt: false,
-        getFundTransactionResponse: action.getFundTransactionResponse,
+        fundTransactionError: '',
+        fundTransactionRequestAttempt: false,
+        fundTransactionResponse: action.fundTransactionResponse,
       };
     case SIGNTX_ATTEMPT:
       return {...state,

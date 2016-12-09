@@ -1,12 +1,7 @@
 // Available GRPC control client examples
 
-export function getNextAddress(client, acountNum, cb) {
-    console.log("getting new address")
-        // NextAddress
-    var request = {
-        account: accountNum
-    };
-
+export function getNextAddress(client, request, cb) {
+    // NextAddress
     client.nextAddress(request, function(err, response) {
         if (err) {
             console.error("nextAddress", err);
@@ -19,12 +14,8 @@ export function getNextAddress(client, acountNum, cb) {
 }
 
 
-export function renameAccount(client, accountNumber, newName, cb) {
+export function renameAccount(client, request, cb) {
     // RenameAccount
-    var request = {
-        account_number: accountNum,
-        new_name: newName
-    };
 
     client.renameAccount(request, function(err, response) {
         if (err) {
@@ -38,11 +29,8 @@ export function renameAccount(client, accountNumber, newName, cb) {
 }
 
 
-export function rescan(client, beginHeight, cb) {
+export function rescan(client, request, cb) {
     // Rescan
-    var request = {
-        begin_height: beginHeight
-    };
 
     var rescanCall = client.rescan(request);
     recanCall.on('data', function(response) {
@@ -57,12 +45,8 @@ export function rescan(client, beginHeight, cb) {
     });
 }
 
-export function getNextAccount(client, passphrase, accountName, cb) {
+export function getNextAccount(client, request, cb) {
     // NextAccount
-    var request = {
-        passphrase: Buffer.from(passphrase),
-        account_name: accountName
-    };
 
     client.nextAccount(request, function(err, response) {
         if (err) {
@@ -75,15 +59,8 @@ export function getNextAccount(client, passphrase, accountName, cb) {
     });
 }
 
-export function importPrivateKey(client, passphrase, accountNum, wif, rescan, scanFrom, cb) {
+export function importPrivateKey(client, request, cb) {
     // ImportPrivateKey
-    var request = {
-        passphrase: Buffer.from(passphrase),
-        account: accountNum,
-        private_key_wif: wif,
-        rescan: rescan,
-        scan_from: scanFrom
-    };
 
     client.importPrivateKey(request, function(err, response) {
         if (err) {
@@ -96,14 +73,8 @@ export function importPrivateKey(client, passphrase, accountNum, wif, rescan, sc
     });
 }
 
-export function importScript(client, passphrase, script, rescan, scanFrom, cb) {
+export function importScript(client, request, cb) {
     // ImportScript
-    var request = {
-        passphrase: Buffer.from(passphrase),
-        script: script,
-        rescan: rescan,
-        scan_from: scanFrom
-    };
 
     client.importScript(request, function(err, response) {
         if (err) {
@@ -116,14 +87,10 @@ export function importScript(client, passphrase, script, rescan, scanFrom, cb) {
     });
 }
 
-export function changePassphrase(client, oldP, newP, cb) {
+export function changePassphrase(client, request, cb) {
     // ChangePassphrase 
-    var request = {
-        old_passphrase: Buffer.from(oldP),
-        new_passphrase: Buffer.from(newP)
-    };
 
-    client.changePassphrase(request, function(err, response) {
+   client.changePassphrase(request, function(err, response) {
         if (err) {
             console.error("changePassphrase", err);
             return cb(null, err);
@@ -139,13 +106,8 @@ export function changePassphrase(client, oldP, newP, cb) {
 // sent to sign/publishTransaction
 //
 
-export function getFundTransaction(client, accountNum, targetAmount, requiredConf, cb) {
+export function getFundTransaction(client, request, cb) {
     // FundTransaction
-    var request = {
-        account: accountNum,
-        target_amount: targetAmount,
-        required_confirmations: requiredConf
-    };
 
     client.fundTransaction(request, function(err, response) {
         if (err) {
@@ -158,12 +120,8 @@ export function getFundTransaction(client, accountNum, targetAmount, requiredCon
     });
 }
 
-export function signTransction(client, passphrase, rawTx, cb) {
+export function signTransction(client, request, cb) {
     // SignTransaction
-    var request = {
-        passphrase: Buffer.from(passphrase),
-        serialized_transaction: rawTx
-    };
 
     client.signTransaction(request, function(err, response) {
         if (err) {
@@ -176,11 +134,8 @@ export function signTransction(client, passphrase, rawTx, cb) {
     });
 }
 
-export function publishTransaction(client, txId, cb) {
+export function publishTransaction(client, request, cb) {
     // PublishTransaction
-    var request = {
-        signed_transaction: txId
-    };
 
     client.publishTransaction(request, function(err, response) {
         if (err) {
@@ -193,22 +148,8 @@ export function publishTransaction(client, txId, cb) {
     });
 }
 
-export function purchaseTickets(client, passphrase, accountNum, spendLimit, requiredConf,
-ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee, cb) {
+export function purchaseTickets(client, request, cb) {
     // PurchaseTickets
-    var request = {
-        passphrase: Buffer.from(passphrase),
-        account: accountNum,
-        spend_limit: spendLimit,
-        required_confirmations: requiredConf,
-        ticket_address: ticketAddress,
-        num_tickets: numTickets,
-        pool_address: poolAddress,
-        pool_fees: poolFees,
-        expiry: expiry,
-        tx_fee: txFee,
-        ticket_fee: ticketFee
-    };
 
     client.purchaseTickets(request, function(err, response) {
         if (err) {

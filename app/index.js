@@ -143,10 +143,10 @@ var initialState = {
   },
   control: {
     // NextAddress
-    nextAddressRequestAttempt: false,
-    nextAddressRequest: null,
-    nextAddressResponse: null,
-    nextAddressError: null,
+    getNextAddressRequestAttempt: false,
+    getNextAddressRequest: null,
+    getNextAddressResponse: null,
+    getNextAddressError: null,
     // RenameAccount
     renameAccountRequestAttempt: false,
     renameAccountRequest: null,
@@ -158,10 +158,10 @@ var initialState = {
     rescanResponse: null,
     rescanError: null,
     // NextAccount
-    nextAccountRequestAttempt: false,
-    nextAccountRequest: null,
-    nextAccountResponse: null,
-    nextAccountError: null,
+    getNextAccountRequestAttempt: false,
+    getNextAccountRequest: null,
+    getNextAccountResponse: null,
+    getNextAccountError: null,
     // ImportPrivateKey
     importPrivateKeyRequestAttempt: false,
     importPrivateKeyRequest: null,
