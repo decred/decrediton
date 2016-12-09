@@ -100,6 +100,11 @@ var initialState = {
     subscribeBlockNtfnsRequest: null,
     subscribeBlockNtfnsResponse: null,
     subscribeBlockNtfnsError: null,
+    // FetchHeaders
+    fetchHeadersRequestAttempt: false,
+    fetchHeadersRequest: null,
+    fetchHeadersResponse: null,
+    fetchHeadersError: null,
   },
   seedService: {
     getSeederRequestAttempt: false,

@@ -114,3 +114,14 @@ export function subscribeBlockNtfns(loader, request, cb) {
         }
     });
 }
+
+export function fetchHeaders(loader, request, cb) {
+    loader.fetchHeaders(request, function(err, response) {
+        if (err) {
+            console.error(err);
+            return cb(err);
+        } else {
+            return cb();
+        }
+    });
+}

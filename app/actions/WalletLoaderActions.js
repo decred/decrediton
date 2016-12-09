@@ -1,6 +1,6 @@
 import { loader, createWallet, walletExists, openWallet, 
   closeWallet, discoverAddresses, subscribeBlockNtfns,
-  startConsensusRpc} from '../middleware/grpc/loader';
+  startConsensusRpc, fetchHeaders} from '../middleware/grpc/loader';
 import { loginRequest } from './LoginActions';
 import path from 'path';
 import os from 'os';
@@ -216,7 +216,6 @@ function startRpcSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: STARTRPC_SUCCESS});
     dispatch(discoverAddressAttempt(true, "password"));
-    dispatch(subscribeBlockAttempt());
   };
 }
 
@@ -267,6 +266,7 @@ function discoverAddressError(error) {
 function discoverAddressSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: DISCOVERADDRESS_SUCCESS});
+    dispatch(fetchHeadersAttempt());
   };
 }
 
@@ -326,6 +326,42 @@ function subscribeBlockAction() {
         dispatch(subscribeBlockError(err + " Please try again"));
       } else {
         dispatch(subscribeBlockSuccess());
+      }
+    })
+  }
+}
+
+export const FETCHHEADERS_ATTEMPT = 'FETCHHEADER_ATTEMPT';
+export const FETCHHEADERS_FAILED = 'FETCHHEADERS_FAILED';
+export const FETCHHEADERS_SUCCESS = 'FETCHHEADERS_SUCCESS';
+
+function fetchHeadersFailed(error) {
+  return { error, type: FETCHHEADERS_FAILED };
+}
+
+function fetchHeadersSuccess() {
+  return (dispatch) => {
+    dispatch({response: {}, type: FETCHHEADERS_SUCCESS});
+    dispatch(subscribeBlockAttempt());
+  };
+}
+
+export function fetchHeadersAttempt() {
+  return (dispatch) => {
+    dispatch({request: {}, type: FETCHHEADERS_ATTEMPT});
+    dispatch(fetchHeadersAction());
+  }
+}
+
+function fetchHeadersAction() {
+  return (dispatch, getState) => {
+    const { loader, fetchHeadersRequest } = getState().walletLoader;
+    fetchHeaders(loader, fetchHeadersRequest,
+        function(err) {
+      if (err) {
+        dispatch(fetchHeadersFailed(err + " Please try again"));
+      } else {
+        dispatch(fetchHeadersSuccess());
       }
     })
   }

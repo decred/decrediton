@@ -6,6 +6,7 @@ import { CLOSEWALLET_ATTEMPT, CLOSEWALLET_FAILED, CLOSEWALLET_SUCCESS } from '..
 import { STARTRPC_ATTEMPT, STARTRPC_FAILED, STARTRPC_SUCCESS } from '../actions/WalletLoaderActions';
 import { DISCOVERADDRESS_ATTEMPT, DISCOVERADDRESS_FAILED, DISCOVERADDRESS_SUCCESS } from '../actions/WalletLoaderActions';
 import { SUBSCRIBEBLOCKNTFNS_ATTEMPT, SUBSCRIBEBLOCKNTFNS_FAILED, SUBSCRIBEBLOCKNTFNS_SUCCESS } from '../actions/WalletLoaderActions';
+import { FETCHHEADERS_ATTEMPT, FETCHHEADERS_FAILED, FETCHHEADERS_SUCCESS } from '../actions/WalletLoaderActions';
 
 export default function walletLoader(state = {}, action) {
   switch (action.type) {
@@ -152,7 +153,25 @@ export default function walletLoader(state = {}, action) {
         subscribeBlockNtfnsRequestAttempt: false,
         subscribeBlockNtfnsRequest: null,
         subscribeBlockNtfnsResponse: action.response,
-      };          
+      };  
+    case FETCHHEADERS_ATTEMPT:
+      return {...state,
+        fetchHeadersRequestAttempt: true,
+        fetchHeadersRequest: action.request,
+      };
+    case FETCHHEADERS_FAILED:
+      return {...state,
+        fetchHeadersError: action.error,
+        fetchHeadersRequestAttempt: false,
+        fetchHeadersRequest: null,
+      };
+    case FETCHHEADERS_SUCCESS:
+      return {...state,
+        fetchHeadersError: null,
+        fetchHeadersRequestAttempt: false,
+        fetchHeadersRequest: null,
+        fetchHeadersResponse: action.response,
+      };         
     default:
       return state;
   }
