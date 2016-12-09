@@ -110,6 +110,8 @@ export function createWalletRequest(pubPass, privPass, seed) {
   return (dispatch) => { 
     dispatch({
       request: request,
+      pubPass: pubPass,
+      privPass: privPass,
       type: CREATEWALLET_ATTEMPT });
     dispatch(createNewWallet());
   }
@@ -145,12 +147,17 @@ function openWalletSuccess() {
   };
 }
 
-export function openWalletRequest(pubPass) {
+export function openWalletRequest(pubPass, privPass) {
   var request = {
     public_passphrase: Buffer.from(pubPass),
   }
   return (dispatch) => {
-    dispatch({request: request, type: OPENWALLET_ATTEMPT});
+    dispatch({
+      request: request, 
+      pubPass: pubPass,
+      privPass: privPass,
+      type: OPENWALLET_ATTEMPT});
+
     dispatch(openWalletAction());
   }
 }
@@ -215,7 +222,7 @@ function startRpcError(error) {
 function startRpcSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: STARTRPC_SUCCESS});
-    dispatch(discoverAddressAttempt(true, "password"));
+    dispatch(discoverAddressAttempt(true));
   };
 }
 
@@ -270,12 +277,14 @@ function discoverAddressSuccess() {
   };
 }
 
-export function discoverAddressAttempt(discoverAccts, privPass) {
-  var request = {
-    discover_accounts: discoverAccts,
-    private_passphrase: Buffer.from(privPass),
-  }
-  return (dispatch) => {
+export function discoverAddressAttempt(discoverAccts) {
+
+  return (dispatch, getState) => {
+    const { privatePassphrase } = getState().walletLoader
+    var request = {
+      discover_accounts: discoverAccts,
+      private_passphrase: Buffer.from(privatePassphrase),
+    }
     dispatch({request: request, type: DISCOVERADDRESS_ATTEMPT});
     dispatch(discoverAddressAction());
   }

@@ -50,6 +50,8 @@ export default function walletLoader(state = {}, action) {
       return {...state,
         walletCreateRequestAttempt: true,
         walletCreateRequest: action.request,
+        privatePassphrase: action.privPass,
+        publicPassphrase: action.pubPass,
       };
     case CREATEWALLET_FAILED:
       return {...state,
@@ -67,7 +69,9 @@ export default function walletLoader(state = {}, action) {
     case OPENWALLET_ATTEMPT:
       return {...state,
         walletOpenRequestAttempt: true,
-        walletOpenRequest: action.request
+        walletOpenRequest: action.request,
+        privatePassphrase: action.privPass,
+        publicPassphrase: action.pubPass,
       };
     case OPENWALLET_FAILED:
       return {...state,
