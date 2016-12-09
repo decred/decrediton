@@ -151,7 +151,7 @@ class Home extends Component{
                   onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}>
                   {getBalanceRequestAttempt ? 'Getting Balance...' : 'Get Balance'}
                 </Button>
-                <h3>StakeInfo: {getStakeInfoResponse === null ? 'Please refresh' : getStakeInfoResponse}</h3>
+                <h3>StakeInfo: {getStakeInfoResponse === null ? 'Please refresh' : getStakeInfoResponse.pool_size}</h3>
                 <Button 
                   bsStyle="primary"
                   disabled={getStakeInfoRequestAttempt}
