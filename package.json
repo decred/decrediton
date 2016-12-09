@@ -92,7 +92,7 @@
   "homepage": "https://github.com/decred/decrediton#readme",
   "devDependencies": {
     "asar": "^0.12.3",
-    "babel-core": "^6.18.0",
+    "babel-core": "6.18.2",
     "babel-eslint": "^7.1.0",
     "babel-loader": "^6.2.7",
     "babel-plugin-add-module-exports": "^0.2.1",
