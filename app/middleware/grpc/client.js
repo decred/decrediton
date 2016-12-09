@@ -385,12 +385,11 @@ ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee, cb) 
     });
 }
 
-export function transactionNtfs(client) {
+export function transactionNtfs(client, request, cb) {
     // Register Notification Streams from Wallet
-    var request = {};
     var transactionNtfns = client.transactionNotifications(request);
     transactionNtfns.on('data', function(response) {
-        console.log("Transaction received:", response);
+        return cb(response);
     });
     transactionNtfns.on('end', function() {
         console.log("Transaction notifications done")
@@ -401,13 +400,10 @@ export function transactionNtfs(client) {
     });
 }
 
-export function spentnessNtfs(client, accountNum) {
-    var request = {
-	    account: accountNum
-    };
+export function spentnessNtfs(client, request, cb) {
     var spentnessNtfns = client.spentnessNotifications(request);
     spentnessNtfns.on('data', function(response) {
-        console.log("Spentness notification received:", response);
+        return cb(response);
     });
     spentnessNtfns.on('end', function() {
         console.log("Spentness notifications done")
@@ -418,11 +414,10 @@ export function spentnessNtfs(client, accountNum) {
     });
 }
 
-export function accountNtfs(client) {
-    var request = {};
+export function accountNtfs(client, request, cb) {
     var accountNtfns = client.accountNotifications(request);
     accountNtfns.on('data', function(response) {
-        console.log("Account notification received:", response);
+        return cb(response);
     });
     accountNtfns.on('end', function() {
         console.log("Account notifications done")
