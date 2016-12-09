@@ -140,6 +140,63 @@ var initialState = {
     accountNtfnsRequestAttempt: false,
     accountNtfnsRequest: null,
     accountNtfnsResponse: null,
+  },
+  control: {
+    // NextAddress
+    nextAddressRequestAttempt: false,
+    nextAddressRequest: null,
+    nextAddressResponse: null,
+    nextAddressError: null,
+    // RenameAccount
+    renameAccountRequestAttempt: false,
+    renameAccountRequest: null,
+    renameAccountResponse: null,
+    renameAccountError: null,
+    // Rescan
+    rescanRequestAttempt: false,
+    rescanRequest: null,
+    rescanResponse: null,
+    rescanError: null,
+    // NextAccount
+    nextAccountRequestAttempt: false,
+    nextAccountRequest: null,
+    nextAccountResponse: null,
+    nextAccountError: null,
+    // ImportPrivateKey
+    importPrivateKeyRequestAttempt: false,
+    importPrivateKeyRequest: null,
+    importPrivateKeyResponse: null,
+    importPrivateKeyError: null,
+    // ImportScript
+    importScriptRequestAttempt: false,
+    importScriptRequest: null,
+    importScriptResponse: null,
+    importScriptError: null,
+    // ChangePassphrase
+    changePassphraseRequestAttempt: false,
+    changePassphraseRequest: null,
+    changePassphraseResponse: null,
+    changePassphraseError: null,
+    // FundTransaction
+    fundTransactionRequestAttempt: false,
+    fundTransactionRequest: null,
+    fundTransactionResponse: null,
+    fundTransactionError: null,
+    // SignTransaction
+    signTransactionRequestAttempt: false,
+    signTransactionRequest: null,
+    signTransactionRespsonse: null,
+    signTransactionError: null,
+    // PublishTransaction
+    publishTransactionRequestAttempt: false,
+    publishTransactionRequest: null,
+    publishTransactionResponse: null,
+    publishTransactionError: null,
+    // PurchaseTicket
+    purchaseTicketRequestAttempt: false,
+    purchaseTicketRequest: null,
+    purchaseTicketResponse: null,
+    purchaseTicketError: null,
   }
 };
 
