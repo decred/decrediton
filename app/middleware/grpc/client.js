@@ -26,6 +26,21 @@ export function getCert() {
     return(cert)
 }
 
+export function getDcrdCert() {
+    var certPath = '';
+    if (os.platform() == 'win32') {
+        certPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'rpc.cert');
+    } else if (os.platform() == 'darwin') {
+        certPath = path.join(process.env.HOME, 'Library', 'Application Support',
+            'Decrediton', 'rpc.cert');
+    } else {
+        var certPath = path.join(process.env.HOME, '.dcrd', 'rpc.cert');
+    }
+
+    var cert = fs.readFileSync(certPath);
+    return(cert)
+}
+
 export function client(address, port, cb) {
     var protoDescriptor = grpc.load('./app/api.proto');
     var walletrpc = protoDescriptor.walletrpc;

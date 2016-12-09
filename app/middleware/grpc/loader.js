@@ -81,8 +81,12 @@ export function closeWallet(loader,request, cb) {
 export function startConsensusRpc(loader, request, cb) {
     loader.startConsensusRpc(request, function(err, response) {
         if (err) {
-            console.error(err);
-            return cb(err);
+            if (err.message.includes("RPC client already created")) {
+                return cb();
+            } else {
+                console.error(err);
+                return cb(err);
+            }
         } else {
             return cb();
         }

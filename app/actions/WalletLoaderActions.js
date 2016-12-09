@@ -1,12 +1,11 @@
 import { loader, createWallet, walletExists, openWallet, 
-  closeWallet, discoverAddresses, subscribeToConsensusRpc,
+  closeWallet, discoverAddresses, subscribeBlockNtfns,
   startConsensusRpc} from '../middleware/grpc/loader';
 import { loginRequest } from './LoginActions';
-import { seederRequest } from './SeedServiceActions';
 import path from 'path';
 import os from 'os';
 import fs from 'fs';
-
+import { getDcrdCert } from '../middleware/grpc/client';
 
 var Buffer = require('buffer/').Buffer;
 
@@ -22,7 +21,6 @@ function loaderSuccess(loader) {
   return (dispatch) => {
     dispatch({loader: loader, type: LOADER_SUCCESS });
     dispatch(walletExistRequest());
-    dispatch(seederRequest());
   };
 }
 
@@ -217,6 +215,8 @@ function startRpcError(error) {
 function startRpcSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: STARTRPC_SUCCESS});
+    dispatch(discoverAddressAttempt(true, "password"));
+    dispatch(subscribeBlockAttempt());
   };
 }
 
@@ -233,8 +233,8 @@ export function startRpcRequest() {
   var request = {
     network_address: "127.0.0.1:19109",
     username: "USER",
-    password: "PASSWORD",
-    certificate: cert,
+    password: Buffer.from("PASSWORD"),
+    certificate: getDcrdCert(),
   };
   return (dispatch) => {
     dispatch({request: request, type: STARTRPC_ATTEMPT});
@@ -270,10 +270,10 @@ function discoverAddressSuccess() {
   };
 }
 
-export function discoverAddressRequest(discoverAccts, privPass) {
+export function discoverAddressAttempt(discoverAccts, privPass) {
   var request = {
     discover_accounts: discoverAccts,
-    private_passphrase: privPass,
+    private_passphrase: Buffer.from(privPass),
   }
   return (dispatch) => {
     dispatch({request: request, type: DISCOVERADDRESS_ATTEMPT});
@@ -310,7 +310,7 @@ function subscribeBlockSuccess() {
   };
 }
 
-export function subscribeBlockRequest() {
+export function subscribeBlockAttempt() {
   return (dispatch) => {
     dispatch({request: {}, type: SUBSCRIBEBLOCKNTFNS_ATTEMPT});
     dispatch(subscribeBlockAction());
