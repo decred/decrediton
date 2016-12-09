@@ -32,7 +32,6 @@ function getNextAddressAction() {
   return (dispatch, getState) => {
     const { client } = getState().login;
     const { getNextAddressRequest } = getState().control;
-    console.log(getNextAddressRequest );
     getNextAddress(client, getNextAddressRequest,
         function(getNextAddressResponse, err) {
       if (err) {
