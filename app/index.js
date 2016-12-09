@@ -127,6 +127,11 @@ var initialState = {
     decodeSeedRequest: null,
     decodeSeedResponse: null,
     decodeSeedError: null,
+  },
+  notifications: {
+    transactionNtfnsRequestAttempt: false,
+    transactionNtfnsRequest: null,
+    transactionNtfnsResponse: null,
   }
 };
 

@@ -2,6 +2,7 @@ import { loader, createWallet, walletExists, openWallet,
   closeWallet, discoverAddresses, subscribeBlockNtfns,
   startConsensusRpc, fetchHeaders} from '../middleware/grpc/loader';
 import { loginRequest } from './LoginActions';
+import { transactionNftnsStart } from './NotificationActions';
 import path from 'path';
 import os from 'os';
 import fs from 'fs';
@@ -352,6 +353,7 @@ function fetchHeadersSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: FETCHHEADERS_SUCCESS});
     dispatch(subscribeBlockAttempt());
+    dispatch(transactionNftnsStart());
   };
 }
 

@@ -385,12 +385,11 @@ ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee, cb) 
     });
 }
 
-export function transactionNtfs(client) {
+export function transactionNtfs(client, request, cb) {
     // Register Notification Streams from Wallet
-    var request = {};
     var transactionNtfns = client.transactionNotifications(request);
     transactionNtfns.on('data', function(response) {
-        console.log("Transaction received:", response);
+        return cb(response);
     });
     transactionNtfns.on('end', function() {
         console.log("Transaction notifications done")
