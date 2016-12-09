@@ -48,7 +48,7 @@ class Receive extends Component{
             <Row>
               <Col sm={12} >
                 <h1>Receive Page</h1>
-                <h3>Current address: {getNextAddressResponse === null ? 'Please refresh' : getNextAddresResponse.address }</h3>
+                <h3>Current address: {getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.address }</h3>
                 <Button 
                   bsStyle="primary"
                   disabled={getNextAddressRequestAttempt}
