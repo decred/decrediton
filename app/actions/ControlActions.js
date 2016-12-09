@@ -15,8 +15,10 @@ function getNextAddressSuccess(getNextAddressResponse) {
   return { getNextAddressResponse: getNextAddressResponse, type: GETNEXTADDRESS_SUCCESS };
 }
 
-export function getNextAddressAttempt() {
+export function getNextAddressAttempt(accountNum) {
   var request = {
+    account: accountNum,
+    kind: 0,
   }
   return (dispatch) => {
     dispatch({
@@ -29,7 +31,7 @@ export function getNextAddressAttempt() {
 function getNextAddressAction() {
   return (dispatch, getState) => {
     const { client } = getState().login;
-    const { getNextAddressRequest } = getState().grpc;
+    const { getNextAddressRequest } = getState().control;
     getNextAddress(client, getNextAddressRequest,
         function(getNextAddressResponse, err) {
       if (err) {
@@ -53,9 +55,11 @@ function renameAccountSuccess(renameAccountResponse) {
   return { renameAccountResponse: renameAccountResponse, type: RENAMEACCOUNT_SUCCESS };
 }
 
-export function renameAccountAttempt() {
+export function renameAccountAttempt(accountNumber, newName) {
   var request = {
-  }
+    account_number: accountNum,
+    new_name: newName
+  };
   return (dispatch) => {
     dispatch({
       request: request,
@@ -67,7 +71,7 @@ export function renameAccountAttempt() {
 function renameAccountAction() {
   return (dispatch, getState) => {
     const { client } = getState().login;
-    const { renameAccountRequest } = getState().grpc;
+    const { renameAccountRequest } = getState().control;
     renameAccount(client, renameAccountRequest,
         function(renameAccountResponse, err) {
       if (err) {
@@ -91,9 +95,10 @@ function rescanSuccess(rescanResponse) {
   return { rescanResponse: rescanResponse, type: RESCAN_SUCCESS };
 }
 
-export function rescanAttempt() {
+export function rescanAttempt(beginHeight) {
   var request = {
-  }
+    begin_height: beginHeight
+  };
   return (dispatch) => {
     dispatch({
       request: request,
@@ -105,7 +110,7 @@ export function rescanAttempt() {
 function rescanAction() {
   return (dispatch, getState) => {
     const { client } = getState().login;
-    const { rescanRequest } = getState().grpc;
+    const { rescanRequest } = getState().control;
     rescan(client, rescanRequest,
         function(rescanResponse, err) {
       if (err) {
@@ -129,9 +134,11 @@ function getNextAccountSuccess(getNextAccountResponse) {
   return { getNextAccountResponse: getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS };
 }
 
-export function getNextAccountAttempt() {
+export function getNextAccountAttempt(passphrase, accountName) {
   var request = {
-  }
+    passphrase: Buffer.from(passphrase),
+    account_name: accountName
+  };
   return (dispatch) => {
     dispatch({
       request: request,
@@ -143,7 +150,7 @@ export function getNextAccountAttempt() {
 function getNextAccountAction() {
   return (dispatch, getState) => {
     const { client } = getState().login;
-    const { getNextAccountRequest } = getState().grpc;
+    const { getNextAccountRequest } = getState().control;
     getNextAccount(client, getNextAccountRequest,
         function(getNextAccountResponse, err) {
       if (err) {
@@ -167,9 +174,15 @@ function importPrivateKeySuccess(importPrivateKeyResponse) {
   return { importPrivateKeyResponse: importPrivateKeyResponse, type: IMPORTPRIVKEY_SUCCESS };
 }
 
-export function importPrivateKeyAttempt() {
+export function importPrivateKeyAttempt(passphrase, accountNum, wif, rescan, scanFrom) {
   var request = {
-  }
+    passphrase: Buffer.from(passphrase),
+    account: accountNum,
+    private_key_wif: wif,
+    rescan: rescan,
+    scan_from: scanFrom
+  };
+
   return (dispatch) => {
     dispatch({
       request: request,
@@ -181,7 +194,7 @@ export function importPrivateKeyAttempt() {
 function importPrivateKeyAction() {
   return (dispatch, getState) => {
     const { client } = getState().login;
-    const { importPrivateKeyRequest } = getState().grpc;
+    const { importPrivateKeyRequest } = getState().control;
     importPrivateKey(client, importPrivateKeyRequest,
         function(importPrivateKeyResponse, err) {
       if (err) {
@@ -205,9 +218,13 @@ function importScriptSuccess(importScriptResponse) {
   return { importScriptResponse: importScriptResponse, type: IMPORTSCRIPT_SUCCESS };
 }
 
-export function importScriptAttempt() {
+export function importScriptAttempt(passphrase, script, rescan, scanFrom) {
   var request = {
-  }
+    passphrase: Buffer.from(passphrase),
+    script: script,
+    rescan: rescan,
+    scan_from: scanFrom
+  };
   return (dispatch) => {
     dispatch({
       request: request,
@@ -219,7 +236,7 @@ export function importScriptAttempt() {
 function importScriptAction() {
   return (dispatch, getState) => {
     const { client } = getState().login;
-    const { importScriptRequest } = getState().grpc;
+    const { importScriptRequest } = getState().control;
     importScript(client, importScriptRequest,
         function(importScriptResponse, err) {
       if (err) {
@@ -243,9 +260,11 @@ function changePassphraseSuccess(changePassphraseResponse) {
   return { changePassphraseResponse: changePassphraseResponse, type: CHANGEPASSPHRASE_SUCCESS };
 }
 
-export function changePassphraseAttempt() {
+export function changePassphraseAttempt(oldPass, newPass) {
   var request = {
-  }
+    old_passphrase: Buffer.from(oldPass),
+    new_passphrase: Buffer.from(newPass)
+  };
   return (dispatch) => {
     dispatch({
       request: request,
@@ -257,7 +276,7 @@ export function changePassphraseAttempt() {
 function changePassphraseAction() {
   return (dispatch, getState) => {
     const { client } = getState().login;
-    const { changePassphraseRequest } = getState().grpc;
+    const { changePassphraseRequest } = getState().control;
     changePassphrase(client, changePassphraseRequest,
         function(changePassphraseResponse, err) {
       if (err) {
@@ -269,39 +288,42 @@ function changePassphraseAction() {
   }
 }
 
-export const GETFUNDTX_ATTEMPT = 'GETFUNDTX_ATTEMPT';
-export const GETFUNDTX_FAILED = 'GETFUNDTX_FAILED';
-export const GETFUNDTX_SUCCESS = 'GETFUNDTX_SUCCESS';
+export const FUNDTX_ATTEMPT = 'FUNDTX_ATTEMPT';
+export const FUNDTX_FAILED = 'FUNDTX_FAILED';
+export const FUNDTX_SUCCESS = 'FUNDTX_SUCCESS';
 
-function getFundTransactionError(error) {
-  return { error, type: GETFUNDTX_FAILED };
+function fundTransactionError(error) {
+  return { error, type: FUNDTX_FAILED };
 }
 
-function getFundTransactionSuccess(getFundTransactionResponse) {
-  return { getFundTransactionResponse: getFundTransactionResponse, type: GETFUNDTX_SUCCESS };
+function fundTransactionSuccess(fundTransactionResponse) {
+  return { fundTransactionResponse: gfundTransactionResponse, type: FUNDTX_SUCCESS };
 }
 
-export function getFundTransactionAttempt() {
+export function fundTransactionAttempt(accountNum, targetAmount, requiredConf) {
   var request = {
-  }
+    account: accountNum,
+    target_amount: targetAmount,
+    required_confirmations: requiredConf
+  };
   return (dispatch) => {
     dispatch({
       request: request,
-      type: GETFUNDTX_ATTEMPT });
-    dispatch(getFundTransactionAction());
+      type: FUNDTX_ATTEMPT });
+    dispatch(fundTransactionAction());
   }
 }
 
-function getFundTransactionAction() {
+function fundTransactionAction() {
   return (dispatch, getState) => {
     const { client } = getState().login;
-    const { getFundTransactionRequest } = getState().grpc;
-    getFundTransaction(client, getFundTransactionRequest,
-        function(getFundTransactionResponse, err) {
+    const { fundTransactionRequest } = getState().control;
+    fundTransaction(client, fundTransactionRequest,
+        function(fundTransactionResponse, err) {
       if (err) {
-        dispatch(getFundTransactionError(err + " Please try again"));
+        dispatch(fundTransactionError(err + " Please try again"));
       } else {
-        dispatch(getFundTransactionSuccess(getFundTransactionResponse));
+        dispatch(fundTransactionSuccess(fundTransactionResponse));
       }
     })
   }
@@ -319,9 +341,11 @@ function signTransactionSuccess(signTransactionResponse) {
   return { signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS };
 }
 
-export function signTransactionAttempt() {
+export function signTransactionAttempt(passphrase, rawTx) {
   var request = {
-  }
+    passphrase: Buffer.from(passphrase),
+    serialized_transaction: rawTx
+  };
   return (dispatch) => {
     dispatch({
       request: request,
@@ -333,7 +357,7 @@ export function signTransactionAttempt() {
 function signTransactionAction() {
   return (dispatch, getState) => {
     const { client } = getState().login;
-    const { signTransactionRequest } = getState().grpc;
+    const { signTransactionRequest } = getState().control;
     signTransaction(client, signTransactionRequest,
         function(signTransactionResponse, err) {
       if (err) {
@@ -357,9 +381,10 @@ function publishTransactionSuccess(publishTransactionResponse) {
   return { publishTransactionResponse: publishTransactionResponse, type: PUBLISHTX_SUCCESS };
 }
 
-export function publishTransactionAttempt() {
+export function publishTransactionAttempt(txId) {
   var request = {
-  }
+    signed_transaction: txId
+  };
   return (dispatch) => {
     dispatch({
       request: request,
@@ -371,7 +396,7 @@ export function publishTransactionAttempt() {
 function publishTransactionAction() {
   return (dispatch, getState) => {
     const { client } = getState().login;
-    const { publishTransactionRequest } = getState().grpc;
+    const { publishTransactionRequest } = getState().control;
     publishTransaction(client, publishTransactionRequest,
         function(publishTransactionResponse, err) {
       if (err) {
@@ -395,9 +420,21 @@ function purchaseTicketSuccess(purchaseTicketResponse) {
   return { purchaseTicketResponse: purchaseTicketResponse, type: PURCHASETICKET_SUCCESS };
 }
 
-export function purchaseTicketAttempt() {
+export function purchaseTicketAttempt(passphrase, accountNum, spendLimit, requiredConf,
+ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
   var request = {
-  }
+    passphrase: Buffer.from(passphrase),
+    account: accountNum,
+    spend_limit: spendLimit,
+    required_confirmations: requiredConf,
+    ticket_address: ticketAddress,
+    num_tickets: numTickets,
+    pool_address: poolAddress,
+    pool_fees: poolFees,
+    expiry: expiry,
+    tx_fee: txFee,
+    ticket_fee: ticketFee
+  };
   return (dispatch) => {
     dispatch({
       request: request,
@@ -409,7 +446,7 @@ export function purchaseTicketAttempt() {
 function purchaseTicketAction() {
   return (dispatch, getState) => {
     const { client } = getState().login;
-    const { purchaseTicketRequest } = getState().grpc;
+    const { purchaseTicketRequest } = getState().control;
     purchaseTicket(client, purchaseTicketRequest,
         function(purchaseTicketResponse, err) {
       if (err) {

@@ -353,7 +353,7 @@ function fetchHeadersSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: FETCHHEADERS_SUCCESS});
     dispatch(subscribeBlockAttempt());
-    dispatch(transactionNftnsStart());
+    //dispatch(transactionNftnsStart());
   };
 }
 
