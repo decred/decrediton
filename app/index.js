@@ -132,6 +132,14 @@ var initialState = {
     transactionNtfnsRequestAttempt: false,
     transactionNtfnsRequest: null,
     transactionNtfnsResponse: null,
+
+    spentnessNtfnsRequestAttempt: false,
+    spentnessNtfnsRequest: null,
+    spentnessNtfnsResponse: null,
+
+    accountNtfnsRequestAttempt: false,
+    accountNtfnsRequest: null,
+    accountNtfnsResponse: null,
   }
 };
 
