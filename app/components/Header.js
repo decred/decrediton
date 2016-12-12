@@ -14,15 +14,17 @@ class Header extends Component {
     return (
       <div>
         <AppBar onLeftIconButtonTouchTap={this._toggle} title="Decrediton" />
-          <Drawer
-            ref="Drawer"
-            docked={false}
-            open={this.state.open}
-            onRequestChange={open => this.setState({open})}
-          >
-            <MenuItem>Settings</MenuItem>
-          </Drawer>
+        <Drawer
+          ref="Drawer"
+          docked={false}
+          open={this.state.open}
+          onRequestChange={open => this.setState({open})}
+        >
+          <MenuItem>Settings</MenuItem>
+        </Drawer>
       </div>
     );
   }
 }
+
+export default Header;
