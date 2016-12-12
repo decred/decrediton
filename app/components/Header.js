@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem'
+import MenuItem from 'material-ui/MenuItem';
 
 class Header extends Component {
 
@@ -13,7 +13,7 @@ class Header extends Component {
   render() {
     return (
       <div>
-        <AppBar onLeftIconButtonTouchTap={this._toggle} title="Decrediton" />
+        <AppBar onLeftIconButtonTouchTap={() => {this._toggle}} title="Decrediton" />
         <Drawer
           ref="Drawer"
           docked={false}

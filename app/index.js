@@ -7,7 +7,6 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import injectTapEventPlugin from "react-tap-event-plugin";
 import routes from './routes';
 import configureStore from './store/configureStore';
-import './bootstrap.min.css';
 import { getCfg } from './config.js';
 
 var cfg = getCfg();

@@ -9,7 +9,8 @@ import CreateWalletForm from '../containers/CreateWalletForm';
 import Sidebar from './SideBar';
 import MaterialTitlePanel from './MaterialTitlePanel';
 import SidebarContent from '../content/SideBarContent';
-import { Button, Col, Row, Navbar, Nav, NavItem } from 'react-bootstrap';
+import RaisedButton from 'material-ui/RaisedButton';
+import { Col, Row } from 'react-bootstrap';
 
 const styles = {
   mainArea: {
@@ -90,11 +91,11 @@ class Home extends Component{
     /*  View that will be seen on fresh starts */
     const getStarted = (      
 
-          <div style={styles.mainArea}>
+          <div >
             <Row>
               <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
                 <Row>
-                  <p style={styles.error}>{error}</p>
+                  <p >{error}</p>
                 </Row>
                 <Row>
                   <h3>Welcome to Decrediton</h3>
@@ -107,7 +108,7 @@ class Home extends Component{
 
     /*  View that will be when logging in is occuring */
     const getStartedLoggingIn = (
-      <div style={styles.mainArea}>
+      <div >
             <Row>
               <Col sm={12} >
                 Logging in!
@@ -117,7 +118,7 @@ class Home extends Component{
 
     /* View that will be shown when an error on logging in occured */
     const getStartedError = (
-      <div style={styles.mainArea}>
+      <div >
             <Row>
               <Col sm={12} >
                 Logging in!
@@ -127,30 +128,29 @@ class Home extends Component{
 
     /* View that will be seen when user has a set Client */
     const homeView = (      
-      <div style={styles.mainArea}>
+      <div >
             <Row>
               <Col sm={12} >
                 <h1>Home Page</h1>
                 <h3>Current balance: {getBalanceResponse === null ? 'Please refresh' : getBalanceResponse.total }</h3>
-                <Button 
-                  bsStyle="primary"
+                <RaisedButton                   
+                  primary={true}
                   disabled={getBalanceRequestAttempt}
                   onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}>
                   {getBalanceRequestAttempt ? 'Getting Balance...' : 'Get Balance'}
-                </Button>
+                </RaisedButton>
                 <h3>StakeInfo: {getStakeInfoResponse === null ? 'Please refresh' : getStakeInfoResponse.pool_size}</h3>
-                <Button 
-                  bsStyle="primary"
+                <RaisedButton 
                   disabled={getStakeInfoRequestAttempt}
                   onClick={!getStakeInfoRequestAttempt? () => this.props.getStakeInfoAttempt() : null}>
                   {getStakeInfoRequestAttempt ? 'Getting Stake Info...' : 'Get Stake Info'}
-                </Button>
+                </RaisedButton>
               </Col>
             </Row>
           </div>);
 
     const getStartedCreateWallet = (    
-      <div style={styles.mainArea}>
+      <div >
             <Row>
               <Col sm={12} >
                 <h1>Home Page</h1>
@@ -161,7 +161,7 @@ class Home extends Component{
           </div>);
 
     const getStartedWalletCreating = (      
-        <div style={styles.mainArea}>
+        <div >
             <Row>
               <Col sm={12} >
                 <p> Creating wallet </p>
@@ -170,28 +170,29 @@ class Home extends Component{
           </div>);
     
     const getStartedWalletLoader = (      
-      <div style={styles.mainArea}>
+      <div >
             <Row>
               <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
                 <Row>
-                  <p style={styles.error}>{error}</p>
+                  <p >{error}</p>
                 </Row>
                 <Row>
-                  <Button type="submit"
+                  <RaisedButton type="submit"
+                    primary={true}
                     onClick={() => {loaderRequest(address, port)}}>
                     Get Started
-                  </Button>
+                  </RaisedButton>
                 </Row>
               </Col>
             </Row>
           </div>);
 
     const getStartedGettingLoader = (      
-      <div style={styles.mainArea}>
+      <div >
             <Row>
               <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
                 <Row>
-                  <p style={styles.error}>{error}</p>
+                  <p >{error}</p>
                 </Row>
                 <Row>
                   <h3>Getting wallet loader service</h3>
@@ -201,11 +202,11 @@ class Home extends Component{
           </div>);
       
     const getStartedWalletExistRequest = (      
-      <div style={styles.mainArea}>
+      <div >
             <Row>
               <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
                 <Row>
-                  <p style={styles.error}>{error}</p>
+                  <p >{error}</p>
                 </Row>
                 <Row>
                   <h3>Checking if wallet exists...</h3>
@@ -215,11 +216,11 @@ class Home extends Component{
           </div>);
 
     const getStartedWalletExist = (      
-      <div style={styles.mainArea}>
+      <div >
             <Row>
               <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
                 <Row>
-                  <p style={styles.error}>{error}</p>
+                  <p >{error}</p>
                 </Row>
                 <Row>
                   <h3>Check if wallet exists</h3>
@@ -229,11 +230,11 @@ class Home extends Component{
           </div>);
 
     const getStartedWalletOpen = (      
-      <div style={styles.mainArea}>
+      <div >
             <Row>
               <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
                 <Row>
-                  <p style={styles.error}>{error}</p>
+                  <p >{error}</p>
                 </Row>
                 <Row>
                   <h3>Opening wallet</h3>
@@ -245,11 +246,11 @@ class Home extends Component{
           </div>);
 
     const getStartedOpeningWallet = (      
-      <div style={styles.mainArea}>
+      <div >
             <Row>
               <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
                 <Row>
-                  <p style={styles.error}>{error}</p>
+                  <p >{error}</p>
                 </Row>
                 <Row>
                   <h3>Trying to open wallet</h3>
