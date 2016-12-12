@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Header from '../components/Header';
 
 // For Customization Options, edit  or use
 // './src/material_ui_raw_theme_file.jsx' as a template.
@@ -16,6 +17,9 @@ export default class App extends Component {
     return (
       <div>
         <MuiThemeProvider muiTheme={theme}>
+          <div>
+            <Header/>
+          </div>
           <div>
             {this.props.children}
           </div>

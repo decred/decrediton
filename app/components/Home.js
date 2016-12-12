@@ -89,8 +89,7 @@ class Home extends Component{
 
     /*  View that will be seen on fresh starts */
     const getStarted = (      
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
+
           <div style={styles.mainArea}>
             <Row>
               <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
@@ -104,43 +103,31 @@ class Home extends Component{
                 </Row>
               </Col>
             </Row>
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>);
+          </div>);
 
     /*  View that will be when logging in is occuring */
-    const getStartedLoggingIn = (      
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div style={styles.mainArea}>
+    const getStartedLoggingIn = (
+      <div style={styles.mainArea}>
             <Row>
               <Col sm={12} >
                 Logging in!
               </Col>
             </Row>
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>);
+          </div>);
 
     /* View that will be shown when an error on logging in occured */
     const getStartedError = (
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div style={styles.mainArea}>
+      <div style={styles.mainArea}>
             <Row>
               <Col sm={12} >
                 Logging in!
               </Col>
             </Row>
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>);
+          </div>);
 
     /* View that will be seen when user has a set Client */
     const homeView = (      
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div style={styles.mainArea}>
+      <div style={styles.mainArea}>
             <Row>
               <Col sm={12} >
                 <h1>Home Page</h1>
@@ -160,14 +147,10 @@ class Home extends Component{
                 </Button>
               </Col>
             </Row>
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>);
+          </div>);
 
-    const getStartedCreateWallet = (      
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div style={styles.mainArea}>
+    const getStartedCreateWallet = (    
+      <div style={styles.mainArea}>
             <Row>
               <Col sm={12} >
                 <h1>Home Page</h1>
@@ -175,27 +158,19 @@ class Home extends Component{
                 <CreateWalletForm />
               </Col>
             </Row>
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>);
+          </div>);
 
     const getStartedWalletCreating = (      
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div style={styles.mainArea}>
+        <div style={styles.mainArea}>
             <Row>
               <Col sm={12} >
                 <p> Creating wallet </p>
               </Col>
             </Row>
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>);
+          </div>);
     
     const getStartedWalletLoader = (      
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div style={styles.mainArea}>
+      <div style={styles.mainArea}>
             <Row>
               <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
                 <Row>
@@ -209,14 +184,10 @@ class Home extends Component{
                 </Row>
               </Col>
             </Row>
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>);
+          </div>);
 
     const getStartedGettingLoader = (      
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div style={styles.mainArea}>
+      <div style={styles.mainArea}>
             <Row>
               <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
                 <Row>
@@ -227,14 +198,10 @@ class Home extends Component{
                 </Row>
               </Col>
             </Row>
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>);
+          </div>);
       
     const getStartedWalletExistRequest = (      
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div style={styles.mainArea}>
+      <div style={styles.mainArea}>
             <Row>
               <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
                 <Row>
@@ -245,14 +212,10 @@ class Home extends Component{
                 </Row>
               </Col>
             </Row>
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>);
+          </div>);
 
     const getStartedWalletExist = (      
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div style={styles.mainArea}>
+      <div style={styles.mainArea}>
             <Row>
               <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
                 <Row>
@@ -263,14 +226,10 @@ class Home extends Component{
                 </Row>
               </Col>
             </Row>
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>);
+          </div>);
 
     const getStartedWalletOpen = (      
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div style={styles.mainArea}>
+      <div style={styles.mainArea}>
             <Row>
               <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
                 <Row>
@@ -283,14 +242,10 @@ class Home extends Component{
                 </Row>
               </Col>
             </Row>
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>);
+          </div>);
 
     const getStartedOpeningWallet = (      
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div style={styles.mainArea}>
+      <div style={styles.mainArea}>
             <Row>
               <Col xs={10} sm={10} md={8} lg={6} xsPush={1} smPush={1} mdPush={2} lgPush={3}>
                 <Row>
@@ -301,9 +256,7 @@ class Home extends Component{
                 </Row>
               </Col>
             </Row>
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>);
+          </div>);
 
     // Step 4 complete
     if (isLoggedIn) {
