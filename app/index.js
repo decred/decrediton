@@ -4,6 +4,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
+import injectTapEventPlugin from "react-tap-event-plugin";
 import routes from './routes';
 import configureStore from './store/configureStore';
 import './bootstrap.min.css';
@@ -209,6 +210,12 @@ var initialState = {
     purchaseTicketError: null,
   }
 };
+
+//Needed for onTouchTap
+//Can go away when react 1.0 release
+//Check this repo:
+//https://github.com/zilverline/react-tap-event-plugin
+injectTapEventPlugin();
 
 const store = configureStore(initialState);
 const history = syncHistoryWithStore(hashHistory, store);
