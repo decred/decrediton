@@ -2,7 +2,11 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import { Button, Row, Col, Table } from 'react-bootstrap';
+import RaisedButton from 'material-ui/RaisedButton';
+
+const style = {
+  margin: 12,
+};
 
 class Send extends Component{
   static propTypes = {
@@ -16,11 +20,7 @@ class Send extends Component{
     /* View that will be seen when user has a set Client */
     const sendView = (      
       <div>
-        <Row>
-          <Col sm={12} >
-            <h1>Send Page</h1>
-          </Col>
-        </Row>
+        <h1>Send Page</h1>
       </div>);
 
     /* Check to see that client is not undefined */

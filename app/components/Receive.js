@@ -2,7 +2,11 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import { Button, Row, Col, Table } from 'react-bootstrap';
+import RaisedButton from 'material-ui/RaisedButton';
+
+const style = {
+  margin: 12,
+};
 
 class Receive extends Component{
   static propTypes = {
@@ -19,18 +23,14 @@ class Receive extends Component{
     /* View that will be seen when user has a set Client */
     const receiveView = (
       <div>
-        <Row>
-          <Col sm={12} >
-            <h1>Receive Page</h1>
-            <h3>Current address: {getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.address }</h3>
-            <Button 
-              bsStyle="primary"
-              disabled={getNextAddressRequestAttempt}
-              onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}>
-              {getNextAddressRequestAttempt ? 'Getting new address' : 'Get New Address'}
-            </Button>
-          </Col>
-        </Row>
+        <h1>Receive Page</h1>
+        <h3>Current address: {getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.address }</h3>
+        <RaisedButton 
+          style={style}
+          disabled={getNextAddressRequestAttempt}
+          onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}>
+          {getNextAddressRequestAttempt ? 'Getting new address' : 'Get New Address'}
+        </RaisedButton>
       </div>);
 
     /* Check to see that client is not undefined */
