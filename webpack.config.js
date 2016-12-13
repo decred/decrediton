@@ -11,7 +11,7 @@ var config = {
       test: /\.jsx?$/,
       loaders: ['babel-loader'],
       exclude: /node_modules/
-    }, 
+    },
       {
         test: /\.global\.css$/,
         loaders: [
