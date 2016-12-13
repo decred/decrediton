@@ -17,6 +17,9 @@ const styles = {
   },
   error: {
     color:"red"
+  },
+  buttons: {
+    margin: 12
   }
 }
 
@@ -88,12 +91,14 @@ class Home extends Component{
         <h1>Home Page</h1>
         <h3>Current balance: {getBalanceResponse === null ? 'Please refresh' : getBalanceResponse.total }</h3>
         <RaisedButton                   
+          style={styles.buttons}
           disabled={getBalanceRequestAttempt}
           onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}>
           {getBalanceRequestAttempt ? 'Getting Balance...' : 'Get Balance'}
         </RaisedButton>
         <h3>StakeInfo: {getStakeInfoResponse === null ? 'Please refresh' : getStakeInfoResponse.pool_size}</h3>
         <RaisedButton 
+          style={styles.buttons}
           disabled={getStakeInfoRequestAttempt}
           onClick={!getStakeInfoRequestAttempt? () => this.props.getStakeInfoAttempt() : null}>
           {getStakeInfoRequestAttempt ? 'Getting Stake Info...' : 'Get Stake Info'}
@@ -116,6 +121,7 @@ class Home extends Component{
       <div >
         <p>{error}</p>
         <RaisedButton type="submit"
+          style={styles.buttons}
           primary={true}
           onClick={() => {loaderRequest(address, port)}}>
           Get Started

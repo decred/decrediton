@@ -1,14 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { openWalletAction, openWalletRequest } from '../actions/WalletLoaderActions'
-import { Button, Form, FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap'
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+
+const style = {
+  margin: 12,
+};
 
 let LoaderForm = ({ dispatch }) => {
   let pubpass, privpass
 
   return (
     <div>
-      <Form horizontal onSubmit={e => {
+      <form onSubmit={e => {
         e.preventDefault()
         if (!pubpass.value.trim() || !pubpass.value.trim()) {
           return
@@ -17,26 +22,21 @@ let LoaderForm = ({ dispatch }) => {
         pubpass.value = ''
         privpass.value = ''
       }}>
-        <FormGroup controlId={pubpass}>
-          <Col componentClass={ControlLabel} sm={2}>
-            Public Password
-          </Col>
-          <Col sm={10}>
-            <FormControl type="text" inputRef={node => {pubpass = node}} placeholder="Public Password" />
-          </Col>
-        </FormGroup>
-        <FormGroup controlId={privpass}>
-          <Col componentClass={ControlLabel} sm={2}>
-            Private Password
-          </Col>
-          <Col sm={10}>
-            <FormControl type="text" inputRef={node => {privpass = node}} placeholder="Private Password" />
-          </Col>
-        </FormGroup>
-        <Button type="submit">
+        <TextField
+          id="pubpass"
+          hintText="Public Password"
+          floatingLabelText="Public Password"
+        /><br />
+        <TextField
+          id="privpass"
+          hintText="Private Password"
+          floatingLabelText="Private Password"
+        /><br />
+        <RaisedButton type="submit"
+         style={style}>
           Open Wallet
-        </Button>
-      </Form>
+        </RaisedButton>
+      </form>
     </div>
   )
 }
