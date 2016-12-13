@@ -1,6 +1,6 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { checkWalletExist, walletExistRequest } from '../actions/WalletLoaderActions'
+import React from 'react';
+import { connect } from 'react-redux';
+import { checkWalletExist, walletExistRequest } from '../actions/WalletLoaderActions';
 import RaisedButton from 'material-ui/RaisedButton';
 
 const style = {
@@ -11,16 +11,16 @@ let WalletExistForm = ({ dispatch }) => {
   return (
     <div>
       <form onSubmit={e => {
-        e.preventDefault()
-        dispatch(walletExistRequest())
+        e.preventDefault();
+        dispatch(walletExistRequest());
       }}>
         <RaisedButton type="submit"
-         style={style} 
+         style={style}
          label='Check wallet exists'/>
       </form>
     </div>
-  )
-}
-WalletExistForm = connect()(WalletExistForm)
+  );
+};
+WalletExistForm = connect()(WalletExistForm);
 
-export default WalletExistForm
+export default WalletExistForm;

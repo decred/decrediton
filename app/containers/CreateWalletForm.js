@@ -1,6 +1,6 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { createNewWallet, createWalletRequest } from '../actions/WalletLoaderActions'
+import React from 'react';
+import { connect } from 'react-redux';
+import { createNewWallet, createWalletRequest } from '../actions/WalletLoaderActions';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
@@ -16,40 +16,40 @@ let CreateWalletForm = ({ dispatch }) => {
   return (
     <div>
       <form onSubmit={e => {
-        e.preventDefault()
+        e.preventDefault();
         if (pubpass == '' || privpass == '' || seed == '') {
-          return
+          return;
         }
-        dispatch(createWalletRequest(pubpass, privpass, seed))
-        pubpass = ''
-        privpass = ''
-        seed = ''
+        dispatch(createWalletRequest(pubpass, privpass, seed));
+        pubpass = '';
+        privpass = '';
+        seed = '';
       }}>
         <TextField
           id="pubpass"
           hintText="Public Password"
           floatingLabelText="Public Password"
-          onBlur={(e) =>{pubpass = e.target.value}}
+          onBlur={(e) =>{pubpass = e.target.value;}}
         /><br />
         <TextField
           id="privpass"
           hintText="Private Password"
           floatingLabelText="Private Password"
-          onBlur={(e) =>{privpass = e.target.value}}
+          onBlur={(e) =>{privpass = e.target.value;}}
         /><br />
         <TextField
           id="seed"
           hintText="Seed"
           floatingLabelText="Seed"
-          onBlur={(e) =>{seed = e.target.value}}
+          onBlur={(e) =>{seed = e.target.value;}}
         /><br />
         <RaisedButton type="submit"
-         style={style} 
+         style={style}
          label='Create Wallet'/>
       </form>
     </div>
-  )
-}
-CreateWalletForm = connect()(CreateWalletForm)
+  );
+};
+CreateWalletForm = connect()(CreateWalletForm);
 
-export default CreateWalletForm
+export default CreateWalletForm;

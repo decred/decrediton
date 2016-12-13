@@ -26,9 +26,9 @@ class Header extends Component {
     this.state = {open:false};
   }
   handleToggle = () => this.setState({open: !this.state.open});
-  
+
   render() {
-    const page = "HOME";
+    const page = 'HOME';
     return (
       <div>
         <AppBar onLeftIconButtonTouchTap={this.handleToggle} title="Decrediton" />

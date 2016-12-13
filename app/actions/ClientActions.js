@@ -1,4 +1,4 @@
-import { getBalance, getAccountNumber, getNetwork, getPing, 
+import { getBalance, getAccountNumber, getNetwork, getPing,
   getStakeInfo, getTicketPrice, getAccounts, getTransactions } from '../middleware/grpc/client';
 
 export const GETBALANCE_ATTEMPT = 'GETBALANCE_ATTEMPT';
@@ -17,13 +17,13 @@ export function getBalanceAttempt(accountNumber, requiredConfs) {
   var request = {
     account_number: accountNumber,
     required_confirmations: requiredConfs
-  }
+  };
   return (dispatch) => {
     dispatch({
       request: request,
       type: GETBALANCE_ATTEMPT });
     dispatch(balance());
-  }
+  };
 }
 
 function balance() {
@@ -32,13 +32,13 @@ function balance() {
     const { getBalanceRequest } = getState().grpc;
     getBalance(client, getBalanceRequest,
         function(getBalanceResponse, err) {
-      if (err) {
-        dispatch(getBalanceError(err + " Please try again"));
-      } else {
-        dispatch(getBalanceSuccess(getBalanceResponse));
-      }
-    })
-  }
+          if (err) {
+            dispatch(getBalanceError(err + ' Please try again'));
+          } else {
+            dispatch(getBalanceSuccess(getBalanceResponse));
+          }
+        });
+  };
 }
 
 export const GETACCOUNTNUMBER_ATTEMPT = 'GETACCOUNTNUMBER_ATTEMPT';
@@ -56,13 +56,13 @@ function getAccountNumberSuccess(getAccountNumberResponse) {
 export function getAccountNumberAttempt(accountName) {
   var request = {
     account_name: accountName
-  }
+  };
   return (dispatch) => {
     dispatch({
       request: request,
       type: GETACCOUNTNUMBER_ATTEMPT });
     dispatch(accountNumber());
-  }
+  };
 }
 
 function accountNumber() {
@@ -71,13 +71,13 @@ function accountNumber() {
     const { getAccountNumberRequest } = getState().grpc;
     getAccountNumber(client, getAccountNumberRequest,
         function(getAccountNumberResponse, err) {
-      if (err) {
-        dispatch(getAccountNumberError(err + " Please try again"));
-      } else {
-        dispatch(getAccountNumberSuccess(getAccountNumberResponse));
-      }
-    })
-  }
+          if (err) {
+            dispatch(getAccountNumberError(err + ' Please try again'));
+          } else {
+            dispatch(getAccountNumberSuccess(getAccountNumberResponse));
+          }
+        });
+  };
 }
 
 export const GETNETWORK_ATTEMPT = 'GETNETWORK_ATTEMPT';
@@ -93,13 +93,13 @@ function getNetworkSuccess(getNetworkResponse) {
 }
 
 export function getNetworkAttempt() {
-  var request = {}
+  var request = {};
   return (dispatch) => {
     dispatch({
       request: request,
       type: GETNETWORK_ATTEMPT });
     dispatch(network());
-  }
+  };
 }
 
 function network() {
@@ -108,13 +108,13 @@ function network() {
     const { getNetworkRequest } = getState().grpc;
     getNetwork(client, getNetworkRequest,
         function(getNetworkResponse, err) {
-      if (err) {
-        dispatch(getNetworkError(err + " Please try again"));
-      } else {
-        dispatch(getNetworkSuccess(getNetworkResponse));
-      }
-    })
-  }
+          if (err) {
+            dispatch(getNetworkError(err + ' Please try again'));
+          } else {
+            dispatch(getNetworkSuccess(getNetworkResponse));
+          }
+        });
+  };
 }
 
 export const GETPING_ATTEMPT = 'GETPING_ATTEMPT';
@@ -131,13 +131,13 @@ function getPingSuccess(getPingResponse) {
 
 export function getPingAttempt() {
   var request = {
-  }
+  };
   return (dispatch) => {
     dispatch({
       request: request,
       type: GETPING_ATTEMPT });
     dispatch(ping());
-  }
+  };
 }
 
 function ping() {
@@ -146,13 +146,13 @@ function ping() {
     const { getPingRequest } = getState().grpc;
     getPing(client, getPingRequest,
         function(getPingResponse, err) {
-      if (err) {
-        dispatch(getPingError(err + " Please try again"));
-      } else {
-        dispatch(getPingSuccess(getPingResponse));
-      }
-    })
-  }
+          if (err) {
+            dispatch(getPingError(err + ' Please try again'));
+          } else {
+            dispatch(getPingSuccess(getPingResponse));
+          }
+        });
+  };
 }
 
 export const GETSTAKEINFO_ATTEMPT = 'GETSTAKEINFO_ATTEMPT';
@@ -169,13 +169,13 @@ function getStakeInfoSuccess(getStakeInfoResponse) {
 
 export function getStakeInfoAttempt() {
   var request = {
-  }
+  };
   return (dispatch) => {
     dispatch({
       request: request,
       type: GETSTAKEINFO_ATTEMPT });
     dispatch(stakeInfo());
-  }
+  };
 }
 
 function stakeInfo() {
@@ -184,13 +184,13 @@ function stakeInfo() {
     const { getStakeInfoRequest } = getState().grpc;
     getStakeInfo(client, getStakeInfoRequest,
         function(getStakeInfoResponse, err) {
-      if (err) {
-        dispatch(getStakeInfoError(err + " Please try again"));
-      } else {
-        dispatch(getStakeInfoSuccess(getStakeInfoResponse));
-      }
-    })
-  }
+          if (err) {
+            dispatch(getStakeInfoError(err + ' Please try again'));
+          } else {
+            dispatch(getStakeInfoSuccess(getStakeInfoResponse));
+          }
+        });
+  };
 }
 
 export const GETTICKETPRICE_ATTEMPT = 'GETTICKETPRICE_ATTEMPT';
@@ -207,13 +207,13 @@ function getTicketPriceSuccess(getTicketPriceResponse) {
 
 export function getTicketPriceAttempt() {
   var request = {
-  }
+  };
   return (dispatch) => {
     dispatch({
       request: request,
       type: GETTICKETPRICE_ATTEMPT });
     dispatch(ticketPrice());
-  }
+  };
 }
 
 function ticketPrice() {
@@ -222,13 +222,13 @@ function ticketPrice() {
     const { getTicketPriceRequest } = getState().grpc;
     getTicketPrice(client, getTicketPriceRequest,
         function(getTicketPriceResponse, err) {
-      if (err) {
-        dispatch(getTicketPriceError(err + " Please try again"));
-      } else {
-        dispatch(getTicketPriceSuccess(getTicketPriceResponse));
-      }
-    })
-  }
+          if (err) {
+            dispatch(getTicketPriceError(err + ' Please try again'));
+          } else {
+            dispatch(getTicketPriceSuccess(getTicketPriceResponse));
+          }
+        });
+  };
 }
 
 export const GETACCOUNTS_ATTEMPT = 'GETACCOUNTS_ATTEMPT';
@@ -245,13 +245,13 @@ function getAccountsSuccess(getAccountsResponse) {
 
 export function getAccountsAttempt() {
   var request = {
-  }
+  };
   return (dispatch) => {
     dispatch({
       request: request,
       type: GETACCOUNTS_ATTEMPT });
     dispatch(accounts());
-  }
+  };
 }
 
 function accounts() {
@@ -260,13 +260,13 @@ function accounts() {
     const { getAccountsRequest } = getState().grpc;
     getAccounts(client, getAccountsRequest,
         function(getAccountsResponse, err) {
-      if (err) {
-        dispatch(getAccountsError(err + " Please try again"));
-      } else {
-        dispatch(getAccountsSuccess(getAccountsResponse));
-      }
-    })
-  }
+          if (err) {
+            dispatch(getAccountsError(err + ' Please try again'));
+          } else {
+            dispatch(getAccountsSuccess(getAccountsResponse));
+          }
+        });
+  };
 }
 
 export const GETTRANSACTIONS_ATTEMPT = 'GETTRANSACTIONS_ATTEMPT';
@@ -296,7 +296,7 @@ export function getTransactionsAttempt(startHeight, endHeight, startHash, endHas
       request: request,
       type: GETTRANSACTIONS_ATTEMPT });
     dispatch(transactions());
-  }
+  };
 }
 
 function transactions() {
@@ -305,11 +305,11 @@ function transactions() {
     const { getTransactionsRequest } = getState().grpc;
     getTransactions(client, getTransactionsRequest,
         function(getTransactionsResponse, err) {
-      if (err) {
-        dispatch(getTransactionsError(err + " Please try again"));
-      } else {
-        dispatch(getTransactionsSuccess(getTransactionsResponse));
-      }
-    })
-  }
+          if (err) {
+            dispatch(getTransactionsError(err + ' Please try again'));
+          } else {
+            dispatch(getTransactionsSuccess(getTransactionsResponse));
+          }
+        });
+  };
 }

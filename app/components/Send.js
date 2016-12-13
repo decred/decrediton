@@ -13,12 +13,12 @@ class Send extends Component{
     client: PropTypes.object,
     isLoggedIn: PropTypes.bool.isRequired
   };
-  
+
   render() {
     const { client, isLoggedIn } = this.props;
 
     /* View that will be seen when user has a set Client */
-    const sendView = (      
+    const sendView = (
       <div>
         <h1>Send Page</h1>
       </div>);
@@ -26,7 +26,7 @@ class Send extends Component{
     /* Check to see that client is not undefined */
     if (isLoggedIn) {
       if (client === undefined) {
-        <p>Error occurred, should have client available</p>
+        <p>Error occurred, should have client available</p>;
       } else {
         return(sendView);
       }
@@ -38,6 +38,6 @@ class Send extends Component{
       );
     }
   }
-};
+}
 
 export default Send;

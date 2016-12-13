@@ -35,17 +35,17 @@ function appDataDirectory() {
 }
 
 function GRPCWalletPort() {
-  if (cfg.network == "mainnet") {
-    return cfg.wallet_port
+  if (cfg.network == 'mainnet') {
+    return cfg.wallet_port;
   }
-  return cfg.wallet_port_testnet
+  return cfg.wallet_port_testnet;
 }
 
 function RPCDaemonPort() {
-  if (cfg.network == "mainnet") {
-    return cfg.daemon_port
+  if (cfg.network == 'mainnet') {
+    return cfg.daemon_port;
   }
-  return cfg.daemon_port_testnet
+  return cfg.daemon_port_testnet;
 }
 
 const installExtensions = async () => {
@@ -72,8 +72,8 @@ const launchDCRD = () => {
   // The spawn() below opens a pipe on fd 3
   args.push('--piperx=3');
 
-  if (cfg.network == "testnet") {
-     args.push('--testnet');
+  if (cfg.network == 'testnet') {
+    args.push('--testnet');
   }
 
   args.push('--rpclisten=127.0.0.1:' + RPCDaemonPort());
@@ -98,7 +98,7 @@ const launchDCRD = () => {
   });
 
   dcrd.unref();
-}
+};
 
 const launchDCRWallet = () => {
   var spawn = require('child_process').spawn;
@@ -113,8 +113,8 @@ const launchDCRWallet = () => {
 
   args.push('--appdata=' + appDataDirectory());
   args.push('--experimentalrpclisten=127.0.0.1:' + GRPCWalletPort());
-  if (cfg.network == "testnet") {
-     args.push('--testnet');
+  if (cfg.network == 'testnet') {
+    args.push('--testnet');
   }
   console.log(`Starting dcrwallet with ${args}`);
   var dcrwallet = spawn('dcrwallet', args, { detached: true, stdio: [ 'ignore', 'pipe', 'pipe', 'ignore', 'pipe'  ] });

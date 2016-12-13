@@ -1,6 +1,6 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { getLoader, loaderRequest } from '../actions/WalletLoaderActions'
+import React from 'react';
+import { connect } from 'react-redux';
+import { getLoader, loaderRequest } from '../actions/WalletLoaderActions';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
@@ -15,33 +15,33 @@ let LoaderForm = ({ dispatch }) => {
   return (
     <div>
       <form onSubmit={e => {
-        e.preventDefault()
+        e.preventDefault();
         if (address == '' || port == '') {
-          return
+          return;
         }
-        dispatch(loaderRequest(address, port))
-        address = ''
-        port = ''
+        dispatch(loaderRequest(address, port));
+        address = '';
+        port = '';
       }}>
         <TextField
           id="address"
           hintText="Address"
           floatingLabelText="Address"
-          onBlur={(e) =>{address = e.target.value}}
+          onBlur={(e) =>{address = e.target.value;}}
         /><br />
         <TextField
           id="port"
           hintText="Port"
           floatingLabelText="Port"
-          onBlur={(e) =>{port = e.target.value}}
+          onBlur={(e) =>{port = e.target.value;}}
         /><br />
         <RaisedButton type="submit"
-         style={style} 
+         style={style}
          label='Get Loader'/>
       </form>
     </div>
-  )
-}
-LoaderForm = connect()(LoaderForm)
+  );
+};
+LoaderForm = connect()(LoaderForm);
 
-export default LoaderForm
+export default LoaderForm;

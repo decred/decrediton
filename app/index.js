@@ -4,15 +4,15 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
-import injectTapEventPlugin from "react-tap-event-plugin";
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import routes from './routes';
 import configureStore from './store/configureStore';
 import { getCfg } from './config.js';
 
 var cfg = getCfg();
 
-var grpcport = "";
-if (cfg.network == "testnet") {
+var grpcport = '';
+if (cfg.network == 'testnet') {
   grpcport = cfg.wallet_port_testnet;
 } else {
   grpcport = cfg.wallet_port;
@@ -20,12 +20,12 @@ if (cfg.network == "testnet") {
 
 var initialState = {
   login: {
-    address: "127.0.0.1",
+    address: '127.0.0.1',
     port: grpcport,
-    passphrase: "",
+    passphrase: '',
     isLoggedIn: false,
     isLoggingIn: false,
-    error: "",
+    error: '',
   },
   grpc: {
     // Balance
@@ -70,14 +70,14 @@ var initialState = {
     getTransactionsResponse: null,
   },
   walletLoader: {
-    // XXX Wallet Passphrases 
-    // We are storing these in state for dev ease, 
-    // but will construct an alternate system 
+    // XXX Wallet Passphrases
+    // We are storing these in state for dev ease,
+    // but will construct an alternate system
     // to properly/securely/safely store passphrases.
-    privatePassphrase: "",
-    publicPassphrase: "",
+    privatePassphrase: '',
+    publicPassphrase: '',
     // Loader
-    getLoaderRequestAttempt: false,   
+    getLoaderRequestAttempt: false,
     getLoaderRequest: null,
     loader: null,
     getLoaderError: null,
@@ -90,7 +90,7 @@ var initialState = {
     walletExistRequestAttempt: false,
     walletExistRequest: null,
     walletExistResponse: null,
-    walletExistError: null,    
+    walletExistError: null,
     // WalletOpen
     walletOpenRequestAttempt: false,
     walletOpenRequest: null,

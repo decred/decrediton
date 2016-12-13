@@ -10,12 +10,12 @@ class History extends Component{
     client: PropTypes.object.isRequired,
     isLoggedIn: PropTypes.bool.isRequired
   };
-  
+
   render() {
     const { client, isLoggedIn } = this.props;
 
     /* View that will be seen when user has a set Client */
-    const historyView = (      
+    const historyView = (
       <div>
         <h1>History Page</h1>
         <Table striped bordered condensed hover>
@@ -49,7 +49,7 @@ class History extends Component{
     /* Check to see that client is not undefined */
     if (isLoggedIn) {
       if (client === undefined) {
-        <p>Error occurred, should have client available</p>
+        <p>Error occurred, should have client available</p>;
       } else {
         return(historyView);
       }
@@ -61,6 +61,6 @@ class History extends Component{
       );
     }
   }
-};
+}
 
 export default History;

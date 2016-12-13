@@ -11,18 +11,18 @@ import LinearProgress from 'material-ui/LinearProgress';
 
 const styles = {
   mainArea: {
-    backgroundColor:"#2971ff"
+    backgroundColor:'#2971ff'
   },
   sideBar: {
-    backgroundColor:"#2ed8a3"
+    backgroundColor:'#2ed8a3'
   },
   error: {
-    color:"red"
+    color:'red'
   },
   buttons: {
     margin: 12
   }
-}
+};
 
 class Home extends Component{
   constructor(props) {
@@ -42,7 +42,7 @@ class Home extends Component{
     getStakeInfoRequestAttempt: PropTypes.bool.isRequired,
 
     getLoaderRequestAttempt: PropTypes.bool.isRequired,
-    walletCreateRequestAttempt: PropTypes.bool.isRequired,    
+    walletCreateRequestAttempt: PropTypes.bool.isRequired,
     walletExistRequestAttempt: PropTypes.bool.isRequired,
     walletOpenRequestAttempt: PropTypes.bool.isRequired,
   }
@@ -58,7 +58,7 @@ class Home extends Component{
     const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
     const { getStakeInfoRequestAttempt, getStakeInfoResponse } = this.props;
 
-    const { loader, getLoaderRequestAttempt, getLoaderError, loaderRequest } = this.props; 
+    const { loader, getLoaderRequestAttempt, getLoaderError, loaderRequest } = this.props;
     const { walletCreateResponse, walletCreateRequestAttempt, walletCreateError } = this.props;
     const { walletOpenResponse, walletOpenRequestAttempt, walletOpenError } = this.props;
     const { walletExistResponse, walletExistRequestAttempt, walletExistError } = this.props;
@@ -66,7 +66,7 @@ class Home extends Component{
     const { startRpcResponse, startRpcRequestAttempt, startRpcError } = this.props;
 
     /*  View that will be seen on fresh starts */
-    const getStarted = (      
+    const getStarted = (
       <div>
         <p>{error}</p>
         <h3>Welcome to Decrediton</h3>
@@ -88,63 +88,63 @@ class Home extends Component{
       </div>);
 
     /* View that will be seen when user has a set Client */
-    const homeView = (      
+    const homeView = (
       <div >
         <h1>Home Page</h1>
         <h3>Current balance: {getBalanceResponse === null ? 'Please refresh' : getBalanceResponse.total }</h3>
-        <RaisedButton                   
+        <RaisedButton
           style={styles.buttons}
           disabled={getBalanceRequestAttempt}
           onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
           label={getBalanceRequestAttempt ? 'Getting Balance...' : 'Get Balance'}/>
         <h3>StakeInfo: {getStakeInfoResponse === null ? 'Please refresh' : getStakeInfoResponse.pool_size}</h3>
-        <RaisedButton 
+        <RaisedButton
           style={styles.buttons}
           disabled={getStakeInfoRequestAttempt}
           onClick={!getStakeInfoRequestAttempt? () => this.props.getStakeInfoAttempt() : null}
           label={getStakeInfoRequestAttempt ? 'Getting Stake Info...' : 'Get Stake Info'}/>
       </div>);
 
-    const getStartedCreateWallet = (    
+    const getStartedCreateWallet = (
       <div>
         <CreateWalletForm />
       </div>);
 
-    const getStartedWalletCreating = (      
+    const getStartedWalletCreating = (
       <div >
         <h3> Creating wallet </h3>
         <LinearProgress mode="indeterminate" />
       </div>);
-    
-    const getStartedWalletLoader = (      
+
+    const getStartedWalletLoader = (
       <div >
         <p>{error}</p>
         <RaisedButton type="submit"
           style={styles.buttons}
           primary={true}
-          onClick={() => {loaderRequest(address, port)}}
+          onClick={() => {loaderRequest(address, port);}}
           label='Get Started'/>
       </div>);
 
-    const getStartedGettingLoader = (      
+    const getStartedGettingLoader = (
       <div >
         <h3>Getting wallet loader service</h3>
         <LinearProgress mode="indeterminate" />
       </div>);
-      
-    const getStartedWalletExistRequest = (      
+
+    const getStartedWalletExistRequest = (
       <div >
         <h3>Checking if wallet exists</h3>
         <LinearProgress mode="indeterminate" />
       </div>);
 
-    const getStartedWalletExist = (      
+    const getStartedWalletExist = (
       <div>
         <p>{error}</p>
         <h3>Check if wallet exists</h3>
       </div>);
 
-    const getStartedWalletOpen = (      
+    const getStartedWalletOpen = (
       <div>
         <p >{error}</p>
         <h3>Opening wallet</h3>
@@ -152,7 +152,7 @@ class Home extends Component{
         <WalletOpenForm />
       </div>);
 
-    const getStartedOpeningWallet = (      
+    const getStartedOpeningWallet = (
       <div>
         <h3>Opening wallet</h3>
         <LinearProgress mode="indeterminate" />
@@ -184,17 +184,17 @@ class Home extends Component{
     }
     // Step 2b creating wallet
     if (walletCreateRequestAttempt) {
-      return(getStartedWalletCreating)
+      return(getStartedWalletCreating);
     }
     // Step 2 wallet exist action complete, though
     // wallet does not exist
-    
+
     if (walletExistResponse !== null && !walletExistResponse.exists) {
-      return(getStartedCreateWallet)
+      return(getStartedCreateWallet);
     }
     // Step 2 action
     if (walletExistRequestAttempt) {
-      return(getStartedWalletExistRequest)
+      return(getStartedWalletExistRequest);
     }
     // Step 1 complete/ Step 2 start
     if (loader !== null) {
@@ -208,6 +208,6 @@ class Home extends Component{
     // Step 1 start
     return (getStartedWalletLoader);
   }
-};
+}
 
 export default Home;

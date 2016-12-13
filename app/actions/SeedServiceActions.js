@@ -26,11 +26,11 @@ export function seederRequest() {
   return (dispatch, getState) => {
     const { getLoaderRequest } = getState().walletLoader;
     dispatch({
-      request: 
+      request:
       { address: getLoaderRequest.address, port: getLoaderRequest.port },
       type: SEEDER_ATTEMPT });
     dispatch(getSeeder());
-  }
+  };
 }
 
 function getSeeder() {
@@ -38,13 +38,13 @@ function getSeeder() {
     const { getSeederRequest } = getState().seedService;
     seeder(getSeederRequest, function(seeder, err) {
       if (err) {
-        dispatch(seederError(err + " Please try again"));
+        dispatch(seederError(err + ' Please try again'));
         //throw err
       } else {
         dispatch(seederSuccess(seeder));
       }
-    })
-  }
+    });
+  };
 }
 
 export const GENERATERANDOMSEED_ATTEMPT = 'GENERATERANDOMSEED_ATTEMPT';
@@ -59,28 +59,28 @@ function generateRandomSeedSuccess(response) {
   return (dispatch) => {
     dispatch({ response: response, type: GENERATERANDOMSEED_SUCCESS });
     dispatch(decodeSeedAttempt(response.seed_mnemonic));
-  }
+  };
 }
 
 export function generateRandomSeedAttempt() {
   return (dispatch) => {
     dispatch({request: {seed_length:0}, type: GENERATERANDOMSEED_ATTEMPT });
     dispatch(generateRandomSeedAction());
-  }
+  };
 }
 
 function generateRandomSeedAction() {
   return (dispatch, getState) => {
     const { seeder, generateRandomSeedRequest } = getState().seedService;
-    generateRandomSeed(seeder, generateRandomSeedRequest, 
+    generateRandomSeed(seeder, generateRandomSeedRequest,
         function(response, err) {
-      if (err) {
-        dispatch(generateRandomSeedError(err + " Please try again"));
-      } else {
-        dispatch(generateRandomSeedSuccess(response));
-      }
-    })
-  }
+          if (err) {
+            dispatch(generateRandomSeedError(err + ' Please try again'));
+          } else {
+            dispatch(generateRandomSeedSuccess(response));
+          }
+        });
+  };
 }
 
 export const DECODESEED_ATTEMPT = 'DECODESEED_ATTEMPT';
@@ -94,7 +94,7 @@ function decodeSeedError(error) {
 function decodeSeedSuccess(response) {
   return (dispatch) => {
     dispatch({response: response, type: DECODESEED_SUCCESS });
-  }
+  };
 }
 
 export function decodeSeedAttempt(mnemonic) {
@@ -102,19 +102,19 @@ export function decodeSeedAttempt(mnemonic) {
     console.log(mnemonic);
     dispatch({request: {user_input:mnemonic}, type: DECODESEED_ATTEMPT });
     dispatch(decodeSeedAction());
-  }
+  };
 }
 
 function decodeSeedAction() {
   return (dispatch, getState) => {
     const { seeder, decodeSeedRequest } = getState().seedService;
-    decodeSeed(seeder, decodeSeedRequest, 
+    decodeSeed(seeder, decodeSeedRequest,
         function(response, err) {
-      if (err) {
-        dispatch(decodeSeedError(err + " Please try again"));
-      } else {
-        dispatch(decodeSeedSuccess(response));
-      }
-    })
-  }
+          if (err) {
+            dispatch(decodeSeedError(err + ' Please try again'));
+          } else {
+            dispatch(decodeSeedSuccess(response));
+          }
+        });
+  };
 }

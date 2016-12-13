@@ -13,20 +13,20 @@ function loginSuccess(client) {
   return (dispatch) => {
     dispatch({ client, type: LOGIN_SUCCESS });
     dispatch(getNextAddressAttempt(0));
-  }
+  };
 }
 
 export function loginRequest() {
   return (dispatch, getState) => {
     const { getLoaderRequest } = getState().walletLoader;
     dispatch({
-      address: getLoaderRequest.address, 
-      port: getLoaderRequest.port, 
-      passphrase: '', 
-      type: LOGIN_ATTEMPT })
+      address: getLoaderRequest.address,
+      port: getLoaderRequest.port,
+      passphrase: '',
+      type: LOGIN_ATTEMPT });
     dispatch(login());
-    
-  }
+
+  };
 }
 
 function login() {
@@ -34,10 +34,10 @@ function login() {
     const { address, port } = getState().login;
     client(address, port, function(client, err) {
       if (err) {
-        dispatch(loginError(err + " Please try again"));
+        dispatch(loginError(err + ' Please try again'));
       } else {
         dispatch(loginSuccess(client));
       }
-    })
-  }
+    });
+  };
 }

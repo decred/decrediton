@@ -14,19 +14,19 @@ function transactionNtfnsData(response) {
 }
 
 export function transactionNftnsStart() {
-  var request = {}
+  var request = {};
   return (dispatch) => {
     dispatch({request: request, type: TRANSACTIONNFTNS_START });
     dispatch(startTransactionNtfns());
-  }
+  };
 }
 
 export function transactionNftnsEnd() {
-  var request = {}
+  var request = {};
   return (dispatch) => {
     dispatch({request: request, type: TRANSACTIONNFTNS_END });
     //
-  }
+  };
 }
 
 function startTransactionNtfns() {
@@ -35,11 +35,11 @@ function startTransactionNtfns() {
     const { transactionNftnsRequest } = getState().notifications;
     transactionNtfs(client, transactionNftnsRequest,
       function(data) {
-        console.log("Transaction received:", data);
+        console.log('Transaction received:', data);
         dispatch(startTransactionNtfns(data));
       }
-    )
-  }
+    );
+  };
 }
 
 export const SPENTNESSNFTNS_START = 'SPENTNESSNFTNS_START';
@@ -56,19 +56,19 @@ function spentnessNtfnsData(response) {
 }
 
 export function spentnessNftnsStart() {
-  var request = {}
+  var request = {};
   return (dispatch) => {
     dispatch({request: request, type: SPENTNESSNFTNS_START });
     dispatch(startSpentnessNtfns());
-  }
+  };
 }
 
 export function spentnessNftnsEnd() {
-  var request = {}
+  var request = {};
   return (dispatch) => {
     dispatch({request: request, type: SPENTNESSNFTNS_END });
     //
-  }
+  };
 }
 
 function startSpentnessNtfns() {
@@ -77,11 +77,11 @@ function startSpentnessNtfns() {
     const { spentnessNftnsRequest } = getState().notifications;
     spentnessNtfs(client, spentnessNftnsRequest,
       function(data) {
-        console.log("Spentness received:", data);
+        console.log('Spentness received:', data);
         dispatch(startSpentnessNtfns(data));
       }
-    )
-  }
+    );
+  };
 }
 
 export const ACCOUNTNFTNS_START = 'ACCOUNTNFTNS_START';
@@ -102,19 +102,19 @@ export function accountNftnsStart(accountNum) {
     account: accountNum,
     no_notify_unspent: false,
     no_notify_spent: false,
-  }
+  };
   return (dispatch) => {
     dispatch({request: request, type: ACCOUNTNFTNS_START });
     dispatch(startAccountNtfns());
-  }
+  };
 }
 
 export function accountNftnsEnd() {
-  var request = {}
+  var request = {};
   return (dispatch) => {
     dispatch({request: request, type: ACCOUNTNFTNS_END });
     //
-  }
+  };
 }
 
 function startAccountNtfns() {
@@ -123,9 +123,9 @@ function startAccountNtfns() {
     const { accountNftnsRequest } = getState().notifications;
     accountNtfs(client, accountNftnsRequest,
       function(data) {
-        console.log("Account received:", data);
+        console.log('Account received:', data);
         dispatch(startAccountNtfns(data));
       }
-    )
-  }
+    );
+  };
 }

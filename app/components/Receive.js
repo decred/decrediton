@@ -15,7 +15,7 @@ class Receive extends Component{
     getNextAddressResponse: PropTypes.object,
     getNextAddressRequestAttempt: PropTypes.bool.isRequired,
   };
-  
+
   render() {
     const { client, isLoggedIn } = this.props;
     const { getNextAddressResponse, getNextAddressAttempt, getNextAddressRequestAttempt } = this.props;
@@ -25,7 +25,7 @@ class Receive extends Component{
       <div>
         <h1>Receive Page</h1>
         <h3>Current address: {getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.address }</h3>
-        <RaisedButton 
+        <RaisedButton
           style={style}
           disabled={getNextAddressRequestAttempt}
           onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
@@ -35,7 +35,7 @@ class Receive extends Component{
     /* Check to see that client is not undefined */
     if (isLoggedIn) {
       if (client === undefined) {
-        <p>Error occurred, should have client available</p>
+        <p>Error occurred, should have client available</p>;
       } else {
         return(receiveView);
       }
@@ -47,6 +47,6 @@ class Receive extends Component{
       );
     }
   }
-};
+}
 
 export default Receive;

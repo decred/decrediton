@@ -34,7 +34,7 @@ function mapStateToProps(state) {
     walletOpenRequestAttempt: state.walletLoader.walletOpenRequestAttempt,
     walletOpenResponse: state.walletLoader.walletOpenResponse,
 
-  
+
   };
 }
 
