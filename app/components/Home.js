@@ -7,6 +7,7 @@ import WalletExistForm from '../containers/WalletExistForm';
 import WalletOpenForm from '../containers/WalletOpenForm';
 import CreateWalletForm from '../containers/CreateWalletForm';
 import RaisedButton from 'material-ui/RaisedButton';
+import LinearProgress from 'material-ui/LinearProgress';
 
 const styles = {
   mainArea: {
@@ -76,13 +77,14 @@ class Home extends Component{
     /*  View that will be when logging in is occuring */
     const getStartedLoggingIn = (
       <div >
-        Logging in!
+        Logging in
+        <LinearProgress mode="indeterminate" />
       </div>);
 
     /* View that will be shown when an error on logging in occured */
     const getStartedError = (
       <div >
-        Logging in!
+        <p> {error} </p>
       </div>);
 
     /* View that will be seen when user has a set Client */
@@ -104,15 +106,14 @@ class Home extends Component{
       </div>);
 
     const getStartedCreateWallet = (    
-      <div >
-        <h1>Home Page</h1>
-        <h3>Try and createWallet</h3>
+      <div>
         <CreateWalletForm />
       </div>);
 
     const getStartedWalletCreating = (      
       <div >
-        <p> Creating wallet </p>
+        <h3> Creating wallet </h3>
+        <LinearProgress mode="indeterminate" />
       </div>);
     
     const getStartedWalletLoader = (      
@@ -127,14 +128,14 @@ class Home extends Component{
 
     const getStartedGettingLoader = (      
       <div >
-        <p>{error}</p>
         <h3>Getting wallet loader service</h3>
+        <LinearProgress mode="indeterminate" />
       </div>);
       
     const getStartedWalletExistRequest = (      
       <div >
-        <p>{error}</p>
-        <h3>Checking if wallet exists...</h3>
+        <h3>Checking if wallet exists</h3>
+        <LinearProgress mode="indeterminate" />
       </div>);
 
     const getStartedWalletExist = (      
@@ -153,8 +154,8 @@ class Home extends Component{
 
     const getStartedOpeningWallet = (      
       <div>
-        <p >{error}</p>
-        <h3>Trying to open wallet</h3>
+        <h3>Opening wallet</h3>
+        <LinearProgress mode="indeterminate" />
       </div>);
 
     // Step 4 complete

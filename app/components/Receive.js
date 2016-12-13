@@ -19,7 +19,7 @@ class Receive extends Component{
   render() {
     const { client, isLoggedIn } = this.props;
     const { getNextAddressResponse, getNextAddressAttempt, getNextAddressRequestAttempt } = this.props;
-
+    const { getNextAddressError } = this.props;
     /* View that will be seen when user has a set Client */
     const receiveView = (
       <div>
@@ -28,9 +28,8 @@ class Receive extends Component{
         <RaisedButton 
           style={style}
           disabled={getNextAddressRequestAttempt}
-          onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}>
-          {getNextAddressRequestAttempt ? 'Getting new address' : 'Get New Address'}
-        </RaisedButton>
+          onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
+          label={getNextAddressRequestAttempt ? 'Getting new address' : 'Get New Address'}/>
       </div>);
 
     /* Check to see that client is not undefined */
