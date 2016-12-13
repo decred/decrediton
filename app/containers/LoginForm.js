@@ -1,51 +1,51 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { login, loginRequest } from '../actions/LoginActions'
-import { Button, Form, FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap'
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+
+const style = {
+  margin: 12,
+};
 
 let LoginForm = ({ dispatch }) => {
-  let address, port, passphrase
+  let address = '';
+  let port = '';
+  let passphrase = '';
 
   return (
     <div>
-      <Form horizontal onSubmit={e => {
+      <form onSubmit={e => {
         e.preventDefault()
-        if (!address.value.trim() || !port.value.trim() || !passphrase.value.trim()) {
+        if (address == '' || port == '' || passphrase == '') {
           return
         }
-        dispatch(loginRequest(address.value, port.value, passphrase.value))
-        address.value = ''
-        port.value = ''
-        passphrase.value = ''
+        dispatch(loginRequest(address, port, passphrase))
+        address = ''
+        port = ''
       }}>
-        <FormGroup controlId={address}>
-          <Col componentClass={ControlLabel} sm={2}>
-            Address
-          </Col>
-          <Col sm={10}>
-            <FormControl type="text" inputRef={node => {address = node}} placeholder="127.0.0.1" />
-          </Col>
-        </FormGroup>
-        <FormGroup controlId={port}>
-          <Col componentClass={ControlLabel} sm={2}>
-            Port
-          </Col>
-          <Col sm={10}>
-            <FormControl type="text" inputRef={node => {port = node}}  placeholder="19112" />
-          </Col>
-        </FormGroup>
-        <FormGroup controlId={passphrase}>
-          <Col componentClass={ControlLabel} sm={2}>
-            Passphrase
-          </Col>
-          <Col sm={10}>
-            <FormControl type="text" inputRef={node => {passphrase = node}}  placeholder="password1" />
-          </Col>
-        </FormGroup>
-        <Button type="submit">
-          Login
-        </Button>
-      </Form>
+        <TextField
+          id="address"
+          hintText="Address"
+          floatingLabelText="Address"
+          onBlur={(e) =>{address = e.target.value}}
+        /><br />
+        <TextField
+          id="port"
+          hintText="Port"
+          floatingLabelText="Port"
+          onBlur={(e) =>{port = e.target.value}}
+        /><br />
+        <TextField
+          id="passphase"
+          hintText="Passphrase"
+          floatingLabelText="Passphrase"
+          onBlur={(e) =>{passphrase = e.target.value}}
+        /><br />
+        <RaisedButton type="submit"
+         style={style} 
+         label='Login'/>
+      </form>
     </div>
   )
 }

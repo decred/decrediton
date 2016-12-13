@@ -2,10 +2,11 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
-import { Button, Row, Col, Table } from 'react-bootstrap';
-import Sidebar from './SideBar';
-import MaterialTitlePanel from './MaterialTitlePanel';
-import SidebarContent from '../content/SideBarContent';
+import RaisedButton from 'material-ui/RaisedButton';
+
+const style = {
+  margin: 12,
+};
 
 class Receive extends Component{
   static propTypes = {
@@ -18,48 +19,18 @@ class Receive extends Component{
   render() {
     const { client, isLoggedIn } = this.props;
     const { getNextAddressResponse, getNextAddressAttempt, getNextAddressRequestAttempt } = this.props;
-    const sideBarProps = {
-      loggedIn: isLoggedIn,
-      page: "RECEIVE",
-    }
-    const sidebar = <SidebarContent {...sideBarProps}/>;
-    
-    const contentHeader = (
-      <span>
-        <span> Decrediton - Receive</span>
-      </span>);
-    const sidebarProps = {
-      sidebar: sidebar,
-      docked: true,
-      open: true,
-      touch: false,
-      shadow: false,
-      pullRight: false,
-      loggedIn: isLoggedIn,
-      transitions: false,
-      page: "RECEIVE",
-    };
-
+    const { getNextAddressError } = this.props;
     /* View that will be seen when user has a set Client */
-    const receiveView = (      
-      <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
-          <div>
-            <Row>
-              <Col sm={12} >
-                <h1>Receive Page</h1>
-                <h3>Current address: {getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.address }</h3>
-                <Button 
-                  bsStyle="primary"
-                  disabled={getNextAddressRequestAttempt}
-                  onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}>
-                  {getNextAddressRequestAttempt ? 'Getting new address' : 'Get New Address'}
-                </Button>
-              </Col>
-            </Row>
-          </div>
-        </MaterialTitlePanel>
-      </Sidebar>);
+    const receiveView = (
+      <div>
+        <h1>Receive Page</h1>
+        <h3>Current address: {getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.address }</h3>
+        <RaisedButton 
+          style={style}
+          disabled={getNextAddressRequestAttempt}
+          onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
+          label={getNextAddressRequestAttempt ? 'Getting new address' : 'Get New Address'}/>
+      </div>);
 
     /* Check to see that client is not undefined */
     if (isLoggedIn) {

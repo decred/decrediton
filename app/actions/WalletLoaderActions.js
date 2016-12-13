@@ -33,7 +33,7 @@ export function loaderRequest(address, port) {
   }
   return (dispatch) => {
     dispatch({request: request, type: LOADER_ATTEMPT });
-    dispatch(getLoader());
+    setTimeout(dispatch(getLoader()), 3000);
   }
 }
 
@@ -69,7 +69,7 @@ export function walletExistRequest() {
   var request = {};
   return (dispatch) => {
     dispatch({request: {}, type: WALLETEXIST_ATTEMPT });
-    dispatch(checkWalletExist());
+    setTimeout(dispatch(checkWalletExist()), 3000);
   }
 }
 
@@ -115,7 +115,7 @@ export function createWalletRequest(pubPass, privPass, seed) {
       pubPass: pubPass,
       privPass: privPass,
       type: CREATEWALLET_ATTEMPT });
-    dispatch(createNewWallet());
+    setTimeout(dispatch(createNewWallet()), 3000);
   }
 }
 
@@ -160,7 +160,7 @@ export function openWalletRequest(pubPass, privPass) {
       privPass: privPass,
       type: OPENWALLET_ATTEMPT});
 
-    dispatch(openWalletAction());
+    setTimeout(dispatch(openWalletAction()), 3000);
   }
 }
 

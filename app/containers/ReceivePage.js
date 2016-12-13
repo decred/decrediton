@@ -12,6 +12,7 @@ function mapStateToProps(state) {
     getNextAddressResponse: state.control.getNextAddressResponse,
     getNextAddressRequestAttempt: state.control.getNextAddressRequestAttempt,
     getNextAddressRequest: state.control.getNextAddressRequest,
+    getNextAddressError: state.control.getNextAddressError,
   };
 }
 

@@ -87,7 +87,8 @@
     "react-router",
     "flux",
     "webpack",
-    "react-hot"
+    "react-hot",
+    "material-ui"
   ],
   "homepage": "https://github.com/decred/decrediton#readme",
   "devDependencies": {
@@ -141,7 +142,6 @@
     "minimist": "^1.2.0",
     "mocha": "^3.1.2",
     "react-addons-test-utils": "^15.3.2",
-    "react-bootstrap": "^0.30.7",
     "redux-logger": "^2.7.4",
     "sinon": "^1.17.6",
     "spectron": "^3.4.0",
@@ -157,13 +157,14 @@
   "dependencies": {
     "electron-debug": "^1.0.1",
     "eslint-formatter-pretty": "^1.1.0",
-    "font-awesome": "^4.7.0",
+    "material-ui": "^0.16.2",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
     "react-redux-form": "^1.2.4",
     "react-router": "^2.8.0",
     "react-router-redux": "^4.0.6",
+    "react-tap-event-plugin": "git+https://github.com/zilverline/react-tap-event-plugin.git#master",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "source-map-support": "^0.4.6"

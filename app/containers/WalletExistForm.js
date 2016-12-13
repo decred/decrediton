@@ -1,24 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { checkWalletExist, walletExistRequest } from '../actions/WalletLoaderActions'
-import { Button, Form, FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap'
+import RaisedButton from 'material-ui/RaisedButton';
 
-let LoaderForm = ({ dispatch }) => {
-  let address, port
+const style = {
+  margin: 12,
+};
 
+let WalletExistForm = ({ dispatch }) => {
   return (
     <div>
-      <Form horizontal onSubmit={e => {
+      <form onSubmit={e => {
         e.preventDefault()
         dispatch(walletExistRequest())
       }}>
-        <Button type="submit">
-          Check wallet exists
-        </Button>
-      </Form>
+        <RaisedButton type="submit"
+         style={style} 
+         label='Check wallet exists'/>
+      </form>
     </div>
   )
 }
-LoaderForm = connect()(LoaderForm)
+WalletExistForm = connect()(WalletExistForm)
 
-export default LoaderForm
+export default WalletExistForm
