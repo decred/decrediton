@@ -5,10 +5,6 @@ import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router';
 
 const styles = {
-  sidebar: {
-    width: 256,
-    height: '100%',
-  },
   sidebarLink: {
     display: 'block',
     padding: '16px 0px',
@@ -20,16 +16,6 @@ const styles = {
     padding: '16px 0px',
     color: 'white',
     textDecoration: 'bold',
-  },
-  divider: {
-    margin: '8px 0',
-    height: 1,
-    backgroundColor: '#757575',
-  },
-  content: {
-    padding: '16px',
-    height: '100%',
-    backgroundColor: '#2ed8a3',
   },
 };
 
@@ -52,10 +38,10 @@ class Header extends Component {
           open={this.state.open}
           onRequestChange={open => this.setState({open})}
         >
-          <MenuItem><Link to="/" style={styles.sidebarLink}>Home</Link></MenuItem>
-          <MenuItem><Link to="/history" style={styles.sidebarLink}>Transaction History</Link></MenuItem>
-          <MenuItem><Link to="/send" style={styles.sidebarLink}>Send Decred</Link></MenuItem>
-          <MenuItem><Link to="/receive" style={styles.sidebarLink}>Receive Decred</Link></MenuItem>
+          <MenuItem><Link to="/" style={styles.sidebarLink} onClick={this.handleToggle}>Home</Link></MenuItem>
+          <MenuItem><Link to="/history" style={styles.sidebarLink} onClick={this.handleToggle}>Transaction History</Link></MenuItem>
+          <MenuItem><Link to="/send" style={styles.sidebarLink} onClick={this.handleToggle}>Send Decred</Link></MenuItem>
+          <MenuItem><Link to="/receive" style={styles.sidebarLink} onClick={this.handleToggle}>Receive Decred</Link></MenuItem>
         </Drawer>
       </div>
     );
