@@ -93,16 +93,14 @@ class Home extends Component{
         <RaisedButton                   
           style={styles.buttons}
           disabled={getBalanceRequestAttempt}
-          onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}>
-          {getBalanceRequestAttempt ? 'Getting Balance...' : 'Get Balance'}
-        </RaisedButton>
+          onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
+          label={getBalanceRequestAttempt ? 'Getting Balance...' : 'Get Balance'}/>
         <h3>StakeInfo: {getStakeInfoResponse === null ? 'Please refresh' : getStakeInfoResponse.pool_size}</h3>
         <RaisedButton 
           style={styles.buttons}
           disabled={getStakeInfoRequestAttempt}
-          onClick={!getStakeInfoRequestAttempt? () => this.props.getStakeInfoAttempt() : null}>
-          {getStakeInfoRequestAttempt ? 'Getting Stake Info...' : 'Get Stake Info'}
-        </RaisedButton>
+          onClick={!getStakeInfoRequestAttempt? () => this.props.getStakeInfoAttempt() : null}
+          label={getStakeInfoRequestAttempt ? 'Getting Stake Info...' : 'Get Stake Info'}/>
       </div>);
 
     const getStartedCreateWallet = (    
@@ -123,9 +121,8 @@ class Home extends Component{
         <RaisedButton type="submit"
           style={styles.buttons}
           primary={true}
-          onClick={() => {loaderRequest(address, port)}}>
-          Get Started
-        </RaisedButton>
+          onClick={() => {loaderRequest(address, port)}}
+          label='Get Started'/>
       </div>);
 
     const getStartedGettingLoader = (      

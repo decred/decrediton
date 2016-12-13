@@ -9,33 +9,36 @@ const style = {
 };
 
 let LoaderForm = ({ dispatch }) => {
-  let pubpass, privpass
+  let pubpass = '';
+  let privpass = '';
 
   return (
     <div>
       <form onSubmit={e => {
         e.preventDefault()
-        if (!pubpass.value.trim() || !pubpass.value.trim()) {
+        if (pubpass == '' || privpass == '') {
+          console.log(pubpass, privpass);
           return
         }
-        dispatch(openWalletRequest(pubpass.value, privpass.value))
-        pubpass.value = ''
-        privpass.value = ''
+        dispatch(openWalletRequest(pubpass, privpass))
+        pubpass = ''
+        privpass = ''
       }}>
         <TextField
           id="pubpass"
           hintText="Public Password"
           floatingLabelText="Public Password"
+          onBlur={(e) =>{pubpass = e.target.value}}
         /><br />
         <TextField
           id="privpass"
           hintText="Private Password"
           floatingLabelText="Private Password"
+          onBlur={(e) =>{privpass = e.target.value}}
         /><br />
         <RaisedButton type="submit"
-         style={style}>
-          Open Wallet
-        </RaisedButton>
+         style={style} 
+         label='Open Wallet'/>
       </form>
     </div>
   )
