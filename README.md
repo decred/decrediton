@@ -52,7 +52,7 @@ NOT already have rpc certs from dcrwallet so it is easiest to start
 with an emtpy $HOME/.dcrwallet
 
 ```bash
-dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19109 --rpccert=~/.dcrd/rpc.cert
+dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19109 --rpccert=$HOME/.dcrd/rpc.cert
 ```
 
 ```bash
@@ -69,6 +69,35 @@ Start decrediton
 ```bash
 npm run dev
 ```
+
+## Installation
+
+Currently decrediton has only been tested and built on Linux and
+macOS.  Additional systems will be added in the future.
+
+Decrediton requires dcrd and dcrwallet installed on your system.  It
+will however NOT use or in any way disrupt the wallet file you may
+already be using.
+
+If you do not already have dcrd and dcrwallet installed,
+[dcrinstall](https://github.com/decred/decred-release/tree/master/cmd/dcrinstall)
+is the preferred way to install the tools.  Follow the instructions on
+that page to get the necessary programs.
+
+Download the decrediton release for your operating system.  For macOS
+double-click the .dmg file, drag the .app to your Applications folder,
+and run as normal.  Decrediton will start up a copy of dcrd and
+dcrwallet for you.
+
+On linux you will need to decompress the package and then run the
+file:
+```
+./decrediton
+```
+
+As on macOS this will start dcrd and dcrwallet for you.
+
+From there follow the on screen instructions to setup your wallet.
 
 ## Contact
 
