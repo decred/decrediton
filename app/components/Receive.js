@@ -14,12 +14,16 @@ class Receive extends Component{
     isLoggedIn: PropTypes.bool.isRequired,
     getNextAddressResponse: PropTypes.object,
     getNextAddressRequestAttempt: PropTypes.bool.isRequired,
+    constructTxResponse: PropTypes.object,
+    constructTxRequestAttempt: PropTypes.bool.isRequired,
   };
 
   render() {
     const { client, isLoggedIn } = this.props;
     const { getNextAddressResponse, getNextAddressAttempt, getNextAddressRequestAttempt } = this.props;
     const { getNextAddressError } = this.props;
+    const { constructTxRequestAttempt, constructTransactionAttempt, constructTxResponse } = this.props;
+
     /* View that will be seen when user has a set Client */
     const receiveView = (
       <div>
@@ -30,6 +34,13 @@ class Receive extends Component{
           disabled={getNextAddressRequestAttempt}
           onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
           label={getNextAddressRequestAttempt ? 'Getting new address' : 'Get New Address'}/>
+        <RaisedButton
+          style={style}
+          disabled={constructTxRequestAttempt}
+          onClick={!constructTxRequestAttempt? () => this.props.constructTransactionAttempt(0) : null}
+          label={constructTxRequestAttempt ? 'Getting tx' : 'get new tx'}/>
+        <h3>Current raw tx: {constructTxResponse === null ? 'Please refresh' : constructTxResponse.unsigned_transaction.toString('hex') }</h3>
+                    
       </div>);
 
     /* Check to see that client is not undefined */

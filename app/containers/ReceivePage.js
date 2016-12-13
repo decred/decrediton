@@ -13,6 +13,8 @@ function mapStateToProps(state) {
     getNextAddressRequestAttempt: state.control.getNextAddressRequestAttempt,
     getNextAddressRequest: state.control.getNextAddressRequest,
     getNextAddressError: state.control.getNextAddressError,
+    constructTxRequestAttempt: state.control.constructTxRequestAttempt,
+    constructTxResponse: state.control.constructTxResponse,
   };
 }
 

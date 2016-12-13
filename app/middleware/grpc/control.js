@@ -120,7 +120,7 @@ export function getFundTransaction(client, request, cb) {
   });
 }
 
-export function signTransction(client, request, cb) {
+export function signTransaction(client, request, cb) {
     // SignTransaction
 
   client.signTransaction(request, function(err, response) {
@@ -157,6 +157,21 @@ export function purchaseTickets(client, request, cb) {
       return cb(null, err);
     } else {
       console.log('purchaseTickets', response);
+      return cb(response);
+    }
+  });
+}
+
+
+export function constructTransaction(client, request, cb) {
+    // PurchaseTickets
+
+  client.constructTransaction(request, function(err, response) {
+    if (err) {
+      console.error('constructTransaction', err);
+      return cb(null, err);
+    } else {
+      console.log('constructTransaction', response);
       return cb(response);
     }
   });

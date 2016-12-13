@@ -207,6 +207,11 @@ var initialState = {
     purchaseTicketRequest: null,
     purchaseTicketResponse: null,
     purchaseTicketError: null,
+    // ConstructTransaction
+    constructTxRequestAttempt: false,
+    constructTxRequest: null,
+    constructTxResponse: null,
+    constructTxError: null,
   }
 };
 

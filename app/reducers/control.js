@@ -9,6 +9,7 @@ import { FUNDTX_ATTEMPT, FUNDTX_FAILED, FUNDTX_SUCCESS } from '../actions/Contro
 import { SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS } from '../actions/ControlActions';
 import { PUBLISHTX_ATTEMPT, PUBLISHTX_FAILED, PUBLISHTX_SUCCESS } from '../actions/ControlActions';
 import { PURCHASETICKET_ATTEMPT, PURCHASETICKET_FAILED, PURCHASETICKET_SUCCESS } from '../actions/ControlActions';
+import { CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS } from '../actions/ControlActions';
 
 export default function control(state = {}, action) {
   switch (action.type) {
@@ -210,7 +211,24 @@ export default function control(state = {}, action) {
       purchaseTicketRequestAttempt: false,
       purchaseTicketResponse: action.purchaseTicketResponse,
     };
-
+  case CONSTRUCTTX_ATTEMPT:
+    return {...state,
+      constructTxError: null,
+      constructTxRequestAttempt: true,
+      constructTxRequest: action.request,
+    };
+  case CONSTRUCTTX_FAILED:
+    return {...state,
+      constructTxError: action.error,
+      constructTxRequestAttempt: false,
+      constructTxResponse: null,
+    };
+  case CONSTRUCTTX_SUCCESS:
+    return {...state,
+      constructTxError: null,
+      constructTxRequestAttempt: false,
+      constructTxResponse: action.constructTxResponse,
+    };
   default:
     return state;
   }

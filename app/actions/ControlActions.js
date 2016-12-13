@@ -1,7 +1,7 @@
 import { getNextAddress, renameAccount, getNextAccount,
   rescan, importPrivateKey, importScript, changePassphrase,
-getFundingTransaction, signTransction, publishTransaction,
-purchaseTickets } from '../middleware/grpc/control';
+getFundingTransaction, signTransaction, publishTransaction,
+purchaseTickets, constructTransaction } from '../middleware/grpc/control';
 
 export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
 export const GETNEXTADDRESS_FAILED = 'GETNEXTADDRESS_FAILED';
@@ -453,6 +453,53 @@ function purchaseTicketAction() {
             dispatch(purchaseTicketError(err + ' Please try again'));
           } else {
             dispatch(purchaseTicketSuccess(purchaseTicketResponse));
+          }
+        });
+  };
+}
+
+export const CONSTRUCTTX_ATTEMPT = 'CONSTRUCTTX_ATTEMPT';
+export const CONSTRUCTTX_FAILED = 'CONSTRUCTTX_FAILED';
+export const CONSTRUCTTX_SUCCESS = 'CONSTRUCTTX_SUCCESS';
+
+function constructTransactionError(error) {
+  return { error, type: CONSTRUCTTX_FAILED };
+}
+
+function constructTransactionSuccess(constructTransactionResponse) {
+  return (dispatch) => {
+    dispatch({constructTxResponse: constructTransactionResponse, type: CONSTRUCTTX_SUCCESS });
+    dispatch(signTransactionAttempt('p2', constructTransactionResponse.unsigned_transaction.toString('hex')));
+  }
+}
+
+export function constructTransactionAttempt() {
+  var request = {
+   source_account: 0,
+   required_confirmations: 1,
+   fee_per_kb: 0,
+   output_selection_algorithm: 1,
+   non_change_outputs: { destination: { address:'TscTHhFsGbAeuLyYUZgoWDjiTejUgFnU4Ji' }, amount: 1 },
+   change_destination: { address: 'TsVZfb7tVHV9pcPLb4aK9Hn7y5NSrXGyANV'},
+  };
+  return (dispatch) => {
+    dispatch({
+      request: request,
+      type: CONSTRUCTTX_ATTEMPT });
+    dispatch(constructTransactionAction());
+  };
+}
+
+function constructTransactionAction() {
+  return (dispatch, getState) => {
+    const { client } = getState().login;
+    const { constructTransactionRequest } = getState().control;
+    constructTransaction(client, constructTransactionRequest,
+        function(constructTransactionResponse, err) {
+          if (err) {
+            dispatch(constructTransactionFailed(err + ' Please try again'));
+          } else {
+            dispatch(constructTransactionSuccess(constructTransactionResponse));
           }
         });
   };
