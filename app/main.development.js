@@ -34,11 +34,18 @@ function appDataDirectory() {
   return path.join(os.homedir(),'.decrediton');
 }
 
-function RPCWalletPort() {
+function GRPCWalletPort() {
   if (cfg.network == "mainnet") {
     return cfg.wallet_port
   }
   return cfg.wallet_port_testnet
+}
+
+function RPCDaemonPort() {
+  if (cfg.network == "mainnet") {
+    return cfg.daemon_port
+  }
+  return cfg.daemon_port_testnet
 }
 
 const installExtensions = async () => {
@@ -68,6 +75,8 @@ const launchDCRD = () => {
   if (cfg.network == "testnet") {
      args.push('--testnet');
   }
+
+  args.push('--rpclisten=127.0.0.1:' + RPCDaemonPort());
 
   console.log(`Starting dcrd with ${args}`);
   var dcrd = spawn('dcrd', args, { detached: true, stdio: [ 'ignore', 'pipe', 'pipe', 'pipe' ] });
@@ -103,7 +112,7 @@ const launchDCRWallet = () => {
   args.push('--piperx=4');
 
   args.push('--appdata=' + appDataDirectory());
-  args.push('--experimentalrpclisten=127.0.0.1:' + RPCWalletPort());
+  args.push('--experimentalrpclisten=127.0.0.1:' + GRPCWalletPort());
   if (cfg.network == "testnet") {
      args.push('--testnet');
   }
