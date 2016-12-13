@@ -338,7 +338,10 @@ function signTransactionError(error) {
 }
 
 function signTransactionSuccess(signTransactionResponse) {
-  return { signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS };
+  return (dispatch) => {
+    dispatch({signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS });
+    dispatch(publishTransactionAttempt(signTransactionResponse.transaction));
+  }
 }
 
 export function signTransactionAttempt(passphrase, rawTx) {
@@ -381,9 +384,9 @@ function publishTransactionSuccess(publishTransactionResponse) {
   return { publishTransactionResponse: publishTransactionResponse, type: PUBLISHTX_SUCCESS };
 }
 
-export function publishTransactionAttempt(txId) {
+export function publishTransactionAttempt(tx) {
   var request = {
-    signed_transaction: txId
+    signed_transaction: tx
   };
   return (dispatch) => {
     dispatch({
@@ -469,7 +472,7 @@ function constructTransactionError(error) {
 function constructTransactionSuccess(constructTransactionResponse) {
   return (dispatch) => {
     dispatch({constructTxResponse: constructTransactionResponse, type: CONSTRUCTTX_SUCCESS });
-    dispatch(signTransactionAttempt('p2', constructTransactionResponse.unsigned_transaction.toString('hex')));
+    dispatch(signTransactionAttempt('p2', constructTransactionResponse.unsigned_transaction));
   }
 }
 
