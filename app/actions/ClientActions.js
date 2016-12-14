@@ -12,8 +12,8 @@ function getWalletServiceError(error) {
 function getWalletServiceSuccess(walletService) {
   return (dispatch) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
-    setTimeout( () => {dispatch(loadActiveDataFiltersAttempt())}, 1000);
-    setTimeout( () => {dispatch(getNextAddressAttempt())}, 1000);
+    setTimeout( () => {dispatch(loadActiveDataFiltersAttempt());}, 1000);
+    setTimeout( () => {dispatch(getNextAddressAttempt());}, 1000);
   };
 }
 

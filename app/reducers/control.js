@@ -157,7 +157,7 @@ export default function control(state = {}, action) {
       loadActiveDataFiltersError: null,
       loadActiveDataFiltersRequestAttempt: false,
       loadActiveDataFiltersResponse: action.response,
-    };  
+    };
   case FUNDTX_ATTEMPT:
     return {...state,
       fundTransactionError: null,

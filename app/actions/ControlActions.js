@@ -378,7 +378,7 @@ function signTransactionSuccess(signTransactionResponse) {
   return (dispatch) => {
     dispatch({signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS });
     dispatch(publishTransactionAttempt(signTransactionResponse.transaction));
-  }
+  };
 }
 
 export function signTransactionAttempt(passphrase, rawTx) {
@@ -508,20 +508,20 @@ function constructTransactionError(error) {
 
 function constructTransactionSuccess(constructTxResponse) {
   return (dispatch, getState) => {
-    const { privatePassphrase } = getState().walletLoader
+    const { privatePassphrase } = getState().walletLoader;
     dispatch({constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
     dispatch(signTransactionAttempt(privatePassphrase, constructTxResponse.unsigned_transaction));
-  }
+  };
 }
 
 export function constructTransactionAttempt() {
   var request = {
-   source_account: 0,
-   required_confirmations: 1,
-   fee_per_kb: 0,
-   output_selection_algorithm: 1,
-   non_change_outputs: { destination: { address:'TscTHhFsGbAeuLyYUZgoWDjiTejUgFnU4Ji' }, amount: 1000000 },
-   change_destination: { address: 'TsVZfb7tVHV9pcPLb4aK9Hn7y5NSrXGyANV'},
+    source_account: 0,
+    required_confirmations: 1,
+    fee_per_kb: 0,
+    output_selection_algorithm: 1,
+    non_change_outputs: { destination: { address:'TscTHhFsGbAeuLyYUZgoWDjiTejUgFnU4Ji' }, amount: 1000000 },
+    change_destination: { address: 'TsVZfb7tVHV9pcPLb4aK9Hn7y5NSrXGyANV'},
   };
   return (dispatch) => {
     dispatch({

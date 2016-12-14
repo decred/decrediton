@@ -10,7 +10,7 @@ function mapStateToProps(state) {
   return {
     isLoggedIn: state.login.isLoggedIn,
     client: state.login.client,
-    
+
     getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
     getBalanceResponse: state.grpc.getBalanceResponse,
     getStakeInfoRequestAttempt: state.grpc.getStakeInfoRequestAttempt,

@@ -62,7 +62,7 @@ class Home extends Component{
     walletService: PropTypes.object,
 
 
-    stepIndex: PropTypes.number.isRequired, 
+    stepIndex: PropTypes.number.isRequired,
   }
 
   handleBalanceClick = () => {
@@ -71,9 +71,9 @@ class Home extends Component{
 
   render() {
     const { stepIndex } = this.props;
-    
+
     const { address, port } = this.props;
-    
+
     const { loader, getLoaderRequestAttempt, getLoaderError, loaderRequest } = this.props;
     /*
     const { walletCreateResponse, walletCreateRequestAttempt, walletCreateError } = this.props;
@@ -82,7 +82,7 @@ class Home extends Component{
     const { walletCloseResponse, walletCloseRequestAttempt, walletCloseError } = this.props;
     const { startRpcResponse, startRpcRequestAttempt, startRpcError } = this.props;
     const { loadActiveDataFiltersAttempt } = this.props;
-    
+
 
     const getStarted = (
       <div>
@@ -200,7 +200,7 @@ class Home extends Component{
     }
     */
 
-    var openOrCreate = "Create Wallet";
+    var openOrCreate = 'Create Wallet';
 
     const stepper = (
       <div style={{width: '100%',  margin: 'auto'}}>
@@ -257,9 +257,9 @@ class Home extends Component{
       </div>
     );
 
-    
+
     return (stepper);
-      
+
   }
 }
 

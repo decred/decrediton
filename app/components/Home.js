@@ -46,7 +46,7 @@ class Home extends Component{
 
     const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
     const { getStakeInfoRequestAttempt, getStakeInfoResponse } = this.props;
-  
+
     /* View that will be seen when user has a set Client */
     const homeView = (
       <div >

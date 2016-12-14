@@ -31,7 +31,7 @@ class Send extends Component{
           disabled={constructTxRequestAttempt}
           onClick={!constructTxRequestAttempt? () => this.props.constructTransactionAttempt(0) : null}
           label={constructTxRequestAttempt ? 'Getting tx' : 'get new tx'}/>
-        <h3>Current raw tx: {publishTransactionResponse === null ? 'Please refresh' : publishTransactionResponse.transaction_hash.toString('hex') }</h3>   
+        <h3>Current raw tx: {publishTransactionResponse === null ? 'Please refresh' : publishTransactionResponse.transaction_hash.toString('hex') }</h3>
       </div>);
 
     /* Check to see that client is not undefined */

@@ -164,7 +164,7 @@ export default function walletLoader(state = {}, action) {
       fetchHeadersRequest: null,
       fetchHeadersResponse: action.response,
       stepIndex: 6,
-    };  
+    };
   case SUBSCRIBEBLOCKNTFNS_ATTEMPT:
     return {...state,
       subscribeBlockNtfnsRequestAttempt: true,
