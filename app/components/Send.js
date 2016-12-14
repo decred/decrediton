@@ -29,14 +29,24 @@ class Send extends Component{
       <div>
         <h1>Send Page</h1>
 	<TextField
+          id="destination"
+          hintText="Destination Address"
+          floatingLabelText="Destination Address"
+        /><br />
+	<TextField
           id="amount"
           hintText="Amount"
           floatingLabelText="Amount"
         /><br />
 	<TextField
-          id="destination"
-          hintText="Destination Address"
-          floatingLabelText="Destination Address"
+          id="account"
+          hintText="Account Number"
+          floatingLabelText="Account Number"
+        /><br />
+	<TextField
+          id="confirmations"
+          hintText="# of Confirmations"
+          floatingLabelText="# of Confirmations"
         /><br />
         <RaisedButton
           style={style}
