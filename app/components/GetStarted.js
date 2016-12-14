@@ -40,14 +40,28 @@ class Home extends Component{
   static propTypes = {
     address: PropTypes.string.isRequired,
     port: PropTypes.string.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired,
-    isLoggingIn: PropTypes.bool.isRequired,
-    client: PropTypes.object,
-    stepIndex: PropTypes.number.isRequired, 
+    // Step 0
     getLoaderRequestAttempt: PropTypes.bool.isRequired,
-    walletCreateRequestAttempt: PropTypes.bool.isRequired,
+    // Step 1
     walletExistRequestAttempt: PropTypes.bool.isRequired,
+    // Step 2
+    walletCreateRequestAttempt: PropTypes.bool.isRequired,
     walletOpenRequestAttempt: PropTypes.bool.isRequired,
+    // Step 3
+    startRpcRequestAttempt: PropTypes.bool.isRequired,
+    // Step 4
+    discoverAddressRequestAttempt: PropTypes.bool.isRequired,
+    // Step 5
+    fetchHeadersRequestAttempt: PropTypes.bool.isRequired,
+    // Step 6
+    subscribeBlockNtfnsRequestAttempt: PropTypes.bool.isRequired,
+    // Final Prep
+    getWalletServiceRequestAttempt: PropTypes.bool.isRequired,
+    loadActiveDataFiltersRequestAttempt: PropTypes.bool.isRequired,
+    walletService: PropTypes.object,
+
+
+    stepIndex: PropTypes.number.isRequired, 
   }
 
   handleBalanceClick = () => {
@@ -56,11 +70,11 @@ class Home extends Component{
 
   render() {
     const { stepIndex } = this.props;
-    /*
+    
     const { address, port } = this.props;
-    const { isLoggedIn, isLoggingIn, client, error} = this.props;
-
+    
     const { loader, getLoaderRequestAttempt, getLoaderError, loaderRequest } = this.props;
+    /*
     const { walletCreateResponse, walletCreateRequestAttempt, walletCreateError } = this.props;
     const { walletOpenResponse, walletOpenRequestAttempt, walletOpenError } = this.props;
     const { walletExistResponse, walletExistRequestAttempt, walletExistError } = this.props;
@@ -208,17 +222,33 @@ class Home extends Component{
 
     const stepper = (
       <div>
-      <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
+      <div style={{width: '100%',  margin: 'auto'}}>
         <Stepper activeStep={stepIndex}>
           <Step>
-            <StepLabel>{openOrCreate}</StepLabel>
+            <StepLabel>Get Wallet Loader Service</StepLabel>
           </Step>
           <Step>
-            <StepLabel>Prepare Wallet</StepLabel>
+            <StepLabel>Wallet Exist</StepLabel>
           </Step>
           <Step>
-            <StepLabel>Create an ad</StepLabel>
+            <StepLabel>Wallet Create/Open</StepLabel>
           </Step>
+          <Step>
+            <StepLabel>Start RPC Concensus</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Discover Addresses</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Fetch Headers</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Subscribe to Block Notifications</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Final Prep</StepLabel>
+          </Step>
+
         </Stepper>
       </div>
       <div>{getStepContent(stepIndex)}</div>
