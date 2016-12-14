@@ -14,9 +14,6 @@ class Receive extends Component{
     isLoggedIn: PropTypes.bool.isRequired,
     getNextAddressResponse: PropTypes.object,
     getNextAddressRequestAttempt: PropTypes.bool.isRequired,
-    constructTxResponse: PropTypes.object,
-    constructTxRequestAttempt: PropTypes.bool.isRequired,
-    publishTransactionResponse: PropTypes.object,
   };
 
   render() {
@@ -35,13 +32,6 @@ class Receive extends Component{
           disabled={getNextAddressRequestAttempt}
           onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
           label={getNextAddressRequestAttempt ? 'Getting new address' : 'Get New Address'}/>
-        <RaisedButton
-          style={style}
-          disabled={constructTxRequestAttempt}
-          onClick={!constructTxRequestAttempt? () => this.props.constructTransactionAttempt(0) : null}
-          label={constructTxRequestAttempt ? 'Getting tx' : 'get new tx'}/>
-        <h3>Current raw tx: {publishTransactionResponse === null ? 'Please refresh' : publishTransactionResponse.transaction_hash.toString('hex') }</h3>
-                    
       </div>);
 
     /* Check to see that client is not undefined */
