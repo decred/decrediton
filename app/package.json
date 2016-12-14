@@ -9,7 +9,7 @@
     "email": "info@decred.org",
     "url": "https://github.com/decred"
   },
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
     "electron-config": "^0.2.1",
     "grpc": "file:../../grpc"

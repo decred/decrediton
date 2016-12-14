@@ -75,7 +75,7 @@
     "email": "info@decred.org",
     "url": "https://github.com/decred"
   },
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/decred/decrediton/issues"
   },
