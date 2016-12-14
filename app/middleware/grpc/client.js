@@ -46,7 +46,7 @@ export function getDcrdCert() {
   return(cert);
 }
 
-export function client(address, port, cb) {
+export function getWalletService(address, port, cb) {
   var protoDescriptor = grpc.load('./app/api.proto');
   var walletrpc = protoDescriptor.walletrpc;
 

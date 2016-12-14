@@ -1,6 +1,6 @@
 import { getWalletService, getBalance, getAccountNumber, getNetwork, getPing,
   getStakeInfo, getTicketPrice, getAccounts, getTransactions } from '../middleware/grpc/client';
-
+import { getNextAddressAttempt, loadActiveDataFiltersAttempt } from './ControlActions';
 export const WALLETSERVICE_ATTEMPT = 'WALLETSERVICE_ATTEMPT';
 export const WALLETSERVICE_FAILED = 'WALLETSERVICE_FAILED';
 export const WALLETSERVICE_SUCCESS = 'WALLETSERVICE_SUCCESS';
@@ -12,6 +12,8 @@ function getWalletServiceError(error) {
 function getWalletServiceSuccess(walletService) {
   return (dispatch) => {
     dispatch({ walletService, type: WALLETSERVICE_SUCCESS });
+    dispatch(loadActiveDataFiltersAttempt());
+    dispatch(getNextAddressAttempt());
   };
 }
 

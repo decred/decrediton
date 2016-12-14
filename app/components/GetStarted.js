@@ -12,6 +12,7 @@ import {
   Step,
   Stepper,
   StepLabel,
+  StepContent
 } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -122,6 +123,12 @@ class Home extends Component{
           onClick={() => {loaderRequest(address, port);}}
           label='Get Started'/>
       </div>);
+    const getStartedWalletOpen = (
+      <div>
+        <h3>Opening wallet</h3>
+        <h5>Please enter the information below to connect to you dcrwallet</h5>
+        <WalletOpenForm />
+      </div>);
       /*
     const getStartedGettingLoader = (
       <div >
@@ -141,13 +148,7 @@ class Home extends Component{
         <h3>Check if wallet exists</h3>
       </div>);
 
-    const getStartedWalletOpen = (
-      <div>
-        <p >{error}</p>
-        <h3>Opening wallet</h3>
-        <h5>Please enter the information below to connect to you dcrwallet</h5>
-        <WalletOpenForm />
-      </div>);
+
 
     const getStartedOpeningWallet = (
       <div>
@@ -197,61 +198,62 @@ class Home extends Component{
     if (loader !== null) {
       return(getStartedWalletExist);
     }
-
-    // Step 1 action
-    if (getLoaderRequestAttempt) {
-      return (getStartedGettingLoader);
-    }
-    // Step 1 start
-    return (getStartedWalletLoader);
     */
 
-    const getStepContent = (stepIndex) => {
-      switch (stepIndex) {
-        case 0:
-          return (getStartedWalletLoader);
-        case 1:
-          return (getStartedWalletExist);
-        case 2:
-          return (getStartedWalletCreateWallet);
-        default:
-          return (<p>You're a long way from home sonny jim!</p>);
-      }
-    }
     var openOrCreate = "Create Wallet";
 
     const stepper = (
-      <div>
       <div style={{width: '100%',  margin: 'auto'}}>
-        <Stepper activeStep={stepIndex}>
+        <Stepper activeStep={stepIndex} orientation="vertical">
           <Step>
             <StepLabel>Get Wallet Loader Service</StepLabel>
+            <StepContent>
+              {getStartedWalletLoader}
+            </StepContent>
           </Step>
           <Step>
             <StepLabel>Wallet Exist</StepLabel>
+            <StepContent>
+              {}
+            </StepContent>
           </Step>
           <Step>
             <StepLabel>Wallet Create/Open</StepLabel>
+            <StepContent>
+              {getStartedWalletOpen}
+            </StepContent>
           </Step>
           <Step>
             <StepLabel>Start RPC Concensus</StepLabel>
+            <StepContent>
+              {}
+            </StepContent>
           </Step>
           <Step>
             <StepLabel>Discover Addresses</StepLabel>
+            <StepContent>
+              {}
+            </StepContent>
           </Step>
           <Step>
             <StepLabel>Fetch Headers</StepLabel>
+            <StepContent>
+              {}
+            </StepContent>
           </Step>
           <Step>
             <StepLabel>Subscribe to Block Notifications</StepLabel>
+            <StepContent>
+              {}
+            </StepContent>
           </Step>
           <Step>
             <StepLabel>Final Prep</StepLabel>
+            <StepContent>
+              {}
+            </StepContent>
           </Step>
-
         </Stepper>
-      </div>
-      <div>{getStepContent(stepIndex)}</div>
       </div>
     );
 

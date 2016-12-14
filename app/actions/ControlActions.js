@@ -30,9 +30,9 @@ export function getNextAddressAttempt(accountNum) {
 
 function getNextAddressAction() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletService } = getState().grpc;
     const { getNextAddressRequest } = getState().control;
-    getNextAddress(client, getNextAddressRequest,
+    getNextAddress(walletService, getNextAddressRequest,
         function(getNextAddressResponse, err) {
           if (err) {
             dispatch(getNextAddressError(err + ' Please try again'));
@@ -70,9 +70,9 @@ export function renameAccountAttempt(accountNumber, newName) {
 
 function renameAccountAction() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletService } = getState().grpc;
     const { renameAccountRequest } = getState().control;
-    renameAccount(client, renameAccountRequest,
+    renameAccount(walletService, renameAccountRequest,
         function(renameAccountResponse, err) {
           if (err) {
             dispatch(renameAccountError(err + ' Please try again'));
@@ -109,9 +109,9 @@ export function rescanAttempt(beginHeight) {
 
 function rescanAction() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletService } = getState().grpc;
     const { rescanRequest } = getState().control;
-    rescan(client, rescanRequest,
+    rescan(walletService, rescanRequest,
         function(rescanResponse, err) {
           if (err) {
             dispatch(rescanError(err + ' Please try again'));
@@ -149,9 +149,9 @@ export function getNextAccountAttempt(passphrase, accountName) {
 
 function getNextAccountAction() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletService } = getState().grpc;
     const { getNextAccountRequest } = getState().control;
-    getNextAccount(client, getNextAccountRequest,
+    getNextAccount(walletService, getNextAccountRequest,
         function(getNextAccountResponse, err) {
           if (err) {
             dispatch(getNextAccountError(err + ' Please try again'));
@@ -193,9 +193,9 @@ export function importPrivateKeyAttempt(passphrase, accountNum, wif, rescan, sca
 
 function importPrivateKeyAction() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletService } = getState().grpc;
     const { importPrivateKeyRequest } = getState().control;
-    importPrivateKey(client, importPrivateKeyRequest,
+    importPrivateKey(walletService, importPrivateKeyRequest,
         function(importPrivateKeyResponse, err) {
           if (err) {
             dispatch(importPrivateKeyError(err + ' Please try again'));
@@ -235,9 +235,9 @@ export function importScriptAttempt(passphrase, script, rescan, scanFrom) {
 
 function importScriptAction() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletService } = getState().grpc;
     const { importScriptRequest } = getState().control;
-    importScript(client, importScriptRequest,
+    importScript(walletService, importScriptRequest,
         function(importScriptResponse, err) {
           if (err) {
             dispatch(importScriptError(err + ' Please try again'));
@@ -275,9 +275,9 @@ export function changePassphraseAttempt(oldPass, newPass) {
 
 function changePassphraseAction() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletService } = getState().grpc;
     const { changePassphraseRequest } = getState().control;
-    changePassphrase(client, changePassphraseRequest,
+    changePassphrase(walletService, changePassphraseRequest,
         function(changePassphraseResponse, err) {
           if (err) {
             dispatch(changePassphraseError(err + ' Please try again'));
@@ -312,9 +312,9 @@ export function loadActiveDataFiltersAttempt() {
 
 function loadActiveDataFiltersAction() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletService } = getState().grpc;
     const { loadActiveDataFiltersRequest } = getState().control;
-    loadActiveDataFilters(client, loadActiveDataFiltersRequest,
+    loadActiveDataFilters(walletService, loadActiveDataFiltersRequest,
         function(response, err) {
           if (err) {
             dispatch(loadActiveDataFiltersError(err + ' Please try again'));
@@ -353,9 +353,9 @@ export function fundTransactionAttempt(accountNum, targetAmount, requiredConf) {
 
 function fundTransactionAction() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletService } = getState().grpc;
     const { fundTransactionRequest } = getState().control;
-    fundTransaction(client, fundTransactionRequest,
+    fundTransaction(walletService, fundTransactionRequest,
         function(fundTransactionResponse, err) {
           if (err) {
             dispatch(fundTransactionError(err + ' Please try again'));
@@ -396,9 +396,9 @@ export function signTransactionAttempt(passphrase, rawTx) {
 
 function signTransactionAction() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletService } = getState().grpc;
     const { signTransactionRequest } = getState().control;
-    signTransaction(client, signTransactionRequest,
+    signTransaction(walletService, signTransactionRequest,
         function(signTransactionResponse, err) {
           if (err) {
             dispatch(signTransactionError(err + ' Please try again'));
@@ -435,9 +435,9 @@ export function publishTransactionAttempt(tx) {
 
 function publishTransactionAction() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletService } = getState().grpc;
     const { publishTransactionRequest } = getState().control;
-    publishTransaction(client, publishTransactionRequest,
+    publishTransaction(walletService, publishTransactionRequest,
         function(publishTransactionResponse, err) {
           if (err) {
             dispatch(publishTransactionError(err + ' Please try again'));
@@ -485,9 +485,9 @@ ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
 
 function purchaseTicketAction() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletService } = getState().grpc;
     const { purchaseTicketRequest } = getState().control;
-    purchaseTicket(client, purchaseTicketRequest,
+    purchaseTicket(walletService, purchaseTicketRequest,
         function(purchaseTicketResponse, err) {
           if (err) {
             dispatch(purchaseTicketError(err + ' Please try again'));
@@ -533,9 +533,9 @@ export function constructTransactionAttempt() {
 
 function constructTransactionAction() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletService } = getState().grpc;
     const { constructTxRequest } = getState().control;
-    constructTransaction(client, constructTxRequest,
+    constructTransaction(walletService, constructTxRequest,
         function(constructTxResponse, err) {
           if (err) {
             dispatch(constructTransactionError(err + ' Please try again'));
