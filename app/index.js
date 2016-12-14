@@ -19,15 +19,13 @@ if (cfg.network == 'testnet') {
 }
 
 var initialState = {
-  login: {
+  grpc: {
+    // WalletService
     address: '127.0.0.1',
     port: grpcport,
-    passphrase: '',
-    isLoggedIn: false,
-    isLoggingIn: false,
-    error: '',
-  },
-  grpc: {
+    walletService: null,
+    getWalletServiceRequestAttempt: false,
+    getWalletServiceError: '',
     // Balance
     getBalanceRequest: null,
     getBalanceError: null,
@@ -70,6 +68,7 @@ var initialState = {
     getTransactionsResponse: null,
   },
   walletLoader: {
+    stepIndex: 0,
     // XXX Wallet Passphrases
     // We are storing these in state for dev ease,
     // but will construct an alternate system

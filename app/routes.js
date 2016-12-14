@@ -10,11 +10,10 @@ import GetStartedPage from './containers/GetStartedPage';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={HomePage} />
+    <IndexRoute component={GetStartedPage} />
+    <Route path="/home" component={HomePage} />
     <Route path="/history" component={HistoryPage} />
     <Route path="/send" component={SendPage} />
     <Route path="/receive" component={ReceivePage} />
-    <Route path="/getstarted" component={GetStartedPage} />
-    
   </Route>
 );

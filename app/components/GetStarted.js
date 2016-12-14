@@ -6,7 +6,15 @@ import LoaderForm from '../containers/LoaderForm';
 import WalletExistForm from '../containers/WalletExistForm';
 import WalletOpenForm from '../containers/WalletOpenForm';
 import CreateWalletForm from '../containers/CreateWalletForm';
+import router from 'react-router';
+
+import {
+  Step,
+  Stepper,
+  StepLabel,
+} from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import LinearProgress from 'material-ui/LinearProgress';
 
 const styles = {
@@ -32,15 +40,10 @@ class Home extends Component{
   static propTypes = {
     address: PropTypes.string.isRequired,
     port: PropTypes.string.isRequired,
-    passphrase: PropTypes.string.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
     isLoggingIn: PropTypes.bool.isRequired,
     client: PropTypes.object,
-    error: PropTypes.string,
-
-    getBalanceRequestAttempt: PropTypes.bool.isRequired,
-    getStakeInfoRequestAttempt: PropTypes.bool.isRequired,
-
+    stepIndex: PropTypes.number.isRequired, 
     getLoaderRequestAttempt: PropTypes.bool.isRequired,
     walletCreateRequestAttempt: PropTypes.bool.isRequired,
     walletExistRequestAttempt: PropTypes.bool.isRequired,
@@ -52,11 +55,10 @@ class Home extends Component{
   }
 
   render() {
+    const { stepIndex } = this.props;
+    /*
     const { address, port } = this.props;
     const { isLoggedIn, isLoggingIn, client, error} = this.props;
-
-    const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
-    const { getStakeInfoRequestAttempt, getStakeInfoResponse } = this.props;
 
     const { loader, getLoaderRequestAttempt, getLoaderError, loaderRequest } = this.props;
     const { walletCreateResponse, walletCreateRequestAttempt, walletCreateError } = this.props;
@@ -66,7 +68,7 @@ class Home extends Component{
     const { startRpcResponse, startRpcRequestAttempt, startRpcError } = this.props;
     const { loadActiveDataFiltersAttempt } = this.props;
     
-    /*  View that will be seen on fresh starts */
+
     const getStarted = (
       <div>
         <p>{error}</p>
@@ -75,39 +77,16 @@ class Home extends Component{
         <LoginForm />
       </div>);
 
-    /*  View that will be when logging in is occuring */
     const getStartedLoggingIn = (
       <div >
         Logging in
         <LinearProgress mode="indeterminate" />
       </div>);
 
-    /* View that will be shown when an error on logging in occured */
+
     const getStartedError = (
       <div >
         <p> {error} </p>
-      </div>);
-
-    /* View that will be seen when user has a set Client */
-    const homeView = (
-      <div >
-        <h1>Home Page</h1>
-        <h3>Current balance: {getBalanceResponse === null ? 'Please refresh' : getBalanceResponse.total }</h3>
-        <RaisedButton
-          style={styles.buttons}
-          disabled={getBalanceRequestAttempt}
-          onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
-          label={getBalanceRequestAttempt ? 'Getting Balance...' : 'Get Balance'}/>
-        <h3>StakeInfo: {getStakeInfoResponse === null ? 'Please refresh' : getStakeInfoResponse.pool_size}</h3>
-        <RaisedButton
-          style={styles.buttons}
-          disabled={getStakeInfoRequestAttempt}
-          onClick={!getStakeInfoRequestAttempt? () => this.props.getStakeInfoAttempt() : null}
-          label={getStakeInfoRequestAttempt ? 'Getting Stake Info...' : 'Get Stake Info'}/>
-        <RaisedButton
-          style={styles.buttons}
-          onClick={() => this.props.loadActiveDataFiltersAttempt()}
-          label='Load Active Data Filters'/>
       </div>);
 
     const getStartedCreateWallet = (
@@ -120,17 +99,16 @@ class Home extends Component{
         <h3> Creating wallet </h3>
         <LinearProgress mode="indeterminate" />
       </div>);
-
+      */
     const getStartedWalletLoader = (
       <div >
-        <p>{error}</p>
         <RaisedButton type="submit"
           style={styles.buttons}
           primary={true}
           onClick={() => {loaderRequest(address, port);}}
           label='Get Started'/>
       </div>);
-
+      /*
     const getStartedGettingLoader = (
       <div >
         <h3>Getting wallet loader service</h3>
@@ -212,6 +190,44 @@ class Home extends Component{
     }
     // Step 1 start
     return (getStartedWalletLoader);
+    */
+
+    const getStepContent = (stepIndex) => {
+      switch (stepIndex) {
+        case 0:
+          return (getStartedWalletLoader);
+        case 1:
+          return (getStartedWalletExist);
+        case 2:
+          return (getStartedWalletCreateWallet);
+        default:
+          return (<p>You're a long way from home sonny jim!</p>);
+      }
+    }
+    var openOrCreate = "Create Wallet";
+
+    const stepper = (
+      <div>
+      <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
+        <Stepper activeStep={stepIndex}>
+          <Step>
+            <StepLabel>{openOrCreate}</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Prepare Wallet</StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>Create an ad</StepLabel>
+          </Step>
+        </Stepper>
+      </div>
+      <div>{getStepContent(stepIndex)}</div>
+      </div>
+    );
+
+    
+    return (stepper);
+      
   }
 }
 

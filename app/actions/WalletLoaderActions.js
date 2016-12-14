@@ -1,7 +1,7 @@
 import { loader, createWallet, walletExists, openWallet,
   closeWallet, discoverAddresses, subscribeBlockNtfns,
   startConsensusRpc, fetchHeaders} from '../middleware/grpc/loader';
-import { loginRequest } from './LoginActions';
+import { getWalletServiceAttempt } from './ClientActions';
 import { transactionNftnsStart } from './NotificationActions';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt } from './ControlActions';
 

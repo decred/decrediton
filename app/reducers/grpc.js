@@ -1,14 +1,33 @@
-import { GETBALANCE_ATTEMPT, GETBALANCE_FAILED, GETBALANCE_SUCCESS } from '../actions/ClientActions';
-import { GETACCOUNTNUMBER_ATTEMPT, GETACCOUNTNUMBER_FAILED, GETACCOUNTNUMBER_SUCCESS } from '../actions/ClientActions';
-import { GETNETWORK_ATTEMPT, GETNETWORK_FAILED, GETNETWORK_SUCCESS } from '../actions/ClientActions';
-import { GETPING_ATTEMPT, GETPING_FAILED, GETPING_SUCCESS } from '../actions/ClientActions';
-import { GETSTAKEINFO_ATTEMPT, GETSTAKEINFO_FAILED, GETSTAKEINFO_SUCCESS } from '../actions/ClientActions';
-import { GETTICKETPRICE_ATTEMPT, GETTICKETPRICE_FAILED, GETTICKETPRICE_SUCCESS } from '../actions/ClientActions';
-import { GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS } from '../actions/ClientActions';
-import { GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED, GETTRANSACTIONS_SUCCESS } from '../actions/ClientActions';
+import { 
+  GETWALLETSERVICE_ATTEMPT, GETWALLETSERVICE_FAILED, GETWALLETSERVICE_SUCCESS, 
+  GETBALANCE_ATTEMPT, GETBALANCE_FAILED, GETBALANCE_SUCCESS, 
+  GETACCOUNTNUMBER_ATTEMPT, GETACCOUNTNUMBER_FAILED, GETACCOUNTNUMBER_SUCCESS, 
+  GETNETWORK_ATTEMPT, GETNETWORK_FAILED, GETNETWORK_SUCCESS, 
+  GETPING_ATTEMPT, GETPING_FAILED, GETPING_SUCCESS, 
+  GETSTAKEINFO_ATTEMPT, GETSTAKEINFO_FAILED, GETSTAKEINFO_SUCCESS, 
+  GETTICKETPRICE_ATTEMPT, GETTICKETPRICE_FAILED, GETTICKETPRICE_SUCCESS, 
+  GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
+  GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED, GETTRANSACTIONS_SUCCESS
+} from '../actions/ClientActions';
 
 export default function grpc(state = {}, action) {
   switch (action.type) {
+  case GETWALLETSERVICE_ATTEMPT:
+    return {...state,
+      getWalletServiceError: null,
+      getWalletServiceRequestAttempt: true,
+    };
+  case GETWALLETSERVICE_FAILED:
+    return {...state,
+      getWalletServiceError: action.error,
+      getWalletServiceRequestAttempt: false,
+    };
+  case GETWALLETSERVICE_SUCCESS:
+    return {...state,
+      getBalanceError: null,
+      getWalletServiceRequestAttempt: false,
+      walletService: action.walletService,
+    };
   case GETBALANCE_ATTEMPT:
     return {...state,
       getBalanceError: null,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { login, loginRequest } from '../actions/LoginActions';
+import { getWalletServiceAttempt } from '../actions/ClientActions';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
@@ -20,7 +20,7 @@ let LoginForm = ({ dispatch }) => {
         if (address == '' || port == '' || passphrase == '') {
           return;
         }
-        dispatch(loginRequest(address, port, passphrase));
+        dispatch(getWalletServiceAttempt(address, port, passphrase));
         address = '';
         port = '';
       }}>

@@ -1,5 +1,44 @@
-import { getBalance, getAccountNumber, getNetwork, getPing,
+import { getWalletService, getBalance, getAccountNumber, getNetwork, getPing,
   getStakeInfo, getTicketPrice, getAccounts, getTransactions } from '../middleware/grpc/client';
+
+export const WALLETSERVICE_ATTEMPT = 'WALLETSERVICE_ATTEMPT';
+export const WALLETSERVICE_FAILED = 'WALLETSERVICE_FAILED';
+export const WALLETSERVICE_SUCCESS = 'WALLETSERVICE_SUCCESS';
+
+function getWalletServiceError(error) {
+  return { error, type: WALLETSERVICE_FAILED };
+}
+
+function getWalletServiceSuccess(walletService) {
+  return (dispatch) => {
+    dispatch({ walletService, type: WALLETSERVICE_SUCCESS });
+  };
+}
+
+export function getWalletServiceAttempt() {
+  return (dispatch, getState) => {
+    const { getLoaderRequest } = getState().walletLoader;
+    dispatch({
+      address: getLoaderRequest.address,
+      port: getLoaderRequest.port,
+      passphrase: '',
+      type: WALLETSERVICE_ATTEMPT });
+    dispatch(getWalletServiceAction());
+  };
+}
+
+function getWalletServiceAction() {
+  return (dispatch, getState) => {
+    const { address, port } = getState().grpc;
+    getWalletService(address, port, function(walletService, err) {
+      if (err) {
+        dispatch(getWalletServiceError(err + ' Please try again'));
+      } else {
+        dispatch(getWalletServiceSuccess(walletService));
+      }
+    });
+  };
+}
 
 export const GETBALANCE_ATTEMPT = 'GETBALANCE_ATTEMPT';
 export const GETBALANCE_FAILED = 'GETBALANCE_FAILED';

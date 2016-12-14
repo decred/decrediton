@@ -11,10 +11,8 @@ const styles = {
     color: '#757575',
     textDecoration: 'none',
   },
-  sidebarLinkCurrentPage: {
-    display: 'block',
-    padding: '16px 0px',
-    color: 'white',
+  active: {
+    color: 'black',
     textDecoration: 'bold',
   },
 };
@@ -28,7 +26,6 @@ class Header extends Component {
   handleToggle = () => this.setState({open: !this.state.open});
 
   render() {
-    const page = 'HOME';
     return (
       <div>
         <AppBar onLeftIconButtonTouchTap={this.handleToggle} title="Decrediton" />
@@ -38,10 +35,10 @@ class Header extends Component {
           open={this.state.open}
           onRequestChange={open => this.setState({open})}
         >
-          <MenuItem><Link to="/" style={styles.sidebarLink} onClick={this.handleToggle}>Home</Link></MenuItem>
-          <MenuItem><Link to="/history" style={styles.sidebarLink} onClick={this.handleToggle}>Transaction History</Link></MenuItem>
-          <MenuItem><Link to="/send" style={styles.sidebarLink} onClick={this.handleToggle}>Send Decred</Link></MenuItem>
-          <MenuItem><Link to="/receive" style={styles.sidebarLink} onClick={this.handleToggle}>Receive Decred</Link></MenuItem>
+          <MenuItem><Link to="/home" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Home</Link></MenuItem>
+          <MenuItem><Link to="/history" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>History</Link></MenuItem>
+          <MenuItem><Link to="/send" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Send Decred</Link></MenuItem>
+          <MenuItem><Link to="/receive" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Receive Decred</Link></MenuItem>
         </Drawer>
       </div>
     );
