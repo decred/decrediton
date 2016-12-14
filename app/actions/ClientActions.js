@@ -1,30 +1,26 @@
 import { getWalletService, getBalance, getAccountNumber, getNetwork, getPing,
   getStakeInfo, getTicketPrice, getAccounts, getTransactions } from '../middleware/grpc/client';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt } from './ControlActions';
-export const WALLETSERVICE_ATTEMPT = 'WALLETSERVICE_ATTEMPT';
-export const WALLETSERVICE_FAILED = 'WALLETSERVICE_FAILED';
-export const WALLETSERVICE_SUCCESS = 'WALLETSERVICE_SUCCESS';
+export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
+export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
+export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
 
 function getWalletServiceError(error) {
-  return { error, type: WALLETSERVICE_FAILED };
+  return { error, type: GETWALLETSERVICE_FAILED };
 }
 
 function getWalletServiceSuccess(walletService) {
   return (dispatch) => {
-    dispatch({ walletService, type: WALLETSERVICE_SUCCESS });
-    dispatch(loadActiveDataFiltersAttempt());
-    dispatch(getNextAddressAttempt());
+    dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
+    setTimeout( () => {dispatch(loadActiveDataFiltersAttempt())}, 1000);
+    setTimeout( () => {dispatch(getNextAddressAttempt())}, 1000);
   };
 }
 
 export function getWalletServiceAttempt() {
   return (dispatch, getState) => {
     const { getLoaderRequest } = getState().walletLoader;
-    dispatch({
-      address: getLoaderRequest.address,
-      port: getLoaderRequest.port,
-      passphrase: '',
-      type: WALLETSERVICE_ATTEMPT });
+    dispatch({ type: GETWALLETSERVICE_ATTEMPT });
     dispatch(getWalletServiceAction());
   };
 }
