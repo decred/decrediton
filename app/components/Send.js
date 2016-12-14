@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorScreen from './ErrorScreen';
+import TextField from 'material-ui/TextField';
 
 const style = {
   margin: 12,
@@ -27,6 +28,16 @@ class Send extends Component{
     const sendView = (
       <div>
         <h1>Send Page</h1>
+	<TextField
+          id="amount"
+          hintText="Amount"
+          floatingLabelText="Amount"
+        /><br />
+	<TextField
+          id="destination"
+          hintText="Destination Address"
+          floatingLabelText="Destination Address"
+        /><br />
         <RaisedButton
           style={style}
           disabled={constructTxRequestAttempt}
