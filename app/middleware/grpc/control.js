@@ -101,6 +101,19 @@ export function changePassphrase(client, request, cb) {
   });
 }
 
+export function loadActiveDataFilters(client, request, cb) {
+    // ChangePassphrase
+
+  client.loadActiveDataFilters(request, function(err, response) {
+    if (err) {
+      console.error('loadActiveDataFilters', err);
+      return cb(null, err);
+    } else {
+      console.log('loadActiveDataFilters', response);
+      return cb(response);
+    }
+  });
+}
 
 // TODO add unsigned tx contruction which will then be
 // sent to sign/publishTransaction

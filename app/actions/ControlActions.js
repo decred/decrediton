@@ -1,6 +1,6 @@
 import { getNextAddress, renameAccount, getNextAccount,
   rescan, importPrivateKey, importScript, changePassphrase,
-getFundingTransaction, signTransaction, publishTransaction,
+  loadActiveDataFilters, getFundingTransaction, signTransaction, publishTransaction,
 purchaseTickets, constructTransaction } from '../middleware/grpc/control';
 
 export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
@@ -288,6 +288,43 @@ function changePassphraseAction() {
   };
 }
 
+export const LOADACTIVEDATAFILTERS_ATTEMPT = 'LOADACTIVEDATAFILTERS_ATTEMPT';
+export const LOADACTIVEDATAFILTERS_FAILED= 'LOADACTIVEDATAFILTERS_FAILED';
+export const LOADACTIVEDATAFILTERS_SUCCESS = 'LOADACTIVEDATAFILTERS_SUCCESS';
+
+function loadActiveDataFiltersError(error) {
+  return { error, type: LOADACTIVEDATAFILTERS_FAILED };
+}
+
+function loadActiveDataFiltersSuccess(response) {
+  return { response: response, type: LOADACTIVEDATAFILTERS_SUCCESS };
+}
+
+export function loadActiveDataFiltersAttempt() {
+  var request = { };
+  return (dispatch) => {
+    dispatch({
+      request: request,
+      type: LOADACTIVEDATAFILTERS_ATTEMPT });
+    dispatch(loadActiveDataFiltersAction());
+  };
+}
+
+function loadActiveDataFiltersAction() {
+  return (dispatch, getState) => {
+    const { client } = getState().login;
+    const { loadActiveDataFiltersRequest } = getState().control;
+    loadActiveDataFilters(client, loadActiveDataFiltersRequest,
+        function(response, err) {
+          if (err) {
+            dispatch(loadActiveDataFiltersError(err + ' Please try again'));
+          } else {
+            dispatch(loadActiveDataFiltersSuccess(response));
+          }
+        });
+  };
+}
+
 export const FUNDTX_ATTEMPT = 'FUNDTX_ATTEMPT';
 export const FUNDTX_FAILED = 'FUNDTX_FAILED';
 export const FUNDTX_SUCCESS = 'FUNDTX_SUCCESS';
@@ -482,7 +519,7 @@ export function constructTransactionAttempt() {
    required_confirmations: 1,
    fee_per_kb: 0,
    output_selection_algorithm: 1,
-   non_change_outputs: { destination: { address:'TscTHhFsGbAeuLyYUZgoWDjiTejUgFnU4Ji' }, amount: 1 },
+   non_change_outputs: { destination: { address:'TscTHhFsGbAeuLyYUZgoWDjiTejUgFnU4Ji' }, amount: 1000000 },
    change_destination: { address: 'TsVZfb7tVHV9pcPLb4aK9Hn7y5NSrXGyANV'},
   };
   return (dispatch) => {

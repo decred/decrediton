@@ -187,6 +187,11 @@ var initialState = {
     changePassphraseRequest: null,
     changePassphraseResponse: null,
     changePassphraseError: null,
+    // ChangePassphrase
+    loadActiveDataFiltersRequestAttempt: false,
+    loadActiveDataFiltersRequest: null,
+    loadActiveDataFiltersResponse: null,
+    loadActiveDataFiltersError: null,
     // FundTransaction
     fundTransactionRequestAttempt: false,
     fundTransactionRequest: null,

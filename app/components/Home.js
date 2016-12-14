@@ -64,7 +64,8 @@ class Home extends Component{
     const { walletExistResponse, walletExistRequestAttempt, walletExistError } = this.props;
     const { walletCloseResponse, walletCloseRequestAttempt, walletCloseError } = this.props;
     const { startRpcResponse, startRpcRequestAttempt, startRpcError } = this.props;
-
+    const { loadActiveDataFiltersAttempt } = this.props;
+    
     /*  View that will be seen on fresh starts */
     const getStarted = (
       <div>
@@ -103,6 +104,10 @@ class Home extends Component{
           disabled={getStakeInfoRequestAttempt}
           onClick={!getStakeInfoRequestAttempt? () => this.props.getStakeInfoAttempt() : null}
           label={getStakeInfoRequestAttempt ? 'Getting Stake Info...' : 'Get Stake Info'}/>
+        <RaisedButton
+          style={styles.buttons}
+          onClick={() => this.props.loadActiveDataFiltersAttempt()}
+          label='Load Active Data Filters'/>
       </div>);
 
     const getStartedCreateWallet = (
