@@ -26,19 +26,32 @@ class Header extends Component {
   handleToggle = () => this.setState({open: !this.state.open});
 
   render() {
+    const { stepIndex } = this.props;
+    const menuItems = (
+      <div>
+        <MenuItem><Link to="/home" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Home</Link></MenuItem>
+        <MenuItem><Link to="/history" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>History</Link></MenuItem>
+        <MenuItem><Link to="/send" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Send Decred</Link></MenuItem>
+        <MenuItem><Link to="/receive" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Receive Decred</Link></MenuItem>
+      </div>
+    );
+    var output;
+    if (stepIndex < 7) {
+      output = (<div></div>);
+    } else {
+      output = menuItems;
+    }
+
     return (
       <div>
-        <AppBar onLeftIconButtonTouchTap={this.handleToggle} title="Decrediton" />
+        <AppBar onLeftIconButtonTouchTap={stepIndex > 7 ? this.handleToggle : null} title="Decrediton" />
         <Drawer
           ref="Drawer"
           docked={false}
           open={this.state.open}
           onRequestChange={open => this.setState({open})}
         >
-          <MenuItem><Link to="/home" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Home</Link></MenuItem>
-          <MenuItem><Link to="/history" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>History</Link></MenuItem>
-          <MenuItem><Link to="/send" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Send Decred</Link></MenuItem>
-          <MenuItem><Link to="/receive" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Receive Decred</Link></MenuItem>
+          {output}
         </Drawer>
       </div>
     );

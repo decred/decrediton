@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
+import HeaderStuff from '../containers/HeaderStuff';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import theme from '../materialUITheme';
@@ -17,7 +17,7 @@ export default class App extends Component {
       <div>
         <MuiThemeProvider muiTheme={theme}>
           <div>
-            <Header />
+            <HeaderStuff />
             {this.props.children}
           </div>
         </MuiThemeProvider>
