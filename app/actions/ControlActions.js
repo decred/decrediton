@@ -507,9 +507,10 @@ function constructTransactionError(error) {
 }
 
 function constructTransactionSuccess(constructTxResponse) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { privatePassphrase } = getState().walletLoader
     dispatch({constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
-    dispatch(signTransactionAttempt('p2', constructTxResponse.unsigned_transaction));
+    dispatch(signTransactionAttempt(privatePassphrase, constructTxResponse.unsigned_transaction));
   }
 }
 
