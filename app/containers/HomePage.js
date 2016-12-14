@@ -5,6 +5,7 @@ import Home from '../components/Home';
 import * as LoginActions from '../actions/LoginActions';
 import * as ClientActions from '../actions/ClientActions';
 import * as WalletLoaderActions from '../actions/WalletLoaderActions';
+import * as ControlActions from '../actions/ControlActions';
 
 function mapStateToProps(state) {
   return {
@@ -39,7 +40,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, WalletLoaderActions, LoginActions, ClientActions), dispatch);
+  return bindActionCreators(Object.assign({}, ControlActions, WalletLoaderActions, LoginActions, ClientActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

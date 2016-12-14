@@ -3,13 +3,10 @@ import { loader, createWallet, walletExists, openWallet,
   startConsensusRpc, fetchHeaders} from '../middleware/grpc/loader';
 import { loginRequest } from './LoginActions';
 import { transactionNftnsStart } from './NotificationActions';
-import path from 'path';
-import os from 'os';
-import fs from 'fs';
+import { getNextAddressAttempt, loadActiveDataFiltersAttempt } from './ControlActions';
+
 import { getDcrdCert } from '../middleware/grpc/client';
 import { getCfg } from '../config.js';
-
-var Buffer = require('buffer/').Buffer;
 
 export const LOADER_ATTEMPT = 'LOADER_ATTEMPT';
 export const LOADER_FAILED = 'LOADER_FAILED';
@@ -316,6 +313,8 @@ function subscribeBlockError(error) {
 function subscribeBlockSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
+    dispatch(loadActiveDataFiltersAttempt());
+    dispatch(getNextAddressAttempt(0));
   };
 }
 

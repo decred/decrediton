@@ -101,6 +101,19 @@ export function changePassphrase(client, request, cb) {
   });
 }
 
+export function loadActiveDataFilters(client, request, cb) {
+    // ChangePassphrase
+
+  client.loadActiveDataFilters(request, function(err, response) {
+    if (err) {
+      console.error('loadActiveDataFilters', err);
+      return cb(null, err);
+    } else {
+      console.log('loadActiveDataFilters', response);
+      return cb(response);
+    }
+  });
+}
 
 // TODO add unsigned tx contruction which will then be
 // sent to sign/publishTransaction
@@ -120,7 +133,7 @@ export function getFundTransaction(client, request, cb) {
   });
 }
 
-export function signTransction(client, request, cb) {
+export function signTransaction(client, request, cb) {
     // SignTransaction
 
   client.signTransaction(request, function(err, response) {
@@ -157,6 +170,21 @@ export function purchaseTickets(client, request, cb) {
       return cb(null, err);
     } else {
       console.log('purchaseTickets', response);
+      return cb(response);
+    }
+  });
+}
+
+
+export function constructTransaction(client, request, cb) {
+    // PurchaseTickets
+    console.log(request);
+  client.constructTransaction(request, function(err, response) {
+    if (err) {
+      console.error('constructTransaction', err);
+      return cb(null, err);
+    } else {
+      console.log('constructTransaction', response);
       return cb(response);
     }
   });

@@ -11,16 +11,27 @@ const style = {
 class Send extends Component{
   static propTypes = {
     client: PropTypes.object,
-    isLoggedIn: PropTypes.bool.isRequired
+    isLoggedIn: PropTypes.bool.isRequired,
+    constructTxResponse: PropTypes.object,
+    constructTxRequestAttempt: PropTypes.bool.isRequired,
+    publishTransactionResponse: PropTypes.object,
   };
 
   render() {
     const { client, isLoggedIn } = this.props;
+    const { constructTxRequestAttempt } = this.props;
+    const { publishTransactionResponse } = this.props;
 
     /* View that will be seen when user has a set Client */
     const sendView = (
       <div>
         <h1>Send Page</h1>
+        <RaisedButton
+          style={style}
+          disabled={constructTxRequestAttempt}
+          onClick={!constructTxRequestAttempt? () => this.props.constructTransactionAttempt(0) : null}
+          label={constructTxRequestAttempt ? 'Getting tx' : 'get new tx'}/>
+        <h3>Current raw tx: {publishTransactionResponse === null ? 'Please refresh' : publishTransactionResponse.transaction_hash.toString('hex') }</h3>   
       </div>);
 
     /* Check to see that client is not undefined */

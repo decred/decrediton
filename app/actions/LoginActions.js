@@ -1,5 +1,4 @@
 import { client } from '../middleware/grpc/client';
-import { getNextAddressAttempt } from './ControlActions';
 
 export const LOGIN_ATTEMPT = 'LOGIN_ATTEMPT';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
@@ -12,7 +11,6 @@ function loginError(error) {
 function loginSuccess(client) {
   return (dispatch) => {
     dispatch({ client, type: LOGIN_SUCCESS });
-    dispatch(getNextAddressAttempt(0));
   };
 }
 
@@ -25,7 +23,6 @@ export function loginRequest() {
       passphrase: '',
       type: LOGIN_ATTEMPT });
     dispatch(login());
-
   };
 }
 

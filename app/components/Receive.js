@@ -20,6 +20,8 @@ class Receive extends Component{
     const { client, isLoggedIn } = this.props;
     const { getNextAddressResponse, getNextAddressAttempt, getNextAddressRequestAttempt } = this.props;
     const { getNextAddressError } = this.props;
+    const { constructTxRequestAttempt, constructTransactionAttempt, constructTxResponse } = this.props;
+    const { publishTransactionResponse } = this.props;
     /* View that will be seen when user has a set Client */
     const receiveView = (
       <div>

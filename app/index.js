@@ -187,6 +187,11 @@ var initialState = {
     changePassphraseRequest: null,
     changePassphraseResponse: null,
     changePassphraseError: null,
+    // ChangePassphrase
+    loadActiveDataFiltersRequestAttempt: false,
+    loadActiveDataFiltersRequest: null,
+    loadActiveDataFiltersResponse: null,
+    loadActiveDataFiltersError: null,
     // FundTransaction
     fundTransactionRequestAttempt: false,
     fundTransactionRequest: null,
@@ -207,6 +212,11 @@ var initialState = {
     purchaseTicketRequest: null,
     purchaseTicketResponse: null,
     purchaseTicketError: null,
+    // ConstructTransaction
+    constructTxRequestAttempt: false,
+    constructTxRequest: null,
+    constructTxResponse: null,
+    constructTxError: null,
   }
 };
 

@@ -5,10 +5,12 @@ import { GETNEXTACCOUNT_ATTEMPT, GETNEXTACCOUNT_FAILED, GETNEXTACCOUNT_SUCCESS }
 import { IMPORTPRIVKEY_ATTEMPT, IMPORTPRIVKEY_FAILED, IMPORTPRIVKEY_SUCCESS } from '../actions/ControlActions';
 import { IMPORTSCRIPT_ATTEMPT, IMPORTSCRIPT_FAILED, IMPORTSCRIPT_SUCCESS } from '../actions/ControlActions';
 import { CHANGEPASSPHRASE_ATTEMPT, CHANGEPASSPHRASE_FAILED, CHANGEPASSPHRASE_SUCCESS } from '../actions/ControlActions';
+import { LOADACTIVEDATAFILTERS_ATTEMPT, LOADACTIVEDATAFILTERS_FAILED, LOADACTIVEDATAFILTERS_SUCCESS } from '../actions/ControlActions';
 import { FUNDTX_ATTEMPT, FUNDTX_FAILED, FUNDTX_SUCCESS } from '../actions/ControlActions';
 import { SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS } from '../actions/ControlActions';
 import { PUBLISHTX_ATTEMPT, PUBLISHTX_FAILED, PUBLISHTX_SUCCESS } from '../actions/ControlActions';
 import { PURCHASETICKET_ATTEMPT, PURCHASETICKET_FAILED, PURCHASETICKET_SUCCESS } from '../actions/ControlActions';
+import { CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS } from '../actions/ControlActions';
 
 export default function control(state = {}, action) {
   switch (action.type) {
@@ -138,6 +140,24 @@ export default function control(state = {}, action) {
       changePassphraseRequestAttempt: false,
       changePassphraseResponse: action.changePassphraseResponse,
     };
+  case LOADACTIVEDATAFILTERS_ATTEMPT:
+    return {...state,
+      loadActiveDataFiltersError: null,
+      loadActiveDataFiltersRequestAttempt: true,
+      loadActiveDataFiltersRequest: action.request,
+    };
+  case LOADACTIVEDATAFILTERS_FAILED:
+    return {...state,
+      loadActiveDataFiltersError: action.error,
+      loadActiveDataFiltersRequestAttempt: false,
+      loadActiveDataFiltersRequest: null,
+    };
+  case LOADACTIVEDATAFILTERS_SUCCESS:
+    return {...state,
+      loadActiveDataFiltersError: null,
+      loadActiveDataFiltersRequestAttempt: false,
+      loadActiveDataFiltersResponse: action.response,
+    };  
   case FUNDTX_ATTEMPT:
     return {...state,
       fundTransactionError: null,
@@ -210,7 +230,24 @@ export default function control(state = {}, action) {
       purchaseTicketRequestAttempt: false,
       purchaseTicketResponse: action.purchaseTicketResponse,
     };
-
+  case CONSTRUCTTX_ATTEMPT:
+    return {...state,
+      constructTxError: null,
+      constructTxRequestAttempt: true,
+      constructTxRequest: action.request,
+    };
+  case CONSTRUCTTX_FAILED:
+    return {...state,
+      constructTxError: action.error,
+      constructTxRequestAttempt: false,
+      constructTxResponse: null,
+    };
+  case CONSTRUCTTX_SUCCESS:
+    return {...state,
+      constructTxError: null,
+      constructTxRequestAttempt: false,
+      constructTxResponse: action.constructTxResponse,
+    };
   default:
     return state;
   }

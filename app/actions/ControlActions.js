@@ -1,7 +1,7 @@
 import { getNextAddress, renameAccount, getNextAccount,
   rescan, importPrivateKey, importScript, changePassphrase,
-getFundingTransaction, signTransction, publishTransaction,
-purchaseTickets } from '../middleware/grpc/control';
+  loadActiveDataFilters, getFundingTransaction, signTransaction, publishTransaction,
+purchaseTickets, constructTransaction } from '../middleware/grpc/control';
 
 export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
 export const GETNEXTADDRESS_FAILED = 'GETNEXTADDRESS_FAILED';
@@ -288,6 +288,43 @@ function changePassphraseAction() {
   };
 }
 
+export const LOADACTIVEDATAFILTERS_ATTEMPT = 'LOADACTIVEDATAFILTERS_ATTEMPT';
+export const LOADACTIVEDATAFILTERS_FAILED= 'LOADACTIVEDATAFILTERS_FAILED';
+export const LOADACTIVEDATAFILTERS_SUCCESS = 'LOADACTIVEDATAFILTERS_SUCCESS';
+
+function loadActiveDataFiltersError(error) {
+  return { error, type: LOADACTIVEDATAFILTERS_FAILED };
+}
+
+function loadActiveDataFiltersSuccess(response) {
+  return { response: response, type: LOADACTIVEDATAFILTERS_SUCCESS };
+}
+
+export function loadActiveDataFiltersAttempt() {
+  var request = { };
+  return (dispatch) => {
+    dispatch({
+      request: request,
+      type: LOADACTIVEDATAFILTERS_ATTEMPT });
+    dispatch(loadActiveDataFiltersAction());
+  };
+}
+
+function loadActiveDataFiltersAction() {
+  return (dispatch, getState) => {
+    const { client } = getState().login;
+    const { loadActiveDataFiltersRequest } = getState().control;
+    loadActiveDataFilters(client, loadActiveDataFiltersRequest,
+        function(response, err) {
+          if (err) {
+            dispatch(loadActiveDataFiltersError(err + ' Please try again'));
+          } else {
+            dispatch(loadActiveDataFiltersSuccess(response));
+          }
+        });
+  };
+}
+
 export const FUNDTX_ATTEMPT = 'FUNDTX_ATTEMPT';
 export const FUNDTX_FAILED = 'FUNDTX_FAILED';
 export const FUNDTX_SUCCESS = 'FUNDTX_SUCCESS';
@@ -338,7 +375,10 @@ function signTransactionError(error) {
 }
 
 function signTransactionSuccess(signTransactionResponse) {
-  return { signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS };
+  return (dispatch) => {
+    dispatch({signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS });
+    dispatch(publishTransactionAttempt(signTransactionResponse.transaction));
+  }
 }
 
 export function signTransactionAttempt(passphrase, rawTx) {
@@ -381,9 +421,9 @@ function publishTransactionSuccess(publishTransactionResponse) {
   return { publishTransactionResponse: publishTransactionResponse, type: PUBLISHTX_SUCCESS };
 }
 
-export function publishTransactionAttempt(txId) {
+export function publishTransactionAttempt(tx) {
   var request = {
-    signed_transaction: txId
+    signed_transaction: tx
   };
   return (dispatch) => {
     dispatch({
@@ -453,6 +493,54 @@ function purchaseTicketAction() {
             dispatch(purchaseTicketError(err + ' Please try again'));
           } else {
             dispatch(purchaseTicketSuccess(purchaseTicketResponse));
+          }
+        });
+  };
+}
+
+export const CONSTRUCTTX_ATTEMPT = 'CONSTRUCTTX_ATTEMPT';
+export const CONSTRUCTTX_FAILED = 'CONSTRUCTTX_FAILED';
+export const CONSTRUCTTX_SUCCESS = 'CONSTRUCTTX_SUCCESS';
+
+function constructTransactionError(error) {
+  return { error, type: CONSTRUCTTX_FAILED };
+}
+
+function constructTransactionSuccess(constructTxResponse) {
+  return (dispatch, getState) => {
+    const { privatePassphrase } = getState().walletLoader
+    dispatch({constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
+    dispatch(signTransactionAttempt(privatePassphrase, constructTxResponse.unsigned_transaction));
+  }
+}
+
+export function constructTransactionAttempt() {
+  var request = {
+   source_account: 0,
+   required_confirmations: 1,
+   fee_per_kb: 0,
+   output_selection_algorithm: 1,
+   non_change_outputs: { destination: { address:'TscTHhFsGbAeuLyYUZgoWDjiTejUgFnU4Ji' }, amount: 1000000 },
+   change_destination: { address: 'TsVZfb7tVHV9pcPLb4aK9Hn7y5NSrXGyANV'},
+  };
+  return (dispatch) => {
+    dispatch({
+      request: request,
+      type: CONSTRUCTTX_ATTEMPT });
+    dispatch(constructTransactionAction());
+  };
+}
+
+function constructTransactionAction() {
+  return (dispatch, getState) => {
+    const { client } = getState().login;
+    const { constructTxRequest } = getState().control;
+    constructTransaction(client, constructTxRequest,
+        function(constructTxResponse, err) {
+          if (err) {
+            dispatch(constructTransactionError(err + ' Please try again'));
+          } else {
+            dispatch(constructTransactionSuccess(constructTxResponse));
           }
         });
   };
