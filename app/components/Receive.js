@@ -16,6 +16,7 @@ class Receive extends Component{
     getNextAddressRequestAttempt: PropTypes.bool.isRequired,
     constructTxResponse: PropTypes.object,
     constructTxRequestAttempt: PropTypes.bool.isRequired,
+    publishTransactionResponse: PropTypes.object,
   };
 
   render() {
@@ -23,7 +24,7 @@ class Receive extends Component{
     const { getNextAddressResponse, getNextAddressAttempt, getNextAddressRequestAttempt } = this.props;
     const { getNextAddressError } = this.props;
     const { constructTxRequestAttempt, constructTransactionAttempt, constructTxResponse } = this.props;
-
+    const { publishTransactionResponse } = this.props;
     /* View that will be seen when user has a set Client */
     const receiveView = (
       <div>
@@ -39,7 +40,7 @@ class Receive extends Component{
           disabled={constructTxRequestAttempt}
           onClick={!constructTxRequestAttempt? () => this.props.constructTransactionAttempt(0) : null}
           label={constructTxRequestAttempt ? 'Getting tx' : 'get new tx'}/>
-        <h3>Current raw tx: {constructTxResponse === null ? 'Please refresh' : constructTxResponse.unsigned_transaction.toString('hex') }</h3>
+        <h3>Current raw tx: {publishTransactionResponse === null ? 'Please refresh' : publishTransactionResponse.transaction_hash.toString('hex') }</h3>
                     
       </div>);
 

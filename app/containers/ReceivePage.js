@@ -15,6 +15,7 @@ function mapStateToProps(state) {
     getNextAddressError: state.control.getNextAddressError,
     constructTxRequestAttempt: state.control.constructTxRequestAttempt,
     constructTxResponse: state.control.constructTxResponse,
+    publishTransactionResponse: state.control.publishTransactionResponse,
   };
 }
 

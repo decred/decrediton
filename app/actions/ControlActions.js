@@ -469,10 +469,10 @@ function constructTransactionError(error) {
   return { error, type: CONSTRUCTTX_FAILED };
 }
 
-function constructTransactionSuccess(constructTransactionResponse) {
+function constructTransactionSuccess(constructTxResponse) {
   return (dispatch) => {
-    dispatch({constructTxResponse: constructTransactionResponse, type: CONSTRUCTTX_SUCCESS });
-    dispatch(signTransactionAttempt('p2', constructTransactionResponse.unsigned_transaction));
+    dispatch({constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
+    dispatch(signTransactionAttempt('p2', constructTxResponse.unsigned_transaction));
   }
 }
 
@@ -496,13 +496,13 @@ export function constructTransactionAttempt() {
 function constructTransactionAction() {
   return (dispatch, getState) => {
     const { client } = getState().login;
-    const { constructTransactionRequest } = getState().control;
-    constructTransaction(client, constructTransactionRequest,
-        function(constructTransactionResponse, err) {
+    const { constructTxRequest } = getState().control;
+    constructTransaction(client, constructTxRequest,
+        function(constructTxResponse, err) {
           if (err) {
-            dispatch(constructTransactionFailed(err + ' Please try again'));
+            dispatch(constructTransactionError(err + ' Please try again'));
           } else {
-            dispatch(constructTransactionSuccess(constructTransactionResponse));
+            dispatch(constructTransactionSuccess(constructTxResponse));
           }
         });
   };
