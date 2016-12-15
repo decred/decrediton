@@ -4,7 +4,7 @@ import { getNextAddressAttempt, loadActiveDataFiltersAttempt } from './ControlAc
 export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
 export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
 export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
-
+import { hashHistory } from 'react-router';
 function getWalletServiceError(error) {
   return { error, type: GETWALLETSERVICE_FAILED };
 }
@@ -14,6 +14,7 @@ function getWalletServiceSuccess(walletService) {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
     setTimeout( () => {dispatch(loadActiveDataFiltersAttempt());}, 1000);
     setTimeout( () => {dispatch(getNextAddressAttempt());}, 1000);
+    setTimeout(() => {hashHistory.push('/home')}, 1000);
   };
 }
 

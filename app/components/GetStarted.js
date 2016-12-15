@@ -6,7 +6,6 @@ import LoaderForm from '../containers/LoaderForm';
 import WalletExistForm from '../containers/WalletExistForm';
 import WalletOpenForm from '../containers/WalletOpenForm';
 import CreateWalletForm from '../containers/CreateWalletForm';
-import router from 'react-router';
 
 import {
   Step,
@@ -63,10 +62,6 @@ class Home extends Component{
 
 
     stepIndex: PropTypes.number.isRequired,
-  }
-
-  handleBalanceClick = () => {
-    this.props.getBalanceAttempt(0,1);
   }
 
   render() {
