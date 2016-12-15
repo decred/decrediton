@@ -145,21 +145,16 @@ export function getAccounts(client, request, cb) {
 }
 
 export function getTransactions(client, request, cb) {
-    var request = {
-    starting_block_height: 1,
-    //starting_block_hash: Buffer.from(startHash),
-    //ending_block_height: endHeight,
-    //ending_block_hash: Buffer.from(endHash)
-  };
+    var request = {};
   console.log(request);
-  client.getTransactions(request, function(err, response) {
-    if (err) {
-      console.error('getTransactions', err);
-      return cb(null, err);
-    } else {
+  var getTx = client.getTransactions(request);
+  getTx.on('data', function(response) {
       console.log('getTransactions', response);
       return cb(response);
-    }
+  });
+  getTx.on('end', function(response) {
+      console.log('getTransactions end', response);
+      return cb(response);
   });
 }
 
