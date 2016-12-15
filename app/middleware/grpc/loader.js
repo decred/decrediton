@@ -50,10 +50,10 @@ export function openWallet(loader, request, cb) {
   loader.openWallet(request, function(err, response) {
     if (err) {
       if (err.message.includes('wallet already loaded')) {
-        return cb(response, null);
+        return cb();
       } else {
         console.error(err.message);
-        return cb(null, err);
+        return cb(err);
       }
     } else {
       return cb();

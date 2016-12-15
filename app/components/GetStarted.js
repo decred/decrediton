@@ -70,12 +70,12 @@ class Home extends Component{
     const { address, port } = this.props;
 
     const { loader, getLoaderRequestAttempt, getLoaderError, loaderRequest } = this.props;
-    /*
-    const { walletCreateResponse, walletCreateRequestAttempt, walletCreateError } = this.props;
-    const { walletOpenResponse, walletOpenRequestAttempt, walletOpenError } = this.props;
+    const { walletCreateRequestAttempt, walletCreateError } = this.props;
+    const { walletOpenRequestAttempt, walletOpenError } = this.props;
     const { walletExistResponse, walletExistRequestAttempt, walletExistError } = this.props;
-    const { walletCloseResponse, walletCloseRequestAttempt, walletCloseError } = this.props;
-    const { startRpcResponse, startRpcRequestAttempt, startRpcError } = this.props;
+    const { walletCloseRequestAttempt, walletCloseError } = this.props;
+    const { startRpcRequestAttempt, startRpcError } = this.props;
+    /*
     const { loadActiveDataFiltersAttempt } = this.props;
 
 
@@ -86,34 +86,33 @@ class Home extends Component{
         <h5>Please enter the information below to connect to you dcrwallet</h5>
         <LoginForm />
       </div>);
-
-    const getStartedCreateWallet = (
-      <div>
-        <CreateWalletForm />
-      </div>);
-
-    const getStartedWalletCreating = (
-      <div >
-        <h3> Creating wallet </h3>
-        <LinearProgress mode="indeterminate" />
-      </div>);
       */
+
+
     const getStartedWalletLoader = (
-      <div >
+      <div>
         <RaisedButton type="submit"
           style={styles.buttons}
           primary={true}
           onClick={() => {loaderRequest(address, port);}}
           label='Get Started'/>
       </div>);
-    const blah = "blahblahblah";
+
     const getStartedWalletOpen = (
       <div>
-        <ShowError error={blah} />
+        <ShowError error={walletOpenError} />
         <h3>Opening wallet</h3>
         <h5>Please enter the information below to connect to you dcrwallet</h5>
         <WalletOpenForm />
       </div>);
+
+    const getStartedWalletCreate = (
+      <div>        
+        <ShowError error={walletCreateError} />
+        <h3>Create wallet</h3>
+        <h5>Please enter the information below to create your dcrwallet</h5>
+        <CreateWalletForm />
+      </div>);  
       /*
     const getStartedGettingLoader = (
       <div >
@@ -185,7 +184,12 @@ class Home extends Component{
     }
     */
 
-    var openOrCreate = 'Create Wallet';
+    var openOrCreate;
+    if (walletExistResponse !== null && walletExistResponse.exists) {
+      openOrCreate = getStartedWalletOpen;
+    } else {
+      openOrCreate = getStartedWalletCreate;
+    }
 
     const stepper = (
       <div style={{width: '100%',  margin: 'auto'}}>
@@ -205,7 +209,7 @@ class Home extends Component{
           <Step>
             <StepLabel>Wallet Create/Open</StepLabel>
             <StepContent>
-              {getStartedWalletOpen}
+              {openOrCreate}
             </StepContent>
           </Step>
           <Step>

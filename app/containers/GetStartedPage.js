@@ -26,6 +26,7 @@ function mapStateToProps(state) {
     walletCreateError: state.walletLoader.walletCreateError,
     walletOpenRequestAttempt: state.walletLoader.walletOpenRequestAttempt,
     walletOpenResponse: state.walletLoader.walletOpenResponse,
+    walletOpenError: state.walletLoader.walletOpenError, 
     // Step 3
     startRpcRequestAttempt: state.walletLoader.startRpcRequestAttempt,
     startRpcError: state.walletLoader.startRpcError,

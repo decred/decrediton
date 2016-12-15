@@ -164,7 +164,7 @@ function openWalletAction() {
     openWallet(loader, walletOpenRequest,
         function(err) {
           if (err) {
-            dispatch(openWalletError(pubPass + err + ' Please try again'));
+            dispatch(openWalletError(err + ' Please try again'));
           } else {
             dispatch(openWalletSuccess());
           }
