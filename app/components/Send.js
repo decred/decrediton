@@ -24,6 +24,11 @@ class Send extends Component{
     const { constructTxRequestAttempt } = this.props;
     const { publishTransactionResponse } = this.props;
 
+    let destination = '';
+    let amount = '';
+    let account = '';
+    let confirmations = '';
+
     /* View that will be seen when user has a set Client */
     const sendView = (
       <div>
@@ -31,7 +36,9 @@ class Send extends Component{
 	<div>
 	<form onSubmit={e => {
 	  e.preventDefault();
-	  // if blank stuff
+	  if (destination == '' || amount == '' || account == '' || confirmations == '' ) {
+	    return;
+	  }
 	}}>
 	<TextField
           id="destination"
@@ -57,13 +64,16 @@ class Send extends Component{
           floatingLabelText="# of Confirmations"
           onBlur={(e) =>{confirmations = e.target.value;}}
         /><br />
+	<RaisedButton type="submit"
+         style={style}
+         label='Send'/>
+	</form>
+	</div>
         <RaisedButton
           style={style}
           disabled={constructTxRequestAttempt}
           onClick={!constructTxRequestAttempt? () => this.props.constructTransactionAttempt(0) : null}
       label={constructTxRequestAttempt ? 'Getting tx' : 'get new tx'}/>
-	</form>
-	</div>
         <h3>Current raw tx: {publishTransactionResponse === null ? 'Please refresh' : publishTransactionResponse.transaction_hash.toString('hex') }</h3>
       </div>);
 
