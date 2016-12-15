@@ -27,34 +27,29 @@ class Header extends Component {
 
   render() {
     const { stepIndex } = this.props;
-    const menuItems = (
+    const loggedIn = (
       <div>
-        <MenuItem><Link to="/home" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Home</Link></MenuItem>
-        <MenuItem><Link to="/history" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>History</Link></MenuItem>
-        <MenuItem><Link to="/send" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Send Decred</Link></MenuItem>
-        <MenuItem><Link to="/receive" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Receive Decred</Link></MenuItem>
-      </div>
-    );
-    var output;
-    if (stepIndex < 7) {
-      output = (<div></div>);
-    } else {
-      output = menuItems;
-    }
-
-    return (
-      <div>
-        <AppBar onLeftIconButtonTouchTap={stepIndex > 7 ? this.handleToggle : null} title="Decrediton" />
+        <AppBar onLeftIconButtonTouchTap={stepIndex >= 7 ? this.handleToggle : ()=> {console.log(stepIndex)}} title="Decrediton" />
         <Drawer
           ref="Drawer"
           docked={false}
           open={this.state.open}
           onRequestChange={open => this.setState({open})}
-        >
-          {output}
+        >     
+          <MenuItem><Link to="/home" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Home</Link></MenuItem>
+          <MenuItem><Link to="/history" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>History</Link></MenuItem>
+          <MenuItem><Link to="/send" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Send Decred</Link></MenuItem>
+          <MenuItem><Link to="/receive" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Receive Decred</Link></MenuItem>
         </Drawer>
       </div>
     );
+    var output;
+    if (stepIndex < 7) {
+      output = (<div>Get Started</div>);
+    } else {
+      output = loggedIn;
+    }
+    return (output);
   }
 }
 
