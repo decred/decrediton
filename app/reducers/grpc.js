@@ -50,7 +50,7 @@ export default function grpc(state = {}, action) {
     return {...state,
       getAccountNumberError: '',
       getAccountNumberRequestAttempt: true,
-      getAccountNumber: action.request,
+      getAccountNumberRequest: action.request,
     };
   case GETACCOUNTNUMBER_FAILED:
     return {...state,

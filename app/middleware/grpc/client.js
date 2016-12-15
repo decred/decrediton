@@ -145,12 +145,19 @@ export function getAccounts(client, request, cb) {
 }
 
 export function getTransactions(client, request, cb) {
-  client.getTransactions(request, function(err, response, cb) {
+    var request = {
+    starting_block_height: 1,
+    //starting_block_hash: Buffer.from(startHash),
+    //ending_block_height: endHeight,
+    //ending_block_hash: Buffer.from(endHash)
+  };
+  console.log(request);
+  client.getTransactions(request, function(err, response) {
     if (err) {
       console.error('getTransactions', err);
       return cb(null, err);
     } else {
-      console.log('getTransactions', response.mined_transactions.length);
+      console.log('getTransactions', response);
       return cb(response);
     }
   });
