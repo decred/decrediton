@@ -28,6 +28,11 @@ class Send extends Component{
     const sendView = (
       <div>
         <h1>Send Page</h1>
+	<div>
+	<form onSubmit={e => {
+	  e.preventDefault();
+	  // if blank stuff
+	}}>
 	<TextField
           id="destination"
           hintText="Destination Address"
@@ -56,7 +61,9 @@ class Send extends Component{
           style={style}
           disabled={constructTxRequestAttempt}
           onClick={!constructTxRequestAttempt? () => this.props.constructTransactionAttempt(0) : null}
-          label={constructTxRequestAttempt ? 'Getting tx' : 'get new tx'}/>
+      label={constructTxRequestAttempt ? 'Getting tx' : 'get new tx'}/>
+	</form>
+	</div>
         <h3>Current raw tx: {publishTransactionResponse === null ? 'Please refresh' : publishTransactionResponse.transaction_hash.toString('hex') }</h3>
       </div>);
 
