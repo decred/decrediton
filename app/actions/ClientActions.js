@@ -14,6 +14,11 @@ function getWalletServiceSuccess(walletService) {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
     setTimeout( () => {dispatch(loadActiveDataFiltersAttempt());}, 1000);
     setTimeout( () => {dispatch(getNextAddressAttempt());}, 1000);
+    setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
+    setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
+    setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
+    setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
+    //setTimeout( () => {dispatch(getTransactionsAttempt(0, 300000, '', ''));}, 1000);
     setTimeout(() => {hashHistory.push('/home')}, 1000);
   };
 }
@@ -324,9 +329,9 @@ export function getTransactionsAttempt(startHeight, endHeight, startHash, endHas
   // GetTransactions
   var request = {
     starting_block_height: startHeight,
-    starting_block_hash: startHash,
+    //starting_block_hash: startHash,
     ending_block_height: endHeight,
-    ending_block_hash: endHash
+    //ending_block_hash: endHash
   };
   return (dispatch) => {
     dispatch({
