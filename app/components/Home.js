@@ -30,8 +30,7 @@ class Home extends Component{
   }
 
   static propTypes = {
-    isLoggedIn: PropTypes.bool.isRequired,
-    client: PropTypes.object,
+    walletService: PropTypes.object,
 
     getBalanceRequestAttempt: PropTypes.bool.isRequired,
     getStakeInfoRequestAttempt: PropTypes.bool.isRequired,
@@ -42,7 +41,7 @@ class Home extends Component{
   }
 
   render() {
-    const { isLoggedIn, client} = this.props;
+    const { walletService } = this.props;
 
     const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
     const { getStakeInfoRequestAttempt, getStakeInfoResponse } = this.props;
@@ -73,14 +72,10 @@ class Home extends Component{
         <p>Something went wrong</p>
       </div>);
 
-    if (isLoggedIn) {
-      if (client === undefined) {
-        return(errorView);
-      } else {
-        return(homeView);
-      }
-    } else {
+    if (walletService === null) {
       return(errorView);
+    } else {
+      return(homeView);
     }
   }
 }

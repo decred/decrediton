@@ -7,12 +7,11 @@ import {Table, TableBody, TableHeader, TableHeaderColumn,
 
 class History extends Component{
   static propTypes = {
-    client: PropTypes.object.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired
+    walletService: PropTypes.object.isRequired,
   };
 
   render() {
-    const { client, isLoggedIn } = this.props;
+    const { walletService } = this.props;
 
     /* View that will be seen when user has a set Client */
     const historyView = (
@@ -47,18 +46,10 @@ class History extends Component{
       </div>);
 
     /* Check to see that client is not undefined */
-    if (isLoggedIn) {
-      if (client === undefined) {
-        <p>Error occurred, should have client available</p>;
-      } else {
-        return(historyView);
-      }
+    if (walletService === null) {
+      return (<p>Error occurred, should have client available</p>);
     } else {
-      return(
-        <div>
-          <p>Error occurred, should be logged in</p>
-        </div>
-      );
+      return(historyView);
     }
   }
 }

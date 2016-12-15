@@ -11,7 +11,6 @@ function mapStateToProps(state) {
     address: state.grpc.address,
     port: state.grpc.port,
 
-
     stepIndex: state.walletLoader.stepIndex,
     // Step 0
     getLoaderRequestAttempt: state.walletLoader.getLoaderRequestAttempt,

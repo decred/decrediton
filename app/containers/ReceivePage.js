@@ -7,8 +7,8 @@ import * as ControlActions from '../actions/ControlActions';
 
 function mapStateToProps(state) {
   return {
-    client: state.login.client,
-    isLoggedIn: state.login.isLoggedIn,
+    walletService: state.grpc.walletService,
+
     getNextAddressResponse: state.control.getNextAddressResponse,
     getNextAddressRequestAttempt: state.control.getNextAddressRequestAttempt,
     getNextAddressRequest: state.control.getNextAddressRequest,

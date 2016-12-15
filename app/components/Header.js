@@ -26,10 +26,10 @@ class Header extends Component {
   handleToggle = () => this.setState({open: !this.state.open});
 
   render() {
-    const { stepIndex } = this.props;
+    const { stepIndex, walletService } = this.props;
     const loggedIn = (
       <div>
-        <AppBar onLeftIconButtonTouchTap={stepIndex >= 7 ? this.handleToggle : ()=> {console.log(stepIndex)}} title="Decrediton" />
+        <AppBar onLeftIconButtonTouchTap={walletService !== null ? this.handleToggle : null} title="Decrediton" />
         <Drawer
           ref="Drawer"
           docked={false}
@@ -44,7 +44,7 @@ class Header extends Component {
       </div>
     );
     var output;
-    if (stepIndex < 7) {
+    if (walletService === null) {
       output = (<div>Get Started</div>);
     } else {
       output = loggedIn;

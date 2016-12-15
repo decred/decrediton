@@ -1,5 +1,5 @@
 import { getWalletService, getBalance, getAccountNumber, getNetwork, getPing,
-  getStakeInfo, getTicketPrice, getAccounts, getTransactions } from '../middleware/grpc/client';
+  getStakeInfo, getTicketPrice, getAccounts, getTransactions } from '../middleware/grpc/walletSerivce';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt } from './ControlActions';
 export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
 export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
@@ -59,18 +59,17 @@ export function getBalanceAttempt(accountNumber, requiredConfs) {
     dispatch({
       request: request,
       type: GETBALANCE_ATTEMPT });
-    dispatch(balance());
+    dispatch(getBalanceAction());
   };
 }
 
-function balance() {
+function getBalanceAction() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
-    const { getBalanceRequest } = getState().grpc;
-    getBalance(client, getBalanceRequest,
+    const { walletService, getBalanceRequest } = getState().grpc;
+    getBalance(walletSerivce, getBalanceRequest,
         function(getBalanceResponse, err) {
           if (err) {
-            dispatch(getBalanceError(err + ' Please try again'));
+            dispatch(getBalanceError(err + ' please try again'));
           } else {
             dispatch(getBalanceSuccess(getBalanceResponse));
           }
@@ -104,9 +103,9 @@ export function getAccountNumberAttempt(accountName) {
 
 function accountNumber() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletSerivce } = getState().grpc;
     const { getAccountNumberRequest } = getState().grpc;
-    getAccountNumber(client, getAccountNumberRequest,
+    getAccountNumber(walletSerivce, getAccountNumberRequest,
         function(getAccountNumberResponse, err) {
           if (err) {
             dispatch(getAccountNumberError(err + ' Please try again'));
@@ -141,9 +140,9 @@ export function getNetworkAttempt() {
 
 function network() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletSerivce } = getState().grpc;
     const { getNetworkRequest } = getState().grpc;
-    getNetwork(client, getNetworkRequest,
+    getNetwork(walletSerivce, getNetworkRequest,
         function(getNetworkResponse, err) {
           if (err) {
             dispatch(getNetworkError(err + ' Please try again'));
@@ -179,9 +178,9 @@ export function getPingAttempt() {
 
 function ping() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletSerivce } = getState().grpc;
     const { getPingRequest } = getState().grpc;
-    getPing(client, getPingRequest,
+    getPing(walletSerivce, getPingRequest,
         function(getPingResponse, err) {
           if (err) {
             dispatch(getPingError(err + ' Please try again'));
@@ -217,9 +216,9 @@ export function getStakeInfoAttempt() {
 
 function stakeInfo() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletSerivce } = getState().grpc;
     const { getStakeInfoRequest } = getState().grpc;
-    getStakeInfo(client, getStakeInfoRequest,
+    getStakeInfo(walletSerivce, getStakeInfoRequest,
         function(getStakeInfoResponse, err) {
           if (err) {
             dispatch(getStakeInfoError(err + ' Please try again'));
@@ -255,9 +254,9 @@ export function getTicketPriceAttempt() {
 
 function ticketPrice() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletSerivce } = getState().grpc;
     const { getTicketPriceRequest } = getState().grpc;
-    getTicketPrice(client, getTicketPriceRequest,
+    getTicketPrice(walletSerivce, getTicketPriceRequest,
         function(getTicketPriceResponse, err) {
           if (err) {
             dispatch(getTicketPriceError(err + ' Please try again'));
@@ -293,9 +292,9 @@ export function getAccountsAttempt() {
 
 function accounts() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletSerivce } = getState().grpc;
     const { getAccountsRequest } = getState().grpc;
-    getAccounts(client, getAccountsRequest,
+    getAccounts(walletSerivce, getAccountsRequest,
         function(getAccountsResponse, err) {
           if (err) {
             dispatch(getAccountsError(err + ' Please try again'));
@@ -338,9 +337,9 @@ export function getTransactionsAttempt(startHeight, endHeight, startHash, endHas
 
 function transactions() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
+    const { walletSerivce } = getState().grpc;
     const { getTransactionsRequest } = getState().grpc;
-    getTransactions(client, getTransactionsRequest,
+    getTransactions(walletSerivce, getTransactionsRequest,
         function(getTransactionsResponse, err) {
           if (err) {
             dispatch(getTransactionsError(err + ' Please try again'));
