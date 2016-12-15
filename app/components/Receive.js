@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
+import ErrorScreen from './ErrorScreen';
 
 const style = {
   margin: 12,
@@ -35,7 +36,7 @@ class Receive extends Component{
 
     /* Check to see that client is not undefined */
     if (walletService === null) {
-        return (<p>Error occurred, should have client available</p>);
+      return (<ErrorScreen />);
     } else {
       return(receiveView);
     }

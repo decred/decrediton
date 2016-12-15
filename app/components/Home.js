@@ -8,6 +8,7 @@ import WalletOpenForm from '../containers/WalletOpenForm';
 import CreateWalletForm from '../containers/CreateWalletForm';
 import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
+import ErrorScreen from './ErrorScreen';
 
 const styles = {
   mainArea: {
@@ -62,18 +63,11 @@ class Home extends Component{
           disabled={getStakeInfoRequestAttempt}
           onClick={!getStakeInfoRequestAttempt? () => this.props.getStakeInfoAttempt() : null}
           label={getStakeInfoRequestAttempt ? 'Getting Stake Info...' : 'Get Stake Info'}/>
-        <RaisedButton
-          style={styles.buttons}
-          onClick={() => this.props.loadActiveDataFiltersAttempt()}
-          label='Load Active Data Filters'/>
-      </div>);
-    const errorView = (
-      <div>
-        <p>Something went wrong</p>
       </div>);
 
+
     if (walletService === null) {
-      return(errorView);
+      return(<ErrorScreen />);
     } else {
       return(homeView);
     }

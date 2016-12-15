@@ -45,7 +45,7 @@ class Header extends Component {
     );
     var output;
     if (walletService === null) {
-      output = (<div>Get Started</div>);
+      output = (<div></div>);
     } else {
       output = loggedIn;
     }
