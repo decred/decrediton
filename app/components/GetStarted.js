@@ -6,7 +6,7 @@ import LoaderForm from '../containers/LoaderForm';
 import WalletExistForm from '../containers/WalletExistForm';
 import WalletOpenForm from '../containers/WalletOpenForm';
 import CreateWalletForm from '../containers/CreateWalletForm';
-
+import ShowError from './ShowError';
 import {
   Step,
   Stepper,
@@ -87,18 +87,6 @@ class Home extends Component{
         <LoginForm />
       </div>);
 
-    const getStartedLoggingIn = (
-      <div >
-        Logging in
-        <LinearProgress mode="indeterminate" />
-      </div>);
-
-
-    const getStartedError = (
-      <div >
-        <p> {error} </p>
-      </div>);
-
     const getStartedCreateWallet = (
       <div>
         <CreateWalletForm />
@@ -118,8 +106,10 @@ class Home extends Component{
           onClick={() => {loaderRequest(address, port);}}
           label='Get Started'/>
       </div>);
+    const blah = "blahblahblah";
     const getStartedWalletOpen = (
       <div>
+        <ShowError error={blah} />
         <h3>Opening wallet</h3>
         <h5>Please enter the information below to connect to you dcrwallet</h5>
         <WalletOpenForm />
