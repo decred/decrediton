@@ -112,8 +112,8 @@ function createNewWallet(pubPass, privPass, seed) {
     seed: Buffer.from(seed),
   };
   return (dispatch, getState) => {
-    const { loader, request } = getState().walletLoader;
-    createWallet(loader, walletCreateRequest,
+    const { loader } = getState().walletLoader;
+    createWallet(loader, request,
         function(err) {
           if (err) {
             dispatch(createWalletError(err + ' Please try again'));
