@@ -17,9 +17,10 @@ let CreateWalletForm = ({ dispatch, seedText }) => {
   const newSeed = (
       <form id="newSeed" onSubmit={e => {
         e.preventDefault();
-        if (pubpass == '' || privpass == '' || seed == '') {
+        if (pubpass == '' || privpass == '') {
           return;
         }
+        seed = document.getElementById("seed1").value;
         dispatch(createWalletRequest(pubpass, privpass, seed));
         pubpass = '';
         privpass = '';
@@ -39,10 +40,13 @@ let CreateWalletForm = ({ dispatch, seedText }) => {
         /><br />
         <TextField
           id="seed1"
-          hintText={seedText.seed_mnemonic}
+          multiLine={true}
+          rows={11}
+          hintText="Seed (33 Words)"
           floatingLabelText="Seed (33 Words)"
-          value={seedText.seed_hex}
-          onBlur={(e) =>{seed = e.target.value;}}
+          disabled={true}
+          value={seedText.seed_mnemonic}
+          //onBlur={(e) =>{seed = e.target.value;}}
         /><br />
         <RaisedButton type="submit"
          style={style}
@@ -74,6 +78,8 @@ let CreateWalletForm = ({ dispatch, seedText }) => {
         /><br />
         <TextField
           id="seed"
+          multiLine={true}
+          rows={11}
           hintText="Seed (33 words)"
           floatingLabelText="Seed (33 Words)"
           onBlur={(e) =>{seed = e.target.value;}}
