@@ -7,6 +7,7 @@ import ErrorScreen from './ErrorScreen';
 import TextField from 'material-ui/TextField';
 import ConstructTxForm from '../containers/ConstructTxForm';
 import SignTxForm from '../containers/SignTxForm';
+import ShowError from './ShowError';
 
 const style = {
   margin: 12,
@@ -24,17 +25,20 @@ class Send extends Component{
 
   render() {
     const { walletService } = this.props;
-    const { constructTxRequestAttempt, constructTxResponse } = this.props;
-    const { publishTransactionResponse } = this.props;
+    const { constructTxRequestAttempt, constructTxResponse, constructTxError } = this.props;
+    const { publishTransactionResponse, publishTransactionError } = this.props;
+    const { signTransactionError } = this.props;
 
     const constructTxView = (
       <div>
+        <ShowError error={constructTxError}/>
         <h1>Construct Tx</h1>
         <ConstructTxForm />
       </div>);
 
     const signTxView = (
       <div>
+        <ShowError error={signTransactionError}/>
         <h1>Sign tx</h1>
         <p> raw tx
           {constructTxResponse !== null ? constructTxResponse.unsigned_transaction.toString('hex') : null}}
