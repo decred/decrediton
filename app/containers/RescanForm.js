@@ -18,7 +18,7 @@ let RescanForm = ({ dispatch }) => {
         if (startHeight == '') {
           return;
         }
-        dispatch(rescanAttempt(startHeight));
+        dispatch(rescanAttempt(parseInt(startHeight)));
         document.getElementById('rescan').reset();
         document.getElementById('startHeight').value = '';
         startHeight = '';

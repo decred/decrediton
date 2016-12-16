@@ -25,9 +25,12 @@ function getWalletServiceSuccess(walletService) {
 
     // Check here to see if wallet was just created, if so
     // start rescan from 0
-    const { walletCreateResponse } = getState().walletLoader;
-    if ( walletCreateResponse !== null ) {
-      setTimeout(() => {dispatch(rescanAttempt('0'));}, 1000);
+    const { fetchHeadersResponse } = getState().walletLoader;
+    if ( fetchHeadersResponse !== null ) {
+      console.log(fetchHeadersResponse);
+      if (fetchHeadersResponse.fetched_headers_count > 0) {
+        setTimeout(() => {dispatch(rescanAttempt(fetchHeadersResponse.first_new_block_height));}, 1000);
+      }
     }
     setTimeout(() => {hashHistory.push('/home');}, 1000);
   };

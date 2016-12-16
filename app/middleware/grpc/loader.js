@@ -113,9 +113,9 @@ export function fetchHeaders(loader, request, cb) {
   loader.fetchHeaders(request, function(err, response) {
     if (err) {
       console.error(err);
-      return cb(err);
+      return cb(null, err);
     } else {
-      return cb();
+      return cb(response);
     }
   });
 }

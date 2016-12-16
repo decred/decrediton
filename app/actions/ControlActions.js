@@ -107,7 +107,7 @@ function rescanComplete() {
 
 export function rescanAttempt(beginHeight) {
   var request = {
-    begin_height: parseInt(beginHeight)
+    begin_height: beginHeight
   };
   return (dispatch) => {
     dispatch({
