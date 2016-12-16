@@ -53,7 +53,7 @@ class Home extends Component{
     }
     var rescanView;
     if (rescanResponse === null) {
-      rescanView = <RescanForm />
+      rescanView = <RescanForm />;
     } else {
       rescanView = (
         <div>

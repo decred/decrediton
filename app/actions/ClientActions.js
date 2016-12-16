@@ -22,12 +22,12 @@ function getWalletServiceSuccess(walletService) {
     //setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
     //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
     //setTimeout( () => {dispatch(getTransactionsAttempt(2, 10, '', ''));}, 1000);
-    
+
     // Check here to see if wallet was just created, if so
     // start rescan from 0
     const { walletCreateResponse } = getState().walletLoader;
     if ( walletCreateResponse !== null ) {
-      setTimeout(() => {dispatch(rescanAttempt("0"))}, 1000);
+      setTimeout(() => {dispatch(rescanAttempt('0'));}, 1000);
     }
     setTimeout(() => {hashHistory.push('/home');}, 1000);
   };

@@ -102,7 +102,7 @@ function rescanComplete() {
   return (dispatch) => {
     dispatch({ type: RESCAN_COMPLETE });
     setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
-  }
+  };
 }
 
 export function rescanAttempt(beginHeight) {

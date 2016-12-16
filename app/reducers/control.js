@@ -72,7 +72,7 @@ export default function control(state = {}, action) {
       rescanRequestAttempt: false,
       rescanResponse: null,
       rescanRequest: null,
-    };  
+    };
   case GETNEXTACCOUNT_ATTEMPT:
     return {...state,
       getNextAccountError: null,
