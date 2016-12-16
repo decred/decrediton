@@ -27,6 +27,7 @@ export default function walletLoader(state = {}, action) {
       getLoaderError: null,
       loader: action.loader,
       getLoaderRequestAttempt: false,
+      stepIndex: 1,
     };
   case WALLETEXIST_ATTEMPT:
     return {...state,
@@ -45,6 +46,7 @@ export default function walletLoader(state = {}, action) {
       walletExistRequestAttempt: false,
       walletExistResponse: action.response,
       walletExistRequest: null,
+      stepIndex: 2,
     };
   case CREATEWALLET_ATTEMPT:
     return {...state,
@@ -65,6 +67,7 @@ export default function walletLoader(state = {}, action) {
       walletCreateRequestAttempt: false,
       walletCreateRequest: null,
       walletCreateResponse: action.response,
+      stepIndex: 3,
     };
   case OPENWALLET_ATTEMPT:
     return {...state,
@@ -85,6 +88,7 @@ export default function walletLoader(state = {}, action) {
       walletOpenRequestAttempt: false,
       walletOpenRequest: null,
       walletOpenResponse: action.response,
+      stepIndex: 3,
     };
   case CLOSEWALLET_ATTEMPT:
     return {...state,
@@ -121,6 +125,7 @@ export default function walletLoader(state = {}, action) {
       startRpcRequestAttempt: false,
       startRpcRequest: null,
       startRpcResponse: action.response,
+      stepIndex: 4,
     };
   case DISCOVERADDRESS_ATTEMPT:
     return {...state,
@@ -139,24 +144,7 @@ export default function walletLoader(state = {}, action) {
       discoverAddressRequestAttempt: false,
       discoverAddressRequest: null,
       discoverAddressResponse: action.response,
-    };
-  case SUBSCRIBEBLOCKNTFNS_ATTEMPT:
-    return {...state,
-      subscribeBlockNtfnsRequestAttempt: true,
-      subscribeBlockNtfnsRequest: action.request,
-    };
-  case SUBSCRIBEBLOCKNTFNS_FAILED:
-    return {...state,
-      subscribeBlockNtfnsError: action.error,
-      subscribeBlockNtfnsRequestAttempt: false,
-      subscribeBlockNtfnsRequest: null,
-    };
-  case SUBSCRIBEBLOCKNTFNS_SUCCESS:
-    return {...state,
-      subscribeBlockNtfnsError: null,
-      subscribeBlockNtfnsRequestAttempt: false,
-      subscribeBlockNtfnsRequest: null,
-      subscribeBlockNtfnsResponse: action.response,
+      stepIndex: 5,
     };
   case FETCHHEADERS_ATTEMPT:
     return {...state,
@@ -175,7 +163,28 @@ export default function walletLoader(state = {}, action) {
       fetchHeadersRequestAttempt: false,
       fetchHeadersRequest: null,
       fetchHeadersResponse: action.response,
+      stepIndex: 6,
     };
+  case SUBSCRIBEBLOCKNTFNS_ATTEMPT:
+    return {...state,
+      subscribeBlockNtfnsRequestAttempt: true,
+      subscribeBlockNtfnsRequest: action.request,
+    };
+  case SUBSCRIBEBLOCKNTFNS_FAILED:
+    return {...state,
+      subscribeBlockNtfnsError: action.error,
+      subscribeBlockNtfnsRequestAttempt: false,
+      subscribeBlockNtfnsRequest: null,
+    };
+  case SUBSCRIBEBLOCKNTFNS_SUCCESS:
+    return {...state,
+      subscribeBlockNtfnsError: null,
+      subscribeBlockNtfnsRequestAttempt: false,
+      subscribeBlockNtfnsRequest: null,
+      subscribeBlockNtfnsResponse: action.response,
+      stepIndex: 7,  // Onto final prep
+    };
+
   default:
     return state;
   }

@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
+import ErrorScreen from './ErrorScreen';
 
 const style = {
   margin: 12,
@@ -10,15 +11,15 @@ const style = {
 
 class Send extends Component{
   static propTypes = {
-    client: PropTypes.object,
-    isLoggedIn: PropTypes.bool.isRequired,
+    walletService: PropTypes.object,
+
     constructTxResponse: PropTypes.object,
     constructTxRequestAttempt: PropTypes.bool.isRequired,
     publishTransactionResponse: PropTypes.object,
   };
 
   render() {
-    const { client, isLoggedIn } = this.props;
+    const { walletService } = this.props;
     const { constructTxRequestAttempt } = this.props;
     const { publishTransactionResponse } = this.props;
 
@@ -31,22 +32,14 @@ class Send extends Component{
           disabled={constructTxRequestAttempt}
           onClick={!constructTxRequestAttempt? () => this.props.constructTransactionAttempt(0) : null}
           label={constructTxRequestAttempt ? 'Getting tx' : 'get new tx'}/>
-        <h3>Current raw tx: {publishTransactionResponse === null ? 'Please refresh' : publishTransactionResponse.transaction_hash.toString('hex') }</h3>   
+        <h3>Current raw tx: {publishTransactionResponse === null ? 'Please refresh' : publishTransactionResponse.transaction_hash.toString('hex') }</h3>
       </div>);
 
     /* Check to see that client is not undefined */
-    if (isLoggedIn) {
-      if (client === undefined) {
-        <p>Error occurred, should have client available</p>;
-      } else {
-        return(sendView);
-      }
+    if (walletService === null) {
+      return (<ErrorScreen />);
     } else {
-      return(
-        <div>
-          <p>Error occurred, should be logged in</p>
-        </div>
-      );
+      return(sendView);
     }
   }
 }

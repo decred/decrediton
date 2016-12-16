@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
+import ErrorScreen from './ErrorScreen';
 
 const style = {
   margin: 12,
@@ -10,14 +11,13 @@ const style = {
 
 class Receive extends Component{
   static propTypes = {
-    client: PropTypes.object,
-    isLoggedIn: PropTypes.bool.isRequired,
+    walletService: PropTypes.object,
     getNextAddressResponse: PropTypes.object,
     getNextAddressRequestAttempt: PropTypes.bool.isRequired,
   };
 
   render() {
-    const { client, isLoggedIn } = this.props;
+    const { walletService } = this.props;
     const { getNextAddressResponse, getNextAddressAttempt, getNextAddressRequestAttempt } = this.props;
     const { getNextAddressError } = this.props;
     const { constructTxRequestAttempt, constructTransactionAttempt, constructTxResponse } = this.props;
@@ -35,18 +35,10 @@ class Receive extends Component{
       </div>);
 
     /* Check to see that client is not undefined */
-    if (isLoggedIn) {
-      if (client === undefined) {
-        <p>Error occurred, should have client available</p>;
-      } else {
-        return(receiveView);
-      }
+    if (walletService === null) {
+      return (<ErrorScreen />);
     } else {
-      return(
-        <div>
-          <p>Error occurred, should be logged in</p>
-        </div>
-      );
+      return(receiveView);
     }
   }
 }

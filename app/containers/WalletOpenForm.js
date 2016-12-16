@@ -17,7 +17,6 @@ let LoaderForm = ({ dispatch }) => {
       <form onSubmit={e => {
         e.preventDefault();
         if (pubpass == '' || privpass == '') {
-          console.log(pubpass, privpass);
           return;
         }
         dispatch(openWalletRequest(pubpass, privpass));

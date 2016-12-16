@@ -46,7 +46,7 @@ export function getDcrdCert() {
   return(cert);
 }
 
-export function client(address, port, cb) {
+export function getWalletService(address, port, cb) {
   var protoDescriptor = grpc.load('./app/api.proto');
   var walletrpc = protoDescriptor.walletrpc;
 
@@ -145,14 +145,16 @@ export function getAccounts(client, request, cb) {
 }
 
 export function getTransactions(client, request, cb) {
-  client.getTransactions(request, function(err, response, cb) {
-    if (err) {
-      console.error('getTransactions', err);
-      return cb(null, err);
-    } else {
-      console.log('getTransactions', response.mined_transactions.length);
-      return cb(response);
-    }
+  var request = {};
+  console.log(request);
+  var getTx = client.getTransactions(request);
+  getTx.on('data', function(response) {
+    console.log('getTransactions', response);
+    return cb(response);
+  });
+  getTx.on('end', function(response) {
+    console.log('getTransactions end', response);
+    return cb(response);
   });
 }
 

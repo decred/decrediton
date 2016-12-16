@@ -1,9 +1,8 @@
 import { loader, createWallet, walletExists, openWallet,
   closeWallet, discoverAddresses, subscribeBlockNtfns,
   startConsensusRpc, fetchHeaders} from '../middleware/grpc/loader';
-import { loginRequest } from './LoginActions';
+import { getWalletServiceAttempt } from './ClientActions';
 import { transactionNftnsStart } from './NotificationActions';
-import { getNextAddressAttempt, loadActiveDataFiltersAttempt } from './ControlActions';
 
 import { getDcrdCert } from '../middleware/grpc/client';
 import { getCfg } from '../config.js';
@@ -96,7 +95,6 @@ function createWalletSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: CREATEWALLET_SUCCESS });
     dispatch(startRpcRequest());
-    dispatch(loginRequest());
   };
 }
 
@@ -142,7 +140,6 @@ function openWalletSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: OPENWALLET_SUCCESS});
     dispatch(startRpcRequest());
-    dispatch(loginRequest());
   };
 }
 
@@ -167,7 +164,7 @@ function openWalletAction() {
     openWallet(loader, walletOpenRequest,
         function(err) {
           if (err) {
-            dispatch(openWalletError(pubPass + err + ' Please try again'));
+            dispatch(openWalletError(err + ' Please try again'));
           } else {
             dispatch(openWalletSuccess());
           }
@@ -313,8 +310,7 @@ function subscribeBlockError(error) {
 function subscribeBlockSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
-    dispatch(loadActiveDataFiltersAttempt());
-    dispatch(getNextAddressAttempt(0));
+    dispatch(getWalletServiceAttempt());
   };
 }
 

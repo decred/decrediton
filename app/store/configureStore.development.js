@@ -4,10 +4,8 @@ import { hashHistory } from 'react-router';
 import { routerMiddleware, push } from 'react-router-redux';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
-import * as loginActions from '../actions/LoginActions';
 
 const actionCreators = {
-  ...loginActions,
   push,
 };
 
