@@ -107,12 +107,12 @@ class Home extends Component{
       </div>);
 
     const getStartedWalletCreate = (
-      <div>        
+      <div>
         <ShowError error={walletCreateError} />
         <h3>Create wallet</h3>
         <h5>Please enter the information below to create your dcrwallet</h5>
         <CreateWalletForm />
-      </div>);  
+      </div>);
       /*
     const getStartedGettingLoader = (
       <div >

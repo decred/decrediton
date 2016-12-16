@@ -8,7 +8,7 @@ const styles = {
 
 class ShowError extends Component {
   constructor(props){
-    super(props)
+    super(props);
   }
   render() {
     const { error } = this.props;
@@ -20,6 +20,6 @@ class ShowError extends Component {
           <p>{error}</p>
         </div>);
     }
-  }  
+  }
 }
 export default ShowError;

@@ -8,7 +8,7 @@ class ErrorScreen extends Component {
         <p> Something went wrong, please go back </p>
         <Link to='/'>Back home</Link>
       </div>);
-    return (errorView)
-  }  
+    return (errorView);
+  }
 }
 export default ErrorScreen;

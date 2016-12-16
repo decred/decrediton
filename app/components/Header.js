@@ -35,7 +35,7 @@ class Header extends Component {
           docked={false}
           open={this.state.open}
           onRequestChange={open => this.setState({open})}
-        >     
+        >
           <MenuItem><Link to="/home" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Home</Link></MenuItem>
           <MenuItem><Link to="/history" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>History</Link></MenuItem>
           <MenuItem><Link to="/send" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Send Decred</Link></MenuItem>
