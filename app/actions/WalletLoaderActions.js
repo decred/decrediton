@@ -3,7 +3,7 @@ import { loader, createWallet, walletExists, openWallet,
   startConsensusRpc, fetchHeaders} from '../middleware/grpc/loader';
 import { getWalletServiceAttempt } from './ClientActions';
 import { transactionNftnsStart } from './NotificationActions';
-
+import { getSeederAttempt } from './SeedServiceActions';
 import { getDcrdCert } from '../middleware/grpc/client';
 import { getCfg } from '../config.js';
 
@@ -18,6 +18,7 @@ function loaderError(error) {
 function loaderSuccess(loader) {
   return (dispatch) => {
     dispatch({loader: loader, type: LOADER_SUCCESS });
+    dispatch(getSeederAttempt());
     dispatch(walletExistRequest());
   };
 }

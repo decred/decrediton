@@ -1,12 +1,5 @@
 import { seeder, generateRandomSeed, decodeSeed } from '../middleware/grpc/seeder';
 
-import path from 'path';
-import os from 'os';
-import fs from 'fs';
-
-
-var Buffer = require('buffer/').Buffer;
-
 export const SEEDER_ATTEMPT = 'SEEDER_ATTEMPT';
 export const SEEDER_FAILED = 'SEEDER_FAILED';
 export const SEEDER_SUCCESS = 'SEEDER_SUCCESS';
@@ -22,7 +15,7 @@ function seederSuccess(seeder) {
   };
 }
 
-export function seederRequest() {
+export function getSeederAttempt() {
   return (dispatch, getState) => {
     const { getLoaderRequest } = getState().walletLoader;
     dispatch({
@@ -58,7 +51,6 @@ function generateRandomSeedError(error) {
 function generateRandomSeedSuccess(response) {
   return (dispatch) => {
     dispatch({ response: response, type: GENERATERANDOMSEED_SUCCESS });
-    dispatch(decodeSeedAttempt(response.seed_mnemonic));
   };
 }
 

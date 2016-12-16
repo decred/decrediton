@@ -5,6 +5,7 @@ import GetStarted from '../components/GetStarted';
 import * as ClientActions from '../actions/ClientActions';
 import * as WalletLoaderActions from '../actions/WalletLoaderActions';
 import * as ControlActions from '../actions/ControlActions';
+import * as SeedServiceActions from '../actions/SeedServiceActions';
 
 function mapStateToProps(state) {
   return {
@@ -50,6 +51,15 @@ function mapStateToProps(state) {
     loadActiveDataFiltersRequestAttempt: state.control.loadActiveDataFiltersRequestAttempt,
     loadActiveDataFiltersError: state.control.loadActiveDataFiltersError,
     loadActiveDataFiltersResponse: state.control.loadActiveDataFiltersResponse,
+
+    // SeedService
+    generateRandomSeedRequestAttempt: state.seedService.generateRandomSeedRequestAttempt,
+    generateRandomSeedResponse: state.seedService.generateRandomSeedResponse,
+    generateRandomSeedError: state.seedService.generateRandomSeedError,
+
+    decodeSeedRequestAttempt: state.seedService.decodeSeedRequestAttempt,
+    decodeSeedResponse: state.seedService.decodeSeedResponse,
+    decodeSeedError: state.seedService.decodeSeedError,
   };
 }
 
