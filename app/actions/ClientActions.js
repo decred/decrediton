@@ -13,9 +13,9 @@ function getWalletServiceSuccess(walletService) {
   return (dispatch) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
     setTimeout( () => {dispatch(loadActiveDataFiltersAttempt());}, 1000);
-    //setTimeout( () => {dispatch(getNextAddressAttempt());}, 1000);
-    //setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
-    //setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
+    setTimeout( () => {dispatch(getNextAddressAttempt());}, 1000);
+    setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
+    setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
     //setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
     //setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
     //setTimeout( () => {dispatch(getPingAttempt());}, 1000);
@@ -24,7 +24,7 @@ function getWalletServiceSuccess(walletService) {
     //setTimeout( () => {dispatch(getTransactionsAttempt(2, 10, '', ''));}, 1000);
     
 
-    //setTimeout(() => {hashHistory.push('/home')}, 1000);
+    setTimeout(() => {hashHistory.push('/home')}, 1000);
   };
 }
 
