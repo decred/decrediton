@@ -49,6 +49,7 @@ class Home extends Component{
       var totalBlocks = getAccountsResponse.current_block_height - rescanRequest.begin_height;
       var blocksFinished = rescanResponse.rescanned_through - rescanRequest.begin_height;
       rescanPercFisnished = (blocksFinished / totalBlocks) * 100;
+      rescanPercFisnished = rescanPercFisnished.toFixed(2);
     }
     var rescanView;
     if (rescanResponse === null) {
