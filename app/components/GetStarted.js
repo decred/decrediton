@@ -79,6 +79,7 @@ class Home extends Component{
     const { walletCloseRequestAttempt, walletCloseError } = this.props;
     const { discoverAddressRequestAttempt, discoverAddressError } = this.props;
     const { startRpcRequestAttempt, startRpcError } = this.props;
+    const { fetchHeadersRequestAttempt } = this.props;
     /*
     const { loadActiveDataFiltersAttempt } = this.props;
 
@@ -155,6 +156,20 @@ class Home extends Component{
       </div>);
     }
     const getStartedDiscoverAddress = (discoveringAddresses);
+
+    var fetchingHeaders;
+    if (fetchHeadersRequestAttempt) {
+      fetchingHeaders = (
+        <div>
+          <CircularProgress size={80} thickness={6}/>
+        </div>
+      )
+    } else {
+      fetchingHeaders = (
+      <div>
+      </div>);
+    }
+    const fetchHeaders = (fetchingHeaders);
       /*
     const getStartedGettingLoader = (
       <div >
@@ -269,7 +284,7 @@ class Home extends Component{
           <Step>
             <StepLabel>Fetch Headers</StepLabel>
             <StepContent>
-              {}
+              {fetchHeaders}
             </StepContent>
           </Step>
           <Step>
