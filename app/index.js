@@ -69,12 +69,6 @@ var initialState = {
   },
   walletLoader: {
     stepIndex: 0,
-    // XXX Wallet Passphrases
-    // We are storing these in state for dev ease,
-    // but will construct an alternate system
-    // to properly/securely/safely store passphrases.
-    privatePassphrase: '',
-    publicPassphrase: '',
     // Loader
     getLoaderRequestAttempt: false,
     getLoaderRequest: null,

@@ -299,7 +299,6 @@ function loadActiveDataFiltersError(error) {
 function loadActiveDataFiltersSuccess(response) {
   return (dispatch) => {
     dispatch({response: response, type: LOADACTIVEDATAFILTERS_SUCCESS });
-    setTimeout( () => {dispatch(rescanAttempt(0));}, 1000);
   };
 }
 

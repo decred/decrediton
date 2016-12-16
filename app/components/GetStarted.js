@@ -6,6 +6,7 @@ import LoaderForm from '../containers/LoaderForm';
 import WalletExistForm from '../containers/WalletExistForm';
 import WalletOpenForm from '../containers/WalletOpenForm';
 import CreateWalletForm from '../containers/CreateWalletForm';
+import DiscoverAddressForm from '../containers/DiscoverAddressForm';
 import ShowError from './ShowError';
 import {
   Step,
@@ -74,6 +75,7 @@ class Home extends Component{
     const { walletOpenRequestAttempt, walletOpenError } = this.props;
     const { walletExistResponse, walletExistRequestAttempt, walletExistError } = this.props;
     const { walletCloseRequestAttempt, walletCloseError } = this.props;
+    const { discoverAddressRequestAttempt, discoverAddressError } = this.props;
     const { startRpcRequestAttempt, startRpcError } = this.props;
     /*
     const { loadActiveDataFiltersAttempt } = this.props;
@@ -113,6 +115,13 @@ class Home extends Component{
         <h5>Please enter the information below to create your dcrwallet</h5>
         <CreateWalletForm />
       </div>);
+    const getStartedDiscoverAddress = (
+      <div>
+        <ShowError error={discoverAddressError} />
+        <h3>Discover used addresses</h3>
+        <h5>Please enter your private password below to discover accounts:</h5>
+        <DiscoverAddressForm />
+      </div>);  
       /*
     const getStartedGettingLoader = (
       <div >
@@ -221,7 +230,7 @@ class Home extends Component{
           <Step>
             <StepLabel>Discover Addresses</StepLabel>
             <StepContent>
-              {}
+              {getStartedDiscoverAddress}
             </StepContent>
           </Step>
           <Step>
