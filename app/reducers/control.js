@@ -1,6 +1,6 @@
 import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS } from '../actions/ControlActions';
 import { RENAMEACCOUNT_ATTEMPT, RENAMEACCOUNT_FAILED, RENAMEACCOUNT_SUCCESS } from '../actions/ControlActions';
-import { RESCAN_ATTEMPT, RESCAN_FAILED, RESCAN_SUCCESS } from '../actions/ControlActions';
+import { RESCAN_ATTEMPT, RESCAN_FAILED, RESCAN_PROGRESS, RESCAN_COMPLETE } from '../actions/ControlActions';
 import { GETNEXTACCOUNT_ATTEMPT, GETNEXTACCOUNT_FAILED, GETNEXTACCOUNT_SUCCESS } from '../actions/ControlActions';
 import { IMPORTPRIVKEY_ATTEMPT, IMPORTPRIVKEY_FAILED, IMPORTPRIVKEY_SUCCESS } from '../actions/ControlActions';
 import { IMPORTSCRIPT_ATTEMPT, IMPORTSCRIPT_FAILED, IMPORTSCRIPT_SUCCESS } from '../actions/ControlActions';
@@ -62,12 +62,17 @@ export default function control(state = {}, action) {
       rescanRequestAttempt: false,
       rescanRequest: null,
     };
-  case RESCAN_SUCCESS:
+  case RESCAN_PROGRESS:
+    return {...state,
+      rescanResponse: action.rescanResponse,
+    };
+  case RESCAN_COMPLETE:
     return {...state,
       rescanError: '',
       rescanRequestAttempt: false,
-      rescanResponse: action.rescanResponse,
-    };
+      rescanResponse: null,
+      rescanRequest: null,
+    };  
   case GETNEXTACCOUNT_ATTEMPT:
     return {...state,
       getNextAccountError: null,

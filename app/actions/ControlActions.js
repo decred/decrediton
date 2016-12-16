@@ -85,14 +85,19 @@ function renameAccountAction() {
 
 export const RESCAN_ATTEMPT = 'RESCAN_ATTEMPT';
 export const RESCAN_FAILED = 'RESCAN_FAILED';
-export const RESCAN_SUCCESS = 'RESCAN_SUCCESS';
+export const RESCAN_PROGRESS = 'RESCAN_PROGRESS';
+export const RESCAN_COMPLETE = 'RESCAN_COMPLETE';
 
 function rescanError(error) {
   return { error, type: RESCAN_FAILED };
 }
 
-function rescanSuccess(rescanResponse) {
-  return { rescanResponse: rescanResponse, type: RESCAN_SUCCESS };
+function rescanProgress(rescanResponse) {
+  return { rescanResponse: rescanResponse, type: RESCAN_PROGRESS };
+}
+
+function rescanComplete() {
+  return { type: RESCAN_COMPLETE };
 }
 
 export function rescanAttempt(beginHeight) {
@@ -112,11 +117,13 @@ function rescanAction() {
     const { walletService } = getState().grpc;
     const { rescanRequest } = getState().control;
     rescan(walletService, rescanRequest,
-        function(rescanResponse, err) {
+        function(finished, rescanResponse, err) {
           if (err) {
             dispatch(rescanError(err + ' Please try again'));
+          } else if (finished) {
+            dispatch(rescanComplete());
           } else {
-            dispatch(rescanSuccess(rescanResponse));
+            dispatch(rescanProgress(rescanResponse));
           }
         });
   };
