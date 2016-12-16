@@ -1,6 +1,6 @@
 import { getWalletService, getBalance, getAccountNumber, getNetwork, getPing,
   getStakeInfo, getTicketPrice, getAccounts, getTransactions } from '../middleware/grpc/client';
-import { getNextAddressAttempt, loadActiveDataFiltersAttempt } from './ControlActions';
+import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt } from './ControlActions';
 export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
 export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
 export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
@@ -18,11 +18,13 @@ function getWalletServiceSuccess(walletService) {
     //setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
     //setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
     //setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
-    setTimeout( () => {dispatch(getPingAttempt());}, 1000);
-    setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
-    setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
-    setTimeout( () => {dispatch(getTransactionsAttempt(2, 10, '', ''));}, 1000);
-    setTimeout(() => {hashHistory.push('/home')}, 1000);
+    //setTimeout( () => {dispatch(getPingAttempt());}, 1000);
+    //setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
+    //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
+    //setTimeout( () => {dispatch(getTransactionsAttempt(2, 10, '', ''));}, 1000);
+    
+
+    //setTimeout(() => {hashHistory.push('/home')}, 1000);
   };
 }
 
