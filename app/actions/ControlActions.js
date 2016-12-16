@@ -517,13 +517,14 @@ function constructTransactionSuccess(constructTxResponse) {
 }
 
 export function constructTransactionAttempt() {
+  // calling wrong things here.
   const { getLoaderRequest } = getState().walletLoader;
   var request = {
-   source_account: 0,
-   required_confirmations: 1,
+   source_account: getLoaderRequest.account,
+   required_confirmations: getLoaderRequest.confirmations,
    fee_per_kb: 0,
    output_selection_algorithm: 1,
-   non_change_outputs: { destination: { address:'TscTHhFsGbAeuLyYUZgoWDjiTejUgFnU4Ji' }, amount: getLoaderREquest.amount },
+   non_change_outputs: { destination: { address:getLoaderRequest.destination }, amount: getLoaderRequest.amount },
    change_destination: { address: 'TsVZfb7tVHV9pcPLb4aK9Hn7y5NSrXGyANV'},
   };
   return (dispatch) => {
