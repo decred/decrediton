@@ -3,6 +3,8 @@ import { getNextAddress, renameAccount, getNextAccount,
   loadActiveDataFilters, getFundingTransaction, signTransaction, publishTransaction,
 purchaseTickets, constructTransaction } from '../middleware/grpc/control';
 
+import { getBalanceAttempt } from './ClientActions';
+
 export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
 export const GETNEXTADDRESS_FAILED = 'GETNEXTADDRESS_FAILED';
 export const GETNEXTADDRESS_SUCCESS = 'GETNEXTADDRESS_SUCCESS';
@@ -97,7 +99,10 @@ function rescanProgress(rescanResponse) {
 }
 
 function rescanComplete() {
-  return { type: RESCAN_COMPLETE };
+  return (dispatch) => {
+    dispatch({ type: RESCAN_COMPLETE });
+    setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
+  }
 }
 
 export function rescanAttempt(beginHeight) {
