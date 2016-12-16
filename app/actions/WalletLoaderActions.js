@@ -101,7 +101,7 @@ function createWalletSuccess() {
 export function createWalletRequest(pubPass, privPass, seed) {
   return (dispatch) => {
     dispatch({ type: CREATEWALLET_ATTEMPT });
-      dispatch(createNewWallet(pubPass, privPass, seed));
+    dispatch(createNewWallet(pubPass, privPass, seed));
   };
 }
 

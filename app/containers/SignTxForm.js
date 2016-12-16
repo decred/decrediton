@@ -19,9 +19,9 @@ let ConstructTxForm = ({ dispatch, rawTx }) => {
           return;
         }
         dispatch(signTransactionAttempt(privpass, rawTx));
-        document.getElementById("signTxForm").reset();
+        document.getElementById('signTxForm').reset();
         privpass.fill(0);
-        document.getElementById("privpass").value = '';
+        document.getElementById('privpass').value = '';
         privpass = '';
       }}>
         <TextField
@@ -35,7 +35,7 @@ let ConstructTxForm = ({ dispatch, rawTx }) => {
          label='Confirm and Sign Tx'/>
 	    </form>
 	</div>);
-}
+};
 ConstructTxForm = connect()(ConstructTxForm);
 
 export default ConstructTxForm;

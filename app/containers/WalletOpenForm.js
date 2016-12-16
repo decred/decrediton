@@ -19,9 +19,9 @@ let LoaderForm = ({ dispatch }) => {
           return;
         }
         dispatch(openWalletAttempt(pubpass));
-        document.getElementById("openWalletForm").reset();
+        document.getElementById('openWalletForm').reset();
         pubpass.fill(0);
-        document.getElementById("pubpass").value = '';
+        document.getElementById('pubpass').value = '';
         pubpass = '';
       }}>
         <TextField

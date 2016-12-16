@@ -19,7 +19,7 @@ class Send extends Component{
 
     constructTxResponse: PropTypes.object,
     constructTxRequestAttempt: PropTypes.bool.isRequired,
-    
+
     publishTransactionResponse: PropTypes.object,
   };
 
@@ -43,13 +43,13 @@ class Send extends Component{
         <p> raw tx
           {constructTxResponse !== null ? constructTxResponse.unsigned_transaction.toString('hex') : null}}
         </p>
-        <p> total previous output amount 
+        <p> total previous output amount
           {constructTxResponse != null ? constructTxResponse.total_previous_output_amount : null}
         </p>
-        <p> total output amount 
+        <p> total output amount
           {constructTxResponse !== null ? constructTxResponse.total_output_amount : null}
         </p>
-        <p> estimated signed size 
+        <p> estimated signed size
           {constructTxResponse !== null ? constructTxResponse.estimated_signed_size : null}
         </p>
         <SignTxForm rawTx={constructTxResponse !== null ? constructTxResponse.unsigned_transaction : null}/>
@@ -58,7 +58,7 @@ class Send extends Component{
     var sendView;
 
     const publishTxView = (
-      <div> 
+      <div>
         <h1>Published Tx!</h1>
         <p>{publishTransactionResponse !== null ? publishTransactionResponse.transaction_hash.toString('hex') : null}</p>
       </div>);

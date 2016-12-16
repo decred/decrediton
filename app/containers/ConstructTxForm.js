@@ -51,7 +51,7 @@ let ConstructTxForm = ({ dispatch }) => {
           label='Send'/>
 	    </form>
 	</div>);
-}
+};
 ConstructTxForm = connect()(ConstructTxForm);
 
 export default ConstructTxForm;

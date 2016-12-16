@@ -19,9 +19,9 @@ let DiscoverAddressForm = ({ dispatch }) => {
           return;
         }
         dispatch(discoverAddressAttempt(true, privpass));
-        document.getElementById("discoverAddress").reset();
+        document.getElementById('discoverAddress').reset();
         privpass.fill(0);
-        document.getElementById("privpass").value = '';
+        document.getElementById('privpass').value = '';
         privpass = '';
       }}>
         <TextField

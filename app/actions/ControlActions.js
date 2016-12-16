@@ -518,10 +518,10 @@ function constructTransactionSuccess(constructTxResponse) {
 
 export function constructTransactionAttempt(account, confirmations, destination, amount) {
   var request = {
-   source_account: parseInt(account),
-   required_confirmations: parseInt(confirmations),
-   output_selection_algorithm: 1,
-   non_change_outputs: { destination: { address:destination }, amount: parseInt(amount) },
+    source_account: parseInt(account),
+    required_confirmations: parseInt(confirmations),
+    output_selection_algorithm: 1,
+    non_change_outputs: { destination: { address:destination }, amount: parseInt(amount) },
   };
   return (dispatch) => {
     dispatch({

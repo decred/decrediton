@@ -121,7 +121,7 @@ class Home extends Component{
         <h3>Discover used addresses</h3>
         <h5>Please enter your private password below to discover accounts:</h5>
         <DiscoverAddressForm />
-      </div>);  
+      </div>);
       /*
     const getStartedGettingLoader = (
       <div >
