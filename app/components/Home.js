@@ -44,6 +44,12 @@ class Home extends Component{
     const { getStakeInfoRequestAttempt, getStakeInfoResponse } = this.props;
     const { rescanRequest, rescanRequestAttempt, rescanError, rescanResponse } = this.props;
     const { getAccountsResponse } = this.props;
+    var rescanPercFisnished;
+    if (rescanResponse !== null && getAccountsResponse !== null && rescanRequest != null) {
+      var totalBlocks = getAccountsResponse.current_block_height - rescanRequest.begin_height;
+      var blocksFinished = rescanResponse.rescanned_through - rescanRequest.begin_height;
+      rescanPercFisnished = (blocksFinished / totalBlocks) * 100;
+    }
     var rescanView;
     if (rescanResponse === null) {
       rescanView = <RescanForm />
@@ -54,6 +60,7 @@ class Home extends Component{
             min={rescanRequest !== null ? rescanRequest.begin_height: 0}
             max={getAccountsResponse !== null ? getAccountsResponse.current_block_height: 100}
             value={rescanResponse !== null ? rescanResponse.rescanned_through : 0} />
+          <p>{rescanPercFisnished}%</p>
         </div>
       );
     }
