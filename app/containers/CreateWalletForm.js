@@ -13,18 +13,15 @@ const style = {
 let CreateWalletForm = ({ dispatch, seedText }) => {
   let pubpass = '';
   let privpass = '';
-  let seed = '';
   const newSeed = (
       <form id="newSeed" onSubmit={e => {
         e.preventDefault();
         if (pubpass == '' || privpass == '') {
           return;
         }
-        seed = document.getElementById("seed1").value;
-        dispatch(createWalletRequest(pubpass, privpass, seed));
+        dispatch(createWalletRequest(pubpass, privpass, seedText.seed_hex));
         pubpass = '';
         privpass = '';
-        seed = '';
       }}>
         <TextField
           id="pubpass1"
