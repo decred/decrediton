@@ -299,6 +299,7 @@ function loadActiveDataFiltersError(error) {
 function loadActiveDataFiltersSuccess(response) {
   return (dispatch) => {
     dispatch({response: response, type: LOADACTIVEDATAFILTERS_SUCCESS });
+    dispatch(rescanAttempt(200000));
   };
 }
 
@@ -384,6 +385,7 @@ function signTransactionSuccess(signTransactionResponse) {
 }
 
 export function signTransactionAttempt(passphrase, rawTx) {
+  console.log(rawTx);
   var request = {
     passphrase: Buffer.from(passphrase),
     serialized_transaction: rawTx
@@ -510,22 +512,16 @@ function constructTransactionError(error) {
 
 function constructTransactionSuccess(constructTxResponse) {
   return (dispatch, getState) => {
-    const { privatePassphrase } = getState().walletLoader;
     dispatch({constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
-    dispatch(signTransactionAttempt(privatePassphrase, constructTxResponse.unsigned_transaction));
   };
 }
 
-export function constructTransactionAttempt() {
-  // calling wrong things here.
-  const { getLoaderRequest } = getState().walletLoader;
+export function constructTransactionAttempt(account, confirmations, destination, amount) {
   var request = {
-   source_account: getLoaderRequest.account,
-   required_confirmations: getLoaderRequest.confirmations,
-   fee_per_kb: 0,
+   source_account: parseInt(account),
+   required_confirmations: parseInt(confirmations),
    output_selection_algorithm: 1,
-   non_change_outputs: { destination: { address:getLoaderRequest.destination }, amount: getLoaderRequest.amount },
-   change_destination: { address: 'TsVZfb7tVHV9pcPLb4aK9Hn7y5NSrXGyANV'},
+   non_change_outputs: { destination: { address:destination }, amount: parseInt(amount) },
   };
   return (dispatch) => {
     dispatch({
