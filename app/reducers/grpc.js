@@ -135,7 +135,7 @@ export default function grpc(state = {}, action) {
     return {...state,
       getAccountsError: '',
       getAccountsRequestAttempt: true,
-      getAccounts: action.request,
+      getAccountsRequest: action.request,
     };
   case GETACCOUNTS_FAILED:
     return {...state,
@@ -146,7 +146,7 @@ export default function grpc(state = {}, action) {
     return {...state,
       getAccountsError: '',
       getAccountsRequestAttempt: false,
-      getAccountsResponse: action.getAccountResponse,
+      getAccountsResponse: action.response,
     };
   case GETTRANSACTIONS_ATTEMPT:
     return {...state,

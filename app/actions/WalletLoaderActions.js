@@ -332,9 +332,9 @@ function fetchHeadersFailed(error) {
   return { error, type: FETCHHEADERS_FAILED };
 }
 
-function fetchHeadersSuccess() {
+function fetchHeadersSuccess(response) {
   return (dispatch) => {
-    dispatch({response: {}, type: FETCHHEADERS_SUCCESS});
+    dispatch({response: response, type: FETCHHEADERS_SUCCESS});
     dispatch(subscribeBlockAttempt());
     //dispatch(transactionNftnsStart());
   };
@@ -351,11 +351,11 @@ function fetchHeadersAction() {
   return (dispatch, getState) => {
     const { loader, fetchHeadersRequest } = getState().walletLoader;
     fetchHeaders(loader, fetchHeadersRequest,
-        function(err) {
+        function(response, err) {
           if (err) {
             dispatch(fetchHeadersFailed(err + ' Please try again'));
           } else {
-            dispatch(fetchHeadersSuccess());
+            dispatch(fetchHeadersSuccess(response));
           }
         });
   };

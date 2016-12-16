@@ -10,20 +10,28 @@ function getWalletServiceError(error) {
 }
 
 function getWalletServiceSuccess(walletService) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
     setTimeout( () => {dispatch(loadActiveDataFiltersAttempt());}, 1000);
     setTimeout( () => {dispatch(getNextAddressAttempt());}, 1000);
     setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
     setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
     //setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
-    //setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
+    setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
     //setTimeout( () => {dispatch(getPingAttempt());}, 1000);
     //setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
     //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
     //setTimeout( () => {dispatch(getTransactionsAttempt(2, 10, '', ''));}, 1000);
 
-
+    // Check here to see if wallet was just created, if so
+    // start rescan from 0
+    const { fetchHeadersResponse } = getState().walletLoader;
+    if ( fetchHeadersResponse !== null ) {
+      console.log(fetchHeadersResponse);
+      if (fetchHeadersResponse.fetched_headers_count > 0) {
+        setTimeout(() => {dispatch(rescanAttempt(fetchHeadersResponse.first_new_block_height));}, 1000);
+      }
+    }
     setTimeout(() => {hashHistory.push('/home');}, 1000);
   };
 }
@@ -287,7 +295,7 @@ function getAccountsError(error) {
 }
 
 function getAccountsSuccess(getAccountsResponse) {
-  return { getAccountsResponse: getAccountsResponse, type: GETACCOUNTS_SUCCESS };
+  return { response: getAccountsResponse, type: GETACCOUNTS_SUCCESS };
 }
 
 export function getAccountsAttempt() {

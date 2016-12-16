@@ -14,6 +14,11 @@ function mapStateToProps(state) {
     getBalanceResponse: state.grpc.getBalanceResponse,
     getStakeInfoRequestAttempt: state.grpc.getStakeInfoRequestAttempt,
     getStakeInfoResponse: state.grpc.getStakeInfoResponse,
+    rescanRequestAttempt: state.control.rescanRequestAttempt,
+    rescanError: state.control.rescanError,
+    rescanResponse: state.control.rescanResponse,
+    rescanRequest: state.control.rescanRequest,
+    getAccountsResponse: state.grpc.getAccountsResponse,
   };
 }
 
