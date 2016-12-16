@@ -13,19 +13,22 @@ let DiscoverAddressForm = ({ dispatch }) => {
 
   return (
     <div>
-      <form onSubmit={e => {
+      <form id="discoverAddress" onSubmit={e => {
         e.preventDefault();
         if (privpass == '') {
           return;
         }
         dispatch(discoverAddressAttempt(true, privpass));
+        document.getElementById("discoverAddress").reset();
+        privpass.fill(0);
+        document.getElementById("privpass").value = '';
         privpass = '';
       }}>
         <TextField
           id="privpass"
           hintText="Private Password"
           floatingLabelText="Private Password"
-          onBlur={(e) =>{privpass = e.target.value;}}
+          onBlur={(e) =>{privpass = Buffer.from(e.target.value);}}
         /><br />
         <RaisedButton type="submit"
          style={style}

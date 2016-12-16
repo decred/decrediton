@@ -13,19 +13,22 @@ let LoaderForm = ({ dispatch }) => {
 
   return (
     <div>
-      <form onSubmit={e => {
+      <form id="openWalletForm" onSubmit={e => {
         e.preventDefault();
         if (pubpass == '') {
           return;
         }
         dispatch(openWalletAttempt(pubpass));
+        document.getElementById("openWalletForm").reset();
+        pubpass.fill(0);
+        document.getElementById("pubpass").value = '';
         pubpass = '';
       }}>
         <TextField
           id="pubpass"
           hintText="Public Password"
           floatingLabelText="Public Password"
-          onBlur={(e) =>{pubpass = e.target.value;}}
+          onBlur={(e) =>{pubpass = Buffer.from(e.target.value);}}
         /><br />
         <RaisedButton type="submit"
          style={style}
