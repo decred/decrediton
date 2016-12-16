@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { discoverAddressAttempt } from '../actions/WalletLoaderActions';
+import { signTransactionAttempt } from '../actions/ControlActions';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
@@ -8,18 +8,18 @@ const style = {
   margin: 12,
 };
 
-let DiscoverAddressForm = ({ dispatch }) => {
+let ConstructTxForm = ({ dispatch, rawTx }) => {
   let privpass = '';
 
   return (
     <div>
-      <form id="discoverAddress" onSubmit={e => {
+      <form id="signTxForm" onSubmit={e => {
         e.preventDefault();
         if (privpass == '') {
           return;
         }
-        dispatch(discoverAddressAttempt(true, privpass));
-        document.getElementById('discoverAddress').reset();
+        dispatch(signTransactionAttempt(privpass, rawTx));
+        document.getElementById('signTxForm').reset();
         privpass.fill(0);
         document.getElementById('privpass').value = '';
         privpass = '';
@@ -32,11 +32,10 @@ let DiscoverAddressForm = ({ dispatch }) => {
         /><br />
         <RaisedButton type="submit"
          style={style}
-         label='Discover Addresses'/>
-      </form>
-    </div>
-  );
+         label='Confirm and Sign Tx'/>
+	    </form>
+	</div>);
 };
-DiscoverAddressForm = connect()(DiscoverAddressForm);
+ConstructTxForm = connect()(ConstructTxForm);
 
-export default DiscoverAddressForm;
+export default ConstructTxForm;

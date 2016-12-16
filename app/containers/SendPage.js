@@ -10,6 +10,8 @@ function mapStateToProps(state) {
 
     constructTxRequestAttempt: state.control.constructTxRequestAttempt,
     constructTxResponse: state.control.constructTxResponse,
+    constructTxError: state.control.constructTxError,
+    signTransactionError: state.control.signTransactionError,
     publishTransactionResponse: state.control.publishTransactionResponse,
   };
 }

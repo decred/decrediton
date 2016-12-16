@@ -178,7 +178,6 @@ export function purchaseTickets(client, request, cb) {
 
 export function constructTransaction(client, request, cb) {
     // PurchaseTickets
-  console.log(request);
   client.constructTransaction(request, function(err, response) {
     if (err) {
       console.error('constructTransaction', err);
