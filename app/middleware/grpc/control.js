@@ -35,10 +35,10 @@ export function rescan(client, request, cb) {
   var rescanCall = client.rescan(request);
   rescanCall.on('data', function(response) {
     console.log('Rescanned thru', response.rescanned_through);
+    return cb(response);
   });
   rescanCall.on('end', function() {
     console.log('Rescan done');
-            // The server has finished sending
   });
   rescanCall.on('status', function(status) {
     console.log('Rescan status:', status);

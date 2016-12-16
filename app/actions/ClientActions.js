@@ -17,7 +17,7 @@ function getWalletServiceSuccess(walletService) {
     setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
     setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
     //setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
-    //setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
+    setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
     //setTimeout( () => {dispatch(getPingAttempt());}, 1000);
     //setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
     //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
@@ -287,7 +287,7 @@ function getAccountsError(error) {
 }
 
 function getAccountsSuccess(getAccountsResponse) {
-  return { getAccountsResponse: getAccountsResponse, type: GETACCOUNTS_SUCCESS };
+  return { response: getAccountsResponse, type: GETACCOUNTS_SUCCESS };
 }
 
 export function getAccountsAttempt() {

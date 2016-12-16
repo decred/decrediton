@@ -1,14 +1,10 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import LoginForm from '../containers/LoginForm';
-import LoaderForm from '../containers/LoaderForm';
-import WalletExistForm from '../containers/WalletExistForm';
-import WalletOpenForm from '../containers/WalletOpenForm';
-import CreateWalletForm from '../containers/CreateWalletForm';
 import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
 import ErrorScreen from './ErrorScreen';
+import RescanForm from '../containers/RescanForm';
 
 const styles = {
   mainArea: {
@@ -46,11 +42,26 @@ class Home extends Component{
 
     const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
     const { getStakeInfoRequestAttempt, getStakeInfoResponse } = this.props;
-
+    const { rescanRequest, rescanRequestAttempt, rescanError, rescanResponse } = this.props;
+    const { getAccountsResponse } = this.props;
+    var rescanView;
+    if (rescanResponse === null) {
+      rescanView = <RescanForm />
+    } else {
+      rescanView = (
+        <div>
+          <LinearProgress mode="determinate"
+            min={rescanRequest !== null ? rescanRequest.starting_height: 0}
+            max={getAccountsResponse !== null ? getAccountsResponse.current_block_height: 100}
+            value={rescanResponse !== null ? rescanResponse.rescanned_through : 0} />
+        </div>
+      );
+    }
     /* View that will be seen when user has a set Client */
     const homeView = (
       <div >
         <h1>Home Page</h1>
+        <h3>Current block height: {getAccountsResponse === null ? 'Please refresh' : getAccountsResponse.current_block_height }</h3>
         <h3>Current balance: {getBalanceResponse === null ? 'Please refresh' : getBalanceResponse.total }</h3>
         <RaisedButton
           style={styles.buttons}
@@ -63,6 +74,7 @@ class Home extends Component{
           disabled={getStakeInfoRequestAttempt}
           onClick={!getStakeInfoRequestAttempt? () => this.props.getStakeInfoAttempt() : null}
           label={getStakeInfoRequestAttempt ? 'Getting Stake Info...' : 'Get Stake Info'}/>
+        {rescanView}
       </div>);
 
 

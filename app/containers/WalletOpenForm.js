@@ -8,7 +8,7 @@ const style = {
   margin: 12,
 };
 
-let LoaderForm = ({ dispatch }) => {
+let WalletOpenForm = ({ dispatch }) => {
   let pubpass = '';
 
   return (
@@ -37,6 +37,6 @@ let LoaderForm = ({ dispatch }) => {
     </div>
   );
 };
-LoaderForm = connect()(LoaderForm);
+WalletOpenForm = connect()(WalletOpenForm);
 
-export default LoaderForm;
+export default WalletOpenForm;

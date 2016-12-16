@@ -97,7 +97,7 @@ function rescanSuccess(rescanResponse) {
 
 export function rescanAttempt(beginHeight) {
   var request = {
-    begin_height: beginHeight
+    begin_height: parseInt(beginHeight)
   };
   return (dispatch) => {
     dispatch({
@@ -299,7 +299,6 @@ function loadActiveDataFiltersError(error) {
 function loadActiveDataFiltersSuccess(response) {
   return (dispatch) => {
     dispatch({response: response, type: LOADACTIVEDATAFILTERS_SUCCESS });
-    dispatch(rescanAttempt(200000));
   };
 }
 
