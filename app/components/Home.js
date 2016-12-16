@@ -51,7 +51,7 @@ class Home extends Component{
       rescanView = (
         <div>
           <LinearProgress mode="determinate"
-            min={rescanRequest !== null ? rescanRequest.starting_height: 0}
+            min={rescanRequest !== null ? rescanRequest.begin_height: 0}
             max={getAccountsResponse !== null ? getAccountsResponse.current_block_height: 100}
             value={rescanResponse !== null ? rescanResponse.rescanned_through : 0} />
         </div>
