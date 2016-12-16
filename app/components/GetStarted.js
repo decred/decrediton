@@ -108,7 +108,7 @@ class Home extends Component{
         <div>
           <CircularProgress size={80} thickness={6}/>
         </div>
-      )
+      );
     } else {
       openingWallet = (
         <div>
@@ -127,7 +127,7 @@ class Home extends Component{
         <div>
           <CircularProgress size={80} thickness={6}/>
         </div>
-      )
+      );
     } else {
       creatingWallet = (
       <div>
@@ -145,7 +145,7 @@ class Home extends Component{
         <div>
           <CircularProgress size={80} thickness={6}/>
         </div>
-      )
+      );
     } else {
       discoveringAddresses = (
       <div>
@@ -163,7 +163,7 @@ class Home extends Component{
         <div>
           <CircularProgress size={80} thickness={6}/>
         </div>
-      )
+      );
     } else {
       fetchingHeaders = (
       <div>
