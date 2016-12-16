@@ -87,13 +87,12 @@ function decodeSeedError(error) {
 function decodeSeedSuccess(pubPass, privPass, response) {
   return (dispatch) => {
     dispatch({response: response, type: DECODESEED_SUCCESS });
-    dispatch(createWalletRequest(pubPass, privPass, response.decoded_seed))
+    dispatch(createWalletRequest(pubPass, privPass, response.decoded_seed.toString('hex')))
   };
 }
 
 export function decodeSeedAttempt(pubPass, privPass, mnemonic) {
   return (dispatch) => {
-    console.log(mnemonic);
     dispatch({request: {user_input:mnemonic}, type: DECODESEED_ATTEMPT });
     dispatch(decodeSeedAction(pubPass, privPass));
   };

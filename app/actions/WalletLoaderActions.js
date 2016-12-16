@@ -107,11 +107,11 @@ export function createWalletRequest(pubPass, privPass, seed) {
 }
 
 function createNewWallet(pubPass, privPass, seed) {
-  console.log(seed);
+  console.log("decoded:",  seed);
   var request = {
     public_passphrase: Buffer.from(pubPass),
     private_passphrase: Buffer.from(privPass),
-    seed: seed,
+    seed: Buffer.from(seed),//"f4a51fc3de6da8ea249bac512735711b2dea52f7b9487aede7d5a47eca387a10"),
   };
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
