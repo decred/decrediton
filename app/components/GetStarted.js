@@ -7,6 +7,8 @@ import WalletExistForm from '../containers/WalletExistForm';
 import WalletOpenForm from '../containers/WalletOpenForm';
 import CreateWalletForm from '../containers/CreateWalletForm';
 import DiscoverAddressForm from '../containers/DiscoverAddressForm';
+import CircularProgress from 'material-ui/CircularProgress';
+
 import ShowError from './ShowError';
 import {
   Step,
@@ -99,29 +101,60 @@ class Home extends Component{
           onClick={() => {loaderRequest(address, port);}}
           label='Get Started'/>
       </div>);
-
-    const getStartedWalletOpen = (
-      <div>
-        <ShowError error={walletOpenError} />
-        <h3>Opening wallet</h3>
-        <h5>Please enter the information below to connect to you dcrwallet</h5>
-        <WalletOpenForm />
+    var openingWallet;
+    if (walletOpenRequestAttempt) {
+      openingWallet = (
+        <div>
+          <CircularProgress size={80} thickness={6}/>
+        </div>
+      )
+    } else {
+      openingWallet = (
+        <div>
+          <ShowError error={walletOpenError} />
+          <h3>Opening wallet</h3>
+          <h5>Please enter the information below to connect to you dcrwallet</h5>
+          <WalletOpenForm/>
       </div>);
+    }
+    const getStartedWalletOpen = (openingWallet);
 
-    const getStartedWalletCreate = (
+
+    var creatingWallet;
+    if (walletCreateRequestAttempt) {
+      creatingWallet = (
+        <div>
+          <CircularProgress size={80} thickness={6}/>
+        </div>
+      )
+    } else {
+      creatingWallet = (
       <div>
         <ShowError error={walletCreateError} />
         <h3>Create wallet</h3>
         <h5>Please enter the information below to create your dcrwallet</h5>
         <CreateWalletForm />
       </div>);
-    const getStartedDiscoverAddress = (
+    }
+    const getStartedWalletCreate = (creatingWallet);
+
+    var discoveringAddresses;
+    if (discoverAddressRequestAttempt) {
+      discoveringAddresses = (
+        <div>
+          <CircularProgress size={80} thickness={6}/>
+        </div>
+      )
+    } else {
+      discoveringAddresses = (
       <div>
         <ShowError error={discoverAddressError} />
         <h3>Discover used addresses</h3>
         <h5>Please enter your private password below to discover accounts:</h5>
         <DiscoverAddressForm />
       </div>);
+    }
+    const getStartedDiscoverAddress = (discoveringAddresses);
       /*
     const getStartedGettingLoader = (
       <div >
