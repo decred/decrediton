@@ -13,13 +13,14 @@ const style = {
 let CreateWalletForm = ({ dispatch, seedText }) => {
   let pubpass = '';
   let privpass = '';
+  let seed = '';
   const newSeed = (
       <form id="newSeed" onSubmit={e => {
         e.preventDefault();
         if (pubpass == '' || privpass == '') {
           return;
         }
-        dispatch(createWalletRequest(pubpass, privpass, seedText.seed_hex));
+        dispatch(createWalletRequest(pubpass, privpass, Buffer.from(seedText.seed_hex)));
         pubpass = '';
         privpass = '';
       }}>
@@ -56,7 +57,7 @@ let CreateWalletForm = ({ dispatch, seedText }) => {
         if (pubpass == '' || privpass == '' || seed == '') {
           return;
         }
-        dispatch(createWalletRequest(pubpass, privpass, seed));
+        dispatch(decodeSeedAttempt(pubpass, privpass, seed));
         pubpass = '';
         privpass = '';
         seed = '';

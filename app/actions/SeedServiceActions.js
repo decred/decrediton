@@ -1,4 +1,5 @@
 import { seeder, generateRandomSeed, decodeSeed } from '../middleware/grpc/seeder';
+import { createWalletRequest } from './WalletLoaderActions';
 
 export const SEEDER_ATTEMPT = 'SEEDER_ATTEMPT';
 export const SEEDER_FAILED = 'SEEDER_FAILED';
@@ -83,21 +84,22 @@ function decodeSeedError(error) {
   return { error, type: DECODESEED_FAILED };
 }
 
-function decodeSeedSuccess(response) {
+function decodeSeedSuccess(pubPass, privPass, response) {
   return (dispatch) => {
     dispatch({response: response, type: DECODESEED_SUCCESS });
+    dispatch(createWalletRequest(pubPass, privPass, response.decoded_seed))
   };
 }
 
-export function decodeSeedAttempt(mnemonic) {
+export function decodeSeedAttempt(pubPass, privPass, mnemonic) {
   return (dispatch) => {
     console.log(mnemonic);
     dispatch({request: {user_input:mnemonic}, type: DECODESEED_ATTEMPT });
-    dispatch(decodeSeedAction());
+    dispatch(decodeSeedAction(pubPass, privPass));
   };
 }
 
-function decodeSeedAction() {
+function decodeSeedAction(pubPass, privPass) {
   return (dispatch, getState) => {
     const { seeder, decodeSeedRequest } = getState().seedService;
     decodeSeed(seeder, decodeSeedRequest,
@@ -105,7 +107,7 @@ function decodeSeedAction() {
           if (err) {
             dispatch(decodeSeedError(err + ' Please try again'));
           } else {
-            dispatch(decodeSeedSuccess(response));
+            dispatch(decodeSeedSuccess(pubPass, privPass, response));
           }
         });
   };
