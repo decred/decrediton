@@ -20,7 +20,7 @@ let CreateWalletForm = ({ dispatch, seedText }) => {
         if (pubpass == '' || privpass == '') {
           return;
         }
-        dispatch(createWalletRequest(pubpass, privpass, seedText.seed_hex, false));
+        dispatch(createWalletRequest(pubpass, privpass, seedText.seed_bytes, false));
         pubpass = '';
         privpass = '';
       }}>
