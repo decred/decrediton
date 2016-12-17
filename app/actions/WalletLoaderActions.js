@@ -99,9 +99,9 @@ function createWalletSuccess() {
   };
 }
 
-export function createWalletRequest(pubPass, privPass, seed) {
+export function createWalletRequest(pubPass, privPass, seed, existing) {
   return (dispatch) => {
-    dispatch({ type: CREATEWALLET_ATTEMPT });
+    dispatch({ existing: existing, type: CREATEWALLET_ATTEMPT });
     dispatch(createNewWallet(pubPass, privPass, seed));
   };
 }
@@ -111,7 +111,7 @@ function createNewWallet(pubPass, privPass, seed) {
   var request = {
     public_passphrase: Buffer.from(pubPass),
     private_passphrase: Buffer.from(privPass),
-    seed: Buffer.from(seed),//"f4a51fc3de6da8ea249bac512735711b2dea52f7b9487aede7d5a47eca387a10"),
+    seed: Buffer.from(seed),
   };
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;

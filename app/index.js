@@ -79,6 +79,7 @@ var initialState = {
     walletCreateRequest: false,
     walletCreateResponse: null,
     walletCreateError: null,
+    walletCreateExisting: false,
     // WalletExist
     walletExistRequestAttempt: false,
     walletExistRequest: null,
