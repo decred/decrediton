@@ -44,7 +44,11 @@ function getWalletRPCVersionError(error) {
 }
 
 function getWalletRPCVersionSuccess(getWalletRPCVersionResponse) {
-  return { response: getWalletRPCVersionResponse, type: WALLETRPCVERSION_SUCCESS };
+  return (dispatch, getState) => {
+    dispatch( { getWalletRPCVersionResponse: getWalletRPCVersionResponse, type: WALLETRPCVERSION_SUCCESS });
+    const { address, port } = getState().grpc;
+    dispatch(loaderRequest(address,port));
+  }
 }
 
 export function getWalletRPCVersionAttempt(accountNumber, requiredConfs) {
@@ -62,7 +66,7 @@ export function getWalletRPCVersionAttempt(accountNumber, requiredConfs) {
 
 function getWalletRPCVersionAction() {
   return (dispatch, getState) => {
-    const { walletService, getWalletRPCVersionRequest } = getState().grpc;
+    const { walletService, getWalletRPCVersionRequest } = getState().version;
     getWalletRPCVersion(walletService, getWalletRPCVersionRequest,
         function(getWalletRPCVersionResponse, err) {
           if (err) {

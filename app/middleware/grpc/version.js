@@ -1,4 +1,5 @@
 import { getCert } from './client';
+import grpc from 'grpc';
 
 export function getVersionService(address, port, cb) {
   var protoDescriptor = grpc.load('./app/api.proto');
@@ -21,7 +22,7 @@ export function getVersionService(address, port, cb) {
 }
 
 export function getWalletRPCVersion(versionService, request, cb) {
-  if (versionService === undefined) {
+  if (versionService === null) {
     return cb(null, new Error('versionService not available to getCurrentVersion'));
   }
 

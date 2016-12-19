@@ -18,8 +18,11 @@ if (cfg.network == 'testnet') {
   grpcport = cfg.wallet_port;
 }
 
+
 var initialState = {  
   version: {
+    // RequiredVersion
+    RequireVersion: "4.2.0",
     // VersionService
     versionService: null,
     getVersionServiceRequestAttempt: false,

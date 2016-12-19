@@ -3,7 +3,7 @@ import {
   WALLETRPCVERSION_ATTEMPT, WALLETRPCVERSION_FAILED, WALLETRPCVERSION_SUCCESS,
 } from '../actions/VersionActions';
 
-export default function grpc(state = {}, action) {
+export default function version(state = {}, action) {
   switch (action.type) {
   case GETVERSIONSERVICE_ATTEMPT:
     return {...state,

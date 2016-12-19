@@ -71,7 +71,7 @@ class Home extends Component{
     const { stepIndex } = this.props;
 
     const { address, port } = this.props;
-
+    const { getVersionServiceAttempt } = this.props;
     const { loader, getLoaderRequestAttempt, getLoaderError, loaderRequest } = this.props;
     const { walletCreateRequestAttempt, walletCreateError } = this.props;
     const { walletOpenRequestAttempt, walletOpenError } = this.props;
@@ -101,7 +101,7 @@ class Home extends Component{
         <RaisedButton type="submit"
           style={styles.buttons}
           primary={true}
-          onClick={() => {loaderRequest(address, port);}}
+          onClick={() => {getVersionServiceAttempt();}}
           label='Get Started'/>
       </div>);
     var openingWallet;
