@@ -87,7 +87,7 @@ function decodeSeedError(error) {
 function decodeSeedSuccess(pubPass, privPass, response) {
   return (dispatch) => {
     dispatch({response: response, type: DECODESEED_SUCCESS });
-    dispatch(createWalletRequest(pubPass, privPass, response.decoded_seed, true))
+    dispatch(createWalletRequest(pubPass, privPass, response.decoded_seed, true));
   };
 }
 
