@@ -6,11 +6,17 @@ import * as ClientActions from '../actions/ClientActions';
 import * as WalletLoaderActions from '../actions/WalletLoaderActions';
 import * as ControlActions from '../actions/ControlActions';
 import * as SeedServiceActions from '../actions/SeedServiceActions';
+import * as VersionActions from '../actions/VersionActions';
 
 function mapStateToProps(state) {
   return {
     address: state.grpc.address,
     port: state.grpc.port,
+
+    // Version checking
+    requiredVersion: state.version.requiredVersion,
+    versionInvalid: state.version.versionInvalid,
+    versionInvalidError: state.version.versionInvalidError,
 
     stepIndex: state.walletLoader.stepIndex,
     // Step 0
@@ -64,7 +70,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, ControlActions, WalletLoaderActions, ClientActions), dispatch);
+  return bindActionCreators(Object.assign({}, VersionActions, ControlActions, WalletLoaderActions, ClientActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GetStarted);

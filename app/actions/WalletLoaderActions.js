@@ -2,6 +2,7 @@ import { loader, createWallet, walletExists, openWallet,
   closeWallet, discoverAddresses, subscribeBlockNtfns,
   startConsensusRpc, fetchHeaders} from '../middleware/grpc/loader';
 import { getWalletServiceAttempt } from './ClientActions';
+import { getVersionServiceAttempt } from './VersionActions';
 import { transactionNftnsStart } from './NotificationActions';
 import { getSeederAttempt } from './SeedServiceActions';
 import { getDcrdCert } from '../middleware/grpc/client';

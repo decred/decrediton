@@ -18,7 +18,23 @@ if (cfg.network == 'testnet') {
   grpcport = cfg.wallet_port;
 }
 
+
 var initialState = {
+  version: {
+    // RequiredVersion
+    requiredVersion: '4.2.0',
+    versionInvalid: false,
+    versionInvalidError: null,
+    // VersionService
+    versionService: null,
+    getVersionServiceRequestAttempt: false,
+    getVersionServiceError: '',
+    // Balance
+    getWalletRPCVersionRequest: null,
+    getWalletRPCVersionError: null,
+    getWalletRPCVersionRequestAttempt: false,
+    getWalletRPCVersionResponse: null,
+  },
   grpc: {
     // WalletService
     address: '127.0.0.1',

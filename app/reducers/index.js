@@ -6,6 +6,7 @@ import walletLoader from './walletLoader';
 import seedService from './seedService';
 import notifications from './notifications';
 import control from './control';
+import version from './version';
 
 const rootReducer = combineReducers({
   grpc,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   seedService,
   notifications,
   control,
+  version,
   routing
 });
 
