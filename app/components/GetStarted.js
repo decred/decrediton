@@ -71,6 +71,7 @@ class Home extends Component{
     const { stepIndex } = this.props;
 
     const { address, port } = this.props;
+    const { requiredVersion, versionInvalid, versionInvalidError } = this.props;
     const { getVersionServiceAttempt } = this.props;
     const { loader, getLoaderRequestAttempt, getLoaderError, loaderRequest } = this.props;
     const { walletCreateRequestAttempt, walletCreateError } = this.props;
@@ -309,7 +310,12 @@ class Home extends Component{
         </Stepper>
       </div>
     );
-
+    
+    if (!versionInvalid) {
+      return (stepper);
+    } else {
+      return (<ShowError error={versionInvalidError}/>);
+    }
 
     return (stepper);
 

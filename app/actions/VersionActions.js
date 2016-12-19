@@ -53,7 +53,8 @@ function getWalletRPCVersionSuccess(getWalletRPCVersionResponse) {
     const { address, port } = getState().grpc;
     const { requiredVersion } = getState().version;
     if (requiredVersion != getWalletRPCVersionResponse.version_string) {
-      var versionErr = "Version not valid got" + getWalletRPCVersionResponse.version_string + " expect " + requiredVersion
+      var versionErr = "Version not valid! got: " + getWalletRPCVersionResponse.version_string + " expected: " + requiredVersion + 
+      ". Please change dcrwallet to expected version."
       dispatch( { error: versionErr, type: VERSION_NOT_VALID })
     } else {
       dispatch(loaderRequest(address,port));

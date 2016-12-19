@@ -13,6 +13,11 @@ function mapStateToProps(state) {
     address: state.grpc.address,
     port: state.grpc.port,
 
+    // Version checking
+    requiredVersion: state.version.requiredVersion,
+    versionInvalid: state.version.versionInvalid,
+    versionInvalidError: state.version.versionInvalidError,
+
     stepIndex: state.walletLoader.stepIndex,
     // Step 0
     getLoaderRequestAttempt: state.walletLoader.getLoaderRequestAttempt,

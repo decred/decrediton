@@ -22,7 +22,9 @@ if (cfg.network == 'testnet') {
 var initialState = {  
   version: {
     // RequiredVersion
-    requiredVersion: "4.1.0",
+    requiredVersion: "4.2.0",
+    versionInvalid: false,
+    versionInvalidError: null,
     // VersionService
     versionService: null,
     getVersionServiceRequestAttempt: false,
