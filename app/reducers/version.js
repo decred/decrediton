@@ -1,6 +1,7 @@
 import {
   GETVERSIONSERVICE_ATTEMPT, GETVERSIONSERVICE_FAILED, GETVERSIONSERVICE_SUCCESS,
   WALLETRPCVERSION_ATTEMPT, WALLETRPCVERSION_FAILED, WALLETRPCVERSION_SUCCESS,
+  VERSION_NOT_VALID
 } from '../actions/VersionActions';
 
 export default function version(state = {}, action) {
@@ -38,6 +39,11 @@ export default function version(state = {}, action) {
       getWalletRPCVersionError: '',
       getWalletRPCVersionRequestAttempt: false,
       getWalletRPCVersionResponse: action.getWalletRPCVersionResponse,
+    };
+  case VERSION_NOT_VALID:
+    return {...state,
+      versionInvalid: true,
+      versionInvalidError: action.error
     };
   default:
     return state;
