@@ -145,16 +145,18 @@ export function getAccounts(client, request, cb) {
 }
 
 export function getTransactions(client, request, cb) {
-  var request = {};
-  console.log(request);
   var getTx = client.getTransactions(request);
   getTx.on('data', function(response) {
-    console.log('getTransactions', response);
-    return cb(response);
+    return cb(false, response);
   });
-  getTx.on('end', function(response) {
-    console.log('getTransactions end', response);
-    return cb(response);
+  getTx.on('end', function() {
+    return cb(true);
+  });
+  getTx.on('status', function(status) {
+    console.log('Rescan status:', status);
+  });
+  getTx.on('error', function(err) {
+        return cb(false, null, err);
   });
 }
 

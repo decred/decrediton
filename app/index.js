@@ -78,6 +78,7 @@ var initialState = {
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
     // Transactions
+    transactions: Array(),
     getTransactionsRequest: null,
     getTransactionsError: null,
     getTransactionsRequestAttempt: false,
