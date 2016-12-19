@@ -50,6 +50,7 @@ export default function walletLoader(state = {}, action) {
     };
   case CREATEWALLET_ATTEMPT:
     return {...state,
+      walletCreateExisting: action.existing,
       walletCreateRequestAttempt: true,
       walletCreateRequest: action.request,
     };

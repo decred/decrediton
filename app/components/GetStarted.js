@@ -80,6 +80,8 @@ class Home extends Component{
     const { discoverAddressRequestAttempt, discoverAddressError } = this.props;
     const { startRpcRequestAttempt, startRpcError } = this.props;
     const { fetchHeadersRequestAttempt } = this.props;
+    const { generateRandomSeedResponse } = this.props;
+
     /*
     const { loadActiveDataFiltersAttempt } = this.props;
 
@@ -122,6 +124,10 @@ class Home extends Component{
 
 
     var creatingWallet;
+    var seedReady = (<div></div>);
+    if (generateRandomSeedResponse !== null) {
+      seedReady = (<CreateWalletForm seedText={generateRandomSeedResponse}/>);
+    }
     if (walletCreateRequestAttempt) {
       creatingWallet = (
         <div>
@@ -130,12 +136,13 @@ class Home extends Component{
       );
     } else {
       creatingWallet = (
-      <div>
-        <ShowError error={walletCreateError} />
-        <h3>Create wallet</h3>
-        <h5>Please enter the information below to create your dcrwallet</h5>
-        <CreateWalletForm />
-      </div>);
+        <div>
+          <ShowError error={walletCreateError} />
+          <h3>Create wallet</h3>
+          <h5>Please enter the information below to create your dcrwallet</h5>
+          {seedReady}
+        </div>
+      );
     }
     const getStartedWalletCreate = (creatingWallet);
 

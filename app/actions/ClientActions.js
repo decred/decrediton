@@ -23,11 +23,11 @@ function getWalletServiceSuccess(walletService) {
     //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
     //setTimeout( () => {dispatch(getTransactionsAttempt(2, 10, '', ''));}, 1000);
 
-    // Check here to see if wallet was just created, if so
-    // start rescan from 0
-    const { fetchHeadersResponse } = getState().walletLoader;
-    if ( fetchHeadersResponse !== null ) {
-      console.log(fetchHeadersResponse);
+    // Check here to see if wallet was just created from an existing
+    // seed.  If it was created from a newly generated seed there is no
+    // expectation of address use so rescan can be skipped.
+    const { fetchHeadersResponse, walletCreateExisting } = getState().walletLoader;
+    if ( walletCreateExisting && fetchHeadersResponse !== null ) {
       if (fetchHeadersResponse.fetched_headers_count > 0) {
         setTimeout(() => {dispatch(rescanAttempt(fetchHeadersResponse.first_new_block_height));}, 1000);
       }

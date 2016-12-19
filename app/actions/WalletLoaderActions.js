@@ -3,7 +3,7 @@ import { loader, createWallet, walletExists, openWallet,
   startConsensusRpc, fetchHeaders} from '../middleware/grpc/loader';
 import { getWalletServiceAttempt } from './ClientActions';
 import { transactionNftnsStart } from './NotificationActions';
-
+import { getSeederAttempt } from './SeedServiceActions';
 import { getDcrdCert } from '../middleware/grpc/client';
 import { getCfg } from '../config.js';
 
@@ -18,6 +18,7 @@ function loaderError(error) {
 function loaderSuccess(loader) {
   return (dispatch) => {
     dispatch({loader: loader, type: LOADER_SUCCESS });
+    dispatch(getSeederAttempt());
     dispatch(walletExistRequest());
   };
 }
@@ -98,9 +99,9 @@ function createWalletSuccess() {
   };
 }
 
-export function createWalletRequest(pubPass, privPass, seed) {
+export function createWalletRequest(pubPass, privPass, seed, existing) {
   return (dispatch) => {
-    dispatch({ type: CREATEWALLET_ATTEMPT });
+    dispatch({ existing: existing, type: CREATEWALLET_ATTEMPT });
     dispatch(createNewWallet(pubPass, privPass, seed));
   };
 }
@@ -109,7 +110,7 @@ function createNewWallet(pubPass, privPass, seed) {
   var request = {
     public_passphrase: Buffer.from(pubPass),
     private_passphrase: Buffer.from(privPass),
-    seed: Buffer.from(seed),
+    seed: seed,
   };
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
