@@ -310,7 +310,7 @@ class Home extends Component{
         </Stepper>
       </div>
     );
-    
+
     if (!versionInvalid) {
       return (stepper);
     } else {

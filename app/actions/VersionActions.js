@@ -41,7 +41,7 @@ function getVersionServiceAction() {
 export const WALLETRPCVERSION_ATTEMPT = 'WALLETRPCVERSION_ATTEMPT';
 export const WALLETRPCVERSION_FAILED = 'WALLETRPCVERSION_FAILED';
 export const WALLETRPCVERSION_SUCCESS = 'WALLETRPCVERSION_SUCCESS';
-export const VERSION_NOT_VALID = "VERSION_NOT_VALID";
+export const VERSION_NOT_VALID = 'VERSION_NOT_VALID';
 
 function getWalletRPCVersionError(error) {
   return { error, type: WALLETRPCVERSION_FAILED };
@@ -53,13 +53,13 @@ function getWalletRPCVersionSuccess(getWalletRPCVersionResponse) {
     const { address, port } = getState().grpc;
     const { requiredVersion } = getState().version;
     if (requiredVersion != getWalletRPCVersionResponse.version_string) {
-      var versionErr = "Version not valid! got: " + getWalletRPCVersionResponse.version_string + " expected: " + requiredVersion + 
-      ". Please change dcrwallet to expected version."
-      dispatch( { error: versionErr, type: VERSION_NOT_VALID })
+      var versionErr = 'Version not valid! got: ' + getWalletRPCVersionResponse.version_string + ' expected: ' + requiredVersion +
+      '. Please change dcrwallet to expected version.';
+      dispatch( { error: versionErr, type: VERSION_NOT_VALID });
     } else {
       dispatch(loaderRequest(address,port));
     }
-  }
+  };
 }
 
 export function getWalletRPCVersionAttempt(accountNumber, requiredConfs) {
