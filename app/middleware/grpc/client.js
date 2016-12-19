@@ -153,7 +153,7 @@ export function getTransactions(client, request, cb) {
     return cb(true);
   });
   getTx.on('status', function(status) {
-    console.log('Rescan status:', status);
+    console.log('GetTx status:', status);
   });
   getTx.on('error', function(err) {
         return cb(false, null, err);

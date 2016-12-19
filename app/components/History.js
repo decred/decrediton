@@ -5,16 +5,15 @@ import { Link } from 'react-router';
 import {Table, TableBody, TableHeader, TableHeaderColumn,
   TableRow, TableRowColumn} from 'material-ui/Table';
 import ErrorScreen from './ErrorScreen';
+import TxRows from './TxRows';
 
 class History extends Component{
   static propTypes = {
-    walletService: PropTypes.object.isRequired,
+    walletService: PropTypes.object,
   };
 
   render() {
-    const { walletService } = this.props;
-
-    /* View that will be seen when user has a set Client */
+    const { walletService, transactions } = this.props;
     const historyView = (
       <div>
         <h1>History Page</h1>
@@ -27,26 +26,18 @@ class History extends Component{
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableRowColumn>20:20:20 November 28th 2016</TableRowColumn>
-              <TableRowColumn>txid</TableRowColumn>
-              <TableRowColumn>200</TableRowColumn>
-            </TableRow>
-            <TableRow>
-              <TableRowColumn>20:20:20 November 28th 2016</TableRowColumn>
-              <TableRowColumn>txid</TableRowColumn>
-              <TableRowColumn>200</TableRowColumn>
-            </TableRow>
-            <TableRow>
-              <TableRowColumn>20:20:20 November 28th 2016</TableRowColumn>
-              <TableRowColumn>txid</TableRowColumn>
-              <TableRowColumn>200</TableRowColumn>
-            </TableRow>
+            {transactions.map(function(tx, i) {
+            var parseDate = new Date(tx.transaction.mined_transactions.timestamp*1000);
+              return (
+                <TableRow key={i}>
+                  <TableRowColumn>{tx.transaction.mined_transactions.height}</TableRowColumn>
+                  <TableRowColumn>{tx.transaction.mined_transactions.transactions[0].hash.toString('hex')}</TableRowColumn>
+                  <TableRowColumn><span>{parseDate.toString()}</span></TableRowColumn>
+                </TableRow>);
+            })}
           </TableBody>
         </Table>
       </div>);
-
-    /* Check to see that client is not undefined */
     if (walletService === null) {
       return (<ErrorScreen />);
     } else {
