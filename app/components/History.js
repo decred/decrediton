@@ -5,7 +5,6 @@ import { Link } from 'react-router';
 import {Table, TableBody, TableHeader, TableHeaderColumn,
   TableRow, TableRowColumn} from 'material-ui/Table';
 import ErrorScreen from './ErrorScreen';
-import TxRows from './TxRows';
 
 class History extends Component{
   static propTypes = {
@@ -17,22 +16,22 @@ class History extends Component{
     const historyView = (
       <div>
         <h1>History Page</h1>
-        <Table striped bordered condensed hover>
-          <TableHeader>
+        <Table fixedHeader={true} striped bordered condensed hover showCheckboxes={false} >
+          <TableHeader displaySelectAll={false}>
             <TableRow>
+              <TableHeaderColumn>Block Number</TableHeaderColumn>
               <TableHeaderColumn>Date</TableHeaderColumn>
-              <TableHeaderColumn>TXID</TableHeaderColumn>
-              <TableHeaderColumn>Amount</TableHeaderColumn>
+              <TableHeaderColumn>Transaction Hash</TableHeaderColumn>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody displayRowCheckbox={false}>
             {transactions.map(function(tx, i) {
             var parseDate = new Date(tx.transaction.mined_transactions.timestamp*1000);
               return (
                 <TableRow key={i}>
                   <TableRowColumn>{tx.transaction.mined_transactions.height}</TableRowColumn>
-                  <TableRowColumn>{tx.transaction.mined_transactions.transactions[0].hash.toString('hex')}</TableRowColumn>
                   <TableRowColumn><span>{parseDate.toString()}</span></TableRowColumn>
+                  <TableRowColumn colSpan={3}>{tx.transaction.mined_transactions.transactions[0].hash.toString('hex')}</TableRowColumn>
                 </TableRow>);
             })}
           </TableBody>
