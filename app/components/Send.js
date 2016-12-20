@@ -8,7 +8,7 @@ import TextField from 'material-ui/TextField';
 import ConstructTxForm from '../containers/ConstructTxForm';
 import SignTxForm from '../containers/SignTxForm';
 import ShowError from './ShowError';
-import { reverseHash } from '../helpers/byteActions'
+import { reverseHash } from '../helpers/byteActions';
 
 const style = {
   margin: 12,

@@ -156,7 +156,7 @@ export function getTransactions(client, request, cb) {
     console.log('GetTx status:', status);
   });
   getTx.on('error', function(err) {
-        return cb(false, null, err);
+    return cb(false, null, err);
   });
 }
 

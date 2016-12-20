@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import {Table, TableBody, TableHeader, TableHeaderColumn,
   TableRow, TableRowColumn} from 'material-ui/Table';
 import ErrorScreen from './ErrorScreen';
-import { reverseHash } from '../helpers/byteActions'
+import { reverseHash } from '../helpers/byteActions';
 class History extends Component{
   static propTypes = {
     walletService: PropTypes.object,
@@ -27,9 +27,9 @@ class History extends Component{
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
             {transactions.map(function(tx, i) {
-            var parseDate = new Date(tx.transaction.mined_transactions.timestamp*1000);
-              var s = tx.transaction.mined_transactions.transactions[0].hash.toString('hex')
-              var reversed = reverseHash(s)
+              var parseDate = new Date(tx.transaction.mined_transactions.timestamp*1000);
+              var s = tx.transaction.mined_transactions.transactions[0].hash.toString('hex');
+              var reversed = reverseHash(s);
               return (
                 <TableRow key={i}>
                   <TableRowColumn>{tx.transaction.mined_transactions.height}</TableRowColumn>

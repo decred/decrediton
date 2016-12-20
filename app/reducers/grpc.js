@@ -162,8 +162,8 @@ export default function grpc(state = {}, action) {
   case GETTRANSACTIONS_PROGRESS:
     return {...state,
       transactions: [
-        ...state.transactions, 
-        { transaction: action.getTransactionsResponse } 
+        ...state.transactions,
+        { transaction: action.getTransactionsResponse }
       ],
     };
   case GETTRANSACTIONS_COMPLETE:
@@ -172,7 +172,7 @@ export default function grpc(state = {}, action) {
       getTransactionsRequestAttempt: false,
       getTransactionsResponse: null,
       getTransactionsRequest: null,
-    };  
+    };
   default:
     return state;
   }
