@@ -21,7 +21,7 @@ function getWalletServiceSuccess(walletService) {
     //setTimeout( () => {dispatch(getPingAttempt());}, 1000);
     //setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
     //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
-    //setTimeout( () => {dispatch(getTransactionsAttempt(2, 10, '', ''));}, 1000);
+    setTimeout( () => {dispatch(getTransactionsAttempt(0, 300000, '', ''));}, 1000);
 
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
@@ -326,14 +326,22 @@ function accounts() {
 
 export const GETTRANSACTIONS_ATTEMPT = 'GETTRANSACTIONS_ATTEMPT';
 export const GETTRANSACTIONS_FAILED = 'GETTRANSACTIONS_FAILED';
-export const GETTRANSACTIONS_SUCCESS = 'GETTRANSACTIONS_SUCCESS';
+export const GETTRANSACTIONS_PROGRESS = 'GETTRANSACTIONS_PROGRESS';
+export const GETTRANSACTIONS_COMPLETE = 'GETTRANSACTIONS_COMPLETE';
 
 function getTransactionsError(error) {
   return { error, type: GETTRANSACTIONS_FAILED };
 }
 
-function getTransactionsSuccess(getTransactionsResponse) {
-  return { getTransactionsResponse: getTransactionsResponse, type: GETTRANSACTIONS_SUCCESS };
+function getTransactionsProgress(getTransactionsResponse) {
+  return { getTransactionsResponse: getTransactionsResponse, type: GETTRANSACTIONS_PROGRESS };
+}
+
+function getTransactionsComplete() {
+  return (dispatch) => {
+    dispatch({ type: GETTRANSACTIONS_COMPLETE });
+    setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
+  };
 }
 
 export function getTransactionsAttempt(startHeight, endHeight, startHash, endHash, ) {
@@ -359,11 +367,13 @@ function transactions() {
     const { walletService } = getState().grpc;
     const { getTransactionsRequest } = getState().grpc;
     getTransactions(walletService, getTransactionsRequest,
-        function(getTransactionsResponse, err) {
+        function(finished, getTransactionsResponse, err) {
           if (err) {
             dispatch(getTransactionsError(err + ' Please try again'));
+          } else if (finished) {
+            dispatch(getTransactionsComplete());
           } else {
-            dispatch(getTransactionsSuccess(getTransactionsResponse));
+            dispatch(getTransactionsProgress(getTransactionsResponse));
           }
         });
   };

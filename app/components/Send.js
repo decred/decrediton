@@ -8,6 +8,7 @@ import TextField from 'material-ui/TextField';
 import ConstructTxForm from '../containers/ConstructTxForm';
 import SignTxForm from '../containers/SignTxForm';
 import ShowError from './ShowError';
+import { reverseHash } from '../helpers/byteActions';
 
 const style = {
   margin: 12,
@@ -60,7 +61,7 @@ class Send extends Component{
     const publishTxView = (
       <div>
         <h1>Published Tx!</h1>
-        <p>{publishTransactionResponse !== null ? publishTransactionResponse.transaction_hash.toString('hex') : null}</p>
+        <p>{publishTransactionResponse !== null ? reverseHash(publishTransactionResponse.transaction_hash.toString('hex')) : null}</p>
       </div>);
 
     if (constructTxResponse === null) {
