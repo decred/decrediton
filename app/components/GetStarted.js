@@ -314,7 +314,8 @@ class Home extends Component{
             modal={true}
             open={true}
           >
-            Disclaimer
+            Decrediton is currently under heavy development and currently in an alpha-state.  While we have tested
+            the code thoroughly, we suggest avoid using this for mainnet wallets until development .  Use at your own risk!
           </Dialog>
         </div>);
     } else {
