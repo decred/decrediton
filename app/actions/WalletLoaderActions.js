@@ -8,6 +8,12 @@ import { getSeederAttempt } from './SeedServiceActions';
 import { getDcrdCert } from '../middleware/grpc/client';
 import { getCfg } from '../config.js';
 
+export const DISCLAIMER_OK = 'DISCLAIMER_OK';
+
+export function disclaimerOKAction() {
+  return { type: DISCLAIMER_OK }
+}
+
 export const LOADER_ATTEMPT = 'LOADER_ATTEMPT';
 export const LOADER_FAILED = 'LOADER_FAILED';
 export const LOADER_SUCCESS = 'LOADER_SUCCESS';

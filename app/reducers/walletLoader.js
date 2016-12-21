@@ -7,9 +7,14 @@ import { STARTRPC_ATTEMPT, STARTRPC_FAILED, STARTRPC_SUCCESS } from '../actions/
 import { DISCOVERADDRESS_ATTEMPT, DISCOVERADDRESS_FAILED, DISCOVERADDRESS_SUCCESS } from '../actions/WalletLoaderActions';
 import { SUBSCRIBEBLOCKNTFNS_ATTEMPT, SUBSCRIBEBLOCKNTFNS_FAILED, SUBSCRIBEBLOCKNTFNS_SUCCESS } from '../actions/WalletLoaderActions';
 import { FETCHHEADERS_ATTEMPT, FETCHHEADERS_FAILED, FETCHHEADERS_SUCCESS } from '../actions/WalletLoaderActions';
+import { DISCLAIMER_OK } from '../actions/WalletLoaderActions';
 
 export default function walletLoader(state = {}, action) {
   switch (action.type) {
+  case DISCLAIMER_OK:
+    return {...state,
+      disclaimerOK: true,
+    };
   case LOADER_ATTEMPT:
     return {...state,
       getLoaderRequestAttempt: true,

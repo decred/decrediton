@@ -8,7 +8,7 @@ import WalletOpenForm from '../containers/WalletOpenForm';
 import CreateWalletForm from '../containers/CreateWalletForm';
 import DiscoverAddressForm from '../containers/DiscoverAddressForm';
 import CircularProgress from 'material-ui/CircularProgress';
-
+import Dialog from 'material-ui/Dialog';
 import ShowError from './ShowError';
 import {
   Step,
@@ -35,7 +35,14 @@ const styles = {
   }
 };
 
+
+
 class Home extends Component{
+  
+  handleDisclaimerOK = (disclaimerOKAction) => {
+    disclaimerOKAction();
+    this.setState({open: false});
+  }
   constructor(props) {
     super(props);
   }
@@ -69,7 +76,7 @@ class Home extends Component{
 
   render() {
     const { stepIndex } = this.props;
-
+    const { disclaimerOK, disclaimerOKAction } = this.props;
     const { address, port } = this.props;
     const { requiredVersion, versionInvalid, versionInvalidError } = this.props;
     const { getVersionServiceAttempt } = this.props;
@@ -83,27 +90,9 @@ class Home extends Component{
     const { fetchHeadersRequestAttempt } = this.props;
     const { generateRandomSeedResponse } = this.props;
 
-    /*
-    const { loadActiveDataFiltersAttempt } = this.props;
-
-
-    const getStarted = (
-      <div>
-        <p>{error}</p>
-        <h3>Welcome to Decrediton</h3>
-        <h5>Please enter the information below to connect to you dcrwallet</h5>
-        <LoginForm />
-      </div>);
-      */
-
-
     const getStartedWalletLoader = (
       <div>
-        <RaisedButton type="submit"
-          style={styles.buttons}
-          primary={true}
-          onClick={() => {getVersionServiceAttempt();}}
-          label='Get Started'/>
+        <ShowError error={getLoaderError} />
       </div>);
     var openingWallet;
     if (walletOpenRequestAttempt) {
@@ -310,11 +299,31 @@ class Home extends Component{
         </Stepper>
       </div>
     );
-
-    if (!versionInvalid) {
-      return (stepper);
+    const actions = [
+      <FlatButton
+        label="OK, I Understand"
+        primary={true}
+        onTouchTap={this.handleDisclaimerOK(disclaimerOKAction)}
+      />,
+    ];
+    if (!disclaimerOK) {
+      return (
+        <div>
+          <Dialog
+            title="Disclaimer"
+            actions={actions}
+            modal={true}
+            open={true}
+          >
+            Disclaimer
+          </Dialog>
+        </div>);
     } else {
-      return (<ShowError error={versionInvalidError}/>);
+      if (!versionInvalid) {
+        return (stepper);
+      } else {
+        return (<ShowError error={versionInvalidError}/>);
+      }
     }
 
     return (stepper);
