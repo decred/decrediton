@@ -85,6 +85,7 @@ var initialState = {
     getTransactionsResponse: null,
   },
   walletLoader: {
+    disclaimerOK: false,
     stepIndex: 0,
     // Loader
     getLoaderRequestAttempt: false,

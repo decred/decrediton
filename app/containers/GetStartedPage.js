@@ -66,6 +66,9 @@ function mapStateToProps(state) {
     decodeSeedRequestAttempt: state.seedService.decodeSeedRequestAttempt,
     decodeSeedResponse: state.seedService.decodeSeedResponse,
     decodeSeedError: state.seedService.decodeSeedError,
+
+    // DisclaimerOK
+    disclaimerOK: state.walletLoader.disclaimerOK,
   };
 }
 
