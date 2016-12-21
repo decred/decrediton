@@ -29,7 +29,7 @@ class Header extends Component {
     const { stepIndex, walletService } = this.props;
     const loggedIn = (
       <div>
-        <AppBar onLeftIconButtonTouchTap={walletService !== null ? this.handleToggle : null} title="Decrediton (in development)" />
+        <AppBar onLeftIconButtonTouchTap={walletService !== null ? this.handleToggle : null} title="Decrediton Preview" />
         <Drawer
           ref="Drawer"
           docked={false}
