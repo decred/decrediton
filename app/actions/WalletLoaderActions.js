@@ -11,7 +11,10 @@ import { getCfg } from '../config.js';
 export const DISCLAIMER_OK = 'DISCLAIMER_OK';
 
 export function disclaimerOKAction() {
-  return { type: DISCLAIMER_OK }
+  return (dispatch) => {
+    dispatch({ type: DISCLAIMER_OK });
+    dispatch(getVersionServiceAttempt());
+  }
 }
 
 export const LOADER_ATTEMPT = 'LOADER_ATTEMPT';

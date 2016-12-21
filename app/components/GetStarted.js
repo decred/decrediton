@@ -39,9 +39,8 @@ const styles = {
 
 class Home extends Component{
   
-  handleDisclaimerOK = (disclaimerOKAction) => {
-    disclaimerOKAction();
-    this.setState({open: false});
+  handleDisclaimerOK = () => {
+    this.props.disclaimerOKAction();
   }
   constructor(props) {
     super(props);
@@ -303,7 +302,7 @@ class Home extends Component{
       <FlatButton
         label="OK, I Understand"
         primary={true}
-        onTouchTap={this.handleDisclaimerOK(disclaimerOKAction)}
+        onTouchTap={this.handleDisclaimerOK}
       />,
     ];
     if (!disclaimerOK) {
