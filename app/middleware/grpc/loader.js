@@ -2,14 +2,13 @@ process.env['GRPC_SSL_CIPHER_SUITES'] = 'HIGH+ECDSA';
 
 import { getCert, getApi } from './client';
 import grpc from 'grpc';
+var messages = require('../walletrpc/api_pb');
+var services = require('../walletrpc/api_grpc_pb.js');
 
 export function loader(request, cb) {
-  var protoDescriptor = grpc.load(getApi());
-  var walletrpc = protoDescriptor.walletrpc;
-
   var cert = getCert();
   var creds = grpc.credentials.createSsl(cert);
-  var loader = new walletrpc.WalletLoaderService(request.address + ':' + request.port, creds);
+  var loader = new services.WalletLoaderServiceClient(request.address + ':' + request.port, creds);
 
   var deadline = new Date();
   var deadlineInSeconds = 2;
