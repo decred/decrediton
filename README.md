@@ -84,10 +84,7 @@ If you do not already have dcrd and dcrwallet installed,
 is the preferred way to install the tools.  Follow the instructions on
 that page to get the necessary programs.
 
-Download the decrediton release for your operating system.  For macOS
-double-click the .dmg file, drag the .app to your Applications folder,
-and run as normal.  Decrediton will start up a copy of dcrd and
-dcrwallet for you.
+Download the decrediton release for your operating system.
 
 On linux you will need to decompress the package and then run the
 file:
@@ -95,7 +92,18 @@ file:
 ./decrediton
 ```
 
-As on macOS this will start dcrd and dcrwallet for you.
+This will start dcrd and dcrwallet for you.
+
+On macOS, double-click the .dmg file, drag the .app to your
+Applications folder.  Since our app is not currently signed, you will
+either need to start dcrwallet and dcrd manually as described in the
+developing section or you need to start it from the command line:
+```
+open Decrediton.app
+```
+to have decrediton start up a copy of dcrd and dcrwallet for you.
+
+We will improve this in an upcoming release.
 
 From there follow the on screen instructions to setup your wallet.
 
