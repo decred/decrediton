@@ -238,7 +238,7 @@ class Home extends Component{
     */
 
     var openOrCreate;
-    if (walletExistResponse !== null && walletExistResponse.exists) {
+    if (walletExistResponse !== null && walletExistResponse.getExists()) {
       openOrCreate = getStartedWalletOpen;
     } else {
       openOrCreate = getStartedWalletCreate;

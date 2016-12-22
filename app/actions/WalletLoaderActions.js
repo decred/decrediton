@@ -7,6 +7,9 @@ import { transactionNftnsStart } from './NotificationActions';
 import { getSeederAttempt } from './SeedServiceActions';
 import { getDcrdCert } from '../middleware/grpc/client';
 import { getCfg } from '../config.js';
+import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest, 
+  CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest, 
+  SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from '../middleware/walletrpc/api_pb';
 
 export const DISCLAIMER_OK = 'DISCLAIMER_OK';
 
@@ -73,9 +76,9 @@ function walletExistSuccess(response) {
 }
 
 export function walletExistRequest() {
-  var request = {};
+  var request = new WalletExistsRequest();
   return (dispatch) => {
-    dispatch({request: {}, type: WALLETEXIST_ATTEMPT });
+    dispatch({request: request, type: WALLETEXIST_ATTEMPT });
     setTimeout(dispatch(checkWalletExist()), 3000);
   };
 }
@@ -117,7 +120,9 @@ export function createWalletRequest(pubPass, privPass, seed, existing) {
 }
 
 function createNewWallet(pubPass, privPass, seed) {
-  var request = {
+  CreateWalletRequest
+  var request = new CreateWalletRequest();
+  request = {
     public_passphrase: Buffer.from(pubPass),
     private_passphrase: Buffer.from(privPass),
     seed: seed,
@@ -151,7 +156,6 @@ function openWalletSuccess() {
 }
 
 export function openWalletAttempt(pubPass) {
-
   return (dispatch) => {
     dispatch({type: OPENWALLET_ATTEMPT});
     dispatch(openWalletAction(pubPass));
@@ -161,9 +165,8 @@ export function openWalletAttempt(pubPass) {
 function openWalletAction(pubPass) {
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
-    var request = {
-      public_passphrase: Buffer.from(pubPass),
-    };
+    var request = new OpenWalletRequest();
+    request.setPublicPassphrase(new Uint8Array(Buffer.from(pubPass)));
     openWallet(loader, request,
         function(err) {
           if (err) {
@@ -197,9 +200,10 @@ export function closeWalletRequest() {
 }
 
 function closeWalletAction() {
+  var request = new CloseWalletRequest();
   return (dispatch, getState) => {
     const { loader, walletCloseRequest } = getState().walletLoader;
-    closeWallet(loader, walletCloseRequest,
+    closeWallet(loader, request,
         function(err) {
           if (err) {
             dispatch(closeWalletError(err + ' Please try again'));
@@ -233,12 +237,13 @@ export function startRpcRequest() {
   } else {
     rpcport = cfg.daemon_port;
   }
-  var request = {
-    network_address: '127.0.0.1:' + rpcport,
-    username: cfg.rpc_user,
-    password: Buffer.from(cfg.rpc_pass),
-    certificate: getDcrdCert(),
-  };
+
+  var request = new StartConsensusRpcRequest();
+  request.setNetworkAddress('127.0.0.1:' + rpcport);
+  request.setUsername(cfg.rpc_user);
+  request.setPassword(new Uint8Array(Buffer.from(cfg.rpc_pass)));
+  request.setCertificate(new Uint8Array(getDcrdCert()));
+  
   return (dispatch) => {
     dispatch({request: request, type: STARTRPC_ATTEMPT});
     dispatch(startRpcAction());
@@ -282,10 +287,10 @@ export function discoverAddressAttempt(discoverAccts, privPass) {
 }
 
 function discoverAddressAction(discoverAccts, privPass) {
-  var request = {
-    discover_accounts: discoverAccts,
-    private_passphrase: Buffer.from(privPass),
-  };
+  DiscoverAddressesRequest
+  var request = new DiscoverAddressesRequest();
+  request.setDiscoverAccounts(discoverAccts);
+  request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
     discoverAddresses(loader, request,
@@ -322,9 +327,10 @@ export function subscribeBlockAttempt() {
 }
 
 function subscribeBlockAction() {
+  var request = new SubscribeToBlockNotificationsRequest();
   return (dispatch, getState) => {
-    const { loader, subscribeBlockNtfnsRequest } = getState().walletLoader;
-    subscribeBlockNtfns(loader, subscribeBlockNtfnsRequest,
+    const { loader } = getState().walletLoader;
+    subscribeBlockNtfns(loader, request,
         function(err) {
           if (err) {
             dispatch(subscribeBlockError(err + ' Please try again'));
@@ -347,7 +353,6 @@ function fetchHeadersSuccess(response) {
   return (dispatch) => {
     dispatch({response: response, type: FETCHHEADERS_SUCCESS});
     dispatch(subscribeBlockAttempt());
-    //dispatch(transactionNftnsStart());
   };
 }
 
@@ -359,9 +364,10 @@ export function fetchHeadersAttempt() {
 }
 
 function fetchHeadersAction() {
+  var request = new FetchHeadersRequest();
   return (dispatch, getState) => {
-    const { loader, fetchHeadersRequest } = getState().walletLoader;
-    fetchHeaders(loader, fetchHeadersRequest,
+    const { loader } = getState().walletLoader;
+    fetchHeaders(loader, request,
         function(response, err) {
           if (err) {
             dispatch(fetchHeadersFailed(err + ' Please try again'));
