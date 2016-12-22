@@ -1,10 +1,10 @@
 process.env['GRPC_SSL_CIPHER_SUITES'] = 'HIGH+ECDSA';
 
-import { getCert } from './client';
+import { getCert, getApi } from './client';
 import grpc from 'grpc';
 
 export function seeder(request, cb) {
-  var protoDescriptor = grpc.load('./app/api.proto');
+  var protoDescriptor = grpc.load(getApi());
   var walletrpc = protoDescriptor.walletrpc;
 
   var cert = getCert();

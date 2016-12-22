@@ -1,5 +1,8 @@
 import { app, BrowserWindow, Menu, shell } from 'electron';
 import { getCfg } from './config.js';
+import path from 'path';
+import fs from 'fs';
+import { api_literal } from './api.contents.js';
 
 let menu;
 let template;
@@ -28,7 +31,7 @@ function appDataDirectory() {
   const os = require('os');
 
   if (process.platform === 'darwin') {
-    return path.join(os.homedir(), 'Library','Application Data','Decrediton');
+    return path.join(os.homedir(), 'Library','Application Support','decrediton');
   }
 
   return path.join(os.homedir(),'.decrediton');
@@ -141,6 +144,12 @@ const launchDCRWallet = () => {
 app.on('ready', async () => {
   await installExtensions();
 
+  var apiPath = path.join(appDataDirectory(), 'api.proto');
+  fs.writeFile(apiPath, api_literal, function(err) {
+    if(err) {
+      return console.log(err);
+    }
+  });
 
   if (process.env.NODE_ENV === 'production') {
     try {

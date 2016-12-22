@@ -18,13 +18,27 @@ export function getCert() {
     certPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'rpc.cert');
   } else if (os.platform() == 'darwin') {
     certPath = path.join(process.env.HOME, 'Library', 'Application Support',
-            'Decrediton', 'rpc.cert');
+            'decrediton', 'rpc.cert');
   } else {
     certPath = path.join(process.env.HOME, '.decrediton', 'rpc.cert');
   }
 
   var cert = fs.readFileSync(certPath);
   return(cert);
+}
+
+export function getApi() {
+  var apiPath = '';
+  if (os.platform() == 'win32') {
+    apiPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'api.proto');
+  } else if (os.platform() == 'darwin') {
+    apiPath = path.join(process.env.HOME, 'Library', 'Application Support',
+            'decrediton', 'api.proto');
+  } else {
+    apiPath = path.join(process.env.HOME, '.decrediton', 'api.proto');
+  }
+
+  return(apiPath);
 }
 
 export function getDcrdCert() {
@@ -37,7 +51,7 @@ export function getDcrdCert() {
     certPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'rpc.cert');
   } else if (os.platform() == 'darwin') {
     certPath = path.join(process.env.HOME, 'Library', 'Application Support',
-            'Decrediton', 'rpc.cert');
+            'decrediton', 'rpc.cert');
   } else {
     certPath = path.join(process.env.HOME, '.dcrd', 'rpc.cert');
   }
@@ -47,7 +61,7 @@ export function getDcrdCert() {
 }
 
 export function getWalletService(address, port, cb) {
-  var protoDescriptor = grpc.load('./app/api.proto');
+  var protoDescriptor = grpc.load(getApi());
   var walletrpc = protoDescriptor.walletrpc;
 
   var cert = getCert();
