@@ -130,8 +130,6 @@ export function getNetwork(client, request, cb) {
 
 export function getAccounts(client, request, cb) {
     // Accounts
-  var request = {};
-
   client.accounts(request, function(err, response) {
     if (err) {
       console.error(err);

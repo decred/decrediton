@@ -5,6 +5,9 @@ export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
 export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
 export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
 import { hashHistory } from 'react-router';
+import { PingRequest, NetworkRequest, AccountNumberRequest,AccountsRequest,
+BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest } from '../middleware/walletrpc/api_pb';
+
 function getWalletServiceError(error) {
   return { error, type: GETWALLETSERVICE_FAILED };
 }
@@ -70,10 +73,9 @@ function getBalanceSuccess(getBalanceResponse) {
 }
 
 export function getBalanceAttempt(accountNumber, requiredConfs) {
-  var request = {
-    account_number: accountNumber,
-    required_confirmations: requiredConfs
-  };
+  var request = new BalanceRequest()
+  request.setAccountNumber(accountNumber);
+  request.setRequiredConfirmations(requiredConfs);
   return (dispatch) => {
     dispatch({
       request: request,
@@ -109,9 +111,8 @@ function getAccountNumberSuccess(getAccountNumberResponse) {
 }
 
 export function getAccountNumberAttempt(accountName) {
-  var request = {
-    account_name: accountName
-  };
+  var request = new AccountNumberRequest();
+  request.setAccountName(accountName);
   return (dispatch) => {
     dispatch({
       request: request,
@@ -148,7 +149,7 @@ function getNetworkSuccess(getNetworkResponse) {
 }
 
 export function getNetworkAttempt() {
-  var request = {};
+  var request = new NetworkRequest();
   return (dispatch) => {
     dispatch({
       request: request,
@@ -185,8 +186,7 @@ function getPingSuccess(getPingResponse) {
 }
 
 export function getPingAttempt() {
-  var request = {
-  };
+  var request = new PingRequest();
   return (dispatch) => {
     dispatch({
       request: request,
@@ -223,8 +223,7 @@ function getStakeInfoSuccess(getStakeInfoResponse) {
 }
 
 export function getStakeInfoAttempt() {
-  var request = {
-  };
+  var request = new StakeInfoRequest();
   return (dispatch) => {
     dispatch({
       request: request,
@@ -261,8 +260,7 @@ function getTicketPriceSuccess(getTicketPriceResponse) {
 }
 
 export function getTicketPriceAttempt() {
-  var request = {
-  };
+  var request = new TicketPriceRequest();
   return (dispatch) => {
     dispatch({
       request: request,
@@ -299,8 +297,7 @@ function getAccountsSuccess(getAccountsResponse) {
 }
 
 export function getAccountsAttempt() {
-  var request = {
-  };
+  var request = new AccountsRequest();
   return (dispatch) => {
     dispatch({
       request: request,
@@ -310,10 +307,10 @@ export function getAccountsAttempt() {
 }
 
 function accounts() {
+  var request = new AccountsRequest();
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
-    const { getAccountsRequest } = getState().grpc;
-    getAccounts(walletService, getAccountsRequest,
+    getAccounts(walletService, request,
         function(getAccountsResponse, err) {
           if (err) {
             dispatch(getAccountsError(err + ' Please try again'));
@@ -348,12 +345,11 @@ export function getTransactionsAttempt(startHeight, endHeight, startHash, endHas
   // Currently not working due to too large of messages
   // known issue by jrick.
   // GetTransactions
-  var request = {
-    starting_block_height: startHeight,
+  var request = new GetTransactionsRequest();
+  request.setStartingBlockHeight(startHeight);
     //starting_block_hash: Buffer.from(startHash),
-    ending_block_height: endHeight,
+  request.setEndingBlockHeight(endHeight);
     //ending_block_hash: Buffer.from(endHash)
-  };
   return (dispatch) => {
     dispatch({
       request: request,
