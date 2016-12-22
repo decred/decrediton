@@ -7,7 +7,7 @@ var services = require('../walletrpc/api_grpc_pb.js');
 export function seeder(request, cb) {
   var cert = getCert();
   var creds = grpc.credentials.createSsl(cert);
-  var seeder = new service.SeedServiceClient(request.address + ':' + request.port, creds);
+  var seeder = new services.SeedServiceClient(request.address + ':' + request.port, creds);
 
   var deadline = new Date();
   var deadlineInSeconds = 2;
@@ -27,7 +27,6 @@ export function generateRandomSeed(seeder, request, cb) {
       console.error(err);
       return cb(null, err);
     } else {
-      console.log(response);
       return cb(response);
     }
   });
@@ -38,7 +37,7 @@ export function decodeSeed(seeder, request, cb) {
     if (err) {
       return cb(null, err);
     } else {
-      console.log(response.decoded_seed.toString('hex'));
+      //console.log(response.decoded_seed.toString('hex'));
       return cb(response);
     }
   });

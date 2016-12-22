@@ -20,7 +20,7 @@ let CreateWalletForm = ({ dispatch, seedText }) => {
         if (pubpass == '' || privpass == '') {
           return;
         }
-        dispatch(createWalletRequest(pubpass, privpass, seedText.seed_bytes, false));
+        dispatch(createWalletRequest(pubpass, privpass, seedText.getSeedBytes(), false));
         pubpass = '';
         privpass = '';
       }}>
@@ -43,7 +43,7 @@ let CreateWalletForm = ({ dispatch, seedText }) => {
           hintText="Seed (33 Words)"
           floatingLabelText="Seed (33 Words)"
           disabled={true}
-          value={seedText.seed_mnemonic}
+          value={seedText.getSeedMnemonic()}
           //onBlur={(e) =>{seed = e.target.value;}}
         /><br />
         <RaisedButton type="submit"

@@ -120,13 +120,10 @@ export function createWalletRequest(pubPass, privPass, seed, existing) {
 }
 
 function createNewWallet(pubPass, privPass, seed) {
-  CreateWalletRequest
   var request = new CreateWalletRequest();
-  request = {
-    public_passphrase: Buffer.from(pubPass),
-    private_passphrase: Buffer.from(privPass),
-    seed: seed,
-  };
+  request.setPublicPassphrase(new Uint8Array(Buffer.from(pubPass)));
+  request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
+  request.setSeed(seed);
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
     createWallet(loader, request,
