@@ -1,7 +1,7 @@
 import { getVersionService, getWalletRPCVersion } from '../middleware/grpc/version';
 import { loaderRequest } from './WalletLoaderActions';
 import { hashHistory } from 'react-router';
-
+var messages = require('../middleware/walletrpc/api_pb');
 export const GETVERSIONSERVICE_ATTEMPT = 'GETVERSIONSERVICE_ATTEMPT';
 export const GETVERSIONSERVICE_FAILED = 'GETVERSIONSERVICE_FAILED';
 export const GETVERSIONSERVICE_SUCCESS = 'GETVERSIONSERVICE_SUCCESS';
@@ -63,10 +63,7 @@ function getWalletRPCVersionSuccess(getWalletRPCVersionResponse) {
 }
 
 export function getWalletRPCVersionAttempt(accountNumber, requiredConfs) {
-  var request = {
-    account_number: accountNumber,
-    required_confirmations: requiredConfs
-  };
+  var request = new messages.VersionRequest();
   return (dispatch) => {
     dispatch({
       request: request,

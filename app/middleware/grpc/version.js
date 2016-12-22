@@ -29,6 +29,7 @@ export function getWalletRPCVersion(versionService, request, cb) {
       console.error(err);
       return cb(null, err);
     } else {
+      console.log(response);
       return cb(response);
     }
   });
