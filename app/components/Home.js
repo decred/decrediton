@@ -46,8 +46,8 @@ class Home extends Component{
     const { getAccountsResponse } = this.props;
     var rescanPercFisnished;
     if (rescanResponse !== null && getAccountsResponse !== null && rescanRequest != null) {
-      var totalBlocks = getAccountsResponse.current_block_height - rescanRequest.begin_height;
-      var blocksFinished = rescanResponse.rescanned_through - rescanRequest.begin_height;
+      var totalBlocks = getAccountsResponse.getCurrentBlockHeight() - rescanRequest.getBeginHeight();
+      var blocksFinished = rescanResponse.getRescannedThrough() - rescanRequest.getBeginHeight();
       rescanPercFisnished = (blocksFinished / totalBlocks) * 100;
       rescanPercFisnished = rescanPercFisnished.toFixed(2);
     }
@@ -58,9 +58,9 @@ class Home extends Component{
       rescanView = (
         <div>
           <LinearProgress mode="determinate"
-            min={rescanRequest !== null ? rescanRequest.begin_height: 0}
-            max={getAccountsResponse !== null ? getAccountsResponse.current_block_height: 100}
-            value={rescanResponse !== null ? rescanResponse.rescanned_through : 0} />
+            min={rescanRequest !== null ? rescanRequest.getBeginHeight(): 0}
+            max={getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight(): 100}
+            value={rescanResponse !== null ? rescanResponse.getRescannedThrough() : 0} />
           <p>{rescanPercFisnished}%</p>
         </div>
       );
@@ -69,14 +69,14 @@ class Home extends Component{
     const homeView = (
       <div >
         <h1>Home Page</h1>
-        <h3>Current block height: {getAccountsResponse === null ? 'Please refresh' : getAccountsResponse.current_block_height }</h3>
-        <h3>Current balance: {getBalanceResponse === null ? 'Please refresh' : getBalanceResponse.total }</h3>
+        <h3>Current block height: {getAccountsResponse === null ? 'Please refresh' : getAccountsResponse.getCurrentBlockHeight() }</h3>
+        <h3>Current balance: {getBalanceResponse === null ? 'Please refresh' : getBalanceResponse.getTotal() }</h3>
         <RaisedButton
           style={styles.buttons}
           disabled={getBalanceRequestAttempt}
           onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
           label={getBalanceRequestAttempt ? 'Getting Balance...' : 'Get Balance'}/>
-        <h3>StakeInfo: {getStakeInfoResponse === null ? 'Please refresh' : getStakeInfoResponse.pool_size}</h3>
+        <h3>StakeInfo: {getStakeInfoResponse === null ? 'Please refresh' : getStakeInfoResponse.getPoolSize()}</h3>
         <RaisedButton
           style={styles.buttons}
           disabled={getStakeInfoRequestAttempt}
