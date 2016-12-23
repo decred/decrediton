@@ -48,10 +48,10 @@ export function getDcrdCert() {
   }
   var certPath = '';
   if (os.platform() == 'win32') {
-    certPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'rpc.cert');
+    certPath = path.join(process.env.LOCALAPPDATA, 'Dcrd', 'rpc.cert');
   } else if (os.platform() == 'darwin') {
     certPath = path.join(process.env.HOME, 'Library', 'Application Support',
-            'decrediton', 'rpc.cert');
+            'Dcrd', 'rpc.cert');
   } else {
     certPath = path.join(process.env.HOME, '.dcrd', 'rpc.cert');
   }
