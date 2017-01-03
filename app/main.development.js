@@ -1,6 +1,7 @@
 import { app, BrowserWindow, Menu, shell } from 'electron';
 import { getCfg } from './config.js';
 import path from 'path';
+import os from 'os';
 import fs from 'fs';
 import { api_literal } from './api.contents.js';
 
@@ -72,6 +73,11 @@ const launchDCRD = () => {
   var spawn = require('child_process').spawn;
   var args = ['--rpcuser='+cfg.rpc_user,'--rpcpass='+cfg.rpc_pass];
 
+  var dcrdExe = path.join(process.resourcesPath, 'bin', 'dcrd')
+  if (os.platform() == 'win32') {
+    dcrdExe = dcrdExe + '.exe';
+  }
+
   // The spawn() below opens a pipe on fd 3
   args.push('--piperx=3');
 
@@ -82,10 +88,10 @@ const launchDCRD = () => {
   args.push('--rpclisten=127.0.0.1:' + RPCDaemonPort());
 
   console.log(`Starting dcrd with ${args}`);
-  var dcrd = spawn('dcrd', args, { detached: true, stdio: [ 'ignore', 'pipe', 'pipe', 'pipe' ] });
+  var dcrd = spawn(dcrdExe, args, { detached: true, stdio: [ 'ignore', 'pipe', 'pipe', 'pipe' ] });
 
   dcrd.on('error', function (err) {
-    console.log('error starting dcrd: ' + err);
+    console.log('error starting ' + dcrdExe + ': ' + path);
   });
 
   dcrd.on('close', (code) => {
@@ -107,6 +113,11 @@ const launchDCRWallet = () => {
   var spawn = require('child_process').spawn;
   var args = ['--noinitialload','--tlscurve=P-256','--onetimetlskey'];
 
+  var dcrwExe = path.join(process.resourcesPath, 'bin', 'dcrwallet')
+  if (os.platform() == 'win32') {
+    dcrwExe = dcrwExe + '.exe';
+  }
+
   // RPC
   args.push('--username=USER');
   args.push('--password=PASSWORD');
@@ -120,10 +131,10 @@ const launchDCRWallet = () => {
     args.push('--testnet');
   }
   console.log(`Starting dcrwallet with ${args}`);
-  var dcrwallet = spawn('dcrwallet', args, { detached: true, stdio: [ 'ignore', 'pipe', 'pipe', 'ignore', 'pipe'  ] });
+  var dcrwallet = spawn(dcrwExe, args, { detached: true, stdio: [ 'ignore', 'pipe', 'pipe', 'ignore', 'pipe'  ] });
 
   dcrwallet.on('error', function (err) {
-    console.log('error starting dcrwallet: ' + err);
+    console.log('error starting ' + dcrwExe + ': ' + path);
   });
 
   dcrwallet.on('close', (code) => {

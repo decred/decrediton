@@ -70,19 +70,32 @@ Start decrediton
 npm run dev
 ```
 
+## Building the package
+
+To build a packaged version of decrediton (including a dmg on OSX and
+exe on Windows), follow the development steps above.  Then build the
+dcr command line tools:
+
+```
+go get -u -v github.com/decred/dcrd
+go get -u -v github.com/decred/dcrd/cmd/dcrctl
+go get -u -v github.com/decred/dcrwallet
+cd code/decrediton
+mkdir bin
+cp `which dcrd` bin/
+cp `which dcrctl` bin/
+cp `which dcrwallet` bin/
+npm run package
+```
+At this time cross compiling is not possible.
+
 ## Installation
 
 Currently decrediton has only been tested and built on Linux and
 macOS.  Additional systems will be added in the future.
 
-Decrediton requires dcrd and dcrwallet installed on your system.  It
-will however NOT use or in any way disrupt the wallet file you may
-already be using.
-
-If you do not already have dcrd and dcrwallet installed,
-[dcrinstall](https://github.com/decred/decred-release/tree/master/cmd/dcrinstall)
-is the preferred way to install the tools.  Follow the instructions on
-that page to get the necessary programs.
+Decrediton will NOT use or in any way disrupt the wallet file you may
+already be using at this time.
 
 Download the decrediton release for your operating system.
 
@@ -95,15 +108,7 @@ file:
 This will start dcrd and dcrwallet for you.
 
 On macOS, double-click the .dmg file, drag the .app to your
-Applications folder.  Since our app is not currently signed, you will
-either need to start dcrwallet and dcrd manually as described in the
-developing section or you need to start it from the command line:
-```
-open Decrediton.app
-```
-to have decrediton start up a copy of dcrd and dcrwallet for you.
-
-We will improve this in an upcoming release.
+Applications folder.  Double click on Decrediton.app to start.
 
 From there follow the on screen instructions to setup your wallet.
 
