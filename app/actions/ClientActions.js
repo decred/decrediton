@@ -1,6 +1,6 @@
 import { getWalletService, getBalance, getAccountNumber, getNetwork, getPing,
   getStakeInfo, getTicketPrice, getAccounts, getTransactions } from '../middleware/grpc/client';
-import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt } from './ControlActions';
+import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, constructTransactionAttempt } from './ControlActions';
 export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
 export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
 export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
@@ -25,7 +25,7 @@ function getWalletServiceSuccess(walletService) {
     //setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
     //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
     setTimeout( () => {dispatch(getTransactionsAttempt(0, 300000, '', ''));}, 1000);
-
+    setTimeout( () => {dispatch(constructTransactionAttempt(0, 0, "TskdEwxKxjGJz281JM9ndBfqZZdPSAGnnMz", 10000));}, 1000);
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.

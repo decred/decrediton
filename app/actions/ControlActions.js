@@ -6,7 +6,7 @@ import { getBalanceAttempt } from './ClientActions';
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   FundTransactionRequest, ConstructTransactionRequest, SignTransactionRequest, 
-  PublishTransactionRequest, PurchaseTicketsRequest, LoadActiveDataFiltersRequest 
+  PublishTransactionRequest, PurchaseTicketsRequest, LoadActiveDataFiltersRequest
 } from '../middleware/walletrpc/api_pb';
 
 export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
@@ -520,26 +520,21 @@ function constructTransactionSuccess(constructTxResponse) {
 }
 
 export function constructTransactionAttempt(account, confirmations, destination, amount) {
-  /*
   var request = new ConstructTransactionRequest();
   var newOutput = new ConstructTransactionRequest.Output();
   request.setSourceAccount(account);
-  request.setRequiredConfirmations(confirmations);
+  request.setRequiredConfirmations(parseInt(confirmations));
   request.setOutputSelectionAlgorithm(1);
   console.log("herer");
-  var newOutput = new ConstructTransactionRequest.Output(new ConstructTransactionRequest.OutputDestination(destination), parseInt(amount));
-  */
-  //request.setNonChangeOutputsList(new Array(newOutput));
+ //var outputDest = new ConstructTransactionRequest.OutputDestination({address: destination});
+  var output = new ConstructTransactionRequest.Output({destination: {address: destination}, amount: amount})
+  var array = new Array(output);
+    console.log("herer");
+  request.addNonChangeOutputs(output);
+  console.log(request.getNonChangeOutputsList());
+  console.log(request.getSourceAccount());
   console.log("herer");
-  var request = new ConstructTransactionRequest({
-    sourcer_account: account, 
-    required_confirmations: confirmations, 
-    fee_per_kb: 0, 
-    output_selection_algorithm: 1, 
-    non_change_outputs: new Array({destination: { address:destination }, amount: parseInt(amount)})
-  });
   console.log(request);
-  console.log("herer");
   return (dispatch) => {
     dispatch({
       request: request,
