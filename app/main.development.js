@@ -24,7 +24,10 @@ if (process.env.NODE_ENV === 'development') {
 var cfg = getCfg();
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+  // If we could reopen after closing all windows on OSX we might want
+  // to on do this only if !== 'darwin' but since we don't, better to
+  // have the same behavior on all platforms.
+  app.quit();
 });
 
 function appDataDirectory() {
