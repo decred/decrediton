@@ -51,7 +51,7 @@ class Send extends Component{
           {constructTxResponse !== null ? constructTxResponse.getTotalOutputAmount() : null}
         </p>
         <p> estimated signed size
-          {constructTxResponse !== null ? constructTxResponse.EstimatedSignedSize() : null}
+          {constructTxResponse !== null ? constructTxResponse.getEstimatedSignedSize() : null}
         </p>
         <SignTxForm rawTx={constructTxResponse !== null ? constructTxResponse.getUnsignedTransaction() : null}/>
       </div>);
@@ -61,7 +61,7 @@ class Send extends Component{
     const publishTxView = (
       <div>
         <h1>Published Tx!</h1>
-        <p>{publishTransactionResponse !== null ? reverseHash(publishTransactionResponse.getTransactionHash()) : null}</p>
+        <p>{publishTransactionResponse !== null ? publishTransactionResponse.getTransactionHash() : null}</p>
       </div>);
 
     if (constructTxResponse === null) {

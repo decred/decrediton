@@ -387,7 +387,7 @@ function signTransactionError(error) {
 function signTransactionSuccess(signTransactionResponse) {
   return (dispatch) => {
     dispatch({signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS });
-    dispatch(publishTransactionAttempt(signTransactionResponse.transaction));
+    dispatch(publishTransactionAttempt(signTransactionResponse.getTransaction()));
   };
 }
 
@@ -404,7 +404,7 @@ export function signTransactionAttempt(passphrase, rawTx) {
 function signTransactionAction(passphrase, rawTx) {
   var request = new SignTransactionRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-  request.setSerializedTransaction(rawTx);
+  request.setSerializedTransaction(new Uint8Array(Buffer.from(rawTx)));
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     signTransaction(walletService, request,
@@ -432,7 +432,7 @@ function publishTransactionSuccess(publishTransactionResponse) {
 
 export function publishTransactionAttempt(tx) {
   var request = new PublishTransactionRequest();
-  request.setSignedTransaction(tx);
+  request.setSignedTransaction(new Uint8Array(Buffer.from(tx)));
   return (dispatch) => {
     dispatch({
       request: request,
