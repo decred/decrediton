@@ -521,20 +521,15 @@ function constructTransactionSuccess(constructTxResponse) {
 
 export function constructTransactionAttempt(account, confirmations, destination, amount) {
   var request = new ConstructTransactionRequest();
-  var newOutput = new ConstructTransactionRequest.Output();
-  request.setSourceAccount(account);
-  request.setRequiredConfirmations(parseInt(confirmations));
+  request.setSourceAccount(parseInt(account));
+  request.setRequiredConfirmations(parseInt(parseInt(confirmations)));
   request.setOutputSelectionAlgorithm(1);
-  console.log("herer");
- //var outputDest = new ConstructTransactionRequest.OutputDestination({address: destination});
-  var output = new ConstructTransactionRequest.Output({destination: {address: destination}, amount: amount})
-  var array = new Array(output);
-    console.log("herer");
+  var outputDest = new ConstructTransactionRequest.OutputDestination();
+  outputDest.setAddress(destination);
+  var output = new ConstructTransactionRequest.Output();
+  output.setDestination(outputDest);
+  output.setAmount(parseInt(amount));
   request.addNonChangeOutputs(output);
-  console.log(request.getNonChangeOutputsList());
-  console.log(request.getSourceAccount());
-  console.log("herer");
-  console.log(request);
   return (dispatch) => {
     dispatch({
       request: request,
