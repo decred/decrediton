@@ -1,13 +1,11 @@
 import { getCert, getApi } from './client';
 import grpc from 'grpc';
-
+var messages = require('../walletrpc/api_pb');
+var services = require('../walletrpc/api_grpc_pb.js');
 export function getVersionService(address, port, cb) {
-  var protoDescriptor = grpc.load(getApi());
-  var walletrpc = protoDescriptor.walletrpc;
-
   var cert = getCert();
   var creds = grpc.credentials.createSsl(cert);
-  var version = new walletrpc.VersionService(address + ':' + port, creds);
+  var version = new services.VersionServiceClient(address + ':' + port, creds);
 
   var deadline = new Date();
   var deadlineInSeconds = 2;
@@ -31,6 +29,7 @@ export function getWalletRPCVersion(versionService, request, cb) {
       console.error(err);
       return cb(null, err);
     } else {
+      console.log(response);
       return cb(response);
     }
   });

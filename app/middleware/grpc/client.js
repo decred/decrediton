@@ -7,6 +7,8 @@ import os from 'os';
 import grpc from 'grpc';
 
 import { getCfg } from '../../config.js';
+var messages = require('../walletrpc/api_pb');
+var services = require('../walletrpc/api_grpc_pb.js');
 
 export function getCert() {
   var cfg = getCfg();
@@ -25,20 +27,6 @@ export function getCert() {
 
   var cert = fs.readFileSync(certPath);
   return(cert);
-}
-
-export function getApi() {
-  var apiPath = '';
-  if (os.platform() == 'win32') {
-    apiPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'api.proto');
-  } else if (os.platform() == 'darwin') {
-    apiPath = path.join(process.env.HOME, 'Library', 'Application Support',
-            'decrediton', 'api.proto');
-  } else {
-    apiPath = path.join(process.env.HOME, '.decrediton', 'api.proto');
-  }
-
-  return(apiPath);
 }
 
 export function getDcrdCert() {
@@ -61,12 +49,9 @@ export function getDcrdCert() {
 }
 
 export function getWalletService(address, port, cb) {
-  var protoDescriptor = grpc.load(getApi());
-  var walletrpc = protoDescriptor.walletrpc;
-
   var cert = getCert();
   var creds = grpc.credentials.createSsl(cert);
-  var client = new walletrpc.WalletService(address + ':' + port, creds);
+  var client = new services.WalletServiceClient(address + ':' + port, creds);
 
   var deadline = new Date();
   var deadlineInSeconds = 2;
@@ -145,8 +130,6 @@ export function getNetwork(client, request, cb) {
 
 export function getAccounts(client, request, cb) {
     // Accounts
-  var request = {};
-
   client.accounts(request, function(err, response) {
     if (err) {
       console.error(err);

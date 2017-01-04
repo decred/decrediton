@@ -2,8 +2,12 @@ import { getNextAddress, renameAccount, getNextAccount,
   rescan, importPrivateKey, importScript, changePassphrase,
   loadActiveDataFilters, getFundingTransaction, signTransaction, publishTransaction,
 purchaseTickets, constructTransaction } from '../middleware/grpc/control';
-
 import { getBalanceAttempt } from './ClientActions';
+import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
+  NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
+  FundTransactionRequest, ConstructTransactionRequest, SignTransactionRequest, 
+  PublishTransactionRequest, PurchaseTicketsRequest, LoadActiveDataFiltersRequest
+} from '../middleware/walletrpc/api_pb';
 
 export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
 export const GETNEXTADDRESS_FAILED = 'GETNEXTADDRESS_FAILED';
@@ -18,10 +22,9 @@ function getNextAddressSuccess(getNextAddressResponse) {
 }
 
 export function getNextAddressAttempt(accountNum) {
-  var request = {
-    account: accountNum,
-    kind: 0,
-  };
+  var request = new NextAddressRequest();
+  request.setAccount(accountNum);
+  request.setKind(0);
   return (dispatch) => {
     dispatch({
       request: request,
@@ -58,10 +61,9 @@ function renameAccountSuccess(renameAccountResponse) {
 }
 
 export function renameAccountAttempt(accountNumber, newName) {
-  var request = {
-    account_number: accountNum,
-    new_name: newName
-  };
+  var request = new RenameAccountRequest();
+  request.setAccountNumber(accountNum);
+  request.setNewName(newName);
   return (dispatch) => {
     dispatch({
       request: request,
@@ -106,9 +108,8 @@ function rescanComplete() {
 }
 
 export function rescanAttempt(beginHeight) {
-  var request = {
-    begin_height: beginHeight
-  };
+  var request = new RescanRequest();
+  request.setBeginHeight(beginHeight);
   return (dispatch) => {
     dispatch({
       request: request,
@@ -147,10 +148,9 @@ function getNextAccountSuccess(getNextAccountResponse) {
 }
 
 export function getNextAccountAttempt(passphrase, accountName) {
-  var request = {
-    passphrase: Buffer.from(passphrase),
-    account_name: accountName
-  };
+  var request = new NextAccountRequest();
+  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+  request.setAccountName(accountName);
   return (dispatch) => {
     dispatch({
       request: request,
@@ -187,13 +187,12 @@ function importPrivateKeySuccess(importPrivateKeyResponse) {
 }
 
 export function importPrivateKeyAttempt(passphrase, accountNum, wif, rescan, scanFrom) {
-  var request = {
-    passphrase: Buffer.from(passphrase),
-    account: accountNum,
-    private_key_wif: wif,
-    rescan: rescan,
-    scan_from: scanFrom
-  };
+  var request = new ImportPrivateKeyRequest();
+  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+  request.setAccount(accountNum);
+  request.setPrivateKeyWif(wif);
+  request.setRescan(rescan);
+  request.setScanFrom(scanFrom);
 
   return (dispatch) => {
     dispatch({
@@ -231,12 +230,11 @@ function importScriptSuccess(importScriptResponse) {
 }
 
 export function importScriptAttempt(passphrase, script, rescan, scanFrom) {
-  var request = {
-    passphrase: Buffer.from(passphrase),
-    script: script,
-    rescan: rescan,
-    scan_from: scanFrom
-  };
+  var request = new ImportScriptRequest();
+  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+  request.setScript(script);
+  request.setRescan(rescan);
+  request.setScanFrom(scanFrom);
   return (dispatch) => {
     dispatch({
       request: request,
@@ -273,10 +271,9 @@ function changePassphraseSuccess(changePassphraseResponse) {
 }
 
 export function changePassphraseAttempt(oldPass, newPass) {
-  var request = {
-    old_passphrase: Buffer.from(oldPass),
-    new_passphrase: Buffer.from(newPass)
-  };
+  var request = new ChangePassphraseRequest();
+  request.setOldPassphrase(new Uint8Array(Buffer.from(oldPass)));
+  request.setNewPassphrase(new Uint8Array(Buffer.from(newPass)));
   return (dispatch) => {
     dispatch({
       request: request,
@@ -315,7 +312,7 @@ function loadActiveDataFiltersSuccess(response) {
 }
 
 export function loadActiveDataFiltersAttempt() {
-  var request = { };
+  var request = new LoadActiveDataFiltersRequest();;
   return (dispatch) => {
     dispatch({
       request: request,
@@ -352,11 +349,10 @@ function fundTransactionSuccess(fundTransactionResponse) {
 }
 
 export function fundTransactionAttempt(accountNum, targetAmount, requiredConf) {
-  var request = {
-    account: accountNum,
-    target_amount: targetAmount,
-    required_confirmations: requiredConf
-  };
+  var request = new FundTransactionRequest();
+  request.setAccount(accountNum);
+  request.setTargetAmount(targetAmount);
+  request.setRequiredConfirmations(requiredConfs);
   return (dispatch) => {
     dispatch({
       request: request,
@@ -391,29 +387,27 @@ function signTransactionError(error) {
 function signTransactionSuccess(signTransactionResponse) {
   return (dispatch) => {
     dispatch({signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS });
-    dispatch(publishTransactionAttempt(signTransactionResponse.transaction));
+    dispatch(publishTransactionAttempt(signTransactionResponse.getTransaction()));
   };
 }
 
 export function signTransactionAttempt(passphrase, rawTx) {
-  console.log(rawTx);
-  var request = {
-    passphrase: Buffer.from(passphrase),
-    serialized_transaction: rawTx
-  };
+
   return (dispatch) => {
     dispatch({
-      request: request,
+      request: {},
       type: SIGNTX_ATTEMPT });
-    dispatch(signTransactionAction());
+    dispatch(signTransactionAction(passphrase, rawTx));
   };
 }
 
-function signTransactionAction() {
+function signTransactionAction(passphrase, rawTx) {
+  var request = new SignTransactionRequest();
+  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+  request.setSerializedTransaction(new Uint8Array(Buffer.from(rawTx)));
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
-    const { signTransactionRequest } = getState().control;
-    signTransaction(walletService, signTransactionRequest,
+    signTransaction(walletService, request,
         function(signTransactionResponse, err) {
           if (err) {
             dispatch(signTransactionError(err + ' Please try again'));
@@ -437,9 +431,8 @@ function publishTransactionSuccess(publishTransactionResponse) {
 }
 
 export function publishTransactionAttempt(tx) {
-  var request = {
-    signed_transaction: tx
-  };
+  var request = new PublishTransactionRequest();
+  request.setSignedTransaction(new Uint8Array(Buffer.from(tx)));
   return (dispatch) => {
     dispatch({
       request: request,
@@ -477,19 +470,18 @@ function purchaseTicketSuccess(purchaseTicketResponse) {
 
 export function purchaseTicketAttempt(passphrase, accountNum, spendLimit, requiredConf,
 ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
-  var request = {
-    passphrase: Buffer.from(passphrase),
-    account: accountNum,
-    spend_limit: spendLimit,
-    required_confirmations: requiredConf,
-    ticket_address: ticketAddress,
-    num_tickets: numTickets,
-    pool_address: poolAddress,
-    pool_fees: poolFees,
-    expiry: expiry,
-    tx_fee: txFee,
-    ticket_fee: ticketFee
-  };
+  var request = new PurchaseTicketsRequest();
+  request.setPassphrase(Buffer.from(passphrase));
+  request.setAccount(accountNum);
+  request.setSpendLimit(spendLimit);
+  request.setRequiredConfirmations(requiredConf);
+  request.setTicketAddress(ticketAddress);
+  request.setNumTickets(numTickets);
+  request.setPoolAddress(poolAddress);
+  request.setPoolFees(poolFees);
+  request.setExpiry(expiry);
+  request.setTxFee(txFee);
+  request.setTicketFee(ticketFee);
   return (dispatch) => {
     dispatch({
       request: request,
@@ -528,12 +520,16 @@ function constructTransactionSuccess(constructTxResponse) {
 }
 
 export function constructTransactionAttempt(account, confirmations, destination, amount) {
-  var request = {
-    source_account: parseInt(account),
-    required_confirmations: parseInt(confirmations),
-    output_selection_algorithm: 1,
-    non_change_outputs: { destination: { address:destination }, amount: parseInt(amount) },
-  };
+  var request = new ConstructTransactionRequest();
+  request.setSourceAccount(parseInt(account));
+  request.setRequiredConfirmations(parseInt(parseInt(confirmations)));
+  request.setOutputSelectionAlgorithm(1);
+  var outputDest = new ConstructTransactionRequest.OutputDestination();
+  outputDest.setAddress(destination);
+  var output = new ConstructTransactionRequest.Output();
+  output.setDestination(outputDest);
+  output.setAmount(parseInt(amount));
+  request.addNonChangeOutputs(output);
   return (dispatch) => {
     dispatch({
       request: request,

@@ -26,7 +26,7 @@ class Receive extends Component{
     const receiveView = (
       <div>
         <h1>Receive Page</h1>
-        <h3>Current address: {getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.address }</h3>
+        <h3>Current address: {getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.getAddress() }</h3>
         <RaisedButton
           style={style}
           disabled={getNextAddressRequestAttempt}

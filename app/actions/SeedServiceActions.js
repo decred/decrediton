@@ -1,10 +1,9 @@
 import { seeder, generateRandomSeed, decodeSeed } from '../middleware/grpc/seeder';
 import { createWalletRequest } from './WalletLoaderActions';
-
 export const SEEDER_ATTEMPT = 'SEEDER_ATTEMPT';
 export const SEEDER_FAILED = 'SEEDER_FAILED';
 export const SEEDER_SUCCESS = 'SEEDER_SUCCESS';
-
+import { GenerateRandomSeedRequest, DecodeSeedRequest } from '../middleware/walletrpc/api_pb';
 function seederError(error) {
   return { error, type: SEEDER_FAILED };
 }
@@ -57,15 +56,16 @@ function generateRandomSeedSuccess(response) {
 
 export function generateRandomSeedAttempt() {
   return (dispatch) => {
-    dispatch({request: {seed_length:0}, type: GENERATERANDOMSEED_ATTEMPT });
+    dispatch({request: {}, type: GENERATERANDOMSEED_ATTEMPT });
     dispatch(generateRandomSeedAction());
   };
 }
 
 function generateRandomSeedAction() {
+  var request = new GenerateRandomSeedRequest();
   return (dispatch, getState) => {
-    const { seeder, generateRandomSeedRequest } = getState().seedService;
-    generateRandomSeed(seeder, generateRandomSeedRequest,
+    const { seeder } = getState().seedService;
+    generateRandomSeed(seeder, request,
         function(response, err) {
           if (err) {
             dispatch(generateRandomSeedError(err + ' Please try again'));
@@ -87,21 +87,23 @@ function decodeSeedError(error) {
 function decodeSeedSuccess(pubPass, privPass, response) {
   return (dispatch) => {
     dispatch({response: response, type: DECODESEED_SUCCESS });
-    dispatch(createWalletRequest(pubPass, privPass, response.decoded_seed, true));
+    dispatch(createWalletRequest(pubPass, privPass, response.getDecodedSeed(), true));
   };
 }
 
 export function decodeSeedAttempt(pubPass, privPass, mnemonic) {
   return (dispatch) => {
-    dispatch({request: {user_input:mnemonic}, type: DECODESEED_ATTEMPT });
-    dispatch(decodeSeedAction(pubPass, privPass));
+    dispatch({request: {}, type: DECODESEED_ATTEMPT });
+    dispatch(decodeSeedAction(pubPass, privPass, mnemonic));
   };
 }
 
-function decodeSeedAction(pubPass, privPass) {
+function decodeSeedAction(pubPass, privPass, mnemonic) {
+  var request = new DecodeSeedRequest();
+  request.setUserInput(mnemonic);
   return (dispatch, getState) => {
-    const { seeder, decodeSeedRequest } = getState().seedService;
-    decodeSeed(seeder, decodeSeedRequest,
+    const { seeder } = getState().seedService;
+    decodeSeed(seeder, request,
         function(response, err) {
           if (err) {
             dispatch(decodeSeedError(err + ' Please try again'));

@@ -34,7 +34,7 @@ export function rescan(client, request, cb) {
 
   var rescanCall = client.rescan(request);
   rescanCall.on('data', function(response) {
-    console.log('Rescanned thru', response.rescanned_through);
+    console.log('Rescanned thru', response.getRescannedThrough());
     return cb(false, response);
   });
   rescanCall.on('end', function() {
