@@ -27,12 +27,12 @@ class History extends Component{
           </TableHeader>
           <TableBody displayRowCheckbox={false}>
             {transactions.map(function(tx, i) {
-              var parseDate = new Date(tx.transaction.mined_transactions.timestamp*1000);
-              var s = tx.transaction.mined_transactions.transactions[0].hash.toString('hex');
+              var parseDate = new Date(tx.transaction.getMinedTransactions().getTimestamp()*1000);
+              var s = tx.transaction.getMinedTransactions().getTransactionsList()[0].getHash().toString('hex');
               var reversed = reverseHash(s);
               return (
                 <TableRow key={i}>
-                  <TableRowColumn>{tx.transaction.mined_transactions.height}</TableRowColumn>
+                  <TableRowColumn>{tx.transaction.getMinedTransactions().getHeight()}</TableRowColumn>
                   <TableRowColumn><span>{parseDate.toString()}</span></TableRowColumn>
                   <TableRowColumn colSpan={3}>{reversed}</TableRowColumn>
                 </TableRow>);
