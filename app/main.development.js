@@ -3,7 +3,6 @@ import { getCfg } from './config.js';
 import path from 'path';
 import os from 'os';
 import fs from 'fs';
-import { api_literal } from './api.contents.js';
 
 let menu;
 let template;
@@ -157,13 +156,6 @@ const launchDCRWallet = () => {
 
 app.on('ready', async () => {
   await installExtensions();
-
-  var apiPath = path.join(appDataDirectory(), 'api.proto');
-  fs.writeFile(apiPath, api_literal, function(err) {
-    if(err) {
-      return console.log(err);
-    }
-  });
 
   if (process.env.NODE_ENV === 'production') {
     try {
