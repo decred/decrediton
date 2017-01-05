@@ -61,7 +61,7 @@ class Send extends Component{
     const publishTxView = (
       <div>
         <h1>Published Tx!</h1>
-        <p>{publishTransactionResponse !== null ? publishTransactionResponse.getTransactionHash() : null}</p>
+        <p>{publishTransactionResponse !== null ? reverseHash(publishTransactionResponse.toString('hex')) : null}</p>
       </div>);
 
     if (constructTxResponse === null) {
