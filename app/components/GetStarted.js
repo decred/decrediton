@@ -78,7 +78,7 @@ class Home extends Component{
     const { disclaimerOK, disclaimerOKAction } = this.props;
     const { address, port } = this.props;
     const { requiredVersion, versionInvalid, versionInvalidError } = this.props;
-    const { getVersionServiceAttempt } = this.props;
+    const { getVersionServiceAttempt, getVersionServiceError } = this.props;
     const { loader, getLoaderRequestAttempt, getLoaderError, loaderRequest } = this.props;
     const { walletCreateRequestAttempt, walletCreateError } = this.props;
     const { walletOpenRequestAttempt, walletOpenError } = this.props;
@@ -92,6 +92,7 @@ class Home extends Component{
     const getStartedWalletLoader = (
       <div>
         <ShowError error={getLoaderError} />
+        <ShowError error={getVersionServiceError}/>
       </div>);
     var openingWallet;
     if (walletOpenRequestAttempt) {
