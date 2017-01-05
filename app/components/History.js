@@ -28,7 +28,7 @@ class History extends Component{
           <TableBody displayRowCheckbox={false}>
             {transactions.map(function(tx, i) {
               var parseDate = new Date(tx.transaction.getMinedTransactions().getTimestamp()*1000);
-              var s = tx.transaction.getMinedTransactions().getTransactionsList()[0].getHash().toString('hex');
+              var s = Buffer.from(tx.transaction.getMinedTransactions().getTransactionsList()[0].getHash()).toString('hex');
               var reversed = reverseHash(s);
               return (
                 <TableRow key={i}>
