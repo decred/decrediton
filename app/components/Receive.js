@@ -5,8 +5,75 @@ import { Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorScreen from './ErrorScreen';
 
-const style = {
-  margin: 12,
+const styles = {
+  pageContentWrapper: {
+    width: '100%',
+    position: 'absolute',
+    paddingBottom: '60px',
+  },
+  //MYDECRED
+  header: {
+    backgroundColor: '#F9FBFC',
+    textAlign: 'center',
+    borderBottom: '1px solid #e2e2e2',
+  },
+  center: {
+    textAlign: 'center',
+    justifyContent: 'center', 
+    alignItems: 'center',
+  },
+  img: {
+    width: '150px',
+    height: '150px',
+    margin: '25px 0 50px 0'
+  },
+
+  colXs12: {
+    justifyContent: 'center', 
+    alignItems: 'center',
+    textAlign: 'center',
+    borderBottom: '1px solid #e2e2e2',
+    backgroundColor: '#F9FBFC',
+  },
+
+  well: {
+      fontWeight: 'bold',
+      //font-family: $inconsolata;
+      fontSize: '1.2rem',
+      backgroundColor:'#e9f8fe',
+      padding: '5px 5px',
+      margin: '-20px 0 15px 0',
+      border: '2px solid #cacfd6',
+      borderRadius: '2px',
+      textAlign: 'center',
+      color: '#0c1e3e',
+      boxShadow: 'none!important',
+  },
+
+  btnInfo: {
+    justifyContent: 'center', 
+    alignItems: 'center',
+    fontSize: '1.8rem',
+    background: 'linear-gradient(#699bff, #2972ff)',
+    border: 'none',
+    borderRadius: 8,
+    boxShadow: '0px 5px 5px 0px rgba(0, 0, 0, 0.3)',
+    padding: '14px 16px',
+    marginBottom: '20px',
+    color: 'white',
+  },
+  btnInfoHover: {
+    background: '#2970ff',
+  },
+
+  btnInfoFocus: {
+    background: '#5a6d81 !important',
+    boxShadow: '0px 5px 5px 0px rgba(0, 0, 0, 0.3)'
+  },
+   btnInfoActive: {
+    background: '#5a6d81 !important',
+    boxShadow: '0px 5px 5px 0px rgba(0, 0, 0, 0.3)',
+  },
 };
 
 class Receive extends Component{
@@ -28,28 +95,34 @@ class Receive extends Component{
         <h1>Receive Page</h1>
         <h3>Current address: {getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.getAddress() }</h3>
         <RaisedButton
-          style={style}
           disabled={getNextAddressRequestAttempt}
           onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
           label={getNextAddressRequestAttempt ? 'Getting new address' : 'Get New Address'}/>
       </div>);
     const copayReceive = (
-      	<div id="page-content-wrapper">
-					<div class="row row-first-heading row-wallet-settings">
-						<div class="col-xs-12">
+  <div style={styles.pageContentWrapper}>
+          <div style={styles.center}>
+            <div style={styles.header}>
 							<p>My Decred Address</p>
 						</div>
 					</div>
-					<div class="row row-my-decred text-center grey-background">
-						<div class="col-xs-12 white-background">
-							<img src="img/qr.jpg" alt="" />
+          <div style={styles.center}>
+						<div style={styles.center}>
+              <img style={styles.img} src="img/qr.jpg" alt="" />
 						</div>
-						<div class="col-xs-12">
-							<input type="text" class="form-control input-well-code" value="DsVmEFoSorV3bpTQHshHpV1asdfKSTkqskC" />
+						<div style={styles.well}>
+							<p>{getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.getAddress() } </p>
+            </div>
+            <div style={styles.center}>
 							<p>Share this wallet address to receive payments, To protect your privacy, new addresses are generated automatically once you use them.</p>
 						</div>
-						<div class="col-xs-12">
-							<button type="button" class="btn btn-info">Generate new address</button>
+						<div style={styles.center}>
+              <button 
+              type="button" 
+              style={styles.btnInfo}
+              onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
+              onMouseOver={() => {this.style = styles.btnInfoHover}}
+              >Generate new address</button>
 						</div>
 					</div>
 				</div>
