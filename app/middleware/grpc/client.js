@@ -11,6 +11,7 @@ var messages = require('../walletrpc/api_pb');
 var services = require('../walletrpc/api_grpc_pb.js');
 
 export function getCert() {
+  var cert = '';
   var cfg = getCfg();
   if (cfg.cert_path != '') {
     return(cfg.cert_path);
@@ -25,7 +26,18 @@ export function getCert() {
     certPath = path.join(process.env.HOME, '.decrediton', 'rpc.cert');
   }
 
-  var cert = fs.readFileSync(certPath);
+  try {
+    cert = fs.readFileSync(certPath);
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      console.log(certPath + " does not exist")
+    } else if (err.code === 'EACCES') {
+      console.log(certPath + " permission denied")
+    } else {
+      console.error(certPath + " " + err)
+    }
+  }
+
   return(cert);
 }
 
@@ -50,6 +62,9 @@ export function getDcrdCert() {
 
 export function getWalletService(address, port, cb) {
   var cert = getCert();
+  if (cert == '') {
+    return cb(null, "Unable to load dcrwallet certificate.  dcrwallet not running?");
+  }
   var creds = grpc.credentials.createSsl(cert);
   var client = new services.WalletServiceClient(address + ':' + port, creds);
 

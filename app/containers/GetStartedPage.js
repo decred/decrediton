@@ -14,6 +14,8 @@ function mapStateToProps(state) {
     port: state.grpc.port,
 
     // Version checking
+    getVersionServiceAttempt: state.version.getVersionServiceAttempt,
+    getVersionServiceError: state.version.getVersionServiceError,
     requiredVersion: state.version.requiredVersion,
     versionInvalid: state.version.versionInvalid,
     versionInvalidError: state.version.versionInvalidError,
