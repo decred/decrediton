@@ -427,7 +427,7 @@ function publishTransactionError(error) {
 }
 
 function publishTransactionSuccess(publishTransactionResponse) {
-  return { publishTransactionResponse: publishTransactionResponse, type: PUBLISHTX_SUCCESS };
+  return { publishTransactionResponse: Buffer.from(publishTransactionResponse.getTransactionHash()), type: PUBLISHTX_SUCCESS };
 }
 
 export function publishTransactionAttempt(tx) {
