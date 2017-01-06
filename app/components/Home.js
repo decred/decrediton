@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
 import ErrorScreen from './ErrorScreen';
 import RescanForm from '../containers/RescanForm';
+import Balance from './Balance';
+import Button from './ButtonTanel';
 
 const styles = {
   mainArea: {
@@ -70,21 +72,23 @@ class Home extends Component{
       <div >
         <h1>Home Page</h1>
         <h3>Current block height: {getAccountsResponse === null ? 'Please refresh' : getAccountsResponse.getCurrentBlockHeight() }</h3>
-        <h3>Current balance: {getBalanceResponse === null ? 'Please refresh' : getBalanceResponse.getTotal() }</h3>
-        <RaisedButton
+        <h3>My balance:</h3>
+        {getBalanceResponse === null ? 'Please refresh' : <Balance amount={getBalanceResponse.getTotal()} /> }
+        <br/>
+        <Button
           style={styles.buttons}
           disabled={getBalanceRequestAttempt}
-          onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
-          label={getBalanceRequestAttempt ? 'Getting Balance...' : 'Get Balance'}/>
-        <h3>StakeInfo: {getStakeInfoResponse === null ? 'Please refresh' : getStakeInfoResponse.getPoolSize()}</h3>
-        <RaisedButton
+          onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}>
+          {getBalanceRequestAttempt ? 'Getting Balance...' : 'Get Balance'}
+        </Button>
+        <Button
           style={styles.buttons}
           disabled={getStakeInfoRequestAttempt}
-          onClick={!getStakeInfoRequestAttempt? () => this.props.getStakeInfoAttempt() : null}
-          label={getStakeInfoRequestAttempt ? 'Getting Stake Info...' : 'Get Stake Info'}/>
+          onClick={!getStakeInfoRequestAttempt? () => this.props.getStakeInfoAttempt() : null}>
+          {getStakeInfoRequestAttempt ? 'Getting Stake Info...' : 'Get Stake Info'}
+        </Button>
         {rescanView}
       </div>);
-
 
     if (walletService === null) {
       return(<ErrorScreen />);
