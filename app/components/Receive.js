@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import ErrorScreen from './ErrorScreen';
+import Button from './ButtonTanel';
 
 const styles = {
   pageContentWrapper: {
@@ -37,6 +38,7 @@ const styles = {
   },
 
   well: {
+      width: 'auto',
       fontWeight: 'bold',
       //font-family: $inconsolata;
       fontSize: '1.2rem',
@@ -48,32 +50,6 @@ const styles = {
       textAlign: 'center',
       color: '#0c1e3e',
       boxShadow: 'none!important',
-  },
-  btnStyle: () => {
-      return {
-        justifyContent: 'center', 
-        alignItems: 'center',
-        fontSize: '1.8rem',
-        background: 'linear-gradient(#699bff, #2972ff)',
-        border: 'none',
-        borderRadius: 8,
-        boxShadow: '0px 5px 5px 0px rgba(0, 0, 0, 0.3)',
-        padding: '14px 16px',
-        marginBottom: '20px',
-        color: 'white',
-    }
-  },
-  btnInfoHover: {
-    background: '#2970ff',
-  },
-
-  btnInfoFocus: {
-    background: '#5a6d81 !important',
-    boxShadow: '0px 5px 5px 0px rgba(0, 0, 0, 0.3)'
-  },
-   btnInfoActive: {
-    background: '#5a6d81 !important',
-    boxShadow: '0px 5px 5px 0px rgba(0, 0, 0, 0.3)',
   },
 };
 
@@ -118,11 +94,13 @@ class Receive extends Component{
 							<p>Share this wallet address to receive payments, To protect your privacy, new addresses are generated automatically once you use them.</p>
 						</div>
 						<div style={styles.center}>
-              <button 
-              type="button" 
-              style={styles.btnStyle()}
-              onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
-              >Generate new address</button>
+              <Button
+                size="large"
+                block={false}
+                onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
+                >
+                Generate new address
+              </Button>
 						</div>
 					</div>
 				</div>
