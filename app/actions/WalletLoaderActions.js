@@ -7,8 +7,8 @@ import { transactionNftnsStart } from './NotificationActions';
 import { getSeederAttempt } from './SeedServiceActions';
 import { getDcrdCert } from '../middleware/grpc/client';
 import { getCfg } from '../config.js';
-import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest, 
-  CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest, 
+import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
+  CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
   SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from '../middleware/walletrpc/api_pb';
 
 export const DISCLAIMER_OK = 'DISCLAIMER_OK';
@@ -17,7 +17,7 @@ export function disclaimerOKAction() {
   return (dispatch) => {
     dispatch({ type: DISCLAIMER_OK });
     dispatch(getVersionServiceAttempt());
-  }
+  };
 }
 
 export const LOADER_ATTEMPT = 'LOADER_ATTEMPT';
@@ -240,7 +240,7 @@ export function startRpcRequest() {
   request.setUsername(cfg.rpc_user);
   request.setPassword(new Uint8Array(Buffer.from(cfg.rpc_pass)));
   request.setCertificate(new Uint8Array(getDcrdCert()));
-  
+
   return (dispatch) => {
     dispatch({request: request, type: STARTRPC_ATTEMPT});
     dispatch(startRpcAction());
@@ -284,7 +284,7 @@ export function discoverAddressAttempt(discoverAccts, privPass) {
 }
 
 function discoverAddressAction(discoverAccts, privPass) {
-  DiscoverAddressesRequest
+  DiscoverAddressesRequest;
   var request = new DiscoverAddressesRequest();
   request.setDiscoverAccounts(discoverAccts);
   request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));

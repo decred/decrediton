@@ -72,7 +72,7 @@ function getBalanceSuccess(getBalanceResponse) {
 }
 
 export function getBalanceAttempt(accountNumber, requiredConfs) {
-  var request = new BalanceRequest()
+  var request = new BalanceRequest();
   request.setAccountNumber(accountNumber);
   request.setRequiredConfirmations(requiredConfs);
   return (dispatch) => {

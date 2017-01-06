@@ -5,7 +5,7 @@ purchaseTickets, constructTransaction } from '../middleware/grpc/control';
 import { getBalanceAttempt } from './ClientActions';
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
-  FundTransactionRequest, ConstructTransactionRequest, SignTransactionRequest, 
+  FundTransactionRequest, ConstructTransactionRequest, SignTransactionRequest,
   PublishTransactionRequest, PurchaseTicketsRequest, LoadActiveDataFiltersRequest
 } from '../middleware/walletrpc/api_pb';
 
@@ -312,7 +312,7 @@ function loadActiveDataFiltersSuccess(response) {
 }
 
 export function loadActiveDataFiltersAttempt() {
-  var request = new LoadActiveDataFiltersRequest();;
+  var request = new LoadActiveDataFiltersRequest();
   return (dispatch) => {
     dispatch({
       request: request,

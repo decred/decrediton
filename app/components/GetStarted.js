@@ -38,7 +38,7 @@ const styles = {
 
 
 class Home extends Component{
-  
+
   handleDisclaimerOK = () => {
     this.props.disclaimerOKAction();
   }

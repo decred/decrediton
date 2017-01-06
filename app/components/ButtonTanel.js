@@ -3,7 +3,7 @@ import React from 'react';
 
 var styles = {
   base: {
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
     fontSize: '1.8rem',
     background: 'linear-gradient(#699bff, #2972ff)',
@@ -26,7 +26,7 @@ var styles = {
       boxShadow: '0px 5px 5px 0px rgba(0, 0, 0, 0.3)',
     },
     '@media (min-width: 320px)': {
-      
+
     }
   },
 

@@ -21,7 +21,7 @@ const styles = {
   },
   center: {
     textAlign: 'center',
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
   },
   img: {
@@ -31,7 +31,7 @@ const styles = {
   },
 
   colXs12: {
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
     borderBottom: '1px solid #e2e2e2',
