@@ -25,9 +25,15 @@ const styles = {
     alignItems: 'center',
   },
   img: {
-    width: '150px',
+    width: '20%',
     height: '150px',
-    margin: '25px 0 50px 0'
+    margin: '25px 0 50px 0',
+    marginLeft: '40%',
+    backgroundColor: 'black',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'white'
   },
 
   colXs12: {
@@ -76,15 +82,12 @@ class Receive extends Component{
 					</div>
 				</div>
         <div style={styles.center}>
-					<div style={styles.center}>
-            <img style={styles.img} src="img/qr.jpg" alt="" />
-					</div>
+          <div style={styles.img}>QR CODE</div>
 					<div style={styles.well}>
 						<p>{getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.getAddress() } </p>
           </div>
           <div style={styles.center}>
-						<p>**NOTE** QRCode is not accurate, simply a place holder! <br/>
-            Share this wallet address to receive payments, To protect your privacy, new addresses are generated automatically once you use them.</p>
+						<p>Share this wallet address to receive payments, To protect your privacy, new addresses are generated automatically once you use them.</p>
 					</div>
 					<div style={styles.center}>
             <Button
