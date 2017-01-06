@@ -75,7 +75,7 @@ const launchDCRD = () => {
   var spawn = require('child_process').spawn;
   var args = ['--rpcuser='+cfg.rpc_user,'--rpcpass='+cfg.rpc_pass];
 
-  var dcrdExe = path.join(process.resourcesPath, 'bin', 'dcrd')
+  var dcrdExe = path.join(process.resourcesPath, 'bin', 'dcrd');
   if (os.platform() == 'win32') {
     dcrdExe = dcrdExe + '.exe';
   }
@@ -115,7 +115,7 @@ const launchDCRWallet = () => {
   var spawn = require('child_process').spawn;
   var args = ['--noinitialload','--tlscurve=P-256','--onetimetlskey'];
 
-  var dcrwExe = path.join(process.resourcesPath, 'bin', 'dcrwallet')
+  var dcrwExe = path.join(process.resourcesPath, 'bin', 'dcrwallet');
   if (os.platform() == 'win32') {
     dcrwExe = dcrwExe + '.exe';
   }
