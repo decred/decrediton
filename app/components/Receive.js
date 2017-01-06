@@ -49,18 +49,19 @@ const styles = {
       color: '#0c1e3e',
       boxShadow: 'none!important',
   },
-
-  btnInfo: {
-    justifyContent: 'center', 
-    alignItems: 'center',
-    fontSize: '1.8rem',
-    background: 'linear-gradient(#699bff, #2972ff)',
-    border: 'none',
-    borderRadius: 8,
-    boxShadow: '0px 5px 5px 0px rgba(0, 0, 0, 0.3)',
-    padding: '14px 16px',
-    marginBottom: '20px',
-    color: 'white',
+  btnStyle: () => {
+      return {
+        justifyContent: 'center', 
+        alignItems: 'center',
+        fontSize: '1.8rem',
+        background: 'linear-gradient(#699bff, #2972ff)',
+        border: 'none',
+        borderRadius: 8,
+        boxShadow: '0px 5px 5px 0px rgba(0, 0, 0, 0.3)',
+        padding: '14px 16px',
+        marginBottom: '20px',
+        color: 'white',
+    }
   },
   btnInfoHover: {
     background: '#2970ff',
@@ -119,9 +120,8 @@ class Receive extends Component{
 						<div style={styles.center}>
               <button 
               type="button" 
-              style={styles.btnInfo}
+              style={styles.btnStyle()}
               onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
-              onMouseOver={() => {this.style = styles.btnInfoHover}}
               >Generate new address</button>
 						</div>
 					</div>
