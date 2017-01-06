@@ -3,7 +3,10 @@ import React from 'react';
 
 var styles = {
   base: {
-    fontSize: '.5em',
+    fontSize: '1em',
+  },
+  small: {
+    fontSize: '0.8em',
   },
 
   block: {
@@ -15,16 +18,13 @@ class Balance extends React.Component {
   render() {
     var totalDcr = parseInt(this.props.amount) / 100000000;
     var numberFormatPart = totalDcr.toString().split(".");
-    console.log(numberFormatPart);
-    console.log(totalDcr);
-    var numberFormatPartAdd = numberFormatPart[1].toString().slice(2);
-    console.log(numberFormatPartAdd);
-    var numberFormatedShow = numberFormatPart[1].toString().replace(numberFormatPartAdd, '<span style="font-size=0.5em">' + numberFormatPartAdd + '</span>');
-    console.log(numberFormatedShow);
     return (
-      <span>
+      <span 
+      style={styles.base}
+      onClick={this.props.onClick}
+      >
         {numberFormatPart[0]}.{numberFormatPart[1].toString().slice(0,2)}
-        <span style={styles.base}>{numberFormatPart[1].toString().slice(2)}</span>
+        <span style={styles.small}>{numberFormatPart[1].toString().slice(2)}</span>
       </span>
     );
   }

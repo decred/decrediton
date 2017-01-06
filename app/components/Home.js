@@ -69,24 +69,14 @@ class Home extends Component{
     }
     /* View that will be seen when user has a set Client */
     const homeView = (
-      <div >
+      <div>
         <h1>Home Page</h1>
         <h3>Current block height: {getAccountsResponse === null ? 'Please refresh' : getAccountsResponse.getCurrentBlockHeight() }</h3>
         <h3>My balance:</h3>
-        {getBalanceResponse === null ? 'Please refresh' : <Balance amount={getBalanceResponse.getTotal()} /> }
+        {getBalanceResponse === null ? 'Please refresh' : 
+        <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
+        amount={getBalanceResponse.getTotal()} /> }
         <br/>
-        <Button
-          style={styles.buttons}
-          disabled={getBalanceRequestAttempt}
-          onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}>
-          {getBalanceRequestAttempt ? 'Getting Balance...' : 'Get Balance'}
-        </Button>
-        <Button
-          style={styles.buttons}
-          disabled={getStakeInfoRequestAttempt}
-          onClick={!getStakeInfoRequestAttempt? () => this.props.getStakeInfoAttempt() : null}>
-          {getStakeInfoRequestAttempt ? 'Getting Stake Info...' : 'Get Stake Info'}
-        </Button>
         {rescanView}
       </div>);
 
