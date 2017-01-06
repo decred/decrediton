@@ -8,11 +8,12 @@ import Button from './ButtonTanel';
 
 const styles = {
   pageContentWrapper: {
-    width: '100%',
+    //width: '100%',
+    marginRight: '8px',
     position: 'absolute',
     paddingBottom: '60px',
   },
-  //MYDECRED
+
   header: {
     backgroundColor: '#F9FBFC',
     textAlign: 'center',
@@ -38,18 +39,18 @@ const styles = {
   },
 
   well: {
-      width: 'auto',
-      fontWeight: 'bold',
-      //font-family: $inconsolata;
-      fontSize: '1.2rem',
-      backgroundColor:'#e9f8fe',
-      padding: '5px 5px',
-      margin: '-20px 0 15px 0',
-      border: '2px solid #cacfd6',
-      borderRadius: '2px',
-      textAlign: 'center',
-      color: '#0c1e3e',
-      boxShadow: 'none!important',
+    width: 'auto',
+    fontWeight: 'bold',
+    //font-family: $inconsolata;
+    fontSize: '1.2rem',
+    backgroundColor:'#e9f8fe',
+    padding: '5px 5px',
+    margin: '-20px 0 15px 0',
+    border: '2px solid #cacfd6',
+    borderRadius: '2px',
+    textAlign: 'center',
+    color: '#0c1e3e',
+    boxShadow: 'none!important',
   },
 };
 
@@ -67,44 +68,36 @@ class Receive extends Component{
     const { constructTxRequestAttempt, constructTransactionAttempt, constructTxResponse } = this.props;
     const { publishTransactionResponse } = this.props;
     /* View that will be seen when user has a set Client */
-    const receiveView = (
-      <div>
-        <h1>Receive Page</h1>
-        <h3>Current address: {getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.getAddress() }</h3>
-        <RaisedButton
-          disabled={getNextAddressRequestAttempt}
-          onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
-          label={getNextAddressRequestAttempt ? 'Getting new address' : 'Get New Address'}/>
-      </div>);
     const copayReceive = (
-  <div style={styles.pageContentWrapper}>
-          <div style={styles.center}>
-            <div style={styles.header}>
-							<p>My Decred Address</p>
-						</div>
-					</div>
-          <div style={styles.center}>
-						<div style={styles.center}>
-              <img style={styles.img} src="img/qr.jpg" alt="" />
-						</div>
-						<div style={styles.well}>
-							<p>{getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.getAddress() } </p>
-            </div>
-            <div style={styles.center}>
-							<p>Share this wallet address to receive payments, To protect your privacy, new addresses are generated automatically once you use them.</p>
-						</div>
-						<div style={styles.center}>
-              <Button
-                size="large"
-                block={false}
-                onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
-                >
-                Generate new address
-              </Button>
-						</div>
+      <div style={styles.pageContentWrapper}>
+        <div style={styles.center}>
+          <div style={styles.header}>
+						<p>My Decred Address</p>
 					</div>
 				</div>
-    )
+        <div style={styles.center}>
+					<div style={styles.center}>
+            <img style={styles.img} src="img/qr.jpg" alt="" />
+					</div>
+					<div style={styles.well}>
+						<p>{getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.getAddress() } </p>
+          </div>
+          <div style={styles.center}>
+						<p>**NOTE** QRCode is not accurate, simply a place holder! <br/>
+            Share this wallet address to receive payments, To protect your privacy, new addresses are generated automatically once you use them.</p>
+					</div>
+					<div style={styles.center}>
+            <Button
+              size="large"
+              block={false}
+              onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
+              >
+              Generate new address
+            </Button>
+					</div>
+				</div>
+			</div>
+    );
     /* Check to see that client is not undefined */
     if (walletService === null) {
       return (<ErrorScreen />);
