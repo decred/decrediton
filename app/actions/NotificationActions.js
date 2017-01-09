@@ -1,4 +1,8 @@
 import { transactionNtfs, spentnessNtfs, accountNtfs } from '../middleware/grpc/client';
+import { getAccountsAttempt, getBalanceAttempt, getStakeInfoAttempt,
+  getTicketPriceAttempt, getNetworkAttempt, getTransactionsAttempt} from './ClientActions';
+
+import { TransactionNotificationsRequest, SpentnessNotificationsRequest, AccountsNotificationsRequest } from '../middleware/walletrpc/api_pb';
 
 export const TRANSACTIONNFTNS_START = 'TRANSACTIONNFTNS_START';
 export const TRANSACTIONNFTNS_FAILED = 'TRANSACTIONNFTNS_FAILED';
@@ -10,11 +14,19 @@ function transactionNftnsError(error) {
 }
 
 function transactionNtfnsData(response) {
-  return { response: response, type: TRANSACTIONNFTNS_DATA };
+  return (dispatch) => {
+    dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
+    setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
+    setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
+    setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
+    setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
+    setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
+    setTimeout( () => {dispatch(getTransactionsAttempt(0, 300000, '', ''));}, 1000);
+  };
 }
 
 export function transactionNftnsStart() {
-  var request = {};
+  var request = new TransactionNotificationsRequest();
   return (dispatch) => {
     dispatch({request: request, type: TRANSACTIONNFTNS_START });
     dispatch(startTransactionNtfns());
@@ -31,12 +43,12 @@ export function transactionNftnsEnd() {
 
 function startTransactionNtfns() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
-    const { transactionNftnsRequest } = getState().notifications;
-    transactionNtfs(client, transactionNftnsRequest,
+    const { walletService } = getState().grpc;
+    const { transactionNtfnsRequest } = getState().notifications;
+    console.log(transactionNtfnsRequest);
+    transactionNtfs(walletService, transactionNtfnsRequest,
       function(data) {
-        console.log('Transaction received:', data);
-        dispatch(startTransactionNtfns(data));
+        dispatch(transactionNtfnsData(data));
       }
     );
   };
