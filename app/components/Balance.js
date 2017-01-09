@@ -17,9 +17,9 @@ var styles = {
 class Balance extends React.Component {
   render() {
     var totalDcr = parseInt(this.props.amount) / 100000000;
-    var numberFormatPart = totalDcr.toString().split(".");
+    var numberFormatPart = totalDcr.toString().split('.');
     return (
-      <span 
+      <span
       style={styles.base}
       onClick={this.props.onClick}
       >

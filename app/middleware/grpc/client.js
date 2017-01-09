@@ -30,11 +30,11 @@ export function getCert() {
     cert = fs.readFileSync(certPath);
   } catch (err) {
     if (err.code === 'ENOENT') {
-      console.log(certPath + " does not exist")
+      console.log(certPath + ' does not exist');
     } else if (err.code === 'EACCES') {
-      console.log(certPath + " permission denied")
+      console.log(certPath + ' permission denied');
     } else {
-      console.error(certPath + " " + err)
+      console.error(certPath + ' ' + err);
     }
   }
 
@@ -63,7 +63,7 @@ export function getDcrdCert() {
 export function getWalletService(address, port, cb) {
   var cert = getCert();
   if (cert == '') {
-    return cb(null, "Unable to load dcrwallet certificate.  dcrwallet not running?");
+    return cb(null, 'Unable to load dcrwallet certificate.  dcrwallet not running?');
   }
   var creds = grpc.credentials.createSsl(cert);
   var client = new services.WalletServiceClient(address + ':' + port, creds);
