@@ -22,7 +22,7 @@ function transactionNtfnsData(response) {
     setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
     setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
     setTimeout( () => {dispatch(getTransactionsAttempt(0, 300000, '', ''));}, 1000);
-  }
+  };
 }
 
 export function transactionNftnsStart() {
@@ -45,7 +45,7 @@ function startTransactionNtfns() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { transactionNtfnsRequest } = getState().notifications;
-    console.log(transactionNtfnsRequest)
+    console.log(transactionNtfnsRequest);
     transactionNtfs(walletService, transactionNtfnsRequest,
       function(data) {
         dispatch(transactionNtfnsData(data));
