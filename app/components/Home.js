@@ -5,13 +5,41 @@ import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
 import ErrorScreen from './ErrorScreen';
 import RescanForm from '../containers/RescanForm';
+import Balance from './Balance';
+import Button from './ButtonTanel';
 
 const styles = {
-  mainArea: {
-    backgroundColor:'#2971ff'
+  pageContentWrapper: {
+    width: '100%',
+    paddingBottom: '60px',
   },
-  sideBar: {
-    backgroundColor:'#2ed8a3'
+
+  header: {
+    backgroundColor: '#F9FBFC',
+    textAlign: 'center',
+    borderBottom: '1px solid #e2e2e2',
+  },
+  center: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  well: {
+    width: 'auto',
+    fontWeight: 'bold',
+    //font-family: $inconsolata;
+    fontSize: '1.2rem',
+    backgroundColor:'#e9f8fe',
+    padding: '5px 5px',
+    margin: '20px 0 15px 0',
+    border: '2px solid #cacfd6',
+    borderRadius: '2px',
+    textAlign: 'center',
+    color: '#0c1e3e',
+    boxShadow: 'none!important',
+  },
+  small: {
+    fontSize: '0.8em',
   },
   error: {
     color:'red'
@@ -67,24 +95,29 @@ class Home extends Component{
     }
     /* View that will be seen when user has a set Client */
     const homeView = (
-      <div >
-        <h1>Home Page</h1>
-        <h3>Current block height: {getAccountsResponse === null ? 'Please refresh' : getAccountsResponse.getCurrentBlockHeight() }</h3>
-        <h3>Current balance: {getBalanceResponse === null ? 'Please refresh' : getBalanceResponse.getTotal() }</h3>
-        <RaisedButton
-          style={styles.buttons}
-          disabled={getBalanceRequestAttempt}
-          onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
-          label={getBalanceRequestAttempt ? 'Getting Balance...' : 'Get Balance'}/>
-        <h3>StakeInfo: {getStakeInfoResponse === null ? 'Please refresh' : getStakeInfoResponse.getPoolSize()}</h3>
-        <RaisedButton
-          style={styles.buttons}
-          disabled={getStakeInfoRequestAttempt}
-          onClick={!getStakeInfoRequestAttempt? () => this.props.getStakeInfoAttempt() : null}
-          label={getStakeInfoRequestAttempt ? 'Getting Stake Info...' : 'Get Stake Info'}/>
-        {rescanView}
+      <div style={styles.pageContentWrapper}>
+        <div style={styles.center}>
+          <div style={styles.header}>
+						<p>My balance</p>
+					</div>
+				</div>
+        <div style={styles.well}>
+          {getBalanceResponse === null ? 'Please refresh' :
+          <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
+          amount={getBalanceResponse.getTotal()} /> }<span style={styles.small}> DCR</span>
+				</div>
+        <div style={styles.center}>
+          <div style={styles.header}>
+          	<p>Current block height</p>
+					</div>
+          <div style={styles.well}>
+            <p>{getAccountsResponse === null ? '""' : getAccountsResponse.getCurrentBlockHeight() }</p>
+          </div>
+        </div>
+        <div style={styles.center}>
+          {rescanView}
+        </div>
       </div>);
-
 
     if (walletService === null) {
       return(<ErrorScreen />);

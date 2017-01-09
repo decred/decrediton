@@ -5,7 +5,7 @@ var services = require('../walletrpc/api_grpc_pb.js');
 export function getVersionService(address, port, cb) {
   var cert = getCert();
   if (cert == '') {
-    return cb(null, "Unable to load dcrwallet certificate.  dcrwallet not running?");
+    return cb(null, 'Unable to load dcrwallet certificate.  dcrwallet not running?');
   }
   var creds = grpc.credentials.createSsl(cert);
   var version = new services.VersionServiceClient(address + ':' + port, creds);

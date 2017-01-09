@@ -43,6 +43,8 @@ class Button extends React.Component {
           styles.base,
           this.props.block && styles.block
         ]}
+        type={this.props.type}
+        disabled={this.props.disabled}
         onClick={this.props.onClick}>
         {this.props.children}
       </button>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { rescanAttempt } from '../actions/ControlActions';
-import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import Button from '../components/ButtonTanel';
 
 const style = {
   margin: 12,
@@ -29,9 +29,7 @@ let RescanForm = ({ dispatch }) => {
           floatingLabelText="Starting Height for Rescan"
           onBlur={(e) =>{startHeight = e.target.value;}}
         /><br />
-        <RaisedButton type="submit"
-         style={style}
-         label='Rescan Wallet'/>
+        <Button type="submit">Rescan Wallet</Button>
       </form>
     </div>
   );
