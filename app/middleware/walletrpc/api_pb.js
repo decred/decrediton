@@ -123,9 +123,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.VersionRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.VersionRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.VersionRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.VersionRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -136,16 +136,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.VersionRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.VersionRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.VersionRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -247,9 +247,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.VersionResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.VersionResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.VersionResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.VersionResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -260,21 +260,21 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.VersionResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.VersionResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        versionString: jspb.Message.getFieldWithDefault(msg, 1, ''),
-        major: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        minor: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        patch: jspb.Message.getFieldWithDefault(msg, 4, 0),
-        prerelease: jspb.Message.getFieldWithDefault(msg, 5, ''),
-        buildMetadata: jspb.Message.getFieldWithDefault(msg, 6, '')
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.VersionResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    versionString: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    major: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    minor: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    patch: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    prerelease: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    buildMetadata: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -416,7 +416,7 @@ proto.walletrpc.VersionResponse.prototype.serializeBinaryToWriter = function (wr
  * @return {string}
  */
 proto.walletrpc.VersionResponse.prototype.getVersionString = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -476,7 +476,7 @@ proto.walletrpc.VersionResponse.prototype.setPatch = function(value) {
  * @return {string}
  */
 proto.walletrpc.VersionResponse.prototype.getPrerelease = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
 
@@ -491,7 +491,7 @@ proto.walletrpc.VersionResponse.prototype.setPrerelease = function(value) {
  * @return {string}
  */
 proto.walletrpc.VersionResponse.prototype.getBuildMetadata = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
 
@@ -539,9 +539,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.TransactionDetails.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.TransactionDetails.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.TransactionDetails.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.TransactionDetails.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -552,23 +552,23 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.TransactionDetails} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.TransactionDetails.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        hash: msg.getHash_asB64(),
-        transaction: msg.getTransaction_asB64(),
-        debitsList: jspb.Message.toObjectList(msg.getDebitsList(),
+proto.walletrpc.TransactionDetails.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    hash: msg.getHash_asB64(),
+    transaction: msg.getTransaction_asB64(),
+    debitsList: jspb.Message.toObjectList(msg.getDebitsList(),
     proto.walletrpc.TransactionDetails.Input.toObject, includeInstance),
-        creditsList: jspb.Message.toObjectList(msg.getCreditsList(),
+    creditsList: jspb.Message.toObjectList(msg.getCreditsList(),
     proto.walletrpc.TransactionDetails.Output.toObject, includeInstance),
-        fee: jspb.Message.getFieldWithDefault(msg, 5, 0),
-        timestamp: jspb.Message.getFieldWithDefault(msg, 6, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+    fee: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    timestamp: jspb.Message.getFieldWithDefault(msg, 6, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -714,7 +714,7 @@ proto.walletrpc.TransactionDetails.prototype.serializeBinaryToWriter = function 
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.TransactionDetails.prototype.getHash = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -753,7 +753,7 @@ proto.walletrpc.TransactionDetails.prototype.setHash = function(value) {
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.TransactionDetails.prototype.getTransaction = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -914,9 +914,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.TransactionDetails.Input.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.TransactionDetails.Input.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.TransactionDetails.Input.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.TransactionDetails.Input.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -927,18 +927,18 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.TransactionDetails.Input} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.TransactionDetails.Input.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        index: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        previousAccount: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        previousAmount: jspb.Message.getFieldWithDefault(msg, 3, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.TransactionDetails.Input.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    index: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    previousAccount: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    previousAmount: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -1118,9 +1118,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.TransactionDetails.Output.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.TransactionDetails.Output.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.TransactionDetails.Output.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.TransactionDetails.Output.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -1131,18 +1131,18 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.TransactionDetails.Output} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.TransactionDetails.Output.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        index: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        account: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        internal: jspb.Message.getFieldWithDefault(msg, 3, false)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.TransactionDetails.Output.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    index: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    account: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    internal: jspb.Message.getFieldWithDefault(msg, 3, false)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -1331,9 +1331,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.BlockDetails.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.BlockDetails.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.BlockDetails.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.BlockDetails.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -1344,20 +1344,20 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.BlockDetails} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.BlockDetails.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        hash: msg.getHash_asB64(),
-        height: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        timestamp: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        transactionsList: jspb.Message.toObjectList(msg.getTransactionsList(),
+proto.walletrpc.BlockDetails.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    hash: msg.getHash_asB64(),
+    height: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    timestamp: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    transactionsList: jspb.Message.toObjectList(msg.getTransactionsList(),
     proto.walletrpc.TransactionDetails.toObject, includeInstance)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -1479,7 +1479,7 @@ proto.walletrpc.BlockDetails.prototype.serializeBinaryToWriter = function (write
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.BlockDetails.prototype.getHash = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -1607,9 +1607,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.AccountBalance.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.AccountBalance.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.AccountBalance.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.AccountBalance.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -1620,17 +1620,17 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.AccountBalance} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.AccountBalance.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        account: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        totalBalance: jspb.Message.getFieldWithDefault(msg, 2, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.AccountBalance.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    account: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    totalBalance: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -1784,9 +1784,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.PingRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.PingRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.PingRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.PingRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -1797,16 +1797,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.PingRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.PingRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.PingRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -1908,9 +1908,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.PingResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.PingResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.PingResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.PingResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -1921,16 +1921,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.PingResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.PingResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.PingResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -2032,9 +2032,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.NetworkRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.NetworkRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.NetworkRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.NetworkRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -2045,16 +2045,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.NetworkRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.NetworkRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.NetworkRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -2156,9 +2156,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.NetworkResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.NetworkResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.NetworkResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.NetworkResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -2169,16 +2169,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.NetworkResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.NetworkResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        activeNetwork: jspb.Message.getFieldWithDefault(msg, 1, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.NetworkResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    activeNetwork: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -2306,9 +2306,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.AccountNumberRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.AccountNumberRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.AccountNumberRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.AccountNumberRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -2319,16 +2319,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.AccountNumberRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.AccountNumberRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        accountName: jspb.Message.getFieldWithDefault(msg, 1, '')
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.AccountNumberRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    accountName: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -2415,7 +2415,7 @@ proto.walletrpc.AccountNumberRequest.prototype.serializeBinaryToWriter = functio
  * @return {string}
  */
 proto.walletrpc.AccountNumberRequest.prototype.getAccountName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -2456,9 +2456,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.AccountNumberResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.AccountNumberResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.AccountNumberResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.AccountNumberResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -2469,16 +2469,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.AccountNumberResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.AccountNumberResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.AccountNumberResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -2606,9 +2606,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.AccountsRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.AccountsRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.AccountsRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.AccountsRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -2619,16 +2619,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.AccountsRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.AccountsRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.AccountsRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -2737,9 +2737,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.AccountsResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.AccountsResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.AccountsResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.AccountsResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -2750,19 +2750,19 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.AccountsResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.AccountsResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        accountsList: jspb.Message.toObjectList(msg.getAccountsList(),
+proto.walletrpc.AccountsResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    accountsList: jspb.Message.toObjectList(msg.getAccountsList(),
     proto.walletrpc.AccountsResponse.Account.toObject, includeInstance),
-        currentBlockHash: msg.getCurrentBlockHash_asB64(),
-        currentBlockHeight: jspb.Message.getFieldWithDefault(msg, 3, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+    currentBlockHash: msg.getCurrentBlockHash_asB64(),
+    currentBlockHeight: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -2906,7 +2906,7 @@ proto.walletrpc.AccountsResponse.prototype.clearAccountsList = function() {
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.AccountsResponse.prototype.getCurrentBlockHash = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -2986,9 +2986,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.AccountsResponse.Account.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.AccountsResponse.Account.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.AccountsResponse.Account.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.AccountsResponse.Account.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -2999,21 +2999,21 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.AccountsResponse.Account} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.AccountsResponse.Account.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        accountName: jspb.Message.getFieldWithDefault(msg, 2, ''),
-        totalBalance: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        externalKeyCount: jspb.Message.getFieldWithDefault(msg, 4, 0),
-        internalKeyCount: jspb.Message.getFieldWithDefault(msg, 5, 0),
-        importedKeyCount: jspb.Message.getFieldWithDefault(msg, 6, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.AccountsResponse.Account.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    accountName: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    totalBalance: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    externalKeyCount: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    internalKeyCount: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    importedKeyCount: jspb.Message.getFieldWithDefault(msg, 6, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -3170,7 +3170,7 @@ proto.walletrpc.AccountsResponse.Account.prototype.setAccountNumber = function(v
  * @return {string}
  */
 proto.walletrpc.AccountsResponse.Account.prototype.getAccountName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -3271,9 +3271,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.RenameAccountRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.RenameAccountRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.RenameAccountRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.RenameAccountRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -3284,17 +3284,17 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.RenameAccountRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.RenameAccountRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        newName: jspb.Message.getFieldWithDefault(msg, 2, '')
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.RenameAccountRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    newName: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -3407,7 +3407,7 @@ proto.walletrpc.RenameAccountRequest.prototype.setAccountNumber = function(value
  * @return {string}
  */
 proto.walletrpc.RenameAccountRequest.prototype.getNewName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -3448,9 +3448,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.RenameAccountResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.RenameAccountResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.RenameAccountResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.RenameAccountResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -3461,16 +3461,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.RenameAccountResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.RenameAccountResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.RenameAccountResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -3572,9 +3572,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.RescanRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.RescanRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.RescanRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.RescanRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -3585,16 +3585,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.RescanRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.RescanRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        beginHeight: jspb.Message.getFieldWithDefault(msg, 1, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.RescanRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    beginHeight: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -3722,9 +3722,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.RescanResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.RescanResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.RescanResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.RescanResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -3735,16 +3735,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.RescanResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.RescanResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        rescannedThrough: jspb.Message.getFieldWithDefault(msg, 1, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.RescanResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    rescannedThrough: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -3872,9 +3872,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.NextAccountRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.NextAccountRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.NextAccountRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.NextAccountRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -3885,17 +3885,17 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.NextAccountRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.NextAccountRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        passphrase: msg.getPassphrase_asB64(),
-        accountName: jspb.Message.getFieldWithDefault(msg, 2, '')
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.NextAccountRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    passphrase: msg.getPassphrase_asB64(),
+    accountName: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -3993,7 +3993,7 @@ proto.walletrpc.NextAccountRequest.prototype.serializeBinaryToWriter = function 
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.NextAccountRequest.prototype.getPassphrase = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -4032,7 +4032,7 @@ proto.walletrpc.NextAccountRequest.prototype.setPassphrase = function(value) {
  * @return {string}
  */
 proto.walletrpc.NextAccountRequest.prototype.getAccountName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -4073,9 +4073,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.NextAccountResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.NextAccountResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.NextAccountResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.NextAccountResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -4086,16 +4086,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.NextAccountResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.NextAccountResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.NextAccountResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -4223,9 +4223,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.NextAddressRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.NextAddressRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.NextAddressRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.NextAddressRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -4236,17 +4236,17 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.NextAddressRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.NextAddressRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        account: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        kind: jspb.Message.getFieldWithDefault(msg, 2, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.NextAddressRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    account: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    kind: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -4408,9 +4408,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.NextAddressResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.NextAddressResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.NextAddressResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.NextAddressResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -4421,17 +4421,17 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.NextAddressResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.NextAddressResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        address: jspb.Message.getFieldWithDefault(msg, 1, ''),
-        publicKey: jspb.Message.getFieldWithDefault(msg, 2, '')
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.NextAddressResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    address: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    publicKey: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -4529,7 +4529,7 @@ proto.walletrpc.NextAddressResponse.prototype.serializeBinaryToWriter = function
  * @return {string}
  */
 proto.walletrpc.NextAddressResponse.prototype.getAddress = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -4544,7 +4544,7 @@ proto.walletrpc.NextAddressResponse.prototype.setAddress = function(value) {
  * @return {string}
  */
 proto.walletrpc.NextAddressResponse.prototype.getPublicKey = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -4585,9 +4585,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.ImportPrivateKeyRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.ImportPrivateKeyRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.ImportPrivateKeyRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.ImportPrivateKeyRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -4598,20 +4598,20 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.ImportPrivateKeyRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.ImportPrivateKeyRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        passphrase: msg.getPassphrase_asB64(),
-        account: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        privateKeyWif: jspb.Message.getFieldWithDefault(msg, 3, ''),
-        rescan: jspb.Message.getFieldWithDefault(msg, 4, false),
-        scanFrom: jspb.Message.getFieldWithDefault(msg, 5, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.ImportPrivateKeyRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    passphrase: msg.getPassphrase_asB64(),
+    account: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    privateKeyWif: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    rescan: jspb.Message.getFieldWithDefault(msg, 4, false),
+    scanFrom: jspb.Message.getFieldWithDefault(msg, 5, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -4742,7 +4742,7 @@ proto.walletrpc.ImportPrivateKeyRequest.prototype.serializeBinaryToWriter = func
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.ImportPrivateKeyRequest.prototype.getPassphrase = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -4796,7 +4796,7 @@ proto.walletrpc.ImportPrivateKeyRequest.prototype.setAccount = function(value) {
  * @return {string}
  */
 proto.walletrpc.ImportPrivateKeyRequest.prototype.getPrivateKeyWif = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
@@ -4869,9 +4869,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.ImportPrivateKeyResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.ImportPrivateKeyResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.ImportPrivateKeyResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.ImportPrivateKeyResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -4882,16 +4882,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.ImportPrivateKeyResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.ImportPrivateKeyResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.ImportPrivateKeyResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -4993,9 +4993,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.ImportScriptRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.ImportScriptRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.ImportScriptRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.ImportScriptRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -5006,19 +5006,19 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.ImportScriptRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.ImportScriptRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        passphrase: msg.getPassphrase_asB64(),
-        script: msg.getScript_asB64(),
-        rescan: jspb.Message.getFieldWithDefault(msg, 3, false),
-        scanFrom: jspb.Message.getFieldWithDefault(msg, 4, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.ImportScriptRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    passphrase: msg.getPassphrase_asB64(),
+    script: msg.getScript_asB64(),
+    rescan: jspb.Message.getFieldWithDefault(msg, 3, false),
+    scanFrom: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -5138,7 +5138,7 @@ proto.walletrpc.ImportScriptRequest.prototype.serializeBinaryToWriter = function
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.ImportScriptRequest.prototype.getPassphrase = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -5177,7 +5177,7 @@ proto.walletrpc.ImportScriptRequest.prototype.setPassphrase = function(value) {
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.ImportScriptRequest.prototype.getScript = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -5274,9 +5274,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.ImportScriptResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.ImportScriptResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.ImportScriptResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.ImportScriptResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -5287,16 +5287,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.ImportScriptResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.ImportScriptResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.ImportScriptResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -5398,9 +5398,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.BalanceRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.BalanceRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.BalanceRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.BalanceRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -5411,17 +5411,17 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.BalanceRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.BalanceRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        requiredConfirmations: jspb.Message.getFieldWithDefault(msg, 2, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.BalanceRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    requiredConfirmations: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -5575,9 +5575,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.BalanceResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.BalanceResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.BalanceResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.BalanceResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -5588,18 +5588,18 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.BalanceResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.BalanceResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        total: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        spendable: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        immatureReward: jspb.Message.getFieldWithDefault(msg, 3, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.BalanceResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    total: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    spendable: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    immatureReward: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -5779,9 +5779,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.GetTransactionsRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.GetTransactionsRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.GetTransactionsRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.GetTransactionsRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -5792,20 +5792,20 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.GetTransactionsRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.GetTransactionsRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        startingBlockHash: msg.getStartingBlockHash_asB64(),
-        startingBlockHeight: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        endingBlockHash: msg.getEndingBlockHash_asB64(),
-        endingBlockHeight: jspb.Message.getFieldWithDefault(msg, 4, 0),
-        minimumRecentTransactions: jspb.Message.getFieldWithDefault(msg, 5, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.GetTransactionsRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    startingBlockHash: msg.getStartingBlockHash_asB64(),
+    startingBlockHeight: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    endingBlockHash: msg.getEndingBlockHash_asB64(),
+    endingBlockHeight: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    minimumRecentTransactions: jspb.Message.getFieldWithDefault(msg, 5, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -5936,7 +5936,7 @@ proto.walletrpc.GetTransactionsRequest.prototype.serializeBinaryToWriter = funct
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.GetTransactionsRequest.prototype.getStartingBlockHash = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -5990,7 +5990,7 @@ proto.walletrpc.GetTransactionsRequest.prototype.setStartingBlockHeight = functi
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.GetTransactionsRequest.prototype.getEndingBlockHash = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
@@ -6092,9 +6092,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.GetTransactionsResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.GetTransactionsResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.GetTransactionsResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.GetTransactionsResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -6105,18 +6105,18 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.GetTransactionsResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.GetTransactionsResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        minedTransactions: (f = msg.getMinedTransactions()) && proto.walletrpc.BlockDetails.toObject(includeInstance, f),
-        unminedTransactionsList: jspb.Message.toObjectList(msg.getUnminedTransactionsList(),
+proto.walletrpc.GetTransactionsResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    minedTransactions: (f = msg.getMinedTransactions()) && proto.walletrpc.BlockDetails.toObject(includeInstance, f),
+    unminedTransactionsList: jspb.Message.toObjectList(msg.getUnminedTransactionsList(),
     proto.walletrpc.TransactionDetails.toObject, includeInstance)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -6307,9 +6307,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.TicketPriceRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.TicketPriceRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.TicketPriceRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.TicketPriceRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -6320,16 +6320,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.TicketPriceRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.TicketPriceRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.TicketPriceRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -6431,9 +6431,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.TicketPriceResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.TicketPriceResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.TicketPriceResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.TicketPriceResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -6444,17 +6444,17 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.TicketPriceResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.TicketPriceResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        ticketPrice: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        height: jspb.Message.getFieldWithDefault(msg, 2, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.TicketPriceResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    ticketPrice: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    height: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -6608,9 +6608,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.StakeInfoRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.StakeInfoRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.StakeInfoRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.StakeInfoRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -6621,16 +6621,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.StakeInfoRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.StakeInfoRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.StakeInfoRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -6732,9 +6732,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.StakeInfoResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.StakeInfoResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.StakeInfoResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.StakeInfoResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -6745,25 +6745,25 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.StakeInfoResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.StakeInfoResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        poolSize: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        allMempoolTix: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        ownMempoolTix: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        immature: jspb.Message.getFieldWithDefault(msg, 4, 0),
-        live: jspb.Message.getFieldWithDefault(msg, 5, 0),
-        voted: jspb.Message.getFieldWithDefault(msg, 6, 0),
-        missed: jspb.Message.getFieldWithDefault(msg, 7, 0),
-        revoked: jspb.Message.getFieldWithDefault(msg, 8, 0),
-        expired: jspb.Message.getFieldWithDefault(msg, 9, 0),
-        totalSubsidy: jspb.Message.getFieldWithDefault(msg, 10, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.StakeInfoResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    poolSize: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    allMempoolTix: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    ownMempoolTix: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    immature: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    live: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    voted: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    missed: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    revoked: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    expired: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    totalSubsidy: jspb.Message.getFieldWithDefault(msg, 10, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -7125,9 +7125,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.ChangePassphraseRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.ChangePassphraseRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.ChangePassphraseRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.ChangePassphraseRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -7138,18 +7138,18 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.ChangePassphraseRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.ChangePassphraseRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        key: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        oldPassphrase: msg.getOldPassphrase_asB64(),
-        newPassphrase: msg.getNewPassphrase_asB64()
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.ChangePassphraseRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    key: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    oldPassphrase: msg.getOldPassphrase_asB64(),
+    newPassphrase: msg.getNewPassphrase_asB64()
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -7273,7 +7273,7 @@ proto.walletrpc.ChangePassphraseRequest.prototype.setKey = function(value) {
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.ChangePassphraseRequest.prototype.getOldPassphrase = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -7312,7 +7312,7 @@ proto.walletrpc.ChangePassphraseRequest.prototype.setOldPassphrase = function(va
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.ChangePassphraseRequest.prototype.getNewPassphrase = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
@@ -7385,9 +7385,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.ChangePassphraseResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.ChangePassphraseResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.ChangePassphraseResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.ChangePassphraseResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -7398,16 +7398,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.ChangePassphraseResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.ChangePassphraseResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.ChangePassphraseResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -7509,9 +7509,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.FundTransactionRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.FundTransactionRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.FundTransactionRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.FundTransactionRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -7522,20 +7522,20 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.FundTransactionRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.FundTransactionRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        account: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        targetAmount: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        requiredConfirmations: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        includeImmatureCoinbases: jspb.Message.getFieldWithDefault(msg, 4, false),
-        includeChangeScript: jspb.Message.getFieldWithDefault(msg, 5, false)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.FundTransactionRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    account: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    targetAmount: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    requiredConfirmations: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    includeImmatureCoinbases: jspb.Message.getFieldWithDefault(msg, 4, false),
+    includeChangeScript: jspb.Message.getFieldWithDefault(msg, 5, false)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -7778,9 +7778,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.FundTransactionResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.FundTransactionResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.FundTransactionResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.FundTransactionResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -7791,19 +7791,19 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.FundTransactionResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.FundTransactionResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        selectedOutputsList: jspb.Message.toObjectList(msg.getSelectedOutputsList(),
+proto.walletrpc.FundTransactionResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    selectedOutputsList: jspb.Message.toObjectList(msg.getSelectedOutputsList(),
     proto.walletrpc.FundTransactionResponse.PreviousOutput.toObject, includeInstance),
-        totalAmount: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        changePkScript: msg.getChangePkScript_asB64()
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+    totalAmount: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    changePkScript: msg.getChangePkScript_asB64()
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -7962,7 +7962,7 @@ proto.walletrpc.FundTransactionResponse.prototype.setTotalAmount = function(valu
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.FundTransactionResponse.prototype.getChangePkScript = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
@@ -8027,9 +8027,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.FundTransactionResponse.PreviousOutput.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.FundTransactionResponse.PreviousOutput.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -8040,22 +8040,22 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.FundTransactionResponse.PreviousOutput} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.FundTransactionResponse.PreviousOutput.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        transactionHash: msg.getTransactionHash_asB64(),
-        outputIndex: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        amount: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        pkScript: msg.getPkScript_asB64(),
-        receiveTime: jspb.Message.getFieldWithDefault(msg, 5, 0),
-        fromCoinbase: jspb.Message.getFieldWithDefault(msg, 6, false),
-        tree: jspb.Message.getFieldWithDefault(msg, 7, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.FundTransactionResponse.PreviousOutput.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    transactionHash: msg.getTransactionHash_asB64(),
+    outputIndex: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    amount: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    pkScript: msg.getPkScript_asB64(),
+    receiveTime: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    fromCoinbase: jspb.Message.getFieldWithDefault(msg, 6, false),
+    tree: jspb.Message.getFieldWithDefault(msg, 7, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -8208,7 +8208,7 @@ proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.serializeBinary
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.getTransactionHash = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -8277,7 +8277,7 @@ proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.setAmount = fun
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.getPkScript = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 4, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
 
@@ -8396,9 +8396,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.ConstructTransactionRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.ConstructTransactionRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.ConstructTransactionRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.ConstructTransactionRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -8409,22 +8409,22 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.ConstructTransactionRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.ConstructTransactionRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        sourceAccount: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        requiredConfirmations: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        feePerKb: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        outputSelectionAlgorithm: jspb.Message.getFieldWithDefault(msg, 4, 0),
-        nonChangeOutputsList: jspb.Message.toObjectList(msg.getNonChangeOutputsList(),
+proto.walletrpc.ConstructTransactionRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    sourceAccount: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    requiredConfirmations: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    feePerKb: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    outputSelectionAlgorithm: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    nonChangeOutputsList: jspb.Message.toObjectList(msg.getNonChangeOutputsList(),
     proto.walletrpc.ConstructTransactionRequest.Output.toObject, includeInstance),
-        changeDestination: (f = msg.getChangeDestination()) && proto.walletrpc.ConstructTransactionRequest.OutputDestination.toObject(includeInstance, f)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+    changeDestination: (f = msg.getChangeDestination()) && proto.walletrpc.ConstructTransactionRequest.OutputDestination.toObject(includeInstance, f)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -8727,9 +8727,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.ConstructTransactionRequest.OutputDestination.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.ConstructTransactionRequest.OutputDestination.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -8740,17 +8740,17 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.ConstructTransactionRequest.OutputDestination} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.ConstructTransactionRequest.OutputDestination.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        address: jspb.Message.getFieldWithDefault(msg, 1, ''),
-        script: msg.getScript_asB64()
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.ConstructTransactionRequest.OutputDestination.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    address: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    script: msg.getScript_asB64()
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -8848,7 +8848,7 @@ proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.serializ
  * @return {string}
  */
 proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.getAddress = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -8863,7 +8863,7 @@ proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.setAddre
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.getScript = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -8928,9 +8928,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.ConstructTransactionRequest.Output.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.ConstructTransactionRequest.Output.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.ConstructTransactionRequest.Output.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.ConstructTransactionRequest.Output.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -8941,17 +8941,17 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.ConstructTransactionRequest.Output} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.ConstructTransactionRequest.Output.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        destination: (f = msg.getDestination()) && proto.walletrpc.ConstructTransactionRequest.OutputDestination.toObject(includeInstance, f),
-        amount: jspb.Message.getFieldWithDefault(msg, 2, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.ConstructTransactionRequest.Output.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    destination: (f = msg.getDestination()) && proto.walletrpc.ConstructTransactionRequest.OutputDestination.toObject(includeInstance, f),
+    amount: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -9122,9 +9122,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.ConstructTransactionResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.ConstructTransactionResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.ConstructTransactionResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.ConstructTransactionResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -9135,19 +9135,19 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.ConstructTransactionResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.ConstructTransactionResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        unsignedTransaction: msg.getUnsignedTransaction_asB64(),
-        totalPreviousOutputAmount: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        totalOutputAmount: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        estimatedSignedSize: jspb.Message.getFieldWithDefault(msg, 4, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.ConstructTransactionResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    unsignedTransaction: msg.getUnsignedTransaction_asB64(),
+    totalPreviousOutputAmount: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    totalOutputAmount: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    estimatedSignedSize: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -9267,7 +9267,7 @@ proto.walletrpc.ConstructTransactionResponse.prototype.serializeBinaryToWriter =
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.ConstructTransactionResponse.prototype.getUnsignedTransaction = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -9384,9 +9384,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.SignTransactionRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.SignTransactionRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.SignTransactionRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.SignTransactionRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -9397,18 +9397,18 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.SignTransactionRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.SignTransactionRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        passphrase: msg.getPassphrase_asB64(),
-        serializedTransaction: msg.getSerializedTransaction_asB64(),
-        inputIndexesList: jspb.Message.getField(msg, 3)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.SignTransactionRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    passphrase: msg.getPassphrase_asB64(),
+    serializedTransaction: msg.getSerializedTransaction_asB64(),
+    inputIndexesList: jspb.Message.getField(msg, 3)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -9517,7 +9517,7 @@ proto.walletrpc.SignTransactionRequest.prototype.serializeBinaryToWriter = funct
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.SignTransactionRequest.prototype.getPassphrase = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -9556,7 +9556,7 @@ proto.walletrpc.SignTransactionRequest.prototype.setPassphrase = function(value)
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.SignTransactionRequest.prototype.getSerializedTransaction = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -9659,9 +9659,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.SignTransactionResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.SignTransactionResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.SignTransactionResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.SignTransactionResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -9672,17 +9672,17 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.SignTransactionResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.SignTransactionResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        transaction: msg.getTransaction_asB64(),
-        unsignedInputIndexesList: jspb.Message.getField(msg, 2)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.SignTransactionResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    transaction: msg.getTransaction_asB64(),
+    unsignedInputIndexesList: jspb.Message.getField(msg, 2)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -9780,7 +9780,7 @@ proto.walletrpc.SignTransactionResponse.prototype.serializeBinaryToWriter = func
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.SignTransactionResponse.prototype.getTransaction = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -9876,9 +9876,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.PublishTransactionRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.PublishTransactionRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.PublishTransactionRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.PublishTransactionRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -9889,16 +9889,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.PublishTransactionRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.PublishTransactionRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        signedTransaction: msg.getSignedTransaction_asB64()
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.PublishTransactionRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    signedTransaction: msg.getSignedTransaction_asB64()
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -9985,7 +9985,7 @@ proto.walletrpc.PublishTransactionRequest.prototype.serializeBinaryToWriter = fu
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.PublishTransactionRequest.prototype.getSignedTransaction = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -10050,9 +10050,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.PublishTransactionResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.PublishTransactionResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.PublishTransactionResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.PublishTransactionResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -10063,16 +10063,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.PublishTransactionResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.PublishTransactionResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        transactionHash: msg.getTransactionHash_asB64()
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.PublishTransactionResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    transactionHash: msg.getTransactionHash_asB64()
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -10159,7 +10159,7 @@ proto.walletrpc.PublishTransactionResponse.prototype.serializeBinaryToWriter = f
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.PublishTransactionResponse.prototype.getTransactionHash = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -10224,9 +10224,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.PurchaseTicketsRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.PurchaseTicketsRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.PurchaseTicketsRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.PurchaseTicketsRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -10237,26 +10237,26 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.PurchaseTicketsRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.PurchaseTicketsRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        passphrase: msg.getPassphrase_asB64(),
-        account: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        spendLimit: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        requiredConfirmations: jspb.Message.getFieldWithDefault(msg, 4, 0),
-        ticketAddress: jspb.Message.getFieldWithDefault(msg, 5, ''),
-        numTickets: jspb.Message.getFieldWithDefault(msg, 6, 0),
-        poolAddress: jspb.Message.getFieldWithDefault(msg, 7, ''),
-        poolFees: +jspb.Message.getFieldWithDefault(msg, 8, 0.0),
-        expiry: jspb.Message.getFieldWithDefault(msg, 9, 0),
-        txFee: jspb.Message.getFieldWithDefault(msg, 10, 0),
-        ticketFee: jspb.Message.getFieldWithDefault(msg, 11, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.PurchaseTicketsRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    passphrase: msg.getPassphrase_asB64(),
+    account: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    spendLimit: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    requiredConfirmations: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    ticketAddress: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    numTickets: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    poolAddress: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    poolFees: +jspb.Message.getFieldWithDefault(msg, 8, 0.0),
+    expiry: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    txFee: jspb.Message.getFieldWithDefault(msg, 10, 0),
+    ticketFee: jspb.Message.getFieldWithDefault(msg, 11, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -10453,7 +10453,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.serializeBinaryToWriter = funct
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.getPassphrase = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -10537,7 +10537,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.setRequiredConfirmations = func
  * @return {string}
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.getTicketAddress = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
 
@@ -10567,7 +10567,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.setNumTickets = function(value)
  * @return {string}
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.getPoolAddress = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
 
@@ -10675,9 +10675,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.PurchaseTicketsResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.PurchaseTicketsResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.PurchaseTicketsResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.PurchaseTicketsResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -10688,16 +10688,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.PurchaseTicketsResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.PurchaseTicketsResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        ticketHashesList: msg.getTicketHashesList_asB64()
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.PurchaseTicketsResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    ticketHashesList: msg.getTicketHashesList_asB64()
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -10869,9 +10869,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.LoadActiveDataFiltersRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.LoadActiveDataFiltersRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.LoadActiveDataFiltersRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.LoadActiveDataFiltersRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -10882,16 +10882,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.LoadActiveDataFiltersRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.LoadActiveDataFiltersRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.LoadActiveDataFiltersRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -10993,9 +10993,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.LoadActiveDataFiltersResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.LoadActiveDataFiltersResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.LoadActiveDataFiltersResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.LoadActiveDataFiltersResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -11006,16 +11006,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.LoadActiveDataFiltersResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.LoadActiveDataFiltersResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.LoadActiveDataFiltersResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -11117,9 +11117,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.TransactionNotificationsRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.TransactionNotificationsRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.TransactionNotificationsRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.TransactionNotificationsRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -11130,16 +11130,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.TransactionNotificationsRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.TransactionNotificationsRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.TransactionNotificationsRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -11248,9 +11248,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.TransactionNotificationsResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.TransactionNotificationsResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.TransactionNotificationsResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.TransactionNotificationsResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -11261,21 +11261,21 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.TransactionNotificationsResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.TransactionNotificationsResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        attachedBlocksList: jspb.Message.toObjectList(msg.getAttachedBlocksList(),
+proto.walletrpc.TransactionNotificationsResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    attachedBlocksList: jspb.Message.toObjectList(msg.getAttachedBlocksList(),
     proto.walletrpc.BlockDetails.toObject, includeInstance),
-        detachedBlocksList: msg.getDetachedBlocksList_asB64(),
-        unminedTransactionsList: jspb.Message.toObjectList(msg.getUnminedTransactionsList(),
+    detachedBlocksList: msg.getDetachedBlocksList_asB64(),
+    unminedTransactionsList: jspb.Message.toObjectList(msg.getUnminedTransactionsList(),
     proto.walletrpc.TransactionDetails.toObject, includeInstance),
-        unminedTransactionHashesList: msg.getUnminedTransactionHashesList_asB64()
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+    unminedTransactionHashesList: msg.getUnminedTransactionHashesList_asB64()
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -11609,9 +11609,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.SpentnessNotificationsRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.SpentnessNotificationsRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.SpentnessNotificationsRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.SpentnessNotificationsRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -11622,18 +11622,18 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.SpentnessNotificationsRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.SpentnessNotificationsRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        account: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        noNotifyUnspent: jspb.Message.getFieldWithDefault(msg, 2, false),
-        noNotifySpent: jspb.Message.getFieldWithDefault(msg, 3, false)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.SpentnessNotificationsRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    account: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    noNotifyUnspent: jspb.Message.getFieldWithDefault(msg, 2, false),
+    noNotifySpent: jspb.Message.getFieldWithDefault(msg, 3, false)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -11817,9 +11817,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.SpentnessNotificationsResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.SpentnessNotificationsResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.SpentnessNotificationsResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.SpentnessNotificationsResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -11830,18 +11830,18 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.SpentnessNotificationsResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.SpentnessNotificationsResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        transactionHash: msg.getTransactionHash_asB64(),
-        outputIndex: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        spender: (f = msg.getSpender()) && proto.walletrpc.SpentnessNotificationsResponse.Spender.toObject(includeInstance, f)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.SpentnessNotificationsResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    transactionHash: msg.getTransactionHash_asB64(),
+    outputIndex: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    spender: (f = msg.getSpender()) && proto.walletrpc.SpentnessNotificationsResponse.Spender.toObject(includeInstance, f)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -11952,7 +11952,7 @@ proto.walletrpc.SpentnessNotificationsResponse.prototype.serializeBinaryToWriter
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.SpentnessNotificationsResponse.prototype.getTransactionHash = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -12062,9 +12062,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.SpentnessNotificationsResponse.Spender.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.SpentnessNotificationsResponse.Spender.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.SpentnessNotificationsResponse.Spender.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.SpentnessNotificationsResponse.Spender.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -12075,17 +12075,17 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.SpentnessNotificationsResponse.Spender} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.SpentnessNotificationsResponse.Spender.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        transactionHash: msg.getTransactionHash_asB64(),
-        inputIndex: jspb.Message.getFieldWithDefault(msg, 2, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.SpentnessNotificationsResponse.Spender.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    transactionHash: msg.getTransactionHash_asB64(),
+    inputIndex: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -12183,7 +12183,7 @@ proto.walletrpc.SpentnessNotificationsResponse.Spender.prototype.serializeBinary
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.SpentnessNotificationsResponse.Spender.prototype.getTransactionHash = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -12263,9 +12263,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.AccountNotificationsRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.AccountNotificationsRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.AccountNotificationsRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.AccountNotificationsRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -12276,16 +12276,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.AccountNotificationsRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.AccountNotificationsRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.AccountNotificationsRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -12387,9 +12387,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.AccountNotificationsResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.AccountNotificationsResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.AccountNotificationsResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.AccountNotificationsResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -12400,20 +12400,20 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.AccountNotificationsResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.AccountNotificationsResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        accountName: jspb.Message.getFieldWithDefault(msg, 2, ''),
-        externalKeyCount: jspb.Message.getFieldWithDefault(msg, 3, 0),
-        internalKeyCount: jspb.Message.getFieldWithDefault(msg, 4, 0),
-        importedKeyCount: jspb.Message.getFieldWithDefault(msg, 5, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.AccountNotificationsResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    accountNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    accountName: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    externalKeyCount: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    internalKeyCount: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    importedKeyCount: jspb.Message.getFieldWithDefault(msg, 5, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -12559,7 +12559,7 @@ proto.walletrpc.AccountNotificationsResponse.prototype.setAccountNumber = functi
  * @return {string}
  */
 proto.walletrpc.AccountNotificationsResponse.prototype.getAccountName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -12645,9 +12645,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.CreateWalletRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.CreateWalletRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.CreateWalletRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.CreateWalletRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -12658,18 +12658,18 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.CreateWalletRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.CreateWalletRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        publicPassphrase: msg.getPublicPassphrase_asB64(),
-        privatePassphrase: msg.getPrivatePassphrase_asB64(),
-        seed: msg.getSeed_asB64()
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.CreateWalletRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    publicPassphrase: msg.getPublicPassphrase_asB64(),
+    privatePassphrase: msg.getPrivatePassphrase_asB64(),
+    seed: msg.getSeed_asB64()
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -12778,7 +12778,7 @@ proto.walletrpc.CreateWalletRequest.prototype.serializeBinaryToWriter = function
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.CreateWalletRequest.prototype.getPublicPassphrase = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -12817,7 +12817,7 @@ proto.walletrpc.CreateWalletRequest.prototype.setPublicPassphrase = function(val
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.CreateWalletRequest.prototype.getPrivatePassphrase = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -12856,7 +12856,7 @@ proto.walletrpc.CreateWalletRequest.prototype.setPrivatePassphrase = function(va
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.CreateWalletRequest.prototype.getSeed = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
@@ -12921,9 +12921,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.CreateWalletResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.CreateWalletResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.CreateWalletResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.CreateWalletResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -12934,16 +12934,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.CreateWalletResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.CreateWalletResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.CreateWalletResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -13045,9 +13045,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.OpenWalletRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.OpenWalletRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.OpenWalletRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.OpenWalletRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -13058,16 +13058,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.OpenWalletRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.OpenWalletRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        publicPassphrase: msg.getPublicPassphrase_asB64()
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.OpenWalletRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    publicPassphrase: msg.getPublicPassphrase_asB64()
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -13154,7 +13154,7 @@ proto.walletrpc.OpenWalletRequest.prototype.serializeBinaryToWriter = function (
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.OpenWalletRequest.prototype.getPublicPassphrase = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -13219,9 +13219,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.OpenWalletResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.OpenWalletResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.OpenWalletResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.OpenWalletResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -13232,16 +13232,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.OpenWalletResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.OpenWalletResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.OpenWalletResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -13343,9 +13343,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.CloseWalletRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.CloseWalletRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.CloseWalletRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.CloseWalletRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -13356,16 +13356,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.CloseWalletRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.CloseWalletRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.CloseWalletRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -13467,9 +13467,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.CloseWalletResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.CloseWalletResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.CloseWalletResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.CloseWalletResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -13480,16 +13480,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.CloseWalletResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.CloseWalletResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.CloseWalletResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -13591,9 +13591,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.WalletExistsRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.WalletExistsRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.WalletExistsRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.WalletExistsRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -13604,16 +13604,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.WalletExistsRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.WalletExistsRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.WalletExistsRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -13715,9 +13715,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.WalletExistsResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.WalletExistsResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.WalletExistsResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.WalletExistsResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -13728,16 +13728,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.WalletExistsResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.WalletExistsResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        exists: jspb.Message.getFieldWithDefault(msg, 1, false)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.WalletExistsResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    exists: jspb.Message.getFieldWithDefault(msg, 1, false)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -13867,9 +13867,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.StartConsensusRpcRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.StartConsensusRpcRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.StartConsensusRpcRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.StartConsensusRpcRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -13880,19 +13880,19 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.StartConsensusRpcRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.StartConsensusRpcRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        networkAddress: jspb.Message.getFieldWithDefault(msg, 1, ''),
-        username: jspb.Message.getFieldWithDefault(msg, 2, ''),
-        password: msg.getPassword_asB64(),
-        certificate: msg.getCertificate_asB64()
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.StartConsensusRpcRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    networkAddress: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    username: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    password: msg.getPassword_asB64(),
+    certificate: msg.getCertificate_asB64()
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -14012,7 +14012,7 @@ proto.walletrpc.StartConsensusRpcRequest.prototype.serializeBinaryToWriter = fun
  * @return {string}
  */
 proto.walletrpc.StartConsensusRpcRequest.prototype.getNetworkAddress = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -14027,7 +14027,7 @@ proto.walletrpc.StartConsensusRpcRequest.prototype.setNetworkAddress = function(
  * @return {string}
  */
 proto.walletrpc.StartConsensusRpcRequest.prototype.getUsername = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -14042,7 +14042,7 @@ proto.walletrpc.StartConsensusRpcRequest.prototype.setUsername = function(value)
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.StartConsensusRpcRequest.prototype.getPassword = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
@@ -14081,7 +14081,7 @@ proto.walletrpc.StartConsensusRpcRequest.prototype.setPassword = function(value)
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.StartConsensusRpcRequest.prototype.getCertificate = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 4, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
 
@@ -14146,9 +14146,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.StartConsensusRpcResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.StartConsensusRpcResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.StartConsensusRpcResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.StartConsensusRpcResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -14159,16 +14159,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.StartConsensusRpcResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.StartConsensusRpcResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.StartConsensusRpcResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -14270,9 +14270,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.DiscoverAddressesRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.DiscoverAddressesRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.DiscoverAddressesRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.DiscoverAddressesRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -14283,17 +14283,17 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.DiscoverAddressesRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.DiscoverAddressesRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        discoverAccounts: jspb.Message.getFieldWithDefault(msg, 1, false),
-        privatePassphrase: msg.getPrivatePassphrase_asB64()
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.DiscoverAddressesRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    discoverAccounts: jspb.Message.getFieldWithDefault(msg, 1, false),
+    privatePassphrase: msg.getPrivatePassphrase_asB64()
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -14408,7 +14408,7 @@ proto.walletrpc.DiscoverAddressesRequest.prototype.setDiscoverAccounts = functio
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.DiscoverAddressesRequest.prototype.getPrivatePassphrase = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -14473,9 +14473,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.DiscoverAddressesResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.DiscoverAddressesResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.DiscoverAddressesResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.DiscoverAddressesResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -14486,16 +14486,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.DiscoverAddressesResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.DiscoverAddressesResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.DiscoverAddressesResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -14597,9 +14597,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.SubscribeToBlockNotificationsRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.SubscribeToBlockNotificationsRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.SubscribeToBlockNotificationsRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.SubscribeToBlockNotificationsRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -14610,16 +14610,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.SubscribeToBlockNotificationsRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.SubscribeToBlockNotificationsRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.SubscribeToBlockNotificationsRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -14721,9 +14721,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.SubscribeToBlockNotificationsResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.SubscribeToBlockNotificationsResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.SubscribeToBlockNotificationsResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.SubscribeToBlockNotificationsResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -14734,16 +14734,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.SubscribeToBlockNotificationsResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.SubscribeToBlockNotificationsResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.SubscribeToBlockNotificationsResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -14845,9 +14845,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.FetchHeadersRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.FetchHeadersRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.FetchHeadersRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.FetchHeadersRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -14858,16 +14858,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.FetchHeadersRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.FetchHeadersRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
+proto.walletrpc.FetchHeadersRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
 
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -14969,9 +14969,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.FetchHeadersResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.FetchHeadersResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.FetchHeadersResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.FetchHeadersResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -14982,18 +14982,18 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.FetchHeadersResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.FetchHeadersResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        fetchedHeadersCount: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        firstNewBlockHash: msg.getFirstNewBlockHash_asB64(),
-        firstNewBlockHeight: jspb.Message.getFieldWithDefault(msg, 3, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.FetchHeadersResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    fetchedHeadersCount: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    firstNewBlockHash: msg.getFirstNewBlockHash_asB64(),
+    firstNewBlockHeight: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -15117,7 +15117,7 @@ proto.walletrpc.FetchHeadersResponse.prototype.setFetchedHeadersCount = function
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.FetchHeadersResponse.prototype.getFirstNewBlockHash = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -15197,9 +15197,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.GenerateRandomSeedRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.GenerateRandomSeedRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.GenerateRandomSeedRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.GenerateRandomSeedRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -15210,16 +15210,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.GenerateRandomSeedRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.GenerateRandomSeedRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        seedLength: jspb.Message.getFieldWithDefault(msg, 1, 0)
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.GenerateRandomSeedRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    seedLength: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -15347,9 +15347,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.GenerateRandomSeedResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.GenerateRandomSeedResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.GenerateRandomSeedResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.GenerateRandomSeedResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -15360,18 +15360,18 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.GenerateRandomSeedResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.GenerateRandomSeedResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        seedBytes: msg.getSeedBytes_asB64(),
-        seedHex: jspb.Message.getFieldWithDefault(msg, 2, ''),
-        seedMnemonic: jspb.Message.getFieldWithDefault(msg, 3, '')
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.GenerateRandomSeedResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    seedBytes: msg.getSeedBytes_asB64(),
+    seedHex: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    seedMnemonic: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -15480,7 +15480,7 @@ proto.walletrpc.GenerateRandomSeedResponse.prototype.serializeBinaryToWriter = f
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.GenerateRandomSeedResponse.prototype.getSeedBytes = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -15519,7 +15519,7 @@ proto.walletrpc.GenerateRandomSeedResponse.prototype.setSeedBytes = function(val
  * @return {string}
  */
 proto.walletrpc.GenerateRandomSeedResponse.prototype.getSeedHex = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
@@ -15534,7 +15534,7 @@ proto.walletrpc.GenerateRandomSeedResponse.prototype.setSeedHex = function(value
  * @return {string}
  */
 proto.walletrpc.GenerateRandomSeedResponse.prototype.getSeedMnemonic = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
@@ -15575,9 +15575,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.DecodeSeedRequest.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.DecodeSeedRequest.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.DecodeSeedRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.DecodeSeedRequest.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -15588,16 +15588,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.DecodeSeedRequest} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.DecodeSeedRequest.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        userInput: jspb.Message.getFieldWithDefault(msg, 1, '')
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.DecodeSeedRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    userInput: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -15684,7 +15684,7 @@ proto.walletrpc.DecodeSeedRequest.prototype.serializeBinaryToWriter = function (
  * @return {string}
  */
 proto.walletrpc.DecodeSeedRequest.prototype.getUserInput = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
@@ -15725,9 +15725,9 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-  proto.walletrpc.DecodeSeedResponse.prototype.toObject = function(opt_includeInstance) {
-    return proto.walletrpc.DecodeSeedResponse.toObject(opt_includeInstance, this);
-  };
+proto.walletrpc.DecodeSeedResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.DecodeSeedResponse.toObject(opt_includeInstance, this);
+};
 
 
 /**
@@ -15738,16 +15738,16 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  * @param {!proto.walletrpc.DecodeSeedResponse} msg The msg instance to transform.
  * @return {!Object}
  */
-  proto.walletrpc.DecodeSeedResponse.toObject = function(includeInstance, msg) {
-    var f, obj = {
-        decodedSeed: msg.getDecodedSeed_asB64()
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
+proto.walletrpc.DecodeSeedResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    decodedSeed: msg.getDecodedSeed_asB64()
   };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
 
 
@@ -15834,7 +15834,7 @@ proto.walletrpc.DecodeSeedResponse.prototype.serializeBinaryToWriter = function 
  * @return {!(string|Uint8Array)}
  */
 proto.walletrpc.DecodeSeedResponse.prototype.getDecodedSeed = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
