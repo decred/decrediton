@@ -1,6 +1,7 @@
 import { getWalletService, getBalance, getAccountNumber, getNetwork, getPing,
   getStakeInfo, getTicketPrice, getAccounts, getTransactions } from '../middleware/grpc/client';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, constructTransactionAttempt } from './ControlActions';
+import { transactionNftnsStart } from './NotificationActions';
 export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
 export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
 export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
@@ -19,15 +20,16 @@ function getWalletServiceSuccess(walletService) {
     setTimeout( () => {dispatch(getNextAddressAttempt());}, 1000);
     setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
     setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
-    //setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
+    setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
     setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
     //setTimeout( () => {dispatch(getPingAttempt());}, 1000);
-    //setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
+    setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
     //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
     setTimeout( () => {dispatch(getTransactionsAttempt(0, 300000, '', ''));}, 1000);
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.
+    setTimeout( () => {dispatch(transactionNftnsStart());}, 1000);
     const { fetchHeadersResponse, walletCreateExisting } = getState().walletLoader;
     if ( walletCreateExisting && fetchHeadersResponse !== null ) {
       if (fetchHeadersResponse.fetched_headers_count > 0) {
