@@ -9,11 +9,37 @@ import Balance from './Balance';
 import Button from './ButtonTanel';
 
 const styles = {
-  mainArea: {
-    backgroundColor:'#2971ff'
+  pageContentWrapper: {
+    width: '100%',
+    paddingBottom: '60px',
   },
-  sideBar: {
-    backgroundColor:'#2ed8a3'
+
+  header: {
+    backgroundColor: '#F9FBFC',
+    textAlign: 'center',
+    borderBottom: '1px solid #e2e2e2',
+  },
+  center: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  well: {
+    width: 'auto',
+    fontWeight: 'bold',
+    //font-family: $inconsolata;
+    fontSize: '1.2rem',
+    backgroundColor:'#e9f8fe',
+    padding: '5px 5px',
+    margin: '20px 0 15px 0',
+    border: '2px solid #cacfd6',
+    borderRadius: '2px',
+    textAlign: 'center',
+    color: '#0c1e3e',
+    boxShadow: 'none!important',
+  },
+  small: {
+    fontSize: '0.8em',
   },
   error: {
     color:'red'
@@ -69,15 +95,28 @@ class Home extends Component{
     }
     /* View that will be seen when user has a set Client */
     const homeView = (
-      <div>
-        <h1>Home Page</h1>
-        <h3>Current block height: {getAccountsResponse === null ? 'Please refresh' : getAccountsResponse.getCurrentBlockHeight() }</h3>
-        <h3>My balance:</h3>
-        {getBalanceResponse === null ? 'Please refresh' : 
-        <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
-        amount={getBalanceResponse.getTotal()} /> }
-        <br/>
-        {rescanView}
+      <div style={styles.pageContentWrapper}>
+        <div style={styles.center}>
+          <div style={styles.header}>
+						<p>My balance</p>
+					</div>
+				</div>
+        <div style={styles.well}>
+          {getBalanceResponse === null ? 'Please refresh' : 
+          <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
+          amount={getBalanceResponse.getTotal()} /> }<span style={styles.small}> DCR</span>
+				</div>
+        <div style={styles.center}>
+          <div style={styles.header}>
+          	<p>Current block height</p>
+					</div>
+          <div style={styles.well}>
+            <p>{getAccountsResponse === null ? '""' : getAccountsResponse.getCurrentBlockHeight() }</p>
+          </div>
+        </div>
+        <div style={styles.center}>
+          {rescanView}
+        </div>
       </div>);
 
     if (walletService === null) {
