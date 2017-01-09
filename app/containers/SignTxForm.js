@@ -33,7 +33,7 @@ let ConstructTxForm = ({ dispatch, rawTx }) => {
         <RaisedButton type="submit"
          style={style}
          label='Confirm and Sign Tx'/>
-	    </form>
+      </form>
 	</div>);
 };
 ConstructTxForm = connect()(ConstructTxForm);

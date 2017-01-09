@@ -1,0 +1,11 @@
+*~
+app/dist/
+app/main.js
+app/main.js.map
+node_modules/
+npm-debug.log
+public/js/bundle.js
+release/
+jsconfig.json
+app/middleware/walletrpc/api_pb.js
+app/middleware/walletrpc/api_grpc_pb.js

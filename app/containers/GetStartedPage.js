@@ -5,7 +5,6 @@ import GetStarted from '../components/GetStarted';
 import * as ClientActions from '../actions/ClientActions';
 import * as WalletLoaderActions from '../actions/WalletLoaderActions';
 import * as ControlActions from '../actions/ControlActions';
-import * as SeedServiceActions from '../actions/SeedServiceActions';
 import * as VersionActions from '../actions/VersionActions';
 
 function mapStateToProps(state) {

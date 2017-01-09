@@ -1,10 +1,6 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router';
-import RaisedButton from 'material-ui/RaisedButton';
 import ErrorScreen from './ErrorScreen';
-import TextField from 'material-ui/TextField';
 import ConstructTxForm from '../containers/ConstructTxForm';
 import SignTxForm from '../containers/SignTxForm';
 import ShowError from './ShowError';

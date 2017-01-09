@@ -2,7 +2,7 @@ import { transactionNtfs, spentnessNtfs, accountNtfs } from '../middleware/grpc/
 import { getAccountsAttempt, getBalanceAttempt, getStakeInfoAttempt,
   getTicketPriceAttempt, getNetworkAttempt, getTransactionsAttempt} from './ClientActions';
 
-import { TransactionNotificationsRequest, SpentnessNotificationsRequest, AccountsNotificationsRequest } from '../middleware/walletrpc/api_pb';
+import { TransactionNotificationsRequest } from '../middleware/walletrpc/api_pb';
 
 export const TRANSACTIONNFTNS_START = 'TRANSACTIONNFTNS_START';
 export const TRANSACTIONNFTNS_FAILED = 'TRANSACTIONNFTNS_FAILED';

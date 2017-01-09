@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
@@ -26,7 +26,7 @@ class Header extends Component {
   handleToggle = () => this.setState({open: !this.state.open});
 
   render() {
-    const { stepIndex, walletService } = this.props;
+    const { walletService } = this.props;
     const loggedIn = (
       <div>
         <AppBar onLeftIconButtonTouchTap={walletService !== null ? this.handleToggle : null} title="Decrediton Preview" />

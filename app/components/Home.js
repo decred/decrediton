@@ -1,12 +1,9 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
-import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
 import ErrorScreen from './ErrorScreen';
 import RescanForm from '../containers/RescanForm';
 import Balance from './Balance';
-import Button from './ButtonTanel';
 
 const styles = {
   pageContentWrapper: {
@@ -108,7 +105,7 @@ class Home extends Component{
 				</div>
         <div style={styles.center}>
           <div style={styles.header}>
-          	<p>Current block height</p>
+            <p>Current block height</p>
 					</div>
           <div style={styles.well}>
             <p>{getAccountsResponse === null ? '""' : getAccountsResponse.getCurrentBlockHeight() }</p>

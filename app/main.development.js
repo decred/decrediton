@@ -2,7 +2,6 @@ import { app, BrowserWindow, Menu, shell } from 'electron';
 import { getCfg } from './config.js';
 import path from 'path';
 import os from 'os';
-import fs from 'fs';
 
 let menu;
 let template;

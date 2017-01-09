@@ -1,6 +1,6 @@
 import { getWalletService, getBalance, getAccountNumber, getNetwork, getPing,
   getStakeInfo, getTicketPrice, getAccounts, getTransactions } from '../middleware/grpc/client';
-import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, constructTransactionAttempt } from './ControlActions';
+import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt } from './ControlActions';
 import { transactionNftnsStart } from './NotificationActions';
 export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
 export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';

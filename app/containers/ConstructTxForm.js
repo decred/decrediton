@@ -16,41 +16,41 @@ let ConstructTxForm = ({ dispatch }) => {
   return (
     <div>
       <form onSubmit={e => {
-	      e.preventDefault();
-	      if (destination == '' || amount == '' || account == '' || confirmations == '' ) {
-	        return;
-	      }
+        e.preventDefault();
+        if (destination == '' || amount == '' || account == '' || confirmations == '' ) {
+          return;
+        }
         dispatch(constructTransactionAttempt(account, confirmations, destination, amount));
-	    }}>
-	      <TextField
+      }}>
+      <TextField
           id="destination"
           hintText="Destination Address"
           floatingLabelText="Destination Address"
           onBlur={(e) =>{destination = e.target.value;}}
         /><br />
-	      <TextField
+      <TextField
           id="amount"
           hintText="Amount"
           floatingLabelText="Amount"
           onBlur={(e) =>{amount = e.target.value;}}
         /><br />
-	      <TextField
+      <TextField
           id="account"
           hintText="Account Number"
           floatingLabelText="Account Number"
           onBlur={(e) =>{account = e.target.value;}}
         /><br />
-	      <TextField
+      <TextField
           id="confirmations"
           hintText="# of Confirmations"
           floatingLabelText="# of Confirmations"
           onBlur={(e) =>{confirmations = e.target.value;}}
         /><br />
-	      <RaisedButton type="submit"
+      <RaisedButton type="submit"
           style={style}
           label='Send'/>
-	    </form>
-	</div>);
+      </form>
+      </div>);
 };
 ConstructTxForm = connect()(ConstructTxForm);
 

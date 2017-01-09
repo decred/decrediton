@@ -1,7 +1,7 @@
 import { getNextAddress, renameAccount, getNextAccount,
   rescan, importPrivateKey, importScript, changePassphrase,
-  loadActiveDataFilters, getFundingTransaction, signTransaction, publishTransaction,
-purchaseTickets, constructTransaction } from '../middleware/grpc/control';
+  loadActiveDataFilters, fundTransaction, signTransaction, publishTransaction,
+  purchaseTicket, constructTransaction } from '../middleware/grpc/control';
 import { getBalanceAttempt } from './ClientActions';
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
@@ -62,7 +62,7 @@ function renameAccountSuccess(renameAccountResponse) {
 
 export function renameAccountAttempt(accountNumber, newName) {
   var request = new RenameAccountRequest();
-  request.setAccountNumber(accountNum);
+  request.setAccountNumber(accountNumber);
   request.setNewName(newName);
   return (dispatch) => {
     dispatch({
@@ -345,14 +345,14 @@ function fundTransactionError(error) {
 }
 
 function fundTransactionSuccess(fundTransactionResponse) {
-  return { fundTransactionResponse: gfundTransactionResponse, type: FUNDTX_SUCCESS };
+  return { fundTransactionResponse: fundTransactionResponse, type: FUNDTX_SUCCESS };
 }
 
 export function fundTransactionAttempt(accountNum, targetAmount, requiredConf) {
   var request = new FundTransactionRequest();
   request.setAccount(accountNum);
   request.setTargetAmount(targetAmount);
-  request.setRequiredConfirmations(requiredConfs);
+  request.setRequiredConfirmations(requiredConf);
   return (dispatch) => {
     dispatch({
       request: request,

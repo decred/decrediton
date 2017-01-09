@@ -3,7 +3,6 @@ import { loader, createWallet, walletExists, openWallet,
   startConsensusRpc, fetchHeaders} from '../middleware/grpc/loader';
 import { getWalletServiceAttempt } from './ClientActions';
 import { getVersionServiceAttempt } from './VersionActions';
-import { transactionNftnsStart } from './NotificationActions';
 import { getSeederAttempt } from './SeedServiceActions';
 import { getDcrdCert } from '../middleware/grpc/client';
 import { getCfg } from '../config.js';

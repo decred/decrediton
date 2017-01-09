@@ -7,7 +7,6 @@ import os from 'os';
 import grpc from 'grpc';
 
 import { getCfg } from '../../config.js';
-var messages = require('../walletrpc/api_pb');
 var services = require('../walletrpc/api_grpc_pb.js');
 
 export function getCert() {

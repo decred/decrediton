@@ -1,7 +1,5 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router';
 import {Table, TableBody, TableHeader, TableHeaderColumn,
   TableRow, TableRowColumn} from 'material-ui/Table';
 import ErrorScreen from './ErrorScreen';

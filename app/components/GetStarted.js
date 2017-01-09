@@ -1,9 +1,5 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
-import LoginForm from '../containers/LoginForm';
-import LoaderForm from '../containers/LoaderForm';
-import WalletExistForm from '../containers/WalletExistForm';
 import WalletOpenForm from '../containers/WalletOpenForm';
 import CreateWalletForm from '../containers/CreateWalletForm';
 import DiscoverAddressForm from '../containers/DiscoverAddressForm';
@@ -16,9 +12,8 @@ import {
   StepLabel,
   StepContent
 } from 'material-ui/Stepper';
-import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import LinearProgress from 'material-ui/LinearProgress';
+//import LinearProgress from 'material-ui/LinearProgress';
 
 const styles = {
   mainArea: {
@@ -326,8 +321,6 @@ class Home extends Component{
         return (<ShowError error={versionInvalidError}/>);
       }
     }
-
-    return (stepper);
 
   }
 }
