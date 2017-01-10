@@ -37,7 +37,7 @@ class ConstructTxForm extends React.Component {
                   {this.state.outputs.map(output => {
                     return(
                       <div key={output.key}>
-                        <p key={"label"+output.key}>{output.key}</p>
+                        <p key={"label"+output.key}>Output #{output.key}</p>
 	                      <TextField
                           key={"destination"+output.key}
                           hintText="Destination Address"
@@ -48,6 +48,14 @@ class ConstructTxForm extends React.Component {
                           hintText="Amount"
                           floatingLabelText="Amount"
                           onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value)}}/>
+                        {this.state.outputs.length - 1 > parseInt(output.key) || this.state.outputs.length  === 1 ?
+                        <div></div>:
+                        <RaisedButton 
+                          key={"remove"+output.key}
+                          disabled={this.state.outputs.length - 1 > parseInt(output.key) || this.state.outputs.length  === 1 }
+                          onClick={this.state.outputs.length - 1 > parseInt(output.key)  || this.state.outputs.length  === 1 ? () => {} : () => this.removeOutput(output.key)}
+                          style={style}
+                        label='Remove output'/>}
                       </div>
                     )})
                   }
@@ -80,9 +88,11 @@ class ConstructTxForm extends React.Component {
         var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: ''};
         this.setState({ outputs: this.state.outputs.concat([newOutput]) });
     }
-    appendRemoveOutput() {
-        var newOutput = {key:`output-${this.state.outputs.length}`, destination: '', amount: ''};
-        this.setState({ outputs: this.state.outputs.concat([newOutput]) });
+    removeOutput(outputKey) {
+      var updateOutputs = this.state.outputs.filter(output => {
+        return (output.key != outputKey)
+      });
+      this.setState({ outputs: updateOutputs });
     }
     updateOutputDestination(outputKey, dest) {
       console.log("updateOutputDest", outputKey, dest);
