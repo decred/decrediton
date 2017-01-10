@@ -519,17 +519,20 @@ function constructTransactionSuccess(constructTxResponse) {
   };
 }
 
-export function constructTransactionAttempt(account, confirmations, destination, amount) {
+export function constructTransactionAttempt(account, confirmations, outputs) {
   var request = new ConstructTransactionRequest();
   request.setSourceAccount(parseInt(account));
   request.setRequiredConfirmations(parseInt(parseInt(confirmations)));
   request.setOutputSelectionAlgorithm(1);
-  var outputDest = new ConstructTransactionRequest.OutputDestination();
-  outputDest.setAddress(destination);
-  var output = new ConstructTransactionRequest.Output();
-  output.setDestination(outputDest);
-  output.setAmount(parseInt(amount));
-  request.addNonChangeOutputs(output);
+
+  outputs.map(output => {
+    var outputDest = new ConstructTransactionRequest.OutputDestination();
+    outputDest.setAddress(output.destination);
+    var newOutput = new ConstructTransactionRequest.Output();
+    newOutput.setDestination(outputDest);
+    newOutput.setAmount(parseInt(output.amount));
+    request.addNonChangeOutputs(newOutput);
+  });
   return (dispatch) => {
     dispatch({
       request: request,
