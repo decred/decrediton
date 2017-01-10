@@ -532,7 +532,7 @@ export function constructTransactionAttempt(account, confirmations, outputs) {
     newOutput.setDestination(outputDest);
     newOutput.setAmount(parseInt(output.amount));
     request.addNonChangeOutputs(newOutput);
-  })
+  });
   return (dispatch) => {
     dispatch({
       request: request,

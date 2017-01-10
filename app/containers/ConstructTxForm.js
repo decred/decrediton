@@ -12,20 +12,20 @@ const style = {
 };
 
 class ConstructTxForm extends React.Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = { 
-          account: '',
-          confirmations: '',
-          outputs: [{key:0, destination: '', amount: ''}] };
-        
-    }
+  constructor(props) {
+    super(props);
 
-    render() {
-        return(
+    this.state = {
+      account: '',
+      confirmations: '',
+      outputs: [{key:0, destination: '', amount: ''}] };
+
+  }
+
+  render() {
+    return(
             <div>
-              <form 
+              <form
                 onSubmit={e => {
 	                e.preventDefault();
 	                if (this.account == '' || this.confirmations == '' ) {
@@ -37,30 +37,30 @@ class ConstructTxForm extends React.Component {
                   {this.state.outputs.map(output => {
                     return(
                       <div key={output.key}>
-                        <p key={"label"+output.key}>Output #{output.key}</p>
+                        <p key={'label'+output.key}>Output #{output.key}</p>
 	                      <TextField
-                          key={"destination"+output.key}
+                          key={'destination'+output.key}
                           hintText="Destination Address"
                           floatingLabelText="Destination Address"
-                          onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value)}}/>
+                          onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
                         <TextField
-                          key={"amount"+output.key}
+                          key={'amount'+output.key}
                           hintText="Amount"
                           floatingLabelText="Amount"
-                          onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value)}}/>
+                          onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value);}}/>
                         {this.state.outputs.length - 1 > parseInt(output.key) || this.state.outputs.length  === 1 ?
                         <div></div>:
-                        <RaisedButton 
-                          key={"remove"+output.key}
+                        <RaisedButton
+                          key={'remove'+output.key}
                           disabled={this.state.outputs.length - 1 > parseInt(output.key) || this.state.outputs.length  === 1 }
                           onClick={this.state.outputs.length - 1 > parseInt(output.key)  || this.state.outputs.length  === 1 ? () => {} : () => this.removeOutput(output.key)}
                           style={style}
                         label='Remove output'/>}
                       </div>
-                    )})
+                    );})
                   }
                 </div>
-                <RaisedButton 
+                <RaisedButton
                   onClick={() => this.appendOutput()}
                   style={style}
                   label='Add another destination'
@@ -69,44 +69,44 @@ class ConstructTxForm extends React.Component {
                   id="account"
                   hintText="Account Number"
                   floatingLabelText="Account Number"
-                  onBlur={(e) =>{this.setState({account: e.target.value})}}
+                  onBlur={(e) =>{this.setState({account: e.target.value});}}
                 /><br />
 	              <TextField
                   id="confirmations"
                   hintText="# of Confirmations"
                   floatingLabelText="# of Confirmations"
-                  onBlur={(e) =>{this.setState({confirmations: e.target.value})}}
+                  onBlur={(e) =>{this.setState({confirmations: e.target.value});}}
                 /><br />
 	              <RaisedButton type="submit"
                   style={style}
                   label='Send'/>
               </form>
             </div>
-        );
-    }
+    );
+  }
 
-    appendOutput() {
-        var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: ''};
-        this.setState({ outputs: this.state.outputs.concat([newOutput]) });
-    }
-    removeOutput(outputKey) {
-      var updateOutputs = this.state.outputs.filter(output => {
-        return (output.key != outputKey)
-      });
-      this.setState({ outputs: updateOutputs });
-    }
-    updateOutputDestination(outputKey, dest) {
-      console.log("updateOutputDest", outputKey, dest);
-      var updateOutputs = this.state.outputs;
-      updateOutputs[outputKey].destination = dest;
-      this.setState({ outputs: updateOutputs });
-    }
-    updateOutputAmount(outputKey, amount) {
-      console.log("updateOutputAmount", outputKey, amount);
-      var updateOutputs = this.state.outputs;
-      updateOutputs[outputKey].amount = amount;
-      this.setState({ outputs: updateOutputs });
-    }
+  appendOutput() {
+    var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: ''};
+    this.setState({ outputs: this.state.outputs.concat([newOutput]) });
+  }
+  removeOutput(outputKey) {
+    var updateOutputs = this.state.outputs.filter(output => {
+      return (output.key != outputKey);
+    });
+    this.setState({ outputs: updateOutputs });
+  }
+  updateOutputDestination(outputKey, dest) {
+    console.log('updateOutputDest', outputKey, dest);
+    var updateOutputs = this.state.outputs;
+    updateOutputs[outputKey].destination = dest;
+    this.setState({ outputs: updateOutputs });
+  }
+  updateOutputAmount(outputKey, amount) {
+    console.log('updateOutputAmount', outputKey, amount);
+    var updateOutputs = this.state.outputs;
+    updateOutputs[outputKey].amount = amount;
+    this.setState({ outputs: updateOutputs });
+  }
     /*
   return (
     <div>
@@ -130,7 +130,7 @@ class ConstructTxForm extends React.Component {
         )}
         </div>
         <br />
-        <RaisedButton 
+        <RaisedButton
           onClick={() => {addOutput()}}
           style={style}
           label='Add another destination'/>
@@ -153,7 +153,7 @@ class ConstructTxForm extends React.Component {
 	    </form>
 	</div>);
   */
-};
+}
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({}, ControlActions), dispatch);
