@@ -63,7 +63,8 @@ class ConstructTxForm extends React.Component {
                 <RaisedButton 
                   onClick={() => this.appendOutput()}
                   style={style}
-                  label='Add another destination'/>
+                  label='Add another destination'
+                /><br />
                 <TextField
                   id="account"
                   hintText="Account Number"
