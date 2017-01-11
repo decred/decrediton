@@ -18,7 +18,7 @@ class Balance extends React.Component {
   render() {
     var totalDcr = 0;
     var numberFormatPart = ['0','0'];
-    if (typeof this.props.amounts !== 'undefined') {
+    if (typeof this.props.amount !== 'undefined') {
       totalDcr = parseInt(this.props.amount) / 100000000;
       numberFormatPart = totalDcr.toString().split('.');
     }
