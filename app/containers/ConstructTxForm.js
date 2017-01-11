@@ -1,5 +1,4 @@
 import React from 'react';
-import Radium from 'radium';
 import { connect } from 'react-redux';
 import { constructTransactionAttempt } from '../actions/ControlActions';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -24,64 +23,64 @@ class ConstructTxForm extends React.Component {
 
   render() {
     return(
-            <div>
-              <form
-                onSubmit={e => {
-	                e.preventDefault();
-	                if (this.account == '' || this.confirmations == '' ) {
-	                  return;
-	                }
-                  this.props.dispatch(constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs));
-	              }}>
-                <div id="dynamicInput">
-                  {this.state.outputs.map(output => {
-                    return(
-                      <div key={output.key}>
-                        <p key={'label'+output.key}>Output #{output.key}</p>
-	                      <TextField
-                          key={'destination'+output.key}
-                          hintText="Destination Address"
-                          floatingLabelText="Destination Address"
-                          onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
-                        <TextField
-                          key={'amount'+output.key}
-                          hintText="Amount"
-                          floatingLabelText="Amount"
-                          onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value);}}/>
-                        {this.state.outputs.length - 1 > parseInt(output.key) || this.state.outputs.length  === 1 ?
-                        <div></div>:
-                        <RaisedButton
-                          key={'remove'+output.key}
-                          disabled={this.state.outputs.length - 1 > parseInt(output.key) || this.state.outputs.length  === 1 }
-                          onClick={this.state.outputs.length - 1 > parseInt(output.key)  || this.state.outputs.length  === 1 ? () => {} : () => this.removeOutput(output.key)}
-                          style={style}
-                        label='Remove output'/>}
-                      </div>
-                    );})
-                  }
-                </div>
-                <RaisedButton
-                  onClick={() => this.appendOutput()}
-                  style={style}
-                  label='Add another destination'
-                /><br />
-                <TextField
-                  id="account"
-                  hintText="Account Number"
-                  floatingLabelText="Account Number"
-                  onBlur={(e) =>{this.setState({account: e.target.value});}}
-                /><br />
-	              <TextField
-                  id="confirmations"
-                  hintText="# of Confirmations"
-                  floatingLabelText="# of Confirmations"
-                  onBlur={(e) =>{this.setState({confirmations: e.target.value});}}
-                /><br />
-	              <RaisedButton type="submit"
-                  style={style}
-                  label='Send'/>
-              </form>
+      <div>
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+            if (this.account == '' || this.confirmations == '' ) {
+              return;
+            }
+            this.props.dispatch(constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs));
+          }}>
+          <div id="dynamicInput">
+            {this.state.outputs.map(output => {
+              return(
+                <div key={output.key}>
+                  <p key={'label'+output.key}>Output #{output.key}</p>
+                  <TextField
+                    key={'destination'+output.key}
+                    hintText="Destination Address"
+                    floatingLabelText="Destination Address"
+                    onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
+                  <TextField
+                    key={'amount'+output.key}
+                    hintText="Amount"
+                    floatingLabelText="Amount"
+                    onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value);}}/>
+                  {this.state.outputs.length - 1 > parseInt(output.key) || this.state.outputs.length  === 1 ?
+                    <div></div>:
+                    <RaisedButton
+                      key={'remove'+output.key}
+                      disabled={this.state.outputs.length - 1 > parseInt(output.key) || this.state.outputs.length  === 1 }
+                      onClick={this.state.outputs.length - 1 > parseInt(output.key)  || this.state.outputs.length  === 1 ? () => {} : () => this.removeOutput(output.key)}
+                      style={style}
+                      label='Remove output'/>}
+                  </div>
+              );})
+              }
             </div>
+            <RaisedButton
+              onClick={() => this.appendOutput()}
+              style={style}
+              label='Add another destination'
+            /><br />
+            <TextField
+              id="account"
+              hintText="Account Number"
+              floatingLabelText="Account Number"
+              onBlur={(e) =>{this.setState({account: e.target.value});}}
+             /><br />
+            <TextField
+              id="confirmations"
+              hintText="# of Confirmations"
+              floatingLabelText="# of Confirmations"
+              onBlur={(e) =>{this.setState({confirmations: e.target.value});}}
+            /><br />
+            <RaisedButton type="submit"
+              style={style}
+              label='Send'/>
+          </form>
+        </div>
     );
   }
 
@@ -96,13 +95,11 @@ class ConstructTxForm extends React.Component {
     this.setState({ outputs: updateOutputs });
   }
   updateOutputDestination(outputKey, dest) {
-    console.log('updateOutputDest', outputKey, dest);
     var updateOutputs = this.state.outputs;
     updateOutputs[outputKey].destination = dest;
     this.setState({ outputs: updateOutputs });
   }
   updateOutputAmount(outputKey, amount) {
-    console.log('updateOutputAmount', outputKey, amount);
     var updateOutputs = this.state.outputs;
     updateOutputs[outputKey].amount = amount;
     this.setState({ outputs: updateOutputs });

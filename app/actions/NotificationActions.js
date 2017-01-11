@@ -9,10 +9,6 @@ export const TRANSACTIONNFTNS_FAILED = 'TRANSACTIONNFTNS_FAILED';
 export const TRANSACTIONNFTNS_DATA = 'TRANSACTIONNFTNS_DATA';
 export const TRANSACTIONNFTNS_END = 'TRANSACTIONNFTNS_END';
 
-function transactionNftnsError(error) {
-  return { error, type: TRANSACTIONNFTNS_FAILED};
-}
-
 function transactionNtfnsData(response) {
   return (dispatch) => {
     dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
@@ -45,7 +41,6 @@ function startTransactionNtfns() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { transactionNtfnsRequest } = getState().notifications;
-    console.log(transactionNtfnsRequest);
     transactionNtfs(walletService, transactionNtfnsRequest,
       function(data) {
         dispatch(transactionNtfnsData(data));
@@ -58,10 +53,6 @@ export const SPENTNESSNFTNS_START = 'SPENTNESSNFTNS_START';
 export const SPENTNESSNFTNS_FAILED = 'SPENTNESSNFTNS_FAILED';
 export const SPENTNESSNFTNS_DATA = 'SPENTNESSNFTNS_DATA';
 export const SPENTNESSNFTNS_END = 'SPENTNESSNFTNS_END';
-
-function spentnessNftnsError(error) {
-  return { error, type: SPENTNESSNFTNS_FAILED};
-}
 
 function spentnessNtfnsData(response) {
   return { response: response, type: SPENTNESSNFTNS_DATA };
@@ -89,8 +80,7 @@ function startSpentnessNtfns() {
     const { spentnessNftnsRequest } = getState().notifications;
     spentnessNtfs(client, spentnessNftnsRequest,
       function(data) {
-        console.log('Spentness received:', data);
-        dispatch(startSpentnessNtfns(data));
+        dispatch(spentnessNtfnsData(data));
       }
     );
   };
@@ -100,10 +90,6 @@ export const ACCOUNTNFTNS_START = 'ACCOUNTNFTNS_START';
 export const ACCOUNTNFTNS_FAILED = 'ACCOUNTNFTNS_FAILED';
 export const ACCOUNTNFTNS_DATA = 'ACCOUNTNFTNS_DATA';
 export const ACCOUNTNFTNS_END = 'ACCOUNTNFTNS_END';
-
-function accountNftnsError(error) {
-  return { error, type: ACCOUNTNFTNS_FAILED};
-}
 
 function accountNtfnsData(response) {
   return { response: response, type: ACCOUNTNFTNS_DATA };
@@ -135,8 +121,7 @@ function startAccountNtfns() {
     const { accountNftnsRequest } = getState().notifications;
     accountNtfs(client, accountNftnsRequest,
       function(data) {
-        console.log('Account received:', data);
-        dispatch(startAccountNtfns(data));
+        dispatch(accountNtfnsData(data));
       }
     );
   };

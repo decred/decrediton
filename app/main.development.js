@@ -92,7 +92,7 @@ const launchDCRD = () => {
   var dcrd = spawn(dcrdExe, args, { detached: true, stdio: [ 'ignore', 'pipe', 'pipe', 'pipe' ] });
 
   dcrd.on('error', function (err) {
-    console.log('error starting ' + dcrdExe + ': ' + path);
+    console.log('error starting ' + dcrdExe + ': ' + path + err);
   });
 
   dcrd.on('close', (code) => {
@@ -135,7 +135,7 @@ const launchDCRWallet = () => {
   var dcrwallet = spawn(dcrwExe, args, { detached: true, stdio: [ 'ignore', 'pipe', 'pipe', 'ignore', 'pipe'  ] });
 
   dcrwallet.on('error', function (err) {
-    console.log('error starting ' + dcrwExe + ': ' + path);
+    console.log('error starting ' + dcrwExe + ': ' + path + err);
   });
 
   dcrwallet.on('close', (code) => {

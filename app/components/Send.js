@@ -6,10 +6,6 @@ import SignTxForm from '../containers/SignTxForm';
 import ShowError from './ShowError';
 import { reverseHash } from '../helpers/byteActions';
 
-const style = {
-  margin: 12,
-};
-
 class Send extends Component{
   static propTypes = {
     walletService: PropTypes.object,
@@ -22,7 +18,7 @@ class Send extends Component{
 
   render() {
     const { walletService } = this.props;
-    const { constructTxRequestAttempt, constructTxResponse, constructTxError } = this.props;
+    const { constructTxResponse, constructTxError } = this.props;
     const { publishTransactionResponse, publishTransactionError } = this.props;
     const { signTransactionError } = this.props;
 
@@ -56,6 +52,7 @@ class Send extends Component{
 
     const publishTxView = (
       <div>
+        <ShowError error={publishTransactionError}/>
         <h1>Published Tx!</h1>
         <p>{publishTransactionResponse !== null ? reverseHash(publishTransactionResponse.toString('hex')) : null}</p>
       </div>);

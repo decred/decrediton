@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoader, loaderRequest } from '../actions/WalletLoaderActions';
+import { loaderRequest } from '../actions/WalletLoaderActions';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 

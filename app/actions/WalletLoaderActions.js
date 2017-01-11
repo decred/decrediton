@@ -198,7 +198,7 @@ export function closeWalletRequest() {
 function closeWalletAction() {
   var request = new CloseWalletRequest();
   return (dispatch, getState) => {
-    const { loader, walletCloseRequest } = getState().walletLoader;
+    const { loader } = getState().walletLoader;
     closeWallet(loader, request,
         function(err) {
           if (err) {
@@ -276,7 +276,7 @@ function discoverAddressSuccess() {
 }
 
 export function discoverAddressAttempt(discoverAccts, privPass) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: DISCOVERADDRESS_ATTEMPT });
     dispatch(discoverAddressAction(discoverAccts, privPass));
   };
