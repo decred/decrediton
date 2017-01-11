@@ -354,13 +354,12 @@ function fetchHeadersProgress(response) {
     if (curBlocks == 0) {
       newCurBlock += response.getFirstNewBlockHeight();
     }
-    if ( newCurBlock > neededBlocks  || response.getFirstNewBlockHeight() + response.getFetchedHeadersCount() < neededBlocks ) {
-      dispatch({curBlocks: newCurBlock, type: FETCHHEADERS_PROGRESS});
-      console.log(newCurBlock, neededBlocks, curBlocks);
-      console.log(response.getFirstNewBlockHeight(),response.getFetchedHeadersCount());
-      setTimeout( () => {dispatch(fetchHeadersAction());}, 1000);
-    } else {
+    if ( newCurBlock > neededBlocks || 
+    response.getFirstNewBlockHeight() + response.getFetchedHeadersCount() > neededBlocks ) {
       dispatch(fetchHeadersSuccess());
+    } else {
+      dispatch({curBlocks: newCurBlock, type: FETCHHEADERS_PROGRESS});
+      setTimeout( () => {dispatch(fetchHeadersAction());}, 1000);
     }
   };
 }
