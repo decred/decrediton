@@ -6,10 +6,16 @@ import os from 'os';
 let menu;
 let template;
 let mainWindow = null;
+let debug = false;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
   sourceMapSupport.install();
+  process.argv.some(function(element) {
+    if (element === '--debug') {
+      debug = true;
+    }
+  });
 }
 
 if (process.env.NODE_ENV === 'development') {
@@ -88,7 +94,9 @@ const launchDCRD = () => {
 
   args.push('--rpclisten=127.0.0.1:' + RPCDaemonPort());
 
-  console.log(`Starting dcrd with ${args}`);
+  if (debug) {
+    console.log(`Starting dcrd with ${args}`);
+  }
   var dcrd = spawn(dcrdExe, args, { detached: true, stdio: [ 'ignore', 'pipe', 'pipe', 'pipe' ] });
 
   dcrd.on('error', function (err) {
@@ -99,13 +107,15 @@ const launchDCRD = () => {
     console.log(`dcrd exited with code ${code}`);
   });
 
-  dcrd.stdout.on('data', (data) => {
-    process.stdout.write(`${data}`);
-  });
+  if (debug) {
+    dcrd.stdout.on('data', (data) => {
+      process.stdout.write(`${data}`);
+    });
 
-  dcrd.stderr.on('data', (data) => {
-    process.stderr.write(`${data}`);
-  });
+    dcrd.stderr.on('data', (data) => {
+      process.stderr.write(`${data}`);
+    });
+  }
 
   dcrd.unref();
 };
@@ -131,7 +141,10 @@ const launchDCRWallet = () => {
   if (cfg.network == 'testnet') {
     args.push('--testnet');
   }
-  console.log(`Starting dcrwallet with ${args}`);
+
+  if (debug) {
+    console.log(`Starting dcrwallet with ${args}`);
+  }
   var dcrwallet = spawn(dcrwExe, args, { detached: true, stdio: [ 'ignore', 'pipe', 'pipe', 'ignore', 'pipe'  ] });
 
   dcrwallet.on('error', function (err) {
@@ -142,13 +155,15 @@ const launchDCRWallet = () => {
     console.log(`dcrwallet exited with code ${code}`);
   });
 
-  dcrwallet.stdout.on('data', (data) => {
-    process.stdout.write(`${data}`);
-  });
+  if (debug) {
+    dcrwallet.stdout.on('data', (data) => {
+      process.stdout.write(`${data}`);
+    });
 
-  dcrwallet.stderr.on('data', (data) => {
-    process.stderr.write(`${data}`);
-  });
+    dcrwallet.stderr.on('data', (data) => {
+      process.stderr.write(`${data}`);
+    });
+  }
 
   dcrwallet.unref();
 };
