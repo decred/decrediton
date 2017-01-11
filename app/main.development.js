@@ -7,6 +7,8 @@ let menu;
 let template;
 let mainWindow = null;
 let debug = false;
+let dcrdPID;
+let dcrwPID;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
@@ -31,6 +33,15 @@ app.on('window-all-closed', () => {
   // If we could reopen after closing all windows on OSX we might want
   // to on do this only if !== 'darwin' but since we don't, better to
   // have the same behavior on all platforms.
+  if (process.env.NODE_ENV === 'production') {
+    // shutdown daemon and wallet.
+    if (debug) {
+      console.log('Sending SIGINT to dcrd at pid:', dcrdPID);
+      console.log('Sending SIGINT to dcrwallet at pid:', dcrwPID);
+    }
+    process.kill(dcrwPID, 'SIGINT');
+    process.kill(dcrdPID, 'SIGINT');
+  }
   app.quit();
 });
 
@@ -104,7 +115,9 @@ const launchDCRD = () => {
   });
 
   dcrd.on('close', (code) => {
-    console.log(`dcrd exited with code ${code}`);
+    if (debug) {
+      console.log(`dcrd exited with code ${code}`);
+    }
   });
 
   if (debug) {
@@ -115,6 +128,11 @@ const launchDCRD = () => {
     dcrd.stderr.on('data', (data) => {
       process.stderr.write(`${data}`);
     });
+  }
+
+  dcrdPID = dcrd.pid;
+  if (debug) {
+    console.log('dcrd started with pid:', dcrdPID);
   }
 
   dcrd.unref();
@@ -152,7 +170,9 @@ const launchDCRWallet = () => {
   });
 
   dcrwallet.on('close', (code) => {
-    console.log(`dcrwallet exited with code ${code}`);
+    if (debug) {
+      console.log(`dcrwallet exited with code ${code}`);
+    }
   });
 
   if (debug) {
@@ -163,6 +183,11 @@ const launchDCRWallet = () => {
     dcrwallet.stderr.on('data', (data) => {
       process.stderr.write(`${data}`);
     });
+  }
+
+  dcrwPID = dcrwallet.pid;
+  if (debug) {
+    console.log('dcrwallet started with pid:', dcrwPID);
   }
 
   dcrwallet.unref();
