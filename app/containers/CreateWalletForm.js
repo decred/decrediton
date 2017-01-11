@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createNewWallet, createWalletRequest } from '../actions/WalletLoaderActions';
-import { generateRandomSeedAttempt, decodeSeedAttempt } from '../actions/SeedServiceActions';
+import { createWalletRequest } from '../actions/WalletLoaderActions';
+import { decodeSeedAttempt } from '../actions/SeedServiceActions';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { Tabs, Tab } from 'material-ui/Tabs';

@@ -4,10 +4,6 @@ import { rescanAttempt } from '../actions/ControlActions';
 import TextField from 'material-ui/TextField';
 import Button from '../components/ButtonTanel';
 
-const style = {
-  margin: 12,
-};
-
 let RescanForm = ({ dispatch }) => {
   let startHeight = '';
 

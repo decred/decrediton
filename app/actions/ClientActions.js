@@ -41,8 +41,7 @@ function getWalletServiceSuccess(walletService) {
 }
 
 export function getWalletServiceAttempt() {
-  return (dispatch, getState) => {
-    const { getLoaderRequest } = getState().walletLoader;
+  return (dispatch) => {
     dispatch({ type: GETWALLETSERVICE_ATTEMPT });
     dispatch(getWalletServiceAction());
   };
@@ -342,15 +341,11 @@ function getTransactionsComplete() {
   };
 }
 
-export function getTransactionsAttempt(startHeight, endHeight, startHash, endHash, ) {
-  // Currently not working due to too large of messages
-  // known issue by jrick.
+export function getTransactionsAttempt(startHeight, endHeight) {
   // GetTransactions
   var request = new GetTransactionsRequest();
   request.setStartingBlockHeight(startHeight);
-    //starting_block_hash: Buffer.from(startHash),
   request.setEndingBlockHeight(endHeight);
-    //ending_block_hash: Buffer.from(endHash)
   return (dispatch) => {
     dispatch({
       request: request,

@@ -33,19 +33,18 @@ export function walletExists(loader, request, cb) {
 }
 
 export function createWallet(loader, request, cb) {
-  loader.createWallet(request, function(err, response) {
+  loader.createWallet(request, function(err) {
     if (err) {
       console.error(err);
       return cb(err);
     } else {
-      console.log('created wallet');
       return cb();
     }
   });
 }
 
 export function openWallet(loader, request, cb) {
-  loader.openWallet(request, function(err, response) {
+  loader.openWallet(request, function(err) {
     if (err) {
       if (err.message.includes('wallet already loaded')) {
         return cb();
@@ -71,7 +70,7 @@ export function closeWallet(loader,request, cb) {
 }
 
 export function startConsensusRpc(loader, request, cb) {
-  loader.startConsensusRpc(request, function(err, response) {
+  loader.startConsensusRpc(request, function(err) {
     if (err) {
       if (err.message.includes('RPC client already created')) {
         return cb();
@@ -86,7 +85,7 @@ export function startConsensusRpc(loader, request, cb) {
 }
 
 export function discoverAddresses(loader, request, cb) {
-  loader.discoverAddresses(request, function(err, response) {
+  loader.discoverAddresses(request, function(err) {
     if (err) {
       console.error(err);
       return cb(err);
@@ -97,7 +96,7 @@ export function discoverAddresses(loader, request, cb) {
 }
 
 export function subscribeBlockNtfns(loader, request, cb) {
-  loader.subscribeToBlockNotifications(request, function(err, response) {
+  loader.subscribeToBlockNotifications(request, function(err) {
     if (err) {
       console.error(err);
       return cb(err);

@@ -66,8 +66,7 @@ class Home extends Component{
     const { walletService } = this.props;
 
     const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
-    const { getStakeInfoRequestAttempt, getStakeInfoResponse } = this.props;
-    const { rescanRequest, rescanRequestAttempt, rescanError, rescanResponse } = this.props;
+    const { rescanRequest, rescanResponse } = this.props;
     const { getAccountsResponse } = this.props;
     var rescanPercFisnished;
     if (rescanResponse !== null && getAccountsResponse !== null && rescanRequest != null) {

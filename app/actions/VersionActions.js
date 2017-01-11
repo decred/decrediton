@@ -17,8 +17,7 @@ function getVersionServiceSuccess(versionService) {
 }
 
 export function getVersionServiceAttempt() {
-  return (dispatch, getState) => {
-    const { getLoaderRequest } = getState().walletLoader;
+  return (dispatch) => {
     dispatch({ type: GETVERSIONSERVICE_ATTEMPT });
     dispatch(getVersionServiceAction());
   };

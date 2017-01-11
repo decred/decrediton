@@ -66,11 +66,8 @@ class Receive extends Component{
 
   render() {
     const { walletService } = this.props;
-    const { getNextAddressResponse, getNextAddressAttempt, getNextAddressRequestAttempt } = this.props;
-    const { getNextAddressError } = this.props;
-    const { constructTxRequestAttempt, constructTransactionAttempt, constructTxResponse } = this.props;
-    const { publishTransactionResponse } = this.props;
-    /* View that will be seen when user has a set Client */
+    const { getNextAddressResponse, getNextAddressRequestAttempt } = this.props;
+
     const copayReceive = (
       <div style={styles.pageContentWrapper}>
         <div style={styles.center}>
@@ -98,7 +95,6 @@ class Receive extends Component{
 				</div>
 			</div>
     );
-    /* Check to see that client is not undefined */
     if (walletService === null) {
       return (<ErrorScreen />);
     } else {

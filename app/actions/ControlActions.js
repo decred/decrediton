@@ -514,7 +514,7 @@ function constructTransactionError(error) {
 }
 
 function constructTransactionSuccess(constructTxResponse) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
   };
 }

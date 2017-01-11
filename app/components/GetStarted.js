@@ -13,23 +13,6 @@ import {
   StepContent
 } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
-//import LinearProgress from 'material-ui/LinearProgress';
-
-const styles = {
-  mainArea: {
-    backgroundColor:'#2971ff'
-  },
-  sideBar: {
-    backgroundColor:'#2ed8a3'
-  },
-  error: {
-    color:'red'
-  },
-  buttons: {
-    margin: 12
-  }
-};
-
 
 
 class Home extends Component{
@@ -70,17 +53,14 @@ class Home extends Component{
 
   render() {
     const { stepIndex } = this.props;
-    const { disclaimerOK, disclaimerOKAction } = this.props;
-    const { address, port } = this.props;
-    const { requiredVersion, versionInvalid, versionInvalidError } = this.props;
-    const { getVersionServiceAttempt, getVersionServiceError } = this.props;
-    const { loader, getLoaderRequestAttempt, getLoaderError, loaderRequest } = this.props;
+    const { disclaimerOK } = this.props;
+    const { versionInvalid, versionInvalidError } = this.props;
+    const { getVersionServiceError } = this.props;
+    const { getLoaderError } = this.props;
     const { walletCreateRequestAttempt, walletCreateError } = this.props;
     const { walletOpenRequestAttempt, walletOpenError } = this.props;
-    const { walletExistResponse, walletExistRequestAttempt, walletExistError } = this.props;
-    const { walletCloseRequestAttempt, walletCloseError } = this.props;
+    const { walletExistResponse } = this.props;
     const { discoverAddressRequestAttempt, discoverAddressError } = this.props;
-    const { startRpcRequestAttempt, startRpcError } = this.props;
     const { fetchHeadersRequestAttempt } = this.props;
     const { generateRandomSeedResponse } = this.props;
 

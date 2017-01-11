@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { checkWalletExist, walletExistRequest } from '../actions/WalletLoaderActions';
+import { walletExistRequest } from '../actions/WalletLoaderActions';
 import RaisedButton from 'material-ui/RaisedButton';
 
 const style = {
