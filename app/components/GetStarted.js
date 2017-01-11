@@ -248,15 +248,15 @@ class Home extends Component{
             </StepContent>
           </Step>
           <Step>
-            <StepLabel>Discover Addresses</StepLabel>
-            <StepContent>
-              {getStartedDiscoverAddress}
-            </StepContent>
-          </Step>
-          <Step>
             <StepLabel>Fetch Headers</StepLabel>
             <StepContent>
               {fetchHeaders}
+            </StepContent>
+          </Step>
+          <Step>
+            <StepLabel>Discover Addresses</StepLabel>
+            <StepContent>
+              {getStartedDiscoverAddress}
             </StepContent>
           </Step>
           <Step>

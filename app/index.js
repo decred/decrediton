@@ -12,9 +12,18 @@ import { getCfg } from './config.js';
 var cfg = getCfg();
 
 var grpcport = '';
+var neededBlocks = 0;
 if (cfg.network == 'testnet') {
   grpcport = cfg.wallet_port_testnet;
+  var today = new Date();
+  var startDate = new Date("01/27/2016");
+  var totalDays = (today.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24;
+  neededBlocks = totalDays * 720 * (0.95);
 } else {
+  var today = new Date();
+  var startDate = new Date("02/08/2016");
+  var totalDays = (today.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24;
+  neededBlocks = totalDays * 288 * (0.95);
   grpcport = cfg.wallet_port;
 }
 
@@ -85,6 +94,8 @@ var initialState = {
     getTransactionsResponse: null,
   },
   walletLoader: {
+    neededBlocks: neededBlocks,
+    curBlocks: 0,
     disclaimerOK: false,
     stepIndex: 0,
     // Loader
