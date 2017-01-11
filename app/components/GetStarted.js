@@ -4,6 +4,7 @@ import WalletOpenForm from '../containers/WalletOpenForm';
 import CreateWalletForm from '../containers/CreateWalletForm';
 import DiscoverAddressForm from '../containers/DiscoverAddressForm';
 import CircularProgress from 'material-ui/CircularProgress';
+import LinearProgress from 'material-ui/LinearProgress';
 import Dialog from 'material-ui/Dialog';
 import ShowError from './ShowError';
 import {
@@ -52,6 +53,7 @@ class Home extends Component{
   }
 
   render() {
+    const { curBlocks, neededBlocks } = this.props;
     const { stepIndex } = this.props;
     const { disclaimerOK } = this.props;
     const { versionInvalid, versionInvalidError } = this.props;
@@ -129,11 +131,19 @@ class Home extends Component{
     }
     const getStartedDiscoverAddress = (discoveringAddresses);
 
+    var ibdBlockProgress;
+    ibdBlockProgress = (curBlocks / neededBlocks) * 100;
+    ibdBlockProgress = ibdBlockProgress.toFixed(2);
+
     var fetchingHeaders;
     if (fetchHeadersRequestAttempt) {
       fetchingHeaders = (
         <div>
-          <CircularProgress size={80} thickness={6}/>
+          <LinearProgress mode="determinate"
+            min={0}
+            max={neededBlocks}
+            value={curBlocks} />
+          <p>{ibdBlockProgress}%</p>
         </div>
       );
     } else {

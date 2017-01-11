@@ -44,6 +44,8 @@ function mapStateToProps(state) {
     discoverAddressError: state.walletLoader.discoverAddressError,
     discoverAddressResponse: state.walletLoader.discoverAddressResponse,
     // Step 5
+    curBlocks: state.walletLoader.curBlocks,
+    neededBlocks: state.walletLoader.neededBlocks,
     fetchHeadersRequestAttempt: state.walletLoader.fetchHeadersRequestAttempt,
     fetchHeadersError: state.walletLoader.fetchHeadersError,
     fetchHeadersResponse: state.walletLoader.fetchHeadersResponse,
