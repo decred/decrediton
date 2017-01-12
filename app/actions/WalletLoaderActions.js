@@ -356,7 +356,7 @@ function fetchHeadersProgress(response) {
     }
     if ( newCurBlock > neededBlocks ||
     response.getFirstNewBlockHeight() + response.getFetchedHeadersCount() > neededBlocks ) {
-      dispatch(fetchHeadersSuccess());
+      dispatch(fetchHeadersSuccess(response));
     } else {
       dispatch({curBlocks: newCurBlock, type: FETCHHEADERS_PROGRESS});
       setTimeout( () => {dispatch(fetchHeadersAction());}, 1000);

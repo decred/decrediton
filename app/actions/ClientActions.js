@@ -32,8 +32,8 @@ function getWalletServiceSuccess(walletService) {
     setTimeout( () => {dispatch(transactionNftnsStart());}, 1000);
     const { fetchHeadersResponse, walletCreateExisting } = getState().walletLoader;
     if ( walletCreateExisting && fetchHeadersResponse !== null ) {
-      if (fetchHeadersResponse.fetched_headers_count > 0) {
-        setTimeout(() => {dispatch(rescanAttempt(fetchHeadersResponse.first_new_block_height));}, 1000);
+      if (fetchHeadersResponse.getFetchedHeadersCount() > 0) {
+        setTimeout(() => {dispatch(rescanAttempt(fetchHeadersResponse.getFirstNewBlockHeight()));}, 1000);
       }
     }
     setTimeout(() => {hashHistory.push('/home');}, 1000);
