@@ -5,6 +5,26 @@ import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router';
 
 const styles = {
+  topBar: {
+    height: '70px',
+    width: "100%",
+    backgroundColor: "#132f4b",
+    color: "white",
+  },
+  title: {
+    marginTop: '14px',
+    marginLeft: '20px',
+    position: 'absolute',
+    fontSize: '1.2em',
+  },
+  sideBar: {
+    position: 'absolute',
+    top:'78',
+    bottom:'0', 
+    left:'8',
+    width:'200px',
+    background:'#132f4b',
+  },
   sidebarLink: {
     display: 'block',
     padding: '16px 0px',
@@ -29,26 +49,17 @@ class Header extends Component {
     const { walletService } = this.props;
     const loggedIn = (
       <div>
-        <AppBar onLeftIconButtonTouchTap={walletService !== null ? this.handleToggle : null} title="Decrediton Preview" />
-        <Drawer
-          ref="Drawer"
-          docked={false}
-          open={this.state.open}
-          onRequestChange={open => this.setState({open})}
-        >
-          <MenuItem><Link to="/home" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Home</Link></MenuItem>
-          <MenuItem><Link to="/history" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>History</Link></MenuItem>
-          <MenuItem><Link to="/send" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Send Decred</Link></MenuItem>
-          <MenuItem><Link to="/receive" style={styles.sidebarLink} onClick={this.handleToggle} activeStyle={styles.active}>Receive Decred</Link></MenuItem>
-        </Drawer>
+        <div style={styles.topBar}>
+          <p style={styles.title}>Decred-Preview</p>
+        </div>
+        <div style={styles.sideBar}>
+          <p>Getting Started</p>
+        </div>
       </div>
+
     );
     var output;
-    if (walletService === null) {
-      output = (<div></div>);
-    } else {
-      output = loggedIn;
-    }
+    output = loggedIn;
     return (output);
   }
 }

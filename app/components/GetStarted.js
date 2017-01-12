@@ -15,6 +15,18 @@ import {
 } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
 
+const styles = {
+  header: { 
+    border:'1px solid #000',
+    width:'100px', 
+    height:'20px', 
+    margin:'0 0 5px 0',
+  },
+  content: { 
+    border:'1px solid #000',
+    margin:'5px 0 5px 0',
+  },
+};
 
 class Home extends Component{
 
@@ -247,7 +259,7 @@ class Home extends Component{
     }
 
     const stepper = (
-      <div style={{width: '100%',  margin: 'auto'}}>
+      <div style={styles.content}>
         <Stepper activeStep={stepIndex} orientation="vertical">
           <Step>
             <StepLabel>Get Wallet Loader Service</StepLabel>
