@@ -78,13 +78,20 @@ dcr command line tools:
 
 ```
 go get -u -v github.com/decred/dcrd
-go get -u -v github.com/decred/dcrd/cmd/dcrctl
 go get -u -v github.com/decred/dcrwallet
+cd $GOPATH/github.com/decred/dcrd
+glide i
+go install . ./cmd/dcrctl/
+cd ../dcrwallet
+glide i
+go install
+cd
 cd code/decrediton
 mkdir bin
 cp `which dcrd` bin/
 cp `which dcrctl` bin/
 cp `which dcrwallet` bin/
+npm install
 npm run package
 ```
 At this time cross compiling is not possible.
