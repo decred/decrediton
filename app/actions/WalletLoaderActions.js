@@ -221,6 +221,7 @@ function startRpcError(error) {
 function startRpcSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: STARTRPC_SUCCESS});
+    dispatch(fetchHeadersAttempt());
     //dispatch(discoverAddressAttempt(true));
   };
 }
@@ -271,7 +272,7 @@ function discoverAddressError(error) {
 function discoverAddressSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: DISCOVERADDRESS_SUCCESS});
-    dispatch(fetchHeadersAttempt());
+    dispatch(subscribeBlockAttempt());
   };
 }
 
@@ -340,15 +341,32 @@ function subscribeBlockAction() {
 export const FETCHHEADERS_ATTEMPT = 'FETCHHEADER_ATTEMPT';
 export const FETCHHEADERS_FAILED = 'FETCHHEADERS_FAILED';
 export const FETCHHEADERS_SUCCESS = 'FETCHHEADERS_SUCCESS';
+export const FETCHHEADERS_PROGRESS = 'FETCHHEADERS_PROGRESS';
 
 function fetchHeadersFailed(error) {
   return { error, type: FETCHHEADERS_FAILED };
 }
 
+function fetchHeadersProgress(response) {
+  return (dispatch, getState) => {
+    const { curBlocks, neededBlocks } = getState().walletLoader;
+    var newCurBlock = curBlocks + response.getFetchedHeadersCount();
+    if (curBlocks == 0) {
+      newCurBlock += response.getFirstNewBlockHeight();
+    }
+    if ( newCurBlock > neededBlocks ||
+    response.getFirstNewBlockHeight() + response.getFetchedHeadersCount() > neededBlocks ) {
+      dispatch(fetchHeadersSuccess(response));
+    } else {
+      dispatch({curBlocks: newCurBlock, type: FETCHHEADERS_PROGRESS});
+      setTimeout( () => {dispatch(fetchHeadersAction());}, 1000);
+    }
+  };
+}
+
 function fetchHeadersSuccess(response) {
   return (dispatch) => {
     dispatch({response: response, type: FETCHHEADERS_SUCCESS});
-    dispatch(subscribeBlockAttempt());
   };
 }
 
@@ -368,7 +386,7 @@ function fetchHeadersAction() {
           if (err) {
             dispatch(fetchHeadersFailed(err + ' Please try again'));
           } else {
-            dispatch(fetchHeadersSuccess(response));
+            dispatch(fetchHeadersProgress(response));
           }
         });
   };
