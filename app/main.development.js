@@ -49,11 +49,13 @@ function appDataDirectory() {
   const path = require('path');
   const os = require('os');
 
-  if (process.platform === 'darwin') {
+  if (os.platform() == 'win32') {
+    return path.join(process.env.LOCALAPPDATA, 'Decrediton');
+  } else if (process.platform === 'darwin') {
     return path.join(os.homedir(), 'Library','Application Support','decrediton');
+  } else {
+    return path.join(os.homedir(),'.config','decrediton');
   }
-
-  return path.join(os.homedir(),'.decrediton');
 }
 
 function GRPCWalletPort() {

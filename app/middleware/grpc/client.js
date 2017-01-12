@@ -22,7 +22,7 @@ export function getCert() {
     certPath = path.join(process.env.HOME, 'Library', 'Application Support',
             'decrediton', 'rpc.cert');
   } else {
-    certPath = path.join(process.env.HOME, '.decrediton', 'rpc.cert');
+    certPath = path.join(process.env.HOME, '.config', 'decrediton', 'rpc.cert');
   }
 
   try {

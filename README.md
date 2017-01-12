@@ -56,7 +56,7 @@ dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19109 --rpccert=$HOME/.
 ```
 
 ```bash
-dcrwallet --testnet --experimentalrpclisten=127.0.0.1:19112 --noinitialload --tlscurve=P-256 --onetimetlskey --appdata=~/.decrediton
+dcrwallet --testnet --experimentalrpclisten=127.0.0.1:19112 --noinitialload --tlscurve=P-256 --onetimetlskey --appdata=~/.config/decrediton
 ```
 
 On macOS you should use:
