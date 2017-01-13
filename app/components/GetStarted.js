@@ -9,6 +9,8 @@ import Dialog from 'material-ui/Dialog';
 import ShowError from './ShowError';
 import Header from './Header';
 import SideBar from './SideBar';
+import Footer from './Footer';
+import Radium from 'radium';
 
 import {
   Step,
@@ -19,6 +21,20 @@ import {
 import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
+  body: {
+    height: '100%'
+  },
+  pageWrap: {
+    minHeight: '100%',
+    /* equal to footer height */
+    marginBottom: '-142px', 
+    
+ 
+    ':after': {
+      content: '',
+      display: 'block',
+    },
+  },
   header: { 
     border:'1px solid #000',
     width:'100px', 
@@ -338,10 +354,13 @@ class Home extends Component{
     } else {
       if (!versionInvalid) {
         return (
-          <div>
-            <SideBar />
-            <Header />
-            {stepper}
+          <div style={styles.body}>
+            <div style={styles.pageWrap}>
+              <SideBar />
+              <Header />
+              {stepper}
+            </div>
+            <Footer />
           </div>);
       } else {
         return (<ShowError error={versionInvalidError}/>);
@@ -351,4 +370,4 @@ class Home extends Component{
   }
 }
 
-export default Home;
+export default Radium(Home);
