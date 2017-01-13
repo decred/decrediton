@@ -62,6 +62,7 @@ class Home extends Component{
     const { walletCreateRequestAttempt, walletCreateError } = this.props;
     const { walletOpenRequestAttempt, walletOpenError } = this.props;
     const { walletExistResponse } = this.props;
+    const { startRpcRequestAttempt, startRpcError } = this.props;
     const { discoverAddressRequestAttempt, discoverAddressError } = this.props;
     const { fetchHeadersRequestAttempt } = this.props;
     const { generateRandomSeedResponse } = this.props;
@@ -112,6 +113,21 @@ class Home extends Component{
       );
     }
     const getStartedWalletCreate = (creatingWallet);
+
+    var startRpc;
+    if (startRpcRequestAttempt) {
+      startRpc = (
+        <div>
+          <CircularProgress size={80} thickness={6}/>
+        </div>
+      );
+    } else {
+      startRpc = (
+      <div>
+        <ShowError error={startRpcError} />
+      </div>
+      );
+    }
 
     var discoveringAddresses;
     if (discoverAddressRequestAttempt) {
@@ -254,7 +270,7 @@ class Home extends Component{
           <Step>
             <StepLabel>Start RPC Concensus</StepLabel>
             <StepContent>
-              {}
+              {startRpc}
             </StepContent>
           </Step>
           <Step>

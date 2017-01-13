@@ -12,21 +12,21 @@ var config = {
       loaders: ['babel-loader'],
       exclude: /node_modules/
     },
-    {
-      test: /\.global\.css$/,
-      loaders: [
-        'style-loader',
-        'css-loader?sourceMap'
-      ]
-    },
+      {
+        test: /\.global\.css$/,
+        loaders: [
+          'style-loader',
+          'css-loader?sourceMap'
+        ]
+      },
 
-    {
-      test: /^((?!\.global).)*\.css$/,
-      loaders: [
-        'style-loader',
-        'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
-      ]
-    }]
+      {
+        test: /^((?!\.global).)*\.css$/,
+        loaders: [
+          'style-loader',
+          'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+        ]
+      }]
   },
   output: {
     path: __dirname + '/dist',
