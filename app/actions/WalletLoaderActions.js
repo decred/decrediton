@@ -351,16 +351,16 @@ function fetchHeadersProgress(response) {
   return (dispatch, getState) => {
     const { curBlocks, neededBlocks } = getState().walletLoader;
     var newCurBlock = curBlocks + response.getFetchedHeadersCount();
-    console.log("curBlocks " + curBlocks);
+    console.log('curBlocks ' + curBlocks);
 
     if (curBlocks == 0) {
       newCurBlock += response.getFirstNewBlockHeight();
     }
-    console.log("getFetchedHeadersCount " + response.getFetchedHeadersCount());
-    console.log("neededBlocks " + neededBlocks);
-    console.log("newCurBlock1 " + newCurBlock);
-    console.log("newCurBlock2 " + newCurBlock);
-    console.log("getFirstNewBlockHeight " + response.getFirstNewBlockHeight());
+    console.log('getFetchedHeadersCount ' + response.getFetchedHeadersCount());
+    console.log('neededBlocks ' + neededBlocks);
+    console.log('newCurBlock1 ' + newCurBlock);
+    console.log('newCurBlock2 ' + newCurBlock);
+    console.log('getFirstNewBlockHeight ' + response.getFirstNewBlockHeight());
     if ( response.getFetchedHeadersCount() == 0 || newCurBlock > neededBlocks ||
     response.getFirstNewBlockHeight() + response.getFetchedHeadersCount() > neededBlocks ) {
       dispatch(fetchHeadersSuccess(response));
