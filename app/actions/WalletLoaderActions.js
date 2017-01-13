@@ -5,7 +5,7 @@ import { getWalletServiceAttempt } from './ClientActions';
 import { getVersionServiceAttempt } from './VersionActions';
 import { getSeederAttempt } from './SeedServiceActions';
 import { getDcrdCert } from '../middleware/grpc/client';
-import { getCfg } from '../config.js';
+import { getCfg, getCfgPath } from '../config.js';
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
   SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from '../middleware/walletrpc/api_pb';
@@ -253,7 +253,7 @@ function startRpcAction() {
     startConsensusRpc(loader, startRpcRequest,
         function(err) {
           if (err) {
-            dispatch(startRpcError(err + ' Please try again'));
+            dispatch(startRpcError(err + '.  You may need to edit ' + getCfgPath() + ' and try again'));
           } else {
             dispatch(startRpcSuccess());
           }
