@@ -84,7 +84,7 @@ class Home extends Component{
         <div>
           <ShowError error={walletOpenError} />
           <h3>Opening wallet</h3>
-          <h5>Please enter the information below to connect to you dcrwallet</h5>
+          <h5>Please enter the information below to connect to your dcrwallet</h5>
           <WalletOpenForm/>
       </div>);
     }

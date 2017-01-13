@@ -43,3 +43,9 @@ export function getCfg() {
   };
   return(cfg);
 }
+
+export function getCfgPath() {
+  const Config = require('electron-config');
+  const config = new Config();
+  return config.path;
+}
