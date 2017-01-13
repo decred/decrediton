@@ -7,6 +7,9 @@ import CircularProgress from 'material-ui/CircularProgress';
 import LinearProgress from 'material-ui/LinearProgress';
 import Dialog from 'material-ui/Dialog';
 import ShowError from './ShowError';
+import Header from './Header';
+import SideBar from './SideBar';
+
 import {
   Step,
   Stepper,
@@ -334,7 +337,12 @@ class Home extends Component{
         </div>);
     } else {
       if (!versionInvalid) {
-        return (stepper);
+        return (
+          <div>
+            <SideBar />
+            <Header />
+            {stepper}
+          </div>);
       } else {
         return (<ShowError error={versionInvalidError}/>);
       }
