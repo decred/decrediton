@@ -122,7 +122,7 @@ class Home extends Component{
         </div>
       );
     } else {
-     startRpc = (
+      startRpc = (
       <div>
         <ShowError error={startRpcError} />
       </div>
