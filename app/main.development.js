@@ -39,8 +39,13 @@ app.on('window-all-closed', () => {
       console.log('Sending SIGINT to dcrd at pid:', dcrdPID);
       console.log('Sending SIGINT to dcrwallet at pid:', dcrwPID);
     }
-    process.kill(dcrwPID, 'SIGINT');
-    process.kill(dcrdPID, 'SIGINT');
+    // Don't try to close if not running.
+    if (require('is-running')(dcrwPID)) {
+      process.kill(dcrwPID, 'SIGINT');
+    }
+    if (require('is-running')(dcrdPID)) {
+      process.kill(dcrdPID, 'SIGINT');
+    }
   }
   app.quit();
 });
@@ -210,6 +215,23 @@ app.on('ready', async () => {
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   mainWindow.webContents.on('did-finish-load', () => {
+    if (process.env.NODE_ENV === 'production') {
+      // Check if daemon and wallet started up and error if not.
+      if (!require('is-running')(dcrwPID)) {
+        if (debug) {
+          console.log('Error running dcrwallet.  Check logs and restart!');
+        }
+        mainWindow.webContents.executeJavaScript('alert("Error running dcrwallet.  Check logs and restart!");');
+        mainWindow.webContents.executeJavaScript('window.close();');
+      }
+      if (!require('is-running')(dcrdPID)) {
+        if (debug) {
+          console.log('Error running dcrd.  Check logs and restart!');
+        }
+        mainWindow.webContents.executeJavaScript('alert("Error running dcrd.  Check logs and restart!");');
+        mainWindow.webContents.executeJavaScript('window.close();');
+      }
+    }
     mainWindow.show();
     mainWindow.focus();
   });
