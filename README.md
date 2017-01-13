@@ -3,6 +3,47 @@
 decrediton is a cross-platform GUI for decred written in node.js using
 Electron.
 
+## Installation
+
+Currently decrediton has only been tested and built on Linux and
+macOS.  Additional systems will be added in the future.
+
+Decrediton will NOT use or in any way disrupt the wallet file you may
+already be using at this time.
+
+Download the decrediton release for your operating system.
+
+On macOS, Ubuntu (14.04 and later), and recent Debians, there should be
+no additional dependencies needed.
+
+On Fedora or similar distros you may need to install the libXScrnSaver
+package if you see this error:
+```
+error while loading shared libraries: libXss.so.1
+```
+
+You can install this on a recent Fedora with the command:
+
+```bash
+sudo dnf -y install libXScrnSaver
+```
+
+On linux you will need to decompress the package:
+```bash
+tar -xvzf decrediton-X.X.X.tar.gz
+```
+and then run the file:
+```bash
+./decrediton
+```
+
+This will start dcrd and dcrwallet for you.
+
+On macOS, double-click the .dmg file, drag the .app to your
+Applications folder.  Double click on Decrediton.app to start.
+
+From there follow the on screen instructions to setup your wallet.
+
 ## Developing
 
 Due to potential compatibility issues, for now, all work should be
@@ -61,6 +102,9 @@ dcrwallet --testnet --experimentalrpclisten=127.0.0.1:19112 --noinitialload --tl
 
 On macOS you should use:
 ```bash
+dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19109 --rpccert=$HOME/Library/Application\ Support\Dcrd/rpc.cert
+```
+```bash
 dcrwallet --testnet --experimentalrpclisten=127.0.0.1:19112 --noinitialload --tlscurve=P-256 --onetimetlskey --appdata=$HOME/Library/Application\ Support/decrediton
 ```
 
@@ -76,9 +120,10 @@ To build a packaged version of decrediton (including a dmg on OSX and
 exe on Windows), follow the development steps above.  Then build the
 dcr command line tools:
 
-```
+```bash
 go get -u -v github.com/decred/dcrd
 go get -u -v github.com/decred/dcrwallet
+go get -u -v github.com/Masterminds/glide
 cd $GOPATH/github.com/decred/dcrd
 glide i
 go install . ./cmd/dcrctl/
@@ -94,30 +139,6 @@ cp `which dcrwallet` bin/
 npm install
 npm run package
 ```
-At this time cross compiling is not possible.
-
-## Installation
-
-Currently decrediton has only been tested and built on Linux and
-macOS.  Additional systems will be added in the future.
-
-Decrediton will NOT use or in any way disrupt the wallet file you may
-already be using at this time.
-
-Download the decrediton release for your operating system.
-
-On linux you will need to decompress the package and then run the
-file:
-```
-./decrediton
-```
-
-This will start dcrd and dcrwallet for you.
-
-On macOS, double-click the .dmg file, drag the .app to your
-Applications folder.  Double click on Decrediton.app to start.
-
-From there follow the on screen instructions to setup your wallet.
 
 ## Contact
 
