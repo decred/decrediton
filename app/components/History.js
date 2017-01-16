@@ -5,6 +5,7 @@ import {Table, TableBody, TableHeader, TableHeaderColumn,
 import ErrorScreen from './ErrorScreen';
 import { reverseHash } from '../helpers/byteActions';
 import SideBar from './SideBar';
+import Header from './Header';
 
 const styles = {
   body: {
@@ -75,6 +76,7 @@ class History extends Component{
     } else {
       return(
         <div style={styles.body}>
+          <Header />
           <SideBar />
           {historyView}
         </div>);

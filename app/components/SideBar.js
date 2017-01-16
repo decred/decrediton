@@ -27,7 +27,10 @@ class SideBar extends Component {
   render() {
     return (
     <div style={styles.sideBar}>
-      <p>Getting Started</p>
+      <Link to="/home" style={styles.sidebarLink} activeStyle={styles.active}>Home</Link>
+      <Link to="/history" style={styles.sidebarLink} activeStyle={styles.active}>History</Link>
+      <Link to="/send" style={styles.sidebarLink} activeStyle={styles.active}>Send Decred</Link>
+      <Link to="/receive" style={styles.sidebarLink} activeStyle={styles.active}>Receive Decred</Link>
     </div>
     );
   }
