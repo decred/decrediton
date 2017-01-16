@@ -4,11 +4,12 @@ import { Link } from 'react-router';
 const styles = {
   sideBar: {
     position: 'absolute',
-    top:'78px',
+    top:'70px',
     bottom:'0px', 
-    left:'8px',
+    left:'0px',
     width:'200px',
-    background:'#132f4b',
+    background:'white',
+    borderRight: '2px solid black'
   },
   sidebarLink: {
     display: 'block',

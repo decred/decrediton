@@ -42,8 +42,11 @@ const styles = {
     margin:'0 0 5px 0',
   },
   content: { 
-    border:'1px solid #000',
-    margin:'5px 0 5px 0',
+    position: 'absolute',
+    top: '78px',
+    left: '0px',
+    bottom: '0px',
+    right: '0px',
   },
 };
 
@@ -356,7 +359,6 @@ class Home extends Component{
         return (
           <div style={styles.body}>
             <div style={styles.pageWrap}>
-              <SideBar />
               <Header />
               {stepper}
             </div>

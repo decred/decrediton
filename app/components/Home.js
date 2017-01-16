@@ -4,13 +4,16 @@ import LinearProgress from 'material-ui/LinearProgress';
 import ErrorScreen from './ErrorScreen';
 import RescanForm from '../containers/RescanForm';
 import Balance from './Balance';
-
+import SideBar from './SideBar';
+import Header from './Header';
 const styles = {
   pageContentWrapper: {
     width: '100%',
     paddingBottom: '60px',
   },
-
+  body: {
+    height: '100%'
+  },
   header: {
     backgroundColor: '#F9FBFC',
     textAlign: 'center',
@@ -43,7 +46,14 @@ const styles = {
   },
   buttons: {
     margin: 12
-  }
+  },
+  content: { 
+    position: 'absolute',
+    top: '70px',
+    left: '200px',
+    bottom: '0px',
+    right: '0px',
+  },
 };
 
 class Home extends Component{
@@ -91,7 +101,7 @@ class Home extends Component{
     }
     /* View that will be seen when user has a set Client */
     const homeView = (
-      <div style={styles.pageContentWrapper}>
+      <div style={styles.content}>
         <div style={styles.center}>
           <div style={styles.header}>
 						<p>My balance</p>
@@ -118,7 +128,12 @@ class Home extends Component{
     if (walletService === null) {
       return(<ErrorScreen />);
     } else {
-      return(homeView);
+      return(
+        <div style={styles.body}>
+          <SideBar />
+          <Header />
+          {homeView}
+        </div>);
     }
   }
 }
