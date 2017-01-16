@@ -9,7 +9,7 @@ const styles = {
     left:'0px',
     width:'200px',
     background:'white',
-    borderRight: '2px solid black'
+    borderRight: '1px solid black'
   },
   sidebarLink: {
     display: 'block',

@@ -50,7 +50,7 @@ const styles = {
   content: { 
     position: 'absolute',
     top: '70px',
-    left: '200px',
+    left: '202px',
     bottom: '0px',
     right: '0px',
   },

@@ -5,6 +5,21 @@ import ConstructTxForm from '../containers/ConstructTxForm';
 import SignTxForm from '../containers/SignTxForm';
 import ShowError from './ShowError';
 import { reverseHash } from '../helpers/byteActions';
+import SideBar from './SideBar';
+import Header from './Header';
+
+const styles = {
+  body: {
+    height: '100%'
+  },
+  content: { 
+    position: 'absolute',
+    top: '70px',
+    left: '202px',
+    bottom: '0px',
+    right: '0px',
+  },
+}
 
 class Send extends Component{
   static propTypes = {
@@ -23,14 +38,14 @@ class Send extends Component{
     const { signTransactionError } = this.props;
 
     const constructTxView = (
-      <div>
+      <div style={styles.content}>
         <ShowError error={constructTxError}/>
         <h1>Construct Tx</h1>
         <ConstructTxForm />
       </div>);
 
     const signTxView = (
-      <div>
+      <div style={styles.content}>
         <ShowError error={signTransactionError}/>
         <h1>Sign tx</h1>
         <p> raw tx <br/>
@@ -51,7 +66,7 @@ class Send extends Component{
     var sendView;
 
     const publishTxView = (
-      <div>
+      <div style={styles.content}>
         <ShowError error={publishTransactionError}/>
         <h1>Published Tx!</h1>
         <p>{publishTransactionResponse !== null ? reverseHash(publishTransactionResponse.toString('hex')) : null}</p>
@@ -70,7 +85,12 @@ class Send extends Component{
     if (walletService === null) {
       return (<ErrorScreen />);
     } else {
-      return(sendView);
+      return(
+        <div styles={styles.body}>
+          <Header />
+          <SideBar />
+          {sendView}
+        </div>);
     }
   }
 }

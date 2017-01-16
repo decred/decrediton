@@ -2,8 +2,21 @@
 import React, { Component, PropTypes } from 'react';
 import ErrorScreen from './ErrorScreen';
 import Button from './ButtonTanel';
+import SideBar from './SideBar';
+import Header from './Header';
 
 const styles = {
+  body: {
+    height: '100%'
+  },
+  content: { 
+    position: 'absolute',
+    top: '70px',
+    left: '202px',
+    bottom: '0px',
+    right: '0px',
+  },
+
   pageContentWrapper: {
     //width: '100%',
     marginRight: '8px',
@@ -69,7 +82,7 @@ class Receive extends Component{
     const { getNextAddressResponse, getNextAddressRequestAttempt } = this.props;
 
     const copayReceive = (
-      <div style={styles.pageContentWrapper}>
+      <div style={styles.content}>
         <div style={styles.center}>
           <div style={styles.header}>
 						<p>My Decred Address</p>
@@ -98,7 +111,12 @@ class Receive extends Component{
     if (walletService === null) {
       return (<ErrorScreen />);
     } else {
-      return(copayReceive);
+      return(
+        <div styles={styles.body}>
+          <Header />
+          <SideBar />
+          {copayReceive}
+        </div>);
     }
   }
 }

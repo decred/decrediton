@@ -30,7 +30,7 @@ const styles = {
   content: { 
     position: 'absolute',
     top: '78px',
-    left: '0px',
+    left: '202px',
     bottom: '0px',
     right: '0px',
   },
