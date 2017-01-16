@@ -31,9 +31,56 @@ const styles = {
     color: '#757575',
     textDecoration: 'none',
   },
+  sidebarTitle: {
+    display: 'block',
+    padding: '0px',
+    color: '#757575',
+    textDecoration: 'none',
+    fontSize: '0.8em',
+    borderBottom: '1px solid black',
+    textAlign: 'left',
+    marginTop: '0.1em'
+  },
+  sidebarBlocks: {
+    textAlign: 'right',
+    marginTop: '0px',
+    marginBottom: '0px',
+  },
+  sideBarBalance: {
+    textAlign: 'right',
+    marginTop: '0px',
+    marginBottom: '0px',
+  },
   active: {
     color: 'black',
     textDecoration: 'none',
+  },
+  wellBalance: {
+    width: 'auto',
+    fontWeight: 'bold',
+    //font-family: $inconsolata;
+    fontSize: '1.2rem',
+    backgroundColor:'#e9f8fe',
+    padding: '5px 5px',
+    margin: '20px 0 0 0',
+    border: '2px solid #cacfd6',
+    textAlign: 'center',
+    color: '#0c1e3e',
+    boxShadow: 'none!important',
+  },
+  wellBlocks: {
+    width: 'auto',
+    fontWeight: 'bold',
+    //font-family: $inconsolata;
+    fontSize: '1.2rem',
+    backgroundColor:'#e9f8fe',
+    padding: '5px 5px',
+    marginTop: '0px',
+    border: '2px solid #cacfd6',
+    borderTop: '0px',
+    textAlign: 'center',
+    color: '#0c1e3e',
+    boxShadow: 'none!important',
   },
   pushToBottom: {
     position: 'relative',
@@ -52,10 +99,18 @@ class SideBar extends Component {
       <Link to="/send" style={styles.sidebarLink} activeStyle={styles.active}>Send Decred</Link>
       <Link to="/receive" style={styles.sidebarLink} activeStyle={styles.active}>Receive Decred</Link>
       <div style={styles.pushToBottom}>
-        {getBalanceResponse === null ? 'Please refresh' :
-          <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
-          amount={getBalanceResponse.getTotal()} /> }<span style={styles.small}> DCR</span>
-        <p>{getAccountsResponse === null ? '""' : getAccountsResponse.getCurrentBlockHeight() }</p>
+        <div style={styles.wellBalance}>
+          <p style={styles.sidebarTitle}>Balance:</p>
+          <p style={styles.sidebarBalance}>
+            {getBalanceResponse === null ? 'Please refresh' :
+              <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
+              amount={getBalanceResponse.getTotal()} /> }<span style={styles.small}> DCR</span>
+          </p>
+        </div>
+        <div style={styles.wellBlocks}>
+          <p style={styles.sidebarTitle}>Block Height:</p>
+          <p style={styles.sidebarBlocks}>{getAccountsResponse === null ? '""' : getAccountsResponse.getCurrentBlockHeight() }</p>
+        </div>
       </div>
     </div>
     );
