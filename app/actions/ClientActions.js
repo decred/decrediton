@@ -178,7 +178,10 @@ export const GETPING_FAILED = 'GETPING_FAILED';
 export const GETPING_SUCCESS = 'GETPING_SUCCESS';
 
 function getPingError(error) {
-  return { error, type: GETPING_FAILED };
+  return (dispatch) => {
+    dispatch({error, type: GETPING_FAILED });
+    setTimeout(() => {hashHistory.push('/walletError');}, 1000);
+  }
 }
 
 function getPingSuccess(getPingResponse) {
