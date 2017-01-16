@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 
 const styles = {
   topBar: {
     position: 'absolute',
     top:'0px',
-    right: '0px', 
+    right: '0px',
     left:'0px',
     height: '70px',
-    backgroundColor: "#132f4b",
-    color: "white",
+    backgroundColor: '#132f4b',
+    color: 'white',
   },
   title: {
     marginTop: '23px',

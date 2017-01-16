@@ -12,14 +12,14 @@ const styles = {
   body: {
     height: '100%'
   },
-  content: { 
+  content: {
     position: 'absolute',
     top: '70px',
     left: '202px',
     bottom: '0px',
     right: '0px',
   },
-}
+};
 
 class Send extends Component{
   static propTypes = {

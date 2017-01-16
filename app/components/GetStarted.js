@@ -8,7 +8,6 @@ import LinearProgress from 'material-ui/LinearProgress';
 import Dialog from 'material-ui/Dialog';
 import ShowError from './ShowError';
 import Header from './Header';
-import SideBar from './SideBar';
 import Footer from './Footer';
 import Radium from 'radium';
 
@@ -27,21 +26,21 @@ const styles = {
   pageWrap: {
     minHeight: '100%',
     /* equal to footer height */
-    marginBottom: '-142px', 
-    
- 
+    marginBottom: '-142px',
+
+
     ':after': {
       content: '',
       display: 'block',
     },
   },
-  header: { 
+  header: {
     border:'1px solid #000',
-    width:'100px', 
-    height:'20px', 
+    width:'100px',
+    height:'20px',
     margin:'0 0 5px 0',
   },
-  content: { 
+  content: {
     position: 'absolute',
     top: '78px',
     left: '0px',

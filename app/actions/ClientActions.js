@@ -181,14 +181,14 @@ function getPingError(error) {
   return (dispatch) => {
     dispatch({error, type: GETPING_FAILED });
     setTimeout(() => {hashHistory.push('/walletError');}, 1000);
-  }
+  };
 }
 
 function getPingSuccess(getPingResponse) {
   return (dispatch) => {
     setTimeout( () => {dispatch(getPingAttempt());}, 10000);
     dispatch({getPingResponse: getPingResponse, type: GETPING_SUCCESS });
-  }
+  };
 }
 
 export function getPingAttempt() {

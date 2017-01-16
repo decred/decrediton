@@ -47,7 +47,7 @@ const styles = {
   buttons: {
     margin: 12
   },
-  content: { 
+  content: {
     position: 'absolute',
     top: '70px',
     left: '202px',

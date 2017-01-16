@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Balance from './Balance';
 
@@ -20,7 +19,7 @@ const styles = {
   sideBar: {
     position: 'absolute',
     top:'70px',
-    bottom:'0px', 
+    bottom:'0px',
     left:'0px',
     width:'200px',
     background:'white',
