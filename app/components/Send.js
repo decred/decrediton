@@ -86,7 +86,7 @@ class Send extends Component{
       return (<ErrorScreen />);
     } else {
       return(
-        <div styles={styles.body}>
+        <div style={styles.body}>
           <Header />
           <SideBar />
           {sendView}
