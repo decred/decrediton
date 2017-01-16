@@ -1,63 +1,9 @@
 process.env['GRPC_SSL_CIPHER_SUITES'] = 'HIGH+ECDSA';
 
-import fs from 'fs';
-import path from 'path';
-
-import os from 'os';
 import grpc from 'grpc';
 
-import { getCfg } from '../../config.js';
+import { getCert } from '../../config.js';
 var services = require('../walletrpc/api_grpc_pb.js');
-
-export function getCert() {
-  var cert = '';
-  var cfg = getCfg();
-  if (cfg.cert_path != '') {
-    return(cfg.cert_path);
-  }
-  var certPath = '';
-  if (os.platform() == 'win32') {
-    certPath = path.join(process.env.LOCALAPPDATA, 'Decrediton', 'rpc.cert');
-  } else if (os.platform() == 'darwin') {
-    certPath = path.join(process.env.HOME, 'Library', 'Application Support',
-            'decrediton', 'rpc.cert');
-  } else {
-    certPath = path.join(process.env.HOME, '.config', 'decrediton', 'rpc.cert');
-  }
-
-  try {
-    cert = fs.readFileSync(certPath);
-  } catch (err) {
-    if (err.code === 'ENOENT') {
-      console.log(certPath + ' does not exist');
-    } else if (err.code === 'EACCES') {
-      console.log(certPath + ' permission denied');
-    } else {
-      console.error(certPath + ' ' + err);
-    }
-  }
-
-  return(cert);
-}
-
-export function getDcrdCert() {
-  var cfg = getCfg();
-  if (cfg.daemon_cert_path != '') {
-    return(cfg.daemon_cert_path);
-  }
-  var certPath = '';
-  if (os.platform() == 'win32') {
-    certPath = path.join(process.env.LOCALAPPDATA, 'Dcrd', 'rpc.cert');
-  } else if (os.platform() == 'darwin') {
-    certPath = path.join(process.env.HOME, 'Library', 'Application Support',
-            'Dcrd', 'rpc.cert');
-  } else {
-    certPath = path.join(process.env.HOME, '.dcrd', 'rpc.cert');
-  }
-
-  var cert = fs.readFileSync(certPath);
-  return(cert);
-}
 
 export function getWalletService(address, port, cb) {
   var cert = getCert();

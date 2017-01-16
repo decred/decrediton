@@ -1,4 +1,4 @@
-import { getCert } from './client';
+import { getCert } from '../../config.js';
 import grpc from 'grpc';
 var services = require('../walletrpc/api_grpc_pb.js');
 export function getVersionService(address, port, cb) {

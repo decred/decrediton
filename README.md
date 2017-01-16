@@ -110,6 +110,26 @@ Start decrediton
 npm run dev
 ```
 
+### Windows
+
+On windows you will need some extra steps to build grpc.  This assumes
+you are using msys2 with various development tools (copilers, make,
+ect) all installed.
+
+Install node from the official package https://nodejs.org/en/download/
+and add it to your msys2 path.
+
+Install openssl from the following site:
+https://slproweb.com/products/Win32OpenSSL.html
+
+From an admin shell:
+
+```bash
+npm install --global --production windows-build-tools
+```
+
+Then build grpc as described above.
+
 ## Building the package
 
 To build a packaged version of decrediton (including a dmg on OSX and
