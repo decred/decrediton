@@ -30,7 +30,7 @@ function getWalletServiceSuccess(walletService) {
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.
     setTimeout( () => {dispatch(transactionNftnsStart());}, 1000);
-    const { fetchHeadersResponse, walletCreateExisting } = getState().walletLoader;
+    const { walletCreateExisting } = getState().walletLoader;
     if ( walletCreateExisting ) {
       setTimeout(() => {dispatch(rescanAttempt(0));}, 1000);
     }
