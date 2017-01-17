@@ -4,8 +4,7 @@ import { loader, createWallet, walletExists, openWallet,
 import { getWalletServiceAttempt } from './ClientActions';
 import { getVersionServiceAttempt } from './VersionActions';
 import { getSeederAttempt } from './SeedServiceActions';
-import { getDcrdCert } from '../middleware/grpc/client';
-import { getCfg, getCfgPath } from '../config.js';
+import { getCfg, getCfgPath, getDcrdCert } from '../config.js';
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
   SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from '../middleware/walletrpc/api_pb';

@@ -1,5 +1,5 @@
 import { app, BrowserWindow, Menu, shell } from 'electron';
-import { getCfg } from './config.js';
+import { getCfg, appDataDirectory } from './config.js';
 import path from 'path';
 import os from 'os';
 
@@ -44,19 +44,6 @@ app.on('window-all-closed', () => {
   }
   app.quit();
 });
-
-function appDataDirectory() {
-  const path = require('path');
-  const os = require('os');
-
-  if (os.platform() == 'win32') {
-    return path.join(process.env.LOCALAPPDATA, 'Decrediton');
-  } else if (process.platform === 'darwin') {
-    return path.join(os.homedir(), 'Library','Application Support','decrediton');
-  } else {
-    return path.join(os.homedir(),'.config','decrediton');
-  }
-}
 
 function GRPCWalletPort() {
   if (cfg.network == 'mainnet') {
@@ -110,7 +97,7 @@ const launchDCRD = () => {
   if (debug) {
     console.log(`Starting dcrd with ${args}`);
   }
-  var dcrd = spawn(dcrdExe, args, { detached: true, stdio: [ 'ignore', 'pipe', 'pipe', 'pipe' ] });
+  var dcrd = spawn(dcrdExe, args, { detached: false, stdio: [ 'ignore', 'pipe', 'pipe', 'pipe' ] });
 
   dcrd.on('error', function (err) {
     console.log('error starting ' + dcrdExe + ': ' + path + err);
@@ -153,8 +140,11 @@ const launchDCRWallet = () => {
   args.push('--username=USER');
   args.push('--password=PASSWORD');
 
-  // The spawn() below opens a pipe on fd 4
-  args.push('--piperx=4');
+  if (os.platform() != 'win32') {
+    // The spawn() below opens a pipe on fd 4
+    // No luck getting this to work on win7.
+    args.push('--piperx=4');
+  }
 
   args.push('--appdata=' + appDataDirectory());
   args.push('--experimentalrpclisten=127.0.0.1:' + GRPCWalletPort());
@@ -165,7 +155,7 @@ const launchDCRWallet = () => {
   if (debug) {
     console.log(`Starting dcrwallet with ${args}`);
   }
-  var dcrwallet = spawn(dcrwExe, args, { detached: true, stdio: [ 'ignore', 'pipe', 'pipe', 'ignore', 'pipe'  ] });
+  var dcrwallet = spawn(dcrwExe, args, { detached: false, stdio: [ 'ignore', 'pipe', 'pipe', 'ignore', 'pipe'  ] });
 
   dcrwallet.on('error', function (err) {
     console.log('error starting ' + dcrwExe + ': ' + path + err);
