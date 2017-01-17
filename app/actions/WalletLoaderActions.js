@@ -348,16 +348,12 @@ function fetchHeadersFailed(error) {
 
 function fetchHeadersProgress(response) {
   return (dispatch, getState) => {
-    const { curBlocks, neededBlocks } = getState().walletLoader;
-    var newCurBlock = curBlocks + response.getFetchedHeadersCount();
-    if (curBlocks == 0) {
-      newCurBlock += response.getFirstNewBlockHeight();
-    }
-    if ( newCurBlock > neededBlocks ||
-    response.getFirstNewBlockHeight() + response.getFetchedHeadersCount() > neededBlocks ) {
+    const { neededBlocks } = getState().walletLoader;
+    var mainChainTipBlockHeight = response.getMainChainTipBlockHeight();
+    if ( mainChainTipBlockHeight > neededBlocks ) {
       dispatch(fetchHeadersSuccess(response));
     } else {
-      dispatch({curBlocks: newCurBlock, type: FETCHHEADERS_PROGRESS});
+      dispatch({type: FETCHHEADERS_PROGRESS});
       setTimeout( () => {dispatch(fetchHeadersAction());}, 1000);
     }
   };
