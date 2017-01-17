@@ -22,7 +22,7 @@ function getWalletServiceSuccess(walletService) {
     setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
     setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
     setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
-    //setTimeout( () => {dispatch(getPingAttempt());}, 1000);
+    setTimeout( () => {dispatch(getPingAttempt());}, 1000);
     setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
     //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
     setTimeout( () => {dispatch(getTransactionsAttempt(0, 300000, '', ''));}, 1000);
@@ -178,11 +178,17 @@ export const GETPING_FAILED = 'GETPING_FAILED';
 export const GETPING_SUCCESS = 'GETPING_SUCCESS';
 
 function getPingError(error) {
-  return { error, type: GETPING_FAILED };
+  return (dispatch) => {
+    dispatch({error, type: GETPING_FAILED });
+    setTimeout(() => {hashHistory.push('/walletError');}, 1000);
+  };
 }
 
 function getPingSuccess(getPingResponse) {
-  return { getPingResponse: getPingResponse, type: GETPING_SUCCESS };
+  return (dispatch) => {
+    setTimeout( () => {dispatch(getPingAttempt());}, 10000);
+    dispatch({getPingResponse: getPingResponse, type: GETPING_SUCCESS });
+  };
 }
 
 export function getPingAttempt() {

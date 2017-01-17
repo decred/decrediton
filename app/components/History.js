@@ -4,6 +4,39 @@ import {Table, TableBody, TableHeader, TableHeaderColumn,
   TableRow, TableRowColumn} from 'material-ui/Table';
 import ErrorScreen from './ErrorScreen';
 import { reverseHash } from '../helpers/byteActions';
+import SideBar from './SideBar';
+import Header from './Header';
+
+const styles = {
+  body: {
+    height: '100%'
+  },
+  pageWrap: {
+    minHeight: '100%',
+    /* equal to footer height */
+    marginBottom: '-142px',
+
+
+    ':after': {
+      content: '',
+      display: 'block',
+    },
+  },
+  header: {
+    border:'1px solid #000',
+    width:'100px',
+    height:'20px',
+    margin:'0 0 5px 0',
+  },
+  content: {
+    position: 'absolute',
+    top: '78px',
+    left: '202px',
+    bottom: '0px',
+    right: '0px',
+  },
+};
+
 class History extends Component{
   static propTypes = {
     walletService: PropTypes.object,
@@ -13,7 +46,7 @@ class History extends Component{
     const { walletService, transactions } = this.props;
 
     const historyView = (
-      <div>
+      <div style={styles.content}>
         <h1>History Page</h1>
         <Table fixedHeader={true} striped bordered condensed hover showCheckboxes={false} >
           <TableHeader displaySelectAll={false}>
@@ -41,7 +74,12 @@ class History extends Component{
     if (walletService === null) {
       return (<ErrorScreen />);
     } else {
-      return(historyView);
+      return(
+        <div style={styles.body}>
+          <Header />
+          <SideBar />
+          {historyView}
+        </div>);
     }
   }
 }

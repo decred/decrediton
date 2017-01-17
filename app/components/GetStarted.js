@@ -7,6 +7,10 @@ import CircularProgress from 'material-ui/CircularProgress';
 import LinearProgress from 'material-ui/LinearProgress';
 import Dialog from 'material-ui/Dialog';
 import ShowError from './ShowError';
+import Header from './Header';
+import Footer from './Footer';
+import Radium from 'radium';
+
 import {
   Step,
   Stepper,
@@ -15,6 +19,35 @@ import {
 } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
 
+const styles = {
+  body: {
+    height: '100%'
+  },
+  pageWrap: {
+    minHeight: '100%',
+    /* equal to footer height */
+    marginBottom: '-142px',
+
+
+    ':after': {
+      content: '',
+      display: 'block',
+    },
+  },
+  header: {
+    border:'1px solid #000',
+    width:'100px',
+    height:'20px',
+    margin:'0 0 5px 0',
+  },
+  content: {
+    position: 'absolute',
+    top: '78px',
+    left: '0px',
+    bottom: '0px',
+    right: '0px',
+  },
+};
 
 class Home extends Component{
 
@@ -247,7 +280,7 @@ class Home extends Component{
     }
 
     const stepper = (
-      <div style={{width: '100%',  margin: 'auto'}}>
+      <div style={styles.content}>
         <Stepper activeStep={stepIndex} orientation="vertical">
           <Step>
             <StepLabel>Get Wallet Loader Service</StepLabel>
@@ -322,7 +355,14 @@ class Home extends Component{
         </div>);
     } else {
       if (!versionInvalid) {
-        return (stepper);
+        return (
+          <div style={styles.body}>
+            <div style={styles.pageWrap}>
+              <Header />
+              {stepper}
+            </div>
+            <Footer />
+          </div>);
       } else {
         return (<ShowError error={versionInvalidError}/>);
       }
@@ -331,4 +371,4 @@ class Home extends Component{
   }
 }
 
-export default Home;
+export default Radium(Home);
