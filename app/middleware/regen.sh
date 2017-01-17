@@ -1,0 +1,1 @@
+protoc --js_out=import_style=commonjs,binary:./walletrpc --grpc_out=./walletrpc --plugin=protoc-gen-grpc=$(which grpc_node_plugin) ./api.proto

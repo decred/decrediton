@@ -8743,7 +8743,8 @@ proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.toObject
 proto.walletrpc.ConstructTransactionRequest.OutputDestination.toObject = function(includeInstance, msg) {
   var f, obj = {
     address: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    script: msg.getScript_asB64()
+    script: msg.getScript_asB64(),
+    scriptVersion: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -8787,6 +8788,10 @@ proto.walletrpc.ConstructTransactionRequest.OutputDestination.deserializeBinaryF
     case 2:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setScript(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setScriptVersion(value);
       break;
     default:
       reader.skipField();
@@ -8837,6 +8842,13 @@ proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.serializ
   if (f.length > 0) {
     writer.writeBytes(
       2,
+      f
+    );
+  }
+  f = this.getScriptVersion();
+  if (f !== 0) {
+    writer.writeUint32(
+      3,
       f
     );
   }
@@ -8894,6 +8906,21 @@ proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.getScrip
 /** @param {!(string|Uint8Array)} value */
 proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.setScript = function(value) {
   jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional uint32 script_version = 3;
+ * @return {number}
+ */
+proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.getScriptVersion = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.setScriptVersion = function(value) {
+  jspb.Message.setField(this, 3, value);
 };
 
 
@@ -14986,7 +15013,9 @@ proto.walletrpc.FetchHeadersResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     fetchedHeadersCount: jspb.Message.getFieldWithDefault(msg, 1, 0),
     firstNewBlockHash: msg.getFirstNewBlockHash_asB64(),
-    firstNewBlockHeight: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    firstNewBlockHeight: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    mainChainTipBlockHash: msg.getMainChainTipBlockHash_asB64(),
+    mainChainTipBlockHeight: jspb.Message.getFieldWithDefault(msg, 5, 0)
   };
 
   if (includeInstance) {
@@ -15034,6 +15063,14 @@ proto.walletrpc.FetchHeadersResponse.deserializeBinaryFromReader = function(msg,
     case 3:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setFirstNewBlockHeight(value);
+      break;
+    case 4:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setMainChainTipBlockHash(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setMainChainTipBlockHeight(value);
       break;
     default:
       reader.skipField();
@@ -15091,6 +15128,20 @@ proto.walletrpc.FetchHeadersResponse.prototype.serializeBinaryToWriter = functio
   if (f !== 0) {
     writer.writeInt32(
       3,
+      f
+    );
+  }
+  f = this.getMainChainTipBlockHash_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      4,
+      f
+    );
+  }
+  f = this.getMainChainTipBlockHeight();
+  if (f !== 0) {
+    writer.writeInt32(
+      5,
       f
     );
   }
@@ -15163,6 +15214,60 @@ proto.walletrpc.FetchHeadersResponse.prototype.getFirstNewBlockHeight = function
 /** @param {number} value */
 proto.walletrpc.FetchHeadersResponse.prototype.setFirstNewBlockHeight = function(value) {
   jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional bytes main_chain_tip_block_hash = 4;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.FetchHeadersResponse.prototype.getMainChainTipBlockHash = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * optional bytes main_chain_tip_block_hash = 4;
+ * This is a type-conversion wrapper around `getMainChainTipBlockHash()`
+ * @return {string}
+ */
+proto.walletrpc.FetchHeadersResponse.prototype.getMainChainTipBlockHash_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getMainChainTipBlockHash()));
+};
+
+
+/**
+ * optional bytes main_chain_tip_block_hash = 4;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getMainChainTipBlockHash()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.FetchHeadersResponse.prototype.getMainChainTipBlockHash_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getMainChainTipBlockHash()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.FetchHeadersResponse.prototype.setMainChainTipBlockHash = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional int32 main_chain_tip_block_height = 5;
+ * @return {number}
+ */
+proto.walletrpc.FetchHeadersResponse.prototype.getMainChainTipBlockHeight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.FetchHeadersResponse.prototype.setMainChainTipBlockHeight = function(value) {
+  jspb.Message.setField(this, 5, value);
 };
 
 
