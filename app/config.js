@@ -54,6 +54,10 @@ export function getCfgPath() {
   return config.path;
 }
 
+// In all the functions below the Windows path is constructed based on
+// os.homedir() rather than using process.env.LOCALAPPDATA because in my tests
+// that was available when using the standalone node but not there when using
+// electron in production mode.
 export function appDataDirectory() {
   const path = require('path');
   const os = require('os');
