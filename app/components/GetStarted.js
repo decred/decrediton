@@ -86,7 +86,7 @@ class Home extends Component{
   }
 
   render() {
-    const { curBlocks, neededBlocks } = this.props;
+    const { fetchHeadersResponse, neededBlocks } = this.props;
     const { stepIndex } = this.props;
     const { disclaimerOK } = this.props;
     const { versionInvalid, versionInvalidError } = this.props;
@@ -180,10 +180,11 @@ class Home extends Component{
     }
     const getStartedDiscoverAddress = (discoveringAddresses);
 
-    var ibdBlockProgress;
-    ibdBlockProgress = (curBlocks / neededBlocks) * 100;
-    ibdBlockProgress = ibdBlockProgress.toFixed(2);
-
+    var ibdBlockProgress = 0.00;
+    if (fetchHeadersResponse !== null) {
+      ibdBlockProgress = (fetchHeadersResponse.getMainChainTipBlockHeight() / neededBlocks) * 100;
+      ibdBlockProgress = ibdBlockProgress.toFixed(2);
+    }
     var fetchingHeaders;
     if (fetchHeadersRequestAttempt) {
       fetchingHeaders = (
@@ -191,7 +192,7 @@ class Home extends Component{
           <LinearProgress mode="determinate"
             min={0}
             max={neededBlocks}
-            value={curBlocks} />
+            value={fetchHeadersResponse !== null ? fetchHeadersResponse.getMainChainTipBlockHeight() : 0.0} />
           <p>{ibdBlockProgress}%</p>
         </div>
       );

@@ -353,7 +353,7 @@ function fetchHeadersProgress(response) {
     if ( mainChainTipBlockHeight > neededBlocks ) {
       dispatch(fetchHeadersSuccess(response));
     } else {
-      dispatch({type: FETCHHEADERS_PROGRESS});
+      dispatch({response: response, type: FETCHHEADERS_PROGRESS});
       setTimeout( () => {dispatch(fetchHeadersAction());}, 1000);
     }
   };
