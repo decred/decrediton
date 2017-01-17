@@ -161,7 +161,7 @@ export default function walletLoader(state = {}, action) {
     };
   case FETCHHEADERS_PROGRESS:
     return {...state,
-      curBlocks: action.curBlocks,
+      fetchHeadersResponse: action.response,
     };
   case FETCHHEADERS_SUCCESS:
     return {...state,
