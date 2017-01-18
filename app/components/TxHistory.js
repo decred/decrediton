@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { reverseHash } from '../helpers/byteActions';
-import SvgSprite from 'react-svg-sprite';
 
 const styles = {
   historyContainer: {
