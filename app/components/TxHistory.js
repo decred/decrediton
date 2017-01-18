@@ -61,7 +61,9 @@ class TxHistory extends Component {
             <div style={styles.transactionRow} key={i}>
               <svg style={styles.plusMinusIcon} ><use xlinkHref="./sprites.svg#sent"></use></svg>
               <span style={styles.txAmount}>{tx.transaction.getMinedTransactions().getHeight()}</span>
-              <span style={styles.txDateSince}>{diffDays} Days Since<span style={styles.txArrow}>></span></span>
+              <span style={styles.txDateSince}>{diffDays} Days Since
+                <svg style={styles.txArrow} ><use xlinkHref="./sprites.svg#left-arrow"></use></svg>
+                </span>
             </div>);
           })}
       </div>);
