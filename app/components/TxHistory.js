@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { reverseHash } from '../helpers/byteActions';
+import SvgSprite from 'react-svg-sprite';
 
 const styles = {
   historyContainer: {
@@ -26,7 +27,6 @@ const styles = {
     width: '16.5px',
     margin: '0 15px',
     verticalAlign: 'middle',
-    backgroundColor: 'green',
   },
   txAmount: {
     fontSize:'1.0rem',
@@ -59,7 +59,7 @@ class TxHistory extends Component {
         var reversed = reverseHash(s);
         return (
             <div style={styles.transactionRow} key={i}>
-              <span style={styles.plusMinusIcon}>+/-</span>
+              <svg style={styles.plusMinusIcon} ><use xlinkHref="./sprites.svg#sent"></use></svg>
               <span style={styles.txAmount}>{tx.transaction.getMinedTransactions().getHeight()}</span>
               <span style={styles.txDateSince}>{diffDays} Days Since<span style={styles.txArrow}>></span></span>
             </div>);
