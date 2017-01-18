@@ -110,7 +110,7 @@ class Home extends Component{
         <div style={styles.well}>
           {getBalanceResponse === null ? 'Please refresh' :
           <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
-          amount={getBalanceResponse.getTotal()} /> }<span style={styles.small}> DCR</span>
+          amount={getBalanceResponse.getTotal()} /> }
 				</div>
         <div style={styles.center}>
           <div style={styles.header}>

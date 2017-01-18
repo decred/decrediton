@@ -4,6 +4,7 @@ import ErrorScreen from './ErrorScreen';
 import SideBar from './SideBar';
 import Header from './Header';
 import TxHistory from './TxHistory';
+import Balance from './Balance';
 
 const styles = {
   body: {
@@ -33,6 +34,20 @@ const styles = {
     bottom: '0px',
     right: '0px',
   },
+  well: {
+    width: 'auto',
+    fontWeight: 'bold',
+    //font-family: $inconsolata;
+    fontSize: '1.2rem',
+    backgroundColor:'#e9f8fe',
+    padding: '5px 5px',
+    margin: '20px 0 15px 0',
+    border: '2px solid #cacfd6',
+    borderRadius: '2px',
+    textAlign: 'center',
+    color: '#0c1e3e',
+    boxShadow: 'none!important',
+  },
 };
 
 class History extends Component{
@@ -41,10 +56,16 @@ class History extends Component{
   };
 
   render() {
-    const { walletService, transactions } = this.props;
+    const { walletService, transactions, getBalanceResponse, getBalanceRequestAttempt } = this.props;
 
     const historyView = (
       <div style={styles.content}>
+        <h3>Available Balance:</h3>
+        <div style={styles.well}>
+          {getBalanceResponse === null ? 'Please refresh' :
+              <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
+              amount={getBalanceResponse.getTotal()} /> }
+        </div>
         <TxHistory transactions={transactions}/>
       </div>);
     if (walletService === null) {
