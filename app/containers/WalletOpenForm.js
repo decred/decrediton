@@ -25,6 +25,7 @@ let WalletOpenForm = ({ dispatch }) => {
         pubpass = '';
       }}>
         <TextField
+          type="password"
           id="pubpass"
           hintText="Public Password"
           floatingLabelText="Public Password"

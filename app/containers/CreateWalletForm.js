@@ -25,12 +25,14 @@ let CreateWalletForm = ({ dispatch, seedText }) => {
         privpass = '';
       }}>
         <TextField
+          type="password"
           id="pubpass1"
           hintText="Public Password"
           floatingLabelText="Public Password"
           onBlur={(e) =>{pubpass = e.target.value;}}
         /><br />
         <TextField
+          type="password"
           id="privpass1"
           hintText="Private Password"
           floatingLabelText="Private Password"
@@ -63,12 +65,14 @@ let CreateWalletForm = ({ dispatch, seedText }) => {
         seed = '';
       }}>
         <TextField
+          type="password"
           id="pubpass"
           hintText="Public Password"
           floatingLabelText="Public Password"
           onBlur={(e) =>{pubpass = e.target.value;}}
         /><br />
         <TextField
+          type="password"
           id="privpass"
           hintText="Private Password"
           floatingLabelText="Private Password"
