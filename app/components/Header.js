@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+var Icon = require('babel!svg-react!../sprites.svg?name=logo');
 
 const styles = {
   topBar: {
@@ -27,7 +28,7 @@ class Header extends Component {
   render() {
     return (
       <div style={styles.topBar}>
-        <svg style={styles.logo}><use xlinkHref="./sprites.svg#logo"></use></svg>
+        <Icon style={styles.logo} />
       </div>);
   }
 }

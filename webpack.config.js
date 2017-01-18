@@ -19,7 +19,10 @@ var config = {
         'css-loader?sourceMap'
       ]
     },
-
+    { 
+      test: /\.svg$/, 
+      loader: 'babel?presets[]=es2015,presets[]=react!svg-react' 
+    },
     {
       test: /^((?!\.global).)*\.css$/,
       loaders: [
