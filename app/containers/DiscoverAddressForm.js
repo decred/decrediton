@@ -25,6 +25,7 @@ let DiscoverAddressForm = ({ dispatch }) => {
         privpass = '';
       }}>
         <TextField
+          type="password"
           id="privpass"
           hintText="Private Password"
           floatingLabelText="Private Password"
