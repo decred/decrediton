@@ -50,10 +50,21 @@ function getWalletRPCVersionSuccess(getWalletRPCVersionResponse) {
     dispatch( { getWalletRPCVersionResponse: getWalletRPCVersionResponse, type: WALLETRPCVERSION_SUCCESS });
     const { address, port } = getState().grpc;
     const { requiredVersion } = getState().version;
-    if (requiredVersion != getWalletRPCVersionResponse.getVersionString()) {
-      var versionErr = 'Version not valid! got: ' + getWalletRPCVersionResponse.getVersionString() + ' expected: ' + requiredVersion +
-      '. Please change dcrwallet to expected version.';
-      dispatch( { error: versionErr, type: VERSION_NOT_VALID });
+    var versionErr = '';
+
+    if (!getWalletRPCVersionResponse.getVersionString()) {
+      versionErr = 'Unable to obtain Dcrwallet API version';
+    } else {
+      if (!semverCompatible(requiredVersion, getWalletRPCVersionResponse.getVersionString())) {
+        versionErr = 'API versions not compatible..  Decrediton requires '
+          + requiredVersion + ' but wallet ' + getWalletRPCVersionResponse.getVersionString()
+          + ' does not satisfy the requirement. Please check your'
+          + ' installation, Decrediton and Dcrwallet versions should match.';
+      }
+    }
+
+    if (versionErr) {
+      dispatch({error: versionErr, type: VERSION_NOT_VALID});
     } else {
       dispatch(loaderRequest(address,port));
     }
@@ -82,4 +93,31 @@ function getWalletRPCVersionAction() {
           }
         });
   };
+}
+
+function semverCompatible(req, act) {
+  var required = req.split('.'), actual = act.split('.');
+
+  var version = {
+    MAJOR: 0,
+    MINOR: 1,
+    PATCH: 2,
+  };
+
+  if (required.length != 3 || actual.length != 3) {
+    return false;
+  }
+
+  if (required[version.MAJOR] != actual[version.MAJOR]) {
+    return false;
+  }
+  if (required[version.MINOR] > actual[version.MINOR]) {
+    return false;
+  }
+  if (required[version.MINOR] == actual[version.MINOR]
+   && required[version.PATCH] > actual[version.PATCH]) {
+    return false;
+  }
+
+  return true;
 }
