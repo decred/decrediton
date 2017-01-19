@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { reverseHash } from '../helpers/byteActions';
+//import { reverseHash } from '../helpers/byteActions';
 import Sent from './icons/Sent';
-import Receive from './icons/Receive';
 import LeftArrow from './icons/LeftArrow';
 
 const styles = {
@@ -16,7 +15,6 @@ const styles = {
     borderBottom: '1px solid #e2e2e2',
     fontSize: '2.25rem',
     fontWeight: '600',
-    padding: '0',
     backgroundColor: '#ffffff',
     width: '100%',
     float: 'left',
@@ -51,21 +49,21 @@ class TxHistory extends Component {
     return (
       <div style={styles.historyContainer}>
         {transactions.map(function(tx, i) {
-        var parseDate = new Date(tx.transaction.getMinedTransactions().getTimestamp()*1000);
-        var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
-        var s = Buffer.from(tx.transaction.getMinedTransactions().getTransactionsList()[0].getHash()).toString('hex');
-        var reversed = reverseHash(s);
-        return (
+          var parseDate = new Date(tx.transaction.getMinedTransactions().getTimestamp()*1000);
+          var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
+          //var s = Buffer.from(tx.transaction.getMinedTransactions().getTransactionsList()[0].getHash()).toString('hex');
+          //var reversed = reverseHash(s);
+          return (
             <div style={styles.transactionRow} key={i}>
               <Sent />
               <span style={styles.txAmount}>{tx.transaction.getMinedTransactions().getHeight()}</span>
               <span style={styles.txDateSince}>{diffDays} Days Since
-                <LeftArrow />  
+                <LeftArrow />
               </span>
             </div>);
-          })}
+        })}
       </div>);
   }
 }
 
-export default TxHistory; 
+export default TxHistory;
