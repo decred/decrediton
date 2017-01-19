@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-var Icon = require('babel!svg-react!../sprites.svg?name=logo');
+import DecredLogo from './icons/DecredLogo';
 
 const styles = {
   topBar: {
@@ -28,7 +28,7 @@ class Header extends Component {
   render() {
     return (
       <div style={styles.topBar}>
-        <Icon style={styles.logo} />
+        <DecredLogo />
       </div>);
   }
 }
