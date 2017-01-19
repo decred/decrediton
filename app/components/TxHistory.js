@@ -47,6 +47,9 @@ class TxHistory extends Component {
     const transactions = this.props.transactions;
     var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
     var today = new Date();
+    transactions.sort(function(a, b) {
+      return b.transaction.getMinedTransactions().getTimestamp() - a.transaction.getMinedTransactions().getTimestamp();
+    });
     return (
       <div style={styles.historyContainer}>
         {transactions.map(function(tx, i) {
