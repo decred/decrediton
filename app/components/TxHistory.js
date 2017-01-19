@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { reverseHash } from '../helpers/byteActions';
+import Sent from './icons/Sent';
+import Receive from './icons/Receive';
+import LeftArrow from './icons/LeftArrow';
 
 const styles = {
   historyContainer: {
@@ -20,12 +23,6 @@ const styles = {
     position: 'relative',
     minHeight: '1px',
     boxSizing: 'border-box',
-  },
-  plusMinusIcon: {
-    height: '16.5px',
-    width: '16.5px',
-    margin: '0 15px',
-    verticalAlign: 'middle',
   },
   txAmount: {
     fontSize:'1.0rem',
@@ -58,11 +55,11 @@ class TxHistory extends Component {
         var reversed = reverseHash(s);
         return (
             <div style={styles.transactionRow} key={i}>
-              <svg style={styles.plusMinusIcon} ><use xlinkHref="./sprites.svg#sent"></use></svg>
+              <Sent />
               <span style={styles.txAmount}>{tx.transaction.getMinedTransactions().getHeight()}</span>
               <span style={styles.txDateSince}>{diffDays} Days Since
-                <svg style={styles.txArrow} ><use xlinkHref="./sprites.svg#left-arrow"></use></svg>
-                </span>
+                <LeftArrow />  
+              </span>
             </div>);
           })}
       </div>);
