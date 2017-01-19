@@ -923,7 +923,7 @@ proto.walletrpc.TransactionDetails.Output.toObject = function(includeInstance, m
     account: jspb.Message.getFieldWithDefault(msg, 2, 0),
     internal: jspb.Message.getFieldWithDefault(msg, 3, false),
     amount: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    fromAddress: msg.getFromAddress_asB64()
+    address: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
   if (includeInstance) {
@@ -977,8 +977,8 @@ proto.walletrpc.TransactionDetails.Output.deserializeBinaryFromReader = function
       msg.setAmount(value);
       break;
     case 5:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setFromAddress(value);
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAddress(value);
       break;
     default:
       reader.skipField();
@@ -1036,9 +1036,9 @@ proto.walletrpc.TransactionDetails.Output.serializeBinaryToWriter = function(mes
       f
     );
   }
-  f = message.getFromAddress_asU8();
+  f = message.getAddress();
   if (f.length > 0) {
-    writer.writeBytes(
+    writer.writeString(
       5,
       f
     );
@@ -1109,40 +1109,16 @@ proto.walletrpc.TransactionDetails.Output.prototype.setAmount = function(value) 
 
 
 /**
- * optional bytes from_address = 5;
- * @return {!(string|Uint8Array)}
- */
-proto.walletrpc.TransactionDetails.Output.prototype.getFromAddress = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
-};
-
-
-/**
- * optional bytes from_address = 5;
- * This is a type-conversion wrapper around `getFromAddress()`
+ * optional string address = 5;
  * @return {string}
  */
-proto.walletrpc.TransactionDetails.Output.prototype.getFromAddress_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getFromAddress()));
+proto.walletrpc.TransactionDetails.Output.prototype.getAddress = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
 
-/**
- * optional bytes from_address = 5;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getFromAddress()`
- * @return {!Uint8Array}
- */
-proto.walletrpc.TransactionDetails.Output.prototype.getFromAddress_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getFromAddress()));
-};
-
-
-/** @param {!(string|Uint8Array)} value */
-proto.walletrpc.TransactionDetails.Output.prototype.setFromAddress = function(value) {
+/** @param {string} value */
+proto.walletrpc.TransactionDetails.Output.prototype.setAddress = function(value) {
   jspb.Message.setField(this, 5, value);
 };
 
