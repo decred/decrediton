@@ -335,6 +335,15 @@ function getTransactionsError(error) {
 }
 
 function getTransactionsProgress(getTransactionsResponse) {
+  var txInput = getTransactionsResponse.getMinedTransactions().getTransactionsList()[0].getDebitsList();
+  var txOutput = getTransactionsResponse.getMinedTransactions().getTransactionsList()[0].getCreditsList();
+
+  if (txInput.length > 0) {
+    console.log('input', txInput[0].getIndex(), txInput[0].getPreviousAccount(), txInput[0].getPreviousAmount());
+  }
+  if (txOutput.length > 0) {
+    console.log('output', txOutput[0].getIndex(), txOutput[0].getAccount(), txOutput[0].getInternal(), txOutput[0].getFromAddress(), txOutput[0].getAmount());
+  }
   return { getTransactionsResponse: getTransactionsResponse, type: GETTRANSACTIONS_PROGRESS };
 }
 
