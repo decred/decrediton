@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ErrorScreen from './ErrorScreen';
 import Button from './ButtonTanel';
 import SideBar from './SideBar';
+import qr from 'qr-image';
 
 const styles = {
   body: {
@@ -34,11 +35,10 @@ const styles = {
     alignItems: 'center',
   },
   img: {
-    width: '20%',
+    width: '30%',
     height: '150px',
     margin: '25px 0 50px 0',
     marginLeft: '40%',
-    backgroundColor: 'black',
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -69,6 +69,16 @@ const styles = {
   },
 };
 
+class QRCode extends Component {
+  static propTypes = {
+    addr: PropTypes.string.isRequired
+  };
+  render() {
+    const qr_img = qr.imageSync('decred:'+this.props.addr, {type: 'svg'});
+    return (<div style={styles.img} dangerouslySetInnerHTML={{__html:qr_img}}></div>);
+  }
+}
+
 class Receive extends Component{
   static propTypes = {
     walletService: PropTypes.object,
@@ -88,10 +98,10 @@ class Receive extends Component{
 					</div>
 				</div>
         <div style={styles.center}>
-          <div style={styles.img}>QR CODE</div>
-					<div style={styles.well}>
+	<QRCode addr={getNextAddressResponse.getAddress()}/>
+	<div style={styles.well}>
 						<p>{getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.getAddress() } </p>
-          </div>
+      </div>
           <div style={styles.center}>
 						<p>Share this wallet address to receive payments, To protect your privacy, new addresses are generated automatically once you use them.</p>
 					</div>
