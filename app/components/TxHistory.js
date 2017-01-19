@@ -25,12 +25,14 @@ const styles = {
     boxSizing: 'border-box',
   },
   txAmount: {
+    position: 'absolute',
+    paddingTop: '16px',
     fontSize:'1.0rem',
   },
   txDateSince: {
     float: 'right',
-    paddingTop: '6px',
-    fontSize: '1.1rem',
+    paddingTop: '16px',
+    fontSize: '1.0rem',
     fontWeight: 'normal',
   },
   txArrow: {
