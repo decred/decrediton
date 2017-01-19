@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 //import { reverseHash } from '../helpers/byteActions';
 import Sent from './icons/Sent';
+import Receive from './icons/Receive';
 import LeftArrow from './icons/LeftArrow';
-
+import Balance from './Balance';
 const styles = {
   historyContainer: {
     width: '100%',
@@ -53,6 +54,20 @@ class TxHistory extends Component {
           var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
           //var s = Buffer.from(tx.transaction.getMinedTransactions().getTransactionsList()[0].getHash()).toString('hex');
           //var reversed = reverseHash(s);
+          var credits = tx.transaction.getMinedTransactions().getTransactionsList()[0].getCreditsList();
+          var debits = tx.transaction.getMinedTransactions().getTransactionsList()[0].getDebitsList();
+          if (debits.length == 0) {
+            var txAmount = credits[0].getAmount();
+            console.log("heereR", txAmount.toString(), i);
+            return (
+            <div style={styles.transactionRow} key={i}>
+              <Receive />
+              <span style={styles.txAmount}><Balance amount={txAmount} /></span>
+              <span style={styles.txDateSince}>{diffDays} Days Since
+                <LeftArrow />
+              </span>
+            </div>);
+          }
           return (
             <div style={styles.transactionRow} key={i}>
               <Sent />

@@ -8,7 +8,7 @@ export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
 import { hashHistory } from 'react-router';
 import { PingRequest, NetworkRequest, AccountNumberRequest,AccountsRequest,
 BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest } from '../middleware/walletrpc/api_pb';
-
+import { reverseHash } from '../helpers/byteActions';
 function getWalletServiceError(error) {
   return { error, type: GETWALLETSERVICE_FAILED };
 }
@@ -344,6 +344,10 @@ function getTransactionsProgress(getTransactionsResponse) {
   if (txOutput.length > 0) {
     console.log('output', txOutput[0].getAddress(), txOutput[0].getAmount());
   }
+  var s = Buffer.from(getTransactionsResponse.getMinedTransactions().getTransactionsList()[0].getHash()).toString('hex');
+  var reversed = reverseHash(s);
+
+  console.log(reversed)
   return { getTransactionsResponse: getTransactionsResponse, type: GETTRANSACTIONS_PROGRESS };
 }
 
