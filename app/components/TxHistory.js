@@ -57,7 +57,10 @@ class TxHistory extends Component {
           var credits = tx.transaction.getMinedTransactions().getTransactionsList()[0].getCreditsList();
           var debits = tx.transaction.getMinedTransactions().getTransactionsList()[0].getDebitsList();
           if (debits.length == 0) {
-            var txAmount = credits[0].getAmount();
+            var txAmount = 0;
+            for(var k = 0; k < credits.length; k++){
+              txAmount += credits[k].getAmount();
+            }
             return (
             <div style={styles.transactionRow} key={i}>
               <Receive />
@@ -67,13 +70,20 @@ class TxHistory extends Component {
               </span>
             </div>);
           } else {
-            var returnedAmount = credits[0].getAmount();
-            var prevAmount = debits[0].getPreviousAmount();
+            var prevAmount = 0;
+            var txAmount = 0;
+            var returnedAmount = 0;
+            for(var k = 0; k < credits.length; k++){
+              returnedAmount += credits[k].getAmount();
+            }
+            for(var k = 0; k < debits.length; k++){
+              prevAmount += debits[k].getPreviousAmount();
+            }
             var txAmount = prevAmount - returnedAmount;
             return (
               <div style={styles.transactionRow} key={i}>
                 <Sent />
-                <span style={styles.txAmount}><Balance amount={txAmount} /></span>
+                <span style={styles.txAmount}>-<Balance amount={txAmount} /></span>
                 <span style={styles.txDateSince}>{diffDays} Days Since
                   <LeftArrow />
                 </span>
