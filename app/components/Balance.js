@@ -29,6 +29,7 @@ class Balance extends React.Component {
       >
         {numberFormatPart[0]}.{numberFormatPart[1].toString().slice(0,2)}
         <span style={styles.small}>{numberFormatPart[1].toString().slice(2)}</span>
+        <span style={styles.small}> DCR</span>
       </span>
     );
   }

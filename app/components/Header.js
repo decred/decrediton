@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import DecredLogo from './icons/DecredLogo';
 
 const styles = {
   topBar: {
@@ -16,13 +17,18 @@ const styles = {
     position: 'absolute',
     fontSize: '1.5em',
   },
+  logo: {
+    width: '149.5px',
+    height: '28px',
+    margin: '18px 25px',
+  }
 };
 
 class Header extends Component {
   render() {
     return (
       <div style={styles.topBar}>
-        <p style={styles.title}>Decred-Preview</p>
+        <DecredLogo />
       </div>);
   }
 }

@@ -6,6 +6,8 @@ function mapStateToProps(state) {
   return {
     walletService: state.grpc.walletService,
     transactions: state.grpc.transactions,
+    getBalanceResponse: state.grpc.getBalanceResponse,
+    getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
   };
 }
 

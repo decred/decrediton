@@ -19,7 +19,6 @@ var config = {
         'css-loader?sourceMap'
       ]
     },
-
     {
       test: /^((?!\.global).)*\.css$/,
       loaders: [

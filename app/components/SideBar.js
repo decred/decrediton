@@ -104,7 +104,7 @@ class SideBar extends Component {
           <p style={styles.sidebarBalance}>
             {getBalanceResponse === null ? 'Please refresh' :
               <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
-              amount={getBalanceResponse.getTotal()} /> }<span style={styles.small}> DCR</span>
+              amount={getBalanceResponse.getTotal()} /> }
           </p>
         </div>
         <div style={styles.wellBlocks}>
