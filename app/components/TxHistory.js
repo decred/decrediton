@@ -52,46 +52,49 @@ class TxHistory extends Component {
     });
     return (
       <div style={styles.historyContainer}>
-        {transactions.map(function(tx, i) {
-          var parseDate = new Date(tx.transaction.getMinedTransactions().getTimestamp()*1000);
+        {transactions.map(function(txs, i) {
+          var parseDate = new Date(txs.transaction.getMinedTransactions().getTimestamp()*1000);
           var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
           //var s = Buffer.from(tx.transaction.getMinedTransactions().getTransactionsList()[0].getHash()).toString('hex');
           //var reversed = reverseHash(s);
-          var credits = tx.transaction.getMinedTransactions().getTransactionsList()[0].getCreditsList();
-          var debits = tx.transaction.getMinedTransactions().getTransactionsList()[0].getDebitsList();
-          if (debits.length == 0) {
-            var txAmount = 0;
-            for(var k = 0; k < credits.length; k++){
-              txAmount += credits[k].getAmount();
-            }
-            return (
-            <div style={styles.transactionRow} key={i}>
-              <Receive />
-              <span style={styles.txAmount}><Balance amount={txAmount} /></span>
-              <span style={styles.txDateSince}>{diffDays} Days Since
-                <LeftArrow />
-              </span>
-            </div>);
-          } else {
-            var prevAmount = 0;
-            var txAmount = 0;
-            var returnedAmount = 0;
-            for(var k = 0; k < credits.length; k++){
-              returnedAmount += credits[k].getAmount();
-            }
-            for(var k = 0; k < debits.length; k++){
-              prevAmount += debits[k].getPreviousAmount();
-            }
-            var txAmount = prevAmount - returnedAmount;
-            return (
-              <div style={styles.transactionRow} key={i}>
-                <Sent />
-                <span style={styles.txAmount}>-<Balance amount={txAmount} /></span>
+          var minedTxs = txs.transaction.getMinedTransactions().getTransactionsList();
+          return (minedTxs.map(function(tx, j) {
+            var credits = tx.getCreditsList();
+            var debits = tx.getDebitsList();
+            if (debits.length == 0) {
+              var txAmount = 0;
+              for(var k = 0; k < credits.length; k++){
+                txAmount += credits[k].getAmount();
+              }
+              return (
+              <div style={styles.transactionRow} key={j}>
+                <Receive />
+                <span style={styles.txAmount}><Balance amount={txAmount} /></span>
                 <span style={styles.txDateSince}>{diffDays} Days Since
                   <LeftArrow />
                 </span>
               </div>);
-          }
+            } else {
+              var prevAmount = 0;
+              var txAmount = 0;
+              var returnedAmount = 0;
+              for(var k = 0; k < credits.length; k++){
+                returnedAmount += credits[k].getAmount();
+              }
+              for(var k = 0; k < debits.length; k++){
+                prevAmount += debits[k].getPreviousAmount();
+              }
+              var txAmount = prevAmount - returnedAmount;
+              return (
+                <div style={styles.transactionRow} key={j}>
+                  <Sent />
+                  <span style={styles.txAmount}>-<Balance amount={txAmount} /></span>
+                  <span style={styles.txDateSince}>{diffDays} Days Since
+                    <LeftArrow />
+                  </span>
+                </div>);
+            }
+          }))
         })}
       </div>);
   }
