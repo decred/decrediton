@@ -46,7 +46,6 @@ export function getAccountNumber(client, request, cb) {
       console.error(err);
       return cb(null, err);
     } else {
-      console.log('accountnumber{"default"} ==', response);
       return cb(response);
     }
   });
@@ -58,7 +57,6 @@ export function getStakeInfo(client, request, cb) {
       console.error(err);
       return cb(null, err);
     } else {
-      console.log('current stakeInfo', response);
       return cb(response);
     }
   });
@@ -70,7 +68,6 @@ export function getPing(client, request, cb) {
       console.error(err);
       return cb(null, err);
     } else {
-      console.log('ping', response);
       return cb(response);
     }
   });
@@ -82,7 +79,6 @@ export function getNetwork(client, request, cb) {
       console.error(err);
       return cb(null, err);
     } else {
-      console.log('network', response);
       return cb(response);
     }
   });
@@ -95,7 +91,6 @@ export function getAccounts(client, request, cb) {
       console.error(err);
       return cb(null, err);
     } else {
-      console.log('accounts', response);
       return cb(response);
     }
   });
@@ -123,7 +118,6 @@ export function getTicketPrice(client, request, cb) {
       console.error('ticketPrice', err);
       return cb(null, err);
     } else {
-      console.log('ticketPrice', response);
       return cb(response);
     }
   });

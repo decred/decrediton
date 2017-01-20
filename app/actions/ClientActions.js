@@ -338,9 +338,7 @@ function getTransactionsProgress(getTransactionsResponse) {
     const { transactions } = getState().grpc;
     var found = false;
     for (var i = 0; i < transactions.length; i++) {
-      console.log(i, transactions[i].getMinedTransactions().getHeight(), getTransactionsResponse.getMinedTransactions().getHeight())
       if ( transactions[i].getMinedTransactions().getHeight() == getTransactionsResponse.getMinedTransactions().getHeight() ) {
-        console.log('found!', getTransactionsResponse.getMinedTransactions().getHeight());
         found = true;
       }
     }
