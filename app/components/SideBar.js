@@ -28,7 +28,7 @@ const styles = {
   },
   sidebarLink: {
     display: 'block',
-    padding: '16px 0px',
+    padding: '16px 30px',
     color: '#757575',
     textDecoration: 'none',
   },
@@ -55,6 +55,8 @@ const styles = {
   active: {
     color: 'white',
     textDecoration: 'none',
+    borderLeft: '5px solid #2ed8a3', 
+    backgroundColor: '#0d2034',
   },
   wellBalance: {
     width: 'auto',

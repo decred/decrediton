@@ -42,7 +42,7 @@ const styles = {
   },
   content: {
     position: 'absolute',
-    top: '78px',
+    top: '0px',
     left: '0px',
     bottom: '0px',
     right: '0px',
@@ -361,7 +361,6 @@ class Home extends Component{
             <div style={styles.pageWrap}>
               {stepper}
             </div>
-            <Footer />
           </div>);
       } else {
         return (<ShowError error={versionInvalidError}/>);
