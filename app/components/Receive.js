@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import ErrorScreen from './ErrorScreen';
 import Button from './ButtonTanel';
 import SideBar from './SideBar';
-import Header from './Header';
 
 const styles = {
   body: {
@@ -12,7 +11,7 @@ const styles = {
   content: {
     position: 'absolute',
     top: '70px',
-    left: '202px',
+    left: '252px',
     bottom: '0px',
     right: '0px',
   },
@@ -113,7 +112,6 @@ class Receive extends Component{
     } else {
       return(
         <div style={styles.body}>
-          <Header />
           <SideBar />
           {copayReceive}
         </div>);

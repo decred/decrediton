@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import ErrorScreen from './ErrorScreen';
 import SideBar from './SideBar';
-import Header from './Header';
 import TxHistory from './TxHistory';
 import Balance from './Balance';
 
@@ -30,7 +29,7 @@ const styles = {
   content: {
     position: 'absolute',
     top: '78px',
-    left: '202px',
+    left: '252px',
     bottom: '0px',
     right: '0px',
   },
@@ -73,7 +72,6 @@ class History extends Component{
     } else {
       return(
         <div style={styles.body}>
-          <Header />
           <SideBar />
           {historyView}
         </div>);

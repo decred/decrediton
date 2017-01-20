@@ -7,8 +7,6 @@ import CircularProgress from 'material-ui/CircularProgress';
 import LinearProgress from 'material-ui/LinearProgress';
 import Dialog from 'material-ui/Dialog';
 import ShowError from './ShowError';
-import Header from './Header';
-import Footer from './Footer';
 import Radium from 'radium';
 
 import {
@@ -42,7 +40,7 @@ const styles = {
   },
   content: {
     position: 'absolute',
-    top: '78px',
+    top: '0px',
     left: '0px',
     bottom: '0px',
     right: '0px',
@@ -359,10 +357,8 @@ class Home extends Component{
         return (
           <div style={styles.body}>
             <div style={styles.pageWrap}>
-              <Header />
               {stepper}
             </div>
-            <Footer />
           </div>);
       } else {
         return (<ShowError error={versionInvalidError}/>);
