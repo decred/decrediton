@@ -17,7 +17,7 @@ function transactionNtfnsData(response) {
     setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
     setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
     setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
-    //setTimeout( () => {dispatch(getTransactionsAttempt(0, 300000, '', ''));}, 1000);
+    setTimeout( () => {dispatch(getTransactionsAttempt(0, 300000, '', ''));}, 1000);
   };
 }
 

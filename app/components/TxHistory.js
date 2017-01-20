@@ -51,6 +51,51 @@ class TxHistory extends Component {
       return b.transaction.getMinedTransactions().getTimestamp() - a.transaction.getMinedTransactions().getTimestamp();
     });
     return (
+      <div>
+      <div style={styles.historyContainer}>
+        {transactions.map(function(txs, i) {
+          var unminedTxs = txs.transaction.getUnminedTransactionsList();
+          return (unminedTxs.map(function(tx, j) {
+            var parseDate = new Date(tx.getTimestamp()*1000);
+            var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
+            var credits = tx.getCreditsList();
+            var debits = tx.getDebitsList();
+            if (debits.length == 0) {
+              var txAmount = 0;
+              for(var k = 0; k < credits.length; k++){
+                txAmount += credits[k].getAmount();
+              }
+              return (
+              <div style={styles.transactionRow} key={j}>
+                <Receive />
+                <span style={styles.txAmount}><Balance amount={txAmount} /></span>
+                <span style={styles.txDateSince}>{diffDays} Days Since
+                  <LeftArrow />
+                </span>
+              </div>);
+            } else {
+              var prevAmount = 0;
+              var txAmount = 0;
+              var returnedAmount = 0;
+              for(var k = 0; k < credits.length; k++){
+                returnedAmount += credits[k].getAmount();
+              }
+              for(var k = 0; k < debits.length; k++){
+                prevAmount += debits[k].getPreviousAmount();
+              }
+              var txAmount = prevAmount - returnedAmount;
+              return (
+                <div style={styles.transactionRow} key={j}>
+                  <Sent />
+                  <span style={styles.txAmount}>-<Balance amount={txAmount} /></span>
+                  <span style={styles.txDateSince}>{diffDays} Days Since
+                    <LeftArrow />
+                  </span>
+                </div>);
+            }
+          }))
+        })}
+      </div>
       <div style={styles.historyContainer}>
         {transactions.map(function(txs, i) {
           var parseDate = new Date(txs.transaction.getMinedTransactions().getTimestamp()*1000);
@@ -96,6 +141,7 @@ class TxHistory extends Component {
             }
           }))
         })}
+      </div>
       </div>);
   }
 }
