@@ -55,7 +55,7 @@ class History extends Component{
   };
 
   render() {
-    const { walletService, transactions, getBalanceResponse, getBalanceRequestAttempt } = this.props;
+    const { walletService, mined, unmined, getBalanceResponse, getBalanceRequestAttempt } = this.props;
 
     const historyView = (
       <div style={styles.content}>
@@ -65,7 +65,7 @@ class History extends Component{
               <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
               amount={getBalanceResponse.getTotal()} /> }
         </div>
-        <TxHistory transactions={transactions}/>
+        <TxHistory mined={mined} unmined={unmined}/>
       </div>);
     if (walletService === null) {
       return (<ErrorScreen />);

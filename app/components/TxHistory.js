@@ -44,18 +44,17 @@ const styles = {
 
 class TxHistory extends Component {
   render() {
-    const transactions = this.props.transactions;
+    const mined = this.props.mined;
+    const unmined = this.props.unmined;
     var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
     var today = new Date();
-    transactions.sort(function(a, b) {
-      return b.getMinedTransactions().getTimestamp() - a.getMinedTransactions().getTimestamp();
+    mined.sort(function(a, b) {
+      return b.getTimestamp() - a.getTimestamp();
     });
     return (
       <div>
       <div style={styles.historyContainer}>
-        {transactions.map(function(txs) {
-          var unminedTxs = txs.getUnminedTransactionsList();
-          return (unminedTxs.map(function(tx, j) {
+        {unmined.map(function(tx) {
             var parseDate = new Date(tx.getTimestamp()*1000);
             var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
             var credits = tx.getCreditsList();
@@ -93,16 +92,15 @@ class TxHistory extends Component {
                   </span>
                 </div>);
             }
-          }));
         })}
       </div>
       <div style={styles.historyContainer}>
-        {transactions.map(function(txs) {
-          var parseDate = new Date(txs.getMinedTransactions().getTimestamp()*1000);
+        {mined.map(function(txs) {
+          var parseDate = new Date(txs.getTimestamp()*1000);
           var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
           //var s = Buffer.from(tx.transaction.getMinedTransactions().getTransactionsList()[0].getHash()).toString('hex');
           //var reversed = reverseHash(s);
-          var minedTxs = txs.getMinedTransactions().getTransactionsList();
+          var minedTxs = txs.getTransactionsList();
           return (minedTxs.map(function(tx, j) {
             var credits = tx.getCreditsList();
             var debits = tx.getDebitsList();

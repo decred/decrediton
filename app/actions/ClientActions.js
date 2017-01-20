@@ -326,7 +326,8 @@ function accounts() {
 
 export const GETTRANSACTIONS_ATTEMPT = 'GETTRANSACTIONS_ATTEMPT';
 export const GETTRANSACTIONS_FAILED = 'GETTRANSACTIONS_FAILED';
-export const GETTRANSACTIONS_PROGRESS = 'GETTRANSACTIONS_PROGRESS';
+export const GETTRANSACTIONS_MINED_PROGRESS = 'GETTRANSACTIONS_MINED_PROGRESS';
+export const GETTRANSACTIONS_UNMINED_PROGRESS = 'GETTRANSACTIONS_UNMINED_PROGRESS';
 export const GETTRANSACTIONS_COMPLETE = 'GETTRANSACTIONS_COMPLETE';
 
 function getTransactionsError(error) {
@@ -335,15 +336,15 @@ function getTransactionsError(error) {
 
 function getTransactionsProgress(getTransactionsResponse) {
   return (dispatch, getState) => {
-    const { transactions } = getState().grpc;
+    const { mined } = getState().grpc;
     var found = false;
-    for (var i = 0; i < transactions.length; i++) {
-      if ( transactions[i].getMinedTransactions().getHeight() == getTransactionsResponse.getMinedTransactions().getHeight() ) {
+    for (var i = 0; i < mined.length; i++) {
+      if ( mined[i].getHeight() == getTransactionsResponse.getMinedTransactions().getHeight() ) {
         found = true;
       }
     }
     if (!found) {
-      dispatch({getTransactionsResponse: getTransactionsResponse, type: GETTRANSACTIONS_PROGRESS })
+      dispatch({getTransactionsResponse: getTransactionsResponse, type: GETTRANSACTIONS_MINED_PROGRESS })
     }
   };
 }
