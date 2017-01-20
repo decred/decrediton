@@ -1135,7 +1135,10 @@ proto.walletrpc.TransactionDetails.Output.toObject = function(includeInstance, m
   var f, obj = {
     index: jspb.Message.getFieldWithDefault(msg, 1, 0),
     account: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    internal: jspb.Message.getFieldWithDefault(msg, 3, false)
+    internal: jspb.Message.getFieldWithDefault(msg, 3, false),
+    amount: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    address: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    outputScript: msg.getOutputScript_asB64()
   };
 
   if (includeInstance) {
@@ -1183,6 +1186,18 @@ proto.walletrpc.TransactionDetails.Output.deserializeBinaryFromReader = function
     case 3:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setInternal(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setAmount(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAddress(value);
+      break;
+    case 6:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setOutputScript(value);
       break;
     default:
       reader.skipField();
@@ -1243,6 +1258,27 @@ proto.walletrpc.TransactionDetails.Output.prototype.serializeBinaryToWriter = fu
       f
     );
   }
+  f = this.getAmount();
+  if (f !== 0) {
+    writer.writeInt64(
+      4,
+      f
+    );
+  }
+  f = this.getAddress();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = this.getOutputScript_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      6,
+      f
+    );
+  }
 };
 
 
@@ -1290,6 +1326,75 @@ proto.walletrpc.TransactionDetails.Output.prototype.getInternal = function() {
 /** @param {boolean} value */
 proto.walletrpc.TransactionDetails.Output.prototype.setInternal = function(value) {
   jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional int64 amount = 4;
+ * @return {number}
+ */
+proto.walletrpc.TransactionDetails.Output.prototype.getAmount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.TransactionDetails.Output.prototype.setAmount = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional string address = 5;
+ * @return {string}
+ */
+proto.walletrpc.TransactionDetails.Output.prototype.getAddress = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.walletrpc.TransactionDetails.Output.prototype.setAddress = function(value) {
+  jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * optional bytes output_script = 6;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.TransactionDetails.Output.prototype.getOutputScript = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * optional bytes output_script = 6;
+ * This is a type-conversion wrapper around `getOutputScript()`
+ * @return {string}
+ */
+proto.walletrpc.TransactionDetails.Output.prototype.getOutputScript_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getOutputScript()));
+};
+
+
+/**
+ * optional bytes output_script = 6;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getOutputScript()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.TransactionDetails.Output.prototype.getOutputScript_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getOutputScript()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.TransactionDetails.Output.prototype.setOutputScript = function(value) {
+  jspb.Message.setField(this, 6, value);
 };
 
 

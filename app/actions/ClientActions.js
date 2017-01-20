@@ -8,7 +8,6 @@ export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
 import { hashHistory } from 'react-router';
 import { PingRequest, NetworkRequest, AccountNumberRequest,AccountsRequest,
 BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest } from '../middleware/walletrpc/api_pb';
-
 function getWalletServiceError(error) {
   return { error, type: GETWALLETSERVICE_FAILED };
 }
