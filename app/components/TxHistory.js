@@ -53,7 +53,7 @@ class TxHistory extends Component {
     return (
       <div>
       <div style={styles.historyContainer}>
-        {transactions.map(function(txs, i) {
+        {transactions.map(function(txs) {
           var unminedTxs = txs.transaction.getUnminedTransactionsList();
           return (unminedTxs.map(function(tx, j) {
             var parseDate = new Date(tx.getTimestamp()*1000);
@@ -75,15 +75,15 @@ class TxHistory extends Component {
               </div>);
             } else {
               var prevAmount = 0;
-              var txAmount = 0;
+              txAmount = 0;
               var returnedAmount = 0;
-              for(var k = 0; k < credits.length; k++){
+              for(k = 0; k < credits.length; k++){
                 returnedAmount += credits[k].getAmount();
               }
-              for(var k = 0; k < debits.length; k++){
+              for(k = 0; k < debits.length; k++){
                 prevAmount += debits[k].getPreviousAmount();
               }
-              var txAmount = prevAmount - returnedAmount;
+              txAmount = prevAmount - returnedAmount;
               return (
                 <div style={styles.transactionRow} key={j}>
                   <Sent />
@@ -93,11 +93,11 @@ class TxHistory extends Component {
                   </span>
                 </div>);
             }
-          }))
+          }));
         })}
       </div>
       <div style={styles.historyContainer}>
-        {transactions.map(function(txs, i) {
+        {transactions.map(function(txs) {
           var parseDate = new Date(txs.transaction.getMinedTransactions().getTimestamp()*1000);
           var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
           //var s = Buffer.from(tx.transaction.getMinedTransactions().getTransactionsList()[0].getHash()).toString('hex');
@@ -121,15 +121,15 @@ class TxHistory extends Component {
               </div>);
             } else {
               var prevAmount = 0;
-              var txAmount = 0;
+              txAmount = 0;
               var returnedAmount = 0;
-              for(var k = 0; k < credits.length; k++){
+              for(k = 0; k < credits.length; k++){
                 returnedAmount += credits[k].getAmount();
               }
-              for(var k = 0; k < debits.length; k++){
+              for(k = 0; k < debits.length; k++){
                 prevAmount += debits[k].getPreviousAmount();
               }
-              var txAmount = prevAmount - returnedAmount;
+              txAmount = prevAmount - returnedAmount;
               return (
                 <div style={styles.transactionRow} key={j}>
                   <Sent />
@@ -139,7 +139,7 @@ class TxHistory extends Component {
                   </span>
                 </div>);
             }
-          }))
+          }));
         })}
       </div>
       </div>);
