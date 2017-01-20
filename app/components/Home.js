@@ -50,7 +50,7 @@ const styles = {
   content: {
     position: 'absolute',
     top: '70px',
-    left: '202px',
+    left: '252px',
     bottom: '0px',
     right: '0px',
   },
@@ -131,7 +131,6 @@ class Home extends Component{
       return(
         <div style={styles.body}>
           <SideBar />
-          <Header />
           {homeView}
         </div>);
     }

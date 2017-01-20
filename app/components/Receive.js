@@ -12,7 +12,7 @@ const styles = {
   content: {
     position: 'absolute',
     top: '70px',
-    left: '202px',
+    left: '252px',
     bottom: '0px',
     right: '0px',
   },
@@ -113,7 +113,6 @@ class Receive extends Component{
     } else {
       return(
         <div style={styles.body}>
-          <Header />
           <SideBar />
           {copayReceive}
         </div>);

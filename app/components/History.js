@@ -30,7 +30,7 @@ const styles = {
   content: {
     position: 'absolute',
     top: '78px',
-    left: '202px',
+    left: '252px',
     bottom: '0px',
     right: '0px',
   },
@@ -73,7 +73,6 @@ class History extends Component{
     } else {
       return(
         <div style={styles.body}>
-          <Header />
           <SideBar />
           {historyView}
         </div>);

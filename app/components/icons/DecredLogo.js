@@ -4,7 +4,7 @@ const styles = {
   logo: {
     width: '149.5px',
     height: '28px',
-    margin: '18px 25px',
+    margin: '32px 43px',
   },
   fill2: {
     fill:'#2972FF'

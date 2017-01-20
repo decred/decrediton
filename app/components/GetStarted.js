@@ -7,7 +7,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import LinearProgress from 'material-ui/LinearProgress';
 import Dialog from 'material-ui/Dialog';
 import ShowError from './ShowError';
-import Header from './Header';
+import SideBar from './SideBar';
 import Footer from './Footer';
 import Radium from 'radium';
 
@@ -359,7 +359,6 @@ class Home extends Component{
         return (
           <div style={styles.body}>
             <div style={styles.pageWrap}>
-              <Header />
               {stepper}
             </div>
             <Footer />

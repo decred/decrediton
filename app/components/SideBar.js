@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import Balance from './Balance';
+import DecredLogo from './icons/DecredLogo';
 
 function mapStateToProps(state) {
   return {
@@ -18,11 +19,11 @@ function mapStateToProps(state) {
 const styles = {
   sideBar: {
     position: 'absolute',
-    top:'70px',
+    top:'0px',
     bottom:'0px',
     left:'0px',
-    width:'200px',
-    background:'white',
+    width:'250px',
+    background:'#132f4b',
     borderRight: '1px solid black'
   },
   sidebarLink: {
@@ -52,7 +53,7 @@ const styles = {
     marginBottom: '0px',
   },
   active: {
-    color: 'black',
+    color: 'white',
     textDecoration: 'none',
   },
   wellBalance: {
@@ -94,10 +95,15 @@ class SideBar extends Component {
     const { getAccountsResponse } = this.props;
     return (
     <div style={styles.sideBar}>
-      <Link to="/home" style={styles.sidebarLink} activeStyle={styles.active}>Home</Link>
-      <Link to="/history" style={styles.sidebarLink} activeStyle={styles.active}>History</Link>
-      <Link to="/send" style={styles.sidebarLink} activeStyle={styles.active}>Send Decred</Link>
-      <Link to="/receive" style={styles.sidebarLink} activeStyle={styles.active}>Receive Decred</Link>
+      <div style={styles.logoArea}>
+        <DecredLogo />
+      </div>
+      <div style={styles.linkArea}>
+        <Link to="/home" style={styles.sidebarLink} activeStyle={styles.active}>Home</Link>
+        <Link to="/history" style={styles.sidebarLink} activeStyle={styles.active}>History</Link>
+        <Link to="/send" style={styles.sidebarLink} activeStyle={styles.active}>Send Decred</Link>
+        <Link to="/receive" style={styles.sidebarLink} activeStyle={styles.active}>Receive Decred</Link>
+      </div>
       <div style={styles.pushToBottom}>
         <div style={styles.wellBalance}>
           <p style={styles.sidebarTitle}>Balance:</p>
