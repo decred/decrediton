@@ -7,8 +7,6 @@ import CircularProgress from 'material-ui/CircularProgress';
 import LinearProgress from 'material-ui/LinearProgress';
 import Dialog from 'material-ui/Dialog';
 import ShowError from './ShowError';
-import SideBar from './SideBar';
-import Footer from './Footer';
 import Radium from 'radium';
 
 import {

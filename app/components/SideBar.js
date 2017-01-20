@@ -55,7 +55,7 @@ const styles = {
   active: {
     color: 'white',
     textDecoration: 'none',
-    borderLeft: '5px solid #2ed8a3', 
+    borderLeft: '5px solid #2ed8a3',
     backgroundColor: '#0d2034',
   },
   wellBalance: {

@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import ErrorScreen from './ErrorScreen';
 import Button from './ButtonTanel';
 import SideBar from './SideBar';
-import Header from './Header';
 
 const styles = {
   body: {

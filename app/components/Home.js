@@ -5,7 +5,7 @@ import ErrorScreen from './ErrorScreen';
 import RescanForm from '../containers/RescanForm';
 import Balance from './Balance';
 import SideBar from './SideBar';
-import Header from './Header';
+
 const styles = {
   pageContentWrapper: {
     width: '100%',

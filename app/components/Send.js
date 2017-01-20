@@ -6,7 +6,6 @@ import SignTxForm from '../containers/SignTxForm';
 import ShowError from './ShowError';
 import { reverseHash } from '../helpers/byteActions';
 import SideBar from './SideBar';
-import Header from './Header';
 
 const styles = {
   body: {
@@ -87,7 +86,6 @@ class Send extends Component{
     } else {
       return(
         <div style={styles.body}>
-          <Header />
           <SideBar />
           {sendView}
         </div>);

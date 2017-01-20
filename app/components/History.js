@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import ErrorScreen from './ErrorScreen';
 import SideBar from './SideBar';
-import Header from './Header';
 import TxHistory from './TxHistory';
 import Balance from './Balance';
 
