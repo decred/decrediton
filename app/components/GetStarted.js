@@ -306,9 +306,9 @@ class Home extends Component{
             </StepContent>
           </Step>
           <Step>
-            <StepLabel>Fetch Headers</StepLabel>
+            <StepLabel>Subscribe to Block Notifications</StepLabel>
             <StepContent>
-              {fetchHeaders}
+              {}
             </StepContent>
           </Step>
           <Step>
@@ -318,9 +318,9 @@ class Home extends Component{
             </StepContent>
           </Step>
           <Step>
-            <StepLabel>Subscribe to Block Notifications</StepLabel>
+            <StepLabel>Fetch Headers</StepLabel>
             <StepContent>
-              {}
+              {fetchHeaders}
             </StepContent>
           </Step>
           <Step>

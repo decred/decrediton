@@ -89,7 +89,8 @@ var initialState = {
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
     // Transactions
-    transactions: Array(),
+    mined: Array(),
+    unmined: Array(),
     getTransactionsRequest: null,
     getTransactionsError: null,
     getTransactionsRequestAttempt: false,

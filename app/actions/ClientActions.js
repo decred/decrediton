@@ -326,7 +326,8 @@ function accounts() {
 
 export const GETTRANSACTIONS_ATTEMPT = 'GETTRANSACTIONS_ATTEMPT';
 export const GETTRANSACTIONS_FAILED = 'GETTRANSACTIONS_FAILED';
-export const GETTRANSACTIONS_PROGRESS = 'GETTRANSACTIONS_PROGRESS';
+export const GETTRANSACTIONS_MINED_PROGRESS = 'GETTRANSACTIONS_MINED_PROGRESS';
+export const GETTRANSACTIONS_UNMINED_PROGRESS = 'GETTRANSACTIONS_UNMINED_PROGRESS';
 export const GETTRANSACTIONS_COMPLETE = 'GETTRANSACTIONS_COMPLETE';
 
 function getTransactionsError(error) {
@@ -334,7 +335,33 @@ function getTransactionsError(error) {
 }
 
 function getTransactionsProgress(getTransactionsResponse) {
-  return { getTransactionsResponse: getTransactionsResponse, type: GETTRANSACTIONS_PROGRESS };
+  return (dispatch, getState) => {
+    const { mined, unmined } = getState().grpc;
+    var found = false;
+    if (getTransactionsResponse.getMinedTransactions() !== undefined) {
+      for (var i = 0; i < mined.length; i++) {
+        if ( mined[i].getHeight() == getTransactionsResponse.getMinedTransactions().getHeight() ) {
+          found = true;
+        }
+      }
+      if (!found) {
+        dispatch({getTransactionsResponse: getTransactionsResponse, type: GETTRANSACTIONS_MINED_PROGRESS });
+      }
+    }
+    if (getTransactionsResponse.getUnminedTransactionsList().length > 0) {
+      found = false;
+      for (i = 0; i < getTransactionsResponse.getUnminedTransactionsList(); i++) {
+        for (var k = 0; k < unmined.length; k++) {
+          if ( unmined[k].getHash() == getTransactionsResponse.getUnminedTransactions()[i].getHash() ) {
+            found = true;
+          }
+        }
+        if (!found) {
+          dispatch({unmined: getTransactionsResponse.getUnminedTransactions()[i], type: GETTRANSACTIONS_UNMINED_PROGRESS });
+        }
+      }
+    }
+  };
 }
 
 function getTransactionsComplete() {
