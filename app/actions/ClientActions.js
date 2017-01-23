@@ -340,12 +340,17 @@ function getTransactionsProgress(getTransactionsResponse) {
     var found = false;
     if (getTransactionsResponse.getMinedTransactions() !== undefined) {
       for (var i = 0; i < mined.length; i++) {
-        if ( mined[i].getHeight() == getTransactionsResponse.getMinedTransactions().getHeight() ) {
+        if ( mined[i].height == getTransactionsResponse.getMinedTransactions().getHeight() ) {
           found = true;
         }
       }
       if (!found) {
-        dispatch({getTransactionsResponse: getTransactionsResponse, type: GETTRANSACTIONS_MINED_PROGRESS });
+        for (var j = 0; j < getTransactionsResponse.getMinedTransactions().getTransactionsList().length; j++) {
+          var tx = getTransactionsResponse.getMinedTransactions().getTransactionsList()[j];
+          tx.height = getTransactionsResponse.getMinedTransactions().getHeight();
+          tx.timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
+          dispatch({tx, type: GETTRANSACTIONS_MINED_PROGRESS });
+        }
       }
     }
     if (getTransactionsResponse.getUnminedTransactionsList().length > 0) {
@@ -373,7 +378,6 @@ function getTransactionsComplete() {
 }
 
 export function getTransactionsAttempt(startHeight, endHeight) {
-  // GetTransactions
   var request = new GetTransactionsRequest();
   request.setStartingBlockHeight(startHeight);
   request.setEndingBlockHeight(endHeight);

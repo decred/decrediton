@@ -164,7 +164,7 @@ export default function grpc(state = {}, action) {
     return {...state,
       mined: [
         ...state.mined,
-        action.getTransactionsResponse.getMinedTransactions(),
+        action.tx,
       ],
     };
   case GETTRANSACTIONS_UNMINED_PROGRESS:
@@ -184,12 +184,12 @@ export default function grpc(state = {}, action) {
   case UPDATETXHISTORYPAGINATION_MINED:
     return {...state,
     currentMined: action.currentMined,
-    currentMinedPage: action.currentMinedPage,
+    currentMinedPage: action.requestedPage,
    };
   case UPDATETXHISTORYPAGINATION_UNMINED:
     return {...state,
     currentUnmined: action.currentUnmined,
-    currentUnminedPage: action.currentUnminedPage,
+    currentUnminedPage: action.requestedPage,
    }; 
   default:
     return state;

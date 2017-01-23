@@ -110,13 +110,11 @@ class TxHistory extends Component {
       <div style={styles.historyContainer}>
         {mined !== null && mined.length > 0 ? <p> Mined Transaction </p> : null}
         {mined !== null && mined.length > 0 ?
-          mined.map(function(txs) {
-          var parseDate = new Date(txs.getTimestamp()*1000);
+          mined.map(function(tx) {
+          var parseDate = new Date(tx.timestamp*1000);
           var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
           //var s = Buffer.from(tx.transaction.getMinedTransactions().getTransactionsList()[0].getHash()).toString('hex');
           //var reversed = reverseHash(s);
-          var minedTxs = txs.getTransactionsList();
-          return (minedTxs.map(function(tx) {
             var credits = tx.getCreditsList();
             var debits = tx.getDebitsList();
             if (debits.length == 0) {
@@ -152,7 +150,6 @@ class TxHistory extends Component {
                   </span>
                 </div>);
             }
-          }));
         }) :
         <p></p>
       }
