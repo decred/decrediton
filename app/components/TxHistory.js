@@ -4,6 +4,7 @@ import Sent from './icons/Sent';
 import Receive from './icons/Receive';
 import LeftArrow from './icons/LeftArrow';
 import Balance from './Balance';
+
 const styles = {
   historyContainer: {
     width: '100%',
@@ -105,6 +106,7 @@ class TxHistory extends Component {
           : <p></p>
         }
       </div>
+
       <div style={styles.historyContainer}>
         {mined !== null && mined.length > 0 ? <p> Mined Transaction </p> : null}
         {mined !== null && mined.length > 0 ?
