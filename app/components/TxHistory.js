@@ -48,16 +48,22 @@ class TxHistory extends Component {
     const unmined = this.props.unmined;
     var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
     var today = new Date();
-    mined.sort(function(a, b) {
-      return b.getTimestamp() - a.getTimestamp();
-    });
+    if (mined !== null) {
+      mined.sort(function(a, b) {
+        return b.getTimestamp() - a.getTimestamp();
+      });
+    }
+    if (unmined !== null) {
+      unmined.sort(function(a, b) {
+        return b.getTimestamp() - a.getTimestamp();
+      });
+    }
     return (
       <div>
       <div style={styles.historyContainer}>
-        {unmined.length > 0 ?
-          <p> Unmined Transactions </p>
-        : <p></p> }
-        {unmined.map(function(tx) {
+        {unmined !== null && unmined.length > 0 ? <p> Unmined Transaction </p> : null}
+        {unmined !== null && unmined.length > 0 ? 
+          unmined.map(function(tx) {
           var parseDate = new Date(tx.getTimestamp()*1000);
           var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
           var credits = tx.getCreditsList();
@@ -95,13 +101,14 @@ class TxHistory extends Component {
                   </span>
                 </div>);
           }
-        })}
+          })
+          : <p></p>
+        }
       </div>
       <div style={styles.historyContainer}>
-        {mined.length > 0 ?
-          <p> Mined Transactions </p>
-        : <p></p> }
-        {mined.map(function(txs) {
+        {mined !== null && mined.length > 0 ? <p> Mined Transaction </p> : null}
+        {mined !== null && mined.length > 0 ?
+          mined.map(function(txs) {
           var parseDate = new Date(txs.getTimestamp()*1000);
           var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
           //var s = Buffer.from(tx.transaction.getMinedTransactions().getTransactionsList()[0].getHash()).toString('hex');
@@ -144,7 +151,9 @@ class TxHistory extends Component {
                 </div>);
             }
           }));
-        })}
+        }) :
+        <p></p>
+      }
       </div>
       </div>);
   }
