@@ -345,19 +345,19 @@ function getTransactionsProgress(getTransactionsResponse) {
         }
       }
       if (!found) {
-        dispatch({getTransactionsResponse: getTransactionsResponse, type: GETTRANSACTIONS_MINED_PROGRESS })
+        dispatch({getTransactionsResponse: getTransactionsResponse, type: GETTRANSACTIONS_MINED_PROGRESS });
       }
     }
     if (getTransactionsResponse.getUnminedTransactionsList().length > 0) {
       found = false;
-      for (var i = 0; i < getTransactionsResponse.getUnminedTransactionsList(); i++) {
+      for (i = 0; i < getTransactionsResponse.getUnminedTransactionsList(); i++) {
         for (var k = 0; k < unmined.length; k++) {
           if ( unmined[k].getHash() == getTransactionsResponse.getUnminedTransactions()[i].getHash() ) {
             found = true;
           }
         }
         if (!found) {
-          dispatch({getTransactionsResponse: getTransactionsResponse.getUnminedTransactions()[i], type: GETTRANSACTIONS_UNMINED_PROGRESS })
+          dispatch({unmined: getTransactionsResponse.getUnminedTransactions()[i], type: GETTRANSACTIONS_UNMINED_PROGRESS });
         }
       }
     }

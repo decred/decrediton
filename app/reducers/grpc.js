@@ -170,7 +170,7 @@ export default function grpc(state = {}, action) {
     return {...state,
       unmined: [
         ...state.unmined,
-        unmined,
+        action.unmined,
       ],
     };
   case GETTRANSACTIONS_COMPLETE:

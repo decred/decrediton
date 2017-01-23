@@ -54,51 +54,51 @@ class TxHistory extends Component {
     return (
       <div>
       <div style={styles.historyContainer}>
-        {unmined.length > 0 ? 
+        {unmined.length > 0 ?
           <p> Unmined Transactions </p>
         : <p></p> }
         {unmined.map(function(tx) {
-            var parseDate = new Date(tx.getTimestamp()*1000);
-            var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
-            var credits = tx.getCreditsList();
-            var debits = tx.getDebitsList();
-            if (debits.length == 0) {
-              var txAmount = 0;
-              for(var k = 0; k < credits.length; k++){
-                txAmount += credits[k].getAmount();
-              }
-              return (
-              <div style={styles.transactionRow} key={j}>
+          var parseDate = new Date(tx.getTimestamp()*1000);
+          var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
+          var credits = tx.getCreditsList();
+          var debits = tx.getDebitsList();
+          if (debits.length == 0) {
+            var txAmount = 0;
+            for(var k = 0; k < credits.length; k++){
+              txAmount += credits[k].getAmount();
+            }
+            return (
+              <div style={styles.transactionRow} key={tx.getHash()}>
                 <Receive />
                 <span style={styles.txAmount}><Balance amount={txAmount} /></span>
                 <span style={styles.txDateSince}>{diffDays} Days Since
                   <LeftArrow />
                 </span>
               </div>);
-            } else {
-              var prevAmount = 0;
-              txAmount = 0;
-              var returnedAmount = 0;
-              for(k = 0; k < credits.length; k++){
-                returnedAmount += credits[k].getAmount();
-              }
-              for(k = 0; k < debits.length; k++){
-                prevAmount += debits[k].getPreviousAmount();
-              }
-              txAmount = prevAmount - returnedAmount;
-              return (
-                <div style={styles.transactionRow} key={j}>
+          } else {
+            var prevAmount = 0;
+            txAmount = 0;
+            var returnedAmount = 0;
+            for(k = 0; k < credits.length; k++){
+              returnedAmount += credits[k].getAmount();
+            }
+            for(k = 0; k < debits.length; k++){
+              prevAmount += debits[k].getPreviousAmount();
+            }
+            txAmount = prevAmount - returnedAmount;
+            return (
+                <div style={styles.transactionRow} key={tx.getHash()}>
                   <Sent />
                   <span style={styles.txAmount}>-<Balance amount={txAmount} /></span>
                   <span style={styles.txDateSince}>{diffDays} Days Since
                     <LeftArrow />
                   </span>
                 </div>);
-            }
+          }
         })}
       </div>
       <div style={styles.historyContainer}>
-        {mined.length > 0 ? 
+        {mined.length > 0 ?
           <p> Mined Transactions </p>
         : <p></p> }
         {mined.map(function(txs) {
@@ -107,7 +107,7 @@ class TxHistory extends Component {
           //var s = Buffer.from(tx.transaction.getMinedTransactions().getTransactionsList()[0].getHash()).toString('hex');
           //var reversed = reverseHash(s);
           var minedTxs = txs.getTransactionsList();
-          return (minedTxs.map(function(tx, j) {
+          return (minedTxs.map(function(tx) {
             var credits = tx.getCreditsList();
             var debits = tx.getDebitsList();
             if (debits.length == 0) {
@@ -116,7 +116,7 @@ class TxHistory extends Component {
                 txAmount += credits[k].getAmount();
               }
               return (
-              <div style={styles.transactionRow} key={j}>
+              <div style={styles.transactionRow} key={tx.getHash()}>
                 <Receive />
                 <span style={styles.txAmount}><Balance amount={txAmount} /></span>
                 <span style={styles.txDateSince}>{diffDays} Days Since
@@ -135,7 +135,7 @@ class TxHistory extends Component {
               }
               txAmount = prevAmount - returnedAmount;
               return (
-                <div style={styles.transactionRow} key={j}>
+                <div style={styles.transactionRow} key={tx.getHash()}>
                   <Sent />
                   <span style={styles.txAmount}>-<Balance amount={txAmount} /></span>
                   <span style={styles.txDateSince}>{diffDays} Days Since
