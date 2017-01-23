@@ -91,6 +91,13 @@ var initialState = {
     // Transactions
     mined: Array(),
     unmined: Array(),
+    currentUnmined: null,
+    currentMined: null,
+    txPerPage: 2,
+    currentMinedPage: 0,
+    currentUnminedPage: 0,
+    updatePaginationMinedRequest: false,
+    updatePaginationUnminedRequest: false,
     getTransactionsRequest: null,
     getTransactionsError: null,
     getTransactionsRequestAttempt: false,

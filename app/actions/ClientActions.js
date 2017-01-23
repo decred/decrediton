@@ -367,6 +367,7 @@ function getTransactionsProgress(getTransactionsResponse) {
 function getTransactionsComplete() {
   return (dispatch) => {
     dispatch({ type: GETTRANSACTIONS_COMPLETE });
+    setTimeout( () => {dispatch(updatePagination(true, 0));}, 1000);
     setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
   };
 }
@@ -399,4 +400,38 @@ function transactions() {
           }
         });
   };
+}
+
+export const UPDATETXHISTORYPAGINATION_MINED = 'UPDATETXHISTORYPAGINATION_MINED';
+export const UPDATETXHISTORYPAGINATION_UNMINED = 'UPDATETXHISTORYPAGINATION_UNMINED';
+
+export function updatePagination(isThisMined, requestedPage) {
+  return (dispatch, getState) => {
+    if (isThisMined) {
+      // do mined stuff
+      const { txPerPage, mined } = getState().grpc;
+      var currentMined = Array();
+      if (mined.length <= txPerPage) {
+        currentMined = mined
+      } else {
+        var pageStart = mined.length - (txPerPage * requestedPage);
+        var pageEnd = pageStart - txPerPage;
+        if (pageEnd < 0) {
+          pageEnd = 0;
+        }
+        for (var i = pageEnd; i < pageStart; i++) {
+          if (mined[i] == null) {
+            console.log("invalid mined element", i);
+            break;
+          }
+          currentMined.push(mined[i]);
+        }
+      }
+      dispatch({currentMined, requestedPage, type: UPDATETXHISTORYPAGINATION_MINED});
+    } else {
+      // do unmined stuff
+      const { currentUnmined, txPerPage, unmined } = getState().grpc;
+      dispatch({currentUnmined, requestedPage, type: UPDATETXHISTORYPAGINATION_UNMINED});
+    }
+  }
 }

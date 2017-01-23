@@ -5,7 +5,7 @@ import History from '../components/History';
 function mapStateToProps(state) {
   return {
     walletService: state.grpc.walletService,
-    mined: state.grpc.mined,
+    currentMined: state.grpc.currentMined,
     unmined: state.grpc.unmined,
     getBalanceResponse: state.grpc.getBalanceResponse,
     getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
