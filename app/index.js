@@ -89,6 +89,8 @@ var initialState = {
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
     // Transactions
+    loadTxNumber: 100,
+    txLookBack: 10000,
     mined: Array(),
     unmined: Array(),
     currentUnmined: null,

@@ -24,7 +24,12 @@ function getWalletServiceSuccess(walletService) {
     setTimeout( () => {dispatch(getPingAttempt());}, 1000);
     setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
     //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
-    setTimeout( () => {dispatch(getTransactionsAttempt(0, 300000, '', ''));}, 1000);
+    const { txLookBack, getAccountsResponse } = getState().grpc;
+    //if ( getAccountsResponse !== null ) {
+      var currentHeight = 254384;//getAccountsResponse.getCurrentBlockHeight();
+      var lookBackBlockHeight = currentHeight - txLookBack;
+      setTimeout( () => {dispatch(getTransactionsAttempt(lookBackBlockHeight, currentHeight, '', ''));}, 1000);
+    //}
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.

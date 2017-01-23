@@ -10,14 +10,19 @@ export const TRANSACTIONNFTNS_DATA = 'TRANSACTIONNFTNS_DATA';
 export const TRANSACTIONNFTNS_END = 'TRANSACTIONNFTNS_END';
 
 function transactionNtfnsData(response) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
     setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
     setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
     setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
     setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
     setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
-    setTimeout( () => {dispatch(getTransactionsAttempt(0, 300000, '', ''));}, 1000);
+    const { txLookBack, getAccountsResponse } = getState().grpc;
+    //if ( getAccountsResponse !== null ) {
+      var currentHeight = 254384; //getAccountsResponse.getCurrentBlockHeight();
+      var lookBackBlockHeight = currentHeight - txLookBack;
+      setTimeout( () => {dispatch(getTransactionsAttempt(lookBackBlockHeight, currentHeight, '', ''));}, 1000);
+    //}
   };
 }
 
