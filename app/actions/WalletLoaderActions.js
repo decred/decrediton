@@ -220,8 +220,7 @@ function startRpcError(error) {
 function startRpcSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: STARTRPC_SUCCESS});
-    dispatch(fetchHeadersAttempt());
-    //dispatch(discoverAddressAttempt(true));
+    dispatch(subscribeBlockAttempt());
   };
 }
 
@@ -269,9 +268,12 @@ function discoverAddressError(error) {
 }
 
 function discoverAddressSuccess() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({response: {}, type: DISCOVERADDRESS_SUCCESS});
-    dispatch(subscribeBlockAttempt());
+    const { subscribeBlockNtfnsResponse } = getState().walletLoader;
+    if ( subscribeBlockNtfnsResponse !== null ) {
+      dispatch(fetchHeadersAttempt());
+    }
   };
 }
 
@@ -309,9 +311,12 @@ function subscribeBlockError(error) {
 }
 
 function subscribeBlockSuccess() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
-    dispatch(getWalletServiceAttempt());
+    const { discoverAddressResponse } = getState().walletLoader;
+    if ( discoverAddressResponse !== null ) {
+      dispatch(fetchHeadersAttempt());
+    }
   };
 }
 
@@ -362,6 +367,7 @@ function fetchHeadersProgress(response) {
 function fetchHeadersSuccess(response) {
   return (dispatch) => {
     dispatch({response: response, type: FETCHHEADERS_SUCCESS});
+    dispatch(getWalletServiceAttempt());
   };
 }
 

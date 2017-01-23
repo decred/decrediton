@@ -169,7 +169,7 @@ export default function walletLoader(state = {}, action) {
       fetchHeadersRequestAttempt: false,
       fetchHeadersRequest: null,
       fetchHeadersResponse: action.response,
-      stepIndex: 5,
+      stepIndex: 7,
     };
   case SUBSCRIBEBLOCKNTFNS_ATTEMPT:
     return {...state,
@@ -188,7 +188,7 @@ export default function walletLoader(state = {}, action) {
       subscribeBlockNtfnsRequestAttempt: false,
       subscribeBlockNtfnsRequest: null,
       subscribeBlockNtfnsResponse: action.response,
-      stepIndex: 7,  // Onto final prep
+      stepIndex: 5,  // Onto final prep
     };
 
   default:
