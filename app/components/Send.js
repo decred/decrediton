@@ -50,10 +50,10 @@ class Send extends Component{
         <p> raw tx <br/>
           {constructTxResponse !== null ? constructTxResponse.getUnsignedTransaction() : null}}
         </p>
-        <p> total previous output amount <br/>
+      <p> total previous output amount (atoms) <br/>
           {constructTxResponse != null ? constructTxResponse.getTotalPreviousOutputAmount() : null}
         </p>
-        <p> total output amount <br/>
+      <p> total output amount (atoms) <br/>
           {constructTxResponse !== null ? constructTxResponse.getTotalOutputAmount() : null}
         </p>
         <p> estimated signed size <br/>

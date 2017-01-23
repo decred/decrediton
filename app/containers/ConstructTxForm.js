@@ -44,8 +44,8 @@ class ConstructTxForm extends React.Component {
                     onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
                   <TextField
                     key={'amount'+output.key}
-                    hintText="Amount"
-                    floatingLabelText="Amount"
+                    hintText="Amount (DCR)"
+                    floatingLabelText="Amount (DCR)"
                     onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value);}}/>
                   {this.state.outputs.length - 1 > parseInt(output.key) || this.state.outputs.length  === 1 ?
                     <div></div>:
@@ -100,8 +100,11 @@ class ConstructTxForm extends React.Component {
     this.setState({ outputs: updateOutputs });
   }
   updateOutputAmount(outputKey, amount) {
+    // For now just convert from atoms to dcr.  We can add option to switch
+    // later (and that need to impact more than just this function.
+    var units = 100000000;
     var updateOutputs = this.state.outputs;
-    updateOutputs[outputKey].amount = amount;
+    updateOutputs[outputKey].amount = amount * units;
     this.setState({ outputs: updateOutputs });
   }
     /*
