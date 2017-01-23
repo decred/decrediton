@@ -54,6 +54,9 @@ class TxHistory extends Component {
     return (
       <div>
       <div style={styles.historyContainer}>
+        {unmined.length > 0 ? 
+          <p> Unmined Transactions </p>
+        : <p></p> }
         {unmined.map(function(tx) {
             var parseDate = new Date(tx.getTimestamp()*1000);
             var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
@@ -95,6 +98,9 @@ class TxHistory extends Component {
         })}
       </div>
       <div style={styles.historyContainer}>
+        {mined.length > 0 ? 
+          <p> Mined Transactions </p>
+        : <p></p> }
         {mined.map(function(txs) {
           var parseDate = new Date(txs.getTimestamp()*1000);
           var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));
