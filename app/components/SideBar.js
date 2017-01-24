@@ -238,7 +238,7 @@ class SideBar extends Component {
           <MenuLink to="/receive">Receive</MenuLink>
           <MenuLink to="/history">History</MenuLink>
           <MenuLink to="/settings">Settings</MenuLink>
-	  <div style={styles.sidebarHelp}><p>Help:</p>
+          <div style={styles.sidebarHelp}><p>Help:</p>
           <a href="https://forum.decred.org" target="_blank" style={styles.sidebarLink}>Forum</a><br />
           <a href="https://decred.slack.com" target="_blank" style={styles.sidebarLink}>Chat</a><br />
         <a href="https://github.com/decred/decrediton/issues" target="_blank" style={styles.sidebarLink}>Issues</a><br />

@@ -7,6 +7,7 @@ import { IMPORTSCRIPT_ATTEMPT, IMPORTSCRIPT_FAILED, IMPORTSCRIPT_SUCCESS } from 
 import { CHANGEPASSPHRASE_ATTEMPT, CHANGEPASSPHRASE_FAILED, CHANGEPASSPHRASE_SUCCESS } from '../actions/ControlActions';
 import { LOADACTIVEDATAFILTERS_ATTEMPT, LOADACTIVEDATAFILTERS_FAILED, LOADACTIVEDATAFILTERS_SUCCESS } from '../actions/ControlActions';
 import { FUNDTX_ATTEMPT, FUNDTX_FAILED, FUNDTX_SUCCESS } from '../actions/ControlActions';
+import { CLEARTX } from '../actions/ControlActions';
 import { SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS } from '../actions/ControlActions';
 import { PUBLISHTX_ATTEMPT, PUBLISHTX_FAILED, PUBLISHTX_SUCCESS } from '../actions/ControlActions';
 import { PURCHASETICKET_ATTEMPT, PURCHASETICKET_FAILED, PURCHASETICKET_SUCCESS } from '../actions/ControlActions';
@@ -180,6 +181,10 @@ export default function control(state = {}, action) {
       fundTransactionError: '',
       fundTransactionRequestAttempt: false,
       fundTransactionResponse: action.fundTransactionResponse,
+    };
+  case CLEARTX:
+    return {...state,
+      constructTxResponse: null,
     };
   case SIGNTX_ATTEMPT:
     return {...state,
