@@ -153,7 +153,7 @@ export default function grpc(state = {}, action) {
   case PAGINATETRANSACTIONS_START:
     return {...state,
       paginatingTxs: true,
-      currentPage: action.currentPage,
+      lookForward: action.lookForward,
       prevStartTxHeight: action.prevStartTxHeight,
       prevStartTxIndex: action.prevStartTxIndex,
       prevEndTxHeight: action.prevEndTxHeight,
@@ -163,8 +163,9 @@ export default function grpc(state = {}, action) {
   case PAGINATETRANSACTIONS_END:
     return {...state,
       paginatingTxs: false,
+      currentPage: action.currentPage,
+      paginatedTxs: state.tempPaginatedTxs,
       tempPaginatedTxs: Array(),
-      paginatedTxs: action.paginatedTxs,
     };
   case PAGINATETRANSACTIONS_MORE:
     return {...state,

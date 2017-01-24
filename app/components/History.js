@@ -66,9 +66,8 @@ class History extends Component{
               <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
               amount={getBalanceResponse.getTotal()} /> }
         </div>
-        <p>{currentPage}</p>
-        <button disabled={currentPage === 0} onClick={()=>getMinedPaginatedTransactions(true)}>Newer</button>
-        <button onClick={()=>getMinedPaginatedTransactions(false)}>Older</button>
+        <button disabled={currentPage <= 1} onClick={()=>getMinedPaginatedTransactions(true)}>Newer {currentPage}</button>
+        <button onClick={()=>getMinedPaginatedTransactions(false)}>Older {currentPage}</button>
         <TxHistory mined={paginatedTxs}/>
       </div>);
     if (walletService === null) {

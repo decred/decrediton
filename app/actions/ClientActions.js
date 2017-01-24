@@ -344,36 +344,35 @@ function paginatedTransactionsProgess(getTransactionsResponse) {
       return;
     }
     var neededTxs = txPerPage - tempPaginatedTxs.length;
+
+      console.log(txPerPage, tempPaginatedTxs.length);
     var newTxs = getTransactionsResponse.getMinedTransactions().getTransactionsList();
     // Need less transactions than what we got, so stop it after the number we need
     // then close the request.
-    var blockHeight = getTransactionsResponse.getMinedTransactions().getHeight()
-    if (neededTxs <= newTxs.length) {
-      for (var i = 0; i < neededTxs; i++) {
-        // Skip tx if it was already included in the previous set
-        if ( (blockHeight == prevStartTxHeight && i == prevStartTxIndex) || 
-          (blockHeight == prevEndTxHeight && i == prevEndTxIndex))  {
-            continue;
-          }
-        newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
-        newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
-        newTxs[i].index = i;
-        tempPaginatedTxs.push(newTxs[i]);
+    var txsAdded = 0;
+    var blockHeight = getTransactionsResponse.getMinedTransactions().getHeight();
+    for (var i = 0; i < newTxs.length; i++) {
+      if (txsAdded == neededTxs) {
+        // update the currentPage
+        var newPage = currentPage;
+        if (lookForward) { 
+          newPage--;
+        } else {
+          newPage++;
+        }
+        dispatch({ currentPage: newPage, type: PAGINATETRANSACTIONS_END });
+        break;
       }
-      var newPage = currentPage;
-      if (lookForward) { 
-        newPage -= 1;
-      } else {
-        newPage += 1;
+      // Skip tx if it was already included in the previous set
+      if ( (blockHeight == prevStartTxHeight && i == prevStartTxIndex) || 
+        (blockHeight == prevEndTxHeight && i == prevEndTxIndex))  {
+        continue;
       }
-      dispatch({ currentPage: newPage, paginatedTxs: tempPaginatedTxs, type: PAGINATETRANSACTIONS_END });
-    } else {
-      for (var i = 0; i < newTxs.length; i++) {
-        newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
-        newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
-        newTxs[i].index = i;
-        dispatch({ tempPaginatedTxs: newTxs[i], type: PAGINATETRANSACTIONS_MORE });
-      }
+      newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
+      newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
+      newTxs[i].index = i;
+      txsAdded++;
+      dispatch({ tempPaginatedTxs: newTxs[i], type: PAGINATETRANSACTIONS_MORE });
     }
   }
 }
@@ -396,6 +395,10 @@ export function getMinedPaginatedTransactions(forward) {
   return (dispatch, getState) => {
     const { paginatedTxs, paginatingTxs, txLookBack, lookForward, getAccountsResponse } = getState().grpc;
     var startRequestHeight, endRequestHeight = 0;
+    var prevStartTxHeight = 0;
+    var prevStartTxIndex = 0;
+    var prevEndTxHeight = 0;
+    var prevEndTxIndex = 0;
     // On startup endHeight will be 0.
     // After the first successful paginated reqeuest it will hold where we left off while getting transactions.
     if ( paginatedTxs.length === 0 ) {
@@ -409,10 +412,10 @@ export function getMinedPaginatedTransactions(forward) {
         return;
       }
     } else {
-      var prevStartTxHeight = paginatedTxs[0].height;
-      var prevStartTxIndex = paginatedTxs[0].index;
-      var prevEndTxHeight = paginatedTxs[paginatedTxs.length-1].height;
-      var prevEndTxIndex = paginatedTxs[paginatedTxs.length-1].index;
+      prevStartTxHeight = paginatedTxs[0].height;
+      prevStartTxIndex = paginatedTxs[0].index;
+      prevEndTxHeight = paginatedTxs[paginatedTxs.length-1].height;
+      prevEndTxIndex = paginatedTxs[paginatedTxs.length-1].index;
       // Check if we want to look forward or backward
       if (!forward) {
         endRequestHeight = prevEndTxHeight;

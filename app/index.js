@@ -97,7 +97,7 @@ var initialState = {
     tempPaginatedTxs: Array(),
     paginatedTxs: Array(),
     paginatingTxs: false,
-    txPerPage: 2,
+    txPerPage: 3,
     currentPage: 0,
     prevStartTxHeight: 0,
     prevStartTxIndex: 0,
