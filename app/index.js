@@ -97,7 +97,7 @@ var initialState = {
     tempPaginatedTxs: Array(),
     paginatedTxs: Array(),
     paginatingTxs: false,
-    txPerPage: 10,
+    txPerPage: 2,
     updatePaginationMinedRequest: false,
     updatePaginationUnminedRequest: false,
     getTransactionsRequest: null,

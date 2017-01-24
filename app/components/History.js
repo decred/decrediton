@@ -54,9 +54,10 @@ class History extends Component{
     walletService: PropTypes.object,
   };
 
+
   render() {
     const { walletService, getBalanceResponse, getBalanceRequestAttempt } = this.props;
-    const { txPerPage, paginatedTxs, paginatingTxs } = this.props;
+    const { txPerPage, paginatedTxs, paginatingTxs, getMinedPaginatedTransactions } = this.props;
     const historyView = (
       <div style={styles.content}>
         <h3>Available Balance:</h3>
@@ -65,6 +66,8 @@ class History extends Component{
               <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
               amount={getBalanceResponse.getTotal()} /> }
         </div>
+        <button onClick={()=>getMinedPaginatedTransactions(true)}>+</button>
+        <button onClick={()=>getMinedPaginatedTransactions(false)}>-</button>
         <TxHistory mined={paginatedTxs}/>
       </div>);
     if (walletService === null) {

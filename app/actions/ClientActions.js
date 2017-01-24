@@ -371,9 +371,9 @@ function paginatedTransactionsProgess(getTransactionsResponse) {
 // get to 0.
 function getMinedPaginatedTransactionsCheck() {
   return (dispatch, getState) => {
-    const { paginatingTxs, lookForward } = getState().grpc;
+    const { paginatingTxs, lookForward, paginatedTxs } = getState().grpc;
     if (paginatingTxs) {
-      console.log("getting more txs. current length:", paginatingTxs.length);
+      console.log("getting more txs. current length:", paginatedTxs.length);
       // Still need to get more transactions
       dispatch(getMinedPaginatedTransactions(lookForward));
     }
@@ -383,44 +383,40 @@ function getMinedPaginatedTransactionsCheck() {
 export function getMinedPaginatedTransactions(forward) {
   return (dispatch, getState) => {
     const { paginatingTxs, txLookBack, lookForward, startHeight, endHeight, getAccountsResponse } = getState().grpc;
-    if (!paginatingTxs) {
-      var startRequestHeight, endRequestHeight = 0;
-      // On startup endHeight will be 0.
-      // After the first successful paginated reqeuest it will hold where we left off while getting transactions.
-      if ( endHeight === 0 ) {
-        // Check to make sure getAccountsResponse (which has current block height) is available
-        if ( getAccountsResponse !== null ) {
-          endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
-          startRequestHeight = endRequestHeight - txLookBack;
-        } else {
-          // Wait a little then re-dispatch this call since we have no starting height yet
-          setTimeout( () => {dispatch(getMinedPaginatedTransactions(forward));}, 1000);
-          return;
-        }
+    var startRequestHeight, endRequestHeight = 0;
+    // On startup endHeight will be 0.
+    // After the first successful paginated reqeuest it will hold where we left off while getting transactions.
+    if ( endHeight === 0 ) {
+    // Check to make sure getAccountsResponse (which has current block height) is available
+      if ( getAccountsResponse !== null ) {
+        endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
+        startRequestHeight = endRequestHeight - txLookBack;
       } else {
-        // Check if we want to look forward or backward
-        if (!forward) {
-          // Subtract 1 from end height so we don't overlap
-          endRequestHeight = endHeight - 1;
-          startRequestHeight = endRequestHeight - txLookBack;
-        } else {
-          // Add 1 to start height so we don't overlap
-          startRequestHeight = endHeightTxHistory + 1;
-          endRequestHeight = startRequestHeight + txLookBack;
-        }
+        // Wait a little then re-dispatch this call since we have no starting height yet
+          setTimeout( () => {dispatch(getMinedPaginatedTransactions(forward));}, 1000);
+        return;
       }
+    } else {
+      // Check if we want to look forward or backward
+      if (!forward) {
+        // Subtract 1 from end height so we don't overlap
+        endRequestHeight = endHeight - 1;
+        startRequestHeight = endRequestHeight - txLookBack;
+      } else {
+        // Add 1 to start height so we don't overlap
+        startRequestHeight = endHeight + 1;
+        endRequestHeight = startRequestHeight + txLookBack;
+      }
+    }
+    if (!paginatingTxs) {
       dispatch({
-        endHeight: endRequestHeight,
         lookForward: forward,
         type: PAGINATETRANSACTIONS_START });
-    } else {
-      dispatch({
-        endHeight: endRequestHeight,
-        type: PAGINATETRANSACTIONS_UPDATE_END });
     }
     var request = new GetTransactionsRequest();
     request.setStartingBlockHeight(startRequestHeight);
     request.setEndingBlockHeight(endRequestHeight);
+    console.log("sending getTransactions request",startRequestHeight, endRequestHeight);
 
     dispatch(getPaginatedTransactions(request));
   };
