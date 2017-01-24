@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ErrorScreen from './ErrorScreen';
 import ConstructTxForm from '../containers/ConstructTxForm';
 import SignTxForm from '../containers/SignTxForm';
+import PublishTx from '../containers/PublishTx';
 import ShowError from './ShowError';
 import { reverseHash } from '../helpers/byteActions';
 import SideBar from './SideBar';
@@ -28,6 +29,9 @@ const styles = {
     float: 'right',
     backgroundColor: '#f3f6f6',
   },
+  button: {
+    margin: 12
+  },
 };
 
 class Send extends Component{
@@ -45,7 +49,7 @@ class Send extends Component{
     const { constructTxResponse, constructTxError } = this.props;
     const { publishTransactionResponse, publishTransactionError } = this.props;
     const { signTransactionError } = this.props;
-
+    const { clearTransaction, signTransactionAttempt} = this.props;
     const constructTxView = (
       <div style={styles.content}>
         <ShowError error={constructTxError}/>
@@ -56,7 +60,7 @@ class Send extends Component{
     const signTxView = (
       <div style={styles.content}>
         <ShowError error={signTransactionError}/>
-        <h1>Sign tx</h1>
+        <h1>Sign Tx</h1>
         <p> raw tx <br/>
           {constructTxResponse !== null ? constructTxResponse.getUnsignedTransaction() : null}}
         </p>
@@ -69,7 +73,7 @@ class Send extends Component{
         <p> estimated signed size <br/>
           {constructTxResponse !== null ? constructTxResponse.getEstimatedSignedSize() : null}
         </p>
-        <SignTxForm rawTx={constructTxResponse !== null ? constructTxResponse.getUnsignedTransaction() : null}/>
+      <SignTxForm clearTransaction={clearTransaction} signTransactionAttempt={signTransactionAttempt} rawTx={constructTxResponse !== null ? constructTxResponse.getUnsignedTransaction() : null}/>
       </div>);
 
     var sendView;
@@ -79,6 +83,7 @@ class Send extends Component{
         <ShowError error={publishTransactionError}/>
         <h1>Published Tx!</h1>
         <p>{publishTransactionResponse !== null ? reverseHash(publishTransactionResponse.toString('hex')) : null}</p>
+	<PublishTx clearTransaction={clearTransaction}/>
       </div>);
 
     if (constructTxResponse === null) {
