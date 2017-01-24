@@ -9,6 +9,7 @@ import {
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
   GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED, GETTRANSACTIONS_MINED_PROGRESS, GETTRANSACTIONS_UNMINED_PROGRESS, GETTRANSACTIONS_COMPLETE,
   UPDATETXHISTORYPAGINATION_MINED, UPDATETXHISTORYPAGINATION_UNMINED,
+  PAGINATETRANSACTIONS_START, PAGINATETRANSACTIONS_MORE, PAGINATETRANSACTIONS_END, PAGINATETRANSACTIONS_UPDATE_END,
 } from '../actions/ClientActions';
 
 export default function grpc(state = {}, action) {
@@ -149,53 +150,11 @@ export default function grpc(state = {}, action) {
       getAccountsRequestAttempt: false,
       getAccountsResponse: action.response,
     };
-  case GETTRANSACTIONS_ATTEMPT:
-    return {...state,
-      getTransactionsError: '',
-      getTransactionsRequestAttempt: true,
-      getTransactionsRequest: action.request,
-    };
-  case GETTRANSACTIONS_FAILED:
-    return {...state,
-      getTransactionsError: action.error,
-      getTransactionsRequestAttempt: false,
-    };
-  case GETTRANSACTIONS_MINED_PROGRESS:
-    return {...state,
-      mined: [
-        ...state.mined,
-        action.tx,
-      ],
-    };
-  case GETTRANSACTIONS_UNMINED_PROGRESS:
-    return {...state,
-      unmined: [
-        ...state.unmined,
-        action.unmined,
-      ],
-    };
-  case GETTRANSACTIONS_COMPLETE:
-    return {...state,
-      getTransactionsError: '',
-      getTransactionsRequestAttempt: false,
-      getTransactionsResponse: null,
-      getTransactionsRequest: null,
-    };
-  case UPDATETXHISTORYPAGINATION_MINED:
-    return {...state,
-    currentMined: action.currentMined,
-    currentMinedPage: action.requestedPage,
-   };
-  case UPDATETXHISTORYPAGINATION_UNMINED:
-    return {...state,
-    currentUnmined: action.currentUnmined,
-    currentUnminedPage: action.requestedPage,
-   }; 
   case PAGINATETRANSACTIONS_START:
     return {...state,
-      endHeightTxHistory: action.endHeightTxHistory,
+      endHeight: action.endHeight,
       paginatingTxHistory: true,
-      paginatedTxs: Array();
+      paginatedTxs: Array(),
     };
   case PAGINATETRANSACTIONS_END:
     return {...state,
@@ -208,8 +167,12 @@ export default function grpc(state = {}, action) {
       tempPaginatedTxs: [
         ...state.tempPaginatedTxs,
         action.tempPaginatedTxs,
-      ];
+      ],
     };
+  case PAGINATETRANSACTIONS_UPDATE_END:
+    return {...state,
+      endHeight: action.endHeight,
+    };  
   default:
     return state;
   }

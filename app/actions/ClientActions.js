@@ -25,7 +25,7 @@ function getWalletServiceSuccess(walletService) {
     setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
     //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
 
-    setTimeout( () => {dispatch(getMinedPaginatedTransactions(false);}, 1500);
+    setTimeout( () => {dispatch(getMinedPaginatedTransactions(false))}, 1500);
 
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
@@ -334,11 +334,7 @@ export const GETTRANSACTIONS_COMPLETE = 'GETTRANSACTIONS_COMPLETE';
 export const PAGINATETRANSACTIONS_START = 'PAGINATETRANSACTIONS_START';
 export const PAGINATETRANSACTIONS_END = 'PAGINATETRANSACTIONS_END';
 export const PAGINATETRANSACTIONS_MORE = 'PAGINATETRANSACTIONS_MORE';
-
-function getTransactionsError(error) {
-  return { error, type: GETTRANSACTIONS_FAILED };
-}
-
+export const PAGINATETRANSACTIONS_UPDATE_END = 'PAGINATETRANSACTIONS_UPDATE_END';
 function paginatedTransactionsProgess(getTransactionsResponse) {
   return (dispatch, getState) => {
     const { tempPaginatedTxs, txPerPage } = getState().grpc;
@@ -347,69 +343,76 @@ function paginatedTransactionsProgess(getTransactionsResponse) {
     // Need less transactions than what we got, so stop it after the number we need
     // then close the request.
     if (neededTxs <= newTxs.length) {
-      tempPaginatedTxs.push(newTxs[0:needTxs]);
+      tempPaginatedTxs.push(newTxs.slice(0,needTxs));
       dispatch({ paginatedTxs: tempPaginatedTxs, type: PAGINATETRANSACTIONS_END });
     } else {
       // Transactions can just be appended here
       dispatch({ tempPaginatedTxs: newTxs, type: PAGINATETRANSACTIONS_MORE });
     }
+  }
 }
 
 // Once the get transactions call is complete we must check to see if we 
 // got enough tx to please txPerPage, if not keep looking back until we 
 // get to 0.
-function getMinedPaginatedTransactionsCheckLength() {
+function getMinedPaginatedTransactionsCheck() {
   return (dispatch, getState) => {
-    const { txPerPage, tempPaginatedResults, paginatingResults } = getState().grpc; {
-      if (paginatingResults) {
-        if (tempPaginatedResults.length = txPerPage) {
-          dispatch(getMoreTransactions());
-        }
-      }
+    const { paginatingTxs, lookForward } = getState().grpc;
+    if (paginatingTxs) {
+      // Still need to get more transactions
+      dispatch(getMinedPaginatedTransactions(lookForward));
     }
-    dispatch({ paginatedResults, type: GETTRANSACTIONS_COMPLETE });
   };
 }
 
 export function getMinedPaginatedTransactions(forward) {
   return (dispatch, getState) => {
-    const { txLookBack, endHeightTxHistory, getAccountsResponse } = getState().grpc;
-    var startRequestHeight, endRequestHeight = 0;
-    // On startup endHeightTxHistory will be 0.
-    // After the first successful paginated reqeuest it will hold where we left off while getting transactions.
-    if ( endHeightTxHistory === 0 ) {
-      // Check to make sure getAccountsResponse (which has current block height) is available
-      if ( getAccountsResponse !== null ) {
-        endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
-        startRequestHeight = endRequestHeight - blockLookBack;
+    const { paginatingTxs, txLookBack, lookForward, startHeight, endHeight, getAccountsResponse } = getState().grpc;
+    if (!paginatingTxs) {
+      var startRequestHeight, endRequestHeight = 0;
+      // On startup endHeight will be 0.
+      // After the first successful paginated reqeuest it will hold where we left off while getting transactions.
+      if ( endHeight === 0 ) {
+        // Check to make sure getAccountsResponse (which has current block height) is available
+        if ( getAccountsResponse !== null ) {
+          endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
+          startRequestHeight = endRequestHeight - txLookBack;
+        } else {
+          // Wait a little then re-dispatch this call since we have no starting height yet
+          setTimeout( () => {dispatch(getMinedPaginatedTransactions());}, 1000);
+          return;
+        }
       } else {
-        // Wait a little then re-dispatch this call since we have no starting height yet
-        setTimeout( () => {dispatch(getMinedPaginatedTransactions());}, 1000);
-        return;
+        // Check if we want to look forward or backward
+        if (!forward) {
+          // Subtract 1 from end height so we don't overlap
+          endRequestHeight = endHeight - 1;
+          startRequestHeight = endRequestHeight - txLookBack;
+        } else {
+          // Add 1 to start height so we don't overlap
+          startRequestHeight = endHeightTxHistory + 1;
+          endRequestHeight = startRequestHeight + txLookBack;
+        }
       }
+
+      dispatch({
+        endHeight: endRequestHeight,
+        lookForward: foward,
+        type: PAGINATETRANSACTIONS_START });
     } else {
-      // Check if we want to look forward or backward
-      if (!forward) {
-        // Subtract 1 from end height so we don't overlap
-        endRequestHeight = endHeightTxHistory - 1;
-        startRequestHeight = endRequestHeight - blockLookBack;
-      } else {
-        // Add 1 to start height so we don't overlap
-        startRequestHeight = endHeightTxHistory + 1;
-        endRequestHeight = startRequestHeight + blockLookBack;
-      }
+      dispatch({
+        endHeight: endRequestHeight,
+        type: PAGINATETRANSACTIONS_UPDATE_END });
     }
     var request = new GetTransactionsRequest();
     request.setStartingBlockHeight(startRequestHeight);
     request.setEndingBlockHeight(endRequestHeight);
-    dispatch({
-      endHeightTxHistory,
-      type: PAGINATETRANSACTIONS_START });
+
     dispatch(getPaginatedTransactions(request));
   };
 }
 
-function getPaginatedtransactions(request) {
+function getPaginatedTransactions(request) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     getTransactions(walletService, request,

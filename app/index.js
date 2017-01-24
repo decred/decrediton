@@ -90,13 +90,14 @@ var initialState = {
     getAccountsResponse: null,
 
     // Transactions
-    loadTxNumber: 100,
-    endHeightTxHistory: 0,
     txLookBack: 10000,
-    tempPaginatedResults: null;
-    paginatedResults: null;
-    paginatingResults: false,
-    txPerPage: 2,
+    lookForward: false,
+    startHeight: 0,
+    endHeight: 0,
+    tempPaginatedTxs: null,
+    paginatedTxs: null,
+    paginatingTxs: false,
+    txPerPage: 10,
     updatePaginationMinedRequest: false,
     updatePaginationUnminedRequest: false,
     getTransactionsRequest: null,
