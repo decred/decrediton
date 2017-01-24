@@ -51,19 +51,19 @@ class TxHistory extends Component {
     var today = new Date();
     if (mined !== null && mined.length > 0 ) {
       mined.sort(function(a, b) {
-        return b.getTimestamp() - a.getTimestamp();
+        return b.timestamp - a.timestamp;
       });
     }
-    if (unmined !== null && unmined.length > 0 ) {
+    if (unmined !== null && unmined !== undefined && unmined.length > 0 ) {
       unmined.sort(function(a, b) {
-        return b.getTimestamp() - a.getTimestamp();
+        return b.timestamp - a.timestamp;
       });
     }
     return (
       <div>
       <div style={styles.historyContainer}>
-        {unmined !== null && unmined.length > 0 ? <p> Unmined Transaction </p> : null}
-        {unmined !== null && unmined.length > 0 ? 
+        {unmined !== null && unmined !== undefined && unmined.length > 0 ? <p> Unmined Transaction </p> : null}
+        {unmined !== null && unmined !== undefined && unmined.length > 0 ? 
           unmined.map(function(tx) {
           var parseDate = new Date(tx.getTimestamp()*1000);
           var diffDays = Math.round(Math.abs((parseDate.getTime() - today.getTime())/(oneDay)));

@@ -160,7 +160,7 @@ export default function grpc(state = {}, action) {
     return {...state,
       paginatingTxs: false,
       tempPaginatedTxs: Array(),
-      paginatedTxs: action.paginatedTx,
+      paginatedTxs: action.paginatedTxs,
     };
   case PAGINATETRANSACTIONS_MORE:
     return {...state,

@@ -350,11 +350,18 @@ function paginatedTransactionsProgess(getTransactionsResponse) {
     console.log("new txs have arrived: newTxsLength ", newTxs.length);
     console.log("new txs have arrived: needed ", neededTxs);
     if (neededTxs <= newTxs.length) {
-      tempPaginatedTxs.push(newTxs.slice(0,neededTxs));
+      for (var i = 0; i < neededTxs; i++) {
+        newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
+        newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
+        tempPaginatedTxs.push(newTxs[i]);
+      }
       dispatch({ paginatedTxs: tempPaginatedTxs, type: PAGINATETRANSACTIONS_END });
     } else {
-      // Transactions can just be appended here
-      dispatch({ tempPaginatedTxs: newTxs, type: PAGINATETRANSACTIONS_MORE });
+      for (var i = 0; i < newTxs.length; i++) {
+        newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
+        newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
+        dispatch({ tempPaginatedTxs: newTxs[i], type: PAGINATETRANSACTIONS_MORE });
+      }
     }
   }
 }
