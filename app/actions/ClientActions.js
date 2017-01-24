@@ -338,7 +338,8 @@ export const PAGINATETRANSACTIONS_UPDATE_END = 'PAGINATETRANSACTIONS_UPDATE_END'
 
 function paginatedTransactionsProgess(getTransactionsResponse) {
   return (dispatch, getState) => {
-    const { tempPaginatedTxs, txPerPage, paginatingTxs } = getState().grpc;
+    const { currentPage, tempPaginatedTxs, txPerPage, paginatingTxs, lookForward } = getState().grpc;
+    const { prevStartTxHeight, prevStartTxIndex, prevEndTxHeight, prevEndTxIndex } = getState().grpc;
     if (!paginatingTxs) {
       return;
     }
@@ -346,21 +347,32 @@ function paginatedTransactionsProgess(getTransactionsResponse) {
     var newTxs = getTransactionsResponse.getMinedTransactions().getTransactionsList();
     // Need less transactions than what we got, so stop it after the number we need
     // then close the request.
-    console.log("new txs have arrived: previousLength ", tempPaginatedTxs.length);
-    console.log("new txs have arrived: newTxsLength ", newTxs.length);
-    console.log("new txs have arrived: needed ", neededTxs);
+    var blockHeight = getTransactionsResponse.getMinedTransactions().getHeight()
     if (neededTxs <= newTxs.length) {
       for (var i = 0; i < neededTxs; i++) {
+        // Skip tx if it was already included in the previous set
+        if ( (blockHeight == prevStartTxHeight && i == prevStartTxIndex) || 
+          (blockHeight == prevEndTxHeight && i == prevEndTxIndex))  {
+            continue;
+          }
         newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
         newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
+        newTxs[i].index = i;
         tempPaginatedTxs.push(newTxs[i]);
       }
-      dispatch({ endHeight: tempPaginatedTxs[tempPaginatedTxs.length-1].height, paginatedTxs: tempPaginatedTxs, type: PAGINATETRANSACTIONS_END });
+      var newPage = currentPage;
+      if (lookForward) { 
+        newPage -= 1;
+      } else {
+        newPage += 1;
+      }
+      dispatch({ currentPage: newPage, paginatedTxs: tempPaginatedTxs, type: PAGINATETRANSACTIONS_END });
     } else {
       for (var i = 0; i < newTxs.length; i++) {
         newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
         newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
-        dispatch({ endHeight: newTxs[i].height, tempPaginatedTxs: newTxs[i], type: PAGINATETRANSACTIONS_MORE });
+        newTxs[i].index = i;
+        dispatch({ tempPaginatedTxs: newTxs[i], type: PAGINATETRANSACTIONS_MORE });
       }
     }
   }
@@ -382,35 +394,41 @@ function getMinedPaginatedTransactionsCheck() {
 
 export function getMinedPaginatedTransactions(forward) {
   return (dispatch, getState) => {
-    const { paginatingTxs, txLookBack, lookForward, startHeight, endHeight, getAccountsResponse } = getState().grpc;
+    const { paginatedTxs, paginatingTxs, txLookBack, lookForward, getAccountsResponse } = getState().grpc;
     var startRequestHeight, endRequestHeight = 0;
     // On startup endHeight will be 0.
     // After the first successful paginated reqeuest it will hold where we left off while getting transactions.
-    if ( endHeight === 0 ) {
+    if ( paginatedTxs.length === 0 ) {
     // Check to make sure getAccountsResponse (which has current block height) is available
       if ( getAccountsResponse !== null ) {
         endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
         startRequestHeight = endRequestHeight - txLookBack;
       } else {
         // Wait a little then re-dispatch this call since we have no starting height yet
-          setTimeout( () => {dispatch(getMinedPaginatedTransactions(forward));}, 1000);
+        setTimeout( () => {dispatch(getMinedPaginatedTransactions(forward));}, 1000);
         return;
       }
     } else {
+      var prevStartTxHeight = paginatedTxs[0].height;
+      var prevStartTxIndex = paginatedTxs[0].index;
+      var prevEndTxHeight = paginatedTxs[paginatedTxs.length-1].height;
+      var prevEndTxIndex = paginatedTxs[paginatedTxs.length-1].index;
       // Check if we want to look forward or backward
       if (!forward) {
-        // Subtract 1 from end height so we don't overlap
-        endRequestHeight = endHeight - 1;
+        endRequestHeight = prevEndTxHeight;
         startRequestHeight = endRequestHeight - txLookBack;
       } else {
-        // Add 1 to start height so we don't overlap
-        startRequestHeight = endHeight + 1;
+        startRequestHeight = prevEndTxHeight;
         endRequestHeight = startRequestHeight + txLookBack;
       }
     }
     if (!paginatingTxs) {
       dispatch({
         lookForward: forward,
+        prevStartTxHeight,
+        prevStartTxIndex,
+        prevEndTxHeight,
+        prevEndTxIndex,
         type: PAGINATETRANSACTIONS_START });
     }
     var request = new GetTransactionsRequest();

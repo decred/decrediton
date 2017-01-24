@@ -12,6 +12,7 @@ function mapStateToProps(state) {
     paginatingTxs: state.grpc.paginatingTxs,
     getBalanceResponse: state.grpc.getBalanceResponse,
     getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
+    currentPage: state.grpc.currentPage,
   };
 }
 
