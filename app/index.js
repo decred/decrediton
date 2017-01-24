@@ -88,16 +88,15 @@ var initialState = {
     getAccountsError: null,
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
+
     // Transactions
     loadTxNumber: 100,
+    endHeightTxHistory: 0,
     txLookBack: 10000,
-    mined: Array(),
-    unmined: Array(),
-    currentUnmined: null,
-    currentMined: null,
+    tempPaginatedResults: null;
+    paginatedResults: null;
+    paginatingResults: false,
     txPerPage: 2,
-    currentMinedPage: 0,
-    currentUnminedPage: 0,
     updatePaginationMinedRequest: false,
     updatePaginationUnminedRequest: false,
     getTransactionsRequest: null,

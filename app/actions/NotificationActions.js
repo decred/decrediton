@@ -17,12 +17,6 @@ function transactionNtfnsData(response) {
     setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
     setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
     setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
-    const { txLookBack, getAccountsResponse } = getState().grpc;
-    //if ( getAccountsResponse !== null ) {
-      var currentHeight = 254384; //getAccountsResponse.getCurrentBlockHeight();
-      var lookBackBlockHeight = currentHeight - txLookBack;
-      setTimeout( () => {dispatch(getTransactionsAttempt(lookBackBlockHeight, currentHeight, '', ''));}, 1000);
-    //}
   };
 }
 

@@ -191,6 +191,25 @@ export default function grpc(state = {}, action) {
     currentUnmined: action.currentUnmined,
     currentUnminedPage: action.requestedPage,
    }; 
+  case PAGINATETRANSACTIONS_START:
+    return {...state,
+      endHeightTxHistory: action.endHeightTxHistory,
+      paginatingTxHistory: true,
+      paginatedTxs: Array();
+    };
+  case PAGINATETRANSACTIONS_END:
+    return {...state,
+      paginatingTxHistory: false,
+      tempPaginatedTxs: Array(),
+      paginatedTxs: action.paginatedTx,
+    };
+  case PAGINATETRANSACTIONS_MORE:
+    return {...state,
+      tempPaginatedTxs: [
+        ...state.tempPaginatedTxs,
+        action.tempPaginatedTxs,
+      ];
+    };
   default:
     return state;
   }
