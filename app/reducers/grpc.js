@@ -152,18 +152,19 @@ export default function grpc(state = {}, action) {
     };
   case PAGINATETRANSACTIONS_START:
     return {...state,
-      endHeight: action.endHeight,
       paginatingTxs: true,
       paginatedTxs: Array(),
     };
   case PAGINATETRANSACTIONS_END:
     return {...state,
+      endHeight: action.endHeight,
       paginatingTxs: false,
       tempPaginatedTxs: Array(),
       paginatedTxs: action.paginatedTxs,
     };
   case PAGINATETRANSACTIONS_MORE:
     return {...state,
+      endHeight: action.endHeight,
       tempPaginatedTxs: [
         ...state.tempPaginatedTxs,
         action.tempPaginatedTxs,

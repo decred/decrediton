@@ -355,12 +355,12 @@ function paginatedTransactionsProgess(getTransactionsResponse) {
         newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
         tempPaginatedTxs.push(newTxs[i]);
       }
-      dispatch({ paginatedTxs: tempPaginatedTxs, type: PAGINATETRANSACTIONS_END });
+      dispatch({ endHeight: tempPaginatedTxs[tempPaginatedTxs.length-1].height, paginatedTxs: tempPaginatedTxs, type: PAGINATETRANSACTIONS_END });
     } else {
       for (var i = 0; i < newTxs.length; i++) {
         newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
         newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
-        dispatch({ tempPaginatedTxs: newTxs[i], type: PAGINATETRANSACTIONS_MORE });
+        dispatch({ endHeight: newTxs[i].height, tempPaginatedTxs: newTxs[i], type: PAGINATETRANSACTIONS_MORE });
       }
     }
   }

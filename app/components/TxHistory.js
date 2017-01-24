@@ -122,15 +122,11 @@ class TxHistory extends Component {
               var txAmount = 0;
               for(var k = 0; k < credits.length; k++){
                 txAmount += credits[k].getAmount();
-                address = credits[k].getAddress();
               }
               return (
               <div style={styles.transactionRow} key={tx.getHash()}>
                 <Receive />
                 <span style={styles.txAmount}><Balance amount={txAmount} /></span>
-                <br/>
-                <span style={styles.txAmount}>{address}</span>
-                <br/>
                 <span style={styles.txDateSince}>{diffDays} Days Since
                   <LeftArrow />
                 </span>
@@ -141,7 +137,6 @@ class TxHistory extends Component {
               var returnedAmount = 0;
               for(k = 0; k < credits.length; k++){
                 returnedAmount += credits[k].getAmount();
-                console.log("output address",credits[k].getAddress() );
               }
               for(k = 0; k < debits.length; k++){
                 prevAmount += debits[k].getPreviousAmount();
