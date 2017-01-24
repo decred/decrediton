@@ -49,12 +49,12 @@ class TxHistory extends Component {
     const unmined = this.props.unmined;
     var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
     var today = new Date();
-    if (mined !== null) {
+    if (mined !== null && mined.length > 0 ) {
       mined.sort(function(a, b) {
         return b.getTimestamp() - a.getTimestamp();
       });
     }
-    if (unmined !== null) {
+    if (unmined !== null && unmined.length > 0 ) {
       unmined.sort(function(a, b) {
         return b.getTimestamp() - a.getTimestamp();
       });

@@ -335,15 +335,22 @@ export const PAGINATETRANSACTIONS_START = 'PAGINATETRANSACTIONS_START';
 export const PAGINATETRANSACTIONS_END = 'PAGINATETRANSACTIONS_END';
 export const PAGINATETRANSACTIONS_MORE = 'PAGINATETRANSACTIONS_MORE';
 export const PAGINATETRANSACTIONS_UPDATE_END = 'PAGINATETRANSACTIONS_UPDATE_END';
+
 function paginatedTransactionsProgess(getTransactionsResponse) {
   return (dispatch, getState) => {
-    const { tempPaginatedTxs, txPerPage } = getState().grpc;
+    const { tempPaginatedTxs, txPerPage, paginatingTxs } = getState().grpc;
+    if (!paginatingTxs) {
+      return;
+    }
     var neededTxs = txPerPage - tempPaginatedTxs.length;
-    newTxs = getTransactionsResponse.getMinedTransactions().getTransactionsList();
+    var newTxs = getTransactionsResponse.getMinedTransactions().getTransactionsList();
     // Need less transactions than what we got, so stop it after the number we need
     // then close the request.
+    console.log("new txs have arrived: previousLength ", tempPaginatedTxs.length);
+    console.log("new txs have arrived: newTxsLength ", newTxs.length);
+    console.log("new txs have arrived: needed ", neededTxs);
     if (neededTxs <= newTxs.length) {
-      tempPaginatedTxs.push(newTxs.slice(0,needTxs));
+      tempPaginatedTxs.push(newTxs.slice(0,neededTxs));
       dispatch({ paginatedTxs: tempPaginatedTxs, type: PAGINATETRANSACTIONS_END });
     } else {
       // Transactions can just be appended here
@@ -359,6 +366,7 @@ function getMinedPaginatedTransactionsCheck() {
   return (dispatch, getState) => {
     const { paginatingTxs, lookForward } = getState().grpc;
     if (paginatingTxs) {
+      console.log("getting more txs. current length:", paginatingTxs.length);
       // Still need to get more transactions
       dispatch(getMinedPaginatedTransactions(lookForward));
     }
@@ -379,7 +387,7 @@ export function getMinedPaginatedTransactions(forward) {
           startRequestHeight = endRequestHeight - txLookBack;
         } else {
           // Wait a little then re-dispatch this call since we have no starting height yet
-          setTimeout( () => {dispatch(getMinedPaginatedTransactions());}, 1000);
+          setTimeout( () => {dispatch(getMinedPaginatedTransactions(forward));}, 1000);
           return;
         }
       } else {
@@ -394,10 +402,9 @@ export function getMinedPaginatedTransactions(forward) {
           endRequestHeight = startRequestHeight + txLookBack;
         }
       }
-
       dispatch({
         endHeight: endRequestHeight,
-        lookForward: foward,
+        lookForward: forward,
         type: PAGINATETRANSACTIONS_START });
     } else {
       dispatch({
@@ -420,7 +427,7 @@ function getPaginatedTransactions(request) {
           if (err) {
             dispatch(getTransactionsError(err + ' Please try again'));
           } else if (finished) {
-            dispatch(getMinedPaginatedTransactionsCheckLength());
+            dispatch(getMinedPaginatedTransactionsCheck());
           } else {
             dispatch(paginatedTransactionsProgess(getTransactionsResponse));
           }

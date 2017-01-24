@@ -7,10 +7,9 @@ import * as ClientActions from '../actions/ClientActions';
 function mapStateToProps(state) {
   return {
     walletService: state.grpc.walletService,
-    currentMined: state.grpc.currentMined,
-    currentMinedPage: state.grpc.currentMinedPage,
     txPerPage: state.grpc.txPerPage,
-    unmined: state.grpc.unmined,
+    paginatedTxs: state.grpc.paginatedTxs,
+    paginatingTxs: state.grpc.paginatingTxs,
     getBalanceResponse: state.grpc.getBalanceResponse,
     getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
   };
