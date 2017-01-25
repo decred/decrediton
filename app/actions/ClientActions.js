@@ -391,45 +391,29 @@ function getTransactionsInfoEnd() {
     const { transactionsInfo } = getState().grpc;
     console.log(transactionsInfo.length);
     dispatch({type: GETTRANSACTIONS_COMPLETE});
+    setTimeout( () => {dispatch(getMinedPaginatedTransactions(1))}, 1500);
   }
 }
-function paginatedTransactionsProgess(getTransactionsResponse) {
+
+function paginatedTransactionsProgess(getTransactionsResponse, requestedTxs) {
   return (dispatch, getState) => {
-    const { currentPage, tempPaginatedTxs, txPerPage, paginatingTxs, lookForward } = getState().grpc;
-    const { prevStartTxHeight, prevStartTxIndex, prevEndTxHeight, prevEndTxIndex } = getState().grpc;
+    const { paginatedTxs, paginatingTxs } = getState().grpc;
     if (!paginatingTxs) {
       return;
     }
-    var neededTxs = txPerPage - tempPaginatedTxs.length;
-
-      console.log(txPerPage, tempPaginatedTxs.length);
     var newTxs = getTransactionsResponse.getMinedTransactions().getTransactionsList();
-    // Need less transactions than what we got, so stop it after the number we need
-    // then close the request.
-    var txsAdded = 0;
     var blockHeight = getTransactionsResponse.getMinedTransactions().getHeight();
     for (var i = 0; i < newTxs.length; i++) {
-      if (txsAdded == neededTxs) {
-        // update the currentPage
-        var newPage = currentPage;
-        if (lookForward) { 
-          newPage--;
-        } else {
-          newPage++;
+      for (var j = 0; j < requestedTxs.length; j++) {
+        // Only add requested tx if it was already included in the previous set
+        if (blockHeight == requestedTxs[j].height && i == requestedTxs[j].index)  {
+          newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
+          newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
+          newTxs[i].index = i;
+          dispatch({ tempPaginatedTxs: newTxs[i], type: PAGINATETRANSACTIONS_MORE });
+          break;
         }
-        dispatch({ currentPage: newPage, type: PAGINATETRANSACTIONS_END });
-        break;
       }
-      // Skip tx if it was already included in the previous set
-      if ( (blockHeight == prevStartTxHeight && i == prevStartTxIndex) || 
-        (blockHeight == prevEndTxHeight && i == prevEndTxIndex))  {
-        continue;
-      }
-      newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
-      newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
-      newTxs[i].index = i;
-      txsAdded++;
-      dispatch({ tempPaginatedTxs: newTxs[i], type: PAGINATETRANSACTIONS_MORE });
     }
   }
 }
@@ -437,70 +421,41 @@ function paginatedTransactionsProgess(getTransactionsResponse) {
 // Once the get transactions call is complete we must check to see if we 
 // got enough tx to please txPerPage, if not keep looking back until we 
 // get to 0.
-function getMinedPaginatedTransactionsCheck() {
-  return (dispatch, getState) => {
-    const { paginatingTxs, lookForward, paginatedTxs } = getState().grpc;
-    if (paginatingTxs) {
-      console.log("getting more txs. current length:", paginatedTxs.length);
-      // Still need to get more transactions
-      dispatch(getMinedPaginatedTransactions(lookForward));
-    }
-  };
+function getMinedPaginatedTransactionsFinished() {
+  return { type: PAGINATETRANSACTIONS_END };
 }
 
-export function getMinedPaginatedTransactions(forward) {
+export function getMinedPaginatedTransactions(pageNumber) {
   return (dispatch, getState) => {
-    const { paginatedTxs, paginatingTxs, txLookBack, lookForward, getAccountsResponse } = getState().grpc;
-    var startRequestHeight, endRequestHeight = 0;
-    var prevStartTxHeight = 0;
-    var prevStartTxIndex = 0;
-    var prevEndTxHeight = 0;
-    var prevEndTxIndex = 0;
-    // On startup endHeight will be 0.
-    // After the first successful paginated reqeuest it will hold where we left off while getting transactions.
-    if ( paginatedTxs.length === 0 ) {
-    // Check to make sure getAccountsResponse (which has current block height) is available
-      if ( getAccountsResponse !== null ) {
-        endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
-        startRequestHeight = endRequestHeight - txLookBack;
-      } else {
-        // Wait a little then re-dispatch this call since we have no starting height yet
-        setTimeout( () => {dispatch(getMinedPaginatedTransactions(forward));}, 1000);
-        return;
-      }
-    } else {
-      prevStartTxHeight = paginatedTxs[0].height;
-      prevStartTxIndex = paginatedTxs[0].index;
-      prevEndTxHeight = paginatedTxs[paginatedTxs.length-1].height;
-      prevEndTxIndex = paginatedTxs[paginatedTxs.length-1].index;
-      // Check if we want to look forward or backward
-      if (!forward) {
-        endRequestHeight = prevEndTxHeight;
-        startRequestHeight = endRequestHeight - txLookBack;
-      } else {
-        startRequestHeight = prevEndTxHeight;
-        endRequestHeight = startRequestHeight + txLookBack;
-      }
+    const { paginatedTxs, paginatingTxs, txPerPage, transactionsInfo } = getState().grpc;
+    if (transactionsInfo.length === 0) {
+      return;
+    } 
+    var startRange = transactionsInfo.length - (pageNumber * txPerPage) - 1;
+    var endRange = startRange + txPerPage;
+    if (startRange < 0) {
+      startRange = 0;
     }
+    if (endRange >= transactionsInfo.length) {
+      endRange = transactionsInfo.length - 1;
+    }
+    var startBlockHeight = transactionsInfo[startRange].height;
+    var endBlockHeight = transactionsInfo[endRange].height;
+    
     if (!paginatingTxs) {
       dispatch({
-        lookForward: forward,
-        prevStartTxHeight,
-        prevStartTxIndex,
-        prevEndTxHeight,
-        prevEndTxIndex,
+        currentPage: pageNumber,
         type: PAGINATETRANSACTIONS_START });
     }
     var request = new GetTransactionsRequest();
-    request.setStartingBlockHeight(startRequestHeight);
-    request.setEndingBlockHeight(endRequestHeight);
-    console.log("sending getTransactions request",startRequestHeight, endRequestHeight);
+    request.setStartingBlockHeight(startBlockHeight);
+    request.setEndingBlockHeight(endBlockHeight);
 
-    dispatch(getPaginatedTransactions(request));
+    dispatch(getPaginatedTransactions(request, transactionsInfo.slice(startRange,endRange)));
   };
 }
 
-function getPaginatedTransactions(request) {
+function getPaginatedTransactions(request, requestedTxs) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     getTransactions(walletService, request,
@@ -508,9 +463,9 @@ function getPaginatedTransactions(request) {
           if (err) {
             dispatch(getTransactionsError(err + ' Please try again'));
           } else if (finished) {
-            dispatch(getMinedPaginatedTransactionsCheck());
+            dispatch(getMinedPaginatedTransactionsFinished());
           } else {
-            dispatch(paginatedTransactionsProgess(getTransactionsResponse));
+            dispatch(paginatedTransactionsProgess(getTransactionsResponse, requestedTxs));
           }
         });
   };
