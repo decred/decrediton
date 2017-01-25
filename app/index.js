@@ -88,9 +88,16 @@ var initialState = {
     getAccountsError: null,
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
-    // Transactions
-    mined: Array(),
-    unmined: Array(),
+
+    // PaginateTransactions
+    tempPaginatedTxs: Array(),
+    paginatedTxs: Array(),
+    paginatingTxs: false,
+    txPerPage: 10,
+    currentPage: 1,
+
+    // GetTransactionInfo
+    transactionsInfo: Array(),
     getTransactionsRequest: null,
     getTransactionsError: null,
     getTransactionsRequestAttempt: false,

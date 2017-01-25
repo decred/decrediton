@@ -1,6 +1,6 @@
 import { transactionNtfs, spentnessNtfs, accountNtfs } from '../middleware/grpc/client';
 import { getAccountsAttempt, getBalanceAttempt, getStakeInfoAttempt,
-  getTicketPriceAttempt, getNetworkAttempt, getTransactionsAttempt} from './ClientActions';
+  getTicketPriceAttempt, getNetworkAttempt } from './ClientActions';
 
 import { TransactionNotificationsRequest } from '../middleware/walletrpc/api_pb';
 
@@ -17,7 +17,6 @@ function transactionNtfnsData(response) {
     setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
     setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
     setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
-    setTimeout( () => {dispatch(getTransactionsAttempt(0, 300000, '', ''));}, 1000);
   };
 }
 

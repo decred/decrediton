@@ -1,15 +1,25 @@
 // @flow
 import { connect } from 'react-redux';
 import History from '../components/History';
+import { bindActionCreators } from 'redux';
+import * as ClientActions from '../actions/ClientActions';
 
 function mapStateToProps(state) {
   return {
     walletService: state.grpc.walletService,
-    mined: state.grpc.mined,
-    unmined: state.grpc.unmined,
+    txPerPage: state.grpc.txPerPage,
+    paginatedTxs: state.grpc.paginatedTxs,
+    paginatingTxs: state.grpc.paginatingTxs,
     getBalanceResponse: state.grpc.getBalanceResponse,
     getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
+    currentPage: state.grpc.currentPage,
+    transactionsInfo: state.grpc.transactionsInfo,
+    getTransactionsRequest: state.grpc.getTransactions,
   };
 }
 
-export default connect(mapStateToProps)(History);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(Object.assign({}, ClientActions), dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(History);

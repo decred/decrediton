@@ -7,7 +7,8 @@ import {
   GETSTAKEINFO_ATTEMPT, GETSTAKEINFO_FAILED, GETSTAKEINFO_SUCCESS,
   GETTICKETPRICE_ATTEMPT, GETTICKETPRICE_FAILED, GETTICKETPRICE_SUCCESS,
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
-  GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED, GETTRANSACTIONS_MINED_PROGRESS, GETTRANSACTIONS_UNMINED_PROGRESS, GETTRANSACTIONS_COMPLETE
+  GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED, GETTRANSACTIONS_PROGRESS, GETTRANSACTIONS_COMPLETE,
+  PAGINATETRANSACTIONS_START, PAGINATETRANSACTIONS_MORE, PAGINATETRANSACTIONS_END,
 } from '../actions/ClientActions';
 
 export default function grpc(state = {}, action) {
@@ -148,37 +149,47 @@ export default function grpc(state = {}, action) {
       getAccountsRequestAttempt: false,
       getAccountsResponse: action.response,
     };
+  case PAGINATETRANSACTIONS_START:
+    return {...state,
+      currentPage: action.currentPage,
+      paginatingTxs: true,
+      paginatedTxs: Array(),
+    };
+  case PAGINATETRANSACTIONS_END:
+    return {...state,
+      paginatingTxs: false,
+      paginatedTxs: state.tempPaginatedTxs,
+      tempPaginatedTxs: Array(),
+    };
+  case PAGINATETRANSACTIONS_MORE:
+    return {...state,
+      tempPaginatedTxs: [
+        ...state.tempPaginatedTxs,
+        action.tempPaginatedTxs,
+      ],
+    };
   case GETTRANSACTIONS_ATTEMPT:
     return {...state,
-      getTransactionsError: '',
-      getTransactionsRequestAttempt: true,
-      getTransactionsRequest: action.request,
+      transactionsInfo: Array(),
+      getAccountsError: '',
+      getAccountsRequestAttempt: true,
     };
   case GETTRANSACTIONS_FAILED:
     return {...state,
-      getTransactionsError: action.error,
-      getTransactionsRequestAttempt: false,
-    };
-  case GETTRANSACTIONS_MINED_PROGRESS:
-    return {...state,
-      mined: [
-        ...state.mined,
-        action.getTransactionsResponse.getMinedTransactions(),
-      ],
-    };
-  case GETTRANSACTIONS_UNMINED_PROGRESS:
-    return {...state,
-      unmined: [
-        ...state.unmined,
-        action.unmined,
-      ],
+      getAccountsError: action.error,
+      getAccountsRequestAttempt: false,
     };
   case GETTRANSACTIONS_COMPLETE:
     return {...state,
-      getTransactionsError: '',
-      getTransactionsRequestAttempt: false,
-      getTransactionsResponse: null,
-      getTransactionsRequest: null,
+      getAccountsError: '',
+      getAccountsRequestAttempt: false,
+    };
+  case GETTRANSACTIONS_PROGRESS:
+    return {...state,
+      transactionsInfo: [
+        ...state.transactionsInfo,
+        action.tx,
+      ]
     };
   default:
     return state;

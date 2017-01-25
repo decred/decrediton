@@ -24,7 +24,9 @@ function getWalletServiceSuccess(walletService) {
     setTimeout( () => {dispatch(getPingAttempt());}, 1000);
     setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
     //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
-    setTimeout( () => {dispatch(getTransactionsAttempt(0, 300000, '', ''));}, 1000);
+    setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
+    //setTimeout( () => {dispatch(getMinedPaginatedTransactions(false))}, 1500);
+
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.
@@ -326,76 +328,144 @@ function accounts() {
 
 export const GETTRANSACTIONS_ATTEMPT = 'GETTRANSACTIONS_ATTEMPT';
 export const GETTRANSACTIONS_FAILED = 'GETTRANSACTIONS_FAILED';
-export const GETTRANSACTIONS_MINED_PROGRESS = 'GETTRANSACTIONS_MINED_PROGRESS';
-export const GETTRANSACTIONS_UNMINED_PROGRESS = 'GETTRANSACTIONS_UNMINED_PROGRESS';
+export const GETTRANSACTIONS_PROGRESS = 'GETTRANSACTIONS_PROGRESS';
 export const GETTRANSACTIONS_COMPLETE = 'GETTRANSACTIONS_COMPLETE';
+export const PAGINATETRANSACTIONS_START = 'PAGINATETRANSACTIONS_START';
+export const PAGINATETRANSACTIONS_END = 'PAGINATETRANSACTIONS_END';
+export const PAGINATETRANSACTIONS_MORE = 'PAGINATETRANSACTIONS_MORE';
+export const PAGINATETRANSACTIONS_UPDATE_END = 'PAGINATETRANSACTIONS_UPDATE_END';
 
-function getTransactionsError(error) {
-  return { error, type: GETTRANSACTIONS_FAILED };
-}
-
-function getTransactionsProgress(getTransactionsResponse) {
+export function getTransactionInfoAttempt() {
   return (dispatch, getState) => {
-    const { mined, unmined } = getState().grpc;
-    var found = false;
-    if (getTransactionsResponse.getMinedTransactions() !== undefined) {
-      for (var i = 0; i < mined.length; i++) {
-        if ( mined[i].getHeight() == getTransactionsResponse.getMinedTransactions().getHeight() ) {
-          found = true;
-        }
-      }
-      if (!found) {
-        dispatch({getTransactionsResponse: getTransactionsResponse, type: GETTRANSACTIONS_MINED_PROGRESS });
-      }
+    const { getAccountsResponse } = getState().grpc;
+    var startRequestHeight, endRequestHeight = 0;
+    // Check to make sure getAccountsResponse (which has current block height) is available
+    if ( getAccountsResponse !== null ) {
+      endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
+      startRequestHeight = 0;
+    } else {
+      // Wait a little then re-dispatch this call since we have no starting height yet
+      setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
+      return;
     }
-    if (getTransactionsResponse.getUnminedTransactionsList().length > 0) {
-      found = false;
-      for (i = 0; i < getTransactionsResponse.getUnminedTransactionsList(); i++) {
-        for (var k = 0; k < unmined.length; k++) {
-          if ( unmined[k].getHash() == getTransactionsResponse.getUnminedTransactions()[i].getHash() ) {
-            found = true;
-          }
-        }
-        if (!found) {
-          dispatch({unmined: getTransactionsResponse.getUnminedTransactions()[i], type: GETTRANSACTIONS_UNMINED_PROGRESS });
-        }
-      }
-    }
+    var request = new GetTransactionsRequest();
+    request.setStartingBlockHeight(startRequestHeight);
+    request.setEndingBlockHeight(endRequestHeight);
+    console.log('sending getTransactionsInfo request',startRequestHeight, endRequestHeight);
+    dispatch({type: GETTRANSACTIONS_ATTEMPT});
+    dispatch(getTransactionsInfo(request));
   };
 }
 
-function getTransactionsComplete() {
-  return (dispatch) => {
-    dispatch({ type: GETTRANSACTIONS_COMPLETE });
-    setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
-  };
-}
-
-export function getTransactionsAttempt(startHeight, endHeight) {
-  // GetTransactions
-  var request = new GetTransactionsRequest();
-  request.setStartingBlockHeight(startHeight);
-  request.setEndingBlockHeight(endHeight);
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: GETTRANSACTIONS_ATTEMPT });
-    dispatch(transactions());
-  };
-}
-
-function transactions() {
+function getTransactionsInfo(request) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
-    const { getTransactionsRequest } = getState().grpc;
-    getTransactions(walletService, getTransactionsRequest,
+    getTransactions(walletService, request,
+      function(finished, getTransactionsResponse, err) {
+        if (err) {
+          console.error(err + ' Please try again');
+        } else if (finished) {
+          dispatch(getTransactionsInfoEnd());
+        } else {
+          dispatch(getTransactionsInfoProgress(getTransactionsResponse));
+        }
+      });
+  };
+}
+
+function getTransactionsInfoProgress(response) {
+  return (dispatch) => {
+    for (var i = 0; i < response.getMinedTransactions().getTransactionsList().length; i++) {
+      var newHeight = response.getMinedTransactions().getHeight();
+      var tx = {
+        height: newHeight,
+        index: i,
+      };
+      dispatch({tx, type: GETTRANSACTIONS_PROGRESS});
+    }
+    response = null;
+  };
+}
+function getTransactionsInfoEnd() {
+  return (dispatch, getState) => {
+    const { transactionsInfo } = getState().grpc;
+    console.log(transactionsInfo.length);
+    dispatch({type: GETTRANSACTIONS_COMPLETE});
+    setTimeout( () => {dispatch(getMinedPaginatedTransactions(1));}, 1500);
+  };
+}
+
+function paginatedTransactionsProgess(getTransactionsResponse, requestedTxs) {
+  return (dispatch, getState) => {
+    const { paginatingTxs } = getState().grpc;
+    if (!paginatingTxs) {
+      return;
+    }
+    var newTxs = getTransactionsResponse.getMinedTransactions().getTransactionsList();
+    var blockHeight = getTransactionsResponse.getMinedTransactions().getHeight();
+    for (var i = 0; i < newTxs.length; i++) {
+      for (var j = 0; j < requestedTxs.length; j++) {
+        // Only add requested tx if it was already included in the previous set
+        if (blockHeight == requestedTxs[j].height && i == requestedTxs[j].index)  {
+          newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
+          newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
+          newTxs[i].index = i;
+          dispatch({ tempPaginatedTxs: newTxs[i], type: PAGINATETRANSACTIONS_MORE });
+          break;
+        }
+      }
+    }
+  };
+}
+
+// Once the get transactions call is complete we must check to see if we
+// got enough tx to please txPerPage, if not keep looking back until we
+// get to 0.
+function getMinedPaginatedTransactionsFinished() {
+  return { type: PAGINATETRANSACTIONS_END };
+}
+
+export function getMinedPaginatedTransactions(pageNumber) {
+  return (dispatch, getState) => {
+    const { paginatingTxs, txPerPage, transactionsInfo } = getState().grpc;
+    if (transactionsInfo.length === 0) {
+      return;
+    }
+    var startRange = transactionsInfo.length - (pageNumber * txPerPage) - 1;
+    var endRange = startRange + txPerPage;
+    if (startRange < 0) {
+      startRange = 0;
+    }
+    if (endRange >= transactionsInfo.length) {
+      endRange = transactionsInfo.length - 1;
+    }
+    var startBlockHeight = transactionsInfo[startRange].height;
+    var endBlockHeight = transactionsInfo[endRange].height;
+
+    if (!paginatingTxs) {
+      dispatch({
+        currentPage: pageNumber,
+        type: PAGINATETRANSACTIONS_START });
+    }
+    var request = new GetTransactionsRequest();
+    request.setStartingBlockHeight(startBlockHeight);
+    request.setEndingBlockHeight(endBlockHeight);
+
+    dispatch(getPaginatedTransactions(request, transactionsInfo.slice(startRange,endRange)));
+  };
+}
+
+function getPaginatedTransactions(request, requestedTxs) {
+  return (dispatch, getState) => {
+    const { walletService } = getState().grpc;
+    getTransactions(walletService, request,
         function(finished, getTransactionsResponse, err) {
           if (err) {
-            dispatch(getTransactionsError(err + ' Please try again'));
+            console.log(err + ' Please try again');
           } else if (finished) {
-            dispatch(getTransactionsComplete());
+            dispatch(getMinedPaginatedTransactionsFinished());
           } else {
-            dispatch(getTransactionsProgress(getTransactionsResponse));
+            dispatch(paginatedTransactionsProgess(getTransactionsResponse, requestedTxs));
           }
         });
   };
