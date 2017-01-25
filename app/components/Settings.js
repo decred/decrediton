@@ -28,7 +28,10 @@ class Settings extends Component{
     const { walletService, currencyDisplay } = this.props;
     const settings = (
       <div style={styles.content}>
-        {currencyDisplay}
+        <select defaultValue={currencyDisplay}>
+          <option value="DCR">DCR</option>
+          <option value="atoms">atoms</option>
+        </select>
 			</div>
     );
     if (walletService === null) {
