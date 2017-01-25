@@ -375,15 +375,15 @@ function getTransactionsInfo(request) {
 
 function getTransactionsInfoProgress(response) {
   return (dispatch) => {
-    var minedTxs = response.getMinedTransactions().getTransactionsList();
-    for (var i = 0; i < minedTxs.length; i++) {
+    for (var i = 0; i < response.getMinedTransactions().getTransactionsList().length; i++) {
+      var newHeight = response.getMinedTransactions().getHeight();
       var tx = {
-        height: response.getMinedTransactions().getHeight(),
-        hash: minedTxs[i].getHash(),
+        height: newHeight,
         index: i,
       }
       dispatch({tx, type: GETTRANSACTIONS_PROGRESS});
     }
+    response = null;
   }
 }
 function getTransactionsInfoEnd() {
