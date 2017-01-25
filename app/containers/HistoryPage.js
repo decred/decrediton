@@ -14,6 +14,7 @@ function mapStateToProps(state) {
     getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
     currentPage: state.grpc.currentPage,
     transactionsInfo: state.grpc.transactionsInfo,
+    getTransactionsRequest: state.grpc.getTransactions,
   };
 }
 
