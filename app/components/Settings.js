@@ -20,12 +20,15 @@ const styles = {
 
 class Settings extends Component{
   static propTypes = {
+    walletService: PropTypes.object,
+    currencyDisplay: PropTypes.string
   };
 
   render() {
+    const { walletService, currencyDisplay } = this.props;
     const settings = (
       <div style={styles.content}>
-
+        {currencyDisplay}
 			</div>
     );
     if (walletService === null) {
@@ -40,4 +43,4 @@ class Settings extends Component{
   }
 }
 
-export default Receive;
+export default Settings;
