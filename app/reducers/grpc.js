@@ -7,7 +7,7 @@ import {
   GETSTAKEINFO_ATTEMPT, GETSTAKEINFO_FAILED, GETSTAKEINFO_SUCCESS,
   GETTICKETPRICE_ATTEMPT, GETTICKETPRICE_FAILED, GETTICKETPRICE_SUCCESS,
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
-  GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED, GETTRANSACTIONS_MINED_PROGRESS, GETTRANSACTIONS_UNMINED_PROGRESS, GETTRANSACTIONS_COMPLETE,
+  GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED, GETTRANSACTIONS_PROGRESS, GETTRANSACTIONS_COMPLETE,
   UPDATETXHISTORYPAGINATION_MINED, UPDATETXHISTORYPAGINATION_UNMINED,
   PAGINATETRANSACTIONS_START, PAGINATETRANSACTIONS_MORE, PAGINATETRANSACTIONS_END, PAGINATETRANSACTIONS_UPDATE_END,
 } from '../actions/ClientActions';
@@ -174,9 +174,29 @@ export default function grpc(state = {}, action) {
         action.tempPaginatedTxs,
       ],
     };
-  case PAGINATETRANSACTIONS_UPDATE_END:
+  case GETTRANSACTIONS_ATTEMPT:
     return {...state,
-    };  
+      transactionsInfo: Array(),
+      getAccountsError: '',
+      getAccountsRequestAttempt: true,
+    };
+  case GETTRANSACTIONS_FAILED:
+    return {...state,
+      getAccountsError: action.error,
+      getAccountsRequestAttempt: false,
+    };
+  case GETTRANSACTIONS_COMPLETE:
+    return {...state,
+      getAccountsError: '',
+      getAccountsRequestAttempt: false,
+    };
+  case GETTRANSACTIONS_PROGRESS:
+    return {...state,
+      transactionsInfo: [
+        ...state.transactionsInfo,
+        action.tx,
+      ]
+    };
   default:
     return state;
   }

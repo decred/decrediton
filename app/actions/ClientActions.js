@@ -24,8 +24,8 @@ function getWalletServiceSuccess(walletService) {
     setTimeout( () => {dispatch(getPingAttempt());}, 1000);
     setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
     //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
-
-    setTimeout( () => {dispatch(getMinedPaginatedTransactions(false))}, 1500);
+    setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
+    //setTimeout( () => {dispatch(getMinedPaginatedTransactions(false))}, 1500);
 
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
@@ -328,14 +328,71 @@ function accounts() {
 
 export const GETTRANSACTIONS_ATTEMPT = 'GETTRANSACTIONS_ATTEMPT';
 export const GETTRANSACTIONS_FAILED = 'GETTRANSACTIONS_FAILED';
-export const GETTRANSACTIONS_MINED_PROGRESS = 'GETTRANSACTIONS_MINED_PROGRESS';
-export const GETTRANSACTIONS_UNMINED_PROGRESS = 'GETTRANSACTIONS_UNMINED_PROGRESS';
+export const GETTRANSACTIONS_PROGRESS = 'GETTRANSACTIONS_PROGRESS';
 export const GETTRANSACTIONS_COMPLETE = 'GETTRANSACTIONS_COMPLETE';
 export const PAGINATETRANSACTIONS_START = 'PAGINATETRANSACTIONS_START';
 export const PAGINATETRANSACTIONS_END = 'PAGINATETRANSACTIONS_END';
 export const PAGINATETRANSACTIONS_MORE = 'PAGINATETRANSACTIONS_MORE';
 export const PAGINATETRANSACTIONS_UPDATE_END = 'PAGINATETRANSACTIONS_UPDATE_END';
 
+export function getTransactionInfoAttempt() {
+  return (dispatch, getState) => {
+    const { getAccountsResponse } = getState().grpc;
+    var startRequestHeight, endRequestHeight = 0;
+    // Check to make sure getAccountsResponse (which has current block height) is available
+    if ( getAccountsResponse !== null ) {
+        endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
+        startRequestHeight = 0;
+    } else {
+      // Wait a little then re-dispatch this call since we have no starting height yet
+      setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
+      return;
+    }
+    var request = new GetTransactionsRequest();
+    request.setStartingBlockHeight(startRequestHeight);
+    request.setEndingBlockHeight(endRequestHeight);
+    console.log("sending getTransactionsInfo request",startRequestHeight, endRequestHeight);
+    dispatch({type: GETTRANSACTIONS_ATTEMPT});
+    dispatch(getTransactionsInfo(request));
+  };
+}
+
+function getTransactionsInfo(request) {
+  return (dispatch, getState) => {
+    const { walletService } = getState().grpc;
+    getTransactions(walletService, request,
+      function(finished, getTransactionsResponse, err) {
+        if (err) {
+          console.error(err + ' Please try again');
+        } else if (finished) {
+          dispatch(getTransactionsInfoEnd());
+        } else {
+          dispatch(getTransactionsInfoProgress(getTransactionsResponse));
+        }
+      });
+  };
+}
+
+function getTransactionsInfoProgress(response) {
+  return (dispatch) => {
+    var minedTxs = response.getMinedTransactions().getTransactionsList();
+    for (var i = 0; i < minedTxs.length; i++) {
+      var tx = {
+        height: response.getMinedTransactions().getHeight(),
+        hash: minedTxs[i].getHash(),
+        index: i,
+      }
+      dispatch({tx, type: GETTRANSACTIONS_PROGRESS});
+    }
+  }
+}
+function getTransactionsInfoEnd() {
+  return (dispatch, getState) => {
+    const { transactionsInfo } = getState().grpc;
+    console.log(transactionsInfo.length);
+    dispatch({type: GETTRANSACTIONS_COMPLETE});
+  }
+}
 function paginatedTransactionsProgess(getTransactionsResponse) {
   return (dispatch, getState) => {
     const { currentPage, tempPaginatedTxs, txPerPage, paginatingTxs, lookForward } = getState().grpc;

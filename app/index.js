@@ -89,7 +89,7 @@ var initialState = {
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
 
-    // Transactions
+    // PaginateTransactions
     txLookBack: 10000,
     lookForward: false,
     startHeight: 0,
@@ -103,8 +103,9 @@ var initialState = {
     prevStartTxIndex: 0,
     prevEndTxHeight: 0,
     prevEndTxIndex: 0,
-    updatePaginationMinedRequest: false,
-    updatePaginationUnminedRequest: false,
+
+    // GetTransactionInfo
+    transactionsInfo: Array(),
     getTransactionsRequest: null,
     getTransactionsError: null,
     getTransactionsRequestAttempt: false,
