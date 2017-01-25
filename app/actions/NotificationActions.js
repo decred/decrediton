@@ -1,6 +1,6 @@
 import { transactionNtfs, spentnessNtfs, accountNtfs } from '../middleware/grpc/client';
 import { getAccountsAttempt, getBalanceAttempt, getStakeInfoAttempt,
-  getTicketPriceAttempt, getNetworkAttempt, getTransactionsAttempt} from './ClientActions';
+  getTicketPriceAttempt, getNetworkAttempt } from './ClientActions';
 
 import { TransactionNotificationsRequest } from '../middleware/walletrpc/api_pb';
 
@@ -10,7 +10,7 @@ export const TRANSACTIONNFTNS_DATA = 'TRANSACTIONNFTNS_DATA';
 export const TRANSACTIONNFTNS_END = 'TRANSACTIONNFTNS_END';
 
 function transactionNtfnsData(response) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
     setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
     setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);

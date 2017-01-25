@@ -341,8 +341,8 @@ export function getTransactionInfoAttempt() {
     var startRequestHeight, endRequestHeight = 0;
     // Check to make sure getAccountsResponse (which has current block height) is available
     if ( getAccountsResponse !== null ) {
-        endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
-        startRequestHeight = 0;
+      endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
+      startRequestHeight = 0;
     } else {
       // Wait a little then re-dispatch this call since we have no starting height yet
       setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
@@ -351,7 +351,7 @@ export function getTransactionInfoAttempt() {
     var request = new GetTransactionsRequest();
     request.setStartingBlockHeight(startRequestHeight);
     request.setEndingBlockHeight(endRequestHeight);
-    console.log("sending getTransactionsInfo request",startRequestHeight, endRequestHeight);
+    console.log('sending getTransactionsInfo request',startRequestHeight, endRequestHeight);
     dispatch({type: GETTRANSACTIONS_ATTEMPT});
     dispatch(getTransactionsInfo(request));
   };
@@ -380,24 +380,24 @@ function getTransactionsInfoProgress(response) {
       var tx = {
         height: newHeight,
         index: i,
-      }
+      };
       dispatch({tx, type: GETTRANSACTIONS_PROGRESS});
     }
     response = null;
-  }
+  };
 }
 function getTransactionsInfoEnd() {
   return (dispatch, getState) => {
     const { transactionsInfo } = getState().grpc;
     console.log(transactionsInfo.length);
     dispatch({type: GETTRANSACTIONS_COMPLETE});
-    setTimeout( () => {dispatch(getMinedPaginatedTransactions(1))}, 1500);
-  }
+    setTimeout( () => {dispatch(getMinedPaginatedTransactions(1));}, 1500);
+  };
 }
 
 function paginatedTransactionsProgess(getTransactionsResponse, requestedTxs) {
   return (dispatch, getState) => {
-    const { paginatedTxs, paginatingTxs } = getState().grpc;
+    const { paginatingTxs } = getState().grpc;
     if (!paginatingTxs) {
       return;
     }
@@ -415,11 +415,11 @@ function paginatedTransactionsProgess(getTransactionsResponse, requestedTxs) {
         }
       }
     }
-  }
+  };
 }
 
-// Once the get transactions call is complete we must check to see if we 
-// got enough tx to please txPerPage, if not keep looking back until we 
+// Once the get transactions call is complete we must check to see if we
+// got enough tx to please txPerPage, if not keep looking back until we
 // get to 0.
 function getMinedPaginatedTransactionsFinished() {
   return { type: PAGINATETRANSACTIONS_END };
@@ -427,10 +427,10 @@ function getMinedPaginatedTransactionsFinished() {
 
 export function getMinedPaginatedTransactions(pageNumber) {
   return (dispatch, getState) => {
-    const { paginatedTxs, paginatingTxs, txPerPage, transactionsInfo } = getState().grpc;
+    const { paginatingTxs, txPerPage, transactionsInfo } = getState().grpc;
     if (transactionsInfo.length === 0) {
       return;
-    } 
+    }
     var startRange = transactionsInfo.length - (pageNumber * txPerPage) - 1;
     var endRange = startRange + txPerPage;
     if (startRange < 0) {
@@ -441,7 +441,7 @@ export function getMinedPaginatedTransactions(pageNumber) {
     }
     var startBlockHeight = transactionsInfo[startRange].height;
     var endBlockHeight = transactionsInfo[endRange].height;
-    
+
     if (!paginatingTxs) {
       dispatch({
         currentPage: pageNumber,
@@ -461,7 +461,7 @@ function getPaginatedTransactions(request, requestedTxs) {
     getTransactions(walletService, request,
         function(finished, getTransactionsResponse, err) {
           if (err) {
-            dispatch(getTransactionsError(err + ' Please try again'));
+            console.log(err + ' Please try again');
           } else if (finished) {
             dispatch(getMinedPaginatedTransactionsFinished());
           } else {

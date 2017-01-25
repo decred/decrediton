@@ -56,8 +56,7 @@ class History extends Component{
 
   render() {
     const { walletService, getBalanceResponse, getBalanceRequestAttempt } = this.props;
-    const { txPerPage, transactionsInfo, paginatedTxs, paginatingTxs, getMinedPaginatedTransactions, currentPage } = this.props;
-    var newerPage = currentPage - 1;
+    const { txPerPage, transactionsInfo, paginatedTxs, getMinedPaginatedTransactions, currentPage } = this.props;
     const historyView = (
       <div style={styles.content}>
         <h3>Available Balance:</h3>
