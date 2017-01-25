@@ -90,19 +90,11 @@ var initialState = {
     getAccountsResponse: null,
 
     // PaginateTransactions
-    txLookBack: 10000,
-    lookForward: false,
-    startHeight: 0,
-    endHeight: null,
     tempPaginatedTxs: Array(),
     paginatedTxs: Array(),
     paginatingTxs: false,
-    txPerPage: 3,
-    currentPage: 0,
-    prevStartTxHeight: 0,
-    prevStartTxIndex: 0,
-    prevEndTxHeight: 0,
-    prevEndTxIndex: 0,
+    txPerPage: 10,
+    currentPage: 1,
 
     // GetTransactionInfo
     transactionsInfo: Array(),
