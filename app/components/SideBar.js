@@ -177,6 +177,7 @@ class SideBar extends Component {
           <MenuLink to="/send">Send</MenuLink>
           <MenuLink to="/receive">Receive</MenuLink>
           <MenuLink to="/history">History</MenuLink>
+          <MenuLink tp="/settings">Settings</MenuLink>
         </div>
         <div style={styles.menuBottom}>
           <div style={styles.menuBottomTotalBalanceShort}>
