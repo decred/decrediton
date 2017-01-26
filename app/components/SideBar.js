@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import Balance from './Balance';
-import MenuLogo from './icons/MenuLogo';
-import ArrowUpLightBlue from './icons/ArrowUpLightBlue';
+import arrowUpLightBlue from './icons/arrow-up-light-blue.svg';
+import menulogo from './icons/menu-logo.svg';
+
 function mapStateToProps(state) {
   return {
     walletService: state.grpc.walletService,
@@ -31,6 +32,7 @@ const styles = {
     zIndex: '3',
     height: '106px',
     backgroundColor: '#0c1e3e',
+    backgroundImage: `url(${menulogo})`,
     backgroundPosition: '58px 50%',
     backgroundSize: 'auto 30px',
     backgroundRepeat: 'no-repeat',
@@ -131,7 +133,7 @@ const styles = {
     height: '7px',
     marginBottom: '15px',
     borderBottom: '1px solid #69d5f7',
-    //background-image: 'url('../images/arrow-up-light-blue.svg')',
+    backgroundImage: `url(${arrowUpLightBlue})`,
     backgroundPosition: '50% 0px',
     backgroundSize: '12px',
     backgroundRepeat: 'no-repeat',
@@ -188,9 +190,7 @@ class SideBar extends Component {
     const { getAccountsResponse } = this.props;
     return (
       <div style={styles.menu}>
-        <div style={styles.menuLogo}>
-          <MenuLogo />
-        </div>
+        <div style={styles.menuLogo}></div>
         <div style={styles.menuNavigation}>
           <Link to="/home" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>Home</Link>
           <Link to="/send" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>Send</Link>
@@ -215,9 +215,7 @@ class SideBar extends Component {
       </div>
       <div style={styles.menuBottom}>
         <div style={styles.menuBottomTotalBalanceShort}>
-          <div style={styles.menuBottomTotalBalanceShortSeperator}>
-            <ArrowUpLightBlue />
-          </div>
+          <div style={styles.menuBottomTotalBalanceShortSeperator}></div>
           <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
           <div style={styles.menuBottomTotalBalanceShortValue}>1,199.675431 DCR</div>
         </div>
