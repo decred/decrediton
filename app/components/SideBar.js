@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import Balance from './Balance';
-import DecredLogo from './icons/DecredLogo';
+import MenuLogo from './icons/MenuLogo';
 
 function mapStateToProps(state) {
   return {
@@ -17,78 +17,25 @@ function mapStateToProps(state) {
 }
 
 const styles = {
-  sideBar: {
-    position: 'absolute',
-    top:'0px',
-    bottom:'0px',
-    left:'0px',
-    width:'250px',
-    background:'#132f4b',
-    borderRight: '1px solid black'
-  },
-  sidebarLink: {
-    display: 'block',
-    padding: '16px 30px',
-    color: '#757575',
-    textDecoration: 'none',
-  },
-  sidebarTitle: {
-    display: 'block',
-    padding: '0px',
-    color: '#757575',
-    textDecoration: 'none',
-    fontSize: '0.8em',
-    borderBottom: '1px solid black',
-    textAlign: 'left',
-    marginTop: '0.1em'
-  },
-  sidebarBlocks: {
-    textAlign: 'right',
-    marginTop: '0px',
-    marginBottom: '0px',
-  },
-  sideBarBalance: {
-    textAlign: 'right',
-    marginTop: '0px',
-    marginBottom: '0px',
-  },
-  active: {
-    color: 'white',
-    textDecoration: 'none',
-    borderLeft: '5px solid #2ed8a3',
-    backgroundColor: '#0d2034',
-  },
-  wellBalance: {
-    width: 'auto',
-    fontWeight: 'bold',
-    //font-family: $inconsolata;
-    fontSize: '1.2rem',
-    backgroundColor:'#e9f8fe',
-    padding: '5px 5px',
-    margin: '20px 0 0 0',
-    border: '2px solid #cacfd6',
-    textAlign: 'center',
-    color: '#0c1e3e',
-    boxShadow: 'none!important',
-  },
-  wellBlocks: {
-    width: 'auto',
-    fontWeight: 'bold',
-    //font-family: $inconsolata;
-    fontSize: '1.2rem',
-    backgroundColor:'#e9f8fe',
-    padding: '5px 5px',
-    marginTop: '0px',
-    border: '2px solid #cacfd6',
-    borderTop: '0px',
-    textAlign: 'center',
-    color: '#0c1e3e',
-    boxShadow: 'none!important',
-  },
-  pushToBottom: {
-    position: 'relative',
-    marginBottom: '-200px',
-  }
+  menu:{},
+  menuLogo:{},
+  menuNavigation:{},
+  menuNavigationLink:{},
+  menuNaviationLinkActive:{},
+  menuTotalBalanceExtended: {},
+  menuTotalBalanceExtendedBottom: {},
+  menuTotalBalanceExtendedBottomAccount: {},
+  menuTotalBalanceExtendedBottomAccountName: {},
+  menuTotalBalanceExtendedBottomAccountNumber: {},
+  menuBottom: {},
+  menuBottomTotalBalanceShort: {},
+  menuBottomTotalBalanceShortSeperator: {},
+  menuBottomTotalBalanceShortName: {},
+  menuBottomTotalBalanceShortValue: {},
+  menuBottomLatestBlock: {},
+  menuBottomLatestBlockName: {},
+  menuBottomLatestBlockNumber: {},
+  menuBottomLatestBlockTime: {},
 };
 
 class SideBar extends Component {
@@ -96,28 +43,41 @@ class SideBar extends Component {
     const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
     return (
-    <div style={styles.sideBar}>
-      <div style={styles.logoArea}>
-        <DecredLogo />
-      </div>
-      <div style={styles.linkArea}>
-        <Link to="/home" style={styles.sidebarLink} activeStyle={styles.active}>Home</Link>
-        <Link to="/history" style={styles.sidebarLink} activeStyle={styles.active}>History</Link>
-        <Link to="/send" style={styles.sidebarLink} activeStyle={styles.active}>Send Decred</Link>
-        <Link to="/receive" style={styles.sidebarLink} activeStyle={styles.active}>Receive Decred</Link>
-      </div>
-      <div style={styles.pushToBottom}>
-        <div style={styles.wellBalance}>
-          <p style={styles.sidebarTitle}>Balance:</p>
-          <p style={styles.sidebarBalance}>
-            {getBalanceResponse === null ? 'Please refresh' :
-              <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
-              amount={getBalanceResponse.getTotal()} /> }
-          </p>
+      <div style={styles.menu}>
+        <div style={styles.menuLogo}>
+          <MenuLogo />
         </div>
-        <div style={styles.wellBlocks}>
-          <p style={styles.sidebarTitle}>Block Height:</p>
-          <p style={styles.sidebarBlocks}>{getAccountsResponse === null ? '""' : getAccountsResponse.getCurrentBlockHeight() }</p>
+        <div style={styles.menuNavigation}>
+          <Link to="/home" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>Home</Link>
+          <Link to="/send" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>Send</Link>
+          <Link to="/receive" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>Receive</Link>
+          <Link to="/history" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>History</Link>
+        </div>
+        <div style={styles.menuTotalBalanceExtended}>
+          <div style={styles.menuTotalBalanceExtendedBottom}>
+            <div style={styles.menuTotalBalanceExtendedBottomAccount}>
+            <div style={styles.menuTotalBalanceExtendedBottomAccountName}>Primary account</div>
+            <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>32.00000000</div>
+          </div>
+          <div style={styles.menuTotalBalanceExtendedBottom}>
+            <div style={styles.menuTotalBalanceExtendedBottomAccountName}>Candy money</div>
+            <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>32.00000000</div>
+          </div>
+          <div style={styles.menuTotalBalanceExtendedBottom}>
+            <div style={styles.menuTotalBalanceExtendedBottomAccountName}>College funds</div>
+            <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>32.00000000</div>
+          </div>
+        </div>
+      </div>
+      <div style={styles.menuBottom}>
+        <div style={styles.menuBottomTotalBalanceShort}>
+          <div style={styles.menuBottomTotalBalanceShortSeperator}></div>
+          <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
+          <div style={styles.menuBottomTotalBalanceShortValue}>1,199.675431 DCR</div>
+        </div>
+        <div style={styles.menuBottomLatestBlock} class="menu-bottom-latest-block w-clearfix">
+          <a style={styles.menuBottomLastestBlockName} href="#">Latest block: <span style={styles.menuBottomLastestBlockNumber}>12,580</span></a>
+          <div style={styles.menuBottomLastestBlockTime}>1 min ago</div>
         </div>
       </div>
     </div>
