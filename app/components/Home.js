@@ -78,7 +78,8 @@ const styles = {
     color: '#596d81',
     fontSize: '27px',
   },
-  indicator: {
+
+  indicatorPending: {
     display: 'inline-block',
     padding: '5px 8px 5px 20px',
     borderStyle: 'solid',
@@ -88,23 +89,29 @@ const styles = {
     lineHeight: '8px',
     textAlign: 'right',
     textTransform: 'capitalize',
-  },
-
-  indicatorPending: {
     borderColor: '#2971ff',
     backgroundImage: `url(${IndicatorPending})`,
     backgroundPosition: '6px 50%',
     backgroundSize: '10px',
-    backgroundRepeat: 'noRepeat',
+    backgroundRepeat: 'no-repeat',
     color: '#2971ff',
   },
 
   indicatorConfirmed: {
+    display: 'inline-block',
+    padding: '5px 8px 5px 20px',
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderRadius: '3px',
+    fontSize: '12px',
+    lineHeight: '8px',
+    textAlign: 'right',
+    textTransform: 'capitalize',
     borderColor: '#2ed8a3',
     backgroundImage: `url(${IndicatorConfirmed})`,
     backgroundPosition: '6px 50%',
     backgroundSize: '10px',
-    backgroundRepeat: 'noRepeat',
+    backgroundRepeat: 'no-repeat',
     color: '#2ed8a3',
   },
 
@@ -128,7 +135,7 @@ const styles = {
     backgroundImage: `url(${ArrowRightGray}),url(${PlusSmall})`,
     backgroundPosition: '97% 50%, 20px 50%',
     backgroundSize: '5px 10px, 16px 16px',
-    backgroundRepeat: 'noRepeat, noRepeat',
+    backgroundRepeat: 'no-repeat, no-repeat',
     ':hover': {
       backgroundImage: `url(${ArrowRightKeyBlue}),url(${PlusSmall})`,
       backgroundSize: '5px, 16px',
@@ -139,7 +146,7 @@ const styles = {
     backgroundImage: `url(${ArrowRightGray},url(${MinusSmall}`,
     backgroundPosition: '97% 50%, 20px 50%',
     backgroundSize: '5px 10px, 16px 16px',
-    backgroundRepeat: 'noRepeat, noRepeat',
+    backgroundRepeat: 'no-repeat, no-repeat',
     ':hover': {
       backgroundImage: `url(${ArrowRightKeyBlue},url(${MinusSmall}`,
       backgroundSize: '5px, 16px',
@@ -230,7 +237,7 @@ const styles = {
     backgroundImage: `url(${Search})`,
     backgroundPosition: '50% 50%',
     backgroundSize: '20px',
-    backgroundRepeat: 'noRepeat',
+    backgroundRepeat: 'no-repeat',
     ':hover': {
       opacity: '0.8',
     }
