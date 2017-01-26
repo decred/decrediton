@@ -93,7 +93,7 @@ var initialState = {
     tempPaginatedTxs: Array(),
     paginatedTxs: Array(),
     paginatingTxs: false,
-    txPerPage: 10,
+    txPerPage: 6,
     currentPage: 1,
 
     // GetTransactionInfo

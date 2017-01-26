@@ -9,7 +9,7 @@ import * as ControlActions from '../actions/ControlActions';
 function mapStateToProps(state) {
   return {
     walletService: state.grpc.walletService,
-
+    paginatedTxs: state.grpc.paginatedTxs,
     getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
     getBalanceResponse: state.grpc.getBalanceResponse,
     getStakeInfoRequestAttempt: state.grpc.getStakeInfoRequestAttempt,
