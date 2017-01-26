@@ -7,7 +7,7 @@ class MenuLogo extends Component {
   render() {
     return (
 			<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 			width="325.369px" height="60px" viewBox="0 0 325.369 60" enable-background="new 0 0 325.369 60" xmlSpace="preserve">
+	 			width="325.369px" height="60px" viewBox="0 0 325.369 60" enableBackground="new 0 0 325.369 60" xmlSpace="preserve">
 				<path id="XMLID_102_" fill="#2ED7A2" d="M33.73,36.807h18.982c7.051,0,12.787-5.738,12.787-12.789
 					c0-7.051-5.736-12.791-12.787-12.791h-6.049L33.73,0h18.982c13.264,0,24.016,10.754,24.016,24.018
 					c0,10.063-6.189,18.68-14.969,22.251l14.967,12.994H59.6L33.73,36.807z"/>

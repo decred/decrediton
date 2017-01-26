@@ -221,7 +221,7 @@ class SideBar extends Component {
           <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
           <div style={styles.menuBottomTotalBalanceShortValue}>1,199.675431 DCR</div>
         </div>
-        <div style={styles.menuBottomLatestBlock} class="menu-bottom-latest-block w-clearfix">
+        <div style={styles.menuBottomLatestBlock}>
           <a style={styles.menuBottomLastestBlockName} href="#">Latest block: '<span style={styles.menuBottomLastestBlockNumber}>12,580</span></a>
           <div style={styles.menuBottomLastestBlockTime}>1 min ago</div>
         </div>
