@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Radium from 'radium';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import Balance from './Balance';
@@ -61,6 +62,10 @@ const styles = {
     textAlign: 'left',
     textDecoration: 'none',
     textTransform: 'capitalize',
+    ':hover': {
+      backgroundColor: '#09182d',
+      backgroundSize: '5px',
+    },
   },
   menuNaviationLinkActive:{
     backgroundColor: '#09182d',
@@ -136,7 +141,6 @@ const styles = {
     borderBottom: '1px solid #69d5f7',
     backgroundImage: `url(${arrowUpLightBlue})`,
     backgroundPosition: '50% 0px',
-    backgroundSize: '12px',
     backgroundRepeat: 'no-repeat',
   },
   menuBottomTotalBalanceShortName: {  
@@ -198,7 +202,7 @@ class SideBar extends Component {
           <Link to="/receive" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>Receive</Link>
           <Link to="/history" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>History</Link>
         </div>
-        <div style={styles.menuTotalBalanceExtended}>
+        <div style={styles.menuTotalBalanceExtended} hidden>
           <div style={styles.menuTotalBalanceExtendedBottom}>
             <div style={styles.menuTotalBalanceExtendedBottomAccount}>
             <div style={styles.menuTotalBalanceExtendedBottomAccountName}>Primary account</div>
@@ -230,5 +234,5 @@ class SideBar extends Component {
   }
 }
 
-export default connect(mapStateToProps)(SideBar);
+export default connect(mapStateToProps)(Radium(SideBar));
 
