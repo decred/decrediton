@@ -52,18 +52,14 @@ const styles = {
     height: '106px',
     paddingBottom: '20px',
   },
-  headerTitle: {
-    height: '54px',
-  },
-  headerMeta: {
-    height: '54px',
-  },
   headerTitleOverview: {
+    height: '54px',
     paddingTop: '13px',
     color: '#596d81',
     fontSize: '27px',
   },
   headerMetaOverview: {
+    height: '54px',
     paddingTop: '5px',
     fontFamily: 'Inconsolata, monospace',
     fontSize: '53px',
@@ -77,6 +73,7 @@ const styles = {
     borderBottom: '1px solid transparent',
     color: '#596d81',
     fontSize: '27px',
+    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
   },
 
   indicatorPending: {
@@ -119,36 +116,38 @@ const styles = {
     paddingTop: '1px',
   },
 
-  transaction: {
+  transactionIn: {
     height: '52px',
     paddingRight: '45px',
     paddingLeft: '56px',
     borderBottom: '1px solid #e7eaed',
     backgroundColor: '#fff',
     cursor: 'pointer',
-    ':hover': {
-      backgroundColor: 'rgba(212, 240, 253, .5)',
-    }
-  },
-
-  transactionIn: {
     backgroundImage: `url(${ArrowRightGray}),url(${PlusSmall})`,
     backgroundPosition: '97% 50%, 20px 50%',
     backgroundSize: '5px 10px, 16px 16px',
     backgroundRepeat: 'no-repeat, no-repeat',
     ':hover': {
+      backgroundColor: 'rgba(212, 240, 253, .5)',
       backgroundImage: `url(${ArrowRightKeyBlue}),url(${PlusSmall})`,
       backgroundSize: '5px, 16px',
     }
   },
 
   transactionOut: {
-    backgroundImage: `url(${ArrowRightGray},url(${MinusSmall}`,
+    height: '52px',
+    paddingRight: '45px',
+    paddingLeft: '56px',
+    borderBottom: '1px solid #e7eaed',
+    backgroundColor: '#fff',
+    cursor: 'pointer',
+    backgroundImage: `url(${ArrowRightGray}),url(${MinusSmall})`,
     backgroundPosition: '97% 50%, 20px 50%',
     backgroundSize: '5px 10px, 16px 16px',
     backgroundRepeat: 'no-repeat, no-repeat',
     ':hover': {
-      backgroundImage: `url(${ArrowRightKeyBlue},url(${MinusSmall}`,
+      backgroundColor: 'rgba(212, 240, 253, .5)',
+      backgroundImage: `url(${ArrowRightKeyBlue}),url(${MinusSmall})`,
       backgroundSize: '5px, 16px',
     }
   },
@@ -177,19 +176,19 @@ const styles = {
   },
 
   transactionAccountName: {
-    width: '50%',
+    width: '45%',
     height: '100%',
     paddingTop: '16px',
-    paddingRight: '10px',
+    paddingRight: '0px',
     float: 'left',
-    fontSize: '13px',
+    fontSize: '11px',
     textAlign: 'right',
   },
 
   transactionAccountIndicator: {
     width: '50%',
     height: '100%',
-    paddingTop: '15px',
+    paddingTop: '14px',
     paddingLeft: '10px',
     float: 'left',
   },
@@ -197,7 +196,7 @@ const styles = {
   transactionAmountNumber: {
     fontFamily: 'Inconsolata, monospace',
     fontSize: '19px',
-    lineHeight: '15px',
+    lineHeight: '13px',
     fontWeight: '700',
   },
 
@@ -220,7 +219,7 @@ const styles = {
   contentTitleText: {
     display: 'inline-block',
     overflow: 'hidden',
-    width: '653px',
+    width: '600px',
     height: '100%',
     paddingTop: '13px',
     paddingRight: '20px',
@@ -229,8 +228,9 @@ const styles = {
   },
 
   contentTitleButtonSearch: {
-    width: '20px',
+    width: '60px',
     height: '100%',
+    cursor: 'pointer',
     paddingRight: '20px',
     paddingLeft: '20px',
     float: 'right',
@@ -312,7 +312,7 @@ class Home extends Component{
         <div style={styles.header}>
           <div style={styles.headerTop}></div>
           <div style={styles.headerTitleOverview}>Available Balance</div>
-          <div style={styles.headerMeta}><Balance amount={3,120.8477094298} />
+          <div style={styles.headerMetaOverview}><Balance amount={312084770942} />
           </div>
         </div>
         <div style={styles.content}>
@@ -323,7 +323,7 @@ class Home extends Component{
           <div style={styles.contentNest}>
             <div style={styles.transactionIn}>
               <div style={styles.transactionAmount}>
-                <div style={styles.transactionAmountNumber}>-<Balance amount={13.43240000} /></div>
+                <div style={styles.transactionAmountNumber}>-<Balance amount={1343240000} /></div>
                 <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>
               </div>
               <div style={styles.transactionAccount}>
@@ -334,19 +334,19 @@ class Home extends Component{
               </div>
               <div style={styles.transactionTimeDate}>20 Jan 2017 14:51</div>
             </div>
-          </div>
-          <div style={styles.transactionOut}>
-            <div style={styles.transactionAmount}>
-              <div style={styles.transactionAmountNumber}>-<Balance amount={13.43240000} /></div>
-              <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>
-            </div>
-            <div style={styles.transactionAccount}>
-              <div style={styles.transactionAccountName}>Primary account</div>
-              <div style={styles.transactionAccountIndicator}>
-                <div style={styles.indicatorConfirmed}>confirmed</div>
+            <div style={styles.transactionOut}>
+              <div style={styles.transactionAmount}>
+                <div style={styles.transactionAmountNumber}>-<Balance amount={1343240000} /></div>
+                <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>
               </div>
+              <div style={styles.transactionAccount}>
+                <div style={styles.transactionAccountName}>Primary account</div>
+                <div style={styles.transactionAccountIndicator}>
+                  <div style={styles.indicatorConfirmed}>confirmed</div>
+                </div>
+              </div>
+              <div style={styles.transactionTimeDate}>20 Jan 2017 14:51</div>
             </div>
-            <div style={styles.transactionTimeDate}>20 Jan 2017 14:51</div>
           </div>
         </div>
       </div>);
