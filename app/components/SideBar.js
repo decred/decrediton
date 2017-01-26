@@ -128,7 +128,7 @@ const styles = {
   },
   menuBottomTotalBalanceShort: {  
     position: 'relative',
-    height: '68px',
+    height: '56px',
     paddingTop: '14px',
     paddingRight: '18px',
     paddingLeft: '18px',
@@ -161,8 +161,8 @@ const styles = {
   },
   menuBottomLatestBlock: { 
     position: 'relative',
-    height: '54px',
-    paddingTop: '22px',
+    height: '77px',
+    paddingTop: '14px',
     paddingRight: '18px',
     paddingLeft: '18px',
     backgroundColor: '#09182d',
@@ -202,6 +202,22 @@ class SideBar extends Component {
           <Link to="/receive" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>Receive</Link>
           <Link to="/history" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>History</Link>
         </div>
+        <div style={styles.menuBottom}>
+          <div style={styles.menuBottomTotalBalanceShort}>
+            <div style={styles.menuBottomTotalBalanceShortSeperator}></div>
+            <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
+            <div style={styles.menuBottomTotalBalanceShortValue}>1,199.675431 DCR</div>
+          </div>
+          <div style={styles.menuBottomLatestBlock}>
+            <a style={styles.menuBottomLatestBlockName} href="#">Latest block: <span style={styles.menuBottomLatestBlockNumber}>12,580</span></a>
+            <div style={styles.menuBottomLatestBlockTime}>1 min ago</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+/*
         <div style={styles.menuTotalBalanceExtended} hidden>
           <div style={styles.menuTotalBalanceExtendedBottom}>
             <div style={styles.menuTotalBalanceExtendedBottomAccount}>
@@ -217,22 +233,6 @@ class SideBar extends Component {
             <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>32.00000000</div>
           </div>
         </div>
-      </div>
-      <div style={styles.menuBottom}>
-        <div style={styles.menuBottomTotalBalanceShort}>
-          <div style={styles.menuBottomTotalBalanceShortSeperator}></div>
-          <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
-          <div style={styles.menuBottomTotalBalanceShortValue}>1,199.675431 DCR</div>
-        </div>
-        <div style={styles.menuBottomLatestBlock}>
-          <a style={styles.menuBottomLastestBlockName} href="#">Latest block: '<span style={styles.menuBottomLastestBlockNumber}>12,580</span></a>
-          <div style={styles.menuBottomLastestBlockTime}>1 min ago</div>
-        </div>
-      </div>
-    </div>
-    );
-  }
-}
-
+        */
 export default connect(mapStateToProps)(Radium(SideBar));
 
