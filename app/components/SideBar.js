@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Balance from './Balance';
 import arrowUpLightBlue from './icons/arrow-up-light-blue.svg';
 import menulogo from './icons/menu-logo.svg';
-import leftLinkColor from './icons/menu-link-left-color.png';
+import MenuLink from './MenuLink';
 
 function mapStateToProps(state) {
   return {
@@ -48,33 +48,7 @@ const styles = {
     zIndex: '1',
     overflow: 'auto',
   },
-  menuNavigationLink:{ 
-    display: 'block',
-    height: '54px',
-    paddingTop: '17px',
-    paddingLeft: '58px',
-    backgroundImage: `url(${leftLinkColor}`,
-    backgroundPosition: '0px 50%',
-    backgroundSize: '0px',
-    backgroundRepeat: 'repeat-y',
-    color: '#c4cbd2',
-    fontSize: '18px',
-    textAlign: 'left',
-    textDecoration: 'none',
-    textTransform: 'capitalize',
-    ':hover': {
-      backgroundColor: '#09182d',
-      backgroundSize: '5px',
-    },
-  },
-  menuNaviationLinkActive:{
-    backgroundColor: '#09182d',
-    backgroundImage: `url(${leftLinkColor}`,
-    backgroundPosition: '0px 50%',
-    backgroundSize: '5px',
-    backgroundRepeat: 'repeat-y',
-    cursor: 'default',
-  },
+
   menuTotalBalanceExtended: {
     position: 'absolute',
     left: '0px',
@@ -197,10 +171,10 @@ class SideBar extends Component {
       <div style={styles.menu}>
         <div style={styles.menuLogo}></div>
         <div style={styles.menuNavigation}>
-          <Link to="/home" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>Overview</Link>
-          <Link to="/send" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>Send</Link>
-          <Link to="/receive" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>Receive</Link>
-          <Link to="/history" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>History</Link>
+          <MenuLink to="/home">Overview</MenuLink>
+          <MenuLink to="/send">Send</MenuLink>
+          <MenuLink to="/receive">Receive</MenuLink>
+          <MenuLink to="/history">History</MenuLink>
         </div>
         <div style={styles.menuBottom}>
           <div style={styles.menuBottomTotalBalanceShort}>
@@ -234,5 +208,5 @@ class SideBar extends Component {
           </div>
         </div>
         */
-export default connect(mapStateToProps)(Radium(SideBar));
+export default connect(mapStateToProps)(SideBar);
 

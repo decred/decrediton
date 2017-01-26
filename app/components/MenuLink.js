@@ -1,0 +1,51 @@
+import Radium from 'radium';
+import React from 'react';
+import leftLinkColor from './icons/menu-link-left-color.png';
+import { Link } from 'react-router';
+
+var styles = {
+  linkColor: {
+    display: 'block',
+    height: '53px',
+    backgroundImage: `url(${leftLinkColor})`,
+    backgroundPosition: '0px 50%',
+    backgroundSize: '0px',
+    backgroundRepeat: 'repeat-y',
+    ':hover': {
+      backgroundColor: '#09182d',
+      backgroundSize: '5px',
+    },
+  },
+  menuNavigationLink:{ 
+    display: 'block',
+    height: '38px',
+    paddingTop: '15px',
+    paddingLeft: '58px',
+    color: '#c4cbd2',
+    fontSize: '18px',
+    textAlign: 'left',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
+  },
+  menuNavigationLinkActive:{
+    backgroundColor: '#09182d',
+    backgroundImage: `url(${leftLinkColor})`,
+    backgroundPosition: '0px 50%',
+    backgroundSize: '5px',
+    backgroundRepeat: 'repeat-y',
+    cursor: 'default',
+  }
+};
+
+class MenuLink extends React.Component {
+  render() {
+    return (
+      <div style={styles.linkColor}>
+        <Link to={this.props.to} style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>
+          {this.props.children}
+        </Link>
+      </div>
+    );
+  }
+}
+module.exports = Radium(MenuLink);
