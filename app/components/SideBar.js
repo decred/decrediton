@@ -167,6 +167,10 @@ class SideBar extends Component {
   render() {
     const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
+    var balance = 0;
+    if (getBalanceResponse != null) {
+      balance = getBalanceResponse.getTotal() / 100000000;
+    }
     return (
       <div style={styles.menu}>
         <div style={styles.menuLogo}></div>
@@ -180,10 +184,10 @@ class SideBar extends Component {
           <div style={styles.menuBottomTotalBalanceShort}>
             <div style={styles.menuBottomTotalBalanceShortSeperator}></div>
             <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
-            <div style={styles.menuBottomTotalBalanceShortValue}>1,199.675431 DCR</div>
+            <div style={styles.menuBottomTotalBalanceShortValue}>{balance.toString()}</div>
           </div>
           <div style={styles.menuBottomLatestBlock}>
-            <a style={styles.menuBottomLatestBlockName} href="#">Latest block: <span style={styles.menuBottomLatestBlockNumber}>12,580</span></a>
+            <a style={styles.menuBottomLatestBlockName} href="#">Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight():0}</span></a>
             <div style={styles.menuBottomLatestBlockTime}>1 min ago</div>
           </div>
         </div>
