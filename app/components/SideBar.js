@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Balance from './Balance';
 import arrowUpLightBlue from './icons/arrow-up-light-blue.svg';
 import menulogo from './icons/menu-logo.svg';
+import leftLinkColor from './icons/menu-link-left-color.png';
 
 function mapStateToProps(state) {
   return {
@@ -51,7 +52,7 @@ const styles = {
     height: '54px',
     paddingTop: '17px',
     paddingLeft: '58px',
-    //backgroundImage: 'url('../images/menu-link-left-color.png')',
+    backgroundImage: `url(${leftLinkColor}`,
     backgroundPosition: '0px 50%',
     backgroundSize: '0px',
     backgroundRepeat: 'repeat-y',
@@ -63,7 +64,7 @@ const styles = {
   },
   menuNaviationLinkActive:{
     backgroundColor: '#09182d',
-    //background-image: 'url('../images/menu-link-left-color.png')',
+    backgroundImage: `url(${leftLinkColor}`,
     backgroundPosition: '0px 50%',
     backgroundSize: '5px',
     backgroundRepeat: 'repeat-y',
@@ -192,7 +193,7 @@ class SideBar extends Component {
       <div style={styles.menu}>
         <div style={styles.menuLogo}></div>
         <div style={styles.menuNavigation}>
-          <Link to="/home" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>Home</Link>
+          <Link to="/home" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>Overview</Link>
           <Link to="/send" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>Send</Link>
           <Link to="/receive" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>Receive</Link>
           <Link to="/history" style={styles.menuNavigationLink} activeStyle={styles.menuNavigationLinkActive}>History</Link>
