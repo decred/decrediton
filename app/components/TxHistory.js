@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 //import { reverseHash } from '../helpers/byteActions';
-import Sent from './icons/Sent';
-import Receive from './icons/Receive';
-import LeftArrow from './icons/LeftArrow';
 import Balance from './Balance';
+import rightArrowGray from './icons/arrow-right-gray.svg';
+import rightArrowKeyBlue from './icons/arrow-right-key-blue.svg';
 
 const styles = {
   historyContainer: {
@@ -40,6 +39,7 @@ const styles = {
     width: '13px',
     margin: '-2px 15px',
     backgroundColor: 'transparent',
+    backgroundImage: `url(${rightArrowGray})`,
   }
 };
 
@@ -76,10 +76,9 @@ class TxHistory extends Component {
               }
               return (
               <div style={styles.transactionRow} key={tx.getHash()}>
-                <Receive />
                 <span style={styles.txAmount}><Balance amount={txAmount} /></span>
                 <span style={styles.txDateSince}>{diffDays} Days Since
-                  <LeftArrow />
+                  <span style={styles.leftArrow} />
                 </span>
               </div>);
             } else {
@@ -95,10 +94,9 @@ class TxHistory extends Component {
               txAmount = prevAmount - returnedAmount;
               return (
                 <div style={styles.transactionRow} key={tx.getHash()}>
-                  <Sent />
                   <span style={styles.txAmount}>-<Balance amount={txAmount} /></span>
                   <span style={styles.txDateSince}>{diffDays} Days Since
-                    <LeftArrow />
+                    <span style={styles.leftArrow} />
                   </span>
                 </div>);
             }
@@ -127,7 +125,7 @@ class TxHistory extends Component {
                 <Receive />
                 <span style={styles.txAmount}><Balance amount={txAmount} /></span>
                 <span style={styles.txDateSince}>{diffDays} Days Since
-                  <LeftArrow />
+                  <span style={styles.leftArrow} />
                 </span>
               </div>);
             } else {
@@ -146,7 +144,7 @@ class TxHistory extends Component {
                   <Sent />
                   <span style={styles.txAmount}>-<Balance amount={txAmount} /></span>
                   <span style={styles.txDateSince}>{diffDays} Days Since
-                    <LeftArrow />
+                    <span style={styles.leftArrow} />
                   </span>
                 </div>);
             }
