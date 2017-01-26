@@ -122,7 +122,6 @@ class TxHistory extends Component {
               }
               return (
               <div style={styles.transactionRow} key={tx.getHash()}>
-                <Receive />
                 <span style={styles.txAmount}><Balance amount={txAmount} /></span>
                 <span style={styles.txDateSince}>{diffDays} Days Since
                   <span style={styles.leftArrow} />
@@ -141,7 +140,6 @@ class TxHistory extends Component {
               txAmount = prevAmount - returnedAmount;
               return (
                 <div style={styles.transactionRow} key={tx.getHash()}>
-                  <Sent />
                   <span style={styles.txAmount}>-<Balance amount={txAmount} /></span>
                   <span style={styles.txDateSince}>{diffDays} Days Since
                     <span style={styles.leftArrow} />

@@ -8,24 +8,18 @@ import CircularProgress from 'material-ui/CircularProgress';
 
 const styles = {
   body: {
-    height: '100%'
-  },
-  pageWrap: {
-    minHeight: '100%',
-    /* equal to footer height */
-    marginBottom: '-142px',
-
-
-    ':after': {
-      content: '',
-      display: 'block',
-    },
-  },
-  header: {
-    border:'1px solid #000',
-    width:'100px',
-    height:'20px',
-    margin:'0 0 5px 0',
+    position: 'fixed',
+    left: '0px',
+    top: '50%',
+    right: '0px',
+    display: 'block',
+    overflow: 'hidden',
+    width: '1178px',
+    height: '770px',
+    marginTop: '-385px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    backgroundColor: '#FFF',
   },
   content: {
     position: 'absolute',

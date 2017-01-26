@@ -9,7 +9,18 @@ import SideBar from './SideBar';
 
 const styles = {
   body: {
-    height: '100%'
+    position: 'fixed',
+    left: '0px',
+    top: '50%',
+    right: '0px',
+    display: 'block',
+    overflow: 'hidden',
+    width: '1178px',
+    height: '770px',
+    marginTop: '-385px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    backgroundColor: '#FFF',
   },
   content: {
     position: 'absolute',

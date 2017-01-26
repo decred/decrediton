@@ -7,10 +7,6 @@ import Balance from './Balance';
 import SideBar from './SideBar';
 
 const styles = {
-  pageContentWrapper: {
-    width: '100%',
-    paddingBottom: '60px',
-  },
   body: {
     position: 'fixed',
     left: '0px',
@@ -24,11 +20,6 @@ const styles = {
     marginRight: 'auto',
     marginLeft: 'auto',
     backgroundColor: '#FFF',
-  },
-  header: {
-    backgroundColor: '#F9FBFC',
-    textAlign: 'center',
-    borderBottom: '1px solid #e2e2e2',
   },
   center: {
     textAlign: 'center',
