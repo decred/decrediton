@@ -207,9 +207,12 @@ app.on('ready', async () => {
   }
 
   mainWindow = new BrowserWindow({
+    frame: false,
     show: false,
     width: 1178,
-    height: 770
+    height: 770,
+    resizable: false,
+    titleBarStyle: 'hidden'
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
