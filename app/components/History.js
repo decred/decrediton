@@ -22,11 +22,10 @@ const styles = {
     backgroundColor: '#FFF',
   },
   content: {
-    position: 'absolute',
-    top: '78px',
-    left: '252px',
-    bottom: '0px',
-    right: '0px',
+    width: '880px',
+    height: '100%',
+    float: 'right',
+    backgroundColor: '#f3f6f6',
   },
   well: {
     width: 'auto',
