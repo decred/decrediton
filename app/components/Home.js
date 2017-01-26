@@ -5,6 +5,13 @@ import ErrorScreen from './ErrorScreen';
 import RescanForm from '../containers/RescanForm';
 import Balance from './Balance';
 import SideBar from './SideBar';
+import Search from './icons/search.svg';
+import IndicatorPending from './icons/indicator-pending.svg';
+import IndicatorConfirmed from './icons/indicator-confirmed.svg';
+import PlusSmall from './icons/plus-small.svg';
+import MinusSmall from './icons/minus-small.svg';
+import ArrowRightGray from './icons/arrow-right-gray.svg';
+import ArrowRightKeyBlue from './icons/arrow-right-key-blue.svg';
 
 const styles = {
   body: {
@@ -21,40 +28,230 @@ const styles = {
     marginLeft: 'auto',
     backgroundColor: '#FFF',
   },
-  center: {
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
+  view: {
+    width: '880px',
+    height: '100%',
+    float: 'right',
+    backgroundColor: '#f3f6f6',
   },
-  well: {
-    width: 'auto',
-    fontWeight: 'bold',
-    //font-family: $inconsolata;
-    fontSize: '1.2rem',
-    backgroundColor:'#e9f8fe',
-    padding: '5px 5px',
-    margin: '20px 0 15px 0',
-    border: '2px solid #cacfd6',
-    borderRadius: '2px',
-    textAlign: 'center',
-    color: '#0c1e3e',
-    boxShadow: 'none!important',
-  },
-  small: {
-    fontSize: '0.8em',
-  },
-  error: {
-    color:'red'
-  },
-  buttons: {
-    margin: 12
+  header: {
+    paddingRight: '80px',
+    paddingLeft: '100px',
+    backgroundColor: '#fff',
   },
   content: {
-    position: 'absolute',
-    top: '70px',
-    left: '252px',
-    bottom: '0px',
-    right: '0px',
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 60px 54px 80px',
+  },
+
+  transition1: {
+    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
+  },
+  headerTop: {
+    height: '106px',
+    paddingBottom: '20px',
+  },
+  headerTitle: {
+    height: '54px',
+  },
+  headerMeta: {
+    height: '54px',
+  },
+  headerTitleOverview: {
+    paddingTop: '13px',
+    color: '#596d81',
+    fontSize: '27px',
+  },
+  headerMetaOverview: {
+    paddingTop: '5px',
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '53px',
+  },
+  contentTitle: {
+    display: 'block',
+    height: '44px',
+    marginRight: 'auto',
+    marginBottom: '10px',
+    marginLeft: 'auto',
+    borderBottom: '1px solid transparent',
+    color: '#596d81',
+    fontSize: '27px',
+  },
+  indicator: {
+    display: 'inline-block',
+    padding: '5px 8px 5px 20px',
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderRadius: '3px',
+    fontSize: '12px',
+    lineHeight: '8px',
+    textAlign: 'right',
+    textTransform: 'capitalize',
+  },
+
+  indicatorPending: {
+    borderColor: '#2971ff',
+    backgroundImage: `url(${IndicatorPending})`,
+    backgroundPosition: '6px 50%',
+    backgroundSize: '10px',
+    backgroundRepeat: 'noRepeat',
+    color: '#2971ff',
+  },
+
+  indicatorConfirmed: {
+    borderColor: '#2ed8a3',
+    backgroundImage: `url(${IndicatorConfirmed})`,
+    backgroundPosition: '6px 50%',
+    backgroundSize: '10px',
+    backgroundRepeat: 'noRepeat',
+    color: '#2ed8a3',
+  },
+
+  contentNest: {
+    paddingTop: '1px',
+  },
+
+  transaction: {
+    height: '52px',
+    paddingRight: '45px',
+    paddingLeft: '56px',
+    borderBottom: '1px solid #e7eaed',
+    backgroundColor: '#fff',
+    cursor: 'pointer',
+    ':hover': {
+      backgroundColor: 'rgba(212, 240, 253, .5)',
+    }
+  },
+
+  transactionIn: {
+    backgroundImage: `url(${ArrowRightGray}),url(${PlusSmall})`,
+    backgroundPosition: '97% 50%, 20px 50%',
+    backgroundSize: '5px 10px, 16px 16px',
+    backgroundRepeat: 'noRepeat, noRepeat',
+    ':hover': {
+      backgroundImage: `url(${ArrowRightKeyBlue}),url(${PlusSmall})`,
+      backgroundSize: '5px, 16px',
+    }
+  },
+
+  transactionOut: {
+    backgroundImage: `url(${ArrowRightGray},url(${MinusSmall}`,
+    backgroundPosition: '97% 50%, 20px 50%',
+    backgroundSize: '5px 10px, 16px 16px',
+    backgroundRepeat: 'noRepeat, noRepeat',
+    ':hover': {
+      backgroundImage: `url(${ArrowRightKeyBlue},url(${MinusSmall}`,
+      backgroundSize: '5px, 16px',
+    }
+  },
+
+  transactionAmount: {
+    width: '44%',
+    height: '100%',
+    paddingTop: '17px',
+    float: 'left',
+  },
+
+  transactionAccount: {
+    width: '34%',
+    height: '100%',
+    float: 'left',
+  },
+
+  transactionTimeDate: {
+    width: '22%',
+    height: '100%',
+    paddingTop: '16px',
+    float: 'left',
+    color: '#0c1e3e',
+    fontSize: '13px',
+    textAlign: 'right',
+  },
+
+  transactionAccountName: {
+    width: '50%',
+    height: '100%',
+    paddingTop: '16px',
+    paddingRight: '10px',
+    float: 'left',
+    fontSize: '13px',
+    textAlign: 'right',
+  },
+
+  transactionAccountIndicator: {
+    width: '50%',
+    height: '100%',
+    paddingTop: '15px',
+    paddingLeft: '10px',
+    float: 'left',
+  },
+
+  transactionAmountNumber: {
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '19px',
+    lineHeight: '15px',
+    fontWeight: '700',
+  },
+
+  transactionAmountHash: {
+    fontFamily: 'Inconsolata, monospace',
+    color: '#c4cbd2',
+    fontSize: '11px',
+    lineHeight: '11px',
+  },
+
+  transactionAmountNumberCurrency: {
+    fontSize: '13px',
+    fontWeight: '400',
+  },
+
+  transactionAmountNumberNumberFormatSmall: {
+    fontSize: '13px',
+  },
+
+  contentTitleText: {
+    display: 'inline-block',
+    overflow: 'hidden',
+    width: '653px',
+    height: '100%',
+    paddingTop: '13px',
+    paddingRight: '20px',
+    paddingLeft: '20px',
+    float: 'left',
+  },
+
+  contentTitleButtonSearch: {
+    width: '20px',
+    height: '100%',
+    paddingRight: '20px',
+    paddingLeft: '20px',
+    float: 'right',
+    backgroundImage: `url(${Search})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '20px',
+    backgroundRepeat: 'noRepeat',
+    ':hover': {
+      opacity: '0.8',
+    }
+  },
+
+  contentTitleButtonSearchTransition1: {
+    width: '60px',
+    height: '100%',
+    cursor: 'pointer',
+  },
+
+  contentTitleTextActive: {
+    color: '#2971ff',
+  },
+
+  contentTitleActive: {
+    borderBottom: '1px solid #2971ff',
+  },
+
+  headerMetaCurrency: {
+    fontSize: '23px',
   },
 };
 
@@ -80,6 +277,7 @@ class Home extends Component{
     const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
     const { rescanRequest, rescanResponse } = this.props;
     const { getAccountsResponse } = this.props;
+
     var rescanPercFisnished;
     if (rescanResponse !== null && getAccountsResponse !== null && rescanRequest != null) {
       var totalBlocks = getAccountsResponse.getCurrentBlockHeight() - rescanRequest.getBeginHeight();
@@ -101,29 +299,48 @@ class Home extends Component{
         </div>
       );
     }
-    /* View that will be seen when user has a set Client */
+
     const homeView = (
-      <div style={styles.content}>
-        <div style={styles.center}>
-          <div style={styles.header}>
-						<p>My balance</p>
-					</div>
-				</div>
-        <div style={styles.well}>
-          {getBalanceResponse === null ? 'Please refresh' :
-          <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
-          amount={getBalanceResponse.getTotal()} /> }
-				</div>
-        <div style={styles.center}>
-          <div style={styles.header}>
-            <p>Current block height</p>
-					</div>
-          <div style={styles.well}>
-            <p>{getAccountsResponse === null ? '""' : getAccountsResponse.getCurrentBlockHeight() }</p>
+      <div style={styles.view}>
+        <div style={styles.header}>
+          <div style={styles.headerTop}></div>
+          <div style={styles.headerTitleOverview}>Available Balance</div>
+          <div style={styles.headerMeta}><Balance amount={3,120.8477094298} />
           </div>
         </div>
-        <div style={styles.center}>
-          {rescanView}
+        <div style={styles.content}>
+          <div style={styles.contentTitle}>
+            <div style={styles.contentTitleText}>Recent Transactions</div>
+            <div style={styles.contentTitleButtonSearch}></div>
+          </div>
+          <div style={styles.contentNest}>
+            <div style={styles.transactionIn}>
+              <div style={styles.transactionAmount}>
+                <div style={styles.transactionAmountNumber}>-<Balance amount={13.43240000} /></div>
+                <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>
+              </div>
+              <div style={styles.transactionAccount}>
+                <div style={styles.transactionAccountName}>Primary account</div>
+                <div style={styles.transactionAccountIndicator}>
+                  <div style={styles.indicatorPending}>Pending</div>
+                </div>
+              </div>
+              <div style={styles.transactionTimeDate}>20 Jan 2017 14:51</div>
+            </div>
+          </div>
+          <div style={styles.transactionOut}>
+            <div style={styles.transactionAmount}>
+              <div style={styles.transactionAmountNumber}>-<Balance amount={13.43240000} /></div>
+              <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>
+            </div>
+            <div style={styles.transactionAccount}>
+              <div style={styles.transactionAccountName}>Primary account</div>
+              <div style={styles.transactionAccountIndicator}>
+                <div style={styles.indicatorConfirmed}>confirmed</div>
+              </div>
+            </div>
+            <div style={styles.transactionTimeDate}>20 Jan 2017 14:51</div>
+          </div>
         </div>
       </div>);
 
