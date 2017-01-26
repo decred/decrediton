@@ -9,7 +9,7 @@ const styles = {
   },
 };
 
-class Sent extends Component {
+class LeftArrow extends Component {
   render() {
     return (
       <svg style={styles.logo} viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" xmlSpace="preserve">
@@ -18,4 +18,4 @@ class Sent extends Component {
   }
 }
 
-export default Sent;
+export default LeftArrow;
