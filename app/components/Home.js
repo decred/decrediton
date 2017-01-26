@@ -131,7 +131,8 @@ const styles = {
       backgroundColor: 'rgba(212, 240, 253, .5)',
       backgroundImage: `url(${ArrowRightKeyBlue}),url(${PlusSmall})`,
       backgroundSize: '5px, 16px',
-    }
+    },
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s'
   },
 
   transactionOut: {
@@ -149,13 +150,14 @@ const styles = {
       backgroundColor: 'rgba(212, 240, 253, .5)',
       backgroundImage: `url(${ArrowRightKeyBlue}),url(${MinusSmall})`,
       backgroundSize: '5px, 16px',
-    }
+    },
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s'
   },
 
   transactionAmount: {
     width: '44%',
-    height: '100%',
-    paddingTop: '17px',
+    height: '39px',
+    paddingTop: '13px',
     float: 'left',
   },
 
@@ -167,7 +169,7 @@ const styles = {
 
   transactionTimeDate: {
     width: '22%',
-    height: '100%',
+    height: '36px',
     paddingTop: '16px',
     float: 'left',
     color: '#0c1e3e',
@@ -177,7 +179,7 @@ const styles = {
 
   transactionAccountName: {
     width: '45%',
-    height: '100%',
+    height: '36px',
     paddingTop: '16px',
     paddingRight: '0px',
     float: 'left',
@@ -187,8 +189,8 @@ const styles = {
 
   transactionAccountIndicator: {
     width: '50%',
-    height: '100%',
-    paddingTop: '14px',
+    height: '35px',
+    paddingTop: '17px',
     paddingLeft: '10px',
     float: 'left',
   },
@@ -321,6 +323,19 @@ class Home extends Component{
             <div style={styles.contentTitleButtonSearch}></div>
           </div>
           <div style={styles.contentNest}>
+            <div style={styles.transactionIn}>
+              <div style={styles.transactionAmount}>
+                <div style={styles.transactionAmountNumber}>-<Balance amount={1343240000} /></div>
+                <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>
+              </div>
+              <div style={styles.transactionAccount}>
+                <div style={styles.transactionAccountName}>Primary account</div>
+                <div style={styles.transactionAccountIndicator}>
+                  <div style={styles.indicatorPending}>Pending</div>
+                </div>
+              </div>
+              <div style={styles.transactionTimeDate}>20 Jan 2017 14:51</div>
+            </div>
             <div style={styles.transactionIn}>
               <div style={styles.transactionAmount}>
                 <div style={styles.transactionAmountNumber}>-<Balance amount={1343240000} /></div>
