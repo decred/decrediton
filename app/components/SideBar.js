@@ -188,7 +188,6 @@ class SideBar extends Component {
           </div>
           <div style={styles.menuBottomLatestBlock}>
             <a style={styles.menuBottomLatestBlockName} href="#">Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight():0}</span></a>
-            <div style={styles.menuBottomLatestBlockTime}>1 min ago</div>
           </div>
         </div>
       </div>
@@ -196,6 +195,10 @@ class SideBar extends Component {
   }
 }
 /*
+        This is the block time since div, that needs to be implemented
+        <div style={styles.menuBottomLatestBlockTime}>1 min ago</div>
+
+        This is the div to show individual account balances on mouse over total balance
         <div style={styles.menuTotalBalanceExtended} hidden>
           <div style={styles.menuTotalBalanceExtendedBottom}>
             <div style={styles.menuTotalBalanceExtendedBottomAccount}>
