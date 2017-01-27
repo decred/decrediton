@@ -53,13 +53,8 @@ const styles = {
     padding: '54px 60px 54px 80px',
   },
   img: {
-    width: '200px',
-    margin: '25px 0 50px 0',
-    marginLeft: '40%',
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: 'white'
+    width: '250px',
+    paddingLeft: '244px',
   },
   center: {
     textAlign: 'center',
