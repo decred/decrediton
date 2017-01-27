@@ -161,7 +161,7 @@ class Home extends Component{
               min={rescanRequest !== null ? rescanRequest.getBeginHeight(): 0}
               max={getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight(): 100}
               value={rescanResponse !== null ? rescanResponse.getRescannedThrough() : 0} />
-            <p>{rescanPercFisnished}%</p> 
+            <p>{rescanPercFisnished}%</p>
     <p>{rescanResponse.getRescannedThrough()}/{getAccountsResponse.getCurrentBlockHeight()}</p>
           </div>
         </div>

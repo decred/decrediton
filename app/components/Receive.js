@@ -108,12 +108,12 @@ class Receive extends Component{
         {getNextAddressResponse !== null ?
           <div style={styles.center}>
             <QRCode addr={getNextAddressResponse.getAddress()}/>
-	          <div style={styles.well}>
-						  <p>{getNextAddressResponse.getAddress()}</p>
+            <div style={styles.well}>
+              <p>{getNextAddressResponse.getAddress()}</p>
             </div>
           </div> :
           <div></div>
-        } 
+        }
         <div style={styles.center}>
 					<p>Share this wallet address to receive payments, To protect your privacy, new addresses are generated automatically once you use them.</p>
 				</div>
