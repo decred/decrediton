@@ -41,6 +41,7 @@ class Button extends React.Component {
     return (
       <button
         style={[
+          this.props.style,
           styles.base,
           this.props.block && styles.block
         ]}
