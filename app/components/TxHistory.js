@@ -116,7 +116,7 @@ const styles = {
   transactionAccountName: {
     width: '45%',
     height: '36px',
-    paddingTop: '16px',
+    paddingTop: '17px',
     paddingRight: '0px',
     float: 'left',
     fontSize: '11px',
