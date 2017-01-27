@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import Balance from './Balance';
-import DecredLogo from './icons/DecredLogo';
+import arrowUpLightBlue from './icons/arrow-up-light-blue.svg';
+import menulogo from './icons/menu-logo.svg';
+import MenuLink from './MenuLink';
 
 function mapStateToProps(state) {
   return {
@@ -17,113 +17,200 @@ function mapStateToProps(state) {
 }
 
 const styles = {
-  sideBar: {
-    position: 'absolute',
-    top:'0px',
-    bottom:'0px',
-    left:'0px',
-    width:'250px',
-    background:'#132f4b',
-    borderRight: '1px solid black'
-  },
-  sidebarLink: {
-    display: 'block',
-    padding: '16px 30px',
-    color: '#757575',
-    textDecoration: 'none',
-  },
-  sidebarTitle: {
-    display: 'block',
-    padding: '0px',
-    color: '#757575',
-    textDecoration: 'none',
-    fontSize: '0.8em',
-    borderBottom: '1px solid black',
-    textAlign: 'left',
-    marginTop: '0.1em'
-  },
-  sidebarBlocks: {
-    textAlign: 'right',
-    marginTop: '0px',
-    marginBottom: '0px',
-  },
-  sideBarBalance: {
-    textAlign: 'right',
-    marginTop: '0px',
-    marginBottom: '0px',
-  },
-  active: {
-    color: 'white',
-    textDecoration: 'none',
-    borderLeft: '5px solid #2ed8a3',
-    backgroundColor: '#0d2034',
-  },
-  wellBalance: {
-    width: 'auto',
-    fontWeight: 'bold',
-    //font-family: $inconsolata;
-    fontSize: '1.2rem',
-    backgroundColor:'#e9f8fe',
-    padding: '5px 5px',
-    margin: '20px 0 0 0',
-    border: '2px solid #cacfd6',
-    textAlign: 'center',
-    color: '#0c1e3e',
-    boxShadow: 'none!important',
-  },
-  wellBlocks: {
-    width: 'auto',
-    fontWeight: 'bold',
-    //font-family: $inconsolata;
-    fontSize: '1.2rem',
-    backgroundColor:'#e9f8fe',
-    padding: '5px 5px',
-    marginTop: '0px',
-    border: '2px solid #cacfd6',
-    borderTop: '0px',
-    textAlign: 'center',
-    color: '#0c1e3e',
-    boxShadow: 'none!important',
-  },
-  pushToBottom: {
+  menu:{
     position: 'relative',
-    marginBottom: '-200px',
-  }
+    overflow: 'hidden',
+    width: '298px',
+    height: '100%',
+    paddingBottom: '54px',
+    float: 'left',
+    backgroundColor: '#0c1e3e',
+  },
+  menuLogo:{
+    position: 'relative',
+    zIndex: '3',
+    height: '106px',
+    backgroundColor: '#0c1e3e',
+    backgroundImage: `url(${menulogo})`,
+    backgroundPosition: '58px 50%',
+    backgroundSize: 'auto 30px',
+    backgroundRepeat: 'no-repeat',
+  },
+  menuNavigation:{
+    position: 'absolute',
+    left: '0px',
+    top: '106px',
+    right: '0px',
+    bottom: '122px',
+    zIndex: '1',
+    overflow: 'auto',
+  },
+
+  menuTotalBalanceExtended: {
+    position: 'absolute',
+    left: '0px',
+    top: '106px',
+    right: '0px',
+    bottom: '122px',
+    zIndex: '2',
+    overflow: 'auto',
+    backgroundColor: 'rgba(9, 24, 45, .8)',
+  },
+  menuTotalBalanceExtendedBottom: {
+    position: 'absolute',
+    left: '0px',
+    right: '0px',
+    bottom: '0px',
+    overflow: 'auto',
+    maxHeight: '100%',
+    paddingRight: '18px',
+    paddingLeft: '18px',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+  menuTotalBalanceExtendedBottomAccount: {
+    display: 'block',
+    height: '44px',
+    paddingTop: '24px',
+    alignSelf: 'stretch',
+    flex: '0 0 auto',
+  },
+  menuTotalBalanceExtendedBottomAccountName: {
+    float: 'left',
+    color: '#69d5f7',
+    fontSize: '13px',
+    lineHeight: '10px',
+    textAlign: 'left',
+  },
+  menuTotalBalanceExtendedBottomAccountNumber: {
+    float: 'right',
+    fontFamily: 'Inconsolata, monospace',
+    color: '#2ed8a3',
+    fontSize: '15px',
+    lineHeight: '10px',
+    textAlign: 'right',
+  },
+  menuBottom: {
+    position: 'absolute',
+    left: '0px',
+    right: '0px',
+    bottom: '0px',
+    zIndex: '2',
+  },
+  menuBottomTotalBalanceShort: {
+    position: 'relative',
+    height: '56px',
+    paddingTop: '14px',
+    paddingRight: '18px',
+    paddingLeft: '18px',
+    backgroundColor: '#0c1e3e',
+    cursor: 'pointer',
+  },
+  menuBottomTotalBalanceShortSeperator: {
+    height: '7px',
+    marginBottom: '15px',
+    borderBottom: '1px solid #69d5f7',
+    backgroundImage: `url(${arrowUpLightBlue})`,
+    backgroundPosition: '50% 0px',
+    backgroundRepeat: 'no-repeat',
+  },
+  menuBottomTotalBalanceShortName: {
+    float: 'left',
+    color: '#69d5f7',
+    fontSize: '13px',
+    lineHeight: '10px',
+    textAlign: 'left',
+    textDecoration: 'none',
+  },
+  menuBottomTotalBalanceShortValue: {
+    float: 'right',
+    fontFamily: 'Inconsolata, monospace',
+    color: '#2ed8a3',
+    fontSize: '13px',
+    lineHeight: '10px',
+    textAlign: 'right',
+  },
+  menuBottomLatestBlock: {
+    position: 'relative',
+    height: '77px',
+    paddingTop: '14px',
+    paddingRight: '18px',
+    paddingLeft: '18px',
+    backgroundColor: '#09182d',
+  },
+  menuBottomLatestBlockName: {
+    float: 'left',
+    color: '#69d5f7',
+    fontSize: '13px',
+    lineHeight: '10px',
+    textAlign: 'left',
+    textDecoration: 'none',
+  },
+  menuBottomLatestBlockNumber: {
+    fontFamily: 'Inconsolata, monospace',
+    color: '#2ed8a3',
+  },
+  menuBottomLatestBlockTime: {
+    float: 'right',
+    color: '#69d5f7',
+    fontSize: '13px',
+    lineHeight: '10px',
+    textAlign: 'right',
+    textDecoration: 'none',
+  },
 };
 
 class SideBar extends Component {
   render() {
-    const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
+    const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
+    var balance = 0;
+    if (getBalanceResponse != null) {
+      balance = getBalanceResponse.getTotal() / 100000000;
+    }
     return (
-    <div style={styles.sideBar}>
-      <div style={styles.logoArea}>
-        <DecredLogo />
-      </div>
-      <div style={styles.linkArea}>
-        <Link to="/home" style={styles.sidebarLink} activeStyle={styles.active}>Home</Link>
-        <Link to="/history" style={styles.sidebarLink} activeStyle={styles.active}>History</Link>
-        <Link to="/send" style={styles.sidebarLink} activeStyle={styles.active}>Send Decred</Link>
-        <Link to="/receive" style={styles.sidebarLink} activeStyle={styles.active}>Receive Decred</Link>
-      </div>
-      <div style={styles.pushToBottom}>
-        <div style={styles.wellBalance}>
-          <p style={styles.sidebarTitle}>Balance:</p>
-          <p style={styles.sidebarBalance}>
-            {getBalanceResponse === null ? 'Please refresh' :
-              <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
-              amount={getBalanceResponse.getTotal()} /> }
-          </p>
+      <div style={styles.menu}>
+        <div style={styles.menuLogo}></div>
+        <div style={styles.menuNavigation}>
+          <MenuLink to="/home">Overview</MenuLink>
+          <MenuLink to="/send">Send</MenuLink>
+          <MenuLink to="/receive">Receive</MenuLink>
+          <MenuLink to="/history">History</MenuLink>
         </div>
-        <div style={styles.wellBlocks}>
-          <p style={styles.sidebarTitle}>Block Height:</p>
-          <p style={styles.sidebarBlocks}>{getAccountsResponse === null ? '""' : getAccountsResponse.getCurrentBlockHeight() }</p>
+        <div style={styles.menuBottom}>
+          <div style={styles.menuBottomTotalBalanceShort}>
+            <div style={styles.menuBottomTotalBalanceShortSeperator}></div>
+            <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
+            <div style={styles.menuBottomTotalBalanceShortValue}>{balance.toString()}</div>
+          </div>
+          <div style={styles.menuBottomLatestBlock}>
+            <a style={styles.menuBottomLatestBlockName} href="#">Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight():0}</span></a>
+          </div>
         </div>
       </div>
-    </div>
     );
   }
 }
+/*
+        This is the block time since div, that needs to be implemented
+        <div style={styles.menuBottomLatestBlockTime}>1 min ago</div>
 
+        This is the div to show individual account balances on mouse over total balance
+        <div style={styles.menuTotalBalanceExtended} hidden>
+          <div style={styles.menuTotalBalanceExtendedBottom}>
+            <div style={styles.menuTotalBalanceExtendedBottomAccount}>
+            <div style={styles.menuTotalBalanceExtendedBottomAccountName}>Primary account</div>
+            <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>32.00000000</div>
+          </div>
+          <div style={styles.menuTotalBalanceExtendedBottom}>
+            <div style={styles.menuTotalBalanceExtendedBottomAccountName}>Candy money</div>
+            <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>32.00000000</div>
+          </div>
+          <div style={styles.menuTotalBalanceExtendedBottom}>
+            <div style={styles.menuTotalBalanceExtendedBottomAccountName}>College funds</div>
+            <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>32.00000000</div>
+          </div>
+        </div>
+        */
 export default connect(mapStateToProps)(SideBar);
 

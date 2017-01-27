@@ -5,54 +5,116 @@ import ErrorScreen from './ErrorScreen';
 import RescanForm from '../containers/RescanForm';
 import Balance from './Balance';
 import SideBar from './SideBar';
-
+import Search from './icons/search.svg';
+import TxHistory from './TxHistory';
 const styles = {
-  pageContentWrapper: {
-    width: '100%',
-    paddingBottom: '60px',
-  },
   body: {
-    height: '100%'
+    position: 'fixed',
+    left: '0px',
+    top: '50%',
+    right: '0px',
+    display: 'block',
+    overflow: 'hidden',
+    width: '1178px',
+    height: '770px',
+    marginTop: '-385px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    backgroundColor: '#FFF',
+  },
+  view: {
+    width: '880px',
+    height: '100%',
+    float: 'right',
+    backgroundColor: '#f3f6f6',
   },
   header: {
-    backgroundColor: '#F9FBFC',
-    textAlign: 'center',
-    borderBottom: '1px solid #e2e2e2',
-  },
-  center: {
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  well: {
-    width: 'auto',
-    fontWeight: 'bold',
-    //font-family: $inconsolata;
-    fontSize: '1.2rem',
-    backgroundColor:'#e9f8fe',
-    padding: '5px 5px',
-    margin: '20px 0 15px 0',
-    border: '2px solid #cacfd6',
-    borderRadius: '2px',
-    textAlign: 'center',
-    color: '#0c1e3e',
-    boxShadow: 'none!important',
-  },
-  small: {
-    fontSize: '0.8em',
-  },
-  error: {
-    color:'red'
-  },
-  buttons: {
-    margin: 12
+    paddingRight: '80px',
+    paddingLeft: '100px',
+    backgroundColor: '#fff',
   },
   content: {
-    position: 'absolute',
-    top: '70px',
-    left: '252px',
-    bottom: '0px',
-    right: '0px',
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 60px 54px 80px',
+  },
+
+  transition1: {
+    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
+  },
+  headerTop: {
+    height: '106px',
+    paddingBottom: '20px',
+  },
+  headerTitleOverview: {
+    height: '54px',
+    paddingTop: '13px',
+    color: '#596d81',
+    fontSize: '27px',
+  },
+  headerMetaOverview: {
+    height: '54px',
+    paddingTop: '5px',
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '53px',
+  },
+  contentTitle: {
+    display: 'block',
+    height: '44px',
+    marginRight: 'auto',
+    marginBottom: '10px',
+    marginLeft: 'auto',
+    borderBottom: '1px solid transparent',
+    color: '#596d81',
+    fontSize: '27px',
+    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
+  },
+  contentNest: {
+    paddingTop: '1px',
+  },
+  contentTitleText: {
+    display: 'inline-block',
+    overflow: 'hidden',
+    width: '600px',
+    height: '100%',
+    paddingTop: '13px',
+    paddingRight: '20px',
+    paddingLeft: '20px',
+    float: 'left',
+  },
+
+  contentTitleButtonSearch: {
+    width: '60px',
+    height: '100%',
+    cursor: 'pointer',
+    paddingRight: '20px',
+    paddingLeft: '20px',
+    float: 'right',
+    backgroundImage: `url(${Search})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '20px',
+    backgroundRepeat: 'no-repeat',
+    ':hover': {
+      opacity: '0.8',
+    }
+  },
+
+  contentTitleButtonSearchTransition1: {
+    width: '60px',
+    height: '100%',
+    cursor: 'pointer',
+  },
+
+  contentTitleTextActive: {
+    color: '#2971ff',
+  },
+
+  contentTitleActive: {
+    borderBottom: '1px solid #2971ff',
+  },
+
+  headerMetaCurrency: {
+    fontSize: '23px',
   },
 };
 
@@ -74,10 +136,11 @@ class Home extends Component{
 
   render() {
     const { walletService } = this.props;
-
-    const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
+    const { paginatedTxs } = this.props;
+    const { getBalanceResponse } = this.props;
     const { rescanRequest, rescanResponse } = this.props;
     const { getAccountsResponse } = this.props;
+
     var rescanPercFisnished;
     if (rescanResponse !== null && getAccountsResponse !== null && rescanRequest != null) {
       var totalBlocks = getAccountsResponse.getCurrentBlockHeight() - rescanRequest.getBeginHeight();
@@ -90,38 +153,39 @@ class Home extends Component{
       rescanView = <RescanForm />;
     } else {
       rescanView = (
-        <div>
-          <LinearProgress mode="determinate"
-            min={rescanRequest !== null ? rescanRequest.getBeginHeight(): 0}
-            max={getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight(): 100}
-            value={rescanResponse !== null ? rescanResponse.getRescannedThrough() : 0} />
-          <p>{rescanPercFisnished}%</p>
+        <div style={styles.view}>
+          <div style={styles.header}>
+            <div style={styles.headerTop}></div>
+            <p>Fetching Headers</p>
+            <LinearProgress mode="determinate"
+              min={rescanRequest !== null ? rescanRequest.getBeginHeight(): 0}
+              max={getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight(): 100}
+              value={rescanResponse !== null ? rescanResponse.getRescannedThrough() : 0} />
+            <p>{rescanPercFisnished}%</p>
+    <p>{rescanResponse.getRescannedThrough()}/{getAccountsResponse.getCurrentBlockHeight()}</p>
+          </div>
         </div>
       );
     }
-    /* View that will be seen when user has a set Client */
+
     const homeView = (
-      <div style={styles.content}>
-        <div style={styles.center}>
-          <div style={styles.header}>
-						<p>My balance</p>
-					</div>
-				</div>
-        <div style={styles.well}>
-          {getBalanceResponse === null ? 'Please refresh' :
-          <Balance onClick={!getBalanceRequestAttempt ? () => this.handleBalanceClick() : null}
-          amount={getBalanceResponse.getTotal()} /> }
-				</div>
-        <div style={styles.center}>
-          <div style={styles.header}>
-            <p>Current block height</p>
-					</div>
-          <div style={styles.well}>
-            <p>{getAccountsResponse === null ? '""' : getAccountsResponse.getCurrentBlockHeight() }</p>
+      <div style={styles.view}>
+        <div style={styles.header}>
+          <div style={styles.headerTop}></div>
+          <div style={styles.headerTitleOverview}>Available Balance</div>
+          <div style={styles.headerMetaOverview}><Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />
           </div>
         </div>
-        <div style={styles.center}>
-          {rescanView}
+        <div style={styles.content}>
+          <div style={styles.contentTitle}>
+            <div style={styles.contentTitleText}>Recent Transactions</div>
+          </div>
+          <div style={styles.contentNest}>
+            {paginatedTxs.length > 0 ?
+              <TxHistory mined={paginatedTxs}/>  :
+              <p>No transactions</p>
+            }
+          </div>
         </div>
       </div>);
 
@@ -131,10 +195,20 @@ class Home extends Component{
       return(
         <div style={styles.body}>
           <SideBar />
-          {homeView}
+          {rescanRequest ?
+            rescanView :
+            homeView
+          }
         </div>);
     }
   }
 }
 
 export default Home;
+
+
+/*
+  This is the transaction search button that needs to get implemented
+  <div style={styles.contentTitleButtonSearch}></div>
+
+*/

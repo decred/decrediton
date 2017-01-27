@@ -9,14 +9,24 @@ import SideBar from './SideBar';
 
 const styles = {
   body: {
-    height: '100%'
+    position: 'fixed',
+    left: '0px',
+    top: '50%',
+    right: '0px',
+    display: 'block',
+    overflow: 'hidden',
+    width: '1178px',
+    height: '770px',
+    marginTop: '-385px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    backgroundColor: '#FFF',
   },
   content: {
-    position: 'absolute',
-    top: '70px',
-    left: '252px',
-    bottom: '0px',
-    right: '0px',
+    width: '880px',
+    height: '100%',
+    float: 'right',
+    backgroundColor: '#f3f6f6',
   },
 };
 
