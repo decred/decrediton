@@ -7,6 +7,8 @@ import Balance from './Balance';
 import SideBar from './SideBar';
 import Search from './icons/search.svg';
 import TxHistory from './TxHistory';
+import './fonts.css';
+
 const styles = {
   body: {
     position: 'fixed',

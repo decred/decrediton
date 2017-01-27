@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import arrowUpLightBlue from './icons/arrow-up-light-blue.svg';
 import menulogo from './icons/menu-logo.svg';
 import MenuLink from './MenuLink';
+import './fonts.css';
 
 function mapStateToProps(state) {
   return {

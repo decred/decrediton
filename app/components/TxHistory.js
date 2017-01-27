@@ -8,6 +8,7 @@ import MinusSmall from './icons/minus-small.svg';
 import ArrowRightGray from './icons/arrow-right-gray.svg';
 import ArrowRightKeyBlue from './icons/arrow-right-key-blue.svg';
 import dateFormat from 'dateformat';
+import './fonts.css';
 
 const styles = {
   historyContainer: {
