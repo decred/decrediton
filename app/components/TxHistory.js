@@ -230,7 +230,7 @@ class TxHistory extends Component {
               return (
                 <div style={styles.transactionIn}>
                   <div style={styles.transactionAmount}>
-                    <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
+                    <div style={styles.transactionAmountNumber}><Balance amount={txAmount} /></div>
                       <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>
                     </div>
                     <div style={styles.transactionAccount}>
