@@ -31,7 +31,7 @@ class Balance extends React.Component {
         totalDcr = parseInt(this.props.amount) / 100000000;
         numberFormatPart = totalDcr.toFixed(8).toString().split('.');
       }
-        return (
+      return (
         <span
         style={styles.base}
         onClick={this.props.onClick}
@@ -40,7 +40,7 @@ class Balance extends React.Component {
           <span style={styles.small}>{numberFormatPart[1].toString().slice(2)}</span>
           <span style={styles.small}> DCR</span>
         </span>
-      );   
+      );
     } else if (currentSettings.currencyDisplay === 'atoms') {
       return (
         <span

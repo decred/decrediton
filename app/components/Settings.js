@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import ErrorScreen from './ErrorScreen';
 import Button from './ButtonTanel';
 import SideBar from './SideBar';
-import qr from 'qr-image';
 
 const styles = {
   body: {
@@ -63,12 +62,9 @@ class Settings extends Component{
     currencyDisplay: PropTypes.string
   };
   handleSaveSettingsClick = (settings) => {
-    console.log(this.props.currentSettings);
-    console.log(settings);
-    console.log(settings === this.props.currentSettings);
     this.props.saveSettings(settings);
   }
-  //handleCurrencyChange 
+  //handleCurrencyChange
   render() {
     const { walletService, currentSettings, settingsChanged, tempSettings, updateStateSettingsChanged } = this.props;
     var settings = {
@@ -86,8 +82,7 @@ class Settings extends Component{
           <select defaultValue={currentSettings.currencyDisplay}
             onChange={(e) => {
               settings.currencyDisplay = e.target.value;
-              console.log(settings);
-              this.props.updateStateSettingsChanged(settings);
+              updateStateSettingsChanged(settings);
             }}>
             <option value="DCR">DCR</option>
             <option value="atoms">atoms</option>

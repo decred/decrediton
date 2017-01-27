@@ -4,10 +4,9 @@ import ErrorScreen from './ErrorScreen';
 import SideBar from './SideBar';
 import TxHistory from './TxHistory';
 import Balance from './Balance';
-import CircularProgress from 'material-ui/CircularProgress';
 
 const styles = {
-    body: {
+  body: {
     position: 'fixed',
     left: '0px',
     top: '50%',
@@ -109,8 +108,8 @@ class History extends Component{
   };
 
   render() {
-    const { walletService, getBalanceResponse, getBalanceRequestAttempt } = this.props;
-    const { getTransactionsRequest, txPerPage, transactionsInfo, paginatingTxs, paginatedTxs, getMinedPaginatedTransactions, currentPage } = this.props;
+    const { walletService, getBalanceResponse } = this.props;
+    const { txPerPage, transactionsInfo, paginatedTxs, getMinedPaginatedTransactions, currentPage } = this.props;
     const historyView = (
       <div style={styles.view}>
         <div style={styles.header}>
