@@ -133,7 +133,7 @@ const styles = {
   },
   menuBottomLatestBlock: {
     position: 'relative',
-    height: '77px',
+    height: '89px',
     paddingTop: '14px',
     paddingRight: '18px',
     paddingLeft: '18px',
