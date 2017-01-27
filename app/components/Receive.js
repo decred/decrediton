@@ -20,31 +20,40 @@ const styles = {
     marginLeft: 'auto',
     backgroundColor: '#FFF',
   },
-  content: {
+  view: {
     width: '880px',
     height: '100%',
     float: 'right',
     backgroundColor: '#f3f6f6',
   },
-  pageContentWrapper: {
-    //width: '100%',
-    marginRight: '8px',
-    position: 'absolute',
-    paddingBottom: '60px',
-  },
-
   header: {
-    backgroundColor: '#F9FBFC',
-    textAlign: 'center',
-    borderBottom: '1px solid #e2e2e2',
+    paddingRight: '80px',
+    paddingLeft: '100px',
+    backgroundColor: '#fff',
   },
-  center: {
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
+  headerTop: {
+    height: '106px',
+    paddingBottom: '20px',
+  },
+  headerTitleOverview: {
+    height: '54px',
+    paddingTop: '13px',
+    color: '#596d81',
+    fontSize: '27px',
+  },
+  headerMetaOverview: {
+    height: '54px',
+    paddingTop: '5px',
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '33px',
+  },
+  content: {
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 60px 54px 80px',
   },
   img: {
-    width: '150px',
+    width: '200px',
     margin: '25px 0 50px 0',
     marginLeft: '40%',
     textAlign: 'center',
@@ -52,29 +61,11 @@ const styles = {
     alignItems: 'center',
     color: 'white'
   },
-
-  colXs12: {
+  center: {
+    textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    textAlign: 'center',
-    borderBottom: '1px solid #e2e2e2',
-    backgroundColor: '#F9FBFC',
-  },
-
-  well: {
-    width: 'auto',
-    fontWeight: 'bold',
-    //font-family: $inconsolata;
-    fontSize: '1.2rem',
-    backgroundColor:'#e9f8fe',
-    padding: '5px 5px',
-    margin: '-20px 0 15px 0',
-    border: '2px solid #cacfd6',
-    borderRadius: '2px',
-    textAlign: 'center',
-    color: '#0c1e3e',
-    boxShadow: 'none!important',
-  },
+  }
 };
 
 class QRCode extends Component {
@@ -99,33 +90,33 @@ class Receive extends Component{
     const { getNextAddressResponse, getNextAddressRequestAttempt } = this.props;
 
     const copayReceive = (
-      <div style={styles.content}>
-        <div style={styles.center}>
-          <div style={styles.header}>
-						<p>My Decred Address</p>
-					</div>
-				</div>
-        {getNextAddressResponse !== null ?
+      <div style={styles.view}>
+        <div style={styles.header}>
+          <div style={styles.headerTop}></div>
+          <div style={styles.headerTitleOverview}>Current address</div>
+          <div style={styles.headerMetaOverview}>
+            {getNextAddressResponse !== null ?
+              getNextAddressResponse.getAddress() :
+              <div></div>
+            }
+          </div>
+        </div>
+        <div style={styles.content}>
           <div style={styles.center}>
-            <QRCode addr={getNextAddressResponse.getAddress()}/>
-            <div style={styles.well}>
-              <p>{getNextAddressResponse.getAddress()}</p>
-            </div>
-          </div> :
-          <div></div>
-        }
-        <div style={styles.center}>
-					<p>Share this wallet address to receive payments, To protect your privacy, new addresses are generated automatically once you use them.</p>
-				</div>
-				<div style={styles.center}>
-          <Button
-            size="large"
-            block={false}
-            onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
-            >
-            Generate new address
-          </Button>
-				</div>
+            {getNextAddressResponse !== null ?
+              <QRCode addr={getNextAddressResponse.getAddress()}/> :
+              <div></div>
+            }
+            <p>Share this wallet address to receive payments, To protect your privacy, new addresses are generated automatically once you use them.</p>
+            <Button
+              size="large"
+              block={false}
+              onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
+              >
+              Generate new address
+            </Button>
+          </div>
+        </div>
 			</div>
     );
     if (walletService === null) {
