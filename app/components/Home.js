@@ -137,7 +137,7 @@ class Home extends Component{
   render() {
     const { walletService } = this.props;
     const { paginatedTxs } = this.props;
-    const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
+    const { getBalanceResponse } = this.props;
     const { rescanRequest, rescanResponse } = this.props;
     const { getAccountsResponse } = this.props;
 
@@ -153,12 +153,15 @@ class Home extends Component{
       rescanView = <RescanForm />;
     } else {
       rescanView = (
-        <div>
-          <LinearProgress mode="determinate"
-            min={rescanRequest !== null ? rescanRequest.getBeginHeight(): 0}
-            max={getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight(): 100}
-            value={rescanResponse !== null ? rescanResponse.getRescannedThrough() : 0} />
-          <p>{rescanPercFisnished}%</p>
+        <div style={styles.view}>
+          <div style={styles.header}>
+            <div style={styles.headerTop}></div>
+            <LinearProgress mode="determinate"
+              min={rescanRequest !== null ? rescanRequest.getBeginHeight(): 0}
+              max={getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight(): 100}
+              value={rescanResponse !== null ? rescanResponse.getRescannedThrough() : 0} />
+            <p>{rescanPercFisnished}%</p>
+          </div>
         </div>
       );
     }
@@ -190,7 +193,10 @@ class Home extends Component{
       return(
         <div style={styles.body}>
           <SideBar />
-          {homeView}
+          {rescanRequest ?
+            {rescanView} :
+            {homeView}
+          }
         </div>);
     }
   }

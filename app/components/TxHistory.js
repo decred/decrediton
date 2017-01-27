@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 //import { reverseHash } from '../helpers/byteActions';
 import Balance from './Balance';
-import rightArrowGray from './icons/arrow-right-gray.svg';
-import rightArrowKeyBlue from './icons/arrow-right-key-blue.svg';
-
 import IndicatorPending from './icons/indicator-pending.svg';
 import IndicatorConfirmed from './icons/indicator-confirmed.svg';
 import PlusSmall from './icons/plus-small.svg';
@@ -222,8 +219,8 @@ class TxHistory extends Component {
           {mined.map(function(tx) {
             var credits = tx.getCreditsList();
             var debits = tx.getDebitsList();
-            var date = dateFormat(new Date(tx.timestamp*1000), "mmm d yyyy, HH:MM:ss");
-// Saturday, June 9th, 2007, 5:46:21 PM 
+            var date = dateFormat(new Date(tx.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
+// Saturday, June 9th, 2007, 5:46:21 PM
             if (debits.length == 0) {
               var txAmount = 0;
               for(var k = 0; k < credits.length; k++){
@@ -243,18 +240,18 @@ class TxHistory extends Component {
                     </div>
                     <div style={styles.transactionTimeDate}><span>{date}</span></div>
                   </div>);
-              } else {
-                var prevAmount = 0;
-                txAmount = 0;
-                var returnedAmount = 0;
-                for(k = 0; k < credits.length; k++){
-                  returnedAmount += credits[k].getAmount();
-                }
-                for(k = 0; k < debits.length; k++){
-                  prevAmount += debits[k].getPreviousAmount();
-                }
-                txAmount = prevAmount - returnedAmount;
-                return (
+            } else {
+              var prevAmount = 0;
+              txAmount = 0;
+              var returnedAmount = 0;
+              for(k = 0; k < credits.length; k++){
+                returnedAmount += credits[k].getAmount();
+              }
+              for(k = 0; k < debits.length; k++){
+                prevAmount += debits[k].getPreviousAmount();
+              }
+              txAmount = prevAmount - returnedAmount;
+              return (
                   <div style={styles.transactionOut}>
                     <div style={styles.transactionAmount}>
                       <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
@@ -268,7 +265,7 @@ class TxHistory extends Component {
                     </div>
                     <div style={styles.transactionTimeDate}><span>{date}</span></div>
                   </div>);
-              }
+            }
           })}
         </div>
       </div>);

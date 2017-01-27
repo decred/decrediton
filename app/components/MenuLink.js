@@ -16,7 +16,7 @@ var styles = {
       backgroundSize: '5px',
     },
   },
-  menuNavigationLink:{ 
+  menuNavigationLink:{
     display: 'block',
     height: '38px',
     paddingTop: '15px',

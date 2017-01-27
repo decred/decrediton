@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import Radium from 'radium';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import Balance from './Balance';
 import arrowUpLightBlue from './icons/arrow-up-light-blue.svg';
 import menulogo from './icons/menu-logo.svg';
 import MenuLink from './MenuLink';
@@ -20,7 +17,7 @@ function mapStateToProps(state) {
 }
 
 const styles = {
-  menu:{  
+  menu:{
     position: 'relative',
     overflow: 'hidden',
     width: '298px',
@@ -29,7 +26,7 @@ const styles = {
     float: 'left',
     backgroundColor: '#0c1e3e',
   },
-  menuLogo:{  
+  menuLogo:{
     position: 'relative',
     zIndex: '3',
     height: '106px',
@@ -39,7 +36,7 @@ const styles = {
     backgroundSize: 'auto 30px',
     backgroundRepeat: 'no-repeat',
   },
-  menuNavigation:{  
+  menuNavigation:{
     position: 'absolute',
     left: '0px',
     top: '106px',
@@ -100,7 +97,7 @@ const styles = {
     bottom: '0px',
     zIndex: '2',
   },
-  menuBottomTotalBalanceShort: {  
+  menuBottomTotalBalanceShort: {
     position: 'relative',
     height: '56px',
     paddingTop: '14px',
@@ -109,7 +106,7 @@ const styles = {
     backgroundColor: '#0c1e3e',
     cursor: 'pointer',
   },
-  menuBottomTotalBalanceShortSeperator: {  
+  menuBottomTotalBalanceShortSeperator: {
     height: '7px',
     marginBottom: '15px',
     borderBottom: '1px solid #69d5f7',
@@ -117,7 +114,7 @@ const styles = {
     backgroundPosition: '50% 0px',
     backgroundRepeat: 'no-repeat',
   },
-  menuBottomTotalBalanceShortName: {  
+  menuBottomTotalBalanceShortName: {
     float: 'left',
     color: '#69d5f7',
     fontSize: '13px',
@@ -133,7 +130,7 @@ const styles = {
     lineHeight: '10px',
     textAlign: 'right',
   },
-  menuBottomLatestBlock: { 
+  menuBottomLatestBlock: {
     position: 'relative',
     height: '77px',
     paddingTop: '14px',
@@ -141,7 +138,7 @@ const styles = {
     paddingLeft: '18px',
     backgroundColor: '#09182d',
   },
-  menuBottomLatestBlockName: {  
+  menuBottomLatestBlockName: {
     float: 'left',
     color: '#69d5f7',
     fontSize: '13px',
@@ -149,11 +146,11 @@ const styles = {
     textAlign: 'left',
     textDecoration: 'none',
   },
-  menuBottomLatestBlockNumber: {  
+  menuBottomLatestBlockNumber: {
     fontFamily: 'Inconsolata, monospace',
     color: '#2ed8a3',
   },
-  menuBottomLatestBlockTime: {  
+  menuBottomLatestBlockTime: {
     float: 'right',
     color: '#69d5f7',
     fontSize: '13px',
@@ -165,7 +162,7 @@ const styles = {
 
 class SideBar extends Component {
   render() {
-    const { getBalanceRequestAttempt, getBalanceResponse } = this.props;
+    const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
     var balance = 0;
     if (getBalanceResponse != null) {
