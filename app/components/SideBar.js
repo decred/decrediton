@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import arrowUpLightBlue from './icons/arrow-up-light-blue.svg';
 import menulogo from './icons/menu-logo.svg';
 import MenuLink from './MenuLink';
+import './fonts.css';
 
 function mapStateToProps(state) {
   return {
@@ -132,7 +133,7 @@ const styles = {
   },
   menuBottomLatestBlock: {
     position: 'relative',
-    height: '77px',
+    height: '89px',
     paddingTop: '14px',
     paddingRight: '18px',
     paddingLeft: '18px',

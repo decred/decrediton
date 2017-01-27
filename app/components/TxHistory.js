@@ -8,6 +8,7 @@ import MinusSmall from './icons/minus-small.svg';
 import ArrowRightGray from './icons/arrow-right-gray.svg';
 import ArrowRightKeyBlue from './icons/arrow-right-key-blue.svg';
 import dateFormat from 'dateformat';
+import './fonts.css';
 
 const styles = {
   historyContainer: {
@@ -115,7 +116,7 @@ const styles = {
   transactionAccountName: {
     width: '45%',
     height: '36px',
-    paddingTop: '16px',
+    paddingTop: '17px',
     paddingRight: '0px',
     float: 'left',
     fontSize: '11px',

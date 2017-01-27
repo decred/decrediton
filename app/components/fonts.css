@@ -1,0 +1,28 @@
+/* Inconsolata - Source Sans Pro */
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/inconsolata-v15-latin_vietnamese_latin-ext-700.woff'); /* IE9 Compat Modes */
+  src: local('Inconsolata-Bold'), 
+       url('../fonts/inconsolata-v15-latin_vietnamese_latin-ext-700.woff') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/inconsolata-v15-latin_vietnamese_latin-ext-700.woff2') format('woff'), /* Modern Browsers */
+}
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../fonts/inconsolata-v15-latin_vietnamese_latin-ext-regular.woff'); /* IE9 Compat Modes */
+  src: local('Inconsolata'), 
+       url('../fonts/inconsolata-v15-latin_vietnamese_latin-ext-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/inconsolata-v15-latin_vietnamese_latin-ext-regular.woff') format('woff'), /* Modern Browsers */
+}
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../fonts/source-sans-pro-v9-latin_vietnamese_latin-ext-300.woff'); /* IE9 Compat Modes */
+  src: local('Source Sans Pro'), 
+       url('../fonts/source-sans-pro-v9-latin_vietnamese_latin-ext-300.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/source-sans-pro-v9-latin_vietnamese_latin-ext-300.woff') format('woff'), /* Modern Browsers */
+}
