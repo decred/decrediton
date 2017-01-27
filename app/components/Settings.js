@@ -7,14 +7,50 @@ import qr from 'qr-image';
 
 const styles = {
   body: {
-    height: '100%'
+    position: 'fixed',
+    left: '0px',
+    top: '50%',
+    right: '0px',
+    display: 'block',
+    overflow: 'hidden',
+    width: '1178px',
+    height: '770px',
+    marginTop: '-385px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    backgroundColor: '#FFF',
+  },
+  view: {
+    width: '880px',
+    height: '100%',
+    float: 'right',
+    backgroundColor: '#f3f6f6',
+  },
+  header: {
+    paddingRight: '80px',
+    paddingLeft: '100px',
+    backgroundColor: '#fff',
+  },
+  headerTop: {
+    height: '106px',
+    paddingBottom: '20px',
+  },
+  headerTitleOverview: {
+    height: '54px',
+    paddingTop: '13px',
+    color: '#596d81',
+    fontSize: '27px',
+  },
+  headerMetaOverview: {
+    height: '54px',
+    paddingTop: '5px',
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '53px',
   },
   content: {
-    position: 'absolute',
-    top: '70px',
-    left: '252px',
-    bottom: '0px',
-    right: '0px',
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 60px 54px 80px',
   },
 };
 
@@ -27,11 +63,19 @@ class Settings extends Component{
   render() {
     const { walletService, currencyDisplay } = this.props;
     const settings = (
-      <div style={styles.content}>
-        <select defaultValue={currencyDisplay}>
-          <option value="DCR">DCR</option>
-          <option value="atoms">atoms</option>
-        </select>
+      <div style={styles.view}>
+        <div style={styles.header}>
+          <div style={styles.headerTop}></div>
+          <div style={styles.headerTitleOverview}>Settings</div>
+          <div style={styles.headerMetaOverview}>
+          </div>
+        </div>
+        <div style={styles.content}>
+          <select defaultValue={currencyDisplay}>
+            <option value="DCR">DCR</option>
+            <option value="atoms">atoms</option>
+          </select>
+        </div>
 			</div>
     );
     if (walletService === null) {
