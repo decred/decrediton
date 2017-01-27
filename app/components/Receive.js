@@ -26,7 +26,6 @@ const styles = {
     float: 'right',
     backgroundColor: '#f3f6f6',
   },
-
   pageContentWrapper: {
     //width: '100%',
     marginRight: '8px',
@@ -45,8 +44,7 @@ const styles = {
     alignItems: 'center',
   },
   img: {
-    width: '30%',
-    height: '150px',
+    width: '150px',
     margin: '25px 0 50px 0',
     marginLeft: '40%',
     textAlign: 'center',
@@ -107,23 +105,26 @@ class Receive extends Component{
 						<p>My Decred Address</p>
 					</div>
 				</div>
-        <div style={styles.center}>
-	<QRCode addr={getNextAddressResponse.getAddress()}/>
-	<div style={styles.well}>
-						<p>{getNextAddressResponse === null ? 'Please refresh' : getNextAddressResponse.getAddress() } </p>
-      </div>
+        {getNextAddressResponse !== null ?
           <div style={styles.center}>
-						<p>Share this wallet address to receive payments, To protect your privacy, new addresses are generated automatically once you use them.</p>
-					</div>
-					<div style={styles.center}>
-            <Button
-              size="large"
-              block={false}
-              onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
-              >
-              Generate new address
-            </Button>
-					</div>
+            <QRCode addr={getNextAddressResponse.getAddress()}/>
+	          <div style={styles.well}>
+						  <p>{getNextAddressResponse.getAddress()}</p>
+            </div>
+          </div> :
+          <div></div>
+        } 
+        <div style={styles.center}>
+					<p>Share this wallet address to receive payments, To protect your privacy, new addresses are generated automatically once you use them.</p>
+				</div>
+				<div style={styles.center}>
+          <Button
+            size="large"
+            block={false}
+            onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
+            >
+            Generate new address
+          </Button>
 				</div>
 			</div>
     );
