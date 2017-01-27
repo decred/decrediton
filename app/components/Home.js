@@ -194,8 +194,8 @@ class Home extends Component{
         <div style={styles.body}>
           <SideBar />
           {rescanRequest ?
-            {rescanView} :
-            {homeView}
+            rescanView :
+            homeView
           }
         </div>);
     }
