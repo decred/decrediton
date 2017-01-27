@@ -52,6 +52,9 @@ const styles = {
     height: '556px',
     padding: '54px 60px 54px 80px',
   },
+  saveSettingsButton: {
+    float: 'right',
+  }
 };
 
 class Settings extends Component{
@@ -90,6 +93,7 @@ class Settings extends Component{
             <option value="atoms">atoms</option>
           </select>
           <Button
+            style={styles.saveSettingsButton}
             disabled={!settingsChanged}
             size="large"
             block={false}
