@@ -59,10 +59,19 @@ class Settings extends Component{
     walletService: PropTypes.object,
     currencyDisplay: PropTypes.string
   };
-
+  handleSaveSettingsClick = (settings) => {
+    console.log(this.props.currentSettings);
+    console.log(settings);
+    console.log(settings === this.props.currentSettings);
+    this.props.saveSettings(settings);
+  }
+  //handleCurrencyChange 
   render() {
-    const { walletService, currencyDisplay } = this.props;
-    const settings = (
+    const { walletService, currentSettings, settingsChanged, tempSettings, updateStateSettingsChanged } = this.props;
+    var settings = {
+      currencyDisplay: tempSettings.currencyDisplay,
+    };
+    const settingsView = (
       <div style={styles.view}>
         <div style={styles.header}>
           <div style={styles.headerTop}></div>
@@ -71,10 +80,22 @@ class Settings extends Component{
           </div>
         </div>
         <div style={styles.content}>
-          <select defaultValue={currencyDisplay}>
+          <select defaultValue={currentSettings.currencyDisplay}
+            onChange={(e) => {
+              settings.currencyDisplay = e.target.value;
+              console.log(settings);
+              this.props.updateStateSettingsChanged(settings);
+            }}>
             <option value="DCR">DCR</option>
             <option value="atoms">atoms</option>
           </select>
+          <Button
+            disabled={!settingsChanged}
+            size="large"
+            block={false}
+            onClick={() => this.handleSaveSettingsClick(tempSettings)}>
+            Save Settings
+          </Button>
         </div>
 			</div>
     );
@@ -84,7 +105,7 @@ class Settings extends Component{
       return(
         <div style={styles.body}>
           <SideBar />
-          {settings}
+          {settingsView}
         </div>);
     }
   }

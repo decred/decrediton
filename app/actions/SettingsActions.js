@@ -1,24 +1,9 @@
-import fs from 'fs';
+// import fs from 'fs';
 
-export const SETTINGS_ATTEMPT = 'SETTINGS_ATTEMPT';
-export const SETTINGS_FAILED = 'SETTINGS_FAILED';
-export const SETTINGS_SUCCESS = 'SETTINGS_SUCCESS';
-
-function setSomeSettingsError(error) {
-  return { error, type: SETTINGS_FAILED };
-}
-
-function setSomeSettingsSuccess() {
-  return { type: SETTINGS_SUCCESS };
-}
-
-export function setSomeSettings(someSettings) {
-  return (dispatch) => {
-    dispatch({someSettings: someSettings, type: SETTINGS_ATTEMPT });
-    dispatch(settingsSave());
-  }
-}
-
+export const SETTINGS_SAVE = 'SETTINGS_SAVE';
+export const SETTINGS_CHANGED = 'SETTINGS_CHANGED';
+export const SETTINGS_UNCHANGED = 'SETTINGS_UNCHANGED';
+/*
 function settingsSave() {
   return (dispatch) => {
     var fs = require('fs');
@@ -32,10 +17,25 @@ function settingsSave() {
     });
   }
 }
+*/
 
-export function checkBoxSetting(someSettings) {
-  return (dispatch) => {
-    console.log('toggled checkbox');
-    dispatch({someSettings: !someSettings, type: SETTINGS_ATTEMPT });
+export function saveSettings(settings) {
+  return {
+    settings,
+    type: SETTINGS_SAVE
+  };
+}
+export function updateStateSettingsChanged(settings) {
+  return (dispatch, getState) => {
+    const { tempSettings, currentSettings } = getState().settings;
+    if (settings.currencyDisplay !== tempSettings.currencyDisplay) {
+      if (settings.currencyDisplay !== currentSettings.currencyDisplay) {
+        console.log("settings changed! different than currentSettings")
+        dispatch({ tempSettings: settings, type: SETTINGS_CHANGED})
+      } else {
+        console.log("settings changed! same as currentSettings")
+        dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED})
+      }
+    }
   }
 }
