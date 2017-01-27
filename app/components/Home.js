@@ -174,7 +174,6 @@ class Home extends Component{
         <div style={styles.content}>
           <div style={styles.contentTitle}>
             <div style={styles.contentTitleText}>Recent Transactions</div>
-            <div style={styles.contentTitleButtonSearch}></div>
           </div>
           <div style={styles.contentNest}>
             {paginatedTxs.length > 0 ?
@@ -198,3 +197,10 @@ class Home extends Component{
 }
 
 export default Home;
+
+
+/*
+  This is the transaction search button that needs to get implemented
+  <div style={styles.contentTitleButtonSearch}></div>
+
+*/
