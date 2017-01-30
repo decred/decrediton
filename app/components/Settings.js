@@ -79,6 +79,9 @@ class Settings extends Component{
           </div>
         </div>
         <div style={styles.content}>
+          <div style={styles.label}>
+            Displayed Units
+          </div>
           <select defaultValue={currentSettings.currencyDisplay}
             onChange={(e) => {
               settings.currencyDisplay = e.target.value;
