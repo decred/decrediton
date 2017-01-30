@@ -6,6 +6,7 @@ import HomePage from './containers/HomePage';
 import HistoryPage from './containers/HistoryPage';
 import SendPage from './containers/SendPage';
 import ReceivePage from './containers/ReceivePage';
+import SettingsPage from './containers/SettingsPage';
 import GetStartedPage from './containers/GetStartedPage';
 import WalletError from './containers/WalletError';
 
@@ -16,6 +17,7 @@ export default (
     <Route path="/history" component={HistoryPage} />
     <Route path="/send" component={SendPage} />
     <Route path="/receive" component={ReceivePage} />
+    <Route path="/settings" component={SettingsPage} />
     <Route path="/walletError" component={WalletError} />
   </Route>
 );

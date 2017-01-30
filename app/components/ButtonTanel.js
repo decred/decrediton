@@ -5,13 +5,14 @@ var styles = {
   base: {
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize: '1.8rem',
+    fontSize: '1.0rem',
     background: 'linear-gradient(#699bff, #2972ff)',
     border: 'none',
     borderRadius: 8,
     boxShadow: '0px 5px 5px 0px rgba(0, 0, 0, 0.3)',
     padding: '14px 16px',
     marginBottom: '20px',
+    fontFamily: 'Inconsolata, monospace',
     color: 'white',
     ':hover': {
       background: '#2970ff',
@@ -40,6 +41,7 @@ class Button extends React.Component {
     return (
       <button
         style={[
+          this.props.style,
           styles.base,
           this.props.block && styles.block
         ]}

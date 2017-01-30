@@ -228,9 +228,9 @@ class TxHistory extends Component {
                 txAmount += credits[k].getAmount();
               }
               return (
-                <div style={styles.transactionIn}>
+                <div style={styles.transactionIn} key={tx.getHash()}>
                   <div style={styles.transactionAmount}>
-                    <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
+                    <div style={styles.transactionAmountNumber}><Balance amount={txAmount} /></div>
                       <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>
                     </div>
                     <div style={styles.transactionAccount}>
@@ -253,7 +253,7 @@ class TxHistory extends Component {
               }
               txAmount = prevAmount - returnedAmount;
               return (
-                  <div style={styles.transactionOut}>
+                  <div style={styles.transactionOut} key={tx.getHash()}>
                     <div style={styles.transactionAmount}>
                       <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
                       <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>

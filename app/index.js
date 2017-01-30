@@ -31,6 +31,15 @@ if (cfg.network == 'testnet') {
 
 
 var initialState = {
+  settings: {
+    currentSettings: {
+      currencyDisplay: 'DCR',
+    },
+    tempSettings: {
+      currencyDisplay: 'DCR',
+    },
+    settingsChanged: false,
+  },
   version: {
     // RequiredVersion
     requiredVersion: '4.3.0',
