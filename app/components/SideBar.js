@@ -173,6 +173,13 @@ const styles = {
     textAlign: 'right',
     textDecoration: 'none',
   },
+  sidebarHelp: {
+    display: 'block',
+    paddingLeft: '18px',
+    padding: '5px 5px',
+    color: '#69d5f7',
+    textDecoration: 'none',
+  },
 };
 
 class SideBar extends Component {
@@ -231,6 +238,11 @@ class SideBar extends Component {
           <MenuLink to="/receive">Receive</MenuLink>
           <MenuLink to="/history">History</MenuLink>
           <MenuLink to="/settings">Settings</MenuLink>
+	  <div style={styles.sidebarHelp}><p>Help:</p>
+          <a href="https://forum.decred.org" target="_blank" style={styles.sidebarLink}>Forum</a><br />
+          <a href="https://decred.slack.com" target="_blank" style={styles.sidebarLink}>Chat</a><br />
+        <a href="https://github.com/decred/decrediton/issues" target="_blank" style={styles.sidebarLink}>Issues</a><br />
+	</div>
         </div>
         <div style={!this.state.accountsHidden ? styles.menuTotalBalanceExtended : styles.menuTotalBalanceExtendedHidden }>
           <div style={styles.menuTotalBalanceExtendedBottom}>
