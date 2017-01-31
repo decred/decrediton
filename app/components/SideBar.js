@@ -52,7 +52,7 @@ const styles = {
     left: '0px',
     top: '106px',
     right: '0px',
-    bottom: '122px',
+    bottom: '157px',
     zIndex: '2',
     overflow: 'auto',
     backgroundColor: 'rgba(9, 24, 45, .8)',
@@ -64,7 +64,7 @@ const styles = {
     left: '0px',
     top: '106px',
     right: '0px',
-    bottom: '122px',
+    bottom: '157px',
     zIndex: '2',
     overflow: 'auto',
     backgroundColor: 'rgba(9, 24, 45, .8)',
@@ -187,9 +187,11 @@ class SideBar extends Component {
   showAccounts() {
     this.setState({accountsHidden: false});
   }
+  
   hideAccounts() {
     this.setState({accountsHidden: true});
   }
+
   render() {
     const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
