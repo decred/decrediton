@@ -14,6 +14,7 @@ function mapStateToProps(state) {
     getStakeInfoRequestAttempt: state.grpc.getStakeInfoRequestAttempt,
     getStakeInfoResponse: state.grpc.getStakeInfoResponse,
     getAccountsResponse: state.grpc.getAccountsResponse,
+    transactionNtfnsResponse: state.notifications.transactionNtfnsResponse,
   };
 }
 
@@ -179,11 +180,33 @@ class SideBar extends Component {
     super(props);
     this.state = {
       accountsHidden: true,
+      timeSince: null,
     };
     this.showAccounts = this.showAccounts.bind(this);
     this.hideAccounts = this.hideAccounts.bind(this);
+    this.updateBlockTimeSince = this.updateBlockTimeSince.bind(this);
   }
-
+  componentWillMount() {
+    setTimeout(() =>{this.updateBlockTimeSince();}, 1000);
+  }
+  updateBlockTimeSince() {
+    const { transactionNtfnsResponse } = this.props;
+    if (transactionNtfnsResponse !== null) {
+      const attachedBlocks = transactionNtfnsResponse.getAttachedBlocksList();
+      var currentTime = new Date();
+      var recentBlockTime = new Date(attachedBlocks[attachedBlocks.length-1].getTimestamp()*1000);
+      var difference = (currentTime - recentBlockTime);
+      var timeSince = Math.floor(difference / 60000);
+      if (timeSince == 0) {
+        this.setState({timeSince: '<1 min ago'});
+      } else if (timeSince == 1) {
+        this.setState({timeSince: '1 min ago'});
+      } else if (timeSince > 1) {
+        this.setState({timeSince: timeSince.toString() + ' mins ago'});
+      }
+    }
+    setTimeout(() =>{this.updateBlockTimeSince();}, 10000);
+  }
   showAccounts() {
     this.setState({accountsHidden: false});
   }
@@ -224,16 +247,16 @@ class SideBar extends Component {
               );
             }) : <div></div>}
           </div>
-
         </div>
         <div style={styles.menuBottom}>
-        <div style={styles.menuBottomTotalBalanceShort} onMouseEnter={() => {this.showAccounts();}} onMouseLeave={() => {this.hideAccounts();}}>
+          <div style={styles.menuBottomTotalBalanceShort} onMouseEnter={() => {this.showAccounts();}} onMouseLeave={() => {this.hideAccounts();}}>
             <div style={styles.menuBottomTotalBalanceShortSeperator}></div>
             <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
             <div style={styles.menuBottomTotalBalanceShortValue}>{balance.toString()}</div>
           </div>
           <div style={styles.menuBottomLatestBlock}>
-            <a style={styles.menuBottomLatestBlockName} href="#">Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight():0}</span></a>
+            <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight():0}</span></a>
+            {this.state.timeSince !== null ? <div style={styles.menuBottomLatestBlockTime}>{this.state.timeSince}</div> : <div></div> }
           </div>
         </div>
       </div>
@@ -241,26 +264,4 @@ class SideBar extends Component {
   }
 }
 
-/*
-        This is the block time since div, that needs to be implemented
-        <div style={styles.menuBottomLatestBlockTime}>1 min ago</div>
-
-        This is the div to show individual account balances on mouse over total balance
-        <div style={styles.menuTotalBalanceExtended} hidden>
-          <div style={styles.menuTotalBalanceExtendedBottom}>
-            <div style={styles.menuTotalBalanceExtendedBottomAccount}>
-            <div style={styles.menuTotalBalanceExtendedBottomAccountName}>Primary account</div>
-            <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>32.00000000</div>
-          </div>
-          <div style={styles.menuTotalBalanceExtendedBottom}>
-            <div style={styles.menuTotalBalanceExtendedBottomAccountName}>Candy money</div>
-            <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>32.00000000</div>
-          </div>
-          <div style={styles.menuTotalBalanceExtendedBottom}>
-            <div style={styles.menuTotalBalanceExtendedBottomAccountName}>College funds</div>
-            <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>32.00000000</div>
-          </div>
-        </div>
-        */
 export default connect(mapStateToProps)(SideBar);
-
