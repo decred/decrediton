@@ -187,7 +187,7 @@ class SideBar extends Component {
   showAccounts() {
     this.setState({accountsHidden: false});
   }
-  
+
   hideAccounts() {
     this.setState({accountsHidden: true});
   }
@@ -211,11 +211,20 @@ class SideBar extends Component {
         </div>
         <div style={!this.state.accountsHidden ? styles.menuTotalBalanceExtended : styles.menuTotalBalanceExtendedHidden }>
           <div style={styles.menuTotalBalanceExtendedBottom}>
-            <div style={styles.menuTotalBalanceExtendedBottomAccount}>
-              <div style={styles.menuTotalBalanceExtendedBottomAccountName}>Primary account</div>
-              <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>32.00000000</div>
-            </div>
+            {getAccountsResponse != null ? getAccountsResponse.getAccountsList().map(function(account) {
+              var accountBalance = 0;
+              if (account.getTotalBalance() > 0) {
+                accountBalance = account.getTotalBalance() / 1000000;
+              }
+              return(
+                <div style={styles.menuTotalBalanceExtendedBottomAccount} key={account.getAccountName()}>
+                  <div style={styles.menuTotalBalanceExtendedBottomAccountName}>{account.getAccountName()}</div>
+                  <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>{accountBalance}</div>
+                </div>
+              );
+            }) : <div></div>}
           </div>
+  
         </div>
         <div style={styles.menuBottom}>
         <div style={styles.menuBottomTotalBalanceShort} onMouseEnter={() => {this.showAccounts()}} onMouseLeave={() => {this.hideAccounts()}}>
