@@ -224,10 +224,10 @@ class SideBar extends Component {
               );
             }) : <div></div>}
           </div>
-  
+
         </div>
         <div style={styles.menuBottom}>
-        <div style={styles.menuBottomTotalBalanceShort} onMouseEnter={() => {this.showAccounts()}} onMouseLeave={() => {this.hideAccounts()}}>
+        <div style={styles.menuBottomTotalBalanceShort} onMouseEnter={() => {this.showAccounts();}} onMouseLeave={() => {this.hideAccounts();}}>
             <div style={styles.menuBottomTotalBalanceShortSeperator}></div>
             <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
             <div style={styles.menuBottomTotalBalanceShortValue}>{balance.toString()}</div>
