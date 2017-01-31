@@ -187,7 +187,7 @@ class SideBar extends Component {
     this.updateBlockTimeSince = this.updateBlockTimeSince.bind(this);
   }
   componentWillMount() {
-    setTimeout(() =>{this.updateBlockTimeSince()}, 1000);
+    setTimeout(() =>{this.updateBlockTimeSince();}, 1000);
   }
   updateBlockTimeSince() {
     const { transactionNtfnsResponse } = this.props;
@@ -200,12 +200,12 @@ class SideBar extends Component {
       if (timeSince == 0) {
         this.setState({timeSince: '<1 min ago'});
       } else if (timeSince == 1) {
-        this.setState({timeSince: '1 min ago'})
+        this.setState({timeSince: '1 min ago'});
       } else if (timeSince > 1) {
-        this.setState({timeSince: timeSince.toString() + ' mins ago'})
+        this.setState({timeSince: timeSince.toString() + ' mins ago'});
       }
     }
-    setTimeout(() =>{this.updateBlockTimeSince()}, 10000);
+    setTimeout(() =>{this.updateBlockTimeSince();}, 10000);
   }
   showAccounts() {
     this.setState({accountsHidden: false});
