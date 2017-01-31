@@ -56,6 +56,19 @@ const styles = {
     zIndex: '2',
     overflow: 'auto',
     backgroundColor: 'rgba(9, 24, 45, .8)',
+    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
+  },
+  menuTotalBalanceExtendedHidden: {
+    display: 'none',
+    position: 'absolute',
+    left: '0px',
+    top: '106px',
+    right: '0px',
+    bottom: '122px',
+    zIndex: '2',
+    overflow: 'auto',
+    backgroundColor: 'rgba(9, 24, 45, .8)',
+    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
   },
   menuTotalBalanceExtendedBottom: {
     position: 'absolute',
@@ -162,6 +175,21 @@ const styles = {
 };
 
 class SideBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      accountsHidden: true,
+    };
+    this.showAccounts = this.showAccounts.bind(this);
+    this.hideAccounts = this.hideAccounts.bind(this);
+  }
+
+  showAccounts() {
+    this.setState({accountsHidden: false});
+  }
+  hideAccounts() {
+    this.setState({accountsHidden: true});
+  }
   render() {
     const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
@@ -179,8 +207,16 @@ class SideBar extends Component {
           <MenuLink to="/history">History</MenuLink>
           <MenuLink to="/settings">Settings</MenuLink>
         </div>
+        <div style={!this.state.accountsHidden ? styles.menuTotalBalanceExtended : styles.menuTotalBalanceExtendedHidden }>
+          <div style={styles.menuTotalBalanceExtendedBottom}>
+            <div style={styles.menuTotalBalanceExtendedBottomAccount}>
+              <div style={styles.menuTotalBalanceExtendedBottomAccountName}>Primary account</div>
+              <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>32.00000000</div>
+            </div>
+          </div>
+        </div>
         <div style={styles.menuBottom}>
-          <div style={styles.menuBottomTotalBalanceShort}>
+        <div style={styles.menuBottomTotalBalanceShort} onMouseEnter={() => {this.showAccounts()}} onMouseLeave={() => {this.hideAccounts()}}>
             <div style={styles.menuBottomTotalBalanceShortSeperator}></div>
             <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
             <div style={styles.menuBottomTotalBalanceShortValue}>{balance.toString()}</div>
@@ -193,6 +229,7 @@ class SideBar extends Component {
     );
   }
 }
+
 /*
         This is the block time since div, that needs to be implemented
         <div style={styles.menuBottomLatestBlockTime}>1 min ago</div>
