@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import { reverseHash } from '../helpers/byteActions';
+import { reverseHash } from '../helpers/byteActions';
 import Balance from './Balance';
 import IndicatorPending from './icons/indicator-pending.svg';
 import IndicatorConfirmed from './icons/indicator-confirmed.svg';
@@ -223,6 +223,48 @@ class TxDetails extends Component {
   render() {
     const { tx } = this.props;
     const { clearTxDetails } = this.props;
+    var credits = tx.getCreditsList();
+    var debits = tx.getDebitsList();
+    var date = dateFormat(new Date(tx.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
+    var txDescription = '';
+    var txAmount = 0;
+    var walletValueUp = false;
+    var fee = tx.getFee();
+    var addressStr = '';
+    if (debits.length == 0) {
+      for (var i = 0; i < credits.length; i++) {
+        // Also check getInternal() to show something different (transfer or something)?
+        var spacing = ", ";
+        if (i != credits.length - 1) {
+          spacing = ""; 
+        }
+        addressStr = addressStr + spacing + credits[i].getAddress();
+        txAmount += credits[i].getAmount();
+      }
+      txDescription = {direction:'Received at:', addressStr: addressStr};
+    } else {
+      var totalDebit = 0;
+      var totalOutgoingCredit = 0;
+      var totalIncomingCredit = 0;
+      for (var i = 0; i < debits.length; i++) {
+        totalDebit += debits[i].getPreviousAmount();
+      }
+      for (var i = 0; i < credits.length; i++) {
+        if (!credits[i].getInternal()) {
+          var spacing = ", ";
+          if (i != credits.length - 1) {
+            spacing = ""; 
+          }
+          addressStr = addressStr + spacing + credits[i].getAddress();
+          // We sent funds to another wallet.
+          txAmount += credits[i].getAmount();
+        } else {
+          // Change coming back.
+          totalIncomingCredit += credits[i].getAmount();
+        }
+      }
+      txDescription = {direction:'Sent to:', addressStr: addressStr};
+    }
     return(
       <div style={styles.view}>
         <div style={styles.header}>
@@ -231,24 +273,24 @@ class TxDetails extends Component {
           </div>
           <div style={styles.headerTitleOverview}>Primary account</div>
           <div style={styles.headerMetaTransactionDetailsIn}>
-            <Balance amount={1343240000} />
-            <div style={styles.headerMetaTransactionDetailsTimeAndDate}>20 Jan 2017 14:51</div>
+            <Balance amount={txAmount} />
+            <div style={styles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
           </div>
         </div>
         <div style={styles.content}>
           <div style={styles.contentNest}>
             <div style={styles.transactionDetailsTop}>
               <div style={styles.transactionDetailsName}>Transaction:</div>
-              <div style={styles.transactionDetailsValue}>68c733bd42e80db76791429558c0b00c2e1ce8d89a2074d977638a252b8b4c1a</div>
+              <div style={styles.transactionDetailsValue}>{reverseHash(Buffer.from(tx.getHash()).toString('hex'))}</div>
               <div style={styles.transactionDetailsName}>
                 <div style={styles.indicatorConfirmed}>confirmed</div>
               </div>
               <div style={styles.transactionDetailsValue}>11 <span style={styles.transactionDetailsValueText}>confirmations</span>
               </div>
-              <div style={styles.transactionDetailsName}>To address:</div>
-              <div style={styles.transactionDetailsValue}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>
+              <div style={styles.transactionDetailsName}>{txDescription[2]}</div>
+              <div style={styles.transactionDetailsValue}>{txDescription[1]}</div>
               <div style={styles.transactionDetailsName}>Transaction fee:</div>
-              <div style={styles.transactionDetailsValue}>0.0001 <span style={styles.transactionDetailsValueText}>DCR</span>
+              <div style={styles.transactionDetailsValue}>{fee}<span style={styles.transactionDetailsValueText}>DCR</span>
               </div>
             </div>
             <div style={styles.transactionDetails}>
