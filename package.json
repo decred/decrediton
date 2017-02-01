@@ -166,6 +166,8 @@
     "electron-debug": "^1.0.1",
     "eslint-formatter-pretty": "^1.1.0",
     "eslint-plugin-react": "^6.9.0",
+    "formsy-material-ui": "^0.5.3",
+    "formsy-react": "^0.18.1",
     "is-running": "^2.1.0",
     "material-ui": "^0.16.2",
     "qr-image": "^3.2.0",
