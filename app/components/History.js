@@ -145,7 +145,7 @@ class History extends Component{
           <SideBar />
           { transactionDetails === null ?
           historyView :
-          <TransactionDetail tx={transactionDetails} clearTxDetails={clearTransactionDetails}/>
+          <TxDetails tx={transactionDetails} clearTxDetails={clearTransactionDetails}/>
           }
         </div>);
     }

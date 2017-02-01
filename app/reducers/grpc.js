@@ -194,11 +194,11 @@ export default function grpc(state = {}, action) {
     };
   case GETTRANSACTIONDETAILS_SET:
     return {...state,
-      transactionDetail: action.tx,
+      transactionDetails: action.tx,
     };
   case GETTRANSACTIONDETAILS_CLEAR:
     return {...state,
-      transactionDetail: null,
+      transactionDetails: null,
     };
   default:
     return state;

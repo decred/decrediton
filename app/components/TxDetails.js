@@ -162,11 +162,11 @@ class TxDetails extends Component {
 
   render() {
     const { tx } = this.props;
-    const { clearTransactionDetails } = this.props;
+    const { clearTxDetails } = this.props;
     return(
       <div>
-        {tx.getHeight()}
-        <div onClick={() => clearTransactionDetails()}>
+        {Buffer.from(tx.getHash()).toString('hex')}
+        <div onClick={() => clearTxDetails()}>
           back
         </div>
       </div>);
