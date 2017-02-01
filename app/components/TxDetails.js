@@ -117,6 +117,7 @@ const styles = {
   },
 
   headerMetaTransactionDetailsIn: {
+    height: '54px',
     paddingTop: '16px',
     paddingLeft: '50px',
     backgroundImage: `url(${PlusBig})`,
@@ -143,6 +144,7 @@ const styles = {
   },
 
   headerMetaTransactionDetailsOut: {
+    height: '54px',
     paddingTop: '16px',
     paddingLeft: '50px',
     backgroundImage: `url(${MinusBig})`,
@@ -152,10 +154,6 @@ const styles = {
     fontFamily: 'Inconsolata, monospace',
     fontSize: '35px',
     fontWeight: '700',
-  },
-
-  headerTopTransactionDetails: {
-    marginRight: '-20px',
   },
 
   transactionDetails: {
@@ -239,7 +237,7 @@ class TxDetails extends Component {
         </div>
         <div style={styles.content}>
           <div style={styles.contentNest}>
-            <div style={styles.transactionDetails}>
+            <div style={styles.transactionDetailsTop}>
               <div style={styles.transactionDetailsName}>Transaction:</div>
               <div style={styles.transactionDetailsValue}>68c733bd42e80db76791429558c0b00c2e1ce8d89a2074d977638a252b8b4c1a</div>
               <div style={styles.transactionDetailsName}>
