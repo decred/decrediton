@@ -157,8 +157,8 @@ const styles = {
 
 class TxHistory extends Component {
   render() {
-    const mined = this.props.mined;
-    const unmined = this.props.unmined;
+    const { showTxDetail } = this.props;
+    const { mined, unmined } = this.props;
     var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
     var today = new Date();
     if (mined !== null && mined.length > 0 ) {
@@ -228,7 +228,7 @@ class TxHistory extends Component {
                 txAmount += credits[k].getAmount();
               }
               return (
-                <div style={styles.transactionIn} key={tx.getHash()}>
+                <div style={styles.transactionIn} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx)}:null}>
                   <div style={styles.transactionAmount}>
                     <div style={styles.transactionAmountNumber}><Balance amount={txAmount} /></div>
                       <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>
@@ -253,7 +253,7 @@ class TxHistory extends Component {
               }
               txAmount = prevAmount - returnedAmount;
               return (
-                  <div style={styles.transactionOut} key={tx.getHash()}>
+                  <div style={styles.transactionOut} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx)}:null}>
                     <div style={styles.transactionAmount}>
                       <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
                       <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>

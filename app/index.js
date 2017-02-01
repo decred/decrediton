@@ -104,7 +104,8 @@ var initialState = {
     paginatingTxs: false,
     txPerPage: 6,
     currentPage: 1,
-
+    transactionDetails: null,
+    
     // GetTransactionInfo
     transactionsInfo: Array(),
     getTransactionsRequest: null,
