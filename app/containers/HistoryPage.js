@@ -17,6 +17,7 @@ function mapStateToProps(state) {
     getTransactionsRequest: state.grpc.getTransactions,
     transactionDetails: state.grpc.transactionDetails,
     getAccountsResponse: state.grpc.getAccountsResponse,
+    getNetworkResponse: state.grpc.getNetworkResponse,
   };
 }
 

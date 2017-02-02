@@ -112,6 +112,8 @@ class History extends Component{
     const { walletService, getBalanceResponse,getAccountsResponse } = this.props;
     const { transactionDetails, setTransactionDetails, clearTransactionDetails } = this.props;
     const { txPerPage, transactionsInfo, paginatedTxs, getMinedPaginatedTransactions, currentPage } = this.props;
+    const { getNetworkResponse } = this.props;
+
     const historyView = (
       <div style={styles.view}>
         <div style={styles.header}>
@@ -145,7 +147,7 @@ class History extends Component{
           <SideBar />
           { transactionDetails === null ?
           historyView :
-          <TxDetails tx={transactionDetails} clearTxDetails={clearTransactionDetails} getAccountsResponse={getAccountsResponse}/>
+          <TxDetails tx={transactionDetails} clearTxDetails={clearTransactionDetails} getAccountsResponse={getAccountsResponse} getNetworkResponse={getNetworkResponse}/>
           }
         </div>);
     }
