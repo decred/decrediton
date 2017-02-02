@@ -476,9 +476,9 @@ export const GETTRANSACTIONDETAILS_SET = 'GETTRANSACTIONDETAILS_SET';
 export const GETTRANSACTIONDETAILS_CLEAR = 'GETTRANSACTIONDETAILS_CLEAR';
 
 export function setTransactionDetails(tx) {
-  return {tx, type: GETTRANSACTIONDETAILS_SET}
+  return {tx, type: GETTRANSACTIONDETAILS_SET};
 }
 
-export function clearTransactionDetails(tx) {
-  return {type: GETTRANSACTIONDETAILS_CLEAR}
+export function clearTransactionDetails() {
+  return {type: GETTRANSACTIONDETAILS_CLEAR};
 }

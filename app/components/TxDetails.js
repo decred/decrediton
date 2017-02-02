@@ -240,36 +240,32 @@ class TxDetails extends Component {
     const { tx } = this.props;
     const { clearTxDetails } = this.props;
     const { getAccountsResponse } = this.props;
-    var currentHeight = 0;
-    if (getAccountsResponse !== null) {
 
-    }
     var credits = tx.getCreditsList();
     var debits = tx.getDebitsList();
 
     var date = dateFormat(new Date(tx.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
     var fee = tx.getFee();
-    
+
     var txDescription = '';
     var txAmount = 0;
 
     var walletValueUp = false;
 
-    var sentAddressStr = '';
     var receiveAddressStr = '';
     var totalDebit = 0;
     var totalFundsReceived = 0;
     var totalChange = 0;
     for (var i = 0; i < debits.length; i++) {
-      console.log(debits.length, i, "debit", debits[i].getPreviousAmount());
+      console.log(debits.length, i, 'debit', debits[i].getPreviousAmount());
       totalDebit += debits[i].getPreviousAmount();
     }
-    for (var i = 0; i < credits.length; i++) {
-      console.log(credits.length, i, "credit", credits[i].getAddress(), credits[i].getInternal());
+    for (i = 0; i < credits.length; i++) {
+      console.log(credits.length, i, 'credit', credits[i].getAddress(), credits[i].getInternal());
       if (!credits[i].getInternal()) {
-        var spacing = ", ";
+        var spacing = ', ';
         if (i != credits.length - 1) {
-          spacing = ""; 
+          spacing = '';
         }
         if (receiveAddressStr === '') {
           receiveAddressStr = credits[i].getAddress();
@@ -278,9 +274,9 @@ class TxDetails extends Component {
         }
         totalFundsReceived += credits[i].getAmount();
       } else {
-        var spacing = ", ";
+        spacing = ', ';
         if (i != credits.length - 1) {
-          spacing = ""; 
+          spacing = '';
         }
         if (receiveAddressStr === '') {
           receiveAddressStr = credits[i].getAddress();
@@ -297,7 +293,7 @@ class TxDetails extends Component {
       txAmount = totalDebit - fee - totalChange - totalFundsReceived;
       walletValueUp = false;
     } else {
-      txDescription = {direction:'Received at:',addressStr: receiveAddressStr}
+      txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
       txAmount = totalFundsReceived;
       walletValueUp = true;
     }
@@ -327,7 +323,7 @@ class TxDetails extends Component {
               <div style={styles.transactionDetailsName}>
                 <div style={styles.indicatorConfirmed}>confirmed</div>
               </div>
-              {getAccountsResponse !== null ? 
+              {getAccountsResponse !== null ?
               <div style={styles.transactionDetailsValue}>{getAccountsResponse.getCurrentBlockHeight() - tx.height} <span style={styles.transactionDetailsValueText}>confirmations</span></div> :
               <div></div>
               }

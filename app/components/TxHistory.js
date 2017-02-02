@@ -223,27 +223,24 @@ class TxHistory extends Component {
 
             var date = dateFormat(new Date(tx.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
             var fee = tx.getFee();
-            
+
             var txDescription = '';
             var txAmount = 0;
 
-            var walletValueUp = false;
-
-            var sentAddressStr = '';
             var receiveAddressStr = '';
             var totalDebit = 0;
             var totalFundsReceived = 0;
             var totalChange = 0;
             for (var i = 0; i < debits.length; i++) {
-              console.log(debits.length, i, "debit", debits[i].getPreviousAmount());
+              console.log(debits.length, i, 'debit', debits[i].getPreviousAmount());
               totalDebit += debits[i].getPreviousAmount();
             }
-            for (var i = 0; i < credits.length; i++) {
-              console.log(credits.length, i, "credit", credits[i].getAddress(), credits[i].getInternal());
+            for (i = 0; i < credits.length; i++) {
+              console.log(credits.length, i, 'credit', credits[i].getAddress(), credits[i].getInternal());
               if (!credits[i].getInternal()) {
-                var spacing = ", ";
+                var spacing = ', ';
                 if (i != credits.length - 1) {
-                  spacing = ""; 
+                  spacing = '';
                 }
                 if (receiveAddressStr === '') {
                   receiveAddressStr = credits[i].getAddress();
@@ -252,9 +249,9 @@ class TxHistory extends Component {
                 }
                 totalFundsReceived += credits[i].getAmount();
               } else {
-                var spacing = ", ";
+                spacing = ', ';
                 if (i != credits.length - 1) {
-                  spacing = ""; 
+                  spacing = '';
                 }
                 if (receiveAddressStr === '') {
                   receiveAddressStr = credits[i].getAddress();
@@ -269,9 +266,8 @@ class TxHistory extends Component {
             if ( totalFundsReceived + totalChange + fee < totalDebit) {
               txDescription = {direction:'Sent', addressStr: ''};
               txAmount = totalDebit - fee - totalChange - totalFundsReceived;
-              walletValueUp = false;
               return (
-                <div style={styles.transactionOut} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx)}:null}>
+                <div style={styles.transactionOut} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx);}:null}>
                   <div style={styles.transactionAmount}>
                     <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
                     <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
@@ -285,11 +281,10 @@ class TxHistory extends Component {
                   <div style={styles.transactionTimeDate}><span>{date}</span></div>
                 </div>);
             } else {
-              txDescription = {direction:'Received at:',addressStr: receiveAddressStr}
+              txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
               txAmount = totalFundsReceived;
-              walletValueUp = true;
               return (
-                <div style={styles.transactionIn} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx)}:null}>
+                <div style={styles.transactionIn} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx);}:null}>
                   <div style={styles.transactionAmount}>
                     <div style={styles.transactionAmountNumber}><Balance amount={txAmount} /></div>
                     <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
