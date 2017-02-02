@@ -1,8 +1,8 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 import WalletOpenForm from '../containers/WalletOpenForm';
-import CreateWalletForm from '../containers/CreateWalletForm';
-import DiscoverAddressForm from '../containers/DiscoverAddressForm';
+import CreateWalletForm from '../components/CreateWalletForm';
+import DiscoverAddressForm from '../components/DiscoverAddressForm';
 import CircularProgress from 'material-ui/CircularProgress';
 import LinearProgress from 'material-ui/LinearProgress';
 import Dialog from 'material-ui/Dialog';
@@ -96,7 +96,6 @@ class Home extends Component{
     const { startRpcRequestAttempt, startRpcError } = this.props;
     const { discoverAddressRequestAttempt, discoverAddressError } = this.props;
     const { fetchHeadersRequestAttempt } = this.props;
-    const { generateRandomSeedResponse } = this.props;
 
     const getStartedWalletLoader = (
       <div>
@@ -123,10 +122,6 @@ class Home extends Component{
 
 
     var creatingWallet;
-    var seedReady = (<div></div>);
-    if (generateRandomSeedResponse !== null) {
-      seedReady = (<CreateWalletForm seedText={generateRandomSeedResponse}/>);
-    }
     if (walletCreateRequestAttempt) {
       creatingWallet = (
         <div>
@@ -139,7 +134,7 @@ class Home extends Component{
           <ShowError error={walletCreateError} />
           <h3>Create wallet</h3>
           <h5>Please enter the information below to create your dcrwallet</h5>
-          {seedReady}
+          <CreateWalletForm/>
         </div>
       );
     }

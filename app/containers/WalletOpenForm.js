@@ -15,9 +15,6 @@ let WalletOpenForm = ({ dispatch }) => {
     <div>
       <form id="openWalletForm" onSubmit={e => {
         e.preventDefault();
-        if (pubpass == '') {
-          return;
-        }
         dispatch(openWalletAttempt(pubpass));
         document.getElementById('openWalletForm').reset();
         pubpass.fill(0);

@@ -1,5 +1,5 @@
 import { SEEDER_ATTEMPT, SEEDER_FAILED, SEEDER_SUCCESS } from '../actions/SeedServiceActions';
-import { GENERATERANDOMSEED_ATTEMPT, GENERATERANDOMSEED_FAILED, GENERATERANDOMSEED_SUCCESS } from '../actions/SeedServiceActions';
+import { GENERATERANDOMSEED_ATTEMPT, GENERATERANDOMSEED_CLEAR, GENERATERANDOMSEED_FAILED, GENERATERANDOMSEED_SUCCESS } from '../actions/SeedServiceActions';
 import { DECODESEED_ATTEMPT, DECODESEED_FAILED, DECODESEED_SUCCESS } from '../actions/SeedServiceActions';
 
 export default function walletLoader(state = {}, action) {
@@ -27,6 +27,10 @@ export default function walletLoader(state = {}, action) {
     return {...state,
       generateRandomSeedRequestAttempt: true,
       generateRandomSeedRequest: action.request,
+    };
+  case GENERATERANDOMSEED_CLEAR:
+    return {...state,
+      generateRandomSeedResponse: null,
     };
   case GENERATERANDOMSEED_FAILED:
     return {...state,

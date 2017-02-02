@@ -11,7 +11,6 @@ function seederError(error) {
 function seederSuccess(seeder) {
   return (dispatch) => {
     dispatch({seeder: seeder, type: SEEDER_SUCCESS });
-    dispatch(generateRandomSeedAttempt());
   };
 }
 
@@ -41,8 +40,15 @@ function getSeeder() {
 }
 
 export const GENERATERANDOMSEED_ATTEMPT = 'GENERATERANDOMSEED_ATTEMPT';
+export const GENERATERANDOMSEED_CLEAR = 'GENERATERANDOMSEED_CLEAR';
 export const GENERATERANDOMSEED_FAILED = 'GENERATERANDOMSEED_FAILED';
 export const GENERATERANDOMSEED_SUCCESS = 'GENERATERANDOMSEED_SUCCESS';
+
+export function generateRandomSeedClear(response) {
+  return (dispatch) => {
+    dispatch({ response: response, type: GENERATERANDOMSEED_CLEAR });
+  };
+}
 
 function generateRandomSeedError(error) {
   return { error, type: GENERATERANDOMSEED_FAILED };
