@@ -18,6 +18,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(Object.assign({}, ControlActions), dispatch);
-}
 
+}
 export default connect(mapStateToProps, mapDispatchToProps)(Send);

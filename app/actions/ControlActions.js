@@ -376,6 +376,12 @@ function fundTransactionAction() {
   };
 }
 
+export const CLEARTX = 'CLEARTX';
+
+export function clearTransaction() {
+  return{ type: CLEARTX };
+}
+
 export const SIGNTX_ATTEMPT = 'SIGNTX_ATTEMPT';
 export const SIGNTX_FAILED = 'SIGNTX_FAILED';
 export const SIGNTX_SUCCESS = 'SIGNTX_SUCCESS';
