@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Radium from 'radium';
 import { reverseHash } from '../helpers/byteActions';
 import Balance from './Balance';
 import IndicatorPending from './icons/indicator-pending.svg';
@@ -114,10 +115,16 @@ const styles = {
     textAlign: 'center',
     textDecoration: 'none',
     textTransform: 'capitalize',
+    ':hover': {
+      backgroundColor: '#596d81',
+    },
+    ':active': {
+      boxShadow: '0 0 0 0 rgba(0, 0, 0, .22)',
+    }
   },
 
   headerMetaTransactionDetailsIn: {
-    height: '54px',
+    height: '38px',
     paddingTop: '16px',
     paddingLeft: '50px',
     backgroundImage: `url(${PlusBig})`,
@@ -144,7 +151,7 @@ const styles = {
   },
 
   headerMetaTransactionDetailsOut: {
-    height: '54px',
+    height: '38px',
     paddingTop: '16px',
     paddingLeft: '50px',
     backgroundImage: `url(${MinusBig})`,
@@ -343,7 +350,7 @@ class TxDetails extends Component {
   }
 }
 
-export default TxDetails;
+export default Radium(TxDetails);
 /*
             <div style={styles.transactionDetails}>
               <div style={styles.transactionDetailsTitle}>Inputs</div>

@@ -92,8 +92,8 @@ const styles = {
 
   transactionAmount: {
     width: '44%',
-    height: '39px',
-    paddingTop: '13px',
+    height: '35px',
+    paddingTop: '17px',
     float: 'left',
   },
 
