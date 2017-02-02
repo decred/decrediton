@@ -410,6 +410,7 @@ function paginatedTransactionsProgess(getTransactionsResponse, requestedTxs) {
           newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
           newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
           newTxs[i].index = i;
+          newTxs[i].blockHash = getTransactionsResponse.getMinedTransactions().getHash();
           dispatch({ tempPaginatedTxs: newTxs[i], type: PAGINATETRANSACTIONS_MORE });
           break;
         }
@@ -469,4 +470,15 @@ function getPaginatedTransactions(request, requestedTxs) {
           }
         });
   };
+}
+
+export const GETTRANSACTIONDETAILS_SET = 'GETTRANSACTIONDETAILS_SET';
+export const GETTRANSACTIONDETAILS_CLEAR = 'GETTRANSACTIONDETAILS_CLEAR';
+
+export function setTransactionDetails(tx) {
+  return {tx, type: GETTRANSACTIONDETAILS_SET};
+}
+
+export function clearTransactionDetails() {
+  return {type: GETTRANSACTIONDETAILS_CLEAR};
 }

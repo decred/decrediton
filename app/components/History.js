@@ -4,6 +4,7 @@ import ErrorScreen from './ErrorScreen';
 import SideBar from './SideBar';
 import TxHistory from './TxHistory';
 import Balance from './Balance';
+import TxDetails from './TxDetails';
 
 const styles = {
   body: {
@@ -108,7 +109,8 @@ class History extends Component{
   };
 
   render() {
-    const { walletService, getBalanceResponse } = this.props;
+    const { walletService, getBalanceResponse,getAccountsResponse } = this.props;
+    const { transactionDetails, setTransactionDetails, clearTransactionDetails } = this.props;
     const { txPerPage, transactionsInfo, paginatedTxs, getMinedPaginatedTransactions, currentPage } = this.props;
     const historyView = (
       <div style={styles.view}>
@@ -129,7 +131,7 @@ class History extends Component{
           </div>
           <div style={styles.contentNest}>
             {paginatedTxs.length > 0 ?
-              <TxHistory mined={paginatedTxs}/>  :
+              <TxHistory mined={paginatedTxs} showTxDetail={setTransactionDetails}/>  :
               <p>No transactions</p>
             }
           </div>
@@ -141,7 +143,10 @@ class History extends Component{
       return(
         <div style={styles.body}>
           <SideBar />
-          {historyView}
+          { transactionDetails === null ?
+          historyView :
+          <TxDetails tx={transactionDetails} clearTxDetails={clearTransactionDetails} getAccountsResponse={getAccountsResponse}/>
+          }
         </div>);
     }
   }

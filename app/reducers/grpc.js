@@ -9,6 +9,7 @@ import {
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
   GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED, GETTRANSACTIONS_PROGRESS, GETTRANSACTIONS_COMPLETE,
   PAGINATETRANSACTIONS_START, PAGINATETRANSACTIONS_MORE, PAGINATETRANSACTIONS_END,
+  GETTRANSACTIONDETAILS_SET, GETTRANSACTIONDETAILS_CLEAR,
 } from '../actions/ClientActions';
 
 export default function grpc(state = {}, action) {
@@ -190,6 +191,14 @@ export default function grpc(state = {}, action) {
         ...state.transactionsInfo,
         action.tx,
       ]
+    };
+  case GETTRANSACTIONDETAILS_SET:
+    return {...state,
+      transactionDetails: action.tx,
+    };
+  case GETTRANSACTIONDETAILS_CLEAR:
+    return {...state,
+      transactionDetails: null,
     };
   default:
     return state;

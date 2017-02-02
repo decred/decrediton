@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import { reverseHash } from '../helpers/byteActions';
+import Radium from 'radium';
 import Balance from './Balance';
 import IndicatorPending from './icons/indicator-pending.svg';
 import IndicatorConfirmed from './icons/indicator-confirmed.svg';
@@ -92,8 +92,8 @@ const styles = {
 
   transactionAmount: {
     width: '44%',
-    height: '39px',
-    paddingTop: '13px',
+    height: '35px',
+    paddingTop: '17px',
     float: 'left',
   },
 
@@ -157,8 +157,8 @@ const styles = {
 
 class TxHistory extends Component {
   render() {
-    const mined = this.props.mined;
-    const unmined = this.props.unmined;
+    const { showTxDetail } = this.props;
+    const { mined, unmined } = this.props;
     var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
     var today = new Date();
     if (mined !== null && mined.length > 0 ) {
@@ -220,52 +220,81 @@ class TxHistory extends Component {
           {mined.map(function(tx) {
             var credits = tx.getCreditsList();
             var debits = tx.getDebitsList();
+
             var date = dateFormat(new Date(tx.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
-// Saturday, June 9th, 2007, 5:46:21 PM
-            if (debits.length == 0) {
-              var txAmount = 0;
-              for(var k = 0; k < credits.length; k++){
-                txAmount += credits[k].getAmount();
+            var fee = tx.getFee();
+
+            var txDescription = '';
+            var txAmount = 0;
+
+            var receiveAddressStr = '';
+            var totalDebit = 0;
+            var totalFundsReceived = 0;
+            var totalChange = 0;
+            for (var i = 0; i < debits.length; i++) {
+              totalDebit += debits[i].getPreviousAmount();
+            }
+            for (i = 0; i < credits.length; i++) {
+              if (!credits[i].getInternal()) {
+                var spacing = ', ';
+                if (i != credits.length - 1) {
+                  spacing = '';
+                }
+                if (receiveAddressStr === '') {
+                  receiveAddressStr = credits[i].getAddress();
+                } else {
+                  receiveAddressStr += spacing + credits[i].getAddress();
+                }
+                totalFundsReceived += credits[i].getAmount();
+              } else {
+                spacing = ', ';
+                if (i != credits.length - 1) {
+                  spacing = '';
+                }
+                if (receiveAddressStr === '') {
+                  receiveAddressStr = credits[i].getAddress();
+                } else {
+                  receiveAddressStr += spacing + credits[i].getAddress();
+                }
+                // Change coming back.
+                totalChange += credits[i].getAmount();
               }
+            }
+
+            if ( totalFundsReceived + totalChange + fee < totalDebit) {
+              txDescription = {direction:'Sent', addressStr: ''};
+              txAmount = totalDebit - fee - totalChange - totalFundsReceived;
               return (
-                <div style={styles.transactionIn} key={tx.getHash()}>
+                <div style={styles.transactionOut} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx);}:null}>
+                  <div style={styles.transactionAmount}>
+                    <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
+                    <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
+                  </div>
+                  <div style={styles.transactionAccount}>
+                    <div style={styles.transactionAccountName}>Primary account</div>
+                    <div style={styles.transactionAccountIndicator}>
+                      <div style={styles.indicatorConfirmed}>Confirmed</div>
+                    </div>
+                  </div>
+                  <div style={styles.transactionTimeDate}><span>{date}</span></div>
+                </div>);
+            } else {
+              txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
+              txAmount = totalFundsReceived;
+              return (
+                <div style={styles.transactionIn} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx);}:null}>
                   <div style={styles.transactionAmount}>
                     <div style={styles.transactionAmountNumber}><Balance amount={txAmount} /></div>
-                      <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>
+                    <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
+                  </div>
+                  <div style={styles.transactionAccount}>
+                    <div style={styles.transactionAccountName}>Primary account</div>
+                    <div style={styles.transactionAccountIndicator}>
+                      <div style={styles.indicatorConfirmed}>Confirmed</div>
                     </div>
-                    <div style={styles.transactionAccount}>
-                      <div style={styles.transactionAccountName}>Primary account</div>
-                      <div style={styles.transactionAccountIndicator}>
-                        <div style={styles.indicatorConfirmed}>Confirmed</div>
-                      </div>
-                    </div>
-                    <div style={styles.transactionTimeDate}><span>{date}</span></div>
-                  </div>);
-            } else {
-              var prevAmount = 0;
-              txAmount = 0;
-              var returnedAmount = 0;
-              for(k = 0; k < credits.length; k++){
-                returnedAmount += credits[k].getAmount();
-              }
-              for(k = 0; k < debits.length; k++){
-                prevAmount += debits[k].getPreviousAmount();
-              }
-              txAmount = prevAmount - returnedAmount;
-              return (
-                  <div style={styles.transactionOut} key={tx.getHash()}>
-                    <div style={styles.transactionAmount}>
-                      <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
-                      <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>
-                    </div>
-                    <div style={styles.transactionAccount}>
-                      <div style={styles.transactionAccountName}>Primary account</div>
-                      <div style={styles.transactionAccountIndicator}>
-                        <div style={styles.indicatorConfirmed}>Confirmed</div>
-                      </div>
-                    </div>
-                    <div style={styles.transactionTimeDate}><span>{date}</span></div>
-                  </div>);
+                  </div>
+                  <div style={styles.transactionTimeDate}><span>{date}</span></div>
+                </div>);
             }
           })}
         </div>
@@ -273,4 +302,4 @@ class TxHistory extends Component {
   }
 }
 
-export default TxHistory;
+export default Radium(TxHistory);
