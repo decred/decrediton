@@ -230,26 +230,36 @@ class TxDetails extends Component {
     }
     var credits = tx.getCreditsList();
     var debits = tx.getDebitsList();
+
     var date = dateFormat(new Date(tx.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
+    var fee = tx.getFee();
+    
     var txDescription = '';
     var txAmount = 0;
+
     var walletValueUp = false;
-    var fee = tx.getFee();
+
     var sentAddressStr = '';
     var receiveAddressStr = '';
     var totalDebit = 0;
     var totalOutgoingCredit = 0;
     var totalIncomingCredit = 0;
     for (var i = 0; i < debits.length; i++) {
+      console.log(debits.length, i, "debit", debits[i].getPreviousAmount());
       totalDebit += debits[i].getPreviousAmount();
     }
     for (var i = 0; i < credits.length; i++) {
+      console.log(credits.length, i, "credit", credits[i].getAmount(), credits[i].getInternal());
       if (!credits[i].getInternal()) {
         var spacing = ", ";
         if (i != credits.length - 1) {
           spacing = ""; 
         }
-        sentAddressStr = sentAddressStr + spacing + credits[i].getAddress();
+        if (sentAddressStr === '') {
+          credits[i].getAddress()
+        } else {
+          sentAddressStr += spacing + credits[i].getAddress();
+        }
         // We sent funds to another wallet.
         totalOutgoingCredit += credits[i].getAmount();
       } else {
@@ -257,17 +267,25 @@ class TxDetails extends Component {
         if (i != credits.length - 1) {
           spacing = ""; 
         }
-        receiveAddressStr = receiveAddressStr + spacing + credits[i].getAddress();
+        if (receiveAddressStr === '') {
+          receiveAddressStr = credits[i].getAddress();
+        } else {
+          receiveAddressStr += spacing + credits[i].getAddress();
+        }
         // Change coming back.
         totalIncomingCredit += credits[i].getAmount();
       }
     }
-    if (totalOutgoingCredit > 0) {
-      txDescription = {direction:'Sent to:', addressStr: sentAddressStr};
-      txAmount = totalOutgoingCredit + fee;
+
+    if ( totalIncomingCredit + fee < totalDebit) {
+      txDescription = {direction:'Sent', addressStr: ''};
+      txAmount = totalDebit - fee - totalIncomingCredit;
+      walletValueUp = false;
+      console.log(totalIncomingCredit, totalDebit, totalDebit - totalIncomingCredit, fee);
     } else {
       txDescription = {direction:'Received at:',addressStr: receiveAddressStr}
       txAmount = totalIncomingCredit;
+      walletValueUp = true;
     }
     return(
       <div style={styles.view}>
@@ -276,10 +294,16 @@ class TxDetails extends Component {
             <a style={styles.viewButtonLightSlateGray} onClick={() => clearTxDetails()}>back</a>
           </div>
           <div style={styles.headerTitleOverview}>Primary account</div>
+          {walletValueUp ?
           <div style={styles.headerMetaTransactionDetailsIn}>
             <Balance amount={txAmount} />
             <div style={styles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
+          </div> :
+          <div style={styles.headerMetaTransactionDetailsOut}>
+            -<Balance amount={txAmount} />
+            <div style={styles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
           </div>
+          }
         </div>
         <div style={styles.content}>
           <div style={styles.contentNest}>
@@ -293,8 +317,8 @@ class TxDetails extends Component {
               <div style={styles.transactionDetailsValue}>{getAccountsResponse.getCurrentBlockHeight() - tx.height} <span style={styles.transactionDetailsValueText}>confirmations</span></div> :
               <div></div>
               }
-              <div style={styles.transactionDetailsName}>{txDescription[2]}</div>
-              <div style={styles.transactionDetailsValue}>{txDescription[1]}</div>
+              <div style={styles.transactionDetailsName}>{txDescription.direction}</div>
+              <div style={styles.transactionDetailsValue}>{txDescription.addressStr}</div>
               <div style={styles.transactionDetailsName}>Transaction fee:</div>
               <div style={styles.transactionDetailsValue}><Balance amount={fee} />
               </div>
@@ -306,7 +330,6 @@ class TxDetails extends Component {
               <div style={styles.transactionDetailsName}>Height:</div>
               <div style={styles.transactionDetailsValue}>{tx.height}</div>
             </div>
-            
           </div>
         </div>
       </div>);
