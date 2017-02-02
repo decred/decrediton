@@ -242,26 +242,25 @@ class TxDetails extends Component {
     var sentAddressStr = '';
     var receiveAddressStr = '';
     var totalDebit = 0;
-    var totalOutgoingCredit = 0;
-    var totalIncomingCredit = 0;
+    var totalFundsReceived = 0;
+    var totalChange = 0;
     for (var i = 0; i < debits.length; i++) {
       console.log(debits.length, i, "debit", debits[i].getPreviousAmount());
       totalDebit += debits[i].getPreviousAmount();
     }
     for (var i = 0; i < credits.length; i++) {
-      console.log(credits.length, i, "credit", credits[i].getAmount(), credits[i].getInternal());
+      console.log(credits.length, i, "credit", credits[i].getAddress(), credits[i].getInternal());
       if (!credits[i].getInternal()) {
         var spacing = ", ";
         if (i != credits.length - 1) {
           spacing = ""; 
         }
-        if (sentAddressStr === '') {
-          credits[i].getAddress()
+        if (receiveAddressStr === '') {
+          receiveAddressStr = credits[i].getAddress();
         } else {
-          sentAddressStr += spacing + credits[i].getAddress();
+          receiveAddressStr += spacing + credits[i].getAddress();
         }
-        // We sent funds to another wallet.
-        totalOutgoingCredit += credits[i].getAmount();
+        totalFundsReceived += credits[i].getAmount();
       } else {
         var spacing = ", ";
         if (i != credits.length - 1) {
@@ -273,18 +272,17 @@ class TxDetails extends Component {
           receiveAddressStr += spacing + credits[i].getAddress();
         }
         // Change coming back.
-        totalIncomingCredit += credits[i].getAmount();
+        totalChange += credits[i].getAmount();
       }
     }
 
-    if ( totalIncomingCredit + fee < totalDebit) {
+    if ( totalFundsReceived + totalChange + fee < totalDebit) {
       txDescription = {direction:'Sent', addressStr: ''};
-      txAmount = totalDebit - fee - totalIncomingCredit;
+      txAmount = totalDebit - fee - totalChange - totalFundsReceived;
       walletValueUp = false;
-      console.log(totalIncomingCredit, totalDebit, totalDebit - totalIncomingCredit, fee);
     } else {
       txDescription = {direction:'Received at:',addressStr: receiveAddressStr}
-      txAmount = totalIncomingCredit;
+      txAmount = totalFundsReceived;
       walletValueUp = true;
     }
     return(
