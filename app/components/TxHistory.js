@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import { reverseHash } from '../helpers/byteActions';
+import Radium from 'radium';
 import Balance from './Balance';
 import IndicatorPending from './icons/indicator-pending.svg';
 import IndicatorConfirmed from './icons/indicator-confirmed.svg';
@@ -309,4 +309,4 @@ class TxHistory extends Component {
   }
 }
 
-export default TxHistory;
+export default Radium(TxHistory);
