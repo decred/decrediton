@@ -232,11 +232,9 @@ class TxHistory extends Component {
             var totalFundsReceived = 0;
             var totalChange = 0;
             for (var i = 0; i < debits.length; i++) {
-              console.log(debits.length, i, 'debit', debits[i].getPreviousAmount());
               totalDebit += debits[i].getPreviousAmount();
             }
             for (i = 0; i < credits.length; i++) {
-              console.log(credits.length, i, 'credit', credits[i].getAddress(), credits[i].getInternal());
               if (!credits[i].getInternal()) {
                 var spacing = ', ';
                 if (i != credits.length - 1) {
