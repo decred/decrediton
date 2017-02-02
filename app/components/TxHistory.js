@@ -220,52 +220,88 @@ class TxHistory extends Component {
           {mined.map(function(tx) {
             var credits = tx.getCreditsList();
             var debits = tx.getDebitsList();
+
             var date = dateFormat(new Date(tx.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
-// Saturday, June 9th, 2007, 5:46:21 PM
-            if (debits.length == 0) {
-              var txAmount = 0;
-              for(var k = 0; k < credits.length; k++){
-                txAmount += credits[k].getAmount();
+            var fee = tx.getFee();
+            
+            var txDescription = '';
+            var txAmount = 0;
+
+            var walletValueUp = false;
+
+            var sentAddressStr = '';
+            var receiveAddressStr = '';
+            var totalDebit = 0;
+            var totalFundsReceived = 0;
+            var totalChange = 0;
+            for (var i = 0; i < debits.length; i++) {
+              console.log(debits.length, i, "debit", debits[i].getPreviousAmount());
+              totalDebit += debits[i].getPreviousAmount();
+            }
+            for (var i = 0; i < credits.length; i++) {
+              console.log(credits.length, i, "credit", credits[i].getAddress(), credits[i].getInternal());
+              if (!credits[i].getInternal()) {
+                var spacing = ", ";
+                if (i != credits.length - 1) {
+                  spacing = ""; 
+                }
+                if (receiveAddressStr === '') {
+                  receiveAddressStr = credits[i].getAddress();
+                } else {
+                  receiveAddressStr += spacing + credits[i].getAddress();
+                }
+                totalFundsReceived += credits[i].getAmount();
+              } else {
+                var spacing = ", ";
+                if (i != credits.length - 1) {
+                  spacing = ""; 
+                }
+                if (receiveAddressStr === '') {
+                  receiveAddressStr = credits[i].getAddress();
+                } else {
+                  receiveAddressStr += spacing + credits[i].getAddress();
+                }
+                // Change coming back.
+                totalChange += credits[i].getAmount();
               }
+            }
+
+            if ( totalFundsReceived + totalChange + fee < totalDebit) {
+              txDescription = {direction:'Sent', addressStr: ''};
+              txAmount = totalDebit - fee - totalChange - totalFundsReceived;
+              walletValueUp = false;
+              return (
+                <div style={styles.transactionOut} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx)}:null}>
+                  <div style={styles.transactionAmount}>
+                    <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
+                    <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
+                  </div>
+                  <div style={styles.transactionAccount}>
+                    <div style={styles.transactionAccountName}>Primary account</div>
+                    <div style={styles.transactionAccountIndicator}>
+                      <div style={styles.indicatorConfirmed}>Confirmed</div>
+                    </div>
+                  </div>
+                  <div style={styles.transactionTimeDate}><span>{date}</span></div>
+                </div>);
+            } else {
+              txDescription = {direction:'Received at:',addressStr: receiveAddressStr}
+              txAmount = totalFundsReceived;
+              walletValueUp = true;
               return (
                 <div style={styles.transactionIn} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx)}:null}>
                   <div style={styles.transactionAmount}>
                     <div style={styles.transactionAmountNumber}><Balance amount={txAmount} /></div>
-                      <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>
+                    <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
+                  </div>
+                  <div style={styles.transactionAccount}>
+                    <div style={styles.transactionAccountName}>Primary account</div>
+                    <div style={styles.transactionAccountIndicator}>
+                      <div style={styles.indicatorConfirmed}>Confirmed</div>
                     </div>
-                    <div style={styles.transactionAccount}>
-                      <div style={styles.transactionAccountName}>Primary account</div>
-                      <div style={styles.transactionAccountIndicator}>
-                        <div style={styles.indicatorConfirmed}>Confirmed</div>
-                      </div>
-                    </div>
-                    <div style={styles.transactionTimeDate}><span>{date}</span></div>
-                  </div>);
-            } else {
-              var prevAmount = 0;
-              txAmount = 0;
-              var returnedAmount = 0;
-              for(k = 0; k < credits.length; k++){
-                returnedAmount += credits[k].getAmount();
-              }
-              for(k = 0; k < debits.length; k++){
-                prevAmount += debits[k].getPreviousAmount();
-              }
-              txAmount = prevAmount - returnedAmount;
-              return (
-                  <div style={styles.transactionOut} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx)}:null}>
-                    <div style={styles.transactionAmount}>
-                      <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
-                      <div style={styles.transactionAmountHash}>Tsbg8igLhyeCTUx4WJEcTk8318AJfqYWf5g</div>
-                    </div>
-                    <div style={styles.transactionAccount}>
-                      <div style={styles.transactionAccountName}>Primary account</div>
-                      <div style={styles.transactionAccountIndicator}>
-                        <div style={styles.indicatorConfirmed}>Confirmed</div>
-                      </div>
-                    </div>
-                    <div style={styles.transactionTimeDate}><span>{date}</span></div>
-                  </div>);
+                  </div>
+                  <div style={styles.transactionTimeDate}><span>{date}</span></div>
+                </div>);
             }
           })}
         </div>
