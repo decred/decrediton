@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import arrowUpLightBlue from './icons/arrow-up-light-blue.svg';
-import leftLinkColor from './icons/menu-link-left-color.png';
 import menulogo from './icons/menu-logo.svg';
 import MenuLink from './MenuLink';
 import HelpLink from './HelpLink';
@@ -253,12 +252,12 @@ class SideBar extends Component {
           <MenuLink to="/receive">Receive</MenuLink>
           <MenuLink to="/history">History</MenuLink>
           <MenuLink to="/settings">Settings</MenuLink>
-	        <div style={styles.sidebarHelp}>
+          <div style={styles.sidebarHelp}>
             <div style={styles.sidebarHelpTitle}>Help links</div>
             <HelpLink href="https://forum.decred.org" target="_blank">Forum</HelpLink>
             <HelpLink href="https://decred.slack.com" target="_blank">Chat</HelpLink>
             <HelpLink href="https://github.com/decred/decrediton/issues" target="_blank">Issues</HelpLink>
-	        </div>
+          </div>
         </div>
         <div style={!this.state.accountsHidden ? styles.menuTotalBalanceExtended : styles.menuTotalBalanceExtendedHidden }>
           <div style={styles.menuTotalBalanceExtendedBottom}>
