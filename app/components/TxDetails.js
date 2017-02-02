@@ -161,6 +161,15 @@ const styles = {
     paddingBottom: '8px',
     borderBottom: '1px solid #e7eaed',
     fontSize: '13px',
+    height: '100px',
+  },
+
+  transactionDetailsTop: {
+    paddingTop: '18px',
+    paddingBottom: '8px',
+    borderBottom: '1px solid #e7eaed',
+    fontSize: '13px',
+    height: '140px',
   },
 
   transactionDetailsLeft: {
