@@ -410,6 +410,7 @@ function paginatedTransactionsProgess(getTransactionsResponse, requestedTxs) {
           newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
           newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
           newTxs[i].index = i;
+          newTxs[i].blockHash = getTransactionsResponse.getMinedTransactions().getHash();
           dispatch({ tempPaginatedTxs: newTxs[i], type: PAGINATETRANSACTIONS_MORE });
           break;
         }

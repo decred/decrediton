@@ -223,6 +223,11 @@ class TxDetails extends Component {
   render() {
     const { tx } = this.props;
     const { clearTxDetails } = this.props;
+    const { getAccountsResponse } = this.props;
+    var currentHeight = 0;
+    if (getAccountsResponse !== null) {
+
+    }
     var credits = tx.getCreditsList();
     var debits = tx.getDebitsList();
     var date = dateFormat(new Date(tx.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
@@ -230,40 +235,39 @@ class TxDetails extends Component {
     var txAmount = 0;
     var walletValueUp = false;
     var fee = tx.getFee();
-    var addressStr = '';
-    if (debits.length == 0) {
-      for (var i = 0; i < credits.length; i++) {
-        // Also check getInternal() to show something different (transfer or something)?
+    var sentAddressStr = '';
+    var receiveAddressStr = '';
+    var totalDebit = 0;
+    var totalOutgoingCredit = 0;
+    var totalIncomingCredit = 0;
+    for (var i = 0; i < debits.length; i++) {
+      totalDebit += debits[i].getPreviousAmount();
+    }
+    for (var i = 0; i < credits.length; i++) {
+      if (!credits[i].getInternal()) {
         var spacing = ", ";
         if (i != credits.length - 1) {
           spacing = ""; 
         }
-        addressStr = addressStr + spacing + credits[i].getAddress();
-        txAmount += credits[i].getAmount();
-      }
-      txDescription = {direction:'Received at:', addressStr: addressStr};
-    } else {
-      var totalDebit = 0;
-      var totalOutgoingCredit = 0;
-      var totalIncomingCredit = 0;
-      for (var i = 0; i < debits.length; i++) {
-        totalDebit += debits[i].getPreviousAmount();
-      }
-      for (var i = 0; i < credits.length; i++) {
-        if (!credits[i].getInternal()) {
-          var spacing = ", ";
-          if (i != credits.length - 1) {
-            spacing = ""; 
-          }
-          addressStr = addressStr + spacing + credits[i].getAddress();
-          // We sent funds to another wallet.
-          txAmount += credits[i].getAmount();
-        } else {
-          // Change coming back.
-          totalIncomingCredit += credits[i].getAmount();
+        sentAddressStr = sentAddressStr + spacing + credits[i].getAddress();
+        // We sent funds to another wallet.
+        totalOutgoingCredit += credits[i].getAmount();
+      } else {
+        var spacing = ", ";
+        if (i != credits.length - 1) {
+          spacing = ""; 
         }
+        receiveAddressStr = receiveAddressStr + spacing + credits[i].getAddress();
+        // Change coming back.
+        totalIncomingCredit += credits[i].getAmount();
       }
-      txDescription = {direction:'Sent to:', addressStr: addressStr};
+    }
+    if (totalOutgoingCredit > 0) {
+      txDescription = {direction:'Sent to:', addressStr: sentAddressStr};
+      txAmount = totalOutgoingCredit + fee;
+    } else {
+      txDescription = {direction:'Received at:',addressStr: receiveAddressStr}
+      txAmount = totalIncomingCredit;
     }
     return(
       <div style={styles.view}>
@@ -285,21 +289,32 @@ class TxDetails extends Component {
               <div style={styles.transactionDetailsName}>
                 <div style={styles.indicatorConfirmed}>confirmed</div>
               </div>
-              <div style={styles.transactionDetailsValue}>11 <span style={styles.transactionDetailsValueText}>confirmations</span>
-              </div>
+              {getAccountsResponse !== null ? 
+              <div style={styles.transactionDetailsValue}>{getAccountsResponse.getCurrentBlockHeight() - tx.height} <span style={styles.transactionDetailsValueText}>confirmations</span></div> :
+              <div></div>
+              }
               <div style={styles.transactionDetailsName}>{txDescription[2]}</div>
               <div style={styles.transactionDetailsValue}>{txDescription[1]}</div>
               <div style={styles.transactionDetailsName}>Transaction fee:</div>
-              <div style={styles.transactionDetailsValue}>{fee}<span style={styles.transactionDetailsValueText}>DCR</span>
+              <div style={styles.transactionDetailsValue}><Balance amount={fee} />
               </div>
             </div>
             <div style={styles.transactionDetails}>
               <div style={styles.transactionDetailsTitle}>Properties</div>
               <div style={styles.transactionDetailsName}>Block:</div>
-              <div style={styles.transactionDetailsValue}>000000000000be05fdd578ba392dc367640a243756ba4ecbf10cafc423b49331a7</div>
+              <div style={styles.transactionDetailsValue}>{reverseHash(Buffer.from(tx.blockHash).toString('hex'))}</div>
               <div style={styles.transactionDetailsName}>Height:</div>
-              <div style={styles.transactionDetailsValue}>10.504</div>
+              <div style={styles.transactionDetailsValue}>{tx.height}</div>
             </div>
+            
+          </div>
+        </div>
+      </div>);
+  }
+}
+
+export default TxDetails;
+/*
             <div style={styles.transactionDetails}>
               <div style={styles.transactionDetailsTitle}>Inputs</div>
               <div style={styles.transactionDetailsName}>College funds:</div>
@@ -315,14 +330,6 @@ class TxDetails extends Component {
               <div style={styles.transactionDetailsValue}>4.9999 <span style={styles.transactionDetailsValueText}>DCR</span>
               </div>
             </div>
-          </div>
-        </div>
-      </div>);
-  }
-}
-
-export default TxDetails;
-/*
         {Buffer.from(tx.getHash()).toString('hex')}
         <div onClick={() => clearTxDetails()}>
           back
