@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import arrowUpLightBlue from './icons/arrow-up-light-blue.svg';
+import leftLinkColor from './icons/menu-link-left-color.png';
 import menulogo from './icons/menu-logo.svg';
 import MenuLink from './MenuLink';
+import HelpLink from './HelpLink';
 import './fonts.css';
 
 function mapStateToProps(state) {
@@ -175,10 +177,23 @@ const styles = {
   },
   sidebarHelp: {
     display: 'block',
+    height: '215px',
+    marginTop: '65px',
     paddingLeft: '18px',
-    padding: '5px 5px',
-    color: '#69d5f7',
+    paddingRight: '18px',
+  },
+  sidebarHelpTitle: {
+    borderTop: '1px solid #69d5f7',
+    borderBottom: '1px solid #69d5f7',
+    paddingLeft: '5px',
+    display: 'block',
+    height: '38px',
+    paddingTop: '15px',
+    color: '#c4cbd2',
+    fontSize: '18px',
+    textAlign: 'left',
     textDecoration: 'none',
+    textTransform: 'capitalize',
   },
 };
 
@@ -238,11 +253,12 @@ class SideBar extends Component {
           <MenuLink to="/receive">Receive</MenuLink>
           <MenuLink to="/history">History</MenuLink>
           <MenuLink to="/settings">Settings</MenuLink>
-	  <div style={styles.sidebarHelp}><p>Help:</p>
-          <a href="https://forum.decred.org" target="_blank" style={styles.sidebarLink}>Forum</a><br />
-          <a href="https://decred.slack.com" target="_blank" style={styles.sidebarLink}>Chat</a><br />
-        <a href="https://github.com/decred/decrediton/issues" target="_blank" style={styles.sidebarLink}>Issues</a><br />
-	</div>
+	        <div style={styles.sidebarHelp}>
+            <div style={styles.sidebarHelpTitle}>Help links</div>
+            <HelpLink href="https://forum.decred.org" target="_blank">Forum</HelpLink>
+            <HelpLink href="https://decred.slack.com" target="_blank">Chat</HelpLink>
+            <HelpLink href="https://github.com/decred/decrediton/issues" target="_blank">Issues</HelpLink>
+	        </div>
         </div>
         <div style={!this.state.accountsHidden ? styles.menuTotalBalanceExtended : styles.menuTotalBalanceExtendedHidden }>
           <div style={styles.menuTotalBalanceExtendedBottom}>
