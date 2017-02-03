@@ -466,7 +466,10 @@ class Send extends Component{
     var flexHeight = {     
       paddingTop: '1px',
       backgroundColor: '#fff',
-      height:'115px'};
+      height:'372px',
+      overflowY: 'auto',
+      overflowX: 'hidden',
+    };
     const { walletService } = this.props;
     const { constructTxResponse, constructTxError } = this.props;
     const { publishTransactionResponse, publishTransactionError } = this.props;
@@ -521,8 +524,22 @@ class Send extends Component{
       <div style={styles.view}>
         <div style={styles.header}>
           <div style={styles.headerTop}>
-            <div style={styles.viewNotificationError}>Error notification</div>
-            <div style={styles.viewNotificationSuccess}>Success notification</div>
+            {publishTransactionError !== null ?
+              <div style={styles.viewNotificationError}>{publishTransactionError}</div> :
+              <div></div>
+            }
+            {constructTxError !== null ?
+              <div style={styles.viewNotificationError}>{constructTxError}</div> :
+              <div></div>
+            }
+            {signTransactionError !== null ?
+              <div style={styles.viewNotificationError}>{signTransactionError}</div> :
+              <div></div>
+            }
+            {publishTransactionResponse !== null ?
+              <div style={styles.viewNotificationSuccess}>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
+              <div></div>
+            }
           </div>
           <div style={styles.headerTitleSend}>Send Funds</div>
           <div style={styles.headerMetaSend}>Decred addresses always begin with letter D contain 26-35 alphanumeric characters e.g. <span style={styles.headerMetaSpanSend}>DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>.</div>

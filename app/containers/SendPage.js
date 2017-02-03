@@ -13,6 +13,7 @@ function mapStateToProps(state) {
     constructTxError: state.control.constructTxError,
     signTransactionError: state.control.signTransactionError,
     publishTransactionResponse: state.control.publishTransactionResponse,
+    publishTransactionError: state.control.publishTransactionError,
   };
 }
 
