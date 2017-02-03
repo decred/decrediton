@@ -8,6 +8,7 @@ import PlusBig from './icons/plus-big.svg';
 import MinusBig from './icons/minus-big.svg';
 import dateFormat from 'dateformat';
 import './fonts.css';
+import { shell } from 'electron';
 
 const styles = {
   view: {
@@ -331,7 +332,7 @@ class TxDetails extends Component {
           <div style={styles.contentNest}>
             <div style={styles.transactionDetailsTop}>
               <div style={styles.transactionDetailsName}>Transaction:</div>
-              <div style={styles.transactionDetailsValue}><a href={txLink} target="_blank">{reverseHash(Buffer.from(tx.getHash()).toString('hex'))}</a></div>
+              <div style={styles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, txLink)}><a>{reverseHash(Buffer.from(tx.getHash()).toString('hex'))}</a></div>
               <div style={styles.transactionDetailsName}>
                 <div style={styles.indicatorConfirmed}>confirmed</div>
               </div>
@@ -348,7 +349,7 @@ class TxDetails extends Component {
             <div style={styles.transactionDetails}>
               <div style={styles.transactionDetailsTitle}>Properties</div>
               <div style={styles.transactionDetailsName}>Block:</div>
-              <div style={styles.transactionDetailsValue}><a href={blockLink} target="_blank">{reverseHash(Buffer.from(tx.blockHash).toString('hex'))}</a></div>
+              <div style={styles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, blockLink)}><a>{reverseHash(Buffer.from(tx.blockHash).toString('hex'))}</a></div>
               <div style={styles.transactionDetailsName}>Height:</div>
               <div style={styles.transactionDetailsValue}>{tx.height}</div>
             </div>
