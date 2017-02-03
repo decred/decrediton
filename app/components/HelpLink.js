@@ -1,5 +1,6 @@
 import Radium from 'radium';
 import React from 'react';
+import { shell } from 'electron';
 import leftLinkColor from './icons/menu-link-left-color.png';
 
 var styles = {
@@ -40,7 +41,7 @@ class HelpLink extends React.Component {
   render() {
     return (
       <div style={styles.linkColor}>
-        <a href={this.props.href} target={this.props.target} style={styles.menuNavigationLink}>
+	<a style={styles.menuNavigationLink} onClick={function(x){shell.openExternal(x);}.bind(null, this.props.href)}>
           {this.props.children}
         </a>
       </div>
