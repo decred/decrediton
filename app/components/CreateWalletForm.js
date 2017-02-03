@@ -37,22 +37,6 @@ class CreateWalletForm extends React.Component {
           onInvalidSubmit={this.notifyFormError.bind(this)}>
           <FormsyText
             type="password"
-            id="pubpass"
-            name="pubpass"
-            hintText="Public Password"
-            floatingLabelText="Public Password"
-          /><br />
-          <FormsyText
-            type="password"
-            id="pubpassVerify"
-            name="pubpassVerify"
-            hintText="Verify Public Password"
-            floatingLabelText="Verify Public Password"
-            validations="equalsField:pubpass"
-            validationError={passwordError}
-          /><br />
-          <FormsyText
-            type="password"
             id="privpass"
             name="privpass"
             hintText="Private Password"
@@ -142,7 +126,8 @@ class CreateWalletForm extends React.Component {
     var selectedSeedType = form_elements['seedtype'].value;
 
     var privpass = document.getElementById('privpassVerify').value;
-    var pubpass = document.getElementById('pubpassVerify').value;
+    // Commenting out pubpass temporarily
+    var pubpass = '';//document.getElementById('pubpassVerify').value;
     var seed = document.getElementById('seed').value;
 
     switch(selectedSeedType) {

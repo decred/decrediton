@@ -70,6 +70,7 @@ function walletExistError(error) {
 function walletExistSuccess(response) {
   return (dispatch) => {
     dispatch({response: response, type: WALLETEXIST_SUCCESS });
+    dispatch(openWalletAttempt('public'));
   };
 }
 
@@ -119,7 +120,7 @@ export function createWalletRequest(pubPass, privPass, seed, existing) {
 
 function createNewWallet(pubPass, privPass, seed) {
   var request = new CreateWalletRequest();
-  request.setPublicPassphrase(new Uint8Array(Buffer.from(pubPass)));
+  //request.setPublicPassphrase(new Uint8Array(Buffer.from(pubPass)));
   request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
   request.setSeed(seed);
   return (dispatch, getState) => {
