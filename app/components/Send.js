@@ -482,47 +482,10 @@ class Send extends Component{
         <ConstructTxForm />
       </div>);
 
-    const signTxView = (
-      <div style={styles.content}>
-        <ShowError error={signTransactionError}/>
-        <h1>Sign Tx</h1>
-        <p> raw tx <br/>
-          {constructTxResponse !== null ? constructTxResponse.getUnsignedTransaction() : null}}
-        </p>
-      <p> total previous output amount (atoms) <br/>
-          {constructTxResponse != null ? constructTxResponse.getTotalPreviousOutputAmount() : null}
-        </p>
-      <p> total output amount (atoms) <br/>
-          {constructTxResponse !== null ? constructTxResponse.getTotalOutputAmount() : null}
-        </p>
-        <p> estimated signed size <br/>
-          {constructTxResponse !== null ? constructTxResponse.getEstimatedSignedSize() : null}
-        </p>
-      <SignTxForm clearTransaction={clearTransaction} signTransactionAttempt={signTransactionAttempt} rawTx={constructTxResponse !== null ? constructTxResponse.getUnsignedTransaction() : null}/>
-      </div>);
 
-    var sendView;
 
-    const publishTxView = (
-      <div style={styles.content}>
-        <ShowError error={publishTransactionError}/>
-        <h1>Published Tx!</h1>
-        <p>{publishTransactionResponse !== null ? reverseHash(publishTransactionResponse.toString('hex')) : null}</p>
-	<PublishTx clearTransaction={clearTransaction}/>
-      </div>);
-
-    if (constructTxResponse === null) {
-      sendView = constructTxView;
-    } else {
-      if (publishTransactionResponse === null) {
-        sendView = signTxView;
-      } else {
-        sendView = publishTxView;
-      }
-    }
-    var sendView = (
-      <div style={styles.view}>
-        <div style={styles.header}>
+    var sharedHeader = (  
+      <div style={styles.header}>
           <div style={styles.headerTop}>
             {publishTransactionError !== null ?
               <div style={styles.viewNotificationError}>{publishTransactionError}</div> :
@@ -543,7 +506,33 @@ class Send extends Component{
           </div>
           <div style={styles.headerTitleSend}>Send Funds</div>
           <div style={styles.headerMetaSend}>Decred addresses always begin with letter D contain 26-35 alphanumeric characters e.g. <span style={styles.headerMetaSpanSend}>DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>.</div>
+        </div>);
+
+    const signTxView = (
+      <div style={styles.view}>
+        {sharedHeader}
+        <div style={styles.content}>
+          <div style={flexHeight}>
+            <div style={styles.contentNestFromAddress}>
+              <div style={styles.contentNestPrefixSend}>Confirm transaction:</div>
+              {constructTxResponse.getUnsignedTransaction()}
+            </div>
+        <p> total previous output amount (atoms) <br/>
+          {constructTxResponse != null ? constructTxResponse.getTotalPreviousOutputAmount() : null}
+        </p>
+        <p> total output amount (atoms) <br/>
+          {constructTxResponse !== null ? constructTxResponse.getTotalOutputAmount() : null}
+        </p>
+        <p> estimated signed size <br/>
+          {constructTxResponse !== null ? constructTxResponse.getEstimatedSignedSize() : null}
+        </p>
+        <SignTxForm clearTransaction={clearTransaction} signTransactionAttempt={signTransactionAttempt} rawTx={constructTxResponse !== null ? constructTxResponse.getUnsignedTransaction() : null}/>
         </div>
+      </div>);
+
+    var sendView = (
+      <div style={styles.view}>
+        {sharedHeader}
         <div style={styles.content}>
           <div style={flexHeight}>
             <div style={styles.contentNestFromAddress}>
@@ -635,7 +624,11 @@ class Send extends Component{
         </div>
       </div>
     );
-    /* Check to see that client is not undefined */
+
+    if (constructTxResponse === null) {
+      sendView = signTxView;
+    }
+    
     if (walletService === null) {
       return (<ErrorScreen />);
     } else {
