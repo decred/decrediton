@@ -14,6 +14,7 @@ import ArrowDownMidBlue from './icons/arrow-down-mid-blue.svg';
 import ArrowDownKeyBlue from './icons/arrow-down-key-blue.svg';
 import Add from './icons/add.svg';
 import Delete from './icons/delete.svg';
+import TextField from 'material-ui/TextField';
 
 const styles = {
     body: {
@@ -41,7 +42,6 @@ const styles = {
     paddingLeft: '100px',
     backgroundColor: '#fff',
   },
-
   viewNotificationError: {
     display: 'inline-block',
     marginRight: 'auto',
@@ -424,8 +424,44 @@ class Send extends Component{
     constructTxRequestAttempt: PropTypes.bool.isRequired,
 
     publishTransactionResponse: PropTypes.object,
-  };
+  }
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      account: '',
+      confirmations: '',
+      outputs: [{key:0, destination: '', amount: ''}] };
+  }
+  submit() {
+    if (this.state.account == '' || this.state.confirmations == '' ) {
+      return;
+    }
+    this.props.dispatch(constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs));
+  }
+  appendOutput() {
+    var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: ''};
+    this.setState({ outputs: this.state.outputs.concat([newOutput]) });
+  }
+  removeOutput(outputKey) {
+    var updateOutputs = this.state.outputs.filter(output => {
+      return (output.key != outputKey);
+    });
+    this.setState({ outputs: updateOutputs });
+  }
+  updateOutputDestination(outputKey, dest) {
+    var updateOutputs = this.state.outputs;
+    updateOutputs[outputKey].destination = dest;
+    this.setState({ outputs: updateOutputs });
+  }
+  updateOutputAmount(outputKey, amount) {
+    // For now just convert from atoms to dcr.  We can add option to switch
+    // later (and that need to impact more than just this function.
+    var units = 100000000;
+    var updateOutputs = this.state.outputs;
+    updateOutputs[outputKey].amount = amount * units;
+    this.setState({ outputs: updateOutputs });
+  }
   render() {
     var flexHeight = {     
       paddingTop: '1px',
@@ -515,53 +551,68 @@ class Send extends Component{
               </div>
               <div style={styles.contentNestFromAddressWalletIcon}></div>
             </div>
-            <div style={styles.contentNestToAddress}>
-              <div style={styles.contentNestPrefixSend}>To:</div>
-              <div style={styles.contentNestAddressHashBlock}>
-                <div style={styles.inputForm}>
-                  <form style={styles.inputForm}>
-                    <input style={styles.contentNestAddressHashTo} type="text" placeholder="Address"/>
-                  </form>
-                </div>
-                <div style={styles.contentNestGradient}></div>
-              </div>
-              <div style={styles.contentNestAddressWalletIcon}></div>
-              <div style={styles.contentNestAddressAmount}>
-                <div style={styles.contentNestPrefixSend}>Amount:</div>
-                <div style={styles.contentNestAddressAmountSumAndCurrency}>
-                  <div style={styles.contentNestAddressAmountSumGradient}>dcr</div>
-                  <div style={styles.inputForm}>
-                    <form style={styles.inputForm}>
-                      <input style={styles.contentNestAddressAmountSum} type="text" value="22.00"/>
-                    </form>
+            <div id="dynamicInput">
+            {this.state.outputs.map((output,i) => {
+              if ( i == 0 ) {
+                return(
+                <div style={styles.contentNestToAddress} key={output.key}>
+                  <div style={styles.contentNestPrefixSend}>To:</div>
+                  <div style={styles.contentNestAddressHashBlock}>
+                    <div style={styles.inputForm}>
+                      <TextField
+                        key={'destination'+output.key}
+                        hintText="Destination Address"
+                        floatingLabelText="Destination Address"
+                        onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
+                    </div>
+                    <div style={styles.contentNestGradient}></div>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div style={styles.contentNestDeleteAddress} key="01">
-              <div style={styles.contentNestAddressHashBlock}>
-                <div style={styles.inputForm}>
-                  <form style={styles.inputForm}>
-                    <input style={styles.contentNestAddressHashTo} type="text" placeholder="Address"/>
-                  </form>
-                </div>
-                <div style={styles.contentNestGradient}></div>
-              </div>
-              <div style={styles.contentNestAddressDeleteIcon}></div>
-              <div style={styles.contentNestAddressAmount}>
-                <div style={styles.contentNestAddressAmountSumAndCurrency}>
-                  <div style={styles.contentNestAddressAmountSumGradient}>dcr</div>
-                  <div style={styles.inputForm}>
-                    <form style={styles.inputForm}>
-                      <input style={styles.contentNestAddressAmountSum} type="text" value="22.00"/>
-                    </form>
+                  <div style={styles.contentNestAddressWalletIcon} onClick={() => this.appendOutput()}></div>
+                  <div style={styles.contentNestAddressAmount}>
+                    <div style={styles.contentNestPrefixSend}>Amount:</div>
+                    <div style={styles.contentNestAddressAmountSumAndCurrency}>
+                      <div style={styles.contentNestAddressAmountSumGradient}>dcr</div>
+                      <TextField
+                        key={'amount'+output.key}
+                        hintText="Amount (DCR)"
+                        floatingLabelText="Amount (DCR)"
+                        onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value);}}/>
+                    </div>
                   </div>
-                </div>
-              </div>
+                </div>);
+              } else {
+              return(
+                <div style={styles.contentNestDeleteAddress} key={output.key}>
+                  <div style={styles.contentNestAddressHashBlock}>
+                    <div style={styles.inputForm}>
+                      <form style={styles.inputForm}>
+                        <input style={styles.contentNestAddressHashTo} type="text" placeholder="Address"/>
+                      </form>
+                    </div>
+                    <div style={styles.contentNestGradient}></div>
+                  </div>
+                  <div style={styles.contentNestAddressDeleteIcon}
+                    disabled={this.state.outputs.length - 1 > parseInt(output.key) || this.state.outputs.length  === 1 }
+                    onClick={this.state.outputs.length - 1 > parseInt(output.key)  || this.state.outputs.length  === 1 ? () => {} : () => this.removeOutput(output.key)}
+                  ></div>
+                  <div style={styles.contentNestAddressAmount}>
+                    <div style={styles.contentNestAddressAmountSumAndCurrency}>
+                      <div style={styles.contentNestAddressAmountSumGradient}>dcr</div>
+                      <div style={styles.inputForm}>
+                        <form style={styles.inputForm}>
+                          <input style={styles.contentNestAddressAmountSum} type="text" value="22.00"/>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>);
+              }})}
+                  
+
             </div>
           </div>
           <div style={styles.contentSend}>
-            <a style={styles.viewButtonKeyBlue} href="#">send</a>
+            <a style={styles.viewButtonKeyBlue} onClick={()=>this.submit()}>send</a>
           </div>
 
         </div>
