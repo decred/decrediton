@@ -104,6 +104,7 @@ function rescanComplete() {
   return (dispatch) => {
     dispatch({ type: RESCAN_COMPLETE });
     setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
+    setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
   };
 }
 
