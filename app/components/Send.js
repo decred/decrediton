@@ -14,6 +14,7 @@ import ArrowDownMidBlue from './icons/arrow-down-mid-blue.svg';
 import ArrowDownKeyBlue from './icons/arrow-down-key-blue.svg';
 import Add from './icons/add.svg';
 import Delete from './icons/delete.svg';
+
 const styles = {
     body: {
       position: 'fixed',
@@ -42,25 +43,25 @@ const styles = {
   },
 
   viewNotificationError: {
-    display: 'inlineBlock',
+    display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
     padding: '7px 20px',
     borderRadius: '5px',
     backgroundColor: '#fd714b',
-    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, 2)',
+    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
     color: '#fff',
     fontSize: '13px',
     textAlign: 'center',
   },
   viewNotificationSuccess: {
-    display: 'inlineBlock',
+    display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
     padding: '7px 20px',
     borderRadius: '5px',
     backgroundColor: '#41bf53',
-    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, 2)',
+    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
     color: '#fff',
     fontSize: '13px',
     textAlign: 'center',
@@ -70,13 +71,13 @@ const styles = {
     transition: 'all 100ms ease-in-out',
   },
   headerTop: {
-    height: '106px',
+    height: '101px',
     paddingTop: '43px',
     textAlign: 'center',
   },
   headerTitleSend: {
     height: '54px',
-    paddingTop: '13px',
+    lineHeight: '49px',
     color: '#596d81',
     fontSize: '27px',
     textTransform: 'capitalize',
@@ -91,7 +92,7 @@ const styles = {
     width: '480px',
     paddingLeft: '50px',
     color: '#0c1e3e',
-    fontSize: '13px',
+    fontSize: '14px',
   },
   content: {
     overflow: 'auto',
@@ -101,6 +102,13 @@ const styles = {
   contentNestSend: {
     paddingTop: '1px',
     backgroundColor: '#fff',
+  },
+  contentNestDeleteAddress: {
+    width: '625px',
+    height: '54px',
+    paddingTop: '10px',
+    paddingLeft: '116px',
+    float: 'left',
   },
   contentNestPrefixSend: {
     width: '100px',
@@ -119,7 +127,7 @@ const styles = {
     float: 'left',
   },  
   contentNestFromAddressWalletIcon: {
-    display: 'inlineBlock',
+    display: 'inline-block',
     width: '60px',
     height: '34px',
     float: 'left',
@@ -134,7 +142,7 @@ const styles = {
     paddingTop: '10px',
     float: 'left',
   },
-  contentNestAddressHash: {
+  contentNestAddressHashTo: {
     width: '100%',
     height: '100%',
     paddingTop: '9px',
@@ -145,11 +153,7 @@ const styles = {
     cursor: 'text',
     ':focus': {
       color: '#2971ff',
-    }
-  },
-  contentNestAddressHashTo: {
-    width: '100%',
-    color: '#2971ff',
+    },
   },
   contentNestAddressHashBlock: {
     position: 'relative',
@@ -274,7 +278,7 @@ const styles = {
     minHeight: '44px',
   },  
   contentNestAddressWalletIcon: {
-    width: '60px',
+    width: '50px',
     height: '34px',
     float: 'left',
     backgroundImage: `url(${Add})`,
@@ -307,7 +311,7 @@ const styles = {
     top: '0px',
     right: '0px',
     bottom: '0px',
-    display: 'inlineBlock',
+    display: 'inline-block',
     width: '37px',
     height: '100%',
     paddingTop: '9px',
@@ -332,7 +336,7 @@ const styles = {
     fontSize: '13px',
   },
   contentNestAddressDeleteIcon: {
-    width: '60px',
+    width: '50px',
     height: '34px',
     float: 'left',
     backgroundImage: `url(${Delete})`,
@@ -423,6 +427,10 @@ class Send extends Component{
   };
 
   render() {
+    var flexHeight = {     
+      paddingTop: '1px',
+      backgroundColor: '#fff',
+      height:'115px'};
     const { walletService } = this.props;
     const { constructTxResponse, constructTxError } = this.props;
     const { publishTransactionResponse, publishTransactionError } = this.props;
@@ -484,7 +492,7 @@ class Send extends Component{
           <div style={styles.headerMetaSend}>Decred addresses always begin with letter D contain 26-35 alphanumeric characters e.g. <span style={styles.headerMetaSpanSend}>DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>.</div>
         </div>
         <div style={styles.content}>
-          <div style={styles.contentNestSend}>
+          <div style={flexHeight}>
             <div style={styles.contentNestFromAddress}>
               <div style={styles.contentNestPrefixSend}>From:</div>
               <div style={styles.selectAccountsSend}>
@@ -510,7 +518,7 @@ class Send extends Component{
             <div style={styles.contentNestToAddress}>
               <div style={styles.contentNestPrefixSend}>To:</div>
               <div style={styles.contentNestAddressHashBlock}>
-                <div style={styles.inputForm }>
+                <div style={styles.inputForm}>
                   <form style={styles.inputForm}>
                     <input style={styles.contentNestAddressHashTo} type="text" placeholder="Address"/>
                   </form>
@@ -522,7 +530,7 @@ class Send extends Component{
                 <div style={styles.contentNestPrefixSend}>Amount:</div>
                 <div style={styles.contentNestAddressAmountSumAndCurrency}>
                   <div style={styles.contentNestAddressAmountSumGradient}>dcr</div>
-                  <div style={styles.inputForm }>
+                  <div style={styles.inputForm}>
                     <form style={styles.inputForm}>
                       <input style={styles.contentNestAddressAmountSum} type="text" value="22.00"/>
                     </form>
@@ -532,9 +540,9 @@ class Send extends Component{
             </div>
             <div style={styles.contentNestDeleteAddress} key="01">
               <div style={styles.contentNestAddressHashBlock}>
-                <div style={styles.inputForm }>
+                <div style={styles.inputForm}>
                   <form style={styles.inputForm}>
-                    <input style={styles.contentNestAddressHash} type="text" placeholder="Address"/>
+                    <input style={styles.contentNestAddressHashTo} type="text" placeholder="Address"/>
                   </form>
                 </div>
                 <div style={styles.contentNestGradient}></div>
@@ -543,7 +551,7 @@ class Send extends Component{
               <div style={styles.contentNestAddressAmount}>
                 <div style={styles.contentNestAddressAmountSumAndCurrency}>
                   <div style={styles.contentNestAddressAmountSumGradient}>dcr</div>
-                  <div style={styles.inputForm }>
+                  <div style={styles.inputForm}>
                     <form style={styles.inputForm}>
                       <input style={styles.contentNestAddressAmountSum} type="text" value="22.00"/>
                     </form>
@@ -554,21 +562,8 @@ class Send extends Component{
           </div>
           <div style={styles.contentSend}>
             <a style={styles.viewButtonKeyBlue} href="#">send</a>
-            <div style={styles.contentSendSection}>
-              <div style={styles.viewCheckbox} data-checkbox-value="0"></div>
-              <div style={styles.contentSendSectionCheckboxText}>send</div>
-              <div style={styles.contentSendSectionAmount}>0.00000000 <span style={styles.contentSendSectionAmountCurrency}>DCR</span>
-              </div>
-              <div style={styles.contentSendSectionDescription}>Estimated fee:</div>
-            </div>
-            <div style={styles.contentSendSection}>
-              <div style={styles.viewCheckbox} data-checkbox-value="0"></div>
-              <div style={styles.contentSendSectionCheckboxText}>Publish</div>
-              <div style={styles.contentSendSectionAmount}>0.00000000 <span style={styles.contentSendSectionAmountCurrency}>DCR</span>
-              </div>
-              <div style={styles.contentSendSectionDescription}>Estimated remaining balance:</div>
-            </div>
           </div>
+
         </div>
       </div>
     );
@@ -586,3 +581,20 @@ class Send extends Component{
 }
 
 export default Send;
+/*
+            <div style={styles.contentSendSection}>
+              <div style={styles.viewCheckbox} data-checkbox-value="0"></div>
+              <div style={styles.contentSendSectionCheckboxText}>send</div>
+              <div style={styles.contentSendSectionAmount}>0.00000000 <span style={styles.contentSendSectionAmountCurrency}>DCR</span>
+              </div>
+              <div style={styles.contentSendSectionDescription}>Estimated fee:</div>
+            </div>
+            <div style={styles.contentSendSection}>
+              <div style={styles.viewCheckbox} data-checkbox-value="0"></div>
+              <div style={styles.contentSendSectionCheckboxText}>Publish</div>
+              <div style={styles.contentSendSectionAmount}>0.00000000 <span style={styles.contentSendSectionAmountCurrency}>DCR</span>
+              </div>
+              <div style={styles.contentSendSectionDescription}>Estimated remaining balance:</div>
+            </div>
+          </div>
+          */
