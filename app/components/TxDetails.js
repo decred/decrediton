@@ -8,6 +8,7 @@ import PlusBig from './icons/plus-big.svg';
 import MinusBig from './icons/minus-big.svg';
 import dateFormat from 'dateformat';
 import './fonts.css';
+import { shell } from 'electron';
 
 const styles = {
   view: {
@@ -240,6 +241,20 @@ class TxDetails extends Component {
     const { tx } = this.props;
     const { clearTxDetails } = this.props;
     const { getAccountsResponse } = this.props;
+    const { getNetworkResponse } = this.props;
+
+    var network = 0;
+    var networkStr = '';
+    if (getNetworkResponse !== null) {
+      network = getNetworkResponse.getActiveNetwork();
+      if (network == 118030347) {
+        networkStr = 'testnet';
+      } else if (network  == 3652452601) {
+        networkStr = 'mainnet';
+      }
+    }
+    var txLink = 'https://'+networkStr.toString()+'.decred.org/tx/' + reverseHash(Buffer.from(tx.getHash()).toString('hex'));
+    var blockLink = 'https://'+networkStr.toString()+'.decred.org/block/' + reverseHash(Buffer.from(tx.blockHash).toString('hex'));
 
     var credits = tx.getCreditsList();
     var debits = tx.getDebitsList();
@@ -317,7 +332,7 @@ class TxDetails extends Component {
           <div style={styles.contentNest}>
             <div style={styles.transactionDetailsTop}>
               <div style={styles.transactionDetailsName}>Transaction:</div>
-              <div style={styles.transactionDetailsValue}>{reverseHash(Buffer.from(tx.getHash()).toString('hex'))}</div>
+              <div style={styles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, txLink)}><a>{reverseHash(Buffer.from(tx.getHash()).toString('hex'))}</a></div>
               <div style={styles.transactionDetailsName}>
                 <div style={styles.indicatorConfirmed}>confirmed</div>
               </div>
@@ -334,7 +349,7 @@ class TxDetails extends Component {
             <div style={styles.transactionDetails}>
               <div style={styles.transactionDetailsTitle}>Properties</div>
               <div style={styles.transactionDetailsName}>Block:</div>
-              <div style={styles.transactionDetailsValue}>{reverseHash(Buffer.from(tx.blockHash).toString('hex'))}</div>
+              <div style={styles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, blockLink)}><a>{reverseHash(Buffer.from(tx.blockHash).toString('hex'))}</a></div>
               <div style={styles.transactionDetailsName}>Height:</div>
               <div style={styles.transactionDetailsValue}>{tx.height}</div>
             </div>
