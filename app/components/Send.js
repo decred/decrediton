@@ -438,9 +438,10 @@ class Send extends Component{
       account: 0,
       confirmations: 0,
       outputs: [{key:0, destination: '', amount: ''}] };
+
   }
   submit() {
-    if (this.state.confirmations == '' ) {
+    if (this.state.outputs[0].destination == '' || this.state.outputs[0].amount == '') {
       return;
     }
     this.props.dispatch(this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs));
@@ -456,6 +457,7 @@ class Send extends Component{
     this.setState({ outputs: updateOutputs });
   }
   updateOutputDestination(outputKey, dest) {
+        console.log("click");
     var updateOutputs = this.state.outputs;
     updateOutputs[outputKey].destination = dest;
     this.setState({ outputs: updateOutputs });
@@ -527,19 +529,20 @@ class Send extends Component{
           </div>
         </div>
       </div>);
-      
+
     var selectAccounts = (
       <div style={styles.selectAccountsSend}>
         <select 
           defaultValue={0}
           style={styles.selectAccount} 
-          onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
-          disabled={getAccountsResponse !== null && getAccountsResponse.getAccountsList().length == 2}>
+          >
           {getAccountsResponse !== null ?
             getAccountsResponse.getAccountsList().map((account,i) => {
               if (account.getAccountName() !== 'imported') {
                 return (
-                  <option style={styles.selectAccountNFirst} key={account.getAccountNumber()} value={account.getAccountNumber()}/>
+                  <option style={styles.selectAccountNFirst} key={account.getAccountNumber()} value={account.getAccountNumber()}>
+                    {account.getAccountName()}
+                  </option>
                 );
               }
             }): 
@@ -624,8 +627,8 @@ class Send extends Component{
               }})}
               </div>
             </div>
-            <div style={styles.contentSend}>
-              <a style={styles.viewButtonKeyBlue} onClick={()=>console.log("click")}>send</a>
+            <div style={styles.contentSend} onClick={() => this.submit()}>
+              <div style={styles.viewButtonKeyBlue}>send</div>
             </div>
           </div>
         </div>
