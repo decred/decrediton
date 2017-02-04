@@ -429,15 +429,17 @@ class Send extends Component{
     super(props);
 
     this.state = {
-      account: '',
-      confirmations: '',
+      account: 0,
+      confirmations: 1,
       outputs: [{key:0, destination: '', amount: ''}] };
   }
   submit() {
+    console.log("herer");/*
     if (this.state.account == '' || this.state.confirmations == '' ) {
       return;
-    }
-    this.props.dispatch(constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs));
+    }    console.log("herer");
+*/
+    this.props.dispatch(this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs));
   }
   appendOutput() {
     var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: ''};
@@ -486,27 +488,27 @@ class Send extends Component{
 
     var sharedHeader = (  
       <div style={styles.header}>
-          <div style={styles.headerTop}>
-            {publishTransactionError !== null ?
-              <div style={styles.viewNotificationError}>{publishTransactionError}</div> :
-              <div></div>
-            }
-            {constructTxError !== null ?
-              <div style={styles.viewNotificationError}>{constructTxError}</div> :
-              <div></div>
-            }
-            {signTransactionError !== null ?
-              <div style={styles.viewNotificationError}>{signTransactionError}</div> :
-              <div></div>
-            }
-            {publishTransactionResponse !== null ?
-              <div style={styles.viewNotificationSuccess}>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
-              <div></div>
-            }
-          </div>
-          <div style={styles.headerTitleSend}>Send Funds</div>
-          <div style={styles.headerMetaSend}>Decred addresses always begin with letter D contain 26-35 alphanumeric characters e.g. <span style={styles.headerMetaSpanSend}>DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>.</div>
-        </div>);
+        <div style={styles.headerTop}>
+          {publishTransactionError !== null ?
+            <div style={styles.viewNotificationError}>{publishTransactionError}</div> :
+            <div></div>
+          }
+          {constructTxError !== null ?
+            <div style={styles.viewNotificationError}>{constructTxError}</div> :
+            <div></div>
+          }
+          {signTransactionError !== null ?
+            <div style={styles.viewNotificationError}>{signTransactionError}</div> :
+            <div></div>
+          }
+          {publishTransactionResponse !== null ?
+            <div style={styles.viewNotificationSuccess}>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
+            <div></div>
+          }
+        </div>
+        <div style={styles.headerTitleSend}>Send Funds</div>
+        <div style={styles.headerMetaSend}>Decred addresses always begin with letter D contain 26-35 alphanumeric characters e.g. <span style={styles.headerMetaSpanSend}>DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>.</div>
+      </div>);
 
     const signTxView = (
       <div style={styles.view}>
@@ -515,18 +517,19 @@ class Send extends Component{
           <div style={flexHeight}>
             <div style={styles.contentNestFromAddress}>
               <div style={styles.contentNestPrefixSend}>Confirm transaction:</div>
-              {constructTxResponse.getUnsignedTransaction()}
+              {constructTxResponse !== null ? constructTxResponse.getUnsignedTransaction(): null}
             </div>
-        <p> total previous output amount (atoms) <br/>
-          {constructTxResponse != null ? constructTxResponse.getTotalPreviousOutputAmount() : null}
-        </p>
-        <p> total output amount (atoms) <br/>
-          {constructTxResponse !== null ? constructTxResponse.getTotalOutputAmount() : null}
-        </p>
-        <p> estimated signed size <br/>
-          {constructTxResponse !== null ? constructTxResponse.getEstimatedSignedSize() : null}
-        </p>
-        <SignTxForm clearTransaction={clearTransaction} signTransactionAttempt={signTransactionAttempt} rawTx={constructTxResponse !== null ? constructTxResponse.getUnsignedTransaction() : null}/>
+            <p> total previous output amount (atoms) <br/>
+              {constructTxResponse != null ? constructTxResponse.getTotalPreviousOutputAmount() : null}
+            </p>
+            <p> total output amount (atoms) <br/>
+              {constructTxResponse !== null ? constructTxResponse.getTotalOutputAmount() : null}
+            </p>
+            <p> estimated signed size <br/>
+              {constructTxResponse !== null ? constructTxResponse.getEstimatedSignedSize() : null}
+            </p>
+            <SignTxForm clearTransaction={clearTransaction} signTransactionAttempt={signTransactionAttempt} rawTx={constructTxResponse !== null ? constructTxResponse.getUnsignedTransaction() : null}/>
+          </div>
         </div>
       </div>);
 
@@ -565,10 +568,11 @@ class Send extends Component{
                   <div style={styles.contentNestPrefixSend}>To:</div>
                   <div style={styles.contentNestAddressHashBlock}>
                     <div style={styles.inputForm}>
-                      <TextField
+                      <input
+                        type="text"
+                        style={styles.contentNestAddressHashTo}
                         key={'destination'+output.key}
-                        hintText="Destination Address"
-                        floatingLabelText="Destination Address"
+                        placeholder="Destination Address"
                         onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
                     </div>
                     <div style={styles.contentNestGradient}></div>
@@ -578,10 +582,11 @@ class Send extends Component{
                     <div style={styles.contentNestPrefixSend}>Amount:</div>
                     <div style={styles.contentNestAddressAmountSumAndCurrency}>
                       <div style={styles.contentNestAddressAmountSumGradient}>dcr</div>
-                      <TextField
+                      <input
+                        type="text"
+                        style={styles.contentNestAddressAmountSum}
                         key={'amount'+output.key}
-                        hintText="Amount (DCR)"
-                        floatingLabelText="Amount (DCR)"
+                        placeholder="Amount"
                         onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value);}}/>
                     </div>
                   </div>
@@ -591,41 +596,44 @@ class Send extends Component{
                 <div style={styles.contentNestDeleteAddress} key={output.key}>
                   <div style={styles.contentNestAddressHashBlock}>
                     <div style={styles.inputForm}>
-                      <form style={styles.inputForm}>
-                        <input style={styles.contentNestAddressHashTo} type="text" placeholder="Address"/>
-                      </form>
+                      <input
+                        type="text"
+                        style={styles.contentNestAddressHashTo}
+                        key={'destination'+output.key}
+                        placeholder="Destination Address"
+                        onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
                     </div>
                     <div style={styles.contentNestGradient}></div>
                   </div>
-                  <div style={styles.contentNestAddressDeleteIcon}
-                    disabled={this.state.outputs.length - 1 > parseInt(output.key) || this.state.outputs.length  === 1 }
-                    onClick={this.state.outputs.length - 1 > parseInt(output.key)  || this.state.outputs.length  === 1 ? () => {} : () => this.removeOutput(output.key)}
-                  ></div>
+                  {this.state.outputs.length - 1 === parseInt(output.key) ?
+                    <div style={styles.contentNestAddressDeleteIcon} onClick={() => this.removeOutput(output.key)}></div> :
+                    <div></div>
+                  }
                   <div style={styles.contentNestAddressAmount}>
                     <div style={styles.contentNestAddressAmountSumAndCurrency}>
                       <div style={styles.contentNestAddressAmountSumGradient}>dcr</div>
                       <div style={styles.inputForm}>
-                        <form style={styles.inputForm}>
-                          <input style={styles.contentNestAddressAmountSum} type="text" value="22.00"/>
-                        </form>
+                      <input
+                        type="text"
+                        style={styles.contentNestAddressAmountSum}
+                        key={'amount'+output.key}
+                        placeholder="Amount"
+                        onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value);}}/>
                       </div>
                     </div>
                   </div>
                 </div>);
               }})}
-                  
-
+              </div>
+            </div>
+            <div style={styles.contentSend}>
+              <a style={styles.viewButtonKeyBlue} onClick={()=>this.submit()}>send</a>
             </div>
           </div>
-          <div style={styles.contentSend}>
-            <a style={styles.viewButtonKeyBlue} onClick={()=>this.submit()}>send</a>
-          </div>
-
         </div>
-      </div>
     );
 
-    if (constructTxResponse === null) {
+    if (constructTxResponse !== null) {
       sendView = signTxView;
     }
     

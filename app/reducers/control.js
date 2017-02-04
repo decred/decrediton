@@ -221,6 +221,8 @@ export default function control(state = {}, action) {
       publishTransactionError: '',
       publishTransactionRequestAttempt: false,
       publishTransactionResponse: action.publishTransactionResponse,
+      constructTxResponse: null,
+      signTxResponse: null,
     };
   case PURCHASETICKET_ATTEMPT:
     return {...state,
