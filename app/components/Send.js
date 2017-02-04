@@ -15,6 +15,7 @@ import ArrowDownKeyBlue from './icons/arrow-down-key-blue.svg';
 import Add from './icons/add.svg';
 import Delete from './icons/delete.svg';
 import TextField from 'material-ui/TextField';
+import Balance from './Balance';
 
 const styles = {
     body: {
@@ -325,12 +326,10 @@ const styles = {
     display: 'block',
     width: '100px',
     height: '100%',
-    paddingTop: '7px',
     borderStyle: 'none',
     fontFamily: 'Inconsolata, monospace',
     fontSize: '19px',
     fontWeight: '700',
-    textAlign: 'right',
   },
   contentNestToAddressAmountSumNumberFormatSmall: {
     fontSize: '13px',
@@ -413,6 +412,13 @@ const styles = {
     ':active': {
       boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
     }
+  },
+  flexHeight: {     
+      paddingTop: '1px',
+      backgroundColor: '#fff',
+      height:'372px',
+      overflowY: 'auto',
+      overflowX: 'hidden',
   }
 };
 
@@ -430,15 +436,14 @@ class Send extends Component{
 
     this.state = {
       account: 0,
-      confirmations: 1,
+      confirmations: 0,
       outputs: [{key:0, destination: '', amount: ''}] };
   }
   submit() {
-    console.log("herer");/*
-    if (this.state.account == '' || this.state.confirmations == '' ) {
+    console.log("herer");
+    if (this.state.confirmations == '' ) {
       return;
     }    console.log("herer");
-*/
     this.props.dispatch(this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs));
   }
   appendOutput() {
@@ -456,6 +461,9 @@ class Send extends Component{
     updateOutputs[outputKey].destination = dest;
     this.setState({ outputs: updateOutputs });
   }
+  updateAccountNumber(outputKey, dest) {
+     this.setState({account: accountNum});
+  }
   updateOutputAmount(outputKey, amount) {
     // For now just convert from atoms to dcr.  We can add option to switch
     // later (and that need to impact more than just this function.
@@ -465,27 +473,15 @@ class Send extends Component{
     this.setState({ outputs: updateOutputs });
   }
   render() {
-    var flexHeight = {     
-      paddingTop: '1px',
-      backgroundColor: '#fff',
-      height:'372px',
-      overflowY: 'auto',
-      overflowX: 'hidden',
-    };
+
+
     const { walletService } = this.props;
     const { constructTxResponse, constructTxError } = this.props;
     const { publishTransactionResponse, publishTransactionError } = this.props;
     const { signTransactionError } = this.props;
-    const { clearTransaction, signTransactionAttempt} = this.props;
-    const constructTxView = (
-      <div style={styles.content}>
-        <ShowError error={constructTxError}/>
-        <h1>Construct Tx</h1>
-        <ConstructTxForm />
-      </div>);
+    const { clearTransaction, signTransactionAttempt } = this.props;
+    const { getAccountsResponse } = this.props;
 
-
-    console.log()
     var sharedHeader = (  
       <div style={styles.header}>
         <div style={styles.headerTop}>
@@ -514,7 +510,7 @@ class Send extends Component{
       <div style={styles.view}>
         {sharedHeader}
         <div style={styles.content}>
-          <div style={flexHeight}>
+          <div style={styles.flexHeight}>
             <div style={styles.contentNestFromAddress}>
               <div style={styles.contentNestPrefixSend}>Confirm transaction:</div>
               {constructTxResponse !== null ? constructTxResponse.getUnsignedTransaction(): null}
@@ -532,32 +528,43 @@ class Send extends Component{
           </div>
         </div>
       </div>);
-
+    var selectAccounts = (
+      
+      <div style={styles.selectAccountsSend}>
+        <select 
+          defaultValue={0}
+          style={styles.selectAccount} 
+          onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
+          disabled={getAccountsResponse !== null && getAccountsResponse.getAccountsList().length == 2}>
+          {getAccountsResponse !== null ?
+            getAccountsResponse.getAccountsList().map((account,i) => {
+              if (i === 0) {
+                return (
+                  <option style={styles.selectAccountNFirst} key={account.getAccountNumber()} value={account.getAccountNumber()}>
+                    <div style={styles.selectAccountNTextSend}>{account.getAccountName()}</div>
+                  </option>
+                );
+              } else if (account.getAccountName() !== 'imported') {
+                return (
+                  <option style={styles.selectAccountNNestSend} key={account.getAccountNumber()} value={account.getAccountNumber()}>
+                    <div style={styles.selectAccountNText}>{account.getAccountName()}</div>
+                    <div style={styles.selectAccountNGradient}></div>
+                  </option>
+                );
+              }
+            }
+          ) : 
+          null }
+        </select>
+      </div>);
     var sendView = (
       <div style={styles.view}>
         {sharedHeader}
         <div style={styles.content}>
-          <div style={flexHeight}>
+          <div style={styles.flexHeight}>
             <div style={styles.contentNestFromAddress}>
               <div style={styles.contentNestPrefixSend}>From:</div>
-              <div style={styles.selectAccountsSend}>
-                <div style={styles.selectAccount}>
-                  <div style={styles.selectAccountNFirst}>
-                    <div style={styles.selectAccountNAmount}>(<span style={styles.selectAccountNAmountBold}>1,144</span>.33243300)</div>
-                    <div style={styles.selectAccountNTextSend}>Primary account sssssssssssssssssssssssssssss</div>
-                  </div>
-                  <div style={styles.selectAccountNNestSend}>
-                    <div style={styles.selectAccountN} key="1" data-name="primaryAccount" data-value="1,133.8883">
-                      <div style={styles.selectAccountNText}>College funds</div>
-                      <div style={styles.selectAccountNGradient}></div>
-                    </div>
-                    <div style={styles.selectAccountN} key="2"  data-name="primaryAccount" data-value="33.8883000">
-                      <div style={styles.selectAccountNText}>College funds</div>
-                      <div style={styles.selectAccountNGradient}></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {selectAccounts}
               <div style={styles.contentNestFromAddressWalletIcon}></div>
             </div>
             <div id="dynamicInput">
