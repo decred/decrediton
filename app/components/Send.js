@@ -440,10 +440,9 @@ class Send extends Component{
       outputs: [{key:0, destination: '', amount: ''}] };
   }
   submit() {
-    console.log("herer");
     if (this.state.confirmations == '' ) {
       return;
-    }    console.log("herer");
+    }
     this.props.dispatch(this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs));
   }
   appendOutput() {
@@ -528,8 +527,8 @@ class Send extends Component{
           </div>
         </div>
       </div>);
-    var selectAccounts = (
       
+    var selectAccounts = (
       <div style={styles.selectAccountsSend}>
         <select 
           defaultValue={0}
@@ -538,25 +537,17 @@ class Send extends Component{
           disabled={getAccountsResponse !== null && getAccountsResponse.getAccountsList().length == 2}>
           {getAccountsResponse !== null ?
             getAccountsResponse.getAccountsList().map((account,i) => {
-              if (i === 0) {
+              if (account.getAccountName() !== 'imported') {
                 return (
-                  <option style={styles.selectAccountNFirst} key={account.getAccountNumber()} value={account.getAccountNumber()}>
-                    <div style={styles.selectAccountNTextSend}>{account.getAccountName()}</div>
-                  </option>
-                );
-              } else if (account.getAccountName() !== 'imported') {
-                return (
-                  <option style={styles.selectAccountNNestSend} key={account.getAccountNumber()} value={account.getAccountNumber()}>
-                    <div style={styles.selectAccountNText}>{account.getAccountName()}</div>
-                    <div style={styles.selectAccountNGradient}></div>
-                  </option>
+                  <option style={styles.selectAccountNFirst} key={account.getAccountNumber()} value={account.getAccountNumber()}/>
                 );
               }
-            }
-          ) : 
-          null }
+            }): 
+            null
+          }
         </select>
       </div>);
+
     var sendView = (
       <div style={styles.view}>
         {sharedHeader}
@@ -634,7 +625,7 @@ class Send extends Component{
               </div>
             </div>
             <div style={styles.contentSend}>
-              <a style={styles.viewButtonKeyBlue} onClick={()=>this.submit()}>send</a>
+              <a style={styles.viewButtonKeyBlue} onClick={()=>console.log("click")}>send</a>
             </div>
           </div>
         </div>
