@@ -207,12 +207,12 @@ class SideBar extends Component {
     this.hideAccounts = this.hideAccounts.bind(this);
     this.updateBlockTimeSince = this.updateBlockTimeSince.bind(this);
   }
-  componentWillMount() {
+  componentDidMount() {
     setTimeout(() =>{this.updateBlockTimeSince();}, 1000);
   }
   updateBlockTimeSince() {
     const { transactionNtfnsResponse } = this.props;
-    if (transactionNtfnsResponse !== null) {
+    if (transactionNtfnsResponse !== null && transactionNtfnsResponse.getAttachedBlocksList().length > 0) {
       const attachedBlocks = transactionNtfnsResponse.getAttachedBlocksList();
       var currentTime = new Date();
       var recentBlockTime = new Date(attachedBlocks[attachedBlocks.length-1].getTimestamp()*1000);
