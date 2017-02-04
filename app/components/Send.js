@@ -485,20 +485,20 @@ class Send extends Component{
       </div>);
 
 
-
+    console.log()
     var sharedHeader = (  
       <div style={styles.header}>
         <div style={styles.headerTop}>
           {publishTransactionError !== null ?
-            <div style={styles.viewNotificationError}>{publishTransactionError}</div> :
+            <div style={styles.viewNotificationError}>{publishTransactionError}pt</div> :
             <div></div>
           }
           {constructTxError !== null ?
-            <div style={styles.viewNotificationError}>{constructTxError}</div> :
+            <div style={styles.viewNotificationError}>{constructTxError}ct</div> :
             <div></div>
           }
           {signTransactionError !== null ?
-            <div style={styles.viewNotificationError}>{signTransactionError}</div> :
+            <div style={styles.viewNotificationError}>{signTransactionError}st</div> :
             <div></div>
           }
           {publishTransactionResponse !== null ?

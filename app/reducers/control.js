@@ -178,7 +178,7 @@ export default function control(state = {}, action) {
     };
   case FUNDTX_SUCCESS:
     return {...state,
-      fundTransactionError: '',
+      fundTransactionError: null,
       fundTransactionRequestAttempt: false,
       fundTransactionResponse: action.fundTransactionResponse,
     };
@@ -200,7 +200,7 @@ export default function control(state = {}, action) {
     };
   case SIGNTX_SUCCESS:
     return {...state,
-      signTransactionError: '',
+      signTransactionError: null,
       signTransactionRequestAttempt: false,
       signTransactionResponse: action.signTransactionResponse,
     };
@@ -218,7 +218,7 @@ export default function control(state = {}, action) {
     };
   case PUBLISHTX_SUCCESS:
     return {...state,
-      publishTransactionError: '',
+      publishTransactionError: null,
       publishTransactionRequestAttempt: false,
       publishTransactionResponse: action.publishTransactionResponse,
       constructTxResponse: null,
