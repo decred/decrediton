@@ -476,32 +476,7 @@ class Home extends Component{
           </div>
         </div>
       );
-    
-                <Step>
-                  <StepLabel>Start RPC Concensus</StepLabel>
-                  <StepContent>
-                    {startRpc}
-                  </StepContent>
-                </Step>
-                <Step>
-                  <StepLabel>Subscribe to Block Notifications</StepLabel>
-                  <StepContent>
-                    {}
-                  </StepContent>
-                </Step>
-                <Step>
-                  <StepLabel>Discover Addresses</StepLabel>
-                  <StepContent>
-                    
-                  </StepContent>
-                </Step>
-                <Step>
-
-              </Stepper>
-            </div>
-          </div>
-        </div>
-    );
+    }
     const actions = [
       <FlatButton
         label="OK, I Understand"
@@ -527,7 +502,9 @@ class Home extends Component{
         return (
           <div style={styles.body}>
             <SideBar gettingStarted={true}/>
-            {stepper}
+            <div style={styles.view}>
+              {startupStepView}
+            </div>
           </div>);
       } else {
         return (<ShowError error={versionInvalidError}/>);
