@@ -232,16 +232,9 @@ class Home extends Component{
             leftText={"New seed"}
             rightText={"Existing Seed"}/>
         </div>
-        <div style={styles.content}>
-          <div style={styles.contentTitle}>
-            <div style={styles.contentTitleText}>Text stuff</div>
-          </div>
-          <div style={styles.contentNest}>
-            {walletCreateRequestAttempt ? 
-              <CircularProgress size={80} thickness={6}/> :
-              <CreateWalletForm/>}
-          </div>
-        </div>
+        {walletCreateRequestAttempt ? 
+          <CircularProgress size={80} thickness={6}/> :
+          <CreateWalletForm/>}
       </div>
       );
     } else if  (stepIndex == 3 || stepIndex == 4) {
