@@ -8,6 +8,7 @@ import LinearProgress from 'material-ui/LinearProgress';
 import Dialog from 'material-ui/Dialog';
 import ShowError from './ShowError';
 import Radium from 'radium';
+import SideBar from './SideBar';
 
 import {
   Step,
@@ -18,32 +19,97 @@ import {
 import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
-  body: {
-    height: '100%'
+    body: {
+    position: 'fixed',
+    left: '0px',
+    top: '50%',
+    right: '0px',
+    display: 'block',
+    overflow: 'hidden',
+    width: '1178px',
+    height: '770px',
+    marginTop: '-385px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    backgroundColor: '#FFF',
   },
-  pageWrap: {
-    minHeight: '100%',
-    /* equal to footer height */
-    marginBottom: '-142px',
-
-
-    ':after': {
-      content: '',
-      display: 'block',
-    },
+  view: {
+    width: '880px',
+    height: '100%',
+    float: 'right',
+    backgroundColor: '#f3f6f6',
   },
   header: {
-    border:'1px solid #000',
-    width:'100px',
-    height:'20px',
-    margin:'0 0 5px 0',
+    paddingRight: '80px',
+    paddingLeft: '100px',
+    backgroundColor: '#fff',
   },
   content: {
-    position: 'absolute',
-    top: '0px',
-    left: '0px',
-    bottom: '0px',
-    right: '0px',
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 60px 54px 80px',
+  },
+
+  transition1: {
+    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
+  },
+  headerTop: {
+    height: '106px',
+    paddingBottom: '20px',
+  },
+  headerTitleOverview: {
+    height: '54px',
+    paddingTop: '13px',
+    color: '#596d81',
+    fontSize: '27px',
+  },
+  headerMetaOverview: {
+    height: '54px',
+    paddingTop: '5px',
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '53px',
+  },
+  contentTitle: {
+    display: 'block',
+    height: '44px',
+    marginRight: 'auto',
+    marginBottom: '10px',
+    marginLeft: 'auto',
+    borderBottom: '1px solid transparent',
+    color: '#596d81',
+    fontSize: '27px',
+    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
+  },
+  contentNest: {
+    paddingTop: '1px',
+  },
+  contentTitleText: {
+    display: 'inline-block',
+    overflow: 'hidden',
+    width: '600px',
+    height: '100%',
+    paddingTop: '13px',
+    paddingRight: '20px',
+    paddingLeft: '20px',
+    float: 'left',
+  },
+
+  contentTitleButtonSearchTransition1: {
+    width: '60px',
+    height: '100%',
+    cursor: 'pointer',
+  },
+
+  contentTitleTextActive: {
+    color: '#2971ff',
+  },
+
+  contentTitleActive: {
+    borderBottom: '1px solid #2971ff',
+  },
+
+  headerMetaCurrency: {
+    fontSize: '23px',
   },
 };
 
@@ -266,66 +332,175 @@ class Home extends Component{
     }
     */
 
-    var openOrCreate;
-    if (walletExistResponse !== null && walletExistResponse.getExists()) {
-      openOrCreate = getStartedWalletOpen;
-    } else {
-      openOrCreate = getStartedWalletCreate;
-    }
+    var startupStepView = (<div>something went wrong</div>);
 
-    const stepper = (
-      <div style={styles.content}>
-        <Stepper activeStep={stepIndex} orientation="vertical">
-          <Step>
-            <StepLabel>Get Wallet Loader Service</StepLabel>
-            <StepContent>
-              {getStartedWalletLoader}
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Wallet Exist</StepLabel>
-            <StepContent>
-              {}
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Wallet Create/Open</StepLabel>
-            <StepContent>
-              {openOrCreate}
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Start RPC Concensus</StepLabel>
-            <StepContent>
-              {startRpc}
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Subscribe to Block Notifications</StepLabel>
-            <StepContent>
-              {}
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Discover Addresses</StepLabel>
-            <StepContent>
-              {getStartedDiscoverAddress}
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Fetch Headers</StepLabel>
-            <StepContent>
-              {fetchHeaders}
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Final Prep</StepLabel>
-            <StepContent>
-              {}
-            </StepContent>
-          </Step>
-        </Stepper>
+    if (stepIndex <= 1) {
+      // Initial Step
+      startupStepView = (
+      <div style={styles.view}>
+        <div style={styles.header}>
+          <div style={styles.headerTop}></div>
+          <div style={styles.headerTitleOverview}>Getting started</div>
+          <div style={styles.headerMetaOverview}>
+            
+          </div>
+        </div>
+        <div style={styles.content}>
+          <div style={styles.contentTitle}>
+            <div style={styles.contentTitleText}>checking wallet state...</div>
+          </div>
+          <div style={styles.contentNest}>
+            {getStartedWalletLoader}
+          </div>
+        </div>
       </div>
+      );
+    } else if (stepIndex == 2 &&
+            walletExistResponse !== null 
+            && walletExistResponse.getExists()) {
+      // Wallet has been shown to exist and public password != 'public'
+       startupStepView = (
+      <div style={styles.view}>
+        <div style={styles.header}>
+          <div style={styles.headerTop}></div>
+          <div style={styles.headerTitleOverview}>Open wallet</div>
+          <div style={styles.headerMetaOverview}>
+          </div>
+        </div>
+        <div style={styles.content}>
+          <div style={styles.contentTitle}>
+            <div style={styles.contentTitleText}></div>
+          </div>
+          <div style={styles.contentNest}>
+            {getStartedWalletOpen}
+          </div>
+        </div>
+      </div>
+      );
+    } else if (stepIndex == 2) {
+      // Wallet does not exist
+     startupStepView = (
+      <div style={styles.view}>
+        <div style={styles.header}>
+          <div style={styles.headerTop}></div>
+          <div style={styles.headerTitleOverview}>Create a Wallet</div>
+          <div style={styles.headerMetaOverview}>
+          </div>
+        </div>
+        <div style={styles.content}>
+          <div style={styles.contentTitle}>
+            <div style={styles.contentTitleText}>Text stuff</div>
+          </div>
+          <div style={styles.contentNest}>
+            {getStartedWalletCreate}
+          </div>
+        </div>
+      </div>
+      );
+    } else if  (stepIndex == 3 || stepIndex == 4) {
+      // Get startrpc and subscribe
+      startupStepView = (
+        <div style={styles.view}>
+          <div style={styles.header}>
+            <div style={styles.headerTop}></div>
+            <div style={styles.headerTitleOverview}>Starting RPC and subscribing block notifications</div>
+            <div style={styles.headerMetaOverview}>
+            </div>
+          </div>
+          <div style={styles.content}>
+            <div style={styles.contentTitle}>
+              <div style={styles.contentTitleText}>Start RPC, Subscribe Block</div>
+            </div>
+            <div style={styles.contentNest}>
+              {startRpc}
+            </div>
+          </div>
+        </div>
+      );  
+    } else if  (stepIndex == 5) {
+      // Get private passphrase for discover address request
+      startupStepView = (
+        <div style={styles.view}>
+          <div style={styles.header}>
+            <div style={styles.headerTop}></div>
+            <div style={styles.headerTitleOverview}>Private passphrase</div>
+            <div style={styles.headerMetaOverview}>
+            </div>
+          </div>
+          <div style={styles.content}>
+            <div style={styles.contentTitle}>
+              <div style={styles.contentTitleText}>For discover addresses</div>
+            </div>
+            <div style={styles.contentNest}>
+              {getStartedDiscoverAddress}
+            </div>
+          </div>
+        </div>
+      );
+    } else if  (stepIndex == 6) {
+      // Fetch headers
+      startupStepView = (
+        <div style={styles.view}>
+          <div style={styles.header}>
+            <div style={styles.headerTop}></div>
+            <div style={styles.headerTitleOverview}>Fetch headers</div>
+            <div style={styles.headerMetaOverview}>
+            </div>
+          </div>
+          <div style={styles.content}>
+            <div style={styles.contentTitle}>
+              <div style={styles.contentTitleText}>Catching up block chain</div>
+            </div>
+            <div style={styles.contentNest}>
+              {fetchHeaders}
+            </div>
+          </div>
+        </div>
+      );
+    } else if  (stepIndex >= 7) {
+      // Final Steps
+      startupStepView = (
+        <div style={styles.view}>
+          <div style={styles.header}>
+            <div style={styles.headerTop}></div>
+            <div style={styles.headerTitleOverview}>Final start up</div>
+            <div style={styles.headerMetaOverview}>
+            </div>
+          </div>
+          <div style={styles.content}>
+            <div style={styles.contentTitle}>
+              <div style={styles.contentTitleText}>Last steps if needed</div>
+            </div>
+            <div style={styles.contentNest}>
+            </div>
+          </div>
+        </div>
+      );
+    
+                <Step>
+                  <StepLabel>Start RPC Concensus</StepLabel>
+                  <StepContent>
+                    {startRpc}
+                  </StepContent>
+                </Step>
+                <Step>
+                  <StepLabel>Subscribe to Block Notifications</StepLabel>
+                  <StepContent>
+                    {}
+                  </StepContent>
+                </Step>
+                <Step>
+                  <StepLabel>Discover Addresses</StepLabel>
+                  <StepContent>
+                    
+                  </StepContent>
+                </Step>
+                <Step>
+
+              </Stepper>
+            </div>
+          </div>
+        </div>
     );
     const actions = [
       <FlatButton
@@ -351,9 +526,8 @@ class Home extends Component{
       if (!versionInvalid) {
         return (
           <div style={styles.body}>
-            <div style={styles.pageWrap}>
-              {stepper}
-            </div>
+            <SideBar gettingStarted={true}/>
+            {stepper}
           </div>);
       } else {
         return (<ShowError error={versionInvalidError}/>);

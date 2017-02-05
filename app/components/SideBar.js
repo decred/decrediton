@@ -246,6 +246,13 @@ class SideBar extends Component {
   }
 
   render() {
+    const { gettingStarted } = this.props;
+    if ( gettingStarted ) {
+      return (     
+        <div style={styles.menu}>
+          <div style={styles.menuLogo}></div>
+        </div>);
+    }
     const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
     const { getNetworkResponse } = this.props;
