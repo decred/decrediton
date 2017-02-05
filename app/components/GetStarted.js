@@ -9,7 +9,7 @@ import Dialog from 'material-ui/Dialog';
 import ShowError from './ShowError';
 import Radium from 'radium';
 import SideBar from './SideBar';
-
+import NewExistingSeedToggle from './NewExistingSeedToggle';
 import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
@@ -37,6 +37,7 @@ const styles = {
     paddingRight: '80px',
     paddingLeft: '100px',
     backgroundColor: '#596d81',
+    height: '214px',
   },
   content: {
     overflow: 'auto',
@@ -49,15 +50,14 @@ const styles = {
   },
   headerTop: {
     height: '106px',
-    paddingBottom: '20px',
   },
   headerTitleOverview: {
-    height: '54px',
-    paddingTop: '13px',
+    height: '41px',
     color: '#fff',
     fontSize: '27px',
   },
   headerMetaOverview: {
+    float: 'left',
     clear: 'left',
     height: '54px',
     width: '50%',
@@ -226,8 +226,11 @@ class Home extends Component{
         <div style={styles.header}>
           <div style={styles.headerTop}></div>
           <div style={styles.headerTitleOverview}>Create a Wallet</div>
-          <div style={styles.headerMetaOverview}>
-          </div>
+          <div style={styles.headerMetaOverview}></div>
+          <NewExistingSeedToggle 
+            activeButton={"left"} 
+            leftText={"New seed"}
+            rightText={"Existing Seed"}/>
         </div>
         <div style={styles.content}>
           <div style={styles.contentTitle}>
