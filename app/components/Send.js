@@ -475,7 +475,7 @@ class Send extends Component{
       outputs: [{key:0, destination: '', amount: ''}] };
   }
   clearTransactionData() {
-    this.setState({account:0, confirmations: 0, outputs: [{key:0, destination: '', amount: ''}]})
+    this.setState({account:0, confirmations: 0, outputs: [{key:0, destination: '', amount: ''}]});
     this.props.clearTransaction();
   }
   submitSignPublishTx() {
@@ -488,7 +488,7 @@ class Send extends Component{
     if (this.state.outputs[0].destination == '' || this.state.outputs[0].amount == '') {
       return;
     }
-   this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs);
+    this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs);
   }
   appendOutput() {
     var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: ''};
@@ -524,7 +524,6 @@ class Send extends Component{
     const { constructTxResponse, constructTxError } = this.props;
     const { publishTransactionResponse, publishTransactionError } = this.props;
     const { signTransactionError } = this.props;
-    const { clearTransaction, signTransactionAttempt } = this.props;
     const { getAccountsResponse } = this.props;
     const { getNetworkResponse } = this.props;
 

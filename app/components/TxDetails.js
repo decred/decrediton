@@ -243,7 +243,6 @@ class TxDetails extends Component {
     const { getAccountsResponse } = this.props;
     const { getNetworkResponse } = this.props;
 
-    var network = 0;
     var networkStr = '';
     if (getNetworkResponse !== null) {
       networkStr = getNetworkResponse.networkStr;
