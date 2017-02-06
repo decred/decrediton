@@ -74,7 +74,85 @@ const styles = {
     textDecoration: 'none',
     textTransform: 'capitalize',
     transition: 'all 50ms ease-in-out 0s',
-  }
+  },
+  contentNewSeedConfirmSeed: {
+    height: '109px',
+  },
+  contentNewSeedPrivPass: {
+    height: '60px',
+  },
+  contentNewSeedCreateButton: {
+    height: '60px',
+  },
+  contentConfirmWalletCreateInputLeft: {
+    width: '160px',
+    marginRight: '20px',
+    float: 'left',
+    color: '#E7EAED',
+    fontSize: '19px',
+    textAlign: 'right',
+    letterSpacing: '-0.1px',
+  },
+  contentConfirmWalletCreateInputLeftPadding: {
+    width: '160px',
+    marginRight: '20px',
+    float: 'left',
+    color: '#E7EAED',
+    fontSize: '19px',
+    textAlign: 'right',
+    letterSpacing: '-0.1px',
+    paddingTop: '23px',
+  },
+  contentConfirmWalletCreateInputRight: {
+    width: '540px',
+    float: 'left',
+    clear: 'right',
+  },
+  contentConfirmWalletCreateInputRightPadding: {
+    marginBottom: '5px',
+    width: '300px',
+    paddingTop: '11px',
+    float: 'left',
+    clear: 'right',
+  },
+  inputPrivatePassword: {
+    backgroundColor: 'transparent',
+    width: '100%',
+    minHeight: '44px',
+    paddingRight: '10px',
+    paddingLeft: '10px',
+    borderStyle: 'none none solid',
+    borderBottom: '1px solid #69D5F7',
+    color: '#69D5F7',
+    fontSize: '19px',
+    lineHeight: 'normal',
+    font: 'inherit',
+    margin: '0px',
+    boxSizing: 'border-box',
+  },
+  inputSeedTextArea: {
+    backgroundColor: 'transparent',
+    width: '100%',
+    minHeight: '108px',
+    paddingRight: '10px',
+    paddingLeft: '10px',
+    borderStyle: 'none none solid',
+    borderWidth: '0px 0px 1px',
+    borderColor: '#000 #000 #69D5F7',
+    fontFamily: 'Inconsolata,monospace',
+    color: '#2971FF',
+    fontSize: '13px',
+    overflow: 'auto',
+    font: 'inherit',
+    margin: '0px',
+  },
+  inputForm: {
+    mozAppearance: 'none !important',
+    position: 'relative',
+    width: '100%',
+    height: 'auto',
+    minHeight: '44px',
+  },
 }
 
 class CreateWalletForm extends React.Component {
@@ -168,6 +246,46 @@ class CreateWalletForm extends React.Component {
           <span style={styles.paragraphOrangeWarning}>Warning:</span> Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else.</div>
         <div style={styles.contentSeed}>{generateRandomSeedResponse !== null ? generateRandomSeedResponse.getSeedMnemonic() : null}</div>
         <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>{console.log('continue')}}>Continue</a>
+      </div>);
+
+    const newContinuedPage = (
+      <div style={styles.contentNewSeed}>
+        <div style={styles.contentNewSeedConfirmSeed}>
+          <div style={styles.contentConfirmWalletCreateInputLeft}>Confirm Seed:&nbsp;</div>
+          <div style={styles.contentConfirmWalletCreateInputRight}>
+            <div style={styles.inputForm}>
+              <form style={styles.inputForm}>
+                <textarea style={styles.inputSeedTextArea} type="text" placeholder="33 words"></textarea>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div style={styles.contentNewSeedPrivPass}>
+          <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Encrypt Wallet:</div>
+          <div style={styles.contentConfirmWalletCreateInputRightPadding}>
+            <div style={styles.inputForm}>
+              <form style={styles.inputForm}>
+                <input style={styles.inputPrivatePassword} type="password" placeholder="Private Passphrase"/>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div style={styles.contentNewSeedPrivPass}>
+          <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Verify:</div>
+          <div cstyle={styles.contentConfirmWalletCreateInputRightPadding}>
+            <div style={styles.inputForm}>
+              <form style={styles.inputForm}>
+                <input style={styles.inputPrivatePassword} type="password" placeholder="Private Passphrase"/>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div style={styles.contentNewSeedCreateButton}>
+          <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
+          <div style={styles.contentConfirmWalletCreateInputRightPadding}>
+            <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>{console.log("ccreate wallet")}}>Create Wallet</a>
+          </div>
+        </div>
       </div>);
 
     return (
