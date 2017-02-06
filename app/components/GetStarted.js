@@ -245,7 +245,7 @@ class Home extends Component{
     if (this.state.pubpass == '') {
       return;
     }
-    this.props.walletOpenRequestAttempt(this.state.pubpass);
+    this.props.walletOpenAttempt(this.state.pubpass);
     this.setState({pubpass:''});
   }
   handleDisclaimerOK = () => {
