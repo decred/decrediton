@@ -1,11 +1,7 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
-import Radium from 'radium';
 import ErrorScreen from './ErrorScreen';
-import ConstructTxForm from '../containers/ConstructTxForm';
 import SignTxForm from '../containers/SignTxForm';
-import PublishTx from '../containers/PublishTx';
-import ShowError from './ShowError';
 import { reverseHash } from '../helpers/byteActions';
 import SideBar from './SideBar';
 import MinusBig from './icons/minus-big.svg';
@@ -14,24 +10,22 @@ import ArrowDownMidBlue from './icons/arrow-down-mid-blue.svg';
 import ArrowDownKeyBlue from './icons/arrow-down-key-blue.svg';
 import Add from './icons/add.svg';
 import Delete from './icons/delete.svg';
-import TextField from 'material-ui/TextField';
-import Balance from './Balance';
 
 const styles = {
-    body: {
-      position: 'fixed',
-      left: '0px',
-      top: '50%',
-      right: '0px',
-      display: 'block',
-      overflow: 'hidden',
-      width: '1178px',
-      height: '770px',
-      marginTop: '-385px',
-      marginRight: 'auto',
-      marginLeft: 'auto',
-      backgroundColor: '#FFF',
-    },
+  body: {
+    position: 'fixed',
+    left: '0px',
+    top: '50%',
+    right: '0px',
+    display: 'block',
+    overflow: 'hidden',
+    width: '1178px',
+    height: '770px',
+    marginTop: '-385px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    backgroundColor: '#FFF',
+  },
   view: {
     width: '880px',
     height: '100%',
@@ -99,7 +93,7 @@ const styles = {
     overflow: 'auto',
     height: '556px',
     padding: '54px 60px 54px 80px',
-  },  
+  },
   contentNestSend: {
     paddingTop: '1px',
     backgroundColor: '#fff',
@@ -120,13 +114,13 @@ const styles = {
     fontSize: '19px',
     textAlign: 'right',
     textTransform: 'capitalize',
-  },  
+  },
   contentNestFromAddress: {
     width: '100%',
     height: '54px',
     paddingTop: '10px',
     float: 'left',
-  },  
+  },
   contentNestFromAddressWalletIcon: {
     display: 'inline-block',
     width: '60px',
@@ -136,7 +130,7 @@ const styles = {
     backgroundPosition: '50% 50%',
     backgroundSize: '20px',
     backgroundRepeat: 'no-repeat',
-  },  
+  },
   contentNestToAddress: {
     width: '100%',
     height: '54px',
@@ -173,7 +167,7 @@ const styles = {
     width: '40px',
     height: '100%',
     backgroundImage: 'linear-gradient(90deg, transparent, #fff 80%)',
-  },  
+  },
   selectAccountsSend: {
     width: '300px',
     position: 'relative',
@@ -193,7 +187,7 @@ const styles = {
       backgroundImage: `url(${ArrowDownKeyBlue})`,
       backgroundSize: '10px',
     }
-  },  
+  },
   selectAccount: {
     display: 'block',
     overflow: 'hidden',
@@ -204,7 +198,7 @@ const styles = {
     ':hover': {
       height: 'auto',
     }
-  },  
+  },
   selectAccountNFirst: {
     overflow: 'hidden',
     height: '34px',
@@ -213,12 +207,12 @@ const styles = {
     paddingLeft: '10px',
     color: '#2971ff',
     fontSize: '19px',
-  },  
+  },
   selectAccountNTextSend: {
     width: '200%',
     paddingTop: '1px',
     fontSize: '13px',
-  },  
+  },
   selectAccountNAmount: {
     position: 'absolute',
     top: '0px',
@@ -233,11 +227,11 @@ const styles = {
     fontSize: '11px',
     fontWeight: '400',
     textAlign: 'right',
-  },  
+  },
   selectAccountNAmountBold: {
     fontFamily: 'Inconsolata, monospace',
     fontWeight: '700',
-  },  
+  },
   selectAccountNNestSend: {
     fontSize: '13px',
     overflow: 'auto',
@@ -247,7 +241,7 @@ const styles = {
     paddingBottom: '10px',
     borderBottom: '1px solid #a9b4bf',
     backgroundColor: '#fff',
-  },  
+  },
   selectAccountNGradient: {
     position: 'absolute',
     top: '0px',
@@ -256,7 +250,7 @@ const styles = {
     width: '40px',
     height: '100%',
     backgroundImage: 'linear-gradient(90deg, transparent, #fff 75%)',
-  },  
+  },
   selectAccountN: {
     position: 'relative',
     overflow: 'hidden',
@@ -268,16 +262,16 @@ const styles = {
     ':hover': {
       color: '#2971ff',
     }
-  },  
+  },
   selectAccountNText: {
     width: '200%',
-  },  
+  },
   inputForm: {
     position: 'relative',
     width: '100%',
     height: 'auto',
     minHeight: '44px',
-  },  
+  },
   contentNestAddressWalletIcon: {
     width: '50px',
     height: '34px',
@@ -367,7 +361,7 @@ const styles = {
     paddingLeft: '5px',
     float: 'left',
     textTransform: 'capitalize',
-  },  
+  },
   ontentSendSectionAmount: {
     width: '160px',
     height: '100%',
@@ -413,12 +407,12 @@ const styles = {
       boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
     }
   },
-  flexHeight: {     
-      paddingTop: '1px',
-      backgroundColor: '#fff',
-      height:'372px',
-      overflowY: 'auto',
-      overflowX: 'hidden',
+  flexHeight: {
+    paddingTop: '1px',
+    backgroundColor: '#fff',
+    height:'372px',
+    overflowY: 'auto',
+    overflowX: 'hidden',
   }
 };
 
@@ -457,13 +451,13 @@ class Send extends Component{
     this.setState({ outputs: updateOutputs });
   }
   updateOutputDestination(outputKey, dest) {
-        console.log("click");
+    console.log('click');
     var updateOutputs = this.state.outputs;
     updateOutputs[outputKey].destination = dest;
     this.setState({ outputs: updateOutputs });
   }
-  updateAccountNumber(outputKey, dest) {
-     this.setState({account: accountNum});
+  updateAccountNumber(outputKey, accountNum) {
+    this.setState({account: accountNum});
   }
   updateOutputAmount(outputKey, amount) {
     // For now just convert from atoms to dcr.  We can add option to switch
@@ -483,7 +477,7 @@ class Send extends Component{
     const { clearTransaction, signTransactionAttempt } = this.props;
     const { getAccountsResponse } = this.props;
 
-    var sharedHeader = (  
+    var sharedHeader = (
       <div style={styles.header}>
         <div style={styles.headerTop}>
           {publishTransactionError !== null ?
@@ -532,12 +526,12 @@ class Send extends Component{
 
     var selectAccounts = (
       <div style={styles.selectAccountsSend}>
-        <select 
+        <select
           defaultValue={0}
-          style={styles.selectAccount} 
+          style={styles.selectAccount}
           >
           {getAccountsResponse !== null ?
-            getAccountsResponse.getAccountsList().map((account,i) => {
+            getAccountsResponse.getAccountsList().map((account) => {
               if (account.getAccountName() !== 'imported') {
                 return (
                   <option style={styles.selectAccountNFirst} key={account.getAccountNumber()} value={account.getAccountNumber()}>
@@ -545,7 +539,7 @@ class Send extends Component{
                   </option>
                 );
               }
-            }): 
+            }):
             null
           }
         </select>
@@ -593,7 +587,7 @@ class Send extends Component{
                   </div>
                 </div>);
               } else {
-              return(
+                return(
                 <div style={styles.contentNestDeleteAddress} key={output.key}>
                   <div style={styles.contentNestAddressHashBlock}>
                     <div style={styles.inputForm}>
@@ -637,7 +631,7 @@ class Send extends Component{
     if (constructTxResponse !== null) {
       sendView = signTxView;
     }
-    
+
     if (walletService === null) {
       return (<ErrorScreen />);
     } else {
