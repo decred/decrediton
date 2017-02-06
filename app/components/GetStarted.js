@@ -1,8 +1,6 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
-import WalletOpenForm from '../containers/WalletOpenForm';
 import CreateWalletForm from '../components/CreateWalletForm';
-import DiscoverAddressForm from '../components/DiscoverAddressForm';
 import CircularProgress from 'material-ui/CircularProgress';
 import LinearProgress from 'material-ui/LinearProgress';
 import Dialog from 'material-ui/Dialog';
@@ -13,7 +11,7 @@ import NewExistingSeedToggle from './NewExistingSeedToggle';
 import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
-    body: {
+  body: {
     position: 'fixed',
     left: '0px',
     top: '50%',
@@ -291,13 +289,13 @@ class Home extends Component{
     const { versionInvalid, versionInvalidError } = this.props;
     const { getVersionServiceError } = this.props;
     const { getLoaderError } = this.props;
-    const { walletCreateRequestAttempt, walletCreateError } = this.props;
-    const { walletOpenRequestAttempt, walletOpenError } = this.props;
+    const { walletCreateRequestAttempt } = this.props;
+    const { walletOpenRequestAttempt } = this.props;
     const { walletExistResponse } = this.props;
-    const { startRpcRequestAttempt, startRpcError } = this.props;
-    const { discoverAddressRequestAttempt, discoverAddressError } = this.props;
+    const { startRpcRequestAttempt } = this.props;
+    const { discoverAddressRequestAttempt } = this.props;
     const { fetchHeadersRequestAttempt } = this.props;
-    const { confirmNewSeed } = this.props;
+
     const getStartedWalletLoader = (
       <div>
         <ShowError error={getLoaderError} />
@@ -333,10 +331,10 @@ class Home extends Component{
       </div>
       );
     } else if (stepIndex == 2 &&
-            walletExistResponse !== null 
+            walletExistResponse !== null
             && walletExistResponse.getExists()) {
       // Wallet has been shown to exist and public password != 'public'
-       startupStepView = (
+      startupStepView = (
       <div style={styles.view}>
         <div style={styles.header}>
           <div style={styles.headerTop}></div>
@@ -346,16 +344,16 @@ class Home extends Component{
           </div>
         </div>
         <div style={styles.contentNewSeed}>
-          { walletOpenRequestAttempt ? 
+          { walletOpenRequestAttempt ?
             <CircularProgress style={styles.loading} size={125} thickness={6}/> :
             <div style={styles.contentNewSeedCreateButton}>
               <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Decrypt Wallet:</div>
               <div style={styles.contentConfirmWalletCreateInputRightPadding}>
                 <div style={styles.inputForm}>
                   <form style={styles.inputForm}>
-                    <input 
-                      style={styles.inputPrivatePassword} 
-                      type="password" 
+                    <input
+                      style={styles.inputPrivatePassword}
+                      type="password"
                       placeholder="Private Passphrase"
                       onBlur={(e)=>this.setState({pubpass:e.target.value})}/>
                   </form>
@@ -374,22 +372,22 @@ class Home extends Component{
       );
     } else if (stepIndex == 2) {
       // Wallet does not exist
-     startupStepView = (
+      startupStepView = (
       <div style={styles.view}>
         <div style={styles.header}>
           <div style={styles.headerTop}></div>
           <div style={styles.headerTitleOverview}>Create a Wallet</div>
           <div style={styles.headerMetaOverview}></div>
-          {!this.props.confirmNewSeed ? 
-            <NewExistingSeedToggle 
-              activeButton={"left"} 
-              leftText={"New seed"}
-              rightText={"Existing Seed"}
-              toggleAction={(e)=>{this.toggleNewExisting(e)}}/> :
+          {!this.props.confirmNewSeed ?
+            <NewExistingSeedToggle
+              activeButton={'left'}
+              leftText={'New seed'}
+              rightText={'Existing Seed'}
+              toggleAction={(e)=>{this.toggleNewExisting(e);}}/> :
             <div style={styles.viewButtonGoBack} onClick={()=>this.props.createWalletGoBackNewSeed()}>Back</div>
           }
         </div>
-        {walletCreateRequestAttempt ? 
+        {walletCreateRequestAttempt ?
         <div style={styles.contentNewSeed}>
           <CircularProgress style={styles.loading} size={125} thickness={6}/>
         </div>  :
@@ -411,14 +409,14 @@ class Home extends Component{
               <div style={styles.contentTitleText}>Start RPC, Subscribe Block</div>
             </div>
             <div style={styles.contentNest}>
-              { startRpcRequestAttempt ? 
+              { startRpcRequestAttempt ?
                 <CircularProgress style={styles.loading} size={125} thickness={6}/> :
                 <div>Some unexpected error occured, please check logs</div>
               }
             </div>
           </div>
         </div>
-      );  
+      );
     } else if  (stepIndex == 5) {
       // Get private passphrase for discover address request
       startupStepView = (
@@ -431,16 +429,16 @@ class Home extends Component{
             </div>
           </div>
           <div style={styles.contentNewSeed}>
-            { discoverAddressRequestAttempt ? 
-            <CircularProgress style={styles.loading} size={125} thickness={6}/> : 
+            { discoverAddressRequestAttempt ?
+            <CircularProgress style={styles.loading} size={125} thickness={6}/> :
               <div style={styles.contentNewSeedCreateButton}>
                 <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Scan for used addresses:</div>
                 <div style={styles.contentConfirmWalletCreateInputRightPadding}>
                   <div style={styles.inputForm}>
                     <form style={styles.inputForm}>
-                      <input 
-                        style={styles.inputPrivatePassword} 
-                        type="password" 
+                      <input
+                        style={styles.inputPrivatePassword}
+                        type="password"
                         placeholder="Private Passphrase"
                         onBlur={(e)=>this.setState({privpass:e.target.value})}/>
                     </form>
@@ -469,7 +467,7 @@ class Home extends Component{
           </div>
           <div style={styles.contentNewSeed}>
             <div style={styles.contentNest}>
-              { fetchHeadersRequestAttempt ? 
+              { fetchHeadersRequestAttempt ?
                 <div>
                   <LinearProgress mode="determinate"
                     style={styles.linearLoading}

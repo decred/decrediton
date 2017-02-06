@@ -1,6 +1,5 @@
 import Radium from 'radium';
 import React from 'react';
-import { connect } from 'react-redux';
 
 const styles = {
   textToggle: {
@@ -46,18 +45,18 @@ const styles = {
     display: 'block',
     overflow: 'hidden',
     height: '44px',
-     minWidth: '140px',
-      float: 'left',
-      backgroundColor: '#e9f8fe',
-      boxShadow: '0 0 8px 0 rgba(0, 0, 0, .2)',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: '#69d5f7',
-      },
-      ':active': {
-        boxShadow: '0 0 1px 0 rgba(0, 0, 0, .2)',
-      },
+    minWidth: '140px',
+    float: 'left',
+    backgroundColor: '#e9f8fe',
+    boxShadow: '0 0 8px 0 rgba(0, 0, 0, .2)',
+    cursor: 'pointer',
+    ':hover': {
+      backgroundColor: '#69d5f7',
     },
+    ':active': {
+      boxShadow: '0 0 1px 0 rgba(0, 0, 0, .2)',
+    },
+  },
   textToggleButtonActive: {
     display: 'block',
     overflow: 'hidden',
@@ -65,30 +64,30 @@ const styles = {
     minWidth: '140px',
     float: 'left',
     boxShadow: '0 0 8px 0 rgba(0, 0, 0, .2)',
-      backgroundColor: '#0c1e3e',
-      color: '#fff',
-      cursor: 'default',
-    },
-    textToggleButtonDescriptionLeft: {
-      width: '100%',
-      height: '100%',
-      textTransform: 'capitalize',
-      paddingTop: '12px',
-      paddingRight: '30px',
-      paddingLeft: '40px',
+    backgroundColor: '#0c1e3e',
+    color: '#fff',
+    cursor: 'default',
+  },
+  textToggleButtonDescriptionLeft: {
+    width: '100%',
+    height: '100%',
+    textTransform: 'capitalize',
+    paddingTop: '12px',
+    paddingRight: '30px',
+    paddingLeft: '40px',
       //textAlign: 'right',
-    },
-    textToggleButtonDescriptionRight: {
-      width: '100%',
-      height: '100%',
-      textTransform: 'capitalize',
-      display: 'block',
-      paddingTop: '12px',
-      paddingRight: '40px',
-      paddingLeft: '30px',
+  },
+  textToggleButtonDescriptionRight: {
+    width: '100%',
+    height: '100%',
+    textTransform: 'capitalize',
+    display: 'block',
+    paddingTop: '12px',
+    paddingRight: '40px',
+    paddingLeft: '30px',
       //textAlign: 'left',
-    }
-}
+  }
+};
 class NewExistingSeedToggle extends React.Component {
   constructor(props) {
     super(props);
@@ -100,10 +99,8 @@ class NewExistingSeedToggle extends React.Component {
     this.setState({activeButton:side});
     this.props.toggleAction(side);
   }
-  render() { 
-    const { activeButton } = this.props;
+  render() {
     const { leftText, rightText } = this.props;
-    const { toggleAction } =this.props;
     if (this.state.activeButton == 'left') {
       return (
         <div style={styles.textToggle}>
@@ -116,7 +113,7 @@ class NewExistingSeedToggle extends React.Component {
         </div>
       );
     } else if (this.state.activeButton == 'right'){
-        return (
+      return (
         <div style={styles.textToggle}>
           <div style={styles.textToggleButton} onClick={() => this.clickButton('left')}>
             <div style={styles.textToggleButtonDescriptionLeft}>{leftText}</div>

@@ -1,5 +1,4 @@
 import { seeder, generateRandomSeed, decodeSeed } from '../middleware/grpc/seeder';
-import { createWalletRequest } from './WalletLoaderActions';
 export const SEEDER_ATTEMPT = 'SEEDER_ATTEMPT';
 export const SEEDER_FAILED = 'SEEDER_FAILED';
 export const SEEDER_SUCCESS = 'SEEDER_SUCCESS';

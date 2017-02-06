@@ -248,7 +248,7 @@ class SideBar extends Component {
   render() {
     const { gettingStarted } = this.props;
     if ( gettingStarted ) {
-      return (     
+      return (
         <div style={styles.menu}>
           <div style={styles.menuLogo}></div>
         </div>);

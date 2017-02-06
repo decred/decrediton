@@ -57,17 +57,17 @@ export default function walletLoader(state = {}, action) {
   case CREATEWALLET_NEWSEED_CONFIRM:
     return {...state,
       confirmNewSeed: true,
-    }
+    };
   case  CREATEWALLET_NEWSEED_BACK:
     return {...state,
       confirmNewSeed: false,
-    }
+    };
   case CREATEWALLET_EXISTINGSEED:
     return {...state,
       createWalletExisting: true,
     };
   case CREATEWALLET_NEWSEED:
-      return {...state,
+    return {...state,
       createWalletExisting: false,
     };
   case CREATEWALLET_ATTEMPT:

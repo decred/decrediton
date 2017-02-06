@@ -64,9 +64,9 @@ export const WALLETEXIST_FAILED = 'WALLETEXIST_FAILED';
 export const WALLETEXIST_SUCCESS = 'WALLETEXIST_SUCCESS';
 
 function walletExistError(error) {
- return (dispatch) => {
+  return (dispatch) => {
     dispatch({ error, type: WALLETEXIST_FAILED });
-  }
+  };
 }
 
 function walletExistSuccess(response) {
@@ -121,7 +121,7 @@ export function createWalletExistingToggle(existing) {
       setTimeout(()=>dispatch({ type: CREATEWALLET_NEWSEED }), 50);
       dispatch(generateRandomSeedAttempt());
     }
-  }
+  };
 }
 export const CREATEWALLET_ATTEMPT = 'CREATEWALLET_ATTEMPT';
 export const CREATEWALLET_FAILED = 'CREATEWALLET_FAILED';
