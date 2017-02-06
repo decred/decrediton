@@ -476,7 +476,16 @@ class Send extends Component{
     const { signTransactionError } = this.props;
     const { clearTransaction, signTransactionAttempt } = this.props;
     const { getAccountsResponse } = this.props;
+    const { getNetworkResponse } = this.props;
 
+    var networkTextDiv = (<div></div>);
+    if (getNetworkResponse !== null) {
+      if (getNetworkResponse.networkStr == 'testnet') {
+        networkTextDiv = (<div style={styles.headerMetaSend}>Testnet Decred addresses always begin with letter T contain 26-35 alphanumeric characters e.g. <span style={styles.headerMetaSpanSend}>TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>.</div>);
+      } else if (getNetworkResponse.networkStr == 'mainnet') {
+        networkTextDiv = (<div style={styles.headerMetaSend}>Mainnet Decred addresses always begin with letter D contain 26-35 alphanumeric characters e.g. <span style={styles.headerMetaSpanSend}>DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>.</div>);
+      }
+    }
     var sharedHeader = (
       <div style={styles.header}>
         <div style={styles.headerTop}>
@@ -498,7 +507,7 @@ class Send extends Component{
           }
         </div>
         <div style={styles.headerTitleSend}>Send Funds</div>
-        <div style={styles.headerMetaSend}>Decred addresses always begin with letter D contain 26-35 alphanumeric characters e.g. <span style={styles.headerMetaSpanSend}>DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>.</div>
+        {networkTextDiv}
       </div>);
 
     const signTxView = (

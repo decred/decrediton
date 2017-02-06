@@ -144,6 +144,15 @@ function getNetworkError(error) {
 }
 
 function getNetworkSuccess(getNetworkResponse) {
+  var network = getNetworkResponse.getActiveNetwork();
+  // XXX remove network magic numbers here
+  var networkStr = '';
+  if (network == 118030347) {
+    networkStr = 'testnet';
+  } else if (network  == 3652452601) {
+    networkStr = 'mainnet';
+  }
+  getNetworkResponse.networkStr = networkStr;
   return { getNetworkResponse: getNetworkResponse, type: GETNETWORK_SUCCESS };
 }
 

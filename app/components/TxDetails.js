@@ -246,12 +246,7 @@ class TxDetails extends Component {
     var network = 0;
     var networkStr = '';
     if (getNetworkResponse !== null) {
-      network = getNetworkResponse.getActiveNetwork();
-      if (network == 118030347) {
-        networkStr = 'testnet';
-      } else if (network  == 3652452601) {
-        networkStr = 'mainnet';
-      }
+      networkStr = getNetworkResponse.networkStr;
     }
     var txLink = 'https://'+networkStr.toString()+'.decred.org/tx/' + reverseHash(Buffer.from(tx.getHash()).toString('hex'));
     var blockLink = 'https://'+networkStr.toString()+'.decred.org/block/' + reverseHash(Buffer.from(tx.blockHash).toString('hex'));
