@@ -438,7 +438,7 @@ class Send extends Component{
     if (this.state.outputs[0].destination == '' || this.state.outputs[0].amount == '') {
       return;
     }
-    this.props.dispatch(this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs));
+   this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs);
   }
   appendOutput() {
     var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: ''};
