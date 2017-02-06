@@ -71,6 +71,8 @@ function mapStateToProps(state) {
 
     // DisclaimerOK
     disclaimerOK: state.walletLoader.disclaimerOK,
+
+    createWalletExisting: state.walletLoader.createWalletExisting,
   };
 }
 

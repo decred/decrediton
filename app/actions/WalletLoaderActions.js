@@ -102,6 +102,19 @@ function checkWalletExist() {
   };
 }
 
+export const CREATEWALLET_EXISTINGSEED = 'CREATEWALLET_EXISTINGSEED';
+export const CREATEWALLET_NEWSEED = 'CREATEWALLET_NEWSEED';
+
+export function createWalletExistingToggle(existing) {
+  return (dispatch) => {
+    if (existing){
+      dispatch({ type: CREATEWALLET_EXISTINGSEED });
+    }   else {
+      setTimeout(()=>dispatch({ type: CREATEWALLET_NEWSEED }), 50);
+      dispatch(generateRandomSeedAttempt());
+    }
+  }
+}
 export const CREATEWALLET_ATTEMPT = 'CREATEWALLET_ATTEMPT';
 export const CREATEWALLET_FAILED = 'CREATEWALLET_FAILED';
 export const CREATEWALLET_SUCCESS = 'CREATEWALLET_SUCCESS';

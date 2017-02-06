@@ -98,10 +98,12 @@ class NewExistingSeedToggle extends React.Component {
   }
   clickButton(side) {
     this.setState({activeButton:side});
+    this.props.toggleAction(side);
   }
   render() { 
     const { activeButton } = this.props;
     const { leftText, rightText } = this.props;
+    const { toggleAction } =this.props;
     if (this.state.activeButton == 'left') {
       return (
         <div style={styles.textToggle}>

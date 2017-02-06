@@ -90,21 +90,21 @@ function decodeSeedError(error) {
   return { error, type: DECODESEED_FAILED };
 }
 
-function decodeSeedSuccess(pubPass, privPass, response) {
+function decodeSeedSuccess(response) {
   return (dispatch) => {
     dispatch({response: response, type: DECODESEED_SUCCESS });
-    dispatch(createWalletRequest(pubPass, privPass, response.getDecodedSeed(), true));
+    //dispatch(createWalletRequest(pubPass, privPass, response.getDecodedSeed(), true));
   };
 }
 
-export function decodeSeedAttempt(pubPass, privPass, mnemonic) {
+export function decodeSeedAttempt(mnemonic) {
   return (dispatch) => {
     dispatch({request: {}, type: DECODESEED_ATTEMPT });
-    dispatch(decodeSeedAction(pubPass, privPass, mnemonic));
+    dispatch(decodeSeedAction(mnemonic));
   };
 }
 
-function decodeSeedAction(pubPass, privPass, mnemonic) {
+function decodeSeedAction(mnemonic) {
   var request = new DecodeSeedRequest();
   request.setUserInput(mnemonic);
   return (dispatch, getState) => {
@@ -114,7 +114,7 @@ function decodeSeedAction(pubPass, privPass, mnemonic) {
           if (err) {
             dispatch(decodeSeedError(err + ' Please try again'));
           } else {
-            dispatch(decodeSeedSuccess(pubPass, privPass, response));
+            dispatch(decodeSeedSuccess(response));
           }
         });
   };

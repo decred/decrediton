@@ -124,6 +124,7 @@ var initialState = {
     loader: null,
     getLoaderError: null,
     // WalletCreate
+    createWalletExisting: false,
     walletCreateRequestAttempt: false,
     walletCreateRequest: false,
     walletCreateResponse: null,

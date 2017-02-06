@@ -109,7 +109,13 @@ const styles = {
 };
 
 class Home extends Component{
-
+  toggleNewExisting(side) {
+    if (side == 'right') {
+      this.props.createWalletExistingToggle(true);
+    } else if (side == 'left') {
+      this.props.createWalletExistingToggle(false);
+    }
+  }
   handleDisclaimerOK = () => {
     this.props.disclaimerOKAction();
   }
@@ -230,11 +236,12 @@ class Home extends Component{
           <NewExistingSeedToggle 
             activeButton={"left"} 
             leftText={"New seed"}
-            rightText={"Existing Seed"}/>
+            rightText={"Existing Seed"}
+            toggleAction={(e)=>{this.toggleNewExisting(e)}}/>
         </div>
         {walletCreateRequestAttempt ? 
           <CircularProgress size={80} thickness={6}/> :
-          <CreateWalletForm/>}
+          <CreateWalletForm existing={this.props.createWalletExistingd}/>}
       </div>
       );
     } else if  (stepIndex == 3 || stepIndex == 4) {
