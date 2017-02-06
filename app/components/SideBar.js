@@ -256,7 +256,7 @@ class SideBar extends Component {
     return (
       <div style={styles.menu}>
         <div style={styles.menuLogo}></div>
-        <div style={styles.testnetText}>{getNetworkResponse !== null && getNetworkResponse.networkStr == 'testnet' ? "Testnet" : ""}</div>
+        <div style={styles.testnetText}>{getNetworkResponse !== null && getNetworkResponse.networkStr == 'testnet' ? 'Testnet' : ''}</div>
         <div style={styles.menuNavigation}>
           <MenuLink to="/home">Overview</MenuLink>
           <MenuLink to="/send">Send</MenuLink>
