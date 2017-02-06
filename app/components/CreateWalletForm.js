@@ -150,6 +150,9 @@ const styles = {
     height: 'auto',
     minHeight: '44px',
   },
+  inputFormError: {
+    color: 'red',
+  }
 }
 
 class CreateWalletForm extends React.Component {
