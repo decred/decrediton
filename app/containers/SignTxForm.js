@@ -23,7 +23,7 @@ class SignTxForm extends React.Component {
     <div>
       <form id="signTxForm" onSubmit={e => {
         e.preventDefault();
-        if (this.privpass == '') {
+        if (this.state.privpass == '') {
           return;
         }
         signTransactionAttempt(this.state.privpass, this.state.rawTx);

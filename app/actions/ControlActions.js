@@ -2,7 +2,7 @@ import { getNextAddress, renameAccount, getNextAccount,
   rescan, importPrivateKey, importScript, changePassphrase,
   loadActiveDataFilters, fundTransaction, signTransaction, publishTransaction,
   purchaseTicket, constructTransaction } from '../middleware/grpc/control';
-import { getBalanceAttempt } from './ClientActions';
+import { getBalanceAttempt, getTransactionInfoAttempt } from './ClientActions';
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   FundTransactionRequest, ConstructTransactionRequest, SignTransactionRequest,
@@ -104,6 +104,7 @@ function rescanComplete() {
   return (dispatch) => {
     dispatch({ type: RESCAN_COMPLETE });
     setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
+    setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
   };
 }
 
