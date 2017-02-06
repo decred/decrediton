@@ -9,7 +9,6 @@ import ArrowDownMidBlue from './icons/arrow-down-mid-blue.svg';
 import ArrowDownKeyBlue from './icons/arrow-down-key-blue.svg';
 import Add from './icons/add.svg';
 import Delete from './icons/delete.svg';
-import TextField from 'material-ui/TextField';
 import Balance from './Balance';
 
 const styles = {
@@ -594,13 +593,19 @@ class Send extends Component{
                 <Balance amount={estimatedFee} />
               </div>
             </div>
-            <TextField
-              id="privpass"
-              type="password"
-              hintText="Private Password"
-              floatingLabelText="Private Password"
-              onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}
-            />
+            <div style={styles.contentNestToAddress} key="privatePassPhrase">
+              <div style={styles.contentNestPrefixConfirm}>Private Passhrase:</div>
+              <div style={styles.contentNestAddressHashBlock}>
+                <div style={styles.inputForm}>
+                  <input
+                    id="privpass"
+                    style={styles.contentNestAddressHashTo}
+                    type="password"
+                    placeholder="Private Password"
+                    onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}/>
+                </div>
+              </div>
+            </div>
           </div>
           <div style={styles.contentSend} onClick={() => this.submitSignPublishTx()}>
             <div style={styles.viewButtonKeyBlue}>Confirm</div>
