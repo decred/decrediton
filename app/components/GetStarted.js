@@ -222,6 +222,9 @@ const styles = {
   loading: {
     marginTop: '110px',
     marginLeft: '268px',
+  },
+  linearLoading: {
+    backgroundColor: 'white',
   }
 };
 
@@ -429,7 +432,7 @@ class Home extends Component{
           </div>
           <div style={styles.contentNewSeed}>
             { discoverAddressRequestAttempt ? 
-              <CircularProgress style={styles.loading} size={125} thickness={6}/> : 
+            <CircularProgress style={styles.loading} size={125} thickness={6}/> : 
               <div style={styles.contentNewSeedCreateButton}>
                 <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Scan for used addresses:</div>
                 <div style={styles.contentConfirmWalletCreateInputRightPadding}>
@@ -460,22 +463,20 @@ class Home extends Component{
         <div style={styles.view}>
           <div style={styles.header}>
             <div style={styles.headerTop}></div>
-            <div style={styles.headerTitleOverview}>Fetch headers</div>
+            <div style={styles.headerTitleOverview}>Catching up block chain</div>
             <div style={styles.headerMetaOverview}>
             </div>
           </div>
-          <div style={styles.content}>
-            <div style={styles.contentTitle}>
-              <div style={styles.contentTitleText}>Catching up block chain</div>
-            </div>
+          <div style={styles.contentNewSeed}>
             <div style={styles.contentNest}>
-              { !fetchHeadersRequestAttempt ? 
+              { fetchHeadersRequestAttempt ? 
                 <div>
                   <LinearProgress mode="determinate"
+                    style={styles.linearLoading}
                     min={0}
                     max={neededBlocks}
                     value={fetchHeadersResponse !== null ? fetchHeadersResponse.getMainChainTipBlockHeight() : 0.0} />
-                  <p>{ibdBlockProgress}%</p>
+                  <p style={{color:'white'}}>{ibdBlockProgress}%</p>
                 </div> :
                 <div></div>
               }
@@ -541,3 +542,10 @@ class Home extends Component{
 }
 
 export default Radium(Home);
+
+/*
+                  <LinearProgress mode="determinate"
+                    min={0}
+                    max={neededBlocks}
+                    value={fetchHeadersResponse !== null ? fetchHeadersResponse.getMainChainTipBlockHeight() : 0.0} />
+                    */
