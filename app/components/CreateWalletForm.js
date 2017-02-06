@@ -79,6 +79,7 @@ const styles = {
     height: '109px',
   },
   contentNewSeedPrivPass: {
+    paddingTop: '10px',
     height: '60px',
   },
   contentNewSeedCreateButton: {
@@ -147,7 +148,7 @@ const styles = {
     margin: '0px',
   },
   inputForm: {
-    mozAppearance: 'none !important',
+    MozAppearance: 'none !important',
     position: 'relative',
     width: '100%',
     height: 'auto',
@@ -161,6 +162,12 @@ class CreateWalletForm extends React.Component {
 
     this.state = {
       canSubmit: false,
+      continued: false,
+      seedMnemonicHex: '',
+      privpass: '',
+      seedError: '',
+      verifyError: '',
+      passwordError: '',
     };
   }
 
@@ -245,7 +252,7 @@ class CreateWalletForm extends React.Component {
           <br/>
           <span style={styles.paragraphOrangeWarning}>Warning:</span> Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else.</div>
         <div style={styles.contentSeed}>{generateRandomSeedResponse !== null ? generateRandomSeedResponse.getSeedMnemonic() : null}</div>
-        <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>{console.log('continue')}}>Continue</a>
+        <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.continueToConfirmButton()}>Continue</a>
       </div>);
 
     const newContinuedPage = (
@@ -255,8 +262,15 @@ class CreateWalletForm extends React.Component {
           <div style={styles.contentConfirmWalletCreateInputRight}>
             <div style={styles.inputForm}>
               <form style={styles.inputForm}>
-                <textarea style={styles.inputSeedTextArea} type="text" placeholder="33 words"></textarea>
+                <textarea 
+                  style={styles.inputSeedTextArea} 
+                  type="text" 
+                  placeholder="33 words"
+                  onBlur={(e)=>this.checkSeedMatch(e.target.value)}></textarea>
               </form>
+            </div>
+            <div style={styles.inputFormError}>
+              {this.state.seedError !== '' ? this.state.seedError : ''}
             </div>
           </div>
         </div>
@@ -265,34 +279,84 @@ class CreateWalletForm extends React.Component {
           <div style={styles.contentConfirmWalletCreateInputRightPadding}>
             <div style={styles.inputForm}>
               <form style={styles.inputForm}>
-                <input style={styles.inputPrivatePassword} type="password" placeholder="Private Passphrase"/>
+                <input 
+                  style={styles.inputPrivatePassword} 
+                  type="password" 
+                  placeholder="Private Passphrase"
+                  onBlur={(e)=>{this.setState({privpass:e.target.value})}}/>
               </form>
+            </div>
+            <div style={styles.inputFormError}>
+              {this.state.passwordError !== '' ? this.state.passwordError : ''}
             </div>
           </div>
         </div>
         <div style={styles.contentNewSeedPrivPass}>
           <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Verify:</div>
-          <div cstyle={styles.contentConfirmWalletCreateInputRightPadding}>
+          <div style={styles.contentConfirmWalletCreateInputRightPadding}>
             <div style={styles.inputForm}>
               <form style={styles.inputForm}>
-                <input style={styles.inputPrivatePassword} type="password" placeholder="Private Passphrase"/>
+                <input 
+                  style={styles.inputPrivatePassword} 
+                  type="password" 
+                  placeholder="Private Passphrase"
+                  onBlur={(e)=>this.verifyPrivatePassword(e.target.value)}/>
               </form>
+            </div>
+            <div style={styles.inputFormError}>
+              {this.state.verifyError !== '' ? this.state.verifyError : ''}
             </div>
           </div>
         </div>
         <div style={styles.contentNewSeedCreateButton}>
           <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
           <div style={styles.contentConfirmWalletCreateInputRightPadding}>
-            <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>{console.log("ccreate wallet")}}>Create Wallet</a>
+            <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.createWalletButton()}>Create Wallet</a>
           </div>
         </div>
       </div>);
 
-    return (
-      newDesign
-    );
+    if (!this.state.continued) {
+      return (newDesign)
+    } else {
+      return (newContinuedPage);
+    }
   }
-
+  checkSeedMatch(seedConfirmation) {
+    if (this.props.generateRandomSeedResponse.getSeedMnemonic() != seedConfirmation) {
+      this.setState({seedError:'Seeds do not match'});
+      console.log("NOT MATCHED");
+    } else {
+      this.setState({seedError:'', seed: this.props.generateRandomSeedResponse.getSeedBytes()});
+      console.log("MATCHED");
+    }
+  }
+  createWalletButton() {
+    if (this.state.verifyError !== '' || this.state.seedError !== '' || this.state.passwordError != '' || 
+      this.state.privpass == '' || this.state.seed == '') {
+      console.log(this.state.privpass);
+      console.log(this.state.seed);
+      console.log(this.state.verifyError);
+      console.log(this.state.seedError);
+      console.log(this.state.passwordError);
+      return;
+    }
+    this.props.decodeSeedAttempt(this.state.pubpass, this.state.privpass, this.state.seed);
+  }
+  verifyPrivatePassword(verifyPrivPass) {
+    if (this.state.privpass != '' && this.state.privpass != verifyPrivPass) {
+      this.setState({verifyError:'Passwords do not match'});
+    } else {
+      this.setState({verifyError:''});
+    }
+  }
+  s
+  continueToConfirmButton() {
+    this.setState({continued: true});
+  }
+  goBackToNewSeedButton() {
+    this.setState({continued: false});
+  }
   disableButton() {
     this.setState({ canSubmit: false });
   }
