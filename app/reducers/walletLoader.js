@@ -7,6 +7,7 @@ import { STARTRPC_ATTEMPT, STARTRPC_FAILED, STARTRPC_SUCCESS } from '../actions/
 import { DISCOVERADDRESS_ATTEMPT, DISCOVERADDRESS_FAILED, DISCOVERADDRESS_SUCCESS } from '../actions/WalletLoaderActions';
 import { SUBSCRIBEBLOCKNTFNS_ATTEMPT, SUBSCRIBEBLOCKNTFNS_FAILED, SUBSCRIBEBLOCKNTFNS_SUCCESS } from '../actions/WalletLoaderActions';
 import { FETCHHEADERS_ATTEMPT, FETCHHEADERS_FAILED, FETCHHEADERS_PROGRESS, FETCHHEADERS_SUCCESS } from '../actions/WalletLoaderActions';
+import { CREATEWALLET_EXISTINGSEED, CREATEWALLET_NEWSEED, CREATEWALLET_NEWSEED_CONFIRM, CREATEWALLET_NEWSEED_BACK } from '../actions/WalletLoaderActions';
 import { DISCLAIMER_OK } from '../actions/WalletLoaderActions';
 
 export default function walletLoader(state = {}, action) {
@@ -52,6 +53,22 @@ export default function walletLoader(state = {}, action) {
       walletExistResponse: action.response,
       walletExistRequest: null,
       stepIndex: 2,
+    };
+  case CREATEWALLET_NEWSEED_CONFIRM:
+    return {...state,
+      confirmNewSeed: true,
+    };
+  case  CREATEWALLET_NEWSEED_BACK:
+    return {...state,
+      confirmNewSeed: false,
+    };
+  case CREATEWALLET_EXISTINGSEED:
+    return {...state,
+      createWalletExisting: true,
+    };
+  case CREATEWALLET_NEWSEED:
+    return {...state,
+      createWalletExisting: false,
     };
   case CREATEWALLET_ATTEMPT:
     return {...state,

@@ -1,54 +1,253 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
-import WalletOpenForm from '../containers/WalletOpenForm';
 import CreateWalletForm from '../components/CreateWalletForm';
-import DiscoverAddressForm from '../components/DiscoverAddressForm';
 import CircularProgress from 'material-ui/CircularProgress';
 import LinearProgress from 'material-ui/LinearProgress';
 import Dialog from 'material-ui/Dialog';
 import ShowError from './ShowError';
 import Radium from 'radium';
-
-import {
-  Step,
-  Stepper,
-  StepLabel,
-  StepContent
-} from 'material-ui/Stepper';
+import SideBar from './SideBar';
+import NewExistingSeedToggle from './NewExistingSeedToggle';
 import FlatButton from 'material-ui/FlatButton';
 
 const styles = {
   body: {
-    height: '100%'
+    position: 'fixed',
+    left: '0px',
+    top: '50%',
+    right: '0px',
+    display: 'block',
+    overflow: 'hidden',
+    width: '1178px',
+    height: '770px',
+    marginTop: '-385px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    backgroundColor: '#FFF',
   },
-  pageWrap: {
-    minHeight: '100%',
-    /* equal to footer height */
-    marginBottom: '-142px',
-
-
-    ':after': {
-      content: '',
-      display: 'block',
-    },
+  view: {
+    width: '880px',
+    height: '100%',
+    float: 'right',
+    backgroundColor: '#0c1e3e',
   },
   header: {
-    border:'1px solid #000',
-    width:'100px',
-    height:'20px',
-    margin:'0 0 5px 0',
+    paddingRight: '80px',
+    paddingLeft: '100px',
+    backgroundColor: '#596d81',
+    height: '214px',
   },
   content: {
-    position: 'absolute',
-    top: '0px',
-    left: '0px',
-    bottom: '0px',
-    right: '0px',
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 60px 54px 80px',
   },
+
+  transition1: {
+    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
+  },
+  headerTop: {
+    height: '106px',
+  },
+  headerTitleOverview: {
+    height: '41px',
+    color: '#fff',
+    fontSize: '27px',
+  },
+  headerMetaOverview: {
+    float: 'left',
+    clear: 'left',
+    height: '54px',
+    width: '50%',
+    fontSize: '13px',
+    color: '#c4cbd2',
+  },
+  contentTitle: {
+    display: 'block',
+    height: '44px',
+    marginRight: 'auto',
+    marginBottom: '10px',
+    marginLeft: 'auto',
+    borderBottom: '1px solid transparent',
+    color: '#596d81',
+    fontSize: '27px',
+    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
+  },
+  contentNest: {
+    paddingTop: '1px',
+  },
+  contentTitleText: {
+    display: 'inline-block',
+    overflow: 'hidden',
+    width: '600px',
+    height: '100%',
+    paddingTop: '13px',
+    paddingRight: '20px',
+    paddingLeft: '20px',
+    float: 'left',
+  },
+
+  contentTitleButtonSearchTransition1: {
+    width: '60px',
+    height: '100%',
+    cursor: 'pointer',
+  },
+
+  contentTitleTextActive: {
+    color: '#2971ff',
+  },
+
+  contentTitleActive: {
+    borderBottom: '1px solid #2971ff',
+  },
+
+  headerMetaCurrency: {
+    fontSize: '23px',
+  },
+  viewButtonGoBack: {
+    marginRight: '80px',
+    marginBottom: '20px',
+    display: 'inline-block',
+    padding: '17px 18px 18px',
+    float: 'right',
+    borderRadius: '5px',
+    backgroundColor: '#8997A5',
+    boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.2)',
+    color: '#FFF',
+    fontSize: '13px',
+    lineHeight: '9px',
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
+    ':hover': {
+      backgroundColor: '#596d81',
+    },
+    ':active': {
+      boxShadow: '0 0 0 0 rgba(0, 0, 0, .22)',
+    }
+  },
+  viewButtonKeyBlueWalletNewSeed: {
+    float: 'left',
+    display: 'inline-block',
+    padding: '17px 18px 18px',
+    borderRadius: '5px',
+    backgroundColor: '#2971FF',
+    boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.2)',
+    transitionProperty: 'none',
+    color: '#FFF',
+    fontSize: '13px',
+    lineHeight: '9px',
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
+    ':hover': {
+      backgroundColor: '#1b58ff',
+    },
+    ':active': {
+      boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
+    }
+  },
+  contentNewSeed: {
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 80px 54px 80px',
+  },
+  contentNewSeedPrivPass: {
+    paddingTop: '10px',
+    height: '80px',
+  },
+  contentConfirmWalletCreateInputLeft: {
+    width: '187px',
+    marginRight: '20px',
+    float: 'left',
+    color: '#E7EAED',
+    fontSize: '19px',
+    textAlign: 'right',
+    letterSpacing: '-0.1px',
+  },
+  contentConfirmWalletCreateInputLeftPadding: {
+    width: '187px',
+    marginRight: '20px',
+    float: 'left',
+    color: '#E7EAED',
+    fontSize: '19px',
+    textAlign: 'right',
+    letterSpacing: '-0.1px',
+    paddingTop: '23px',
+  },
+  contentConfirmWalletCreateInputRight: {
+    width: '540px',
+    float: 'left',
+    clear: 'right',
+  },
+  contentConfirmWalletCreateInputRightPadding: {
+    marginBottom: '5px',
+    width: '300px',
+    paddingTop: '11px',
+    float: 'left',
+    clear: 'right',
+  },
+  inputPrivatePassword: {
+    backgroundColor: 'transparent',
+    width: '100%',
+    minHeight: '44px',
+    paddingRight: '10px',
+    paddingLeft: '10px',
+    borderStyle: 'none none solid',
+    borderBottom: '1px solid #69D5F7',
+    color: '#69D5F7',
+    fontSize: '19px',
+    lineHeight: 'normal',
+    margin: '0px',
+    boxSizing: 'border-box',
+  },
+  inputForm: {
+    MozAppearance: 'none !important',
+    position: 'relative',
+    width: '100%',
+    height: 'auto',
+    minHeight: '44px',
+  },
+  inputFormError: {
+    color: 'red',
+  },
+  contentNewSeedCreateButton: {
+    height: '80px',
+    float: 'left',
+  },
+  loading: {
+    marginTop: '110px',
+    marginLeft: '268px',
+  },
+  linearLoading: {
+    backgroundColor: 'white',
+  }
 };
 
 class Home extends Component{
-
+  toggleNewExisting(side) {
+    if (side == 'right') {
+      this.props.createWalletExistingToggle(true);
+    } else if (side == 'left') {
+      this.props.createWalletExistingToggle(false);
+    }
+  }
+  discoverAddressesButton() {
+    if (this.state.privpass == '' ) {
+      return;
+    }
+    this.props.discoverAddressAttempt(true, this.state.privpass);
+    this.setState({privpass:''});
+  }
+  openWalletButton() {
+    if (this.state.pubpass == '') {
+      return;
+    }
+    this.props.openWalletAttempt(this.state.pubpass);
+    this.setState({pubpass:''});
+  }
   handleDisclaimerOK = () => {
     this.props.disclaimerOKAction();
   }
@@ -90,11 +289,11 @@ class Home extends Component{
     const { versionInvalid, versionInvalidError } = this.props;
     const { getVersionServiceError } = this.props;
     const { getLoaderError } = this.props;
-    const { walletCreateRequestAttempt, walletCreateError } = this.props;
-    const { walletOpenRequestAttempt, walletOpenError } = this.props;
+    const { walletCreateRequestAttempt } = this.props;
+    const { walletOpenRequestAttempt } = this.props;
     const { walletExistResponse } = this.props;
-    const { startRpcRequestAttempt, startRpcError } = this.props;
-    const { discoverAddressRequestAttempt, discoverAddressError } = this.props;
+    const { startRpcRequestAttempt } = this.props;
+    const { discoverAddressRequestAttempt } = this.props;
     const { fetchHeadersRequestAttempt } = this.props;
 
     const getStartedWalletLoader = (
@@ -102,231 +301,207 @@ class Home extends Component{
         <ShowError error={getLoaderError} />
         <ShowError error={getVersionServiceError}/>
       </div>);
-    var openingWallet;
-    if (walletOpenRequestAttempt) {
-      openingWallet = (
-        <div>
-          <CircularProgress size={80} thickness={6}/>
-        </div>
-      );
-    } else {
-      openingWallet = (
-        <div>
-          <ShowError error={walletOpenError} />
-          <h3>Opening wallet</h3>
-          <h5>Please enter the information below to connect to your dcrwallet</h5>
-          <WalletOpenForm/>
-      </div>);
-    }
-    const getStartedWalletOpen = (openingWallet);
-
-
-    var creatingWallet;
-    if (walletCreateRequestAttempt) {
-      creatingWallet = (
-        <div>
-          <CircularProgress size={80} thickness={6}/>
-        </div>
-      );
-    } else {
-      creatingWallet = (
-        <div>
-          <ShowError error={walletCreateError} />
-          <h3>Create wallet</h3>
-          <h5>Please enter the information below to create your dcrwallet</h5>
-          <CreateWalletForm/>
-        </div>
-      );
-    }
-    const getStartedWalletCreate = (creatingWallet);
-
-    var startRpc;
-    if (startRpcRequestAttempt) {
-      startRpc = (
-        <div>
-          <CircularProgress size={80} thickness={6}/>
-        </div>
-      );
-    } else {
-      startRpc = (
-      <div>
-        <ShowError error={startRpcError} />
-      </div>
-      );
-    }
-
-    var discoveringAddresses;
-    if (discoverAddressRequestAttempt) {
-      discoveringAddresses = (
-        <div>
-          <CircularProgress size={80} thickness={6}/>
-        </div>
-      );
-    } else {
-      discoveringAddresses = (
-      <div>
-        <ShowError error={discoverAddressError} />
-        <h3>Discover used addresses</h3>
-        <h5>Please enter your private password below to discover accounts:</h5>
-        <DiscoverAddressForm />
-      </div>);
-    }
-    const getStartedDiscoverAddress = (discoveringAddresses);
 
     var ibdBlockProgress = 0.00;
     if (fetchHeadersResponse !== null) {
       ibdBlockProgress = (fetchHeadersResponse.getMainChainTipBlockHeight() / neededBlocks) * 100;
       ibdBlockProgress = ibdBlockProgress.toFixed(2);
     }
-    var fetchingHeaders;
-    if (fetchHeadersRequestAttempt) {
-      fetchingHeaders = (
-        <div>
-          <LinearProgress mode="determinate"
-            min={0}
-            max={neededBlocks}
-            value={fetchHeadersResponse !== null ? fetchHeadersResponse.getMainChainTipBlockHeight() : 0.0} />
-          <p>{ibdBlockProgress}%</p>
+
+    var startupStepView = (<div>something went wrong</div>);
+
+    if (stepIndex <= 1) {
+      // Initial Step
+      startupStepView = (
+      <div style={styles.view}>
+        <div style={styles.header}>
+          <div style={styles.headerTop}></div>
+          <div style={styles.headerTitleOverview}>Getting started</div>
+          <div style={styles.headerMetaOverview}>
+          </div>
+        </div>
+        <div style={styles.content}>
+          <div style={styles.contentTitle}>
+            <div style={styles.contentTitleText}>checking wallet state...</div>
+          </div>
+          <div style={styles.contentNest}>
+            {getStartedWalletLoader}
+          </div>
+        </div>
+      </div>
+      );
+    } else if (stepIndex == 2 &&
+            walletExistResponse !== null
+            && walletExistResponse.getExists()) {
+      // Wallet has been shown to exist and public password != 'public'
+      startupStepView = (
+      <div style={styles.view}>
+        <div style={styles.header}>
+          <div style={styles.headerTop}></div>
+          <div style={styles.headerTitleOverview}>Opening Wallet</div>
+          <div style={styles.headerMetaOverview}>
+            Please enter the information below to  create your dcrwallet
+          </div>
+        </div>
+        <div style={styles.contentNewSeed}>
+          { walletOpenRequestAttempt ?
+            <CircularProgress style={styles.loading} size={125} thickness={6}/> :
+            <div style={styles.contentNewSeedCreateButton}>
+              <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Decrypt Wallet:</div>
+              <div style={styles.contentConfirmWalletCreateInputRightPadding}>
+                <div style={styles.inputForm}>
+                  <form style={styles.inputForm}>
+                    <input
+                      style={styles.inputPrivatePassword}
+                      type="password"
+                      placeholder="Private Passphrase"
+                      onBlur={(e)=>this.setState({pubpass:e.target.value})}/>
+                  </form>
+                </div>
+              </div>
+              <div style={styles.contentNewSeedCreateButton}>
+                <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
+                <div style={styles.contentConfirmWalletCreateInputRightPadding}>
+                  <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.openWalletButton()}>Open Wallet</a>
+                </div>
+              </div>
+            </div>
+            }
+          </div>
         </div>
       );
-    } else {
-      fetchingHeaders = (
-      <div>
-      </div>);
-    }
-    const fetchHeaders = (fetchingHeaders);
-      /*
-    const getStartedGettingLoader = (
-      <div >
-        <h3>Getting wallet loader service</h3>
-        <LinearProgress mode="indeterminate" />
-      </div>);
-
-    const getStartedWalletExistRequest = (
-      <div >
-        <h3>Checking if wallet exists</h3>
-        <LinearProgress mode="indeterminate" />
-      </div>);
-
-    const getStartedWalletExist = (
-      <div>
-        <p>{error}</p>
-        <h3>Check if wallet exists</h3>
-      </div>);
-
-
-
-    const getStartedOpeningWallet = (
-      <div>
-        <h3>Opening wallet</h3>
-        <LinearProgress mode="indeterminate" />
-      </div>);
-
-    // Step 4 complete
-    if (isLoggedIn) {
-      if (client === undefined) {
-        return(getStarted);
-      } else {
-        return(homeView);
-      }
-    }
-    // Step 4 action
-    if (isLoggingIn) {
-      return (getStartedLoggingIn);
-    }
-    // Step 3 complete/ Step 4 start
-    if (walletOpenResponse !== null) {
-      return(getStarted);
-    }
-    // Step 3 action
-    if (walletOpenRequestAttempt) {
-      return (getStartedOpeningWallet);
-    }
-    // Step 2 complete/ Step 3 start
-    if (walletExistResponse !== null && walletExistResponse.exists) {
-      return(getStartedWalletOpen);
-    }
-    // Step 2b creating wallet
-    if (walletCreateRequestAttempt) {
-      return(getStartedWalletCreating);
-    }
-    // Step 2 wallet exist action complete, though
-    // wallet does not exist
-
-    if (walletExistResponse !== null && !walletExistResponse.exists) {
-      return(getStartedCreateWallet);
-    }
-    // Step 2 action
-    if (walletExistRequestAttempt) {
-      return(getStartedWalletExistRequest);
-    }
-    // Step 1 complete/ Step 2 start
-    if (loader !== null) {
-      return(getStartedWalletExist);
-    }
-    */
-
-    var openOrCreate;
-    if (walletExistResponse !== null && walletExistResponse.getExists()) {
-      openOrCreate = getStartedWalletOpen;
-    } else {
-      openOrCreate = getStartedWalletCreate;
-    }
-
-    const stepper = (
-      <div style={styles.content}>
-        <Stepper activeStep={stepIndex} orientation="vertical">
-          <Step>
-            <StepLabel>Get Wallet Loader Service</StepLabel>
-            <StepContent>
-              {getStartedWalletLoader}
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Wallet Exist</StepLabel>
-            <StepContent>
-              {}
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Wallet Create/Open</StepLabel>
-            <StepContent>
-              {openOrCreate}
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Start RPC Concensus</StepLabel>
-            <StepContent>
-              {startRpc}
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Subscribe to Block Notifications</StepLabel>
-            <StepContent>
-              {}
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Discover Addresses</StepLabel>
-            <StepContent>
-              {getStartedDiscoverAddress}
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Fetch Headers</StepLabel>
-            <StepContent>
-              {fetchHeaders}
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Final Prep</StepLabel>
-            <StepContent>
-              {}
-            </StepContent>
-          </Step>
-        </Stepper>
+    } else if (stepIndex == 2) {
+      // Wallet does not exist
+      startupStepView = (
+      <div style={styles.view}>
+        <div style={styles.header}>
+          <div style={styles.headerTop}></div>
+          <div style={styles.headerTitleOverview}>Create a Wallet</div>
+          <div style={styles.headerMetaOverview}></div>
+          {!this.props.confirmNewSeed ?
+            <NewExistingSeedToggle
+              activeButton={'left'}
+              leftText={'New seed'}
+              rightText={'Existing Seed'}
+              toggleAction={(e)=>{this.toggleNewExisting(e);}}/> :
+            <div style={styles.viewButtonGoBack} onClick={()=>this.props.createWalletGoBackNewSeed()}>Back</div>
+          }
+        </div>
+        {walletCreateRequestAttempt ?
+        <div style={styles.contentNewSeed}>
+          <CircularProgress style={styles.loading} size={125} thickness={6}/>
+        </div>  :
+          <CreateWalletForm existing={this.props.createWalletExisting}/>}
       </div>
-    );
+      );
+    } else if  (stepIndex == 3 || stepIndex == 4) {
+      // Get startrpc and subscribe
+      startupStepView = (
+        <div style={styles.view}>
+          <div style={styles.header}>
+            <div style={styles.headerTop}></div>
+            <div style={styles.headerTitleOverview}>Starting RPC and subscribing block notifications</div>
+            <div style={styles.headerMetaOverview}>
+            </div>
+          </div>
+          <div style={styles.content}>
+            <div style={styles.contentTitle}>
+              <div style={styles.contentTitleText}>Start RPC, Subscribe Block</div>
+            </div>
+            <div style={styles.contentNest}>
+              { startRpcRequestAttempt ?
+                <CircularProgress style={styles.loading} size={125} thickness={6}/> :
+                <div>Some unexpected error occured, please check logs</div>
+              }
+            </div>
+          </div>
+        </div>
+      );
+    } else if  (stepIndex == 5) {
+      // Get private passphrase for discover address request
+      startupStepView = (
+        <div style={styles.view}>
+          <div style={styles.header}>
+            <div style={styles.headerTop}></div>
+            <div style={styles.headerTitleOverview}>Opening Wallet</div>
+            <div style={styles.headerMetaOverview}>
+              Please enter the information below to load your dcrwallet
+            </div>
+          </div>
+          <div style={styles.contentNewSeed}>
+            { discoverAddressRequestAttempt ?
+            <CircularProgress style={styles.loading} size={125} thickness={6}/> :
+              <div style={styles.contentNewSeedCreateButton}>
+                <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Scan for used addresses:</div>
+                <div style={styles.contentConfirmWalletCreateInputRightPadding}>
+                  <div style={styles.inputForm}>
+                    <form style={styles.inputForm}>
+                      <input
+                        style={styles.inputPrivatePassword}
+                        type="password"
+                        placeholder="Private Passphrase"
+                        onBlur={(e)=>this.setState({privpass:e.target.value})}/>
+                    </form>
+                  </div>
+                </div>
+                <div style={styles.contentNewSeedCreateButton}>
+                  <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
+                  <div style={styles.contentConfirmWalletCreateInputRightPadding}>
+                    <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.discoverAddressesButton()}>Scan</a>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      );
+    } else if  (stepIndex == 6) {
+      // Fetch headers
+      startupStepView = (
+        <div style={styles.view}>
+          <div style={styles.header}>
+            <div style={styles.headerTop}></div>
+            <div style={styles.headerTitleOverview}>Catching up block chain</div>
+            <div style={styles.headerMetaOverview}>
+            </div>
+          </div>
+          <div style={styles.contentNewSeed}>
+            <div style={styles.contentNest}>
+              { fetchHeadersRequestAttempt ?
+                <div>
+                  <LinearProgress mode="determinate"
+                    style={styles.linearLoading}
+                    min={0}
+                    max={neededBlocks}
+                    value={fetchHeadersResponse !== null ? fetchHeadersResponse.getMainChainTipBlockHeight() : 0.0} />
+                  <p style={{color:'white'}}>{ibdBlockProgress}%</p>
+                </div> :
+                <div></div>
+              }
+            </div>
+          </div>
+        </div>
+      );
+    } else if  (stepIndex >= 7) {
+      // Final Steps
+      startupStepView = (
+        <div style={styles.view}>
+          <div style={styles.header}>
+            <div style={styles.headerTop}></div>
+            <div style={styles.headerTitleOverview}>Final start up</div>
+            <div style={styles.headerMetaOverview}>
+            </div>
+          </div>
+          <div style={styles.content}>
+            <div style={styles.contentTitle}>
+              <div style={styles.contentTitleText}>Last steps if needed</div>
+            </div>
+            <div style={styles.contentNest}>
+            </div>
+          </div>
+        </div>
+      );
+    }
     const actions = [
       <FlatButton
         label="OK, I Understand"
@@ -351,8 +526,9 @@ class Home extends Component{
       if (!versionInvalid) {
         return (
           <div style={styles.body}>
-            <div style={styles.pageWrap}>
-              {stepper}
+            <SideBar gettingStarted={true}/>
+            <div style={styles.view}>
+              {startupStepView}
             </div>
           </div>);
       } else {
@@ -364,3 +540,10 @@ class Home extends Component{
 }
 
 export default Radium(Home);
+
+/*
+                  <LinearProgress mode="determinate"
+                    min={0}
+                    max={neededBlocks}
+                    value={fetchHeadersResponse !== null ? fetchHeadersResponse.getMainChainTipBlockHeight() : 0.0} />
+                    */

@@ -3,7 +3,7 @@ import { loader, createWallet, walletExists, openWallet,
   startConsensusRpc, fetchHeaders} from '../middleware/grpc/loader';
 import { getWalletServiceAttempt } from './ClientActions';
 import { getVersionServiceAttempt } from './VersionActions';
-import { getSeederAttempt } from './SeedServiceActions';
+import { getSeederAttempt, generateRandomSeedAttempt } from './SeedServiceActions';
 import { getCfg, getCfgPath, getDcrdCert } from '../config.js';
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
@@ -64,13 +64,19 @@ export const WALLETEXIST_FAILED = 'WALLETEXIST_FAILED';
 export const WALLETEXIST_SUCCESS = 'WALLETEXIST_SUCCESS';
 
 function walletExistError(error) {
-  return { error, type: WALLETEXIST_FAILED };
+  return (dispatch) => {
+    dispatch({ error, type: WALLETEXIST_FAILED });
+  };
 }
 
 function walletExistSuccess(response) {
   return (dispatch) => {
     dispatch({response: response, type: WALLETEXIST_SUCCESS });
-    dispatch(openWalletAttempt('public'));
+    if (response.getExists()) {
+      setTimeout(dispatch(openWalletAttempt('public')), 1000);
+    } else {
+      setTimeout(() => dispatch(generateRandomSeedAttempt()), 500);
+    }
   };
 }
 
@@ -95,7 +101,28 @@ function checkWalletExist() {
         });
   };
 }
+export const CREATEWALLET_NEWSEED_CONFIRM = 'CREATEWALLET_NEWSEED_CONFIRM';
+export const CREATEWALLET_NEWSEED_BACK = 'CREATEWALLET_NEWSEED_BACK';
+export const CREATEWALLET_EXISTINGSEED = 'CREATEWALLET_EXISTINGSEED';
+export const CREATEWALLET_NEWSEED = 'CREATEWALLET_NEWSEED';
 
+export function createWalletConfirmNewSeed(){
+  return{ type: CREATEWALLET_NEWSEED_CONFIRM };
+}
+export function createWalletGoBackNewSeed(){
+  return{ type: CREATEWALLET_NEWSEED_BACK };
+}
+
+export function createWalletExistingToggle(existing) {
+  return (dispatch) => {
+    if (existing){
+      dispatch({ type: CREATEWALLET_EXISTINGSEED });
+    }   else {
+      setTimeout(()=>dispatch({ type: CREATEWALLET_NEWSEED }), 50);
+      dispatch(generateRandomSeedAttempt());
+    }
+  };
+}
 export const CREATEWALLET_ATTEMPT = 'CREATEWALLET_ATTEMPT';
 export const CREATEWALLET_FAILED = 'CREATEWALLET_FAILED';
 export const CREATEWALLET_SUCCESS = 'CREATEWALLET_SUCCESS';
