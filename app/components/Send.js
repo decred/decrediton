@@ -10,6 +10,7 @@ import ArrowDownKeyBlue from './icons/arrow-down-key-blue.svg';
 import Add from './icons/add.svg';
 import Delete from './icons/delete.svg';
 import TextField from 'material-ui/TextField';
+import Balance from './Balance';
 
 const styles = {
   body: {
@@ -115,6 +116,16 @@ const styles = {
     textAlign: 'right',
     textTransform: 'capitalize',
   },
+  contentNestPrefixConfirm: {
+    width: '230px',
+    paddingRight: '15px',
+    float: 'left',
+    height: '100%',
+    paddingTop: '5px',
+    fontSize: '19px',
+    textAlign: 'right',
+    textTransform: 'capitalize',
+  },
   contentNestFromAddress: {
     width: '100%',
     height: '54px',
@@ -158,6 +169,15 @@ const styles = {
     float: 'left',
     borderBottom: '1px solid #a9b4bf',
     fontSize: '13px',
+  },
+  contentNestAddressHashBlockConfirm: {
+    position: 'relative',
+    overflow: 'hidden',
+    width: '300px',
+    height: '34px',
+    paddingTop: '7px',
+    float: 'left',
+    fontSize: '17px',
   },
   contentNestGradient: {
     position: 'absolute',
@@ -541,24 +561,39 @@ class Send extends Component{
         {networkTextDiv}
       </div>);
 
+    var estimatedFee = 0;
+    var totalSpent = 0;
+    if (constructTxResponse !== null) {
+      // Use default fee per kb since we aren't setting currently in constructTxRequest (0.01 dcr)
+      estimatedFee = (constructTxResponse.getEstimatedSignedSize() / 1000) * 0.01 * 100000000; // convert to atoms for balance div
+      totalSpent = constructTxResponse.getTotalPreviousOutputAmount() - constructTxResponse.getTotalOutputAmount();
+    }
     const signTxView = (
       <div style={styles.view}>
         {sharedHeader}
         <div style={styles.content}>
           <div style={styles.flexHeight}>
             <div style={styles.contentNestFromAddress}>
-              <div style={styles.contentNestPrefixSend}>Confirm transaction:</div>
-              {constructTxResponse !== null ? constructTxResponse.getUnsignedTransaction(): null}
+              <div style={styles.contentNestPrefixConfirm}>Confirm transaction:</div>
             </div>
-            <p> total previous output amount (atoms) <br/>
-              {constructTxResponse != null ? constructTxResponse.getTotalPreviousOutputAmount() : null}
-            </p>
-            <p> total output amount (atoms) <br/>
-              {constructTxResponse !== null ? constructTxResponse.getTotalOutputAmount() : null}
-            </p>
-            <p> estimated signed size <br/>
-              {constructTxResponse !== null ? constructTxResponse.getEstimatedSignedSize() : null}
-            </p>
+            <div style={styles.contentNestToAddress} key="totalSpent">
+              <div style={styles.contentNestPrefixConfirm}>Total spent from wallet:</div>
+              <div style={styles.contentNestAddressHashBlockConfirm}>
+                <Balance amount={totalSpent} />
+              </div>
+            </div>
+            <div style={styles.contentNestToAddress} key="estimatedSize">
+              <div style={styles.contentNestPrefixConfirm}>Estimated Transactions Size:</div>
+              <div style={styles.contentNestAddressHashBlockConfirm}>
+                {constructTxResponse !== null ? constructTxResponse.getEstimatedSignedSize() : null} bytes
+              </div>
+            </div>
+            <div style={styles.contentNestToAddress} key="totalFee">
+              <div style={styles.contentNestPrefixConfirm}>Estimated Fee:</div>
+              <div style={styles.contentNestAddressHashBlockConfirm}>
+                <Balance amount={estimatedFee} />
+              </div>
+            </div>
             <TextField
               id="privpass"
               type="password"

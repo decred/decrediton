@@ -9,6 +9,7 @@ function mapStateToProps(state) {
     walletService: state.grpc.walletService,
 
     constructTxRequestAttempt: state.control.constructTxRequestAttempt,
+    constructTxRequest: state.control.constructTxRequest,
     constructTxResponse: state.control.constructTxResponse,
     constructTxError: state.control.constructTxError,
     signTransactionError: state.control.signTransactionError,
