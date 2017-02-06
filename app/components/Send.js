@@ -1,7 +1,6 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 import ErrorScreen from './ErrorScreen';
-import SignTxForm from '../containers/SignTxForm';
 import { reverseHash } from '../helpers/byteActions';
 import SideBar from './SideBar';
 import MinusBig from './icons/minus-big.svg';
@@ -10,6 +9,7 @@ import ArrowDownMidBlue from './icons/arrow-down-mid-blue.svg';
 import ArrowDownKeyBlue from './icons/arrow-down-key-blue.svg';
 import Add from './icons/add.svg';
 import Delete from './icons/delete.svg';
+import TextField from 'material-ui/TextField';
 
 const styles = {
   body: {
@@ -383,8 +383,30 @@ const styles = {
   contentSendSectionAmountCurrency: {
     paddingLeft: '5px',
   },
-
   viewButtonKeyBlue: {
+    width: '9%',
+    float: 'left',
+    display: 'inline-block',
+    padding: '17px 18px 18px',
+    borderRadius: '5px',
+    backgroundColor: '#2971ff',
+    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
+    transitionProperty: 'none',
+    color: '#fff',
+    fontSize: '13px',
+    lineHeight: '9px',
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
+    ':hover': {
+      backgroundColor: '#1b58ff',
+    },
+    ':active': {
+      boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
+    }
+  },
+  viewButtonKeyGray: {
     width: '9%',
     float: 'left',
     display: 'inline-block',
@@ -429,12 +451,20 @@ class Send extends Component{
     super(props);
 
     this.state = {
+      privpass: '',
+      rawTx: '',
       account: 0,
       confirmations: 0,
       outputs: [{key:0, destination: '', amount: ''}] };
 
   }
-  submit() {
+  submitSignPublishTx() {
+    if (this.state.privpass == '' || this.props.constructTxResponse === null) {
+      return;
+    }
+    this.props.signTransactionAttempt(this.state.privpass, this.props.constructTxResponse.getUnsignedTransaction());
+  }
+  submitConstructTx() {
     if (this.state.outputs[0].destination == '' || this.state.outputs[0].amount == '') {
       return;
     }
@@ -528,7 +558,19 @@ class Send extends Component{
             <p> estimated signed size <br/>
               {constructTxResponse !== null ? constructTxResponse.getEstimatedSignedSize() : null}
             </p>
-            <SignTxForm clearTransaction={clearTransaction} signTransactionAttempt={signTransactionAttempt} rawTx={constructTxResponse !== null ? constructTxResponse.getUnsignedTransaction() : null}/>
+            <TextField
+              id="privpass"
+              hintText="Private Password"
+              floatingLabelText="Private Password"
+              onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}
+            />
+
+          </div>
+          <div style={styles.contentSend} onClick={() => this.submitSignPublishTx()}>
+            <div style={styles.viewButtonKeyBlue}>Confirm</div>
+          </div>
+          <div style={styles.contentSend} onClick={() => clearTransaction()}>
+            <div style={styles.viewButtonGray}>Cancel</div>
           </div>
         </div>
       </div>);
@@ -630,7 +672,7 @@ class Send extends Component{
               }})}
               </div>
             </div>
-            <div style={styles.contentSend} onClick={() => this.submit()}>
+            <div style={styles.contentSend} onClick={() => this.submitConstructTx()}>
               <div style={styles.viewButtonKeyBlue}>send</div>
             </div>
           </div>
