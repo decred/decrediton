@@ -14,6 +14,7 @@ function mapStateToProps(state) {
     getBalanceResponse: state.grpc.getBalanceResponse,
     getStakeInfoRequestAttempt: state.grpc.getStakeInfoRequestAttempt,
     getStakeInfoResponse: state.grpc.getStakeInfoResponse,
+    getNetworkResponse: state.grpc.getNetworkResponse,
     getAccountsResponse: state.grpc.getAccountsResponse,
     transactionNtfnsResponse: state.notifications.transactionNtfnsResponse,
   };
@@ -32,12 +33,20 @@ const styles = {
   menuLogo:{
     position: 'relative',
     zIndex: '3',
-    height: '106px',
+    height: '60px',
+    paddingTop: '20px',
     backgroundColor: '#0c1e3e',
     backgroundImage: `url(${menulogo})`,
     backgroundPosition: '58px 50%',
     backgroundSize: 'auto 30px',
     backgroundRepeat: 'no-repeat',
+  },
+  testnetText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: '18px',
+    height: '46px',
+    fontFamily: 'Inconsolata, monospace',
   },
   menuNavigation:{
     position: 'absolute',
@@ -239,6 +248,7 @@ class SideBar extends Component {
   render() {
     const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
+    const { getNetworkResponse } = this.props;
     var balance = 0;
     if (getBalanceResponse != null) {
       balance = getBalanceResponse.getTotal() / 100000000;
@@ -246,6 +256,7 @@ class SideBar extends Component {
     return (
       <div style={styles.menu}>
         <div style={styles.menuLogo}></div>
+        <div style={styles.testnetText}>{getNetworkResponse !== null && getNetworkResponse.networkStr == 'testnet' ? 'Testnet' : ''}</div>
         <div style={styles.menuNavigation}>
           <MenuLink to="/home">Overview</MenuLink>
           <MenuLink to="/send">Send</MenuLink>
