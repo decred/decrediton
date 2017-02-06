@@ -72,11 +72,11 @@ const styles = {
     transition: 'all 50ms ease-in-out 0s',
   },
   contentNewSeedConfirmSeed: {
-    height: '109px',
+    height: '139px',
   },
   contentNewSeedPrivPass: {
     paddingTop: '10px',
-    height: '60px',
+    height: '80px',
   },
   contentNewSeedCreateButton: {
     height: '60px',
@@ -259,7 +259,7 @@ class CreateWalletForm extends React.Component {
     if (this.props.createWalletExisting) {
         this.props.decodeSeedAttempt(seedConfirmation);
     } else {
-      if (this.props.generateRandomSeedResponse.getSeedMnemonic() != seedConfirmation) {
+      if (seedConfirmation !== '' && this.props.generateRandomSeedResponse.getSeedMnemonic() != seedConfirmation) {
         this.setState({seedError:'Seeds do not match'});
       } else {
         this.setState({seedError:'', seed: this.props.generateRandomSeedResponse.getSeedBytes()});

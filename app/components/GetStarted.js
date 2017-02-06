@@ -108,7 +108,7 @@ const styles = {
   },
   viewButtonGoBack: {
     marginRight: '80px',
-    marginBottom: '40px',
+    marginBottom: '20px',
     transition: 'all 50ms ease-in-out 0s',
     display: 'inline-block',
     padding: '17px 18px 18px',
@@ -123,6 +123,12 @@ const styles = {
     textAlign: 'center',
     textDecoration: 'none',
     textTransform: 'capitalize',
+    ':hover': {
+      backgroundColor: '#596d81',
+    },
+    ':active': {
+      boxShadow: '0 0 0 0 rgba(0, 0, 0, .22)',
+    }
   }
 };
 
