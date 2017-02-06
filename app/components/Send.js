@@ -406,15 +406,13 @@ const styles = {
       boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
     }
   },
-  viewButtonKeyGray: {
-    width: '9%',
-    float: 'left',
+  viewButtonLightSlateGray: {
     display: 'inline-block',
     padding: '17px 18px 18px',
+    float: 'right',
     borderRadius: '5px',
-    backgroundColor: '#2971ff',
+    backgroundColor: '#8997a5',
     boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
-    transitionProperty: 'none',
     color: '#fff',
     fontSize: '13px',
     lineHeight: '9px',
@@ -423,10 +421,10 @@ const styles = {
     textDecoration: 'none',
     textTransform: 'capitalize',
     ':hover': {
-      backgroundColor: '#1b58ff',
+      backgroundColor: '#596d81',
     },
     ':active': {
-      boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
+      boxShadow: '0 0 0 0 rgba(0, 0, 0, .22)',
     }
   },
   flexHeight: {
@@ -456,7 +454,10 @@ class Send extends Component{
       account: 0,
       confirmations: 0,
       outputs: [{key:0, destination: '', amount: ''}] };
-
+  }
+  clearTransactionData() {
+    this.setState({account:0, confirmations: 0, outputs: [{key:0, destination: '', amount: ''}]})
+    this.props.clearTransaction();
   }
   submitSignPublishTx() {
     if (this.state.privpass == '' || this.props.constructTxResponse === null) {
@@ -560,17 +561,17 @@ class Send extends Component{
             </p>
             <TextField
               id="privpass"
+              type="password"
               hintText="Private Password"
               floatingLabelText="Private Password"
               onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}
             />
-
           </div>
           <div style={styles.contentSend} onClick={() => this.submitSignPublishTx()}>
             <div style={styles.viewButtonKeyBlue}>Confirm</div>
           </div>
-          <div style={styles.contentSend} onClick={() => clearTransaction()}>
-            <div style={styles.viewButtonGray}>Cancel</div>
+          <div style={styles.contentSend} onClick={() => this.clearTransactionData()}>
+            <div style={styles.viewButtonLightSlateGray}>Cancel</div>
           </div>
         </div>
       </div>);
