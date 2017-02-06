@@ -152,18 +152,16 @@ const styles = {
     }
   },
   contentNewSeed: {
-    paddingRight: '80px',
-    paddingLeft: '80px',
     overflow: 'auto',
     height: '556px',
-    padding: '54px 60px 54px 80px',
+    padding: '54px 80px 54px 80px',
   },
   contentNewSeedPrivPass: {
     paddingTop: '10px',
     height: '80px',
   },
   contentConfirmWalletCreateInputLeft: {
-    width: '160px',
+    width: '187px',
     marginRight: '20px',
     float: 'left',
     color: '#E7EAED',
@@ -172,7 +170,7 @@ const styles = {
     letterSpacing: '-0.1px',
   },
   contentConfirmWalletCreateInputLeftPadding: {
-    width: '160px',
+    width: '187px',
     marginRight: '20px',
     float: 'left',
     color: '#E7EAED',
@@ -236,6 +234,14 @@ class Home extends Component{
       return;
     }
     this.props.discoverAddressAttempt(true, this.state.privpass);
+    this.setState({privpass:''});
+  }
+  openWalletButton() {
+    if (this.state.pubpass == '') {
+      return;
+    }
+    this.props.walletOpenRequestAttempt(this.state.pubpass);
+    this.setState({pubpass:''});
   }
   handleDisclaimerOK = () => {
     this.props.disclaimerOKAction();
@@ -307,7 +313,6 @@ class Home extends Component{
           <div style={styles.headerTop}></div>
           <div style={styles.headerTitleOverview}>Getting started</div>
           <div style={styles.headerMetaOverview}>
-            
           </div>
         </div>
         <div style={styles.content}>
@@ -333,18 +338,32 @@ class Home extends Component{
             Please enter the information below to  create your dcrwallet
           </div>
         </div>
-        <div style={styles.content}>
-          <div style={styles.contentTitle}>
-            <div style={styles.contentTitleText}></div>
-          </div>
-          <div style={styles.contentNest}>
-            { walletOpenRequestAttempt ? 
-              <CircularProgress size={80} thickness={6}/> :
-              <WalletOpenForm />
+        <div style={styles.contentNewSeed}>
+          { walletOpenRequestAttempt ? 
+            <CircularProgress size={80} thickness={6}/> :
+            <div style={styles.contentNewSeedCreateButton}>
+              <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Decrypt Wallet:</div>
+              <div style={styles.contentConfirmWalletCreateInputRightPadding}>
+                <div style={styles.inputForm}>
+                  <form style={styles.inputForm}>
+                    <input 
+                      style={styles.inputPrivatePassword} 
+                      type="password" 
+                      placeholder="Private Passphrase"
+                      onBlur={(e)=>this.setState({pubpass:e.target.value})}/>
+                  </form>
+                </div>
+              </div>
+              <div style={styles.contentNewSeedCreateButton}>
+                <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
+                <div style={styles.contentConfirmWalletCreateInputRightPadding}>
+                  <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.openWalletButton()}>Open Wallet</a>
+                </div>
+              </div>
+            </div>
             }
           </div>
         </div>
-      </div>
       );
     } else if (stepIndex == 2) {
       // Wallet does not exist
@@ -406,7 +425,7 @@ class Home extends Component{
             { discoverAddressRequestAttempt ? 
               <CircularProgress size={80} thickness={6}/> : 
               <div style={styles.contentNewSeedCreateButton}>
-                <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Decrypt Wallet:</div>
+                <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Scan for used addresses:</div>
                 <div style={styles.contentConfirmWalletCreateInputRightPadding}>
                   <div style={styles.inputForm}>
                     <form style={styles.inputForm}>
@@ -421,7 +440,7 @@ class Home extends Component{
                 <div style={styles.contentNewSeedCreateButton}>
                   <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
                   <div style={styles.contentConfirmWalletCreateInputRightPadding}>
-                    <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.discoverAddressesButton()}>Open Wallet</a>
+                    <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.discoverAddressesButton()}>Scan</a>
                   </div>
                 </div>
               </div>
