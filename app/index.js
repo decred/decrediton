@@ -125,6 +125,7 @@ var initialState = {
     getLoaderError: null,
     // WalletCreate
     createWalletExisting: false,
+    confirmNewSeed: false,
     walletCreateRequestAttempt: false,
     walletCreateRequest: false,
     walletCreateResponse: null,

@@ -101,9 +101,17 @@ function checkWalletExist() {
         });
   };
 }
-
+export const CREATEWALLET_NEWSEED_CONFIRM = 'CREATEWALLET_NEWSEED_CONFIRM';
+export const CREATEWALLET_NEWSEED_BACK = 'CREATEWALLET_NEWSEED_BACK';
 export const CREATEWALLET_EXISTINGSEED = 'CREATEWALLET_EXISTINGSEED';
 export const CREATEWALLET_NEWSEED = 'CREATEWALLET_NEWSEED';
+
+export function createWalletConfirmNewSeed(){
+  return{ type: CREATEWALLET_NEWSEED_CONFIRM };
+}
+export function createWalletGoBackNewSeed(){
+  return{ type: CREATEWALLET_NEWSEED_BACK };
+}
 
 export function createWalletExistingToggle(existing) {
   return (dispatch) => {

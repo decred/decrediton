@@ -106,6 +106,24 @@ const styles = {
   headerMetaCurrency: {
     fontSize: '23px',
   },
+  viewButtonGoBack: {
+    marginRight: '80px',
+    marginBottom: '40px',
+    transition: 'all 50ms ease-in-out 0s',
+    display: 'inline-block',
+    padding: '17px 18px 18px',
+    float: 'right',
+    borderRadius: '5px',
+    backgroundColor: '#8997A5',
+    boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.2)',
+    color: '#FFF',
+    fontSize: '13px',
+    lineHeight: '9px',
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
+  }
 };
 
 class Home extends Component{
@@ -163,7 +181,7 @@ class Home extends Component{
     const { startRpcRequestAttempt, startRpcError } = this.props;
     const { discoverAddressRequestAttempt, discoverAddressError } = this.props;
     const { fetchHeadersRequestAttempt } = this.props;
-
+    const { confirmNewSeed } = this.props;
     const getStartedWalletLoader = (
       <div>
         <ShowError error={getLoaderError} />
@@ -233,11 +251,14 @@ class Home extends Component{
           <div style={styles.headerTop}></div>
           <div style={styles.headerTitleOverview}>Create a Wallet</div>
           <div style={styles.headerMetaOverview}></div>
-          <NewExistingSeedToggle 
-            activeButton={"left"} 
-            leftText={"New seed"}
-            rightText={"Existing Seed"}
-            toggleAction={(e)=>{this.toggleNewExisting(e)}}/>
+          {!this.props.confirmNewSeed ? 
+            <NewExistingSeedToggle 
+              activeButton={"left"} 
+              leftText={"New seed"}
+              rightText={"Existing Seed"}
+              toggleAction={(e)=>{this.toggleNewExisting(e)}}/> :
+            <div style={styles.viewButtonGoBack} onClick={()=>this.props.createWalletGoBackNewSeed()}>Back</div>
+          }
         </div>
         {walletCreateRequestAttempt ? 
           <CircularProgress size={80} thickness={6}/> :

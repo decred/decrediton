@@ -185,7 +185,7 @@ class CreateWalletForm extends React.Component {
           <br/>
           <span style={styles.paragraphOrangeWarning}>Warning:</span> Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else.</div>
         <div style={styles.contentSeed}>{generateRandomSeedResponse !== null ? generateRandomSeedResponse.getSeedMnemonic() : null}</div>
-        <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.continueToConfirmButton()}>Continue</a>
+        <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.props.createWalletConfirmNewSeed()}>Continue</a>
       </div>);
 
     const newContinuedPage = (
@@ -249,7 +249,7 @@ class CreateWalletForm extends React.Component {
         </div>
       </div>);
       
-    if (this.state.continued || this.props.createWalletExisting) {
+    if (this.props.confirmNewSeed || this.props.createWalletExisting) {
       return (newContinuedPage)
     } else {
       return (newDesign);
@@ -288,10 +288,10 @@ class CreateWalletForm extends React.Component {
     }
   }
   continueToConfirmButton() {
-    this.setState({continued: true});
+    this.props.createWalletConfirmNewSeed();
   }
   goBackToNewSeedButton() {
-    this.setState({continued: false});
+    this.props.createWalletGoBackNewSeed();
   }
   disableButton() {
     this.setState({ canSubmit: false });
@@ -357,6 +357,7 @@ function mapStateToProps(state) {
     decodeSeedResponse: state.seedService.decodeSeedResponse,
     decodeSeedError: state.seedService.decodeSeedError,
     createWalletExisting: state.walletLoader.createWalletExisting,
+    confirmNewSeed: state.walletLoader.confirmNewSeed,
   };
 }
 

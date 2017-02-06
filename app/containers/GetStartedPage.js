@@ -73,6 +73,7 @@ function mapStateToProps(state) {
     disclaimerOK: state.walletLoader.disclaimerOK,
 
     createWalletExisting: state.walletLoader.createWalletExisting,
+    confirmNewSeed: state.walletLoader.confirmNewSeed,
   };
 }
 
