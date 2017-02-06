@@ -218,6 +218,10 @@ const styles = {
   contentNewSeedCreateButton: {
     height: '80px',
     float: 'left',
+  },
+  loading: {
+    marginTop: '110px',
+    marginLeft: '268px',
   }
 };
 
@@ -340,7 +344,7 @@ class Home extends Component{
         </div>
         <div style={styles.contentNewSeed}>
           { walletOpenRequestAttempt ? 
-            <CircularProgress size={80} thickness={6}/> :
+            <CircularProgress style={styles.loading} size={125} thickness={6}/> :
             <div style={styles.contentNewSeedCreateButton}>
               <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Decrypt Wallet:</div>
               <div style={styles.contentConfirmWalletCreateInputRightPadding}>
@@ -383,8 +387,10 @@ class Home extends Component{
           }
         </div>
         {walletCreateRequestAttempt ? 
-          <CircularProgress size={80} thickness={6}/> :
-          <CreateWalletForm existing={this.props.createWalletExistingd}/>}
+        <div style={styles.contentNewSeed}>
+          <CircularProgress style={styles.loading} size={125} thickness={6}/>
+        </div>  :
+          <CreateWalletForm existing={this.props.createWalletExisting}/>}
       </div>
       );
     } else if  (stepIndex == 3 || stepIndex == 4) {
@@ -403,7 +409,7 @@ class Home extends Component{
             </div>
             <div style={styles.contentNest}>
               { startRpcRequestAttempt ? 
-                <CircularProgress size={80} thickness={6}/> :
+                <CircularProgress style={styles.loading} size={125} thickness={6}/> :
                 <div>Some unexpected error occured, please check logs</div>
               }
             </div>
@@ -423,7 +429,7 @@ class Home extends Component{
           </div>
           <div style={styles.contentNewSeed}>
             { discoverAddressRequestAttempt ? 
-              <CircularProgress size={80} thickness={6}/> : 
+              <CircularProgress style={styles.loading} size={125} thickness={6}/> : 
               <div style={styles.contentNewSeedCreateButton}>
                 <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Scan for used addresses:</div>
                 <div style={styles.contentConfirmWalletCreateInputRightPadding}>
@@ -463,7 +469,7 @@ class Home extends Component{
               <div style={styles.contentTitleText}>Catching up block chain</div>
             </div>
             <div style={styles.contentNest}>
-              { fetchHeadersRequestAttempt ? 
+              { !fetchHeadersRequestAttempt ? 
                 <div>
                   <LinearProgress mode="determinate"
                     min={0}
