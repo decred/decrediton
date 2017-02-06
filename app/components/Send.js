@@ -1,5 +1,6 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import ErrorScreen from './ErrorScreen';
 import { reverseHash } from '../helpers/byteActions';
 import SideBar from './SideBar';
@@ -10,6 +11,12 @@ import ArrowDownKeyBlue from './icons/arrow-down-key-blue.svg';
 import Add from './icons/add.svg';
 import Delete from './icons/delete.svg';
 import Balance from './Balance';
+
+function mapStateToProps(state) {
+  return {
+    currentSettings: state.settings.currentSettings,
+  };
+}
 
 const styles = {
   body: {
@@ -509,23 +516,29 @@ class Send extends Component{
   updateAccountNumber(outputKey, accountNum) {
     this.setState({account: accountNum});
   }
-  updateOutputAmount(outputKey, amount) {
-    // For now just convert from atoms to dcr.  We can add option to switch
-    // later (and that need to impact more than just this function.
+  updateOutputAmount(outputKey, amount, unitLabel) {
+    // Default to DCR.
     var units = 100000000;
+    if (unitLabel === 'DCR') {
+      units = 100000000;
+    }
+    if (unitLabel === 'atoms') {
+      units = 1;
+    }
     var updateOutputs = this.state.outputs;
     updateOutputs[outputKey].amount = amount * units;
     this.setState({ outputs: updateOutputs });
   }
   render() {
-
-
+    const { currentSettings } = this.props;
     const { walletService } = this.props;
     const { constructTxResponse, constructTxError } = this.props;
     const { publishTransactionResponse, publishTransactionError } = this.props;
     const { signTransactionError } = this.props;
     const { getAccountsResponse } = this.props;
     const { getNetworkResponse } = this.props;
+
+    var unitLabel = currentSettings.currencyDisplay;
 
     var networkTextDiv = (<div></div>);
     if (getNetworkResponse !== null) {
@@ -667,13 +680,13 @@ class Send extends Component{
                   <div style={styles.contentNestAddressAmount}>
                     <div style={styles.contentNestPrefixSend}>Amount:</div>
                     <div style={styles.contentNestAddressAmountSumAndCurrency}>
-                      <div style={styles.contentNestAddressAmountSumGradient}>dcr</div>
+                    <div style={styles.contentNestAddressAmountSumGradient}>{unitLabel}</div>
                       <input
                         type="text"
                         style={styles.contentNestAddressAmountSum}
                         key={'amount'+output.key}
                         placeholder="Amount"
-                        onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value);}}/>
+                        onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
                     </div>
                   </div>
                 </div>);
@@ -697,14 +710,14 @@ class Send extends Component{
                   }
                   <div style={styles.contentNestAddressAmount}>
                     <div style={styles.contentNestAddressAmountSumAndCurrency}>
-                      <div style={styles.contentNestAddressAmountSumGradient}>dcr</div>
+                    <div style={styles.contentNestAddressAmountSumGradient}>{unitLabel}</div>
                       <div style={styles.inputForm}>
                       <input
                         type="text"
                         style={styles.contentNestAddressAmountSum}
                         key={'amount'+output.key}
                         placeholder="Amount"
-                        onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value);}}/>
+                        onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
                       </div>
                     </div>
                   </div>
@@ -735,21 +748,4 @@ class Send extends Component{
   }
 }
 
-export default Send;
-/*
-            <div style={styles.contentSendSection}>
-              <div style={styles.viewCheckbox} data-checkbox-value="0"></div>
-              <div style={styles.contentSendSectionCheckboxText}>send</div>
-              <div style={styles.contentSendSectionAmount}>0.00000000 <span style={styles.contentSendSectionAmountCurrency}>DCR</span>
-              </div>
-              <div style={styles.contentSendSectionDescription}>Estimated fee:</div>
-            </div>
-            <div style={styles.contentSendSection}>
-              <div style={styles.viewCheckbox} data-checkbox-value="0"></div>
-              <div style={styles.contentSendSectionCheckboxText}>Publish</div>
-              <div style={styles.contentSendSectionAmount}>0.00000000 <span style={styles.contentSendSectionAmountCurrency}>DCR</span>
-              </div>
-              <div style={styles.contentSendSectionDescription}>Estimated remaining balance:</div>
-            </div>
-          </div>
-          */
+export default connect(mapStateToProps)(Send);
