@@ -69,7 +69,12 @@ const styles = {
     textAlign: 'center',
     textDecoration: 'none',
     textTransform: 'capitalize',
-    transition: 'all 50ms ease-in-out 0s',
+    ':hover': {
+      backgroundColor: '#1b58ff',
+    },
+    ':active': {
+      boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
+    }
   },
   contentNewSeedConfirmSeed: {
     height: '139px',
@@ -123,7 +128,6 @@ const styles = {
     color: '#69D5F7',
     fontSize: '19px',
     lineHeight: 'normal',
-    font: 'inherit',
     margin: '0px',
     boxSizing: 'border-box',
   },
@@ -140,7 +144,6 @@ const styles = {
     color: '#2971FF',
     fontSize: '13px',
     overflow: 'auto',
-    font: 'inherit',
     margin: '0px',
   },
   inputForm: {

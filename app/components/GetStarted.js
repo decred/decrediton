@@ -109,7 +109,6 @@ const styles = {
   viewButtonGoBack: {
     marginRight: '80px',
     marginBottom: '20px',
-    transition: 'all 50ms ease-in-out 0s',
     display: 'inline-block',
     padding: '17px 18px 18px',
     float: 'right',
@@ -129,6 +128,98 @@ const styles = {
     ':active': {
       boxShadow: '0 0 0 0 rgba(0, 0, 0, .22)',
     }
+  },
+  viewButtonKeyBlueWalletNewSeed: {
+    float: 'left',
+    display: 'inline-block',
+    padding: '17px 18px 18px',
+    borderRadius: '5px',
+    backgroundColor: '#2971FF',
+    boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.2)',
+    transitionProperty: 'none',
+    color: '#FFF',
+    fontSize: '13px',
+    lineHeight: '9px',
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
+    ':hover': {
+      backgroundColor: '#1b58ff',
+    },
+    ':active': {
+      boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
+    }
+  },
+  contentNewSeed: {
+    paddingRight: '80px',
+    paddingLeft: '80px',
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 60px 54px 80px',
+  },
+  contentNewSeedPrivPass: {
+    paddingTop: '10px',
+    height: '80px',
+  },
+  contentConfirmWalletCreateInputLeft: {
+    width: '160px',
+    marginRight: '20px',
+    float: 'left',
+    color: '#E7EAED',
+    fontSize: '19px',
+    textAlign: 'right',
+    letterSpacing: '-0.1px',
+  },
+  contentConfirmWalletCreateInputLeftPadding: {
+    width: '160px',
+    marginRight: '20px',
+    float: 'left',
+    color: '#E7EAED',
+    fontSize: '19px',
+    textAlign: 'right',
+    letterSpacing: '-0.1px',
+    paddingTop: '23px',
+  },
+  contentConfirmWalletCreateInputRight: {
+    width: '540px',
+    float: 'left',
+    clear: 'right',
+  },
+  contentConfirmWalletCreateInputRightPadding: {
+    marginBottom: '5px',
+    width: '300px',
+    paddingTop: '11px',
+    float: 'left',
+    clear: 'right',
+  },
+  inputPrivatePassword: {
+    backgroundColor: 'transparent',
+    width: '100%',
+    minHeight: '44px',
+    paddingRight: '10px',
+    paddingLeft: '10px',
+    borderStyle: 'none none solid',
+    borderBottom: '1px solid #69D5F7',
+    color: '#69D5F7',
+    fontSize: '19px',
+    lineHeight: 'normal',
+    margin: '0px',
+    boxSizing: 'border-box',
+  },
+  inputForm: {
+    MozAppearance: 'none !important',
+    position: 'relative',
+    width: '100%',
+    height: 'auto',
+    minHeight: '44px',
+  },
+  inputFormError: {
+    color: 'red',
+  },
+  contentNewSeedCreateButton: {
+    height: '80px',
+    float: 'left',
   }
 };
 
@@ -139,6 +230,12 @@ class Home extends Component{
     } else if (side == 'left') {
       this.props.createWalletExistingToggle(false);
     }
+  }
+  discoverAddressesButton() {
+    if (this.state.privpass == '' ) {
+      return;
+    }
+    this.props.discoverAddressAttempt(true, this.state.privpass);
   }
   handleDisclaimerOK = () => {
     this.props.disclaimerOKAction();
@@ -302,19 +399,33 @@ class Home extends Component{
             <div style={styles.headerTop}></div>
             <div style={styles.headerTitleOverview}>Opening Wallet</div>
             <div style={styles.headerMetaOverview}>
-              Please enter the information below to  create your dcrwallet
+              Please enter the information below to load your dcrwallet
             </div>
           </div>
-          <div style={styles.content}>
-            <div style={styles.contentTitle}>
-              <div style={styles.contentTitleText}>For discover addresses</div>
-            </div>
-            <div style={styles.contentNest}>
-              { discoverAddressRequestAttempt ? 
-                <CircularProgress size={80} thickness={6}/> : 
-                <DiscoverAddressForm />
-              }
-            </div>
+          <div style={styles.contentNewSeed}>
+            { discoverAddressRequestAttempt ? 
+              <CircularProgress size={80} thickness={6}/> : 
+              <div style={styles.contentNewSeedCreateButton}>
+                <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Decrypt Wallet:</div>
+                <div style={styles.contentConfirmWalletCreateInputRightPadding}>
+                  <div style={styles.inputForm}>
+                    <form style={styles.inputForm}>
+                      <input 
+                        style={styles.inputPrivatePassword} 
+                        type="password" 
+                        placeholder="Private Passphrase"
+                        onBlur={(e)=>this.setState({privpass:e.target.value})}/>
+                    </form>
+                  </div>
+                </div>
+                <div style={styles.contentNewSeedCreateButton}>
+                  <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
+                  <div style={styles.contentConfirmWalletCreateInputRightPadding}>
+                    <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.discoverAddressesButton()}>Open Wallet</a>
+                  </div>
+                </div>
+              </div>
+            }
           </div>
         </div>
       );
