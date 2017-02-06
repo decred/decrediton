@@ -166,7 +166,7 @@ class CreateWalletForm extends React.Component {
           <br/>
           <br/>
           <span style={styles.paragraphOrangeWarning}>Warning:</span> Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else.</div>
-        <div style={styles.contentSeed}>tunnel quiver holiness bottomless commando topmost spyglass combustion tonic Friday retouch hemisphere gremlin mighty pupil celebrate backyard repellent Yucatan payday bluebird advisor snappy reindeer heavyweight erase designing maritime freedom Norwegian guidance chambermaid local</div>
+        <div style={styles.contentSeed}>{generateRandomSeedResponse !== null ? generateRandomSeedResponse.getSeedMnemonic() : null}</div>
         <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>{console.log('continue')}}>Continue</a>
       </div>);
 
