@@ -175,7 +175,7 @@ class CreateWalletForm extends React.Component {
     let passwordError = 'Passwords do not match';
     let seedError = 'Seed must consist of words';
 
-    const { decodeSeedError, generateRandomSeedError, generateRandomSeedResponse } = this.props;
+    const { createWalletRequest, decodeSeedError, generateRandomSeedError, generateRandomSeedResponse } = this.props;
     const seedDecodeError = (
       <ShowError error={decodeSeedError}/>
     );
@@ -341,7 +341,7 @@ class CreateWalletForm extends React.Component {
       console.log(this.state.passwordError);
       return;
     }
-    this.props.decodeSeedAttempt(this.state.pubpass, this.state.privpass, this.state.seed);
+    this.props.createWalletRequest(this.state.pubpass, this.state.privpass, this.state.seed, false);
   }
   verifyPrivatePassword(verifyPrivPass) {
     if (this.state.privpass != '' && this.state.privpass != verifyPrivPass) {
