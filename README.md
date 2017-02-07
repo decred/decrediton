@@ -47,8 +47,7 @@ From there follow the on screen instructions to setup your wallet.
 ## Developing
 
 Due to potential compatibility issues, for now, all work should be
-done with node v6.5.0 and electron 1.4.6.  It is likely we can relax
-this once things have settled down.  The recommended way to install
+done with node v6.9.5 and electron 1.4.6.  The recommended way to install
 node is using nvm.
 
 This has primarily been tested on Linux at the moment although OSX
@@ -57,9 +56,9 @@ should work similarly.
 ``` bash
 git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
 . ~/.nvm/nvm.sh
-nvm install v6.5.0
-nvm use v6.5.0
-nvm alias default v6.5.0
+nvm install v6.9.5
+nvm use v6.9.5
+nvm alias default v6.9.5
 npm install -g npm
 cd
 ```
@@ -117,7 +116,7 @@ you are using msys2 with various development tools (copilers, make,
 ect) all installed.
 
 Install node from the official package https://nodejs.org/en/download/
-and add it to your msys2 path.
+and add it to your msys2 path.  You must install the same version of node as required for Linux and OSX (6.9.5).
 
 Install openssl from the following site:
 https://slproweb.com/products/Win32OpenSSL.html
