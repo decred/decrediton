@@ -518,8 +518,8 @@ class Home extends Component{
             modal={true}
             open={true}
           >
-            Decrediton is currently under heavy development and currently in an alpha-state.  While we have tested
-            the code thoroughly, we suggest avoiding using on Mainnet.  Use at your own risk!
+            Decrediton is currently under heavy development and in an alpha-state.  While we have tested
+            the code thoroughly, we suggest using caution on Mainnet.  Use at your own risk!
           </Dialog>
         </div>);
     } else {
