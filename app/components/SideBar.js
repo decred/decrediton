@@ -282,7 +282,7 @@ class SideBar extends Component {
             {getAccountsResponse != null ? getAccountsResponse.getAccountsList().map(function(account) {
               var accountBalance = 0;
               if (account.getTotalBalance() > 0) {
-                accountBalance = account.getTotalBalance() / 1000000;
+                accountBalance = account.getTotalBalance() / 100000000;
               }
               return(
                 <div style={styles.menuTotalBalanceExtendedBottomAccount} key={account.getAccountName()}>
