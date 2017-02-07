@@ -7,7 +7,7 @@ export function getCfg() {
   const config = new Config();
   // If value is missing (or no config file) write the defaults.
   if (!config.has('network')) {
-    config.set('network', 'testnet');
+    config.set('network', 'mainnet');
   }
   if (!config.has('wallet_port_testnet')) {
     config.set('wallet_port_testnet', '19112');
