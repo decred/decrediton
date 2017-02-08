@@ -90,8 +90,11 @@ const launchDCRD = () => {
     dcrdExe = dcrdExe + '.exe';
   }
 
-  // The spawn() below opens a pipe on fd 3
-  args.push('--piperx=3');
+  if (os.platform() != 'win32') {
+    // The spawn() below opens a pipe on fd 4
+    // The spawn() below opens a pipe on fd 3
+    args.push('--piperx=3');
+  }
 
   if (cfg.network == 'testnet') {
     args.push('--testnet');
