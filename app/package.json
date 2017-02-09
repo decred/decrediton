@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "electron-config": "^0.2.1",
-    "grpc": "file:../../grpc"
+    "grpc": "file:../../grpc",
+    "minimist": "^1.2.0"
   }
 }

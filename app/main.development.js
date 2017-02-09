@@ -2,6 +2,7 @@ import { app, BrowserWindow, Menu, shell } from 'electron';
 import { getCfg, appDataDirectory } from './config.js';
 import path from 'path';
 import os from 'os';
+import parseArgs from 'minimist';
 
 let menu;
 let template;
@@ -10,14 +11,26 @@ let debug = false;
 let dcrdPID;
 let dcrwPID;
 
+// Not oing to make incorrect options fatal since running in dev mode has
+// all sorts of things on the cmd line that we don't care about.  If we want
+// to make this fatal, it must be for production mode only.
+function unknownFn(arg) {
+  console.log('%s is not a valid option!', arg);
+  return;
+}
+
+// Allowed cmd line options are defined here.
+var opts = {
+  boolean: ['debug'],
+  default: { debug: false },
+  unknown: unknownFn
+};
+var argv = parseArgs(process.argv.slice(1), opts);
+debug = argv.debug;
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
   sourceMapSupport.install();
-  process.argv.some(function(element) {
-    if (element === '--debug') {
-      debug = true;
-    }
-  });
 }
 
 if (process.env.NODE_ENV === 'development') {
