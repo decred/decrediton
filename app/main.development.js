@@ -48,17 +48,22 @@ app.on('window-all-closed', () => {
   // have the same behavior on all platforms.
   if (process.env.NODE_ENV === 'production') {
     // shutdown daemon and wallet.
-    if (debug) {
-      console.log('Sending SIGINT to dcrd at pid:', dcrdPID);
-      console.log('Sending SIGINT to dcrwallet at pid:', dcrwPID);
-    }
     // Don't try to close if not running.
     if (require('is-running')(dcrwPID)) {
+      if (debug) {
+	console.log('Sending SIGINT to dcrwallet at pid:', dcrwPID);
+      }
       process.kill(dcrwPID, 'SIGINT');
     }
     if (require('is-running')(dcrdPID)) {
+      if (debug) {
+	console.log('Sending SIGINT to dcrd at pid:', dcrdPID);
+      }
       process.kill(dcrdPID, 'SIGINT');
     }
+
+  if (debug) {
+    console.log('Closing decrediton.');
   }
   app.quit();
 });
