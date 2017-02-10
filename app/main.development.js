@@ -11,7 +11,7 @@ let debug = false;
 let dcrdPID;
 let dcrwPID;
 
-// Not oing to make incorrect options fatal since running in dev mode has
+// Not going to make incorrect options fatal since running in dev mode has
 // all sorts of things on the cmd line that we don't care about.  If we want
 // to make this fatal, it must be for production mode only.
 function unknownFn(arg) {
