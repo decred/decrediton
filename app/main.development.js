@@ -22,7 +22,9 @@ function unknownFn(arg) {
 // Allowed cmd line options are defined here.
 var opts = {
   boolean: ['debug'],
+  string: ['extrawalletargs'],
   default: { debug: false },
+  alias: { d: 'debug' },
   unknown: unknownFn
 };
 var argv = parseArgs(process.argv.slice(1), opts);
@@ -177,6 +179,14 @@ const launchDCRWallet = () => {
   args.push('--experimentalrpclisten=127.0.0.1:' + GRPCWalletPort());
   if (cfg.network == 'testnet') {
     args.push('--testnet');
+  }
+
+  // Add any extra args if defined.
+  if (argv.extrawalletargs != undefined) {
+    var extraArgs = argv.extrawalletargs.split(' ');
+    for (var i = 0; i < extraArgs.length; i++) {
+      args.push(extraArgs[i]);
+    }
   }
 
   if (debug) {

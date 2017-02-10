@@ -44,6 +44,22 @@ Applications folder.  Double click on Decrediton.app to start.
 
 From there follow the on screen instructions to setup your wallet.
 
+### Options
+
+When running a release version, there are a few options available.
+
+To see additional debug information (including the output of dcrd and dcrwallet) run:
+
+```
+decrediton --debug
+```
+
+To pass additional arguements to dcrwallet (such as to increase the logging level run:
+
+```
+decrediton --extrawalletargs='-d=debug'
+```
+
 ## Developing
 
 Due to potential compatibility issues, for now, all work should be
