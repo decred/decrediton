@@ -1,8 +1,8 @@
 // @flow
 import { connect } from 'react-redux';
-import History from '../components/History';
+import History from './History';
 import { bindActionCreators } from 'redux';
-import * as ClientActions from '../actions/ClientActions';
+import * as ClientActions from '../../actions/ClientActions';
 
 function mapStateToProps(state) {
   return {

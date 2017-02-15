@@ -1,11 +1,11 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
-import ErrorScreen from './ErrorScreen';
-import SideBar from './SideBar';
-import TxHistory from './TxHistory';
-import Balance from './Balance';
+import ErrorScreen from '../ErrorScreen';
+import SideBar from '../SideBar';
+import TxHistory from '../TxHistory';
+import Balance from '../Balance';
 import TxDetails from './TxDetails';
-import Header from './Header';
+import Header from '../Header';
 
 const styles = {
   body: {
