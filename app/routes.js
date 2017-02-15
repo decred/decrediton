@@ -2,12 +2,12 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './containers/App';
-import HomePage from './containers/HomePage';
-import HistoryPage from './containers/HistoryPage';
-import SendPage from './containers/SendPage';
-import ReceivePage from './containers/ReceivePage';
-import SettingsPage from './containers/SettingsPage';
-import GetStartedPage from './containers/GetStartedPage';
+import HomePage from './components/views/HomePage';
+import HistoryPage from './components/views/HistoryPage';
+import SendPage from './components/views/SendPage';
+import ReceivePage from './components/views/ReceivePage';
+import SettingsPage from './components/views/SettingsPage';
+import GetStartedPage from './components/views/GetStartedPage';
 import WalletError from './containers/WalletError';
 
 export default (
