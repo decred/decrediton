@@ -310,7 +310,7 @@ class Home extends Component{
       // Wallet has been shown to exist and public password != 'public'
       startupStepView = (
       <div style={styles.view}>
-        <Header getStarted 
+        <Header getStarted
           headerTitleOverview="Opening Wallet"
           headerMetaOverview="Please enter the information below to  create your dcrwallet"
         />
@@ -345,7 +345,7 @@ class Home extends Component{
       // Wallet does not exist
       startupStepView = (
       <div style={styles.view}>
-        <Header getStarted headerTitleOverview={"Create a Wallet"}>
+        <Header getStarted headerTitleOverview={'Create a Wallet'}>
           {!this.props.confirmNewSeed ?
             <NewExistingSeedToggle
               activeButton={'left'}
@@ -384,8 +384,8 @@ class Home extends Component{
       // Get private passphrase for discover address request
       startupStepView = (
         <div style={styles.view}>
-          <Header getStarted 
-            headerTitleOverview="Opening Wallet" 
+          <Header getStarted
+            headerTitleOverview="Opening Wallet"
             headerMetaOverview="Please enter the information below to load your dcrwallet"/>
           <div style={styles.contentNewSeed}>
             { discoverAddressRequestAttempt ?

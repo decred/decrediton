@@ -66,7 +66,7 @@ class Receive extends Component{
 
     const copayReceive = (
       <div style={styles.view}>
-        <Header 
+        <Header
           headerTitleOverview="Current address"
           headerMetaOverview={
             getNextAddressResponse !== null ?

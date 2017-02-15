@@ -150,7 +150,7 @@ class Home extends Component{
 
     const homeView = (
       <div style={styles.view}>
-        <Header 
+        <Header
           headerTitleOverview="Available Balance"
           headerMetaOverview={<Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />}
         />

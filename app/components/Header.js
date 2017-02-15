@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';       
+import React from 'react';
 
 const styles = {
   headerGetStarted: {
@@ -45,7 +45,7 @@ const styles = {
     fontFamily: 'Inconsolata, monospace',
     fontSize: '53px',
   },
-}
+};
 class Header extends React.Component {
   render() {
     if (this.props.getStarted) {

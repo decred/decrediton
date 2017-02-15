@@ -540,7 +540,7 @@ class Send extends Component{
       }
     }
     var sharedHeader = (
-      <Header 
+      <Header
         headerTop={[publishTransactionError !== null ?
             <div key="pubError" style={styles.viewNotificationError}>{publishTransactionError}</div> :
             <div key="pubError" ></div>,
