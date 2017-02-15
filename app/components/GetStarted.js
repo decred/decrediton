@@ -293,7 +293,7 @@ class Home extends Component{
       // Initial Step
       startupStepView = (
       <div style={styles.view}>
-        <Header headerTitleOverview="Getting started" />
+        <Header getStarted headerTitleOverview="Getting started" />
         <div style={styles.content}>
           <div style={styles.contentTitle}>
             <div style={styles.contentTitleText}>checking wallet state...</div>
@@ -310,7 +310,7 @@ class Home extends Component{
       // Wallet has been shown to exist and public password != 'public'
       startupStepView = (
       <div style={styles.view}>
-        <Header 
+        <Header getStarted 
           headerTitleOverview="Opening Wallet"
           headerMetaOverview="Please enter the information below to  create your dcrwallet"
         />
@@ -345,7 +345,7 @@ class Home extends Component{
       // Wallet does not exist
       startupStepView = (
       <div style={styles.view}>
-        <Header headerTitleOverview={"Create a Wallet"}>
+        <Header getStarted headerTitleOverview={"Create a Wallet"}>
           {!this.props.confirmNewSeed ?
             <NewExistingSeedToggle
               activeButton={'left'}
@@ -366,7 +366,7 @@ class Home extends Component{
       // Get startrpc and subscribe
       startupStepView = (
         <div style={styles.view}>
-          <Header headerTitleOverview="Starting RPC and subscribing block notifications"/>
+          <Header getStarted headerTitleOverview="Starting RPC and subscribing block notifications"/>
           <div style={styles.content}>
             <div style={styles.contentTitle}>
               <div style={styles.contentTitleText}>Start RPC, Subscribe Block</div>
@@ -384,7 +384,7 @@ class Home extends Component{
       // Get private passphrase for discover address request
       startupStepView = (
         <div style={styles.view}>
-          <Header 
+          <Header getStarted 
             headerTitleOverview="Opening Wallet" 
             headerMetaOverview="Please enter the information below to load your dcrwallet"/>
           <div style={styles.contentNewSeed}>
@@ -418,7 +418,7 @@ class Home extends Component{
       // Fetch headers
       startupStepView = (
         <div style={styles.view}>
-          <Header headerTitleOverview="Catching up block chain"/>
+          <Header getStarted headerTitleOverview="Catching up block chain"/>
           <div style={styles.contentNewSeed}>
             <div style={styles.contentNest}>
               { fetchHeadersRequestAttempt ?
@@ -440,7 +440,7 @@ class Home extends Component{
       // Final Steps
       startupStepView = (
         <div style={styles.view}>
-          <Header headerTitleOverview="Final start up" />
+          <Header getStarted headerTitleOverview="Final start up" />
           <div style={styles.content}>
             <div style={styles.contentTitle}>
               <div style={styles.contentTitleText}>Last steps if needed</div>
