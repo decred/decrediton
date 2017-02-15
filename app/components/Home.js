@@ -30,11 +30,6 @@ const styles = {
     float: 'right',
     backgroundColor: '#f3f6f6',
   },
-  header: {
-    paddingRight: '80px',
-    paddingLeft: '100px',
-    backgroundColor: '#fff',
-  },
   content: {
     overflow: 'auto',
     height: '556px',
@@ -43,22 +38,6 @@ const styles = {
 
   transition1: {
     transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
-  },
-  headerTop: {
-    height: '106px',
-    paddingBottom: '20px',
-  },
-  headerTitleOverview: {
-    height: '54px',
-    paddingTop: '13px',
-    color: '#596d81',
-    fontSize: '27px',
-  },
-  headerMetaOverview: {
-    height: '54px',
-    paddingTop: '5px',
-    fontFamily: 'Inconsolata, monospace',
-    fontSize: '53px',
   },
   contentTitle: {
     display: 'block',
@@ -156,28 +135,24 @@ class Home extends Component{
     } else {
       rescanView = (
         <div style={styles.view}>
-          <div style={styles.header}>
-            <div style={styles.headerTop}></div>
-            <p>Rescanning</p>
+          <Header headerTitleOverview="Rescanning">
             <LinearProgress mode="determinate"
               min={rescanRequest !== null ? rescanRequest.getBeginHeight(): 0}
               max={getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight(): 100}
               value={rescanResponse !== null ? rescanResponse.getRescannedThrough() : 0} />
             <p>{rescanPercFisnished}%</p>
-    <p>{rescanResponse.getRescannedThrough()}/{getAccountsResponse.getCurrentBlockHeight()}</p>
-          </div>
+            <p>{rescanResponse.getRescannedThrough()}/{getAccountsResponse.getCurrentBlockHeight()}</p>
+          </Header>
         </div>
       );
     }
 
     const homeView = (
       <div style={styles.view}>
-        <div style={styles.header}>
-          <div style={styles.headerTop}></div>
-          <div style={styles.headerTitleOverview}>Available Balance</div>
-          <div style={styles.headerMetaOverview}><Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />
-          </div>
-        </div>
+        <Header 
+          headerTitleOverview="Available Balance"
+          headerMetaOverview={<Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />}
+        />
         <div style={styles.content}>
           <div style={styles.contentTitle}>
             <div style={styles.contentTitleText}>Recent Transactions</div>
