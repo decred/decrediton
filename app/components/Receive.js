@@ -26,27 +26,6 @@ const styles = {
     float: 'right',
     backgroundColor: '#f3f6f6',
   },
-  header: {
-    paddingRight: '80px',
-    paddingLeft: '100px',
-    backgroundColor: '#fff',
-  },
-  headerTop: {
-    height: '106px',
-    paddingBottom: '20px',
-  },
-  headerTitleOverview: {
-    height: '54px',
-    paddingTop: '13px',
-    color: '#596d81',
-    fontSize: '27px',
-  },
-  headerMetaOverview: {
-    height: '54px',
-    paddingTop: '5px',
-    fontFamily: 'Inconsolata, monospace',
-    fontSize: '33px',
-  },
   content: {
     overflow: 'auto',
     height: '556px',
@@ -86,16 +65,14 @@ class Receive extends Component{
 
     const copayReceive = (
       <div style={styles.view}>
-        <div style={styles.header}>
-          <div style={styles.headerTop}></div>
-          <div style={styles.headerTitleOverview}>Current address</div>
-          <div style={styles.headerMetaOverview}>
-            {getNextAddressResponse !== null ?
-              getNextAddressResponse.getAddress() :
+        <Header 
+          headerTitleOverview="Current address"
+          headerMetaOverview={
+            getNextAddressResponse !== null ?
+              <div style={{fontSize:'33px'}}>getNextAddressResponse.getAddress()</div> :
               <div></div>
-            }
-          </div>
-        </div>
+          }
+        />
         <div style={styles.content}>
           <div style={styles.center}>
             {getNextAddressResponse !== null ?
