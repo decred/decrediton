@@ -1,7 +1,5 @@
 // @flow
-import React, { Component, PropTypes } from 'react';
-import ErrorScreen from '../ErrorScreen';
-import Button from '../ButtonTanel';
+import React, { Component } from 'react';
 import SideBar from '../SideBar';
 import Header from '../Header';
 
