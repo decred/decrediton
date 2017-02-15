@@ -8,7 +8,7 @@ import SendPage from './components/views/SendPage';
 import ReceivePage from './components/views/ReceivePage';
 import SettingsPage from './components/views/SettingsPage';
 import GetStartedPage from './components/views/GetStartedPage';
-import WalletError from './containers/WalletError';
+import WalletError from './components/views/WalletError';
 
 export default (
   <Route path="/" component={App}>
