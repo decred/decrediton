@@ -29,8 +29,9 @@ const styles = {
     backgroundColor: '#fff',
   },
   headerTop: {
-    height: '106px',
-    paddingBottom: '20px',
+    height: '90px',
+    paddingTop: '36px',
+    textAlign: 'center',
   },
   headerTitleOverview: {
     height: '54px',

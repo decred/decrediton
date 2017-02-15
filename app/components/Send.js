@@ -68,11 +68,6 @@ const styles = {
   transition1: {
     transition: 'all 100ms ease-in-out',
   },
-  headerTop: {
-    height: '101px',
-    paddingTop: '43px',
-    textAlign: 'center',
-  },
   headerTitleSend: {
     height: '54px',
     lineHeight: '49px',
@@ -572,7 +567,6 @@ class Send extends Component{
     }
     const signTxView = (
       <div style={styles.view}>
-
         {sharedHeader}
         <div style={styles.content}>
           <div style={styles.flexHeight}>
