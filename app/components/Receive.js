@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ErrorScreen from './ErrorScreen';
 import Button from './ButtonTanel';
 import SideBar from './SideBar';
+import Header from './Header';
 import qr from 'qr-image';
 
 const styles = {
@@ -69,7 +70,7 @@ class Receive extends Component{
           headerTitleOverview="Current address"
           headerMetaOverview={
             getNextAddressResponse !== null ?
-              <div style={{fontSize:'33px'}}>getNextAddressResponse.getAddress()</div> :
+              <div style={{fontSize:'33px'}}>{getNextAddressResponse.getAddress()}</div> :
               <div></div>
           }
         />

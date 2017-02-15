@@ -7,6 +7,7 @@ import Balance from './Balance';
 import SideBar from './SideBar';
 import Search from './icons/search.svg';
 import TxHistory from './TxHistory';
+import Header from './Header';
 import './fonts.css';
 
 const styles = {
