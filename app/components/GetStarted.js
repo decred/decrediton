@@ -9,6 +9,7 @@ import Radium from 'radium';
 import SideBar from './SideBar';
 import NewExistingSeedToggle from './NewExistingSeedToggle';
 import FlatButton from 'material-ui/FlatButton';
+import Header from './Header';
 
 const styles = {
   body: {
@@ -31,12 +32,6 @@ const styles = {
     float: 'right',
     backgroundColor: '#0c1e3e',
   },
-  header: {
-    paddingRight: '80px',
-    paddingLeft: '100px',
-    backgroundColor: '#596d81',
-    height: '214px',
-  },
   content: {
     overflow: 'auto',
     height: '556px',
@@ -45,22 +40,6 @@ const styles = {
 
   transition1: {
     transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
-  },
-  headerTop: {
-    height: '106px',
-  },
-  headerTitleOverview: {
-    height: '41px',
-    color: '#fff',
-    fontSize: '27px',
-  },
-  headerMetaOverview: {
-    float: 'left',
-    clear: 'left',
-    height: '54px',
-    width: '50%',
-    fontSize: '13px',
-    color: '#c4cbd2',
   },
   contentTitle: {
     display: 'block',
@@ -314,12 +293,7 @@ class Home extends Component{
       // Initial Step
       startupStepView = (
       <div style={styles.view}>
-        <div style={styles.header}>
-          <div style={styles.headerTop}></div>
-          <div style={styles.headerTitleOverview}>Getting started</div>
-          <div style={styles.headerMetaOverview}>
-          </div>
-        </div>
+        <Header getStarted headerTitleOverview="Getting started" />
         <div style={styles.content}>
           <div style={styles.contentTitle}>
             <div style={styles.contentTitleText}>checking wallet state...</div>
@@ -336,13 +310,10 @@ class Home extends Component{
       // Wallet has been shown to exist and public password != 'public'
       startupStepView = (
       <div style={styles.view}>
-        <div style={styles.header}>
-          <div style={styles.headerTop}></div>
-          <div style={styles.headerTitleOverview}>Opening Wallet</div>
-          <div style={styles.headerMetaOverview}>
-            Please enter the information below to  create your dcrwallet
-          </div>
-        </div>
+        <Header getStarted
+          headerTitleOverview="Opening Wallet"
+          headerMetaOverview="Please enter the information below to  create your dcrwallet"
+        />
         <div style={styles.contentNewSeed}>
           { walletOpenRequestAttempt ?
             <CircularProgress style={styles.loading} size={125} thickness={6}/> :
@@ -374,10 +345,7 @@ class Home extends Component{
       // Wallet does not exist
       startupStepView = (
       <div style={styles.view}>
-        <div style={styles.header}>
-          <div style={styles.headerTop}></div>
-          <div style={styles.headerTitleOverview}>Create a Wallet</div>
-          <div style={styles.headerMetaOverview}></div>
+        <Header getStarted headerTitleOverview={'Create a Wallet'}>
           {!this.props.confirmNewSeed ?
             <NewExistingSeedToggle
               activeButton={'left'}
@@ -386,7 +354,7 @@ class Home extends Component{
               toggleAction={(e)=>{this.toggleNewExisting(e);}}/> :
             <div style={styles.viewButtonGoBack} onClick={()=>this.props.createWalletGoBackNewSeed()}>Back</div>
           }
-        </div>
+        </Header>
         {walletCreateRequestAttempt ?
         <div style={styles.contentNewSeed}>
           <CircularProgress style={styles.loading} size={125} thickness={6}/>
@@ -398,12 +366,7 @@ class Home extends Component{
       // Get startrpc and subscribe
       startupStepView = (
         <div style={styles.view}>
-          <div style={styles.header}>
-            <div style={styles.headerTop}></div>
-            <div style={styles.headerTitleOverview}>Starting RPC and subscribing block notifications</div>
-            <div style={styles.headerMetaOverview}>
-            </div>
-          </div>
+          <Header getStarted headerTitleOverview="Starting RPC and subscribing block notifications"/>
           <div style={styles.content}>
             <div style={styles.contentTitle}>
               <div style={styles.contentTitleText}>Start RPC, Subscribe Block</div>
@@ -421,13 +384,9 @@ class Home extends Component{
       // Get private passphrase for discover address request
       startupStepView = (
         <div style={styles.view}>
-          <div style={styles.header}>
-            <div style={styles.headerTop}></div>
-            <div style={styles.headerTitleOverview}>Opening Wallet</div>
-            <div style={styles.headerMetaOverview}>
-              Please enter the information below to load your dcrwallet
-            </div>
-          </div>
+          <Header getStarted
+            headerTitleOverview="Opening Wallet"
+            headerMetaOverview="Please enter the information below to load your dcrwallet"/>
           <div style={styles.contentNewSeed}>
             { discoverAddressRequestAttempt ?
             <CircularProgress style={styles.loading} size={125} thickness={6}/> :
@@ -459,12 +418,7 @@ class Home extends Component{
       // Fetch headers
       startupStepView = (
         <div style={styles.view}>
-          <div style={styles.header}>
-            <div style={styles.headerTop}></div>
-            <div style={styles.headerTitleOverview}>Catching up block chain</div>
-            <div style={styles.headerMetaOverview}>
-            </div>
-          </div>
+          <Header getStarted headerTitleOverview="Catching up block chain"/>
           <div style={styles.contentNewSeed}>
             <div style={styles.contentNest}>
               { fetchHeadersRequestAttempt ?
@@ -486,12 +440,7 @@ class Home extends Component{
       // Final Steps
       startupStepView = (
         <div style={styles.view}>
-          <div style={styles.header}>
-            <div style={styles.headerTop}></div>
-            <div style={styles.headerTitleOverview}>Final start up</div>
-            <div style={styles.headerMetaOverview}>
-            </div>
-          </div>
+          <Header getStarted headerTitleOverview="Final start up" />
           <div style={styles.content}>
             <div style={styles.contentTitle}>
               <div style={styles.contentTitleText}>Last steps if needed</div>

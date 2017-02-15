@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ErrorScreen from './ErrorScreen';
 import Button from './ButtonTanel';
 import SideBar from './SideBar';
+import Header from './Header';
 
 const styles = {
   body: {
@@ -24,27 +25,6 @@ const styles = {
     height: '100%',
     float: 'right',
     backgroundColor: '#f3f6f6',
-  },
-  header: {
-    paddingRight: '80px',
-    paddingLeft: '100px',
-    backgroundColor: '#fff',
-  },
-  headerTop: {
-    height: '106px',
-    paddingBottom: '20px',
-  },
-  headerTitleOverview: {
-    height: '54px',
-    paddingTop: '13px',
-    color: '#596d81',
-    fontSize: '27px',
-  },
-  headerMetaOverview: {
-    height: '54px',
-    paddingTop: '5px',
-    fontFamily: 'Inconsolata, monospace',
-    fontSize: '53px',
   },
   content: {
     overflow: 'auto',
@@ -72,12 +52,7 @@ class Settings extends Component{
     };
     const settingsView = (
       <div style={styles.view}>
-        <div style={styles.header}>
-          <div style={styles.headerTop}></div>
-          <div style={styles.headerTitleOverview}>Settings</div>
-          <div style={styles.headerMetaOverview}>
-          </div>
-        </div>
+        <Header headerTitleOverview="Settings" />
         <div style={styles.content}>
           <div style={styles.label}>
             Displayed Units

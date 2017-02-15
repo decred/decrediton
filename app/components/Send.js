@@ -11,6 +11,7 @@ import ArrowDownKeyBlue from './icons/arrow-down-key-blue.svg';
 import Add from './icons/add.svg';
 import Delete from './icons/delete.svg';
 import Balance from './Balance';
+import Header from './Header';
 
 function mapStateToProps(state) {
   return {
@@ -39,11 +40,6 @@ const styles = {
     float: 'right',
     backgroundColor: '#f3f6f6',
   },
-  header: {
-    paddingRight: '80px',
-    paddingLeft: '100px',
-    backgroundColor: '#fff',
-  },
   viewNotificationError: {
     display: 'inline-block',
     marginRight: 'auto',
@@ -71,11 +67,6 @@ const styles = {
   },
   transition1: {
     transition: 'all 100ms ease-in-out',
-  },
-  headerTop: {
-    height: '101px',
-    paddingTop: '43px',
-    textAlign: 'center',
   },
   headerTitleSend: {
     height: '54px',
@@ -549,28 +540,23 @@ class Send extends Component{
       }
     }
     var sharedHeader = (
-      <div style={styles.header}>
-        <div style={styles.headerTop}>
-          {publishTransactionError !== null ?
-            <div style={styles.viewNotificationError}>{publishTransactionError}pt</div> :
-            <div></div>
-          }
-          {constructTxError !== null ?
-            <div style={styles.viewNotificationError}>{constructTxError}ct</div> :
-            <div></div>
-          }
-          {signTransactionError !== null ?
-            <div style={styles.viewNotificationError}>{signTransactionError}st</div> :
-            <div></div>
-          }
-          {publishTransactionResponse !== null ?
-            <div style={styles.viewNotificationSuccess}>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
-            <div></div>
-          }
-        </div>
-        <div style={styles.headerTitleSend}>Send Funds</div>
-        {networkTextDiv}
-      </div>);
+      <Header
+        headerTop={[publishTransactionError !== null ?
+            <div key="pubError" style={styles.viewNotificationError}>{publishTransactionError}</div> :
+            <div key="pubError" ></div>,
+          constructTxError !== null ?
+            <div key="conError"  style={styles.viewNotificationError}>{constructTxError}</div> :
+            <div key="conError" ></div>,
+          signTransactionError !== null ?
+            <div key="signError"  style={styles.viewNotificationError}>{signTransactionError}</div> :
+            <div key="signError" ></div>,
+          publishTransactionResponse !== null ?
+            <div key="pubSuccess"  style={styles.viewNotificationSuccess}>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
+            <div key="pubSuccess" ></div>]}
+        headerTitleOverview={<div style={styles.headerTitleSend}>Send Funds</div>}
+        headerMetaOverview={networkTextDiv}>
+      </Header>
+    );
 
     var estimatedFee = 0;
     var totalSpent = 0;
