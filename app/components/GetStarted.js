@@ -345,7 +345,7 @@ class Home extends Component{
       // Wallet does not exist
       startupStepView = (
       <div style={styles.view}>
-        <Header headerTitleOverview="Create a Wallet">
+        <Header headerTitleOverview={"Create a Wallet"}>
           {!this.props.confirmNewSeed ?
             <NewExistingSeedToggle
               activeButton={'left'}

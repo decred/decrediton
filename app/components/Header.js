@@ -4,23 +4,24 @@ const styles = {
   header: {
     paddingRight: '80px',
     paddingLeft: '100px',
-    backgroundColor: '#fff',
+    backgroundColor: '#596d81',
+    height: '214px',
   },
   headerTop: {
     height: '106px',
-    paddingBottom: '20px',
   },
   headerTitleOverview: {
-    height: '54px',
-    paddingTop: '13px',
-    color: '#596d81',
+    height: '41px',
+    color: '#fff',
     fontSize: '27px',
   },
   headerMetaOverview: {
+    float: 'left',
+    clear: 'left',
     height: '54px',
-    paddingTop: '5px',
-    fontFamily: 'Inconsolata, monospace',
-    fontSize: '53px',
+    width: '50%',
+    fontSize: '13px',
+    color: '#c4cbd2',
   },
 }
 class Header extends React.Component {
@@ -28,7 +29,7 @@ class Header extends React.Component {
     return (
       <div style={styles.header}>
         <div style={styles.headerTop}>{this.props.headerTop}</div>
-        <div style={styles.headerTitleOverview}>{this.headerTitleOverview}</div>
+        <div style={styles.headerTitleOverview}>{this.props.headerTitleOverview}</div>
         <div style={styles.headerMetaOverview}>
           {this.props.headerMetaOverview}
         </div>
