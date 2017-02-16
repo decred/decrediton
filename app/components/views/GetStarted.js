@@ -1,15 +1,15 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
-import CreateWalletForm from '../components/CreateWalletForm';
+import CreateWalletForm from '../CreateWalletForm';
 import CircularProgress from 'material-ui/CircularProgress';
 import LinearProgress from 'material-ui/LinearProgress';
 import Dialog from 'material-ui/Dialog';
-import ShowError from './ShowError';
+import ShowError from '../ShowError';
 import Radium from 'radium';
-import SideBar from './SideBar';
-import NewExistingSeedToggle from './NewExistingSeedToggle';
+import SideBar from '../SideBar';
+import NewExistingSeedToggle from '../NewExistingSeedToggle';
 import FlatButton from 'material-ui/FlatButton';
-import Header from './Header';
+import Header from '../Header';
 
 const styles = {
   body: {

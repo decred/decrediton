@@ -1,17 +1,17 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import ErrorScreen from './ErrorScreen';
-import { reverseHash } from '../helpers/byteActions';
-import SideBar from './SideBar';
-import MinusBig from './icons/minus-big.svg';
-import WalletGray from './icons/wallet-gray.svg';
-import ArrowDownMidBlue from './icons/arrow-down-mid-blue.svg';
-import ArrowDownKeyBlue from './icons/arrow-down-key-blue.svg';
-import Add from './icons/add.svg';
-import Delete from './icons/delete.svg';
-import Balance from './Balance';
-import Header from './Header';
+import ErrorScreen from '../ErrorScreen';
+import { reverseHash } from '../../helpers/byteActions';
+import SideBar from '../SideBar';
+import MinusBig from '../icons/minus-big.svg';
+import WalletGray from '../icons/wallet-gray.svg';
+import ArrowDownMidBlue from '../icons/arrow-down-mid-blue.svg';
+import ArrowDownKeyBlue from '../icons/arrow-down-key-blue.svg';
+import Add from '../icons/add.svg';
+import Delete from '../icons/delete.svg';
+import Balance from '../Balance';
+import Header from '../Header';
 
 function mapStateToProps(state) {
   return {

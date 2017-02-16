@@ -1,14 +1,14 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 import LinearProgress from 'material-ui/LinearProgress';
-import ErrorScreen from './ErrorScreen';
-import RescanForm from '../components/RescanForm';
-import Balance from './Balance';
-import SideBar from './SideBar';
-import Search from './icons/search.svg';
-import TxHistory from './TxHistory';
-import Header from './Header';
-import './fonts.css';
+import ErrorScreen from '../ErrorScreen';
+import RescanForm from '../RescanForm';
+import Balance from '../Balance';
+import SideBar from '../SideBar';
+import Search from '../icons/search.svg';
+import TxHistory from '../TxHistory';
+import Header from '../Header';
+import '../fonts.css';
 
 const styles = {
   body: {

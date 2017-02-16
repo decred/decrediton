@@ -1,11 +1,11 @@
 // @flow
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import GetStarted from '../components/GetStarted';
-import * as ClientActions from '../actions/ClientActions';
-import * as WalletLoaderActions from '../actions/WalletLoaderActions';
-import * as ControlActions from '../actions/ControlActions';
-import * as VersionActions from '../actions/VersionActions';
+import GetStarted from './GetStarted';
+import * as ClientActions from '../../actions/ClientActions';
+import * as WalletLoaderActions from '../../actions/WalletLoaderActions';
+import * as ControlActions from '../../actions/ControlActions';
+import * as VersionActions from '../../actions/VersionActions';
 
 function mapStateToProps(state) {
   return {

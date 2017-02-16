@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Radium from 'radium';
-import { reverseHash } from '../helpers/byteActions';
-import Balance from './Balance';
-import IndicatorPending from './icons/indicator-pending.svg';
-import IndicatorConfirmed from './icons/indicator-confirmed.svg';
-import PlusBig from './icons/plus-big.svg';
-import MinusBig from './icons/minus-big.svg';
+import { reverseHash } from '../../helpers/byteActions';
+import Balance from '../Balance';
+import IndicatorPending from '../icons/indicator-pending.svg';
+import IndicatorConfirmed from '../icons/indicator-confirmed.svg';
+import PlusBig from '../icons/plus-big.svg';
+import MinusBig from '../icons/minus-big.svg';
 import dateFormat from 'dateformat';
-import './fonts.css';
+import '../fonts.css';
 import { shell } from 'electron';
 
 const styles = {

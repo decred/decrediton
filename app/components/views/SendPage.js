@@ -1,8 +1,8 @@
 // @flow
 import { connect } from 'react-redux';
-import Send from '../components/Send';
 import { bindActionCreators } from 'redux';
-import * as ControlActions from '../actions/ControlActions';
+import Send from './Send';
+import * as ControlActions from '../../actions/ControlActions';
 
 function mapStateToProps(state) {
   return {
