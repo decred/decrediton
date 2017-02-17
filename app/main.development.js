@@ -51,21 +51,22 @@ app.on('window-all-closed', () => {
     // Don't try to close if not running.
     if (require('is-running')(dcrwPID)) {
       if (debug) {
-	console.log('Sending SIGINT to dcrwallet at pid:', dcrwPID);
+        console.log('Sending SIGINT to dcrwallet at pid:', dcrwPID);
       }
       process.kill(dcrwPID, 'SIGINT');
     }
     if (require('is-running')(dcrdPID)) {
       if (debug) {
-	console.log('Sending SIGINT to dcrd at pid:', dcrdPID);
+        console.log('Sending SIGINT to dcrd at pid:', dcrdPID);
       }
       process.kill(dcrdPID, 'SIGINT');
     }
 
-  if (debug) {
-    console.log('Closing decrediton.');
+    if (debug) {
+      console.log('Closing decrediton.');
+    }
+    app.quit();
   }
-  app.quit();
 });
 
 function GRPCWalletPort() {
