@@ -1,4 +1,4 @@
-import { seeder, generateRandomSeed, decodeSeed } from '../middleware/grpc/seeder';
+import { seeder } from '../middleware/grpc/seeder';
 export const SEEDER_ATTEMPT = 'SEEDER_ATTEMPT';
 export const SEEDER_FAILED = 'SEEDER_FAILED';
 export const SEEDER_SUCCESS = 'SEEDER_SUCCESS';
@@ -70,8 +70,8 @@ function generateRandomSeedAction() {
   var request = new GenerateRandomSeedRequest();
   return (dispatch, getState) => {
     const { seeder } = getState().seedService;
-    generateRandomSeed(seeder, request,
-        function(response, err) {
+    seeder.generateRandomSeed(request,
+        function(err, response) {
           if (err) {
             dispatch(generateRandomSeedError(err + ' Please try again'));
           } else {
@@ -108,8 +108,8 @@ function decodeSeedAction(mnemonic) {
   request.setUserInput(mnemonic);
   return (dispatch, getState) => {
     const { seeder } = getState().seedService;
-    decodeSeed(seeder, request,
-        function(response, err) {
+    seeder.decodeSeed(request,
+        function(err, response) {
           if (err) {
             dispatch(decodeSeedError(err + ' Please try again'));
           } else {

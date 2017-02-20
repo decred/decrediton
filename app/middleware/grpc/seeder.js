@@ -20,27 +20,6 @@ export function seeder(request, cb) {
   });
 }
 
-export function generateRandomSeed(seeder, request, cb) {
-  seeder.generateRandomSeed(request, function(err, response) {
-    if (err) {
-      console.error(err);
-      return cb(null, err);
-    } else {
-      return cb(response);
-    }
-  });
-}
-
-export function decodeSeed(seeder, request, cb) {
-  seeder.decodeSeed(request, function(err, response) {
-    if (err) {
-      return cb(null, err);
-    } else {
-      //console.log(response.decoded_seed.toString('hex'));
-      return cb(response);
-    }
-  });
-}
 /*
 bject {seed_bytes: Buffer[32], seed_hex: "59b335d2a7cd7d0a133106d1f779c987e65c842d6b5664925cc1a4b779a8442c", seed_mnemonic: "endow pocketful chopper sensation repay sandalwood…ssor jawbone paramount crumpled Chicago snowslide"}
 seed_bytes
