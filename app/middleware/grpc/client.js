@@ -25,77 +25,6 @@ export function getWalletService(address, port, cb) {
   });
 }
 
-export function getBalance(client, request, cb) {
-  if (client === undefined) {
-    return cb(null, new Error('Client not available to getBalance'));
-  }
-
-  client.balance(request, function(err, response) {
-    if (err) {
-      console.error(err);
-      return cb(null, err);
-    } else {
-      return cb(response);
-    }
-  });
-}
-
-export function getAccountNumber(client, request, cb) {
-  client.accountNumber(request, function(err, response) {
-    if (err) {
-      console.error(err);
-      return cb(null, err);
-    } else {
-      return cb(response);
-    }
-  });
-}
-
-export function getStakeInfo(client, request, cb) {
-  client.stakeInfo(request, function(err, response) {
-    if (err) {
-      console.error(err);
-      return cb(null, err);
-    } else {
-      return cb(response);
-    }
-  });
-}
-
-export function getPing(client, request, cb) {
-  client.ping(request, function(err, response) {
-    if (err) {
-      console.error(err);
-      return cb(null, err);
-    } else {
-      return cb(response);
-    }
-  });
-}
-
-export function getNetwork(client, request, cb) {
-  client.network(request, function(err, response) {
-    if (err) {
-      console.error(err);
-      return cb(null, err);
-    } else {
-      return cb(response);
-    }
-  });
-}
-
-export function getAccounts(client, request, cb) {
-    // Accounts
-  client.accounts(request, function(err, response) {
-    if (err) {
-      console.error(err);
-      return cb(null, err);
-    } else {
-      return cb(response);
-    }
-  });
-}
-
 export function getTransactions(client, request, cb) {
   var getTx = client.getTransactions(request);
   getTx.on('data', function(response) {
@@ -109,17 +38,6 @@ export function getTransactions(client, request, cb) {
   });
   getTx.on('error', function(err) {
     return cb(false, null, err);
-  });
-}
-
-export function getTicketPrice(client, request, cb) {
-  client.ticketPrice(request, function(err, response) {
-    if (err) {
-      console.error('ticketPrice', err);
-      return cb(null, err);
-    } else {
-      return cb(response);
-    }
   });
 }
 
