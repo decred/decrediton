@@ -368,16 +368,19 @@ export function getTransactionInfoAttempt() {
 function getTransactionsInfo(request) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
-    getTransactions(walletService, request,
-      function(finished, getTransactionsResponse, err) {
-        if (err) {
-          console.error(err + ' Please try again');
-        } else if (finished) {
-          dispatch(getTransactionsInfoEnd());
-        } else {
-          dispatch(getTransactionsInfoProgress(getTransactionsResponse));
-        }
-      });
+    var getTx = walletService.getTransactions(request);
+    getTx.on('data', function(response) {
+      dispatch(getTransactionsInfoProgress(getTransactionsResponse));
+    });
+    getTx.on('end', function() {
+      dispatch(getTransactionsInfoEnd());
+    });
+    getTx.on('status', function(status) {
+      console.log('GetTx status:', status);
+    });
+    getTx.on('error', function(err) {
+      console.error(err + ' Please try again');
+    });
   };
 }
 

@@ -120,16 +120,18 @@ function rescanAction() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { rescanRequest } = getState().control;
-    rescan(walletService, rescanRequest,
-        function(finished, rescanResponse, err) {
-          if (err) {
-            dispatch(rescanError(err + ' Please try again'));
-          } else if (finished) {
-            dispatch(rescanComplete());
-          } else {
-            dispatch(rescanProgress(rescanResponse));
-          }
-        });
+    var rescanCall = client.rescan(rescanRequest);
+    rescanCall.on('data', function(response) {
+      console.log('Rescanned thru', response.getRescannedThrough());
+      dispatch(rescanProgress(rescanResponse));
+    });
+    rescanCall.on('end', function() {
+      console.log('Rescan done');
+      dispatch(rescanComplete());
+    });
+    rescanCall.on('status', function(status) {
+      console.log('Rescan status:', status);
+    });
   };
 }
 

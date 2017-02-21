@@ -79,22 +79,6 @@ export function getVersionService(address, port, cb) {
   });
 }
 
-export function getTransactions(client, request, cb) {
-  var getTx = client.getTransactions(request);
-  getTx.on('data', function(response) {
-    return cb(false, response);
-  });
-  getTx.on('end', function() {
-    return cb(true);
-  });
-  getTx.on('status', function(status) {
-    console.log('GetTx status:', status);
-  });
-  getTx.on('error', function(err) {
-    return cb(false, null, err);
-  });
-}
-
 export function transactionNtfs(client, request, cb) {
     // Register Notification Streams from Wallet
   var transactionNtfns = client.transactionNotifications(request);
@@ -146,20 +130,3 @@ Hex: f4a51fc3de6da8ea249bac512735711b2dea52f7b9487aede7d5a47eca387a10
      f4a51fc3de6da8ea249bac512735711b2dea52f7b9487aede7d5a47eca387a10
      */
 // Available GRPC control client examples
-
-export function rescan(client, request, cb) {
-    // Rescan
-
-  var rescanCall = client.rescan(request);
-  rescanCall.on('data', function(response) {
-    console.log('Rescanned thru', response.getRescannedThrough());
-    return cb(false, response);
-  });
-  rescanCall.on('end', function() {
-    console.log('Rescan done');
-    return cb(true);
-  });
-  rescanCall.on('status', function(status) {
-    console.log('Rescan status:', status);
-  });
-}
