@@ -120,10 +120,10 @@ function rescanAction() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { rescanRequest } = getState().control;
-    var rescanCall = client.rescan(rescanRequest);
+    var rescanCall = walletService.rescan(rescanRequest);
     rescanCall.on('data', function(response) {
       console.log('Rescanned thru', response.getRescannedThrough());
-      dispatch(rescanProgress(rescanResponse));
+      dispatch(rescanProgress(response));
     });
     rescanCall.on('end', function() {
       console.log('Rescan done');

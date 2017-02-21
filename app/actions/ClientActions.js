@@ -370,7 +370,7 @@ function getTransactionsInfo(request) {
     const { walletService } = getState().grpc;
     var getTx = walletService.getTransactions(request);
     getTx.on('data', function(response) {
-      dispatch(getTransactionsInfoProgress(getTransactionsResponse));
+      dispatch(getTransactionsInfoProgress(response));
     });
     getTx.on('end', function() {
       dispatch(getTransactionsInfoEnd());
@@ -470,16 +470,19 @@ export function getMinedPaginatedTransactions(pageNumber) {
 function getPaginatedTransactions(request, requestedTxs) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
-    getTransactions(walletService, request,
-        function(finished, getTransactionsResponse, err) {
-          if (err) {
-            console.log(err + ' Please try again');
-          } else if (finished) {
-            dispatch(getMinedPaginatedTransactionsFinished());
-          } else {
-            dispatch(paginatedTransactionsProgess(getTransactionsResponse, requestedTxs));
-          }
-        });
+    var getTx = walletService.getTransactions(request);
+    getTx.on('data', function(response) {
+      dispatch(paginatedTransactionsProgess(response, requestedTxs));
+    });
+    getTx.on('end', function() {
+      dispatch(getMinedPaginatedTransactionsFinished());
+    });
+    getTx.on('status', function(status) {
+      console.log('GetTx status:', status);
+    });
+    getTx.on('error', function(err) {
+      console.error(err + ' Please try again');
+    });
   };
 }
 
