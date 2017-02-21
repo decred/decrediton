@@ -145,3 +145,21 @@ upshot paperweight billiard replica tactics hazardous retouch undaunted bluebird
 Hex: f4a51fc3de6da8ea249bac512735711b2dea52f7b9487aede7d5a47eca387a10
      f4a51fc3de6da8ea249bac512735711b2dea52f7b9487aede7d5a47eca387a10
      */
+// Available GRPC control client examples
+
+export function rescan(client, request, cb) {
+    // Rescan
+
+  var rescanCall = client.rescan(request);
+  rescanCall.on('data', function(response) {
+    console.log('Rescanned thru', response.getRescannedThrough());
+    return cb(false, response);
+  });
+  rescanCall.on('end', function() {
+    console.log('Rescan done');
+    return cb(true);
+  });
+  rescanCall.on('status', function(status) {
+    console.log('Rescan status:', status);
+  });
+}

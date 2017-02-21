@@ -1,7 +1,4 @@
-import { getNextAddress, renameAccount, getNextAccount,
-  rescan, importPrivateKey, importScript, changePassphrase,
-  loadActiveDataFilters, fundTransaction, signTransaction, publishTransaction,
-  purchaseTicket, constructTransaction } from '../middleware/grpc/control';
+import { rescan } from '../middleware/grpc/client';
 import { getBalanceAttempt, getTransactionInfoAttempt } from './ClientActions';
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
@@ -37,8 +34,8 @@ function getNextAddressAction() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { getNextAddressRequest } = getState().control;
-    getNextAddress(walletService, getNextAddressRequest,
-        function(getNextAddressResponse, err) {
+    walletService.nextAddress(getNextAddressRequest,
+        function(err, getNextAddressResponse) {
           if (err) {
             dispatch(getNextAddressError(err + ' Please try again'));
           } else {
@@ -76,8 +73,8 @@ function renameAccountAction() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { renameAccountRequest } = getState().control;
-    renameAccount(walletService, renameAccountRequest,
-        function(renameAccountResponse, err) {
+    walletService.renameAccount(renameAccountRequest,
+        function(err, renameAccountResponse) {
           if (err) {
             dispatch(renameAccountError(err + ' Please try again'));
           } else {
@@ -164,8 +161,8 @@ function getNextAccountAction() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { getNextAccountRequest } = getState().control;
-    getNextAccount(walletService, getNextAccountRequest,
-        function(getNextAccountResponse, err) {
+    walletService.nextAccount(getNextAccountRequest,
+        function(err, getNextAccountResponse) {
           if (err) {
             dispatch(getNextAccountError(err + ' Please try again'));
           } else {
@@ -207,8 +204,8 @@ function importPrivateKeyAction() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { importPrivateKeyRequest } = getState().control;
-    importPrivateKey(walletService, importPrivateKeyRequest,
-        function(importPrivateKeyResponse, err) {
+    walletService.importPrivateKey(importPrivateKeyRequest,
+        function(err, importPrivateKeyResponse) {
           if (err) {
             dispatch(importPrivateKeyError(err + ' Please try again'));
           } else {
@@ -248,8 +245,8 @@ function importScriptAction() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { importScriptRequest } = getState().control;
-    importScript(walletService, importScriptRequest,
-        function(importScriptResponse, err) {
+    walletService.importScript(importScriptRequest,
+        function(err, importScriptResponse) {
           if (err) {
             dispatch(importScriptError(err + ' Please try again'));
           } else {
@@ -287,8 +284,8 @@ function changePassphraseAction() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { changePassphraseRequest } = getState().control;
-    changePassphrase(walletService, changePassphraseRequest,
-        function(changePassphraseResponse, err) {
+    walletService.changePassphrase(changePassphraseRequest,
+        function(err, changePassphraseResponse) {
           if (err) {
             dispatch(changePassphraseError(err + ' Please try again'));
           } else {
@@ -326,52 +323,12 @@ function loadActiveDataFiltersAction() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { loadActiveDataFiltersRequest } = getState().control;
-    loadActiveDataFilters(walletService, loadActiveDataFiltersRequest,
-        function(response, err) {
+    walletService.loadActiveDataFilters(loadActiveDataFiltersRequest,
+        function(err, response) {
           if (err) {
             dispatch(loadActiveDataFiltersError(err + ' Please try again'));
           } else {
             dispatch(loadActiveDataFiltersSuccess(response));
-          }
-        });
-  };
-}
-
-export const FUNDTX_ATTEMPT = 'FUNDTX_ATTEMPT';
-export const FUNDTX_FAILED = 'FUNDTX_FAILED';
-export const FUNDTX_SUCCESS = 'FUNDTX_SUCCESS';
-
-function fundTransactionError(error) {
-  return { error, type: FUNDTX_FAILED };
-}
-
-function fundTransactionSuccess(fundTransactionResponse) {
-  return { fundTransactionResponse: fundTransactionResponse, type: FUNDTX_SUCCESS };
-}
-
-export function fundTransactionAttempt(accountNum, targetAmount, requiredConf) {
-  var request = new FundTransactionRequest();
-  request.setAccount(accountNum);
-  request.setTargetAmount(targetAmount);
-  request.setRequiredConfirmations(requiredConf);
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: FUNDTX_ATTEMPT });
-    dispatch(fundTransactionAction());
-  };
-}
-
-function fundTransactionAction() {
-  return (dispatch, getState) => {
-    const { walletService } = getState().grpc;
-    const { fundTransactionRequest } = getState().control;
-    fundTransaction(walletService, fundTransactionRequest,
-        function(fundTransactionResponse, err) {
-          if (err) {
-            dispatch(fundTransactionError(err + ' Please try again'));
-          } else {
-            dispatch(fundTransactionSuccess(fundTransactionResponse));
           }
         });
   };
@@ -414,8 +371,8 @@ function signTransactionAction(passphrase, rawTx) {
   request.setSerializedTransaction(new Uint8Array(Buffer.from(rawTx)));
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
-    signTransaction(walletService, request,
-        function(signTransactionResponse, err) {
+    walletService.signTransaction(request,
+        function(err, signTransactionResponse) {
           if (err) {
             dispatch(signTransactionError(err + ' Please try again'));
           } else {
@@ -452,8 +409,8 @@ function publishTransactionAction() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { publishTransactionRequest } = getState().control;
-    publishTransaction(walletService, publishTransactionRequest,
-        function(publishTransactionResponse, err) {
+    walletService.publishTransaction(publishTransactionRequest,
+        function(err, publishTransactionResponse) {
           if (err) {
             dispatch(publishTransactionError(err + ' Please try again'));
           } else {
@@ -501,8 +458,8 @@ function purchaseTicketAction() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { purchaseTicketRequest } = getState().control;
-    purchaseTicket(walletService, purchaseTicketRequest,
-        function(purchaseTicketResponse, err) {
+    walletService.purchaseTicket(purchaseTicketRequest,
+        function(err, purchaseTicketResponse) {
           if (err) {
             dispatch(purchaseTicketError(err + ' Please try again'));
           } else {
@@ -550,10 +507,10 @@ export function constructTransactionAttempt(account, confirmations, outputs) {
 
 function constructTransactionAction() {
   return (dispatch, getState) => {
-    const { walletService } = getState().grpc;
+    const { walletService } = getState().grpc; 
     const { constructTxRequest } = getState().control;
-    constructTransaction(walletService, constructTxRequest,
-        function(constructTxResponse, err) {
+    walletService.constructTransaction(constructTxRequest,
+        function(err, constructTxResponse) {
           if (err) {
             dispatch(constructTransactionError(err + ' Please try again'));
           } else {
