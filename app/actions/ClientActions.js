@@ -1,4 +1,4 @@
-import { getWalletService, getTransactions } from '../middleware/grpc/client';
+import { getWalletService } from '../middleware/grpc/client';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt } from './ControlActions';
 import { transactionNftnsStart } from './NotificationActions';
 export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';

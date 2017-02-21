@@ -284,7 +284,7 @@ function startRpcAction() {
             if (err.message.includes('RPC client already created')) {
               dispatch(startRpcSuccess());
               return;
-            } 
+            }
             dispatch(startRpcError(err + '.  You may need to edit ' + getCfgPath() + ' and try again'));
           } else {
             dispatch(startRpcSuccess());

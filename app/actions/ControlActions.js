@@ -1,8 +1,7 @@
-import { rescan } from '../middleware/grpc/client';
 import { getBalanceAttempt, getTransactionInfoAttempt } from './ClientActions';
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
-  FundTransactionRequest, ConstructTransactionRequest, SignTransactionRequest,
+  ConstructTransactionRequest, SignTransactionRequest,
   PublishTransactionRequest, PurchaseTicketsRequest, LoadActiveDataFiltersRequest
 } from '../middleware/walletrpc/api_pb';
 
@@ -88,10 +87,6 @@ export const RESCAN_ATTEMPT = 'RESCAN_ATTEMPT';
 export const RESCAN_FAILED = 'RESCAN_FAILED';
 export const RESCAN_PROGRESS = 'RESCAN_PROGRESS';
 export const RESCAN_COMPLETE = 'RESCAN_COMPLETE';
-
-function rescanError(error) {
-  return { error, type: RESCAN_FAILED };
-}
 
 function rescanProgress(rescanResponse) {
   return { rescanResponse: rescanResponse, type: RESCAN_PROGRESS };
@@ -509,7 +504,7 @@ export function constructTransactionAttempt(account, confirmations, outputs) {
 
 function constructTransactionAction() {
   return (dispatch, getState) => {
-    const { walletService } = getState().grpc; 
+    const { walletService } = getState().grpc;
     const { constructTxRequest } = getState().control;
     walletService.constructTransaction(constructTxRequest,
         function(err, constructTxResponse) {
