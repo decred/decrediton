@@ -1,4 +1,4 @@
-import { loader } from '../middleware/grpc/loader';
+import { loader } from '../middleware/grpc/client';
 import { getWalletServiceAttempt } from './ClientActions';
 import { getVersionServiceAttempt } from './VersionActions';
 import { getSeederAttempt, generateRandomSeedAttempt } from './SeedServiceActions';

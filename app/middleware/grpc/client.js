@@ -25,6 +25,60 @@ export function getWalletService(address, port, cb) {
   });
 }
 
+export function loader(request, cb) {
+  var cert = getCert();
+  var creds = grpc.credentials.createSsl(cert);
+  var loader = new services.WalletLoaderServiceClient(request.address + ':' + request.port, creds);
+
+  var deadline = new Date();
+  var deadlineInSeconds = 2;
+  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+  grpc.waitForClientReady(loader, deadline, function(err) {
+    if (err) {
+      return cb(null, err);
+    } else {
+      return cb(loader);
+    }
+  });
+}
+
+export function seeder(request, cb) {
+  var cert = getCert();
+  var creds = grpc.credentials.createSsl(cert);
+  var seeder = new services.SeedServiceClient(request.address + ':' + request.port, creds);
+
+  var deadline = new Date();
+  var deadlineInSeconds = 2;
+  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+  grpc.waitForClientReady(seeder, deadline, function(err) {
+    if (err) {
+      return cb(null, err);
+    } else {
+      return cb(seeder);
+    }
+  });
+}
+
+export function getVersionService(address, port, cb) {
+  var cert = getCert();
+  if (cert == '') {
+    return cb(null, 'Unable to load dcrwallet certificate.  dcrwallet not running?');
+  }
+  var creds = grpc.credentials.createSsl(cert);
+  var version = new services.VersionServiceClient(address + ':' + port, creds);
+
+  var deadline = new Date();
+  var deadlineInSeconds = 2;
+  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+  grpc.waitForClientReady(version, deadline, function(err) {
+    if (err) {
+      return cb(null, err);
+    } else {
+      return cb(version);
+    }
+  });
+}
+
 export function getTransactions(client, request, cb) {
   var getTx = client.getTransactions(request);
   getTx.on('data', function(response) {
