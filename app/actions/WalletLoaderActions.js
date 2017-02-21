@@ -1,6 +1,4 @@
-import { loader, createWallet, walletExists, openWallet,
-  closeWallet, discoverAddresses, subscribeBlockNtfns,
-  startConsensusRpc, fetchHeaders} from '../middleware/grpc/loader';
+import { loader } from '../middleware/grpc/client';
 import { getWalletServiceAttempt } from './ClientActions';
 import { getVersionServiceAttempt } from './VersionActions';
 import { getSeederAttempt, generateRandomSeedAttempt } from './SeedServiceActions';
@@ -91,8 +89,8 @@ export function walletExistRequest() {
 function checkWalletExist() {
   return (dispatch, getState) => {
     const { loader, walletExistRequest } = getState().walletLoader;
-    walletExists(loader, walletExistRequest,
-        function(response, err) {
+    loader.walletExists(walletExistRequest,
+        function(err, response) {
           if (err) {
             dispatch(walletExistError(err + ' Please try again'));
           } else {
@@ -152,7 +150,7 @@ function createNewWallet(pubPass, privPass, seed) {
   request.setSeed(seed);
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
-    createWallet(loader, request,
+    loader.createWallet(request,
         function(err) {
           if (err) {
             dispatch(createWalletError(err + ' Please try again'));
@@ -190,9 +188,13 @@ function openWalletAction(pubPass) {
     const { loader } = getState().walletLoader;
     var request = new OpenWalletRequest();
     request.setPublicPassphrase(new Uint8Array(Buffer.from(pubPass)));
-    openWallet(loader, request,
+    loader.openWallet(request,
         function(err) {
           if (err) {
+            if (err.message.includes('wallet already loaded')) {
+              dispatch(openWalletSuccess());
+              return;
+            }
             dispatch(openWalletError(err + ' Please try again'));
           } else {
             dispatch(openWalletSuccess());
@@ -226,7 +228,7 @@ function closeWalletAction() {
   var request = new CloseWalletRequest();
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
-    closeWallet(loader, request,
+    loader.closeWallet(request,
         function(err) {
           if (err) {
             dispatch(closeWalletError(err + ' Please try again'));
@@ -276,9 +278,13 @@ export function startRpcRequest() {
 function startRpcAction() {
   return (dispatch, getState) => {
     const { loader, startRpcRequest } = getState().walletLoader;
-    startConsensusRpc(loader, startRpcRequest,
+    loader.startConsensusRpc(startRpcRequest,
         function(err) {
           if (err) {
+            if (err.message.includes('RPC client already created')) {
+              dispatch(startRpcSuccess());
+              return;
+            }
             dispatch(startRpcError(err + '.  You may need to edit ' + getCfgPath() + ' and try again'));
           } else {
             dispatch(startRpcSuccess());
@@ -319,7 +325,7 @@ function discoverAddressAction(discoverAccts, privPass) {
   request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
-    discoverAddresses(loader, request,
+    loader.discoverAddresses(request,
         function(err) {
           if (err) {
             dispatch(discoverAddressError(err + ' Please try again'));
@@ -359,7 +365,7 @@ function subscribeBlockAction() {
   var request = new SubscribeToBlockNotificationsRequest();
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
-    subscribeBlockNtfns(loader, request,
+    loader.subscribeToBlockNotifications(request,
         function(err) {
           if (err) {
             dispatch(subscribeBlockError(err + ' Please try again'));
@@ -410,8 +416,8 @@ function fetchHeadersAction() {
   var request = new FetchHeadersRequest();
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
-    fetchHeaders(loader, request,
-        function(response, err) {
+    loader.fetchHeaders(request,
+        function(err, response) {
           if (err) {
             dispatch(fetchHeadersFailed(err + ' Please try again'));
           } else {

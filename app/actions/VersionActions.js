@@ -1,4 +1,4 @@
-import { getVersionService, getWalletRPCVersion } from '../middleware/grpc/version';
+import { getVersionService } from '../middleware/grpc/client';
 import { loaderRequest } from './WalletLoaderActions';
 var messages = require('../middleware/walletrpc/api_pb');
 export const GETVERSIONSERVICE_ATTEMPT = 'GETVERSIONSERVICE_ATTEMPT';
@@ -84,8 +84,8 @@ export function getWalletRPCVersionAttempt() {
 function getWalletRPCVersionAction() {
   return (dispatch, getState) => {
     const { versionService, getWalletRPCVersionRequest } = getState().version;
-    getWalletRPCVersion(versionService, getWalletRPCVersionRequest,
-        function(getWalletRPCVersionResponse, err) {
+    versionService.version(getWalletRPCVersionRequest,
+        function(err, getWalletRPCVersionResponse) {
           if (err) {
             dispatch(getWalletRPCVersionError(err + ' please try again'));
           } else {

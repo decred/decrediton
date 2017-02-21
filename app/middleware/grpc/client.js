@@ -25,100 +25,56 @@ export function getWalletService(address, port, cb) {
   });
 }
 
-export function getBalance(client, request, cb) {
-  if (client === undefined) {
-    return cb(null, new Error('Client not available to getBalance'));
+export function loader(request, cb) {
+  var cert = getCert();
+  var creds = grpc.credentials.createSsl(cert);
+  var loader = new services.WalletLoaderServiceClient(request.address + ':' + request.port, creds);
+
+  var deadline = new Date();
+  var deadlineInSeconds = 2;
+  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+  grpc.waitForClientReady(loader, deadline, function(err) {
+    if (err) {
+      return cb(null, err);
+    } else {
+      return cb(loader);
+    }
+  });
+}
+
+export function seeder(request, cb) {
+  var cert = getCert();
+  var creds = grpc.credentials.createSsl(cert);
+  var seeder = new services.SeedServiceClient(request.address + ':' + request.port, creds);
+
+  var deadline = new Date();
+  var deadlineInSeconds = 2;
+  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+  grpc.waitForClientReady(seeder, deadline, function(err) {
+    if (err) {
+      return cb(null, err);
+    } else {
+      return cb(seeder);
+    }
+  });
+}
+
+export function getVersionService(address, port, cb) {
+  var cert = getCert();
+  if (cert == '') {
+    return cb(null, 'Unable to load dcrwallet certificate.  dcrwallet not running?');
   }
+  var creds = grpc.credentials.createSsl(cert);
+  var version = new services.VersionServiceClient(address + ':' + port, creds);
 
-  client.balance(request, function(err, response) {
+  var deadline = new Date();
+  var deadlineInSeconds = 2;
+  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+  grpc.waitForClientReady(version, deadline, function(err) {
     if (err) {
-      console.error(err);
       return cb(null, err);
     } else {
-      return cb(response);
-    }
-  });
-}
-
-export function getAccountNumber(client, request, cb) {
-  client.accountNumber(request, function(err, response) {
-    if (err) {
-      console.error(err);
-      return cb(null, err);
-    } else {
-      return cb(response);
-    }
-  });
-}
-
-export function getStakeInfo(client, request, cb) {
-  client.stakeInfo(request, function(err, response) {
-    if (err) {
-      console.error(err);
-      return cb(null, err);
-    } else {
-      return cb(response);
-    }
-  });
-}
-
-export function getPing(client, request, cb) {
-  client.ping(request, function(err, response) {
-    if (err) {
-      console.error(err);
-      return cb(null, err);
-    } else {
-      return cb(response);
-    }
-  });
-}
-
-export function getNetwork(client, request, cb) {
-  client.network(request, function(err, response) {
-    if (err) {
-      console.error(err);
-      return cb(null, err);
-    } else {
-      return cb(response);
-    }
-  });
-}
-
-export function getAccounts(client, request, cb) {
-    // Accounts
-  client.accounts(request, function(err, response) {
-    if (err) {
-      console.error(err);
-      return cb(null, err);
-    } else {
-      return cb(response);
-    }
-  });
-}
-
-export function getTransactions(client, request, cb) {
-  var getTx = client.getTransactions(request);
-  getTx.on('data', function(response) {
-    return cb(false, response);
-  });
-  getTx.on('end', function() {
-    return cb(true);
-  });
-  getTx.on('status', function(status) {
-    console.log('GetTx status:', status);
-  });
-  getTx.on('error', function(err) {
-    return cb(false, null, err);
-  });
-}
-
-export function getTicketPrice(client, request, cb) {
-  client.ticketPrice(request, function(err, response) {
-    if (err) {
-      console.error('ticketPrice', err);
-      return cb(null, err);
-    } else {
-      return cb(response);
+      return cb(version);
     }
   });
 }
@@ -169,7 +125,5 @@ export function accountNtfs(client, request, cb) {
 /*
 random seed for dev:
 upshot paperweight billiard replica tactics hazardous retouch undaunted bluebird Norwegian ribcage enchanting brackish conformist hamlet bravado button undaunted Dupont voyager sentence dictator keyboard unify transit specialist regain insurgent spellbind consulting keyboard autopsy sawdust
-
 Hex: f4a51fc3de6da8ea249bac512735711b2dea52f7b9487aede7d5a47eca387a10
-     f4a51fc3de6da8ea249bac512735711b2dea52f7b9487aede7d5a47eca387a10
-     */
+*/
