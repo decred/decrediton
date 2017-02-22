@@ -72,31 +72,46 @@ if (argv.mainnet) {
   }
 }
 
+function closeClis() {
+    // shutdown daemon and wallet.
+    // Don't try to close if not running.
+  if (require('is-running')(dcrwPID)) {
+    if (debug) {
+      console.log('Sending SIGINT to dcrwallet at pid:', dcrwPID);
+    }
+    process.kill(dcrwPID, 'SIGINT');
+  }
+  if (require('is-running')(dcrdPID)) {
+    if (debug) {
+      console.log('Sending SIGINT to dcrd at pid:', dcrdPID);
+    }
+    process.kill(dcrdPID, 'SIGINT');
+  }
+}
+
+function cleanShutdown() {
+  // Attempt a clean shutdown.
+  const cliShutDownPause = 2; // in seconds.
+  const shutDownPause = 3; // in seconds.
+  if (process.env.NODE_ENV === 'production') {
+    closeClis();
+    // Sent shutdown message again as we have seen it missed in the past if they
+    // are still running.
+    setTimeout(function(){closeClis();}, cliShutDownPause*1000);
+    if (debug) {
+      console.log('Closing decrediton.');
+    }
+    setTimeout(function(){app.quit();}, shutDownPause*1000);
+  } else {
+    app.quit();
+  }
+}
+
 app.on('window-all-closed', () => {
   // If we could reopen after closing all windows on OSX we might want
   // to on do this only if !== 'darwin' but since we don't, better to
   // have the same behavior on all platforms.
-  if (process.env.NODE_ENV === 'production') {
-    // shutdown daemon and wallet.
-    // Don't try to close if not running.
-    if (require('is-running')(dcrwPID)) {
-      if (debug) {
-        console.log('Sending SIGINT to dcrwallet at pid:', dcrwPID);
-      }
-      process.kill(dcrwPID, 'SIGINT');
-    }
-    if (require('is-running')(dcrdPID)) {
-      if (debug) {
-        console.log('Sending SIGINT to dcrd at pid:', dcrdPID);
-      }
-      process.kill(dcrdPID, 'SIGINT');
-    }
-
-    if (debug) {
-      console.log('Closing decrediton.');
-    }
-    app.quit();
-  }
+  cleanShutdown();
 });
 
 const installExtensions = async () => {
@@ -126,7 +141,6 @@ const launchDCRD = () => {
   }
 
   if (os.platform() != 'win32') {
-    // The spawn() below opens a pipe on fd 4
     // The spawn() below opens a pipe on fd 3
     args.push('--piperx=3');
   }
@@ -314,7 +328,7 @@ app.on('ready', async () => {
         label: 'Quit',
         accelerator: 'Command+Q',
         click() {
-          app.quit();
+          cleanShutdown();
         }
       }]
     }, {
