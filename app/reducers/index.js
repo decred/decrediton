@@ -16,6 +16,7 @@ const rootReducer = combineReducers({
   control,
   version,
   settings,
+  stakepool,
   routing
 });
 

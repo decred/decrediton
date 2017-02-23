@@ -19,7 +19,7 @@ export default (
     <Route path="/send" component={SendPage} />
     <Route path="/receive" component={ReceivePage} />
     <Route path="/settings" component={SettingsPage} />
-    <Route path="/stakepool" component={StakePool} />
+    <Route path="/stakepool" component={StakePoolPage} />
     <Route path="/walletError" component={WalletError} />
   </Route>
 );
