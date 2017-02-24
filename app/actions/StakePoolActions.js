@@ -1,4 +1,3 @@
-import { getVersionService } from '../middleware/grpc/client';
 import { stakePoolInfo } from '../middleware/stakepoolapi';
 export const GETSTAKEPOOLINFO_ATTEMPT = 'GETSTAKEPOOLINFO_ATTEMPT';
 export const GETSTAKEPOOLINFO_FAILED = 'GETSTAKEPOOLINFO_FAILED';
@@ -8,27 +7,36 @@ function getStakePoolInfoError(error) {
   return { error, type: GETSTAKEPOOLINFO_FAILED };
 }
 
-function getStakePoolInfoSuccess(versionService) {
-  return (dispatch) => {
-    dispatch({ versionService, type: GETSTAKEPOOLINFO_SUCCESS });
+function getStakePoolInfoSuccess(response) {
+  return (dispatch, getState) => {
+    const { network } = getState().grpc;
+    var stakePoolNames = Object.keys(response.data);
+    var usablePools = Array();
+    // Only add matching network stakepool info
+    for (var i = 0; i < stakePoolNames.length; i++) {
+      if (response.data[stakePoolNames[i]].Network == network) {
+        usablePools.push(response.data[stakePoolNames[i]]);
+      }
+    }
+
+    dispatch({ data: usablePools. , type: GETSTAKEPOOLINFO_SUCCESS });
   };
 }
 
 export function getStakePoolInfoAttempt() {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({ type: GETSTAKEPOOLINFO_ATTEMPT });
-    dispatch((getStakePoolInfoAction));
+    dispatch(getStakePoolInfoAction());
   };
 }
 
 function getStakePoolInfoAction() {
-  return (dispatch, getState) => {
-    const { address, port } = getState().grpc;
+  return (dispatch) => {
     stakePoolInfo(function(response, err) {
       if (err) {
-        dispatch(getVersionServiceError(err + ' Please try again'));
+        dispatch(getStakePoolInfoError(err + ' Please try again'));
       } else {
-        dispatch(getVersionServiceSuccess(versionService));
+        dispatch(getStakePoolInfoSuccess(response));
       }
     });
   };

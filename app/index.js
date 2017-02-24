@@ -64,6 +64,7 @@ var initialState = {
     address: '127.0.0.1',
     port: grpcport,
     walletService: null,
+    network: cfg.network,
     getWalletServiceRequestAttempt: false,
     getWalletServiceError: '',
     // Balance

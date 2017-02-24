@@ -53,7 +53,7 @@ class StakePool extends Component{
   render() {
     const { walletService } = this.props;
     const { getNextAddressResponse, getNextAddressRequestAttempt } = this.props;
-
+    const { stakePoolInfoData } = this.props;
     const copayReceive = (
       <div style={styles.view}>
         <Header
