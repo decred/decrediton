@@ -19,7 +19,7 @@ function getStakePoolInfoSuccess(response) {
       }
     }
 
-    dispatch({ data: usablePools. , type: GETSTAKEPOOLINFO_SUCCESS });
+    dispatch({ data: usablePools, type: GETSTAKEPOOLINFO_SUCCESS });
   };
 }
 
