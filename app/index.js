@@ -39,6 +39,11 @@ var initialState = {
     },
     settingsChanged: false,
   },
+  stakepool: {
+    stakePoolInfoRequest: false,
+    stakePoolInfoError: null,
+    stakePoolInfoData: null,
+  },
   version: {
     // RequiredVersion
     requiredVersion: '4.3.0',
