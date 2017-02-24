@@ -11,14 +11,36 @@ export function stakePoolInfo(cb) {
 
 }
 
-export function apiClientRequest(apiUrl, request, apiToken, cb) {
+export function setStakePoolAddress(apiUrl, apiToken, pKAddress, cb) {
+
+  console.log(pKAddress);
   var config = {
     headers: { 
       "Authorization": "Bearer " + apiToken,
     }
   }
-  console.log(apiUrl+request);
-  axios.get(apiUrl+request)
+  var url = apiUrl+"address";
+  axios.post(url,
+    querystring.stringify({
+      UserPubKeyAddr: pKAddress,
+    }),
+    config)
+  .then(function(response) {
+    cb(response);
+  })
+  .catch(function(error) {
+    cb(null, error);
+  });
+}
+
+export function getPurchaseInfo(apiUrl, apiToken, cb) {
+  var config = {
+    headers: { 
+      "Authorization": "Bearer " + apiToken,
+    }
+  }
+  var url = apiUrl+"getpurchaseinfo";
+  axios.get(url, config)
   .then(function(response) {
     cb(response);
   })
