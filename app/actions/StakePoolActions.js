@@ -68,25 +68,31 @@ function setStakePoolAddressAttempt(poolConfig) {
         if (err) {
           console.error(err);
         } else {
+          // parse response data for no err
           console.log(response);
-          dispatch(requestPurchaseInfo());
         }
     });
   }
 }
 
-function requestPurchaseInfo() {
-  return (dispatch) => {
-    getPurchaseInfo(
-      "https://teststakepool.decred.org/api/v1/", 
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE0ODc5NzM3ODQsImlzcyI6Imh0dHBzOi8vdGVzdHN0YWtlcG9vbC5kZWNyZWQub3JnIiwibG9nZ2VkSW5BcyI6MTR9.HdJuTqDJPbVWPPzetOfQ7jK7PgadPeXWZulqgzZN-4U",
-      function(response, err) {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log(response);
-        }
-      });
+function requestPurchaseInfo(poolHost) {
+  return (dispatch, getState) => {
+    const { stakePoolConfig } = getState().stakepool 
+    for (var i = 0; i < stakePoolConfig; i++) {
+      if (stakePoolConfig[i].ApiKey != "") {
+        getPurchaseInfo(
+          stakePoolConfig[i].Host, 
+          stakePoolConfig[i].ApiKey,
+          function(response, err) {
+          if (err) {
+            console.error(err);
+          } else {
+            // parse response data for no err
+            console.log(response);
+          }
+        });
+      }
+    }
   }
 }
 function getStakePoolInfoAction() {
