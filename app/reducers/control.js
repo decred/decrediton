@@ -11,7 +11,8 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   CLEARTX,
   SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS,
   PUBLISHTX_ATTEMPT, PUBLISHTX_FAILED, PUBLISHTX_SUCCESS,
-  PURCHASETICKET_ATTEMPT, PURCHASETICKET_FAILED, PURCHASETICKET_SUCCESS,
+  PURCHASETICKETS_ATTEMPT, PURCHASETICKETS_FAILED, PURCHASETICKETS_SUCCESS,
+  PURCHASETICKETS_CLEAR_ERROR, PURCHASETICKETS_CLEAR_SUCCESS,
   CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS,
   CONSTRUCTTX_CLEAR_ERROR, PUBLISHTX_CLEAR_ERROR, SIGNTX_CLEAR_ERROR, PUBLISHTX_CLEAR_SUCCESS,
  } from '../actions/ControlActions';
@@ -252,23 +253,31 @@ export default function control(state = {}, action) {
     return {...state,
       constructTxError: null,
     };
-  case PURCHASETICKET_ATTEMPT:
+  case PURCHASETICKETS_ATTEMPT:
     return {...state,
-      purchaseTicketError: null,
-      purchaseTicketRequestAttempt: true,
-      purchaseTicketRequest: action.request,
+      purchaseTicketsError: null,
+      purchaseTicketsRequestAttempt: true,
+      purchaseTicketsRequest: action.request,
     };
-  case PURCHASETICKET_FAILED:
+  case PURCHASETICKETS_FAILED:
     return {...state,
-      purchaseTicketError: action.error,
-      purchaseTicketRequestAttempt: false,
-      purchaseTicketRequest: null,
+      purchaseTicketsError: action.error,
+      purchaseTicketsRequestAttempt: false,
+      purchaseTicketsRequest: null,
     };
-  case PURCHASETICKET_SUCCESS:
+  case PURCHASETICKETS_SUCCESS:
     return {...state,
-      purchaseTicketError: '',
-      purchaseTicketRequestAttempt: false,
-      purchaseTicketResponse: action.purchaseTicketResponse,
+      purchaseTicketsError: '',
+      purchaseTicketsRequestAttempt: false,
+      purchaseTicketsResponse: action.purchaseTicketsResponse,
+    };
+  case PURCHASETICKETS_CLEAR_ERROR:
+    return {...state,
+      purchaseTicketsError: null,
+    };
+  case  PURCHASETICKETS_CLEAR_SUCCESS:
+    return {...state,
+      purchaseTicketsSuccess: null,
     };
   case CONSTRUCTTX_ATTEMPT:
     return {...state,

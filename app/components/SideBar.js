@@ -267,6 +267,7 @@ class SideBar extends Component {
           <MenuLink to="/receive">Receive</MenuLink>
           <MenuLink to="/history">History</MenuLink>
           <MenuLink to="/stakepool">Stakepool Setup</MenuLink>
+          <MenuLink to="/purchase">Purchase Tickets</MenuLink>
           <MenuLink to="/settings">Settings</MenuLink>
           <div style={styles.sidebarHelp}>
             <div style={styles.sidebarHelpTitle}>Help links</div>
