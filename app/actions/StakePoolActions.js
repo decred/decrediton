@@ -10,16 +10,31 @@ function getStakePoolInfoError(error) {
 function getStakePoolInfoSuccess(response) {
   return (dispatch, getState) => {
     const { network } = getState().grpc;
+    const { stakePoolConfig } = getState().stakepool;
     var stakePoolNames = Object.keys(response.data);
     var usablePools = Array();
     // Only add matching network stakepool info
+    var foundStakePoolConfigs = stakePoolConfig;
     for (var i = 0; i < stakePoolNames.length; i++) {
       if (response.data[stakePoolNames[i]].Network == network) {
-        usablePools.push(response.data[stakePoolNames[i]]);
+        if (foundStakePoolConfigs == null) {
+          foundStakePoolConfigs = Array({
+            Host:response.data[stakePoolNames[i]].URL,
+            ApiKey:"",
+            MultigsigVoteScript:"",
+            VotingAccount:"",
+          });
+        } else {
+          foundStakePoolConfigs.push({
+            Host:response.data[stakePoolNames[i]].URL,
+            ApiKey:"",
+            MultigsigVoteScript:"",
+            VotingAccount:"",
+          });
+        }
       }
     }
-    dispatch(setStakePoolAddressAttempt());
-    dispatch({ data: usablePools, type: GETSTAKEPOOLINFO_SUCCESS });
+    dispatch({ stakePoolConfig: foundStakePoolConfigs, type: GETSTAKEPOOLINFO_SUCCESS });
   };
 }
 
@@ -29,12 +44,13 @@ export function getStakePoolInfoAttempt() {
     dispatch(getStakePoolInfoAction());
   };
 }
-function setStakePoolAddressAttempt() {
-  return (dispatch) => {
+function setStakePoolAddressAttempt(poolConfig) {
+  return (dispatch, getState) => {
+    const { getNextAddress } = getState().control
     setStakePoolAddress(
-      "https://teststakepool.decred.org/api/v1/", 
-      "apiToken",
-      "pKAddress",
+      poolConfig.Host, 
+      poolConfig.ApiKey,
+      getNextAddress.GetPublicKey(),
       function(response, err) {
         if (err) {
           console.error(err);
@@ -42,7 +58,7 @@ function setStakePoolAddressAttempt() {
           console.log(response);
           dispatch(requestPurchaseInfo());
         }
-      });
+    });
   }
 }
 

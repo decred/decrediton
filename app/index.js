@@ -43,6 +43,10 @@ var initialState = {
     stakePoolInfoRequest: false,
     stakePoolInfoError: null,
     stakePoolInfoData: null,
+    selectedStakePoolData: null,
+    stakePoolConfig: null,
+    stakePoolApiKeys: null,
+    stakePoolPurchaseInfo: null,
   },
   version: {
     // RequiredVersion

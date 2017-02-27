@@ -12,7 +12,6 @@ export function stakePoolInfo(cb) {
 }
 
 export function setStakePoolAddress(apiUrl, apiToken, pKAddress, cb) {
-
   console.log(pKAddress);
   var config = {
     headers: { 

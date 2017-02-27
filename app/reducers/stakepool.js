@@ -17,7 +17,7 @@ export default function stakepool(state = {}, action) {
   case GETSTAKEPOOLINFO_SUCCESS:
     return {...state,
       stakePoolInfoRequest: false,
-      stakePoolInfoData: action.data,
+      stakePoolInfoConfig: action.stakePoolConfig,
     };
   default:
     return state;
