@@ -1,5 +1,6 @@
 import {
-    GETSTAKEPOOLINFO_ATTEMPT, GETSTAKEPOOLINFO_FAILED, GETSTAKEPOOLINFO_SUCCESS
+    GETSTAKEPOOLINFO_ATTEMPT, GETSTAKEPOOLINFO_FAILED, GETSTAKEPOOLINFO_SUCCESS,
+    SETSTAKEPOOLAPIKEY 
 } from '../actions/StakePoolActions';
 
 export default function stakepool(state = {}, action) {
@@ -19,6 +20,10 @@ export default function stakepool(state = {}, action) {
       stakePoolInfoRequest: false,
       stakePoolInfoConfig: action.stakePoolConfig,
     };
+  case SETSTAKEPOOLAPIKEY:
+    return {...state,
+      stakePoolInfoConfig: action.updatedStakePoolConfig,
+    };  
   default:
     return state;
   }

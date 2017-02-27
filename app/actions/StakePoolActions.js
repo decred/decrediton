@@ -38,6 +38,19 @@ function getStakePoolInfoSuccess(response) {
   };
 }
 
+export const SETSTAKEPOOLAPIKEY = "SETSTAKEPOOLAPIKEY"
+export function setStakePoolApiKey(poolHost, apikey) {
+  return (dispatch, getState) => {
+    const { stakePoolConfig } = getState().stakepool;
+    var updatedStakePoolConfig = stakePoolConfig;
+    for (var i = 0; i < updatedStakePoolConfig.length; i++) {
+      if (poolHost == updatedStakePoolConfig[i].Host) {
+        updatedStakePoolConfig[i].ApiKey = apikey
+      }
+    }
+    dispatch({ updatedStakePoolConfig: updatedStakePoolConfig, type: SETSTAKEPOOLAPIKEY });
+  };
+}
 export function getStakePoolInfoAttempt() {
   return (dispatch, getState) => {
     dispatch({ type: GETSTAKEPOOLINFO_ATTEMPT });
