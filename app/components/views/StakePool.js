@@ -47,7 +47,21 @@ class StakePool extends Component{
   static propTypes = {
     walletService: PropTypes.object,
   };
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      stakePoolHost: '',
+      apiKey: '',
+      account: 0,
+    };
+  }
+  submitSignPublishTx() {
+    if (this.state.stakePoolHost == '' || this.state.apiKey == '') {
+      return;
+    }
+    this.props.signTransactionAttempt(this.state.privpass, this.props.constructTxResponse.getUnsignedTransaction());
+  }
   render() {
     const { walletService } = this.props;
     const { stakePoolInfoConfig } = this.props;

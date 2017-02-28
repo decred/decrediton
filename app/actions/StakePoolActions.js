@@ -1,4 +1,5 @@
 import { stakePoolInfo, getPurchaseInfo, setStakePoolAddress } from '../middleware/stakepoolapi';
+import { getNextAddress } from './ControlActions';
 export const GETSTAKEPOOLINFO_ATTEMPT = 'GETSTAKEPOOLINFO_ATTEMPT';
 export const GETSTAKEPOOLINFO_FAILED = 'GETSTAKEPOOLINFO_FAILED';
 export const GETSTAKEPOOLINFO_SUCCESS = 'GETSTAKEPOOLINFO_SUCCESS';
@@ -37,26 +38,62 @@ function getStakePoolInfoSuccess(response) {
     dispatch({ stakePoolConfig: foundStakePoolConfigs, type: GETSTAKEPOOLINFO_SUCCESS });
   };
 }
-
-export const SETSTAKEPOOLAPIKEY = "SETSTAKEPOOLAPIKEY"
-export function setStakePoolApiKey(poolHost, apikey) {
-  return (dispatch, getState) => {
-    const { stakePoolConfig } = getState().stakepool;
-    var updatedStakePoolConfig = stakePoolConfig;
-    for (var i = 0; i < updatedStakePoolConfig.length; i++) {
-      if (poolHost == updatedStakePoolConfig[i].Host) {
-        updatedStakePoolConfig[i].ApiKey = apikey
-      }
-    }
-    dispatch({ updatedStakePoolConfig: updatedStakePoolConfig, type: SETSTAKEPOOLAPIKEY });
-  };
-}
 export function getStakePoolInfoAttempt() {
   return (dispatch, getState) => {
     dispatch({ type: GETSTAKEPOOLINFO_ATTEMPT });
     dispatch(getStakePoolInfoAction());
   };
 }
+function getStakePoolInfoAction() {
+  return (dispatch) => {
+    stakePoolInfo(function(response, err) {
+      if (err) {
+        dispatch(getStakePoolInfoError(err + ' Please try again'));
+      } else {
+        dispatch(getStakePoolInfoSuccess(response));
+      }
+    });
+  };
+}
+
+export const SETSTAKEPOOLAPIKEY = "SETSTAKEPOOLAPIKEY"
+export function setStakePoolInformation(poolHost, apikey, accountNum) {
+  return (dispatch, getState) => {
+    var purchaseInfo = requestPurchaseInfo(poolHost, apikey);
+    getPurchaseInfo(
+      poolHost, 
+      apiKey,
+      function(response, err) {
+        if (err) {
+          console.error(err);
+          return;
+        } else {
+          // parse response data for no err
+          console.log(response);
+        }
+      });
+      /*
+    const { walletService } = getState().grpc;
+    // get new address for requested VotingAccount
+    var request = new NextAddressRequest();
+    request.setAccount(accountNum);
+    request.setKind(0);
+    var addressPubKey = null;
+    walletService.nextAddress(request,
+      function(err, getNextAddressResponse) {
+        if (err) {
+          // handle some err here some way
+        } else {
+          addressPubKey = getNextAddressResponse.GetPublicKey();
+        }
+      });
+    
+
+    dispatch({ updatedStakePoolConfig: updatedStakePoolConfig, type: SETSTAKEPOOLAPIKEY });
+    */
+  };
+}
+
 function setStakePoolAddressAttempt(poolConfig) {
   return (dispatch, getState) => {
     const { getNextAddress } = getState().control
@@ -73,36 +110,4 @@ function setStakePoolAddressAttempt(poolConfig) {
         }
     });
   }
-}
-
-function requestPurchaseInfo(poolHost) {
-  return (dispatch, getState) => {
-    const { stakePoolConfig } = getState().stakepool 
-    for (var i = 0; i < stakePoolConfig; i++) {
-      if (stakePoolConfig[i].ApiKey != "") {
-        getPurchaseInfo(
-          stakePoolConfig[i].Host, 
-          stakePoolConfig[i].ApiKey,
-          function(response, err) {
-          if (err) {
-            console.error(err);
-          } else {
-            // parse response data for no err
-            console.log(response);
-          }
-        });
-      }
-    }
-  }
-}
-function getStakePoolInfoAction() {
-  return (dispatch) => {
-    stakePoolInfo(function(response, err) {
-      if (err) {
-        dispatch(getStakePoolInfoError(err + ' Please try again'));
-      } else {
-        dispatch(getStakePoolInfoSuccess(response));
-      }
-    });
-  };
 }

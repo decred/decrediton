@@ -2,8 +2,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import StakePool from './StakePool';
-import * as ClientActions from '../../actions/ClientActions';
-import * as ControlActions from '../../actions/ControlActions';
+import * as StakePoolActions from '../../actions/ClientActions';
 
 function mapStateToProps(state) {
   return {
@@ -13,7 +12,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, ClientActions, ControlActions), dispatch);
+  return bindActionCreators(Object.assign({}, StakePoolActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StakePool);
