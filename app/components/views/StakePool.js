@@ -56,15 +56,26 @@ class StakePool extends Component{
       account: 0,
     };
   }
-  submitSignPublishTx() {
+  setStakePoolInfo() {
     if (this.state.stakePoolHost == '' || this.state.apiKey == '') {
       return;
     }
-    this.props.signTransactionAttempt(this.state.privpass, this.props.constructTxResponse.getUnsignedTransaction());
+    setStakePoolInformation(this.state.stakePoolHost, this.props.apiKey, this.props.account);
+  }
+  updateApiKey(apiKey) {
+    this.setState({apiKey: apiKey});
+  }
+  updateAccountNumber(accountNum) {
+    this.setState({account: accountNum});
+  }
+  updateStakePoolHost(poolHost) {
+    this.setState({stakePoolHost: poolHost});
   }
   render() {
     const { walletService } = this.props;
     const { stakePoolInfoConfig } = this.props;
+    const { setStakePoolInformation } = this.props;
+    const { getAccountsResponse } = this.props;
     var selectStakePool = (
       <div style={styles.selectStakePoolArea}>
         <select
@@ -83,6 +94,26 @@ class StakePool extends Component{
           }
         </select>
       </div>);
+    var selectAccounts = (
+      <div style={styles.selectAccountsSend}>
+        <select
+          defaultValue={0}
+          style={styles.selectAccount}
+          >
+          {getAccountsResponse !== null ?
+            getAccountsResponse.getAccountsList().map((account) => {
+              if (account.getAccountName() !== 'imported') {
+                return (
+                  <option style={styles.selectAccountNFirst} key={account.getAccountNumber()} value={account.getAccountNumber()}>
+                    {account.getAccountName()}
+                  </option>
+                );
+              }
+            }):
+            null
+          }
+        </select>
+      </div>);  
     const copayReceive = (
       <div style={styles.view}>
         <Header
@@ -92,6 +123,12 @@ class StakePool extends Component{
         <div style={styles.content}>
           <div style={styles.center}>
             {selectStakePool}
+            {selectAccounts}
+            <input
+              type="text"
+              style={styles.contentNestAddressAmountSum}
+              placeholder="API Key"
+              onBlur={(e) =>{this.updateApiKey(e.target.value);}}/>
           </div>
         </div>
 			</div>
