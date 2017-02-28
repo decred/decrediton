@@ -46,33 +46,38 @@ const styles = {
 class StakePool extends Component{
   static propTypes = {
     walletService: PropTypes.object,
-    getNextAddressResponse: PropTypes.object,
-    getNextAddressRequestAttempt: PropTypes.bool.isRequired,
   };
 
   render() {
     const { walletService } = this.props;
-    const { getNextAddressResponse, getNextAddressRequestAttempt } = this.props;
-    const { stakePoolInfoData } = this.props;
+    const { stakePoolInfoConfig } = this.props;
+    var selectStakePool = (
+      <div style={styles.selectStakePoolArea}>
+        <select
+          defaultValue={0}
+          style={styles.selectStakePool}
+          >
+          {stakePoolInfoConfig !== null ?
+            stakePoolInfoConfig.map((stakePool) => {
+              return (
+                <option style={styles.selectStakePoolNFirst} key={stakePool.Host} value={stakePool.Host}>
+                  {stakePool.Host}
+                </option>
+              );
+             }):
+            null
+          }
+        </select>
+      </div>);
     const copayReceive = (
       <div style={styles.view}>
         <Header
           headerTitleOverview="Stake pool settings"
-          headerMetaOverview={
-            getNextAddressResponse !== null ?
-              <div style={{fontSize:'33px'}}>{getNextAddressResponse.getAddress()}</div> :
-              <div></div>
-          }
+          headerMetaOverview={<div></div>}
         />
         <div style={styles.content}>
           <div style={styles.center}>
-            <Button
-              size="large"
-              block={false}
-              onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
-              >
-              Generate new address
-            </Button>
+            {selectStakePool}
           </div>
         </div>
 			</div>

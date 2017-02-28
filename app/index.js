@@ -44,7 +44,7 @@ var initialState = {
     stakePoolInfoError: null,
     stakePoolInfoData: null,
     selectedStakePoolData: null,
-    stakePoolConfig: null,
+    stakePoolInfoConfig: null,
     stakePoolApiKeys: null,
     stakePoolPurchaseInfo: null,
   },

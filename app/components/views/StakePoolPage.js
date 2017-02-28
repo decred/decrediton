@@ -8,7 +8,7 @@ import * as ControlActions from '../../actions/ControlActions';
 function mapStateToProps(state) {
   return {
     walletService: state.grpc.walletService,
-    stakePoolInfoData: state.stakepool.stakePoolInfoData,
+    stakePoolInfoConfig: state.stakepool.stakePoolInfoConfig,
   };
 }
 
