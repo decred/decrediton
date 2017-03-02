@@ -421,7 +421,7 @@ function fetchHeadersAction() {
           if (err) {
             dispatch(fetchHeadersFailed(err + ' Please try again'));
           } else {
-            dispatch(fetchHeadersProgress(response));
+            dispatch(fetchHeadersSuccess(response));
           }
         });
   };

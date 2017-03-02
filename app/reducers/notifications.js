@@ -1,5 +1,5 @@
 import { TRANSACTIONNFTNS_START, TRANSACTIONNFTNS_FAILED,
-  TRANSACTIONNFTNS_DATA, TRANSACTIONNFTNS_END } from '../actions/NotificationActions';
+  TRANSACTIONNFTNS_DATA, TRANSACTIONNFTNS_SYNCING, TRANSACTIONNFTNS_END } from '../actions/NotificationActions';
 import { SPENTNESSNFTNS_START, SPENTNESSNFTNS_FAILED,
   SPENTNESSNFTNS_DATA, SPENTNESSNFTNS_END } from '../actions/NotificationActions';
 import { ACCOUNTNFTNS_START, ACCOUNTNFTNS_FAILED,
@@ -17,6 +17,10 @@ export default function notifications(state = {}, action) {
     return {...state,
       transactionNtfnsResponse: action.response,
     };
+  case TRANSACTIONNFTNS_SYNCING:
+    return {...state,
+      currentHeight: action.currentHeight,
+    };  
   case TRANSACTIONNFTNS_END:
   case SPENTNESSNFTNS_START:
     return {...state,

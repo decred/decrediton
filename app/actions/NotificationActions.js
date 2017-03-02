@@ -7,16 +7,35 @@ import { TransactionNotificationsRequest } from '../middleware/walletrpc/api_pb'
 export const TRANSACTIONNFTNS_START = 'TRANSACTIONNFTNS_START';
 export const TRANSACTIONNFTNS_FAILED = 'TRANSACTIONNFTNS_FAILED';
 export const TRANSACTIONNFTNS_DATA = 'TRANSACTIONNFTNS_DATA';
+export const TRANSACTIONNFTNS_SYNCING = 'TRANSACTIONNFTNS_SYNCING';
 export const TRANSACTIONNFTNS_END = 'TRANSACTIONNFTNS_END';
 
 function transactionNtfnsData(response) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { neededBlocks } = getState().walletLoader;
+    const { currentHeight } = getState().notifications;
+    var currentHeight = 0;
+    if (response.GetAttachedBlocksList().length > 0) {
+      currentHeight = response.GetAttachedBlocksList()[0].height
+    }
+    if (currentHeight > neededBlocks) {
+      dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
+      setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
+      setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
+      setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
+      setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
+      setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
+    } else if (currentHeight%1000 == 0) {
+      dispatch({currentHeight: currentHeight, type: TRANSACTIONNFTNS_SYNCING });
+    }
+    /*
     dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
     setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
     setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
     setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
     setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
     setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
+    */
   };
 }
 
