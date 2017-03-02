@@ -15,7 +15,7 @@ function transactionNtfnsData(response) {
     const { neededBlocks } = getState().walletLoader;
     var currentHeight = 0;
     if (response.getAttachedBlocksList().length > 0) {
-      currentHeight = response.getAttachedBlocksList()[0].getHeight()
+      currentHeight = response.getAttachedBlocksList()[0].getHeight();
     }
     if (currentHeight > neededBlocks) {
       dispatch({response: response, timeSince: '', type: TRANSACTIONNFTNS_DATA });

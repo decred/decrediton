@@ -261,7 +261,7 @@ class SideBar extends Component {
     const { getNetworkResponse } = this.props;
     const { timeBack, currentHeight } = this.props;
     const { timeSince, transactionNtfnsResponse } = this.props;
-    
+
     var balance = 0;
     if (getBalanceResponse != null) {
       balance = getBalanceResponse.getTotal() / 100000000;
@@ -307,11 +307,11 @@ class SideBar extends Component {
           </div>
           {transactionNtfnsResponse !== null ?
             <div style={styles.menuBottomLatestBlock}>
-              <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{transactionNtfnsResponse.getAttachedBlockList()[0].getHeight()}</span></a> 
+              <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{transactionNtfnsResponse.getAttachedBlockList()[0].getHeight()}</span></a>
               <div style={styles.menuBottomLatestBlockTime}>{timeSince}</div>
             </div>:
             <div style={styles.menuBottomLatestBlock}>
-              <a style={styles.menuBottomLatestBlockName}>Synced to block: <span style={styles.menuBottomLatestBlockNumber}>{currentHeight}</span></a> 
+              <a style={styles.menuBottomLatestBlockName}>Synced to block: <span style={styles.menuBottomLatestBlockNumber}>{currentHeight}</span></a>
               <div style={styles.menuBottomLatestBlockTime}>{timeBack}</div>
             </div>
           }

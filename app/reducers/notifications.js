@@ -22,7 +22,7 @@ export default function notifications(state = {}, action) {
     return {...state,
       currentHeight: action.currentHeight,
       timeBack: action.timeBack,
-    };  
+    };
   case TRANSACTIONNFTNS_END:
   case SPENTNESSNFTNS_START:
     return {...state,

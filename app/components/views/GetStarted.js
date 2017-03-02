@@ -261,7 +261,6 @@ class Home extends Component{
   }
 
   render() {
-    const { fetchHeadersResponse, neededBlocks } = this.props;
     const { stepIndex } = this.props;
     const { disclaimerOK } = this.props;
     const { versionInvalid, versionInvalidError } = this.props;
@@ -279,12 +278,6 @@ class Home extends Component{
         <ShowError error={getLoaderError} />
         <ShowError error={getVersionServiceError}/>
       </div>);
-
-    var ibdBlockProgress = 0.00;
-    if (fetchHeadersResponse !== null) {
-      ibdBlockProgress = (fetchHeadersResponse.getMainChainTipBlockHeight() / neededBlocks) * 100;
-      ibdBlockProgress = ibdBlockProgress.toFixed(2);
-    }
 
     var startupStepView = (<div>something went wrong</div>);
 
