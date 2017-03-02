@@ -17,6 +17,9 @@ function mapStateToProps(state) {
     getNetworkResponse: state.grpc.getNetworkResponse,
     getAccountsResponse: state.grpc.getAccountsResponse,
     transactionNtfnsResponse: state.notifications.transactionNtfnsResponse,
+    timeSince: state.notifications.timeSince,
+    currentHeight: state.notifications.currentHeight,
+    timeBack:  state.notifications.timeBack,
   };
 }
 
@@ -256,6 +259,9 @@ class SideBar extends Component {
     const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
     const { getNetworkResponse } = this.props;
+    const { timeBack, currentHeight } = this.props;
+    const { timeSince, transactionNtfnsResponse } = this.props;
+
     var balance = 0;
     if (getBalanceResponse != null) {
       balance = getBalanceResponse.getTotal() / 100000000;
@@ -299,10 +305,20 @@ class SideBar extends Component {
             <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
             <div style={styles.menuBottomTotalBalanceShortValue}>{balance.toString()}</div>
           </div>
-          <div style={styles.menuBottomLatestBlock}>
-            <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight():0}</span></a>
-            {this.state.timeSince !== null ? <div style={styles.menuBottomLatestBlockTime}>{this.state.timeSince}</div> : <div></div> }
-          </div>
+          {transactionNtfnsResponse !== null ?
+            <div style={styles.menuBottomLatestBlock}>
+              <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{transactionNtfnsResponse.getAttachedBlocksList()[0].getHeight()}</span></a>
+              <div style={styles.menuBottomLatestBlockTime}>{timeSince}</div>
+            </div>:
+            currentHeight !== 0 ?
+            <div style={styles.menuBottomLatestBlock}>
+              <a style={styles.menuBottomLatestBlockName}>Synced to block: <span style={styles.menuBottomLatestBlockNumber}>{currentHeight}</span></a>
+              <div style={styles.menuBottomLatestBlockTime}>{timeBack}</div>
+            </div>:
+            <div>
+            </div>
+          }
+
         </div>
       </div>
     );

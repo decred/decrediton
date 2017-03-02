@@ -385,19 +385,6 @@ function fetchHeadersFailed(error) {
   return { error, type: FETCHHEADERS_FAILED };
 }
 
-function fetchHeadersProgress(response) {
-  return (dispatch, getState) => {
-    const { neededBlocks } = getState().walletLoader;
-    var mainChainTipBlockHeight = response.getMainChainTipBlockHeight();
-    if ( mainChainTipBlockHeight > neededBlocks ) {
-      dispatch(fetchHeadersSuccess(response));
-    } else {
-      dispatch({response: response, type: FETCHHEADERS_PROGRESS});
-      setTimeout( () => {dispatch(fetchHeadersAction());}, 1000);
-    }
-  };
-}
-
 function fetchHeadersSuccess(response) {
   return (dispatch) => {
     dispatch({response: response, type: FETCHHEADERS_SUCCESS});
@@ -421,7 +408,7 @@ function fetchHeadersAction() {
           if (err) {
             dispatch(fetchHeadersFailed(err + ' Please try again'));
           } else {
-            dispatch(fetchHeadersProgress(response));
+            dispatch(fetchHeadersSuccess(response));
           }
         });
   };
