@@ -16,10 +16,12 @@ export default function notifications(state = {}, action) {
   case TRANSACTIONNFTNS_DATA:
     return {...state,
       transactionNtfnsResponse: action.response,
+      timeSince: action.timeSince,
     };
   case TRANSACTIONNFTNS_SYNCING:
     return {...state,
       currentHeight: action.currentHeight,
+      timeBack: action.timeBack,
     };  
   case TRANSACTIONNFTNS_END:
   case SPENTNESSNFTNS_START:

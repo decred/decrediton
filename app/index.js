@@ -184,6 +184,8 @@ var initialState = {
     decodeSeedError: null,
   },
   notifications: {
+    timeSince: '',
+    timeBack: '',
     currentHeight: 0,
     transactionNtfnsRequestAttempt: false,
     transactionNtfnsRequest: null,

@@ -18,14 +18,14 @@ function transactionNtfnsData(response) {
       currentHeight = response.getAttachedBlocksList()[0].getHeight()
     }
     if (currentHeight > neededBlocks) {
-      dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
+      dispatch({response: response, timeSince: '', type: TRANSACTIONNFTNS_DATA });
       setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
       setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
       setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
       setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
       setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
     } else if (currentHeight%100 == 0) {
-      dispatch({currentHeight: currentHeight, type: TRANSACTIONNFTNS_SYNCING });
+      dispatch({currentHeight: currentHeight, timeBack: '', type: TRANSACTIONNFTNS_SYNCING });
     }
   };
 }
