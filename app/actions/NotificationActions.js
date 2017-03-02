@@ -13,10 +13,9 @@ export const TRANSACTIONNFTNS_END = 'TRANSACTIONNFTNS_END';
 function transactionNtfnsData(response) {
   return (dispatch, getState) => {
     const { neededBlocks } = getState().walletLoader;
-    const { currentHeight } = getState().notifications;
     var currentHeight = 0;
-    if (response.GetAttachedBlocksList().length > 0) {
-      currentHeight = response.GetAttachedBlocksList()[0].height
+    if (response.getAttachedBlocksList().length > 0) {
+      currentHeight = response.getAttachedBlocksList()[0].height
     }
     if (currentHeight > neededBlocks) {
       dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
