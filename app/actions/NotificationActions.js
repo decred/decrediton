@@ -15,7 +15,7 @@ function transactionNtfnsData(response) {
     const { neededBlocks } = getState().walletLoader;
     var currentHeight = 0;
     if (response.getAttachedBlocksList().length > 0) {
-      currentHeight = response.getAttachedBlocksList()[0].height
+      currentHeight = response.getAttachedBlocksList()[0].getHeight()
     }
     if (currentHeight > neededBlocks) {
       dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
@@ -24,17 +24,9 @@ function transactionNtfnsData(response) {
       setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
       setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
       setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
-    } else if (currentHeight%1000 == 0) {
+    } else if (currentHeight%100 == 0) {
       dispatch({currentHeight: currentHeight, type: TRANSACTIONNFTNS_SYNCING });
     }
-    /*
-    dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
-    setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
-    setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
-    setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
-    setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
-    setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
-    */
   };
 }
 
