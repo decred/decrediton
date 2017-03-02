@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import CreateWalletForm from '../CreateWalletForm';
 import CircularProgress from 'material-ui/CircularProgress';
-import LinearProgress from 'material-ui/LinearProgress';
 import Dialog from 'material-ui/Dialog';
 import ShowError from '../ShowError';
 import Radium from 'radium';
@@ -418,21 +417,12 @@ class Home extends Component{
       // Fetch headers
       startupStepView = (
         <div style={styles.view}>
-          <Header getStarted headerTitleOverview="Catching up block chain"/>
+          <Header getStarted headerTitleOverview="Fetching block headers"/>
           <div style={styles.contentNewSeed}>
-            <div style={styles.contentNest}>
-              { fetchHeadersRequestAttempt ?
-                <div>
-                  <LinearProgress mode="determinate"
-                    style={styles.linearLoading}
-                    min={0}
-                    max={neededBlocks}
-                    value={fetchHeadersResponse !== null ? fetchHeadersResponse.getMainChainTipBlockHeight() : 0.0} />
-                  <p style={{color:'white'}}>{ibdBlockProgress}%</p>
-                </div> :
-                <div></div>
-              }
-            </div>
+            { fetchHeadersRequestAttempt ?
+            <CircularProgress style={styles.loading} size={125} thickness={6}/> :
+            <div></div>
+            }
           </div>
         </div>
       );
@@ -489,10 +479,3 @@ class Home extends Component{
 }
 
 export default Radium(Home);
-
-/*
-                  <LinearProgress mode="determinate"
-                    min={0}
-                    max={neededBlocks}
-                    value={fetchHeadersResponse !== null ? fetchHeadersResponse.getMainChainTipBlockHeight() : 0.0} />
-                    */
