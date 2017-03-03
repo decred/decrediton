@@ -33,7 +33,7 @@ export function updateStateSettingsChanged(settings) {
       if (settings.currencyDisplay !== currentSettings.currencyDisplay) {
         console.log('settings changed! different than currentSettings');
         cfg.set('currency_display', settings.currencyDisplay);
-        dispatch({ tempSettings: settings, type: SETTINGS_CHANGED}); 
+        dispatch({ tempSettings: settings, type: SETTINGS_CHANGED});
       } else {
         console.log('settings unchanged! same as currentSettings');
         dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED});
