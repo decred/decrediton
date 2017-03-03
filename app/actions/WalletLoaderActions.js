@@ -262,7 +262,6 @@ export function startRpcRequest() {
   } else {
     rpcport = cfg.get('daemon_port');
   }
-  console.log(rpcport);
   var request = new StartConsensusRpcRequest();
   request.setNetworkAddress('127.0.0.1:' + rpcport);
   request.setUsername(cfg.get('rpc_user'));
