@@ -191,7 +191,7 @@ function getPingError(error) {
   };
 }
 
-function getPingSuccess(getPingResponse) {
+function getPingSuccess() {
   return (dispatch) => {
     setTimeout( () => {dispatch(getPingAttempt());}, 10000);
   };
