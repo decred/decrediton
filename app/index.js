@@ -33,9 +33,11 @@ var initialState = {
   settings: {
     currentSettings: {
       currencyDisplay: cfg.get('currency_display'),
+      network: cfg.get('network'),
     },
     tempSettings: {
       currencyDisplay: cfg.get('currency_display'),
+      network: cfg.get('network'),
     },
     settingsChanged: false,
   },

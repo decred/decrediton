@@ -33,22 +33,27 @@ const styles = {
   },
   saveSettingsButton: {
     float: 'right',
+  },
+  restart: {
+    fontWeight: 'bold',
   }
 };
 
 class Settings extends Component{
   static propTypes = {
     walletService: PropTypes.object,
-    currencyDisplay: PropTypes.string
+    currencyDisplay: PropTypes.string,
+    network: PropTypes.string,
   };
   handleSaveSettingsClick = (settings) => {
     this.props.saveSettings(settings);
   }
-  //handleCurrencyChange
+
   render() {
     const { walletService, currentSettings, settingsChanged, tempSettings, updateStateSettingsChanged } = this.props;
     var settings = {
       currencyDisplay: tempSettings.currencyDisplay,
+      network: tempSettings.network,
     };
     const settingsView = (
       <div style={styles.view}>
@@ -65,6 +70,19 @@ class Settings extends Component{
             <option value="DCR">DCR</option>
             <option value="atoms">atoms</option>
           </select>
+
+          <div style={styles.label}>
+            Network <span style={styles.restart}>(requires restart!)</span>
+          </div>
+          <select defaultValue={currentSettings.network}
+            onChange={(e) => {
+              settings.network = e.target.value;
+              updateStateSettingsChanged(settings);
+            }}>
+            <option value="mainnet">mainnet</option>
+            <option value="testnet">testnet</option>
+          </select>
+
           <Button
             style={styles.saveSettingsButton}
             disabled={!settingsChanged}
@@ -73,8 +91,8 @@ class Settings extends Component{
             onClick={() => this.handleSaveSettingsClick(tempSettings)}>
             Save Settings
           </Button>
-        </div>
-			</div>
+	</div>
+      </div>
     );
     if (walletService === null) {
       return (<ErrorScreen />);
