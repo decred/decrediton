@@ -33,7 +33,9 @@ export function getCfg() {
   if (!config.has('rpc_pass')) {
     config.set('rpc_pass','PASSWORD');
   }
-
+  if (!config.has('currency_display')) {
+    config.set('currency_display','DCR');
+  }
   return(config);
 }
 

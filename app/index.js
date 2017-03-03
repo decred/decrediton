@@ -33,10 +33,10 @@ if (cfg.get('network') == 'testnet') {
 var initialState = {
   settings: {
     currentSettings: {
-      currencyDisplay: 'DCR',
+      currencyDisplay: cfg.get('currency_display'),
     },
     tempSettings: {
-      currencyDisplay: 'DCR',
+      currencyDisplay: cfg.get('currency_display'),
     },
     settingsChanged: false,
   },
