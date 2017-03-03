@@ -16,7 +16,6 @@ var neededBlocks = 0;
 var today = new Date();
 var startDate = new Date();
 var totalDays = 0.0;
-console.log(cfg.get('network'));
 if (cfg.get('network') == 'testnet') {
   grpcport = cfg.get('wallet_port_testnet');
   startDate = new Date('01/27/2016');
