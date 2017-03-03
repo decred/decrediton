@@ -194,16 +194,12 @@ function getPingError(error) {
 function getPingSuccess(getPingResponse) {
   return (dispatch) => {
     setTimeout( () => {dispatch(getPingAttempt());}, 10000);
-    dispatch({getPingResponse: getPingResponse, type: GETPING_SUCCESS });
   };
 }
 
 export function getPingAttempt() {
   var request = new PingRequest();
   return (dispatch) => {
-    dispatch({
-      request: request,
-      type: GETPING_ATTEMPT });
     dispatch(ping());
   };
 }
