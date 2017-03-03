@@ -59,9 +59,6 @@ export function getCfgPath() {
 // that was available when using the standalone node but not there when using
 // electron in production mode.
 export function appDataDirectory() {
-  const path = require('path');
-  const os = require('os');
-
   if (os.platform() == 'win32') {
     return path.join(os.homedir(), 'AppData', 'Local', 'Decrediton');
   } else if (process.platform === 'darwin') {

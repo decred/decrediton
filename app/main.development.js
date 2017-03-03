@@ -42,6 +42,8 @@ if (process.env.NODE_ENV === 'development') {
   require('module').globalPaths.push(p); // eslint-disable-line
 }
 
+// Always use reasonable path for save data.
+app.setPath('userData', appDataDirectory());
 var cfg = getCfg();
 
 app.on('window-all-closed', () => {
