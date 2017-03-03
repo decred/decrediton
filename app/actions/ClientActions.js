@@ -191,19 +191,14 @@ function getPingError(error) {
   };
 }
 
-function getPingSuccess(getPingResponse) {
+function getPingSuccess() {
   return (dispatch) => {
     setTimeout( () => {dispatch(getPingAttempt());}, 10000);
-    dispatch({getPingResponse: getPingResponse, type: GETPING_SUCCESS });
   };
 }
 
 export function getPingAttempt() {
-  var request = new PingRequest();
   return (dispatch) => {
-    dispatch({
-      request: request,
-      type: GETPING_ATTEMPT });
     dispatch(ping());
   };
 }
@@ -211,8 +206,7 @@ export function getPingAttempt() {
 function ping() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
-    const { getPingRequest } = getState().grpc;
-    walletService.ping(getPingRequest,
+    walletService.ping(new PingRequest(),
         function(err, getPingResponse) {
           if (err) {
             dispatch(getPingError(err + ' Please try again'));
