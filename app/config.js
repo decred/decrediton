@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
+import { stakePoolInfo } from './middleware/stakepoolapi';
 
 export function getCfg() {
   const Config = require('electron-config');
@@ -35,6 +36,27 @@ export function getCfg() {
   }
   if (!config.has('currency_display')) {
     config.set('currency_display','DCR');
+  }
+  if (!config.has('stakepools') || config.get('stakepools') == null) {
+    stakePoolInfo(function(response, err) {
+      if (response == null) {
+        console.log(err)
+      } else {
+        var stakePoolNames = Object.keys(response.data);
+        // Only add matching network stakepool info
+        var foundStakePoolConfigs = Array();
+        for (var i = 0; i < stakePoolNames.length; i++) {
+            foundStakePoolConfigs.push({
+              Host:response.data[stakePoolNames[i]].URL,
+              Network: response.data[stakePoolNames[i]].Network,
+              ApiKey:"",
+              MultigsigVoteScript:"",
+              VotingAccount:"",
+            });
+        }
+        config.set('stakepools', foundStakePoolConfigs)}
+      }
+    )
   }
   return(config);
 }
