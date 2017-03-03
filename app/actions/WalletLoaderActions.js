@@ -257,16 +257,16 @@ function startRpcSuccess() {
 export function startRpcRequest() {
   var cfg = getCfg();
   var rpcport = '';
-  if (cfg.network == 'testnet') {
-    rpcport = cfg.daemon_port_testnet;
+  if (cfg.get('network') == 'testnet') {
+    rpcport = cfg.get('daemon_port_testnet');
   } else {
-    rpcport = cfg.daemon_port;
+    rpcport = cfg.get('daemon_port');
   }
-
+  console.log(rpcport);
   var request = new StartConsensusRpcRequest();
   request.setNetworkAddress('127.0.0.1:' + rpcport);
-  request.setUsername(cfg.rpc_user);
-  request.setPassword(new Uint8Array(Buffer.from(cfg.rpc_pass)));
+  request.setUsername(cfg.get('rpc_user'));
+  request.setPassword(new Uint8Array(Buffer.from(cfg.get('rpc_pass'))));
   request.setCertificate(new Uint8Array(getDcrdCert()));
 
   return (dispatch) => {

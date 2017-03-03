@@ -34,18 +34,7 @@ export function getCfg() {
     config.set('rpc_pass','PASSWORD');
   }
 
-  var cfg = {
-    'network' :config.get('network'),
-    'wallet_port': config.get('wallet_port'),
-    'wallet_port_testnet': config.get('wallet_port_testnet'),
-    'cert_path': config.get('cert_path'),
-    'daemon_port': config.get('daemon_port'),
-    'daemon_port_testnet': config.get('daemon_port_testnet'),
-    'daemon_cert_path': config.get('daemon_cert_path'),
-    'rpc_user': config.get('rpc_user'),
-    'rpc_pass': config.get('rpc_pass')
-  };
-  return(cfg);
+  return(config);
 }
 
 export function getCfgPath() {
@@ -71,8 +60,8 @@ export function appDataDirectory() {
 export function getCert() {
   var cert = '';
   var cfg = getCfg();
-  if (cfg.cert_path != '') {
-    return(cfg.cert_path);
+  if (cfg.get('cert_path') != '') {
+    return(cfg.get('cert_path'));
   }
   var certPath = '';
   if (os.platform() == 'win32') {
@@ -101,8 +90,8 @@ export function getCert() {
 
 export function getDcrdCert() {
   var cfg = getCfg();
-  if (cfg.daemon_cert_path != '') {
-    return(cfg.daemon_cert_path);
+  if (cfg.get('daemon_cert_path') != '') {
+    return(cfg.get('daemon_cert_path'));
   }
   var certPath = '';
   if (os.platform() == 'win32') {
