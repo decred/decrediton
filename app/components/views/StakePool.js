@@ -411,7 +411,7 @@ class StakePool extends Component{
       //return;
     }
     //setStakePoolInformation(this.state.stakePoolHost, this.props.apiKey, this.props.account);
-    this.props.setStakePoolInformation("https://teststakepool.decred.org", this.props.apiKey, 0);
+    this.props.setStakePoolInformation("https://teststakepool.decred.org", this.state.apiKey, 0);
   }
   updateApiKey(apiKey) {
     this.setState({apiKey: apiKey});
@@ -424,16 +424,19 @@ class StakePool extends Component{
   }
   render() {
     const { walletService } = this.props;
-    const { stakePoolInfoConfig } = this.props;
     const { getAccountsResponse } = this.props;
+    const { currentStakePoolConfig } = this.props;
+    const { getNetworkResponse } = this.props;
+
     var selectStakePool = (
       <div style={styles.selectStakePoolArea}>
         <select
           defaultValue={0}
           style={styles.selectStakePool}
           >
-          {stakePoolInfoConfig !== null ?
-            stakePoolInfoConfig.map((stakePool) => {
+          {currentStakePoolConfig !== null ?
+            currentStakePoolConfig.map((stakePool) => {
+              if (stakePool.ApiKey == '' && stakePool.Network == getNetworkResponse.networkStr)
               return (
                 <option style={styles.selectStakePoolNFirst} key={stakePool.Host} value={stakePool.Host}>
                   {stakePool.Host}

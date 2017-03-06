@@ -18,7 +18,7 @@ export function setStakePoolAddress(apiUrl, apiToken, pKAddress, cb) {
       "Authorization": "Bearer " + apiToken,
     }
   }
-  var url = apiUrl+"address";
+  var url = apiUrl+"/api/v1/address";
   axios.post(url,
     querystring.stringify({
       UserPubKeyAddr: pKAddress,
@@ -38,7 +38,7 @@ export function getPurchaseInfo(apiUrl, apiToken, cb) {
       "Authorization": "Bearer " + apiToken,
     }
   }
-  var url = apiUrl+"getpurchaseinfo";
+  var url = apiUrl+"/api/v1/getpurchaseinfo";
   axios.get(url, config)
   .then(function(response) {
     cb(response);

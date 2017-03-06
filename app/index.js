@@ -40,6 +40,7 @@ var initialState = {
     settingsChanged: false,
   },
   stakepool: {
+    currentStakePoolConfig: cfg.get('stakepools'),
     stakePoolInfoRequest: false,
     stakePoolInfoError: null,
     stakePoolInfoData: null,

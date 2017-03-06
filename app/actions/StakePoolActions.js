@@ -57,9 +57,8 @@ function getStakePoolInfoAction() {
 }
 
 export const SETSTAKEPOOLAPIKEY = "SETSTAKEPOOLAPIKEY"
-export function setStakePoolInformation(poolHost, apikey, accountNum) {
+export function setStakePoolInformation(poolHost, apiKey, accountNum) {
   return (dispatch, getState) => {
-    var purchaseInfo = requestPurchaseInfo(poolHost, apikey);
     getPurchaseInfo(
       poolHost, 
       apiKey,
@@ -69,7 +68,12 @@ export function setStakePoolInformation(poolHost, apikey, accountNum) {
           return;
         } else {
           // parse response data for no err
-          console.log(response);
+          if (response.data.message == 'success') {
+            console.log(response.data.data);
+          } else if (response.data.message == 'error') {
+            console.error(response.data.data)
+          }
+          
         }
       });
       /*
