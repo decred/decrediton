@@ -434,7 +434,7 @@ class StakePool extends Component{
           defaultValue={0}
           style={styles.selectStakePool}
           >
-          {currentStakePoolConfig !== null ?
+          {currentStakePoolConfig !== null && getNetworkResponse !== null ?
             currentStakePoolConfig.map((stakePool) => {
               if (stakePool.ApiKey == '' && stakePool.Network == getNetworkResponse.networkStr)
               return (
