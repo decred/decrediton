@@ -18,6 +18,7 @@ export default function stakepool(state = {}, action) {
     return {...state,
       currentStakePoolConfigRequest: false,
       currentStakePoolConfig: action.currentStakePoolConfig,
+      activeStakePoolConfig: true,
     };     
   default:
     return state;
