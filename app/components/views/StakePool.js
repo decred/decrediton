@@ -1,5 +1,6 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
+import CircularProgress from 'material-ui/CircularProgress';
 import ErrorScreen from '../ErrorScreen';
 import SideBar from '../SideBar';
 import Header from '../Header';
@@ -583,9 +584,11 @@ class StakePool extends Component{
           headerTitleOverview="Stake pool settings"
           headerMetaOverview={<div></div>}
         />
-        {!activeStakePoolConfig || this.state.addAnotherStakePool && !currentStakePoolConfigRequest ?
+        {(!activeStakePoolConfig || this.state.addAnotherStakePool) && !currentStakePoolConfigRequest ?
           stakePoolConfigInput :
-          configuredStakePoolInformation
+          currentStakePoolConfigRequest ?
+            <CircularProgress style={styles.loading} size={125} thickness={6}/> :
+            configuredStakePoolInformation
         }
       </div>
     );
