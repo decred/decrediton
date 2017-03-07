@@ -4,6 +4,8 @@ export const GETSTAKEPOOLINFO_ATTEMPT = 'GETSTAKEPOOLINFO_ATTEMPT';
 export const GETSTAKEPOOLINFO_FAILED = 'GETSTAKEPOOLINFO_FAILED';
 export const GETSTAKEPOOLINFO_SUCCESS = 'GETSTAKEPOOLINFO_SUCCESS';
 
+import { NextAddressRequest } from '../middleware/walletrpc/api_pb';
+
 function getStakePoolInfoError(error) {
   return { error, type: GETSTAKEPOOLINFO_FAILED };
 }
@@ -76,7 +78,7 @@ export function setStakePoolInformation(poolHost, apiKey, accountNum) {
             dispatch({ stakePoolData: response.data.data, type: SETSTAKEPOOLAPIKEY });
           } else if (response.data.status == 'error') {
             if (response.data.message == 'purchaseinfo error - no address submitted') {
-              setStakePoolAddress(poolHost, apiKey, accountNum)
+              dispatch(setStakePoolAddressAction(poolHost, apiKey, accountNum));
               console.log("setting need address to true");
               return (true);
             } else {
@@ -92,10 +94,11 @@ export function setStakePoolInformation(poolHost, apiKey, accountNum) {
   }
 }
 
-function setStakePoolAddress(poolHost, apiKey, accountNum) {
+function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
+  return (dispatch, getState) => {
   console.log("getting new address pubkey");
   const { walletService } = getState().grpc;
-      // get new address for requested VotingAccount
+  // get new address for requested VotingAccount
   var request = new NextAddressRequest();
   request.setAccount(accountNum);
   request.setKind(0);
@@ -105,7 +108,7 @@ function setStakePoolAddress(poolHost, apiKey, accountNum) {
       if (err) {
         // handle some err here some way
       } else {
-        addressPubKey = getNextAddressResponse.GetPublicKey();
+        addressPubKey = getNextAddressResponse.getPublicKey();
         setStakePoolAddress(
           poolHost, 
           apiKey, 
@@ -114,7 +117,7 @@ function setStakePoolAddress(poolHost, apiKey, accountNum) {
             if (response.data.status == 'success') {
               console.log(response.data.message);
               console.log(response.data.data);
-              setStakePoolInformation(poolHost, apiKey, accountNum)
+              dispatch(setStakePoolInformation(poolHost, apiKey, accountNum));
             } else if (response.data.status == 'error') {
               console.error(response.data.message);
             } else {
@@ -125,4 +128,5 @@ function setStakePoolAddress(poolHost, apiKey, accountNum) {
       }
     }
   );
+  }
 }
