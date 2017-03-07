@@ -562,7 +562,7 @@ class StakePool extends Component{
               <div style={styles.contentNestPrefixSend}>Api Key:</div>
               <div style={styles.contentNestAddressHashBlock}>
                 <div style={styles.inputForm}>
-                  <textarea
+                  <input
                     type="text"
                     style={styles.contentNestAddressAmountSum}
                     placeholder="API Key"
