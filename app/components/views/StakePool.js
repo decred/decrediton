@@ -111,6 +111,12 @@ const styles = {
     textAlign: 'right',
     textTransform: 'capitalize',
   },
+  contentNestStakePoolSettingsBottom: {
+    width: '100%',
+    height: '20px',
+    marginTop: '30px',
+    float: 'left',
+  },
   contentNestContentStakePoolSettings: {
     position: 'relative',
     overflowY: 'hidden',
@@ -119,6 +125,7 @@ const styles = {
     height: '34px',
     float: 'left',
     fontSize: '13px',
+    paddingTop: '2px',
   },
   contentNestPrefixSend: {
     width: '100px',
@@ -167,11 +174,9 @@ const styles = {
   },
   contentNestAddressHashBlock: {
     position: 'relative',
-    overflow: 'hidden',
-    width: '300px',
+    width: '600px',
     height: '34px',
     float: 'left',
-    borderBottom: '1px solid #a9b4bf',
     fontSize: '13px',
   },
   contentNestAddressHashBlockConfirm: {
@@ -293,8 +298,7 @@ const styles = {
   inputForm: {
     position: 'relative',
     width: '100%',
-    height: 'auto',
-    minHeight: '44px',
+    height: '25px',
   },
   contentNestAddressAmount: {
     display: 'block',
@@ -329,10 +333,8 @@ const styles = {
   },
   contentNestAddressAmountSum: {
     display: 'block',
-    width: '100px',
+    width: '100%',
     height: '100%',
-    borderStyle: 'none',
-    fontFamily: 'Inconsolata, monospace',
     fontSize: '19px',
     fontWeight: '700',
   },
@@ -539,20 +541,10 @@ class StakePool extends Component{
           }
         </select>
       </div>);  
-    const stakePool = (
-      <div style={styles.view}>
-        <Header
-          headerTop={
-            currentStakePoolConfigError !== null ?
-            <div key="updateStakePoolError" style={styles.viewNotificationError}>{currentStakePoolConfigError}</div> :
-            <div key="updateStakePoolError" ></div>
-          }
-          headerTitleOverview="Stake pool settings"
-          headerMetaOverview={<div></div>}
-        />
-        {!activeStakePoolConfig || this.state.addAnotherStakePool ? 
-        <div style={styles.content}>
-          <div style={styles.flexHeight}>
+    
+    var stakePoolConfigAInput = (
+      <div style={styles.content}>
+        <div style={styles.flexHeight}>
             <div style={styles.contentNestFromAddress}>
               <div style={styles.contentNestPrefixSend}>Stake Pool:</div>
                 {selectStakePool}
@@ -574,7 +566,9 @@ class StakePool extends Component{
           <div style={styles.contentSend} onClick={() => this.setStakePoolInfo()}>
             <div style={styles.viewButtonKeyBlue}>Confirm</div>
           </div>
-        </div> :
+        </div>
+    );
+    var configuredStakePoolInformation = (
         <div style={styles.content}>
           <div style={styles.flexHeight}>
             <div style={styles.contentNestFromAddress}>
@@ -601,7 +595,7 @@ class StakePool extends Component{
                     <div style={styles.contentNestPrefixStakePoolSettings}>Script:</div>
                     <textarea disabled value={stakePool.Script} style={styles.contentNestContentStakePoolSettings}/>
                   </div>
-                  <div style={styles.contentNestStakePoolSettings}>
+                  <div style={styles.contentNestStakePoolSettingsBottom}>
                     <div style={styles.contentNestPrefixStakePoolSettings}>Pool Fees:</div>
                     <div style={styles.contentNestContentStakePoolSettings}>
                       {stakePool.PoolFees}
@@ -619,6 +613,21 @@ class StakePool extends Component{
           <div></div>
           }
         </div>
+    );
+    const stakePool = (
+      <div style={styles.view}>
+        <Header
+          headerTop={
+            currentStakePoolConfigError !== null ?
+            <div key="updateStakePoolError" style={styles.viewNotificationError}>{currentStakePoolConfigError}</div> :
+            <div key="updateStakePoolError" ></div>
+          }
+          headerTitleOverview="Stake pool settings"
+          headerMetaOverview={<div></div>}
+        />
+        {!activeStakePoolConfig || this.state.addAnotherStakePool && !currentStakePoolConfigRequest ? 
+          stakePoolConfigInput :
+          configuredStakePoolInformation
         }
       </div>
     );
