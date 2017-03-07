@@ -425,9 +425,29 @@ class StakePool extends Component{
   render() {
     const { walletService } = this.props;
     const { getAccountsResponse } = this.props;
-    const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError } = this.props;
+    const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
     const { getNetworkResponse } = this.props;
 
+    var configedStakePool = (
+      <div style={styles.selectStakePoolArea}>
+        <select
+          defaultValue={0}
+          style={styles.selectStakePool}
+          >
+          {currentStakePoolConfig !== null && getNetworkResponse !== null ?
+            currentStakePoolConfig.map((stakePool) => {
+              if (stakePool.ApiKey && stakePool.Network == getNetworkResponse.networkStr) {
+                return (
+                  <option style={styles.selectStakePoolNFirst} key={stakePool.Host} value={stakePool.Host}>
+                    {stakePool.Host}
+                  </option>
+                );
+              }
+             }):
+            null
+          }
+        </select>
+      </div>);
     var selectStakePool = (
       <div style={styles.selectStakePoolArea}>
         <select
@@ -436,12 +456,13 @@ class StakePool extends Component{
           >
           {currentStakePoolConfig !== null && getNetworkResponse !== null ?
             currentStakePoolConfig.map((stakePool) => {
-              if (!stakePool.ApiKey && stakePool.Network == getNetworkResponse.networkStr)
-              return (
-                <option style={styles.selectStakePoolNFirst} key={stakePool.Host} value={stakePool.Host}>
-                  {stakePool.Host}
-                </option>
-              );
+              if (!stakePool.ApiKey && stakePool.Network == getNetworkResponse.networkStr) {
+                return (
+                  <option style={styles.selectStakePoolNFirst} key={stakePool.Host} value={stakePool.Host}>
+                    {stakePool.Host}
+                  </option>
+                );
+              }
              }):
             null
           }
@@ -480,16 +501,23 @@ class StakePool extends Component{
         />
         <div style={styles.content}>
           <div style={styles.center}>
-            {selectStakePool}
-            {selectAccounts}
-            <input
-              type="text"
-              style={styles.contentNestAddressAmountSum}
-              placeholder="API Key"
-              onBlur={(e) =>{this.updateApiKey(e.target.value);}}/>
-            <div style={styles.contentSend} onClick={() => this.setStakePoolInfo()}>
-              <div style={styles.viewButtonKeyBlue}>Confirm</div>
-            </div>
+            {!activeStakePoolConfig ? 
+              <div>
+                <div>{selectStakePool}</div>
+                <div>{selectAccounts}</div>
+                <input
+                  type="text"
+                  style={styles.contentNestAddressAmountSum}
+                  placeholder="API Key"
+                  onBlur={(e) =>{this.updateApiKey(e.target.value);}}/>
+                <div style={styles.contentSend} onClick={() => this.setStakePoolInfo()}>
+                  <div style={styles.viewButtonKeyBlue}>Confirm</div>
+                </div> 
+              </div> :
+              <div>
+                Configured stake pool
+              </div>
+            }
           </div>
         </div>
 			</div>
@@ -497,7 +525,7 @@ class StakePool extends Component{
     if (walletService === null) {
       return (<ErrorScreen />);
     } else {
-      return(
+      return (
         <div style={styles.body}>
           <SideBar />
           {stakePool}

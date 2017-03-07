@@ -10,6 +10,7 @@ function mapStateToProps(state) {
     currentStakePoolConfig: state.stakepool.currentStakePoolConfig,
     currentStakePoolConfigRequest: state.stakepool.currentStakePoolConfigRequest,
     currentStakePoolConfigError: state.stakepool.currentStakePoolConfigError,
+    activeStakePoolConfig: state.stakepool.activeStakePoolConfig,
     getAccountsResponse: state.grpc.getAccountsResponse,
     getNetworkResponse: state.grpc.getNetworkResponse,
   };
