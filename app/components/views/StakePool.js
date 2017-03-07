@@ -404,12 +404,17 @@ class StakePool extends Component{
       stakePoolHost: '',
       apiKey: '',
       account: 0,
+      addAnotherStakePool: false,
     };
+  }
+  addAnotherStakePool() {
+    this.setState({addAnotherStakePool: true});
   }
   setStakePoolInfo() {
     if (this.state.stakePoolHost == '' || this.state.apiKey == '') {
       //return;
     }
+    //this.setState({addAnotherStakePool: false});
     //setStakePoolInformation(this.state.stakePoolHost, this.props.apiKey, this.props.account);
     this.props.setStakePoolInformation("https://teststakepool.decred.org", this.state.apiKey, 0);
   }
@@ -427,7 +432,13 @@ class StakePool extends Component{
     const { getAccountsResponse } = this.props;
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
     const { getNetworkResponse } = this.props;
-
+    var unconfigedStakePools = 0;
+    console.log(this.state.addAnotherStakePool);
+    for (var i = 0; i < currentStakePoolConfig; i++) {
+      if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == getNetworkResponse.networkStr) {
+        unconfigedStakePools++;
+      }
+    }
     var configedStakePool = (
       <div style={styles.selectStakePoolArea}>
         <select
@@ -499,28 +510,44 @@ class StakePool extends Component{
           headerTitleOverview="Stake pool settings"
           headerMetaOverview={<div></div>}
         />
+        {!activeStakePoolConfig || this.state.addAnotherStakePool ? 
         <div style={styles.content}>
-          <div style={styles.center}>
-            {!activeStakePoolConfig ? 
-              <div>
-                <div>{selectStakePool}</div>
-                <div>{selectAccounts}</div>
-                <input
-                  type="text"
-                  style={styles.contentNestAddressAmountSum}
-                  placeholder="API Key"
-                  onBlur={(e) =>{this.updateApiKey(e.target.value);}}/>
-                <div style={styles.contentSend} onClick={() => this.setStakePoolInfo()}>
-                  <div style={styles.viewButtonKeyBlue}>Confirm</div>
-                </div> 
-              </div> :
-              <div>
-                Configured stake pool
+          <div style={styles.flexHeight}>
+            <div style={styles.contentNestFromAddress}>
+              <div style={styles.contentNestPrefixSend}>Stake Pool:</div>
+                {selectStakePool}
+              <div style={styles.contentNestFromAddressWalletIcon}></div>
+            </div>
+            <div style={styles.contentNestToAddress}>
+              <div style={styles.contentNestPrefixSend}>Api Key:</div>
+              <div style={styles.contentNestAddressHashBlock}>
+                <div style={styles.inputForm}>
+                  <input
+                    type="text"
+                    style={styles.contentNestAddressAmountSum}
+                    placeholder="API Key"
+                    onBlur={(e) =>{this.updateApiKey(e.target.value);}}/>
+                </div>
               </div>
-            }
+            </div>
+          </div> 
+          <div style={styles.contentSend} onClick={() => this.setStakePoolInfo()}>
+            <div style={styles.viewButtonKeyBlue}>Confirm</div>
           </div>
+        </div> :
+        <div style={styles.content}>
+          <div style={styles.flexHeight}>
+            Configured stake pool
+          </div>
+          {unconfigedStakePools > 0 ?
+          <div style={styles.contentSend} onClick={() => this.addAnotherStakePool()}>
+            <div style={styles.viewButtonKeyBlue}>Add stakepool</div>
+          </div> :
+          <div></div>
+          }
         </div>
-			</div>
+        }
+      </div>
     );
     if (walletService === null) {
       return (<ErrorScreen />);

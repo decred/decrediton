@@ -19,10 +19,12 @@ var totalDays = 0.0;
 var foundStakePoolConfig = false;
 var currentStakePoolConfig = cfg.get('stakepools');
 var network = cfg.get('network');
-for (var i = 0; i < currentStakePoolConfig.length; i++) {
-  if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
-    foundStakePoolConfig = true;
-    break;
+if (currentStakePoolConfig !== undefined) {
+  for (var i = 0; i < currentStakePoolConfig.length; i++) {
+    if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
+      foundStakePoolConfig = true;
+      break;
+    }
   }
 }
 if (network == 'testnet') {
