@@ -41,13 +41,8 @@ var initialState = {
   },
   stakepool: {
     currentStakePoolConfig: cfg.get('stakepools'),
-    stakePoolInfoRequest: false,
-    stakePoolInfoError: null,
-    stakePoolInfoData: null,
-    selectedStakePoolData: null,
-    stakePoolInfoConfig: null,
-    stakePoolApiKeys: null,
-    stakePoolPurchaseInfo: null,
+    currentStakePoolConfigRequest: false,
+    currentStakePoolConfigError: null,
   },
   version: {
     // RequiredVersion

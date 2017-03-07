@@ -49,9 +49,6 @@ export function getCfg() {
             foundStakePoolConfigs.push({
               Host:response.data[stakePoolNames[i]].URL,
               Network: response.data[stakePoolNames[i]].Network,
-              ApiKey:"",
-              MultigsigVoteScript:"",
-              VotingAccount:"",
             });
         }
         config.set('stakepools', foundStakePoolConfigs)}

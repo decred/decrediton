@@ -1,68 +1,18 @@
 import { stakePoolInfo, getPurchaseInfo, setStakePoolAddress } from '../middleware/stakepoolapi';
 import { getNextAddress } from './ControlActions';
-export const GETSTAKEPOOLINFO_ATTEMPT = 'GETSTAKEPOOLINFO_ATTEMPT';
-export const GETSTAKEPOOLINFO_FAILED = 'GETSTAKEPOOLINFO_FAILED';
-export const GETSTAKEPOOLINFO_SUCCESS = 'GETSTAKEPOOLINFO_SUCCESS';
-
 import { NextAddressRequest } from '../middleware/walletrpc/api_pb';
+import { getCfg } from '../config.js';
 
-function getStakePoolInfoError(error) {
-  return { error, type: GETSTAKEPOOLINFO_FAILED };
-}
+export const UPDATESTAKEPOOLCONFIG_ATTEMPT = "UPDATESTAKEPOOLCONFIG_ATTEMPT"
+export const UPDATESTAKEPOOLCONFIG_FAILED = "UPDATESTAKEPOOLCONFIG_FAILED"
+export const UPDATESTAKEPOOLCONFIG_SUCCESS = "UPDATESTAKEPOOLCONFIG_SUCCESS"
 
-function getStakePoolInfoSuccess(response) {
+export function setStakePoolInformation(poolHost, apiKey, accountNum, internal) {
   return (dispatch, getState) => {
-    const { network } = getState().grpc;
-    const { stakePoolConfig } = getState().stakepool;
-    var stakePoolNames = Object.keys(response.data);
-    var usablePools = Array();
-    // Only add matching network stakepool info
-    var foundStakePoolConfigs = stakePoolConfig;
-    for (var i = 0; i < stakePoolNames.length; i++) {
-      if (response.data[stakePoolNames[i]].Network == network) {
-        if (foundStakePoolConfigs == null) {
-          foundStakePoolConfigs = Array({
-            Host:response.data[stakePoolNames[i]].URL,
-            ApiKey:"",
-            MultigsigVoteScript:"",
-            VotingAccount:"",
-          });
-        } else {
-          foundStakePoolConfigs.push({
-            Host:response.data[stakePoolNames[i]].URL,
-            ApiKey:"",
-            MultigsigVoteScript:"",
-            VotingAccount:"",
-          });
-        }
-      }
+    if (!internal) {
+      dispatch({ type: UPDATESTAKEPOOLCONFIG_ATTEMPT });
     }
-    dispatch({ stakePoolConfig: foundStakePoolConfigs, type: GETSTAKEPOOLINFO_SUCCESS });
-  };
-}
-export function getStakePoolInfoAttempt() {
-  return (dispatch, getState) => {
-    dispatch({ type: GETSTAKEPOOLINFO_ATTEMPT });
-    dispatch(getStakePoolInfoAction());
-  };
-}
-function getStakePoolInfoAction() {
-  return (dispatch) => {
-    stakePoolInfo(function(response, err) {
-      if (err) {
-        dispatch(getStakePoolInfoError(err + ' Please try again'));
-      } else {
-        dispatch(getStakePoolInfoSuccess(response));
-      }
-    });
-  };
-}
-
-export const SETSTAKEPOOLAPIKEY = "SETSTAKEPOOLAPIKEY"
-export function setStakePoolInformation(poolHost, apiKey, accountNum) {
-  return (dispatch, getState) => {
     var needAddress = false;
-    var poolInfo = null;
     getPurchaseInfo(
       poolHost, 
       apiKey,
@@ -75,7 +25,7 @@ export function setStakePoolInformation(poolHost, apiKey, accountNum) {
           if (response.data.status == 'success') {
             console.log(response.data.message);
             console.log(response.data.data);
-            dispatch({ stakePoolData: response.data.data, type: SETSTAKEPOOLAPIKEY });
+            dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, accountNum));
           } else if (response.data.status == 'error') {
             if (response.data.message == 'purchaseinfo error - no address submitted') {
               dispatch(setStakePoolAddressAction(poolHost, apiKey, accountNum));
@@ -83,17 +33,38 @@ export function setStakePoolInformation(poolHost, apiKey, accountNum) {
               return (true);
             } else {
               console.error(response.data.message);
+              dispatch({ error: response.data.message, type: UPDATESTAKEPOOLCONFIG_FAILED });
             }
-          } else {
-            console.error("shouldn't be here:", response);
           }
-          
         }
       }
     );
   }
 }
 
+function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
+  return (dispatch) => {
+    var config = getCfg();
+    var stakePoolConfigs = config.get('stakepools');
+    console.log(stakePoolConfigs)
+    for (var i = 0; i < stakePoolConfigs.length; i++) {
+      if (stakePoolConfigs[i].Host == poolHost) {
+        stakePoolConfigs[i].ApiKey = apiKey;
+        stakePoolConfigs[i].PoolFees = newPoolInfo.PoolFees;
+        stakePoolConfigs[i].PoolAddress = newPoolInfo.PoolAddress;
+        stakePoolConfigs[i].Script = newPoolInfo.Script;
+        stakePoolConfigs[i].TicketAddress = newPoolInfo.TicketAddress;
+        stakePoolConfigs[i].VotingAccount = accountNum;
+        console.log(stakePoolConfigs[i])
+        break;
+      };
+    }
+    console.log(stakePoolConfigs)
+    config.set('stakepools', stakePoolConfigs)
+    dispatch({ currentStakePoolConfig: stakePoolConfigs, type: UPDATESTAKEPOOLCONFIG_SUCCESS });
+  }
+}
+        
 function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
   return (dispatch, getState) => {
   console.log("getting new address pubkey");
@@ -117,9 +88,10 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
             if (response.data.status == 'success') {
               console.log(response.data.message);
               console.log(response.data.data);
-              dispatch(setStakePoolInformation(poolHost, apiKey, accountNum));
+              dispatch(setStakePoolInformation(poolHost, apiKey, accountNum, true));
             } else if (response.data.status == 'error') {
               console.error(response.data.message);
+              dispatch({ error: response.data.message, type: UPDATESTAKEPOOLCONFIG_FAILED });
             } else {
               console.error("shouldn't be here set address:", response);
             }

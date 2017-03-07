@@ -1,7 +1,6 @@
 import { getWalletService } from '../middleware/grpc/client';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt } from './ControlActions';
 import { transactionNftnsStart } from './NotificationActions';
-import { getStakePoolInfoAttempt } from './StakePoolActions';
 export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
 export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
 export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
@@ -23,7 +22,6 @@ function getWalletServiceSuccess(walletService) {
     setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
     setTimeout( () => {dispatch(getPingAttempt());}, 1000);
     setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
-    setTimeout( () => {dispatch(getStakePoolInfoAttempt());}, 1000);
     //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
     setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
     //setTimeout( () => {dispatch(getMinedPaginatedTransactions(false))}, 1500);

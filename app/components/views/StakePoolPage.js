@@ -8,6 +8,8 @@ function mapStateToProps(state) {
   return {
     walletService: state.grpc.walletService,
     currentStakePoolConfig: state.stakepool.currentStakePoolConfig,
+    currentStakePoolConfigRequest: state.stakepool.currentStakePoolConfigRequest,
+    currentStakePoolConfigError: state.stakepool.currentStakePoolConfigError,
     getAccountsResponse: state.grpc.getAccountsResponse,
     getNetworkResponse: state.grpc.getNetworkResponse,
   };

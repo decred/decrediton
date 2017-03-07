@@ -425,7 +425,7 @@ class StakePool extends Component{
   render() {
     const { walletService } = this.props;
     const { getAccountsResponse } = this.props;
-    const { currentStakePoolConfig } = this.props;
+    const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError } = this.props;
     const { getNetworkResponse } = this.props;
 
     var selectStakePool = (
@@ -436,7 +436,7 @@ class StakePool extends Component{
           >
           {currentStakePoolConfig !== null && getNetworkResponse !== null ?
             currentStakePoolConfig.map((stakePool) => {
-              if (stakePool.ApiKey == '' && stakePool.Network == getNetworkResponse.networkStr)
+              if (!stakePool.ApiKey && stakePool.Network == getNetworkResponse.networkStr)
               return (
                 <option style={styles.selectStakePoolNFirst} key={stakePool.Host} value={stakePool.Host}>
                   {stakePool.Host}
@@ -467,9 +467,14 @@ class StakePool extends Component{
           }
         </select>
       </div>);  
-    const copayReceive = (
+    const stakePool = (
       <div style={styles.view}>
         <Header
+          headerTop={
+            currentStakePoolConfigError !== null ?
+            <div key="updateStakePoolError" style={styles.viewNotificationError}>{currentStakePoolConfigError}</div> :
+            <div key="updateStakePoolError" ></div>
+          }
           headerTitleOverview="Stake pool settings"
           headerMetaOverview={<div></div>}
         />
@@ -495,7 +500,7 @@ class StakePool extends Component{
       return(
         <div style={styles.body}>
           <SideBar />
-          {copayReceive}
+          {stakePool}
         </div>);
     }
   }
