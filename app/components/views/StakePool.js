@@ -433,6 +433,10 @@ const styles = {
     height:'372px',
     overflowY: 'auto',
     overflowX: 'hidden',
+  },
+  loading: {
+    marginTop: '110px',
+    marginLeft: '268px',
   }
 };
 
