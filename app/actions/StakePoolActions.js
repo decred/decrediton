@@ -73,11 +73,12 @@ export function setStakePoolInformation(poolHost, apiKey, accountNum) {
           if (response.data.status == 'success') {
             console.log(response.data.message);
             console.log(response.data.data);
-            poolInfo = response.data.data;
+            dispatch({ stakePoolData: response.data.data, type: SETSTAKEPOOLAPIKEY });
           } else if (response.data.status == 'error') {
             if (response.data.message == 'purchaseinfo error - no address submitted') {
-              needAddress = true;
+              setStakePoolAddress(poolHost, apiKey, accountNum)
               console.log("setting need address to true");
+              return (true);
             } else {
               console.error(response.data.message);
             }
@@ -88,88 +89,40 @@ export function setStakePoolInformation(poolHost, apiKey, accountNum) {
         }
       }
     );
-    console.log(needAddress);
-    if (needAddress) {
-      console.log("getting new address pubkey");
-      const { walletService } = getState().grpc;
-      // get new address for requested VotingAccount
-      var request = new NextAddressRequest();
-      request.setAccount(accountNum);
-      request.setKind(0);
-      var addressPubKey = null;
-      walletService.nextAddress(request,
-      function(err, getNextAddressResponse) {
-        if (err) {
-          // handle some err here some way
-        } else {
-          addressPubKey = getNextAddressResponse.GetPublicKey();
-        }
-      });
-      setStakePoolAddress(
-        poolHost, 
-        apiKey, 
-        addressPubKey, 
-        function(response, err) {
-          if (response.data.status == 'success') {
-            console.log(response.data.message);
-            console.log(response.data.data);
-          } else if (response.data.status == 'error') {
-            if (response.data.message == 'purchaseinfo error - no address submitted') {
-              needAddress = true;
-            } else {
-              console.error(response.data.message);
-            }
-          } else {
-            console.error("shouldn't be here set address:", response);
-          }
-        }
-      );
-    }
-    // ask for purchase info again.
-    getPurchaseInfo(
-      poolHost, 
-      apiKey,
-      function(response, err) {
-        if (err) {
-          console.error(err);
-          return;
-        } else {
-          // parse response data for no err
-          if (response.data.status == 'success') {
-            console.log(response.data.message);
-            console.log(response.data.data);
-            poolInfo = response.data.data;
-          } else if (response.data.status == 'error') {
-            if (response.data.message == 'purchaseinfo error - no address submitted') {
-              needAddress = true;
-            } else {
-              console.error(response.data.message);
-            }
-          } else {
-            console.error("shouldn't be here:", response);
-          }
-          
-        }
-      }
-    );
-    dispatch({ updatedStakePoolConfig: poolInfo, type: SETSTAKEPOOLAPIKEY });
-  };
+  }
 }
 
-function setStakePoolAddressAttempt(poolConfig) {
-  return (dispatch, getState) => {
-    const { getNextAddress } = getState().control
-    setStakePoolAddress(
-      poolConfig.Host, 
-      poolConfig.ApiKey,
-      getNextAddress.GetPublicKey(),
-      function(response, err) {
-        if (err) {
-          console.error(err);
-        } else {
-          // parse response data for no err
-          console.log(response);
-        }
-    });
-  }
+function setStakePoolAddress(poolHost, apiKey, accountNum) {
+  console.log("getting new address pubkey");
+  const { walletService } = getState().grpc;
+      // get new address for requested VotingAccount
+  var request = new NextAddressRequest();
+  request.setAccount(accountNum);
+  request.setKind(0);
+  var addressPubKey = null;
+  walletService.nextAddress(request,
+    function(err, getNextAddressResponse) {
+      if (err) {
+        // handle some err here some way
+      } else {
+        addressPubKey = getNextAddressResponse.GetPublicKey();
+        setStakePoolAddress(
+          poolHost, 
+          apiKey, 
+          addressPubKey, 
+          function(response, err) {
+            if (response.data.status == 'success') {
+              console.log(response.data.message);
+              console.log(response.data.data);
+              setStakePoolInformation(poolHost, apiKey, accountNum)
+            } else if (response.data.status == 'error') {
+              console.error(response.data.message);
+            } else {
+              console.error("shouldn't be here set address:", response);
+            }
+          }
+        );
+      }
+    }
+  );
 }
