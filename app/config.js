@@ -40,20 +40,20 @@ export function getCfg() {
   if (!config.has('stakepools') || config.get('stakepools') == null) {
     stakePoolInfo(function(response, err) {
       if (response == null) {
-        console.log(err)
+        console.log(err);
       } else {
         var stakePoolNames = Object.keys(response.data);
         // Only add matching network stakepool info
         var foundStakePoolConfigs = Array();
         for (var i = 0; i < stakePoolNames.length; i++) {
-            foundStakePoolConfigs.push({
-              Host:response.data[stakePoolNames[i]].URL,
-              Network: response.data[stakePoolNames[i]].Network,
-            });
+          foundStakePoolConfigs.push({
+            Host:response.data[stakePoolNames[i]].URL,
+            Network: response.data[stakePoolNames[i]].Network,
+          });
         }
-        config.set('stakepools', foundStakePoolConfigs)}
-      }
-    )
+        config.set('stakepools', foundStakePoolConfigs);}
+    }
+    );
   }
   return(config);
 }

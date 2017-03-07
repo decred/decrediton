@@ -8,18 +8,18 @@ export default function stakepool(state = {}, action) {
     return {...state,
       currentStakePoolConfigRequest: true,
       currentStakePoolConfigError: null,
-    };  
+    };
   case UPDATESTAKEPOOLCONFIG_FAILED:
     return {...state,
       currentStakePoolConfigRequest: false,
       currentStakePoolConfigError: action.error,
-    }; 
+    };
   case UPDATESTAKEPOOLCONFIG_SUCCESS:
     return {...state,
       currentStakePoolConfigRequest: false,
       currentStakePoolConfig: action.currentStakePoolConfig,
       activeStakePoolConfig: true,
-    };     
+    };
   default:
     return state;
   }

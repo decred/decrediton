@@ -14,11 +14,11 @@ export function stakePoolInfo(cb) {
 export function setStakePoolAddress(apiUrl, apiToken, pKAddress, cb) {
   console.log(pKAddress);
   var config = {
-    headers: { 
-      "Authorization": "Bearer " + apiToken,
+    headers: {
+      'Authorization': 'Bearer ' + apiToken,
     }
-  }
-  var url = apiUrl+"/api/v1/address";
+  };
+  var url = apiUrl+'/api/v1/address';
   axios.post(url,
     querystring.stringify({
       UserPubKeyAddr: pKAddress,
@@ -34,11 +34,11 @@ export function setStakePoolAddress(apiUrl, apiToken, pKAddress, cb) {
 
 export function getPurchaseInfo(apiUrl, apiToken, cb) {
   var config = {
-    headers: { 
-      "Authorization": "Bearer " + apiToken,
+    headers: {
+      'Authorization': 'Bearer ' + apiToken,
     }
-  }
-  var url = apiUrl+"/api/v1/getpurchaseinfo";
+  };
+  var url = apiUrl+'/api/v1/getpurchaseinfo';
   axios.get(url, config)
   .then(function(response) {
     cb(response);
