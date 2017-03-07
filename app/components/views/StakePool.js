@@ -79,6 +79,40 @@ const styles = {
     paddingLeft: '116px',
     float: 'left',
   },
+  contentNestPrefixConfigured: {
+    width: '200px',
+    paddingRight: '15px',
+    float: 'left',
+    height: '100%',
+    paddingTop: '5px',
+    fontSize: '19px',
+    textAlign: 'right',
+    textTransform: 'capitalize',
+  },
+  contentNestStakePoolSettings: {
+    width: '100%',
+    height: '20px',
+    marginTop: '20px',
+    float: 'left',
+  },
+  contentNestPrefixStakePoolSettings: {
+    width: '125px',
+    paddingRight: '15px',
+    float: 'left',
+    height: '100%',
+    fontSize: '19px',
+    textAlign: 'right',
+    textTransform: 'capitalize',
+  },
+  contentNestContentStakePoolSettings: {
+    position: 'relative',
+    overflowY: 'hidden',
+    overflowX: 'auto',
+    width: '575px',
+    height: '34px',
+    float: 'left',
+    fontSize: '13px',
+  },
   contentNestPrefixSend: {
     width: '100px',
     paddingRight: '15px',
@@ -431,11 +465,10 @@ class StakePool extends Component{
     const { walletService } = this.props;
     const { getAccountsResponse } = this.props;
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
-    const { getNetworkResponse } = this.props;
+    const { network } = this.props;
     var unconfigedStakePools = 0;
-    console.log(this.state.addAnotherStakePool);
     for (var i = 0; i < currentStakePoolConfig; i++) {
-      if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == getNetworkResponse.networkStr) {
+      if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
         unconfigedStakePools++;
       }
     }
@@ -445,9 +478,9 @@ class StakePool extends Component{
           defaultValue={0}
           style={styles.selectStakePool}
           >
-          {currentStakePoolConfig !== null && getNetworkResponse !== null ?
+          {currentStakePoolConfig !== null ?
             currentStakePoolConfig.map((stakePool) => {
-              if (stakePool.ApiKey && stakePool.Network == getNetworkResponse.networkStr) {
+              if (stakePool.ApiKey && stakePool.Network == network) {
                 return (
                   <option style={styles.selectStakePoolNFirst} key={stakePool.Host} value={stakePool.Host}>
                     {stakePool.Host}
@@ -455,7 +488,7 @@ class StakePool extends Component{
                 );
               }
              }):
-            null
+             null
           }
         </select>
       </div>);
@@ -465,16 +498,16 @@ class StakePool extends Component{
           defaultValue={0}
           style={styles.selectStakePool}
           >
-          {currentStakePoolConfig !== null && getNetworkResponse !== null ?
+          {currentStakePoolConfig !== null  ?
             currentStakePoolConfig.map((stakePool) => {
-              if (!stakePool.ApiKey && stakePool.Network == getNetworkResponse.networkStr) {
+              if (!stakePool.ApiKey && stakePool.Network == network) {
                 return (
                   <option style={styles.selectStakePoolNFirst} key={stakePool.Host} value={stakePool.Host}>
                     {stakePool.Host}
                   </option>
                 );
               }
-             }):
+             }) :
             null
           }
         </select>
@@ -537,7 +570,42 @@ class StakePool extends Component{
         </div> :
         <div style={styles.content}>
           <div style={styles.flexHeight}>
-            Configured stake pool
+            <div style={styles.contentNestFromAddress}>
+              <div style={styles.contentNestPrefixConfigured}>Configured stake pools:</div>
+            </div>
+            <div id="dynamicInput">
+            {currentStakePoolConfig.map((stakePool,i) => {
+              if (stakePool.ApiKey && stakePool.Network == network) {
+                return(       
+                <div key={stakePool.Host}>
+                  <div style={styles.contentNestStakePoolSettings}>
+                    <div style={styles.contentNestPrefixStakePoolSettings}>URL:</div>
+                    <div style={styles.contentNestContentStakePoolSettings}>
+                      {stakePool.Host}
+                    </div>
+                  </div>
+                  <div style={styles.contentNestStakePoolSettings}>
+                    <div style={styles.contentNestPrefixStakePoolSettings}>Ticket Address:</div>
+                    <div style={styles.contentNestContentStakePoolSettings}>
+                      {stakePool.TicketAddress}
+                    </div>
+                  </div>
+                  <div style={styles.contentNestStakePoolSettings}>
+                    <div style={styles.contentNestPrefixStakePoolSettings}>Script:</div>
+                    <div style={styles.contentNestContentStakePoolSettings}>
+                      {stakePool.Script}
+                    </div>
+                  </div>
+                  <div style={styles.contentNestStakePoolSettings}>
+                    <div style={styles.contentNestPrefixStakePoolSettings}>Pool Fees:</div>
+                    <div style={styles.contentNestContentStakePoolSettings}>
+                      {stakePool.PoolFees}
+                    </div>
+                  </div>
+                </div>);
+              }
+            })}
+            </div>
           </div>
           {unconfigedStakePools > 0 ?
           <div style={styles.contentSend} onClick={() => this.addAnotherStakePool()}>
