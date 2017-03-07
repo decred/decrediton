@@ -89,6 +89,13 @@ const styles = {
     textAlign: 'right',
     textTransform: 'capitalize',
   },
+  contentNestStakePool: {
+    borderTop: '1px solid',
+    height: '185px',
+    position: 'relative',
+    borderBottom: '1px solid',
+    float: 'left',
+  },
   contentNestStakePoolSettings: {
     width: '100%',
     height: '20px',
@@ -555,7 +562,7 @@ class StakePool extends Component{
               <div style={styles.contentNestPrefixSend}>Api Key:</div>
               <div style={styles.contentNestAddressHashBlock}>
                 <div style={styles.inputForm}>
-                  <input
+                  <textarea
                     type="text"
                     style={styles.contentNestAddressAmountSum}
                     placeholder="API Key"
@@ -577,7 +584,7 @@ class StakePool extends Component{
             {currentStakePoolConfig.map((stakePool,i) => {
               if (stakePool.ApiKey && stakePool.Network == network) {
                 return(       
-                <div key={stakePool.Host}>
+                <div key={stakePool.Host} style={styles.contentNestStakePool}>
                   <div style={styles.contentNestStakePoolSettings}>
                     <div style={styles.contentNestPrefixStakePoolSettings}>URL:</div>
                     <div style={styles.contentNestContentStakePoolSettings}>
@@ -592,9 +599,7 @@ class StakePool extends Component{
                   </div>
                   <div style={styles.contentNestStakePoolSettings}>
                     <div style={styles.contentNestPrefixStakePoolSettings}>Script:</div>
-                    <div style={styles.contentNestContentStakePoolSettings}>
-                      {stakePool.Script}
-                    </div>
+                    <textarea disabled value={stakePool.Script} style={styles.contentNestContentStakePoolSettings}/>
                   </div>
                   <div style={styles.contentNestStakePoolSettings}>
                     <div style={styles.contentNestPrefixStakePoolSettings}>Pool Fees:</div>
