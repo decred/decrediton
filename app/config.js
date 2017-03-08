@@ -46,10 +46,12 @@ export function getCfg() {
         // Only add matching network stakepool info
         var foundStakePoolConfigs = Array();
         for (var i = 0; i < stakePoolNames.length; i++) {
-          foundStakePoolConfigs.push({
-            Host:response.data[stakePoolNames[i]].URL,
-            Network: response.data[stakePoolNames[i]].Network,
-          });
+          if (response.data[stakePoolNames[i]].APIEnabled) {
+            foundStakePoolConfigs.push({
+              Host:response.data[stakePoolNames[i]].URL,
+              Network: response.data[stakePoolNames[i]].Network,
+            });
+          }
         }
         config.set('stakepools', foundStakePoolConfigs);}
     }
