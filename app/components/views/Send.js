@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import ErrorScreen from '../ErrorScreen';
+import CircularProgress from 'material-ui/CircularProgress';
 import { reverseHash } from '../../helpers/byteActions';
 import SideBar from '../SideBar';
 import MinusBig from '../icons/minus-big.svg';
@@ -146,10 +147,9 @@ const styles = {
     float: 'left',
   },
   contentNestAddressHashTo: {
-    width: '100%',
+    width: '96%',
     height: '100%',
-    paddingTop: '9px',
-    paddingLeft: '10px',
+    padding: '9px 0px 8px 10px',
     borderStyle: 'none',
     color: '#2971ff',
     fontSize: '13px',
@@ -161,7 +161,7 @@ const styles = {
   contentNestAddressHashBlock: {
     position: 'relative',
     overflow: 'hidden',
-    width: '300px',
+    width: '311px',
     height: '34px',
     float: 'left',
     borderBottom: '1px solid #a9b4bf',
@@ -175,15 +175,6 @@ const styles = {
     paddingTop: '7px',
     float: 'left',
     fontSize: '17px',
-  },
-  contentNestGradient: {
-    position: 'absolute',
-    top: '0px',
-    right: '0px',
-    bottom: '0px',
-    width: '40px',
-    height: '100%',
-    backgroundImage: 'linear-gradient(90deg, transparent, #fff 80%)',
   },
   selectAccountsSend: {
     width: '300px',
@@ -290,7 +281,7 @@ const styles = {
     minHeight: '44px',
   },
   contentNestAddressWalletIcon: {
-    width: '50px',
+    width: '39px',
     height: '34px',
     float: 'left',
     backgroundImage: `url(${Add})`,
@@ -346,7 +337,7 @@ const styles = {
     fontSize: '13px',
   },
   contentNestAddressDeleteIcon: {
-    width: '50px',
+    width: '39px',
     height: '34px',
     float: 'left',
     backgroundImage: `url(${Delete})`,
@@ -450,6 +441,10 @@ const styles = {
     height:'372px',
     overflowY: 'auto',
     overflowX: 'hidden',
+  },
+  loading: {
+    marginTop: '110px',
+    marginLeft: '268px',
   }
 };
 
@@ -481,6 +476,7 @@ class Send extends Component{
       return;
     }
     this.props.signTransactionAttempt(this.state.privpass, this.props.constructTxResponse.getUnsignedTransaction());
+    setTimeout(this.clearTransactionData(),1000);
   }
   submitConstructTx() {
     if (this.state.outputs[0].destination == '' || this.state.outputs[0].amount == '') {
@@ -499,7 +495,6 @@ class Send extends Component{
     this.setState({ outputs: updateOutputs });
   }
   updateOutputDestination(outputKey, dest) {
-    console.log('click');
     var updateOutputs = this.state.outputs;
     updateOutputs[outputKey].destination = dest;
     this.setState({ outputs: updateOutputs });
@@ -523,9 +518,9 @@ class Send extends Component{
   render() {
     const { currentSettings } = this.props;
     const { walletService } = this.props;
-    const { constructTxResponse, constructTxError } = this.props;
-    const { publishTransactionResponse, publishTransactionError } = this.props;
-    const { signTransactionError } = this.props;
+    const { constructTxResponse, constructTxError, constructTxRequestAttempt } = this.props;
+    const { publishTransactionResponse, publishTransactionError, publishTransactionRequestAttempt } = this.props;
+    const { signTransactionError, signTransactionRequestAttempt } = this.props;
     const { getAccountsResponse } = this.props;
     const { getNetworkResponse } = this.props;
 
@@ -660,7 +655,6 @@ class Send extends Component{
                         placeholder="Destination Address"
                         onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
                     </div>
-                    <div style={styles.contentNestGradient}></div>
                   </div>
                   <div style={styles.contentNestAddressWalletIcon} onClick={() => this.appendOutput()}></div>
                   <div style={styles.contentNestAddressAmount}>
@@ -721,7 +715,17 @@ class Send extends Component{
     if (constructTxResponse !== null) {
       sendView = signTxView;
     }
-
+    var loadingView = (
+      <div style={styles.view}>
+        {sharedHeader}
+        <div style={styles.content}>
+          <CircularProgress style={styles.loading} size={125} thickness={6}/>
+        </div>
+      </div>
+    );
+    if (signTransactionRequestAttempt || publishTransactionRequestAttempt || constructTxRequestAttempt ) {
+      sendView = loadingView;
+    }
     if (walletService === null) {
       return (<ErrorScreen />);
     } else {
