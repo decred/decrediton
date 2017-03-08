@@ -448,7 +448,7 @@ class StakePool extends Component{
     super(props);
     var initStakePoolHost = '';
     for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
-      if (!this.props.currentStakePoolConfig[i].ApiKey) {
+      if (!this.props.currentStakePoolConfig[i].ApiKey && this.props.currentStakePoolConfig[i].Network == this.props.network) {
         initStakePoolHost = this.props.currentStakePoolConfig[i].Host;
         break;
       }
