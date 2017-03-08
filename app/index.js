@@ -54,6 +54,7 @@ var initialState = {
     currentStakePoolConfig: currentStakePoolConfig,
     currentStakePoolConfigRequest: false,
     currentStakePoolConfigError: null,
+    currentStakePoolConfigSuccessMessage: '',
     activeStakePoolConfig: foundStakePoolConfig,
   },
   version: {

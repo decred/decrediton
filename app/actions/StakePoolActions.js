@@ -40,6 +40,7 @@ function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
   return (dispatch) => {
     var config = getCfg();
     var stakePoolConfigs = config.get('stakepools');
+    var successMessage = "You have successfully configured ";
     for (var i = 0; i < stakePoolConfigs.length; i++) {
       if (stakePoolConfigs[i].Host == poolHost) {
         stakePoolConfigs[i].ApiKey = apiKey;
@@ -48,11 +49,12 @@ function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
         stakePoolConfigs[i].Script = newPoolInfo.Script;
         stakePoolConfigs[i].TicketAddress = newPoolInfo.TicketAddress;
         stakePoolConfigs[i].VotingAccount = accountNum;
+        successMessage += poolHost;
         break;
       }
     }
     config.set('stakepools', stakePoolConfigs);
-    dispatch({ currentStakePoolConfig: stakePoolConfigs, type: UPDATESTAKEPOOLCONFIG_SUCCESS });
+    dispatch({ successMessage: successMessage, currentStakePoolConfig: stakePoolConfigs, type: UPDATESTAKEPOOLCONFIG_SUCCESS });
   };
 }
 

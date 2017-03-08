@@ -484,6 +484,7 @@ class StakePool extends Component{
   render() {
     const { walletService } = this.props;
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
+    const { currentStakePoolConfigSuccessMessage } = this.props;
     const { network } = this.props;
     var unconfigedStakePools = 0;
     for (var i = 0; i < currentStakePoolConfig.length; i++) {
@@ -589,9 +590,15 @@ class StakePool extends Component{
       <div style={styles.view}>
         <Header
           headerTop={
+            [
             currentStakePoolConfigError !== null ?
             <div key="updateStakePoolError" style={styles.viewNotificationError}>{currentStakePoolConfigError}</div> :
-            <div key="updateStakePoolError" ></div>
+
+            <div key="updateStakePoolError" ></div>,
+            currentStakePoolConfigSuccessMessage !== undefined && currentStakePoolConfigSuccessMessage !== '' ?
+            <div key="configSuccess"  style={styles.viewNotificationSuccess}>{currentStakePoolConfigSuccessMessage}</div> :
+            <div key="configSuccess" ></div>
+            ]
           }
           headerTitleOverview="Stake pool settings"
           headerMetaOverview={<div></div>}
