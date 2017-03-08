@@ -446,9 +446,15 @@ class StakePool extends Component{
   };
   constructor(props) {
     super(props);
-
+    var initStakePoolHost = '';
+    for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
+      if (!this.props.currentStakePoolConfig[i].ApiKey) {
+        initStakePoolHost = this.props.currentStakePoolConfig[i].Host
+        break;
+      }
+    }
     this.state = {
-      stakePoolHost: '',
+      stakePoolHost: initStakePoolHost,
       apiKey: '',
       account: 0,
       addAnotherStakePool: false,
@@ -459,11 +465,12 @@ class StakePool extends Component{
   }
   setStakePoolInfo() {
     if (this.state.stakePoolHost == '' || this.state.apiKey == '') {
-      //return;
+      return;
     }
     //this.setState({addAnotherStakePool: false});
     //setStakePoolInformation(this.state.stakePoolHost, this.props.apiKey, this.props.account);
-    this.props.setStakePoolInformation('https://teststakepool.decred.org', this.state.apiKey, 0);
+    this.props.setStakePoolInformation(this.state.stakePoolHost, this.state.apiKey, 0);
+    setTimeout(this.setState({addAnotherStakePool: false}), 1000);
   }
   updateApiKey(apiKey) {
     this.setState({apiKey: apiKey});
@@ -479,7 +486,7 @@ class StakePool extends Component{
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
     const { network } = this.props;
     var unconfigedStakePools = 0;
-    for (var i = 0; i < currentStakePoolConfig; i++) {
+    for (var i = 0; i < currentStakePoolConfig.length; i++) {
       if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
         unconfigedStakePools++;
       }
@@ -489,6 +496,7 @@ class StakePool extends Component{
         <select
           defaultValue={0}
           style={styles.selectStakePool}
+          onChange={(e) =>{this.updateStakePoolHost(e.target.value);}}
           >
           {currentStakePoolConfig !== null  ?
             currentStakePoolConfig.map((stakePool) => {
