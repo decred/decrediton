@@ -201,7 +201,32 @@ const styles = {
   },
   linearLoading: {
     backgroundColor: 'white',
-  }
+  },
+  viewNotificationError: {
+    display: 'inline-block',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    padding: '7px 20px',
+    borderRadius: '5px',
+    backgroundColor: '#fd714b',
+    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
+    color: '#fff',
+    fontSize: '13px',
+    textAlign: 'center',
+  },
+  viewNotificationSuccess: {
+    display: 'inline-block',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    padding: '7px 20px',
+    borderRadius: '5px',
+    backgroundColor: '#41bf53',
+    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
+    color: '#fff',
+    fontSize: '13px',
+    textAlign: 'center',
+    textDecoration: 'none',
+  },
 };
 
 class Home extends Component{
@@ -266,12 +291,12 @@ class Home extends Component{
     const { versionInvalid, versionInvalidError } = this.props;
     const { getVersionServiceError } = this.props;
     const { getLoaderError } = this.props;
-    const { walletCreateRequestAttempt } = this.props;
-    const { walletOpenRequestAttempt } = this.props;
+    const { walletCreateRequestAttempt, walletCreateError } = this.props;
+    const { walletOpenRequestAttempt, walletOpenError } = this.props;
     const { walletExistResponse } = this.props;
-    const { startRpcRequestAttempt } = this.props;
-    const { discoverAddressRequestAttempt } = this.props;
-    const { fetchHeadersRequestAttempt } = this.props;
+    const { startRpcRequestAttempt, startRpcError } = this.props;
+    const { discoverAddressRequestAttempt, discoverAddressError } = this.props;
+    const { fetchHeadersRequestAttempt, fetchHeadersError } = this.props;
 
     const getStartedWalletLoader = (
       <div>
@@ -303,6 +328,10 @@ class Home extends Component{
       startupStepView = (
       <div style={styles.view}>
         <Header getStarted
+          headerTop={ walletOpenError !== null ?
+              <div key="walletOpenError" style={styles.viewNotificationError}>{walletOpenError}</div> :
+              <div key="walletOpenError" ></div>
+          }
           headerTitleOverview="Opening Wallet"
           headerMetaOverview="Please enter the information below to  create your dcrwallet"
         />
@@ -337,7 +366,13 @@ class Home extends Component{
       // Wallet does not exist
       startupStepView = (
       <div style={styles.view}>
-        <Header getStarted headerTitleOverview={'Create a Wallet'}>
+        <Header 
+          getStarted
+          headerTop={ walletCreateError !== null ?
+            <div key="walletCreateError" style={styles.viewNotificationError}>{walletCreateError}</div> :
+            <div key="walletCreateError" ></div>
+          }
+          headerTitleOverview={'Create a Wallet'}>
           {!this.props.confirmNewSeed ?
             <NewExistingSeedToggle
               activeButton={'left'}
@@ -358,7 +393,13 @@ class Home extends Component{
       // Get startrpc and subscribe
       startupStepView = (
         <div style={styles.view}>
-          <Header getStarted headerTitleOverview="Starting RPC and subscribing block notifications"/>
+          <Header 
+            getStarted 
+            headerTop={ startRpcError !== null ?
+              <div key="startRpcError" style={styles.viewNotificationError}>{startRpcError}</div> :
+              <div key="startRpcError" ></div>
+            }
+            headerTitleOverview="Starting RPC and subscribing block notifications"/>
           <div style={styles.content}>
             <div style={styles.contentTitle}>
               <div style={styles.contentTitleText}>Start RPC, Subscribe Block</div>
@@ -377,6 +418,10 @@ class Home extends Component{
       startupStepView = (
         <div style={styles.view}>
           <Header getStarted
+            headerTop={ discoverAddressError !== null ?
+              <div key="pubError" style={styles.viewNotificationError}>{discoverAddressError}</div> :
+              <div key="pubError" ></div>
+            }
             headerTitleOverview="Opening Wallet"
             headerMetaOverview="Please enter the information below to load your dcrwallet"/>
           <div style={styles.contentNewSeed}>
@@ -410,7 +455,13 @@ class Home extends Component{
       // Fetch headers
       startupStepView = (
         <div style={styles.view}>
-          <Header getStarted headerTitleOverview="Fetching block headers"/>
+          <Header 
+            getStarted
+            headerTop={ fetchHeadersError !== null ?
+              <div key="fetchHeadersError" style={styles.viewNotificationError}>{fetchHeadersError}</div> :
+              <div key="fetchHeadersError" ></div>
+            } 
+            headerTitleOverview="Fetching block headers"/>
           <div style={styles.contentNewSeed}>
             { fetchHeadersRequestAttempt ?
             <CircularProgress style={styles.loading} size={125} thickness={6}/> :
