@@ -40,7 +40,7 @@ function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
   return (dispatch) => {
     var config = getCfg();
     var stakePoolConfigs = config.get('stakepools');
-    var successMessage = "You have successfully configured ";
+    var successMessage = 'You have successfully configured ';
     for (var i = 0; i < stakePoolConfigs.length; i++) {
       if (stakePoolConfigs[i].Host == poolHost) {
         stakePoolConfigs[i].ApiKey = apiKey;

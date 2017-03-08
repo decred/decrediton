@@ -449,7 +449,7 @@ class StakePool extends Component{
     var initStakePoolHost = '';
     for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
       if (!this.props.currentStakePoolConfig[i].ApiKey) {
-        initStakePoolHost = this.props.currentStakePoolConfig[i].Host
+        initStakePoolHost = this.props.currentStakePoolConfig[i].Host;
         break;
       }
     }
@@ -590,7 +590,7 @@ class StakePool extends Component{
       <div style={styles.view}>
         <Header
           headerTop={
-            [
+          [
             currentStakePoolConfigError !== null ?
             <div key="updateStakePoolError" style={styles.viewNotificationError}>{currentStakePoolConfigError}</div> :
 
@@ -598,7 +598,7 @@ class StakePool extends Component{
             currentStakePoolConfigSuccessMessage !== undefined && currentStakePoolConfigSuccessMessage !== '' ?
             <div key="configSuccess"  style={styles.viewNotificationSuccess}>{currentStakePoolConfigSuccessMessage}</div> :
             <div key="configSuccess" ></div>
-            ]
+          ]
           }
           headerTitleOverview="Stake pool settings"
           headerMetaOverview={<div></div>}
