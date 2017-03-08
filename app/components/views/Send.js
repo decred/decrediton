@@ -459,7 +459,7 @@ class Send extends Component{
   }
   constructor(props) {
     super(props);
-    
+
     this.state = {
       privpass: '',
       rawTx: '',
@@ -518,7 +518,7 @@ class Send extends Component{
   render() {
     const { currentSettings } = this.props;
     const { walletService } = this.props;
-    const { constructTxResponse, constructTxError, constructTxRequest, constructTxRequestAttempt } = this.props;
+    const { constructTxResponse, constructTxError, constructTxRequestAttempt } = this.props;
     const { publishTransactionResponse, publishTransactionError, publishTransactionRequestAttempt } = this.props;
     const { signTransactionError, signTransactionRequestAttempt } = this.props;
     const { getAccountsResponse } = this.props;
@@ -722,7 +722,7 @@ class Send extends Component{
           <CircularProgress style={styles.loading} size={125} thickness={6}/>
         </div>
       </div>
-    )
+    );
     if (signTransactionRequestAttempt || publishTransactionRequestAttempt || constructTxRequestAttempt ) {
       sendView = loadingView;
     }
