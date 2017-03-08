@@ -642,6 +642,28 @@ function deserialize_walletrpc_StakeInfoResponse(buffer_arg) {
   return api_pb.StakeInfoResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_StartAutoBuyerRequest(arg) {
+  if (!(arg instanceof api_pb.StartAutoBuyerRequest)) {
+    throw new Error('Expected argument of type walletrpc.StartAutoBuyerRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_StartAutoBuyerRequest(buffer_arg) {
+  return api_pb.StartAutoBuyerRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_StartAutoBuyerResponse(arg) {
+  if (!(arg instanceof api_pb.StartAutoBuyerResponse)) {
+    throw new Error('Expected argument of type walletrpc.StartAutoBuyerResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_StartAutoBuyerResponse(buffer_arg) {
+  return api_pb.StartAutoBuyerResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_StartConsensusRpcRequest(arg) {
   if (!(arg instanceof api_pb.StartConsensusRpcRequest)) {
     throw new Error('Expected argument of type walletrpc.StartConsensusRpcRequest');
@@ -662,6 +684,28 @@ function serialize_walletrpc_StartConsensusRpcResponse(arg) {
 
 function deserialize_walletrpc_StartConsensusRpcResponse(buffer_arg) {
   return api_pb.StartConsensusRpcResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_StopAutoBuyerRequest(arg) {
+  if (!(arg instanceof api_pb.StopAutoBuyerRequest)) {
+    throw new Error('Expected argument of type walletrpc.StopAutoBuyerRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_StopAutoBuyerRequest(buffer_arg) {
+  return api_pb.StopAutoBuyerRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_StopAutoBuyerResponse(arg) {
+  if (!(arg instanceof api_pb.StopAutoBuyerResponse)) {
+    throw new Error('Expected argument of type walletrpc.StopAutoBuyerResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_StopAutoBuyerResponse(buffer_arg) {
+  return api_pb.StopAutoBuyerResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_SubscribeToBlockNotificationsRequest(arg) {
@@ -1153,6 +1197,32 @@ var WalletLoaderServiceService = exports.WalletLoaderServiceService = {
 };
 
 exports.WalletLoaderServiceClient = grpc.makeGenericClientConstructor(WalletLoaderServiceService);
+var TicketBuyerServiceService = exports.TicketBuyerServiceService = {
+  startAutoBuyer: {
+    path: '/walletrpc.TicketBuyerService/StartAutoBuyer',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.StartAutoBuyerRequest,
+    responseType: api_pb.StartAutoBuyerResponse,
+    requestSerialize: serialize_walletrpc_StartAutoBuyerRequest,
+    requestDeserialize: deserialize_walletrpc_StartAutoBuyerRequest,
+    responseSerialize: serialize_walletrpc_StartAutoBuyerResponse,
+    responseDeserialize: deserialize_walletrpc_StartAutoBuyerResponse,
+  },
+  stopAutoBuyer: {
+    path: '/walletrpc.TicketBuyerService/StopAutoBuyer',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.StopAutoBuyerRequest,
+    responseType: api_pb.StopAutoBuyerResponse,
+    requestSerialize: serialize_walletrpc_StopAutoBuyerRequest,
+    requestDeserialize: deserialize_walletrpc_StopAutoBuyerRequest,
+    responseSerialize: serialize_walletrpc_StopAutoBuyerResponse,
+    responseDeserialize: deserialize_walletrpc_StopAutoBuyerResponse,
+  },
+};
+
+exports.TicketBuyerServiceClient = grpc.makeGenericClientConstructor(TicketBuyerServiceService);
 var SeedServiceService = exports.SeedServiceService = {
   generateRandomSeed: {
     path: '/walletrpc.SeedService/GenerateRandomSeed',
