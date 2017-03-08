@@ -366,7 +366,7 @@ class Home extends Component{
       // Wallet does not exist
       startupStepView = (
       <div style={styles.view}>
-        <Header 
+        <Header
           getStarted
           headerTop={ walletCreateError !== null ?
             <div key="walletCreateError" style={styles.viewNotificationError}>{walletCreateError}</div> :
@@ -393,8 +393,8 @@ class Home extends Component{
       // Get startrpc and subscribe
       startupStepView = (
         <div style={styles.view}>
-          <Header 
-            getStarted 
+          <Header
+            getStarted
             headerTop={ startRpcError !== null ?
               <div key="startRpcError" style={styles.viewNotificationError}>{startRpcError}</div> :
               <div key="startRpcError" ></div>
@@ -455,12 +455,12 @@ class Home extends Component{
       // Fetch headers
       startupStepView = (
         <div style={styles.view}>
-          <Header 
+          <Header
             getStarted
             headerTop={ fetchHeadersError !== null ?
               <div key="fetchHeadersError" style={styles.viewNotificationError}>{fetchHeadersError}</div> :
               <div key="fetchHeadersError" ></div>
-            } 
+            }
             headerTitleOverview="Fetching block headers"/>
           <div style={styles.contentNewSeed}>
             { fetchHeadersRequestAttempt ?
