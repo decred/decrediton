@@ -8,7 +8,9 @@ const styles = {
     height: '214px',
   },
   headerTopGetStarted: {
-    height: '106px',
+    height: '83px',
+    paddingTop: '36px',
+    textAlign: 'center',
   },
   headerTitleOverviewGetStarted: {
     height: '41px',
