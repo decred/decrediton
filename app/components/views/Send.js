@@ -459,7 +459,7 @@ class Send extends Component{
   }
   constructor(props) {
     super(props);
-
+    
     this.state = {
       privpass: '',
       rawTx: '',
@@ -476,6 +476,7 @@ class Send extends Component{
       return;
     }
     this.props.signTransactionAttempt(this.state.privpass, this.props.constructTxResponse.getUnsignedTransaction());
+    setTimeout(this.clearTransactionData(),1000);
   }
   submitConstructTx() {
     if (this.state.outputs[0].destination == '' || this.state.outputs[0].amount == '') {
