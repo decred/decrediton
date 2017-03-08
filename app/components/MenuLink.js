@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 var styles = {
   linkColor: {
     display: 'block',
-    height: '53px',
+    height: '52px',
     backgroundImage: `url(${leftLinkColor})`,
     backgroundPosition: '0px 50%',
     backgroundSize: '0px',

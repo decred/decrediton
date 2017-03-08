@@ -161,6 +161,7 @@
     "webpack-validator": "^2.2.9"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "electron-debug": "^1.0.1",
     "eslint-formatter-pretty": "^1.1.0",
     "eslint-plugin-react": "^6.9.0",

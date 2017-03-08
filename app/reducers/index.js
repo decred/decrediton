@@ -8,6 +8,8 @@ import notifications from './notifications';
 import control from './control';
 import version from './version';
 import settings from './settings';
+import stakepool from './stakepool';
+
 const rootReducer = combineReducers({
   grpc,
   walletLoader,
@@ -16,6 +18,7 @@ const rootReducer = combineReducers({
   control,
   version,
   settings,
+  stakepool,
   routing
 });
 

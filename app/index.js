@@ -16,7 +16,18 @@ var neededBlocks = 0;
 var today = new Date();
 var startDate = new Date();
 var totalDays = 0.0;
-if (cfg.get('network') == 'testnet') {
+var foundStakePoolConfig = false;
+var currentStakePoolConfig = cfg.get('stakepools');
+var network = cfg.get('network');
+if (currentStakePoolConfig !== undefined) {
+  for (var i = 0; i < currentStakePoolConfig.length; i++) {
+    if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
+      foundStakePoolConfig = true;
+      break;
+    }
+  }
+}
+if (network == 'testnet') {
   grpcport = cfg.get('wallet_port_testnet');
   startDate = new Date('01/27/2016');
   totalDays = (today.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24;
@@ -41,6 +52,13 @@ var initialState = {
     },
     settingsChanged: false,
   },
+  stakepool: {
+    currentStakePoolConfig: currentStakePoolConfig,
+    currentStakePoolConfigRequest: false,
+    currentStakePoolConfigError: null,
+    currentStakePoolConfigSuccessMessage: '',
+    activeStakePoolConfig: foundStakePoolConfig,
+  },
   version: {
     // RequiredVersion
     requiredVersion: '4.3.0',
@@ -61,6 +79,7 @@ var initialState = {
     address: '127.0.0.1',
     port: grpcport,
     walletService: null,
+    network: network,
     getWalletServiceRequestAttempt: false,
     getWalletServiceError: '',
     // Balance
