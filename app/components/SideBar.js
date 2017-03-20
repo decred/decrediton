@@ -14,7 +14,7 @@ function mapStateToProps(state) {
     getBalanceResponse: state.grpc.getBalanceResponse,
     getStakeInfoRequestAttempt: state.grpc.getStakeInfoRequestAttempt,
     getStakeInfoResponse: state.grpc.getStakeInfoResponse,
-    getNetworkResponse: state.grpc.getNetworkResponse,
+    network: state.grpc.network,
     getAccountsResponse: state.grpc.getAccountsResponse,
     transactionNtfnsResponse: state.notifications.transactionNtfnsResponse,
     timeSince: state.notifications.timeSince,
@@ -250,15 +250,16 @@ class SideBar extends Component {
 
   render() {
     const { gettingStarted, errorPage } = this.props;
+    const { network } = this.props;
     if ( gettingStarted || errorPage ) {
       return (
         <div style={styles.menu}>
           <div style={styles.menuLogo}></div>
+          <div style={styles.testnetText}>{network !== null && network == 'testnet' ? 'Testnet' : ''}</div>
         </div>);
     }
     const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
-    const { getNetworkResponse } = this.props;
     const { timeBack, currentHeight } = this.props;
     const { timeSince, transactionNtfnsResponse } = this.props;
 
@@ -269,7 +270,7 @@ class SideBar extends Component {
     return (
       <div style={styles.menu}>
         <div style={styles.menuLogo}></div>
-        <div style={styles.testnetText}>{getNetworkResponse !== null && getNetworkResponse.networkStr == 'testnet' ? 'Testnet' : ''}</div>
+        <div style={styles.testnetText}>{network !== null && network == 'testnet' ? 'Testnet' : ''}</div>
         <div style={styles.menuNavigation}>
           <MenuLink to="/home">Overview</MenuLink>
           <MenuLink to="/send">Send</MenuLink>
