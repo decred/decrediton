@@ -261,7 +261,7 @@ class SideBar extends Component {
     const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
     const { timeBack, currentHeight } = this.props;
-    const { timeSince, transactionNtfnsResponse } = this.props;
+    const { timeSince } = this.props;
 
     var balance = 0;
     if (getBalanceResponse != null) {
