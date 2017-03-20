@@ -92,7 +92,7 @@ class History extends Component{
     const { transactionDetails, setTransactionDetails, clearTransactionDetails } = this.props;
     const { txPerPage, transactionsInfo, paginatedTxs, getMinedPaginatedTransactions, currentPage } = this.props;
     const { getNetworkResponse } = this.props;
-    
+
     var totalPages = 1;
     if (transactionsInfo.length > 0) {
       console.log(txPerPage/23);
