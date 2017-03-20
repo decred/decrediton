@@ -22,14 +22,12 @@ function getWalletServiceSuccess(walletService) {
     setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
     setTimeout( () => {dispatch(getPingAttempt());}, 1000);
     setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
-    //setTimeout( () => {dispatch(getAccountNumberAttempt("default"));}, 1000);
     setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
-    //setTimeout( () => {dispatch(getMinedPaginatedTransactions(false))}, 1500);
-
+    setTimeout( () => {dispatch(transactionNftnsStart());}, 1000);
+    
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.
-    setTimeout( () => {dispatch(transactionNftnsStart());}, 1000);
     const { walletCreateExisting } = getState().walletLoader;
     if ( walletCreateExisting ) {
       setTimeout(() => {dispatch(rescanAttempt(0));}, 1000);
