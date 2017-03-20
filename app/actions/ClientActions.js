@@ -141,7 +141,10 @@ export const GETNETWORK_FAILED = 'GETNETWORK_FAILED';
 export const GETNETWORK_SUCCESS = 'GETNETWORK_SUCCESS';
 
 function getNetworkError(error) {
-  return { error, type: GETNETWORK_FAILED };
+  return (dispatch) => {
+    dispatch({ error, type: GETNETWORK_FAILED });
+    setTimeout(() => { hashHistory.push('/walletError'); }, 1000);
+  }
 }
 
 function getNetworkSuccess(getNetworkResponse) {
