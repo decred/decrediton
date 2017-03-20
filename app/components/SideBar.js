@@ -5,6 +5,7 @@ import menulogo from './icons/menu-logo.svg';
 import MenuLink from './MenuLink';
 import HelpLink from './HelpLink';
 import './fonts.css';
+import { timeSince } from '../helpers/dateFormat.js';
 
 function mapStateToProps(state) {
   return {
@@ -220,23 +221,14 @@ class SideBar extends Component {
     this.updateBlockTimeSince = this.updateBlockTimeSince.bind(this);
   }
   componentDidMount() {
-    setTimeout(() =>{this.updateBlockTimeSince();}, 1000);
   }
   updateBlockTimeSince() {
     const { transactionNtfnsResponse } = this.props;
     if (transactionNtfnsResponse !== null && transactionNtfnsResponse.getAttachedBlocksList().length > 0) {
       const attachedBlocks = transactionNtfnsResponse.getAttachedBlocksList();
-      var currentTime = new Date();
       var recentBlockTime = new Date(attachedBlocks[attachedBlocks.length-1].getTimestamp()*1000);
-      var difference = (currentTime - recentBlockTime);
-      var timeSince = Math.floor(difference / 60000);
-      if (timeSince == 0) {
-        this.setState({timeSince: '<1 min ago'});
-      } else if (timeSince == 1) {
-        this.setState({timeSince: '1 min ago'});
-      } else if (timeSince > 1) {
-        this.setState({timeSince: timeSince.toString() + ' mins ago'});
-      }
+      console.log(recentBlockTime);
+      this.setState({timeSince: timeSince(recentBlockTime)});
     }
     setTimeout(() =>{this.updateBlockTimeSince();}, 10000);
   }
@@ -261,8 +253,7 @@ class SideBar extends Component {
     const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
     const { timeBack, currentHeight } = this.props;
-    const { timeSince } = this.props;
-
+    this.updateBlockTimeSince();
     var balance = 0;
     if (getBalanceResponse != null) {
       balance = getBalanceResponse.getTotal() / 100000000;
@@ -310,7 +301,7 @@ class SideBar extends Component {
           {getAccountsResponse !== null ?
             <div style={styles.menuBottomLatestBlock}>
               <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse.getCurrentBlockHeight()}</span></a>
-              <div style={styles.menuBottomLatestBlockTime}>{timeSince}</div>
+              <div style={styles.menuBottomLatestBlockTime}>{this.state.timeSince}</div>
             </div>:
             currentHeight !== 0 ?
             <div style={styles.menuBottomLatestBlock}>
