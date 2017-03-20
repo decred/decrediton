@@ -397,8 +397,7 @@ function getTransactionsInfoProgress(response) {
   };
 }
 function getTransactionsInfoEnd() {
-  return (dispatch, getState) => {
-    const { transactionsInfo } = getState().grpc;
+  return (dispatch) => {
     dispatch({ type: GETTRANSACTIONS_COMPLETE });
     setTimeout(() => { dispatch(getMinedPaginatedTransactions(1)); }, 1500);
   };
