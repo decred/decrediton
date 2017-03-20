@@ -1,22 +1,25 @@
 import {
-    UPDATESTAKEPOOLCONFIG_ATTEMPT, UPDATESTAKEPOOLCONFIG_FAILED, UPDATESTAKEPOOLCONFIG_SUCCESS,
+  UPDATESTAKEPOOLCONFIG_ATTEMPT, UPDATESTAKEPOOLCONFIG_FAILED, UPDATESTAKEPOOLCONFIG_SUCCESS,
 } from '../actions/StakePoolActions';
 
 export default function stakepool(state = {}, action) {
   switch (action.type) {
   case UPDATESTAKEPOOLCONFIG_ATTEMPT:
-    return {...state,
+    return {
+      ...state,
       currentStakePoolConfigRequest: true,
       currentStakePoolConfigError: null,
       currentStakePoolConfigSuccessMessage: '',
     };
   case UPDATESTAKEPOOLCONFIG_FAILED:
-    return {...state,
+    return {
+      ...state,
       currentStakePoolConfigRequest: false,
       currentStakePoolConfigError: action.error,
     };
   case UPDATESTAKEPOOLCONFIG_SUCCESS:
-    return {...state,
+    return {
+      ...state,
       currentStakePoolConfigRequest: false,
       currentStakePoolConfigSuccessMessage: action.successMessage,
       currentStakePoolConfig: action.currentStakePoolConfig,

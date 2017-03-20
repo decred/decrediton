@@ -14,7 +14,7 @@ export function setStakePoolInformation(poolHost, apiKey, accountNum, internal) 
     getPurchaseInfo(
       poolHost,
       apiKey,
-      function(response, err) {
+      function (response, err) {
         if (err) {
           console.error(err);
           return;
@@ -61,35 +61,35 @@ function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
 function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
-  // get new address for requested VotingAccount
+    // get new address for requested VotingAccount
     var request = new NextAddressRequest();
     request.setAccount(accountNum);
     request.setKind(0);
     var addressPubKey = null;
     walletService.nextAddress(request,
-    function(err, getNextAddressResponse) {
-      if (err) {
-        // handle some err here some way
-      } else {
-        addressPubKey = getNextAddressResponse.getPublicKey();
-        setStakePoolAddress(
-          poolHost,
-          apiKey,
-          addressPubKey,
-          function(response, err) {
-            if (err) {
-              dispatch({ error: err, type: UPDATESTAKEPOOLCONFIG_FAILED });
-            } else if (response.data.status == 'success') {
-              dispatch(setStakePoolInformation(poolHost, apiKey, accountNum, true));
-            } else if (response.data.status == 'error') {
-              dispatch({ error: response.data.message, type: UPDATESTAKEPOOLCONFIG_FAILED });
-            } else {
-              console.error('shouldn\'t be here set address:', response);
+      function (err, getNextAddressResponse) {
+        if (err) {
+          // handle some err here some way
+        } else {
+          addressPubKey = getNextAddressResponse.getPublicKey();
+          setStakePoolAddress(
+            poolHost,
+            apiKey,
+            addressPubKey,
+            function (response, err) {
+              if (err) {
+                dispatch({ error: err, type: UPDATESTAKEPOOLCONFIG_FAILED });
+              } else if (response.data.status == 'success') {
+                dispatch(setStakePoolInformation(poolHost, apiKey, accountNum, true));
+              } else if (response.data.status == 'error') {
+                dispatch({ error: response.data.message, type: UPDATESTAKEPOOLCONFIG_FAILED });
+              } else {
+                console.error('shouldn\'t be here set address:', response);
+              }
             }
-          }
-        );
+          );
+        }
       }
-    }
-  );
+    );
   };
 }

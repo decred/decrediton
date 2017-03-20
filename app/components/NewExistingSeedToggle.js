@@ -75,7 +75,7 @@ const styles = {
     paddingTop: '12px',
     paddingRight: '30px',
     paddingLeft: '40px',
-      //textAlign: 'right',
+    //textAlign: 'right',
   },
   textToggleButtonDescriptionRight: {
     width: '100%',
@@ -85,7 +85,7 @@ const styles = {
     paddingTop: '12px',
     paddingRight: '40px',
     paddingLeft: '30px',
-      //textAlign: 'left',
+    //textAlign: 'left',
   }
 };
 class NewExistingSeedToggle extends React.Component {
@@ -96,7 +96,7 @@ class NewExistingSeedToggle extends React.Component {
     };
   }
   clickButton(side) {
-    this.setState({activeButton:side});
+    this.setState({ activeButton: side });
     this.props.toggleAction(side);
   }
   render() {
@@ -112,7 +112,7 @@ class NewExistingSeedToggle extends React.Component {
           </div>
         </div>
       );
-    } else if (this.state.activeButton == 'right'){
+    } else if (this.state.activeButton == 'right') {
       return (
         <div style={styles.textToggle}>
           <div style={styles.textToggleButton} onClick={() => this.clickButton('left')}>

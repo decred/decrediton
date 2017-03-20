@@ -15,15 +15,15 @@ export function updateStateSettingsChanged(settings) {
     var cfg = getCfg();
     const { tempSettings, currentSettings } = getState().settings;
     if ((settings.currencyDisplay !== tempSettings.currencyDisplay) ||
-	(settings.network !== tempSettings.network)){
+      (settings.network !== tempSettings.network)) {
       if (settings.currencyDisplay !== currentSettings.currencyDisplay) {
         cfg.set('currency_display', settings.currencyDisplay);
-        dispatch({ tempSettings: settings, type: SETTINGS_CHANGED});
+        dispatch({ tempSettings: settings, type: SETTINGS_CHANGED });
       } else if (settings.network !== currentSettings.network) {
         cfg.set('network', settings.network);
-        dispatch({ tempSettings: settings, type: SETTINGS_CHANGED});
+        dispatch({ tempSettings: settings, type: SETTINGS_CHANGED });
       } else {
-        dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED});
+        dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED });
       }
     }
   };

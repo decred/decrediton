@@ -59,7 +59,7 @@ class DiscoverAddressForm extends React.Component {
 
   submitForm() {
     var element = document.getElementById('privpass');
-    this.props.dispatch(discoverAddressAttempt(true,Buffer.from(element.value)));
+    this.props.dispatch(discoverAddressAttempt(true, Buffer.from(element.value)));
     element.value = '';
   }
 }

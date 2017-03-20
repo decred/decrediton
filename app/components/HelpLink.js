@@ -16,7 +16,7 @@ var styles = {
       backgroundSize: '5px',
     },
   },
-  menuNavigationLink:{
+  menuNavigationLink: {
     display: 'block',
     height: '38px',
     paddingTop: '15px',
@@ -27,7 +27,7 @@ var styles = {
     textDecoration: 'none',
     textTransform: 'capitalize',
   },
-  menuNavigationLinkActive:{
+  menuNavigationLinkActive: {
     backgroundColor: '#09182d',
     backgroundImage: `url(${leftLinkColor})`,
     backgroundPosition: '0px 50%',
@@ -41,7 +41,7 @@ class HelpLink extends React.Component {
   render() {
     return (
       <div style={styles.linkColor}>
-	<a style={styles.menuNavigationLink} onClick={function(x){shell.openExternal(x);}.bind(null, this.props.href)}>
+        <a style={styles.menuNavigationLink} onClick={function (x) { shell.openExternal(x); }.bind(null, this.props.href)}>
           {this.props.children}
         </a>
       </div>

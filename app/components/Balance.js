@@ -26,17 +26,17 @@ class Balance extends React.Component {
     const { currentSettings } = this.props;
     if (currentSettings.currencyDisplay === 'DCR') {
       var totalDcr = 0;
-      var numberFormatPart = ['0','0'];
+      var numberFormatPart = ['0', '0'];
       if (typeof this.props.amount !== 'undefined' && this.props.amount !== 0) {
         totalDcr = parseInt(this.props.amount) / 100000000;
         numberFormatPart = totalDcr.toFixed(8).toString().split('.');
       }
       return (
         <span
-        style={styles.base}
-        onClick={this.props.onClick}
+          style={styles.base}
+          onClick={this.props.onClick}
         >
-          {numberFormatPart[0]}.{numberFormatPart[1].toString().slice(0,2)}
+          {numberFormatPart[0]}.{numberFormatPart[1].toString().slice(0, 2)}
           <span style={styles.small}>{numberFormatPart[1].toString().slice(2)}</span>
           <span style={styles.small}> DCR</span>
         </span>
@@ -44,8 +44,8 @@ class Balance extends React.Component {
     } else if (currentSettings.currencyDisplay === 'atoms') {
       return (
         <span
-        style={styles.base}
-        onClick={this.props.onClick}
+          style={styles.base}
+          onClick={this.props.onClick}
         >
           {this.props.amount}
           <span style={styles.small}> atoms</span>

@@ -247,13 +247,13 @@ class TxDetails extends Component {
     if (getNetworkResponse !== null) {
       networkStr = getNetworkResponse.networkStr;
     }
-    var txLink = 'https://'+networkStr.toString()+'.decred.org/tx/' + reverseHash(Buffer.from(tx.getHash()).toString('hex'));
-    var blockLink = 'https://'+networkStr.toString()+'.decred.org/block/' + reverseHash(Buffer.from(tx.blockHash).toString('hex'));
+    var txLink = 'https://' + networkStr.toString() + '.decred.org/tx/' + reverseHash(Buffer.from(tx.getHash()).toString('hex'));
+    var blockLink = 'https://' + networkStr.toString() + '.decred.org/block/' + reverseHash(Buffer.from(tx.blockHash).toString('hex'));
 
     var credits = tx.getCreditsList();
     var debits = tx.getDebitsList();
 
-    var date = dateFormat(new Date(tx.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
+    var date = dateFormat(new Date(tx.timestamp * 1000), 'mmm d yyyy, HH:MM:ss');
     var fee = tx.getFee();
 
     var txDescription = '';
@@ -295,16 +295,16 @@ class TxDetails extends Component {
       }
     }
 
-    if ( totalFundsReceived + totalChange + fee < totalDebit) {
-      txDescription = {direction:'Sent', addressStr: ''};
+    if (totalFundsReceived + totalChange + fee < totalDebit) {
+      txDescription = { direction: 'Sent', addressStr: '' };
       txAmount = totalDebit - fee - totalChange - totalFundsReceived;
       walletValueUp = false;
     } else {
-      txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
+      txDescription = { direction: 'Received at:', addressStr: receiveAddressStr };
       txAmount = totalFundsReceived;
       walletValueUp = true;
     }
-    return(
+    return (
       <div style={styles.view}>
         <div style={styles.header}>
           <div style={styles.headerTopTransactionDetails}>
@@ -312,27 +312,27 @@ class TxDetails extends Component {
           </div>
           <div style={styles.headerTitleOverview}>Primary account</div>
           {walletValueUp ?
-          <div style={styles.headerMetaTransactionDetailsIn}>
-            <Balance amount={txAmount} />
-            <div style={styles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
-          </div> :
-          <div style={styles.headerMetaTransactionDetailsOut}>
-            -<Balance amount={txAmount} />
-            <div style={styles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
-          </div>
+            <div style={styles.headerMetaTransactionDetailsIn}>
+              <Balance amount={txAmount} />
+              <div style={styles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
+            </div> :
+            <div style={styles.headerMetaTransactionDetailsOut}>
+              -<Balance amount={txAmount} />
+              <div style={styles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
+            </div>
           }
         </div>
         <div style={styles.content}>
           <div style={styles.contentNest}>
             <div style={styles.transactionDetailsTop}>
               <div style={styles.transactionDetailsName}>Transaction:</div>
-              <div style={styles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, txLink)}><a>{reverseHash(Buffer.from(tx.getHash()).toString('hex'))}</a></div>
+              <div style={styles.transactionDetailsValue} onClick={function (x) { shell.openExternal(x); }.bind(null, txLink)}><a>{reverseHash(Buffer.from(tx.getHash()).toString('hex'))}</a></div>
               <div style={styles.transactionDetailsName}>
                 <div style={styles.indicatorConfirmed}>confirmed</div>
               </div>
               {getAccountsResponse !== null ?
-              <div style={styles.transactionDetailsValue}>{getAccountsResponse.getCurrentBlockHeight() - tx.height} <span style={styles.transactionDetailsValueText}>confirmations</span></div> :
-              <div></div>
+                <div style={styles.transactionDetailsValue}>{getAccountsResponse.getCurrentBlockHeight() - tx.height} <span style={styles.transactionDetailsValueText}>confirmations</span></div> :
+                <div></div>
               }
               <div style={styles.transactionDetailsName}>{txDescription.direction}</div>
               <div style={styles.transactionDetailsValue}>{txDescription.addressStr}</div>
@@ -343,7 +343,7 @@ class TxDetails extends Component {
             <div style={styles.transactionDetails}>
               <div style={styles.transactionDetailsTitle}>Properties</div>
               <div style={styles.transactionDetailsName}>Block:</div>
-              <div style={styles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, blockLink)}><a>{reverseHash(Buffer.from(tx.blockHash).toString('hex'))}</a></div>
+              <div style={styles.transactionDetailsValue} onClick={function (x) { shell.openExternal(x); }.bind(null, blockLink)}><a>{reverseHash(Buffer.from(tx.blockHash).toString('hex'))}</a></div>
               <div style={styles.transactionDetailsName}>Height:</div>
               <div style={styles.transactionDetailsValue}>{tx.height}</div>
             </div>

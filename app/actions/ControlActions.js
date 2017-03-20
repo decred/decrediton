@@ -1,5 +1,6 @@
 import { getBalanceAttempt, getTransactionInfoAttempt } from './ClientActions';
-import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
+import {
+  ChangePassphraseRequest, RenameAccountRequest, RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   ConstructTransactionRequest, SignTransactionRequest,
   PublishTransactionRequest, PurchaseTicketsRequest, LoadActiveDataFiltersRequest
@@ -24,7 +25,8 @@ export function getNextAddressAttempt(accountNum) {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: GETNEXTADDRESS_ATTEMPT });
+      type: GETNEXTADDRESS_ATTEMPT
+    });
     dispatch(getNextAddressAction());
   };
 }
@@ -34,13 +36,13 @@ function getNextAddressAction() {
     const { walletService } = getState().grpc;
     const { getNextAddressRequest } = getState().control;
     walletService.nextAddress(getNextAddressRequest,
-        function(err, getNextAddressResponse) {
-          if (err) {
-            dispatch(getNextAddressError(err + ' Please try again'));
-          } else {
-            dispatch(getNextAddressSuccess(getNextAddressResponse));
-          }
-        });
+      function (err, getNextAddressResponse) {
+        if (err) {
+          dispatch(getNextAddressError(err + ' Please try again'));
+        } else {
+          dispatch(getNextAddressSuccess(getNextAddressResponse));
+        }
+      });
   };
 }
 
@@ -63,7 +65,8 @@ export function renameAccountAttempt(accountNumber, newName) {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: RENAMEACCOUNT_ATTEMPT });
+      type: RENAMEACCOUNT_ATTEMPT
+    });
     dispatch(renameAccountAction());
   };
 }
@@ -73,13 +76,13 @@ function renameAccountAction() {
     const { walletService } = getState().grpc;
     const { renameAccountRequest } = getState().control;
     walletService.renameAccount(renameAccountRequest,
-        function(err, renameAccountResponse) {
-          if (err) {
-            dispatch(renameAccountError(err + ' Please try again'));
-          } else {
-            dispatch(renameAccountSuccess(renameAccountResponse));
-          }
-        });
+      function (err, renameAccountResponse) {
+        if (err) {
+          dispatch(renameAccountError(err + ' Please try again'));
+        } else {
+          dispatch(renameAccountSuccess(renameAccountResponse));
+        }
+      });
   };
 }
 
@@ -95,8 +98,8 @@ function rescanProgress(rescanResponse) {
 function rescanComplete() {
   return (dispatch) => {
     dispatch({ type: RESCAN_COMPLETE });
-    setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
-    setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
+    setTimeout(() => { dispatch(getBalanceAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 1000);
   };
 }
 
@@ -106,7 +109,8 @@ export function rescanAttempt(beginHeight) {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: RESCAN_ATTEMPT });
+      type: RESCAN_ATTEMPT
+    });
     dispatch(rescanAction());
   };
 }
@@ -116,15 +120,15 @@ function rescanAction() {
     const { walletService } = getState().grpc;
     const { rescanRequest } = getState().control;
     var rescanCall = walletService.rescan(rescanRequest);
-    rescanCall.on('data', function(response) {
+    rescanCall.on('data', function (response) {
       console.log('Rescanned thru', response.getRescannedThrough());
       dispatch(rescanProgress(response));
     });
-    rescanCall.on('end', function() {
+    rescanCall.on('end', function () {
       console.log('Rescan done');
       dispatch(rescanComplete());
     });
-    rescanCall.on('status', function(status) {
+    rescanCall.on('status', function (status) {
       console.log('Rescan status:', status);
     });
   };
@@ -149,7 +153,8 @@ export function getNextAccountAttempt(passphrase, accountName) {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: GETNEXTACCOUNT_ATTEMPT });
+      type: GETNEXTACCOUNT_ATTEMPT
+    });
     dispatch(getNextAccountAction());
   };
 }
@@ -159,13 +164,13 @@ function getNextAccountAction() {
     const { walletService } = getState().grpc;
     const { getNextAccountRequest } = getState().control;
     walletService.nextAccount(getNextAccountRequest,
-        function(err, getNextAccountResponse) {
-          if (err) {
-            dispatch(getNextAccountError(err + ' Please try again'));
-          } else {
-            dispatch(getNextAccountSuccess(getNextAccountResponse));
-          }
-        });
+      function (err, getNextAccountResponse) {
+        if (err) {
+          dispatch(getNextAccountError(err + ' Please try again'));
+        } else {
+          dispatch(getNextAccountSuccess(getNextAccountResponse));
+        }
+      });
   };
 }
 
@@ -192,7 +197,8 @@ export function importPrivateKeyAttempt(passphrase, accountNum, wif, rescan, sca
   return (dispatch) => {
     dispatch({
       request: request,
-      type: IMPORTPRIVKEY_ATTEMPT });
+      type: IMPORTPRIVKEY_ATTEMPT
+    });
     dispatch(importPrivateKeyAction());
   };
 }
@@ -202,13 +208,13 @@ function importPrivateKeyAction() {
     const { walletService } = getState().grpc;
     const { importPrivateKeyRequest } = getState().control;
     walletService.importPrivateKey(importPrivateKeyRequest,
-        function(err, importPrivateKeyResponse) {
-          if (err) {
-            dispatch(importPrivateKeyError(err + ' Please try again'));
-          } else {
-            dispatch(importPrivateKeySuccess(importPrivateKeyResponse));
-          }
-        });
+      function (err, importPrivateKeyResponse) {
+        if (err) {
+          dispatch(importPrivateKeyError(err + ' Please try again'));
+        } else {
+          dispatch(importPrivateKeySuccess(importPrivateKeyResponse));
+        }
+      });
   };
 }
 
@@ -233,7 +239,8 @@ export function importScriptAttempt(passphrase, script, rescan, scanFrom) {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: IMPORTSCRIPT_ATTEMPT });
+      type: IMPORTSCRIPT_ATTEMPT
+    });
     dispatch(importScriptAction());
   };
 }
@@ -243,13 +250,13 @@ function importScriptAction() {
     const { walletService } = getState().grpc;
     const { importScriptRequest } = getState().control;
     walletService.importScript(importScriptRequest,
-        function(err, importScriptResponse) {
-          if (err) {
-            dispatch(importScriptError(err + ' Please try again'));
-          } else {
-            dispatch(importScriptSuccess(importScriptResponse));
-          }
-        });
+      function (err, importScriptResponse) {
+        if (err) {
+          dispatch(importScriptError(err + ' Please try again'));
+        } else {
+          dispatch(importScriptSuccess(importScriptResponse));
+        }
+      });
   };
 }
 
@@ -272,7 +279,8 @@ export function changePassphraseAttempt(oldPass, newPass) {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: CHANGEPASSPHRASE_ATTEMPT });
+      type: CHANGEPASSPHRASE_ATTEMPT
+    });
     dispatch(changePassphraseAction());
   };
 }
@@ -282,18 +290,18 @@ function changePassphraseAction() {
     const { walletService } = getState().grpc;
     const { changePassphraseRequest } = getState().control;
     walletService.changePassphrase(changePassphraseRequest,
-        function(err, changePassphraseResponse) {
-          if (err) {
-            dispatch(changePassphraseError(err + ' Please try again'));
-          } else {
-            dispatch(changePassphraseSuccess(changePassphraseResponse));
-          }
-        });
+      function (err, changePassphraseResponse) {
+        if (err) {
+          dispatch(changePassphraseError(err + ' Please try again'));
+        } else {
+          dispatch(changePassphraseSuccess(changePassphraseResponse));
+        }
+      });
   };
 }
 
 export const LOADACTIVEDATAFILTERS_ATTEMPT = 'LOADACTIVEDATAFILTERS_ATTEMPT';
-export const LOADACTIVEDATAFILTERS_FAILED= 'LOADACTIVEDATAFILTERS_FAILED';
+export const LOADACTIVEDATAFILTERS_FAILED = 'LOADACTIVEDATAFILTERS_FAILED';
 export const LOADACTIVEDATAFILTERS_SUCCESS = 'LOADACTIVEDATAFILTERS_SUCCESS';
 
 function loadActiveDataFiltersError(error) {
@@ -302,7 +310,7 @@ function loadActiveDataFiltersError(error) {
 
 function loadActiveDataFiltersSuccess(response) {
   return (dispatch) => {
-    dispatch({response: response, type: LOADACTIVEDATAFILTERS_SUCCESS });
+    dispatch({ response: response, type: LOADACTIVEDATAFILTERS_SUCCESS });
   };
 }
 
@@ -311,7 +319,8 @@ export function loadActiveDataFiltersAttempt() {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: LOADACTIVEDATAFILTERS_ATTEMPT });
+      type: LOADACTIVEDATAFILTERS_ATTEMPT
+    });
     dispatch(loadActiveDataFiltersAction());
   };
 }
@@ -321,20 +330,20 @@ function loadActiveDataFiltersAction() {
     const { walletService } = getState().grpc;
     const { loadActiveDataFiltersRequest } = getState().control;
     walletService.loadActiveDataFilters(loadActiveDataFiltersRequest,
-        function(err, response) {
-          if (err) {
-            dispatch(loadActiveDataFiltersError(err + ' Please try again'));
-          } else {
-            dispatch(loadActiveDataFiltersSuccess(response));
-          }
-        });
+      function (err, response) {
+        if (err) {
+          dispatch(loadActiveDataFiltersError(err + ' Please try again'));
+        } else {
+          dispatch(loadActiveDataFiltersSuccess(response));
+        }
+      });
   };
 }
 
 export const CLEARTX = 'CLEARTX';
 
 export function clearTransaction() {
-  return{ type: CLEARTX };
+  return { type: CLEARTX };
 }
 
 export const SIGNTX_ATTEMPT = 'SIGNTX_ATTEMPT';
@@ -347,7 +356,7 @@ function signTransactionError(error) {
 
 function signTransactionSuccess(signTransactionResponse) {
   return (dispatch) => {
-    dispatch({signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS });
+    dispatch({ signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS });
     dispatch(publishTransactionAttempt(signTransactionResponse.getTransaction()));
   };
 }
@@ -357,7 +366,8 @@ export function signTransactionAttempt(passphrase, rawTx) {
   return (dispatch) => {
     dispatch({
       request: {},
-      type: SIGNTX_ATTEMPT });
+      type: SIGNTX_ATTEMPT
+    });
     dispatch(signTransactionAction(passphrase, rawTx));
   };
 }
@@ -369,13 +379,13 @@ function signTransactionAction(passphrase, rawTx) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     walletService.signTransaction(request,
-        function(err, signTransactionResponse) {
-          if (err) {
-            dispatch(signTransactionError(err + ' Please try again'));
-          } else {
-            dispatch(signTransactionSuccess(signTransactionResponse));
-          }
-        });
+      function (err, signTransactionResponse) {
+        if (err) {
+          dispatch(signTransactionError(err + ' Please try again'));
+        } else {
+          dispatch(signTransactionSuccess(signTransactionResponse));
+        }
+      });
   };
 }
 
@@ -397,7 +407,8 @@ export function publishTransactionAttempt(tx) {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: PUBLISHTX_ATTEMPT });
+      type: PUBLISHTX_ATTEMPT
+    });
     dispatch(publishTransactionAction());
   };
 }
@@ -407,13 +418,13 @@ function publishTransactionAction() {
     const { walletService } = getState().grpc;
     const { publishTransactionRequest } = getState().control;
     walletService.publishTransaction(publishTransactionRequest,
-        function(err, publishTransactionResponse) {
-          if (err) {
-            dispatch(publishTransactionError(err + ' Please try again'));
-          } else {
-            dispatch(publishTransactionSuccess(publishTransactionResponse));
-          }
-        });
+      function (err, publishTransactionResponse) {
+        if (err) {
+          dispatch(publishTransactionError(err + ' Please try again'));
+        } else {
+          dispatch(publishTransactionSuccess(publishTransactionResponse));
+        }
+      });
   };
 }
 
@@ -430,7 +441,7 @@ function purchaseTicketSuccess(purchaseTicketResponse) {
 }
 
 export function purchaseTicketAttempt(passphrase, accountNum, spendLimit, requiredConf,
-ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
+  ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
   var request = new PurchaseTicketsRequest();
   request.setPassphrase(Buffer.from(passphrase));
   request.setAccount(accountNum);
@@ -446,7 +457,8 @@ ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: PURCHASETICKET_ATTEMPT });
+      type: PURCHASETICKET_ATTEMPT
+    });
     dispatch(purchaseTicketAction());
   };
 }
@@ -456,13 +468,13 @@ function purchaseTicketAction() {
     const { walletService } = getState().grpc;
     const { purchaseTicketRequest } = getState().control;
     walletService.purchaseTicket(purchaseTicketRequest,
-        function(err, purchaseTicketResponse) {
-          if (err) {
-            dispatch(purchaseTicketError(err + ' Please try again'));
-          } else {
-            dispatch(purchaseTicketSuccess(purchaseTicketResponse));
-          }
-        });
+      function (err, purchaseTicketResponse) {
+        if (err) {
+          dispatch(purchaseTicketError(err + ' Please try again'));
+        } else {
+          dispatch(purchaseTicketSuccess(purchaseTicketResponse));
+        }
+      });
   };
 }
 
@@ -476,7 +488,7 @@ function constructTransactionError(error) {
 
 function constructTransactionSuccess(constructTxResponse) {
   return (dispatch) => {
-    dispatch({constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
+    dispatch({ constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
   };
 }
 
@@ -497,7 +509,8 @@ export function constructTransactionAttempt(account, confirmations, outputs) {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: CONSTRUCTTX_ATTEMPT });
+      type: CONSTRUCTTX_ATTEMPT
+    });
     dispatch(constructTransactionAction());
   };
 }
@@ -507,12 +520,12 @@ function constructTransactionAction() {
     const { walletService } = getState().grpc;
     const { constructTxRequest } = getState().control;
     walletService.constructTransaction(constructTxRequest,
-        function(err, constructTxResponse) {
-          if (err) {
-            dispatch(constructTransactionError(err + ' Please try again'));
-          } else {
-            dispatch(constructTransactionSuccess(constructTxResponse));
-          }
-        });
+      function (err, constructTxResponse) {
+        if (err) {
+          dispatch(constructTransactionError(err + ' Please try again'));
+        } else {
+          dispatch(constructTransactionSuccess(constructTxResponse));
+        }
+      });
   };
 }

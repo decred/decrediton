@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 
 const styles = {
   error: {
-    color:'red'
+    color: 'red'
   },
 };
 
 class ShowError extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
   render() {

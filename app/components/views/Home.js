@@ -100,7 +100,7 @@ const styles = {
   },
 };
 
-class Home extends Component{
+class Home extends Component {
   constructor(props) {
     super(props);
   }
@@ -113,7 +113,7 @@ class Home extends Component{
   }
 
   handleBalanceClick = () => {
-    this.props.getBalanceAttempt(0,1);
+    this.props.getBalanceAttempt(0, 1);
   }
 
   render() {
@@ -138,8 +138,8 @@ class Home extends Component{
         <div style={styles.view}>
           <Header headerTitleOverview="Rescanning">
             <LinearProgress mode="determinate"
-              min={rescanRequest !== null ? rescanRequest.getBeginHeight(): 0}
-              max={getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight(): 100}
+              min={rescanRequest !== null ? rescanRequest.getBeginHeight() : 0}
+              max={getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight() : 100}
               value={rescanResponse !== null ? rescanResponse.getRescannedThrough() : 0} />
             <p>{rescanPercFisnished}%</p>
             <p>{rescanResponse.getRescannedThrough()}/{getAccountsResponse.getCurrentBlockHeight()}</p>
@@ -160,7 +160,7 @@ class Home extends Component{
           </div>
           <div style={styles.contentNest}>
             {paginatedTxs.length > 0 ?
-              <TxHistory mined={paginatedTxs}/>  :
+              <TxHistory mined={paginatedTxs} /> :
               <p>No transactions</p>
             }
           </div>
@@ -168,9 +168,9 @@ class Home extends Component{
       </div>);
 
     if (walletService === null) {
-      return(<ErrorScreen />);
+      return (<ErrorScreen />);
     } else {
-      return(
+      return (
         <div style={styles.body}>
           <SideBar />
           {rescanRequest ?

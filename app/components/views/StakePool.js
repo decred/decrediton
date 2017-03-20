@@ -430,7 +430,7 @@ const styles = {
   flexHeight: {
     paddingTop: '1px',
     backgroundColor: '#fff',
-    height:'372px',
+    height: '372px',
     overflowY: 'auto',
     overflowX: 'hidden',
   },
@@ -440,7 +440,7 @@ const styles = {
   }
 };
 
-class StakePool extends Component{
+class StakePool extends Component {
   static propTypes = {
     walletService: PropTypes.object,
   };
@@ -461,7 +461,7 @@ class StakePool extends Component{
     };
   }
   addAnotherStakePool() {
-    this.setState({addAnotherStakePool: true});
+    this.setState({ addAnotherStakePool: true });
   }
   setStakePoolInfo() {
     if (this.state.stakePoolHost == '' || this.state.apiKey == '') {
@@ -470,16 +470,16 @@ class StakePool extends Component{
     //this.setState({addAnotherStakePool: false});
     //setStakePoolInformation(this.state.stakePoolHost, this.props.apiKey, this.props.account);
     this.props.setStakePoolInformation(this.state.stakePoolHost, this.state.apiKey, 0);
-    setTimeout(this.setState({addAnotherStakePool: false}), 1000);
+    setTimeout(this.setState({ addAnotherStakePool: false }), 1000);
   }
   updateApiKey(apiKey) {
-    this.setState({apiKey: apiKey});
+    this.setState({ apiKey: apiKey });
   }
   updateAccountNumber(accountNum) {
-    this.setState({account: accountNum});
+    this.setState({ account: accountNum });
   }
   updateStakePoolHost(poolHost) {
-    this.setState({stakePoolHost: poolHost});
+    this.setState({ stakePoolHost: poolHost });
   }
   render() {
     const { walletService } = this.props;
@@ -497,9 +497,9 @@ class StakePool extends Component{
         <select
           defaultValue={0}
           style={styles.selectStakePool}
-          onChange={(e) =>{this.updateStakePoolHost(e.target.value);}}
-          >
-          {currentStakePoolConfig !== null  ?
+          onChange={(e) => { this.updateStakePoolHost(e.target.value); }}
+        >
+          {currentStakePoolConfig !== null ?
             currentStakePoolConfig.map((stakePool) => {
               if (!stakePool.ApiKey && stakePool.Network == network) {
                 return (
@@ -517,74 +517,74 @@ class StakePool extends Component{
     var stakePoolConfigInput = (
       <div style={styles.content}>
         <div style={styles.flexHeight}>
-            <div style={styles.contentNestFromAddress}>
-              <div style={styles.contentNestPrefixSend}>Stake Pool:</div>
-                {selectStakePool}
-              <div style={styles.contentNestFromAddressWalletIcon}></div>
-            </div>
-            <div style={styles.contentNestToAddress}>
-              <div style={styles.contentNestPrefixSend}>Api Key:</div>
-              <div style={styles.contentNestAddressHashBlock}>
-                <div style={styles.inputForm}>
-                  <input
-                    type="text"
-                    style={styles.contentNestAddressAmountSum}
-                    placeholder="API Key"
-                    onBlur={(e) =>{this.updateApiKey(e.target.value);}}/>
-                </div>
+          <div style={styles.contentNestFromAddress}>
+            <div style={styles.contentNestPrefixSend}>Stake Pool:</div>
+            {selectStakePool}
+            <div style={styles.contentNestFromAddressWalletIcon}></div>
+          </div>
+          <div style={styles.contentNestToAddress}>
+            <div style={styles.contentNestPrefixSend}>Api Key:</div>
+            <div style={styles.contentNestAddressHashBlock}>
+              <div style={styles.inputForm}>
+                <input
+                  type="text"
+                  style={styles.contentNestAddressAmountSum}
+                  placeholder="API Key"
+                  onBlur={(e) => { this.updateApiKey(e.target.value); }} />
               </div>
             </div>
           </div>
-          <div style={styles.contentSend} onClick={() => this.setStakePoolInfo()}>
-            <div style={styles.viewButtonKeyBlue}>Confirm</div>
-          </div>
         </div>
+        <div style={styles.contentSend} onClick={() => this.setStakePoolInfo()}>
+          <div style={styles.viewButtonKeyBlue}>Confirm</div>
+        </div>
+      </div>
     );
     var configuredStakePoolInformation = (
-        <div style={styles.content}>
-          <div style={styles.flexHeight}>
-            <div style={styles.contentNestFromAddress}>
-              <div style={styles.contentNestPrefixConfigured}>Configured stake pools:</div>
-            </div>
-            <div id="dynamicInput">
+      <div style={styles.content}>
+        <div style={styles.flexHeight}>
+          <div style={styles.contentNestFromAddress}>
+            <div style={styles.contentNestPrefixConfigured}>Configured stake pools:</div>
+          </div>
+          <div id="dynamicInput">
             {currentStakePoolConfig.map((stakePool) => {
               if (stakePool.ApiKey && stakePool.Network == network) {
-                return(
-                <div key={stakePool.Host} style={styles.contentNestStakePool}>
-                  <div style={styles.contentNestStakePoolSettings}>
-                    <div style={styles.contentNestPrefixStakePoolSettings}>URL:</div>
-                    <div style={styles.contentNestContentStakePoolSettings}>
-                      {stakePool.Host}
+                return (
+                  <div key={stakePool.Host} style={styles.contentNestStakePool}>
+                    <div style={styles.contentNestStakePoolSettings}>
+                      <div style={styles.contentNestPrefixStakePoolSettings}>URL:</div>
+                      <div style={styles.contentNestContentStakePoolSettings}>
+                        {stakePool.Host}
+                      </div>
                     </div>
-                  </div>
-                  <div style={styles.contentNestStakePoolSettings}>
-                    <div style={styles.contentNestPrefixStakePoolSettings}>Ticket Address:</div>
-                    <div style={styles.contentNestContentStakePoolSettings}>
-                      {stakePool.TicketAddress}
+                    <div style={styles.contentNestStakePoolSettings}>
+                      <div style={styles.contentNestPrefixStakePoolSettings}>Ticket Address:</div>
+                      <div style={styles.contentNestContentStakePoolSettings}>
+                        {stakePool.TicketAddress}
+                      </div>
                     </div>
-                  </div>
-                  <div style={styles.contentNestStakePoolSettings}>
-                    <div style={styles.contentNestPrefixStakePoolSettings}>Script:</div>
-                    <textarea disabled value={stakePool.Script} style={styles.contentNestContentStakePoolSettings}/>
-                  </div>
-                  <div style={styles.contentNestStakePoolSettingsBottom}>
-                    <div style={styles.contentNestPrefixStakePoolSettings}>Pool Fees:</div>
-                    <div style={styles.contentNestContentStakePoolSettings}>
-                      {stakePool.PoolFees}
+                    <div style={styles.contentNestStakePoolSettings}>
+                      <div style={styles.contentNestPrefixStakePoolSettings}>Script:</div>
+                      <textarea disabled value={stakePool.Script} style={styles.contentNestContentStakePoolSettings} />
                     </div>
-                  </div>
-                </div>);
+                    <div style={styles.contentNestStakePoolSettingsBottom}>
+                      <div style={styles.contentNestPrefixStakePoolSettings}>Pool Fees:</div>
+                      <div style={styles.contentNestContentStakePoolSettings}>
+                        {stakePool.PoolFees}
+                      </div>
+                    </div>
+                  </div>);
               }
             })}
-            </div>
           </div>
-          {unconfigedStakePools > 0 ?
+        </div>
+        {unconfigedStakePools > 0 ?
           <div style={styles.contentSend} onClick={() => this.addAnotherStakePool()}>
             <div style={styles.viewButtonKeyBlue}>Add stakepool</div>
           </div> :
           <div></div>
-          }
-        </div>
+        }
+      </div>
     );
     const stakePool = (
       <div style={styles.view}>
@@ -592,12 +592,12 @@ class StakePool extends Component{
           headerTop={
           [
             currentStakePoolConfigError !== null ?
-            <div key="updateStakePoolError" style={styles.viewNotificationError}>{currentStakePoolConfigError}</div> :
+                <div key="updateStakePoolError" style={styles.viewNotificationError}>{currentStakePoolConfigError}</div> :
 
-            <div key="updateStakePoolError" ></div>,
+                <div key="updateStakePoolError" ></div>,
             currentStakePoolConfigSuccessMessage !== undefined && currentStakePoolConfigSuccessMessage !== '' ?
-            <div key="configSuccess"  style={styles.viewNotificationSuccess}>{currentStakePoolConfigSuccessMessage}</div> :
-            <div key="configSuccess" ></div>
+                <div key="configSuccess" style={styles.viewNotificationSuccess}>{currentStakePoolConfigSuccessMessage}</div> :
+                <div key="configSuccess" ></div>
           ]
           }
           headerTitleOverview="Stake pool settings"
@@ -606,7 +606,7 @@ class StakePool extends Component{
         {(!activeStakePoolConfig || this.state.addAnotherStakePool) && !currentStakePoolConfigRequest ?
           stakePoolConfigInput :
           currentStakePoolConfigRequest ?
-            <CircularProgress style={styles.loading} size={125} thickness={6}/> :
+            <CircularProgress style={styles.loading} size={125} thickness={6} /> :
             configuredStakePoolInformation
         }
       </div>

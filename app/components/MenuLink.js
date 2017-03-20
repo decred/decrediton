@@ -16,7 +16,7 @@ var styles = {
       backgroundSize: '5px',
     },
   },
-  menuNavigationLink:{
+  menuNavigationLink: {
     display: 'block',
     height: '38px',
     paddingTop: '15px',
@@ -27,7 +27,7 @@ var styles = {
     textDecoration: 'none',
     textTransform: 'capitalize',
   },
-  menuNavigationLinkActive:{
+  menuNavigationLinkActive: {
     backgroundColor: '#09182d',
     backgroundImage: `url(${leftLinkColor})`,
     backgroundPosition: '0px 50%',

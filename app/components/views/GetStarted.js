@@ -229,7 +229,7 @@ const styles = {
   },
 };
 
-class Home extends Component{
+class Home extends Component {
   toggleNewExisting(side) {
     if (side == 'right') {
       this.props.createWalletExistingToggle(true);
@@ -238,18 +238,18 @@ class Home extends Component{
     }
   }
   discoverAddressesButton() {
-    if (this.state.privpass == '' ) {
+    if (this.state.privpass == '') {
       return;
     }
     this.props.discoverAddressAttempt(true, this.state.privpass);
-    this.setState({privpass:''});
+    this.setState({ privpass: '' });
   }
   openWalletButton() {
     if (this.state.pubpass == '') {
       return;
     }
     this.props.openWalletAttempt(this.state.pubpass);
-    this.setState({pubpass:''});
+    this.setState({ pubpass: '' });
   }
   handleDisclaimerOK = () => {
     this.props.disclaimerOKAction();
@@ -301,7 +301,7 @@ class Home extends Component{
     const getStartedWalletLoader = (
       <div>
         <ShowError error={getLoaderError} />
-        <ShowError error={getVersionServiceError}/>
+        <ShowError error={getVersionServiceError} />
       </div>);
 
     var startupStepView = (<div>something went wrong</div>);
@@ -309,55 +309,55 @@ class Home extends Component{
     if (stepIndex <= 1) {
       // Initial Step
       startupStepView = (
-      <div style={styles.view}>
-        <Header getStarted headerTitleOverview="Getting started" />
-        <div style={styles.content}>
-          <div style={styles.contentTitle}>
-            <div style={styles.contentTitleText}>checking wallet state...</div>
-          </div>
-          <div style={styles.contentNest}>
-            {getStartedWalletLoader}
+        <div style={styles.view}>
+          <Header getStarted headerTitleOverview="Getting started" />
+          <div style={styles.content}>
+            <div style={styles.contentTitle}>
+              <div style={styles.contentTitleText}>checking wallet state...</div>
+            </div>
+            <div style={styles.contentNest}>
+              {getStartedWalletLoader}
+            </div>
           </div>
         </div>
-      </div>
       );
     } else if (stepIndex == 2 &&
-            walletExistResponse !== null
-            && walletExistResponse.getExists()) {
+      walletExistResponse !== null
+      && walletExistResponse.getExists()) {
       // Wallet has been shown to exist and public password != 'public'
       startupStepView = (
-      <div style={styles.view}>
-        <Header getStarted
-          headerTop={ walletOpenError !== null ?
+        <div style={styles.view}>
+          <Header getStarted
+            headerTop={walletOpenError !== null ?
               <div key="walletOpenError" style={styles.viewNotificationError}>{walletOpenError}</div> :
               <div key="walletOpenError" ></div>
-          }
-          headerTitleOverview="Opening Wallet"
-          headerMetaOverview="Please enter the information below to  create your dcrwallet"
-        />
-        <div style={styles.contentNewSeed}>
-          { walletOpenRequestAttempt ?
-            <CircularProgress style={styles.loading} size={125} thickness={6}/> :
-            <div style={styles.contentNewSeedCreateButton}>
-              <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Decrypt Wallet:</div>
-              <div style={styles.contentConfirmWalletCreateInputRightPadding}>
-                <div style={styles.inputForm}>
-                  <form style={styles.inputForm}>
-                    <input
-                      style={styles.inputPrivatePassword}
-                      type="password"
-                      placeholder="Private Passphrase"
-                      onBlur={(e)=>this.setState({pubpass:e.target.value})}/>
-                  </form>
-                </div>
-              </div>
+            }
+            headerTitleOverview="Opening Wallet"
+            headerMetaOverview="Please enter the information below to  create your dcrwallet"
+          />
+          <div style={styles.contentNewSeed}>
+            {walletOpenRequestAttempt ?
+              <CircularProgress style={styles.loading} size={125} thickness={6} /> :
               <div style={styles.contentNewSeedCreateButton}>
-                <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
+                <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Decrypt Wallet:</div>
                 <div style={styles.contentConfirmWalletCreateInputRightPadding}>
-                  <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.openWalletButton()}>Open Wallet</a>
+                  <div style={styles.inputForm}>
+                    <form style={styles.inputForm}>
+                      <input
+                        style={styles.inputPrivatePassword}
+                        type="password"
+                        placeholder="Private Passphrase"
+                        onBlur={(e) => this.setState({ pubpass: e.target.value })} />
+                    </form>
+                  </div>
+                </div>
+                <div style={styles.contentNewSeedCreateButton}>
+                  <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
+                  <div style={styles.contentConfirmWalletCreateInputRightPadding}>
+                    <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={() => this.openWalletButton()}>Open Wallet</a>
+                  </div>
                 </div>
               </div>
-            </div>
             }
           </div>
         </div>
@@ -365,68 +365,68 @@ class Home extends Component{
     } else if (stepIndex == 2) {
       // Wallet does not exist
       startupStepView = (
-      <div style={styles.view}>
-        <Header
-          getStarted
-          headerTop={ walletCreateError !== null ?
-            <div key="walletCreateError" style={styles.viewNotificationError}>{walletCreateError}</div> :
-            <div key="walletCreateError" ></div>
-          }
-          headerTitleOverview={'Create a Wallet'}>
-          {!this.props.confirmNewSeed ?
-            <NewExistingSeedToggle
-              activeButton={'left'}
-              leftText={'New seed'}
-              rightText={'Existing Seed'}
-              toggleAction={(e)=>{this.toggleNewExisting(e);}}/> :
-            <div style={styles.viewButtonGoBack} onClick={()=>this.props.createWalletGoBackNewSeed()}>Back</div>
-          }
-        </Header>
-        {walletCreateRequestAttempt ?
-        <div style={styles.contentNewSeed}>
-          <CircularProgress style={styles.loading} size={125} thickness={6}/>
-        </div>  :
-          <CreateWalletForm existing={this.props.createWalletExisting}/>}
-      </div>
+        <div style={styles.view}>
+          <Header
+            getStarted
+            headerTop={walletCreateError !== null ?
+              <div key="walletCreateError" style={styles.viewNotificationError}>{walletCreateError}</div> :
+              <div key="walletCreateError" ></div>
+            }
+            headerTitleOverview={'Create a Wallet'}>
+            {!this.props.confirmNewSeed ?
+              <NewExistingSeedToggle
+                activeButton={'left'}
+                leftText={'New seed'}
+                rightText={'Existing Seed'}
+                toggleAction={(e) => { this.toggleNewExisting(e); }} /> :
+              <div style={styles.viewButtonGoBack} onClick={() => this.props.createWalletGoBackNewSeed()}>Back</div>
+            }
+          </Header>
+          {walletCreateRequestAttempt ?
+            <div style={styles.contentNewSeed}>
+              <CircularProgress style={styles.loading} size={125} thickness={6} />
+            </div> :
+            <CreateWalletForm existing={this.props.createWalletExisting} />}
+        </div>
       );
-    } else if  (stepIndex == 3 || stepIndex == 4) {
+    } else if (stepIndex == 3 || stepIndex == 4) {
       // Get startrpc and subscribe
       startupStepView = (
         <div style={styles.view}>
           <Header
             getStarted
-            headerTop={ startRpcError !== null ?
+            headerTop={startRpcError !== null ?
               <div key="startRpcError" style={styles.viewNotificationError}>{startRpcError}</div> :
               <div key="startRpcError" ></div>
             }
-            headerTitleOverview="Starting RPC and subscribing block notifications"/>
+            headerTitleOverview="Starting RPC and subscribing block notifications" />
           <div style={styles.content}>
             <div style={styles.contentTitle}>
               <div style={styles.contentTitleText}>Start RPC, Subscribe Block</div>
             </div>
             <div style={styles.contentNest}>
-              { startRpcRequestAttempt ?
-                <CircularProgress style={styles.loading} size={125} thickness={6}/> :
+              {startRpcRequestAttempt ?
+                <CircularProgress style={styles.loading} size={125} thickness={6} /> :
                 <div>Some unexpected error occured, please check logs</div>
               }
             </div>
           </div>
         </div>
       );
-    } else if  (stepIndex == 5) {
+    } else if (stepIndex == 5) {
       // Get private passphrase for discover address request
       startupStepView = (
         <div style={styles.view}>
           <Header getStarted
-            headerTop={ discoverAddressError !== null ?
+            headerTop={discoverAddressError !== null ?
               <div key="pubError" style={styles.viewNotificationError}>{discoverAddressError}</div> :
               <div key="pubError" ></div>
             }
             headerTitleOverview="Opening Wallet"
-            headerMetaOverview="Please enter the information below to load your dcrwallet"/>
+            headerMetaOverview="Please enter the information below to load your dcrwallet" />
           <div style={styles.contentNewSeed}>
-            { discoverAddressRequestAttempt ?
-            <CircularProgress style={styles.loading} size={125} thickness={6}/> :
+            {discoverAddressRequestAttempt ?
+              <CircularProgress style={styles.loading} size={125} thickness={6} /> :
               <div style={styles.contentNewSeedCreateButton}>
                 <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Scan for used addresses:</div>
                 <div style={styles.contentConfirmWalletCreateInputRightPadding}>
@@ -436,14 +436,14 @@ class Home extends Component{
                         style={styles.inputPrivatePassword}
                         type="password"
                         placeholder="Private Passphrase"
-                        onBlur={(e)=>this.setState({privpass:e.target.value})}/>
+                        onBlur={(e) => this.setState({ privpass: e.target.value })} />
                     </form>
                   </div>
                 </div>
                 <div style={styles.contentNewSeedCreateButton}>
                   <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
                   <div style={styles.contentConfirmWalletCreateInputRightPadding}>
-                    <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.discoverAddressesButton()}>Scan</a>
+                    <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={() => this.discoverAddressesButton()}>Scan</a>
                   </div>
                 </div>
               </div>
@@ -451,26 +451,26 @@ class Home extends Component{
           </div>
         </div>
       );
-    } else if  (stepIndex == 6) {
+    } else if (stepIndex == 6) {
       // Fetch headers
       startupStepView = (
         <div style={styles.view}>
           <Header
             getStarted
-            headerTop={ fetchHeadersError !== null ?
+            headerTop={fetchHeadersError !== null ?
               <div key="fetchHeadersError" style={styles.viewNotificationError}>{fetchHeadersError}</div> :
               <div key="fetchHeadersError" ></div>
             }
-            headerTitleOverview="Fetching block headers"/>
+            headerTitleOverview="Fetching block headers" />
           <div style={styles.contentNewSeed}>
-            { fetchHeadersRequestAttempt ?
-            <CircularProgress style={styles.loading} size={125} thickness={6}/> :
-            <div></div>
+            {fetchHeadersRequestAttempt ?
+              <CircularProgress style={styles.loading} size={125} thickness={6} /> :
+              <div></div>
             }
           </div>
         </div>
       );
-    } else if  (stepIndex >= 7) {
+    } else if (stepIndex >= 7) {
       // Final Steps
       startupStepView = (
         <div style={styles.view}>
@@ -509,13 +509,13 @@ class Home extends Component{
       if (!versionInvalid) {
         return (
           <div style={styles.body}>
-            <SideBar gettingStarted={true}/>
+            <SideBar gettingStarted={true} />
             <div style={styles.view}>
               {startupStepView}
             </div>
           </div>);
       } else {
-        return (<ShowError error={versionInvalidError}/>);
+        return (<ShowError error={versionInvalidError} />);
       }
     }
 

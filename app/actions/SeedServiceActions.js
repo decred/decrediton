@@ -9,7 +9,7 @@ function seederError(error) {
 
 function seederSuccess(seeder) {
   return (dispatch) => {
-    dispatch({seeder: seeder, type: SEEDER_SUCCESS });
+    dispatch({ seeder: seeder, type: SEEDER_SUCCESS });
   };
 }
 
@@ -19,7 +19,8 @@ export function getSeederAttempt() {
     dispatch({
       request:
       { address: getLoaderRequest.address, port: getLoaderRequest.port },
-      type: SEEDER_ATTEMPT });
+      type: SEEDER_ATTEMPT
+    });
     dispatch(getSeeder());
   };
 }
@@ -27,7 +28,7 @@ export function getSeederAttempt() {
 function getSeeder() {
   return (dispatch, getState) => {
     const { getSeederRequest } = getState().seedService;
-    seeder(getSeederRequest, function(seeder, err) {
+    seeder(getSeederRequest, function (seeder, err) {
       if (err) {
         dispatch(seederError(err + ' Please try again'));
         //throw err
@@ -61,7 +62,7 @@ function generateRandomSeedSuccess(response) {
 
 export function generateRandomSeedAttempt() {
   return (dispatch) => {
-    dispatch({request: {}, type: GENERATERANDOMSEED_ATTEMPT });
+    dispatch({ request: {}, type: GENERATERANDOMSEED_ATTEMPT });
     dispatch(generateRandomSeedAction());
   };
 }
@@ -71,13 +72,13 @@ function generateRandomSeedAction() {
   return (dispatch, getState) => {
     const { seeder } = getState().seedService;
     seeder.generateRandomSeed(request,
-        function(err, response) {
-          if (err) {
-            dispatch(generateRandomSeedError(err + ' Please try again'));
-          } else {
-            dispatch(generateRandomSeedSuccess(response));
-          }
-        });
+      function (err, response) {
+        if (err) {
+          dispatch(generateRandomSeedError(err + ' Please try again'));
+        } else {
+          dispatch(generateRandomSeedSuccess(response));
+        }
+      });
   };
 }
 
@@ -91,14 +92,14 @@ function decodeSeedError(error) {
 
 function decodeSeedSuccess(response) {
   return (dispatch) => {
-    dispatch({response: response, type: DECODESEED_SUCCESS });
+    dispatch({ response: response, type: DECODESEED_SUCCESS });
     //dispatch(createWalletRequest(pubPass, privPass, response.getDecodedSeed(), true));
   };
 }
 
 export function decodeSeedAttempt(mnemonic) {
   return (dispatch) => {
-    dispatch({request: {}, type: DECODESEED_ATTEMPT });
+    dispatch({ request: {}, type: DECODESEED_ATTEMPT });
     dispatch(decodeSeedAction(mnemonic));
   };
 }
@@ -109,12 +110,12 @@ function decodeSeedAction(mnemonic) {
   return (dispatch, getState) => {
     const { seeder } = getState().seedService;
     seeder.decodeSeed(request,
-        function(err, response) {
-          if (err) {
-            dispatch(decodeSeedError(err + ' Please try again'));
-          } else {
-            dispatch(decodeSeedSuccess(response));
-          }
-        });
+      function (err, response) {
+        if (err) {
+          dispatch(decodeSeedError(err + ' Please try again'));
+        } else {
+          dispatch(decodeSeedSuccess(response));
+        }
+      });
   };
 }
