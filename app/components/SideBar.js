@@ -189,7 +189,7 @@ const styles = {
   sidebarHelp: {
     display: 'block',
     height: '215px',
-    marginTop: '65px',
+    marginTop: '20px',
     paddingLeft: '18px',
     paddingRight: '18px',
   },
