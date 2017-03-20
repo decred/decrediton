@@ -1,7 +1,14 @@
 // @flow
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import SideBar from '../SideBar';
 import Header from '../Header';
+
+function mapStateToProps(state) {
+  return {
+    getNetworkError: state.grpc.getNetworkError
+  }
+}
 
 const styles = {
   body: {
@@ -31,23 +38,27 @@ const styles = {
   },
 };
 
-class WalletError extends Component{
+class WalletError extends Component {
   render() {
+    const { getNetworkError } = this.props;
     const errorView = (
       <div style={styles.view}>
         <Header headerTitleOverview="An error has occured" />
         <div style={styles.content}>
-          <p> We have detected that your wallet has disconnected.
-            Please reload Decrediton to fix this problem. </p>
+          {getNetworkError !== null ?
+            <p>{getNetworkError} Please verify that your dcrd is configured correctly and restart.</p> :
+            <p> We have detected that your wallet has disconnected.
+              Please reload Decrediton to fix this problem. </p>
+          }
         </div>
-			</div>
+      </div>
     );
-    return(
+    return (
       <div style={styles.body}>
-        <SideBar errorPage/>
+        <SideBar errorPage />
         {errorView}
       </div>);
   }
 }
 
-export default WalletError;
+export default connect(mapStateToProps)(WalletError);
