@@ -80,6 +80,11 @@ var initialState = {
     port: grpcport,
     walletService: null,
     network: network,
+    // ints for mainnet and testnet protocol hex
+    // TestNet2 CurrencyNet = 0x48e7a065
+    testnet: 1223139429,
+    // MainNet CurrencyNet = 0xd9b400f9
+    mainnet: 3652452601,
     getWalletServiceRequestAttempt: false,
     getWalletServiceError: '',
     // Balance

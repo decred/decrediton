@@ -5,8 +5,10 @@ export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
 export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
 export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
 import { hashHistory } from 'react-router';
-import { PingRequest, NetworkRequest, AccountNumberRequest,AccountsRequest,
-BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest } from '../middleware/walletrpc/api_pb';
+import {
+  PingRequest, NetworkRequest, AccountNumberRequest, AccountsRequest,
+  BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest
+} from '../middleware/walletrpc/api_pb';
 function getWalletServiceError(error) {
   return { error, type: GETWALLETSERVICE_FAILED };
 }
@@ -14,25 +16,25 @@ function getWalletServiceError(error) {
 function getWalletServiceSuccess(walletService) {
   return (dispatch, getState) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
-    setTimeout( () => {dispatch(loadActiveDataFiltersAttempt());}, 1000);
-    setTimeout( () => {dispatch(getNextAddressAttempt());}, 1000);
-    setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
-    setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
-    setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
-    setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
-    setTimeout( () => {dispatch(getPingAttempt());}, 1000);
-    setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
-    setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
-    setTimeout( () => {dispatch(transactionNftnsStart());}, 1000);
+    setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getNextAddressAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getBalanceAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getTicketPriceAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getAccountsAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getPingAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getNetworkAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 1000);
+    setTimeout(() => { dispatch(transactionNftnsStart()); }, 1000);
 
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.
     const { walletCreateExisting } = getState().walletLoader;
-    if ( walletCreateExisting ) {
-      setTimeout(() => {dispatch(rescanAttempt(0));}, 1000);
+    if (walletCreateExisting) {
+      setTimeout(() => { dispatch(rescanAttempt(0)); }, 1000);
     }
-    setTimeout(() => {hashHistory.push('/home');}, 1000);
+    setTimeout(() => { hashHistory.push('/home'); }, 1000);
   };
 }
 
@@ -46,7 +48,7 @@ export function getWalletServiceAttempt() {
 function getWalletServiceAction() {
   return (dispatch, getState) => {
     const { address, port } = getState().grpc;
-    getWalletService(address, port, function(walletService, err) {
+    getWalletService(address, port, function (walletService, err) {
       if (err) {
         dispatch(getWalletServiceError(err + ' Please try again'));
       } else {
@@ -75,7 +77,8 @@ export function getBalanceAttempt(accountNumber, requiredConfs) {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: GETBALANCE_ATTEMPT });
+      type: GETBALANCE_ATTEMPT
+    });
     dispatch(getBalanceAction());
   };
 }
@@ -84,13 +87,13 @@ function getBalanceAction() {
   return (dispatch, getState) => {
     const { walletService, getBalanceRequest } = getState().grpc;
     walletService.balance(getBalanceRequest,
-        function(err, getBalanceResponse) {
-          if (err) {
-            dispatch(getBalanceError(err + ' please try again'));
-          } else {
-            dispatch(getBalanceSuccess(getBalanceResponse));
-          }
-        });
+      function (err, getBalanceResponse) {
+        if (err) {
+          dispatch(getBalanceError(err + ' please try again'));
+        } else {
+          dispatch(getBalanceSuccess(getBalanceResponse));
+        }
+      });
   };
 }
 
@@ -112,7 +115,8 @@ export function getAccountNumberAttempt(accountName) {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: GETACCOUNTNUMBER_ATTEMPT });
+      type: GETACCOUNTNUMBER_ATTEMPT
+    });
     dispatch(accountNumber());
   };
 }
@@ -122,13 +126,13 @@ function accountNumber() {
     const { walletService } = getState().grpc;
     const { getAccountNumberRequest } = getState().grpc;
     walletService.accountNumber(getAccountNumberRequest,
-        function(err, getAccountNumberResponse) {
-          if (err) {
-            dispatch(getAccountNumberError(err + ' Please try again'));
-          } else {
-            dispatch(getAccountNumberSuccess(getAccountNumberResponse));
-          }
-        });
+      function (err, getAccountNumberResponse) {
+        if (err) {
+          dispatch(getAccountNumberError(err + ' Please try again'));
+        } else {
+          dispatch(getAccountNumberSuccess(getAccountNumberResponse));
+        }
+      });
   };
 }
 
@@ -137,20 +141,27 @@ export const GETNETWORK_FAILED = 'GETNETWORK_FAILED';
 export const GETNETWORK_SUCCESS = 'GETNETWORK_SUCCESS';
 
 function getNetworkError(error) {
-  return { error, type: GETNETWORK_FAILED };
+  return (dispatch) => {
+    dispatch({ error, type: GETNETWORK_FAILED });
+    setTimeout(() => { hashHistory.push('/walletError'); }, 1000);
+  };
 }
 
 function getNetworkSuccess(getNetworkResponse) {
-  var network = getNetworkResponse.getActiveNetwork();
-  // XXX remove network magic numbers here
-  var networkStr = '';
-  if (network == 118030347) {
-    networkStr = 'testnet';
-  } else if (network  == 3652452601) {
-    networkStr = 'mainnet';
-  }
-  getNetworkResponse.networkStr = networkStr;
-  return { getNetworkResponse: getNetworkResponse, type: GETNETWORK_SUCCESS };
+  return (dispatch, getState) => {
+    const { testnet, mainnet, network } = getState().grpc;
+    var currentNetwork = getNetworkResponse.getActiveNetwork();
+    // XXX remove network magic numbers here
+    var networkStr = '';
+    if ((currentNetwork == testnet && network == 'testnet') ||
+      (currentNetwork == mainnet && network == 'mainnet')) {
+      networkStr = network;
+      getNetworkResponse.networkStr = networkStr;
+      dispatch({ getNetworkResponse: getNetworkResponse, type: GETNETWORK_SUCCESS });
+    } else {
+      dispatch(getNetworkError('Invalid network detected'));
+    }
+  };
 }
 
 export function getNetworkAttempt() {
@@ -158,7 +169,8 @@ export function getNetworkAttempt() {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: GETNETWORK_ATTEMPT });
+      type: GETNETWORK_ATTEMPT
+    });
     dispatch(network());
   };
 }
@@ -168,13 +180,13 @@ function network() {
     const { walletService } = getState().grpc;
     const { getNetworkRequest } = getState().grpc;
     walletService.network(getNetworkRequest,
-        function(err, getNetworkResponse) {
-          if (err) {
-            dispatch(getNetworkError(err + ' Please try again'));
-          } else {
-            dispatch(getNetworkSuccess(getNetworkResponse));
-          }
-        });
+      function (err, getNetworkResponse) {
+        if (err) {
+          dispatch(getNetworkError(err + ' Please try again'));
+        } else {
+          dispatch(getNetworkSuccess(getNetworkResponse));
+        }
+      });
   };
 }
 
@@ -184,14 +196,14 @@ export const GETPING_SUCCESS = 'GETPING_SUCCESS';
 
 function getPingError(error) {
   return (dispatch) => {
-    dispatch({error, type: GETPING_FAILED });
-    setTimeout(() => {hashHistory.push('/walletError');}, 1000);
+    dispatch({ error, type: GETPING_FAILED });
+    setTimeout(() => { hashHistory.push('/walletError'); }, 1000);
   };
 }
 
 function getPingSuccess() {
   return (dispatch) => {
-    setTimeout( () => {dispatch(getPingAttempt());}, 10000);
+    setTimeout(() => { dispatch(getPingAttempt()); }, 10000);
   };
 }
 
@@ -205,13 +217,13 @@ function ping() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     walletService.ping(new PingRequest(),
-        function(err, getPingResponse) {
-          if (err) {
-            dispatch(getPingError(err + ' Please try again'));
-          } else {
-            dispatch(getPingSuccess(getPingResponse));
-          }
-        });
+      function (err, getPingResponse) {
+        if (err) {
+          dispatch(getPingError(err + ' Please try again'));
+        } else {
+          dispatch(getPingSuccess(getPingResponse));
+        }
+      });
   };
 }
 
@@ -232,7 +244,8 @@ export function getStakeInfoAttempt() {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: GETSTAKEINFO_ATTEMPT });
+      type: GETSTAKEINFO_ATTEMPT
+    });
     dispatch(stakeInfo());
   };
 }
@@ -242,13 +255,13 @@ function stakeInfo() {
     const { walletService } = getState().grpc;
     const { getStakeInfoRequest } = getState().grpc;
     walletService.stakeInfo(getStakeInfoRequest,
-        function(err, getStakeInfoResponse) {
-          if (err) {
-            dispatch(getStakeInfoError(err + ' Please try again'));
-          } else {
-            dispatch(getStakeInfoSuccess(getStakeInfoResponse));
-          }
-        });
+      function (err, getStakeInfoResponse) {
+        if (err) {
+          dispatch(getStakeInfoError(err + ' Please try again'));
+        } else {
+          dispatch(getStakeInfoSuccess(getStakeInfoResponse));
+        }
+      });
   };
 }
 
@@ -269,7 +282,8 @@ export function getTicketPriceAttempt() {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: GETTICKETPRICE_ATTEMPT });
+      type: GETTICKETPRICE_ATTEMPT
+    });
     dispatch(ticketPrice());
   };
 }
@@ -279,13 +293,13 @@ function ticketPrice() {
     const { walletService } = getState().grpc;
     const { getTicketPriceRequest } = getState().grpc;
     walletService.ticketPrice(getTicketPriceRequest,
-        function(err, getTicketPriceResponse) {
-          if (err) {
-            dispatch(getTicketPriceError(err + ' Please try again'));
-          } else {
-            dispatch(getTicketPriceSuccess(getTicketPriceResponse));
-          }
-        });
+      function (err, getTicketPriceResponse) {
+        if (err) {
+          dispatch(getTicketPriceError(err + ' Please try again'));
+        } else {
+          dispatch(getTicketPriceSuccess(getTicketPriceResponse));
+        }
+      });
   };
 }
 
@@ -306,7 +320,8 @@ export function getAccountsAttempt() {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: GETACCOUNTS_ATTEMPT });
+      type: GETACCOUNTS_ATTEMPT
+    });
     dispatch(accounts());
   };
 }
@@ -316,13 +331,13 @@ function accounts() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     walletService.accounts(request,
-        function(err, getAccountsResponse) {
-          if (err) {
-            dispatch(getAccountsError(err + ' Please try again'));
-          } else {
-            dispatch(getAccountsSuccess(getAccountsResponse));
-          }
-        });
+      function (err, getAccountsResponse) {
+        if (err) {
+          dispatch(getAccountsError(err + ' Please try again'));
+        } else {
+          dispatch(getAccountsSuccess(getAccountsResponse));
+        }
+      });
   };
 }
 
@@ -340,19 +355,18 @@ export function getTransactionInfoAttempt() {
     const { getAccountsResponse } = getState().grpc;
     var startRequestHeight, endRequestHeight = 0;
     // Check to make sure getAccountsResponse (which has current block height) is available
-    if ( getAccountsResponse !== null ) {
+    if (getAccountsResponse !== null) {
       endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
       startRequestHeight = 0;
     } else {
       // Wait a little then re-dispatch this call since we have no starting height yet
-      setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
+      setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 1000);
       return;
     }
     var request = new GetTransactionsRequest();
     request.setStartingBlockHeight(startRequestHeight);
     request.setEndingBlockHeight(endRequestHeight);
-    console.log('sending getTransactionsInfo request',startRequestHeight, endRequestHeight);
-    dispatch({type: GETTRANSACTIONS_ATTEMPT});
+    dispatch({ type: GETTRANSACTIONS_ATTEMPT });
     dispatch(getTransactionsInfo(request));
   };
 }
@@ -361,16 +375,16 @@ function getTransactionsInfo(request) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     var getTx = walletService.getTransactions(request);
-    getTx.on('data', function(response) {
+    getTx.on('data', function (response) {
       dispatch(getTransactionsInfoProgress(response));
     });
-    getTx.on('end', function() {
+    getTx.on('end', function () {
       dispatch(getTransactionsInfoEnd());
     });
-    getTx.on('status', function(status) {
+    getTx.on('status', function (status) {
       console.log('GetTx status:', status);
     });
-    getTx.on('error', function(err) {
+    getTx.on('error', function (err) {
       console.error(err + ' Please try again');
     });
   };
@@ -384,17 +398,15 @@ function getTransactionsInfoProgress(response) {
         height: newHeight,
         index: i,
       };
-      dispatch({tx, type: GETTRANSACTIONS_PROGRESS});
+      dispatch({ tx, type: GETTRANSACTIONS_PROGRESS });
     }
     response = null;
   };
 }
 function getTransactionsInfoEnd() {
-  return (dispatch, getState) => {
-    const { transactionsInfo } = getState().grpc;
-    console.log(transactionsInfo.length);
-    dispatch({type: GETTRANSACTIONS_COMPLETE});
-    setTimeout( () => {dispatch(getMinedPaginatedTransactions(1));}, 1500);
+  return (dispatch) => {
+    dispatch({ type: GETTRANSACTIONS_COMPLETE });
+    setTimeout(() => { dispatch(getMinedPaginatedTransactions(1)); }, 1500);
   };
 }
 
@@ -409,7 +421,7 @@ function paginatedTransactionsProgess(getTransactionsResponse, requestedTxs) {
     for (var i = 0; i < newTxs.length; i++) {
       for (var j = 0; j < requestedTxs.length; j++) {
         // Only add requested tx if it was already included in the previous set
-        if (blockHeight == requestedTxs[j].height && i == requestedTxs[j].index)  {
+        if (blockHeight == requestedTxs[j].height && i == requestedTxs[j].index) {
           newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
           newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
           newTxs[i].index = i;
@@ -449,13 +461,14 @@ export function getMinedPaginatedTransactions(pageNumber) {
     if (!paginatingTxs) {
       dispatch({
         currentPage: pageNumber,
-        type: PAGINATETRANSACTIONS_START });
+        type: PAGINATETRANSACTIONS_START
+      });
     }
     var request = new GetTransactionsRequest();
     request.setStartingBlockHeight(startBlockHeight);
     request.setEndingBlockHeight(endBlockHeight);
 
-    dispatch(getPaginatedTransactions(request, transactionsInfo.slice(startRange,endRange)));
+    dispatch(getPaginatedTransactions(request, transactionsInfo.slice(startRange, endRange)));
   };
 }
 
@@ -463,16 +476,16 @@ function getPaginatedTransactions(request, requestedTxs) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     var getTx = walletService.getTransactions(request);
-    getTx.on('data', function(response) {
+    getTx.on('data', function (response) {
       dispatch(paginatedTransactionsProgess(response, requestedTxs));
     });
-    getTx.on('end', function() {
+    getTx.on('end', function () {
       dispatch(getMinedPaginatedTransactionsFinished());
     });
-    getTx.on('status', function(status) {
+    getTx.on('status', function (status) {
       console.log('GetTx status:', status);
     });
-    getTx.on('error', function(err) {
+    getTx.on('error', function (err) {
       console.error(err + ' Please try again');
     });
   };
@@ -482,9 +495,9 @@ export const GETTRANSACTIONDETAILS_SET = 'GETTRANSACTIONDETAILS_SET';
 export const GETTRANSACTIONDETAILS_CLEAR = 'GETTRANSACTIONDETAILS_CLEAR';
 
 export function setTransactionDetails(tx) {
-  return {tx, type: GETTRANSACTIONDETAILS_SET};
+  return { tx, type: GETTRANSACTIONDETAILS_SET };
 }
 
 export function clearTransactionDetails() {
-  return {type: GETTRANSACTIONDETAILS_CLEAR};
+  return { type: GETTRANSACTIONDETAILS_CLEAR };
 }
