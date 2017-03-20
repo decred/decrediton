@@ -221,16 +221,19 @@ class SideBar extends Component {
     this.updateBlockTimeSince = this.updateBlockTimeSince.bind(this);
   }
   componentDidMount() {
+    this.updateBlockTimeSince(new Date());
   }
-  updateBlockTimeSince() {
+  updateBlockTimeSince(startTime) {
     const { transactionNtfnsResponse } = this.props;
     if (transactionNtfnsResponse !== null && transactionNtfnsResponse.getAttachedBlocksList().length > 0) {
       const attachedBlocks = transactionNtfnsResponse.getAttachedBlocksList();
       var recentBlockTime = new Date(attachedBlocks[attachedBlocks.length-1].getTimestamp()*1000);
       console.log(recentBlockTime);
       this.setState({timeSince: timeSince(recentBlockTime)});
+    } else {
+      this.setState({timeSince: timeSince(startTime)});
     }
-    setTimeout(() =>{this.updateBlockTimeSince();}, 10000);
+    setTimeout(() =>{this.updateBlockTimeSince(startTime);}, 10000);
   }
   showAccounts() {
     this.setState({accountsHidden: false});
@@ -253,7 +256,6 @@ class SideBar extends Component {
     const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
     const { timeBack, currentHeight } = this.props;
-    this.updateBlockTimeSince();
     var balance = 0;
     if (getBalanceResponse != null) {
       balance = getBalanceResponse.getTotal() / 100000000;
