@@ -306,9 +306,9 @@ class SideBar extends Component {
             <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
             <div style={styles.menuBottomTotalBalanceShortValue}>{balance.toString()}</div>
           </div>
-          {transactionNtfnsResponse !== null ?
+          {getAccountsResponse !== null ?
             <div style={styles.menuBottomLatestBlock}>
-              <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{transactionNtfnsResponse.getAttachedBlocksList()[0].getHeight()}</span></a>
+              <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse.getCurrentBlockHeight()}</span></a>
               <div style={styles.menuBottomLatestBlockTime}>{timeSince}</div>
             </div>:
             currentHeight !== 0 ?
