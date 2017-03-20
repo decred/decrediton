@@ -145,16 +145,20 @@ function getNetworkError(error) {
 }
 
 function getNetworkSuccess(getNetworkResponse) {
-  var network = getNetworkResponse.getActiveNetwork();
-  // XXX remove network magic numbers here
-  var networkStr = '';
-  if (network == 1223139429) {
-    networkStr = 'testnet';
-  } else if (network == 3652452601) {
-    networkStr = 'mainnet';
+  return (dispatch, getState) => {
+    const { testnet, mainnet, network } = getState().grpc;
+    var currentNetwork = getNetworkResponse.getActiveNetwork();
+    // XXX remove network magic numbers here
+    var networkStr = '';
+    if ((currentNetwork == testnet && network == 'testnet') ||
+      (currentNetwork == mainnet && network == 'mainnet')) {
+      networkStr = network;
+      getNetworkResponse.networkStr = networkStr;
+      dispatch({ getNetworkResponse: getNetworkResponse, type: GETNETWORK_SUCCESS });
+    } else {
+      dispatch(getNetworkError("Invalid network detected"));
+    }
   }
-  getNetworkResponse.networkStr = networkStr;
-  return { getNetworkResponse: getNetworkResponse, type: GETNETWORK_SUCCESS };
 }
 
 export function getNetworkAttempt() {
