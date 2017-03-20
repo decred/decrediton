@@ -11,7 +11,7 @@ macOS.  Additional systems will be added in the future.
 Decrediton will NOT use or in any way disrupt the wallet file you may
 already be using at this time.
 
-Download the decrediton release for your operating system.
+Download the decrediton release for your operating system on [decred/decred-binaries](https://github.com/decred/decred-binaries/releases).
 
 On macOS, Ubuntu (14.04 and later), and recent Debians, there should be
 no additional dependencies needed.
