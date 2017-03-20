@@ -144,7 +144,7 @@ function getNetworkError(error) {
   return (dispatch) => {
     dispatch({ error, type: GETNETWORK_FAILED });
     setTimeout(() => { hashHistory.push('/walletError'); }, 1000);
-  }
+  };
 }
 
 function getNetworkSuccess(getNetworkResponse) {
@@ -159,9 +159,9 @@ function getNetworkSuccess(getNetworkResponse) {
       getNetworkResponse.networkStr = networkStr;
       dispatch({ getNetworkResponse: getNetworkResponse, type: GETNETWORK_SUCCESS });
     } else {
-      dispatch(getNetworkError("Invalid network detected"));
+      dispatch(getNetworkError('Invalid network detected'));
     }
-  }
+  };
 }
 
 export function getNetworkAttempt() {

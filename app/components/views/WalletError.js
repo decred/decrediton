@@ -7,7 +7,7 @@ import Header from '../Header';
 function mapStateToProps(state) {
   return {
     getNetworkError: state.grpc.getNetworkError
-  }
+  };
 }
 
 const styles = {
