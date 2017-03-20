@@ -92,6 +92,12 @@ class History extends Component{
     const { transactionDetails, setTransactionDetails, clearTransactionDetails } = this.props;
     const { txPerPage, transactionsInfo, paginatedTxs, getMinedPaginatedTransactions, currentPage } = this.props;
     const { getNetworkResponse } = this.props;
+    
+    var totalPages = 1;
+    if (transactionsInfo.length > 0) {
+      console.log(txPerPage/23);
+      totalPages = Math.floor(transactionsInfo.length / txPerPage) + 1;
+    }
 
     const historyView = (
       <div style={styles.view}>
@@ -104,7 +110,7 @@ class History extends Component{
             <div style={styles.contentTitleText}>Recent Transactions</div>
             <div style={styles.contentTitleButtonsArea}>
               <button style={styles.contentTitleButtonsLeft} disabled={currentPage <= 1} onClick={()=>getMinedPaginatedTransactions(currentPage-1)}>&lt;</button>
-              <span style={styles.contentTitleButtonsText}>Page {currentPage}</span>
+              <span style={styles.contentTitleButtonsText}>{currentPage} of {totalPages}</span>
               <button style={styles.contentTitleButtonsRight} disabled={(currentPage + 1) * txPerPage > transactionsInfo.length}onClick={()=>getMinedPaginatedTransactions(currentPage+1)}>&gt;</button>
             </div>
           </div>
