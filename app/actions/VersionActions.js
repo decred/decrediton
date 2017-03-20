@@ -26,7 +26,7 @@ export function getVersionServiceAttempt() {
 function getVersionServiceAction() {
   return (dispatch, getState) => {
     const { address, port } = getState().grpc;
-    getVersionService(address, port, function(versionService, err) {
+    getVersionService(address, port, function (versionService, err) {
       if (err) {
         dispatch(getVersionServiceError(err + ' Please try again'));
       } else {
@@ -47,7 +47,7 @@ function getWalletRPCVersionError(error) {
 
 function getWalletRPCVersionSuccess(getWalletRPCVersionResponse) {
   return (dispatch, getState) => {
-    dispatch( { getWalletRPCVersionResponse: getWalletRPCVersionResponse, type: WALLETRPCVERSION_SUCCESS });
+    dispatch({ getWalletRPCVersionResponse: getWalletRPCVersionResponse, type: WALLETRPCVERSION_SUCCESS });
     const { address, port } = getState().grpc;
     const { requiredVersion } = getState().version;
     var versionErr = '';
@@ -64,9 +64,9 @@ function getWalletRPCVersionSuccess(getWalletRPCVersionResponse) {
     }
 
     if (versionErr) {
-      dispatch({error: versionErr, type: VERSION_NOT_VALID});
+      dispatch({ error: versionErr, type: VERSION_NOT_VALID });
     } else {
-      dispatch(loaderRequest(address,port));
+      dispatch(loaderRequest(address, port));
     }
   };
 }
@@ -76,7 +76,8 @@ export function getWalletRPCVersionAttempt() {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: WALLETRPCVERSION_ATTEMPT });
+      type: WALLETRPCVERSION_ATTEMPT
+    });
     dispatch(getWalletRPCVersionAction());
   };
 }
@@ -85,13 +86,13 @@ function getWalletRPCVersionAction() {
   return (dispatch, getState) => {
     const { versionService, getWalletRPCVersionRequest } = getState().version;
     versionService.version(getWalletRPCVersionRequest,
-        function(err, getWalletRPCVersionResponse) {
-          if (err) {
-            dispatch(getWalletRPCVersionError(err + ' please try again'));
-          } else {
-            dispatch(getWalletRPCVersionSuccess(getWalletRPCVersionResponse));
-          }
-        });
+      function (err, getWalletRPCVersionResponse) {
+        if (err) {
+          dispatch(getWalletRPCVersionError(err + ' please try again'));
+        } else {
+          dispatch(getWalletRPCVersionSuccess(getWalletRPCVersionResponse));
+        }
+      });
   };
 }
 
@@ -115,7 +116,7 @@ function semverCompatible(req, act) {
     return false;
   }
   if (required[version.MINOR] == actual[version.MINOR]
-   && required[version.PATCH] > actual[version.PATCH]) {
+    && required[version.PATCH] > actual[version.PATCH]) {
     return false;
   }
 

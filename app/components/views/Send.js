@@ -438,7 +438,7 @@ const styles = {
   flexHeight: {
     paddingTop: '1px',
     backgroundColor: '#fff',
-    height:'372px',
+    height: '372px',
     overflowY: 'auto',
     overflowX: 'hidden',
   },
@@ -448,7 +448,7 @@ const styles = {
   }
 };
 
-class Send extends Component{
+class Send extends Component {
   static propTypes = {
     walletService: PropTypes.object,
 
@@ -465,10 +465,11 @@ class Send extends Component{
       rawTx: '',
       account: 0,
       confirmations: 0,
-      outputs: [{key:0, destination: '', amount: ''}] };
+      outputs: [{ key: 0, destination: '', amount: '' }]
+    };
   }
   clearTransactionData() {
-    this.setState({account:0, confirmations: 0, outputs: [{key:0, destination: '', amount: ''}]});
+    this.setState({ account: 0, confirmations: 0, outputs: [{ key: 0, destination: '', amount: '' }] });
     this.props.clearTransaction();
   }
   submitSignPublishTx() {
@@ -476,7 +477,7 @@ class Send extends Component{
       return;
     }
     this.props.signTransactionAttempt(this.state.privpass, this.props.constructTxResponse.getUnsignedTransaction());
-    setTimeout(this.clearTransactionData(),1000);
+    setTimeout(this.clearTransactionData(), 1000);
   }
   submitConstructTx() {
     if (this.state.outputs[0].destination == '' || this.state.outputs[0].amount == '') {
@@ -485,7 +486,7 @@ class Send extends Component{
     this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs);
   }
   appendOutput() {
-    var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: ''};
+    var newOutput = { key: `${this.state.outputs.length}`, destination: '', amount: '' };
     this.setState({ outputs: this.state.outputs.concat([newOutput]) });
   }
   removeOutput(outputKey) {
@@ -500,7 +501,7 @@ class Send extends Component{
     this.setState({ outputs: updateOutputs });
   }
   updateAccountNumber(outputKey, accountNum) {
-    this.setState({account: accountNum});
+    this.setState({ account: accountNum });
   }
   updateOutputAmount(outputKey, amount, unitLabel) {
     // Default to DCR.
@@ -537,17 +538,17 @@ class Send extends Component{
     var sharedHeader = (
       <Header
         headerTop={[publishTransactionError !== null ?
-            <div key="pubError" style={styles.viewNotificationError}>{publishTransactionError}</div> :
-            <div key="pubError" ></div>,
+          <div key="pubError" style={styles.viewNotificationError}>{publishTransactionError}</div> :
+          <div key="pubError" ></div>,
           constructTxError !== null ?
-            <div key="conError"  style={styles.viewNotificationError}>{constructTxError}</div> :
-            <div key="conError" ></div>,
+          <div key="conError" style={styles.viewNotificationError}>{constructTxError}</div> :
+          <div key="conError" ></div>,
           signTransactionError !== null ?
-            <div key="signError"  style={styles.viewNotificationError}>{signTransactionError}</div> :
-            <div key="signError" ></div>,
+          <div key="signError" style={styles.viewNotificationError}>{signTransactionError}</div> :
+          <div key="signError" ></div>,
           publishTransactionResponse !== null ?
-            <div key="pubSuccess"  style={styles.viewNotificationSuccess}>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
-            <div key="pubSuccess" ></div>]}
+          <div key="pubSuccess" style={styles.viewNotificationSuccess}>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
+          <div key="pubSuccess" ></div>]}
         headerTitleOverview={<div style={styles.headerTitleSend}>Send Funds</div>}
         headerMetaOverview={networkTextDiv}>
       </Header>
@@ -595,7 +596,7 @@ class Send extends Component{
                     style={styles.contentNestAddressHashTo}
                     type="password"
                     placeholder="Private Password"
-                    onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}/>
+                    onBlur={(e) => { this.setState({ privpass: Buffer.from(e.target.value) }); }} />
                 </div>
               </div>
             </div>
@@ -614,7 +615,7 @@ class Send extends Component{
         <select
           defaultValue={0}
           style={styles.selectAccount}
-          >
+        >
           {getAccountsResponse !== null ?
             getAccountsResponse.getAccountsList().map((account) => {
               if (account.getAccountName() !== 'imported') {
@@ -624,7 +625,7 @@ class Send extends Component{
                   </option>
                 );
               }
-            }):
+            }) :
             null
           }
         </select>
@@ -641,75 +642,76 @@ class Send extends Component{
               <div style={styles.contentNestFromAddressWalletIcon}></div>
             </div>
             <div id="dynamicInput">
-            {this.state.outputs.map((output,i) => {
-              if ( i == 0 ) {
-                return(
-                <div style={styles.contentNestToAddress} key={output.key}>
-                  <div style={styles.contentNestPrefixSend}>To:</div>
-                  <div style={styles.contentNestAddressHashBlock}>
-                    <div style={styles.inputForm}>
-                      <input
-                        type="text"
-                        style={styles.contentNestAddressHashTo}
-                        key={'destination'+output.key}
-                        placeholder="Destination Address"
-                        onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
-                    </div>
-                  </div>
-                  <div style={styles.contentNestAddressWalletIcon} onClick={() => this.appendOutput()}></div>
-                  <div style={styles.contentNestAddressAmount}>
-                    <div style={styles.contentNestPrefixSend}>Amount:</div>
-                    <div style={styles.contentNestAddressAmountSumAndCurrency}>
-                    <div style={styles.contentNestAddressAmountSumGradient}>{unitLabel}</div>
-                      <input
-                        type="text"
-                        style={styles.contentNestAddressAmountSum}
-                        key={'amount'+output.key}
-                        placeholder="Amount"
-                        onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
-                    </div>
-                  </div>
-                </div>);
-              } else {
-                return(
-                <div style={styles.contentNestDeleteAddress} key={output.key}>
-                  <div style={styles.contentNestAddressHashBlock}>
-                    <div style={styles.inputForm}>
-                      <input
-                        type="text"
-                        style={styles.contentNestAddressHashTo}
-                        key={'destination'+output.key}
-                        placeholder="Destination Address"
-                        onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
-                    </div>
-                    <div style={styles.contentNestGradient}></div>
-                  </div>
-                  {this.state.outputs.length - 1 === parseInt(output.key) ?
-                    <div style={styles.contentNestAddressDeleteIcon} onClick={() => this.removeOutput(output.key)}></div> :
-                    <div></div>
-                  }
-                  <div style={styles.contentNestAddressAmount}>
-                    <div style={styles.contentNestAddressAmountSumAndCurrency}>
-                    <div style={styles.contentNestAddressAmountSumGradient}>{unitLabel}</div>
-                      <div style={styles.inputForm}>
-                      <input
-                        type="text"
-                        style={styles.contentNestAddressAmountSum}
-                        key={'amount'+output.key}
-                        placeholder="Amount"
-                        onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
+              {this.state.outputs.map((output, i) => {
+                if (i == 0) {
+                  return (
+                    <div style={styles.contentNestToAddress} key={output.key}>
+                      <div style={styles.contentNestPrefixSend}>To:</div>
+                      <div style={styles.contentNestAddressHashBlock}>
+                        <div style={styles.inputForm}>
+                          <input
+                            type="text"
+                            style={styles.contentNestAddressHashTo}
+                            key={'destination' + output.key}
+                            placeholder="Destination Address"
+                            onBlur={(e) => { this.updateOutputDestination(output.key, e.target.value); }} />
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>);
-              }})}
-              </div>
-            </div>
-            <div style={styles.contentSend} onClick={() => this.submitConstructTx()}>
-              <div style={styles.viewButtonKeyBlue}>send</div>
+                      <div style={styles.contentNestAddressWalletIcon} onClick={() => this.appendOutput()}></div>
+                      <div style={styles.contentNestAddressAmount}>
+                        <div style={styles.contentNestPrefixSend}>Amount:</div>
+                        <div style={styles.contentNestAddressAmountSumAndCurrency}>
+                          <div style={styles.contentNestAddressAmountSumGradient}>{unitLabel}</div>
+                          <input
+                            type="text"
+                            style={styles.contentNestAddressAmountSum}
+                            key={'amount' + output.key}
+                            placeholder="Amount"
+                            onBlur={(e) => { this.updateOutputAmount(output.key, e.target.value, unitLabel); }} />
+                        </div>
+                      </div>
+                    </div>);
+                } else {
+                  return (
+                    <div style={styles.contentNestDeleteAddress} key={output.key}>
+                      <div style={styles.contentNestAddressHashBlock}>
+                        <div style={styles.inputForm}>
+                          <input
+                            type="text"
+                            style={styles.contentNestAddressHashTo}
+                            key={'destination' + output.key}
+                            placeholder="Destination Address"
+                            onBlur={(e) => { this.updateOutputDestination(output.key, e.target.value); }} />
+                        </div>
+                        <div style={styles.contentNestGradient}></div>
+                      </div>
+                      {this.state.outputs.length - 1 === parseInt(output.key) ?
+                        <div style={styles.contentNestAddressDeleteIcon} onClick={() => this.removeOutput(output.key)}></div> :
+                        <div></div>
+                      }
+                      <div style={styles.contentNestAddressAmount}>
+                        <div style={styles.contentNestAddressAmountSumAndCurrency}>
+                          <div style={styles.contentNestAddressAmountSumGradient}>{unitLabel}</div>
+                          <div style={styles.inputForm}>
+                            <input
+                              type="text"
+                              style={styles.contentNestAddressAmountSum}
+                              key={'amount' + output.key}
+                              placeholder="Amount"
+                              onBlur={(e) => { this.updateOutputAmount(output.key, e.target.value, unitLabel); }} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>);
+                }
+              })}
             </div>
           </div>
+          <div style={styles.contentSend} onClick={() => this.submitConstructTx()}>
+            <div style={styles.viewButtonKeyBlue}>send</div>
+          </div>
         </div>
+      </div>
     );
 
     if (constructTxResponse !== null) {
@@ -719,17 +721,17 @@ class Send extends Component{
       <div style={styles.view}>
         {sharedHeader}
         <div style={styles.content}>
-          <CircularProgress style={styles.loading} size={125} thickness={6}/>
+          <CircularProgress style={styles.loading} size={125} thickness={6} />
         </div>
       </div>
     );
-    if (signTransactionRequestAttempt || publishTransactionRequestAttempt || constructTxRequestAttempt ) {
+    if (signTransactionRequestAttempt || publishTransactionRequestAttempt || constructTxRequestAttempt) {
       sendView = loadingView;
     }
     if (walletService === null) {
       return (<ErrorScreen />);
     } else {
-      return(
+      return (
         <div style={styles.body}>
           <SideBar />
           {sendView}

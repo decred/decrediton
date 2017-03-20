@@ -13,41 +13,48 @@ import { DISCLAIMER_OK } from '../actions/WalletLoaderActions';
 export default function walletLoader(state = {}, action) {
   switch (action.type) {
   case DISCLAIMER_OK:
-    return {...state,
+    return {
+      ...state,
       disclaimerOK: true,
     };
   case LOADER_ATTEMPT:
-    return {...state,
+    return {
+      ...state,
       getLoaderRequestAttempt: true,
       getLoaderRequest: action.request,
     };
   case LOADER_FAILED:
-    return {...state,
+    return {
+      ...state,
       getLoaderError: action.error,
       getLoaderRequestAttempt: false,
       getLoaderRequest: null,
       loader: null,
     };
   case LOADER_SUCCESS:
-    return {...state,
+    return {
+      ...state,
       getLoaderError: null,
       loader: action.loader,
       getLoaderRequestAttempt: false,
       stepIndex: 1,
     };
   case WALLETEXIST_ATTEMPT:
-    return {...state,
+    return {
+      ...state,
       walletExistRequestAttempt: true,
       walletExistRequest: action.request,
     };
   case WALLETEXIST_FAILED:
-    return {...state,
+    return {
+      ...state,
       walletExistError: action.error,
       walletExistRequestAttempt: false,
       walletExistsResponse: null,
     };
   case WALLETEXIST_SUCCESS:
-    return {...state,
+    return {
+      ...state,
       walletExistError: null,
       walletExistRequestAttempt: false,
       walletExistResponse: action.response,
@@ -55,35 +62,42 @@ export default function walletLoader(state = {}, action) {
       stepIndex: 2,
     };
   case CREATEWALLET_NEWSEED_CONFIRM:
-    return {...state,
+    return {
+      ...state,
       confirmNewSeed: true,
     };
-  case  CREATEWALLET_NEWSEED_BACK:
-    return {...state,
+  case CREATEWALLET_NEWSEED_BACK:
+    return {
+      ...state,
       confirmNewSeed: false,
     };
   case CREATEWALLET_EXISTINGSEED:
-    return {...state,
+    return {
+      ...state,
       createWalletExisting: true,
     };
   case CREATEWALLET_NEWSEED:
-    return {...state,
+    return {
+      ...state,
       createWalletExisting: false,
     };
   case CREATEWALLET_ATTEMPT:
-    return {...state,
+    return {
+      ...state,
       walletCreateExisting: action.existing,
       walletCreateRequestAttempt: true,
       walletCreateRequest: action.request,
     };
   case CREATEWALLET_FAILED:
-    return {...state,
+    return {
+      ...state,
       walletCreateError: action.error,
       walletCreateRequestAttempt: false,
       walletCreateRequest: null,
     };
   case CREATEWALLET_SUCCESS:
-    return {...state,
+    return {
+      ...state,
       walletCreateError: null,
       walletCreateRequestAttempt: false,
       walletCreateRequest: null,
@@ -91,18 +105,21 @@ export default function walletLoader(state = {}, action) {
       stepIndex: 3,
     };
   case OPENWALLET_ATTEMPT:
-    return {...state,
+    return {
+      ...state,
       walletOpenRequestAttempt: true,
       walletOpenRequest: action.request,
     };
   case OPENWALLET_FAILED:
-    return {...state,
+    return {
+      ...state,
       walletOpenError: action.error,
       walletOpenRequestAttempt: false,
       walletOpenRequest: null,
     };
   case OPENWALLET_SUCCESS:
-    return {...state,
+    return {
+      ...state,
       walletOpenError: null,
       walletOpenRequestAttempt: false,
       walletOpenRequest: null,
@@ -110,36 +127,42 @@ export default function walletLoader(state = {}, action) {
       stepIndex: 3,
     };
   case CLOSEWALLET_ATTEMPT:
-    return {...state,
+    return {
+      ...state,
       walletCloseRequestAttempt: true,
       walletCloseRequest: action.request,
     };
   case CLOSEWALLET_FAILED:
-    return {...state,
+    return {
+      ...state,
       walletCloseError: action.error,
       walletCloseRequestAttempt: false,
       walletCloseRequest: null,
     };
   case CLOSEWALLET_SUCCESS:
-    return {...state,
+    return {
+      ...state,
       walletCloseError: null,
       walletCloseRequestAttempt: false,
       walletCloseRequest: null,
       walletCloseResponse: action.response,
     };
   case STARTRPC_ATTEMPT:
-    return {...state,
+    return {
+      ...state,
       startRpcRequestAttempt: true,
       startRpcRequest: action.request,
     };
   case STARTRPC_FAILED:
-    return {...state,
+    return {
+      ...state,
       startRpcError: action.error,
       startRpcRequestAttempt: false,
       startRpcRequest: null,
     };
   case STARTRPC_SUCCESS:
-    return {...state,
+    return {
+      ...state,
       startRpcError: null,
       startRpcRequestAttempt: false,
       startRpcRequest: null,
@@ -147,18 +170,21 @@ export default function walletLoader(state = {}, action) {
       stepIndex: 4,
     };
   case DISCOVERADDRESS_ATTEMPT:
-    return {...state,
+    return {
+      ...state,
       discoverAddressRequestAttempt: true,
       discoverAddressRequest: action.request,
     };
   case DISCOVERADDRESS_FAILED:
-    return {...state,
+    return {
+      ...state,
       discoverAddressError: action.error,
       discoverAddressRequestAttempt: false,
       discoverAddressRequest: null
     };
   case DISCOVERADDRESS_SUCCESS:
-    return {...state,
+    return {
+      ...state,
       discoverAddressError: null,
       discoverAddressRequestAttempt: false,
       discoverAddressRequest: null,
@@ -166,22 +192,26 @@ export default function walletLoader(state = {}, action) {
       stepIndex: 6,
     };
   case FETCHHEADERS_ATTEMPT:
-    return {...state,
+    return {
+      ...state,
       fetchHeadersRequestAttempt: true,
       fetchHeadersRequest: action.request,
     };
   case FETCHHEADERS_FAILED:
-    return {...state,
+    return {
+      ...state,
       fetchHeadersError: action.error,
       fetchHeadersRequestAttempt: false,
       fetchHeadersRequest: null,
     };
   case FETCHHEADERS_PROGRESS:
-    return {...state,
+    return {
+      ...state,
       fetchHeadersResponse: action.response,
     };
   case FETCHHEADERS_SUCCESS:
-    return {...state,
+    return {
+      ...state,
       fetchHeadersError: null,
       fetchHeadersRequestAttempt: false,
       fetchHeadersRequest: null,
@@ -189,18 +219,21 @@ export default function walletLoader(state = {}, action) {
       stepIndex: 7,
     };
   case SUBSCRIBEBLOCKNTFNS_ATTEMPT:
-    return {...state,
+    return {
+      ...state,
       subscribeBlockNtfnsRequestAttempt: true,
       subscribeBlockNtfnsRequest: action.request,
     };
   case SUBSCRIBEBLOCKNTFNS_FAILED:
-    return {...state,
+    return {
+      ...state,
       subscribeBlockNtfnsError: action.error,
       subscribeBlockNtfnsRequestAttempt: false,
       subscribeBlockNtfnsRequest: null,
     };
   case SUBSCRIBEBLOCKNTFNS_SUCCESS:
-    return {...state,
+    return {
+      ...state,
       subscribeBlockNtfnsError: null,
       subscribeBlockNtfnsRequestAttempt: false,
       subscribeBlockNtfnsRequest: null,

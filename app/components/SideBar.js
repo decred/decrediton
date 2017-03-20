@@ -19,12 +19,12 @@ function mapStateToProps(state) {
     transactionNtfnsResponse: state.notifications.transactionNtfnsResponse,
     timeSince: state.notifications.timeSince,
     currentHeight: state.notifications.currentHeight,
-    timeBack:  state.notifications.timeBack,
+    timeBack: state.notifications.timeBack,
   };
 }
 
 const styles = {
-  menu:{
+  menu: {
     position: 'relative',
     overflow: 'hidden',
     width: '298px',
@@ -33,7 +33,7 @@ const styles = {
     float: 'left',
     backgroundColor: '#0c1e3e',
   },
-  menuLogo:{
+  menuLogo: {
     position: 'relative',
     zIndex: '3',
     height: '60px',
@@ -51,7 +51,7 @@ const styles = {
     height: '46px',
     fontFamily: 'Inconsolata, monospace',
   },
-  menuNavigation:{
+  menuNavigation: {
     position: 'absolute',
     left: '0px',
     top: '106px',
@@ -220,38 +220,38 @@ class SideBar extends Component {
     this.updateBlockTimeSince = this.updateBlockTimeSince.bind(this);
   }
   componentDidMount() {
-    setTimeout(() =>{this.updateBlockTimeSince();}, 1000);
+    setTimeout(() => { this.updateBlockTimeSince(); }, 1000);
   }
   updateBlockTimeSince() {
     const { transactionNtfnsResponse } = this.props;
     if (transactionNtfnsResponse !== null && transactionNtfnsResponse.getAttachedBlocksList().length > 0) {
       const attachedBlocks = transactionNtfnsResponse.getAttachedBlocksList();
       var currentTime = new Date();
-      var recentBlockTime = new Date(attachedBlocks[attachedBlocks.length-1].getTimestamp()*1000);
+      var recentBlockTime = new Date(attachedBlocks[attachedBlocks.length - 1].getTimestamp() * 1000);
       var difference = (currentTime - recentBlockTime);
       var timeSince = Math.floor(difference / 60000);
       if (timeSince == 0) {
-        this.setState({timeSince: '<1 min ago'});
+        this.setState({ timeSince: '<1 min ago' });
       } else if (timeSince == 1) {
-        this.setState({timeSince: '1 min ago'});
+        this.setState({ timeSince: '1 min ago' });
       } else if (timeSince > 1) {
-        this.setState({timeSince: timeSince.toString() + ' mins ago'});
+        this.setState({ timeSince: timeSince.toString() + ' mins ago' });
       }
     }
-    setTimeout(() =>{this.updateBlockTimeSince();}, 10000);
+    setTimeout(() => { this.updateBlockTimeSince(); }, 10000);
   }
   showAccounts() {
-    this.setState({accountsHidden: false});
+    this.setState({ accountsHidden: false });
   }
 
   hideAccounts() {
-    this.setState({accountsHidden: true});
+    this.setState({ accountsHidden: true });
   }
 
   render() {
     const { gettingStarted, errorPage } = this.props;
     const { network } = this.props;
-    if ( gettingStarted || errorPage ) {
+    if (gettingStarted || errorPage) {
       return (
         <div style={styles.menu}>
           <div style={styles.menuLogo}></div>
@@ -285,14 +285,14 @@ class SideBar extends Component {
             <HelpLink href="https://github.com/decred/decrediton/issues">Issues</HelpLink>
           </div>
         </div>
-        <div style={!this.state.accountsHidden ? styles.menuTotalBalanceExtended : styles.menuTotalBalanceExtendedHidden }>
+        <div style={!this.state.accountsHidden ? styles.menuTotalBalanceExtended : styles.menuTotalBalanceExtendedHidden}>
           <div style={styles.menuTotalBalanceExtendedBottom}>
-            {getAccountsResponse != null ? getAccountsResponse.getAccountsList().map(function(account) {
+            {getAccountsResponse != null ? getAccountsResponse.getAccountsList().map(function (account) {
               var accountBalance = 0;
               if (account.getTotalBalance() > 0) {
                 accountBalance = account.getTotalBalance() / 100000000;
               }
-              return(
+              return (
                 <div style={styles.menuTotalBalanceExtendedBottomAccount} key={account.getAccountName()}>
                   <div style={styles.menuTotalBalanceExtendedBottomAccountName}>{account.getAccountName()}</div>
                   <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>{accountBalance}</div>
@@ -302,7 +302,7 @@ class SideBar extends Component {
           </div>
         </div>
         <div style={styles.menuBottom}>
-          <div style={styles.menuBottomTotalBalanceShort} onMouseEnter={() => {this.showAccounts();}} onMouseLeave={() => {this.hideAccounts();}}>
+          <div style={styles.menuBottomTotalBalanceShort} onMouseEnter={() => { this.showAccounts(); }} onMouseLeave={() => { this.hideAccounts(); }}>
             <div style={styles.menuBottomTotalBalanceShortSeperator}></div>
             <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
             <div style={styles.menuBottomTotalBalanceShortValue}>{balance.toString()}</div>
@@ -311,14 +311,14 @@ class SideBar extends Component {
             <div style={styles.menuBottomLatestBlock}>
               <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse.getCurrentBlockHeight()}</span></a>
               <div style={styles.menuBottomLatestBlockTime}>{timeSince}</div>
-            </div>:
+            </div> :
             currentHeight !== 0 ?
-            <div style={styles.menuBottomLatestBlock}>
-              <a style={styles.menuBottomLatestBlockName}>Synced to block: <span style={styles.menuBottomLatestBlockNumber}>{currentHeight}</span></a>
-              <div style={styles.menuBottomLatestBlockTime}>{timeBack}</div>
-            </div>:
-            <div>
-            </div>
+              <div style={styles.menuBottomLatestBlock}>
+                <a style={styles.menuBottomLatestBlockName}>Synced to block: <span style={styles.menuBottomLatestBlockNumber}>{currentHeight}</span></a>
+                <div style={styles.menuBottomLatestBlockTime}>{timeBack}</div>
+              </div> :
+              <div>
+              </div>
           }
 
         </div>

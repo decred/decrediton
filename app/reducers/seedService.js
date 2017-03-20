@@ -5,59 +5,69 @@ import { DECODESEED_ATTEMPT, DECODESEED_FAILED, DECODESEED_SUCCESS } from '../ac
 export default function walletLoader(state = {}, action) {
   switch (action.type) {
   case SEEDER_ATTEMPT:
-    return {...state,
+    return {
+      ...state,
       getSeederRequestAttempt: true,
       getSeederRequest: action.request,
     };
   case SEEDER_FAILED:
-    return {...state,
+    return {
+      ...state,
       getSeederError: action.error,
       getSeederRequestAttempt: false,
       getSeederRequest: null,
       seeder: null,
     };
   case SEEDER_SUCCESS:
-    return {...state,
+    return {
+      ...state,
       getSeederError: null,
       seeder: action.seeder,
       getSeederRequestAttempt: false,
       getSeederRequest: null,
     };
   case GENERATERANDOMSEED_ATTEMPT:
-    return {...state,
+    return {
+      ...state,
       generateRandomSeedRequestAttempt: true,
       generateRandomSeedRequest: action.request,
     };
   case GENERATERANDOMSEED_CLEAR:
-    return {...state,
+    return {
+      ...state,
       generateRandomSeedResponse: null,
     };
   case GENERATERANDOMSEED_FAILED:
-    return {...state,
+    return {
+      ...state,
       generateRandomSeedError: action.error,
       generateRandomSeedRequestAttempt: false,
       generateRandomSeedResponse: null,
     };
   case GENERATERANDOMSEED_SUCCESS:
-    return {...state,
+    return {
+      ...state,
       generateRandomSeedError: null,
       generateRandomSeedRequestAttempt: false,
       generateRandomSeedResponse: action.response,
       generateRandomSeedRequest: null,
     };
   case DECODESEED_ATTEMPT:
-    return {...state,
+    return {
+      ...state,
       decodeSeedRequestAttempt: true,
       decodeSeedRequest: action.request,
     };
   case DECODESEED_FAILED:
-    return {...state,
+    return {
+      ...state,
       decodeSeedError: action.error,
       decodeSeedRequestAttempt: false,
       decodeSeedRequest: null,
     };
   case DECODESEED_SUCCESS:
-    return {...state,
+    return {
+      ...state,
       decodeSeedError: null,
       decodeSeedRequestAttempt: false,
       decodeSeedResponse: action.response,

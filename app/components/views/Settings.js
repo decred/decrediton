@@ -39,7 +39,7 @@ const styles = {
   }
 };
 
-class Settings extends Component{
+class Settings extends Component {
   static propTypes = {
     walletService: PropTypes.object,
     currencyDisplay: PropTypes.string,
@@ -91,13 +91,13 @@ class Settings extends Component{
             onClick={() => this.handleSaveSettingsClick(tempSettings)}>
             Save Settings
           </Button>
-	</div>
+        </div>
       </div>
     );
     if (walletService === null) {
       return (<ErrorScreen />);
     } else {
-      return(
+      return (
         <div style={styles.body}>
           <SideBar />
           {settingsView}

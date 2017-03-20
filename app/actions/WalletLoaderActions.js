@@ -3,9 +3,11 @@ import { getWalletServiceAttempt } from './ClientActions';
 import { getVersionServiceAttempt } from './VersionActions';
 import { getSeederAttempt, generateRandomSeedAttempt } from './SeedServiceActions';
 import { getCfg, getCfgPath, getDcrdCert } from '../config.js';
-import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
+import {
+  WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
-  SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from '../middleware/walletrpc/api_pb';
+  SubscribeToBlockNotificationsRequest, FetchHeadersRequest
+} from '../middleware/walletrpc/api_pb';
 
 export const DISCLAIMER_OK = 'DISCLAIMER_OK';
 
@@ -26,7 +28,7 @@ function loaderError(error) {
 
 function loaderSuccess(loader) {
   return (dispatch) => {
-    dispatch({loader: loader, type: LOADER_SUCCESS });
+    dispatch({ loader: loader, type: LOADER_SUCCESS });
     dispatch(getSeederAttempt());
     dispatch(walletExistRequest());
   };
@@ -38,7 +40,7 @@ export function loaderRequest(address, port) {
     port: port,
   };
   return (dispatch) => {
-    dispatch({request: request, type: LOADER_ATTEMPT });
+    dispatch({ request: request, type: LOADER_ATTEMPT });
     setTimeout(dispatch(getLoader()), 3000);
   };
 }
@@ -46,7 +48,7 @@ export function loaderRequest(address, port) {
 function getLoader() {
   return (dispatch, getState) => {
     const { getLoaderRequest } = getState().walletLoader;
-    loader(getLoaderRequest, function(loader, err) {
+    loader(getLoaderRequest, function (loader, err) {
       if (err) {
         dispatch(loaderError(err + ' Please try again'));
         //throw err
@@ -69,7 +71,7 @@ function walletExistError(error) {
 
 function walletExistSuccess(response) {
   return (dispatch) => {
-    dispatch({response: response, type: WALLETEXIST_SUCCESS });
+    dispatch({ response: response, type: WALLETEXIST_SUCCESS });
     if (response.getExists()) {
       setTimeout(dispatch(openWalletAttempt('public')), 1000);
     } else {
@@ -81,7 +83,7 @@ function walletExistSuccess(response) {
 export function walletExistRequest() {
   var request = new WalletExistsRequest();
   return (dispatch) => {
-    dispatch({request: request, type: WALLETEXIST_ATTEMPT });
+    dispatch({ request: request, type: WALLETEXIST_ATTEMPT });
     setTimeout(dispatch(checkWalletExist()), 3000);
   };
 }
@@ -90,13 +92,13 @@ function checkWalletExist() {
   return (dispatch, getState) => {
     const { loader, walletExistRequest } = getState().walletLoader;
     loader.walletExists(walletExistRequest,
-        function(err, response) {
-          if (err) {
-            dispatch(walletExistError(err + ' Please try again'));
-          } else {
-            dispatch(walletExistSuccess(response));
-          }
-        });
+      function (err, response) {
+        if (err) {
+          dispatch(walletExistError(err + ' Please try again'));
+        } else {
+          dispatch(walletExistSuccess(response));
+        }
+      });
   };
 }
 export const CREATEWALLET_NEWSEED_CONFIRM = 'CREATEWALLET_NEWSEED_CONFIRM';
@@ -104,19 +106,19 @@ export const CREATEWALLET_NEWSEED_BACK = 'CREATEWALLET_NEWSEED_BACK';
 export const CREATEWALLET_EXISTINGSEED = 'CREATEWALLET_EXISTINGSEED';
 export const CREATEWALLET_NEWSEED = 'CREATEWALLET_NEWSEED';
 
-export function createWalletConfirmNewSeed(){
-  return{ type: CREATEWALLET_NEWSEED_CONFIRM };
+export function createWalletConfirmNewSeed() {
+  return { type: CREATEWALLET_NEWSEED_CONFIRM };
 }
-export function createWalletGoBackNewSeed(){
-  return{ type: CREATEWALLET_NEWSEED_BACK };
+export function createWalletGoBackNewSeed() {
+  return { type: CREATEWALLET_NEWSEED_BACK };
 }
 
 export function createWalletExistingToggle(existing) {
   return (dispatch) => {
-    if (existing){
+    if (existing) {
       dispatch({ type: CREATEWALLET_EXISTINGSEED });
-    }   else {
-      setTimeout(()=>dispatch({ type: CREATEWALLET_NEWSEED }), 50);
+    } else {
+      setTimeout(() => dispatch({ type: CREATEWALLET_NEWSEED }), 50);
       dispatch(generateRandomSeedAttempt());
     }
   };
@@ -131,7 +133,7 @@ function createWalletError(error) {
 
 function createWalletSuccess() {
   return (dispatch) => {
-    dispatch({response: {}, type: CREATEWALLET_SUCCESS });
+    dispatch({ response: {}, type: CREATEWALLET_SUCCESS });
     dispatch(startRpcRequest());
   };
 }
@@ -151,13 +153,13 @@ function createNewWallet(pubPass, privPass, seed) {
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
     loader.createWallet(request,
-        function(err) {
-          if (err) {
-            dispatch(createWalletError(err + ' Please try again'));
-          } else {
-            dispatch(createWalletSuccess());
-          }
-        });
+      function (err) {
+        if (err) {
+          dispatch(createWalletError(err + ' Please try again'));
+        } else {
+          dispatch(createWalletSuccess());
+        }
+      });
   };
 }
 
@@ -171,14 +173,14 @@ function openWalletError(error) {
 
 function openWalletSuccess() {
   return (dispatch) => {
-    dispatch({response: {}, type: OPENWALLET_SUCCESS});
+    dispatch({ response: {}, type: OPENWALLET_SUCCESS });
     dispatch(startRpcRequest());
   };
 }
 
 export function openWalletAttempt(pubPass) {
   return (dispatch) => {
-    dispatch({type: OPENWALLET_ATTEMPT});
+    dispatch({ type: OPENWALLET_ATTEMPT });
     dispatch(openWalletAction(pubPass));
   };
 }
@@ -189,17 +191,17 @@ function openWalletAction(pubPass) {
     var request = new OpenWalletRequest();
     request.setPublicPassphrase(new Uint8Array(Buffer.from(pubPass)));
     loader.openWallet(request,
-        function(err) {
-          if (err) {
-            if (err.message.includes('wallet already loaded')) {
-              dispatch(openWalletSuccess());
-              return;
-            }
-            dispatch(openWalletError(err + ' Please try again'));
-          } else {
+      function (err) {
+        if (err) {
+          if (err.message.includes('wallet already loaded')) {
             dispatch(openWalletSuccess());
+            return;
           }
-        });
+          dispatch(openWalletError(err + ' Please try again'));
+        } else {
+          dispatch(openWalletSuccess());
+        }
+      });
   };
 }
 
@@ -213,13 +215,13 @@ function closeWalletError(error) {
 
 function closeWalletSuccess() {
   return (dispatch) => {
-    dispatch({response: {}, type: CLOSEWALLET_SUCCESS});
+    dispatch({ response: {}, type: CLOSEWALLET_SUCCESS });
   };
 }
 
 export function closeWalletRequest() {
   return (dispatch) => {
-    dispatch({request: {}, type: CLOSEWALLET_ATTEMPT});
+    dispatch({ request: {}, type: CLOSEWALLET_ATTEMPT });
     dispatch(closeWalletAction());
   };
 }
@@ -229,13 +231,13 @@ function closeWalletAction() {
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
     loader.closeWallet(request,
-        function(err) {
-          if (err) {
-            dispatch(closeWalletError(err + ' Please try again'));
-          } else {
-            dispatch(closeWalletSuccess());
-          }
-        });
+      function (err) {
+        if (err) {
+          dispatch(closeWalletError(err + ' Please try again'));
+        } else {
+          dispatch(closeWalletSuccess());
+        }
+      });
   };
 }
 
@@ -249,7 +251,7 @@ function startRpcError(error) {
 
 function startRpcSuccess() {
   return (dispatch) => {
-    dispatch({response: {}, type: STARTRPC_SUCCESS});
+    dispatch({ response: {}, type: STARTRPC_SUCCESS });
     dispatch(subscribeBlockAttempt());
   };
 }
@@ -269,7 +271,7 @@ export function startRpcRequest() {
   request.setCertificate(new Uint8Array(getDcrdCert()));
 
   return (dispatch) => {
-    dispatch({request: request, type: STARTRPC_ATTEMPT});
+    dispatch({ request: request, type: STARTRPC_ATTEMPT });
     dispatch(startRpcAction());
   };
 }
@@ -278,17 +280,17 @@ function startRpcAction() {
   return (dispatch, getState) => {
     const { loader, startRpcRequest } = getState().walletLoader;
     loader.startConsensusRpc(startRpcRequest,
-        function(err) {
-          if (err) {
-            if (err.message.includes('RPC client already created')) {
-              dispatch(startRpcSuccess());
-              return;
-            }
-            dispatch(startRpcError(err + '.  You may need to edit ' + getCfgPath() + ' and try again'));
-          } else {
+      function (err) {
+        if (err) {
+          if (err.message.includes('RPC client already created')) {
             dispatch(startRpcSuccess());
+            return;
           }
-        });
+          dispatch(startRpcError(err + '.  You may need to edit ' + getCfgPath() + ' and try again'));
+        } else {
+          dispatch(startRpcSuccess());
+        }
+      });
   };
 }
 
@@ -302,9 +304,9 @@ function discoverAddressError(error) {
 
 function discoverAddressSuccess() {
   return (dispatch, getState) => {
-    dispatch({response: {}, type: DISCOVERADDRESS_SUCCESS});
+    dispatch({ response: {}, type: DISCOVERADDRESS_SUCCESS });
     const { subscribeBlockNtfnsResponse } = getState().walletLoader;
-    if ( subscribeBlockNtfnsResponse !== null ) {
+    if (subscribeBlockNtfnsResponse !== null) {
       dispatch(fetchHeadersAttempt());
     }
   };
@@ -325,13 +327,13 @@ function discoverAddressAction(discoverAccts, privPass) {
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
     loader.discoverAddresses(request,
-        function(err) {
-          if (err) {
-            dispatch(discoverAddressError(err + ' Please try again'));
-          } else {
-            dispatch(discoverAddressSuccess());
-          }
-        });
+      function (err) {
+        if (err) {
+          dispatch(discoverAddressError(err + ' Please try again'));
+        } else {
+          dispatch(discoverAddressSuccess());
+        }
+      });
   };
 }
 
@@ -345,9 +347,9 @@ function subscribeBlockError(error) {
 
 function subscribeBlockSuccess() {
   return (dispatch, getState) => {
-    dispatch({response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
+    dispatch({ response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS });
     const { discoverAddressResponse } = getState().walletLoader;
-    if ( discoverAddressResponse !== null ) {
+    if (discoverAddressResponse !== null) {
       dispatch(fetchHeadersAttempt());
     }
   };
@@ -355,7 +357,7 @@ function subscribeBlockSuccess() {
 
 export function subscribeBlockAttempt() {
   return (dispatch) => {
-    dispatch({request: {}, type: SUBSCRIBEBLOCKNTFNS_ATTEMPT});
+    dispatch({ request: {}, type: SUBSCRIBEBLOCKNTFNS_ATTEMPT });
     dispatch(subscribeBlockAction());
   };
 }
@@ -365,13 +367,13 @@ function subscribeBlockAction() {
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
     loader.subscribeToBlockNotifications(request,
-        function(err) {
-          if (err) {
-            dispatch(subscribeBlockError(err + ' Please try again'));
-          } else {
-            dispatch(subscribeBlockSuccess());
-          }
-        });
+      function (err) {
+        if (err) {
+          dispatch(subscribeBlockError(err + ' Please try again'));
+        } else {
+          dispatch(subscribeBlockSuccess());
+        }
+      });
   };
 }
 
@@ -386,14 +388,14 @@ function fetchHeadersFailed(error) {
 
 function fetchHeadersSuccess(response) {
   return (dispatch) => {
-    dispatch({response: response, type: FETCHHEADERS_SUCCESS});
+    dispatch({ response: response, type: FETCHHEADERS_SUCCESS });
     dispatch(getWalletServiceAttempt());
   };
 }
 
 export function fetchHeadersAttempt() {
   return (dispatch) => {
-    dispatch({request: {}, type: FETCHHEADERS_ATTEMPT});
+    dispatch({ request: {}, type: FETCHHEADERS_ATTEMPT });
     dispatch(fetchHeadersAction());
   };
 }
@@ -403,12 +405,12 @@ function fetchHeadersAction() {
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
     loader.fetchHeaders(request,
-        function(err, response) {
-          if (err) {
-            dispatch(fetchHeadersFailed(err + ' Please try again'));
-          } else {
-            dispatch(fetchHeadersSuccess(response));
-          }
-        });
+      function (err, response) {
+        if (err) {
+          dispatch(fetchHeadersFailed(err + ' Please try again'));
+        } else {
+          dispatch(fetchHeadersSuccess(response));
+        }
+      });
   };
 }
