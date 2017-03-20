@@ -14,7 +14,7 @@ function mapStateToProps(state) {
     getBalanceResponse: state.grpc.getBalanceResponse,
     getStakeInfoRequestAttempt: state.grpc.getStakeInfoRequestAttempt,
     getStakeInfoResponse: state.grpc.getStakeInfoResponse,
-    getNetworkResponse: state.grpc.getNetworkResponse,
+    network: state.grpc.network,
     getAccountsResponse: state.grpc.getAccountsResponse,
     transactionNtfnsResponse: state.notifications.transactionNtfnsResponse,
     timeSince: state.notifications.timeSince,
@@ -189,7 +189,7 @@ const styles = {
   sidebarHelp: {
     display: 'block',
     height: '215px',
-    marginTop: '65px',
+    marginTop: '20px',
     paddingLeft: '18px',
     paddingRight: '18px',
   },
@@ -250,17 +250,18 @@ class SideBar extends Component {
 
   render() {
     const { gettingStarted, errorPage } = this.props;
+    const { network } = this.props;
     if ( gettingStarted || errorPage ) {
       return (
         <div style={styles.menu}>
           <div style={styles.menuLogo}></div>
+          <div style={styles.testnetText}>{network !== null && network == 'testnet' ? 'Testnet' : ''}</div>
         </div>);
     }
     const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
-    const { getNetworkResponse } = this.props;
     const { timeBack, currentHeight } = this.props;
-    const { timeSince, transactionNtfnsResponse } = this.props;
+    const { timeSince } = this.props;
 
     var balance = 0;
     if (getBalanceResponse != null) {
@@ -269,7 +270,7 @@ class SideBar extends Component {
     return (
       <div style={styles.menu}>
         <div style={styles.menuLogo}></div>
-        <div style={styles.testnetText}>{getNetworkResponse !== null && getNetworkResponse.networkStr == 'testnet' ? 'Testnet' : ''}</div>
+        <div style={styles.testnetText}>{network !== null && network == 'testnet' ? 'Testnet' : ''}</div>
         <div style={styles.menuNavigation}>
           <MenuLink to="/home">Overview</MenuLink>
           <MenuLink to="/send">Send</MenuLink>
@@ -306,9 +307,9 @@ class SideBar extends Component {
             <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
             <div style={styles.menuBottomTotalBalanceShortValue}>{balance.toString()}</div>
           </div>
-          {transactionNtfnsResponse !== null ?
+          {getAccountsResponse !== null ?
             <div style={styles.menuBottomLatestBlock}>
-              <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{transactionNtfnsResponse.getAttachedBlocksList()[0].getHeight()}</span></a>
+              <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse.getCurrentBlockHeight()}</span></a>
               <div style={styles.menuBottomLatestBlockTime}>{timeSince}</div>
             </div>:
             currentHeight !== 0 ?
