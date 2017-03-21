@@ -22,6 +22,24 @@ export function timeSince(date) {
   if (interval >= 1) {
     return interval + ' minutes ago';
   }
-  console.log(seconds, interval);
   return '<1 minute ago';
+}
+
+export function timeBack(date) {
+  var seconds = Math.floor((new Date() - date) / 1000);
+
+  var interval = Math.floor(seconds / 31536000);
+
+  if (interval >= 1) {
+    return interval + ' years back';
+  }
+  interval = Math.floor(seconds / 2592000);
+  if (interval >= 1) {
+    return interval + ' months back';
+  }
+  interval = Math.floor(seconds / 86400);
+  if (interval >= 1) {
+    return interval + ' days back';
+  }
+  return interval + ' hours back';
 }
