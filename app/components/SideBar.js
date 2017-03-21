@@ -214,7 +214,6 @@ class SideBar extends Component {
     super(props);
     this.state = {
       accountsHidden: true,
-      timeSince: null,
     };
     this.showAccounts = this.showAccounts.bind(this);
     this.hideAccounts = this.hideAccounts.bind(this);
@@ -228,10 +227,9 @@ class SideBar extends Component {
     if (transactionNtfnsResponse !== null && transactionNtfnsResponse.getAttachedBlocksList().length > 0) {
       const attachedBlocks = transactionNtfnsResponse.getAttachedBlocksList();
       var recentBlockTime = new Date(attachedBlocks[attachedBlocks.length-1].getTimestamp()*1000);
-      console.log(recentBlockTime);
-      this.setState({timeSince: timeSince(recentBlockTime)});
+      this.timeSince = timeSince(recentBlockTime);
     } else {
-      this.setState({timeSince: timeSince(startTime)});
+      this.timeSince = timeSince(startTime);
     }
     setTimeout(() =>{this.updateBlockTimeSince(startTime);}, 10000);
   }
@@ -303,7 +301,7 @@ class SideBar extends Component {
           {getAccountsResponse !== null ?
             <div style={styles.menuBottomLatestBlock}>
               <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse.getCurrentBlockHeight()}</span></a>
-              <div style={styles.menuBottomLatestBlockTime}>{this.state.timeSince}</div>
+              <div style={styles.menuBottomLatestBlockTime}>{this.timeSince}</div>
             </div>:
             currentHeight !== 0 ?
             <div style={styles.menuBottomLatestBlock}>
