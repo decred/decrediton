@@ -98,6 +98,18 @@ const styles = {
   headerMetaCurrency: {
     fontSize: '23px',
   },
+  viewNotificationNotSynced: {
+    display: 'inline-block',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    padding: '7px 20px',
+    borderRadius: '5px',
+    backgroundColor: '#666666',
+    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
+    color: '#fff',
+    fontSize: '13px',
+    textAlign: 'center',
+  },
 };
 
 class Home extends Component{
@@ -122,6 +134,7 @@ class Home extends Component{
     const { getBalanceResponse } = this.props;
     const { rescanRequest, rescanResponse } = this.props;
     const { getAccountsResponse } = this.props;
+    const { synced } = this.props;
 
     var rescanPercFisnished;
     if (rescanResponse !== null && getAccountsResponse !== null && rescanRequest != null) {
@@ -151,6 +164,12 @@ class Home extends Component{
     const homeView = (
       <div style={styles.view}>
         <Header
+          headerTop={ !synced ?
+              <div key="notSynced" style={styles.viewNotificationNotSynced}>
+                Wallet not synced. Note: Balances will not be accurate until syncing is complete.
+              </div> :
+              <div key="notSynced" ></div>
+          }
           headerTitleOverview="Available Balance"
           headerMetaOverview={<Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />}
         />
