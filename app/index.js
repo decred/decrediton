@@ -29,7 +29,7 @@ if (currentStakePoolConfig !== undefined) {
 }
 if (network == 'testnet') {
   grpcport = cfg.get('wallet_port_testnet');
-  startDate = new Date('01/27/2016');
+  startDate = new Date('03/15/2017');
   totalDays = (today.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24;
   neededBlocks = totalDays * 720 * (0.95);
 } else {
