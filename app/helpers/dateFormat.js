@@ -2,7 +2,6 @@ export function timeSince(date) {
   var seconds = Math.floor((new Date() - date) / 1000);
 
   var interval = Math.floor(seconds / 31536000);
-
   if (interval >= 1) {
     return interval + ' years ago';
   }
@@ -25,21 +24,20 @@ export function timeSince(date) {
   return '<1 minute ago';
 }
 
-export function timeBack(date) {
-  var seconds = Math.floor((new Date() - date) / 1000);
-
-  var interval = Math.floor(seconds / 31536000);
-
-  if (interval >= 1) {
+export function timeBackString(days) {
+  var interval = Math.floor(days / 365);
+  if (interval > 1) {
     return interval + ' years back';
   }
-  interval = Math.floor(seconds / 2592000);
-  if (interval >= 1) {
+  if (interval == 1) {
+    return interval + ' year back';
+  }
+  interval = Math.floor(days / 30);
+  if (interval > 1) {
     return interval + ' months back';
   }
-  interval = Math.floor(seconds / 86400);
-  if (interval >= 1) {
-    return interval + ' days back';
+  if (interval == 1) {
+    return interval + ' month back';
   }
-  return interval + ' hours back';
+  return days + ' days back';
 }
