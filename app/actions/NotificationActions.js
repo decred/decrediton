@@ -19,12 +19,21 @@ function transactionNtfnsData(response) {
       currentHeight = response.getAttachedBlocksList()[0].getHeight();
     }
     if (currentHeight > neededBlocks) {
-      dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
-      setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
-      setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
-      setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
-      setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
-      setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
+      const attachedBlocks = response.getAttachedBlocksList();
+      var recentBlockTime = new Date(attachedBlocks[attachedBlocks.length-1].getTimestamp()*1000);
+      var seconds = Math.floor((new Date() - recentBlockTime) / 1000);
+      // Only request other wallet information if it is within 2 hours.
+      // 3600 * 2 == 2 hours worth of seconds
+      if (seconds < 3600 * 2) {
+        dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
+        setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
+        setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
+        setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
+        setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
+        setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
+      } else if (attachedBlocks.getHeight()%100 == 0) {
+        dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
+      }
     } else if (currentHeight%100 == 0) {
       const { blocksPerDay } = getState().notifications;
       var daysBack = Math.floor((neededBlocks - currentHeight) / blocksPerDay);
