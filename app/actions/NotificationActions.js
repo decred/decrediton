@@ -31,7 +31,7 @@ function transactionNtfnsData(response) {
         setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
         setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
         setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
-      } else if (attachedBlocks.getHeight()%100 == 0) {
+      } else if (attachedBlocks[attachedBlocks.length-1].getHeight()%100 == 0) {
         dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
       }
     } else if (currentHeight%100 == 0) {
