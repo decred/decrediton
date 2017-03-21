@@ -21,6 +21,7 @@ function mapStateToProps(state) {
     currentHeight: state.notifications.currentHeight,
     timeBackString: state.notifications.timeBackString,
     synced: state.notifications.synced,
+    startTime: state.grpc.startTime,
   };
 }
 
@@ -214,24 +215,28 @@ class SideBar extends Component {
     super(props);
     this.state = {
       accountsHidden: true,
+      timeSince: '',
     };
     this.showAccounts = this.showAccounts.bind(this);
     this.hideAccounts = this.hideAccounts.bind(this);
-    this.updateBlockTimeSince = this.updateBlockTimeSince.bind(this);
+   //this.updateBlockTimeSince = this.updateBlockTimeSince.bind(this);
+  }
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
   componentDidMount() {
-    this.updateBlockTimeSince(new Date());
+    this.interval = setInterval(() => this.updateBlockTimeSince(), 5000);
   }
-  updateBlockTimeSince(startTime) {
-    const { transactionNtfnsResponse } = this.props;
+
+  updateBlockTimeSince() {
+    const { transactionNtfnsResponse, startTime } = this.props;
     if (transactionNtfnsResponse !== null && transactionNtfnsResponse.getAttachedBlocksList().length > 0) {
       const attachedBlocks = transactionNtfnsResponse.getAttachedBlocksList();
       var recentBlockTime = new Date(attachedBlocks[attachedBlocks.length-1].getTimestamp()*1000);
-      this.timeSince = timeSince(recentBlockTime);
+      this.setState({timeSince: timeSince(recentBlockTime)});
     } else {
-      this.timeSince = timeSince(startTime);
+      this.setState({timeSince: timeSince(startTime)});
     }
-    setTimeout(() =>{this.updateBlockTimeSince(startTime);}, 10000);
   }
   showAccounts() {
     this.setState({accountsHidden: false});
@@ -301,7 +306,7 @@ class SideBar extends Component {
           {synced && getAccountsResponse !== null ?
             <div style={styles.menuBottomLatestBlock}>
               <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse.getCurrentBlockHeight()}</span></a>
-              <div style={styles.menuBottomLatestBlockTime}>{this.timeSince}</div>
+              <div style={styles.menuBottomLatestBlockTime}>{this.state.timeSince}</div>
             </div>:
             currentHeight !== 0 ?
             <div style={styles.menuBottomLatestBlock}>
