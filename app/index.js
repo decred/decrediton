@@ -27,15 +27,18 @@ if (currentStakePoolConfig !== undefined) {
     }
   }
 }
+var blocksPerDay = 0;
 if (network == 'testnet') {
   grpcport = cfg.get('wallet_port_testnet');
-  startDate = new Date('01/27/2016');
+  startDate = new Date('03/15/2017');
   totalDays = (today.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24;
-  neededBlocks = totalDays * 720 * (0.95);
+  blocksPerDay = 720;
+  neededBlocks = totalDays * blocksPerDay * (0.95);
 } else {
   startDate = new Date('02/08/2016');
   totalDays = (today.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24;
-  neededBlocks = totalDays * 288 * (0.95);
+  blocksPerDay = 288;
+  neededBlocks = totalDays * blocksPerDay * (0.95);
   grpcport = cfg.get('wallet_port');
 }
 
@@ -80,6 +83,7 @@ var initialState = {
     port: grpcport,
     walletService: null,
     network: network,
+    startTime: new Date(),
     // ints for mainnet and testnet protocol hex
     // TestNet2 CurrencyNet = 0x48e7a065
     testnet: 1223139429,
@@ -209,9 +213,10 @@ var initialState = {
     decodeSeedError: null,
   },
   notifications: {
-    timeSince: '',
-    timeBack: '',
+    synced: true,
     currentHeight: 0,
+    timeBackString: '',
+    blocksPerDay: blocksPerDay,
     transactionNtfnsRequestAttempt: false,
     transactionNtfnsRequest: null,
     transactionNtfnsResponse: null,

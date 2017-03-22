@@ -5,6 +5,7 @@ import menulogo from './icons/menu-logo.svg';
 import MenuLink from './MenuLink';
 import HelpLink from './HelpLink';
 import './fonts.css';
+import { timeSince } from '../helpers/dateFormat.js';
 
 function mapStateToProps(state) {
   return {
@@ -17,9 +18,10 @@ function mapStateToProps(state) {
     network: state.grpc.network,
     getAccountsResponse: state.grpc.getAccountsResponse,
     transactionNtfnsResponse: state.notifications.transactionNtfnsResponse,
-    timeSince: state.notifications.timeSince,
     currentHeight: state.notifications.currentHeight,
-    timeBack:  state.notifications.timeBack,
+    timeBackString: state.notifications.timeBackString,
+    synced: state.notifications.synced,
+    startTime: state.grpc.startTime,
   };
 }
 
@@ -213,32 +215,28 @@ class SideBar extends Component {
     super(props);
     this.state = {
       accountsHidden: true,
-      timeSince: null,
+      timeSince: '',
     };
     this.showAccounts = this.showAccounts.bind(this);
     this.hideAccounts = this.hideAccounts.bind(this);
-    this.updateBlockTimeSince = this.updateBlockTimeSince.bind(this);
+   //this.updateBlockTimeSince = this.updateBlockTimeSince.bind(this);
+  }
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
   componentDidMount() {
-    setTimeout(() =>{this.updateBlockTimeSince();}, 1000);
+    this.interval = setInterval(() => this.updateBlockTimeSince(), 5000);
   }
+
   updateBlockTimeSince() {
-    const { transactionNtfnsResponse } = this.props;
+    const { transactionNtfnsResponse, startTime } = this.props;
     if (transactionNtfnsResponse !== null && transactionNtfnsResponse.getAttachedBlocksList().length > 0) {
       const attachedBlocks = transactionNtfnsResponse.getAttachedBlocksList();
-      var currentTime = new Date();
       var recentBlockTime = new Date(attachedBlocks[attachedBlocks.length-1].getTimestamp()*1000);
-      var difference = (currentTime - recentBlockTime);
-      var timeSince = Math.floor(difference / 60000);
-      if (timeSince == 0) {
-        this.setState({timeSince: '<1 min ago'});
-      } else if (timeSince == 1) {
-        this.setState({timeSince: '1 min ago'});
-      } else if (timeSince > 1) {
-        this.setState({timeSince: timeSince.toString() + ' mins ago'});
-      }
+      this.setState({timeSince: timeSince(recentBlockTime)});
+    } else {
+      this.setState({timeSince: timeSince(startTime)});
     }
-    setTimeout(() =>{this.updateBlockTimeSince();}, 10000);
   }
   showAccounts() {
     this.setState({accountsHidden: false});
@@ -260,9 +258,7 @@ class SideBar extends Component {
     }
     const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
-    const { timeBack, currentHeight } = this.props;
-    const { timeSince } = this.props;
-
+    const { synced, currentHeight, timeBackString } = this.props;
     var balance = 0;
     if (getBalanceResponse != null) {
       balance = getBalanceResponse.getTotal() / 100000000;
@@ -307,15 +303,15 @@ class SideBar extends Component {
             <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
             <div style={styles.menuBottomTotalBalanceShortValue}>{balance.toString()}</div>
           </div>
-          {getAccountsResponse !== null ?
+          {synced && getAccountsResponse !== null ?
             <div style={styles.menuBottomLatestBlock}>
               <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse.getCurrentBlockHeight()}</span></a>
-              <div style={styles.menuBottomLatestBlockTime}>{timeSince}</div>
+              <div style={styles.menuBottomLatestBlockTime}>{this.state.timeSince}</div>
             </div>:
             currentHeight !== 0 ?
             <div style={styles.menuBottomLatestBlock}>
               <a style={styles.menuBottomLatestBlockName}>Synced to block: <span style={styles.menuBottomLatestBlockNumber}>{currentHeight}</span></a>
-              <div style={styles.menuBottomLatestBlockTime}>{timeBack}</div>
+              <div style={styles.menuBottomLatestBlockTime}>{timeBackString}</div>
             </div>:
             <div>
             </div>

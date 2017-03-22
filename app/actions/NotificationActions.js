@@ -1,7 +1,7 @@
 import { transactionNtfs, spentnessNtfs, accountNtfs } from '../middleware/grpc/client';
 import { getAccountsAttempt, getBalanceAttempt, getStakeInfoAttempt,
   getTicketPriceAttempt, getNetworkAttempt } from './ClientActions';
-
+import { timeBackString } from '../helpers/dateFormat.js';
 import { TransactionNotificationsRequest } from '../middleware/walletrpc/api_pb';
 
 export const TRANSACTIONNFTNS_START = 'TRANSACTIONNFTNS_START';
@@ -13,19 +13,31 @@ export const TRANSACTIONNFTNS_END = 'TRANSACTIONNFTNS_END';
 function transactionNtfnsData(response) {
   return (dispatch, getState) => {
     const { neededBlocks } = getState().walletLoader;
+
     var currentHeight = 0;
     if (response.getAttachedBlocksList().length > 0) {
       currentHeight = response.getAttachedBlocksList()[0].getHeight();
     }
     if (currentHeight > neededBlocks) {
-      dispatch({response: response, timeSince: '', type: TRANSACTIONNFTNS_DATA });
-      setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
-      setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
-      setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
-      setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
-      setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
+      const attachedBlocks = response.getAttachedBlocksList();
+      var recentBlockTime = new Date(attachedBlocks[attachedBlocks.length-1].getTimestamp()*1000);
+      var seconds = Math.floor((new Date() - recentBlockTime) / 1000);
+      // Only request other wallet information if it is within 2 hours.
+      // 3600 * 2 == 2 hours worth of seconds
+      if (seconds < 3600 * 2) {
+        dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
+        setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
+        setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
+        setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
+        setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
+        setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
+      } else if (attachedBlocks[attachedBlocks.length-1].getHeight()%100 == 0) {
+        dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
+      }
     } else if (currentHeight%100 == 0) {
-      dispatch({currentHeight: currentHeight, timeBack: '', type: TRANSACTIONNFTNS_SYNCING });
+      const { blocksPerDay } = getState().notifications;
+      var daysBack = Math.floor((neededBlocks - currentHeight) / blocksPerDay);
+      dispatch({currentHeight: currentHeight, timeBackString: timeBackString(daysBack), type: TRANSACTIONNFTNS_SYNCING });
     }
   };
 }
