@@ -5,7 +5,7 @@ import SideBar from '../SideBar';
 import Header from '../Header';
 import Balance from '../Balance';
 import KeyBlueButton from '../KeyBlueButton';
-
+import SlateGrayButton from '../SlateGrayButton';
 const styles = {
   body: {
     position: 'fixed',
@@ -120,50 +120,11 @@ const styles = {
   },
   contentAddNewAccount: {
     marginTop: '20px',
-  },
-  viewButtonKeyBlue: {
-    width: '9%',
     float: 'left',
-    display: 'inline-block',
-    padding: '17px 18px 18px',
-    borderRadius: '5px',
-    backgroundColor: '#2971ff',
-    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
-    transitionProperty: 'none',
-    color: '#fff',
-    fontSize: '13px',
-    lineHeight: '9px',
-    fontWeight: '600',
-    textAlign: 'center',
-    textDecoration: 'none',
-    textTransform: 'capitalize',
-    ':hover': {
-      backgroundColor: '#1b58ff',
-    },
-    ':active': {
-      boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
-    }
   },
-  viewButtonLightSlateGray: {
-    display: 'inline-block',
-    padding: '17px 18px 18px',
+  contentHideNewAccount: {
+    marginTop: '20px',
     float: 'right',
-    borderRadius: '5px',
-    backgroundColor: '#8997a5',
-    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
-    color: '#fff',
-    fontSize: '13px',
-    lineHeight: '9px',
-    fontWeight: '600',
-    textAlign: 'center',
-    textDecoration: 'none',
-    textTransform: 'capitalize',
-    ':hover': {
-      backgroundColor: '#596d81',
-    },
-    ':active': {
-      boxShadow: '0 0 0 0 rgba(0, 0, 0, .22)',
-    }
   },
 };
 
@@ -171,7 +132,21 @@ class Accounts extends Component{
   static propTypes = {
     walletService: PropTypes.object,
   };
-
+  constructor(props)  {
+    super(props);
+    this.state = {
+      showAddAccount: false,
+    };
+  }
+  addAccount() {
+    console.log("Add account");
+  }
+  showAddAccount() {
+    this.setState({showAddAccount: true});
+  }
+  hideAddAccount() {
+    this.setState({showAddAccount: false});
+  }
   render() {
     const { walletService, getAccountsResponse } = this.props;
 
@@ -195,18 +170,42 @@ class Accounts extends Component{
           </div>
           <KeyBlueButton
            style={styles.contentAddNewAccount} 
-           onClick={() => this.addNewAccount()}>
+           onClick={() => this.showAddAccount()}>
            Add New Account
           </KeyBlueButton>
         </div>
       </div>);
+    const addAccountView = (
+      <div style={styles.view}>
+        <Header
+          headerTitleOverview="Account Management"
+        />
+        <div style={styles.content}>
+          <div style={styles.flexHeight}>
+          </div>
+          <KeyBlueButton
+           style={styles.contentAddNewAccount} 
+           onClick={() => this.addAccount()}>
+           Confirm
+          </KeyBlueButton>
+          <SlateGrayButton
+           style={styles.contentHideNewAccount} 
+           onClick={() => this.hideAddAccount()}>
+           Cancel
+          </SlateGrayButton>
+        </div>
+      </div>
+    );
     if (walletService === null) {
       return (<ErrorScreen />);
     } else {
       return(
         <div style={styles.body}>
           <SideBar />
-          {accountsView}
+          {!this.state.showAddAccount ? 
+          accountsView :
+          addAccountView
+          }
         </div>);
     }
   }

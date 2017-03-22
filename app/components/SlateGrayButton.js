@@ -33,6 +33,7 @@ class SlateGrayButton extends React.Component {
       <div
         style={[
           this.props.style,
+          styles.base,
           this.props.block && styles.block
         ]}
         type={this.props.type}
