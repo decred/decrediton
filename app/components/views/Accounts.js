@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ErrorScreen from '../ErrorScreen';
 import SideBar from '../SideBar';
 import Header from '../Header';
+import Balance from '../Balance';
 
 const styles = {
   body: {
@@ -76,7 +77,93 @@ const styles = {
     display: 'block',
     float: 'right',
     fontFamily: 'Inconsolata, monospace',
-  }
+  },
+  accountRow: {
+    width: '100%',
+    height: '54px',
+    paddingTop: '10px',
+    float: 'left',
+    borderBottom: '1px black solid',
+  },
+  accountName: {
+    width: '25%',
+    paddingRight: '15px',
+    float: 'left',
+    height: '100%',
+    paddingTop: '5px',
+    fontSize: '19px',
+    textAlign: 'right',
+  },
+  accountBalance: {
+    width: '50%',
+    float: 'left',
+    height: '100%',
+    paddingTop: '5px',
+    fontSize: '19px',
+    textAlign: 'right',
+  },
+  accountRename: {
+    width: '25%',
+    float: 'left',
+    height: '100%',
+    paddingTop: '5px',
+    fontSize: '19px',
+    textAlign: 'right',
+  },
+  flexHeight: {
+    border: '1px black solid',
+    backgroundColor: '#fff',
+    height:'372px',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+  },
+  contentAddNewAccount: {
+    marginTop: '20px',
+  },
+  viewButtonKeyBlue: {
+    width: '9%',
+    float: 'left',
+    display: 'inline-block',
+    padding: '17px 18px 18px',
+    borderRadius: '5px',
+    backgroundColor: '#2971ff',
+    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
+    transitionProperty: 'none',
+    color: '#fff',
+    fontSize: '13px',
+    lineHeight: '9px',
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
+    ':hover': {
+      backgroundColor: '#1b58ff',
+    },
+    ':active': {
+      boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
+    }
+  },
+  viewButtonLightSlateGray: {
+    display: 'inline-block',
+    padding: '17px 18px 18px',
+    float: 'right',
+    borderRadius: '5px',
+    backgroundColor: '#8997a5',
+    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
+    color: '#fff',
+    fontSize: '13px',
+    lineHeight: '9px',
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
+    ':hover': {
+      backgroundColor: '#596d81',
+    },
+    ':active': {
+      boxShadow: '0 0 0 0 rgba(0, 0, 0, .22)',
+    }
+  },
 };
 
 class Accounts extends Component{
@@ -93,10 +180,20 @@ class Accounts extends Component{
           headerTitleOverview="Account Management"
         />
         <div style={styles.content}>
-          <div style={styles.contentTitle}>
-            <div style={styles.contentTitleText}>Accounts</div>
+          <div style={styles.flexHeight}>
+            {getAccountsResponse !== null ?
+              getAccountsResponse.getAccountsList().map(function(account) {
+              return (
+                <div style={styles.accountRow} key={account.getAccountName()}>
+                  <span style={styles.accountName}>{account.getAccountName()}</span>
+                  <span style={styles.accountBalance}><Balance amount={account.getTotalBalance()}/></span>
+                </div>);
+              }) :
+              <div></div>
+            }
           </div>
-          <div style={styles.contentNest}>
+          <div style={styles.contentAddNewAccount} onClick={() => this.addNewAccount()}>
+            <div style={styles.viewButtonKeyBlue}>Add New Account</div>
           </div>
         </div>
       </div>);
