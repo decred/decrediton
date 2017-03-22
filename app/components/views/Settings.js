@@ -1,7 +1,7 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 import ErrorScreen from '../ErrorScreen';
-import Button from '../ButtonTanel';
+import KeyBlueButton from '../KeyBlueButton';
 import SideBar from '../SideBar';
 import Header from '../Header';
 
@@ -83,14 +83,14 @@ class Settings extends Component{
             <option value="testnet">testnet</option>
           </select>
 
-          <Button
+          <KeyBlueButton
             style={styles.saveSettingsButton}
             disabled={!settingsChanged}
             size="large"
             block={false}
             onClick={() => this.handleSaveSettingsClick(tempSettings)}>
             Save Settings
-          </Button>
+          </KeyBlueButton>
 	</div>
       </div>
     );

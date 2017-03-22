@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { rescanAttempt } from '../actions/ControlActions';
 import ControlActions from '../actions/ControlActions';
-import Button from '../components/ButtonTanel';
+import KeyBlueButton from './KeyBlueButton';
 import Formsy from 'formsy-react';
 import { FormsyText } from 'formsy-material-ui/lib';
 
