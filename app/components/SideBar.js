@@ -262,6 +262,7 @@ class SideBar extends Component {
         <div style={styles.testnetText}>{network !== null && network == 'testnet' ? 'Testnet' : ''}</div>
         <div style={styles.menuNavigation}>
           <MenuLink to="/home">Overview</MenuLink>
+          <MenuLink to="/accounts">Accounts</MenuLink>
           <MenuLink to="/send">Send</MenuLink>
           <MenuLink to="/receive">Receive</MenuLink>
           <MenuLink to="/history">History</MenuLink>

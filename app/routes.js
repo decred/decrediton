@@ -9,6 +9,7 @@ import ReceivePage from './components/views/ReceivePage';
 import SettingsPage from './components/views/SettingsPage';
 import StakePoolPage from './components/views/StakePoolPage';
 import GetStartedPage from './components/views/GetStartedPage';
+import AccountsPage from './components/views/AccountsPage';
 import WalletError from './components/views/WalletError';
 
 export default (
@@ -20,6 +21,7 @@ export default (
     <Route path="/receive" component={ReceivePage} />
     <Route path="/settings" component={SettingsPage} />
     <Route path="/stakepool" component={StakePoolPage} />
+    <Route path="/accounts" component={AccountsPage} />
     <Route path="/walletError" component={WalletError} />
   </Route>
 );
