@@ -13,6 +13,8 @@ import Add from '../icons/add.svg';
 import Delete from '../icons/delete.svg';
 import Balance from '../Balance';
 import Header from '../Header';
+import KeyBlueButton from '../KeyBlueButton';
+import SlateGrayButton from '../SlateGrayButton';
 
 function mapStateToProps(state) {
   return {
@@ -600,12 +602,12 @@ class Send extends Component{
               </div>
             </div>
           </div>
-          <div style={styles.contentSend} onClick={() => this.submitSignPublishTx()}>
-            <div style={styles.viewButtonKeyBlue}>Confirm</div>
-          </div>
-          <div style={styles.contentSend} onClick={() => this.clearTransactionData()}>
-            <div style={styles.viewButtonLightSlateGray}>Cancel</div>
-          </div>
+          <KeyBlueButton style={styles.contentSend} onClick={() => this.submitSignPublishTx()}>
+            Confirm
+          </KeyBlueButton>
+          <SlateGrayButton style={styles.contentSend} onClick={() => this.clearTransactionData()}>
+            Cancel
+          </SlateGrayButton>
         </div>
       </div>);
 
@@ -705,9 +707,9 @@ class Send extends Component{
               }})}
               </div>
             </div>
-            <div style={styles.contentSend} onClick={() => this.submitConstructTx()}>
-              <div style={styles.viewButtonKeyBlue}>send</div>
-            </div>
+            <KeyBlueButton style={styles.contentSend} onClick={() => this.submitConstructTx()}>
+              Send
+            </KeyBlueButton>
           </div>
         </div>
     );

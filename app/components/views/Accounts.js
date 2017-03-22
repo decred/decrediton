@@ -4,6 +4,7 @@ import ErrorScreen from '../ErrorScreen';
 import SideBar from '../SideBar';
 import Header from '../Header';
 import Balance from '../Balance';
+import KeyBlueButton from '../KeyBlueButton';
 
 const styles = {
   body: {
@@ -192,9 +193,11 @@ class Accounts extends Component{
               <div></div>
             }
           </div>
-          <div style={styles.contentAddNewAccount} onClick={() => this.addNewAccount()}>
-            <div style={styles.viewButtonKeyBlue}>Add New Account</div>
-          </div>
+          <KeyBlueButton
+           style={styles.contentAddNewAccount} 
+           onClick={() => this.addNewAccount()}>
+           Add New Account
+          </KeyBlueButton>
         </div>
       </div>);
     if (walletService === null) {

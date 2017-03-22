@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import ControlActions from '../actions/ControlActions';
 import * as WalletLoaderActions from '../actions/WalletLoaderActions';
 import * as SeedServiceActions from '../actions/SeedServiceActions';
+import KeyBlueButton from './KeyBlueButton';
 
 const styles = {
   contentNewSeed: {
@@ -56,25 +57,6 @@ const styles = {
   },
   viewButtonKeyBlueWalletNewSeed: {
     float: 'left',
-    display: 'inline-block',
-    padding: '17px 18px 18px',
-    borderRadius: '5px',
-    backgroundColor: '#2971FF',
-    boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.2)',
-    transitionProperty: 'none',
-    color: '#FFF',
-    fontSize: '13px',
-    lineHeight: '9px',
-    fontWeight: '600',
-    textAlign: 'center',
-    textDecoration: 'none',
-    textTransform: 'capitalize',
-    ':hover': {
-      backgroundColor: '#1b58ff',
-    },
-    ':active': {
-      boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
-    }
   },
   contentNewSeedConfirmSeed: {
     height: '139px',
@@ -187,7 +169,7 @@ class CreateWalletForm extends React.Component {
           <br/>
           <span style={styles.paragraphOrangeWarning}>Warning:</span> Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else.</div>
         <div style={styles.contentSeed}>{generateRandomSeedResponse !== null ? generateRandomSeedResponse.getSeedMnemonic() : null}</div>
-        <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.props.createWalletConfirmNewSeed()}>Continue</a>
+        <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.props.createWalletConfirmNewSeed()}>Continue</KeyBlueButton>
       </div>);
 
     const newContinuedPage = (
@@ -246,7 +228,7 @@ class CreateWalletForm extends React.Component {
         <div style={styles.contentNewSeedCreateButton}>
           <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
           <div style={styles.contentConfirmWalletCreateInputRightPadding}>
-            <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.createWalletButton()}>Create Wallet</a>
+            <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.createWalletButton()}>Create Wallet</KeyBlueButton>
           </div>
         </div>
       </div>);
