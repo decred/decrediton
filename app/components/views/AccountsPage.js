@@ -13,7 +13,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, ContraolActions, ClientActions), dispatch);
+  return bindActionCreators(Object.assign({}, ControlActions, ClientActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Accounts);
