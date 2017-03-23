@@ -219,6 +219,7 @@ class Accounts extends Component{
       return;
     }
     this.props.getNextAccountAttempt(this.state.privpass, this.state.addAccountName);
+    this.hideAddAccount();
   }
   showAddAccount() {
     this.setState({showAddAccount: true});
