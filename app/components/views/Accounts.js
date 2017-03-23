@@ -91,11 +91,12 @@ const styles = {
   accountName: {
     width: '25%',
     paddingRight: '15px',
+    paddingLeft: '5px',
     float: 'left',
     height: '100%',
     paddingTop: '5px',
     fontSize: '19px',
-    textAlign: 'right',
+    textAlign: 'left',
   },
   accountBalance: {
     width: '50%',
@@ -247,18 +248,23 @@ class Accounts extends Component{
           ]}
         />
         <div style={styles.content}>
-          <div style={styles.flexHeight}>
-            {getAccountsResponse !== null ?
-              getAccountsResponse.getAccountsList().map(function(account) {
+          {getNextAccountRequestAttempt ?
+            <div style={styles.content}>
+              <CircularProgress style={styles.loading} size={125} thickness={6}/>
+            </div> :
+            getAccountsResponse !== null ?
+              <div style={styles.flexHeight}>
+              {getAccountsResponse.getAccountsList().map(function(account) {
                 return (
                 <div style={styles.accountRow} key={account.getAccountName()}>
                   <span style={styles.accountName}>{account.getAccountName()}</span>
                   <span style={styles.accountBalance}><Balance amount={account.getTotalBalance()}/></span>
                 </div>);
-              }) :
+              })}
+              </div>  :
               <div></div>
             }
-          </div>
+
           <KeyBlueButton
            style={styles.contentAddNewAccount}
            onClick={() => this.showAddAccount()}>
@@ -278,10 +284,7 @@ class Accounts extends Component{
             <div key="accountSuccess" ></div>,
           ]}
         />
-        { getNextAccountRequestAttempt ?
-        <div style={styles.content}>
-          <CircularProgress style={styles.loading} size={125} thickness={6}/>
-        </div> :
+
         <div style={styles.content}>
           <div style={styles.flexHeight}>
             <div style={styles.contentNestToAddress}>
@@ -292,6 +295,7 @@ class Accounts extends Component{
                     type="text"
                     style={styles.contentNestAddressHashTo}
                     placeholder="New Account Name"
+                    maxLength="50"
                     onBlur={(e) =>{this.updateAddAccountName(e.target.value);}}/>
                 </div>
               </div>
