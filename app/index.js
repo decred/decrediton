@@ -83,7 +83,7 @@ var initialState = {
     port: grpcport,
     walletService: null,
     network: network,
-    startTime: new Date(),
+    timeSince: null,
     // ints for mainnet and testnet protocol hex
     // TestNet2 CurrencyNet = 0x48e7a065
     testnet: 1223139429,

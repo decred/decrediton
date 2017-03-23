@@ -507,13 +507,14 @@ export const UPDATETIMESINCEBLOCK = 'UPDATETIMESINCEBLOCK';
 export function updateBlockTimeSince() {
   return (dispatch, getState) => {
     const { transactionNtfnsResponse } = getState().notifications;
-    const { startTime } = getState().grpc;
+    const { timeSince } = getState().grpc;
     if (transactionNtfnsResponse !== null && transactionNtfnsResponse.getAttachedBlocksList().length > 0) {
       const attachedBlocks = transactionNtfnsResponse.getAttachedBlocksList();
       var recentBlockTime = new Date(attachedBlocks[0].getTimestamp()*1000);
-      dispatch({timeSince: timeSince(recentBlockTime), type: UPDATETIMESINCEBLOCK });
-    } else {
-      dispatch({timeSince: timeSince(startTime), type: UPDATETIMESINCEBLOCK });
+      var updatedTimeSince = timeSince(recentBlockTime);
+      if (timeSince != updatedTimeSince) {
+        dispatch({timeSince: updatedTimeSince, type: UPDATETIMESINCEBLOCK });
+      }
     }
   };
 }

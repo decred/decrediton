@@ -23,7 +23,6 @@ function mapStateToProps(state) {
     timeBackString: state.notifications.timeBackString,
     timeSince: state.grpc.timeSince,
     synced: state.notifications.synced,
-    startTime: state.grpc.startTime,
   };
 }
 
