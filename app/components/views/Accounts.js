@@ -169,6 +169,31 @@ const styles = {
       color: '#2971ff',
     },
   },
+  viewNotificationError: {
+    display: 'inline-block',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    padding: '7px 20px',
+    borderRadius: '5px',
+    backgroundColor: '#fd714b',
+    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
+    color: '#fff',
+    fontSize: '13px',
+    textAlign: 'center',
+  },
+  viewNotificationSuccess: {
+    display: 'inline-block',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    padding: '7px 20px',
+    borderRadius: '5px',
+    backgroundColor: '#41bf53',
+    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
+    color: '#fff',
+    fontSize: '13px',
+    textAlign: 'center',
+    textDecoration: 'none',
+  },
 };
 
 class Accounts extends Component{
@@ -188,6 +213,7 @@ class Accounts extends Component{
       return;
     }
     this.props.getNextAccountAttempt(this.state.privpass, this.state.addAccountName);
+    setTimeout(this.setState({showAddAccount: false}),1000);
   }
   showAddAccount() {
     this.setState({showAddAccount: true});
@@ -200,11 +226,18 @@ class Accounts extends Component{
   }
   render() {
     const { walletService, getAccountsResponse } = this.props;
-
+    const { getNextAccountError, getNextAccountSuccess } = this.props;
     const accountsView = (
       <div style={styles.view}>
         <Header
           headerTitleOverview="Account Management"
+          headerTop={[getNextAccountError !== null ?
+            <div key="accountError" style={styles.viewNotificationError}>{getNextAccountError}</div> :
+            <div key="accountError" ></div>,
+            getNextAccountSuccess !== '' ?
+            <div key="accountSuccess" style={styles.viewNotificationSuccess}>{getNextAccountSuccess}</div> :
+            <div key="accountSuccess" ></div>,
+          ]}
         />
         <div style={styles.content}>
           <div style={styles.flexHeight}>
@@ -230,6 +263,13 @@ class Accounts extends Component{
       <div style={styles.view}>
         <Header
           headerTitleOverview="Account Management"
+          headerTop={[getNextAccountError !== null ?
+            <div key="accountError" style={styles.viewNotificationError}>{getNextAccountError}</div> :
+            <div key="accountError" ></div>,
+            getNextAccountSuccess !== '' ?
+            <div key="accountSuccess" style={styles.viewNotificationSuccess}>{getNextAccountSuccess}</div> :
+            <div key="accountSuccess" ></div>,
+          ]}
         />
         <div style={styles.content}>
           <div style={styles.flexHeight}>

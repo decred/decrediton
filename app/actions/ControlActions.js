@@ -1,4 +1,4 @@
-import { getBalanceAttempt, getTransactionInfoAttempt } from './ClientActions';
+import { getBalanceAttempt, getTransactionInfoAttempt, getAccountsAttempt } from './ClientActions';
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   ConstructTransactionRequest, SignTransactionRequest,
@@ -138,8 +138,12 @@ function getNextAccountError(error) {
   return { error, type: GETNEXTACCOUNT_FAILED };
 }
 
-function getNextAccountSuccess(getNextAccountResponse) {
-  return { getNextAccountResponse: getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS };
+function getNextAccountSuccess(getNextAccountResponse, accountName) {
+  var success = 'Account - ' + accountName + ' - has been successfully created.';
+  return (dispatch) => {
+    dispatch({getNextAccountResponse: getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS, successMessage: success });
+    dispatch(getAccountsAttempt());
+  };
 }
 
 export function getNextAccountAttempt(passphrase, accountName) {
@@ -163,7 +167,7 @@ function getNextAccountAction() {
           if (err) {
             dispatch(getNextAccountError(err + ' Please try again'));
           } else {
-            dispatch(getNextAccountSuccess(getNextAccountResponse));
+            dispatch(getNextAccountSuccess(getNextAccountResponse, getNextAccountRequest.getAccountName()));
           }
         });
   };

@@ -9,6 +9,8 @@ function mapStateToProps(state) {
   return {
     walletService: state.grpc.walletService,
     getAccountsResponse: state.grpc.getAccountsResponse,
+    getNextAccountSuccess: state.control.getNextAccountSuccess,
+    getNextAccountError: state.control.getNextAccountError,
   };
 }
 

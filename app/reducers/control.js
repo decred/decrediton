@@ -88,9 +88,10 @@ export default function control(state = {}, action) {
     };
   case GETNEXTACCOUNT_SUCCESS:
     return {...state,
-      getNextAccountError: '',
+      getNextAccountError: null,
       getNextAccountRequestAttempt: false,
       getNextAccountResponse: action.getNextAccountResponse,
+      getNextAccountSuccess: action.successMessage,
     };
   case IMPORTPRIVKEY_ATTEMPT:
     return {...state,
