@@ -126,6 +126,49 @@ const styles = {
     marginTop: '20px',
     float: 'right',
   },
+  contentNestToAddress: {
+    width: '100%',
+    height: '54px',
+    paddingTop: '10px',
+    float: 'left',
+  },
+  contentNestPrefixSend: {
+    width: '200px',
+    paddingRight: '15px',
+    float: 'left',
+    height: '100%',
+    paddingTop: '5px',
+    fontSize: '19px',
+    textAlign: 'right',
+    textTransform: 'capitalize',
+  },
+  contentNestAddressHashBlock: {
+    position: 'relative',
+    overflow: 'hidden',
+    width: '311px',
+    height: '34px',
+    float: 'left',
+    borderBottom: '1px solid #a9b4bf',
+    fontSize: '13px',
+  },
+  inputForm: {
+    position: 'relative',
+    width: '100%',
+    height: 'auto',
+    minHeight: '44px',
+  },
+  contentNestAddressHashTo: {
+    width: '96%',
+    height: '100%',
+    padding: '9px 0px 8px 10px',
+    borderStyle: 'none',
+    color: '#2971ff',
+    fontSize: '13px',
+    cursor: 'text',
+    ':focus': {
+      color: '#2971ff',
+    },
+  },
 };
 
 class Accounts extends Component{
@@ -136,16 +179,24 @@ class Accounts extends Component{
     super(props);
     this.state = {
       showAddAccount: false,
+      addAccountName: '',
+      privpass: null,
     };
   }
   addAccount() {
-    console.log("Add account");
+    if (this.state.addAccountName == '' || this.state.privpass == null) {
+      return;
+    }
+    this.props.getNextAccountAttempt(this.state.privpass, this.state.addAccountName);
   }
   showAddAccount() {
     this.setState({showAddAccount: true});
   }
   hideAddAccount() {
-    this.setState({showAddAccount: false});
+    this.setState({showAddAccount: false, addAccountName: '', privpass: null});
+  }
+  updateAddAccountName(accountName) {
+    this.setState({addAccountName: accountName});
   }
   render() {
     const { walletService, getAccountsResponse } = this.props;
@@ -159,7 +210,7 @@ class Accounts extends Component{
           <div style={styles.flexHeight}>
             {getAccountsResponse !== null ?
               getAccountsResponse.getAccountsList().map(function(account) {
-              return (
+                return (
                 <div style={styles.accountRow} key={account.getAccountName()}>
                   <span style={styles.accountName}>{account.getAccountName()}</span>
                   <span style={styles.accountBalance}><Balance amount={account.getTotalBalance()}/></span>
@@ -169,7 +220,7 @@ class Accounts extends Component{
             }
           </div>
           <KeyBlueButton
-           style={styles.contentAddNewAccount} 
+           style={styles.contentAddNewAccount}
            onClick={() => this.showAddAccount()}>
            Add New Account
           </KeyBlueButton>
@@ -182,14 +233,39 @@ class Accounts extends Component{
         />
         <div style={styles.content}>
           <div style={styles.flexHeight}>
+            <div style={styles.contentNestToAddress}>
+              <div style={styles.contentNestPrefixSend}>To:</div>
+              <div style={styles.contentNestAddressHashBlock}>
+                <div style={styles.inputForm}>
+                  <input
+                    type="text"
+                    style={styles.contentNestAddressHashTo}
+                    placeholder="New Account Name"
+                    onBlur={(e) =>{this.updateAddAccountName(e.target.value);}}/>
+                </div>
+              </div>
+            </div>
+            <div style={styles.contentNestToAddress} key="privatePassPhrase">
+              <div style={styles.contentNestPrefixSend}>Private Passhrase:</div>
+              <div style={styles.contentNestAddressHashBlock}>
+                <div style={styles.inputForm}>
+                  <input
+                    id="privpass"
+                    style={styles.contentNestAddressHashTo}
+                    type="password"
+                    placeholder="Private Password"
+                    onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}/>
+                </div>
+              </div>
+            </div>
           </div>
           <KeyBlueButton
-           style={styles.contentAddNewAccount} 
+           style={styles.contentAddNewAccount}
            onClick={() => this.addAccount()}>
            Confirm
           </KeyBlueButton>
           <SlateGrayButton
-           style={styles.contentHideNewAccount} 
+           style={styles.contentHideNewAccount}
            onClick={() => this.hideAddAccount()}>
            Cancel
           </SlateGrayButton>
@@ -202,7 +278,7 @@ class Accounts extends Component{
       return(
         <div style={styles.body}>
           <SideBar />
-          {!this.state.showAddAccount ? 
+          {!this.state.showAddAccount ?
           accountsView :
           addAccountView
           }
