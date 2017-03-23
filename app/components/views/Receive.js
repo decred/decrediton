@@ -1,7 +1,7 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 import ErrorScreen from '../ErrorScreen';
-import Button from '../ButtonTanel';
+import KeyBlueButton from '../KeyBlueButton';
 import SideBar from '../SideBar';
 import Header from '../Header';
 import qr from 'qr-image';
@@ -81,13 +81,13 @@ class Receive extends Component{
               <div></div>
             }
             <p>Share this wallet address to receive payments, To protect your privacy, new addresses are generated automatically once you use them.</p>
-            <Button
+            <KeyBlueButton
               size="large"
               block={false}
               onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(0) : null}
               >
               Generate new address
-            </Button>
+            </KeyBlueButton>
           </div>
         </div>
 			</div>

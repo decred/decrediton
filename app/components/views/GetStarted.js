@@ -7,8 +7,9 @@ import ShowError from '../ShowError';
 import Radium from 'radium';
 import SideBar from '../SideBar';
 import NewExistingSeedToggle from '../NewExistingSeedToggle';
-import FlatButton from 'material-ui/FlatButton';
 import Header from '../Header';
+import KeyBlueButton from '../KeyBlueButton';
+import SlateGrayButton from '../SlateGrayButton';
 
 const styles = {
   body: {
@@ -85,47 +86,9 @@ const styles = {
   viewButtonGoBack: {
     marginRight: '80px',
     marginBottom: '20px',
-    display: 'inline-block',
-    padding: '17px 18px 18px',
-    float: 'right',
-    borderRadius: '5px',
-    backgroundColor: '#8997A5',
-    boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.2)',
-    color: '#FFF',
-    fontSize: '13px',
-    lineHeight: '9px',
-    fontWeight: '600',
-    textAlign: 'center',
-    textDecoration: 'none',
-    textTransform: 'capitalize',
-    ':hover': {
-      backgroundColor: '#596d81',
-    },
-    ':active': {
-      boxShadow: '0 0 0 0 rgba(0, 0, 0, .22)',
-    }
   },
   viewButtonKeyBlueWalletNewSeed: {
     float: 'left',
-    display: 'inline-block',
-    padding: '17px 18px 18px',
-    borderRadius: '5px',
-    backgroundColor: '#2971FF',
-    boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.2)',
-    transitionProperty: 'none',
-    color: '#FFF',
-    fontSize: '13px',
-    lineHeight: '9px',
-    fontWeight: '600',
-    textAlign: 'center',
-    textDecoration: 'none',
-    textTransform: 'capitalize',
-    ':hover': {
-      backgroundColor: '#1b58ff',
-    },
-    ':active': {
-      boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
-    }
   },
   contentNewSeed: {
     overflow: 'auto',
@@ -354,7 +317,7 @@ class Home extends Component{
               <div style={styles.contentNewSeedCreateButton}>
                 <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
                 <div style={styles.contentConfirmWalletCreateInputRightPadding}>
-                  <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.openWalletButton()}>Open Wallet</a>
+                  <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.openWalletButton()}>Open Wallet</KeyBlueButton>
                 </div>
               </div>
             </div>
@@ -379,7 +342,7 @@ class Home extends Component{
               leftText={'New seed'}
               rightText={'Existing Seed'}
               toggleAction={(e)=>{this.toggleNewExisting(e);}}/> :
-            <div style={styles.viewButtonGoBack} onClick={()=>this.props.createWalletGoBackNewSeed()}>Back</div>
+            <SlateGrayButton style={styles.viewButtonGoBack} onClick={()=>this.props.createWalletGoBackNewSeed()}>Back</SlateGrayButton>
           }
         </Header>
         {walletCreateRequestAttempt ?
@@ -443,7 +406,7 @@ class Home extends Component{
                 <div style={styles.contentNewSeedCreateButton}>
                   <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
                   <div style={styles.contentConfirmWalletCreateInputRightPadding}>
-                    <a style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.discoverAddressesButton()}>Scan</a>
+                    <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.discoverAddressesButton()}>Scan</KeyBlueButton>
                   </div>
                 </div>
               </div>
@@ -486,11 +449,12 @@ class Home extends Component{
       );
     }
     const actions = [
-      <FlatButton
-        label="OK, I Understand"
-        primary={true}
-        onTouchTap={this.handleDisclaimerOK}
-      />,
+      <KeyBlueButton
+        onClick={() => this.handleDisclaimerOK()}
+      >
+        OK, I Understand
+      </KeyBlueButton>
+      ,
     ];
     if (!disclaimerOK) {
       return (

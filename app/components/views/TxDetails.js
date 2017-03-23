@@ -102,28 +102,6 @@ const styles = {
     textAlign: 'center',
     marginRight: '-20px',
   },
-  viewButtonLightSlateGray: {
-    display: 'inline-block',
-    padding: '17px 18px 18px',
-    float: 'right',
-    borderRadius: '5px',
-    backgroundColor: '#8997a5',
-    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
-    color: '#fff',
-    fontSize: '13px',
-    lineHeight: '9px',
-    fontWeight: '600',
-    textAlign: 'center',
-    textDecoration: 'none',
-    textTransform: 'capitalize',
-    ':hover': {
-      backgroundColor: '#596d81',
-    },
-    ':active': {
-      boxShadow: '0 0 0 0 rgba(0, 0, 0, .22)',
-    }
-  },
-
   headerMetaTransactionDetailsIn: {
     height: '38px',
     paddingTop: '16px',
@@ -308,7 +286,7 @@ class TxDetails extends Component {
       <div style={styles.view}>
         <div style={styles.header}>
           <div style={styles.headerTopTransactionDetails}>
-            <a style={styles.viewButtonLightSlateGray} onClick={() => clearTxDetails()}>back</a>
+            <SlateGrayButton onClick={() => clearTxDetails()}>back</SlateGrayButton>
           </div>
           <div style={styles.headerTitleOverview}>Primary account</div>
           {walletValueUp ?

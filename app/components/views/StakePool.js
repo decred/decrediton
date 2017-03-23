@@ -6,6 +6,7 @@ import SideBar from '../SideBar';
 import Header from '../Header';
 import ArrowDownMidBlue from '../icons/arrow-down-mid-blue.svg';
 import ArrowDownKeyBlue from '../icons/arrow-down-key-blue.svg';
+import KeyBlueButton from '../KeyBlueButton';
 
 const styles = {
   body: {
@@ -535,9 +536,9 @@ class StakePool extends Component{
               </div>
             </div>
           </div>
-          <div style={styles.contentSend} onClick={() => this.setStakePoolInfo()}>
-            <div style={styles.viewButtonKeyBlue}>Confirm</div>
-          </div>
+          <KeyBlueButton style={styles.contentSend} onClick={() => this.setStakePoolInfo()}>
+            Confirm
+          </KeyBlueButton>
         </div>
     );
     var configuredStakePoolInformation = (
@@ -579,9 +580,9 @@ class StakePool extends Component{
             </div>
           </div>
           {unconfigedStakePools > 0 ?
-          <div style={styles.contentSend} onClick={() => this.addAnotherStakePool()}>
-            <div style={styles.viewButtonKeyBlue}>Add stakepool</div>
-          </div> :
+          <KeyBlueButton style={styles.contentSend} onClick={() => this.addAnotherStakePool()}>
+            Add stakepool
+          </KeyBlueButton> :
           <div></div>
           }
         </div>
