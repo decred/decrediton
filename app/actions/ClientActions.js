@@ -5,6 +5,7 @@ export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
 export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
 export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
 import { hashHistory } from 'react-router';
+import { timeSince } from '../helpers/dateFormat.js';
 import {
   PingRequest, NetworkRequest, AccountNumberRequest, AccountsRequest,
   BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest
@@ -500,4 +501,20 @@ export function setTransactionDetails(tx) {
 
 export function clearTransactionDetails() {
   return { type: GETTRANSACTIONDETAILS_CLEAR };
+}
+
+export const UPDATETIMESINCEBLOCK = 'UPDATETIMESINCEBLOCK';
+export function updateBlockTimeSince() {
+  return (dispatch, getState) => {
+    const { transactionNtfnsResponse } = getState().notifications;
+    const { timeSinceString } = getState().grpc;
+    if (transactionNtfnsResponse !== null && transactionNtfnsResponse.getAttachedBlocksList().length > 0) {
+      const attachedBlocks = transactionNtfnsResponse.getAttachedBlocksList();
+      var recentBlockTime = new Date(attachedBlocks[0].getTimestamp()*1000);
+      var updatedTimeSince = timeSince(recentBlockTime);
+      if (timeSinceString != updatedTimeSince) {
+        dispatch({timeSinceString: updatedTimeSince, type: UPDATETIMESINCEBLOCK });
+      }
+    }
+  };
 }
