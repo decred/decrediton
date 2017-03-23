@@ -237,7 +237,7 @@ export default function grpc(state = {}, action) {
   case UPDATETIMESINCEBLOCK:
     return {
       ...state,
-      timeSince: action.timeSince,
+      timeSinceString: action.timeSinceString,
     };
   default:
     return state;

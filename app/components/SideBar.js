@@ -21,7 +21,7 @@ function mapStateToProps(state) {
     transactionNtfnsResponse: state.notifications.transactionNtfnsResponse,
     currentHeight: state.notifications.currentHeight,
     timeBackString: state.notifications.timeBackString,
-    timeSince: state.grpc.timeSince,
+    timeSinceString: state.grpc.timeSinceString,
     synced: state.notifications.synced,
   };
 }
@@ -251,7 +251,7 @@ class SideBar extends Component {
     }
     const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
-    const { synced, currentHeight, timeBackString, timeSince } = this.props;
+    const { synced, currentHeight, timeBackString, timeSinceString } = this.props;
     var balance = 0;
     if (getBalanceResponse != null) {
       balance = getBalanceResponse.getTotal() / 100000000;
@@ -299,7 +299,7 @@ class SideBar extends Component {
           {synced && getAccountsResponse !== null ?
             <div style={styles.menuBottomLatestBlock}>
               <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse.getCurrentBlockHeight()}</span></a>
-              <div style={styles.menuBottomLatestBlockTime}>{timeSince}</div>
+              <div style={styles.menuBottomLatestBlockTime}>{timeSinceString}</div>
             </div>:
             currentHeight !== 0 ?
             <div style={styles.menuBottomLatestBlock}>
