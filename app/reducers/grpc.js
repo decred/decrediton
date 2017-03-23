@@ -10,6 +10,7 @@ import {
   GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED, GETTRANSACTIONS_PROGRESS, GETTRANSACTIONS_COMPLETE,
   PAGINATETRANSACTIONS_START, PAGINATETRANSACTIONS_MORE, PAGINATETRANSACTIONS_END,
   GETTRANSACTIONDETAILS_SET, GETTRANSACTIONDETAILS_CLEAR,
+  UPDATETIMESINCEBLOCK,
 } from '../actions/ClientActions';
 
 export default function grpc(state = {}, action) {
@@ -232,6 +233,11 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       transactionDetails: null,
+    };
+  case UPDATETIMESINCEBLOCK:
+    return {
+      ...state,
+      timeSince: action.timeSince,
     };
   default:
     return state;

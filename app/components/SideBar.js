@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import * as ClientActions from '../actions/ClientActions';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import arrowUpLightBlue from './icons/arrow-up-light-blue.svg';
 import menulogo from './icons/menu-logo.svg';
 import MenuLink from './MenuLink';
 import HelpLink from './HelpLink';
 import './fonts.css';
-import { timeSince } from '../helpers/dateFormat.js';
 
 function mapStateToProps(state) {
   return {
@@ -20,9 +21,14 @@ function mapStateToProps(state) {
     transactionNtfnsResponse: state.notifications.transactionNtfnsResponse,
     currentHeight: state.notifications.currentHeight,
     timeBackString: state.notifications.timeBackString,
+    timeSince: state.grpc.timeSince,
     synced: state.notifications.synced,
     startTime: state.grpc.startTime,
   };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(Object.assign({}, ClientActions), dispatch);
 }
 
 const styles = {
@@ -225,23 +231,11 @@ class SideBar extends Component {
     clearInterval(this.interval);
   }
   componentDidMount() {
-    this.interval = setInterval(() => this.updateBlockTimeSince(), 5000);
-  }
-
-  updateBlockTimeSince() {
-    const { transactionNtfnsResponse, startTime } = this.props;
-    if (transactionNtfnsResponse !== null && transactionNtfnsResponse.getAttachedBlocksList().length > 0) {
-      const attachedBlocks = transactionNtfnsResponse.getAttachedBlocksList();
-      var recentBlockTime = new Date(attachedBlocks[attachedBlocks.length-1].getTimestamp()*1000);
-      this.setState({timeSince: timeSince(recentBlockTime)});
-    } else {
-      this.setState({timeSince: timeSince(startTime)});
-    }
+    this.interval = setInterval(() => this.props.updateBlockTimeSince(), 10000);
   }
   showAccounts() {
     this.setState({accountsHidden: false});
   }
-
   hideAccounts() {
     this.setState({accountsHidden: true});
   }
@@ -258,7 +252,7 @@ class SideBar extends Component {
     }
     const { getBalanceResponse } = this.props;
     const { getAccountsResponse } = this.props;
-    const { synced, currentHeight, timeBackString } = this.props;
+    const { synced, currentHeight, timeBackString, timeSince } = this.props;
     var balance = 0;
     if (getBalanceResponse != null) {
       balance = getBalanceResponse.getTotal() / 100000000;
@@ -306,7 +300,7 @@ class SideBar extends Component {
           {synced && getAccountsResponse !== null ?
             <div style={styles.menuBottomLatestBlock}>
               <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse.getCurrentBlockHeight()}</span></a>
-              <div style={styles.menuBottomLatestBlockTime}>{this.state.timeSince}</div>
+              <div style={styles.menuBottomLatestBlockTime}>{timeSince}</div>
             </div>:
             currentHeight !== 0 ?
             <div style={styles.menuBottomLatestBlock}>
@@ -323,4 +317,4 @@ class SideBar extends Component {
   }
 }
 
-export default connect(mapStateToProps)(SideBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
