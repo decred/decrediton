@@ -11,6 +11,7 @@ function mapStateToProps(state) {
     getAccountsResponse: state.grpc.getAccountsResponse,
     getNextAccountSuccess: state.control.getNextAccountSuccess,
     getNextAccountError: state.control.getNextAccountError,
+    getNextAccountRequestAttempt: state.control.getNextAccountRequestAttempt,
   };
 }
 

@@ -6,6 +6,8 @@ import Header from '../Header';
 import Balance from '../Balance';
 import KeyBlueButton from '../KeyBlueButton';
 import SlateGrayButton from '../SlateGrayButton';
+import CircularProgress from 'material-ui/CircularProgress';
+
 const styles = {
   body: {
     position: 'fixed',
@@ -194,6 +196,10 @@ const styles = {
     textAlign: 'center',
     textDecoration: 'none',
   },
+  loading: {
+    marginTop: '110px',
+    marginLeft: '268px',
+  }
 };
 
 class Accounts extends Component{
@@ -213,7 +219,6 @@ class Accounts extends Component{
       return;
     }
     this.props.getNextAccountAttempt(this.state.privpass, this.state.addAccountName);
-    setTimeout(this.setState({showAddAccount: false}),1000);
   }
   showAddAccount() {
     this.setState({showAddAccount: true});
@@ -227,6 +232,7 @@ class Accounts extends Component{
   render() {
     const { walletService, getAccountsResponse } = this.props;
     const { getNextAccountError, getNextAccountSuccess } = this.props;
+    const { getNextAccountRequestAttempt } = this.props;
     const accountsView = (
       <div style={styles.view}>
         <Header
@@ -271,10 +277,14 @@ class Accounts extends Component{
             <div key="accountSuccess" ></div>,
           ]}
         />
+        { getNextAccountRequestAttempt ?
+        <div style={styles.content}>
+          <CircularProgress style={styles.loading} size={125} thickness={6}/>
+        </div> :
         <div style={styles.content}>
           <div style={styles.flexHeight}>
             <div style={styles.contentNestToAddress}>
-              <div style={styles.contentNestPrefixSend}>To:</div>
+              <div style={styles.contentNestPrefixSend}>Account Name:</div>
               <div style={styles.contentNestAddressHashBlock}>
                 <div style={styles.inputForm}>
                   <input
@@ -310,6 +320,7 @@ class Accounts extends Component{
            Cancel
           </SlateGrayButton>
         </div>
+        }
       </div>
     );
     if (walletService === null) {
