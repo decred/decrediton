@@ -2,13 +2,13 @@ import { transactionNtfs, spentnessNtfs, accountNtfs } from '../middleware/grpc/
 import { getAccountsAttempt, getBalanceAttempt, getStakeInfoAttempt,
   getTicketPriceAttempt, getNetworkAttempt } from './ClientActions';
 import { timeBackString } from '../helpers/dateFormat.js';
-import { TransactionNotificationsRequest } from '../middleware/walletrpc/api_pb';
+import { TransactionNotificationsRequest, SpentnessNotificationsRequest, AccountNotificationsRequest} from '../middleware/walletrpc/api_pb';
 
-export const TRANSACTIONNFTNS_START = 'TRANSACTIONNFTNS_START';
-export const TRANSACTIONNFTNS_FAILED = 'TRANSACTIONNFTNS_FAILED';
-export const TRANSACTIONNFTNS_DATA = 'TRANSACTIONNFTNS_DATA';
-export const TRANSACTIONNFTNS_SYNCING = 'TRANSACTIONNFTNS_SYNCING';
-export const TRANSACTIONNFTNS_END = 'TRANSACTIONNFTNS_END';
+export const TRANSACTIONNTFNS_START = 'TRANSACTIONNTFNS_START';
+export const TRANSACTIONNTFNS_FAILED = 'TRANSACTIONNTFNS_FAILED';
+export const TRANSACTIONNTFNS_DATA = 'TRANSACTIONNTFNS_DATA';
+export const TRANSACTIONNTFNS_SYNCING = 'TRANSACTIONNTFNS_SYNCING';
+export const TRANSACTIONNTFNS_END = 'TRANSACTIONNTFNS_END';
 
 function transactionNtfnsData(response) {
   return (dispatch, getState) => {
@@ -25,35 +25,35 @@ function transactionNtfnsData(response) {
       // Only request other wallet information if it is within 2 hours.
       // 3600 * 2 == 2 hours worth of seconds
       if (seconds < 3600 * 2) {
-        dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
+        dispatch({response: response, type: TRANSACTIONNTFNS_DATA });
         setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
         setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
         setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
         setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
         setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
       } else if (attachedBlocks[attachedBlocks.length-1].getHeight()%100 == 0) {
-        dispatch({response: response, type: TRANSACTIONNFTNS_DATA });
+        dispatch({response: response, type: TRANSACTIONNTFNS_DATA });
       }
     } else if (currentHeight%100 == 0) {
       const { blocksPerDay } = getState().notifications;
       var daysBack = Math.floor((neededBlocks - currentHeight) / blocksPerDay);
-      dispatch({currentHeight: currentHeight, timeBackString: timeBackString(daysBack), type: TRANSACTIONNFTNS_SYNCING });
+      dispatch({currentHeight: currentHeight, timeBackString: timeBackString(daysBack), type: TRANSACTIONNTFNS_SYNCING });
     }
   };
 }
 
-export function transactionNftnsStart() {
+export function transactionNtfnsStart() {
   var request = new TransactionNotificationsRequest();
   return (dispatch) => {
-    dispatch({request: request, type: TRANSACTIONNFTNS_START });
+    dispatch({request: request, type: TRANSACTIONNTFNS_START });
     dispatch(startTransactionNtfns());
   };
 }
 
-export function transactionNftnsEnd() {
+export function transactionNtfnsEnd() {
   var request = {};
   return (dispatch) => {
-    dispatch({request: request, type: TRANSACTIONNFTNS_END });
+    dispatch({request: request, type: TRANSACTIONNTFNS_END });
     //
   };
 }
@@ -70,36 +70,40 @@ function startTransactionNtfns() {
   };
 }
 
-export const SPENTNESSNFTNS_START = 'SPENTNESSNFTNS_START';
-export const SPENTNESSNFTNS_FAILED = 'SPENTNESSNFTNS_FAILED';
-export const SPENTNESSNFTNS_DATA = 'SPENTNESSNFTNS_DATA';
-export const SPENTNESSNFTNS_END = 'SPENTNESSNFTNS_END';
+export const SPENTNESSNTFNS_START = 'SPENTNESSNTFNS_START';
+export const SPENTNESSNTFNS_FAILED = 'SPENTNESSNTFNS_FAILED';
+export const SPENTNESSNTFNS_DATA = 'SPENTNESSNTFNS_DATA';
+export const SPENTNESSNTFNS_END = 'SPENTNESSNTFNS_END';
 
 function spentnessNtfnsData(response) {
-  return { response: response, type: SPENTNESSNFTNS_DATA };
+  console.log("spentnessNtfnsData", response);
+  //return { response: response, type: SPENTNESSNTFNS_DATA };
 }
 
-export function spentnessNftnsStart() {
-  var request = {};
+export function spentnessNtfnsStart(accountNum) {
+  var request = new SpentnessNotificationsRequest();
+  request.setAccount(accountNum);
+  request.setNoNotifyUnspent(false);
+  request.setNoNotifySpent(false);
   return (dispatch) => {
-    dispatch({request: request, type: SPENTNESSNFTNS_START });
+    dispatch({request: request, type: SPENTNESSNTFNS_START });
     dispatch(startSpentnessNtfns());
   };
 }
 
-export function spentnessNftnsEnd() {
+export function spentnessNtfnsEnd() {
   var request = {};
   return (dispatch) => {
-    dispatch({request: request, type: SPENTNESSNFTNS_END });
+    dispatch({request: request, type: SPENTNESSNTFNS_END });
     //
   };
 }
 
 function startSpentnessNtfns() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
-    const { spentnessNftnsRequest } = getState().notifications;
-    spentnessNtfs(client, spentnessNftnsRequest,
+    const { walletService } = getState().grpc;
+    const { spentnessNtfnsRequest } = getState().notifications;
+    spentnessNtfs(walletService, spentnessNtfnsRequest,
       function(data) {
         dispatch(spentnessNtfnsData(data));
       }
@@ -107,40 +111,37 @@ function startSpentnessNtfns() {
   };
 }
 
-export const ACCOUNTNFTNS_START = 'ACCOUNTNFTNS_START';
-export const ACCOUNTNFTNS_FAILED = 'ACCOUNTNFTNS_FAILED';
-export const ACCOUNTNFTNS_DATA = 'ACCOUNTNFTNS_DATA';
-export const ACCOUNTNFTNS_END = 'ACCOUNTNFTNS_END';
+export const ACCOUNTNTFNS_START = 'ACCOUNTNTFNS_START';
+export const ACCOUNTNTFNS_FAILED = 'ACCOUNTNTFNS_FAILED';
+export const ACCOUNTNTFNS_DATA = 'ACCOUNTNTFNS_DATA';
+export const ACCOUNTNTFNS_END = 'ACCOUNTNTFNS_END';
 
 function accountNtfnsData(response) {
-  return { response: response, type: ACCOUNTNFTNS_DATA };
+  console.log("accountNtfns", response);
+  //return { response: response, type: ACCOUNTNTFNS_DATA };
 }
 
-export function accountNftnsStart(accountNum) {
-  var request = {
-    account: accountNum,
-    no_notify_unspent: false,
-    no_notify_spent: false,
-  };
+export function accountNtfnsStart() {
+  var request = new AccountNotificationsRequest();
   return (dispatch) => {
-    dispatch({request: request, type: ACCOUNTNFTNS_START });
+    dispatch({request: request, type: ACCOUNTNTFNS_START });
     dispatch(startAccountNtfns());
   };
 }
 
-export function accountNftnsEnd() {
+export function accountNtfnsEnd() {
   var request = {};
   return (dispatch) => {
-    dispatch({request: request, type: ACCOUNTNFTNS_END });
+    dispatch({request: request, type: ACCOUNTNTFNS_END });
     //
   };
 }
 
 function startAccountNtfns() {
   return (dispatch, getState) => {
-    const { client } = getState().login;
-    const { accountNftnsRequest } = getState().notifications;
-    accountNtfs(client, accountNftnsRequest,
+    const { walletService } = getState().grpc;
+    const { accountNtfnsRequest } = getState().notifications;
+    accountNtfs(walletService, accountNtfnsRequest,
       function(data) {
         dispatch(accountNtfnsData(data));
       }
