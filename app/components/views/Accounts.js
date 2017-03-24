@@ -7,6 +7,7 @@ import Balance from '../Balance';
 import KeyBlueButton from '../KeyBlueButton';
 import SlateGrayButton from '../SlateGrayButton';
 import CircularProgress from 'material-ui/CircularProgress';
+import Delete from '../icons/delete.svg';
 
 const styles = {
   body: {
@@ -176,7 +177,7 @@ const styles = {
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
-    padding: '7px 20px',
+    padding: '7px 20px 7px 7px',
     borderRadius: '5px',
     backgroundColor: '#fd714b',
     boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
@@ -188,7 +189,7 @@ const styles = {
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
-    padding: '7px 20px',
+    padding: '7px 20px 7px 7px',
     borderRadius: '5px',
     backgroundColor: '#41bf53',
     boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
@@ -200,7 +201,20 @@ const styles = {
   loading: {
     marginTop: '110px',
     marginLeft: '268px',
-  }
+  },
+  contentNestAddressDeleteIcon: {
+    width: '26px',
+    height: '19px',
+    float: 'left',
+    backgroundImage: `url(${Delete})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '8px',
+    backgroundRepeat: 'no-repeat',
+    cursor: 'pointer',
+    ':hover': {
+      opacity: '0.85',
+    }
+  },
 };
 
 class Accounts extends Component{
@@ -214,6 +228,10 @@ class Accounts extends Component{
       addAccountName: '',
       privpass: null,
     };
+  }
+  componentWillMount() {
+    this.props.clearNewAccountSuccess();
+    this.props.clearNewAccountError();
   }
   addAccount() {
     if (this.state.addAccountName == '' || this.state.privpass == null) {
@@ -240,10 +258,10 @@ class Accounts extends Component{
         <Header
           headerTitleOverview="Account Management"
           headerTop={[getNextAccountError !== null ?
-            <div key="accountError" style={styles.viewNotificationError}>{getNextAccountError}</div> :
+            <div key="accountError" style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearNewAccountError()}></div>{getNextAccountError}</div> :
             <div key="accountError" ></div>,
-            getNextAccountSuccess !== '' ?
-            <div key="accountSuccess" style={styles.viewNotificationSuccess}>{getNextAccountSuccess}</div> :
+            getNextAccountSuccess !== null ?
+            <div key="accountSuccess" style={styles.viewNotificationSuccess}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearNewAccountSuccess()}></div>{getNextAccountSuccess}</div> :
             <div key="accountSuccess" ></div>,
           ]}
         />
@@ -279,7 +297,7 @@ class Accounts extends Component{
           headerTop={[getNextAccountError !== null ?
             <div key="accountError" style={styles.viewNotificationError}>{getNextAccountError}</div> :
             <div key="accountError" ></div>,
-            getNextAccountSuccess !== '' ?
+            getNextAccountSuccess !== null ?
             <div key="accountSuccess" style={styles.viewNotificationSuccess}>{getNextAccountSuccess}</div> :
             <div key="accountSuccess" ></div>,
           ]}
