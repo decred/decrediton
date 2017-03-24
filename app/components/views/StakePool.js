@@ -7,6 +7,7 @@ import Header from '../Header';
 import ArrowDownMidBlue from '../icons/arrow-down-mid-blue.svg';
 import ArrowDownKeyBlue from '../icons/arrow-down-key-blue.svg';
 import KeyBlueButton from '../KeyBlueButton';
+import Delete from '../icons/delete.svg';
 
 const styles = {
   body: {
@@ -33,7 +34,7 @@ const styles = {
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
-    padding: '7px 20px',
+    padding: '7px 20px 7px 7px',
     borderRadius: '5px',
     backgroundColor: '#fd714b',
     boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
@@ -45,7 +46,7 @@ const styles = {
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
-    padding: '7px 20px',
+    padding: '7px 20px 7px 7px',
     borderRadius: '5px',
     backgroundColor: '#41bf53',
     boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
@@ -53,6 +54,19 @@ const styles = {
     fontSize: '13px',
     textAlign: 'center',
     textDecoration: 'none',
+  },
+  contentNestAddressDeleteIcon: {
+    width: '26px',
+    height: '19px',
+    float: 'left',
+    backgroundImage: `url(${Delete})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '8px',
+    backgroundRepeat: 'no-repeat',
+    cursor: 'pointer',
+    ':hover': {
+      opacity: '0.85',
+    }
   },
   transition1: {
     transition: 'all 100ms ease-in-out',
@@ -461,6 +475,10 @@ class StakePool extends Component{
       addAnotherStakePool: false,
     };
   }
+  componentWillMount() {
+    this.props.clearStakePoolConfigError();
+    this.props.clearStakePoolConfigSuccess();
+  }
   addAnotherStakePool() {
     this.setState({addAnotherStakePool: true});
   }
@@ -593,11 +611,11 @@ class StakePool extends Component{
           headerTop={
           [
             currentStakePoolConfigError !== null ?
-            <div key="updateStakePoolError" style={styles.viewNotificationError}>{currentStakePoolConfigError}</div> :
+            <div key="updateStakePoolError" style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStakePoolConfigError()}/>{currentStakePoolConfigError}</div> :
 
             <div key="updateStakePoolError" ></div>,
             currentStakePoolConfigSuccessMessage !== undefined && currentStakePoolConfigSuccessMessage !== '' ?
-            <div key="configSuccess"  style={styles.viewNotificationSuccess}>{currentStakePoolConfigSuccessMessage}</div> :
+            <div key="configSuccess"  style={styles.viewNotificationSuccess}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStakePoolConfigSuccess()}/>{currentStakePoolConfigSuccessMessage}</div> :
             <div key="configSuccess" ></div>
           ]
           }

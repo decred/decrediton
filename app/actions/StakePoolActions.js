@@ -5,6 +5,8 @@ import { getCfg } from '../config.js';
 export const UPDATESTAKEPOOLCONFIG_ATTEMPT = 'UPDATESTAKEPOOLCONFIG_ATTEMPT';
 export const UPDATESTAKEPOOLCONFIG_FAILED = 'UPDATESTAKEPOOLCONFIG_FAILED';
 export const UPDATESTAKEPOOLCONFIG_SUCCESS = 'UPDATESTAKEPOOLCONFIG_SUCCESS';
+export const UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS = 'UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS';
+export const UPDATESTAKEPOOLCONFIG_CLEAR_ERROR = 'UPDATESTAKEPOOLCONFIG_CLEAR_ERROR';
 
 export function setStakePoolInformation(poolHost, apiKey, accountNum, internal) {
   return (dispatch) => {
@@ -91,5 +93,22 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
       }
     }
   );
+  };
+}
+export function clearStakePoolConfigError() {
+  return (dispatch, getState) => {
+    const { currentStakePoolConfigError } = getState().control;
+    if (currentStakePoolConfigError !== null) {
+      dispatch({type: UPDATESTAKEPOOLCONFIG_CLEAR_ERROR});
+    }
+  };
+}
+
+export function clearStakePoolConfigSuccess() {
+  return (dispatch, getState) => {
+    const { currentStakePoolConfigSuccessMessage } = getState().control;
+    if (currentStakePoolConfigSuccessMessage !== '') {
+      dispatch({type: UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS});
+    }
   };
 }
