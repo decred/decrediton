@@ -345,6 +345,7 @@ function accounts() {
 export const GETTRANSACTIONS_ATTEMPT = 'GETTRANSACTIONS_ATTEMPT';
 export const GETTRANSACTIONS_FAILED = 'GETTRANSACTIONS_FAILED';
 export const GETTRANSACTIONS_PROGRESS = 'GETTRANSACTIONS_PROGRESS';
+export const GETTRANSACTIONS_UNMINED_PROGRESS = 'GETTRANSACTIONS_PROGRESS';
 export const GETTRANSACTIONS_COMPLETE = 'GETTRANSACTIONS_COMPLETE';
 export const PAGINATETRANSACTIONS_START = 'PAGINATETRANSACTIONS_START';
 export const PAGINATETRANSACTIONS_END = 'PAGINATETRANSACTIONS_END';
@@ -400,6 +401,9 @@ function getTransactionsInfoProgress(response) {
         index: i,
       };
       dispatch({ tx, type: GETTRANSACTIONS_PROGRESS });
+    }
+    if (response.getUnminedTransactions().getTransactionsList().length > 0) {
+      dispatch({unmined: response.getUnminedTransactions().getTransactionsList(), type: GETTRANSACTIONS_UNMINED_PROGRESS})
     }
     response = null;
   };

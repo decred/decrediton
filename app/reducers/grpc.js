@@ -8,6 +8,7 @@ import {
   GETTICKETPRICE_ATTEMPT, GETTICKETPRICE_FAILED, GETTICKETPRICE_SUCCESS,
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
   GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED, GETTRANSACTIONS_PROGRESS, GETTRANSACTIONS_COMPLETE,
+  GETTRANSACTIONS_UNMINED_PROGRESS,
   PAGINATETRANSACTIONS_START, PAGINATETRANSACTIONS_MORE, PAGINATETRANSACTIONS_END,
   GETTRANSACTIONDETAILS_SET, GETTRANSACTIONDETAILS_CLEAR,
   UPDATETIMESINCEBLOCK,
@@ -201,20 +202,19 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       transactionsInfo: Array(),
-      getAccountsError: '',
-      getAccountsRequestAttempt: true,
+      getTransactionsRequestAttempt: true,
     };
   case GETTRANSACTIONS_FAILED:
     return {
       ...state,
-      getAccountsError: action.error,
-      getAccountsRequestAttempt: false,
+      getTransactionsRequestError: action.error,
+      getTransactionsRequestAttempt: false,
     };
   case GETTRANSACTIONS_COMPLETE:
     return {
       ...state,
-      getAccountsError: '',
-      getAccountsRequestAttempt: false,
+      getTransactionsRequestError: '',
+      getTransactionsRequestAttempt: false,
     };
   case GETTRANSACTIONS_PROGRESS:
     return {
@@ -223,6 +223,11 @@ export default function grpc(state = {}, action) {
         ...state.transactionsInfo,
         action.tx,
       ]
+    };
+  case GETTRANSACTIONS_UNMINED_PROGRESS:
+    return {
+      ...state,
+      unMinedTransactions: action.unmined,
     };
   case GETTRANSACTIONDETAILS_SET:
     return {
