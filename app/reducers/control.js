@@ -12,7 +12,9 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   SIGNTX_ATTEMPT, SIGNTX_FAILED, SIGNTX_SUCCESS,
   PUBLISHTX_ATTEMPT, PUBLISHTX_FAILED, PUBLISHTX_SUCCESS,
   PURCHASETICKET_ATTEMPT, PURCHASETICKET_FAILED, PURCHASETICKET_SUCCESS,
-  CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS } from '../actions/ControlActions';
+  CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS, 
+  CONSTRUCTTX_CLEAR_ERROR, PUBLISHTX_CLEAR_ERROR, SIGNTX_CLEAR_ERROR, PUBLISHTX_CLEAR_SUCCESS,
+ } from '../actions/ControlActions';
 
 export default function control(state = {}, action) {
   switch (action.type) {
@@ -234,6 +236,22 @@ export default function control(state = {}, action) {
       constructTxResponse: null,
       signTxResponse: null,
     };
+  case  PUBLISHTX_CLEAR_ERROR:
+    return {...state,
+      publishTransactionError: null,
+    };
+  case  PUBLISHTX_CLEAR_SUCCESS:
+    return {...state,
+      publishTransactionResponse: null,
+    };
+  case  SIGNTX_CLEAR_ERROR:
+    return {...state,
+      signTransactionError: null,
+    };
+  case CONSTRUCTTX_CLEAR_ERROR:
+    return {...state,
+      constructTxError: null,
+    };       
   case PURCHASETICKET_ATTEMPT:
     return {...state,
       purchaseTicketError: null,

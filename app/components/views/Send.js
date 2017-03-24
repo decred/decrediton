@@ -47,7 +47,7 @@ const styles = {
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
-    padding: '7px 20px',
+    padding: '7px 20px 7px 7px',
     borderRadius: '5px',
     backgroundColor: '#fd714b',
     boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
@@ -59,7 +59,7 @@ const styles = {
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
-    padding: '7px 20px',
+    padding: '7px 20px 7px 7px',
     borderRadius: '5px',
     backgroundColor: '#41bf53',
     boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
@@ -67,6 +67,19 @@ const styles = {
     fontSize: '13px',
     textAlign: 'center',
     textDecoration: 'none',
+  },
+  contentNestAddressDeleteIcon: {
+    width: '26px',
+    height: '19px',
+    float: 'left',
+    backgroundImage: `url(${Delete})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '8px',
+    backgroundRepeat: 'no-repeat',
+    cursor: 'pointer',
+    ':hover': {
+      opacity: '0.85',
+    }
   },
   transition1: {
     transition: 'all 100ms ease-in-out',
@@ -469,6 +482,13 @@ class Send extends Component{
       confirmations: 0,
       outputs: [{key:0, destination: '', amount: ''}] };
   }
+  componentWillMount() {
+    this.props.clearConstructTxError();
+    this.props.clearPublishTxError();
+    this.props.clearSignTxError();
+    this.props.clearPublishTxSuccess();
+  }
+
   clearTransactionData() {
     this.setState({account:0, confirmations: 0, outputs: [{key:0, destination: '', amount: ''}]});
     this.props.clearTransaction();
@@ -539,16 +559,16 @@ class Send extends Component{
     var sharedHeader = (
       <Header
         headerTop={[publishTransactionError !== null ?
-            <div key="pubError" style={styles.viewNotificationError}>{publishTransactionError}</div> :
+            <div key="pubError" style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPublishTxError()}/>{publishTransactionError}</div> :
             <div key="pubError" ></div>,
           constructTxError !== null ?
-            <div key="conError"  style={styles.viewNotificationError}>{constructTxError}</div> :
+            <div key="conError"  style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearConstructTxError()}/>{constructTxError}</div> :
             <div key="conError" ></div>,
           signTransactionError !== null ?
-            <div key="signError"  style={styles.viewNotificationError}>{signTransactionError}</div> :
+            <div key="signError"  style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearSignTxError()}/>{signTransactionError}</div> :
             <div key="signError" ></div>,
           publishTransactionResponse !== null ?
-            <div key="pubSuccess"  style={styles.viewNotificationSuccess}>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
+            <div key="pubSuccess"  style={styles.viewNotificationSuccess}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPublishTxResponse()}/>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
             <div key="pubSuccess" ></div>]}
         headerTitleOverview={<div style={styles.headerTitleSend}>Send Funds</div>}
         headerMetaOverview={networkTextDiv}>
