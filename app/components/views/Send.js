@@ -568,7 +568,7 @@ class Send extends Component{
             <div key="signError"  style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIconHeader} onClick={() => this.props.clearSignTxError()}/>{signTransactionError}</div> :
             <div key="signError" ></div>,
           publishTransactionResponse !== null ?
-            <div key="pubSuccess"  style={styles.viewNotificationSuccess}><div style={styles.contentNestAddressDeleteIconHeader} onClick={() => this.props.clearPublishTxResponse()}/>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
+            <div key="pubSuccess"  style={styles.viewNotificationSuccess}><div style={styles.contentNestAddressDeleteIconHeader} onClick={() => this.props.clearPublishTxSuccess()}/>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
             <div key="pubSuccess" ></div>]}
         headerTitleOverview={<div style={styles.headerTitleSend}>Send Funds</div>}
         headerMetaOverview={networkTextDiv}>
