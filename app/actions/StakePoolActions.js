@@ -19,7 +19,7 @@ export function setStakePoolInformation(poolHost, apiKey, accountNum, internal) 
       function(response, err) {
         if (err) {
           console.log(err);
-          dispatch({ error: "Unable to contact stakepool, please try again later", type: UPDATESTAKEPOOLCONFIG_FAILED });
+          dispatch({ error: 'Unable to contact stakepool, please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
           return;
         } else {
           // parse response data for no err
@@ -72,7 +72,7 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
     walletService.nextAddress(request,
     function(err, getNextAddressResponse) {
       if (err) {
-        dispatch({ error: "Error settings stakepool address, please try again later.", type: UPDATESTAKEPOOLCONFIG_FAILED });
+        dispatch({ error: 'Error settings stakepool address, please try again later.', type: UPDATESTAKEPOOLCONFIG_FAILED });
       } else {
         addressPubKey = getNextAddressResponse.getPublicKey();
         setStakePoolAddress(

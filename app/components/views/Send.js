@@ -68,7 +68,7 @@ const styles = {
     textAlign: 'center',
     textDecoration: 'none',
   },
-  contentNestAddressDeleteIcon: {
+  contentNestAddressDeleteIconHeader: {
     width: '26px',
     height: '19px',
     float: 'left',
@@ -559,16 +559,16 @@ class Send extends Component{
     var sharedHeader = (
       <Header
         headerTop={[publishTransactionError !== null ?
-            <div key="pubError" style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPublishTxError()}/>{publishTransactionError}</div> :
+            <div key="pubError" style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIconHeader} onClick={() => this.props.clearPublishTxError()}/>{publishTransactionError}</div> :
             <div key="pubError" ></div>,
           constructTxError !== null ?
-            <div key="conError"  style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearConstructTxError()}/>{constructTxError}</div> :
+            <div key="conError"  style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIconHeader} onClick={() => this.props.clearConstructTxError()}/>{constructTxError}</div> :
             <div key="conError" ></div>,
           signTransactionError !== null ?
-            <div key="signError"  style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearSignTxError()}/>{signTransactionError}</div> :
+            <div key="signError"  style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIconHeader} onClick={() => this.props.clearSignTxError()}/>{signTransactionError}</div> :
             <div key="signError" ></div>,
           publishTransactionResponse !== null ?
-            <div key="pubSuccess"  style={styles.viewNotificationSuccess}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPublishTxResponse()}/>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
+            <div key="pubSuccess"  style={styles.viewNotificationSuccess}><div style={styles.contentNestAddressDeleteIconHeader} onClick={() => this.props.clearPublishTxResponse()}/>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
             <div key="pubSuccess" ></div>]}
         headerTitleOverview={<div style={styles.headerTitleSend}>Send Funds</div>}
         headerMetaOverview={networkTextDiv}>
