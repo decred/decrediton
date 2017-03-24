@@ -249,7 +249,7 @@ var initialState = {
     getNextAccountRequestAttempt: false,
     getNextAccountRequest: null,
     getNextAccountResponse: null,
-    getNextAccountSuccess: '',
+    getNextAccountSuccess: null,
     getNextAccountError: null,
     // ImportPrivateKey
     importPrivateKeyRequestAttempt: false,

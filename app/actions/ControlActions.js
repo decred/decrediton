@@ -133,6 +133,8 @@ function rescanAction() {
 export const GETNEXTACCOUNT_ATTEMPT = 'GETNEXTACCOUNT_ATTEMPT';
 export const GETNEXTACCOUNT_FAILED = 'GETNEXTACCOUNT_FAILED';
 export const GETNEXTACCOUNT_SUCCESS = 'GETNEXTACCOUNT_SUCCESS';
+export const GETNEXTACCOUNT_CLEAR_ERROR = 'GETNEXTACCOUNT_CLEAR_ERROR';
+export const GETNEXTACCOUNT_CLEAR_SUCCESS= 'GETNEXTACCOUNT_CLEAR_SUCCESS';
 
 function getNextAccountError(error) {
   return { error, type: GETNEXTACCOUNT_FAILED };
@@ -173,6 +175,23 @@ function getNextAccountAction() {
   };
 }
 
+export function clearNewAccountSuccess() {
+  return (dispatch, getState) => {
+    const { getNextAccountSuccess } = getState().control;
+    if (getNextAccountSuccess !== null) {
+      dispatch({type: GETNEXTACCOUNT_CLEAR_SUCCESS})
+    }
+  }
+}
+
+export function clearNewAccountError() {
+  return (dispatch, getState) => {
+    const { getNextAccountError } = getState().control;
+    if (getNextAccountError !== null) {
+      dispatch({type: GETNEXTACCOUNT_CLEAR_ERROR});
+    }
+  }
+}
 export const IMPORTPRIVKEY_ATTEMPT = 'IMPORTPRIVKEY_ATTEMPT';
 export const IMPORTPRIVKEY_FAILED = 'IMPORTPRIVKEY_FAILED';
 export const IMPORTPRIVKEY_SUCCESS = 'IMPORTPRIVKEY_SUCCESS';

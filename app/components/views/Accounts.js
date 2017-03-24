@@ -215,6 +215,10 @@ class Accounts extends Component{
       privpass: null,
     };
   }
+  componentWillMount() {
+    this.props.clearNewAccountSuccess();
+    this.props.clearNewAccountError();
+  }
   addAccount() {
     if (this.state.addAccountName == '' || this.state.privpass == null) {
       return;
@@ -242,7 +246,7 @@ class Accounts extends Component{
           headerTop={[getNextAccountError !== null ?
             <div key="accountError" style={styles.viewNotificationError}>{getNextAccountError}</div> :
             <div key="accountError" ></div>,
-            getNextAccountSuccess !== '' ?
+            getNextAccountSuccess !== null ?
             <div key="accountSuccess" style={styles.viewNotificationSuccess}>{getNextAccountSuccess}</div> :
             <div key="accountSuccess" ></div>,
           ]}
@@ -279,7 +283,7 @@ class Accounts extends Component{
           headerTop={[getNextAccountError !== null ?
             <div key="accountError" style={styles.viewNotificationError}>{getNextAccountError}</div> :
             <div key="accountError" ></div>,
-            getNextAccountSuccess !== '' ?
+            getNextAccountSuccess !== null ?
             <div key="accountSuccess" style={styles.viewNotificationSuccess}>{getNextAccountSuccess}</div> :
             <div key="accountSuccess" ></div>,
           ]}
