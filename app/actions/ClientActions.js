@@ -27,8 +27,8 @@ function getWalletServiceSuccess(walletService) {
     setTimeout(() => { dispatch(getNetworkAttempt()); }, 1000);
     setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 1000);
     setTimeout(() => { dispatch(transactionNtfnsStart()); }, 1000);
-    setTimeout(() => { dispatch(spentnessNtfnsStart()); }, 1000);
-    setTimeout(() => { dispatch(accountNtfnsStart(0)); }, 1000);
+    setTimeout(() => { dispatch(spentnessNtfnsStart(0)); }, 1000);
+    setTimeout(() => { dispatch(accountNtfnsStart()); }, 1000);
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.
