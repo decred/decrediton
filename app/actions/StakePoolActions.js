@@ -5,6 +5,8 @@ import { getCfg } from '../config.js';
 export const UPDATESTAKEPOOLCONFIG_ATTEMPT = 'UPDATESTAKEPOOLCONFIG_ATTEMPT';
 export const UPDATESTAKEPOOLCONFIG_FAILED = 'UPDATESTAKEPOOLCONFIG_FAILED';
 export const UPDATESTAKEPOOLCONFIG_SUCCESS = 'UPDATESTAKEPOOLCONFIG_SUCCESS';
+export const UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS = 'UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS';
+export const UPDATESTAKEPOOLCONFIG_CLEAR_ERROR = 'UPDATESTAKEPOOLCONFIG_CLEAR_ERROR';
 
 export function setStakePoolInformation(poolHost, apiKey, accountNum, internal) {
   return (dispatch) => {
@@ -16,7 +18,8 @@ export function setStakePoolInformation(poolHost, apiKey, accountNum, internal) 
       apiKey,
       function(response, err) {
         if (err) {
-          console.error(err);
+          console.log(err);
+          dispatch({ error: 'Unable to contact stakepool, please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
           return;
         } else {
           // parse response data for no err
@@ -69,7 +72,7 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
     walletService.nextAddress(request,
     function(err, getNextAddressResponse) {
       if (err) {
-        // handle some err here some way
+        dispatch({ error: 'Error settings stakepool address, please try again later.', type: UPDATESTAKEPOOLCONFIG_FAILED });
       } else {
         addressPubKey = getNextAddressResponse.getPublicKey();
         setStakePoolAddress(
@@ -91,5 +94,22 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
       }
     }
   );
+  };
+}
+export function clearStakePoolConfigError() {
+  return (dispatch, getState) => {
+    const { currentStakePoolConfigError } = getState().control;
+    if (currentStakePoolConfigError !== null) {
+      dispatch({type: UPDATESTAKEPOOLCONFIG_CLEAR_ERROR});
+    }
+  };
+}
+
+export function clearStakePoolConfigSuccess() {
+  return (dispatch, getState) => {
+    const { currentStakePoolConfigSuccessMessage } = getState().control;
+    if (currentStakePoolConfigSuccessMessage !== '') {
+      dispatch({type: UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS});
+    }
   };
 }

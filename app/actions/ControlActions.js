@@ -440,6 +440,47 @@ function publishTransactionAction() {
   };
 }
 
+export const CONSTRUCTTX_CLEAR_ERROR = 'CONSTRUCTTX_CLEAR_ERROR';
+export const PUBLISHTX_CLEAR_ERROR = 'PUBLISHTX_CLEAR_ERROR';
+export const SIGNTX_CLEAR_ERROR = 'SIGNTX_CLEAR_ERROR';
+export const PUBLISHTX_CLEAR_SUCCESS = 'PUBLISHTX_CLEAR_SUCCESS';
+
+export function clearConstructTxError() {
+  return (dispatch, getState) => {
+    const { constructTransactionError } = getState().control;
+    if (constructTransactionError !== null) {
+      dispatch({type: CONSTRUCTTX_CLEAR_ERROR});
+    }
+  };
+}
+
+export function clearPublishTxError() {
+  return (dispatch, getState) => {
+    const { publishTransactionError } = getState().control;
+    if (publishTransactionError !== null) {
+      dispatch({type: PUBLISHTX_CLEAR_ERROR});
+    }
+  };
+}
+
+export function clearSignTxError() {
+  return (dispatch, getState) => {
+    const { signTransactionError } = getState().control;
+    if (signTransactionError !== null) {
+      dispatch({type: SIGNTX_CLEAR_ERROR});
+    }
+  };
+}
+
+export function clearPublishTxSuccess() {
+  return (dispatch, getState) => {
+    const { publishTransactionResponse } = getState().control;
+    if (publishTransactionResponse !== null) {
+      dispatch({type: PUBLISHTX_CLEAR_SUCCESS});
+    }
+  };
+}
+
 export const PURCHASETICKET_ATTEMPT = 'PURCHASETICKET_ATTEMPT';
 export const PURCHASETICKET_FAILED = 'PURCHASETICKET_FAILED';
 export const PURCHASETICKET_SUCCESS = 'PURCHASETICKET_SUCCESS';
