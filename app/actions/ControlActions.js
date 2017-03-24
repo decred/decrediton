@@ -447,8 +447,8 @@ export const PUBLISHTX_CLEAR_SUCCESS = 'PUBLISHTX_CLEAR_SUCCESS';
 
 export function clearConstructTxError() {
   return (dispatch, getState) => {
-    const { constructTransactionError } = getState().control;
-    if (constructTransactionError !== null) {
+    const { constructTxError } = getState().control;
+    if (constructTxError !== null) {
       dispatch({type: CONSTRUCTTX_CLEAR_ERROR});
     }
   };
