@@ -141,6 +141,7 @@ var initialState = {
     getTransactionsError: null,
     getTransactionsRequestAttempt: false,
     getTransactionsResponse: null,
+    unminedTransactions: null,
   },
   walletLoader: {
     neededBlocks: neededBlocks,

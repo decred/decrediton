@@ -403,6 +403,7 @@ function getTransactionsInfoProgress(response) {
       dispatch({ tx, type: GETTRANSACTIONS_PROGRESS });
     }
     if (response.getUnminedTransactionsList().length > 0) {
+      console.log("unmined!", response.getUnminedTransactionsList());
       dispatch({unmined: response.getUnminedTransactionsList(), type: GETTRANSACTIONS_UNMINED_PROGRESS})
     }
     response = null;

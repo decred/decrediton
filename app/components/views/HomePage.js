@@ -20,6 +20,7 @@ function mapStateToProps(state) {
     rescanRequest: state.control.rescanRequest,
     getAccountsResponse: state.grpc.getAccountsResponse,
     synced: state.notifications.synced,
+    unminedTransactions: state.grpc.unminedTransactions,
   };
 }
 

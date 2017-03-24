@@ -227,7 +227,7 @@ export default function grpc(state = {}, action) {
   case GETTRANSACTIONS_UNMINED_PROGRESS:
     return {
       ...state,
-      unMinedTransactions: action.unmined,
+      unminedTransactions: action.unmined,
     };
   case GETTRANSACTIONDETAILS_SET:
     return {

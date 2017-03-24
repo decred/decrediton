@@ -135,6 +135,7 @@ class Home extends Component{
     const { rescanRequest, rescanResponse } = this.props;
     const { getAccountsResponse } = this.props;
     const { synced } = this.props;
+    const { unminedTransactions } = this.props;
 
     var rescanPercFisnished;
     if (rescanResponse !== null && getAccountsResponse !== null && rescanRequest != null) {
