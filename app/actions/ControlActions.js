@@ -179,9 +179,9 @@ export function clearNewAccountSuccess() {
   return (dispatch, getState) => {
     const { getNextAccountSuccess } = getState().control;
     if (getNextAccountSuccess !== null) {
-      dispatch({type: GETNEXTACCOUNT_CLEAR_SUCCESS})
+      dispatch({type: GETNEXTACCOUNT_CLEAR_SUCCESS});
     }
-  }
+  };
 }
 
 export function clearNewAccountError() {
@@ -190,7 +190,7 @@ export function clearNewAccountError() {
     if (getNextAccountError !== null) {
       dispatch({type: GETNEXTACCOUNT_CLEAR_ERROR});
     }
-  }
+  };
 }
 export const IMPORTPRIVKEY_ATTEMPT = 'IMPORTPRIVKEY_ATTEMPT';
 export const IMPORTPRIVKEY_FAILED = 'IMPORTPRIVKEY_FAILED';

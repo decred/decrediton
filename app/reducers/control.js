@@ -95,13 +95,13 @@ export default function control(state = {}, action) {
       getNextAccountSuccess: action.successMessage,
     };
   case  GETNEXTACCOUNT_CLEAR_ERROR:
-   return {...state,
-     getNextAccountError: null,
-   };
+    return {...state,
+      getNextAccountError: null,
+    };
   case  GETNEXTACCOUNT_CLEAR_SUCCESS:
-   return {...state,
-     getNextAccountSuccess: null,
-   };
+    return {...state,
+      getNextAccountSuccess: null,
+    };
   case IMPORTPRIVKEY_ATTEMPT:
     return {...state,
       importPrivateKeyError: null,
