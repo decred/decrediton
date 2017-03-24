@@ -402,8 +402,8 @@ function getTransactionsInfoProgress(response) {
       };
       dispatch({ tx, type: GETTRANSACTIONS_PROGRESS });
     }
-    if (response.getUnminedTransactions().getTransactionsList().length > 0) {
-      dispatch({unmined: response.getUnminedTransactions().getTransactionsList(), type: GETTRANSACTIONS_UNMINED_PROGRESS})
+    if (response.getUnminedTransactionsList().length > 0) {
+      dispatch({unmined: response.getUnminedTransactionsList(), type: GETTRANSACTIONS_UNMINED_PROGRESS})
     }
     response = null;
   };
