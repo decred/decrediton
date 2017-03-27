@@ -68,9 +68,8 @@ class Header extends React.Component {
         open: false,
       };
     }
-    componentWillReceiveProps() {
-      if (this.props.newUnminedMessage !== null) {
-        console.log("sdfsdF", this.props.newUnminedMessage );
+    componentWillReceiveProps(nextProps) {
+      if (this.props.newUnminedMessage !== nextProps.newUnminedMessage) {
         this.setState({
           open: true,
         });
@@ -80,7 +79,6 @@ class Header extends React.Component {
       this.setState({
         open: false,
       });
-      this.props.clearNewUnminedMessage();
     };
 
   render() {
@@ -108,7 +106,11 @@ class Header extends React.Component {
             open={this.state.open}
             message={this.props.newUnminedMessage !== null ? this.props.newUnminedMessage : ''}
             autoHideDuration={4000}
-            onRequestClose={() => this.handleRequestClose()}
+            onRequestClose={(reason) => {
+              if (reason != "clickaway") 
+                this.handleRequestClose()
+              }
+            }
           />
         </div>
       );
