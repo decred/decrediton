@@ -1,20 +1,22 @@
 import { transactionNtfs, spentnessNtfs, accountNtfs } from '../middleware/grpc/client';
 import { getAccountsAttempt, getBalanceAttempt, getStakeInfoAttempt,
-  getTicketPriceAttempt, getNetworkAttempt } from './ClientActions';
+  getTicketPriceAttempt, getNetworkAttempt, getMinedPaginatedTransactions } from './ClientActions';
 import { timeBackString } from '../helpers/dateFormat.js';
 import { TransactionNotificationsRequest, SpentnessNotificationsRequest, AccountNotificationsRequest} from '../middleware/walletrpc/api_pb';
+import { GETTRANSACTIONS_PROGRESS } from './ClientActions';
 
 export const TRANSACTIONNTFNS_START = 'TRANSACTIONNTFNS_START';
 export const TRANSACTIONNTFNS_FAILED = 'TRANSACTIONNTFNS_FAILED';
 export const TRANSACTIONNTFNS_DATA = 'TRANSACTIONNTFNS_DATA';
 export const TRANSACTIONNTFNS_DATA_UNMINED = 'TRANSACTIONNTFNS_DATA_UNMINED';
+export const TRANSACTIONNTFNS_DATA_UNMINED_UPDATE = 'TRANSACTIONNTFNS_DATA_UNMINED_UPDATE';
 export const TRANSACTIONNTFNS_SYNCING = 'TRANSACTIONNTFNS_SYNCING';
 export const TRANSACTIONNTFNS_END = 'TRANSACTIONNTFNS_END';
 
 function transactionNtfnsData(response) {
   return (dispatch, getState) => {
     const { neededBlocks } = getState().walletLoader;
-
+    const { unmined } = getState().notifications;
     var currentHeight = 0;
     if (response.getAttachedBlocksList().length > 0) {
       currentHeight = response.getAttachedBlocksList()[0].getHeight();
@@ -31,6 +33,38 @@ function transactionNtfnsData(response) {
           setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
           setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
           setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
+
+          // check to see if any recent unmined tx have been mined
+          var updatedUnmined = Array();
+          for (var k = 0; k < unmined.length; k++) {
+            var unminedFound = false;
+            for (var j = 0; j < attachedBlocks.length; j++){
+              var index = 0;
+              for (var i = 0; i < attachedBlocks[j].getTransactionsList().length; i++) {
+                if (unmined[k].getHash() == attachedBlocks[j].getTransactionsList()[i].getHash()) {
+                  var tx = {
+                    height: attachedBlocks[j].getHeight(),
+                    index: index,
+                    hash: attachedBlocks[j].getTransactionsList()[i].getHash(),
+                  }
+                  unminedFound = true;
+                  dispatch({ tx, type: GETTRANSACTIONS_PROGRESS });
+                  break;
+                  index++;
+                }
+              }
+              if (unminedFound) {
+                break;
+              }
+            }
+            if (!unminedFound) {
+              updatedUnmined.push(unmined[k])
+            }
+          }
+          if (unmined.length != updatedUnmined.length) {
+            dispatch({unmined: updatedUnmined, type: TRANSACTIONNTFNS_DATA_UNMINED_UPDATE});
+            setTimeout(() => { dispatch(getMinedPaginatedTransactions(1)); }, 1500);
+          }
         } else if (attachedBlocks[attachedBlocks.length-1].getHeight()%100 == 0) {
           dispatch({response: response, type: TRANSACTIONNTFNS_DATA });
         }

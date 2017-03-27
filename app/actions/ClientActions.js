@@ -1,15 +1,17 @@
 import { getWalletService } from '../middleware/grpc/client';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt } from './ControlActions';
-import { transactionNtfnsStart, spentnessNtfnsStart, accountNtfnsStart } from './NotificationActions';
-export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
-export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
-export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
+import { transactionNtfnsStart, spentnessNtfnsStart, accountNtfnsStart, updateUnmined } from './NotificationActions';
 import { hashHistory } from 'react-router';
 import { timeSince } from '../helpers/dateFormat.js';
 import {
   PingRequest, NetworkRequest, AccountNumberRequest, AccountsRequest,
   BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest
 } from '../middleware/walletrpc/api_pb';
+
+export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
+export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
+export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
+
 function getWalletServiceError(error) {
   return { error, type: GETWALLETSERVICE_FAILED };
 }
@@ -400,6 +402,7 @@ function getTransactionsInfoProgress(response) {
       var tx = {
         height: newHeight,
         index: i,
+        hash: response.getMinedTransactions().getTransactionsList()[i].getHash(),
       };
       dispatch({ tx, type: GETTRANSACTIONS_PROGRESS });
     }

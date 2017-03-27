@@ -1,6 +1,6 @@
 import { TRANSACTIONNTFNS_START, TRANSACTIONNTFNS_FAILED,
   TRANSACTIONNTFNS_DATA, TRANSACTIONNTFNS_SYNCING, TRANSACTIONNTFNS_END,
-  TRANSACTIONNTFNS_DATA_UNMINED } from '../actions/NotificationActions';
+  TRANSACTIONNTFNS_DATA_UNMINED, TRANSACTIONNTFNS_DATA_UNMINED_UPDATE } from '../actions/NotificationActions';
 import { SPENTNESSNTFNS_START, SPENTNESSNTFNS_FAILED,
   SPENTNESSNTFNS_DATA, SPENTNESSNTFNS_END } from '../actions/NotificationActions';
 import { ACCOUNTNTFNS_START, ACCOUNTNTFNS_FAILED,
@@ -26,11 +26,15 @@ export default function notifications(state = {}, action) {
       timeBackString: action.timeBackString,
     };
   case TRANSACTIONNTFNS_DATA_UNMINED:
-     return {...state,
+    return {...state,
       unmined: [
         ...state.unmined,
         action.unmined,
       ]
+    };
+  case TRANSACTIONNTFNS_DATA_UNMINED_UPDATE:
+    return {...state,
+      unmined: action.unmined,
     };
   case TRANSACTIONNTFNS_END:
   case SPENTNESSNTFNS_START:
