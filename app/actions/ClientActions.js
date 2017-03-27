@@ -457,7 +457,8 @@ export function getMinedPaginatedTransactions(pageNumber) {
     if (transactionsInfo.length === 0) {
       return;
     }
-    var startRange = transactionsInfo.length - (pageNumber * txPerPage) - 1;
+
+    var startRange = transactionsInfo.length - (pageNumber * txPerPage);
     var endRange = startRange + txPerPage;
     if (startRange < 0) {
       startRange = 0;
@@ -467,7 +468,6 @@ export function getMinedPaginatedTransactions(pageNumber) {
     }
     var startBlockHeight = transactionsInfo[startRange].height;
     var endBlockHeight = transactionsInfo[endRange].height;
-
     if (!paginatingTxs) {
       dispatch({
         currentPage: pageNumber,
@@ -478,7 +478,7 @@ export function getMinedPaginatedTransactions(pageNumber) {
     request.setStartingBlockHeight(startBlockHeight);
     request.setEndingBlockHeight(endBlockHeight);
 
-    dispatch(getPaginatedTransactions(request, transactionsInfo.slice(startRange, endRange)));
+    dispatch(getPaginatedTransactions(request, transactionsInfo.slice(startRange, endRange+1)));
   };
 }
 
