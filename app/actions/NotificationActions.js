@@ -2,6 +2,7 @@ import { transactionNtfs, spentnessNtfs, accountNtfs } from '../middleware/grpc/
 import { getAccountsAttempt, getBalanceAttempt, getStakeInfoAttempt,
   getTicketPriceAttempt, getNetworkAttempt, getMinedPaginatedTransactions } from './ClientActions';
 import { timeBackString } from '../helpers/dateFormat.js';
+import { reverseHash } from '../helpers/byteActions';
 import { TransactionNotificationsRequest, SpentnessNotificationsRequest, AccountNotificationsRequest} from '../middleware/walletrpc/api_pb';
 import { GETTRANSACTIONS_PROGRESS } from './ClientActions';
 
@@ -75,7 +76,7 @@ function transactionNtfnsData(response) {
       }
     } else if (response.getUnminedTransactionsList().length > 0) {
       for (var i = 0; i < response.getUnminedTransactionsList().length; i++) {
-        var message = "New transaction! Tx hash: " + Buffer.from(response.getUnminedTransactionsList()[i].getHash()).toString('hex');
+        var message = "New transaction! " + reverseHash(Buffer.from(response.getUnminedTransactionsList()[i].getHash()).toString('hex'));
         dispatch({unmined: response.getUnminedTransactionsList()[i], unminedMessage: message, type: TRANSACTIONNTFNS_DATA_UNMINED });
       }
     }

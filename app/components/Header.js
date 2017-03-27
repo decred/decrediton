@@ -60,6 +60,17 @@ const styles = {
     fontFamily: 'Inconsolata, monospace',
     fontSize: '53px',
   },
+  Snackbar: {
+    width: '100%',
+    backgroundColor: 'rgb(12, 30, 62)',
+    transform: '',
+    bottom: '853px',
+    left: '322px',
+  },
+  SnackbarContent: {
+    backgroundColor: 'rgb(12, 30, 62)',
+    maxWidth: '100%',
+  }
 };
 class Header extends React.Component {
     constructor(props) {
@@ -70,6 +81,7 @@ class Header extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
       if (this.props.newUnminedMessage !== nextProps.newUnminedMessage) {
+        console.log(nextProps.newUnminedMessage);
         this.setState({
           open: true,
         });
@@ -95,23 +107,27 @@ class Header extends React.Component {
       );
     } else {
       return (
-        <div style={styles.header}>
-          <div style={styles.headerTop}>{this.props.headerTop}</div>
-          <div style={styles.headerTitleOverview}>{this.props.headerTitleOverview}</div>
-          <div style={styles.headerMetaOverview}>
-            {this.props.headerMetaOverview}
-          </div>
-          {this.props.children}
+        <div>
           <Snackbar
+            style={styles.Snackbar}
             open={this.state.open}
             message={this.props.newUnminedMessage !== null ? this.props.newUnminedMessage : ''}
             autoHideDuration={4000}
+            bodyStyle={styles.SnackbarContent}
             onRequestClose={(reason) => {
               if (reason != "clickaway") 
                 this.handleRequestClose()
               }
             }
           />
+          <div style={styles.header}>
+            <div style={styles.headerTop}>{this.props.headerTop}</div>
+            <div style={styles.headerTitleOverview}>{this.props.headerTitleOverview}</div>
+            <div style={styles.headerMetaOverview}>
+              {this.props.headerMetaOverview}
+            </div>
+            {this.props.children}
+          </div>
         </div>
       );
     }
