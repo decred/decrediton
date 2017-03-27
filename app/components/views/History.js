@@ -96,7 +96,6 @@ class History extends Component{
     
     var totalPages = 1;
     if (transactionsInfo.length > 0) {
-      console.log(txPerPage/23);
       totalPages = Math.floor(transactionsInfo.length / txPerPage) + 1;
     }
 
