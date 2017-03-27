@@ -64,8 +64,8 @@ const styles = {
     width: '100%',
     backgroundColor: 'rgb(12, 30, 62)',
     transform: '',
-    bottom: '853px',
-    left: '322px',
+    bottom: '720px',
+    left: '298px',
   },
   SnackbarContent: {
     backgroundColor: 'rgb(12, 30, 62)',
