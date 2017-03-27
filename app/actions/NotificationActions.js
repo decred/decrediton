@@ -37,11 +37,16 @@ function transactionNtfnsData(response) {
           // check to see if any recent unmined tx have been mined
           var updatedUnmined = Array();
           for (var k = 0; k < unmined.length; k++) {
+            console.log("checking to see if unmined tx: ", umined[k].getHash(), " has been mined.")
             var unminedFound = false;
             for (var j = 0; j < attachedBlocks.length; j++){
               var index = 0;
+              console.log("received transactions for block: ", attachedBlocks.getHeight());
               for (var i = 0; i < attachedBlocks[j].getTransactionsList().length; i++) {
+                
+                console.log(attachedBlocks[j].getTransactionsList()[i].getHash(), " has been mined.")
                 if (unmined[k].getHash() == attachedBlocks[j].getTransactionsList()[i].getHash()) {
+                  console.log("MATCH!");
                   var tx = {
                     height: attachedBlocks[j].getHeight(),
                     index: index,
@@ -58,6 +63,7 @@ function transactionNtfnsData(response) {
               }
             }
             if (!unminedFound) {
+              console.log("wasn't found, adding back to unmined list");
               updatedUnmined.push(unmined[k])
             }
           }
