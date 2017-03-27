@@ -21,6 +21,7 @@ function mapStateToProps(state) {
     getAccountsResponse: state.grpc.getAccountsResponse,
     synced: state.notifications.synced,
     unminedTransactions: state.grpc.unminedTransactions,
+    unmined: state.notifications.unmined,
   };
 }
 

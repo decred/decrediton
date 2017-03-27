@@ -27,7 +27,10 @@ export default function notifications(state = {}, action) {
     };
   case TRANSACTIONNTFNS_DATA_UNMINED:
      return {...state,
-      unmined: action.unmined,
+      unmined: [
+        ...state.unmined,
+        action.unmined,
+      ]
     };
   case TRANSACTIONNTFNS_END:
   case SPENTNESSNTFNS_START:

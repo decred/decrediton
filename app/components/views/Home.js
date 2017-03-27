@@ -136,6 +136,7 @@ class Home extends Component{
     const { getAccountsResponse } = this.props;
     const { synced } = this.props;
     const { unminedTransactions } = this.props;
+    const { unmined } = this.props;
 
     var rescanPercFisnished;
     if (rescanResponse !== null && getAccountsResponse !== null && rescanRequest != null) {
@@ -179,6 +180,10 @@ class Home extends Component{
             <div style={styles.contentTitleText}>Recent Transactions</div>
           </div>
           <div style={styles.contentNest}>
+            {unmined.length > 0 ?
+              <TxHistory unmined={unmined}/>  :
+              <p>No unmined transactions</p>
+            }
             {paginatedTxs.length > 0 ?
               <TxHistory mined={paginatedTxs}/>  :
               <p>No transactions</p>

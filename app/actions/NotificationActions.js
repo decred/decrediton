@@ -41,8 +41,9 @@ function transactionNtfnsData(response) {
         dispatch({currentHeight: currentHeight, timeBackString: timeBackString(daysBack), type: TRANSACTIONNTFNS_SYNCING });
       }
     } else if (response.getUnminedTransactionsList().length > 0) {
-      console.log(response.getUnminedTransactionsList());
-      dispatch({unmined: response.getUnminedTransactionsList(), type: TRANSACTIONNTFNS_DATA_UNMINED });
+      for (var i = 0; i < response.getUnminedTransactionsList().length; i++) {
+        dispatch({unmined: response.getUnminedTransactionsList()[i], type: TRANSACTIONNTFNS_DATA_UNMINED });
+      }
     }
   }
 }
