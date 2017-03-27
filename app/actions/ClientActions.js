@@ -490,7 +490,7 @@ function getPaginatedTransactions(request, requestedTxs) {
       dispatch(getMinedPaginatedTransactionsFinished());
     });
     getTx.on('status', function (status) {
-      console.log('GetTx status:', status);
+      //console.log('GetTx status:', status);
     });
     getTx.on('error', function (err) {
       console.error(err + ' Please try again');
