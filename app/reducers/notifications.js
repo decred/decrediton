@@ -5,6 +5,7 @@ import { SPENTNESSNTFNS_START, SPENTNESSNTFNS_FAILED,
   SPENTNESSNTFNS_DATA, SPENTNESSNTFNS_END } from '../actions/NotificationActions';
 import { ACCOUNTNTFNS_START, ACCOUNTNTFNS_FAILED,
   ACCOUNTNTFNS_DATA, ACCOUNTNTFNS_END } from '../actions/NotificationActions';
+import { CLEARUNMINEDMESSAGE }  from '../actions/NotificationActions';
 
 export default function notifications(state = {}, action) {
   switch (action.type) {
@@ -30,7 +31,8 @@ export default function notifications(state = {}, action) {
       unmined: [
         ...state.unmined,
         action.unmined,
-      ]
+      ],
+      newUnminedMessage: action.unminedMessage,
     };
   case TRANSACTIONNTFNS_DATA_UNMINED_UPDATE:
     return {...state,
@@ -59,6 +61,10 @@ export default function notifications(state = {}, action) {
       accountNtfnsResponse: action.response,
     };
   case ACCOUNTNTFNS_END:
+  case CLEARUNMINEDMESSAGE:
+    return {...state,
+      newUnminedMessage: null,
+    };
   default:
     return state;
   }

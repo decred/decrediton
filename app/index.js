@@ -221,8 +221,9 @@ var initialState = {
     transactionNtfnsRequestAttempt: false,
     transactionNtfnsRequest: null,
     transactionNtfnsResponse: null,
+    
     unmined: Array(),
-
+    newUnminedMessage: null,
     spentnessNtfnsRequestAttempt: false,
     spentnessNtfnsRequest: null,
     spentnessNtfnsResponse: null,

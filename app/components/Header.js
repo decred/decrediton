@@ -1,4 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import Snackbar from 'material-ui/Snackbar';
+import * as NotificationActions from '../actions/NotificationActions';
+
+function mapStateToProps(state) {
+  return {
+    newUnminedMessage: state.notifications.newUnminedMessage,
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(Object.assign({}, NotificationActions), dispatch);
+}
 
 const styles = {
   headerGetStarted: {
@@ -49,6 +62,27 @@ const styles = {
   },
 };
 class Header extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        open: false,
+      };
+    }
+    componentWillReceiveProps() {
+      if (this.props.newUnminedMessage !== null) {
+        console.log("sdfsdF", this.props.newUnminedMessage );
+        this.setState({
+          open: true,
+        });
+      }
+    }
+    handleRequestClose() {
+      this.setState({
+        open: false,
+      });
+      this.props.clearNewUnminedMessage();
+    };
+
   render() {
     if (this.props.getStarted) {
       return (
@@ -70,10 +104,16 @@ class Header extends React.Component {
             {this.props.headerMetaOverview}
           </div>
           {this.props.children}
+          <Snackbar
+            open={this.state.open}
+            message={this.props.newUnminedMessage !== null ? this.props.newUnminedMessage : ''}
+            autoHideDuration={4000}
+            onRequestClose={() => this.handleRequestClose()}
+          />
         </div>
       );
     }
   }
 }
 
-export default Header;
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

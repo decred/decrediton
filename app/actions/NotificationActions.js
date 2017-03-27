@@ -75,7 +75,8 @@ function transactionNtfnsData(response) {
       }
     } else if (response.getUnminedTransactionsList().length > 0) {
       for (var i = 0; i < response.getUnminedTransactionsList().length; i++) {
-        dispatch({unmined: response.getUnminedTransactionsList()[i], type: TRANSACTIONNTFNS_DATA_UNMINED });
+        var message = "New transaction! Tx hash: " + Buffer.from(response.getUnminedTransactionsList()[i].getHash()).toString('hex');
+        dispatch({unmined: response.getUnminedTransactionsList()[i], unminedMessage: message, type: TRANSACTIONNTFNS_DATA_UNMINED });
       }
     }
   }
@@ -186,4 +187,8 @@ function startAccountNtfns() {
       }
     );
   };
+}
+export const CLEARUNMINEDMESSAGE = 'CLEARUNMINEDMESSAGE';
+export function clearNewUnminedMessage() {
+  return {type: CLEARUNMINEDMESSAGE};
 }
