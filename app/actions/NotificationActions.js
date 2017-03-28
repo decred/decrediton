@@ -37,6 +37,8 @@ function transactionNtfnsData(response) {
 
           // check to see if any recent unmined tx have been mined
           var updatedUnmined = Array();
+          const { transactionsInfo } = getState().grpc;
+          var updatedTransactionInfo = transactionsInfo;
           for (var k = 0; k < unmined.length; k++) {
             var unminedFound = false;
             for (var j = 0; j < attachedBlocks.length; j++){
@@ -47,11 +49,13 @@ function transactionNtfnsData(response) {
                     height: attachedBlocks[j].getHeight(),
                     index: index,
                     hash: attachedBlocks[j].getTransactionsList()[i].getHash(),
-                  }
+                    tx: attachedBlocks[j].getTransactionsList()[i],
+                    timestamp: attachedBlocks[j].getTimestamp(),
+                  };
+                  updatedTransactionInfo.unshift(tx);
                   unminedFound = true;
-                  dispatch({ tx, type: GETTRANSACTIONS_PROGRESS });
-                  break;
                   index++;
+                  break;
                 }
               }
               if (unminedFound) {
@@ -59,12 +63,13 @@ function transactionNtfnsData(response) {
               }
             }
             if (!unminedFound) {
-              updatedUnmined.push(unmined[k])
+              updatedUnmined.push(unmined[k]);
             }
           }
           if (unmined.length != updatedUnmined.length) {
+            dispatch({ transactionsInfo: updatedTransactionInfo, type: GETTRANSACTIONS_PROGRESS });
             dispatch({unmined: updatedUnmined, type: TRANSACTIONNTFNS_DATA_UNMINED_UPDATE});
-            setTimeout(() => { dispatch(getMinedPaginatedTransactions(1)); }, 1500);
+            setTimeout(() => { dispatch(getMinedPaginatedTransactions(0)); }, 1500);
           }
         } else if (attachedBlocks[attachedBlocks.length-1].getHeight()%100 == 0) {
           dispatch({response: response, type: TRANSACTIONNTFNS_DATA });
@@ -76,11 +81,11 @@ function transactionNtfnsData(response) {
       }
     } else if (response.getUnminedTransactionsList().length > 0) {
       for (var i = 0; i < response.getUnminedTransactionsList().length; i++) {
-        var message = "New transaction! " + reverseHash(Buffer.from(response.getUnminedTransactionsList()[i].getHash()).toString('hex'));
+        var message = 'New transaction! ' + reverseHash(Buffer.from(response.getUnminedTransactionsList()[i].getHash()).toString('hex'));
         dispatch({unmined: response.getUnminedTransactionsList()[i], unminedMessage: message, type: TRANSACTIONNTFNS_DATA_UNMINED });
       }
     }
-  }
+  };
 }
 
 export function transactionNtfnsStart() {
