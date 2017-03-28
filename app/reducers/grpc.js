@@ -9,7 +9,7 @@ import {
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
   GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED, GETTRANSACTIONS_PROGRESS, GETTRANSACTIONS_COMPLETE,
   GETTRANSACTIONS_UNMINED_PROGRESS,
-  PAGINATETRANSACTIONS_START, PAGINATETRANSACTIONS_MORE, PAGINATETRANSACTIONS_END,
+  PAGINATETRANSACTIONS,
   GETTRANSACTIONDETAILS_SET, GETTRANSACTIONDETAILS_CLEAR,
   UPDATETIMESINCEBLOCK,
 } from '../actions/ClientActions';
@@ -176,27 +176,10 @@ export default function grpc(state = {}, action) {
       getAccountsRequestAttempt: false,
       getAccountsResponse: action.response,
     };
-  case PAGINATETRANSACTIONS_START:
+  case PAGINATETRANSACTIONS:
     return {
       ...state,
-      currentPage: action.currentPage,
-      paginatingTxs: true,
-      paginatedTxs: Array(),
-    };
-  case PAGINATETRANSACTIONS_END:
-    return {
-      ...state,
-      paginatingTxs: false,
-      paginatedTxs: state.tempPaginatedTxs,
-      tempPaginatedTxs: Array(),
-    };
-  case PAGINATETRANSACTIONS_MORE:
-    return {
-      ...state,
-      tempPaginatedTxs: [
-        ...state.tempPaginatedTxs,
-        action.tempPaginatedTxs,
-      ],
+      paginatedTxs: state.paginatedTxs,
     };
   case GETTRANSACTIONS_ATTEMPT:
     return {
@@ -219,10 +202,7 @@ export default function grpc(state = {}, action) {
   case GETTRANSACTIONS_PROGRESS:
     return {
       ...state,
-      transactionsInfo: [
-        ...state.transactionsInfo,
-        action.tx,
-      ]
+      transactionsInfo: action.transactionsInfo,
     };
   case GETTRANSACTIONS_UNMINED_PROGRESS:
     return {

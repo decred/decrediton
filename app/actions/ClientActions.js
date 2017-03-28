@@ -1,6 +1,6 @@
 import { getWalletService } from '../middleware/grpc/client';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt } from './ControlActions';
-import { transactionNtfnsStart, spentnessNtfnsStart, accountNtfnsStart, updateUnmined } from './NotificationActions';
+import { transactionNtfnsStart, spentnessNtfnsStart, accountNtfnsStart } from './NotificationActions';
 import { hashHistory } from 'react-router';
 import { timeSince } from '../helpers/dateFormat.js';
 import {
@@ -350,10 +350,7 @@ export const GETTRANSACTIONS_FAILED = 'GETTRANSACTIONS_FAILED';
 export const GETTRANSACTIONS_PROGRESS = 'GETTRANSACTIONS_PROGRESS';
 export const GETTRANSACTIONS_UNMINED_PROGRESS = 'GETTRANSACTIONS_PROGRESS';
 export const GETTRANSACTIONS_COMPLETE = 'GETTRANSACTIONS_COMPLETE';
-export const PAGINATETRANSACTIONS_START = 'PAGINATETRANSACTIONS_START';
-export const PAGINATETRANSACTIONS_END = 'PAGINATETRANSACTIONS_END';
-export const PAGINATETRANSACTIONS_MORE = 'PAGINATETRANSACTIONS_MORE';
-export const PAGINATETRANSACTIONS_UPDATE_END = 'PAGINATETRANSACTIONS_UPDATE_END';
+export const PAGINATETRANSACTIONS = 'PAGINATETRANSACTIONS';
 
 export function getTransactionInfoAttempt() {
   return (dispatch, getState) => {
@@ -396,19 +393,23 @@ function getTransactionsInfo(request) {
 }
 
 function getTransactionsInfoProgress(response) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { transactionsInfo } = getState().grpc;
+    var updatedTransactionInfo = transactionsInfo;
     for (var i = 0; i < response.getMinedTransactions().getTransactionsList().length; i++) {
       var newHeight = response.getMinedTransactions().getHeight();
       var tx = {
+        tx: response.getMinedTransactions().getTransactionsList()[i],
         height: newHeight,
         index: i,
         hash: response.getMinedTransactions().getTransactionsList()[i].getHash(),
       };
-      dispatch({ tx, type: GETTRANSACTIONS_PROGRESS });
+      updatedTransactionInfo.unshift(tx);
     }
+    dispatch({ transactionsInfo: updatedTransactionInfo, type: GETTRANSACTIONS_PROGRESS });
     if (response.getUnminedTransactionsList().length > 0) {
-      console.log("unmined!", response.getUnminedTransactionsList());
-      dispatch({unmined: response.getUnminedTransactionsList(), type: GETTRANSACTIONS_UNMINED_PROGRESS})
+      console.log('unmined!', response.getUnminedTransactionsList());
+      dispatch({unmined: response.getUnminedTransactionsList(), type: GETTRANSACTIONS_UNMINED_PROGRESS});
     }
     response = null;
   };
@@ -416,88 +417,28 @@ function getTransactionsInfoProgress(response) {
 function getTransactionsInfoEnd() {
   return (dispatch) => {
     dispatch({ type: GETTRANSACTIONS_COMPLETE });
-    setTimeout(() => { dispatch(getMinedPaginatedTransactions(1)); }, 1500);
+    setTimeout(() => { dispatch(getMinedPaginatedTransactions(0)); }, 1500);
   };
-}
-
-function paginatedTransactionsProgess(getTransactionsResponse, requestedTxs) {
-  return (dispatch, getState) => {
-    const { paginatingTxs } = getState().grpc;
-    if (!paginatingTxs) {
-      return;
-    }
-    var newTxs = getTransactionsResponse.getMinedTransactions().getTransactionsList();
-    var blockHeight = getTransactionsResponse.getMinedTransactions().getHeight();
-    for (var i = 0; i < newTxs.length; i++) {
-      for (var j = 0; j < requestedTxs.length; j++) {
-        // Only add requested tx if it was already included in the previous set
-        if (blockHeight == requestedTxs[j].height && i == requestedTxs[j].index) {
-          newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
-          newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
-          newTxs[i].index = i;
-          newTxs[i].blockHash = getTransactionsResponse.getMinedTransactions().getHash();
-          dispatch({ tempPaginatedTxs: newTxs[i], type: PAGINATETRANSACTIONS_MORE });
-          break;
-        }
-      }
-    }
-  };
-}
-
-// Once the get transactions call is complete we must check to see if we
-// got enough tx to please txPerPage, if not keep looking back until we
-// get to 0.
-function getMinedPaginatedTransactionsFinished() {
-  return { type: PAGINATETRANSACTIONS_END };
 }
 
 export function getMinedPaginatedTransactions(pageNumber) {
   return (dispatch, getState) => {
-    const { paginatingTxs, txPerPage, transactionsInfo } = getState().grpc;
+    const { transactionsInfo, txPerPage } = getState().grpc;
     if (transactionsInfo.length === 0) {
       return;
     }
-
-    var startRange = transactionsInfo.length - (pageNumber * txPerPage);
-    var endRange = startRange + txPerPage;
-    if (startRange < 0) {
-      startRange = 0;
+    var startTx = pageNumber * txPerPage;
+    var endTx = startTx + txPerPage;
+    if (endTx >= transactionsInfo.length) {
+      endTx = transactionsInfo.length - 1;
     }
-    if (endRange >= transactionsInfo.length) {
-      endRange = transactionsInfo.length - 1;
+    console.log(transactionsInfo.slice(startTx, endTx+1));
+    console.log(startTx, endTx);
+    var paginatedTx = Array();
+    for (var i = startTx; i < endTx+1; i++) {
+      paginatedTx.push(transactionsInfo[i].tx);
     }
-    var startBlockHeight = transactionsInfo[startRange].height;
-    var endBlockHeight = transactionsInfo[endRange].height;
-    if (!paginatingTxs) {
-      dispatch({
-        currentPage: pageNumber,
-        type: PAGINATETRANSACTIONS_START
-      });
-    }
-    var request = new GetTransactionsRequest();
-    request.setStartingBlockHeight(startBlockHeight);
-    request.setEndingBlockHeight(endBlockHeight);
-
-    dispatch(getPaginatedTransactions(request, transactionsInfo.slice(startRange, endRange+1)));
-  };
-}
-
-function getPaginatedTransactions(request, requestedTxs) {
-  return (dispatch, getState) => {
-    const { walletService } = getState().grpc;
-    var getTx = walletService.getTransactions(request);
-    getTx.on('data', function (response) {
-      dispatch(paginatedTransactionsProgess(response, requestedTxs));
-    });
-    getTx.on('end', function () {
-      dispatch(getMinedPaginatedTransactionsFinished());
-    });
-    getTx.on('status', function (status) {
-      //console.log('GetTx status:', status);
-    });
-    getTx.on('error', function (err) {
-      console.error(err + ' Please try again');
-    });
+    dispatch({ paginatedTx: paginatedTx, type: PAGINATETRANSACTIONS });
   };
 }
 
