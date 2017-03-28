@@ -175,52 +175,53 @@ class TxHistory extends Component {
       <div>
         <div>
           {unmined !== null && unmined !== undefined && unmined.length > 0 ?
-            unmined.map(function(tx) {
-            var credits = tx.getCreditsList();
-            var debits = tx.getDebitsList();
-            var fee = tx.getFee();
+            unmined.map(function(txInfo) {
+              var tx = txInfo.tx;
+              var credits = tx.getCreditsList();
+              var debits = tx.getDebitsList();
+              var fee = tx.getFee();
 
-            var txDescription = '';
-            var txAmount = 0;
+              var txDescription = '';
+              var txAmount = 0;
 
-            var receiveAddressStr = '';
-            var totalDebit = 0;
-            var totalFundsReceived = 0;
-            var totalChange = 0;
-            for (var i = 0; i < debits.length; i++) {
-              totalDebit += debits[i].getPreviousAmount();
-            }
-            for (i = 0; i < credits.length; i++) {
-              if (!credits[i].getInternal()) {
-                var spacing = ', ';
-                if (i != credits.length - 1) {
-                  spacing = '';
-                }
-                if (receiveAddressStr === '') {
-                  receiveAddressStr = credits[i].getAddress();
-                } else {
-                  receiveAddressStr += spacing + credits[i].getAddress();
-                }
-                totalFundsReceived += credits[i].getAmount();
-              } else {
-                spacing = ', ';
-                if (i != credits.length - 1) {
-                  spacing = '';
-                }
-                if (receiveAddressStr === '') {
-                  receiveAddressStr = credits[i].getAddress();
-                } else {
-                  receiveAddressStr += spacing + credits[i].getAddress();
-                }
-                // Change coming back.
-                totalChange += credits[i].getAmount();
+              var receiveAddressStr = '';
+              var totalDebit = 0;
+              var totalFundsReceived = 0;
+              var totalChange = 0;
+              for (var i = 0; i < debits.length; i++) {
+                totalDebit += debits[i].getPreviousAmount();
               }
-            }
+              for (i = 0; i < credits.length; i++) {
+                if (!credits[i].getInternal()) {
+                  var spacing = ', ';
+                  if (i != credits.length - 1) {
+                    spacing = '';
+                  }
+                  if (receiveAddressStr === '') {
+                    receiveAddressStr = credits[i].getAddress();
+                  } else {
+                    receiveAddressStr += spacing + credits[i].getAddress();
+                  }
+                  totalFundsReceived += credits[i].getAmount();
+                } else {
+                  spacing = ', ';
+                  if (i != credits.length - 1) {
+                    spacing = '';
+                  }
+                  if (receiveAddressStr === '') {
+                    receiveAddressStr = credits[i].getAddress();
+                  } else {
+                    receiveAddressStr += spacing + credits[i].getAddress();
+                  }
+                  // Change coming back.
+                  totalChange += credits[i].getAmount();
+                }
+              }
 
-            if ( totalFundsReceived + totalChange + fee < totalDebit) {
-              txDescription = {direction:'Sent', addressStr: ''};
-              txAmount = totalDebit - fee - totalChange - totalFundsReceived;
-              return (
+              if ( totalFundsReceived + totalChange + fee < totalDebit) {
+                txDescription = {direction:'Sent', addressStr: ''};
+                txAmount = totalDebit - fee - totalChange - totalFundsReceived;
+                return (
                 <div style={styles.transactionOut} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx);}:null}>
                   <div style={styles.transactionAmount}>
                     <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
@@ -233,10 +234,10 @@ class TxHistory extends Component {
                     </div>
                   </div>
                 </div>);
-            } else {
-              txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
-              txAmount = totalFundsReceived;
-              return (
+              } else {
+                txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
+                txAmount = totalFundsReceived;
+                return (
                 <div style={styles.transactionIn} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx);}:null}>
                   <div style={styles.transactionAmount}>
                     <div style={styles.transactionAmountNumber}><Balance amount={txAmount} /></div>
@@ -249,61 +250,62 @@ class TxHistory extends Component {
                     </div>
                   </div>
                 </div>);
-            }
-          })
+              }
+            })
             : <p></p>
           }
         </div>
         <div>
           {mined !== null && mined !== undefined && mined.length > 0 ?
-            mined.map(function(tx) {
-            var credits = tx.getCreditsList();
-            var debits = tx.getDebitsList();
+            mined.map(function(txInfo) {
+              var tx = txInfo.tx;
+              var credits = tx.getCreditsList();
+              var debits = tx.getDebitsList();
 
-            var date = dateFormat(new Date(tx.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
-            var fee = tx.getFee();
+              var date = dateFormat(new Date(txInfo.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
+              var fee = tx.getFee();
 
-            var txDescription = '';
-            var txAmount = 0;
+              var txDescription = '';
+              var txAmount = 0;
 
-            var receiveAddressStr = '';
-            var totalDebit = 0;
-            var totalFundsReceived = 0;
-            var totalChange = 0;
-            for (var i = 0; i < debits.length; i++) {
-              totalDebit += debits[i].getPreviousAmount();
-            }
-            for (i = 0; i < credits.length; i++) {
-              if (!credits[i].getInternal()) {
-                var spacing = ', ';
-                if (i != credits.length - 1) {
-                  spacing = '';
-                }
-                if (receiveAddressStr === '') {
-                  receiveAddressStr = credits[i].getAddress();
-                } else {
-                  receiveAddressStr += spacing + credits[i].getAddress();
-                }
-                totalFundsReceived += credits[i].getAmount();
-              } else {
-                spacing = ', ';
-                if (i != credits.length - 1) {
-                  spacing = '';
-                }
-                if (receiveAddressStr === '') {
-                  receiveAddressStr = credits[i].getAddress();
-                } else {
-                  receiveAddressStr += spacing + credits[i].getAddress();
-                }
-                // Change coming back.
-                totalChange += credits[i].getAmount();
+              var receiveAddressStr = '';
+              var totalDebit = 0;
+              var totalFundsReceived = 0;
+              var totalChange = 0;
+              for (var i = 0; i < debits.length; i++) {
+                totalDebit += debits[i].getPreviousAmount();
               }
-            }
+              for (i = 0; i < credits.length; i++) {
+                if (!credits[i].getInternal()) {
+                  var spacing = ', ';
+                  if (i != credits.length - 1) {
+                    spacing = '';
+                  }
+                  if (receiveAddressStr === '') {
+                    receiveAddressStr = credits[i].getAddress();
+                  } else {
+                    receiveAddressStr += spacing + credits[i].getAddress();
+                  }
+                  totalFundsReceived += credits[i].getAmount();
+                } else {
+                  spacing = ', ';
+                  if (i != credits.length - 1) {
+                    spacing = '';
+                  }
+                  if (receiveAddressStr === '') {
+                    receiveAddressStr = credits[i].getAddress();
+                  } else {
+                    receiveAddressStr += spacing + credits[i].getAddress();
+                  }
+                  // Change coming back.
+                  totalChange += credits[i].getAmount();
+                }
+              }
 
-            if ( totalFundsReceived + totalChange + fee < totalDebit) {
-              txDescription = {direction:'Sent', addressStr: ''};
-              txAmount = totalDebit - fee - totalChange - totalFundsReceived;
-              return (
+              if ( totalFundsReceived + totalChange + fee < totalDebit) {
+                txDescription = {direction:'Sent', addressStr: ''};
+                txAmount = totalDebit - fee - totalChange - totalFundsReceived;
+                return (
                 <div style={styles.transactionOut} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx);}:null}>
                   <div style={styles.transactionAmount}>
                     <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
@@ -317,10 +319,10 @@ class TxHistory extends Component {
                   </div>
                   <div style={styles.transactionTimeDate}><span>{date}</span></div>
                 </div>);
-            } else {
-              txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
-              txAmount = totalFundsReceived;
-              return (
+              } else {
+                txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
+                txAmount = totalFundsReceived;
+                return (
                 <div style={styles.transactionIn} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx);}:null}>
                   <div style={styles.transactionAmount}>
                     <div style={styles.transactionAmountNumber}><Balance amount={txAmount} /></div>
@@ -334,8 +336,8 @@ class TxHistory extends Component {
                   </div>
                   <div style={styles.transactionTimeDate}><span>{date}</span></div>
                 </div>);
-            }
-          }) :
+              }
+            }) :
           <div></div>
         }
         </div>

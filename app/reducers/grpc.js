@@ -179,7 +179,8 @@ export default function grpc(state = {}, action) {
   case PAGINATETRANSACTIONS:
     return {
       ...state,
-      paginatedTxs: state.paginatedTxs,
+      paginatedTxs: action.paginatedTxs,
+      currentPage: action.currentPage,
     };
   case GETTRANSACTIONS_ATTEMPT:
     return {

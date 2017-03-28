@@ -128,11 +128,9 @@ var initialState = {
     getAccountsResponse: null,
 
     // PaginateTransactions
-    tempPaginatedTxs: Array(),
     paginatedTxs: Array(),
-    paginatingTxs: false,
     txPerPage: 6,
-    currentPage: 1,
+    currentPage: 0,
     transactionDetails: null,
 
     // GetTransactionInfo
@@ -221,7 +219,7 @@ var initialState = {
     transactionNtfnsRequestAttempt: false,
     transactionNtfnsRequest: null,
     transactionNtfnsResponse: null,
-    
+
     unmined: Array(),
     newUnminedMessage: null,
     spentnessNtfnsRequestAttempt: false,

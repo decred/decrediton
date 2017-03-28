@@ -399,6 +399,7 @@ function getTransactionsInfoProgress(response) {
     for (var i = 0; i < response.getMinedTransactions().getTransactionsList().length; i++) {
       var newHeight = response.getMinedTransactions().getHeight();
       var tx = {
+        timestamp: response.getMinedTransactions().getTimestamp(),
         tx: response.getMinedTransactions().getTransactionsList()[i],
         height: newHeight,
         index: i,
@@ -432,13 +433,7 @@ export function getMinedPaginatedTransactions(pageNumber) {
     if (endTx >= transactionsInfo.length) {
       endTx = transactionsInfo.length - 1;
     }
-    console.log(transactionsInfo.slice(startTx, endTx+1));
-    console.log(startTx, endTx);
-    var paginatedTx = Array();
-    for (var i = startTx; i < endTx+1; i++) {
-      paginatedTx.push(transactionsInfo[i].tx);
-    }
-    dispatch({ paginatedTx: paginatedTx, type: PAGINATETRANSACTIONS });
+    dispatch({ paginatedTxs: transactionsInfo.slice(startTx, endTx+1), currentPage: pageNumber, type: PAGINATETRANSACTIONS });
   };
 }
 
