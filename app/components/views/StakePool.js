@@ -443,6 +443,31 @@ const styles = {
       boxShadow: '0 0 0 0 rgba(0, 0, 0, .22)',
     }
   },
+  purchaseTicketRow: {
+    width: '100%',
+    height: '54px',
+    paddingTop: '10px',
+    float: 'left',
+    borderBottom: '1px black solid',
+  },
+  purchaseTicketLabel: {
+    width: '25%',
+    paddingRight: '15px',
+    paddingLeft: '5px',
+    float: 'left',
+    height: '100%',
+    paddingTop: '5px',
+    fontSize: '19px',
+    textAlign: 'left',
+  },
+  purchaseTicketInput: {
+    width: '50%',
+    float: 'left',
+    height: '100%',
+    paddingTop: '5px',
+    fontSize: '19px',
+    textAlign: 'right',
+  },
   flexHeight: {
     paddingTop: '1px',
     backgroundColor: '#fff',
@@ -719,65 +744,95 @@ class StakePool extends Component{
               {selectAccounts}
               <div style={styles.contentNestFromAddressWalletIcon}></div>
             </div>
-            <div style={styles.contentNestPrefixSend}>Number of Tickets:</div>
-            <div style={styles.inputForm}>
-              <input
-                type="text"
-                style={styles.contentNestAddressHashTo}
-                placeholder="Number of Tickets"
-                onBlur={(e) =>{this.updateNumTickets(e.target.value);}}/>
+            <div style={styles.purchaseTicketRow}>
+              <div style={styles.purchaseTicketLabel}>Number of Tickets:</div>
+              <div style={styles.purchaseTicketInput}>
+                <div style={styles.inputForm}>
+                  <input
+                    type="text"
+                    style={styles.contentNestAddressHashTo}
+                    placeholder="Number of Tickets"
+                    onBlur={(e) =>{this.updateNumTickets(e.target.value);}}/>
+                </div>
+              </div>
             </div>
-            <div style={styles.contentNestPrefixSend}>Ticket Fee (DCR/kB):</div>
-            <div style={styles.inputForm}>
-              <input
-                type="text"
-                style={styles.contentNestAddressHashTo}
-                placeholder="Ticket Fee"
-                onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
+            <div style={styles.purchaseTicketRow}>
+              <div style={styles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
+              <div style={styles.purchaseTicketInput}>
+                <div style={styles.inputForm}>
+                  <input
+                    type="text"
+                    style={styles.contentNestAddressHashTo}
+                    placeholder="Ticket Fee"
+                    onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
+                </div>
+              </div>
             </div>
-            <div style={styles.contentNestPrefixSend}>Split Fee (DCR/kB):</div>
-            <div style={styles.inputForm}>
-              <input
-                type="text"
-                style={styles.contentNestAddressHashTo}
-                placeholder="Split Fee"
-                onBlur={(e) =>{this.updateTxFee(e.target.value);}}/>
+            <div style={styles.purchaseTicketRow}>
+              <div style={styles.purchaseTicketLabel}>Split Fee (DCR/kB):</div>
+              <div style={styles.purchaseTicketInput}>
+                <div style={styles.inputForm}>
+                  <input
+                    type="text"
+                    style={styles.contentNestAddressHashTo}
+                    placeholder="Split Fee"
+                    onBlur={(e) =>{this.updateTxFee(e.target.value);}}/>
+                </div>
+              </div>
             </div>
-            <div style={styles.contentNestPrefixSend}>Expiry:</div>
-              <div style={styles.inputForm}>
-                <input
-                  type="text"
-                  style={styles.contentNestAddressHashTo}
-                  placeholder="Expiry"
-                  onBlur={(e) =>{this.updateExpiry(e.target.value);}}/>
+            <div style={styles.purchaseTicketRow}>
+              <div style={styles.purchaseTicketLabel}>Expiry:</div>
+              <div style={styles.purchaseTicketInput}>
+                <div style={styles.inputForm}>
+                  <input
+                    type="text"
+                    style={styles.contentNestAddressHashTo}
+                    placeholder="Expiry"
+                    onBlur={(e) =>{this.updateExpiry(e.target.value);}}/>
+                </div>
+              </div>
             </div>
-            <div style={styles.contentNestPrefixSend}>Pool Address:</div>
-            <div style={styles.inputForm}>
-              <input
-                type="text"
-                style={styles.contentNestAddressHashTo}
-                placeholder="Pool Address"
-                onBlur={(e) =>{this.updatePoolAddress(e.target.value);}}/>
+            <div style={styles.purchaseTicketRow}>
+              <div style={styles.purchaseTicketLabel}>Pool Address:</div>
+              <div style={styles.purchaseTicketInput}>
+                <div style={styles.inputForm}>
+                  <input
+                    type="text"
+                    style={styles.contentNestAddressHashTo}
+                    placeholder="Pool Address"
+                    onBlur={(e) =>{this.updatePoolAddress(e.target.value);}}/>
+                </div>
+              </div>
             </div>
-            <div style={styles.contentNestPrefixSend}>Ticket Address:</div>
-            <div style={styles.inputForm}>
-              <input
-                type="text"
-                style={styles.contentNestAddressHashTo}
-                placeholder="Ticket Address"
-                onBlur={(e) =>{this.updateTicketAddress(e.target.value);}}/>
+            <div style={styles.purchaseTicketRow}>
+              <div style={styles.purchaseTicketLabel}>Ticket Address:</div>
+              <div style={styles.purchaseTicketInput}>
+                <div style={styles.inputForm}>
+                  <input
+                    type="text"
+                    style={styles.contentNestAddressHashTo}
+                    placeholder="Ticket Address"
+                    onBlur={(e) =>{this.updateTicketAddress(e.target.value);}}/>
+                </div>
+              </div>
             </div>
-            <div style={styles.contentNestPrefixSend}>Private Passhrase:</div>
-            <div style={styles.inputForm}>
-              <input
-                id="privpass"
-                style={styles.contentNestAddressHashTo}
-                type="password"
-                placeholder="Private Password"
-                onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}/>
+            <div style={styles.purchaseTicketRow}>
+              <div style={styles.purchaseTicketLabel}>Private Passhrase:</div>
+              <div style={styles.purchaseTicketInput}>
+                <div style={styles.inputForm}>
+                  <input
+                    id="privpass"
+                    style={styles.contentNestAddressHashTo}
+                    type="password"
+                    placeholder="Private Password"
+                    onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}/>
+                </div>
+              </div>
             </div>
-            <div style={styles.contentPurchase} onClick={() => this.submitPurchase()}>
-              <div style={styles.viewButtonKeyBlue}>Purchase</div>
+            <div style={styles.purchaseTicketRow}>
+              <div style={styles.contentPurchase} onClick={() => this.submitPurchase()}>
+                <div style={styles.viewButtonKeyBlue}>Purchase</div>
+              </div>
             </div>
           </div>
 
