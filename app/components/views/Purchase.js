@@ -541,8 +541,8 @@ class Purchase extends Component{
                       headerTitleOverview={<div style={styles.headerTitlePurchase}>Purchase Tickets</div>}
                       ></Header>
                       <div style={styles.headerMetaPurchase}>You must setup a
-		      stake pool preference before you can
-		      purchase tickets!</div>
+                      stake pool preference before you can
+                      purchase tickets!</div>
                       </div>);
     var selectAccounts = (
       <div style={styles.selectAccountsPurchase}>
