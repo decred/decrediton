@@ -122,7 +122,6 @@ export const SPENTNESSNTFNS_DATA = 'SPENTNESSNTFNS_DATA';
 export const SPENTNESSNTFNS_END = 'SPENTNESSNTFNS_END';
 
 function spentnessNtfnsData(response) {
-  console.log('spentnessNtfnsData', response);
   return { response: response, type: SPENTNESSNTFNS_DATA };
 }
 
@@ -163,7 +162,6 @@ export const ACCOUNTNTFNS_DATA = 'ACCOUNTNTFNS_DATA';
 export const ACCOUNTNTFNS_END = 'ACCOUNTNTFNS_END';
 
 function accountNtfnsData(response) {
-  console.log('accountNtfns', response);
   return { response: response, type: ACCOUNTNTFNS_DATA };
 }
 
