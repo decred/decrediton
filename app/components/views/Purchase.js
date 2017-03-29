@@ -529,17 +529,20 @@ class Purchase extends Component{
   render() {
     const { walletService } = this.props;
     const { getAccountsResponse } = this.props;
-    const { currentStakePoolConfig } = this.props;
+    const { activeStakePoolConfig } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
     const { purchaseTicketsRequestAttempt } = this.props;
 
     var warningTextDiv = (<div style={styles.headerMetaPurchase}>The safest way
                           to ensure that your vote succeeds is use a stake pool.
                          </div>);
-    var noPoolView = (<div sytle={styles.view}>
+    var noPoolView = (<div style={styles.view}>
                       <Header
                       headerTitleOverview={<div style={styles.headerTitlePurchase}>Purchase Tickets</div>}
                       ></Header>
+                      <div style={styles.headerMetaPurchase}>You must setup a
+		      stake pool preference before you can
+		      purchase tickets!</div>
                       </div>);
     var selectAccounts = (
       <div style={styles.selectAccountsPurchase}>
@@ -664,7 +667,7 @@ class Purchase extends Component{
 
     if (walletService === null) {
       return (<ErrorScreen />);
-    } else if (currentStakePoolConfig === null) {
+    } else if (activeStakePoolConfig !== true) {
       return(
         <div style={styles.body}>
           <SideBar />
