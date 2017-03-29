@@ -562,11 +562,11 @@ class Purchase extends Component{
         headerTitleOverview={<div style={styles.headerTitlePurchase}>Purchase Tickets</div>}
       headerTop={[purchaseTicketsError !== null ?
             <div key="purchaseError" style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPurchaseTicketsError()}></div>{purchaseTicketsError}</div> :
-		  <div key="purchaseError" ></div>,
-		  purchaseTicketsSuccess !== null ?
-		  <div key="purchaseSuccess" style={styles.viewNotificationSuccess}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPurchaseTicketsSuccess()}></div>{purchaseTicketsSuccess}</div> :
-		  <div key="purchaseSuccess" ></div>,
-		 ]}
+                  <div key="purchaseError" ></div>,
+        purchaseTicketsSuccess !== null ?
+      <div key="purchaseSuccess" style={styles.viewNotificationSuccess}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPurchaseTicketsSuccess()}></div>{purchaseTicketsSuccess}</div> :
+                  <div key="purchaseSuccess" ></div>,
+      ]}
       headerMetaOverview={warningTextDiv}>
 	</Header>
         <div style={styles.content}>
