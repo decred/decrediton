@@ -430,10 +430,10 @@ export function getMinedPaginatedTransactions(pageNumber) {
     }
     var startTx = pageNumber * txPerPage;
     var endTx = startTx + txPerPage;
-    if (endTx >= transactionsInfo.length) {
-      endTx = transactionsInfo.length - 1;
+    if (endTx > transactionsInfo.length) {
+      endTx = transactionsInfo.length;
     }
-    dispatch({ paginatedTxs: transactionsInfo.slice(startTx, endTx+1), currentPage: pageNumber, type: PAGINATETRANSACTIONS });
+    dispatch({ paginatedTxs: transactionsInfo.slice(startTx, endTx), currentPage: pageNumber, type: PAGINATETRANSACTIONS });
   };
 }
 
