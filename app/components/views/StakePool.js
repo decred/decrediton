@@ -498,7 +498,10 @@ const styles = {
       backgroundImage: `url(${ArrowDownKeyBlue})`,
       backgroundSize: '10px',
     }
-  }
+  },
+  toggle: {
+    float: 'right',
+  },
 };
 
 class StakePool extends Component{
@@ -736,9 +739,13 @@ class StakePool extends Component{
         </div>
     );
     var purchaseTicketsView = (
-      <div style={styles.view}>
         <div style={styles.content}>
           <div style={styles.flexHeight}>
+            <div style={styles.contentNestFromAddress}>
+              <div style={styles.contentNestPrefixSend}>Stake Pool:</div>
+                {selectStakePool}
+              <div style={styles.contentNestFromAddressWalletIcon}></div>
+            </div>
             <div style={styles.contentNestFromAddress}>
               <div style={styles.contentNestPrefixPurchase}>From:</div>
               {selectAccounts}
@@ -835,10 +842,7 @@ class StakePool extends Component{
               </div>
             </div>
           </div>
-
-          </div>
-
-      </div>);
+        </div>);
     const stakePool = (
       <div style={styles.view}>
         <Header
@@ -854,17 +858,19 @@ class StakePool extends Component{
           ]
           }
           headerTitleOverview="Stake pool settings"
-          headerMetaOverview={<div></div>}
-        >          
-          {activeStakePoolConfig && !this.state.addAnotherStakePool ?
-            <NewExistingSeedToggle
-              activeButton={'left'}
-              leftText={'Purchase Tickets'}
-              rightText={'Configure stakepools'}
-              toggleAction={(e)=>{this.toggleTicketStakePool(e);}}/> :
-              <div></div>
+          headerMetaOverview={       
+            activeStakePoolConfig && !this.state.addAnotherStakePool ?
+            <div style={styles.toggle}>
+              <NewExistingSeedToggle
+                activeButton={'left'}
+                leftText={'Purchase Tickets'}
+                rightText={'Configure stakepools'}
+                toggleAction={(e)=>{this.toggleTicketStakePool(e);}}/> 
+            </div>:
+            <div></div>
+            
           }
-        </Header>
+        />
         {(!activeStakePoolConfig || this.state.addAnotherStakePool) && !currentStakePoolConfigRequest ?
           stakePoolConfigInput :
           currentStakePoolConfigRequest || purchaseTicketsRequestAttempt ?
