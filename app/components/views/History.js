@@ -109,8 +109,8 @@ class History extends Component{
           <div style={styles.contentTitle}>
             <div style={styles.contentTitleText}>Recent Transactions</div>
             <div style={styles.contentTitleButtonsArea}>
-              <button style={styles.contentTitleButtonsLeft} disabled={currentPage <= 1} onClick={()=>getMinedPaginatedTransactions(currentPage-1)}>&lt;</button>
-              <span style={styles.contentTitleButtonsText}>{currentPage} of {totalPages}</span>
+              <button style={styles.contentTitleButtonsLeft} disabled={currentPage < 1} onClick={()=>getMinedPaginatedTransactions(currentPage-1)}>&lt;</button>
+              <span style={styles.contentTitleButtonsText}>{currentPage + 1} of {totalPages}</span>
               <button style={styles.contentTitleButtonsRight} disabled={(currentPage + 1) * txPerPage > transactionsInfo.length}onClick={()=>getMinedPaginatedTransactions(currentPage+1)}>&gt;</button>
             </div>
           </div>
