@@ -22,6 +22,7 @@ function mapStateToProps(state) {
     synced: state.notifications.synced,
     unminedTransactions: state.grpc.unminedTransactions,
     unmined: state.notifications.unmined,
+    getTransactionsRequestAttempt: state.grpc.getTransactionsRequestAttempt,
   };
 }
 

@@ -19,15 +19,15 @@ function getWalletServiceError(error) {
 function getWalletServiceSuccess(walletService) {
   return (dispatch, getState) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
+    setTimeout(() => { dispatch(getAccountsAttempt()); }, 10);
+    setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 20);
     setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNextAddressAttempt()); }, 1000);
     setTimeout(() => { dispatch(getBalanceAttempt()); }, 1000);
     setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
     setTimeout(() => { dispatch(getTicketPriceAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getAccountsAttempt()); }, 1000);
     setTimeout(() => { dispatch(getPingAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNetworkAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 1000);
     setTimeout(() => { dispatch(transactionNtfnsStart()); }, 1000);
     setTimeout(() => { dispatch(spentnessNtfnsStart(0)); }, 1000);
     setTimeout(() => { dispatch(accountNtfnsStart()); }, 1000);
@@ -417,7 +417,7 @@ function getTransactionsInfoProgress(response) {
 }
 function getTransactionsInfoEnd() {
   return (dispatch) => {
-    dispatch({ type: GETTRANSACTIONS_COMPLETE });
+    setTimeout(() => { dispatch({ type: GETTRANSACTIONS_COMPLETE })}, 1000);
     setTimeout(() => { dispatch(getMinedPaginatedTransactions(0)); }, 1500);
   };
 }
