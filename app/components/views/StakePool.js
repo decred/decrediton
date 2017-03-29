@@ -511,9 +511,16 @@ class StakePool extends Component{
   constructor(props) {
     super(props);
     var initStakePoolHost = '';
+    var initStakePool = null;
     for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
       if (!this.props.currentStakePoolConfig[i].ApiKey && this.props.currentStakePoolConfig[i].Network == this.props.network) {
         initStakePoolHost = this.props.currentStakePoolConfig[i].Host;
+        break;
+      }
+    }
+    for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
+      if (this.props.currentStakePoolConfig[i].ApiKey && this.props.currentStakePoolConfig[i].Network == this.props.network) {
+        initStakePool = this.props.currentStakePoolConfig[i];
         break;
       }
     }
@@ -532,9 +539,11 @@ class StakePool extends Component{
       poolFee: 0,
       expiry: 16,
       txFee: 0.01, // DCR/kB
-      ticketFee: 0.01 // DCR/kB
+      ticketFee: 0.01, // DCR/kB
+      selectedStakePoolForPurchase: initStakePool,
     };
   }
+
   componentWillMount() {
     this.props.clearStakePoolConfigError();
     this.props.clearStakePoolConfigSuccess();
@@ -804,10 +813,10 @@ class StakePool extends Component{
               <div style={styles.purchaseTicketInput}>
                 <div style={styles.inputForm}>
                   <input
+                    disabled
                     type="text"
                     style={styles.contentNestAddressHashTo}
-                    placeholder="Pool Address"
-                    onBlur={(e) =>{this.updatePoolAddress(e.target.value);}}/>
+                    value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolAddress : null}/>
                 </div>
               </div>
             </div>
@@ -817,9 +826,9 @@ class StakePool extends Component{
                 <div style={styles.inputForm}>
                   <input
                     type="text"
+                    disabled
                     style={styles.contentNestAddressHashTo}
-                    placeholder="Ticket Address"
-                    onBlur={(e) =>{this.updateTicketAddress(e.target.value);}}/>
+                    value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.TicketAddress : null}/>
                 </div>
               </div>
             </div>
