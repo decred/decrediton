@@ -4,6 +4,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import ErrorScreen from '../ErrorScreen';
 import SideBar from '../SideBar';
 import Header from '../Header';
+import NewExistingSeedToggle from '../NewExistingSeedToggle';
 import ArrowDownMidBlue from '../icons/arrow-down-mid-blue.svg';
 import ArrowDownKeyBlue from '../icons/arrow-down-key-blue.svg';
 import KeyBlueButton from '../KeyBlueButton';
@@ -452,6 +453,26 @@ const styles = {
   loading: {
     marginTop: '110px',
     marginLeft: '268px',
+  },
+  selectAccountsPurchase: {
+    width: '300px',
+    position: 'relative',
+    zIndex: '3',
+    overflow: 'visible',
+    height: '34px',
+    minWidth: '300px',
+    float: 'left',
+    borderBottom: '1px solid #2971ff',
+    backgroundColor: '#fff',
+    backgroundImage: `url(${ArrowDownMidBlue})`,
+    backgroundPosition: '100% 50%',
+    backgroundSize: '10px',
+    backgroundRepeat: 'no-repeat',
+    cursor: 'pointer',
+    ':hover': {
+      backgroundImage: `url(${ArrowDownKeyBlue})`,
+      backgroundSize: '10px',
+    }
   }
 };
 
@@ -473,11 +494,67 @@ class StakePool extends Component{
       apiKey: '',
       account: 0,
       addAnotherStakePool: false,
+      purchaseTickets: true,
+      account: 0,
+      spendLimit: 0,
+      conf: 0,
+      ticketAddress: '',
+      numTickets: 0,
+      poolAddress: '',
+      poolFee: 0,
+      expiry: 16,
+      txFee: 0.01, // DCR/kB
+      ticketFee: 0.01 // DCR/kB
     };
   }
   componentWillMount() {
     this.props.clearStakePoolConfigError();
     this.props.clearStakePoolConfigSuccess();
+    this.props.clearPurchaseTicketsSuccess();
+    this.props.clearPurchaseTicketsError();
+  }
+  submitPurchase() {
+    if (this.state.privpass == null || this.state.ticketAddress == '' ||
+       this.state.numTickets == '' ) {
+      return;
+    }
+    this.props.purchaseTicketsAttempt(
+      this.state.privpass,
+      this.state.account,
+      this.state.spendLimit,
+      this.state.conf,
+      this.state.ticketAddress,
+      this.state.numTickets,
+      this.state.poolAddress,
+      this.state.poolFee,
+      this.state.expiry,
+      this.state.txFee,
+      this.state.ticketFee
+    );
+  }
+  updateAccountNumber(outputKey, accountNum) {
+    this.setState({account: accountNum});
+  }
+  updateTicketAddress(ticketAddress) {
+    this.setState({ticketAddress: ticketAddress});
+  }
+  updateNumTickets(numTickets) {
+    this.setState({numTickets: numTickets});
+  }
+  updatePoolAddress(poolAddress) {
+    this.setState({poolAddress: poolAddress});
+  }
+  updatePoolFee(poolFee) {
+    this.setState({poolFee: poolFee});
+  }
+  updateExpiry(expiry) {
+    this.setState({expiry: expiry});
+  }
+  updateTxFee(txFee) {
+    this.setState({txFee: txFee});
+  }
+  updateTicketFee(ticketFee) {
+    this.setState({ticketFee: ticketFee});
   }
   addAnotherStakePool() {
     this.setState({addAnotherStakePool: true});
@@ -500,17 +577,45 @@ class StakePool extends Component{
   updateStakePoolHost(poolHost) {
     this.setState({stakePoolHost: poolHost});
   }
+  toggleTicketStakePool(side) {
+    if (side == 'right') {
+      this.setState({purchaseTickets: false});
+    } else if (side == 'left') {
+      this.setState({purchaseTickets: true});
+    }
+  }
   render() {
     const { walletService } = this.props;
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
-    const { currentStakePoolConfigSuccessMessage } = this.props;
+    const { currentStakePoolConfigSuccessMessage, getAccountsResponse, purchaseTicketsRequestAttempt } = this.props;
     const { network } = this.props;
+
     var unconfigedStakePools = 0;
     for (var i = 0; i < currentStakePoolConfig.length; i++) {
       if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
         unconfigedStakePools++;
       }
     }
+    var selectAccounts = (
+      <div style={styles.selectAccountsPurchase}>
+        <select
+          defaultValue={0}
+          style={styles.selectAccount}
+          >
+          {getAccountsResponse !== null ?
+            getAccountsResponse.getAccountsList().map((account) => {
+              if (account.getAccountName() !== 'imported') {
+                return (
+                  <option style={styles.selectAccountNFirst} key={account.getAccountNumber()} value={account.getAccountNumber()}>
+                    {account.getAccountName()}
+                  </option>
+                );
+              }
+            }):
+            null
+          }
+        </select>
+      </div>);
     var selectStakePool = (
       <div style={styles.selectStakePoolArea}>
         <select
@@ -605,6 +710,80 @@ class StakePool extends Component{
           }
         </div>
     );
+    var purchaseTicketsView = (
+      <div style={styles.view}>
+        <div style={styles.content}>
+          <div style={styles.flexHeight}>
+            <div style={styles.contentNestFromAddress}>
+              <div style={styles.contentNestPrefixPurchase}>From:</div>
+              {selectAccounts}
+              <div style={styles.contentNestFromAddressWalletIcon}></div>
+            </div>
+            <div style={styles.contentNestPrefixSend}>Number of Tickets:</div>
+            <div style={styles.inputForm}>
+              <input
+                type="text"
+                style={styles.contentNestAddressHashTo}
+                placeholder="Number of Tickets"
+                onBlur={(e) =>{this.updateNumTickets(e.target.value);}}/>
+            </div>
+            <div style={styles.contentNestPrefixSend}>Ticket Fee (DCR/kB):</div>
+            <div style={styles.inputForm}>
+              <input
+                type="text"
+                style={styles.contentNestAddressHashTo}
+                placeholder="Ticket Fee"
+                onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
+            </div>
+            <div style={styles.contentNestPrefixSend}>Split Fee (DCR/kB):</div>
+            <div style={styles.inputForm}>
+              <input
+                type="text"
+                style={styles.contentNestAddressHashTo}
+                placeholder="Split Fee"
+                onBlur={(e) =>{this.updateTxFee(e.target.value);}}/>
+            </div>
+            <div style={styles.contentNestPrefixSend}>Expiry:</div>
+              <div style={styles.inputForm}>
+                <input
+                  type="text"
+                  style={styles.contentNestAddressHashTo}
+                  placeholder="Expiry"
+                  onBlur={(e) =>{this.updateExpiry(e.target.value);}}/>
+            </div>
+            <div style={styles.contentNestPrefixSend}>Pool Address:</div>
+            <div style={styles.inputForm}>
+              <input
+                type="text"
+                style={styles.contentNestAddressHashTo}
+                placeholder="Pool Address"
+                onBlur={(e) =>{this.updatePoolAddress(e.target.value);}}/>
+            </div>
+            <div style={styles.contentNestPrefixSend}>Ticket Address:</div>
+            <div style={styles.inputForm}>
+              <input
+                type="text"
+                style={styles.contentNestAddressHashTo}
+                placeholder="Ticket Address"
+                onBlur={(e) =>{this.updateTicketAddress(e.target.value);}}/>
+            </div>
+            <div style={styles.contentNestPrefixSend}>Private Passhrase:</div>
+            <div style={styles.inputForm}>
+              <input
+                id="privpass"
+                style={styles.contentNestAddressHashTo}
+                type="password"
+                placeholder="Private Password"
+                onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}/>
+            </div>
+            <div style={styles.contentPurchase} onClick={() => this.submitPurchase()}>
+              <div style={styles.viewButtonKeyBlue}>Purchase</div>
+            </div>
+          </div>
+
+          </div>
+
+      </div>);
     const stakePool = (
       <div style={styles.view}>
         <Header
@@ -621,12 +800,23 @@ class StakePool extends Component{
           }
           headerTitleOverview="Stake pool settings"
           headerMetaOverview={<div></div>}
-        />
+        >          
+          {activeStakePoolConfig && !this.state.addAnotherStakePool ?
+            <NewExistingSeedToggle
+              activeButton={'left'}
+              leftText={'Purchase Tickets'}
+              rightText={'Configure stakepools'}
+              toggleAction={(e)=>{this.toggleTicketStakePool(e);}}/> :
+              <div></div>
+          }
+        </Header>
         {(!activeStakePoolConfig || this.state.addAnotherStakePool) && !currentStakePoolConfigRequest ?
           stakePoolConfigInput :
-          currentStakePoolConfigRequest ?
+          currentStakePoolConfigRequest || purchaseTicketsRequestAttempt ?
             <CircularProgress style={styles.loading} size={125} thickness={6}/> :
-            configuredStakePoolInformation
+              this.state.purchaseTickets ?
+              purchaseTicketsView :
+              configuredStakePoolInformation
         }
       </div>
     );
