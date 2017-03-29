@@ -175,8 +175,8 @@ class TxHistory extends Component {
       <div>
         <div>
           {unmined !== null && unmined !== undefined && unmined.length > 0 ?
-            unmined.map(function(txInfo) {
-              var tx = txInfo.tx;
+            unmined.map(function(tx) {
+              var tx = tx;
               var credits = tx.getCreditsList();
               var debits = tx.getDebitsList();
               var fee = tx.getFee();
