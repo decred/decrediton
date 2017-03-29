@@ -8,7 +8,8 @@ import {
   GETTICKETPRICE_ATTEMPT, GETTICKETPRICE_FAILED, GETTICKETPRICE_SUCCESS,
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
   GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED, GETTRANSACTIONS_PROGRESS, GETTRANSACTIONS_COMPLETE,
-  PAGINATETRANSACTIONS_START, PAGINATETRANSACTIONS_MORE, PAGINATETRANSACTIONS_END,
+  GETTRANSACTIONS_UNMINED_PROGRESS,
+  PAGINATETRANSACTIONS,
   GETTRANSACTIONDETAILS_SET, GETTRANSACTIONDETAILS_CLEAR,
   UPDATETIMESINCEBLOCK,
 } from '../actions/ClientActions';
@@ -175,54 +176,39 @@ export default function grpc(state = {}, action) {
       getAccountsRequestAttempt: false,
       getAccountsResponse: action.response,
     };
-  case PAGINATETRANSACTIONS_START:
+  case PAGINATETRANSACTIONS:
     return {
       ...state,
+      paginatedTxs: action.paginatedTxs,
       currentPage: action.currentPage,
-      paginatingTxs: true,
-      paginatedTxs: Array(),
-    };
-  case PAGINATETRANSACTIONS_END:
-    return {
-      ...state,
-      paginatingTxs: false,
-      paginatedTxs: state.tempPaginatedTxs,
-      tempPaginatedTxs: Array(),
-    };
-  case PAGINATETRANSACTIONS_MORE:
-    return {
-      ...state,
-      tempPaginatedTxs: [
-        ...state.tempPaginatedTxs,
-        action.tempPaginatedTxs,
-      ],
     };
   case GETTRANSACTIONS_ATTEMPT:
     return {
       ...state,
       transactionsInfo: Array(),
-      getAccountsError: '',
-      getAccountsRequestAttempt: true,
+      getTransactionsRequestAttempt: true,
     };
   case GETTRANSACTIONS_FAILED:
     return {
       ...state,
-      getAccountsError: action.error,
-      getAccountsRequestAttempt: false,
+      getTransactionsRequestError: action.error,
+      getTransactionsRequestAttempt: false,
     };
   case GETTRANSACTIONS_COMPLETE:
     return {
       ...state,
-      getAccountsError: '',
-      getAccountsRequestAttempt: false,
+      getTransactionsRequestError: '',
+      getTransactionsRequestAttempt: false,
     };
   case GETTRANSACTIONS_PROGRESS:
     return {
       ...state,
-      transactionsInfo: [
-        ...state.transactionsInfo,
-        action.tx,
-      ]
+      transactionsInfo: action.transactionsInfo,
+    };
+  case GETTRANSACTIONS_UNMINED_PROGRESS:
+    return {
+      ...state,
+      unminedTransactions: action.unmined,
     };
   case GETTRANSACTIONDETAILS_SET:
     return {

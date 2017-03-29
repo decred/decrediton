@@ -1,6 +1,7 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 import LinearProgress from 'material-ui/LinearProgress';
+import CircularProgress from 'material-ui/CircularProgress';
 import ErrorScreen from '../ErrorScreen';
 import RescanForm from '../RescanForm';
 import Balance from '../Balance';
@@ -110,6 +111,10 @@ const styles = {
     fontSize: '13px',
     textAlign: 'center',
   },
+  loading: {
+    marginTop: '110px',
+    marginLeft: '268px',
+  },
 };
 
 class Home extends Component{
@@ -132,9 +137,11 @@ class Home extends Component{
     const { walletService } = this.props;
     const { paginatedTxs } = this.props;
     const { getBalanceResponse } = this.props;
+    const { getTransactionsRequestAttempt } = this.props;
     const { rescanRequest, rescanResponse } = this.props;
     const { getAccountsResponse } = this.props;
     const { synced } = this.props;
+    const { unmined } = this.props;
 
     var rescanPercFisnished;
     if (rescanResponse !== null && getAccountsResponse !== null && rescanRequest != null) {
@@ -173,17 +180,26 @@ class Home extends Component{
           headerTitleOverview="Available Balance"
           headerMetaOverview={<Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />}
         />
-        <div style={styles.content}>
-          <div style={styles.contentTitle}>
-            <div style={styles.contentTitleText}>Recent Transactions</div>
+        {!getTransactionsRequestAttempt ?
+          <div style={styles.content}>
+            <div style={styles.contentTitle}>
+              <div style={styles.contentTitleText}>Recent Transactions</div>
+            </div>
+            <div style={styles.contentNest}>
+              {unmined.length > 0 ?
+                <TxHistory unmined={unmined}/>  :
+                <p></p>
+              }
+              {paginatedTxs.length > 0 ?
+                <TxHistory mined={paginatedTxs}/>  :
+                <p>No transactions</p>
+              }
+            </div>
+          </div> :
+          <div style={styles.content}>
+            <CircularProgress style={styles.loading} size={125} thickness={6}/> :
           </div>
-          <div style={styles.contentNest}>
-            {paginatedTxs.length > 0 ?
-              <TxHistory mined={paginatedTxs}/>  :
-              <p>No transactions</p>
-            }
-          </div>
-        </div>
+        }
       </div>);
 
     if (walletService === null) {

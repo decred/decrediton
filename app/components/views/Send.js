@@ -580,7 +580,7 @@ class Send extends Component{
     if (constructTxResponse !== null) {
       // Use default fee per kb since we aren't setting currently in constructTxRequest (0.01 dcr)
       estimatedFee = (constructTxResponse.getEstimatedSignedSize() / 1000) * 0.01 * 100000000; // convert to atoms for balance div
-      totalSpent = constructTxResponse.getTotalPreviousOutputAmount() - constructTxResponse.getTotalOutputAmount();
+      totalSpent = constructTxResponse.getTotalPreviousOutputAmount() - constructTxResponse.getTotalOutputAmount() + constructTxResponse.totalAmount;
     }
     const signTxView = (
       <div style={styles.view}>

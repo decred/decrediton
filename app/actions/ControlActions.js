@@ -447,8 +447,8 @@ export const PUBLISHTX_CLEAR_SUCCESS = 'PUBLISHTX_CLEAR_SUCCESS';
 
 export function clearConstructTxError() {
   return (dispatch, getState) => {
-    const { constructTransactionError } = getState().control;
-    if (constructTransactionError !== null) {
+    const { constructTxError } = getState().control;
+    if (constructTxError !== null) {
       dispatch({type: CONSTRUCTTX_CLEAR_ERROR});
     }
   };
@@ -549,7 +549,7 @@ export function constructTransactionAttempt(account, confirmations, outputs) {
   request.setSourceAccount(parseInt(account));
   request.setRequiredConfirmations(parseInt(parseInt(confirmations)));
   request.setOutputSelectionAlgorithm(1);
-
+  var totalAmount = 0;
   outputs.map(output => {
     var outputDest = new ConstructTransactionRequest.OutputDestination();
     outputDest.setAddress(output.destination);
@@ -557,16 +557,17 @@ export function constructTransactionAttempt(account, confirmations, outputs) {
     newOutput.setDestination(outputDest);
     newOutput.setAmount(parseInt(output.amount));
     request.addNonChangeOutputs(newOutput);
+    totalAmount += output.amount;
   });
   return (dispatch) => {
     dispatch({
       request: request,
       type: CONSTRUCTTX_ATTEMPT });
-    dispatch(constructTransactionAction());
+    dispatch(constructTransactionAction(totalAmount));
   };
 }
 
-function constructTransactionAction() {
+function constructTransactionAction(totalAmount) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { constructTxRequest } = getState().control;
@@ -575,6 +576,7 @@ function constructTransactionAction() {
           if (err) {
             dispatch(constructTransactionError(err + ' Please try again'));
           } else {
+            constructTxResponse.totalAmount = totalAmount;
             dispatch(constructTransactionSuccess(constructTxResponse));
           }
         });

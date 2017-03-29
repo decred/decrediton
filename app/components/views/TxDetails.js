@@ -9,6 +9,7 @@ import MinusBig from '../icons/minus-big.svg';
 import dateFormat from 'dateformat';
 import '../fonts.css';
 import { shell } from 'electron';
+import SlateGrayButton from '../SlateGrayButton';
 
 const styles = {
   view: {
@@ -286,9 +287,11 @@ class TxDetails extends Component {
       <div style={styles.view}>
         <div style={styles.header}>
           <div style={styles.headerTopTransactionDetails}>
-            <SlateGrayButton onClick={() => clearTxDetails()}>back</SlateGrayButton>
           </div>
-          <div style={styles.headerTitleOverview}>Primary account</div>
+          <div style={styles.headerTitleOverview}>
+            Primary account
+            <SlateGrayButton style={{float: 'right'}} onClick={() => clearTxDetails()}>back</SlateGrayButton>
+          </div>
           {walletValueUp ?
           <div style={styles.headerMetaTransactionDetailsIn}>
             <Balance amount={txAmount} />

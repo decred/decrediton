@@ -1,15 +1,17 @@
 import { getWalletService } from '../middleware/grpc/client';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt } from './ControlActions';
-import { transactionNftnsStart } from './NotificationActions';
-export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
-export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
-export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
+import { transactionNtfnsStart } from './NotificationActions';
 import { hashHistory } from 'react-router';
 import { timeSince } from '../helpers/dateFormat.js';
 import {
   PingRequest, NetworkRequest, AccountNumberRequest, AccountsRequest,
   BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest
 } from '../middleware/walletrpc/api_pb';
+
+export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
+export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
+export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
+
 function getWalletServiceError(error) {
   return { error, type: GETWALLETSERVICE_FAILED };
 }
@@ -17,17 +19,16 @@ function getWalletServiceError(error) {
 function getWalletServiceSuccess(walletService) {
   return (dispatch, getState) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
+    setTimeout(() => { dispatch(getAccountsAttempt()); }, 10);
+    setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 20);
     setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNextAddressAttempt()); }, 1000);
     setTimeout(() => { dispatch(getBalanceAttempt()); }, 1000);
     setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
     setTimeout(() => { dispatch(getTicketPriceAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getAccountsAttempt()); }, 1000);
     setTimeout(() => { dispatch(getPingAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNetworkAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 1000);
-    setTimeout(() => { dispatch(transactionNftnsStart()); }, 1000);
-
+    setTimeout(() => { dispatch(transactionNtfnsStart()); }, 1000);
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.
@@ -345,11 +346,9 @@ function accounts() {
 export const GETTRANSACTIONS_ATTEMPT = 'GETTRANSACTIONS_ATTEMPT';
 export const GETTRANSACTIONS_FAILED = 'GETTRANSACTIONS_FAILED';
 export const GETTRANSACTIONS_PROGRESS = 'GETTRANSACTIONS_PROGRESS';
+export const GETTRANSACTIONS_UNMINED_PROGRESS = 'GETTRANSACTIONS_PROGRESS';
 export const GETTRANSACTIONS_COMPLETE = 'GETTRANSACTIONS_COMPLETE';
-export const PAGINATETRANSACTIONS_START = 'PAGINATETRANSACTIONS_START';
-export const PAGINATETRANSACTIONS_END = 'PAGINATETRANSACTIONS_END';
-export const PAGINATETRANSACTIONS_MORE = 'PAGINATETRANSACTIONS_MORE';
-export const PAGINATETRANSACTIONS_UPDATE_END = 'PAGINATETRANSACTIONS_UPDATE_END';
+export const PAGINATETRANSACTIONS = 'PAGINATETRANSACTIONS';
 
 export function getTransactionInfoAttempt() {
   return (dispatch, getState) => {
@@ -392,103 +391,47 @@ function getTransactionsInfo(request) {
 }
 
 function getTransactionsInfoProgress(response) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { transactionsInfo } = getState().grpc;
+    var updatedTransactionInfo = transactionsInfo;
     for (var i = 0; i < response.getMinedTransactions().getTransactionsList().length; i++) {
       var newHeight = response.getMinedTransactions().getHeight();
       var tx = {
+        timestamp: response.getMinedTransactions().getTimestamp(),
+        tx: response.getMinedTransactions().getTransactionsList()[i],
         height: newHeight,
         index: i,
+        hash: response.getMinedTransactions().getTransactionsList()[i].getHash(),
       };
-      dispatch({ tx, type: GETTRANSACTIONS_PROGRESS });
+      updatedTransactionInfo.unshift(tx);
+    }
+    dispatch({ transactionsInfo: updatedTransactionInfo, type: GETTRANSACTIONS_PROGRESS });
+    if (response.getUnminedTransactionsList().length > 0) {
+      console.log('unmined!', response.getUnminedTransactionsList());
+      dispatch({unmined: response.getUnminedTransactionsList(), type: GETTRANSACTIONS_UNMINED_PROGRESS});
     }
     response = null;
   };
 }
 function getTransactionsInfoEnd() {
   return (dispatch) => {
-    dispatch({ type: GETTRANSACTIONS_COMPLETE });
-    setTimeout(() => { dispatch(getMinedPaginatedTransactions(1)); }, 1500);
+    setTimeout(() => { dispatch({ type: GETTRANSACTIONS_COMPLETE });}, 1000);
+    setTimeout(() => { dispatch(getMinedPaginatedTransactions(0)); }, 1500);
   };
-}
-
-function paginatedTransactionsProgess(getTransactionsResponse, requestedTxs) {
-  return (dispatch, getState) => {
-    const { paginatingTxs } = getState().grpc;
-    if (!paginatingTxs) {
-      return;
-    }
-    var newTxs = getTransactionsResponse.getMinedTransactions().getTransactionsList();
-    var blockHeight = getTransactionsResponse.getMinedTransactions().getHeight();
-    for (var i = 0; i < newTxs.length; i++) {
-      for (var j = 0; j < requestedTxs.length; j++) {
-        // Only add requested tx if it was already included in the previous set
-        if (blockHeight == requestedTxs[j].height && i == requestedTxs[j].index) {
-          newTxs[i].timestamp = getTransactionsResponse.getMinedTransactions().getTimestamp();
-          newTxs[i].height = getTransactionsResponse.getMinedTransactions().getHeight();
-          newTxs[i].index = i;
-          newTxs[i].blockHash = getTransactionsResponse.getMinedTransactions().getHash();
-          dispatch({ tempPaginatedTxs: newTxs[i], type: PAGINATETRANSACTIONS_MORE });
-          break;
-        }
-      }
-    }
-  };
-}
-
-// Once the get transactions call is complete we must check to see if we
-// got enough tx to please txPerPage, if not keep looking back until we
-// get to 0.
-function getMinedPaginatedTransactionsFinished() {
-  return { type: PAGINATETRANSACTIONS_END };
 }
 
 export function getMinedPaginatedTransactions(pageNumber) {
   return (dispatch, getState) => {
-    const { paginatingTxs, txPerPage, transactionsInfo } = getState().grpc;
+    const { transactionsInfo, txPerPage } = getState().grpc;
     if (transactionsInfo.length === 0) {
       return;
     }
-    var startRange = transactionsInfo.length - (pageNumber * txPerPage) - 1;
-    var endRange = startRange + txPerPage;
-    if (startRange < 0) {
-      startRange = 0;
+    var startTx = pageNumber * txPerPage;
+    var endTx = startTx + txPerPage;
+    if (endTx > transactionsInfo.length) {
+      endTx = transactionsInfo.length;
     }
-    if (endRange >= transactionsInfo.length) {
-      endRange = transactionsInfo.length - 1;
-    }
-    var startBlockHeight = transactionsInfo[startRange].height;
-    var endBlockHeight = transactionsInfo[endRange].height;
-
-    if (!paginatingTxs) {
-      dispatch({
-        currentPage: pageNumber,
-        type: PAGINATETRANSACTIONS_START
-      });
-    }
-    var request = new GetTransactionsRequest();
-    request.setStartingBlockHeight(startBlockHeight);
-    request.setEndingBlockHeight(endBlockHeight);
-
-    dispatch(getPaginatedTransactions(request, transactionsInfo.slice(startRange, endRange)));
-  };
-}
-
-function getPaginatedTransactions(request, requestedTxs) {
-  return (dispatch, getState) => {
-    const { walletService } = getState().grpc;
-    var getTx = walletService.getTransactions(request);
-    getTx.on('data', function (response) {
-      dispatch(paginatedTransactionsProgess(response, requestedTxs));
-    });
-    getTx.on('end', function () {
-      dispatch(getMinedPaginatedTransactionsFinished());
-    });
-    getTx.on('status', function (status) {
-      console.log('GetTx status:', status);
-    });
-    getTx.on('error', function (err) {
-      console.error(err + ' Please try again');
-    });
+    dispatch({ paginatedTxs: transactionsInfo.slice(startTx, endTx), currentPage: pageNumber, type: PAGINATETRANSACTIONS });
   };
 }
 
