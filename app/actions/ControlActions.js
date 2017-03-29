@@ -481,22 +481,24 @@ export function clearPublishTxSuccess() {
   };
 }
 
-export const PURCHASETICKET_ATTEMPT = 'PURCHASETICKET_ATTEMPT';
-export const PURCHASETICKET_FAILED = 'PURCHASETICKET_FAILED';
-export const PURCHASETICKET_SUCCESS = 'PURCHASETICKET_SUCCESS';
+export const PURCHASETICKETS_ATTEMPT = 'PURCHASETICKETS_ATTEMPT';
+export const PURCHASETICKETS_FAILED = 'PURCHASETICKETS_FAILED';
+export const PURCHASETICKETS_SUCCESS = 'PURCHASETICKETS_SUCCESS';
+export const PURCHASETICKETS_CLEAR_ERROR = 'PURCHASETICKETS_CLEAR_ERROR';
+export const PURCHASETICKETS_CLEAR_SUCCESS= 'PURCHASETICKETS_CLEAR_SUCCESS';
 
-function purchaseTicketError(error) {
-  return { error, type: PURCHASETICKET_FAILED };
+function purchaseTicketsError(error) {
+  return { error, type: PURCHASETICKETS_FAILED };
 }
 
-function purchaseTicketSuccess(purchaseTicketResponse) {
-  return { purchaseTicketResponse: purchaseTicketResponse, type: PURCHASETICKET_SUCCESS };
+function purchaseTicketsSuccess(purchaseTicketsResponse) {
+  return { purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS };
 }
 
-export function purchaseTicketAttempt(passphrase, accountNum, spendLimit, requiredConf,
+export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requiredConf,
 ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
   var request = new PurchaseTicketsRequest();
-  request.setPassphrase(Buffer.from(passphrase));
+  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setAccount(accountNum);
   request.setSpendLimit(spendLimit);
   request.setRequiredConfirmations(requiredConf);
@@ -510,23 +512,41 @@ ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
   return (dispatch) => {
     dispatch({
       request: request,
-      type: PURCHASETICKET_ATTEMPT });
-    dispatch(purchaseTicketAction());
+      type: PURCHASETICKETS_ATTEMPT });
+    dispatch(purchaseTicketsAction());
   };
 }
 
-function purchaseTicketAction() {
+function purchaseTicketsAction() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
-    const { purchaseTicketRequest } = getState().control;
-    walletService.purchaseTicket(purchaseTicketRequest,
-        function(err, purchaseTicketResponse) {
+    const { purchaseTicketsRequest } = getState().control;
+    walletService.purchaseTickets(purchaseTicketsRequest,
+        function(err, purchaseTicketsResponse) {
           if (err) {
-            dispatch(purchaseTicketError(err + ' Please try again'));
+            dispatch(purchaseTicketsError(err + ' Please try again'));
           } else {
-            dispatch(purchaseTicketSuccess(purchaseTicketResponse));
+            dispatch(purchaseTicketsSuccess(purchaseTicketsResponse));
           }
         });
+  };
+}
+
+export function clearPurchaseTicketsSuccess() {
+  return (dispatch, getState) => {
+    const { purchaseTicketsSuccess } = getState().control;
+    if (purchaseTicketsSuccess !== null) {
+      dispatch({type: PURCHASETICKETS_CLEAR_SUCCESS});
+    }
+  };
+}
+
+export function clearPurchaseTicketsError() {
+  return (dispatch, getState) => {
+    const { purchaseTicketsError } = getState().control;
+    if (purchaseTicketsError !== null) {
+      dispatch({type: PURCHASETICKETS_CLEAR_ERROR});
+    }
   };
 }
 

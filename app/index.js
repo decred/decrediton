@@ -288,10 +288,11 @@ var initialState = {
     publishTransactionResponse: null,
     publishTransactionError: null,
     // PurchaseTicket
-    purchaseTicketRequestAttempt: false,
-    purchaseTicketRequest: null,
-    purchaseTicketResponse: null,
-    purchaseTicketError: null,
+    purchaseTicketsRequestAttempt: false,
+    purchaseTicketsRequest: null,
+    purchaseTicketsResponse: null,
+    purchaseTicketsSuccess: null,
+    purchaseTicketsError: null,
     // ConstructTransaction
     constructTxRequestAttempt: false,
     constructTxRequest: null,

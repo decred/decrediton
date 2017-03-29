@@ -6,6 +6,7 @@ import HomePage from './components/views/HomePage';
 import HistoryPage from './components/views/HistoryPage';
 import SendPage from './components/views/SendPage';
 import ReceivePage from './components/views/ReceivePage';
+import PurchasePage from './components/views/PurchasePage';
 import SettingsPage from './components/views/SettingsPage';
 import StakePoolPage from './components/views/StakePoolPage';
 import GetStartedPage from './components/views/GetStartedPage';
@@ -19,6 +20,7 @@ export default (
     <Route path="/history" component={HistoryPage} />
     <Route path="/send" component={SendPage} />
     <Route path="/receive" component={ReceivePage} />
+    <Route path="/purchase" component={PurchasePage} />
     <Route path="/settings" component={SettingsPage} />
     <Route path="/stakepool" component={StakePoolPage} />
     <Route path="/accounts" component={AccountsPage} />
