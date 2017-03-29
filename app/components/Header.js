@@ -73,25 +73,25 @@ const styles = {
   }
 };
 class Header extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        open: false,
-      };
-    }
-    componentWillReceiveProps(nextProps) {
-      if (this.props.newUnminedMessage !== nextProps.newUnminedMessage) {
-        console.log(nextProps.newUnminedMessage);
-        this.setState({
-          open: true,
-        });
-      }
-    }
-    handleRequestClose() {
-      this.setState({
-        open: false,
-      });
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.newUnminedMessage !== nextProps.newUnminedMessage) {
+      console.log(nextProps.newUnminedMessage);
+      this.setState({
+        open: true,
+      });
+    }
+  }
+  handleRequestClose() {
+    this.setState({
+      open: false,
+    });
+  }
 
   render() {
     if (this.props.getStarted) {
@@ -115,9 +115,9 @@ class Header extends React.Component {
             autoHideDuration={4000}
             bodyStyle={styles.SnackbarContent}
             onRequestClose={(reason) => {
-              if (reason != "clickaway") 
-                this.handleRequestClose()
-              }
+              if (reason != 'clickaway')
+                this.handleRequestClose();
+            }
             }
           />
           <div style={styles.header}>

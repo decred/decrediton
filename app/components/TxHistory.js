@@ -159,8 +159,6 @@ class TxHistory extends Component {
   render() {
     const { showTxDetail } = this.props;
     const { mined, unmined } = this.props;
-    var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-    var today = new Date();
     if (mined !== null && mined !== undefined && mined.length > 0 ) {
       mined.sort(function(a, b) {
         return b.timestamp - a.timestamp;
@@ -176,7 +174,6 @@ class TxHistory extends Component {
         <div>
           {unmined !== null && unmined !== undefined && unmined.length > 0 ?
             unmined.map(function(tx) {
-              var tx = tx;
               var credits = tx.getCreditsList();
               var debits = tx.getDebitsList();
               var fee = tx.getFee();

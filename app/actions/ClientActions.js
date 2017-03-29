@@ -417,7 +417,7 @@ function getTransactionsInfoProgress(response) {
 }
 function getTransactionsInfoEnd() {
   return (dispatch) => {
-    setTimeout(() => { dispatch({ type: GETTRANSACTIONS_COMPLETE })}, 1000);
+    setTimeout(() => { dispatch({ type: GETTRANSACTIONS_COMPLETE });}, 1000);
     setTimeout(() => { dispatch(getMinedPaginatedTransactions(0)); }, 1500);
   };
 }

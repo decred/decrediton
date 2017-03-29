@@ -80,9 +80,9 @@ function transactionNtfnsData(response) {
         dispatch({currentHeight: currentHeight, timeBackString: timeBackString(daysBack), type: TRANSACTIONNTFNS_SYNCING });
       }
     } else if (response.getUnminedTransactionsList().length > 0) {
-      for (var i = 0; i < response.getUnminedTransactionsList().length; i++) {
-        var message = 'New transaction! ' + reverseHash(Buffer.from(response.getUnminedTransactionsList()[i].getHash()).toString('hex'));
-        dispatch({unmined: response.getUnminedTransactionsList()[i], unminedMessage: message, type: TRANSACTIONNTFNS_DATA_UNMINED });
+      for (var z = 0; z < response.getUnminedTransactionsList().length; z++) {
+        var message = 'New transaction! ' + reverseHash(Buffer.from(response.getUnminedTransactionsList()[z].getHash()).toString('hex'));
+        dispatch({unmined: response.getUnminedTransactionsList()[z], unminedMessage: message, type: TRANSACTIONNTFNS_DATA_UNMINED });
       }
     }
   };
@@ -122,8 +122,8 @@ export const SPENTNESSNTFNS_DATA = 'SPENTNESSNTFNS_DATA';
 export const SPENTNESSNTFNS_END = 'SPENTNESSNTFNS_END';
 
 function spentnessNtfnsData(response) {
-  //console.log("spentnessNtfnsData", response);
-  //return { response: response, type: SPENTNESSNTFNS_DATA };
+  console.log('spentnessNtfnsData', response);
+  return { response: response, type: SPENTNESSNTFNS_DATA };
 }
 
 export function spentnessNtfnsStart(accountNum) {
@@ -133,7 +133,7 @@ export function spentnessNtfnsStart(accountNum) {
   request.setNoNotifySpent(false);
   return (dispatch) => {
     dispatch({request: request, type: SPENTNESSNTFNS_START });
-    //dispatch(startSpentnessNtfns());
+    dispatch(startSpentnessNtfns());
   };
 }
 
@@ -163,15 +163,15 @@ export const ACCOUNTNTFNS_DATA = 'ACCOUNTNTFNS_DATA';
 export const ACCOUNTNTFNS_END = 'ACCOUNTNTFNS_END';
 
 function accountNtfnsData(response) {
-  //console.log("accountNtfns", response);
-  //return { response: response, type: ACCOUNTNTFNS_DATA };
+  console.log('accountNtfns', response);
+  return { response: response, type: ACCOUNTNTFNS_DATA };
 }
 
 export function accountNtfnsStart() {
   var request = new AccountNotificationsRequest();
   return (dispatch) => {
     dispatch({request: request, type: ACCOUNTNTFNS_START });
-    //dispatch(startAccountNtfns());
+    dispatch(startAccountNtfns());
   };
 }
 

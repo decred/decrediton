@@ -141,9 +141,8 @@ class Home extends Component{
     const { rescanRequest, rescanResponse } = this.props;
     const { getAccountsResponse } = this.props;
     const { synced } = this.props;
-    const { unminedTransactions } = this.props;
     const { unmined } = this.props;
-    
+
     var rescanPercFisnished;
     if (rescanResponse !== null && getAccountsResponse !== null && rescanRequest != null) {
       var totalBlocks = getAccountsResponse.getCurrentBlockHeight() - rescanRequest.getBeginHeight();
@@ -181,7 +180,7 @@ class Home extends Component{
           headerTitleOverview="Available Balance"
           headerMetaOverview={<Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />}
         />
-        {!getTransactionsRequestAttempt ? 
+        {!getTransactionsRequestAttempt ?
           <div style={styles.content}>
             <div style={styles.contentTitle}>
               <div style={styles.contentTitleText}>Recent Transactions</div>
