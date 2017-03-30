@@ -129,3 +129,20 @@ export function getDcrdCert() {
   var cert = fs.readFileSync(certPath);
   return(cert);
 }
+
+export function GRPCWalletPort() {
+  var cfg = getCfg();
+  if (cfg.get('network') == 'mainnet') {
+    return cfg.get('wallet_port');
+  }
+  return cfg.get('wallet_port_testnet');
+}
+
+export function RPCDaemonPort() {
+  var cfg = getCfg();
+  if (cfg.get('network') == 'mainnet') {
+    return cfg.get('daemon_port');
+  }
+  return cfg.get('daemon_port_testnet');
+}
+

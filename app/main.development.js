@@ -1,5 +1,5 @@
 import { app, BrowserWindow, Menu, shell } from 'electron';
-import { getCfg, appDataDirectory } from './config.js';
+import { getCfg, appDataDirectory, GRPCWalletPort, RPCDaemonPort } from './config.js';
 import path from 'path';
 import os from 'os';
 import parseArgs from 'minimist';
@@ -46,6 +46,10 @@ if (process.env.NODE_ENV === 'development') {
 app.setPath('userData', appDataDirectory());
 var cfg = getCfg();
 
+if (debug) {
+  console.log('Using config/data from:', app.getPath('userData'));
+}
+
 app.on('window-all-closed', () => {
   // If we could reopen after closing all windows on OSX we might want
   // to on do this only if !== 'darwin' but since we don't, better to
@@ -73,20 +77,6 @@ app.on('window-all-closed', () => {
   }
 });
 
-function GRPCWalletPort() {
-  if (cfg.network == 'mainnet') {
-    return cfg.wallet_port;
-  }
-  return cfg.wallet_port_testnet;
-}
-
-function RPCDaemonPort() {
-  if (cfg.network == 'mainnet') {
-    return cfg.daemon_port;
-  }
-  return cfg.daemon_port_testnet;
-}
-
 const installExtensions = async () => {
   if (process.env.NODE_ENV === 'development') {
     const installer = require('electron-devtools-installer'); // eslint-disable-line global-require
@@ -106,7 +96,7 @@ const installExtensions = async () => {
 
 const launchDCRD = () => {
   var spawn = require('child_process').spawn;
-  var args = ['--rpcuser='+cfg.rpc_user,'--rpcpass='+cfg.rpc_pass];
+  var args = ['--rpcuser='+cfg.get('rpc_user'),'--rpcpass='+cfg.get('rpc_pass')];
 
   var dcrdExe = path.join(process.resourcesPath, 'bin', 'dcrd');
   if (os.platform() == 'win32') {
@@ -119,7 +109,7 @@ const launchDCRD = () => {
     args.push('--piperx=3');
   }
 
-  if (cfg.network == 'testnet') {
+  if (cfg.get('network') == 'testnet') {
     args.push('--testnet');
   }
 
@@ -179,7 +169,7 @@ const launchDCRWallet = () => {
 
   args.push('--appdata=' + appDataDirectory());
   args.push('--experimentalrpclisten=127.0.0.1:' + GRPCWalletPort());
-  if (cfg.network == 'testnet') {
+  if (cfg.get('network') == 'testnet') {
     args.push('--testnet');
   }
 
