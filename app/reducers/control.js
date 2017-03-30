@@ -268,6 +268,7 @@ export default function control(state = {}, action) {
   case PURCHASETICKETS_SUCCESS:
     return {...state,
       purchaseTicketsError: '',
+      purchaseTicketsSuccess: action.success,
       purchaseTicketsRequestAttempt: false,
       purchaseTicketsResponse: action.purchaseTicketsResponse,
     };

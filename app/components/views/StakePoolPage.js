@@ -16,6 +16,8 @@ function mapStateToProps(state) {
     currentStakePoolConfigSuccessMessage: state.stakepool.currentStakePoolConfigSuccessMessage,
     network: state.grpc.network,
     purchaseTicketsRequestAttempt: state.control.purchaseTicketsRequestAttempt,
+    purchaseTicketsError: state.control.purchaseTicketsError,
+    purchaseTicketsSuccess: state.control.purchaseTicketsSuccess,
   };
 }
 

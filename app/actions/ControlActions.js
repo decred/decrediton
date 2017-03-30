@@ -492,7 +492,8 @@ function purchaseTicketsError(error) {
 }
 
 function purchaseTicketsSuccess(purchaseTicketsResponse) {
-  return { purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS };
+  var success = 'Tickets were successfully purchased!';
+  return { success: success, purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS };
 }
 
 export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requiredConf,

@@ -616,7 +616,7 @@ class StakePool extends Component{
       spendLimit: this.props.getBalanceResponse != null ? this.props.getBalanceResponse.getSpendable() : 0,
       conf: 0,
       numTickets: 0,
-      expiry: 144,
+      expiry: 0,
       txFee: 0.01, // DCR/kB
       ticketFee: 0.01, // DCR/kB
       selectedStakePoolForPurchase: initStakePool,
@@ -681,7 +681,7 @@ class StakePool extends Component{
     const { walletService } = this.props;
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
     const { currentStakePoolConfigSuccessMessage, getAccountsResponse, purchaseTicketsRequestAttempt } = this.props;
-
+    const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
     const { network } = this.props;
 
     var unconfigedStakePools = 0;
@@ -939,11 +939,16 @@ class StakePool extends Component{
           [
             currentStakePoolConfigError !== null ?
             <div key="updateStakePoolError" style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStakePoolConfigError()}/>{currentStakePoolConfigError}</div> :
-
             <div key="updateStakePoolError" ></div>,
             currentStakePoolConfigSuccessMessage !== undefined && currentStakePoolConfigSuccessMessage !== '' ?
             <div key="configSuccess"  style={styles.viewNotificationSuccess}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStakePoolConfigSuccess()}/>{currentStakePoolConfigSuccessMessage}</div> :
-            <div key="configSuccess" ></div>
+            <div key="configSuccess" ></div>,
+            purchaseTicketsError !== null ?
+            <div key="purchaseTicketsError" style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPurchaseTicketsError()}/>{purchaseTicketsError}</div> :
+            <div key="purchaseTicketsError" ></div>,
+            purchaseTicketsSuccess !== null ?
+            <div key="purchaseTicketsSuccess" style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPurchaseTicketsSuccess()}/>{purchaseTicketsSuccess}</div> :
+            <div key="purchaseTicketsSuccess" ></div>,
           ]
           }
           headerTitleOverview="Stake pool settings"
