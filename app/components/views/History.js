@@ -93,24 +93,23 @@ class History extends Component{
       paginatedTxs: props.transactionsInfo.length >= props.txPerPage  ? props.transactionsInfo.slice(0,props.txPerPage) : props.transactionsInfo.slice(0,props.transactionsInfo.length),
     };
   }
-  updateShownTransactions(pageNumber) {
+  pageForward() {
     const { transactionsInfo, txPerPage } = this.props;
     const { currentPage } = this.state;
-    var newPaginatedTxs;
-    console.log(currentPage, pageNumber);
-    if (currentPage > pageNumber) {
-      newPaginatedTxs = pageNumber == 0 ?
-        transactionsInfo.slice(0, pageNumber * txPerPage) :
-        transactionsInfo.slice(pageNumber * txPerPage, currentPage*txPerPage);
-      this.setState({paginatedTxs: newPaginatedTxs, currentPage: pageNumber});
-    } else {
-      newPaginatedTxs = pageNumber * txPerPage > transactionsInfo.length ?
-        transactionsInfo.slice(currentPage*txPerPage, transactionsInfo.length) :
-        transactionsInfo.slice(currentPage*txPerPage, pageNumber * txPerPage);
-      this.setState({paginatedTxs: newPaginatedTxs, currentPage: pageNumber});
-    }
+    var newPaginatedTxs = (currentPage+1) * txPerPage > transactionsInfo.length ?
+      transactionsInfo.slice(currentPage*txPerPage, transactionsInfo.length) :
+      transactionsInfo.slice(currentPage*txPerPage, (currentPage+1) * txPerPage);
+    this.setState({paginatedTxs: newPaginatedTxs, currentPage: currentPage+1});
+  }
+
+  pageBackward() {
+    const { transactionsInfo, txPerPage } = this.props;
+    const { currentPage } = this.state;
+    var newPaginatedTxs = transactionsInfo.slice((currentPage-1) * txPerPage, currentPage*txPerPage);
+    this.setState({paginatedTxs: newPaginatedTxs, currentPage: currentPage-1});
   }
   render() {
+    console.log(this.state.currentPage);
     const { walletService, getBalanceResponse, getAccountsResponse } = this.props;
     const { transactionDetails, setTransactionDetails, clearTransactionDetails } = this.props;
     const { txPerPage, transactionsInfo } = this.props;
@@ -132,9 +131,9 @@ class History extends Component{
           <div style={styles.contentTitle}>
             <div style={styles.contentTitleText}>Recent Transactions</div>
             <div style={styles.contentTitleButtonsArea}>
-              <button style={styles.contentTitleButtonsLeft} disabled={this.state.currentPage < 1} onClick={()=>this.updateShownTransactions(this.state.currentPage-1)}>&lt;</button>
+              <button style={styles.contentTitleButtonsLeft} disabled={this.state.currentPage < 1} onClick={()=>this.pageBackward()}>&lt;</button>
               <span style={styles.contentTitleButtonsText}>{this.state.currentPage + 1} of {totalPages}</span>
-              <button style={styles.contentTitleButtonsRight} disabled={(this.state.currentPage + 1) * txPerPage > transactionsInfo.length}onClick={()=>this.updateShownTransactions(this.state.currentPage+1)}>&gt;</button>
+              <button style={styles.contentTitleButtonsRight} disabled={(this.state.currentPage + 1) * txPerPage > transactionsInfo.length}onClick={()=>this.pageForward()}>&gt;</button>
             </div>
           </div>
           <div style={styles.contentNest}>
