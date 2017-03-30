@@ -492,7 +492,7 @@ function purchaseTicketsError(error) {
 }
 
 function purchaseTicketsSuccess(purchaseTicketsResponse) {
-  var success = 'Tickets were successfully purchased!';
+  var success = 'You successfully purchased ' + purchaseTicketsResponse.getTicketHashesList().length + ' tickets.';
   return { success: success, purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS };
 }
 
