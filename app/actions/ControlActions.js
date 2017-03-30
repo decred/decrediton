@@ -496,19 +496,31 @@ function purchaseTicketsSuccess(purchaseTicketsResponse) {
 }
 
 export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requiredConf,
-ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
+numTickets, expiry, ticketFee, stakepool) {
   var request = new PurchaseTicketsRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+  console.log('pw', passphrase);
   request.setAccount(accountNum);
+  console.log('accountnum', accountNum);
   request.setSpendLimit(spendLimit);
+  console.log('spendlimit', spendLimit);
   request.setRequiredConfirmations(requiredConf);
-  request.setTicketAddress(ticketAddress);
+  console.log('conf', requiredConf);
+  request.setTicketAddress(stakepool.TicketAddress);
+  console.log('ticketaddress', stakepool.TicketAddress);
   request.setNumTickets(numTickets);
-  request.setPoolAddress(poolAddress);
-  request.setPoolFees(poolFees);
-  request.setExpiry(expiry);
-  request.setTxFee(txFee);
-  request.setTicketFee(ticketFee);
+  console.log('numtickets', numTickets);
+  request.setPoolAddress(stakepool.PoolAddress);
+  console.log('pooladdress', stakepool.PoolAddress);
+  request.setPoolFees(stakepool.PoolFees);
+  console.log('poolfees', stakepool.PoolFees);
+  request.setExpiry(0);
+  console.log('expiry', expiry);
+  request.setTxFee(1);
+  console.log('txfee:1');
+  request.setTicketFee(1);
+  console.log('ticketfee', ticketFee);
+
   return (dispatch) => {
     dispatch({
       request: request,
