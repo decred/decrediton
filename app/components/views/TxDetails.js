@@ -221,19 +221,19 @@ class TxDetails extends Component {
     const { clearTxDetails } = this.props;
     const { getAccountsResponse } = this.props;
     const { getNetworkResponse } = this.props;
-
+    console.log(tx.blockHash);
     var networkStr = '';
     if (getNetworkResponse !== null) {
       networkStr = getNetworkResponse.networkStr;
     }
-    var txLink = 'https://'+networkStr.toString()+'.decred.org/tx/' + reverseHash(Buffer.from(tx.getHash()).toString('hex'));
+    var txLink = 'https://'+networkStr.toString()+'.decred.org/tx/' + reverseHash(Buffer.from(tx.tx.getHash()).toString('hex'));
     var blockLink = 'https://'+networkStr.toString()+'.decred.org/block/' + reverseHash(Buffer.from(tx.blockHash).toString('hex'));
 
-    var credits = tx.getCreditsList();
-    var debits = tx.getDebitsList();
+    var credits = tx.tx.getCreditsList();
+    var debits = tx.tx.getDebitsList();
 
     var date = dateFormat(new Date(tx.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
-    var fee = tx.getFee();
+    var fee = tx.tx.getFee();
 
     var txDescription = '';
     var txAmount = 0;
@@ -307,7 +307,7 @@ class TxDetails extends Component {
           <div style={styles.contentNest}>
             <div style={styles.transactionDetailsTop}>
               <div style={styles.transactionDetailsName}>Transaction:</div>
-              <div style={styles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, txLink)}><a>{reverseHash(Buffer.from(tx.getHash()).toString('hex'))}</a></div>
+              <div style={styles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, txLink)}><a>{reverseHash(Buffer.from(tx.tx.getHash()).toString('hex'))}</a></div>
               <div style={styles.transactionDetailsName}>
                 <div style={styles.indicatorConfirmed}>confirmed</div>
               </div>

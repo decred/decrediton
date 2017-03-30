@@ -157,7 +157,7 @@ const styles = {
 class TxRow extends Component {
   render() {
     const { showTxDetail } = this.props;
-    const { tx } = this.props;
+    const { txInfo } = this.props;
     const { direction } = this.props;
     const { txAmount } = this.props;
     const { txDescription } = this.props;
@@ -167,7 +167,7 @@ class TxRow extends Component {
     if (pending) {
       if (direction == 'out') {
         return (
-          <div style={styles.transactionOut} key={tx.getHash()}>
+          <div style={styles.transactionOut} key={txInfo.tx.getHash()}>
             <div style={styles.transactionAmount}>
               <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
               <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
@@ -181,7 +181,7 @@ class TxRow extends Component {
             </div>);
       } else if ( direction == 'in') {
         return (
-          <div style={styles.transactionIn} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx);}:null}>
+          <div style={styles.transactionIn} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
             <div style={styles.transactionAmount}>
               <div style={styles.transactionAmountNumber}><Balance amount={txAmount} /></div>
               <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
@@ -197,7 +197,7 @@ class TxRow extends Component {
     } else {
       if (direction == 'out') {
         return (
-          <div style={styles.transactionOut} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx);}:null}>
+          <div style={styles.transactionOut} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
             <div style={styles.transactionAmount}>
               <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
               <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
@@ -212,7 +212,7 @@ class TxRow extends Component {
           </div>);
       } else if ( direction == 'in') {
         return (
-          <div style={styles.transactionIn} key={tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(tx);}:null}>
+          <div style={styles.transactionIn} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
             <div style={styles.transactionAmount}>
               <div style={styles.transactionAmountNumber}><Balance amount={txAmount} /></div>
               <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>

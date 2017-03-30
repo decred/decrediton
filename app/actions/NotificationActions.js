@@ -51,6 +51,7 @@ function transactionNtfnsData(response) {
                     hash: attachedBlocks[j].getTransactionsList()[i].getHash(),
                     tx: attachedBlocks[j].getTransactionsList()[i],
                     timestamp: attachedBlocks[j].getTimestamp(),
+                    blockHash: attachedBlocks[j].getHash(),
                   };
                   updatedTransactionInfo.unshift(tx);
                   unminedFound = true;
