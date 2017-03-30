@@ -267,7 +267,8 @@ export default function control(state = {}, action) {
     };
   case PURCHASETICKETS_SUCCESS:
     return {...state,
-      purchaseTicketsError: '',
+      purchaseTicketsError: null,
+      purchaseTicketsSuccess: action.success,
       purchaseTicketsRequestAttempt: false,
       purchaseTicketsResponse: action.purchaseTicketsResponse,
     };
@@ -277,7 +278,7 @@ export default function control(state = {}, action) {
     };
   case  PURCHASETICKETS_CLEAR_SUCCESS:
     return {...state,
-      purchaseTicketsSuccess: null,
+      purchaseTicketsSuccess: '',
     };
   case CONSTRUCTTX_ATTEMPT:
     return {...state,

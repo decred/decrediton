@@ -402,6 +402,7 @@ function getTransactionsInfoProgress(response) {
         height: newHeight,
         index: i,
         hash: response.getMinedTransactions().getTransactionsList()[i].getHash(),
+        blockHash: response.getMinedTransactions().getHash(),
       };
       updatedTransactionInfo.unshift(tx);
     }

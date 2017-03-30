@@ -492,23 +492,25 @@ function purchaseTicketsError(error) {
 }
 
 function purchaseTicketsSuccess(purchaseTicketsResponse) {
-  return { purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS };
+  var success = 'You successfully purchased ' + purchaseTicketsResponse.getTicketHashesList().length + ' tickets.';
+  return { success: success, purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS };
 }
 
 export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requiredConf,
-ticketAddress, numTickets, poolAddress, poolFees, expiry, txFee, ticketFee) {
+numTickets, expiry, ticketFee, stakepool) {
   var request = new PurchaseTicketsRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setAccount(accountNum);
   request.setSpendLimit(spendLimit);
   request.setRequiredConfirmations(requiredConf);
-  request.setTicketAddress(ticketAddress);
+  request.setTicketAddress(stakepool.TicketAddress);
   request.setNumTickets(numTickets);
-  request.setPoolAddress(poolAddress);
-  request.setPoolFees(poolFees);
-  request.setExpiry(expiry);
-  request.setTxFee(txFee);
-  request.setTicketFee(ticketFee);
+  request.setPoolAddress(stakepool.PoolAddress);
+  request.setPoolFees(stakepool.PoolFees);
+  request.setExpiry(0);
+  request.setTxFee(1000000);
+  request.setTicketFee(ticketFee*1e8);
+
   return (dispatch) => {
     dispatch({
       request: request,
@@ -535,7 +537,7 @@ function purchaseTicketsAction() {
 export function clearPurchaseTicketsSuccess() {
   return (dispatch, getState) => {
     const { purchaseTicketsSuccess } = getState().control;
-    if (purchaseTicketsSuccess !== null) {
+    if (purchaseTicketsSuccess !== '') {
       dispatch({type: PURCHASETICKETS_CLEAR_SUCCESS});
     }
   };

@@ -27,6 +27,9 @@ if (currentStakePoolConfig !== undefined) {
     }
   }
 }
+if (currentStakePoolConfig == undefined) {
+  setTimeout(currentStakePoolConfig = cfg.get('stakepools'), 1000);
+}
 var blocksPerDay = 0;
 if (network == 'testnet') {
   grpcport = cfg.get('wallet_port_testnet');
@@ -291,7 +294,7 @@ var initialState = {
     purchaseTicketsRequestAttempt: false,
     purchaseTicketsRequest: null,
     purchaseTicketsResponse: null,
-    purchaseTicketsSuccess: null,
+    purchaseTicketsSuccess: '',
     purchaseTicketsError: null,
     // ConstructTransaction
     constructTxRequestAttempt: false,

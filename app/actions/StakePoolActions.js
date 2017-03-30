@@ -98,7 +98,7 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
 }
 export function clearStakePoolConfigError() {
   return (dispatch, getState) => {
-    const { currentStakePoolConfigError } = getState().control;
+    const { currentStakePoolConfigError } = getState().stakepool;
     if (currentStakePoolConfigError !== null) {
       dispatch({type: UPDATESTAKEPOOLCONFIG_CLEAR_ERROR});
     }
@@ -107,7 +107,7 @@ export function clearStakePoolConfigError() {
 
 export function clearStakePoolConfigSuccess() {
   return (dispatch, getState) => {
-    const { currentStakePoolConfigSuccessMessage } = getState().control;
+    const { currentStakePoolConfigSuccessMessage } = getState().stakepool;
     if (currentStakePoolConfigSuccessMessage !== '') {
       dispatch({type: UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS});
     }
