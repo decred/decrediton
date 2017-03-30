@@ -512,15 +512,21 @@ class StakePool extends Component{
     super(props);
     var initStakePoolHost = '';
     var initStakePool = null;
+    // Look for any available uninitialized stakepool config
+    // This will be set for the first in the dropdown for
+    // setting apikey/purchase information of the stakepool.
     for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
       if (!this.props.currentStakePoolConfig[i].ApiKey && this.props.currentStakePoolConfig[i].Network == this.props.network) {
         initStakePoolHost = this.props.currentStakePoolConfig[i].Host;
         break;
       }
     }
-    for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
-      if (this.props.currentStakePoolConfig[i].ApiKey && this.props.currentStakePoolConfig[i].Network == this.props.network) {
-        initStakePool = this.props.currentStakePoolConfig[i];
+    // Look for any available initialized stakepool config
+    // This will be set for the first in the dropdown for
+    // ticket purchase stake pool selection.
+    for (var j = 0; j < this.props.currentStakePoolConfig.length; j++) {
+      if (this.props.currentStakePoolConfig[j].ApiKey && this.props.currentStakePoolConfig[j].Network == this.props.network) {
+        initStakePool = this.props.currentStakePoolConfig[j];
         break;
       }
     }
@@ -530,7 +536,6 @@ class StakePool extends Component{
       account: 0,
       addAnotherStakePool: false,
       purchaseTickets: true,
-      account: 0,
       spendLimit: 0,
       conf: 0,
       ticketAddress: '',
@@ -607,9 +612,6 @@ class StakePool extends Component{
   }
   updateApiKey(apiKey) {
     this.setState({apiKey: apiKey});
-  }
-  updateAccountNumber(accountNum) {
-    this.setState({account: accountNum});
   }
   updateStakePoolHost(poolHost) {
     this.setState({stakePoolHost: poolHost});
@@ -867,17 +869,17 @@ class StakePool extends Component{
           ]
           }
           headerTitleOverview="Stake pool settings"
-          headerMetaOverview={       
+          headerMetaOverview={
             activeStakePoolConfig && !this.state.addAnotherStakePool ?
             <div style={styles.toggle}>
               <NewExistingSeedToggle
                 activeButton={'left'}
                 leftText={'Purchase Tickets'}
                 rightText={'Configure stakepools'}
-                toggleAction={(e)=>{this.toggleTicketStakePool(e);}}/> 
+                toggleAction={(e)=>{this.toggleTicketStakePool(e);}}/>
             </div>:
             <div></div>
-            
+
           }
         />
         {(!activeStakePoolConfig || this.state.addAnotherStakePool) && !currentStakePoolConfigRequest ?
