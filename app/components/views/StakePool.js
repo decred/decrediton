@@ -536,13 +536,10 @@ class StakePool extends Component{
       account: 0,
       addAnotherStakePool: false,
       purchaseTickets: true,
-      spendLimit: 0,
+      spendLimit: this.props.getBalanceResponse != null ? this.props.getBalanceResponse.getSpendable() : 0,
       conf: 0,
-      ticketAddress: '',
       numTickets: 0,
-      poolAddress: '',
-      poolFee: 0,
-      expiry: 16,
+      expiry: 144,
       txFee: 0.01, // DCR/kB
       ticketFee: 0.01, // DCR/kB
       selectedStakePoolForPurchase: initStakePool,
@@ -556,8 +553,8 @@ class StakePool extends Component{
     this.props.clearPurchaseTicketsError();
   }
   submitPurchase() {
-    if (this.state.privpass == null || this.state.ticketAddress == '' ||
-       this.state.numTickets == '' ) {
+    if (this.state.privpass == null || this.state.selectedStakePoolForPurchase == null ||
+       this.state.numTickets <= 0 ) {
       return;
     }
     this.props.purchaseTicketsAttempt(
@@ -565,35 +562,17 @@ class StakePool extends Component{
       this.state.account,
       this.state.spendLimit,
       this.state.conf,
-      this.state.ticketAddress,
       this.state.numTickets,
-      this.state.poolAddress,
-      this.state.poolFee,
       this.state.expiry,
-      this.state.txFee,
-      this.state.ticketFee
+      this.state.ticketFee,
+      this.state.selectedStakePoolForPurchase
     );
   }
-  updateAccountNumber(outputKey, accountNum) {
+  updateAccountNumber(accountNum) {
     this.setState({account: accountNum});
-  }
-  updateTicketAddress(ticketAddress) {
-    this.setState({ticketAddress: ticketAddress});
   }
   updateNumTickets(numTickets) {
     this.setState({numTickets: numTickets});
-  }
-  updatePoolAddress(poolAddress) {
-    this.setState({poolAddress: poolAddress});
-  }
-  updatePoolFee(poolFee) {
-    this.setState({poolFee: poolFee});
-  }
-  updateExpiry(expiry) {
-    this.setState({expiry: expiry});
-  }
-  updateTxFee(txFee) {
-    this.setState({txFee: txFee});
   }
   updateTicketFee(ticketFee) {
     this.setState({ticketFee: ticketFee});
@@ -605,8 +584,6 @@ class StakePool extends Component{
     if (this.state.stakePoolHost == '' || this.state.apiKey == '') {
       return;
     }
-    //this.setState({addAnotherStakePool: false});
-    //setStakePoolInformation(this.state.stakePoolHost, this.props.apiKey, this.props.account);
     this.props.setStakePoolInformation(this.state.stakePoolHost, this.state.apiKey, 0);
     setTimeout(this.setState({addAnotherStakePool: false}), 1000);
   }
@@ -627,6 +604,7 @@ class StakePool extends Component{
     const { walletService } = this.props;
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
     const { currentStakePoolConfigSuccessMessage, getAccountsResponse, purchaseTicketsRequestAttempt } = this.props;
+
     const { network } = this.props;
 
     var unconfigedStakePools = 0;
@@ -640,6 +618,7 @@ class StakePool extends Component{
         <select
           defaultValue={0}
           style={styles.selectAccount}
+          onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
           >
           {getAccountsResponse !== null ?
             getAccountsResponse.getAccountsList().map((account) => {
@@ -655,7 +634,7 @@ class StakePool extends Component{
           }
         </select>
       </div>);
-    var selectStakePool = (
+    var selectStakePoolApiKey = (
       <div style={styles.selectStakePoolArea}>
         <select
           defaultValue={0}
@@ -676,13 +655,64 @@ class StakePool extends Component{
           }
         </select>
       </div>);
+    var selectStakePoolPurchaseTickets = (
+      <div style={styles.selectStakePoolArea}>
+        <select
+          defaultValue={this.state.selectedStakePoolForPurchase}
+          style={styles.selectStakePool}
+          onChange={(e) =>{this.updateStakePoolPurchaseTickets(e.target.value);}}
+          >
+          {currentStakePoolConfig !== null  ?
+            currentStakePoolConfig.map((stakePool) => {
+              if (stakePool.ApiKey && stakePool.Network == network) {
+                return (
+                  <option style={styles.selectStakePoolNFirst} key={stakePool.Host} value={stakePool}>
+                    {stakePool.Host}
+                  </option>
+                );
+              }
+            }) :
+            null
+          }
+        </select>
+      </div>);
+    var selectNumTickets = (
+      <div style={styles.selectStakePoolArea}>
+        <select
+          defaultValue={0}
+          style={styles.selectStakePool}
+          onChange={(e) =>{this.updateNumTickets(e.target.value);}}
+          >
+          <option style={styles.selectStakePoolNFirst} key={stakePool.Host} value={0}/>
+          <option style={styles.selectStakePoolN} value={1}/>
+          <option style={styles.selectStakePoolN} value={2}/>
+          <option style={styles.selectStakePoolN} value={3}/>
+          <option style={styles.selectStakePoolN} value={4}/>
+          <option style={styles.selectStakePoolN} value={5}/>
+          <option style={styles.selectStakePoolN} value={6}/>
+          <option style={styles.selectStakePoolN} value={7}/>
+          <option style={styles.selectStakePoolN} value={8}/>
+          <option style={styles.selectStakePoolN} value={9}/>
+          <option style={styles.selectStakePoolN} value={10}/>
+          <option style={styles.selectStakePoolN} value={11}/>
+          <option style={styles.selectStakePoolN} value={12}/>
+          <option style={styles.selectStakePoolN} value={13}/>
+          <option style={styles.selectStakePoolN} value={14}/>
+          <option style={styles.selectStakePoolN} value={15}/>
+          <option style={styles.selectStakePoolN} value={16}/>
+          <option style={styles.selectStakePoolN} value={17}/>
+          <option style={styles.selectStakePoolN} value={18}/>
+          <option style={styles.selectStakePoolN} value={19}/>
+          <option style={styles.selectStakePoolN} value={20}/>
+        </select>
+      </div>);
 
     var stakePoolConfigInput = (
       <div style={styles.content}>
         <div style={styles.flexHeight}>
             <div style={styles.contentNestFromAddress}>
               <div style={styles.contentNestPrefixSend}>Stake Pool:</div>
-                {selectStakePool}
+                {selectStakePoolApiKey}
               <div style={styles.contentNestFromAddressWalletIcon}></div>
             </div>
             <div style={styles.contentNestToAddress}>
@@ -754,7 +784,7 @@ class StakePool extends Component{
           <div style={styles.flexHeight}>
             <div style={styles.contentNestFromAddress}>
               <div style={styles.contentNestPrefixSend}>Stake Pool:</div>
-                {selectStakePool}
+                {selectStakePoolPurchaseTickets}
               <div style={styles.contentNestFromAddressWalletIcon}></div>
             </div>
             <div style={styles.contentNestFromAddress}>
@@ -765,13 +795,7 @@ class StakePool extends Component{
             <div style={styles.purchaseTicketRow}>
               <div style={styles.purchaseTicketLabel}>Number of Tickets:</div>
               <div style={styles.purchaseTicketInput}>
-                <div style={styles.inputForm}>
-                  <input
-                    type="text"
-                    style={styles.contentNestAddressHashTo}
-                    placeholder="Number of Tickets"
-                    onBlur={(e) =>{this.updateNumTickets(e.target.value);}}/>
-                </div>
+                {selectNumTickets}
               </div>
             </div>
             <div style={styles.purchaseTicketRow}>
@@ -783,30 +807,6 @@ class StakePool extends Component{
                     style={styles.contentNestAddressHashTo}
                     placeholder="Ticket Fee"
                     onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
-                </div>
-              </div>
-            </div>
-            <div style={styles.purchaseTicketRow}>
-              <div style={styles.purchaseTicketLabel}>Split Fee (DCR/kB):</div>
-              <div style={styles.purchaseTicketInput}>
-                <div style={styles.inputForm}>
-                  <input
-                    type="text"
-                    style={styles.contentNestAddressHashTo}
-                    placeholder="Split Fee"
-                    onBlur={(e) =>{this.updateTxFee(e.target.value);}}/>
-                </div>
-              </div>
-            </div>
-            <div style={styles.purchaseTicketRow}>
-              <div style={styles.purchaseTicketLabel}>Expiry:</div>
-              <div style={styles.purchaseTicketInput}>
-                <div style={styles.inputForm}>
-                  <input
-                    type="text"
-                    style={styles.contentNestAddressHashTo}
-                    placeholder="Expiry"
-                    onBlur={(e) =>{this.updateExpiry(e.target.value);}}/>
                 </div>
               </div>
             </div>
