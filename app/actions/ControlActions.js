@@ -500,27 +500,16 @@ export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requi
 numTickets, expiry, ticketFee, stakepool) {
   var request = new PurchaseTicketsRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-  console.log('pw', passphrase);
   request.setAccount(accountNum);
-  console.log('accountnum', accountNum);
   request.setSpendLimit(spendLimit);
-  console.log('spendlimit', spendLimit);
   request.setRequiredConfirmations(requiredConf);
-  console.log('conf', requiredConf);
   request.setTicketAddress(stakepool.TicketAddress);
-  console.log('ticketaddress', stakepool.TicketAddress);
   request.setNumTickets(numTickets);
-  console.log('numtickets', numTickets);
   request.setPoolAddress(stakepool.PoolAddress);
-  console.log('pooladdress', stakepool.PoolAddress);
   request.setPoolFees(stakepool.PoolFees);
-  console.log('poolfees', stakepool.PoolFees);
   request.setExpiry(0);
-  console.log('expiry', expiry);
-  request.setTxFee(1);
-  console.log('txfee:1');
-  request.setTicketFee(1);
-  console.log('ticketfee', ticketFee);
+  request.setTxFee(1000000);
+  request.setTicketFee(ticketFee*1e8);
 
   return (dispatch) => {
     dispatch({

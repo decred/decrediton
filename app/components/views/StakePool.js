@@ -683,7 +683,7 @@ class StakePool extends Component{
     const { currentStakePoolConfigSuccessMessage, getAccountsResponse, purchaseTicketsRequestAttempt } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
     const { network } = this.props;
-
+    console.log(this.state.spendLimit);
     var unconfigedStakePools = 0;
     for (var i = 0; i < currentStakePoolConfig.length; i++) {
       if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
@@ -946,8 +946,8 @@ class StakePool extends Component{
             purchaseTicketsError !== null ?
             <div key="purchaseTicketsError" style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPurchaseTicketsError()}/>{purchaseTicketsError}</div> :
             <div key="purchaseTicketsError" ></div>,
-            purchaseTicketsSuccess !== null ?
-            <div key="purchaseTicketsSuccess" style={styles.viewNotificationError}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPurchaseTicketsSuccess()}/>{purchaseTicketsSuccess}</div> :
+            purchaseTicketsSuccess !== undefined && purchaseTicketsSuccess !== '' ?
+            <div key="purchaseTicketsSuccess" style={styles.viewNotificationSuccess}><div style={styles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPurchaseTicketsSuccess()}/>{purchaseTicketsSuccess}</div> :
             <div key="purchaseTicketsSuccess" ></div>,
           ]
           }

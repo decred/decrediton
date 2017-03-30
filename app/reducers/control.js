@@ -278,7 +278,7 @@ export default function control(state = {}, action) {
     };
   case  PURCHASETICKETS_CLEAR_SUCCESS:
     return {...state,
-      purchaseTicketsSuccess: null,
+      purchaseTicketsSuccess: '',
     };
   case CONSTRUCTTX_ATTEMPT:
     return {...state,

@@ -291,7 +291,7 @@ var initialState = {
     purchaseTicketsRequestAttempt: false,
     purchaseTicketsRequest: null,
     purchaseTicketsResponse: null,
-    purchaseTicketsSuccess: null,
+    purchaseTicketsSuccess: '',
     purchaseTicketsError: null,
     // ConstructTransaction
     constructTxRequestAttempt: false,
