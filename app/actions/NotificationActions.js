@@ -82,8 +82,17 @@ function transactionNtfnsData(response) {
       }
     } else if (response.getUnminedTransactionsList().length > 0) {
       for (var z = 0; z < response.getUnminedTransactionsList().length; z++) {
-        var message = 'New transaction! ' + reverseHash(Buffer.from(response.getUnminedTransactionsList()[z].getHash()).toString('hex'));
-        dispatch({unmined: response.getUnminedTransactionsList()[z], unminedMessage: message, type: TRANSACTIONNTFNS_DATA_UNMINED });
+        var found = false;
+        for (var y = 0; y < unmined.length; y++) {
+          if (Buffer.from(unmined[y].getHash()).toString('hex') == Buffer.from(response.getUnminedTransactionsList()[z].getHash()).toString('hex')) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          var message = 'New transaction! ' + reverseHash(Buffer.from(response.getUnminedTransactionsList()[z].getHash()).toString('hex'));
+          dispatch({unmined: response.getUnminedTransactionsList()[z], unminedMessage: message, type: TRANSACTIONNTFNS_DATA_UNMINED });
+        }
       }
     }
   };

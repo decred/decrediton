@@ -66,11 +66,11 @@ class TxHistory extends Component {
               if ( totalFundsReceived + totalChange + fee < totalDebit) {
                 txDescription = {direction:'Sent', addressStr: ''};
                 txAmount = totalDebit - fee - totalChange - totalFundsReceived;
-                return (<TxRow key={tx.getHash()} txInfo={tx} direction={'out'} pending txAmount={txAmount} txDescription={txDescription} />);
+                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} txInfo={tx} direction={'out'} pending txAmount={txAmount} txDescription={txDescription} />);
               } else {
                 txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
                 txAmount = totalFundsReceived;
-                return (<TxRow key={tx.getHash()} txInfo={tx} direction={'in'} pending txAmount={txAmount} txDescription={txDescription} />);
+                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} txInfo={tx} direction={'in'} pending txAmount={txAmount} txDescription={txDescription} />);
               }
             })
             : <p></p>
@@ -126,11 +126,11 @@ class TxHistory extends Component {
               if ( totalFundsReceived + totalChange + fee < totalDebit) {
                 txDescription = {direction:'Sent', addressStr: ''};
                 txAmount = totalDebit - fee - totalChange - totalFundsReceived;
-                return (<TxRow key={tx.getHash()} txInfo={txInfo} direction={'out'} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
+                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} txInfo={txInfo} direction={'out'} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
               } else {
                 txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
                 txAmount = totalFundsReceived;
-                return (<TxRow key={tx.getHash()} txInfo={txInfo} direction={'in'} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
+                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} txInfo={txInfo} direction={'in'} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
               }
             }) :
           <div></div>

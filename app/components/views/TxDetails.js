@@ -221,7 +221,6 @@ class TxDetails extends Component {
     const { clearTxDetails } = this.props;
     const { getAccountsResponse } = this.props;
     const { getNetworkResponse } = this.props;
-    console.log(tx.blockHash);
     var networkStr = '';
     if (getNetworkResponse !== null) {
       networkStr = getNetworkResponse.networkStr;
