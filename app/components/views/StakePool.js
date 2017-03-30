@@ -838,7 +838,7 @@ class StakePool extends Component{
                     <div style={styles.contentNestContentStakePoolSettings}>
                       {stakePool.Host}
                     </div>
-                  </div>First
+                  </div>
                   <div style={styles.contentNestStakePoolSettings}>
                     <div style={styles.contentNestPrefixStakePoolSettings}>Ticket Address:</div>
                     <div style={styles.contentNestContentStakePoolSettings}>
