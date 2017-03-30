@@ -178,7 +178,7 @@ const styles = {
   contentNestAddressHashTo: {
     width: '100%',
     height: '100%',
-    paddingTop: '9px',
+    paddingTop: '4px',
     paddingLeft: '10px',
     borderStyle: 'none',
     color: '#2971ff',
@@ -522,8 +522,8 @@ const styles = {
   },
   purchaseTicketRow: {
     width: '100%',
-    height: '54px',
-    paddingTop: '10px',
+    height: '45px',
+    paddingTop: '6px',
     float: 'left',
     borderBottom: '1px black solid',
   },
@@ -533,7 +533,7 @@ const styles = {
     paddingLeft: '5px',
     float: 'left',
     height: '100%',
-    paddingTop: '5px',
+    paddingTop: '8px',
     fontSize: '19px',
     textAlign: 'left',
   },
@@ -691,17 +691,17 @@ class StakePool extends Component{
       }
     }
     var selectAccounts = (
-      <div style={styles.selectAccountsPurchase}>
+      <div style={styles.selectStakePoolArea}>
         <select
           defaultValue={0}
-          style={styles.selectAccount}
+          style={styles.selectPurchaseTickets}
           onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
           >
           {getAccountsResponse !== null ?
             getAccountsResponse.getAccountsList().map((account) => {
               if (account.getAccountName() !== 'imported') {
                 return (
-                  <option style={styles.selectAccountNFirst} key={account.getAccountNumber()} value={account.getAccountNumber()}>
+                  <option style={styles.selectPurchaseTicketsN} key={account.getAccountNumber()} value={account.getAccountNumber()}>
                     {account.getAccountName()}
                   </option>
                 );
@@ -722,7 +722,7 @@ class StakePool extends Component{
             currentStakePoolConfig.map((stakePool) => {
               if (!stakePool.ApiKey && stakePool.Network == network) {
                 return (
-                  <option style={styles.selectStakePoolNFirst} key={stakePool.Host} value={stakePool.Host}>
+                  <option style={styles.selectStakePoolN} key={stakePool.Host} value={stakePool.Host}>
                     {stakePool.Host}
                   </option>
                 );
@@ -743,7 +743,7 @@ class StakePool extends Component{
             currentStakePoolConfig.map((stakePool) => {
               if (stakePool.ApiKey && stakePool.Network == network) {
                 return (
-                  <option style={styles.selectPurchaseTicketsNFirst} key={stakePool.Host} value={stakePool}>
+                  <option style={styles.selectPurchaseTicketsN} key={stakePool.Host} value={stakePool}>
                     {stakePool.Host}
                   </option>
                 );
@@ -760,7 +760,7 @@ class StakePool extends Component{
           style={styles.selectPurchaseTickets}
           onChange={(e) =>{this.updateNumTickets(e.target.value);}}
           >
-          <option style={styles.selectPurchaseTicketsNFirst} value={0} label={0}/>
+          <option style={styles.selectPurchaseTicketsN} value={0} label={0}/>
           <option style={styles.selectPurchaseTicketsN} value={1} label={1}/>
           <option style={styles.selectPurchaseTicketsN} value={2} label={2}/>
           <option style={styles.selectPurchaseTicketsN} value={3} label={3}/>
@@ -826,7 +826,7 @@ class StakePool extends Component{
                     <div style={styles.contentNestContentStakePoolSettings}>
                       {stakePool.Host}
                     </div>
-                  </div>
+                  </div>First
                   <div style={styles.contentNestStakePoolSettings}>
                     <div style={styles.contentNestPrefixStakePoolSettings}>Ticket Address:</div>
                     <div style={styles.contentNestContentStakePoolSettings}>
@@ -927,12 +927,10 @@ class StakePool extends Component{
                 </div>
               </div>
             </div>
-            <div style={styles.purchaseTicketRow}>
-              <div style={styles.contentPurchase} onClick={() => this.submitPurchase()}>
-                <div style={styles.viewButtonKeyBlue}>Purchase</div>
-              </div>
-            </div>
           </div>
+          <KeyBlueButton style={styles.contentSend} onClick={() => this.submitPurchase()}>
+            Purchase
+          </KeyBlueButton>
         </div>);
     const stakePool = (
       <div style={styles.view}>
