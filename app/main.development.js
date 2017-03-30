@@ -21,7 +21,7 @@ function unknownFn(arg) {
 
 // Allowed cmd line options are defined here.
 var opts = {
-  boolean: ['debug'],
+  boolean: ['debug', 'testnet', 'mainnet'],
   string: ['extrawalletargs'],
   default: { debug: false },
   alias: { d: 'debug' },
@@ -48,6 +48,26 @@ var cfg = getCfg();
 
 if (debug) {
   console.log('Using config/data from:', app.getPath('userData'));
+}
+
+// Check if network was set on command line (but only allow one!).
+if (argv.testnet && argv.mainnet) {
+  console.log('Cannot use both --testnet and --mainnet.');
+  app.quit();
+}
+
+if (argv.testnet) {
+  cfg.set('network', 'testnet');
+  if (debug) {
+    console.log('Running on testnet.');
+  }
+}
+
+if (argv.mainnet) {
+  cfg.set('network', 'mainnet');
+  if (debug) {
+    console.log('Running on mainnet.');
+  }
 }
 
 app.on('window-all-closed', () => {
