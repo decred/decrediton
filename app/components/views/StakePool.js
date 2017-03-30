@@ -592,19 +592,21 @@ class StakePool extends Component{
     // Look for any available uninitialized stakepool config
     // This will be set for the first in the dropdown for
     // setting apikey/purchase information of the stakepool.
-    for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
-      if (!this.props.currentStakePoolConfig[i].ApiKey && this.props.currentStakePoolConfig[i].Network == this.props.network) {
-        initStakePoolHost = this.props.currentStakePoolConfig[i].Host;
-        break;
+    if (this.props.currentStakePoolConfig != null) {
+      for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
+        if (!this.props.currentStakePoolConfig[i].ApiKey && this.props.currentStakePoolConfig[i].Network == this.props.network) {
+          initStakePoolHost = this.props.currentStakePoolConfig[i].Host;
+          break;
+        }
       }
-    }
-    // Look for any available initialized stakepool config
-    // This will be set for the first in the dropdown for
-    // ticket purchase stake pool selection.
-    for (var j = 0; j < this.props.currentStakePoolConfig.length; j++) {
-      if (this.props.currentStakePoolConfig[j].ApiKey && this.props.currentStakePoolConfig[j].Network == this.props.network) {
-        initStakePool = this.props.currentStakePoolConfig[j];
-        break;
+      // Look for any available initialized stakepool config
+      // This will be set for the first in the dropdown for
+      // ticket purchase stake pool selection.
+      for (var j = 0; j < this.props.currentStakePoolConfig.length; j++) {
+        if (this.props.currentStakePoolConfig[j].ApiKey && this.props.currentStakePoolConfig[j].Network == this.props.network) {
+          initStakePool = this.props.currentStakePoolConfig[j];
+          break;
+        }
       }
     }
     this.state = {
@@ -622,7 +624,16 @@ class StakePool extends Component{
       selectedStakePoolForPurchase: initStakePool,
     };
   }
-
+  componentWillReceiveProps(nextProps) {
+    if (this.props.currentStakePoolConfig != nextProps.currentStakePoolConfig) {
+      for (var j = 0; j < nextProps.currentStakePoolConfig.length; j++) {
+        if (nextProps.currentStakePoolConfig[j].ApiKey && nextProps.currentStakePoolConfig[j].Network == this.props.network) {
+          this.setState({selectedStakePoolForPurchase: nextProps.currentStakePoolConfig[j]});
+          break;
+        }
+      }
+    }
+  }
   componentWillMount() {
     this.props.clearStakePoolConfigError();
     this.props.clearStakePoolConfigSuccess();
@@ -683,11 +694,12 @@ class StakePool extends Component{
     const { currentStakePoolConfigSuccessMessage, getAccountsResponse, purchaseTicketsRequestAttempt } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
     const { network } = this.props;
-    console.log(this.state.spendLimit);
     var unconfigedStakePools = 0;
-    for (var i = 0; i < currentStakePoolConfig.length; i++) {
-      if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
-        unconfigedStakePools++;
+    if (currentStakePoolConfig != null) {
+      for (var i = 0; i < currentStakePoolConfig.length; i++) {
+        if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
+          unconfigedStakePools++;
+        }
       }
     }
     var selectAccounts = (

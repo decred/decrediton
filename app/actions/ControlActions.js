@@ -537,7 +537,7 @@ function purchaseTicketsAction() {
 export function clearPurchaseTicketsSuccess() {
   return (dispatch, getState) => {
     const { purchaseTicketsSuccess } = getState().control;
-    if (purchaseTicketsSuccess !== null) {
+    if (purchaseTicketsSuccess !== '') {
       dispatch({type: PURCHASETICKETS_CLEAR_SUCCESS});
     }
   };
