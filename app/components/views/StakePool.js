@@ -934,7 +934,7 @@ class StakePool extends Component{
                     id="privpass"
                     style={styles.contentNestAddressHashTo}
                     type="password"
-                    placeholder="Private Password"
+                    placeholder="Private Passphrase"
                     onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}/>
                 </div>
               </div>
