@@ -311,6 +311,83 @@ const styles = {
   selectAccountNText: {
     width: '200%',
   },
+  selectPurchaseTickets: {
+    display: 'block',
+    overflow: 'hidden',
+    height: '100%',
+    paddingTop: '3px',
+    color: '#0c1e3e',
+    ':hover': {
+      height: 'auto',
+    }
+  },
+  selectPurchaseTicketsNFirst: {
+    overflow: 'hidden',
+    height: '34px',
+    marginRight: '20px',
+    paddingTop: '5px',
+    paddingLeft: '10px',
+    color: '#2971ff',
+    fontSize: '19px',
+  },
+  selectPurchaseTicketsNTextSend: {
+    width: '200%',
+    paddingTop: '1px',
+    fontSize: '13px',
+  },
+  selectPurchaseTicketsNAmount: {
+    position: 'absolute',
+    top: '0px',
+    right: '0px',
+    bottom: '0px',
+    marginRight: '20px',
+    paddingTop: '7px',
+    paddingLeft: '40px',
+    backgroundImage: 'linear-gradient(90deg, transparent, #fff 28%)',
+    fontFamily: 'Inconsolata, monospace',
+    color: '#596d81',
+    fontSize: '11px',
+    fontWeight: '400',
+    textAlign: 'right',
+  },
+  selectPurchaseTicketsNAmountBold: {
+    fontFamily: 'Inconsolata, monospace',
+    fontWeight: '700',
+  },
+  selectPurchaseTicketsNNestSend: {
+    fontSize: '13px',
+    overflow: 'auto',
+    height: 'auto',
+    maxHeight: '413px',
+    paddingTop: '10px',
+    paddingBottom: '10px',
+    borderBottom: '1px solid #a9b4bf',
+    backgroundColor: '#fff',
+  },
+  selectPurchaseTicketsNGradient: {
+    position: 'absolute',
+    top: '0px',
+    right: '0px',
+    bottom: '0px',
+    width: '40px',
+    height: '100%',
+    backgroundImage: 'linear-gradient(90deg, transparent, #fff 75%)',
+  },
+  selectPurchaseTicketsN: {
+    position: 'relative',
+    overflow: 'hidden',
+    width: '100%',
+    paddingTop: '18px',
+    paddingBottom: '18px',
+    paddingLeft: '10px',
+    float: 'left',
+    ':hover': {
+      color: '#2971ff',
+    }
+  },
+  selectPurchaseTicketsNText: {
+    width: '200%',
+  },
   inputForm: {
     position: 'relative',
     width: '100%',
@@ -659,14 +736,14 @@ class StakePool extends Component{
       <div style={styles.selectStakePoolArea}>
         <select
           defaultValue={this.state.selectedStakePoolForPurchase}
-          style={styles.selectStakePool}
+          style={styles.selectPurchaseTickets}
           onChange={(e) =>{this.updateStakePoolPurchaseTickets(e.target.value);}}
           >
           {currentStakePoolConfig !== null  ?
             currentStakePoolConfig.map((stakePool) => {
               if (stakePool.ApiKey && stakePool.Network == network) {
                 return (
-                  <option style={styles.selectStakePoolNFirst} key={stakePool.Host} value={stakePool}>
+                  <option style={styles.selectPurchaseTicketsNFirst} key={stakePool.Host} value={stakePool}>
                     {stakePool.Host}
                   </option>
                 );
@@ -680,30 +757,30 @@ class StakePool extends Component{
       <div style={styles.selectStakePoolArea}>
         <select
           defaultValue={0}
-          style={styles.selectStakePool}
+          style={styles.selectPurchaseTickets}
           onChange={(e) =>{this.updateNumTickets(e.target.value);}}
           >
-          <option style={styles.selectStakePoolNFirst} key={stakePool.Host} value={0}/>
-          <option style={styles.selectStakePoolN} value={1}/>
-          <option style={styles.selectStakePoolN} value={2}/>
-          <option style={styles.selectStakePoolN} value={3}/>
-          <option style={styles.selectStakePoolN} value={4}/>
-          <option style={styles.selectStakePoolN} value={5}/>
-          <option style={styles.selectStakePoolN} value={6}/>
-          <option style={styles.selectStakePoolN} value={7}/>
-          <option style={styles.selectStakePoolN} value={8}/>
-          <option style={styles.selectStakePoolN} value={9}/>
-          <option style={styles.selectStakePoolN} value={10}/>
-          <option style={styles.selectStakePoolN} value={11}/>
-          <option style={styles.selectStakePoolN} value={12}/>
-          <option style={styles.selectStakePoolN} value={13}/>
-          <option style={styles.selectStakePoolN} value={14}/>
-          <option style={styles.selectStakePoolN} value={15}/>
-          <option style={styles.selectStakePoolN} value={16}/>
-          <option style={styles.selectStakePoolN} value={17}/>
-          <option style={styles.selectStakePoolN} value={18}/>
-          <option style={styles.selectStakePoolN} value={19}/>
-          <option style={styles.selectStakePoolN} value={20}/>
+          <option style={styles.selectPurchaseTicketsNFirst} value={0} label={0}/>
+          <option style={styles.selectPurchaseTicketsN} value={1} label={1}/>
+          <option style={styles.selectPurchaseTicketsN} value={2} label={2}/>
+          <option style={styles.selectPurchaseTicketsN} value={3} label={3}/>
+          <option style={styles.selectPurchaseTicketsN} value={4} label={4}/>
+          <option style={styles.selectPurchaseTicketsN} value={5} label={5}/>
+          <option style={styles.selectPurchaseTicketsN} value={6} label={6}/>
+          <option style={styles.selectPurchaseTicketsN} value={7} label={7}/>
+          <option style={styles.selectPurchaseTicketsN} value={8} label={8}/>
+          <option style={styles.selectPurchaseTicketsN} value={9} label={9}/>
+          <option style={styles.selectPurchaseTicketsN} value={10} label={10}/>
+          <option style={styles.selectPurchaseTicketsN} value={11} label={11}/>
+          <option style={styles.selectPurchaseTicketsN} value={12} label={12}/>
+          <option style={styles.selectPurchaseTicketsN} value={13} label={13}/>
+          <option style={styles.selectPurchaseTicketsN} value={14} label={14}/>
+          <option style={styles.selectPurchaseTicketsN} value={15} label={15}/>
+          <option style={styles.selectPurchaseTicketsN} value={16} label={16}/>
+          <option style={styles.selectPurchaseTicketsN} value={17} label={17}/>
+          <option style={styles.selectPurchaseTicketsN} value={18} label={18}/>
+          <option style={styles.selectPurchaseTicketsN} value={19} label={19}/>
+          <option style={styles.selectPurchaseTicketsN} value={20} label={20}/>
         </select>
       </div>);
 
@@ -782,15 +859,17 @@ class StakePool extends Component{
     var purchaseTicketsView = (
         <div style={styles.content}>
           <div style={styles.flexHeight}>
-            <div style={styles.contentNestFromAddress}>
-              <div style={styles.contentNestPrefixSend}>Stake Pool:</div>
+            <div style={styles.purchaseTicketRow}>
+              <div style={styles.purchaseTicketLabel}>Stake Pool:</div>
+              <div style={styles.purchaseTicketInput}>
                 {selectStakePoolPurchaseTickets}
-              <div style={styles.contentNestFromAddressWalletIcon}></div>
+              </div>
             </div>
-            <div style={styles.contentNestFromAddress}>
-              <div style={styles.contentNestPrefixPurchase}>From:</div>
-              {selectAccounts}
-              <div style={styles.contentNestFromAddressWalletIcon}></div>
+            <div style={styles.purchaseTicketRow}>
+              <div style={styles.purchaseTicketLabel}>Account:</div>
+              <div style={styles.purchaseTicketInput}>
+                {selectAccounts}
+              </div>
             </div>
             <div style={styles.purchaseTicketRow}>
               <div style={styles.purchaseTicketLabel}>Number of Tickets:</div>
@@ -806,6 +885,7 @@ class StakePool extends Component{
                     type="text"
                     style={styles.contentNestAddressHashTo}
                     placeholder="Ticket Fee"
+                    defaultValue={0.01}
                     onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
                 </div>
               </div>
