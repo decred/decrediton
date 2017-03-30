@@ -135,13 +135,15 @@ class Home extends Component{
 
   render() {
     const { walletService } = this.props;
-    const { paginatedTxs } = this.props;
+    const { transactionsInfo, txPerPage } = this.props;
     const { getBalanceResponse } = this.props;
     const { getTransactionsRequestAttempt } = this.props;
     const { rescanRequest, rescanResponse } = this.props;
     const { getAccountsResponse } = this.props;
     const { synced } = this.props;
     const { unmined } = this.props;
+
+    var paginatedTxs = transactionsInfo.length >= txPerPage ? transactionsInfo.slice(0,txPerPage) : transactionsInfo.slice(0,transactionsInfo.length);
 
     var rescanPercFisnished;
     if (rescanResponse !== null && getAccountsResponse !== null && rescanRequest != null) {

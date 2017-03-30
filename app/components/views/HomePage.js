@@ -9,7 +9,6 @@ import * as ControlActions from '../../actions/ControlActions';
 function mapStateToProps(state) {
   return {
     walletService: state.grpc.walletService,
-    paginatedTxs: state.grpc.paginatedTxs,
     getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
     getBalanceResponse: state.grpc.getBalanceResponse,
     getStakeInfoRequestAttempt: state.grpc.getStakeInfoRequestAttempt,
@@ -23,6 +22,8 @@ function mapStateToProps(state) {
     unminedTransactions: state.grpc.unminedTransactions,
     unmined: state.notifications.unmined,
     getTransactionsRequestAttempt: state.grpc.getTransactionsRequestAttempt,
+    transactionsInfo: state.grpc.transactionsInfo,
+    txPerPage: state.grpc.txPerPage,
   };
 }
 
