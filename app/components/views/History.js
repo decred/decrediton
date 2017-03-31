@@ -96,25 +96,23 @@ class History extends Component{
   pageForward() {
     const { transactionsInfo, txPerPage } = this.props;
     const { currentPage } = this.state;
-    var newPaginatedTxs = (currentPage+1) * txPerPage > transactionsInfo.length ?
-      transactionsInfo.slice(currentPage*txPerPage, transactionsInfo.length) :
-      transactionsInfo.slice(currentPage*txPerPage, (currentPage+1) * txPerPage);
+    var newPaginatedTxs = (currentPage+2) * txPerPage > transactionsInfo.length ?
+      transactionsInfo.slice((currentPage+1)*txPerPage, transactionsInfo.length) :
+      transactionsInfo.slice((currentPage+1)*txPerPage, (currentPage+2) * txPerPage);
     this.setState({paginatedTxs: newPaginatedTxs, currentPage: currentPage+1});
   }
 
   pageBackward() {
     const { transactionsInfo, txPerPage } = this.props;
     const { currentPage } = this.state;
-    var newPaginatedTxs = transactionsInfo.slice((currentPage-1) * txPerPage, currentPage*txPerPage);
+    var newPaginatedTxs = transactionsInfo.slice((currentPage-1) * txPerPage, (currentPage)*txPerPage);
     this.setState({paginatedTxs: newPaginatedTxs, currentPage: currentPage-1});
   }
   render() {
-    console.log(this.state.currentPage);
     const { walletService, getBalanceResponse, getAccountsResponse } = this.props;
     const { transactionDetails, setTransactionDetails, clearTransactionDetails } = this.props;
     const { txPerPage, transactionsInfo } = this.props;
     const { getNetworkResponse } = this.props;
-
 
     var totalPages = 1;
     if (transactionsInfo.length > 0) {
