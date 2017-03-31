@@ -286,8 +286,8 @@ class TxDetails extends Component {
     return(
       <div style={styles.view}>
         <Header
-          headerTitleOverview={["Primary account",
-          <SlateGrayButton key="back" style={{float: 'right'}} onClick={() => clearTxDetails()}>back</SlateGrayButton>
+          headerTitleOverview={['Primary account',
+            <SlateGrayButton key="back" style={{float: 'right'}} onClick={() => clearTxDetails()}>back</SlateGrayButton>
           ]}
           headerMetaOverview={
             walletValueUp ?

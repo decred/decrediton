@@ -715,8 +715,8 @@ class StakePool extends Component{
     const { currentStakePoolConfigSuccessMessage, getAccountsResponse, purchaseTicketsRequestAttempt } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
     const { network } = this.props;
-    const { getStakeInfoResponse, getTicketPriceResponse } = this.props;
-    
+    const { getTicketPriceResponse } = this.props;
+
     var unconfigedStakePools = 0;
     if (currentStakePoolConfig != null) {
       for (var i = 0; i < currentStakePoolConfig.length; i++) {
@@ -986,7 +986,7 @@ class StakePool extends Component{
             <div key="purchaseTicketsSuccess" ></div>,
           ]
           }
-          headerTitleOverview={this.state.purchaseTickets & getTicketPriceResponse !== null ? <div>Ticket price: <Balance amount={getTicketPriceResponse.getTicketPrice()}/></div>:"Stake pool settings"}
+          headerTitleOverview={this.state.purchaseTickets & getTicketPriceResponse !== null ? <div>Ticket price: <Balance amount={getTicketPriceResponse.getTicketPrice()}/></div>:'Stake pool settings'}
           headerMetaOverview={
             activeStakePoolConfig && !this.state.addAnotherStakePool ?
             <div style={styles.toggle}>
