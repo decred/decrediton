@@ -19,6 +19,8 @@ function mapStateToProps(state) {
     purchaseTicketsError: state.control.purchaseTicketsError,
     purchaseTicketsSuccess: state.control.purchaseTicketsSuccess,
     getBalanceResponse: state.grpc.getBalanceResponse,
+    getStakeInfoResponse: state.grpc.getStakeInfoResponse,
+    getTicketPriceResponse: state.grpc.getTicketPriceResponse,
   };
 }
 

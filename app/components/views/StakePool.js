@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
 import ErrorScreen from '../ErrorScreen';
+import Balance from '../Balance';
 import SideBar from '../SideBar';
 import Header from '../Header';
 import NewExistingSeedToggle from '../NewExistingSeedToggle';
@@ -579,6 +580,26 @@ const styles = {
   toggle: {
     float: 'right',
   },
+  contentTitle: {
+    display: 'block',
+    height: '44px',
+    marginRight: 'auto',
+    marginBottom: '10px',
+    marginLeft: 'auto',
+    borderBottom: '1px solid transparent',
+    color: '#596d81',
+    fontSize: '27px',
+    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
+  },
+  contentTitleText: {
+    display: 'inline-block',
+    overflow: 'hidden',
+    width: '500px',
+    height: '100%',
+    paddingTop: '13px',
+    paddingRight: '20px',
+    paddingLeft: '20px',
+  },
 };
 
 class StakePool extends Component{
@@ -694,6 +715,8 @@ class StakePool extends Component{
     const { currentStakePoolConfigSuccessMessage, getAccountsResponse, purchaseTicketsRequestAttempt } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
     const { network } = this.props;
+    const { getStakeInfoResponse, getTicketPriceResponse } = this.props;
+    
     var unconfigedStakePools = 0;
     if (currentStakePoolConfig != null) {
       for (var i = 0; i < currentStakePoolConfig.length; i++) {
@@ -963,7 +986,7 @@ class StakePool extends Component{
             <div key="purchaseTicketsSuccess" ></div>,
           ]
           }
-          headerTitleOverview="Stake pool settings"
+          headerTitleOverview={this.state.purchaseTickets & getTicketPriceResponse !== null ? <div>Ticket price: <Balance amount={getTicketPriceResponse.getTicketPrice()}/></div>:"Stake pool settings"}
           headerMetaOverview={
             activeStakePoolConfig && !this.state.addAnotherStakePool ?
             <div style={styles.toggle}>
