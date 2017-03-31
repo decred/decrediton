@@ -132,7 +132,7 @@ var initialState = {
 
     // PaginateTransactions
     paginatedTxs: Array(),
-    txPerPage: 6,
+    txPerPage: 8,
     currentPage: 0,
     transactionDetails: null,
 
