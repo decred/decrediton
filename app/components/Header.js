@@ -15,8 +15,8 @@ function mapDispatchToProps(dispatch) {
 
 const styles = {
   headerGetStarted: {
-    paddingRight: '80px',
-    paddingLeft: '100px',
+    paddingRight: '42px',
+    paddingLeft: '80px',
     backgroundColor: '#596d81',
   },
   headerTopGetStarted: {
@@ -38,8 +38,8 @@ const styles = {
     fontFamily: 'Inconsolata, monospace',
   },
   header: {
-    paddingRight: '80px',
-    paddingLeft: '100px',
+    paddingRight: '42px',
+    paddingLeft: '80px',
     backgroundColor: '#fff',
   },
   headerTop: {

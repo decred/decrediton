@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Radium from 'radium';
 import { reverseHash } from '../../helpers/byteActions';
 import Balance from '../Balance';
+import Header from '../Header';
 import IndicatorPending from '../icons/indicator-pending.svg';
 import IndicatorConfirmed from '../icons/indicator-confirmed.svg';
 import PlusBig from '../icons/plus-big.svg';
@@ -284,14 +285,12 @@ class TxDetails extends Component {
     }
     return(
       <div style={styles.view}>
-        <div style={styles.header}>
-          <div style={styles.headerTopTransactionDetails}>
-          </div>
-          <div style={styles.headerTitleOverview}>
-            Primary account
-            <SlateGrayButton style={{float: 'right'}} onClick={() => clearTxDetails()}>back</SlateGrayButton>
-          </div>
-          {walletValueUp ?
+        <Header
+          headerTitleOverview={['Primary account',
+            <SlateGrayButton key="back" style={{float: 'right'}} onClick={() => clearTxDetails()}>back</SlateGrayButton>
+          ]}
+          headerMetaOverview={
+            walletValueUp ?
           <div style={styles.headerMetaTransactionDetailsIn}>
             <Balance amount={txAmount} />
             <div style={styles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
@@ -300,8 +299,7 @@ class TxDetails extends Component {
             -<Balance amount={txAmount} />
             <div style={styles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
           </div>
-          }
-        </div>
+          }/>
         <div style={styles.content}>
           <div style={styles.contentNest}>
             <div style={styles.transactionDetailsTop}>
