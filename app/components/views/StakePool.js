@@ -986,16 +986,19 @@ class StakePool extends Component{
             <div key="purchaseTicketsSuccess" ></div>,
           ]
           }
-          headerTitleOverview={this.state.purchaseTickets & getTicketPriceResponse !== null ? <div>Ticket price: <Balance amount={getTicketPriceResponse.getTicketPrice()}/></div>:'Stake pool settings'}
+          headerTitleOverview={
+            this.state.purchaseTickets ? 'Ticket price:' :'Stake pool settings'}
           headerMetaOverview={
-            activeStakePoolConfig && !this.state.addAnotherStakePool ?
-            <div style={styles.toggle}>
-              <NewExistingSeedToggle
-                activeButton={'left'}
-                leftText={'Purchase Tickets'}
-                rightText={'Configure stakepools'}
-                toggleAction={(e)=>{this.toggleTicketStakePool(e);}}/>
-            </div>:
+            activeStakePoolConfig && !this.state.addAnotherStakePool && getTicketPriceResponse !== null ?
+            <div>
+             <Balance amount={getTicketPriceResponse.getTicketPrice()}/>
+              <div style={styles.toggle}>
+                <NewExistingSeedToggle
+                  activeButton={'left'}
+                  leftText={'Purchase Tickets'}
+                  rightText={'Configure stakepools'}
+                  toggleAction={(e)=>{this.toggleTicketStakePool(e);}}/>
+              </div></div>:
             <div></div>
 
           }

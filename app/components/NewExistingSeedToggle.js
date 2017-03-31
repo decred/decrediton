@@ -73,8 +73,8 @@ const styles = {
     height: '100%',
     textTransform: 'capitalize',
     paddingTop: '12px',
-    paddingRight: '30px',
-    paddingLeft: '40px',
+    paddingRight: '20px',
+    paddingLeft: '20px',
       //textAlign: 'right',
   },
   textToggleButtonDescriptionRight: {
@@ -83,8 +83,8 @@ const styles = {
     textTransform: 'capitalize',
     display: 'block',
     paddingTop: '12px',
-    paddingRight: '40px',
-    paddingLeft: '30px',
+    paddingRight: '20px',
+    paddingLeft: '20px',
       //textAlign: 'left',
   }
 };
