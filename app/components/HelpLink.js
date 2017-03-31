@@ -34,7 +34,7 @@ class HelpLink extends React.Component {
   render() {
     return (
       <div style={styles.linkColor}>
-	      <a style={styles.helpLink} onClick={function(x){shell.openExternal(x);}.bind(null, this.props.href)}>
+        <a style={styles.helpLink} onClick={function(x){shell.openExternal(x);}.bind(null, this.props.href)}>
           {this.props.children}
         </a>
       </div>

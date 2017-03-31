@@ -1,6 +1,5 @@
 // @flow
 import React, {Component} from 'react';
-import ErrorScreen from '../ErrorScreen';
 import SideBar from '../SideBar';
 import Header from '../Header';
 import HelpLink from '../HelpLink';
@@ -62,7 +61,7 @@ class Help extends Component{
         <SideBar />
         {helpView}
       </div>);
-    
+
   }
 }
 
