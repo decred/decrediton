@@ -1,6 +1,6 @@
 import { transactionNtfs, spentnessNtfs, accountNtfs } from '../middleware/grpc/client';
 import { getAccountsAttempt, getBalanceAttempt, getStakeInfoAttempt,
-  getTicketPriceAttempt, getNetworkAttempt, getMinedPaginatedTransactions } from './ClientActions';
+  getTicketPriceAttempt, getNetworkAttempt } from './ClientActions';
 import { timeBackString } from '../helpers/dateFormat.js';
 import { reverseHash } from '../helpers/byteActions';
 import { TransactionNotificationsRequest, SpentnessNotificationsRequest, AccountNotificationsRequest} from '../middleware/walletrpc/api_pb';
@@ -70,7 +70,6 @@ function transactionNtfnsData(response) {
           if (unmined.length != updatedUnmined.length) {
             dispatch({ transactionsInfo: updatedTransactionInfo, type: GETTRANSACTIONS_PROGRESS });
             dispatch({unmined: updatedUnmined, type: TRANSACTIONNTFNS_DATA_UNMINED_UPDATE});
-            setTimeout(() => { dispatch(getMinedPaginatedTransactions(0)); }, 1500);
           }
         } else if (attachedBlocks[attachedBlocks.length-1].getHeight()%100 == 0) {
           dispatch({response: response, type: TRANSACTIONNTFNS_DATA });

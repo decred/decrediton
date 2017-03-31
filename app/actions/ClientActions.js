@@ -417,22 +417,6 @@ function getTransactionsInfoProgress(response) {
 function getTransactionsInfoEnd() {
   return (dispatch) => {
     setTimeout(() => { dispatch({ type: GETTRANSACTIONS_COMPLETE });}, 1000);
-    setTimeout(() => { dispatch(getMinedPaginatedTransactions(0)); }, 1500);
-  };
-}
-
-export function getMinedPaginatedTransactions(pageNumber) {
-  return (dispatch, getState) => {
-    const { transactionsInfo, txPerPage } = getState().grpc;
-    if (transactionsInfo.length === 0) {
-      return;
-    }
-    var startTx = pageNumber * txPerPage;
-    var endTx = startTx + txPerPage;
-    if (endTx > transactionsInfo.length) {
-      endTx = transactionsInfo.length;
-    }
-    dispatch({ paginatedTxs: transactionsInfo.slice(startTx, endTx), currentPage: pageNumber, type: PAGINATETRANSACTIONS });
   };
 }
 

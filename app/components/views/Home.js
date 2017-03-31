@@ -135,13 +135,22 @@ class Home extends Component{
 
   render() {
     const { walletService } = this.props;
-    const { paginatedTxs } = this.props;
+    const { transactionsInfo, txPerPage } = this.props;
     const { getBalanceResponse } = this.props;
     const { getTransactionsRequestAttempt } = this.props;
     const { rescanRequest, rescanResponse } = this.props;
     const { getAccountsResponse } = this.props;
     const { synced } = this.props;
     const { unmined } = this.props;
+
+    var transactionMessage = '';
+    if (transactionsInfo.length == 0) {
+      transactionMessage = 'No transactions';
+    }
+    var paginatedTxs = unmined.length > 0 ?
+    unmined.length > txPerPage ? Array() :
+    transactionsInfo.length + unmined.length >= txPerPage  ? transactionsInfo.slice(0,txPerPage-unmined.length) : transactionsInfo.slice(0,transactionsInfo.length+unmined.length):
+    transactionsInfo.length >= txPerPage  ? transactionsInfo.slice(0,txPerPage) : transactionsInfo.slice(0,transactionsInfo.length);
 
     var rescanPercFisnished;
     if (rescanResponse !== null && getAccountsResponse !== null && rescanRequest != null) {
@@ -192,7 +201,7 @@ class Home extends Component{
               }
               {paginatedTxs.length > 0 ?
                 <TxHistory mined={paginatedTxs}/>  :
-                <p>No transactions</p>
+                <p>{transactionMessage}</p>
               }
             </div>
           </div> :

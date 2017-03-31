@@ -86,11 +86,32 @@ class History extends Component{
   static propTypes = {
     walletService: PropTypes.object,
   };
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPage: 0,
+      paginatedTxs: props.transactionsInfo.length >= props.txPerPage  ? props.transactionsInfo.slice(0,props.txPerPage) : props.transactionsInfo.slice(0,props.transactionsInfo.length),
+    };
+  }
+  pageForward() {
+    const { transactionsInfo, txPerPage } = this.props;
+    const { currentPage } = this.state;
+    var newPaginatedTxs = (currentPage+2) * txPerPage > transactionsInfo.length ?
+      transactionsInfo.slice((currentPage+1)*txPerPage, transactionsInfo.length) :
+      transactionsInfo.slice((currentPage+1)*txPerPage, (currentPage+2) * txPerPage);
+    this.setState({paginatedTxs: newPaginatedTxs, currentPage: currentPage+1});
+  }
 
+  pageBackward() {
+    const { transactionsInfo, txPerPage } = this.props;
+    const { currentPage } = this.state;
+    var newPaginatedTxs = transactionsInfo.slice((currentPage-1) * txPerPage, (currentPage)*txPerPage);
+    this.setState({paginatedTxs: newPaginatedTxs, currentPage: currentPage-1});
+  }
   render() {
-    const { walletService, getBalanceResponse,getAccountsResponse } = this.props;
+    const { walletService, getBalanceResponse, getAccountsResponse } = this.props;
     const { transactionDetails, setTransactionDetails, clearTransactionDetails } = this.props;
-    const { txPerPage, transactionsInfo, paginatedTxs, getMinedPaginatedTransactions, currentPage } = this.props;
+    const { txPerPage, transactionsInfo } = this.props;
     const { getNetworkResponse } = this.props;
 
     var totalPages = 1;
@@ -108,14 +129,14 @@ class History extends Component{
           <div style={styles.contentTitle}>
             <div style={styles.contentTitleText}>Recent Transactions</div>
             <div style={styles.contentTitleButtonsArea}>
-              <button style={styles.contentTitleButtonsLeft} disabled={currentPage < 1} onClick={()=>getMinedPaginatedTransactions(currentPage-1)}>&lt;</button>
-              <span style={styles.contentTitleButtonsText}>{currentPage + 1} of {totalPages}</span>
-              <button style={styles.contentTitleButtonsRight} disabled={(currentPage + 1) * txPerPage > transactionsInfo.length}onClick={()=>getMinedPaginatedTransactions(currentPage+1)}>&gt;</button>
+              <button style={styles.contentTitleButtonsLeft} disabled={this.state.currentPage < 1} onClick={()=>this.pageBackward()}>&lt;</button>
+              <span style={styles.contentTitleButtonsText}>{this.state.currentPage + 1} of {totalPages}</span>
+              <button style={styles.contentTitleButtonsRight} disabled={(this.state.currentPage + 1) * txPerPage > transactionsInfo.length}onClick={()=>this.pageForward()}>&gt;</button>
             </div>
           </div>
           <div style={styles.contentNest}>
-            {paginatedTxs.length > 0 ?
-              <TxHistory mined={paginatedTxs} showTxDetail={setTransactionDetails}/>  :
+            {this.state.paginatedTxs.length > 0 ?
+              <TxHistory mined={this.state.paginatedTxs} showTxDetail={setTransactionDetails}/>  :
               <p>No transactions</p>
             }
           </div>
