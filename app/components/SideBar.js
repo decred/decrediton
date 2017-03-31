@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import arrowUpLightBlue from './icons/arrow-up-light-blue.svg';
 import menulogo from './icons/menu-logo.svg';
 import MenuLink from './MenuLink';
-import HelpLink from './HelpLink';
 import './fonts.css';
 
 function mapStateToProps(state) {
@@ -266,14 +265,9 @@ class SideBar extends Component {
           <MenuLink to="/send">Send</MenuLink>
           <MenuLink to="/receive">Receive</MenuLink>
           <MenuLink to="/history">History</MenuLink>
-          <MenuLink to="/proofofstake">Proof of Stake</MenuLink>
+          <MenuLink to="/proofofstake">Purchase Tickets</MenuLink>
           <MenuLink to="/settings">Settings</MenuLink>
-          <div style={styles.sidebarHelp}>
-            <div style={styles.sidebarHelpTitle}>Help links</div>
-            <HelpLink href="https://forum.decred.org">Forum</HelpLink>
-            <HelpLink href="https://decred.slack.com">Chat</HelpLink>
-            <HelpLink href="https://github.com/decred/decrediton/issues">Issues</HelpLink>
-          </div>
+          <MenuLink to="/help">Help</MenuLink>
         </div>
         <div style={!this.state.accountsHidden ? styles.menuTotalBalanceExtended : styles.menuTotalBalanceExtendedHidden }>
           <div style={styles.menuTotalBalanceExtendedBottom}>
