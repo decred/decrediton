@@ -6,42 +6,35 @@ import leftLinkColor from './icons/menu-link-left-color.png';
 var styles = {
   linkColor: {
     display: 'block',
+    width: '50%',
     height: '53px',
     backgroundImage: `url(${leftLinkColor})`,
     backgroundPosition: '0px 50%',
     backgroundSize: '0px',
     backgroundRepeat: 'repeat-y',
     ':hover': {
-      backgroundColor: '#09182d',
+      backgroundColor: '#616262',
       backgroundSize: '5px',
     },
   },
-  menuNavigationLink:{
+  helpLink:{
     display: 'block',
     height: '38px',
     paddingTop: '15px',
     paddingLeft: '40px',
-    color: '#c4cbd2',
+    color: 'black',
     fontSize: '18px',
     textAlign: 'left',
     textDecoration: 'none',
     textTransform: 'capitalize',
   },
-  menuNavigationLinkActive:{
-    backgroundColor: '#09182d',
-    backgroundImage: `url(${leftLinkColor})`,
-    backgroundPosition: '0px 50%',
-    backgroundSize: '5px',
-    backgroundRepeat: 'repeat-y',
-    cursor: 'default',
-  }
 };
 
 class HelpLink extends React.Component {
   render() {
     return (
       <div style={styles.linkColor}>
-	<a style={styles.menuNavigationLink} onClick={function(x){shell.openExternal(x);}.bind(null, this.props.href)}>
+	      <a style={styles.helpLink} onClick={function(x){shell.openExternal(x);}.bind(null, this.props.href)}>
           {this.props.children}
         </a>
       </div>
