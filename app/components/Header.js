@@ -18,25 +18,24 @@ const styles = {
     paddingRight: '80px',
     paddingLeft: '100px',
     backgroundColor: '#596d81',
-    height: '214px',
   },
   headerTopGetStarted: {
-    height: '83px',
-    paddingTop: '36px',
+    height: '34px',
+    paddingTop: '5px',
     textAlign: 'center',
   },
   headerTitleOverviewGetStarted: {
-    height: '41px',
+    height: '54px',
+    paddingTop: '13px',
     color: '#fff',
     fontSize: '27px',
   },
   headerMetaOverviewGetStarted: {
-    float: 'left',
-    clear: 'left',
     height: '54px',
-    width: '50%',
+    paddingTop: '5px',
     fontSize: '13px',
     color: '#c4cbd2',
+    fontFamily: 'Inconsolata, monospace',
   },
   header: {
     paddingRight: '80px',
@@ -44,8 +43,8 @@ const styles = {
     backgroundColor: '#fff',
   },
   headerTop: {
-    height: '90px',
-    paddingTop: '36px',
+    height: '34px',
+    paddingTop: '5px',
     textAlign: 'center',
   },
   headerTitleOverview: {
