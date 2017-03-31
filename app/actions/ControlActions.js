@@ -516,6 +516,7 @@ numTickets, expiry, ticketFee, stakepool) {
       request: request,
       type: PURCHASETICKETS_ATTEMPT });
     dispatch(purchaseTicketsAction());
+    dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0));
   };
 }
 
