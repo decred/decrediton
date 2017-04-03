@@ -716,6 +716,7 @@ class StakePool extends Component{
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
     const { network } = this.props;
     const { getTicketPriceResponse } = this.props;
+    const { getStakeInfoResponse } = this.props;
 
     var unconfigedStakePools = 0;
     if (currentStakePoolConfig != null) {
@@ -987,7 +988,26 @@ class StakePool extends Component{
           ]
           }
           headerTitleOverview={
-            this.state.purchaseTickets ? 'Ticket price:' :'Stake pool settings'}
+            <div style={{height: '100%'}}>
+              <div style={{float: 'left'}}>{this.state.purchaseTickets ? 'Ticket price:' :'Stake pool settings'}</div>
+              <div style={{float: 'right', marginTop: '-50px', height:'100px', width: '200px', paddingRight: '112px'}}>
+                {getStakeInfoResponse !== null ? 
+                <div style={{height: '100%'}}>
+                  <div style={{height: '10px', fontSize: '10px'}}>Poolsize: {getStakeInfoResponse.getPoolSize()}</div>
+                  <div style={{height: '10px', fontSize: '10px'}}>All Mempool Tickets: {getStakeInfoResponse.getAllMempoolTix()}</div>
+                  <div style={{height: '10px', fontSize: '10px'}}>Own Mempool Tickets: {getStakeInfoResponse.getOwnMempoolTix()}</div>
+                  <div style={{height: '10px', fontSize: '10px'}}>Live Tickets: {getStakeInfoResponse.getLive()}</div>
+                  <div style={{height: '10px', fontSize: '10px'}}>Voted Tickets: {getStakeInfoResponse.getVoted()}</div>
+                  <div style={{height: '10px', fontSize: '10px'}}>Missed Tickets: {getStakeInfoResponse.getMissed()}</div>
+                  <div style={{height: '10px', fontSize: '10px'}}>Revoked Tickets: {getStakeInfoResponse.getRevoked()}</div>
+                  <div style={{height: '10px', fontSize: '10px'}}>Expired Tickets: {getStakeInfoResponse.getExpired()}</div>
+                </div> :
+                <div>
+                </div>
+                }
+              </div>
+            </div>
+          }
           headerMetaOverview={
             activeStakePoolConfig && !this.state.addAnotherStakePool && getTicketPriceResponse !== null ?
             <div>
