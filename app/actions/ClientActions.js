@@ -1,6 +1,7 @@
 import { getWalletService } from '../middleware/grpc/client';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt } from './ControlActions';
 import { transactionNtfnsStart } from './NotificationActions';
+import { updateStakepoolPurchaseInformation } from './StakePoolActions';
 import { hashHistory } from 'react-router';
 import { timeSince } from '../helpers/dateFormat.js';
 import {
