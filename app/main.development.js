@@ -1,5 +1,5 @@
 import { app, BrowserWindow, Menu, shell } from 'electron';
-import { getCfg, appDataDirectory, GRPCWalletPort, RPCDaemonPort } from './config.js';
+import { getCfg, appDataDirectory, dcrdCfg, dcrwCfg, writeCfgs } from './config.js';
 import path from 'path';
 import os from 'os';
 import parseArgs from 'minimist';
@@ -45,6 +45,8 @@ if (process.env.NODE_ENV === 'development') {
 // Always use reasonable path for save data.
 app.setPath('userData', appDataDirectory());
 var cfg = getCfg();
+// Write application config files.
+writeCfgs();
 
 if (debug) {
   console.log('Using config/data from:', app.getPath('userData'));
@@ -116,7 +118,7 @@ const installExtensions = async () => {
 
 const launchDCRD = () => {
   var spawn = require('child_process').spawn;
-  var args = ['--rpcuser='+cfg.get('rpc_user'),'--rpcpass='+cfg.get('rpc_pass')];
+  var args = ['--configfile='+dcrdCfg()];
 
   var dcrdExe = path.join(process.resourcesPath, 'bin', 'dcrd');
   if (os.platform() == 'win32') {
@@ -128,12 +130,6 @@ const launchDCRD = () => {
     // The spawn() below opens a pipe on fd 3
     args.push('--piperx=3');
   }
-
-  if (cfg.get('network') == 'testnet') {
-    args.push('--testnet');
-  }
-
-  args.push('--rpclisten=127.0.0.1:' + RPCDaemonPort());
 
   if (debug) {
     console.log(`Starting dcrd with ${args}`);
@@ -170,27 +166,17 @@ const launchDCRD = () => {
 
 const launchDCRWallet = () => {
   var spawn = require('child_process').spawn;
-  var args = ['--noinitialload','--tlscurve=P-256','--onetimetlskey'];
+  var args = ['--configfile='+dcrwCfg()];
 
   var dcrwExe = path.join(process.resourcesPath, 'bin', 'dcrwallet');
   if (os.platform() == 'win32') {
     dcrwExe = dcrwExe + '.exe';
   }
 
-  // RPC
-  args.push('--username=USER');
-  args.push('--password=PASSWORD');
-
   if (os.platform() != 'win32') {
     // The spawn() below opens a pipe on fd 4
     // No luck getting this to work on win7.
     args.push('--piperx=4');
-  }
-
-  args.push('--appdata=' + appDataDirectory());
-  args.push('--experimentalrpclisten=127.0.0.1:' + GRPCWalletPort());
-  if (cfg.get('network') == 'testnet') {
-    args.push('--testnet');
   }
 
   // Add any extra args if defined.

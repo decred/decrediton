@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import os from 'os';
 import { stakePoolInfo } from './middleware/stakepoolapi';
+var ini = require('ini');
 
 export function getCfg() {
   const Config = require('electron-config');
@@ -146,3 +147,61 @@ export function RPCDaemonPort() {
   return cfg.get('daemon_port_testnet');
 }
 
+export function dcrdCfg() {
+  var cfgLoc = appDataDirectory();
+  return path.join(cfgLoc, 'dcrd.conf');
+}
+
+export function dcrwCfg() {
+  var cfgLoc = appDataDirectory();
+  return path.join(cfgLoc, 'dcrwallet.conf');
+}
+
+export function dcrctlCfg() {
+  var cfgLoc = appDataDirectory();
+  return path.join(cfgLoc, 'dcrctl.conf');
+}
+
+export function writeCfgs() {
+  var cfg = getCfg();
+  var net = 0;
+  if (cfg.get('network') === 'testnet') {
+    net = 1;
+  }
+  var dcrdConf = {
+    'Application Options':
+    {
+      testnet: net,
+      rpcuser: cfg.get('rpc_user'),
+      rpcpass: cfg.get('rpc_pass'),
+      rpclisten: '127.0.0.1:' + RPCDaemonPort(),
+    }
+  };
+  fs.writeFileSync(dcrdCfg(), ini.stringify(dcrdConf));
+
+  var dcrwConf = {
+    'Application Options':
+    {
+      testnet: net,
+      username: cfg.get('rpc_user'),
+      password: cfg.get('rpc_pass'),
+      appdata: appDataDirectory(),
+      experimentalrpclisten: '127.0.0.1:' + GRPCWalletPort(),
+      tlscurve: 'P-256',
+      noinitialload: '1',
+      onetimetlskey: '1',
+    }
+  };
+  fs.writeFileSync(dcrwCfg(), ini.stringify(dcrwConf));
+
+  var dcrctlConf = {
+    'Application Options':
+    {
+      testnet: net,
+      rpcuser: cfg.get('rpc_user'),
+      rpcpass: cfg.get('rpc_pass'),
+      rpcserver: '127.0.0.1:' + RPCDaemonPort(),
+    }
+  };
+  fs.writeFileSync(dcrctlCfg(), ini.stringify(dcrctlConf));
+}
