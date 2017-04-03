@@ -8,6 +8,33 @@ export const UPDATESTAKEPOOLCONFIG_SUCCESS = 'UPDATESTAKEPOOLCONFIG_SUCCESS';
 export const UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS = 'UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS';
 export const UPDATESTAKEPOOLCONFIG_CLEAR_ERROR = 'UPDATESTAKEPOOLCONFIG_CLEAR_ERROR';
 
+export function updateStakepoolPurchaseInformation() {
+  return (dispatch, getState) => {
+    const { stakePoolConfigs } = getState().stakepool;
+    const { network } = getState().grpc;
+    for (var i = 0; i < stakePoolConfigs.length; i++) {
+      if (stakePoolConfigs[i].ApiKey && stakePoolConfigs[i].Network == network) {
+        getPurchaseInfo(
+            stakePoolConfigs[i].PoolHost,
+            stakePoolConfigs[i].ApiKey,
+            function(response, err) {
+              if (err) {
+                console.log(err);
+                dispatch({ error: 'Unable to contact stakepool, please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
+                return;
+              } else {
+                // parse response data for no err
+                if (response.data.status == 'success') {
+                  dispatch(updateSavedConfig(response.data.data, stakePoolConfigs[i].PoolHost, stakePoolConfigs[i].ApiKey, takePoolConfigs[i].VotingAccount));
+                }
+              }
+            }
+        )
+      }
+    }
+  };
+}
+
 export function setStakePoolInformation(poolHost, apiKey, accountNum, internal) {
   return (dispatch) => {
     if (!internal) {
