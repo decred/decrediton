@@ -10,13 +10,15 @@ export const UPDATESTAKEPOOLCONFIG_CLEAR_ERROR = 'UPDATESTAKEPOOLCONFIG_CLEAR_ER
 
 export function updateStakepoolPurchaseInformation() {
   return (dispatch, getState) => {
-    const { stakePoolConfigs } = getState().stakepool;
+    const { currentStakePoolConfig } = getState().stakepool;
     const { network } = getState().grpc;
-    for (var i = 0; i < stakePoolConfigs.length; i++) {
-      if (stakePoolConfigs[i].ApiKey && stakePoolConfigs[i].Network == network) {
-        getPurchaseInfo(
-            stakePoolConfigs[i].PoolHost,
-            stakePoolConfigs[i].ApiKey,
+    for (var i = 0; i < currentStakePoolConfig.length; i++) {
+      if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
+        console.log(currentStakePoolConfig[i].Host);
+        var poolHost = currentStakePoolConfig[i].Host;
+        var apiKey = currentStakePoolConfig[i].ApiKey;
+        var votingAccount = currentStakePoolConfig[i].VotingAccount;
+        getPurchaseInfo(poolHost,apiKey,
             function(response, err) {
               if (err) {
                 console.log(err);
@@ -25,7 +27,7 @@ export function updateStakepoolPurchaseInformation() {
               } else {
                 // parse response data for no err
                 if (response.data.status == 'success') {
-                  dispatch(updateSavedConfig(response.data.data, stakePoolConfigs[i].PoolHost, stakePoolConfigs[i].ApiKey, takePoolConfigs[i].VotingAccount));
+                  dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, votingAccount));
                 }
               }
             }
