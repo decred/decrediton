@@ -250,7 +250,7 @@ function importScriptSuccess(importScriptResponse) {
 export function importScriptAttempt(passphrase, script, rescan, scanFrom) {
   var request = new ImportScriptRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-  request.setScript(script);
+  request.setScript(hexToBytes(script));
   request.setRescan(rescan);
   request.setScanFrom(scanFrom);
   return (dispatch) => {
@@ -259,6 +259,12 @@ export function importScriptAttempt(passphrase, script, rescan, scanFrom) {
       type: IMPORTSCRIPT_ATTEMPT });
     dispatch(importScriptAction());
   };
+}
+
+function hexToBytes(hex) {
+  for (var bytes = [], c = 0; c < hex.length; c += 2)
+    bytes.push(parseInt(hex.substr(c, 2), 16));
+  return bytes;
 }
 
 function importScriptAction() {

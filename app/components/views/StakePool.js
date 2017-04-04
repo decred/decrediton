@@ -991,7 +991,7 @@ class StakePool extends Component{
             <div style={{height: '100%'}}>
               <div style={{float: 'left'}}>{this.state.purchaseTickets ? 'Ticket price:' :'Stake pool settings'}</div>
               <div style={{float: 'right', marginTop: '-50px', height:'100px', width: '200px', paddingRight: '112px'}}>
-                {getStakeInfoResponse !== null ? 
+                {getStakeInfoResponse !== null ?
                 <div style={{height: '100%'}}>
                   <div style={{height: '10px', fontSize: '10px'}}>Poolsize: {getStakeInfoResponse.getPoolSize()}</div>
                   <div style={{height: '10px', fontSize: '10px'}}>All Mempool Tickets: {getStakeInfoResponse.getAllMempoolTix()}</div>
