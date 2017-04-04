@@ -5,7 +5,663 @@ import PlusBig from '../icons/plus-big.svg';
 import MinusBig from '../icons/minus-big.svg';
 import ArrowDownMidBlue from '../icons/arrow-down-mid-blue.svg';
 import ArrowDownKeyBlue from '../icons/arrow-down-key-blue.svg';
+import Search from '../icons/search.svg';
 
+export const ReceiveStyles = {
+  body: {
+    position: 'fixed',
+    left: '0px',
+    top: '50%',
+    right: '0px',
+    display: 'block',
+    overflow: 'hidden',
+    width: '1178px',
+    height: '770px',
+    marginTop: '-385px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    backgroundColor: '#FFF',
+  },
+  view: {
+    width: '880px',
+    height: '100%',
+    float: 'right',
+    backgroundColor: '#f3f6f6',
+  },
+  content: {
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 60px 54px 80px',
+  },
+  img: {
+    width: '250px',
+    paddingLeft: '244px',
+  },
+  center: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+};
+export const SendStyles = {
+  body: {
+    position: 'fixed',
+    left: '0px',
+    top: '50%',
+    right: '0px',
+    display: 'block',
+    overflow: 'hidden',
+    width: '1178px',
+    height: '770px',
+    marginTop: '-385px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    backgroundColor: '#FFF',
+  },
+  view: {
+    width: '880px',
+    height: '100%',
+    float: 'right',
+    backgroundColor: '#f3f6f6',
+  },
+  viewNotificationError: {
+    display: 'inline-block',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    padding: '7px 20px 7px 7px',
+    borderRadius: '5px',
+    backgroundColor: '#fd714b',
+    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
+    color: '#fff',
+    fontSize: '13px',
+    textAlign: 'center',
+  },
+  viewNotificationSuccess: {
+    display: 'inline-block',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    padding: '7px 20px 7px 7px',
+    borderRadius: '5px',
+    backgroundColor: '#41bf53',
+    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
+    color: '#fff',
+    fontSize: '13px',
+    textAlign: 'center',
+    textDecoration: 'none',
+  },
+  contentNestAddressDeleteIconHeader: {
+    width: '26px',
+    height: '19px',
+    float: 'left',
+    backgroundImage: `url(${Delete})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '8px',
+    backgroundRepeat: 'no-repeat',
+    cursor: 'pointer',
+    ':hover': {
+      opacity: '0.85',
+    }
+  },
+  transition1: {
+    transition: 'all 100ms ease-in-out',
+  },
+  headerTitleSend: {
+    height: '54px',
+    lineHeight: '49px',
+    color: '#596d81',
+    fontSize: '27px',
+    textTransform: 'capitalize',
+    paddingLeft: '50px',
+    backgroundImage: `url(${MinusBig})`,
+    backgroundPosition: '0px 50%',
+    backgroundSize: '30px',
+    backgroundRepeat: 'no-repeat',
+  },
+  headerMetaSend: {
+    height: '54px',
+    width: '480px',
+    paddingLeft: '50px',
+    color: '#0c1e3e',
+    fontSize: '14px',
+  },
+  content: {
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 60px 54px 80px',
+  },
+  contentNestSend: {
+    paddingTop: '1px',
+    backgroundColor: '#fff',
+  },
+  contentNestDeleteAddress: {
+    width: '625px',
+    height: '54px',
+    paddingTop: '10px',
+    paddingLeft: '116px',
+    float: 'left',
+  },
+  contentNestPrefixSend: {
+    width: '100px',
+    paddingRight: '15px',
+    float: 'left',
+    height: '100%',
+    paddingTop: '5px',
+    fontSize: '19px',
+    textAlign: 'right',
+    textTransform: 'capitalize',
+  },
+  contentNestPrefixConfirm: {
+    width: '230px',
+    paddingRight: '15px',
+    float: 'left',
+    height: '100%',
+    paddingTop: '5px',
+    fontSize: '19px',
+    textAlign: 'right',
+    textTransform: 'capitalize',
+  },
+  contentNestFromAddress: {
+    width: '100%',
+    height: '54px',
+    paddingTop: '10px',
+    float: 'left',
+  },
+  contentNestFromAddressWalletIcon: {
+    display: 'inline-block',
+    width: '60px',
+    height: '34px',
+    float: 'left',
+    backgroundImage: `url(${WalletGray})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '20px',
+    backgroundRepeat: 'no-repeat',
+  },
+  contentNestToAddress: {
+    width: '100%',
+    height: '54px',
+    paddingTop: '10px',
+    float: 'left',
+  },
+  contentNestAddressHashTo: {
+    width: '96%',
+    height: '100%',
+    padding: '9px 0px 8px 10px',
+    borderStyle: 'none',
+    color: '#2971ff',
+    fontSize: '13px',
+    cursor: 'text',
+    ':focus': {
+      color: '#2971ff',
+    },
+  },
+  contentNestAddressHashBlock: {
+    position: 'relative',
+    overflow: 'hidden',
+    width: '311px',
+    height: '34px',
+    float: 'left',
+    borderBottom: '1px solid #a9b4bf',
+    fontSize: '13px',
+  },
+  contentNestAddressHashBlockConfirm: {
+    position: 'relative',
+    overflow: 'hidden',
+    width: '300px',
+    height: '34px',
+    paddingTop: '7px',
+    float: 'left',
+    fontSize: '17px',
+  },
+  selectAccountsSend: {
+    width: '300px',
+    position: 'relative',
+    zIndex: '3',
+    overflow: 'visible',
+    height: '34px',
+    minWidth: '300px',
+    float: 'left',
+    borderBottom: '1px solid #2971ff',
+    backgroundColor: '#fff',
+    backgroundImage: `url(${ArrowDownMidBlue})`,
+    backgroundPosition: '100% 50%',
+    backgroundSize: '10px',
+    backgroundRepeat: 'no-repeat',
+    cursor: 'pointer',
+    ':hover': {
+      backgroundImage: `url(${ArrowDownKeyBlue})`,
+      backgroundSize: '10px',
+    }
+  },
+  selectAccount: {
+    display: 'block',
+    overflow: 'hidden',
+    width: '100%',
+    height: '100%',
+    color: '#0c1e3e',
+    fontSize: '19px',
+    ':hover': {
+      height: 'auto',
+    }
+  },
+  selectAccountNFirst: {
+    overflow: 'hidden',
+    height: '34px',
+    marginRight: '20px',
+    paddingTop: '5px',
+    paddingLeft: '10px',
+    color: '#2971ff',
+    fontSize: '19px',
+  },
+  selectAccountNTextSend: {
+    width: '200%',
+    paddingTop: '1px',
+    fontSize: '13px',
+  },
+  selectAccountNAmount: {
+    position: 'absolute',
+    top: '0px',
+    right: '0px',
+    bottom: '0px',
+    marginRight: '20px',
+    paddingTop: '7px',
+    paddingLeft: '40px',
+    backgroundImage: 'linear-gradient(90deg, transparent, #fff 28%)',
+    fontFamily: 'Inconsolata, monospace',
+    color: '#596d81',
+    fontSize: '11px',
+    fontWeight: '400',
+    textAlign: 'right',
+  },
+  selectAccountNAmountBold: {
+    fontFamily: 'Inconsolata, monospace',
+    fontWeight: '700',
+  },
+  selectAccountNNestSend: {
+    fontSize: '13px',
+    overflow: 'auto',
+    height: 'auto',
+    maxHeight: '413px',
+    paddingTop: '10px',
+    paddingBottom: '10px',
+    borderBottom: '1px solid #a9b4bf',
+    backgroundColor: '#fff',
+  },
+  selectAccountNGradient: {
+    position: 'absolute',
+    top: '0px',
+    right: '0px',
+    bottom: '0px',
+    width: '40px',
+    height: '100%',
+    backgroundImage: 'linear-gradient(90deg, transparent, #fff 75%)',
+  },
+  selectAccountN: {
+    position: 'relative',
+    overflow: 'hidden',
+    width: '100%',
+    paddingTop: '18px',
+    paddingBottom: '18px',
+    paddingLeft: '10px',
+    float: 'left',
+    ':hover': {
+      color: '#2971ff',
+    }
+  },
+  selectAccountNText: {
+    width: '200%',
+  },
+  inputForm: {
+    position: 'relative',
+    width: '100%',
+    height: 'auto',
+    minHeight: '44px',
+  },
+  contentNestAddressWalletIcon: {
+    width: '39px',
+    height: '34px',
+    float: 'left',
+    backgroundImage: `url(${Add})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '19px',
+    backgroundRepeat: 'no-repeat',
+    cursor: 'pointer',
+    ':hover': {
+      opacity: '0.85',
+    }
+  },
+  contentNestAddressAmount: {
+    display: 'block',
+    height: '34px',
+    float: 'right',
+  },
+  contentNestAddressAmountSumAndCurrency: {
+    position: 'relative',
+    overflow: 'hidden',
+    width: '140px',
+    height: '100%',
+    marginRight: '20px',
+    float: 'right',
+    borderBottom: '1px solid #a9b4bf',
+    color: '#0c1e3e',
+    textAlign: 'right',
+  },
+  contentNestAddressAmountSumGradient: {
+    position: 'absolute',
+    top: '0px',
+    right: '0px',
+    bottom: '0px',
+    display: 'inline-block',
+    width: '37px',
+    height: '100%',
+    paddingTop: '9px',
+    paddingRight: '10px',
+    backgroundColor: '#fff',
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '13px',
+    textTransform: 'uppercase',
+  },
+  contentNestAddressAmountSum: {
+    display: 'block',
+    width: '100px',
+    height: '100%',
+    borderStyle: 'none',
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '19px',
+    fontWeight: '700',
+  },
+  contentNestToAddressAmountSumNumberFormatSmall: {
+    fontSize: '13px',
+  },
+  contentNestAddressDeleteIcon: {
+    width: '39px',
+    height: '34px',
+    float: 'left',
+    backgroundImage: `url(${Delete})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '8px',
+    backgroundRepeat: 'no-repeat',
+    cursor: 'pointer',
+    ':hover': {
+      opacity: '0.85',
+    }
+  },
+  contentNestAddressAmountSumNumberFormatSmall: {
+    fontSize: '13px',
+  },
+  contentSend: {
+    marginTop: '20px',
+  },
+  contentSendSection: {
+    display: 'block',
+    width: '91%',
+    height: '22px',
+    paddingLeft: '30px',
+    float: 'left',
+    color: '#0c1e3e',
+  },
+  contentSendSectionCheckboxText: {
+    height: '100%',
+    paddingTop: '1px',
+    paddingLeft: '5px',
+    float: 'left',
+    textTransform: 'capitalize',
+  },
+  ontentSendSectionAmount: {
+    width: '160px',
+    height: '100%',
+    paddingTop: '1px',
+    paddingRight: '30px',
+    float: 'right',
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '13px',
+    textAlign: 'right',
+  },
+  contentSendSectionDescription: {
+    height: '100%',
+    paddingTop: '1px',
+    paddingRight: '20px',
+    float: 'right',
+    color: '#596d81',
+    fontSize: '13px',
+  },
+  contentSendSectionAmountCurrency: {
+    paddingLeft: '5px',
+  },
+  viewButtonKeyBlue: {
+    width: '9%',
+    float: 'left',
+    display: 'inline-block',
+    padding: '17px 18px 18px',
+    borderRadius: '5px',
+    backgroundColor: '#2971ff',
+    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
+    transitionProperty: 'none',
+    color: '#fff',
+    fontSize: '13px',
+    lineHeight: '9px',
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
+    ':hover': {
+      backgroundColor: '#1b58ff',
+    },
+    ':active': {
+      boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
+    }
+  },
+  viewButtonLightSlateGray: {
+    display: 'inline-block',
+    padding: '17px 18px 18px',
+    float: 'right',
+    borderRadius: '5px',
+    backgroundColor: '#8997a5',
+    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
+    color: '#fff',
+    fontSize: '13px',
+    lineHeight: '9px',
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
+    ':hover': {
+      backgroundColor: '#596d81',
+    },
+    ':active': {
+      boxShadow: '0 0 0 0 rgba(0, 0, 0, .22)',
+    }
+  },
+  flexHeight: {
+    paddingTop: '1px',
+    backgroundColor: '#fff',
+    height:'372px',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+  },
+  loading: {
+    marginTop: '110px',
+    marginLeft: '268px',
+  }
+};
+export const HomeStyles = {
+  body: {
+    position: 'fixed',
+    left: '0px',
+    top: '50%',
+    right: '0px',
+    display: 'block',
+    overflow: 'hidden',
+    width: '1178px',
+    height: '770px',
+    marginTop: '-385px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    backgroundColor: '#FFF',
+  },
+  view: {
+    width: '880px',
+    height: '100%',
+    float: 'right',
+    backgroundColor: '#f3f6f6',
+  },
+  content: {
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 60px 54px 80px',
+  },
+
+  transition1: {
+    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
+  },
+  contentTitle: {
+    display: 'block',
+    height: '44px',
+    marginRight: 'auto',
+    marginBottom: '10px',
+    marginLeft: 'auto',
+    borderBottom: '1px solid transparent',
+    color: '#596d81',
+    fontSize: '27px',
+    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
+  },
+  contentNest: {
+    paddingTop: '1px',
+  },
+  contentTitleText: {
+    display: 'inline-block',
+    overflow: 'hidden',
+    width: '600px',
+    height: '100%',
+    paddingTop: '13px',
+    paddingRight: '20px',
+    paddingLeft: '20px',
+    float: 'left',
+  },
+
+  contentTitleButtonSearch: {
+    width: '60px',
+    height: '100%',
+    cursor: 'pointer',
+    paddingRight: '20px',
+    paddingLeft: '20px',
+    float: 'right',
+    backgroundImage: `url(${Search})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '20px',
+    backgroundRepeat: 'no-repeat',
+    ':hover': {
+      opacity: '0.8',
+    }
+  },
+
+  contentTitleButtonSearchTransition1: {
+    width: '60px',
+    height: '100%',
+    cursor: 'pointer',
+  },
+
+  contentTitleTextActive: {
+    color: '#2971ff',
+  },
+
+  contentTitleActive: {
+    borderBottom: '1px solid #2971ff',
+  },
+
+  headerMetaCurrency: {
+    fontSize: '23px',
+  },
+  viewNotificationNotSynced: {
+    display: 'inline-block',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    padding: '7px 20px',
+    borderRadius: '5px',
+    backgroundColor: '#666666',
+    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
+    color: '#fff',
+    fontSize: '13px',
+    textAlign: 'center',
+  },
+  loading: {
+    marginTop: '110px',
+    marginLeft: '268px',
+  },
+};
+export const HistoryStyles = {
+  body: {
+    position: 'fixed',
+    left: '0px',
+    top: '50%',
+    right: '0px',
+    display: 'block',
+    overflow: 'hidden',
+    width: '1178px',
+    height: '770px',
+    marginTop: '-385px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    backgroundColor: '#FFF',
+  },
+  view: {
+    width: '880px',
+    height: '100%',
+    float: 'right',
+    backgroundColor: '#f3f6f6',
+  },
+  content: {
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 60px 54px 80px',
+  },
+  transition1: {
+    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
+  },
+  contentTitle: {
+    display: 'block',
+    height: '44px',
+    marginRight: 'auto',
+    marginBottom: '10px',
+    marginLeft: 'auto',
+    borderBottom: '1px solid transparent',
+    color: '#596d81',
+    fontSize: '27px',
+    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
+  },
+  contentNest: {
+    paddingTop: '1px',
+  },
+  contentTitleText: {
+    display: 'inline-block',
+    overflow: 'hidden',
+    width: '500px',
+    height: '100%',
+    paddingTop: '13px',
+    paddingRight: '20px',
+    paddingLeft: '20px',
+    float: 'left',
+  },
+  contentTitleButtonsArea: {
+    float: 'right',
+    height: '100%',
+    paddingTop: '13px',
+  },
+  contentTitleButtonsText: {
+    padding: '0px 10px 0px 10px',
+  },
+  contentTitleButtonsLeft: {
+    marginTop: '3px',
+    display: 'block',
+    float: 'left',
+    fontFamily: 'Inconsolata, monospace',
+  },
+  contentTitleButtonsRight: {
+    marginTop: '3px',
+    display: 'block',
+    float: 'right',
+    fontFamily: 'Inconsolata, monospace',
+  }
+};
 export const SettingStyles = {
   body: {
     position: 'fixed',
@@ -39,7 +695,6 @@ export const SettingStyles = {
     fontWeight: 'bold',
   }
 };
-
 export const StakePoolStyles = {
   body: {
     position: 'fixed',
@@ -709,7 +1364,6 @@ export const HelpStyles = {
     alignItems: 'center',
   }
 };
-
 export const TxDetailStyles = {
   view: {
     width: '880px',
@@ -909,7 +1563,6 @@ export const TxDetailStyles = {
     borderBottom: '0px none transparent',
   }
 };
-
 export const GetStartedStyles = {
   body: {
     position: 'fixed',

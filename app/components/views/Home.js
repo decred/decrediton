@@ -6,116 +6,10 @@ import ErrorScreen from '../ErrorScreen';
 import RescanForm from '../RescanForm';
 import Balance from '../Balance';
 import SideBar from '../SideBar';
-import Search from '../icons/search.svg';
 import TxHistory from '../TxHistory';
 import Header from '../Header';
 import '../fonts.css';
-
-const styles = {
-  body: {
-    position: 'fixed',
-    left: '0px',
-    top: '50%',
-    right: '0px',
-    display: 'block',
-    overflow: 'hidden',
-    width: '1178px',
-    height: '770px',
-    marginTop: '-385px',
-    marginRight: 'auto',
-    marginLeft: 'auto',
-    backgroundColor: '#FFF',
-  },
-  view: {
-    width: '880px',
-    height: '100%',
-    float: 'right',
-    backgroundColor: '#f3f6f6',
-  },
-  content: {
-    overflow: 'auto',
-    height: '556px',
-    padding: '54px 60px 54px 80px',
-  },
-
-  transition1: {
-    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
-  },
-  contentTitle: {
-    display: 'block',
-    height: '44px',
-    marginRight: 'auto',
-    marginBottom: '10px',
-    marginLeft: 'auto',
-    borderBottom: '1px solid transparent',
-    color: '#596d81',
-    fontSize: '27px',
-    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
-  },
-  contentNest: {
-    paddingTop: '1px',
-  },
-  contentTitleText: {
-    display: 'inline-block',
-    overflow: 'hidden',
-    width: '600px',
-    height: '100%',
-    paddingTop: '13px',
-    paddingRight: '20px',
-    paddingLeft: '20px',
-    float: 'left',
-  },
-
-  contentTitleButtonSearch: {
-    width: '60px',
-    height: '100%',
-    cursor: 'pointer',
-    paddingRight: '20px',
-    paddingLeft: '20px',
-    float: 'right',
-    backgroundImage: `url(${Search})`,
-    backgroundPosition: '50% 50%',
-    backgroundSize: '20px',
-    backgroundRepeat: 'no-repeat',
-    ':hover': {
-      opacity: '0.8',
-    }
-  },
-
-  contentTitleButtonSearchTransition1: {
-    width: '60px',
-    height: '100%',
-    cursor: 'pointer',
-  },
-
-  contentTitleTextActive: {
-    color: '#2971ff',
-  },
-
-  contentTitleActive: {
-    borderBottom: '1px solid #2971ff',
-  },
-
-  headerMetaCurrency: {
-    fontSize: '23px',
-  },
-  viewNotificationNotSynced: {
-    display: 'inline-block',
-    marginRight: 'auto',
-    marginLeft: 'auto',
-    padding: '7px 20px',
-    borderRadius: '5px',
-    backgroundColor: '#666666',
-    boxShadow: '0 3px 10px 0 rgba(0, 0, 0, .2)',
-    color: '#fff',
-    fontSize: '13px',
-    textAlign: 'center',
-  },
-  loading: {
-    marginTop: '110px',
-    marginLeft: '268px',
-  },
-};
+import { HomeStyles } from './ViewStyles';
 
 class Home extends Component{
   constructor(props) {
@@ -164,7 +58,7 @@ class Home extends Component{
       rescanView = <RescanForm />;
     } else {
       rescanView = (
-        <div style={styles.view}>
+        <div style={HomeStyles.view}>
           <Header headerTitleOverview="Rescanning">
             <LinearProgress mode="determinate"
               min={rescanRequest !== null ? rescanRequest.getBeginHeight(): 0}
@@ -178,10 +72,10 @@ class Home extends Component{
     }
 
     const homeView = (
-      <div style={styles.view}>
+      <div style={HomeStyles.view}>
         <Header
           headerTop={ !synced ?
-              <div key="notSynced" style={styles.viewNotificationNotSynced}>
+              <div key="notSynced" style={HomeStyles.viewNotificationNotSynced}>
                 Wallet not synced. Note: Balances will not be accurate until syncing is complete.
               </div> :
               <div key="notSynced" ></div>
@@ -190,11 +84,11 @@ class Home extends Component{
           headerMetaOverview={<Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />}
         />
         {!getTransactionsRequestAttempt ?
-          <div style={styles.content}>
-            <div style={styles.contentTitle}>
-              <div style={styles.contentTitleText}>Recent Transactions</div>
+          <div style={HomeStyles.content}>
+            <div style={HomeStyles.contentTitle}>
+              <div style={HomeStyles.contentTitleText}>Recent Transactions</div>
             </div>
-            <div style={styles.contentNest}>
+            <div style={HomeStyles.contentNest}>
               {unmined.length > 0 ?
                 <TxHistory unmined={unmined}/>  :
                 <p></p>
@@ -205,8 +99,8 @@ class Home extends Component{
               }
             </div>
           </div> :
-          <div style={styles.content}>
-            <CircularProgress style={styles.loading} size={125} thickness={6}/> :
+          <div style={HomeStyles.content}>
+            <CircularProgress style={HomeStyles.loading} size={125} thickness={6}/> :
           </div>
         }
       </div>);
@@ -215,7 +109,7 @@ class Home extends Component{
       return(<ErrorScreen />);
     } else {
       return(
-        <div style={styles.body}>
+        <div style={HomeStyles.body}>
           <SideBar />
           {rescanRequest ?
             rescanView :
@@ -231,6 +125,6 @@ export default Home;
 
 /*
   This is the transaction search button that needs to get implemented
-  <div style={styles.contentTitleButtonSearch}></div>
+  <div style={HomeStyles.contentTitleButtonSearch}></div>
 
 */
