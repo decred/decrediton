@@ -250,7 +250,7 @@ function importScriptSuccess(importScriptResponse) {
 export function importScriptAttempt(passphrase, script, rescan, scanFrom) {
   var request = new ImportScriptRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-  request.setScript(hexToBytes(script));
+  request.setScript(new Uint8Array(Buffer.from(hexToBytes(script))));
   request.setRescan(rescan);
   request.setScanFrom(scanFrom);
   return (dispatch) => {
