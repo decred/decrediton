@@ -10,7 +10,7 @@ import NewExistingSeedToggle from '../NewExistingSeedToggle';
 import Header from '../Header';
 import KeyBlueButton from '../KeyBlueButton';
 import SlateGrayButton from '../SlateGrayButton';
-import GetStartedStyles from './ViewStyles';
+import { GetStartedStyles } from './ViewStyles';
 
 class Home extends Component{
   toggleNewExisting(side) {

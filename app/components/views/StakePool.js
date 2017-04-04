@@ -7,7 +7,7 @@ import SideBar from '../SideBar';
 import Header from '../Header';
 import NewExistingSeedToggle from '../NewExistingSeedToggle';
 import KeyBlueButton from '../KeyBlueButton';
-import StakePoolStyles from './ViewStyles';
+import { StakePoolStyles } from './ViewStyles';
 
 class StakePool extends Component{
   static propTypes = {

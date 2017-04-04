@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import SideBar from '../SideBar';
 import Header from '../Header';
 import HelpLink from '../HelpLink';
-import HelpStyles from './ViewStyles';
+import { HelpStyles } from './ViewStyles';
 
 class Help extends Component{
   render() {

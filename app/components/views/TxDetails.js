@@ -7,7 +7,7 @@ import dateFormat from 'dateformat';
 import '../fonts.css';
 import { shell } from 'electron';
 import SlateGrayButton from '../SlateGrayButton';
-import TxDetailsStyles from './ViewStyles';
+import { TxDetailsStyles } from './ViewStyles';
 
 class TxDetails extends Component {
   constructor(props) {

@@ -7,7 +7,7 @@ import Balance from '../Balance';
 import KeyBlueButton from '../KeyBlueButton';
 import SlateGrayButton from '../SlateGrayButton';
 import CircularProgress from 'material-ui/CircularProgress';
-import AccountStyles from './ViewStyles.js';
+import { AccountStyles } from './ViewStyles.js';
 
 class Accounts extends Component{
   static propTypes = {
