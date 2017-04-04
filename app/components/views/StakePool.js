@@ -600,6 +600,49 @@ const styles = {
     paddingRight: '20px',
     paddingLeft: '20px',
   },
+  stakeInfoArea: {
+    fontSize: '13px',
+    fontWeight: 'bold',
+    float: 'right',
+    marginTop: '-33px',
+    height:'80px',
+    width: '312px',
+  },
+  stakeInfoAreaLeft: {
+    height: '100%',
+    width: '170px',
+    float: 'left',
+  },
+  stakeInfoAreaRight: {
+    height: '100%',
+    width: '142px',
+    float: 'right',
+  },
+  stakeInfoRows: {
+    width: '100%',
+    height: '20px'
+  },
+  stakeInfoRowsRightName: {
+    width: '96px',
+    float: 'left',
+    textAlign: 'left',
+  },
+  stakeInfoRowsRightValue: {
+    width: '46px',
+    float: 'right',
+    textAlign: 'right',
+  },
+  stakeInfoRowsLeftName: {
+    width: '124px',
+    float: 'left',
+    textAlign: 'left',
+  },
+  stakeInfoRowsLeftValue: {
+    width: '34px',
+    float: 'right',
+    textAlign: 'right',
+    paddingRight: '8px',
+  }
 };
 
 class StakePool extends Component{
@@ -716,6 +759,7 @@ class StakePool extends Component{
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
     const { network } = this.props;
     const { getTicketPriceResponse } = this.props;
+    const { getStakeInfoResponse } = this.props;
 
     var unconfigedStakePools = 0;
     if (currentStakePoolConfig != null) {
@@ -987,7 +1031,29 @@ class StakePool extends Component{
           ]
           }
           headerTitleOverview={
-            this.state.purchaseTickets ? 'Ticket price:' :'Stake pool settings'}
+            <div style={{height: '100%'}}>
+              <div style={{float: 'left'}}>{this.state.purchaseTickets ? 'Ticket price:' :'Stake pool settings'}</div>
+                {getStakeInfoResponse !== null ?
+                <div style={styles.stakeInfoArea}>
+                  <div style={styles.stakeInfoAreaLeft}>
+                    <div style={styles.stakeInfoRows}><span style={styles.stakeInfoRowsLeftName}>Poolsize:</span><span style={styles.stakeInfoRowsLeftValue}>{getStakeInfoResponse.getPoolSize()}</span></div>
+                    <div style={styles.stakeInfoRows}><span style={styles.stakeInfoRowsLeftName}>All Mempool Tickets:</span><span style={styles.stakeInfoRowsLeftValue}>{getStakeInfoResponse.getAllMempoolTix()}</span></div>
+                    <div style={styles.stakeInfoRows}><span style={styles.stakeInfoRowsLeftName}>Own Mempool Tickets:</span><span style={styles.stakeInfoRowsLeftValue}>{getStakeInfoResponse.getOwnMempoolTix()}</span></div>
+                    <div style={styles.stakeInfoRows}><span style={styles.stakeInfoRowsLeftName}>Live Tickets:</span><span style={styles.stakeInfoRowsLeftValue}>{getStakeInfoResponse.getLive()}</span></div>
+                  </div>
+                  <div style={styles.stakeInfoAreaRight}>
+                    <div style={styles.stakeInfoRows}><span style={styles.stakeInfoRowsRightName}>Voted Tickets:</span><span style={styles.stakeInfoRowsRightValue}>{getStakeInfoResponse.getVoted()}</span></div>
+                    <div style={styles.stakeInfoRows}><span style={styles.stakeInfoRowsRightName}>Missed Tickets:</span><span style={styles.stakeInfoRowsRightValue}>{getStakeInfoResponse.getMissed()}</span></div>
+                    <div style={styles.stakeInfoRows}><span style={styles.stakeInfoRowsRightName}>Revoked Tickets:</span><span style={styles.stakeInfoRowsRightValue}>{getStakeInfoResponse.getRevoked()}</span></div>
+                    <div style={styles.stakeInfoRows}><span style={styles.stakeInfoRowsRightName}>Expired Tickets:</span><span style={styles.stakeInfoRowsRightValue}>{getStakeInfoResponse.getExpired()}</span></div>
+                  </div>
+                </div>:
+                <div>
+                </div>
+                }
+
+            </div>
+          }
           headerMetaOverview={
             activeStakePoolConfig && !this.state.addAnotherStakePool && getTicketPriceResponse !== null ?
             <div>
