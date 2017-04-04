@@ -74,7 +74,6 @@ class Accounts extends Component{
               </div>  :
               <div></div>
             }
-
           <KeyBlueButton
            style={AccountStyles.contentAddNewAccount}
            onClick={() => this.showAddAccount()}>
