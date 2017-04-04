@@ -1,3 +1,4 @@
+import Add from '../icons/add.svg';
 import Delete from '../icons/delete.svg';
 import IndicatorPending from '../icons/indicator-pending.svg';
 import IndicatorConfirmed from '../icons/indicator-confirmed.svg';
@@ -6,6 +7,7 @@ import MinusBig from '../icons/minus-big.svg';
 import ArrowDownMidBlue from '../icons/arrow-down-mid-blue.svg';
 import ArrowDownKeyBlue from '../icons/arrow-down-key-blue.svg';
 import Search from '../icons/search.svg';
+import WalletGray from '../icons/wallet-gray.svg';
 
 export const ReceiveStyles = {
   body: {
