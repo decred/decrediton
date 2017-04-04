@@ -4,40 +4,7 @@ import ErrorScreen from '../ErrorScreen';
 import KeyBlueButton from '../KeyBlueButton';
 import SideBar from '../SideBar';
 import Header from '../Header';
-
-const styles = {
-  body: {
-    position: 'fixed',
-    left: '0px',
-    top: '50%',
-    right: '0px',
-    display: 'block',
-    overflow: 'hidden',
-    width: '1178px',
-    height: '770px',
-    marginTop: '-385px',
-    marginRight: 'auto',
-    marginLeft: 'auto',
-    backgroundColor: '#FFF',
-  },
-  view: {
-    width: '880px',
-    height: '100%',
-    float: 'right',
-    backgroundColor: '#f3f6f6',
-  },
-  content: {
-    overflow: 'auto',
-    height: '556px',
-    padding: '54px 60px 54px 80px',
-  },
-  saveSettingsButton: {
-    float: 'right',
-  },
-  restart: {
-    fontWeight: 'bold',
-  }
-};
+import { SettingStyles } from './ViewStyles';
 
 class Settings extends Component{
   static propTypes = {
@@ -56,10 +23,10 @@ class Settings extends Component{
       network: tempSettings.network,
     };
     const settingsView = (
-      <div style={styles.view}>
+      <div style={SettingStyles.view}>
         <Header headerTitleOverview="Settings" />
-        <div style={styles.content}>
-          <div style={styles.label}>
+        <div style={SettingStyles.content}>
+          <div style={SettingStyles.label}>
             Displayed Units
           </div>
           <select defaultValue={currentSettings.currencyDisplay}
@@ -71,8 +38,8 @@ class Settings extends Component{
             <option value="atoms">atoms</option>
           </select>
 
-          <div style={styles.label}>
-            Network <span style={styles.restart}>(requires restart!)</span>
+          <div style={SettingStyles.label}>
+            Network <span style={SettingStyles.restart}>(requires restart!)</span>
           </div>
           <select defaultValue={currentSettings.network}
             onChange={(e) => {
@@ -84,7 +51,7 @@ class Settings extends Component{
           </select>
 
           <KeyBlueButton
-            style={styles.saveSettingsButton}
+            style={SettingStyles.saveSettingsButton}
             disabled={!settingsChanged}
             size="large"
             block={false}
@@ -98,7 +65,7 @@ class Settings extends Component{
       return (<ErrorScreen />);
     } else {
       return(
-        <div style={styles.body}>
+        <div style={SettingStyles.body}>
           <SideBar />
           {settingsView}
         </div>);
