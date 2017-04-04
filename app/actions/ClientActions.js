@@ -1,6 +1,7 @@
 import { getWalletService } from '../middleware/grpc/client';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt } from './ControlActions';
 import { transactionNtfnsStart } from './NotificationActions';
+import { updateStakepoolPurchaseInformation } from './StakePoolActions';
 import { hashHistory } from 'react-router';
 import { timeSince } from '../helpers/dateFormat.js';
 import {
@@ -29,6 +30,7 @@ function getWalletServiceSuccess(walletService) {
     setTimeout(() => { dispatch(getPingAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNetworkAttempt()); }, 1000);
     setTimeout(() => { dispatch(transactionNtfnsStart()); }, 1000);
+    setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.
