@@ -1366,7 +1366,7 @@ export const HelpStyles = {
     alignItems: 'center',
   }
 };
-export const TxDetailStyles = {
+export const TxDetailsStyles = {
   view: {
     width: '880px',
     height: '100%',
