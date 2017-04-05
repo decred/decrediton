@@ -3,52 +3,16 @@ import React, {Component} from 'react';
 import SideBar from '../SideBar';
 import Header from '../Header';
 import HelpLink from '../HelpLink';
-
-const styles = {
-  body: {
-    position: 'fixed',
-    left: '0px',
-    top: '50%',
-    right: '0px',
-    display: 'block',
-    overflow: 'hidden',
-    width: '1178px',
-    height: '770px',
-    marginTop: '-385px',
-    marginRight: 'auto',
-    marginLeft: 'auto',
-    backgroundColor: '#FFF',
-  },
-  view: {
-    width: '880px',
-    height: '100%',
-    float: 'right',
-    backgroundColor: '#f3f6f6',
-  },
-  content: {
-    overflow: 'auto',
-    height: '556px',
-    padding: '54px 60px 54px 80px',
-  },
-  img: {
-    width: '250px',
-    paddingLeft: '244px',
-  },
-  center: {
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-};
+import { HelpStyles } from './ViewStyles';
 
 class Help extends Component{
   render() {
     const helpView = (
-      <div style={styles.view}>
+      <div style={HelpStyles.view}>
         <Header
           headerTitleOverview="Help"
         />
-        <div style={styles.content}>
+        <div style={HelpStyles.content}>
             <HelpLink href="https://forum.decred.org">Forum</HelpLink>
             <HelpLink href="https://decred.slack.com">Chat</HelpLink>
             <HelpLink href="https://github.com/decred/decrediton/issues">Issues</HelpLink>
@@ -57,7 +21,7 @@ class Help extends Component{
     );
 
     return(
-      <div style={styles.body}>
+      <div style={HelpStyles.body}>
         <SideBar />
         {helpView}
       </div>);

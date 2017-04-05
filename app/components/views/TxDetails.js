@@ -3,214 +3,11 @@ import Radium from 'radium';
 import { reverseHash } from '../../helpers/byteActions';
 import Balance from '../Balance';
 import Header from '../Header';
-import IndicatorPending from '../icons/indicator-pending.svg';
-import IndicatorConfirmed from '../icons/indicator-confirmed.svg';
-import PlusBig from '../icons/plus-big.svg';
-import MinusBig from '../icons/minus-big.svg';
 import dateFormat from 'dateformat';
 import '../fonts.css';
 import { shell } from 'electron';
 import SlateGrayButton from '../SlateGrayButton';
-
-const styles = {
-  view: {
-    width: '880px',
-    height: '100%',
-    float: 'right',
-    backgroundColor: '#f3f6f6',
-  },
-  header: {
-    paddingRight: '80px',
-    paddingLeft: '100px',
-    backgroundColor: '#fff',
-  },
-  content: {
-    overflow: 'auto',
-    height: '556px',
-    padding: '54px 60px 54px 80px',
-  },
-
-  transition1: {
-    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
-  },
-  headerTop: {
-    height: '106px',
-    paddingBottom: '20px',
-  },
-  headerTitleOverview: {
-    height: '54px',
-    paddingTop: '13px',
-    color: '#596d81',
-    fontSize: '27px',
-  },
-  headerMetaOverview: {
-    height: '54px',
-    paddingTop: '5px',
-    fontFamily: 'Inconsolata, monospace',
-    fontSize: '53px',
-  },
-  contentTitle: {
-    display: 'block',
-    height: '44px',
-    marginRight: 'auto',
-    marginBottom: '10px',
-    marginLeft: 'auto',
-    borderBottom: '1px solid transparent',
-    color: '#596d81',
-    fontSize: '27px',
-    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
-  },
-  contentNest: {
-    paddingTop: '1px',
-  },
-  indicatorPending: {
-    display: 'inline-block',
-    padding: '5px 8px 5px 20px',
-    borderStyle: 'solid',
-    borderWidth: '1px',
-    borderRadius: '3px',
-    fontSize: '12px',
-    lineHeight: '8px',
-    textAlign: 'right',
-    textTransform: 'capitalize',
-    borderColor: '#2971ff',
-    backgroundImage: `url(${IndicatorPending})`,
-    backgroundPosition: '6px 50%',
-    backgroundSize: '10px',
-    backgroundRepeat: 'no-repeat',
-    color: '#2971ff',
-  },
-
-  indicatorConfirmed: {
-    display: 'inline-block',
-    padding: '5px 8px 5px 20px',
-    borderStyle: 'solid',
-    borderWidth: '1px',
-    borderRadius: '3px',
-    fontSize: '12px',
-    lineHeight: '8px',
-    textAlign: 'right',
-    textTransform: 'capitalize',
-    borderColor: '#2ed8a3',
-    backgroundImage: `url(${IndicatorConfirmed})`,
-    backgroundPosition: '6px 50%',
-    backgroundSize: '10px',
-    backgroundRepeat: 'no-repeat',
-    color: '#2ed8a3',
-  },
-  headerTopTransactionDetails: {
-    height: '106px',
-    paddingTop: '43px',
-    textAlign: 'center',
-    marginRight: '-20px',
-  },
-  headerMetaTransactionDetailsIn: {
-    height: '38px',
-    paddingTop: '16px',
-    paddingLeft: '50px',
-    backgroundImage: `url(${PlusBig})`,
-    backgroundPosition: '0px 50%',
-    backgroundSize: '30px',
-    backgroundRepeat: 'no-repeat',
-    fontFamily: 'Inconsolata, monospace',
-    fontSize: '35px',
-    fontWeight: '700',
-  },
-
-  headerMetaTransactionDetailsCurrency: {
-    fontSize: '19px',
-    fontWeight: '400',
-  },
-
-  headerMetaTransactionDetailsTimeAndDate: {
-    display: 'inline-block',
-    paddingTop: '4px',
-    float: 'right',
-    fontFamily: 'Source Sans Pro, sans-serif',
-    fontSize: '19px',
-    fontWeight: '400',
-  },
-
-  headerMetaTransactionDetailsOut: {
-    height: '38px',
-    paddingTop: '16px',
-    paddingLeft: '50px',
-    backgroundImage: `url(${MinusBig})`,
-    backgroundPosition: '0px 50%',
-    backgroundSize: '30px',
-    backgroundRepeat: 'no-repeat',
-    fontFamily: 'Inconsolata, monospace',
-    fontSize: '35px',
-    fontWeight: '700',
-  },
-
-  transactionDetails: {
-    paddingTop: '18px',
-    paddingBottom: '8px',
-    borderBottom: '1px solid #e7eaed',
-    fontSize: '13px',
-    height: '100px',
-  },
-
-  transactionDetailsTop: {
-    paddingTop: '18px',
-    paddingBottom: '8px',
-    borderBottom: '1px solid #e7eaed',
-    fontSize: '13px',
-    height: '140px',
-  },
-
-  transactionDetailsLeft: {
-    width: '150px',
-    float: 'left',
-  },
-
-  transactionDetailsRight: {
-    width: '570px',
-    float: 'right',
-  },
-
-  transactionDetailsName: {
-    display: 'block',
-    width: '160px',
-    height: '28px',
-    paddingTop: '4px',
-    paddingRight: '20px',
-    float: 'left',
-    clear: 'left',
-    fontSize: '13px',
-    lineHeight: '19px',
-    textAlign: 'right',
-  },
-
-  transactionDetailsValue: {
-    display: 'inline-block',
-    height: '28px',
-    paddingTop: '9px',
-    float: 'left',
-    fontFamily: 'Inconsolata, monospace',
-    lineHeight: '10px',
-    fontWeight: '700',
-    textAlign: 'left',
-  },
-
-  transactionDetailsValueText: {
-    fontWeight: '400',
-  },
-
-  transactionDetailsTitle: {
-    width: '140px',
-    height: '28px',
-    paddingTop: '4px',
-    color: '#596d81',
-    fontSize: '20px',
-    textAlign: 'right',
-  },
-
-  transactionDetailsLast: {
-    borderBottom: '0px none transparent',
-  }
-};
+import { TxDetailsStyles } from './ViewStyles';
 
 class TxDetails extends Component {
   constructor(props) {
@@ -284,46 +81,46 @@ class TxDetails extends Component {
       walletValueUp = true;
     }
     return(
-      <div style={styles.view}>
+      <div style={TxDetailsStyles.view}>
         <Header
           headerTitleOverview={['Primary account',
             <SlateGrayButton key="back" style={{float: 'right'}} onClick={() => clearTxDetails()}>back</SlateGrayButton>
           ]}
           headerMetaOverview={
             walletValueUp ?
-          <div style={styles.headerMetaTransactionDetailsIn}>
+          <div style={TxDetailsStyles.headerMetaTransactionDetailsIn}>
             <Balance amount={txAmount} />
-            <div style={styles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
+            <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
           </div> :
-          <div style={styles.headerMetaTransactionDetailsOut}>
+          <div style={TxDetailsStyles.headerMetaTransactionDetailsOut}>
             -<Balance amount={txAmount} />
-            <div style={styles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
+            <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
           </div>
           }/>
-        <div style={styles.content}>
-          <div style={styles.contentNest}>
-            <div style={styles.transactionDetailsTop}>
-              <div style={styles.transactionDetailsName}>Transaction:</div>
-              <div style={styles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, txLink)}><a>{reverseHash(Buffer.from(tx.tx.getHash()).toString('hex'))}</a></div>
-              <div style={styles.transactionDetailsName}>
-                <div style={styles.indicatorConfirmed}>confirmed</div>
+        <div style={TxDetailsStyles.content}>
+          <div style={TxDetailsStyles.contentNest}>
+            <div style={TxDetailsStyles.transactionDetailsTop}>
+              <div style={TxDetailsStyles.transactionDetailsName}>Transaction:</div>
+              <div style={TxDetailsStyles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, txLink)}><a>{reverseHash(Buffer.from(tx.tx.getHash()).toString('hex'))}</a></div>
+              <div style={TxDetailsStyles.transactionDetailsName}>
+                <div style={TxDetailsStyles.indicatorConfirmed}>confirmed</div>
               </div>
               {getAccountsResponse !== null ?
-              <div style={styles.transactionDetailsValue}>{getAccountsResponse.getCurrentBlockHeight() - tx.height} <span style={styles.transactionDetailsValueText}>confirmations</span></div> :
+              <div style={TxDetailsStyles.transactionDetailsValue}>{getAccountsResponse.getCurrentBlockHeight() - tx.height} <span style={TxDetailsStyles.transactionDetailsValueText}>confirmations</span></div> :
               <div></div>
               }
-              <div style={styles.transactionDetailsName}>{txDescription.direction}</div>
-              <div style={styles.transactionDetailsValue}>{txDescription.addressStr}</div>
-              <div style={styles.transactionDetailsName}>Transaction fee:</div>
-              <div style={styles.transactionDetailsValue}><Balance amount={fee} />
+              <div style={TxDetailsStyles.transactionDetailsName}>{txDescription.direction}</div>
+              <div style={TxDetailsStyles.transactionDetailsValue}>{txDescription.addressStr}</div>
+              <div style={TxDetailsStyles.transactionDetailsName}>Transaction fee:</div>
+              <div style={TxDetailsStyles.transactionDetailsValue}><Balance amount={fee} />
               </div>
             </div>
-            <div style={styles.transactionDetails}>
-              <div style={styles.transactionDetailsTitle}>Properties</div>
-              <div style={styles.transactionDetailsName}>Block:</div>
-              <div style={styles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, blockLink)}><a>{reverseHash(Buffer.from(tx.blockHash).toString('hex'))}</a></div>
-              <div style={styles.transactionDetailsName}>Height:</div>
-              <div style={styles.transactionDetailsValue}>{tx.height}</div>
+            <div style={TxDetailsStyles.transactionDetails}>
+              <div style={TxDetailsStyles.transactionDetailsTitle}>Properties</div>
+              <div style={TxDetailsStyles.transactionDetailsName}>Block:</div>
+              <div style={TxDetailsStyles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, blockLink)}><a>{reverseHash(Buffer.from(tx.blockHash).toString('hex'))}</a></div>
+              <div style={TxDetailsStyles.transactionDetailsName}>Height:</div>
+              <div style={TxDetailsStyles.transactionDetailsValue}>{tx.height}</div>
             </div>
           </div>
         </div>
@@ -333,19 +130,19 @@ class TxDetails extends Component {
 
 export default Radium(TxDetails);
 /*
-            <div style={styles.transactionDetails}>
-              <div style={styles.transactionDetailsTitle}>Inputs</div>
-              <div style={styles.transactionDetailsName}>College funds:</div>
-              <div style={styles.transactionDetailsValue}>0.0001 <span style={styles.transactionDetailsValueText}>DCR</span>
+            <div style={TxDetailsStyles.transactionDetails}>
+              <div style={TxDetailsStyles.transactionDetailsTitle}>Inputs</div>
+              <div style={TxDetailsStyles.transactionDetailsName}>College funds:</div>
+              <div style={TxDetailsStyles.transactionDetailsValue}>0.0001 <span style={TxDetailsStyles.transactionDetailsValueText}>DCR</span>
               </div>
             </div>
-            <div style={styles.transactionDetailsLast}>
-              <div style={styles.transactionDetailsTitle}>Outputs</div>
-              <div style={styles.transactionDetailsName}>Tsbg8igLh… :</div>
-              <div style={styles.transactionDetailsValue}>5.00&nbsp;<span style={styles.transactionDetailsValueText}>DCR</span>
+            <div style={TxDetailsStyles.transactionDetailsLast}>
+              <div style={TxDetailsStyles.transactionDetailsTitle}>Outputs</div>
+              <div style={TxDetailsStyles.transactionDetailsName}>Tsbg8igLh… :</div>
+              <div style={TxDetailsStyles.transactionDetailsValue}>5.00&nbsp;<span style={TxDetailsStyles.transactionDetailsValueText}>DCR</span>
               </div>
-              <div style={styles.transactionDetailsName}>Change:</div>
-              <div style={styles.transactionDetailsValue}>4.9999 <span style={styles.transactionDetailsValueText}>DCR</span>
+              <div style={TxDetailsStyles.transactionDetailsName}>Change:</div>
+              <div style={TxDetailsStyles.transactionDetailsValue}>4.9999 <span style={TxDetailsStyles.transactionDetailsValueText}>DCR</span>
               </div>
             </div>
         {Buffer.from(tx.getHash()).toString('hex')}

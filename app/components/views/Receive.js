@@ -5,43 +5,7 @@ import KeyBlueButton from '../KeyBlueButton';
 import SideBar from '../SideBar';
 import Header from '../Header';
 import qr from 'qr-image';
-
-const styles = {
-  body: {
-    position: 'fixed',
-    left: '0px',
-    top: '50%',
-    right: '0px',
-    display: 'block',
-    overflow: 'hidden',
-    width: '1178px',
-    height: '770px',
-    marginTop: '-385px',
-    marginRight: 'auto',
-    marginLeft: 'auto',
-    backgroundColor: '#FFF',
-  },
-  view: {
-    width: '880px',
-    height: '100%',
-    float: 'right',
-    backgroundColor: '#f3f6f6',
-  },
-  content: {
-    overflow: 'auto',
-    height: '556px',
-    padding: '54px 60px 54px 80px',
-  },
-  img: {
-    width: '250px',
-    paddingLeft: '244px',
-  },
-  center: {
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-};
+import { ReceiveStyles } from './ViewStyles';
 
 class QRCode extends Component {
   static propTypes = {
@@ -49,7 +13,7 @@ class QRCode extends Component {
   };
   render() {
     const qr_img = qr.imageSync('decred:'+this.props.addr, {type: 'svg'});
-    return (<div style={styles.img} dangerouslySetInnerHTML={{__html:qr_img}}></div>);
+    return (<div style={ReceiveStyles.img} dangerouslySetInnerHTML={{__html:qr_img}}></div>);
   }
 }
 
@@ -65,7 +29,7 @@ class Receive extends Component{
     const { getNextAddressResponse, getNextAddressRequestAttempt } = this.props;
 
     const copayReceive = (
-      <div style={styles.view}>
+      <div style={ReceiveStyles.view}>
         <Header
           headerTitleOverview="Current address"
           headerMetaOverview={
@@ -74,8 +38,8 @@ class Receive extends Component{
               <div></div>
           }
         />
-        <div style={styles.content}>
-          <div style={styles.center}>
+        <div style={ReceiveStyles.content}>
+          <div style={ReceiveStyles.center}>
             {getNextAddressResponse !== null ?
               <QRCode addr={getNextAddressResponse.getAddress()}/> :
               <div></div>
@@ -96,7 +60,7 @@ class Receive extends Component{
       return (<ErrorScreen />);
     } else {
       return(
-        <div style={styles.body}>
+        <div style={ReceiveStyles.body}>
           <SideBar />
           {copayReceive}
         </div>);

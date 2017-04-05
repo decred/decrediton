@@ -5,6 +5,7 @@ import { rescanAttempt } from '../actions/ControlActions';
 import ControlActions from '../actions/ControlActions';
 import Formsy from 'formsy-react';
 import { FormsyText } from 'formsy-material-ui/lib';
+import KeyBlueButton from './KeyBlueButton';
 
 class RescanForm extends React.Component {
   constructor(props) {
@@ -45,7 +46,7 @@ class RescanForm extends React.Component {
             required
           />
           <br />
-          <Button type="submit" disabled={!this.state.canSubmit}>Rescan Wallet</Button>
+          <KeyBlueButton type="submit" disabled={!this.state.canSubmit}>Rescan Wallet</KeyBlueButton>
         </Formsy.Form>
       </div>
     );
