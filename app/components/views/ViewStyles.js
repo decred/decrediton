@@ -1990,5 +1990,30 @@ export const AccountStyles = {
       opacity: '0.85',
     }
   },
+  accountDetailsRow: {
+    width: '100%',
+    height: '45px',
+    paddingTop: '6px',
+    float: 'left',
+    borderBottom: '1px black solid',
+  },
+  accountDetailsLabel: {
+    width: '25%',
+    paddingRight: '15px',
+    paddingLeft: '5px',
+    float: 'left',
+    height: '100%',
+    paddingTop: '8px',
+    fontSize: '19px',
+    textAlign: 'left',
+  },
+  accountDetailsInput: {
+    width: '50%',
+    float: 'left',
+    height: '100%',
+    paddingTop: '5px',
+    fontSize: '19px',
+    textAlign: 'right',
+  },
 };
 

@@ -204,19 +204,33 @@ class Accounts extends Component{
     const accountDetails = (
       <div style={AccountStyles.view}>
         <Header
-          headerTitleOverview={[<div key={1}>Account information</div>,
+          headerTitleOverview={[<div key={1}>Total account balance</div>,
             <SlateGrayButton key="back" style={{float: 'right'}} onClick={() => this.hideAccountDetails()}>back</SlateGrayButton>]}
           headerTop={renameAccountError !== null ?
             <div key="renameAccountError" style={AccountStyles.viewNotificationError}><div style={AccountStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearRenameAccountError()}>{renameAccountError}</div></div> :
             <div key="renameAccountError" ></div>
           }
+          headerMetaOverview={
+              this.state.showAccountDetailsAccount !== null?
+             <Balance amount={this.state.showAccountDetailsAccount.getTotalBalance()}/>:
+             <div></div>
+          }
         />
         <div style={AccountStyles.content}>
           {this.state.showAccountDetailsAccount !== null ?
-          <div>
-            <div>Account Name {this.state.showAccountDetailsAccount.getAccountName()}</div>
-            <div>Account Number {this.state.showAccountDetailsAccount.getAccountNumber()}</div>
-            <div>Total Balance {this.state.showAccountDetailsAccount.getTotalBalance()}</div>
+          <div>            
+            <div style={AccountStyles.accountDetailsRow}>
+              <div style={AccountStyles.accountDetailsLabel}>Account Name:</div>
+              <div style={AccountStyles.accountDetailsInput}>
+                {this.state.showAccountDetailsAccount.getAccountName()}
+              </div>
+            </div>
+            <div style={AccountStyles.accountDetailsRow}>
+              <div style={AccountStyles.accountDetailsLabel}>Account Number:</div>
+              <div style={AccountStyles.accountDetailsInput}>
+                {this.state.showAccountDetailsAccount.getAccountNumber()}
+              </div>
+            </div>
             <KeyBlueButton
               style={AccountStyles.contentConfirmNewAccount}
               onClick={() => this.showRenameAccount(this.state.showAccountDetailsAccount.getAccountNumber())}>
