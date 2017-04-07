@@ -85,7 +85,7 @@ class Receive extends Component{
               <QRCode addr={getNextAddressResponse.getAddress()}/> :
               <div></div>
             }
-            <p>Share this wallet address to receive payments, To protect your privacy, new addresses are generated automatically once you use them.</p>
+            <p>Share this wallet address to receive payments. To protect your privacy, new addresses are generated automatically once you use them.</p>
             {selectAccounts}
             <KeyBlueButton
               size="large"
