@@ -56,6 +56,13 @@ class Accounts extends Component{
             <div key="accountSuccess" style={AccountStyles.viewNotificationSuccess}><div style={AccountStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearNewAccountSuccess()}></div>{getNextAccountSuccess}</div> :
             <div key="accountSuccess" ></div>,
           ]}
+          headerMetaOverview={
+            <KeyBlueButton
+            style={AccountStyles.contentAddNewAccount}
+            onClick={() => this.showAddAccount()}>
+            Add New Account
+            </KeyBlueButton>
+          }
         />
         <div style={AccountStyles.content}>
           {getNextAccountRequestAttempt ?
@@ -74,11 +81,6 @@ class Accounts extends Component{
               </div>  :
               <div></div>
             }
-          <KeyBlueButton
-           style={AccountStyles.contentAddNewAccount}
-           onClick={() => this.showAddAccount()}>
-           Add New Account
-          </KeyBlueButton>
         </div>
       </div>);
     const addAccountView = (
@@ -124,7 +126,7 @@ class Accounts extends Component{
             </div>
           </div>
           <KeyBlueButton
-           style={AccountStyles.contentAddNewAccount}
+           style={AccountStyles.contentConfirmNewAccount}
            onClick={() => this.addAccount()}>
            Confirm
           </KeyBlueButton>
