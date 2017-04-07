@@ -55,9 +55,8 @@ const styles = {
 class AccountRow extends Component {
   render() {
     const { account } = this.props;
-    const { showAccountDetail } = this.props;
     return (
-          <div style={styles.accountRow} key={account.getAccountNumber()} onClick={showAccountDetail !== undefined ? () => {showAccountDetail(account.getAccountNumber());}:null}>
+          <div style={styles.accountRow} key={account.getAccountNumber()} onClick={this.props.onClick}>
             <div style={styles.accountName}>{account.getAccountName()}</div>
             <div style={styles.accountBalance}><Balance amount={account.getTotalBalance()} /></div>
           </div>);

@@ -243,6 +243,7 @@ var initialState = {
     renameAccountRequestAttempt: false,
     renameAccountRequest: null,
     renameAccountResponse: null,
+    renameAccountSuccess: '',
     renameAccountError: null,
     // Rescan
     rescanRequestAttempt: false,
