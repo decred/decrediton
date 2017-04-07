@@ -20,9 +20,18 @@ class QRCode extends Component {
 class Receive extends Component{
   constructor(props) {
     super(props);
+    var accountName = '';
+    if (props.getAccountsResponse !== null && props.getNextAddressResponse !== null) {
+      for (var i = 0; i < props.getAccountsResponse.getAccountsList().length; i++) {
+        if (props.getNextAddressResponse.accountNumber == props.getAccountsResponse.getAccountsList()[i].getAccountNumber()) {
+          accountName = props.getAccountsResponse.getAccountsList()[i].getAccountName();
+          break;
+        }
+      }
+    }
     this.state = {
-      account: 0,
-      accountName: 'default',
+      account: props.getNextAddressResponse !== null ? props.getNextAddressResponse.accountNumber : 0,
+      accountName: props.getNextAddressResponse !== null ? accountName : 'default',
     }
   }
   static propTypes = {
@@ -50,7 +59,7 @@ class Receive extends Component{
     var selectAccounts = (
       <div style={ReceiveStyles.selectAccountsArea}>
         <select
-          defaultValue={0}
+          defaultValue={this.state.account}
           style={ReceiveStyles.selectAccounts}
           onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
           >
