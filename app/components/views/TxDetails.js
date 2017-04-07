@@ -81,9 +81,9 @@ class TxDetails extends Component {
       txAmount = totalDebit - fee - totalChange - totalFundsReceived;
       walletValueUp = false;
       if (this.props.getAccountsResponse != null) {
-        for (var i = 0; i < this.props.getAccountsResponse.getAccountsList().length; i++) {
-          if (this.props.getAccountsResponse.getAccountsList()[i].getAccountNumber() == previousAccount) {
-            accountName = this.props.getAccountsResponse.getAccountsList()[i].getAccountName();
+        for (var y = 0; y < this.props.getAccountsResponse.getAccountsList().length; y++) {
+          if (this.props.getAccountsResponse.getAccountsList()[y].getAccountNumber() == previousAccount) {
+            accountName = this.props.getAccountsResponse.getAccountsList()[y].getAccountName();
             break;
           }
         }
@@ -93,9 +93,9 @@ class TxDetails extends Component {
       txAmount = totalFundsReceived;
       walletValueUp = true;
       if (this.props.getAccountsResponse != null) {
-        for (var i = 0; i < this.props.getAccountsResponse.getAccountsList().length; i++) {
-          if (this.props.getAccountsResponse.getAccountsList()[i].getAccountNumber() == account) {
-            accountName = this.props.getAccountsResponse.getAccountsList()[i].getAccountName();
+        for (var z = 0; z < this.props.getAccountsResponse.getAccountsList().length; z++) {
+          if (this.props.getAccountsResponse.getAccountsList()[z].getAccountNumber() == account) {
+            accountName = this.props.getAccountsResponse.getAccountsList()[z].getAccountName();
             break;
           }
         }
@@ -150,24 +150,3 @@ class TxDetails extends Component {
 }
 
 export default Radium(TxDetails);
-/*
-            <div style={TxDetailsStyles.transactionDetails}>
-              <div style={TxDetailsStyles.transactionDetailsTitle}>Inputs</div>
-              <div style={TxDetailsStyles.transactionDetailsName}>College funds:</div>
-              <div style={TxDetailsStyles.transactionDetailsValue}>0.0001 <span style={TxDetailsStyles.transactionDetailsValueText}>DCR</span>
-              </div>
-            </div>
-            <div style={TxDetailsStyles.transactionDetailsLast}>
-              <div style={TxDetailsStyles.transactionDetailsTitle}>Outputs</div>
-              <div style={TxDetailsStyles.transactionDetailsName}>Tsbg8igLh… :</div>
-              <div style={TxDetailsStyles.transactionDetailsValue}>5.00&nbsp;<span style={TxDetailsStyles.transactionDetailsValueText}>DCR</span>
-              </div>
-              <div style={TxDetailsStyles.transactionDetailsName}>Change:</div>
-              <div style={TxDetailsStyles.transactionDetailsValue}>4.9999 <span style={TxDetailsStyles.transactionDetailsValueText}>DCR</span>
-              </div>
-            </div>
-        {Buffer.from(tx.getHash()).toString('hex')}
-        <div onClick={() => clearTxDetails()}>
-          back
-        </div>
-*/

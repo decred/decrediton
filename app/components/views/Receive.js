@@ -32,7 +32,7 @@ class Receive extends Component{
     this.state = {
       account: props.getNextAddressResponse !== null ? props.getNextAddressResponse.accountNumber : 0,
       accountName: props.getNextAddressResponse !== null ? accountName : 'default',
-    }
+    };
   }
   static propTypes = {
     walletService: PropTypes.object,

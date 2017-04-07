@@ -60,14 +60,14 @@ class Accounts extends Component{
     this.props.clearRenameAccountError();
   }
   showRenameAccount(accountNumber) {
-    this.setState({showRenameAccount: true, renameAccountNumber: accountNumber, renameAccountName: ''})
+    this.setState({showRenameAccount: true, renameAccountNumber: accountNumber, renameAccountName: ''});
     this.props.clearNewAccountSuccess();
     this.props.clearNewAccountError();
     this.props.clearRenameAccountSuccess();
     this.props.clearRenameAccountError();
   }
   hideRenameAccount() {
-    this.setState({showRenameAccount:false, renameAccountNumber: -1, renameAccountName: ''})
+    this.setState({showRenameAccount:false, renameAccountNumber: -1, renameAccountName: ''});
     this.props.clearNewAccountSuccess();
     this.props.clearNewAccountError();
     this.props.clearRenameAccountSuccess();
@@ -76,7 +76,7 @@ class Accounts extends Component{
   renameAccount() {
     if (this.state.renameAccountName == '' || this.state.renameAccountNumber == -1) {
       console.log(this.state.renameAccountNumber, this.state.renameAccountName);
-      return
+      return;
     }
     this.props.renameAccountAttempt(this.state.renameAccountNumber, this.state.renameAccountName);
     this.hideRenameAccount();
@@ -87,7 +87,7 @@ class Accounts extends Component{
     this.props.clearNewAccountError();
     this.props.clearRenameAccountSuccess();
     this.props.clearRenameAccountError();
-  } 
+  }
   hideAccountDetails() {
     this.setState({showAccountDetails: false, showAccountDetailsAccount: null});
     this.props.clearNewAccountSuccess();
@@ -139,7 +139,7 @@ class Accounts extends Component{
                 if (account.getAccountName() !== 'imported') {
                   return (<AccountRow key={account.getAccountName()} account={account} onClick={() => this.showAccountDetailsView(account)}/>);
                 }
-              })} 
+              })}
               </div>:
               <div></div>
             }
@@ -218,7 +218,7 @@ class Accounts extends Component{
         />
         <div style={AccountStyles.content}>
           {this.state.showAccountDetailsAccount !== null ?
-          <div>            
+          <div>
             <div style={AccountStyles.accountDetailsRow}>
               <div style={AccountStyles.accountDetailsLabel}>Account Name:</div>
               <div style={AccountStyles.accountDetailsInput}>

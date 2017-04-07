@@ -55,12 +55,12 @@ function renameAccountError(error) {
 }
 
 function renameAccountSuccess(renameAccountResponse) {
-  var successMsg = "You have successfully updated the account name."
+  var successMsg = 'You have successfully updated the account name.';
   return (dispatch) => {
     dispatch({ renameAccountSuccess: successMsg, renameAccountResponse: renameAccountResponse, type: RENAMEACCOUNT_SUCCESS });
     dispatch(getAccountsAttempt());
-  }
-  
+  };
+
 }
 
 export function renameAccountAttempt(accountNumber, newName) {
