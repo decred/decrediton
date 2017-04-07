@@ -22,13 +22,21 @@ class Accounts extends Component{
       showAccountDetailsAccount: null,
       showRenameAccount: false,
       renameAccountName: '',
+      renameAccountNumber: -1,
       addAccountName: '',
       privpass: null,
     };
   }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.getAccountsResponse != nextProps.getAccountsResponse) {
+      this.setState({showRenameAccount: false, showAccountDetails: false, showAccountDetailsAccount: null});
+    }
+  }
   componentWillMount() {
     this.props.clearNewAccountSuccess();
     this.props.clearNewAccountError();
+    this.props.clearRenameAccountSuccess();
+    this.props.clearRenameAccountError();
   }
   addAccount() {
     if (this.state.addAccountName == '' || this.state.privpass == null) {
@@ -39,18 +47,59 @@ class Accounts extends Component{
   }
   showAddAccount() {
     this.setState({showAddAccount: true});
+    this.props.clearNewAccountSuccess();
+    this.props.clearNewAccountError();
+    this.props.clearRenameAccountSuccess();
+    this.props.clearRenameAccountError();
   }
   hideAddAccount() {
     this.setState({showAddAccount: false, addAccountName: '', privpass: null});
+    this.props.clearNewAccountSuccess();
+    this.props.clearNewAccountError();
+    this.props.clearRenameAccountSuccess();
+    this.props.clearRenameAccountError();
+  }
+  showRenameAccount(accountNumber) {
+    this.setState({showRenameAccount: true, renameAccountNumber: accountNumber, renameAccountName: ''})
+    this.props.clearNewAccountSuccess();
+    this.props.clearNewAccountError();
+    this.props.clearRenameAccountSuccess();
+    this.props.clearRenameAccountError();
+  }
+  hideRenameAccount() {
+    this.setState({showRenameAccount:false, renameAccountNumber: -1, renameAccountName: ''})
+    this.props.clearNewAccountSuccess();
+    this.props.clearNewAccountError();
+    this.props.clearRenameAccountSuccess();
+    this.props.clearRenameAccountError();
+  }
+  renameAccount() {
+    if (this.state.renameAccountName == '' || this.state.renameAccountNumber == -1) {
+      console.log(this.state.renameAccountNumber, this.state.renameAccountName);
+      return
+    }
+    this.props.renameAccountAttempt(this.state.renameAccountNumber, this.state.renameAccountName);
+    this.hideRenameAccount();
   }
   showAccountDetailsView(account) {
     this.setState({showAccountDetails: true, showAccountDetailsAccount: account});
+    this.props.clearNewAccountSuccess();
+    this.props.clearNewAccountError();
+    this.props.clearRenameAccountSuccess();
+    this.props.clearRenameAccountError();
   } 
   hideAccountDetails() {
     this.setState({showAccountDetails: false, showAccountDetailsAccount: null});
+    this.props.clearNewAccountSuccess();
+    this.props.clearNewAccountError();
+    this.props.clearRenameAccountSuccess();
+    this.props.clearRenameAccountError();
   }
   updateAddAccountName(accountName) {
     this.setState({addAccountName: accountName});
+  }
+  updateRenameAccountName(accountName) {
+    this.setState({renameAccountName: accountName});
   }
   render() {
     const { walletService, getAccountsResponse } = this.props;
@@ -67,6 +116,9 @@ class Accounts extends Component{
             getNextAccountSuccess !== null ?
             <div key="accountSuccess" style={AccountStyles.viewNotificationSuccess}><div style={AccountStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearNewAccountSuccess()}></div>{getNextAccountSuccess}</div> :
             <div key="accountSuccess" ></div>,
+            renameAccountSuccess !== null ?
+            <div key="renameAccountSuccess" style={AccountStyles.viewNotificationSuccess}><div style={AccountStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearRenameAccountSuccess()}></div>{renameAccountSuccess}</div> :
+            <div key="renameAccountSuccess" ></div>,
           ]}
           headerMetaOverview={
             <KeyBlueButton
@@ -154,13 +206,10 @@ class Accounts extends Component{
         <Header
           headerTitleOverview={[<div key={1}>Account information</div>,
             <SlateGrayButton key="back" style={{float: 'right'}} onClick={() => this.hideAccountDetails()}>back</SlateGrayButton>]}
-          headerTop={[renameAccountError !== null ?
-            <div key="renameAccountError" style={AccountStyles.viewNotificationError}>{renameAccountError}</div> :
-            <div key="renameAccountError" ></div>,
-            renameAccountSuccess !== '' ?
-            <div key="renameAccountSuccess" style={AccountStyles.viewNotificationSuccess}>{renameAccountSuccess}</div> :
-            <div key="renameAccountSuccess" ></div>,
-          ]}
+          headerTop={renameAccountError !== null ?
+            <div key="renameAccountError" style={AccountStyles.viewNotificationError}><div style={AccountStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearRenameAccountError()}>{renameAccountError}</div></div> :
+            <div key="renameAccountError" ></div>
+          }
         />
         <div style={AccountStyles.content}>
           {this.state.showAccountDetailsAccount !== null ?
@@ -168,6 +217,11 @@ class Accounts extends Component{
             <div>Account Name {this.state.showAccountDetailsAccount.getAccountName()}</div>
             <div>Account Number {this.state.showAccountDetailsAccount.getAccountNumber()}</div>
             <div>Total Balance {this.state.showAccountDetailsAccount.getTotalBalance()}</div>
+            <KeyBlueButton
+              style={AccountStyles.contentConfirmNewAccount}
+              onClick={() => this.showRenameAccount(this.state.showAccountDetailsAccount.getAccountNumber())}>
+              Rename Account
+            </KeyBlueButton>
           </div>
           :
           <div></div>
@@ -183,7 +237,7 @@ class Accounts extends Component{
         <div style={AccountStyles.content}>
           <div style={AccountStyles.flexHeight}>
             <div style={AccountStyles.contentNestToAddress}>
-              <div style={AccountStyles.contentNestPrefixSend}>Account Name:</div>
+              <div style={AccountStyles.contentNestPrefixSend}>New Account Name:</div>
               <div style={AccountStyles.contentNestAddressHashBlock}>
                 <div style={AccountStyles.inputForm}>
                   <input
@@ -195,28 +249,15 @@ class Accounts extends Component{
                 </div>
               </div>
             </div>
-            <div style={AccountStyles.contentNestToAddress} key="privatePassPhrase">
-              <div style={AccountStyles.contentNestPrefixSend}>Private Passhrase:</div>
-              <div style={AccountStyles.contentNestAddressHashBlock}>
-                <div style={AccountStyles.inputForm}>
-                  <input
-                    id="privpass"
-                    style={AccountStyles.contentNestAddressHashTo}
-                    type="password"
-                    placeholder="Private Password"
-                    onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}/>
-                </div>
-              </div>
-            </div>
           </div>
           <KeyBlueButton
            style={AccountStyles.contentConfirmNewAccount}
-           onClick={() => this.addAccount()}>
-           Confirm
+           onClick={() => this.renameAccount()}>
+           Rename
           </KeyBlueButton>
           <SlateGrayButton
            style={AccountStyles.contentHideNewAccount}
-           onClick={() => this.hideAddAccount()}>
+           onClick={() => this.hideRenameAccount()}>
            Cancel
           </SlateGrayButton>
         </div>
@@ -232,7 +273,9 @@ class Accounts extends Component{
           {!this.state.showAddAccount ?
             !this.state.showAccountDetails ?
               accountsView :
-              accountDetails :
+                !this.state.showRenameAccount ?
+                  accountDetails :
+                    renameAccount :
             addAccountView
           }
         </div>);

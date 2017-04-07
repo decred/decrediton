@@ -48,13 +48,19 @@ function getNextAddressAction() {
 export const RENAMEACCOUNT_ATTEMPT = 'RENAMEACCOUNT_ATTEMPT';
 export const RENAMEACCOUNT_FAILED = 'RENAMEACCOUNT_FAILED';
 export const RENAMEACCOUNT_SUCCESS = 'RENAMEACCOUNT_SUCCESS';
-
+export const RENAMEACCOUNT_CLEAR_ERROR = 'RENAMEACCOUNT_CLEAR_ERROR';
+export const RENAMEACCOUNT_CLEAR_SUCCESS= 'RENAMEACCOUNT_CLEAR_SUCCESS';
 function renameAccountError(error) {
   return { error, type: RENAMEACCOUNT_FAILED };
 }
 
 function renameAccountSuccess(renameAccountResponse) {
-  return { renameAccountResponse: renameAccountResponse, type: RENAMEACCOUNT_SUCCESS };
+  var successMsg = "You have successfully updated the account name."
+  return (dispatch) => {
+    dispatch({ renameAccountSuccess: successMsg, renameAccountResponse: renameAccountResponse, type: RENAMEACCOUNT_SUCCESS });
+    dispatch(getAccountsAttempt());
+  }
+  
 }
 
 export function renameAccountAttempt(accountNumber, newName) {
@@ -83,7 +89,23 @@ function renameAccountAction() {
         });
   };
 }
+export function clearRenameAccountSuccess() {
+  return (dispatch, getState) => {
+    const { renameAccountSuccess } = getState().control;
+    if (renameAccountSuccess !== null) {
+      dispatch({type: RENAMEACCOUNT_CLEAR_SUCCESS});
+    }
+  };
+}
 
+export function clearRenameAccountError() {
+  return (dispatch, getState) => {
+    const { renameAccountError } = getState().control;
+    if ( renameAccountError !== null) {
+      dispatch({type: RENAMEACCOUNT_CLEAR_ERROR});
+    }
+  };
+}
 export const RESCAN_ATTEMPT = 'RESCAN_ATTEMPT';
 export const RESCAN_FAILED = 'RESCAN_FAILED';
 export const RESCAN_PROGRESS = 'RESCAN_PROGRESS';
