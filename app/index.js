@@ -297,6 +297,21 @@ var initialState = {
     purchaseTicketsResponse: null,
     purchaseTicketsSuccess: '',
     purchaseTicketsError: null,
+
+    // TicketBuyerService
+    ticketBuyerService: null,
+    // StartAutoBuyer
+    startAutoBuyerRequestAttempt: false,
+    startAutoBuyerRequest: null,
+    startAutoBuyerResponse: null,
+    startAutoBuyerSuccess: '',
+    startAutoBuyerError: null,
+    // StopAutoBuyer
+    stopAutoBuyerRequestAttempt: false,
+    stopAutoBuyerRequest: null,
+    stopAutoBuyerResponse: null,
+    stopAutoBuyerSuccess: '',
+    stopAutoBuyerError: null,
     // ConstructTransaction
     constructTxRequestAttempt: false,
     constructTxRequest: null,

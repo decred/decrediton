@@ -1,5 +1,6 @@
 import {
   GETWALLETSERVICE_ATTEMPT, GETWALLETSERVICE_FAILED, GETWALLETSERVICE_SUCCESS,
+  GETTICKETBUYERSERVICE_ATTEMPT, GETTICKETBUYERSERVICE_FAILED, GETTICKETBUYERSERVICE_SUCCESS,
   GETBALANCE_ATTEMPT, GETBALANCE_FAILED, GETBALANCE_SUCCESS,
   GETACCOUNTNUMBER_ATTEMPT, GETACCOUNTNUMBER_FAILED, GETACCOUNTNUMBER_SUCCESS,
   GETNETWORK_ATTEMPT, GETNETWORK_FAILED, GETNETWORK_SUCCESS,
@@ -34,6 +35,25 @@ export default function grpc(state = {}, action) {
       getBalanceError: null,
       getWalletServiceRequestAttempt: false,
       walletService: action.walletService,
+    };
+  case GETTICKETBUYERSERVICE_ATTEMPT:
+    return {
+      ...state,
+      getTicketBuyerServiceError: null,
+      getTicketBuyerServiceRequestAttempt: true,
+    };
+  case GETTICKETBUYERSERVICE_FAILED:
+    return {
+      ...state,
+      getTicketBuyerServiceError: action.error,
+      getTicketBuyerServiceRequestAttempt: false,
+    };
+  case GETTICKETBUYERSERVICE_SUCCESS:
+    return {
+      ...state,
+      getTicketBuyerError: null,
+      getTicketBuyerServiceRequestAttempt: false,
+      ticketBuyerService: action.ticketBuyerService,
     };
   case GETBALANCE_ATTEMPT:
     return {

@@ -14,6 +14,10 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   PUBLISHTX_ATTEMPT, PUBLISHTX_FAILED, PUBLISHTX_SUCCESS,
   PURCHASETICKETS_ATTEMPT, PURCHASETICKETS_FAILED, PURCHASETICKETS_SUCCESS,
   PURCHASETICKETS_CLEAR_ERROR, PURCHASETICKETS_CLEAR_SUCCESS,
+  STARTAUTOBUYER_ATTEMPT, STARTAUTOBUYER_FAILED, STARTAUTOBUYER_SUCCESS,
+  STARTAUTOBUYER_CLEAR_ERROR, STARTAUTOBUYER_CLEAR_SUCCESS,
+  STOPAUTOBUYER_ATTEMPT, STOPAUTOBUYER_FAILED, STOPAUTOBUYER_SUCCESS,
+  STOPAUTOBUYER_CLEAR_ERROR, STOPAUTOBUYER_CLEAR_SUCCESS,
   CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS,
   CONSTRUCTTX_CLEAR_ERROR, PUBLISHTX_CLEAR_ERROR, SIGNTX_CLEAR_ERROR, PUBLISHTX_CLEAR_SUCCESS,
  } from '../actions/ControlActions';
@@ -289,6 +293,60 @@ export default function control(state = {}, action) {
   case  PURCHASETICKETS_CLEAR_SUCCESS:
     return {...state,
       purchaseTicketsSuccess: '',
+    };
+  case STARTAUTOBUYER_ATTEMPT:
+    return {...state,
+      startAutoBuyerError: null,
+      startAutoBuyerRequestAttempt: true,
+      startAutoBuyerRequest: action.request,
+    };
+  case STARTAUTOBUYER_FAILED:
+    return {...state,
+      startAutoBuyerError: action.error,
+      startAutoBuyerRequestAttempt: false,
+      startAutoBuyerRequest: null,
+    };
+  case STARTAUTOBUYER_SUCCESS:
+    return {...state,
+      startAutoBuyerError: null,
+      startAutoBuyerSuccess: action.success,
+      startAutoBuyerRequestAttempt: false,
+      startAutoBuyerResponse: action.startAutoBuyerResponse,
+    };
+  case STARTAUTOBUYER_CLEAR_ERROR:
+    return {...state,
+      startAutoBuyerError: null,
+    };
+  case  STARTAUTOBUYER_CLEAR_SUCCESS:
+    return {...state,
+      startAutoBuyerSuccess: '',
+    };
+  case STOPAUTOBUYER_ATTEMPT:
+    return {...state,
+      stopAutoBuyerError: null,
+      stopAutoBuyerRequestAttempt: true,
+      stopAutoBuyerRequest: action.request,
+    };
+  case STOPAUTOBUYER_FAILED:
+    return {...state,
+      stopAutoBuyerError: action.error,
+      stopAutoBuyerRequestAttempt: false,
+      stopAutoBuyerRequest: null,
+    };
+  case STOPAUTOBUYER_SUCCESS:
+    return {...state,
+      stopAutoBuyerError: null,
+      stopAutoBuyerSuccess: action.success,
+      stopAutoBuyerRequestAttempt: false,
+      stopAutoBuyerResponse: action.stopAutoBuyerResponse,
+    };
+  case STOPAUTOBUYER_CLEAR_ERROR:
+    return {...state,
+      stopAutoBuyerError: null,
+    };
+  case  STOPAUTOBUYER_CLEAR_SUCCESS:
+    return {...state,
+      stopAutoBuyerSuccess: '',
     };
   case CONSTRUCTTX_ATTEMPT:
     return {...state,

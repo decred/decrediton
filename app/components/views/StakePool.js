@@ -14,6 +14,7 @@ import { StakePoolStyles } from './ViewStyles';
 class StakePool extends Component{
   static propTypes = {
     walletService: PropTypes.object,
+    ticketBuyerService: PropTypes.object,
   };
   constructor(props) {
     super(props);
@@ -54,6 +55,13 @@ class StakePool extends Component{
       selectedStakePoolForPurchase: initStakePool,
       advancedHidden: true,
       privpass: null,
+
+      // for autostart
+      balanceToMaintain: 0*100000000, // in atoms
+      maxFeePerKb: 0.1*100000000, // in atoms
+      maxPriceRelative: 1.25*100000000, // in atoms
+      maxPriceAbsolute: 0*100000000, // in atoms
+      maxPerBlock: 5,
 
       // error form divs
       numTicketsError: null,
@@ -186,8 +194,24 @@ class StakePool extends Component{
       this.setState({privpass: Buffer.from(privPass), privPassError: null});
     }
   }
+  submitStart() {
+    this.props.startAutoBuyerAttempt(
+      this.state.privpass,
+      this.state.account,
+      this.state.balanceToMaintain,
+      this.state.maxFeePerKb,
+      this.state.maxPriceRelative,
+      this.state.maxPriceAbsolute,
+      this.state.maxPerBlock,
+      this.state.selectedStakePoolForPurchase
+    );
+  }
+  submitStop() {
+    this.props.stopAutoBuyerAttempt();
+  }
   render() {
     const { walletService } = this.props;
+    const { ticketBuyerService } = this.props;
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
     const { currentStakePoolConfigSuccessMessage, getAccountsResponse, purchaseTicketsRequestAttempt } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
@@ -515,7 +539,29 @@ class StakePool extends Component{
           <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.submitPurchase()}>
             Purchase
           </KeyBlueButton>
-        </div>);
+	<div>
+          <div>Start Automatic Ticket Purchasing</div>
+          <div style={StakePoolStyles.inputFormPurchaseTicket}>
+          <input
+                    id="privpass"
+                    style={StakePoolStyles.contentNestPurchaseTicketForm}
+                    type="password"
+                    placeholder="Private Passphrase"
+                    onBlur={(e) =>{this.updatePrivPass(e.target.value);}}/>
+        </div>
+	<KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.submitStart()}>
+          Start Auto Ticket Purchasing
+        </KeyBlueButton>
+	</div>
+	<div>
+           <div>Stop Automatic Ticket Purchasing</div>
+	<div style={StakePoolStyles.inputFormPurchaseTicket}>
+	</div>
+	<KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.submitStop()}>
+          Stop Auto Ticket Purchasing
+        </KeyBlueButton>
+	</div>
+      </div>);
     const stakePool = (
       <div style={StakePoolStyles.view}>
         <Header
@@ -584,7 +630,7 @@ class StakePool extends Component{
         }
       </div>
     );
-    if (walletService === null) {
+    if ((walletService === null) || (ticketBuyerService === null)){
       return (<ErrorScreen />);
     } else {
       return (
