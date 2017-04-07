@@ -8,6 +8,7 @@ import KeyBlueButton from '../KeyBlueButton';
 import SlateGrayButton from '../SlateGrayButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import { AccountStyles } from './ViewStyles.js';
+import AccountRow from '../AccountRow';
 
 class Accounts extends Component{
   static propTypes = {
@@ -70,15 +71,13 @@ class Accounts extends Component{
               <CircularProgress style={AccountStyles.loading} size={125} thickness={6}/>
             </div> :
             getAccountsResponse !== null ?
-              <div style={AccountStyles.flexHeight}>
+              <div style={AccountStyles.contentNest}>
               {getAccountsResponse.getAccountsList().map(function(account) {
-                return (
-                <div style={AccountStyles.accountRow} key={account.getAccountName()}>
-                  <span style={AccountStyles.accountName}>{account.getAccountName()}</span>
-                  <span style={AccountStyles.accountBalance}><Balance amount={account.getTotalBalance()}/></span>
-                </div>);
-              })}
-              </div>  :
+                if (account.getAccountName() !== 'imported') {
+                  return (<AccountRow key={account.getAccountName()} account={account}/>);
+                }
+              })} 
+              </div>:
               <div></div>
             }
         </div>
