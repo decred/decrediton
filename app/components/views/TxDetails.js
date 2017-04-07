@@ -41,9 +41,13 @@ class TxDetails extends Component {
     var totalDebit = 0;
     var totalFundsReceived = 0;
     var totalChange = 0;
+
+    var previousAccount;
     for (var i = 0; i < debits.length; i++) {
       totalDebit += debits[i].getPreviousAmount();
+      previousAccount = debits[i].getPreviousAccount();
     }
+    var account;
     for (i = 0; i < credits.length; i++) {
       if (!credits[i].getInternal()) {
         var spacing = ', ';
@@ -69,21 +73,38 @@ class TxDetails extends Component {
         // Change coming back.
         totalChange += credits[i].getAmount();
       }
+      account = credits[i].getAccount();
     }
-
+    var accountName = 'Primary Account';
     if ( totalFundsReceived + totalChange + fee < totalDebit) {
       txDescription = {direction:'Sent', addressStr: ''};
       txAmount = totalDebit - fee - totalChange - totalFundsReceived;
       walletValueUp = false;
+      if (this.props.getAccountsResponse != null) {
+        for (var i = 0; i < this.props.getAccountsResponse.getAccountsList().length; i++) {
+          if (this.props.getAccountsResponse.getAccountsList()[i].getAccountNumber() == previousAccount) {
+            accountName = this.props.getAccountsResponse.getAccountsList()[i].getAccountName();
+            break;
+          }
+        }
+      }
     } else {
       txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
       txAmount = totalFundsReceived;
       walletValueUp = true;
+      if (this.props.getAccountsResponse != null) {
+        for (var i = 0; i < this.props.getAccountsResponse.getAccountsList().length; i++) {
+          if (this.props.getAccountsResponse.getAccountsList()[i].getAccountNumber() == account) {
+            accountName = this.props.getAccountsResponse.getAccountsList()[i].getAccountName();
+            break;
+          }
+        }
+      }
     }
     return(
       <div style={TxDetailsStyles.view}>
         <Header
-          headerTitleOverview={['Primary account',
+          headerTitleOverview={[<div key={accountName}>{accountName}</div>,
             <SlateGrayButton key="back" style={{float: 'right'}} onClick={() => clearTxDetails()}>back</SlateGrayButton>
           ]}
           headerMetaOverview={
