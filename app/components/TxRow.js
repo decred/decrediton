@@ -163,6 +163,7 @@ class TxRow extends Component {
     const { txDescription } = this.props;
     const { pending } = this.props;
     const { date } = this.props;
+    const { accountName } = this.props;
 
     if (pending) {
       if (direction == 'out') {
@@ -173,7 +174,7 @@ class TxRow extends Component {
               <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
             </div>
             <div style={styles.transactionAccount}>
-              <div style={styles.transactionAccountName}>Primary account</div>
+              <div style={styles.transactionAccountName}>{accountName}</div>
                 <div style={styles.transactionAccountIndicator}>
                   <div style={styles.indicatorPending}>Pending</div>
                 </div>
@@ -187,7 +188,7 @@ class TxRow extends Component {
               <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
             </div>
             <div style={styles.transactionAccount}>
-              <div style={styles.transactionAccountName}>Primary account</div>
+              <div style={styles.transactionAccountName}>{accountName}</div>
               <div style={styles.transactionAccountIndicator}>
                 <div style={styles.indicatorPending}>Pending</div>
               </div>
@@ -203,7 +204,7 @@ class TxRow extends Component {
               <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
             </div>
             <div style={styles.transactionAccount}>
-              <div style={styles.transactionAccountName}>Primary account</div>
+              <div style={styles.transactionAccountName}>{accountName}</div>
               <div style={styles.transactionAccountIndicator}>
                 <div style={styles.indicatorConfirmed}>Confirmed</div>
               </div>
@@ -218,7 +219,7 @@ class TxRow extends Component {
               <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
             </div>
             <div style={styles.transactionAccount}>
-              <div style={styles.transactionAccountName}>Primary account</div>
+              <div style={styles.transactionAccountName}>{accountName}</div>
               <div style={styles.transactionAccountIndicator}>
                 <div style={styles.indicatorConfirmed}>Confirmed</div>
               </div>
