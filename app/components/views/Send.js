@@ -190,6 +190,7 @@ class Send extends Component{
         <select
           defaultValue={0}
           style={SendStyles.selectAccount}
+          onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
           >
           {getAccountsResponse !== null ?
             getAccountsResponse.getAccountsList().map((account) => {

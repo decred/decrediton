@@ -43,6 +43,41 @@ export const ReceiveStyles = {
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  selectAccounts: {
+    display: 'block',
+    overflow: 'hidden',
+    width: '100%',
+    height: '100%',
+    color: '#0c1e3e',
+    fontSize: '19px',
+    ':hover': {
+      height: 'auto',
+    }
+  },
+  selectAccountsN: {
+    position: 'relative',
+    overflow: 'hidden',
+    width: '100%',
+    paddingTop: '18px',
+    paddingBottom: '18px',
+    paddingLeft: '10px',
+    float: 'left',
+    ':hover': {
+      color: '#2971ff',
+    }
+  },
+  fromAccount: {
+    fontSize: '13px',
+  },
+  fromAccountBold: {
+    fontWeight: 'bold'
+  },
+  selectAccountsArea: {
+    width: '50%',
+    marginLeft: '190px',
+    paddingBottom: '16px',
+    paddingTop: '6px',
   }
 };
 export const SendStyles = {

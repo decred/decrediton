@@ -18,6 +18,7 @@ function getNextAddressSuccess(getNextAddressResponse) {
 }
 
 export function getNextAddressAttempt(accountNum) {
+  console.log(accountNum);
   var request = new NextAddressRequest();
   request.setAccount(accountNum);
   request.setKind(0);
