@@ -319,10 +319,10 @@ class StakePool extends Component{
         <div style={StakePoolStyles.contentPurchaseTicketView}>
           <div style={StakePoolStyles.instructions}>
             In order to stake mine, you must make a deposit to the network in the form of a ticket.<br/>
-            The ticket enters the owner in a lottery for the next several months, at which time it may 
-            be chosen at any block for validation.  After being chosen randomly, the ticket owner must 
-            produce a vote transaction to validate the previous block and vote on any agendas.  <b>Decrediton 
-            does not vote</b> and tickets must only be purchased with voting rights assigned to a stake pool 
+            The ticket enters the owner in a lottery for the next several months, at which time it may
+            be chosen at any block for validation.  After being chosen randomly, the ticket owner must
+            produce a vote transaction to validate the previous block and vote on any agendas.  <b>Decrediton
+            does not vote</b> and tickets must only be purchased with voting rights assigned to a stake pool
             or your own seperate, always running voting wallet.<br/>
             The safest way to ensure that your vote succeeds is to use a stake pool.
           </div>

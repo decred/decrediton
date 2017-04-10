@@ -1226,7 +1226,7 @@ export const StakePoolStyles = {
       backgroundSize: '10px',
     }
   },
-  selectStakePoolArea: { 
+  selectStakePoolArea: {
     paddingTop: '4px'
   },
   purchaseTicketRow: {
