@@ -7,6 +7,8 @@ import SideBar from '../SideBar';
 import Header from '../Header';
 import NewExistingSeedToggle from '../NewExistingSeedToggle';
 import KeyBlueButton from '../KeyBlueButton';
+import SlateGrayButton from '../SlateGrayButton';
+import HideShowButton from '../HideShowButton';
 import { StakePoolStyles } from './ViewStyles';
 
 class StakePool extends Component{
@@ -50,6 +52,7 @@ class StakePool extends Component{
       txFee: 0.01, // DCR/kB
       ticketFee: 0.01, // DCR/kB
       selectedStakePoolForPurchase: initStakePool,
+      advancedHidden: true,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -116,6 +119,13 @@ class StakePool extends Component{
       this.setState({purchaseTickets: true});
     }
   }
+  showAdvanced() {
+    this.setState({advancedHidden: false});
+  }
+  hideAdvanced() {
+    this.setState({advancedHidden: true});
+  }
+
   render() {
     const { walletService } = this.props;
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
@@ -320,42 +330,49 @@ class StakePool extends Component{
                 {selectNumTickets}
               </div>
             </div>
-            <div style={StakePoolStyles.purchaseTicketRow}>
-              <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
-              <div style={StakePoolStyles.purchaseTicketInput}>
-                <div style={StakePoolStyles.inputForm}>
-                  <input
-                    type="text"
-                    style={StakePoolStyles.contentNestAddressHashTo}
-                    placeholder="Ticket Fee"
-                    defaultValue={0.01}
-                    onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
+            <div hidden={this.state.advancedHidden ? true : false}>
+              <div style={StakePoolStyles.purchaseTicketRow}>
+                <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
+                <div style={StakePoolStyles.purchaseTicketInput}>
+                  <div style={StakePoolStyles.inputForm}>
+                    <input
+                      type="text"
+                      style={StakePoolStyles.contentNestAddressHashTo}
+                      placeholder="Ticket Fee"
+                      defaultValue={0.01}
+                      onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
+                  </div>
+                </div>
+              </div>
+              <div style={StakePoolStyles.purchaseTicketRow}>
+                <div style={StakePoolStyles.purchaseTicketLabel}>Pool Address:</div>
+                <div style={StakePoolStyles.purchaseTicketInput}>
+                  <div style={StakePoolStyles.inputForm}>
+                    <input
+                      disabled
+                      type="text"
+                      style={StakePoolStyles.contentNestAddressHashTo}
+                      value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolAddress : null}/>
+                  </div>
+                </div>
+              </div>
+              <div style={StakePoolStyles.purchaseTicketRow}>
+                <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Address:</div>
+                <div style={StakePoolStyles.purchaseTicketInput}>
+                  <div style={StakePoolStyles.inputForm}>
+                    <input
+                      type="text"
+                      disabled
+                      style={StakePoolStyles.contentNestAddressHashTo}
+                      value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.TicketAddress : null}/>
+                  </div>
                 </div>
               </div>
             </div>
             <div style={StakePoolStyles.purchaseTicketRow}>
-              <div style={StakePoolStyles.purchaseTicketLabel}>Pool Address:</div>
-              <div style={StakePoolStyles.purchaseTicketInput}>
-                <div style={StakePoolStyles.inputForm}>
-                  <input
-                    disabled
-                    type="text"
-                    style={StakePoolStyles.contentNestAddressHashTo}
-                    value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolAddress : null}/>
-                </div>
-              </div>
-            </div>
-            <div style={StakePoolStyles.purchaseTicketRow}>
-              <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Address:</div>
-              <div style={StakePoolStyles.purchaseTicketInput}>
-                <div style={StakePoolStyles.inputForm}>
-                  <input
-                    type="text"
-                    disabled
-                    style={StakePoolStyles.contentNestAddressHashTo}
-                    value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.TicketAddress : null}/>
-                </div>
-              </div>
+              <HideShowButton showAdvanced={this.state.advancedHidden ? true : false} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}>
+                {this.state.advancedHidden ? "Show" : "Hide"} advanced
+              </HideShowButton>
             </div>
             <div style={StakePoolStyles.purchaseTicketRow}>
               <div style={StakePoolStyles.purchaseTicketLabel}>Private Passhrase:</div>

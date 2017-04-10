@@ -6,6 +6,8 @@ import PlusBig from '../icons/plus-big.svg';
 import MinusBig from '../icons/minus-big.svg';
 import ArrowDownMidBlue from '../icons/arrow-down-mid-blue.svg';
 import ArrowDownKeyBlue from '../icons/arrow-down-key-blue.svg';
+import ArrowUpLightBlue from '../icons/arrow-up-light-blue.svg';
+import ArrowUpTurquiose from '../icons/arrow-up-turquiose.svg';
 import Search from '../icons/search.svg';
 import WalletGray from '../icons/wallet-gray.svg';
 
@@ -1242,6 +1244,46 @@ export const StakePoolStyles = {
       boxShadow: '0 0 0 0 rgba(0, 0, 0, .22)',
     }
   },
+  showAdvanced: {
+    width: '300px',
+    position: 'relative',
+    zIndex: '3',
+    overflow: 'visible',
+    height: '34px',
+    minWidth: '300px',
+    float: 'left',
+    borderBottom: '1px solid #2971ff',
+    backgroundColor: '#fff',
+    backgroundImage: `url(${ArrowDownMidBlue})`,
+    backgroundPosition: '100% 50%',
+    backgroundSize: '10px',
+    backgroundRepeat: 'no-repeat',
+    cursor: 'pointer',
+    ':hover': {
+      backgroundImage: `url(${ArrowDownKeyBlue})`,
+      backgroundSize: '10px',
+    }
+  },
+  hideAdvanced: {
+    width: '300px',
+    position: 'relative',
+    zIndex: '3',
+    overflow: 'visible',
+    height: '34px',
+    minWidth: '300px',
+    float: 'left',
+    borderBottom: '1px solid #2971ff',
+    backgroundColor: '#fff',
+    backgroundImage: `url(${ArrowUpLightBlue})`,
+    backgroundPosition: '100% 50%',
+    backgroundSize: '10px',
+    backgroundRepeat: 'no-repeat',
+    cursor: 'pointer',
+    ':hover': {
+      backgroundImage: `url(${ArrowUpTurquiose})`,
+      backgroundSize: '10px',
+    }
+  },
   purchaseTicketRow: {
     width: '100%',
     height: '45px',
@@ -1270,7 +1312,7 @@ export const StakePoolStyles = {
   flexHeight: {
     paddingTop: '1px',
     backgroundColor: '#fff',
-    height:'372px',
+    height:'436px',
     overflowY: 'auto',
     overflowX: 'hidden',
   },
