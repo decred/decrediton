@@ -60,5 +60,4 @@ class HideShowButton extends React.Component {
   }
 }
 
-export default HideShowButton;
-//module.exports = Radium(HideShowButton);
+module.exports = Radium(HideShowButton);
