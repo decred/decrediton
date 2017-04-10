@@ -14,11 +14,12 @@ var styles = {
     paddingLeft: '20px',
     backgroundColor: '#fff',
     backgroundImage: `url(${ArrowDownMidBlue})`,
-    backgroundPosition: '0% 50%',
+    backgroundPosition: '0% 45%',
     backgroundSize: '10px',
     backgroundRepeat: 'no-repeat',
     cursor: 'pointer',
     ':hover': {
+      fontWeight: 'bold',
       backgroundImage: `url(${ArrowDownKeyBlue})`,
       backgroundSize: '10px',
     }
@@ -31,11 +32,12 @@ var styles = {
     paddingLeft: '20px',
     backgroundColor: '#fff',
     backgroundImage: `url(${ArrowUpLightBlue})`,
-    backgroundPosition: '0% 50%',
+    backgroundPosition: '0% 45%',
     backgroundSize: '10px',
     backgroundRepeat: 'no-repeat',
     cursor: 'pointer',
     ':hover': {
+      fontWeight: 'bold',
       backgroundImage: `url(${ArrowUpTurquiose})`,
       backgroundSize: '10px',
     }
