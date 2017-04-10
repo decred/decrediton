@@ -53,6 +53,14 @@ class StakePool extends Component{
       ticketFee: 0.01, // DCR/kB
       selectedStakePoolForPurchase: initStakePool,
       advancedHidden: true,
+      privpass: null,
+
+      // error form divs
+      numTicketsError: null,
+      txFeeError: null,
+      ticketFeeError: null,
+      expiryError: null,
+      privPassError: null,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -72,8 +80,22 @@ class StakePool extends Component{
     this.props.clearPurchaseTicketsError();
   }
   submitPurchase() {
-    if (this.state.privpass == null || this.state.selectedStakePoolForPurchase == null ||
-       this.state.numTickets <= 0 ) {
+    var checkErrors = false;
+    if (this.state.selectedStakePoolForPurchase == null ||
+       this.state.numTicketsError !== null || this.state.txFeeError !== null ||
+       this.state.ticketFeeError !== null || this.state.expiryError !== null ||
+       this.state.privPassError !== null) {
+      checkErrors = true;
+    }
+    if (this.state.privpass == null) {
+      this.setState({privPassError: '*Please enter your passphrase'});
+      checkErrors = true;
+    }
+    if (this.state.numTickets == 0) {
+      this.setState({numTicketsError: '*You must purchase 1 or more tickets.'});
+      checkErrors = true;
+    }
+    if (checkErrors) {
       return;
     }
     this.props.purchaseTicketsAttempt(
@@ -92,16 +114,32 @@ class StakePool extends Component{
     this.setState({account: accountNum});
   }
   updateNumTickets(numTickets) {
-    this.setState({numTickets: numTickets});
+    if (numTickets > 0) {
+      this.setState({numTickets: numTickets, numTicketsError: null});
+    } else {
+      this.setState({numTicketsError: '*You must purchase 1 or more tickets.'});
+    }
   }
   updateTicketFee(ticketFee) {
-    this.setState({ticketFee: ticketFee});
+    if (ticketFee > 0 && ticketFee < 1) {
+      this.setState({ticketFee: ticketFee, ticketFeeError: null});
+    } else {
+      this.setState({ticketFeeError: '*Invalid ticket fee (0 - 1 DCR/KB)'});
+    }
   }
   updateTxFee(txFee) {
-    this.setState({txFee: txFee});
+    if (txFee > 0 && txFee < 1) {
+      this.setState({txFee: txFee, txFeeError: null});
+    } else {
+      this.setState({txFeeError: '*Invalid tx fee (0 - 1 DCR/KB)'});
+    }
   }
   updateExpiry(expiry) {
-    this.setState({expiry: expiry});
+    if (expiry >= 0) {
+      this.setState({expiry: expiry, expiryError: null});
+    } else {
+      this.setState({expiryError: '*Invalid expiry (>= 0)'});
+    }
   }
   addAnotherStakePool() {
     this.setState({addAnotherStakePool: true});
@@ -132,7 +170,13 @@ class StakePool extends Component{
   hideAdvanced() {
     this.setState({advancedHidden: true});
   }
-
+  updatePrivPass(privPass) {
+    if (privPass == '') {
+      this.setState({privpass: null, privPassError: '*Please enter your passphrase'});
+    } else {
+      this.setState({privpass: Buffer.from(privPass), privPassError: null});
+    }
+  }
   render() {
     const { walletService } = this.props;
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
@@ -344,6 +388,9 @@ class StakePool extends Component{
               <div style={StakePoolStyles.purchaseTicketInput}>
                 {selectNumTickets}
               </div>
+              <div style={StakePoolStyles.purchaseTicketInputError}>
+                {this.state.numTicketsError}
+              </div>
             </div>
             <div hidden={this.state.advancedHidden ? true : false}>
               <div style={StakePoolStyles.purchaseTicketRow}>
@@ -358,6 +405,9 @@ class StakePool extends Component{
                       onBlur={(e) =>{this.updateTxFee(e.target.value);}}/>
                   </div>
                 </div>
+                <div style={StakePoolStyles.purchaseTicketInputError}>
+                  {this.state.txFeeError}
+                </div>
               </div>
               <div style={StakePoolStyles.purchaseTicketRow}>
                 <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
@@ -371,6 +421,9 @@ class StakePool extends Component{
                       onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
                   </div>
                 </div>
+                <div style={StakePoolStyles.purchaseTicketInputError}>
+                  {this.state.ticketFeeError}
+                </div>
               </div>
               <div style={StakePoolStyles.purchaseTicketRow}>
                 <div style={StakePoolStyles.purchaseTicketLabel}>Expiry:</div>
@@ -383,6 +436,9 @@ class StakePool extends Component{
                       defaultValue={this.state.expiry}
                       onBlur={(e) =>{this.updateExpiry(e.target.value);}}/>
                   </div>
+                </div>
+                <div style={StakePoolStyles.purchaseTicketInputError}>
+                  {this.state.expiryError}
                 </div>
               </div>
               <div style={StakePoolStyles.purchaseTicketRow}>
@@ -436,8 +492,11 @@ class StakePool extends Component{
                     style={StakePoolStyles.contentNestPurchaseTicketForm}
                     type="password"
                     placeholder="Private Passphrase"
-                    onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}/>
+                    onBlur={(e) =>{this.updatePrivPass(e.target.value);}}/>
                 </div>
+              </div>
+              <div style={StakePoolStyles.purchaseTicketInputError}>
+                {this.state.privPassError}
               </div>
             </div>
           </div>

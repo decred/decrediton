@@ -1248,11 +1248,19 @@ export const StakePoolStyles = {
     textAlign: 'left',
   },
   purchaseTicketInput: {
-    width: '50%',
+    width: '286px',
     float: 'left',
     height: '100%',
     fontSize: '19px',
     textAlign: 'right',
+  },
+  purchaseTicketInputError: {
+    width: '290px',
+    float: 'right',
+    height: '100%',
+    textAlign: 'left',
+    color: 'red',
+    paddingTop: '5px',
   },
   flexHeight: {
     paddingTop: '1px',
