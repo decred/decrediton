@@ -90,7 +90,7 @@ class StakePool extends Component{
     if (this.state.privpass == null) {
       this.setState({privPassError: '*Please enter your passphrase'});
       checkErrors = true;
-    } 
+    }
     if (this.state.numTickets == 0) {
       this.setState({numTicketsError: '*You must purchase 1 or more tickets.'});
       checkErrors = true;
@@ -117,28 +117,28 @@ class StakePool extends Component{
     if (numTickets > 0) {
       this.setState({numTickets: numTickets, numTicketsError: null});
     } else {
-      this.setState({numTicketsError: '*You must purchase 1 or more tickets.'})
+      this.setState({numTicketsError: '*You must purchase 1 or more tickets.'});
     }
   }
   updateTicketFee(ticketFee) {
     if (ticketFee > 0 && ticketFee < 1) {
       this.setState({ticketFee: ticketFee, ticketFeeError: null});
     } else {
-      this.setState({ticketFeeError: '*Invalid ticket fee (0 - 1 DCR/KB)'})
+      this.setState({ticketFeeError: '*Invalid ticket fee (0 - 1 DCR/KB)'});
     }
   }
   updateTxFee(txFee) {
     if (txFee > 0 && txFee < 1) {
       this.setState({txFee: txFee, txFeeError: null});
     } else {
-      this.setState({txFeeError: '*Invalid tx fee (0 - 1 DCR/KB)'})
+      this.setState({txFeeError: '*Invalid tx fee (0 - 1 DCR/KB)'});
     }
   }
   updateExpiry(expiry) {
     if (expiry >= 0) {
       this.setState({expiry: expiry, expiryError: null});
     } else {
-      this.setState({expiryError: '*Invalid expiry (>= 0)'})
+      this.setState({expiryError: '*Invalid expiry (>= 0)'});
     }
   }
   addAnotherStakePool() {
@@ -492,7 +492,7 @@ class StakePool extends Component{
                     style={StakePoolStyles.contentNestPurchaseTicketForm}
                     type="password"
                     placeholder="Private Passphrase"
-                    onBlur={(e) =>{this.updatePrivPass(e.target.value)}}/>
+                    onBlur={(e) =>{this.updatePrivPass(e.target.value);}}/>
                 </div>
               </div>
               <div style={StakePoolStyles.purchaseTicketInputError}>
