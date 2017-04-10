@@ -1290,6 +1290,7 @@ export const StakePoolStyles = {
     paddingTop: '6px',
     float: 'left',
     borderBottom: '1px black solid',
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
   },
   purchaseTicketLabel: {
     width: '25%',
