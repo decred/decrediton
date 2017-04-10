@@ -1184,7 +1184,7 @@ export const StakePoolStyles = {
     paddingLeft: '5px',
   },
   contentPurchaseButton: {
-    marginTop: '10px'
+    marginTop: '8px'
   },
   showAdvanced: {
     width: '300px',
