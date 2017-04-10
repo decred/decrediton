@@ -11,7 +11,10 @@ var styles = {
     backgroundPosition: '0px 50%',
     backgroundSize: '0px',
     backgroundRepeat: 'repeat-y',
-    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
+    transitionProperty: 'all',
+    transitionDuration: '100ms',
+    transitionTimingFunction: 'cubic-bezier(0.86, 0, 0.07, 1)',
+    transitionDelay: '0s',
     ':hover': {
       backgroundColor: '#09182d',
       backgroundSize: '5px',

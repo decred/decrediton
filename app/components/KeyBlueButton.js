@@ -16,7 +16,10 @@ var styles = {
     textAlign: 'center',
     textDecoration: 'none',
     textTransform: 'capitalize',
-    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
+    transitionProperty: 'all',
+    transitionDuration: '100ms',
+    transitionTimingFunction: 'cubic-bezier(0.86, 0, 0.07, 1)',
+    transitionDelay: '0s',
     ':hover': {
       backgroundColor: '#1b58ff',
     },

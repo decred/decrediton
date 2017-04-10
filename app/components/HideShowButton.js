@@ -17,7 +17,10 @@ var styles = {
     backgroundPosition: '0% 45%',
     backgroundSize: '10px',
     backgroundRepeat: 'no-repeat',
-    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
+    transitionProperty: 'all',
+    transitionDuration: '100ms',
+    transitionTimingFunction: 'cubic-bezier(0.86, 0, 0.07, 1)',
+    transitionDelay: '0s',
     cursor: 'pointer',
     ':hover': {
       fontWeight: 'bold',
@@ -36,7 +39,10 @@ var styles = {
     backgroundPosition: '0% 45%',
     backgroundSize: '10px',
     backgroundRepeat: 'no-repeat',
-    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
+    transitionProperty: 'all',
+    transitionDuration: '100ms',
+    transitionTimingFunction: 'cubic-bezier(0.86, 0, 0.07, 1)',
+    transitionDelay: '0s',
     cursor: 'pointer',
     ':hover': {
       fontWeight: 'bold',
