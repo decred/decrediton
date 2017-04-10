@@ -49,6 +49,7 @@ const styles = {
     float: 'left',
     backgroundColor: '#e9f8fe',
     boxShadow: '0 0 8px 0 rgba(0, 0, 0, .2)',
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
     cursor: 'pointer',
     ':hover': {
       backgroundColor: '#69d5f7',
