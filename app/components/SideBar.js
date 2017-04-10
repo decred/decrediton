@@ -276,12 +276,14 @@ class SideBar extends Component {
               if (account.getTotalBalance() > 0) {
                 accountBalance = account.getTotalBalance() / 100000000;
               }
-              return(
-                <div style={styles.menuTotalBalanceExtendedBottomAccount} key={account.getAccountName()}>
-                  <div style={styles.menuTotalBalanceExtendedBottomAccountName}>{account.getAccountName()}</div>
-                  <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>{accountBalance}</div>
-                </div>
-              );
+              if (account.getAccountName() !== 'imported') {
+                return(
+                  <div style={styles.menuTotalBalanceExtendedBottomAccount} key={account.getAccountName()}>
+                    <div style={styles.menuTotalBalanceExtendedBottomAccountName}>{account.getAccountName()}</div>
+                    <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>{accountBalance}</div>
+                  </div>
+                );
+              }
             }) : <div></div>}
           </div>
         </div>

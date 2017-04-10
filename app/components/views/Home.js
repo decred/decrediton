@@ -90,11 +90,11 @@ class Home extends Component{
             </div>
             <div style={HomeStyles.contentNest}>
               {unmined.length > 0 ?
-                <TxHistory unmined={unmined}/>  :
+                <TxHistory getAccountsResponse={getAccountsResponse} unmined={unmined}/>  :
                 <p></p>
               }
               {paginatedTxs.length > 0 ?
-                <TxHistory mined={paginatedTxs}/>  :
+                <TxHistory getAccountsResponse={getAccountsResponse} mined={paginatedTxs}/>  :
                 <p>{transactionMessage}</p>
               }
             </div>

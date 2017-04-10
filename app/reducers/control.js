@@ -1,5 +1,6 @@
 import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   RENAMEACCOUNT_ATTEMPT, RENAMEACCOUNT_FAILED, RENAMEACCOUNT_SUCCESS,
+  RENAMEACCOUNT_CLEAR_ERROR, RENAMEACCOUNT_CLEAR_SUCCESS,
   RESCAN_ATTEMPT, RESCAN_FAILED, RESCAN_PROGRESS, RESCAN_COMPLETE,
   GETNEXTACCOUNT_ATTEMPT, GETNEXTACCOUNT_FAILED, GETNEXTACCOUNT_SUCCESS,
   GETNEXTACCOUNT_CLEAR_ERROR, GETNEXTACCOUNT_CLEAR_SUCCESS,
@@ -51,9 +52,18 @@ export default function control(state = {}, action) {
     };
   case RENAMEACCOUNT_SUCCESS:
     return {...state,
-      renameAccountError: '',
+      renameAccountError: null,
       renameAccountRequestAttempt: false,
       renameAccountResponse: action.renameAccountResponse,
+      renameAccountSuccess: action.renameAccountSuccess,
+    };
+  case  RENAMEACCOUNT_CLEAR_ERROR:
+    return {...state,
+      renameAccountError: null,
+    };
+  case  RENAMEACCOUNT_CLEAR_SUCCESS:
+    return {...state,
+      renameAccountSuccess: null,
     };
   case RESCAN_ATTEMPT:
     return {...state,

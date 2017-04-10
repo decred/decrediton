@@ -13,6 +13,7 @@ function mapStateToProps(state) {
     getNextAddressRequestAttempt: state.control.getNextAddressRequestAttempt,
     getNextAddressRequest: state.control.getNextAddressRequest,
     getNextAddressError: state.control.getNextAddressError,
+    getAccountsResponse: state.grpc.getAccountsResponse,
   };
 }
 

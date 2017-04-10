@@ -62,7 +62,7 @@ class History extends Component{
           </div>
           <div style={HistoryStyles.contentNest}>
             {this.state.paginatedTxs.length > 0 ?
-              <TxHistory mined={this.state.paginatedTxs} showTxDetail={setTransactionDetails}/>  :
+              <TxHistory getAccountsResponse={getAccountsResponse} mined={this.state.paginatedTxs} showTxDetail={setTransactionDetails}/>  :
               <p>No transactions</p>
             }
           </div>

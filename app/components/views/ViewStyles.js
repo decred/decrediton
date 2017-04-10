@@ -43,6 +43,41 @@ export const ReceiveStyles = {
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  selectAccounts: {
+    display: 'block',
+    overflow: 'hidden',
+    width: '100%',
+    height: '100%',
+    color: '#0c1e3e',
+    fontSize: '19px',
+    ':hover': {
+      height: 'auto',
+    }
+  },
+  selectAccountsN: {
+    position: 'relative',
+    overflow: 'hidden',
+    width: '100%',
+    paddingTop: '18px',
+    paddingBottom: '18px',
+    paddingLeft: '10px',
+    float: 'left',
+    ':hover': {
+      color: '#2971ff',
+    }
+  },
+  fromAccount: {
+    fontSize: '13px',
+  },
+  fromAccountBold: {
+    fontWeight: 'bold'
+  },
+  selectAccountsArea: {
+    width: '50%',
+    marginLeft: '190px',
+    paddingBottom: '16px',
+    paddingTop: '6px',
   }
 };
 export const SendStyles = {
@@ -1859,6 +1894,10 @@ export const AccountStyles = {
     overflowX: 'hidden',
   },
   contentAddNewAccount: {
+    width: '278px',
+    float: 'right',
+  },
+  contentConfirmNewAccount: {
     marginTop: '20px',
     float: 'left',
   },
@@ -1950,6 +1989,31 @@ export const AccountStyles = {
     ':hover': {
       opacity: '0.85',
     }
+  },
+  accountDetailsRow: {
+    width: '100%',
+    height: '45px',
+    paddingTop: '6px',
+    float: 'left',
+    borderBottom: '1px black solid',
+  },
+  accountDetailsLabel: {
+    width: '25%',
+    paddingRight: '15px',
+    paddingLeft: '5px',
+    float: 'left',
+    height: '100%',
+    paddingTop: '8px',
+    fontSize: '19px',
+    textAlign: 'left',
+  },
+  accountDetailsInput: {
+    width: '50%',
+    float: 'left',
+    height: '100%',
+    paddingTop: '5px',
+    fontSize: '19px',
+    textAlign: 'right',
   },
 };
 

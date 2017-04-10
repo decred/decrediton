@@ -41,9 +41,13 @@ class TxDetails extends Component {
     var totalDebit = 0;
     var totalFundsReceived = 0;
     var totalChange = 0;
+
+    var previousAccount;
     for (var i = 0; i < debits.length; i++) {
       totalDebit += debits[i].getPreviousAmount();
+      previousAccount = debits[i].getPreviousAccount();
     }
+    var account;
     for (i = 0; i < credits.length; i++) {
       if (!credits[i].getInternal()) {
         var spacing = ', ';
@@ -69,21 +73,38 @@ class TxDetails extends Component {
         // Change coming back.
         totalChange += credits[i].getAmount();
       }
+      account = credits[i].getAccount();
     }
-
+    var accountName = 'Primary Account';
     if ( totalFundsReceived + totalChange + fee < totalDebit) {
       txDescription = {direction:'Sent', addressStr: ''};
       txAmount = totalDebit - fee - totalChange - totalFundsReceived;
       walletValueUp = false;
+      if (this.props.getAccountsResponse != null) {
+        for (var y = 0; y < this.props.getAccountsResponse.getAccountsList().length; y++) {
+          if (this.props.getAccountsResponse.getAccountsList()[y].getAccountNumber() == previousAccount) {
+            accountName = this.props.getAccountsResponse.getAccountsList()[y].getAccountName();
+            break;
+          }
+        }
+      }
     } else {
       txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
       txAmount = totalFundsReceived;
       walletValueUp = true;
+      if (this.props.getAccountsResponse != null) {
+        for (var z = 0; z < this.props.getAccountsResponse.getAccountsList().length; z++) {
+          if (this.props.getAccountsResponse.getAccountsList()[z].getAccountNumber() == account) {
+            accountName = this.props.getAccountsResponse.getAccountsList()[z].getAccountName();
+            break;
+          }
+        }
+      }
     }
     return(
       <div style={TxDetailsStyles.view}>
         <Header
-          headerTitleOverview={['Primary account',
+          headerTitleOverview={[<div key={accountName}>{accountName}</div>,
             <SlateGrayButton key="back" style={{float: 'right'}} onClick={() => clearTxDetails()}>back</SlateGrayButton>
           ]}
           headerMetaOverview={
@@ -129,24 +150,3 @@ class TxDetails extends Component {
 }
 
 export default Radium(TxDetails);
-/*
-            <div style={TxDetailsStyles.transactionDetails}>
-              <div style={TxDetailsStyles.transactionDetailsTitle}>Inputs</div>
-              <div style={TxDetailsStyles.transactionDetailsName}>College funds:</div>
-              <div style={TxDetailsStyles.transactionDetailsValue}>0.0001 <span style={TxDetailsStyles.transactionDetailsValueText}>DCR</span>
-              </div>
-            </div>
-            <div style={TxDetailsStyles.transactionDetailsLast}>
-              <div style={TxDetailsStyles.transactionDetailsTitle}>Outputs</div>
-              <div style={TxDetailsStyles.transactionDetailsName}>Tsbg8igLh… :</div>
-              <div style={TxDetailsStyles.transactionDetailsValue}>5.00&nbsp;<span style={TxDetailsStyles.transactionDetailsValueText}>DCR</span>
-              </div>
-              <div style={TxDetailsStyles.transactionDetailsName}>Change:</div>
-              <div style={TxDetailsStyles.transactionDetailsValue}>4.9999 <span style={TxDetailsStyles.transactionDetailsValueText}>DCR</span>
-              </div>
-            </div>
-        {Buffer.from(tx.getHash()).toString('hex')}
-        <div onClick={() => clearTxDetails()}>
-          back
-        </div>
-*/
