@@ -49,7 +49,7 @@ class HideShowButton extends React.Component {
   render() {
     return (
       <div
-        style={this.props.showAdvanced ? 
+        style={this.props.showAdvanced ?
             styles.showAdvanced :
             styles.hideAdvanced}
         type={this.props.type}

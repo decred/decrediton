@@ -7,7 +7,6 @@ import SideBar from '../SideBar';
 import Header from '../Header';
 import NewExistingSeedToggle from '../NewExistingSeedToggle';
 import KeyBlueButton from '../KeyBlueButton';
-import SlateGrayButton from '../SlateGrayButton';
 import HideShowButton from '../HideShowButton';
 import { StakePoolStyles } from './ViewStyles';
 
@@ -371,7 +370,7 @@ class StakePool extends Component{
             </div>
             <div style={StakePoolStyles.purchaseTicketRow}>
               <HideShowButton showAdvanced={this.state.advancedHidden ? true : false} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}>
-                {this.state.advancedHidden ? "Show" : "Hide"} advanced
+                {this.state.advancedHidden ? 'Show' : 'Hide'} advanced
               </HideShowButton>
             </div>
             <div style={StakePoolStyles.purchaseTicketRow}>
