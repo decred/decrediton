@@ -466,50 +466,6 @@ export const SendStyles = {
   contentSendSectionAmountCurrency: {
     paddingLeft: '5px',
   },
-  viewButtonKeyBlue: {
-    width: '9%',
-    float: 'left',
-    display: 'inline-block',
-    padding: '17px 18px 18px',
-    borderRadius: '5px',
-    backgroundColor: '#2971ff',
-    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
-    transitionProperty: 'none',
-    color: '#fff',
-    fontSize: '13px',
-    lineHeight: '9px',
-    fontWeight: '600',
-    textAlign: 'center',
-    textDecoration: 'none',
-    textTransform: 'capitalize',
-    ':hover': {
-      backgroundColor: '#1b58ff',
-    },
-    ':active': {
-      boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
-    }
-  },
-  viewButtonLightSlateGray: {
-    display: 'inline-block',
-    padding: '17px 18px 18px',
-    float: 'right',
-    borderRadius: '5px',
-    backgroundColor: '#8997a5',
-    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
-    color: '#fff',
-    fontSize: '13px',
-    lineHeight: '9px',
-    fontWeight: '600',
-    textAlign: 'center',
-    textDecoration: 'none',
-    textTransform: 'capitalize',
-    ':hover': {
-      backgroundColor: '#596d81',
-    },
-    ':active': {
-      boxShadow: '0 0 0 0 rgba(0, 0, 0, .22)',
-    }
-  },
   flexHeight: {
     paddingTop: '1px',
     backgroundColor: '#fff',
@@ -807,6 +763,27 @@ export const StakePoolStyles = {
     overflow: 'auto',
     height: '556px',
     padding: '54px 60px 54px 80px',
+  },
+  contentPurchaseTicketView: {
+    overflow: 'auto',
+    height: '565px',
+    padding: '20px 60px 20px 80px',
+  },
+  instructions: {
+    fontSize: '13px',
+  },
+  contentNestPurchaseTicketForm: {
+    width: '100%',
+    height: '100%',
+    paddingTop: '2px',
+    paddingLeft: '10px',
+    borderStyle: 'none',
+    color: '#2971ff',
+    fontSize: '13px',
+    cursor: 'text',
+    ':focus': {
+      color: '#2971ff',
+    },
   },
   contentNestSend: {
     paddingTop: '1px',
@@ -1117,6 +1094,12 @@ export const StakePoolStyles = {
     width: '100%',
     height: '25px',
   },
+  inputFormPurchaseTicket: {
+    position: 'relative',
+    width: '100%',
+    height: '25px',
+    paddingTop: '1px',
+  },
   contentNestAddressAmount: {
     display: 'block',
     height: '34px',
@@ -1200,50 +1183,6 @@ export const StakePoolStyles = {
   contentSendSectionAmountCurrency: {
     paddingLeft: '5px',
   },
-  viewButtonKeyBlue: {
-    width: '9%',
-    float: 'left',
-    display: 'inline-block',
-    padding: '17px 18px 18px',
-    borderRadius: '5px',
-    backgroundColor: '#2971ff',
-    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
-    transitionProperty: 'none',
-    color: '#fff',
-    fontSize: '13px',
-    lineHeight: '9px',
-    fontWeight: '600',
-    textAlign: 'center',
-    textDecoration: 'none',
-    textTransform: 'capitalize',
-    ':hover': {
-      backgroundColor: '#1b58ff',
-    },
-    ':active': {
-      boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
-    }
-  },
-  viewButtonLightSlateGray: {
-    display: 'inline-block',
-    padding: '17px 18px 18px',
-    float: 'right',
-    borderRadius: '5px',
-    backgroundColor: '#8997a5',
-    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
-    color: '#fff',
-    fontSize: '13px',
-    lineHeight: '9px',
-    fontWeight: '600',
-    textAlign: 'center',
-    textDecoration: 'none',
-    textTransform: 'capitalize',
-    ':hover': {
-      backgroundColor: '#596d81',
-    },
-    ':active': {
-      boxShadow: '0 0 0 0 rgba(0, 0, 0, .22)',
-    }
-  },
   showAdvanced: {
     width: '300px',
     position: 'relative',
@@ -1284,36 +1223,38 @@ export const StakePoolStyles = {
       backgroundSize: '10px',
     }
   },
+  selectStakePoolArea: { 
+    paddingTop: '4px'
+  },
   purchaseTicketRow: {
     width: '100%',
-    height: '45px',
-    paddingTop: '6px',
+    height: '34px',
+    paddingTop: '2px',
     float: 'left',
     borderBottom: '1px black solid',
     transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
   },
   purchaseTicketLabel: {
-    width: '25%',
+    width: '131px',
     paddingRight: '15px',
     paddingLeft: '5px',
     float: 'left',
     height: '100%',
-    paddingTop: '8px',
-    fontSize: '19px',
+    paddingTop: '5px',
+    fontSize: '16px',
     textAlign: 'left',
   },
   purchaseTicketInput: {
     width: '50%',
     float: 'left',
     height: '100%',
-    paddingTop: '5px',
     fontSize: '19px',
     textAlign: 'right',
   },
   flexHeight: {
     paddingTop: '1px',
     backgroundColor: '#fff',
-    height:'436px',
+    height:'411px',
     overflowY: 'auto',
     overflowX: 'hidden',
   },
