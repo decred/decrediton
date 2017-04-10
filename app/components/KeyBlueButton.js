@@ -8,7 +8,6 @@ var styles = {
     borderRadius: '5px',
     backgroundColor: '#2971ff',
     boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
-    transitionProperty: 'none',
     color: '#fff',
     fontSize: '13px',
     lineHeight: '9px',

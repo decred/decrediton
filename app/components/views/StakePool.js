@@ -1,5 +1,6 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
+import { shell } from 'electron';
 import CircularProgress from 'material-ui/CircularProgress';
 import ErrorScreen from '../ErrorScreen';
 import Balance from '../Balance';
@@ -47,7 +48,7 @@ class StakePool extends Component{
       spendLimit: this.props.getBalanceResponse != null ? this.props.getBalanceResponse.getSpendable() : 0,
       conf: 0,
       numTickets: 0,
-      expiry: 0,
+      expiry: 16,
       txFee: 0.01, // DCR/kB
       ticketFee: 0.01, // DCR/kB
       selectedStakePoolForPurchase: initStakePool,
@@ -83,6 +84,7 @@ class StakePool extends Component{
       this.state.numTickets,
       this.state.expiry,
       this.state.ticketFee,
+      this.state.txFee,
       this.state.selectedStakePoolForPurchase
     );
   }
@@ -94,6 +96,12 @@ class StakePool extends Component{
   }
   updateTicketFee(ticketFee) {
     this.setState({ticketFee: ticketFee});
+  }
+  updateTxFee(txFee) {
+    this.setState({txFee: txFee});
+  }
+  updateExpiry(expiry) {
+    this.setState({expiry: expiry});
   }
   addAnotherStakePool() {
     this.setState({addAnotherStakePool: true});
@@ -309,7 +317,15 @@ class StakePool extends Component{
         </div>
     );
     var purchaseTicketsView = (
-        <div style={StakePoolStyles.content}>
+        <div style={StakePoolStyles.contentPurchaseTicketView}>
+          <div style={StakePoolStyles.instructions}>
+            In order to stake mine, you must make a deposit to the network in the form of a ticket.<br/>
+            The ticket enters the owner in a lottery for the next several months, at which time it may
+            be chosen at any block for validation.  After being chosen randomly, the ticket owner must
+            produce a vote transaction to validate the previous block and vote on any agendas.  <b>Decrediton
+            does not vote</b> and tickets can, currently, only be purchased with voting rights assigned to a stake pool.<br/>
+            For more information, go to <a onClick={function(x){shell.openExternal(x);}.bind(null, 'https://docs.decred.org/mining/proof-of-stake/#sign-up-for-a-stake-pool')}>docs.decred.org</a>
+          </div>
           <div style={StakePoolStyles.flexHeight}>
             <div style={StakePoolStyles.purchaseTicketRow}>
               <div style={StakePoolStyles.purchaseTicketLabel}>Stake Pool:</div>
@@ -331,12 +347,25 @@ class StakePool extends Component{
             </div>
             <div hidden={this.state.advancedHidden ? true : false}>
               <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
+                <div style={StakePoolStyles.purchaseTicketLabel}>Tx Fee (DCR/kB):</div>
                 <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputForm}>
+                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
                     <input
                       type="text"
-                      style={StakePoolStyles.contentNestAddressHashTo}
+                      style={StakePoolStyles.contentNestPurchaseTicketForm}
+                      placeholder="Tx Fee"
+                      defaultValue={0.01}
+                      onBlur={(e) =>{this.updateTxFee(e.target.value);}}/>
+                  </div>
+                </div>
+              </div>
+              <div style={StakePoolStyles.purchaseTicketRow}>
+                <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
+                <div style={StakePoolStyles.purchaseTicketInput}>
+                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                    <input
+                      type="text"
+                      style={StakePoolStyles.contentNestPurchaseTicketForm}
                       placeholder="Ticket Fee"
                       defaultValue={0.01}
                       onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
@@ -344,42 +373,67 @@ class StakePool extends Component{
                 </div>
               </div>
               <div style={StakePoolStyles.purchaseTicketRow}>
+                <div style={StakePoolStyles.purchaseTicketLabel}>Expiry:</div>
+                <div style={StakePoolStyles.purchaseTicketInput}>
+                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                    <input
+                      type="text"
+                      style={StakePoolStyles.contentNestPurchaseTicketForm}
+                      placeholder="Expiry"
+                      defaultValue={this.state.expiry}
+                      onBlur={(e) =>{this.updateExpiry(e.target.value);}}/>
+                  </div>
+                </div>
+              </div>
+              <div style={StakePoolStyles.purchaseTicketRow}>
                 <div style={StakePoolStyles.purchaseTicketLabel}>Pool Address:</div>
                 <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputForm}>
+                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
                     <input
                       disabled
                       type="text"
-                      style={StakePoolStyles.contentNestAddressHashTo}
+                      style={StakePoolStyles.contentNestPurchaseTicketForm}
                       value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolAddress : null}/>
+                  </div>
+                </div>
+              </div>
+              <div style={StakePoolStyles.purchaseTicketRow}>
+                <div style={StakePoolStyles.purchaseTicketLabel}>Pool Fees:</div>
+                <div style={StakePoolStyles.purchaseTicketInput}>
+                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                    <input
+                      disabled
+                      type="text"
+                      style={StakePoolStyles.contentNestPurchaseTicketForm}
+                      value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolFees : null}/>
                   </div>
                 </div>
               </div>
               <div style={StakePoolStyles.purchaseTicketRow}>
                 <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Address:</div>
                 <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputForm}>
+                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
                     <input
                       type="text"
                       disabled
-                      style={StakePoolStyles.contentNestAddressHashTo}
+                      style={StakePoolStyles.contentNestPurchaseTicketForm}
                       value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.TicketAddress : null}/>
                   </div>
                 </div>
               </div>
             </div>
-            <div style={StakePoolStyles.purchaseTicketRow}>
-              <HideShowButton showAdvanced={this.state.advancedHidden ? true : false} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}>
+            <div style={StakePoolStyles.purchaseTicketRow} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}>
+              <HideShowButton showAdvanced={this.state.advancedHidden ? true : false}>
                 {this.state.advancedHidden ? 'Show' : 'Hide'} advanced
               </HideShowButton>
             </div>
             <div style={StakePoolStyles.purchaseTicketRow}>
               <div style={StakePoolStyles.purchaseTicketLabel}>Private Passhrase:</div>
               <div style={StakePoolStyles.purchaseTicketInput}>
-                <div style={StakePoolStyles.inputForm}>
+                <div style={StakePoolStyles.inputFormPurchaseTicket}>
                   <input
                     id="privpass"
-                    style={StakePoolStyles.contentNestAddressHashTo}
+                    style={StakePoolStyles.contentNestPurchaseTicketForm}
                     type="password"
                     placeholder="Private Passphrase"
                     onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}/>
@@ -387,7 +441,7 @@ class StakePool extends Component{
               </div>
             </div>
           </div>
-          <KeyBlueButton style={StakePoolStyles.contentSend} onClick={() => this.submitPurchase()}>
+          <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.submitPurchase()}>
             Purchase
           </KeyBlueButton>
         </div>);

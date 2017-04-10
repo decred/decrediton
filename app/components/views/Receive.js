@@ -6,7 +6,7 @@ import SideBar from '../SideBar';
 import Header from '../Header';
 import qr from 'qr-image';
 import { ReceiveStyles } from './ViewStyles';
-
+//var receiveCopy = 'To maximize privacy, please use addresses one time only.';
 class QRCode extends Component {
   static propTypes = {
     addr: PropTypes.string.isRequired
