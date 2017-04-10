@@ -379,7 +379,7 @@ class StakePool extends Component{
                       type="text"
                       style={StakePoolStyles.contentNestPurchaseTicketForm}
                       placeholder="Expiry"
-                      defaultValue={0}
+                      defaultValue={this.state.expiry}
                       onBlur={(e) =>{this.updateExpiry(e.target.value);}}/>
                   </div>
                 </div>
