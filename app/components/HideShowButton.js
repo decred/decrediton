@@ -7,14 +7,14 @@ import ArrowUpTurquiose from './icons/arrow-up-turquiose.svg';
 
 var styles = {
   showAdvanced: {
-    width: '100px',
+    width: '100%',
     height: '30px',
-    paddingTop: '3px',
+    paddingTop: '4px',
     paddingLeft: '20px',
     marginLeft: '10px',
     backgroundColor: '#fff',
     backgroundImage: `url(${ArrowDownMidBlue})`,
-    backgroundPosition: '0% 37%',
+    backgroundPosition: '0% 40%',
     backgroundSize: '10px',
     backgroundRepeat: 'no-repeat',
     transitionProperty: 'all',
@@ -29,14 +29,14 @@ var styles = {
     }
   },
   hideAdvanced: {
-    width: '100px',
+    width: '100%',
     height: '30px',
-    paddingTop: '3px',
+    paddingTop: '4px',
     paddingLeft: '20px',
     marginLeft: '10px',
     backgroundColor: '#fff',
     backgroundImage: `url(${ArrowUpLightBlue})`,
-    backgroundPosition: '0% 37%',
+    backgroundPosition: '0% 40%',
     backgroundSize: '10px',
     backgroundRepeat: 'no-repeat',
     transitionProperty: 'all',

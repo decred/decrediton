@@ -526,7 +526,7 @@ function purchaseTicketsSuccess(purchaseTicketsResponse) {
 }
 
 export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requiredConf,
-numTickets, expiry, ticketFee, stakepool) {
+numTickets, expiry, ticketFee, txFee, stakepool) {
   var request = new PurchaseTicketsRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setAccount(accountNum);
@@ -537,7 +537,7 @@ numTickets, expiry, ticketFee, stakepool) {
   request.setPoolAddress(stakepool.PoolAddress);
   request.setPoolFees(stakepool.PoolFees);
   request.setExpiry(0);
-  request.setTxFee(1000000);
+  request.setTxFee(txFee*1e8);
   request.setTicketFee(ticketFee*1e8);
 
   return (dispatch) => {

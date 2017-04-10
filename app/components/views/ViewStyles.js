@@ -1183,6 +1183,9 @@ export const StakePoolStyles = {
   contentSendSectionAmountCurrency: {
     paddingLeft: '5px',
   },
+  contentPurchaseButton: {
+    marginTop: '10px'
+  },
   showAdvanced: {
     width: '300px',
     position: 'relative',

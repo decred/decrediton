@@ -14,7 +14,6 @@ export function updateStakepoolPurchaseInformation() {
     const { network } = getState().grpc;
     for (var i = 0; i < currentStakePoolConfig.length; i++) {
       if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
-        console.log(currentStakePoolConfig[i].Host);
         var poolHost = currentStakePoolConfig[i].Host;
         var apiKey = currentStakePoolConfig[i].ApiKey;
         var votingAccount = currentStakePoolConfig[i].VotingAccount;

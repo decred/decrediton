@@ -83,6 +83,7 @@ class StakePool extends Component{
       this.state.numTickets,
       this.state.expiry,
       this.state.ticketFee,
+      this.state.txFee,
       this.state.selectedStakePoolForPurchase
     );
   }
@@ -94,6 +95,12 @@ class StakePool extends Component{
   }
   updateTicketFee(ticketFee) {
     this.setState({ticketFee: ticketFee});
+  }
+  updateTxFee(txFee) {
+    this.setState({txFee: txFee});
+  }
+  updateExpiry(expiry) {
+    this.setState({expiry: expiry});
   }
   addAnotherStakePool() {
     this.setState({addAnotherStakePool: true});
@@ -415,8 +422,8 @@ class StakePool extends Component{
                 </div>
               </div>
             </div>
-            <div style={StakePoolStyles.purchaseTicketRow}>
-              <HideShowButton showAdvanced={this.state.advancedHidden ? true : false} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}>
+            <div style={StakePoolStyles.purchaseTicketRow} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}>
+              <HideShowButton showAdvanced={this.state.advancedHidden ? true : false}>
                 {this.state.advancedHidden ? 'Show' : 'Hide'} advanced
               </HideShowButton>
             </div>
@@ -434,7 +441,7 @@ class StakePool extends Component{
               </div>
             </div>
           </div>
-          <KeyBlueButton style={StakePoolStyles.contentSend} onClick={() => this.submitPurchase()}>
+          <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.submitPurchase()}>
             Purchase
           </KeyBlueButton>
         </div>);
