@@ -75,7 +75,7 @@ class Send extends Component{
     updateOutputs[outputKey].destination = dest;
     this.setState({ outputs: updateOutputs });
   }
-  updateAccountNumber(outputKey, accountNum) {
+  updateAccountNumber(accountNum) {
     this.setState({account: accountNum});
   }
   updateOutputAmount(outputKey, amount, unitLabel) {
@@ -188,7 +188,7 @@ class Send extends Component{
     var selectAccounts = (
       <div style={SendStyles.selectAccountsSend}>
         <select
-          defaultValue={0}
+          defaultValue={this.state.account}
           style={SendStyles.selectAccount}
           onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
           >
