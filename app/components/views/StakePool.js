@@ -322,9 +322,8 @@ class StakePool extends Component{
             The ticket enters the owner in a lottery for the next several months, at which time it may
             be chosen at any block for validation.  After being chosen randomly, the ticket owner must
             produce a vote transaction to validate the previous block and vote on any agendas.  <b>Decrediton
-            does not vote</b> and tickets must only be purchased with voting rights assigned to a stake pool
-            or your own seperate, always running voting wallet.<br/>
-            The safest way to ensure that your vote succeeds is to use a stake pool.
+            does not vote</b> and tickets can, currently, only be purchased with voting rights assigned to a stake pool.<br/>
+            For more information, go to <a onClick={function(x){shell.openExternal(x);}.bind(null, 'https://docs.decred.org/mining/proof-of-stake/#sign-up-for-a-stake-pool')}>docs.decred.org</a>
           </div>
           <div style={StakePoolStyles.flexHeight}>
             <div style={StakePoolStyles.purchaseTicketRow}>
