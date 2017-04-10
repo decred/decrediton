@@ -1,5 +1,6 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
+import { shell } from 'electron';
 import CircularProgress from 'material-ui/CircularProgress';
 import ErrorScreen from '../ErrorScreen';
 import Balance from '../Balance';
