@@ -194,7 +194,7 @@ export const SendStyles = {
   },
   sendOutputRow: {
     width: '100%',
-    height: '35px',
+    height: '27px',
     float: 'left',
   },
   sendOutputErrorRow: {
@@ -212,7 +212,7 @@ export const SendStyles = {
   sendOutputAmountError: {
     color: 'red',
     float: 'right',
-    width: '132px',
+    width: '149px',
     textAlign: 'right',
     paddingRight: '59px',
   },
@@ -290,6 +290,12 @@ export const SendStyles = {
     height: '34px',
     float: 'left',
     paddingLeft: '101px',
+    fontSize: '13px',
+  },
+  sendAddressSignPrivPass: {
+    width: '299px',
+    height: '34px',
+    float: 'left',
     fontSize: '13px',
   },
   sendAddressHashBlockConfirm: {

@@ -34,8 +34,8 @@ class Send extends Component{
       rawTx: '',
       account: 0,
       confirmations: 0,
-      outputs: [{key:0, destination: '', amount: ''}],
-      outputErrors: [{key:0, addressError: null, amountError: null}],
+      outputs: [{key:0, destination: null, amount: null, addressError: null, amountError: null}],
+      privPassError: null,
     };
   }
   componentWillMount() {
@@ -46,7 +46,7 @@ class Send extends Component{
   }
 
   clearTransactionData() {
-    this.setState({account:0, confirmations: 0, outputs: [{key:0, destination: '', amount: ''}]});
+    this.setState({account:0, confirmations: 0, outputs: [{key:0, destination: null, amount: null, addressError: null, amountError: null}]});
     this.props.clearTransaction();
   }
   submitSignPublishTx() {
@@ -63,45 +63,47 @@ class Send extends Component{
   }
   submitConstructTx() {
     var checkErrors = false;
-    var updatedOutputErrors = this.state.outputErrors;
-    for (var i = 0; i < this.state.outputs.length; i++ ) {
-      if (this.state.outputs[i].address == '') {
+    var updatedOutputErrors = this.state.outputs;
+    for (var i = 0; i < updatedOutputErrors.length; i++ ) {
+      if (updatedOutputErrors[i].destination == null) {
         updatedOutputErrors[i].addressError = '*Please enter a valid address';
         checkErrors = true;
       }
-      if (this.state.outputs[i].amount < 0 ) {
+      if (updatedOutputErrors[i].amount == null || updatedOutputErrors[i].amount < 0) {
         updatedOutputErrors[i].amountError = '*Please enter a valid amount (> 0)';
         checkErrors = true;
       }
-    }
-    for (var j = 0; j < this.state.outputErrors.length; j++ ) {
-      if (this.state.outputErrors[j].addressError !== null || this.state.outputErrors[j].amountError !== null ) {
+      if (updatedOutputErrors[i].addressError !== null || updatedOutputErrors[i].amountError !== null ) {
         checkErrors = true;
       }
     }
     if (checkErrors) {
-      this.setState({outputErrors: updatedOutputErrors});
+      this.setState({output: updatedOutputErrors});
       return;
     }
     this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs);
   }
   appendOutput() {
-    var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: ''};
-    var newOutputError = {key:`${this.state.outputs.length}`, addressError: null, amountError: null};
-    this.setState({ outputs: this.state.outputs.concat([newOutput]), outputErrors: this.state.outputErrors.concat([newOutputError])});
+    var newOutput = {key:`${this.state.outputs.length}`, destination: null, amount: null, addressError: null, amountError: null};
+    this.setState({ outputs: this.state.outputs.concat([newOutput])});
   }
   removeOutput(outputKey) {
     var updateOutputs = this.state.outputs.filter(output => {
       return (output.key != outputKey);
     });
-    var updateOutputErrors = this.state.outputErrors.filter(outputError => {
-      return (outputError.key != outputKey);
-    });
-    this.setState({ outputs: updateOutputs, outputErrors: updateOutputErrors });
+    this.setState({ outputs: updateOutputs});
   }
   updateOutputDestination(outputKey, dest) {
+    // do some more helper address checking here
+    // possibly check for Ds/Dc Ts/Tc and length at the least
+    // later can do full address validtion from dcrutil code
     var updateOutputs = this.state.outputs;
-    updateOutputs[outputKey].destination = dest;
+    if (dest == '') {
+      updateOutputs[outputKey].addressError = '*Please enter a valid address';
+    } else {
+      updateOutputs[outputKey].destination = dest;
+      updateOutputs[outputKey].addressError = null;
+    }
     this.setState({ outputs: updateOutputs });
   }
   updateAccountNumber(accountNum) {
@@ -117,7 +119,12 @@ class Send extends Component{
       units = 1;
     }
     var updateOutputs = this.state.outputs;
-    updateOutputs[outputKey].amount = amount * units;
+    if (amount < 0) {
+      updateOutputs[outputKey].amountError = '*Please enter a valid amount (> 0)';
+    } else {
+      updateOutputs[outputKey].amount = amount * units;
+      updateOutputs[outputKey].amountError = null;
+    }
     this.setState({ outputs: updateOutputs });
   }
   updatePrivPass(privpass) {
@@ -200,7 +207,7 @@ class Send extends Component{
             </div>
             <div style={SendStyles.sendToAddress} key="privatePassPhrase">
               <div style={SendStyles.sendPrefixConfirm}>Private Passhrase:</div>
-              <div style={SendStyles.sendAddressHashBlock}>
+              <div style={SendStyles.sendAddressSignPrivPass}>
                 <div style={SendStyles.inputForm}>
                   <input
                     id="privpass"
