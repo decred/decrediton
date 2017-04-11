@@ -25,7 +25,7 @@ class Accounts extends Component{
       renameAccountNumber: -1,
       addAccountName: '',
       privpass: null,
-      accountRenameNameError: null,
+      renameAccountNameError: null,
       addAccountNameError: null,
       addAccountPrivPassError: null,
     };
@@ -290,7 +290,7 @@ class Accounts extends Component{
                 </div>
               </div>
               <div style={AccountStyles.accountFormInputError}>
-                {this.state.accountRenameNameError}teste
+                {this.state.renameAccountNameError}
               </div>
             </div>
           </div>
