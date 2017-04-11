@@ -149,16 +149,16 @@ class Send extends Component{
     var sharedHeader = (
       <Header
         headerTop={[publishTransactionError !== null ?
-            <div key="pubError" style={SendStyles.viewNotificationError}><div style={SendStyles.contentNestAddressDeleteIconHeader} onClick={() => this.props.clearPublishTxError()}/>{publishTransactionError}</div> :
+            <div key="pubError" style={SendStyles.viewNotificationError}><div style={SendStyles.sendAddressDeleteIconHeader} onClick={() => this.props.clearPublishTxError()}/>{publishTransactionError}</div> :
             <div key="pubError" ></div>,
           constructTxError !== null ?
-            <div key="conError"  style={SendStyles.viewNotificationError}><div style={SendStyles.contentNestAddressDeleteIconHeader} onClick={() => this.props.clearConstructTxError()}/>{constructTxError}</div> :
+            <div key="conError"  style={SendStyles.viewNotificationError}><div style={SendStyles.sendAddressDeleteIconHeader} onClick={() => this.props.clearConstructTxError()}/>{constructTxError}</div> :
             <div key="conError" ></div>,
           signTransactionError !== null ?
-            <div key="signError"  style={SendStyles.viewNotificationError}><div style={SendStyles.contentNestAddressDeleteIconHeader} onClick={() => this.props.clearSignTxError()}/>{signTransactionError}</div> :
+            <div key="signError"  style={SendStyles.viewNotificationError}><div style={SendStyles.sendAddressDeleteIconHeader} onClick={() => this.props.clearSignTxError()}/>{signTransactionError}</div> :
             <div key="signError" ></div>,
           publishTransactionResponse !== null ?
-            <div key="pubSuccess"  style={SendStyles.viewNotificationSuccess}><div style={SendStyles.contentNestAddressDeleteIconHeader} onClick={() => this.props.clearPublishTxSuccess()}/>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
+            <div key="pubSuccess"  style={SendStyles.viewNotificationSuccess}><div style={SendStyles.sendAddressDeleteIconHeader} onClick={() => this.props.clearPublishTxSuccess()}/>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
             <div key="pubSuccess" ></div>]}
         headerTitleOverview={<div style={SendStyles.headerTitleSend}>Send Funds</div>}
         headerMetaOverview={networkTextDiv}>
@@ -177,34 +177,34 @@ class Send extends Component{
         {sharedHeader}
         <div style={SendStyles.content}>
           <div style={SendStyles.flexHeight}>
-            <div style={SendStyles.contentNestFromAddress}>
-              <div style={SendStyles.contentNestPrefixConfirm}>Confirm transaction:</div>
+            <div style={SendStyles.sendFromAddress}>
+              <div style={SendStyles.sendPrefixConfirm}>Confirm transaction:</div>
             </div>
-            <div style={SendStyles.contentNestToAddress} key="totalSpent">
-              <div style={SendStyles.contentNestPrefixConfirm}>Total spent from wallet:</div>
-              <div style={SendStyles.contentNestAddressHashBlockConfirm}>
+            <div style={SendStyles.sendToAddress} key="totalSpent">
+              <div style={SendStyles.sendPrefixConfirm}>Total spent from wallet:</div>
+              <div style={SendStyles.sendAddressHashBlockConfirm}>
                 <Balance amount={totalSpent} />
               </div>
             </div>
-            <div style={SendStyles.contentNestToAddress} key="estimatedSize">
-              <div style={SendStyles.contentNestPrefixConfirm}>Estimated Transactions Size:</div>
-              <div style={SendStyles.contentNestAddressHashBlockConfirm}>
+            <div style={SendStyles.sendToAddress} key="estimatedSize">
+              <div style={SendStyles.sendPrefixConfirm}>Estimated Transactions Size:</div>
+              <div style={SendStyles.sendAddressHashBlockConfirm}>
                 {constructTxResponse !== null ? constructTxResponse.getEstimatedSignedSize() : null} bytes
               </div>
             </div>
-            <div style={SendStyles.contentNestToAddress} key="totalFee">
-              <div style={SendStyles.contentNestPrefixConfirm}>Estimated Fee:</div>
-              <div style={SendStyles.contentNestAddressHashBlockConfirm}>
+            <div style={SendStyles.sendToAddress} key="totalFee">
+              <div style={SendStyles.sendPrefixConfirm}>Estimated Fee:</div>
+              <div style={SendStyles.sendAddressHashBlockConfirm}>
                 <Balance amount={estimatedFee} />
               </div>
             </div>
-            <div style={SendStyles.contentNestToAddress} key="privatePassPhrase">
-              <div style={SendStyles.contentNestPrefixConfirm}>Private Passhrase:</div>
-              <div style={SendStyles.contentNestAddressHashBlock}>
+            <div style={SendStyles.sendToAddress} key="privatePassPhrase">
+              <div style={SendStyles.sendPrefixConfirm}>Private Passhrase:</div>
+              <div style={SendStyles.sendAddressHashBlock}>
                 <div style={SendStyles.inputForm}>
                   <input
                     id="privpass"
-                    style={SendStyles.contentNestAddressHashTo}
+                    style={SendStyles.sendAddressHashTo}
                     type="password"
                     placeholder="Private Password"
                     onBlur={(e) =>this.updatePrivPass(e.target.value)}/>
@@ -247,67 +247,79 @@ class Send extends Component{
       <div style={SendStyles.view}>
         {sharedHeader}
         <div style={SendStyles.content}>
-          <div style={SendStyles.flexHeight}>
-            <div style={SendStyles.contentNestFromAddress}>
-              <div style={SendStyles.contentNestPrefixSend}>From:</div>
+          <div style={SendStyles.sendSelectAccountArea}>
+            <div style={SendStyles.sendLabel}>From:</div>
+            <div style={SendStyles.sendSelectAccountInput}>
               {selectAccounts}
-              <div style={SendStyles.contentNestFromAddressWalletIcon}></div>
             </div>
+            <div style={SendStyles.sendFromAddressWalletIcon}></div>
+          </div>
+          <div style={SendStyles.flexHeight}>
             <div id="dynamicInput">
             {this.state.outputs.map((output,i) => {
               if ( i == 0 ) {
                 return(
-                <div style={SendStyles.contentNestToAddress} key={output.key}>
-                  <div style={SendStyles.contentNestPrefixSend}>To:</div>
-                  <div style={SendStyles.contentNestAddressHashBlock}>
-                    <div style={SendStyles.inputForm}>
-                      <input
-                        type="text"
-                        style={SendStyles.contentNestAddressHashTo}
-                        key={'destination'+output.key}
-                        placeholder="Destination Address"
-                        onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
+                <div style={SendStyles.sendRow} key={output.key}>
+                  <div style={SendStyles.sendOutputRow}>
+                    <div style={SendStyles.sendLabel}>To:</div>
+                    <div style={SendStyles.sendAddress}>
+                      <div style={SendStyles.inputForm}>
+                        <input
+                          type="text"
+                          style={SendStyles.sendAddressHashTo}
+                          key={'destination'+output.key}
+                          placeholder="Destination Address"
+                          onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
+                      </div>
+                    </div>
+                    <div style={SendStyles.sendAddressWalletIcon} onClick={() => this.appendOutput()}></div>
+                    <div style={SendStyles.sendAmount}>
+                      <div style={SendStyles.sendAmountLabel}>Amount:</div>
+                      <div style={SendStyles.sendAddressAmountSumAndCurrency}>
+                      <div style={SendStyles.sendAddressAmountSumGradient}>{unitLabel}</div>
+                        <input
+                          type="text"
+                          style={SendStyles.sendAddressInputAmount}
+                          key={'amount'+output.key}
+                          placeholder="Amount"
+                          onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
+                      </div>
                     </div>
                   </div>
-                  <div style={SendStyles.contentNestAddressWalletIcon} onClick={() => this.appendOutput()}></div>
-                  <div style={SendStyles.contentNestAddressAmount}>
-                    <div style={SendStyles.contentNestPrefixSend}>Amount:</div>
-                    <div style={SendStyles.contentNestAddressAmountSumAndCurrency}>
-                    <div style={SendStyles.contentNestAddressAmountSumGradient}>{unitLabel}</div>
-                      <input
-                        type="text"
-                        style={SendStyles.contentNestAddressAmountSum}
-                        key={'amount'+output.key}
-                        placeholder="Amount"
-                        onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
+                  <div style={SendStyles.sendOutputErrorRow}>
+                    <div style={SendStyles.sendOutputAddressError}>
+                      {output.addressError}Address Error
+                    </div>
+                    <div style={SendStyles.sendOutputAmountError}>
+                      {output.amountError}Amount Error
                     </div>
                   </div>
                 </div>);
               } else {
                 return(
-                <div style={SendStyles.contentNestDeleteAddress} key={output.key}>
-                  <div style={SendStyles.contentNestAddressHashBlock}>
+                <div style={SendStyles.sendDeleteAddress} key={output.key}>
+                  <div style={SendStyles.sendAddressHashBlock}>
                     <div style={SendStyles.inputForm}>
                       <input
                         type="text"
-                        style={SendStyles.contentNestAddressHashTo}
+                        style={SendStyles.sendAddressHashTo}
                         key={'destination'+output.key}
                         placeholder="Destination Address"
                         onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
                     </div>
-                    <div style={SendStyles.contentNestGradient}></div>
+                    <div style={SendStyles.sendGradient}></div>
                   </div>
                   {this.state.outputs.length - 1 === parseInt(output.key) ?
-                    <div style={SendStyles.contentNestAddressDeleteIcon} onClick={() => this.removeOutput(output.key)}></div> :
+                    <div style={SendStyles.sendAddressDeleteIcon} onClick={() => this.removeOutput(output.key)}></div> :
                     <div></div>
                   }
-                  <div style={SendStyles.contentNestAddressAmount}>
-                    <div style={SendStyles.contentNestAddressAmountSumAndCurrency}>
-                    <div style={SendStyles.contentNestAddressAmountSumGradient}>{unitLabel}</div>
+                  <div style={SendStyles.sendAddressAmount}>
+                    <div style={SendStyles.sendAddressAmountSumAndCurrency}>
+                    <div style={SendStyles.sendAddressAmountSumGradient}>{unitLabel}</div>
                       <div style={SendStyles.inputForm}>
                       <input
                         type="text"
-                        style={SendStyles.contentNestAddressAmountSum}
+                        style={SendStyles.sendAddressInputAmount}
                         key={'amount'+output.key}
                         placeholder="Amount"
                         onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
