@@ -288,42 +288,50 @@ class Send extends Component{
                   </div>
                   <div style={SendStyles.sendOutputErrorRow}>
                     <div style={SendStyles.sendOutputAddressError}>
-                      {output.addressError}Address Error
+                      {output.addressError}
                     </div>
                     <div style={SendStyles.sendOutputAmountError}>
-                      {output.amountError}Amount Error
+                      {output.amountError}
                     </div>
                   </div>
                 </div>);
               } else {
                 return(
-                <div style={SendStyles.sendDeleteAddress} key={output.key}>
-                  <div style={SendStyles.sendAddressHashBlock}>
-                    <div style={SendStyles.inputForm}>
-                      <input
-                        type="text"
-                        style={SendStyles.sendAddressHashTo}
-                        key={'destination'+output.key}
-                        placeholder="Destination Address"
-                        onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
-                    </div>
-                    <div style={SendStyles.sendGradient}></div>
-                  </div>
-                  {this.state.outputs.length - 1 === parseInt(output.key) ?
-                    <div style={SendStyles.sendAddressDeleteIcon} onClick={() => this.removeOutput(output.key)}></div> :
-                    <div></div>
-                  }
-                  <div style={SendStyles.sendAddressAmount}>
-                    <div style={SendStyles.sendAddressAmountSumAndCurrency}>
-                    <div style={SendStyles.sendAddressAmountSumGradient}>{unitLabel}</div>
+                <div style={SendStyles.sendRow} key={output.key}>
+                  <div style={SendStyles.sendOutputRow}>
+                    <div style={SendStyles.sendAddressHashBlock}>
                       <div style={SendStyles.inputForm}>
-                      <input
-                        type="text"
-                        style={SendStyles.sendAddressInputAmount}
-                        key={'amount'+output.key}
-                        placeholder="Amount"
-                        onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
+                        <input
+                          type="text"
+                          style={SendStyles.sendAddressHashTo}
+                          key={'destination'+output.key}
+                          placeholder="Destination Address"
+                          onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
                       </div>
+                      <div style={SendStyles.sendGradient}></div>
+                    </div>
+                    {this.state.outputs.length - 1 === parseInt(output.key) ?
+                      <div style={SendStyles.sendAddressDeleteIcon} onClick={() => this.removeOutput(output.key)}></div> :
+                      <div style={{width:'39px', height: '34px', float: 'left'}}></div>
+                    }
+                    <div style={SendStyles.sendAmount}>
+                      <div style={SendStyles.sendAddressAmountSumAndCurrency}>
+                      <div style={SendStyles.sendAddressAmountSumGradient}>{unitLabel}</div>
+                        <input
+                          type="text"
+                          style={SendStyles.sendAddressInputAmount}
+                          key={'amount'+output.key}
+                          placeholder="Amount"
+                          onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
+                      </div>
+                    </div>
+                  </div>
+                  <div style={SendStyles.sendOutputErrorRow}>
+                    <div style={SendStyles.sendOutputAddressError}>
+                      {output.addressError}
+                    </div>
+                    <div style={SendStyles.sendOutputAmountError}>
+                      {output.amountError}
                     </div>
                   </div>
                 </div>);

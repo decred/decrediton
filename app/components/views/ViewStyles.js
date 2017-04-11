@@ -286,12 +286,10 @@ export const SendStyles = {
     },
   },
   sendAddressHashBlock: {
-    position: 'relative',
-    overflow: 'hidden',
-    width: '311px',
+    width: '299px',
     height: '34px',
     float: 'left',
-    borderBottom: '1px solid #a9b4bf',
+    paddingLeft: '101px',
     fontSize: '13px',
   },
   sendAddressHashBlockConfirm: {
