@@ -216,6 +216,13 @@ export const SendStyles = {
     textAlign: 'right',
     paddingRight: '59px',
   },
+  sendOutputPrivPassError: {
+
+    color: 'red',
+    float: 'left',
+    width: '223px',
+    paddingRight: '11px',
+  },
   sendLabel: {
     width: '90px',
     float: 'left',

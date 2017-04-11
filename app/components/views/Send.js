@@ -217,6 +217,9 @@ class Send extends Component{
                     onBlur={(e) =>this.updatePrivPass(e.target.value)}/>
                 </div>
               </div>
+              <div style={SendStyles.sendOutputPrivPassError}>
+                {this.state.privPassError}
+              </div>
             </div>
           </div>
           <KeyBlueButton style={SendStyles.contentSend} onClick={() => this.submitSignPublishTx()}>
