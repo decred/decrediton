@@ -69,7 +69,7 @@ class Settings extends Component{
               Save Settings
             </KeyBlueButton>
           </div>
-	      </div>
+        </div>
       </div>
     );
     if (walletService === null) {
