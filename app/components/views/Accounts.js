@@ -27,6 +27,7 @@ class Accounts extends Component{
       privpass: null,
       accountRenameNameError: null,
       addAccountNameError: null,
+      addAccountPrivPassError: null,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -41,7 +42,17 @@ class Accounts extends Component{
     this.props.clearRenameAccountError();
   }
   addAccount() {
-    if (this.state.addAccountName == '' || this.state.privpass == null) {
+    var checkErrors = false;
+    if (this.state.addAccountName == '') {
+      this.setState({addAccountNameError: '*You must enter an account name'});
+      checkErrors = true;
+    }
+    if (this.state.privpass == null) {
+      this.setState({addAccountPrivPassError: '*Please enter your private passphrase'});
+      checkErrors = true;
+    }
+    if (this.state.addAccountNameError !== null || this.state.addAccountPrivPassError !== null ||
+       checkErrors) {
       return;
     }
     this.props.getNextAccountAttempt(this.state.privpass, this.state.addAccountName);
@@ -76,8 +87,13 @@ class Accounts extends Component{
     this.props.clearRenameAccountError();
   }
   renameAccount() {
-    if (this.state.renameAccountName == '' || this.state.renameAccountNumber == -1) {
-      console.log(this.state.renameAccountNumber, this.state.renameAccountName);
+    var checkErrors = false;
+    if (this.state.renameAccountName == '') {
+      this.setState({renameAccountNameError: '*You must enter an account name'});
+      checkErrors = true;
+    }
+    if (this.state.renameAccountNameError !== null ||
+       checkErrors) {
       return;
     }
     this.props.renameAccountAttempt(this.state.renameAccountNumber, this.state.renameAccountName);
@@ -98,10 +114,13 @@ class Accounts extends Component{
     this.props.clearRenameAccountError();
   }
   updateAddAccountName(accountName) {
-    this.setState({addAccountName: accountName});
+    this.setState({addAccountName: accountName, addAccountNameError: null});
   }
   updateRenameAccountName(accountName) {
-    this.setState({renameAccountName: accountName});
+    this.setState({renameAccountName: accountName, renameAccountNameError: null});
+  }
+  updatePrivPass(privpass) {
+    this.setState({privpass: Buffer.from(privpass), addAccountPrivPassError: null});
   }
   render() {
     const { walletService, getAccountsResponse } = this.props;
@@ -171,11 +190,11 @@ class Accounts extends Component{
                     style={AccountStyles.contentNestAddressHashTo}
                     placeholder="New Account Name"
                     maxLength="50"
-                    onBlur={(e) =>{this.updateAddAccountName(e.target.value);}}/>
+                    onBlur={(e) => this.updateAddAccountName(e.target.value)}/>
                 </div>
               </div>
               <div style={AccountStyles.accountFormInputError}>
-                {this.state.addAccountNameError}sdfsadf
+                {this.state.addAccountNameError}
               </div>
             </div>
             <div style={AccountStyles.accountFormRow} key="privatePassPhrase">
@@ -187,11 +206,11 @@ class Accounts extends Component{
                     style={AccountStyles.contentNestAddressHashTo}
                     type="password"
                     placeholder="Private Password"
-                    onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}/>
+                    onBlur={(e) => this.updatePrivPass(e.target.value)}/>
                 </div>
               </div>
               <div style={AccountStyles.accountFormInputError}>
-                {this.state.addAccountPrivPassError}tests1
+                {this.state.addAccountPrivPassError}
               </div>
             </div>
           </div>
