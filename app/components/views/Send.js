@@ -34,7 +34,9 @@ class Send extends Component{
       rawTx: '',
       account: 0,
       confirmations: 0,
-      outputs: [{key:0, destination: '', amount: ''}] };
+      outputs: [{key:0, destination: '', amount: ''}],
+      outputErrors: [{key:0, addressError: null, amountError: null}],
+    };
   }
   componentWillMount() {
     this.props.clearConstructTxError();
@@ -48,27 +50,54 @@ class Send extends Component{
     this.props.clearTransaction();
   }
   submitSignPublishTx() {
-    if (this.state.privpass == '' || this.props.constructTxResponse === null) {
+    var checkErrors = false;
+    if (this.state.privpass == null) {
+      this.setState({privPassError: '*Please enter your private passphrase'});
+      checkErrors = true;
+    }
+    if (this.state.privPassError !== null || this.props.constructTxResponse == null || checkErrors) {
       return;
     }
     this.props.signTransactionAttempt(this.state.privpass, this.props.constructTxResponse.getUnsignedTransaction());
     setTimeout(this.clearTransactionData(),1000);
   }
   submitConstructTx() {
-    if (this.state.outputs[0].destination == '' || this.state.outputs[0].amount == '') {
+    var checkErrors = false;
+    var updatedOutputErrors = this.state.outputErrors;
+    for (var i = 0; i < this.state.outputs.length; i++ ) {
+      if (this.state.outputs[i].address == '') {
+        updatedOutputErrors[i].addressError = '*Please enter a valid address';
+        checkErrors = true;
+      }
+      if (this.state.outputs[i].amount < 0 ) {
+        updatedOutputErrors[i].amountError = '*Please enter a valid amount (> 0)';
+        checkErrors = true;
+      }
+    }
+    for (var j = 0; j < this.state.outputErrors.length; j++ ) {
+      if (this.state.outputErrors[j].addressError !== null || this.state.outputErrors[j].amountError !== null ) {
+        checkErrors = true;
+      }
+    }
+    if (checkErrors) {
+      this.setState({outputErrors: updatedOutputErrors});
       return;
     }
     this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs);
   }
   appendOutput() {
     var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: ''};
-    this.setState({ outputs: this.state.outputs.concat([newOutput]) });
+    var newOutputError = {key:`${this.state.outputs.length}`, addressError: null, amountError: null};
+    this.setState({ outputs: this.state.outputs.concat([newOutput]), outputErrors: this.state.outputErrors.concat([newOutputError])});
   }
   removeOutput(outputKey) {
     var updateOutputs = this.state.outputs.filter(output => {
       return (output.key != outputKey);
     });
-    this.setState({ outputs: updateOutputs });
+    var updateOutputErrors = this.state.outputErrors.filter(outputError => {
+      return (outputError.key != outputKey);
+    });
+    this.setState({ outputs: updateOutputs, outputErrors: updateOutputErrors });
   }
   updateOutputDestination(outputKey, dest) {
     var updateOutputs = this.state.outputs;
@@ -90,6 +119,13 @@ class Send extends Component{
     var updateOutputs = this.state.outputs;
     updateOutputs[outputKey].amount = amount * units;
     this.setState({ outputs: updateOutputs });
+  }
+  updatePrivPass(privpass) {
+    if (privpass != '') {
+      this.setState({privpass: Buffer.from(privpass), privPassError: null});
+    } else {
+      this.setState({privpass: null, privPassError: '*Please enter your private passphrase'});
+    }
   }
   render() {
     const { currentSettings } = this.props;
@@ -171,7 +207,7 @@ class Send extends Component{
                     style={SendStyles.contentNestAddressHashTo}
                     type="password"
                     placeholder="Private Password"
-                    onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}/>
+                    onBlur={(e) =>this.updatePrivPass(e.target.value)}/>
                 </div>
               </div>
             </div>
