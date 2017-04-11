@@ -688,7 +688,62 @@ export const SettingStyles = {
   },
   restart: {
     fontWeight: 'bold',
-  }
+  },
+  settingsSaveButton: {
+    marginTop: '10px',
+    marginRight: '27px',
+    float: 'right',
+  },
+  settingsRow: {
+    width: '100%',
+    height: '50px',
+    paddingTop: '15px',
+    float: 'left',
+    borderBottom: '1px black solid',
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
+  },
+  settingsLabel: {
+    width: '50%',
+    paddingLeft: '10px',
+    float: 'left',
+    height: '100%',
+    paddingTop: '5px',
+    fontSize: '20px',
+    textAlign: 'left',
+  },
+  settingsInput: {
+    width: '45%',
+    paddingRight: '10px',
+    float: 'left',
+    height: '100%',
+    fontSize: '20px',
+    paddingTop: '5px',
+    textAlign: 'right',
+  },
+  settingsInputSelect: {
+    display: 'block',
+    overflow: 'hidden',
+    float: 'right',
+    color: 'rgb(12, 30, 62)',
+    fontSize: '19px',
+  },
+  settingsInputSelectOption: {
+    overflow: 'hidden',
+    height: '34px',
+    marginRight: '20px',
+    paddingTop: '5px',
+    paddingLeft: '10px',
+    color: 'rgb(41, 113, 255)',
+    fontSize: '19px',
+  },
+  settingsInputError: {
+    width: '290px',
+    float: 'right',
+    height: '100%',
+    textAlign: 'left',
+    color: 'red',
+    paddingTop: '5px',
+  },
 };
 export const StakePoolStyles = {
   body: {

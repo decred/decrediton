@@ -26,6 +26,20 @@ var styles = {
       boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
     }
   },
+  baseDisabled: {
+    display: 'inline-block',
+    padding: '17px 18px 18px',
+    borderRadius: '5px',
+    backgroundColor: 'grey',
+    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
+    color: '#fff',
+    fontSize: '13px',
+    lineHeight: '9px',
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
+  },
   block: {
     display: 'block',
   },
@@ -35,11 +49,11 @@ class KeyBlueButton extends React.Component {
   render() {
     return (
       <div
-        style={[
+        style={! this.props.disabled ? [
           this.props.style,
           styles.base,
           this.props.block && styles.block
-        ]}
+        ] : styles.baseDisabled }
         type={this.props.type}
         disabled={this.props.disabled}
         onClick={this.props.onClick}>

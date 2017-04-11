@@ -26,39 +26,50 @@ class Settings extends Component{
       <div style={SettingStyles.view}>
         <Header headerTitleOverview="Settings" />
         <div style={SettingStyles.content}>
-          <div style={SettingStyles.label}>
-            Displayed Units
+          <div style={SettingStyles.settingsRow}>
+            <div style={SettingStyles.settingsLabel}>
+              Displayed Units
+            </div>
+            <div style={SettingStyles.settingsInput}>
+              <select
+                style={SettingStyles.settingsInputSelect}
+                defaultValue={currentSettings.currencyDisplay}
+                onChange={(e) => {
+                  settings.currencyDisplay = e.target.value;
+                  updateStateSettingsChanged(settings);
+                }}>
+                <option style={SettingStyles.settingsInputSelectOption} value="DCR">DCR</option>
+                <option style={SettingStyles.settingsInputSelectOption} value="atoms">atoms</option>
+              </select>
+            </div>
           </div>
-          <select defaultValue={currentSettings.currencyDisplay}
-            onChange={(e) => {
-              settings.currencyDisplay = e.target.value;
-              updateStateSettingsChanged(settings);
-            }}>
-            <option value="DCR">DCR</option>
-            <option value="atoms">atoms</option>
-          </select>
-
-          <div style={SettingStyles.label}>
-            Network <span style={SettingStyles.restart}>(requires restart!)</span>
+          <div style={SettingStyles.settingsRow}>
+            <div style={SettingStyles.settingsLabel}>
+              Network <span style={SettingStyles.restart}>(requires restart!)</span>
+            </div>
+            <div style={SettingStyles.settingsInput}>
+              <select
+                style={SettingStyles.settingsInputSelect}
+                defaultValue={currentSettings.network}
+                onChange={(e) => {
+                  settings.network = e.target.value;
+                  updateStateSettingsChanged(settings);
+                }}>
+                <option style={SettingStyles.settingsInputSelectOption} value="mainnet">mainnet</option>
+                <option style={SettingStyles.settingsInputSelectOption} value="testnet">testnet</option>
+              </select>
+            </div>
           </div>
-          <select defaultValue={currentSettings.network}
-            onChange={(e) => {
-              settings.network = e.target.value;
-              updateStateSettingsChanged(settings);
-            }}>
-            <option value="mainnet">mainnet</option>
-            <option value="testnet">testnet</option>
-          </select>
-
-          <KeyBlueButton
-            style={SettingStyles.saveSettingsButton}
-            disabled={!settingsChanged}
-            size="large"
-            block={false}
-            onClick={() => this.handleSaveSettingsClick(tempSettings)}>
-            Save Settings
-          </KeyBlueButton>
-	</div>
+          <div style={SettingStyles.settingsSaveButton}>
+            <KeyBlueButton
+              disabled={!settingsChanged}
+              size="large"
+              block={false}
+              onClick={settingsChanged ? () => this.handleSaveSettingsClick(tempSettings): null}>
+              Save Settings
+            </KeyBlueButton>
+          </div>
+	      </div>
       </div>
     );
     if (walletService === null) {
