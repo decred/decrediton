@@ -25,6 +25,8 @@ class Accounts extends Component{
       renameAccountNumber: -1,
       addAccountName: '',
       privpass: null,
+      accountRenameNameError: null,
+      addAccountNameError: null,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -160,9 +162,9 @@ class Accounts extends Component{
 
         <div style={AccountStyles.content}>
           <div style={AccountStyles.flexHeight}>
-            <div style={AccountStyles.contentNestToAddress}>
-              <div style={AccountStyles.contentNestPrefixSend}>Account Name:</div>
-              <div style={AccountStyles.contentNestAddressHashBlock}>
+            <div style={AccountStyles.accountFormRow}>
+              <div style={AccountStyles.accountFormLabel}>Account Name:</div>
+              <div style={AccountStyles.accountFormInput}>
                 <div style={AccountStyles.inputForm}>
                   <input
                     type="text"
@@ -172,10 +174,13 @@ class Accounts extends Component{
                     onBlur={(e) =>{this.updateAddAccountName(e.target.value);}}/>
                 </div>
               </div>
+              <div style={AccountStyles.accountFormInputError}>
+                {this.state.addAccountNameError}sdfsadf
+              </div>
             </div>
-            <div style={AccountStyles.contentNestToAddress} key="privatePassPhrase">
-              <div style={AccountStyles.contentNestPrefixSend}>Private Passhrase:</div>
-              <div style={AccountStyles.contentNestAddressHashBlock}>
+            <div style={AccountStyles.accountFormRow} key="privatePassPhrase">
+              <div style={AccountStyles.accountFormLabel}>Private Passhrase:</div>
+              <div style={AccountStyles.accountFormInput}>
                 <div style={AccountStyles.inputForm}>
                   <input
                     id="privpass"
@@ -184,6 +189,9 @@ class Accounts extends Component{
                     placeholder="Private Password"
                     onBlur={(e) =>{this.setState({privpass: Buffer.from(e.target.value)});}}/>
                 </div>
+              </div>
+              <div style={AccountStyles.accountFormInputError}>
+                {this.state.addAccountPrivPassError}tests1
               </div>
             </div>
           </div>
@@ -250,9 +258,9 @@ class Accounts extends Component{
         />
         <div style={AccountStyles.content}>
           <div style={AccountStyles.flexHeight}>
-            <div style={AccountStyles.contentNestToAddress}>
-              <div style={AccountStyles.contentNestPrefixSend}>New Account Name:</div>
-              <div style={AccountStyles.contentNestAddressHashBlock}>
+            <div style={AccountStyles.accountFormRow}>
+              <div style={AccountStyles.accountFormLabel}>New Account Name:</div>
+              <div style={AccountStyles.accountFormInput}>
                 <div style={AccountStyles.inputForm}>
                   <input
                     type="text"
@@ -261,6 +269,9 @@ class Accounts extends Component{
                     maxLength="50"
                     onBlur={(e) =>{this.updateRenameAccountName(e.target.value);}}/>
                 </div>
+              </div>
+              <div style={AccountStyles.accountFormInputError}>
+                {this.state.accountRenameNameError}teste
               </div>
             </div>
           </div>
