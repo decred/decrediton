@@ -1396,6 +1396,11 @@ export const StakePoolStyles = {
     color: 'red',
     paddingTop: '5px',
   },
+  apiKeyError: {
+    paddingLeft: '118px',
+    textAlign: 'left',
+    color: 'red',
+  },
   flexHeight: {
     paddingTop: '1px',
     backgroundColor: '#fff',

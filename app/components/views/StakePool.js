@@ -61,6 +61,7 @@ class StakePool extends Component{
       ticketFeeError: null,
       expiryError: null,
       privPassError: null,
+      apiKeyError: null,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -145,14 +146,22 @@ class StakePool extends Component{
     this.setState({addAnotherStakePool: true});
   }
   setStakePoolInfo() {
-    if (this.state.stakePoolHost == '' || this.state.apiKey == '') {
+    if (this.state.apiKey == '') {
+      this.setState({apiKeyError: '*Please enter your API key'});
+      return;
+    }
+    if (this.state.stakePoolHost == '' || this.state.apiKeyError !== null) {
       return;
     }
     this.props.setStakePoolInformation(this.state.stakePoolHost, this.state.apiKey, 0);
     setTimeout(this.setState({addAnotherStakePool: false}), 1000);
   }
   updateApiKey(apiKey) {
-    this.setState({apiKey: apiKey});
+    if (apiKey != '') {
+      this.setState({apiKey: apiKey, apiKeyError: null});
+    } else {
+      this.setState({apiKeyError: '*Please enter your API key'});
+    }
   }
   updateStakePoolHost(poolHost) {
     this.setState({stakePoolHost: poolHost});
@@ -307,6 +316,9 @@ class StakePool extends Component{
                     onBlur={(e) =>{this.updateApiKey(e.target.value);}}/>
                 </div>
               </div>
+            </div>
+            <div style={StakePoolStyles.apiKeyError}>
+              {this.state.apiKeyError}
             </div>
           </div>
           <KeyBlueButton style={StakePoolStyles.contentSend} onClick={() => this.setStakePoolInfo()}>
