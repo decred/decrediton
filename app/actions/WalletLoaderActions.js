@@ -321,7 +321,9 @@ function discoverAddressAction(discoverAccts, privPass) {
   DiscoverAddressesRequest;
   var request = new DiscoverAddressesRequest();
   request.setDiscoverAccounts(discoverAccts);
-  request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
+  if (discoverAccts) {
+    request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
+  }
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
     loader.discoverAddresses(request,
@@ -346,6 +348,11 @@ function subscribeBlockError(error) {
 function subscribeBlockSuccess() {
   return (dispatch, getState) => {
     dispatch({response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
+    const { walletCreateResponse } = getState().walletLoader;
+    if (walletCreateResponse == null) {
+      // CreateWalletSuccess is null which means this is a previously created wallet
+      dispatch(discoverAddressAttempt(false));
+    }
     const { discoverAddressResponse } = getState().walletLoader;
     if ( discoverAddressResponse !== null ) {
       dispatch(fetchHeadersAttempt());
