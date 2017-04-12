@@ -351,7 +351,7 @@ class StakePool extends Component{
         </div>
     );
     var votingGuiView = (
-      <div style={StakePoolStyles.cotent}>
+      <div style={StakePoolStyles.content}>
         <div style={StakePoolStyles.votingTitleArea}>
           <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences</div>
         </div>
@@ -364,14 +364,15 @@ class StakePool extends Component{
               </div>
               <div style={StakePoolStyles.agendaOverviewMiddle}>
                 <div style={StakePoolStyles.agendaOverviewText}>
-                  <span>Change maximum allowed block size from 1MB to 1.25MiB</span>
+                  <br/>
+                  <span>Change maximum allowed block size from 1MB to 1.25MiB</span><br/>
                   <span style={StakePoolStyles.agendaOverviewAgendaId}>
                     Agenda ID: <span style={StakePoolStyles.agendaOverviewAgendaIdId}>#maxblocksize</span>
-                  </span>
+                  </span><br/>
                   <span>
                     Once the majority of the PoW miners have upgraded (75% of the 100 most recent blocks are at the latest version) and the majority of the PoS 
                     miners have upgraded (75% of the votes in a 2016 block interval) have upgraded, the voting process begins.
-                  </span>
+                  </span><br/>
                   <a target="_blank" href="http://decred.org" style={StakePoolStyles.agendaOverViewReadMore}>Read more »</a>
                 </div>
               </div>
@@ -382,17 +383,17 @@ class StakePool extends Component{
               </div>
               <div style={StakePoolStyles.agendaOverviewOptionsSectionMiddle}>
                   <input style={StakePoolStyles.agendaOptionsRadio} id="option1" type="radio" name="field" value="option" checked=""/>
-                  <label style={StakePoolStyles.agendaOptionsRadioLabel} for="option1"><span><span></span></span>Option 1</label>
+                  <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor="option1"><span><span></span></span>Option 1</label>
                   <input style={StakePoolStyles.agendaOptionsRadio} id="option2" type="radio" name="field" value="option"/>
-                  <label style={StakePoolStyles.agendaOptionsRadioLabel} for="option2"><span><span></span></span>Option 2</label>
+                  <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor="option2"><span><span></span></span>Option 2</label>
                   <input style={StakePoolStyles.agendaOptionsRadio} id="option3" type="radio" name="field" value="option"/>
-                  <label style={StakePoolStyles.agendaOptionsRadioLabel} for="option3"><span><span></span></span>Option 3</label>
+                  <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor="option3"><span><span></span></span>Option 3</label>
                   <input style={StakePoolStyles.agendaOptionsRadio} id="option4" type="radio" name="field" value="option"/>
-                  <label style={StakePoolStyles.agendaOptionsRadioLabel} for="option4"><span><span></span></span>Option 4</label>
+                  <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor="option4"><span><span></span></span>Option 4</label>
                   <input style={StakePoolStyles.agendaOptionsRadio} id="option5" type="radio" name="field" value="option"/>
-                  <label style={StakePoolStyles.agendaOptionsRadioLabel} for="option5"><span><span></span></span>Option 5</label>
+                  <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor="option5"><span><span></span></span>Option 5</label>
                   <input style={StakePoolStyles.agendaOptionsRadio} id="option6" type="radio" name="field" value="option"/>
-                  <label style={StakePoolStyles.agendaOptionsRadioLabel} for="option6"><span><span></span></span>Option 6</label>
+                  <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor="option6"><span><span></span></span>Option 6</label>
               </div>
             </div>
           </div>
@@ -669,14 +670,7 @@ class StakePool extends Component{
 
           }
         />
-        {(!activeStakePoolConfig || this.state.addAnotherStakePool) && !currentStakePoolConfigRequest ?
-          stakePoolConfigInput :
-          currentStakePoolConfigRequest || purchaseTicketsRequestAttempt ?
-            <CircularProgress style={StakePoolStyles.loading} size={125} thickness={6}/> :
-              this.state.purchaseTickets ?
-              purchaseTicketsView :
-              configuredStakePoolInformation
-        }
+        {votingGuiView}
       </div>
     );
     if ((walletService === null) || (ticketBuyerService === null)){

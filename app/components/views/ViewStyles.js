@@ -1528,7 +1528,7 @@ export const StakePoolStyles = {
   },
   agendaOverview: {
     position: 'relative',
-    width: '460px',
+    width: '420px',
     padding: '20px 20px 4px',
     float: 'left',
   },
@@ -1560,8 +1560,8 @@ export const StakePoolStyles = {
     position: 'relative',
     overflow: 'hidden',
     width: '700px',
+    height: '217px',
     marginBottom: '20px',
-    marginLeft: '20px',
     float: 'left',
     backgroundColor: '#fff',
     backgroundImage: `url(${AgendaStripe})`,
@@ -1592,7 +1592,7 @@ export const StakePoolStyles = {
   agendaOverviewOptionsArea: {
     position: 'relative',
     display: 'inline',
-    width: '240px',
+    width: '170px',
     paddingTop: '20px',
     paddingRight: '35px',
     paddingLeft: '35px',
