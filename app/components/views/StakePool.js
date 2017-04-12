@@ -373,11 +373,12 @@ class StakePool extends Component{
               </div>
               <div style={StakePoolStyles.agendaOverviewMiddle}>
                 <div style={StakePoolStyles.agendaOverviewText}>
-                  <br/>
                   <span>Change maximum allowed block size from 1MB to 1.25MiB</span><br/>
                   <span style={StakePoolStyles.agendaOverviewAgendaId}>
                     Agenda ID: <span style={StakePoolStyles.agendaOverviewAgendaIdId}>#maxblocksize</span>
-                  </span><br/>
+                  </span>
+                  <br/>
+                  <br/>
                   <span>
                     Once the majority of the PoW miners have upgraded (75% of the 100 most recent blocks are at the latest version) and the majority of the PoS 
                     miners have upgraded (75% of the votes in a 2016 block interval) have upgraded, the voting process begins.
@@ -403,6 +404,28 @@ class StakePool extends Component{
                   <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor="option5"><span><span></span></span>Option 5</label>
                   <input style={StakePoolStyles.agendaOptionsRadio} id="option6" type="radio" name="field" value="option6" checked={this.state.choice == "option6"} onChange={(e) => this.selectAgendaChoice("agenda1", e.target.value)}/>
                   <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor="option6"><span><span></span></span>Option 6</label>
+              </div>
+            </div>
+            <div style={StakePoolStyles.agendaBottom}>
+              <div style={StakePoolStyles.agendaBottomOverview}>
+                <div style={StakePoolStyles.agendaIndicatorPending}>In Progress</div>
+                <div style={StakePoolStyles.agendaPercent}><span style={StakePoolStyles.agendaPercentNumber}>42</span>%</div>
+              </div>
+              <div style={StakePoolStyles.agendaBottomOptions}>
+                <KeyBlueButton style={StakePoolStyles.agendaUpdatePreferencesButton} onClick={() => this.updateAgendaPreference("agenda1")}>Update Preference</KeyBlueButton>
+              </div>
+            </div>
+          </div>
+          <div style={StakePoolStyles.agendaCard}>
+            <div style={StakePoolStyles.agendaCardBottom}>
+              <div style={StakePoolStyles.agendaCardIndicatorPending}>In Progress</div>
+              <div style={StakePoolStyles.agendaCardBottomCfg}>Change maximum allowed block size from 1MB to 1.25MiB <span style={StakePoolStyles.agendaCardBottomCfgLast}>Agenda ID: <span style={StakePoolStyles.agendaCardBottomCfgLastBold}>#maxblocksize</span></span>
+              </div>
+              <div style={StakePoolStyles.agendaCardPercent}><span style={StakePoolStyles.agendaPercentNumber}>42</span>%</div>
+            </div>
+            <div style={StakePoolStyles.agendaCardTop}>
+              <div style={StakePoolStyles.agendaCardName}>Agenda name</div>
+              <div style={StakePoolStyles.agendaCardTopPreference}>Preference: <span style={StakePoolStyles.textHighlightSmall}>Abstain</span>
               </div>
             </div>
           </div>
