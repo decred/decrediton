@@ -22,7 +22,7 @@ class Home extends Component{
   }
   discoverAddressesButton() {
     if (this.state.privpass == '') {
-      this.setState({privPassError: '*Please enter your private password'})
+      this.setState({privPassError: '*Please enter your private passphrase'})
       return;
     } 
     if (this.state.privPassError !== null) {
@@ -33,7 +33,7 @@ class Home extends Component{
   }
   openWalletButton() {
     if (this.state.pubpass == '') {
-      this.setState({pubPassError: '*Please enter your public password'})
+      this.setState({pubPassError: '*Please enter your public passphrase'})
       return;
     } 
     if (this.state.pubPassError !== null) {
@@ -49,14 +49,14 @@ class Home extends Component{
     if (pubPass !== '') {
       this.setState({pubpass: pubPass, pubPassError: null})
     } else {
-      this.setState({pubPassError: '*Please enter your public password'})
+      this.setState({pubPassError: '*Please enter your public passphrase'})
     }
   }
   updatePrivPass(privPass) {
     if (privPass !== '') {
       this.setState({privpass: privPass, privPassError: null})
     } else {
-      this.setState({privPassError: '*Please enter your private password'})
+      this.setState({privPassError: '*Please enter your private passphrase'})
     }
   }
   constructor(props) {
@@ -236,7 +236,7 @@ class Home extends Component{
             { discoverAddressRequestAttempt ?
             <CircularProgress style={GetStartedStyles.loading} size={125} thickness={6}/> :
               <div style={GetStartedStyles.contentNewSeedCreateButton}>
-                <div style={GetStartedStyles.contentConfirmWalletCreateInputLeftPadding}>Scan for used addresses:</div>
+                <div style={GetStartedStyles.contentConfirmWalletCreateInputLeftPadding}>Scan for used accounts:</div>
                 <div style={GetStartedStyles.contentConfirmWalletCreateInputRightPadding}>
                   <div style={GetStartedStyles.inputForm}>
                     <form style={GetStartedStyles.inputForm}>
