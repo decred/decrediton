@@ -1396,6 +1396,11 @@ export const StakePoolStyles = {
     color: 'red',
     paddingTop: '5px',
   },
+  apiKeyError: {
+    paddingLeft: '118px',
+    textAlign: 'left',
+    color: 'red',
+  },
   flexHeight: {
     paddingTop: '1px',
     backgroundColor: '#fff',
@@ -1783,7 +1788,14 @@ export const GetStartedStyles = {
     paddingLeft: '20px',
     float: 'left',
   },
-
+  privPassError: {
+    width: '290px',
+    paddingLeft: '214px',
+    height: '100%',
+    textAlign: 'left',
+    color: 'red',
+    paddingTop: '17px',
+  },
   contentTitleButtonSearchTransition1: {
     width: '60px',
     height: '100%',

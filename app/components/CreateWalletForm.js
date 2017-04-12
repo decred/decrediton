@@ -151,7 +151,7 @@ class CreateWalletForm extends React.Component {
       privpass: '',
       seedError: '',
       verifyError: '',
-      passwordError: '',
+      privPassError: null,
     };
   }
 
@@ -200,11 +200,11 @@ class CreateWalletForm extends React.Component {
                   style={styles.inputPrivatePassword}
                   type="password"
                   placeholder="Private Passphrase"
-                  onBlur={(e)=>{this.setState({privpass:e.target.value});}}/>
+                  onBlur={(e)=>this.updatePrivPass(e.target.value)}/>
               </form>
             </div>
             <div style={styles.inputFormError}>
-              {this.state.passwordError !== '' ? this.state.passwordError : ''}
+              {this.state.privPassError}
             </div>
           </div>
         </div>
@@ -244,18 +244,25 @@ class CreateWalletForm extends React.Component {
       this.props.decodeSeedAttempt(seedConfirmation);
     } else {
       if (seedConfirmation !== '' && this.props.generateRandomSeedResponse.getSeedMnemonic() != seedConfirmation) {
-        this.setState({seedError:'Seeds do not match'});
+        this.setState({seedError:'*Seeds do not match'});
       } else {
         this.setState({seedError:'', seed: this.props.generateRandomSeedResponse.getSeedBytes()});
       }
     }
   }
   createWalletButton() {
-    if (this.state.verifyError !== '' || this.state.seedError !== '' || this.state.passwordError != '' ||
+    if (this.state.privpass == '') {
+      this.setState({privPassError: '*Please enter your private passphrase'});
+      return;
+    }
+    if (this.state.verifyError !== '' || this.state.seedError !== '' || this.state.privPassError != null ||
       this.state.privpass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null)) {
       return;
     }
     if (this.props.createWalletExisting && this.props.decodeSeedResponse === null) {
+      return;
+    }
+    if (this.state.privPassError !== null) {
       return;
     }
     if (this.props.createWalletExisting) {
@@ -264,9 +271,16 @@ class CreateWalletForm extends React.Component {
       this.props.createWalletRequest(this.state.pubpass, this.state.privpass, this.state.seed, false);
     }
   }
+  updatePrivPass(privPass) {
+    if (privPass !== '') {
+      this.setState({privpass: privPass, privPassError: null});
+    } else {
+      this.setState({privPassError: '*Please enter your private passphrase'});
+    }
+  }
   verifyPrivatePassword(verifyPrivPass) {
     if (this.state.privpass != '' && this.state.privpass != verifyPrivPass) {
-      this.setState({verifyError:'Passwords do not match'});
+      this.setState({verifyError:'*Passwords do not match'});
     } else {
       this.setState({verifyError:''});
     }

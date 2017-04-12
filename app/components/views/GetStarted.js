@@ -21,7 +21,11 @@ class Home extends Component{
     }
   }
   discoverAddressesButton() {
-    if (this.state.privpass == '' ) {
+    if (this.state.privpass == '') {
+      this.setState({privPassError: '*Please enter your private passphrase'});
+      return;
+    }
+    if (this.state.privPassError !== null) {
       return;
     }
     this.props.discoverAddressAttempt(true, this.state.privpass);
@@ -29,6 +33,10 @@ class Home extends Component{
   }
   openWalletButton() {
     if (this.state.pubpass == '') {
+      this.setState({pubPassError: '*Please enter your public passphrase'});
+      return;
+    }
+    if (this.state.pubPassError !== null) {
       return;
     }
     this.props.openWalletAttempt(this.state.pubpass);
@@ -36,6 +44,20 @@ class Home extends Component{
   }
   handleDisclaimerOK = () => {
     this.props.disclaimerOKAction();
+  }
+  updatePubPass(pubPass) {
+    if (pubPass !== '') {
+      this.setState({pubpass: pubPass, pubPassError: null});
+    } else {
+      this.setState({pubPassError: '*Please enter your public passphrase'});
+    }
+  }
+  updatePrivPass(privPass) {
+    if (privPass !== '') {
+      this.setState({privpass: privPass, privPassError: null});
+    } else {
+      this.setState({privPassError: '*Please enter your private passphrase'});
+    }
   }
   constructor(props) {
     super(props);
@@ -130,9 +152,12 @@ class Home extends Component{
                       style={GetStartedStyles.inputPrivatePassword}
                       type="password"
                       placeholder="Private Passphrase"
-                      onBlur={(e)=>this.setState({pubpass:e.target.value})}/>
+                      onBlur={(e)=>this.updatePubPass(e.target.value)}/>
                   </form>
                 </div>
+              </div>
+              <div style={GetStartedStyles.privPassError}>
+                {this.state.pubPassError}
               </div>
               <div style={GetStartedStyles.contentNewSeedCreateButton}>
                 <div style={GetStartedStyles.contentConfirmWalletCreateInputLeftPadding}></div>
@@ -211,7 +236,7 @@ class Home extends Component{
             { discoverAddressRequestAttempt ?
             <CircularProgress style={GetStartedStyles.loading} size={125} thickness={6}/> :
               <div style={GetStartedStyles.contentNewSeedCreateButton}>
-                <div style={GetStartedStyles.contentConfirmWalletCreateInputLeftPadding}>Scan for used addresses:</div>
+                <div style={GetStartedStyles.contentConfirmWalletCreateInputLeftPadding}>Scan for used accounts:</div>
                 <div style={GetStartedStyles.contentConfirmWalletCreateInputRightPadding}>
                   <div style={GetStartedStyles.inputForm}>
                     <form style={GetStartedStyles.inputForm}>
@@ -219,9 +244,12 @@ class Home extends Component{
                         style={GetStartedStyles.inputPrivatePassword}
                         type="password"
                         placeholder="Private Passphrase"
-                        onBlur={(e)=>this.setState({privpass:e.target.value})}/>
+                        onBlur={(e)=>this.updatePrivPass(e.target.value)}/>
                     </form>
                   </div>
+                </div>
+                <div style={GetStartedStyles.privPassError}>
+                  {this.state.privPassError}
                 </div>
                 <div style={GetStartedStyles.contentNewSeedCreateButton}>
                   <div style={GetStartedStyles.contentConfirmWalletCreateInputLeftPadding}></div>
