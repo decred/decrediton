@@ -2,6 +2,7 @@ import Add from '../icons/add.svg';
 import Delete from '../icons/delete.svg';
 import IndicatorPending from '../icons/indicator-pending.svg';
 import IndicatorConfirmed from '../icons/indicator-confirmed.svg';
+import IndicatorFinished from '../icons/indicator-finished.svg';
 import PlusBig from '../icons/plus-big.svg';
 import MinusBig from '../icons/minus-big.svg';
 import ArrowDownMidBlue from '../icons/arrow-down-mid-blue.svg';
@@ -13,6 +14,7 @@ import WalletGray from '../icons/wallet-gray.svg';
 import AgendaClose from '../icons/tickets-agenda-close.svg';
 import AgendaStripe from '../icons/stripe.svg';
 import CardKebab from '../icons/tickets-agenda-card-kebab.svg';
+import CardDisabledKebab from '../icons/tickets-agenda-card-kebab-disabled.svg';
 
 export const ReceiveStyles = {
   body: {
@@ -1697,6 +1699,27 @@ export const StakePoolStyles = {
     color: '#0c1e3e',
     cursor: 'pointer',
   },
+
+  agendaCardDisabled: {
+    position: 'relative',
+    overflow: 'hidden',
+    width: '180px',
+    height: '190px',
+    marginBottom: '20px',
+    marginRight: '20px',
+    padding: '20px',
+    float: 'left',
+    backgroundColor: '#e7eaed',
+    backgroundImage: `url(${CardDisabledKebab})`,
+    backgroundSize: '10px',
+    backgroundPosition: '93% 27px',
+    backgroundRepeat: 'no-repeat',
+    boxShadow: '0 3px 6px 0 rgba(9, 24, 45, .1)',
+    color: '#0c1e3e',
+    cursor: 'pointer',
+    color: '#8997a5',
+    cursor: 'default',
+  },
   agendaCardBottom: {
     position: 'absolute',
     left: '0px',
@@ -1728,6 +1751,28 @@ export const StakePoolStyles = {
     marginBottom: '20px',
     float: 'right',
   },
+  agendaCardIndicatorFinished: {
+    position: 'absolute',
+    right: '0px',
+    bottom: '0px',
+    marginRight: '20px',
+    marginBottom: '20px',
+    borderColor: '#8997a5',
+    backgroundImage: `url(${IndicatorFinished})`,
+    backgroundPosition: '6px 50%',
+    backgroundSize: '10px',
+    backgroundRepeat: 'no-repeat',
+    color: '#8997a5',
+    display: 'inline-block',
+    padding: '5px 8px 5px 20px',
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderRadius: '3px',
+    fontSize: '12px',
+    lineHeight: '8px',
+    textAlign: 'right',
+    textTransform: 'capitalize',
+  },
   agendaCardBottomCfg: {
     height: '80px',
     marginBottom: '20px',
@@ -1736,6 +1781,15 @@ export const StakePoolStyles = {
   },
   agendaCardBottomCfgLast: {
     color: '#0c1e3e',
+  },
+  agendaCardBottomCfgDisabled: {
+    height: '80px',
+    marginBottom: '20px',
+    float: 'left',
+    color: '#8997a5',
+  },
+  agendaCardBottomCfgLastDisabled: {
+    color: '#8997a5',
   }, 
   agendaCardBottomCfgLastBold: {
     fontWeight: '600',

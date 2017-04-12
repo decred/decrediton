@@ -429,6 +429,58 @@ class StakePool extends Component{
               </div>
             </div>
           </div>
+          <div style={StakePoolStyles.agendaCard}>
+            <div style={StakePoolStyles.agendaCardBottom}>
+              <div style={StakePoolStyles.agendaCardIndicatorPending}>In Progress</div>
+              <div style={StakePoolStyles.agendaCardBottomCfg}>Change maximum allowed block size from 1MB to 1.25MiB <span style={StakePoolStyles.agendaCardBottomCfgLast}>Agenda ID: <span style={StakePoolStyles.agendaCardBottomCfgLastBold}>#maxblocksize</span></span>
+              </div>
+              <div style={StakePoolStyles.agendaCardPercent}><span style={StakePoolStyles.agendaPercentNumber}>42</span>%</div>
+            </div>
+            <div style={StakePoolStyles.agendaCardTop}>
+              <div style={StakePoolStyles.agendaCardName}>Agenda name</div>
+              <div style={StakePoolStyles.agendaCardTopPreference}>Preference: <span style={StakePoolStyles.textHighlightSmall}>Abstain</span>
+              </div>
+            </div>
+          </div>           
+          <div style={StakePoolStyles.agendaCardDisabled}>
+            <div style={StakePoolStyles.agendaCardBottom}>
+              <div style={StakePoolStyles.agendaCardIndicatorFinished}>Finished</div>
+              <div style={StakePoolStyles.agendaCardBottomCfg}>Change sdiff calculations <span style={StakePoolStyles.agendaCardBottomCfgLast}>Agenda ID: <span style={StakePoolStyles.agendaCardBottomCfgLastBold}>#maxblocksize</span></span>
+              </div>
+              <div style={StakePoolStyles.agendaCardPercent}><span style={StakePoolStyles.agendaPercentNumber}>100</span>%</div>
+            </div>
+            <div style={StakePoolStyles.agendaCardTop}>
+              <div style={StakePoolStyles.agendaCardName}>Agenda name</div>
+              <div style={StakePoolStyles.agendaCardTopPreference}>Preference: <span style={StakePoolStyles.textHighlightSmall}>Option 1</span>
+              </div>
+            </div>
+          </div>          
+          <div style={StakePoolStyles.agendaCardDisabled}>
+            <div style={StakePoolStyles.agendaCardBottom}>
+              <div style={StakePoolStyles.agendaCardIndicatorFinished}>Finished</div>
+              <div style={StakePoolStyles.agendaCardBottomCfg}>Change sdiff calculations <span style={StakePoolStyles.agendaCardBottomCfgLast}>Agenda ID: <span style={StakePoolStyles.agendaCardBottomCfgLastBold}>#maxblocksize</span></span>
+              </div>
+              <div style={StakePoolStyles.agendaCardPercent}><span style={StakePoolStyles.agendaPercentNumber}>100</span>%</div>
+            </div>
+            <div style={StakePoolStyles.agendaCardTop}>
+              <div style={StakePoolStyles.agendaCardName}>Agenda name</div>
+              <div style={StakePoolStyles.agendaCardTopPreference}>Preference: <span style={StakePoolStyles.textHighlightSmall}>Option 1</span>
+              </div>
+            </div>
+          </div>          
+          <div style={StakePoolStyles.agendaCardDisabled}>
+            <div style={StakePoolStyles.agendaCardBottom}>
+              <div style={StakePoolStyles.agendaCardIndicatorFinished}>Finished</div>
+              <div style={StakePoolStyles.agendaCardBottomCfg}>Change sdiff calculations <span style={StakePoolStyles.agendaCardBottomCfgLast}>Agenda ID: <span style={StakePoolStyles.agendaCardBottomCfgLastBold}>#maxblocksize</span></span>
+              </div>
+              <div style={StakePoolStyles.agendaCardPercent}><span style={StakePoolStyles.agendaPercentNumber}>100</span>%</div>
+            </div>
+            <div style={StakePoolStyles.agendaCardTop}>
+              <div style={StakePoolStyles.agendaCardName}>Agenda name</div>
+              <div style={StakePoolStyles.agendaCardTopPreference}>Preference: <span style={StakePoolStyles.textHighlightSmall}>Option 1</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
