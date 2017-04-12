@@ -156,7 +156,7 @@ class Home extends Component{
                   </form>
                 </div>
               </div>
-              <div style={GetStartStyles.pubPassError}>
+              <div style={GetStartedStyles.privPassError}>
                 {this.state.pubPassError}
               </div>
               <div style={GetStartedStyles.contentNewSeedCreateButton}>
@@ -248,7 +248,7 @@ class Home extends Component{
                     </form>
                   </div>
                 </div>
-                <div style={GetStartStyles.privPassError}>
+                <div style={GetStartedStyles.privPassError}>
                   {this.state.privPassError}
                 </div>
                 <div style={GetStartedStyles.contentNewSeedCreateButton}>

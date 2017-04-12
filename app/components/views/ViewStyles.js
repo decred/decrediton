@@ -1783,17 +1783,9 @@ export const GetStartedStyles = {
     paddingLeft: '20px',
     float: 'left',
   },
-  pubPassError: {
-    width: '290px',
-    float: 'right',
-    height: '100%',
-    textAlign: 'left',
-    color: 'red',
-    paddingTop: '17px',
-  },
   privPassError: {
     width: '290px',
-    float: 'right',
+    paddingLeft: '214px',
     height: '100%',
     textAlign: 'left',
     color: 'red',
