@@ -273,9 +273,9 @@ class CreateWalletForm extends React.Component {
   }
   updatePrivPass(privPass) {
     if (privPass !== '') {
-      this.setState({privpass: privPass, privPassError: null})
+      this.setState({privpass: privPass, privPassError: null});
     } else {
-      this.setState({privPassError: '*Please enter your private passphrase'})
+      this.setState({privPassError: '*Please enter your private passphrase'});
     }
   }
   verifyPrivatePassword(verifyPrivPass) {

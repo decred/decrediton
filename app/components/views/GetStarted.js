@@ -22,9 +22,9 @@ class Home extends Component{
   }
   discoverAddressesButton() {
     if (this.state.privpass == '') {
-      this.setState({privPassError: '*Please enter your private passphrase'})
+      this.setState({privPassError: '*Please enter your private passphrase'});
       return;
-    } 
+    }
     if (this.state.privPassError !== null) {
       return;
     }
@@ -33,9 +33,9 @@ class Home extends Component{
   }
   openWalletButton() {
     if (this.state.pubpass == '') {
-      this.setState({pubPassError: '*Please enter your public passphrase'})
+      this.setState({pubPassError: '*Please enter your public passphrase'});
       return;
-    } 
+    }
     if (this.state.pubPassError !== null) {
       return;
     }
@@ -47,16 +47,16 @@ class Home extends Component{
   }
   updatePubPass(pubPass) {
     if (pubPass !== '') {
-      this.setState({pubpass: pubPass, pubPassError: null})
+      this.setState({pubpass: pubPass, pubPassError: null});
     } else {
-      this.setState({pubPassError: '*Please enter your public passphrase'})
+      this.setState({pubPassError: '*Please enter your public passphrase'});
     }
   }
   updatePrivPass(privPass) {
     if (privPass !== '') {
-      this.setState({privpass: privPass, privPassError: null})
+      this.setState({privpass: privPass, privPassError: null});
     } else {
-      this.setState({privPassError: '*Please enter your private passphrase'})
+      this.setState({privPassError: '*Please enter your private passphrase'});
     }
   }
   constructor(props) {
