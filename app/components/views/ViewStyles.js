@@ -10,6 +10,8 @@ import ArrowUpLightBlue from '../icons/arrow-up-light-blue.svg';
 import ArrowUpTurquiose from '../icons/arrow-up-turquiose.svg';
 import Search from '../icons/search.svg';
 import WalletGray from '../icons/wallet-gray.svg';
+import AgendaClose from '../icons/tickets-agenda-close.svg';
+import AgendaStripe from '../icons/stripe.svg';
 
 export const ReceiveStyles = {
   body: {
@@ -1497,7 +1499,149 @@ export const StakePoolStyles = {
     float: 'right',
     textAlign: 'right',
     paddingRight: '8px',
-  }
+  },
+  votingTitleArea: {
+    marginBottom: '5px',
+    display: 'block',
+    height: '44px',
+    marginRight: 'auto',
+    marginBottom: '10px',
+    marginLeft: 'auto',
+    borderBottom: '1px solid transparent',
+    color: '#596d81',
+    fontSize: '27px',
+  },
+  votingTitleAreaName: {
+    width: '100%',
+    fontSize: '20px',
+    display: 'inlineBlock',
+    overflow: 'hidden',
+    width: '653px',
+    height: '100%',
+    paddingTop: '13px',
+    paddingRight: '20px',
+    paddingLeft: '20px',
+    float: 'left',
+  },
+  votingAgendaArea: {
+    paddingTop: '1px',
+  },
+  agendaOverview: {
+    position: 'relative',
+    width: '460px',
+    padding: '20px 20px 4px',
+    float: 'left',
+  },
+  agendaOverviewTitleArea: {
+    marginBottom: '29px',
+    position: 'relative',
+  },
+  agendaOverviewTitleName: {
+    paddingRight: '10px',
+    float: 'left',
+    fontSize: '19px',
+  }, 
+  agendaOverviewTitleClose: {
+    position: 'absolute',
+    top: '0px',
+    right: '0px',
+    width: '11px',
+    height: '11px',
+    float: 'right',
+    backgroundImage: `url(${AgendaClose})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '11px',
+    backgroundRepeat: 'noRepeat',
+    maxWidth: '100%',
+    display: 'inlineBlock',
+    backgroundColor: 'transparent',
+  },
+  agenda: {
+    position: 'relative',
+    overflow: 'hidden',
+    width: '700px',
+    marginBottom: '20px',
+    marginLeft: '20px',
+    float: 'left',
+    backgroundColor: '#fff',
+    backgroundImage: `url(${AgendaStripe})`,
+    backgroundPosition: '460px 50%',
+    backgroundSize: '1px',
+    backgroundRepeat: 'repeat-y',
+  },
+  agendaOverviewMiddle: {
+    color: '#596d81',
+    fontSize: '13px',
+    position: 'relative',    
+  },
+  agendaOverviewText: {
+    lineHeight: '18px',
+  },
+  agendaOverviewAgendaId: {
+    color: '#0c1e3e',
+  },
+  agendaOverviewAgendaIdId: {
+    fontWeight: '600',
+  },
+  agendaOverviewReadMore: {
+    display: 'block',
+    color: '#2971ff',
+    textDecoration: 'none',
+    backgroundColor: 'transparent',
+  },
+  agendaOverviewOptionsArea: {
+    position: 'relative',
+    display: 'inline',
+    width: '240px',
+    paddingTop: '20px',
+    paddingRight: '35px',
+    paddingLeft: '35px',
+    float: 'left',
+    flexDirection: 'row',
+    alignItems: 'stretch',
+  },
+  agendaOverviewOptionsSection: {
+    marginBottom: '29px',
+  },
+  agendaNameOptions: {
+    paddingRight: '10px',
+    float: 'left',
+    fontSize: '19px',
+  },
+  agendaOverviewOptionsSectionMiddle: {
+
+  },
+  agendaOptionsRadio: {
+    boxSizing: 'borderBox',
+    padding: '0',
+    left: '-9999px',
+    top: '-9999px',
+    zIndex: '-1',
+    display: 'none',
+    overflow: 'hidden',
+    width: '0px',
+    height: '0px',
+    border: '1px solid #2971ff',
+    borderRadius: '0px',
+    backgroundColor: '#fff',
+    lineHeight: 'normal',
+    color: 'inherit',
+    font: 'inherit',
+    margin: '0',
+  },
+  agendaOptionsRadioLabel: {
+    display: 'inlineBlock',
+    width: '100%',
+    color: '#596d81',
+    fontSize: '11px',
+    fontWeight: '400',
+    cursor: 'pointer',
+    lineHeight: '1',
+    display: 'block',
+    marginBottom: '5px',
+    fontWeight: 'bold',
+    boxSizing: 'borderBox',
+  },
 };
 export const HelpStyles = {
   body: {

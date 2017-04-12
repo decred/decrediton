@@ -350,6 +350,55 @@ class StakePool extends Component{
           </KeyBlueButton>
         </div>
     );
+    var votingGuiView = (
+      <div style={StakePoolStyles.cotent}>
+        <div style={StakePoolStyles.votingTitleArea}>
+          <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences</div>
+        </div>
+        <div style={StakePoolStyles.votingAgendaArea}>
+          <div style={StakePoolStyles.agenda}>
+            <div style={StakePoolStyles.agendaOverview}>
+              <div style={StakePoolStyles.agendaOverviewTitleArea}>
+                <a style={StakePoolStyles.agendaOverviewTitleClose} href="#"></a>
+                <div style={StakePoolStyles.agendaOverviewTitleName}>Agenda name</div>
+              </div>
+              <div style={StakePoolStyles.agendaOverviewMiddle}>
+                <div style={StakePoolStyles.agendaOverviewText}>
+                  <span>Change maximum allowed block size from 1MB to 1.25MiB</span>
+                  <span style={StakePoolStyles.agendaOverviewAgendaId}>
+                    Agenda ID: <span style={StakePoolStyles.agendaOverviewAgendaIdId}>#maxblocksize</span>
+                  </span>
+                  <span>
+                    Once the majority of the PoW miners have upgraded (75% of the 100 most recent blocks are at the latest version) and the majority of the PoS 
+                    miners have upgraded (75% of the votes in a 2016 block interval) have upgraded, the voting process begins.
+                  </span>
+                  <a target="_blank" href="http://decred.org" style={StakePoolStyles.agendaOverViewReadMore}>Read more »</a>
+                </div>
+              </div>
+            </div>
+            <div style={StakePoolStyles.agendaOverviewOptionsArea}>
+              <div style={StakePoolStyles.agendaOverviewOptionsSection}>
+                <div style={StakePoolStyles.agendaNameOptions}>Voting for</div>
+              </div>
+              <div style={StakePoolStyles.agendaOverviewOptionsSectionMiddle}>
+                  <input style={StakePoolStyles.agendaOptionsRadio} id="option1" type="radio" name="field" value="option" checked=""/>
+                  <label style={StakePoolStyles.agendaOptionsRadioLabel} for="option1"><span><span></span></span>Option 1</label>
+                  <input style={StakePoolStyles.agendaOptionsRadio} id="option2" type="radio" name="field" value="option"/>
+                  <label style={StakePoolStyles.agendaOptionsRadioLabel} for="option2"><span><span></span></span>Option 2</label>
+                  <input style={StakePoolStyles.agendaOptionsRadio} id="option3" type="radio" name="field" value="option"/>
+                  <label style={StakePoolStyles.agendaOptionsRadioLabel} for="option3"><span><span></span></span>Option 3</label>
+                  <input style={StakePoolStyles.agendaOptionsRadio} id="option4" type="radio" name="field" value="option"/>
+                  <label style={StakePoolStyles.agendaOptionsRadioLabel} for="option4"><span><span></span></span>Option 4</label>
+                  <input style={StakePoolStyles.agendaOptionsRadio} id="option5" type="radio" name="field" value="option"/>
+                  <label style={StakePoolStyles.agendaOptionsRadioLabel} for="option5"><span><span></span></span>Option 5</label>
+                  <input style={StakePoolStyles.agendaOptionsRadio} id="option6" type="radio" name="field" value="option"/>
+                  <label style={StakePoolStyles.agendaOptionsRadioLabel} for="option6"><span><span></span></span>Option 6</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
     var configuredStakePoolInformation = (
         <div style={StakePoolStyles.content}>
           <div style={StakePoolStyles.flexHeight}>
