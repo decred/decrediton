@@ -88,7 +88,7 @@ class StakePool extends Component{
       checkErrors = true;
     }
     if (this.state.privpass == null) {
-      this.setState({privPassError: '*Please enter your passphrase'});
+      this.setState({privPassError: '*Please enter your private passphrase'});
       checkErrors = true;
     }
     if (this.state.numTickets == 0) {

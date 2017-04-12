@@ -128,7 +128,7 @@ export const SendStyles = {
     textAlign: 'center',
     textDecoration: 'none',
   },
-  contentNestAddressDeleteIconHeader: {
+  sendAddressDeleteIconHeader: {
     width: '26px',
     height: '19px',
     float: 'left',
@@ -168,18 +168,77 @@ export const SendStyles = {
     height: '556px',
     padding: '54px 60px 54px 80px',
   },
-  contentNestSend: {
+  sendSend: {
     paddingTop: '1px',
     backgroundColor: '#fff',
   },
-  contentNestDeleteAddress: {
+  sendDeleteAddress: {
     width: '625px',
     height: '54px',
     paddingTop: '10px',
     paddingLeft: '116px',
     float: 'left',
   },
-  contentNestPrefixSend: {
+  sendSelectAccountArea: {
+    width: '100%',
+    height: '62px',
+  },
+  sendSelectAccountInput: {
+    width: '290px',
+    float: 'left',
+  },
+  sendRow: {
+    width: '100%',
+    height: '47px',
+    float: 'left',
+  },
+  sendOutputRow: {
+    width: '100%',
+    height: '27px',
+    float: 'left',
+  },
+  sendOutputErrorRow: {
+    width: '100%',
+    height: '12px',
+    float: 'left',
+    fontSize: '11px',
+  },
+  sendOutputAddressError: {
+    color: 'red',
+    float: 'left',
+    width: '290px',
+    paddingLeft: '110px',
+  },
+  sendOutputAmountError: {
+    color: 'red',
+    float: 'right',
+    width: '149px',
+    textAlign: 'right',
+    paddingRight: '59px',
+  },
+  sendOutputPrivPassError: {
+
+    color: 'red',
+    float: 'left',
+    width: '223px',
+    paddingRight: '11px',
+  },
+  sendLabel: {
+    width: '90px',
+    float: 'left',
+    paddingLeft: '10px',
+    paddingTop: '5px',
+    fontSize: '20px',
+  },
+  sendAddress: {
+    width : '300px',
+    float: 'left',
+  },
+  sendAmount: {
+    width : '300px',
+    float: 'left',
+  },
+  sendPrefixSend: {
     width: '100px',
     paddingRight: '15px',
     float: 'left',
@@ -189,7 +248,7 @@ export const SendStyles = {
     textAlign: 'right',
     textTransform: 'capitalize',
   },
-  contentNestPrefixConfirm: {
+  sendPrefixConfirm: {
     width: '230px',
     paddingRight: '15px',
     float: 'left',
@@ -199,13 +258,13 @@ export const SendStyles = {
     textAlign: 'right',
     textTransform: 'capitalize',
   },
-  contentNestFromAddress: {
+  sendFromAddress: {
     width: '100%',
     height: '54px',
     paddingTop: '10px',
     float: 'left',
   },
-  contentNestFromAddressWalletIcon: {
+  sendFromAddressWalletIcon: {
     display: 'inline-block',
     width: '60px',
     height: '34px',
@@ -215,13 +274,13 @@ export const SendStyles = {
     backgroundSize: '20px',
     backgroundRepeat: 'no-repeat',
   },
-  contentNestToAddress: {
+  sendToAddress: {
     width: '100%',
     height: '54px',
     paddingTop: '10px',
     float: 'left',
   },
-  contentNestAddressHashTo: {
+  sendAddressHashTo: {
     width: '96%',
     height: '100%',
     padding: '9px 0px 8px 10px',
@@ -233,16 +292,20 @@ export const SendStyles = {
       color: '#2971ff',
     },
   },
-  contentNestAddressHashBlock: {
-    position: 'relative',
-    overflow: 'hidden',
-    width: '311px',
+  sendAddressHashBlock: {
+    width: '299px',
     height: '34px',
     float: 'left',
-    borderBottom: '1px solid #a9b4bf',
+    paddingLeft: '101px',
     fontSize: '13px',
   },
-  contentNestAddressHashBlockConfirm: {
+  sendAddressSignPrivPass: {
+    width: '299px',
+    height: '34px',
+    float: 'left',
+    fontSize: '13px',
+  },
+  sendAddressHashBlockConfirm: {
     position: 'relative',
     overflow: 'hidden',
     width: '300px',
@@ -250,6 +313,13 @@ export const SendStyles = {
     paddingTop: '7px',
     float: 'left',
     fontSize: '17px',
+  },
+  sendAmountLabel: {
+    float: 'left',
+    width: '26%',
+    paddingLeft: '10px',
+    paddingTop: '5px',
+    fontSize: '20px',
   },
   selectAccountsSend: {
     width: '300px',
@@ -355,7 +425,7 @@ export const SendStyles = {
     height: 'auto',
     minHeight: '44px',
   },
-  contentNestAddressWalletIcon: {
+  sendAddressWalletIcon: {
     width: '39px',
     height: '34px',
     float: 'left',
@@ -368,23 +438,32 @@ export const SendStyles = {
       opacity: '0.85',
     }
   },
-  contentNestAddressAmount: {
+  sendAddressAmount: {
     display: 'block',
     height: '34px',
     float: 'right',
   },
-  contentNestAddressAmountSumAndCurrency: {
+  sendAddressInputAmount: {
+    width: '68%',
+    float: 'left',
+    height: '100%',
+    padding: '9px 10px 8px 10px',
+    borderStyle: 'none',
+    color: 'rgb(41, 113, 255)',
+    fontSize: '13px',
+    textAlign: 'right',
+    cursor: 'text',
+  },
+  sendAddressAmountSumAndCurrency: {
     position: 'relative',
     overflow: 'hidden',
-    width: '140px',
+    width: '70%',
     height: '100%',
-    marginRight: '20px',
     float: 'right',
-    borderBottom: '1px solid #a9b4bf',
     color: '#0c1e3e',
     textAlign: 'right',
   },
-  contentNestAddressAmountSumGradient: {
+  sendAddressAmountSumGradient: {
     position: 'absolute',
     top: '0px',
     right: '0px',
@@ -392,14 +471,14 @@ export const SendStyles = {
     display: 'inline-block',
     width: '37px',
     height: '100%',
-    paddingTop: '9px',
+    paddingTop: '7px',
     paddingRight: '10px',
     backgroundColor: '#fff',
     fontFamily: 'Inconsolata, monospace',
     fontSize: '13px',
     textTransform: 'uppercase',
   },
-  contentNestAddressAmountSum: {
+  sendAddressAmountSum: {
     display: 'block',
     width: '100px',
     height: '100%',
@@ -408,10 +487,10 @@ export const SendStyles = {
     fontSize: '19px',
     fontWeight: '700',
   },
-  contentNestToAddressAmountSumNumberFormatSmall: {
+  sendToAddressAmountSumNumberFormatSmall: {
     fontSize: '13px',
   },
-  contentNestAddressDeleteIcon: {
+  sendAddressDeleteIcon: {
     width: '39px',
     height: '34px',
     float: 'left',
@@ -424,7 +503,7 @@ export const SendStyles = {
       opacity: '0.85',
     }
   },
-  contentNestAddressAmountSumNumberFormatSmall: {
+  sendAddressAmountSumNumberFormatSmall: {
     fontSize: '13px',
   },
   contentSend: {
