@@ -50,8 +50,8 @@ class KeyBlueButton extends React.Component {
     return (
       <div
         style={! this.props.disabled ? [
-          this.props.style,
           styles.base,
+          this.props.style,
           this.props.block && styles.block
         ] : styles.baseDisabled }
         type={this.props.type}

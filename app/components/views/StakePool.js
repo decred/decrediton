@@ -8,6 +8,7 @@ import SideBar from '../SideBar';
 import Header from '../Header';
 import NewExistingSeedToggle from '../NewExistingSeedToggle';
 import KeyBlueButton from '../KeyBlueButton';
+import SlateGrayButton from '../SlateGrayButton';
 import HideShowButton from '../HideShowButton';
 import { StakePoolStyles } from './ViewStyles';
 import AgendaCard from '../AgendaCard';
@@ -48,6 +49,7 @@ class StakePool extends Component{
       account: 0,
       addAnotherStakePool: false,
       purchaseTickets: true,
+      purchaseTicketsStakePoolConfig: false,
       spendLimit: this.props.getBalanceResponse != null ? this.props.getBalanceResponse.getSpendable() : 0,
       conf: 0,
       numTickets: 0,
@@ -129,6 +131,12 @@ class StakePool extends Component{
       this.state.selectedStakePoolForPurchase
     );
   }
+  showStakePoolConfig() {
+    this.setState({purchaseTicketsStakePoolConfig: true});
+  }
+  hideStakePoolConfig() {
+    this.setState({purchaseTicketsStakePoolConfig: false});
+  }
   updateAccountNumber(accountNum) {
     this.setState({account: accountNum});
   }
@@ -163,6 +171,9 @@ class StakePool extends Component{
   addAnotherStakePool() {
     this.setState({addAnotherStakePool: true});
   }
+  cancelAddAnotherStakePool() {
+    this.setState({addAnotherStakePool: false});
+  }
   setStakePoolInfo() {
     if (this.state.apiKey == '') {
       this.setState({apiKeyError: '*Please enter your API key'});
@@ -186,9 +197,9 @@ class StakePool extends Component{
   }
   toggleTicketStakePool(side) {
     if (side == 'right') {
-      this.setState({purchaseTickets: false});
+      this.setState({purchaseTickets: false, purchaseTicketsStakePoolConfig: false});
     } else if (side == 'left') {
-      this.setState({purchaseTickets: true});
+      this.setState({purchaseTickets: true, purchaseTicketsStakePoolConfig: false});
     }
   }
   showAdvanced() {
@@ -374,6 +385,15 @@ class StakePool extends Component{
           <KeyBlueButton style={StakePoolStyles.contentSend} onClick={() => this.setStakePoolInfo()}>
             Confirm
           </KeyBlueButton>
+          {this.state.purchaseTicketsStakePoolConfig ?
+            <SlateGrayButton
+              style={StakePoolStyles.hideStakePoolConfig}
+              onClick={() => this.cancelAddAnotherStakePool()}>
+              Cancel
+            </SlateGrayButton> :
+            <div>
+            </div>
+          }
         </div>
     );
     var votingGuiView = (
@@ -436,6 +456,15 @@ class StakePool extends Component{
           </KeyBlueButton> :
           <div></div>
           }
+          {this.state.purchaseTicketsStakePoolConfig ?
+            <SlateGrayButton
+              style={StakePoolStyles.hideStakePoolConfig}
+              onClick={() => this.hideStakePoolConfig()}>
+              Cancel
+            </SlateGrayButton> :
+            <div>
+            </div>
+          }
         </div>
     );
     var purchaseTicketsView = (
@@ -450,9 +479,16 @@ class StakePool extends Component{
           </div>
           <div style={StakePoolStyles.flexHeight}>
             <div style={StakePoolStyles.purchaseTicketRow}>
-              <div style={StakePoolStyles.purchaseTicketLabel}>Stake Pool:</div>
+              <div style={StakePoolStyles.purchaseTicketLabel}>
+                Stake Pool:
+                </div>
               <div style={StakePoolStyles.purchaseTicketInput}>
                 {selectStakePoolPurchaseTickets}
+              </div>
+              <div style={StakePoolStyles.purchaseTicketInputError}>
+                <KeyBlueButton style={StakePoolStyles.manageStakePoolsButton} onClick={() => this.showStakePoolConfig()}>
+                  Manage stake pools
+                </KeyBlueButton>
               </div>
             </div>
             <div style={StakePoolStyles.purchaseTicketRow}>
@@ -655,13 +691,24 @@ class StakePool extends Component{
                 <NewExistingSeedToggle
                   activeButton={'left'}
                   leftText={'Purchase Tickets'}
-                  rightText={'Configure stakepools'}
+                  rightText={'Vote settings'}
                   toggleAction={(e)=>{this.toggleTicketStakePool(e);}}/>
               </div></div>:
             <div></div>
 
           }
-        />
+        />-
+        {(!activeStakePoolConfig || this.state.addAnotherStakePool) && !currentStakePoolConfigRequest ?
+          stakePoolConfigInput :
+          currentStakePoolConfigRequest || purchaseTicketsRequestAttempt ?
+            <CircularProgress style={StakePoolStyles.loading} size={125} thickness={6}/> :
+              this.state.purchaseTickets ?
+                this.state.purchaseTicketsStakePoolConfig ?
+                  configuredStakePoolInformation :
+                    purchaseTicketsView :
+                      votingGuiView
+        }
+
         {votingGuiView}
       </div>
     );

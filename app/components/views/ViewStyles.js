@@ -1680,6 +1680,14 @@ export const StakePoolStyles = {
     backgroundRepeat: 'no-repeat',
     color: '#2971ff',
   },
+  hideStakePoolConfig: {
+    float: 'right',
+  },
+  manageStakePoolsButton: {
+    width: '150px',
+    padding: '7px 18px',
+    display: 'block',
+  }
 };
 export const HelpStyles = {
   body: {
