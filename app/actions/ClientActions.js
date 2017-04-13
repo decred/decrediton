@@ -581,7 +581,7 @@ function getAgendasAction() {
   var request = new AgendasRequest();
   return (dispatch, getState) => {
     const { agendaService } = getState().grpc;
-    agendaService.agendas(request, function (agendas, err) {
+    agendaService.agendas(request, function (err, agendas) {
       if (err) {
         dispatch(getAgendasError(err + ' Please try again'));
       } else {
@@ -616,7 +616,8 @@ function getVoteChoicesAction() {
   var request = new VoteChoicesRequest();
   return (dispatch, getState) => {
     const { votingService } = getState().grpc;
-    votingService.voteChoices(request, function (voteChoices, err) {
+    votingService.voteChoices(request, function (err, voteChoices) {
+
       if (err) {
         dispatch(getVoteChoicesError(err + ' Please try again'));
       } else {
@@ -657,7 +658,7 @@ function setVoteChoicesAction(choices) {
   });
   return (dispatch, setState) => {
     const { votingService } = setState().grpc;
-    votingService.setVoteChoices(request, function (response, err) {
+    votingService.setVoteChoices(request, function (err, response) {
       if (err) {
         dispatch(setVoteChoicesError(err + ' Please try again'));
       } else {
