@@ -75,9 +75,9 @@ class StakePool extends Component{
       apiKeyError: null,
       agendaDisplay: null,
       availableAgendas: [
-        {agendaId: 'Agenda1', selectedOption: 'option1', agendaDiscription: 'This is the agenda1 description', finished: false},
-        {agendaId: 'Agenda2', selectedOption: 'option2', agendaDiscription: 'This is the agenda2 description', finished: false},
-        {agendaId: 'Agenda3', selectedOption: 'option3', agendaDiscription: 'This is the agenda3 description', finished: true},
+        {agendaName: 'Agenda 1 Name', agendaId: 'Agenda1', percentVoted: 42, options: ['1-optionA', '1-optionB', '1-optionC'], selectedOption: '1-optionA', agendaDescription: 'This is the agenda1 description', finished: false},
+        {agendaName: 'Agenda 2 Name', agendaId: 'Agenda2', percentVoted: 35, options: ['2-optionA', '2-optionB', '2-optionC'], selectedOption: '2-optionB', agendaDescription: 'This is the agenda2 description', finished: false},
+        {agendaName: 'Agenda 3 Name', agendaId: 'Agenda3', percentVoted: 100, options: ['3-optionA', '3-optionB', '3-optionC'], selectedOption: '3-optionC', agendaDescription: 'This is the agenda3 description', finished: true},
 
       ],
     };
@@ -383,7 +383,7 @@ class StakePool extends Component{
         </div>
         <div style={StakePoolStyles.votingAgendaArea}>
           {this.state.agendaDisplay !== null ?
-            <AgendaOverview currentChoice={this.state.agendaDisplay.currentOption} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updateAgendaPreference={this.updateAgendaPreference}/>:
+            <AgendaOverview agenda={this.state.agendaDisplay} currentChoice={this.state.agendaDisplay.currentOption} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updateAgendaPreference={this.updateAgendaPreference}/>:
             <div></div>
           }
           {this.state.availableAgendas.map((agenda) => {

@@ -137,7 +137,10 @@ const styles = {
     paddingRight: '20px',
     paddingLeft: '20px',
   },
-
+  agendaPercentNumber: {
+    fontSize: '45px',
+    fontWeight: '600',
+  },
   agendaCardName: {
     paddingRight: '10px',
     float: 'left',
@@ -165,14 +168,14 @@ class AgendaCard extends React.Component {
             <div style={styles.agendaCardBottom}>
               <div style={styles.agendaCardIndicatorPending}>In Progress</div>
               <div style={styles.agendaCardBottomCfg}>
-                Change maximum allowed block size from 1MB to 1.25MiB <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>#maxblocksize</span></span>
+                {this.props.agenda.agendaDescription} <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>#{this.props.agenda.agendaId}</span></span>
               </div>
-              <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>42</span>%</div>
+              <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>{this.props.agenda.percentVoted}</span>%</div>
             </div>
             <div style={styles.agendaCardTop}>
-              <div style={styles.agendaCardName}>Agenda name</div>
+              <div style={styles.agendaCardName}>{this.props.agenda.agendaName}</div>
               <div style={styles.agendaCardTopPreference}>
-                Preference: <span style={styles.textHighlightSmall}>Abstain</span>
+                Preference: <span style={styles.textHighlightSmall}>{this.props.agenda.selectedOption}</span>
               </div>
             </div>
           </div>);
@@ -181,9 +184,10 @@ class AgendaCard extends React.Component {
           <div style={styles.agendaCardDisabled}>
             <div style={styles.agendaCardBottom}>
               <div style={styles.agendaCardIndicatorFinished}>Finished</div>
-              <div style={styles.agendaCardBottomCfg}>Change sdiff calculations <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>#maxblocksize</span></span>
+              <div style={styles.agendaCardBottomCfg}>
+                {this.props.agenda.agendaDescription} <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>#{this.props.agenda.agendaId}</span></span>
               </div>
-              <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>100</span>%</div>
+              <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>{this.props.agenda.percentVoted}</span>%</div>
             </div>
             <div style={styles.agendaCardTop}>
               <div style={styles.agendaCardName}>Agenda name</div>

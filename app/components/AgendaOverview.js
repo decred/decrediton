@@ -16,13 +16,13 @@ class AgendaOverview extends React.Component {
             <div style={StakePoolStyles.agendaOverview}>
               <div style={StakePoolStyles.agendaOverviewTitleArea}>
                 <AgendaClose onClick={() => this.props.closeCurrentAgenda()}/>
-                <div style={StakePoolStyles.agendaOverviewTitleName}>Agenda name</div>
+                <div style={StakePoolStyles.agendaOverviewTitleName}>{this.props.agenda.agendaName}</div>
               </div>
               <div style={StakePoolStyles.agendaOverviewMiddle}>
                 <div style={StakePoolStyles.agendaOverviewText}>
-                  <span>Change maximum allowed block size from 1MB to 1.25MiB</span><br/>
+                  <span>{this.props.agenda.agendaDescription}</span><br/>
                   <span style={StakePoolStyles.agendaOverviewAgendaId}>
-                    Agenda ID: <span style={StakePoolStyles.agendaOverviewAgendaIdId}>#maxblocksize</span>
+                    Agenda ID: <span style={StakePoolStyles.agendaOverviewAgendaIdId}>#{this.props.agenda.agendaId}</span>
                   </span>
                   <br/>
                   <br/>
@@ -39,24 +39,20 @@ class AgendaOverview extends React.Component {
                 <div style={StakePoolStyles.agendaNameOptions}>Voting for</div>
               </div>
               <div style={StakePoolStyles.agendaOverviewOptionsSectionMiddle}>
-                  <input style={StakePoolStyles.agendaOptionsRadio} id="option1" type="radio" name="field" value="option1" checked={this.state.choice == 'option1'} onChange={(e) => {this.setState({choice: e.target.value});this.props.selectAgendaChoice('agenda1', e.target.value);}}/>
-                  <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor="option1"><span><span></span></span>Option 1</label>
-                  <input style={StakePoolStyles.agendaOptionsRadio} id="option2" type="radio" name="field" value="option2" checked={this.state.choice == 'option2'} onChange={(e) => {this.setState({choice: e.target.value});this.props.selectAgendaChoice('agenda1', e.target.value);}}/>
-                  <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor="option2"><span><span></span></span>Option 2</label>
-                  <input style={StakePoolStyles.agendaOptionsRadio} id="option3" type="radio" name="field" value="option3" checked={this.state.choice == 'option3'} onChange={(e) => {this.setState({choice: e.target.value});this.props.selectAgendaChoice('agenda1', e.target.value);}}/>
-                  <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor="option3"><span><span></span></span>Option 3</label>
-                  <input style={StakePoolStyles.agendaOptionsRadio} id="option4" type="radio" name="field" value="option4" checked={this.state.choice == 'option4'} onChange={(e) => {this.setState({choice: e.target.value});this.props.selectAgendaChoice('agenda1', e.target.value);}}/>
-                  <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor="option4"><span><span></span></span>Option 4</label>
-                  <input style={StakePoolStyles.agendaOptionsRadio} id="option5" type="radio" name="field" value="option5" checked={this.state.choice == 'option5'} onChange={(e) => {this.setState({choice: e.target.value});this.props.selectAgendaChoice('agenda1', e.target.value);}}/>
-                  <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor="option5"><span><span></span></span>Option 5</label>
-                  <input style={StakePoolStyles.agendaOptionsRadio} id="option6" type="radio" name="field" value="option6" checked={this.state.choice == 'option6'} onChange={(e) => {this.setState({choice: e.target.value});this.props.selectAgendaChoice('agenda1', e.target.value);}}/>
-                  <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor="option6"><span><span></span></span>Option 6</label>
+                {this.props.agenda.options.map((option) => {
+                  return(
+                  <div key={this.props.agenda+option}>
+                    <input style={StakePoolStyles.agendaOptionsRadio} id={option} type="radio" name="field" value={option} checked={this.state.choice == {option}} onChange={(e) => {this.setState({choice: e.target.value});this.props.selectAgendaChoice(this.props.agenda.agendaId, e.target.value);}}/>
+                    <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor={option}><span><span></span></span>{option}</label>
+                  </div>
+                  );
+                })}
               </div>
             </div>
             <div style={StakePoolStyles.agendaBottom}>
               <div style={StakePoolStyles.agendaBottomOverview}>
                 <div style={StakePoolStyles.agendaIndicatorPending}>In Progress</div>
-                <div style={StakePoolStyles.agendaPercent}><span style={StakePoolStyles.agendaPercentNumber}>42</span>%</div>
+                <div style={StakePoolStyles.agendaPercent}><span style={StakePoolStyles.agendaPercentNumber}>{this.props.agenda.percentVoted}</span>%</div>
               </div>
               <div style={StakePoolStyles.agendaBottomOptions}>
                 <KeyBlueButton style={StakePoolStyles.agendaUpdatePreferencesButton} onClick={() => this.props.updateAgendaPreference('agenda1')}>Update Preference</KeyBlueButton>
