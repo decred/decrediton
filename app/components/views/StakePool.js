@@ -397,7 +397,7 @@ class StakePool extends Component{
         </div>
     );
     var votingGuiView = (
-      <div style={StakePoolStyles.content}>
+      <div style={StakePoolStyles.contentVotingGui}>
         <div style={StakePoolStyles.votingTitleArea}>
           <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences</div>
         </div>
@@ -708,8 +708,6 @@ class StakePool extends Component{
                     purchaseTicketsView :
                       votingGuiView
         }
-
-        {votingGuiView}
       </div>
     );
     if ((walletService === null) || (ticketBuyerService === null)){

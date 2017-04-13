@@ -900,6 +900,11 @@ export const StakePoolStyles = {
     height: '556px',
     padding: '54px 60px 54px 80px',
   },
+  contentVotingGui: {
+    overflow: 'auto',
+    height: '556px',
+    padding: '0px 60px 10px 80px',
+  },
   contentPurchaseTicketView: {
     overflow: 'auto',
     height: '565px',
@@ -1502,13 +1507,12 @@ export const StakePoolStyles = {
   },
   votingTitleArea: {
     display: 'block',
-    height: '44px',
+    height: '20px',
     marginRight: 'auto',
-    marginBottom: '10px',
     marginLeft: 'auto',
     borderBottom: '1px solid transparent',
     color: '#596d81',
-    fontSize: '27px',
+    fontSize: '20px',
   },
   votingTitleAreaName: {
     fontSize: '20px',
@@ -1516,13 +1520,12 @@ export const StakePoolStyles = {
     overflow: 'hidden',
     width: '653px',
     height: '100%',
-    paddingTop: '13px',
+    paddingBottom: '10px',
     paddingRight: '20px',
     paddingLeft: '20px',
     float: 'left',
   },
   votingAgendaArea: {
-    paddingTop: '1px',
   },
   agendaOverview: {
     position: 'relative',
@@ -1561,7 +1564,7 @@ export const StakePoolStyles = {
     position: 'relative',
     overflow: 'hidden',
     width: '700px',
-    height: '281px',
+    height: '256px',
     marginBottom: '20px',
     float: 'left',
     backgroundColor: '#fff',
