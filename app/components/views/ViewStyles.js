@@ -1303,7 +1303,7 @@ export const StakePoolStyles = {
     float: 'left',
     textTransform: 'capitalize',
   },
-  ontentSendSectionAmount: {
+  contentSendSectionAmount: {
     width: '160px',
     height: '100%',
     paddingTop: '1px',
@@ -1440,6 +1440,7 @@ export const StakePoolStyles = {
     }
   },
   toggle: {
+    fontFamily: 'Source Sans Pro, sans-serif',
     float: 'right',
   },
   contentTitle: {
@@ -1530,7 +1531,7 @@ export const StakePoolStyles = {
   agendaOverview: {
     position: 'relative',
     width: '420px',
-    padding: '20px 20px 4px',
+    padding: '10px 20px 4px',
     float: 'left',
   },
   agendaOverviewTitleArea: {
