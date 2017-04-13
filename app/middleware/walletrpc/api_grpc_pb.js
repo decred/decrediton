@@ -70,6 +70,28 @@ function deserialize_walletrpc_AccountsResponse(buffer_arg) {
   return api_pb.AccountsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_AgendasRequest(arg) {
+  if (!(arg instanceof api_pb.AgendasRequest)) {
+    throw new Error('Expected argument of type walletrpc.AgendasRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_AgendasRequest(buffer_arg) {
+  return api_pb.AgendasRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_AgendasResponse(arg) {
+  if (!(arg instanceof api_pb.AgendasResponse)) {
+    throw new Error('Expected argument of type walletrpc.AgendasResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_AgendasResponse(buffer_arg) {
+  return api_pb.AgendasResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_BalanceRequest(arg) {
   if (!(arg instanceof api_pb.BalanceRequest)) {
     throw new Error('Expected argument of type walletrpc.BalanceRequest');
@@ -752,6 +774,28 @@ function deserialize_walletrpc_SetPoolFeesResponse(buffer_arg) {
   return api_pb.SetPoolFeesResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_SetVoteChoicesRequest(arg) {
+  if (!(arg instanceof api_pb.SetVoteChoicesRequest)) {
+    throw new Error('Expected argument of type walletrpc.SetVoteChoicesRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SetVoteChoicesRequest(buffer_arg) {
+  return api_pb.SetVoteChoicesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_SetVoteChoicesResponse(arg) {
+  if (!(arg instanceof api_pb.SetVoteChoicesResponse)) {
+    throw new Error('Expected argument of type walletrpc.SetVoteChoicesResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SetVoteChoicesResponse(buffer_arg) {
+  return api_pb.SetVoteChoicesResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_SetVotingAddressRequest(arg) {
   if (!(arg instanceof api_pb.SetVotingAddressRequest)) {
     throw new Error('Expected argument of type walletrpc.SetVotingAddressRequest');
@@ -1014,6 +1058,28 @@ function serialize_walletrpc_VersionResponse(arg) {
 
 function deserialize_walletrpc_VersionResponse(buffer_arg) {
   return api_pb.VersionResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_VoteChoicesRequest(arg) {
+  if (!(arg instanceof api_pb.VoteChoicesRequest)) {
+    throw new Error('Expected argument of type walletrpc.VoteChoicesRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_VoteChoicesRequest(buffer_arg) {
+  return api_pb.VoteChoicesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_VoteChoicesResponse(arg) {
+  if (!(arg instanceof api_pb.VoteChoicesResponse)) {
+    throw new Error('Expected argument of type walletrpc.VoteChoicesResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_VoteChoicesResponse(buffer_arg) {
+  return api_pb.VoteChoicesResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_WalletExistsRequest(arg) {
@@ -1579,3 +1645,44 @@ var SeedServiceService = exports.SeedServiceService = {
 };
 
 exports.SeedServiceClient = grpc.makeGenericClientConstructor(SeedServiceService);
+var AgendaServiceService = exports.AgendaServiceService = {
+  agendas: {
+    path: '/walletrpc.AgendaService/Agendas',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.AgendasRequest,
+    responseType: api_pb.AgendasResponse,
+    requestSerialize: serialize_walletrpc_AgendasRequest,
+    requestDeserialize: deserialize_walletrpc_AgendasRequest,
+    responseSerialize: serialize_walletrpc_AgendasResponse,
+    responseDeserialize: deserialize_walletrpc_AgendasResponse,
+  },
+};
+
+exports.AgendaServiceClient = grpc.makeGenericClientConstructor(AgendaServiceService);
+var VotingServiceService = exports.VotingServiceService = {
+  voteChoices: {
+    path: '/walletrpc.VotingService/VoteChoices',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.VoteChoicesRequest,
+    responseType: api_pb.VoteChoicesResponse,
+    requestSerialize: serialize_walletrpc_VoteChoicesRequest,
+    requestDeserialize: deserialize_walletrpc_VoteChoicesRequest,
+    responseSerialize: serialize_walletrpc_VoteChoicesResponse,
+    responseDeserialize: deserialize_walletrpc_VoteChoicesResponse,
+  },
+  setVoteChoices: {
+    path: '/walletrpc.VotingService/SetVoteChoices',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.SetVoteChoicesRequest,
+    responseType: api_pb.SetVoteChoicesResponse,
+    requestSerialize: serialize_walletrpc_SetVoteChoicesRequest,
+    requestDeserialize: deserialize_walletrpc_SetVoteChoicesRequest,
+    responseSerialize: serialize_walletrpc_SetVoteChoicesResponse,
+    responseDeserialize: deserialize_walletrpc_SetVoteChoicesResponse,
+  },
+};
+
+exports.VotingServiceClient = grpc.makeGenericClientConstructor(VotingServiceService);
