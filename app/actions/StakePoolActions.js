@@ -132,7 +132,7 @@ export const SETSTAKEPOOLVOTECHOICES_SUCCESS = 'SETSTAKEPOOLVOTECHOICES_SUCCESS'
 export function setStakePoolVoteChoices(poolHost, apiKey, voteChoices) {
   return (dispatch, ) => {
     dispatch({ type: SETSTAKEPOOLVOTECHOICES_ATTEMPT });
-    setStakePoolAddress(
+    setVoteChoices(
       poolHost,
       apiKey,
       voteChoices,
