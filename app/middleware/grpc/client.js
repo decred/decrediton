@@ -25,6 +25,26 @@ export function getWalletService(address, port, cb) {
   });
 }
 
+export function getTicketBuyerService(address, port, cb) {
+  var cert = getCert();
+  if (cert == '') {
+    return cb(null, 'Unable to load dcrwallet certificate.  dcrwallet not running?');
+  }
+  var creds = grpc.credentials.createSsl(cert);
+  var client = new services.TicketBuyerServiceClient(address + ':' + port, creds);
+
+  var deadline = new Date();
+  var deadlineInSeconds = 2;
+  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+  grpc.waitForClientReady(client, deadline, function(err) {
+    if (err) {
+      return cb(null, err);
+    } else {
+      return cb(client);
+    }
+  });
+}
+
 export function loader(request, cb) {
   var cert = getCert();
   var creds = grpc.credentials.createSsl(cert);

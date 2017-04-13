@@ -1,4 +1,4 @@
-import { getWalletService } from '../middleware/grpc/client';
+import { getWalletService, getTicketBuyerService } from '../middleware/grpc/client';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt } from './ControlActions';
 import { transactionNtfnsStart } from './NotificationActions';
 import { updateStakepoolPurchaseInformation } from './StakePoolActions';
@@ -57,6 +57,40 @@ function getWalletServiceAction() {
         dispatch(getWalletServiceError(err + ' Please try again'));
       } else {
         dispatch(getWalletServiceSuccess(walletService));
+      }
+    });
+  };
+}
+
+export const GETTICKETBUYERSERVICE_ATTEMPT = 'GETTICKETBUYERSERVICE_ATTEMPT';
+export const GETTICKETBUYERSERVICE_FAILED = 'GETTICKETBUYERSERVICE_FAILED';
+export const GETTICKETBUYERSERVICE_SUCCESS = 'GETTICKETBUYERSERVICE_SUCCESS';
+
+function getTicketBuyerServiceError(error) {
+  return { error, type: GETTICKETBUYERSERVICE_FAILED };
+}
+
+function getTicketBuyerServiceSuccess(ticketBuyerService) {
+  return (dispatch) => {
+    dispatch({ ticketBuyerService, type: GETTICKETBUYERSERVICE_SUCCESS });
+  };
+}
+
+export function getTicketBuyerServiceAttempt() {
+  return (dispatch) => {
+    dispatch({ type: GETTICKETBUYERSERVICE_ATTEMPT });
+    dispatch(getTicketBuyerServiceAction());
+  };
+}
+
+function getTicketBuyerServiceAction() {
+  return (dispatch, getState) => {
+    const { address, port } = getState().grpc;
+    getTicketBuyerService(address, port, function (ticketBuyerService, err) {
+      if (err) {
+        dispatch(getTicketBuyerServiceError(err + ' Please try again'));
+      } else {
+        dispatch(getTicketBuyerServiceSuccess(ticketBuyerService));
       }
     });
   };

@@ -2,8 +2,9 @@ import { getBalanceAttempt, getTransactionInfoAttempt, getAccountsAttempt } from
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   ConstructTransactionRequest, SignTransactionRequest,
-  PublishTransactionRequest, PurchaseTicketsRequest, LoadActiveDataFiltersRequest
-} from '../middleware/walletrpc/api_pb';
+  PublishTransactionRequest, PurchaseTicketsRequest, LoadActiveDataFiltersRequest,
+  StartAutoBuyerRequest, StopAutoBuyerRequest
+  } from '../middleware/walletrpc/api_pb';
 
 export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
 export const GETNEXTADDRESS_FAILED = 'GETNEXTADDRESS_FAILED';
@@ -578,6 +579,133 @@ export function clearPurchaseTicketsError() {
     const { purchaseTicketsError } = getState().control;
     if (purchaseTicketsError !== null) {
       dispatch({type: PURCHASETICKETS_CLEAR_ERROR});
+    }
+  };
+}
+
+export const STARTAUTOBUYER_ATTEMPT = 'STARTAUTOBUYER_ATTEMPT';
+export const STARTAUTOBUYER_FAILED = 'STARTAUTOBUYER_FAILED';
+export const STARTAUTOBUYER_SUCCESS = 'STARTAUTOBUYER_SUCCESS';
+export const STARTAUTOBUYER_CLEAR_ERROR = 'STARTAUTOBUYER_CLEAR_ERROR';
+export const STARTAUTOBUYER_CLEAR_SUCCESS= 'STARTAUTOBUYER_CLEAR_SUCCESS';
+
+function startAutoBuyerError(error) {
+  return { error, type: STARTAUTOBUYER_FAILED };
+}
+
+function startAutoBuyerSuccess(startAutoBuyerResponse) {
+  var success = 'You successfully started the auto ticket buyer.';
+  return { success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS };
+}
+
+export function startAutoBuyerAttempt(passphrase, accountNum, balanceToMaintain,
+maxFeePerKb, maxPriceRelative, maxPriceAbsolute, maxPerBlock, stakepool) {
+  var request = new StartAutoBuyerRequest();
+  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+  request.setAccount(accountNum);
+  request.setBalanceToMaintain(balanceToMaintain);
+  request.setMaxFeePerKb(maxFeePerKb);
+  request.setMaxPriceRelative(maxPriceRelative);
+  request.setMaxPriceAbsolute(maxPriceAbsolute);
+  request.setVotingAddress(stakepool.TicketAddress);
+  request.setPoolAddress(stakepool.PoolAddress);
+  request.setPoolFees(stakepool.PoolFees);
+  request.setMaxPerBlock(maxPerBlock);
+  return (dispatch) => {
+    dispatch({
+      request: request,
+      type: STARTAUTOBUYER_ATTEMPT });
+    dispatch(startAutoBuyerAction());
+  };
+}
+
+function startAutoBuyerAction() {
+  return (dispatch, getState) => {
+    const { ticketBuyerService } = getState().grpc;
+    const { startAutoBuyerRequest } = getState().control;
+    ticketBuyerService.startAutoBuyer(startAutoBuyerRequest,
+        function(err, startAutoBuyerResponse) {
+          if (err) {
+            dispatch(startAutoBuyerError(err + ' Please try again'));
+          } else {
+            dispatch(startAutoBuyerSuccess(startAutoBuyerResponse));
+          }
+        });
+  };
+}
+
+export function clearStartAutoBuyerSuccess() {
+  return (dispatch, getState) => {
+    const { startAutoBuyerSuccess } = getState().control;
+    if (startAutoBuyerSuccess !== '') {
+      dispatch({type: STARTAUTOBUYER_CLEAR_SUCCESS});
+    }
+  };
+}
+
+export function clearStartAutoBuyerError() {
+  return (dispatch, getState) => {
+    const { startAutoBuyerError } = getState().control;
+    if (startAutoBuyerError !== null) {
+      dispatch({type: STARTAUTOBUYER_CLEAR_ERROR});
+    }
+  };
+}
+
+export const STOPAUTOBUYER_ATTEMPT = 'STOPAUTOBUYER_ATTEMPT';
+export const STOPAUTOBUYER_FAILED = 'STOPAUTOBUYER_FAILED';
+export const STOPAUTOBUYER_SUCCESS = 'STOPAUTOBUYER_SUCCESS';
+export const STOPAUTOBUYER_CLEAR_ERROR = 'STOPAUTOBUYER_CLEAR_ERROR';
+export const STOPAUTOBUYER_CLEAR_SUCCESS= 'STOPAUTOBUYER_CLEAR_SUCCESS';
+
+function stopAutoBuyerError(error) {
+  return { error, type: STOPAUTOBUYER_FAILED };
+}
+
+function stopAutoBuyerSuccess(stopAutoBuyerResponse) {
+  var success = 'You successfully stoped the auto ticket buyer.';
+  return { success: success, stopAutoBuyerResponse: stopAutoBuyerResponse, type: STOPAUTOBUYER_SUCCESS };
+}
+
+export function stopAutoBuyerAttempt() {
+  var request = new StopAutoBuyerRequest();
+  return (dispatch) => {
+    dispatch({
+      request: request,
+      type: STOPAUTOBUYER_ATTEMPT });
+    dispatch(stopAutoBuyerAction());
+  };
+}
+
+function stopAutoBuyerAction() {
+  return (dispatch, getState) => {
+    const { ticketBuyerService } = getState().grpc;
+    const { stopAutoBuyerRequest } = getState().control;
+    ticketBuyerService.stopAutoBuyer(stopAutoBuyerRequest,
+        function(err, stopAutoBuyerResponse) {
+          if (err) {
+            dispatch(stopAutoBuyerError(err + ' Please try again'));
+          } else {
+            dispatch(stopAutoBuyerSuccess(stopAutoBuyerResponse));
+          }
+        });
+  };
+}
+
+export function clearStopAutoBuyerSuccess() {
+  return (dispatch, getState) => {
+    const { stopAutoBuyerSuccess } = getState().control;
+    if (stopAutoBuyerSuccess !== '') {
+      dispatch({type: STOPAUTOBUYER_CLEAR_SUCCESS});
+    }
+  };
+}
+
+export function clearStopAutoBuyerError() {
+  return (dispatch, getState) => {
+    const { stopAutoBuyerError } = getState().control;
+    if (stopAutoBuyerError !== null) {
+      dispatch({type: STOPAUTOBUYER_CLEAR_ERROR});
     }
   };
 }
