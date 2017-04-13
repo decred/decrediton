@@ -601,7 +601,6 @@ function getVoteChoicesError(error) {
 function getVoteChoicesSuccess(voteChoices) {
   return (dispatch) => {
     dispatch({ voteChoices, type: GETVOTECHOICES_SUCCESS });
-    setTimeout(() => { dispatch(getVoteChoicesAttempt()); }, 10);
   };
 }
 
@@ -625,3 +624,45 @@ function getVoteChoicesAction() {
     });
   };
 }
+
+export const SETVOTECHOICES_ATTEMPT = 'SETVOTECHOICES_ATTEMPT';
+export const SETVOTECHOICES_FAILED = 'SETVOTECHOICES_FAILED';
+export const SETVOTECHOICES_SUCCESS = 'SETVOTECHOICES_SUCCESS';
+
+function setVoteChoicesError(error) {
+  return { error, type: SETVOTECHOICES_FAILED };
+}
+
+function setVoteChoicesSuccess(response) {
+  return (dispatch) => {
+    dispatch({ response, type: SETVOTECHOICES_SUCCESS });
+  };
+}
+
+export function setVoteChoicesAttempt() {
+  return (dispatch) => {
+    dispatch({ type: SETVOTECHOICES_ATTEMPT });
+    dispatch(setVoteChoicesAction());
+  };
+}
+
+function setVoteChoicesAction(choices) {
+  var request;// = new SetVoteChoicesRequest();
+  choices.map(choiceRaw => {
+    var choice;// = new Choice();
+    choice.setChoiceId(choiceRaw.choiceId);
+    choice.setAgendaId(choiceRaw.agendaId);
+    request.addChoices(choice);
+  });
+  return (dispatch, setState) => {
+    const { votingService } = setState().grpc;
+    votingService.setVoteChoices(request, function (response, err) {
+      if (err) {
+        dispatch(setVoteChoicesError(err + ' Please try again'));
+      } else {
+        dispatch(setVoteChoicesSuccess(response));
+      }
+    });
+  };
+}
+
