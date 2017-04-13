@@ -6,7 +6,8 @@ import { hashHistory } from 'react-router';
 import { timeSince } from '../helpers/dateFormat.js';
 import {
   PingRequest, NetworkRequest, AccountNumberRequest, AccountsRequest,
-  BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest
+  BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest,
+  AgendasRequest, VoteChoicesRequest, SetVoteChoicesRequest,
 } from '../middleware/walletrpc/api_pb';
 
 export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
@@ -577,7 +578,7 @@ export function getAgendasAttempt() {
 }
 
 function getAgendasAction() {
-  var request;
+  var request = new AgendasRequest();
   return (dispatch, getState) => {
     const { agendaService } = getState().grpc;
     agendaService.agendas(request, function (agendas, err) {
@@ -612,7 +613,7 @@ export function getVoteChoicesAttempt() {
 }
 
 function getVoteChoicesAction() {
-  var request;
+  var request = new VoteChoicesRequest();
   return (dispatch, getState) => {
     const { votingService } = getState().grpc;
     votingService.voteChoices(request, function (voteChoices, err) {
@@ -647,9 +648,9 @@ export function setVoteChoicesAttempt() {
 }
 
 function setVoteChoicesAction(choices) {
-  var request;// = new SetVoteChoicesRequest();
+  var request = new SetVoteChoicesRequest();
   choices.map(choiceRaw => {
-    var choice;// = new Choice();
+    var choice = new SetVoteChoicesRequest.Choice();
     choice.setChoiceId(choiceRaw.choiceId);
     choice.setAgendaId(choiceRaw.agendaId);
     request.addChoices(choice);

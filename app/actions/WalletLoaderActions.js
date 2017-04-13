@@ -1,5 +1,5 @@
 import { loader } from '../middleware/grpc/client';
-import { getWalletServiceAttempt, getTicketBuyerServiceAttempt } from './ClientActions';
+import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from './ClientActions';
 import { getVersionServiceAttempt } from './VersionActions';
 import { getSeederAttempt, generateRandomSeedAttempt } from './SeedServiceActions';
 import { getCfg, getCfgPath, getDcrdCert } from '../config.js';
@@ -396,6 +396,8 @@ function fetchHeadersSuccess(response) {
     dispatch({response: response, type: FETCHHEADERS_SUCCESS});
     dispatch(getWalletServiceAttempt());
     dispatch(getTicketBuyerServiceAttempt());
+    dispatch(getVotingServiceAttempt());
+    dispatch(getAgendaServiceAttempt());
   };
 }
 
