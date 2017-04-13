@@ -159,38 +159,38 @@ const styles = {
 };
 class AgendaCard extends React.Component {
   render() {
-    if (!this.props.disabled) {
+    if (!this.props.agenda.finished) {
       return (
-        <div style={styles.agendaCard}>
-          <div style={styles.agendaCardBottom}>
-            <div style={styles.agendaCardIndicatorPending}>In Progress</div>
-            <div style={styles.agendaCardBottomCfg}>
-              Change maximum allowed block size from 1MB to 1.25MiB <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>#maxblocksize</span></span>
+          <div style={styles.agendaCard} onClick={this.props.onClick}>
+            <div style={styles.agendaCardBottom}>
+              <div style={styles.agendaCardIndicatorPending}>In Progress</div>
+              <div style={styles.agendaCardBottomCfg}>
+                Change maximum allowed block size from 1MB to 1.25MiB <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>#maxblocksize</span></span>
+              </div>
+              <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>42</span>%</div>
             </div>
-            <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>42</span>%</div>
-          </div>
-          <div style={styles.agendaCardTop}>
-            <div style={styles.agendaCardName}>Agenda name</div>
-            <div style={styles.agendaCardTopPreference}>
-              Preference: <span style={styles.textHighlightSmall}>Abstain</span>
+            <div style={styles.agendaCardTop}>
+              <div style={styles.agendaCardName}>Agenda name</div>
+              <div style={styles.agendaCardTopPreference}>
+                Preference: <span style={styles.textHighlightSmall}>Abstain</span>
+              </div>
             </div>
-          </div>
-        </div>);
+          </div>);
     } else {
       return (
-        <div style={styles.agendaCardDisabled}>
-          <div style={styles.agendaCardBottom}>
-            <div style={styles.agendaCardIndicatorFinished}>Finished</div>
-            <div style={styles.agendaCardBottomCfg}>Change sdiff calculations <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>#maxblocksize</span></span>
+          <div style={styles.agendaCardDisabled}>
+            <div style={styles.agendaCardBottom}>
+              <div style={styles.agendaCardIndicatorFinished}>Finished</div>
+              <div style={styles.agendaCardBottomCfg}>Change sdiff calculations <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>#maxblocksize</span></span>
+              </div>
+              <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>100</span>%</div>
             </div>
-            <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>100</span>%</div>
-          </div>
-          <div style={styles.agendaCardTop}>
-            <div style={styles.agendaCardName}>Agenda name</div>
-            <div style={styles.agendaCardTopPreference}>Preference: <span style={styles.textHighlightSmall}>Option 1</span>
+            <div style={styles.agendaCardTop}>
+              <div style={styles.agendaCardName}>Agenda name</div>
+              <div style={styles.agendaCardTopPreference}>Preference: <span style={styles.textHighlightSmall}>Option 1</span>
+              </div>
             </div>
-          </div>
-        </div>);
+          </div>);
     }
   }
 }

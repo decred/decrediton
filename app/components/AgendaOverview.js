@@ -1,5 +1,4 @@
 import React from 'react';
-import Radium from 'radium';
 import { StakePoolStyles } from './views/ViewStyles';
 import AgendaClose from './AgendaClose';
 import KeyBlueButton from './KeyBlueButton';
@@ -16,7 +15,7 @@ class AgendaOverview extends React.Component {
           <div style={StakePoolStyles.agenda}>
             <div style={StakePoolStyles.agendaOverview}>
               <div style={StakePoolStyles.agendaOverviewTitleArea}>
-                <AgendaClose onClick={() => this.closeCurrentAgenda()}/>
+                <AgendaClose onClick={() => this.props.closeCurrentAgenda()}/>
                 <div style={StakePoolStyles.agendaOverviewTitleName}>Agenda name</div>
               </div>
               <div style={StakePoolStyles.agendaOverviewMiddle}>
@@ -69,4 +68,4 @@ class AgendaOverview extends React.Component {
   }
 }
 
-export default Radium(AgendaOverview);
+export default AgendaOverview;

@@ -73,6 +73,13 @@ class StakePool extends Component{
       expiryError: null,
       privPassError: null,
       apiKeyError: null,
+      agendaDisplay: null,
+      availableAgendas: [
+        {agendaId: 'Agenda1', selectedOption: 'option1', agendaDiscription: 'This is the agenda1 description', finished: false},
+        {agendaId: 'Agenda2', selectedOption: 'option2', agendaDiscription: 'This is the agenda2 description', finished: false},
+        {agendaId: 'Agenda3', selectedOption: 'option3', agendaDiscription: 'This is the agenda3 description', finished: true},
+
+      ],
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -214,10 +221,15 @@ class StakePool extends Component{
   }
   selectAgendaChoice(agenda, choice) {
     console.log(agenda, choice);
-    //this.setState({choice: choice});
+    this.setState({choice: choice});
   }
   closeCurrentAgenda() {
+    this.setState({agendaDisplay: null});
     console.log('close agenda');
+  }
+  showAgendaOverview(agenda) {
+    this.setState({agendaDisplay: agenda});
+    console.log('show agenda');
   }
   updateAgendaPreference() {
     console.log('update agenda preference');
@@ -370,11 +382,13 @@ class StakePool extends Component{
           <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences</div>
         </div>
         <div style={StakePoolStyles.votingAgendaArea}>
-          <AgendaOverview currentChoice={'option1'} selectAgendaChoice={this.selectAgendaChoice} updateAgendaPreference={this.updateAgendaPreference}/>
-          <AgendaCard/>
-          <AgendaCard disabled={true}/>
-          <AgendaCard disabled={true}/>
-          <AgendaCard disabled={true}/>
+          {this.state.agendaDisplay !== null ?
+            <AgendaOverview currentChoice={this.state.agendaDisplay.currentOption} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updateAgendaPreference={this.updateAgendaPreference}/>:
+            <div></div>
+          }
+          {this.state.availableAgendas.map((agenda) => {
+            return(<AgendaCard key={agenda.agendaId} agenda={agenda} onClick={() => this.showAgendaOverview(agenda)}/>);
+          })}
         </div>
       </div>
     );
