@@ -1504,7 +1504,6 @@ export const StakePoolStyles = {
     paddingRight: '8px',
   },
   votingTitleArea: {
-    marginBottom: '5px',
     display: 'block',
     height: '44px',
     marginRight: 'auto',
@@ -1515,7 +1514,6 @@ export const StakePoolStyles = {
     fontSize: '27px',
   },
   votingTitleAreaName: {
-    width: '100%',
     fontSize: '20px',
     display: 'inlineBlock',
     overflow: 'hidden',
@@ -1543,7 +1541,7 @@ export const StakePoolStyles = {
     paddingRight: '10px',
     float: 'left',
     fontSize: '19px',
-  }, 
+  },
   agendaOverviewTitleClose: {
     position: 'absolute',
     top: '0px',
@@ -1558,6 +1556,9 @@ export const StakePoolStyles = {
     maxWidth: '100%',
     display: 'inlineBlock',
     backgroundColor: 'transparent',
+    ':hover': {
+      opacity: '0.7',
+    }
   },
   agenda: {
     position: 'relative',
@@ -1575,7 +1576,7 @@ export const StakePoolStyles = {
   agendaOverviewMiddle: {
     color: '#596d81',
     fontSize: '13px',
-    position: 'relative',    
+    position: 'relative',
   },
   agendaOverviewText: {
     lineHeight: '18px',
@@ -1618,15 +1619,13 @@ export const StakePoolStyles = {
     float: 'left',
   },
   agendaOptionsRadioLabel: {
-    display: 'inlineBlock',
+    display: 'block',
     width: '100%',
     color: '#596d81',
     fontSize: '13px',
-    fontWeight: '400',
+    fontWeight: '600',
     cursor: 'pointer',
-    display: 'block',
     marginBottom: '5px',
-    fontWeight: 'bold',
     boxSizing: 'borderBox',
   },
   agendaBottom: {
@@ -1647,7 +1646,7 @@ export const StakePoolStyles = {
   agendaPercent: {
     float: 'left',
     fontSize: '19px',
-  }, 
+  },
   agendaPercentNumber: {
     fontSize: '45px',
     fontWeight: '600',
