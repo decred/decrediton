@@ -1,10 +1,11 @@
 import React from 'react';
 import Radium from 'radium';
 import CardKebab from './icons/tickets-agenda-card-kebab.svg';
+import CardKebabHover from './icons/tickets-agenda-card-kebab-hover.svg';
 import CardDisabledKebab from './icons/tickets-agenda-card-kebab-disabled.svg';
 import IndicatorPending from './icons/indicator-pending.svg';
-import IndicatorConfirmed from './icons/indicator-confirmed.svg';
 import IndicatorFinished from './icons/indicator-finished.svg';
+
 const styles = {
   agendaCard: {
     position: 'relative',
@@ -23,6 +24,11 @@ const styles = {
     boxShadow: '0 3px 6px 0 rgba(9, 24, 45, .1)',
     color: '#0c1e3e',
     cursor: 'pointer',
+    ':hover': {
+      backgroundImage: `url(${CardKebabHover})`,
+      backgroundSize: '10px',
+      boxShadow: '0 2px 2px 0 rgba(9, 24, 45, .1)',
+    },
   },
 
   agendaCardDisabled: {
@@ -39,11 +45,11 @@ const styles = {
     backgroundSize: '10px',
     backgroundPosition: '93% 27px',
     backgroundRepeat: 'no-repeat',
-    boxShadow: '0 3px 6px 0 rgba(9, 24, 45, .1)',
-    color: '#0c1e3e',
-    cursor: 'pointer',
     color: '#8997a5',
     cursor: 'default',
+    ':hover': {
+      boxShadow: '0 3px 6px 0 rgba(9, 24, 45, .1)',
+    },
   },
   agendaCardBottom: {
     position: 'absolute',
@@ -74,7 +80,6 @@ const styles = {
     bottom: '0px',
     marginRight: '20px',
     marginBottom: '20px',
-    float: 'right',
   },
   agendaCardIndicatorFinished: {
     position: 'absolute',
@@ -115,7 +120,7 @@ const styles = {
   },
   agendaCardBottomCfgLastDisabled: {
     color: '#8997a5',
-  }, 
+  },
   agendaCardBottomCfgLastBold: {
     fontWeight: '600',
   },
@@ -132,7 +137,7 @@ const styles = {
     paddingRight: '20px',
     paddingLeft: '20px',
   },
-  
+
   agendaCardName: {
     paddingRight: '10px',
     float: 'left',
@@ -186,7 +191,7 @@ class AgendaCard extends React.Component {
             </div>
           </div>
         </div>);
-    }  
+    }
   }
 }
 
