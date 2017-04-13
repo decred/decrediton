@@ -2,7 +2,6 @@ import Add from '../icons/add.svg';
 import Delete from '../icons/delete.svg';
 import IndicatorPending from '../icons/indicator-pending.svg';
 import IndicatorConfirmed from '../icons/indicator-confirmed.svg';
-import IndicatorFinished from '../icons/indicator-finished.svg';
 import PlusBig from '../icons/plus-big.svg';
 import MinusBig from '../icons/minus-big.svg';
 import ArrowDownMidBlue from '../icons/arrow-down-mid-blue.svg';
@@ -13,8 +12,6 @@ import Search from '../icons/search.svg';
 import WalletGray from '../icons/wallet-gray.svg';
 import AgendaClose from '../icons/tickets-agenda-close.svg';
 import AgendaStripe from '../icons/stripe.svg';
-import CardKebab from '../icons/tickets-agenda-card-kebab.svg';
-import CardDisabledKebab from '../icons/tickets-agenda-card-kebab-disabled.svg';
 
 export const ReceiveStyles = {
   body: {
