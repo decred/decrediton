@@ -1545,7 +1545,7 @@ export const StakePoolStyles = {
   },
   agendaOverviewTitleClose: {
     position: 'absolute',
-    top: '0px',
+    top: '7px',
     right: '0px',
     width: '11px',
     height: '11px',
