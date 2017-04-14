@@ -230,20 +230,11 @@ class StakePool extends Component{
   submitStop() {
     this.props.stopAutoBuyerAttempt();
   }
-  selectAgendaChoice(agenda, choice) {
-    console.log(agenda, choice);
-    this.setState({choice: choice});
-  }
   closeCurrentAgenda() {
     this.setState({agendaDisplay: null});
-    console.log('close agenda');
   }
-  showAgendaOverview(agenda) {
-    this.setState({agendaDisplay: agenda});
-    console.log('show agenda');
-  }
-  updateAgendaPreference() {
-    console.log('update agenda preference');
+  showAgendaOverview(agenda, selectedChoice) {
+    this.setState({agendaDisplay: agenda, selectedChoice: selectedChoice});
   }
 
   render() {
@@ -405,11 +396,19 @@ class StakePool extends Component{
         </div>
         <div style={StakePoolStyles.votingAgendaArea}>
           {this.state.agendaDisplay !== null ?
-            <AgendaOverview agenda={this.state.agendaDisplay} currentChoice='option1' closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updateAgendaPreference={this.updateAgendaPreference}/>:
+            <AgendaOverview agenda={this.state.agendaDisplay} selectedChoice={this.state.selectedChoice} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updatePreferences={(agendaId, choiceId) =>this.props.setVoteChoicesAttempt(agendaId, choiceId)}/>:
             <div></div>
           }
-          {getAgendasResponse !== null ? getAgendasResponse.getAgendasList().map((agenda) => {
-            return(<AgendaCard key={agenda.getId()} agenda={agenda} onClick={() => this.showAgendaOverview(agenda)}/>);
+          {getAgendasResponse !== null && getVoteChoicesResponse !== null ? getAgendasResponse.getAgendasList().map((agenda) => {
+            var agendaId
+            var selectedChoice;
+            for (var i = 0; getVoteChoicesResponse.getChoicesList().length; i++) {
+              if (getVoteChoicesResponse.getChoicesList()[i].getAgendaId() == agenda.getId()) {
+                selectedChoice = getVoteChoicesResponse.getChoicesList()[i].getChoiceId()
+                break;
+              }
+            }
+            return(<AgendaCard key={agenda.getId()} agenda={agenda} selectedChoice={selectedChoice} onClick={() => this.showAgendaOverview(agenda, selectedChoice)}/>);
           }):
           <div></div>
           }

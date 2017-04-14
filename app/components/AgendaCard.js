@@ -175,7 +175,7 @@ class AgendaCard extends React.Component {
             <div style={styles.agendaCardTop}>
               <div style={styles.agendaCardName}>{this.props.agenda.getId()}</div>
               <div style={styles.agendaCardTopPreference}>
-                Preference: <span style={styles.textHighlightSmall}>selected option</span>
+                Preference: <span style={styles.textHighlightSmall}>{this.props.selectedChoice}</span>
               </div>
             </div>
           </div>);
@@ -191,7 +191,7 @@ class AgendaCard extends React.Component {
             </div>
             <div style={styles.agendaCardTop}>
               <div style={styles.agendaCardName}>{this.props.agenda.getId()}</div>
-              <div style={styles.agendaCardTopPreference}>Preference: <span style={styles.textHighlightSmall}>Option 1</span>
+              <div style={styles.agendaCardTopPreference}>Preference: <span style={styles.textHighlightSmall}>{this.props.selectedChoice}</span>
               </div>
             </div>
           </div>);

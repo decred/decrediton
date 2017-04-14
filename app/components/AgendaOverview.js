@@ -7,7 +7,7 @@ class AgendaOverview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      choice: this.props.currentChoice,
+      choice: this.props.selectedChoice,
     };
   }
   render() {
@@ -42,7 +42,7 @@ class AgendaOverview extends React.Component {
                 {this.props.agenda.getChoicesList().map((choice) => {
                   return(
                   <div key={this.props.agenda.getId()+choice.getId()}>
-                    <input style={StakePoolStyles.agendaOptionsRadio} id={choice.getId()} type="radio" name="field" value={choice.getId()} checked={this.state.choice == choice.getId()} onChange={(e) => {this.setState({choice: e.target.value});this.props.selectAgendaChoice(this.props.agenda.getId(), e.target.value);}}/>
+                    <input style={StakePoolStyles.agendaOptionsRadio} id={choice.getId()} type="radio" name="field" value={choice.getId()} checked={this.state.choice == choice.getId()} onChange={(e) => {this.setState({choice: e.target.value});}}/>
                     <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor={choice.getId()}><span><span></span></span>{choice.getId()}</label>
                   </div>
                   );
@@ -55,7 +55,7 @@ class AgendaOverview extends React.Component {
                 <div style={StakePoolStyles.agendaPercent}><span style={StakePoolStyles.agendaPercentNumber}>XX</span>%</div>
               </div>
               <div style={StakePoolStyles.agendaBottomOptions}>
-                <KeyBlueButton style={StakePoolStyles.agendaUpdatePreferencesButton} onClick={() => this.props.updateAgendaPreference('agenda1')}>Update Preference</KeyBlueButton>
+                <KeyBlueButton style={StakePoolStyles.agendaUpdatePreferencesButton} onClick={() => this.props.updatePreferences(this.props.agenda.getId(), this.state.choice)}>Update Preference</KeyBlueButton>
               </div>
             </div>
           </div>
