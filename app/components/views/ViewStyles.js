@@ -1396,7 +1396,7 @@ export const StakePoolStyles = {
     textAlign: 'right',
   },
   purchaseTicketInputError: {
-    width: '290px',
+    width: '288px',
     float: 'right',
     height: '100%',
     textAlign: 'left',
