@@ -425,7 +425,7 @@ class StakePool extends Component{
             }
             return(<AgendaCard key={agenda.getId()} agenda={agenda} selectedChoice={selectedChoice} onClick={() => this.showAgendaOverview(agenda)}/>);
           }):
-          <div></div>
+          <div>Currently, no agendas for voting.</div>
           }
         </div>
       </div>
