@@ -27,7 +27,6 @@ var styles = {
     }
   },
   baseDisabled: {
-    display: 'inline-block',
     padding: '17px 18px 18px',
     borderRadius: '5px',
     backgroundColor: 'grey',
@@ -50,10 +49,11 @@ class KeyBlueButton extends React.Component {
     return (
       <div
         style={! this.props.disabled ? [
-          this.props.style,
           styles.base,
+          this.props.style,
           this.props.block && styles.block
-        ] : styles.baseDisabled }
+        ] : [styles.baseDisabled,
+          this.props.style] }
         type={this.props.type}
         disabled={this.props.disabled}
         onClick={this.props.onClick}>

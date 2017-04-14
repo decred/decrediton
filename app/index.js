@@ -143,6 +143,9 @@ var initialState = {
     getTransactionsRequestAttempt: false,
     getTransactionsResponse: null,
     unminedTransactions: null,
+
+    getAgendasResponse: null,
+    getVoteChoicesResponse: null,
   },
   walletLoader: {
     neededBlocks: neededBlocks,

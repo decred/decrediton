@@ -7,10 +7,10 @@ const styles = {
     display: 'inline-block',
     overflow: 'hidden',
     height: '44px',
-    borderRadius: '5px',
+    borderRadius: '3px',
     boxShadow: '0 0 8px 0 rgba(0, 0, 0, .2)',
     color: '#0c1e3e',
-    fontSize: '13px',
+    fontSize: '15px',
   },
 
   textToggleNewSeed: {
@@ -33,7 +33,7 @@ const styles = {
     display: 'inline-block',
     overflow: 'hidden',
     height: '44px',
-    borderRadius: '5px',
+    borderRadius: '3px',
     boxShadow: '0 0 8px 0 rgba(0, 0, 0, .2)',
     color: '#0c1e3e',
     fontSize: '13px',
@@ -54,12 +54,15 @@ const styles = {
     transitionTimingFunction: 'cubic-bezier(0.86, 0, 0.07, 1)',
     transitionDelay: '0s',
     cursor: 'pointer',
+    /*
     ':hover': {
       backgroundColor: '#69d5f7',
     },
     ':active': {
+      backgroundColor: '#0c1e3e',
       boxShadow: '0 0 1px 0 rgba(0, 0, 0, .2)',
     },
+    */
   },
   textToggleButtonActive: {
     display: 'block',
@@ -72,23 +75,14 @@ const styles = {
     color: '#fff',
     cursor: 'default',
   },
-  textToggleButtonDescriptionLeft: {
-    width: '100%',
-    height: '100%',
-    textTransform: 'capitalize',
-    paddingTop: '12px',
-    paddingRight: '20px',
-    paddingLeft: '20px',
-      //textAlign: 'right',
-  },
-  textToggleButtonDescriptionRight: {
+  textToggleButtonDescription: {
     width: '100%',
     height: '100%',
     textTransform: 'capitalize',
     display: 'block',
     paddingTop: '12px',
-    paddingRight: '20px',
-    paddingLeft: '20px',
+    paddingRight: '35px',
+    paddingLeft: '35px',
       //textAlign: 'left',
   }
 };
@@ -105,29 +99,16 @@ class NewExistingSeedToggle extends React.Component {
   }
   render() {
     const { leftText, rightText } = this.props;
-    if (this.state.activeButton == 'left') {
-      return (
-        <div style={styles.textToggle}>
-          <div style={styles.textToggleButtonActive}>
-            <div style={styles.textToggleButtonDescriptionLeft}>{leftText}</div>
-          </div>
-          <div style={styles.textToggleButton} onClick={() => this.clickButton('right')}>
-            <div style={styles.textToggleButtonDescriptionRight}>{rightText}</div>
-          </div>
+    return (
+      <div style={styles.textToggle}>
+        <div style={this.state.activeButton == 'right' ? styles.textToggleButton : styles.textToggleButtonActive } onClick={this.state.activeButton == 'right' ? () => this.clickButton('left') : null}>
+          <div style={styles.textToggleButtonDescription}>{leftText}</div>
         </div>
-      );
-    } else if (this.state.activeButton == 'right'){
-      return (
-        <div style={styles.textToggle}>
-          <div style={styles.textToggleButton} onClick={() => this.clickButton('left')}>
-            <div style={styles.textToggleButtonDescriptionLeft}>{leftText}</div>
-          </div>
-          <div style={styles.textToggleButtonActive}>
-            <div style={styles.textToggleButtonDescriptionRight}>{rightText}</div>
-          </div>
+        <div style={this.state.activeButton == 'left' ? styles.textToggleButton : styles.textToggleButtonActive } onClick={this.state.activeButton == 'left' ? () => this.clickButton('right') : null}>
+          <div style={styles.textToggleButtonDescription}>{rightText}</div>
         </div>
-      );
-    }
+      </div>
+    );
   }
 }
 export default Radium(NewExistingSeedToggle);

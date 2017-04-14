@@ -12,7 +12,6 @@ export function stakePoolInfo(cb) {
 }
 
 export function setStakePoolAddress(apiUrl, apiToken, pKAddress, cb) {
-  console.log(pKAddress);
   var config = {
     headers: {
       'Authorization': 'Bearer ' + apiToken,
@@ -22,6 +21,26 @@ export function setStakePoolAddress(apiUrl, apiToken, pKAddress, cb) {
   axios.post(url,
     querystring.stringify({
       UserPubKeyAddr: pKAddress,
+    }),
+    config)
+  .then(function(response) {
+    cb(response);
+  })
+  .catch(function(error) {
+    cb(null, error);
+  });
+}
+
+export function setVoteChoices(apiUrl, apiToken, voteChoices, cb) {
+  var config = {
+    headers: {
+      'Authorization': 'Bearer ' + apiToken,
+    }
+  };
+  var url = apiUrl+'/api/v1/votechoices';
+  axios.post(url,
+    querystring.stringify({
+      VoteChoices: voteChoices,
     }),
     config)
   .then(function(response) {

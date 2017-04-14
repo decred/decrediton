@@ -1,4 +1,4 @@
-import { getPurchaseInfo, setStakePoolAddress } from '../middleware/stakepoolapi';
+import { getPurchaseInfo, setStakePoolAddress, setVoteChoices } from '../middleware/stakepoolapi';
 import { NextAddressRequest } from '../middleware/walletrpc/api_pb';
 import { getCfg } from '../config.js';
 
@@ -124,6 +124,34 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
   );
   };
 }
+
+export const SETSTAKEPOOLVOTECHOICES_ATTEMPT = 'SETSTAKEPOOLVOTECHOICES_ATTEMPT';
+export const SETSTAKEPOOLVOTECHOICES_FAILED = 'SETSTAKEPOOLVOTECHOICES_FAILED';
+export const SETSTAKEPOOLVOTECHOICES_SUCCESS = 'SETSTAKEPOOLVOTECHOICES_SUCCESS';
+
+export function setStakePoolVoteChoices(poolHost, apiKey, voteChoices) {
+  return (dispatch, ) => {
+    dispatch({ type: SETSTAKEPOOLVOTECHOICES_ATTEMPT });
+    setVoteChoices(
+      poolHost,
+      apiKey,
+      voteChoices,
+      function(response, err) {
+        if (err) {
+          dispatch({ error: err, type: SETSTAKEPOOLVOTECHOICES_FAILED });
+        } else if (response.data.status == 'success') {
+          dispatch({ type: SETSTAKEPOOLVOTECHOICES_SUCCESS });
+        } else if (response.data.status == 'error') {
+          dispatch({ error: response.data.message, type: SETSTAKEPOOLVOTECHOICES_FAILED });
+        } else {
+          console.error('shouldn\'t be here set address:', response);
+        }
+      }
+    );
+  };
+
+}
+
 export function clearStakePoolConfigError() {
   return (dispatch, getState) => {
     const { currentStakePoolConfigError } = getState().stakepool;

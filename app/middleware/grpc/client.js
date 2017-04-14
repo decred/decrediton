@@ -98,7 +98,44 @@ export function getVersionService(address, port, cb) {
     }
   });
 }
+export function getVotingService(address, port, cb) {
+  var cert = getCert();
+  if (cert == '') {
+    return cb(null, 'Unable to load dcrwallet certificate.  dcrwallet not running?');
+  }
+  var creds = grpc.credentials.createSsl(cert);
+  var votingService = new services.VotingServiceClient(address + ':' + port, creds);
 
+  var deadline = new Date();
+  var deadlineInSeconds = 2;
+  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+  grpc.waitForClientReady(votingService, deadline, function(err) {
+    if (err) {
+      return cb(null, err);
+    } else {
+      return cb(votingService);
+    }
+  });
+}
+export function getAgendaService(address, port, cb) {
+  var cert = getCert();
+  if (cert == '') {
+    return cb(null, 'Unable to load dcrwallet certificate.  dcrwallet not running?');
+  }
+  var creds = grpc.credentials.createSsl(cert);
+  var agendaService = new services.AgendaServiceClient(address + ':' + port, creds);
+
+  var deadline = new Date();
+  var deadlineInSeconds = 2;
+  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+  grpc.waitForClientReady(agendaService, deadline, function(err) {
+    if (err) {
+      return cb(null, err);
+    } else {
+      return cb(agendaService);
+    }
+  });
+}
 export function transactionNtfs(client, request, cb) {
     // Register Notification Streams from Wallet
   var transactionNtfns = client.transactionNotifications(request);

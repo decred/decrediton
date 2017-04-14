@@ -10,6 +10,8 @@ import ArrowUpLightBlue from '../icons/arrow-up-light-blue.svg';
 import ArrowUpTurquiose from '../icons/arrow-up-turquiose.svg';
 import Search from '../icons/search.svg';
 import WalletGray from '../icons/wallet-gray.svg';
+import AgendaClose from '../icons/tickets-agenda-close.svg';
+import AgendaStripe from '../icons/stripe.svg';
 
 export const ReceiveStyles = {
   body: {
@@ -898,6 +900,11 @@ export const StakePoolStyles = {
     height: '556px',
     padding: '54px 60px 54px 80px',
   },
+  contentVotingGui: {
+    overflow: 'auto',
+    height: '556px',
+    padding: '0px 60px 10px 80px',
+  },
   contentPurchaseTicketView: {
     overflow: 'auto',
     height: '565px',
@@ -1296,7 +1303,7 @@ export const StakePoolStyles = {
     float: 'left',
     textTransform: 'capitalize',
   },
-  ontentSendSectionAmount: {
+  contentSendSectionAmount: {
     width: '160px',
     height: '100%',
     paddingTop: '1px',
@@ -1389,7 +1396,7 @@ export const StakePoolStyles = {
     textAlign: 'right',
   },
   purchaseTicketInputError: {
-    width: '290px',
+    width: '288px',
     float: 'right',
     height: '100%',
     textAlign: 'left',
@@ -1433,6 +1440,7 @@ export const StakePoolStyles = {
     }
   },
   toggle: {
+    fontFamily: 'Source Sans Pro, sans-serif',
     float: 'right',
   },
   contentTitle: {
@@ -1497,6 +1505,194 @@ export const StakePoolStyles = {
     float: 'right',
     textAlign: 'right',
     paddingRight: '8px',
+  },
+  votingTitleArea: {
+    display: 'block',
+    height: '20px',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    borderBottom: '1px solid transparent',
+    color: '#596d81',
+    fontSize: '20px',
+  },
+  votingTitleAreaName: {
+    fontSize: '20px',
+    display: 'inlineBlock',
+    overflow: 'hidden',
+    width: '653px',
+    height: '100%',
+    paddingBottom: '10px',
+    paddingRight: '20px',
+    paddingLeft: '20px',
+    float: 'left',
+  },
+  votingAgendaArea: {
+  },
+  noAgendasMessage: {
+    fontSize: '25px',
+    paddingTop: '200px',
+    paddingLeft: '150px',
+  },
+  agendaOverview: {
+    position: 'relative',
+    width: '420px',
+    padding: '10px 20px 4px',
+    float: 'left',
+  },
+  agendaOverviewTitleArea: {
+    marginBottom: '29px',
+    position: 'relative',
+  },
+  agendaOverviewTitleName: {
+    paddingRight: '10px',
+    float: 'left',
+    fontSize: '19px',
+  },
+  agendaOverviewTitleClose: {
+    position: 'absolute',
+    top: '7px',
+    right: '0px',
+    width: '11px',
+    height: '11px',
+    float: 'right',
+    backgroundImage: `url(${AgendaClose})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '11px',
+    backgroundRepeat: 'noRepeat',
+    maxWidth: '100%',
+    display: 'inlineBlock',
+    backgroundColor: 'transparent',
+    ':hover': {
+      opacity: '0.7',
+    }
+  },
+  agenda: {
+    position: 'relative',
+    overflow: 'hidden',
+    width: '700px',
+    height: '256px',
+    marginBottom: '20px',
+    float: 'left',
+    backgroundColor: '#fff',
+    backgroundImage: `url(${AgendaStripe})`,
+    backgroundPosition: '460px 50%',
+    backgroundSize: '1px',
+    backgroundRepeat: 'repeat-y',
+  },
+  agendaOverviewMiddle: {
+    color: '#596d81',
+    fontSize: '13px',
+    position: 'relative',
+  },
+  agendaOverviewText: {
+    lineHeight: '18px',
+  },
+  agendaOverviewAgendaId: {
+    color: '#0c1e3e',
+  },
+  agendaOverviewAgendaIdId: {
+    fontWeight: '600',
+  },
+  agendaOverviewReadMore: {
+    display: 'block',
+    color: '#2971ff',
+    textDecoration: 'none',
+    backgroundColor: 'transparent',
+  },
+  agendaOverviewOptionsArea: {
+    position: 'relative',
+    display: 'inline',
+    width: '170px',
+    paddingTop: '20px',
+    paddingRight: '35px',
+    paddingLeft: '35px',
+    float: 'left',
+    flexDirection: 'row',
+    alignItems: 'stretch',
+  },
+  agendaOverviewOptionsSection: {
+    marginBottom: '29px',
+  },
+  agendaNameOptions: {
+    paddingRight: '10px',
+    float: 'left',
+    fontSize: '19px',
+  },
+  agendaOverviewOptionsSectionMiddle: {
+
+  },
+  agendaOptionsRadio: {
+    float: 'left',
+  },
+  agendaOptionsRadioLabel: {
+    display: 'block',
+    width: '100%',
+    color: '#596d81',
+    fontSize: '13px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    marginBottom: '5px',
+    boxSizing: 'borderBox',
+  },
+  agendaBottom: {
+    paddingTop: '15px',
+    float: 'left',
+    width: '700px',
+    height: '64px',
+  },
+  agendaBottomOverview: {
+    position: 'relative',
+    width: '420px',
+    paddingTop: '15px',
+    paddingBottom: '20px',
+    paddingLeft: '20px',
+    paddingRight: '20px',
+    float: 'left',
+  },
+  agendaPercent: {
+    float: 'left',
+    fontSize: '19px',
+  },
+  agendaPercentNumber: {
+    fontSize: '45px',
+    fontWeight: '600',
+  },
+  agendaBottomOptions: {
+    width: '240px',
+    float: 'left',
+  },
+  agendaUpdatePreferencesButton: {
+    width: '134px',
+    display: 'block',
+    marginRight: '35px',
+    marginBottom: '20px',
+    marginLeft: '35px',
+  },
+  agendaIndicatorPending: {
+    float: 'right',
+    display: 'inline-block',
+    padding: '5px 8px 5px 20px',
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderRadius: '3px',
+    fontSize: '12px',
+    lineHeight: '8px',
+    textAlign: 'right',
+    textTransform: 'capitalize',
+    borderColor: '#2971ff',
+    backgroundImage: `url(${IndicatorPending})`,
+    backgroundPosition: '6px 50%',
+    backgroundSize: '10px',
+    backgroundRepeat: 'no-repeat',
+    color: '#2971ff',
+  },
+  hideStakePoolConfig: {
+    float: 'right',
+  },
+  manageStakePoolsButton: {
+    width: '150px',
+    padding: '7px 18px',
+    display: 'block',
   }
 };
 export const HelpStyles = {

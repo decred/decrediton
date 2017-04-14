@@ -8,8 +8,11 @@ import SideBar from '../SideBar';
 import Header from '../Header';
 import NewExistingSeedToggle from '../NewExistingSeedToggle';
 import KeyBlueButton from '../KeyBlueButton';
+import SlateGrayButton from '../SlateGrayButton';
 import HideShowButton from '../HideShowButton';
 import { StakePoolStyles } from './ViewStyles';
+import AgendaCard from '../AgendaCard';
+import AgendaOverview from '../AgendaOverview';
 
 class StakePool extends Component{
   static propTypes = {
@@ -46,6 +49,7 @@ class StakePool extends Component{
       account: 0,
       addAnotherStakePool: false,
       purchaseTickets: true,
+      purchaseTicketsStakePoolConfig: false,
       spendLimit: this.props.getBalanceResponse != null ? this.props.getBalanceResponse.getSpendable() : 0,
       conf: 0,
       numTickets: 0,
@@ -55,6 +59,7 @@ class StakePool extends Component{
       selectedStakePoolForPurchase: initStakePool,
       advancedHidden: true,
       privpass: null,
+      choice: 'option1',
 
       // for autostart
       balanceToMaintain: 0*100000000, // in atoms
@@ -70,6 +75,7 @@ class StakePool extends Component{
       expiryError: null,
       privPassError: null,
       apiKeyError: null,
+      agendaDisplay: null,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -77,6 +83,14 @@ class StakePool extends Component{
       for (var j = 0; j < nextProps.currentStakePoolConfig.length; j++) {
         if (nextProps.currentStakePoolConfig[j].ApiKey && nextProps.currentStakePoolConfig[j].Network == this.props.network) {
           this.setState({selectedStakePoolForPurchase: nextProps.currentStakePoolConfig[j]});
+          break;
+        }
+      }
+    }
+    if (this.props.getVoteChoicesResponse !== nextProps.getVoteChoicesResponse) {
+      for (var i = 0; i < nextProps.getVoteChoicesResponse.getChoicesList().length; i++) {
+        if (nextProps.getVoteChoicesResponse.getChoicesList()[i].getAgendaId() == this.state.agendaDisplay.getId()) {
+          this.setState({selectedChoice: nextProps.getVoteChoicesResponse.getChoicesList()[i].getChoiceId()});
           break;
         }
       }
@@ -119,6 +133,12 @@ class StakePool extends Component{
       this.state.selectedStakePoolForPurchase
     );
   }
+  showStakePoolConfig() {
+    this.setState({purchaseTicketsStakePoolConfig: true});
+  }
+  hideStakePoolConfig() {
+    this.setState({purchaseTicketsStakePoolConfig: false});
+  }
   updateAccountNumber(accountNum) {
     this.setState({account: accountNum});
   }
@@ -153,6 +173,9 @@ class StakePool extends Component{
   addAnotherStakePool() {
     this.setState({addAnotherStakePool: true});
   }
+  cancelAddAnotherStakePool() {
+    this.setState({addAnotherStakePool: false});
+  }
   setStakePoolInfo() {
     if (this.state.apiKey == '') {
       this.setState({apiKeyError: '*Please enter your API key'});
@@ -176,9 +199,9 @@ class StakePool extends Component{
   }
   toggleTicketStakePool(side) {
     if (side == 'right') {
-      this.setState({purchaseTickets: false});
+      this.setState({purchaseTickets: false, purchaseTicketsStakePoolConfig: false});
     } else if (side == 'left') {
-      this.setState({purchaseTickets: true});
+      this.setState({purchaseTickets: true, purchaseTicketsStakePoolConfig: false});
     }
   }
   showAdvanced() {
@@ -209,6 +232,20 @@ class StakePool extends Component{
   submitStop() {
     this.props.stopAutoBuyerAttempt();
   }
+  closeCurrentAgenda() {
+    this.setState({agendaDisplay: null});
+  }
+  showAgendaOverview(agenda) {
+    var selectedChoice;
+    for (var i = 0; i < this.props.getVoteChoicesResponse.getChoicesList().length; i++) {
+      if (this.props.getVoteChoicesResponse.getChoicesList()[i].getAgendaId() == agenda.getId()) {
+        selectedChoice = this.props.getVoteChoicesResponse.getChoicesList()[i].getChoiceId();
+        break;
+      }
+    }
+    this.setState({agendaDisplay: agenda, selectedChoice: selectedChoice});
+  }
+
   render() {
     const { walletService } = this.props;
     const { ticketBuyerService } = this.props;
@@ -218,6 +255,8 @@ class StakePool extends Component{
     const { network } = this.props;
     const { getTicketPriceResponse } = this.props;
     const { getStakeInfoResponse } = this.props;
+    const { getAgendasResponse } = this.props;
+    const { getVoteChoicesResponse } = this.props;
 
     var unconfigedStakePools = 0;
     if (currentStakePoolConfig != null) {
@@ -348,7 +387,43 @@ class StakePool extends Component{
           <KeyBlueButton style={StakePoolStyles.contentSend} onClick={() => this.setStakePoolInfo()}>
             Confirm
           </KeyBlueButton>
+          {this.state.purchaseTicketsStakePoolConfig ?
+            <SlateGrayButton
+              style={StakePoolStyles.hideStakePoolConfig}
+              onClick={() => this.cancelAddAnotherStakePool()}>
+              Cancel
+            </SlateGrayButton> :
+            <div>
+            </div>
+          }
         </div>
+    );
+    var votingGuiView = (
+      <div style={StakePoolStyles.contentVotingGui}>
+        <div style={StakePoolStyles.votingTitleArea}>
+          <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences</div>
+        </div>
+        <div style={StakePoolStyles.votingAgendaArea}>
+          {this.state.agendaDisplay !== null && getVoteChoicesResponse !== null ?
+            <AgendaOverview agenda={this.state.agendaDisplay} selectedChoice={this.state.selectedChoice} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updatePreferences={(agendaId, choiceId) =>this.props.setVoteChoicesAttempt(agendaId, choiceId)}/>:
+            <div></div>
+          }
+          {getAgendasResponse !== null && getVoteChoicesResponse !== null ? getAgendasResponse.getAgendasList().length > 0 ?
+            getAgendasResponse.getAgendasList().map((agenda) => {
+              var selectedChoice;
+              for (var i = 0; getVoteChoicesResponse.getChoicesList().length; i++) {
+                if (getVoteChoicesResponse.getChoicesList()[i].getAgendaId() == agenda.getId()) {
+                  selectedChoice = getVoteChoicesResponse.getChoicesList()[i].getChoiceId();
+                  break;
+                }
+              }
+              return(<AgendaCard key={agenda.getId()} agenda={agenda} selectedChoice={selectedChoice} onClick={() => this.showAgendaOverview(agenda)}/>);
+            }):
+            <div style={StakePoolStyles.noAgendasMessage}>There are currently no agendas for voting.</div>:
+          <div style={StakePoolStyles.noAgendasMessage}>There are currently no agendas for voting.</div>
+          }
+        </div>
+      </div>
     );
     var configuredStakePoolInformation = (
         <div style={StakePoolStyles.content}>
@@ -394,6 +469,15 @@ class StakePool extends Component{
           </KeyBlueButton> :
           <div></div>
           }
+          {this.state.purchaseTicketsStakePoolConfig ?
+            <SlateGrayButton
+              style={StakePoolStyles.hideStakePoolConfig}
+              onClick={() => this.hideStakePoolConfig()}>
+              Cancel
+            </SlateGrayButton> :
+            <div>
+            </div>
+          }
         </div>
     );
     var purchaseTicketsView = (
@@ -408,9 +492,16 @@ class StakePool extends Component{
           </div>
           <div style={StakePoolStyles.flexHeight}>
             <div style={StakePoolStyles.purchaseTicketRow}>
-              <div style={StakePoolStyles.purchaseTicketLabel}>Stake Pool:</div>
+              <div style={StakePoolStyles.purchaseTicketLabel}>
+                Stake Pool:
+                </div>
               <div style={StakePoolStyles.purchaseTicketInput}>
                 {selectStakePoolPurchaseTickets}
+              </div>
+              <div style={StakePoolStyles.purchaseTicketInputError}>
+                <KeyBlueButton style={StakePoolStyles.manageStakePoolsButton} onClick={() => this.showStakePoolConfig()}>
+                  Manage stake pools
+                </KeyBlueButton>
               </div>
             </div>
             <div style={StakePoolStyles.purchaseTicketRow}>
@@ -613,20 +704,22 @@ class StakePool extends Component{
                 <NewExistingSeedToggle
                   activeButton={'left'}
                   leftText={'Purchase Tickets'}
-                  rightText={'Configure stakepools'}
+                  rightText={'Vote settings'}
                   toggleAction={(e)=>{this.toggleTicketStakePool(e);}}/>
               </div></div>:
             <div></div>
 
           }
-        />
+        />-
         {(!activeStakePoolConfig || this.state.addAnotherStakePool) && !currentStakePoolConfigRequest ?
           stakePoolConfigInput :
           currentStakePoolConfigRequest || purchaseTicketsRequestAttempt ?
             <CircularProgress style={StakePoolStyles.loading} size={125} thickness={6}/> :
               this.state.purchaseTickets ?
-              purchaseTicketsView :
-              configuredStakePoolInformation
+                this.state.purchaseTicketsStakePoolConfig ?
+                  configuredStakePoolInformation :
+                    purchaseTicketsView :
+                      votingGuiView
         }
       </div>
     );

@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import StakePool from './StakePool';
 import * as StakePoolActions from '../../actions/StakePoolActions';
 import * as ControlActions from '../../actions/ControlActions';
+import * as ClientActions from '../../actions/ClientActions';
 
 function mapStateToProps(state) {
   return {
@@ -28,11 +29,13 @@ function mapStateToProps(state) {
     getBalanceResponse: state.grpc.getBalanceResponse,
     getStakeInfoResponse: state.grpc.getStakeInfoResponse,
     getTicketPriceResponse: state.grpc.getTicketPriceResponse,
+    getAgendasResponse: state.grpc.getAgendasResponse,
+    getVoteChoicesResponse: state.grpc.getVoteChoicesResponse,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, StakePoolActions, ControlActions), dispatch);
+  return bindActionCreators(Object.assign({}, StakePoolActions, ControlActions, ClientActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StakePool);

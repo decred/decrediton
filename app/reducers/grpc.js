@@ -13,6 +13,12 @@ import {
   PAGINATETRANSACTIONS,
   GETTRANSACTIONDETAILS_SET, GETTRANSACTIONDETAILS_CLEAR,
   UPDATETIMESINCEBLOCK,
+
+  GETAGENDASERVICE_ATTEMPT, GETAGENDASERVICE_FAILED, GETAGENDASERVICE_SUCCESS,
+  GETVOTINGSERVICE_ATTEMPT, GETVOTINGSERVICE_FAILED, GETVOTINGSERVICE_SUCCESS,
+  GETAGENDAS_ATTEMPT, GETAGENDAS_FAILED, GETAGENDAS_SUCCESS,
+  GETVOTECHOICES_ATTEMPT, GETVOTECHOICES_FAILED, GETVOTECHOICES_SUCCESS,
+  SETVOTECHOICES_ATTEMPT, SETVOTECHOICES_FAILED, SETVOTECHOICES_SUCCESS,
 } from '../actions/ClientActions';
 
 export default function grpc(state = {}, action) {
@@ -244,6 +250,105 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       timeSinceString: action.timeSinceString,
+    };
+  case GETAGENDASERVICE_ATTEMPT:
+    return {
+      ...state,
+      getAgendaServiceError: null,
+      getAgendaServiceRequestAttempt: true,
+    };
+  case GETAGENDASERVICE_FAILED:
+    return {
+      ...state,
+      getAgendaServiceError: action.error,
+      getAgendaServiceRequestAttempt: false,
+    };
+  case GETAGENDASERVICE_SUCCESS:
+    return {
+      ...state,
+      getAgendaServiceRequestAttempt: false,
+      agendaService: action.agendaService,
+    };
+  case GETVOTINGSERVICE_ATTEMPT:
+    return {
+      ...state,
+      getVotingServiceError: null,
+      getVotingServiceRequestAttempt: true,
+    };
+  case GETVOTINGSERVICE_FAILED:
+    return {
+      ...state,
+      getVotingServiceError: action.error,
+      getVotingServiceRequestAttempt: false,
+    };
+  case GETVOTINGSERVICE_SUCCESS:
+    return {
+      ...state,
+      getVotingServiceRequestAttempt: false,
+      votingService: action.votingService,
+    };
+  case GETAGENDAS_ATTEMPT:
+    return {
+      ...state,
+      getAgendasRequest: action.request,
+      getAgendasError: null,
+      getAgendasRequestAttempt: true,
+    };
+  case GETAGENDAS_FAILED:
+    return {
+      ...state,
+      getAgendasRequest: null,
+      getAgendasError: action.error,
+      getAgendasRequestAttempt: false,
+    };
+  case GETAGENDAS_SUCCESS:
+    return {
+      ...state,
+      getAgendasRequest: null,
+      getAgendasRequestAttempt: false,
+      getAgendasResponse: action.agendas,
+    };
+  case GETVOTECHOICES_ATTEMPT:
+    return {
+      ...state,
+      getVoteChoicesRequest: action.request,
+      getVoteChoicesError: null,
+      getVoteChoicesRequestAttempt: true,
+    };
+  case GETVOTECHOICES_FAILED:
+    return {
+      ...state,
+      getVoteChoicesRequest: null,
+      getVoteChoicesError: action.error,
+      getVoteChoicesRequestAttempt: false,
+    };
+  case GETVOTECHOICES_SUCCESS:
+    return {
+      ...state,
+      getVoteChoicesRequest: null,
+      getVoteChoicesRequestAttempt: false,
+      getVoteChoicesResponse: action.voteChoices,
+    };
+  case SETVOTECHOICES_ATTEMPT:
+    return {
+      ...state,
+      setVoteChoicesRequest: action.setVoteChoicesRequest,
+      setVoteChoicesError: null,
+      setVoteChoicesRequestAttempt: true,
+    };
+  case SETVOTECHOICES_FAILED:
+    return {
+      ...state,
+      setVoteChoicesRequest: null,
+      setVoteChoicesError: action.error,
+      setVoteChoicesRequestAttempt: false,
+    };
+  case SETVOTECHOICES_SUCCESS:
+    return {
+      ...state,
+      setVoteChoicesRequest: null,
+      setVoteChoicesRequestAttempt: false,
+      setVoteChoicesResponse: action.voteChoices,
     };
   default:
     return state;
