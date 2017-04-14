@@ -643,7 +643,7 @@ function setVoteChoicesSuccess(response) {
 }
 
 export function setVoteChoicesAttempt(agendaId, choiceId) {
-  return (dispatch) => {  
+  return (dispatch) => {
     var request = new SetVoteChoicesRequest();
     var choice = new SetVoteChoicesRequest.Choice();
     choice.setChoiceId(choiceId);

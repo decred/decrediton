@@ -76,12 +76,6 @@ class StakePool extends Component{
       privPassError: null,
       apiKeyError: null,
       agendaDisplay: null,
-      availableAgendas: [
-        {agendaName: 'Agenda 1 Name', agendaId: 'Agenda1', percentVoted: 42, options: ['1-optionA', '1-optionB', '1-optionC'], selectedOption: '1-optionA', agendaDescription: 'This is the agenda1 description', finished: false},
-        {agendaName: 'Agenda 2 Name', agendaId: 'Agenda2', percentVoted: 35, options: ['2-optionA', '2-optionB', '2-optionC'], selectedOption: '2-optionB', agendaDescription: 'This is the agenda2 description', finished: false},
-        {agendaName: 'Agenda 3 Name', agendaId: 'Agenda3', percentVoted: 100, options: ['3-optionA', '3-optionB', '3-optionC'], selectedOption: '3-optionC', agendaDescription: 'This is the agenda3 description', finished: true},
-
-      ],
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -410,17 +404,16 @@ class StakePool extends Component{
           <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences</div>
         </div>
         <div style={StakePoolStyles.votingAgendaArea}>
-          {this.state.agendaDisplay !== null && getVoteChoicesResponse !== null ? 
+          {this.state.agendaDisplay !== null && getVoteChoicesResponse !== null ?
             <AgendaOverview agenda={this.state.agendaDisplay} selectedChoice={this.state.selectedChoice} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updatePreferences={(agendaId, choiceId) =>this.props.setVoteChoicesAttempt(agendaId, choiceId)}/>:
             <div></div>
           }
           {getAgendasResponse !== null && getVoteChoicesResponse !== null ? getAgendasResponse.getAgendasList().length > 0 ?
             getAgendasResponse.getAgendasList().map((agenda) => {
-              var agendaId
               var selectedChoice;
               for (var i = 0; getVoteChoicesResponse.getChoicesList().length; i++) {
                 if (getVoteChoicesResponse.getChoicesList()[i].getAgendaId() == agenda.getId()) {
-                  selectedChoice = getVoteChoicesResponse.getChoicesList()[i].getChoiceId()
+                  selectedChoice = getVoteChoicesResponse.getChoicesList()[i].getChoiceId();
                   break;
                 }
               }
