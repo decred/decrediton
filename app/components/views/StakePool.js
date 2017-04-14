@@ -414,18 +414,20 @@ class StakePool extends Component{
             <AgendaOverview agenda={this.state.agendaDisplay} selectedChoice={this.state.selectedChoice} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updatePreferences={(agendaId, choiceId) =>this.props.setVoteChoicesAttempt(agendaId, choiceId)}/>:
             <div></div>
           }
-          {getAgendasResponse !== null && getVoteChoicesResponse !== null ? getAgendasResponse.getAgendasList().map((agenda) => {
-            var agendaId
-            var selectedChoice;
-            for (var i = 0; getVoteChoicesResponse.getChoicesList().length; i++) {
-              if (getVoteChoicesResponse.getChoicesList()[i].getAgendaId() == agenda.getId()) {
-                selectedChoice = getVoteChoicesResponse.getChoicesList()[i].getChoiceId()
-                break;
+          {getAgendasResponse !== null && getVoteChoicesResponse !== null ? getAgendasResponse.getAgendasList().length > 0 ?
+            getAgendasResponse.getAgendasList().map((agenda) => {
+              var agendaId
+              var selectedChoice;
+              for (var i = 0; getVoteChoicesResponse.getChoicesList().length; i++) {
+                if (getVoteChoicesResponse.getChoicesList()[i].getAgendaId() == agenda.getId()) {
+                  selectedChoice = getVoteChoicesResponse.getChoicesList()[i].getChoiceId()
+                  break;
+                }
               }
-            }
-            return(<AgendaCard key={agenda.getId()} agenda={agenda} selectedChoice={selectedChoice} onClick={() => this.showAgendaOverview(agenda)}/>);
-          }):
-          <div>Currently, no agendas for voting.</div>
+              return(<AgendaCard key={agenda.getId()} agenda={agenda} selectedChoice={selectedChoice} onClick={() => this.showAgendaOverview(agenda)}/>);
+            }):
+            <div style={StakePoolStyles.noAgendasMessage}>There are currently no agendas for voting.</div>:
+          <div style={StakePoolStyles.noAgendasMessage}>There are currently no agendas for voting.</div>
           }
         </div>
       </div>

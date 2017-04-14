@@ -1528,6 +1528,11 @@ export const StakePoolStyles = {
   },
   votingAgendaArea: {
   },
+  noAgendasMessage: {
+    fontSize: '25px',
+    paddingTop: '200px',
+    paddingLeft: '150px',
+  },
   agendaOverview: {
     position: 'relative',
     width: '420px',
