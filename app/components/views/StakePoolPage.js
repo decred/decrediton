@@ -28,6 +28,8 @@ function mapStateToProps(state) {
     getBalanceResponse: state.grpc.getBalanceResponse,
     getStakeInfoResponse: state.grpc.getStakeInfoResponse,
     getTicketPriceResponse: state.grpc.getTicketPriceResponse,
+    getAgendasResponse: state.grpc.getAgendasResponse,
+    getVoteChoicesResponse: state.grpc.getVoteChoicesResponse,
   };
 }
 

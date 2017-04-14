@@ -16,13 +16,13 @@ class AgendaOverview extends React.Component {
             <div style={StakePoolStyles.agendaOverview}>
               <div style={StakePoolStyles.agendaOverviewTitleArea}>
                 <AgendaClose onClick={() => this.props.closeCurrentAgenda()}/>
-                <div style={StakePoolStyles.agendaOverviewTitleName}>{this.props.agenda.agendaName}</div>
+                <div style={StakePoolStyles.agendaOverviewTitleName}>{this.props.agenda.getId()}</div>
               </div>
               <div style={StakePoolStyles.agendaOverviewMiddle}>
                 <div style={StakePoolStyles.agendaOverviewText}>
-                  <span>{this.props.agenda.agendaDescription}</span><br/>
+                  <span>{this.props.agenda.getDescription()}</span><br/>
                   <span style={StakePoolStyles.agendaOverviewAgendaId}>
-                    Agenda ID: <span style={StakePoolStyles.agendaOverviewAgendaIdId}>#{this.props.agenda.agendaId}</span>
+                    Agenda ID: <span style={StakePoolStyles.agendaOverviewAgendaIdId}>#{this.props.agenda.getId()}</span>
                   </span>
                   <br/>
                   <br/>
@@ -39,9 +39,9 @@ class AgendaOverview extends React.Component {
                 <div style={StakePoolStyles.agendaNameOptions}>Voting for</div>
               </div>
               <div style={StakePoolStyles.agendaOverviewOptionsSectionMiddle}>
-                {this.props.agenda.options.map((option) => {
+                {this.props.agenda.getChoicesList().map((option) => {
                   return(
-                  <div key={this.props.agenda+option}>
+                  <div key={this.props.agenda.getId()+option.getChoiceId()}>
                     <input style={StakePoolStyles.agendaOptionsRadio} id={option} type="radio" name="field" value={option} checked={this.state.choice == {option}} onChange={(e) => {this.setState({choice: e.target.value});this.props.selectAgendaChoice(this.props.agenda.agendaId, e.target.value);}}/>
                     <label style={StakePoolStyles.agendaOptionsRadioLabel} htmlFor={option}><span><span></span></span>{option}</label>
                   </div>

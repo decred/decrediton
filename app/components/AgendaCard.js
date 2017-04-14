@@ -168,14 +168,14 @@ class AgendaCard extends React.Component {
             <div style={styles.agendaCardBottom}>
               <div style={styles.agendaCardIndicatorPending}>In Progress</div>
               <div style={styles.agendaCardBottomCfg}>
-                {this.props.agenda.agendaDescription} <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>#{this.props.agenda.agendaId}</span></span>
+                {this.props.agenda.getDescription()} <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>#{this.props.agenda.getId()}</span></span>
               </div>
-              <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>{this.props.agenda.percentVoted}</span>%</div>
+              <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>42</span>%</div>
             </div>
             <div style={styles.agendaCardTop}>
-              <div style={styles.agendaCardName}>{this.props.agenda.agendaName}</div>
+              <div style={styles.agendaCardName}>{this.props.agenda.getId()}</div>
               <div style={styles.agendaCardTopPreference}>
-                Preference: <span style={styles.textHighlightSmall}>{this.props.agenda.selectedOption}</span>
+                Preference: <span style={styles.textHighlightSmall}>selected option</span>
               </div>
             </div>
           </div>);
@@ -185,12 +185,12 @@ class AgendaCard extends React.Component {
             <div style={styles.agendaCardBottom}>
               <div style={styles.agendaCardIndicatorFinished}>Finished</div>
               <div style={styles.agendaCardBottomCfg}>
-                {this.props.agenda.agendaDescription} <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>#{this.props.agenda.agendaId}</span></span>
+                {this.props.agenda.getDescription()} <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>#{this.props.agenda.getId()}</span></span>
               </div>
-              <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>{this.props.agenda.percentVoted}</span>%</div>
+              <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>100</span>%</div>
             </div>
             <div style={styles.agendaCardTop}>
-              <div style={styles.agendaCardName}>Agenda name</div>
+              <div style={styles.agendaCardName}>{this.props.agenda.getId()}</div>
               <div style={styles.agendaCardTopPreference}>Preference: <span style={styles.textHighlightSmall}>Option 1</span>
               </div>
             </div>

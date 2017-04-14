@@ -255,6 +255,8 @@ class StakePool extends Component{
     const { network } = this.props;
     const { getTicketPriceResponse } = this.props;
     const { getStakeInfoResponse } = this.props;
+    const { getAgendasResponse } = this.props;
+    const { getVoteChoicesResponse } = this.props;
 
     var unconfigedStakePools = 0;
     if (currentStakePoolConfig != null) {
@@ -403,12 +405,14 @@ class StakePool extends Component{
         </div>
         <div style={StakePoolStyles.votingAgendaArea}>
           {this.state.agendaDisplay !== null ?
-            <AgendaOverview agenda={this.state.agendaDisplay} currentChoice={this.state.agendaDisplay.currentOption} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updateAgendaPreference={this.updateAgendaPreference}/>:
+            <AgendaOverview agenda={this.state.agendaDisplay} currentChoice='option1' closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updateAgendaPreference={this.updateAgendaPreference}/>:
             <div></div>
           }
-          {this.state.availableAgendas.map((agenda) => {
-            return(<AgendaCard key={agenda.agendaId} agenda={agenda} onClick={() => this.showAgendaOverview(agenda)}/>);
-          })}
+          {getAgendasResponse !== null ? getAgendasResponse.getAgendasList().map((agenda) => {
+            return(<AgendaCard key={agenda.getId()} agenda={agenda} onClick={() => this.showAgendaOverview(agenda)}/>);
+          }):
+          <div></div>
+          }
         </div>
       </div>
     );
