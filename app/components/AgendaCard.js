@@ -110,6 +110,7 @@ const styles = {
     color: '#596d81',
   },
   agendaCardBottomCfgLast: {
+    float: 'left',
     color: '#0c1e3e',
   },
   agendaCardBottomCfgDisabled: {
