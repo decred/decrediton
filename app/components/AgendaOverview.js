@@ -36,7 +36,6 @@ class AgendaOverview extends React.Component {
                     Once the majority of the PoW miners have upgraded (75% of the 100 most recent blocks are at the latest version) and the majority of the PoS
                     miners have upgraded (75% of the votes in a 2016 block interval) have upgraded, the voting process begins.
                   </span><br/>
-                  <a target="_blank" href="http://decred.org" style={StakePoolStyles.agendaOverViewReadMore}>Read more »</a>
                 </div>
               </div>
             </div>
@@ -71,3 +70,5 @@ class AgendaOverview extends React.Component {
 }
 
 export default AgendaOverview;
+
+//<a target="_blank" href="http://decred.org" style={StakePoolStyles.agendaOverViewReadMore}>Read more »</a>
