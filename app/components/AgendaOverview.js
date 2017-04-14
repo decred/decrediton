@@ -28,7 +28,7 @@ class AgendaOverview extends React.Component {
                 <div style={StakePoolStyles.agendaOverviewText}>
                   <span>{this.props.agenda.getDescription()}</span><br/>
                   <span style={StakePoolStyles.agendaOverviewAgendaId}>
-                    Agenda ID: <span style={StakePoolStyles.agendaOverviewAgendaIdId}>#{this.props.agenda.getId()}</span>
+                    Agenda ID: <span style={StakePoolStyles.agendaOverviewAgendaIdId}>{this.props.agenda.getId()}</span>
                   </span>
                   <br/>
                   <br/>

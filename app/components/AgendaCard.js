@@ -169,7 +169,7 @@ class AgendaCard extends React.Component {
             <div style={styles.agendaCardBottom}>
               <div style={styles.agendaCardIndicatorPending}>In Progress</div>
               <div style={styles.agendaCardBottomCfg}>
-                {this.props.agenda.getDescription()} <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>#{this.props.agenda.getId()}</span></span>
+                {this.props.agenda.getDescription()} <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>{this.props.agenda.getId()}</span></span>
               </div>
               <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>XX</span>%</div>
             </div>
@@ -186,7 +186,7 @@ class AgendaCard extends React.Component {
             <div style={styles.agendaCardBottom}>
               <div style={styles.agendaCardIndicatorFinished}>Finished</div>
               <div style={styles.agendaCardBottomCfg}>
-                {this.props.agenda.getDescription()} <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>#{this.props.agenda.getId()}</span></span>
+                {this.props.agenda.getDescription()} <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>{this.props.agenda.getId()}</span></span>
               </div>
               <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>XX</span>%</div>
             </div>
