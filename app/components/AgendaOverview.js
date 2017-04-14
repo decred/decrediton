@@ -9,6 +9,12 @@ class AgendaOverview extends React.Component {
     this.state = {
       choice: this.props.selectedChoice,
     };
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.selectedChoice != nextProps.selectedChoice) {
+      this.setState({choice: nextProps.selectedChoice});
+    }
   }
   render() {
     return (
@@ -55,7 +61,7 @@ class AgendaOverview extends React.Component {
                 <div style={StakePoolStyles.agendaPercent}><span style={StakePoolStyles.agendaPercentNumber}>XX</span>%</div>
               </div>
               <div style={StakePoolStyles.agendaBottomOptions}>
-                <KeyBlueButton style={StakePoolStyles.agendaUpdatePreferencesButton} onClick={() => this.props.updatePreferences(this.props.agenda.getId(), this.state.choice)}>Update Preference</KeyBlueButton>
+                <KeyBlueButton disabled={this.props.selectedChoice == this.state.choice} style={StakePoolStyles.agendaUpdatePreferencesButton} onClick={this.props.selectedChoice !== this.state.choice ? () => this.props.updatePreferences(this.props.agenda.getId(), this.state.choice):null}>Update Preference</KeyBlueButton>
               </div>
             </div>
           </div>

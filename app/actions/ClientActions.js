@@ -638,6 +638,7 @@ function setVoteChoicesError(error) {
 function setVoteChoicesSuccess(response) {
   return (dispatch) => {
     dispatch({ response, type: SETVOTECHOICES_SUCCESS });
+    dispatch(getVoteChoicesAttempt());
   };
 }
 

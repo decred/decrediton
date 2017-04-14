@@ -149,6 +149,7 @@ const styles = {
   agendaCardTopPreference: {
     marginTop: '6px',
     float: 'left',
+    width: '186px',
   },
   textHighlightSmall: {
     paddingRight: '2px',
