@@ -4,7 +4,8 @@ import { getAccountsAttempt, getBalanceAttempt, getStakeInfoAttempt,
 import { timeBackString } from '../helpers/dateFormat.js';
 import { reverseHash } from '../helpers/byteActions';
 import { TransactionNotificationsRequest, SpentnessNotificationsRequest, AccountNotificationsRequest} from '../middleware/walletrpc/api_pb';
-import { GETTRANSACTIONS_PROGRESS } from './ClientActions';
+import { GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_TICKET, GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE } from './ClientActions';
+import { TransactionDetails }  from '../middleware/walletrpc/api_pb';
 
 export const TRANSACTIONNTFNS_START = 'TRANSACTIONNTFNS_START';
 export const TRANSACTIONNTFNS_FAILED = 'TRANSACTIONNTFNS_FAILED';
@@ -38,6 +39,13 @@ function transactionNtfnsData(response) {
           // check to see if any recent unmined tx have been mined
           var updatedUnmined = Array();
           const { regularTransactionsInfo } = getState().grpc;
+          const { ticketTransactionsInfo } = getState().grpc;
+          const { voteTransactionsInfo } = getState().grpc;
+          const { revokeTransactionsInfo } = getState().grpc;
+          var updatedRegular = regularTransactionsInfo;
+          var updatedTicket = ticketTransactionsInfo;
+          var updatedVote = voteTransactionsInfo;
+          var updatedRevoke = revokeTransactionsInfo;
           var updatedTransactionInfo = regularTransactionsInfo;
           for (var k = 0; k < unmined.length; k++) {
             var unminedFound = false;
@@ -52,8 +60,17 @@ function transactionNtfnsData(response) {
                     tx: attachedBlocks[j].getTransactionsList()[i],
                     timestamp: attachedBlocks[j].getTimestamp(),
                     blockHash: attachedBlocks[j].getHash(),
+                    type: attachedBlocks[j].getTransactionsList()[i].getTransactionType(),
                   };
-                  updatedTransactionInfo.unshift(tx);
+                  if (tx.type == TransactionDetails.TransactionType.REGULAR) {
+                    updatedRegular.unshift(tx);
+                  } else if (tx.type == TransactionDetails.TransactionType.TICKET_PURCHASE) {
+                    updatedTicket.unshift(tx);
+                  } else if (tx.type == TransactionDetails.TransactionType.VOTE) {
+                    updatedVote.unshift(tx);
+                  } else if (tx.type == TransactionDetails.TransactionType.REVOKE) {
+                    updatedRevoke.unshift(tx);
+                  }
                   unminedFound = true;
                   index++;
                   break;
@@ -68,7 +85,18 @@ function transactionNtfnsData(response) {
             }
           }
           if (unmined.length != updatedUnmined.length) {
-            dispatch({ regularTransactionsInfo: updatedTransactionInfo, type: GETTRANSACTIONS_PROGRESS });
+            if (updatedRegular.length !== regularTransactionsInfo.length) {
+              dispatch({ regularTransactionsInfo: updatedRegular, type: GETTRANSACTIONS_PROGRESS_REGULAR });
+            }
+            if (updatedTicket.length !== ticketTransactionsInfo.length) {
+              dispatch({ ticketTransactionsInfo: updatedTicket, type: GETTRANSACTIONS_PROGRESS_TICKET });
+            }
+            if (updatedVote.length !== voteTransactionsInfo.length) {
+              dispatch({ voteTransactionsInfo: updatedVote, type: GETTRANSACTIONS_PROGRESS_VOTE });
+            }
+            if (updatedRevoke.length !== revokeTransactionsInfo.length) {
+              dispatch({ revokeTransactionsInfo: updatedRevoke, type: GETTRANSACTIONS_PROGRESS_REVOKE });
+            }
             dispatch({unmined: updatedUnmined, type: TRANSACTIONNTFNS_DATA_UNMINED_UPDATE});
           }
         } else if (attachedBlocks[attachedBlocks.length-1].getHeight()%100 == 0) {

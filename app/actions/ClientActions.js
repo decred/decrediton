@@ -9,9 +9,7 @@ import {
   BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest,
   AgendasRequest, VoteChoicesRequest, SetVoteChoicesRequest,
 } from '../middleware/walletrpc/api_pb';
-import {
-  TransactionDetails
-}  from '../middleware/walletrpc/api_pb';
+import { TransactionDetails }  from '../middleware/walletrpc/api_pb';
 
 export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
 export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
@@ -463,16 +461,16 @@ function getTransactionsInfoProgress(response) {
         updatedRevoke.unshift(tx);
       }
     }
-    if (updatedRegular.length !== regularTransactionsInfo) {
+    if (updatedRegular.length !== regularTransactionsInfo.length) {
       dispatch({ regularTransactionsInfo: updatedRegular, type: GETTRANSACTIONS_PROGRESS_REGULAR });
     }
-    if (updatedTicket.length !== ticketTransactionsInfo) {
+    if (updatedTicket.length !== ticketTransactionsInfo.length) {
       dispatch({ ticketTransactionsInfo: updatedTicket, type: GETTRANSACTIONS_PROGRESS_TICKET });
     }
-    if (updatedVote.length !== voteTransactionsInfo) {
+    if (updatedVote.length !== voteTransactionsInfo.length) {
       dispatch({ voteTransactionsInfo: updatedVote, type: GETTRANSACTIONS_PROGRESS_VOTE });
     }
-    if (updatedRevoke.length !== revokeTransactionsInfo) {
+    if (updatedRevoke.length !== revokeTransactionsInfo.length) {
       dispatch({ revokeTransactionsInfo: updatedRevoke, type: GETTRANSACTIONS_PROGRESS_REVOKE });
     }
     if (response.getUnminedTransactionsList().length > 0) {
