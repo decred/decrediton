@@ -12,8 +12,6 @@ import {
   GETTRANSACTIONS_UNMINED_PROGRESS,
   GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_TICKET,
   GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE,
-  PAGINATETRANSACTIONS,
-  GETTRANSACTIONDETAILS_SET, GETTRANSACTIONDETAILS_CLEAR,
   UPDATETIMESINCEBLOCK,
 
   GETAGENDASERVICE_ATTEMPT, GETAGENDASERVICE_FAILED, GETAGENDASERVICE_SUCCESS,
@@ -203,12 +201,6 @@ export default function grpc(state = {}, action) {
       getAccountsError: '',
       getAccountsRequestAttempt: false,
       getAccountsResponse: action.response,
-    };
-  case PAGINATETRANSACTIONS:
-    return {
-      ...state,
-      paginatedTxs: action.paginatedTxs,
-      currentPage: action.currentPage,
     };
   case GETTRANSACTIONS_ATTEMPT:
     return {
