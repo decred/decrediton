@@ -117,6 +117,7 @@ goog.exportSymbol('proto.walletrpc.TicketPriceResponse', null, global);
 goog.exportSymbol('proto.walletrpc.TransactionDetails', null, global);
 goog.exportSymbol('proto.walletrpc.TransactionDetails.Input', null, global);
 goog.exportSymbol('proto.walletrpc.TransactionDetails.Output', null, global);
+goog.exportSymbol('proto.walletrpc.TransactionDetails.TransactionType', null, global);
 goog.exportSymbol('proto.walletrpc.TransactionNotificationsRequest', null, global);
 goog.exportSymbol('proto.walletrpc.TransactionNotificationsResponse', null, global);
 goog.exportSymbol('proto.walletrpc.VersionRequest', null, global);
@@ -575,7 +576,8 @@ proto.walletrpc.TransactionDetails.toObject = function(includeInstance, msg) {
     creditsList: jspb.Message.toObjectList(msg.getCreditsList(),
     proto.walletrpc.TransactionDetails.Output.toObject, includeInstance),
     fee: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    timestamp: jspb.Message.getFieldWithDefault(msg, 6, 0)
+    timestamp: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    transactionType: jspb.Message.getFieldWithDefault(msg, 7, 0)
   };
 
   if (includeInstance) {
@@ -637,6 +639,10 @@ proto.walletrpc.TransactionDetails.deserializeBinaryFromReader = function(msg, r
     case 6:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setTimestamp(value);
+      break;
+    case 7:
+      var value = /** @type {!proto.walletrpc.TransactionDetails.TransactionType} */ (reader.readEnum());
+      msg.setTransactionType(value);
       break;
     default:
       reader.skipField();
@@ -710,8 +716,25 @@ proto.walletrpc.TransactionDetails.serializeBinaryToWriter = function(message, w
       f
     );
   }
+  f = message.getTransactionType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      7,
+      f
+    );
+  }
 };
 
+
+/**
+ * @enum {number}
+ */
+proto.walletrpc.TransactionDetails.TransactionType = {
+  REGULAR: 0,
+  TICKET_PURCHASE: 1,
+  VOTE: 2,
+  REVOCATION: 3
+};
 
 
 /**
@@ -1379,6 +1402,21 @@ proto.walletrpc.TransactionDetails.prototype.getTimestamp = function() {
 /** @param {number} value */
 proto.walletrpc.TransactionDetails.prototype.setTimestamp = function(value) {
   jspb.Message.setField(this, 6, value);
+};
+
+
+/**
+ * optional TransactionType transaction_type = 7;
+ * @return {!proto.walletrpc.TransactionDetails.TransactionType}
+ */
+proto.walletrpc.TransactionDetails.prototype.getTransactionType = function() {
+  return /** @type {!proto.walletrpc.TransactionDetails.TransactionType} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
+};
+
+
+/** @param {!proto.walletrpc.TransactionDetails.TransactionType} value */
+proto.walletrpc.TransactionDetails.prototype.setTransactionType = function(value) {
+  jspb.Message.setField(this, 7, value);
 };
 
 
