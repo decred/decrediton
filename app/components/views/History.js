@@ -19,6 +19,7 @@ class History extends Component{
       paginatedTxs: props.regularTransactionsInfo.length >= props.txPerPage  ? props.regularTransactionsInfo.slice(0,props.txPerPage) : props.regularTransactionsInfo.slice(0,props.regularTransactionsInfo.length),
       selectedTypeArray: props.regularTransactionsInfo,
       selectedType: 'Regular',
+      transactionDetails: null,
     };
   }
   pageForward() {
@@ -54,9 +55,15 @@ class History extends Component{
     var paginatedTxs = selectedTypeArray.length >= this.props.txPerPage  ? selectedTypeArray.slice(0,this.props.txPerPage) : selectedTypeArray.slice(0,selectedTypeArray.length);
     this.setState({selectedType: type, currentPage: 0, selectedTypeArray: selectedTypeArray, paginatedTxs: paginatedTxs});
   }
+  setTransactionDetails(tx) {
+    this.setState({transactionDetails: tx});
+  }
+  clearTransactionDetails() {
+    this.setState({transactionDetails: null});
+  }
+
   render() {
     const { walletService, getBalanceResponse, getAccountsResponse } = this.props;
-    const { transactionDetails, setTransactionDetails, clearTransactionDetails } = this.props;
     const { txPerPage } = this.props;
     const { regularTransactionsInfo, ticketTransactionsInfo, voteTransactionsInfo, revokeTransactionsInfo } = this.props;
     const { getNetworkResponse } = this.props;
@@ -96,7 +103,7 @@ class History extends Component{
           </div>
           <div style={HistoryStyles.contentNest}>
             {this.state.paginatedTxs.length > 0 ?
-              <TxHistory getAccountsResponse={getAccountsResponse} mined={this.state.paginatedTxs} showTxDetail={setTransactionDetails}/>  :
+              <TxHistory getAccountsResponse={getAccountsResponse} mined={this.state.paginatedTxs} showTxDetail={(tx) => this.setTransactionDetails(tx)}/>  :
               <p>No transactions</p>
             }
           </div>
@@ -108,9 +115,9 @@ class History extends Component{
       return(
         <div style={HistoryStyles.body}>
           <SideBar />
-          { transactionDetails === null ?
+          { this.state.transactionDetails === null ?
           historyView :
-          <TxDetails tx={transactionDetails} clearTxDetails={clearTransactionDetails} getAccountsResponse={getAccountsResponse} getNetworkResponse={getNetworkResponse}/>
+          <TxDetails tx={this.state.transactionDetails} clearTxDetails={() => this.clearTransactionDetails()} getAccountsResponse={getAccountsResponse} getNetworkResponse={getNetworkResponse}/>
           }
         </div>);
     }

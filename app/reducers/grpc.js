@@ -256,16 +256,6 @@ export default function grpc(state = {}, action) {
       ...state,
       unminedTransactions: action.unmined,
     };
-  case GETTRANSACTIONDETAILS_SET:
-    return {
-      ...state,
-      transactionDetails: action.tx,
-    };
-  case GETTRANSACTIONDETAILS_CLEAR:
-    return {
-      ...state,
-      transactionDetails: null,
-    };
   case UPDATETIMESINCEBLOCK:
     return {
       ...state,

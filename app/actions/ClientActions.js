@@ -489,17 +489,6 @@ function getTransactionsInfoEnd() {
   };
 }
 
-export const GETTRANSACTIONDETAILS_SET = 'GETTRANSACTIONDETAILS_SET';
-export const GETTRANSACTIONDETAILS_CLEAR = 'GETTRANSACTIONDETAILS_CLEAR';
-
-export function setTransactionDetails(tx) {
-  return { tx, type: GETTRANSACTIONDETAILS_SET };
-}
-
-export function clearTransactionDetails() {
-  return { type: GETTRANSACTIONDETAILS_CLEAR };
-}
-
 export const UPDATETIMESINCEBLOCK = 'UPDATETIMESINCEBLOCK';
 export function updateBlockTimeSince() {
   return (dispatch, getState) => {
