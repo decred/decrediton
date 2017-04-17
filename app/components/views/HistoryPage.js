@@ -13,7 +13,7 @@ function mapStateToProps(state) {
     getBalanceResponse: state.grpc.getBalanceResponse,
     getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
     currentPage: state.grpc.currentPage,
-    transactionsInfo: state.grpc.transactionsInfo,
+    regularTransactionsInfo: state.grpc.regularTransactionsInfo,
     getTransactionsRequest: state.grpc.getTransactions,
     transactionDetails: state.grpc.transactionDetails,
     getAccountsResponse: state.grpc.getAccountsResponse,

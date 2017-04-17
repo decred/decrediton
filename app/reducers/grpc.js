@@ -211,7 +211,10 @@ export default function grpc(state = {}, action) {
   case GETTRANSACTIONS_ATTEMPT:
     return {
       ...state,
-      transactionsInfo: Array(),
+      regularTransactionsInfo: Array(),
+      ticketTransactionsInfo: Array(),
+      voteTransactionsInfo: Array(),
+      revokeTransactionsInfo: Array(),
       getTransactionsRequestAttempt: true,
     };
   case GETTRANSACTIONS_FAILED:
@@ -229,7 +232,10 @@ export default function grpc(state = {}, action) {
   case GETTRANSACTIONS_PROGRESS:
     return {
       ...state,
-      transactionsInfo: action.transactionsInfo,
+      regularTransactionsInfo: action.regularTransactionsInfo,
+      ticketTransactionsInfo: action.ticketTransactionsInfo,
+      voteTransactionsInfo: action.voteTransactionsInfo,
+      revokeTransactionsInfo: action.revokeTransactionsInfo,
     };
   case GETTRANSACTIONS_UNMINED_PROGRESS:
     return {

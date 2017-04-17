@@ -37,8 +37,8 @@ function transactionNtfnsData(response) {
 
           // check to see if any recent unmined tx have been mined
           var updatedUnmined = Array();
-          const { transactionsInfo } = getState().grpc;
-          var updatedTransactionInfo = transactionsInfo;
+          const { regularTransactionsInfo } = getState().grpc;
+          var updatedTransactionInfo = regularTransactionsInfo;
           for (var k = 0; k < unmined.length; k++) {
             var unminedFound = false;
             for (var j = 0; j < attachedBlocks.length; j++){
@@ -68,7 +68,7 @@ function transactionNtfnsData(response) {
             }
           }
           if (unmined.length != updatedUnmined.length) {
-            dispatch({ transactionsInfo: updatedTransactionInfo, type: GETTRANSACTIONS_PROGRESS });
+            dispatch({ regularTransactionsInfo: updatedTransactionInfo, type: GETTRANSACTIONS_PROGRESS });
             dispatch({unmined: updatedUnmined, type: TRANSACTIONNTFNS_DATA_UNMINED_UPDATE});
           }
         } else if (attachedBlocks[attachedBlocks.length-1].getHeight()%100 == 0) {

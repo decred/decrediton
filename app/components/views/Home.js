@@ -29,7 +29,7 @@ class Home extends Component{
 
   render() {
     const { walletService } = this.props;
-    const { transactionsInfo, txPerPage } = this.props;
+    const { regularTransactionsInfo, txPerPage } = this.props;
     const { getBalanceResponse } = this.props;
     const { getTransactionsRequestAttempt } = this.props;
     const { rescanRequest, rescanResponse } = this.props;
@@ -38,13 +38,13 @@ class Home extends Component{
     const { unmined } = this.props;
 
     var transactionMessage = '';
-    if (transactionsInfo.length == 0) {
+    if (regularTransactionsInfo.length == 0) {
       transactionMessage = 'No transactions';
     }
     var paginatedTxs = unmined.length > 0 ?
     unmined.length > txPerPage ? Array() :
-    transactionsInfo.length + unmined.length >= txPerPage  ? transactionsInfo.slice(0,txPerPage-unmined.length) : transactionsInfo.slice(0,transactionsInfo.length+unmined.length):
-    transactionsInfo.length >= txPerPage  ? transactionsInfo.slice(0,txPerPage) : transactionsInfo.slice(0,transactionsInfo.length);
+    regularTransactionsInfo.length + unmined.length >= txPerPage  ? regularTransactionsInfo.slice(0,txPerPage-unmined.length) : regularTransactionsInfo.slice(0,regularTransactionsInfo.length+unmined.length):
+    regularTransactionsInfo.length >= txPerPage  ? regularTransactionsInfo.slice(0,txPerPage) : regularTransactionsInfo.slice(0,regularTransactionsInfo.length);
 
     var rescanPercFisnished;
     if (rescanResponse !== null && getAccountsResponse !== null && rescanRequest != null) {
