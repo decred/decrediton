@@ -125,7 +125,7 @@ class History extends Component{
             <div style={HistoryStyles.contentTitleButtonsArea}>
               <button style={HistoryStyles.contentTitleButtonsLeft} disabled={this.state.currentPage < 1} onClick={()=>this.pageBackward()}>&lt;</button>
               <span style={HistoryStyles.contentTitleButtonsText}>{this.state.currentPage + 1} of {totalPages}</span>
-              <button style={HistoryStyles.contentTitleButtonsRight} disabled={(this.state.currentPage + 1) * txPerPage > this.state.selectedTypeArray.length}onClick={()=>this.pageForward()}>&gt;</button>
+              <button style={HistoryStyles.contentTitleButtonsRight} disabled={(this.state.currentPage + 1) * txPerPage >= this.state.selectedTypeArray.length}onClick={()=>this.pageForward()}>&gt;</button>
             </div>
           </div>
           <div style={HistoryStyles.contentNest}>
