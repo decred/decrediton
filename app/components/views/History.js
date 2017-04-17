@@ -74,16 +74,19 @@ class History extends Component{
     }
 
     var selectTxTypes = (
-      <select
-        defaultValue={this.state.selectedType}
-        style={HistoryStyles.selectTxTypes}
-        onChange={(e) =>{this.updateSelectedType(e.target.value);}}
-        >
-        <option style={HistoryStyles.selectTxTypesN} value='Regular' label='Regular' disabled={regularTransactionsInfo.length == 0}/>
-        <option style={HistoryStyles.selectTxTypesN} value='Tickets' label='Tickets' disabled={ticketTransactionsInfo.length == 0}/>
-        <option style={HistoryStyles.selectTxTypesN} value='Votes' label='Votes' disabled={voteTransactionsInfo.length == 0}/>
-        <option style={HistoryStyles.selectTxTypesN} value='Revokes' label='Revokes' disabled={revokeTransactionsInfo.length == 0}/>
-      </select>);
+      <div style={HistoryStyles.selectTxTypesArea}>
+        <div style={HistoryStyles.selectTxTypesLabel}>Tx Type:</div>
+        <select
+          defaultValue={this.state.selectedType}
+          style={HistoryStyles.selectTxTypes}
+          onChange={(e) =>{this.updateSelectedType(e.target.value);}}
+          >
+          <option style={HistoryStyles.selectTxTypesN} value='Regular' label='Regular' disabled={regularTransactionsInfo.length == 0}/>
+          <option style={HistoryStyles.selectTxTypesN} value='Tickets' label='Tickets' disabled={ticketTransactionsInfo.length == 0}/>
+          <option style={HistoryStyles.selectTxTypesN} value='Votes' label='Votes' disabled={voteTransactionsInfo.length == 0}/>
+          <option style={HistoryStyles.selectTxTypesN} value='Revokes' label='Revokes' disabled={revokeTransactionsInfo.length == 0}/>
+        </select>
+      </div>);
 
     const historyView = (
       <div style={HistoryStyles.view}>

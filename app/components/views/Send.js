@@ -242,7 +242,7 @@ class Send extends Component{
             getAccountsResponse.getAccountsList().map((account) => {
               if (account.getAccountName() !== 'imported') {
                 return (
-                  <option style={SendStyles.selectAccountNFirst} key={account.getAccountNumber()} value={account.getAccountNumber()}>
+                  <option style={SendStyles.selectAccountN} key={account.getAccountNumber()} value={account.getAccountNumber()}>
                     {account.getAccountName()}
                   </option>
                 );

@@ -710,7 +710,7 @@ export const HistoryStyles = {
   contentTitleText: {
     display: 'inline-block',
     overflow: 'hidden',
-    width: '500px',
+    width: '245px',
     height: '100%',
     paddingTop: '13px',
     paddingRight: '20px',
@@ -736,7 +736,49 @@ export const HistoryStyles = {
     display: 'block',
     float: 'right',
     fontFamily: 'Inconsolata, monospace',
-  }
+  },
+  selectTxTypesArea: {
+    width: '235px',
+    float: 'left',
+    backgroundImage: `url(${ArrowDownMidBlue})`,
+    backgroundPosition: '100% 50%',
+    backgroundSize: '10px',
+    backgroundRepeat: 'no-repeat',
+    cursor: 'pointer',
+    ':hover': {
+      backgroundImage: `url(${ArrowDownKeyBlue})`,
+      backgroundSize: '10px',
+    }
+  },
+  selectTxTypesLabel: {
+    float: 'left',
+    marginLeft: '13px',
+    marginTop: '13px',
+  },
+  selectTxTypes: {
+    float: 'right',
+    display: 'block',
+    overflow: 'hidden',
+    width: '120px',
+    marginTop: '13px',
+    color: '#0c1e3e',
+    fontSize: '19px',
+    ':hover': {
+      height: 'auto',
+    }
+  },
+  selectTxTypesN: {
+    position: 'relative',
+    overflow: 'hidden',
+    width: '100%',
+    paddingTop: '18px',
+    paddingBottom: '18px',
+    paddingLeft: '10px',
+    float: 'left',
+    ':hover': {
+      color: '#2971ff',
+    }
+  },
 };
 export const SettingStyles = {
   body: {
