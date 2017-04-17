@@ -8,10 +8,10 @@ import {
   GETSTAKEINFO_ATTEMPT, GETSTAKEINFO_FAILED, GETSTAKEINFO_SUCCESS,
   GETTICKETPRICE_ATTEMPT, GETTICKETPRICE_FAILED, GETTICKETPRICE_SUCCESS,
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
-  GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED, GETTRANSACTIONS_PROGRESS, GETTRANSACTIONS_COMPLETE,
+  GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED,  GETTRANSACTIONS_COMPLETE,
   GETTRANSACTIONS_UNMINED_PROGRESS,
-  PAGINATETRANSACTIONS,
-  GETTRANSACTIONDETAILS_SET, GETTRANSACTIONDETAILS_CLEAR,
+  GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_TICKET,
+  GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE,
   UPDATETIMESINCEBLOCK,
 
   GETAGENDASERVICE_ATTEMPT, GETAGENDASERVICE_FAILED, GETAGENDASERVICE_SUCCESS,
@@ -202,16 +202,13 @@ export default function grpc(state = {}, action) {
       getAccountsRequestAttempt: false,
       getAccountsResponse: action.response,
     };
-  case PAGINATETRANSACTIONS:
-    return {
-      ...state,
-      paginatedTxs: action.paginatedTxs,
-      currentPage: action.currentPage,
-    };
   case GETTRANSACTIONS_ATTEMPT:
     return {
       ...state,
-      transactionsInfo: Array(),
+      regularTransactionsInfo: Array(),
+      ticketTransactionsInfo: Array(),
+      voteTransactionsInfo: Array(),
+      revokeTransactionsInfo: Array(),
       getTransactionsRequestAttempt: true,
     };
   case GETTRANSACTIONS_FAILED:
@@ -226,25 +223,30 @@ export default function grpc(state = {}, action) {
       getTransactionsRequestError: '',
       getTransactionsRequestAttempt: false,
     };
-  case GETTRANSACTIONS_PROGRESS:
+  case GETTRANSACTIONS_PROGRESS_REGULAR:
     return {
       ...state,
-      transactionsInfo: action.transactionsInfo,
+      regularTransactionsInfo: action.regularTransactionsInfo,
+    };
+  case GETTRANSACTIONS_PROGRESS_TICKET:
+    return {
+      ...state,
+      ticketTransactionsInfo: action.ticketTransactionsInfo,
+    };
+  case GETTRANSACTIONS_PROGRESS_VOTE:
+    return {
+      ...state,
+      voteTransactionsInfo: action.voteTransactionsInfo,
+    };
+  case GETTRANSACTIONS_PROGRESS_REVOKE:
+    return {
+      ...state,
+      revokeTransactionsInfo: action.revokeTransactionsInfo,
     };
   case GETTRANSACTIONS_UNMINED_PROGRESS:
     return {
       ...state,
       unminedTransactions: action.unmined,
-    };
-  case GETTRANSACTIONDETAILS_SET:
-    return {
-      ...state,
-      transactionDetails: action.tx,
-    };
-  case GETTRANSACTIONDETAILS_CLEAR:
-    return {
-      ...state,
-      transactionDetails: null,
     };
   case UPDATETIMESINCEBLOCK:
     return {

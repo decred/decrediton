@@ -16,34 +16,101 @@ class History extends Component{
     super(props);
     this.state = {
       currentPage: 0,
-      paginatedTxs: props.transactionsInfo.length >= props.txPerPage  ? props.transactionsInfo.slice(0,props.txPerPage) : props.transactionsInfo.slice(0,props.transactionsInfo.length),
+      paginatedTxs: props.regularTransactionsInfo.length >= props.txPerPage  ? props.regularTransactionsInfo.slice(0,props.txPerPage) : props.regularTransactionsInfo.slice(0,props.regularTransactionsInfo.length),
+      selectedTypeArray: props.regularTransactionsInfo,
+      selectedType: 'Regular',
+      transactionDetails: null,
     };
   }
   pageForward() {
-    const { transactionsInfo, txPerPage } = this.props;
-    const { currentPage } = this.state;
-    var newPaginatedTxs = (currentPage+2) * txPerPage > transactionsInfo.length ?
-      transactionsInfo.slice((currentPage+1)*txPerPage, transactionsInfo.length) :
-      transactionsInfo.slice((currentPage+1)*txPerPage, (currentPage+2) * txPerPage);
+    const { txPerPage } = this.props;
+    const { currentPage, selectedTypeArray } = this.state;
+    var newPaginatedTxs = (currentPage+2) * txPerPage > selectedTypeArray.length ?
+      selectedTypeArray.slice((currentPage+1)*txPerPage, selectedTypeArray.length) :
+      selectedTypeArray.slice((currentPage+1)*txPerPage, (currentPage+2) * txPerPage);
     this.setState({paginatedTxs: newPaginatedTxs, currentPage: currentPage+1});
   }
 
   pageBackward() {
-    const { transactionsInfo, txPerPage } = this.props;
-    const { currentPage } = this.state;
-    var newPaginatedTxs = transactionsInfo.slice((currentPage-1) * txPerPage, (currentPage)*txPerPage);
+    const { txPerPage } = this.props;
+    const { currentPage, selectedTypeArray } = this.state;
+    var newPaginatedTxs = selectedTypeArray.slice((currentPage-1) * txPerPage, (currentPage)*txPerPage);
     this.setState({paginatedTxs: newPaginatedTxs, currentPage: currentPage-1});
   }
+  updateSelectedType(type) {
+    var selectedTypeArray;
+    if (type == 'Regular') {
+      const { regularTransactionsInfo } = this.props;
+      selectedTypeArray = regularTransactionsInfo;
+    } else if (type == 'Tickets') {
+      const { ticketTransactionsInfo } = this.props;
+      selectedTypeArray = ticketTransactionsInfo;
+    } else if (type == 'Votes') {
+      const { voteTransactionsInfo } = this.props;
+      selectedTypeArray = voteTransactionsInfo;
+    } else if (type == 'Revokes') {
+      const { revokeTransactionsInfo } = this.props;
+      selectedTypeArray = revokeTransactionsInfo;
+    } else if (type == 'All') {
+      const { regularTransactionsInfo } = this.props;
+      const { ticketTransactionsInfo } = this.props;
+      const { voteTransactionsInfo } = this.props;
+      const { revokeTransactionsInfo } = this.props;
+      var allTransactions = Array();
+      for (var i = 0; i < regularTransactionsInfo.length; i++) {
+        allTransactions.push(regularTransactionsInfo[i]);
+      }
+      for (i = 0; i < ticketTransactionsInfo.length; i++) {
+        allTransactions.push(ticketTransactionsInfo[i]);
+      }
+      for (i = 0; i < voteTransactionsInfo.length; i++) {
+        allTransactions.push(voteTransactionsInfo[i]);
+      }
+      for (i = 0; i < revokeTransactionsInfo.length; i++) {
+        allTransactions.push(revokeTransactionsInfo[i]);
+      }
+      allTransactions.sort(function (a,b) {
+        return b.timestamp - a.timestamp;
+      });
+      selectedTypeArray = allTransactions;
+    }
+    var paginatedTxs = selectedTypeArray.length >= this.props.txPerPage  ? selectedTypeArray.slice(0,this.props.txPerPage) : selectedTypeArray.slice(0,selectedTypeArray.length);
+    this.setState({selectedType: type, currentPage: 0, selectedTypeArray: selectedTypeArray, paginatedTxs: paginatedTxs});
+  }
+  setTransactionDetails(tx) {
+    this.setState({transactionDetails: tx});
+  }
+  clearTransactionDetails() {
+    this.setState({transactionDetails: null});
+  }
+
   render() {
     const { walletService, getBalanceResponse, getAccountsResponse } = this.props;
-    const { transactionDetails, setTransactionDetails, clearTransactionDetails } = this.props;
-    const { txPerPage, transactionsInfo } = this.props;
+    const { txPerPage } = this.props;
+    const { regularTransactionsInfo, ticketTransactionsInfo, voteTransactionsInfo, revokeTransactionsInfo } = this.props;
     const { getNetworkResponse } = this.props;
 
     var totalPages = 1;
-    if (transactionsInfo.length > 0) {
-      totalPages = Math.floor(transactionsInfo.length / txPerPage) + 1;
+    if (this.state.selectedTypeArray.length > 0) {
+      totalPages = Math.ceil(this.state.selectedTypeArray.length / txPerPage);
+
     }
+
+    var selectTxTypes = (
+      <div style={HistoryStyles.selectTxTypesArea}>
+        <div style={HistoryStyles.selectTxTypesLabel}>Tx Type:</div>
+        <select
+          defaultValue={this.state.selectedType}
+          style={HistoryStyles.selectTxTypes}
+          onChange={(e) =>{this.updateSelectedType(e.target.value);}}
+          >
+          <option style={HistoryStyles.selectTxTypesN} value='All' label='All' disabled={regularTransactionsInfo.length == 0 && ticketTransactionsInfo.length == 0 && voteTransactionsInfo.length == 0 && revokeTransactionsInfo.length == 0}/>
+          <option style={HistoryStyles.selectTxTypesN} value='Regular' label='Regular' disabled={regularTransactionsInfo.length == 0}/>
+          <option style={HistoryStyles.selectTxTypesN} value='Tickets' label='Tickets' disabled={ticketTransactionsInfo.length == 0}/>
+          <option style={HistoryStyles.selectTxTypesN} value='Votes' label='Votes' disabled={voteTransactionsInfo.length == 0}/>
+          <option style={HistoryStyles.selectTxTypesN} value='Revokes' label='Revokes' disabled={revokeTransactionsInfo.length == 0}/>
+        </select>
+      </div>);
 
     const historyView = (
       <div style={HistoryStyles.view}>
@@ -54,15 +121,16 @@ class History extends Component{
         <div style={HistoryStyles.content}>
           <div style={HistoryStyles.contentTitle}>
             <div style={HistoryStyles.contentTitleText}>Recent Transactions</div>
+            {selectTxTypes}
             <div style={HistoryStyles.contentTitleButtonsArea}>
               <button style={HistoryStyles.contentTitleButtonsLeft} disabled={this.state.currentPage < 1} onClick={()=>this.pageBackward()}>&lt;</button>
               <span style={HistoryStyles.contentTitleButtonsText}>{this.state.currentPage + 1} of {totalPages}</span>
-              <button style={HistoryStyles.contentTitleButtonsRight} disabled={(this.state.currentPage + 1) * txPerPage > transactionsInfo.length}onClick={()=>this.pageForward()}>&gt;</button>
+              <button style={HistoryStyles.contentTitleButtonsRight} disabled={(this.state.currentPage + 1) * txPerPage >= this.state.selectedTypeArray.length}onClick={()=>this.pageForward()}>&gt;</button>
             </div>
           </div>
           <div style={HistoryStyles.contentNest}>
             {this.state.paginatedTxs.length > 0 ?
-              <TxHistory getAccountsResponse={getAccountsResponse} mined={this.state.paginatedTxs} showTxDetail={setTransactionDetails}/>  :
+              <TxHistory getAccountsResponse={getAccountsResponse} mined={this.state.paginatedTxs} showTxDetail={(tx) => this.setTransactionDetails(tx)}/>  :
               <p>No transactions</p>
             }
           </div>
@@ -74,9 +142,9 @@ class History extends Component{
       return(
         <div style={HistoryStyles.body}>
           <SideBar />
-          { transactionDetails === null ?
+          { this.state.transactionDetails === null ?
           historyView :
-          <TxDetails tx={transactionDetails} clearTxDetails={clearTransactionDetails} getAccountsResponse={getAccountsResponse} getNetworkResponse={getNetworkResponse}/>
+          <TxDetails tx={this.state.transactionDetails} clearTxDetails={() => this.clearTransactionDetails()} getAccountsResponse={getAccountsResponse} getNetworkResponse={getNetworkResponse}/>
           }
         </div>);
     }

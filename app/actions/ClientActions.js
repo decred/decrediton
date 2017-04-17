@@ -9,6 +9,7 @@ import {
   BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest,
   AgendasRequest, VoteChoicesRequest, SetVoteChoicesRequest,
 } from '../middleware/walletrpc/api_pb';
+import { TransactionDetails }  from '../middleware/walletrpc/api_pb';
 
 export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
 export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
@@ -382,10 +383,12 @@ function accounts() {
 
 export const GETTRANSACTIONS_ATTEMPT = 'GETTRANSACTIONS_ATTEMPT';
 export const GETTRANSACTIONS_FAILED = 'GETTRANSACTIONS_FAILED';
-export const GETTRANSACTIONS_PROGRESS = 'GETTRANSACTIONS_PROGRESS';
-export const GETTRANSACTIONS_UNMINED_PROGRESS = 'GETTRANSACTIONS_PROGRESS';
+export const GETTRANSACTIONS_PROGRESS_REGULAR = 'GETTRANSACTIONS_PROGRESS_REGULAR';
+export const GETTRANSACTIONS_PROGRESS_TICKET = 'GETTRANSACTIONS_PROGRESS_TICKET';
+export const GETTRANSACTIONS_PROGRESS_VOTE = 'GETTRANSACTIONS_PROGRESS_VOTE';
+export const GETTRANSACTIONS_PROGRESS_REVOKE = 'GETTRANSACTIONS_PROGRESS_REVOKE';
+export const GETTRANSACTIONS_UNMINED_PROGRESS = 'GETTRANSACTIONS_UNMINED_PROGRESS';
 export const GETTRANSACTIONS_COMPLETE = 'GETTRANSACTIONS_COMPLETE';
-export const PAGINATETRANSACTIONS = 'PAGINATETRANSACTIONS';
 
 export function getTransactionInfoAttempt() {
   return (dispatch, getState) => {
@@ -429,8 +432,14 @@ function getTransactionsInfo(request) {
 
 function getTransactionsInfoProgress(response) {
   return (dispatch, getState) => {
-    const { transactionsInfo } = getState().grpc;
-    var updatedTransactionInfo = transactionsInfo;
+    const { regularTransactionsInfo } = getState().grpc;
+    const { ticketTransactionsInfo } = getState().grpc;
+    const { voteTransactionsInfo } = getState().grpc;
+    const { revokeTransactionsInfo } = getState().grpc;
+    var updatedRegular = regularTransactionsInfo;
+    var updatedTicket = ticketTransactionsInfo;
+    var updatedVote = voteTransactionsInfo;
+    var updatedRevoke = revokeTransactionsInfo;
     for (var i = 0; i < response.getMinedTransactions().getTransactionsList().length; i++) {
       var newHeight = response.getMinedTransactions().getHeight();
       var tx = {
@@ -440,10 +449,30 @@ function getTransactionsInfoProgress(response) {
         index: i,
         hash: response.getMinedTransactions().getTransactionsList()[i].getHash(),
         blockHash: response.getMinedTransactions().getHash(),
+        type: response.getMinedTransactions().getTransactionsList()[i].getTransactionType(),
       };
-      updatedTransactionInfo.unshift(tx);
+      if (tx.type == TransactionDetails.TransactionType.REGULAR) {
+        updatedRegular.unshift(tx);
+      } else if (tx.type == TransactionDetails.TransactionType.TICKET_PURCHASE) {
+        updatedTicket.unshift(tx);
+      } else if (tx.type == TransactionDetails.TransactionType.VOTE) {
+        updatedVote.unshift(tx);
+      } else if (tx.type == TransactionDetails.TransactionType.REVOKE) {
+        updatedRevoke.unshift(tx);
+      }
     }
-    dispatch({ transactionsInfo: updatedTransactionInfo, type: GETTRANSACTIONS_PROGRESS });
+    if (updatedRegular.length !== regularTransactionsInfo.length) {
+      dispatch({ regularTransactionsInfo: updatedRegular, type: GETTRANSACTIONS_PROGRESS_REGULAR });
+    }
+    if (updatedTicket.length !== ticketTransactionsInfo.length) {
+      dispatch({ ticketTransactionsInfo: updatedTicket, type: GETTRANSACTIONS_PROGRESS_TICKET });
+    }
+    if (updatedVote.length !== voteTransactionsInfo.length) {
+      dispatch({ voteTransactionsInfo: updatedVote, type: GETTRANSACTIONS_PROGRESS_VOTE });
+    }
+    if (updatedRevoke.length !== revokeTransactionsInfo.length) {
+      dispatch({ revokeTransactionsInfo: updatedRevoke, type: GETTRANSACTIONS_PROGRESS_REVOKE });
+    }
     if (response.getUnminedTransactionsList().length > 0) {
       console.log('unmined!', response.getUnminedTransactionsList());
       dispatch({unmined: response.getUnminedTransactionsList(), type: GETTRANSACTIONS_UNMINED_PROGRESS});
@@ -455,17 +484,6 @@ function getTransactionsInfoEnd() {
   return (dispatch) => {
     setTimeout(() => { dispatch({ type: GETTRANSACTIONS_COMPLETE });}, 1000);
   };
-}
-
-export const GETTRANSACTIONDETAILS_SET = 'GETTRANSACTIONDETAILS_SET';
-export const GETTRANSACTIONDETAILS_CLEAR = 'GETTRANSACTIONDETAILS_CLEAR';
-
-export function setTransactionDetails(tx) {
-  return { tx, type: GETTRANSACTIONDETAILS_SET };
-}
-
-export function clearTransactionDetails() {
-  return { type: GETTRANSACTIONDETAILS_CLEAR };
 }
 
 export const UPDATETIMESINCEBLOCK = 'UPDATETIMESINCEBLOCK';

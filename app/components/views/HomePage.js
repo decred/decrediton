@@ -22,7 +22,10 @@ function mapStateToProps(state) {
     unminedTransactions: state.grpc.unminedTransactions,
     unmined: state.notifications.unmined,
     getTransactionsRequestAttempt: state.grpc.getTransactionsRequestAttempt,
-    transactionsInfo: state.grpc.transactionsInfo,
+    regularTransactionsInfo: state.grpc.regularTransactionsInfo,
+    ticketTransactionsInfo: state.grpc.ticketTransactionsInfo,
+    voteTransactionsInfo: state.grpc.voteTransactionsInfo,
+    revokeTransactionsInfo: state.grpc.revokeTransactionsInfo,
     txPerPage: state.grpc.txPerPage,
   };
 }

@@ -137,7 +137,10 @@ var initialState = {
     transactionDetails: null,
 
     // GetTransactionInfo
-    transactionsInfo: Array(),
+    regularTransactionsInfo: Array(),
+    ticketTransactionsInfo: Array(),
+    voteTransactionsInfo: Array(),
+    revokeTransactionsInfo: Array(),
     getTransactionsRequest: null,
     getTransactionsError: null,
     getTransactionsRequestAttempt: false,
