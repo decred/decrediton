@@ -51,6 +51,28 @@ class History extends Component{
     } else if (type == 'Revokes') {
       const { revokeTransactionsInfo } = this.props;
       selectedTypeArray = revokeTransactionsInfo;
+    } else if (type == 'All') {
+      const { regularTransactionsInfo } = this.props;
+      const { ticketTransactionsInfo } = this.props;
+      const { voteTransactionsInfo } = this.props;
+      const { revokeTransactionsInfo } = this.props;
+      var allTransactions = Array();
+      for (var i = 0; i < regularTransactionsInfo.length; i++) {
+        allTransactions.push(regularTransactionsInfo[i]);
+      }
+      for (i = 0; i < ticketTransactionsInfo.length; i++) {
+        allTransactions.push(ticketTransactionsInfo[i]);
+      }
+      for (i = 0; i < voteTransactionsInfo.length; i++) {
+        allTransactions.push(voteTransactionsInfo[i]);
+      }
+      for (i = 0; i < revokeTransactionsInfo.length; i++) {
+        allTransactions.push(revokeTransactionsInfo[i]);
+      }
+      allTransactions.sort(function (a,b) {
+        return b.timestamp - a.timestamp;
+      });
+      selectedTypeArray = allTransactions;
     }
     var paginatedTxs = selectedTypeArray.length >= this.props.txPerPage  ? selectedTypeArray.slice(0,this.props.txPerPage) : selectedTypeArray.slice(0,selectedTypeArray.length);
     this.setState({selectedType: type, currentPage: 0, selectedTypeArray: selectedTypeArray, paginatedTxs: paginatedTxs});
@@ -81,6 +103,7 @@ class History extends Component{
           style={HistoryStyles.selectTxTypes}
           onChange={(e) =>{this.updateSelectedType(e.target.value);}}
           >
+          <option style={HistoryStyles.selectTxTypesN} value='All' label='All' disabled={regularTransactionsInfo.length == 0 && ticketTransactionsInfo.length == 0 && voteTransactionsInfo.length == 0 && revokeTransactionsInfo.length == 0}/>
           <option style={HistoryStyles.selectTxTypesN} value='Regular' label='Regular' disabled={regularTransactionsInfo.length == 0}/>
           <option style={HistoryStyles.selectTxTypesN} value='Tickets' label='Tickets' disabled={ticketTransactionsInfo.length == 0}/>
           <option style={HistoryStyles.selectTxTypesN} value='Votes' label='Votes' disabled={voteTransactionsInfo.length == 0}/>
