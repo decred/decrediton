@@ -92,7 +92,8 @@ class History extends Component{
 
     var totalPages = 1;
     if (this.state.selectedTypeArray.length > 0) {
-      totalPages = Math.floor(this.state.selectedTypeArray.length / txPerPage) + 1;
+      totalPages = Math.ceil(this.state.selectedTypeArray.length / txPerPage);
+
     }
 
     var selectTxTypes = (
