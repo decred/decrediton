@@ -46,7 +46,6 @@ function transactionNtfnsData(response) {
           var updatedTicket = ticketTransactionsInfo;
           var updatedVote = voteTransactionsInfo;
           var updatedRevoke = revokeTransactionsInfo;
-          var updatedTransactionInfo = regularTransactionsInfo;
           for (var k = 0; k < unmined.length; k++) {
             var unminedFound = false;
             for (var j = 0; j < attachedBlocks.length; j++){
