@@ -14,6 +14,8 @@ import { StakePoolStyles } from './ViewStyles';
 import AgendaCard from '../AgendaCard';
 import AgendaOverview from '../AgendaOverview';
 import PurchaseTicketsInfo from '../PurchaseTicketsInfo';
+import PurchaseTicketsInfoButton from '../PurchaseTicketsInfoButton';
+import TicketsCogs from '../TicketsCogs';
 
 class StakePool extends Component{
   static propTypes = {
@@ -494,26 +496,16 @@ class StakePool extends Component{
         <div style={StakePoolStyles.contentPurchaseTicketView}>
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Purchase Tickets</div>
-            <KeyBlueButton onClick={()=> this.showPurchaseInfoModal()}>Info</KeyBlueButton>
           </div>
           <div style={StakePoolStyles.flexHeight}>
-            <div style={StakePoolStyles.purchaseTicketRow}>
-              <div style={StakePoolStyles.purchaseTicketLabel}>
-                Stake Pool:
-                </div>
-              <div style={StakePoolStyles.purchaseTicketInput}>
-                {selectStakePoolPurchaseTickets}
-              </div>
-              <div style={StakePoolStyles.purchaseTicketInputError}>
-                <KeyBlueButton style={StakePoolStyles.manageStakePoolsButton} onClick={() => this.showStakePoolConfig()}>
-                  Manage stake pools
-                </KeyBlueButton>
-              </div>
-            </div>
             <div style={StakePoolStyles.purchaseTicketRow}>
               <div style={StakePoolStyles.purchaseTicketLabel}>Account:</div>
               <div style={StakePoolStyles.purchaseTicketInput}>
                 {selectAccounts}
+              </div>                
+              <div style={StakePoolStyles.purchaseTicketInputError}>
+                <PurchaseTicketsInfoButton onClick={() => this.showPurchaseInfoModal()}/>
+                <TicketsCogs opened={this.state.advancedHidden} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}/>
               </div>
             </div>
             <div style={StakePoolStyles.purchaseTicketRow}>
@@ -525,7 +517,36 @@ class StakePool extends Component{
                 {this.state.numTicketsError}
               </div>
             </div>
+            <div style={StakePoolStyles.purchaseTicketRow}>
+              <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
+              <div style={StakePoolStyles.purchaseTicketInput}>
+                <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                  <input
+                    type="text"
+                    style={StakePoolStyles.contentNestPurchaseTicketForm}
+                    placeholder="Ticket Fee"
+                    defaultValue={0.01}
+                    onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
+                </div>
+              </div>
+              <div style={StakePoolStyles.purchaseTicketInputError}>
+                {this.state.ticketFeeError}
+              </div>
+            </div>
             <div hidden={this.state.advancedHidden ? true : false}>
+              <div style={StakePoolStyles.purchaseTicketRow}>
+                <div style={StakePoolStyles.purchaseTicketLabel}>
+                  Stake Pool:
+                  </div>
+                <div style={StakePoolStyles.purchaseTicketInput}>
+                  {selectStakePoolPurchaseTickets}
+                </div>
+                <div style={StakePoolStyles.purchaseTicketInputError}>
+                  <KeyBlueButton style={StakePoolStyles.manageStakePoolsButton} onClick={() => this.showStakePoolConfig()}>
+                    Manage stake pools
+                  </KeyBlueButton>
+                </div>
+              </div>
               <div style={StakePoolStyles.purchaseTicketRow}>
                 <div style={StakePoolStyles.purchaseTicketLabel}>Tx Fee (DCR/kB):</div>
                 <div style={StakePoolStyles.purchaseTicketInput}>
@@ -540,22 +561,6 @@ class StakePool extends Component{
                 </div>
                 <div style={StakePoolStyles.purchaseTicketInputError}>
                   {this.state.txFeeError}
-                </div>
-              </div>
-              <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      placeholder="Ticket Fee"
-                      defaultValue={0.01}
-                      onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
-                  </div>
-                </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  {this.state.ticketFeeError}
                 </div>
               </div>
               <div style={StakePoolStyles.purchaseTicketRow}>
@@ -610,11 +615,6 @@ class StakePool extends Component{
                   </div>
                 </div>
               </div>
-            </div>
-            <div style={StakePoolStyles.purchaseTicketRow} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}>
-              <HideShowButton showAdvanced={this.state.advancedHidden ? true : false}>
-                {this.state.advancedHidden ? 'Show' : 'Hide'} advanced
-              </HideShowButton>
             </div>
             <div style={StakePoolStyles.purchaseTicketRow}>
               <div style={StakePoolStyles.purchaseTicketLabel}>Private Passhrase:</div>
