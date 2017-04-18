@@ -1454,6 +1454,7 @@ export const StakePoolStyles = {
     paddingTop: '1px',
     backgroundColor: '#fff',
     height:'411px',
+    float: 'left',
     overflowY: 'auto',
     overflowX: 'hidden',
   },

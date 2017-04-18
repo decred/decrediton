@@ -13,6 +13,7 @@ import HideShowButton from '../HideShowButton';
 import { StakePoolStyles } from './ViewStyles';
 import AgendaCard from '../AgendaCard';
 import AgendaOverview from '../AgendaOverview';
+import PurchaseTicketsInfo from '../PurchaseTicketsInfo';
 
 class StakePool extends Component{
   static propTypes = {
@@ -50,6 +51,7 @@ class StakePool extends Component{
       addAnotherStakePool: false,
       purchaseTickets: true,
       purchaseTicketsStakePoolConfig: false,
+      showPurchaseInfoModal: false,
       spendLimit: this.props.getBalanceResponse != null ? this.props.getBalanceResponse.getSpendable() : 0,
       conf: 0,
       numTickets: 0,
@@ -244,8 +246,13 @@ class StakePool extends Component{
       }
     }
     this.setState({agendaDisplay: agenda, selectedChoice: selectedChoice});
+    }
+  showPurchaseInfoModal() {
+    this.setState({showPurchaseInfoModal: true});
   }
-
+  closePurchaseInfoModal() {
+    this.setState({showPurchaseInfoModal: false});
+  }
   render() {
     const { walletService } = this.props;
     const { ticketBuyerService } = this.props;
@@ -480,10 +487,14 @@ class StakePool extends Component{
           }
         </div>
     );
+    var purchaseTicketsInfoModal = (
+        <PurchaseTicketsInfo closeModal={()=>this.closePurchaseInfoModal()}/>
+    )
     var purchaseTicketsView = (
         <div style={StakePoolStyles.contentPurchaseTicketView}>
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Purchase Tickets</div>
+            <KeyBlueButton onClick={()=> this.showPurchaseInfoModal()}>Info</KeyBlueButton>
           </div>
           <div style={StakePoolStyles.flexHeight}>
             <div style={StakePoolStyles.purchaseTicketRow}>
@@ -705,7 +716,7 @@ class StakePool extends Component{
             <div></div>
 
           }
-        />-
+        />
         {(!activeStakePoolConfig || this.state.addAnotherStakePool) && !currentStakePoolConfigRequest ?
           stakePoolConfigInput :
           currentStakePoolConfigRequest || purchaseTicketsRequestAttempt ?
@@ -713,8 +724,10 @@ class StakePool extends Component{
               this.state.purchaseTickets ?
                 this.state.purchaseTicketsStakePoolConfig ?
                   configuredStakePoolInformation :
-                    purchaseTicketsView :
-                      votingGuiView
+                    this.state.showPurchaseInfoModal ? 
+                      purchaseTicketsInfoModal :
+                        purchaseTicketsView :
+                        votingGuiView
         }
       </div>
     );
