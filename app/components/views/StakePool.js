@@ -17,6 +17,7 @@ import PurchaseTicketsInfo from '../PurchaseTicketsInfo';
 import PurchaseTicketsInfoButton from '../PurchaseTicketsInfoButton';
 import TicketsCogs from '../TicketsCogs';
 import NumTicketsInput from '../NumTicketsInput';
+import ManagePoolsButton from '../ManagePoolsButton';
 
 class StakePool extends Component{
   static propTypes = {
@@ -515,9 +516,7 @@ class StakePool extends Component{
                 {selectStakePoolPurchaseTickets}
               </div>
               <div style={StakePoolStyles.purchaseTicketInputError}>
-                <KeyBlueButton style={StakePoolStyles.manageStakePoolsButton} onClick={() => this.showStakePoolConfig()}>
-                  Manage stake pools
-                </KeyBlueButton>
+                <ManagePoolsButton onClick={() => this.showStakePoolConfig()}/>
               </div>
             </div>
             <div hidden={this.state.advancedHidden ? true : false}>

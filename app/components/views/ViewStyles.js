@@ -22,6 +22,7 @@ import SplitFeeIcon from '../icons/split-fee.svg';
 import TicketAddressIcon from '../icons/voting-address.svg';
 import FeeAddressIcon from '../icons/pool-fee-address.svg';
 import PoolFeeIcon from '../icons/pool-fees.svg';
+import TicketsManageStakepools from '../icons/tickets-manage-stakepools.svg';
 
 export const ReceiveStyles = {
   body: {
@@ -1271,6 +1272,7 @@ export const StakePoolStyles = {
     display: 'block',
     overflow: 'hidden',
     height: '100%',
+    width: '100%',
     paddingTop: '3px',
     color: '#0c1e3e',
     ':hover': {
@@ -1640,6 +1642,33 @@ export const StakePoolStyles = {
     textAlign: 'left',
     color: 'red',
     paddingTop: '5px',
+  },
+  managePoolsButton: {
+    float: 'left',
+    backgroundColor: '#2971ff',
+    backgroundImage: `url(${TicketsManageStakepools})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '12px',
+    backgroundRepeat: 'no-repeat',
+    outline: '0',
+    position: 'relative',
+    display: 'block',
+    width: '20px',
+    height: '20px',
+    padding: '0px',
+    borderRadius: '5px',
+    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
+    color: 'white',
+    border: '0',
+    lineHeight: 'inherit',
+    textDecoration: 'none',
+    cursor: 'pointer',
+    ':hover': {
+      backgroundColor: '#1b58ff',
+    },
+    ':active': {
+      boxShadow: '0 0 0 0 rgba(0, 0, 0, .2)',
+    }
   },
   purchaseTicketInfoButton: {
     marginLeft: '210px',
