@@ -1427,6 +1427,13 @@ export const StakePoolStyles = {
   numTicketsInputArea: {
     paddingTop: '2px'
   },
+  purchaseTicketQuickBarRow: {
+    width: '100%',
+    height: '50px',
+    paddingTop: '2px',
+    float: 'left',
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
+  },
   purchaseTicketRow: {
     width: '100%',
     height: '34px',
@@ -1539,6 +1546,22 @@ export const StakePoolStyles = {
     color: 'red',
   },
   flexHeight: {
+    paddingTop: '1px',
+    backgroundColor: '#fff',
+    height:'411px',
+    float: 'left',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+  },
+  flexHeightHidden: {
+    paddingTop: '1px',
+    backgroundColor: '#fff',
+    height:'237px',
+    float: 'left',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+  },
+  flexHeightShown: {
     paddingTop: '1px',
     backgroundColor: '#fff',
     height:'411px',

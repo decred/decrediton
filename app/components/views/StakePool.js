@@ -476,7 +476,7 @@ class StakePool extends Component{
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Purchase Tickets</div>
           </div>
-          <div style={StakePoolStyles.flexHeight}>
+          <div style={this.state.advancedHidden ? StakePoolStyles.flexHeightHidden : StakePoolStyles.flexHeightShown }>
             <div style={StakePoolStyles.purchaseTicketRow}>
               <div style={StakePoolStyles.purchaseTicketLabel}>Account:</div>
               <div style={StakePoolStyles.purchaseTicketInput}>
@@ -512,20 +512,20 @@ class StakePool extends Component{
                 {this.state.ticketFeeError}
               </div>
             </div>
-            <div hidden={this.state.advancedHidden ? true : false}>
-              <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>
-                  Stake Pool:
-                  </div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  {selectStakePoolPurchaseTickets}
+            <div style={StakePoolStyles.purchaseTicketRow}>
+              <div style={StakePoolStyles.purchaseTicketLabel}>
+                Stake Pool:
                 </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  <KeyBlueButton style={StakePoolStyles.manageStakePoolsButton} onClick={() => this.showStakePoolConfig()}>
-                    Manage stake pools
-                  </KeyBlueButton>
-                </div>
+              <div style={StakePoolStyles.purchaseTicketInput}>
+                {selectStakePoolPurchaseTickets}
               </div>
+              <div style={StakePoolStyles.purchaseTicketInputError}>
+                <KeyBlueButton style={StakePoolStyles.manageStakePoolsButton} onClick={() => this.showStakePoolConfig()}>
+                  Manage stake pools
+                </KeyBlueButton>
+              </div>
+            </div>
+            <div hidden={this.state.advancedHidden ? true : false}>
               <div style={StakePoolStyles.purchaseTicketRow}>
                 <div style={StakePoolStyles.purchaseTicketLabel}>Tx Fee (DCR/kB):</div>
                 <div style={StakePoolStyles.purchaseTicketInput}>
@@ -611,32 +611,13 @@ class StakePool extends Component{
                 {this.state.privPassError}
               </div>
             </div>
+            <div hidden={this.state.advancedHidden ? false : true} style={StakePoolStyles.purchaseTicketQuickBarRow}>
+              Stake pool quickbar
+            </div>
           </div>
           <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.submitPurchase()}>
             Purchase
           </KeyBlueButton>
-	<div>
-          <div>Start Automatic Ticket Purchasing</div>
-          <div style={StakePoolStyles.inputFormPurchaseTicket}>
-          <input
-                    id="privpass"
-                    style={StakePoolStyles.contentNestPurchaseTicketForm}
-                    type="password"
-                    placeholder="Private Passphrase"
-                    onBlur={(e) =>{this.updatePrivPass(e.target.value);}}/>
-        </div>
-	<KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.submitStart()}>
-          Start Auto Ticket Purchasing
-        </KeyBlueButton>
-	</div>
-	<div>
-           <div>Stop Automatic Ticket Purchasing</div>
-	<div style={StakePoolStyles.inputFormPurchaseTicket}>
-	</div>
-	<KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.submitStop()}>
-          Stop Auto Ticket Purchasing
-        </KeyBlueButton>
-	</div>
       </div>);
     const stakePool = (
       <div style={StakePoolStyles.view}>
