@@ -1215,7 +1215,6 @@ export const StakePoolStyles = {
     textAlign: 'left',
   },
   numTicketsInputValue: {
-    color: '#2971ff',
     width: '40px',
     fontSize: '19px',
     fontWeight: '700',
@@ -1231,10 +1230,10 @@ export const StakePoolStyles = {
   },
   numTicketsInputValueSuffix: {
     display: 'inline-block',
-    paddingTop: '3px',
+    paddingTop: '5px',
     paddingRight: '5px',
     fontFamily: 'Inconsolata, monospace',
-    fontSize: '11px',
+    fontSize: '13px',
     fontWeight: '700',
   },
   numTicketsMoreLess: {
