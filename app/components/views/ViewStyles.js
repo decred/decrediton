@@ -1767,7 +1767,7 @@ export const StakePoolStyles = {
   flexHeightShown: {
     paddingTop: '1px',
     backgroundColor: '#fff',
-    height:'411px',
+    height:'374px',
     float: 'left',
     overflowY: 'auto',
     overflowX: 'hidden',
