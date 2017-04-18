@@ -339,10 +339,10 @@ class StakePool extends Component{
         </select>
       </div>);
     var selectNumTickets = (
-      <div style={StakePoolStyles.selectStakePoolArea}>
+      <div style={StakePoolStyles.numTicketsInputArea}>
         <input
           defaultValue={0}
-          style={StakePoolStyles.numTicketInput}
+          style={StakePoolStyles.numTicketsInput}
           onChange={(e) =>{this.updateNumTickets(e.target.value);}}
           type='number' min="0"
           />
