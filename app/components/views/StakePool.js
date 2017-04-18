@@ -16,6 +16,7 @@ import AgendaOverview from '../AgendaOverview';
 import PurchaseTicketsInfo from '../PurchaseTicketsInfo';
 import PurchaseTicketsInfoButton from '../PurchaseTicketsInfoButton';
 import TicketsCogs from '../TicketsCogs';
+import NumTicketsInput from '../NumTicketsInput';
 
 class StakePool extends Component{
   static propTypes = {
@@ -146,12 +147,13 @@ class StakePool extends Component{
   updateAccountNumber(accountNum) {
     this.setState({account: accountNum});
   }
-  updateNumTickets(numTickets) {
-    if (numTickets > 0) {
-      this.setState({numTickets: numTickets, numTicketsError: null});
-    } else {
-      this.setState({numTicketsError: '*You must purchase 1 or more tickets.'});
-    }
+  incrementNumTickets() {
+      this.setState({numTickets: this.state.numTickets + 1});
+  }
+  decrementNumTickets() {
+     if (this.state.numTickets > 0) {
+      this.setState({numTickets: this.state.numTickets - 1});
+     }
   }
   updateTicketFee(ticketFee) {
     if (ticketFee > 0 && ticketFee < 1) {
@@ -339,14 +341,7 @@ class StakePool extends Component{
         </select>
       </div>);
     var selectNumTickets = (
-      <div style={StakePoolStyles.numTicketsInputArea}>
-        <input
-          defaultValue={0}
-          style={StakePoolStyles.numTicketsInput}
-          onChange={(e) =>{this.updateNumTickets(e.target.value);}}
-          type='number' min="0"
-          />
-      </div>);
+      <NumTicketsInput numTickets={this.state.numTickets} incrementNumTickets={()=>this.incrementNumTickets()} decrementNumTickets={()=>this.decrementNumTickets()}/>);
 
     var stakePoolConfigInput = (
       <div style={StakePoolStyles.content}>
@@ -470,7 +465,7 @@ class StakePool extends Component{
     );
     var purchaseTicketsInfoModal = (
         <PurchaseTicketsInfo closeModal={()=>this.closePurchaseInfoModal()}/>
-    )
+    );
     var purchaseTicketsView = (
         <div style={StakePoolStyles.contentPurchaseTicketView}>
           <div style={StakePoolStyles.votingTitleArea}>

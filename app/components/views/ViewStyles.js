@@ -5,6 +5,7 @@ import IndicatorConfirmed from '../icons/indicator-confirmed.svg';
 import PlusBig from '../icons/plus-big.svg';
 import MinusBig from '../icons/minus-big.svg';
 import ArrowDownMidBlue from '../icons/arrow-down-mid-blue.svg';
+import ArrowUpKeyBlue from '../icons/arrow-up-key-blue.svg';
 import ArrowDownKeyBlue from '../icons/arrow-down-key-blue.svg';
 import ArrowUpLightBlue from '../icons/arrow-up-light-blue.svg';
 import ArrowUpTurquiose from '../icons/arrow-up-turquiose.svg';
@@ -1204,14 +1205,67 @@ export const StakePoolStyles = {
   selectAccountNText: {
     width: '200%',
   },
-  numTicketsInput: { 
+  numTicketsInput: {
+    width: '111px',
+    paddingTop: '4px',
     float: 'left',
-    width: '50px',
-    height: '25px',
-    paddingLeft: '10px',
+    fontFamily: 'Inconsolata, sans-serif',
+    color: '#0c1e3e',
+    textAlign: 'left',
+  },
+  numTicketsInputValue: {
+    color: '#2971ff',
+    width: '40px',
+    fontSize: '19px',
+    fontWeight: '700',
+    whiteSpace: 'pre',
+    display: 'inline-block',
+    marginRight: '10px',
+    marginBottom: '3px',
+    marginLeft: '10px',
+    float: 'left',
+    textAlign: 'right',
     borderStyle: 'none',
-    color: 'rgb(41, 113, 255)',
-    fontSize: '13px',
+    lineHeight: 'normal',
+  },
+  numTicketsInputValueSuffix: {
+    display: 'inline-block',
+    paddingTop: '3px',
+    paddingRight: '5px',
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '11px',
+    fontWeight: '700',
+  },
+  numTicketsMoreLess: {
+    width: '20px',
+    height: '100%',
+    float: 'left',
+  },
+  numTicketsMore: {
+    width: '20px',
+    height: '14px',
+    marginBottom: '2px',
+    float: 'left',
+    backgroundImage: `url(${ArrowUpKeyBlue})`,
+    backgroundPosition: '50% 100%',
+    backgroundSize: '10px',
+    backgroundRepeat: 'no-repeat',
+    ':hover': {
+      opacity: '0.7',
+    }
+  },
+  numTicketsLess: {
+    width: '20px',
+    height: '12px',
+    marginTop: '2px',
+    float: 'left',
+    backgroundImage: `url(${ArrowDownKeyBlue})`,
+    backgroundPosition: '50% 0px',
+    backgroundSize: '10px',
+    backgroundRepeat: 'no-repeat',
+    ':hover': {
+      opacity: '0.7',
+    }
   },
   selectPurchaseTickets: {
     display: 'block',
