@@ -612,7 +612,13 @@ class StakePool extends Component{
               </div>
             </div>
             <div hidden={this.state.advancedHidden ? false : true} style={StakePoolStyles.purchaseTicketQuickBarRow}>
-              Stake pool quickbar
+              <div style={StakePoolStyles.quickBarRowLabel}>Settings:</div>
+              <div style={StakePoolStyles.stakepoolIcon}>{this.state.selectedStakePoolForPurchase.Host}</div>
+              <div style={StakePoolStyles.expiryIcon}>{this.state.expiry} Blocks</div>
+              <div style={StakePoolStyles.feeIcon}>{this.state.txFee} DCR/KB</div>
+              <div style={StakePoolStyles.ticketAddressIcon}>{this.state.selectedStakePoolForPurchase.TicketAddress}</div>
+              <div style={StakePoolStyles.feeAddressIcon}>{this.state.selectedStakePoolForPurchase.PoolAddress}</div>
+              <div style={StakePoolStyles.poolFeeIcon}>{this.state.selectedStakePoolForPurchase.PoolFees}%</div>
             </div>
           </div>
           <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.submitPurchase()}>
