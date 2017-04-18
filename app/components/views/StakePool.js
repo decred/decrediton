@@ -340,33 +340,12 @@ class StakePool extends Component{
       </div>);
     var selectNumTickets = (
       <div style={StakePoolStyles.selectStakePoolArea}>
-        <select
+        <input
           defaultValue={0}
-          style={StakePoolStyles.selectPurchaseTickets}
+          style={StakePoolStyles.numTicketInput}
           onChange={(e) =>{this.updateNumTickets(e.target.value);}}
-          >
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={0} label={0}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={1} label={1}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={2} label={2}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={3} label={3}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={4} label={4}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={5} label={5}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={6} label={6}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={7} label={7}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={8} label={8}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={9} label={9}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={10} label={10}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={11} label={11}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={12} label={12}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={13} label={13}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={14} label={14}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={15} label={15}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={16} label={16}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={17} label={17}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={18} label={18}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={19} label={19}/>
-          <option style={StakePoolStyles.selectPurchaseTicketsN} value={20} label={20}/>
-        </select>
+          type='number' min="0"
+          />
       </div>);
 
     var stakePoolConfigInput = (

@@ -1198,6 +1198,16 @@ export const StakePoolStyles = {
   selectAccountNText: {
     width: '200%',
   },
+  numTicketInput: { 
+    float: 'left',
+    width: '50px',
+    height: '100%',
+    paddingTop: '2px',
+    paddingLeft: '10px',
+    borderStyle: 'none',
+    color: 'rgb(41, 113, 255)',
+    fontSize: '13px',
+  },
   selectPurchaseTickets: {
     display: 'block',
     overflow: 'hidden',
