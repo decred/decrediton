@@ -16,6 +16,7 @@ import PurchaseTicketsInfoButton from '../PurchaseTicketsInfoButton';
 import TicketsCogs from '../TicketsCogs';
 import NumTicketsInput from '../NumTicketsInput';
 import ManagePoolsButton from '../ManagePoolsButton';
+import AutoBuyerSwitch from '../AutoBuyerSwitch';
 
 class StakePool extends Component{
   static propTypes = {
@@ -262,6 +263,12 @@ class StakePool extends Component{
   }
   closePurchaseInfoModal() {
     this.setState({showPurchaseInfoModal: false});
+  }
+  enableTicketBuyer() {
+    this.setState({ticketBuyerEnabled: true});
+  }
+  disableTicketBuyer() {
+    this.setState({ticketBuyerEnabled: false});
   }
   render() {
     const { walletService, currentSettings, settingsChanged, tempSettings, updateStateVoteSettingsChanged } = this.props;
@@ -628,8 +635,10 @@ class StakePool extends Component{
           </div>
           <div style={this.state.autoBuyerHidden ? StakePoolStyles.flexHeightAutoBuyerHidden : StakePoolStyles.flexHeightAutoBuyerShown }>         
             <div style={StakePoolStyles.autoBuyerRow}>
-              <div style={StakePoolStyles.autoBuyerSwitch}></div>
-              <div style={StakePoolStyles.autoBuyerLabel}>Disabled</div>
+              <div style={StakePoolStyles.autoBuyerSwitch}>
+                <AutoBuyerSwitch enabled={this.state.ticketBuyerEnabled} onClick={this.state.ticketBuyerEnabled ? ()=>this.disableTicketBuyer() : ()=>this.enableTicketBuyer()}/>
+              </div>
+              <div style={StakePoolStyles.autoBuyerLabel}>{this.state.ticketBuyerEnabled ? 'Enabled' : 'Disabled'}</div>
               <div style={StakePoolStyles.autoBuyerQuickBarRow}>
                 {this.state.autoBuyerHidden ? 
                   <div>

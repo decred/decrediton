@@ -1500,11 +1500,85 @@ export const StakePoolStyles = {
     float: 'left',
     position: 'relative',
   },
-  autoBuyerSwitch: {
-    width: '100px',
+  switchEnabled: {
+    display: 'block',
+    width: '60px',
+    height: '24px',
+    borderRadius: '5px',
+    backgroundColor: '#2971ff',
+    ':hover': {
+      width: '56px',
+      paddingLeft: '4px',
+    },
+    transition: 'all 200ms ease-in-out',
     float: 'left',
   },
-  autoBuyerLabel: {    
+
+  switchDisabled: {
+    display: 'block',
+    width: '60px',
+    height: '24px',
+    borderRadius: '5px',
+    backgroundColor: '#c4cbd2',
+    ':hover': {
+      width: '56px',
+      paddingRight: '4px',
+    },
+    transition: 'all 200ms ease-in-out',
+    float: 'left',
+  },
+
+  switchKnobEnabled: {
+    width: '30px',
+    height: '100%',
+    borderRadius: '5px',
+    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
+    backgroundColor: '#fff',
+  },
+  switchKnobDisabled: {
+    width: '30px',
+    height: '100%',
+    borderRadius: '5px',
+    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
+    float: 'right',
+    backgroundColor: '#596d81',
+  },
+/*
+  .switch.disabled-inactive {
+    background-color: #f3f6f6;
+    cursor: default;
+  }
+
+  .switch.disabled-inactive.transition0.automatic-purchase {
+    float: left;
+  }
+
+  .switch.enabled-inactive {
+    background-color: #f3f6f6;
+    cursor: default;
+  }
+
+  .switch.enabled-inactive.transition0.automatic-purchase {
+    float: left;
+  }
+  .switch-knob.disabled-inactive {
+    float: right;
+    background-color: #e7eaed;
+  }
+
+  .switch-knob.enabled-inactive {
+    background-color: #e7eaed;
+  }
+  */
+
+  autoBuyerSwitch: {
+    width: '85px',
+    float: 'left',
+    paddingLeft: '15px',
+    paddingTop: '13px',
+  },
+  autoBuyerLabel: {   
+    width: '75px', 
     display: 'block',
     paddingTop: '13px',
     paddingLeft: '20px',
