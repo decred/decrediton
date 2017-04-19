@@ -963,6 +963,12 @@ export const StakePoolStyles = {
     height: '556px',
     padding: '0px 60px 10px 80px',
   },
+  contentPurchaseTicketViewBlur: {
+    filter: 'blur(6px)',
+    overflow: 'auto',
+    height: '565px',
+    padding: '20px 60px 20px 80px',
+  },
   contentPurchaseTicketView: {
     overflow: 'auto',
     height: '565px',

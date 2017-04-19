@@ -17,6 +17,7 @@ import TicketsCogs from '../TicketsCogs';
 import NumTicketsInput from '../NumTicketsInput';
 import ManagePoolsButton from '../ManagePoolsButton';
 import AutoBuyerSwitch from '../AutoBuyerSwitch';
+import PassphraseModal from '../PassphraseModal';
 
 class StakePool extends Component{
   static propTypes = {
@@ -55,6 +56,7 @@ class StakePool extends Component{
       purchaseTickets: true,
       purchaseTicketsStakePoolConfig: false,
       showPurchaseInfoModal: false,
+      passphraseModalOpen: false,
       spendLimit: this.props.getBalanceResponse != null ? this.props.getBalanceResponse.getSpendable() : 0,
       conf: 0,
       numTickets: 0,
@@ -265,10 +267,10 @@ class StakePool extends Component{
     this.setState({showPurchaseInfoModal: false});
   }
   enableTicketBuyer() {
-    this.setState({ticketBuyerEnabled: true});
+    this.setState({ticketBuyerEnabled: true, passphraseModalOpen: true});
   }
   disableTicketBuyer() {
-    this.setState({ticketBuyerEnabled: false});
+    this.setState({ticketBuyerEnabled: false, passphraseModalOpen: false});
   }
   render() {
     const { walletService, currentSettings, settingsChanged, tempSettings, updateStateVoteSettingsChanged } = this.props;
@@ -480,7 +482,9 @@ class StakePool extends Component{
         <PurchaseTicketsInfo closeModal={()=>this.closePurchaseInfoModal()}/>
     );
     var purchaseTicketsView = (
-        <div style={StakePoolStyles.contentPurchaseTicketView}>
+      <div>
+        <PassphraseModal hidden={!this.state.passphraseModalOpen} submitPassphrase={(privPass) => console.log(privPass)} cancelPassphrase={()=>this.disableTicketBuyer()}/> 
+        <div style={this.state.passphraseModalOpen ? StakePoolStyles.contentPurchaseTicketViewBlur : StakePoolStyles.contentPurchaseTicketView}>
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Purchase Tickets</div>
           </div>
@@ -655,7 +659,8 @@ class StakePool extends Component{
               </div>
             </div>
           </div>
-        </div>);
+        </div>
+      </div>);
     const stakePool = (
       <div style={StakePoolStyles.view}>
         <Header
