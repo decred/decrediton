@@ -310,13 +310,13 @@ var initialState = {
     startAutoBuyerRequestAttempt: false,
     startAutoBuyerRequest: null,
     startAutoBuyerResponse: null,
-    startAutoBuyerSuccess: '',
+    startAutoBuyerSuccess: null,
     startAutoBuyerError: null,
     // StopAutoBuyer
     stopAutoBuyerRequestAttempt: false,
     stopAutoBuyerRequest: null,
     stopAutoBuyerResponse: null,
-    stopAutoBuyerSuccess: '',
+    stopAutoBuyerSuccess: null,
     stopAutoBuyerError: null,
     // ConstructTransaction
     constructTxRequestAttempt: false,

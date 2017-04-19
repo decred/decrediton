@@ -637,7 +637,7 @@ function startAutoBuyerAction() {
 export function clearStartAutoBuyerSuccess() {
   return (dispatch, getState) => {
     const { startAutoBuyerSuccess } = getState().control;
-    if (startAutoBuyerSuccess !== '') {
+    if (startAutoBuyerSuccess !== null) {
       dispatch({type: STARTAUTOBUYER_CLEAR_SUCCESS});
     }
   };
@@ -695,7 +695,7 @@ function stopAutoBuyerAction() {
 export function clearStopAutoBuyerSuccess() {
   return (dispatch, getState) => {
     const { stopAutoBuyerSuccess } = getState().control;
-    if (stopAutoBuyerSuccess !== '') {
+    if (stopAutoBuyerSuccess !== null) {
       dispatch({type: STOPAUTOBUYER_CLEAR_SUCCESS});
     }
   };

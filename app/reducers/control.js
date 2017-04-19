@@ -319,7 +319,7 @@ export default function control(state = {}, action) {
     };
   case  STARTAUTOBUYER_CLEAR_SUCCESS:
     return {...state,
-      startAutoBuyerSuccess: '',
+      startAutoBuyerSuccess: null,
     };
   case STOPAUTOBUYER_ATTEMPT:
     return {...state,
@@ -339,6 +339,9 @@ export default function control(state = {}, action) {
       stopAutoBuyerSuccess: action.success,
       stopAutoBuyerRequestAttempt: false,
       stopAutoBuyerResponse: action.stopAutoBuyerResponse,
+      startAutoBuyerSuccess: null,
+      startAutoBuyerResponse: null,
+      startAutoBuyerRequest: null,
     };
   case STOPAUTOBUYER_CLEAR_ERROR:
     return {...state,
@@ -346,7 +349,7 @@ export default function control(state = {}, action) {
     };
   case  STOPAUTOBUYER_CLEAR_SUCCESS:
     return {...state,
-      stopAutoBuyerSuccess: '',
+      stopAutoBuyerSuccess: null,
     };
   case CONSTRUCTTX_ATTEMPT:
     return {...state,

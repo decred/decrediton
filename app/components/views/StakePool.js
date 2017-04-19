@@ -642,9 +642,9 @@ class StakePool extends Component{
           <div style={this.state.autoBuyerHidden ? StakePoolStyles.flexHeightAutoBuyerHidden : StakePoolStyles.flexHeightAutoBuyerShown }>         
             <div style={StakePoolStyles.autoBuyerRow}>
               <div style={StakePoolStyles.autoBuyerSwitch}>
-                <AutoBuyerSwitch enabled={this.state.ticketBuyerEnabled} onClick={this.state.ticketBuyerEnabled ? ()=>this.disableTicketBuyer() : ()=>this.enableTicketBuyer()}/>
+                <AutoBuyerSwitch enabled={this.props.startAutoBuyerSuccess} onClick={this.state.ticketBuyerEnabled ? ()=>this.disableTicketBuyer() : ()=>this.enableTicketBuyer()}/>
               </div>
-              <div style={StakePoolStyles.autoBuyerLabel}>{this.state.ticketBuyerEnabled ? 'Enabled' : 'Disabled'}</div>
+              <div style={StakePoolStyles.autoBuyerLabel}>{this.props.startAutoBuyerSuccess ? 'Enabled' : 'Disabled'}</div>
               <div style={StakePoolStyles.autoBuyerQuickBarRow}>
                 {this.state.autoBuyerHidden ? 
                   <div>
@@ -680,6 +680,18 @@ class StakePool extends Component{
             purchaseTicketsSuccess !== undefined && purchaseTicketsSuccess !== '' ?
             <div key="purchaseTicketsSuccess" style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPurchaseTicketsSuccess()}/>{purchaseTicketsSuccess}</div> :
             <div key="purchaseTicketsSuccess" ></div>,
+            startAutoBuyerSuccess !== null && startAutoBuyerSuccess !== '' ?
+            <div key="startAutoBuyerSuccess" style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStartAutoBuyerSuccess()}/>{startAutoBuyerSuccess}</div> :
+            <div key="startAutoBuyerSuccess" ></div>,
+            stopAutoBuyerSuccess !== null && stopAutoBuyerSuccess !== '' ?
+            <div key="stopAutoBuyerSuccess" style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStopAutoBuyerSuccess()}/>{stopAutoBuyerSuccess}</div> :
+            <div key="stopAutoBuyerSuccess" ></div>,            
+            startAutoBuyerError !== null && startAutoBuyerError !== '' ?
+            <div key="startAutoBuyerError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStartAutoBuyerError()}/>{startAutoBuyerError}</div> :
+            <div key="startAutoBuyerError" ></div>,
+            stopAutoBuyerError !== null && stopAutoBuyerError !== '' ?
+            <div key="stopAutoBuyerError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStopAutoBuyerError()}/>{stopAutoBuyerError}</div> :
+            <div key="stopAutoBuyerError" ></div>,
           ]
           }
           headerTitleOverview={
