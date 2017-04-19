@@ -62,6 +62,7 @@ class StakePool extends Component{
       ticketFee: 0.01, // DCR/kB
       selectedStakePoolForPurchase: initStakePool,
       advancedHidden: true,
+      autoBuyerHidden: true,
       privpass: null,
       choice: 'option1',
 
@@ -214,6 +215,12 @@ class StakePool extends Component{
   }
   hideAdvanced() {
     this.setState({advancedHidden: true});
+  }
+  showAutoBuyer() {
+    this.setState({autoBuyerHidden: false});
+  }
+  hideAutoBuyer() {
+    this.setState({autoBuyerHidden: true});
   }
   updatePrivPass(privPass) {
     if (privPass == '') {
@@ -616,7 +623,30 @@ class StakePool extends Component{
           <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.submitPurchase()}>
             Purchase
           </KeyBlueButton>
-      </div>);
+          <div style={StakePoolStyles.votingTitleArea}>
+            <div style={StakePoolStyles.votingTitleAreaName}>Automatic Purchase</div>
+          </div>
+          <div style={this.state.autoBuyerHidden ? StakePoolStyles.flexHeightAutoBuyerHidden : StakePoolStyles.flexHeightAutoBuyerShown }>         
+            <div style={StakePoolStyles.autoBuyerRow}>
+              <div style={StakePoolStyles.autoBuyerSwitch}></div>
+              <div style={StakePoolStyles.autoBuyerLabel}>Disabled</div>
+              <div style={StakePoolStyles.autoBuyerQuickBarRow}>
+                {this.state.autoBuyerHidden ? 
+                  <div>
+                    <div style={StakePoolStyles.balanceToMaintainIcon}>125 DCR</div>
+                    <div style={StakePoolStyles.maxFeeIcon}>0.1 DCR</div>
+                    <div style={StakePoolStyles.maxPriceAbsoluteIcon}>33.50 DCR</div>
+                    <div style={StakePoolStyles.maxPriceRelativeIcon}>2</div>
+                    <div style={StakePoolStyles.maxPerBlockIcon}>1</div>
+                  </div>:
+                  <div></div>}
+              </div>
+              <div style={StakePoolStyles.autoBuyerShowAdvancedArea}>
+                <TicketsCogs opened={this.state.autoBuyerHidden} onClick={this.state.autoBuyerHidden ? () => this.showAutoBuyer() : () => this.hideAutoBuyer()}/>
+              </div>
+            </div>
+          </div>
+        </div>);
     const stakePool = (
       <div style={StakePoolStyles.view}>
         <Header
