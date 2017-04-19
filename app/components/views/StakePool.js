@@ -1,6 +1,5 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
-import { shell } from 'electron';
 import CircularProgress from 'material-ui/CircularProgress';
 import ErrorScreen from '../ErrorScreen';
 import Balance from '../Balance';
@@ -9,7 +8,6 @@ import Header from '../Header';
 import NewExistingSeedToggle from '../NewExistingSeedToggle';
 import KeyBlueButton from '../KeyBlueButton';
 import SlateGrayButton from '../SlateGrayButton';
-import HideShowButton from '../HideShowButton';
 import { StakePoolStyles } from './ViewStyles';
 import AgendaCard from '../AgendaCard';
 import AgendaOverview from '../AgendaOverview';
@@ -149,12 +147,12 @@ class StakePool extends Component{
     this.setState({account: accountNum});
   }
   incrementNumTickets() {
-      this.setState({numTickets: this.state.numTickets + 1});
+    this.setState({numTickets: this.state.numTickets + 1});
   }
   decrementNumTickets() {
-     if (this.state.numTickets > 0) {
+    if (this.state.numTickets > 0) {
       this.setState({numTickets: this.state.numTickets - 1});
-     }
+    }
   }
   updateTicketFee(ticketFee) {
     if (ticketFee > 0 && ticketFee < 1) {
@@ -251,7 +249,7 @@ class StakePool extends Component{
       }
     }
     this.setState({agendaDisplay: agenda, selectedChoice: selectedChoice});
-    }
+  }
   showPurchaseInfoModal() {
     this.setState({showPurchaseInfoModal: true});
   }
@@ -477,7 +475,7 @@ class StakePool extends Component{
               <div style={StakePoolStyles.purchaseTicketLabel}>Account:</div>
               <div style={StakePoolStyles.purchaseTicketInput}>
                 {selectAccounts}
-              </div>                
+              </div>
               <div style={StakePoolStyles.purchaseTicketInputError}>
                 <PurchaseTicketsInfoButton onClick={() => this.showPurchaseInfoModal()}/>
                 <TicketsCogs opened={this.state.advancedHidden} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}/>
@@ -684,7 +682,7 @@ class StakePool extends Component{
               this.state.purchaseTickets ?
                 this.state.purchaseTicketsStakePoolConfig ?
                   configuredStakePoolInformation :
-                    this.state.showPurchaseInfoModal ? 
+                    this.state.showPurchaseInfoModal ?
                       purchaseTicketsInfoModal :
                         purchaseTicketsView :
                         votingGuiView
