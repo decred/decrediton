@@ -7,7 +7,7 @@ class NumTicketsInput extends React.Component {
     return (
       <div style={StakePoolStyles.numTicketsInputArea}>
         <div style={StakePoolStyles.numTicketsInput}>
-          <input style={StakePoolStyles.numTicketsInputValue} type="text" placeholder="" value={this.props.numTickets} data-max-width="70"/>
+          <input style={StakePoolStyles.numTicketsInputValue} type="text" readOnly placeholder="" value={this.props.numTickets} data-max-width="70"/>
           <div style={StakePoolStyles.numTicketsInputValueSuffix}>Tickets</div>
           <span style={StakePoolStyles.numTicketsInputValueSpan} style={{display: 'none', fontSize: '19px'}}>10000</span>
 	      </div>
