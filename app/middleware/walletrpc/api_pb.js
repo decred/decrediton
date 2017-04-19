@@ -20189,7 +20189,8 @@ proto.walletrpc.VoteChoicesResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     version: jspb.Message.getFieldWithDefault(msg, 1, 0),
     choicesList: jspb.Message.toObjectList(msg.getChoicesList(),
-    proto.walletrpc.VoteChoicesResponse.Choice.toObject, includeInstance)
+    proto.walletrpc.VoteChoicesResponse.Choice.toObject, includeInstance),
+    votebits: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -20235,6 +20236,10 @@ proto.walletrpc.VoteChoicesResponse.deserializeBinaryFromReader = function(msg, 
       reader.readMessage(value,proto.walletrpc.VoteChoicesResponse.Choice.deserializeBinaryFromReader);
       msg.addChoices(value);
       break;
+    case 3:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setVotebits(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -20276,6 +20281,13 @@ proto.walletrpc.VoteChoicesResponse.serializeBinaryToWriter = function(message, 
       2,
       f,
       proto.walletrpc.VoteChoicesResponse.Choice.serializeBinaryToWriter
+    );
+  }
+  f = message.getVotebits();
+  if (f !== 0) {
+    writer.writeUint32(
+      3,
+      f
     );
   }
 };
@@ -20547,6 +20559,21 @@ proto.walletrpc.VoteChoicesResponse.prototype.addChoices = function(opt_value, o
 
 proto.walletrpc.VoteChoicesResponse.prototype.clearChoicesList = function() {
   this.setChoicesList([]);
+};
+
+
+/**
+ * optional uint32 votebits = 3;
+ * @return {number}
+ */
+proto.walletrpc.VoteChoicesResponse.prototype.getVotebits = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.VoteChoicesResponse.prototype.setVotebits = function(value) {
+  jspb.Message.setField(this, 3, value);
 };
 
 
@@ -20931,7 +20958,7 @@ proto.walletrpc.SetVoteChoicesResponse.prototype.toObject = function(opt_include
  */
 proto.walletrpc.SetVoteChoicesResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-
+    votebits: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
 
   if (includeInstance) {
@@ -20968,6 +20995,10 @@ proto.walletrpc.SetVoteChoicesResponse.deserializeBinaryFromReader = function(ms
     }
     var field = reader.getFieldNumber();
     switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setVotebits(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -20996,6 +21027,28 @@ proto.walletrpc.SetVoteChoicesResponse.prototype.serializeBinary = function() {
  */
 proto.walletrpc.SetVoteChoicesResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getVotebits();
+  if (f !== 0) {
+    writer.writeUint32(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional uint32 votebits = 1;
+ * @return {number}
+ */
+proto.walletrpc.SetVoteChoicesResponse.prototype.getVotebits = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.SetVoteChoicesResponse.prototype.setVotebits = function(value) {
+  jspb.Message.setField(this, 1, value);
 };
 
 
