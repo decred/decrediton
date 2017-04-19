@@ -105,7 +105,7 @@ class PassphraseModal extends React.Component {
               <br/>the automatic purchase will continue until disabled from the Toggle.</div>
             <div style={styles.autobuyerPassphraseModalSubSectionPrivPassphrase}>
               <div style={styles.bigPrefix}>Private Passphrase:</div>
-              <input style={styles.inputPassphraseField} type="password" placeholder="" onChange={(e) => this.updatePrivatePassphrase(e.target.value)}/>
+              <input style={styles.inputPassphraseField} type="password" placeholder="" defaultValue={this.state.privpass} onChange={(e) => this.updatePrivatePassphrase(e.target.value)}/>
             </div>
             <div style={styles.modalSubSectionSaveCancel}>
               <KeyBlueButton style={{float: 'left'}} onClick={()=>this.submitPassphrase()}>save</KeyBlueButton>

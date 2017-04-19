@@ -232,9 +232,9 @@ class StakePool extends Component{
       this.setState({privpass: Buffer.from(privPass), privPassError: null});
     }
   }
-  submitStart() {
+  submitStart(privpass) {
     this.props.startAutoBuyerAttempt(
-      this.state.privpass,
+      privpass,
       this.state.account,
       this.state.balanceToMaintain,
       this.state.maxFeePerKb,
@@ -243,6 +243,7 @@ class StakePool extends Component{
       this.state.maxPerBlock,
       this.state.selectedStakePoolForPurchase
     );
+    this.setState({passphraseModalOpen: false});
   }
   submitStop() {
     this.props.stopAutoBuyerAttempt();
@@ -270,6 +271,7 @@ class StakePool extends Component{
     this.setState({ticketBuyerEnabled: true, passphraseModalOpen: true});
   }
   disableTicketBuyer() {
+    this.submitStop();
     this.setState({ticketBuyerEnabled: false, passphraseModalOpen: false});
   }
   render() {
@@ -483,7 +485,7 @@ class StakePool extends Component{
     );
     var purchaseTicketsView = (
       <div>
-        <PassphraseModal hidden={!this.state.passphraseModalOpen} submitPassphrase={(privPass) => console.log(privPass)} cancelPassphrase={()=>this.disableTicketBuyer()}/> 
+        <PassphraseModal hidden={!this.state.passphraseModalOpen} submitPassphrase={(privPass) => this.submitStart(privPass)} cancelPassphrase={()=>this.setState({passphraseModalOpen: false})}/> 
         <div style={this.state.passphraseModalOpen ? StakePoolStyles.contentPurchaseTicketViewBlur : StakePoolStyles.contentPurchaseTicketView}>
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Purchase Tickets</div>
