@@ -32,7 +32,6 @@ const styles = {
     lineHeight: '15px',
     position: 'relative',
     zIndex: '0',
-    minHeight: '50px',
   },
   highlightTextNeonGreen: {
     color: '#2ed8a3',
