@@ -23,6 +23,7 @@ function mapStateToProps(state) {
     startAutoBuyerRequestAttempt: state.control.startAutoBuyerRequestAttempt,
     startAutoBuyerError: state.control.startAutoBuyerError,
     startAutoBuyerSuccess: state.control.startAutoBuyerSuccess,
+    startAutoBuyerResponse: state.control.startAutoBuyerResponse,
     stopAutoBuyerRequestAttempt: state.control.stopAutoBuyerRequestAttempt,
     stopAutoBuyerError: state.control.stopAutoBuyerError,
     stopAutoBuyerSuccess: state.control.stopAutoBuyerSuccess,

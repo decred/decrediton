@@ -109,6 +109,10 @@ class StakePool extends Component{
     this.props.clearStakePoolConfigSuccess();
     this.props.clearPurchaseTicketsSuccess();
     this.props.clearPurchaseTicketsError();
+    this.props.clearStartAutoBuyerSuccess();
+    this.props.clearStartAutoBuyerError();
+    this.props.clearStopAutoBuyerSuccess();
+    this.props.clearStopAutoBuyerError();
   }
   submitPurchase() {
     var checkErrors = false;
@@ -285,6 +289,7 @@ class StakePool extends Component{
     const { getStakeInfoResponse } = this.props;
     const { getAgendasResponse } = this.props;
     const { getVoteChoicesResponse } = this.props;
+    const { startAutoBuyerSuccess, startAutoBuyerResponse, stopAutoBuyerSuccess, startAutoBuyerError, stopAutoBuyerError } = this.props;
 
     var unconfigedStakePools = 0;
     if (currentStakePoolConfig != null) {
@@ -642,9 +647,9 @@ class StakePool extends Component{
           <div style={this.state.autoBuyerHidden ? StakePoolStyles.flexHeightAutoBuyerHidden : StakePoolStyles.flexHeightAutoBuyerShown }>         
             <div style={StakePoolStyles.autoBuyerRow}>
               <div style={StakePoolStyles.autoBuyerSwitch}>
-                <AutoBuyerSwitch enabled={this.props.startAutoBuyerSuccess} onClick={this.state.ticketBuyerEnabled ? ()=>this.disableTicketBuyer() : ()=>this.enableTicketBuyer()}/>
+                <AutoBuyerSwitch enabled={startAutoBuyerResponse} onClick={startAutoBuyerResponse ? ()=>this.disableTicketBuyer() : ()=>this.enableTicketBuyer()}/>
               </div>
-              <div style={StakePoolStyles.autoBuyerLabel}>{this.props.startAutoBuyerSuccess ? 'Enabled' : 'Disabled'}</div>
+              <div style={StakePoolStyles.autoBuyerLabel}>{startAutoBuyerResponse ? 'Enabled' : 'Disabled'}</div>
               <div style={StakePoolStyles.autoBuyerQuickBarRow}>
                 {this.state.autoBuyerHidden ? 
                   <div>

@@ -663,7 +663,7 @@ function stopAutoBuyerError(error) {
 }
 
 function stopAutoBuyerSuccess(stopAutoBuyerResponse) {
-  var success = 'You successfully stoped the auto ticket buyer.';
+  var success = 'You successfully stopped the auto ticket buyer.';
   return { success: success, stopAutoBuyerResponse: stopAutoBuyerResponse, type: STOPAUTOBUYER_SUCCESS };
 }
 

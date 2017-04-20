@@ -312,6 +312,9 @@ export default function control(state = {}, action) {
       startAutoBuyerSuccess: action.success,
       startAutoBuyerRequestAttempt: false,
       startAutoBuyerResponse: action.startAutoBuyerResponse,
+      stopAutoBuyerSuccess: null,
+      stopAutoBuyerRequest: null,
+      stopAutoBuyerResponse: null,
     };
   case STARTAUTOBUYER_CLEAR_ERROR:
     return {...state,
@@ -336,6 +339,7 @@ export default function control(state = {}, action) {
   case STOPAUTOBUYER_SUCCESS:
     return {...state,
       stopAutoBuyerError: null,
+      stopAutoBuyerRequest: null,
       stopAutoBuyerSuccess: action.success,
       stopAutoBuyerRequestAttempt: false,
       stopAutoBuyerResponse: action.stopAutoBuyerResponse,
