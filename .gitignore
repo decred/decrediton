@@ -8,3 +8,4 @@ public/js/bundle.js
 release/
 jsconfig.json
 bin/
+.DS_Store
