@@ -27,6 +27,7 @@ var styles = {
     }
   },
   baseDisabled: {
+    display: 'inline-block',
     padding: '17px 18px 18px',
     borderRadius: '5px',
     backgroundColor: 'grey',

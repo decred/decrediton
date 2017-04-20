@@ -1454,7 +1454,8 @@ export const StakePoolStyles = {
     paddingLeft: '5px',
   },
   contentPurchaseButton: {
-    marginTop: '8px'
+    marginTop: '8px',
+    marginLeft: '8px'
   },
   showAdvanced: {
     width: '300px',
@@ -1612,7 +1613,7 @@ export const StakePoolStyles = {
   flexHeightAutoBuyerShown: {
     paddingTop: '1px',
     backgroundColor: '#fff',
-    height:'192px',
+    height:'296px',
     width: '740px',
     float: 'left',
     overflowY: 'auto',
@@ -1701,7 +1702,7 @@ export const StakePoolStyles = {
     backgroundSize: '16px',
     backgroundRepeat: 'no-repeat',
     height: '16px',
-    minWidth: '20px',
+    width: '40px',
     marginTop: '8px',
     paddingLeft: '20px',
     float: 'left',
@@ -1837,7 +1838,7 @@ export const StakePoolStyles = {
     transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
   },
   purchaseTicketLabel: {
-    width: '131px',
+    width: '134px',
     paddingRight: '15px',
     paddingLeft: '5px',
     float: 'left',
@@ -1847,7 +1848,7 @@ export const StakePoolStyles = {
     textAlign: 'left',
   },
   purchaseTicketInput: {
-    width: '286px',
+    width: '283px',
     float: 'left',
     height: '100%',
     fontSize: '19px',
