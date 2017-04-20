@@ -635,7 +635,7 @@ function setTicketBuyerConfigSuccess() {
   return (dispatch) => {
     dispatch({ success: "Ticket buyer settings have been successfully updated.", type: SETTICKETBUYERCONFIG_SUCCESS });
     // something is hanging config request XXX
-    //dispatch(getTicketBuyerConfigAttempt());
+    dispatch(getTicketBuyerConfigAttempt());
   };
 }
 
@@ -661,6 +661,7 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
     const { ticketBuyerService } = getState().grpc;
     const { getTicketBuyerConfigResponse } = getState().control;
     var hitError = '';
+    if (account != getTicketBuyerConfigResponse.getAccount()) {
       var request = new SetAccountRequest();
       request.setAccount(account);
       ticketBuyerService.setAccount(request, function (err) {
@@ -669,6 +670,8 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
         } else {
         }
       });
+    }
+    if (account != getTicketBuyerConfigResponse.getAccount()) {
       var request = new SetBalanceToMaintainRequest();
       request.setBalanceToMaintain(balanceToMaintain);
       ticketBuyerService.setBalanceToMaintain(request, function (err) {
@@ -679,6 +682,8 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           dispatch({balanceToMaintain: balanceToMaintain, type: SETBALANCETOMAINTAIN})
         }
       });
+    }
+    if (maxFee != getTicketBuyerConfigResponse.getMaxFee()) {
       var request = new SetMaxFeeRequest();
       request.setMaxFeePerKb(maxFee*1e8);
       ticketBuyerService.setMaxFee(request, function (err) {
@@ -689,6 +694,8 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           dispatch({maxFee: maxFee, type: SETMAXFEE})
         }
       });
+    }
+    if (maxPriceAbsolute != getTicketBuyerConfigResponse.getMaxPriceAbsolute()) {
       var request = new SetMaxPriceAbsoluteRequest();
       request.setMaxPriceAbsolute(maxPriceAbsolute*1e8);
       ticketBuyerService.setMaxPriceAbsolute(request, function (err) {
@@ -699,6 +706,8 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           dispatch({maxPriceAbsolute: maxPriceAbsolute, type: SETMAXPRICEABSOLUTE})
         }
       });
+    }
+    if (maxPriceRelative != getTicketBuyerConfigResponse.getMaxPriceRelative()) {
       var request = new SetMaxPriceRelativeRequest();
       request.setMaxPriceRelative(maxPriceRelative);
       ticketBuyerService.setMaxPriceRelative(request, function (err) {
@@ -709,6 +718,8 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           dispatch({maxPriceRelative: maxPriceRelative, type: SETMAXPRICERELATIVE});
         }
       });
+    }
+    if (stakePool.TicketAddress != getTicketBuyerConfigResponse.getVotingAddress()) {
       var request = new SetVotingAddressRequest();
       request.setVotingAddress(stakePool.TicketAddress);
       ticketBuyerService.setVotingAddress(request, function (err) {
@@ -717,6 +728,8 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
         } else {
         }
       });
+    }
+    if (stakePool.PoolAddress != getTicketBuyerConfigResponse.getPoolAddress()) {
       var request = new SetPoolAddressRequest();
       request.setPoolAddress(stakePool.PoolAddress);
       ticketBuyerService.setPoolAddress(request, function (err) {
@@ -725,6 +738,8 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
         } else {
         }
       });
+    }
+    if (stakePool.PoolFees != getTicketBuyerConfigResponse.getPoolFees()) {
       var request = new SetPoolFeesRequest();
       request.setPoolFees(stakePool.PoolFees);
       ticketBuyerService.setPoolFees(request, function (err) {
@@ -733,6 +748,8 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
         } else {
         }
       });
+    }
+    if (maxPerBlock != getTicketBuyerConfigResponse.getMaxPerBlock()) {
       var request = new SetMaxPerBlockRequest();
       request.setMaxPerBlock(maxPerBlock);
       ticketBuyerService.setMaxPerBlock(request, function (err) {
@@ -743,6 +760,7 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           dispatch({maxPerBlock: maxPerBlock, type: SETMAXPERBLOCK});
         }
       });
+    }
     if (hitError != '') {
       dispatch(setTicketBuyerConfigError(hitError + ' Please try again'));
     } else {
