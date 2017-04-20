@@ -1961,6 +1961,11 @@ export const StakePoolStyles = {
       opacity: '0.7',
     }
   },
+  areaSpacing: {
+    float: 'left',
+    height: '25px',
+    width: '100%',
+  },
   apiKeyError: {
     paddingLeft: '118px',
     textAlign: 'left',
@@ -1977,7 +1982,7 @@ export const StakePoolStyles = {
   flexHeightHidden: {
     paddingTop: '1px',
     backgroundColor: '#fff',
-    height:'258px',
+    height:'214px',
     float: 'left',
     overflowY: 'auto',
     overflowX: 'hidden',
@@ -1985,7 +1990,7 @@ export const StakePoolStyles = {
   flexHeightShown: {
     paddingTop: '1px',
     backgroundColor: '#fff',
-    height:'374px',
+    height:'340px',
     float: 'left',
     overflowY: 'auto',
     overflowX: 'hidden',

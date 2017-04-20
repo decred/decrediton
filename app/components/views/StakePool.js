@@ -66,7 +66,6 @@ class StakePool extends Component{
       selectedStakePoolForPurchase: initStakePool,
       advancedHidden: true,
       autoBuyerHidden: true,
-      privpass: null,
       choice: 'option1',
 
       // for autostart
@@ -114,16 +113,12 @@ class StakePool extends Component{
     this.props.clearStopAutoBuyerSuccess();
     this.props.clearStopAutoBuyerError();
   }
-  submitPurchase() {
+  submitPurchase(privpass) {
     var checkErrors = false;
     if (this.state.selectedStakePoolForPurchase == null ||
        this.state.numTicketsError !== null || this.state.txFeeError !== null ||
        this.state.ticketFeeError !== null || this.state.expiryError !== null ||
        this.state.privPassError !== null) {
-      checkErrors = true;
-    }
-    if (this.state.privpass == null) {
-      this.setState({privPassError: '*Please enter your private passphrase'});
       checkErrors = true;
     }
     if (this.state.numTickets == 0) {
@@ -134,7 +129,7 @@ class StakePool extends Component{
       return;
     }
     this.props.purchaseTicketsAttempt(
-      this.state.privpass,
+      privpass,
       this.state.account,
       this.state.spendLimit,
       this.state.conf,
@@ -271,12 +266,12 @@ class StakePool extends Component{
   closePurchaseInfoModal() {
     this.setState({showPurchaseInfoModal: false});
   }
-  enableTicketBuyer() {
-    this.setState({ticketBuyerEnabled: true, passphraseModalOpen: true});
+  showPassphraseModal(heading, description, func) {
+    this.setState({modalHeading: heading, modalDescription: description, modalSubmitFunc: func, passphraseModalOpen: true});
   }
   disableTicketBuyer() {
     this.submitStop();
-    this.setState({ticketBuyerEnabled: false, passphraseModalOpen: false});
+    this.setState({modalHeading: null, modalDescription: null, modalSubmitFunc: null, passphraseModalOpen: false});
   }
   render() {
     const { walletService, currentSettings, settingsChanged, tempSettings, updateStateVoteSettingsChanged } = this.props;
@@ -495,15 +490,23 @@ class StakePool extends Component{
         <br/>the automatic purchase will continue until disabled from the Toggle.
       </div>
     );
+    var startAutoBuyerHeading = "Enter Passphrase to Start Autobuyer";
+    var startAutoBuyerFunc = (privPass) => this.submitStart(privPass);
+    var purchaseTicketDescription = (
+      <div>
+      </div>
+    );
+    var purchaseTicketHeading = "Enter Passphrase to Purchase Tickets";
+    var purchaseTicketFunc = (privPass) => this.submitPurchase(privPass);
     var purchaseTicketsView = (
       <div>
         <PassphraseModal 
           hidden={!this.state.passphraseModalOpen} 
-          submitPassphrase={(privPass) => this.submitStart(privPass)} 
-          cancelPassphrase={()=>this.setState({passphraseModalOpen: false})}
-          heading="Enter Passphrase to Start Autobuyer"
-          description={startAutoBuyerDescription}
-              /> 
+          submitPassphrase={this.state.modalSubmitFunc} 
+          cancelPassphrase={()=>this.setState({modalHeading: null, modalDescription: null, modalSubmitFunc: null, passphraseModalOpen: false})}
+          heading={this.state.modalHeading}
+          description={this.state.modalDescription}
+        /> 
         <div style={this.state.passphraseModalOpen ? StakePoolStyles.contentPurchaseTicketViewBlur : StakePoolStyles.contentPurchaseTicketView}>
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Purchase Tickets</div>
@@ -625,22 +628,6 @@ class StakePool extends Component{
                 </div>
               </div>
             </div>
-            <div style={StakePoolStyles.purchaseTicketRow}>
-              <div style={StakePoolStyles.purchaseTicketLabel}>Private Passhrase:</div>
-              <div style={StakePoolStyles.purchaseTicketInput}>
-                <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                  <input
-                    id="privpass"
-                    style={StakePoolStyles.contentNestPurchaseTicketForm}
-                    type="password"
-                    placeholder="Private Passphrase"
-                    onBlur={(e) =>{this.updatePrivPass(e.target.value);}}/>
-                </div>
-              </div>
-              <div style={StakePoolStyles.purchaseTicketInputError}>
-                {this.state.privPassError}
-              </div>
-            </div>
             <div hidden={this.state.advancedHidden ? false : true} style={StakePoolStyles.purchaseTicketQuickBarRow}>
               <div style={StakePoolStyles.quickBarRowLabel}>Settings:</div>
               <div style={StakePoolStyles.stakepoolIcon}>{this.state.selectedStakePoolForPurchase.Host}</div>
@@ -651,16 +638,17 @@ class StakePool extends Component{
               <div style={StakePoolStyles.poolFeeIcon}>{this.state.selectedStakePoolForPurchase.PoolFees}%</div>
             </div>
           </div>
-          <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.submitPurchase()}>
+          <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.showPassphraseModal(purchaseTicketHeading, purchaseTicketDescription, purchaseTicketFunc)}>
             Purchase
           </KeyBlueButton>
+          <div style={StakePoolStyles.areaSpacing}></div>
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Automatic Purchase</div>
           </div>
           <div style={this.state.autoBuyerHidden ? StakePoolStyles.flexHeightAutoBuyerHidden : StakePoolStyles.flexHeightAutoBuyerShown }>         
             <div style={StakePoolStyles.autoBuyerRow}>
               <div style={StakePoolStyles.autoBuyerSwitch}>
-                <AutoBuyerSwitch enabled={startAutoBuyerResponse} onClick={startAutoBuyerResponse ? ()=>this.disableTicketBuyer() : ()=>this.enableTicketBuyer()}/>
+                <AutoBuyerSwitch enabled={startAutoBuyerResponse} onClick={startAutoBuyerResponse ? ()=>this.disableTicketBuyer() : ()=>this.showPassphraseModal(startAutoBuyerHeading, startAutoBuyerDescription, startAutoBuyerFunc)}/>
               </div>
               <div style={StakePoolStyles.autoBuyerLabel}>{startAutoBuyerResponse ? 'Enabled' : 'Disabled'}</div>
               <div style={StakePoolStyles.autoBuyerQuickBarRow}>
