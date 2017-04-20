@@ -22,6 +22,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   STOPAUTOBUYER_CLEAR_ERROR, STOPAUTOBUYER_CLEAR_SUCCESS,
   CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS,
   CONSTRUCTTX_CLEAR_ERROR, PUBLISHTX_CLEAR_ERROR, SIGNTX_CLEAR_ERROR, PUBLISHTX_CLEAR_SUCCESS,
+  SETBALANCETOMAINTAIN, SETMAXFEE, SETMAXPRICEABSOLUTE, SETMAXPRICERELATIVE, SETMAXPERBLOCK
  } from '../actions/ControlActions';
 
 export default function control(state = {}, action) {
@@ -335,6 +336,31 @@ export default function control(state = {}, action) {
       ...state,
       setTicketBuyerConfigRequestAttempt: false,
       setTicketBuyerConfigResponse: action.success,
+    };
+  case SETBALANCETOMAINTAIN: 
+    return {
+      ...state,
+      balanceToMaintain: action.balanceToMaintain,
+    };
+  case SETMAXFEE: 
+    return {
+      ...state,
+      maxFee: action.maxFee,
+    };
+  case SETMAXPRICEABSOLUTE: 
+    return {
+      ...state,
+      maxPriceAbsolute: action.maxPriceAbsolute,
+    };
+  case SETMAXPRICERELATIVE: 
+    return {
+      ...state,
+      maxPriceRelative: action.maxPriceRelative,
+    };
+  case SETMAXPERBLOCK: 
+    return {
+      ...state,
+      maxPerBlock: action.maxPerBlock,
     };
   case STARTAUTOBUYER_ATTEMPT:
     return {...state,

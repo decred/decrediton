@@ -639,16 +639,22 @@ function setTicketBuyerConfigSuccess() {
 }
 
 export function setTicketBuyerConfigAttempt(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
-  votingAddress, poolAddress, poolFees, maxPerBlock) {
+  stakePool, maxPerBlock) {
   return (dispatch) => {
     dispatch({ type: SETTICKETBUYERCONFIG_ATTEMPT });
     dispatch(setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
-      votingAddress, poolAddress, poolFees, maxPerBlock));
+      stakePool, maxPerBlock));
   };
 }
 
+export const SETBALANCETOMAINTAIN = "SETBALANCETOMAINTAIN";
+export const SETMAXFEE = "SETMAXFEE";
+export const SETMAXPRICEABSOLUTE = "SETMAXPRICEABSOLUTE";
+export const SETMAXPRICERELATIVE = "SETMAXPRICERELATIVE";
+export const SETMAXPERBLOCK = "SETMAXPERBLOCK";
+
 function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
-  votingAddress, poolAddress, poolFees, maxPerBlock) {
+  stakePool, maxPerBlock) {
   var cfg = getCfg();
   return (dispatch, getState) => {
     const { ticketBuyerService } = getState().grpc;
@@ -672,6 +678,7 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           hitError += err + '. ';
         } else {
           cfg.set('balancetomaintain', balanceToMaintain);
+          dispatch({balanceToMaintain: balanceToMaintain, type: SETBALANCETOMAINTAIN})
         }
       });
     }
@@ -683,6 +690,7 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           hitError += err + '. ';
         } else {
           cfg.set('maxfee', maxFee);
+          dispatch({maxFee: maxFee, type: SETMAXFEE})
         }
       });
     }
@@ -694,6 +702,7 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           hitError += err + '. ';
         } else {
           cfg.set('maxpriceabsolute',maxPriceAbsolute);
+          dispatch({maxPriceAbsolute: maxPriceAbsolute, type: SETMAXPRICEABSOLUTE})
         }
       });
     }
@@ -705,12 +714,13 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           hitError += err + '. ';
         } else {
           cfg.set('maxpricerelative',maxPriceRelative);
+          dispatch({maxPriceRelative: maxPriceRelative, type: SETMAXPRICERELATIVE});
         }
       });
     }
-    if (votingAddress != getTicketBuyerConfigRequest.getVotingAddress()) {
+    if (stakePool.TicketAddress != getTicketBuyerConfigRequest.getVotingAddress()) {
       var request = new SetVotingAddressRequest();
-      request.setVotingAddress(votingAddress);
+      request.setVotingAddress(stakePool.TicketAddress);
       ticketBuyerService.setVotingAddress(request, function (err) {
         if (err) {
           hitError += err + '. ';
@@ -718,9 +728,9 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
         }
       });
     }
-    if (poolAddress != getTicketBuyerConfigRequest.getPoolAddress()) {
+    if (stakePool.PoolAddress != getTicketBuyerConfigRequest.getPoolAddress()) {
       var request = new SetPoolAddressRequest();
-      request.setPoolAddress(poolAddress);
+      request.setPoolAddress(stakePool.PoolAddress);
       ticketBuyerService.setPoolAddress(request, function (err) {
         if (err) {
           hitError += err + '. ';
@@ -728,9 +738,9 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
         }
       });
     }
-    if (poolFees != getTicketBuyerConfigRequest.getPoolFees()) {
+    if (stakePool.PoolFees != getTicketBuyerConfigRequest.getPoolFees()) {
       var request = new SetPoolFeesRequest();
-      request.setPoolFees(poolFees);
+      request.setPoolFees(stakePool.PoolFees);
       ticketBuyerService.setPoolFees(request, function (err) {
         if (err) {
           hitError += err + '. ';
@@ -746,6 +756,7 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           hitError += err + '. ';
         } else {
           cfg.set('maxperblock',maxPerBlock);
+          dispatch({maxPerBlock: maxPerBlock, type: SETMAXPERBLOCK});
         }
       });
     }

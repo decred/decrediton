@@ -173,15 +173,19 @@ class StakePool extends Component{
     }
   }
   updateBalanceToMaintain(value) {
-    console.log("bupdate bal");
+    console.log("bupdate bal", value, this.checkAutoBuyerConfigDifference());
     if (!isNaN(value) && value < 0) {
       var err = "*Please enter a valid max fee (> 0)"
       this.setState({balanceToMaintainError: err})
     } else {
-      if (this.state.balanceToMaintain !== value) {
-        this.setState({balanceToMaintain: value, autoBuyerConfigChanged: this.checkAutoBuyerConfigDifference(), balanceToMaintainError: null})
-      }
+      var changed = value !== this.props.balanceToMaintain ||
+       this.state.maxFee !== this.props.maxFee || 
+       this.state.maxPriceAbsolute !== this.props.maxPriceAbsolute || 
+       this.state.maxPriceRelative !== this.props.maxPriceRelative || 
+       this.state.maxPerBlock !== this.props.maxPerBlock;
+      this.setState({balanceToMaintain: value, autoBuyerConfigChanged: changed, balanceToMaintainError: null})
     }
+
   }
   updateMaxFee(value) {
     console.log("bupdate bal4");
@@ -189,9 +193,12 @@ class StakePool extends Component{
       var err = "*Please enter a valid max fee (> 0)"
       this.setState({maxFeeError: err})
     } else {
-      if (this.state.maxFee !== value) {
-        this.setState({maxFee: value, autoBuyerConfigChanged: this.checkAutoBuyerConfigDifference(), maxFeeError: null})
-      }
+      var changed = this.state.balanceToMaintain !== this.props.balanceToMaintain ||
+       value !== this.props.maxFee || 
+       this.state.maxPriceAbsolute !== this.props.maxPriceAbsolute || 
+       this.state.maxPriceRelative !== this.props.maxPriceRelative || 
+       this.state.maxPerBlock !== this.props.maxPerBlock;
+      this.setState({maxFee: value, autoBuyerConfigChanged: changed, maxFeeError: null})
     }
   }
   updateMaxPriceAbsolute(value) {
@@ -200,9 +207,12 @@ class StakePool extends Component{
       var err = "*Please enter a value max price absolute (> 0)"
       this.setState({maxPriceAbsoluteError: err})
     } else {
-      if (this.state.maxPriceAbsolute !== value) {
-        this.setState({maxPriceAbsolute: value, autoBuyerConfigChanged: this.checkAutoBuyerConfigDifference(), maxPriceAbsoluteError: null})
-      }
+      var changed = this.state.balanceToMaintain !== this.props.balanceToMaintain ||
+       this.state.maxFee !== this.props.maxFee || 
+       value !== this.props.maxPriceAbsolute || 
+       this.state.maxPriceRelative !== this.props.maxPriceRelative || 
+       this.state.maxPerBlock !== this.props.maxPerBlock;
+      this.setState({maxPriceAbsolute: value, autoBuyerConfigChanged: changed, maxPriceAbsoluteError: null})
     }
   }
   updateMaxPriceRelative(value) {
@@ -211,9 +221,12 @@ class StakePool extends Component{
       var err = "*Please enter a value max price relative (> 0)"
       this.setState({maxPriceRelativeError: err})
     } else {
-      if (this.state.maxPriceRelative !== value) {
-        this.setState({maxPriceRelative: value, autoBuyerConfigChanged: this.checkAutoBuyerConfigDifference(), maxPriceRelativeError: null})
-      }
+      var changed = this.state.balanceToMaintain !== this.props.balanceToMaintain ||
+       this.state.maxFee !== this.props.maxFee || 
+       this.state.maxPriceAbsolute !== this.props.maxPriceAbsolute || 
+       value !== this.props.maxPriceRelative || 
+       this.state.maxPerBlock !== this.props.maxPerBlock;
+      this.setState({maxPriceRelative: value, autoBuyerConfigChanged: changed, maxPriceRelativeError: null})
     }
   }
   updateMaxPerBlock(value) {
@@ -222,10 +235,24 @@ class StakePool extends Component{
       var err = "*Please enter a value max per block (> 0)"
       this.setState({maxPerBlockError: err})
     } else {
-      if (this.state.maxPerBlock !== value) {
-        this.setState({maxPerBlock: value, autoBuyerConfigChanged: this.checkAutoBuyerConfigDifference(), maxPerBlockError: null})
-      }
+      var changed = this.state.balanceToMaintain !== this.props.balanceToMaintain ||
+       this.state.maxFee !== this.props.maxFee ||
+       this.state.maxPriceAbsolute !== this.props.maxPriceAbsolute || 
+       this.state.maxPriceRelative !== this.props.maxPriceRelative || 
+       value !== this.props.maxPerBlock;
+      this.setState({maxPerBlock: value, autoBuyerConfigChanged: changed, maxPerBlockError: null})
     }
+  }
+  updateAutoBuyerSettings() {
+    this.props.setTicketBuyerConfigAttempt(
+      this.state.account,
+      this.state.balanceToMaintain,
+      this.state.maxFee,
+      this.state.maxPriceAbsolute,
+      this.state.maxPriceRelative,
+      this.state.selectedStakePoolForPurchase,
+      this.state.maxPerBlock
+    )
   }
   showStakePoolConfig() {
     this.setState({purchaseTicketsStakePoolConfig: true});
@@ -743,8 +770,6 @@ class StakePool extends Component{
                   </div>:
                   <div></div>}
               </div>
-
-           
               <div style={StakePoolStyles.autoBuyerShowAdvancedArea}>
                 <TicketsCogs opened={this.state.autoBuyerHidden} onClick={this.state.autoBuyerHidden ? () => this.showAutoBuyer() : () => this.hideAutoBuyer()}/>
               </div>
@@ -830,7 +855,7 @@ class StakePool extends Component{
                   {this.state.maxPerBlockError}
                 </div>
               </div>
-              <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} disabled={!this.state.autoBuyerConfigChanged} onClick={this.state.autoBuyerConfigChanged ? () => console.log("update autobuyer config") : null}>
+              <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} disabled={!this.state.autoBuyerConfigChanged} onClick={this.state.autoBuyerConfigChanged ? () => this.updateAutoBuyerSettings() : null}>
                 Update Config
               </KeyBlueButton>
             </div>
