@@ -393,7 +393,7 @@ class StakePool extends Component{
     const { getAgendasResponse } = this.props;
     const { getVoteChoicesResponse } = this.props;
     const { startAutoBuyerSuccess, startAutoBuyerResponse, stopAutoBuyerSuccess, startAutoBuyerError, stopAutoBuyerError } = this.props;
-
+    const { getTicketBuyerConfigResponse } = this.props;
     var unconfigedStakePools = 0;
     if (currentStakePoolConfig != null) {
       for (var i = 0; i < currentStakePoolConfig.length; i++) {
@@ -855,7 +855,7 @@ class StakePool extends Component{
                   {this.state.maxPerBlockError}
                 </div>
               </div>
-              <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} disabled={!this.state.autoBuyerConfigChanged} onClick={this.state.autoBuyerConfigChanged ? () => this.updateAutoBuyerSettings() : null}>
+              <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} hidden={startAutoBuyerResponse == null} disabled={!this.state.autoBuyerConfigChanged} onClick={this.state.autoBuyerConfigChanged ? () => this.updateAutoBuyerSettings() : null}>
                 Update Config
               </KeyBlueButton>
             </div>

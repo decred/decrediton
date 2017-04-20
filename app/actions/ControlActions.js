@@ -613,7 +613,7 @@ function getTicketBuyerConfigAction() {
   return (dispatch, getState) => {
     const { ticketBuyerService } = getState().grpc;
     ticketBuyerService.ticketBuyerConfig(request, function (err, ticketBuyerConfig) {
-
+      console.log("response!:", ticketBuyerConfig);
       if (err) {
         dispatch(getTicketBuyerConfigError(err + ' Please try again'));
       } else {
@@ -634,7 +634,8 @@ function setTicketBuyerConfigError(error) {
 function setTicketBuyerConfigSuccess() {
   return (dispatch) => {
     dispatch({ success: "Ticket buyer settings have been successfully updated.", type: SETTICKETBUYERCONFIG_SUCCESS });
-    dispatch(getTicketBuyerConfigAttempt());
+    // something is hanging config request XXX
+    //dispatch(getTicketBuyerConfigAttempt());
   };
 }
 
@@ -658,9 +659,8 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
   var cfg = getCfg();
   return (dispatch, getState) => {
     const { ticketBuyerService } = getState().grpc;
-    const { getTicketBuyerConfigRequest } = getState().control;
+    const { getTicketBuyerConfigResponse } = getState().control;
     var hitError = '';
-    if (account != getTicketBuyerConfigRequest.getAccount()) {
       var request = new SetAccountRequest();
       request.setAccount(account);
       ticketBuyerService.setAccount(request, function (err) {
@@ -669,8 +669,6 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
         } else {
         }
       });
-    }
-    if (balanceToMaintain != getTicketBuyerConfigRequest.getBalanceToMaintain()) {
       var request = new SetBalanceToMaintainRequest();
       request.setBalanceToMaintain(balanceToMaintain);
       ticketBuyerService.setBalanceToMaintain(request, function (err) {
@@ -681,8 +679,6 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           dispatch({balanceToMaintain: balanceToMaintain, type: SETBALANCETOMAINTAIN})
         }
       });
-    }
-    if (maxFee != getTicketBuyerConfigRequest.getMaxFee()) {
       var request = new SetMaxFeeRequest();
       request.setMaxFee(maxFee);
       ticketBuyerService.setMaxFee(request, function (err) {
@@ -693,8 +689,6 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           dispatch({maxFee: maxFee, type: SETMAXFEE})
         }
       });
-    }
-    if (maxPriceAbsolute != getTicketBuyerConfigRequest.getMaxPriceAbsolute()) {
       var request = new SetMaxPriceAbsoluteRequest();
       request.setMaxPriceAbsolute(maxPriceAbsolute);
       ticketBuyerService.setMaxPriceAbsolute(request, function (err) {
@@ -705,8 +699,6 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           dispatch({maxPriceAbsolute: maxPriceAbsolute, type: SETMAXPRICEABSOLUTE})
         }
       });
-    }
-    if (maxPriceRelative != getTicketBuyerConfigRequest.getMaxPriceRelative()) {
       var request = new SetMaxPriceRelativeRequest();
       request.setMaxPriceRelative(maxPriceRelative);
       ticketBuyerService.setMaxPriceRelative(request, function (err) {
@@ -717,8 +709,6 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           dispatch({maxPriceRelative: maxPriceRelative, type: SETMAXPRICERELATIVE});
         }
       });
-    }
-    if (stakePool.TicketAddress != getTicketBuyerConfigRequest.getVotingAddress()) {
       var request = new SetVotingAddressRequest();
       request.setVotingAddress(stakePool.TicketAddress);
       ticketBuyerService.setVotingAddress(request, function (err) {
@@ -727,8 +717,6 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
         } else {
         }
       });
-    }
-    if (stakePool.PoolAddress != getTicketBuyerConfigRequest.getPoolAddress()) {
       var request = new SetPoolAddressRequest();
       request.setPoolAddress(stakePool.PoolAddress);
       ticketBuyerService.setPoolAddress(request, function (err) {
@@ -737,8 +725,6 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
         } else {
         }
       });
-    }
-    if (stakePool.PoolFees != getTicketBuyerConfigRequest.getPoolFees()) {
       var request = new SetPoolFeesRequest();
       request.setPoolFees(stakePool.PoolFees);
       ticketBuyerService.setPoolFees(request, function (err) {
@@ -747,8 +733,6 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
         } else {
         }
       });
-    }
-    if (maxPerBlock != getTicketBuyerConfigRequest.getMaxPerBlock()) {
       var request = new SetMaxPerBlockRequest();
       request.setMaxPerBlock(maxPerBlock);
       ticketBuyerService.setMaxPerBlock(request, function (err) {
@@ -759,7 +743,6 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
           dispatch({maxPerBlock: maxPerBlock, type: SETMAXPERBLOCK});
         }
       });
-    }
     if (hitError != '') {
       dispatch(setTicketBuyerConfigError(hitError + ' Please try again'));
     } else {
@@ -780,7 +763,10 @@ function startAutoBuyerError(error) {
 
 function startAutoBuyerSuccess(startAutoBuyerResponse) {
   var success = 'You successfully started the auto ticket buyer.';
-  return { success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS };
+  return (dispatch) => {
+      dispatch({ success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS });
+      dispatch(getTicketBuyerConfigAttempt());
+  }
 }
 
 export function startAutoBuyerAttempt(passphrase, accountNum, balanceToMaintain,
@@ -789,7 +775,7 @@ maxFeePerKb, maxPriceRelative, maxPriceAbsolute, maxPerBlock, stakepool) {
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setAccount(accountNum);
   request.setBalanceToMaintain(balanceToMaintain);
-  request.setMaxFeePerKb(maxFeePerKb);
+  request.setMaxFeePerKb(maxFeePerKb*1e8);
   request.setMaxPriceRelative(maxPriceRelative);
   request.setMaxPriceAbsolute(maxPriceAbsolute);
   request.setVotingAddress(stakepool.TicketAddress);

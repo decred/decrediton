@@ -37,6 +37,7 @@ function mapStateToProps(state) {
     maxPriceRelative: state.control.maxPriceRelative,
     maxPriceAbsolute: state.control.maxPriceAbsolute,
     maxPerBlock:  state.control.maxPerBlock,
+    getTicketBuyerConfigResponse: state.control.getTicketBuyerConfigResponse,
   };
 }
 
