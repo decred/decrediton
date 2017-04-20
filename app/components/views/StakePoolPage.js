@@ -32,6 +32,11 @@ function mapStateToProps(state) {
     getTicketPriceResponse: state.grpc.getTicketPriceResponse,
     getAgendasResponse: state.grpc.getAgendasResponse,
     getVoteChoicesResponse: state.grpc.getVoteChoicesResponse,
+    balanceToMaintain: state.control.balanceToMaintain,
+    maxFee: state.control.maxFee,
+    maxPriceRelative: state.control.maxPriceRelative,
+    maxPriceAbsolute: state.control.maxPriceAbsolute,
+    maxPerBlock:  state.control.maxPerBlock,
   };
 }
 

@@ -8,7 +8,7 @@ import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   SetMaxPriceRelativeRequest, SetVotingAddressRequest, SetPoolAddressRequest, SetPoolFeesRequest,
   SetMaxPerBlockRequest,
   } from '../middleware/walletrpc/api_pb';
-import { getCfg } from './config.js';
+import { getCfg } from '../config.js';
 
 export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
 export const GETNEXTADDRESS_FAILED = 'GETNEXTADDRESS_FAILED';

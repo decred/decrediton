@@ -307,6 +307,11 @@ var initialState = {
     // TicketBuyerService
     ticketBuyerService: null,
     // TicketBuyerConfig
+    balanceToMaintain: cfg.get('balancetomaintain'),
+    maxFee: cfg.get('maxfee'),
+    maxPriceAbsolute: cfg.get('maxpriceabsolute'),
+    maxPriceRelative: cfg.get('maxpricerelative'),
+    maxPerBlock: cfg.get('maxperblock'),
     ticketBuyerConfigRequestAttempt: false,
     ticketBuyerConfigRequest: null,
     ticketBuyerConfigResponse: null,
