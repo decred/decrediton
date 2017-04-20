@@ -8,6 +8,7 @@ import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   SetMaxPriceRelativeRequest, SetVotingAddressRequest, SetPoolAddressRequest, SetPoolFeesRequest,
   SetMaxPerBlockRequest,
   } from '../middleware/walletrpc/api_pb';
+import { getCfg } from './config.js';
 
 export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
 export const GETNEXTADDRESS_FAILED = 'GETNEXTADDRESS_FAILED';
@@ -637,14 +638,18 @@ function setTicketBuyerConfigSuccess() {
   };
 }
 
-export function setTicketBuyerConfigAttempt() {
+export function setTicketBuyerConfigAttempt(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
+  votingAddress, poolAddress, poolFees, maxPerBlock) {
   return (dispatch) => {
     dispatch({ type: SETTICKETBUYERCONFIG_ATTEMPT });
-    dispatch(setTicketBuyerConfigAction());
+    dispatch(setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
+      votingAddress, poolAddress, poolFees, maxPerBlock));
   };
 }
 
-function setTicketBuyerConfigAction() {
+function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
+  votingAddress, poolAddress, poolFees, maxPerBlock) {
+  var cfg = getCfg();
   return (dispatch, getState) => {
     const { ticketBuyerService } = getState().grpc;
     const { getTicketBuyerConfigRequest } = getState().control;
@@ -655,6 +660,7 @@ function setTicketBuyerConfigAction() {
       ticketBuyerService.setAccount(request, function (err) {
         if (err) {
           hitError += err + '. ';
+        } else {
         }
       });
     }
@@ -664,6 +670,8 @@ function setTicketBuyerConfigAction() {
       ticketBuyerService.setBalanceToMaintain(request, function (err) {
         if (err) {
           hitError += err + '. ';
+        } else {
+          cfg.set('balancetomaintain', balanceToMaintain);
         }
       });
     }
@@ -673,6 +681,8 @@ function setTicketBuyerConfigAction() {
       ticketBuyerService.setMaxFee(request, function (err) {
         if (err) {
           hitError += err + '. ';
+        } else {
+          cfg.set('maxfee', maxFee);
         }
       });
     }
@@ -682,6 +692,8 @@ function setTicketBuyerConfigAction() {
       ticketBuyerService.setMaxPriceAbsolute(request, function (err) {
         if (err) {
           hitError += err + '. ';
+        } else {
+          cfg.set('maxpriceabsolute',maxPriceAbsolute);
         }
       });
     }
@@ -691,6 +703,8 @@ function setTicketBuyerConfigAction() {
       ticketBuyerService.setMaxPriceRelative(request, function (err) {
         if (err) {
           hitError += err + '. ';
+        } else {
+          cfg.set('maxpricerelative',maxPriceRelative);
         }
       });
     }
@@ -700,6 +714,7 @@ function setTicketBuyerConfigAction() {
       ticketBuyerService.setVotingAddress(request, function (err) {
         if (err) {
           hitError += err + '. ';
+        } else {
         }
       });
     }
@@ -709,6 +724,7 @@ function setTicketBuyerConfigAction() {
       ticketBuyerService.setPoolAddress(request, function (err) {
         if (err) {
           hitError += err + '. ';
+        } else {
         }
       });
     }
@@ -718,6 +734,7 @@ function setTicketBuyerConfigAction() {
       ticketBuyerService.setPoolFees(request, function (err) {
         if (err) {
           hitError += err + '. ';
+        } else {
         }
       });
     }
@@ -727,6 +744,8 @@ function setTicketBuyerConfigAction() {
       ticketBuyerService.setMaxPerBlock(request, function (err) {
         if (err) {
           hitError += err + '. ';
+        } else {
+          cfg.set('maxperblock',maxPerBlock);
         }
       });
     }
