@@ -1,5 +1,5 @@
 import { getWalletService, getTicketBuyerService, getVotingService, getAgendaService } from '../middleware/grpc/client';
-import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt } from './ControlActions';
+import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, getTicketBuyerConfigAttempt } from './ControlActions';
 import { transactionNtfnsStart } from './NotificationActions';
 import { updateStakepoolPurchaseInformation } from './StakePoolActions';
 import { hashHistory } from 'react-router';
@@ -75,6 +75,7 @@ function getTicketBuyerServiceError(error) {
 function getTicketBuyerServiceSuccess(ticketBuyerService) {
   return (dispatch) => {
     dispatch({ ticketBuyerService, type: GETTICKETBUYERSERVICE_SUCCESS });
+    setTimeout(() => { dispatch(getTicketBuyerConfigAttempt()); }, 10);
   };
 }
 

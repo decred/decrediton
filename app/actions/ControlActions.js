@@ -3,7 +3,7 @@ import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   ConstructTransactionRequest, SignTransactionRequest,
   PublishTransactionRequest, PurchaseTicketsRequest, LoadActiveDataFiltersRequest,
-  StartAutoBuyerRequest, StopAutoBuyerRequest
+  StartAutoBuyerRequest, StopAutoBuyerRequest, TicketBuyerConfigRequest
   } from '../middleware/walletrpc/api_pb';
 
 export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
@@ -583,6 +583,164 @@ export function clearPurchaseTicketsError() {
   };
 }
 
+export const GETTICKETBUYERCONFIG_ATTEMPT = 'GETTICKETBUYERCONFIG_ATTEMPT';
+export const GETTICKETBUYERCONFIG_FAILED = 'GETTICKETBUYERCONFIG_FAILED';
+export const GETTICKETBUYERCONFIG_SUCCESS = 'GETTICKETBUYERCONFIG_SUCCESS';
+
+function getTicketBuyerConfigError(error) {
+  return { error, type: GETTICKETBUYERCONFIG_FAILED };
+}
+
+function getTicketBuyerConfigSuccess(ticketBuyerConfig) {
+  return (dispatch) => {
+    dispatch({ ticketBuyerConfig, type: GETTICKETBUYERCONFIG_SUCCESS });
+  };
+}
+
+export function getTicketBuyerConfigAttempt() {
+  return (dispatch) => {
+    dispatch({ type: GETTICKETBUYERCONFIG_ATTEMPT });
+    dispatch(getTicketBuyerConfigAction());
+  };
+}
+
+function getTicketBuyerConfigAction() {
+  var request = new TicketBuyerConfigRequest();
+  return (dispatch, getState) => {
+    const { ticketBuyerService } = getState().grpc;
+    ticketBuyerService.ticketBuyerConfig(request, function (err, ticketBuyerConfig) {
+
+      if (err) {
+        dispatch(getTicketBuyerConfigError(err + ' Please try again'));
+      } else {
+        dispatch(getTicketBuyerConfigSuccess(ticketBuyerConfig));
+      }
+    });
+  };
+}
+
+export const SETTICKETBUYERCONFIG_ATTEMPT = 'SETTICKETBUYERCONFIG_ATTEMPT';
+export const SETTICKETBUYERCONFIG_FAILED = 'SETTICKETBUYERCONFIG_FAILED';
+export const SETTICKETBUYERCONFIG_SUCCESS = 'SETTICKETBUYERCONFIG_SUCCESS';
+
+function setTicketBuyerConfigError(error) {
+  return { error, type: SETTICKETBUYERCONFIG_FAILED };
+}
+
+function setTicketBuyerConfigSuccess() {
+  return (dispatch) => {
+    dispatch({ type: SETTICKETBUYERCONFIG_SUCCESS });
+    dispatch(getTicketBuyerConfigAttempt());
+  };
+}
+
+export function setTicketBuyerConfigAttempt() {
+  return (dispatch) => {
+    dispatch({ type: SETTICKETBUYERCONFIG_ATTEMPT });
+    dispatch(setTicketBuyerConfigAction());
+  };
+}
+
+function setTicketBuyerConfigAction() {
+SetVotingAddressRequest
+SetPoolAddressRequest
+SetPoolFeesRequest
+SetMaxPerBlockRequest
+
+  var request = new TicketBuyerConfigRequest();
+  return (dispatch, getState) => {
+    const { ticketBuyerService } = getState().grpc;
+    const { getTicketBuyerConfigRequest } = getState().control;
+    var hitError = '';
+    if (account != getTicketBuyerConfigRequest.getAccount()) {
+      var request = new SetAccountRequest();
+      request.setAccount(account);
+      ticketBuyerService.setAccount(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        }
+      });
+    }
+    if (balanceToMaintain != getTicketBuyerConfigRequest.getBalanceToMaintain()) {
+      var request = new SetBalanceToMaintainRequest();
+      request.setBalanceToMaintain(balanceToMaintain);
+      ticketBuyerService.setBalanceToMaintain(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        }
+      });
+    }
+    if (maxFee != getTicketBuyerConfigRequest.getMaxFee()) {
+      var request = new SetMaxFeeRequest();
+      request.setMaxFee(maxFee);
+      ticketBuyerService.setMaxFee(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        }
+      });
+    }
+    if (maxPriceAbsolute != getTicketBuyerConfigRequest.getMaxPriceAbsolute()) {
+      var request = new SetMaxPriceAbsoluteRequest();
+      request.setMaxPriceAbsolute(maxPriceAbsolute);
+      ticketBuyerService.setMaxPriceAbsolute(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        }
+      });
+    }
+    if (maxPriceRelative != getTicketBuyerConfigRequest.getMaxPriceRelative()) {
+      var request = new SetMaxPriceRelativeRequest();
+      request.setMaxPriceRelative(maxPriceRelative);
+      ticketBuyerService.setMaxPriceRelative(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        }
+      });
+    }
+    if (votingAddress != getTicketBuyerConfigRequest.getVotingAddress()) {
+      var request = new SetVotingAddressRequest();
+      request.setVotingAddress(votingAddress);
+      ticketBuyerService.setVotingAddress(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        }
+      });
+    }
+    if (poolAddress != getTicketBuyerConfigRequest.getPoolAddress()) {
+      var request = new SetPoolAddressRequest();
+      request.setPoolAddress(poolAddress);
+      ticketBuyerService.setPoolAddress(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        }
+      });
+    }
+    if (poolFees != getTicketBuyerConfigRequest.getPoolFees()) {
+      var request = new SetPoolFeesRequest();
+      request.setPoolFees(poolFees);
+      ticketBuyerService.setPoolFees(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        }
+      });
+    }
+    if (maxPerBlock != getTicketBuyerConfigRequest.getMaxPerBlock()) {
+      var request = new SetMaxPerBlockRequest();
+      request.setMaxPerBlock(maxPerBlock);
+      ticketBuyerService.setMaxPerBlock(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        }
+      });
+    }
+    if (hitError != '') {
+      dispatch(setTicketBuyerConfigError(hitError + ' Please try again'));
+    } else {
+      dispatch(setTicketBuyerConfigSuccess());
+    }
+  };
+}
+
 export const STARTAUTOBUYER_ATTEMPT = 'STARTAUTOBUYER_ATTEMPT';
 export const STARTAUTOBUYER_FAILED = 'STARTAUTOBUYER_FAILED';
 export const STARTAUTOBUYER_SUCCESS = 'STARTAUTOBUYER_SUCCESS';
@@ -691,6 +849,7 @@ function stopAutoBuyerAction() {
         });
   };
 }
+
 
 export function clearStopAutoBuyerSuccess() {
   return (dispatch, getState) => {

@@ -14,6 +14,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   PUBLISHTX_ATTEMPT, PUBLISHTX_FAILED, PUBLISHTX_SUCCESS,
   PURCHASETICKETS_ATTEMPT, PURCHASETICKETS_FAILED, PURCHASETICKETS_SUCCESS,
   PURCHASETICKETS_CLEAR_ERROR, PURCHASETICKETS_CLEAR_SUCCESS,
+  GETTICKETBUYERCONFIG_ATTEMPT, GETTICKETBUYERCONFIG_FAILED, GETTICKETBUYERCONFIG_SUCCESS,
   STARTAUTOBUYER_ATTEMPT, STARTAUTOBUYER_FAILED, STARTAUTOBUYER_SUCCESS,
   STARTAUTOBUYER_CLEAR_ERROR, STARTAUTOBUYER_CLEAR_SUCCESS,
   STOPAUTOBUYER_ATTEMPT, STOPAUTOBUYER_FAILED, STOPAUTOBUYER_SUCCESS,
@@ -293,6 +294,27 @@ export default function control(state = {}, action) {
   case  PURCHASETICKETS_CLEAR_SUCCESS:
     return {...state,
       purchaseTicketsSuccess: '',
+    };
+  case GETTICKETBUYERCONFIG_ATTEMPT:
+    return {
+      ...state,
+      getTicketBuyerConfigRequest: action.request,
+      getTicketBuyerConfigError: null,
+      getTicketBuyerConfigRequestAttempt: true,
+    };
+  case GETTICKETBUYERCONFIG_FAILED:
+    return {
+      ...state,
+      getTicketBuyerConfigRequest: null,
+      getTicketBuyerConfigError: action.error,
+      getTicketBuyerConfigRequestAttempt: false,
+    };
+  case GETTICKETBUYERCONFIG_SUCCESS:
+    return {
+      ...state,
+      getTicketBuyerConfigRequest: null,
+      getTicketBuyerConfigRequestAttempt: false,
+      getTicketBuyerConfigResponse: action.ticketBuyerConfig,
     };
   case STARTAUTOBUYER_ATTEMPT:
     return {...state,

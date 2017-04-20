@@ -306,6 +306,12 @@ var initialState = {
 
     // TicketBuyerService
     ticketBuyerService: null,
+    // TicketBuyerConfig
+    ticketBuyerConfigRequestAttempt: false,
+    ticketBuyerConfigRequest: null,
+    ticketBuyerConfigResponse: null,
+    ticketBuyerConfigSuccess: null,
+    ticketBuyerConfigError: null,
     // StartAutoBuyer
     startAutoBuyerRequestAttempt: false,
     startAutoBuyerRequest: null,
