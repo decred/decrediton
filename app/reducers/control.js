@@ -316,6 +316,25 @@ export default function control(state = {}, action) {
       getTicketBuyerConfigRequestAttempt: false,
       getTicketBuyerConfigResponse: action.ticketBuyerConfig,
     };
+  case SETTICKETBUYERCONFIG_ATTEMPT:
+    return {
+      ...state,
+      setTicketBuyerConfigError: null,
+      setTicketBuyerConfigRequestAttempt: true,
+      setTicketBuyerConfigResponse: null,
+    };
+  case SETTICKETBUYERCONFIG_FAILED:
+    return {
+      ...state,
+      setTicketBuyerConfigError: action.error,
+      setTicketBuyerConfigRequestAttempt: false,
+    };
+  case SETTICKETBUYERCONFIG_SUCCESS:
+    return {
+      ...state,
+      setTicketBuyerConfigRequestAttempt: false,
+      setTicketBuyerConfigResponse: action.success,
+    };
   case STARTAUTOBUYER_ATTEMPT:
     return {...state,
       startAutoBuyerError: null,

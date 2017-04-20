@@ -3,7 +3,10 @@ import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   ConstructTransactionRequest, SignTransactionRequest,
   PublishTransactionRequest, PurchaseTicketsRequest, LoadActiveDataFiltersRequest,
-  StartAutoBuyerRequest, StopAutoBuyerRequest, TicketBuyerConfigRequest
+  StartAutoBuyerRequest, StopAutoBuyerRequest, TicketBuyerConfigRequest,
+  SetAccountRequest, SetBalanceToMaintainRequest, SetMaxFeeRequest, SetMaxPriceAbsoluteRequest,
+  SetMaxPriceRelativeRequest, SetVotingAddressRequest, SetPoolAddressRequest, SetPoolFeesRequest,
+  SetMaxPerBlockRequest,
   } from '../middleware/walletrpc/api_pb';
 
 export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
@@ -629,7 +632,7 @@ function setTicketBuyerConfigError(error) {
 
 function setTicketBuyerConfigSuccess() {
   return (dispatch) => {
-    dispatch({ type: SETTICKETBUYERCONFIG_SUCCESS });
+    dispatch({ success: "Ticket buyer settings have been successfully updated.", type: SETTICKETBUYERCONFIG_SUCCESS });
     dispatch(getTicketBuyerConfigAttempt());
   };
 }
@@ -642,12 +645,6 @@ export function setTicketBuyerConfigAttempt() {
 }
 
 function setTicketBuyerConfigAction() {
-SetVotingAddressRequest
-SetPoolAddressRequest
-SetPoolFeesRequest
-SetMaxPerBlockRequest
-
-  var request = new TicketBuyerConfigRequest();
   return (dispatch, getState) => {
     const { ticketBuyerService } = getState().grpc;
     const { getTicketBuyerConfigRequest } = getState().control;
