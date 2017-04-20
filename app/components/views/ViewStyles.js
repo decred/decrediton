@@ -1217,6 +1217,9 @@ export const StakePoolStyles = {
   selectAccountNText: {
     width: '200%',
   },
+  highlightTextNeonGreen: {
+    color: '#2ed8a3',
+  },
   numTicketsInput: {
     width: '111px',
     paddingTop: '4px',

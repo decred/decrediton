@@ -101,10 +101,8 @@ class PassphraseModal extends React.Component {
     return (
        <div hidden={this.props.hidden} style={styles.autoBuyerPassphraseModal}>
           <div style={styles.autobuyerPassphraseModalSection}>
-            <div style={styles.autobuyerPassphraseModalSectionHeadingSubSection}>Enter Passphrase to Start Autobuyer</div>
-            <div style={styles.autobuyerPassphraseModalSectionHeadingSubSectionNotice}><span style={styles.highlightTextNeonGreen}>Notice!</span> &nbsp;Automatic ticket purchase will continue as long as the wallet is running.
-              <br/>When the wallet is closed, tickets are not purchased. When the wallet is restarted
-              <br/>the automatic purchase will continue until disabled from the Toggle.</div>
+            <div style={styles.autobuyerPassphraseModalSectionHeadingSubSection}>{this.props.heading}</div>
+            <div style={styles.autobuyerPassphraseModalSectionHeadingSubSectionNotice}>{this.props.description}</div>
             <div style={styles.autobuyerPassphraseModalSubSectionPrivPassphrase}>
               <div style={styles.bigPrefix}>Private Passphrase:</div>
               <input id='passphrase' style={styles.inputPassphraseField} type="password" placeholder="" defaultValue={this.state.privpass} onChange={(e) => this.updatePrivatePassphrase(e.target.value)}/>

@@ -488,9 +488,22 @@ class StakePool extends Component{
     var purchaseTicketsInfoModal = (
         <PurchaseTicketsInfo closeModal={()=>this.closePurchaseInfoModal()}/>
     );
+    var startAutoBuyerDescription = (
+      <div>
+        <span style={StakePoolStyles.highlightTextNeonGreen}>Notice!</span> &nbsp;Automatic ticket purchase will continue as long as the wallet is running.
+        <br/>When the wallet is closed, tickets are not purchased. When the wallet is restarted
+        <br/>the automatic purchase will continue until disabled from the Toggle.
+      </div>
+    );
     var purchaseTicketsView = (
       <div>
-        <PassphraseModal hidden={!this.state.passphraseModalOpen} submitPassphrase={(privPass) => this.submitStart(privPass)} cancelPassphrase={()=>this.setState({passphraseModalOpen: false})}/> 
+        <PassphraseModal 
+          hidden={!this.state.passphraseModalOpen} 
+          submitPassphrase={(privPass) => this.submitStart(privPass)} 
+          cancelPassphrase={()=>this.setState({passphraseModalOpen: false})}
+          heading="Enter Passphrase to Start Autobuyer"
+          description={startAutoBuyerDescription}
+              /> 
         <div style={this.state.passphraseModalOpen ? StakePoolStyles.contentPurchaseTicketViewBlur : StakePoolStyles.contentPurchaseTicketView}>
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Purchase Tickets</div>
