@@ -855,9 +855,11 @@ class StakePool extends Component{
                   {this.state.maxPerBlockError}
                 </div>
               </div>
-              <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} hidden={startAutoBuyerResponse == null} disabled={!this.state.autoBuyerConfigChanged} onClick={this.state.autoBuyerConfigChanged ? () => this.updateAutoBuyerSettings() : null}>
+              <div hidden={startAutoBuyerResponse == null}>
+              <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} disabled={!this.state.autoBuyerConfigChanged} onClick={this.state.autoBuyerConfigChanged ? () => this.updateAutoBuyerSettings() : null}>
                 Update Config
               </KeyBlueButton>
+              </div>
             </div>
           </div>
         </div>

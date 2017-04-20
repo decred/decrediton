@@ -680,7 +680,7 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
         }
       });
       var request = new SetMaxFeeRequest();
-      request.setMaxFee(maxFee);
+      request.setMaxFeePerKb(maxFee*1e8);
       ticketBuyerService.setMaxFee(request, function (err) {
         if (err) {
           hitError += err + '. ';
@@ -690,7 +690,7 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
         }
       });
       var request = new SetMaxPriceAbsoluteRequest();
-      request.setMaxPriceAbsolute(maxPriceAbsolute);
+      request.setMaxPriceAbsolute(maxPriceAbsolute*1e8);
       ticketBuyerService.setMaxPriceAbsolute(request, function (err) {
         if (err) {
           hitError += err + '. ';
