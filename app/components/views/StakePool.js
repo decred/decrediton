@@ -574,7 +574,7 @@ class StakePool extends Component{
       <div>
         <span style={StakePoolStyles.highlightTextNeonGreen}>Notice!</span> &nbsp;Automatic ticket purchase will continue as long as the wallet is running.
         <br/>When the wallet is closed, tickets are not purchased. When the wallet is restarted
-        <br/>the automatic purchase will continue until disabled from the Toggle.
+        <br/>the automatic purchase will need to enabled again with the Toggle.
       </div>
     );
     var startAutoBuyerHeading = 'Enter Passphrase to Start Autobuyer';
