@@ -107,7 +107,7 @@ class TxHistory extends Component {
 
               var date = dateFormat(new Date(txInfo.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
               var fee = tx.getFee();
-
+              var type = txInfo.type;
               var txDescription = '';
               var txAmount = 0;
 
@@ -161,7 +161,7 @@ class TxHistory extends Component {
                     }
                   }
                 }
-                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} accountName={accountName} txInfo={txInfo} direction={'out'} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
+                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} type={type} accountName={accountName} txInfo={txInfo} direction={'out'} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
               } else {
                 if (getAccountsResponse != null) {
                   for (var t = 0; t < getAccountsResponse.getAccountsList().length; t++) {
@@ -173,7 +173,7 @@ class TxHistory extends Component {
                 }
                 txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
                 txAmount = totalFundsReceived;
-                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} accountName={accountName} txInfo={txInfo} direction={'in'} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
+                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} type={type} accountName={accountName} txInfo={txInfo} direction={'in'} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
               }
             }) :
           <div></div>
