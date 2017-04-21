@@ -5,9 +5,11 @@ import IndicatorPending from './icons/indicator-pending.svg';
 import IndicatorConfirmed from './icons/indicator-confirmed.svg';
 import PlusSmall from './icons/plus-small.svg';
 import MinusSmall from './icons/minus-small.svg';
+import TicketSmall from './icons/tickets-ticket.svg';
 import ArrowRightGray from './icons/arrow-right-gray.svg';
 import ArrowRightKeyBlue from './icons/arrow-right-key-blue.svg';
 import './fonts.css';
+import { TransactionDetails }  from '../middleware/walletrpc/api_pb';
 
 const styles = {
   historyContainer: {
@@ -89,6 +91,60 @@ const styles = {
     transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s'
   },
 
+  ticketTx: {
+    height: '52px',
+    paddingRight: '45px',
+    paddingLeft: '56px',
+    borderBottom: '1px solid #e7eaed',
+    backgroundColor: '#fff',
+    cursor: 'pointer',
+    backgroundImage: `url(${ArrowRightGray}),url(${TicketSmall})`,
+    backgroundPosition: '97% 50%, 20px 50%',
+    backgroundSize: '5px 10px, 16px 16px',
+    backgroundRepeat: 'no-repeat, no-repeat',
+    ':hover': {
+      backgroundColor: 'rgba(212, 240, 253, .5)',
+      backgroundImage: `url(${ArrowRightKeyBlue}),url(${TicketSmall})`,
+      backgroundSize: '5px, 16px',
+    },
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s'
+  },
+  voteTx: {
+    height: '52px',
+    paddingRight: '45px',
+    paddingLeft: '56px',
+    borderBottom: '1px solid #e7eaed',
+    backgroundColor: '#fff',
+    cursor: 'pointer',
+    backgroundImage: `url(${ArrowRightGray}),url(${TicketSmall})`,
+    backgroundPosition: '97% 50%, 20px 50%',
+    backgroundSize: '5px 10px, 16px 16px',
+    backgroundRepeat: 'no-repeat, no-repeat',
+    ':hover': {
+      backgroundColor: 'rgba(212, 240, 253, .5)',
+      backgroundImage: `url(${ArrowRightKeyBlue}),url(${TicketSmall})`,
+      backgroundSize: '5px, 16px',
+    },
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s'
+  },
+  revokeTx: {
+    height: '52px',
+    paddingRight: '45px',
+    paddingLeft: '56px',
+    borderBottom: '1px solid #e7eaed',
+    backgroundColor: '#fff',
+    cursor: 'pointer',
+    backgroundImage: `url(${ArrowRightGray}),url(${TicketSmall})`,
+    backgroundPosition: '97% 50%, 20px 50%',
+    backgroundSize: '5px 10px, 16px 16px',
+    backgroundRepeat: 'no-repeat, no-repeat',
+    ':hover': {
+      backgroundColor: 'rgba(212, 240, 253, .5)',
+      backgroundImage: `url(${ArrowRightKeyBlue}),url(${TicketSmall})`,
+      backgroundSize: '5px, 16px',
+    },
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s'
+  },
   transactionAmount: {
     width: '44%',
     height: '35px',
@@ -164,7 +220,52 @@ class TxRow extends Component {
     const { pending } = this.props;
     const { date } = this.props;
     const { accountName } = this.props;
-
+    const { type } = this.props;
+    if (type == TransactionDetails.TransactionType.TICKET_PURCHASE) {
+      return (
+        <div style={styles.ticketTx} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
+          <div style={styles.transactionAmount}>
+            Ticket
+          </div>
+          <div style={styles.transactionAccount}>
+            <div style={styles.transactionAccountName}>{accountName}</div>
+            <div style={styles.transactionAccountIndicator}>
+              <div style={styles.indicatorConfirmed}>Confirmed</div>
+            </div>
+          </div>
+          <div style={styles.transactionTimeDate}><span>{date}</span></div>
+        </div>);
+    }
+    if (type == TransactionDetails.TransactionType.VOTE) {
+      return (
+        <div style={styles.voteTx} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
+          <div style={styles.transactionAmount}>
+            Vote
+          </div>
+          <div style={styles.transactionAccount}>
+            <div style={styles.transactionAccountName}>{accountName}</div>
+            <div style={styles.transactionAccountIndicator}>
+              <div style={styles.indicatorConfirmed}>Confirmed</div>
+            </div>
+          </div>
+          <div style={styles.transactionTimeDate}><span>{date}</span></div>
+        </div>);
+    }
+    if (type == TransactionDetails.TransactionType.REVOKE) {
+      return (
+        <div style={styles.revokeTx} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
+          <div style={styles.transactionAmount}>
+            Revoke
+          </div>
+          <div style={styles.transactionAccount}>
+            <div style={styles.transactionAccountName}>{accountName}</div>
+            <div style={styles.transactionAccountIndicator}>
+              <div style={styles.indicatorConfirmed}>Confirmed</div>
+            </div>
+          </div>
+          <div style={styles.transactionTimeDate}><span>{date}</span></div>
+        </div>);
+    }
     if (pending) {
       if (direction == 'out') {
         return (
