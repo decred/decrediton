@@ -14,12 +14,15 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   PUBLISHTX_ATTEMPT, PUBLISHTX_FAILED, PUBLISHTX_SUCCESS,
   PURCHASETICKETS_ATTEMPT, PURCHASETICKETS_FAILED, PURCHASETICKETS_SUCCESS,
   PURCHASETICKETS_CLEAR_ERROR, PURCHASETICKETS_CLEAR_SUCCESS,
+  GETTICKETBUYERCONFIG_ATTEMPT, GETTICKETBUYERCONFIG_FAILED, GETTICKETBUYERCONFIG_SUCCESS,
+  SETTICKETBUYERCONFIG_ATTEMPT, SETTICKETBUYERCONFIG_FAILED, SETTICKETBUYERCONFIG_SUCCESS,
   STARTAUTOBUYER_ATTEMPT, STARTAUTOBUYER_FAILED, STARTAUTOBUYER_SUCCESS,
   STARTAUTOBUYER_CLEAR_ERROR, STARTAUTOBUYER_CLEAR_SUCCESS,
   STOPAUTOBUYER_ATTEMPT, STOPAUTOBUYER_FAILED, STOPAUTOBUYER_SUCCESS,
   STOPAUTOBUYER_CLEAR_ERROR, STOPAUTOBUYER_CLEAR_SUCCESS,
   CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS,
   CONSTRUCTTX_CLEAR_ERROR, PUBLISHTX_CLEAR_ERROR, SIGNTX_CLEAR_ERROR, PUBLISHTX_CLEAR_SUCCESS,
+  SETBALANCETOMAINTAIN, SETMAXFEE, SETMAXPRICEABSOLUTE, SETMAXPRICERELATIVE, SETMAXPERBLOCK
  } from '../actions/ControlActions';
 
 export default function control(state = {}, action) {
@@ -294,6 +297,71 @@ export default function control(state = {}, action) {
     return {...state,
       purchaseTicketsSuccess: '',
     };
+  case GETTICKETBUYERCONFIG_ATTEMPT:
+    return {
+      ...state,
+      getTicketBuyerConfigRequest: action.request,
+      getTicketBuyerConfigError: null,
+      getTicketBuyerConfigRequestAttempt: true,
+    };
+  case GETTICKETBUYERCONFIG_FAILED:
+    return {
+      ...state,
+      getTicketBuyerConfigRequest: null,
+      getTicketBuyerConfigError: action.error,
+      getTicketBuyerConfigRequestAttempt: false,
+    };
+  case GETTICKETBUYERCONFIG_SUCCESS:
+    return {
+      ...state,
+      getTicketBuyerConfigRequest: null,
+      getTicketBuyerConfigRequestAttempt: false,
+      getTicketBuyerConfigResponse: action.ticketBuyerConfig,
+    };
+  case SETTICKETBUYERCONFIG_ATTEMPT:
+    return {
+      ...state,
+      setTicketBuyerConfigError: null,
+      setTicketBuyerConfigRequestAttempt: true,
+      setTicketBuyerConfigResponse: null,
+    };
+  case SETTICKETBUYERCONFIG_FAILED:
+    return {
+      ...state,
+      setTicketBuyerConfigError: action.error,
+      setTicketBuyerConfigRequestAttempt: false,
+    };
+  case SETTICKETBUYERCONFIG_SUCCESS:
+    return {
+      ...state,
+      setTicketBuyerConfigRequestAttempt: false,
+      setTicketBuyerConfigResponse: action.success,
+    };
+  case SETBALANCETOMAINTAIN:
+    return {
+      ...state,
+      balanceToMaintain: action.balanceToMaintain,
+    };
+  case SETMAXFEE:
+    return {
+      ...state,
+      maxFee: action.maxFee,
+    };
+  case SETMAXPRICEABSOLUTE:
+    return {
+      ...state,
+      maxPriceAbsolute: action.maxPriceAbsolute,
+    };
+  case SETMAXPRICERELATIVE:
+    return {
+      ...state,
+      maxPriceRelative: action.maxPriceRelative,
+    };
+  case SETMAXPERBLOCK:
+    return {
+      ...state,
+      maxPerBlock: action.maxPerBlock,
+    };
   case STARTAUTOBUYER_ATTEMPT:
     return {...state,
       startAutoBuyerError: null,
@@ -312,6 +380,9 @@ export default function control(state = {}, action) {
       startAutoBuyerSuccess: action.success,
       startAutoBuyerRequestAttempt: false,
       startAutoBuyerResponse: action.startAutoBuyerResponse,
+      stopAutoBuyerSuccess: null,
+      stopAutoBuyerRequest: null,
+      stopAutoBuyerResponse: null,
     };
   case STARTAUTOBUYER_CLEAR_ERROR:
     return {...state,
@@ -319,7 +390,7 @@ export default function control(state = {}, action) {
     };
   case  STARTAUTOBUYER_CLEAR_SUCCESS:
     return {...state,
-      startAutoBuyerSuccess: '',
+      startAutoBuyerSuccess: null,
     };
   case STOPAUTOBUYER_ATTEMPT:
     return {...state,
@@ -336,9 +407,13 @@ export default function control(state = {}, action) {
   case STOPAUTOBUYER_SUCCESS:
     return {...state,
       stopAutoBuyerError: null,
+      stopAutoBuyerRequest: null,
       stopAutoBuyerSuccess: action.success,
       stopAutoBuyerRequestAttempt: false,
       stopAutoBuyerResponse: action.stopAutoBuyerResponse,
+      startAutoBuyerSuccess: null,
+      startAutoBuyerResponse: null,
+      startAutoBuyerRequest: null,
     };
   case STOPAUTOBUYER_CLEAR_ERROR:
     return {...state,
@@ -346,7 +421,7 @@ export default function control(state = {}, action) {
     };
   case  STOPAUTOBUYER_CLEAR_SUCCESS:
     return {...state,
-      stopAutoBuyerSuccess: '',
+      stopAutoBuyerSuccess: null,
     };
   case CONSTRUCTTX_ATTEMPT:
     return {...state,

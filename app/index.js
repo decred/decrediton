@@ -306,17 +306,28 @@ var initialState = {
 
     // TicketBuyerService
     ticketBuyerService: null,
+    // TicketBuyerConfig
+    balanceToMaintain: cfg.get('balancetomaintain'),
+    maxFee: cfg.get('maxfee'),
+    maxPriceAbsolute: cfg.get('maxpriceabsolute'),
+    maxPriceRelative: cfg.get('maxpricerelative'),
+    maxPerBlock: cfg.get('maxperblock'),
+    getTicketBuyerConfigRequestAttempt: false,
+    getTicketBuyerConfigRequest: null,
+    getTicketBuyerConfigResponse: null,
+    getTicketBuyerConfigSuccess: null,
+    getTicketBuyerConfigError: null,
     // StartAutoBuyer
     startAutoBuyerRequestAttempt: false,
     startAutoBuyerRequest: null,
     startAutoBuyerResponse: null,
-    startAutoBuyerSuccess: '',
+    startAutoBuyerSuccess: null,
     startAutoBuyerError: null,
     // StopAutoBuyer
     stopAutoBuyerRequestAttempt: false,
     stopAutoBuyerRequest: null,
     stopAutoBuyerResponse: null,
-    stopAutoBuyerSuccess: '',
+    stopAutoBuyerSuccess: null,
     stopAutoBuyerError: null,
     // ConstructTransaction
     constructTxRequestAttempt: false,

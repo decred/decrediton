@@ -22,6 +22,11 @@ import SplitFeeIcon from '../icons/split-fee.svg';
 import TicketAddressIcon from '../icons/voting-address.svg';
 import FeeAddressIcon from '../icons/pool-fee-address.svg';
 import PoolFeeIcon from '../icons/pool-fees.svg';
+import BalanceToMaintainIcon from '../icons/balance-to-maintain.svg';
+import MaxFeeIcon from '../icons/max-fee.svg';
+import MaxPriceAbsoluteIcon from '../icons/max-price-absolute.svg';
+import MaxPriceRelativeIcon from '../icons/max-price-relative.svg';
+import MaxPerBlockIcon from '../icons/max-per-block.svg';
 import TicketsManageStakepools from '../icons/tickets-manage-stakepools.svg';
 
 export const ReceiveStyles = {
@@ -958,6 +963,12 @@ export const StakePoolStyles = {
     height: '556px',
     padding: '0px 60px 10px 80px',
   },
+  contentPurchaseTicketViewBlur: {
+    filter: 'blur(6px)',
+    overflow: 'auto',
+    height: '565px',
+    padding: '20px 60px 20px 80px',
+  },
   contentPurchaseTicketView: {
     overflow: 'auto',
     height: '565px',
@@ -1206,6 +1217,9 @@ export const StakePoolStyles = {
   selectAccountNText: {
     width: '200%',
   },
+  highlightTextNeonGreen: {
+    color: '#2ed8a3',
+  },
   numTicketsInput: {
     width: '111px',
     paddingTop: '4px',
@@ -1440,7 +1454,8 @@ export const StakePoolStyles = {
     paddingLeft: '5px',
   },
   contentPurchaseButton: {
-    marginTop: '8px'
+    marginTop: '8px',
+    marginLeft: '8px'
   },
   showAdvanced: {
     width: '300px',
@@ -1488,6 +1503,128 @@ export const StakePoolStyles = {
   numTicketsInputArea: {
     paddingTop: '2px'
   },
+  autoBuyerQuickBarRow: {
+    width: '400px',
+    paddingLeft: '37px',
+    paddingTop: '8px',
+    float: 'left',
+    position: 'relative',
+  },
+  switchEnabled: {
+    display: 'block',
+    width: '60px',
+    height: '24px',
+    borderRadius: '5px',
+    backgroundColor: '#2971ff',
+    ':hover': {
+      width: '56px',
+      paddingLeft: '4px',
+    },
+    transition: 'all 200ms ease-in-out',
+    float: 'left',
+  },
+
+  switchDisabled: {
+    display: 'block',
+    width: '60px',
+    height: '24px',
+    borderRadius: '5px',
+    backgroundColor: '#c4cbd2',
+    ':hover': {
+      width: '56px',
+      paddingRight: '4px',
+    },
+    transition: 'all 200ms ease-in-out',
+    float: 'left',
+  },
+
+  switchKnobEnabled: {
+    width: '30px',
+    height: '100%',
+    borderRadius: '5px',
+    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
+    backgroundColor: '#fff',
+  },
+  switchKnobDisabled: {
+    width: '30px',
+    height: '100%',
+    borderRadius: '5px',
+    boxShadow: '0 0 10px 0 rgba(0, 0, 0, .2)',
+    float: 'right',
+    backgroundColor: '#596d81',
+  },
+/*
+  .switch.disabled-inactive {
+    background-color: #f3f6f6;
+    cursor: default;
+  }
+
+  .switch.disabled-inactive.transition0.automatic-purchase {
+    float: left;
+  }
+
+  .switch.enabled-inactive {
+    background-color: #f3f6f6;
+    cursor: default;
+  }
+
+  .switch.enabled-inactive.transition0.automatic-purchase {
+    float: left;
+  }
+  .switch-knob.disabled-inactive {
+    float: right;
+    background-color: #e7eaed;
+  }
+
+  .switch-knob.enabled-inactive {
+    background-color: #e7eaed;
+  }
+  */
+
+  autoBuyerSwitch: {
+    width: '85px',
+    float: 'left',
+    paddingLeft: '15px',
+    paddingTop: '13px',
+  },
+  autoBuyerLabel: {
+    width: '75px',
+    display: 'block',
+    paddingTop: '13px',
+    paddingLeft: '20px',
+    float: 'left',
+    color: '#0c1e3e',
+    fontSize: '19px',
+    textTransform: 'capitalize',
+  },
+  autoBuyerShowAdvancedArea: {
+    float: 'right',
+    paddingTop: '13px',
+  },
+  flexHeightAutoBuyerHidden: {
+    paddingTop: '1px',
+    backgroundColor: '#fff',
+    height:'54px',
+    width: '740px',
+    float: 'left',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+  },
+  flexHeightAutoBuyerShown: {
+    paddingTop: '1px',
+    backgroundColor: '#fff',
+    height:'296px',
+    width: '740px',
+    float: 'left',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+  },
+  autoBuyerRow: {
+    width: '100%',
+    height: '54px',
+    float: 'left',
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
+  },
   purchaseTicketQuickBarRow: {
     height: '36px',
     float: 'left',
@@ -1506,6 +1643,89 @@ export const StakePoolStyles = {
     height: '100%',
     textAlign: 'right',
     textTransform: 'capitalize',
+  },
+  balanceToMaintainIcon: {
+    display: 'block',
+    backgroundImage: `url(${BalanceToMaintainIcon})`,
+    backgroundPosition: '0px 50%',
+    backgroundSize: '16px',
+    backgroundRepeat: 'no-repeat',
+    height: '16px',
+    minWidth: '20px',
+    marginTop: '8px',
+    paddingRight: '18px',
+    paddingLeft: '20px',
+    float: 'left',
+    fontFamily: 'Inconsolata, monospace',
+    color: '#0c1e3e',
+    fontSize: '11px',
+    lineHeight: '17px',
+  },
+  maxFeeIcon: {
+    display: 'block',
+    backgroundImage: `url(${MaxFeeIcon})`,
+    backgroundPosition: '0px 50%',
+    backgroundSize: '16px',
+    backgroundRepeat: 'no-repeat',
+    height: '16px',
+    minWidth: '20px',
+    marginTop: '8px',
+    paddingRight: '18px',
+    paddingLeft: '20px',
+    float: 'left',
+    fontFamily: 'Inconsolata, monospace',
+    color: '#0c1e3e',
+    fontSize: '11px',
+    lineHeight: '17px',
+  },
+  maxPriceAbsoluteIcon: {
+    display: 'block',
+    backgroundImage: `url(${MaxPriceAbsoluteIcon})`,
+    backgroundPosition: '0px 50%',
+    backgroundSize: '16px',
+    backgroundRepeat: 'no-repeat',
+    height: '16px',
+    minWidth: '20px',
+    marginTop: '8px',
+    paddingRight: '18px',
+    paddingLeft: '20px',
+    float: 'left',
+    fontFamily: 'Inconsolata, monospace',
+    color: '#0c1e3e',
+    fontSize: '11px',
+    lineHeight: '17px',
+  },
+  maxPriceRelativeIcon: {
+    display: 'block',
+    backgroundImage: `url(${MaxPriceRelativeIcon})`,
+    backgroundPosition: '0px 50%',
+    backgroundSize: '16px',
+    backgroundRepeat: 'no-repeat',
+    height: '16px',
+    width: '40px',
+    marginTop: '8px',
+    paddingLeft: '20px',
+    float: 'left',
+    fontFamily: 'Inconsolata, monospace',
+    color: '#0c1e3e',
+    fontSize: '11px',
+    lineHeight: '17px',
+  },
+  maxPerBlockIcon: {
+    display: 'block',
+    backgroundImage: `url(${MaxPerBlockIcon})`,
+    backgroundPosition: '0px 50%',
+    backgroundSize: '16px',
+    backgroundRepeat: 'no-repeat',
+    height: '16px',
+    minWidth: '20px',
+    marginTop: '8px',
+    paddingLeft: '20px',
+    float: 'left',
+    fontFamily: 'Inconsolata, monospace',
+    color: '#0c1e3e',
+    fontSize: '11px',
+    lineHeight: '17px',
   },
   stakepoolIcon: {
     display: 'block',
@@ -1618,7 +1838,7 @@ export const StakePoolStyles = {
     transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
   },
   purchaseTicketLabel: {
-    width: '131px',
+    width: '134px',
     paddingRight: '15px',
     paddingLeft: '5px',
     float: 'left',
@@ -1628,7 +1848,7 @@ export const StakePoolStyles = {
     textAlign: 'left',
   },
   purchaseTicketInput: {
-    width: '286px',
+    width: '283px',
     float: 'left',
     height: '100%',
     fontSize: '19px',
@@ -1742,6 +1962,11 @@ export const StakePoolStyles = {
       opacity: '0.7',
     }
   },
+  areaSpacing: {
+    float: 'left',
+    height: '25px',
+    width: '100%',
+  },
   apiKeyError: {
     paddingLeft: '118px',
     textAlign: 'left',
@@ -1758,7 +1983,7 @@ export const StakePoolStyles = {
   flexHeightHidden: {
     paddingTop: '1px',
     backgroundColor: '#fff',
-    height:'258px',
+    height:'214px',
     float: 'left',
     overflowY: 'auto',
     overflowX: 'hidden',
@@ -1766,7 +1991,7 @@ export const StakePoolStyles = {
   flexHeightShown: {
     paddingTop: '1px',
     backgroundColor: '#fff',
-    height:'374px',
+    height:'340px',
     float: 'left',
     overflowY: 'auto',
     overflowX: 'hidden',

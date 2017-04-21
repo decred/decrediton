@@ -3,8 +3,12 @@ import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   ConstructTransactionRequest, SignTransactionRequest,
   PublishTransactionRequest, PurchaseTicketsRequest, LoadActiveDataFiltersRequest,
-  StartAutoBuyerRequest, StopAutoBuyerRequest
+  StartAutoBuyerRequest, StopAutoBuyerRequest, TicketBuyerConfigRequest,
+  SetAccountRequest, SetBalanceToMaintainRequest, SetMaxFeeRequest, SetMaxPriceAbsoluteRequest,
+  SetMaxPriceRelativeRequest, SetVotingAddressRequest, SetPoolAddressRequest, SetPoolFeesRequest,
+  SetMaxPerBlockRequest,
   } from '../middleware/walletrpc/api_pb';
+import { getCfg } from '../config.js';
 
 export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
 export const GETNEXTADDRESS_FAILED = 'GETNEXTADDRESS_FAILED';
@@ -583,6 +587,183 @@ export function clearPurchaseTicketsError() {
   };
 }
 
+export const GETTICKETBUYERCONFIG_ATTEMPT = 'GETTICKETBUYERCONFIG_ATTEMPT';
+export const GETTICKETBUYERCONFIG_FAILED = 'GETTICKETBUYERCONFIG_FAILED';
+export const GETTICKETBUYERCONFIG_SUCCESS = 'GETTICKETBUYERCONFIG_SUCCESS';
+
+function getTicketBuyerConfigError(error) {
+  return { error, type: GETTICKETBUYERCONFIG_FAILED };
+}
+
+function getTicketBuyerConfigSuccess(ticketBuyerConfig) {
+  return (dispatch) => {
+    dispatch({ ticketBuyerConfig: ticketBuyerConfig, type: GETTICKETBUYERCONFIG_SUCCESS });
+  };
+}
+
+export function getTicketBuyerConfigAttempt() {
+  return (dispatch) => {
+    dispatch({ type: GETTICKETBUYERCONFIG_ATTEMPT });
+    dispatch(getTicketBuyerConfigAction());
+  };
+}
+
+function getTicketBuyerConfigAction() {
+  var request = new TicketBuyerConfigRequest();
+  return (dispatch, getState) => {
+    const { ticketBuyerService } = getState().grpc;
+    ticketBuyerService.ticketBuyerConfig(request, function (err, ticketBuyerConfig) {
+      if (err) {
+        dispatch(getTicketBuyerConfigError(err + ' Please try again'));
+      } else {
+        dispatch(getTicketBuyerConfigSuccess(ticketBuyerConfig));
+      }
+    });
+  };
+}
+
+export const SETTICKETBUYERCONFIG_ATTEMPT = 'SETTICKETBUYERCONFIG_ATTEMPT';
+export const SETTICKETBUYERCONFIG_FAILED = 'SETTICKETBUYERCONFIG_FAILED';
+export const SETTICKETBUYERCONFIG_SUCCESS = 'SETTICKETBUYERCONFIG_SUCCESS';
+
+function setTicketBuyerConfigError(error) {
+  return { error, type: SETTICKETBUYERCONFIG_FAILED };
+}
+
+function setTicketBuyerConfigSuccess() {
+  return (dispatch) => {
+    dispatch({ success: 'Ticket buyer settings have been successfully updated.', type: SETTICKETBUYERCONFIG_SUCCESS });
+    // something is hanging config request XXX
+    dispatch(getTicketBuyerConfigAttempt());
+  };
+}
+
+export function setTicketBuyerConfigAttempt(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
+  stakePool, maxPerBlock) {
+  return (dispatch) => {
+    dispatch({ type: SETTICKETBUYERCONFIG_ATTEMPT });
+    dispatch(setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
+      stakePool, maxPerBlock));
+  };
+}
+
+export const SETBALANCETOMAINTAIN = 'SETBALANCETOMAINTAIN';
+export const SETMAXFEE = 'SETMAXFEE';
+export const SETMAXPRICEABSOLUTE = 'SETMAXPRICEABSOLUTE';
+export const SETMAXPRICERELATIVE = 'SETMAXPRICERELATIVE';
+export const SETMAXPERBLOCK = 'SETMAXPERBLOCK';
+
+function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
+  stakePool, maxPerBlock) {
+  var cfg = getCfg();
+  return (dispatch, getState) => {
+    const { ticketBuyerService } = getState().grpc;
+    const { getTicketBuyerConfigResponse } = getState().control;
+    var hitError = '';
+    if (account != getTicketBuyerConfigResponse.getAccount()) {
+      var request = new SetAccountRequest();
+      request.setAccount(account);
+      ticketBuyerService.setAccount(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        }
+      });
+    }
+    if (balanceToMaintain*1e8 != getTicketBuyerConfigResponse.getBalanceToMaintain()) {
+      request = new SetBalanceToMaintainRequest();
+      request.setBalanceToMaintain(balanceToMaintain*1e8);
+      ticketBuyerService.setBalanceToMaintain(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        } else {
+          cfg.set('balancetomaintain', balanceToMaintain);
+          dispatch({balanceToMaintain: balanceToMaintain, type: SETBALANCETOMAINTAIN});
+        }
+      });
+    }
+    if (maxFee*1e8 != getTicketBuyerConfigResponse.getMaxFee()) {
+      request = new SetMaxFeeRequest();
+      request.setMaxFeePerKb(maxFee*1e8);
+      ticketBuyerService.setMaxFee(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        } else {
+          cfg.set('maxfee', maxFee);
+          dispatch({maxFee: maxFee, type: SETMAXFEE});
+        }
+      });
+    }
+    if (maxPriceAbsolute*1e8 != getTicketBuyerConfigResponse.getMaxPriceAbsolute()) {
+      request = new SetMaxPriceAbsoluteRequest();
+      request.setMaxPriceAbsolute(maxPriceAbsolute*1e8);
+      ticketBuyerService.setMaxPriceAbsolute(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        } else {
+          cfg.set('maxpriceabsolute',maxPriceAbsolute);
+          dispatch({maxPriceAbsolute: maxPriceAbsolute, type: SETMAXPRICEABSOLUTE});
+        }
+      });
+    }
+    if (maxPriceRelative != getTicketBuyerConfigResponse.getMaxPriceRelative()) {
+      request = new SetMaxPriceRelativeRequest();
+      request.setMaxPriceRelative(maxPriceRelative);
+      ticketBuyerService.setMaxPriceRelative(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        } else {
+          cfg.set('maxpricerelative',maxPriceRelative);
+          dispatch({maxPriceRelative: maxPriceRelative, type: SETMAXPRICERELATIVE});
+        }
+      });
+    }
+    if (stakePool.TicketAddress != getTicketBuyerConfigResponse.getVotingAddress()) {
+      request = new SetVotingAddressRequest();
+      request.setVotingAddress(stakePool.TicketAddress);
+      ticketBuyerService.setVotingAddress(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        }
+      });
+    }
+    if (stakePool.PoolAddress != getTicketBuyerConfigResponse.getPoolAddress()) {
+      request = new SetPoolAddressRequest();
+      request.setPoolAddress(stakePool.PoolAddress);
+      ticketBuyerService.setPoolAddress(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        }
+      });
+    }
+    if (stakePool.PoolFees != getTicketBuyerConfigResponse.getPoolFees()) {
+      request = new SetPoolFeesRequest();
+      request.setPoolFees(stakePool.PoolFees);
+      ticketBuyerService.setPoolFees(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        }
+      });
+    }
+    if (maxPerBlock != getTicketBuyerConfigResponse.getMaxPerBlock()) {
+      request = new SetMaxPerBlockRequest();
+      request.setMaxPerBlock(maxPerBlock);
+      ticketBuyerService.setMaxPerBlock(request, function (err) {
+        if (err) {
+          hitError += err + '. ';
+        } else {
+          cfg.set('maxperblock',maxPerBlock);
+          dispatch({maxPerBlock: maxPerBlock, type: SETMAXPERBLOCK});
+        }
+      });
+    }
+    if (hitError != '') {
+      dispatch(setTicketBuyerConfigError(hitError + ' Please try again'));
+    } else {
+      dispatch(setTicketBuyerConfigSuccess());
+    }
+  };
+}
+
 export const STARTAUTOBUYER_ATTEMPT = 'STARTAUTOBUYER_ATTEMPT';
 export const STARTAUTOBUYER_FAILED = 'STARTAUTOBUYER_FAILED';
 export const STARTAUTOBUYER_SUCCESS = 'STARTAUTOBUYER_SUCCESS';
@@ -595,7 +776,10 @@ function startAutoBuyerError(error) {
 
 function startAutoBuyerSuccess(startAutoBuyerResponse) {
   var success = 'You successfully started the auto ticket buyer.';
-  return { success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS };
+  return (dispatch) => {
+    dispatch({ success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS });
+    dispatch(getTicketBuyerConfigAttempt());
+  };
 }
 
 export function startAutoBuyerAttempt(passphrase, accountNum, balanceToMaintain,
@@ -604,7 +788,7 @@ maxFeePerKb, maxPriceRelative, maxPriceAbsolute, maxPerBlock, stakepool) {
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setAccount(accountNum);
   request.setBalanceToMaintain(balanceToMaintain);
-  request.setMaxFeePerKb(maxFeePerKb);
+  request.setMaxFeePerKb(maxFeePerKb*1e8);
   request.setMaxPriceRelative(maxPriceRelative);
   request.setMaxPriceAbsolute(maxPriceAbsolute);
   request.setVotingAddress(stakepool.TicketAddress);
@@ -637,7 +821,7 @@ function startAutoBuyerAction() {
 export function clearStartAutoBuyerSuccess() {
   return (dispatch, getState) => {
     const { startAutoBuyerSuccess } = getState().control;
-    if (startAutoBuyerSuccess !== '') {
+    if (startAutoBuyerSuccess !== null) {
       dispatch({type: STARTAUTOBUYER_CLEAR_SUCCESS});
     }
   };
@@ -663,7 +847,7 @@ function stopAutoBuyerError(error) {
 }
 
 function stopAutoBuyerSuccess(stopAutoBuyerResponse) {
-  var success = 'You successfully stoped the auto ticket buyer.';
+  var success = 'You successfully stopped the auto ticket buyer.';
   return { success: success, stopAutoBuyerResponse: stopAutoBuyerResponse, type: STOPAUTOBUYER_SUCCESS };
 }
 
@@ -692,10 +876,11 @@ function stopAutoBuyerAction() {
   };
 }
 
+
 export function clearStopAutoBuyerSuccess() {
   return (dispatch, getState) => {
     const { stopAutoBuyerSuccess } = getState().control;
-    if (stopAutoBuyerSuccess !== '') {
+    if (stopAutoBuyerSuccess !== null) {
       dispatch({type: STOPAUTOBUYER_CLEAR_SUCCESS});
     }
   };

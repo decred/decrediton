@@ -35,6 +35,24 @@ export function getCfg() {
   if (!config.has('rpc_pass')) {
     config.set('rpc_pass','PASSWORD');
   }
+  if (!config.has('enableticketbuyer')) {
+    config.set('enableticketbuyer','0');
+  }
+  if (!config.has('balancetomaintain')) {
+    config.set('balancetomaintain','0');
+  }
+  if (!config.has('maxfee')) {
+    config.set('maxfee','0.1');
+  }
+  if (!config.has('maxpricerelative')) {
+    config.set('maxpricerelative','1.25');
+  }
+  if (!config.has('maxpriceabsolute')) {
+    config.set('maxpriceabsolute','0');
+  }
+  if (!config.has('maxperblock')) {
+    config.set('maxperblock','5');
+  }
   if (!config.has('currency_display')) {
     config.set('currency_display','DCR');
   }
@@ -165,8 +183,12 @@ export function dcrctlCfg() {
 export function writeCfgs() {
   var cfg = getCfg();
   var net = 0;
+  var autobuy = 0;
   if (cfg.get('network') === 'testnet') {
     net = 1;
+  }
+  if (cfg.get('enableticketbuyer') === '1') {
+    autobuy = 1;
   }
   var dcrdConf = {
     'Application Options':
@@ -190,6 +212,15 @@ export function writeCfgs() {
       tlscurve: 'P-256',
       noinitialload: '1',
       onetimetlskey: '1',
+      enableticketbuyer: autobuy,
+    },
+    'Ticket Buyer Options':
+    {
+      'ticketbuyer.balancetomaintainabsolute': cfg.get('balancetomaintain'),
+      'ticketbuyer.maxfee': cfg.get('maxfee'),
+      'ticketbuyer.maxpricerelative': cfg.get('maxpricerelative'),
+      'ticketbuyer.maxpriceabsolute': cfg.get('maxpriceabsolute'),
+      'ticketbuyer.maxperblock': cfg.get('maxperblock'),
     }
   };
   fs.writeFileSync(dcrwCfg(), ini.stringify(dcrwConf));
