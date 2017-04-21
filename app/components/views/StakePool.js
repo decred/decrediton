@@ -157,23 +157,7 @@ class StakePool extends Component{
       this.state.selectedStakePoolForPurchase
     );
   }
-  checkAutoBuyerConfigDifference() {
-    if (this.state.balanceToMaintain !== this.props.balanceToMaintain ||
-       this.state.maxFee !== this.props.maxFee ||
-       this.state.maxPriceAbsolute !== this.props.maxPriceAbsolute ||
-       this.state.maxPriceRelative !== this.props.maxPriceRelative ||
-       this.state.maxPerBlock !== this.props.maxPerBlock) {
-      console.log('true!',
-
-       this.state.balanceToMaintain !== this.props.balanceToMaintain,this.state.balanceToMaintain,this.props.balanceToMaintain);
-      return true;
-    } else {
-      console.log('false!',this.state.balanceToMaintain,this.props.balanceToMaintain);
-      return false;
-    }
-  }
   updateBalanceToMaintain(value) {
-    console.log('bupdate bal', value, this.checkAutoBuyerConfigDifference());
     if (!isNaN(value) && value < 0) {
       var err = '*Please enter a valid max fee (> 0)';
       this.setState({balanceToMaintainError: err});
@@ -188,7 +172,6 @@ class StakePool extends Component{
 
   }
   updateMaxFee(value) {
-    console.log('bupdate bal4');
     if (!isNaN(value) && value < 0) {
       var err = '*Please enter a valid max fee (> 0)';
       this.setState({maxFeeError: err});
@@ -202,7 +185,6 @@ class StakePool extends Component{
     }
   }
   updateMaxPriceAbsolute(value) {
-    console.log('bupdate bal3');
     if (!isNaN(value) && value < 0) {
       var err = '*Please enter a value max price absolute (> 0)';
       this.setState({maxPriceAbsoluteError: err});
@@ -216,7 +198,6 @@ class StakePool extends Component{
     }
   }
   updateMaxPriceRelative(value) {
-    console.log('bupdate bal2');
     if (!isNaN(value) && value < 0) {
       var err = '*Please enter a value max price relative (> 0)';
       this.setState({maxPriceRelativeError: err});
@@ -230,7 +211,6 @@ class StakePool extends Component{
     }
   }
   updateMaxPerBlock(value) {
-    console.log('bupdate bal1');
     if (!isNaN(value) && value < 0) {
       var err = '*Please enter a value max per block (> 0)';
       this.setState({maxPerBlockError: err});

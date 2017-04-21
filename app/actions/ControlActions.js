@@ -613,7 +613,6 @@ function getTicketBuyerConfigAction() {
   return (dispatch, getState) => {
     const { ticketBuyerService } = getState().grpc;
     ticketBuyerService.ticketBuyerConfig(request, function (err, ticketBuyerConfig) {
-      console.log('response!:', ticketBuyerConfig);
       if (err) {
         dispatch(getTicketBuyerConfigError(err + ' Please try again'));
       } else {
