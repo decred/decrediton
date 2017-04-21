@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import CreateWalletForm from '../CreateWalletForm';
 import CircularProgress from 'material-ui/CircularProgress';
-import Dialog from 'material-ui/Dialog';
 import ShowError from '../ShowError';
 import Radium from 'radium';
 import SideBar from '../SideBar';
@@ -41,9 +40,6 @@ class Home extends Component{
     }
     this.props.openWalletAttempt(this.state.pubpass);
     this.setState({pubpass:''});
-  }
-  handleDisclaimerOK = () => {
-    this.props.disclaimerOKAction();
   }
   updatePubPass(pubPass) {
     if (pubPass !== '') {
@@ -90,9 +86,12 @@ class Home extends Component{
     stepIndex: PropTypes.number.isRequired,
   }
 
+  componentDidMount() {
+    this.props.versionCheckAction();
+  }
+
   render() {
     const { stepIndex } = this.props;
-    const { disclaimerOK } = this.props;
     const { versionInvalid, versionInvalidError } = this.props;
     const { getVersionServiceError } = this.props;
     const { getLoaderError } = this.props;
@@ -296,39 +295,16 @@ class Home extends Component{
         </div>
       );
     }
-    const actions = [
-      <KeyBlueButton
-        onClick={() => this.handleDisclaimerOK()}
-      >
-        OK, I Understand
-      </KeyBlueButton>
-      ,
-    ];
-    if (!disclaimerOK) {
+    if (!versionInvalid) {
       return (
-        <div>
-          <Dialog
-            title="Disclaimer"
-            actions={actions}
-            modal={true}
-            open={true}
-          >
-            Decrediton is currently under heavy development and in an alpha-state.  While we have tested
-            the code thoroughly, we suggest using caution on Mainnet.  Use at your own risk!
-          </Dialog>
-        </div>);
-    } else {
-      if (!versionInvalid) {
-        return (
           <div style={GetStartedStyles.body}>
             <SideBar gettingStarted={true}/>
             <div style={GetStartedStyles.view}>
               {startupStepView}
             </div>
           </div>);
-      } else {
-        return (<ShowError error={versionInvalidError}/>);
-      }
+    } else {
+      return (<ShowError error={versionInvalidError}/>);
     }
 
   }

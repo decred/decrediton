@@ -7,11 +7,8 @@ import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
   SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from '../middleware/walletrpc/api_pb';
 
-export const DISCLAIMER_OK = 'DISCLAIMER_OK';
-
-export function disclaimerOKAction() {
+export function versionCheckAction() {
   return (dispatch) => {
-    dispatch({ type: DISCLAIMER_OK });
     dispatch(getVersionServiceAttempt());
   };
 }

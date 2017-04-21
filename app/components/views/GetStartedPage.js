@@ -69,9 +69,6 @@ function mapStateToProps(state) {
     decodeSeedResponse: state.seedService.decodeSeedResponse,
     decodeSeedError: state.seedService.decodeSeedError,
 
-    // DisclaimerOK
-    disclaimerOK: state.walletLoader.disclaimerOK,
-
     createWalletExisting: state.walletLoader.createWalletExisting,
     confirmNewSeed: state.walletLoader.confirmNewSeed,
   };

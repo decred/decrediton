@@ -153,7 +153,6 @@ var initialState = {
   walletLoader: {
     neededBlocks: neededBlocks,
     curBlocks: 0,
-    disclaimerOK: false,
     stepIndex: 0,
     // Loader
     getLoaderRequestAttempt: false,
