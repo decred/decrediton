@@ -63,7 +63,7 @@ decrediton --extrawalletargs='-d=debug'
 ## Developing
 
 Due to potential compatibility issues, for now, all work should be
-done with node v6.9.5 and electron 1.4.6.  The recommended way to install
+done with node v6.9.5 and electron 1.4.15.  The recommended way to install
 node is using nvm.
 
 This has primarily been tested on Linux at the moment although OSX
