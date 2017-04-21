@@ -597,7 +597,7 @@ function getTicketBuyerConfigError(error) {
 
 function getTicketBuyerConfigSuccess(ticketBuyerConfig) {
   return (dispatch) => {
-    dispatch({ ticketBuyerConfig, type: GETTICKETBUYERCONFIG_SUCCESS });
+    dispatch({ ticketBuyerConfig: ticketBuyerConfig, type: GETTICKETBUYERCONFIG_SUCCESS });
   };
 }
 
@@ -613,7 +613,7 @@ function getTicketBuyerConfigAction() {
   return (dispatch, getState) => {
     const { ticketBuyerService } = getState().grpc;
     ticketBuyerService.ticketBuyerConfig(request, function (err, ticketBuyerConfig) {
-      console.log("response!:", ticketBuyerConfig);
+      console.log('response!:', ticketBuyerConfig);
       if (err) {
         dispatch(getTicketBuyerConfigError(err + ' Please try again'));
       } else {
@@ -633,7 +633,7 @@ function setTicketBuyerConfigError(error) {
 
 function setTicketBuyerConfigSuccess() {
   return (dispatch) => {
-    dispatch({ success: "Ticket buyer settings have been successfully updated.", type: SETTICKETBUYERCONFIG_SUCCESS });
+    dispatch({ success: 'Ticket buyer settings have been successfully updated.', type: SETTICKETBUYERCONFIG_SUCCESS });
     // something is hanging config request XXX
     dispatch(getTicketBuyerConfigAttempt());
   };
@@ -648,11 +648,11 @@ export function setTicketBuyerConfigAttempt(account, balanceToMaintain, maxFee, 
   };
 }
 
-export const SETBALANCETOMAINTAIN = "SETBALANCETOMAINTAIN";
-export const SETMAXFEE = "SETMAXFEE";
-export const SETMAXPRICEABSOLUTE = "SETMAXPRICEABSOLUTE";
-export const SETMAXPRICERELATIVE = "SETMAXPRICERELATIVE";
-export const SETMAXPERBLOCK = "SETMAXPERBLOCK";
+export const SETBALANCETOMAINTAIN = 'SETBALANCETOMAINTAIN';
+export const SETMAXFEE = 'SETMAXFEE';
+export const SETMAXPRICEABSOLUTE = 'SETMAXPRICEABSOLUTE';
+export const SETMAXPRICERELATIVE = 'SETMAXPRICERELATIVE';
+export const SETMAXPERBLOCK = 'SETMAXPERBLOCK';
 
 function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
   stakePool, maxPerBlock) {
@@ -667,48 +667,47 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
       ticketBuyerService.setAccount(request, function (err) {
         if (err) {
           hitError += err + '. ';
-        } else {
         }
       });
     }
-    if (account != getTicketBuyerConfigResponse.getAccount()) {
-      var request = new SetBalanceToMaintainRequest();
-      request.setBalanceToMaintain(balanceToMaintain);
+    if (balanceToMaintain*1e8 != getTicketBuyerConfigResponse.getBalanceToMaintain()) {
+      request = new SetBalanceToMaintainRequest();
+      request.setBalanceToMaintain(balanceToMaintain*1e8);
       ticketBuyerService.setBalanceToMaintain(request, function (err) {
         if (err) {
           hitError += err + '. ';
         } else {
           cfg.set('balancetomaintain', balanceToMaintain);
-          dispatch({balanceToMaintain: balanceToMaintain, type: SETBALANCETOMAINTAIN})
+          dispatch({balanceToMaintain: balanceToMaintain, type: SETBALANCETOMAINTAIN});
         }
       });
     }
-    if (maxFee != getTicketBuyerConfigResponse.getMaxFee()) {
-      var request = new SetMaxFeeRequest();
+    if (maxFee*1e8 != getTicketBuyerConfigResponse.getMaxFee()) {
+      request = new SetMaxFeeRequest();
       request.setMaxFeePerKb(maxFee*1e8);
       ticketBuyerService.setMaxFee(request, function (err) {
         if (err) {
           hitError += err + '. ';
         } else {
           cfg.set('maxfee', maxFee);
-          dispatch({maxFee: maxFee, type: SETMAXFEE})
+          dispatch({maxFee: maxFee, type: SETMAXFEE});
         }
       });
     }
-    if (maxPriceAbsolute != getTicketBuyerConfigResponse.getMaxPriceAbsolute()) {
-      var request = new SetMaxPriceAbsoluteRequest();
+    if (maxPriceAbsolute*1e8 != getTicketBuyerConfigResponse.getMaxPriceAbsolute()) {
+      request = new SetMaxPriceAbsoluteRequest();
       request.setMaxPriceAbsolute(maxPriceAbsolute*1e8);
       ticketBuyerService.setMaxPriceAbsolute(request, function (err) {
         if (err) {
           hitError += err + '. ';
         } else {
           cfg.set('maxpriceabsolute',maxPriceAbsolute);
-          dispatch({maxPriceAbsolute: maxPriceAbsolute, type: SETMAXPRICEABSOLUTE})
+          dispatch({maxPriceAbsolute: maxPriceAbsolute, type: SETMAXPRICEABSOLUTE});
         }
       });
     }
     if (maxPriceRelative != getTicketBuyerConfigResponse.getMaxPriceRelative()) {
-      var request = new SetMaxPriceRelativeRequest();
+      request = new SetMaxPriceRelativeRequest();
       request.setMaxPriceRelative(maxPriceRelative);
       ticketBuyerService.setMaxPriceRelative(request, function (err) {
         if (err) {
@@ -720,37 +719,34 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
       });
     }
     if (stakePool.TicketAddress != getTicketBuyerConfigResponse.getVotingAddress()) {
-      var request = new SetVotingAddressRequest();
+      request = new SetVotingAddressRequest();
       request.setVotingAddress(stakePool.TicketAddress);
       ticketBuyerService.setVotingAddress(request, function (err) {
         if (err) {
           hitError += err + '. ';
-        } else {
         }
       });
     }
     if (stakePool.PoolAddress != getTicketBuyerConfigResponse.getPoolAddress()) {
-      var request = new SetPoolAddressRequest();
+      request = new SetPoolAddressRequest();
       request.setPoolAddress(stakePool.PoolAddress);
       ticketBuyerService.setPoolAddress(request, function (err) {
         if (err) {
           hitError += err + '. ';
-        } else {
         }
       });
     }
     if (stakePool.PoolFees != getTicketBuyerConfigResponse.getPoolFees()) {
-      var request = new SetPoolFeesRequest();
+      request = new SetPoolFeesRequest();
       request.setPoolFees(stakePool.PoolFees);
       ticketBuyerService.setPoolFees(request, function (err) {
         if (err) {
           hitError += err + '. ';
-        } else {
         }
       });
     }
     if (maxPerBlock != getTicketBuyerConfigResponse.getMaxPerBlock()) {
-      var request = new SetMaxPerBlockRequest();
+      request = new SetMaxPerBlockRequest();
       request.setMaxPerBlock(maxPerBlock);
       ticketBuyerService.setMaxPerBlock(request, function (err) {
         if (err) {
@@ -782,9 +778,9 @@ function startAutoBuyerError(error) {
 function startAutoBuyerSuccess(startAutoBuyerResponse) {
   var success = 'You successfully started the auto ticket buyer.';
   return (dispatch) => {
-      dispatch({ success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS });
-      dispatch(getTicketBuyerConfigAttempt());
-  }
+    dispatch({ success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS });
+    dispatch(getTicketBuyerConfigAttempt());
+  };
 }
 
 export function startAutoBuyerAttempt(passphrase, accountNum, balanceToMaintain,

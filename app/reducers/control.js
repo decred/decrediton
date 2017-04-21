@@ -337,27 +337,27 @@ export default function control(state = {}, action) {
       setTicketBuyerConfigRequestAttempt: false,
       setTicketBuyerConfigResponse: action.success,
     };
-  case SETBALANCETOMAINTAIN: 
+  case SETBALANCETOMAINTAIN:
     return {
       ...state,
       balanceToMaintain: action.balanceToMaintain,
     };
-  case SETMAXFEE: 
+  case SETMAXFEE:
     return {
       ...state,
       maxFee: action.maxFee,
     };
-  case SETMAXPRICEABSOLUTE: 
+  case SETMAXPRICEABSOLUTE:
     return {
       ...state,
       maxPriceAbsolute: action.maxPriceAbsolute,
     };
-  case SETMAXPRICERELATIVE: 
+  case SETMAXPRICERELATIVE:
     return {
       ...state,
       maxPriceRelative: action.maxPriceRelative,
     };
-  case SETMAXPERBLOCK: 
+  case SETMAXPERBLOCK:
     return {
       ...state,
       maxPerBlock: action.maxPerBlock,
