@@ -1587,8 +1587,8 @@ export const StakePoolStyles = {
     paddingLeft: '15px',
     paddingTop: '13px',
   },
-  autoBuyerLabel: {   
-    width: '75px', 
+  autoBuyerLabel: {
+    width: '75px',
     display: 'block',
     paddingTop: '13px',
     paddingLeft: '20px',

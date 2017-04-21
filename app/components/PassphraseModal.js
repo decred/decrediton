@@ -1,6 +1,5 @@
 import React from 'react';
 import Radium from 'radium';
-import { StakePoolStyles } from './views/ViewStyles';
 import KeyBlueButton from './KeyBlueButton';
 import SlateGrayButton from './SlateGrayButton';
 
@@ -70,14 +69,14 @@ const styles = {
   modalSubSectionSaveCancel: {
     height: '44px',
   }
-}
+};
 class PassphraseModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       privpass: null,
       privPassError: null,
-    }
+    };
   }
   submitPassphrase() {
     if (this.state.privpass == null || this.state.privPassError != null) {
