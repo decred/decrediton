@@ -9,3 +9,5 @@ release/
 jsconfig.json
 bin/
 .DS_Store
+.vagrant
+dist/
