@@ -164,7 +164,7 @@ const styles = {
 };
 
 // Currently removing percent progress until a solution to populate is found
-// <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>XX</span>%</div> 
+// <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>XX</span>%</div>
 // should go UNDER agendaCarBottomCfg div
 class AgendaCard extends React.Component {
   render() {

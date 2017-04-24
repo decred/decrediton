@@ -154,7 +154,7 @@ export function setStakePoolVoteChoices(voteBits) {
         );
       }
     }
-  }
+  };
 }
 
 export function clearStakePoolConfigError() {
