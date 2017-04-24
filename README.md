@@ -93,7 +93,7 @@ cd code
 git clone https://github.com/decred/decrediton.git
 git clone https://github.com/grpc/grpc
 cd grpc
-git checkout cc2e048e84eaa418cab393553594a3fefb891037  # linux, on OSX use commit 42a95a21e31e3c604e195a9d3ac50af4941436bb instead
+git checkout cc2e048e84eaa418cab393553594a3fefb891037 
 git submodule update --init
 npm install
 cd ../decrediton
