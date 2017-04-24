@@ -1,7 +1,7 @@
 import { getWalletService, getTicketBuyerService, getVotingService, getAgendaService } from '../middleware/grpc/client';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, getTicketBuyerConfigAttempt } from './ControlActions';
 import { transactionNtfnsStart } from './NotificationActions';
-import { updateStakepoolPurchaseInformation } from './StakePoolActions';
+import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from './StakePoolActions';
 import { hashHistory } from 'react-router';
 import { timeSince } from '../helpers/dateFormat.js';
 import {
@@ -621,6 +621,7 @@ function getVoteChoicesError(error) {
 function getVoteChoicesSuccess(voteChoices) {
   return (dispatch) => {
     dispatch({ voteChoices, type: GETVOTECHOICES_SUCCESS });
+    dispatch(setStakePoolVoteChoices(voteChoices.getVotebits()));
   };
 }
 

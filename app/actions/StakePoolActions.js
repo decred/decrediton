@@ -80,6 +80,7 @@ function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
         stakePoolConfigs[i].Script = newPoolInfo.Script;
         stakePoolConfigs[i].TicketAddress = newPoolInfo.TicketAddress;
         stakePoolConfigs[i].VotingAccount = accountNum;
+        stakePoolConfigs[i].VoteBits = newPoolInfo.VoteBits;
         successMessage += poolHost;
         break;
       }
@@ -129,27 +130,31 @@ export const SETSTAKEPOOLVOTECHOICES_ATTEMPT = 'SETSTAKEPOOLVOTECHOICES_ATTEMPT'
 export const SETSTAKEPOOLVOTECHOICES_FAILED = 'SETSTAKEPOOLVOTECHOICES_FAILED';
 export const SETSTAKEPOOLVOTECHOICES_SUCCESS = 'SETSTAKEPOOLVOTECHOICES_SUCCESS';
 
-export function setStakePoolVoteChoices(poolHost, apiKey, voteChoices) {
-  return (dispatch, ) => {
-    dispatch({ type: SETSTAKEPOOLVOTECHOICES_ATTEMPT });
-    setVoteChoices(
-      poolHost,
-      apiKey,
-      voteChoices,
-      function(response, err) {
-        if (err) {
-          dispatch({ error: err, type: SETSTAKEPOOLVOTECHOICES_FAILED });
-        } else if (response.data.status == 'success') {
-          dispatch({ type: SETSTAKEPOOLVOTECHOICES_SUCCESS });
-        } else if (response.data.status == 'error') {
-          dispatch({ error: response.data.message, type: SETSTAKEPOOLVOTECHOICES_FAILED });
-        } else {
-          console.error('shouldn\'t be here set address:', response);
-        }
+export function setStakePoolVoteChoices(voteBits) {
+  return (dispatch, getState) => {
+    const { currentStakePoolConfig } = getState().stakepool;
+    const { network } = getState().grpc;
+    for (var i = 0; i < currentStakePoolConfig.length; i++) {
+      if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
+        setVoteChoices(
+          currentStakePoolConfig[i].Host,
+          currentStakePoolConfig[i].ApiKey,
+          voteBits,
+          function(response, err) {
+            if (err) {
+              dispatch({ error: err, type: SETSTAKEPOOLVOTECHOICES_FAILED });
+            } else if (response.data.status == 'success') {
+              dispatch({ type: SETSTAKEPOOLVOTECHOICES_SUCCESS });
+            } else if (response.data.status == 'error') {
+              dispatch({ error: response.data.message, type: SETSTAKEPOOLVOTECHOICES_FAILED });
+            } else {
+              console.error('shouldn\'t be here set address:', response);
+            }
+          }
+        );
       }
-    );
-  };
-
+    }
+  }
 }
 
 export function clearStakePoolConfigError() {
