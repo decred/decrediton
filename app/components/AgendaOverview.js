@@ -57,7 +57,6 @@ class AgendaOverview extends React.Component {
             <div style={StakePoolStyles.agendaBottom}>
               <div style={StakePoolStyles.agendaBottomOverview}>
                 <div style={StakePoolStyles.agendaIndicatorPending}>In Progress</div>
-                <div style={StakePoolStyles.agendaPercent}><span style={StakePoolStyles.agendaPercentNumber}>XX</span>%</div>
               </div>
               <div style={StakePoolStyles.agendaBottomOptions}>
                 <KeyBlueButton disabled={this.props.selectedChoice == this.state.choice} style={StakePoolStyles.agendaUpdatePreferencesButton} onClick={this.props.selectedChoice !== this.state.choice ? () => this.props.updatePreferences(this.props.agenda.getId(), this.state.choice):null}>Update Preference</KeyBlueButton>
@@ -68,7 +67,9 @@ class AgendaOverview extends React.Component {
     );
   }
 }
-
+// Need to replace once we have a way to get the agenda progress
+//  <div style={StakePoolStyles.agendaPercent}><span style={StakePoolStyles.agendaPercentNumber}>XX</span>%</div>
+// needs to go below agendaIndicatorPending div
 export default AgendaOverview;
 
 //<a target="_blank" href="http://decred.org" style={StakePoolStyles.agendaOverViewReadMore}>Read more »</a>

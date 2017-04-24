@@ -1,7 +1,7 @@
 import { getWalletService, getTicketBuyerService, getVotingService, getAgendaService } from '../middleware/grpc/client';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, getTicketBuyerConfigAttempt } from './ControlActions';
 import { transactionNtfnsStart } from './NotificationActions';
-import { updateStakepoolPurchaseInformation } from './StakePoolActions';
+import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from './StakePoolActions';
 import { hashHistory } from 'react-router';
 import { timeSince } from '../helpers/dateFormat.js';
 import {
@@ -422,9 +422,11 @@ function getTransactionsInfo(request) {
     getTx.on('end', function () {
       dispatch(getTransactionsInfoEnd());
     });
+    /*
     getTx.on('status', function (status) {
-      console.log('GetTx status:', status);
+      //console.log('GetTx status:', status);
     });
+    */
     getTx.on('error', function (err) {
       console.error(err + ' Please try again');
     });
@@ -621,6 +623,7 @@ function getVoteChoicesError(error) {
 function getVoteChoicesSuccess(voteChoices) {
   return (dispatch) => {
     dispatch({ voteChoices, type: GETVOTECHOICES_SUCCESS });
+    dispatch(setStakePoolVoteChoices(voteChoices.getVotebits()));
   };
 }
 
@@ -636,7 +639,6 @@ function getVoteChoicesAction() {
   return (dispatch, getState) => {
     const { votingService } = getState().grpc;
     votingService.voteChoices(request, function (err, voteChoices) {
-
       if (err) {
         dispatch(getVoteChoicesError(err + ' Please try again'));
       } else {
