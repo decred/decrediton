@@ -637,7 +637,6 @@ function getVoteChoicesAction() {
   return (dispatch, getState) => {
     const { votingService } = getState().grpc;
     votingService.voteChoices(request, function (err, voteChoices) {
-
       if (err) {
         dispatch(getVoteChoicesError(err + ' Please try again'));
       } else {
