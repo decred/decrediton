@@ -162,6 +162,10 @@ const styles = {
     textTransform: 'capitalize',
   },
 };
+
+// Currently removing percent progress until a solution to populate is found
+// <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>XX</span>%</div> 
+// should go UNDER agendaCarBottomCfg div
 class AgendaCard extends React.Component {
   render() {
     if (!this.props.agenda.finished) {
@@ -172,7 +176,6 @@ class AgendaCard extends React.Component {
               <div style={styles.agendaCardBottomCfg}>
                 {this.props.agenda.getDescription()} <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>{this.props.agenda.getId()}</span></span>
               </div>
-              <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>XX</span>%</div>
             </div>
             <div style={styles.agendaCardTop}>
               <div style={styles.agendaCardName}>{this.props.agenda.getId()}</div>
@@ -189,7 +192,6 @@ class AgendaCard extends React.Component {
               <div style={styles.agendaCardBottomCfg}>
                 {this.props.agenda.getDescription()} <span style={styles.agendaCardBottomCfgLast}>Agenda ID: <span style={styles.agendaCardBottomCfgLastBold}>{this.props.agenda.getId()}</span></span>
               </div>
-              <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>XX</span>%</div>
             </div>
             <div style={styles.agendaCardTop}>
               <div style={styles.agendaCardName}>{this.props.agenda.getId()}</div>
