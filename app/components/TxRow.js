@@ -251,9 +251,9 @@ class TxRow extends Component {
           <div style={styles.transactionTimeDate}><span>{date}</span></div>
         </div>);
     }
-    if (type == TransactionDetails.TransactionType.REVOKE) {
+    if (type == TransactionDetails.TransactionType.REVOCATION) {
       return (
-        <div style={styles.revokeTx} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
+          <div style={styles.revokeTx} key={txInfo.tx != null ? txInfo.tx.getHash() : null} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
           <div style={styles.transactionAmount}>
             Revoke
           </div>
