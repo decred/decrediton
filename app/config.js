@@ -4,7 +4,7 @@ import os from 'os';
 import { stakePoolInfo } from './middleware/stakepoolapi';
 var ini = require('ini');
 
-export function getCfg() {
+export function getCfg(update) {
   const Config = require('electron-config');
   const config = new Config();
   // If value is missing (or no config file) write the defaults.
@@ -75,7 +75,7 @@ export function getCfg() {
         }
         config.set('stakepools', foundStakePoolConfigs);}
     });
-  } else {
+  } else if (!update) {
     var currentStakePoolConfigs = config.get('stakepools');
     stakePoolInfo(function(response, err) {
       if (response == null) {
@@ -88,7 +88,6 @@ export function getCfg() {
           var found = false;
           for (var k = 0; k < currentStakePoolConfigs.length; k++) {
             if (response.data[stakePoolNames[i]].URL == currentStakePoolConfigs[k].Host) {
-              console.log(response.data[stakePoolNames[i]].URL,currentStakePoolConfigs[k].Host);
               found = true;
               if (response.data[stakePoolNames[i]].APIEnabled) {
                 currentStakePoolConfigs[k].Host = response.data[stakePoolNames[i]].URL;
