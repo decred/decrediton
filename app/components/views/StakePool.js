@@ -880,7 +880,7 @@ class StakePool extends Component{
           }
           headerTitleOverview={
             <div style={{height: '100%'}}>
-              <div style={{float: 'left'}}>{this.state.purchaseTickets ? 'Ticket price:' :'Stake pool settings'}</div>
+              <div style={{float: 'left'}}>{this.state.purchaseTickets ? activeStakePoolConfig ? 'Ticket price:' : '' : 'Stake pool settings'}</div>
                 {getStakeInfoResponse !== null ?
                 <div style={StakePoolStyles.stakeInfoArea}>
                   <div style={StakePoolStyles.stakeInfoAreaLeft}>
