@@ -63,7 +63,7 @@ const styles = {
     width: '100%',
     backgroundColor: 'rgb(12, 30, 62)',
     transform: '',
-    bottom: '720px',
+    bottom: '697px',
     left: '298px',
   },
   SnackbarContent: {
