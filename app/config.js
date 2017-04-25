@@ -4,7 +4,7 @@ import os from 'os';
 import { stakePoolInfo } from './middleware/stakepoolapi';
 var ini = require('ini');
 
-export function getCfg() {
+export function getCfg(update) {
   const Config = require('electron-config');
   const config = new Config();
   // If value is missing (or no config file) write the defaults.
@@ -69,12 +69,48 @@ export function getCfg() {
             foundStakePoolConfigs.push({
               Host:response.data[stakePoolNames[i]].URL,
               Network: response.data[stakePoolNames[i]].Network,
+              APIVersionsSupported: response.data[stakePoolNames[i]].APIVersionsSupported,
             });
           }
         }
         config.set('stakepools', foundStakePoolConfigs);}
-    }
-    );
+    });
+  } else if (!update) {
+    var currentStakePoolConfigs = config.get('stakepools');
+    stakePoolInfo(function(response, err) {
+      if (response == null) {
+        console.log(err);
+      } else {
+        var stakePoolNames = Object.keys(response.data);
+        // Only add matching network stakepool info
+        var foundStakePoolConfigs = Array();
+        for (var i = 0; i < stakePoolNames.length; i++) {
+          var found = false;
+          for (var k = 0; k < currentStakePoolConfigs.length; k++) {
+            if (response.data[stakePoolNames[i]].URL == currentStakePoolConfigs[k].Host) {
+              found = true;
+              if (response.data[stakePoolNames[i]].APIEnabled) {
+                currentStakePoolConfigs[k].Host = response.data[stakePoolNames[i]].URL;
+                currentStakePoolConfigs[k].APIVersionsSupported = response.data[stakePoolNames[i]].APIVersionsSupported,
+                currentStakePoolConfigs[k].Network = response.data[stakePoolNames[i]].Network,
+                foundStakePoolConfigs.push(currentStakePoolConfigs[k]);
+              }
+              break;
+            }
+          }
+          if (!found) {
+            if (response.data[stakePoolNames[i]].APIEnabled) {
+              foundStakePoolConfigs.push({
+                Host:response.data[stakePoolNames[i]].URL,
+                Network: response.data[stakePoolNames[i]].Network,
+                APIVersionsSupported: response.data[stakePoolNames[i]].APIVersionsSupported,
+              });
+            }
+          }
+        }
+      }
+      config.set('stakepools', foundStakePoolConfigs);
+    });
   }
   return(config);
 }

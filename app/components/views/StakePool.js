@@ -366,7 +366,7 @@ class StakePool extends Component{
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
     const { currentStakePoolConfigSuccessMessage, getAccountsResponse, purchaseTicketsRequestAttempt } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
-    const { network } = this.props;
+    const { network, requiredStakepoolAPIVersion } = this.props;
     const { getTicketPriceResponse } = this.props;
     const { getStakeInfoResponse } = this.props;
     const { getAgendasResponse } = this.props;
@@ -376,7 +376,8 @@ class StakePool extends Component{
     var unconfigedStakePools = 0;
     if (currentStakePoolConfig != null) {
       for (var i = 0; i < currentStakePoolConfig.length; i++) {
-        if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
+        if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network &&
+        currentStakePoolConfig[i].APIVersionsSupported[1] == requiredStakepoolAPIVersion) {
           unconfigedStakePools++;
         }
       }
@@ -448,42 +449,45 @@ class StakePool extends Component{
       <NumTicketsInput numTickets={this.state.numTickets} incrementNumTickets={()=>this.incrementNumTickets()} decrementNumTickets={()=>this.decrementNumTickets()}/>);
 
     var stakePoolConfigInput = (
+      unconfigedStakePools > 0 ?
       <div style={StakePoolStyles.content}>
         <div style={StakePoolStyles.flexHeight}>
-            <div style={StakePoolStyles.contentNestFromAddress}>
-              <div style={StakePoolStyles.contentNestPrefixSend}>Stake Pool:</div>
-                {selectStakePoolApiKey}
-              <div style={StakePoolStyles.contentNestFromAddressWalletIcon}></div>
-            </div>
-            <div style={StakePoolStyles.contentNestToAddress}>
-              <div style={StakePoolStyles.contentNestPrefixSend}>Api Key:</div>
-              <div style={StakePoolStyles.contentNestAddressHashBlock}>
-                <div style={StakePoolStyles.inputForm}>
-                  <input
-                    type="text"
-                    style={StakePoolStyles.contentNestAddressAmountSum}
-                    placeholder="API Key"
-                    onBlur={(e) =>{this.updateApiKey(e.target.value);}}/>
-                </div>
+          <div style={StakePoolStyles.contentNestFromAddress}>
+            <div style={StakePoolStyles.contentNestPrefixSend}>Stake Pool:</div>
+              {selectStakePoolApiKey}
+            <div style={StakePoolStyles.contentNestFromAddressWalletIcon}></div>
+          </div>
+          <div style={StakePoolStyles.contentNestToAddress}>
+            <div style={StakePoolStyles.contentNestPrefixSend}>Api Key:</div>
+            <div style={StakePoolStyles.contentNestAddressHashBlock}>
+              <div style={StakePoolStyles.inputForm}>
+                <input
+                  type="text"
+                  style={StakePoolStyles.contentNestAddressAmountSum}
+                  placeholder="API Key"
+                  onBlur={(e) =>{this.updateApiKey(e.target.value);}}/>
               </div>
             </div>
-            <div style={StakePoolStyles.apiKeyError}>
-              {this.state.apiKeyError}
-            </div>
           </div>
-          <KeyBlueButton style={StakePoolStyles.contentSend} onClick={() => this.setStakePoolInfo()}>
-            Confirm
-          </KeyBlueButton>
-          {this.state.purchaseTicketsStakePoolConfig ?
-            <SlateGrayButton
-              style={StakePoolStyles.hideStakePoolConfig}
-              onClick={() => this.cancelAddAnotherStakePool()}>
-              Cancel
-            </SlateGrayButton> :
-            <div>
-            </div>
-          }
+          <div style={StakePoolStyles.apiKeyError}>
+            {this.state.apiKeyError}
+          </div>
         </div>
+        <KeyBlueButton style={StakePoolStyles.contentSend} onClick={() => this.setStakePoolInfo()}>
+          Confirm
+        </KeyBlueButton>
+        {this.state.purchaseTicketsStakePoolConfig ?
+          <SlateGrayButton
+            style={StakePoolStyles.hideStakePoolConfig}
+            onClick={() => this.cancelAddAnotherStakePool()}>
+            Cancel
+          </SlateGrayButton> :
+          <div></div>
+        }
+      </div> :
+      <div style={StakePoolStyles.content}>
+        <div style={StakePoolStyles.noAgendasMessage}>There are currently no stakepools configured for v2.</div>
+      </div>
     );
     var votingGuiView = (
       <div style={StakePoolStyles.contentVotingGui}>
@@ -876,7 +880,7 @@ class StakePool extends Component{
           }
           headerTitleOverview={
             <div style={{height: '100%'}}>
-              <div style={{float: 'left'}}>{this.state.purchaseTickets ? 'Ticket price:' :'Stake pool settings'}</div>
+              <div style={{float: 'left'}}>{this.state.purchaseTickets ? activeStakePoolConfig ? 'Ticket price:' : '' : 'Stake pool settings'}</div>
                 {getStakeInfoResponse !== null ?
                 <div style={StakePoolStyles.stakeInfoArea}>
                   <div style={StakePoolStyles.stakeInfoAreaLeft}>
