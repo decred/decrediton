@@ -93,7 +93,6 @@ export function getCfg(update) {
                 currentStakePoolConfigs[k].Host = response.data[stakePoolNames[i]].URL;
                 currentStakePoolConfigs[k].APIVersionsSupported = response.data[stakePoolNames[i]].APIVersionsSupported,
                 currentStakePoolConfigs[k].Network = response.data[stakePoolNames[i]].Network,
-                console.log(currentStakePoolConfigs[k]);
                 foundStakePoolConfigs.push(currentStakePoolConfigs[k]);
               }
               break;
