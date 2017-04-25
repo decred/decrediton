@@ -86,6 +86,7 @@ var initialState = {
     port: grpcport,
     walletService: null,
     network: network,
+    requiredStakepoolAPIVersion: 2,
     timeSinceString: null,
     // ints for mainnet and testnet protocol hex
     // TestNet2 CurrencyNet = 0x48e7a065

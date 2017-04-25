@@ -17,6 +17,7 @@ function mapStateToProps(state) {
     getAccountsResponse: state.grpc.getAccountsResponse,
     currentStakePoolConfigSuccessMessage: state.stakepool.currentStakePoolConfigSuccessMessage,
     network: state.grpc.network,
+    requiredStakepoolAPIVersion: state.grpc.requiredStakepoolAPIVersion,
     purchaseTicketsRequestAttempt: state.control.purchaseTicketsRequestAttempt,
     purchaseTicketsError: state.control.purchaseTicketsError,
     purchaseTicketsSuccess: state.control.purchaseTicketsSuccess,
