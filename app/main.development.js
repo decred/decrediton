@@ -45,8 +45,6 @@ if (process.env.NODE_ENV === 'development') {
 // Always use reasonable path for save data.
 app.setPath('userData', appDataDirectory());
 var cfg = getCfg();
-// Write application config files.
-writeCfgs();
 
 if (debug) {
   console.log('Using config/data from:', app.getPath('userData'));
@@ -236,15 +234,17 @@ const launchDCRWallet = () => {
 
 app.on('ready', async () => {
   await installExtensions();
+  // Write application config files.
+  await writeCfgs();
 
   if (process.env.NODE_ENV === 'production') {
     try {
-      launchDCRD();
+      await launchDCRD();
     } catch (e) {
       console.log('error launching dcrd: ' + e);
     }
     try {
-      launchDCRWallet();
+      await launchDCRWallet();
     } catch (e) {
       console.log('error launching dcrwallet: ' + e);
     }
