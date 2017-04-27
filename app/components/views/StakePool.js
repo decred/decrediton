@@ -299,6 +299,14 @@ class StakePool extends Component{
   updateStakePoolHost(poolHost) {
     this.setState({stakePoolHost: poolHost});
   }
+  updateStakePoolPurchaseTickets(poolHost) {
+    for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
+      if (this.props.currentStakePoolConfig[i].Host == poolHost) {
+        this.setState({selectedStakePoolForPurchase: this.props.currentStakePoolConfig[i]});
+        break;
+      }
+    }
+  }
   toggleTicketStakePool(side) {
     if (side == 'right') {
       this.setState({purchaseTickets: false, purchaseTicketsStakePoolConfig: false});
@@ -376,8 +384,7 @@ class StakePool extends Component{
     var unconfigedStakePools = 0;
     if (currentStakePoolConfig != null) {
       for (var i = 0; i < currentStakePoolConfig.length; i++) {
-        if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network &&
-        currentStakePoolConfig[i].APIVersionsSupported[1] == requiredStakepoolAPIVersion) {
+        if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
           unconfigedStakePools++;
         }
       }
