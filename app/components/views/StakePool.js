@@ -360,8 +360,9 @@ class StakePool extends Component{
     console.log('click');
     var selectedChoice = 'abstain';
     if (this.state.selectedStakePoolForVoting.VoteChoices !== undefined) {
-      for (var i = 0; this.state.selectedStakePoolForVoting.VoteChoices.length; i++) {
-        if (this.state.selectedStakePoolForVoting.VoteChoices[i].agendaId == agenda.getId()) {
+      for (var i = 0; i < this.state.selectedStakePoolForVoting.VoteChoices.length; i++) {
+        if (this.state.selectedStakePoolForVoting.VoteChoices[i] !== undefined &&
+        this.state.selectedStakePoolForVoting.VoteChoices[i].agendaId == agenda.getId()) {
           selectedChoice = this.state.selectedStakePoolForVoting.VoteChoices[i].choiceId;
           break;
         }
@@ -542,7 +543,7 @@ class StakePool extends Component{
             getAgendasResponse.getAgendasList().map((agenda) => {
               var selectedChoice = 'abstain';
               if (this.state.selectedStakePoolForVoting.VoteChoices !== undefined) {
-                for (var i = 0; this.state.selectedStakePoolForVoting.VoteChoices.length; i++) {
+                for (var i = 0; i < this.state.selectedStakePoolForVoting.VoteChoices.length; i++) {
                   if (this.state.selectedStakePoolForVoting.VoteChoices[i] !== undefined &&
                   this.state.selectedStakePoolForVoting.VoteChoices[i].agendaId == agenda.getId()) {
                     selectedChoice = this.state.selectedStakePoolForVoting.VoteChoices[i].choiceId;
