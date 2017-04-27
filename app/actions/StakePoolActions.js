@@ -125,35 +125,53 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
   );
   };
 }
-
+function updateStakePoolVoteChoicesConfig(stakePool, voteChoices) {
+  var config = getCfg(true);
+  var stakePoolConfigs = config.get('stakepools');
+  var voteChoicesConfig;
+  for (var k = 0; k < voteChoices.getChoicesList(); k++) {
+    voteChoicesConfig.push(
+      {
+        agendaId: voteChoices.getChoicesList()[k].getAgendaId(),
+        choiceId: voteChoices.getChoicesList()[k].getChoiceId()
+      });
+  }
+  for (var i = 0; i < stakePoolConfigs.length; i++) {
+    if (stakePoolConfigs[i].Host == stakePool.Host) {
+      stakePoolConfigs[i].VoteBits = voteChoices.getVotebits();
+      stakePoolConfigs[i].VoteChoices = voteChoicesConfig;
+      break;
+    }
+  }
+  config.set('stakepools', stakePoolConfigs);
+}
 export const SETSTAKEPOOLVOTECHOICES_ATTEMPT = 'SETSTAKEPOOLVOTECHOICES_ATTEMPT';
 export const SETSTAKEPOOLVOTECHOICES_FAILED = 'SETSTAKEPOOLVOTECHOICES_FAILED';
 export const SETSTAKEPOOLVOTECHOICES_SUCCESS = 'SETSTAKEPOOLVOTECHOICES_SUCCESS';
 
-export function setStakePoolVoteChoices(voteBits) {
-  return (dispatch, getState) => {
-    const { currentStakePoolConfig } = getState().stakepool;
-    const { network } = getState().grpc;
-    for (var i = 0; i < currentStakePoolConfig.length; i++) {
-      if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
-        setVoteChoices(
-          currentStakePoolConfig[i].Host,
-          currentStakePoolConfig[i].ApiKey,
-          voteBits,
-          function(response, err) {
-            if (err) {
-              dispatch({ error: err, type: SETSTAKEPOOLVOTECHOICES_FAILED });
-            } else if (response.data.status == 'success') {
-              dispatch({ type: SETSTAKEPOOLVOTECHOICES_SUCCESS });
-            } else if (response.data.status == 'error') {
-              dispatch({ error: response.data.message, type: SETSTAKEPOOLVOTECHOICES_FAILED });
-            } else {
-              console.error('shouldn\'t be here set address:', response);
-            }
-          }
-        );
+export function setStakePoolVoteChoices(stakePool, voteChoices) {
+  console.log(voteChoices.getVotebits());
+  console.log(stakePool.Host, stakePool.ApiKey);
+  return (dispatch) => {
+    setVoteChoices(
+      stakePool.Host,
+      stakePool.ApiKey,
+      voteChoices.getVotebits(),
+      function(response, err) {
+        if (err) {
+          console.log(stakePool.Host, stakePool.ApiKey,voteChoices.getVotebits());
+          console.error(err);
+          dispatch({ error: err, type: SETSTAKEPOOLVOTECHOICES_FAILED });
+        } else if (response.data.status == 'success') {
+          dispatch(updateStakePoolVoteChoicesConfig(stakePool, voteChoices));
+          dispatch({ type: SETSTAKEPOOLVOTECHOICES_SUCCESS });
+        } else if (response.data.status == 'error') {
+          dispatch({ error: response.data.message, type: SETSTAKEPOOLVOTECHOICES_FAILED });
+        } else {
+          console.error('shouldn\'t be here set address:', response);
+        }
       }
-    }
+    );
   };
 }
 

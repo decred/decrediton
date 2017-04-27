@@ -37,6 +37,7 @@ export function setVoteChoices(apiUrl, apiToken, voteChoices, cb) {
       'Authorization': 'Bearer ' + apiToken,
     }
   };
+  console.log(apiUrl, apiToken, voteChoices);
   var url = apiUrl+'/api/v1/voting';
   axios.post(url,
     querystring.stringify({
