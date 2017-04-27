@@ -1281,6 +1281,17 @@ export const StakePoolStyles = {
       opacity: '0.7',
     }
   },
+  selectVotingPreferences: {
+    display: 'block',
+    float: 'right',
+    overflow: 'hidden',
+    height: '100%',
+    paddingTop: '3px',
+    color: '#0c1e3e',
+    ':hover': {
+      height: 'auto',
+    }
+  },
   selectPurchaseTickets: {
     display: 'block',
     overflow: 'hidden',

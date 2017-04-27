@@ -552,7 +552,6 @@ function getVotingServiceError(error) {
 function getVotingServiceSuccess(votingService) {
   return (dispatch) => {
     dispatch({ votingService, type: GETVOTINGSERVICE_SUCCESS });
-    setTimeout(() => { dispatch(getVoteChoicesAttempt()); }, 10);
   };
 }
 
@@ -587,7 +586,6 @@ function getAgendasError(error) {
 function getAgendasSuccess(agendas) {
   return (dispatch) => {
     dispatch({ agendas, type: GETAGENDAS_SUCCESS });
-    setTimeout(() => { dispatch(getVoteChoicesAttempt()); }, 10);
   };
 }
 
@@ -620,21 +618,21 @@ function getVoteChoicesError(error) {
   return { error, type: GETVOTECHOICES_FAILED };
 }
 
-function getVoteChoicesSuccess(voteChoices) {
+function getVoteChoicesSuccess(stakePool, voteChoices) {
   return (dispatch) => {
     dispatch({ voteChoices, type: GETVOTECHOICES_SUCCESS });
-    dispatch(setStakePoolVoteChoices(voteChoices.getVotebits()));
+    dispatch(setStakePoolVoteChoices(stakePool, voteChoices));
   };
 }
 
-export function getVoteChoicesAttempt() {
+export function getVoteChoicesAttempt(stakePool) {
   return (dispatch) => {
     dispatch({ type: GETVOTECHOICES_ATTEMPT });
-    dispatch(getVoteChoicesAction());
+    dispatch(getVoteChoicesAction(stakePool));
   };
 }
 
-function getVoteChoicesAction() {
+function getVoteChoicesAction(stakePool) {
   var request = new VoteChoicesRequest();
   return (dispatch, getState) => {
     const { votingService } = getState().grpc;
@@ -642,7 +640,7 @@ function getVoteChoicesAction() {
       if (err) {
         dispatch(getVoteChoicesError(err + ' Please try again'));
       } else {
-        dispatch(getVoteChoicesSuccess(voteChoices));
+        dispatch(getVoteChoicesSuccess(stakePool, voteChoices));
       }
     });
   };
@@ -656,14 +654,14 @@ function setVoteChoicesError(error) {
   return { error, type: SETVOTECHOICES_FAILED };
 }
 
-function setVoteChoicesSuccess(response) {
+function setVoteChoicesSuccess(stakePool, response) {
   return (dispatch) => {
     dispatch({ response, type: SETVOTECHOICES_SUCCESS });
-    dispatch(getVoteChoicesAttempt());
+    dispatch(getVoteChoicesAttempt(stakePool));
   };
 }
 
-export function setVoteChoicesAttempt(agendaId, choiceId) {
+export function setVoteChoicesAttempt(stakePool, agendaId, choiceId) {
   return (dispatch) => {
     var request = new SetVoteChoicesRequest();
     var choice = new SetVoteChoicesRequest.Choice();
@@ -671,11 +669,11 @@ export function setVoteChoicesAttempt(agendaId, choiceId) {
     choice.setAgendaId(agendaId);
     request.addChoices(choice);
     dispatch({ setVoteChoicesRequest: request, type: SETVOTECHOICES_ATTEMPT });
-    dispatch(setVoteChoicesAction());
+    dispatch(setVoteChoicesAction(stakePool));
   };
 }
 
-function setVoteChoicesAction() {
+function setVoteChoicesAction(stakePool) {
 
   return (dispatch, getState) => {
     const { votingService } = getState().grpc;
@@ -684,7 +682,7 @@ function setVoteChoicesAction() {
       if (err) {
         dispatch(setVoteChoicesError(err + ' Please try again'));
       } else {
-        dispatch(setVoteChoicesSuccess(response));
+        dispatch(setVoteChoicesSuccess(stakePool, response));
       }
     });
   };

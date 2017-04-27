@@ -64,6 +64,7 @@ class StakePool extends Component{
       txFee: 0.01, // DCR/kB
       ticketFee: 0.01, // DCR/kB
       selectedStakePoolForPurchase: initStakePool,
+      selectedStakePoolForVoting: initStakePool,
       advancedHidden: true,
       autoBuyerHidden: true,
       choice: 'option1',
@@ -96,7 +97,9 @@ class StakePool extends Component{
       for (var j = 0; j < nextProps.currentStakePoolConfig.length; j++) {
         if (nextProps.currentStakePoolConfig[j].ApiKey && nextProps.currentStakePoolConfig[j].Network == this.props.network) {
           this.setState({selectedStakePoolForPurchase: nextProps.currentStakePoolConfig[j]});
-          break;
+        }
+        if (this.state.selectedStakePoolForVoting !== null && nextProps.currentStakePoolConfig[j].Host == this.state.selectedStakePoolForVoting.Host) {
+          this.setState({selectedStakePoolForVoting: nextProps.currentStakePoolConfig[j]});
         }
       }
     }
@@ -299,6 +302,22 @@ class StakePool extends Component{
   updateStakePoolHost(poolHost) {
     this.setState({stakePoolHost: poolHost});
   }
+  updateStakePoolPurchaseTickets(poolHost) {
+    for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
+      if (this.props.currentStakePoolConfig[i].Host == poolHost) {
+        this.setState({selectedStakePoolForPurchase: this.props.currentStakePoolConfig[i]});
+        break;
+      }
+    }
+  }
+  updateStakePoolVotingPreferences(poolHost) {
+    for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
+      if (this.props.currentStakePoolConfig[i].Host == poolHost) {
+        this.setState({selectedStakePoolForVoting: this.props.currentStakePoolConfig[i]});
+        break;
+      }
+    }
+  }
   toggleTicketStakePool(side) {
     if (side == 'right') {
       this.setState({purchaseTickets: false, purchaseTicketsStakePoolConfig: false});
@@ -338,11 +357,14 @@ class StakePool extends Component{
     this.setState({agendaDisplay: null});
   }
   showAgendaOverview(agenda) {
-    var selectedChoice;
-    for (var i = 0; i < this.props.getVoteChoicesResponse.getChoicesList().length; i++) {
-      if (this.props.getVoteChoicesResponse.getChoicesList()[i].getAgendaId() == agenda.getId()) {
-        selectedChoice = this.props.getVoteChoicesResponse.getChoicesList()[i].getChoiceId();
-        break;
+    var selectedChoice = 'abstain';
+    if (this.state.selectedStakePoolForVoting.VoteChoices !== undefined) {
+      for (var i = 0; i < this.state.selectedStakePoolForVoting.VoteChoices.length; i++) {
+        if (this.state.selectedStakePoolForVoting.VoteChoices[i] !== undefined &&
+        this.state.selectedStakePoolForVoting.VoteChoices[i].agendaId == agenda.getId()) {
+          selectedChoice = this.state.selectedStakePoolForVoting.VoteChoices[i].choiceId;
+          break;
+        }
       }
     }
     this.setState({agendaDisplay: agenda, selectedChoice: selectedChoice});
@@ -370,14 +392,12 @@ class StakePool extends Component{
     const { getTicketPriceResponse } = this.props;
     const { getStakeInfoResponse } = this.props;
     const { getAgendasResponse } = this.props;
-    const { getVoteChoicesResponse } = this.props;
     const { startAutoBuyerSuccess, startAutoBuyerResponse, stopAutoBuyerSuccess, startAutoBuyerError, stopAutoBuyerError } = this.props;
     const { getTicketBuyerConfigResponse } = this.props;
     var unconfigedStakePools = 0;
     if (currentStakePoolConfig != null) {
       for (var i = 0; i < currentStakePoolConfig.length; i++) {
-        if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network &&
-        currentStakePoolConfig[i].APIVersionsSupported[1] == requiredStakepoolAPIVersion) {
+        if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
           unconfigedStakePools++;
         }
       }
@@ -427,7 +447,7 @@ class StakePool extends Component{
     var selectStakePoolPurchaseTickets = (
       <div style={StakePoolStyles.selectStakePoolArea}>
         <select
-          defaultValue={this.state.selectedStakePoolForPurchase}
+          defaultValue={this.state.selectedStakePoolForPurchase !== null ? this.state.selectedStakePoolForPurchase.Host : 0}
           style={StakePoolStyles.selectPurchaseTickets}
           onChange={(e) =>{this.updateStakePoolPurchaseTickets(e.target.value);}}
           >
@@ -435,7 +455,7 @@ class StakePool extends Component{
             currentStakePoolConfig.map((stakePool) => {
               if (stakePool.ApiKey && stakePool.Network == network) {
                 return (
-                  <option style={StakePoolStyles.selectPurchaseTicketsN} key={stakePool.Host} value={stakePool}>
+                  <option style={StakePoolStyles.selectPurchaseTicketsN} key={stakePool.Host} value={stakePool.Host}>
                     {stakePool.Host}
                   </option>
                 );
@@ -445,11 +465,30 @@ class StakePool extends Component{
           }
         </select>
       </div>);
+
+    var selectStakePoolVotingPreferences = (
+        <select
+          defaultValue={this.state.selectedStakePoolForVoting !== null ? this.state.selectedStakePoolForPurchase.Host : 0}
+          style={StakePoolStyles.selectVotingPreferences}
+          onChange={(e) =>{this.updateStakePoolVotingPreferences(e.target.value);}}
+          >
+          {currentStakePoolConfig !== null  ?
+            currentStakePoolConfig.map((stakePool) => {
+              if (stakePool.ApiKey && stakePool.Network == network) {
+                return (
+                  <option style={StakePoolStyles.selectPurchaseTicketsN} key={stakePool.Host} value={stakePool.Host}>
+                    {stakePool.Host}
+                  </option>
+                );
+              }
+            }) :
+            null
+          }
+        </select>);
     var selectNumTickets = (
       <NumTicketsInput numTickets={this.state.numTickets} incrementNumTickets={()=>this.incrementNumTickets()} decrementNumTickets={()=>this.decrementNumTickets()}/>);
 
     var stakePoolConfigInput = (
-      unconfigedStakePools > 0 ?
       <div style={StakePoolStyles.content}>
         <div style={StakePoolStyles.flexHeight}>
           <div style={StakePoolStyles.contentNestFromAddress}>
@@ -484,28 +523,29 @@ class StakePool extends Component{
           </SlateGrayButton> :
           <div></div>
         }
-      </div> :
-      <div style={StakePoolStyles.content}>
-        <div style={StakePoolStyles.noAgendasMessage}>There are currently no stakepools configured for v2.</div>
       </div>
     );
     var votingGuiView = (
       <div style={StakePoolStyles.contentVotingGui}>
         <div style={StakePoolStyles.votingTitleArea}>
-          <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences</div>
+          <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences {selectStakePoolVotingPreferences}</div>
         </div>
+        {this.state.selectedStakePoolForVoting !== null && this.state.selectedStakePoolForVoting.APIVersionsSupported[1] == requiredStakepoolAPIVersion ?
         <div style={StakePoolStyles.votingAgendaArea}>
-          {this.state.agendaDisplay !== null && getVoteChoicesResponse !== null ?
-            <AgendaOverview agenda={this.state.agendaDisplay} selectedChoice={this.state.selectedChoice} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updatePreferences={(agendaId, choiceId) =>this.props.setVoteChoicesAttempt(agendaId, choiceId)}/>:
+          {this.state.agendaDisplay !== null && this.state.selectedStakePoolForVoting !== null ?
+            <AgendaOverview agenda={this.state.agendaDisplay} selectedChoice={this.state.selectedChoice} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updatePreferences={(agendaId, choiceId) =>this.props.setVoteChoicesAttempt(this.state.selectedStakePoolForVoting, agendaId, choiceId)}/>:
             <div></div>
           }
-          {getAgendasResponse !== null && getVoteChoicesResponse !== null ? getAgendasResponse.getAgendasList().length > 0 ?
+          {getAgendasResponse !== null && this.state.selectedStakePoolForVoting !== null ? getAgendasResponse.getAgendasList().length > 0 ?
             getAgendasResponse.getAgendasList().map((agenda) => {
-              var selectedChoice;
-              for (var i = 0; getVoteChoicesResponse.getChoicesList().length; i++) {
-                if (getVoteChoicesResponse.getChoicesList()[i].getAgendaId() == agenda.getId()) {
-                  selectedChoice = getVoteChoicesResponse.getChoicesList()[i].getChoiceId();
-                  break;
+              var selectedChoice = 'abstain';
+              if (this.state.selectedStakePoolForVoting.VoteChoices !== undefined) {
+                for (var i = 0; i < this.state.selectedStakePoolForVoting.VoteChoices.length; i++) {
+                  if (this.state.selectedStakePoolForVoting.VoteChoices[i] !== undefined &&
+                  this.state.selectedStakePoolForVoting.VoteChoices[i].agendaId == agenda.getId()) {
+                    selectedChoice = this.state.selectedStakePoolForVoting.VoteChoices[i].choiceId;
+                    break;
+                  }
                 }
               }
               return(<AgendaCard key={agenda.getId()} agenda={agenda} selectedChoice={selectedChoice} onClick={() => this.showAgendaOverview(agenda)}/>);
@@ -513,7 +553,10 @@ class StakePool extends Component{
             <div style={StakePoolStyles.noAgendasMessage}>There are currently no agendas for voting.</div>:
           <div style={StakePoolStyles.noAgendasMessage}>There are currently no agendas for voting.</div>
           }
-        </div>
+        </div> :
+        <div style={StakePoolStyles.votingAgendaArea}>
+          <div style={StakePoolStyles.noAgendasMessage}>This pool is not configured for vote choices.</div>
+        </div>}
       </div>
     );
     var configuredStakePoolInformation = (
