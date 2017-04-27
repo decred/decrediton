@@ -447,7 +447,7 @@ class StakePool extends Component{
     var selectStakePoolPurchaseTickets = (
       <div style={StakePoolStyles.selectStakePoolArea}>
         <select
-          defaultValue={this.state.selectedStakePoolForPurchase.Host}
+          defaultValue={this.state.selectedStakePoolForPurchase !== null ? this.state.selectedStakePoolForPurchase.Host : 0}
           style={StakePoolStyles.selectPurchaseTickets}
           onChange={(e) =>{this.updateStakePoolPurchaseTickets(e.target.value);}}
           >
@@ -468,7 +468,7 @@ class StakePool extends Component{
 
     var selectStakePoolVotingPreferences = (
         <select
-          defaultValue={this.state.selectedStakePoolForVoting.Host}
+          defaultValue={this.state.selectedStakePoolForVoting !== null ? this.state.selectedStakePoolForPurchase.Host : 0}
           style={StakePoolStyles.selectVotingPreferences}
           onChange={(e) =>{this.updateStakePoolVotingPreferences(e.target.value);}}
           >
@@ -530,7 +530,7 @@ class StakePool extends Component{
         <div style={StakePoolStyles.votingTitleArea}>
           <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences {selectStakePoolVotingPreferences}</div>
         </div>
-        {this.state.selectedStakePoolForVoting.APIVersionsSupported[1] == requiredStakepoolAPIVersion ?
+        {this.state.selectedStakePoolForVoting !== null && this.state.selectedStakePoolForVoting.APIVersionsSupported[1] == requiredStakepoolAPIVersion ?
         <div style={StakePoolStyles.votingAgendaArea}>
           {this.state.agendaDisplay !== null && this.state.selectedStakePoolForVoting !== null ?
             <AgendaOverview agenda={this.state.agendaDisplay} selectedChoice={this.state.selectedChoice} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updatePreferences={(agendaId, choiceId) =>this.props.setVoteChoicesAttempt(this.state.selectedStakePoolForVoting, agendaId, choiceId)}/>:
