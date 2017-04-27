@@ -490,7 +490,7 @@ class StakePool extends Component{
 
     var stakePoolConfigInput = (
       <div style={StakePoolStyles.content}>
-        <div style={StakePoolStyles.flethis.state.selectedStakePoolForVotingxHeight}>
+        <div style={StakePoolStyles.flexHeight}>
           <div style={StakePoolStyles.contentNestFromAddress}>
             <div style={StakePoolStyles.contentNestPrefixSend}>Stake Pool:</div>
               {selectStakePoolApiKey}
