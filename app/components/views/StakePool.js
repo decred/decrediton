@@ -357,7 +357,6 @@ class StakePool extends Component{
     this.setState({agendaDisplay: null});
   }
   showAgendaOverview(agenda) {
-    console.log('click');
     var selectedChoice = 'abstain';
     if (this.state.selectedStakePoolForVoting.VoteChoices !== undefined) {
       for (var i = 0; i < this.state.selectedStakePoolForVoting.VoteChoices.length; i++) {
@@ -368,8 +367,6 @@ class StakePool extends Component{
         }
       }
     }
-
-    console.log('click', agenda, selectedChoice);
     this.setState({agendaDisplay: agenda, selectedChoice: selectedChoice});
   }
   showPurchaseInfoModal() {
