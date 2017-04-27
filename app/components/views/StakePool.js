@@ -543,7 +543,8 @@ class StakePool extends Component{
               var selectedChoice = 'abstain';
               if (this.state.selectedStakePoolForVoting.VoteChoices !== undefined) {
                 for (var i = 0; this.state.selectedStakePoolForVoting.VoteChoices.length; i++) {
-                  if (this.state.selectedStakePoolForVoting.VoteChoices[i].agendaId == agenda.getId()) {
+                  if (this.state.selectedStakePoolForVoting.VoteChoices[i] !== undefined &&
+                  this.state.selectedStakePoolForVoting.VoteChoices[i].agendaId == agenda.getId()) {
                     selectedChoice = this.state.selectedStakePoolForVoting.VoteChoices[i].choiceId;
                     break;
                   }
