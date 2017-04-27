@@ -97,7 +97,9 @@ class StakePool extends Component{
       for (var j = 0; j < nextProps.currentStakePoolConfig.length; j++) {
         if (nextProps.currentStakePoolConfig[j].ApiKey && nextProps.currentStakePoolConfig[j].Network == this.props.network) {
           this.setState({selectedStakePoolForPurchase: nextProps.currentStakePoolConfig[j]});
-          break;
+        }
+        if (nextProps.currentStakePoolConfig[j].Host == this.state.selectedStakePoolForVoting.Host) {
+          this.setState({selectedStakePoolForVoting: nextProps.currentStakePoolConfig[j]});
         }
       }
     }
@@ -309,10 +311,8 @@ class StakePool extends Component{
     }
   }
   updateStakePoolVotingPreferences(poolHost) {
-    console.log('updating stakepool voting pref', poolHost, this.state.selectedStakePoolForVoting);
     for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
       if (this.props.currentStakePoolConfig[i].Host == poolHost) {
-        console.log('here!', this.props.currentStakePoolConfig[i].APIVersionsSupported);
         this.setState({selectedStakePoolForVoting: this.props.currentStakePoolConfig[i]});
         break;
       }
@@ -358,7 +358,7 @@ class StakePool extends Component{
   }
   showAgendaOverview(agenda) {
     console.log('click');
-    var selectedChoice = 'Abstain';
+    var selectedChoice = 'abstain';
     if (this.state.selectedStakePoolForVoting.VoteChoices !== undefined) {
       for (var i = 0; this.state.selectedStakePoolForVoting.VoteChoices.length; i++) {
         if (this.state.selectedStakePoolForVoting.VoteChoices[i].agendaId == agenda.getId()) {
@@ -394,7 +394,6 @@ class StakePool extends Component{
     const { getTicketPriceResponse } = this.props;
     const { getStakeInfoResponse } = this.props;
     const { getAgendasResponse } = this.props;
-    const { getVoteChoicesResponse } = this.props;
     const { startAutoBuyerSuccess, startAutoBuyerResponse, stopAutoBuyerSuccess, startAutoBuyerError, stopAutoBuyerError } = this.props;
     const { getTicketBuyerConfigResponse } = this.props;
     var unconfigedStakePools = 0;
@@ -541,7 +540,7 @@ class StakePool extends Component{
           }
           {getAgendasResponse !== null && this.state.selectedStakePoolForVoting !== null ? getAgendasResponse.getAgendasList().length > 0 ?
             getAgendasResponse.getAgendasList().map((agenda) => {
-              var selectedChoice = 'Abstain';
+              var selectedChoice = 'abstain';
               if (this.state.selectedStakePoolForVoting.VoteChoices !== undefined) {
                 for (var i = 0; this.state.selectedStakePoolForVoting.VoteChoices.length; i++) {
                   if (this.state.selectedStakePoolForVoting.VoteChoices[i].agendaId == agenda.getId()) {

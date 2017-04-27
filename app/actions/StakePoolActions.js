@@ -126,32 +126,33 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
   };
 }
 function updateStakePoolVoteChoicesConfig(stakePool, voteChoices) {
-  var config = getCfg(true);
-  var stakePoolConfigs = config.get('stakepools');
-  var voteChoicesConfig;
-  for (var k = 0; k < voteChoices.getChoicesList(); k++) {
-    voteChoicesConfig.push(
-      {
+  return (dispatch) => {
+    var config = getCfg(true);
+    var stakePoolConfigs = config.get('stakepools');
+    var voteChoicesConfig = new Array();
+    for (var k = 0; k < voteChoices.getChoicesList().length; k++) {
+      voteChoicesConfig.push({
         agendaId: voteChoices.getChoicesList()[k].getAgendaId(),
         choiceId: voteChoices.getChoicesList()[k].getChoiceId()
       });
-  }
-  for (var i = 0; i < stakePoolConfigs.length; i++) {
-    if (stakePoolConfigs[i].Host == stakePool.Host) {
-      stakePoolConfigs[i].VoteBits = voteChoices.getVotebits();
-      stakePoolConfigs[i].VoteChoices = voteChoicesConfig;
-      break;
     }
-  }
-  config.set('stakepools', stakePoolConfigs);
+    for (var i = 0; i < stakePoolConfigs.length; i++) {
+      if (stakePoolConfigs[i].Host == stakePool.Host) {
+        stakePoolConfigs[i].VoteBits = voteChoices.getVotebits();
+        stakePoolConfigs[i].VoteChoices = voteChoicesConfig;
+        break;
+      }
+    }
+    config.set('stakepools', stakePoolConfigs);
+    var successMessage = 'You have successfully updated your vote choices.';
+    dispatch({ successMessage: successMessage, currentStakePoolConfig: stakePoolConfigs, type: UPDATESTAKEPOOLCONFIG_SUCCESS });
+  };
 }
 export const SETSTAKEPOOLVOTECHOICES_ATTEMPT = 'SETSTAKEPOOLVOTECHOICES_ATTEMPT';
 export const SETSTAKEPOOLVOTECHOICES_FAILED = 'SETSTAKEPOOLVOTECHOICES_FAILED';
 export const SETSTAKEPOOLVOTECHOICES_SUCCESS = 'SETSTAKEPOOLVOTECHOICES_SUCCESS';
 
 export function setStakePoolVoteChoices(stakePool, voteChoices) {
-  console.log(voteChoices.getVotebits());
-  console.log(stakePool.Host, stakePool.ApiKey);
   return (dispatch) => {
     setVoteChoices(
       stakePool.Host,
@@ -159,7 +160,6 @@ export function setStakePoolVoteChoices(stakePool, voteChoices) {
       voteChoices.getVotebits(),
       function(response, err) {
         if (err) {
-          console.log(stakePool.Host, stakePool.ApiKey,voteChoices.getVotebits());
           console.error(err);
           dispatch({ error: err, type: SETSTAKEPOOLVOTECHOICES_FAILED });
         } else if (response.data.status == 'success') {
