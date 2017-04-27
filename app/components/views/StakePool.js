@@ -98,7 +98,7 @@ class StakePool extends Component{
         if (nextProps.currentStakePoolConfig[j].ApiKey && nextProps.currentStakePoolConfig[j].Network == this.props.network) {
           this.setState({selectedStakePoolForPurchase: nextProps.currentStakePoolConfig[j]});
         }
-        if (nextProps.currentStakePoolConfig[j].Host == this.state.selectedStakePoolForVoting.Host) {
+        if (this.state.selectedStakePoolForVoting !== null && nextProps.currentStakePoolConfig[j].Host == this.state.selectedStakePoolForVoting.Host) {
           this.setState({selectedStakePoolForVoting: nextProps.currentStakePoolConfig[j]});
         }
       }
@@ -490,7 +490,7 @@ class StakePool extends Component{
 
     var stakePoolConfigInput = (
       <div style={StakePoolStyles.content}>
-        <div style={StakePoolStyles.flexHeight}>
+        <div style={StakePoolStyles.flethis.state.selectedStakePoolForVotingxHeight}>
           <div style={StakePoolStyles.contentNestFromAddress}>
             <div style={StakePoolStyles.contentNestPrefixSend}>Stake Pool:</div>
               {selectStakePoolApiKey}
