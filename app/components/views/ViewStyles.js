@@ -2563,6 +2563,10 @@ export const GetStartedStyles = {
     fontSize: '27px',
     transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
   },
+  fetchHeadersMessage: {
+    fontSize: '25px',
+    color: '#c4cbd2',
+  },
   contentNest: {
     paddingTop: '1px',
   },

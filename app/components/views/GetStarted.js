@@ -229,7 +229,7 @@ class Home extends Component{
               <div key="pubError" style={GetStartedStyles.viewNotificationError}>{discoverAddressError}</div> :
               <div key="pubError" ></div>
             }
-            headerTitleOverview="Opening Wallet"
+            headerTitleOverview="Discovering addresses"
             headerMetaOverview="Please enter the information below to load your dcrwallet"/>
           <div style={GetStartedStyles.contentNewSeed}>
             { discoverAddressRequestAttempt ?
@@ -274,7 +274,10 @@ class Home extends Component{
             headerTitleOverview="Fetching block headers"/>
           <div style={GetStartedStyles.contentNewSeed}>
             { fetchHeadersRequestAttempt ?
-            <CircularProgress style={GetStartedStyles.loading} size={125} thickness={6}/> :
+            <div>
+              <CircularProgress style={GetStartedStyles.loading} size={125} thickness={6}/>
+              <div style={GetStartedStyles.fetchHeadersMessage}> If you are syncing the blockchain for the first time, this may take a while. </div>
+            </div> :
             <div></div>
             }
           </div>
