@@ -150,6 +150,7 @@ const styles = {
     height: '35px',
     paddingTop: '17px',
     float: 'left',
+    display: 'block',
   },
 
   transactionAccount: {
@@ -198,6 +199,9 @@ const styles = {
     color: '#c4cbd2',
     fontSize: '11px',
     lineHeight: '11px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
 
   transactionAmountNumberCurrency: {
