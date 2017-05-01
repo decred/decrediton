@@ -129,7 +129,7 @@ function createWalletError(error) {
 function createWalletSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: CREATEWALLET_SUCCESS });
-    dispatch(startRpcRequest());
+    dispatch(startRpcRequestFunc());
   };
 }
 
