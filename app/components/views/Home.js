@@ -76,7 +76,10 @@ class Home extends Component{
             headerMetaOverview={
               <div>
                 <Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />
-                <KeyBlueButton style={HomeStyles.rescanButton} onClick={() => this.props.rescanAttempt(0)}>Rescan</KeyBlueButton>
+                <div style={HomeStyles.rescanButtonArea}>
+                  <KeyBlueButton style={HomeStyles.rescanButton} onClick={() => this.props.rescanAttempt(0)}>Rescan</KeyBlueButton>
+                  <span style={HomeStyles.rescanButtonMessage}>*Rescanning the blockchain may resolve some balance errors.</span>
+                </div>
               </div>
             }
           />

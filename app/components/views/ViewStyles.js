@@ -605,9 +605,21 @@ export const HomeStyles = {
   transition1: {
     transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
   },
-  rescanButton: {
+  rescanButtonArea: {
     fontFamily: 'Source Sans Pro, sans-serif',
     float: 'right',
+    width: '43%',
+    height: '40px',
+  },
+  rescanButton: {
+    marginTop: '-10px',
+    float: 'right',
+  },
+  rescanButtonMessage: {
+    color: '#596d81',
+    fontSize: '13px',
+    float: 'left',
+    width: '100%',
   },
   contentTitle: {
     display: 'block',
