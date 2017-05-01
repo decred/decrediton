@@ -71,7 +71,7 @@ class Home extends Component{
     walletOpenRequestAttempt: PropTypes.bool.isRequired,
     // Step 3
     startRpcRequestAttempt: PropTypes.bool.isRequired,
-    startRpcRequest: PropTypes.func.isRequired,
+    startRpcRequestFunc: PropTypes.func.isRequired,
     // Step 4
     discoverAddressRequestAttempt: PropTypes.bool.isRequired,
     // Step 5
@@ -102,7 +102,7 @@ class Home extends Component{
     const { startRpcRequestAttempt, startRpcError } = this.props;
     const { discoverAddressRequestAttempt, discoverAddressError } = this.props;
     const { fetchHeadersRequestAttempt, fetchHeadersError } = this.props;
-    const { startRpcRequest } = this.props;
+    const { startRpcRequestFunc } = this.props;
 
     const getStartedWalletLoader = (
       <div>
@@ -218,7 +218,7 @@ class Home extends Component{
                 <CircularProgress style={GetStartedStyles.loading} size={125} thickness={6}/> :
                 <div>
                   <div style={GetStartedStyles.rpcRetryMessage}>Connection to dcrd failed, please try and reconnect.</div>
-                  <KeyBlueButton style={GetStartedStyles.rpcRetryButton} onClick={()=>startRpcRequest()}>Retry</KeyBlueButton>
+                  <KeyBlueButton style={GetStartedStyles.rpcRetryButton} onClick={()=>startRpcRequestFunc()}>Retry</KeyBlueButton>
                 </div>
               }
             </div>
