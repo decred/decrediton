@@ -71,6 +71,7 @@ class Home extends Component{
     walletOpenRequestAttempt: PropTypes.bool.isRequired,
     // Step 3
     startRpcRequestAttempt: PropTypes.bool.isRequired,
+    startRpcRequest: PropTypes.func.isRequired,
     // Step 4
     discoverAddressRequestAttempt: PropTypes.bool.isRequired,
     // Step 5
@@ -101,6 +102,7 @@ class Home extends Component{
     const { startRpcRequestAttempt, startRpcError } = this.props;
     const { discoverAddressRequestAttempt, discoverAddressError } = this.props;
     const { fetchHeadersRequestAttempt, fetchHeadersError } = this.props;
+    const { startRpcRequest } = this.props;
 
     const getStartedWalletLoader = (
       <div>
@@ -214,7 +216,10 @@ class Home extends Component{
             <div style={GetStartedStyles.contentNest}>
               { startRpcRequestAttempt ?
                 <CircularProgress style={GetStartedStyles.loading} size={125} thickness={6}/> :
-                <div>Some unexpected error occured, please check logs</div>
+                <div>
+                  <KeyBlueButton onClick={()=>startRpcRequest()}>Retry</KeyBlueButton>
+                  <div>Some unexpected error occured, please check logs</div>
+                </div>
               }
             </div>
           </div>

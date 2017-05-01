@@ -39,6 +39,7 @@ function mapStateToProps(state) {
     startRpcRequestAttempt: state.walletLoader.startRpcRequestAttempt,
     startRpcError: state.walletLoader.startRpcError,
     startRpcResponse: state.walletLoader.startRpcResponse,
+    startRpcRequest: state.walletLoader.startRpcRequest,
     // Step 4
     discoverAddressRequestAttempt: state.walletLoader.discoverAddressRequestAttempt,
     discoverAddressError: state.walletLoader.discoverAddressError,
