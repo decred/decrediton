@@ -71,6 +71,7 @@ class Home extends Component{
     walletOpenRequestAttempt: PropTypes.bool.isRequired,
     // Step 3
     startRpcRequestAttempt: PropTypes.bool.isRequired,
+    startRpcRequestFunc: PropTypes.func.isRequired,
     // Step 4
     discoverAddressRequestAttempt: PropTypes.bool.isRequired,
     // Step 5
@@ -101,6 +102,7 @@ class Home extends Component{
     const { startRpcRequestAttempt, startRpcError } = this.props;
     const { discoverAddressRequestAttempt, discoverAddressError } = this.props;
     const { fetchHeadersRequestAttempt, fetchHeadersError } = this.props;
+    const { startRpcRequestFunc } = this.props;
 
     const getStartedWalletLoader = (
       <div>
@@ -209,12 +211,15 @@ class Home extends Component{
             headerTitleOverview="Starting RPC and subscribing block notifications"/>
           <div style={GetStartedStyles.content}>
             <div style={GetStartedStyles.contentTitle}>
-              <div style={GetStartedStyles.contentTitleText}>Start RPC, Subscribe Block</div>
+              <div style={GetStartedStyles.contentTitleText}>Start RPC connection to daemon, Subscribe to Block Notifications</div>
             </div>
             <div style={GetStartedStyles.contentNest}>
               { startRpcRequestAttempt ?
                 <CircularProgress style={GetStartedStyles.loading} size={125} thickness={6}/> :
-                <div>Some unexpected error occured, please check logs</div>
+                <div>
+                  <div style={GetStartedStyles.rpcRetryMessage}>Connection to dcrd failed, please try and reconnect.</div>
+                  <KeyBlueButton style={GetStartedStyles.rpcRetryButton} onClick={()=>startRpcRequestFunc()}>Retry</KeyBlueButton>
+                </div>
               }
             </div>
           </div>

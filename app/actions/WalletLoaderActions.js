@@ -129,7 +129,7 @@ function createWalletError(error) {
 function createWalletSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: CREATEWALLET_SUCCESS });
-    dispatch(startRpcRequest());
+    dispatch(startRpcRequestFunc());
   };
 }
 
@@ -169,7 +169,7 @@ function openWalletError(error) {
 function openWalletSuccess() {
   return (dispatch) => {
     dispatch({response: {}, type: OPENWALLET_SUCCESS});
-    dispatch(startRpcRequest());
+    dispatch(startRpcRequestFunc());
   };
 }
 
@@ -251,7 +251,7 @@ function startRpcSuccess() {
   };
 }
 
-export function startRpcRequest() {
+export function startRpcRequestFunc(localHost) {
   var cfg = getCfg();
   var rpcport = '';
   if (cfg.get('network') == 'testnet') {
@@ -260,28 +260,44 @@ export function startRpcRequest() {
     rpcport = cfg.get('daemon_port');
   }
   var request = new StartConsensusRpcRequest();
-  request.setNetworkAddress('127.0.0.1:' + rpcport);
-  request.setUsername(cfg.get('rpc_user'));
-  request.setPassword(new Uint8Array(Buffer.from(cfg.get('rpc_pass'))));
-  request.setCertificate(new Uint8Array(getDcrdCert()));
 
-  return (dispatch) => {
-    dispatch({request: request, type: STARTRPC_ATTEMPT});
-    dispatch(startRpcAction());
-  };
+  // This is an attempt to deal with different setups
+  // that may not like 127.0.0.1 as the loopback address
+  if (localHost) {
+    request.setNetworkAddress('localhost:' + rpcport);
+    request.setUsername(cfg.get('rpc_user'));
+    request.setPassword(new Uint8Array(Buffer.from(cfg.get('rpc_pass'))));
+    request.setCertificate(new Uint8Array(getDcrdCert()));
+    return (dispatch) => {
+      dispatch(startRpcAction(request, true));
+    };
+  } else {
+    request.setNetworkAddress('127.0.0.1:' + rpcport);
+    request.setUsername(cfg.get('rpc_user'));
+    request.setPassword(new Uint8Array(Buffer.from(cfg.get('rpc_pass'))));
+    request.setCertificate(new Uint8Array(getDcrdCert()));
+    return (dispatch) => {
+      dispatch({request: request, type: STARTRPC_ATTEMPT});
+      dispatch(startRpcAction(request));
+    };
+  }
 }
 
-function startRpcAction() {
+function startRpcAction(request, second) {
   return (dispatch, getState) => {
-    const { loader, startRpcRequest } = getState().walletLoader;
-    loader.startConsensusRpc(startRpcRequest,
+    const { loader } = getState().walletLoader;
+    loader.startConsensusRpc(request,
         function(err) {
           if (err) {
             if (err.message.includes('RPC client already created')) {
               dispatch(startRpcSuccess());
               return;
             }
-            dispatch(startRpcError(err + '.  You may need to edit ' + getCfgPath() + ' and try again'));
+            if (second) {
+              dispatch(startRpcError(err + '.  You may need to edit ' + getCfgPath() + ' and try again'));
+            } else {
+              dispatch(startRpcRequestFunc(true));
+            }
           } else {
             dispatch(startRpcSuccess());
           }
