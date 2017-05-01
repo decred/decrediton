@@ -605,6 +605,10 @@ export const HomeStyles = {
   transition1: {
     transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
   },
+  rescanButton: {
+    fontFamily: 'Source Sans Pro, sans-serif',
+    float: 'right',
+  },
   contentTitle: {
     display: 'block',
     height: '44px',

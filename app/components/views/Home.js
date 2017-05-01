@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import LinearProgress from 'material-ui/LinearProgress';
 import CircularProgress from 'material-ui/CircularProgress';
+import KeyBlueButton from '../KeyBlueButton';
 import ErrorScreen from '../ErrorScreen';
 import Balance from '../Balance';
 import SideBar from '../SideBar';
@@ -45,7 +46,7 @@ class Home extends Component{
     regularTransactionsInfo.length + unmined.length >= txPerPage  ? regularTransactionsInfo.slice(0,txPerPage-unmined.length) : regularTransactionsInfo.slice(0,regularTransactionsInfo.length+unmined.length):
     regularTransactionsInfo.length >= txPerPage  ? regularTransactionsInfo.slice(0,txPerPage) : regularTransactionsInfo.slice(0,regularTransactionsInfo.length);
 
-    var rescanPercFisnished;
+    var rescanPercFisnished = 0.00;
     if (rescanResponse !== null && getAccountsResponse !== null && rescanRequest != null) {
       var totalBlocks = getAccountsResponse.getCurrentBlockHeight() - rescanRequest.getBeginHeight();
       var blocksFinished = rescanResponse.getRescannedThrough() - rescanRequest.getBeginHeight();
@@ -62,7 +63,7 @@ class Home extends Component{
               max={getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight(): 100}
               value={rescanResponse !== null ? rescanResponse.getRescannedThrough() : 0} />
             <p>{rescanPercFisnished}%</p>
-            <p>{rescanResponse.getRescannedThrough()}/{getAccountsResponse.getCurrentBlockHeight()}</p>
+            <p>{rescanResponse !== null ? rescanResponse.getRescannedThrough():0}/{getAccountsResponse.getCurrentBlockHeight()}</p>
           </Header>:
           <Header
             headerTop={ !synced ?
@@ -72,7 +73,12 @@ class Home extends Component{
                 <div key="notSynced" ></div>
             }
             headerTitleOverview="Available Balance"
-            headerMetaOverview={<Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />}
+            headerMetaOverview={
+              <div>
+                <Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />
+                <KeyBlueButton style={HomeStyles.rescanButton} onClick={() => this.props.rescanAttempt(0)}>Rescan</KeyBlueButton>
+              </div>
+            }
           />
         }
         {!getTransactionsRequestAttempt ?
