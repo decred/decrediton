@@ -29,6 +29,7 @@ var opts = {
 };
 var argv = parseArgs(process.argv.slice(1), opts);
 debug = argv.debug;
+// Output for child processes.
 var stdout = 'ignore';
 if (debug) {
   stdout = 'pipe';
