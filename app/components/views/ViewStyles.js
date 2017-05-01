@@ -2601,7 +2601,15 @@ export const GetStartedStyles = {
   contentTitleActive: {
     borderBottom: '1px solid #2971ff',
   },
-
+  rpcRetryMessage: {
+    color: '#c4cbd2',
+    float: 'left',
+    width: '100%',
+  },
+  rpcRetryButton: {
+    marginTop: '10px',
+    float: 'left',
+  },
   headerMetaCurrency: {
     fontSize: '23px',
   },

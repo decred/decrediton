@@ -124,6 +124,7 @@ export default function walletLoader(state = {}, action) {
     };
   case STARTRPC_ATTEMPT:
     return {...state,
+      startRpcError: null,
       startRpcRequestAttempt: true,
       startRpcRequest: action.request,
     };
