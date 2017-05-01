@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import LinearProgress from 'material-ui/LinearProgress';
 import CircularProgress from 'material-ui/CircularProgress';
 import ErrorScreen from '../ErrorScreen';
-import RescanForm from '../RescanForm';
 import Balance from '../Balance';
 import SideBar from '../SideBar';
 import TxHistory from '../TxHistory';
@@ -53,12 +52,10 @@ class Home extends Component{
       rescanPercFisnished = (blocksFinished / totalBlocks) * 100;
       rescanPercFisnished = rescanPercFisnished.toFixed(2);
     }
-    var rescanView;
-    if (rescanResponse === null) {
-      rescanView = <RescanForm />;
-    } else {
-      rescanView = (
-        <div style={HomeStyles.view}>
+
+    const homeView = (
+      <div style={HomeStyles.view}>
+        {rescanRequest ?
           <Header headerTitleOverview="Rescanning">
             <LinearProgress mode="determinate"
               min={rescanRequest !== null ? rescanRequest.getBeginHeight(): 0}
@@ -66,23 +63,18 @@ class Home extends Component{
               value={rescanResponse !== null ? rescanResponse.getRescannedThrough() : 0} />
             <p>{rescanPercFisnished}%</p>
             <p>{rescanResponse.getRescannedThrough()}/{getAccountsResponse.getCurrentBlockHeight()}</p>
-          </Header>
-        </div>
-      );
-    }
-
-    const homeView = (
-      <div style={HomeStyles.view}>
-        <Header
-          headerTop={ !synced ?
-              <div key="notSynced" style={HomeStyles.viewNotificationNotSynced}>
-                Wallet not synced. Note: Balances will not be accurate until syncing is complete.
-              </div> :
-              <div key="notSynced" ></div>
-          }
-          headerTitleOverview="Available Balance"
-          headerMetaOverview={<Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />}
-        />
+          </Header>:
+          <Header
+            headerTop={ !synced ?
+                <div key="notSynced" style={HomeStyles.viewNotificationNotSynced}>
+                  Wallet not synced. Note: Balances will not be accurate until syncing is complete.
+                </div> :
+                <div key="notSynced" ></div>
+            }
+            headerTitleOverview="Available Balance"
+            headerMetaOverview={<Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />}
+          />
+        }
         {!getTransactionsRequestAttempt ?
           <div style={HomeStyles.content}>
             <div style={HomeStyles.contentTitle}>
@@ -111,10 +103,7 @@ class Home extends Component{
       return(
         <div style={HomeStyles.body}>
           <SideBar />
-          {rescanRequest ?
-            rescanView :
-            homeView
-          }
+          {homeView}
         </div>);
     }
   }
