@@ -57,13 +57,18 @@ class Home extends Component{
     const homeView = (
       <div style={HomeStyles.view}>
         {rescanRequest ?
-          <Header headerTitleOverview="Rescanning">
-            <LinearProgress mode="determinate"
-              min={rescanRequest !== null ? rescanRequest.getBeginHeight(): 0}
-              max={getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight(): 100}
-              value={rescanResponse !== null ? rescanResponse.getRescannedThrough() : 0} />
-            <p>{rescanPercFisnished}%</p>
-            <p>{rescanResponse !== null ? rescanResponse.getRescannedThrough():0}/{getAccountsResponse.getCurrentBlockHeight()}</p>
+          <Header headerTitleOverview="Rescanning"
+            headerMetaOverview={
+            <div style={HomeStyles.rescanProgressArea} >
+              <LinearProgress mode="determinate"
+                min={rescanRequest !== null ? rescanRequest.getBeginHeight(): 0}
+                max={getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight(): 100}
+                value={rescanResponse !== null ? rescanResponse.getRescannedThrough() : 0} />
+              <span style={HomeStyles.rescanProgressFraction}>{rescanResponse !== null ? rescanResponse.getRescannedThrough():0}/{getAccountsResponse !== null ? getAccountsResponse.getCurrentBlockHeight():1}</span>
+              <span style={HomeStyles.rescanProgressPercent}>{rescanPercFisnished}%</span>
+            </div>
+            }
+            >
           </Header>:
           <Header
             headerTop={ !synced ?
