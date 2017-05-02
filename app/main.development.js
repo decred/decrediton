@@ -29,6 +29,15 @@ var opts = {
 };
 var argv = parseArgs(process.argv.slice(1), opts);
 debug = argv.debug;
+// Output for child processes.
+var stdout = 'ignore';
+if (debug) {
+  stdout = 'pipe';
+}
+var stderr = 'ignore';
+if (debug) {
+  stderr = 'pipe';
+}
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
@@ -146,7 +155,7 @@ const launchDCRD = () => {
   if (debug) {
     console.log(`Starting dcrd with ${args}`);
   }
-  var dcrd = spawn(dcrdExe, args, { detached: false, stdio: [ 'ignore', 'pipe', 'pipe', 'pipe' ] });
+  var dcrd = spawn(dcrdExe, args, { detached: false, stdio: [ 'ignore', stdout, stderr, 'pipe' ] });
 
   dcrd.on('error', function (err) {
     console.log('error starting ' + dcrdExe + ': ' + path + err);
@@ -202,7 +211,7 @@ const launchDCRWallet = () => {
   if (debug) {
     console.log(`Starting dcrwallet with ${args}`);
   }
-  var dcrwallet = spawn(dcrwExe, args, { detached: false, stdio: [ 'ignore', 'pipe', 'pipe', 'ignore', 'pipe'  ] });
+  var dcrwallet = spawn(dcrwExe, args, { detached: false, stdio: [ 'ignore', stdout, stderr, 'ignore', 'pipe'  ] });
 
   dcrwallet.on('error', function (err) {
     console.log('error starting ' + dcrwExe + ': ' + path + err);
