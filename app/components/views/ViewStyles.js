@@ -605,6 +605,15 @@ export const HomeStyles = {
   transition1: {
     transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
   },
+  rescanProgressArea: {
+    fontSize: '16px',
+  },
+  rescanProgressPercent: {
+    float: 'right',
+  },
+  rescanProgressFraction: {
+    float: 'left',
+  },
   rescanButtonArea: {
     fontFamily: 'Source Sans Pro, sans-serif',
     float: 'right',
