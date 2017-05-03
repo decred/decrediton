@@ -102,6 +102,10 @@ class ImportScriptModal extends React.Component {
     scriptInput.value = '';
     this.setState({script: null, privpass: null});
   }
+  cancel() {
+    this.setState({script: null, privpass: null, scriptError: null, privPassError: null});
+    this.props.cancelImportScript();
+  }
   updatePrivatePassphrase(privpass) {
     if (privpass != '') {
       this.setState({privpass: privpass, privPassError: null});
@@ -134,7 +138,7 @@ class ImportScriptModal extends React.Component {
             </div>
             <div style={styles.modalSubSectionSaveCancel}>
               <KeyBlueButton style={{float: 'left'}} onClick={()=>this.submitImportScript()}>save</KeyBlueButton>
-              <SlateGrayButton style={{float: 'right'}} onClick={()=>this.props.cancelImportScript()}>cancel</SlateGrayButton>
+              <SlateGrayButton style={{float: 'right'}} onClick={()=>this.cancel()}>cancel</SlateGrayButton>
             </div>
           </div>
         </div>

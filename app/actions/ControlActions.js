@@ -550,7 +550,7 @@ numTickets, expiry, ticketFee, txFee, stakepool) {
       request: request,
       type: PURCHASETICKETS_ATTEMPT });
     dispatch(purchaseTicketsAction());
-    dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0));
+    dispatch(importScriptAttempt(passphrase, stakepool.Script, true, 0));
   };
 }
 

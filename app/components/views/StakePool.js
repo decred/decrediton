@@ -18,6 +18,7 @@ import NumTicketsInput from '../NumTicketsInput';
 import ManagePoolsButton from '../ManagePoolsButton';
 import AutoBuyerSwitch from '../AutoBuyerSwitch';
 import PassphraseModal from '../PassphraseModal';
+import ImportScriptModal from '../ImportScriptModal';
 
 class StakePool extends Component{
   static propTypes = {
@@ -138,6 +139,9 @@ class StakePool extends Component{
     this.props.clearStartAutoBuyerError();
     this.props.clearStopAutoBuyerSuccess();
     this.props.clearStopAutoBuyerError();
+  }
+  importScript(privpass, script) {
+    this.props.importScriptAttempt(privpass, script, true, 0);
   }
   submitPurchase(privpass) {
     var checkErrors = false;
@@ -660,12 +664,12 @@ class StakePool extends Component{
         />
         <ImportScriptModal
           hidden={!this.state.importScriptModalOpen}
-          submitPassphrase={this.state.modalScriptSubmitFunc}
-          cancelPassphrase={()=>this.setState({modalScriptHeading: null, modalScriptDescription: null, modalScriptSubmitFunc: null, importScriptModalOpen: false})}
+          submitImportScript={this.state.modalScriptSubmitFunc}
+          cancelImportScript={()=>this.setState({modalScriptHeading: null, modalScriptDescription: null, modalScriptSubmitFunc: null, importScriptModalOpen: false})}
           heading={this.state.modalScriptHeading}
           description={this.state.modalScriptDescription}
         />
-        <div style={this.state.passphraseModalOpen ? StakePoolStyles.contentPurchaseTicketViewBlur : StakePoolStyles.contentPurchaseTicketView}>
+        <div style={this.state.passphraseModalOpen || this.state.importScriptModalOpen ? StakePoolStyles.contentPurchaseTicketViewBlur : StakePoolStyles.contentPurchaseTicketView}>
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Purchase Tickets</div>
           </div>
