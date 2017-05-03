@@ -82,6 +82,12 @@ class StakePool extends Component{
       maxPerBlockError: null,
       autoBuyerConfigChanged: false,
 
+      // ImportScriptModal
+      modalScriptHeading: null,
+      modalScriptDescription: null,
+      modalScriptSubmitFunc: null,
+      importScriptModalOpen: false,
+
       // error form divs
       numTicketsError: null,
       txFeeError: null,
@@ -378,6 +384,9 @@ class StakePool extends Component{
   showPassphraseModal(heading, description, func) {
     this.setState({modalHeading: heading, modalDescription: description, modalSubmitFunc: func, passphraseModalOpen: true});
   }
+  showImportScriptModal(heading, description, func) {
+    this.setState({modalScriptHeading: heading, modalScriptDescription: description, modalScriptSubmitFunc: func, importScriptModalOpen: true});
+  }
   disableTicketBuyer() {
     this.submitStop();
     this.setState({modalHeading: null, modalDescription: null, modalSubmitFunc: null, passphraseModalOpen: false});
@@ -632,6 +641,14 @@ class StakePool extends Component{
     );
     var purchaseTicketHeading = 'Enter Passphrase to Purchase Tickets';
     var purchaseTicketFunc = (privPass) => this.submitPurchase(privPass);
+    var importScriptDescription = (
+      <div>
+        Please enter your Script from your configured stakepool:
+      </div>
+    );
+    var importScriptHeading = 'Enter Passphrase to Import Script';
+    var importScriptFunc = (privPass, script) => this.importScript(privPass, script);
+
     var purchaseTicketsView = (
       <div>
         <PassphraseModal
@@ -640,6 +657,13 @@ class StakePool extends Component{
           cancelPassphrase={()=>this.setState({modalHeading: null, modalDescription: null, modalSubmitFunc: null, passphraseModalOpen: false})}
           heading={this.state.modalHeading}
           description={this.state.modalDescription}
+        />
+        <ImportScriptModal
+          hidden={!this.state.importScriptModalOpen}
+          submitPassphrase={this.state.modalScriptSubmitFunc}
+          cancelPassphrase={()=>this.setState({modalScriptHeading: null, modalScriptDescription: null, modalScriptSubmitFunc: null, importScriptModalOpen: false})}
+          heading={this.state.modalScriptHeading}
+          description={this.state.modalScriptDescription}
         />
         <div style={this.state.passphraseModalOpen ? StakePoolStyles.contentPurchaseTicketViewBlur : StakePoolStyles.contentPurchaseTicketView}>
           <div style={StakePoolStyles.votingTitleArea}>
@@ -774,6 +798,9 @@ class StakePool extends Component{
           </div>
           <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.showPassphraseModal(purchaseTicketHeading, purchaseTicketDescription, purchaseTicketFunc)}>
             Purchase
+          </KeyBlueButton>
+          <KeyBlueButton style={StakePoolStyles.contentImportScriptButton} onClick={() => this.showImportScriptModal(importScriptHeading, importScriptDescription, importScriptFunc)}>
+            Import Script
           </KeyBlueButton>
           <div style={StakePoolStyles.areaSpacing}></div>
           <div style={StakePoolStyles.votingTitleArea}>
