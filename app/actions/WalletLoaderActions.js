@@ -361,8 +361,8 @@ function subscribeBlockError(error) {
 function subscribeBlockSuccess() {
   return (dispatch, getState) => {
     dispatch({response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
-    const { walletCreateResponse } = getState().walletLoader;
-    if (walletCreateResponse == null) {
+    const { walletCreateResponse, createWalletExisting } = getState().walletLoader;
+    if (walletCreateResponse == null || walletCreateResponse !== null && !createWalletExisting) {
       // CreateWalletSuccess is null which means this is a previously created wallet
       dispatch(discoverAddressAttempt(false));
     }
