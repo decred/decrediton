@@ -158,6 +158,7 @@ export default function control(state = {}, action) {
       importScriptError: null,
       importScriptRequestAttempt: false,
       importScriptResponse: action.importScriptResponse,
+      importScriptSuccess: action.importScriptSuccess,
     };
   case IMPORTSCRIPT_CLEAR_ERROR:
     return {...state,
