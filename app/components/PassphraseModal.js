@@ -68,6 +68,10 @@ const styles = {
   },
   modalSubSectionSaveCancel: {
     height: '44px',
+  },
+  inputError: {
+    color: 'red',
+    fontSize: '10px',
   }
 };
 class PassphraseModal extends React.Component {
@@ -104,6 +108,7 @@ class PassphraseModal extends React.Component {
             <div style={styles.autobuyerPassphraseModalSubSectionPrivPassphrase}>
               <div style={styles.bigPrefix}>Private Passphrase:</div>
               <input id='passphrase' style={styles.inputPassphraseField} type="password" placeholder="" defaultValue={this.state.privpass} onChange={(e) => this.updatePrivatePassphrase(e.target.value)}/>
+              <div style={styles.inputError}>{this.state.privPassError}</div>
             </div>
             <div style={styles.modalSubSectionSaveCancel}>
               <KeyBlueButton style={{float: 'left'}} onClick={()=>this.submitPassphrase()}>save</KeyBlueButton>

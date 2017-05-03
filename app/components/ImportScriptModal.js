@@ -68,6 +68,10 @@ const styles = {
   },
   modalSubSectionSaveCancel: {
     height: '44px',
+  },
+  inputError: {
+    color: 'red',
+    fontSize: '10px',
   }
 };
 class ImportScriptModal extends React.Component {

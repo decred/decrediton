@@ -135,6 +135,8 @@ class StakePool extends Component{
     this.props.clearStakePoolConfigSuccess();
     this.props.clearPurchaseTicketsSuccess();
     this.props.clearPurchaseTicketsError();
+    this.props.clearImportScriptSuccess();
+    this.props.clearImportScriptError();
     this.props.clearStartAutoBuyerSuccess();
     this.props.clearStartAutoBuyerError();
     this.props.clearStopAutoBuyerSuccess();
@@ -142,6 +144,7 @@ class StakePool extends Component{
   }
   importScript(privpass, script) {
     this.props.importScriptAttempt(privpass, script, true, 0);
+    this.setState({importScriptModalOpen: false});
   }
   submitPurchase(privpass) {
     var checkErrors = false;
@@ -169,6 +172,7 @@ class StakePool extends Component{
       this.state.txFee,
       this.state.selectedStakePoolForPurchase
     );
+    this.setState({passphraseModalOpen: false});
   }
   updateBalanceToMaintain(value) {
     if (!isNaN(value) && value < 0) {
@@ -401,6 +405,7 @@ class StakePool extends Component{
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
     const { currentStakePoolConfigSuccessMessage, getAccountsResponse, purchaseTicketsRequestAttempt } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
+    const { importScriptError, importScriptSuccess } = this.props;
     const { network, requiredStakepoolAPIVersion } = this.props;
     const { getTicketPriceResponse } = this.props;
     const { getStakeInfoResponse } = this.props;
@@ -950,6 +955,12 @@ class StakePool extends Component{
             stopAutoBuyerError !== null && stopAutoBuyerError !== '' ?
             <div key="stopAutoBuyerError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStopAutoBuyerError()}/>{stopAutoBuyerError}</div> :
             <div key="stopAutoBuyerError" ></div>,
+            importScriptError !== null ?
+            <div key="importScriptError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearImportScriptError()}/>{importScriptError}</div> :
+            <div key="importScriptError" ></div>,
+            importScriptSuccess !== undefined && importScriptSuccess !== '' ?
+            <div key="importScriptSuccess" style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearImportScriptSuccess()}/>{importScriptSuccess}</div> :
+            <div key="importScriptSuccess" ></div>,
           ]
           }
           headerTitleOverview={
