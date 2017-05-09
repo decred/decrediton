@@ -93,6 +93,9 @@ class StakePool extends Component{
     };
   }
   componentWillReceiveProps(nextProps) {
+    if (this.props.getBalanceResponse != nextProps.getBalanceResponse) {
+      this.setState({spendLimit: nextProps.getBalanceResponse.getSpendable()});
+    }
     if (this.props.currentStakePoolConfig != nextProps.currentStakePoolConfig) {
       for (var j = 0; j < nextProps.currentStakePoolConfig.length; j++) {
         if (nextProps.currentStakePoolConfig[j].ApiKey && nextProps.currentStakePoolConfig[j].Network == this.props.network) {
