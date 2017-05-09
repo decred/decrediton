@@ -36,9 +36,13 @@ function getWalletServiceSuccess(walletService) {
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.
-    const { walletCreateExisting } = getState().walletLoader;
+    const { walletCreateExisting, walletCreateResponse } = getState().walletLoader;
+    const { fetchHeadersResponse } = getState().walletLoader;
     if (walletCreateExisting) {
       setTimeout(() => { dispatch(rescanAttempt(0)); }, 1000);
+    } else if (walletCreateResponse == null && fetchHeadersResponse != null && fetchHeadersResponse.getFirstNewBlockHeight() !== 0) {
+
+      setTimeout(() => { dispatch(rescanAttempt(fetchHeadersResponse.getFirstNewBlockHeight())); }, 1000);
     }
     setTimeout(() => { hashHistory.push('/home'); }, 1000);
   };
