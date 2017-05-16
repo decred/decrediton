@@ -244,7 +244,7 @@ export function writeCfgs() {
       username: cfg.get('rpc_user'),
       password: cfg.get('rpc_pass'),
       appdata: appDataDirectory(),
-      experimentalrpclisten: '127.0.0.1:' + GRPCWalletPort(),
+      grpclisten: '127.0.0.1:' + GRPCWalletPort(),
       tlscurve: 'P-256',
       noinitialload: '1',
       onetimetlskey: '1',
