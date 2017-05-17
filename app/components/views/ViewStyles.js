@@ -1491,7 +1491,13 @@ export const StakePoolStyles = {
   },
   contentPurchaseButton: {
     marginTop: '8px',
-    marginLeft: '8px'
+    marginLeft: '8px',
+    float: 'left',
+  },
+  contentImportScriptButton: {
+    marginTop: '8px',
+    marginRight: '8px',
+    float: 'right',
   },
   showAdvanced: {
     width: '300px',

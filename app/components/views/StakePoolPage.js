@@ -21,6 +21,8 @@ function mapStateToProps(state) {
     purchaseTicketsRequestAttempt: state.control.purchaseTicketsRequestAttempt,
     purchaseTicketsError: state.control.purchaseTicketsError,
     purchaseTicketsSuccess: state.control.purchaseTicketsSuccess,
+    importScriptSuccess: state.control.importScriptSuccess,
+    importScriptError: state.control.importScriptError,
     startAutoBuyerRequestAttempt: state.control.startAutoBuyerRequestAttempt,
     startAutoBuyerError: state.control.startAutoBuyerError,
     startAutoBuyerSuccess: state.control.startAutoBuyerSuccess,

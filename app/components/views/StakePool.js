@@ -18,6 +18,7 @@ import NumTicketsInput from '../NumTicketsInput';
 import ManagePoolsButton from '../ManagePoolsButton';
 import AutoBuyerSwitch from '../AutoBuyerSwitch';
 import PassphraseModal from '../PassphraseModal';
+import ImportScriptModal from '../ImportScriptModal';
 
 class StakePool extends Component{
   static propTypes = {
@@ -82,6 +83,12 @@ class StakePool extends Component{
       maxPerBlockError: null,
       autoBuyerConfigChanged: false,
 
+      // ImportScriptModal
+      modalScriptHeading: null,
+      modalScriptDescription: null,
+      modalScriptSubmitFunc: null,
+      importScriptModalOpen: false,
+
       // error form divs
       numTicketsError: null,
       txFeeError: null,
@@ -128,10 +135,16 @@ class StakePool extends Component{
     this.props.clearStakePoolConfigSuccess();
     this.props.clearPurchaseTicketsSuccess();
     this.props.clearPurchaseTicketsError();
+    this.props.clearImportScriptSuccess();
+    this.props.clearImportScriptError();
     this.props.clearStartAutoBuyerSuccess();
     this.props.clearStartAutoBuyerError();
     this.props.clearStopAutoBuyerSuccess();
     this.props.clearStopAutoBuyerError();
+  }
+  importScript(privpass, script) {
+    this.props.importScriptAttempt(privpass, script, true, 0);
+    this.setState({importScriptModalOpen: false});
   }
   submitPurchase(privpass) {
     var checkErrors = false;
@@ -159,6 +172,7 @@ class StakePool extends Component{
       this.state.txFee,
       this.state.selectedStakePoolForPurchase
     );
+    this.setState({passphraseModalOpen: false});
   }
   updateBalanceToMaintain(value) {
     if (!isNaN(value) && value < 0) {
@@ -378,6 +392,9 @@ class StakePool extends Component{
   showPassphraseModal(heading, description, func) {
     this.setState({modalHeading: heading, modalDescription: description, modalSubmitFunc: func, passphraseModalOpen: true});
   }
+  showImportScriptModal(heading, description, func) {
+    this.setState({modalScriptHeading: heading, modalScriptDescription: description, modalScriptSubmitFunc: func, importScriptModalOpen: true});
+  }
   disableTicketBuyer() {
     this.submitStop();
     this.setState({modalHeading: null, modalDescription: null, modalSubmitFunc: null, passphraseModalOpen: false});
@@ -388,6 +405,7 @@ class StakePool extends Component{
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
     const { currentStakePoolConfigSuccessMessage, getAccountsResponse, purchaseTicketsRequestAttempt } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
+    const { importScriptError, importScriptSuccess } = this.props;
     const { network, requiredStakepoolAPIVersion } = this.props;
     const { getTicketPriceResponse } = this.props;
     const { getStakeInfoResponse } = this.props;
@@ -632,6 +650,14 @@ class StakePool extends Component{
     );
     var purchaseTicketHeading = 'Enter Passphrase to Purchase Tickets';
     var purchaseTicketFunc = (privPass) => this.submitPurchase(privPass);
+    var importScriptDescription = (
+      <div>
+        Please enter your Script from your configured stakepool:
+      </div>
+    );
+    var importScriptHeading = 'Enter Passphrase to Import Script';
+    var importScriptFunc = (privPass, script) => this.importScript(privPass, script);
+
     var purchaseTicketsView = (
       <div>
         <PassphraseModal
@@ -641,7 +667,14 @@ class StakePool extends Component{
           heading={this.state.modalHeading}
           description={this.state.modalDescription}
         />
-        <div style={this.state.passphraseModalOpen ? StakePoolStyles.contentPurchaseTicketViewBlur : StakePoolStyles.contentPurchaseTicketView}>
+        <ImportScriptModal
+          hidden={!this.state.importScriptModalOpen}
+          submitImportScript={this.state.modalScriptSubmitFunc}
+          cancelImportScript={()=>this.setState({modalScriptHeading: null, modalScriptDescription: null, modalScriptSubmitFunc: null, importScriptModalOpen: false})}
+          heading={this.state.modalScriptHeading}
+          description={this.state.modalScriptDescription}
+        />
+        <div style={this.state.passphraseModalOpen || this.state.importScriptModalOpen ? StakePoolStyles.contentPurchaseTicketViewBlur : StakePoolStyles.contentPurchaseTicketView}>
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Purchase Tickets</div>
           </div>
@@ -774,6 +807,9 @@ class StakePool extends Component{
           </div>
           <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.showPassphraseModal(purchaseTicketHeading, purchaseTicketDescription, purchaseTicketFunc)}>
             Purchase
+          </KeyBlueButton>
+          <KeyBlueButton style={StakePoolStyles.contentImportScriptButton} onClick={() => this.showImportScriptModal(importScriptHeading, importScriptDescription, importScriptFunc)}>
+            Import Script
           </KeyBlueButton>
           <div style={StakePoolStyles.areaSpacing}></div>
           <div style={StakePoolStyles.votingTitleArea}>
@@ -919,6 +955,12 @@ class StakePool extends Component{
             stopAutoBuyerError !== null && stopAutoBuyerError !== '' ?
             <div key="stopAutoBuyerError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStopAutoBuyerError()}/>{stopAutoBuyerError}</div> :
             <div key="stopAutoBuyerError" ></div>,
+            importScriptError !== null ?
+            <div key="importScriptError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearImportScriptError()}/>{importScriptError}</div> :
+            <div key="importScriptError" ></div>,
+            importScriptSuccess !== undefined && importScriptSuccess !== '' ?
+            <div key="importScriptSuccess" style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearImportScriptSuccess()}/>{importScriptSuccess}</div> :
+            <div key="importScriptSuccess" ></div>,
           ]
           }
           headerTitleOverview={

@@ -6,6 +6,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   GETNEXTACCOUNT_CLEAR_ERROR, GETNEXTACCOUNT_CLEAR_SUCCESS,
   IMPORTPRIVKEY_ATTEMPT, IMPORTPRIVKEY_FAILED, IMPORTPRIVKEY_SUCCESS,
   IMPORTSCRIPT_ATTEMPT, IMPORTSCRIPT_FAILED, IMPORTSCRIPT_SUCCESS,
+  IMPORTSCRIPT_CLEAR_ERROR, IMPORTSCRIPT_CLEAR_SUCCESS,
   CHANGEPASSPHRASE_ATTEMPT, CHANGEPASSPHRASE_FAILED, CHANGEPASSPHRASE_SUCCESS,
   LOADACTIVEDATAFILTERS_ATTEMPT, LOADACTIVEDATAFILTERS_FAILED, LOADACTIVEDATAFILTERS_SUCCESS,
   FUNDTX_ATTEMPT, FUNDTX_FAILED, FUNDTX_SUCCESS,
@@ -154,9 +155,18 @@ export default function control(state = {}, action) {
     };
   case IMPORTSCRIPT_SUCCESS:
     return {...state,
-      importScriptError: '',
+      importScriptError: null,
       importScriptRequestAttempt: false,
       importScriptResponse: action.importScriptResponse,
+      importScriptSuccess: action.importScriptSuccess,
+    };
+  case IMPORTSCRIPT_CLEAR_ERROR:
+    return {...state,
+      importScriptError: null,
+    };
+  case  IMPORTSCRIPT_CLEAR_SUCCESS:
+    return {...state,
+      importScriptSuccess: '',
     };
   case CHANGEPASSPHRASE_ATTEMPT:
     return {...state,

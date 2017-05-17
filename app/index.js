@@ -272,6 +272,7 @@ var initialState = {
     importScriptRequest: null,
     importScriptResponse: null,
     importScriptError: null,
+    importScriptSuccess: '',
     // ChangePassphrase
     changePassphraseRequestAttempt: false,
     changePassphraseRequest: null,

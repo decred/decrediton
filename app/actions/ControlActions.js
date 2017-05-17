@@ -266,13 +266,17 @@ function importPrivateKeyAction() {
 export const IMPORTSCRIPT_ATTEMPT = 'IMPORTSCRIPT_ATTEMPT';
 export const IMPORTSCRIPT_FAILED = 'IMPORTSCRIPT_FAILED';
 export const IMPORTSCRIPT_SUCCESS = 'IMPORTSCRIPT_SUCCESS';
+export const IMPORTSCRIPT_CLEAR_ERROR = 'IMPORTSCRIPT_CLEAR_ERROR';
+export const IMPORTSCRIPT_CLEAR_SUCCESS= 'IMPORTSCRIPT_CLEAR_SUCCESS';
+
 
 function importScriptError(error) {
   return { error, type: IMPORTSCRIPT_FAILED };
 }
 
 function importScriptSuccess(importScriptResponse) {
-  return { importScriptResponse: importScriptResponse, type: IMPORTSCRIPT_SUCCESS };
+  var message = 'Script successfully imported, rescanning now';
+  return { importScriptSuccess: message, importScriptResponse: importScriptResponse, type: IMPORTSCRIPT_SUCCESS };
 }
 
 export function importScriptAttempt(passphrase, script, rescan, scanFrom) {
@@ -307,6 +311,24 @@ function importScriptAction() {
             dispatch(importScriptSuccess(importScriptResponse));
           }
         });
+  };
+}
+
+export function clearImportScriptSuccess() {
+  return (dispatch, getState) => {
+    const { importScriptSuccess } = getState().control;
+    if (importScriptSuccess !== '') {
+      dispatch({type: IMPORTSCRIPT_CLEAR_SUCCESS});
+    }
+  };
+}
+
+export function clearImportScriptError() {
+  return (dispatch, getState) => {
+    const { importScriptError } = getState().control;
+    if (importScriptError !== null) {
+      dispatch({type: IMPORTSCRIPT_CLEAR_ERROR});
+    }
   };
 }
 
@@ -550,7 +572,7 @@ numTickets, expiry, ticketFee, txFee, stakepool) {
       request: request,
       type: PURCHASETICKETS_ATTEMPT });
     dispatch(purchaseTicketsAction());
-    dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0));
+    dispatch(importScriptAttempt(passphrase, stakepool.Script, true, 0));
   };
 }
 
