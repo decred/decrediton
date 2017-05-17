@@ -93,7 +93,7 @@ cd code
 git clone https://github.com/decred/decrediton.git
 git clone https://github.com/grpc/grpc
 cd grpc
-git checkout cc2e048e84eaa418cab393553594a3fefb891037 
+git checkout cc2e048e84eaa418cab393553594a3fefb891037
 git submodule update --init
 npm install
 cd ../decrediton
@@ -105,19 +105,19 @@ NOT already have rpc certs from dcrwallet so it is easiest to start
 with an emtpy $HOME/.dcrwallet
 
 ```bash
-dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19109 --rpccert=$HOME/.dcrd/rpc.cert
+dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=$HOME/.dcrd/rpc.cert
 ```
 
 ```bash
-dcrwallet --testnet --grpclisten=127.0.0.1:19112 --noinitialload --tlscurve=P-256 --onetimetlskey --appdata=~/.config/decrediton
+dcrwallet --testnet --rpcconnect=127.0.0.1:19119 --grpclisten=127.0.0.1:19121 --noinitialload --tlscurve=P-256 --onetimetlskey --appdata=~/.config/decrediton
 ```
 
 On macOS you should use:
 ```bash
-dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19109 --rpccert=$HOME/Library/Application\ Support/Dcrd/rpc.cert
+dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=$HOME/Library/Application\ Support/Dcrd/rpc.cert
 ```
 ```bash
-dcrwallet --testnet --grpclisten=127.0.0.1:19112 --noinitialload --tlscurve=P-256 --onetimetlskey --appdata=$HOME/Library/Application\ Support/decrediton
+dcrwallet --testnet --rpcconnect=127.0.0.1:19119 --grpclisten=127.0.0.1:19121 --noinitialload --tlscurve=P-256 --onetimetlskey --appdata=$HOME/Library/Application\ Support/decrediton
 ```
 
 Start decrediton
