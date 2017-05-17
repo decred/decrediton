@@ -12,19 +12,19 @@ export function getCfg(update) {
     config.set('network', 'mainnet');
   }
   if (!config.has('wallet_port_testnet')) {
-    config.set('wallet_port_testnet', '19112');
+    config.set('wallet_port_testnet', '19121');
   }
   if (!config.has('wallet_port')) {
-    config.set('wallet_port', '9112');
+    config.set('wallet_port', '9121');
   }
   if (!config.has('cert_path')) {
     config.set('cert_path','');
   }
   if (!config.has('daemon_port')) {
-    config.set('daemon_port','9109');
+    config.set('daemon_port','9119');
   }
   if (!config.has('daemon_port_testnet')) {
-    config.set('daemon_port_testnet','19109');
+    config.set('daemon_port_testnet','19119');
   }
   if (!config.has('daemon_cert_path')) {
     config.set('daemon_cert_path','');
@@ -244,6 +244,7 @@ export function writeCfgs() {
       username: cfg.get('rpc_user'),
       password: cfg.get('rpc_pass'),
       appdata: appDataDirectory(),
+      rpcconnect: '127.0.0.1:' + RPCDaemonPort(),
       grpclisten: '127.0.0.1:' + GRPCWalletPort(),
       tlscurve: 'P-256',
       noinitialload: '1',
