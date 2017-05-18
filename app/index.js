@@ -67,7 +67,7 @@ var initialState = {
   },
   version: {
     // RequiredVersion
-    requiredVersion: '4.9.0',
+    requiredVersion: '4.10.0',
     versionInvalid: false,
     versionInvalidError: null,
     // VersionService
@@ -231,9 +231,6 @@ var initialState = {
 
     unmined: Array(),
     newUnminedMessage: null,
-    spentnessNtfnsRequestAttempt: false,
-    spentnessNtfnsRequest: null,
-    spentnessNtfnsResponse: null,
 
     accountNtfnsRequestAttempt: false,
     accountNtfnsRequest: null,
@@ -304,6 +301,12 @@ var initialState = {
     purchaseTicketsResponse: null,
     purchaseTicketsSuccess: '',
     purchaseTicketsError: null,
+    // RevokeTickets
+    revokeTicketsRequestAttempt: false,
+    revokeTicketsRequest: null,
+    revokeTicketsResponse: null,
+    revokeTicketsSuccess: '',
+    revokeTicketsError: null,
 
     // TicketBuyerService
     ticketBuyerService: null,

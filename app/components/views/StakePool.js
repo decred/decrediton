@@ -138,6 +138,8 @@ class StakePool extends Component{
     this.props.clearStakePoolConfigSuccess();
     this.props.clearPurchaseTicketsSuccess();
     this.props.clearPurchaseTicketsError();
+    this.props.clearRevokeTicketsSuccess();
+    this.props.clearRevokeTicketsError();
     this.props.clearImportScriptSuccess();
     this.props.clearImportScriptError();
     this.props.clearStartAutoBuyerSuccess();
@@ -175,6 +177,17 @@ class StakePool extends Component{
       this.state.txFee,
       this.state.selectedStakePoolForPurchase
     );
+    this.setState({passphraseModalOpen: false});
+  }
+  submitRevoke(privpass) {
+    var checkErrors = false;
+    if (this.state.privPassError !== null) {
+      checkErrors = true;
+    }
+    if (checkErrors) {
+      return;
+    }
+    this.props.revokeTicketsAttempt(privpass);
     this.setState({passphraseModalOpen: false});
   }
   updateBalanceToMaintain(value) {
@@ -408,6 +421,7 @@ class StakePool extends Component{
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
     const { currentStakePoolConfigSuccessMessage, getAccountsResponse, purchaseTicketsRequestAttempt } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
+    const { revokeTicketsError, revokeTicketsSuccess } = this.props;
     const { importScriptError, importScriptSuccess } = this.props;
     const { network, requiredStakepoolAPIVersion } = this.props;
     const { getTicketPriceResponse } = this.props;
@@ -647,6 +661,12 @@ class StakePool extends Component{
     );
     var startAutoBuyerHeading = 'Enter Passphrase to Start Autobuyer';
     var startAutoBuyerFunc = (privPass) => this.submitStart(privPass);
+    var revokeTicketDescription = (
+      <div>
+      </div>
+    );
+    var revokeTicketHeading = 'Enter Passphrase to Revoke Tickets';
+    var revokeTicketFunc = (privPass) => this.submitRevoke(privPass);
     var purchaseTicketDescription = (
       <div>
       </div>
@@ -814,6 +834,9 @@ class StakePool extends Component{
           <KeyBlueButton style={StakePoolStyles.contentImportScriptButton} onClick={() => this.showImportScriptModal(importScriptHeading, importScriptDescription, importScriptFunc)}>
             Import Script
           </KeyBlueButton>
+          <KeyBlueButton style={StakePoolStyles.contentRevokeButton} onClick={() => this.showPassphraseModal(revokeTicketHeading, revokeTicketDescription, revokeTicketFunc)}>
+            Revoke
+          </KeyBlueButton>
           <div style={StakePoolStyles.areaSpacing}></div>
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Automatic Purchase</div>
@@ -946,6 +969,12 @@ class StakePool extends Component{
             purchaseTicketsSuccess !== undefined && purchaseTicketsSuccess !== '' ?
             <div key="purchaseTicketsSuccess" style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPurchaseTicketsSuccess()}/>{purchaseTicketsSuccess}</div> :
             <div key="purchaseTicketsSuccess" ></div>,
+            revokeTicketsError !== null ?
+            <div key="revokeTicketsError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearRevokeTicketsError()}/>{revokeTicketsError}</div> :
+            <div key="revokeTicketsError" ></div>,
+            revokeTicketsSuccess !== undefined && revokeTicketsSuccess !== '' ?
+            <div key="revokeTicketsSuccess" style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearRevokeTicketsSuccess()}/>{revokeTicketsSuccess}</div> :
+            <div key="revokeTicketsSuccess" ></div>,
             startAutoBuyerSuccess !== null && startAutoBuyerSuccess !== '' ?
             <div key="startAutoBuyerSuccess" style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStartAutoBuyerSuccess()}/>{startAutoBuyerSuccess}</div> :
             <div key="startAutoBuyerSuccess" ></div>,

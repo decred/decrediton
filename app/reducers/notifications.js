@@ -1,8 +1,6 @@
 import { TRANSACTIONNTFNS_START, TRANSACTIONNTFNS_FAILED,
   TRANSACTIONNTFNS_DATA, TRANSACTIONNTFNS_SYNCING, TRANSACTIONNTFNS_END,
   TRANSACTIONNTFNS_DATA_UNMINED, TRANSACTIONNTFNS_DATA_UNMINED_UPDATE } from '../actions/NotificationActions';
-import { SPENTNESSNTFNS_START, SPENTNESSNTFNS_FAILED,
-  SPENTNESSNTFNS_DATA, SPENTNESSNTFNS_END } from '../actions/NotificationActions';
 import { ACCOUNTNTFNS_START, ACCOUNTNTFNS_FAILED,
   ACCOUNTNTFNS_DATA, ACCOUNTNTFNS_END } from '../actions/NotificationActions';
 import { CLEARUNMINEDMESSAGE }  from '../actions/NotificationActions';
@@ -39,17 +37,6 @@ export default function notifications(state = {}, action) {
       unmined: action.unmined,
     };
   case TRANSACTIONNTFNS_END:
-  case SPENTNESSNTFNS_START:
-    return {...state,
-      spentnessNtfnsAttempt: true,
-      spentnessNtfnsRequest: action.request,
-    };
-  case SPENTNESSNTFNS_FAILED:
-  case SPENTNESSNTFNS_DATA:
-    return {...state,
-      spentnessNtfnsResponse: action.response,
-    };
-  case SPENTNESSNTFNS_END:
   case ACCOUNTNTFNS_START:
     return {...state,
       accountNtfnsAttempt: true,

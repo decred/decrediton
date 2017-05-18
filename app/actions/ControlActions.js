@@ -2,7 +2,7 @@ import { getBalanceAttempt, getTransactionInfoAttempt, getAccountsAttempt } from
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   ConstructTransactionRequest, SignTransactionRequest,
-  PublishTransactionRequest, PurchaseTicketsRequest, LoadActiveDataFiltersRequest,
+  PublishTransactionRequest, PurchaseTicketsRequest, RevokeTicketsRequest, LoadActiveDataFiltersRequest,
   StartAutoBuyerRequest, StopAutoBuyerRequest, TicketBuyerConfigRequest,
   SetAccountRequest, SetBalanceToMaintainRequest, SetMaxFeeRequest, SetMaxPriceAbsoluteRequest,
   SetMaxPriceRelativeRequest, SetVotingAddressRequest, SetPoolAddressRequest, SetPoolFeesRequest,
@@ -605,6 +605,66 @@ export function clearPurchaseTicketsError() {
     const { purchaseTicketsError } = getState().control;
     if (purchaseTicketsError !== null) {
       dispatch({type: PURCHASETICKETS_CLEAR_ERROR});
+    }
+  };
+}
+
+export const REVOKETICKETS_ATTEMPT = 'REVOKETICKETS_ATTEMPT';
+export const REVOKETICKETS_FAILED = 'REVOKETICKETS_FAILED';
+export const REVOKETICKETS_SUCCESS = 'REVOKETICKETS_SUCCESS';
+export const REVOKETICKETS_CLEAR_ERROR = 'REVOKETICKETS_CLEAR_ERROR';
+export const REVOKETICKETS_CLEAR_SUCCESS= 'REVOKETICKETS_CLEAR_SUCCESS';
+
+function revokeTicketsError(error) {
+  return { error, type: REVOKETICKETS_FAILED };
+}
+
+function revokeTicketsSuccess(revokeTicketsResponse) {
+  var success = 'You successfully revoked tickets.';
+  return { success: success, revokeTicketsResponse: revokeTicketsResponse, type: REVOKETICKETS_SUCCESS };
+}
+
+export function revokeTicketsAttempt(passphrase) {
+  var request = new RevokeTicketsRequest();
+  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+
+  return (dispatch) => {
+    dispatch({
+      request: request,
+      type: REVOKETICKETS_ATTEMPT });
+    dispatch(revokeTicketsAction());
+  };
+}
+
+function revokeTicketsAction() {
+  return (dispatch, getState) => {
+    const { walletService } = getState().grpc;
+    const { revokeTicketsRequest } = getState().control;
+    walletService.revokeTickets(revokeTicketsRequest,
+        function(err, revokeTicketsResponse) {
+          if (err) {
+            dispatch(revokeTicketsError(err + ' Please try again'));
+          } else {
+            dispatch(revokeTicketsSuccess(revokeTicketsResponse));
+          }
+        });
+  };
+}
+
+export function clearRevokeTicketsSuccess() {
+  return (dispatch, getState) => {
+    const { revokeTicketsSuccess } = getState().control;
+    if (revokeTicketsSuccess !== '') {
+      dispatch({type: REVOKETICKETS_CLEAR_SUCCESS});
+    }
+  };
+}
+
+export function clearRevokeTicketsError() {
+  return (dispatch, getState) => {
+    const { revokeTicketsError } = getState().control;
+    if (revokeTicketsError !== null) {
+      dispatch({type: REVOKETICKETS_CLEAR_ERROR});
     }
   };
 }
