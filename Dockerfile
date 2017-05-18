@@ -21,6 +21,10 @@ RUN apt-get update && \
 RUN mkdir /release && \
     chown $USER /release
 
+# create directory to get source from
+RUN mkdir /src && \
+    chown $USER /src
+
 # switch user
 USER $USER
 WORKDIR /home/$USER

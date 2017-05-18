@@ -2,18 +2,8 @@
 
 set -e
 
-BUILD_TAG=${1:-master}
-BUILD_OS=${2:-linux}
-BUILD_ARCH=${3:-amd64}
-BUILD_REPO=${4:-decred}
-
-if [ "${TRAVIS}" = "true" ]; then
-    if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
-	BUILD_TAG=$TRAVIS_PULL_REQUEST_SHA
-    else
-	BUILD_TAG=$TRAVIS_TAG
-    fi
-fi
+BUILD_OS=${1:-linux}
+BUILD_ARCH=${2:-amd64}
 
 DCRD_RELEASE=v1.0.1
 
@@ -33,7 +23,7 @@ if [ "$BUILD_OS" == "darwin" ]; then
 fi
 
 echo "------------------------------------------"
-echo " Building $BUILD_TAG for $BUILD_OS:$BUILD_ARCH from $BUILD_REPO on github"
+echo " Building for $BUILD_OS:$BUILD_ARCH "
 echo "------------------------------------------"
 echo
 
@@ -46,12 +36,10 @@ mkdir $DIST_DIR && chmod 777 $DIST_DIR
 # to build the docker image yourself run this:
 docker build -t $DOCKER_IMAGE_TAG .
 
-docker run --rm -it -v $DIST_DIR:/release $DOCKER_IMAGE_TAG /bin/bash -c "\
+docker run --rm -it -v $DIST_DIR:/release -v $(pwd):/src $DOCKER_IMAGE_TAG /bin/bash -c "\
   . \$HOME/.nvm/nvm.sh && \
-  git clone https://github.com/$BUILD_REPO/decrediton && \
-  cd decrediton && \
-  git checkout -b $BUILD_TAG && \
-  cd ..
+  mkdir decrediton && \
+  rsync -ra --filter=':- .gitignore'  /src/ decrediton/ && \
   git clone https://github.com/grpc/grpc && \
   cd grpc && \
   git checkout $GRPC_COMMIT && \
@@ -59,7 +47,7 @@ docker run --rm -it -v $DIST_DIR:/release $DOCKER_IMAGE_TAG /bin/bash -c "\
   cd ../decrediton && \
   npm install && \
   npm run lint && \
-  mkdir bin && \
+  mkdir -p bin && \
   curl -L ${DCRD_RELEASE_URL} | tar zxvf - --strip-components=1 -C ./bin/ && \
   npm run package-$BUILD_TARGET && \
   rsync -ra ./release/ /release/"

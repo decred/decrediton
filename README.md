@@ -174,10 +174,10 @@ npm run package
 
 ## Docker
 
-A docker file for building decrediton is also provided.  With no options it builds from master.  It is also possible to build from a fork or branch using the docker scripts:
+A docker file for building decrediton is also provided.  With no options it builds for linux on amd64 although it is possible to attempt OSX or arm builds (neither of which have been tested).
 
 ```
-$ ./build-docker.sh <BRANCH> <OS> amd64 <GITHUBID>
+$ ./build-docker.sh <OS> <ARCH>
 ```
 
 ## Contact
