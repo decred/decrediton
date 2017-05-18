@@ -5,6 +5,7 @@ set -e
 BUILD_TAG=${1:-master}
 BUILD_OS=${2:-linux}
 BUILD_ARCH=${3:-amd64}
+BUILD_REPO=${4:-decred}
 
 DCRD_RELEASE=v1.0.1
 
@@ -24,7 +25,7 @@ if [ "$BUILD_OS" == "darwin" ]; then
 fi
 
 echo "------------------------------------------"
-echo " Building $BUILD_TAG for $BUILD_OS:$BUILD_ARCH"
+echo " Building $BUILD_TAG for $BUILD_OS:$BUILD_ARCH from $BUILD_REPO on github"
 echo "------------------------------------------"
 echo
 
@@ -39,15 +40,16 @@ docker build -t $DOCKER_IMAGE_TAG .
 
 docker run --rm -it -v $DIST_DIR:/release $DOCKER_IMAGE_TAG /bin/bash -c "\
   . \$HOME/.nvm/nvm.sh && \
-  git clone -b $BUILD_TAG https://github.com/decred/decrediton && \
+  git clone -b $BUILD_TAG https://github.com/$BUILD_REPO/decrediton && \
   git clone https://github.com/grpc/grpc && \
   cd grpc && \
   git checkout $GRPC_COMMIT && \
   git submodule update --init && \
   cd ../decrediton && \
   npm install && \
+  npm run lint && \
   mkdir bin && \
-  curl -L ${DCRD_RELEASE_URL} | tar zxvf - --strip-components=1 -C ./bin/
+  curl -L ${DCRD_RELEASE_URL} | tar zxvf - --strip-components=1 -C ./bin/ && \
   npm run package-$BUILD_TARGET && \
   rsync -ra ./release/ /release/"
 
