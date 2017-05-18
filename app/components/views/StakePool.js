@@ -833,7 +833,7 @@ class StakePool extends Component{
           </KeyBlueButton>
           <KeyBlueButton style={StakePoolStyles.contentImportScriptButton} onClick={() => this.showImportScriptModal(importScriptHeading, importScriptDescription, importScriptFunc)}>
             Import Script
-          </KeyBlueButton>          
+          </KeyBlueButton>
           <KeyBlueButton style={StakePoolStyles.contentRevokeButton} onClick={() => this.showPassphraseModal(revokeTicketHeading, revokeTicketDescription, revokeTicketFunc)}>
             Revoke
           </KeyBlueButton>

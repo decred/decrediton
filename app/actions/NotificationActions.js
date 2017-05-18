@@ -1,4 +1,4 @@
-import { transactionNtfs, spentnessNtfs, accountNtfs } from '../middleware/grpc/client';
+import { transactionNtfs, accountNtfs } from '../middleware/grpc/client';
 import { getAccountsAttempt, getBalanceAttempt, getStakeInfoAttempt,
   getTicketPriceAttempt, getNetworkAttempt } from './ClientActions';
 import { timeBackString } from '../helpers/dateFormat.js';
