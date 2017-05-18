@@ -7,6 +7,14 @@ BUILD_OS=${2:-linux}
 BUILD_ARCH=${3:-amd64}
 BUILD_REPO=${4:-decred}
 
+if [ "${TRAVIS}" = "true" ]; then
+    if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
+	BUILD_TAG=$TRAVIS_PULL_REQUEST_SHA
+    else
+	BUILD_TAG=$TRAVIS_TAG
+    fi
+fi
+
 DCRD_RELEASE=v1.0.1
 
 DOCKER_IMAGE_TAG=decrediton-builder
@@ -40,7 +48,10 @@ docker build -t $DOCKER_IMAGE_TAG .
 
 docker run --rm -it -v $DIST_DIR:/release $DOCKER_IMAGE_TAG /bin/bash -c "\
   . \$HOME/.nvm/nvm.sh && \
-  git clone -b $BUILD_TAG https://github.com/$BUILD_REPO/decrediton && \
+  git clone https://github.com/$BUILD_REPO/decrediton && \
+  cd decrediton && \
+  git checkout -b $BUILD_TAG && \
+  cd ..
   git clone https://github.com/grpc/grpc && \
   cd grpc && \
   git checkout $GRPC_COMMIT && \
