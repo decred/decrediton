@@ -304,6 +304,12 @@ var initialState = {
     purchaseTicketsResponse: null,
     purchaseTicketsSuccess: '',
     purchaseTicketsError: null,
+    // RevokeTickets
+    revokeTicketsRequestAttempt: false,
+    revokeTicketsRequest: null,
+    revokeTicketsResponse: null,
+    revokeTicketsSuccess: '',
+    revokeTicketsError: null,
 
     // TicketBuyerService
     ticketBuyerService: null,

@@ -15,6 +15,8 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   PUBLISHTX_ATTEMPT, PUBLISHTX_FAILED, PUBLISHTX_SUCCESS,
   PURCHASETICKETS_ATTEMPT, PURCHASETICKETS_FAILED, PURCHASETICKETS_SUCCESS,
   PURCHASETICKETS_CLEAR_ERROR, PURCHASETICKETS_CLEAR_SUCCESS,
+  REVOKETICKETS_ATTEMPT, REVOKETICKETS_FAILED, REVOKETICKETS_SUCCESS,
+  REVOKETICKETS_CLEAR_ERROR, REVOKETICKETS_CLEAR_SUCCESS,
   GETTICKETBUYERCONFIG_ATTEMPT, GETTICKETBUYERCONFIG_FAILED, GETTICKETBUYERCONFIG_SUCCESS,
   SETTICKETBUYERCONFIG_ATTEMPT, SETTICKETBUYERCONFIG_FAILED, SETTICKETBUYERCONFIG_SUCCESS,
   STARTAUTOBUYER_ATTEMPT, STARTAUTOBUYER_FAILED, STARTAUTOBUYER_SUCCESS,
@@ -306,6 +308,33 @@ export default function control(state = {}, action) {
   case  PURCHASETICKETS_CLEAR_SUCCESS:
     return {...state,
       purchaseTicketsSuccess: '',
+    };
+  case REVOKETICKETS_ATTEMPT:
+    return {...state,
+      revokeTicketsError: null,
+      revokeTicketsRequestAttempt: true,
+      revokeTicketsRequest: action.request,
+    };
+  case REVOKETICKETS_FAILED:
+    return {...state,
+      revokeTicketsError: action.error,
+      revokeTicketsRequestAttempt: false,
+      revokeTicketsRequest: null,
+    };
+  case REVOKETICKETS_SUCCESS:
+    return {...state,
+      revokeTicketsError: null,
+      revokeTicketsSuccess: action.success,
+      revokeTicketsRequestAttempt: false,
+      revokeTicketsResponse: action.revokeTicketsResponse,
+    };
+  case REVOKETICKETS_CLEAR_ERROR:
+    return {...state,
+      revokeTicketsError: null,
+    };
+  case  REVOKETICKETS_CLEAR_SUCCESS:
+    return {...state,
+      revokeTicketsSuccess: '',
     };
   case GETTICKETBUYERCONFIG_ATTEMPT:
     return {
