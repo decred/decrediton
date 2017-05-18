@@ -2,7 +2,7 @@ import { getBalanceAttempt, getTransactionInfoAttempt, getAccountsAttempt } from
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   ConstructTransactionRequest, SignTransactionRequest,
-  PublishTransactionRequest, PurchaseTicketsRequest, RevokeTicketsReques, tLoadActiveDataFiltersRequest,
+  PublishTransactionRequest, PurchaseTicketsRequest, RevokeTicketsRequest, LoadActiveDataFiltersRequest,
   StartAutoBuyerRequest, StopAutoBuyerRequest, TicketBuyerConfigRequest,
   SetAccountRequest, SetBalanceToMaintainRequest, SetMaxFeeRequest, SetMaxPriceAbsoluteRequest,
   SetMaxPriceRelativeRequest, SetVotingAddressRequest, SetPoolAddressRequest, SetPoolFeesRequest,

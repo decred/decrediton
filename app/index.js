@@ -231,9 +231,6 @@ var initialState = {
 
     unmined: Array(),
     newUnminedMessage: null,
-    spentnessNtfnsRequestAttempt: false,
-    spentnessNtfnsRequest: null,
-    spentnessNtfnsResponse: null,
 
     accountNtfnsRequestAttempt: false,
     accountNtfnsRequest: null,

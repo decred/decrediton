@@ -1494,6 +1494,11 @@ export const StakePoolStyles = {
     marginLeft: '8px',
     float: 'left',
   },
+  contentRevokeButton : {
+    marginTop: '8px',
+    marginRight: '8px',
+    float: 'right',
+  },
   contentImportScriptButton: {
     marginTop: '8px',
     marginRight: '8px',

@@ -3,7 +3,7 @@ import { getAccountsAttempt, getBalanceAttempt, getStakeInfoAttempt,
   getTicketPriceAttempt, getNetworkAttempt } from './ClientActions';
 import { timeBackString } from '../helpers/dateFormat.js';
 import { reverseHash } from '../helpers/byteActions';
-import { TransactionNotificationsRequest, SpentnessNotificationsRequest, AccountNotificationsRequest} from '../middleware/walletrpc/api_pb';
+import { TransactionNotificationsRequest, AccountNotificationsRequest} from '../middleware/walletrpc/api_pb';
 import { GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_TICKET, GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE } from './ClientActions';
 import { TransactionDetails }  from '../middleware/walletrpc/api_pb';
 
@@ -147,46 +147,6 @@ function startTransactionNtfns() {
     transactionNtfs(walletService, transactionNtfnsRequest,
       function(data) {
         dispatch(transactionNtfnsData(data));
-      }
-    );
-  };
-}
-
-export const SPENTNESSNTFNS_START = 'SPENTNESSNTFNS_START';
-export const SPENTNESSNTFNS_FAILED = 'SPENTNESSNTFNS_FAILED';
-export const SPENTNESSNTFNS_DATA = 'SPENTNESSNTFNS_DATA';
-export const SPENTNESSNTFNS_END = 'SPENTNESSNTFNS_END';
-
-function spentnessNtfnsData(response) {
-  return { response: response, type: SPENTNESSNTFNS_DATA };
-}
-
-export function spentnessNtfnsStart(accountNum) {
-  var request = new SpentnessNotificationsRequest();
-  request.setAccount(accountNum);
-  request.setNoNotifyUnspent(false);
-  request.setNoNotifySpent(false);
-  return (dispatch) => {
-    dispatch({request: request, type: SPENTNESSNTFNS_START });
-    dispatch(startSpentnessNtfns());
-  };
-}
-
-export function spentnessNtfnsEnd() {
-  var request = {};
-  return (dispatch) => {
-    dispatch({request: request, type: SPENTNESSNTFNS_END });
-    //
-  };
-}
-
-function startSpentnessNtfns() {
-  return (dispatch, getState) => {
-    const { walletService } = getState().grpc;
-    const { spentnessNtfnsRequest } = getState().notifications;
-    spentnessNtfs(walletService, spentnessNtfnsRequest,
-      function(data) {
-        dispatch(spentnessNtfnsData(data));
       }
     );
   };
