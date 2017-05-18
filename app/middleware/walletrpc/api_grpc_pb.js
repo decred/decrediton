@@ -598,6 +598,28 @@ function deserialize_walletrpc_RescanResponse(buffer_arg) {
   return api_pb.RescanResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_RevokeTicketsRequest(arg) {
+  if (!(arg instanceof api_pb.RevokeTicketsRequest)) {
+    throw new Error('Expected argument of type walletrpc.RevokeTicketsRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_RevokeTicketsRequest(buffer_arg) {
+  return api_pb.RevokeTicketsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_RevokeTicketsResponse(arg) {
+  if (!(arg instanceof api_pb.RevokeTicketsResponse)) {
+    throw new Error('Expected argument of type walletrpc.RevokeTicketsResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_RevokeTicketsResponse(buffer_arg) {
+  return api_pb.RevokeTicketsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_SetAccountRequest(arg) {
   if (!(arg instanceof api_pb.SetAccountRequest)) {
     throw new Error('Expected argument of type walletrpc.SetAccountRequest');
@@ -838,28 +860,6 @@ function serialize_walletrpc_SignTransactionResponse(arg) {
 
 function deserialize_walletrpc_SignTransactionResponse(buffer_arg) {
   return api_pb.SignTransactionResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SpentnessNotificationsRequest(arg) {
-  if (!(arg instanceof api_pb.SpentnessNotificationsRequest)) {
-    throw new Error('Expected argument of type walletrpc.SpentnessNotificationsRequest');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SpentnessNotificationsRequest(buffer_arg) {
-  return api_pb.SpentnessNotificationsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SpentnessNotificationsResponse(arg) {
-  if (!(arg instanceof api_pb.SpentnessNotificationsResponse)) {
-    throw new Error('Expected argument of type walletrpc.SpentnessNotificationsResponse');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SpentnessNotificationsResponse(buffer_arg) {
-  return api_pb.SpentnessNotificationsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_StakeInfoRequest(arg) {
@@ -1222,17 +1222,6 @@ var WalletServiceService = exports.WalletServiceService = {
     responseSerialize: serialize_walletrpc_TransactionNotificationsResponse,
     responseDeserialize: deserialize_walletrpc_TransactionNotificationsResponse,
   },
-  spentnessNotifications: {
-    path: '/walletrpc.WalletService/SpentnessNotifications',
-    requestStream: false,
-    responseStream: true,
-    requestType: api_pb.SpentnessNotificationsRequest,
-    responseType: api_pb.SpentnessNotificationsResponse,
-    requestSerialize: serialize_walletrpc_SpentnessNotificationsRequest,
-    requestDeserialize: deserialize_walletrpc_SpentnessNotificationsRequest,
-    responseSerialize: serialize_walletrpc_SpentnessNotificationsResponse,
-    responseDeserialize: deserialize_walletrpc_SpentnessNotificationsResponse,
-  },
   accountNotifications: {
     path: '/walletrpc.WalletService/AccountNotifications',
     requestStream: false,
@@ -1376,6 +1365,17 @@ var WalletServiceService = exports.WalletServiceService = {
     requestDeserialize: deserialize_walletrpc_PurchaseTicketsRequest,
     responseSerialize: serialize_walletrpc_PurchaseTicketsResponse,
     responseDeserialize: deserialize_walletrpc_PurchaseTicketsResponse,
+  },
+  revokeTickets: {
+    path: '/walletrpc.WalletService/RevokeTickets',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.RevokeTicketsRequest,
+    responseType: api_pb.RevokeTicketsResponse,
+    requestSerialize: serialize_walletrpc_RevokeTicketsRequest,
+    requestDeserialize: deserialize_walletrpc_RevokeTicketsRequest,
+    responseSerialize: serialize_walletrpc_RevokeTicketsResponse,
+    responseDeserialize: deserialize_walletrpc_RevokeTicketsResponse,
   },
   loadActiveDataFilters: {
     path: '/walletrpc.WalletService/LoadActiveDataFilters',
