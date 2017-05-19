@@ -4,6 +4,7 @@ import ErrorScreen from '../ErrorScreen';
 import KeyBlueButton from '../KeyBlueButton';
 import SideBar from '../SideBar';
 import Header from '../Header';
+import ChangePassphraseModal from '../ChangePassphraseModal';
 import { SettingStyles } from './ViewStyles';
 
 class Settings extends Component{
@@ -12,10 +13,17 @@ class Settings extends Component{
     currencyDisplay: PropTypes.string,
     network: PropTypes.string,
   };
+  constructor(props) {
+    this.state = {
+      changePassphraseModal: false,
+    }
+  }
   handleSaveSettingsClick = (settings) => {
     this.props.saveSettings(settings);
   }
-
+  showPassphraseModal() {
+    this.setState({changePassphraseModel: true});
+  }
   render() {
     const { walletService, currentSettings, settingsChanged, tempSettings, updateStateSettingsChanged } = this.props;
     const { changePassphraseError, changePassphraseResponse } = this.props;
@@ -82,7 +90,7 @@ class Settings extends Component{
           </div>
           <div style={SettingStyles.settingsSaveButton}>
               <KeyBlueButton
-                onClick={settingsChanged ? () => this.handleSaveSettingsClick(tempSettings): null}>
+                onClick={() => this.showPassphraseModal()}>
                 Update Private Passphrase
               </KeyBlueButton>
           </div>
