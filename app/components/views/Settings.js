@@ -17,7 +17,7 @@ class Settings extends Component{
     super(props);
     this.state = {
       changePassphraseModal: false,
-    }
+    };
   }
   componentWillMount() {
     this.props.clearChangePassphraseError();
@@ -41,7 +41,7 @@ class Settings extends Component{
       network: tempSettings.network,
     };
     const settingsView = (
-      <div style={SettingStyles.view}> 
+      <div style={SettingStyles.view}>
         <Header
           headerTop={
           [
