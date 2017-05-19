@@ -5,7 +5,7 @@ import KeyBlueButton from '../KeyBlueButton';
 import SideBar from '../SideBar';
 import Header from '../Header';
 import ChangePassphraseModal from '../ChangePassphraseModal';
-import { SettingStyles } from './ViewStyles';
+import { SettingStyles, StakePoolStyles } from './ViewStyles';
 
 class Settings extends Component{
   static propTypes = {
@@ -24,28 +24,18 @@ class Settings extends Component{
     this.props.clearChangePassphraseSuccess();
   }
   updatePassphrase(oldPass, newPass, priv) {
-    this.props.changePassphraseAttempt(
-      privpass,
-      this.state.account,
-      this.state.spendLimit,
-      this.state.conf,
-      this.state.numTickets,
-      this.state.expiry,
-      this.state.ticketFee,
-      this.state.txFee,
-      this.state.selectedStakePoolForPurchase
-    );
-    this.setState({changePassphraseModel: false});
+    this.props.changePassphraseAttempt(oldPass, newPass, priv);
+    this.setState({changePassphraseModal: false});
   }
   handleSaveSettingsClick = (settings) => {
     this.props.saveSettings(settings);
   }
   showPassphraseModal() {
-    this.setState({changePassphraseModel: true});
+    this.setState({changePassphraseModal: true});
   }
   render() {
     const { walletService, currentSettings, settingsChanged, tempSettings, updateStateSettingsChanged } = this.props;
-    const { changePassphraseError, changePassphraseResponse } = this.props;
+    const { changePassphraseError, changePassphraseSuccess } = this.props;
     var settings = {
       currencyDisplay: tempSettings.currencyDisplay,
       network: tempSettings.network,
@@ -66,12 +56,12 @@ class Settings extends Component{
         <div>
           <ChangePassphraseModal
             hidden={!this.state.changePassphraseModal}
-            submitPassphrase={(oldPass, newPass, priv) => this.updatePassphrase(oldPass, newPass, priv)}
+            updatePassphrase={(oldPass, newPass, priv) => this.updatePassphrase(oldPass, newPass, priv)}
             cancelPassphrase={()=>this.setState({changePassphraseModal: false})}
             heading={<div></div>}
-            description={'Please complete fields to update private passphrase:'}
+            description={''}
           />
-          <div style={this.state.changePassphraseModal ? StakePoolStyles.contentBlur : StakePoolStyles.content}>
+          <div style={this.state.changePassphraseModal ? SettingStyles.contentBlur : SettingStyles.content}>
             <div style={SettingStyles.settingsRow}>
               <div style={SettingStyles.settingsLabel}>
                 Displayed Units

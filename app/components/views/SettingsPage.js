@@ -13,7 +13,7 @@ function mapStateToProps(state) {
     tempSettings: state.settings.tempSettings,
     changePassphraseError: state.control.changePassphraseError,
     changePassphraseRequestAttempt: state.control.changePassphraseRequestAttempt,
-    changePassphraseResponse: state.control.changePassphraseResponse,
+    changePassphraseSuccess: state.control.changePassphraseSuccess,
   };
 }
 

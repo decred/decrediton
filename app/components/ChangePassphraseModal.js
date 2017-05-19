@@ -44,18 +44,18 @@ const styles = {
     minHeight: '50px',
   },
   bigPrefix: {
-    paddingRight: '10px',
     float: 'left',
     color: '#0c1e3e',
     fontSize: '19px',
     height: '100%',
+    width: '200px',
     paddingTop: '5px',
     textAlign: 'right',
     textTransform: 'capitalize',
   },
   inputPassphraseField: {
     width: '290px',
-    padding: '7px 10px',
+    padding: '7px 0px',
     float: 'left',
     borderStyle: 'solid',
     borderWidth: '0px 0px 1px',
@@ -70,6 +70,7 @@ const styles = {
     height: '44px',
   },
   inputError: {
+    textAlign: 'right',
     color: 'red',
     fontSize: '10px',
   }
@@ -126,7 +127,7 @@ class ChangePassphraseModal extends React.Component {
   }
   updateConfirmPrivatePassphrase(privpass) {
     if (privpass != '') {
-      if (this.state.privpass == this.state.confirmPrivpass) {
+      if (this.state.privpass == privpass) {
         this.setState({confirmPrivpass: privpass, confirmPrivPassError: null});
       } else {
         this.setState({confirmPrivPassError: '*Confirm does not match'});
