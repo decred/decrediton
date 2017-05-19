@@ -14,9 +14,28 @@ class Settings extends Component{
     network: PropTypes.string,
   };
   constructor(props) {
+    super(props);
     this.state = {
       changePassphraseModal: false,
     }
+  }
+  componentWillMount() {
+    this.props.clearChangePassphraseError();
+    this.props.clearChangePassphraseSuccess();
+  }
+  updatePassphrase(oldPass, newPass, priv) {
+    this.props.changePassphraseAttempt(
+      privpass,
+      this.state.account,
+      this.state.spendLimit,
+      this.state.conf,
+      this.state.numTickets,
+      this.state.expiry,
+      this.state.ticketFee,
+      this.state.txFee,
+      this.state.selectedStakePoolForPurchase
+    );
+    this.setState({changePassphraseModel: false});
   }
   handleSaveSettingsClick = (settings) => {
     this.props.saveSettings(settings);
@@ -44,55 +63,64 @@ class Settings extends Component{
             <div key="configSuccess" ></div>,
           ]}
           headerTitleOverview="Settings" />
-        <div style={SettingStyles.content}>
-          <div style={SettingStyles.settingsRow}>
-            <div style={SettingStyles.settingsLabel}>
-              Displayed Units
+        <div>
+          <ChangePassphraseModal
+            hidden={!this.state.changePassphraseModal}
+            submitPassphrase={(oldPass, newPass, priv) => this.updatePassphrase(oldPass, newPass, priv)}
+            cancelPassphrase={()=>this.setState({changePassphraseModal: false})}
+            heading={<div></div>}
+            description={'Please complete fields to update private passphrase:'}
+          />
+          <div style={this.state.changePassphraseModal ? StakePoolStyles.contentBlur : StakePoolStyles.content}>
+            <div style={SettingStyles.settingsRow}>
+              <div style={SettingStyles.settingsLabel}>
+                Displayed Units
+              </div>
+              <div style={SettingStyles.settingsInput}>
+                <select
+                  style={SettingStyles.settingsInputSelect}
+                  defaultValue={currentSettings.currencyDisplay}
+                  onChange={(e) => {
+                    settings.currencyDisplay = e.target.value;
+                    updateStateSettingsChanged(settings);
+                  }}>
+                  <option style={SettingStyles.settingsInputSelectOption} value="DCR">DCR</option>
+                  <option style={SettingStyles.settingsInputSelectOption} value="atoms">atoms</option>
+                </select>
+              </div>
             </div>
-            <div style={SettingStyles.settingsInput}>
-              <select
-                style={SettingStyles.settingsInputSelect}
-                defaultValue={currentSettings.currencyDisplay}
-                onChange={(e) => {
-                  settings.currencyDisplay = e.target.value;
-                  updateStateSettingsChanged(settings);
-                }}>
-                <option style={SettingStyles.settingsInputSelectOption} value="DCR">DCR</option>
-                <option style={SettingStyles.settingsInputSelectOption} value="atoms">atoms</option>
-              </select>
+            <div style={SettingStyles.settingsRow}>
+              <div style={SettingStyles.settingsLabel}>
+                Network <span style={SettingStyles.restart}>(requires restart!)</span>
+              </div>
+              <div style={SettingStyles.settingsInput}>
+                <select
+                  style={SettingStyles.settingsInputSelect}
+                  defaultValue={currentSettings.network}
+                  onChange={(e) => {
+                    settings.network = e.target.value;
+                    updateStateSettingsChanged(settings);
+                  }}>
+                  <option style={SettingStyles.settingsInputSelectOption} value="mainnet">mainnet</option>
+                  <option style={SettingStyles.settingsInputSelectOption} value="testnet">testnet</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div style={SettingStyles.settingsRow}>
-            <div style={SettingStyles.settingsLabel}>
-              Network <span style={SettingStyles.restart}>(requires restart!)</span>
-            </div>
-            <div style={SettingStyles.settingsInput}>
-              <select
-                style={SettingStyles.settingsInputSelect}
-                defaultValue={currentSettings.network}
-                onChange={(e) => {
-                  settings.network = e.target.value;
-                  updateStateSettingsChanged(settings);
-                }}>
-                <option style={SettingStyles.settingsInputSelectOption} value="mainnet">mainnet</option>
-                <option style={SettingStyles.settingsInputSelectOption} value="testnet">testnet</option>
-              </select>
-            </div>
-          </div>
-          <div style={SettingStyles.settingsSaveButton}>
-            <KeyBlueButton
-              disabled={!settingsChanged}
-              size="large"
-              block={false}
-              onClick={settingsChanged ? () => this.handleSaveSettingsClick(tempSettings): null}>
-              Save Settings
-            </KeyBlueButton>
-          </div>
-          <div style={SettingStyles.settingsSaveButton}>
+            <div style={SettingStyles.settingsSaveButton}>
               <KeyBlueButton
-                onClick={() => this.showPassphraseModal()}>
-                Update Private Passphrase
+                disabled={!settingsChanged}
+                size="large"
+                block={false}
+                onClick={settingsChanged ? () => this.handleSaveSettingsClick(tempSettings): null}>
+                Save Settings
               </KeyBlueButton>
+            </div>
+            <div style={SettingStyles.settingsSaveButton}>
+                <KeyBlueButton
+                  onClick={() => this.showPassphraseModal()}>
+                  Update Private Passphrase
+                </KeyBlueButton>
+            </div>
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Settings from './Settings';
 import * as SettingsActions from '../../actions/SettingsActions';
+import * as ControlActions from '../../actions/ControlActions';
 
 function mapStateToProps(state) {
   return {
@@ -17,7 +18,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, SettingsActions), dispatch);
+  return bindActionCreators(Object.assign({}, SettingsActions, ControlActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
