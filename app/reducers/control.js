@@ -8,6 +8,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   IMPORTSCRIPT_ATTEMPT, IMPORTSCRIPT_FAILED, IMPORTSCRIPT_SUCCESS,
   IMPORTSCRIPT_CLEAR_ERROR, IMPORTSCRIPT_CLEAR_SUCCESS,
   CHANGEPASSPHRASE_ATTEMPT, CHANGEPASSPHRASE_FAILED, CHANGEPASSPHRASE_SUCCESS,
+  CHANGEPASSPHRASE_CLEAR_ERROR, CHANGEPASSPHRASE_CLEAR_SUCCESS,
   LOADACTIVEDATAFILTERS_ATTEMPT, LOADACTIVEDATAFILTERS_FAILED, LOADACTIVEDATAFILTERS_SUCCESS,
   FUNDTX_ATTEMPT, FUNDTX_FAILED, FUNDTX_SUCCESS,
   CLEARTX,
@@ -184,9 +185,18 @@ export default function control(state = {}, action) {
     };
   case CHANGEPASSPHRASE_SUCCESS:
     return {...state,
-      changePassphraseError: '',
+      changePassphraseError: null,
       changePassphraseRequestAttempt: false,
       changePassphraseResponse: action.changePassphraseResponse,
+      changePassphraseSuccess: 'Your private passphrase was successfully updated.',
+    };
+  case CHANGEPASSPHRASE_CLEAR_ERROR:
+    return {...state,
+      changePassphraseError: null,
+    };
+  case  CHANGEPASSPHRASE_CLEAR_SUCCESS:
+    return {...state,
+      changePassphraseSuccess: '',
     };
   case LOADACTIVEDATAFILTERS_ATTEMPT:
     return {...state,

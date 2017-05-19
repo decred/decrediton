@@ -275,6 +275,7 @@ var initialState = {
     changePassphraseRequest: null,
     changePassphraseResponse: null,
     changePassphraseError: null,
+    changePassphraseSuccess: '',
     // ChangePassphrase
     loadActiveDataFiltersRequestAttempt: false,
     loadActiveDataFiltersRequest: null,
