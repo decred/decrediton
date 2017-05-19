@@ -335,6 +335,8 @@ export function clearImportScriptError() {
 export const CHANGEPASSPHRASE_ATTEMPT = 'CHANGEPASSPHRASE_ATTEMPT';
 export const CHANGEPASSPHRASE_FAILED = 'CHANGEPASSPHRASE_FAILED';
 export const CHANGEPASSPHRASE_SUCCESS = 'CHANGEPASSPHRASE_SUCCESS';
+export const CHANGEPASSPHRASE_CLEAR_ERROR = 'CHANGEPASSPHRASE_CLEAR_ERROR';
+export const CHANGEPASSPHRASE_CLEAR_SUCCESS = 'CHANGEPASSPHRASE_CLEAR_SUCCESS';
 
 function changePassphraseError(error) {
   return { error, type: CHANGEPASSPHRASE_FAILED };
@@ -344,8 +346,13 @@ function changePassphraseSuccess(changePassphraseResponse) {
   return { changePassphraseResponse: changePassphraseResponse, type: CHANGEPASSPHRASE_SUCCESS };
 }
 
-export function changePassphraseAttempt(oldPass, newPass) {
+export function changePassphraseAttempt(oldPass, newPass, priv) {
   var request = new ChangePassphraseRequest();
+  if (priv) {
+    request.setKey(ChangePassphraseRequest.Key.PRIVATE);
+  } else {
+    request.setKey(ChangePassphraseRequest.Key.PUBLIC);
+  }
   request.setOldPassphrase(new Uint8Array(Buffer.from(oldPass)));
   request.setNewPassphrase(new Uint8Array(Buffer.from(newPass)));
   return (dispatch) => {
@@ -368,6 +375,24 @@ function changePassphraseAction() {
             dispatch(changePassphraseSuccess(changePassphraseResponse));
           }
         });
+  };
+}
+
+export function clearChangePassphraseSuccess() {
+  return (dispatch, getState) => {
+    const { changePassphraseSuccess } = getState().control;
+    if (changePassphraseSuccess !== '') {
+      dispatch({type: CHANGEPASSPHRASE_CLEAR_SUCCESS});
+    }
+  };
+}
+
+export function clearChangePassphraseError() {
+  return (dispatch, getState) => {
+    const { changePassphraseError } = getState().control;
+    if (changePassphraseError !== null) {
+      dispatch({type: CHANGEPASSPHRASE_CLEAR_ERROR});
+    }
   };
 }
 

@@ -10,6 +10,9 @@ function mapStateToProps(state) {
     currentSettings: state.settings.currentSettings,
     settingsChanged: state.settings.settingsChanged,
     tempSettings: state.settings.tempSettings,
+    changePassphraseError: state.control.changePassphraseError,
+    changePassphraseRequestAttempt: state.control.changePassphraseRequestAttempt,
+    changePassphraseResponse: state.control.changePassphraseResponse,
   };
 }
 

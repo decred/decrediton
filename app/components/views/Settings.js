@@ -18,13 +18,24 @@ class Settings extends Component{
 
   render() {
     const { walletService, currentSettings, settingsChanged, tempSettings, updateStateSettingsChanged } = this.props;
+    const { changePassphraseError, changePassphraseResponse } = this.props;
     var settings = {
       currencyDisplay: tempSettings.currencyDisplay,
       network: tempSettings.network,
     };
     const settingsView = (
-      <div style={SettingStyles.view}>
-        <Header headerTitleOverview="Settings" />
+      <div style={SettingStyles.view}> 
+        <Header
+          headerTop={
+          [
+            changePassphraseError !== null ?
+            <div key="updateStakePoolError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearChangePassphraseError()}/>{changePassphraseError}</div> :
+            <div key="updateStakePoolError" ></div>,
+            changePassphraseSuccess !== undefined && changePassphraseSuccess !== '' ?
+            <div key="configSuccess"  style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearChangePassphraseSuccess()}/>{changePassphraseSuccess}</div> :
+            <div key="configSuccess" ></div>,
+          ]}
+          headerTitleOverview="Settings" />
         <div style={SettingStyles.content}>
           <div style={SettingStyles.settingsRow}>
             <div style={SettingStyles.settingsLabel}>
@@ -68,6 +79,12 @@ class Settings extends Component{
               onClick={settingsChanged ? () => this.handleSaveSettingsClick(tempSettings): null}>
               Save Settings
             </KeyBlueButton>
+          </div>
+          <div style={SettingStyles.settingsSaveButton}>
+              <KeyBlueButton
+                onClick={settingsChanged ? () => this.handleSaveSettingsClick(tempSettings): null}>
+                Update Private Passphrase
+              </KeyBlueButton>
           </div>
         </div>
       </div>
