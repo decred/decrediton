@@ -389,6 +389,7 @@ function accounts() {
 export const GETTRANSACTIONS_ATTEMPT = 'GETTRANSACTIONS_ATTEMPT';
 export const GETTRANSACTIONS_FAILED = 'GETTRANSACTIONS_FAILED';
 export const GETTRANSACTIONS_PROGRESS_REGULAR = 'GETTRANSACTIONS_PROGRESS_REGULAR';
+export const GETTRANSACTIONS_PROGRESS_COINBASE = 'GETTRANSACTIONS_PROGRESS_COINBASE';
 export const GETTRANSACTIONS_PROGRESS_TICKET = 'GETTRANSACTIONS_PROGRESS_TICKET';
 export const GETTRANSACTIONS_PROGRESS_VOTE = 'GETTRANSACTIONS_PROGRESS_VOTE';
 export const GETTRANSACTIONS_PROGRESS_REVOKE = 'GETTRANSACTIONS_PROGRESS_REVOKE';
@@ -440,10 +441,12 @@ function getTransactionsInfo(request) {
 function getTransactionsInfoProgress(response) {
   return (dispatch, getState) => {
     const { regularTransactionsInfo } = getState().grpc;
+    const { coinbaseTransactionsInfo } = getState().grpc;
     const { ticketTransactionsInfo } = getState().grpc;
     const { voteTransactionsInfo } = getState().grpc;
     const { revokeTransactionsInfo } = getState().grpc;
     var updatedRegular = regularTransactionsInfo;
+    var updatedCoinbase = coinbaseTransactionsInfo;
     var updatedTicket = ticketTransactionsInfo;
     var updatedVote = voteTransactionsInfo;
     var updatedRevoke = revokeTransactionsInfo;
@@ -460,6 +463,8 @@ function getTransactionsInfoProgress(response) {
       };
       if (tx.type == TransactionDetails.TransactionType.REGULAR) {
         updatedRegular.unshift(tx);
+      } else if (tx.type == TransactionDetails.TransactionType.COINBASE) {
+        updatedCoinbase.unshift(tx);
       } else if (tx.type == TransactionDetails.TransactionType.TICKET_PURCHASE) {
         updatedTicket.unshift(tx);
       } else if (tx.type == TransactionDetails.TransactionType.VOTE) {
@@ -470,6 +475,9 @@ function getTransactionsInfoProgress(response) {
     }
     if (updatedRegular.length !== regularTransactionsInfo.length) {
       dispatch({ regularTransactionsInfo: updatedRegular, type: GETTRANSACTIONS_PROGRESS_REGULAR });
+    }
+    if (updatedCoinbase.length !== ticketTransactionsInfo.length) {
+      dispatch({ coinbaseTransactionsInfo: updatedTicket, type: GETTRANSACTIONS_PROGRESS_COINBASE });
     }
     if (updatedTicket.length !== ticketTransactionsInfo.length) {
       dispatch({ ticketTransactionsInfo: updatedTicket, type: GETTRANSACTIONS_PROGRESS_TICKET });

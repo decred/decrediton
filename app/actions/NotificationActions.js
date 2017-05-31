@@ -4,7 +4,7 @@ import { getAccountsAttempt, getBalanceAttempt, getStakeInfoAttempt,
 import { timeBackString } from '../helpers/dateFormat.js';
 import { reverseHash } from '../helpers/byteActions';
 import { TransactionNotificationsRequest, AccountNotificationsRequest} from '../middleware/walletrpc/api_pb';
-import { GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_TICKET, GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE } from './ClientActions';
+import { GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_COINBASE, GETTRANSACTIONS_PROGRESS_TICKET, GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE } from './ClientActions';
 import { TransactionDetails }  from '../middleware/walletrpc/api_pb';
 
 export const TRANSACTIONNTFNS_START = 'TRANSACTIONNTFNS_START';
@@ -39,10 +39,12 @@ function transactionNtfnsData(response) {
           // check to see if any recent unmined tx have been mined
           var updatedUnmined = Array();
           const { regularTransactionsInfo } = getState().grpc;
+          const { coinbaseTransactionsInfo } = getState().grpc;
           const { ticketTransactionsInfo } = getState().grpc;
           const { voteTransactionsInfo } = getState().grpc;
           const { revokeTransactionsInfo } = getState().grpc;
           var updatedRegular = regularTransactionsInfo;
+          var updatedCoinbase = coinbaseTransactionsInfo;
           var updatedTicket = ticketTransactionsInfo;
           var updatedVote = voteTransactionsInfo;
           var updatedRevoke = revokeTransactionsInfo;
@@ -63,6 +65,8 @@ function transactionNtfnsData(response) {
                   };
                   if (tx.type == TransactionDetails.TransactionType.REGULAR) {
                     updatedRegular.unshift(tx);
+                  } else if (tx.type == TransactionDetails.TransactionType.COINBASE) {
+                    updatedCoinbase.unshift(tx);
                   } else if (tx.type == TransactionDetails.TransactionType.TICKET_PURCHASE) {
                     updatedTicket.unshift(tx);
                   } else if (tx.type == TransactionDetails.TransactionType.VOTE) {
@@ -86,6 +90,9 @@ function transactionNtfnsData(response) {
           if (unmined.length != updatedUnmined.length) {
             if (updatedRegular.length !== regularTransactionsInfo.length) {
               dispatch({ regularTransactionsInfo: updatedRegular, type: GETTRANSACTIONS_PROGRESS_REGULAR });
+            }
+            if (updatedCoinbase.length !== coinbaseTransactionsInfo.length) {
+              dispatch({ coinbaseTransactionsInfo: updatedCoinbase, type: GETTRANSACTIONS_PROGRESS_COINBASE });
             }
             if (updatedTicket.length !== ticketTransactionsInfo.length) {
               dispatch({ ticketTransactionsInfo: updatedTicket, type: GETTRANSACTIONS_PROGRESS_TICKET });

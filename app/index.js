@@ -67,7 +67,7 @@ var initialState = {
   },
   version: {
     // RequiredVersion
-    requiredVersion: '4.10.0',
+    requiredVersion: '4.11.0',
     versionInvalid: false,
     versionInvalidError: null,
     // VersionService
@@ -139,6 +139,7 @@ var initialState = {
 
     // GetTransactionInfo
     regularTransactionsInfo: Array(),
+    coinbaseTransactionsInfo: Array(),
     ticketTransactionsInfo: Array(),
     voteTransactionsInfo: Array(),
     revokeTransactionsInfo: Array(),
