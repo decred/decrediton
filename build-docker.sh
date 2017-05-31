@@ -1,6 +1,10 @@
 #!/bin/bash
+set -ex
 
-set -e
+# To run on docker on windows, symlink /mnt/c to /c and then execute the script
+# from the repo path under /c.  See:
+# https://github.com/Microsoft/BashOnWindows/issues/1854
+# for more details.
 
 BUILD_OS=${1:-linux}
 BUILD_ARCH=${2:-amd64}
@@ -31,14 +35,9 @@ if [ -d $DIST_DIR ]; then
 fi
 mkdir $DIST_DIR && chmod 777 $DIST_DIR
 
-# to build the docker image and push to repo:
-#docker build -t $DOCKER_IMAGE_TAG .
-#docker tag $DOCKER_IMAGE_TAG jcvernaleo/$DOCKER_IMAGE_TAG
-#docker push jcvernaleo/$DOCKER_IMAGE_TAG
+docker pull decred/$DOCKER_IMAGE_TAG
 
-docker pull jcvernaleo/$DOCKER_IMAGE_TAG
-
-docker run --rm -it -v $DIST_DIR:/release -v $(pwd):/src jcvernaleo/$DOCKER_IMAGE_TAG /bin/bash -c "\
+docker run --rm -it -v $DIST_DIR:/release -v $(pwd):/src decred/$DOCKER_IMAGE_TAG /bin/bash -c "\
   . \$HOME/.nvm/nvm.sh && \
   mkdir decrediton && \
   rsync -ra --filter=':- .gitignore'  /src/ decrediton/ && \

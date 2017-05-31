@@ -180,6 +180,17 @@ A docker file for building decrediton is also provided.  With no options it buil
 $ ./build-docker.sh <OS> <ARCH>
 ```
 
+### Updating the docker image
+
+To update the docker imagee, make the desired changes to the `Dockerfile` (such as updating the grpc commit or the node version) then build and push the new image:
+
+```
+DOCKER_IMAGE_TAG=decrediton-builder
+docker build -t $DOCKER_IMAGE_TAG .
+docker tag $DOCKER_IMAGE_TAG decred/$DOCKER_IMAGE_TAG
+docker push decred/$DOCKER_IMAGE_TAG
+```
+
 ## Contact
 
 If you have any further questions you can find us at:

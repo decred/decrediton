@@ -1,8 +1,9 @@
+#decrediton-builder
 FROM ubuntu:trusty
 
 LABEL description="Decrediton builder image"
-LABEL version="1.1"
-LABEL maintainer "peter@prioritylane.com"
+LABEL version="1.2"
+LABEL maintainer "john@netpurgatory.com"
 
 ENV NODE_VERSION v6.9.5
 ENV GRPC_COMMIT=cc2e048e84eaa418cab393553594a3fefb891037
