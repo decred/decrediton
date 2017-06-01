@@ -154,7 +154,12 @@ class CreateWalletForm extends React.Component {
       privPassError: null,
     };
   }
-
+  componentWillUpdate(nextProps) {
+    if (this.props.decodeSeedError !== nextProps.decodeSeedError) {
+      
+      this.setState({seedError: nextProps.decodeSeedError});
+    }
+  }
   render() {
     const { generateRandomSeedResponse } = this.props;
     const newDesign = (
