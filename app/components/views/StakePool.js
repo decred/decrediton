@@ -148,7 +148,7 @@ class StakePool extends Component{
     this.props.clearStopAutoBuyerError();
   }
   importScript(privpass, script) {
-    this.props.importScriptAttempt(privpass, script, true, 0);
+    this.props.importScriptAttempt(privpass, script, true, 0, null);
     this.setState({importScriptModalOpen: false});
   }
   submitPurchase(privpass) {
@@ -175,7 +175,7 @@ class StakePool extends Component{
       this.state.expiry,
       this.state.ticketFee,
       this.state.txFee,
-      this.state.selectedStakePoolForPurchase
+      this.state.selectedStakePoolForPurchase,
     );
     this.setState({passphraseModalOpen: false});
   }
