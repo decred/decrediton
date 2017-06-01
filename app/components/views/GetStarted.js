@@ -103,6 +103,7 @@ class Home extends Component{
     const { discoverAddressRequestAttempt, discoverAddressError } = this.props;
     const { fetchHeadersRequestAttempt, fetchHeadersError } = this.props;
     const { startRpcRequestFunc } = this.props;
+    const { decodeSeedError } = this.props;
 
     const getStartedWalletLoader = (
       <div>
@@ -177,10 +178,12 @@ class Home extends Component{
       <div style={GetStartedStyles.view}>
         <Header
           getStarted
-          headerTop={ walletCreateError !== null ?
+          headerTop={
+          [
+            walletCreateError !== null ?
             <div key="walletCreateError" style={GetStartedStyles.viewNotificationError}>{walletCreateError}</div> :
             <div key="walletCreateError" ></div>
-          }
+          ]}
           headerTitleOverview={'Create a Wallet'}>
           {!this.props.confirmNewSeed ?
             <NewExistingSeedToggle
@@ -195,7 +198,7 @@ class Home extends Component{
         <div style={GetStartedStyles.contentNewSeed}>
           <CircularProgress style={GetStartedStyles.loading} size={125} thickness={6}/>
         </div>  :
-          <CreateWalletForm existing={this.props.createWalletExisting}/>}
+          <CreateWalletForm existing={this.props.createWalletExisting} decodeSeedError={decodeSeedError}/>}
       </div>
       );
     } else if  (stepIndex == 3 || stepIndex == 4) {
