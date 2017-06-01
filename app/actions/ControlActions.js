@@ -288,8 +288,13 @@ function importScriptSuccess(importScriptResponse, votingAddress) {
       if (importScriptResponse.getRedeemable() && importScriptResponse.getP2shAddress() == votingAddress) {
         dispatch(purchaseTicketsAction());
       } else {
-        var error = "The stakepool voting address is not the P2SH address of the voting redeem script. This could be due to trying to use a stakepool that is configured for a different wallet. If this is not the case, please report this to the stakepool administrator and the Decred devs.";
-        dispatch({ error, type: PURCHASETICKETS_FAILED });
+        if (importScriptResponse.getP2shAddress() != votingAddress) { 
+          var error = "The stakepool voting address is not the P2SH address of the voting redeem script. This could be due to trying to use a stakepool that is configured for a different wallet. If this is not the case, please report this to the stakepool administrator and the Decred devs.";
+          dispatch({ error, type: PURCHASETICKETS_FAILED });
+        } else {
+          var error = "This script is not redeemable by this wallet.";
+          dispatch({ error, type: PURCHASETICKETS_FAILED });
+        }
       }
     }
   }
