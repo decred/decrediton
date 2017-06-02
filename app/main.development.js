@@ -1,5 +1,5 @@
 import { app, BrowserWindow, Menu, shell } from 'electron';
-import { getCfg, appDataDirectory, dcrdCfg, dcrwCfg, writeCfgs } from './config.js';
+import { getCfg, appDataDirectory, dcrdCfg, dcrwCfg, writeCfgs, getDcrdPath } from './config.js';
 import path from 'path';
 import os from 'os';
 import parseArgs from 'minimist';
@@ -386,6 +386,16 @@ app.on('ready', async () => {
         click() {
           mainWindow.toggleDevTools();
         }
+      }, {
+        label: 'Show Wallet Log Files',
+        click() {
+          shell.openItem(path.join(appDataDirectory(), 'logs'));
+        }
+      }, {
+        label: 'Show Daemon Log Files',
+        click() {
+          shell.openItem(path.join(getDcrdPath(), 'logs'));
+        }
       }]
     }, {
       label: 'Window',
@@ -459,6 +469,16 @@ app.on('ready', async () => {
         accelerator: 'Alt+Ctrl+I',
         click() {
           mainWindow.toggleDevTools();
+        }
+      }, {
+        label: 'Show Wallet Log Files',
+        click() {
+          shell.openItem(path.join(appDataDirectory(), 'logs'));
+        }
+      }, {
+        label: 'Show Daemon Log Files',
+        click() {
+          shell.openItem(path.join(getDcrdPath(), 'logs'));
         }
       }]
     }, {
