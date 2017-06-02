@@ -14,6 +14,9 @@ import {
 } from '../actions/WalletLoaderActions';
 
 import KeyBlueButton from './KeyBlueButton';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
+import Contributors from './SeedEntry';
 
 const styles = {
   contentNewSeed: {
@@ -192,11 +195,7 @@ class CreateWalletForm extends React.Component {
           <div style={styles.contentConfirmWalletCreateInputRight}>
             <div style={styles.inputForm}>
               <form style={styles.inputForm}>
-                <textarea
-                  style={styles.inputSeedTextArea}
-                  type="text"
-                  placeholder="33 words"
-                  onBlur={(e)=>this.checkSeedMatch(e.target.value)}></textarea>
+                <Contributors label="Seed Entry"/>
               </form>
             </div>
             <div style={styles.inputFormError}>

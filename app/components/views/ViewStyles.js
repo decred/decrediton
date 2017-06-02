@@ -3209,3 +3209,6 @@ export const AccountStyles = {
   },
 };
 
+export const SeedStyles = {
+
+};
