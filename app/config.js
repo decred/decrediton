@@ -135,6 +135,16 @@ export function appDataDirectory() {
   }
 }
 
+export function getDcrdPath() {
+  if (os.platform() == 'win32') {
+    return path.join(os.homedir(), 'AppData', 'Local', 'Dcrd');
+  } else if (process.platform === 'darwin') {
+    return path.join(os.homedir(), 'Library','Application Support','dcrd');
+  } else {
+    return path.join(os.homedir(),'.dcrd');
+  }
+}
+
 export function getCert() {
   var cert = '';
   var cfg = getCfg();
