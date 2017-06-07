@@ -26,6 +26,7 @@ export function getNextAddressAttempt(accountNum) {
   var request = new NextAddressRequest();
   request.setAccount(accountNum);
   request.setKind(0);
+  request.setGapPolicy(NextAddressRequest.GapPolicy.GAP_POLICY_WRAP);
   return (dispatch) => {
     dispatch({
       request: request,
