@@ -26,10 +26,12 @@ service WalletService {
 	rpc GetTransactions (GetTransactionsRequest) returns (stream GetTransactionsResponse);
 	rpc TicketPrice (TicketPriceRequest) returns (TicketPriceResponse);
 	rpc StakeInfo (StakeInfoRequest) returns (StakeInfoResponse);
+	rpc BlockInfo (BlockInfoRequest) returns (BlockInfoResponse);
 
 	// Notifications
 	rpc TransactionNotifications (TransactionNotificationsRequest) returns (stream TransactionNotificationsResponse);
 	rpc AccountNotifications (AccountNotificationsRequest) returns (stream AccountNotificationsResponse);
+	rpc ConfirmationNotifications (stream ConfirmationNotificationsRequest) returns (stream ConfirmationNotificationsResponse);
 
 	// Control
 	rpc ChangePassphrase (ChangePassphraseRequest) returns (ChangePassphraseResponse);
@@ -188,6 +190,13 @@ message NextAddressRequest {
 	     BIP0044_INTERNAL = 1;
 	}
 	Kind kind = 2;
+	enum GapPolicy {
+		GAP_POLICY_UNSPECIFIED = 0;
+		GAP_POLICY_ERROR = 1;
+		GAP_POLICY_IGNORE = 2;
+		GAP_POLICY_WRAP = 3;
+	}
+	GapPolicy gap_policy = 3;
 }
 message NextAddressResponse {
 	string address = 1;
@@ -277,6 +286,19 @@ message StakeInfoResponse {
 	uint32 revoked = 8;
 	uint32 expired = 9;
 	int64 total_subsidy = 10;
+}
+
+message BlockInfoRequest {
+    bytes block_hash = 1;
+    int32 block_height = 2;
+}
+message BlockInfoResponse {
+    bytes block_hash = 1;
+    int32 block_height = 2;
+    int32 confirmations = 3;
+    int64 timestamp = 4;
+    bytes block_header = 5;
+    bool stake_invalidated = 6;
 }
 
 message ChangePassphraseRequest {
@@ -420,6 +442,20 @@ message AccountNotificationsResponse {
 	uint32 external_key_count = 3;
 	uint32 internal_key_count = 4;
 	uint32 imported_key_count = 5;
+}
+
+message ConfirmationNotificationsRequest {
+    repeated bytes tx_hashes = 1;
+    int32 stop_after = 2;
+}
+message ConfirmationNotificationsResponse {
+    message TransactionConfirmations {
+        bytes tx_hash = 1;
+        int32 confirmations = 2;
+        bytes block_hash = 3;
+        int32 block_height = 4;
+    }
+    repeated TransactionConfirmations confirmations = 1;
 }
 
 message CreateWalletRequest {

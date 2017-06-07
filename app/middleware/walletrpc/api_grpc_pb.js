@@ -114,6 +114,28 @@ function deserialize_walletrpc_BalanceResponse(buffer_arg) {
   return api_pb.BalanceResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_BlockInfoRequest(arg) {
+  if (!(arg instanceof api_pb.BlockInfoRequest)) {
+    throw new Error('Expected argument of type walletrpc.BlockInfoRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_BlockInfoRequest(buffer_arg) {
+  return api_pb.BlockInfoRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_BlockInfoResponse(arg) {
+  if (!(arg instanceof api_pb.BlockInfoResponse)) {
+    throw new Error('Expected argument of type walletrpc.BlockInfoResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_BlockInfoResponse(buffer_arg) {
+  return api_pb.BlockInfoResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_ChangePassphraseRequest(arg) {
   if (!(arg instanceof api_pb.ChangePassphraseRequest)) {
     throw new Error('Expected argument of type walletrpc.ChangePassphraseRequest');
@@ -156,6 +178,28 @@ function serialize_walletrpc_CloseWalletResponse(arg) {
 
 function deserialize_walletrpc_CloseWalletResponse(buffer_arg) {
   return api_pb.CloseWalletResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_ConfirmationNotificationsRequest(arg) {
+  if (!(arg instanceof api_pb.ConfirmationNotificationsRequest)) {
+    throw new Error('Expected argument of type walletrpc.ConfirmationNotificationsRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_ConfirmationNotificationsRequest(buffer_arg) {
+  return api_pb.ConfirmationNotificationsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_ConfirmationNotificationsResponse(arg) {
+  if (!(arg instanceof api_pb.ConfirmationNotificationsResponse)) {
+    throw new Error('Expected argument of type walletrpc.ConfirmationNotificationsResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_ConfirmationNotificationsResponse(buffer_arg) {
+  return api_pb.ConfirmationNotificationsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_ConstructTransactionRequest(arg) {
@@ -1210,6 +1254,17 @@ var WalletServiceService = exports.WalletServiceService = {
     responseSerialize: serialize_walletrpc_StakeInfoResponse,
     responseDeserialize: deserialize_walletrpc_StakeInfoResponse,
   },
+  blockInfo: {
+    path: '/walletrpc.WalletService/BlockInfo',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.BlockInfoRequest,
+    responseType: api_pb.BlockInfoResponse,
+    requestSerialize: serialize_walletrpc_BlockInfoRequest,
+    requestDeserialize: deserialize_walletrpc_BlockInfoRequest,
+    responseSerialize: serialize_walletrpc_BlockInfoResponse,
+    responseDeserialize: deserialize_walletrpc_BlockInfoResponse,
+  },
   // Notifications
   transactionNotifications: {
     path: '/walletrpc.WalletService/TransactionNotifications',
@@ -1232,6 +1287,17 @@ var WalletServiceService = exports.WalletServiceService = {
     requestDeserialize: deserialize_walletrpc_AccountNotificationsRequest,
     responseSerialize: serialize_walletrpc_AccountNotificationsResponse,
     responseDeserialize: deserialize_walletrpc_AccountNotificationsResponse,
+  },
+  confirmationNotifications: {
+    path: '/walletrpc.WalletService/ConfirmationNotifications',
+    requestStream: true,
+    responseStream: true,
+    requestType: api_pb.ConfirmationNotificationsRequest,
+    responseType: api_pb.ConfirmationNotificationsResponse,
+    requestSerialize: serialize_walletrpc_ConfirmationNotificationsRequest,
+    requestDeserialize: deserialize_walletrpc_ConfirmationNotificationsRequest,
+    responseSerialize: serialize_walletrpc_ConfirmationNotificationsResponse,
+    responseDeserialize: deserialize_walletrpc_ConfirmationNotificationsResponse,
   },
   // Control
   changePassphrase: {
