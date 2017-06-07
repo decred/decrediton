@@ -155,6 +155,8 @@ export default function control(state = {}, action) {
       importScriptError: action.error,
       importScriptRequestAttempt: false,
       importScriptRequest: null,
+      purchaseTicketsRequestAttempt: false,
+      purchaseTicketsRequest: null,
     };
   case IMPORTSCRIPT_SUCCESS:
     return {...state,
