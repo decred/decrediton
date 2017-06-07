@@ -277,7 +277,7 @@ class StakePool extends Component{
     this.setState({account: accountNum});
   }
   incrementNumTickets() {
-    this.setState({numTickets: this.state.numTickets + 1});
+    this.setState({numTickets: this.state.numTickets + 1, numTicketsError: null});
   }
   decrementNumTickets() {
     if (this.state.numTickets > 0) {
