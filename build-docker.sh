@@ -9,7 +9,7 @@ set -ex
 BUILD_OS=${1:-linux}
 BUILD_ARCH=${2:-amd64}
 
-DCRD_RELEASE=v1.0.1
+DCRD_RELEASE=v1.0.3
 
 DOCKER_IMAGE_TAG=decrediton-builder
 
