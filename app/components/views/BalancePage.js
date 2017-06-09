@@ -8,12 +8,7 @@ function mapStateToProps(state) {
   return {
     walletService: state.grpc.walletService,
     getAccountsResponse: state.grpc.getAccountsResponse,
-    getNextAccountSuccess: state.control.getNextAccountSuccess,
-    getNextAccountError: state.control.getNextAccountError,
-    getNextAccountRequestAttempt: state.control.getNextAccountRequestAttempt,
-    renameAccountError: state.control.renameAccountError,
-    renameAccountSuccess: state.control.renameAccountSuccess,
-    getBalanceResponse: state.grpc.getBalanceResponse,
+    balances: state.grpc.balances,
   };
 }
 

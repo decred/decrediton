@@ -111,11 +111,12 @@ function getBalanceError(error) {
   return { error, type: GETBALANCE_FAILED };
 }
 
-function getBalanceSuccess(accountNumber, getBalanceResponse) {
+function getBalanceSuccess(accountNumber, accountName, getBalanceResponse) {
   return (dispatch, getState) => {
     const { balances } = getState().grpc;
     var updatedBalance = {
       accountNumber: accountNumber,
+      accountName: accountName,
       total: getBalanceResponse.getTotal(),
       spendable: getBalanceResponse.getTotal(),
       immatureReward: getBalanceResponse.getImmatureReward(),
@@ -138,13 +139,13 @@ function getBalanceSuccess(accountNumber, getBalanceResponse) {
   }
 }
 
-export function getBalanceAttempt(accountNumber, requiredConfs) {
+export function getBalanceAttempt(accountNumber, requiredConfs, accountName) {
   return (dispatch) => {
-    dispatch(getBalanceAction(accountNumber, requiredConfs));
+    dispatch(getBalanceAction(accountNumber, requiredConfs, accountName));
   };
 }
 
-function getBalanceAction(accountNumber, requiredConfs) {
+function getBalanceAction(accountNumber, requiredConfs, accountName) {
   var request = new BalanceRequest();
   request.setAccountNumber(accountNumber);
   request.setRequiredConfirmations(requiredConfs);
@@ -155,7 +156,7 @@ function getBalanceAction(accountNumber, requiredConfs) {
         if (err) {
           dispatch(getBalanceError(err + ' please try again'));
         } else {
-          dispatch(getBalanceSuccess(accountNumber, getBalanceResponse));
+          dispatch(getBalanceSuccess(accountNumber, accountName, getBalanceResponse));
         }
       });
   };
@@ -378,7 +379,7 @@ function getAccountsError(error) {
 function getAccountsSuccess(getAccountsResponse) {
   return (dispatch) => {
     for (var i = 0; i < getAccountsResponse.getAccountsList().length; i++) {
-      dispatch(getBalanceAttempt(getAccountsResponse.getAccountsList()[i].getAccountNumber()));
+      dispatch(getBalanceAttempt(getAccountsResponse.getAccountsList()[i].getAccountNumber(), 0, getAccountsResponse.getAccountsList()[i].getAccountName()));
     }
     dispatch({response: getAccountsResponse, type: GETACCOUNTS_SUCCESS });
   }
