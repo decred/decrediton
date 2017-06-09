@@ -39,7 +39,7 @@ export default function grpc(state = {}, action) {
   case GETWALLETSERVICE_SUCCESS:
     return {
       ...state,
-      getBalanceError: null,
+      getWalletServiceError: null,
       getWalletServiceRequestAttempt: false,
       walletService: action.walletService,
     };
@@ -81,7 +81,7 @@ export default function grpc(state = {}, action) {
       ...state,
       getBalanceError: '',
       getBalanceRequestAttempt: false,
-      getBalanceResponse: action.getBalanceResponse,
+      balances: action.balances,
     };
   case GETACCOUNTNUMBER_ATTEMPT:
     return {
