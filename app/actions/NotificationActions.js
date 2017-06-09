@@ -30,7 +30,6 @@ function transactionNtfnsData(response) {
         // 3600 * 2 == 2 hours worth of seconds
         if (seconds < 3600 * 2) {
           dispatch({response: response, type: TRANSACTIONNTFNS_DATA });
-          setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
           setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
           setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
           setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);

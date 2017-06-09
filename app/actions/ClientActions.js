@@ -149,8 +149,8 @@ function getBalanceAction(accountNumber, requiredConfs) {
   request.setAccountNumber(accountNumber);
   request.setRequiredConfirmations(requiredConfs);
   return (dispatch, getState) => {
-    const { walletService, getBalanceRequest } = getState().grpc;
-    walletService.balance(getBalanceRequest,
+    const { walletService } = getState().grpc;
+    walletService.balance(request,
       function (err, getBalanceResponse) {
         if (err) {
           dispatch(getBalanceError(err + ' please try again'));
@@ -378,7 +378,6 @@ function getAccountsError(error) {
 function getAccountsSuccess(getAccountsResponse) {
   return (dispatch) => {
     for (var i = 0; i < getAccountsResponse.getAccountsList().length; i++) {
-      console.log(getAccountsResponse.getAccountsList()[i].getAccountNumber());
       dispatch(getBalanceAttempt(getAccountsResponse.getAccountsList()[i].getAccountNumber()));
     }
     dispatch({response: getAccountsResponse, type: GETACCOUNTS_SUCCESS });

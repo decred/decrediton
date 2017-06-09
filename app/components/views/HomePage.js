@@ -10,7 +10,7 @@ function mapStateToProps(state) {
   return {
     walletService: state.grpc.walletService,
     getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
-    getBalanceResponse: state.grpc.getBalanceResponse,
+    balances: state.grpc.balances,
     getStakeInfoRequestAttempt: state.grpc.getStakeInfoRequestAttempt,
     getStakeInfoResponse: state.grpc.getStakeInfoResponse,
     rescanRequestAttempt: state.control.rescanRequestAttempt,

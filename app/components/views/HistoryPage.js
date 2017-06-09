@@ -10,7 +10,7 @@ function mapStateToProps(state) {
     txPerPage: state.grpc.txPerPage,
     paginatedTxs: state.grpc.paginatedTxs,
     paginatingTxs: state.grpc.paginatingTxs,
-    getBalanceResponse: state.grpc.getBalanceResponse,
+    balances: state.grpc.balances,
     getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
     currentPage: state.grpc.currentPage,
     regularTransactionsInfo: state.grpc.regularTransactionsInfo,
