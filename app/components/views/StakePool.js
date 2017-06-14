@@ -49,6 +49,14 @@ class StakePool extends Component{
         }
       }
     }
+    var defaultSpendLimit = 0;
+    if (this.props.balances != null) {
+      for (var i = 0; i < this.props.balances.length; i++) {
+        if (this.props.balances[i].accountName == 'default') {
+          defaultSpendLimit = this.props.balances[i].spendable;
+        }
+      }
+    }
     this.state = {
       stakePoolHost: initStakePoolHost,
       apiKey: '',
@@ -58,7 +66,7 @@ class StakePool extends Component{
       purchaseTicketsStakePoolConfig: false,
       showPurchaseInfoModal: false,
       passphraseModalOpen: false,
-      spendLimit: this.props.getBalanceResponse != null ? this.props.getBalanceResponse.getSpendable() : 0,
+      spendLimit: defaultSpendLimit,
       conf: 0,
       numTickets: 0,
       expiry: 16,
@@ -100,8 +108,15 @@ class StakePool extends Component{
     };
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.getBalanceResponse != nextProps.getBalanceResponse) {
-      this.setState({spendLimit: nextProps.getBalanceResponse.getSpendable()});
+    if (this.props.balances != nextProps.balances) {
+      var newAccountSpendableBalance = 0;
+      for (var i = 0; i < nextProps.balances; i++) {
+        if (nextProps.balances[i].accountNumber == this.state.account) {
+          newAccountSpendableBalance = nextProps.balances[i].spendable;
+          break;
+        }
+      }
+      this.setState({spendLimit: newAccountSpendableBalance});
     }
     if (this.props.currentStakePoolConfig != nextProps.currentStakePoolConfig) {
       for (var j = 0; j < nextProps.currentStakePoolConfig.length; j++) {
@@ -275,6 +290,17 @@ class StakePool extends Component{
   }
   updateAccountNumber(accountNum) {
     this.setState({account: accountNum});
+    if (this.props.balances !== null) {
+      var updatedAccountSpendLimit = 0;
+      for (var i = 0; i < this.props.balances.length; i++) {
+        if (this.props.balances[i].accountNumber == accountNum) {
+          updatedAccountSpendLimit = this.props.balances[i].spendable;
+          break;
+        }
+      }
+      console.log("update spendlimit account", updatedAccountSpendLimit);
+      this.setState({spendLimit: updatedAccountSpendLimit});
+    }
   }
   incrementNumTickets() {
     this.setState({numTickets: this.state.numTickets + 1, numTicketsError: null});

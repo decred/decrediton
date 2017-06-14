@@ -33,7 +33,7 @@ function mapStateToProps(state) {
     stopAutoBuyerRequestAttempt: state.control.stopAutoBuyerRequestAttempt,
     stopAutoBuyerError: state.control.stopAutoBuyerError,
     stopAutoBuyerSuccess: state.control.stopAutoBuyerSuccess,
-    getBalanceResponse: state.grpc.getBalanceResponse,
+    balances: state.grpc.balances,
     getStakeInfoResponse: state.grpc.getStakeInfoResponse,
     getTicketPriceResponse: state.grpc.getTicketPriceResponse,
     getAgendasResponse: state.grpc.getAgendasResponse,
