@@ -5606,7 +5606,10 @@ proto.walletrpc.BalanceResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     total: jspb.Message.getFieldWithDefault(msg, 1, 0),
     spendable: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    immatureReward: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    immatureReward: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    immatureStakeGeneration: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    lockedByTickets: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    votingAuthority: jspb.Message.getFieldWithDefault(msg, 6, 0)
   };
 
   if (includeInstance) {
@@ -5654,6 +5657,18 @@ proto.walletrpc.BalanceResponse.deserializeBinaryFromReader = function(msg, read
     case 3:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setImmatureReward(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setImmatureStakeGeneration(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setLockedByTickets(value);
+      break;
+    case 6:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setVotingAuthority(value);
       break;
     default:
       reader.skipField();
@@ -5704,6 +5719,27 @@ proto.walletrpc.BalanceResponse.serializeBinaryToWriter = function(message, writ
       f
     );
   }
+  f = message.getImmatureStakeGeneration();
+  if (f !== 0) {
+    writer.writeInt64(
+      4,
+      f
+    );
+  }
+  f = message.getLockedByTickets();
+  if (f !== 0) {
+    writer.writeInt64(
+      5,
+      f
+    );
+  }
+  f = message.getVotingAuthority();
+  if (f !== 0) {
+    writer.writeInt64(
+      6,
+      f
+    );
+  }
 };
 
 
@@ -5749,6 +5785,51 @@ proto.walletrpc.BalanceResponse.prototype.getImmatureReward = function() {
 /** @param {number} value */
 proto.walletrpc.BalanceResponse.prototype.setImmatureReward = function(value) {
   jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional int64 immature_stake_generation = 4;
+ * @return {number}
+ */
+proto.walletrpc.BalanceResponse.prototype.getImmatureStakeGeneration = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.BalanceResponse.prototype.setImmatureStakeGeneration = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional int64 locked_by_tickets = 5;
+ * @return {number}
+ */
+proto.walletrpc.BalanceResponse.prototype.getLockedByTickets = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.BalanceResponse.prototype.setLockedByTickets = function(value) {
+  jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * optional int64 voting_authority = 6;
+ * @return {number}
+ */
+proto.walletrpc.BalanceResponse.prototype.getVotingAuthority = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.BalanceResponse.prototype.setVotingAuthority = function(value) {
+  jspb.Message.setField(this, 6, value);
 };
 
 

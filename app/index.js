@@ -99,7 +99,7 @@ var initialState = {
     getBalanceRequest: null,
     getBalanceError: null,
     getBalanceRequestAttempt: false,
-    getBalanceResponse: null,
+    balances: Array(),
     // AccountNumber
     getAccountNumberRequest: null,
     getAccountNumberError: null,

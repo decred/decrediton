@@ -30,7 +30,7 @@ class Home extends Component{
   render() {
     const { walletService } = this.props;
     const { regularTransactionsInfo, txPerPage } = this.props;
-    const { getBalanceResponse } = this.props;
+    const { balances } = this.props;
     const { getTransactionsRequestAttempt } = this.props;
     const { rescanRequest, rescanResponse } = this.props;
     const { getAccountsResponse } = this.props;
@@ -53,7 +53,12 @@ class Home extends Component{
       rescanPercFisnished = (blocksFinished / totalBlocks) * 100;
       rescanPercFisnished = rescanPercFisnished.toFixed(2);
     }
-
+    var totalBalance = 0;
+    if (balances !== null) {
+      for (var i = 0; i < balances.length; i++) {
+        totalBalance += balances[i].spendable;
+      }
+    }
     const homeView = (
       <div style={HomeStyles.view}>
         {rescanRequest ?
@@ -80,7 +85,7 @@ class Home extends Component{
             headerTitleOverview="Available Balance"
             headerMetaOverview={
               <div>
-                <Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />
+                <Balance amount={totalBalance} />
                 <div style={HomeStyles.rescanButtonArea}>
                   <KeyBlueButton style={HomeStyles.rescanButton} onClick={() => this.props.rescanAttempt(0)}>Rescan</KeyBlueButton>
                   <span style={HomeStyles.rescanButtonMessage}>*Rescanning the blockchain may resolve some balance errors.</span>

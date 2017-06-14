@@ -12,7 +12,7 @@ function mapStateToProps(state) {
     walletService: state.grpc.walletService,
 
     getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
-    getBalanceResponse: state.grpc.getBalanceResponse,
+    balances: state.grpc.balances,
     getStakeInfoRequestAttempt: state.grpc.getStakeInfoRequestAttempt,
     getStakeInfoResponse: state.grpc.getStakeInfoResponse,
     network: state.grpc.network,
@@ -248,12 +248,17 @@ class SideBar extends Component {
           <div style={styles.testnetText}>{network !== null && network == 'testnet' ? 'Testnet' : ''}</div>
         </div>);
     }
-    const { getBalanceResponse } = this.props;
+    const { balances } = this.props;
     const { getAccountsResponse } = this.props;
     const { synced, currentHeight, timeBackString, timeSinceString } = this.props;
-    var balance = 0;
-    if (getBalanceResponse != null) {
-      balance = getBalanceResponse.getTotal() / 100000000;
+    var totalBalance = 0;
+    if (balances !== null) {
+      for (var i = 0; i < balances.length; i++) {
+        totalBalance += balances[i].total;
+      }
+      if (totalBalance > 0) {
+        totalBalance /= 100000000;
+      }
     }
     return (
       <div style={styles.menu}>
@@ -266,6 +271,7 @@ class SideBar extends Component {
           <MenuLink to="/receive">Receive</MenuLink>
           <MenuLink to="/history">History</MenuLink>
           <MenuLink to="/proofofstake">Purchase Tickets</MenuLink>
+          <MenuLink to="/balance">Balance Overview</MenuLink>
           <MenuLink to="/settings">Settings</MenuLink>
           <MenuLink to="/help">Help</MenuLink>
         </div>
@@ -276,14 +282,12 @@ class SideBar extends Component {
               if (account.getTotalBalance() > 0) {
                 accountBalance = account.getTotalBalance() / 100000000;
               }
-              if (account.getAccountName() !== 'imported') {
-                return(
-                  <div style={styles.menuTotalBalanceExtendedBottomAccount} key={account.getAccountName()}>
-                    <div style={styles.menuTotalBalanceExtendedBottomAccountName}>{account.getAccountName()}</div>
-                    <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>{accountBalance}</div>
-                  </div>
-                );
-              }
+              return(
+                <div style={styles.menuTotalBalanceExtendedBottomAccount} key={account.getAccountName()}>
+                  <div style={styles.menuTotalBalanceExtendedBottomAccountName}>{account.getAccountName()}</div>
+                  <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>{accountBalance}</div>
+                </div>
+              );
             }) : <div></div>}
           </div>
         </div>
@@ -291,7 +295,7 @@ class SideBar extends Component {
           <div style={styles.menuBottomTotalBalanceShort} onMouseEnter={() => {this.showAccounts();}} onMouseLeave={() => {this.hideAccounts();}}>
             <div style={styles.menuBottomTotalBalanceShortSeperator}></div>
             <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
-            <div style={styles.menuBottomTotalBalanceShortValue}>{balance.toString()}</div>
+            <div style={styles.menuBottomTotalBalanceShortValue}>{totalBalance.toString()}</div>
           </div>
           {synced && getAccountsResponse !== null ?
             <div style={styles.menuBottomLatestBlock}>

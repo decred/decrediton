@@ -26,7 +26,6 @@ function getWalletServiceSuccess(walletService) {
     setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 20);
     setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNextAddressAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getBalanceAttempt()); }, 1000);
     setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
     setTimeout(() => { dispatch(getTicketPriceAttempt()); }, 1000);
     setTimeout(() => { dispatch(getPingAttempt()); }, 1000);
@@ -111,32 +110,52 @@ function getBalanceError(error) {
   return { error, type: GETBALANCE_FAILED };
 }
 
-function getBalanceSuccess(getBalanceResponse) {
-  return { getBalanceResponse: getBalanceResponse, type: GETBALANCE_SUCCESS };
-}
-
-export function getBalanceAttempt(accountNumber, requiredConfs) {
-  var request = new BalanceRequest();
-  request.setAccountNumber(accountNumber);
-  request.setRequiredConfirmations(requiredConfs);
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: GETBALANCE_ATTEMPT
-    });
-    dispatch(getBalanceAction());
+function getBalanceSuccess(accountNumber, accountName, getBalanceResponse) {
+  return (dispatch, getState) => {
+    const { balances } = getState().grpc;
+    var updatedBalance = {
+      accountNumber: accountNumber,
+      accountName: accountName,
+      total: getBalanceResponse.getTotal(),
+      spendable: getBalanceResponse.getTotal(),
+      immatureReward: getBalanceResponse.getImmatureReward(),
+      immatureStakeGeneration: getBalanceResponse.getImmatureStakeGeneration(),
+      lockedByTickets: getBalanceResponse.getLockedByTickets(),
+      votingAuthority: getBalanceResponse.getVotingAuthority(),
+    };
+    var updatedBalances = balances;
+    var found = false;
+    for (var i = 0; i < balances.length; i++) {
+      if (balances[i].accountNumber == accountNumber) {
+        updatedBalances[i] = updatedBalance;
+        found = true;
+      }
+    }
+    if (updatedBalances.length == 0 || !found) {
+      updatedBalances.push(updatedBalance);
+    }
+    dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS });
   };
 }
 
-function getBalanceAction() {
+export function getBalanceAttempt(accountNumber, requiredConfs, accountName) {
+  return (dispatch) => {
+    dispatch(getBalanceAction(accountNumber, requiredConfs, accountName));
+  };
+}
+
+function getBalanceAction(accountNumber, requiredConfs, accountName) {
+  var request = new BalanceRequest();
+  request.setAccountNumber(accountNumber);
+  request.setRequiredConfirmations(requiredConfs);
   return (dispatch, getState) => {
-    const { walletService, getBalanceRequest } = getState().grpc;
-    walletService.balance(getBalanceRequest,
+    const { walletService } = getState().grpc;
+    walletService.balance(request,
       function (err, getBalanceResponse) {
         if (err) {
           dispatch(getBalanceError(err + ' please try again'));
         } else {
-          dispatch(getBalanceSuccess(getBalanceResponse));
+          dispatch(getBalanceSuccess(accountNumber, accountName, getBalanceResponse));
         }
       });
   };
@@ -357,7 +376,12 @@ function getAccountsError(error) {
 }
 
 function getAccountsSuccess(getAccountsResponse) {
-  return { response: getAccountsResponse, type: GETACCOUNTS_SUCCESS };
+  return (dispatch) => {
+    for (var i = 0; i < getAccountsResponse.getAccountsList().length; i++) {
+      dispatch(getBalanceAttempt(getAccountsResponse.getAccountsList()[i].getAccountNumber(), 0, getAccountsResponse.getAccountsList()[i].getAccountName()));
+    }
+    dispatch({response: getAccountsResponse, type: GETACCOUNTS_SUCCESS });
+  };
 }
 
 export function getAccountsAttempt() {

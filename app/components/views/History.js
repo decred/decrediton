@@ -85,7 +85,7 @@ class History extends Component{
   }
 
   render() {
-    const { walletService, getBalanceResponse, getAccountsResponse } = this.props;
+    const { walletService, balances, getAccountsResponse } = this.props;
     const { txPerPage } = this.props;
     const { regularTransactionsInfo, ticketTransactionsInfo, voteTransactionsInfo, revokeTransactionsInfo } = this.props;
     const { getNetworkResponse } = this.props;
@@ -111,12 +111,17 @@ class History extends Component{
           <option style={HistoryStyles.selectTxTypesN} value='Revokes' label='Revokes' disabled={revokeTransactionsInfo.length == 0}/>
         </select>
       </div>);
-
+    var totalBalance = 0;
+    if (balances !== null) {
+      for (var i = 0; i < balances.length; i++) {
+        totalBalance += balances[i].spendable;
+      }
+    }
     const historyView = (
       <div style={HistoryStyles.view}>
         <Header
           headerTitleOverview="Available Balance"
-          headerMetaOverview={<Balance amount={getBalanceResponse !== null ? getBalanceResponse.getTotal() : 0} />}
+          headerMetaOverview={<Balance amount={totalBalance} />}
         />
         <div style={HistoryStyles.content}>
           <div style={HistoryStyles.contentTitle}>
