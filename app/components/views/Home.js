@@ -56,7 +56,7 @@ class Home extends Component{
     var totalBalance = 0;
     if (balances !== null) {
       for (var i = 0; i < balances.length; i++) {
-        totalBalance += balances[i].total;
+        totalBalance += balances[i].spendable;
       }
     }
     const homeView = (
