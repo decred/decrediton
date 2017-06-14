@@ -9,19 +9,35 @@ import SlateGrayButton from '../SlateGrayButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import { AccountStyles, StakePoolStyles } from './ViewStyles.js';
 import AccountRow from '../AccountRow';
+import BalanceOverviewInfoModal from '../BalanceOverviewInfoModal';
+import PurchaseTicketsInfoButton from '../PurchaseTicketsInfoButton';
 
 class BalanceView extends Component{
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      balanceOverviewInfoModal: false
+    }
+  }
+  showBalanceOverviewInfoModal() {
+    this.setState({balanceOverviewInfoModal: true});
+  }
+  closeBalanceOverviewInfoModal() {
+    this.setState({balanceOverviewInfoModal: false});
+  }
+  render() {    
+    var balanceOverviewInfoModal = (
+        <BalanceOverviewInfoModal closeModal={()=>this.closeBalanceOverviewInfoModal()}/>
+    );
     const { getAccountsResponse, balances, walletService } = this.props;
     const accountsView = (
-      <div style={AccountStyles.view}>
-        <Header
-          headerTitleOverview="Balance Overview"
-        />
-        <div style={StakePoolStyles.content}>
-          <div style={StakePoolStyles.flexHeight}>
-            <div style={StakePoolStyles.contentNestFromAddress}>
-              <div style={StakePoolStyles.contentNestPrefixConfigured}>Current Balances:</div>
+        <div style={StakePoolStyles.contentPurchaseTicketView}>
+          <div style={StakePoolStyles.flexHeightBalanceOverview}>
+            <div style={StakePoolStyles.contentNestBalanceOverview}>
+              <div style={StakePoolStyles.contentNestPrefixBalanceOverview}>Current Balances:</div>
+              <div style={StakePoolStyles.contentNestContentBalanceOverview}>
+                <PurchaseTicketsInfoButton onClick={() => this.showBalanceOverviewInfoModal()}/>
+              </div>
             </div>
           {balances !== null ?
             <div id="dynamicInput">
@@ -76,7 +92,6 @@ class BalanceView extends Component{
             <div></div>
             }
             </div>
-        </div>
       </div>);
     if (walletService === null) {
       return (<ErrorScreen />);
@@ -84,7 +99,12 @@ class BalanceView extends Component{
       return(
         <div style={AccountStyles.body}>
           <SideBar />
-          {accountsView}
+          <div style={AccountStyles.view}>
+            <Header
+              headerTitleOverview="Balance Overview"
+            />
+            {this.state.balanceOverviewInfoModal ? balanceOverviewInfoModal : accountsView}
+          </div>
         </div>);
     }
   }

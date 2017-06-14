@@ -2071,6 +2071,14 @@ export const StakePoolStyles = {
     overflowY: 'auto',
     overflowX: 'hidden',
   },
+  flexHeightBalanceOverview: {
+    paddingTop: '1px',
+    backgroundColor: '#fff',
+    height:'553px',
+    float: 'left',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+  },
   flexHeightHidden: {
     paddingTop: '1px',
     backgroundColor: '#fff',
