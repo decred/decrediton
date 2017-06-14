@@ -122,7 +122,7 @@ function getBalanceSuccess(accountNumber, accountName, getBalanceResponse) {
       immatureStakeGeneration: getBalanceResponse.getImmatureStakeGeneration(),
       lockedByTickets: getBalanceResponse.getLockedByTickets(),
       votingAuthority: getBalanceResponse.getVotingAuthority(),
-    }
+    };
     var updatedBalances = balances;
     var found = false;
     for (var i = 0; i < balances.length; i++) {
@@ -135,7 +135,7 @@ function getBalanceSuccess(accountNumber, accountName, getBalanceResponse) {
       updatedBalances.push(updatedBalance);
     }
     dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS });
-  }
+  };
 }
 
 export function getBalanceAttempt(accountNumber, requiredConfs, accountName) {
@@ -381,7 +381,7 @@ function getAccountsSuccess(getAccountsResponse) {
       dispatch(getBalanceAttempt(getAccountsResponse.getAccountsList()[i].getAccountNumber(), 0, getAccountsResponse.getAccountsList()[i].getAccountName()));
     }
     dispatch({response: getAccountsResponse, type: GETACCOUNTS_SUCCESS });
-  }
+  };
 }
 
 export function getAccountsAttempt() {

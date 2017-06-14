@@ -1,14 +1,10 @@
 // @flow
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import ErrorScreen from '../ErrorScreen';
 import SideBar from '../SideBar';
 import Header from '../Header';
 import Balance from '../Balance';
-import KeyBlueButton from '../KeyBlueButton';
-import SlateGrayButton from '../SlateGrayButton';
-import CircularProgress from 'material-ui/CircularProgress';
 import { AccountStyles, StakePoolStyles } from './ViewStyles.js';
-import AccountRow from '../AccountRow';
 import BalanceOverviewInfoModal from '../BalanceOverviewInfoModal';
 import BalanceOverviewInfoButton from '../BalanceOverviewInfoButton';
 
@@ -17,7 +13,7 @@ class BalanceView extends Component{
     super(props);
     this.state = {
       balanceOverviewInfoModal: false
-    }
+    };
   }
   showBalanceOverviewInfoModal() {
     this.setState({balanceOverviewInfoModal: true});
@@ -25,11 +21,11 @@ class BalanceView extends Component{
   closeBalanceOverviewInfoModal() {
     this.setState({balanceOverviewInfoModal: false});
   }
-  render() {    
+  render() {
     var balanceOverviewInfoModal = (
         <BalanceOverviewInfoModal closeModal={()=>this.closeBalanceOverviewInfoModal()}/>
     );
-    const { getAccountsResponse, balances, walletService } = this.props;
+    const { balances, walletService } = this.props;
     const accountsView = (
         <div style={StakePoolStyles.contentPurchaseTicketView}>
           <div style={StakePoolStyles.flexHeightBalanceOverview}>
