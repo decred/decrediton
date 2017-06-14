@@ -1,5 +1,5 @@
 import { transactionNtfs, accountNtfs } from '../middleware/grpc/client';
-import { getAccountsAttempt, getBalanceAttempt, getStakeInfoAttempt,
+import { getAccountsAttempt, getStakeInfoAttempt,
   getTicketPriceAttempt, getNetworkAttempt } from './ClientActions';
 import { timeBackString } from '../helpers/dateFormat.js';
 import { reverseHash } from '../helpers/byteActions';

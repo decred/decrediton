@@ -26,7 +26,6 @@ function getWalletServiceSuccess(walletService) {
     setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 20);
     setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNextAddressAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getBalanceAttempt()); }, 1000);
     setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
     setTimeout(() => { dispatch(getTicketPriceAttempt()); }, 1000);
     setTimeout(() => { dispatch(getPingAttempt()); }, 1000);

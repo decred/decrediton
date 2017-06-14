@@ -1,4 +1,4 @@
-import { getBalanceAttempt, getTransactionInfoAttempt, getAccountsAttempt } from './ClientActions';
+import { getAccountsAttempt, getTransactionInfoAttempt } from './ClientActions';
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   ConstructTransactionRequest, SignTransactionRequest,
@@ -124,7 +124,7 @@ function rescanProgress(rescanResponse) {
 function rescanComplete() {
   return (dispatch) => {
     dispatch({ type: RESCAN_COMPLETE });
-    setTimeout( () => {dispatch(getBalanceAttempt());}, 1000);
+    setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
     setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
   };
 }
