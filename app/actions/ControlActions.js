@@ -515,9 +515,9 @@ function publishTransactionError(error) {
 
 function publishTransactionSuccess(publishTransactionResponse) {
   return (dispatch) => {
-    disaptch({ publishTransactionResponse: Buffer.from(publishTransactionResponse.getTransactionHash()), type: PUBLISHTX_SUCCESS });
-    dispatch(getAccountsResponse());
-  }
+    dispatch({ publishTransactionResponse: Buffer.from(publishTransactionResponse.getTransactionHash()), type: PUBLISHTX_SUCCESS });
+    dispatch(getAccountsAttempt());
+  };
 }
 
 export function publishTransactionAttempt(tx) {
@@ -602,7 +602,7 @@ function purchaseTicketsSuccess(purchaseTicketsResponse) {
     var success = 'You successfully purchased ' + purchaseTicketsResponse.getTicketHashesList().length + ' tickets.';
     dispatch({ success: success, purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
     dispatch(getAccountsAttempt());
-  }
+  };
 }
 
 export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requiredConf,

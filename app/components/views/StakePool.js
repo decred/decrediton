@@ -51,7 +51,7 @@ class StakePool extends Component{
     }
     var defaultSpendLimit = 0;
     if (this.props.balances != null) {
-      for (var i = 0; i < this.props.balances.length; i++) {
+      for (i = 0; i < this.props.balances.length; i++) {
         if (this.props.balances[i].accountName == 'default') {
           defaultSpendLimit = this.props.balances[i].spendable;
         }
@@ -129,7 +129,7 @@ class StakePool extends Component{
       }
     }
     if (this.props.getVoteChoicesResponse !== nextProps.getVoteChoicesResponse) {
-      for (var i = 0; i < nextProps.getVoteChoicesResponse.getChoicesList().length; i++) {
+      for (i = 0; i < nextProps.getVoteChoicesResponse.getChoicesList().length; i++) {
         if (nextProps.getVoteChoicesResponse.getChoicesList()[i].getAgendaId() == this.state.agendaDisplay.getId()) {
           this.setState({selectedChoice: nextProps.getVoteChoicesResponse.getChoicesList()[i].getChoiceId()});
           break;
@@ -298,7 +298,7 @@ class StakePool extends Component{
           break;
         }
       }
-      console.log("update spendlimit account", updatedAccountSpendLimit);
+      console.log('update spendlimit account', updatedAccountSpendLimit);
       this.setState({spendLimit: updatedAccountSpendLimit});
     }
   }
@@ -472,11 +472,10 @@ class StakePool extends Component{
           >
           {balances !== null ?
             balances.map((account) => {
-              var accountBalance
               if (account.accountName !== 'imported') {
                 return (
                   <option style={StakePoolStyles.selectPurchaseTicketsN} key={account.accountNumber} value={account.accountNumber}>
-                    {account.accountName}: {account.spendable / 100000000} 
+                    {account.accountName}: {account.spendable / 100000000}
                   </option>
                 );
               }
@@ -861,7 +860,7 @@ class StakePool extends Component{
             </KeyBlueButton>
             {getTicketPriceResponse !== null && this.state.spendLimit < getTicketPriceResponse.getTicketPrice() ?
             <span style={{color: 'red', float: 'left', paddingLeft: '20px', paddingTop: '19px'}}>
-              Insufficient spendable account balance to purchase tickets. 
+              Insufficient spendable account balance to purchase tickets.
             </span> :
             <div/>
             }
