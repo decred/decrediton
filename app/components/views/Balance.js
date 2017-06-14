@@ -10,7 +10,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import { AccountStyles, StakePoolStyles } from './ViewStyles.js';
 import AccountRow from '../AccountRow';
 import BalanceOverviewInfoModal from '../BalanceOverviewInfoModal';
-import PurchaseTicketsInfoButton from '../PurchaseTicketsInfoButton';
+import BalanceOverviewInfoButton from '../BalanceOverviewInfoButton';
 
 class BalanceView extends Component{
   constructor(props) {
@@ -36,7 +36,7 @@ class BalanceView extends Component{
             <div style={StakePoolStyles.contentNestBalanceOverview}>
               <div style={StakePoolStyles.contentNestPrefixBalanceOverview}>Current Balances:</div>
               <div style={StakePoolStyles.contentNestContentBalanceOverview}>
-                <PurchaseTicketsInfoButton onClick={() => this.showBalanceOverviewInfoModal()}/>
+                <BalanceOverviewInfoButton onClick={() => this.showBalanceOverviewInfoModal()}/>
               </div>
             </div>
           {balances !== null ?
