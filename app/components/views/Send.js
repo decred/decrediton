@@ -29,14 +29,36 @@ class Send extends Component{
   constructor(props) {
     super(props);
 
+    var defaultSpendable = 0;
+    if (this.props.balances != null) {
+      for (var i = 0; i < this.props.balances.length; i++) {
+        if (this.props.balances[i].accountNumber == 0) {
+          defaultSpendable = this.props.balances[i].spendable;
+        }
+      }
+    }
     this.state = {
       privpass: '',
       rawTx: '',
       account: 0,
+      accountSpendable: defaultSpendable,
       confirmations: 0,
       outputs: [{key:0, destination: null, amount: null, addressError: null, amountError: null}],
+      totalOutputAmount: 0,
       privPassError: null,
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.balances != nextProps.balances) {
+      var newAccountSpendableBalance = 0;
+      for (var i = 0; i < nextProps.balances; i++) {
+        if (nextProps.balances[i].accountNumber == this.state.account) {
+          newAccountSpendableBalance = nextProps.balances[i].spendable;
+          break;
+        }
+      }
+      this.setState({accountSpendable: newAccountSpendableBalance});
+    }
   }
   componentWillMount() {
     this.props.clearConstructTxError();
@@ -46,7 +68,7 @@ class Send extends Component{
   }
 
   clearTransactionData() {
-    this.setState({account:0, confirmations: 0, outputs: [{key:0, destination: null, amount: null, addressError: null, amountError: null}]});
+    this.setState({totalOutputAmount: 0, account: 0, confirmations: 0, outputs: [{key:0, destination: null, amount: null, addressError: null, amountError: null}]});
     this.props.clearTransaction();
   }
   submitSignPublishTx() {
@@ -91,7 +113,11 @@ class Send extends Component{
     var updateOutputs = this.state.outputs.filter(output => {
       return (output.key != outputKey);
     });
-    this.setState({ outputs: updateOutputs});
+    var totalOutputAmount = 0;
+    for (var i = 0; i < updateOutputs.length; i++){
+      totalOutputAmount += updateOutputs[i].amount;
+    }
+    this.setState({ totalOutputAmount: totalOutputAmount, outputs: updateOutputs});
   }
   updateOutputDestination(outputKey, dest) {
     // do some more helper address checking here
@@ -108,6 +134,16 @@ class Send extends Component{
   }
   updateAccountNumber(accountNum) {
     this.setState({account: accountNum});
+    if (this.props.balances !== null) {
+      var updatedAccountSpendable = 0;
+      for (var i = 0; i < this.props.balances.length; i++) {
+        if (this.props.balances[i].accountNumber == accountNum) {
+          updatedAccountSpendable = this.props.balances[i].spendable;
+          break;
+        }
+      }
+      this.setState({accountSpendable: updatedAccountSpendable});
+    }
   }
   updateOutputAmount(outputKey, amount, unitLabel) {
     // Default to DCR.
@@ -125,7 +161,11 @@ class Send extends Component{
       updateOutputs[outputKey].amount = amount * units;
       updateOutputs[outputKey].amountError = null;
     }
-    this.setState({ outputs: updateOutputs });
+    var totalOutputAmount = 0;
+    for (var i = 0; i < updateOutputs.length; i++){
+      totalOutputAmount += updateOutputs[i].amount;
+    }
+    this.setState({ totalOutputAmount: totalOutputAmount, outputs: updateOutputs });
   }
   updatePrivPass(privpass) {
     if (privpass != '') {
@@ -140,7 +180,7 @@ class Send extends Component{
     const { constructTxResponse, constructTxError, constructTxRequestAttempt } = this.props;
     const { publishTransactionResponse, publishTransactionError, publishTransactionRequestAttempt } = this.props;
     const { signTransactionError, signTransactionRequestAttempt } = this.props;
-    const { getAccountsResponse } = this.props;
+    const { balances } = this.props;
     const { getNetworkResponse } = this.props;
 
     var unitLabel = currentSettings.currencyDisplay;
@@ -238,12 +278,12 @@ class Send extends Component{
           style={SendStyles.selectAccount}
           onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
           >
-          {getAccountsResponse !== null ?
-            getAccountsResponse.getAccountsList().map((account) => {
-              if (account.getAccountName() !== 'imported') {
+          {balances !== null ?
+            balances.map((account) => {
+              if (account.accountName !== 'imported') {
                 return (
-                  <option style={SendStyles.selectAccountN} key={account.getAccountNumber()} value={account.getAccountNumber()}>
-                    {account.getAccountName()}
+                  <option style={SendStyles.selectAccountN} key={account.accountNumber} value={account.accountNumber}>
+                    {account.accountName}: {account.spendable / 100000000} 
                   </option>
                 );
               }
@@ -292,7 +332,7 @@ class Send extends Component{
                           style={SendStyles.sendAddressInputAmount}
                           key={'amount'+output.key}
                           placeholder="Amount"
-                          onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
+                          onChange={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
                       </div>
                     </div>
                   </div>
@@ -348,9 +388,25 @@ class Send extends Component{
               }})}
               </div>
             </div>
-            <KeyBlueButton style={SendStyles.contentSend} onClick={() => this.submitConstructTx()}>
-              Send
-            </KeyBlueButton>
+            <div style={SendStyles.sendButtonArea}>
+              <KeyBlueButton style={SendStyles.contentSend} disabled={this.state.accountSpendable < this.state.totalOutputAmount && this.state.totalOutputAmount > 0} onClick={this.state.accountSpendable < this.state.totalOutputAmount && this.state.totalOutputAmount > 0 ? null : () => this.submitConstructTx()}>
+                Send
+              </KeyBlueButton>
+              {this.state.accountSpendable < this.state.totalOutputAmount && this.state.totalOutputAmount > 0 ?
+              <span style={{color: 'red', float: 'left', paddingLeft: '20px', paddingTop: '30px'}}>
+                Insufficient spendable account balance to send specified amount.
+              </span> :
+              <div/>
+              }
+              <div style={SendStyles.totalAmountSend}>
+                <div style={SendStyles.totalAmountSendText}>
+                  Total amount sending:
+                </div>
+                <div style={SendStyles.totalAmountSendAmount}>
+                  <Balance amount={this.state.totalOutputAmount}/>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
     );

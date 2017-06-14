@@ -525,6 +525,7 @@ export const SendStyles = {
     fontSize: '13px',
   },
   contentSend: {
+    float: 'left',
     marginTop: '20px',
   },
   contentSendSection: {
@@ -542,7 +543,7 @@ export const SendStyles = {
     float: 'left',
     textTransform: 'capitalize',
   },
-  ontentSendSectionAmount: {
+  contentSendSectionAmount: {
     width: '160px',
     height: '100%',
     paddingTop: '1px',
@@ -573,6 +574,28 @@ export const SendStyles = {
   loading: {
     marginTop: '110px',
     marginLeft: '268px',
+  },
+  totalAmountSend: {
+    float: 'right',
+    width: '275px',
+    marginTop: '10px',
+    paddingRight: '10px',
+    fontSize: '20px',
+    textAlign: 'right',
+  },
+  totalAmountSendText: {
+    float: 'right',
+    paddingBottom: '5px',
+    width: '100%',
+  },
+  totalAmountSendAmount: {
+    float: 'right',
+    width: '100%',
+    fontFamily: 'Inconsolata, monospace',
+  },
+  sendButtonArea: {
+    width: '100%',
+    height: '50px',
   }
 };
 export const HomeStyles = {

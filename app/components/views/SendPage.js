@@ -17,7 +17,7 @@ function mapStateToProps(state) {
     publishTransactionResponse: state.control.publishTransactionResponse,
     publishTransactionRequestAttempt: state.control.publishTransactionRequestAttempt,
     publishTransactionError: state.control.publishTransactionError,
-    getAccountsResponse: state.grpc.getAccountsResponse,
+    balances: state.grpc.balances,
     getNetworkResponse: state.grpc.getNetworkResponse,
   };
 }
