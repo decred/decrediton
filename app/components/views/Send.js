@@ -283,7 +283,7 @@ class Send extends Component{
               if (account.accountName !== 'imported') {
                 return (
                   <option style={SendStyles.selectAccountN} key={account.accountNumber} value={account.accountNumber}>
-                    {account.accountName}: {account.spendable / 100000000} 
+                    {account.accountName}: {account.spendable / 100000000}
                   </option>
                 );
               }
