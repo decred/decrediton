@@ -64,7 +64,7 @@ class BalanceView extends Component{
                       <Balance amount={balance.immatureReward}/>
                     </div>
                   </div>
-                  <div style={StakePoolStyles.contentNestBalanceOverviewBottom}>
+                  <div style={StakePoolStyles.contentNestBalanceOverview}>
                     <div style={StakePoolStyles.contentNestPrefixBalanceOverview}>Immature Stake Generation:</div>
                     <div style={StakePoolStyles.contentNestContentBalanceOverview}>
                       <Balance amount={balance.immatureStakeGeneration}/>
