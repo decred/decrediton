@@ -68,7 +68,7 @@ class StakePool extends Component{
       passphraseModalOpen: false,
       spendLimit: defaultSpendLimit,
       conf: 0,
-      numTickets: 0,
+      numTickets: 1,
       expiry: 16,
       txFee: 0.01, // DCR/kB
       ticketFee: 0.01, // DCR/kB
@@ -306,7 +306,7 @@ class StakePool extends Component{
     this.setState({numTickets: this.state.numTickets + 1, numTicketsError: null});
   }
   decrementNumTickets() {
-    if (this.state.numTickets > 0) {
+    if (this.state.numTickets > 1) {
       this.setState({numTickets: this.state.numTickets - 1});
     }
   }
@@ -855,15 +855,23 @@ class StakePool extends Component{
               <div style={StakePoolStyles.poolFeeIcon}>{this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolFees : null}%</div>
             </div>
           </div>
-          <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} disabled={getTicketPriceResponse !== null ? this.state.spendLimit < getTicketPriceResponse.getTicketPrice() || this.state.numTickets <= 0: true} onClick={getTicketPriceResponse !== null ? this.state.spendLimit < getTicketPriceResponse.getTicketPrice() || this.state.numTickets <= 0 ? null : () => this.showPassphraseModal(purchaseTicketHeading, purchaseTicketDescription, purchaseTicketFunc) : null}>
-            Purchase
-          </KeyBlueButton>
-          <KeyBlueButton style={StakePoolStyles.contentImportScriptButton} onClick={() => this.showImportScriptModal(importScriptHeading, importScriptDescription, importScriptFunc)}>
-            Import Script
-          </KeyBlueButton>
-          <KeyBlueButton style={StakePoolStyles.contentRevokeButton} onClick={() => this.showPassphraseModal(revokeTicketHeading, revokeTicketDescription, revokeTicketFunc)}>
-            Revoke
-          </KeyBlueButton>
+          <div>
+            <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} disabled={getTicketPriceResponse !== null ? this.state.spendLimit < getTicketPriceResponse.getTicketPrice() || this.state.numTickets <= 0: true} onClick={getTicketPriceResponse !== null ? this.state.spendLimit < getTicketPriceResponse.getTicketPrice() || this.state.numTickets <= 0 ? null : () => this.showPassphraseModal(purchaseTicketHeading, purchaseTicketDescription, purchaseTicketFunc) : null}>
+              Purchase
+            </KeyBlueButton>
+            {getTicketPriceResponse !== null && this.state.spendLimit < getTicketPriceResponse.getTicketPrice() ?
+            <span style={{color: 'red', float: 'left', paddingLeft: '20px', paddingTop: '19px'}}>
+              Insufficient spendable account balance to purchase tickets. 
+            </span> :
+            <div/>
+            }
+            <KeyBlueButton style={StakePoolStyles.contentImportScriptButton} onClick={() => this.showImportScriptModal(importScriptHeading, importScriptDescription, importScriptFunc)}>
+              Import Script
+            </KeyBlueButton>
+            <KeyBlueButton style={StakePoolStyles.contentRevokeButton} onClick={() => this.showPassphraseModal(revokeTicketHeading, revokeTicketDescription, revokeTicketFunc)}>
+              Revoke
+            </KeyBlueButton>
+          </div>
           <div style={StakePoolStyles.areaSpacing}></div>
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Automatic Purchase</div>
