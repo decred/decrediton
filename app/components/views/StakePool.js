@@ -445,7 +445,7 @@ class StakePool extends Component{
     const { walletService } = this.props;
     const { ticketBuyerService } = this.props;
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
-    const { currentStakePoolConfigSuccessMessage, getAccountsResponse, purchaseTicketsRequestAttempt } = this.props;
+    const { currentStakePoolConfigSuccessMessage, balances, purchaseTicketsRequestAttempt } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
     const { revokeTicketsError, revokeTicketsSuccess } = this.props;
     const { importScriptError, importScriptSuccess } = this.props;
@@ -470,12 +470,13 @@ class StakePool extends Component{
           style={StakePoolStyles.selectPurchaseTickets}
           onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
           >
-          {getAccountsResponse !== null ?
-            getAccountsResponse.getAccountsList().map((account) => {
-              if (account.getAccountName() !== 'imported') {
+          {balances !== null ?
+            balances.map((account) => {
+              var accountBalance
+              if (account.accountName !== 'imported') {
                 return (
-                  <option style={StakePoolStyles.selectPurchaseTicketsN} key={account.getAccountNumber()} value={account.getAccountNumber()}>
-                    {account.getAccountName()}
+                  <option style={StakePoolStyles.selectPurchaseTicketsN} key={account.accountNumber} value={account.accountNumber}>
+                    {account.accountName}: {account.spendable / 100000000} 
                   </option>
                 );
               }
