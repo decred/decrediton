@@ -64,7 +64,6 @@ class BalanceOverviewInfoModal extends React.Component {
             <span style={styles.highlightTextSkyBlue}>Voting Authority</span> - This balance shows the total amount that this account has voting authority over.  For example, if you use a voting-only wallet this will show that total amount controlled.
             <br/>
             <br/>
-            <br/>
             <span style={styles.highlightTextSkyBlue}>Immature Rewards</span> - These are regular coinbase rewards that are currently maturing (from PoW mining reward for instance).
             <br/>
             <br/>
