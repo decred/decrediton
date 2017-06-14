@@ -49,6 +49,14 @@ class StakePool extends Component{
         }
       }
     }
+    var defaultSpendLimit = 0;
+    if (this.props.balances != null) {
+      for (i = 0; i < this.props.balances.length; i++) {
+        if (this.props.balances[i].accountName == 'default') {
+          defaultSpendLimit = this.props.balances[i].spendable;
+        }
+      }
+    }
     this.state = {
       stakePoolHost: initStakePoolHost,
       apiKey: '',
@@ -58,9 +66,9 @@ class StakePool extends Component{
       purchaseTicketsStakePoolConfig: false,
       showPurchaseInfoModal: false,
       passphraseModalOpen: false,
-      spendLimit: this.props.getBalanceResponse != null ? this.props.getBalanceResponse.getSpendable() : 0,
+      spendLimit: defaultSpendLimit,
       conf: 0,
-      numTickets: 0,
+      numTickets: 1,
       expiry: 16,
       txFee: 0.01, // DCR/kB
       ticketFee: 0.01, // DCR/kB
@@ -100,8 +108,15 @@ class StakePool extends Component{
     };
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.getBalanceResponse != nextProps.getBalanceResponse) {
-      this.setState({spendLimit: nextProps.getBalanceResponse.getSpendable()});
+    if (this.props.balances != nextProps.balances) {
+      var newAccountSpendableBalance = 0;
+      for (var i = 0; i < nextProps.balances; i++) {
+        if (nextProps.balances[i].accountNumber == this.state.account) {
+          newAccountSpendableBalance = nextProps.balances[i].spendable;
+          break;
+        }
+      }
+      this.setState({spendLimit: newAccountSpendableBalance});
     }
     if (this.props.currentStakePoolConfig != nextProps.currentStakePoolConfig) {
       for (var j = 0; j < nextProps.currentStakePoolConfig.length; j++) {
@@ -114,7 +129,7 @@ class StakePool extends Component{
       }
     }
     if (this.props.getVoteChoicesResponse !== nextProps.getVoteChoicesResponse) {
-      for (var i = 0; i < nextProps.getVoteChoicesResponse.getChoicesList().length; i++) {
+      for (i = 0; i < nextProps.getVoteChoicesResponse.getChoicesList().length; i++) {
         if (nextProps.getVoteChoicesResponse.getChoicesList()[i].getAgendaId() == this.state.agendaDisplay.getId()) {
           this.setState({selectedChoice: nextProps.getVoteChoicesResponse.getChoicesList()[i].getChoiceId()});
           break;
@@ -275,12 +290,23 @@ class StakePool extends Component{
   }
   updateAccountNumber(accountNum) {
     this.setState({account: accountNum});
+    if (this.props.balances !== null) {
+      var updatedAccountSpendLimit = 0;
+      for (var i = 0; i < this.props.balances.length; i++) {
+        if (this.props.balances[i].accountNumber == accountNum) {
+          updatedAccountSpendLimit = this.props.balances[i].spendable;
+          break;
+        }
+      }
+      console.log('update spendlimit account', updatedAccountSpendLimit);
+      this.setState({spendLimit: updatedAccountSpendLimit});
+    }
   }
   incrementNumTickets() {
     this.setState({numTickets: this.state.numTickets + 1, numTicketsError: null});
   }
   decrementNumTickets() {
-    if (this.state.numTickets > 0) {
+    if (this.state.numTickets > 1) {
       this.setState({numTickets: this.state.numTickets - 1});
     }
   }
@@ -419,7 +445,7 @@ class StakePool extends Component{
     const { walletService } = this.props;
     const { ticketBuyerService } = this.props;
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
-    const { currentStakePoolConfigSuccessMessage, getAccountsResponse, purchaseTicketsRequestAttempt } = this.props;
+    const { currentStakePoolConfigSuccessMessage, balances, purchaseTicketsRequestAttempt } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
     const { revokeTicketsError, revokeTicketsSuccess } = this.props;
     const { importScriptError, importScriptSuccess } = this.props;
@@ -444,12 +470,12 @@ class StakePool extends Component{
           style={StakePoolStyles.selectPurchaseTickets}
           onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
           >
-          {getAccountsResponse !== null ?
-            getAccountsResponse.getAccountsList().map((account) => {
-              if (account.getAccountName() !== 'imported') {
+          {balances !== null ?
+            balances.map((account) => {
+              if (account.accountName !== 'imported') {
                 return (
-                  <option style={StakePoolStyles.selectPurchaseTicketsN} key={account.getAccountNumber()} value={account.getAccountNumber()}>
-                    {account.getAccountName()}
+                  <option style={StakePoolStyles.selectPurchaseTicketsN} key={account.accountNumber} value={account.accountNumber}>
+                    {account.accountName}: {account.spendable / 100000000}
                   </option>
                 );
               }
@@ -828,15 +854,23 @@ class StakePool extends Component{
               <div style={StakePoolStyles.poolFeeIcon}>{this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolFees : null}%</div>
             </div>
           </div>
-          <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} onClick={() => this.showPassphraseModal(purchaseTicketHeading, purchaseTicketDescription, purchaseTicketFunc)}>
-            Purchase
-          </KeyBlueButton>
-          <KeyBlueButton style={StakePoolStyles.contentImportScriptButton} onClick={() => this.showImportScriptModal(importScriptHeading, importScriptDescription, importScriptFunc)}>
-            Import Script
-          </KeyBlueButton>
-          <KeyBlueButton style={StakePoolStyles.contentRevokeButton} onClick={() => this.showPassphraseModal(revokeTicketHeading, revokeTicketDescription, revokeTicketFunc)}>
-            Revoke
-          </KeyBlueButton>
+          <div>
+            <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} disabled={getTicketPriceResponse !== null ? this.state.spendLimit < getTicketPriceResponse.getTicketPrice() || this.state.numTickets <= 0: true} onClick={getTicketPriceResponse !== null ? this.state.spendLimit < getTicketPriceResponse.getTicketPrice() || this.state.numTickets <= 0 ? null : () => this.showPassphraseModal(purchaseTicketHeading, purchaseTicketDescription, purchaseTicketFunc) : null}>
+              Purchase
+            </KeyBlueButton>
+            {getTicketPriceResponse !== null && this.state.spendLimit < getTicketPriceResponse.getTicketPrice() ?
+            <span style={{color: 'red', float: 'left', paddingLeft: '20px', paddingTop: '19px'}}>
+              Insufficient spendable account balance to purchase tickets.
+            </span> :
+            <div/>
+            }
+            <KeyBlueButton style={StakePoolStyles.contentImportScriptButton} onClick={() => this.showImportScriptModal(importScriptHeading, importScriptDescription, importScriptFunc)}>
+              Import Script
+            </KeyBlueButton>
+            <KeyBlueButton style={StakePoolStyles.contentRevokeButton} onClick={() => this.showPassphraseModal(revokeTicketHeading, revokeTicketDescription, revokeTicketFunc)}>
+              Revoke
+            </KeyBlueButton>
+          </div>
           <div style={StakePoolStyles.areaSpacing}></div>
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Automatic Purchase</div>

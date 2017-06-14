@@ -114,7 +114,9 @@ class History extends Component{
     var totalBalance = 0;
     if (balances !== null) {
       for (var i = 0; i < balances.length; i++) {
-        totalBalance += balances[i].spendable;
+        if (balances[i].accountName !== 'imported') {
+          totalBalance += balances[i].spendable;
+        }
       }
     }
     const historyView = (
