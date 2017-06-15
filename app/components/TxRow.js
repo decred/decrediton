@@ -145,6 +145,69 @@ const styles = {
     },
     transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s'
   },
+
+  transactionInOverview: {
+    height: '52px',
+    paddingRight: '45px',
+    paddingLeft: '56px',
+    borderBottom: '1px solid #e7eaed',
+    backgroundColor: '#fff',
+    cursor: 'default',
+    backgroundImage: `url(${PlusSmall})`,
+    backgroundPosition: '20px 50%',
+    backgroundSize: '16px 16px',
+    backgroundRepeat: 'no-repeat',
+  },
+
+  transactionOutOverview: {
+    height: '52px',
+    paddingRight: '45px',
+    paddingLeft: '56px',
+    borderBottom: '1px solid #e7eaed',
+    backgroundColor: '#fff',
+    cursor: 'default',
+    backgroundImage: `url(${MinusSmall})`,
+    backgroundPosition: '20px 50%',
+    backgroundSize: '16px 16px',
+    backgroundRepeat: 'no-repeat',
+  },
+
+  ticketTxOverview: {
+    height: '52px',
+    paddingRight: '45px',
+    paddingLeft: '56px',
+    borderBottom: '1px solid #e7eaed',
+    backgroundColor: '#fff',
+    cursor: 'default',
+    backgroundImage: `url(${TicketSmall})`,
+    backgroundPosition: '20px 50%',
+    backgroundSize: '16px 16px',
+    backgroundRepeat: 'no-repeat',
+  },
+  voteTxOverview: {
+    height: '52px',
+    paddingRight: '45px',
+    paddingLeft: '56px',
+    borderBottom: '1px solid #e7eaed',
+    backgroundColor: '#fff',
+    cursor: 'default',
+    backgroundImage: `url(${TicketSmall})`,
+    backgroundPosition: '20px 50%',
+    backgroundSize: '16px 16px',
+    backgroundRepeat: 'no-repeat',
+  },
+  revokeTxOverview: {
+    height: '52px',
+    paddingRight: '45px',
+    paddingLeft: '56px',
+    borderBottom: '1px solid #e7eaed',
+    backgroundColor: '#fff',
+    cursor: 'default',
+    backgroundImage: `url(${TicketSmall})`,
+    backgroundPosition: '20px 50%',
+    backgroundSize: '16px 16px',
+    backgroundRepeat: 'no-repeat',
+  },
   transactionAmount: {
     width: '44%',
     height: '35px',
@@ -227,7 +290,7 @@ class TxRow extends Component {
     const { type } = this.props;
     if (type == TransactionDetails.TransactionType.TICKET_PURCHASE) {
       return (
-        <div style={styles.ticketTx} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
+        <div style={showTxDetail !== undefined ? styles.ticketTx : styles.ticketTxOverview} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:console.log(showTxDetail)}>
           <div style={styles.transactionAmount}>
             Ticket
           </div>
@@ -242,7 +305,7 @@ class TxRow extends Component {
     }
     if (type == TransactionDetails.TransactionType.VOTE) {
       return (
-        <div style={styles.voteTx} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
+        <div style={showTxDetail !== undefined ? styles.voteTx : styles.voteTxOverview} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
           <div style={styles.transactionAmount}>
             Vote
           </div>
@@ -257,7 +320,7 @@ class TxRow extends Component {
     }
     if (type == TransactionDetails.TransactionType.REVOCATION) {
       return (
-          <div style={styles.revokeTx} key={txInfo.tx != null ? txInfo.tx.getHash() : null} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
+          <div style={showTxDetail !== undefined ? styles.revokeTx : styles.revokeTxOverview} key={txInfo.tx != null ? txInfo.tx.getHash() : null} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
           <div style={styles.transactionAmount}>
             Revoke
           </div>
@@ -273,7 +336,7 @@ class TxRow extends Component {
     if (pending) {
       if (direction == 'out') {
         return (
-          <div style={styles.transactionOut} key={Buffer.from(txInfo.getHash()).toString('hex')}>
+          <div style={showTxDetail !== undefined ? styles.transactionOut : styles.transactionOutOverview } key={Buffer.from(txInfo.getHash()).toString('hex')}onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
             <div style={styles.transactionAmount}>
               <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
               <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
@@ -287,7 +350,7 @@ class TxRow extends Component {
             </div>);
       } else if ( direction == 'in') {
         return (
-          <div style={styles.transactionIn} key={Buffer.from(txInfo.getHash()).toString('hex')} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
+          <div style={showTxDetail !== undefined ? styles.transactionIn : styles.transactionInOverview } key={Buffer.from(txInfo.getHash()).toString('hex')} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
             <div style={styles.transactionAmount}>
               <div style={styles.transactionAmountNumber}><Balance amount={txAmount} /></div>
               <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
@@ -303,7 +366,7 @@ class TxRow extends Component {
     } else {
       if (direction == 'out') {
         return (
-          <div style={styles.transactionOut} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
+          <div style={showTxDetail !== undefined ? styles.transactionOut : styles.transactionOutOverview } key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
             <div style={styles.transactionAmount}>
               <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
               <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
@@ -318,7 +381,7 @@ class TxRow extends Component {
           </div>);
       } else if ( direction == 'in') {
         return (
-          <div style={styles.transactionIn} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
+          <div style={showTxDetail !== undefined ? styles.transactionIn : styles.transactionInOverview } key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
             <div style={styles.transactionAmount}>
               <div style={styles.transactionAmountNumber}><Balance amount={txAmount} /></div>
               <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
