@@ -149,7 +149,7 @@ class CreateWalletForm extends React.Component {
       continued: false,
       seedMnemonicHex: '',
       privpass: '',
-      seedError: '',
+      seedError: null,
       verifyError: '',
       privPassError: null,
     };
@@ -191,7 +191,7 @@ class CreateWalletForm extends React.Component {
               </form>
             </div>
             <div style={styles.inputFormError}>
-              {this.state.seedError !== '' ? this.state.seedError : ''}
+              {this.state.seedError !== null ? this.state.seedError : ''}
             </div>
           </div>
         </div>
@@ -250,7 +250,7 @@ class CreateWalletForm extends React.Component {
       if (seedConfirmation !== '' && this.props.generateRandomSeedResponse.getSeedMnemonic() != seedConfirmation) {
         this.setState({seedError:'*Seeds do not match'});
       } else {
-        this.setState({seedError:'', seed: this.props.generateRandomSeedResponse.getSeedBytes()});
+        this.setState({seedError: null, seed: this.props.generateRandomSeedResponse.getSeedBytes()});
       }
     }
   }
@@ -259,7 +259,7 @@ class CreateWalletForm extends React.Component {
       this.setState({privPassError: '*Please enter your private passphrase'});
       return;
     }
-    if (this.state.verifyError !== '' || this.state.seedError !== '' || this.state.privPassError != null ||
+    if (this.state.verifyError !== '' || this.state.seedError !== null ||
       this.state.privpass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null)) {
       return;
     }
