@@ -52,7 +52,7 @@ class StakePool extends Component{
     var defaultSpendLimit = 0;
     if (this.props.balances != null) {
       for (i = 0; i < this.props.balances.length; i++) {
-        if (this.props.balances[i].accountName == 'default') {
+        if (this.props.balances[i].accountNumber == 0) {
           defaultSpendLimit = this.props.balances[i].spendable;
         }
       }
@@ -298,7 +298,6 @@ class StakePool extends Component{
           break;
         }
       }
-      console.log('update spendlimit account', updatedAccountSpendLimit);
       this.setState({spendLimit: updatedAccountSpendLimit});
     }
   }
