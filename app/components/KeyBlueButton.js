@@ -28,6 +28,7 @@ var styles = {
     }
   },
   baseDisabled: {
+    cursor: 'default',
     display: 'inline-block',
     padding: '17px 18px 18px',
     borderRadius: '5px',
