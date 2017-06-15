@@ -3,6 +3,7 @@ import React from 'react';
 
 var styles = {
   base: {
+    cursor: 'pointer',
     display: 'inline-block',
     padding: '17px 18px 18px',
     borderRadius: '5px',
