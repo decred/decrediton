@@ -117,7 +117,7 @@ function getBalanceSuccess(accountNumber, accountName, getBalanceResponse) {
       accountNumber: accountNumber,
       accountName: accountName,
       total: getBalanceResponse.getTotal(),
-      spendable: getBalanceResponse.getTotal(),
+      spendable: getBalanceResponse.getSpendable(),
       immatureReward: getBalanceResponse.getImmatureReward(),
       immatureStakeGeneration: getBalanceResponse.getImmatureStakeGeneration(),
       lockedByTickets: getBalanceResponse.getLockedByTickets(),
