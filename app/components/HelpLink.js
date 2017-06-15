@@ -5,6 +5,7 @@ import leftLinkColor from './icons/menu-link-left-color.png';
 
 var styles = {
   linkColor: {
+    cursor: 'pointer',
     display: 'block',
     width: '50%',
     height: '53px',
