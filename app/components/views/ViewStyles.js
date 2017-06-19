@@ -202,6 +202,7 @@ export const SendStyles = {
     backgroundColor: '#f3f6f6',
   },
   viewNotificationError: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -214,6 +215,7 @@ export const SendStyles = {
     textAlign: 'center',
   },
   viewNotificationSuccess: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -1040,6 +1042,7 @@ export const StakePoolStyles = {
     backgroundColor: '#f3f6f6',
   },
   viewNotificationError: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -1052,6 +1055,7 @@ export const StakePoolStyles = {
     textAlign: 'center',
   },
   viewNotificationSuccess: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -2912,6 +2916,7 @@ export const GetStartedStyles = {
     backgroundColor: 'white',
   },
   viewNotificationError: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -2924,6 +2929,7 @@ export const GetStartedStyles = {
     textAlign: 'center',
   },
   viewNotificationSuccess: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -3115,6 +3121,7 @@ export const AccountStyles = {
     },
   },
   viewNotificationError: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -3127,6 +3134,7 @@ export const AccountStyles = {
     textAlign: 'center',
   },
   viewNotificationSuccess: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
