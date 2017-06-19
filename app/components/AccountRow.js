@@ -5,6 +5,8 @@ import Radium from 'radium';
 import Balance from './Balance';
 import ArrowRightGray from './icons/arrow-right-gray.svg';
 import ArrowRightKeyBlue from './icons/arrow-right-key-blue.svg';
+import ArrowDownMidBlue from './icons/arrow-down-mid-blue.svg';
+import ArrowDownKeyBlue from './icons/arrow-down-key-blue.svg';
 import './fonts.css';
 import { AccountStyles } from './views/ViewStyles.js';
 import WalletGray from './icons/wallet-gray.svg';
@@ -20,7 +22,6 @@ const styles = {
     backgroundPosition: '60px 24px',
     backgroundSize: '5px auto',
     backgroundRepeat: 'no-repeat',
-    transition: 'all 100ms ease-in-out 0s',
     ':hover': {
       backgroundColor: 'rgba(212, 240, 253, .5)',
       backgroundImage: `url(${ArrowRightKeyBlue})`,
@@ -92,8 +93,15 @@ const styles = {
     paddingRight: '20px',
     float: 'left',
     backgroundColor: 'transparent',
+    backgroundImage: `url(${ArrowDownMidBlue})`,
+    backgroundPosition: '57px 26px',
+    backgroundSize: '10px auto',
+    backgroundRepeat: 'no-repeat',
+    ':hover': {
+      backgroundImage: `url(${ArrowDownKeyBlue})`,
+      backgroundSize: '10px',
+    },
     cursor: 'pointer',
-    transition: 'all 100ms ease-in-out 0s',
   },
   accountRowDetailsBottom: {
     width: '100%',
