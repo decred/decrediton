@@ -148,6 +148,12 @@ const styles = {
   accountRowDetailsCfg: {
 
   },
+  accountRowLong: {
+    height: '353px',
+  },
+  accountRowShort: {
+    height: '77px',
+  },
 };
 
 class AccountRow extends Component {
@@ -161,7 +167,7 @@ class AccountRow extends Component {
   render() {
     const { account, balance } = this.props;
     return (
-        <div>
+        <div style={this.state.showAccountDetails ? styles.accountRowLong : styles.accountRowShort}>
           <div style={this.state.showAccountDetails ? styles.accountRowDetailsTop : styles.accountRow} key={account.getAccountNumber()} onClick={this.state.showAccountDetails ? () => this.setState({showAccountDetails: false}) : () => this.setState({showAccountDetails: true})}>
             <div style={styles.accountRowTopTop}>
               <div style={styles.accountRowWalletIcon}/>
@@ -176,11 +182,17 @@ class AccountRow extends Component {
           {this.state.showAccountDetails ?
             this.state.showRenameAccount ?
             <div style={styles.accountRowDetailsBottom} key={'details'+account.getAccountNumber()}>
-              <div style={AccountStyles.accountFormRow}>
-                <div style={AccountStyles.accountFormLabel}>New Account Name:</div>
-                <div style={AccountStyles.accountFormInput}>
+              <div style={styles.accountRowDetailsBottomTitle}>
+                <div style={styles.accountRowDetailsBottomTitleName}>
+                  Rename Account
+                </div>
+              </div>
+              <div style={styles.accountRowDetailsBottomSpec}>
+                <div style={styles.accountRowDetailsBottomSpecName}>New Account Name:</div>
+                <div style={styles.accountRowDetailsBottomSpecValue}>
                   <div style={AccountStyles.inputForm}>
                     <input
+                      key={'rename'+account.getAccountNumber()}
                       type="text"
                       style={AccountStyles.contentNestAddressHashTo}
                       placeholder="New Account Name"
@@ -190,6 +202,23 @@ class AccountRow extends Component {
                 </div>
                 <div style={AccountStyles.accountFormInputError}>
                   {this.state.renameAccountNameError}
+                </div>
+              </div>
+              <div style={styles.accountRowDetailsBottomSpec}>
+                <div style={styles.accountRowDetailsBottomSpecName}>Private Passphrase</div>
+                <div style={styles.accountRowDetailsBottomSpecValue}>
+                  <div style={AccountStyles.inputForm}>
+                    <input
+                      key={'privpass'+account.getAccountNumber()}
+                      type="password"
+                      style={AccountStyles.contentNestAddressHashTo}
+                      placeholder="Private Passphrase"
+                      maxLength="50"
+                      onBlur={(e) =>{this.updatePrivatePass(e.target.value);}}/>
+                  </div>
+                </div>
+                <div style={AccountStyles.accountFormInputError}>
+                  {this.state.privPassError}
                 </div>
               </div>
               <KeyBlueButton
