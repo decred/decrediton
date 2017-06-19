@@ -13,7 +13,7 @@ class QRCode extends Component {
   };
   render() {
     const qr_img = qr.imageSync('decred:'+this.props.addr, {type: 'svg'});
-    return (<div style={ReceiveStyles.img} dangerouslySetInnerHTML={{__html:qr_img}}></div>);
+    return (<div style={ReceiveStyles.contentNestQRImage} dangerouslySetInnerHTML={{__html:qr_img}}></div>);
   }
 }
 
@@ -80,27 +80,31 @@ class Receive extends Component{
     const receive = (
       <div style={ReceiveStyles.view}>
         <Header
-          headerTitleOverview="Current address"
           headerTitleOverview={<div style={ReceiveStyles.headerTitleReceive}>Receive Funds</div>}
           headerMetaOverview={<div style={ReceiveStyles.headerMetaReceive}>Each time you request a payment, create a new address to protect your privacy.</div>}/>
         <div style={ReceiveStyles.content}>
-          <div style={ReceiveStyles.center}>
-            {getNextAddressResponse !== null ?
-              <QRCode addr={getNextAddressResponse.getAddress()}/> :
-              <div></div>
-            }
-            <p>Share this wallet address to receive payments. To protect your privacy, new addresses are generated automatically once you use them.</p>
-            {selectAccounts}
+          <div style={ReceiveStyles.contentNestReceive}>
+            <div style={ReceiveStyles.contentNestReceiveForAddress}>
+              <div style={ReceiveStyles.contentNestReceiveForAddressIcon}></div>
+              <div style={ReceiveStyles.contentNestPrefixReceive}>This address is for:</div>
+              {selectAccounts}
+            </div>
+            <div style={ReceiveStyles.contentNestQR}>
+              <div style={ReceiveStyles.contentNestQRHash}>{getNextAddressResponse !== null ? getNextAddressResponse.getAddress() : ''}</div>
+              <QRCode addr={getNextAddressResponse !== null ? getNextAddressResponse.getAddress() : ''}/>
+            </div>
+          </div>
+          <div style={ReceiveStyles.contentReceive}>
             <KeyBlueButton
               size="large"
               block={false}
               onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(this.state.account) : null}
-              >
+            >
               Generate new address
             </KeyBlueButton>
           </div>
         </div>
-			</div>
+      </div>
     );
     if (walletService === null) {
       return (<ErrorScreen />);
