@@ -130,7 +130,7 @@ class Accounts extends Component{
     const accountsView = (
       <div style={AccountStyles.view}>
         <Header
-          headerTitleOverview="Account Management"
+          headerTitleOverview="Accounts"
           headerTop={[getNextAccountError !== null ?
             <div key="accountError" style={AccountStyles.viewNotificationError}><div style={AccountStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearNewAccountError()}></div>{getNextAccountError}</div> :
             <div key="accountError" ></div>,
@@ -145,7 +145,7 @@ class Accounts extends Component{
             <KeyBlueButton
             style={AccountStyles.contentAddNewAccount}
             onClick={() => this.showAddAccount()}>
-            Add New Account
+            Add New
             </KeyBlueButton>
           }
         />

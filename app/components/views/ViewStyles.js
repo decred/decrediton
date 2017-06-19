@@ -2971,7 +2971,7 @@ export const AccountStyles = {
     overflowX: 'hidden',
   },
   contentAddNewAccount: {
-    width: '278px',
+    width: '80px',
     float: 'right',
   },
   contentConfirmNewAccount: {
