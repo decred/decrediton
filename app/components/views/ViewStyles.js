@@ -98,7 +98,26 @@ export const ReceiveStyles = {
     marginLeft: '190px',
     paddingBottom: '16px',
     paddingTop: '6px',
-  }
+  },
+  headerTitleReceive: {
+    height: '54px',
+    lineHeight: '49px',
+    color: '#596d81',
+    fontSize: '27px',
+    textTransform: 'capitalize',
+    paddingLeft: '50px',
+    backgroundImage: `url(${PlusBig})`,
+    backgroundPosition: '0px 50%',
+    backgroundSize: '30px',
+    backgroundRepeat: 'no-repeat',
+  },
+  headerMetaReceive: {
+    height: '54px',
+    width: '480px',
+    paddingLeft: '50px',
+    color: '#0c1e3e',
+    fontSize: '14px',
+  },
 };
 export const SendStyles = {
   body: {

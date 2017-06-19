@@ -77,17 +77,12 @@ class Receive extends Component{
           }
         </select>
       </div>);
-
     const receive = (
       <div style={ReceiveStyles.view}>
         <Header
           headerTitleOverview="Current address"
-          headerMetaOverview={
-            getNextAddressResponse !== null ?
-              <div style={{fontSize:'33px'}}>{getNextAddressResponse.getAddress()} <span style={ReceiveStyles.fromAccount}>from <span style={ReceiveStyles.fromAccountBold}>{this.state.accountName}</span> account</span></div> :
-              <div></div>
-          }
-        />
+          headerTitleOverview={<div style={ReceiveStyles.headerTitleReceive}>Receive Funds</div>}
+          headerMetaOverview={<div style={ReceiveStyles.headerMetaReceive}>Each time you request a payment, create a new address to protect your privacy.</div>}/>
         <div style={ReceiveStyles.content}>
           <div style={ReceiveStyles.center}>
             {getNextAddressResponse !== null ?
