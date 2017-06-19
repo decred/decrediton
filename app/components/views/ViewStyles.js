@@ -2968,7 +2968,7 @@ export const AccountStyles = {
     backgroundColor: '#f3f6f6',
   },
   content: {
-    overflow: 'auto',
+    overflowY: 'scroll',
     height: '556px',
     padding: '54px 60px 54px 80px',
   },
