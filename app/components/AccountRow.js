@@ -154,6 +154,14 @@ const styles = {
   accountRowShort: {
     height: '77px',
   },
+  accountRowRename: {
+    height: '248px',
+  },
+  contentConfirmNewAccount: {
+    marginTop: '20px',
+    marginLeft: '20px',
+    float: 'left',
+  },
 };
 
 class AccountRow extends Component {
@@ -167,7 +175,7 @@ class AccountRow extends Component {
   render() {
     const { account, balance } = this.props;
     return (
-        <div style={this.state.showAccountDetails ? styles.accountRowLong : styles.accountRowShort}>
+        <div style={this.state.showAccountDetails ? this.state.showRenameAccount ? styles.accountRowRename : styles.accountRowLong : styles.accountRowShort}>
           <div style={this.state.showAccountDetails ? styles.accountRowDetailsTop : styles.accountRow} key={account.getAccountNumber()} onClick={this.state.showAccountDetails ? () => this.setState({showAccountDetails: false}) : () => this.setState({showAccountDetails: true})}>
             <div style={styles.accountRowTopTop}>
               <div style={styles.accountRowWalletIcon}/>
@@ -204,7 +212,7 @@ class AccountRow extends Component {
                   {this.state.renameAccountNameError}
                 </div>
               </div>
-              <div style={styles.accountRowDetailsBottomSpec}>
+              <div style={styles.accountRowDetailsBottomSpecLast}>
                 <div style={styles.accountRowDetailsBottomSpecName}>Private Passphrase</div>
                 <div style={styles.accountRowDetailsBottomSpecValue}>
                   <div style={AccountStyles.inputForm}>
@@ -222,12 +230,12 @@ class AccountRow extends Component {
                 </div>
               </div>
               <KeyBlueButton
-                style={AccountStyles.contentConfirmNewAccount}
+                style={styles.contentConfirmNewAccount}
                 onClick={() => this.props.renameAccount()}>
                 Rename
               </KeyBlueButton>
               <SlateGrayButton
-                style={AccountStyles.contentHideNewAccount}
+                style={styles.contentConfirmNewAccount}
                 onClick={() => this.setState({showRenameAccount: false})}>
                 Cancel
               </SlateGrayButton>
