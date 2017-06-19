@@ -123,7 +123,7 @@ class Accounts extends Component{
     this.setState({privpass: Buffer.from(privpass), addAccountPrivPassError: null});
   }
   render() {
-    const { walletService, getAccountsResponse } = this.props;
+    const { walletService, getAccountsResponse, balances } = this.props;
     const { getNextAccountError, getNextAccountSuccess } = this.props;
     const { getNextAccountRequestAttempt } = this.props;
     const { renameAccountError, renameAccountSuccess } = this.props;
@@ -140,6 +140,9 @@ class Accounts extends Component{
             renameAccountSuccess !== null ?
             <div key="renameAccountSuccess" style={AccountStyles.viewNotificationSuccess}><div style={AccountStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearRenameAccountSuccess()}></div>{renameAccountSuccess}</div> :
             <div key="renameAccountSuccess" ></div>,
+            renameAccountError !== null ?
+            <div key="renameAccountError" style={AccountStyles.viewNotificationError}><div style={AccountStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearRenameAccountError()}></div>{renameAccountError}</div> :
+            <div key="renameAccountError" ></div>,
           ]}
           headerMetaOverview={
             <KeyBlueButton
@@ -157,9 +160,14 @@ class Accounts extends Component{
             getAccountsResponse !== null ?
               <div style={AccountStyles.contentNest}>
               {getAccountsResponse.getAccountsList().map((account) => {
-                if (account.getAccountName() !== 'imported') {
-                  return (<AccountRow key={account.getAccountName()} account={account} onClick={() => this.showAccountDetailsView(account)}/>);
+                var balance;
+                for (var i = 0; i < balances.length; i++) {
+                  if (balances[i].accountNumber == account.getAccountNumber()) {
+                    balance = balances[i];
+                    break;
+                  }
                 }
+                return (<AccountRow key={account.getAccountName()} balance={balance} account={account}/>);
               })}
               </div>:
               <div></div>
@@ -228,48 +236,6 @@ class Accounts extends Component{
         }
       </div>
     );
-    const accountDetails = (
-      <div style={AccountStyles.view}>
-        <Header
-          headerTitleOverview={[<div key={1}>Total account balance</div>,
-            <SlateGrayButton key="back" style={{float: 'right'}} onClick={() => this.hideAccountDetails()}>back</SlateGrayButton>]}
-          headerTop={renameAccountError !== null ?
-            <div key="renameAccountError" style={AccountStyles.viewNotificationError}><div style={AccountStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearRenameAccountError()}>{renameAccountError}</div></div> :
-            <div key="renameAccountError" ></div>
-          }
-          headerMetaOverview={
-              this.state.showAccountDetailsAccount !== null?
-             <Balance amount={this.state.showAccountDetailsAccount.getTotalBalance()}/>:
-             <div></div>
-          }
-        />
-        <div style={AccountStyles.content}>
-          {this.state.showAccountDetailsAccount !== null ?
-          <div>
-            <div style={AccountStyles.accountDetailsRow}>
-              <div style={AccountStyles.accountDetailsLabel}>Account Name:</div>
-              <div style={AccountStyles.accountDetailsInput}>
-                {this.state.showAccountDetailsAccount.getAccountName()}
-              </div>
-            </div>
-            <div style={AccountStyles.accountDetailsRow}>
-              <div style={AccountStyles.accountDetailsLabel}>Account Number:</div>
-              <div style={AccountStyles.accountDetailsInput}>
-                {this.state.showAccountDetailsAccount.getAccountNumber()}
-              </div>
-            </div>
-            <KeyBlueButton
-              style={AccountStyles.contentConfirmNewAccount}
-              onClick={() => this.showRenameAccount(this.state.showAccountDetailsAccount.getAccountNumber())}>
-              Rename Account
-            </KeyBlueButton>
-          </div>
-          :
-          <div></div>
-          }
-        </div>
-      </div>
-    );
     const renameAccount = (
       <div style={AccountStyles.view}>
         <Header
@@ -314,14 +280,7 @@ class Accounts extends Component{
       return(
         <div style={AccountStyles.body}>
           <SideBar />
-          {!this.state.showAddAccount ?
-            !this.state.showAccountDetails ?
-              accountsView :
-                !this.state.showRenameAccount ?
-                  accountDetails :
-                    renameAccount :
-            addAccountView
-          }
+          {accountsView}
         </div>);
     }
   }
