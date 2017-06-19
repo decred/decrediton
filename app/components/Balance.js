@@ -11,6 +11,7 @@ function mapStateToProps(state) {
 var styles = {
   base: {
     fontSize: '1em',
+    fontFamily: 'Inconsolata, monospace',
   },
   small: {
     fontSize: '0.8em',
