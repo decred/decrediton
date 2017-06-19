@@ -616,7 +616,7 @@ numTickets, expiry, ticketFee, txFee, stakepool) {
   request.setNumTickets(numTickets);
   request.setPoolAddress(stakepool.PoolAddress);
   request.setPoolFees(stakepool.PoolFees);
-  request.setExpiry(0);
+  request.setExpiry(expiry);
   request.setTxFee(txFee*1e8);
   request.setTicketFee(ticketFee*1e8);
 
