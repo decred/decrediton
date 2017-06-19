@@ -213,9 +213,6 @@ class Home extends Component{
             }
             headerTitleOverview="Starting RPC and subscribing block notifications"/>
           <div style={GetStartedStyles.content}>
-            <div style={GetStartedStyles.contentTitle}>
-              <div style={GetStartedStyles.contentTitleText}>Start RPC connection to daemon, Subscribe to Block Notifications</div>
-            </div>
             <div style={GetStartedStyles.contentNest}>
               { startRpcRequestAttempt ?
                 <CircularProgress style={GetStartedStyles.loading} size={125} thickness={6}/> :

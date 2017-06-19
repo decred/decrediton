@@ -2824,11 +2824,14 @@ export const GetStartedStyles = {
   rpcRetryMessage: {
     color: '#c4cbd2',
     float: 'left',
-    width: '100%',
+    width: '525px',
+    paddingTop: '20px',
+    fontSize: '25px',
   },
   rpcRetryButton: {
+    width: '100px',
     marginTop: '10px',
-    float: 'left',
+    float: 'right',
   },
   headerMetaCurrency: {
     fontSize: '23px',
