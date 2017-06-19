@@ -132,6 +132,19 @@ const styles = {
     color: '#0C1E3E',
     fontSize: '12px',
   },
+  accountRowDetailsBottomSpecName: {
+    width: '140px',
+    height: '26px',
+    paddingRight: '20px',
+    float: 'left',
+    textAlign: 'right',
+  },
+  accountRowDetailsBottomSpecValue: {
+    height: '26px',
+    float: 'left',
+    fontDamily: 'Inconsolata,monospace',
+    fontWeight: '700',
+  },
   accountRowDetailsCfg: {
 
   },
@@ -162,7 +175,7 @@ class AccountRow extends Component {
           </div>
           {this.state.showAccountDetails ?
             this.state.showRenameAccount ?
-            <div style={styles.accountDetails} key={'details'+account.getAccountNumber()}>
+            <div style={styles.accountRowDetailsBottom} key={'details'+account.getAccountNumber()}>
               <div style={AccountStyles.accountFormRow}>
                 <div style={AccountStyles.accountFormLabel}>New Account Name:</div>
                 <div style={AccountStyles.accountFormInput}>
@@ -190,18 +203,44 @@ class AccountRow extends Component {
                 Cancel
               </SlateGrayButton>
             </div> :
-            <div style={styles.accountDetails} key={'details'+account.getAccountNumber()}>
-              <div style={AccountStyles.accountDetailsRow}>
-                <div style={AccountStyles.accountDetailsLabel}>Total Balance:</div>
-                <div style={AccountStyles.accountDetailsInput}>
-                  {balance.total}
+            <div style={styles.accountRowDetailsBottom} key={'details'+account.getAccountNumber()}>
+              <div style={styles.accountRowDetailsBottomTitle}>
+                <div style={styles.accountRowDetailsBottomTitleName}>
+                  Balances
                 </div>
               </div>
-              <KeyBlueButton
-                style={AccountStyles.contentConfirmNewAccount}
-                onClick={() => this.setState({showRenameAccount: true})}>
-                Rename Account
-              </KeyBlueButton>
+              <div style={styles.accountRowDetailsBottomSpec}>
+                <div style={styles.accountRowDetailsBottomSpecName}>Total</div>
+                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={balance.total}/></div>
+              </div>
+              <div style={styles.accountRowDetailsBottomSpec}>
+                <div style={styles.accountRowDetailsBottomSpecName}>Spendable</div>
+                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={balance.spendable}/></div>
+              </div>
+              <div style={styles.accountRowDetailsBottomSpec}>
+                <div style={styles.accountRowDetailsBottomSpecName}>Immature Rewards</div>
+                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={balance.immatureReward}/></div>
+              </div>
+              <div style={styles.accountRowDetailsBottomSpec}>
+                <div style={styles.accountRowDetailsBottomSpecName}>Locked By Tickets</div>
+                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={balance.lockedByTickets}/></div>
+              </div>
+              <div style={styles.accountRowDetailsBottomSpec}>
+                <div style={styles.accountRowDetailsBottomSpecName}>Voting Authority</div>
+                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={balance.votingAuthority}/></div>
+              </div>
+              <div style={styles.accountRowDetailsBottomSpecLast}>
+                <div style={styles.accountRowDetailsBottomSpecName}>Immature Stake Generation</div>
+                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={balance.immatureStakeGeneration}/></div>
+              </div>
+              {account.getAccountName() !== 'imported' ?
+                <KeyBlueButton
+                  style={AccountStyles.contentConfirmNewAccount}
+                  onClick={() => this.setState({showRenameAccount: true})}>
+                  Rename Account
+                </KeyBlueButton> :
+                <div></div>
+              }
             </div> :
             <div></div>
           }
