@@ -18,22 +18,11 @@ class Accounts extends Component{
     super(props);
     this.state = {
       showAddAccount: false,
-      showAccountDetails: false,
-      showAccountDetailsAccount: null,
-      showRenameAccount: false,
-      renameAccountName: '',
-      renameAccountNumber: -1,
       addAccountName: '',
       privpass: null,
-      renameAccountNameError: null,
       addAccountNameError: null,
       addAccountPrivPassError: null,
     };
-  }
-  componentWillReceiveProps(nextProps) {
-    if (this.props.getAccountsResponse != nextProps.getAccountsResponse) {
-      this.setState({showRenameAccount: false, showAccountDetails: false, showAccountDetailsAccount: null});
-    }
   }
   componentWillMount() {
     this.props.clearNewAccountSuccess();
@@ -72,34 +61,6 @@ class Accounts extends Component{
     this.props.clearRenameAccountSuccess();
     this.props.clearRenameAccountError();
   }
-  showRenameAccount(accountNumber) {
-    this.setState({showRenameAccount: true, renameAccountNumber: accountNumber, renameAccountName: ''});
-    this.props.clearNewAccountSuccess();
-    this.props.clearNewAccountError();
-    this.props.clearRenameAccountSuccess();
-    this.props.clearRenameAccountError();
-  }
-  hideRenameAccount() {
-    this.setState({showRenameAccount:false, renameAccountNumber: -1, renameAccountName: ''});
-    this.props.clearNewAccountSuccess();
-    this.props.clearNewAccountError();
-    this.props.clearRenameAccountSuccess();
-    this.props.clearRenameAccountError();
-  }
-  showAccountDetailsView(account) {
-    this.setState({showAccountDetails: true, showAccountDetailsAccount: account});
-    this.props.clearNewAccountSuccess();
-    this.props.clearNewAccountError();
-    this.props.clearRenameAccountSuccess();
-    this.props.clearRenameAccountError();
-  }
-  hideAccountDetails() {
-    this.setState({showAccountDetails: false, showAccountDetailsAccount: null});
-    this.props.clearNewAccountSuccess();
-    this.props.clearNewAccountError();
-    this.props.clearRenameAccountSuccess();
-    this.props.clearRenameAccountError();
-  }
   updateAddAccountName(accountName) {
     this.setState({addAccountName: accountName, addAccountNameError: null});
   }
@@ -107,7 +68,7 @@ class Accounts extends Component{
     this.setState({privpass: Buffer.from(privpass), addAccountPrivPassError: null});
   }
   render() {
-    const { walletService, getAccountsResponse, balances } = this.props;
+    const { walletService, balances } = this.props;
     const { getNextAccountError, getNextAccountSuccess } = this.props;
     const { getNextAccountRequestAttempt } = this.props;
     const { renameAccountError, renameAccountSuccess } = this.props;
@@ -141,17 +102,10 @@ class Accounts extends Component{
             <div style={AccountStyles.content}>
               <CircularProgress style={AccountStyles.loading} size={125} thickness={6}/>
             </div> :
-            getAccountsResponse !== null ?
+            balances !== null ?
               <div style={AccountStyles.contentNest}>
-              {getAccountsResponse.getAccountsList().map((account) => {
-                var balance;
-                for (var i = 0; i < balances.length; i++) {
-                  if (balances[i].accountNumber == account.getAccountNumber()) {
-                    balance = balances[i];
-                    break;
-                  }
-                }
-                return (<AccountRow key={account.getAccountName()} balance={balance} account={account} renameAccount={(name, number) => this.props.renameAccountAttempt(name, number)}/>);
+              {balances.map((account) => {
+                return (<AccountRow key={account.accountName} account={account} renameAccount={(name, number) => this.props.renameAccountAttempt(name, number)}/>);
               })}
               </div>:
               <div></div>
@@ -161,7 +115,7 @@ class Accounts extends Component{
     const addAccountView = (
       <div style={AccountStyles.view}>
         <Header
-          headerTitleOverview="Account Management"
+          headerTitleOverview="Accounts"
           headerTop={[getNextAccountError !== null ?
             <div key="accountError" style={AccountStyles.viewNotificationError}>{getNextAccountError}</div> :
             <div key="accountError" ></div>,
@@ -220,51 +174,13 @@ class Accounts extends Component{
         }
       </div>
     );
-    const renameAccount = (
-      <div style={AccountStyles.view}>
-        <Header
-        headerTitleOverview="Rename Account"
-        />
-        <div style={AccountStyles.content}>
-          <div style={AccountStyles.flexHeight}>
-            <div style={AccountStyles.accountFormRow}>
-              <div style={AccountStyles.accountFormLabel}>New Account Name:</div>
-              <div style={AccountStyles.accountFormInput}>
-                <div style={AccountStyles.inputForm}>
-                  <input
-                    type="text"
-                    style={AccountStyles.contentNestAddressHashTo}
-                    placeholder="New Account Name"
-                    maxLength="50"
-                    onBlur={(e) =>{this.updateRenameAccountName(e.target.value);}}/>
-                </div>
-              </div>
-              <div style={AccountStyles.accountFormInputError}>
-                {this.state.renameAccountNameError}
-              </div>
-            </div>
-          </div>
-          <KeyBlueButton
-           style={AccountStyles.contentConfirmNewAccount}
-           onClick={() => this.renameAccount()}>
-           Rename
-          </KeyBlueButton>
-          <SlateGrayButton
-           style={AccountStyles.contentHideNewAccount}
-           onClick={() => this.hideRenameAccount()}>
-           Cancel
-          </SlateGrayButton>
-        </div>
-        }
-      </div>
-    );
     if (walletService === null) {
       return (<ErrorScreen />);
     } else {
       return(
         <div style={AccountStyles.body}>
           <SideBar />
-          {accountsView}
+          {this.state.showAddAccount ? addAccountView : accountsView}
         </div>);
     }
   }

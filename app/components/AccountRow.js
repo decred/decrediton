@@ -204,7 +204,7 @@ class AccountRow extends Component {
       showRenameAccount: false,
       renameAccountName: null,
       renameAccountNameError: null,
-      renameAccountNumber: this.props.account.getAccountNumber(),
+      renameAccountNumber: this.props.account.accountNumber,
     };
   }
   updateRenameAccountName(accountName) {
@@ -225,23 +225,23 @@ class AccountRow extends Component {
     this.setState({renameAccountName: null, showRenameAccount: false});
   }
   render() {
-    const { account, balance } = this.props;
+    const { account } = this.props;
     return (
         <div style={this.state.showAccountDetails ? this.state.showRenameAccount ? styles.accountRowRename : styles.accountRowLong : styles.accountRowShort}>
-          <div style={this.state.showAccountDetails ? styles.accountRowDetailsTop : styles.accountRow} key={account.getAccountNumber()} onClick={this.state.showAccountDetails ? () => this.setState({showAccountDetails: false}) : () => this.setState({showAccountDetails: true})}>
+          <div style={this.state.showAccountDetails ? styles.accountRowDetailsTop : styles.accountRow} key={account.accountNumber} onClick={this.state.showAccountDetails ? () => this.setState({showAccountDetails: false}) : () => this.setState({showAccountDetails: true})}>
             <div style={styles.accountRowTopTop}>
               <div style={styles.accountRowWalletIcon}/>
-              <div style={styles.accountRowTopAccountName}>{account.getAccountName()}</div>
-              <div style={styles.accountRowTopAccountFunds}><Balance amount={balance.total}/></div>
+              <div style={styles.accountRowTopAccountName}>{account.accountName}</div>
+              <div style={styles.accountRowTopAccountFunds}><Balance amount={account.total}/></div>
             </div>
             <div style={styles.accountRowTopBottom}>
               <div style={styles.accountRowTopLastTx}></div>
-              <div style={styles.accountRowTopSpendable}>Spendable <Balance amount={balance.spendable}/></div>
+              <div style={styles.accountRowTopSpendable}>Spendable <Balance amount={account.spendable}/></div>
             </div>
           </div>
           {this.state.showAccountDetails ?
             this.state.showRenameAccount ?
-            <div style={styles.accountRowDetailsBottom} key={'details'+account.getAccountNumber()}>
+            <div style={styles.accountRowDetailsBottom} key={'details'+account.accountNumber}>
               <div style={styles.accountRowDetailsBottomTitle}>
                 <div style={styles.accountRowDetailsBottomTitleName}>
                   Rename Account
@@ -275,7 +275,7 @@ class AccountRow extends Component {
                 Cancel
               </SlateGrayButton>
             </div> :
-            <div style={styles.accountRowDetailsBottom} key={'details'+account.getAccountNumber()}>
+            <div style={styles.accountRowDetailsBottom} key={'details'+account.accountNumber}>
               <div style={styles.accountRowDetailsBottomTitle}>
                 <div style={styles.accountRowDetailsBottomTitleName}>
                   Balances
@@ -283,29 +283,29 @@ class AccountRow extends Component {
               </div>
               <div style={styles.accountRowDetailsBottomSpec}>
                 <div style={styles.accountRowDetailsBottomSpecName}>Total</div>
-                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={balance.total}/></div>
+                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.total}/></div>
               </div>
               <div style={styles.accountRowDetailsBottomSpec}>
                 <div style={styles.accountRowDetailsBottomSpecName}>Spendable</div>
-                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={balance.spendable}/></div>
+                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.spendable}/></div>
               </div>
               <div style={styles.accountRowDetailsBottomSpec}>
                 <div style={styles.accountRowDetailsBottomSpecName}>Immature Rewards</div>
-                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={balance.immatureReward}/></div>
+                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.immatureReward}/></div>
               </div>
               <div style={styles.accountRowDetailsBottomSpec}>
                 <div style={styles.accountRowDetailsBottomSpecName}>Locked By Tickets</div>
-                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={balance.lockedByTickets}/></div>
+                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.lockedByTickets}/></div>
               </div>
               <div style={styles.accountRowDetailsBottomSpec}>
                 <div style={styles.accountRowDetailsBottomSpecName}>Voting Authority</div>
-                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={balance.votingAuthority}/></div>
+                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.votingAuthority}/></div>
               </div>
               <div style={styles.accountRowDetailsBottomSpecLast}>
                 <div style={styles.accountRowDetailsBottomSpecName}>Immature Stake Generation</div>
-                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={balance.immatureStakeGeneration}/></div>
+                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.immatureStakeGeneration}/></div>
               </div>
-              {account.getAccountName() !== 'imported' ?
+              {account.accountName !== 'imported' ?
                 <KeyBlueButton
                   style={AccountStyles.contentConfirmNewAccount}
                   onClick={() => this.setState({showRenameAccount: true})}>
