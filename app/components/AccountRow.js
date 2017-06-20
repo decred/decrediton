@@ -202,7 +202,27 @@ class AccountRow extends Component {
     this.state = {
       showAccountDetails: false,
       showRenameAccount: false,
+      renameAccountName: null,
+      renameAccountNameError: null,
+      renameAccountNumber: this.props.account.getAccountNumber(),
     };
+  }
+  updateRenameAccountName(accountName) {
+    if (accountName !== '') {
+      this.setState({renameAccountName: accountName, renameAccountNameError: null});
+    }
+  }
+  renameAccount() {
+    var checkErrors = false;
+    if (this.state.renameAccountName == '') {
+      this.setState({renameAccountNameError: '*You must enter an account name'});
+      checkErrors = true;
+    }
+    if (checkErrors) {
+      return;
+    }
+    this.props.renameAccount(this.state.renameAccountNumber, this.state.renameAccountName);
+    this.setState({renameAccountName: null, showRenameAccount: false});
   }
   render() {
     const { account, balance } = this.props;
@@ -244,26 +264,9 @@ class AccountRow extends Component {
                   {this.state.renameAccountNameError}
                 </div>
               </div>
-              <div style={styles.accountRowDetailsBottomRenameLast}>
-                <div style={styles.accountRowDetailsBottomRenameName}>Private Passphrase</div>
-                <div style={styles.accountRowDetailsBottomSpecValue}>
-                  <div style={AccountStyles.inputForm}>
-                    <input
-                      key={'privpass'+account.getAccountNumber()}
-                      type="password"
-                      style={AccountStyles.contentNestAddressHashTo}
-                      placeholder="Private Passphrase"
-                      maxLength="50"
-                      onBlur={(e) =>{this.updatePrivatePass(e.target.value);}}/>
-                  </div>
-                </div>
-                <div style={AccountStyles.accountFormInputError}>
-                  {this.state.privPassError}
-                </div>
-              </div>
               <KeyBlueButton
                 style={styles.contentConfirmNewAccount}
-                onClick={() => this.props.renameAccount()}>
+                onClick={() => this.renameAccount()}>
                 Rename
               </KeyBlueButton>
               <SlateGrayButton

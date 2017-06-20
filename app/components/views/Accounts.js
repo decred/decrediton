@@ -86,19 +86,6 @@ class Accounts extends Component{
     this.props.clearRenameAccountSuccess();
     this.props.clearRenameAccountError();
   }
-  renameAccount() {
-    var checkErrors = false;
-    if (this.state.renameAccountName == '') {
-      this.setState({renameAccountNameError: '*You must enter an account name'});
-      checkErrors = true;
-    }
-    if (this.state.renameAccountNameError !== null ||
-       checkErrors) {
-      return;
-    }
-    this.props.renameAccountAttempt(this.state.renameAccountNumber, this.state.renameAccountName);
-    this.hideRenameAccount();
-  }
   showAccountDetailsView(account) {
     this.setState({showAccountDetails: true, showAccountDetailsAccount: account});
     this.props.clearNewAccountSuccess();
@@ -115,9 +102,6 @@ class Accounts extends Component{
   }
   updateAddAccountName(accountName) {
     this.setState({addAccountName: accountName, addAccountNameError: null});
-  }
-  updateRenameAccountName(accountName) {
-    this.setState({renameAccountName: accountName, renameAccountNameError: null});
   }
   updatePrivPass(privpass) {
     this.setState({privpass: Buffer.from(privpass), addAccountPrivPassError: null});
@@ -167,7 +151,7 @@ class Accounts extends Component{
                     break;
                   }
                 }
-                return (<AccountRow key={account.getAccountName()} balance={balance} account={account}/>);
+                return (<AccountRow key={account.getAccountName()} balance={balance} account={account} renameAccount={(name, number) => this.props.renameAccountAttempt(name, number)}/>);
               })}
               </div>:
               <div></div>
