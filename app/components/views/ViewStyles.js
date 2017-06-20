@@ -660,24 +660,27 @@ export const SendStyles = {
   totalAmountSend: {
     float: 'right',
     width: '275px',
-    marginTop: '10px',
     paddingRight: '10px',
-    fontSize: '20px',
+    fontSize: '15px',
     textAlign: 'right',
   },
   totalAmountSendText: {
-    float: 'right',
+    float: 'left',
     paddingBottom: '5px',
-    width: '100%',
+  },
+  estimationAreaSend: {
+    paddingTop:'10px',
+    float: 'right',
+    height: '100%',
+    width:'300px',
   },
   totalAmountSendAmount: {
     float: 'right',
-    width: '100%',
     fontFamily: 'Inconsolata, monospace',
   },
   sendButtonArea: {
     width: '100%',
-    height: '50px',
+    height: '100px',
   }
 };
 export const HomeStyles = {
