@@ -43,7 +43,7 @@ class Send extends Component{
       account: 0,
       accountSpendable: defaultSpendable,
       confirmations: 0,
-      outputs: [{key:0, destination: null, amount: null, addressError: null, amountError: null}],
+      outputs: [{key:0, destination: '', amount: '', addressError: null, amountError: null}],
       totalOutputAmount: 0,
       privPassError: null,
     };
@@ -68,8 +68,7 @@ class Send extends Component{
   }
 
   clearTransactionData() {
-    console.log("clear data");
-    this.setState({confirmTxModal: false, totalOutputAmount: 0, account: 0, confirmations: 0, outputs: [{key:0, destination: null, amount: null, addressError: null, amountError: null}]});
+    this.setState({confirmTxModal: false, totalOutputAmount: 0, account: 0, confirmations: 0, outputs: [{key:0, destination: '', amount: '', addressError: null, amountError: null}]});
     this.props.clearTransaction();
   }
   confirmTx() {
@@ -90,11 +89,12 @@ class Send extends Component{
     var checkErrors = false;
     var updatedOutputErrors = this.state.outputs;
     for (var i = 0; i < updatedOutputErrors.length; i++ ) {
-      if (updatedOutputErrors[i].destination == null) {
+      if (updatedOutputErrors[i].destination == null || updatedOutputErrors[i].destination == '' ) {
         updatedOutputErrors[i].addressError = '*Please enter a valid address';
+        updatedOutputErrors[i].destination = ''
         checkErrors = true;
       }
-      if (updatedOutputErrors[i].amount == null || updatedOutputErrors[i].amount < 0) {
+      if (updatedOutputErrors[i].amount == null || updatedOutputErrors[i].amount == '' || updatedOutputErrors[i].amount < 0) {
         updatedOutputErrors[i].amountError = '*Please enter a valid amount (> 0)';
         checkErrors = true;
       }
@@ -109,7 +109,7 @@ class Send extends Component{
     this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs);
   }
   appendOutput() {
-    var newOutput = {key:`${this.state.outputs.length}`, destination: null, amount: null, addressError: null, amountError: null};
+    var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: '', addressError: null, amountError: null};
     this.setState({ outputs: this.state.outputs.concat([newOutput])});
   }
   removeOutput(outputKey) {
@@ -121,12 +121,14 @@ class Send extends Component{
       totalOutputAmount += updateOutputs[i].amount;
     }
     this.setState({ totalOutputAmount: totalOutputAmount, outputs: updateOutputs});
+    this.submitConstructTx();
   }
   updateOutputDestination(outputKey, dest) {
     // do some more helper address checking here
     // possibly check for Ds/Dc Ts/Tc and length at the least
     // later can do full address validtion from dcrutil code
     var updateOutputs = this.state.outputs;
+    updateOutputs[outputKey].destination = dest;
     if (dest == '') {
       updateOutputs[outputKey].addressError = '*Please enter a valid address';
     } else {
@@ -134,7 +136,6 @@ class Send extends Component{
       updateOutputs[outputKey].addressError = null;
     }
     this.setState({ outputs: updateOutputs });
-    this.submitConstructTx();
   }
   updateAccountNumber(accountNum) {
     this.setState({account: accountNum});
@@ -171,14 +172,6 @@ class Send extends Component{
       totalOutputAmount += updateOutputs[i].amount;
     }
     this.setState({ totalOutputAmount: totalOutputAmount, outputs: updateOutputs });
-    this.submitConstructTx();
-  }
-  updatePrivPass(privpass) {
-    if (privpass != '') {
-      this.setState({privpass: Buffer.from(privpass), privPassError: null});
-    } else {
-      this.setState({privpass: null, privPassError: '*Please enter your private passphrase'});
-    }
   }
   render() {
     const { currentSettings } = this.props;
@@ -278,12 +271,13 @@ class Send extends Component{
                     <div style={SendStyles.sendAddress}>
                       <div style={SendStyles.inputForm}>
                         <input
-                          defaultValue={output.destination}
+                          value={output.destination}
                           type="text"
                           style={SendStyles.sendAddressHashTo}
                           key={'destination'+output.key}
                           placeholder="Destination Address"
-                          onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
+                          onChange={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}
+                          onBlur={()=>this.submitConstructTx()}/>
                       </div>
                     </div>
                     <div style={SendStyles.sendAddressWalletIcon} onClick={() => this.appendOutput()}></div>
@@ -292,12 +286,13 @@ class Send extends Component{
                       <div style={SendStyles.sendAddressAmountSumAndCurrency}>
                       <div style={SendStyles.sendAddressAmountSumGradient}>{unitLabel}</div>
                         <input
-                          defaultValue={output.amount/unitDivisor}
+                          value={output.amount/unitDivisor}
                           type="text"
                           style={SendStyles.sendAddressInputAmount}
                           key={'amount'+output.key}
                           placeholder="Amount"
-                          onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
+                          onChange={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}
+                          onBlur={()=>this.submitConstructTx()}/>
                       </div>
                     </div>
                   </div>
@@ -317,12 +312,13 @@ class Send extends Component{
                     <div style={SendStyles.sendAddressHashBlock}>
                       <div style={SendStyles.inputForm}>
                         <input
-                          defaultValue={output.destination}
+                          value={output.destination}
                           type="text"
                           style={SendStyles.sendAddressHashTo}
                           key={'destination'+output.key}
                           placeholder="Destination Address"
-                          onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
+                          onChange={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}
+                          onBlur={()=>this.submitConstructTx()}/>
                       </div>
                       <div style={SendStyles.sendGradient}></div>
                     </div>
@@ -334,12 +330,13 @@ class Send extends Component{
                       <div style={SendStyles.sendAddressAmountSumAndCurrency}>
                       <div style={SendStyles.sendAddressAmountSumGradient}>{unitLabel}</div>
                         <input
-                          defaultValue={output.amount/unitDivisor}
+                          value={output.amount/unitDivisor}
                           type="text"
                           style={SendStyles.sendAddressInputAmount}
                           key={'amount'+output.key}
                           placeholder="Amount"
-                          onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
+                          onChange={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}
+                          onBlur={()=>this.submitConstructTx()}/>
                       </div>
                     </div>
                   </div>
