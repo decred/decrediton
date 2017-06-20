@@ -10,6 +10,7 @@ import Header from '../Header';
 import KeyBlueButton from '../KeyBlueButton';
 import SlateGrayButton from '../SlateGrayButton';
 import { SendStyles } from './ViewStyles';
+import PassphraseModal from '../PassphraseModal';
 
 function mapStateToProps(state) {
   return {
@@ -38,8 +39,7 @@ class Send extends Component{
       }
     }
     this.state = {
-      privpass: '',
-      rawTx: '',
+      confirmTxModal: false,
       account: 0,
       accountSpendable: defaultSpendable,
       confirmations: 0,
@@ -68,19 +68,22 @@ class Send extends Component{
   }
 
   clearTransactionData() {
-    this.setState({totalOutputAmount: 0, account: 0, confirmations: 0, outputs: [{key:0, destination: null, amount: null, addressError: null, amountError: null}]});
+    console.log("clear data");
+    this.setState({confirmTxModal: false, totalOutputAmount: 0, account: 0, confirmations: 0, outputs: [{key:0, destination: null, amount: null, addressError: null, amountError: null}]});
     this.props.clearTransaction();
   }
-  submitSignPublishTx() {
-    var checkErrors = false;
-    if (this.state.privpass == null) {
-      this.setState({privPassError: '*Please enter your private passphrase'});
-      checkErrors = true;
-    }
-    if (this.state.privPassError !== null || this.props.constructTxResponse == null || checkErrors) {
+  confirmTx() {
+    this.setState({confirmTxModal: true});
+  }
+  cancelTx() {
+    this.setState({confirmTxModal: false});
+    this.clearTransactionData();
+  }
+  submitSignPublishTx(privpass) {
+    if (this.state.privPassError !== null || this.props.constructTxResponse == null) {
       return;
     }
-    this.props.signTransactionAttempt(this.state.privpass, this.props.constructTxResponse.getUnsignedTransaction());
+    this.props.signTransactionAttempt(privpass, this.props.constructTxResponse.getUnsignedTransaction());
     setTimeout(this.clearTransactionData(),1000);
   }
   submitConstructTx() {
@@ -248,7 +251,15 @@ class Send extends Component{
     var sendView = (
       <div style={SendStyles.view}>
         {sharedHeader}
-        <div style={SendStyles.content}>
+        <div>
+          <PassphraseModal
+            hidden={!this.state.confirmTxModal}
+            submitPassphrase={(privpass)=>this.submitSignPublishTx(privpass)}
+            cancelPassphrase={()=>this.cancelTx()}
+            heading={'Confirm Transaction'}
+            description={<div>Please confirm your transaction for <Balance amount={totalSpent}/></div>}
+          />
+        <div style={!this.state.confirmTxModal ? SendStyles.content : SendStyles.contentBlur}>
           <div style={SendStyles.sendSelectAccountArea}>
             <div style={SendStyles.sendLabel}>From:</div>
             <div style={SendStyles.sendSelectAccountInput}>
@@ -345,7 +356,7 @@ class Send extends Component{
               </div>
             </div>
             <div style={SendStyles.sendButtonArea}>
-              <KeyBlueButton style={SendStyles.contentSend} disabled={constructTxResponse==null} onClick={constructTxResponse !== null  ? () => this.submitConstructTx() : null}>
+              <KeyBlueButton style={SendStyles.contentSend} disabled={constructTxResponse==null} onClick={constructTxResponse !== null  ? () => this.confirmTx() : null}>
                 Send
               </KeyBlueButton>
               {constructTxError !== null ?
@@ -382,6 +393,7 @@ class Send extends Component{
               </div>
             </div>
           </div>
+        </div>
         </div>
     );
     var loadingView = (
