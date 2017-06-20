@@ -8,8 +8,8 @@ import SideBar from '../SideBar';
 import Balance from '../Balance';
 import Header from '../Header';
 import KeyBlueButton from '../KeyBlueButton';
-import SlateGrayButton from '../SlateGrayButton';
 import { SendStyles } from './ViewStyles';
+import PassphraseModal from '../PassphraseModal';
 
 function mapStateToProps(state) {
   return {
@@ -38,12 +38,11 @@ class Send extends Component{
       }
     }
     this.state = {
-      privpass: '',
-      rawTx: '',
+      confirmTxModal: false,
       account: 0,
       accountSpendable: defaultSpendable,
       confirmations: 0,
-      outputs: [{key:0, destination: null, amount: null, addressError: null, amountError: null}],
+      outputs: [{key:0, destination: '', amount: '', addressError: null, amountError: null}],
       totalOutputAmount: 0,
       privPassError: null,
     };
@@ -68,30 +67,33 @@ class Send extends Component{
   }
 
   clearTransactionData() {
-    this.setState({totalOutputAmount: 0, account: 0, confirmations: 0, outputs: [{key:0, destination: null, amount: null, addressError: null, amountError: null}]});
+    this.setState({confirmTxModal: false, totalOutputAmount: 0, account: 0, confirmations: 0, outputs: [{key:0, destination: '', amount: '', addressError: null, amountError: null}]});
     this.props.clearTransaction();
   }
-  submitSignPublishTx() {
-    var checkErrors = false;
-    if (this.state.privpass == null) {
-      this.setState({privPassError: '*Please enter your private passphrase'});
-      checkErrors = true;
-    }
-    if (this.state.privPassError !== null || this.props.constructTxResponse == null || checkErrors) {
+  confirmTx() {
+    this.setState({confirmTxModal: true});
+  }
+  cancelTx() {
+    this.setState({confirmTxModal: false});
+    this.clearTransactionData();
+  }
+  submitSignPublishTx(privpass) {
+    if (this.state.privPassError !== null || this.props.constructTxResponse == null) {
       return;
     }
-    this.props.signTransactionAttempt(this.state.privpass, this.props.constructTxResponse.getUnsignedTransaction());
+    this.props.signTransactionAttempt(privpass, this.props.constructTxResponse.getUnsignedTransaction());
     setTimeout(this.clearTransactionData(),1000);
   }
   submitConstructTx() {
     var checkErrors = false;
     var updatedOutputErrors = this.state.outputs;
     for (var i = 0; i < updatedOutputErrors.length; i++ ) {
-      if (updatedOutputErrors[i].destination == null) {
+      if (updatedOutputErrors[i].destination == null || updatedOutputErrors[i].destination == '' ) {
         updatedOutputErrors[i].addressError = '*Please enter a valid address';
+        updatedOutputErrors[i].destination = '';
         checkErrors = true;
       }
-      if (updatedOutputErrors[i].amount == null || updatedOutputErrors[i].amount < 0) {
+      if (updatedOutputErrors[i].amount == null || updatedOutputErrors[i].amount == '' || updatedOutputErrors[i].amount < 0) {
         updatedOutputErrors[i].amountError = '*Please enter a valid amount (> 0)';
         checkErrors = true;
       }
@@ -100,13 +102,13 @@ class Send extends Component{
       }
     }
     if (checkErrors) {
-      this.setState({output: updatedOutputErrors});
+      this.setState({outputs: updatedOutputErrors});
       return;
     }
     this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs);
   }
   appendOutput() {
-    var newOutput = {key:`${this.state.outputs.length}`, destination: null, amount: null, addressError: null, amountError: null};
+    var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: '', addressError: null, amountError: null};
     this.setState({ outputs: this.state.outputs.concat([newOutput])});
   }
   removeOutput(outputKey) {
@@ -118,12 +120,14 @@ class Send extends Component{
       totalOutputAmount += updateOutputs[i].amount;
     }
     this.setState({ totalOutputAmount: totalOutputAmount, outputs: updateOutputs});
+    this.submitConstructTx();
   }
   updateOutputDestination(outputKey, dest) {
     // do some more helper address checking here
     // possibly check for Ds/Dc Ts/Tc and length at the least
     // later can do full address validtion from dcrutil code
     var updateOutputs = this.state.outputs;
+    updateOutputs[outputKey].destination = dest;
     if (dest == '') {
       updateOutputs[outputKey].addressError = '*Please enter a valid address';
     } else {
@@ -144,6 +148,7 @@ class Send extends Component{
       }
       this.setState({accountSpendable: updatedAccountSpendable});
     }
+    this.submitConstructTx();
   }
   updateOutputAmount(outputKey, amount, unitLabel) {
     // Default to DCR.
@@ -167,13 +172,6 @@ class Send extends Component{
     }
     this.setState({ totalOutputAmount: totalOutputAmount, outputs: updateOutputs });
   }
-  updatePrivPass(privpass) {
-    if (privpass != '') {
-      this.setState({privpass: Buffer.from(privpass), privPassError: null});
-    } else {
-      this.setState({privpass: null, privPassError: '*Please enter your private passphrase'});
-    }
-  }
   render() {
     const { currentSettings } = this.props;
     const { walletService } = this.props;
@@ -184,7 +182,10 @@ class Send extends Component{
     const { getNetworkResponse } = this.props;
 
     var unitLabel = currentSettings.currencyDisplay;
-
+    var unitDivisor = 100000000;
+    if (unitLabel == 'atoms') {
+      unitDivisor = 1;
+    }
     var networkTextDiv = (<div></div>);
     if (getNetworkResponse !== null) {
       if (getNetworkResponse.networkStr == 'testnet') {
@@ -198,9 +199,6 @@ class Send extends Component{
         headerTop={[publishTransactionError !== null ?
             <div key="pubError" style={SendStyles.viewNotificationError}><div style={SendStyles.sendAddressDeleteIconHeader} onClick={() => this.props.clearPublishTxError()}/>{publishTransactionError}</div> :
             <div key="pubError" ></div>,
-          constructTxError !== null ?
-            <div key="conError"  style={SendStyles.viewNotificationError}><div style={SendStyles.sendAddressDeleteIconHeader} onClick={() => this.props.clearConstructTxError()}/>{constructTxError}</div> :
-            <div key="conError" ></div>,
           signTransactionError !== null ?
             <div key="signError"  style={SendStyles.viewNotificationError}><div style={SendStyles.sendAddressDeleteIconHeader} onClick={() => this.props.clearSignTxError()}/>{signTransactionError}</div> :
             <div key="signError" ></div>,
@@ -216,60 +214,9 @@ class Send extends Component{
     var totalSpent = 0;
     if (constructTxResponse !== null) {
       // Use default fee per kb since we aren't setting currently in constructTxRequest (0.01 dcr)
-      estimatedFee = (constructTxResponse.getEstimatedSignedSize() / 1000) * 0.01 * 100000000; // convert to atoms for balance div
+      estimatedFee = (constructTxResponse.getEstimatedSignedSize() / 1000) * 0.001 * 100000000; // convert to atoms for balance div
       totalSpent = constructTxResponse.getTotalPreviousOutputAmount() - constructTxResponse.getTotalOutputAmount() + constructTxResponse.totalAmount;
     }
-    const signTxView = (
-      <div style={SendStyles.view}>
-        {sharedHeader}
-        <div style={SendStyles.content}>
-          <div style={SendStyles.flexHeight}>
-            <div style={SendStyles.sendFromAddress}>
-              <div style={SendStyles.sendPrefixConfirm}>Confirm transaction:</div>
-            </div>
-            <div style={SendStyles.sendToAddress} key="totalSpent">
-              <div style={SendStyles.sendPrefixConfirm}>Total spent from wallet:</div>
-              <div style={SendStyles.sendAddressHashBlockConfirm}>
-                <Balance amount={totalSpent} />
-              </div>
-            </div>
-            <div style={SendStyles.sendToAddress} key="estimatedSize">
-              <div style={SendStyles.sendPrefixConfirm}>Estimated Transactions Size:</div>
-              <div style={SendStyles.sendAddressHashBlockConfirm}>
-                {constructTxResponse !== null ? constructTxResponse.getEstimatedSignedSize() : null} bytes
-              </div>
-            </div>
-            <div style={SendStyles.sendToAddress} key="totalFee">
-              <div style={SendStyles.sendPrefixConfirm}>Estimated Fee:</div>
-              <div style={SendStyles.sendAddressHashBlockConfirm}>
-                <Balance amount={estimatedFee} />
-              </div>
-            </div>
-            <div style={SendStyles.sendToAddress} key="privatePassPhrase">
-              <div style={SendStyles.sendPrefixConfirm}>Private Passhrase:</div>
-              <div style={SendStyles.sendAddressSignPrivPass}>
-                <div style={SendStyles.inputForm}>
-                  <input
-                    id="privpass"
-                    style={SendStyles.sendAddressHashTo}
-                    type="password"
-                    placeholder="Private Password"
-                    onBlur={(e) =>this.updatePrivPass(e.target.value)}/>
-                </div>
-              </div>
-              <div style={SendStyles.sendOutputPrivPassError}>
-                {this.state.privPassError}
-              </div>
-            </div>
-          </div>
-          <KeyBlueButton style={SendStyles.contentSend} onClick={() => this.submitSignPublishTx()}>
-            Confirm
-          </KeyBlueButton>
-          <SlateGrayButton style={SendStyles.contentSend} onClick={() => this.clearTransactionData()}>
-            Cancel
-          </SlateGrayButton>
-        </div>
-      </div>);
 
     var selectAccounts = (
       <div style={SendStyles.selectAccountsSend}>
@@ -296,7 +243,15 @@ class Send extends Component{
     var sendView = (
       <div style={SendStyles.view}>
         {sharedHeader}
-        <div style={SendStyles.content}>
+        <div>
+          <PassphraseModal
+            hidden={!this.state.confirmTxModal}
+            submitPassphrase={(privpass)=>this.submitSignPublishTx(privpass)}
+            cancelPassphrase={()=>this.cancelTx()}
+            heading={'Confirm Transaction'}
+            description={<div>Please confirm your transaction for <Balance amount={totalSpent}/></div>}
+          />
+        <div style={!this.state.confirmTxModal ? SendStyles.content : SendStyles.contentBlur}>
           <div style={SendStyles.sendSelectAccountArea}>
             <div style={SendStyles.sendLabel}>From:</div>
             <div style={SendStyles.sendSelectAccountInput}>
@@ -315,11 +270,13 @@ class Send extends Component{
                     <div style={SendStyles.sendAddress}>
                       <div style={SendStyles.inputForm}>
                         <input
+                          value={output.destination}
                           type="text"
                           style={SendStyles.sendAddressHashTo}
                           key={'destination'+output.key}
                           placeholder="Destination Address"
-                          onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
+                          onChange={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}
+                          onBlur={()=>this.submitConstructTx()}/>
                       </div>
                     </div>
                     <div style={SendStyles.sendAddressWalletIcon} onClick={() => this.appendOutput()}></div>
@@ -328,11 +285,13 @@ class Send extends Component{
                       <div style={SendStyles.sendAddressAmountSumAndCurrency}>
                       <div style={SendStyles.sendAddressAmountSumGradient}>{unitLabel}</div>
                         <input
+                          value={output.amount/unitDivisor}
                           type="text"
                           style={SendStyles.sendAddressInputAmount}
                           key={'amount'+output.key}
                           placeholder="Amount"
-                          onChange={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
+                          onChange={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}
+                          onBlur={()=>this.submitConstructTx()}/>
                       </div>
                     </div>
                   </div>
@@ -352,11 +311,13 @@ class Send extends Component{
                     <div style={SendStyles.sendAddressHashBlock}>
                       <div style={SendStyles.inputForm}>
                         <input
+                          value={output.destination}
                           type="text"
                           style={SendStyles.sendAddressHashTo}
                           key={'destination'+output.key}
                           placeholder="Destination Address"
-                          onBlur={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}/>
+                          onChange={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}
+                          onBlur={()=>this.submitConstructTx()}/>
                       </div>
                       <div style={SendStyles.sendGradient}></div>
                     </div>
@@ -368,11 +329,13 @@ class Send extends Component{
                       <div style={SendStyles.sendAddressAmountSumAndCurrency}>
                       <div style={SendStyles.sendAddressAmountSumGradient}>{unitLabel}</div>
                         <input
+                          value={output.amount/unitDivisor}
                           type="text"
                           style={SendStyles.sendAddressInputAmount}
                           key={'amount'+output.key}
                           placeholder="Amount"
-                          onBlur={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}/>
+                          onChange={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}
+                          onBlur={()=>this.submitConstructTx()}/>
                       </div>
                     </div>
                   </div>
@@ -389,31 +352,46 @@ class Send extends Component{
               </div>
             </div>
             <div style={SendStyles.sendButtonArea}>
-              <KeyBlueButton style={SendStyles.contentSend} disabled={this.state.accountSpendable < this.state.totalOutputAmount && this.state.totalOutputAmount > 0} onClick={this.state.accountSpendable < this.state.totalOutputAmount && this.state.totalOutputAmount > 0 ? null : () => this.submitConstructTx()}>
+              <KeyBlueButton style={SendStyles.contentSend} disabled={constructTxResponse==null} onClick={constructTxResponse !== null  ? () => this.confirmTx() : null}>
                 Send
               </KeyBlueButton>
-              {this.state.accountSpendable < this.state.totalOutputAmount && this.state.totalOutputAmount > 0 ?
-              <span style={{color: 'red', float: 'left', paddingLeft: '20px', paddingTop: '30px'}}>
-                Insufficient spendable account balance to send specified amount.
+              {constructTxError !== null ?
+              <span style={{color: 'red', width: '330px', float: 'left', paddingLeft: '20px', paddingTop: '30px'}}>
+                {constructTxError}
               </span> :
               <div/>
               }
-              <div style={SendStyles.totalAmountSend}>
-                <div style={SendStyles.totalAmountSendText}>
-                  Total amount sending:
+              <div style={SendStyles.estimationAreaSend}>
+                <div style={SendStyles.totalAmountSend}>
+                  <div style={SendStyles.totalAmountSendText}>
+                    Total amount sending:
+                  </div>
+                  <div style={SendStyles.totalAmountSendAmount}>
+                    <Balance amount={totalSpent}/>
+                  </div>
                 </div>
-                <div style={SendStyles.totalAmountSendAmount}>
-                  <Balance amount={this.state.totalOutputAmount}/>
+                <div style={SendStyles.totalAmountSend}>
+                  <div style={SendStyles.totalAmountSendText}>
+                    Estimated Fee:
+                  </div>
+                  <div style={SendStyles.totalAmountSendAmount}>
+                    <Balance amount={estimatedFee} />
+                  </div>
+                </div>
+                <div style={SendStyles.totalAmountSend}>
+                  <div style={SendStyles.totalAmountSendText}>
+                    Estimated Size:
+                  </div>
+                  <div style={SendStyles.totalAmountSendAmount}>
+                    {constructTxResponse !== null ? constructTxResponse.getEstimatedSignedSize() : 0} bytes
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        </div>
     );
-
-    if (constructTxResponse !== null) {
-      sendView = signTxView;
-    }
     var loadingView = (
       <div style={SendStyles.view}>
         {sharedHeader}

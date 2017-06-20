@@ -110,18 +110,28 @@ function getBalanceError(error) {
   return { error, type: GETBALANCE_FAILED };
 }
 
-function getBalanceSuccess(accountNumber, accountName, getBalanceResponse) {
+function getBalanceSuccess(account, getBalanceResponse) {
   return (dispatch, getState) => {
-    const { balances } = getState().grpc;
+    const { balances, network } = getState().grpc;
+    var HDPath = '';
+    if (network == 'mainnet') {
+      HDPath = 'm / 44\' / 20\' / ' + account.getAccountNumber() + '\'';
+    } else if (network == 'testnet') {
+      HDPath = 'm / 44\' / 11\' / ' + account.getAccountNumber() + '\'';
+    }
     var updatedBalance = {
-      accountNumber: accountNumber,
-      accountName: accountName,
+      accountNumber: account.getAccountNumber(),
+      accountName: account.getAccountName(),
       total: getBalanceResponse.getTotal(),
       spendable: getBalanceResponse.getSpendable(),
       immatureReward: getBalanceResponse.getImmatureReward(),
       immatureStakeGeneration: getBalanceResponse.getImmatureStakeGeneration(),
       lockedByTickets: getBalanceResponse.getLockedByTickets(),
       votingAuthority: getBalanceResponse.getVotingAuthority(),
+      HDPath: HDPath,
+      externalKeys: account.getExternalKeyCount(),
+      internalKeys: account.getInternalKeyCount(),
+      importedKeys: account.getImportedKeyCount(),
     };
     var updatedBalances = balances;
     var found = false;
@@ -138,15 +148,15 @@ function getBalanceSuccess(accountNumber, accountName, getBalanceResponse) {
   };
 }
 
-export function getBalanceAttempt(accountNumber, requiredConfs, accountName) {
+export function getBalanceAttempt(account, requiredConfs) {
   return (dispatch) => {
-    dispatch(getBalanceAction(accountNumber, requiredConfs, accountName));
+    dispatch(getBalanceAction(account, requiredConfs));
   };
 }
 
-function getBalanceAction(accountNumber, requiredConfs, accountName) {
+function getBalanceAction(account, requiredConfs) {
   var request = new BalanceRequest();
-  request.setAccountNumber(accountNumber);
+  request.setAccountNumber(account.getAccountNumber());
   request.setRequiredConfirmations(requiredConfs);
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
@@ -155,7 +165,7 @@ function getBalanceAction(accountNumber, requiredConfs, accountName) {
         if (err) {
           dispatch(getBalanceError(err + ' please try again'));
         } else {
-          dispatch(getBalanceSuccess(accountNumber, accountName, getBalanceResponse));
+          dispatch(getBalanceSuccess(account, getBalanceResponse));
         }
       });
   };
@@ -378,7 +388,7 @@ function getAccountsError(error) {
 function getAccountsSuccess(getAccountsResponse) {
   return (dispatch) => {
     for (var i = 0; i < getAccountsResponse.getAccountsList().length; i++) {
-      dispatch(getBalanceAttempt(getAccountsResponse.getAccountsList()[i].getAccountNumber(), 0, getAccountsResponse.getAccountsList()[i].getAccountName()));
+      dispatch(getBalanceAttempt(getAccountsResponse.getAccountsList()[i], 0));
     }
     dispatch({response: getAccountsResponse, type: GETACCOUNTS_SUCCESS });
   };

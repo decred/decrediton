@@ -10,7 +10,6 @@ import SettingsPage from './components/views/SettingsPage';
 import StakePoolPage from './components/views/StakePoolPage';
 import GetStartedPage from './components/views/GetStartedPage';
 import AccountsPage from './components/views/AccountsPage';
-import BalancePage from './components/views/BalancePage';
 import WalletError from './components/views/WalletError';
 import Help from './components/views/Help';
 
@@ -24,7 +23,6 @@ export default (
     <Route path="/settings" component={SettingsPage} />
     <Route path="/proofofstake" component={StakePoolPage} />
     <Route path="/accounts" component={AccountsPage} />
-    <Route path="/balance" component={BalancePage} />
     <Route path="/walletError" component={WalletError} />
     <Route path="/help" component={Help} />
   </Route>

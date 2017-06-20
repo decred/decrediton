@@ -55,10 +55,6 @@ export const ReceiveStyles = {
     height: '556px',
     padding: '54px 60px 54px 80px',
   },
-  img: {
-    width: '250px',
-    paddingLeft: '244px',
-  },
   center: {
     textAlign: 'center',
     justifyContent: 'center',
@@ -98,7 +94,91 @@ export const ReceiveStyles = {
     marginLeft: '190px',
     paddingBottom: '16px',
     paddingTop: '6px',
-  }
+  },
+  headerTitleReceive: {
+    height: '54px',
+    lineHeight: '49px',
+    color: '#596d81',
+    fontSize: '27px',
+    textTransform: 'capitalize',
+    paddingLeft: '50px',
+    backgroundImage: `url(${PlusBig})`,
+    backgroundPosition: '0px 50%',
+    backgroundSize: '30px',
+    backgroundRepeat: 'no-repeat',
+  },
+  headerMetaReceive: {
+    height: '54px',
+    width: '480px',
+    paddingLeft: '50px',
+    color: '#0c1e3e',
+    fontSize: '14px',
+  },
+  contentNestReceive: {
+    backgroundColor: '#fff',
+    paddingTop: '1px',
+    height: '235px',
+  },
+  contentNestReceiveForAddress: {
+    width: '100%',
+    height: '54px',
+    paddingTop: '10px',
+    paddingLeft: '20px',
+    float: 'left',
+  },
+  contentNestReceiveForAddressIcon: {
+    display: 'inline-block',
+    width: '60px',
+    height: '34px',
+    float: 'right',
+    paddingRight: '42px',
+    backgroundImage: `url(${WalletGray})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '20px auto',
+    backgroundRepeat: 'no-repeat',
+  },
+  contentNestPrefixReceive: {
+    paddingRight: '0px',
+    float: 'left',
+    height: '100%',
+    paddingTop: '5px',
+    fontSize: '19px',
+    textAlign: 'right',
+    textTransform: 'capitalize',
+  },
+  contentNestQR: {
+    width: '100%',
+    minHeight: '140px',
+    padding: '20px',
+    float: 'left',
+    textAlign: 'center',
+  },
+  contentNestQRHash: {
+    width: '544px',
+    height:'82px',
+    paddingTop: '56px',
+    float: 'left',
+    border: '1px solid #69d5f7',
+    borderRadius: '5px',
+    backgroundColor: '#e9f8fe',
+    fontFamily: 'Inconsolata, monospace',
+    color: '#0c1e3e',
+    fontSize: '25px',
+    fontWeight: '700',
+  },
+  contentNestQRImage: {
+    width: '140px',
+    height: '140px',
+    float: 'right',
+    paddingRight: '36px',
+    backgroundPosition: '50% 50%',
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+  },
+  contentReceive: {
+    marginTop: '20px',
+    textAlign: 'center',
+  },
 };
 export const SendStyles = {
   body: {
@@ -122,6 +202,7 @@ export const SendStyles = {
     backgroundColor: '#f3f6f6',
   },
   viewNotificationError: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -134,6 +215,7 @@ export const SendStyles = {
     textAlign: 'center',
   },
   viewNotificationSuccess: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -182,6 +264,12 @@ export const SendStyles = {
     fontSize: '14px',
   },
   content: {
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 60px 54px 80px',
+  },
+  contentBlur: {
+    filter: 'blur(6px)',
     overflow: 'auto',
     height: '556px',
     padding: '54px 60px 54px 80px',
@@ -578,24 +666,27 @@ export const SendStyles = {
   totalAmountSend: {
     float: 'right',
     width: '275px',
-    marginTop: '10px',
     paddingRight: '10px',
-    fontSize: '20px',
+    fontSize: '15px',
     textAlign: 'right',
   },
   totalAmountSendText: {
-    float: 'right',
+    float: 'left',
     paddingBottom: '5px',
-    width: '100%',
+  },
+  estimationAreaSend: {
+    paddingTop:'10px',
+    float: 'right',
+    height: '100%',
+    width:'300px',
   },
   totalAmountSendAmount: {
     float: 'right',
-    width: '100%',
     fontFamily: 'Inconsolata, monospace',
   },
   sendButtonArea: {
     width: '100%',
-    height: '50px',
+    height: '100px',
   }
 };
 export const HomeStyles = {
@@ -960,6 +1051,7 @@ export const StakePoolStyles = {
     backgroundColor: '#f3f6f6',
   },
   viewNotificationError: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -972,6 +1064,7 @@ export const StakePoolStyles = {
     textAlign: 'center',
   },
   viewNotificationSuccess: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -2740,11 +2833,14 @@ export const GetStartedStyles = {
   rpcRetryMessage: {
     color: '#c4cbd2',
     float: 'left',
-    width: '100%',
+    width: '525px',
+    paddingTop: '20px',
+    fontSize: '25px',
   },
   rpcRetryButton: {
+    width: '100px',
     marginTop: '10px',
-    float: 'left',
+    float: 'right',
   },
   headerMetaCurrency: {
     fontSize: '23px',
@@ -2832,6 +2928,7 @@ export const GetStartedStyles = {
     backgroundColor: 'white',
   },
   viewNotificationError: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -2844,6 +2941,7 @@ export const GetStartedStyles = {
     textAlign: 'center',
   },
   viewNotificationSuccess: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -2879,7 +2977,7 @@ export const AccountStyles = {
     backgroundColor: '#f3f6f6',
   },
   content: {
-    overflow: 'auto',
+    overflowY: 'scroll',
     height: '556px',
     padding: '54px 60px 54px 80px',
   },
@@ -2971,7 +3069,7 @@ export const AccountStyles = {
     overflowX: 'hidden',
   },
   contentAddNewAccount: {
-    width: '278px',
+    width: '80px',
     float: 'right',
   },
   contentConfirmNewAccount: {
@@ -3035,6 +3133,7 @@ export const AccountStyles = {
     },
   },
   viewNotificationError: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -3047,6 +3146,7 @@ export const AccountStyles = {
     textAlign: 'center',
   },
   viewNotificationSuccess: {
+    marginTop: '20px',
     display: 'inline-block',
     marginRight: 'auto',
     marginLeft: 'auto',

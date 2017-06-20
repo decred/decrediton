@@ -56,7 +56,6 @@ const styles = {
   headerMetaOverview: {
     height: '54px',
     paddingTop: '5px',
-    fontFamily: 'Inconsolata, monospace',
     fontSize: '53px',
   },
   Snackbar: {
