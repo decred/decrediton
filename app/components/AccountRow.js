@@ -252,7 +252,7 @@ class AccountRow extends Component {
                 <div style={styles.accountRowDetailsBottomSpecValue}>
                   <div style={AccountStyles.inputForm}>
                     <input
-                      key={'rename'+account.getAccountNumber()}
+                      key={'rename'+account.accountNumber}
                       type="text"
                       style={AccountStyles.contentNestAddressHashTo}
                       placeholder="New Account Name"

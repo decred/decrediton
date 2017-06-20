@@ -345,7 +345,7 @@ class Send extends Component{
               </div>
             </div>
             <div style={SendStyles.sendButtonArea}>
-              <KeyBlueButton style={SendStyles.contentSend} disabled={this.state.accountSpendable < this.state.totalOutputAmount && this.state.totalOutputAmount > 0} onClick={this.state.accountSpendable < this.state.totalOutputAmount && this.state.totalOutputAmount > 0 ? null : () => this.submitConstructTx()}>
+              <KeyBlueButton style={SendStyles.contentSend} disabled={constructTxResponse==null} onClick={constructTxResponse !== null  ? () => this.submitConstructTx() : null}>
                 Send
               </KeyBlueButton>
               {constructTxError !== null ?
