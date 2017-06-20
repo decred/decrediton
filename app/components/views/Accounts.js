@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import ErrorScreen from '../ErrorScreen';
 import SideBar from '../SideBar';
 import Header from '../Header';
-import Balance from '../Balance';
 import KeyBlueButton from '../KeyBlueButton';
 import SlateGrayButton from '../SlateGrayButton';
 import CircularProgress from 'material-ui/CircularProgress';

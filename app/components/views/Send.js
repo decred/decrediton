@@ -8,7 +8,6 @@ import SideBar from '../SideBar';
 import Balance from '../Balance';
 import Header from '../Header';
 import KeyBlueButton from '../KeyBlueButton';
-import SlateGrayButton from '../SlateGrayButton';
 import { SendStyles } from './ViewStyles';
 import PassphraseModal from '../PassphraseModal';
 
@@ -91,7 +90,7 @@ class Send extends Component{
     for (var i = 0; i < updatedOutputErrors.length; i++ ) {
       if (updatedOutputErrors[i].destination == null || updatedOutputErrors[i].destination == '' ) {
         updatedOutputErrors[i].addressError = '*Please enter a valid address';
-        updatedOutputErrors[i].destination = ''
+        updatedOutputErrors[i].destination = '';
         checkErrors = true;
       }
       if (updatedOutputErrors[i].amount == null || updatedOutputErrors[i].amount == '' || updatedOutputErrors[i].amount < 0) {

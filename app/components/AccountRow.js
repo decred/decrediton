@@ -111,7 +111,7 @@ const styles = {
   },
   accountRowDetailsBottomColumnRight: {
     width: '405px',
-    marginRight: '20px', 
+    marginRight: '20px',
     height: '200px',
     float: 'right',
     borderBottom: '1px solid #E7EAED',
