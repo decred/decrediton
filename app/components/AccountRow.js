@@ -57,10 +57,9 @@ const styles = {
   accountRowWalletIcon: {
     position: 'absolute',
     left: '0px',
-    top: '0px',
     bottom: '0px',
     width: '50px',
-    height: '100%',
+    height: '77px',
     marginRight: '30px',
     float: 'left',
     backgroundImage: `url(${WalletGray})`,
@@ -102,6 +101,7 @@ const styles = {
       backgroundSize: '10px',
     },
     cursor: 'pointer',
+    paddingTop: '1px',
   },
   accountRowDetailsBottom: {
     width: '100%',
@@ -153,6 +153,30 @@ const styles = {
     fontDamily: 'Inconsolata,monospace',
     fontWeight: '700',
   },
+  accountRowDetailsBottomRename: {
+    width: '100%',
+    height: '36px',
+    float: 'left',
+    color: '#0C1E3E',
+    fontSize: '12px',
+  },
+  accountRowDetailsBottomRenameLast: {
+    paddingBottom: '9px',
+    borderBottom: '1px solid #E7EAED',
+    width: '100%',
+    height: '36px',
+    float: 'left',
+    color: '#0C1E3E',
+    fontSize: '12px',
+  },
+  accountRowDetailsBottomRenameName: {
+    width: '140px',
+    height: '26px',
+    paddingRight: '20px',
+    paddingTop: '5px',
+    float: 'left',
+    textAlign: 'right',
+  },
   accountRowDetailsCfg: {
 
   },
@@ -203,8 +227,8 @@ class AccountRow extends Component {
                   Rename Account
                 </div>
               </div>
-              <div style={styles.accountRowDetailsBottomSpec}>
-                <div style={styles.accountRowDetailsBottomSpecName}>New Account Name:</div>
+              <div style={styles.accountRowDetailsBottomRename}>
+                <div style={styles.accountRowDetailsBottomRenameName}>New Account Name:</div>
                 <div style={styles.accountRowDetailsBottomSpecValue}>
                   <div style={AccountStyles.inputForm}>
                     <input
@@ -220,8 +244,8 @@ class AccountRow extends Component {
                   {this.state.renameAccountNameError}
                 </div>
               </div>
-              <div style={styles.accountRowDetailsBottomSpecLast}>
-                <div style={styles.accountRowDetailsBottomSpecName}>Private Passphrase</div>
+              <div style={styles.accountRowDetailsBottomRenameLast}>
+                <div style={styles.accountRowDetailsBottomRenameName}>Private Passphrase</div>
                 <div style={styles.accountRowDetailsBottomSpecValue}>
                   <div style={AccountStyles.inputForm}>
                     <input
