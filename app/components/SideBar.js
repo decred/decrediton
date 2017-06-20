@@ -270,7 +270,7 @@ class SideBar extends Component {
           <MenuLink to="/send">Send</MenuLink>
           <MenuLink to="/receive">Receive</MenuLink>
           <MenuLink to="/history">History</MenuLink>
-          <MenuLink to="/proofofstake">Purchase Tickets</MenuLink>
+          <MenuLink to="/proofofstake">Tickets</MenuLink>
           <MenuLink to="/settings">Settings</MenuLink>
           <MenuLink to="/help">Help</MenuLink>
         </div>
