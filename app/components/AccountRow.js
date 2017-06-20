@@ -103,6 +103,19 @@ const styles = {
     cursor: 'pointer',
     paddingTop: '1px',
   },
+  accountRowDetailsBottomColumnLeft: {
+    width: '300px',
+    height: '200px',
+    float: 'left',
+    borderBottom: '1px solid #E7EAED',
+  },
+  accountRowDetailsBottomColumnRight: {
+    width: '405px',
+    marginRight: '20px', 
+    height: '200px',
+    float: 'right',
+    borderBottom: '1px solid #E7EAED',
+  },
   accountRowDetailsBottom: {
     width: '100%',
     paddingRight: '20px',
@@ -276,34 +289,55 @@ class AccountRow extends Component {
               </SlateGrayButton>
             </div> :
             <div style={styles.accountRowDetailsBottom} key={'details'+account.accountNumber}>
-              <div style={styles.accountRowDetailsBottomTitle}>
-                <div style={styles.accountRowDetailsBottomTitleName}>
-                  Balances
+              <div style={styles.accountRowDetailsBottomColumnLeft}>
+                <div style={styles.accountRowDetailsBottomTitle}>
+                  <div style={styles.accountRowDetailsBottomTitleName}>
+                    Balances
+                  </div>
+                </div>
+                <div style={styles.accountRowDetailsBottomSpec}>
+                  <div style={styles.accountRowDetailsBottomSpecName}>Total</div>
+                  <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.total}/></div>
+                </div>
+                <div style={styles.accountRowDetailsBottomSpec}>
+                  <div style={styles.accountRowDetailsBottomSpecName}>Spendable</div>
+                  <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.spendable}/></div>
+                </div>
+                <div style={styles.accountRowDetailsBottomSpec}>
+                  <div style={styles.accountRowDetailsBottomSpecName}>Immature Rewards</div>
+                  <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.immatureReward}/></div>
+                </div>
+                <div style={styles.accountRowDetailsBottomSpec}>
+                  <div style={styles.accountRowDetailsBottomSpecName}>Locked By Tickets</div>
+                  <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.lockedByTickets}/></div>
+                </div>
+                <div style={styles.accountRowDetailsBottomSpec}>
+                  <div style={styles.accountRowDetailsBottomSpecName}>Voting Authority</div>
+                  <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.votingAuthority}/></div>
+                </div>
+                <div style={styles.accountRowDetailsBottomSpec}>
+                  <div style={styles.accountRowDetailsBottomSpecName}>Immature Stake Generation</div>
+                  <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.immatureStakeGeneration}/></div>
                 </div>
               </div>
-              <div style={styles.accountRowDetailsBottomSpec}>
-                <div style={styles.accountRowDetailsBottomSpecName}>Total</div>
-                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.total}/></div>
-              </div>
-              <div style={styles.accountRowDetailsBottomSpec}>
-                <div style={styles.accountRowDetailsBottomSpecName}>Spendable</div>
-                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.spendable}/></div>
-              </div>
-              <div style={styles.accountRowDetailsBottomSpec}>
-                <div style={styles.accountRowDetailsBottomSpecName}>Immature Rewards</div>
-                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.immatureReward}/></div>
-              </div>
-              <div style={styles.accountRowDetailsBottomSpec}>
-                <div style={styles.accountRowDetailsBottomSpecName}>Locked By Tickets</div>
-                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.lockedByTickets}/></div>
-              </div>
-              <div style={styles.accountRowDetailsBottomSpec}>
-                <div style={styles.accountRowDetailsBottomSpecName}>Voting Authority</div>
-                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.votingAuthority}/></div>
-              </div>
-              <div style={styles.accountRowDetailsBottomSpecLast}>
-                <div style={styles.accountRowDetailsBottomSpecName}>Immature Stake Generation</div>
-                <div style={styles.accountRowDetailsBottomSpecValue}><Balance amount={account.immatureStakeGeneration}/></div>
+              <div style={styles.accountRowDetailsBottomColumnRight}>
+                <div style={styles.accountRowDetailsBottomTitle}>
+                  <div style={styles.accountRowDetailsBottomTitleName}>
+                    Properties
+                  </div>
+                </div>
+                <div style={styles.accountRowDetailsBottomSpec}>
+                  <div style={styles.accountRowDetailsBottomSpecName}>Account number</div>
+                  <div style={styles.accountRowDetailsBottomSpecValue}>{account.accountNumber}</div>
+                </div>
+                <div style={styles.accountRowDetailsBottomSpec}>
+                  <div style={styles.accountRowDetailsBottomSpecName}>HD Path</div>
+                  <div style={styles.accountRowDetailsBottomSpecValue}>{account.HDPath}</div>
+                </div>
+                <div style={styles.accountRowDetailsBottomSpec}>
+                  <div style={styles.accountRowDetailsBottomSpecName}>Keys</div>
+                  <div style={styles.accountRowDetailsBottomSpecValue}>{account.externalKeys} external, {account.internalKeys} internal, {account.importedKeys} imported</div>
+                </div>
               </div>
               {account.accountName !== 'imported' ?
                 <KeyBlueButton
