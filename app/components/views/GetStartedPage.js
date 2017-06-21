@@ -2,10 +2,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import GetStarted from './GetStarted';
-import * as ClientActions from '../../actions/ClientActions';
-import * as WalletLoaderActions from '../../actions/WalletLoaderActions';
-import * as ControlActions from '../../actions/ControlActions';
-import * as VersionActions from '../../actions/VersionActions';
+import {createWalletGoBackNewSeed, createWalletExistingToggle, discoverAddressAttempt, openWalletAttempt, startRpcRequestFunc, versionCheckAction } from '../../actions/WalletLoaderActions';
 
 function mapStateToProps(state) {
   return {
@@ -76,7 +73,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, VersionActions, ControlActions, WalletLoaderActions, ClientActions), dispatch);
+  return bindActionCreators({createWalletGoBackNewSeed, createWalletExistingToggle, discoverAddressAttempt, openWalletAttempt, startRpcRequestFunc, versionCheckAction}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GetStarted);

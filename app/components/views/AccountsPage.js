@@ -2,7 +2,6 @@
 import { connect } from 'react-redux';
 import Accounts from './Accounts';
 import { bindActionCreators } from 'redux';
-import * as ClientActions from '../../actions/ClientActions';
 import * as ControlActions from '../../actions/ControlActions';
 
 function mapStateToProps(state) {
@@ -19,7 +18,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, ControlActions, ClientActions), dispatch);
+  return bindActionCreators({}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Accounts);
