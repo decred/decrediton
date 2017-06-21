@@ -47,7 +47,7 @@ docker run --rm -it -v $DIST_DIR:/release -v $(pwd):/src decred/$DOCKER_IMAGE_TA
   mkdir -p bin && \
   curl -L ${DCRD_RELEASE_URL} | tar zxvf - --strip-components=1 -C ./bin/ && \
   npm run package-$BUILD_TARGET && \
-  rsync -ra ./release/ /release/"
+  rsync -r ./release/ /release/"
 
 echo "------------------------------------------"
 echo "Build complete, artifacts in $DIST_DIR"
