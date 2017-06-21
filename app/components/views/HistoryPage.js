@@ -1,8 +1,6 @@
 // @flow
 import { connect } from 'react-redux';
 import History from './History';
-import { bindActionCreators } from 'redux';
-import * as ClientActions from '../../actions/ClientActions';
 
 function mapStateToProps(state) {
   return {
@@ -25,8 +23,4 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(History);
+export default connect(mapStateToProps)(History);
