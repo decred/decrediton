@@ -136,7 +136,7 @@ function getBalanceSuccess(account, getBalanceResponse) {
     var updatedBalances = balances;
     var found = false;
     for (var i = 0; i < balances.length; i++) {
-      if (balances[i].accountNumber == accountNumber) {
+      if (balances[i].accountNumber == account.getAccountNumber()) {
         updatedBalances[i] = updatedBalance;
         found = true;
       }

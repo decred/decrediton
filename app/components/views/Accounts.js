@@ -104,7 +104,7 @@ class Accounts extends Component{
             balances !== null ?
               <div style={AccountStyles.contentNest}>
               {balances.map((account) => {
-                return (<AccountRow key={account.accountName} account={account} renameAccount={(name, number) => this.props.renameAccountAttempt(name, number)}/>);
+                return (<AccountRow key={'accountRow' + account.accountName} account={account} renameAccount={(name, number) => this.props.renameAccountAttempt(name, number)}/>);
               })}
               </div>:
               <div></div>

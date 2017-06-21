@@ -113,6 +113,7 @@ function transactionNtfnsData(response) {
         dispatch({currentHeight: currentHeight, timeBackString: timeBackString(daysBack), type: TRANSACTIONNTFNS_SYNCING });
       }
     } else if (response.getUnminedTransactionsList().length > 0) {
+      setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
       for (var z = 0; z < response.getUnminedTransactionsList().length; z++) {
         var found = false;
         for (var y = 0; y < unmined.length; y++) {
