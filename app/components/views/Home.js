@@ -25,7 +25,7 @@ class Home extends Component{
   }
 
   handleBalanceClick = () => {
-    this.props.getBalanceAttempt(0,1);
+    this.props.getAccountsAttempt();
   }
 
   render() {

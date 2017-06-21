@@ -2,8 +2,8 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Settings from './Settings';
-import * as SettingsActions from '../../actions/SettingsActions';
-import * as ControlActions from '../../actions/ControlActions';
+import { saveSettings } from '../../actions/SettingsActions';
+import { clearChangePassphraseError, clearChangePassphraseSuccess, changePassphraseAttempt} from '../../actions/ControlActions';
 
 function mapStateToProps(state) {
   return {
@@ -18,7 +18,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({ clearChangePassphraseError, clearChangePassphraseSuccess, changePassphraseAttempt, saveSettings}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
