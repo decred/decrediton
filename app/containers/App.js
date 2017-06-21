@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import theme from '../materialUITheme';
 import {StyleRoot} from 'radium';
