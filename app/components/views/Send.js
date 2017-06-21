@@ -160,11 +160,16 @@ class Send extends Component{
       units = 1;
     }
     var updateOutputs = this.state.outputs;
-    if (amount < 0) {
-      updateOutputs[outputKey].amountError = '*Please enter a valid amount (> 0)';
+    if (isNaN(parseInt(amount))) {
+      updateOutputs[outputKey].amountError = '*Please enter a valid amount';
+      updateOutputs[outputKey].amount = 0;
     } else {
-      updateOutputs[outputKey].amount = amount * units;
-      updateOutputs[outputKey].amountError = null;
+      if (parseInt(amount) <= 0) {
+        updateOutputs[outputKey].amountError = '*Please enter a valid amount (> 0)';
+      } else {
+        updateOutputs[outputKey].amount = parseInt(amount) * units;
+        updateOutputs[outputKey].amountError = null;
+      }
     }
     var totalOutputAmount = 0;
     for (var i = 0; i < updateOutputs.length; i++){

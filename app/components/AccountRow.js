@@ -241,7 +241,7 @@ class AccountRow extends Component {
     const { account } = this.props;
     return (
         <div style={this.state.showAccountDetails ? this.state.showRenameAccount ? styles.accountRowRename : styles.accountRowLong : styles.accountRowShort}>
-          <div style={this.state.showAccountDetails ? styles.accountRowDetailsTop : styles.accountRow} key={account.accountNumber} onClick={this.state.showAccountDetails ? () => this.setState({showAccountDetails: false}) : () => this.setState({showAccountDetails: true})}>
+          <div style={this.state.showAccountDetails ? styles.accountRowDetailsTop : styles.accountRow} key={'top'+account.accountNumber} onClick={this.state.showAccountDetails ? () => this.setState({showAccountDetails: false}) : () => this.setState({showAccountDetails: true})}>
             <div style={styles.accountRowTopTop}>
               <div style={styles.accountRowWalletIcon}/>
               <div style={styles.accountRowTopAccountName}>{account.accountName}</div>
