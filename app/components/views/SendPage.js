@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Send from './Send';
-import * as ControlActions from '../../actions/ControlActions';
+import { clearConstructTxError, clearPublishTxError, clearSignTxError, clearPublishTxSuccess, clearTransaction, constructTransactionAttempt, signTransactionAttempt} from '../../actions/ControlActions';
 
 function mapStateToProps(state) {
   return {
@@ -23,7 +23,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({clearConstructTxError, clearPublishTxError, clearSignTxError, clearPublishTxSuccess, clearTransaction, constructTransactionAttempt, signTransactionAttempt }, dispatch);
 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Send);
