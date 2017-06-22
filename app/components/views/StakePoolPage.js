@@ -5,8 +5,7 @@ import StakePool from './StakePool';
 import { clearStakePoolConfigError,
     clearStakePoolConfigSuccess,
     setStakePoolInformation,
-    setVoteChoicesAttempt,
-    StakePoolActions } from '../../actions/StakePoolActions';
+  } from '../../actions/StakePoolActions';
 import { purchaseTicketsAttempt,
     revokeTicketsAttempt,
     clearStartAutoBuyerSuccess,
@@ -19,9 +18,10 @@ import { purchaseTicketsAttempt,
     clearRevokeTicketsError,
     clearImportScriptSuccess,
     clearImportScriptError,
-    importScriptAttempt } from '../../actions/ControlActions';
-import { startAutoBuyerAttempt,
-      stopAutoBuyerAttempt } from '../../actions/ClientActions';
+    importScriptAttempt,
+    startAutoBuyerAttempt,
+    stopAutoBuyerAttempt, } from '../../actions/ControlActions';
+import { setVoteChoicesAttempt } from '../../actions/ClientActions';
 
 function mapStateToProps(state) {
   return {
@@ -74,7 +74,7 @@ function mapDispatchToProps(dispatch) {
     clearStopAutoBuyerError,
     setStakePoolInformation,
     setVoteChoicesAttempt,
-    StakePoolActions, purchaseTicketsAttempt,
+    purchaseTicketsAttempt,
     revokeTicketsAttempt,
     clearPurchaseTicketsSuccess,
     clearPurchaseTicketsError,
