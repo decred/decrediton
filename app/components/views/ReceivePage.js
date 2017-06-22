@@ -2,8 +2,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Receive from './Receive';
-import * as ClientActions from '../../actions/ClientActions';
-import * as ControlActions from '../../actions/ControlActions';
+import { getNextAddressAttempt } from '../../actions/ControlActions';
 
 function mapStateToProps(state) {
   return {
@@ -18,7 +17,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({getNextAddressAttempt}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Receive);
