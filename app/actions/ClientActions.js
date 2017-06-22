@@ -1,3 +1,4 @@
+// @flow
 import { getWalletService, getTicketBuyerService, getVotingService, getAgendaService } from '../middleware/grpc/client';
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, getTicketBuyerConfigAttempt } from './ControlActions';
 import { transactionNtfnsStart } from './NotificationActions';

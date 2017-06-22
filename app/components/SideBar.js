@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import { updateBlockTimeSince } from '../actions/ClientActions';
 import { bindActionCreators } from 'redux';

@@ -1,3 +1,4 @@
+// @flow
 import { transactionNtfs, accountNtfs } from '../middleware/grpc/client';
 import { getAccountsAttempt, getStakeInfoAttempt,
   getTicketPriceAttempt, getNetworkAttempt } from './ClientActions';

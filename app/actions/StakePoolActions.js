@@ -1,3 +1,4 @@
+// @flow
 import { getPurchaseInfo, setStakePoolAddress, setVoteChoices } from '../middleware/stakepoolapi';
 import { NextAddressRequest } from '../middleware/walletrpc/api_pb';
 import { getCfg } from '../config.js';

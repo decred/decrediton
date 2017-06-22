@@ -1,3 +1,4 @@
+// @flow
 import Radium from 'radium';
 import React from 'react';
 

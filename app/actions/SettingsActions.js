@@ -1,3 +1,4 @@
+// @flow
 import { getCfg, writeCfg } from '../config.js';
 export const SETTINGS_SAVE = 'SETTINGS_SAVE';
 export const SETTINGS_CHANGED = 'SETTINGS_CHANGED';

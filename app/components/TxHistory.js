@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import TxRow from './TxRow';
 import dateFormat from 'dateformat';
