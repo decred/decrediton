@@ -2,9 +2,26 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import StakePool from './StakePool';
-import * as StakePoolActions from '../../actions/StakePoolActions';
-import * as ControlActions from '../../actions/ControlActions';
-import * as ClientActions from '../../actions/ClientActions';
+import { clearStakePoolConfigError,
+    clearStakePoolConfigSuccess,
+    setStakePoolInformation,
+    setVoteChoicesAttempt,
+    StakePoolActions } from '../../actions/StakePoolActions';
+import { purchaseTicketsAttempt,
+    revokeTicketsAttempt,
+    clearStartAutoBuyerSuccess,
+    clearStartAutoBuyerError,
+    clearStopAutoBuyerSuccess,
+    clearStopAutoBuyerError,
+    clearPurchaseTicketsSuccess,
+    clearPurchaseTicketsError,
+    clearRevokeTicketsSuccess,
+    clearRevokeTicketsError,
+    clearImportScriptSuccess,
+    clearImportScriptError,
+    importScriptAttempt } from '../../actions/ControlActions';
+import { startAutoBuyerAttempt,
+      stopAutoBuyerAttempt } from '../../actions/ClientActions';
 
 function mapStateToProps(state) {
   return {
@@ -48,7 +65,26 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({
+    clearStakePoolConfigError,
+    clearStakePoolConfigSuccess,
+    clearStartAutoBuyerSuccess,
+    clearStartAutoBuyerError,
+    clearStopAutoBuyerSuccess,
+    clearStopAutoBuyerError,
+    setStakePoolInformation,
+    setVoteChoicesAttempt,
+    StakePoolActions, purchaseTicketsAttempt,
+    revokeTicketsAttempt,
+    clearPurchaseTicketsSuccess,
+    clearPurchaseTicketsError,
+    clearRevokeTicketsSuccess,
+    clearRevokeTicketsError,
+    clearImportScriptSuccess,
+    clearImportScriptError,
+    importScriptAttempt,
+    startAutoBuyerAttempt,
+    stopAutoBuyerAttempt  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StakePool);
