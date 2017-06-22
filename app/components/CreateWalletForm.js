@@ -10,8 +10,6 @@ import {
   generateRandomSeedClear,
   generateRandomSeedAttempt
 } from '../actions/ControlActions';
-import * as WalletLoaderActions from '../actions/WalletLoaderActions';
-import * as SeedServiceActions from '../actions/SeedServiceActions';
 import KeyBlueButton from './KeyBlueButton';
 
 const styles = {
