@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { StakePoolStyles } from './views/ViewStyles';
 import AgendaClose from './AgendaClose';

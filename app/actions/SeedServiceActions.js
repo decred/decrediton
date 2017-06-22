@@ -1,3 +1,4 @@
+// @flow
 import { seeder } from '../middleware/grpc/client';
 export const SEEDER_ATTEMPT = 'SEEDER_ATTEMPT';
 export const SEEDER_FAILED = 'SEEDER_FAILED';

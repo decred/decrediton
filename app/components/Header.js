@@ -1,16 +1,12 @@
+// @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Snackbar from 'material-ui/Snackbar';
-import * as NotificationActions from '../actions/NotificationActions';
 
 function mapStateToProps(state) {
   return {
     newUnminedMessage: state.notifications.newUnminedMessage,
   };
-}
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, NotificationActions), dispatch);
 }
 
 const styles = {
@@ -79,7 +75,6 @@ class Header extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.newUnminedMessage !== nextProps.newUnminedMessage) {
-      console.log(nextProps.newUnminedMessage);
       this.setState({
         open: true,
       });
@@ -132,4 +127,4 @@ class Header extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps)(Header);

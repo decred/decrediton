@@ -2,8 +2,7 @@
 import { connect } from 'react-redux';
 import Accounts from './Accounts';
 import { bindActionCreators } from 'redux';
-import * as ClientActions from '../../actions/ClientActions';
-import * as ControlActions from '../../actions/ControlActions';
+import {renameAccountAttempt, clearNewAccountSuccess, clearNewAccountError, clearRenameAccountSuccess, clearRenameAccountError, getNextAccountAttempt} from '../../actions/ControlActions';
 
 function mapStateToProps(state) {
   return {
@@ -19,7 +18,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, ControlActions, ClientActions), dispatch);
+  return bindActionCreators({renameAccountAttempt, clearNewAccountSuccess, clearNewAccountError, clearRenameAccountSuccess, clearRenameAccountError, getNextAccountAttempt}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Accounts);

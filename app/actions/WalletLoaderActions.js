@@ -1,3 +1,4 @@
+// @flow
 import { loader } from '../middleware/grpc/client';
 import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from './ClientActions';
 import { getVersionServiceAttempt } from './VersionActions';

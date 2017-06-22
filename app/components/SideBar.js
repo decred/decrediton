@@ -1,5 +1,6 @@
+// @flow
 import React, { Component } from 'react';
-import * as ClientActions from '../actions/ClientActions';
+import { updateBlockTimeSince } from '../actions/ClientActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import arrowUpLightBlue from './icons/arrow-up-light-blue.svg';
@@ -26,7 +27,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, ClientActions), dispatch);
+  return bindActionCreators({ updateBlockTimeSince }, dispatch);
 }
 
 const styles = {

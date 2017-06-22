@@ -1,3 +1,4 @@
+// @flow
 import { getAccountsAttempt, getTransactionInfoAttempt } from './ClientActions';
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,

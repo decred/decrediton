@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import Radium from 'radium';
 import CardKebab from './icons/tickets-agenda-card-kebab.svg';

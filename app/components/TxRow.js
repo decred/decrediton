@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import Radium from 'radium';
 import Balance from './Balance';

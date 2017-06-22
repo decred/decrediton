@@ -1,5 +1,6 @@
 // @flow
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import ErrorScreen from '../ErrorScreen';
 import SideBar from '../SideBar';
 import TxHistory from '../TxHistory';

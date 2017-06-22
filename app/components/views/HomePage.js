@@ -2,9 +2,8 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Home from './Home';
-import * as ClientActions from '../../actions/ClientActions';
-import * as WalletLoaderActions from '../../actions/WalletLoaderActions';
-import * as ControlActions from '../../actions/ControlActions';
+import { getAccountsAttempt } from '../../actions/ClientActions';
+import { rescanAttempt } from '../../actions/ControlActions';
 
 function mapStateToProps(state) {
   return {
@@ -31,7 +30,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, ControlActions, WalletLoaderActions, ClientActions), dispatch);
+  return bindActionCreators({getAccountsAttempt, rescanAttempt}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

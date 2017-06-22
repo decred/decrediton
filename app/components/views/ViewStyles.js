@@ -1,3 +1,4 @@
+// @flow
 import Add from '../icons/add.svg';
 import Delete from '../icons/delete.svg';
 import IndicatorPending from '../icons/indicator-pending.svg';

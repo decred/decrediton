@@ -1,5 +1,6 @@
 // @flow
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 import LinearProgress from 'material-ui/LinearProgress';
 import CircularProgress from 'material-ui/CircularProgress';
 import KeyBlueButton from '../KeyBlueButton';
@@ -24,7 +25,7 @@ class Home extends Component{
   }
 
   handleBalanceClick = () => {
-    this.props.getBalanceAttempt(0,1);
+    this.props.getAccountsAttempt();
   }
 
   render() {

@@ -1,3 +1,4 @@
+// @flow
 import { getVersionService } from '../middleware/grpc/client';
 import { loaderRequest } from './WalletLoaderActions';
 var messages = require('../middleware/walletrpc/api_pb');

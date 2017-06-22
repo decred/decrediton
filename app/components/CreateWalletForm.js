@@ -1,9 +1,15 @@
+// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ControlActions from '../actions/ControlActions';
-import * as WalletLoaderActions from '../actions/WalletLoaderActions';
-import * as SeedServiceActions from '../actions/SeedServiceActions';
+import {
+  createWalletConfirmNewSeed,
+  createWalletGoBackNewSeed,
+  decodeSeedAttempt,
+  createWalletRequest,
+  generateRandomSeedClear,
+  generateRandomSeedAttempt
+} from '../actions/ControlActions';
 import KeyBlueButton from './KeyBlueButton';
 
 const styles = {
@@ -344,7 +350,13 @@ class CreateWalletForm extends React.Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Object.assign({}, ControlActions, WalletLoaderActions, SeedServiceActions), dispatch);
+  return bindActionCreators({
+    createWalletConfirmNewSeed,
+    createWalletGoBackNewSeed,
+    decodeSeedAttempt,
+    createWalletRequest,
+    generateRandomSeedClear,
+    generateRandomSeedAttempt}, dispatch);
 }
 
 function mapStateToProps(state) {

@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react';
 import SlateGrayButton from './SlateGrayButton';
 import KeyBlueButton from './KeyBlueButton';
