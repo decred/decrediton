@@ -124,7 +124,7 @@ class Send extends Component{
       totalOutputAmount += updateOutputs[i].amount;
     }
     this.setState({ totalOutputAmount: totalOutputAmount, outputs: updateOutputs});
-    this.submitConstructTx();
+    setTimeout(()=>this.submitConstructTx(), 100);
   }
   updateOutputDestination(outputKey, dest) {
     // do some more helper address checking here
