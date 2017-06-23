@@ -152,7 +152,7 @@ class Send extends Component{
     this.submitConstructTx();
   }
   updateOutputAmount(outputKey, amountStr, unitLabel) {
-    if (amountStr.length > 50 || amountStr.match(/[a-z]/i)) {
+    if (amountStr.length > 17 || amountStr.match(/[a-z]/i)) {
       // alphabet letters found or longer than 50
       return;
     }
