@@ -43,7 +43,7 @@ class Send extends Component{
       account: 0,
       accountSpendable: defaultSpendable,
       confirmations: 0,
-      outputs: [{key:0, destination: '', amount: '', addressError: null, amountError: null}],
+      outputs: [{key:0, destination: '', amount: 0, amountStr: '', addressError: null, amountError: null}],
       totalOutputAmount: 0,
       privPassError: null,
     };
@@ -68,7 +68,7 @@ class Send extends Component{
   }
 
   clearTransactionData() {
-    this.setState({confirmTxModal: false, totalOutputAmount: 0, account: 0, confirmations: 0, outputs: [{key:0, destination: '', amount: '', addressError: null, amountError: null}]});
+    this.setState({confirmTxModal: false, totalOutputAmount: 0, account: 0, confirmations: 0, outputs: [{key:0, destination: '', amount: 0, amountStr: '', addressError: null, amountError: null}]});
     this.props.clearTransaction();
   }
   confirmTx() {
@@ -94,7 +94,7 @@ class Send extends Component{
         updatedOutputErrors[i].destination = '';
         checkErrors = true;
       }
-      if (updatedOutputErrors[i].amount == null || updatedOutputErrors[i].amount == '' || updatedOutputErrors[i].amount < 0) {
+      if (updatedOutputErrors[i].amount == null || updatedOutputErrors[i].amount <= 0) {
         updatedOutputErrors[i].amountError = '*Please enter a valid amount (> 0)';
         checkErrors = true;
       }
@@ -109,7 +109,7 @@ class Send extends Component{
     this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs);
   }
   appendOutput() {
-    var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: '', addressError: null, amountError: null};
+    var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: 0, amountStr: '', addressError: null, amountError: null};
     this.setState({ outputs: this.state.outputs.concat([newOutput])});
   }
   removeOutput(outputKey) {
@@ -121,7 +121,7 @@ class Send extends Component{
       totalOutputAmount += updateOutputs[i].amount;
     }
     this.setState({ totalOutputAmount: totalOutputAmount, outputs: updateOutputs});
-    this.submitConstructTx();
+    setTimeout(()=>this.submitConstructTx(), 100);
   }
   updateOutputDestination(outputKey, dest) {
     // do some more helper address checking here
@@ -151,7 +151,12 @@ class Send extends Component{
     }
     this.submitConstructTx();
   }
-  updateOutputAmount(outputKey, amount, unitLabel) {
+  updateOutputAmount(outputKey, amountStr, unitLabel) {
+    if (amountStr.length > 17 || amountStr.match(/[a-z]/i)) {
+      // alphabet letters found or longer than 50
+      return;
+    }
+
     // Default to DCR.
     var units = 100000000;
     if (unitLabel === 'DCR') {
@@ -161,14 +166,16 @@ class Send extends Component{
       units = 1;
     }
     var updateOutputs = this.state.outputs;
-    if (isNaN(parseInt(amount))) {
+    updateOutputs[outputKey].amountStr = amountStr;
+    if (isNaN(parseFloat(amountStr))) {
       updateOutputs[outputKey].amountError = '*Please enter a valid amount';
       updateOutputs[outputKey].amount = 0;
     } else {
-      if (parseInt(amount) <= 0) {
+      if (parseFloat(amountStr) <= 0) {
         updateOutputs[outputKey].amountError = '*Please enter a valid amount (> 0)';
+        updateOutputs[outputKey].amount = 0;
       } else {
-        updateOutputs[outputKey].amount = parseInt(amount) * units;
+        updateOutputs[outputKey].amount = parseFloat(amountStr) * units;
         updateOutputs[outputKey].amountError = null;
       }
     }
@@ -188,10 +195,7 @@ class Send extends Component{
     const { getNetworkResponse } = this.props;
 
     var unitLabel = currentSettings.currencyDisplay;
-    var unitDivisor = 100000000;
-    if (unitLabel == 'atoms') {
-      unitDivisor = 1;
-    }
+
     var networkTextDiv = (<div></div>);
     if (getNetworkResponse !== null) {
       if (getNetworkResponse.networkStr == 'testnet') {
@@ -291,7 +295,7 @@ class Send extends Component{
                       <div style={SendStyles.sendAddressAmountSumAndCurrency}>
                       <div style={SendStyles.sendAddressAmountSumGradient}>{unitLabel}</div>
                         <input
-                          value={output.amount/unitDivisor}
+                          value={output.amountStr}
                           type="text"
                           style={SendStyles.sendAddressInputAmount}
                           key={'amount'+output.key}
@@ -335,7 +339,7 @@ class Send extends Component{
                       <div style={SendStyles.sendAddressAmountSumAndCurrency}>
                       <div style={SendStyles.sendAddressAmountSumGradient}>{unitLabel}</div>
                         <input
-                          value={output.amount/unitDivisor}
+                          value={output.amountStr}
                           type="text"
                           style={SendStyles.sendAddressInputAmount}
                           key={'amount'+output.key}
