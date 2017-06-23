@@ -113,12 +113,9 @@ class Send extends Component{
     this.setState({ outputs: this.state.outputs.concat([newOutput])});
   }
   removeOutput(outputKey) {
-    console.log(outputKey);
     var updateOutputs = this.state.outputs.filter(output => {
       return (output.key != outputKey);
     });
-    console.log(this.state.outputs);
-    console.log(updateOutputs);
     var totalOutputAmount = 0;
     for (var i = 0; i < updateOutputs.length; i++){
       totalOutputAmount += updateOutputs[i].amount;
@@ -155,6 +152,11 @@ class Send extends Component{
     this.submitConstructTx();
   }
   updateOutputAmount(outputKey, amountStr, unitLabel) {
+    if (amountStr.length > 50 || amountStr.match(/[a-z]/i)) {
+      // alphabet letters found or longer than 50
+      return;
+    }
+
     // Default to DCR.
     var units = 100000000;
     if (unitLabel === 'DCR') {
@@ -191,7 +193,7 @@ class Send extends Component{
     const { signTransactionError, signTransactionRequestAttempt } = this.props;
     const { balances } = this.props;
     const { getNetworkResponse } = this.props;
-    console.log(this.state.outputs);
+
     var unitLabel = currentSettings.currencyDisplay;
 
     var networkTextDiv = (<div></div>);
