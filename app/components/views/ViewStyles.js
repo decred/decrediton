@@ -2286,10 +2286,10 @@ export const StakePoolStyles = {
     paddingLeft: '20px',
   },
   stakeInfoArea: {
-    fontSize: '13px',
+    fontSize: '12px',
     fontWeight: 'bold',
     float: 'right',
-    marginTop: '-33px',
+    marginTop: '-40px',
     height:'80px',
     width: '312px',
   },

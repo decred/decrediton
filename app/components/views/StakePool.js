@@ -1038,6 +1038,7 @@ class StakePool extends Component{
                     <div style={StakePoolStyles.stakeInfoRows}><span style={StakePoolStyles.stakeInfoRowsLeftName}>Poolsize:</span><span style={StakePoolStyles.stakeInfoRowsLeftValue}>{getStakeInfoResponse.getPoolSize()}</span></div>
                     <div style={StakePoolStyles.stakeInfoRows}><span style={StakePoolStyles.stakeInfoRowsLeftName}>All Mempool Tickets:</span><span style={StakePoolStyles.stakeInfoRowsLeftValue}>{getStakeInfoResponse.getAllMempoolTix()}</span></div>
                     <div style={StakePoolStyles.stakeInfoRows}><span style={StakePoolStyles.stakeInfoRowsLeftName}>Own Mempool Tickets:</span><span style={StakePoolStyles.stakeInfoRowsLeftValue}>{getStakeInfoResponse.getOwnMempoolTix()}</span></div>
+                    <div style={StakePoolStyles.stakeInfoRows}><span style={StakePoolStyles.stakeInfoRowsLeftName}>Immature Tickets:</span><span style={StakePoolStyles.stakeInfoRowsLeftValue}>{getStakeInfoResponse.getImmature()}</span></div>
                     <div style={StakePoolStyles.stakeInfoRows}><span style={StakePoolStyles.stakeInfoRowsLeftName}>Live Tickets:</span><span style={StakePoolStyles.stakeInfoRowsLeftValue}>{getStakeInfoResponse.getLive()}</span></div>
                   </div>
                   <div style={StakePoolStyles.stakeInfoAreaRight}>
