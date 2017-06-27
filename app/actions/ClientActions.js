@@ -124,7 +124,7 @@ function getBalanceSuccess(account, getBalanceResponse) {
     }
     var hidden = false;
     for ( var i = 0; i < hiddenAccounts.length; i++ ) {
-      if (hiddenAccounts[i] == account.getAccountName()) {
+      if (hiddenAccounts[i] == account.getAccountNumber()) {
         hidden = true;
         break;
       }
