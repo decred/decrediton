@@ -456,7 +456,7 @@ export function showAccount(accountName) {
     var updatedHiddenAccounts = Array();
     for (var i = 0; i < hiddenAccounts.length; i++) {
       if (hiddenAccounts[i] !== accountName) {
-        updatedHiddenAccounts.push(accountName);
+        updatedHiddenAccounts.push(hiddenAccounts[i]);
       }
     }
     var cfg = getCfg();
