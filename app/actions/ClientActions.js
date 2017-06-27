@@ -433,7 +433,7 @@ function accounts() {
 
 export const UPDATEHIDDENACCOUNTS = 'UPDATEHIDDENACCOUNTS';
 
-export function hideAccount(accountName) {
+export function hideAccount(accountNumber) {
   return (dispatch, getState) => {
     const {hiddenAccounts} = getState().grpc;
     var updatedHiddenAccounts;
@@ -442,7 +442,7 @@ export function hideAccount(accountName) {
     } else {
       updatedHiddenAccounts = hiddenAccounts;
     }
-    updatedHiddenAccounts.push(accountName);
+    updatedHiddenAccounts.push(accountNumber);
     var cfg = getCfg();
     cfg.set('hiddenaccounts', updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
@@ -450,12 +450,12 @@ export function hideAccount(accountName) {
   };
 }
 
-export function showAccount(accountName) {
+export function showAccount(accountNumber) {
   return (dispatch, getState) => {
     const {hiddenAccounts} = getState().grpc;
     var updatedHiddenAccounts = Array();
     for (var i = 0; i < hiddenAccounts.length; i++) {
-      if (hiddenAccounts[i] !== accountName) {
+      if (hiddenAccounts[i] !== accountNumber) {
         updatedHiddenAccounts.push(hiddenAccounts[i]);
       }
     }

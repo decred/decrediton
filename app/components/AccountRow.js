@@ -261,11 +261,11 @@ class AccountRow extends Component {
     this.setState({renameAccountName: null, showRenameAccount: false});
   }
   showAccount() {
-    this.props.showAccount(this.props.account.accountName);
+    this.props.showAccount(this.props.account.accountNumber);
     this.setState({hidden: false});
   }
   hideAccount() {
-    this.props.hideAccount(this.props.account.accountName);
+    this.props.hideAccount(this.props.account.accountNumber);
     this.setState({hidden: true});
   }
   render() {
@@ -378,13 +378,13 @@ class AccountRow extends Component {
                 </KeyBlueButton> :
                 <div></div>
               }
-              {account.accountName !== 'imported' && account.accountName !== 'default' && account.total == 0  && !this.state.hidden ?
+              {account.accountName !== 'imported' && account.accountName !== 'default' && account.total == 0 && !this.state.hidden ?
                 <KeyBlueButton
                   style={AccountStyles.contentShowHideAccount}
                   onClick={() => this.hideAccount()}>
                   Hide Account
                 </KeyBlueButton> :
-                account.accountName !== 'imported' && account.accountName !== 'default' && account.total == 0 && this.state.hidden ?
+                account.accountName !== 'imported' && account.accountName !== 'default' && this.state.hidden ?
                 <KeyBlueButton
                   style={AccountStyles.contentShowHideAccount}
                   onClick={() => this.showAccount()}>

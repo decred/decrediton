@@ -109,7 +109,7 @@ class Accounts extends Component{
             sortedBalances !== null ?
               <div style={AccountStyles.contentNest}>
               {sortedBalances.map((account) => {
-                return (<AccountRow key={'accountRow' + account.accountName} account={account} renameAccount={(name, number) => this.props.renameAccountAttempt(name, number)} hideAccount={(name) => this.props.hideAccount(name)} showAccount={(name) => this.props.showAccount(name)}/>);
+                return (<AccountRow key={'accountRow' + account.accountName} account={account} renameAccount={(name, number) => this.props.renameAccountAttempt(name, number)} hideAccount={(number) => this.props.hideAccount(number)} showAccount={(number) => this.props.showAccount(number)}/>);
               })}
               </div>:
               <div></div>
