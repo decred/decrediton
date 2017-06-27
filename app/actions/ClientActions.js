@@ -11,6 +11,7 @@ import {
   AgendasRequest, VoteChoicesRequest, SetVoteChoicesRequest,
 } from '../middleware/walletrpc/api_pb';
 import { TransactionDetails }  from '../middleware/walletrpc/api_pb';
+import { getCfg } from '../config.js';
 
 export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
 export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
@@ -114,13 +115,22 @@ function getBalanceError(error) {
 function getBalanceSuccess(account, getBalanceResponse) {
   return (dispatch, getState) => {
     const { balances, network } = getState().grpc;
+    const { hiddenAccounts } = getState().grpc;
     var HDPath = '';
     if (network == 'mainnet') {
       HDPath = 'm / 44\' / 20\' / ' + account.getAccountNumber() + '\'';
     } else if (network == 'testnet') {
       HDPath = 'm / 44\' / 11\' / ' + account.getAccountNumber() + '\'';
     }
+    var hidden = false;
+    for ( var i = 0; i < hiddenAccounts.length; i++ ) {
+      if (hiddenAccounts[i] == account.getAccountName()) {
+        hidden = true;
+        break;
+      }
+    }
     var updatedBalance = {
+      hidden: hidden,
       accountNumber: account.getAccountNumber(),
       accountName: account.getAccountName(),
       total: getBalanceResponse.getTotal(),
@@ -419,6 +429,36 @@ function accounts() {
         }
       });
   };
+}
+
+export const UPDATEHIDDENACCOUNTS = 'UPDATEHIDDENACCOUNTS';
+
+export function hideAccount(accountName) {
+  return (dispatch, getState) => {
+    const {hiddenAccounts} = getState().grpc;
+    var updatedHiddenAccounts = hiddenAccounts;
+    updatedHiddenAccounts.push(accountName);
+    var cfg = getCfg();
+    cfg.set('hiddenaccounts', updatedHiddenAccounts);
+    dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
+    dispatch(getAccountsAttempt());
+  }
+}
+
+export function showAccount(accountName) {
+  return (dispatch, getState) => {
+    const {hiddenAccounts} = getState().grpc;
+    var updatedHiddenAccounts = Array();
+    for (var i = 0; i < hiddenAccounts.length; i++) {
+      if (hiddenAccounts[i] !== accountName) {
+        updatedHiddenAccounts.push(accountName);
+      }
+    }
+    var cfg = getCfg();
+    cfg.set('hiddenaccounts', updatedHiddenAccounts);
+    dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
+    dispatch(getAccountsAttempt());
+  }
 }
 
 export const GETTRANSACTIONS_ATTEMPT = 'GETTRANSACTIONS_ATTEMPT';

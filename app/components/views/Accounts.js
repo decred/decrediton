@@ -72,6 +72,11 @@ class Accounts extends Component{
     const { getNextAccountError, getNextAccountSuccess } = this.props;
     const { getNextAccountRequestAttempt } = this.props;
     const { renameAccountError, renameAccountSuccess } = this.props;
+    const { hiddenAccounts } = this.props;
+    var sortedBalances = balances;
+    sortedBalances.sort(function(a, b) {
+      return b.accountNumber - a.accountNumber;
+    });
     const accountsView = (
       <div style={AccountStyles.view}>
         <Header
@@ -102,10 +107,10 @@ class Accounts extends Component{
             <div style={AccountStyles.content}>
               <CircularProgress style={AccountStyles.loading} size={125} thickness={6}/>
             </div> :
-            balances !== null ?
+            sortedBalances !== null ?
               <div style={AccountStyles.contentNest}>
-              {balances.map((account) => {
-                return (<AccountRow key={'accountRow' + account.accountName} account={account} renameAccount={(name, number) => this.props.renameAccountAttempt(name, number)}/>);
+              {sortedBalances.map((account) => {
+                return (<AccountRow key={'accountRow' + account.accountName} account={account} renameAccount={(name, number) => this.props.renameAccountAttempt(name, number)} hideAccount={(name) => this.props.hideAccountAttempt(name)}/>);
               })}
               </div>:
               <div></div>

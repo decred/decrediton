@@ -203,6 +203,11 @@ export default function grpc(state = {}, action) {
       getAccountsRequestAttempt: false,
       getAccountsResponse: action.response,
     };
+  case UPDATEHIDDENACCOUNTS:
+    return {
+      ...state,
+      hiddenAccounts: action.hiddenAccounts,
+    };
   case GETTRANSACTIONS_ATTEMPT:
     return {
       ...state,

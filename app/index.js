@@ -19,6 +19,7 @@ var totalDays = 0.0;
 var foundStakePoolConfig = false;
 var currentStakePoolConfig = cfg.get('stakepools');
 var network = cfg.get('network');
+var hiddenAccounts = cfg.get('hiddenaccounts');
 if (currentStakePoolConfig !== undefined) {
   for (var i = 0; i < currentStakePoolConfig.length; i++) {
     if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
@@ -126,6 +127,7 @@ var initialState = {
     getTicketPriceRequestAttempt: false,
     getTicketPriceResponse: null,
     // Accounts
+    hiddenAccounts: hiddenAccounts,
     getAccountsRequest: null,
     getAccountsError: null,
     getAccountsRequestAttempt: false,
