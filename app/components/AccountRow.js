@@ -30,6 +30,23 @@ const styles = {
     },
     cursor: 'pointer',
   },
+  accountRowHidden: {
+    position: 'relative',
+    overflow: 'hidden',
+    height: '77px',
+    borderTop: '1px solid #F0F4F4',
+    backgroundColor: 'transparent',
+    backgroundImage: `url(${ArrowRightGray})`,
+    backgroundPosition: '60px 24px',
+    backgroundSize: '5px auto',
+    backgroundRepeat: 'no-repeat',
+    ':hover': {
+      backgroundColor: 'rgba(212, 240, 253, .5)',
+      backgroundImage: `url(${ArrowRightKeyBlue})`,
+      backgroundSize: '5px',
+    },
+    cursor: 'pointer',
+  },
   accountRowTopTop: {
     width: '100%',
     height: '40px',
@@ -200,6 +217,10 @@ const styles = {
   accountRowShort: {
     height: '77px',
   },
+  accountRowShortHidden: {
+    backgroundColor: 'transparent',
+    height: '77px',
+  },
   accountRowRename: {
     height: '248px',
   },
@@ -219,6 +240,7 @@ class AccountRow extends Component {
       renameAccountName: null,
       renameAccountNameError: null,
       renameAccountNumber: this.props.account.accountNumber,
+      hidden: this.props.account.hidden,
     };
   }
   updateRenameAccountName(accountName) {
@@ -238,14 +260,22 @@ class AccountRow extends Component {
     this.props.renameAccount(this.state.renameAccountNumber, this.state.renameAccountName);
     this.setState({renameAccountName: null, showRenameAccount: false});
   }
+  showAccount() {
+    this.props.showAccount(this.props.account.accountNumber);
+    this.setState({hidden: false});
+  }
+  hideAccount() {
+    this.props.hideAccount(this.props.account.accountNumber);
+    this.setState({hidden: true});
+  }
   render() {
     const { account } = this.props;
     return (
         <div style={this.state.showAccountDetails ? this.state.showRenameAccount ? styles.accountRowRename : styles.accountRowLong : styles.accountRowShort}>
-          <div style={this.state.showAccountDetails ? styles.accountRowDetailsTop : styles.accountRow} key={'top'+account.accountNumber} onClick={this.state.showAccountDetails ? () => this.setState({showAccountDetails: false}) : () => this.setState({showAccountDetails: true})}>
+          <div style={this.state.showAccountDetails ? styles.accountRowDetailsTop :  this.state.hidden ? styles.accountRowHidden : styles.accountRow } key={'top'+account.accountNumber} onClick={this.state.showAccountDetails ? () => this.setState({showAccountDetails: false}) : () => this.setState({showAccountDetails: true})}>
             <div style={styles.accountRowTopTop}>
               <div style={styles.accountRowWalletIcon}/>
-              <div style={styles.accountRowTopAccountName}>{account.accountName}</div>
+              <div style={styles.accountRowTopAccountName}>{account.accountName}{this.state.hidden ? <span> (hidden)</span> : <span></span>}</div>
               <div style={styles.accountRowTopAccountFunds}><Balance amount={account.total}/></div>
             </div>
             <div style={styles.accountRowTopBottom}>
@@ -345,6 +375,20 @@ class AccountRow extends Component {
                   style={AccountStyles.contentConfirmNewAccount}
                   onClick={() => this.setState({showRenameAccount: true})}>
                   Rename Account
+                </KeyBlueButton> :
+                <div></div>
+              }
+              {account.accountName !== 'imported' && account.accountName !== 'default' && account.total == 0 && !this.state.hidden ?
+                <KeyBlueButton
+                  style={AccountStyles.contentShowHideAccount}
+                  onClick={() => this.hideAccount()}>
+                  Hide Account
+                </KeyBlueButton> :
+                account.accountName !== 'imported' && account.accountName !== 'default' && this.state.hidden ?
+                <KeyBlueButton
+                  style={AccountStyles.contentShowHideAccount}
+                  onClick={() => this.showAccount()}>
+                  Show Account
                 </KeyBlueButton> :
                 <div></div>
               }

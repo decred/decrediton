@@ -472,7 +472,7 @@ class StakePool extends Component{
           >
           {balances !== null ?
             balances.map((account) => {
-              if (account.accountName !== 'imported') {
+              if (account.accountName !== 'imported' && !account.hidden) {
                 return (
                   <option style={StakePoolStyles.selectPurchaseTicketsN} key={account.accountNumber} value={account.accountNumber}>
                     {account.accountName}: {account.spendable / 100000000}

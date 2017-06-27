@@ -20,6 +20,7 @@ import {
   GETAGENDAS_ATTEMPT, GETAGENDAS_FAILED, GETAGENDAS_SUCCESS,
   GETVOTECHOICES_ATTEMPT, GETVOTECHOICES_FAILED, GETVOTECHOICES_SUCCESS,
   SETVOTECHOICES_ATTEMPT, SETVOTECHOICES_FAILED, SETVOTECHOICES_SUCCESS,
+  UPDATEHIDDENACCOUNTS,
 } from '../actions/ClientActions';
 
 export default function grpc(state = {}, action) {
@@ -202,6 +203,11 @@ export default function grpc(state = {}, action) {
       getAccountsError: '',
       getAccountsRequestAttempt: false,
       getAccountsResponse: action.response,
+    };
+  case UPDATEHIDDENACCOUNTS:
+    return {
+      ...state,
+      hiddenAccounts: action.hiddenAccounts,
     };
   case GETTRANSACTIONS_ATTEMPT:
     return {

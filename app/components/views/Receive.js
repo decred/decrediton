@@ -22,10 +22,10 @@ class Receive extends Component{
   constructor(props) {
     super(props);
     var accountName = '';
-    if (props.getAccountsResponse !== null && props.getNextAddressResponse !== null) {
-      for (var i = 0; i < props.getAccountsResponse.getAccountsList().length; i++) {
-        if (props.getNextAddressResponse.accountNumber == props.getAccountsResponse.getAccountsList()[i].getAccountNumber()) {
-          accountName = props.getAccountsResponse.getAccountsList()[i].getAccountName();
+    if (props.balances !== null && props.getNextAddressResponse !== null) {
+      for (var i = 0; i < props.balances.length; i++) {
+        if (props.getNextAddressResponse.accountNumber == props.balances[i].accountNumber) {
+          accountName = props.balances[i].accountName;
           break;
         }
       }
@@ -42,10 +42,10 @@ class Receive extends Component{
   };
   updateAccountNumber(accountNum) {
     this.setState({account: accountNum});
-    if (this.props.getAccountsResponse != null) {
-      for (var i = 0; i < this.props.getAccountsResponse.getAccountsList().length; i++) {
-        if (this.props.getAccountsResponse.getAccountsList()[i].getAccountNumber() == accountNum) {
-          this.setState({accountName: this.props.getAccountsResponse.getAccountsList()[i].getAccountName()});
+    if (this.props.balances != null) {
+      for (var i = 0; i < this.props.balances.length; i++) {
+        if (this.props.balances[i].accountNumber == accountNum) {
+          this.setState({accountName: this.props.balances[i].accountName});
           break;
         }
       }
@@ -55,7 +55,7 @@ class Receive extends Component{
   render() {
     const { walletService } = this.props;
     const { getNextAddressResponse, getNextAddressRequestAttempt } = this.props;
-    const { getAccountsResponse } = this.props;
+    const { balances } = this.props;
 
     var selectAccounts = (
       <div style={ReceiveStyles.selectAccountsArea}>
@@ -64,12 +64,12 @@ class Receive extends Component{
           style={ReceiveStyles.selectAccounts}
           onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
           >
-          {getAccountsResponse !== null ?
-            getAccountsResponse.getAccountsList().map((account) => {
-              if (account.getAccountName() !== 'imported') {
+          {balances !== null ?
+            balances.map((account) => {
+              if (account.accountName !== 'imported' && !account.hidden) {
                 return (
-                  <option style={ReceiveStyles.selectAccountsN} key={account.getAccountNumber()} value={account.getAccountNumber()}>
-                    {account.getAccountName()}
+                  <option style={ReceiveStyles.selectAccountsN} key={account.accountNumber} value={account.accountNumber}>
+                    {account.accountName}
                   </option>
                 );
               }
