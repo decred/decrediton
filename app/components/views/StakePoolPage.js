@@ -25,6 +25,7 @@ import { setVoteChoicesAttempt } from '../../actions/ClientActions';
 
 function mapStateToProps(state) {
   return {
+    currentSettings: state.settings.currentSettings,
     walletService: state.grpc.walletService,
     ticketBuyerService: state.grpc.ticketBuyerService,
     currentStakePoolConfig: state.stakepool.currentStakePoolConfig,

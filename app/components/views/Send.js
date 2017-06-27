@@ -195,7 +195,10 @@ class Send extends Component{
     const { getNetworkResponse } = this.props;
 
     var unitLabel = currentSettings.currencyDisplay;
-
+    var unitDivisor = 1;
+    if (unitLabel == 'DCR') {
+      unitDivisor = 100000000;
+    }
     var networkTextDiv = (<div></div>);
     if (getNetworkResponse !== null) {
       if (getNetworkResponse.networkStr == 'testnet') {
@@ -240,7 +243,7 @@ class Send extends Component{
               if (account.accountName !== 'imported' && !account.hidden) {
                 return (
                   <option style={SendStyles.selectAccountN} key={account.accountNumber} value={account.accountNumber}>
-                    {account.accountName}: {account.spendable / 100000000}
+                    {account.accountName}: {account.spendable / unitDivisor} {unitLabel}
                   </option>
                 );
               }

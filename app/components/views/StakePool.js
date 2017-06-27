@@ -443,6 +443,7 @@ class StakePool extends Component{
   }
   render() {
     const { walletService } = this.props;
+    const { currentSettings } = this.props;
     const { ticketBuyerService } = this.props;
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
     const { currentStakePoolConfigSuccessMessage, balances, purchaseTicketsRequestAttempt } = this.props;
@@ -455,6 +456,11 @@ class StakePool extends Component{
     const { getAgendasResponse } = this.props;
     const { startAutoBuyerSuccess, startAutoBuyerResponse, stopAutoBuyerSuccess, startAutoBuyerError, stopAutoBuyerError } = this.props;
     const { getTicketBuyerConfigResponse } = this.props;
+    var unitLabel = currentSettings.currencyDisplay;
+    var unitDivisor = 1;
+    if (unitLabel == 'DCR') {
+      unitDivisor = 100000000;
+    }
     var unconfigedStakePools = 0;
     if (currentStakePoolConfig != null) {
       for (var i = 0; i < currentStakePoolConfig.length; i++) {
@@ -475,7 +481,7 @@ class StakePool extends Component{
               if (account.accountName !== 'imported' && !account.hidden) {
                 return (
                   <option style={StakePoolStyles.selectPurchaseTicketsN} key={account.accountNumber} value={account.accountNumber}>
-                    {account.accountName}: {account.spendable / 100000000}
+                    {account.accountName}: {account.spendable / unitDivisor} {unitLabel}
                   </option>
                 );
               }
