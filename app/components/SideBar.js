@@ -249,8 +249,7 @@ class SideBar extends Component {
           <div style={styles.testnetText}>{network !== null && network == 'testnet' ? 'Testnet' : ''}</div>
         </div>);
     }
-    const { balances } = this.props;
-    const { getAccountsResponse } = this.props;
+    const { balances, getAccountsResponse } = this.props;
     const { synced, currentHeight, timeBackString, timeSinceString } = this.props;
     var totalBalance = 0;
     if (balances !== null) {
@@ -277,17 +276,19 @@ class SideBar extends Component {
         </div>
         <div style={!this.state.accountsHidden ? styles.menuTotalBalanceExtended : styles.menuTotalBalanceExtendedHidden }>
           <div style={styles.menuTotalBalanceExtendedBottom}>
-            {getAccountsResponse != null ? getAccountsResponse.getAccountsList().map(function(account) {
-              var accountBalance = 0;
-              if (account.getTotalBalance() > 0) {
-                accountBalance = account.getTotalBalance() / 100000000;
+            {balances != null ? balances.map(function(account) {
+              if (!account.hidden) {
+                var accountBalance = 0;
+                if (account.total > 0) {
+                  accountBalance = account.total / 100000000;
+                }
+                return(
+                  <div style={styles.menuTotalBalanceExtendedBottomAccount} key={account.accountName}>
+                    <div style={styles.menuTotalBalanceExtendedBottomAccountName}>{account.accountName}</div>
+                    <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>{accountBalance}</div>
+                  </div>
+                );
               }
-              return(
-                <div style={styles.menuTotalBalanceExtendedBottomAccount} key={account.getAccountName()}>
-                  <div style={styles.menuTotalBalanceExtendedBottomAccountName}>{account.getAccountName()}</div>
-                  <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>{accountBalance}</div>
-                </div>
-              );
             }) : <div></div>}
           </div>
         </div>
