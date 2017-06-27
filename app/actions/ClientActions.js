@@ -146,7 +146,7 @@ function getBalanceSuccess(account, getBalanceResponse) {
     };
     var updatedBalances = balances;
     var found = false;
-    for (var i = 0; i < balances.length; i++) {
+    for (i = 0; i < balances.length; i++) {
       if (balances[i].accountNumber == account.getAccountNumber()) {
         updatedBalances[i] = updatedBalance;
         found = true;
@@ -447,7 +447,7 @@ export function hideAccount(accountName) {
     cfg.set('hiddenaccounts', updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
     dispatch(getAccountsAttempt());
-  }
+  };
 }
 
 export function showAccount(accountName) {
@@ -463,7 +463,7 @@ export function showAccount(accountName) {
     cfg.set('hiddenaccounts', updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
     dispatch(getAccountsAttempt());
-  }
+  };
 }
 
 export const GETTRANSACTIONS_ATTEMPT = 'GETTRANSACTIONS_ATTEMPT';

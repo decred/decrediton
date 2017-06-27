@@ -72,7 +72,6 @@ class Accounts extends Component{
     const { getNextAccountError, getNextAccountSuccess } = this.props;
     const { getNextAccountRequestAttempt } = this.props;
     const { renameAccountError, renameAccountSuccess } = this.props;
-    const { hiddenAccounts } = this.props;
     var sortedBalances = balances;
     sortedBalances.sort(function(a, b) {
       return a.accountNumber - b.accountNumber;
