@@ -75,7 +75,7 @@ class Accounts extends Component{
     const { hiddenAccounts } = this.props;
     var sortedBalances = balances;
     sortedBalances.sort(function(a, b) {
-      return b.accountNumber - a.accountNumber;
+      return a.accountNumber - b.accountNumber;
     });
     const accountsView = (
       <div style={AccountStyles.view}>
@@ -110,7 +110,7 @@ class Accounts extends Component{
             sortedBalances !== null ?
               <div style={AccountStyles.contentNest}>
               {sortedBalances.map((account) => {
-                return (<AccountRow key={'accountRow' + account.accountName} account={account} renameAccount={(name, number) => this.props.renameAccountAttempt(name, number)} hideAccount={(name) => this.props.hideAccountAttempt(name)}/>);
+                return (<AccountRow key={'accountRow' + account.accountName} account={account} renameAccount={(name, number) => this.props.renameAccountAttempt(name, number)} hideAccount={(name) => this.props.hideAccount(name)} showAccount={(name) => this.props.showAccount(name)}/>);
               })}
               </div>:
               <div></div>

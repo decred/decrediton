@@ -436,7 +436,12 @@ export const UPDATEHIDDENACCOUNTS = 'UPDATEHIDDENACCOUNTS';
 export function hideAccount(accountName) {
   return (dispatch, getState) => {
     const {hiddenAccounts} = getState().grpc;
-    var updatedHiddenAccounts = hiddenAccounts;
+    var updatedHiddenAccounts;
+    if (hiddenAccounts.length == 0) {
+      updatedHiddenAccounts = Array();
+    } else {
+      updatedHiddenAccounts = hiddenAccounts;
+    }
     updatedHiddenAccounts.push(accountName);
     var cfg = getCfg();
     cfg.set('hiddenaccounts', updatedHiddenAccounts);

@@ -57,7 +57,8 @@ export function getCfg(update) {
     config.set('currency_display','DCR');
   }
   if (!config.has('hiddenaccounts')) {
-    config.set('hiddenaccounts','[]');
+    var hiddenAccounts = Array();
+    config.set('hiddenaccounts',hiddenAccounts);
   }
   if (!config.has('stakepools') || config.get('stakepools') == null) {
     stakePoolInfo(function(response, err) {

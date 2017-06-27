@@ -3077,6 +3077,10 @@ export const AccountStyles = {
     marginTop: '20px',
     float: 'left',
   },
+  contentShowHideAccount: {
+    marginTop: '20px',
+    float: 'right',
+  },
   contentHideNewAccount: {
     marginTop: '20px',
     float: 'right',

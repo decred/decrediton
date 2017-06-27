@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Accounts from './Accounts';
 import { bindActionCreators } from 'redux';
 import {renameAccountAttempt, clearNewAccountSuccess, clearNewAccountError, clearRenameAccountSuccess, clearRenameAccountError, getNextAccountAttempt} from '../../actions/ControlActions';
-import {hideAccountAttempt} from '../../actions/ClientActions';
+import { hideAccount, showAccount } from '../../actions/ClientActions';
 function mapStateToProps(state) {
   return {
     walletService: state.grpc.walletService,
@@ -18,7 +18,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({renameAccountAttempt, clearNewAccountSuccess, clearNewAccountError, clearRenameAccountSuccess, clearRenameAccountError, getNextAccountAttempt, hideAccountAttempt}, dispatch);
+  return bindActionCreators({renameAccountAttempt, clearNewAccountSuccess, clearNewAccountError, clearRenameAccountSuccess, clearRenameAccountError, getNextAccountAttempt, hideAccount, showAccount}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Accounts);

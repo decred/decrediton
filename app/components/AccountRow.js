@@ -348,6 +348,20 @@ class AccountRow extends Component {
                 </KeyBlueButton> :
                 <div></div>
               }
+              {account.accountName !== 'imported' && !account.hidden ?
+                <KeyBlueButton
+                  style={AccountStyles.contentShowHideAccount}
+                  onClick={() => this.props.hideAccount(account.accountName)}>
+                  Hide Account
+                </KeyBlueButton> :
+                account.accountName !== 'imported' && account.hidden ?
+                <KeyBlueButton
+                  style={AccountStyles.contentShowHideAccount}
+                  onClick={() => this.props.showAccount(account.accountName)}>
+                  Show Account
+                </KeyBlueButton> :
+                <div></div>
+              }
             </div> :
             <div></div>
           }
