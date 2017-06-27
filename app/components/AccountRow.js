@@ -378,13 +378,13 @@ class AccountRow extends Component {
                 </KeyBlueButton> :
                 <div></div>
               }
-              {account.accountName !== 'imported' && account.accountName !== 'default' && !this.state.hidden ?
+              {account.accountName !== 'imported' && account.accountName !== 'default' && account.total == 0  && !this.state.hidden ?
                 <KeyBlueButton
                   style={AccountStyles.contentShowHideAccount}
                   onClick={() => this.hideAccount()}>
                   Hide Account
                 </KeyBlueButton> :
-                account.accountName !== 'imported' && account.accountName !== 'default' && this.state.hidden ?
+                account.accountName !== 'imported' && account.accountName !== 'default' && account.total == 0 && this.state.hidden ?
                 <KeyBlueButton
                   style={AccountStyles.contentShowHideAccount}
                   onClick={() => this.showAccount()}>
