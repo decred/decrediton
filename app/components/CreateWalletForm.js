@@ -3,13 +3,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
+  decodeSeedAttempt,
+  generateRandomSeedAttempt,
+  generateRandomSeedClear,
+} from '../actions/SeedServiceActions';
+import {
+  createWalletRequest,
   createWalletConfirmNewSeed,
   createWalletGoBackNewSeed,
-  decodeSeedAttempt,
-  createWalletRequest,
-  generateRandomSeedClear,
-  generateRandomSeedAttempt
-} from '../actions/ControlActions';
+} from '../actions/WalletLoaderActions';
+
 import KeyBlueButton from './KeyBlueButton';
 
 const styles = {
