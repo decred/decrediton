@@ -103,12 +103,8 @@ class Home extends Component{
               <div style={HomeStyles.contentTitleText}>Recent Transactions</div>
             </div>
             <div style={HomeStyles.contentNest}>
-              {unmined.length > 0 ?
-                <TxHistory getAccountsResponse={getAccountsResponse} unmined={unmined}/>  :
-                <p></p>
-              }
-              {paginatedTxs.length > 0 ?
-                <TxHistory getAccountsResponse={getAccountsResponse} mined={paginatedTxs}/>  :
+              {paginatedTxs.length > 0 || unmined.length > 0 ?
+                <TxHistory getAccountsResponse={getAccountsResponse} mined={paginatedTxs} unmined={unmined}/>  :
                 <p>{transactionMessage}</p>
               }
             </div>
