@@ -270,9 +270,11 @@ class AccountRow extends Component {
   }
   render() {
     const { account } = this.props;
+    const { accountNumDetailsShown } = this.props;
+    var showAccountDetails = accountNumDetailsShown !== null && accountNumDetailsShown == account.accountNumber ;
     return (
-        <div style={this.state.showAccountDetails ? this.state.showRenameAccount ? styles.accountRowRename : styles.accountRowLong : styles.accountRowShort}>
-          <div style={this.state.showAccountDetails ? styles.accountRowDetailsTop :  this.state.hidden ? styles.accountRowHidden : styles.accountRow } key={'top'+account.accountNumber} onClick={this.state.showAccountDetails ? () => this.setState({showAccountDetails: false}) : () => this.setState({showAccountDetails: true})}>
+        <div style={showAccountDetails ? this.state.showRenameAccount ? styles.accountRowRename : styles.accountRowLong : styles.accountRowShort}>
+          <div style={showAccountDetails ? styles.accountRowDetailsTop :  this.state.hidden ? styles.accountRowHidden : styles.accountRow } key={'top'+account.accountNumber} onClick={showAccountDetails ? () => this.props.hideAccountDetails() : () => this.props.showAccountDetails(account.accountNumber)}>
             <div style={styles.accountRowTopTop}>
               <div style={styles.accountRowWalletIcon}/>
               <div style={styles.accountRowTopAccountName}>{account.accountName}{this.state.hidden ? <span> (hidden)</span> : <span></span>}</div>
@@ -283,7 +285,7 @@ class AccountRow extends Component {
               <div style={styles.accountRowTopSpendable}>Spendable <Balance amount={account.spendable}/></div>
             </div>
           </div>
-          {this.state.showAccountDetails ?
+          {showAccountDetails ?
             this.state.showRenameAccount ?
             <div style={styles.accountRowDetailsBottom} key={'details'+account.accountNumber}>
               <div style={styles.accountRowDetailsBottomTitle}>

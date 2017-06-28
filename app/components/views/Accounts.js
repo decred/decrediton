@@ -22,6 +22,7 @@ class Accounts extends Component{
       privpass: null,
       addAccountNameError: null,
       addAccountPrivPassError: null,
+      accountNumDetailsShown: null,
     };
   }
   componentWillMount() {
@@ -67,6 +68,12 @@ class Accounts extends Component{
   updatePrivPass(privpass) {
     this.setState({privpass: Buffer.from(privpass), addAccountPrivPassError: null});
   }
+  showAccountDetails(accountNumber) {
+    this.setState({accountNumDetailsShown: accountNumber});
+  }
+  hideAccountDetails() {
+    this.setState({accountNumDetailsShown: null});
+  }
   render() {
     const { walletService, balances } = this.props;
     const { getNextAccountError, getNextAccountSuccess } = this.props;
@@ -109,7 +116,16 @@ class Accounts extends Component{
             sortedBalances !== null ?
               <div style={AccountStyles.contentNest}>
               {sortedBalances.map((account) => {
-                return (<AccountRow key={'accountRow' + account.accountName} account={account} renameAccount={(name, number) => this.props.renameAccountAttempt(name, number)} hideAccount={(number) => this.props.hideAccount(number)} showAccount={(number) => this.props.showAccount(number)}/>);
+                return (<AccountRow
+                  key={'accountRow' + account.accountName}
+                  account={account}
+                  accountNumDetailsShown={this.state.accountNumDetailsShown}
+                  renameAccount={(name, number) => this.props.renameAccountAttempt(name, number)}
+                  hideAccount={(number) => this.props.hideAccount(number)}
+                  showAccount={(number) => this.props.showAccount(number)}
+                  showAccountDetails={(number) => this.showAccountDetails(number)}
+                  hideAccountDetails={() => this.hideAccountDetails()}
+                />);
               })}
               </div>:
               <div></div>
