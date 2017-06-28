@@ -1,5 +1,5 @@
 // @flow
-import { getAccountsAttempt, getTransactionInfoAttempt } from './ClientActions';
+import { getAccountsAttempt, getTransactionInfoAttempt, getStakeInfoAttempt } from './ClientActions';
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   ConstructTransactionRequest, SignTransactionRequest,
@@ -603,6 +603,7 @@ function purchaseTicketsSuccess(purchaseTicketsResponse) {
     var success = 'You successfully purchased ' + purchaseTicketsResponse.getTicketHashesList().length + ' tickets.';
     dispatch({ success: success, purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
     dispatch(getAccountsAttempt());
+    setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
   };
 }
 
