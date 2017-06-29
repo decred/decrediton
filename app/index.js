@@ -83,7 +83,7 @@ var initialState = {
   },
   grpc: {
     // WalletService
-    address: '127.0.0.1',
+    address: cfg.get('wallet_rpc_host'),
     port: grpcport,
     walletService: null,
     network: network,

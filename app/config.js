@@ -29,6 +29,12 @@ export function getCfg(update) {
   if (!config.has('daemon_cert_path')) {
     config.set('daemon_cert_path','');
   }
+  if (!config.has('daemon_rpc_host')) {
+    config.set('daemon_rpc_host', '127.0.0.1');
+  }
+  if (!config.has('wallet_rpc_host')) {
+    config.set('wallet_rpc_host', '127.0.0.1');
+  }
   if (!config.has('rpc_user')) {
     config.set('rpc_user','USER');
   }
@@ -246,7 +252,7 @@ export function writeCfgs() {
       testnet: net,
       rpcuser: cfg.get('rpc_user'),
       rpcpass: cfg.get('rpc_pass'),
-      rpclisten: '127.0.0.1:' + RPCDaemonPort(),
+      rpclisten: cfg.get('daemon_rpc_host') + ':' + RPCDaemonPort(),
     }
   };
   fs.writeFileSync(dcrdCfg(), ini.stringify(dcrdConf));
@@ -258,8 +264,8 @@ export function writeCfgs() {
       username: cfg.get('rpc_user'),
       password: cfg.get('rpc_pass'),
       appdata: appDataDirectory(),
-      rpcconnect: '127.0.0.1:' + RPCDaemonPort(),
-      grpclisten: '127.0.0.1:' + GRPCWalletPort(),
+      rpcconnect: cfg.get('daemon_rpc_host') + ':' + RPCDaemonPort(),
+      grpclisten: cfg.get('wallet_rpc_host') + ':' + GRPCWalletPort(),
       tlscurve: 'P-256',
       noinitialload: '1',
       onetimetlskey: '1',
@@ -282,7 +288,7 @@ export function writeCfgs() {
       testnet: net,
       rpcuser: cfg.get('rpc_user'),
       rpcpass: cfg.get('rpc_pass'),
-      rpcserver: '127.0.0.1:' + RPCDaemonPort(),
+      rpcserver: cfg.get('daemon_rpc_host') + ':' + RPCDaemonPort(),
     }
   };
   fs.writeFileSync(dcrctlCfg(), ini.stringify(dcrctlConf));
