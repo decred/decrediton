@@ -2,7 +2,7 @@ import React from 'react';
 import createClass from 'create-react-class';
 import Select from 'react-select';
 
-const SEED_WORDS = require('../helpers/english.js');
+const SEED_WORDS = require('../helpers/wordlist.js');
 const MAX_SEED_WORDS = 33;
 const ASYNC_DELAY = 100;
 
