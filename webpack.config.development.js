@@ -42,7 +42,6 @@ export default validate(merge(baseConfig, {
           'css-loader?sourceMap'
         ]
       },
-
       {
         test: /^((?!\.min).)*\.css$/,
         loaders: [
