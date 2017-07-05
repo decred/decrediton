@@ -23,9 +23,11 @@ const ConfirmSeed = createClass({
 		};
 	},
 	onChange (value) {
+		var disabled = value.length >= MAX_SEED_WORDS;
 		this.setState({
 			value: value,
 		});
+		this.props.checkSeedMatch(value);
 	},
 	getSeedWords (input, callback) {
 		input = input.toLowerCase();
@@ -34,7 +36,7 @@ const ConfirmSeed = createClass({
 		});
 		var data = {
 			options: options.slice(0, MAX_SEED_WORDS),
-			complete: options.length <= MAX_SEED_WORDS,
+			complete: this.state.value.length >= MAX_SEED_WORDS,
 		};
 		setTimeout(function() {
 			callback(null, data);
