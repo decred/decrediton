@@ -14,7 +14,6 @@ import {
 } from '../actions/WalletLoaderActions';
 
 import KeyBlueButton from './KeyBlueButton';
-import Select from 'react-select';
 import './react-select.global.css';
 import ConfimSeed from './SeedEntry';
 
@@ -271,11 +270,11 @@ class CreateWalletForm extends React.Component {
       return;
     }
     this.setState({remainingSeedWords:0});
-    var seedConfirmationStr = "";
+    var seedConfirmationStr = '';
     for (var i = 0; i < seedConfirmation.length; i++) {
       seedConfirmationStr += seedConfirmation[i].name;
       if (i < seedConfirmation.length - 1) {
-        seedConfirmationStr += " ";
+        seedConfirmationStr += ' ';
       }
     }
     if (this.props.createWalletExisting) {
