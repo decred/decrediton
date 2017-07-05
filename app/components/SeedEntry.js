@@ -3,16 +3,19 @@ import createClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 
-const CONTRIBUTORS = require('../helpers/english.js');
-const MAX_CONTRIBUTORS = 6;
-const ASYNC_DELAY = 500;
+const SEED_WORDS = require('../helpers/english.js');
+const MAX_SEED_WORDS = 33;
+const ASYNC_DELAY = 100;
 
-const Contributors = createClass({
-	displayName: 'Contributors',
+const ConfirmSeed = createClass({
+	displayName: 'Confim Seed',
 	getInitialState () {
     var seedList = Array();
-    for (var i = 0; i < CONTRIBUTORS.length; i++){
-      seedList.push({name: CONTRIBUTORS[i]});
+		SEED_WORDS.sort(function (a, b) {
+    	return a.toLowerCase().localeCompare(b.toLowerCase());
+		});
+    for (var i = 0; i < SEED_WORDS.length; i++){
+      seedList.push({name: SEED_WORDS[i]});
     }
 		return {
       seedList: seedList,
@@ -24,14 +27,14 @@ const Contributors = createClass({
 			value: value,
 		});
 	},
-	getContributors (input, callback) {
+	getSeedWords (input, callback) {
 		input = input.toLowerCase();
 		var options = this.state.seedList.filter(i => {
 			return i.name.toLowerCase().substr(0, input.length) === input;
 		});
 		var data = {
-			options: options.slice(0, MAX_CONTRIBUTORS),
-			complete: options.length <= MAX_CONTRIBUTORS,
+			options: options.slice(0, MAX_SEED_WORDS),
+			complete: options.length <= MAX_SEED_WORDS,
 		};
 		setTimeout(function() {
 			callback(null, data);
@@ -40,10 +43,10 @@ const Contributors = createClass({
 	render () {
 		return (
 			<div className="section">
-			  <Select.Async multi={true} value={this.state.value} onChange={this.onChange} valueKey="name" labelKey="name" loadOptions={this.getContributors} />
+			  <Select.Async multi={true} filterOptions={false} value={this.state.value} onChange={this.onChange} valueKey="name" labelKey="name" loadOptions={this.getSeedWords} />
 			</div>
 		);
 	}
 });
 
-module.exports = Contributors;
+module.exports = ConfirmSeed;

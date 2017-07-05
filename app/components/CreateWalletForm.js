@@ -16,7 +16,7 @@ import {
 import KeyBlueButton from './KeyBlueButton';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import Contributors from './SeedEntry';
+import ConfimSeed from './SeedEntry';
 
 const styles = {
   contentNewSeed: {
@@ -195,7 +195,7 @@ class CreateWalletForm extends React.Component {
           <div style={styles.contentConfirmWalletCreateInputRight}>
             <div style={styles.inputForm}>
               <form style={styles.inputForm}>
-                <Contributors label="Seed Entry"/>
+                <ConfimSeed label="Seed Entry"/>
               </form>
             </div>
             <div style={styles.inputFormError}>
