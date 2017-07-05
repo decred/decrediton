@@ -45,7 +45,7 @@ const ConfirmSeed = createClass({
 	render () {
 		return (
 			<div className="section">
-			  <Select.Async placeholder={"Enter your seed..."} multi={true} filterOptions={false} value={this.state.value} onChange={this.onChange} valueKey="name" labelKey="name" loadOptions={this.getSeedWords} />
+			  <Select.Async clearable={false} placeholder={"Enter your seed..."} multi={true} filterOptions={false} value={this.state.value} onChange={this.onChange} valueKey="name" labelKey="name" loadOptions={this.getSeedWords} />
 			</div>
 		);
 	}
