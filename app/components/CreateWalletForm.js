@@ -200,7 +200,10 @@ class CreateWalletForm extends React.Component {
     const newContinuedPage = (
       <div style={styles.contentNewSeed}>
         <div style={styles.contentNewSeedConfirmSeed}>
-          <div style={styles.contentConfirmWalletCreateInputLeft}>Confirm Seed:&nbsp;</div>
+          <div style={styles.contentConfirmWalletCreateInputLeft}>
+            <span style={{float:'left'}}>Confirm Seed:&nbsp;</span>
+            <span style={{float:'left',fontSize:'13px',color:'white'}}> Seed words remaining: {this.state.remainingSeedWords} </span>
+          </div>
           <div style={styles.contentConfirmWalletCreateInputRight}>
             <div style={styles.inputForm}>
               <form style={styles.inputFormConfirmSeed}>
@@ -247,7 +250,6 @@ class CreateWalletForm extends React.Component {
           </div>
         </div>
         <div style={styles.contentNewSeedCreateButton}>
-          <span style={{color:'white'}}> Seed words remaining: {this.state.remainingSeedWords} </span>
           <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
           <div style={styles.contentConfirmWalletCreateInputRightPadding}>
             <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} disabled={this.state.verifyError !== '' || this.state.seedError !== null ||
