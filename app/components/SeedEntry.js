@@ -42,9 +42,14 @@ const ConfirmSeed = createClass({
 			callback(null, data);
 		}, ASYNC_DELAY);
 	},
+	handleKeyDown (e) {
+		if (e.keyCode == 9 && this.state.value.length < MAX_SEED_WORDS) {
+			e.preventDefault();
+		}
+	},
 	render () {
 		return (
-			<div className="section">
+			<div className="section" onKeyDown={(e) => this.handleKeyDown(e)}>
 			  <Select.Async clearable={false} placeholder={"Enter your seed..."} multi={true} filterOptions={false} value={this.state.value} onChange={this.onChange} valueKey="name" labelKey="name" loadOptions={this.getSeedWords} />
 			</div>
 		);
