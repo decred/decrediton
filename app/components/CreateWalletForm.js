@@ -15,7 +15,7 @@ import {
 
 import KeyBlueButton from './KeyBlueButton';
 import Select from 'react-select';
-import 'react-select/dist/react-select.css';
+import './react-select.global.css';
 import ConfimSeed from './SeedEntry';
 
 const styles = {
