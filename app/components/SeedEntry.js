@@ -47,7 +47,7 @@ const ConfirmSeed = createClass({
   },
   render () {
     return (
-			<div className="section" onKeyDown={(e) => this.handleKeyDown(e)}>
+			<div className="section" style={{fontFamily: 'Inconsolata,monospace'}} onKeyDown={(e) => this.handleKeyDown(e)}>
 				<Select.Async clearable={false} placeholder={'Enter your seed...'} multi={true} filterOptions={false} value={this.state.value} onChange={this.onChange} valueKey="name" labelKey="name" loadOptions={this.getSeedWords} />
 			</div>
     );
