@@ -71,7 +71,7 @@ const styles = {
     float: 'left',
   },
   contentNewSeedConfirmSeed: {
-    height: '139px',
+    height: '200px',
   },
   contentNewSeedPrivPass: {
     paddingTop: '10px',
@@ -147,6 +147,13 @@ const styles = {
     height: 'auto',
     minHeight: '44px',
   },
+  inputFormConfirmSeed: {
+    MozAppearance: 'none !important',
+    position: 'relative',
+    width: '100%',
+    height: '200px',
+    minHeight: '44px',
+  },
   inputFormError: {
     color: 'red',
   }
@@ -196,7 +203,7 @@ class CreateWalletForm extends React.Component {
           <div style={styles.contentConfirmWalletCreateInputLeft}>Confirm Seed:&nbsp;</div>
           <div style={styles.contentConfirmWalletCreateInputRight}>
             <div style={styles.inputForm}>
-              <form style={styles.inputForm}>
+              <form style={styles.inputFormConfirmSeed}>
                 <ConfimSeed label="Seed Entry" checkSeedMatch={(seed)=>this.checkSeedMatch(seed)}/>
               </form>
             </div>
