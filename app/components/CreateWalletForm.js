@@ -14,6 +14,8 @@ import {
 } from '../actions/WalletLoaderActions';
 
 import KeyBlueButton from './KeyBlueButton';
+import './react-select.global.css';
+import ConfimSeed from './SeedEntry';
 
 const styles = {
   contentNewSeed: {
@@ -68,7 +70,7 @@ const styles = {
     float: 'left',
   },
   contentNewSeedConfirmSeed: {
-    height: '139px',
+    height: '200px',
   },
   contentNewSeedPrivPass: {
     paddingTop: '10px',
@@ -144,6 +146,13 @@ const styles = {
     height: 'auto',
     minHeight: '44px',
   },
+  inputFormConfirmSeed: {
+    MozAppearance: 'none !important',
+    position: 'relative',
+    width: '100%',
+    height: '200px',
+    minHeight: '44px',
+  },
   inputFormError: {
     color: 'red',
   }
@@ -152,7 +161,7 @@ const styles = {
 class CreateWalletForm extends React.Component {
   constructor(props) {
     super(props);
-
+    var requiredSeedLength = 33;
     this.state = {
       canSubmit: false,
       continued: false,
@@ -161,6 +170,8 @@ class CreateWalletForm extends React.Component {
       seedError: null,
       verifyError: '',
       privPassError: null,
+      remainingSeedWords: requiredSeedLength,
+      requiredSeedLength: requiredSeedLength,
     };
   }
   componentWillUpdate(nextProps) {
@@ -188,15 +199,14 @@ class CreateWalletForm extends React.Component {
     const newContinuedPage = (
       <div style={styles.contentNewSeed}>
         <div style={styles.contentNewSeedConfirmSeed}>
-          <div style={styles.contentConfirmWalletCreateInputLeft}>Confirm Seed:&nbsp;</div>
+          <div style={styles.contentConfirmWalletCreateInputLeft}>
+            <span style={{float:'left'}}>Confirm Seed:&nbsp;</span>
+            <span style={{float:'left',fontSize:'13px',color:'white'}}> Seed words remaining: {this.state.remainingSeedWords} </span>
+          </div>
           <div style={styles.contentConfirmWalletCreateInputRight}>
             <div style={styles.inputForm}>
-              <form style={styles.inputForm}>
-                <textarea
-                  style={styles.inputSeedTextArea}
-                  type="text"
-                  placeholder="33 words"
-                  onBlur={(e)=>this.checkSeedMatch(e.target.value)}></textarea>
+              <form style={styles.inputFormConfirmSeed}>
+                <ConfimSeed label="Seed Entry" checkSeedMatch={(seed)=>this.checkSeedMatch(seed)}/>
               </form>
             </div>
             <div style={styles.inputFormError}>
@@ -241,7 +251,9 @@ class CreateWalletForm extends React.Component {
         <div style={styles.contentNewSeedCreateButton}>
           <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
           <div style={styles.contentConfirmWalletCreateInputRightPadding}>
-            <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.createWalletButton()}>Create Wallet</KeyBlueButton>
+            <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} disabled={this.state.verifyError !== '' || this.state.seedError !== null ||
+              this.state.privpass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null)} onClick={this.state.verifyError !== '' || this.state.seedError !== null ||
+              this.state.privpass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null) ? null : ()=>this.createWalletButton()}>Create Wallet</KeyBlueButton>
           </div>
         </div>
       </div>);
@@ -253,10 +265,22 @@ class CreateWalletForm extends React.Component {
     }
   }
   checkSeedMatch(seedConfirmation) {
+    if (seedConfirmation.length < this.state.requiredSeedLength) {
+      this.setState({remainingSeedWords:this.state.requiredSeedLength - seedConfirmation.length});
+      return;
+    }
+    this.setState({remainingSeedWords:0});
+    var seedConfirmationStr = '';
+    for (var i = 0; i < seedConfirmation.length; i++) {
+      seedConfirmationStr += seedConfirmation[i].name;
+      if (i < seedConfirmation.length - 1) {
+        seedConfirmationStr += ' ';
+      }
+    }
     if (this.props.createWalletExisting) {
-      this.props.decodeSeedAttempt(seedConfirmation);
+      this.props.decodeSeedAttempt(seedConfirmationStr);
     } else {
-      if (seedConfirmation !== '' && this.props.generateRandomSeedResponse.getSeedMnemonic() != seedConfirmation) {
+      if (seedConfirmationStr !== '' && this.props.generateRandomSeedResponse.getSeedMnemonic() != seedConfirmationStr) {
         this.setState({seedError:'*Seeds do not match'});
       } else {
         this.setState({seedError: null, seed: this.props.generateRandomSeedResponse.getSeedBytes()});
