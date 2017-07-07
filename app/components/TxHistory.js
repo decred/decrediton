@@ -82,7 +82,19 @@ class TxHistory extends Component {
                   }
                 }
                 return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} accountName={accountName} txInfo={tx} direction={'out'} pending txAmount={txAmount} txDescription={txDescription} />);
-              } else {
+              } else if ( totalFundsReceived + totalChange + fee == totalDebit) {
+                txDescription = {direction:'Transferred', addressStr: ''};
+                txAmount = fee;
+                if (getAccountsResponse != null) {
+                  for (var y = 0; y < getAccountsResponse.getAccountsList().length; y++) {
+                    if (getAccountsResponse.getAccountsList()[y].getAccountNumber() == account) {
+                      accountName = getAccountsResponse.getAccountsList()[y].getAccountName();
+                      break;
+                    }
+                  }
+                }
+                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} accountName={accountName} txInfo={tx} direction={'transfer'} pending txAmount={txAmount} txDescription={txDescription} />);
+              }  else {
                 txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
                 txAmount = totalFundsReceived;
                 if (getAccountsResponse != null) {
@@ -156,13 +168,25 @@ class TxHistory extends Component {
                 txAmount = totalDebit - fee - totalChange - totalFundsReceived;
                 if (getAccountsResponse != null) {
                   for (var k = 0; k < getAccountsResponse.getAccountsList().length; k++) {
-                    if (getAccountsResponse.getAccountsList()[i].getAccountNumber() == previousAccount) {
+                    if (getAccountsResponse.getAccountsList()[k].getAccountNumber() == previousAccount) {
                       accountName = getAccountsResponse.getAccountsList()[k].getAccountName();
                       break;
                     }
                   }
                 }
                 return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} type={type} accountName={accountName} txInfo={txInfo} direction={'out'} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
+              } else if (totalFundsReceived + totalChange + fee == totalDebit) {
+                txDescription = {direction:'Transferred', addressStr: ''};
+                txAmount = fee;
+                if (getAccountsResponse != null) {
+                  for (var k = 0; k < getAccountsResponse.getAccountsList().length; k++) {
+                    if (getAccountsResponse.getAccountsList()[k].getAccountNumber() == account) {
+                      accountName = getAccountsResponse.getAccountsList()[k].getAccountName();
+                      break;
+                    }
+                  }
+                }
+                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} type={type} accountName={accountName} txInfo={txInfo} direction={'transfer'} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
               } else {
                 if (getAccountsResponse != null) {
                   for (var t = 0; t < getAccountsResponse.getAccountsList().length; t++) {

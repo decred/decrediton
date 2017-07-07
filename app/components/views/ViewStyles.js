@@ -2657,7 +2657,18 @@ export const TxDetailsStyles = {
     fontSize: '35px',
     fontWeight: '700',
   },
-
+  headerMetaTransactionDetailsTransfer: {
+    height: '38px',
+    paddingTop: '16px',
+    paddingLeft: '50px',
+    backgroundImage: `url(${WalletGray})`,
+    backgroundPosition: '0px 50%',
+    backgroundSize: '30px',
+    backgroundRepeat: 'no-repeat',
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '35px',
+    fontWeight: '700',
+  },
   headerMetaTransactionDetailsCurrency: {
     fontSize: '19px',
     fontWeight: '400',

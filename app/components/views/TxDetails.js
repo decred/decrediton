@@ -37,7 +37,7 @@ class TxDetails extends Component {
     var txAmount = 0;
 
     var walletValueUp = false;
-
+    var transferred = false;
     var receiveAddressStr = '';
     var totalDebit = 0;
     var totalFundsReceived = 0;
@@ -89,6 +89,19 @@ class TxDetails extends Component {
           }
         }
       }
+    } else if ( totalFundsReceived + totalChange + fee == totalDebit) {
+      txDescription = {direction:'Transferred', addressStr: ''};
+      txAmount = fee;
+      walletValueUp = false;
+      transferred = true;
+      if (this.props.getAccountsResponse != null) {
+        for (var y = 0; y < this.props.getAccountsResponse.getAccountsList().length; y++) {
+          if (this.props.getAccountsResponse.getAccountsList()[y].getAccountNumber() == previousAccount) {
+            accountName = this.props.getAccountsResponse.getAccountsList()[y].getAccountName();
+            break;
+          }
+        }
+      }
     } else {
       txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
       txAmount = totalFundsReceived;
@@ -112,6 +125,11 @@ class TxDetails extends Component {
             walletValueUp ?
           <div style={TxDetailsStyles.headerMetaTransactionDetailsIn}>
             <Balance amount={txAmount} />
+            <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
+          </div> :
+            transferred ? 
+          <div style={TxDetailsStyles.headerMetaTransactionDetailsTransfer}>
+            -<Balance amount={txAmount} />
             <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
           </div> :
           <div style={TxDetailsStyles.headerMetaTransactionDetailsOut}>
