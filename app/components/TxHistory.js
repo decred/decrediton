@@ -32,7 +32,7 @@ class TxHistory extends Component {
               var txDescription = '';
               var txAmount = 0;
 
-              var receiveAddressStr = '';
+              var receiveAddressStr = Array();
               var totalDebit = 0;
               var totalFundsReceived = 0;
               var totalChange = 0;
@@ -43,27 +43,10 @@ class TxHistory extends Component {
                 previousAccount = debits[i].getPreviousAccount();
               }
               for (i = 0; i < credits.length; i++) {
+                receiveAddressStr.push(credits[i].getAddress());
                 if (!credits[i].getInternal()) {
-                  var spacing = ', ';
-                  if (i != credits.length - 1) {
-                    spacing = '';
-                  }
-                  if (receiveAddressStr === '') {
-                    receiveAddressStr = credits[i].getAddress();
-                  } else {
-                    receiveAddressStr += spacing + credits[i].getAddress();
-                  }
                   totalFundsReceived += credits[i].getAmount();
                 } else {
-                  spacing = ', ';
-                  if (i != credits.length - 1) {
-                    spacing = '';
-                  }
-                  if (receiveAddressStr === '') {
-                    receiveAddressStr = credits[i].getAddress();
-                  } else {
-                    receiveAddressStr += spacing + credits[i].getAddress();
-                  }
                   // Change coming back.
                   totalChange += credits[i].getAmount();
                 }
@@ -71,7 +54,7 @@ class TxHistory extends Component {
               }
               var accountName = '';
               if ( totalFundsReceived + totalChange + fee < totalDebit) {
-                txDescription = {direction:'Sent', addressStr: ''};
+                txDescription = {direction:'Sent', addressStr: null};
                 txAmount = totalDebit - fee - totalChange - totalFundsReceived;
                 if (getAccountsResponse != null) {
                   for (var y = 0; y < getAccountsResponse.getAccountsList().length; y++) {
@@ -83,7 +66,7 @@ class TxHistory extends Component {
                 }
                 return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} accountName={accountName} txInfo={tx} direction={'out'} pending txAmount={txAmount} txDescription={txDescription} />);
               } else if ( totalFundsReceived + totalChange + fee == totalDebit) {
-                txDescription = {direction:'Transferred', addressStr: ''};
+                txDescription = {direction:'Transferred', addressStr: receiveAddressStr};
                 txAmount = fee;
                 if (getAccountsResponse != null) {
                   for (var y = 0; y < getAccountsResponse.getAccountsList().length; y++) {
@@ -124,7 +107,7 @@ class TxHistory extends Component {
               var txDescription = '';
               var txAmount = 0;
 
-              var receiveAddressStr = '';
+              var receiveAddressStr = Array();
               var totalDebit = 0;
               var totalFundsReceived = 0;
               var totalChange = 0;
@@ -136,27 +119,10 @@ class TxHistory extends Component {
                 previousAccount = debits[i].getPreviousAccount();
               }
               for (i = 0; i < credits.length; i++) {
+                receiveAddressStr.push(credits[i].getAddress());
                 if (!credits[i].getInternal()) {
-                  var spacing = ', ';
-                  if (i != credits.length - 1) {
-                    spacing = '';
-                  }
-                  if (receiveAddressStr === '') {
-                    receiveAddressStr = credits[i].getAddress();
-                  } else {
-                    receiveAddressStr += spacing + credits[i].getAddress();
-                  }
                   totalFundsReceived += credits[i].getAmount();
                 } else {
-                  spacing = ', ';
-                  if (i != credits.length - 1) {
-                    spacing = '';
-                  }
-                  if (receiveAddressStr === '') {
-                    receiveAddressStr = credits[i].getAddress();
-                  } else {
-                    receiveAddressStr += spacing + credits[i].getAddress();
-                  }
                   // Change coming back.
                   totalChange += credits[i].getAmount();
                 }
@@ -164,7 +130,7 @@ class TxHistory extends Component {
               }
 
               if ( totalFundsReceived + totalChange + fee < totalDebit) {
-                txDescription = {direction:'Sent', addressStr: ''};
+                txDescription = {direction:'Sent', addressStr: null};
                 txAmount = totalDebit - fee - totalChange - totalFundsReceived;
                 if (getAccountsResponse != null) {
                   for (var k = 0; k < getAccountsResponse.getAccountsList().length; k++) {
@@ -176,7 +142,7 @@ class TxHistory extends Component {
                 }
                 return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} type={type} accountName={accountName} txInfo={txInfo} direction={'out'} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
               } else if (totalFundsReceived + totalChange + fee == totalDebit) {
-                txDescription = {direction:'Transferred', addressStr: ''};
+                txDescription = {direction:'Transferred', addressStr: receiveAddressStr};
                 txAmount = fee;
                 if (getAccountsResponse != null) {
                   for (var k = 0; k < getAccountsResponse.getAccountsList().length; k++) {
