@@ -2657,7 +2657,18 @@ export const TxDetailsStyles = {
     fontSize: '35px',
     fontWeight: '700',
   },
-
+  headerMetaTransactionDetailsTransfer: {
+    height: '38px',
+    paddingTop: '16px',
+    paddingLeft: '50px',
+    backgroundImage: `url(${WalletGray})`,
+    backgroundPosition: '0px 50%',
+    backgroundSize: '30px',
+    backgroundRepeat: 'no-repeat',
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '35px',
+    fontWeight: '700',
+  },
   headerMetaTransactionDetailsCurrency: {
     fontSize: '19px',
     fontWeight: '400',
@@ -2698,7 +2709,7 @@ export const TxDetailsStyles = {
     paddingBottom: '8px',
     borderBottom: '1px solid #e7eaed',
     fontSize: '13px',
-    height: '140px',
+    height: '240px',
   },
 
   transactionDetailsLeft: {
@@ -2723,11 +2734,41 @@ export const TxDetailsStyles = {
     lineHeight: '19px',
     textAlign: 'right',
   },
-
+  transactionDetailsOutputArea: {
+    float: 'left',
+    width: '100%',
+    height: '100px',
+    overflow: 'auto',
+    paddingLeft: '80px',
+  },
+  transactionDetailsDirection: {
+    display: 'block',
+    width: '100%',
+    height: '28px',
+    paddingTop: '4px',
+    paddingLeft: '80px',
+    float: 'left',
+    clear: 'left',
+    fontSize: '20px',
+    lineHeight: '19px',
+    textAlign: 'left',
+  },
   transactionDetailsValue: {
     display: 'inline-block',
     height: '28px',
     paddingTop: '9px',
+    float: 'left',
+    fontFamily: 'Inconsolata, monospace',
+    lineHeight: '10px',
+    fontWeight: '700',
+    textAlign: 'left',
+  },
+
+  transactionDetailsAddress: {
+    display: 'inline-block',
+    height: '28px',
+    paddingTop: '9px',
+    width: '100%',
     float: 'left',
     fontFamily: 'Inconsolata, monospace',
     lineHeight: '10px',

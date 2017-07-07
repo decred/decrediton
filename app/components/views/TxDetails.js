@@ -37,8 +37,8 @@ class TxDetails extends Component {
     var txAmount = 0;
 
     var walletValueUp = false;
-
-    var receiveAddressStr = '';
+    var transferred = false;
+    var receiveAddressStr = Array();
     var totalDebit = 0;
     var totalFundsReceived = 0;
     var totalChange = 0;
@@ -50,27 +50,10 @@ class TxDetails extends Component {
     }
     var account;
     for (i = 0; i < credits.length; i++) {
+      receiveAddressStr.push(credits[i].getAddress());
       if (!credits[i].getInternal()) {
-        var spacing = ', ';
-        if (i != credits.length - 1) {
-          spacing = '';
-        }
-        if (receiveAddressStr === '') {
-          receiveAddressStr = credits[i].getAddress();
-        } else {
-          receiveAddressStr += spacing + credits[i].getAddress();
-        }
         totalFundsReceived += credits[i].getAmount();
       } else {
-        spacing = ', ';
-        if (i != credits.length - 1) {
-          spacing = '';
-        }
-        if (receiveAddressStr === '') {
-          receiveAddressStr = credits[i].getAddress();
-        } else {
-          receiveAddressStr += spacing + credits[i].getAddress();
-        }
         // Change coming back.
         totalChange += credits[i].getAmount();
       }
@@ -78,11 +61,24 @@ class TxDetails extends Component {
     }
     var accountName = 'Primary Account';
     if ( totalFundsReceived + totalChange + fee < totalDebit) {
-      txDescription = {direction:'Sent', addressStr: ''};
+      txDescription = {direction:'Sent', addressStr: null};
       txAmount = totalDebit - fee - totalChange - totalFundsReceived;
       walletValueUp = false;
       if (this.props.getAccountsResponse != null) {
         for (var y = 0; y < this.props.getAccountsResponse.getAccountsList().length; y++) {
+          if (this.props.getAccountsResponse.getAccountsList()[y].getAccountNumber() == previousAccount) {
+            accountName = this.props.getAccountsResponse.getAccountsList()[y].getAccountName();
+            break;
+          }
+        }
+      }
+    } else if ( totalFundsReceived + totalChange + fee == totalDebit) {
+      txDescription = {direction:'Transferred', addressStr: receiveAddressStr};
+      txAmount = fee;
+      walletValueUp = false;
+      transferred = true;
+      if (this.props.getAccountsResponse != null) {
+        for (y = 0; y < this.props.getAccountsResponse.getAccountsList().length; y++) {
           if (this.props.getAccountsResponse.getAccountsList()[y].getAccountNumber() == previousAccount) {
             accountName = this.props.getAccountsResponse.getAccountsList()[y].getAccountName();
             break;
@@ -114,6 +110,11 @@ class TxDetails extends Component {
             <Balance amount={txAmount} />
             <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
           </div> :
+            transferred ?
+          <div style={TxDetailsStyles.headerMetaTransactionDetailsTransfer}>
+            -<Balance amount={txAmount} />
+            <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
+          </div> :
           <div style={TxDetailsStyles.headerMetaTransactionDetailsOut}>
             -<Balance amount={txAmount} />
             <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
@@ -131,8 +132,14 @@ class TxDetails extends Component {
               <div style={TxDetailsStyles.transactionDetailsValue}>{getAccountsResponse.getCurrentBlockHeight() - tx.height} <span style={TxDetailsStyles.transactionDetailsValueText}>confirmations</span></div> :
               <div></div>
               }
-              <div style={TxDetailsStyles.transactionDetailsName}>{txDescription.direction}</div>
-              <div style={TxDetailsStyles.transactionDetailsValue}>{txDescription.addressStr}</div>
+              <div style={TxDetailsStyles.transactionDetailsDirection}>{txDescription.direction}</div>
+              <div style={TxDetailsStyles.transactionDetailsOutputArea}>
+                {txDescription.addressStr !== null ?
+                  txDescription.addressStr.map(function(addressStr) {
+                    return(<div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr}>{addressStr}</div>);
+                  }) :
+                  <div></div>}
+              </div>
               <div style={TxDetailsStyles.transactionDetailsName}>Transaction fee:</div>
               <div style={TxDetailsStyles.transactionDetailsValue}><Balance amount={fee} />
               </div>

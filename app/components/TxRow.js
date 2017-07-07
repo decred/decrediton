@@ -4,6 +4,7 @@ import Radium from 'radium';
 import Balance from './Balance';
 import IndicatorPending from './icons/indicator-pending.svg';
 import IndicatorConfirmed from './icons/indicator-confirmed.svg';
+import WalletGray from './icons/wallet-gray.svg';
 import PlusSmall from './icons/plus-small.svg';
 import MinusSmall from './icons/minus-small.svg';
 import TicketSmall from './icons/tickets-ticket.svg';
@@ -68,6 +69,25 @@ const styles = {
     ':hover': {
       backgroundColor: 'rgba(212, 240, 253, .5)',
       backgroundImage: `url(${ArrowRightKeyBlue}),url(${PlusSmall})`,
+      backgroundSize: '5px, 16px',
+    },
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s'
+  },
+
+  transactionTransfer: {
+    height: '52px',
+    paddingRight: '45px',
+    paddingLeft: '56px',
+    borderBottom: '1px solid #e7eaed',
+    backgroundColor: '#fff',
+    cursor: 'pointer',
+    backgroundImage: `url(${ArrowRightGray}),url(${WalletGray})`,
+    backgroundPosition: '97% 50%, 20px 50%',
+    backgroundSize: '5px 10px, 16px 16px',
+    backgroundRepeat: 'no-repeat, no-repeat',
+    ':hover': {
+      backgroundColor: 'rgba(212, 240, 253, .5)',
+      backgroundImage: `url(${ArrowRightKeyBlue}),url(${WalletGray})`,
       backgroundSize: '5px, 16px',
     },
     transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s'
@@ -155,6 +175,19 @@ const styles = {
     backgroundColor: '#fff',
     cursor: 'default',
     backgroundImage: `url(${PlusSmall})`,
+    backgroundPosition: '20px 50%',
+    backgroundSize: '16px 16px',
+    backgroundRepeat: 'no-repeat',
+  },
+
+  transactionTransferOverview: {
+    height: '52px',
+    paddingRight: '45px',
+    paddingLeft: '56px',
+    borderBottom: '1px solid #e7eaed',
+    backgroundColor: '#fff',
+    cursor: 'default',
+    backgroundImage: `url(${WalletGray})`,
     backgroundPosition: '20px 50%',
     backgroundSize: '16px 16px',
     backgroundRepeat: 'no-repeat',
@@ -289,6 +322,21 @@ class TxRow extends Component {
     const { date } = this.props;
     const { accountName } = this.props;
     const { type } = this.props;
+    var receiveAddressStr = '';
+    if (txDescription.addressStr !== null) {
+      var spacing = '';
+      for (var i = 0; i < txDescription.addressStr.length; i++) {
+        if (i != txDescription.addressStr.length - 1) {
+          console.log(receiveAddressStr, i, txDescription.addressStr.length - 1);
+          spacing = ', ';
+        }
+        if (receiveAddressStr === '') {
+          receiveAddressStr = txDescription.addressStr[i];
+        } else {
+          receiveAddressStr += spacing + txDescription.addressStr[i];
+        }
+      }
+    }
     if (type == TransactionDetails.TransactionType.TICKET_PURCHASE) {
       return (
         <div style={showTxDetail !== undefined ? styles.ticketTx : styles.ticketTxOverview} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:console.log(showTxDetail)}>
@@ -340,7 +388,7 @@ class TxRow extends Component {
           <div style={showTxDetail !== undefined ? styles.transactionOut : styles.transactionOutOverview } key={Buffer.from(txInfo.getHash()).toString('hex')}onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
             <div style={styles.transactionAmount}>
               <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
-              <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
+              <div style={styles.transactionAmountHash}>{receiveAddressStr}</div>
             </div>
             <div style={styles.transactionAccount}>
               <div style={styles.transactionAccountName}>{accountName}</div>
@@ -354,7 +402,21 @@ class TxRow extends Component {
           <div style={showTxDetail !== undefined ? styles.transactionIn : styles.transactionInOverview } key={Buffer.from(txInfo.getHash()).toString('hex')} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
             <div style={styles.transactionAmount}>
               <div style={styles.transactionAmountNumber}><Balance amount={txAmount} /></div>
-              <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
+              <div style={styles.transactionAmountHash}>{receiveAddressStr}</div>
+            </div>
+            <div style={styles.transactionAccount}>
+              <div style={styles.transactionAccountName}>{accountName}</div>
+              <div style={styles.transactionAccountIndicator}>
+                <div style={styles.indicatorPending}>Pending</div>
+              </div>
+            </div>
+          </div>);
+      } else if ( direction == 'transfer') {
+        return (
+          <div style={showTxDetail !== undefined ? styles.transactionTransfer : styles.transactionTransferOverview } key={Buffer.from(txInfo.getHash()).toString('hex')} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
+            <div style={styles.transactionAmount}>
+              <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
+              <div style={styles.transactionAmountHash}>{receiveAddressStr}</div>
             </div>
             <div style={styles.transactionAccount}>
               <div style={styles.transactionAccountName}>{accountName}</div>
@@ -370,7 +432,7 @@ class TxRow extends Component {
           <div style={showTxDetail !== undefined ? styles.transactionOut : styles.transactionOutOverview } key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
             <div style={styles.transactionAmount}>
               <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
-              <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
+              <div style={styles.transactionAmountHash}>{receiveAddressStr}</div>
             </div>
             <div style={styles.transactionAccount}>
               <div style={styles.transactionAccountName}>{accountName}</div>
@@ -385,7 +447,22 @@ class TxRow extends Component {
           <div style={showTxDetail !== undefined ? styles.transactionIn : styles.transactionInOverview } key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
             <div style={styles.transactionAmount}>
               <div style={styles.transactionAmountNumber}><Balance amount={txAmount} /></div>
-              <div style={styles.transactionAmountHash}>{txDescription.addressStr}</div>
+              <div style={styles.transactionAmountHash}>{receiveAddressStr}</div>
+            </div>
+            <div style={styles.transactionAccount}>
+              <div style={styles.transactionAccountName}>{accountName}</div>
+              <div style={styles.transactionAccountIndicator}>
+                <div style={styles.indicatorConfirmed}>Confirmed</div>
+              </div>
+            </div>
+            <div style={styles.transactionTimeDate}><span>{date}</span></div>
+          </div>);
+      } else if ( direction == 'transfer') {
+        return (
+          <div style={showTxDetail !== undefined ? styles.transactionTransfer : styles.transactionTransferOverview } key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
+            <div style={styles.transactionAmount}>
+              <div style={styles.transactionAmountNumber}>-<Balance amount={txAmount} /></div>
+              <div style={styles.transactionAmountHash}>{receiveAddressStr}</div>
             </div>
             <div style={styles.transactionAccount}>
               <div style={styles.transactionAccountName}>{accountName}</div>
