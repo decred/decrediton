@@ -327,7 +327,7 @@ class TxRow extends Component {
       var spacing = '';
       for (var i = 0; i < txDescription.addressStr.length; i++) {
         if (i != txDescription.addressStr.length - 1) {
-          console.log(receiveAddressStr, i, txDescription.addressStr.length - 1)
+          console.log(receiveAddressStr, i, txDescription.addressStr.length - 1);
           spacing = ', ';
         }
         if (receiveAddressStr === '') {

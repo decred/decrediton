@@ -2736,7 +2736,7 @@ export const TxDetailsStyles = {
   },
   transactionDetailsOutputArea: {
     float: 'left',
-    width: '100%', 
+    width: '100%',
     height: '100px',
     overflow: 'auto',
     paddingLeft: '80px',

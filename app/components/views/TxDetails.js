@@ -78,7 +78,7 @@ class TxDetails extends Component {
       walletValueUp = false;
       transferred = true;
       if (this.props.getAccountsResponse != null) {
-        for (var y = 0; y < this.props.getAccountsResponse.getAccountsList().length; y++) {
+        for (y = 0; y < this.props.getAccountsResponse.getAccountsList().length; y++) {
           if (this.props.getAccountsResponse.getAccountsList()[y].getAccountNumber() == previousAccount) {
             accountName = this.props.getAccountsResponse.getAccountsList()[y].getAccountName();
             break;
@@ -110,7 +110,7 @@ class TxDetails extends Component {
             <Balance amount={txAmount} />
             <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
           </div> :
-            transferred ? 
+            transferred ?
           <div style={TxDetailsStyles.headerMetaTransactionDetailsTransfer}>
             -<Balance amount={txAmount} />
             <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
@@ -134,7 +134,7 @@ class TxDetails extends Component {
               }
               <div style={TxDetailsStyles.transactionDetailsDirection}>{txDescription.direction}</div>
               <div style={TxDetailsStyles.transactionDetailsOutputArea}>
-                {txDescription.addressStr !== null ? 
+                {txDescription.addressStr !== null ?
                   txDescription.addressStr.map(function(addressStr) {
                     return(<div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr}>{addressStr}</div>);
                   }) :

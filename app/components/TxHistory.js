@@ -69,7 +69,7 @@ class TxHistory extends Component {
                 txDescription = {direction:'Transferred', addressStr: receiveAddressStr};
                 txAmount = fee;
                 if (getAccountsResponse != null) {
-                  for (var y = 0; y < getAccountsResponse.getAccountsList().length; y++) {
+                  for (y = 0; y < getAccountsResponse.getAccountsList().length; y++) {
                     if (getAccountsResponse.getAccountsList()[y].getAccountNumber() == account) {
                       accountName = getAccountsResponse.getAccountsList()[y].getAccountName();
                       break;
@@ -145,7 +145,7 @@ class TxHistory extends Component {
                 txDescription = {direction:'Transferred', addressStr: receiveAddressStr};
                 txAmount = fee;
                 if (getAccountsResponse != null) {
-                  for (var k = 0; k < getAccountsResponse.getAccountsList().length; k++) {
+                  for (k = 0; k < getAccountsResponse.getAccountsList().length; k++) {
                     if (getAccountsResponse.getAccountsList()[k].getAccountNumber() == account) {
                       accountName = getAccountsResponse.getAccountsList()[k].getAccountName();
                       break;
