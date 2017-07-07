@@ -556,7 +556,7 @@ function getTransactionsInfoProgress(response) {
     if (updatedRegular.length !== regularTransactionsInfo.length) {
       dispatch({ regularTransactionsInfo: updatedRegular, type: GETTRANSACTIONS_PROGRESS_REGULAR });
     }
-    if (updatedCoinbase.length !== ticketTransactionsInfo.length) {
+    if (updatedCoinbase.length !== coinbaseTransactionsInfo.length) {
       dispatch({ coinbaseTransactionsInfo: updatedCoinbase, type: GETTRANSACTIONS_PROGRESS_COINBASE });
     }
     if (updatedTicket.length !== ticketTransactionsInfo.length) {
