@@ -387,25 +387,6 @@ app.on('ready', async () => {
         }
       }]
     }, {
-      label: 'Advanced',
-      submenu: [{
-        label: 'Toggle Developer Tools',
-        accelerator: 'Alt+Command+I',
-        click() {
-          mainWindow.toggleDevTools();
-        }
-      }, {
-        label: 'Show Wallet Log Files',
-        click() {
-          shell.openItem(path.join(appDataDirectory(), 'logs'));
-        }
-      }, {
-        label: 'Show Daemon Log Files',
-        click() {
-          shell.openItem(path.join(getDcrdPath(), 'logs'));
-        }
-      }]
-    }, {
       label: 'Window',
       submenu: [{
         label: 'Minimize',
@@ -421,40 +402,11 @@ app.on('ready', async () => {
         label: 'Bring All to Front',
         selector: 'arrangeInFront:'
       }]
-    }, {
-      label: 'Help',
-      submenu: [{
-        label: 'Learn More',
-        click() {
-          shell.openExternal('https://decred.org');
-        }
-      }, {
-        label: 'Documentation',
-        click() {
-          shell.openExternal('https://github.com/decred/decrediton');
-        }
-      }, {
-        label: 'Community Discussions',
-        click() {
-          shell.openExternal('https://forum.decred.org');
-        }
-      }, {
-        label: 'Search Issues',
-        click() {
-          shell.openExternal('https://github.com/decred/decrediton/issues');
-        }
-      }]
     }];
-
-    menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
   } else {
     template = [{
       label: '&File',
       submenu: [{
-        label: '&Open',
-        accelerator: 'Ctrl+O'
-      }, {
         label: '&Close',
         accelerator: 'Ctrl+W',
         click() {
@@ -470,10 +422,13 @@ app.on('ready', async () => {
           mainWindow.setFullScreen(!mainWindow.isFullScreen());
         }
       }]
-    }, {
-      label: '&Advanced',
+    }];
+  }
+  template.push(
+    {
+      label: 'Advanced',
       submenu: [{
-        label: 'Toggle &Developer Tools',
+        label: 'Toggle Developer Tools',
         accelerator: 'Alt+Ctrl+I',
         click() {
           mainWindow.toggleDevTools();
@@ -512,8 +467,7 @@ app.on('ready', async () => {
           shell.openExternal('https://github.com/decred/decrediton/issues');
         }
       }]
-    }];
-    menu = Menu.buildFromTemplate(template);
-    mainWindow.setMenu(menu);
-  }
+    });
+  menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 });
