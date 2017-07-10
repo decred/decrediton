@@ -226,6 +226,12 @@ export function dcrdCfg() {
   return path.join(cfgLoc, 'dcrd.conf');
 }
 
+export function getWalletFile() {
+  var cfg = getCfg();
+  var network =  cfg.get('network');
+  return path.join(appDataDirectory(), network, 'wallet.db');
+}
+
 export function dcrwCfg() {
   var cfgLoc = appDataDirectory();
   return path.join(cfgLoc, 'dcrwallet.conf');
