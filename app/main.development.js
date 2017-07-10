@@ -79,21 +79,29 @@ if (argv.mainnet) {
   }
 }
 
-function closeClis() {
-    // shutdown daemon and wallet.
-    // Don't try to close if not running.
+function closeDCRW() {
   if (require('is-running')(dcrwPID)) {
     if (debug) {
       console.log('Sending SIGINT to dcrwallet at pid:', dcrwPID);
     }
     process.kill(dcrwPID, 'SIGINT');
   }
+}
+
+function closeDCRD() {
   if (require('is-running')(dcrdPID)) {
     if (debug) {
       console.log('Sending SIGINT to dcrd at pid:', dcrdPID);
     }
     process.kill(dcrdPID, 'SIGINT');
   }
+}
+
+function closeClis() {
+  // shutdown daemon and wallet.
+  // Don't try to close if not running.
+  closeDCRW();
+  closeDCRD();
 }
 
 function cleanShutdown() {
