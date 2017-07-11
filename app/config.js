@@ -165,10 +165,10 @@ export function getCert() {
   if (os.platform() == 'win32') {
     certPath = path.join(os.homedir(), 'AppData', 'Local', 'Decrediton', 'rpc.cert');
   } else if (os.platform() == 'darwin') {
-    certPath = path.join(process.env.HOME, 'Library', 'Application Support',
+    certPath = path.join(os.homedir(), 'Library', 'Application Support',
             'decrediton', 'rpc.cert');
   } else {
-    certPath = path.join(process.env.HOME, '.config', 'decrediton', 'rpc.cert');
+    certPath = path.join(os.homedir(), '.config', 'decrediton', 'rpc.cert');
   }
 
   try {
@@ -195,10 +195,10 @@ export function getDcrdCert() {
   if (os.platform() == 'win32') {
     certPath = path.join(os.homedir(), 'AppData', 'Local', 'Dcrd', 'rpc.cert');
   } else if (os.platform() == 'darwin') {
-    certPath = path.join(process.env.HOME, 'Library', 'Application Support',
+    certPath = path.join(os.homedir(), 'Library', 'Application Support',
             'Dcrd', 'rpc.cert');
   } else {
-    certPath = path.join(process.env.HOME, '.dcrd', 'rpc.cert');
+    certPath = path.join(os.homedir(), '.dcrd', 'rpc.cert');
   }
 
   var cert = fs.readFileSync(certPath);
