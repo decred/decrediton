@@ -1106,6 +1106,12 @@ export const StakePoolStyles = {
     height: '556px',
     padding: '54px 60px 54px 80px',
   },
+  contentBlur: {
+    filter: 'blur(6px)',
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 60px 54px 80px',
+  },
   contentVotingGui: {
     overflow: 'auto',
     height: '556px',
