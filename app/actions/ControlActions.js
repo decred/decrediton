@@ -10,6 +10,7 @@ import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   SetMaxPerBlockRequest,
   } from '../middleware/walletrpc/api_pb';
 import { getCfg } from '../config.js';
+import UPDATESTAKEPOOLCONFIG_FAILED from './StakePoolActions';
 
 export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
 export const GETNEXTADDRESS_FAILED = 'GETNEXTADDRESS_FAILED';
@@ -276,33 +277,50 @@ function importScriptError(error) {
   return { error, type: IMPORTSCRIPT_FAILED };
 }
 
-function importScriptSuccess(importScriptResponse, votingAddress) {
+function importScriptSuccess(importScriptResponse, votingAddress, apiKeyCheck) {
   var message = 'Script successfully imported, rescanning now';
   return (dispatch) => {
-    if (!votingAddress) {
-      if (importScriptResponse.getRedeemable()) {
-        dispatch({ importScriptSuccess: message, importScriptResponse: importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
-      } else {
-        var error = 'This script is not redeemable by this wallet.';
-        dispatch({ error, type: IMPORTSCRIPT_FAILED });
-      }
-    } else {
+      console.log(apiKeyCheck)
+    if (apiKeyCheck) {
       if (importScriptResponse.getRedeemable() && importScriptResponse.getP2shAddress() == votingAddress) {
-        dispatch(purchaseTicketsAction());
+        dispatch(apiKeyCheck());
       } else {
         if (importScriptResponse.getP2shAddress() != votingAddress) {
           error = 'The stakepool voting address is not the P2SH address of the voting redeem script. This could be due to trying to use a stakepool that is configured for a different wallet. If this is not the case, please report this to the stakepool administrator and the Decred devs.';
-          dispatch({ error, type: PURCHASETICKETS_FAILED });
+          dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED });
         } else {
           error = 'This script is not redeemable by this wallet.';
-          dispatch({ error, type: PURCHASETICKETS_FAILED });
+          dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED });
         }
       }
+    } else {
+      if (!votingAddress) {
+        if (importScriptResponse.getRedeemable()) {
+          dispatch({ importScriptSuccess: message, importScriptResponse: importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
+        } else {
+          var error = 'This script is not redeemable by this wallet.';
+          dispatch({ error, type: IMPORTSCRIPT_FAILED });
+        }
+      } else {
+        if (importScriptResponse.getRedeemable() && importScriptResponse.getP2shAddress() == votingAddress) {
+          dispatch(purchaseTicketsAction());
+        } else {
+          if (importScriptResponse.getP2shAddress() != votingAddress) {
+            error = 'The stakepool voting address is not the P2SH address of the voting redeem script. This could be due to trying to use a stakepool that is configured for a different wallet. If this is not the case, please report this to the stakepool administrator and the Decred devs.';
+            dispatch({ error, type: PURCHASETICKETS_FAILED });
+          } else {
+            error = 'This script is not redeemable by this wallet.';
+            dispatch({ error, type: PURCHASETICKETS_FAILED });
+          }
+        }
+      }
+
     }
   };
 }
 
-export function importScriptAttempt(passphrase, script, rescan, scanFrom, votingAddress) {
+export function importScriptAttempt(passphrase, script, rescan, scanFrom, votingAddress, apiKeyCheck) {
+  console.log(apiKeyCheck);
   var request = new ImportScriptRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setScript(new Uint8Array(Buffer.from(hexToBytes(script))));
@@ -312,7 +330,7 @@ export function importScriptAttempt(passphrase, script, rescan, scanFrom, voting
     dispatch({
       request: request,
       type: IMPORTSCRIPT_ATTEMPT });
-    dispatch(importScriptAction(votingAddress));
+    dispatch(importScriptAction(votingAddress, apiKeyCheck));
   };
 }
 
@@ -322,7 +340,7 @@ function hexToBytes(hex) {
   return bytes;
 }
 
-function importScriptAction(purchaseTickets) {
+function importScriptAction(purchaseTickets, apiKeyCheck) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { importScriptRequest } = getState().control;
@@ -331,7 +349,7 @@ function importScriptAction(purchaseTickets) {
           if (err) {
             dispatch(importScriptError(err + ' Please try again'));
           } else {
-            dispatch(importScriptSuccess(importScriptResponse, purchaseTickets));
+            dispatch(importScriptSuccess(importScriptResponse, purchaseTickets, apiKeyCheck));
           }
         });
   };

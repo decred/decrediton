@@ -2,6 +2,7 @@
 import { getPurchaseInfo, setStakePoolAddress, setVoteChoices } from '../middleware/stakepoolapi';
 import { NextAddressRequest } from '../middleware/walletrpc/api_pb';
 import { getCfg } from '../config.js';
+import { importScriptAttempt } from './ControlActions'
 
 export const UPDATESTAKEPOOLCONFIG_ATTEMPT = 'UPDATESTAKEPOOLCONFIG_ATTEMPT';
 export const UPDATESTAKEPOOLCONFIG_FAILED = 'UPDATESTAKEPOOLCONFIG_FAILED';
@@ -37,7 +38,7 @@ export function updateStakepoolPurchaseInformation() {
   };
 }
 
-export function setStakePoolInformation(poolHost, apiKey, accountNum, internal) {
+export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, internal) {
   return (dispatch) => {
     if (!internal) {
       dispatch({ type: UPDATESTAKEPOOLCONFIG_ATTEMPT });
@@ -53,7 +54,7 @@ export function setStakePoolInformation(poolHost, apiKey, accountNum, internal) 
         } else {
           // parse response data for no err
           if (response.data.status == 'success') {
-            dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, accountNum));
+            dispatch(importScriptAttempt(privpass, response.data.data.Script, true, 0, response.data.data.TicketAddress, () => updateSavedConfig(response.data.data, poolHost, apiKey, accountNum)));
           } else if (response.data.status == 'error') {
             if (response.data.message == 'purchaseinfo error - no address submitted') {
               dispatch(setStakePoolAddressAction(poolHost, apiKey, accountNum));
