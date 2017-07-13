@@ -346,7 +346,7 @@ class StakePool extends Component{
       return;
     }
     this.props.setStakePoolInformation(privpass, this.state.stakePoolHost, this.state.apiKey, 0);
-    setTimeout(this.setState({addAnotherStakePool: false}), 1000);
+    setTimeout(this.setState({passphraseModalOpen: false, addAnotherStakePool: false}), 1000);
   }
   updateApiKey(apiKey) {
     if (apiKey != '') {
@@ -558,7 +558,7 @@ class StakePool extends Component{
       <div>
       </div>
     );
-    var apiKeyHeading = 'Enter Passphrase to connect to you stakepool';
+    var apiKeyHeading = 'Enter private passphrase to connect to your stakepool';
     var apiKeyFunc = (privPass) => this.setStakePoolInfo(privPass);
     var stakePoolConfigInput = (
       <div>
@@ -592,7 +592,7 @@ class StakePool extends Component{
               {this.state.apiKeyError}
             </div>
           </div>
-          <KeyBlueButton style={StakePoolStyles.contentSend} onClick={() => this.showPassphraseModal(apiKeyHeading, apiKeyDescription, apiKeyFunc)}>
+          <KeyBlueButton style={StakePoolStyles.contentSend} disabled={this.state.apiKey == ''} onClick={this.state.apiKey == '' ? null : () => this.showPassphraseModal(apiKeyHeading, apiKeyDescription, apiKeyFunc)}>
             Add
           </KeyBlueButton>
           {this.state.purchaseTicketsStakePoolConfig ?
