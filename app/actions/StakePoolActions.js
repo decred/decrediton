@@ -2,7 +2,7 @@
 import { getPurchaseInfo, setStakePoolAddress, setVoteChoices } from '../middleware/stakepoolapi';
 import { NextAddressRequest } from '../middleware/walletrpc/api_pb';
 import { getCfg } from '../config.js';
-import { importScriptAttempt } from './ControlActions'
+import { importScriptAttempt } from './ControlActions';
 
 export const UPDATESTAKEPOOLCONFIG_ATTEMPT = 'UPDATESTAKEPOOLCONFIG_ATTEMPT';
 export const UPDATESTAKEPOOLCONFIG_FAILED = 'UPDATESTAKEPOOLCONFIG_FAILED';
@@ -22,8 +22,7 @@ export function updateStakepoolPurchaseInformation() {
         getPurchaseInfo(poolHost,apiKey,
             function(response, err) {
               if (err) {
-                console.log(err);
-                dispatch({ error: 'Unable to contact stakepool, please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
+                dispatch({ error: 'Unable to contact stakepool: '+ err +' please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
                 return;
               } else {
                 // parse response data for no err
@@ -48,13 +47,19 @@ export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, 
       apiKey,
       function(response, err) {
         if (err) {
-          console.log(err);
-          dispatch({ error: 'Unable to contact stakepool, please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
+          dispatch({ error: 'Unable to contact stakepool: '+ err +' please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
           return;
         } else {
           // parse response data for no err
           if (response.data.status == 'success') {
-            dispatch(importScriptAttempt(privpass, response.data.data.Script, true, 0, response.data.data.TicketAddress, () => updateSavedConfig(response.data.data, poolHost, apiKey, accountNum)));
+            dispatch(importScriptAttempt(privpass, response.data.data.Script, true, 0, response.data.data.TicketAddress, (error) => {
+              if (error) {
+                var err = error + '. Please set up a new stakepool account for this wallet.';
+                dispatch({ error: err, type: UPDATESTAKEPOOLCONFIG_FAILED });
+              } else {
+                dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, accountNum));
+              }
+            }));
           } else if (response.data.status == 'error') {
             if (response.data.message == 'purchaseinfo error - no address submitted') {
               dispatch(setStakePoolAddressAction(poolHost, apiKey, accountNum));

@@ -10,7 +10,6 @@ import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   SetMaxPerBlockRequest,
   } from '../middleware/walletrpc/api_pb';
 import { getCfg } from '../config.js';
-import UPDATESTAKEPOOLCONFIG_FAILED from './StakePoolActions';
 
 export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
 export const GETNEXTADDRESS_FAILED = 'GETNEXTADDRESS_FAILED';
@@ -277,60 +276,34 @@ function importScriptError(error) {
   return { error, type: IMPORTSCRIPT_FAILED };
 }
 
-function importScriptSuccess(importScriptResponse, votingAddress, apiKeyCheck) {
+function importScriptSuccess(importScriptResponse, votingAddress, cb) {
   var message = 'Script successfully imported, rescanning now';
   return (dispatch) => {
-      console.log(apiKeyCheck)
-    if (apiKeyCheck) {
-      if (importScriptResponse.getRedeemable() && importScriptResponse.getP2shAddress() == votingAddress) {
-        dispatch(apiKeyCheck());
-      } else {
-        if (importScriptResponse.getP2shAddress() != votingAddress) {
-          error = 'The stakepool voting address is not the P2SH address of the voting redeem script. This could be due to trying to use a stakepool that is configured for a different wallet. If this is not the case, please report this to the stakepool administrator and the Decred devs.';
-          dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED });
-        } else {
-          error = 'This script is not redeemable by this wallet.';
-          dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED });
-        }
-      }
+    if (!votingAddress) {
+      dispatch({ importScriptSuccess: message, importScriptResponse: importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
     } else {
-      if (!votingAddress) {
-        if (importScriptResponse.getRedeemable()) {
-          dispatch({ importScriptSuccess: message, importScriptResponse: importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
-        } else {
-          var error = 'This script is not redeemable by this wallet.';
-          dispatch({ error, type: IMPORTSCRIPT_FAILED });
-        }
+      if (importScriptResponse.getP2shAddress() == votingAddress) {
+        dispatch(cb());
       } else {
-        if (importScriptResponse.getRedeemable() && importScriptResponse.getP2shAddress() == votingAddress) {
-          dispatch(purchaseTicketsAction());
-        } else {
-          if (importScriptResponse.getP2shAddress() != votingAddress) {
-            error = 'The stakepool voting address is not the P2SH address of the voting redeem script. This could be due to trying to use a stakepool that is configured for a different wallet. If this is not the case, please report this to the stakepool administrator and the Decred devs.';
-            dispatch({ error, type: PURCHASETICKETS_FAILED });
-          } else {
-            error = 'This script is not redeemable by this wallet.';
-            dispatch({ error, type: PURCHASETICKETS_FAILED });
-          }
-        }
+        var error = 'The stakepool voting address is not the P2SH address of the voting redeem script. This could be due to trying to use a stakepool that is configured for a different wallet. If this is not the case, please report this to the stakepool administrator and the Decred devs.';
+        dispatch(cb(error));
       }
-
     }
   };
 }
 
-export function importScriptAttempt(passphrase, script, rescan, scanFrom, votingAddress, apiKeyCheck) {
-  console.log(apiKeyCheck);
+export function importScriptAttempt(passphrase, script, rescan, scanFrom, votingAddress, cb) {
   var request = new ImportScriptRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setScript(new Uint8Array(Buffer.from(hexToBytes(script))));
   request.setRescan(rescan);
   request.setScanFrom(scanFrom);
+  request.setRequireRedeemable(true);
   return (dispatch) => {
     dispatch({
       request: request,
       type: IMPORTSCRIPT_ATTEMPT });
-    dispatch(importScriptAction(votingAddress, apiKeyCheck));
+    dispatch(importScriptAction(votingAddress, cb));
   };
 }
 
@@ -340,18 +313,22 @@ function hexToBytes(hex) {
   return bytes;
 }
 
-function importScriptAction(purchaseTickets, apiKeyCheck) {
+function importScriptAction(votingAddress, cb) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { importScriptRequest } = getState().control;
     walletService.importScript(importScriptRequest,
-        function(err, importScriptResponse) {
-          if (err) {
+      function(err, importScriptResponse) {
+        if (err) {
+          if (!votingAddress && !cb) {
             dispatch(importScriptError(err + ' Please try again'));
           } else {
-            dispatch(importScriptSuccess(importScriptResponse, purchaseTickets, apiKeyCheck));
+            dispatch(cb(err));
           }
-        });
+        } else {
+          dispatch(importScriptSuccess(importScriptResponse, votingAddress, cb));
+        }
+      });
   };
 }
 
@@ -648,7 +625,13 @@ numTickets, expiry, ticketFee, txFee, stakepool) {
     dispatch({
       request: request,
       type: PURCHASETICKETS_ATTEMPT });
-    dispatch(importScriptAttempt(passphrase, stakepool.Script, true, 0, stakepool.TicketAddress));
+    dispatch(importScriptAttempt(passphrase, stakepool.Script, true, 0, stakepool.TicketAddress, (error) => {
+      if (error) {
+        dispatch(purchaseTicketsError(error));
+      } else {
+        dispatch(purchaseTicketsAction());
+      }
+    }));
   };
 }
 
