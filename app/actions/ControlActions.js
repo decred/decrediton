@@ -332,6 +332,7 @@ function importScriptAction(votingAddress, cb) {
             }
           }
         } else {
+          setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
           dispatch(importScriptSuccess(importScriptResponse, votingAddress, cb));
         }
       });
@@ -631,7 +632,7 @@ numTickets, expiry, ticketFee, txFee, stakepool) {
     dispatch({
       request: request,
       type: PURCHASETICKETS_ATTEMPT });
-    dispatch(importScriptAttempt(passphrase, stakepool.Script, true, 0, stakepool.TicketAddress, (error) => {
+    dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0, stakepool.TicketAddress, (error) => {
       if (error) {
         dispatch(purchaseTicketsError(error));
       } else {
