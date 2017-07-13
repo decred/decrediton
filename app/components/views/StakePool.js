@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import { shell } from 'electron';
 import { PropTypes } from 'prop-types';
 import CircularProgress from 'material-ui/CircularProgress';
 import ErrorScreen from '../ErrorScreen';
@@ -576,9 +577,22 @@ class StakePool extends Component{
                 {selectStakePoolApiKey}
               <div style={StakePoolStyles.contentNestFromAddressWalletIcon}></div>
             </div>
+            <div style={StakePoolStyles.contentNestApiKeyInstructions}>
+              <span>
+                Please select your desired stakepool from the above dropdown and follow these instructions:
+                <br/>1) Create an account or login to your existing account at <a style={StakePoolStyles.stakepoolLink} onClick={function(x){shell.openExternal(x);}.bind(null, this.state.stakePoolHost)}>{this.state.stakePoolHost}</a>.
+                <br/>2) Once logged in, select the 'Settings' tab.
+                <br/>3) Copy and paste your Api Key into the field below (typically starts with 'eyJhb...').
+                <br/>4) Click Add and enter your private passphrase.
+                <br/>
+                <br/>
+                <span style={StakePoolStyles.highlighTextOrange}>Notice!</span> If you receive an error about the script not being redeemable when attempting to add your stakepool, you can try the following:
+                <br/> - Each stakepool account you create can only be associated with 1 wallet.  If you have previously created this stakepool account with a different wallet (different seed), then you must create a new account.
+                <br/> - If you had previously used a 'voting account', for your ticket purchases, please go to the Accounts page and create a new account (with any name).  This will now allow you to successfully import your script for your stakepool.
+              </span>
+            </div>
             <div style={StakePoolStyles.contentNestToAddress}>
-              <div style={StakePoolStyles.contentNestPrefixSend}>Api Key:</div>
-              <div style={StakePoolStyles.contentNestAddressHashBlock}>
+              <div style={StakePoolStyles.contentNestApiKey}>
                 <div style={StakePoolStyles.inputForm}>
                   <input
                     type="text"
@@ -587,9 +601,9 @@ class StakePool extends Component{
                     onBlur={(e) =>{this.updateApiKey(e.target.value);}}/>
                 </div>
               </div>
-            </div>
-            <div style={StakePoolStyles.apiKeyError}>
-              {this.state.apiKeyError}
+              <div style={StakePoolStyles.apiKeyError}>
+                {this.state.apiKeyError}
+              </div>
             </div>
           </div>
           <KeyBlueButton style={StakePoolStyles.contentSend} disabled={this.state.apiKey == ''} onClick={this.state.apiKey == '' ? null : () => this.showPassphraseModal(apiKeyHeading, apiKeyDescription, apiKeyFunc)}>
