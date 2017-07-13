@@ -327,7 +327,7 @@ function importScriptAction(votingAddress, cb) {
             if (error.indexOf('master private key') !== -1) {
               dispatch(() => cb(err + ' Please try again.'));
             } else {
-              err = err + '. This probably means you are trying to use a stakepool account that is already associated with another wallet.  If you have previously used a voting account, please create a new account (with any name) and try again.  Otherwise, please set up a new stakepool account for this wallet.';
+              err = err + '. This probably means you are trying to use a stakepool account that is already associated with another wallet.  If you have previously used a voting account, please create a new account and try again.  Otherwise, please set up a new stakepool account for this wallet.';
               dispatch(() => cb(err));
             }
           }
