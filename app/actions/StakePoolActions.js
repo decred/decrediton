@@ -54,8 +54,7 @@ export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, 
           if (response.data.status == 'success') {
             dispatch(importScriptAttempt(privpass, response.data.data.Script, true, 0, response.data.data.TicketAddress, (error) => {
               if (error) {
-                var err = error + '. Please set up a new stakepool account for this wallet.';
-                dispatch({ error: err, type: UPDATESTAKEPOOLCONFIG_FAILED });
+                dispatch({ error: error, type: UPDATESTAKEPOOLCONFIG_FAILED });
               } else {
                 dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, accountNum));
               }
