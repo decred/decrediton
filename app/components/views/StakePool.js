@@ -588,7 +588,7 @@ class StakePool extends Component{
                 <br/>
                 <span style={StakePoolStyles.highlighTextOrange}>Notice!</span> If you receive an error about the script not being redeemable when attempting to add your stakepool, you can try the following:
                 <br/> - Each stakepool account you create can only be associated with 1 wallet.  If you have previously created this stakepool account with a different wallet (different seed), then you must create a new account.
-                <br/> - If you had previously used a 'voting account', for your ticket purchases, please go to the Accounts page and create a new account (with any name).  This will now allow you to successfully import your script for your stakepool.
+                <br/> - If you had previously used a 'voting account', for your ticket purchases, please go to the Accounts page and create a new account.  This may now allow you to successfully import your script for your stakepool.
               </span>
             </div>
             <div style={StakePoolStyles.contentNestToAddress}>
