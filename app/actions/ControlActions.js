@@ -276,43 +276,34 @@ function importScriptError(error) {
   return { error, type: IMPORTSCRIPT_FAILED };
 }
 
-function importScriptSuccess(importScriptResponse, votingAddress) {
+function importScriptSuccess(importScriptResponse, votingAddress, cb) {
   var message = 'Script successfully imported, rescanning now';
   return (dispatch) => {
     if (!votingAddress) {
-      if (importScriptResponse.getRedeemable()) {
-        dispatch({ importScriptSuccess: message, importScriptResponse: importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
-      } else {
-        var error = 'This script is not redeemable by this wallet.';
-        dispatch({ error, type: IMPORTSCRIPT_FAILED });
-      }
+      dispatch({ importScriptSuccess: message, importScriptResponse: importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
     } else {
-      if (importScriptResponse.getRedeemable() && importScriptResponse.getP2shAddress() == votingAddress) {
-        dispatch(purchaseTicketsAction());
+      if (importScriptResponse.getP2shAddress() == votingAddress) {
+        dispatch(() => cb());
       } else {
-        if (importScriptResponse.getP2shAddress() != votingAddress) {
-          error = 'The stakepool voting address is not the P2SH address of the voting redeem script. This could be due to trying to use a stakepool that is configured for a different wallet. If this is not the case, please report this to the stakepool administrator and the Decred devs.';
-          dispatch({ error, type: PURCHASETICKETS_FAILED });
-        } else {
-          error = 'This script is not redeemable by this wallet.';
-          dispatch({ error, type: PURCHASETICKETS_FAILED });
-        }
+        var error = 'The stakepool voting address is not the P2SH address of the voting redeem script. This could be due to trying to use a stakepool that is configured for a different wallet. If this is not the case, please report this to the stakepool administrator and the Decred devs.';
+        dispatch(() => cb(error));
       }
     }
   };
 }
 
-export function importScriptAttempt(passphrase, script, rescan, scanFrom, votingAddress) {
+export function importScriptAttempt(passphrase, script, rescan, scanFrom, votingAddress, cb) {
   var request = new ImportScriptRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setScript(new Uint8Array(Buffer.from(hexToBytes(script))));
   request.setRescan(rescan);
   request.setScanFrom(scanFrom);
+  request.setRequireRedeemable(true);
   return (dispatch) => {
     dispatch({
       request: request,
       type: IMPORTSCRIPT_ATTEMPT });
-    dispatch(importScriptAction(votingAddress));
+    dispatch(importScriptAction(votingAddress, cb));
   };
 }
 
@@ -322,18 +313,29 @@ function hexToBytes(hex) {
   return bytes;
 }
 
-function importScriptAction(purchaseTickets) {
+function importScriptAction(votingAddress, cb) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     const { importScriptRequest } = getState().control;
     walletService.importScript(importScriptRequest,
-        function(err, importScriptResponse) {
-          if (err) {
+      function(err, importScriptResponse) {
+        if (err) {
+          if (!votingAddress && !cb) {
             dispatch(importScriptError(err + ' Please try again'));
           } else {
-            dispatch(importScriptSuccess(importScriptResponse, purchaseTickets));
+            var error = err + '';
+            if (error.indexOf('master private key') !== -1) {
+              dispatch(() => cb(err + ' Please try again.'));
+            } else {
+              err = err + '. This probably means you are trying to use a stakepool account that is already associated with another wallet.  If you have previously used a voting account, please create a new account and try again.  Otherwise, please set up a new stakepool account for this wallet.';
+              dispatch(() => cb(err));
+            }
           }
-        });
+        } else {
+          setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
+          dispatch(importScriptSuccess(importScriptResponse, votingAddress, cb));
+        }
+      });
   };
 }
 
@@ -630,7 +632,13 @@ numTickets, expiry, ticketFee, txFee, stakepool) {
     dispatch({
       request: request,
       type: PURCHASETICKETS_ATTEMPT });
-    dispatch(importScriptAttempt(passphrase, stakepool.Script, true, 0, stakepool.TicketAddress));
+    dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0, stakepool.TicketAddress, (error) => {
+      if (error) {
+        dispatch(purchaseTicketsError(error));
+      } else {
+        dispatch(purchaseTicketsAction());
+      }
+    }));
   };
 }
 

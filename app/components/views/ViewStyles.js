@@ -1106,6 +1106,12 @@ export const StakePoolStyles = {
     height: '556px',
     padding: '54px 60px 54px 80px',
   },
+  contentBlur: {
+    filter: 'blur(6px)',
+    overflow: 'auto',
+    height: '556px',
+    padding: '54px 60px 54px 80px',
+  },
   contentVotingGui: {
     overflow: 'auto',
     height: '556px',
@@ -1261,6 +1267,20 @@ export const StakePoolStyles = {
     paddingTop: '10px',
     float: 'left',
   },
+  contentNestApiKeyInstructions: {
+    width: '600px',
+    height: '260px',
+    paddingLeft: '30px',
+    float: 'left',
+  },
+  contentNestApiKey: {
+    position: 'relative',
+    paddingLeft: '65px',
+    width: '600px',
+    height: '34px',
+    float: 'left',
+    fontSize: '13px',
+  },
   contentNestToAddress: {
     width: '100%',
     height: '54px',
@@ -1405,6 +1425,9 @@ export const StakePoolStyles = {
   },
   highlightTextNeonGreen: {
     color: '#2ed8a3',
+  },
+  highlighTextOrange: {
+    color: '#fd714b',
   },
   numTicketsInput: {
     width: '111px',
@@ -2201,9 +2224,15 @@ export const StakePoolStyles = {
     width: '100%',
   },
   apiKeyError: {
-    paddingLeft: '118px',
+    paddingLeft: '70px',
     textAlign: 'left',
+    float: 'left',
     color: 'red',
+  },
+  stakepoolLink: {
+    color: '#2971ff',
+    fontWeight: 'bold',
+    cursor: 'pointer',
   },
   flexHeight: {
     paddingTop: '1px',

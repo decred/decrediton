@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import { shell } from 'electron';
 import { PropTypes } from 'prop-types';
 import CircularProgress from 'material-ui/CircularProgress';
 import ErrorScreen from '../ErrorScreen';
@@ -337,7 +338,7 @@ class StakePool extends Component{
   cancelAddAnotherStakePool() {
     this.setState({addAnotherStakePool: false});
   }
-  setStakePoolInfo() {
+  setStakePoolInfo(privpass) {
     if (this.state.apiKey == '') {
       this.setState({apiKeyError: '*Please enter your API key'});
       return;
@@ -345,8 +346,8 @@ class StakePool extends Component{
     if (this.state.stakePoolHost == '' || this.state.apiKeyError !== null) {
       return;
     }
-    this.props.setStakePoolInformation(this.state.stakePoolHost, this.state.apiKey, 0);
-    setTimeout(this.setState({addAnotherStakePool: false}), 1000);
+    this.props.setStakePoolInformation(privpass, this.state.stakePoolHost, this.state.apiKey, 0);
+    setTimeout(this.setState({passphraseModalOpen: false, addAnotherStakePool: false}), 1000);
   }
   updateApiKey(apiKey) {
     if (apiKey != '') {
@@ -554,42 +555,69 @@ class StakePool extends Component{
         </select>);
     var selectNumTickets = (
       <NumTicketsInput numTickets={this.state.numTickets} incrementNumTickets={()=>this.incrementNumTickets()} decrementNumTickets={()=>this.decrementNumTickets()}/>);
-
+    var apiKeyDescription = (
+      <div>
+      </div>
+    );
+    var apiKeyHeading = 'Enter private passphrase to connect to your stakepool';
+    var apiKeyFunc = (privPass) => this.setStakePoolInfo(privPass);
     var stakePoolConfigInput = (
-      <div style={StakePoolStyles.content}>
-        <div style={StakePoolStyles.flexHeight}>
-          <div style={StakePoolStyles.contentNestFromAddress}>
-            <div style={StakePoolStyles.contentNestPrefixSend}>Stake Pool:</div>
-              {selectStakePoolApiKey}
-            <div style={StakePoolStyles.contentNestFromAddressWalletIcon}></div>
-          </div>
-          <div style={StakePoolStyles.contentNestToAddress}>
-            <div style={StakePoolStyles.contentNestPrefixSend}>Api Key:</div>
-            <div style={StakePoolStyles.contentNestAddressHashBlock}>
-              <div style={StakePoolStyles.inputForm}>
-                <input
-                  type="text"
-                  style={StakePoolStyles.contentNestAddressAmountSum}
-                  placeholder="API Key"
-                  onBlur={(e) =>{this.updateApiKey(e.target.value);}}/>
+      <div>
+        <PassphraseModal
+          hidden={!this.state.passphraseModalOpen}
+          submitPassphrase={this.state.modalSubmitFunc}
+          cancelPassphrase={()=>this.setState({modalHeading: null, modalDescription: null, modalSubmitFunc: null, passphraseModalOpen: false})}
+          heading={this.state.modalHeading}
+          description={this.state.modalDescription}
+        />
+        <div style={!this.state.passphraseModalOpen ? StakePoolStyles.content : StakePoolStyles.contentBlur}>
+          <div style={StakePoolStyles.flexHeight}>
+            <div style={StakePoolStyles.contentNestFromAddress}>
+              <div style={StakePoolStyles.contentNestPrefixSend}>Stake Pool:</div>
+                {selectStakePoolApiKey}
+              <div style={StakePoolStyles.contentNestFromAddressWalletIcon}></div>
+            </div>
+            <div style={StakePoolStyles.contentNestApiKeyInstructions}>
+              <span>
+                Please select your desired stakepool from the above dropdown and follow these instructions:
+                <br/>1) Create an account or login to your existing account at <a style={StakePoolStyles.stakepoolLink} onClick={function(x){shell.openExternal(x);}.bind(null, this.state.stakePoolHost)}>{this.state.stakePoolHost}</a>.
+                <br/>2) Once logged in, select the 'Settings' tab.
+                <br/>3) Copy and paste your Api Key into the field below (typically starts with 'eyJhb...').
+                <br/>4) Click Add and enter your private passphrase.
+                <br/>
+                <br/>
+                <span style={StakePoolStyles.highlighTextOrange}>Notice!</span> If you receive an error about the script not being redeemable when attempting to add your stakepool, you can try the following:
+                <br/> - Each stakepool account you create can only be associated with 1 wallet.  If you have previously created this stakepool account with a different wallet (different seed), then you must create a new account.
+                <br/> - If you had previously used a 'voting account', for your ticket purchases, please go to the Accounts page and create a new account.  This may now allow you to successfully import your script for your stakepool.
+              </span>
+            </div>
+            <div style={StakePoolStyles.contentNestToAddress}>
+              <div style={StakePoolStyles.contentNestApiKey}>
+                <div style={StakePoolStyles.inputForm}>
+                  <input
+                    type="text"
+                    style={StakePoolStyles.contentNestAddressAmountSum}
+                    placeholder="API Key"
+                    onBlur={(e) =>{this.updateApiKey(e.target.value);}}/>
+                </div>
+              </div>
+              <div style={StakePoolStyles.apiKeyError}>
+                {this.state.apiKeyError}
               </div>
             </div>
           </div>
-          <div style={StakePoolStyles.apiKeyError}>
-            {this.state.apiKeyError}
-          </div>
+          <KeyBlueButton style={StakePoolStyles.contentSend} disabled={this.state.apiKey == ''} onClick={this.state.apiKey == '' ? null : () => this.showPassphraseModal(apiKeyHeading, apiKeyDescription, apiKeyFunc)}>
+            Add
+          </KeyBlueButton>
+          {this.state.purchaseTicketsStakePoolConfig ?
+            <SlateGrayButton
+              style={StakePoolStyles.hideStakePoolConfig}
+              onClick={() => this.cancelAddAnotherStakePool()}>
+              Cancel
+            </SlateGrayButton> :
+            <div></div>
+          }
         </div>
-        <KeyBlueButton style={StakePoolStyles.contentSend} onClick={() => this.setStakePoolInfo()}>
-          Confirm
-        </KeyBlueButton>
-        {this.state.purchaseTicketsStakePoolConfig ?
-          <SlateGrayButton
-            style={StakePoolStyles.hideStakePoolConfig}
-            onClick={() => this.cancelAddAnotherStakePool()}>
-            Cancel
-          </SlateGrayButton> :
-          <div></div>
-        }
       </div>
     );
     var votingGuiView = (
@@ -712,7 +740,6 @@ class StakePool extends Component{
     );
     var importScriptHeading = 'Enter Passphrase to Import Script';
     var importScriptFunc = (privPass, script) => this.importScript(privPass, script);
-
     var purchaseTicketsView = (
       <div>
         <PassphraseModal

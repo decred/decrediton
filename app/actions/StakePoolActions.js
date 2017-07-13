@@ -2,6 +2,7 @@
 import { getPurchaseInfo, setStakePoolAddress, setVoteChoices } from '../middleware/stakepoolapi';
 import { NextAddressRequest } from '../middleware/walletrpc/api_pb';
 import { getCfg } from '../config.js';
+import { importScriptAttempt } from './ControlActions';
 
 export const UPDATESTAKEPOOLCONFIG_ATTEMPT = 'UPDATESTAKEPOOLCONFIG_ATTEMPT';
 export const UPDATESTAKEPOOLCONFIG_FAILED = 'UPDATESTAKEPOOLCONFIG_FAILED';
@@ -21,8 +22,7 @@ export function updateStakepoolPurchaseInformation() {
         getPurchaseInfo(poolHost,apiKey,
             function(response, err) {
               if (err) {
-                console.log(err);
-                dispatch({ error: 'Unable to contact stakepool, please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
+                dispatch({ error: 'Unable to contact stakepool: '+ err +' please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
                 return;
               } else {
                 // parse response data for no err
@@ -37,7 +37,7 @@ export function updateStakepoolPurchaseInformation() {
   };
 }
 
-export function setStakePoolInformation(poolHost, apiKey, accountNum, internal) {
+export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, internal) {
   return (dispatch) => {
     if (!internal) {
       dispatch({ type: UPDATESTAKEPOOLCONFIG_ATTEMPT });
@@ -47,13 +47,18 @@ export function setStakePoolInformation(poolHost, apiKey, accountNum, internal) 
       apiKey,
       function(response, err) {
         if (err) {
-          console.log(err);
-          dispatch({ error: 'Unable to contact stakepool, please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
+          dispatch({ error: 'Unable to contact stakepool: '+ err +' please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
           return;
         } else {
           // parse response data for no err
           if (response.data.status == 'success') {
-            dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, accountNum));
+            dispatch(importScriptAttempt(privpass, response.data.data.Script, true, 0, response.data.data.TicketAddress, (error) => {
+              if (error) {
+                dispatch({ error: error, type: UPDATESTAKEPOOLCONFIG_FAILED });
+              } else {
+                dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, accountNum));
+              }
+            }));
           } else if (response.data.status == 'error') {
             if (response.data.message == 'purchaseinfo error - no address submitted') {
               dispatch(setStakePoolAddressAction(poolHost, apiKey, accountNum));
