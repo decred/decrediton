@@ -283,10 +283,10 @@ function importScriptSuccess(importScriptResponse, votingAddress, cb) {
       dispatch({ importScriptSuccess: message, importScriptResponse: importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
     } else {
       if (importScriptResponse.getP2shAddress() == votingAddress) {
-        dispatch(cb());
+        dispatch(() => cb());
       } else {
         var error = 'The stakepool voting address is not the P2SH address of the voting redeem script. This could be due to trying to use a stakepool that is configured for a different wallet. If this is not the case, please report this to the stakepool administrator and the Decred devs.';
-        dispatch(cb(error));
+        dispatch(() => cb(error));
       }
     }
   };
@@ -323,7 +323,7 @@ function importScriptAction(votingAddress, cb) {
           if (!votingAddress && !cb) {
             dispatch(importScriptError(err + ' Please try again'));
           } else {
-            dispatch(cb(err));
+            dispatch(() => cb(err));
           }
         } else {
           dispatch(importScriptSuccess(importScriptResponse, votingAddress, cb));
