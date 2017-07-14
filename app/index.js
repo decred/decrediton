@@ -155,6 +155,7 @@ var initialState = {
     getVoteChoicesResponse: null,
   },
   walletLoader: {
+    rpcRetryAttempts: 0,
     neededBlocks: neededBlocks,
     curBlocks: 0,
     stepIndex: 0,
