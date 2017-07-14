@@ -30,6 +30,7 @@ import MaxPriceAbsoluteIcon from '../icons/max-price-absolute.svg';
 import MaxPriceRelativeIcon from '../icons/max-price-relative.svg';
 import MaxPerBlockIcon from '../icons/max-per-block.svg';
 import TicketsManageStakepools from '../icons/tickets-manage-stakepools.svg';
+import TicketSmall from '../icons/tickets-ticket.svg';
 
 export const ReceiveStyles = {
   body: {
@@ -2674,6 +2675,18 @@ export const TxDetailsStyles = {
     paddingTop: '43px',
     textAlign: 'center',
     marginRight: '-20px',
+  },
+  headerMetaTransactionDetailsStakeTx: {
+    height: '38px',
+    paddingTop: '16px',
+    paddingLeft: '50px',
+    backgroundImage: `url(${TicketSmall})`,
+    backgroundPosition: '0px 50%',
+    backgroundSize: '30px',
+    backgroundRepeat: 'no-repeat',
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '35px',
+    fontWeight: '700',
   },
   headerMetaTransactionDetailsIn: {
     height: '38px',
