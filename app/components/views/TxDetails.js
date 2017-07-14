@@ -50,7 +50,7 @@ class TxDetails extends Component {
     }
     var account;
     for (i = 0; i < credits.length; i++) {
-      receiveAddressStr.push(credits[i].getAddress());
+      receiveAddressStr.push({address: credits[i].getAddress(), amount:credits[i].getAmount()});
       if (!credits[i].getInternal()) {
         totalFundsReceived += credits[i].getAmount();
       } else {
@@ -135,8 +135,12 @@ class TxDetails extends Component {
               <div style={TxDetailsStyles.transactionDetailsDirection}>{txDescription.direction}</div>
               <div style={TxDetailsStyles.transactionDetailsOutputArea}>
                 {txDescription.addressStr !== null ?
-                  txDescription.addressStr.map(function(addressStr) {
-                    return(<div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr}>{addressStr}</div>);
+                  txDescription.addressStr.map(function(addressStr,i) {
+                    return(
+                      <div key={'row'+i} style={TxDetailsStyles.transactionDetailsRow}>
+                        <div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr.address}>{addressStr.address}</div>
+                        <div style={TxDetailsStyles.transactionDetailsAmount} key={addressStr.amount+addressStr.address}><Balance amount={addressStr.amount}/></div>
+                      </div>);
                   }) :
                   <div></div>}
               </div>

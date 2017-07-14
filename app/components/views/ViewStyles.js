@@ -2792,17 +2792,25 @@ export const TxDetailsStyles = {
     fontWeight: '700',
     textAlign: 'left',
   },
-
-  transactionDetailsAddress: {
+  transactionDetailsRow: {
     display: 'inline-block',
     height: '28px',
     paddingTop: '9px',
-    width: '100%',
+    width: '70%',
     float: 'left',
     fontFamily: 'Inconsolata, monospace',
     lineHeight: '10px',
     fontWeight: '700',
+  },
+  transactionDetailsAddress: {
+    width: '50%',
+    float: 'left',
     textAlign: 'left',
+  },
+  transactionDetailsAmount: {
+    width: '50%',
+    float: 'right',
+    textAlign: 'right',
   },
 
   transactionDetailsValueText: {

@@ -327,7 +327,6 @@ class TxRow extends Component {
       var spacing = '';
       for (var i = 0; i < txDescription.addressStr.length; i++) {
         if (i != txDescription.addressStr.length - 1) {
-          console.log(receiveAddressStr, i, txDescription.addressStr.length - 1);
           spacing = ', ';
         }
         if (receiveAddressStr === '') {
@@ -339,7 +338,7 @@ class TxRow extends Component {
     }
     if (type == TransactionDetails.TransactionType.TICKET_PURCHASE) {
       return (
-        <div style={showTxDetail !== undefined ? styles.ticketTx : styles.ticketTxOverview} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:console.log(showTxDetail)}>
+        <div style={showTxDetail !== undefined ? styles.ticketTx : styles.ticketTxOverview} key={txInfo.tx.getHash()} onClick={showTxDetail !== undefined ? () => {showTxDetail(txInfo);}:null}>
           <div style={styles.transactionAmount}>
             Ticket
           </div>
