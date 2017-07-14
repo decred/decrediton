@@ -106,7 +106,7 @@ class TxHistory extends Component {
               var type = txInfo.type;
               var txDescription = '';
               var txAmount = 0;
-
+              var sendAddressStr = Array();
               var receiveAddressStr = Array();
               var totalDebit = 0;
               var totalFundsReceived = 0;
@@ -117,6 +117,7 @@ class TxHistory extends Component {
               for (var i = 0; i < debits.length; i++) {
                 totalDebit += debits[i].getPreviousAmount();
                 previousAccount = debits[i].getPreviousAccount();
+                sendAddressStr.push({account: debits[i].getPreviousAccount(), amount: debits[i].getPreviousAmount()});
               }
               for (i = 0; i < credits.length; i++) {
                 receiveAddressStr.push(credits[i].getAddress());

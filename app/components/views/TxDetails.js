@@ -9,6 +9,7 @@ import '../fonts.css';
 import { shell } from 'electron';
 import SlateGrayButton from '../SlateGrayButton';
 import { TxDetailsStyles } from './ViewStyles';
+import { TransactionDetails }  from '../../middleware/walletrpc/api_pb';
 
 class TxDetails extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class TxDetails extends Component {
 
   render() {
     const { tx } = this.props;
+    const { detailType } = this.props;
     const { clearTxDetails } = this.props;
     const { getAccountsResponse } = this.props;
     const { getNetworkResponse } = this.props;
@@ -33,93 +35,78 @@ class TxDetails extends Component {
     var date = dateFormat(new Date(tx.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
     var fee = tx.tx.getFee();
 
-    var txDescription = '';
     var txAmount = 0;
-
-    var walletValueUp = false;
-    var transferred = false;
+    var sendAddressStr = Array();
     var receiveAddressStr = Array();
     var totalDebit = 0;
     var totalFundsReceived = 0;
     var totalChange = 0;
-
-    var previousAccount;
     for (var i = 0; i < debits.length; i++) {
       totalDebit += debits[i].getPreviousAmount();
-      previousAccount = debits[i].getPreviousAccount();
+      for (var y = 0; y < this.props.getAccountsResponse.getAccountsList().length; y++) {
+        if (this.props.getAccountsResponse.getAccountsList()[y].getAccountNumber() == debits[i].getPreviousAccount()) {
+          sendAddressStr.push({account:this.props.getAccountsResponse.getAccountsList()[y].getAccountName(), amount: debits[i].getPreviousAmount()});
+          break;
+        }
+      }
     }
-    var account;
     for (i = 0; i < credits.length; i++) {
-      receiveAddressStr.push(credits[i].getAddress());
+      receiveAddressStr.push({address: credits[i].getAddress(), amount:credits[i].getAmount()});
       if (!credits[i].getInternal()) {
         totalFundsReceived += credits[i].getAmount();
       } else {
         // Change coming back.
         totalChange += credits[i].getAmount();
       }
-      account = credits[i].getAccount();
     }
-    var accountName = 'Primary Account';
-    if ( totalFundsReceived + totalChange + fee < totalDebit) {
-      txDescription = {direction:'Sent', addressStr: null};
-      txAmount = totalDebit - fee - totalChange - totalFundsReceived;
-      walletValueUp = false;
-      if (this.props.getAccountsResponse != null) {
-        for (var y = 0; y < this.props.getAccountsResponse.getAccountsList().length; y++) {
-          if (this.props.getAccountsResponse.getAccountsList()[y].getAccountNumber() == previousAccount) {
-            accountName = this.props.getAccountsResponse.getAccountsList()[y].getAccountName();
-            break;
-          }
-        }
-      }
-    } else if ( totalFundsReceived + totalChange + fee == totalDebit) {
-      txDescription = {direction:'Transferred', addressStr: receiveAddressStr};
-      txAmount = fee;
-      walletValueUp = false;
-      transferred = true;
-      if (this.props.getAccountsResponse != null) {
-        for (y = 0; y < this.props.getAccountsResponse.getAccountsList().length; y++) {
-          if (this.props.getAccountsResponse.getAccountsList()[y].getAccountNumber() == previousAccount) {
-            accountName = this.props.getAccountsResponse.getAccountsList()[y].getAccountName();
-            break;
-          }
-        }
-      }
-    } else {
-      txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
-      txAmount = totalFundsReceived;
-      walletValueUp = true;
-      if (this.props.getAccountsResponse != null) {
-        for (var z = 0; z < this.props.getAccountsResponse.getAccountsList().length; z++) {
-          if (this.props.getAccountsResponse.getAccountsList()[z].getAccountNumber() == account) {
-            accountName = this.props.getAccountsResponse.getAccountsList()[z].getAccountName();
-            break;
-          }
-        }
-      }
-    }
-    return(
-      <div style={TxDetailsStyles.view}>
-        <Header
-          headerTitleOverview={[<div key={accountName}>{accountName}</div>,
-            <SlateGrayButton key="back" style={{float: 'right'}} onClick={() => clearTxDetails()}>back</SlateGrayButton>
-          ]}
-          headerMetaOverview={
-            walletValueUp ?
-          <div style={TxDetailsStyles.headerMetaTransactionDetailsIn}>
-            <Balance amount={txAmount} />
-            <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
-          </div> :
-            transferred ?
-          <div style={TxDetailsStyles.headerMetaTransactionDetailsTransfer}>
-            -<Balance amount={txAmount} />
-            <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
-          </div> :
+    var headerMeta;
+    if (detailType == null) {
+      if ( totalFundsReceived + totalChange + fee < totalDebit) {
+        txAmount = totalDebit - fee - totalChange - totalFundsReceived;
+        headerMeta = (
           <div style={TxDetailsStyles.headerMetaTransactionDetailsOut}>
             -<Balance amount={txAmount} />
             <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
           </div>
-          }/>
+        );
+      } else if ( totalFundsReceived + totalChange + fee == totalDebit) {
+        txAmount = fee;
+        headerMeta = (
+          <div style={TxDetailsStyles.headerMetaTransactionDetailsTransfer}>
+            -<Balance amount={txAmount} />
+            <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
+          </div>
+        );
+      } else {
+        txAmount = totalFundsReceived;
+        headerMeta = (
+          <div style={TxDetailsStyles.headerMetaTransactionDetailsIn}>
+            <Balance amount={txAmount} />
+            <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
+          </div>
+        );
+      }
+    } else {
+      var typeStr;
+      if (detailType == TransactionDetails.TransactionType.TICKET_PURCHASE) {
+        typeStr = 'Ticket';
+      } else if (detailType == TransactionDetails.TransactionType.VOTE) {
+        typeStr = 'Vote';
+      } else if (detailType == TransactionDetails.TransactionType.REVOCATION) {
+        typeStr = 'Revocation';
+      }
+      headerMeta = (
+          <div style={TxDetailsStyles.headerMetaTransactionDetailsStakeTx}>
+            {typeStr}
+            <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{date}</div>
+          </div>
+        );
+    }
+    return(
+      <div style={TxDetailsStyles.view}>
+        <Header
+          headerTitleOverview={<SlateGrayButton key="back" style={{float: 'right'}} onClick={() => clearTxDetails()}>back</SlateGrayButton>}
+          headerMetaOverview={headerMeta}/>
         <div style={TxDetailsStyles.content}>
           <div style={TxDetailsStyles.contentNest}>
             <div style={TxDetailsStyles.transactionDetailsTop}>
@@ -132,13 +119,33 @@ class TxDetails extends Component {
               <div style={TxDetailsStyles.transactionDetailsValue}>{getAccountsResponse.getCurrentBlockHeight() - tx.height} <span style={TxDetailsStyles.transactionDetailsValueText}>confirmations</span></div> :
               <div></div>
               }
-              <div style={TxDetailsStyles.transactionDetailsDirection}>{txDescription.direction}</div>
-              <div style={TxDetailsStyles.transactionDetailsOutputArea}>
-                {txDescription.addressStr !== null ?
-                  txDescription.addressStr.map(function(addressStr) {
-                    return(<div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr}>{addressStr}</div>);
-                  }) :
-                  <div></div>}
+              <div style={TxDetailsStyles.transactionDetailsOverview}>
+                <div style={TxDetailsStyles.transactionDetailsOverviewTitle}>
+                  <div style={TxDetailsStyles.transactionDetailsOverviewTitleConsumed}>Used Inputs</div>
+                  <div style={TxDetailsStyles.transactionDetailsOverviewTitleCreated}>New Wallet Outputs</div>
+                </div>
+                <div style={TxDetailsStyles.transactionDetailsInputArea}>
+                  {sendAddressStr !== null ?
+                    sendAddressStr.map(function(addressStr,i) {
+                      return(
+                        <div key={'row-input'+i} style={TxDetailsStyles.transactionDetailsRow}>
+                          <div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr.account}>{addressStr.account}</div>
+                          <div style={TxDetailsStyles.transactionDetailsAmount} key={addressStr.account+addressStr.amount}><Balance amount={addressStr.amount}/></div>
+                        </div>);
+                    }) :
+                    <div></div>}
+                </div>
+                <div style={TxDetailsStyles.transactionDetailsOutputArea}>
+                  {receiveAddressStr !== null ?
+                    receiveAddressStr.map(function(addressStr,i) {
+                      return(
+                        <div key={'row-output'+i} style={TxDetailsStyles.transactionDetailsRow}>
+                          <div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr.address}>{addressStr.address}</div>
+                          <div style={TxDetailsStyles.transactionDetailsAmount} key={addressStr.amount+addressStr.address}><Balance amount={addressStr.amount}/></div>
+                        </div>);
+                    }) :
+                    <div></div>}
+                </div>
               </div>
               <div style={TxDetailsStyles.transactionDetailsName}>Transaction fee:</div>
               <div style={TxDetailsStyles.transactionDetailsValue}><Balance amount={fee} />
@@ -154,6 +161,7 @@ class TxDetails extends Component {
           </div>
         </div>
       </div>);
+
   }
 }
 

@@ -10,6 +10,7 @@ import ArrowUpKeyBlue from '../icons/arrow-up-key-blue.svg';
 import ArrowDownKeyBlue from '../icons/arrow-down-key-blue.svg';
 import ArrowUpLightBlue from '../icons/arrow-up-light-blue.svg';
 import ArrowUpTurquiose from '../icons/arrow-up-turquiose.svg';
+import ArrowRightKeyBlue from '../icons/arrow-right-key-blue.svg';
 import Search from '../icons/search.svg';
 import WalletGray from '../icons/wallet-gray.svg';
 import AgendaClose from '../icons/tickets-agenda-close.svg';
@@ -29,6 +30,7 @@ import MaxPriceAbsoluteIcon from '../icons/max-price-absolute.svg';
 import MaxPriceRelativeIcon from '../icons/max-price-relative.svg';
 import MaxPerBlockIcon from '../icons/max-per-block.svg';
 import TicketsManageStakepools from '../icons/tickets-manage-stakepools.svg';
+import TicketSmall from '../icons/tickets-ticket.svg';
 
 export const ReceiveStyles = {
   body: {
@@ -2674,6 +2676,18 @@ export const TxDetailsStyles = {
     textAlign: 'center',
     marginRight: '-20px',
   },
+  headerMetaTransactionDetailsStakeTx: {
+    height: '38px',
+    paddingTop: '16px',
+    paddingLeft: '50px',
+    backgroundImage: `url(${TicketSmall})`,
+    backgroundPosition: '0px 50%',
+    backgroundSize: '30px',
+    backgroundRepeat: 'no-repeat',
+    fontFamily: 'Inconsolata, monospace',
+    fontSize: '35px',
+    fontWeight: '700',
+  },
   headerMetaTransactionDetailsIn: {
     height: '38px',
     paddingTop: '16px',
@@ -2763,12 +2777,45 @@ export const TxDetailsStyles = {
     lineHeight: '19px',
     textAlign: 'right',
   },
-  transactionDetailsOutputArea: {
-    float: 'left',
+  transactionDetailsOverview: {
+    height: '100px',
     width: '100%',
+    paddingLeft: '80px',
+  },
+  transactionDetailsOverviewTitle: {
+    float: 'left',
+    height: '30px',
+    width: '100%',
+    fontSize: '20px',
+    fontWeight: '700',
+    borderTop: '1px solid #e7eaed',
+    paddingTop: '10px',
+  },
+  transactionDetailsOverviewTitleCreated: {
+    float: 'right',
+    width: '63%',
+  },
+  transactionDetailsOverviewTitleConsumed: {
+    float: 'left',
+    width: '30%',
+  },
+  transactionDetailsInputArea: {
+    float: 'left',
+    width: '30%',
     height: '100px',
     overflow: 'auto',
-    paddingLeft: '80px',
+    backgroundImage: `url(${ArrowRightKeyBlue})`,
+    backgroundPosition: '100% 50%',
+    backgroundSize: '15px',
+    backgroundRepeat: 'no-repeat',
+    paddingRight: '35px',
+  },
+  transactionDetailsOutputArea: {
+    float: 'right',
+    width: '56%',
+    height: '100px',
+    overflow: 'auto',
+    paddingRight: '50px',
   },
   transactionDetailsDirection: {
     display: 'block',
@@ -2792,8 +2839,7 @@ export const TxDetailsStyles = {
     fontWeight: '700',
     textAlign: 'left',
   },
-
-  transactionDetailsAddress: {
+  transactionDetailsRow: {
     display: 'inline-block',
     height: '28px',
     paddingTop: '9px',
@@ -2802,7 +2848,16 @@ export const TxDetailsStyles = {
     fontFamily: 'Inconsolata, monospace',
     lineHeight: '10px',
     fontWeight: '700',
+  },
+  transactionDetailsAddress: {
+    width: '50%',
+    float: 'left',
     textAlign: 'left',
+  },
+  transactionDetailsAmount: {
+    width: '50%',
+    float: 'right',
+    textAlign: 'right',
   },
 
   transactionDetailsValueText: {

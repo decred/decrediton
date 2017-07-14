@@ -21,6 +21,7 @@ class History extends Component{
       selectedTypeArray: props.regularTransactionsInfo,
       selectedType: 'Regular',
       transactionDetails: null,
+      detailType: null,
     };
   }
   pageForward() {
@@ -78,8 +79,8 @@ class History extends Component{
     var paginatedTxs = selectedTypeArray.length >= this.props.txPerPage  ? selectedTypeArray.slice(0,this.props.txPerPage) : selectedTypeArray.slice(0,selectedTypeArray.length);
     this.setState({selectedType: type, currentPage: 0, selectedTypeArray: selectedTypeArray, paginatedTxs: paginatedTxs});
   }
-  setTransactionDetails(tx) {
-    this.setState({transactionDetails: tx});
+  setTransactionDetails(tx, type) {
+    this.setState({transactionDetails: tx, detailType: type});
   }
   clearTransactionDetails() {
     this.setState({transactionDetails: null});
@@ -138,7 +139,7 @@ class History extends Component{
           </div>
           <div style={HistoryStyles.contentNest}>
             {this.state.paginatedTxs.length > 0 ?
-              <TxHistory getAccountsResponse={getAccountsResponse} mined={this.state.paginatedTxs} showTxDetail={(tx) => this.setTransactionDetails(tx)}/>  :
+              <TxHistory getAccountsResponse={getAccountsResponse} mined={this.state.paginatedTxs} showTxDetail={(tx, type) => this.setTransactionDetails(tx, type)}/>  :
               <p>No transactions</p>
             }
           </div>
@@ -152,7 +153,7 @@ class History extends Component{
           <SideBar />
           { this.state.transactionDetails === null ?
           historyView :
-          <TxDetails tx={this.state.transactionDetails} clearTxDetails={() => this.clearTransactionDetails()} getAccountsResponse={getAccountsResponse} getNetworkResponse={getNetworkResponse}/>
+          <TxDetails tx={this.state.transactionDetails} detailType={this.state.detailType} clearTxDetails={() => this.clearTransactionDetails()} getAccountsResponse={getAccountsResponse} getNetworkResponse={getNetworkResponse}/>
           }
         </div>);
     }
