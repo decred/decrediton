@@ -10,6 +10,7 @@ import ArrowUpKeyBlue from '../icons/arrow-up-key-blue.svg';
 import ArrowDownKeyBlue from '../icons/arrow-down-key-blue.svg';
 import ArrowUpLightBlue from '../icons/arrow-up-light-blue.svg';
 import ArrowUpTurquiose from '../icons/arrow-up-turquiose.svg';
+import ArrowRightKeyBlue from '../icons/arrow-right-key-blue.svg';
 import Search from '../icons/search.svg';
 import WalletGray from '../icons/wallet-gray.svg';
 import AgendaClose from '../icons/tickets-agenda-close.svg';
@@ -2774,6 +2775,8 @@ export const TxDetailsStyles = {
     width: '100%',
     fontSize: '20px',
     fontWeight: '700',
+    borderTop: '1px solid #e7eaed',
+    paddingTop: '10px',
   },
   transactionDetailsOverviewTitleCreated: {
     float: 'right',
@@ -2788,6 +2791,11 @@ export const TxDetailsStyles = {
     width: '30%',
     height: '100px',
     overflow: 'auto',
+    backgroundImage: `url(${ArrowRightKeyBlue})`,
+    backgroundPosition: '100% 50%',
+    backgroundSize: '15px',
+    backgroundRepeat: 'no-repeat',
+    paddingRight: '35px',
   },
   transactionDetailsOutputArea: {
     float: 'right',
