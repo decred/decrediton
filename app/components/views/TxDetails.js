@@ -38,18 +38,25 @@ class TxDetails extends Component {
 
     var walletValueUp = false;
     var transferred = false;
+    var sendAddressStr = Array();
     var receiveAddressStr = Array();
     var totalDebit = 0;
     var totalFundsReceived = 0;
     var totalChange = 0;
-
     var previousAccount;
     for (var i = 0; i < debits.length; i++) {
       totalDebit += debits[i].getPreviousAmount();
       previousAccount = debits[i].getPreviousAccount();
+      for (var y = 0; y < this.props.getAccountsResponse.getAccountsList().length; y++) {
+        if (this.props.getAccountsResponse.getAccountsList()[y].getAccountNumber() == debits[i].getPreviousAccount()) {
+          sendAddressStr.push({account:this.props.getAccountsResponse.getAccountsList()[y].getAccountName(), amount: debits[i].getPreviousAmount()});
+          break;
+        }
+      }
     }
     var account;
     for (i = 0; i < credits.length; i++) {
+      console.log(credits[i].getAddress());
       receiveAddressStr.push({address: credits[i].getAddress(), amount:credits[i].getAmount()});
       if (!credits[i].getInternal()) {
         totalFundsReceived += credits[i].getAmount();
@@ -61,7 +68,7 @@ class TxDetails extends Component {
     }
     var accountName = 'Primary Account';
     if ( totalFundsReceived + totalChange + fee < totalDebit) {
-      txDescription = {direction:'Sent', addressStr: null};
+      txDescription = {direction:'Sent', addressStr: receiveAddressStr};
       txAmount = totalDebit - fee - totalChange - totalFundsReceived;
       walletValueUp = false;
       if (this.props.getAccountsResponse != null) {
@@ -133,16 +140,29 @@ class TxDetails extends Component {
               <div></div>
               }
               <div style={TxDetailsStyles.transactionDetailsDirection}>{txDescription.direction}</div>
-              <div style={TxDetailsStyles.transactionDetailsOutputArea}>
-                {txDescription.addressStr !== null ?
-                  txDescription.addressStr.map(function(addressStr,i) {
-                    return(
-                      <div key={'row'+i} style={TxDetailsStyles.transactionDetailsRow}>
-                        <div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr.address}>{addressStr.address}</div>
-                        <div style={TxDetailsStyles.transactionDetailsAmount} key={addressStr.amount+addressStr.address}><Balance amount={addressStr.amount}/></div>
-                      </div>);
-                  }) :
-                  <div></div>}
+              <div style={TxDetailsStyles.transactionDetailsOverview}>
+                <div style={TxDetailsStyles.transactionDetailsInputArea}>
+                  {sendAddressStr !== null ?
+                    sendAddressStr.map(function(addressStr,i) {
+                      return(
+                        <div key={'row-input'+i} style={TxDetailsStyles.transactionDetailsRow}>
+                          <div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr.account}>{addressStr.account}</div>
+                          <div style={TxDetailsStyles.transactionDetailsAmount} key={addressStr.account+addressStr.amount}><Balance amount={addressStr.amount}/></div>
+                        </div>);
+                    }) :
+                    <div></div>}
+                </div>
+                <div style={TxDetailsStyles.transactionDetailsOutputArea}>
+                  {txDescription.addressStr !== null ?
+                    txDescription.addressStr.map(function(addressStr,i) {
+                      return(
+                        <div key={'row-output'+i} style={TxDetailsStyles.transactionDetailsRow}>
+                          <div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr.address}>{addressStr.address}</div>
+                          <div style={TxDetailsStyles.transactionDetailsAmount} key={addressStr.amount+addressStr.address}><Balance amount={addressStr.amount}/></div>
+                        </div>);
+                    }) :
+                    <div></div>}
+                </div>
               </div>
               <div style={TxDetailsStyles.transactionDetailsName}>Transaction fee:</div>
               <div style={TxDetailsStyles.transactionDetailsValue}><Balance amount={fee} />

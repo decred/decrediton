@@ -2763,12 +2763,23 @@ export const TxDetailsStyles = {
     lineHeight: '19px',
     textAlign: 'right',
   },
-  transactionDetailsOutputArea: {
-    float: 'left',
+  transactionDetailsOverview: {
+    height: '100px',
     width: '100%',
+    paddingLeft: '80px',
+  },
+  transactionDetailsInputArea: {
+    float: 'left',
+    width: '30%',
     height: '100px',
     overflow: 'auto',
-    paddingLeft: '80px',
+  },
+  transactionDetailsOutputArea: {
+    float: 'right',
+    width: '56%',
+    height: '100px',
+    overflow: 'auto',
+    paddingRight: '50px',
   },
   transactionDetailsDirection: {
     display: 'block',
@@ -2796,7 +2807,7 @@ export const TxDetailsStyles = {
     display: 'inline-block',
     height: '28px',
     paddingTop: '9px',
-    width: '70%',
+    width: '100%',
     float: 'left',
     fontFamily: 'Inconsolata, monospace',
     lineHeight: '10px',
