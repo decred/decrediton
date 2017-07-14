@@ -229,6 +229,9 @@ export function dcrdCfg() {
 export function getWalletFile() {
   var cfg = getCfg();
   var network =  cfg.get('network');
+  if (network === 'testnet') {
+    network = 'testnet2';
+  }
   return path.join(appDataDirectory(), network, 'wallet.db');
 }
 
