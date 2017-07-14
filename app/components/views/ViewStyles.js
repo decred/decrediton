@@ -2768,6 +2768,21 @@ export const TxDetailsStyles = {
     width: '100%',
     paddingLeft: '80px',
   },
+  transactionDetailsOverviewTitle: {
+    float: 'left',
+    height: '30px',
+    width: '100%',
+    fontSize: '20px',
+    fontWeight: '700',
+  },
+  transactionDetailsOverviewTitleCreated: {
+    float: 'right',
+    width: '63%',
+  },
+  transactionDetailsOverviewTitleConsumed: {
+    float: 'left',
+    width: '30%',
+  },
   transactionDetailsInputArea: {
     float: 'left',
     width: '30%',

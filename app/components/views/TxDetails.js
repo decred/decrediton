@@ -139,8 +139,11 @@ class TxDetails extends Component {
               <div style={TxDetailsStyles.transactionDetailsValue}>{getAccountsResponse.getCurrentBlockHeight() - tx.height} <span style={TxDetailsStyles.transactionDetailsValueText}>confirmations</span></div> :
               <div></div>
               }
-              <div style={TxDetailsStyles.transactionDetailsDirection}>{txDescription.direction}</div>
               <div style={TxDetailsStyles.transactionDetailsOverview}>
+                <div style={TxDetailsStyles.transactionDetailsOverviewTitle}>
+                  <div style={TxDetailsStyles.transactionDetailsOverviewTitleConsumed}>Used Inputs</div>
+                  <div style={TxDetailsStyles.transactionDetailsOverviewTitleCreated}>New Wallet Outputs</div>
+                </div>
                 <div style={TxDetailsStyles.transactionDetailsInputArea}>
                   {sendAddressStr !== null ?
                     sendAddressStr.map(function(addressStr,i) {
