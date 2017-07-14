@@ -3,7 +3,7 @@ import { LOADER_ATTEMPT, LOADER_FAILED, LOADER_SUCCESS } from '../actions/Wallet
 import { WALLETEXIST_ATTEMPT, WALLETEXIST_FAILED, WALLETEXIST_SUCCESS } from '../actions/WalletLoaderActions';
 import { OPENWALLET_ATTEMPT, OPENWALLET_FAILED, OPENWALLET_SUCCESS } from '../actions/WalletLoaderActions';
 import { CLOSEWALLET_ATTEMPT, CLOSEWALLET_FAILED, CLOSEWALLET_SUCCESS } from '../actions/WalletLoaderActions';
-import { STARTRPC_ATTEMPT, STARTRPC_FAILED, STARTRPC_SUCCESS } from '../actions/WalletLoaderActions';
+import { STARTRPC_ATTEMPT, STARTRPC_FAILED, STARTRPC_SUCCESS, STARTRPC_RETRY } from '../actions/WalletLoaderActions';
 import { DISCOVERADDRESS_ATTEMPT, DISCOVERADDRESS_FAILED, DISCOVERADDRESS_SUCCESS } from '../actions/WalletLoaderActions';
 import { SUBSCRIBEBLOCKNTFNS_ATTEMPT, SUBSCRIBEBLOCKNTFNS_FAILED, SUBSCRIBEBLOCKNTFNS_SUCCESS } from '../actions/WalletLoaderActions';
 import { FETCHHEADERS_ATTEMPT, FETCHHEADERS_FAILED, FETCHHEADERS_PROGRESS, FETCHHEADERS_SUCCESS } from '../actions/WalletLoaderActions';
@@ -128,11 +128,16 @@ export default function walletLoader(state = {}, action) {
       startRpcRequestAttempt: true,
       startRpcRequest: action.request,
     };
+  case STARTRPC_RETRY:
+    return {...state,
+      rpcRetryAttempts: action.rpcRetryAttempts,
+    };
   case STARTRPC_FAILED:
     return {...state,
       startRpcError: action.error,
       startRpcRequestAttempt: false,
       startRpcRequest: null,
+      rpcRetryAttempts: 0,
     };
   case STARTRPC_SUCCESS:
     return {...state,

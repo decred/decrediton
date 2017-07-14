@@ -240,9 +240,18 @@ function closeWalletAction() {
 export const STARTRPC_ATTEMPT = 'STARTRPC_ATTEMPT';
 export const STARTRPC_FAILED = 'STARTRPC_FAILED';
 export const STARTRPC_SUCCESS = 'STARTRPC_SUCCESS';
+export const STARTRPC_RETRY = 'STARTRPC_RETRY';
 
-function startRpcError(error) {
-  return { error: error, type: STARTRPC_FAILED };
+function startRpcError(error, request) {
+  return (dispatch, getState) => {
+    const {rpcRetryAttempts} = getState().walletLoader;
+    if (rpcRetryAttempts < 5) {
+      dispatch({ rpcRetryAttempts: rpcRetryAttempts+1, type: STARTRPC_RETRY });
+      setTimeout(() => dispatch(startRpcAction(request)), 5000);
+    } else {
+      dispatch({ error: error, type: STARTRPC_FAILED });
+    }
+  };
 }
 
 function startRpcSuccess() {
@@ -295,7 +304,7 @@ function startRpcAction(request, second) {
               return;
             }
             if (second) {
-              dispatch(startRpcError(err + '.  You may need to edit ' + getCfgPath() + ' and try again'));
+              dispatch(startRpcError(err + '.  You may need to edit ' + getCfgPath() + ' and try again', request));
             } else {
               dispatch(startRpcRequestFunc(true));
             }
