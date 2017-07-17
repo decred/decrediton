@@ -213,6 +213,14 @@ export function GRPCWalletPort() {
   return cfg.get('wallet_port_testnet');
 }
 
+export function RPCWalletPort() {
+  var cfg = getCfg();
+  if (cfg.get('network') == 'mainnet') {
+    return '9110';
+  }
+  return '19110';
+}
+
 export function RPCDaemonPort() {
   var cfg = getCfg();
   if (cfg.get('network') == 'mainnet') {
@@ -274,6 +282,7 @@ export function writeCfgs() {
       password: cfg.get('rpc_pass'),
       appdata: appDataDirectory(),
       rpcconnect: cfg.get('daemon_rpc_host') + ':' + RPCDaemonPort(),
+      rpclisten: cfg.get('wallet_rpc_host') + ':' + RPCWalletPort(),
       grpclisten: cfg.get('wallet_rpc_host') + ':' + GRPCWalletPort(),
       tlscurve: 'P-256',
       noinitialload: '1',
@@ -298,6 +307,7 @@ export function writeCfgs() {
       rpcuser: cfg.get('rpc_user'),
       rpcpass: cfg.get('rpc_pass'),
       rpcserver: cfg.get('daemon_rpc_host') + ':' + RPCDaemonPort(),
+      walletrpcserver: cfg.get('wallet_rpc_host') + ':' + RPCWalletPort(),
     }
   };
   fs.writeFileSync(dcrctlCfg(), ini.stringify(dcrctlConf));
