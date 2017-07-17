@@ -922,11 +922,17 @@ function startAutoBuyerError(error) {
   return { error, type: STARTAUTOBUYER_FAILED };
 }
 
-function startAutoBuyerSuccess(startAutoBuyerResponse) {
+function startAutoBuyerSuccess(request, startAutoBuyerResponse) {
   var success = 'You successfully started the auto ticket buyer.';
   return (dispatch) => {
-    dispatch({ success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS });
-    dispatch(getTicketBuyerConfigAttempt());
+    dispatch({ success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS,
+      balanceToMaintain: request.getBalanceToMaintain(),
+      maxFeePerKb: request.getMaxFeePerKb(),
+      maxPriceRelative: request.getMaxPriceRelative(),
+      maxPriceAbsolute: request.getMaxPriceAbsolute(),
+      maxPerBlock: request.getMaxPerBlock(),
+    });
+    setTimeout(()=>dispatch(getTicketBuyerConfigAttempt(), 1000));
   };
 }
 
@@ -943,26 +949,19 @@ maxFeePerKb, maxPriceRelative, maxPriceAbsolute, maxPerBlock, stakepool) {
   request.setPoolAddress(stakepool.PoolAddress);
   request.setPoolFees(stakepool.PoolFees);
   request.setMaxPerBlock(maxPerBlock);
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: STARTAUTOBUYER_ATTEMPT });
-    dispatch(startAutoBuyerAction());
-  };
-}
-
-function startAutoBuyerAction() {
   return (dispatch, getState) => {
+    dispatch({
+      type: STARTAUTOBUYER_ATTEMPT,
+    });
     const { ticketBuyerService } = getState().grpc;
-    const { startAutoBuyerRequest } = getState().control;
-    ticketBuyerService.startAutoBuyer(startAutoBuyerRequest,
-        function(err, startAutoBuyerResponse) {
-          if (err) {
-            dispatch(startAutoBuyerError(err + ' Please try again'));
-          } else {
-            dispatch(startAutoBuyerSuccess(startAutoBuyerResponse));
-          }
-        });
+    ticketBuyerService.startAutoBuyer(request,
+      function(err, startAutoBuyerResponse) {
+        if (err) {
+          dispatch(startAutoBuyerError(err + ' Please try again'));
+        } else {
+          dispatch(startAutoBuyerSuccess(request, startAutoBuyerResponse));
+        }
+      });
   };
 }
 
