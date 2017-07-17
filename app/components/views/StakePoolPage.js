@@ -20,7 +20,8 @@ import { purchaseTicketsAttempt,
     clearImportScriptError,
     importScriptAttempt,
     startAutoBuyerAttempt,
-    stopAutoBuyerAttempt, } from '../../actions/ControlActions';
+    stopAutoBuyerAttempt,
+    setTicketBuyerConfigAttempt } from '../../actions/ControlActions';
 import { setVoteChoicesAttempt } from '../../actions/ClientActions';
 
 function mapStateToProps(state) {
@@ -85,7 +86,8 @@ function mapDispatchToProps(dispatch) {
     clearImportScriptError,
     importScriptAttempt,
     startAutoBuyerAttempt,
-    stopAutoBuyerAttempt  }, dispatch);
+    stopAutoBuyerAttempt,
+    setTicketBuyerConfigAttempt  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StakePool);
