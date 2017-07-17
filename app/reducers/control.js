@@ -434,6 +434,11 @@ export default function control(state = {}, action) {
       stopAutoBuyerSuccess: null,
       stopAutoBuyerRequest: null,
       stopAutoBuyerResponse: null,
+      balanceToMaintain: action.balanceToMaintain,
+      maxFeePerKb: action.maxFeePerKb,
+      maxPriceRelative: action.maxPriceRelative,
+      maxPriceAbsolute: action.maxPriceAbsolute,
+      maxPerBlock: action.maxPerBlock,
     };
   case STARTAUTOBUYER_CLEAR_ERROR:
     return {...state,

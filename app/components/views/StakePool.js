@@ -148,6 +148,9 @@ class StakePool extends Component{
         maxPriceAbsolute: nextProps.maxPriceAbsolute, maxPriceRelative: nextProps.maxPriceRelative,
         maxPerBlock: nextProps.maxPerBlock, autoBuyerConfigChanged: false});
     }
+    if (this.props.getTicketBuyerConfigResponse == null && this.props.getTicketBuyerConfigResponse !== nextProps.getTicketBuyerConfigResponse) {
+      this.setState({autoBuyerConfigChanged: false});
+    }
   }
 
   componentWillMount() {
@@ -219,7 +222,6 @@ class StakePool extends Component{
        this.state.maxPerBlock !== this.props.maxPerBlock;
       this.setState({balanceToMaintain: value, autoBuyerConfigChanged: changed, balanceToMaintainError: null});
     }
-
   }
   updateMaxFee(value) {
     if (!isNaN(value) && value < 0) {
