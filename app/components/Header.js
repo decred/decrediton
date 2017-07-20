@@ -6,6 +6,7 @@ import WalletGray from './icons/wallet-gray.svg';
 import TicketSmall from './icons/tickets-ticket.svg';
 import PlusBig from './icons/plus-big.svg';
 import MinusBig from './icons/minus-big.svg';
+import Balance from './Balance';
 
 function mapStateToProps(state) {
   return {
@@ -59,11 +60,12 @@ const styles = {
     fontSize: '53px',
   },
   Snackbar: {
+    fontFamily: 'inherit',
     position: 'absolute',
     left: '61%',
   },
   SnackbarContentSend: {
-    height: '110px',
+    height: '78px',
     padding: '0px 50px',
     backgroundColor: 'rgba(12, 30, 62, 0.5)',
     backgroundImage: `url(${MinusBig})`,
@@ -72,7 +74,7 @@ const styles = {
     backgroundRepeat: 'no-repeat',
   },
   SnackbarContentReceive: {
-    height: '110px',
+    height: '78px',
     padding: '0px 50px',
     backgroundColor: 'rgba(12, 30, 62, 0.5)',
     backgroundImage: `url(${PlusBig})`,
@@ -81,7 +83,7 @@ const styles = {
     backgroundRepeat: 'no-repeat',
   },
   SnackbarContentStake: {
-    height: '110px',
+    height: '78px',
     padding: '0px 50px',
     backgroundColor: 'rgba(12, 30, 62, 0.5)',
     backgroundImage: `url(${TicketSmall})`,
@@ -90,13 +92,41 @@ const styles = {
     backgroundRepeat: 'no-repeat',
   },
   SnackbarContentTransfer: {
-    height: '110px',
+    height: '78px',
     padding: '0px 50px',
     backgroundColor: 'rgba(12, 30, 62, 0.5)',
     backgroundImage: `url(${WalletGray})`,
     backgroundPosition: '15px 50%',
     backgroundSize: '20px',
     backgroundRepeat: 'no-repeat',
+  },
+  SnackbarInformation: {    
+    fontFamily: 'Source Sans Pro, sans-serif',
+    width: '100%',
+  },
+  SnackbarInformationRow: {
+    width: '100%',
+    float: 'left',
+    height: '25px',
+  },
+  SnackbarInformationRowType: {
+    width: '30%',
+    float: 'left',
+  },
+  SnackbarInformationRowAmount: {
+    width: '40%',
+    float: 'left',
+  },
+  SnackbarInformationRowFee: {
+    width: '30%',
+    float: 'left',
+    textAlign: 'right',
+  },
+  SnackbarInformationRowTx: {
+    width: '100%',
+    float: 'left',
+    textAlign: 'center',
+    fontFamily: 'Inconsolata, monospace',
   }
 };
 class Header extends React.Component {
@@ -132,14 +162,50 @@ class Header extends React.Component {
         </div>
       );
     } else {
+      var snackbarContentStyle;
+      if (this.props.newUnminedMessage !== null) { 
+        if (this.props.newUnminedMessage.type == 'Ticket' || this.props.newUnminedMessage.type == 'Vote' || this.props.newUnminedMessage.type == 'Revoke') {
+          snackbarContentStyle = styles.SnackbarContentStake
+        } else if (this.props.newUnminedMessage.type == 'Receive') {
+          snackbarContentStyle = styles.SnackbarContentReceive
+        } else if (this.props.newUnminedMessage.type == 'Send') {
+          snackbarContentStyle = styles.SnackbarContentSend
+        } else if (this.props.newUnminedMessage.type == 'Transfer') {
+          snackbarContentStyle = styles.SnackbarContentTransfer
+        }
+      }
+      var newNtfns = '';
+      if (this.props.newUnminedMessage !== null) {
+        if (this.props.newUnminedMessage.type == 'Ticket' || this.props.newUnminedMessage.type == 'Send' || this.props.newUnminedMessage.type == 'Transfer' || this.props.newUnminedMessage.type == 'Receive') { 
+          newNtfns = (<div style={styles.SnackbarInformation}>
+                        <div style={styles.SnackbarInformationRow}>
+                          <div style={styles.SnackbarInformationRowTx}>{this.props.newUnminedMessage.txHash}</div>
+                        </div>
+                        <div style={styles.SnackbarInformationRow}>
+                          <div style={styles.SnackbarInformationRowType}>{this.props.newUnminedMessage.type}</div>
+                          <div style={styles.SnackbarInformationRowAmount}>Amount  <Balance amount={this.props.newUnminedMessage.amount}/></div>
+                          <div style={styles.SnackbarInformationRowFee}>Fee  <Balance amount={this.props.newUnminedMessage.fee}/></div>
+                        </div> 
+                      </div>);
+        } else {
+          newNtfns = (<div style={styles.SnackbarInformation}>
+                        <div style={styles.SnackbarInformationRow}>
+                          <div style={styles.SnackbarInformationRowTx}>{this.props.newUnminedMessage.txHash}</div>
+                        </div> 
+                        <div style={styles.SnackbarInformationRow}>
+                          <div style={styles.SnackbarInformationRowType}>{this.props.newUnminedMessage.type}</div>
+                        </div>
+                      </div>);
+        }
+      }
       return (
         <div>
           <Snackbar
             style={styles.Snackbar}
             open={this.state.open}
-            message={this.props.newUnminedMessage !== null ? this.props.newUnminedMessage : ''}
-            autoHideDuration={5000}
-            bodyStyle={styles.SnackbarContentTransfer}
+            message={newNtfns}
+            autoHideDuration={4000}
+            bodyStyle={snackbarContentStyle}
             onRequestClose={(reason) => {
               if (reason != 'clickaway')
                 this.handleRequestClose();
