@@ -134,18 +134,26 @@ class Header extends React.Component {
     super(props);
     this.state = {
       open: false,
+      ntfns: null,
     };
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.newUnminedMessage !== nextProps.newUnminedMessage) {
-      this.setState({
-        open: true,
-      });
+    if (this.state.ntfns == null && this.props.newUnminedMessage !== nextProps.newUnminedMessage) {
+        this.setState({
+          open: true,
+          ntfns: nextProps.newUnminedMessage
+        });
+    } else if (this.props.newUnminedMessage !== nextProps.newUnminedMessage) {
+        setTimeout(()=>this.setState({
+          open: true,
+          ntfns: nextProps.newUnminedMessage
+        }), 4000);
     }
   }
   handleRequestClose() {
     this.setState({
       open: false,
+      ntfns: null
     });
   }
 
@@ -163,37 +171,37 @@ class Header extends React.Component {
       );
     } else {
       var snackbarContentStyle;
-      if (this.props.newUnminedMessage !== null) {
-        if (this.props.newUnminedMessage.type == 'Ticket' || this.props.newUnminedMessage.type == 'Vote' || this.props.newUnminedMessage.type == 'Revoke') {
+      if (this.state.ntfns !== null) {
+        if (this.state.ntfns.type == 'Ticket' || this.state.ntfns.type == 'Vote' || this.state.ntfns.type == 'Revoke') {
           snackbarContentStyle = styles.SnackbarContentStake;
-        } else if (this.props.newUnminedMessage.type == 'Receive') {
+        } else if (this.state.ntfns.type == 'Receive') {
           snackbarContentStyle = styles.SnackbarContentReceive;
-        } else if (this.props.newUnminedMessage.type == 'Send') {
+        } else if (this.state.ntfns.type == 'Send') {
           snackbarContentStyle = styles.SnackbarContentSend;
-        } else if (this.props.newUnminedMessage.type == 'Transfer') {
+        } else if (this.state.ntfns.type == 'Transfer') {
           snackbarContentStyle = styles.SnackbarContentTransfer;
         }
       }
       var newNtfns = '';
-      if (this.props.newUnminedMessage !== null) {
-        if (this.props.newUnminedMessage.type == 'Ticket' || this.props.newUnminedMessage.type == 'Send' || this.props.newUnminedMessage.type == 'Transfer' || this.props.newUnminedMessage.type == 'Receive') {
+      if (this.state.ntfns !== null) {
+        if (this.state.ntfns.type == 'Ticket' || this.state.ntfns.type == 'Send' || this.state.ntfns.type == 'Transfer' || this.state.ntfns.type == 'Receive') {
           newNtfns = (<div style={styles.SnackbarInformation}>
                         <div style={styles.SnackbarInformationRow}>
-                          <div style={styles.SnackbarInformationRowTx}>{this.props.newUnminedMessage.txHash}</div>
+                          <div style={styles.SnackbarInformationRowTx}>{this.state.ntfns.txHash}</div>
                         </div>
                         <div style={styles.SnackbarInformationRow}>
-                          <div style={styles.SnackbarInformationRowType}>{this.props.newUnminedMessage.type}</div>
-                          <div style={styles.SnackbarInformationRowAmount}>Amount  <Balance amount={this.props.newUnminedMessage.amount}/></div>
-                          <div style={styles.SnackbarInformationRowFee}>Fee  <Balance amount={this.props.newUnminedMessage.fee}/></div>
+                          <div style={styles.SnackbarInformationRowType}>{this.state.ntfns.type}</div>
+                          <div style={styles.SnackbarInformationRowAmount}>Amount  <Balance amount={this.state.ntfns.amount}/></div>
+                          <div style={styles.SnackbarInformationRowFee}>Fee  <Balance amount={this.state.ntfns.fee}/></div>
                         </div>
                       </div>);
         } else {
           newNtfns = (<div style={styles.SnackbarInformation}>
                         <div style={styles.SnackbarInformationRow}>
-                          <div style={styles.SnackbarInformationRowTx}>{this.props.newUnminedMessage.txHash}</div>
+                          <div style={styles.SnackbarInformationRowTx}>{this.state.ntfns.txHash}</div>
                         </div>
                         <div style={styles.SnackbarInformationRow}>
-                          <div style={styles.SnackbarInformationRowType}>{this.props.newUnminedMessage.type}</div>
+                          <div style={styles.SnackbarInformationRowType}>{this.state.ntfns.type}</div>
                         </div>
                       </div>);
         }

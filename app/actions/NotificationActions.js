@@ -114,7 +114,6 @@ function transactionNtfnsData(response) {
         dispatch({currentHeight: currentHeight, timeBackString: timeBackString(daysBack), type: TRANSACTIONNTFNS_SYNCING });
       }
     } else if (response.getUnminedTransactionsList().length > 0) {
-      setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
       for (var z = 0; z < response.getUnminedTransactionsList().length; z++) {
         var found = false;
         for (var y = 0; y < unmined.length; y++) {
@@ -142,12 +141,15 @@ function transactionNtfnsData(response) {
             type = 'Ticket';
           } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.VOTE) {
             type = 'Vote';
+            setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
           } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.REVOKE) {
             type = 'Revoke';
+              setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
           }
 
           if (type == 'Regular' && amount > 0) {
             type = 'Receive';
+              setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
           } else if (type == 'Regular' && amount < 0 && (fee == Math.abs(amount))) {
             type = 'Transfer';
           } else if (type == 'Regular' && amount < 0 && (fee != Math.abs(amount))) {

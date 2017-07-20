@@ -332,7 +332,9 @@ function importScriptAction(votingAddress, cb) {
             }
           }
         } else {
-          setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
+          if (!votingAddress && !cb) {
+            setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
+          }
           dispatch(importScriptSuccess(importScriptResponse, votingAddress, cb));
         }
       });
@@ -519,7 +521,7 @@ function publishTransactionError(error) {
 function publishTransactionSuccess(publishTransactionResponse) {
   return (dispatch) => {
     dispatch({ publishTransactionResponse: Buffer.from(publishTransactionResponse.getTransactionHash()), type: PUBLISHTX_SUCCESS });
-    dispatch(getAccountsAttempt());
+    setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
   };
 }
 
@@ -604,8 +606,8 @@ function purchaseTicketsSuccess(purchaseTicketsResponse) {
   return (dispatch) => {
     var success = 'You successfully purchased ' + purchaseTicketsResponse.getTicketHashesList().length + ' tickets.';
     dispatch({ success: success, purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
-    dispatch(getAccountsAttempt());
-    setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
+    setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
+    setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 4000);
   };
 }
 
