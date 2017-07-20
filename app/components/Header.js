@@ -2,6 +2,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
+import WalletGray from './icons/wallet-gray.svg';
+import TicketSmall from './icons/tickets-ticket.svg';
+import PlusBig from './icons/plus-big.svg';
+import MinusBig from './icons/minus-big.svg';
 
 function mapStateToProps(state) {
   return {
@@ -55,15 +59,44 @@ const styles = {
     fontSize: '53px',
   },
   Snackbar: {
-    width: '100%',
-    backgroundColor: 'rgb(12, 30, 62)',
-    transform: '',
-    bottom: '697px',
-    left: '298px',
+    position: 'absolute',
+    left: '61%',
   },
-  SnackbarContent: {
-    backgroundColor: 'rgb(12, 30, 62)',
-    maxWidth: '100%',
+  SnackbarContentSend: {
+    height: '110px',
+    padding: '0px 50px',
+    backgroundColor: 'rgba(12, 30, 62, 0.5)',
+    backgroundImage: `url(${MinusBig})`,
+    backgroundPosition: '15px 50%',
+    backgroundSize: '20px',
+    backgroundRepeat: 'no-repeat',
+  },
+  SnackbarContentReceive: {
+    height: '110px',
+    padding: '0px 50px',
+    backgroundColor: 'rgba(12, 30, 62, 0.5)',
+    backgroundImage: `url(${PlusBig})`,
+    backgroundPosition: '15px 50%',
+    backgroundSize: '20px',
+    backgroundRepeat: 'no-repeat',
+  },
+  SnackbarContentStake: {
+    height: '110px',
+    padding: '0px 50px',
+    backgroundColor: 'rgba(12, 30, 62, 0.5)',
+    backgroundImage: `url(${TicketSmall})`,
+    backgroundPosition: '15px 50%',
+    backgroundSize: '20px',
+    backgroundRepeat: 'no-repeat',
+  },
+  SnackbarContentTransfer: {
+    height: '110px',
+    padding: '0px 50px',
+    backgroundColor: 'rgba(12, 30, 62, 0.5)',
+    backgroundImage: `url(${WalletGray})`,
+    backgroundPosition: '15px 50%',
+    backgroundSize: '20px',
+    backgroundRepeat: 'no-repeat',
   }
 };
 class Header extends React.Component {
@@ -105,8 +138,8 @@ class Header extends React.Component {
             style={styles.Snackbar}
             open={this.state.open}
             message={this.props.newUnminedMessage !== null ? this.props.newUnminedMessage : ''}
-            autoHideDuration={4000}
-            bodyStyle={styles.SnackbarContent}
+            autoHideDuration={5000}
+            bodyStyle={styles.SnackbarContentTransfer}
             onRequestClose={(reason) => {
               if (reason != 'clickaway')
                 this.handleRequestClose();
