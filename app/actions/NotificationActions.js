@@ -123,15 +123,15 @@ function transactionNtfnsData(response) {
             break;
           }
         }
-        if (!found) { 
+        if (!found) {
           var type = 'Regular';
           var fee = response.getUnminedTransactionsList()[z].getFee();
           var inputAmts = 0;
           var outputAmts = 0;
-          for (var i = 0; i < response.getUnminedTransactionsList()[z].getDebitsList().length; i++) {
+          for (i = 0; i < response.getUnminedTransactionsList()[z].getDebitsList().length; i++) {
             inputAmts += response.getUnminedTransactionsList()[z].getDebitsList()[i].getPreviousAmount();
           }
-          for (var i = 0; i < response.getUnminedTransactionsList()[z].getCreditsList().length; i++) {
+          for (i = 0; i < response.getUnminedTransactionsList()[z].getCreditsList().length; i++) {
             outputAmts += response.getUnminedTransactionsList()[z].getCreditsList()[i].getAmount();
           }
           var amount = outputAmts - inputAmts;
@@ -144,23 +144,21 @@ function transactionNtfnsData(response) {
             type = 'Vote';
           } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.REVOKE) {
             type = 'Revoke';
-          }            
-          
+          }
+
           if (type == 'Regular' && amount > 0) {
             type = 'Receive';
           } else if (type == 'Regular' && amount < 0 && (fee == Math.abs(amount))) {
             type = 'Transfer';
           } else if (type == 'Regular' && amount < 0 && (fee != Math.abs(amount))) {
-            console.log(fee, amount);
             type = 'Send';
           }
-
           var message = {
             txHash: reverseHash(Buffer.from(response.getUnminedTransactionsList()[z].getHash()).toString('hex')),
-            type: type, 
+            type: type,
             amount: amount,
             fee: fee,
-          }
+          };
           dispatch({unmined: response.getUnminedTransactionsList()[z], unminedMessage: message, type: TRANSACTIONNTFNS_DATA_UNMINED });
         }
       }

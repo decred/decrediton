@@ -100,7 +100,7 @@ const styles = {
     backgroundSize: '20px',
     backgroundRepeat: 'no-repeat',
   },
-  SnackbarInformation: {    
+  SnackbarInformation: {
     fontFamily: 'Source Sans Pro, sans-serif',
     width: '100%',
   },
@@ -163,20 +163,20 @@ class Header extends React.Component {
       );
     } else {
       var snackbarContentStyle;
-      if (this.props.newUnminedMessage !== null) { 
+      if (this.props.newUnminedMessage !== null) {
         if (this.props.newUnminedMessage.type == 'Ticket' || this.props.newUnminedMessage.type == 'Vote' || this.props.newUnminedMessage.type == 'Revoke') {
-          snackbarContentStyle = styles.SnackbarContentStake
+          snackbarContentStyle = styles.SnackbarContentStake;
         } else if (this.props.newUnminedMessage.type == 'Receive') {
-          snackbarContentStyle = styles.SnackbarContentReceive
+          snackbarContentStyle = styles.SnackbarContentReceive;
         } else if (this.props.newUnminedMessage.type == 'Send') {
-          snackbarContentStyle = styles.SnackbarContentSend
+          snackbarContentStyle = styles.SnackbarContentSend;
         } else if (this.props.newUnminedMessage.type == 'Transfer') {
-          snackbarContentStyle = styles.SnackbarContentTransfer
+          snackbarContentStyle = styles.SnackbarContentTransfer;
         }
       }
       var newNtfns = '';
       if (this.props.newUnminedMessage !== null) {
-        if (this.props.newUnminedMessage.type == 'Ticket' || this.props.newUnminedMessage.type == 'Send' || this.props.newUnminedMessage.type == 'Transfer' || this.props.newUnminedMessage.type == 'Receive') { 
+        if (this.props.newUnminedMessage.type == 'Ticket' || this.props.newUnminedMessage.type == 'Send' || this.props.newUnminedMessage.type == 'Transfer' || this.props.newUnminedMessage.type == 'Receive') {
           newNtfns = (<div style={styles.SnackbarInformation}>
                         <div style={styles.SnackbarInformationRow}>
                           <div style={styles.SnackbarInformationRowTx}>{this.props.newUnminedMessage.txHash}</div>
@@ -185,13 +185,13 @@ class Header extends React.Component {
                           <div style={styles.SnackbarInformationRowType}>{this.props.newUnminedMessage.type}</div>
                           <div style={styles.SnackbarInformationRowAmount}>Amount  <Balance amount={this.props.newUnminedMessage.amount}/></div>
                           <div style={styles.SnackbarInformationRowFee}>Fee  <Balance amount={this.props.newUnminedMessage.fee}/></div>
-                        </div> 
+                        </div>
                       </div>);
         } else {
           newNtfns = (<div style={styles.SnackbarInformation}>
                         <div style={styles.SnackbarInformationRow}>
                           <div style={styles.SnackbarInformationRowTx}>{this.props.newUnminedMessage.txHash}</div>
-                        </div> 
+                        </div>
                         <div style={styles.SnackbarInformationRow}>
                           <div style={styles.SnackbarInformationRowType}>{this.props.newUnminedMessage.type}</div>
                         </div>
