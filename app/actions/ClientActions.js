@@ -154,7 +154,7 @@ export function getAccountNumberAttempt(accountName) {
   var request = new AccountNumberRequest();
   request.setAccountName(accountName);
   return (dispatch, getState) => {
-    dispatch({ request: request, type: GETACCOUNTNUMBER_ATTEMPT });
+    dispatch({ type: GETACCOUNTNUMBER_ATTEMPT });
     const { walletService } = getState().grpc;
     walletService.accountNumber(request,
       function (err, getAccountNumberResponse) {
@@ -192,10 +192,7 @@ function getNetworkSuccess(getNetworkResponse) {
 export function getNetworkAttempt() {
   var request = new NetworkRequest();
   return (dispatch, getState) => {
-    dispatch({
-      request: request,
-      type: GETNETWORK_ATTEMPT
-    });
+    dispatch({ type: GETNETWORK_ATTEMPT });
     const { walletService } = getState().grpc;
     walletService.network(request,
       function (err, getNetworkResponse) {
@@ -235,10 +232,7 @@ export const GETSTAKEINFO_SUCCESS = 'GETSTAKEINFO_SUCCESS';
 export function getStakeInfoAttempt() {
   var request = new StakeInfoRequest();
   return (dispatch, getState) => {
-    dispatch({
-      request: request,
-      type: GETSTAKEINFO_ATTEMPT
-    });
+    dispatch({ type: GETSTAKEINFO_ATTEMPT });
     const { walletService } = getState().grpc;
     walletService.stakeInfo(request,
       function (err, getStakeInfoResponse) {
@@ -258,10 +252,7 @@ export const GETTICKETPRICE_SUCCESS = 'GETTICKETPRICE_SUCCESS';
 export function getTicketPriceAttempt() {
   var request = new TicketPriceRequest();
   return (dispatch, getState) => {
-    dispatch({
-      request: request,
-      type: GETTICKETPRICE_ATTEMPT
-    });
+    dispatch({ type: GETTICKETPRICE_ATTEMPT });
     const { walletService } = getState().grpc;
     walletService.ticketPrice(request,
       function (err, getTicketPriceResponse) {
@@ -281,10 +272,7 @@ export const GETACCOUNTS_SUCCESS = 'GETACCOUNTS_SUCCESS';
 export function getAccountsAttempt() {
   var request = new AccountsRequest();
   return (dispatch, getState) => {
-    dispatch({
-      request: request,
-      type: GETACCOUNTS_ATTEMPT
-    });
+    dispatch({ type: GETACCOUNTS_ATTEMPT });
     const { walletService } = getState().grpc;
     walletService.accounts(request,
       function (err, getAccountsResponse) {
@@ -545,15 +533,6 @@ export function getVoteChoicesAttempt(stakePool) {
 export const SETVOTECHOICES_ATTEMPT = 'SETVOTECHOICES_ATTEMPT';
 export const SETVOTECHOICES_FAILED = 'SETVOTECHOICES_FAILED';
 export const SETVOTECHOICES_SUCCESS = 'SETVOTECHOICES_SUCCESS';
-
-function setVoteChoicesError(error) {
-  return { error, type: SETVOTECHOICES_FAILED };
-}
-
-function setVoteChoicesSuccess(stakePool, response) {
-  return (dispatch) => {
-  };
-}
 
 export function setVoteChoicesAttempt(stakePool, agendaId, choiceId) {
   return (dispatch, getState) => {

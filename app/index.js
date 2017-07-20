@@ -97,38 +97,31 @@ var initialState = {
     getWalletServiceRequestAttempt: false,
     getWalletServiceError: '',
     // Balance
-    getBalanceRequest: null,
     getBalanceError: null,
     getBalanceRequestAttempt: false,
     balances: Array(),
     // AccountNumber
-    getAccountNumberRequest: null,
     getAccountNumberError: null,
     getAccountNumberRequestAttempt: false,
     getAccountNumberResponse: null,
     // Network
-    getNetworkRequest: null,
     getNetworkError: null,
     getNetworkRequestAttempt: false,
     getNetworkResponse: null,
     // Ping
-    getPingRequest: null,
     getPingError: null,
     getPingRequestAttempt: false,
     getPingResponse: null,
     // StakeInfo
-    getStakeInfoRequest: null,
     getStakeInfoError: null,
     getStakeInfoRequestAttempt: false,
     getStakeInfoResponse: null,
     // TicketPrice
-    getTicketPriceRequest: null,
     getTicketPriceError: null,
     getTicketPriceRequestAttempt: false,
     getTicketPriceResponse: null,
     // Accounts
     hiddenAccounts: hiddenAccounts,
-    getAccountsRequest: null,
     getAccountsError: null,
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
