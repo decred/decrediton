@@ -17,10 +17,6 @@ export const GETWALLETSERVICE_ATTEMPT = 'GETWALLETSERVICE_ATTEMPT';
 export const GETWALLETSERVICE_FAILED = 'GETWALLETSERVICE_FAILED';
 export const GETWALLETSERVICE_SUCCESS = 'GETWALLETSERVICE_SUCCESS';
 
-function getWalletServiceError(error) {
-  return { error, type: GETWALLETSERVICE_FAILED };
-}
-
 function getWalletServiceSuccess(walletService) {
   return (dispatch, getState) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
@@ -50,18 +46,12 @@ function getWalletServiceSuccess(walletService) {
 }
 
 export function getWalletServiceAttempt() {
-  return (dispatch) => {
-    dispatch({ type: GETWALLETSERVICE_ATTEMPT });
-    dispatch(getWalletServiceAction());
-  };
-}
-
-function getWalletServiceAction() {
   return (dispatch, getState) => {
+    dispatch({ type: GETWALLETSERVICE_ATTEMPT });
     const { address, port } = getState().grpc;
     getWalletService(address, port, function (walletService, err) {
       if (err) {
-        dispatch(getWalletServiceError(err + ' Please try again'));
+        dispatch({error: err + ' Please try again', type: GETWALLETSERVICE_FAILED });
       } else {
         dispatch(getWalletServiceSuccess(walletService));
       }
@@ -73,32 +63,16 @@ export const GETTICKETBUYERSERVICE_ATTEMPT = 'GETTICKETBUYERSERVICE_ATTEMPT';
 export const GETTICKETBUYERSERVICE_FAILED = 'GETTICKETBUYERSERVICE_FAILED';
 export const GETTICKETBUYERSERVICE_SUCCESS = 'GETTICKETBUYERSERVICE_SUCCESS';
 
-function getTicketBuyerServiceError(error) {
-  return { error, type: GETTICKETBUYERSERVICE_FAILED };
-}
-
-function getTicketBuyerServiceSuccess(ticketBuyerService) {
-  return (dispatch) => {
-    dispatch({ ticketBuyerService, type: GETTICKETBUYERSERVICE_SUCCESS });
-    setTimeout(() => { dispatch(getTicketBuyerConfigAttempt()); }, 10);
-  };
-}
-
 export function getTicketBuyerServiceAttempt() {
-  return (dispatch) => {
-    dispatch({ type: GETTICKETBUYERSERVICE_ATTEMPT });
-    dispatch(getTicketBuyerServiceAction());
-  };
-}
-
-function getTicketBuyerServiceAction() {
   return (dispatch, getState) => {
+    dispatch({ type: GETTICKETBUYERSERVICE_ATTEMPT });
     const { address, port } = getState().grpc;
     getTicketBuyerService(address, port, function (ticketBuyerService, err) {
       if (err) {
-        dispatch(getTicketBuyerServiceError(err + ' Please try again'));
+        dispatch({ error: err + ' Please try again', type: GETTICKETBUYERSERVICE_FAILED });
       } else {
-        dispatch(getTicketBuyerServiceSuccess(ticketBuyerService));
+        dispatch({ ticketBuyerService, type: GETTICKETBUYERSERVICE_SUCCESS });
+        setTimeout(() => { dispatch(getTicketBuyerConfigAttempt()); }, 10);
       }
     });
   };
@@ -107,10 +81,6 @@ function getTicketBuyerServiceAction() {
 export const GETBALANCE_ATTEMPT = 'GETBALANCE_ATTEMPT';
 export const GETBALANCE_FAILED = 'GETBALANCE_FAILED';
 export const GETBALANCE_SUCCESS = 'GETBALANCE_SUCCESS';
-
-function getBalanceError(error) {
-  return { error, type: GETBALANCE_FAILED };
-}
 
 function getBalanceSuccess(account, getBalanceResponse) {
   return (dispatch, getState) => {
@@ -160,21 +130,15 @@ function getBalanceSuccess(account, getBalanceResponse) {
 }
 
 export function getBalanceAttempt(account, requiredConfs) {
-  return (dispatch) => {
-    dispatch(getBalanceAction(account, requiredConfs));
-  };
-}
-
-function getBalanceAction(account, requiredConfs) {
-  var request = new BalanceRequest();
-  request.setAccountNumber(account.getAccountNumber());
-  request.setRequiredConfirmations(requiredConfs);
   return (dispatch, getState) => {
+    var request = new BalanceRequest();
+    request.setAccountNumber(account.getAccountNumber());
+    request.setRequiredConfirmations(requiredConfs);
     const { walletService } = getState().grpc;
     walletService.balance(request,
       function (err, getBalanceResponse) {
         if (err) {
-          dispatch(getBalanceError(err + ' please try again'));
+          dispatch({ error: err + ' please try again', type: GETBALANCE_FAILED });
         } else {
           dispatch(getBalanceSuccess(account, getBalanceResponse));
         }
@@ -186,36 +150,18 @@ export const GETACCOUNTNUMBER_ATTEMPT = 'GETACCOUNTNUMBER_ATTEMPT';
 export const GETACCOUNTNUMBER_FAILED = 'GETACCOUNTNUMBER_FAILED';
 export const GETACCOUNTNUMBER_SUCCESS = 'GETACCOUNTNUMBER_SUCCESS';
 
-function getAccountNumberError(error) {
-  return { error, type: GETACCOUNTNUMBER_FAILED };
-}
-
-function getAccountNumberSuccess(getAccountNumberResponse) {
-  return { getAccountNumberResponse: getAccountNumberResponse, type: GETACCOUNTNUMBER_SUCCESS };
-}
-
 export function getAccountNumberAttempt(accountName) {
   var request = new AccountNumberRequest();
   request.setAccountName(accountName);
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: GETACCOUNTNUMBER_ATTEMPT
-    });
-    dispatch(accountNumber());
-  };
-}
-
-function accountNumber() {
   return (dispatch, getState) => {
+    dispatch({ request: request, type: GETACCOUNTNUMBER_ATTEMPT });
     const { walletService } = getState().grpc;
-    const { getAccountNumberRequest } = getState().grpc;
-    walletService.accountNumber(getAccountNumberRequest,
+    walletService.accountNumber(request,
       function (err, getAccountNumberResponse) {
         if (err) {
-          dispatch(getAccountNumberError(err + ' Please try again'));
+          dispatch({ error: err + ' Please try again', type: GETACCOUNTNUMBER_FAILED });
         } else {
-          dispatch(getAccountNumberSuccess(getAccountNumberResponse));
+          dispatch({ getAccountNumberResponse: getAccountNumberResponse, type: GETACCOUNTNUMBER_SUCCESS });
         }
       });
   };
@@ -224,13 +170,6 @@ function accountNumber() {
 export const GETNETWORK_ATTEMPT = 'GETNETWORK_ATTEMPT';
 export const GETNETWORK_FAILED = 'GETNETWORK_FAILED';
 export const GETNETWORK_SUCCESS = 'GETNETWORK_SUCCESS';
-
-function getNetworkError(error) {
-  return (dispatch) => {
-    dispatch({ error, type: GETNETWORK_FAILED });
-    setTimeout(() => { hashHistory.push('/walletError'); }, 1000);
-  };
-}
 
 function getNetworkSuccess(getNetworkResponse) {
   return (dispatch, getState) => {
@@ -244,30 +183,25 @@ function getNetworkSuccess(getNetworkResponse) {
       getNetworkResponse.networkStr = networkStr;
       dispatch({ getNetworkResponse: getNetworkResponse, type: GETNETWORK_SUCCESS });
     } else {
-      dispatch(getNetworkError('Invalid network detected'));
+      dispatch({ error: 'Invalid network detected', type: GETNETWORK_FAILED });
+      setTimeout(() => { hashHistory.push('/walletError'); }, 1000);
     }
   };
 }
 
 export function getNetworkAttempt() {
   var request = new NetworkRequest();
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({
       request: request,
       type: GETNETWORK_ATTEMPT
     });
-    dispatch(network());
-  };
-}
-
-function network() {
-  return (dispatch, getState) => {
     const { walletService } = getState().grpc;
-    const { getNetworkRequest } = getState().grpc;
-    walletService.network(getNetworkRequest,
+    walletService.network(request,
       function (err, getNetworkResponse) {
         if (err) {
-          dispatch(getNetworkError(err + ' Please try again'));
+          dispatch({ error: err + ' Please try again', type: GETNETWORK_FAILED });
+          setTimeout(() => { hashHistory.push('/walletError'); }, 1000);
         } else {
           dispatch(getNetworkSuccess(getNetworkResponse));
         }
@@ -279,34 +213,16 @@ export const GETPING_ATTEMPT = 'GETPING_ATTEMPT';
 export const GETPING_FAILED = 'GETPING_FAILED';
 export const GETPING_SUCCESS = 'GETPING_SUCCESS';
 
-function getPingError(error) {
-  return (dispatch) => {
-    dispatch({ error, type: GETPING_FAILED });
-    setTimeout(() => { hashHistory.push('/walletError'); }, 1000);
-  };
-}
-
-function getPingSuccess() {
-  return (dispatch) => {
-    setTimeout(() => { dispatch(getPingAttempt()); }, 10000);
-  };
-}
-
 export function getPingAttempt() {
-  return (dispatch) => {
-    dispatch(ping());
-  };
-}
-
-function ping() {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     walletService.ping(new PingRequest(),
-      function (err, getPingResponse) {
+      function (err) {
         if (err) {
-          dispatch(getPingError(err + ' Please try again'));
+          dispatch({ error: err + ' Please try again', type: GETPING_FAILED });
+          setTimeout(() => { hashHistory.push('/walletError'); }, 1000);
         } else {
-          dispatch(getPingSuccess(getPingResponse));
+          setTimeout(() => { dispatch(getPingAttempt()); }, 10000);
         }
       });
   };
@@ -316,35 +232,20 @@ export const GETSTAKEINFO_ATTEMPT = 'GETSTAKEINFO_ATTEMPT';
 export const GETSTAKEINFO_FAILED = 'GETSTAKEINFO_FAILED';
 export const GETSTAKEINFO_SUCCESS = 'GETSTAKEINFO_SUCCESS';
 
-function getStakeInfoError(error) {
-  return { error, type: GETSTAKEINFO_FAILED };
-}
-
-function getStakeInfoSuccess(getStakeInfoResponse) {
-  return { getStakeInfoResponse: getStakeInfoResponse, type: GETSTAKEINFO_SUCCESS };
-}
-
 export function getStakeInfoAttempt() {
   var request = new StakeInfoRequest();
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({
       request: request,
       type: GETSTAKEINFO_ATTEMPT
     });
-    dispatch(stakeInfo());
-  };
-}
-
-function stakeInfo() {
-  return (dispatch, getState) => {
     const { walletService } = getState().grpc;
-    const { getStakeInfoRequest } = getState().grpc;
-    walletService.stakeInfo(getStakeInfoRequest,
+    walletService.stakeInfo(request,
       function (err, getStakeInfoResponse) {
         if (err) {
-          dispatch(getStakeInfoError(err + ' Please try again'));
+          dispatch({ error: err + ' Please try again', type: GETSTAKEINFO_FAILED });
         } else {
-          dispatch(getStakeInfoSuccess(getStakeInfoResponse));
+          dispatch({ getStakeInfoResponse: getStakeInfoResponse, type: GETSTAKEINFO_SUCCESS });
         }
       });
   };
@@ -354,35 +255,20 @@ export const GETTICKETPRICE_ATTEMPT = 'GETTICKETPRICE_ATTEMPT';
 export const GETTICKETPRICE_FAILED = 'GETTICKETPRICE_FAILED';
 export const GETTICKETPRICE_SUCCESS = 'GETTICKETPRICE_SUCCESS';
 
-function getTicketPriceError(error) {
-  return { error, type: GETTICKETPRICE_FAILED };
-}
-
-function getTicketPriceSuccess(getTicketPriceResponse) {
-  return { getTicketPriceResponse: getTicketPriceResponse, type: GETTICKETPRICE_SUCCESS };
-}
-
 export function getTicketPriceAttempt() {
   var request = new TicketPriceRequest();
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({
       request: request,
       type: GETTICKETPRICE_ATTEMPT
     });
-    dispatch(ticketPrice());
-  };
-}
-
-function ticketPrice() {
-  return (dispatch, getState) => {
     const { walletService } = getState().grpc;
-    const { getTicketPriceRequest } = getState().grpc;
-    walletService.ticketPrice(getTicketPriceRequest,
+    walletService.ticketPrice(request,
       function (err, getTicketPriceResponse) {
         if (err) {
-          dispatch(getTicketPriceError(err + ' Please try again'));
+          dispatch({ error: err + ' Please try again', type: GETTICKETPRICE_FAILED });
         } else {
-          dispatch(getTicketPriceSuccess(getTicketPriceResponse));
+          dispatch({ getTicketPriceResponse: getTicketPriceResponse, type: GETTICKETPRICE_SUCCESS });
         }
       });
   };
@@ -392,40 +278,23 @@ export const GETACCOUNTS_ATTEMPT = 'GETACCOUNTS_ATTEMPT';
 export const GETACCOUNTS_FAILED = 'GETACCOUNTS_FAILED';
 export const GETACCOUNTS_SUCCESS = 'GETACCOUNTS_SUCCESS';
 
-function getAccountsError(error) {
-  return { error, type: GETACCOUNTS_FAILED };
-}
-
-function getAccountsSuccess(getAccountsResponse) {
-  return (dispatch) => {
-    for (var i = 0; i < getAccountsResponse.getAccountsList().length; i++) {
-      dispatch(getBalanceAttempt(getAccountsResponse.getAccountsList()[i], 0));
-    }
-    dispatch({response: getAccountsResponse, type: GETACCOUNTS_SUCCESS });
-  };
-}
-
 export function getAccountsAttempt() {
   var request = new AccountsRequest();
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({
       request: request,
       type: GETACCOUNTS_ATTEMPT
     });
-    dispatch(accounts());
-  };
-}
-
-function accounts() {
-  var request = new AccountsRequest();
-  return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     walletService.accounts(request,
       function (err, getAccountsResponse) {
         if (err) {
-          dispatch(getAccountsError(err + ' Please try again'));
+          dispatch({ error: err + ' Please try again', type: GETACCOUNTS_FAILED });
         } else {
-          dispatch(getAccountsSuccess(getAccountsResponse));
+          for (var i = 0; i < getAccountsResponse.getAccountsList().length; i++) {
+            dispatch(getBalanceAttempt(getAccountsResponse.getAccountsList()[i], 0));
+          }
+          dispatch({response: getAccountsResponse, type: GETACCOUNTS_SUCCESS });
         }
       });
   };
@@ -596,7 +465,6 @@ export function updateBlockTimeSince() {
     }
   };
 }
-
 
 export const GETAGENDASERVICE_ATTEMPT = 'GETAGENDASERVICE_ATTEMPT';
 export const GETAGENDASERVICE_FAILED = 'GETAGENDASERVICE_FAILED';
