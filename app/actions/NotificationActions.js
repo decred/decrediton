@@ -144,12 +144,12 @@ function transactionNtfnsData(response) {
             setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
           } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.REVOKE) {
             type = 'Revoke';
-              setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
+            setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
           }
 
           if (type == 'Regular' && amount > 0) {
             type = 'Receive';
-              setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
+            setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
           } else if (type == 'Regular' && amount < 0 && (fee == Math.abs(amount))) {
             type = 'Transfer';
           } else if (type == 'Regular' && amount < 0 && (fee != Math.abs(amount))) {

@@ -139,15 +139,15 @@ class Header extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     if (this.state.ntfns == null && this.props.newUnminedMessage !== nextProps.newUnminedMessage) {
-        this.setState({
-          open: true,
-          ntfns: nextProps.newUnminedMessage
-        });
+      this.setState({
+        open: true,
+        ntfns: nextProps.newUnminedMessage
+      });
     } else if (this.props.newUnminedMessage !== nextProps.newUnminedMessage) {
-        setTimeout(()=>this.setState({
-          open: true,
-          ntfns: nextProps.newUnminedMessage
-        }), 4000);
+      setTimeout(()=>this.setState({
+        open: true,
+        ntfns: nextProps.newUnminedMessage
+      }), 4000);
     }
   }
   handleRequestClose() {
