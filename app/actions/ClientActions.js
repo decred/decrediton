@@ -470,32 +470,16 @@ export const GETAGENDASERVICE_ATTEMPT = 'GETAGENDASERVICE_ATTEMPT';
 export const GETAGENDASERVICE_FAILED = 'GETAGENDASERVICE_FAILED';
 export const GETAGENDASERVICE_SUCCESS = 'GETAGENDASERVICE_SUCCESS';
 
-function getAgendaServiceError(error) {
-  return { error, type: GETAGENDASERVICE_FAILED };
-}
-
-function getAgendaServiceSuccess(agendaService) {
-  return (dispatch) => {
-    dispatch({ agendaService, type: GETAGENDASERVICE_SUCCESS });
-    setTimeout(() => { dispatch(getAgendasAttempt()); }, 10);
-  };
-}
-
 export function getAgendaServiceAttempt() {
-  return (dispatch) => {
-    dispatch({ type: GETAGENDASERVICE_ATTEMPT });
-    dispatch(getAgendaServiceAction());
-  };
-}
-
-function getAgendaServiceAction() {
   return (dispatch, getState) => {
+    dispatch({ type: GETAGENDASERVICE_ATTEMPT });
     const { address, port } = getState().grpc;
     getAgendaService(address, port, function (agendaService, err) {
       if (err) {
-        dispatch(getAgendaServiceError(err + ' Please try again'));
+        dispatch({ error: err + ' Please try again', type: GETAGENDASERVICE_FAILED });
       } else {
-        dispatch(getAgendaServiceSuccess(agendaService));
+        dispatch({ agendaService, type: GETAGENDASERVICE_SUCCESS });
+        setTimeout(() => { dispatch(getAgendasAttempt()); }, 10);
       }
     });
   };
@@ -505,31 +489,15 @@ export const GETVOTINGSERVICE_ATTEMPT = 'GETVOTINGSERVICE_ATTEMPT';
 export const GETVOTINGSERVICE_FAILED = 'GETVOTINGSERVICE_FAILED';
 export const GETVOTINGSERVICE_SUCCESS = 'GETVOTINGSERVICE_SUCCESS';
 
-function getVotingServiceError(error) {
-  return { error, type: GETVOTINGSERVICE_FAILED };
-}
-
-function getVotingServiceSuccess(votingService) {
-  return (dispatch) => {
-    dispatch({ votingService, type: GETVOTINGSERVICE_SUCCESS });
-  };
-}
-
 export function getVotingServiceAttempt() {
-  return (dispatch) => {
-    dispatch({ type: GETVOTINGSERVICE_ATTEMPT });
-    dispatch(getVotingServiceAction());
-  };
-}
-
-function getVotingServiceAction() {
   return (dispatch, getState) => {
+    dispatch({ type: GETVOTINGSERVICE_ATTEMPT });
     const { address, port } = getState().grpc;
     getVotingService(address, port, function (votingService, err) {
       if (err) {
-        dispatch(getVotingServiceError(err + ' Please try again'));
+        dispatch({ error: err + ' Please try again', type: GETVOTINGSERVICE_FAILED });
       } else {
-        dispatch(getVotingServiceSuccess(votingService));
+        dispatch({ votingService, type: GETVOTINGSERVICE_SUCCESS });
       }
     });
   };
@@ -539,32 +507,16 @@ export const GETAGENDAS_ATTEMPT = 'GETAGENDAS_ATTEMPT';
 export const GETAGENDAS_FAILED = 'GETAGENDAS_FAILED';
 export const GETAGENDAS_SUCCESS = 'GETAGENDAS_SUCCESS';
 
-function getAgendasError(error) {
-  return { error, type: GETAGENDAS_FAILED };
-}
-
-function getAgendasSuccess(agendas) {
-  return (dispatch) => {
-    dispatch({ agendas, type: GETAGENDAS_SUCCESS });
-  };
-}
-
 export function getAgendasAttempt() {
-  return (dispatch) => {
-    dispatch({ type: GETAGENDAS_ATTEMPT });
-    dispatch(getAgendasAction());
-  };
-}
-
-function getAgendasAction() {
-  var request = new AgendasRequest();
   return (dispatch, getState) => {
+    dispatch({ type: GETAGENDAS_ATTEMPT });
+    var request = new AgendasRequest();
     const { agendaService } = getState().grpc;
     agendaService.agendas(request, function (err, agendas) {
       if (err) {
-        dispatch(getAgendasError(err + ' Please try again'));
+        dispatch({ error: err + ' Please try again', type: GETAGENDAS_FAILED });
       } else {
-        dispatch(getAgendasSuccess(agendas));
+        dispatch({ agendas, type: GETAGENDAS_SUCCESS });
       }
     });
   };
@@ -574,33 +526,17 @@ export const GETVOTECHOICES_ATTEMPT = 'GETVOTECHOICES_ATTEMPT';
 export const GETVOTECHOICES_FAILED = 'GETVOTECHOICES_FAILED';
 export const GETVOTECHOICES_SUCCESS = 'GETVOTECHOICES_SUCCESS';
 
-function getVoteChoicesError(error) {
-  return { error, type: GETVOTECHOICES_FAILED };
-}
-
-function getVoteChoicesSuccess(stakePool, voteChoices) {
-  return (dispatch) => {
-    dispatch({ voteChoices, type: GETVOTECHOICES_SUCCESS });
-    dispatch(setStakePoolVoteChoices(stakePool, voteChoices));
-  };
-}
-
 export function getVoteChoicesAttempt(stakePool) {
-  return (dispatch) => {
-    dispatch({ type: GETVOTECHOICES_ATTEMPT });
-    dispatch(getVoteChoicesAction(stakePool));
-  };
-}
-
-function getVoteChoicesAction(stakePool) {
-  var request = new VoteChoicesRequest();
   return (dispatch, getState) => {
+    dispatch({ type: GETVOTECHOICES_ATTEMPT });
+    var request = new VoteChoicesRequest();
     const { votingService } = getState().grpc;
     votingService.voteChoices(request, function (err, voteChoices) {
       if (err) {
-        dispatch(getVoteChoicesError(err + ' Please try again'));
+        dispatch({ error: err + ' Please try again', type: GETVOTECHOICES_FAILED });
       } else {
-        dispatch(getVoteChoicesSuccess(stakePool, voteChoices));
+        dispatch({ voteChoices, type: GETVOTECHOICES_SUCCESS });
+        dispatch(setStakePoolVoteChoices(stakePool, voteChoices));
       }
     });
   };
@@ -616,33 +552,24 @@ function setVoteChoicesError(error) {
 
 function setVoteChoicesSuccess(stakePool, response) {
   return (dispatch) => {
-    dispatch({ response, type: SETVOTECHOICES_SUCCESS });
-    dispatch(getVoteChoicesAttempt(stakePool));
   };
 }
 
 export function setVoteChoicesAttempt(stakePool, agendaId, choiceId) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     var request = new SetVoteChoicesRequest();
     var choice = new SetVoteChoicesRequest.Choice();
     choice.setChoiceId(choiceId);
     choice.setAgendaId(agendaId);
     request.addChoices(choice);
     dispatch({ setVoteChoicesRequest: request, type: SETVOTECHOICES_ATTEMPT });
-    dispatch(setVoteChoicesAction(stakePool));
-  };
-}
-
-function setVoteChoicesAction(stakePool) {
-
-  return (dispatch, getState) => {
     const { votingService } = getState().grpc;
-    const { setVoteChoicesRequest } = getState().grpc;
-    votingService.setVoteChoices(setVoteChoicesRequest, function (err, response) {
+    votingService.setVoteChoices(request, function (err, response) {
       if (err) {
-        dispatch(setVoteChoicesError(err + ' Please try again'));
+        dispatch({ error: err + ' Please try again', type: SETVOTECHOICES_FAILED });
       } else {
-        dispatch(setVoteChoicesSuccess(stakePool, response));
+        dispatch({ response, type: SETVOTECHOICES_SUCCESS });
+        dispatch(getVoteChoicesAttempt(stakePool));
       }
     });
   };
