@@ -114,7 +114,6 @@ function transactionNtfnsData(response) {
         dispatch({currentHeight: currentHeight, timeBackString: timeBackString(daysBack), type: TRANSACTIONNTFNS_SYNCING });
       }
     } else if (response.getUnminedTransactionsList().length > 0) {
-      setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
       for (var z = 0; z < response.getUnminedTransactionsList().length; z++) {
         var found = false;
         for (var y = 0; y < unmined.length; y++) {
@@ -124,7 +123,44 @@ function transactionNtfnsData(response) {
           }
         }
         if (!found) {
-          var message = 'New transaction! ' + reverseHash(Buffer.from(response.getUnminedTransactionsList()[z].getHash()).toString('hex'));
+          var type = 'Regular';
+          var fee = response.getUnminedTransactionsList()[z].getFee();
+          var inputAmts = 0;
+          var outputAmts = 0;
+          for (i = 0; i < response.getUnminedTransactionsList()[z].getDebitsList().length; i++) {
+            inputAmts += response.getUnminedTransactionsList()[z].getDebitsList()[i].getPreviousAmount();
+          }
+          for (i = 0; i < response.getUnminedTransactionsList()[z].getCreditsList().length; i++) {
+            outputAmts += response.getUnminedTransactionsList()[z].getCreditsList()[i].getAmount();
+          }
+          var amount = outputAmts - inputAmts;
+          if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.COINBASE) {
+            type = 'Coinbase';
+          } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.TICKET_PURCHASE) {
+            amount = outputAmts;
+            type = 'Ticket';
+          } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.VOTE) {
+            type = 'Vote';
+            setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
+          } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.REVOKE) {
+            type = 'Revoke';
+            setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
+          }
+
+          if (type == 'Regular' && amount > 0) {
+            type = 'Receive';
+            setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
+          } else if (type == 'Regular' && amount < 0 && (fee == Math.abs(amount))) {
+            type = 'Transfer';
+          } else if (type == 'Regular' && amount < 0 && (fee != Math.abs(amount))) {
+            type = 'Send';
+          }
+          var message = {
+            txHash: reverseHash(Buffer.from(response.getUnminedTransactionsList()[z].getHash()).toString('hex')),
+            type: type,
+            amount: amount,
+            fee: fee,
+          };
           dispatch({unmined: response.getUnminedTransactionsList()[z], unminedMessage: message, type: TRANSACTIONNTFNS_DATA_UNMINED });
         }
       }
