@@ -76,7 +76,6 @@ var initialState = {
     getVersionServiceRequestAttempt: false,
     getVersionServiceError: '',
     // Balance
-    getWalletRPCVersionRequest: null,
     getWalletRPCVersionError: null,
     getWalletRPCVersionRequestAttempt: false,
     getWalletRPCVersionResponse: null,
@@ -156,66 +155,54 @@ var initialState = {
     stepIndex: 0,
     // Loader
     getLoaderRequestAttempt: false,
-    getLoaderRequest: null,
     loader: null,
     getLoaderError: null,
     // WalletCreate
     createWalletExisting: false,
     confirmNewSeed: false,
     walletCreateRequestAttempt: false,
-    walletCreateRequest: false,
     walletCreateResponse: null,
     walletCreateError: null,
     walletCreateExisting: false,
     // WalletExist
     walletExistRequestAttempt: false,
-    walletExistRequest: null,
     walletExistResponse: null,
     walletExistError: null,
     // WalletOpen
     walletOpenRequestAttempt: false,
-    walletOpenRequest: null,
     walletOpenResponse: null,
     walletOpenError: null,
     // WalletClose
     walletCloseRequestAttempt: false,
-    walletClosedRequest: null,
     walletClosedResponse: null,
     walletClosedError: null,
     // StartRpc
     startRpcRequestAttempt: false,
-    startRpcRequest: null,
     startRpcResponse: null,
     startRpcError: null,
     // DiscoverAddress
     discoverAddressRequestAttempt: false,
-    discoverAddressRequest: null,
     discoverAddressResponse: null,
     discoverAddressError: null,
     // SubscribeBlockNtfns
     subscribeBlockNtfnsRequestAttempt: false,
-    subscribeBlockNtfnsRequest: null,
     subscribeBlockNtfnsResponse: null,
     subscribeBlockNtfnsError: null,
     // FetchHeaders
     fetchHeadersRequestAttempt: false,
-    fetchHeadersRequest: null,
     fetchHeadersResponse: null,
     fetchHeadersError: null,
   },
   seedService: {
     getSeederRequestAttempt: false,
-    getSeederRequest: null,
     seeder: null,
     getSeederError: null,
 
     generateRandomSeedRequestAttempt: false,
-    generateRandomSeedRequest: null,
     generateRandomSeedResponse: null,
     generateRandomSeedError: null,
 
     decodeSeedRequestAttempt: false,
-    decodeSeedRequest: null,
     decodeSeedResponse: null,
     decodeSeedError: null,
   },
@@ -225,14 +212,12 @@ var initialState = {
     timeBackString: '',
     blocksPerDay: blocksPerDay,
     transactionNtfnsRequestAttempt: false,
-    transactionNtfnsRequest: null,
     transactionNtfnsResponse: null,
 
     unmined: Array(),
     newUnminedMessage: null,
 
     accountNtfnsRequestAttempt: false,
-    accountNtfnsRequest: null,
     accountNtfnsResponse: null,
   },
   control: {

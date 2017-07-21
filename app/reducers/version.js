@@ -26,13 +26,11 @@ export default function version(state = {}, action) {
     return {...state,
       getWalletRPCVersionError: null,
       getWalletRPCVersionRequestAttempt: true,
-      getWalletRPCVersionRequest: action.request,
     };
   case WALLETRPCVERSION_FAILED:
     return {...state,
       getWalletRPCVersionError: action.error,
       getWalletRPCVersionRequestAttempt: false,
-      getWalletRPCVersionRequest: null,
     };
   case WALLETRPCVERSION_SUCCESS:
     return {...state,

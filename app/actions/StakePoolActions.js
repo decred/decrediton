@@ -166,7 +166,6 @@ export function setStakePoolVoteChoices(stakePool, voteChoices) {
       voteChoices.getVotebits(),
       function(response, err) {
         if (err) {
-          console.error(err);
           dispatch({ error: err, type: SETSTAKEPOOLVOTECHOICES_FAILED });
         } else if (response.data.status == 'success') {
           dispatch(updateStakePoolVoteChoicesConfig(stakePool, voteChoices));
