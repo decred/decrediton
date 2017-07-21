@@ -10,9 +10,9 @@ export function getVersionServiceAttempt() {
   return (dispatch, getState) => {
     dispatch({ type: GETVERSIONSERVICE_ATTEMPT });
     const { address, port } = getState().grpc;
-    getVersionService(address, port, function(versionService, err) {
-      if (err) {
-        dispatch({ error: err, type: GETVERSIONSERVICE_FAILED });
+    getVersionService(address, port, function(versionService, error) {
+      if (error) {
+        dispatch({ error, type: GETVERSIONSERVICE_FAILED });
       } else {
         dispatch({ versionService, type: GETVERSIONSERVICE_SUCCESS });
         dispatch(getWalletRPCVersionAttempt());
@@ -32,9 +32,9 @@ export function getWalletRPCVersionAttempt() {
     dispatch({ type: WALLETRPCVERSION_ATTEMPT });
     const { versionService } = getState().version;
     versionService.version(request,
-        function(err, getWalletRPCVersionResponse) {
-          if (err) {
-            dispatch({ error: err, type: WALLETRPCVERSION_FAILED });
+        function(error, getWalletRPCVersionResponse) {
+          if (error) {
+            dispatch({ error, type: WALLETRPCVERSION_FAILED });
           } else {
             dispatch( { getWalletRPCVersionResponse: getWalletRPCVersionResponse, type: WALLETRPCVERSION_SUCCESS });
             const { requiredVersion } = getState().version;

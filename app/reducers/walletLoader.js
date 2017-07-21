@@ -17,7 +17,7 @@ export default function walletLoader(state = {}, action) {
     };
   case LOADER_FAILED:
     return {...state,
-      getLoaderError: action.error,
+      getLoaderError: String(action.error),
       getLoaderRequestAttempt: false,
       loader: null,
     };
@@ -34,7 +34,7 @@ export default function walletLoader(state = {}, action) {
     };
   case WALLETEXIST_FAILED:
     return {...state,
-      walletExistError: action.error,
+      walletExistError: String(action.error),
       walletExistRequestAttempt: false,
       walletExistsResponse: null,
     };
@@ -68,7 +68,7 @@ export default function walletLoader(state = {}, action) {
     };
   case CREATEWALLET_FAILED:
     return {...state,
-      walletCreateError: action.error,
+      walletCreateError: String(action.error),
       walletCreateRequestAttempt: false,
     };
   case CREATEWALLET_SUCCESS:
@@ -84,7 +84,7 @@ export default function walletLoader(state = {}, action) {
     };
   case OPENWALLET_FAILED:
     return {...state,
-      walletOpenError: action.error,
+      walletOpenError: String(action.error),
       walletOpenRequestAttempt: false,
     };
   case OPENWALLET_SUCCESS:
@@ -100,7 +100,7 @@ export default function walletLoader(state = {}, action) {
     };
   case CLOSEWALLET_FAILED:
     return {...state,
-      walletCloseError: action.error,
+      walletCloseError: String(action.error),
       walletCloseRequestAttempt: false,
     };
   case CLOSEWALLET_SUCCESS:
@@ -120,7 +120,7 @@ export default function walletLoader(state = {}, action) {
     };
   case STARTRPC_FAILED:
     return {...state,
-      startRpcError: action.error,
+      startRpcError: String(action.error),
       startRpcRequestAttempt: false,
       rpcRetryAttempts: 0,
     };
@@ -137,7 +137,7 @@ export default function walletLoader(state = {}, action) {
     };
   case DISCOVERADDRESS_FAILED:
     return {...state,
-      discoverAddressError: action.error,
+      discoverAddressError: String(action.error),
       discoverAddressRequestAttempt: false,
     };
   case DISCOVERADDRESS_SUCCESS:
@@ -153,7 +153,7 @@ export default function walletLoader(state = {}, action) {
     };
   case FETCHHEADERS_FAILED:
     return {...state,
-      fetchHeadersError: action.error,
+      fetchHeadersError: String(action.error),
       fetchHeadersRequestAttempt: false,
     };
   case FETCHHEADERS_PROGRESS:
@@ -173,7 +173,7 @@ export default function walletLoader(state = {}, action) {
     };
   case SUBSCRIBEBLOCKNTFNS_FAILED:
     return {...state,
-      subscribeBlockNtfnsError: action.error,
+      subscribeBlockNtfnsError: String(action.error),
       subscribeBlockNtfnsRequestAttempt: false,
     };
   case SUBSCRIBEBLOCKNTFNS_SUCCESS:

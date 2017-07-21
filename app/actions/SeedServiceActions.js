@@ -10,9 +10,9 @@ export function getSeederAttempt() {
     const { address, port } = getState().walletLoader;
     dispatch({ type: SEEDER_ATTEMPT });
     var request = { address: address, port: port };
-    seeder(request, function(seeder, err) {
-      if (err) {
-        dispatch({ error: err, type: SEEDER_FAILED });
+    seeder(request, function(seeder, error) {
+      if (error) {
+        dispatch({ error, type: SEEDER_FAILED });
       } else {
         dispatch({seeder: seeder, type: SEEDER_SUCCESS });
       }
@@ -37,9 +37,9 @@ export function generateRandomSeedAttempt() {
     dispatch({request: {}, type: GENERATERANDOMSEED_ATTEMPT });
     const { seeder } = getState().seedService;
     seeder.generateRandomSeed(request,
-      function(err, response) {
-        if (err) {
-          dispatch({ error: err, type: GENERATERANDOMSEED_FAILED });
+      function(error, response) {
+        if (error) {
+          dispatch({ error, type: GENERATERANDOMSEED_FAILED });
         } else {
           dispatch({ response: response, type: GENERATERANDOMSEED_SUCCESS });
         }
@@ -59,9 +59,9 @@ export function decodeSeedAttempt(mnemonic) {
     dispatch({request: {}, type: DECODESEED_ATTEMPT });
     const { seeder } = getState().seedService;
     seeder.decodeSeed(request,
-        function(err, response) {
-          if (err) {
-            dispatch({ error: err, type: DECODESEED_FAILED });
+        function(error, response) {
+          if (error) {
+            dispatch({ error, type: DECODESEED_FAILED });
           } else {
             dispatch({response: response, type: DECODESEED_SUCCESS });
           }

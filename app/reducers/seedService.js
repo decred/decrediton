@@ -10,7 +10,7 @@ export default function walletLoader(state = {}, action) {
     };
   case SEEDER_FAILED:
     return {...state,
-      getSeederError: action.error,
+      getSeederError: String(action.error),
       getSeederRequestAttempt: false,
       seeder: null,
     };
@@ -30,7 +30,7 @@ export default function walletLoader(state = {}, action) {
     };
   case GENERATERANDOMSEED_FAILED:
     return {...state,
-      generateRandomSeedError: action.error,
+      generateRandomSeedError: String(action.error),
       generateRandomSeedRequestAttempt: false,
       generateRandomSeedResponse: null,
     };
@@ -46,7 +46,7 @@ export default function walletLoader(state = {}, action) {
     };
   case DECODESEED_FAILED:
     return {...state,
-      decodeSeedError: action.error,
+      decodeSeedError: String(action.error),
       decodeSeedRequestAttempt: false,
     };
   case DECODESEED_SUCCESS:

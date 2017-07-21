@@ -20,9 +20,9 @@ export function updateStakepoolPurchaseInformation() {
         var apiKey = currentStakePoolConfig[i].ApiKey;
         var votingAccount = currentStakePoolConfig[i].VotingAccount;
         getPurchaseInfo(poolHost,apiKey,
-            function(response, err) {
-              if (err) {
-                dispatch({ error: 'Unable to contact stakepool: '+ err +' please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
+            function(response, error) {
+              if (error) {
+                dispatch({ error: 'Unable to contact stakepool: '+ error +' please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
                 return;
               } else {
                 // parse response data for no err
@@ -45,16 +45,16 @@ export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, 
     getPurchaseInfo(
       poolHost,
       apiKey,
-      function(response, err) {
-        if (err) {
-          dispatch({ error: 'Unable to contact stakepool: '+ err +' please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
+      function(response, error) {
+        if (error) {
+          dispatch({ error: 'Unable to contact stakepool: '+ error +' please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
           return;
         } else {
           // parse response data for no err
           if (response.data.status == 'success') {
             dispatch(importScriptAttempt(privpass, response.data.data.Script, true, 0, response.data.data.TicketAddress, (error) => {
               if (error) {
-                dispatch({ error: error, type: UPDATESTAKEPOOLCONFIG_FAILED });
+                dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED });
               } else {
                 dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, accountNum));
               }
@@ -105,24 +105,24 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
     request.setKind(0);
     var addressPubKey = null;
     walletService.nextAddress(request,
-    function(err, getNextAddressResponse) {
-      if (err) {
-        dispatch({ error: 'Error settings stakepool address, please try again later.', type: UPDATESTAKEPOOLCONFIG_FAILED });
+    function(error, getNextAddressResponse) {
+      if (error) {
+        dispatch({ error: error + '. Error settings stakepool address, please try again later.', type: UPDATESTAKEPOOLCONFIG_FAILED });
       } else {
         addressPubKey = getNextAddressResponse.getPublicKey();
         setStakePoolAddress(
           poolHost,
           apiKey,
           addressPubKey,
-          function(response, err) {
-            if (err) {
-              dispatch({ error: err, type: UPDATESTAKEPOOLCONFIG_FAILED });
+          function(response, error) {
+            if (error) {
+              dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED });
             } else if (response.data.status == 'success') {
               dispatch(setStakePoolInformation(poolHost, apiKey, accountNum, true));
             } else if (response.data.status == 'error') {
               dispatch({ error: response.data.message, type: UPDATESTAKEPOOLCONFIG_FAILED });
             } else {
-              console.error('shouldn\'t be here set address:', response);
+              dispatch({ error:'shouldn\'t be here set address:', type: UPDATESTAKEPOOLCONFIG_FAILED });
             }
           }
         );
@@ -164,16 +164,16 @@ export function setStakePoolVoteChoices(stakePool, voteChoices) {
       stakePool.Host,
       stakePool.ApiKey,
       voteChoices.getVotebits(),
-      function(response, err) {
-        if (err) {
-          dispatch({ error: err, type: SETSTAKEPOOLVOTECHOICES_FAILED });
+      function(response, error) {
+        if (error) {
+          dispatch({ error, type: SETSTAKEPOOLVOTECHOICES_FAILED });
         } else if (response.data.status == 'success') {
           dispatch(updateStakePoolVoteChoicesConfig(stakePool, voteChoices));
           dispatch({ type: SETSTAKEPOOLVOTECHOICES_SUCCESS });
         } else if (response.data.status == 'error') {
           dispatch({ error: response.data.message, type: SETSTAKEPOOLVOTECHOICES_FAILED });
         } else {
-          console.error('shouldn\'t be here set address:', response);
+          dispatch({ error: 'shouldn\'t be here, set vote choices:', type: SETSTAKEPOOLVOTECHOICES_FAILED });
         }
       }
     );

@@ -25,10 +25,9 @@ export function loaderRequest(address, port) {
   };
   return (dispatch) => {
     dispatch({request: request, type: LOADER_ATTEMPT });
-    loader(request, function(loader, err) {
-      if (err) {
-        dispatch({ error: err, type: LOADER_FAILED });
-        //throw err
+    loader(request, function(loader, error) {
+      if (error) {
+        dispatch({ error, type: LOADER_FAILED });
       } else {
         dispatch({loader: loader, type: LOADER_SUCCESS });
         dispatch(getSeederAttempt());
@@ -48,9 +47,9 @@ export function walletExistRequest() {
     dispatch({ type: WALLETEXIST_ATTEMPT });
     const { loader } = getState().walletLoader;
     loader.walletExists(request,
-        function(err, response) {
-          if (err) {
-            dispatch({ error: err, type: WALLETEXIST_FAILED });
+        function(error, response) {
+          if (error) {
+            dispatch({ error, type: WALLETEXIST_FAILED });
           } else {
             dispatch({response: response, type: WALLETEXIST_SUCCESS });
             if (response.getExists()) {
@@ -99,9 +98,9 @@ export function createWalletRequest(pubPass, privPass, seed, existing) {
     dispatch({ existing: existing, type: CREATEWALLET_ATTEMPT });
     const { loader } = getState().walletLoader;
     loader.createWallet(request,
-      function(err) {
-        if (err) {
-          dispatch({ error: err, type: CREATEWALLET_FAILED });
+      function(error) {
+        if (error) {
+          dispatch({ error, type: CREATEWALLET_FAILED });
         } else {
           dispatch({response: {}, type: CREATEWALLET_SUCCESS });
           dispatch(startRpcRequestFunc());
@@ -121,14 +120,14 @@ export function openWalletAttempt(pubPass) {
     dispatch({type: OPENWALLET_ATTEMPT});
     const { loader } = getState().walletLoader;
     loader.openWallet(request,
-      function(err) {
-        if (err) {
-          if (err.message.includes('wallet already loaded')) {
+      function(error) {
+        if (error) {
+          if (error.message.includes('wallet already loaded')) {
             dispatch({response: {}, type: OPENWALLET_SUCCESS});
             dispatch(startRpcRequestFunc());
             return;
           }
-          dispatch({ error: err, type: OPENWALLET_FAILED });
+          dispatch({ error, type: OPENWALLET_FAILED });
         } else {
           dispatch({ type: OPENWALLET_SUCCESS });
           dispatch(startRpcRequestFunc());
@@ -147,9 +146,9 @@ export function closeWalletRequest() {
     dispatch({ type: CLOSEWALLET_ATTEMPT });
     const { loader } = getState().walletLoader;
     loader.closeWallet(request,
-      function(err) {
-        if (err) {
-          dispatch({ error: err, type: CLOSEWALLET_FAILED });
+      function(error) {
+        if (error) {
+          dispatch({ error, type: CLOSEWALLET_FAILED });
         } else {
           dispatch({ type: CLOSEWALLET_SUCCESS });
         }
@@ -169,7 +168,7 @@ function startRpcError(error, request) {
       dispatch({ rpcRetryAttempts: rpcRetryAttempts+1, type: STARTRPC_RETRY });
       setTimeout(() => dispatch(startRpcAction(request)), 5000);
     } else {
-      dispatch({ error: error, type: STARTRPC_FAILED });
+      dispatch({ error, type: STARTRPC_FAILED });
     }
   };
 }
@@ -210,15 +209,15 @@ function startRpcAction(request, second) {
   return (dispatch, getState) => {
     const { loader } = getState().walletLoader;
     loader.startConsensusRpc(request,
-        function(err) {
-          if (err) {
-            if (err.message.includes('RPC client already created')) {
+        function(error) {
+          if (error) {
+            if (error.message.includes('RPC client already created')) {
               dispatch({ type: STARTRPC_SUCCESS});
               dispatch(subscribeBlockAttempt());
               return;
             }
             if (second) {
-              dispatch(startRpcError(err + '.  You may need to edit ' + getCfgPath() + ' and try again', request));
+              dispatch(startRpcError(error + '.  You may need to edit ' + getCfgPath() + ' and try again', request));
             } else {
               dispatch(startRpcRequestFunc(true));
             }
@@ -244,9 +243,9 @@ export function discoverAddressAttempt(discoverAccts, privPass) {
     dispatch({ type: DISCOVERADDRESS_ATTEMPT });
     const { loader } = getState().walletLoader;
     loader.discoverAddresses(request,
-        function(err) {
-          if (err) {
-            dispatch({ error: err, type: DISCOVERADDRESS_FAILED });
+        function(error) {
+          if (error) {
+            dispatch({ error, type: DISCOVERADDRESS_FAILED });
           } else {
             dispatch({response: {}, type: DISCOVERADDRESS_SUCCESS});
             const { subscribeBlockNtfnsResponse } = getState().walletLoader;
@@ -268,9 +267,9 @@ export function subscribeBlockAttempt() {
     dispatch({request: {}, type: SUBSCRIBEBLOCKNTFNS_ATTEMPT});
     const { loader } = getState().walletLoader;
     loader.subscribeToBlockNotifications(request,
-        function(err) {
-          if (err) {
-            dispatch({ error: err, type: SUBSCRIBEBLOCKNTFNS_FAILED });
+        function(error) {
+          if (error) {
+            dispatch({ error, type: SUBSCRIBEBLOCKNTFNS_FAILED });
           } else {
             dispatch({response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
             const { walletCreateResponse, createWalletExisting } = getState().walletLoader;
@@ -298,9 +297,9 @@ export function fetchHeadersAttempt() {
     dispatch({request: {}, type: FETCHHEADERS_ATTEMPT});
     const { loader } = getState().walletLoader;
     loader.fetchHeaders(request,
-        function(err, response) {
-          if (err) {
-            dispatch({ error: err, type: FETCHHEADERS_FAILED });
+        function(error, response) {
+          if (error) {
+            dispatch({ error, type: FETCHHEADERS_FAILED });
           } else {
             dispatch({response: response, type: FETCHHEADERS_SUCCESS});
             dispatch(getWalletServiceAttempt());
