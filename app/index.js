@@ -94,6 +94,8 @@ var initialState = {
     testnet: 1223139429,
     // MainNet CurrencyNet = 0xd9b400f9
     mainnet: 3652452601,
+
+    // GetWalletService
     getWalletServiceRequestAttempt: false,
     getWalletServiceError: '',
     // Balance
@@ -138,12 +140,12 @@ var initialState = {
     ticketTransactionsInfo: Array(),
     voteTransactionsInfo: Array(),
     revokeTransactionsInfo: Array(),
-    getTransactionsRequest: null,
     getTransactionsError: null,
     getTransactionsRequestAttempt: false,
     getTransactionsResponse: null,
     unminedTransactions: null,
 
+    // Agenda/VoteChoices
     getAgendasResponse: null,
     getVoteChoicesResponse: null,
   },

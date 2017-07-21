@@ -15,38 +15,21 @@ export const GETNEXTADDRESS_ATTEMPT = 'GETNEXTADDRESS_ATTEMPT';
 export const GETNEXTADDRESS_FAILED = 'GETNEXTADDRESS_FAILED';
 export const GETNEXTADDRESS_SUCCESS = 'GETNEXTADDRESS_SUCCESS';
 
-function getNextAddressError(error) {
-  return { error, type: GETNEXTADDRESS_FAILED };
-}
-
-function getNextAddressSuccess(getNextAddressResponse) {
-  return { getNextAddressResponse: getNextAddressResponse, type: GETNEXTADDRESS_SUCCESS };
-}
-
 export function getNextAddressAttempt(accountNum) {
   var request = new NextAddressRequest();
   request.setAccount(accountNum);
   request.setKind(0);
   request.setGapPolicy(NextAddressRequest.GapPolicy.GAP_POLICY_WRAP);
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: GETNEXTADDRESS_ATTEMPT });
-    dispatch(getNextAddressAction());
-  };
-}
-
-function getNextAddressAction() {
   return (dispatch, getState) => {
+    dispatch({ type: GETNEXTADDRESS_ATTEMPT });
     const { walletService } = getState().grpc;
-    const { getNextAddressRequest } = getState().control;
-    walletService.nextAddress(getNextAddressRequest,
+    walletService.nextAddress(request,
         function(err, getNextAddressResponse) {
           if (err) {
-            dispatch(getNextAddressError(err + ' Please try again'));
+            dispatch({ error: err, type: GETNEXTADDRESS_FAILED });
           } else {
-            getNextAddressResponse.accountNumber = getNextAddressRequest.getAccount();
-            dispatch(getNextAddressSuccess(getNextAddressResponse));
+            getNextAddressResponse.accountNumber = accountNum;
+            dispatch({ getNextAddressResponse: getNextAddressResponse, type: GETNEXTADDRESS_SUCCESS });
           }
         });
   };
@@ -57,41 +40,22 @@ export const RENAMEACCOUNT_FAILED = 'RENAMEACCOUNT_FAILED';
 export const RENAMEACCOUNT_SUCCESS = 'RENAMEACCOUNT_SUCCESS';
 export const RENAMEACCOUNT_CLEAR_ERROR = 'RENAMEACCOUNT_CLEAR_ERROR';
 export const RENAMEACCOUNT_CLEAR_SUCCESS= 'RENAMEACCOUNT_CLEAR_SUCCESS';
-function renameAccountError(error) {
-  return { error, type: RENAMEACCOUNT_FAILED };
-}
-
-function renameAccountSuccess(renameAccountResponse) {
-  var successMsg = 'You have successfully updated the account name.';
-  return (dispatch) => {
-    dispatch({ renameAccountSuccess: successMsg, renameAccountResponse: renameAccountResponse, type: RENAMEACCOUNT_SUCCESS });
-    dispatch(getAccountsAttempt());
-  };
-
-}
 
 export function renameAccountAttempt(accountNumber, newName) {
   var request = new RenameAccountRequest();
   request.setAccountNumber(accountNumber);
   request.setNewName(newName);
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: RENAMEACCOUNT_ATTEMPT });
-    dispatch(renameAccountAction());
-  };
-}
-
-function renameAccountAction() {
   return (dispatch, getState) => {
+    dispatch({ type: RENAMEACCOUNT_ATTEMPT });
     const { walletService } = getState().grpc;
-    const { renameAccountRequest } = getState().control;
-    walletService.renameAccount(renameAccountRequest,
+    walletService.renameAccount(request,
         function(err, renameAccountResponse) {
           if (err) {
-            dispatch(renameAccountError(err + ' Please try again'));
+            dispatch({ error: err, type: RENAMEACCOUNT_FAILED });
           } else {
-            dispatch(renameAccountSuccess(renameAccountResponse));
+            var successMsg = 'You have successfully updated the account name.';
+            dispatch({ renameAccountSuccess: successMsg, renameAccountResponse: renameAccountResponse, type: RENAMEACCOUNT_SUCCESS });
+            dispatch(getAccountsAttempt());
           }
         });
   };
@@ -118,41 +82,22 @@ export const RESCAN_FAILED = 'RESCAN_FAILED';
 export const RESCAN_PROGRESS = 'RESCAN_PROGRESS';
 export const RESCAN_COMPLETE = 'RESCAN_COMPLETE';
 
-function rescanProgress(rescanResponse) {
-  return { rescanResponse: rescanResponse, type: RESCAN_PROGRESS };
-}
-
-function rescanComplete() {
-  return (dispatch) => {
-    dispatch({ type: RESCAN_COMPLETE });
-    setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
-    setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
-  };
-}
-
 export function rescanAttempt(beginHeight) {
   var request = new RescanRequest();
   request.setBeginHeight(beginHeight);
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: RESCAN_ATTEMPT });
-    dispatch(rescanAction());
-  };
-}
-
-function rescanAction() {
   return (dispatch, getState) => {
+    dispatch({ type: RESCAN_ATTEMPT });
     const { walletService } = getState().grpc;
-    const { rescanRequest } = getState().control;
-    var rescanCall = walletService.rescan(rescanRequest);
+    var rescanCall = walletService.rescan(request);
     rescanCall.on('data', function(response) {
       console.log('Rescanned thru', response.getRescannedThrough());
-      dispatch(rescanProgress(response));
+      dispatch({ rescanResponse: response, type: RESCAN_PROGRESS });
     });
     rescanCall.on('end', function() {
       console.log('Rescan done');
-      dispatch(rescanComplete());
+      dispatch({ type: RESCAN_COMPLETE });
+      setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
+      setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
     });
     rescanCall.on('status', function(status) {
       console.log('Rescan status:', status);
@@ -166,42 +111,23 @@ export const GETNEXTACCOUNT_SUCCESS = 'GETNEXTACCOUNT_SUCCESS';
 export const GETNEXTACCOUNT_CLEAR_ERROR = 'GETNEXTACCOUNT_CLEAR_ERROR';
 export const GETNEXTACCOUNT_CLEAR_SUCCESS= 'GETNEXTACCOUNT_CLEAR_SUCCESS';
 
-function getNextAccountError(error) {
-  return { error, type: GETNEXTACCOUNT_FAILED };
-}
-
-function getNextAccountSuccess(getNextAccountResponse, accountName) {
-  var success = 'Account - ' + accountName + ' - has been successfully created.';
-  return (dispatch) => {
-    dispatch({getNextAccountResponse: getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS, successMessage: success });
-    dispatch(getAccountsAttempt());
-  };
-}
-
 export function getNextAccountAttempt(passphrase, accountName) {
   var request = new NextAccountRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setAccountName(accountName);
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: GETNEXTACCOUNT_ATTEMPT });
-    dispatch(getNextAccountAction());
-  };
-}
-
-function getNextAccountAction() {
   return (dispatch, getState) => {
+    dispatch({ type: GETNEXTACCOUNT_ATTEMPT });
     const { walletService } = getState().grpc;
-    const { getNextAccountRequest } = getState().control;
-    walletService.nextAccount(getNextAccountRequest,
-        function(err, getNextAccountResponse) {
-          if (err) {
-            dispatch(getNextAccountError(err + ' Please try again'));
-          } else {
-            dispatch(getNextAccountSuccess(getNextAccountResponse, getNextAccountRequest.getAccountName()));
-          }
-        });
+    walletService.nextAccount(request,
+      function(err, getNextAccountResponse) {
+        if (err) {
+          dispatch({ error: err, type: GETNEXTACCOUNT_FAILED });
+        } else {
+          var success = 'Account - ' + accountName + ' - has been successfully created.';
+          dispatch({getNextAccountResponse: getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS, successMessage: success });
+          dispatch(getAccountsAttempt());
+        }
+      });
   };
 }
 
@@ -226,14 +152,6 @@ export const IMPORTPRIVKEY_ATTEMPT = 'IMPORTPRIVKEY_ATTEMPT';
 export const IMPORTPRIVKEY_FAILED = 'IMPORTPRIVKEY_FAILED';
 export const IMPORTPRIVKEY_SUCCESS = 'IMPORTPRIVKEY_SUCCESS';
 
-function importPrivateKeyError(error) {
-  return { error, type: IMPORTPRIVKEY_FAILED };
-}
-
-function importPrivateKeySuccess(importPrivateKeyResponse) {
-  return { importPrivateKeyResponse: importPrivateKeyResponse, type: IMPORTPRIVKEY_SUCCESS };
-}
-
 export function importPrivateKeyAttempt(passphrase, accountNum, wif, rescan, scanFrom) {
   var request = new ImportPrivateKeyRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
@@ -241,27 +159,17 @@ export function importPrivateKeyAttempt(passphrase, accountNum, wif, rescan, sca
   request.setPrivateKeyWif(wif);
   request.setRescan(rescan);
   request.setScanFrom(scanFrom);
-
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: IMPORTPRIVKEY_ATTEMPT });
-    dispatch(importPrivateKeyAction());
-  };
-}
-
-function importPrivateKeyAction() {
   return (dispatch, getState) => {
+    dispatch({ type: IMPORTPRIVKEY_ATTEMPT });
     const { walletService } = getState().grpc;
-    const { importPrivateKeyRequest } = getState().control;
-    walletService.importPrivateKey(importPrivateKeyRequest,
-        function(err, importPrivateKeyResponse) {
-          if (err) {
-            dispatch(importPrivateKeyError(err + ' Please try again'));
-          } else {
-            dispatch(importPrivateKeySuccess(importPrivateKeyResponse));
-          }
-        });
+    walletService.importPrivateKey(request,
+      function(err, importPrivateKeyResponse) {
+        if (err) {
+          dispatch({ error: err, type: IMPORTPRIVKEY_FAILED });
+        } else {
+          dispatch({ importPrivateKeyResponse: importPrivateKeyResponse, type: IMPORTPRIVKEY_SUCCESS });
+        }
+      });
   };
 }
 
@@ -270,11 +178,6 @@ export const IMPORTSCRIPT_FAILED = 'IMPORTSCRIPT_FAILED';
 export const IMPORTSCRIPT_SUCCESS = 'IMPORTSCRIPT_SUCCESS';
 export const IMPORTSCRIPT_CLEAR_ERROR = 'IMPORTSCRIPT_CLEAR_ERROR';
 export const IMPORTSCRIPT_CLEAR_SUCCESS= 'IMPORTSCRIPT_CLEAR_SUCCESS';
-
-
-function importScriptError(error) {
-  return { error, type: IMPORTSCRIPT_FAILED };
-}
 
 function importScriptSuccess(importScriptResponse, votingAddress, cb) {
   var message = 'Script successfully imported, rescanning now';
@@ -299,11 +202,30 @@ export function importScriptAttempt(passphrase, script, rescan, scanFrom, voting
   request.setRescan(rescan);
   request.setScanFrom(scanFrom);
   request.setRequireRedeemable(true);
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: IMPORTSCRIPT_ATTEMPT });
-    dispatch(importScriptAction(votingAddress, cb));
+  return (dispatch, getState) => {
+    dispatch({ type: IMPORTSCRIPT_ATTEMPT });
+    const { walletService } = getState().grpc;
+    walletService.importScript(request,
+      function(err, importScriptResponse) {
+        if (err) {
+          if (!votingAddress && !cb) {
+            dispatch({ error: err, type: IMPORTSCRIPT_FAILED });
+          } else {
+            var error = err + '';
+            if (error.indexOf('master private key') !== -1) {
+              dispatch(() => cb(err));
+            } else {
+              err = err + '. This probably means you are trying to use a stakepool account that is already associated with another wallet.  If you have previously used a voting account, please create a new account and try again.  Otherwise, please set up a new stakepool account for this wallet.';
+              dispatch(() => cb(err));
+            }
+          }
+        } else {
+          dispatch(importScriptSuccess(importScriptResponse, votingAddress, cb));
+          if (!votingAddress && !cb) {
+            setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
+          }
+        }
+      });
   };
 }
 
@@ -311,34 +233,6 @@ function hexToBytes(hex) {
   for (var bytes = [], c = 0; c < hex.length; c += 2)
     bytes.push(parseInt(hex.substr(c, 2), 16));
   return bytes;
-}
-
-function importScriptAction(votingAddress, cb) {
-  return (dispatch, getState) => {
-    const { walletService } = getState().grpc;
-    const { importScriptRequest } = getState().control;
-    walletService.importScript(importScriptRequest,
-      function(err, importScriptResponse) {
-        if (err) {
-          if (!votingAddress && !cb) {
-            dispatch(importScriptError(err + ' Please try again'));
-          } else {
-            var error = err + '';
-            if (error.indexOf('master private key') !== -1) {
-              dispatch(() => cb(err + ' Please try again.'));
-            } else {
-              err = err + '. This probably means you are trying to use a stakepool account that is already associated with another wallet.  If you have previously used a voting account, please create a new account and try again.  Otherwise, please set up a new stakepool account for this wallet.';
-              dispatch(() => cb(err));
-            }
-          }
-        } else {
-          if (!votingAddress && !cb) {
-            setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
-          }
-          dispatch(importScriptSuccess(importScriptResponse, votingAddress, cb));
-        }
-      });
-  };
 }
 
 export function clearImportScriptSuccess() {
@@ -365,14 +259,6 @@ export const CHANGEPASSPHRASE_SUCCESS = 'CHANGEPASSPHRASE_SUCCESS';
 export const CHANGEPASSPHRASE_CLEAR_ERROR = 'CHANGEPASSPHRASE_CLEAR_ERROR';
 export const CHANGEPASSPHRASE_CLEAR_SUCCESS = 'CHANGEPASSPHRASE_CLEAR_SUCCESS';
 
-function changePassphraseError(error) {
-  return { error, type: CHANGEPASSPHRASE_FAILED };
-}
-
-function changePassphraseSuccess(changePassphraseResponse) {
-  return { changePassphraseResponse: changePassphraseResponse, type: CHANGEPASSPHRASE_SUCCESS };
-}
-
 export function changePassphraseAttempt(oldPass, newPass, priv) {
   var request = new ChangePassphraseRequest();
   if (priv) {
@@ -382,24 +268,15 @@ export function changePassphraseAttempt(oldPass, newPass, priv) {
   }
   request.setOldPassphrase(new Uint8Array(Buffer.from(oldPass)));
   request.setNewPassphrase(new Uint8Array(Buffer.from(newPass)));
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: CHANGEPASSPHRASE_ATTEMPT });
-    dispatch(changePassphraseAction());
-  };
-}
-
-function changePassphraseAction() {
   return (dispatch, getState) => {
+    dispatch({ type: CHANGEPASSPHRASE_ATTEMPT });
     const { walletService } = getState().grpc;
-    const { changePassphraseRequest } = getState().control;
-    walletService.changePassphrase(changePassphraseRequest,
+    walletService.changePassphrase(request,
         function(err, changePassphraseResponse) {
           if (err) {
-            dispatch(changePassphraseError(err + ' Please try again'));
+            dispatch({ error: err, type: CHANGEPASSPHRASE_FAILED });
           } else {
-            dispatch(changePassphraseSuccess(changePassphraseResponse));
+            dispatch({ changePassphraseResponse: changePassphraseResponse, type: CHANGEPASSPHRASE_SUCCESS });
           }
         });
   };
@@ -427,38 +304,19 @@ export const LOADACTIVEDATAFILTERS_ATTEMPT = 'LOADACTIVEDATAFILTERS_ATTEMPT';
 export const LOADACTIVEDATAFILTERS_FAILED= 'LOADACTIVEDATAFILTERS_FAILED';
 export const LOADACTIVEDATAFILTERS_SUCCESS = 'LOADACTIVEDATAFILTERS_SUCCESS';
 
-function loadActiveDataFiltersError(error) {
-  return { error, type: LOADACTIVEDATAFILTERS_FAILED };
-}
-
-function loadActiveDataFiltersSuccess(response) {
-  return (dispatch) => {
-    dispatch({response: response, type: LOADACTIVEDATAFILTERS_SUCCESS });
-  };
-}
-
 export function loadActiveDataFiltersAttempt() {
   var request = new LoadActiveDataFiltersRequest();
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: LOADACTIVEDATAFILTERS_ATTEMPT });
-    dispatch(loadActiveDataFiltersAction());
-  };
-}
-
-function loadActiveDataFiltersAction() {
   return (dispatch, getState) => {
+    dispatch({ type: LOADACTIVEDATAFILTERS_ATTEMPT });
     const { walletService } = getState().grpc;
-    const { loadActiveDataFiltersRequest } = getState().control;
-    walletService.loadActiveDataFilters(loadActiveDataFiltersRequest,
-        function(err, response) {
-          if (err) {
-            dispatch(loadActiveDataFiltersError(err + ' Please try again'));
-          } else {
-            dispatch(loadActiveDataFiltersSuccess(response));
-          }
-        });
+    walletService.loadActiveDataFilters(request,
+      function(err, response) {
+        if (err) {
+          dispatch({ error: err, type: LOADACTIVEDATAFILTERS_FAILED });
+        } else {
+          dispatch({response: response, type: LOADACTIVEDATAFILTERS_SUCCESS });
+        }
+      });
   };
 }
 
@@ -472,41 +330,22 @@ export const SIGNTX_ATTEMPT = 'SIGNTX_ATTEMPT';
 export const SIGNTX_FAILED = 'SIGNTX_FAILED';
 export const SIGNTX_SUCCESS = 'SIGNTX_SUCCESS';
 
-function signTransactionError(error) {
-  return { error, type: SIGNTX_FAILED };
-}
-
-function signTransactionSuccess(signTransactionResponse) {
-  return (dispatch) => {
-    dispatch({signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS });
-    dispatch(publishTransactionAttempt(signTransactionResponse.getTransaction()));
-  };
-}
-
 export function signTransactionAttempt(passphrase, rawTx) {
-
-  return (dispatch) => {
-    dispatch({
-      request: {},
-      type: SIGNTX_ATTEMPT });
-    dispatch(signTransactionAction(passphrase, rawTx));
-  };
-}
-
-function signTransactionAction(passphrase, rawTx) {
   var request = new SignTransactionRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setSerializedTransaction(new Uint8Array(Buffer.from(rawTx)));
   return (dispatch, getState) => {
+    dispatch({ type: SIGNTX_ATTEMPT });
     const { walletService } = getState().grpc;
     walletService.signTransaction(request,
-        function(err, signTransactionResponse) {
-          if (err) {
-            dispatch(signTransactionError(err + ' Please try again'));
-          } else {
-            dispatch(signTransactionSuccess(signTransactionResponse));
-          }
-        });
+      function(err, signTransactionResponse) {
+        if (err) {
+          dispatch({ error: err, type: SIGNTX_FAILED });
+        } else {
+          dispatch({signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS });
+          dispatch(publishTransactionAttempt(signTransactionResponse.getTransaction()));
+        }
+      });
   };
 }
 
@@ -514,40 +353,21 @@ export const PUBLISHTX_ATTEMPT = 'PUBLISHTX_ATTEMPT';
 export const PUBLISHTX_FAILED = 'PUBLISHTX_FAILED';
 export const PUBLISHTX_SUCCESS = 'PUBLISHTX_SUCCESS';
 
-function publishTransactionError(error) {
-  return { error, type: PUBLISHTX_FAILED };
-}
-
-function publishTransactionSuccess(publishTransactionResponse) {
-  return (dispatch) => {
-    dispatch({ publishTransactionResponse: Buffer.from(publishTransactionResponse.getTransactionHash()), type: PUBLISHTX_SUCCESS });
-    setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
-  };
-}
-
 export function publishTransactionAttempt(tx) {
   var request = new PublishTransactionRequest();
   request.setSignedTransaction(new Uint8Array(Buffer.from(tx)));
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: PUBLISHTX_ATTEMPT });
-    dispatch(publishTransactionAction());
-  };
-}
-
-function publishTransactionAction() {
   return (dispatch, getState) => {
+    dispatch({ type: PUBLISHTX_ATTEMPT });
     const { walletService } = getState().grpc;
-    const { publishTransactionRequest } = getState().control;
-    walletService.publishTransaction(publishTransactionRequest,
-        function(err, publishTransactionResponse) {
-          if (err) {
-            dispatch(publishTransactionError(err + ' Please try again'));
-          } else {
-            dispatch(publishTransactionSuccess(publishTransactionResponse));
-          }
-        });
+    walletService.publishTransaction(request,
+      function(err, publishTransactionResponse) {
+        if (err) {
+          dispatch({ error: err, type: PUBLISHTX_FAILED });
+        } else {
+          dispatch({ publishTransactionResponse: Buffer.from(publishTransactionResponse.getTransactionHash()), type: PUBLISHTX_SUCCESS });
+          setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
+        }
+      });
   };
 }
 
@@ -598,21 +418,8 @@ export const PURCHASETICKETS_SUCCESS = 'PURCHASETICKETS_SUCCESS';
 export const PURCHASETICKETS_CLEAR_ERROR = 'PURCHASETICKETS_CLEAR_ERROR';
 export const PURCHASETICKETS_CLEAR_SUCCESS= 'PURCHASETICKETS_CLEAR_SUCCESS';
 
-function purchaseTicketsError(error) {
-  return { error, type: PURCHASETICKETS_FAILED };
-}
-
-function purchaseTicketsSuccess(purchaseTicketsResponse) {
-  return (dispatch) => {
-    var success = 'You successfully purchased ' + purchaseTicketsResponse.getTicketHashesList().length + ' tickets.';
-    dispatch({ success: success, purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
-    setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
-    setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 4000);
-  };
-}
-
 export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requiredConf,
-numTickets, expiry, ticketFee, txFee, stakepool) {
+  numTickets, expiry, ticketFee, txFee, stakepool) {
   return (dispatch, getState) => {
     const {getAccountsResponse} = getState().grpc;
     var request = new PurchaseTicketsRequest();
@@ -631,31 +438,31 @@ numTickets, expiry, ticketFee, txFee, stakepool) {
     }
     request.setTxFee(txFee*1e8);
     request.setTicketFee(ticketFee*1e8);
-    dispatch({
-      request: request,
-      type: PURCHASETICKETS_ATTEMPT });
+    dispatch({ type: PURCHASETICKETS_ATTEMPT });
     dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0, stakepool.TicketAddress, (error) => {
       if (error) {
-        dispatch(purchaseTicketsError(error));
+        dispatch({ error, type: PURCHASETICKETS_FAILED });
       } else {
-        dispatch(purchaseTicketsAction());
+        dispatch(purchaseTicketsAction(request));
       }
     }));
   };
 }
 
-function purchaseTicketsAction() {
+function purchaseTicketsAction(request) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
-    const { purchaseTicketsRequest } = getState().control;
-    walletService.purchaseTickets(purchaseTicketsRequest,
-        function(err, purchaseTicketsResponse) {
-          if (err) {
-            dispatch(purchaseTicketsError(err + ' Please try again'));
-          } else {
-            dispatch(purchaseTicketsSuccess(purchaseTicketsResponse));
-          }
-        });
+    walletService.purchaseTickets(request,
+      function(err, purchaseTicketsResponse) {
+        if (err) {
+          dispatch({ error: err, type: PURCHASETICKETS_FAILED });
+        } else {
+          var success = 'You successfully purchased ' + purchaseTicketsResponse.getTicketHashesList().length + ' tickets.';
+          dispatch({ success: success, purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+          setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
+          setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 4000);
+        }
+      });
   };
 }
 
