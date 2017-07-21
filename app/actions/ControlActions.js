@@ -490,39 +490,21 @@ export const REVOKETICKETS_SUCCESS = 'REVOKETICKETS_SUCCESS';
 export const REVOKETICKETS_CLEAR_ERROR = 'REVOKETICKETS_CLEAR_ERROR';
 export const REVOKETICKETS_CLEAR_SUCCESS= 'REVOKETICKETS_CLEAR_SUCCESS';
 
-function revokeTicketsError(error) {
-  return { error, type: REVOKETICKETS_FAILED };
-}
-
-function revokeTicketsSuccess(revokeTicketsResponse) {
-  var success = 'You successfully revoked tickets.';
-  return { success: success, revokeTicketsResponse: revokeTicketsResponse, type: REVOKETICKETS_SUCCESS };
-}
-
 export function revokeTicketsAttempt(passphrase) {
   var request = new RevokeTicketsRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
-
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: REVOKETICKETS_ATTEMPT });
-    dispatch(revokeTicketsAction());
-  };
-}
-
-function revokeTicketsAction() {
   return (dispatch, getState) => {
+    dispatch({ type: REVOKETICKETS_ATTEMPT });
     const { walletService } = getState().grpc;
-    const { revokeTicketsRequest } = getState().control;
-    walletService.revokeTickets(revokeTicketsRequest,
-        function(err, revokeTicketsResponse) {
-          if (err) {
-            dispatch(revokeTicketsError(err + ' Please try again'));
-          } else {
-            dispatch(revokeTicketsSuccess(revokeTicketsResponse));
-          }
-        });
+    walletService.revokeTickets(request,
+      function(err, revokeTicketsResponse) {
+        if (err) {
+          dispatch({ error: err, type: REVOKETICKETS_FAILED });
+        } else {
+          var success = 'You successfully revoked tickets.';
+          dispatch({ success: success, revokeTicketsResponse: revokeTicketsResponse, type: REVOKETICKETS_SUCCESS });
+        }
+      });
   };
 }
 
@@ -548,32 +530,16 @@ export const GETTICKETBUYERCONFIG_ATTEMPT = 'GETTICKETBUYERCONFIG_ATTEMPT';
 export const GETTICKETBUYERCONFIG_FAILED = 'GETTICKETBUYERCONFIG_FAILED';
 export const GETTICKETBUYERCONFIG_SUCCESS = 'GETTICKETBUYERCONFIG_SUCCESS';
 
-function getTicketBuyerConfigError(error) {
-  return { error, type: GETTICKETBUYERCONFIG_FAILED };
-}
-
-function getTicketBuyerConfigSuccess(ticketBuyerConfig) {
-  return (dispatch) => {
-    dispatch({ ticketBuyerConfig: ticketBuyerConfig, type: GETTICKETBUYERCONFIG_SUCCESS });
-  };
-}
-
 export function getTicketBuyerConfigAttempt() {
-  return (dispatch) => {
-    dispatch({ type: GETTICKETBUYERCONFIG_ATTEMPT });
-    dispatch(getTicketBuyerConfigAction());
-  };
-}
-
-function getTicketBuyerConfigAction() {
   var request = new TicketBuyerConfigRequest();
   return (dispatch, getState) => {
+    dispatch({ type: GETTICKETBUYERCONFIG_ATTEMPT });
     const { ticketBuyerService } = getState().grpc;
     ticketBuyerService.ticketBuyerConfig(request, function (err, ticketBuyerConfig) {
       if (err) {
-        dispatch(getTicketBuyerConfigError(err + ' Please try again'));
+        dispatch({ error: err, type: GETTICKETBUYERCONFIG_FAILED });
       } else {
-        dispatch(getTicketBuyerConfigSuccess(ticketBuyerConfig));
+        dispatch({ ticketBuyerConfig: ticketBuyerConfig, type: GETTICKETBUYERCONFIG_SUCCESS });
       }
     });
   };
@@ -582,38 +548,17 @@ function getTicketBuyerConfigAction() {
 export const SETTICKETBUYERCONFIG_ATTEMPT = 'SETTICKETBUYERCONFIG_ATTEMPT';
 export const SETTICKETBUYERCONFIG_FAILED = 'SETTICKETBUYERCONFIG_FAILED';
 export const SETTICKETBUYERCONFIG_SUCCESS = 'SETTICKETBUYERCONFIG_SUCCESS';
-
-function setTicketBuyerConfigError(error) {
-  return { error, type: SETTICKETBUYERCONFIG_FAILED };
-}
-
-function setTicketBuyerConfigSuccess() {
-  return (dispatch) => {
-    dispatch({ success: 'Ticket buyer settings have been successfully updated.', type: SETTICKETBUYERCONFIG_SUCCESS });
-    // something is hanging config request XXX
-    dispatch(getTicketBuyerConfigAttempt());
-  };
-}
-
-export function setTicketBuyerConfigAttempt(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
-  stakePool, maxPerBlock) {
-  return (dispatch) => {
-    dispatch({ type: SETTICKETBUYERCONFIG_ATTEMPT });
-    dispatch(setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
-      stakePool, maxPerBlock));
-  };
-}
-
 export const SETBALANCETOMAINTAIN = 'SETBALANCETOMAINTAIN';
 export const SETMAXFEE = 'SETMAXFEE';
 export const SETMAXPRICEABSOLUTE = 'SETMAXPRICEABSOLUTE';
 export const SETMAXPRICERELATIVE = 'SETMAXPRICERELATIVE';
 export const SETMAXPERBLOCK = 'SETMAXPERBLOCK';
 
-function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
+export function setTicketBuyerConfigAttempt(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
   stakePool, maxPerBlock) {
   var cfg = getCfg();
   return (dispatch, getState) => {
+    dispatch({ type: SETTICKETBUYERCONFIG_ATTEMPT });
     const { ticketBuyerService } = getState().grpc;
     const { getTicketBuyerConfigResponse } = getState().control;
     var hitError = '';
@@ -714,9 +659,10 @@ function setTicketBuyerConfigAction(account, balanceToMaintain, maxFee, maxPrice
       });
     }
     if (hitError != '') {
-      dispatch(setTicketBuyerConfigError(hitError + ' Please try again'));
+      dispatch({ error: hitError, type: SETTICKETBUYERCONFIG_FAILED });
     } else {
-      dispatch(setTicketBuyerConfigSuccess());
+      dispatch({ success: 'Ticket buyer settings have been successfully updated.', type: SETTICKETBUYERCONFIG_SUCCESS });
+      dispatch(getTicketBuyerConfigAttempt());
     }
   };
 }
@@ -726,24 +672,6 @@ export const STARTAUTOBUYER_FAILED = 'STARTAUTOBUYER_FAILED';
 export const STARTAUTOBUYER_SUCCESS = 'STARTAUTOBUYER_SUCCESS';
 export const STARTAUTOBUYER_CLEAR_ERROR = 'STARTAUTOBUYER_CLEAR_ERROR';
 export const STARTAUTOBUYER_CLEAR_SUCCESS= 'STARTAUTOBUYER_CLEAR_SUCCESS';
-
-function startAutoBuyerError(error) {
-  return { error, type: STARTAUTOBUYER_FAILED };
-}
-
-function startAutoBuyerSuccess(request, startAutoBuyerResponse) {
-  var success = 'You successfully started the auto ticket buyer.';
-  return (dispatch) => {
-    dispatch({ success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS,
-      balanceToMaintain: request.getBalanceToMaintain(),
-      maxFeePerKb: request.getMaxFeePerKb(),
-      maxPriceRelative: request.getMaxPriceRelative(),
-      maxPriceAbsolute: request.getMaxPriceAbsolute(),
-      maxPerBlock: request.getMaxPerBlock(),
-    });
-    setTimeout(()=>dispatch(getTicketBuyerConfigAttempt(), 1000));
-  };
-}
 
 export function startAutoBuyerAttempt(passphrase, accountNum, balanceToMaintain,
 maxFeePerKb, maxPriceRelative, maxPriceAbsolute, maxPerBlock, stakepool) {
@@ -766,9 +694,19 @@ maxFeePerKb, maxPriceRelative, maxPriceAbsolute, maxPerBlock, stakepool) {
     ticketBuyerService.startAutoBuyer(request,
       function(err, startAutoBuyerResponse) {
         if (err) {
-          dispatch(startAutoBuyerError(err + ' Please try again'));
+          dispatch({ error: err, type: STARTAUTOBUYER_FAILED });
         } else {
-          dispatch(startAutoBuyerSuccess(request, startAutoBuyerResponse));
+          var success = 'You successfully started the auto ticket buyer.';
+          return (dispatch) => {
+            dispatch({ success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS,
+              balanceToMaintain: balanceToMaintain,
+              maxFeePerKb: maxFeePerKb*1e8,
+              maxPriceRelative: maxPriceRelative,
+              maxPriceAbsolute: maxPriceAbsolute,
+              maxPerBlock: maxPerBlock,
+            });
+            setTimeout(()=>dispatch(getTicketBuyerConfigAttempt(), 1000));
+          };
         }
       });
   };
@@ -798,15 +736,6 @@ export const STOPAUTOBUYER_SUCCESS = 'STOPAUTOBUYER_SUCCESS';
 export const STOPAUTOBUYER_CLEAR_ERROR = 'STOPAUTOBUYER_CLEAR_ERROR';
 export const STOPAUTOBUYER_CLEAR_SUCCESS= 'STOPAUTOBUYER_CLEAR_SUCCESS';
 
-function stopAutoBuyerError(error) {
-  return { error, type: STOPAUTOBUYER_FAILED };
-}
-
-function stopAutoBuyerSuccess(stopAutoBuyerResponse) {
-  var success = 'You successfully stopped the auto ticket buyer.';
-  return { success: success, stopAutoBuyerResponse: stopAutoBuyerResponse, type: STOPAUTOBUYER_SUCCESS };
-}
-
 export function stopAutoBuyerAttempt() {
   var request = new StopAutoBuyerRequest();
   return (dispatch) => {
@@ -822,13 +751,14 @@ function stopAutoBuyerAction() {
     const { ticketBuyerService } = getState().grpc;
     const { stopAutoBuyerRequest } = getState().control;
     ticketBuyerService.stopAutoBuyer(stopAutoBuyerRequest,
-        function(err, stopAutoBuyerResponse) {
-          if (err) {
-            dispatch(stopAutoBuyerError(err + ' Please try again'));
-          } else {
-            dispatch(stopAutoBuyerSuccess(stopAutoBuyerResponse));
-          }
-        });
+      function(err, stopAutoBuyerResponse) {
+        if (err) {
+          dispatch({ error: err, type: STOPAUTOBUYER_FAILED });
+        } else {
+          var success = 'You successfully stopped the auto ticket buyer.';
+          dispatch({ success: success, stopAutoBuyerResponse: stopAutoBuyerResponse, type: STOPAUTOBUYER_SUCCESS });
+        }
+      });
   };
 }
 
@@ -855,16 +785,6 @@ export const CONSTRUCTTX_ATTEMPT = 'CONSTRUCTTX_ATTEMPT';
 export const CONSTRUCTTX_FAILED = 'CONSTRUCTTX_FAILED';
 export const CONSTRUCTTX_SUCCESS = 'CONSTRUCTTX_SUCCESS';
 
-function constructTransactionError(error) {
-  return { error, type: CONSTRUCTTX_FAILED };
-}
-
-function constructTransactionSuccess(constructTxResponse) {
-  return (dispatch) => {
-    dispatch({constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
-  };
-}
-
 export function constructTransactionAttempt(account, confirmations, outputs) {
   var request = new ConstructTransactionRequest();
   request.setSourceAccount(parseInt(account));
@@ -880,26 +800,17 @@ export function constructTransactionAttempt(account, confirmations, outputs) {
     request.addNonChangeOutputs(newOutput);
     totalAmount += output.amount;
   });
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: CONSTRUCTTX_ATTEMPT });
-    dispatch(constructTransactionAction(totalAmount));
-  };
-}
-
-function constructTransactionAction(totalAmount) {
   return (dispatch, getState) => {
+    dispatch({ type: CONSTRUCTTX_ATTEMPT });
     const { walletService } = getState().grpc;
-    const { constructTxRequest } = getState().control;
-    walletService.constructTransaction(constructTxRequest,
-        function(err, constructTxResponse) {
-          if (err) {
-            dispatch(constructTransactionError(err + ' Please try again'));
-          } else {
-            constructTxResponse.totalAmount = totalAmount;
-            dispatch(constructTransactionSuccess(constructTxResponse));
-          }
-        });
+    walletService.constructTransaction(request,
+      function(err, constructTxResponse) {
+        if (err) {
+          dispatch({ error: err, type: CONSTRUCTTX_FAILED });
+        } else {
+          constructTxResponse.totalAmount = totalAmount;
+          dispatch({constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
+        }
+      });
   };
 }
