@@ -35,13 +35,11 @@ export default function control(state = {}, action) {
     return {...state,
       getNextAddressError: null,
       getNextAddressRequestAttempt: true,
-      getNextAddressRequest: action.request,
     };
   case GETNEXTADDRESS_FAILED:
     return {...state,
-      getNextAddressError: action.error,
+      getNextAddressError: String(action.error),
       getNextAddressRequestAttempt: false,
-      getNextAddressRequest: null,
     };
   case GETNEXTADDRESS_SUCCESS:
     return {...state,
@@ -53,13 +51,11 @@ export default function control(state = {}, action) {
     return {...state,
       renameAccountError: null,
       renameAccountRequestAttempt: true,
-      renameAccountRequest: action.request,
     };
   case RENAMEACCOUNT_FAILED:
     return {...state,
-      renameAccountError: action.error,
+      renameAccountError: String(action.error),
       renameAccountRequestAttempt: false,
-      renameAccountRequest: null,
     };
   case RENAMEACCOUNT_SUCCESS:
     return {...state,
@@ -79,14 +75,13 @@ export default function control(state = {}, action) {
   case RESCAN_ATTEMPT:
     return {...state,
       rescanError: null,
-      rescanRequestAttempt: true,
       rescanRequest: action.request,
+      rescanRequestAttempt: true,
     };
   case RESCAN_FAILED:
     return {...state,
-      rescanError: action.error,
+      rescanError: String(action.error),
       rescanRequestAttempt: false,
-      rescanRequest: null,
     };
   case RESCAN_PROGRESS:
     return {...state,
@@ -95,21 +90,19 @@ export default function control(state = {}, action) {
   case RESCAN_COMPLETE:
     return {...state,
       rescanError: '',
+      rescanRequest: null,
       rescanRequestAttempt: false,
       rescanResponse: null,
-      rescanRequest: null,
     };
   case GETNEXTACCOUNT_ATTEMPT:
     return {...state,
       getNextAccountError: null,
       getNextAccountRequestAttempt: true,
-      getNextAccountRequest: action.request,
     };
   case GETNEXTACCOUNT_FAILED:
     return {...state,
-      getNextAccountError: action.error,
+      getNextAccountError: String(action.error),
       getNextAccountRequestAttempt: false,
-      getNextAccountRequest: null,
     };
   case GETNEXTACCOUNT_SUCCESS:
     return {...state,
@@ -130,13 +123,11 @@ export default function control(state = {}, action) {
     return {...state,
       importPrivateKeyError: null,
       importPrivateKeyRequestAttempt: true,
-      importPrivateKeyRequest: action.request,
     };
   case IMPORTPRIVKEY_FAILED:
     return {...state,
-      importPrivateKeyError: action.error,
+      importPrivateKeyError: String(action.error),
       importPrivateKeyRequestAttempt: false,
-      importPrivateKeyRequest: null,
     };
   case IMPORTPRIVKEY_SUCCESS:
     return {...state,
@@ -148,15 +139,12 @@ export default function control(state = {}, action) {
     return {...state,
       importScriptError: null,
       importScriptRequestAttempt: true,
-      importScriptRequest: action.request,
     };
   case IMPORTSCRIPT_FAILED:
     return {...state,
-      importScriptError: action.error,
+      importScriptError: String(action.error),
       importScriptRequestAttempt: false,
-      importScriptRequest: null,
       purchaseTicketsRequestAttempt: false,
-      purchaseTicketsRequest: null,
     };
   case IMPORTSCRIPT_SUCCESS:
     return {...state,
@@ -177,13 +165,11 @@ export default function control(state = {}, action) {
     return {...state,
       changePassphraseError: null,
       changePassphraseRequestAttempt: true,
-      changePassphraseRequest: action.request,
     };
   case CHANGEPASSPHRASE_FAILED:
     return {...state,
-      changePassphraseError: action.error,
+      changePassphraseError: String(action.error),
       changePassphraseRequestAttempt: false,
-      changePassphraseRequest: null,
     };
   case CHANGEPASSPHRASE_SUCCESS:
     return {...state,
@@ -204,13 +190,11 @@ export default function control(state = {}, action) {
     return {...state,
       loadActiveDataFiltersError: null,
       loadActiveDataFiltersRequestAttempt: true,
-      loadActiveDataFiltersRequest: action.request,
     };
   case LOADACTIVEDATAFILTERS_FAILED:
     return {...state,
-      loadActiveDataFiltersError: action.error,
+      loadActiveDataFiltersError: String(action.error),
       loadActiveDataFiltersRequestAttempt: false,
-      loadActiveDataFiltersRequest: null,
     };
   case LOADACTIVEDATAFILTERS_SUCCESS:
     return {...state,
@@ -222,13 +206,11 @@ export default function control(state = {}, action) {
     return {...state,
       fundTransactionError: null,
       fundTransactionRequestAttempt: true,
-      fundTransactionRequest: action.request,
     };
   case FUNDTX_FAILED:
     return {...state,
-      fundTransactionError: action.error,
+      fundTransactionError: String(action.error),
       fundTransactionRequestAttempt: false,
-      fundTransactionRequest: null,
     };
   case FUNDTX_SUCCESS:
     return {...state,
@@ -244,13 +226,11 @@ export default function control(state = {}, action) {
     return {...state,
       signTransactionError: null,
       signTransactionRequestAttempt: true,
-      signTransactionRequest: action.request,
     };
   case SIGNTX_FAILED:
     return {...state,
-      signTransactionError: action.error,
+      signTransactionError: String(action.error),
       signTransactionRequestAttempt: false,
-      signTransactionRequest: null,
     };
   case SIGNTX_SUCCESS:
     return {...state,
@@ -262,13 +242,11 @@ export default function control(state = {}, action) {
     return {...state,
       publishTransactionError: null,
       publishTransactionRequestAttempt: true,
-      publishTransactionRequest: action.request,
     };
   case PUBLISHTX_FAILED:
     return {...state,
-      publishTransactionError: action.error,
+      publishTransactionError: String(action.error),
       publishTransactionRequestAttempt: false,
-      publishTransactionRequest: null,
     };
   case PUBLISHTX_SUCCESS:
     return {...state,
@@ -298,13 +276,11 @@ export default function control(state = {}, action) {
     return {...state,
       purchaseTicketsError: null,
       purchaseTicketsRequestAttempt: true,
-      purchaseTicketsRequest: action.request,
     };
   case PURCHASETICKETS_FAILED:
     return {...state,
-      purchaseTicketsError: action.error,
+      purchaseTicketsError: String(action.error),
       purchaseTicketsRequestAttempt: false,
-      purchaseTicketsRequest: null,
     };
   case PURCHASETICKETS_SUCCESS:
     return {...state,
@@ -325,13 +301,11 @@ export default function control(state = {}, action) {
     return {...state,
       revokeTicketsError: null,
       revokeTicketsRequestAttempt: true,
-      revokeTicketsRequest: action.request,
     };
   case REVOKETICKETS_FAILED:
     return {...state,
-      revokeTicketsError: action.error,
+      revokeTicketsError: String(action.error),
       revokeTicketsRequestAttempt: false,
-      revokeTicketsRequest: null,
     };
   case REVOKETICKETS_SUCCESS:
     return {...state,
@@ -351,21 +325,18 @@ export default function control(state = {}, action) {
   case GETTICKETBUYERCONFIG_ATTEMPT:
     return {
       ...state,
-      getTicketBuyerConfigRequest: action.request,
       getTicketBuyerConfigError: null,
       getTicketBuyerConfigRequestAttempt: true,
     };
   case GETTICKETBUYERCONFIG_FAILED:
     return {
       ...state,
-      getTicketBuyerConfigRequest: null,
-      getTicketBuyerConfigError: action.error,
+      getTicketBuyerConfigError: String(action.error),
       getTicketBuyerConfigRequestAttempt: false,
     };
   case GETTICKETBUYERCONFIG_SUCCESS:
     return {
       ...state,
-      getTicketBuyerConfigRequest: null,
       getTicketBuyerConfigRequestAttempt: false,
       getTicketBuyerConfigResponse: action.ticketBuyerConfig,
     };
@@ -417,13 +388,11 @@ export default function control(state = {}, action) {
     return {...state,
       startAutoBuyerError: null,
       startAutoBuyerRequestAttempt: true,
-      startAutoBuyerRequest: action.request,
     };
   case STARTAUTOBUYER_FAILED:
     return {...state,
-      startAutoBuyerError: action.error,
+      startAutoBuyerError: String(action.error),
       startAutoBuyerRequestAttempt: false,
-      startAutoBuyerRequest: null,
     };
   case STARTAUTOBUYER_SUCCESS:
     return {...state,
@@ -432,7 +401,6 @@ export default function control(state = {}, action) {
       startAutoBuyerRequestAttempt: false,
       startAutoBuyerResponse: action.startAutoBuyerResponse,
       stopAutoBuyerSuccess: null,
-      stopAutoBuyerRequest: null,
       stopAutoBuyerResponse: null,
       balanceToMaintain: action.balanceToMaintain,
       maxFeePerKb: action.maxFeePerKb,
@@ -452,24 +420,20 @@ export default function control(state = {}, action) {
     return {...state,
       stopAutoBuyerError: null,
       stopAutoBuyerRequestAttempt: true,
-      stopAutoBuyerRequest: action.request,
     };
   case STOPAUTOBUYER_FAILED:
     return {...state,
-      stopAutoBuyerError: action.error,
+      stopAutoBuyerError: String(action.error),
       stopAutoBuyerRequestAttempt: false,
-      stopAutoBuyerRequest: null,
     };
   case STOPAUTOBUYER_SUCCESS:
     return {...state,
       stopAutoBuyerError: null,
-      stopAutoBuyerRequest: null,
       stopAutoBuyerSuccess: action.success,
       stopAutoBuyerRequestAttempt: false,
       stopAutoBuyerResponse: action.stopAutoBuyerResponse,
       startAutoBuyerSuccess: null,
       startAutoBuyerResponse: null,
-      startAutoBuyerRequest: null,
     };
   case STOPAUTOBUYER_CLEAR_ERROR:
     return {...state,
@@ -483,11 +447,10 @@ export default function control(state = {}, action) {
     return {...state,
       constructTxError: null,
       constructTxRequestAttempt: true,
-      constructTxRequest: action.request,
     };
   case CONSTRUCTTX_FAILED:
     return {...state,
-      constructTxError: action.error,
+      constructTxError: String(action.error),
       constructTxRequestAttempt: false,
       constructTxResponse: null,
     };

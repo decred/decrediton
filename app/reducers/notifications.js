@@ -10,7 +10,6 @@ export default function notifications(state = {}, action) {
   case TRANSACTIONNTFNS_START:
     return {...state,
       transactionNtfnsAttempt: true,
-      transactionNtfnsRequest: action.request,
     };
   case TRANSACTIONNTFNS_FAILED:
   case TRANSACTIONNTFNS_DATA:
@@ -40,7 +39,6 @@ export default function notifications(state = {}, action) {
   case ACCOUNTNTFNS_START:
     return {...state,
       accountNtfnsAttempt: true,
-      accountNtfnsRequest: action.request,
     };
   case ACCOUNTNTFNS_FAILED:
   case ACCOUNTNTFNS_DATA:

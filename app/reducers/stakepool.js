@@ -14,7 +14,7 @@ export default function stakepool(state = {}, action) {
   case UPDATESTAKEPOOLCONFIG_FAILED:
     return {...state,
       currentStakePoolConfigRequest: false,
-      currentStakePoolConfigError: action.error,
+      currentStakePoolConfigError: String(action.error),
     };
   case UPDATESTAKEPOOLCONFIG_SUCCESS:
     return {...state,

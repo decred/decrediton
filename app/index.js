@@ -76,7 +76,6 @@ var initialState = {
     getVersionServiceRequestAttempt: false,
     getVersionServiceError: '',
     // Balance
-    getWalletRPCVersionRequest: null,
     getWalletRPCVersionError: null,
     getWalletRPCVersionRequestAttempt: false,
     getWalletRPCVersionResponse: null,
@@ -94,41 +93,36 @@ var initialState = {
     testnet: 1223139429,
     // MainNet CurrencyNet = 0xd9b400f9
     mainnet: 3652452601,
+
+    // GetWalletService
     getWalletServiceRequestAttempt: false,
     getWalletServiceError: '',
     // Balance
-    getBalanceRequest: null,
     getBalanceError: null,
     getBalanceRequestAttempt: false,
     balances: Array(),
     // AccountNumber
-    getAccountNumberRequest: null,
     getAccountNumberError: null,
     getAccountNumberRequestAttempt: false,
     getAccountNumberResponse: null,
     // Network
-    getNetworkRequest: null,
     getNetworkError: null,
     getNetworkRequestAttempt: false,
     getNetworkResponse: null,
     // Ping
-    getPingRequest: null,
     getPingError: null,
     getPingRequestAttempt: false,
     getPingResponse: null,
     // StakeInfo
-    getStakeInfoRequest: null,
     getStakeInfoError: null,
     getStakeInfoRequestAttempt: false,
     getStakeInfoResponse: null,
     // TicketPrice
-    getTicketPriceRequest: null,
     getTicketPriceError: null,
     getTicketPriceRequestAttempt: false,
     getTicketPriceResponse: null,
     // Accounts
     hiddenAccounts: hiddenAccounts,
-    getAccountsRequest: null,
     getAccountsError: null,
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
@@ -145,12 +139,12 @@ var initialState = {
     ticketTransactionsInfo: Array(),
     voteTransactionsInfo: Array(),
     revokeTransactionsInfo: Array(),
-    getTransactionsRequest: null,
     getTransactionsError: null,
     getTransactionsRequestAttempt: false,
     getTransactionsResponse: null,
     unminedTransactions: null,
 
+    // Agenda/VoteChoices
     getAgendasResponse: null,
     getVoteChoicesResponse: null,
   },
@@ -161,66 +155,54 @@ var initialState = {
     stepIndex: 0,
     // Loader
     getLoaderRequestAttempt: false,
-    getLoaderRequest: null,
     loader: null,
     getLoaderError: null,
     // WalletCreate
     createWalletExisting: false,
     confirmNewSeed: false,
     walletCreateRequestAttempt: false,
-    walletCreateRequest: false,
     walletCreateResponse: null,
     walletCreateError: null,
     walletCreateExisting: false,
     // WalletExist
     walletExistRequestAttempt: false,
-    walletExistRequest: null,
     walletExistResponse: null,
     walletExistError: null,
     // WalletOpen
     walletOpenRequestAttempt: false,
-    walletOpenRequest: null,
     walletOpenResponse: null,
     walletOpenError: null,
     // WalletClose
     walletCloseRequestAttempt: false,
-    walletClosedRequest: null,
     walletClosedResponse: null,
     walletClosedError: null,
     // StartRpc
     startRpcRequestAttempt: false,
-    startRpcRequest: null,
     startRpcResponse: null,
     startRpcError: null,
     // DiscoverAddress
     discoverAddressRequestAttempt: false,
-    discoverAddressRequest: null,
     discoverAddressResponse: null,
     discoverAddressError: null,
     // SubscribeBlockNtfns
     subscribeBlockNtfnsRequestAttempt: false,
-    subscribeBlockNtfnsRequest: null,
     subscribeBlockNtfnsResponse: null,
     subscribeBlockNtfnsError: null,
     // FetchHeaders
     fetchHeadersRequestAttempt: false,
-    fetchHeadersRequest: null,
     fetchHeadersResponse: null,
     fetchHeadersError: null,
   },
   seedService: {
     getSeederRequestAttempt: false,
-    getSeederRequest: null,
     seeder: null,
     getSeederError: null,
 
     generateRandomSeedRequestAttempt: false,
-    generateRandomSeedRequest: null,
     generateRandomSeedResponse: null,
     generateRandomSeedError: null,
 
     decodeSeedRequestAttempt: false,
-    decodeSeedRequest: null,
     decodeSeedResponse: null,
     decodeSeedError: null,
   },
@@ -230,85 +212,71 @@ var initialState = {
     timeBackString: '',
     blocksPerDay: blocksPerDay,
     transactionNtfnsRequestAttempt: false,
-    transactionNtfnsRequest: null,
     transactionNtfnsResponse: null,
 
     unmined: Array(),
     newUnminedMessage: null,
 
     accountNtfnsRequestAttempt: false,
-    accountNtfnsRequest: null,
     accountNtfnsResponse: null,
   },
   control: {
     // NextAddress
     getNextAddressRequestAttempt: false,
-    getNextAddressRequest: null,
     getNextAddressResponse: null,
     getNextAddressError: null,
     // RenameAccount
     renameAccountRequestAttempt: false,
-    renameAccountRequest: null,
     renameAccountResponse: null,
     renameAccountSuccess: null,
     renameAccountError: null,
     // Rescan
     rescanRequestAttempt: false,
-    rescanRequest: null,
+    rescaneRequest: null,
     rescanResponse: null,
     rescanError: null,
     // NextAccount
     getNextAccountRequestAttempt: false,
-    getNextAccountRequest: null,
     getNextAccountResponse: null,
     getNextAccountSuccess: null,
     getNextAccountError: null,
     // ImportPrivateKey
     importPrivateKeyRequestAttempt: false,
-    importPrivateKeyRequest: null,
     importPrivateKeyResponse: null,
     importPrivateKeyError: null,
     // ImportScript
     importScriptRequestAttempt: false,
-    importScriptRequest: null,
     importScriptResponse: null,
     importScriptError: null,
     importScriptSuccess: '',
     // ChangePassphrase
     changePassphraseRequestAttempt: false,
-    changePassphraseRequest: null,
     changePassphraseResponse: null,
     changePassphraseError: null,
     changePassphraseSuccess: '',
     // ChangePassphrase
     loadActiveDataFiltersRequestAttempt: false,
-    loadActiveDataFiltersRequest: null,
     loadActiveDataFiltersResponse: null,
     loadActiveDataFiltersError: null,
     // FundTransaction
     fundTransactionRequestAttempt: false,
-    fundTransactionRequest: null,
     fundTransactionResponse: null,
     fundTransactionError: null,
     // SignTransaction
     signTransactionRequestAttempt: false,
-    signTransactionRequest: null,
     signTransactionRespsonse: null,
     signTransactionError: null,
     // PublishTransaction
     publishTransactionRequestAttempt: false,
-    publishTransactionRequest: null,
     publishTransactionResponse: null,
     publishTransactionError: null,
     // PurchaseTicket
     purchaseTicketsRequestAttempt: false,
-    purchaseTicketsRequest: null,
     purchaseTicketsResponse: null,
     purchaseTicketsSuccess: '',
     purchaseTicketsError: null,
     // RevokeTickets
     revokeTicketsRequestAttempt: false,
-    revokeTicketsRequest: null,
     revokeTicketsResponse: null,
     revokeTicketsSuccess: '',
     revokeTicketsError: null,
@@ -322,25 +290,21 @@ var initialState = {
     maxPriceRelative: cfg.get('maxpricerelative'),
     maxPerBlock: cfg.get('maxperblock'),
     getTicketBuyerConfigRequestAttempt: false,
-    getTicketBuyerConfigRequest: null,
     getTicketBuyerConfigResponse: null,
     getTicketBuyerConfigSuccess: null,
     getTicketBuyerConfigError: null,
     // StartAutoBuyer
     startAutoBuyerRequestAttempt: false,
-    startAutoBuyerRequest: null,
     startAutoBuyerResponse: null,
     startAutoBuyerSuccess: null,
     startAutoBuyerError: null,
     // StopAutoBuyer
     stopAutoBuyerRequestAttempt: false,
-    stopAutoBuyerRequest: null,
     stopAutoBuyerResponse: null,
     stopAutoBuyerSuccess: null,
     stopAutoBuyerError: null,
     // ConstructTransaction
     constructTxRequestAttempt: false,
-    constructTxRequest: null,
     constructTxResponse: null,
     constructTxError: null,
   }

@@ -15,7 +15,6 @@ function mapStateToProps(state) {
     ticketTransactionsInfo: state.grpc.ticketTransactionsInfo,
     voteTransactionsInfo: state.grpc.voteTransactionsInfo,
     revokeTransactionsInfo: state.grpc.revokeTransactionsInfo,
-    getTransactionsRequest: state.grpc.getTransactions,
     transactionDetails: state.grpc.transactionDetails,
     getAccountsResponse: state.grpc.getAccountsResponse,
     getNetworkResponse: state.grpc.getNetworkResponse,

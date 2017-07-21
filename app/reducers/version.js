@@ -13,7 +13,7 @@ export default function version(state = {}, action) {
     };
   case GETVERSIONSERVICE_FAILED:
     return {...state,
-      getVersionServiceError: action.error,
+      getVersionServiceError: String(action.error),
       getVersionServiceRequestAttempt: false,
     };
   case GETVERSIONSERVICE_SUCCESS:
@@ -26,13 +26,11 @@ export default function version(state = {}, action) {
     return {...state,
       getWalletRPCVersionError: null,
       getWalletRPCVersionRequestAttempt: true,
-      getWalletRPCVersionRequest: action.request,
     };
   case WALLETRPCVERSION_FAILED:
     return {...state,
-      getWalletRPCVersionError: action.error,
+      getWalletRPCVersionError: String(action.error),
       getWalletRPCVersionRequestAttempt: false,
-      getWalletRPCVersionRequest: null,
     };
   case WALLETRPCVERSION_SUCCESS:
     return {...state,
@@ -43,7 +41,7 @@ export default function version(state = {}, action) {
   case VERSION_NOT_VALID:
     return {...state,
       versionInvalid: true,
-      versionInvalidError: action.error
+      versionInvalidError: String(action.error)
     };
   default:
     return state;

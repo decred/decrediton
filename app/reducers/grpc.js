@@ -34,7 +34,7 @@ export default function grpc(state = {}, action) {
   case GETWALLETSERVICE_FAILED:
     return {
       ...state,
-      getWalletServiceError: action.error,
+      getWalletServiceError: String(action.error),
       getWalletServiceRequestAttempt: false,
     };
   case GETWALLETSERVICE_SUCCESS:
@@ -53,7 +53,7 @@ export default function grpc(state = {}, action) {
   case GETTICKETBUYERSERVICE_FAILED:
     return {
       ...state,
-      getTicketBuyerServiceError: action.error,
+      getTicketBuyerServiceError: String(action.error),
       getTicketBuyerServiceRequestAttempt: false,
     };
   case GETTICKETBUYERSERVICE_SUCCESS:
@@ -68,14 +68,12 @@ export default function grpc(state = {}, action) {
       ...state,
       getBalanceError: null,
       getBalanceRequestAttempt: true,
-      getBalanceRequest: action.request,
     };
   case GETBALANCE_FAILED:
     return {
       ...state,
-      getBalanceError: action.error,
+      getBalanceError: String(action.error),
       getBalanceRequestAttempt: false,
-      getBalanceRequest: null,
     };
   case GETBALANCE_SUCCESS:
     return {
@@ -89,12 +87,11 @@ export default function grpc(state = {}, action) {
       ...state,
       getAccountNumberError: '',
       getAccountNumberRequestAttempt: true,
-      getAccountNumberRequest: action.request,
     };
   case GETACCOUNTNUMBER_FAILED:
     return {
       ...state,
-      getAccountNumberError: action.error,
+      getAccountNumberError: String(action.error),
       getAccountNumberRequestAttempt: false,
     };
   case GETACCOUNTNUMBER_SUCCESS:
@@ -109,12 +106,11 @@ export default function grpc(state = {}, action) {
       ...state,
       getNetworkError: null,
       getNetworkRequestAttempt: true,
-      getNetworkRequest: action.request,
     };
   case GETNETWORK_FAILED:
     return {
       ...state,
-      getNetworkError: action.error,
+      getNetworkError: String(action.error),
       getNetworkRequestAttempt: false,
     };
   case GETNETWORK_SUCCESS:
@@ -129,12 +125,11 @@ export default function grpc(state = {}, action) {
       ...state,
       getPingError: '',
       getPingRequestAttempt: true,
-      getPingRequest: action.request,
     };
   case GETPING_FAILED:
     return {
       ...state,
-      getPingError: action.error,
+      getPingError: String(action.error),
       getPingRequestAttempt: false,
     };
   case GETPING_SUCCESS:
@@ -149,12 +144,11 @@ export default function grpc(state = {}, action) {
       ...state,
       getStakeInfoError: '',
       getStakeInfoRequestAttempt: true,
-      getStakeInfoRequest: action.request,
     };
   case GETSTAKEINFO_FAILED:
     return {
       ...state,
-      getStakeInfoError: action.error,
+      getStakeInfoError: String(action.error),
       getStakeInfoRequestAttempt: false,
     };
   case GETSTAKEINFO_SUCCESS:
@@ -169,12 +163,11 @@ export default function grpc(state = {}, action) {
       ...state,
       getTicketPriceError: '',
       getTicketPriceRequestAttempt: true,
-      getTicketPriceRequest: action.request,
     };
   case GETTICKETPRICE_FAILED:
     return {
       ...state,
-      getTicketPriceError: action.error,
+      getTicketPriceError: String(action.error),
       getTicketPriceRequestAttempt: false,
     };
   case GETTICKETPRICE_SUCCESS:
@@ -189,12 +182,11 @@ export default function grpc(state = {}, action) {
       ...state,
       getAccountsError: '',
       getAccountsRequestAttempt: true,
-      getAccountsRequest: action.request,
     };
   case GETACCOUNTS_FAILED:
     return {
       ...state,
-      getAccountsError: action.error,
+      getAccountsError: String(action.error),
       getAccountsRequestAttempt: false,
     };
   case GETACCOUNTS_SUCCESS:
@@ -222,7 +214,7 @@ export default function grpc(state = {}, action) {
   case GETTRANSACTIONS_FAILED:
     return {
       ...state,
-      getTransactionsRequestError: action.error,
+      getTransactionsRequestError: String(action.error),
       getTransactionsRequestAttempt: false,
     };
   case GETTRANSACTIONS_COMPLETE:
@@ -275,7 +267,7 @@ export default function grpc(state = {}, action) {
   case GETAGENDASERVICE_FAILED:
     return {
       ...state,
-      getAgendaServiceError: action.error,
+      getAgendaServiceError: String(action.error),
       getAgendaServiceRequestAttempt: false,
     };
   case GETAGENDASERVICE_SUCCESS:
@@ -293,7 +285,7 @@ export default function grpc(state = {}, action) {
   case GETVOTINGSERVICE_FAILED:
     return {
       ...state,
-      getVotingServiceError: action.error,
+      getVotingServiceError: String(action.error),
       getVotingServiceRequestAttempt: false,
     };
   case GETVOTINGSERVICE_SUCCESS:
@@ -305,63 +297,54 @@ export default function grpc(state = {}, action) {
   case GETAGENDAS_ATTEMPT:
     return {
       ...state,
-      getAgendasRequest: action.request,
       getAgendasError: null,
       getAgendasRequestAttempt: true,
     };
   case GETAGENDAS_FAILED:
     return {
       ...state,
-      getAgendasRequest: null,
-      getAgendasError: action.error,
+      getAgendasError: String(action.error),
       getAgendasRequestAttempt: false,
     };
   case GETAGENDAS_SUCCESS:
     return {
       ...state,
-      getAgendasRequest: null,
       getAgendasRequestAttempt: false,
       getAgendasResponse: action.agendas,
     };
   case GETVOTECHOICES_ATTEMPT:
     return {
       ...state,
-      getVoteChoicesRequest: action.request,
       getVoteChoicesError: null,
       getVoteChoicesRequestAttempt: true,
     };
   case GETVOTECHOICES_FAILED:
     return {
       ...state,
-      getVoteChoicesRequest: null,
-      getVoteChoicesError: action.error,
+      getVoteChoicesError: String(action.error),
       getVoteChoicesRequestAttempt: false,
     };
   case GETVOTECHOICES_SUCCESS:
     return {
       ...state,
-      getVoteChoicesRequest: null,
       getVoteChoicesRequestAttempt: false,
       getVoteChoicesResponse: action.voteChoices,
     };
   case SETVOTECHOICES_ATTEMPT:
     return {
       ...state,
-      setVoteChoicesRequest: action.setVoteChoicesRequest,
       setVoteChoicesError: null,
       setVoteChoicesRequestAttempt: true,
     };
   case SETVOTECHOICES_FAILED:
     return {
       ...state,
-      setVoteChoicesRequest: null,
-      setVoteChoicesError: action.error,
+      setVoteChoicesError: String(action.error),
       setVoteChoicesRequestAttempt: false,
     };
   case SETVOTECHOICES_SUCCESS:
     return {
       ...state,
-      setVoteChoicesRequest: null,
       setVoteChoicesRequestAttempt: false,
       setVoteChoicesResponse: action.voteChoices,
     };

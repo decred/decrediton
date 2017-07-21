@@ -170,9 +170,14 @@ function transactionNtfnsData(response) {
 
 export function transactionNtfnsStart() {
   var request = new TransactionNotificationsRequest();
-  return (dispatch) => {
-    dispatch({request: request, type: TRANSACTIONNTFNS_START });
-    dispatch(startTransactionNtfns());
+  return (dispatch, getState) => {
+    dispatch({ type: TRANSACTIONNTFNS_START });
+    const { walletService } = getState().grpc;
+    transactionNtfs(walletService, request,
+      function(data) {
+        dispatch(transactionNtfnsData(data));
+      }
+    );
   };
 }
 
@@ -184,55 +189,32 @@ export function transactionNtfnsEnd() {
   };
 }
 
-function startTransactionNtfns() {
-  return (dispatch, getState) => {
-    const { walletService } = getState().grpc;
-    const { transactionNtfnsRequest } = getState().notifications;
-    transactionNtfs(walletService, transactionNtfnsRequest,
-      function(data) {
-        dispatch(transactionNtfnsData(data));
-      }
-    );
-  };
-}
-
 export const ACCOUNTNTFNS_START = 'ACCOUNTNTFNS_START';
 export const ACCOUNTNTFNS_FAILED = 'ACCOUNTNTFNS_FAILED';
 export const ACCOUNTNTFNS_DATA = 'ACCOUNTNTFNS_DATA';
 export const ACCOUNTNTFNS_END = 'ACCOUNTNTFNS_END';
 
-function accountNtfnsData(response) {
-  return { response: response, type: ACCOUNTNTFNS_DATA };
-}
-
 export function accountNtfnsStart() {
   var request = new AccountNotificationsRequest();
-  return (dispatch) => {
-    dispatch({request: request, type: ACCOUNTNTFNS_START });
-    dispatch(startAccountNtfns());
-  };
-}
-
-export function accountNtfnsEnd() {
-  var request = {};
-  return (dispatch) => {
-    dispatch({request: request, type: ACCOUNTNTFNS_END });
-    //
-  };
-}
-
-function startAccountNtfns() {
   return (dispatch, getState) => {
+    dispatch({request: request, type: ACCOUNTNTFNS_START });
     const { walletService } = getState().grpc;
-    const { accountNtfnsRequest } = getState().notifications;
-    accountNtfs(walletService, accountNtfnsRequest,
+    accountNtfs(walletService, request,
       function(data) {
-        dispatch(accountNtfnsData(data));
+        dispatch({ response: data, type: ACCOUNTNTFNS_DATA });
       }
     );
   };
 }
+
+export function accountNtfnsEnd() {
+  return (dispatch) => {
+    dispatch({ type: ACCOUNTNTFNS_END });
+    //
+  };
+}
+
 export const CLEARUNMINEDMESSAGE = 'CLEARUNMINEDMESSAGE';
 export function clearNewUnminedMessage() {
-  return {type: CLEARUNMINEDMESSAGE};
+  return { type: CLEARUNMINEDMESSAGE };
 }
