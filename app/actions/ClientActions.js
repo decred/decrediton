@@ -350,19 +350,13 @@ export function getTransactionInfoAttempt() {
     request.setStartingBlockHeight(startRequestHeight);
     request.setEndingBlockHeight(endRequestHeight);
     dispatch({ type: GETTRANSACTIONS_ATTEMPT });
-    dispatch(getTransactionsInfo(request));
-  };
-}
-
-function getTransactionsInfo(request) {
-  return (dispatch, getState) => {
     const { walletService } = getState().grpc;
     var getTx = walletService.getTransactions(request);
     getTx.on('data', function (response) {
       dispatch(getTransactionsInfoProgress(response));
     });
     getTx.on('end', function () {
-      dispatch(getTransactionsInfoEnd());
+      setTimeout(() => { dispatch({ type: GETTRANSACTIONS_COMPLETE });}, 1000);
     });
     /*
     getTx.on('status', function (status) {
@@ -430,11 +424,6 @@ function getTransactionsInfoProgress(response) {
       dispatch({unmined: response.getUnminedTransactionsList(), type: GETTRANSACTIONS_UNMINED_PROGRESS});
     }
     response = null;
-  };
-}
-function getTransactionsInfoEnd() {
-  return (dispatch) => {
-    setTimeout(() => { dispatch({ type: GETTRANSACTIONS_COMPLETE });}, 1000);
   };
 }
 
