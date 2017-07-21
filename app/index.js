@@ -232,6 +232,7 @@ var initialState = {
     renameAccountError: null,
     // Rescan
     rescanRequestAttempt: false,
+    rescaneRequest: null,
     rescanResponse: null,
     rescanError: null,
     // NextAccount

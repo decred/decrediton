@@ -75,6 +75,7 @@ export default function control(state = {}, action) {
   case RESCAN_ATTEMPT:
     return {...state,
       rescanError: null,
+      rescanRequest: action.request,
       rescanRequestAttempt: true,
     };
   case RESCAN_FAILED:
@@ -89,6 +90,7 @@ export default function control(state = {}, action) {
   case RESCAN_COMPLETE:
     return {...state,
       rescanError: '',
+      rescanRequest: null,
       rescanRequestAttempt: false,
       rescanResponse: null,
     };

@@ -86,7 +86,7 @@ export function rescanAttempt(beginHeight) {
   var request = new RescanRequest();
   request.setBeginHeight(beginHeight);
   return (dispatch, getState) => {
-    dispatch({ type: RESCAN_ATTEMPT });
+    dispatch({ request: request, type: RESCAN_ATTEMPT });
     const { walletService } = getState().grpc;
     var rescanCall = walletService.rescan(request);
     rescanCall.on('data', function(response) {
