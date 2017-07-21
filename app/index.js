@@ -238,72 +238,59 @@ var initialState = {
   control: {
     // NextAddress
     getNextAddressRequestAttempt: false,
-    getNextAddressRequest: null,
     getNextAddressResponse: null,
     getNextAddressError: null,
     // RenameAccount
     renameAccountRequestAttempt: false,
-    renameAccountRequest: null,
     renameAccountResponse: null,
     renameAccountSuccess: null,
     renameAccountError: null,
     // Rescan
     rescanRequestAttempt: false,
-    rescanRequest: null,
     rescanResponse: null,
     rescanError: null,
     // NextAccount
     getNextAccountRequestAttempt: false,
-    getNextAccountRequest: null,
     getNextAccountResponse: null,
     getNextAccountSuccess: null,
     getNextAccountError: null,
     // ImportPrivateKey
     importPrivateKeyRequestAttempt: false,
-    importPrivateKeyRequest: null,
     importPrivateKeyResponse: null,
     importPrivateKeyError: null,
     // ImportScript
     importScriptRequestAttempt: false,
-    importScriptRequest: null,
     importScriptResponse: null,
     importScriptError: null,
     importScriptSuccess: '',
     // ChangePassphrase
     changePassphraseRequestAttempt: false,
-    changePassphraseRequest: null,
     changePassphraseResponse: null,
     changePassphraseError: null,
     changePassphraseSuccess: '',
     // ChangePassphrase
     loadActiveDataFiltersRequestAttempt: false,
-    loadActiveDataFiltersRequest: null,
     loadActiveDataFiltersResponse: null,
     loadActiveDataFiltersError: null,
     // FundTransaction
     fundTransactionRequestAttempt: false,
-    fundTransactionRequest: null,
     fundTransactionResponse: null,
     fundTransactionError: null,
     // SignTransaction
     signTransactionRequestAttempt: false,
-    signTransactionRequest: null,
     signTransactionRespsonse: null,
     signTransactionError: null,
     // PublishTransaction
     publishTransactionRequestAttempt: false,
-    publishTransactionRequest: null,
     publishTransactionResponse: null,
     publishTransactionError: null,
     // PurchaseTicket
     purchaseTicketsRequestAttempt: false,
-    purchaseTicketsRequest: null,
     purchaseTicketsResponse: null,
     purchaseTicketsSuccess: '',
     purchaseTicketsError: null,
     // RevokeTickets
     revokeTicketsRequestAttempt: false,
-    revokeTicketsRequest: null,
     revokeTicketsResponse: null,
     revokeTicketsSuccess: '',
     revokeTicketsError: null,
@@ -317,25 +304,21 @@ var initialState = {
     maxPriceRelative: cfg.get('maxpricerelative'),
     maxPerBlock: cfg.get('maxperblock'),
     getTicketBuyerConfigRequestAttempt: false,
-    getTicketBuyerConfigRequest: null,
     getTicketBuyerConfigResponse: null,
     getTicketBuyerConfigSuccess: null,
     getTicketBuyerConfigError: null,
     // StartAutoBuyer
     startAutoBuyerRequestAttempt: false,
-    startAutoBuyerRequest: null,
     startAutoBuyerResponse: null,
     startAutoBuyerSuccess: null,
     startAutoBuyerError: null,
     // StopAutoBuyer
     stopAutoBuyerRequestAttempt: false,
-    stopAutoBuyerRequest: null,
     stopAutoBuyerResponse: null,
     stopAutoBuyerSuccess: null,
     stopAutoBuyerError: null,
     // ConstructTransaction
     constructTxRequestAttempt: false,
-    constructTxRequest: null,
     constructTxResponse: null,
     constructTxError: null,
   }
