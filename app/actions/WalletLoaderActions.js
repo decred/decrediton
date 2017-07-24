@@ -3,7 +3,7 @@ import { loader } from '../middleware/grpc/client';
 import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from './ClientActions';
 import { getVersionServiceAttempt } from './VersionActions';
 import { getSeederAttempt, generateRandomSeedAttempt } from './SeedServiceActions';
-import { getCfg, getCfgPath, getDcrdCert } from '../config.js';
+import { getCfg, getCfgPath, getDcrdCert,RPCDaemonPort, RPCDaemonHost } from '../config.js';
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
   SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from '../middleware/walletrpc/api_pb';
@@ -175,18 +175,8 @@ function startRpcError(error, request) {
 
 export function startRpcRequestFunc(localHost) {
   var cfg = getCfg();
-  var rpcport = '';
-  if (cfg.get('network') == 'testnet') {
-    rpcport = cfg.get('daemon_port_testnet');
-  } else {
-    rpcport = cfg.get('daemon_port');
-  }
-  var daemon_host = '';
-  if (cfg.get('network') == 'testnet') {
-    daemon_host = cfg.get('daemon_rpc_host_testnet');
-  } else {
-    daemon_host = cfg.get('daemon_rpc_host');
-  }
+  var rpcport = RPCDaemonPort();
+  var daemonhost = RPCDaemonHost();
   var request = new StartConsensusRpcRequest();
 
   // This is an attempt to deal with different setups
@@ -200,7 +190,7 @@ export function startRpcRequestFunc(localHost) {
       dispatch(startRpcAction(request, true));
     };
   } else {
-    request.setNetworkAddress(daemon_host + ':' + rpcport);
+    request.setNetworkAddress(daemonhost + ':' + rpcport);
     request.setUsername(cfg.get('rpc_user'));
     request.setPassword(new Uint8Array(Buffer.from(cfg.get('rpc_pass'))));
     request.setCertificate(new Uint8Array(getDcrdCert()));

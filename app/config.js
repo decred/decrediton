@@ -232,6 +232,15 @@ export function RPCDaemonPort() {
   return cfg.get('daemon_port_testnet');
 }
 
+export function RPCDaemonHost() {
+  var cfg = getCfg();
+  if (cfg.get('network') == 'mainnet') {
+    return cfg.get('daemon_rpc_host');
+  }
+  return cfg.get('daemon_rpc_host_testnet');
+}
+
+
 export function dcrdCfg() {
   var cfgLoc = appDataDirectory();
   return path.join(cfgLoc, 'dcrd.conf');
