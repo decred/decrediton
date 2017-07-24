@@ -79,24 +79,13 @@ npm install -g npm
 cd
 ```
 
-Due to an incompatibility between grpc and electron, several extra
-steps are necessary.  As some current PRs make it into grpc these
-steps will be unnecessary in the future.  Since you must locally build
-grpc, you must have compilers and the normal development tools
-installed.
-
 Adjust the following steps for the paths you want to use.
 
 ``` bash
 mkdir code
 cd code
 git clone https://github.com/decred/decrediton.git
-git clone https://github.com/grpc/grpc
-cd grpc
-git checkout cc2e048e84eaa418cab393553594a3fefb891037
-git submodule update --init
-npm install
-cd ../decrediton
+cd decrediton
 npm install
 ```
 
