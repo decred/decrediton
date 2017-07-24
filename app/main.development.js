@@ -4,6 +4,12 @@ import path from 'path';
 import os from 'os';
 import parseArgs from 'minimist';
 import mv from 'mv';
+import winston from 'winston';
+
+winston.log('info', 'Hello distributed log files!');
+winston.info('Hello again distributed logs');
+winston.level = 'debug';
+winston.log('debug', 'Now my debug messages are written to console!');
 
 let menu;
 let template;
