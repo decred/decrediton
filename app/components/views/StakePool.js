@@ -72,8 +72,8 @@ class StakePool extends Component{
       conf: 0,
       numTickets: 1,
       expiry: 16,
-      txFee: 0.01, // DCR/kB
-      ticketFee: 0.01, // DCR/kB
+      txFee: 0.001, // DCR/kB
+      ticketFee: 0.001, // DCR/kB
       selectedStakePoolForPurchase: initStakePool,
       selectedStakePoolForVoting: initStakePool,
       advancedHidden: true,
@@ -790,7 +790,7 @@ class StakePool extends Component{
                     type="text"
                     style={StakePoolStyles.contentNestPurchaseTicketForm}
                     placeholder="Ticket Fee"
-                    defaultValue={0.01}
+                    defaultValue={0.001}
                     onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
                 </div>
               </div>
@@ -818,7 +818,7 @@ class StakePool extends Component{
                       type="text"
                       style={StakePoolStyles.contentNestPurchaseTicketForm}
                       placeholder="Tx Fee"
-                      defaultValue={0.01}
+                      defaultValue={0.001}
                       onBlur={(e) =>{this.updateTxFee(e.target.value);}}/>
                   </div>
                 </div>
