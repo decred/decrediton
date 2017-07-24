@@ -6,11 +6,6 @@ import parseArgs from 'minimist';
 import mv from 'mv';
 import winston from 'winston';
 
-winston.log('info', 'Hello distributed log files!');
-winston.info('Hello again distributed logs');
-winston.level = 'debug';
-winston.log('debug', 'Now my debug messages are written to console!');
-
 let menu;
 let template;
 let mainWindow = null;
@@ -61,6 +56,14 @@ if (process.env.NODE_ENV === 'development') {
 // Always use reasonable path for save data.
 app.setPath('userData', appDataDirectory());
 var cfg = getCfg();
+
+var logger = new (winston.Logger)({
+  transports: [
+    new (winston.transports.Console)({colorize: 'all'}),
+    new (winston.transports.File)({ filename: path.join(app.getPath('userData'),'decrediton.log') })
+  ]
+});
+logger.log('info', 'This is an information message.');
 
 if (debug) {
   console.log('Using config/data from:', app.getPath('userData'));
