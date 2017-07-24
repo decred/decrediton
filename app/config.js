@@ -32,6 +32,9 @@ export function getCfg(update) {
   if (!config.has('daemon_rpc_host')) {
     config.set('daemon_rpc_host', '127.0.0.1');
   }
+  if (!config.has('daemon_rpc_host_testnet')) {
+    config.set('daemon_rpc_host_testnet', '127.0.0.1');
+  }
   if (!config.has('wallet_rpc_host')) {
     config.set('wallet_rpc_host', '127.0.0.1');
   }

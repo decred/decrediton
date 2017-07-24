@@ -181,6 +181,12 @@ export function startRpcRequestFunc(localHost) {
   } else {
     rpcport = cfg.get('daemon_port');
   }
+  var daemon_host = '';
+  if (cfg.get('network') == 'testnet') {
+    daemon_host = cfg.get('daemon_rpc_host_testnet');
+  } else {
+    daemon_host = cfg.get('daemon_rpc_host');
+  }
   var request = new StartConsensusRpcRequest();
 
   // This is an attempt to deal with different setups
@@ -194,7 +200,7 @@ export function startRpcRequestFunc(localHost) {
       dispatch(startRpcAction(request, true));
     };
   } else {
-    request.setNetworkAddress('127.0.0.1:' + rpcport);
+    request.setNetworkAddress(daemon_host + ':' + rpcport);
     request.setUsername(cfg.get('rpc_user'));
     request.setPassword(new Uint8Array(Buffer.from(cfg.get('rpc_pass'))));
     request.setCertificate(new Uint8Array(getDcrdCert()));
