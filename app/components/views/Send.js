@@ -42,7 +42,7 @@ class Send extends Component{
         if (this.props.balances[i].accountNumber == 0) {
           defaultSpendable = this.props.balances[i].spendable;
         }
-        if (this.props.balances[i].accountName != 'imported' && this.props.balances[i].spendable > 0) {
+        if (this.props.balances[i].accountNumber == 0 || this.props.balances[i].accountName != 'imported' && this.props.balances[i].spendable > 0) {
           accountsList.push({ value: this.props.balances[i].accountNumber, label: this.props.balances[i].accountName + ': ' +this.props.balances[i].spendable / unitDivisor + ' ' + this.props.currentSettings.currencyDisplay});
         }
       }
@@ -66,7 +66,7 @@ class Send extends Component{
         if (nextProps.balances[i].accountNumber == this.state.account) {
           newAccountSpendableBalance = nextProps.balances[i].spendable;
         }
-        if (nextProps.balances[i].accountName != 'imported' && nextProps.balances[i].spendable > 0) {
+        if (nextProps.balances[i].accountNumber == 0 || nextProps.balances[i].accountName != 'imported' && nextProps.balances[i].spendable > 0) {
           accountsList.push({ value: nextProps.balances[i].accountNumber, label: nextProps.balances[i].accountName });
         }
       }
