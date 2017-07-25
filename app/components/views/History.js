@@ -32,7 +32,7 @@ class History extends Component{
       currentPage: 0,
       paginatedTxs: props.regularTransactionsInfo.length >= props.txPerPage  ? props.regularTransactionsInfo.slice(0,props.txPerPage) : props.regularTransactionsInfo.slice(0,props.regularTransactionsInfo.length),
       selectedTypeArray: props.regularTransactionsInfo,
-      selectedType: 'Regular',
+      selectedType: {value:'Regular', label:'Regular'},
       transactionDetails: null,
       detailType: null,
       txTypes: txTypes,
@@ -55,19 +55,19 @@ class History extends Component{
   }
   updateSelectedType(type) {
     var selectedTypeArray;
-    if (type == 'Regular') {
+    if (type.value == 'Regular') {
       const { regularTransactionsInfo } = this.props;
       selectedTypeArray = regularTransactionsInfo;
-    } else if (type == 'Tickets') {
+    } else if (type.value == 'Tickets') {
       const { ticketTransactionsInfo } = this.props;
       selectedTypeArray = ticketTransactionsInfo;
-    } else if (type == 'Votes') {
+    } else if (type.value == 'Votes') {
       const { voteTransactionsInfo } = this.props;
       selectedTypeArray = voteTransactionsInfo;
-    } else if (type == 'Revokes') {
+    } else if (type.value == 'Revokes') {
       const { revokeTransactionsInfo } = this.props;
       selectedTypeArray = revokeTransactionsInfo;
-    } else if (type == 'All') {
+    } else if (type.value == 'All') {
       const { regularTransactionsInfo } = this.props;
       const { ticketTransactionsInfo } = this.props;
       const { voteTransactionsInfo } = this.props;
@@ -91,7 +91,7 @@ class History extends Component{
       selectedTypeArray = allTransactions;
     }
     var paginatedTxs = selectedTypeArray.length >= this.props.txPerPage  ? selectedTypeArray.slice(0,this.props.txPerPage) : selectedTypeArray.slice(0,selectedTypeArray.length);
-    this.setState({selectedType: type, currentPage: 0, selectedTypeArray: selectedTypeArray, paginatedTxs: paginatedTxs});
+    this.setState({selectedType: type.value, currentPage: 0, selectedTypeArray: selectedTypeArray, paginatedTxs: paginatedTxs});
   }
   setTransactionDetails(tx, type) {
     this.setState({transactionDetails: tx, detailType: type});
@@ -120,7 +120,7 @@ class History extends Component{
           onChange={(val) => this.updateSelectedType(val)}
           placeholder={'Select type...'}
           multi={false}
-          value={'Regular'}
+          value={this.state.selectedType}
           valueKey="value" labelKey="label"
           options={this.state.txTypes}/>
       </div>);
