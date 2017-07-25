@@ -32,6 +32,9 @@ export function getCfg(update) {
   if (!config.has('daemon_rpc_host')) {
     config.set('daemon_rpc_host', '127.0.0.1');
   }
+  if (!config.has('daemon_rpc_host_testnet')) {
+    config.set('daemon_rpc_host_testnet', '127.0.0.1');
+  }
   if (!config.has('wallet_rpc_host')) {
     config.set('wallet_rpc_host', '127.0.0.1');
   }
@@ -228,6 +231,15 @@ export function RPCDaemonPort() {
   }
   return cfg.get('daemon_port_testnet');
 }
+
+export function RPCDaemonHost() {
+  var cfg = getCfg();
+  if (cfg.get('network') == 'mainnet') {
+    return cfg.get('daemon_rpc_host');
+  }
+  return cfg.get('daemon_rpc_host_testnet');
+}
+
 
 export function dcrdCfg() {
   var cfgLoc = appDataDirectory();
