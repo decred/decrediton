@@ -11,6 +11,8 @@ const styles = {
     overflow: 'auto',
     height: '556px',
     padding: '54px 160px 54px 180px',
+    width: '46%',
+    backgroundColor: 'rgba(12,30,62, 0.5)'
   },
   autobuyerPassphraseModalSection: {
     padding: '20px',
