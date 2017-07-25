@@ -131,12 +131,12 @@ export const ReceiveStyles = {
   },
   contentNestReceiveForAddressIcon: {
     display: 'inline-block',
-    width: '60px',
+    width: '34px',
     height: '34px',
     float: 'right',
-    paddingRight: '42px',
+    paddingRight: '140px',
     backgroundImage: `url(${WalletGray})`,
-    backgroundPosition: '50% 50%',
+    backgroundPosition: '0% 50%',
     backgroundSize: '20px auto',
     backgroundRepeat: 'no-repeat',
   },
@@ -182,6 +182,11 @@ export const ReceiveStyles = {
     marginTop: '20px',
     textAlign: 'center',
   },
+  receiveSelectAccountInput: {
+    width: '380px',
+    float: 'left',
+    paddingLeft: '20px',
+  }
 };
 export const SendStyles = {
   body: {

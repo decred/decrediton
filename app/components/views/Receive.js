@@ -7,6 +7,8 @@ import SideBar from '../SideBar';
 import Header from '../Header';
 import qr from 'qr-image';
 import { ReceiveStyles } from './ViewStyles';
+import Select from 'react-select';
+
 //var receiveCopy = 'To maximize privacy, please use addresses one time only.';
 class QRCode extends Component {
   static propTypes = {
@@ -21,18 +23,21 @@ class QRCode extends Component {
 class Receive extends Component{
   constructor(props) {
     super(props);
-    var accountName = '';
+    var defaultAccount;
+    var accountsList = Array();
     if (props.balances !== null && props.getNextAddressResponse !== null) {
       for (var i = 0; i < props.balances.length; i++) {
         if (props.getNextAddressResponse.accountNumber == props.balances[i].accountNumber) {
-          accountName = props.balances[i].accountName;
-          break;
+          defaultAccount = { value: props.balances[i].accountNumber, label: props.balances[i].accountName};
+        }
+        if (props.balances[i].accountName !== 'imported' && !props.balances[i].hidden) {
+          accountsList.push({ value: props.balances[i].accountNumber, label: props.balances[i].accountName});
         }
       }
     }
     this.state = {
-      account: props.getNextAddressResponse !== null ? props.getNextAddressResponse.accountNumber : 0,
-      accountName: props.getNextAddressResponse !== null ? accountName : 'default',
+      account: defaultAccount,
+      accountsList: accountsList
     };
   }
   static propTypes = {
@@ -40,44 +45,25 @@ class Receive extends Component{
     getNextAddressResponse: PropTypes.object,
     getNextAddressRequestAttempt: PropTypes.bool.isRequired,
   };
-  updateAccountNumber(accountNum) {
-    this.setState({account: accountNum});
-    if (this.props.balances != null) {
-      for (var i = 0; i < this.props.balances.length; i++) {
-        if (this.props.balances[i].accountNumber == accountNum) {
-          this.setState({accountName: this.props.balances[i].accountName});
-          break;
-        }
-      }
-      this.props.getNextAddressAttempt(accountNum);
-    }
+  updateAccountNumber(account) {
+    this.setState({account: account});
+    this.props.getNextAddressAttempt(account.value);
   }
   render() {
     const { walletService } = this.props;
     const { getNextAddressResponse, getNextAddressRequestAttempt } = this.props;
-    const { balances } = this.props;
 
     var selectAccounts = (
-      <div style={ReceiveStyles.selectAccountsArea}>
-        <select
-          defaultValue={this.state.account}
-          style={ReceiveStyles.selectAccounts}
-          onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
-          >
-          {balances !== null ?
-            balances.map((account) => {
-              if (account.accountName !== 'imported' && !account.hidden) {
-                return (
-                  <option style={ReceiveStyles.selectAccountsN} key={account.accountNumber} value={account.accountNumber}>
-                    {account.accountName}
-                  </option>
-                );
-              }
-            }):
-            null
-          }
-        </select>
-      </div>);
+      <Select
+        clearable={false}
+        style={{zIndex:'9'}}
+        onChange={(val) => this.updateAccountNumber(val)}
+        placeholder={'Select account...'}
+        multi={false}
+        value={this.state.account}
+        valueKey="value" labelKey="label"
+        options={this.state.accountsList}/>);
+
     const receive = (
       <div style={ReceiveStyles.view}>
         <Header
@@ -88,7 +74,9 @@ class Receive extends Component{
             <div style={ReceiveStyles.contentNestReceiveForAddress}>
               <div style={ReceiveStyles.contentNestReceiveForAddressIcon}></div>
               <div style={ReceiveStyles.contentNestPrefixReceive}>This address is for:</div>
-              {selectAccounts}
+              <div style={ReceiveStyles.receiveSelectAccountInput}>
+                {selectAccounts}
+              </div>
             </div>
             <div style={ReceiveStyles.contentNestQR}>
               <div style={ReceiveStyles.contentNestQRHash}>{getNextAddressResponse !== null ? getNextAddressResponse.getAddress() : ''}</div>
