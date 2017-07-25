@@ -645,7 +645,9 @@ class StakePool extends Component{
                   }
                 }
               }
-              return(<AgendaCard key={agenda.getId()} agenda={agenda} selectedChoice={selectedChoice} onClick={() => this.showAgendaOverview(agenda)}/>);
+              if (this.state.agendaDisplay == null || (this.state.agendaDisplay !== null && agenda.getId() !== this.state.agendaDisplay.getId())) {
+                return(<AgendaCard key={agenda.getId()} agenda={agenda} selectedChoice={selectedChoice} onClick={() => this.showAgendaOverview(agenda)}/>);
+              }
             }):
             <div style={StakePoolStyles.noAgendasMessage}>There are currently no agendas for voting.</div>:
           <div style={StakePoolStyles.noAgendasMessage}>There are currently no agendas for voting.</div>
