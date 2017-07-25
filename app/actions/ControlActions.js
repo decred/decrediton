@@ -16,7 +16,6 @@ export const GETNEXTADDRESS_FAILED = 'GETNEXTADDRESS_FAILED';
 export const GETNEXTADDRESS_SUCCESS = 'GETNEXTADDRESS_SUCCESS';
 
 export function getNextAddressAttempt(accountNum) {
-  console.log(accountNum);
   var request = new NextAddressRequest();
   request.setAccount(accountNum);
   request.setKind(0);

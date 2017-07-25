@@ -8,12 +8,25 @@ import Balance from '../Balance';
 import TxDetails from './TxDetails';
 import Header from '../Header';
 import { HistoryStyles } from './ViewStyles';
+import Select from 'react-select';
 
 class History extends Component{
   static propTypes = {
     walletService: PropTypes.object,
   };
   constructor(props) {
+    var txTypes = Array();
+    if (props.regularTransactionsInfo.length != 0 || props.ticketTransactionsInfo.length != 0 || props.voteTransactionsInfo.length != 0 || props.revokeTransactionsInfo.length != 0) {
+      txTypes.push({value:'All', label:'All'});
+    } else if (props.regularTransactionsInfo.length != 0) {
+      txTypes.push({value:'Regular', label:'Regular'});
+    } else if (props.ticketTransactionsInfo.length != 0) {
+      txTypes.push({value:'Tickets', label:'Tickets'});
+    } else if (props.voteTransactionsInfo.length != 0) {
+      txTypes.push({value:'Votes', label:'Votes'});
+    } else if (props.revokeTransactionsInfo.length != 0) {
+      txTypes.push({value:'Revokes', label:'Revokes'});
+    }
     super(props);
     this.state = {
       currentPage: 0,
@@ -22,6 +35,7 @@ class History extends Component{
       selectedType: 'Regular',
       transactionDetails: null,
       detailType: null,
+      txTypes: txTypes,
     };
   }
   pageForward() {
@@ -89,7 +103,6 @@ class History extends Component{
   render() {
     const { walletService, balances, getAccountsResponse } = this.props;
     const { txPerPage } = this.props;
-    const { regularTransactionsInfo, ticketTransactionsInfo, voteTransactionsInfo, revokeTransactionsInfo } = this.props;
     const { getNetworkResponse } = this.props;
 
     var totalPages = 1;
@@ -101,17 +114,15 @@ class History extends Component{
     var selectTxTypes = (
       <div style={HistoryStyles.selectTxTypesArea}>
         <div style={HistoryStyles.selectTxTypesLabel}>Tx Type:</div>
-        <select
-          defaultValue={this.state.selectedType}
-          style={HistoryStyles.selectTxTypes}
-          onChange={(e) =>{this.updateSelectedType(e.target.value);}}
-          >
-          <option style={HistoryStyles.selectTxTypesN} value='All' label='All' disabled={regularTransactionsInfo.length == 0 && ticketTransactionsInfo.length == 0 && voteTransactionsInfo.length == 0 && revokeTransactionsInfo.length == 0}/>
-          <option style={HistoryStyles.selectTxTypesN} value='Regular' label='Regular' disabled={regularTransactionsInfo.length == 0}/>
-          <option style={HistoryStyles.selectTxTypesN} value='Tickets' label='Tickets' disabled={ticketTransactionsInfo.length == 0}/>
-          <option style={HistoryStyles.selectTxTypesN} value='Votes' label='Votes' disabled={voteTransactionsInfo.length == 0}/>
-          <option style={HistoryStyles.selectTxTypesN} value='Revokes' label='Revokes' disabled={revokeTransactionsInfo.length == 0}/>
-        </select>
+        <Select
+          clearable={false}
+          style={{zIndex:'9'}}
+          onChange={(val) => this.updateSelectedType(val)}
+          placeholder={'Select type...'}
+          multi={false}
+          value={'Regular'}
+          valueKey="value" labelKey="label"
+          options={this.state.txTypes}/>
       </div>);
     var totalBalance = 0;
     if (balances !== null) {
