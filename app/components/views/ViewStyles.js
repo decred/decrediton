@@ -658,7 +658,6 @@ export const SendStyles = {
   flexHeight: {
     paddingTop: '1px',
     backgroundColor: '#fff',
-    height:'372px',
     overflowY: 'auto',
     overflowX: 'hidden',
   },
