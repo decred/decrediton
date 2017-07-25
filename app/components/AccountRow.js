@@ -217,10 +217,6 @@ const styles = {
     borderTop: '1px #A9B4BF solid',
     borderBottom: '1px #A9B4BF solid',
   },
-  accountRowLongDefault: {
-    height: '353px',
-    borderBottom: '1px #A9B4BF solid',
-  },
   accountRowShort: {
     height: '77px',
   },
@@ -280,7 +276,7 @@ class AccountRow extends Component {
     const { accountNumDetailsShown } = this.props;
     var showAccountDetails = accountNumDetailsShown !== null && accountNumDetailsShown == account.accountNumber ;
     return (
-        <div style={showAccountDetails ? this.state.showRenameAccount ? styles.accountRowRename : account.accountNumber == 0 ? styles.accountRowLongDefault : styles.accountRowLong : styles.accountRowShort}>
+        <div style={showAccountDetails ? this.state.showRenameAccount ? styles.accountRowRename : styles.accountRowLong : styles.accountRowShort}>
           <div style={showAccountDetails ? styles.accountRowDetailsTop :  this.state.hidden ? styles.accountRowHidden : styles.accountRow } key={'top'+account.accountNumber} onClick={showAccountDetails ? () => this.props.hideAccountDetails() : () => this.props.showAccountDetails(account.accountNumber)}>
             <div style={styles.accountRowTopTop}>
               <div style={styles.accountRowWalletIcon}/>
