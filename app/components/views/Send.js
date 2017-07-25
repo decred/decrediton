@@ -265,14 +265,14 @@ class Send extends Component{
             description={<div>Please confirm your transaction for <Balance amount={totalSpent}/></div>}
           />
         <div style={!this.state.confirmTxModal ? SendStyles.content : SendStyles.contentBlur}>
-          <div style={SendStyles.sendSelectAccountArea}>
-            <div style={SendStyles.sendLabel}>From:</div>
-            <div style={SendStyles.sendSelectAccountInput}>
-              {selectAccounts}
-            </div>
-            <div style={SendStyles.sendFromAddressWalletIcon}></div>
-          </div>
           <div style={SendStyles.flexHeight}>
+            <div style={SendStyles.sendSelectAccountArea}>
+              <div style={SendStyles.sendLabel}>From:</div>
+              <div style={SendStyles.sendSelectAccountInput}>
+                {selectAccounts}
+              </div>
+              <div style={SendStyles.sendFromAddressWalletIcon}></div>
+            </div>
             <div id="dynamicInput">
             {this.state.outputs.map((output,i) => {
               if ( i == 0 ) {

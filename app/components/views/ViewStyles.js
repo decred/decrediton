@@ -291,6 +291,7 @@ export const SendStyles = {
   sendSelectAccountArea: {
     width: '100%',
     height: '62px',
+    marginTop: '10px',
   },
   sendSelectAccountInput: {
     width: '290px',
@@ -333,11 +334,12 @@ export const SendStyles = {
     paddingRight: '11px',
   },
   sendLabel: {
-    width: '90px',
+    width: '85px',
     float: 'left',
-    paddingLeft: '10px',
+    paddingRight: '15px',
     paddingTop: '5px',
     fontSize: '20px',
+    textAlign: 'right',
   },
   sendAddress: {
     width : '300px',
