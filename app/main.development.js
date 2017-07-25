@@ -57,52 +57,50 @@ if (process.env.NODE_ENV === 'development') {
 app.setPath('userData', appDataDirectory());
 var cfg = getCfg();
 
-var logger = new (winston.Logger)({
-  transports: [
-    new (winston.transports.Console)({colorize: 'all'}),
-    new (winston.transports.File)({ filename: path.join(app.getPath('userData'),'decrediton.log') })
-  ]
-});
-logger.log('info', 'This is an information message.');
-
+var logger;
 if (debug) {
-  console.log('Using config/data from:', app.getPath('userData'));
+  logger = new (winston.Logger)({
+    transports: [
+      new (winston.transports.Console)({colorize: 'all'}),
+      new (winston.transports.File)({ json: false, filename: path.join(app.getPath('userData'),'decrediton.log') })
+    ]
+  });
+} else {
+  logger = new (winston.Logger)({
+    transports: [
+      new (winston.transports.File)({ json: false, filename: path.join(app.getPath('userData'),'decrediton.log') })
+    ]
+  });
 }
+
+logger.log('info', 'Using config/data from:' + app.getPath('userData'));
 
 // Check if network was set on command line (but only allow one!).
 if (argv.testnet && argv.mainnet) {
-  console.log('Cannot use both --testnet and --mainnet.');
+  logger.log('Cannot use both --testnet and --mainnet.');
   app.quit();
 }
 
 if (argv.testnet) {
   cfg.set('network', 'testnet');
-  if (debug) {
-    console.log('Running on testnet.');
-  }
+  logger.log('info', 'Running on testnet.');
 }
 
 if (argv.mainnet) {
   cfg.set('network', 'mainnet');
-  if (debug) {
-    console.log('Running on mainnet.');
-  }
+  logger.log('info', 'Running on mainnet.');
 }
 
 function closeDCRW() {
   if (require('is-running')(dcrwPID)) {
-    if (debug) {
-      console.log('Sending SIGINT to dcrwallet at pid:', dcrwPID);
-    }
+    logger.log('info', 'Sending SIGINT to dcrwallet at pid:' + dcrwPID);
     process.kill(dcrwPID, 'SIGINT');
   }
 }
 
 function closeDCRD() {
   if (require('is-running')(dcrdPID)) {
-    if (debug) {
-      console.log('Sending SIGINT to dcrd at pid:', dcrdPID);
-    }
+    logger.log('info', 'Sending SIGINT to dcrd at pid:' + dcrdPID);
     process.kill(dcrdPID, 'SIGINT');
   }
 }
@@ -123,9 +121,7 @@ function cleanShutdown() {
     // Sent shutdown message again as we have seen it missed in the past if they
     // are still running.
     setTimeout(function(){closeClis();}, cliShutDownPause*1000);
-    if (debug) {
-      console.log('Closing decrediton.');
-    }
+    logger.log('info', 'Closing decrediton.');
     setTimeout(function(){app.quit();}, shutDownPause*1000);
   } else {
     app.quit();
@@ -170,19 +166,16 @@ const launchDCRD = () => {
     args.push('--piperx=3');
   }
 
-  if (debug) {
-    console.log(`Starting dcrd with ${args}`);
-  }
+  logger.log('info', `Starting dcrd with ${args}`);
+
   var dcrd = spawn(dcrdExe, args, { detached: false, stdio: [ 'ignore', stdout, stderr, 'pipe' ] });
 
   dcrd.on('error', function (err) {
-    console.log('error starting ' + dcrdExe + ': ' + path + err);
+    logger.log('error', 'error starting ' + dcrdExe + ': ' + path + err);
   });
 
   dcrd.on('close', (code) => {
-    if (debug) {
-      console.log(`dcrd exited with code ${code}`);
-    }
+    logger.log('info', `dcrd exited with code ${code}`);
   });
 
   if (debug) {
@@ -196,9 +189,7 @@ const launchDCRD = () => {
   }
 
   dcrdPID = dcrd.pid;
-  if (debug) {
-    console.log('dcrd started with pid:', dcrdPID);
-  }
+  logger.log('info', 'dcrd started with pid:' + dcrdPID);
 
   dcrd.unref();
 };
@@ -226,19 +217,16 @@ const launchDCRWallet = () => {
     }
   }
 
-  if (debug) {
-    console.log(`Starting dcrwallet with ${args}`);
-  }
+  logger.log('info', `Starting dcrwallet with ${args}`);
+
   var dcrwallet = spawn(dcrwExe, args, { detached: false, stdio: [ 'ignore', stdout, stderr, 'ignore', 'pipe'  ] });
 
   dcrwallet.on('error', function (err) {
-    console.log('error starting ' + dcrwExe + ': ' + path + err);
+    logger.log('error', 'error starting ' + dcrwExe + ': ' + path + err);
   });
 
   dcrwallet.on('close', (code) => {
-    if (debug) {
-      console.log(`dcrwallet exited with code ${code}`);
-    }
+    logger.log('info', `dcrwallet exited with code ${code}`);
   });
 
   if (debug) {
@@ -252,9 +240,7 @@ const launchDCRWallet = () => {
   }
 
   dcrwPID = dcrwallet.pid;
-  if (debug) {
-    console.log('dcrwallet started with pid:', dcrwPID);
-  }
+  logger.log('info', 'dcrwallet started with pid:' + dcrwPID);
 
   dcrwallet.unref();
 };
@@ -268,12 +254,12 @@ app.on('ready', async () => {
     try {
       await launchDCRD();
     } catch (e) {
-      console.log('error launching dcrd: ' + e);
+      logger.log('error', 'error launching dcrd: ' + e);
     }
     try {
       await launchDCRWallet();
     } catch (e) {
-      console.log('error launching dcrwallet: ' + e);
+      logger.log('error', 'error launching dcrwallet: ' + e);
     }
   }
 
@@ -289,16 +275,12 @@ app.on('ready', async () => {
     if (process.env.NODE_ENV === 'production') {
       // Check if daemon and wallet started up and error if not.
       if (!require('is-running')(dcrwPID)) {
-        if (debug) {
-          console.log('Error running dcrwallet.  Check logs and restart!');
-        }
+        logger.log('error', 'Error running dcrwallet.  Check logs and restart!');
         mainWindow.webContents.executeJavaScript('alert("Error running dcrwallet.  Check logs and restart!");');
         mainWindow.webContents.executeJavaScript('window.close();');
       }
       if (!require('is-running')(dcrdPID)) {
-        if (debug) {
-          console.log('Error running dcrd.  Check logs and restart!');
-        }
+        logger.log('error', 'Error running dcrd.  Check logs and restart!');
         mainWindow.webContents.executeJavaScript('alert("Error running dcrd.  Check logs and restart!");');
         mainWindow.webContents.executeJavaScript('window.close();');
       }
@@ -456,14 +438,14 @@ app.on('ready', async () => {
       }, {
         label: 'Remove Wallet (Requires Restart)',
         click() {
-          console.log(getWalletFile());
+          logger.log(getWalletFile());
           closeDCRW();
           var origFile = getWalletFile();
           var date = new Date();
           var backupFile = origFile + '-' + date.toISOString();
           mv(origFile, backupFile, function(err) {
             if (err != undefined) {
-              console.log('Cannot remove file!', err);
+              logger.log('error', 'Cannot remove file!', err);
             }
           });
           cleanShutdown();
