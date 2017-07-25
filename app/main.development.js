@@ -57,20 +57,14 @@ if (process.env.NODE_ENV === 'development') {
 app.setPath('userData', appDataDirectory());
 var cfg = getCfg();
 
-var logger;
+var logger = new (winston.Logger)({
+  transports: [
+    new (winston.transports.File)({ json: false, filename: path.join(app.getPath('userData'),'decrediton.log') })
+  ]
+});
+
 if (debug) {
-  logger = new (winston.Logger)({
-    transports: [
-      new (winston.transports.Console)({colorize: 'all'}),
-      new (winston.transports.File)({ json: false, filename: path.join(app.getPath('userData'),'decrediton.log') })
-    ]
-  });
-} else {
-  logger = new (winston.Logger)({
-    transports: [
-      new (winston.transports.File)({ json: false, filename: path.join(app.getPath('userData'),'decrediton.log') })
-    ]
-  });
+  logger.add(winston.transports.Console, {colorize: 'all'});
 }
 
 logger.log('info', 'Using config/data from:' + app.getPath('userData'));
