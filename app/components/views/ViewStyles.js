@@ -664,6 +664,7 @@ export const SendStyles = {
     backgroundColor: '#fff',
     overflowY: 'auto',
     overflowX: 'hidden',
+    height: '200px',
   },
   loading: {
     marginTop: '110px',
