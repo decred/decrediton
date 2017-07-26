@@ -949,7 +949,7 @@ class StakePool extends Component{
               <div style={StakePoolStyles.poolFeeIcon}>{this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolFees : null}%</div>
             </div>
           </div>
-          <div>
+          <div style={StakePoolStyles.purchaseTicketButtonsArea}>
             <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} disabled={getTicketPriceResponse !== null ? this.state.spendLimit < getTicketPriceResponse.getTicketPrice() || this.state.numTickets <= 0: true} onClick={getTicketPriceResponse !== null ? this.state.spendLimit < getTicketPriceResponse.getTicketPrice() || this.state.numTickets <= 0 ? null : () => this.showPassphraseModal(purchaseTicketHeading, purchaseTicketDescription, purchaseTicketFunc) : null}>
               Purchase
             </KeyBlueButton>

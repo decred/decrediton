@@ -2339,6 +2339,10 @@ export const StakePoolStyles = {
     overflowY: 'auto',
     overflowX: 'hidden',
   },
+  purchaseTicketButtonsArea: {
+    width: '740px',
+    float: 'left',
+  },
   flexHeightShown: {
     paddingTop: '1px',
     backgroundColor: '#fff',
