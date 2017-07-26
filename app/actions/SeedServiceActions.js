@@ -8,7 +8,6 @@ import { GenerateRandomSeedRequest, DecodeSeedRequest } from '../middleware/wall
 export function getSeederAttempt() {
   return (dispatch, getState) => {
     const { address, port } = getState().grpc;
-    console.log(address, port);
     dispatch({ type: SEEDER_ATTEMPT });
     var request = { address: address, port: port };
     seeder(request, function(seeder, error) {
