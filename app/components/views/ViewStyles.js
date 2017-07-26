@@ -740,13 +740,6 @@ export const HomeStyles = {
     float: 'left',
   },
   rescanButtonArea: {
-    fontFamily: 'Source Sans Pro, sans-serif',
-    float: 'right',
-    width: '43%',
-    height: '40px',
-  },
-  rescanButton: {
-    marginTop: '-10px',
     float: 'right',
   },
   rescanButtonMessage: {

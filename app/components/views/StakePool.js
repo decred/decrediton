@@ -1120,7 +1120,7 @@ class StakePool extends Component{
         <div style={StakePoolStyles.body}>
           <SideBar />
           {stakePool}
-          <ReactToolTip type="info" effect="solid"/>
+          <ReactToolTip place="left" type="info" effect="solid"/>
         </div>);
     }
   }
