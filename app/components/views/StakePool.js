@@ -770,7 +770,7 @@ class StakePool extends Component{
               <div style={StakePoolStyles.purchaseTicketInput}>
                 {selectAccounts}
               </div>
-              <div style={StakePoolStyles.purchaseTicketInputError}>
+              <div style={StakePoolStyles.purchaseTicketInputButtons}>
                 <PurchaseTicketsInfoButton onClick={() => this.showPurchaseInfoModal()}/>
                 <TicketsCogs opened={this.state.advancedHidden} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}/>
               </div>
@@ -809,7 +809,7 @@ class StakePool extends Component{
               <div style={StakePoolStyles.purchaseTicketInput}>
                 {selectStakePoolPurchaseTickets}
               </div>
-              <div style={StakePoolStyles.purchaseTicketInputError}>
+              <div style={StakePoolStyles.purchaseTicketInputButtons}>
                 <ManagePoolsButton onClick={() => this.showStakePoolConfig()}/>
               </div>
             </div>
@@ -927,11 +927,11 @@ class StakePool extends Component{
               <div style={StakePoolStyles.autoBuyerQuickBarRow}>
                 {this.state.autoBuyerHidden ?
                   <div>
-                    <div style={StakePoolStyles.balanceToMaintainIcon}>{this.state.balanceToMaintain}</div>
-                    <div style={StakePoolStyles.maxFeeIcon}>{this.state.maxFee} DCR</div>
-                    <div style={StakePoolStyles.maxPriceAbsoluteIcon}>{this.state.maxPriceAbsolute} DCR</div>
-                    <div style={StakePoolStyles.maxPriceRelativeIcon}>{this.state.maxPriceRelative}%</div>
-                    <div style={StakePoolStyles.maxPerBlockIcon}>{this.state.maxPerBlock}</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.balanceToMaintainIcon}/>{this.state.balanceToMaintain}</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxFeeIcon}/>{this.state.maxFee} DCR</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxPriceAbsoluteIcon}/>{this.state.maxPriceAbsolute} DCR</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxPriceRelativeIcon}/>{this.state.maxPriceRelative}%</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxPerBlockIcon}/>{this.state.maxPerBlock}</div>
                   </div>:
                   <div></div>}
               </div>
@@ -941,72 +941,76 @@ class StakePool extends Component{
             </div>
             <div hidden={this.state.autoBuyerHidden ? true : false}>
               <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Balance to maintain:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      placeholder="Balance to Maintain"
-                      defaultValue={this.state.balanceToMaintain}
-                      onBlur={(e) =>{this.updateBalanceToMaintain(e.target.value);}}/>
+                <div style={StakePoolStyles.purchaseTicketRowLeft}>
+                  <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.balanceToMaintainIcon}/>Balance to maintain:</div>
+                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketForm}
+                        placeholder="Balance to Maintain"
+                        defaultValue={this.state.balanceToMaintain}
+                        onBlur={(e) =>{this.updateBalanceToMaintain(e.target.value);}}/>
+                    </div>
+                  </div>
+                  <div style={StakePoolStyles.purchaseTicketInputError}>
+                    {this.state.balanceToMaintainError}
                   </div>
                 </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  {this.state.balanceToMaintainError}
+                <div style={StakePoolStyles.purchaseTicketRowRight}>
+                  <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.maxFeeIcon}/>Max Fee:</div>
+                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketForm}
+                        placeholder="Max Fee"
+                        defaultValue={this.state.maxFee}
+                        onBlur={(e) =>{this.updateMaxFee(e.target.value);}}/>
+                    </div>
+                  </div>
+                  <div style={StakePoolStyles.purchaseTicketInputError}>
+                    {this.state.maxFeeError}
+                  </div>
                 </div>
               </div>
               <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Max Fee:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      placeholder="Max Fee"
-                      defaultValue={this.state.maxFee}
-                      onBlur={(e) =>{this.updateMaxFee(e.target.value);}}/>
+                <div style={StakePoolStyles.purchaseTicketRowLeft}>
+                  <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.maxPriceAbsoluteIcon}/>Max Price Absolute:</div>
+                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketForm}
+                        placeholder="Max Price Absolute"
+                        defaultValue={this.state.maxPriceAbsolute}
+                        onBlur={(e) =>{this.updateMaxPriceAbsolute(e.target.value);}}/>
+                    </div>
+                  </div>
+                  <div style={StakePoolStyles.purchaseTicketInputError}>
+                    {this.state.maxPriceAbsoluteError}
                   </div>
                 </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  {this.state.maxFeeError}
+                <div style={StakePoolStyles.purchaseTicketRowRight}>
+                  <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.maxPriceRelativeIcon}/>Max Price Relative:</div>
+                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketForm}
+                        placeholder="Max Price Relative"
+                        defaultValue={this.state.maxPriceRelative}
+                        onBlur={(e) =>{this.updateMaxPriceRelative(e.target.value);}}/>
+                    </div>
+                  </div>
+                  <div style={StakePoolStyles.purchaseTicketInputError}>
+                    {this.state.maxPriceRelativeError}
+                  </div>
                 </div>
               </div>
               <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Max Price Absolute:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      placeholder="Max Price Absolute"
-                      defaultValue={this.state.maxPriceAbsolute}
-                      onBlur={(e) =>{this.updateMaxPriceAbsolute(e.target.value);}}/>
-                  </div>
-                </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  {this.state.maxPriceAbsoluteError}
-                </div>
-              </div>
-              <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Max Price eRelative:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      placeholder="Max Price Relative"
-                      defaultValue={this.state.maxPriceRelative}
-                      onBlur={(e) =>{this.updateMaxPriceRelative(e.target.value);}}/>
-                  </div>
-                </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  {this.state.maxPriceRelativeError}
-                </div>
-              </div>
-              <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Max per block:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
+                <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.maxPerBlockIcon}/>Max Per Block:</div>
+                <div style={StakePoolStyles.purchaseTicketNumInput}>
                   <div style={StakePoolStyles.inputFormPurchaseTicket}>
                     <input
                       type="text"
