@@ -2145,6 +2145,13 @@ export const StakePoolStyles = {
     fontSize: '19px',
     textAlign: 'right',
   },
+  purchaseTicketInputSelect: {
+    width: '283px',
+    float: 'left',
+    height: '100%',
+    fontSize: '16px',
+    textAlign: 'left',
+  },
   purchaseTicketNumInput: {
     width: '132px',
     float: 'left',

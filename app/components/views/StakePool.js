@@ -21,6 +21,7 @@ import ManagePoolsButton from '../ManagePoolsButton';
 import AutoBuyerSwitch from '../AutoBuyerSwitch';
 import PassphraseModal from '../PassphraseModal';
 import ImportScriptModal from '../ImportScriptModal';
+import Select from 'react-select';
 
 class StakePool extends Component{
   static propTypes = {
@@ -29,40 +30,49 @@ class StakePool extends Component{
   };
   constructor(props) {
     super(props);
-    var initStakePoolHost = '';
-    var initStakePool = null;
+    var selectedConfigured = null;
+    var selectedUnconfigured = null;
+    var configuredStakePools = Array();
+    var unconfiguredStakePools = Array();
     // Look for any available uninitialized stakepool config
     // This will be set for the first in the dropdown for
     // setting apikey/purchase information of the stakepool.
     if (this.props.currentStakePoolConfig != null) {
       for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
         if (!this.props.currentStakePoolConfig[i].ApiKey && this.props.currentStakePoolConfig[i].Network == this.props.network) {
-          initStakePoolHost = this.props.currentStakePoolConfig[i].Host;
-          break;
-        }
-      }
-      // Look for any available initialized stakepool config
-      // This will be set for the first in the dropdown for
-      // ticket purchase stake pool selection.
-      for (var j = 0; j < this.props.currentStakePoolConfig.length; j++) {
-        if (this.props.currentStakePoolConfig[j].ApiKey && this.props.currentStakePoolConfig[j].Network == this.props.network) {
-          initStakePool = this.props.currentStakePoolConfig[j];
-          break;
+          selectedUnconfigured = {value: this.props.currentStakePoolConfig[i], label: this.props.currentStakePoolConfig[i].Host};
+          unconfiguredStakePools.push({value: this.props.currentStakePoolConfig[i], label: this.props.currentStakePoolConfig[i].Host});
+        }else if (this.props.currentStakePoolConfig[i].ApiKey && this.props.currentStakePoolConfig[i].Network == this.props.network) {
+          selectedConfigured = {value: this.props.currentStakePoolConfig[i], label: this.props.currentStakePoolConfig[i].Host};
+          configuredStakePools.push({value:this.props.currentStakePoolConfig[i], label: this.props.currentStakePoolConfig[i].Host});
         }
       }
     }
     var defaultSpendLimit = 0;
+    var accountsList = Array();
+    var unitDivisor = 1;
+    if (this.props.currentSettings.currencyDisplay == 'DCR') {
+      unitDivisor = 100000000;
+    }
     if (this.props.balances != null) {
       for (i = 0; i < this.props.balances.length; i++) {
         if (this.props.balances[i].accountNumber == 0) {
           defaultSpendLimit = this.props.balances[i].spendable;
         }
+        if (this.props.balances[i].accountNumber == 0 || this.props.balances[i].accountName != 'imported' && this.props.balances[i].spendable > 0) {
+          accountsList.push({ value: this.props.balances[i].accountNumber, label: this.props.balances[i].accountName + ': ' +this.props.balances[i].spendable / unitDivisor + ' ' + this.props.currentSettings.currencyDisplay});
+        }
       }
     }
+
     this.state = {
-      stakePoolHost: initStakePoolHost,
+      accountsList: accountsList,
+      configuredStakePools: configuredStakePools,
+      selectedConfigured: selectedConfigured,
+      unconfiguredStakePools: unconfiguredStakePools,
+      selectedUnconfigured: selectedUnconfigured,
       apiKey: '',
-      account: 0,
+      account: accountsList[0],
       addAnotherStakePool: false,
       purchaseTickets: true,
       purchaseTicketsStakePoolConfig: false,
@@ -74,8 +84,6 @@ class StakePool extends Component{
       expiry: 16,
       txFee: 0.001, // DCR/kB
       ticketFee: 0.001, // DCR/kB
-      selectedStakePoolForPurchase: initStakePool,
-      selectedStakePoolForVoting: initStakePool,
       advancedHidden: true,
       autoBuyerHidden: true,
       choice: 'option1',
@@ -110,25 +118,22 @@ class StakePool extends Component{
     };
   }
   componentWillReceiveProps(nextProps) {
+    var accountsList = Array();
+    var unitDivisor = 1;
+    if (nextProps.currentSettings.currencyDisplay == 'DCR') {
+      unitDivisor = 100000000;
+    }
     if (this.props.balances != nextProps.balances) {
       var newAccountSpendableBalance = 0;
       for (var i = 0; i < nextProps.balances; i++) {
         if (nextProps.balances[i].accountNumber == this.state.account) {
           newAccountSpendableBalance = nextProps.balances[i].spendable;
-          break;
+        }
+        if (nextProps.balances[i].accountNumber == 0 || nextProps.balances[i].accountName != 'imported' && nextProps.balances[i].spendable > 0) {
+          accountsList.push({ value: nextProps.balances[i].accountNumber, label: nextProps.balances[i].accountName + ': ' +nextProps.balances[i].spendable / unitDivisor + ' ' + nextProps.currentSettings.currencyDisplay});
         }
       }
-      this.setState({spendLimit: newAccountSpendableBalance});
-    }
-    if (this.props.currentStakePoolConfig != nextProps.currentStakePoolConfig) {
-      for (var j = 0; j < nextProps.currentStakePoolConfig.length; j++) {
-        if (nextProps.currentStakePoolConfig[j].ApiKey && nextProps.currentStakePoolConfig[j].Network == this.props.network) {
-          this.setState({selectedStakePoolForPurchase: nextProps.currentStakePoolConfig[j]});
-        }
-        if (this.state.selectedStakePoolForVoting !== null && nextProps.currentStakePoolConfig[j].Host == this.state.selectedStakePoolForVoting.Host) {
-          this.setState({selectedStakePoolForVoting: nextProps.currentStakePoolConfig[j]});
-        }
-      }
+      this.setState({spendLimit: newAccountSpendableBalance, accountsList: accountsList });
     }
     if (this.props.getVoteChoicesResponse !== nextProps.getVoteChoicesResponse) {
       for (i = 0; i < nextProps.getVoteChoicesResponse.getChoicesList().length; i++) {
@@ -173,7 +178,7 @@ class StakePool extends Component{
   }
   submitPurchase(privpass) {
     var checkErrors = false;
-    if (this.state.selectedStakePoolForPurchase == null ||
+    if (this.state.selectedConfigured == null ||
        this.state.numTicketsError !== null || this.state.txFeeError !== null ||
        this.state.ticketFeeError !== null || this.state.expiryError !== null ||
        this.state.privPassError !== null) {
@@ -195,7 +200,7 @@ class StakePool extends Component{
       this.state.expiry,
       this.state.ticketFee,
       this.state.txFee,
-      this.state.selectedStakePoolForPurchase,
+      this.state.selectedConfigured.value,
     );
     this.setState({passphraseModalOpen: false});
   }
@@ -277,12 +282,12 @@ class StakePool extends Component{
   }
   updateAutoBuyerSettings() {
     this.props.setTicketBuyerConfigAttempt(
-      this.state.account,
+      this.state.account.value,
       this.state.balanceToMaintain,
       this.state.maxFee,
       this.state.maxPriceAbsolute,
       this.state.maxPriceRelative,
-      this.state.selectedStakePoolForPurchase,
+      this.state.selectedConfigured.value,
       this.state.maxPerBlock
     );
   }
@@ -292,12 +297,12 @@ class StakePool extends Component{
   hideStakePoolConfig() {
     this.setState({purchaseTicketsStakePoolConfig: false});
   }
-  updateAccountNumber(accountNum) {
-    this.setState({account: accountNum});
+  updateAccountNumber(account) {
+    this.setState({account: account});
     if (this.props.balances !== null) {
       var updatedAccountSpendLimit = 0;
       for (var i = 0; i < this.props.balances.length; i++) {
-        if (this.props.balances[i].accountNumber == accountNum) {
+        if (this.props.balances[i].accountNumber == account.value) {
           updatedAccountSpendLimit = this.props.balances[i].spendable;
           break;
         }
@@ -345,10 +350,10 @@ class StakePool extends Component{
       this.setState({apiKeyError: '*Please enter your API key'});
       return;
     }
-    if (this.state.stakePoolHost == '' || this.state.apiKeyError !== null) {
+    if (this.state.selectedUnconfigured == null || this.state.apiKeyError !== null) {
       return;
     }
-    this.props.setStakePoolInformation(privpass, this.state.stakePoolHost, this.state.apiKey, 0);
+    this.props.setStakePoolInformation(privpass, this.state.selectedUnconfigured.label, this.state.apiKey, 0);
     setTimeout(this.setState({passphraseModalOpen: false, addAnotherStakePool: false}), 1000);
   }
   updateApiKey(apiKey) {
@@ -356,25 +361,6 @@ class StakePool extends Component{
       this.setState({apiKey: apiKey, apiKeyError: null});
     } else {
       this.setState({apiKeyError: '*Please enter your API key'});
-    }
-  }
-  updateStakePoolHost(poolHost) {
-    this.setState({stakePoolHost: poolHost});
-  }
-  updateStakePoolPurchaseTickets(poolHost) {
-    for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
-      if (this.props.currentStakePoolConfig[i].Host == poolHost) {
-        this.setState({selectedStakePoolForPurchase: this.props.currentStakePoolConfig[i]});
-        break;
-      }
-    }
-  }
-  updateStakePoolVotingPreferences(poolHost) {
-    for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
-      if (this.props.currentStakePoolConfig[i].Host == poolHost) {
-        this.setState({selectedStakePoolForVoting: this.props.currentStakePoolConfig[i]});
-        break;
-      }
     }
   }
   toggleTicketStakePool(side) {
@@ -399,13 +385,13 @@ class StakePool extends Component{
   submitStart(privpass) {
     this.props.startAutoBuyerAttempt(
       privpass,
-      this.state.account,
+      this.state.account.value,
       this.state.balanceToMaintain,
       this.state.maxFee,
       this.state.maxPriceRelative,
       this.state.maxPriceAbsolute,
       this.state.maxPerBlock,
-      this.state.selectedStakePoolForPurchase
+      this.state.selectedConfigured
     );
     this.setState({passphraseModalOpen: false});
   }
@@ -417,11 +403,11 @@ class StakePool extends Component{
   }
   showAgendaOverview(agenda) {
     var selectedChoice = 'abstain';
-    if (this.state.selectedStakePoolForVoting.VoteChoices !== undefined) {
-      for (var i = 0; i < this.state.selectedStakePoolForVoting.VoteChoices.length; i++) {
-        if (this.state.selectedStakePoolForVoting.VoteChoices[i] !== undefined &&
-        this.state.selectedStakePoolForVoting.VoteChoices[i].agendaId == agenda.getId()) {
-          selectedChoice = this.state.selectedStakePoolForVoting.VoteChoices[i].choiceId;
+    if (this.state.selectedConfigured.VoteChoices !== undefined) {
+      for (var i = 0; i < this.state.selectedConfigured.VoteChoices.length; i++) {
+        if (this.state.selectedConfigured.VoteChoices[i] !== undefined &&
+        this.state.selectedConfigured.VoteChoices[i].agendaId == agenda.getId()) {
+          selectedChoice = this.state.selectedConfigured.VoteChoices[i].choiceId;
           break;
         }
       }
@@ -444,12 +430,17 @@ class StakePool extends Component{
     this.submitStop();
     this.setState({modalHeading: null, modalDescription: null, modalSubmitFunc: null, passphraseModalOpen: false});
   }
+  updateConfiguredStakePool(stakePool) {
+    this.setState({selectedConfigured: stakePool});
+  }
+  updateUnconfiguredStakePool(stakePool) {
+    this.setState({selectedUnconfigured: stakePool});
+  }
   render() {
     const { walletService } = this.props;
-    const { currentSettings } = this.props;
     const { ticketBuyerService } = this.props;
     const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
-    const { currentStakePoolConfigSuccessMessage, balances, purchaseTicketsRequestAttempt } = this.props;
+    const { currentStakePoolConfigSuccessMessage, purchaseTicketsRequestAttempt } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
     const { revokeTicketsError, revokeTicketsSuccess } = this.props;
     const { importScriptError, importScriptSuccess } = this.props;
@@ -459,11 +450,6 @@ class StakePool extends Component{
     const { getAgendasResponse } = this.props;
     const { startAutoBuyerSuccess, startAutoBuyerResponse, stopAutoBuyerSuccess, startAutoBuyerError, stopAutoBuyerError } = this.props;
     const { getTicketBuyerConfigResponse } = this.props;
-    var unitLabel = currentSettings.currencyDisplay;
-    var unitDivisor = 1;
-    if (unitLabel == 'DCR') {
-      unitDivisor = 100000000;
-    }
     var unconfigedStakePools = 0;
     if (currentStakePoolConfig != null) {
       for (var i = 0; i < currentStakePoolConfig.length; i++) {
@@ -473,88 +459,38 @@ class StakePool extends Component{
       }
     }
     var selectAccounts = (
-      <div style={StakePoolStyles.selectStakePoolArea}>
-        <select
-          defaultValue={0}
-          style={StakePoolStyles.selectPurchaseTickets}
-          onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
-          >
-          {balances !== null ?
-            balances.map((account) => {
-              if (account.accountName !== 'imported' && !account.hidden) {
-                return (
-                  <option style={StakePoolStyles.selectPurchaseTicketsN} key={account.accountNumber} value={account.accountNumber}>
-                    {account.accountName}: {account.spendable / unitDivisor} {unitLabel}
-                  </option>
-                );
-              }
-            }):
-            null
-          }
-        </select>
-      </div>);
-    var selectStakePoolApiKey = (
-      <div style={StakePoolStyles.selectStakePoolArea}>
-        <select
-          defaultValue={0}
-          style={StakePoolStyles.selectStakePool}
-          onChange={(e) =>{this.updateStakePoolHost(e.target.value);}}
-          >
-          {currentStakePoolConfig !== null  ?
-            currentStakePoolConfig.map((stakePool) => {
-              if (!stakePool.ApiKey && stakePool.Network == network) {
-                return (
-                  <option style={StakePoolStyles.selectStakePoolN} key={stakePool.Host} value={stakePool.Host}>
-                    {stakePool.Host}
-                  </option>
-                );
-              }
-            }) :
-            null
-          }
-        </select>
-      </div>);
-    var selectStakePoolPurchaseTickets = (
-      <div style={StakePoolStyles.selectStakePoolArea}>
-        <select
-          defaultValue={this.state.selectedStakePoolForPurchase !== null ? this.state.selectedStakePoolForPurchase.Host : 0}
-          style={StakePoolStyles.selectPurchaseTickets}
-          onChange={(e) =>{this.updateStakePoolPurchaseTickets(e.target.value);}}
-          >
-          {currentStakePoolConfig !== null  ?
-            currentStakePoolConfig.map((stakePool) => {
-              if (stakePool.ApiKey && stakePool.Network == network) {
-                return (
-                  <option style={StakePoolStyles.selectPurchaseTicketsN} key={stakePool.Host} value={stakePool.Host}>
-                    {stakePool.Host}
-                  </option>
-                );
-              }
-            }) :
-            null
-          }
-        </select>
-      </div>);
-
-    var selectStakePoolVotingPreferences = (
-        <select
-          defaultValue={this.state.selectedStakePoolForVoting !== null ? this.state.selectedStakePoolForPurchase.Host : 0}
-          style={StakePoolStyles.selectVotingPreferences}
-          onChange={(e) =>{this.updateStakePoolVotingPreferences(e.target.value);}}
-          >
-          {currentStakePoolConfig !== null  ?
-            currentStakePoolConfig.map((stakePool) => {
-              if (stakePool.ApiKey && stakePool.Network == network) {
-                return (
-                  <option style={StakePoolStyles.selectPurchaseTicketsN} key={stakePool.Host} value={stakePool.Host}>
-                    {stakePool.Host}
-                  </option>
-                );
-              }
-            }) :
-            null
-          }
-        </select>);
+        <Select
+          clearable={false}
+          style={{zIndex:'9'}}
+          onChange={(val) => this.updateAccountNumber(val)}
+          placeholder={'Select account...'}
+          multi={false}
+          value={this.state.account}
+          valueKey="value" labelKey="label"
+          options={this.state.accountsList}
+          />);
+    var selectConfiguredStakePool = (
+        <Select
+          clearable={false}
+          style={{zIndex:'9'}}
+          onChange={(val) => this.updateConfiguredStakePool(val)}
+          placeholder={'Select account...'}
+          multi={false}
+          value={this.state.selectedConfigured}
+          valueKey="value" labelKey="label"
+          options={this.state.configuredStakePools}
+          />);
+    var selectUnconfiguredStakePool = (
+        <Select
+          clearable={false}
+          style={{zIndex:'9'}}
+          onChange={(val) => this.updateUnconfiguredStakePool(val)}
+          placeholder={'Select account...'}
+          multi={false}
+          value={this.state.selectedUnconfigured}
+          valueKey="value" labelKey="label"
+          options={this.state.unconfiguredStakePools}
+          />);
     var selectNumTickets = (
       <NumTicketsInput numTickets={this.state.numTickets} incrementNumTickets={()=>this.incrementNumTickets()} decrementNumTickets={()=>this.decrementNumTickets()}/>);
     var apiKeyDescription = (
@@ -563,6 +499,11 @@ class StakePool extends Component{
     );
     var apiKeyHeading = 'Enter private passphrase to connect to your stakepool';
     var apiKeyFunc = (privPass) => this.setStakePoolInfo(privPass);
+
+    var selectedUnconfiguredLabel = null;
+    if (this.state.selectedUnconfigured !== null) {
+      selectedUnconfiguredLabel = this.state.selectedUnconfigured.label;
+    }
     var stakePoolConfigInput = (
       <div>
         <PassphraseModal
@@ -576,13 +517,13 @@ class StakePool extends Component{
           <div style={StakePoolStyles.flexHeight}>
             <div style={StakePoolStyles.contentNestFromAddress}>
               <div style={StakePoolStyles.contentNestPrefixSend}>Stake Pool:</div>
-                {selectStakePoolApiKey}
+                {selectUnconfiguredStakePool}
               <div style={StakePoolStyles.contentNestFromAddressWalletIcon}></div>
             </div>
             <div style={StakePoolStyles.contentNestApiKeyInstructions}>
               <span>
                 Please select your desired stakepool from the above dropdown and follow these instructions:
-                <br/>1) Create an account or login to your existing account at <a style={StakePoolStyles.stakepoolLink} onClick={function(x){shell.openExternal(x);}.bind(null, this.state.stakePoolHost)}>{this.state.stakePoolHost}</a>.
+                <br/>1) Create an account or login to your existing account at <a style={StakePoolStyles.stakepoolLink} onClick={function(x){shell.openExternal(x);}.bind(null, selectedUnconfiguredLabel)}>{selectedUnconfiguredLabel}</a>.
                 <br/>2) Once logged in, select the 'Settings' tab.
                 <br/>3) Copy and paste your Api Key into the field below (typically starts with 'eyJhb...').
                 <br/>4) Click Add and enter your private passphrase.
@@ -625,22 +566,22 @@ class StakePool extends Component{
     var votingGuiView = (
       <div style={StakePoolStyles.contentVotingGui}>
         <div style={StakePoolStyles.votingTitleArea}>
-          <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences {selectStakePoolVotingPreferences}</div>
+          <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences {selectConfiguredStakePool}</div>
         </div>
-        {this.state.selectedStakePoolForVoting !== null && this.state.selectedStakePoolForVoting.APIVersionsSupported[1] == requiredStakepoolAPIVersion ?
+        {this.state.selectedConfigured !== null && this.state.selectedConfigured.value.APIVersionsSupported[1] == requiredStakepoolAPIVersion ?
         <div style={StakePoolStyles.votingAgendaArea}>
-          {this.state.agendaDisplay !== null && this.state.selectedStakePoolForVoting !== null ?
-            <AgendaOverview agenda={this.state.agendaDisplay} selectedChoice={this.state.selectedChoice} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updatePreferences={(agendaId, choiceId) =>this.props.setVoteChoicesAttempt(this.state.selectedStakePoolForVoting, agendaId, choiceId)}/>:
+          {this.state.agendaDisplay !== null && this.state.selectedConfigured !== null ?
+            <AgendaOverview agenda={this.state.agendaDisplay} selectedChoice={this.state.selectedChoice} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updatePreferences={(agendaId, choiceId) =>this.props.setVoteChoicesAttempt(this.state.selectedConfigured.value.Host, agendaId, choiceId)}/>:
             <div></div>
           }
-          {getAgendasResponse !== null && this.state.selectedStakePoolForVoting !== null ? getAgendasResponse.getAgendasList().length > 0 ?
+          {getAgendasResponse !== null && this.state.selectedConfigured !== null ? getAgendasResponse.getAgendasList().length > 0 ?
             getAgendasResponse.getAgendasList().map((agenda) => {
               var selectedChoice = 'abstain';
-              if (this.state.selectedStakePoolForVoting.VoteChoices !== undefined) {
-                for (var i = 0; i < this.state.selectedStakePoolForVoting.VoteChoices.length; i++) {
-                  if (this.state.selectedStakePoolForVoting.VoteChoices[i] !== undefined &&
-                  this.state.selectedStakePoolForVoting.VoteChoices[i].agendaId == agenda.getId()) {
-                    selectedChoice = this.state.selectedStakePoolForVoting.VoteChoices[i].choiceId;
+              if (this.state.selectedConfigured.VoteChoices !== undefined) {
+                for (var i = 0; i < this.state.selectedConfigured.value.VoteChoices.length; i++) {
+                  if (this.state.selectedConfigured.value.VoteChoices[i] !== undefined &&
+                  this.state.selectedConfigured.value.VoteChoices[i].agendaId == agenda.getId()) {
+                    selectedChoice = this.state.selectedConfigured.value.VoteChoices[i].choiceId;
                     break;
                   }
                 }
@@ -819,7 +760,7 @@ class StakePool extends Component{
           <div style={this.state.advancedHidden ? StakePoolStyles.flexHeightHidden : StakePoolStyles.flexHeightShown }>
             <div style={StakePoolStyles.purchaseTicketRow}>
               <div style={StakePoolStyles.purchaseTicketLabel}>Account:</div>
-              <div style={StakePoolStyles.purchaseTicketInput}>
+              <div style={StakePoolStyles.purchaseTicketInputSelect}>
                 {selectAccounts}
               </div>
               <div style={StakePoolStyles.purchaseTicketInputButtons}>
@@ -858,8 +799,8 @@ class StakePool extends Component{
               <div style={StakePoolStyles.purchaseTicketLabel}>
                 Stake Pool:
                 </div>
-              <div style={StakePoolStyles.purchaseTicketInput}>
-                {selectStakePoolPurchaseTickets}
+              <div style={StakePoolStyles.purchaseTicketInputSelect}>
+                {selectConfiguredStakePool}
               </div>
               <div style={StakePoolStyles.purchaseTicketInputButtons}>
                 <ManagePoolsButton onClick={() => this.showStakePoolConfig()}/>
@@ -908,7 +849,7 @@ class StakePool extends Component{
                       type="text"
                       disabled
                       style={StakePoolStyles.contentNestPurchaseTicketFormDisabled}
-                      value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.TicketAddress : null}/>
+                      value={this.state.selectedConfigured != null ? this.state.selectedConfigured.value.TicketAddress : null}/>
                   </div>
                 </div>
               </div>
@@ -920,7 +861,7 @@ class StakePool extends Component{
                       disabled
                       type="text"
                       style={StakePoolStyles.contentNestPurchaseTicketFormDisabled}
-                      value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolAddress : null}/>
+                      value={this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolAddress : null}/>
                   </div>
                 </div>
               </div>
@@ -933,7 +874,7 @@ class StakePool extends Component{
                         disabled
                         type="text"
                         style={StakePoolStyles.contentNestPurchaseTicketFormDisabled}
-                        value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolFees : null}/>
+                        value={this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolFees : null}/>
                     </div>
                   </div>
                 </div>
@@ -941,12 +882,12 @@ class StakePool extends Component{
             </div>
             <div hidden={this.state.advancedHidden ? false : true} style={StakePoolStyles.purchaseTicketQuickBarRow}>
               <div style={StakePoolStyles.quickBarRowLabel}>Settings:</div>
-             <div style={StakePoolStyles.stakepoolIcon}>{this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.Host : null}</div>
+             <div style={StakePoolStyles.stakepoolIcon}>{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.Host : null}</div>
               <div style={StakePoolStyles.expiryIcon}>{this.state.expiry} Blocks</div>
               <div style={StakePoolStyles.feeIcon}>{this.state.txFee} DCR/KB</div>
-              <div style={StakePoolStyles.ticketAddressIcon}>{this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.TicketAddress : null}</div>
-              <div style={StakePoolStyles.feeAddressIcon}>{this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolAddress : null}</div>
-              <div style={StakePoolStyles.poolFeeIcon}>{this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolFees : null}%</div>
+              <div style={StakePoolStyles.ticketAddressIcon}>{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.TicketAddress : null}</div>
+              <div style={StakePoolStyles.feeAddressIcon}>{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolAddress : null}</div>
+              <div style={StakePoolStyles.poolFeeIcon}>{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolFees : null}%</div>
             </div>
           </div>
           <div style={StakePoolStyles.purchaseTicketButtonsArea}>
