@@ -10,7 +10,7 @@ import ArrowDownMidBlue from './icons/arrow-down-mid-blue.svg';
 import ArrowDownKeyBlue from './icons/arrow-down-key-blue.svg';
 import RenameIcon from './icons/account-rename.svg';
 import HideIcon from './icons/account-eye-hide.svg';
-import ShowIcon from './icons/account-eye-open.svg'
+import ShowIcon from './icons/account-eye-open.svg';
 import './fonts.css';
 import { AccountStyles } from './views/ViewStyles.js';
 import WalletGray from './icons/wallet-gray.svg';
@@ -289,7 +289,7 @@ const styles = {
     ':hover': {
       opacity: '0.7',
     },
-  }, 
+  },
   hideAccountButton: {
     marginRight: '20px',
     marginTop: '15px',
