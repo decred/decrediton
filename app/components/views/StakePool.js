@@ -22,6 +22,7 @@ import AutoBuyerSwitch from '../AutoBuyerSwitch';
 import PassphraseModal from '../PassphraseModal';
 import ImportScriptModal from '../ImportScriptModal';
 import Select from 'react-select';
+import ReactToolTip from 'react-tooltip';
 
 class StakePool extends Component{
   static propTypes = {
@@ -926,7 +927,7 @@ class StakePool extends Component{
               <div style={StakePoolStyles.autoBuyerQuickBarRow}>
                 {this.state.autoBuyerHidden ?
                   <div>
-                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.balanceToMaintainIcon}/>{this.state.balanceToMaintain}</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas} data-tip="Balance To Maintain"><div style={StakePoolStyles.balanceToMaintainIcon}/>{this.state.balanceToMaintain}</div>
                     <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxFeeIcon}/>{this.state.maxFee} DCR</div>
                     <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxPriceAbsoluteIcon}/>{this.state.maxPriceAbsolute} DCR</div>
                     <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxPriceRelativeIcon}/>{this.state.maxPriceRelative}%</div>
@@ -1116,6 +1117,7 @@ class StakePool extends Component{
         <div style={StakePoolStyles.body}>
           <SideBar />
           {stakePool}
+          <ReactToolTip />
         </div>);
     }
   }
