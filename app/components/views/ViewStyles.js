@@ -2074,6 +2074,44 @@ export const StakePoolStyles = {
     fontSize: '11px',
     lineHeight: '17px',
   },
+  stakeInfoArea: {
+    paddingTop: '1px',
+    backgroundColor: 'rgb(255, 255, 255)',
+    height: '130px',
+    width: '740px',
+    float: 'left',
+    marginBottom: '10px',
+  },
+  stakeInfoRow: {
+    width: '100%',
+    height: '25px',
+    float: 'left',
+    borderBottom: '1px #E7EAED solid',
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
+  },
+  stakeInfoRowLeft: {
+    width: '50%',
+    float: 'left',
+  },
+  stakeInfoRowRight: {
+    width: '50%',
+    float: 'right',
+  },
+  stakeInfoLabel: {
+    width: '152px',
+    paddingRight: '15px',
+    paddingLeft: '5px',
+    float: 'left',
+    height: '100%',
+    paddingTop: '2px',
+    fontSize: '14px',
+    textAlign: 'right',
+  },
+  stakeInfoValue: {
+    fontFamily: 'Inconsolata, monospace',
+    float: 'left',
+    paddingTop: '3px',
+  },
   purchaseTicketRow: {
     width: '100%',
     height: '45px',
@@ -2122,7 +2160,7 @@ export const StakePoolStyles = {
     textAlign: 'right',
   },
   purchaseTicketInputButtons: {
-    width: '255px',
+    width: '275px',
     float: 'left',
     paddingTop: '5px',
     paddingLeft: '10px',
@@ -2163,7 +2201,7 @@ export const StakePoolStyles = {
     }
   },
   purchaseTicketInfoButton: {
-    marginLeft: '180px',
+    marginLeft: '200px',
     float: 'left',
     borderRadius: '0px',
     backgroundImage: `url(${TicketsInfo})`,
@@ -2296,6 +2334,7 @@ export const StakePoolStyles = {
     paddingTop: '1px',
     backgroundColor: '#fff',
     height:'210px',
+    width: '740px',
     float: 'left',
     overflowY: 'auto',
     overflowX: 'hidden',
@@ -2304,6 +2343,7 @@ export const StakePoolStyles = {
     paddingTop: '1px',
     backgroundColor: '#fff',
     height:'340px',
+    width: '740px',
     float: 'left',
     overflowY: 'auto',
     overflowX: 'hidden',
@@ -2355,49 +2395,6 @@ export const StakePoolStyles = {
     paddingTop: '13px',
     paddingRight: '20px',
     paddingLeft: '20px',
-  },
-  stakeInfoArea: {
-    fontSize: '12px',
-    fontWeight: 'bold',
-    float: 'right',
-    marginTop: '-40px',
-    height:'80px',
-    width: '312px',
-  },
-  stakeInfoAreaLeft: {
-    height: '100%',
-    width: '170px',
-    float: 'left',
-  },
-  stakeInfoAreaRight: {
-    height: '100%',
-    width: '142px',
-    float: 'right',
-  },
-  stakeInfoRows: {
-    width: '100%',
-    height: '20px'
-  },
-  stakeInfoRowsRightName: {
-    width: '96px',
-    float: 'left',
-    textAlign: 'left',
-  },
-  stakeInfoRowsRightValue: {
-    width: '46px',
-    float: 'right',
-    textAlign: 'right',
-  },
-  stakeInfoRowsLeftName: {
-    width: '124px',
-    float: 'left',
-    textAlign: 'left',
-  },
-  stakeInfoRowsLeftValue: {
-    width: '34px',
-    float: 'right',
-    textAlign: 'right',
-    paddingRight: '8px',
   },
   votingTitleArea: {
     display: 'block',
