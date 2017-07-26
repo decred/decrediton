@@ -1145,7 +1145,21 @@ export const StakePoolStyles = {
     paddingLeft: '10px',
     borderStyle: 'none',
     color: '#2971ff',
-    fontSize: '13px',
+    borderBottom: '1px solid',
+    fontSize: '15px',
+    cursor: 'text',
+    ':focus': {
+      color: '#2971ff',
+    },
+  },
+  contentNestPurchaseTicketFormDisabled: {
+    width: '100%',
+    height: '100%',
+    paddingTop: '2px',
+    paddingLeft: '10px',
+    borderStyle: 'none',
+    color: '#2971ff',
+    fontSize: '15px',
     cursor: 'text',
     ':focus': {
       color: '#2971ff',
@@ -2075,6 +2089,14 @@ export const StakePoolStyles = {
     borderBottom: '1px black solid',
     transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
   },
+  purchaseTicketRowLeft: {
+    width: '50%',
+    float: 'left',
+  },
+  purchaseTicketRowRight: {
+    width: '50%',
+    float: 'right',
+  },
   purchaseTicketLabel: {
     width: '134px',
     paddingRight: '15px',
@@ -2087,6 +2109,20 @@ export const StakePoolStyles = {
   },
   purchaseTicketInput: {
     width: '283px',
+    float: 'left',
+    height: '100%',
+    fontSize: '19px',
+    textAlign: 'right',
+  },
+  purchaseTicketNumInput: {
+    width: '132px',
+    float: 'left',
+    height: '100%',
+    fontSize: '19px',
+    textAlign: 'right',
+  },
+  purchaseTicketAddressInput: {
+    width: '331px',
     float: 'left',
     height: '100%',
     fontSize: '19px',

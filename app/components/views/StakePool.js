@@ -776,28 +776,30 @@ class StakePool extends Component{
               </div>
             </div>
             <div style={StakePoolStyles.purchaseTicketRow}>
-              <div style={StakePoolStyles.purchaseTicketLabel}>Number of Tickets:</div>
-              <div style={StakePoolStyles.purchaseTicketInput}>
-                {selectNumTickets}
-              </div>
-              <div style={StakePoolStyles.purchaseTicketInputError}>
-                {this.state.numTicketsError}
-              </div>
-            </div>
-            <div style={StakePoolStyles.purchaseTicketRow}>
-              <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
-              <div style={StakePoolStyles.purchaseTicketInput}>
-                <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                  <input
-                    type="text"
-                    style={StakePoolStyles.contentNestPurchaseTicketForm}
-                    placeholder="Ticket Fee"
-                    defaultValue={0.001}
-                    onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
+              <div style={StakePoolStyles.purchaseTicketRowLeft}>
+                <div style={StakePoolStyles.purchaseTicketLabel}>Number of Tickets:</div>
+                <div style={StakePoolStyles.purchaseTicketNumInput}>
+                  {selectNumTickets}
+                </div>
+                <div style={StakePoolStyles.purchaseTicketInputError}>
+                  {this.state.numTicketsError}
                 </div>
               </div>
-              <div style={StakePoolStyles.purchaseTicketInputError}>
-                {this.state.ticketFeeError}
+              <div style={StakePoolStyles.purchaseTicketRowRight}>
+                <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
+                <div style={StakePoolStyles.purchaseTicketNumInput}>
+                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                    <input
+                      type="text"
+                      style={StakePoolStyles.contentNestPurchaseTicketForm}
+                      placeholder="Ticket Fee"
+                      defaultValue={0.001}
+                      onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
+                  </div>
+                </div>
+                <div style={StakePoolStyles.purchaseTicketInputError}>
+                  {this.state.ticketFeeError}
+                </div>
               </div>
             </div>
             <div style={StakePoolStyles.purchaseTicketRow}>
@@ -813,70 +815,74 @@ class StakePool extends Component{
             </div>
             <div hidden={this.state.advancedHidden ? true : false}>
               <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Tx Fee (DCR/kB):</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      placeholder="Tx Fee"
-                      defaultValue={0.001}
-                      onBlur={(e) =>{this.updateTxFee(e.target.value);}}/>
+                <div style={StakePoolStyles.purchaseTicketRowLeft}>
+                  <div style={StakePoolStyles.purchaseTicketLabel}>Tx Fee (DCR/kB):</div>
+                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketForm}
+                        placeholder="Tx Fee"
+                        defaultValue={0.001}
+                        onBlur={(e) =>{this.updateTxFee(e.target.value);}}/>
+                    </div>
+                  </div>
+                  <div style={StakePoolStyles.purchaseTicketInputError}>
+                    {this.state.txFeeError}
                   </div>
                 </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  {this.state.txFeeError}
-                </div>
-              </div>
-              <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Expiry:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      placeholder="Expiry"
-                      defaultValue={this.state.expiry}
-                      onBlur={(e) =>{this.updateExpiry(e.target.value);}}/>
+                <div style={StakePoolStyles.purchaseTicketRowRight}>
+                  <div style={StakePoolStyles.purchaseTicketLabel}>Expiry:</div>
+                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketForm}
+                        placeholder="Expiry"
+                        defaultValue={this.state.expiry}
+                        onBlur={(e) =>{this.updateExpiry(e.target.value);}}/>
+                    </div>
                   </div>
-                </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  {this.state.expiryError}
-                </div>
-              </div>
-              <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Pool Address:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      disabled
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolAddress : null}/>
-                  </div>
-                </div>
-              </div>
-              <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Pool Fees:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      disabled
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolFees : null}/>
+                  <div style={StakePoolStyles.purchaseTicketInputError}>
+                    {this.state.expiryError}
                   </div>
                 </div>
               </div>
               <div style={StakePoolStyles.purchaseTicketRow}>
                 <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Address:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
+                <div style={StakePoolStyles.purchaseTicketAddressInput}>
                   <div style={StakePoolStyles.inputFormPurchaseTicket}>
                     <input
                       type="text"
                       disabled
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
+                      style={StakePoolStyles.contentNestPurchaseTicketFormDisabled}
                       value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.TicketAddress : null}/>
+                  </div>
+                </div>
+              </div>
+              <div style={StakePoolStyles.purchaseTicketRow}>
+                <div style={StakePoolStyles.purchaseTicketLabel}>Pool Address:</div>
+                <div style={StakePoolStyles.purchaseTicketAddressInput}>
+                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                    <input
+                      disabled
+                      type="text"
+                      style={StakePoolStyles.contentNestPurchaseTicketFormDisabled}
+                      value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolAddress : null}/>
+                  </div>
+                </div>
+              </div>
+              <div style={StakePoolStyles.purchaseTicketRow}>
+                <div style={StakePoolStyles.purchaseTicketRowLeft}>
+                  <div style={StakePoolStyles.purchaseTicketLabel}>Pool Fees:</div>
+                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        disabled
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketFormDisabled}
+                        value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolFees : null}/>
+                    </div>
                   </div>
                 </div>
               </div>
