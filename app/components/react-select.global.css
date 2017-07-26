@@ -52,7 +52,11 @@
 .is-searchable.is-open > .Select-control {
   cursor: text;
 }
+.is-open {
+  z-index: 100 !important;
+}
 .is-open > .Select-control {
+  z-index: 100 !important;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   background: #fff;
@@ -61,7 +65,7 @@
 .is-open > .Select-control .Select-arrow {
   top: -2px;
   border-color: transparent transparent #999;
-  border-width: 0 0px 0px;
+  border-width: 0 5px 5px;
 }
 .is-searchable.is-focused:not(.is-open) > .Select-control {
   cursor: text;
@@ -192,7 +196,7 @@
 .Select-arrow {
   border-color: #999 transparent transparent;
   border-style: solid;
-  border-width: 0px 0px 0px;
+  border-width: 5px 5px 2.5px;
   display: inline-block;
   height: 0;
   width: 0;

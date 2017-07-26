@@ -185,15 +185,18 @@ class Home extends Component{
             <div key="walletCreateError" style={GetStartedStyles.viewNotificationError}>{walletCreateError}</div> :
             <div key="walletCreateError" ></div>
           ]}
-          headerTitleOverview={'Create a Wallet'}>
-          {!this.props.confirmNewSeed ?
-            <NewExistingSeedToggle
-              activeButton={'left'}
-              leftText={'New seed'}
-              rightText={'Existing Seed'}
-              toggleAction={(e)=>{this.toggleNewExisting(e);}}/> :
-            <SlateGrayButton style={GetStartedStyles.viewButtonGoBack} onClick={()=>this.props.createWalletGoBackNewSeed()}>Back</SlateGrayButton>
-          }
+          headerTitleOverview={'Create a Wallet'}
+          headerMetaOverview=
+            {<div style={GetStartedStyles.toggle}>
+              {!this.props.confirmNewSeed ?
+                <NewExistingSeedToggle
+                  activeButton={'left'}
+                  leftText={'New seed'}
+                  rightText={'Existing Seed'}
+                  toggleAction={(e)=>{this.toggleNewExisting(e);}}/> :
+                <SlateGrayButton style={GetStartedStyles.viewButtonGoBack} onClick={()=>this.props.createWalletGoBackNewSeed()}>Back</SlateGrayButton>
+              }
+          </div>}>
         </Header>
         {walletCreateRequestAttempt ?
         <div style={GetStartedStyles.contentNewSeed}>

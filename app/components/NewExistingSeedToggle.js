@@ -4,77 +4,81 @@ import React from 'react';
 
 const styles = {
   textToggle: {
-    position: 'relative',
-    display: 'inline-block',
-    overflow: 'hidden',
+    display: 'block',
     height: '44px',
-    borderRadius: '3px',
-    boxShadow: '0 0 8px 0 rgba(0, 0, 0, .2)',
-    color: '#0c1e3e',
-    fontSize: '15px',
-  },
-
-  textToggleNewSeed: {
-    overflow: 'hidden',
-    height: '44px',
-    borderRadius: '5px',
-    boxShadow: '0 0 8px 0 rgba(0, 0, 0, .2)',
-    color: '#0c1e3e',
-    fontSize: '13px',
-    position: 'absolute',
-    right: '0px',
-    bottom: '0px',
-    display: 'inline-block',
-    marginRight: '60px',
-    marginBottom: '40px',
     float: 'right',
+    textAlign: 'left',
   },
 
-  textToggleExistingSeed: {
+  textToggleButtonLeft: {
+    minWidth: '140px',
+    float: 'left',
+    border: '1px #e7eaed solid',
+    borderRadius: '5px 0px 0px 5px',
+    backgroundColor: '#fff',
+    boxShadow: 'none',
+    color: '#8997a5',
     display: 'inline-block',
-    overflow: 'hidden',
-    height: '44px',
-    borderRadius: '3px',
-    boxShadow: '0 0 8px 0 rgba(0, 0, 0, .2)',
-    color: '#0c1e3e',
+    padding: '12px 18px',
     fontSize: '13px',
-    marginRight: '60px',
-    marginBottom: '40px',
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
+    cursor: 'pointer',
   },
 
-  textToggleButton: {
-    display: 'block',
-    overflow: 'hidden',
-    height: '44px',
+  textToggleButtonRight: {
     minWidth: '140px',
     float: 'left',
-    backgroundColor: '#e9f8fe',
-    boxShadow: '0 0 8px 0 rgba(0, 0, 0, .2)',
-    transitionProperty: 'all',
-    transitionDuration: '100ms',
-    transitionTimingFunction: 'cubic-bezier(0.86, 0, 0.07, 1)',
-    transitionDelay: '0s',
+    border: '1px #e7eaed solid',
+    borderRadius: '0px 5px 5px 0px',
+    backgroundColor: '#fff',
+    boxShadow: 'none',
+    color: '#8997a5',
+    display: 'inline-block',
+    padding: '12px 18px',
+    fontSize: '13px',
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
     cursor: 'pointer',
-    /*
-    ':hover': {
-      backgroundColor: '#69d5f7',
-    },
-    ':active': {
-      backgroundColor: '#0c1e3e',
-      boxShadow: '0 0 1px 0 rgba(0, 0, 0, .2)',
-    },
-    */
   },
-  textToggleButtonActive: {
-    display: 'block',
-    overflow: 'hidden',
-    height: '44px',
+
+  textToggleButtonActiveLeft: {
+    backgroundColor: '#f3f6f6',
+    color: '#0c1e3e',
+    cursor: 'default',
     minWidth: '140px',
     float: 'left',
-    boxShadow: '0 0 8px 0 rgba(0, 0, 0, .2)',
-    backgroundColor: '#0c1e3e',
-    color: '#fff',
+    border: '1px solid #f3f6f6',
+    borderRadius: '5px 0px 0px 5px',
+    boxShadow: 'none',
+    display: 'inline-block',
+    padding: '12px 18px',
+    fontSize: '13px',
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
+  },
+  textToggleButtonActiveRight: {
+    backgroundColor: '#f3f6f6',
+    color: '#0c1e3e',
     cursor: 'default',
+    minWidth: '140px',
+    float: 'left',
+    border: '1px solid #f3f6f6',
+    borderRadius: '0px 5px 5px 0px',
+    boxShadow: 'none',
+    display: 'inline-block',
+    padding: '12px 18px',
+    fontSize: '13px',
+    fontWeight: '600',
+    textAlign: 'center',
+    textDecoration: 'none',
+    textTransform: 'capitalize',
   },
   textToggleButtonDescription: {
     width: '100%',
@@ -102,11 +106,11 @@ class NewExistingSeedToggle extends React.Component {
     const { leftText, rightText } = this.props;
     return (
       <div style={styles.textToggle}>
-        <div style={this.state.activeButton == 'right' ? styles.textToggleButton : styles.textToggleButtonActive } onClick={this.state.activeButton == 'right' ? () => this.clickButton('left') : null}>
-          <div style={styles.textToggleButtonDescription}>{leftText}</div>
+        <div style={this.state.activeButton == 'right' ? styles.textToggleButtonLeft : styles.textToggleButtonActiveLeft } onClick={this.state.activeButton == 'right' ? () => this.clickButton('left') : null}>
+          {leftText}
         </div>
-        <div style={this.state.activeButton == 'left' ? styles.textToggleButton : styles.textToggleButtonActive } onClick={this.state.activeButton == 'left' ? () => this.clickButton('right') : null}>
-          <div style={styles.textToggleButtonDescription}>{rightText}</div>
+        <div style={this.state.activeButton == 'left' ? styles.textToggleButtonRight : styles.textToggleButtonActiveRight } onClick={this.state.activeButton == 'left' ? () => this.clickButton('right') : null}>
+          {rightText}
         </div>
       </div>
     );

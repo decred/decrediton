@@ -21,6 +21,7 @@ import ManagePoolsButton from '../ManagePoolsButton';
 import AutoBuyerSwitch from '../AutoBuyerSwitch';
 import PassphraseModal from '../PassphraseModal';
 import ImportScriptModal from '../ImportScriptModal';
+import Select from 'react-select';
 
 class StakePool extends Component{
   static propTypes = {
@@ -29,40 +30,49 @@ class StakePool extends Component{
   };
   constructor(props) {
     super(props);
-    var initStakePoolHost = '';
-    var initStakePool = null;
+    var selectedConfigured = undefined;
+    var selectedUnconfigured = undefined;
+    var configuredStakePools = Array();
+    var unconfiguredStakePools = Array();
     // Look for any available uninitialized stakepool config
     // This will be set for the first in the dropdown for
     // setting apikey/purchase information of the stakepool.
     if (this.props.currentStakePoolConfig != null) {
       for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
         if (!this.props.currentStakePoolConfig[i].ApiKey && this.props.currentStakePoolConfig[i].Network == this.props.network) {
-          initStakePoolHost = this.props.currentStakePoolConfig[i].Host;
-          break;
-        }
-      }
-      // Look for any available initialized stakepool config
-      // This will be set for the first in the dropdown for
-      // ticket purchase stake pool selection.
-      for (var j = 0; j < this.props.currentStakePoolConfig.length; j++) {
-        if (this.props.currentStakePoolConfig[j].ApiKey && this.props.currentStakePoolConfig[j].Network == this.props.network) {
-          initStakePool = this.props.currentStakePoolConfig[j];
-          break;
+          selectedUnconfigured = {value: this.props.currentStakePoolConfig[i], label: this.props.currentStakePoolConfig[i].Host};
+          unconfiguredStakePools.push(selectedUnconfigured);
+        }else if (this.props.currentStakePoolConfig[i].ApiKey && this.props.currentStakePoolConfig[i].Network == this.props.network) {
+          selectedConfigured = {value: this.props.currentStakePoolConfig[i], label: this.props.currentStakePoolConfig[i].Host};
+          configuredStakePools.push(selectedConfigured);
         }
       }
     }
     var defaultSpendLimit = 0;
+    var accountsList = Array();
+    var unitDivisor = 1;
+    if (this.props.currentSettings.currencyDisplay == 'DCR') {
+      unitDivisor = 100000000;
+    }
     if (this.props.balances != null) {
       for (i = 0; i < this.props.balances.length; i++) {
         if (this.props.balances[i].accountNumber == 0) {
           defaultSpendLimit = this.props.balances[i].spendable;
         }
+        if (this.props.balances[i].accountNumber == 0 || this.props.balances[i].accountName != 'imported' && this.props.balances[i].spendable > 0) {
+          accountsList.push({ value: this.props.balances[i].accountNumber, label: this.props.balances[i].accountName + ': ' +this.props.balances[i].spendable / unitDivisor + ' ' + this.props.currentSettings.currencyDisplay});
+        }
       }
     }
+
     this.state = {
-      stakePoolHost: initStakePoolHost,
+      accountsList: accountsList,
+      configuredStakePools: configuredStakePools,
+      selectedConfigured: selectedConfigured,
+      unconfiguredStakePools: unconfiguredStakePools,
+      selectedUnconfigured: selectedUnconfigured,
       apiKey: '',
-      account: 0,
+      account: accountsList[0],
       addAnotherStakePool: false,
       purchaseTickets: true,
       purchaseTicketsStakePoolConfig: false,
@@ -74,8 +84,6 @@ class StakePool extends Component{
       expiry: 16,
       txFee: 0.001, // DCR/kB
       ticketFee: 0.001, // DCR/kB
-      selectedStakePoolForPurchase: initStakePool,
-      selectedStakePoolForVoting: initStakePool,
       advancedHidden: true,
       autoBuyerHidden: true,
       choice: 'option1',
@@ -110,25 +118,33 @@ class StakePool extends Component{
     };
   }
   componentWillReceiveProps(nextProps) {
+    var accountsList = Array();
+    var unitDivisor = 1;
+    if (nextProps.currentSettings.currencyDisplay == 'DCR') {
+      unitDivisor = 100000000;
+    }
     if (this.props.balances != nextProps.balances) {
       var newAccountSpendableBalance = 0;
       for (var i = 0; i < nextProps.balances; i++) {
         if (nextProps.balances[i].accountNumber == this.state.account) {
           newAccountSpendableBalance = nextProps.balances[i].spendable;
-          break;
+        }
+        if (nextProps.balances[i].accountNumber == 0 || nextProps.balances[i].accountName != 'imported' && nextProps.balances[i].spendable > 0) {
+          accountsList.push({ value: nextProps.balances[i].accountNumber, label: nextProps.balances[i].accountName + ': ' + nextProps.balances[i].spendable / unitDivisor + ' ' + nextProps.currentSettings.currencyDisplay});
         }
       }
-      this.setState({spendLimit: newAccountSpendableBalance});
+      this.setState({spendLimit: newAccountSpendableBalance, accountsList: accountsList });
     }
     if (this.props.currentStakePoolConfig != nextProps.currentStakePoolConfig) {
+      var configuredStakePools = Array();
+      var selectedConfigured = undefined;
       for (var j = 0; j < nextProps.currentStakePoolConfig.length; j++) {
         if (nextProps.currentStakePoolConfig[j].ApiKey && nextProps.currentStakePoolConfig[j].Network == this.props.network) {
-          this.setState({selectedStakePoolForPurchase: nextProps.currentStakePoolConfig[j]});
-        }
-        if (this.state.selectedStakePoolForVoting !== null && nextProps.currentStakePoolConfig[j].Host == this.state.selectedStakePoolForVoting.Host) {
-          this.setState({selectedStakePoolForVoting: nextProps.currentStakePoolConfig[j]});
+          selectedConfigured = {value: nextProps.currentStakePoolConfig[j], label: nextProps.currentStakePoolConfig[j].Host};
+          configuredStakePools.push(selectedConfigured);
         }
       }
+      this.setState({selectedConfigured: selectedConfigured, configuredStakePools: configuredStakePools});
     }
     if (this.props.getVoteChoicesResponse !== nextProps.getVoteChoicesResponse) {
       for (i = 0; i < nextProps.getVoteChoicesResponse.getChoicesList().length; i++) {
@@ -173,7 +189,7 @@ class StakePool extends Component{
   }
   submitPurchase(privpass) {
     var checkErrors = false;
-    if (this.state.selectedStakePoolForPurchase == null ||
+    if (this.state.selectedConfigured == null ||
        this.state.numTicketsError !== null || this.state.txFeeError !== null ||
        this.state.ticketFeeError !== null || this.state.expiryError !== null ||
        this.state.privPassError !== null) {
@@ -188,14 +204,14 @@ class StakePool extends Component{
     }
     this.props.purchaseTicketsAttempt(
       privpass,
-      this.state.account,
+      this.state.account.value,
       this.state.spendLimit,
       this.state.conf,
       this.state.numTickets,
       this.state.expiry,
       this.state.ticketFee,
       this.state.txFee,
-      this.state.selectedStakePoolForPurchase,
+      this.state.selectedConfigured.value,
     );
     this.setState({passphraseModalOpen: false});
   }
@@ -277,12 +293,12 @@ class StakePool extends Component{
   }
   updateAutoBuyerSettings() {
     this.props.setTicketBuyerConfigAttempt(
-      this.state.account,
+      this.state.account.value,
       this.state.balanceToMaintain,
       this.state.maxFee,
       this.state.maxPriceAbsolute,
       this.state.maxPriceRelative,
-      this.state.selectedStakePoolForPurchase,
+      this.state.selectedConfigured.value,
       this.state.maxPerBlock
     );
   }
@@ -292,12 +308,12 @@ class StakePool extends Component{
   hideStakePoolConfig() {
     this.setState({purchaseTicketsStakePoolConfig: false});
   }
-  updateAccountNumber(accountNum) {
-    this.setState({account: accountNum});
+  updateAccountNumber(account) {
+    this.setState({account: account});
     if (this.props.balances !== null) {
       var updatedAccountSpendLimit = 0;
       for (var i = 0; i < this.props.balances.length; i++) {
-        if (this.props.balances[i].accountNumber == accountNum) {
+        if (this.props.balances[i].accountNumber == account.value) {
           updatedAccountSpendLimit = this.props.balances[i].spendable;
           break;
         }
@@ -345,10 +361,10 @@ class StakePool extends Component{
       this.setState({apiKeyError: '*Please enter your API key'});
       return;
     }
-    if (this.state.stakePoolHost == '' || this.state.apiKeyError !== null) {
+    if (this.state.selectedUnconfigured == null || this.state.apiKeyError !== null) {
       return;
     }
-    this.props.setStakePoolInformation(privpass, this.state.stakePoolHost, this.state.apiKey, 0);
+    this.props.setStakePoolInformation(privpass, this.state.selectedUnconfigured.label, this.state.apiKey, 0);
     setTimeout(this.setState({passphraseModalOpen: false, addAnotherStakePool: false}), 1000);
   }
   updateApiKey(apiKey) {
@@ -356,25 +372,6 @@ class StakePool extends Component{
       this.setState({apiKey: apiKey, apiKeyError: null});
     } else {
       this.setState({apiKeyError: '*Please enter your API key'});
-    }
-  }
-  updateStakePoolHost(poolHost) {
-    this.setState({stakePoolHost: poolHost});
-  }
-  updateStakePoolPurchaseTickets(poolHost) {
-    for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
-      if (this.props.currentStakePoolConfig[i].Host == poolHost) {
-        this.setState({selectedStakePoolForPurchase: this.props.currentStakePoolConfig[i]});
-        break;
-      }
-    }
-  }
-  updateStakePoolVotingPreferences(poolHost) {
-    for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
-      if (this.props.currentStakePoolConfig[i].Host == poolHost) {
-        this.setState({selectedStakePoolForVoting: this.props.currentStakePoolConfig[i]});
-        break;
-      }
     }
   }
   toggleTicketStakePool(side) {
@@ -399,13 +396,13 @@ class StakePool extends Component{
   submitStart(privpass) {
     this.props.startAutoBuyerAttempt(
       privpass,
-      this.state.account,
+      this.state.account.value,
       this.state.balanceToMaintain,
       this.state.maxFee,
       this.state.maxPriceRelative,
       this.state.maxPriceAbsolute,
       this.state.maxPerBlock,
-      this.state.selectedStakePoolForPurchase
+      this.state.selectedConfigured
     );
     this.setState({passphraseModalOpen: false});
   }
@@ -417,11 +414,11 @@ class StakePool extends Component{
   }
   showAgendaOverview(agenda) {
     var selectedChoice = 'abstain';
-    if (this.state.selectedStakePoolForVoting.VoteChoices !== undefined) {
-      for (var i = 0; i < this.state.selectedStakePoolForVoting.VoteChoices.length; i++) {
-        if (this.state.selectedStakePoolForVoting.VoteChoices[i] !== undefined &&
-        this.state.selectedStakePoolForVoting.VoteChoices[i].agendaId == agenda.getId()) {
-          selectedChoice = this.state.selectedStakePoolForVoting.VoteChoices[i].choiceId;
+    if (this.state.selectedConfigured.value.VoteChoices !== undefined) {
+      for (var i = 0; i < this.state.selectedConfigured.value.VoteChoices.length; i++) {
+        if (this.state.selectedConfigured.value.VoteChoices[i] !== undefined &&
+        this.state.selectedConfigured.value.VoteChoices[i].agendaId == agenda.getId()) {
+          selectedChoice = this.state.selectedConfigured.value.VoteChoices[i].choiceId;
           break;
         }
       }
@@ -444,12 +441,17 @@ class StakePool extends Component{
     this.submitStop();
     this.setState({modalHeading: null, modalDescription: null, modalSubmitFunc: null, passphraseModalOpen: false});
   }
+  updateConfiguredStakePool(stakePool) {
+    this.setState({selectedConfigured: {value: stakePool, label: stakePool.Host}});
+  }
+  updateUnconfiguredStakePool(stakePool) {
+    this.setState({selectedUnconfigured: {value: stakePool, label: stakePool.Host}});
+  }
   render() {
     const { walletService } = this.props;
-    const { currentSettings } = this.props;
     const { ticketBuyerService } = this.props;
-    const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
-    const { currentStakePoolConfigSuccessMessage, balances, purchaseTicketsRequestAttempt } = this.props;
+    const { currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
+    const { currentStakePoolConfigSuccessMessage, purchaseTicketsRequestAttempt } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
     const { revokeTicketsError, revokeTicketsSuccess } = this.props;
     const { importScriptError, importScriptSuccess } = this.props;
@@ -459,102 +461,39 @@ class StakePool extends Component{
     const { getAgendasResponse } = this.props;
     const { startAutoBuyerSuccess, startAutoBuyerResponse, stopAutoBuyerSuccess, startAutoBuyerError, stopAutoBuyerError } = this.props;
     const { getTicketBuyerConfigResponse } = this.props;
-    var unitLabel = currentSettings.currencyDisplay;
-    var unitDivisor = 1;
-    if (unitLabel == 'DCR') {
-      unitDivisor = 100000000;
-    }
-    var unconfigedStakePools = 0;
-    if (currentStakePoolConfig != null) {
-      for (var i = 0; i < currentStakePoolConfig.length; i++) {
-        if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
-          unconfigedStakePools++;
-        }
-      }
-    }
     var selectAccounts = (
-      <div style={StakePoolStyles.selectStakePoolArea}>
-        <select
-          defaultValue={0}
-          style={StakePoolStyles.selectPurchaseTickets}
-          onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
-          >
-          {balances !== null ?
-            balances.map((account) => {
-              if (account.accountName !== 'imported' && !account.hidden) {
-                return (
-                  <option style={StakePoolStyles.selectPurchaseTicketsN} key={account.accountNumber} value={account.accountNumber}>
-                    {account.accountName}: {account.spendable / unitDivisor} {unitLabel}
-                  </option>
-                );
-              }
-            }):
-            null
-          }
-        </select>
-      </div>);
-    var selectStakePoolApiKey = (
-      <div style={StakePoolStyles.selectStakePoolArea}>
-        <select
-          defaultValue={0}
-          style={StakePoolStyles.selectStakePool}
-          onChange={(e) =>{this.updateStakePoolHost(e.target.value);}}
-          >
-          {currentStakePoolConfig !== null  ?
-            currentStakePoolConfig.map((stakePool) => {
-              if (!stakePool.ApiKey && stakePool.Network == network) {
-                return (
-                  <option style={StakePoolStyles.selectStakePoolN} key={stakePool.Host} value={stakePool.Host}>
-                    {stakePool.Host}
-                  </option>
-                );
-              }
-            }) :
-            null
-          }
-        </select>
-      </div>);
-    var selectStakePoolPurchaseTickets = (
-      <div style={StakePoolStyles.selectStakePoolArea}>
-        <select
-          defaultValue={this.state.selectedStakePoolForPurchase !== null ? this.state.selectedStakePoolForPurchase.Host : 0}
-          style={StakePoolStyles.selectPurchaseTickets}
-          onChange={(e) =>{this.updateStakePoolPurchaseTickets(e.target.value);}}
-          >
-          {currentStakePoolConfig !== null  ?
-            currentStakePoolConfig.map((stakePool) => {
-              if (stakePool.ApiKey && stakePool.Network == network) {
-                return (
-                  <option style={StakePoolStyles.selectPurchaseTicketsN} key={stakePool.Host} value={stakePool.Host}>
-                    {stakePool.Host}
-                  </option>
-                );
-              }
-            }) :
-            null
-          }
-        </select>
-      </div>);
-
-    var selectStakePoolVotingPreferences = (
-        <select
-          defaultValue={this.state.selectedStakePoolForVoting !== null ? this.state.selectedStakePoolForPurchase.Host : 0}
-          style={StakePoolStyles.selectVotingPreferences}
-          onChange={(e) =>{this.updateStakePoolVotingPreferences(e.target.value);}}
-          >
-          {currentStakePoolConfig !== null  ?
-            currentStakePoolConfig.map((stakePool) => {
-              if (stakePool.ApiKey && stakePool.Network == network) {
-                return (
-                  <option style={StakePoolStyles.selectPurchaseTicketsN} key={stakePool.Host} value={stakePool.Host}>
-                    {stakePool.Host}
-                  </option>
-                );
-              }
-            }) :
-            null
-          }
-        </select>);
+        <Select
+          clearable={false}
+          style={{zIndex:'9'}}
+          onChange={(val) => this.updateAccountNumber(val)}
+          placeholder={'Select account...'}
+          multi={false}
+          value={this.state.account}
+          valueKey="value" labelKey="label"
+          options={this.state.accountsList}
+          />);
+    var selectConfiguredStakePool = (
+        <Select
+          clearable={false}
+          style={{zIndex:'9'}}
+          onChange={(val) => this.updateConfiguredStakePool(val)}
+          placeholder={'Select account...'}
+          multi={false}
+          value={this.state.selectedConfigured}
+          valueKey="value" labelKey="label"
+          options={this.state.configuredStakePools}
+          />);
+    var selectUnconfiguredStakePool = (
+        <Select
+          clearable={false}
+          style={{zIndex:'9'}}
+          onChange={(val) => this.updateUnconfiguredStakePool(val)}
+          placeholder={'Select account...'}
+          multi={false}
+          value={this.state.selectedUnconfigured}
+          valueKey="value" labelKey="label"
+          options={this.state.unconfiguredStakePools}
+          />);
     var selectNumTickets = (
       <NumTicketsInput numTickets={this.state.numTickets} incrementNumTickets={()=>this.incrementNumTickets()} decrementNumTickets={()=>this.decrementNumTickets()}/>);
     var apiKeyDescription = (
@@ -563,6 +502,11 @@ class StakePool extends Component{
     );
     var apiKeyHeading = 'Enter private passphrase to connect to your stakepool';
     var apiKeyFunc = (privPass) => this.setStakePoolInfo(privPass);
+
+    var selectedUnconfiguredLabel = null;
+    if (this.state.selectedUnconfigured !== undefined) {
+      selectedUnconfiguredLabel = this.state.selectedUnconfigured.label;
+    }
     var stakePoolConfigInput = (
       <div>
         <PassphraseModal
@@ -576,13 +520,15 @@ class StakePool extends Component{
           <div style={StakePoolStyles.flexHeight}>
             <div style={StakePoolStyles.contentNestFromAddress}>
               <div style={StakePoolStyles.contentNestPrefixSend}>Stake Pool:</div>
-                {selectStakePoolApiKey}
+              <div style={StakePoolStyles.stakePoolUnconfiguredSelect}>
+                {selectUnconfiguredStakePool}
+              </div>
               <div style={StakePoolStyles.contentNestFromAddressWalletIcon}></div>
             </div>
             <div style={StakePoolStyles.contentNestApiKeyInstructions}>
               <span>
                 Please select your desired stakepool from the above dropdown and follow these instructions:
-                <br/>1) Create an account or login to your existing account at <a style={StakePoolStyles.stakepoolLink} onClick={function(x){shell.openExternal(x);}.bind(null, this.state.stakePoolHost)}>{this.state.stakePoolHost}</a>.
+                <br/>1) Create an account or login to your existing account at <a style={StakePoolStyles.stakepoolLink} onClick={function(x){shell.openExternal(x);}.bind(null, selectedUnconfiguredLabel)}>{selectedUnconfiguredLabel}</a>.
                 <br/>2) Once logged in, select the 'Settings' tab.
                 <br/>3) Copy and paste your Api Key into the field below (typically starts with 'eyJhb...').
                 <br/>4) Click Add and enter your private passphrase.
@@ -625,27 +571,30 @@ class StakePool extends Component{
     var votingGuiView = (
       <div style={StakePoolStyles.contentVotingGui}>
         <div style={StakePoolStyles.votingTitleArea}>
-          <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences {selectStakePoolVotingPreferences}</div>
+          <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences</div>
+          <div style={StakePoolStyles.stakePoolUnconfiguredSelect}>{selectConfiguredStakePool}</div>
         </div>
-        {this.state.selectedStakePoolForVoting !== null && this.state.selectedStakePoolForVoting.APIVersionsSupported[1] == requiredStakepoolAPIVersion ?
+        {this.state.selectedConfigured !== null && this.state.selectedConfigured.value.APIVersionsSupported[1] == requiredStakepoolAPIVersion ?
         <div style={StakePoolStyles.votingAgendaArea}>
-          {this.state.agendaDisplay !== null && this.state.selectedStakePoolForVoting !== null ?
-            <AgendaOverview agenda={this.state.agendaDisplay} selectedChoice={this.state.selectedChoice} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updatePreferences={(agendaId, choiceId) =>this.props.setVoteChoicesAttempt(this.state.selectedStakePoolForVoting, agendaId, choiceId)}/>:
+          {this.state.agendaDisplay !== null && this.state.selectedConfigured !== null ?
+            <AgendaOverview agenda={this.state.agendaDisplay} selectedChoice={this.state.selectedChoice} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updatePreferences={(agendaId, choiceId) =>this.props.setVoteChoicesAttempt(this.state.selectedConfigured.value, agendaId, choiceId)}/>:
             <div></div>
           }
-          {getAgendasResponse !== null && this.state.selectedStakePoolForVoting !== null ? getAgendasResponse.getAgendasList().length > 0 ?
+          {getAgendasResponse !== null && this.state.selectedConfigured !== null ? getAgendasResponse.getAgendasList().length > 0 ?
             getAgendasResponse.getAgendasList().map((agenda) => {
               var selectedChoice = 'abstain';
-              if (this.state.selectedStakePoolForVoting.VoteChoices !== undefined) {
-                for (var i = 0; i < this.state.selectedStakePoolForVoting.VoteChoices.length; i++) {
-                  if (this.state.selectedStakePoolForVoting.VoteChoices[i] !== undefined &&
-                  this.state.selectedStakePoolForVoting.VoteChoices[i].agendaId == agenda.getId()) {
-                    selectedChoice = this.state.selectedStakePoolForVoting.VoteChoices[i].choiceId;
+              if (this.state.selectedConfigured.VoteChoices !== undefined) {
+                for (var i = 0; i < this.state.selectedConfigured.value.VoteChoices.length; i++) {
+                  if (this.state.selectedConfigured.value.VoteChoices[i] !== undefined &&
+                  this.state.selectedConfigured.value.VoteChoices[i].agendaId == agenda.getId()) {
+                    selectedChoice = this.state.selectedConfigured.value.VoteChoices[i].choiceId;
                     break;
                   }
                 }
               }
-              return(<AgendaCard key={agenda.getId()} agenda={agenda} selectedChoice={selectedChoice} onClick={() => this.showAgendaOverview(agenda)}/>);
+              if (this.state.agendaDisplay == null || (this.state.agendaDisplay !== null && agenda.getId() !== this.state.agendaDisplay.getId())) {
+                return(<AgendaCard key={agenda.getId()} agenda={agenda} selectedChoice={selectedChoice} onClick={() => this.showAgendaOverview(agenda)}/>);
+              }
             }):
             <div style={StakePoolStyles.noAgendasMessage}>There are currently no agendas for voting.</div>:
           <div style={StakePoolStyles.noAgendasMessage}>There are currently no agendas for voting.</div>
@@ -663,7 +612,7 @@ class StakePool extends Component{
               <div style={StakePoolStyles.contentNestPrefixConfigured}>Configured stake pools:</div>
             </div>
             <div id="dynamicInput">
-            {currentStakePoolConfig.map((stakePool) => {
+            {this.state.configuredStakePools.map((stakePool) => {
               if (stakePool.ApiKey && stakePool.Network == network) {
                 return(
                 <div key={stakePool.Host} style={StakePoolStyles.contentNestStakePool}>
@@ -694,7 +643,7 @@ class StakePool extends Component{
             })}
             </div>
           </div>
-          {unconfigedStakePools > 0 ?
+          {this.state.unconfiguredStakePools.length > 0 ?
           <KeyBlueButton style={StakePoolStyles.contentSend} onClick={() => this.addAnotherStakePool()}>
             Add stakepool
           </KeyBlueButton> :
@@ -759,137 +708,195 @@ class StakePool extends Component{
           description={this.state.modalScriptDescription}
         />
         <div style={this.state.passphraseModalOpen || this.state.importScriptModalOpen ? StakePoolStyles.contentPurchaseTicketViewBlur : StakePoolStyles.contentPurchaseTicketView}>
+          {getStakeInfoResponse !== null ?
+          <div style={StakePoolStyles.stakeInfoArea}>
+            <div style={StakePoolStyles.stakeInfoRow}>
+              <div style={StakePoolStyles.stakeInfoRowLeft}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Poolsize:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getPoolSize()}</div>
+              </div>
+              <div style={StakePoolStyles.stakeInfoRowRight}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Voted Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getVoted()}</div>
+              </div>
+            </div>
+            <div style={StakePoolStyles.stakeInfoRow}>
+              <div style={StakePoolStyles.stakeInfoRowLeft}>
+                <div style={StakePoolStyles.stakeInfoLabel}>All Mempool Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getAllMempoolTix()}</div>
+              </div>
+              <div style={StakePoolStyles.stakeInfoRowRight}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Missed Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getMissed()}</div>
+              </div>
+            </div>
+            <div style={StakePoolStyles.stakeInfoRow}>
+              <div style={StakePoolStyles.stakeInfoRowLeft}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Own Mempool Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getOwnMempoolTix()}</div>
+              </div>
+              <div style={StakePoolStyles.stakeInfoRowRight}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Revoked Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getRevoked()}</div>
+              </div>
+            </div>
+            <div style={StakePoolStyles.stakeInfoRow}>
+              <div style={StakePoolStyles.stakeInfoRowLeft}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Immature Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getImmature()}</div>
+              </div>
+              <div style={StakePoolStyles.stakeInfoRowRight}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Expired Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getExpired()}</div>
+              </div>
+            </div>
+            <div style={StakePoolStyles.stakeInfoRow}>
+              <div style={StakePoolStyles.stakeInfoRowLeft}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Live Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getLive()}</div>
+              </div>
+            </div>
+          </div>:
+          <div>
+          </div>
+          }
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Purchase Tickets</div>
           </div>
           <div style={this.state.advancedHidden ? StakePoolStyles.flexHeightHidden : StakePoolStyles.flexHeightShown }>
             <div style={StakePoolStyles.purchaseTicketRow}>
               <div style={StakePoolStyles.purchaseTicketLabel}>Account:</div>
-              <div style={StakePoolStyles.purchaseTicketInput}>
+              <div style={StakePoolStyles.purchaseTicketInputSelect}>
                 {selectAccounts}
               </div>
-              <div style={StakePoolStyles.purchaseTicketInputError}>
+              <div style={StakePoolStyles.purchaseTicketInputButtons}>
                 <PurchaseTicketsInfoButton onClick={() => this.showPurchaseInfoModal()}/>
                 <TicketsCogs opened={this.state.advancedHidden} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}/>
               </div>
             </div>
             <div style={StakePoolStyles.purchaseTicketRow}>
-              <div style={StakePoolStyles.purchaseTicketLabel}>Number of Tickets:</div>
-              <div style={StakePoolStyles.purchaseTicketInput}>
-                {selectNumTickets}
-              </div>
-              <div style={StakePoolStyles.purchaseTicketInputError}>
-                {this.state.numTicketsError}
-              </div>
-            </div>
-            <div style={StakePoolStyles.purchaseTicketRow}>
-              <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
-              <div style={StakePoolStyles.purchaseTicketInput}>
-                <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                  <input
-                    type="text"
-                    style={StakePoolStyles.contentNestPurchaseTicketForm}
-                    placeholder="Ticket Fee"
-                    defaultValue={0.001}
-                    onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
+              <div style={StakePoolStyles.purchaseTicketRowLeft}>
+                <div style={StakePoolStyles.purchaseTicketLabel}>Number of Tickets:</div>
+                <div style={StakePoolStyles.purchaseTicketNumInput}>
+                  {selectNumTickets}
+                </div>
+                <div style={StakePoolStyles.purchaseTicketInputError}>
+                  {this.state.numTicketsError}
                 </div>
               </div>
-              <div style={StakePoolStyles.purchaseTicketInputError}>
-                {this.state.ticketFeeError}
+              <div style={StakePoolStyles.purchaseTicketRowRight}>
+                <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
+                <div style={StakePoolStyles.purchaseTicketNumInput}>
+                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                    <input
+                      type="text"
+                      style={StakePoolStyles.contentNestPurchaseTicketForm}
+                      placeholder="Ticket Fee"
+                      defaultValue={0.001}
+                      onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
+                  </div>
+                </div>
+                <div style={StakePoolStyles.purchaseTicketInputError}>
+                  {this.state.ticketFeeError}
+                </div>
               </div>
             </div>
             <div style={StakePoolStyles.purchaseTicketRow}>
               <div style={StakePoolStyles.purchaseTicketLabel}>
                 Stake Pool:
                 </div>
-              <div style={StakePoolStyles.purchaseTicketInput}>
-                {selectStakePoolPurchaseTickets}
+              <div style={StakePoolStyles.purchaseTicketInputSelect}>
+                {selectConfiguredStakePool}
               </div>
-              <div style={StakePoolStyles.purchaseTicketInputError}>
+              <div style={StakePoolStyles.purchaseTicketInputButtons}>
                 <ManagePoolsButton onClick={() => this.showStakePoolConfig()}/>
               </div>
             </div>
             <div hidden={this.state.advancedHidden ? true : false}>
               <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Tx Fee (DCR/kB):</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      placeholder="Tx Fee"
-                      defaultValue={0.001}
-                      onBlur={(e) =>{this.updateTxFee(e.target.value);}}/>
+                <div style={StakePoolStyles.purchaseTicketRowLeft}>
+                  <div style={StakePoolStyles.purchaseTicketLabel}>Tx Fee (DCR/kB):</div>
+                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketForm}
+                        placeholder="Tx Fee"
+                        defaultValue={0.001}
+                        onBlur={(e) =>{this.updateTxFee(e.target.value);}}/>
+                    </div>
+                  </div>
+                  <div style={StakePoolStyles.purchaseTicketInputError}>
+                    {this.state.txFeeError}
                   </div>
                 </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  {this.state.txFeeError}
-                </div>
-              </div>
-              <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Expiry:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      placeholder="Expiry"
-                      defaultValue={this.state.expiry}
-                      onBlur={(e) =>{this.updateExpiry(e.target.value);}}/>
+                <div style={StakePoolStyles.purchaseTicketRowRight}>
+                  <div style={StakePoolStyles.purchaseTicketLabel}>Expiry:</div>
+                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketForm}
+                        placeholder="Expiry"
+                        defaultValue={this.state.expiry}
+                        onBlur={(e) =>{this.updateExpiry(e.target.value);}}/>
+                    </div>
                   </div>
-                </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  {this.state.expiryError}
-                </div>
-              </div>
-              <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Pool Address:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      disabled
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolAddress : null}/>
-                  </div>
-                </div>
-              </div>
-              <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Pool Fees:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      disabled
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolFees : null}/>
+                  <div style={StakePoolStyles.purchaseTicketInputError}>
+                    {this.state.expiryError}
                   </div>
                 </div>
               </div>
               <div style={StakePoolStyles.purchaseTicketRow}>
                 <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Address:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
+                <div style={StakePoolStyles.purchaseTicketAddressInput}>
                   <div style={StakePoolStyles.inputFormPurchaseTicket}>
                     <input
                       type="text"
                       disabled
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      value={this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.TicketAddress : null}/>
+                      style={StakePoolStyles.contentNestPurchaseTicketFormDisabled}
+                      value={this.state.selectedConfigured != null ? this.state.selectedConfigured.value.TicketAddress : null}/>
+                  </div>
+                </div>
+              </div>
+              <div style={StakePoolStyles.purchaseTicketRow}>
+                <div style={StakePoolStyles.purchaseTicketLabel}>Pool Address:</div>
+                <div style={StakePoolStyles.purchaseTicketAddressInput}>
+                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                    <input
+                      disabled
+                      type="text"
+                      style={StakePoolStyles.contentNestPurchaseTicketFormDisabled}
+                      value={this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolAddress : null}/>
+                  </div>
+                </div>
+              </div>
+              <div style={StakePoolStyles.purchaseTicketRow}>
+                <div style={StakePoolStyles.purchaseTicketRowLeft}>
+                  <div style={StakePoolStyles.purchaseTicketLabel}>Pool Fees:</div>
+                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        disabled
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketFormDisabled}
+                        value={this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolFees : null}/>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div hidden={this.state.advancedHidden ? false : true} style={StakePoolStyles.purchaseTicketQuickBarRow}>
               <div style={StakePoolStyles.quickBarRowLabel}>Settings:</div>
-             <div style={StakePoolStyles.stakepoolIcon}>{this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.Host : null}</div>
+             <div style={StakePoolStyles.stakepoolIcon}>{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.Host : null}</div>
               <div style={StakePoolStyles.expiryIcon}>{this.state.expiry} Blocks</div>
               <div style={StakePoolStyles.feeIcon}>{this.state.txFee} DCR/KB</div>
-              <div style={StakePoolStyles.ticketAddressIcon}>{this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.TicketAddress : null}</div>
-              <div style={StakePoolStyles.feeAddressIcon}>{this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolAddress : null}</div>
-              <div style={StakePoolStyles.poolFeeIcon}>{this.state.selectedStakePoolForPurchase != null ? this.state.selectedStakePoolForPurchase.PoolFees : null}%</div>
+              <div style={StakePoolStyles.ticketAddressIcon}>{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.TicketAddress : null}</div>
+              <div style={StakePoolStyles.feeAddressIcon}>{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolAddress : null}</div>
+              <div style={StakePoolStyles.poolFeeIcon}>{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolFees : null}%</div>
             </div>
           </div>
-          <div>
+          <div style={StakePoolStyles.purchaseTicketButtonsArea}>
             <KeyBlueButton style={StakePoolStyles.contentPurchaseButton} disabled={getTicketPriceResponse !== null ? this.state.spendLimit < getTicketPriceResponse.getTicketPrice() || this.state.numTickets <= 0: true} onClick={getTicketPriceResponse !== null ? this.state.spendLimit < getTicketPriceResponse.getTicketPrice() || this.state.numTickets <= 0 ? null : () => this.showPassphraseModal(purchaseTicketHeading, purchaseTicketDescription, purchaseTicketFunc) : null}>
               Purchase
             </KeyBlueButton>
@@ -919,11 +926,11 @@ class StakePool extends Component{
               <div style={StakePoolStyles.autoBuyerQuickBarRow}>
                 {this.state.autoBuyerHidden ?
                   <div>
-                    <div style={StakePoolStyles.balanceToMaintainIcon}>{this.state.balanceToMaintain}</div>
-                    <div style={StakePoolStyles.maxFeeIcon}>{this.state.maxFee} DCR</div>
-                    <div style={StakePoolStyles.maxPriceAbsoluteIcon}>{this.state.maxPriceAbsolute} DCR</div>
-                    <div style={StakePoolStyles.maxPriceRelativeIcon}>{this.state.maxPriceRelative}%</div>
-                    <div style={StakePoolStyles.maxPerBlockIcon}>{this.state.maxPerBlock}</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.balanceToMaintainIcon}/>{this.state.balanceToMaintain}</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxFeeIcon}/>{this.state.maxFee} DCR</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxPriceAbsoluteIcon}/>{this.state.maxPriceAbsolute} DCR</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxPriceRelativeIcon}/>{this.state.maxPriceRelative}%</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxPerBlockIcon}/>{this.state.maxPerBlock}</div>
                   </div>:
                   <div></div>}
               </div>
@@ -933,72 +940,76 @@ class StakePool extends Component{
             </div>
             <div hidden={this.state.autoBuyerHidden ? true : false}>
               <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Balance to maintain:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      placeholder="Balance to Maintain"
-                      defaultValue={this.state.balanceToMaintain}
-                      onBlur={(e) =>{this.updateBalanceToMaintain(e.target.value);}}/>
+                <div style={StakePoolStyles.purchaseTicketRowLeft}>
+                  <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.balanceToMaintainIcon}/>Balance to maintain:</div>
+                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketForm}
+                        placeholder="Balance to Maintain"
+                        defaultValue={this.state.balanceToMaintain}
+                        onBlur={(e) =>{this.updateBalanceToMaintain(e.target.value);}}/>
+                    </div>
+                  </div>
+                  <div style={StakePoolStyles.purchaseTicketInputError}>
+                    {this.state.balanceToMaintainError}
                   </div>
                 </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  {this.state.balanceToMaintainError}
+                <div style={StakePoolStyles.purchaseTicketRowRight}>
+                  <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.maxFeeIcon}/>Max Fee:</div>
+                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketForm}
+                        placeholder="Max Fee"
+                        defaultValue={this.state.maxFee}
+                        onBlur={(e) =>{this.updateMaxFee(e.target.value);}}/>
+                    </div>
+                  </div>
+                  <div style={StakePoolStyles.purchaseTicketInputError}>
+                    {this.state.maxFeeError}
+                  </div>
                 </div>
               </div>
               <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Max Fee:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      placeholder="Max Fee"
-                      defaultValue={this.state.maxFee}
-                      onBlur={(e) =>{this.updateMaxFee(e.target.value);}}/>
+                <div style={StakePoolStyles.purchaseTicketRowLeft}>
+                  <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.maxPriceAbsoluteIcon}/>Max Price Absolute:</div>
+                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketForm}
+                        placeholder="Max Price Absolute"
+                        defaultValue={this.state.maxPriceAbsolute}
+                        onBlur={(e) =>{this.updateMaxPriceAbsolute(e.target.value);}}/>
+                    </div>
+                  </div>
+                  <div style={StakePoolStyles.purchaseTicketInputError}>
+                    {this.state.maxPriceAbsoluteError}
                   </div>
                 </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  {this.state.maxFeeError}
+                <div style={StakePoolStyles.purchaseTicketRowRight}>
+                  <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.maxPriceRelativeIcon}/>Max Price Relative:</div>
+                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketForm}
+                        placeholder="Max Price Relative"
+                        defaultValue={this.state.maxPriceRelative}
+                        onBlur={(e) =>{this.updateMaxPriceRelative(e.target.value);}}/>
+                    </div>
+                  </div>
+                  <div style={StakePoolStyles.purchaseTicketInputError}>
+                    {this.state.maxPriceRelativeError}
+                  </div>
                 </div>
               </div>
               <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Max Price Absolute:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      placeholder="Max Price Absolute"
-                      defaultValue={this.state.maxPriceAbsolute}
-                      onBlur={(e) =>{this.updateMaxPriceAbsolute(e.target.value);}}/>
-                  </div>
-                </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  {this.state.maxPriceAbsoluteError}
-                </div>
-              </div>
-              <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Max Price eRelative:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      placeholder="Max Price Relative"
-                      defaultValue={this.state.maxPriceRelative}
-                      onBlur={(e) =>{this.updateMaxPriceRelative(e.target.value);}}/>
-                  </div>
-                </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  {this.state.maxPriceRelativeError}
-                </div>
-              </div>
-              <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Max per block:</div>
-                <div style={StakePoolStyles.purchaseTicketInput}>
+                <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.maxPerBlockIcon}/>Max Per Block:</div>
+                <div style={StakePoolStyles.purchaseTicketNumInput}>
                   <div style={StakePoolStyles.inputFormPurchaseTicket}>
                     <input
                       type="text"
@@ -1067,26 +1078,6 @@ class StakePool extends Component{
           headerTitleOverview={
             <div style={{height: '100%'}}>
               <div style={{float: 'left'}}>{this.state.purchaseTickets ? activeStakePoolConfig ? 'Ticket price:' : '' : 'Stake pool settings'}</div>
-                {getStakeInfoResponse !== null ?
-                <div style={StakePoolStyles.stakeInfoArea}>
-                  <div style={StakePoolStyles.stakeInfoAreaLeft}>
-                    <div style={StakePoolStyles.stakeInfoRows}><span style={StakePoolStyles.stakeInfoRowsLeftName}>Poolsize:</span><span style={StakePoolStyles.stakeInfoRowsLeftValue}>{getStakeInfoResponse.getPoolSize()}</span></div>
-                    <div style={StakePoolStyles.stakeInfoRows}><span style={StakePoolStyles.stakeInfoRowsLeftName}>All Mempool Tickets:</span><span style={StakePoolStyles.stakeInfoRowsLeftValue}>{getStakeInfoResponse.getAllMempoolTix()}</span></div>
-                    <div style={StakePoolStyles.stakeInfoRows}><span style={StakePoolStyles.stakeInfoRowsLeftName}>Own Mempool Tickets:</span><span style={StakePoolStyles.stakeInfoRowsLeftValue}>{getStakeInfoResponse.getOwnMempoolTix()}</span></div>
-                    <div style={StakePoolStyles.stakeInfoRows}><span style={StakePoolStyles.stakeInfoRowsLeftName}>Immature Tickets:</span><span style={StakePoolStyles.stakeInfoRowsLeftValue}>{getStakeInfoResponse.getImmature()}</span></div>
-                    <div style={StakePoolStyles.stakeInfoRows}><span style={StakePoolStyles.stakeInfoRowsLeftName}>Live Tickets:</span><span style={StakePoolStyles.stakeInfoRowsLeftValue}>{getStakeInfoResponse.getLive()}</span></div>
-                  </div>
-                  <div style={StakePoolStyles.stakeInfoAreaRight}>
-                    <div style={StakePoolStyles.stakeInfoRows}><span style={StakePoolStyles.stakeInfoRowsRightName}>Voted Tickets:</span><span style={StakePoolStyles.stakeInfoRowsRightValue}>{getStakeInfoResponse.getVoted()}</span></div>
-                    <div style={StakePoolStyles.stakeInfoRows}><span style={StakePoolStyles.stakeInfoRowsRightName}>Missed Tickets:</span><span style={StakePoolStyles.stakeInfoRowsRightValue}>{getStakeInfoResponse.getMissed()}</span></div>
-                    <div style={StakePoolStyles.stakeInfoRows}><span style={StakePoolStyles.stakeInfoRowsRightName}>Revoked Tickets:</span><span style={StakePoolStyles.stakeInfoRowsRightValue}>{getStakeInfoResponse.getRevoked()}</span></div>
-                    <div style={StakePoolStyles.stakeInfoRows}><span style={StakePoolStyles.stakeInfoRowsRightName}>Expired Tickets:</span><span style={StakePoolStyles.stakeInfoRowsRightValue}>{getStakeInfoResponse.getExpired()}</span></div>
-                  </div>
-                </div>:
-                <div>
-                </div>
-                }
-
             </div>
           }
           headerMetaOverview={

@@ -11,6 +11,7 @@ import Header from '../Header';
 import KeyBlueButton from '../KeyBlueButton';
 import { SendStyles } from './ViewStyles';
 import PassphraseModal from '../PassphraseModal';
+import Select from 'react-select';
 
 function mapStateToProps(state) {
   return {
@@ -31,33 +32,45 @@ class Send extends Component{
     super(props);
 
     var defaultSpendable = 0;
+    var unitDivisor = 1;
+    if (this.props.currentSettings.currencyDisplay == 'DCR') {
+      unitDivisor = 100000000;
+    }
+    var accountsList = Array();
     if (this.props.balances != null) {
       for (var i = 0; i < this.props.balances.length; i++) {
         if (this.props.balances[i].accountNumber == 0) {
           defaultSpendable = this.props.balances[i].spendable;
         }
+        if (this.props.balances[i].accountNumber == 0 || this.props.balances[i].accountName != 'imported' && this.props.balances[i].spendable > 0) {
+          accountsList.push({ value: this.props.balances[i].accountNumber, label: this.props.balances[i].accountName + ': ' +this.props.balances[i].spendable / unitDivisor + ' ' + this.props.currentSettings.currencyDisplay});
+        }
       }
     }
     this.state = {
       confirmTxModal: false,
-      account: 0,
+      account: accountsList[0],
       accountSpendable: defaultSpendable,
       confirmations: 0,
       outputs: [{key:0, destination: '', amount: 0, amountStr: '', addressError: null, amountError: null}],
       totalOutputAmount: 0,
       privPassError: null,
+      accountsList: accountsList,
     };
   }
   componentWillReceiveProps(nextProps) {
+    var accountsList = Array();
     if (this.props.balances != nextProps.balances) {
       var newAccountSpendableBalance = 0;
       for (var i = 0; i < nextProps.balances; i++) {
         if (nextProps.balances[i].accountNumber == this.state.account) {
           newAccountSpendableBalance = nextProps.balances[i].spendable;
-          break;
+        }
+        if (nextProps.balances[i].accountNumber == 0 || nextProps.balances[i].accountName != 'imported' && nextProps.balances[i].spendable > 0) {
+          accountsList.push({ value: nextProps.balances[i].accountNumber, label: nextProps.balances[i].accountName });
         }
       }
-      this.setState({accountSpendable: newAccountSpendableBalance});
+      this.setState({accountSpendable: newAccountSpendableBalance, accountsList: accountsList});
     }
   }
   componentWillMount() {
@@ -106,7 +119,7 @@ class Send extends Component{
       this.setState({outputs: updatedOutputErrors});
       return;
     }
-    this.props.constructTransactionAttempt(this.state.account, this.state.confirmations, this.state.outputs);
+    this.props.constructTransactionAttempt(this.state.account.value, this.state.confirmations, this.state.outputs);
   }
   appendOutput() {
     var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: 0, amountStr: '', addressError: null, amountError: null};
@@ -191,14 +204,9 @@ class Send extends Component{
     const { constructTxResponse, constructTxError, constructTxRequestAttempt } = this.props;
     const { publishTransactionResponse, publishTransactionError, publishTransactionRequestAttempt } = this.props;
     const { signTransactionError, signTransactionRequestAttempt } = this.props;
-    const { balances } = this.props;
     const { getNetworkResponse } = this.props;
 
     var unitLabel = currentSettings.currencyDisplay;
-    var unitDivisor = 1;
-    if (unitLabel == 'DCR') {
-      unitDivisor = 100000000;
-    }
     var networkTextDiv = (<div></div>);
     if (getNetworkResponse !== null) {
       if (getNetworkResponse.networkStr == 'testnet') {
@@ -232,26 +240,16 @@ class Send extends Component{
     }
 
     var selectAccounts = (
-      <div style={SendStyles.selectAccountsSend}>
-        <select
-          defaultValue={this.state.account}
-          style={SendStyles.selectAccount}
-          onChange={(e) =>{this.updateAccountNumber(e.target.value);}}
-          >
-          {balances !== null ?
-            balances.map((account) => {
-              if (account.accountName !== 'imported' && !account.hidden) {
-                return (
-                  <option style={SendStyles.selectAccountN} key={account.accountNumber} value={account.accountNumber}>
-                    {account.accountName}: {account.spendable / unitDivisor} {unitLabel}
-                  </option>
-                );
-              }
-            }):
-            null
-          }
-        </select>
-      </div>);
+        <Select
+          clearable={false}
+          style={{zIndex:'9'}}
+          onChange={(val) => this.updateAccountNumber(val)}
+          placeholder={'Select account...'}
+          multi={false}
+          value={this.state.account}
+          valueKey="value" labelKey="label"
+          options={this.state.accountsList}
+          />);
 
     var sendView = (
       <div style={SendStyles.view}>
@@ -265,14 +263,14 @@ class Send extends Component{
             description={<div>Please confirm your transaction for <Balance amount={totalSpent}/></div>}
           />
         <div style={!this.state.confirmTxModal ? SendStyles.content : SendStyles.contentBlur}>
-          <div style={SendStyles.sendSelectAccountArea}>
-            <div style={SendStyles.sendLabel}>From:</div>
-            <div style={SendStyles.sendSelectAccountInput}>
-              {selectAccounts}
-            </div>
-            <div style={SendStyles.sendFromAddressWalletIcon}></div>
-          </div>
           <div style={SendStyles.flexHeight}>
+            <div style={SendStyles.sendSelectAccountArea}>
+              <div style={SendStyles.sendLabel}>From:</div>
+              <div style={SendStyles.sendSelectAccountInput}>
+                {selectAccounts}
+              </div>
+              <div style={SendStyles.sendFromAddressWalletIcon}></div>
+            </div>
             <div id="dynamicInput">
             {this.state.outputs.map((output,i) => {
               if ( i == 0 ) {

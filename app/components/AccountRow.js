@@ -8,6 +8,9 @@ import ArrowRightGray from './icons/arrow-right-gray.svg';
 import ArrowRightKeyBlue from './icons/arrow-right-key-blue.svg';
 import ArrowDownMidBlue from './icons/arrow-down-mid-blue.svg';
 import ArrowDownKeyBlue from './icons/arrow-down-key-blue.svg';
+import RenameIcon from './icons/account-rename.svg';
+import HideIcon from './icons/account-eye-hide.svg';
+import ShowIcon from './icons/account-eye-open.svg';
 import './fonts.css';
 import { AccountStyles } from './views/ViewStyles.js';
 import WalletGray from './icons/wallet-gray.svg';
@@ -217,10 +220,6 @@ const styles = {
     borderTop: '1px #A9B4BF solid',
     borderBottom: '1px #A9B4BF solid',
   },
-  accountRowLongDefault: {
-    height: '353px',
-    borderBottom: '1px #A9B4BF solid',
-  },
   accountRowShort: {
     height: '77px',
   },
@@ -230,11 +229,92 @@ const styles = {
   },
   accountRowRename: {
     height: '248px',
+    marginTop: '1px',
+    borderTop: '1px #A9B4BF solid',
+    borderBottom: '1px #A9B4BF solid',
   },
   contentConfirmNewAccount: {
     marginTop: '20px',
     marginLeft: '20px',
     float: 'left',
+  },
+  renameButton: {
+    marginRight: '20px',
+    marginTop: '15px',
+    float: 'right',
+    borderRadius: '0px',
+    backgroundImage: `url(${RenameIcon})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '40px',
+    backgroundRepeat: 'no-repeat',
+    boxShadow: 'none',
+    outline: '0',
+    position: 'relative',
+    display: 'block',
+    width: '40px',
+    height: '40px',
+    padding: '0px',
+    backgroundColor: 'transparent',
+    color: 'white',
+    border: '0',
+    lineHeight: 'inherit',
+    textDecoration: 'none',
+    cursor: 'pointer',
+    ':hover': {
+      opacity: '0.7',
+    },
+  },
+  showAccountButton: {
+    marginRight: '20px',
+    marginTop: '15px',
+    float: 'right',
+    borderRadius: '0px',
+    backgroundImage: `url(${ShowIcon})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '40px',
+    backgroundRepeat: 'no-repeat',
+    boxShadow: 'none',
+    outline: '0',
+    position: 'relative',
+    display: 'block',
+    width: '40px',
+    height: '40px',
+    padding: '0px',
+    backgroundColor: 'transparent',
+    color: 'white',
+    border: '0',
+    lineHeight: 'inherit',
+    textDecoration: 'none',
+    cursor: 'pointer',
+    ':hover': {
+      opacity: '0.7',
+    },
+  },
+  hideAccountButton: {
+    marginRight: '20px',
+    marginTop: '15px',
+    float: 'right',
+    borderRadius: '0px',
+    backgroundImage: `url(${HideIcon})`,
+    backgroundPosition: '50% 50%',
+    backgroundSize: '40px',
+    backgroundRepeat: 'no-repeat',
+    boxShadow: 'none',
+    outline: '0',
+    position: 'relative',
+    display: 'block',
+    width: '40px',
+    height: '40px',
+    padding: '0px',
+    backgroundColor: 'transparent',
+    color: 'white',
+    border: '0',
+    lineHeight: 'inherit',
+    textDecoration: 'none',
+    cursor: 'pointer',
+    ':hover': {
+      opacity: '0.7',
+    },
   },
 };
 
@@ -280,7 +360,7 @@ class AccountRow extends Component {
     const { accountNumDetailsShown } = this.props;
     var showAccountDetails = accountNumDetailsShown !== null && accountNumDetailsShown == account.accountNumber ;
     return (
-        <div style={showAccountDetails ? this.state.showRenameAccount ? styles.accountRowRename : account.accountNumber == 0 ? styles.accountRowLongDefault : styles.accountRowLong : styles.accountRowShort}>
+        <div style={showAccountDetails ? this.state.showRenameAccount ? styles.accountRowRename : styles.accountRowLong : styles.accountRowShort}>
           <div style={showAccountDetails ? styles.accountRowDetailsTop :  this.state.hidden ? styles.accountRowHidden : styles.accountRow } key={'top'+account.accountNumber} onClick={showAccountDetails ? () => this.props.hideAccountDetails() : () => this.props.showAccountDetails(account.accountNumber)}>
             <div style={styles.accountRowTopTop}>
               <div style={styles.accountRowWalletIcon}/>
@@ -380,25 +460,22 @@ class AccountRow extends Component {
                 </div>
               </div>
               {account.accountName !== 'imported' ?
-                <KeyBlueButton
-                  style={AccountStyles.contentConfirmNewAccount}
-                  onClick={() => this.setState({showRenameAccount: true})}>
-                  Rename Account
-                </KeyBlueButton> :
+                <div
+                  key={'renameAccountButton'+account.accountNumber}
+                  style={styles.renameButton}
+                  onClick={() => this.setState({showRenameAccount: true})}/>:
                 <div></div>
               }
               {account.accountName !== 'imported' && account.accountName !== 'default' && account.total == 0 && !this.state.hidden ?
-                <KeyBlueButton
-                  style={AccountStyles.contentShowHideAccount}
-                  onClick={() => this.hideAccount()}>
-                  Hide Account
-                </KeyBlueButton> :
+                <div
+                  key={'hideAccountButton'+account.accountNumber}
+                  style={styles.hideAccountButton}
+                  onClick={() => this.hideAccount()}/>:
                 account.accountName !== 'imported' && account.accountName !== 'default' && this.state.hidden ?
-                <KeyBlueButton
-                  style={AccountStyles.contentShowHideAccount}
-                  onClick={() => this.showAccount()}>
-                  Show Account
-                </KeyBlueButton> :
+                <div
+                  style={styles.showAccountButton}
+                  key={'showAccountButton'+account.accountNumber}
+                  onClick={() => this.showAccount()}/> :
                 <div></div>
               }
             </div> :
