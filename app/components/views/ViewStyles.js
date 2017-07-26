@@ -2919,6 +2919,10 @@ export const TxDetailsStyles = {
   }
 };
 export const GetStartedStyles = {
+  toggle: {
+    fontFamily: 'Source Sans Pro, sans-serif',
+    float: 'right',
+  },
   body: {
     position: 'fixed',
     left: '0px',
