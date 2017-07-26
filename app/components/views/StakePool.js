@@ -118,6 +118,9 @@ class StakePool extends Component{
       agendaDisplay: null,
     };
   }
+  componentDidUpdate() {
+    ReactToolTip.rebuild();
+  }
   componentWillReceiveProps(nextProps) {
     var accountsList = Array();
     var unitDivisor = 1;
