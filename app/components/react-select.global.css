@@ -52,7 +52,11 @@
 .is-searchable.is-open > .Select-control {
   cursor: text;
 }
+.is-open {
+  z-index: 100 !important;
+}
 .is-open > .Select-control {
+  z-index: 100 !important;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   background: #fff;

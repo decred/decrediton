@@ -193,7 +193,7 @@ class StakePool extends Component{
     }
     this.props.purchaseTicketsAttempt(
       privpass,
-      this.state.account,
+      this.state.account.value,
       this.state.spendLimit,
       this.state.conf,
       this.state.numTickets,
@@ -431,10 +431,10 @@ class StakePool extends Component{
     this.setState({modalHeading: null, modalDescription: null, modalSubmitFunc: null, passphraseModalOpen: false});
   }
   updateConfiguredStakePool(stakePool) {
-    this.setState({selectedConfigured: stakePool});
+    this.setState({selectedConfigured: {value: stakePool, label: stakePool.Host}});
   }
   updateUnconfiguredStakePool(stakePool) {
-    this.setState({selectedUnconfigured: stakePool});
+    this.setState({selectedUnconfigured: {value: stakePool, label: stakePool.Host}});
   }
   render() {
     const { walletService } = this.props;
