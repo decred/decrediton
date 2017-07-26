@@ -339,7 +339,7 @@ export const SendStyles = {
     paddingRight: '11px',
   },
   sendLabel: {
-    width: '85px',
+    width: '65px',
     float: 'left',
     paddingRight: '15px',
     paddingTop: '5px',
@@ -413,7 +413,7 @@ export const SendStyles = {
     width: '299px',
     height: '34px',
     float: 'left',
-    paddingLeft: '101px',
+    paddingLeft: '81px',
     fontSize: '13px',
   },
   sendAddressSignPrivPass: {
@@ -669,7 +669,6 @@ export const SendStyles = {
     backgroundColor: '#fff',
     overflowY: 'auto',
     overflowX: 'hidden',
-    height: '200px',
   },
   loading: {
     marginTop: '110px',
