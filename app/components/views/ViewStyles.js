@@ -3208,7 +3208,6 @@ export const AccountStyles = {
     height: '54px',
     paddingTop: '10px',
     float: 'left',
-    borderBottom: '1px black solid',
   },
   accountName: {
     width: '25%',
@@ -3237,11 +3236,8 @@ export const AccountStyles = {
     textAlign: 'right',
   },
   flexHeight: {
-    border: '1px black solid',
     backgroundColor: '#fff',
-    height:'372px',
-    overflowY: 'auto',
-    overflowX: 'hidden',
+    height:'125px',
   },
   contentAddNewAccount: {
     width: '80px',
@@ -3265,8 +3261,7 @@ export const AccountStyles = {
     height: '60px',
     paddingTop: '2px',
     float: 'left',
-    borderBottom: '1px black solid',
-    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
+    borderBottom: '1px #E7EAED solid',
   },
   accountFormLabel: {
     width: '131px',
@@ -3276,7 +3271,7 @@ export const AccountStyles = {
     height: '100%',
     paddingTop: '17px',
     fontSize: '16px',
-    textAlign: 'left',
+    textAlign: 'right',
   },
   accountFormInput: {
     width: '286px',
@@ -3305,6 +3300,7 @@ export const AccountStyles = {
     height: '100%',
     padding: '9px 0px 8px 10px',
     borderStyle: 'none',
+    borderBottom: '1px #2971ff solid',
     color: '#2971ff',
     fontSize: '13px',
     cursor: 'text',
