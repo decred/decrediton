@@ -1272,6 +1272,12 @@ export const StakePoolStyles = {
     textAlign: 'right',
     textTransform: 'capitalize',
   },
+  stakePoolUnconfiguredSelect: {
+    width: '350px',
+    float: 'left',
+    fontSize: '16px',
+    paddingLeft: '10px',
+  },
   contentNestPrefixConfirm: {
     width: '230px',
     paddingRight: '15px',
@@ -2410,24 +2416,22 @@ export const StakePoolStyles = {
   votingTitleArea: {
     display: 'block',
     height: '20px',
-    marginRight: 'auto',
-    marginLeft: 'auto',
+    width: '740px',
     borderBottom: '1px solid transparent',
     color: '#596d81',
     fontSize: '20px',
   },
   votingTitleAreaName: {
     fontSize: '20px',
-    display: 'inlineBlock',
-    overflow: 'hidden',
-    width: '653px',
+    display: 'inline-block',
     height: '100%',
+    paddingTop: '10px',
     paddingBottom: '10px',
-    paddingRight: '20px',
-    paddingLeft: '20px',
     float: 'left',
   },
   votingAgendaArea: {
+    width: '100%',
+    float: 'left',
   },
   noAgendasMessage: {
     fontSize: '25px',

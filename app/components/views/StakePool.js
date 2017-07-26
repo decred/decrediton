@@ -30,8 +30,8 @@ class StakePool extends Component{
   };
   constructor(props) {
     super(props);
-    var selectedConfigured = null;
-    var selectedUnconfigured = null;
+    var selectedConfigured = undefined;
+    var selectedUnconfigured = undefined;
     var configuredStakePools = Array();
     var unconfiguredStakePools = Array();
     // Look for any available uninitialized stakepool config
@@ -41,10 +41,10 @@ class StakePool extends Component{
       for (var i = 0; i < this.props.currentStakePoolConfig.length; i++) {
         if (!this.props.currentStakePoolConfig[i].ApiKey && this.props.currentStakePoolConfig[i].Network == this.props.network) {
           selectedUnconfigured = {value: this.props.currentStakePoolConfig[i], label: this.props.currentStakePoolConfig[i].Host};
-          unconfiguredStakePools.push({value: this.props.currentStakePoolConfig[i], label: this.props.currentStakePoolConfig[i].Host});
+          unconfiguredStakePools.push(selectedUnconfigured);
         }else if (this.props.currentStakePoolConfig[i].ApiKey && this.props.currentStakePoolConfig[i].Network == this.props.network) {
           selectedConfigured = {value: this.props.currentStakePoolConfig[i], label: this.props.currentStakePoolConfig[i].Host};
-          configuredStakePools.push({value:this.props.currentStakePoolConfig[i], label: this.props.currentStakePoolConfig[i].Host});
+          configuredStakePools.push(selectedConfigured);
         }
       }
     }
@@ -130,10 +130,21 @@ class StakePool extends Component{
           newAccountSpendableBalance = nextProps.balances[i].spendable;
         }
         if (nextProps.balances[i].accountNumber == 0 || nextProps.balances[i].accountName != 'imported' && nextProps.balances[i].spendable > 0) {
-          accountsList.push({ value: nextProps.balances[i].accountNumber, label: nextProps.balances[i].accountName + ': ' +nextProps.balances[i].spendable / unitDivisor + ' ' + nextProps.currentSettings.currencyDisplay});
+          accountsList.push({ value: nextProps.balances[i].accountNumber, label: nextProps.balances[i].accountName + ': ' + nextProps.balances[i].spendable / unitDivisor + ' ' + nextProps.currentSettings.currencyDisplay});
         }
       }
       this.setState({spendLimit: newAccountSpendableBalance, accountsList: accountsList });
+    }
+    if (this.props.currentStakePoolConfig != nextProps.currentStakePoolConfig) {
+      var configuredStakePools = Array();
+      var selectedConfigured = undefined;
+      for (var j = 0; j < nextProps.currentStakePoolConfig.length; j++) {
+        if (nextProps.currentStakePoolConfig[j].ApiKey && nextProps.currentStakePoolConfig[j].Network == this.props.network) {
+          selectedConfigured = {value: nextProps.currentStakePoolConfig[j], label: nextProps.currentStakePoolConfig[j].Host};
+          configuredStakePools.push(selectedConfigured);
+        }
+      }
+      this.setState({selectedConfigured: selectedConfigured, configuredStakePools: configuredStakePools});
     }
     if (this.props.getVoteChoicesResponse !== nextProps.getVoteChoicesResponse) {
       for (i = 0; i < nextProps.getVoteChoicesResponse.getChoicesList().length; i++) {
@@ -403,11 +414,11 @@ class StakePool extends Component{
   }
   showAgendaOverview(agenda) {
     var selectedChoice = 'abstain';
-    if (this.state.selectedConfigured.VoteChoices !== undefined) {
-      for (var i = 0; i < this.state.selectedConfigured.VoteChoices.length; i++) {
-        if (this.state.selectedConfigured.VoteChoices[i] !== undefined &&
-        this.state.selectedConfigured.VoteChoices[i].agendaId == agenda.getId()) {
-          selectedChoice = this.state.selectedConfigured.VoteChoices[i].choiceId;
+    if (this.state.selectedConfigured.value.VoteChoices !== undefined) {
+      for (var i = 0; i < this.state.selectedConfigured.value.VoteChoices.length; i++) {
+        if (this.state.selectedConfigured.value.VoteChoices[i] !== undefined &&
+        this.state.selectedConfigured.value.VoteChoices[i].agendaId == agenda.getId()) {
+          selectedChoice = this.state.selectedConfigured.value.VoteChoices[i].choiceId;
           break;
         }
       }
@@ -439,7 +450,7 @@ class StakePool extends Component{
   render() {
     const { walletService } = this.props;
     const { ticketBuyerService } = this.props;
-    const { currentStakePoolConfig, currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
+    const { currentStakePoolConfigRequest, currentStakePoolConfigError, activeStakePoolConfig } = this.props;
     const { currentStakePoolConfigSuccessMessage, purchaseTicketsRequestAttempt } = this.props;
     const { purchaseTicketsError, purchaseTicketsSuccess } = this.props;
     const { revokeTicketsError, revokeTicketsSuccess } = this.props;
@@ -450,14 +461,6 @@ class StakePool extends Component{
     const { getAgendasResponse } = this.props;
     const { startAutoBuyerSuccess, startAutoBuyerResponse, stopAutoBuyerSuccess, startAutoBuyerError, stopAutoBuyerError } = this.props;
     const { getTicketBuyerConfigResponse } = this.props;
-    var unconfigedStakePools = 0;
-    if (currentStakePoolConfig != null) {
-      for (var i = 0; i < currentStakePoolConfig.length; i++) {
-        if (!currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
-          unconfigedStakePools++;
-        }
-      }
-    }
     var selectAccounts = (
         <Select
           clearable={false}
@@ -501,7 +504,7 @@ class StakePool extends Component{
     var apiKeyFunc = (privPass) => this.setStakePoolInfo(privPass);
 
     var selectedUnconfiguredLabel = null;
-    if (this.state.selectedUnconfigured !== null) {
+    if (this.state.selectedUnconfigured !== undefined) {
       selectedUnconfiguredLabel = this.state.selectedUnconfigured.label;
     }
     var stakePoolConfigInput = (
@@ -517,7 +520,9 @@ class StakePool extends Component{
           <div style={StakePoolStyles.flexHeight}>
             <div style={StakePoolStyles.contentNestFromAddress}>
               <div style={StakePoolStyles.contentNestPrefixSend}>Stake Pool:</div>
+              <div style={StakePoolStyles.stakePoolUnconfiguredSelect}>
                 {selectUnconfiguredStakePool}
+              </div>
               <div style={StakePoolStyles.contentNestFromAddressWalletIcon}></div>
             </div>
             <div style={StakePoolStyles.contentNestApiKeyInstructions}>
@@ -566,12 +571,13 @@ class StakePool extends Component{
     var votingGuiView = (
       <div style={StakePoolStyles.contentVotingGui}>
         <div style={StakePoolStyles.votingTitleArea}>
-          <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences {selectConfiguredStakePool}</div>
+          <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences</div>
+          <div style={StakePoolStyles.stakePoolUnconfiguredSelect}>{selectConfiguredStakePool}</div>
         </div>
         {this.state.selectedConfigured !== null && this.state.selectedConfigured.value.APIVersionsSupported[1] == requiredStakepoolAPIVersion ?
         <div style={StakePoolStyles.votingAgendaArea}>
           {this.state.agendaDisplay !== null && this.state.selectedConfigured !== null ?
-            <AgendaOverview agenda={this.state.agendaDisplay} selectedChoice={this.state.selectedChoice} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updatePreferences={(agendaId, choiceId) =>this.props.setVoteChoicesAttempt(this.state.selectedConfigured.value.Host, agendaId, choiceId)}/>:
+            <AgendaOverview agenda={this.state.agendaDisplay} selectedChoice={this.state.selectedChoice} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updatePreferences={(agendaId, choiceId) =>this.props.setVoteChoicesAttempt(this.state.selectedConfigured.value, agendaId, choiceId)}/>:
             <div></div>
           }
           {getAgendasResponse !== null && this.state.selectedConfigured !== null ? getAgendasResponse.getAgendasList().length > 0 ?
@@ -606,7 +612,7 @@ class StakePool extends Component{
               <div style={StakePoolStyles.contentNestPrefixConfigured}>Configured stake pools:</div>
             </div>
             <div id="dynamicInput">
-            {currentStakePoolConfig.map((stakePool) => {
+            {this.state.configuredStakePools.map((stakePool) => {
               if (stakePool.ApiKey && stakePool.Network == network) {
                 return(
                 <div key={stakePool.Host} style={StakePoolStyles.contentNestStakePool}>
@@ -637,7 +643,7 @@ class StakePool extends Component{
             })}
             </div>
           </div>
-          {unconfigedStakePools > 0 ?
+          {this.state.unconfiguredStakePools.length > 0 ?
           <KeyBlueButton style={StakePoolStyles.contentSend} onClick={() => this.addAnotherStakePool()}>
             Add stakepool
           </KeyBlueButton> :
