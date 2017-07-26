@@ -878,14 +878,15 @@ export const HistoryStyles = {
     overflow: 'hidden',
     width: '245px',
     height: '100%',
-    paddingTop: '13px',
+    paddingTop: '21px',
     paddingRight: '20px',
     paddingLeft: '20px',
     float: 'left',
   },
   contentTitleButtonsArea: {
     float: 'right',
-    height: '100%',
+    width: '138px',
+    fontSize: '27px',
     paddingTop: '13px',
   },
   contentTitleButtonsText: {
@@ -905,7 +906,7 @@ export const HistoryStyles = {
   },
   selectTxTypesArea: {
     width: '235px',
-    float: 'left',
+    float: 'right',
     backgroundImage: `url(${ArrowDownMidBlue})`,
     backgroundPosition: '100% 50%',
     backgroundSize: '10px',
@@ -919,19 +920,15 @@ export const HistoryStyles = {
   selectTxTypesLabel: {
     float: 'left',
     marginLeft: '13px',
-    marginTop: '13px',
+    marginTop: '19px',
   },
   selectTxTypes: {
     float: 'right',
     display: 'block',
-    overflow: 'hidden',
     width: '120px',
     marginTop: '13px',
     color: '#0c1e3e',
     fontSize: '19px',
-    ':hover': {
-      height: 'auto',
-    }
   },
   selectTxTypesN: {
     position: 'relative',

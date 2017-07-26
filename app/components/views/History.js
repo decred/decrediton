@@ -18,13 +18,17 @@ class History extends Component{
     var txTypes = Array();
     if (props.regularTransactionsInfo.length != 0 || props.ticketTransactionsInfo.length != 0 || props.voteTransactionsInfo.length != 0 || props.revokeTransactionsInfo.length != 0) {
       txTypes.push({value:'All', label:'All'});
-    } else if (props.regularTransactionsInfo.length != 0) {
+    }
+    if (props.regularTransactionsInfo.length != 0) {
       txTypes.push({value:'Regular', label:'Regular'});
-    } else if (props.ticketTransactionsInfo.length != 0) {
+    }
+    if (props.ticketTransactionsInfo.length != 0) {
       txTypes.push({value:'Tickets', label:'Tickets'});
-    } else if (props.voteTransactionsInfo.length != 0) {
+    }
+    if (props.voteTransactionsInfo.length != 0) {
       txTypes.push({value:'Votes', label:'Votes'});
-    } else if (props.revokeTransactionsInfo.length != 0) {
+    }
+    if (props.revokeTransactionsInfo.length != 0) {
       txTypes.push({value:'Revokes', label:'Revokes'});
     }
     super(props);
@@ -101,6 +105,7 @@ class History extends Component{
   }
 
   render() {
+    console.log(this.state.txTypes);
     const { walletService, balances, getAccountsResponse } = this.props;
     const { txPerPage } = this.props;
     const { getNetworkResponse } = this.props;
@@ -114,15 +119,17 @@ class History extends Component{
     var selectTxTypes = (
       <div style={HistoryStyles.selectTxTypesArea}>
         <div style={HistoryStyles.selectTxTypesLabel}>Tx Type:</div>
-        <Select
-          clearable={false}
-          style={{zIndex:'9'}}
-          onChange={(val) => this.updateSelectedType(val)}
-          placeholder={'Select type...'}
-          multi={false}
-          value={this.state.selectedType}
-          valueKey="value" labelKey="label"
-          options={this.state.txTypes}/>
+        <div style={HistoryStyles.selectTxTypes}>
+          <Select
+            clearable={false}
+            style={{zIndex:'9'}}
+            onChange={(val) => this.updateSelectedType(val)}
+            placeholder={'Select type...'}
+            multi={false}
+            value={this.state.selectedType}
+            valueKey="value" labelKey="label"
+            options={this.state.txTypes}/>
+        </div>
       </div>);
     var totalBalance = 0;
     if (balances !== null) {
@@ -142,17 +149,17 @@ class History extends Component{
           <div style={HistoryStyles.contentTitle}>
             <div style={HistoryStyles.contentTitleText}>Recent Transactions</div>
             {selectTxTypes}
-            <div style={HistoryStyles.contentTitleButtonsArea}>
-              <button style={HistoryStyles.contentTitleButtonsLeft} disabled={this.state.currentPage < 1} onClick={()=>this.pageBackward()}>&lt;</button>
-              <span style={HistoryStyles.contentTitleButtonsText}>{this.state.currentPage + 1} of {totalPages}</span>
-              <button style={HistoryStyles.contentTitleButtonsRight} disabled={(this.state.currentPage + 1) * txPerPage >= this.state.selectedTypeArray.length}onClick={()=>this.pageForward()}>&gt;</button>
-            </div>
           </div>
           <div style={HistoryStyles.contentNest}>
             {this.state.paginatedTxs.length > 0 ?
               <TxHistory getAccountsResponse={getAccountsResponse} mined={this.state.paginatedTxs} showTxDetail={(tx, type) => this.setTransactionDetails(tx, type)}/>  :
               <p>No transactions</p>
             }
+          </div>
+          <div style={HistoryStyles.contentTitleButtonsArea}>
+            <button style={HistoryStyles.contentTitleButtonsLeft} disabled={this.state.currentPage < 1} onClick={()=>this.pageBackward()}>&lt;</button>
+            <span style={HistoryStyles.contentTitleButtonsText}>{this.state.currentPage + 1} of {totalPages}</span>
+            <button style={HistoryStyles.contentTitleButtonsRight} disabled={(this.state.currentPage + 1) * txPerPage >= this.state.selectedTypeArray.length}onClick={()=>this.pageForward()}>&gt;</button>
           </div>
         </div>
       </div>);
