@@ -617,29 +617,29 @@ class StakePool extends Component{
             </div>
             <div id="dynamicInput">
             {this.state.configuredStakePools.map((stakePool) => {
-              if (stakePool.ApiKey && stakePool.Network == network) {
+              if (stakePool.value.ApiKey && stakePool.value.Network == network) {
                 return(
-                <div key={stakePool.Host} style={StakePoolStyles.contentNestStakePool}>
+                <div key={stakePool.value.Host} style={StakePoolStyles.contentNestStakePool}>
                   <div style={StakePoolStyles.contentNestStakePoolSettings}>
                     <div style={StakePoolStyles.contentNestPrefixStakePoolSettings}>URL:</div>
                     <div style={StakePoolStyles.contentNestContentStakePoolSettings}>
-                      {stakePool.Host}
+                      {stakePool.value.Host}
                     </div>
                   </div>
                   <div style={StakePoolStyles.contentNestStakePoolSettings}>
                     <div style={StakePoolStyles.contentNestPrefixStakePoolSettings}>Ticket Address:</div>
                     <div style={StakePoolStyles.contentNestContentStakePoolSettings}>
-                      {stakePool.TicketAddress}
+                      {stakePool.value.TicketAddress}
                     </div>
                   </div>
                   <div style={StakePoolStyles.contentNestStakePoolSettings}>
                     <div style={StakePoolStyles.contentNestPrefixStakePoolSettings}>Script:</div>
-                    <textarea disabled value={stakePool.Script} style={StakePoolStyles.contentNestContentStakePoolSettings}/>
+                    <textarea disabled value={stakePool.value.Script} style={StakePoolStyles.contentNestContentStakePoolSettings}/>
                   </div>
                   <div style={StakePoolStyles.contentNestStakePoolSettingsBottom}>
                     <div style={StakePoolStyles.contentNestPrefixStakePoolSettings}>Pool Fees:</div>
                     <div style={StakePoolStyles.contentNestContentStakePoolSettings}>
-                      {stakePool.PoolFees}
+                      {stakePool.value.PoolFees}
                     </div>
                   </div>
                 </div>);

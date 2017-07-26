@@ -2321,12 +2321,8 @@ export const StakePoolStyles = {
     cursor: 'pointer',
   },
   flexHeight: {
-    paddingTop: '1px',
     backgroundColor: '#fff',
-    height:'411px',
     float: 'left',
-    overflowY: 'auto',
-    overflowX: 'hidden',
   },
   flexHeightBalanceOverview: {
     paddingTop: '1px',
@@ -2586,6 +2582,7 @@ export const StakePoolStyles = {
   },
   hideStakePoolConfig: {
     float: 'right',
+    marginTop: '10px',
   },
   manageStakePoolsButton: {
     width: '150px',
