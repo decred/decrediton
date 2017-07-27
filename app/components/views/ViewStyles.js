@@ -327,12 +327,11 @@ export const SendStyles = {
   sendOutputAmountError: {
     color: 'red',
     float: 'right',
-    width: '149px',
+    width: '180px',
     textAlign: 'right',
     paddingRight: '59px',
   },
   sendOutputPrivPassError: {
-
     color: 'red',
     float: 'left',
     width: '223px',
