@@ -726,10 +726,6 @@ export const HomeStyles = {
     height: '556px',
     padding: '54px 60px 54px 80px',
   },
-
-  transition1: {
-    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
-  },
   rescanProgressArea: {
     fontSize: '16px',
   },
@@ -757,7 +753,6 @@ export const HomeStyles = {
     borderBottom: '1px solid transparent',
     color: '#596d81',
     fontSize: '27px',
-    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
   },
   contentNest: {
     paddingTop: '1px',
@@ -849,9 +844,6 @@ export const HistoryStyles = {
     height: '556px',
     padding: '54px 60px 54px 80px',
   },
-  transition1: {
-    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
-  },
   contentTitle: {
     display: 'block',
     height: '44px',
@@ -861,7 +853,6 @@ export const HistoryStyles = {
     borderBottom: '1px solid transparent',
     color: '#596d81',
     fontSize: '27px',
-    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
   },
   contentNest: {
     paddingTop: '1px',
@@ -985,7 +976,6 @@ export const SettingStyles = {
     paddingTop: '15px',
     float: 'left',
     borderBottom: '1px black solid',
-    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
   },
   settingsLabel: {
     width: '50%',
@@ -1859,6 +1849,7 @@ export const StakePoolStyles = {
     float: 'left',
     overflowY: 'auto',
     overflowX: 'hidden',
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
   },
   flexHeightAutoBuyerShown: {
     paddingTop: '1px',
@@ -1873,7 +1864,6 @@ export const StakePoolStyles = {
     width: '100%',
     height: '54px',
     float: 'left',
-    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
   },
   purchaseTicketQuickBarRow: {
     height: '36px',
@@ -2080,12 +2070,24 @@ export const StakePoolStyles = {
     float: 'left',
     marginBottom: '10px',
   },
+  stakeInfoAreaSmall: {
+    paddingTop: '1px',
+    backgroundColor: 'rgb(255, 255, 255)',
+    height: '40px',
+    width: '740px',
+    float: 'left',
+    marginBottom: '10px',
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
+  },
+  stakeInfoRowSmall: {
+    width: '33%',
+    float: 'left',
+  },
   stakeInfoRow: {
     width: '100%',
     height: '25px',
     float: 'left',
     borderBottom: '1px #E7EAED solid',
-    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
   },
   stakeInfoRowLeft: {
     width: '50%',
@@ -2116,7 +2118,6 @@ export const StakePoolStyles = {
     paddingTop: '2px',
     float: 'left',
     borderBottom: '1px #E7EAED solid',
-    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
   },
   purchaseTicketRowLeft: {
     width: '50%',
@@ -2339,6 +2340,7 @@ export const StakePoolStyles = {
     float: 'left',
     overflowY: 'auto',
     overflowX: 'hidden',
+    transition: 'all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s',
   },
   purchaseTicketButtonsArea: {
     width: '740px',
@@ -2390,7 +2392,6 @@ export const StakePoolStyles = {
     borderBottom: '1px solid transparent',
     color: '#596d81',
     fontSize: '27px',
-    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
   },
   contentTitleText: {
     display: 'inline-block',
@@ -2642,10 +2643,6 @@ export const TxDetailsStyles = {
     height: '556px',
     padding: '54px 60px 54px 80px',
   },
-
-  transition1: {
-    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
-  },
   headerTop: {
     height: '106px',
     paddingBottom: '20px',
@@ -2671,7 +2668,6 @@ export const TxDetailsStyles = {
     borderBottom: '1px solid transparent',
     color: '#596d81',
     fontSize: '27px',
-    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
   },
   contentNest: {
     paddingTop: '1px',
@@ -2948,10 +2944,6 @@ export const GetStartedStyles = {
     height: '556px',
     padding: '54px 60px 54px 80px',
   },
-
-  transition1: {
-    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
-  },
   contentTitle: {
     display: 'block',
     height: '44px',
@@ -2961,7 +2953,6 @@ export const GetStartedStyles = {
     borderBottom: '1px solid transparent',
     color: '#596d81',
     fontSize: '27px',
-    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
   },
   fetchHeadersMessage: {
     fontSize: '25px',
@@ -3152,9 +3143,6 @@ export const AccountStyles = {
     height: '512px',
     padding: '54px 60px 54px 80px',
   },
-  transition1: {
-    transition: 'all 100ms cubic-bezier(.86, 0, .07, 1)',
-  },
   contentTitle: {
     display: 'block',
     height: '44px',
@@ -3164,7 +3152,6 @@ export const AccountStyles = {
     borderBottom: '1px solid transparent',
     color: '#596d81',
     fontSize: '27px',
-    transition: 'all 250ms cubic-bezier(.86, 0, .07, 1)',
   },
   contentNest: {
     paddingTop: '1px',

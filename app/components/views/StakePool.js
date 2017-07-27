@@ -87,6 +87,7 @@ class StakePool extends Component{
       ticketFee: 0.001, // DCR/kB
       advancedHidden: true,
       autoBuyerHidden: true,
+      stakeInfoHidden: true,
       choice: 'option1',
 
       // for autostart
@@ -312,6 +313,12 @@ class StakePool extends Component{
   hideStakePoolConfig() {
     this.setState({purchaseTicketsStakePoolConfig: false});
   }
+  showStakeInfo() {
+    this.setState({stakeInfoHidden: false});
+  }
+  hideStakeInfo() {
+    this.setState({stakeInfoHidden: true});
+  }
   updateAccountNumber(account) {
     this.setState({account: account});
     if (this.props.balances !== null) {
@@ -500,6 +507,7 @@ class StakePool extends Component{
           />);
     var selectNumTickets = (
       <NumTicketsInput numTickets={this.state.numTickets} incrementNumTickets={()=>this.incrementNumTickets()} decrementNumTickets={()=>this.decrementNumTickets()}/>);
+
     var apiKeyDescription = (
       <div>
       </div>
@@ -664,6 +672,75 @@ class StakePool extends Component{
           }
         </div>
     );
+    var stakeInfoArea = (
+      getStakeInfoResponse !== null ?
+        this.state.stakeInfoHidden ?
+          <div style={StakePoolStyles.stakeInfoAreaSmall}>
+              <div style={StakePoolStyles.stakeInfoRowSmall}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Own Mempool Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getOwnMempoolTix()}</div>
+              </div>
+              <div style={StakePoolStyles.stakeInfoRowSmall}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Immature Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getImmature()}</div>
+              </div>
+              <div style={StakePoolStyles.stakeInfoRowSmall}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Live Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getLive()}</div>
+                <TicketsCogs opened={this.state.stakeInfoHidden} onClick={this.state.stakeInfoHidden ? () => this.showStakeInfo() : () => this.hideStakeInfo()}/>
+              </div>
+          </div>:
+          <div style={StakePoolStyles.stakeInfoArea}>
+            <div style={StakePoolStyles.stakeInfoRow}>
+              <div style={StakePoolStyles.stakeInfoRowLeft}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Poolsize:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getPoolSize()}</div>
+              </div>
+              <div style={StakePoolStyles.stakeInfoRowRight}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Voted Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getVoted()}</div>
+                <TicketsCogs opened={this.state.stakeInfoHidden} onClick={this.state.stakeInfoHidden ? () => this.showStakeInfo() : () => this.hideStakeInfo()}/>
+              </div>
+            </div>
+            <div style={StakePoolStyles.stakeInfoRow}>
+              <div style={StakePoolStyles.stakeInfoRowLeft}>
+                <div style={StakePoolStyles.stakeInfoLabel}>All Mempool Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getAllMempoolTix()}</div>
+              </div>
+              <div style={StakePoolStyles.stakeInfoRowRight}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Missed Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getMissed()}</div>
+              </div>
+            </div>
+            <div style={StakePoolStyles.stakeInfoRow}>
+              <div style={StakePoolStyles.stakeInfoRowLeft}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Own Mempool Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getOwnMempoolTix()}</div>
+              </div>
+              <div style={StakePoolStyles.stakeInfoRowRight}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Revoked Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getRevoked()}</div>
+              </div>
+            </div>
+            <div style={StakePoolStyles.stakeInfoRow}>
+              <div style={StakePoolStyles.stakeInfoRowLeft}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Immature Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getImmature()}</div>
+              </div>
+              <div style={StakePoolStyles.stakeInfoRowRight}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Expired Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getExpired()}</div>
+              </div>
+            </div>
+            <div style={StakePoolStyles.stakeInfoRow}>
+              <div style={StakePoolStyles.stakeInfoRowLeft}>
+                <div style={StakePoolStyles.stakeInfoLabel}>Live Tickets:</div>
+                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getLive()}</div>
+              </div>
+            </div>
+          </div>:
+          <div>
+          </div>);
     var purchaseTicketsInfoModal = (
         <PurchaseTicketsInfo closeModal={()=>this.closePurchaseInfoModal()}/>
     );
@@ -712,58 +789,7 @@ class StakePool extends Component{
           description={this.state.modalScriptDescription}
         />
         <div style={this.state.passphraseModalOpen || this.state.importScriptModalOpen ? StakePoolStyles.contentPurchaseTicketViewBlur : StakePoolStyles.contentPurchaseTicketView}>
-          {getStakeInfoResponse !== null ?
-          <div style={StakePoolStyles.stakeInfoArea}>
-            <div style={StakePoolStyles.stakeInfoRow}>
-              <div style={StakePoolStyles.stakeInfoRowLeft}>
-                <div style={StakePoolStyles.stakeInfoLabel}>Poolsize:</div>
-                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getPoolSize()}</div>
-              </div>
-              <div style={StakePoolStyles.stakeInfoRowRight}>
-                <div style={StakePoolStyles.stakeInfoLabel}>Voted Tickets:</div>
-                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getVoted()}</div>
-              </div>
-            </div>
-            <div style={StakePoolStyles.stakeInfoRow}>
-              <div style={StakePoolStyles.stakeInfoRowLeft}>
-                <div style={StakePoolStyles.stakeInfoLabel}>All Mempool Tickets:</div>
-                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getAllMempoolTix()}</div>
-              </div>
-              <div style={StakePoolStyles.stakeInfoRowRight}>
-                <div style={StakePoolStyles.stakeInfoLabel}>Missed Tickets:</div>
-                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getMissed()}</div>
-              </div>
-            </div>
-            <div style={StakePoolStyles.stakeInfoRow}>
-              <div style={StakePoolStyles.stakeInfoRowLeft}>
-                <div style={StakePoolStyles.stakeInfoLabel}>Own Mempool Tickets:</div>
-                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getOwnMempoolTix()}</div>
-              </div>
-              <div style={StakePoolStyles.stakeInfoRowRight}>
-                <div style={StakePoolStyles.stakeInfoLabel}>Revoked Tickets:</div>
-                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getRevoked()}</div>
-              </div>
-            </div>
-            <div style={StakePoolStyles.stakeInfoRow}>
-              <div style={StakePoolStyles.stakeInfoRowLeft}>
-                <div style={StakePoolStyles.stakeInfoLabel}>Immature Tickets:</div>
-                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getImmature()}</div>
-              </div>
-              <div style={StakePoolStyles.stakeInfoRowRight}>
-                <div style={StakePoolStyles.stakeInfoLabel}>Expired Tickets:</div>
-                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getExpired()}</div>
-              </div>
-            </div>
-            <div style={StakePoolStyles.stakeInfoRow}>
-              <div style={StakePoolStyles.stakeInfoRowLeft}>
-                <div style={StakePoolStyles.stakeInfoLabel}>Live Tickets:</div>
-                <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getLive()}</div>
-              </div>
-            </div>
-          </div>:
-          <div>
-          </div>
-          }
+          {stakeInfoArea}
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Purchase Tickets</div>
           </div>
