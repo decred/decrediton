@@ -111,7 +111,7 @@ class Send extends Component{
         updatedOutputErrors[i].amountError = '*Please enter a valid amount (> 0)';
         checkErrors = true;
       }
-      if (updatedOutputErrors[i].amount > 9223372036854776000) {    // 2^63
+      if (updatedOutputErrors[i].amount > Number.MAX_SAFE_INTEGER) {
         updatedOutputErrors[i].amountError = '*Please enter a valid amount (too large)';
         checkErrors = true;
       }
