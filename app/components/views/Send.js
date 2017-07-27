@@ -184,7 +184,7 @@ class Send extends Component{
     }
     var updateOutputs = this.state.outputs;
     updateOutputs[outputKey].amountStr = amountStr;
-    
+
     var amount = parseFloat(amountStr);
     if (isNaN(amount)) {
       updateOutputs[outputKey].amountError = '*Please enter a valid amount';
