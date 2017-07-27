@@ -3150,7 +3150,7 @@ export const AccountStyles = {
   },
   content: {
     overflowY: 'scroll',
-    height: '556px',
+    height: '512px',
     padding: '54px 60px 54px 80px',
   },
   transition1: {
