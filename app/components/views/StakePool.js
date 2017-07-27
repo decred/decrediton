@@ -578,7 +578,7 @@ class StakePool extends Component{
           <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences</div>
           <div style={StakePoolStyles.stakePoolUnconfiguredSelect}>{selectConfiguredStakePool}</div>
         </div>
-        {this.state.selectedConfigured !== null && this.state.selectedConfigured.value.APIVersionsSupported[1] == requiredStakepoolAPIVersion ?
+        {this.state.selectedConfigured !== undefined  && this.state.selectedConfigured.value.APIVersionsSupported[1] == requiredStakepoolAPIVersion ?
         <div style={StakePoolStyles.votingAgendaArea}>
           {this.state.agendaDisplay !== null && this.state.selectedConfigured !== null ?
             <AgendaOverview agenda={this.state.agendaDisplay} selectedChoice={this.state.selectedChoice} closeCurrentAgenda={() => this.closeCurrentAgenda()} selectAgendaChoice={() => this.selectAgendaChoice()} updatePreferences={(agendaId, choiceId) =>this.props.setVoteChoicesAttempt(this.state.selectedConfigured.value, agendaId, choiceId)}/>:
