@@ -684,10 +684,10 @@ class StakePool extends Component{
                 <div style={StakePoolStyles.stakeInfoLabel}>Immature Tickets:</div>
                 <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getImmature()}</div>
               </div>
-              <div style={StakePoolStyles.stakeInfoRowSmall}>
+              <div style={StakePoolStyles.stakeInfoRowSmallRight}>
                 <div style={StakePoolStyles.stakeInfoLabel}>Live Tickets:</div>
                 <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getLive()}</div>
-                <TicketsCogs opened={this.state.stakeInfoHidden} onClick={this.state.stakeInfoHidden ? () => this.showStakeInfo() : () => this.hideStakeInfo()}/>
+                <TicketsCogs opened={this.state.stakeInfoHidden} style={{paddingTop: '2px'}} onClick={this.state.stakeInfoHidden ? () => this.showStakeInfo() : () => this.hideStakeInfo()}/>
               </div>
           </div>:
           <div style={StakePoolStyles.stakeInfoArea}>
@@ -699,7 +699,7 @@ class StakePool extends Component{
               <div style={StakePoolStyles.stakeInfoRowRight}>
                 <div style={StakePoolStyles.stakeInfoLabel}>Voted Tickets:</div>
                 <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getVoted()}</div>
-                <TicketsCogs opened={this.state.stakeInfoHidden} onClick={this.state.stakeInfoHidden ? () => this.showStakeInfo() : () => this.hideStakeInfo()}/>
+                <TicketsCogs opened={this.state.stakeInfoHidden} style={{paddingTop: '2px'}} onClick={this.state.stakeInfoHidden ? () => this.showStakeInfo() : () => this.hideStakeInfo()}/>
               </div>
             </div>
             <div style={StakePoolStyles.stakeInfoRow}>

@@ -2073,7 +2073,7 @@ export const StakePoolStyles = {
   stakeInfoAreaSmall: {
     paddingTop: '1px',
     backgroundColor: 'rgb(255, 255, 255)',
-    height: '40px',
+    height: '25px',
     width: '740px',
     float: 'left',
     marginBottom: '10px',
@@ -2081,6 +2081,10 @@ export const StakePoolStyles = {
   },
   stakeInfoRowSmall: {
     width: '33%',
+    float: 'left',
+  },
+  stakeInfoRowSmallRight: {
+    width: '34%',
     float: 'left',
   },
   stakeInfoRow: {
@@ -2207,7 +2211,7 @@ export const StakePoolStyles = {
     }
   },
   purchaseTicketInfoButton: {
-    marginLeft: '200px',
+    marginLeft: '197px',
     float: 'left',
     borderRadius: '0px',
     backgroundImage: `url(${TicketsInfo})`,
@@ -2220,7 +2224,7 @@ export const StakePoolStyles = {
     display: 'block',
     width: '20px',
     height: '20px',
-    padding: '0px',
+    padding: '3px',
     backgroundColor: 'transparent',
     color: 'white',
     border: '0',
@@ -2269,7 +2273,7 @@ export const StakePoolStyles = {
     display: 'block',
     width: '20px',
     height: '20px',
-    padding: '0px',
+    padding: '3px',
     backgroundColor: 'transparent',
     color: 'white',
     border: '0',
@@ -2293,7 +2297,7 @@ export const StakePoolStyles = {
     display: 'block',
     width: '20px',
     height: '20px',
-    padding: '0px',
+    padding: '3px',
     backgroundColor: 'transparent',
     color: 'white',
     border: '0',
