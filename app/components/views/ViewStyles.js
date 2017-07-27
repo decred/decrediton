@@ -1450,8 +1450,8 @@ export const StakePoolStyles = {
     color: '#fd714b',
   },
   numTicketsInput: {
-    width: '111px',
-    paddingTop: '4px',
+    width: '126px',
+    paddingTop: '6px',
     float: 'left',
     fontFamily: 'Inconsolata, sans-serif',
     color: '#0c1e3e',
@@ -1473,7 +1473,6 @@ export const StakePoolStyles = {
   },
   numTicketsInputValueSuffix: {
     display: 'inline-block',
-    paddingTop: '5px',
     paddingRight: '5px',
     fontFamily: 'Inconsolata, monospace',
     fontSize: '13px',
@@ -2152,7 +2151,7 @@ export const StakePoolStyles = {
     textAlign: 'left',
   },
   purchaseTicketNumInput: {
-    width: '132px',
+    width: '146px',
     float: 'left',
     height: '100%',
     fontSize: '19px',
