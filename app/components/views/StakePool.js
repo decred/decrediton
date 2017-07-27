@@ -22,6 +22,7 @@ import AutoBuyerSwitch from '../AutoBuyerSwitch';
 import PassphraseModal from '../PassphraseModal';
 import ImportScriptModal from '../ImportScriptModal';
 import Select from 'react-select';
+import ReactToolTip from 'react-tooltip';
 
 class StakePool extends Component{
   static propTypes = {
@@ -116,6 +117,9 @@ class StakePool extends Component{
       apiKeyError: null,
       agendaDisplay: null,
     };
+  }
+  componentDidUpdate() {
+    ReactToolTip.rebuild();
   }
   componentWillReceiveProps(nextProps) {
     var accountsList = Array();
@@ -613,29 +617,29 @@ class StakePool extends Component{
             </div>
             <div id="dynamicInput">
             {this.state.configuredStakePools.map((stakePool) => {
-              if (stakePool.ApiKey && stakePool.Network == network) {
+              if (stakePool.value.ApiKey && stakePool.value.Network == network) {
                 return(
-                <div key={stakePool.Host} style={StakePoolStyles.contentNestStakePool}>
+                <div key={stakePool.value.Host} style={StakePoolStyles.contentNestStakePool}>
                   <div style={StakePoolStyles.contentNestStakePoolSettings}>
                     <div style={StakePoolStyles.contentNestPrefixStakePoolSettings}>URL:</div>
                     <div style={StakePoolStyles.contentNestContentStakePoolSettings}>
-                      {stakePool.Host}
+                      {stakePool.value.Host}
                     </div>
                   </div>
                   <div style={StakePoolStyles.contentNestStakePoolSettings}>
                     <div style={StakePoolStyles.contentNestPrefixStakePoolSettings}>Ticket Address:</div>
                     <div style={StakePoolStyles.contentNestContentStakePoolSettings}>
-                      {stakePool.TicketAddress}
+                      {stakePool.value.TicketAddress}
                     </div>
                   </div>
                   <div style={StakePoolStyles.contentNestStakePoolSettings}>
                     <div style={StakePoolStyles.contentNestPrefixStakePoolSettings}>Script:</div>
-                    <textarea disabled value={stakePool.Script} style={StakePoolStyles.contentNestContentStakePoolSettings}/>
+                    <textarea disabled value={stakePool.value.Script} style={StakePoolStyles.contentNestContentStakePoolSettings}/>
                   </div>
                   <div style={StakePoolStyles.contentNestStakePoolSettingsBottom}>
                     <div style={StakePoolStyles.contentNestPrefixStakePoolSettings}>Pool Fees:</div>
                     <div style={StakePoolStyles.contentNestContentStakePoolSettings}>
-                      {stakePool.PoolFees}
+                      {stakePool.value.PoolFees}
                     </div>
                   </div>
                 </div>);
@@ -888,12 +892,12 @@ class StakePool extends Component{
             </div>
             <div hidden={this.state.advancedHidden ? false : true} style={StakePoolStyles.purchaseTicketQuickBarRow}>
               <div style={StakePoolStyles.quickBarRowLabel}>Settings:</div>
-             <div style={StakePoolStyles.stakepoolIcon}>{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.Host : null}</div>
-              <div style={StakePoolStyles.expiryIcon}>{this.state.expiry} Blocks</div>
-              <div style={StakePoolStyles.feeIcon}>{this.state.txFee} DCR/KB</div>
-              <div style={StakePoolStyles.ticketAddressIcon}>{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.TicketAddress : null}</div>
-              <div style={StakePoolStyles.feeAddressIcon}>{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolAddress : null}</div>
-              <div style={StakePoolStyles.poolFeeIcon}>{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolFees : null}%</div>
+             <div style={StakePoolStyles.stakepoolIcon} data-tip="Current Stakepool">{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.Host : null}</div>
+              <div style={StakePoolStyles.expiryIcon} data-tip="Expiry">{this.state.expiry} Blocks</div>
+              <div style={StakePoolStyles.feeIcon} data-tip="Tx Fee">{this.state.txFee} DCR/KB</div>
+              <div style={StakePoolStyles.ticketAddressIcon} data-tip="Ticket Address">{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.TicketAddress : null}</div>
+              <div style={StakePoolStyles.feeAddressIcon} data-tip="Pool Address">{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolAddress : null}</div>
+              <div style={StakePoolStyles.poolFeeIcon} data-tip="Pool Fee">{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolFees : null}%</div>
             </div>
           </div>
           <div style={StakePoolStyles.purchaseTicketButtonsArea}>
@@ -926,11 +930,11 @@ class StakePool extends Component{
               <div style={StakePoolStyles.autoBuyerQuickBarRow}>
                 {this.state.autoBuyerHidden ?
                   <div>
-                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.balanceToMaintainIcon}/>{this.state.balanceToMaintain}</div>
-                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxFeeIcon}/>{this.state.maxFee} DCR</div>
-                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxPriceAbsoluteIcon}/>{this.state.maxPriceAbsolute} DCR</div>
-                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxPriceRelativeIcon}/>{this.state.maxPriceRelative}%</div>
-                    <div style={StakePoolStyles.autoBuyerIconAreas}><div style={StakePoolStyles.maxPerBlockIcon}/>{this.state.maxPerBlock}</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas} data-tip="Balance To Maintain"><div style={StakePoolStyles.balanceToMaintainIcon}/>{this.state.balanceToMaintain}</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas} data-tip="Max Fee"><div style={StakePoolStyles.maxFeeIcon}/>{this.state.maxFee} DCR</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas} data-tip="Max Price Absolute"><div style={StakePoolStyles.maxPriceAbsoluteIcon}/>{this.state.maxPriceAbsolute} DCR</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas} data-tip="Max Price Relative"><div style={StakePoolStyles.maxPriceRelativeIcon}/>{this.state.maxPriceRelative}%</div>
+                    <div style={StakePoolStyles.autoBuyerIconAreas} data-tip="Max Per Block"><div style={StakePoolStyles.maxPerBlockIcon}/>{this.state.maxPerBlock}</div>
                   </div>:
                   <div></div>}
               </div>
@@ -1116,6 +1120,7 @@ class StakePool extends Component{
         <div style={StakePoolStyles.body}>
           <SideBar />
           {stakePool}
+          <ReactToolTip type="info" effect="solid"/>
         </div>);
     }
   }

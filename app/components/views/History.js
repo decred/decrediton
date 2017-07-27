@@ -105,7 +105,6 @@ class History extends Component{
   }
 
   render() {
-    console.log(this.state.txTypes);
     const { walletService, balances, getAccountsResponse } = this.props;
     const { txPerPage } = this.props;
     const { getNetworkResponse } = this.props;

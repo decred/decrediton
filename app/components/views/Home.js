@@ -11,6 +11,7 @@ import TxHistory from '../TxHistory';
 import Header from '../Header';
 import '../fonts.css';
 import { HomeStyles } from './ViewStyles';
+import ReactToolTip from 'react-tooltip';
 
 class Home extends Component{
   constructor(props) {
@@ -89,9 +90,8 @@ class Home extends Component{
             headerMetaOverview={
               <div>
                 <Balance amount={totalBalance} />
-                <div style={HomeStyles.rescanButtonArea}>
-                  <KeyBlueButton style={HomeStyles.rescanButton} onClick={() => this.props.rescanAttempt(0)}>Rescan</KeyBlueButton>
-                  <span style={HomeStyles.rescanButtonMessage}>*Rescanning the blockchain may resolve some balance errors.</span>
+                <div style={HomeStyles.rescanButtonArea} data-tip="Rescanning the blockchain may resolve some balance errors.">
+                  <KeyBlueButton onClick={() => this.props.rescanAttempt(0)}>Rescan</KeyBlueButton>
                 </div>
               </div>
             }
@@ -122,6 +122,7 @@ class Home extends Component{
         <div style={HomeStyles.body}>
           <SideBar />
           {homeView}
+          <ReactToolTip place="left" type="info" effect="solid"/>
         </div>);
     }
   }
