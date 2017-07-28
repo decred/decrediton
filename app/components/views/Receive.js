@@ -93,7 +93,7 @@ class Receive extends Component{
             <KeyBlueButton
               size="large"
               block={false}
-              onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(this.state.account) : null}
+              onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(this.state.account.value) : null}
             >
               Generate new address
             </KeyBlueButton>
