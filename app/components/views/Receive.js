@@ -6,6 +6,7 @@ import KeyBlueButton from '../KeyBlueButton';
 import SideBar from '../SideBar';
 import Header from '../Header';
 import qr from 'qr-image';
+import CopyToClipboardButton from '../CopyToClipboardButton';
 import { ReceiveStyles } from './ViewStyles';
 import Select from 'react-select';
 
@@ -79,7 +80,13 @@ class Receive extends Component{
               </div>
             </div>
             <div style={ReceiveStyles.contentNestQR}>
-              <div style={ReceiveStyles.contentNestQRHash}>{getNextAddressResponse !== null ? getNextAddressResponse.getAddress() : ''}</div>
+              <div style={ReceiveStyles.contentNestQRHash}>
+                {getNextAddressResponse !== null ? [
+                    <span>{getNextAddressResponse.getAddress()}</span>,
+                    <CopyToClipboardButton style={ReceiveStyles.contentNestCopyToClipboardIcon} textToCopy={getNextAddressResponse.getAddress()} />
+                  ] : ''
+                }
+              </div>
               <QRCode addr={getNextAddressResponse !== null ? getNextAddressResponse.getAddress() : ''}/>
             </div>
           </div>
