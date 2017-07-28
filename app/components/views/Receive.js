@@ -6,6 +6,8 @@ import KeyBlueButton from '../KeyBlueButton';
 import SideBar from '../SideBar';
 import Header from '../Header';
 import qr from 'qr-image';
+import CopyToClipboardButton from '../CopyToClipboardButton';
+import ReactTooltip from 'react-tooltip';
 import { ReceiveStyles } from './ViewStyles';
 import Select from 'react-select';
 
@@ -79,7 +81,12 @@ class Receive extends Component{
               </div>
             </div>
             <div style={ReceiveStyles.contentNestQR}>
-              <div style={ReceiveStyles.contentNestQRHash}>{getNextAddressResponse !== null ? getNextAddressResponse.getAddress() : ''}</div>
+              <div style={ReceiveStyles.contentNestQRHash}>
+                {getNextAddressResponse !== null ? [
+                  <span key="addressSpan">{getNextAddressResponse.getAddress()}</span>,
+                  <CopyToClipboardButton key="copyToClipboard" style={ReceiveStyles.contentNestCopyToClipboardIcon} textToCopy={getNextAddressResponse.getAddress()} />
+                ] : ''}
+              </div>
               <QRCode addr={getNextAddressResponse !== null ? getNextAddressResponse.getAddress() : ''}/>
             </div>
           </div>
@@ -87,12 +94,13 @@ class Receive extends Component{
             <KeyBlueButton
               size="large"
               block={false}
-              onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(this.state.account) : null}
+              onClick={!getNextAddressRequestAttempt? () => this.props.getNextAddressAttempt(this.state.account.value) : null}
             >
               Generate new address
             </KeyBlueButton>
           </div>
         </div>
+        <ReactTooltip />
       </div>
     );
     if (walletService === null) {
