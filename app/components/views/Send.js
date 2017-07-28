@@ -111,6 +111,10 @@ class Send extends Component{
         updatedOutputErrors[i].amountError = '*Please enter a valid amount (> 0)';
         checkErrors = true;
       }
+      if (updatedOutputErrors[i].amount > Number.MAX_SAFE_INTEGER) {
+        updatedOutputErrors[i].amountError = '*Please enter a valid amount (too large)';
+        checkErrors = true;
+      }
       if (updatedOutputErrors[i].addressError !== null || updatedOutputErrors[i].amountError !== null ) {
         checkErrors = true;
       }
@@ -180,15 +184,17 @@ class Send extends Component{
     }
     var updateOutputs = this.state.outputs;
     updateOutputs[outputKey].amountStr = amountStr;
-    if (isNaN(parseFloat(amountStr))) {
+
+    var amount = parseFloat(amountStr);
+    if (isNaN(amount)) {
       updateOutputs[outputKey].amountError = '*Please enter a valid amount';
       updateOutputs[outputKey].amount = 0;
     } else {
-      if (parseFloat(amountStr) <= 0) {
+      if (amount <= 0) {
         updateOutputs[outputKey].amountError = '*Please enter a valid amount (> 0)';
         updateOutputs[outputKey].amount = 0;
       } else {
-        updateOutputs[outputKey].amount = parseFloat(amountStr) * units;
+        updateOutputs[outputKey].amount = amount * units;
         updateOutputs[outputKey].amountError = null;
       }
     }
