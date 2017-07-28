@@ -55,6 +55,11 @@ class Receive extends Component{
     const { walletService } = this.props;
     const { getNextAddressResponse, getNextAddressRequestAttempt } = this.props;
 
+    let nextAddress = '';
+    if(getNextAddressResponse !== null) {
+      nextAddress = getNextAddressResponse.getAddress();
+    }
+
     var selectAccounts = (
       <Select
         clearable={false}
@@ -82,12 +87,9 @@ class Receive extends Component{
             </div>
             <div style={ReceiveStyles.contentNestQR}>
               <div style={ReceiveStyles.contentNestQRHash}>
-                {getNextAddressResponse !== null ? [
-                  <span key="addressSpan">{getNextAddressResponse.getAddress()}</span>,
-                  <CopyToClipboardButton key="copyToClipboard" style={ReceiveStyles.contentNestCopyToClipboardIcon} textToCopy={getNextAddressResponse.getAddress()} />
-                ] : ''}
+                {this.renderNextAddressText(nextAddress)}
               </div>
-              <QRCode addr={getNextAddressResponse !== null ? getNextAddressResponse.getAddress() : ''}/>
+              <QRCode addr={nextAddress}/>
             </div>
           </div>
           <div style={ReceiveStyles.contentReceive}>
@@ -113,6 +115,21 @@ class Receive extends Component{
         </div>);
     }
   }
+
+  renderNextAddressText(nextAddress) {
+    if(!nextAddress) {
+      return null;
+    }
+
+    // A space is inserted before the address text to fix an issue with double-clicking to select the address.
+    // Without the space, double-clicking the address text will also highlight the account name from the account
+    // selector component.
+    return [
+      <span key="addressSpan">{' ' + nextAddress}</span>,
+      <CopyToClipboardButton key="copyToClipboard" style={ReceiveStyles.contentNestCopyToClipboardIcon} textToCopy={nextAddress} />
+    ];
+  }
+
 }
 
 export default Receive;
