@@ -15,7 +15,7 @@ class CopyToClipboardButton extends Component {
     var style = {};
     Object.assign(style, ReceiveStyles.copyToClipboardIcon);
     Object.assign(style, this.props.style);
-    
+
     return <a style={style} onClick={() => copy(this.props.textToCopy)}></a>;
   }
 
