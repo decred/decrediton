@@ -7,6 +7,7 @@ import SideBar from '../SideBar';
 import Header from '../Header';
 import qr from 'qr-image';
 import CopyToClipboardButton from '../CopyToClipboardButton';
+import ReactTooltip from 'react-tooltip';
 import { ReceiveStyles } from './ViewStyles';
 import Select from 'react-select';
 
@@ -99,6 +100,7 @@ class Receive extends Component{
             </KeyBlueButton>
           </div>
         </div>
+        <ReactTooltip />
       </div>
     );
     if (walletService === null) {

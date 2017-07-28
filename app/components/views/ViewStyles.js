@@ -151,9 +151,7 @@ export const ReceiveStyles = {
     textTransform: 'capitalize',
   },
   contentNestCopyToClipboardIcon: {
-    width: '38px',
-    height: '34px',
-    backgroundPosition: '16px 16px',
+    marginLeft: '16px',
   },
   contentNestQR: {
     width: '100%',
@@ -195,10 +193,10 @@ export const ReceiveStyles = {
   },
   copyToClipboardIcon: {
     display: 'inline-block',
-    width: '34px',
-    height: '34px',
+    width: '20px',
+    height: '18px',
     backgroundImage: `url(${WalletGray})`,
-    backgroundPosition: '0% 50%',
+    backgroundPosition: '0 0',
     backgroundSize: '20px auto',
     backgroundRepeat: 'no-repeat',
     cursor: 'pointer',
