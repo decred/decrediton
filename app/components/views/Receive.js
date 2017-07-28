@@ -82,8 +82,8 @@ class Receive extends Component{
             <div style={ReceiveStyles.contentNestQR}>
               <div style={ReceiveStyles.contentNestQRHash}>
                 {getNextAddressResponse !== null ? [
-                  <span>{getNextAddressResponse.getAddress()}</span>,
-                  <CopyToClipboardButton style={ReceiveStyles.contentNestCopyToClipboardIcon} textToCopy={getNextAddressResponse.getAddress()} />
+                  <span key="addressSpan">{getNextAddressResponse.getAddress()}</span>,
+                  <CopyToClipboardButton key="copyToClipboard" style={ReceiveStyles.contentNestCopyToClipboardIcon} textToCopy={getNextAddressResponse.getAddress()} />
                 ] : ''}
               </div>
               <QRCode addr={getNextAddressResponse !== null ? getNextAddressResponse.getAddress() : ''}/>
