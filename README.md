@@ -115,6 +115,13 @@ Start decrediton
 npm run dev
 ```
 
+### Note about developing with testnet
+
+The first time you run with testnet, you may get a "Failed to connect wallet by deadline error".  If so, make sure you change your config.json:
+```bash
+"network": "testnet",
+```
+
 ### Windows
 
 On windows you will need some extra steps to build grpc.  This assumes
