@@ -44,7 +44,7 @@ const styles = {
     position: 'relative',
     zIndex: '3',
     height: '60px',
-    paddingTop: '20px',
+    marginTop: '20px',
     backgroundColor: '#0c1e3e',
     backgroundImage: `url(${menulogo})`,
     backgroundPosition: '58px 50%',

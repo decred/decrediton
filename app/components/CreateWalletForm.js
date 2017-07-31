@@ -52,12 +52,10 @@ const styles = {
     color: '#FD714B',
   },
   contentSeed: {
-    width: '100%',
     height: 'auto',
     minHeight: '140px',
     marginBottom: '20px',
     padding: '14px 20px',
-    float: 'left',
     border: '1px solid #69D5F7',
     borderRadius: '5px',
     backgroundColor: '#E9F8FE',
@@ -191,7 +189,9 @@ class CreateWalletForm extends React.Component {
           <br/>the seed must be backed up before continuing.
           <br/>
           <br/>
-          <span style={styles.paragraphOrangeWarning}>Warning:</span> Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else.</div>
+          <span style={styles.paragraphOrangeWarning}>Warning:</span> Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else.
+        </div>
+        <div style={{clear: 'both'}}></div>
         <div style={styles.contentSeed}>{generateRandomSeedResponse !== null ? generateRandomSeedResponse.getSeedMnemonic() : null}</div>
         <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.props.createWalletConfirmNewSeed()}>Continue</KeyBlueButton>
       </div>);
