@@ -23,6 +23,7 @@ import PassphraseModal from '../PassphraseModal';
 import ImportScriptModal from '../ImportScriptModal';
 import Select from 'react-select';
 import ReactToolTip from 'react-tooltip';
+import { addSpacingAroundText } from '../../helpers/strings';
 
 class StakePool extends Component{
   static propTypes = {
@@ -921,8 +922,8 @@ class StakePool extends Component{
              <div style={StakePoolStyles.stakepoolIcon} data-tip="Current Stakepool">{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.Host : null}</div>
               <div style={StakePoolStyles.expiryIcon} data-tip="Expiry">{this.state.expiry} Blocks</div>
               <div style={StakePoolStyles.feeIcon} data-tip="Tx Fee">{this.state.txFee} DCR/KB</div>
-              <div style={StakePoolStyles.ticketAddressIcon} data-tip="Ticket Address">{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.TicketAddress : null}</div>
-              <div style={StakePoolStyles.feeAddressIcon} data-tip="Pool Address">{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolAddress : null}</div>
+              <div style={StakePoolStyles.ticketAddressIcon} data-tip="Ticket Address">{this.state.selectedConfigured != null ? addSpacingAroundText(this.state.selectedConfigured.value.TicketAddress) : null}</div>
+              <div style={StakePoolStyles.feeAddressIcon} data-tip="Pool Address">{this.state.selectedConfigured != null ? addSpacingAroundText(this.state.selectedConfigured.value.PoolAddress) : null}</div>
               <div style={StakePoolStyles.poolFeeIcon} data-tip="Pool Fee">{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolFees : null}%</div>
             </div>
           </div>

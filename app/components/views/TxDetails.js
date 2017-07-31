@@ -10,6 +10,7 @@ import { shell } from 'electron';
 import SlateGrayButton from '../SlateGrayButton';
 import { TxDetailsStyles } from './ViewStyles';
 import { TransactionDetails }  from '../../middleware/walletrpc/api_pb';
+import { addSpacingAroundText } from '../../helpers/strings';
 
 class TxDetails extends Component {
   constructor(props) {
@@ -111,7 +112,9 @@ class TxDetails extends Component {
           <div style={TxDetailsStyles.contentNest}>
             <div style={TxDetailsStyles.transactionDetailsTop}>
               <div style={TxDetailsStyles.transactionDetailsName}>Transaction:</div>
-              <div style={TxDetailsStyles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, txLink)}><a>{reverseHash(Buffer.from(tx.tx.getHash()).toString('hex'))}</a></div>
+              <div style={TxDetailsStyles.transactionDetailsValue}>
+                <a onClick={function(x){shell.openExternal(x);}.bind(null, txLink)} style={{cursor: 'pointer'}}>{reverseHash(Buffer.from(tx.tx.getHash()).toString('hex'))}</a>
+              </div>
               <div style={TxDetailsStyles.transactionDetailsName}>
                 <div style={TxDetailsStyles.indicatorConfirmed}>confirmed</div>
               </div>
@@ -140,7 +143,7 @@ class TxDetails extends Component {
                     receiveAddressStr.map(function(addressStr,i) {
                       return(
                         <div key={'row-output'+i} style={TxDetailsStyles.transactionDetailsRow}>
-                          <div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr.address}>{addressStr.address}</div>
+                          <div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr.address}>{addSpacingAroundText(addressStr.address)}</div>
                           <div style={TxDetailsStyles.transactionDetailsAmount} key={addressStr.amount+addressStr.address}><Balance amount={addressStr.amount}/></div>
                         </div>);
                     }) :
@@ -154,7 +157,9 @@ class TxDetails extends Component {
             <div style={TxDetailsStyles.transactionDetails}>
               <div style={TxDetailsStyles.transactionDetailsTitle}>Properties</div>
               <div style={TxDetailsStyles.transactionDetailsName}>Block:</div>
-              <div style={TxDetailsStyles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, blockLink)}><a>{reverseHash(Buffer.from(tx.blockHash).toString('hex'))}</a></div>
+              <div style={TxDetailsStyles.transactionDetailsValue}>
+                <a onClick={function(x){shell.openExternal(x);}.bind(null, blockLink)} style={{cursor: 'pointer'}}>{reverseHash(Buffer.from(tx.blockHash).toString('hex'))}</a>
+              </div>
               <div style={TxDetailsStyles.transactionDetailsName}>Height:</div>
               <div style={TxDetailsStyles.transactionDetailsValue}>{tx.height}</div>
             </div>
