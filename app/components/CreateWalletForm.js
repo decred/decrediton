@@ -168,6 +168,7 @@ class CreateWalletForm extends React.Component {
       canSubmit: false,
       continued: false,
       privpass: '',
+      verifyPass: '',
       seedError: null,
       verifyError: '',
       privPassError: null,
@@ -263,9 +264,9 @@ class CreateWalletForm extends React.Component {
           <div style={styles.contentConfirmWalletCreateInputRightPadding}>
             {this.state.network ?
             <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} disabled={this.state.verifyError !== '' || this.state.seedError !== null ||
-              this.state.privpass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null)} onClick={this.state.verifyError !== '' || this.state.seedError !== null ||
-              this.state.privpass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null) ? null : ()=>this.createWalletButton()}>Create Wallet</KeyBlueButton> :
-            <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} disabled={this.state.verifyError !== '' || this.state.privpass == ''} onClick={this.state.verifyError !== '' || this.state.privpass == '' ? null : ()=>this.createWalletButton()}>Create Wallet</KeyBlueButton> }
+              this.state.privpass == '' || this.state.verifyPass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null)} onClick={this.state.verifyError !== '' || this.state.seedError !== null ||
+              this.state.privpass == '' || this.state.verifyPass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null) ? null : ()=>this.createWalletButton()}>Create Wallet</KeyBlueButton> :
+            <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} disabled={this.state.verifyError !== '' || this.state.privpass == '' || this.state.verifyPass == ''} onClick={this.state.verifyError !== '' || this.state.privpass == '' ? null : ()=>this.createWalletButton()}>Create Wallet</KeyBlueButton> }
           </div>
         </div>
       </div>);
@@ -304,6 +305,10 @@ class CreateWalletForm extends React.Component {
       this.setState({privPassError: '*Please enter your private passphrase'});
       return;
     }
+    if (this.state.privpass != this.state.verifyPass) {
+      this.setState({verifyError: '*Passwords do not match'});
+      return;
+    }
     if (this.state.verifyError !== '' || this.state.seedError !== null ||
       this.state.privpass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null)) {
       return;
@@ -331,7 +336,7 @@ class CreateWalletForm extends React.Component {
     if (this.state.privpass != '' && this.state.privpass != verifyPrivPass) {
       this.setState({verifyError:'*Passwords do not match'});
     } else {
-      this.setState({verifyError:''});
+      this.setState({verifyError:'', verifyPass: verifyPrivPass});
     }
   }
   continueToConfirmButton() {
