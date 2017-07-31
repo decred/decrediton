@@ -160,21 +160,29 @@ class CreateWalletForm extends React.Component {
   constructor(props) {
     super(props);
     var requiredSeedLength = 33;
+    var seed = '';
+    if (this.props.network == 'testnet' && this.props.generateRandomSeedResponse !== null) {
+      seed = this.props.generateRandomSeedResponse.getSeedBytes();
+    }
     this.state = {
       canSubmit: false,
       continued: false,
-      seedMnemonicHex: '',
       privpass: '',
       seedError: null,
       verifyError: '',
       privPassError: null,
       remainingSeedWords: requiredSeedLength,
       requiredSeedLength: requiredSeedLength,
+      seed: seed,
+      network: this.props.network == 'mainnet'
     };
   }
   componentWillUpdate(nextProps) {
     if (this.props.decodeSeedError !== nextProps.decodeSeedError) {
       this.setState({seedError: nextProps.decodeSeedError});
+    }
+    if (this.props.network == 'testnet' && nextProps.generateRandomSeedResponse !== this.props.generateRandomSeedResponse) {
+      this.setState({seed: nextProps.generateRandomSeedResponse.getSeedBytes()});
     }
   }
   render() {
@@ -198,6 +206,7 @@ class CreateWalletForm extends React.Component {
 
     const newContinuedPage = (
       <div style={styles.contentNewSeed}>
+        {this.state.network ?
         <div style={styles.contentNewSeedConfirmSeed}>
           <div style={styles.contentConfirmWalletCreateInputLeft}>
             <span style={{float:'left'}}>Confirm Seed:&nbsp;</span>
@@ -213,7 +222,8 @@ class CreateWalletForm extends React.Component {
               {this.state.seedError !== null ? this.state.seedError : ''}
             </div>
           </div>
-        </div>
+        </div> :
+        <div></div> }
         <div style={styles.contentNewSeedPrivPass}>
           <div style={styles.contentConfirmWalletCreateInputLeftPadding}>Encrypt Wallet:</div>
           <div style={styles.contentConfirmWalletCreateInputRightPadding}>
@@ -251,9 +261,11 @@ class CreateWalletForm extends React.Component {
         <div style={styles.contentNewSeedCreateButton}>
           <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
           <div style={styles.contentConfirmWalletCreateInputRightPadding}>
+            {this.state.network ?
             <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} disabled={this.state.verifyError !== '' || this.state.seedError !== null ||
               this.state.privpass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null)} onClick={this.state.verifyError !== '' || this.state.seedError !== null ||
-              this.state.privpass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null) ? null : ()=>this.createWalletButton()}>Create Wallet</KeyBlueButton>
+              this.state.privpass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null) ? null : ()=>this.createWalletButton()}>Create Wallet</KeyBlueButton> :
+            <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} disabled={this.state.verifyError !== '' || this.state.privpass == ''} onClick={this.state.verifyError !== '' || this.state.privpass == '' ? null : ()=>this.createWalletButton()}>Create Wallet</KeyBlueButton> }
           </div>
         </div>
       </div>);
@@ -399,6 +411,7 @@ function mapStateToProps(state) {
     decodeSeedError: state.seedService.decodeSeedError,
     createWalletExisting: state.walletLoader.createWalletExisting,
     confirmNewSeed: state.walletLoader.confirmNewSeed,
+    network: state.grpc.network,
   };
 }
 
