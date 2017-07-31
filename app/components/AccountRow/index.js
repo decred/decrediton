@@ -1,17 +1,17 @@
 // @flow
 import React, { Component } from 'react';
-import Row from "./Row";
+import Row from './Row';
 
 class AccountRow extends Component {
   constructor(props) {
     super(props);
     [
-      "updateRenameAccountName",
-      "renameAccount",
-      "showRenameAccount",
-      "hideRenameAccount",
-      "showAccount",
-      "hideAccount"
+      'updateRenameAccountName',
+      'renameAccount',
+      'showRenameAccount',
+      'hideRenameAccount',
+      'showAccount',
+      'hideAccount'
     ].forEach(name => this[name] = this[name].bind(this));
 
     this.state = {
