@@ -10,6 +10,7 @@ import { shell } from 'electron';
 import SlateGrayButton from '../SlateGrayButton';
 import { TxDetailsStyles } from './ViewStyles';
 import { TransactionDetails }  from '../../middleware/walletrpc/api_pb';
+import { addSpacingAroundText } from '../../helpers/strings';
 
 class TxDetails extends Component {
   constructor(props) {
@@ -142,7 +143,7 @@ class TxDetails extends Component {
                     receiveAddressStr.map(function(addressStr,i) {
                       return(
                         <div key={'row-output'+i} style={TxDetailsStyles.transactionDetailsRow}>
-                          <div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr.address}>{addressStr.address}</div>
+                          <div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr.address}>{addSpacingAroundText(addressStr.address)}</div>
                           <div style={TxDetailsStyles.transactionDetailsAmount} key={addressStr.amount+addressStr.address}><Balance amount={addressStr.amount}/></div>
                         </div>);
                     }) :

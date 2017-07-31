@@ -84,12 +84,14 @@ class Receive extends Component{
               <div style={ReceiveStyles.receiveSelectAccountInput}>
                 {selectAccounts}
               </div>
+              <div style={{clear: 'both'}}></div>
             </div>
             <div style={ReceiveStyles.contentNestQR}>
               <div style={ReceiveStyles.contentNestQRHash}>
                 {this.renderNextAddressText(nextAddress)}
               </div>
               <QRCode addr={nextAddress}/>
+              <div style={{clear: 'both'}}></div>
             </div>
           </div>
           <div style={ReceiveStyles.contentReceive}>
@@ -121,11 +123,8 @@ class Receive extends Component{
       return null;
     }
 
-    // A space is inserted before the address text to fix an issue with double-clicking to select the address.
-    // Without the space, double-clicking the address text will also highlight the account name from the account
-    // selector component.
     return [
-      <span key="addressSpan">{' ' + nextAddress}</span>,
+      <span key="addressSpan">{nextAddress}</span>,
       <CopyToClipboardButton key="copyToClipboard" style={ReceiveStyles.contentNestCopyToClipboardIcon} textToCopy={nextAddress} />
     ];
   }
