@@ -111,7 +111,9 @@ class TxDetails extends Component {
           <div style={TxDetailsStyles.contentNest}>
             <div style={TxDetailsStyles.transactionDetailsTop}>
               <div style={TxDetailsStyles.transactionDetailsName}>Transaction:</div>
-              <div style={TxDetailsStyles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, txLink)}><a>{reverseHash(Buffer.from(tx.tx.getHash()).toString('hex'))}</a></div>
+              <div style={TxDetailsStyles.transactionDetailsValue}>
+                <a onClick={function(x){shell.openExternal(x);}.bind(null, txLink)} style={{cursor: 'pointer'}}>{reverseHash(Buffer.from(tx.tx.getHash()).toString('hex'))}</a>
+              </div>
               <div style={TxDetailsStyles.transactionDetailsName}>
                 <div style={TxDetailsStyles.indicatorConfirmed}>confirmed</div>
               </div>
@@ -154,7 +156,9 @@ class TxDetails extends Component {
             <div style={TxDetailsStyles.transactionDetails}>
               <div style={TxDetailsStyles.transactionDetailsTitle}>Properties</div>
               <div style={TxDetailsStyles.transactionDetailsName}>Block:</div>
-              <div style={TxDetailsStyles.transactionDetailsValue} onClick={function(x){shell.openExternal(x);}.bind(null, blockLink)}><a>{reverseHash(Buffer.from(tx.blockHash).toString('hex'))}</a></div>
+              <div style={TxDetailsStyles.transactionDetailsValue}>
+                <a onClick={function(x){shell.openExternal(x);}.bind(null, blockLink)} style={{cursor: 'pointer'}}>{reverseHash(Buffer.from(tx.blockHash).toString('hex'))}</a>
+              </div>
               <div style={TxDetailsStyles.transactionDetailsName}>Height:</div>
               <div style={TxDetailsStyles.transactionDetailsValue}>{tx.height}</div>
             </div>
