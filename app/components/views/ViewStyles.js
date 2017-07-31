@@ -128,7 +128,6 @@ export const ReceiveStyles = {
     height: '54px',
     paddingTop: '10px',
     paddingLeft: '20px',
-    float: 'left',
   },
   contentNestReceiveForAddressIcon: {
     display: 'inline-block',
