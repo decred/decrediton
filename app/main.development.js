@@ -66,7 +66,7 @@ var logger = new (winston.Logger)({
         // Format the timestamp in local time like the dcrd and dcrwallet logs.
         let pad = (s, n) => {
           n = n || 2;
-          s = Array(n).join("0").substring(0, n) + s;
+          s = Array(n).join("0") + s;
           return s.substring(s.length - n);
         };
 
