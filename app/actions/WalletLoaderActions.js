@@ -1,12 +1,12 @@
 // @flow
-import { loader } from '../middleware/grpc/client';
-import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from './ClientActions';
-import { getVersionServiceAttempt } from './VersionActions';
-import { getSeederAttempt, generateRandomSeedAttempt } from './SeedServiceActions';
-import { getCfg, getCfgPath, getDcrdCert,RPCDaemonPort, RPCDaemonHost } from '../config.js';
+import { loader } from "../middleware/grpc/client";
+import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from "./ClientActions";
+import { getVersionServiceAttempt } from "./VersionActions";
+import { getSeederAttempt, generateRandomSeedAttempt } from "./SeedServiceActions";
+import { getCfg, getCfgPath, getDcrdCert,RPCDaemonPort, RPCDaemonHost } from "../config.js";
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
-  SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from '../middleware/walletrpc/api_pb';
+  SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from "../middleware/walletrpc/api_pb";
 
 export function versionCheckAction() {
   return (dispatch) => {
@@ -14,9 +14,9 @@ export function versionCheckAction() {
   };
 }
 
-export const LOADER_ATTEMPT = 'LOADER_ATTEMPT';
-export const LOADER_FAILED = 'LOADER_FAILED';
-export const LOADER_SUCCESS = 'LOADER_SUCCESS';
+export const LOADER_ATTEMPT = "LOADER_ATTEMPT";
+export const LOADER_FAILED = "LOADER_FAILED";
+export const LOADER_SUCCESS = "LOADER_SUCCESS";
 
 export function loaderRequest(address, port) {
   var request = {
@@ -37,9 +37,9 @@ export function loaderRequest(address, port) {
   };
 }
 
-export const WALLETEXIST_ATTEMPT = 'WALLETEXIST_ATTEMPT';
-export const WALLETEXIST_FAILED = 'WALLETEXIST_FAILED';
-export const WALLETEXIST_SUCCESS = 'WALLETEXIST_SUCCESS';
+export const WALLETEXIST_ATTEMPT = "WALLETEXIST_ATTEMPT";
+export const WALLETEXIST_FAILED = "WALLETEXIST_FAILED";
+export const WALLETEXIST_SUCCESS = "WALLETEXIST_SUCCESS";
 
 export function walletExistRequest() {
   var request = new WalletExistsRequest();
@@ -53,7 +53,7 @@ export function walletExistRequest() {
           } else {
             dispatch({response: response, type: WALLETEXIST_SUCCESS });
             if (response.getExists()) {
-              setTimeout(dispatch(openWalletAttempt('public')), 1000);
+              setTimeout(dispatch(openWalletAttempt("public")), 1000);
             } else {
               setTimeout(() => dispatch(generateRandomSeedAttempt()), 500);
             }
@@ -62,10 +62,10 @@ export function walletExistRequest() {
   };
 }
 
-export const CREATEWALLET_NEWSEED_CONFIRM = 'CREATEWALLET_NEWSEED_CONFIRM';
-export const CREATEWALLET_NEWSEED_BACK = 'CREATEWALLET_NEWSEED_BACK';
-export const CREATEWALLET_EXISTINGSEED = 'CREATEWALLET_EXISTINGSEED';
-export const CREATEWALLET_NEWSEED = 'CREATEWALLET_NEWSEED';
+export const CREATEWALLET_NEWSEED_CONFIRM = "CREATEWALLET_NEWSEED_CONFIRM";
+export const CREATEWALLET_NEWSEED_BACK = "CREATEWALLET_NEWSEED_BACK";
+export const CREATEWALLET_EXISTINGSEED = "CREATEWALLET_EXISTINGSEED";
+export const CREATEWALLET_NEWSEED = "CREATEWALLET_NEWSEED";
 
 export function createWalletConfirmNewSeed(){
   return{ type: CREATEWALLET_NEWSEED_CONFIRM };
@@ -85,9 +85,9 @@ export function createWalletExistingToggle(existing) {
   };
 }
 
-export const CREATEWALLET_ATTEMPT = 'CREATEWALLET_ATTEMPT';
-export const CREATEWALLET_FAILED = 'CREATEWALLET_FAILED';
-export const CREATEWALLET_SUCCESS = 'CREATEWALLET_SUCCESS';
+export const CREATEWALLET_ATTEMPT = "CREATEWALLET_ATTEMPT";
+export const CREATEWALLET_FAILED = "CREATEWALLET_FAILED";
+export const CREATEWALLET_SUCCESS = "CREATEWALLET_SUCCESS";
 
 export function createWalletRequest(pubPass, privPass, seed, existing) {
   var request = new CreateWalletRequest();
@@ -109,9 +109,9 @@ export function createWalletRequest(pubPass, privPass, seed, existing) {
   };
 }
 
-export const OPENWALLET_ATTEMPT = 'OPENWALLET_ATTEMPT';
-export const OPENWALLET_FAILED = 'OPENWALLET_FAILED';
-export const OPENWALLET_SUCCESS = 'OPENWALLET_SUCCESS';
+export const OPENWALLET_ATTEMPT = "OPENWALLET_ATTEMPT";
+export const OPENWALLET_FAILED = "OPENWALLET_FAILED";
+export const OPENWALLET_SUCCESS = "OPENWALLET_SUCCESS";
 
 export function openWalletAttempt(pubPass) {
   var request = new OpenWalletRequest();
@@ -122,7 +122,7 @@ export function openWalletAttempt(pubPass) {
     loader.openWallet(request,
       function(error) {
         if (error) {
-          if (error.message.includes('wallet already loaded')) {
+          if (error.message.includes("wallet already loaded")) {
             dispatch({response: {}, type: OPENWALLET_SUCCESS});
             dispatch(startRpcRequestFunc());
             return;
@@ -136,9 +136,9 @@ export function openWalletAttempt(pubPass) {
   };
 }
 
-export const CLOSEWALLET_ATTEMPT = 'CLOSEWALLET_ATTEMPT';
-export const CLOSEWALLET_FAILED = 'CLOSEWALLET_FAILED';
-export const CLOSEWALLET_SUCCESS = 'CLOSEWALLET_SUCCESS';
+export const CLOSEWALLET_ATTEMPT = "CLOSEWALLET_ATTEMPT";
+export const CLOSEWALLET_FAILED = "CLOSEWALLET_FAILED";
+export const CLOSEWALLET_SUCCESS = "CLOSEWALLET_SUCCESS";
 
 export function closeWalletRequest() {
   var request = new CloseWalletRequest();
@@ -156,10 +156,10 @@ export function closeWalletRequest() {
   };
 }
 
-export const STARTRPC_ATTEMPT = 'STARTRPC_ATTEMPT';
-export const STARTRPC_FAILED = 'STARTRPC_FAILED';
-export const STARTRPC_SUCCESS = 'STARTRPC_SUCCESS';
-export const STARTRPC_RETRY = 'STARTRPC_RETRY';
+export const STARTRPC_ATTEMPT = "STARTRPC_ATTEMPT";
+export const STARTRPC_FAILED = "STARTRPC_FAILED";
+export const STARTRPC_SUCCESS = "STARTRPC_SUCCESS";
+export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
 function startRpcError(error, request) {
   return (dispatch, getState) => {
@@ -182,17 +182,17 @@ export function startRpcRequestFunc(localHost) {
   // This is an attempt to deal with different setups
   // that may not like 127.0.0.1 as the loopback address
   if (localHost) {
-    request.setNetworkAddress('localhost:' + rpcport);
-    request.setUsername(cfg.get('rpc_user'));
-    request.setPassword(new Uint8Array(Buffer.from(cfg.get('rpc_pass'))));
+    request.setNetworkAddress("localhost:" + rpcport);
+    request.setUsername(cfg.get("rpc_user"));
+    request.setPassword(new Uint8Array(Buffer.from(cfg.get("rpc_pass"))));
     request.setCertificate(new Uint8Array(getDcrdCert()));
     return (dispatch) => {
       dispatch(startRpcAction(request, true));
     };
   } else {
-    request.setNetworkAddress(daemonhost + ':' + rpcport);
-    request.setUsername(cfg.get('rpc_user'));
-    request.setPassword(new Uint8Array(Buffer.from(cfg.get('rpc_pass'))));
+    request.setNetworkAddress(daemonhost + ":" + rpcport);
+    request.setUsername(cfg.get("rpc_user"));
+    request.setPassword(new Uint8Array(Buffer.from(cfg.get("rpc_pass"))));
     request.setCertificate(new Uint8Array(getDcrdCert()));
     return (dispatch) => {
       dispatch({request: request, type: STARTRPC_ATTEMPT});
@@ -207,13 +207,13 @@ function startRpcAction(request, second) {
     loader.startConsensusRpc(request,
         function(error) {
           if (error) {
-            if (error.message.includes('RPC client already created')) {
+            if (error.message.includes("RPC client already created")) {
               dispatch({ type: STARTRPC_SUCCESS});
               dispatch(subscribeBlockAttempt());
               return;
             }
             if (second) {
-              dispatch(startRpcError(error + '.  You may need to edit ' + getCfgPath() + ' and try again', request));
+              dispatch(startRpcError(error + ".  You may need to edit " + getCfgPath() + " and try again", request));
             } else {
               dispatch(startRpcRequestFunc(true));
             }
@@ -225,9 +225,9 @@ function startRpcAction(request, second) {
   };
 }
 
-export const DISCOVERADDRESS_ATTEMPT = 'DISCOVERADDRESS_ATTEMPT';
-export const DISCOVERADDRESS_FAILED = 'DISCOVERADDRESS_FAILED';
-export const DISCOVERADDRESS_SUCCESS = 'DISCOVERADDRESS_SUCCESS';
+export const DISCOVERADDRESS_ATTEMPT = "DISCOVERADDRESS_ATTEMPT";
+export const DISCOVERADDRESS_FAILED = "DISCOVERADDRESS_FAILED";
+export const DISCOVERADDRESS_SUCCESS = "DISCOVERADDRESS_SUCCESS";
 
 export function discoverAddressAttempt(discoverAccts, privPass) {
   var request = new DiscoverAddressesRequest();
@@ -253,9 +253,9 @@ export function discoverAddressAttempt(discoverAccts, privPass) {
   };
 }
 
-export const SUBSCRIBEBLOCKNTFNS_ATTEMPT = 'SUBSCRIBEBLOCKNTFNS_ATTEMPT';
-export const SUBSCRIBEBLOCKNTFNS_FAILED = 'SUBSCRIBEBLOCKNTFNS_FAILED';
-export const SUBSCRIBEBLOCKNTFNS_SUCCESS = 'SUBSCRIBEBLOCKNTFNS_SUCCESS';
+export const SUBSCRIBEBLOCKNTFNS_ATTEMPT = "SUBSCRIBEBLOCKNTFNS_ATTEMPT";
+export const SUBSCRIBEBLOCKNTFNS_FAILED = "SUBSCRIBEBLOCKNTFNS_FAILED";
+export const SUBSCRIBEBLOCKNTFNS_SUCCESS = "SUBSCRIBEBLOCKNTFNS_SUCCESS";
 
 export function subscribeBlockAttempt() {
   var request = new SubscribeToBlockNotificationsRequest();
@@ -282,10 +282,10 @@ export function subscribeBlockAttempt() {
   };
 }
 
-export const FETCHHEADERS_ATTEMPT = 'FETCHHEADER_ATTEMPT';
-export const FETCHHEADERS_FAILED = 'FETCHHEADERS_FAILED';
-export const FETCHHEADERS_SUCCESS = 'FETCHHEADERS_SUCCESS';
-export const FETCHHEADERS_PROGRESS = 'FETCHHEADERS_PROGRESS';
+export const FETCHHEADERS_ATTEMPT = "FETCHHEADER_ATTEMPT";
+export const FETCHHEADERS_FAILED = "FETCHHEADERS_FAILED";
+export const FETCHHEADERS_SUCCESS = "FETCHHEADERS_SUCCESS";
+export const FETCHHEADERS_PROGRESS = "FETCHHEADERS_PROGRESS";
 
 export function fetchHeadersAttempt() {
   var request = new FetchHeadersRequest();

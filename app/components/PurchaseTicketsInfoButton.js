@@ -1,7 +1,7 @@
 // @flow
-import React from 'react';
-import Radium from 'radium';
-import { StakePoolStyles } from './views/ViewStyles';
+import React from "react";
+import Radium from "radium";
+import { StakePoolStyles } from "./views/ViewStyles";
 
 class PurchaseTicketsInfoButton extends React.Component {
   render() {

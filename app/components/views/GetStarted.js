@@ -1,59 +1,59 @@
 // @flow
-import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
-import CreateWalletForm from '../CreateWalletForm';
-import CircularProgress from 'material-ui/CircularProgress';
-import ShowError from '../ShowError';
-import Radium from 'radium';
-import SideBar from '../SideBar';
-import NewExistingSeedToggle from '../NewExistingSeedToggle';
-import Header from '../Header';
-import KeyBlueButton from '../KeyBlueButton';
-import SlateGrayButton from '../SlateGrayButton';
-import { GetStartedStyles } from './ViewStyles';
+import React, { Component } from "react";
+import { PropTypes } from "prop-types";
+import CreateWalletForm from "../CreateWalletForm";
+import CircularProgress from "material-ui/CircularProgress";
+import ShowError from "../ShowError";
+import Radium from "radium";
+import SideBar from "../SideBar";
+import NewExistingSeedToggle from "../NewExistingSeedToggle";
+import Header from "../Header";
+import KeyBlueButton from "../KeyBlueButton";
+import SlateGrayButton from "../SlateGrayButton";
+import { GetStartedStyles } from "./ViewStyles";
 
 class Home extends Component{
   toggleNewExisting(side) {
-    if (side == 'right') {
+    if (side == "right") {
       this.props.createWalletExistingToggle(true);
-    } else if (side == 'left') {
+    } else if (side == "left") {
       this.props.createWalletExistingToggle(false);
     }
   }
   discoverAddressesButton() {
-    if (this.state.privpass == '') {
-      this.setState({privPassError: '*Please enter your private passphrase'});
+    if (this.state.privpass == "") {
+      this.setState({privPassError: "*Please enter your private passphrase"});
       return;
     }
     if (this.state.privPassError !== null) {
       return;
     }
     this.props.discoverAddressAttempt(true, this.state.privpass);
-    this.setState({privpass:''});
+    this.setState({privpass:""});
   }
   openWalletButton() {
-    if (this.state.pubpass == '') {
-      this.setState({pubPassError: '*Please enter your public passphrase'});
+    if (this.state.pubpass == "") {
+      this.setState({pubPassError: "*Please enter your public passphrase"});
       return;
     }
     if (this.state.pubPassError !== null) {
       return;
     }
     this.props.openWalletAttempt(this.state.pubpass);
-    this.setState({pubpass:''});
+    this.setState({pubpass:""});
   }
   updatePubPass(pubPass) {
-    if (pubPass !== '') {
+    if (pubPass !== "") {
       this.setState({pubpass: pubPass, pubPassError: null});
     } else {
-      this.setState({pubPassError: '*Please enter your public passphrase'});
+      this.setState({pubPassError: "*Please enter your public passphrase"});
     }
   }
   updatePrivPass(privPass) {
-    if (privPass !== '') {
+    if (privPass !== "") {
       this.setState({privpass: privPass, privPassError: null});
     } else {
-      this.setState({privPassError: '*Please enter your private passphrase'});
+      this.setState({privPassError: "*Please enter your private passphrase"});
     }
   }
   constructor(props) {
@@ -185,14 +185,14 @@ class Home extends Component{
             <div key="walletCreateError" style={GetStartedStyles.viewNotificationError}>{walletCreateError}</div> :
             <div key="walletCreateError" ></div>
           ]}
-          headerTitleOverview={'Create a Wallet'}
+          headerTitleOverview={"Create a Wallet"}
           headerMetaOverview=
             {<div style={GetStartedStyles.toggle}>
               {!this.props.confirmNewSeed ?
                 <NewExistingSeedToggle
-                  activeButton={'left'}
-                  leftText={'New seed'}
-                  rightText={'Existing Seed'}
+                  activeButton={"left"}
+                  leftText={"New seed"}
+                  rightText={"Existing Seed"}
                   toggleAction={(e)=>{this.toggleNewExisting(e);}}/> :
                 <SlateGrayButton style={GetStartedStyles.viewButtonGoBack} onClick={()=>this.props.createWalletGoBackNewSeed()}>Back</SlateGrayButton>
               }

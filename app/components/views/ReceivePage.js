@@ -1,8 +1,8 @@
 // @flow
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import Receive from './Receive';
-import { getNextAddressAttempt } from '../../actions/ControlActions';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import Receive from "./Receive";
+import { getNextAddressAttempt } from "../../actions/ControlActions";
 
 function mapStateToProps(state) {
   return {

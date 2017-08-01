@@ -1,8 +1,8 @@
 // @flow
-import React from 'react';
-import { StakePoolStyles } from './views/ViewStyles';
-import AgendaClose from './AgendaClose';
-import KeyBlueButton from './KeyBlueButton';
+import React from "react";
+import { StakePoolStyles } from "./views/ViewStyles";
+import AgendaClose from "./AgendaClose";
+import KeyBlueButton from "./KeyBlueButton";
 
 class AgendaOverview extends React.Component {
   constructor(props) {

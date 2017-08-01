@@ -1,14 +1,14 @@
 // @flow
-import React, { Component, } from 'react';
-import { PropTypes } from 'prop-types';
-import ErrorScreen from '../ErrorScreen';
-import SideBar from '../SideBar';
-import Header from '../Header';
-import KeyBlueButton from '../KeyBlueButton';
-import SlateGrayButton from '../SlateGrayButton';
-import CircularProgress from 'material-ui/CircularProgress';
-import { AccountStyles } from './ViewStyles.js';
-import AccountRow from '../AccountRow';
+import React, { Component, } from "react";
+import { PropTypes } from "prop-types";
+import ErrorScreen from "../ErrorScreen";
+import SideBar from "../SideBar";
+import Header from "../Header";
+import KeyBlueButton from "../KeyBlueButton";
+import SlateGrayButton from "../SlateGrayButton";
+import CircularProgress from "material-ui/CircularProgress";
+import { AccountStyles } from "./ViewStyles.js";
+import AccountRow from "../AccountRow";
 
 class Accounts extends Component{
   static propTypes = {
@@ -18,7 +18,7 @@ class Accounts extends Component{
     super(props);
     this.state = {
       showAddAccount: false,
-      addAccountName: '',
+      addAccountName: "",
       privpass: null,
       addAccountNameError: null,
       addAccountPrivPassError: null,
@@ -33,12 +33,12 @@ class Accounts extends Component{
   }
   addAccount() {
     var checkErrors = false;
-    if (this.state.addAccountName == '') {
-      this.setState({addAccountNameError: '*You must enter an account name'});
+    if (this.state.addAccountName == "") {
+      this.setState({addAccountNameError: "*You must enter an account name"});
       checkErrors = true;
     }
     if (this.state.privpass == null) {
-      this.setState({addAccountPrivPassError: '*Please enter your private passphrase'});
+      this.setState({addAccountPrivPassError: "*Please enter your private passphrase"});
       checkErrors = true;
     }
     if (this.state.addAccountNameError !== null || this.state.addAccountPrivPassError !== null ||
@@ -56,7 +56,7 @@ class Accounts extends Component{
     this.props.clearRenameAccountError();
   }
   hideAddAccount() {
-    this.setState({showAddAccount: false, addAccountName: '', privpass: null});
+    this.setState({showAddAccount: false, addAccountName: "", privpass: null});
     this.props.clearNewAccountSuccess();
     this.props.clearNewAccountError();
     this.props.clearRenameAccountSuccess();
@@ -117,7 +117,7 @@ class Accounts extends Component{
               <div style={AccountStyles.contentNest}>
               {sortedBalances.map((account) => {
                 return (<AccountRow
-                  key={'accountRow' + account.accountName}
+                  key={"accountRow" + account.accountName}
                   account={account}
                   accountNumDetailsShown={this.state.accountNumDetailsShown}
                   renameAccount={(name, number) => this.props.renameAccountAttempt(name, number)}

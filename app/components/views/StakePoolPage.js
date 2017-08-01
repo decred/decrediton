@@ -1,11 +1,11 @@
 // @flow
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import StakePool from './StakePool';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import StakePool from "./StakePool";
 import { clearStakePoolConfigError,
     clearStakePoolConfigSuccess,
     setStakePoolInformation,
-  } from '../../actions/StakePoolActions';
+  } from "../../actions/StakePoolActions";
 import { purchaseTicketsAttempt,
     revokeTicketsAttempt,
     clearStartAutoBuyerSuccess,
@@ -21,8 +21,8 @@ import { purchaseTicketsAttempt,
     importScriptAttempt,
     startAutoBuyerAttempt,
     stopAutoBuyerAttempt,
-    setTicketBuyerConfigAttempt } from '../../actions/ControlActions';
-import { setVoteChoicesAttempt } from '../../actions/ClientActions';
+    setTicketBuyerConfigAttempt } from "../../actions/ControlActions";
+import { setVoteChoicesAttempt } from "../../actions/ClientActions";
 
 function mapStateToProps(state) {
   return {

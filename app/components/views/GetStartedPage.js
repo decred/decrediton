@@ -1,8 +1,8 @@
 // @flow
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import GetStarted from './GetStarted';
-import {createWalletGoBackNewSeed, createWalletExistingToggle, discoverAddressAttempt, openWalletAttempt, startRpcRequestFunc, versionCheckAction } from '../../actions/WalletLoaderActions';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import GetStarted from "./GetStarted";
+import {createWalletGoBackNewSeed, createWalletExistingToggle, discoverAddressAttempt, openWalletAttempt, startRpcRequestFunc, versionCheckAction } from "../../actions/WalletLoaderActions";
 
 function mapStateToProps(state) {
   return {

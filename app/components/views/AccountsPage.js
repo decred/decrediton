@@ -1,9 +1,9 @@
 // @flow
-import { connect } from 'react-redux';
-import Accounts from './Accounts';
-import { bindActionCreators } from 'redux';
-import {renameAccountAttempt, clearNewAccountSuccess, clearNewAccountError, clearRenameAccountSuccess, clearRenameAccountError, getNextAccountAttempt} from '../../actions/ControlActions';
-import { hideAccount, showAccount } from '../../actions/ClientActions';
+import { connect } from "react-redux";
+import Accounts from "./Accounts";
+import { bindActionCreators } from "redux";
+import {renameAccountAttempt, clearNewAccountSuccess, clearNewAccountError, clearRenameAccountSuccess, clearRenameAccountError, getNextAccountAttempt} from "../../actions/ControlActions";
+import { hideAccount, showAccount } from "../../actions/ClientActions";
 function mapStateToProps(state) {
   return {
     walletService: state.grpc.walletService,

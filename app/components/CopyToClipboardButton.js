@@ -1,11 +1,11 @@
 // @flow
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import ReactTooltip from 'react-tooltip';
-import { PropTypes } from 'prop-types';
-import Radium from 'radium';
-import copy from 'clipboard-copy';
-import { ReceiveStyles } from './views/ViewStyles';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import ReactTooltip from "react-tooltip";
+import { PropTypes } from "prop-types";
+import Radium from "radium";
+import copy from "clipboard-copy";
+import { ReceiveStyles } from "./views/ViewStyles";
 
 
 class CopyToClipboardButton extends Component {
@@ -37,7 +37,7 @@ class CopyToClipboardButton extends Component {
         data-place="bottom"
         data-type="info"
         data-effect="solid"
-        data-tip={this.state.showTooltip ? 'Copied!' : ''}
+        data-tip={this.state.showTooltip ? "Copied!" : ""}
         onClick={this.onClick}
         onMouseLeave={this.onMouseLeave} />
     );

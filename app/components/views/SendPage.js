@@ -1,8 +1,8 @@
 // @flow
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import Send from './Send';
-import { clearConstructTxError, clearPublishTxError, clearSignTxError, clearPublishTxSuccess, clearTransaction, constructTransactionAttempt, signTransactionAttempt} from '../../actions/ControlActions';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import Send from "./Send";
+import { clearConstructTxError, clearPublishTxError, clearSignTxError, clearPublishTxSuccess, clearTransaction, constructTransactionAttempt, signTransactionAttempt} from "../../actions/ControlActions";
 
 function mapStateToProps(state) {
   return {
