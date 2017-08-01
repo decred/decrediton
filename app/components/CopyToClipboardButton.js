@@ -5,9 +5,11 @@ import ReactTooltip from 'react-tooltip';
 import { PropTypes } from 'prop-types';
 import Radium from 'radium';
 import copy from 'clipboard-copy';
+import { autobind } from 'core-decorators';
 import { ReceiveStyles } from './views/ViewStyles';
 
 
+@autobind
 class CopyToClipboardButton extends Component {
 
   static propTypes = {
@@ -16,9 +18,6 @@ class CopyToClipboardButton extends Component {
 
   constructor(props) {
     super(props);
-
-    this.onClick = this.onClick.bind(this);
-    this.onMouseLeave = this.onMouseLeave.bind(this);
 
     this.state = {
       showTooltip: false

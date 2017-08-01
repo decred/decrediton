@@ -1,18 +1,12 @@
 // @flow
 import React, { Component } from 'react';
+import { autobind } from 'core-decorators';
 import Row from './Row';
 
+@autobind
 class AccountRow extends Component {
   constructor(props) {
     super(props);
-    [
-      'updateRenameAccountName',
-      'renameAccount',
-      'showRenameAccount',
-      'hideRenameAccount',
-      'showAccount',
-      'hideAccount'
-    ].forEach(name => this[name] = this[name].bind(this));
 
     this.state = {
       isShowingRenameAccount: false,
