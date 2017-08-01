@@ -12,6 +12,7 @@ function mapStateToProps(state) {
     getNextAccountRequestAttempt: state.control.getNextAccountRequestAttempt,
     renameAccountError: state.control.renameAccountError,
     renameAccountSuccess: state.control.renameAccountSuccess,
+    renameAccountRequestAttempt: state.control.renameAccountRequestAttempt,
     balances: state.grpc.balances,
     hiddenAccounts: state.grpc.hiddenAccounts,
   };
