@@ -2,7 +2,7 @@ import {
   GETVERSIONSERVICE_ATTEMPT, GETVERSIONSERVICE_FAILED, GETVERSIONSERVICE_SUCCESS,
   WALLETRPCVERSION_ATTEMPT, WALLETRPCVERSION_FAILED, WALLETRPCVERSION_SUCCESS,
   VERSION_NOT_VALID
-} from '../actions/VersionActions';
+} from "../actions/VersionActions";
 
 export default function version(state = {}, action) {
   switch (action.type) {
@@ -34,7 +34,7 @@ export default function version(state = {}, action) {
     };
   case WALLETRPCVERSION_SUCCESS:
     return {...state,
-      getWalletRPCVersionError: '',
+      getWalletRPCVersionError: "",
       getWalletRPCVersionRequestAttempt: false,
       getWalletRPCVersionResponse: action.getWalletRPCVersionResponse,
     };

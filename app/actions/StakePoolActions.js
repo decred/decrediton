@@ -1,14 +1,14 @@
 // @flow
-import { getPurchaseInfo, setStakePoolAddress, setVoteChoices } from '../middleware/stakepoolapi';
-import { NextAddressRequest } from '../middleware/walletrpc/api_pb';
-import { getCfg } from '../config.js';
-import { importScriptAttempt } from './ControlActions';
+import { getPurchaseInfo, setStakePoolAddress, setVoteChoices } from "../middleware/stakepoolapi";
+import { NextAddressRequest } from "../middleware/walletrpc/api_pb";
+import { getCfg } from "../config.js";
+import { importScriptAttempt } from "./ControlActions";
 
-export const UPDATESTAKEPOOLCONFIG_ATTEMPT = 'UPDATESTAKEPOOLCONFIG_ATTEMPT';
-export const UPDATESTAKEPOOLCONFIG_FAILED = 'UPDATESTAKEPOOLCONFIG_FAILED';
-export const UPDATESTAKEPOOLCONFIG_SUCCESS = 'UPDATESTAKEPOOLCONFIG_SUCCESS';
-export const UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS = 'UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS';
-export const UPDATESTAKEPOOLCONFIG_CLEAR_ERROR = 'UPDATESTAKEPOOLCONFIG_CLEAR_ERROR';
+export const UPDATESTAKEPOOLCONFIG_ATTEMPT = "UPDATESTAKEPOOLCONFIG_ATTEMPT";
+export const UPDATESTAKEPOOLCONFIG_FAILED = "UPDATESTAKEPOOLCONFIG_FAILED";
+export const UPDATESTAKEPOOLCONFIG_SUCCESS = "UPDATESTAKEPOOLCONFIG_SUCCESS";
+export const UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS = "UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS";
+export const UPDATESTAKEPOOLCONFIG_CLEAR_ERROR = "UPDATESTAKEPOOLCONFIG_CLEAR_ERROR";
 
 export function updateStakepoolPurchaseInformation() {
   return (dispatch, getState) => {
@@ -22,11 +22,11 @@ export function updateStakepoolPurchaseInformation() {
         getPurchaseInfo(poolHost,apiKey,
             function(response, error) {
               if (error) {
-                dispatch({ error: 'Unable to contact stakepool: '+ error +' please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
+                dispatch({ error: "Unable to contact stakepool: "+ error +" please try again later", type: UPDATESTAKEPOOLCONFIG_FAILED });
                 return;
               } else {
                 // parse response data for no err
-                if (response.data.status == 'success') {
+                if (response.data.status == "success") {
                   dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, votingAccount));
                 }
               }
@@ -47,11 +47,11 @@ export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, 
       apiKey,
       function(response, error) {
         if (error) {
-          dispatch({ error: 'Unable to contact stakepool: '+ error +' please try again later', type: UPDATESTAKEPOOLCONFIG_FAILED });
+          dispatch({ error: "Unable to contact stakepool: "+ error +" please try again later", type: UPDATESTAKEPOOLCONFIG_FAILED });
           return;
         } else {
           // parse response data for no err
-          if (response.data.status == 'success') {
+          if (response.data.status == "success") {
             dispatch(importScriptAttempt(privpass, response.data.data.Script, true, 0, response.data.data.TicketAddress, (error) => {
               if (error) {
                 dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED });
@@ -59,8 +59,8 @@ export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, 
                 dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, accountNum));
               }
             }));
-          } else if (response.data.status == 'error') {
-            if (response.data.message == 'purchaseinfo error - no address submitted') {
+          } else if (response.data.status == "error") {
+            if (response.data.message == "purchaseinfo error - no address submitted") {
               dispatch(setStakePoolAddressAction(poolHost, apiKey, accountNum));
               return (true);
             } else {
@@ -76,8 +76,8 @@ export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, 
 function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
   return (dispatch) => {
     var config = getCfg(true);
-    var stakePoolConfigs = config.get('stakepools');
-    var successMessage = 'You have successfully configured ';
+    var stakePoolConfigs = config.get("stakepools");
+    var successMessage = "You have successfully configured ";
     for (var i = 0; i < stakePoolConfigs.length; i++) {
       if (stakePoolConfigs[i].Host == poolHost) {
         stakePoolConfigs[i].ApiKey = apiKey;
@@ -91,7 +91,7 @@ function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
         break;
       }
     }
-    config.set('stakepools', stakePoolConfigs);
+    config.set("stakepools", stakePoolConfigs);
     dispatch({ successMessage: successMessage, currentStakePoolConfig: stakePoolConfigs, type: UPDATESTAKEPOOLCONFIG_SUCCESS });
   };
 }
@@ -107,7 +107,7 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
     walletService.nextAddress(request,
     function(error, getNextAddressResponse) {
       if (error) {
-        dispatch({ error: error + '. Error settings stakepool address, please try again later.', type: UPDATESTAKEPOOLCONFIG_FAILED });
+        dispatch({ error: error + ". Error settings stakepool address, please try again later.", type: UPDATESTAKEPOOLCONFIG_FAILED });
       } else {
         addressPubKey = getNextAddressResponse.getPublicKey();
         setStakePoolAddress(
@@ -117,12 +117,12 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
           function(response, error) {
             if (error) {
               dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED });
-            } else if (response.data.status == 'success') {
+            } else if (response.data.status == "success") {
               dispatch(setStakePoolInformation(poolHost, apiKey, accountNum, true));
-            } else if (response.data.status == 'error') {
+            } else if (response.data.status == "error") {
               dispatch({ error: response.data.message, type: UPDATESTAKEPOOLCONFIG_FAILED });
             } else {
-              dispatch({ error:'shouldn\'t be here set address:', type: UPDATESTAKEPOOLCONFIG_FAILED });
+              dispatch({ error:"shouldn't be here set address:", type: UPDATESTAKEPOOLCONFIG_FAILED });
             }
           }
         );
@@ -134,7 +134,7 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
 function updateStakePoolVoteChoicesConfig(stakePool, voteChoices) {
   return (dispatch) => {
     var config = getCfg(true);
-    var stakePoolConfigs = config.get('stakepools');
+    var stakePoolConfigs = config.get("stakepools");
     var voteChoicesConfig = new Array();
     for (var k = 0; k < voteChoices.getChoicesList().length; k++) {
       voteChoicesConfig.push({
@@ -149,14 +149,14 @@ function updateStakePoolVoteChoicesConfig(stakePool, voteChoices) {
         break;
       }
     }
-    config.set('stakepools', stakePoolConfigs);
-    var successMessage = 'You have successfully updated your vote choices.';
+    config.set("stakepools", stakePoolConfigs);
+    var successMessage = "You have successfully updated your vote choices.";
     dispatch({ successMessage: successMessage, currentStakePoolConfig: stakePoolConfigs, type: UPDATESTAKEPOOLCONFIG_SUCCESS });
   };
 }
-export const SETSTAKEPOOLVOTECHOICES_ATTEMPT = 'SETSTAKEPOOLVOTECHOICES_ATTEMPT';
-export const SETSTAKEPOOLVOTECHOICES_FAILED = 'SETSTAKEPOOLVOTECHOICES_FAILED';
-export const SETSTAKEPOOLVOTECHOICES_SUCCESS = 'SETSTAKEPOOLVOTECHOICES_SUCCESS';
+export const SETSTAKEPOOLVOTECHOICES_ATTEMPT = "SETSTAKEPOOLVOTECHOICES_ATTEMPT";
+export const SETSTAKEPOOLVOTECHOICES_FAILED = "SETSTAKEPOOLVOTECHOICES_FAILED";
+export const SETSTAKEPOOLVOTECHOICES_SUCCESS = "SETSTAKEPOOLVOTECHOICES_SUCCESS";
 
 export function setStakePoolVoteChoices(stakePool, voteChoices) {
   return (dispatch) => {
@@ -167,13 +167,13 @@ export function setStakePoolVoteChoices(stakePool, voteChoices) {
       function(response, error) {
         if (error) {
           dispatch({ error, type: SETSTAKEPOOLVOTECHOICES_FAILED });
-        } else if (response.data.status == 'success') {
+        } else if (response.data.status == "success") {
           dispatch(updateStakePoolVoteChoicesConfig(stakePool, voteChoices));
           dispatch({ type: SETSTAKEPOOLVOTECHOICES_SUCCESS });
-        } else if (response.data.status == 'error') {
+        } else if (response.data.status == "error") {
           dispatch({ error: response.data.message, type: SETSTAKEPOOLVOTECHOICES_FAILED });
         } else {
-          dispatch({ error: 'shouldn\'t be here, set vote choices:', type: SETSTAKEPOOLVOTECHOICES_FAILED });
+          dispatch({ error: "shouldn't be here, set vote choices:", type: SETSTAKEPOOLVOTECHOICES_FAILED });
         }
       }
     );
@@ -192,7 +192,7 @@ export function clearStakePoolConfigError() {
 export function clearStakePoolConfigSuccess() {
   return (dispatch, getState) => {
     const { currentStakePoolConfigSuccessMessage } = getState().stakepool;
-    if (currentStakePoolConfigSuccessMessage !== '') {
+    if (currentStakePoolConfigSuccessMessage !== "") {
       dispatch({type: UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS});
     }
   };

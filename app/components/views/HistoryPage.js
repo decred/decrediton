@@ -1,6 +1,6 @@
 // @flow
-import { connect } from 'react-redux';
-import History from './History';
+import { connect } from "react-redux";
+import History from "./History";
 
 function mapStateToProps(state) {
   return {

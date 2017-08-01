@@ -1,15 +1,15 @@
 // @flow
-import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
-import ErrorScreen from '../ErrorScreen';
-import KeyBlueButton from '../KeyBlueButton';
-import SideBar from '../SideBar';
-import Header from '../Header';
-import qr from 'qr-image';
-import CopyToClipboardButton from '../CopyToClipboardButton';
-import ReactTooltip from 'react-tooltip';
-import { ReceiveStyles } from './ViewStyles';
-import Select from 'react-select';
+import React, { Component } from "react";
+import { PropTypes } from "prop-types";
+import ErrorScreen from "../ErrorScreen";
+import KeyBlueButton from "../KeyBlueButton";
+import SideBar from "../SideBar";
+import Header from "../Header";
+import qr from "qr-image";
+import CopyToClipboardButton from "../CopyToClipboardButton";
+import ReactTooltip from "react-tooltip";
+import { ReceiveStyles } from "./ViewStyles";
+import Select from "react-select";
 
 //var receiveCopy = 'To maximize privacy, please use addresses one time only.';
 class QRCode extends Component {
@@ -17,7 +17,7 @@ class QRCode extends Component {
     addr: PropTypes.string.isRequired
   };
   render() {
-    const qr_img = qr.imageSync('decred:'+this.props.addr, {type: 'svg'});
+    const qr_img = qr.imageSync("decred:"+this.props.addr, {type: "svg"});
     return (<div style={ReceiveStyles.contentNestQRImage} dangerouslySetInnerHTML={{__html:qr_img}}></div>);
   }
 }
@@ -32,7 +32,7 @@ class Receive extends Component{
         if (props.getNextAddressResponse.accountNumber == props.balances[i].accountNumber) {
           defaultAccount = { value: props.balances[i].accountNumber, label: props.balances[i].accountName};
         }
-        if (props.balances[i].accountName !== 'imported' && !props.balances[i].hidden) {
+        if (props.balances[i].accountName !== "imported" && !props.balances[i].hidden) {
           accountsList.push({ value: props.balances[i].accountNumber, label: props.balances[i].accountName});
         }
       }
@@ -55,7 +55,7 @@ class Receive extends Component{
     const { walletService } = this.props;
     const { getNextAddressResponse, getNextAddressRequestAttempt } = this.props;
 
-    let nextAddress = '';
+    let nextAddress = "";
     if(getNextAddressResponse !== null) {
       nextAddress = getNextAddressResponse.getAddress();
     }
@@ -63,9 +63,9 @@ class Receive extends Component{
     var selectAccounts = (
       <Select
         clearable={false}
-        style={{zIndex:'9'}}
+        style={{zIndex:"9"}}
         onChange={(val) => this.updateAccountNumber(val)}
-        placeholder={'Select account...'}
+        placeholder={"Select account..."}
         multi={false}
         value={this.state.account}
         valueKey="value" labelKey="label"
@@ -84,14 +84,14 @@ class Receive extends Component{
               <div style={ReceiveStyles.receiveSelectAccountInput}>
                 {selectAccounts}
               </div>
-              <div style={{clear: 'both'}}></div>
+              <div style={{clear: "both"}}></div>
             </div>
             <div style={ReceiveStyles.contentNestQR}>
               <div style={ReceiveStyles.contentNestQRHash}>
                 {this.renderNextAddressText(nextAddress)}
               </div>
               <QRCode addr={nextAddress}/>
-              <div style={{clear: 'both'}}></div>
+              <div style={{clear: "both"}}></div>
             </div>
           </div>
           <div style={ReceiveStyles.contentReceive}>

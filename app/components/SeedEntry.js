@@ -1,13 +1,13 @@
-import React from 'react';
-import createClass from 'create-react-class';
-import Select from 'react-select';
+import React from "react";
+import createClass from "create-react-class";
+import Select from "react-select";
 
-const SEED_WORDS = require('../helpers/wordlist.js');
+const SEED_WORDS = require("../helpers/wordlist.js");
 const MAX_SEED_WORDS = 33;
 const ASYNC_DELAY = 100;
 
 const ConfirmSeed = createClass({
-  displayName: 'Confim Seed',
+  displayName: "Confim Seed",
   getInitialState () {
     var seedList = Array();
     SEED_WORDS.sort(function (a, b) {
@@ -47,8 +47,8 @@ const ConfirmSeed = createClass({
   },
   render () {
     return (
-			<div className="section" style={{fontFamily: 'Inconsolata,monospace'}} onKeyDown={(e) => this.handleKeyDown(e)}>
-				<Select.Async clearable={false} placeholder={'Enter your seed...'} multi={true} filterOptions={false} value={this.state.value} onChange={this.onChange} valueKey="name" labelKey="name" loadOptions={this.getSeedWords} />
+			<div className="section" style={{fontFamily: "Inconsolata,monospace"}} onKeyDown={(e) => this.handleKeyDown(e)}>
+				<Select.Async clearable={false} placeholder={"Enter your seed..."} multi={true} filterOptions={false} value={this.state.value} onChange={this.onChange} valueKey="name" labelKey="name" loadOptions={this.getSeedWords} />
 			</div>
     );
   }

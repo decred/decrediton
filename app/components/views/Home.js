@@ -1,17 +1,17 @@
 // @flow
-import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
-import LinearProgress from 'material-ui/LinearProgress';
-import CircularProgress from 'material-ui/CircularProgress';
-import KeyBlueButton from '../KeyBlueButton';
-import ErrorScreen from '../ErrorScreen';
-import Balance from '../Balance';
-import SideBar from '../SideBar';
-import TxHistory from '../TxHistory';
-import Header from '../Header';
-import '../fonts.css';
-import { HomeStyles } from './ViewStyles';
-import ReactToolTip from 'react-tooltip';
+import React, { Component } from "react";
+import { PropTypes } from "prop-types";
+import LinearProgress from "material-ui/LinearProgress";
+import CircularProgress from "material-ui/CircularProgress";
+import KeyBlueButton from "../KeyBlueButton";
+import ErrorScreen from "../ErrorScreen";
+import Balance from "../Balance";
+import SideBar from "../SideBar";
+import TxHistory from "../TxHistory";
+import Header from "../Header";
+import "../fonts.css";
+import { HomeStyles } from "./ViewStyles";
+import ReactToolTip from "react-tooltip";
 
 class Home extends Component{
   constructor(props) {
@@ -39,9 +39,9 @@ class Home extends Component{
     const { synced } = this.props;
     const { unmined } = this.props;
 
-    var transactionMessage = '';
+    var transactionMessage = "";
     if (regularTransactionsInfo.length == 0) {
-      transactionMessage = 'No transactions';
+      transactionMessage = "No transactions";
     }
     var paginatedTxs = unmined.length > 0 ?
     unmined.length > txPerPage ? Array() :
@@ -58,7 +58,7 @@ class Home extends Component{
     var totalBalance = 0;
     if (balances !== null) {
       for (var i = 0; i < balances.length; i++) {
-        if (balances[i].accountName !== 'imported') {
+        if (balances[i].accountName !== "imported") {
           totalBalance += balances[i].spendable;
         }
       }

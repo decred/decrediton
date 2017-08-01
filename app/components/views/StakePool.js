@@ -1,29 +1,29 @@
 // @flow
-import React, { Component } from 'react';
-import { shell } from 'electron';
-import { PropTypes } from 'prop-types';
-import CircularProgress from 'material-ui/CircularProgress';
-import ErrorScreen from '../ErrorScreen';
-import Balance from '../Balance';
-import SideBar from '../SideBar';
-import Header from '../Header';
-import NewExistingSeedToggle from '../NewExistingSeedToggle';
-import KeyBlueButton from '../KeyBlueButton';
-import SlateGrayButton from '../SlateGrayButton';
-import { StakePoolStyles } from './ViewStyles';
-import AgendaCard from '../AgendaCard';
-import AgendaOverview from '../AgendaOverview';
-import PurchaseTicketsInfo from '../PurchaseTicketsInfo';
-import PurchaseTicketsInfoButton from '../PurchaseTicketsInfoButton';
-import TicketsCogs from '../TicketsCogs';
-import NumTicketsInput from '../NumTicketsInput';
-import ManagePoolsButton from '../ManagePoolsButton';
-import AutoBuyerSwitch from '../AutoBuyerSwitch';
-import PassphraseModal from '../PassphraseModal';
-import ImportScriptModal from '../ImportScriptModal';
-import Select from 'react-select';
-import ReactToolTip from 'react-tooltip';
-import { addSpacingAroundText } from '../../helpers/strings';
+import React, { Component } from "react";
+import { shell } from "electron";
+import { PropTypes } from "prop-types";
+import CircularProgress from "material-ui/CircularProgress";
+import ErrorScreen from "../ErrorScreen";
+import Balance from "../Balance";
+import SideBar from "../SideBar";
+import Header from "../Header";
+import NewExistingSeedToggle from "../NewExistingSeedToggle";
+import KeyBlueButton from "../KeyBlueButton";
+import SlateGrayButton from "../SlateGrayButton";
+import { StakePoolStyles } from "./ViewStyles";
+import AgendaCard from "../AgendaCard";
+import AgendaOverview from "../AgendaOverview";
+import PurchaseTicketsInfo from "../PurchaseTicketsInfo";
+import PurchaseTicketsInfoButton from "../PurchaseTicketsInfoButton";
+import TicketsCogs from "../TicketsCogs";
+import NumTicketsInput from "../NumTicketsInput";
+import ManagePoolsButton from "../ManagePoolsButton";
+import AutoBuyerSwitch from "../AutoBuyerSwitch";
+import PassphraseModal from "../PassphraseModal";
+import ImportScriptModal from "../ImportScriptModal";
+import Select from "react-select";
+import ReactToolTip from "react-tooltip";
+import { addSpacingAroundText } from "../../helpers/strings";
 
 class StakePool extends Component{
   static propTypes = {
@@ -53,7 +53,7 @@ class StakePool extends Component{
     var defaultSpendLimit = 0;
     var accountsList = Array();
     var unitDivisor = 1;
-    if (this.props.currentSettings.currencyDisplay == 'DCR') {
+    if (this.props.currentSettings.currencyDisplay == "DCR") {
       unitDivisor = 100000000;
     }
     if (this.props.balances != null) {
@@ -61,8 +61,8 @@ class StakePool extends Component{
         if (this.props.balances[i].accountNumber == 0) {
           defaultSpendLimit = this.props.balances[i].spendable;
         }
-        if (this.props.balances[i].accountNumber == 0 || this.props.balances[i].accountName != 'imported' && this.props.balances[i].spendable > 0) {
-          accountsList.push({ value: this.props.balances[i].accountNumber, label: this.props.balances[i].accountName + ': ' +this.props.balances[i].spendable / unitDivisor + ' ' + this.props.currentSettings.currencyDisplay});
+        if (this.props.balances[i].accountNumber == 0 || this.props.balances[i].accountName != "imported" && this.props.balances[i].spendable > 0) {
+          accountsList.push({ value: this.props.balances[i].accountNumber, label: this.props.balances[i].accountName + ": " +this.props.balances[i].spendable / unitDivisor + " " + this.props.currentSettings.currencyDisplay});
         }
       }
     }
@@ -73,7 +73,7 @@ class StakePool extends Component{
       selectedConfigured: selectedConfigured,
       unconfiguredStakePools: unconfiguredStakePools,
       selectedUnconfigured: selectedUnconfigured,
-      apiKey: '',
+      apiKey: "",
       account: accountsList[0],
       addAnotherStakePool: false,
       purchaseTickets: true,
@@ -89,7 +89,7 @@ class StakePool extends Component{
       advancedHidden: true,
       autoBuyerHidden: true,
       stakeInfoHidden: true,
-      choice: 'option1',
+      choice: "option1",
 
       // for autostart
       balanceToMaintain: this.props.balanceToMaintain, // in atoms
@@ -126,7 +126,7 @@ class StakePool extends Component{
   componentWillReceiveProps(nextProps) {
     var accountsList = Array();
     var unitDivisor = 1;
-    if (nextProps.currentSettings.currencyDisplay == 'DCR') {
+    if (nextProps.currentSettings.currencyDisplay == "DCR") {
       unitDivisor = 100000000;
     }
     if (this.props.balances != nextProps.balances) {
@@ -135,8 +135,8 @@ class StakePool extends Component{
         if (nextProps.balances[i].accountNumber == this.state.account) {
           newAccountSpendableBalance = nextProps.balances[i].spendable;
         }
-        if (nextProps.balances[i].accountNumber == 0 || nextProps.balances[i].accountName != 'imported' && nextProps.balances[i].spendable > 0) {
-          accountsList.push({ value: nextProps.balances[i].accountNumber, label: nextProps.balances[i].accountName + ': ' + nextProps.balances[i].spendable / unitDivisor + ' ' + nextProps.currentSettings.currencyDisplay});
+        if (nextProps.balances[i].accountNumber == 0 || nextProps.balances[i].accountName != "imported" && nextProps.balances[i].spendable > 0) {
+          accountsList.push({ value: nextProps.balances[i].accountNumber, label: nextProps.balances[i].accountName + ": " + nextProps.balances[i].spendable / unitDivisor + " " + nextProps.currentSettings.currencyDisplay});
         }
       }
       this.setState({spendLimit: newAccountSpendableBalance, accountsList: accountsList });
@@ -202,7 +202,7 @@ class StakePool extends Component{
       checkErrors = true;
     }
     if (this.state.numTickets == 0) {
-      this.setState({numTicketsError: '*You must purchase 1 or more tickets.'});
+      this.setState({numTicketsError: "*You must purchase 1 or more tickets."});
       checkErrors = true;
     }
     if (checkErrors) {
@@ -234,7 +234,7 @@ class StakePool extends Component{
   }
   updateBalanceToMaintain(value) {
     if (!isNaN(value) && value < 0) {
-      var err = '*Please enter a valid max fee (> 0)';
+      var err = "*Please enter a valid max fee (> 0)";
       this.setState({balanceToMaintainError: err});
     } else {
       var changed = value !== this.props.balanceToMaintain ||
@@ -247,7 +247,7 @@ class StakePool extends Component{
   }
   updateMaxFee(value) {
     if (!isNaN(value) && value < 0) {
-      var err = '*Please enter a valid max fee (> 0)';
+      var err = "*Please enter a valid max fee (> 0)";
       this.setState({maxFeeError: err});
     } else {
       var changed = this.state.balanceToMaintain !== this.props.balanceToMaintain ||
@@ -260,7 +260,7 @@ class StakePool extends Component{
   }
   updateMaxPriceAbsolute(value) {
     if (!isNaN(value) && value < 0) {
-      var err = '*Please enter a value max price absolute (> 0)';
+      var err = "*Please enter a value max price absolute (> 0)";
       this.setState({maxPriceAbsoluteError: err});
     } else {
       var changed = this.state.balanceToMaintain !== this.props.balanceToMaintain ||
@@ -273,7 +273,7 @@ class StakePool extends Component{
   }
   updateMaxPriceRelative(value) {
     if (!isNaN(value) && value < 0) {
-      var err = '*Please enter a value max price relative (> 0)';
+      var err = "*Please enter a value max price relative (> 0)";
       this.setState({maxPriceRelativeError: err});
     } else {
       var changed = this.state.balanceToMaintain !== this.props.balanceToMaintain ||
@@ -286,7 +286,7 @@ class StakePool extends Component{
   }
   updateMaxPerBlock(value) {
     if (!isNaN(value) && value < 0) {
-      var err = '*Please enter a value max per block (> 0)';
+      var err = "*Please enter a value max per block (> 0)";
       this.setState({maxPerBlockError: err});
     } else {
       var changed = this.state.balanceToMaintain !== this.props.balanceToMaintain ||
@@ -345,21 +345,21 @@ class StakePool extends Component{
     if (!isNaN(ticketFee) && ticketFee > 0 && ticketFee < 1) {
       this.setState({ticketFee: ticketFee, ticketFeeError: null});
     } else {
-      this.setState({ticketFeeError: '*Invalid ticket fee (0 - 1 DCR/KB)'});
+      this.setState({ticketFeeError: "*Invalid ticket fee (0 - 1 DCR/KB)"});
     }
   }
   updateTxFee(txFee) {
     if (!isNaN(txFee) && txFee > 0 && txFee < 1) {
       this.setState({txFee: txFee, txFeeError: null});
     } else {
-      this.setState({txFeeError: '*Invalid tx fee (0 - 1 DCR/KB)'});
+      this.setState({txFeeError: "*Invalid tx fee (0 - 1 DCR/KB)"});
     }
   }
   updateExpiry(expiry) {
     if (!isNaN(expiry) && expiry >= 0) {
       this.setState({expiry: expiry, expiryError: null});
     } else {
-      this.setState({expiryError: '*Invalid expiry (>= 0)'});
+      this.setState({expiryError: "*Invalid expiry (>= 0)"});
     }
   }
   addAnotherStakePool() {
@@ -369,8 +369,8 @@ class StakePool extends Component{
     this.setState({addAnotherStakePool: false});
   }
   setStakePoolInfo(privpass) {
-    if (this.state.apiKey == '') {
-      this.setState({apiKeyError: '*Please enter your API key'});
+    if (this.state.apiKey == "") {
+      this.setState({apiKeyError: "*Please enter your API key"});
       return;
     }
     if (this.state.selectedUnconfigured == null || this.state.apiKeyError !== null) {
@@ -380,16 +380,16 @@ class StakePool extends Component{
     setTimeout(this.setState({passphraseModalOpen: false, addAnotherStakePool: false}), 1000);
   }
   updateApiKey(apiKey) {
-    if (apiKey != '') {
+    if (apiKey != "") {
       this.setState({apiKey: apiKey, apiKeyError: null});
     } else {
-      this.setState({apiKeyError: '*Please enter your API key'});
+      this.setState({apiKeyError: "*Please enter your API key"});
     }
   }
   toggleTicketStakePool(side) {
-    if (side == 'right') {
+    if (side == "right") {
       this.setState({purchaseTickets: false, purchaseTicketsStakePoolConfig: false});
-    } else if (side == 'left') {
+    } else if (side == "left") {
       this.setState({purchaseTickets: true, purchaseTicketsStakePoolConfig: false});
     }
   }
@@ -425,7 +425,7 @@ class StakePool extends Component{
     this.setState({agendaDisplay: null});
   }
   showAgendaOverview(agenda) {
-    var selectedChoice = 'abstain';
+    var selectedChoice = "abstain";
     if (this.state.selectedConfigured.value.VoteChoices !== undefined) {
       for (var i = 0; i < this.state.selectedConfigured.value.VoteChoices.length; i++) {
         if (this.state.selectedConfigured.value.VoteChoices[i] !== undefined &&
@@ -476,9 +476,9 @@ class StakePool extends Component{
     var selectAccounts = (
         <Select
           clearable={false}
-          style={{zIndex:'9'}}
+          style={{zIndex:"9"}}
           onChange={(val) => this.updateAccountNumber(val)}
-          placeholder={'Select account...'}
+          placeholder={"Select account..."}
           multi={false}
           value={this.state.account}
           valueKey="value" labelKey="label"
@@ -487,9 +487,9 @@ class StakePool extends Component{
     var selectConfiguredStakePool = (
         <Select
           clearable={false}
-          style={{zIndex:'9'}}
+          style={{zIndex:"9"}}
           onChange={(val) => this.updateConfiguredStakePool(val)}
-          placeholder={'Select account...'}
+          placeholder={"Select account..."}
           multi={false}
           value={this.state.selectedConfigured}
           valueKey="value" labelKey="label"
@@ -498,9 +498,9 @@ class StakePool extends Component{
     var selectUnconfiguredStakePool = (
         <Select
           clearable={false}
-          style={{zIndex:'9'}}
+          style={{zIndex:"9"}}
           onChange={(val) => this.updateUnconfiguredStakePool(val)}
-          placeholder={'Select account...'}
+          placeholder={"Select account..."}
           multi={false}
           value={this.state.selectedUnconfigured}
           valueKey="value" labelKey="label"
@@ -513,7 +513,7 @@ class StakePool extends Component{
       <div>
       </div>
     );
-    var apiKeyHeading = 'Enter private passphrase to connect to your stakepool';
+    var apiKeyHeading = "Enter private passphrase to connect to your stakepool";
     var apiKeyFunc = (privPass) => this.setStakePoolInfo(privPass);
 
     var selectedUnconfiguredLabel = null;
@@ -567,7 +567,7 @@ class StakePool extends Component{
               </div>
             </div>
           </div>
-          <KeyBlueButton style={StakePoolStyles.contentSend} disabled={this.state.apiKey == ''} onClick={this.state.apiKey == '' ? null : () => this.showPassphraseModal(apiKeyHeading, apiKeyDescription, apiKeyFunc)}>
+          <KeyBlueButton style={StakePoolStyles.contentSend} disabled={this.state.apiKey == ""} onClick={this.state.apiKey == "" ? null : () => this.showPassphraseModal(apiKeyHeading, apiKeyDescription, apiKeyFunc)}>
             Add
           </KeyBlueButton>
           {this.state.purchaseTicketsStakePoolConfig ?
@@ -595,7 +595,7 @@ class StakePool extends Component{
           }
           {getAgendasResponse !== null && this.state.selectedConfigured !== null ? getAgendasResponse.getAgendasList().length > 0 ?
             getAgendasResponse.getAgendasList().map((agenda) => {
-              var selectedChoice = 'abstain';
+              var selectedChoice = "abstain";
               if (this.state.selectedConfigured.VoteChoices !== undefined) {
                 for (var i = 0; i < this.state.selectedConfigured.value.VoteChoices.length; i++) {
                   if (this.state.selectedConfigured.value.VoteChoices[i] !== undefined &&
@@ -688,7 +688,7 @@ class StakePool extends Component{
               <div style={StakePoolStyles.stakeInfoRowSmallRight}>
                 <div style={StakePoolStyles.stakeInfoLabel}>Live Tickets:</div>
                 <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getLive()}</div>
-                <TicketsCogs opened={this.state.stakeInfoHidden} style={{paddingTop: '2px'}} onClick={this.state.stakeInfoHidden ? () => this.showStakeInfo() : () => this.hideStakeInfo()}/>
+                <TicketsCogs opened={this.state.stakeInfoHidden} style={{paddingTop: "2px"}} onClick={this.state.stakeInfoHidden ? () => this.showStakeInfo() : () => this.hideStakeInfo()}/>
               </div>
           </div>:
           <div style={StakePoolStyles.stakeInfoArea}>
@@ -700,7 +700,7 @@ class StakePool extends Component{
               <div style={StakePoolStyles.stakeInfoRowRight}>
                 <div style={StakePoolStyles.stakeInfoLabel}>Voted Tickets:</div>
                 <div style={StakePoolStyles.stakeInfoValue}>{getStakeInfoResponse.getVoted()}</div>
-                <TicketsCogs opened={this.state.stakeInfoHidden} style={{paddingTop: '2px'}} onClick={this.state.stakeInfoHidden ? () => this.showStakeInfo() : () => this.hideStakeInfo()}/>
+                <TicketsCogs opened={this.state.stakeInfoHidden} style={{paddingTop: "2px"}} onClick={this.state.stakeInfoHidden ? () => this.showStakeInfo() : () => this.hideStakeInfo()}/>
               </div>
             </div>
             <div style={StakePoolStyles.stakeInfoRow}>
@@ -752,26 +752,26 @@ class StakePool extends Component{
         <br/>the automatic purchase will need to enabled again with the Toggle.
       </div>
     );
-    var startAutoBuyerHeading = 'Enter Passphrase to Start Autobuyer';
+    var startAutoBuyerHeading = "Enter Passphrase to Start Autobuyer";
     var startAutoBuyerFunc = (privPass) => this.submitStart(privPass);
     var revokeTicketDescription = (
       <div>
       </div>
     );
-    var revokeTicketHeading = 'Enter Passphrase to Revoke Tickets';
+    var revokeTicketHeading = "Enter Passphrase to Revoke Tickets";
     var revokeTicketFunc = (privPass) => this.submitRevoke(privPass);
     var purchaseTicketDescription = (
       <div>
       </div>
     );
-    var purchaseTicketHeading = 'Enter Passphrase to Purchase Tickets';
+    var purchaseTicketHeading = "Enter Passphrase to Purchase Tickets";
     var purchaseTicketFunc = (privPass) => this.submitPurchase(privPass);
     var importScriptDescription = (
       <div>
         Please enter your Script from your configured stakepool:
       </div>
     );
-    var importScriptHeading = 'Enter Passphrase to Import Script';
+    var importScriptHeading = "Enter Passphrase to Import Script";
     var importScriptFunc = (privPass, script) => this.importScript(privPass, script);
     var purchaseTicketsView = (
       <div>
@@ -932,7 +932,7 @@ class StakePool extends Component{
               Purchase
             </KeyBlueButton>
             {getTicketPriceResponse !== null && this.state.spendLimit < getTicketPriceResponse.getTicketPrice() ?
-            <span style={{color: 'red', float: 'left', paddingLeft: '20px', paddingTop: '19px'}}>
+            <span style={{color: "red", float: "left", paddingLeft: "20px", paddingTop: "19px"}}>
               Insufficient spendable account balance to purchase tickets.
             </span> :
             <div/>
@@ -953,7 +953,7 @@ class StakePool extends Component{
               <div style={StakePoolStyles.autoBuyerSwitch}>
                 <AutoBuyerSwitch enabled={startAutoBuyerResponse} onClick={startAutoBuyerResponse ? ()=>this.disableTicketBuyer() : ()=>this.showPassphraseModal(startAutoBuyerHeading, startAutoBuyerDescription, startAutoBuyerFunc)}/>
               </div>
-              <div style={StakePoolStyles.autoBuyerLabel}>{startAutoBuyerResponse ? 'Enabled' : 'Disabled'}</div>
+              <div style={StakePoolStyles.autoBuyerLabel}>{startAutoBuyerResponse ? "Enabled" : "Disabled"}</div>
               <div style={StakePoolStyles.autoBuyerQuickBarRow}>
                 {this.state.autoBuyerHidden ?
                   <div>
@@ -1071,44 +1071,44 @@ class StakePool extends Component{
             currentStakePoolConfigError !== null ?
             <div key="updateStakePoolError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStakePoolConfigError()}/>{currentStakePoolConfigError}</div> :
             <div key="updateStakePoolError" ></div>,
-            currentStakePoolConfigSuccessMessage !== undefined && currentStakePoolConfigSuccessMessage !== '' ?
+            currentStakePoolConfigSuccessMessage !== undefined && currentStakePoolConfigSuccessMessage !== "" ?
             <div key="configSuccess"  style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStakePoolConfigSuccess()}/>{currentStakePoolConfigSuccessMessage}</div> :
             <div key="configSuccess" ></div>,
             purchaseTicketsError !== null ?
             <div key="purchaseTicketsError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPurchaseTicketsError()}/>{purchaseTicketsError}</div> :
             <div key="purchaseTicketsError" ></div>,
-            purchaseTicketsSuccess !== undefined && purchaseTicketsSuccess !== '' ?
+            purchaseTicketsSuccess !== undefined && purchaseTicketsSuccess !== "" ?
             <div key="purchaseTicketsSuccess" style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearPurchaseTicketsSuccess()}/>{purchaseTicketsSuccess}</div> :
             <div key="purchaseTicketsSuccess" ></div>,
             revokeTicketsError !== null ?
             <div key="revokeTicketsError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearRevokeTicketsError()}/>{revokeTicketsError}</div> :
             <div key="revokeTicketsError" ></div>,
-            revokeTicketsSuccess !== undefined && revokeTicketsSuccess !== '' ?
+            revokeTicketsSuccess !== undefined && revokeTicketsSuccess !== "" ?
             <div key="revokeTicketsSuccess" style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearRevokeTicketsSuccess()}/>{revokeTicketsSuccess}</div> :
             <div key="revokeTicketsSuccess" ></div>,
-            startAutoBuyerSuccess !== null && startAutoBuyerSuccess !== '' ?
+            startAutoBuyerSuccess !== null && startAutoBuyerSuccess !== "" ?
             <div key="startAutoBuyerSuccess" style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStartAutoBuyerSuccess()}/>{startAutoBuyerSuccess}</div> :
             <div key="startAutoBuyerSuccess" ></div>,
-            stopAutoBuyerSuccess !== null && stopAutoBuyerSuccess !== '' ?
+            stopAutoBuyerSuccess !== null && stopAutoBuyerSuccess !== "" ?
             <div key="stopAutoBuyerSuccess" style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStopAutoBuyerSuccess()}/>{stopAutoBuyerSuccess}</div> :
             <div key="stopAutoBuyerSuccess" ></div>,
-            startAutoBuyerError !== null && startAutoBuyerError !== '' ?
+            startAutoBuyerError !== null && startAutoBuyerError !== "" ?
             <div key="startAutoBuyerError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStartAutoBuyerError()}/>{startAutoBuyerError}</div> :
             <div key="startAutoBuyerError" ></div>,
-            stopAutoBuyerError !== null && stopAutoBuyerError !== '' ?
+            stopAutoBuyerError !== null && stopAutoBuyerError !== "" ?
             <div key="stopAutoBuyerError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearStopAutoBuyerError()}/>{stopAutoBuyerError}</div> :
             <div key="stopAutoBuyerError" ></div>,
             importScriptError !== null ?
             <div key="importScriptError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearImportScriptError()}/>{importScriptError}</div> :
             <div key="importScriptError" ></div>,
-            importScriptSuccess !== undefined && importScriptSuccess !== '' ?
+            importScriptSuccess !== undefined && importScriptSuccess !== "" ?
             <div key="importScriptSuccess" style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearImportScriptSuccess()}/>{importScriptSuccess}</div> :
             <div key="importScriptSuccess" ></div>,
           ]
           }
           headerTitleOverview={
-            <div style={{height: '100%'}}>
-              <div style={{float: 'left'}}>{this.state.purchaseTickets ? activeStakePoolConfig ? 'Ticket price:' : '' : 'Stake pool settings'}</div>
+            <div style={{height: "100%"}}>
+              <div style={{float: "left"}}>{this.state.purchaseTickets ? activeStakePoolConfig ? "Ticket price:" : "" : "Stake pool settings"}</div>
             </div>
           }
           headerMetaOverview={
@@ -1117,9 +1117,9 @@ class StakePool extends Component{
              <Balance amount={getTicketPriceResponse.getTicketPrice()}/>
               <div style={StakePoolStyles.toggle}>
                 <NewExistingSeedToggle
-                  activeButton={'left'}
-                  leftText={'Purchase Tickets'}
-                  rightText={'Vote settings'}
+                  activeButton={"left"}
+                  leftText={"Purchase Tickets"}
+                  rightText={"Vote settings"}
                   toggleAction={(e)=>{this.toggleTicketStakePool(e);}}/>
               </div></div>:
             <div></div>

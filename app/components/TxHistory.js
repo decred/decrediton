@@ -1,8 +1,8 @@
 // @flow
-import React, { Component } from 'react';
-import TxRow from './TxRow';
-import dateFormat from 'dateformat';
-import './fonts.css';
+import React, { Component } from "react";
+import TxRow from "./TxRow";
+import dateFormat from "dateformat";
+import "./fonts.css";
 
 class TxHistory extends Component {
   render() {
@@ -29,7 +29,7 @@ class TxHistory extends Component {
               var debits = tx.getDebitsList();
               var fee = tx.getFee();
 
-              var txDescription = '';
+              var txDescription = "";
               var txAmount = 0;
 
               var receiveAddressStr = Array();
@@ -52,9 +52,9 @@ class TxHistory extends Component {
                 }
                 account = credits[i].getAccount();
               }
-              var accountName = '';
+              var accountName = "";
               if ( totalFundsReceived + totalChange + fee < totalDebit) {
-                txDescription = {direction:'Sent', addressStr: null};
+                txDescription = {direction:"Sent", addressStr: null};
                 txAmount = totalDebit - fee - totalChange - totalFundsReceived;
                 if (getAccountsResponse != null) {
                   for (var y = 0; y < getAccountsResponse.getAccountsList().length; y++) {
@@ -64,9 +64,9 @@ class TxHistory extends Component {
                     }
                   }
                 }
-                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} accountName={accountName} txInfo={tx} direction={'out'} pending txAmount={txAmount} txDescription={txDescription} />);
+                return (<TxRow key={Buffer.from(tx.getHash()).toString("hex")} accountName={accountName} txInfo={tx} direction={"out"} pending txAmount={txAmount} txDescription={txDescription} />);
               } else if ( totalFundsReceived + totalChange + fee == totalDebit) {
-                txDescription = {direction:'Transferred', addressStr: receiveAddressStr};
+                txDescription = {direction:"Transferred", addressStr: receiveAddressStr};
                 txAmount = fee;
                 if (getAccountsResponse != null) {
                   for (y = 0; y < getAccountsResponse.getAccountsList().length; y++) {
@@ -76,9 +76,9 @@ class TxHistory extends Component {
                     }
                   }
                 }
-                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} accountName={accountName} txInfo={tx} direction={'transfer'} pending txAmount={txAmount} txDescription={txDescription} />);
+                return (<TxRow key={Buffer.from(tx.getHash()).toString("hex")} accountName={accountName} txInfo={tx} direction={"transfer"} pending txAmount={txAmount} txDescription={txDescription} />);
               }  else {
-                txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
+                txDescription = {direction:"Received at:",addressStr: receiveAddressStr};
                 txAmount = totalFundsReceived;
                 if (getAccountsResponse != null) {
                   for (var z = 0; z < getAccountsResponse.getAccountsList().length; z++) {
@@ -88,7 +88,7 @@ class TxHistory extends Component {
                     }
                   }
                 }
-                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} accountName={accountName} txInfo={tx} direction={'in'} pending txAmount={txAmount} txDescription={txDescription} />);
+                return (<TxRow key={Buffer.from(tx.getHash()).toString("hex")} accountName={accountName} txInfo={tx} direction={"in"} pending txAmount={txAmount} txDescription={txDescription} />);
               }
             })
             : <p></p>
@@ -101,10 +101,10 @@ class TxHistory extends Component {
               var credits = tx.getCreditsList();
               var debits = tx.getDebitsList();
 
-              var date = dateFormat(new Date(txInfo.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
+              var date = dateFormat(new Date(txInfo.timestamp*1000), "mmm d yyyy, HH:MM:ss");
               var fee = tx.getFee();
               var type = txInfo.type;
-              var txDescription = '';
+              var txDescription = "";
               var txAmount = 0;
               var sendAddressStr = Array();
               var receiveAddressStr = Array();
@@ -113,7 +113,7 @@ class TxHistory extends Component {
               var totalChange = 0;
               var previousAccount;
               var account;
-              var accountName = '';
+              var accountName = "";
               for (var i = 0; i < debits.length; i++) {
                 totalDebit += debits[i].getPreviousAmount();
                 previousAccount = debits[i].getPreviousAccount();
@@ -131,7 +131,7 @@ class TxHistory extends Component {
               }
 
               if ( totalFundsReceived + totalChange + fee < totalDebit) {
-                txDescription = {direction:'Sent', addressStr: null};
+                txDescription = {direction:"Sent", addressStr: null};
                 txAmount = totalDebit - fee - totalChange - totalFundsReceived;
                 if (getAccountsResponse != null) {
                   for (var k = 0; k < getAccountsResponse.getAccountsList().length; k++) {
@@ -141,9 +141,9 @@ class TxHistory extends Component {
                     }
                   }
                 }
-                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} type={type} accountName={accountName} txInfo={txInfo} direction={'out'} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
+                return (<TxRow key={Buffer.from(tx.getHash()).toString("hex")} type={type} accountName={accountName} txInfo={txInfo} direction={"out"} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
               } else if (totalFundsReceived + totalChange + fee == totalDebit) {
-                txDescription = {direction:'Transferred', addressStr: receiveAddressStr};
+                txDescription = {direction:"Transferred", addressStr: receiveAddressStr};
                 txAmount = fee;
                 if (getAccountsResponse != null) {
                   for (k = 0; k < getAccountsResponse.getAccountsList().length; k++) {
@@ -153,7 +153,7 @@ class TxHistory extends Component {
                     }
                   }
                 }
-                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} type={type} accountName={accountName} txInfo={txInfo} direction={'transfer'} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
+                return (<TxRow key={Buffer.from(tx.getHash()).toString("hex")} type={type} accountName={accountName} txInfo={txInfo} direction={"transfer"} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
               } else {
                 if (getAccountsResponse != null) {
                   for (var t = 0; t < getAccountsResponse.getAccountsList().length; t++) {
@@ -163,9 +163,9 @@ class TxHistory extends Component {
                     }
                   }
                 }
-                txDescription = {direction:'Received at:',addressStr: receiveAddressStr};
+                txDescription = {direction:"Received at:",addressStr: receiveAddressStr};
                 txAmount = totalFundsReceived;
-                return (<TxRow key={Buffer.from(tx.getHash()).toString('hex')} type={type} accountName={accountName} txInfo={txInfo} direction={'in'} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
+                return (<TxRow key={Buffer.from(tx.getHash()).toString("hex")} type={type} accountName={accountName} txInfo={txInfo} direction={"in"} showTxDetail={showTxDetail} txAmount={txAmount} txDescription={txDescription} date={date}/>);
               }
             }) :
           <div></div>

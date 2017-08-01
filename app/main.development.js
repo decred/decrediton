@@ -1,10 +1,10 @@
-import { app, BrowserWindow, Menu, shell } from 'electron';
-import { getCfg, appDataDirectory, dcrdCfg, dcrwCfg, writeCfgs, getDcrdPath, getWalletFile } from './config.js';
-import path from 'path';
-import os from 'os';
-import parseArgs from 'minimist';
-import mv from 'mv';
-import winston from 'winston';
+import { app, BrowserWindow, Menu, shell } from "electron";
+import { getCfg, appDataDirectory, dcrdCfg, dcrwCfg, writeCfgs, getDcrdPath, getWalletFile } from "./config.js";
+import path from "path";
+import os from "os";
+import parseArgs from "minimist";
+import mv from "mv";
+import winston from "winston";
 
 let menu;
 let template;
@@ -17,85 +17,85 @@ let dcrwPID;
 // all sorts of things on the cmd line that we don't care about.  If we want
 // to make this fatal, it must be for production mode only.
 function unknownFn(arg) {
-  console.log('%s is not a valid option!', arg);
+  console.log("%s is not a valid option!", arg);
   return;
 }
 
 // Allowed cmd line options are defined here.
 var opts = {
-  boolean: ['debug', 'testnet', 'mainnet'],
-  string: ['extrawalletargs'],
+  boolean: ["debug", "testnet", "mainnet"],
+  string: ["extrawalletargs"],
   default: { debug: false },
-  alias: { d: 'debug' },
+  alias: { d: "debug" },
   unknown: unknownFn
 };
 var argv = parseArgs(process.argv.slice(1), opts);
 debug = argv.debug;
 // Output for child processes.
-var stdout = 'ignore';
+var stdout = "ignore";
 if (debug) {
-  stdout = 'pipe';
+  stdout = "pipe";
 }
-var stderr = 'ignore';
+var stderr = "ignore";
 if (debug) {
-  stderr = 'pipe';
+  stderr = "pipe";
 }
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === "production") {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
   sourceMapSupport.install();
 }
 
-if (process.env.NODE_ENV === 'development') {
-  require('electron-debug')(); // eslint-disable-line global-require
+if (process.env.NODE_ENV === "development") {
+  require("electron-debug")(); // eslint-disable-line global-require
   const path = require('path'); // eslint-disable-line
   const p = path.join(__dirname, '..', 'app', 'node_modules'); // eslint-disable-line
   require('module').globalPaths.push(p); // eslint-disable-line
 }
 
 // Always use reasonable path for save data.
-app.setPath('userData', appDataDirectory());
+app.setPath("userData", appDataDirectory());
 var cfg = getCfg();
 
 var logger = new (winston.Logger)({
   transports: [
-    new (winston.transports.File)({ json: false, filename: path.join(app.getPath('userData'),'decrediton.log') })
+    new (winston.transports.File)({ json: false, filename: path.join(app.getPath("userData"),"decrediton.log") })
   ]
 });
 
 if (debug) {
-  logger.add(winston.transports.Console, {colorize: 'all'});
+  logger.add(winston.transports.Console, {colorize: "all"});
 }
 
-logger.log('info', 'Using config/data from:' + app.getPath('userData'));
+logger.log("info", "Using config/data from:" + app.getPath("userData"));
 
 // Check if network was set on command line (but only allow one!).
 if (argv.testnet && argv.mainnet) {
-  logger.log('Cannot use both --testnet and --mainnet.');
+  logger.log("Cannot use both --testnet and --mainnet.");
   app.quit();
 }
 
 if (argv.testnet) {
-  cfg.set('network', 'testnet');
-  logger.log('info', 'Running on testnet.');
+  cfg.set("network", "testnet");
+  logger.log("info", "Running on testnet.");
 }
 
 if (argv.mainnet) {
-  cfg.set('network', 'mainnet');
-  logger.log('info', 'Running on mainnet.');
+  cfg.set("network", "mainnet");
+  logger.log("info", "Running on mainnet.");
 }
 
 function closeDCRW() {
-  if (require('is-running')(dcrwPID)) {
-    logger.log('info', 'Sending SIGINT to dcrwallet at pid:' + dcrwPID);
-    process.kill(dcrwPID, 'SIGINT');
+  if (require("is-running")(dcrwPID)) {
+    logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
+    process.kill(dcrwPID, "SIGINT");
   }
 }
 
 function closeDCRD() {
-  if (require('is-running')(dcrdPID)) {
-    logger.log('info', 'Sending SIGINT to dcrd at pid:' + dcrdPID);
-    process.kill(dcrdPID, 'SIGINT');
+  if (require("is-running")(dcrdPID)) {
+    logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrdPID);
+    process.kill(dcrdPID, "SIGINT");
   }
 }
 
@@ -110,19 +110,19 @@ function cleanShutdown() {
   // Attempt a clean shutdown.
   const cliShutDownPause = 2; // in seconds.
   const shutDownPause = 3; // in seconds.
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === "production") {
     closeClis();
     // Sent shutdown message again as we have seen it missed in the past if they
     // are still running.
     setTimeout(function(){closeClis();}, cliShutDownPause*1000);
-    logger.log('info', 'Closing decrediton.');
+    logger.log("info", "Closing decrediton.");
     setTimeout(function(){app.quit();}, shutDownPause*1000);
   } else {
     app.quit();
   }
 }
 
-app.on('window-all-closed', () => {
+app.on("window-all-closed", () => {
   // If we could reopen after closing all windows on OSX we might want
   // to on do this only if !== 'darwin' but since we don't, better to
   // have the same behavior on all platforms.
@@ -130,12 +130,12 @@ app.on('window-all-closed', () => {
 });
 
 const installExtensions = async () => {
-  if (process.env.NODE_ENV === 'development') {
-    const installer = require('electron-devtools-installer'); // eslint-disable-line global-require
+  if (process.env.NODE_ENV === "development") {
+    const installer = require("electron-devtools-installer"); // eslint-disable-line global-require
 
     const extensions = [
-      'REACT_DEVELOPER_TOOLS',
-      'REDUX_DEVTOOLS'
+      "REACT_DEVELOPER_TOOLS",
+      "REDUX_DEVTOOLS"
     ];
     const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
     for (const name of extensions) { // eslint-disable-line
@@ -147,113 +147,113 @@ const installExtensions = async () => {
 };
 
 const launchDCRD = () => {
-  var spawn = require('child_process').spawn;
-  var args = ['--configfile='+dcrdCfg()];
+  var spawn = require("child_process").spawn;
+  var args = ["--configfile="+dcrdCfg()];
 
-  var dcrdExe = path.join(process.resourcesPath, 'bin', 'dcrd');
-  if (os.platform() == 'win32') {
-    dcrdExe = dcrdExe + '.exe';
+  var dcrdExe = path.join(process.resourcesPath, "bin", "dcrd");
+  if (os.platform() == "win32") {
+    dcrdExe = dcrdExe + ".exe";
   }
 
-  if (os.platform() != 'win32') {
+  if (os.platform() != "win32") {
     // The spawn() below opens a pipe on fd 3
-    args.push('--piperx=3');
+    args.push("--piperx=3");
   }
 
-  logger.log('info', `Starting dcrd with ${args}`);
+  logger.log("info", `Starting dcrd with ${args}`);
 
-  var dcrd = spawn(dcrdExe, args, { detached: false, stdio: [ 'ignore', stdout, stderr, 'pipe' ] });
+  var dcrd = spawn(dcrdExe, args, { detached: false, stdio: [ "ignore", stdout, stderr, "pipe" ] });
 
-  dcrd.on('error', function (err) {
-    logger.log('error', 'error starting ' + dcrdExe + ': ' + path + err);
+  dcrd.on("error", function (err) {
+    logger.log("error", "error starting " + dcrdExe + ": " + path + err);
   });
 
-  dcrd.on('close', (code) => {
-    logger.log('info', `dcrd exited with code ${code}`);
+  dcrd.on("close", (code) => {
+    logger.log("info", `dcrd exited with code ${code}`);
   });
 
   if (debug) {
-    dcrd.stdout.on('data', (data) => {
+    dcrd.stdout.on("data", (data) => {
       process.stdout.write(`${data}`);
     });
 
-    dcrd.stderr.on('data', (data) => {
+    dcrd.stderr.on("data", (data) => {
       process.stderr.write(`${data}`);
     });
   }
 
   dcrdPID = dcrd.pid;
-  logger.log('info', 'dcrd started with pid:' + dcrdPID);
+  logger.log("info", "dcrd started with pid:" + dcrdPID);
 
   dcrd.unref();
 };
 
 const launchDCRWallet = () => {
-  var spawn = require('child_process').spawn;
-  var args = ['--configfile='+dcrwCfg()];
+  var spawn = require("child_process").spawn;
+  var args = ["--configfile="+dcrwCfg()];
 
-  var dcrwExe = path.join(process.resourcesPath, 'bin', 'dcrwallet');
-  if (os.platform() == 'win32') {
-    dcrwExe = dcrwExe + '.exe';
+  var dcrwExe = path.join(process.resourcesPath, "bin", "dcrwallet");
+  if (os.platform() == "win32") {
+    dcrwExe = dcrwExe + ".exe";
   }
 
-  if (os.platform() != 'win32') {
+  if (os.platform() != "win32") {
     // The spawn() below opens a pipe on fd 4
     // No luck getting this to work on win7.
-    args.push('--piperx=4');
+    args.push("--piperx=4");
   }
 
   // Add any extra args if defined.
   if (argv.extrawalletargs != undefined) {
-    var extraArgs = argv.extrawalletargs.split(' ');
+    var extraArgs = argv.extrawalletargs.split(" ");
     for (var i = 0; i < extraArgs.length; i++) {
       args.push(extraArgs[i]);
     }
   }
 
-  logger.log('info', `Starting dcrwallet with ${args}`);
+  logger.log("info", `Starting dcrwallet with ${args}`);
 
-  var dcrwallet = spawn(dcrwExe, args, { detached: false, stdio: [ 'ignore', stdout, stderr, 'ignore', 'pipe'  ] });
+  var dcrwallet = spawn(dcrwExe, args, { detached: false, stdio: [ "ignore", stdout, stderr, "ignore", "pipe"  ] });
 
-  dcrwallet.on('error', function (err) {
-    logger.log('error', 'error starting ' + dcrwExe + ': ' + path + err);
+  dcrwallet.on("error", function (err) {
+    logger.log("error", "error starting " + dcrwExe + ": " + path + err);
   });
 
-  dcrwallet.on('close', (code) => {
-    logger.log('info', `dcrwallet exited with code ${code}`);
+  dcrwallet.on("close", (code) => {
+    logger.log("info", `dcrwallet exited with code ${code}`);
   });
 
   if (debug) {
-    dcrwallet.stdout.on('data', (data) => {
+    dcrwallet.stdout.on("data", (data) => {
       process.stdout.write(`${data}`);
     });
 
-    dcrwallet.stderr.on('data', (data) => {
+    dcrwallet.stderr.on("data", (data) => {
       process.stderr.write(`${data}`);
     });
   }
 
   dcrwPID = dcrwallet.pid;
-  logger.log('info', 'dcrwallet started with pid:' + dcrwPID);
+  logger.log("info", "dcrwallet started with pid:" + dcrwPID);
 
   dcrwallet.unref();
 };
 
-app.on('ready', async () => {
+app.on("ready", async () => {
   await installExtensions();
   // Write application config files.
   await writeCfgs();
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === "production") {
     try {
       await launchDCRD();
     } catch (e) {
-      logger.log('error', 'error launching dcrd: ' + e);
+      logger.log("error", "error launching dcrd: " + e);
     }
     try {
       await launchDCRWallet();
     } catch (e) {
-      logger.log('error', 'error launching dcrwallet: ' + e);
+      logger.log("error", "error launching dcrwallet: " + e);
     }
   }
 
@@ -265,35 +265,35 @@ app.on('ready', async () => {
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
-  mainWindow.webContents.on('did-finish-load', () => {
-    if (process.env.NODE_ENV === 'production') {
+  mainWindow.webContents.on("did-finish-load", () => {
+    if (process.env.NODE_ENV === "production") {
       // Check if daemon and wallet started up and error if not.
-      if (!require('is-running')(dcrwPID)) {
-        logger.log('error', 'Error running dcrwallet.  Check logs and restart!');
-        mainWindow.webContents.executeJavaScript('alert("Error running dcrwallet.  Check logs and restart!");');
-        mainWindow.webContents.executeJavaScript('window.close();');
+      if (!require("is-running")(dcrwPID)) {
+        logger.log("error", "Error running dcrwallet.  Check logs and restart!");
+        mainWindow.webContents.executeJavaScript("alert(\"Error running dcrwallet.  Check logs and restart!\");");
+        mainWindow.webContents.executeJavaScript("window.close();");
       }
-      if (!require('is-running')(dcrdPID)) {
-        logger.log('error', 'Error running dcrd.  Check logs and restart!');
-        mainWindow.webContents.executeJavaScript('alert("Error running dcrd.  Check logs and restart!");');
-        mainWindow.webContents.executeJavaScript('window.close();');
+      if (!require("is-running")(dcrdPID)) {
+        logger.log("error", "Error running dcrd.  Check logs and restart!");
+        mainWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart!\");");
+        mainWindow.webContents.executeJavaScript("window.close();");
       }
     }
     mainWindow.show();
     mainWindow.focus();
   });
 
-  mainWindow.on('closed', () => {
+  mainWindow.on("closed", () => {
     mainWindow = null;
   });
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === "development") {
     mainWindow.openDevTools();
-    mainWindow.webContents.on('context-menu', (e, props) => {
+    mainWindow.webContents.on("context-menu", (e, props) => {
       const { x, y } = props;
 
       Menu.buildFromTemplate([{
-        label: 'Inspect element',
+        label: "Inspect element",
         click() {
           mainWindow.inspectElement(x, y);
         }
@@ -301,109 +301,109 @@ app.on('ready', async () => {
     });
   }
 
-  if (process.platform === 'darwin') {
+  if (process.platform === "darwin") {
     template = [{
-      label: 'Decrediton',
+      label: "Decrediton",
       submenu: [{
-        label: 'About Decrediton',
-        selector: 'orderFrontStandardAboutPanel:'
+        label: "About Decrediton",
+        selector: "orderFrontStandardAboutPanel:"
       }, {
-        type: 'separator'
+        type: "separator"
       }, {
-        label: 'Services',
+        label: "Services",
         submenu: []
       }, {
-        type: 'separator'
+        type: "separator"
       }, {
-        label: 'Hide Decrediton',
-        accelerator: 'Command+H',
-        selector: 'hide:'
+        label: "Hide Decrediton",
+        accelerator: "Command+H",
+        selector: "hide:"
       }, {
-        label: 'Hide Others',
-        accelerator: 'Command+Shift+H',
-        selector: 'hideOtherApplications:'
+        label: "Hide Others",
+        accelerator: "Command+Shift+H",
+        selector: "hideOtherApplications:"
       }, {
-        label: 'Show All',
-        selector: 'unhideAllApplications:'
+        label: "Show All",
+        selector: "unhideAllApplications:"
       }, {
-        type: 'separator'
+        type: "separator"
       }, {
-        label: 'Quit',
-        accelerator: 'Command+Q',
+        label: "Quit",
+        accelerator: "Command+Q",
         click() {
           cleanShutdown();
         }
       }]
     }, {
-      label: 'Edit',
+      label: "Edit",
       submenu: [{
-        label: 'Undo',
-        accelerator: 'Command+Z',
-        selector: 'undo:'
+        label: "Undo",
+        accelerator: "Command+Z",
+        selector: "undo:"
       }, {
-        label: 'Redo',
-        accelerator: 'Shift+Command+Z',
-        selector: 'redo:'
+        label: "Redo",
+        accelerator: "Shift+Command+Z",
+        selector: "redo:"
       }, {
-        type: 'separator'
+        type: "separator"
       }, {
-        label: 'Cut',
-        accelerator: 'Command+X',
-        selector: 'cut:'
+        label: "Cut",
+        accelerator: "Command+X",
+        selector: "cut:"
       }, {
-        label: 'Copy',
-        accelerator: 'Command+C',
-        selector: 'copy:'
+        label: "Copy",
+        accelerator: "Command+C",
+        selector: "copy:"
       }, {
-        label: 'Paste',
-        accelerator: 'Command+V',
-        selector: 'paste:'
+        label: "Paste",
+        accelerator: "Command+V",
+        selector: "paste:"
       }, {
-        label: 'Select All',
-        accelerator: 'Command+A',
-        selector: 'selectAll:'
+        label: "Select All",
+        accelerator: "Command+A",
+        selector: "selectAll:"
       }]
     }, {
-      label: 'View',
+      label: "View",
       submenu: [{
-        label: 'Toggle Full Screen',
-        accelerator: 'Ctrl+Command+F',
+        label: "Toggle Full Screen",
+        accelerator: "Ctrl+Command+F",
         click() {
           mainWindow.setFullScreen(!mainWindow.isFullScreen());
         }
       }]
     }, {
-      label: 'Window',
+      label: "Window",
       submenu: [{
-        label: 'Minimize',
-        accelerator: 'Command+M',
-        selector: 'performMiniaturize:'
+        label: "Minimize",
+        accelerator: "Command+M",
+        selector: "performMiniaturize:"
       }, {
-        label: 'Close',
-        accelerator: 'Command+W',
-        selector: 'performClose:'
+        label: "Close",
+        accelerator: "Command+W",
+        selector: "performClose:"
       }, {
-        type: 'separator'
+        type: "separator"
       }, {
-        label: 'Bring All to Front',
-        selector: 'arrangeInFront:'
+        label: "Bring All to Front",
+        selector: "arrangeInFront:"
       }]
     }];
   } else {
     template = [{
-      label: '&File',
+      label: "&File",
       submenu: [{
-        label: '&Close',
-        accelerator: 'Ctrl+W',
+        label: "&Close",
+        accelerator: "Ctrl+W",
         click() {
           mainWindow.close();
         }
       }]
     }, {
-      label: '&View',
+      label: "&View",
       submenu: [{
-        label: 'Toggle &Full Screen',
-        accelerator: 'F11',
+        label: "Toggle &Full Screen",
+        accelerator: "F11",
         click() {
           mainWindow.setFullScreen(!mainWindow.isFullScreen());
         }
@@ -412,60 +412,60 @@ app.on('ready', async () => {
   }
   template.push(
     {
-      label: 'Advanced',
+      label: "Advanced",
       submenu: [{
-        label: 'Toggle Developer Tools',
-        accelerator: 'Alt+Ctrl+I',
+        label: "Toggle Developer Tools",
+        accelerator: "Alt+Ctrl+I",
         click() {
           mainWindow.toggleDevTools();
         }
       }, {
-        label: 'Show Wallet Log Files',
+        label: "Show Wallet Log Files",
         click() {
-          shell.openItem(path.join(appDataDirectory(), 'logs'));
+          shell.openItem(path.join(appDataDirectory(), "logs"));
         }
       }, {
-        label: 'Show Daemon Log Files',
+        label: "Show Daemon Log Files",
         click() {
-          shell.openItem(path.join(getDcrdPath(), 'logs'));
+          shell.openItem(path.join(getDcrdPath(), "logs"));
         }
       }, {
-        label: 'Remove Wallet (Requires Restart)',
+        label: "Remove Wallet (Requires Restart)",
         click() {
           logger.log(getWalletFile());
           closeDCRW();
           var origFile = getWalletFile();
           var date = new Date();
-          var backupFile = origFile + '-' + date.toISOString();
+          var backupFile = origFile + "-" + date.toISOString();
           mv(origFile, backupFile, function(err) {
             if (err != undefined) {
-              logger.log('error', 'Cannot remove file!', err);
+              logger.log("error", "Cannot remove file!", err);
             }
           });
           cleanShutdown();
         }
       }]
     }, {
-      label: 'Help',
+      label: "Help",
       submenu: [{
-        label: 'Learn More',
+        label: "Learn More",
         click() {
-          shell.openExternal('https://decred.org');
+          shell.openExternal("https://decred.org");
         }
       }, {
-        label: 'Documentation',
+        label: "Documentation",
         click() {
-          shell.openExternal('https://github.com/decred/decrediton');
+          shell.openExternal("https://github.com/decred/decrediton");
         }
       }, {
-        label: 'Community Discussions',
+        label: "Community Discussions",
         click() {
-          shell.openExternal('https://forum.decred.org');
+          shell.openExternal("https://forum.decred.org");
         }
       }, {
-        label: 'Search Issues',
+        label: "Search Issues",
         click() {
-          shell.openExternal('https://github.com/decred/decrediton/issues');
+          shell.openExternal("https://github.com/decred/decrediton/issues");
         }
       }]
     });

@@ -1,16 +1,16 @@
 // @flow
-import React, { Component } from 'react';
-import Radium from 'radium';
-import { reverseHash } from '../../helpers/byteActions';
-import Balance from '../Balance';
-import Header from '../Header';
-import dateFormat from 'dateformat';
-import '../fonts.css';
-import { shell } from 'electron';
-import SlateGrayButton from '../SlateGrayButton';
-import { TxDetailsStyles } from './ViewStyles';
-import { TransactionDetails }  from '../../middleware/walletrpc/api_pb';
-import { addSpacingAroundText } from '../../helpers/strings';
+import React, { Component } from "react";
+import Radium from "radium";
+import { reverseHash } from "../../helpers/byteActions";
+import Balance from "../Balance";
+import Header from "../Header";
+import dateFormat from "dateformat";
+import "../fonts.css";
+import { shell } from "electron";
+import SlateGrayButton from "../SlateGrayButton";
+import { TxDetailsStyles } from "./ViewStyles";
+import { TransactionDetails }  from "../../middleware/walletrpc/api_pb";
+import { addSpacingAroundText } from "../../helpers/strings";
 
 class TxDetails extends Component {
   constructor(props) {
@@ -23,17 +23,17 @@ class TxDetails extends Component {
     const { clearTxDetails } = this.props;
     const { getAccountsResponse } = this.props;
     const { getNetworkResponse } = this.props;
-    var networkStr = '';
+    var networkStr = "";
     if (getNetworkResponse !== null) {
       networkStr = getNetworkResponse.networkStr;
     }
-    var txLink = 'https://'+networkStr.toString()+'.decred.org/tx/' + reverseHash(Buffer.from(tx.tx.getHash()).toString('hex'));
-    var blockLink = 'https://'+networkStr.toString()+'.decred.org/block/' + reverseHash(Buffer.from(tx.blockHash).toString('hex'));
+    var txLink = "https://"+networkStr.toString()+".decred.org/tx/" + reverseHash(Buffer.from(tx.tx.getHash()).toString("hex"));
+    var blockLink = "https://"+networkStr.toString()+".decred.org/block/" + reverseHash(Buffer.from(tx.blockHash).toString("hex"));
 
     var credits = tx.tx.getCreditsList();
     var debits = tx.tx.getDebitsList();
 
-    var date = dateFormat(new Date(tx.timestamp*1000), 'mmm d yyyy, HH:MM:ss');
+    var date = dateFormat(new Date(tx.timestamp*1000), "mmm d yyyy, HH:MM:ss");
     var fee = tx.tx.getFee();
 
     var txAmount = 0;
@@ -90,11 +90,11 @@ class TxDetails extends Component {
     } else {
       var typeStr;
       if (detailType == TransactionDetails.TransactionType.TICKET_PURCHASE) {
-        typeStr = 'Ticket';
+        typeStr = "Ticket";
       } else if (detailType == TransactionDetails.TransactionType.VOTE) {
-        typeStr = 'Vote';
+        typeStr = "Vote";
       } else if (detailType == TransactionDetails.TransactionType.REVOCATION) {
-        typeStr = 'Revocation';
+        typeStr = "Revocation";
       }
       headerMeta = (
           <div style={TxDetailsStyles.headerMetaTransactionDetailsStakeTx}>
@@ -106,14 +106,14 @@ class TxDetails extends Component {
     return(
       <div style={TxDetailsStyles.view}>
         <Header
-          headerTitleOverview={<SlateGrayButton key="back" style={{float: 'right'}} onClick={() => clearTxDetails()}>back</SlateGrayButton>}
+          headerTitleOverview={<SlateGrayButton key="back" style={{float: "right"}} onClick={() => clearTxDetails()}>back</SlateGrayButton>}
           headerMetaOverview={headerMeta}/>
         <div style={TxDetailsStyles.content}>
           <div style={TxDetailsStyles.contentNest}>
             <div style={TxDetailsStyles.transactionDetailsTop}>
               <div style={TxDetailsStyles.transactionDetailsName}>Transaction:</div>
               <div style={TxDetailsStyles.transactionDetailsValue}>
-                <a onClick={function(x){shell.openExternal(x);}.bind(null, txLink)} style={{cursor: 'pointer'}}>{reverseHash(Buffer.from(tx.tx.getHash()).toString('hex'))}</a>
+                <a onClick={function(x){shell.openExternal(x);}.bind(null, txLink)} style={{cursor: "pointer"}}>{reverseHash(Buffer.from(tx.tx.getHash()).toString("hex"))}</a>
               </div>
               <div style={TxDetailsStyles.transactionDetailsName}>
                 <div style={TxDetailsStyles.indicatorConfirmed}>confirmed</div>
@@ -131,7 +131,7 @@ class TxDetails extends Component {
                   {sendAddressStr !== null ?
                     sendAddressStr.map(function(addressStr,i) {
                       return(
-                        <div key={'row-input'+i} style={TxDetailsStyles.transactionDetailsRow}>
+                        <div key={"row-input"+i} style={TxDetailsStyles.transactionDetailsRow}>
                           <div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr.account}>{addressStr.account}</div>
                           <div style={TxDetailsStyles.transactionDetailsAmount} key={addressStr.account+addressStr.amount}><Balance amount={addressStr.amount}/></div>
                         </div>);
@@ -142,7 +142,7 @@ class TxDetails extends Component {
                   {receiveAddressStr !== null ?
                     receiveAddressStr.map(function(addressStr,i) {
                       return(
-                        <div key={'row-output'+i} style={TxDetailsStyles.transactionDetailsRow}>
+                        <div key={"row-output"+i} style={TxDetailsStyles.transactionDetailsRow}>
                           <div style={TxDetailsStyles.transactionDetailsAddress} key={addressStr.address}>{addSpacingAroundText(addressStr.address)}</div>
                           <div style={TxDetailsStyles.transactionDetailsAmount} key={addressStr.amount+addressStr.address}><Balance amount={addressStr.amount}/></div>
                         </div>);
@@ -158,7 +158,7 @@ class TxDetails extends Component {
               <div style={TxDetailsStyles.transactionDetailsTitle}>Properties</div>
               <div style={TxDetailsStyles.transactionDetailsName}>Block:</div>
               <div style={TxDetailsStyles.transactionDetailsValue}>
-                <a onClick={function(x){shell.openExternal(x);}.bind(null, blockLink)} style={{cursor: 'pointer'}}>{reverseHash(Buffer.from(tx.blockHash).toString('hex'))}</a>
+                <a onClick={function(x){shell.openExternal(x);}.bind(null, blockLink)} style={{cursor: "pointer"}}>{reverseHash(Buffer.from(tx.blockHash).toString("hex"))}</a>
               </div>
               <div style={TxDetailsStyles.transactionDetailsName}>Height:</div>
               <div style={TxDetailsStyles.transactionDetailsValue}>{tx.height}</div>

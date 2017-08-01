@@ -1,9 +1,9 @@
 // @flow
-import { seeder } from '../middleware/grpc/client';
-export const SEEDER_ATTEMPT = 'SEEDER_ATTEMPT';
-export const SEEDER_FAILED = 'SEEDER_FAILED';
-export const SEEDER_SUCCESS = 'SEEDER_SUCCESS';
-import { GenerateRandomSeedRequest, DecodeSeedRequest } from '../middleware/walletrpc/api_pb';
+import { seeder } from "../middleware/grpc/client";
+export const SEEDER_ATTEMPT = "SEEDER_ATTEMPT";
+export const SEEDER_FAILED = "SEEDER_FAILED";
+export const SEEDER_SUCCESS = "SEEDER_SUCCESS";
+import { GenerateRandomSeedRequest, DecodeSeedRequest } from "../middleware/walletrpc/api_pb";
 
 export function getSeederAttempt() {
   return (dispatch, getState) => {
@@ -20,10 +20,10 @@ export function getSeederAttempt() {
   };
 }
 
-export const GENERATERANDOMSEED_ATTEMPT = 'GENERATERANDOMSEED_ATTEMPT';
-export const GENERATERANDOMSEED_CLEAR = 'GENERATERANDOMSEED_CLEAR';
-export const GENERATERANDOMSEED_FAILED = 'GENERATERANDOMSEED_FAILED';
-export const GENERATERANDOMSEED_SUCCESS = 'GENERATERANDOMSEED_SUCCESS';
+export const GENERATERANDOMSEED_ATTEMPT = "GENERATERANDOMSEED_ATTEMPT";
+export const GENERATERANDOMSEED_CLEAR = "GENERATERANDOMSEED_CLEAR";
+export const GENERATERANDOMSEED_FAILED = "GENERATERANDOMSEED_FAILED";
+export const GENERATERANDOMSEED_SUCCESS = "GENERATERANDOMSEED_SUCCESS";
 
 export function generateRandomSeedClear(response) {
   return (dispatch) => {
@@ -47,9 +47,9 @@ export function generateRandomSeedAttempt() {
   };
 }
 
-export const DECODESEED_ATTEMPT = 'DECODESEED_ATTEMPT';
-export const DECODESEED_FAILED = 'DECODESEED_FAILED';
-export const DECODESEED_SUCCESS = 'DECODESEED_SUCCESS';
+export const DECODESEED_ATTEMPT = "DECODESEED_ATTEMPT";
+export const DECODESEED_FAILED = "DECODESEED_FAILED";
+export const DECODESEED_SUCCESS = "DECODESEED_SUCCESS";
 
 
 export function decodeSeedAttempt(mnemonic) {

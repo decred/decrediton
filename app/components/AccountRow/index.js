@@ -1,7 +1,7 @@
 // @flow
-import React, { Component } from 'react';
-import { autobind } from 'core-decorators';
-import Row from './Row';
+import React, { Component } from "react";
+import { autobind } from "core-decorators";
+import Row from "./Row";
 
 @autobind
 class AccountRow extends Component {
@@ -18,15 +18,15 @@ class AccountRow extends Component {
   }
 
   updateRenameAccountName(accountName) {
-    if (accountName !== '') {
+    if (accountName !== "") {
       this.setState({renameAccountName: accountName, renameAccountNameError: null});
     }
   }
 
   renameAccount() {
     var checkErrors = false;
-    if (this.state.renameAccountName == '') {
-      this.setState({renameAccountNameError: '*You must enter an account name'});
+    if (this.state.renameAccountName == "") {
+      this.setState({renameAccountNameError: "*You must enter an account name"});
       checkErrors = true;
     }
     if (checkErrors) {

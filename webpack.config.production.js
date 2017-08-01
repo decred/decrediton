@@ -2,25 +2,25 @@
  * Build config for electron 'Renderer Process' file
  */
 
-import path from 'path';
-import webpack from 'webpack';
-import validate from 'webpack-validator';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import merge from 'webpack-merge';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import baseConfig from './webpack.config.base';
+import path from "path";
+import webpack from "webpack";
+import validate from "webpack-validator";
+import ExtractTextPlugin from "extract-text-webpack-plugin";
+import merge from "webpack-merge";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import baseConfig from "./webpack.config.base";
 
 const config = validate(merge(baseConfig, {
-  devtool: 'cheap-module-source-map',
+  devtool: "cheap-module-source-map",
 
   entry: [
-    'babel-polyfill',
-    './app/index'
+    "babel-polyfill",
+    "./app/index"
   ],
 
   output: {
-    path: path.join(__dirname, 'app/dist'),
-    publicPath: '../dist/'
+    path: path.join(__dirname, "app/dist"),
+    publicPath: "../dist/"
   },
 
   module: {
@@ -29,8 +29,8 @@ const config = validate(merge(baseConfig, {
       {
         test: /\.global\.css$/,
         loader: ExtractTextPlugin.extract(
-          'style-loader',
-          'css-loader'
+          "style-loader",
+          "css-loader"
         )
       },
 
@@ -38,16 +38,16 @@ const config = validate(merge(baseConfig, {
       {
         test: /^((?!\.global).)*\.css$/,
         loader: ExtractTextPlugin.extract(
-          'style-loader',
-          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+          "style-loader",
+          "css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]"
         )
       },
 
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
-      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
+      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
+      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" },
     ]
   },
 
@@ -58,7 +58,7 @@ const config = validate(merge(baseConfig, {
 
     // NODE_ENV should be production so that modules do not perform certain development checks
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      "process.env.NODE_ENV": JSON.stringify("production")
     }),
 
     // Minify without warning messages and IE8 support
@@ -68,16 +68,16 @@ const config = validate(merge(baseConfig, {
         warnings: false
       }
     }),
-    new ExtractTextPlugin('style.css', { allChunks: true }),
+    new ExtractTextPlugin("style.css", { allChunks: true }),
     new HtmlWebpackPlugin({
-      filename: '../app.html',
-      template: 'app/app.html',
+      filename: "../app.html",
+      template: "app/app.html",
       inject: false
     })
   ],
 
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
-  target: 'electron-renderer'
+  target: "electron-renderer"
 }));
 
 export default config;

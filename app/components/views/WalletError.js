@@ -1,8 +1,8 @@
 // @flow
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import SideBar from '../SideBar';
-import Header from '../Header';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import SideBar from "../SideBar";
+import Header from "../Header";
 
 function mapStateToProps(state) {
   return {
@@ -12,29 +12,29 @@ function mapStateToProps(state) {
 
 const styles = {
   body: {
-    position: 'fixed',
-    left: '0px',
-    top: '50%',
-    right: '0px',
-    display: 'block',
-    overflow: 'hidden',
-    width: '1178px',
-    height: '770px',
-    marginTop: '-385px',
-    marginRight: 'auto',
-    marginLeft: 'auto',
-    backgroundColor: '#FFF',
+    position: "fixed",
+    left: "0px",
+    top: "50%",
+    right: "0px",
+    display: "block",
+    overflow: "hidden",
+    width: "1178px",
+    height: "770px",
+    marginTop: "-385px",
+    marginRight: "auto",
+    marginLeft: "auto",
+    backgroundColor: "#FFF",
   },
   view: {
-    width: '880px',
-    height: '100%',
-    float: 'right',
-    backgroundColor: '#f3f6f6',
+    width: "880px",
+    height: "100%",
+    float: "right",
+    backgroundColor: "#f3f6f6",
   },
   content: {
-    overflow: 'auto',
-    height: '556px',
-    padding: '54px 60px 54px 80px',
+    overflow: "auto",
+    height: "556px",
+    padding: "54px 60px 54px 80px",
   },
 };
 

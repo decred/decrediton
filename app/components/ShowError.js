@@ -1,9 +1,9 @@
 // @flow
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 const styles = {
   error: {
-    color:'red'
+    color:"red"
   },
 };
 

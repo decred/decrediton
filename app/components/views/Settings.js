@@ -1,12 +1,12 @@
 // @flow
-import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
-import ErrorScreen from '../ErrorScreen';
-import KeyBlueButton from '../KeyBlueButton';
-import SideBar from '../SideBar';
-import Header from '../Header';
-import ChangePassphraseModal from '../ChangePassphraseModal';
-import { SettingStyles, StakePoolStyles } from './ViewStyles';
+import React, { Component } from "react";
+import { PropTypes } from "prop-types";
+import ErrorScreen from "../ErrorScreen";
+import KeyBlueButton from "../KeyBlueButton";
+import SideBar from "../SideBar";
+import Header from "../Header";
+import ChangePassphraseModal from "../ChangePassphraseModal";
+import { SettingStyles, StakePoolStyles } from "./ViewStyles";
 
 class Settings extends Component{
   static propTypes = {
@@ -49,7 +49,7 @@ class Settings extends Component{
             changePassphraseError !== null ?
             <div key="updateStakePoolError" style={StakePoolStyles.viewNotificationError}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearChangePassphraseError()}/>{changePassphraseError}</div> :
             <div key="updateStakePoolError" ></div>,
-            changePassphraseSuccess !== undefined && changePassphraseSuccess !== '' ?
+            changePassphraseSuccess !== undefined && changePassphraseSuccess !== "" ?
             <div key="configSuccess"  style={StakePoolStyles.viewNotificationSuccess}><div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={() => this.props.clearChangePassphraseSuccess()}/>{changePassphraseSuccess}</div> :
             <div key="configSuccess" ></div>,
           ]}
@@ -60,7 +60,7 @@ class Settings extends Component{
             updatePassphrase={(oldPass, newPass, priv) => this.updatePassphrase(oldPass, newPass, priv)}
             cancelPassphrase={()=>this.setState({changePassphraseModal: false})}
             heading={<div></div>}
-            description={''}
+            description={""}
           />
           <div style={this.state.changePassphraseModal ? SettingStyles.contentBlur : SettingStyles.content}>
             <div style={SettingStyles.settingsRow}>
