@@ -54,7 +54,7 @@ export function renameAccountAttempt(accountNumber, newName) {
             dispatch({ error, type: RENAMEACCOUNT_FAILED });
           } else {
             var successMsg = "You have successfully updated the account name.";
-            dispatch({ renameAccountSuccess: successMsg, renameAccountResponse: renameAccountResponse, type: RENAMEACCOUNT_SUCCESS });
+            setTimeout( () => dispatch({ renameAccountSuccess: successMsg, renameAccountResponse: renameAccountResponse, type: RENAMEACCOUNT_SUCCESS }), 1000);
             dispatch(getAccountsAttempt());
           }
         });
@@ -124,7 +124,7 @@ export function getNextAccountAttempt(passphrase, accountName) {
           dispatch({ error, type: GETNEXTACCOUNT_FAILED });
         } else {
           var success = "Account - " + accountName + " - has been successfully created.";
-          dispatch({getNextAccountResponse: getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS, successMessage: success });
+          setTimeout( () => dispatch({getNextAccountResponse: getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS, successMessage: success }), 1000);
           dispatch(getAccountsAttempt());
         }
       });

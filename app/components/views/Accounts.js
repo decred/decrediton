@@ -15,6 +15,10 @@ class Accounts extends Component{
     walletService: PropTypes.object,
   };
   constructor(props)  {
+    var sortedAccounts = props.balances;
+    sortedAccounts.sort(function(a, b) {
+      return a.accountNumber - b.accountNumber;
+    });
     super(props);
     this.state = {
       showAddAccount: false,
@@ -23,7 +27,17 @@ class Accounts extends Component{
       addAccountNameError: null,
       addAccountPrivPassError: null,
       accountNumDetailsShown: null,
+      sortedAccounts: sortedAccounts,
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.balances !== this.props.balances) {
+      var sortedAccounts = nextProps.balances;
+      sortedAccounts.sort(function(a, b) {
+        return a.accountNumber - b.accountNumber;
+      });
+      this.setState({sortedAccounts: sortedAccounts});
+    }
   }
   componentWillMount() {
     this.props.clearNewAccountSuccess();
@@ -75,14 +89,10 @@ class Accounts extends Component{
     this.setState({accountNumDetailsShown: null});
   }
   render() {
-    const { walletService, balances } = this.props;
+    const { walletService } = this.props;
     const { getNextAccountError, getNextAccountSuccess } = this.props;
     const { getNextAccountRequestAttempt } = this.props;
-    const { renameAccountError, renameAccountSuccess } = this.props;
-    var sortedBalances = balances;
-    sortedBalances.sort(function(a, b) {
-      return a.accountNumber - b.accountNumber;
-    });
+    const { renameAccountError, renameAccountSuccess, renameAccountRequestAttempt } = this.props;
     const accountsView = (
       <div style={AccountStyles.view}>
         <Header
@@ -109,13 +119,12 @@ class Accounts extends Component{
           }
         />
         <div style={AccountStyles.content}>
-          {getNextAccountRequestAttempt ?
+          {getNextAccountRequestAttempt || renameAccountRequestAttempt ?
             <div style={AccountStyles.content}>
               <CircularProgress style={AccountStyles.loading} size={125} thickness={6}/>
             </div> :
-            sortedBalances !== null ?
               <div style={AccountStyles.contentNest}>
-              {sortedBalances.map((account) => {
+              {this.state.sortedAccounts.map((account) => {
                 return (<AccountRow
                   key={"accountRow" + account.accountName}
                   account={account}
@@ -127,8 +136,7 @@ class Accounts extends Component{
                   hideAccountDetails={() => this.hideAccountDetails()}
                 />);
               })}
-              </div>:
-              <div></div>
+              </div>
             }
         </div>
       </div>);
