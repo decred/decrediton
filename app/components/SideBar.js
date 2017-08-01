@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { updateBlockTimeSince } from "../actions/ClientActions";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { autobind } from "core-decorators";
 import arrowUpLightBlue from "./icons/arrow-up-light-blue.svg";
 import menulogo from "./icons/menu-logo.svg";
 import MenuLink from "./MenuLink";
@@ -215,6 +216,7 @@ const styles = {
   },
 };
 
+@autobind
 class SideBar extends Component {
   constructor(props) {
     super(props);
@@ -222,8 +224,6 @@ class SideBar extends Component {
       accountsHidden: true,
       timeSince: "",
     };
-    this.showAccounts = this.showAccounts.bind(this);
-    this.hideAccounts = this.hideAccounts.bind(this);
    //this.updateBlockTimeSince = this.updateBlockTimeSince.bind(this);
   }
   componentWillUnmount() {
@@ -293,7 +293,7 @@ class SideBar extends Component {
           </div>
         </div>
         <div style={styles.menuBottom}>
-          <div style={styles.menuBottomTotalBalanceShort} onMouseEnter={() => {this.showAccounts();}} onMouseLeave={() => {this.hideAccounts();}}>
+          <div style={styles.menuBottomTotalBalanceShort} onMouseEnter={this.showAccounts} onMouseLeave={this.hideAccounts}>
             <div style={styles.menuBottomTotalBalanceShortSeperator}></div>
             <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
             <div style={styles.menuBottomTotalBalanceShortValue}>{totalBalance.toString()}</div>
