@@ -15,6 +15,11 @@ class Accounts extends Component{
     walletService: PropTypes.object,
   };
   constructor(props)  {
+    var sortedAccounts = props.balances;
+    sortedAccounts.sort(function(a, b) {
+      return a.accountNumber - b.accountNumber;
+    });
+    console.log("constructor", props.balances);
     super(props);
     this.state = {
       showAddAccount: false,
@@ -23,9 +28,40 @@ class Accounts extends Component{
       addAccountNameError: null,
       addAccountPrivPassError: null,
       accountNumDetailsShown: null,
+      sortedAccounts: sortedAccounts,
     };
   }
+  componentWillReceiveProps(nextProps) {
+    console.log("receiving props");
+    if (nextProps.balances.length !== this.props.balances.length) {
+      var sortedAccounts = nextProps.balances;
+      sortedAccounts.sort(function(a, b) {
+        return a.accountNumber - b.accountNumber;
+      });
+      console.log("above change sorted accounts", sortedAccounts);
+      this.setState({sortedAccounts: sortedAccounts});
+    } else {
+      console.log(nextProps.balances, this.props.balances);
+      var changed = false;
+      for (var i = 0; i < nextProps.balances.length; i++) {
+        console.log(nextProps.balances[i].accountName, this.props.balances[i].accountName);
+        if (nextProps.balances[i].accountName != this.props.balances[i].accountName) {
+          changed = true;
+          break;
+        }
+      }
+      if (changed) {
+        sortedAccounts = nextProps.balances;
+        sortedAccounts.sort(function(a, b) {
+          return a.accountNumber - b.accountNumber;
+        });
+        console.log("below change sorted accounts", sortedAccounts);
+        this.setState({sortedAccounts: sortedAccounts});
+      }
+    }
+  }
   componentWillMount() {
+    console.log("component will mount");
     this.props.clearNewAccountSuccess();
     this.props.clearNewAccountError();
     this.props.clearRenameAccountSuccess();
@@ -75,14 +111,11 @@ class Accounts extends Component{
     this.setState({accountNumDetailsShown: null});
   }
   render() {
-    const { walletService, balances } = this.props;
+    console.log(this.state.sortedAccounts);
+    const { walletService } = this.props;
     const { getNextAccountError, getNextAccountSuccess } = this.props;
     const { getNextAccountRequestAttempt } = this.props;
     const { renameAccountError, renameAccountSuccess } = this.props;
-    var sortedBalances = balances;
-    sortedBalances.sort(function(a, b) {
-      return a.accountNumber - b.accountNumber;
-    });
     const accountsView = (
       <div style={AccountStyles.view}>
         <Header
@@ -113,9 +146,8 @@ class Accounts extends Component{
             <div style={AccountStyles.content}>
               <CircularProgress style={AccountStyles.loading} size={125} thickness={6}/>
             </div> :
-            sortedBalances !== null ?
               <div style={AccountStyles.contentNest}>
-              {sortedBalances.map((account) => {
+              {this.state.sortedAccounts.map((account) => {
                 return (<AccountRow
                   key={"accountRow" + account.accountName}
                   account={account}
@@ -127,8 +159,7 @@ class Accounts extends Component{
                   hideAccountDetails={() => this.hideAccountDetails()}
                 />);
               })}
-              </div>:
-              <div></div>
+              </div>
             }
         </div>
       </div>);
