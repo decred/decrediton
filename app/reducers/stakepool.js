@@ -1,7 +1,7 @@
 import {
     UPDATESTAKEPOOLCONFIG_ATTEMPT, UPDATESTAKEPOOLCONFIG_FAILED, UPDATESTAKEPOOLCONFIG_SUCCESS,
     UPDATESTAKEPOOLCONFIG_CLEAR_ERROR, UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS,
-} from '../actions/StakePoolActions';
+} from "../actions/StakePoolActions";
 
 export default function stakepool(state = {}, action) {
   switch (action.type) {
@@ -9,7 +9,7 @@ export default function stakepool(state = {}, action) {
     return {...state,
       currentStakePoolConfigRequest: true,
       currentStakePoolConfigError: null,
-      currentStakePoolConfigSuccessMessage: '',
+      currentStakePoolConfigSuccessMessage: "",
     };
   case UPDATESTAKEPOOLCONFIG_FAILED:
     return {...state,
@@ -30,7 +30,7 @@ export default function stakepool(state = {}, action) {
     };
   case  UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS:
     return {...state,
-      currentStakePoolConfigSuccessMessage: '',
+      currentStakePoolConfigSuccessMessage: "",
     };
   default:
     return state;

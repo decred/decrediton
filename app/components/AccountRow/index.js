@@ -1,17 +1,17 @@
 // @flow
-import React, { Component } from 'react';
-import Row from './Row';
+import React, { Component } from "react";
+import Row from "./Row";
 
 class AccountRow extends Component {
   constructor(props) {
     super(props);
     [
-      'updateRenameAccountName',
-      'renameAccount',
-      'showRenameAccount',
-      'hideRenameAccount',
-      'showAccount',
-      'hideAccount'
+      "updateRenameAccountName",
+      "renameAccount",
+      "showRenameAccount",
+      "hideRenameAccount",
+      "showAccount",
+      "hideAccount"
     ].forEach(name => this[name] = this[name].bind(this));
 
     this.state = {
@@ -24,15 +24,15 @@ class AccountRow extends Component {
   }
 
   updateRenameAccountName(accountName) {
-    if (accountName !== '') {
+    if (accountName !== "") {
       this.setState({renameAccountName: accountName, renameAccountNameError: null});
     }
   }
 
   renameAccount() {
     var checkErrors = false;
-    if (this.state.renameAccountName == '') {
-      this.setState({renameAccountNameError: '*You must enter an account name'});
+    if (this.state.renameAccountName == "") {
+      this.setState({renameAccountNameError: "*You must enter an account name"});
       checkErrors = true;
     }
     if (checkErrors) {

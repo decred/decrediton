@@ -21,7 +21,7 @@ import {
   GETVOTECHOICES_ATTEMPT, GETVOTECHOICES_FAILED, GETVOTECHOICES_SUCCESS,
   SETVOTECHOICES_ATTEMPT, SETVOTECHOICES_FAILED, SETVOTECHOICES_SUCCESS,
   UPDATEHIDDENACCOUNTS,
-} from '../actions/ClientActions';
+} from "../actions/ClientActions";
 
 export default function grpc(state = {}, action) {
   switch (action.type) {
@@ -78,14 +78,14 @@ export default function grpc(state = {}, action) {
   case GETBALANCE_SUCCESS:
     return {
       ...state,
-      getBalanceError: '',
+      getBalanceError: "",
       getBalanceRequestAttempt: false,
       balances: action.balances,
     };
   case GETACCOUNTNUMBER_ATTEMPT:
     return {
       ...state,
-      getAccountNumberError: '',
+      getAccountNumberError: "",
       getAccountNumberRequestAttempt: true,
     };
   case GETACCOUNTNUMBER_FAILED:
@@ -97,7 +97,7 @@ export default function grpc(state = {}, action) {
   case GETACCOUNTNUMBER_SUCCESS:
     return {
       ...state,
-      getAccountNumberError: '',
+      getAccountNumberError: "",
       getAccountNumberRequestAttempt: false,
       getAccountNumberResponse: action.getAccountNumberResponse,
     };
@@ -123,7 +123,7 @@ export default function grpc(state = {}, action) {
   case GETPING_ATTEMPT:
     return {
       ...state,
-      getPingError: '',
+      getPingError: "",
       getPingRequestAttempt: true,
     };
   case GETPING_FAILED:
@@ -135,14 +135,14 @@ export default function grpc(state = {}, action) {
   case GETPING_SUCCESS:
     return {
       ...state,
-      getPingError: '',
+      getPingError: "",
       getPingRequestAttempt: false,
       getPingResponse: action.getPingResponse,
     };
   case GETSTAKEINFO_ATTEMPT:
     return {
       ...state,
-      getStakeInfoError: '',
+      getStakeInfoError: "",
       getStakeInfoRequestAttempt: true,
     };
   case GETSTAKEINFO_FAILED:
@@ -154,14 +154,14 @@ export default function grpc(state = {}, action) {
   case GETSTAKEINFO_SUCCESS:
     return {
       ...state,
-      getStakeInfoError: '',
+      getStakeInfoError: "",
       getStakeInfoRequestAttempt: false,
       getStakeInfoResponse: action.getStakeInfoResponse,
     };
   case GETTICKETPRICE_ATTEMPT:
     return {
       ...state,
-      getTicketPriceError: '',
+      getTicketPriceError: "",
       getTicketPriceRequestAttempt: true,
     };
   case GETTICKETPRICE_FAILED:
@@ -173,14 +173,14 @@ export default function grpc(state = {}, action) {
   case GETTICKETPRICE_SUCCESS:
     return {
       ...state,
-      getTicketPriceError: '',
+      getTicketPriceError: "",
       getTicketPriceRequestAttempt: false,
       getTicketPriceResponse: action.getTicketPriceResponse,
     };
   case GETACCOUNTS_ATTEMPT:
     return {
       ...state,
-      getAccountsError: '',
+      getAccountsError: "",
       getAccountsRequestAttempt: true,
     };
   case GETACCOUNTS_FAILED:
@@ -192,7 +192,7 @@ export default function grpc(state = {}, action) {
   case GETACCOUNTS_SUCCESS:
     return {
       ...state,
-      getAccountsError: '',
+      getAccountsError: "",
       getAccountsRequestAttempt: false,
       getAccountsResponse: action.response,
     };
@@ -220,7 +220,7 @@ export default function grpc(state = {}, action) {
   case GETTRANSACTIONS_COMPLETE:
     return {
       ...state,
-      getTransactionsRequestError: '',
+      getTransactionsRequestError: "",
       getTransactionsRequestAttempt: false,
     };
   case GETTRANSACTIONS_PROGRESS_REGULAR:

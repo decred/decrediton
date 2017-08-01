@@ -1,47 +1,47 @@
 // @flow
-import React from 'react';
-import SlateGrayButton from './SlateGrayButton';
+import React from "react";
+import SlateGrayButton from "./SlateGrayButton";
 
 const styles = {
   modal: {
-    height: '556px',
+    height: "556px",
   },
   modalSection: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   modalSectionTicketPurchaseInformation: {
-    paddingTop: '71px',
-    paddingBottom: '54px',
-    paddingLeft: '100px',
-    width: '100%',
-    height: 'auto',
-    minHeight: '100%',
-    backgroundColor: 'rgba(12, 30, 62, .9)',
+    paddingTop: "71px",
+    paddingBottom: "54px",
+    paddingLeft: "100px",
+    width: "100%",
+    height: "auto",
+    minHeight: "100%",
+    backgroundColor: "rgba(12, 30, 62, .9)",
   },
   highlightTextSkyBlue: {
-    color: '#69d5f7',
+    color: "#69d5f7",
   },
   highlightTextNeonGreen: {
-    color: '#2ed8a3',
+    color: "#2ed8a3",
   },
   ticketPurchaseInformationButton: {
-    width: '80px',
-    float: 'right',
+    width: "80px",
+    float: "right",
   },
   modalSubSectionHeadingTicketPurchaseInformation: {
-    color: '#fff',
-    fontSize: '19px',
-    lineHeight: '18px',
-    textTransform: 'capitalize',
-    minHeight: '50px',
-    paddingRight: '160px',
+    color: "#fff",
+    fontSize: "19px",
+    lineHeight: "18px",
+    textTransform: "capitalize",
+    minHeight: "50px",
+    paddingRight: "160px",
   },
   ticketPurchaseInformationTextColumn: {
-    width: '600px',
-    float: 'left',
-    color: '#fff',
-    fontSize: '13px',
-    lineHeight: '14px',
+    width: "600px",
+    float: "left",
+    color: "#fff",
+    fontSize: "13px",
+    lineHeight: "14px",
   }
 };
 class BalanceOverviewInfoModal extends React.Component {

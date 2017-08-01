@@ -1,158 +1,158 @@
 // @flow
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import {
   decodeSeedAttempt,
   generateRandomSeedAttempt,
   generateRandomSeedClear,
-} from '../actions/SeedServiceActions';
+} from "../actions/SeedServiceActions";
 import {
   createWalletRequest,
   createWalletConfirmNewSeed,
   createWalletGoBackNewSeed,
-} from '../actions/WalletLoaderActions';
+} from "../actions/WalletLoaderActions";
 
-import KeyBlueButton from './KeyBlueButton';
-import './react-select.global.css';
-import ConfimSeed from './SeedEntry';
+import KeyBlueButton from "./KeyBlueButton";
+import "./react-select.global.css";
+import ConfimSeed from "./SeedEntry";
 
 const styles = {
   contentNewSeed: {
-    paddingRight: '80px',
-    paddingLeft: '80px',
-    overflow: 'auto',
-    height: '556px',
-    padding: '54px 60px 54px 80px',
+    paddingRight: "80px",
+    paddingLeft: "80px",
+    overflow: "auto",
+    height: "556px",
+    padding: "54px 60px 54px 80px",
   },
   contentParagraphRight: {
-    float: 'left',
-    width: '300px',
-    marginBottom: '30px',
-    color: '#B7D1F0',
-    fontSize: '13px',
-    lineHeight: '16px',
+    float: "left",
+    width: "300px",
+    marginBottom: "30px",
+    color: "#B7D1F0",
+    fontSize: "13px",
+    lineHeight: "16px",
   },
   contentParagraphLeft: {
-    float: 'right',
-    width: '300px',
-    marginBottom: '30px',
-    color: '#B7D1F0',
-    fontSize: '13px',
-    lineHeight: '16px',
+    float: "right",
+    width: "300px",
+    marginBottom: "30px",
+    color: "#B7D1F0",
+    fontSize: "13px",
+    lineHeight: "16px",
   },
   paragraphCyanBold: {
-    color: '#69D5F7',
-    fontWeight: '700',
+    color: "#69D5F7",
+    fontWeight: "700",
   },
   paragraphCyanRegular: {
-    color: '#69D5F7',
+    color: "#69D5F7",
   },
   paragraphOrangeWarning: {
-    color: '#FD714B',
+    color: "#FD714B",
   },
   contentSeed: {
-    height: 'auto',
-    minHeight: '140px',
-    marginBottom: '20px',
-    padding: '14px 20px',
-    border: '1px solid #69D5F7',
-    borderRadius: '5px',
-    backgroundColor: '#E9F8FE',
-    fontFamily: 'Inconsolata,monospace',
-    color: '#000',
-    fontSize: '16px',
-    lineHeight: '29px',
+    height: "auto",
+    minHeight: "140px",
+    marginBottom: "20px",
+    padding: "14px 20px",
+    border: "1px solid #69D5F7",
+    borderRadius: "5px",
+    backgroundColor: "#E9F8FE",
+    fontFamily: "Inconsolata,monospace",
+    color: "#000",
+    fontSize: "16px",
+    lineHeight: "29px",
   },
   viewButtonKeyBlueWalletNewSeed: {
-    float: 'left',
+    float: "left",
   },
   contentNewSeedConfirmSeed: {
-    height: '200px',
+    height: "200px",
   },
   contentNewSeedPrivPass: {
-    paddingTop: '10px',
-    height: '80px',
+    paddingTop: "10px",
+    height: "80px",
   },
   contentNewSeedCreateButton: {
-    height: '60px',
+    height: "60px",
   },
   contentConfirmWalletCreateInputLeft: {
-    width: '160px',
-    marginRight: '20px',
-    float: 'left',
-    color: '#E7EAED',
-    fontSize: '19px',
-    textAlign: 'right',
-    letterSpacing: '-0.1px',
+    width: "160px",
+    marginRight: "20px",
+    float: "left",
+    color: "#E7EAED",
+    fontSize: "19px",
+    textAlign: "right",
+    letterSpacing: "-0.1px",
   },
   contentConfirmWalletCreateInputLeftPadding: {
-    width: '160px',
-    marginRight: '20px',
-    float: 'left',
-    color: '#E7EAED',
-    fontSize: '19px',
-    textAlign: 'right',
-    letterSpacing: '-0.1px',
-    paddingTop: '23px',
+    width: "160px",
+    marginRight: "20px",
+    float: "left",
+    color: "#E7EAED",
+    fontSize: "19px",
+    textAlign: "right",
+    letterSpacing: "-0.1px",
+    paddingTop: "23px",
   },
   contentConfirmWalletCreateInputRight: {
-    width: '540px',
-    float: 'left',
-    clear: 'right',
+    width: "540px",
+    float: "left",
+    clear: "right",
   },
   contentConfirmWalletCreateInputRightPadding: {
-    marginBottom: '5px',
-    width: '300px',
-    paddingTop: '11px',
-    float: 'left',
-    clear: 'right',
+    marginBottom: "5px",
+    width: "300px",
+    paddingTop: "11px",
+    float: "left",
+    clear: "right",
   },
   inputPrivatePassword: {
-    backgroundColor: 'transparent',
-    width: '100%',
-    minHeight: '44px',
-    paddingRight: '10px',
-    paddingLeft: '10px',
-    borderStyle: 'none none solid',
-    borderBottom: '1px solid #69D5F7',
-    color: '#69D5F7',
-    fontSize: '19px',
-    lineHeight: 'normal',
-    margin: '0px',
-    boxSizing: 'border-box',
+    backgroundColor: "transparent",
+    width: "100%",
+    minHeight: "44px",
+    paddingRight: "10px",
+    paddingLeft: "10px",
+    borderStyle: "none none solid",
+    borderBottom: "1px solid #69D5F7",
+    color: "#69D5F7",
+    fontSize: "19px",
+    lineHeight: "normal",
+    margin: "0px",
+    boxSizing: "border-box",
   },
   inputSeedTextArea: {
-    backgroundColor: 'transparent',
-    width: '100%',
-    minHeight: '108px',
-    paddingRight: '10px',
-    paddingLeft: '10px',
-    borderStyle: 'none none solid',
-    borderWidth: '0px 0px 1px',
-    borderColor: '#000 #000 #69D5F7',
-    fontFamily: 'Inconsolata,monospace',
-    color: '#2971FF',
-    fontSize: '13px',
-    overflow: 'auto',
-    margin: '0px',
+    backgroundColor: "transparent",
+    width: "100%",
+    minHeight: "108px",
+    paddingRight: "10px",
+    paddingLeft: "10px",
+    borderStyle: "none none solid",
+    borderWidth: "0px 0px 1px",
+    borderColor: "#000 #000 #69D5F7",
+    fontFamily: "Inconsolata,monospace",
+    color: "#2971FF",
+    fontSize: "13px",
+    overflow: "auto",
+    margin: "0px",
   },
   inputForm: {
-    MozAppearance: 'none !important',
-    position: 'relative',
-    width: '100%',
-    height: 'auto',
-    minHeight: '44px',
+    MozAppearance: "none !important",
+    position: "relative",
+    width: "100%",
+    height: "auto",
+    minHeight: "44px",
   },
   inputFormConfirmSeed: {
-    MozAppearance: 'none !important',
-    position: 'relative',
-    width: '100%',
-    height: '200px',
-    minHeight: '44px',
+    MozAppearance: "none !important",
+    position: "relative",
+    width: "100%",
+    height: "200px",
+    minHeight: "44px",
   },
   inputFormError: {
-    color: 'red',
+    color: "red",
   }
 };
 
@@ -160,29 +160,29 @@ class CreateWalletForm extends React.Component {
   constructor(props) {
     super(props);
     var requiredSeedLength = 33;
-    var seed = '';
-    if (this.props.network == 'testnet' && this.props.generateRandomSeedResponse !== null) {
+    var seed = "";
+    if (this.props.network == "testnet" && this.props.generateRandomSeedResponse !== null) {
       seed = this.props.generateRandomSeedResponse.getSeedBytes();
     }
     this.state = {
       canSubmit: false,
       continued: false,
-      privpass: '',
-      verifyPass: '',
+      privpass: "",
+      verifyPass: "",
       seedError: null,
-      verifyError: '',
+      verifyError: "",
       privPassError: null,
       remainingSeedWords: requiredSeedLength,
       requiredSeedLength: requiredSeedLength,
       seed: seed,
-      network: this.props.network == 'mainnet'
+      network: this.props.network == "mainnet"
     };
   }
   componentWillUpdate(nextProps) {
     if (this.props.decodeSeedError !== nextProps.decodeSeedError) {
       this.setState({seedError: nextProps.decodeSeedError});
     }
-    if (this.props.network == 'testnet' && nextProps.generateRandomSeedResponse !== this.props.generateRandomSeedResponse) {
+    if (this.props.network == "testnet" && nextProps.generateRandomSeedResponse !== this.props.generateRandomSeedResponse) {
       this.setState({seed: nextProps.generateRandomSeedResponse.getSeedBytes()});
     }
   }
@@ -200,7 +200,7 @@ class CreateWalletForm extends React.Component {
           <br/>
           <span style={styles.paragraphOrangeWarning}>Warning:</span> Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else.
         </div>
-        <div style={{clear: 'both'}}></div>
+        <div style={{clear: "both"}}></div>
         <div style={styles.contentSeed}>{generateRandomSeedResponse !== null ? generateRandomSeedResponse.getSeedMnemonic() : null}</div>
         <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} onClick={()=>this.props.createWalletConfirmNewSeed()}>Continue</KeyBlueButton>
       </div>);
@@ -210,8 +210,8 @@ class CreateWalletForm extends React.Component {
         {this.state.network ?
         <div style={styles.contentNewSeedConfirmSeed}>
           <div style={styles.contentConfirmWalletCreateInputLeft}>
-            <span style={{float:'left'}}>Confirm Seed:&nbsp;</span>
-            <span style={{float:'left',fontSize:'13px',color:'white'}}> Seed words remaining: {this.state.remainingSeedWords} </span>
+            <span style={{float:"left"}}>Confirm Seed:&nbsp;</span>
+            <span style={{float:"left",fontSize:"13px",color:"white"}}> Seed words remaining: {this.state.remainingSeedWords} </span>
           </div>
           <div style={styles.contentConfirmWalletCreateInputRight}>
             <div style={styles.inputForm}>
@@ -220,7 +220,7 @@ class CreateWalletForm extends React.Component {
               </form>
             </div>
             <div style={styles.inputFormError}>
-              {this.state.seedError !== null ? this.state.seedError : ''}
+              {this.state.seedError !== null ? this.state.seedError : ""}
             </div>
           </div>
         </div> :
@@ -255,7 +255,7 @@ class CreateWalletForm extends React.Component {
               </form>
             </div>
             <div style={styles.inputFormError}>
-              {this.state.verifyError !== '' ? this.state.verifyError : ''}
+              {this.state.verifyError !== "" ? this.state.verifyError : ""}
             </div>
           </div>
         </div>
@@ -263,10 +263,10 @@ class CreateWalletForm extends React.Component {
           <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
           <div style={styles.contentConfirmWalletCreateInputRightPadding}>
             {this.state.network ?
-            <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} disabled={this.state.verifyError !== '' || this.state.seedError !== null ||
-              this.state.privpass == '' || this.state.verifyPass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null)} onClick={this.state.verifyError !== '' || this.state.seedError !== null ||
-              this.state.privpass == '' || this.state.verifyPass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null) ? null : ()=>this.createWalletButton()}>Create Wallet</KeyBlueButton> :
-            <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} disabled={this.state.verifyError !== '' || this.state.privpass == '' || this.state.verifyPass == ''} onClick={this.state.verifyError !== '' || this.state.privpass == '' ? null : ()=>this.createWalletButton()}>Create Wallet</KeyBlueButton> }
+            <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} disabled={this.state.verifyError !== "" || this.state.seedError !== null ||
+              this.state.privpass == "" || this.state.verifyPass == "" || (this.state.seed == "" && this.props.decodeSeedResponse === null)} onClick={this.state.verifyError !== "" || this.state.seedError !== null ||
+              this.state.privpass == "" || this.state.verifyPass == "" || (this.state.seed == "" && this.props.decodeSeedResponse === null) ? null : ()=>this.createWalletButton()}>Create Wallet</KeyBlueButton> :
+            <KeyBlueButton style={styles.viewButtonKeyBlueWalletNewSeed} disabled={this.state.verifyError !== "" || this.state.privpass == "" || this.state.verifyPass == ""} onClick={this.state.verifyError !== "" || this.state.privpass == "" ? null : ()=>this.createWalletButton()}>Create Wallet</KeyBlueButton> }
           </div>
         </div>
       </div>);
@@ -283,34 +283,34 @@ class CreateWalletForm extends React.Component {
       return;
     }
     this.setState({remainingSeedWords:0});
-    var seedConfirmationStr = '';
+    var seedConfirmationStr = "";
     for (var i = 0; i < seedConfirmation.length; i++) {
       seedConfirmationStr += seedConfirmation[i].name;
       if (i < seedConfirmation.length - 1) {
-        seedConfirmationStr += ' ';
+        seedConfirmationStr += " ";
       }
     }
     if (this.props.createWalletExisting) {
       this.props.decodeSeedAttempt(seedConfirmationStr);
     } else {
-      if (seedConfirmationStr !== '' && this.props.generateRandomSeedResponse.getSeedMnemonic() != seedConfirmationStr) {
-        this.setState({seedError:'*Seeds do not match'});
+      if (seedConfirmationStr !== "" && this.props.generateRandomSeedResponse.getSeedMnemonic() != seedConfirmationStr) {
+        this.setState({seedError:"*Seeds do not match"});
       } else {
         this.setState({seedError: null, seed: this.props.generateRandomSeedResponse.getSeedBytes()});
       }
     }
   }
   createWalletButton() {
-    if (this.state.privpass == '') {
-      this.setState({privPassError: '*Please enter your private passphrase'});
+    if (this.state.privpass == "") {
+      this.setState({privPassError: "*Please enter your private passphrase"});
       return;
     }
     if (this.state.privpass != this.state.verifyPass) {
-      this.setState({verifyError: '*Passwords do not match'});
+      this.setState({verifyError: "*Passwords do not match"});
       return;
     }
-    if (this.state.verifyError !== '' || this.state.seedError !== null ||
-      this.state.privpass == '' || (this.state.seed == '' && this.props.decodeSeedResponse === null)) {
+    if (this.state.verifyError !== "" || this.state.seedError !== null ||
+      this.state.privpass == "" || (this.state.seed == "" && this.props.decodeSeedResponse === null)) {
       return;
     }
     if (this.props.createWalletExisting && this.props.decodeSeedResponse === null) {
@@ -326,17 +326,17 @@ class CreateWalletForm extends React.Component {
     }
   }
   updatePrivPass(privPass) {
-    if (privPass !== '') {
+    if (privPass !== "") {
       this.setState({privpass: privPass, privPassError: null});
     } else {
-      this.setState({privPassError: '*Please enter your private passphrase'});
+      this.setState({privPassError: "*Please enter your private passphrase"});
     }
   }
   verifyPrivatePassword(verifyPrivPass) {
-    if (this.state.privpass != '' && this.state.privpass != verifyPrivPass) {
-      this.setState({verifyError:'*Passwords do not match'});
+    if (this.state.privpass != "" && this.state.privpass != verifyPrivPass) {
+      this.setState({verifyError:"*Passwords do not match"});
     } else {
-      this.setState({verifyError:'', verifyPass: verifyPrivPass});
+      this.setState({verifyError:"", verifyPass: verifyPrivPass});
     }
   }
   continueToConfirmButton() {
@@ -354,41 +354,41 @@ class CreateWalletForm extends React.Component {
   }
 
   notifyFormError(data) {
-    console.error('Form error:', data);
+    console.error("Form error:", data);
   }
 
   seedTypeChange() {
-    var form_elements = document.getElementById('createWalletForm').elements;
-    var selectedSeedType = form_elements['seedtype'].value;
+    var form_elements = document.getElementById("createWalletForm").elements;
+    var selectedSeedType = form_elements["seedtype"].value;
 
     switch(selectedSeedType) {
-    case 'existing':
+    case "existing":
       this.props.generateRandomSeedClear();
       break;
-    case 'new':
+    case "new":
       this.props.generateRandomSeedAttempt();
       break;
     default:
-      console.error('seedTypeChange called with undefined type of ' + selectedSeedType);
+      console.error("seedTypeChange called with undefined type of " + selectedSeedType);
     }
   }
 
   submitForm() {
-    var form_elements = document.getElementById('createWalletForm').elements;
-    var selectedSeedType = form_elements['seedtype'].value;
+    var form_elements = document.getElementById("createWalletForm").elements;
+    var selectedSeedType = form_elements["seedtype"].value;
 
-    var privpass = document.getElementById('privpassVerify').value;
+    var privpass = document.getElementById("privpassVerify").value;
     // Commenting out pubpass temporarily
-    var pubpass = '';//document.getElementById('pubpassVerify').value;
-    var seed = document.getElementById('seed').value;
+    var pubpass = "";//document.getElementById('pubpassVerify').value;
+    var seed = document.getElementById("seed").value;
 
     switch(selectedSeedType) {
-    case 'existing':
-    case 'new':
+    case "existing":
+    case "new":
       this.props.decodeSeedAttempt(pubpass, privpass, seed);
       break;
     default:
-      console.error('seedTypeChange called with undefined type of ' + selectedSeedType);
+      console.error("seedTypeChange called with undefined type of " + selectedSeedType);
     }
   }
 }

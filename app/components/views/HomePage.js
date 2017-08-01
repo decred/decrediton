@@ -1,9 +1,9 @@
 // @flow
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import Home from './Home';
-import { getAccountsAttempt } from '../../actions/ClientActions';
-import { rescanAttempt } from '../../actions/ControlActions';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import Home from "./Home";
+import { getAccountsAttempt } from "../../actions/ClientActions";
+import { rescanAttempt } from "../../actions/ControlActions";
 
 function mapStateToProps(state) {
   return {

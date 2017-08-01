@@ -1,7 +1,7 @@
 // @flow
-import Radium from 'radium';
-import React from 'react';
-import { connect } from 'react-redux';
+import Radium from "radium";
+import React from "react";
+import { connect } from "react-redux";
 
 function mapStateToProps(state) {
   return {
@@ -11,27 +11,27 @@ function mapStateToProps(state) {
 
 var styles = {
   base: {
-    fontSize: '1em',
-    fontFamily: 'Inconsolata, monospace',
+    fontSize: "1em",
+    fontFamily: "Inconsolata, monospace",
   },
   small: {
-    fontSize: '0.8em',
+    fontSize: "0.8em",
   },
 
   block: {
-    display: 'block',
+    display: "block",
   },
 };
 
 class Balance extends React.Component {
   render() {
     const { currentSettings } = this.props;
-    if (currentSettings.currencyDisplay === 'DCR') {
+    if (currentSettings.currencyDisplay === "DCR") {
       var totalDcr = 0;
-      var numberFormatPart = ['0','0'];
-      if (typeof this.props.amount !== 'undefined' && this.props.amount !== 0) {
+      var numberFormatPart = ["0","0"];
+      if (typeof this.props.amount !== "undefined" && this.props.amount !== 0) {
         totalDcr = parseInt(this.props.amount) / 100000000;
-        numberFormatPart = totalDcr.toFixed(8).toString().split('.');
+        numberFormatPart = totalDcr.toFixed(8).toString().split(".");
       }
       return (
         <span
@@ -43,7 +43,7 @@ class Balance extends React.Component {
           <span style={styles.small}> DCR</span>
         </span>
       );
-    } else if (currentSettings.currencyDisplay === 'atoms') {
+    } else if (currentSettings.currencyDisplay === "atoms") {
       return (
         <span
         style={styles.base}

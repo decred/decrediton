@@ -27,7 +27,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS,
   CONSTRUCTTX_CLEAR_ERROR, PUBLISHTX_CLEAR_ERROR, SIGNTX_CLEAR_ERROR, PUBLISHTX_CLEAR_SUCCESS,
   SETBALANCETOMAINTAIN, SETMAXFEE, SETMAXPRICEABSOLUTE, SETMAXPRICERELATIVE, SETMAXPERBLOCK
- } from '../actions/ControlActions';
+ } from "../actions/ControlActions";
 
 export default function control(state = {}, action) {
   switch (action.type) {
@@ -43,7 +43,7 @@ export default function control(state = {}, action) {
     };
   case GETNEXTADDRESS_SUCCESS:
     return {...state,
-      getNextAddressError: '',
+      getNextAddressError: "",
       getNextAddressRequestAttempt: false,
       getNextAddressResponse: action.getNextAddressResponse,
     };
@@ -89,7 +89,7 @@ export default function control(state = {}, action) {
     };
   case RESCAN_COMPLETE:
     return {...state,
-      rescanError: '',
+      rescanError: "",
       rescanRequest: null,
       rescanRequestAttempt: false,
       rescanResponse: null,
@@ -131,7 +131,7 @@ export default function control(state = {}, action) {
     };
   case IMPORTPRIVKEY_SUCCESS:
     return {...state,
-      importPrivateKeyError: '',
+      importPrivateKeyError: "",
       importPrivateKeyRequestAttempt: false,
       importPrivateKeyResponse: action.importPrivateKeyResponse,
     };
@@ -159,7 +159,7 @@ export default function control(state = {}, action) {
     };
   case  IMPORTSCRIPT_CLEAR_SUCCESS:
     return {...state,
-      importScriptSuccess: '',
+      importScriptSuccess: "",
     };
   case CHANGEPASSPHRASE_ATTEMPT:
     return {...state,
@@ -176,7 +176,7 @@ export default function control(state = {}, action) {
       changePassphraseError: null,
       changePassphraseRequestAttempt: false,
       changePassphraseResponse: action.changePassphraseResponse,
-      changePassphraseSuccess: 'Your private passphrase was successfully updated.',
+      changePassphraseSuccess: "Your private passphrase was successfully updated.",
     };
   case CHANGEPASSPHRASE_CLEAR_ERROR:
     return {...state,
@@ -184,7 +184,7 @@ export default function control(state = {}, action) {
     };
   case  CHANGEPASSPHRASE_CLEAR_SUCCESS:
     return {...state,
-      changePassphraseSuccess: '',
+      changePassphraseSuccess: "",
     };
   case LOADACTIVEDATAFILTERS_ATTEMPT:
     return {...state,
@@ -295,7 +295,7 @@ export default function control(state = {}, action) {
     };
   case  PURCHASETICKETS_CLEAR_SUCCESS:
     return {...state,
-      purchaseTicketsSuccess: '',
+      purchaseTicketsSuccess: "",
     };
   case REVOKETICKETS_ATTEMPT:
     return {...state,
@@ -320,7 +320,7 @@ export default function control(state = {}, action) {
     };
   case  REVOKETICKETS_CLEAR_SUCCESS:
     return {...state,
-      revokeTicketsSuccess: '',
+      revokeTicketsSuccess: "",
     };
   case GETTICKETBUYERCONFIG_ATTEMPT:
     return {

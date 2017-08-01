@@ -1,25 +1,25 @@
 // @flow
-import React from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import { Router, hashHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import routes from './routes';
-import configureStore from './store/configureStore';
-import { getCfg } from './config.js';
+import React from "react";
+import { render } from "react-dom";
+import { Provider } from "react-redux";
+import { Router, hashHistory } from "react-router";
+import { syncHistoryWithStore } from "react-router-redux";
+import injectTapEventPlugin from "react-tap-event-plugin";
+import routes from "./routes";
+import configureStore from "./store/configureStore";
+import { getCfg } from "./config.js";
 
 var cfg = getCfg();
 
-var grpcport = '';
+var grpcport = "";
 var neededBlocks = 0;
 var today = new Date();
 var startDate = new Date();
 var totalDays = 0.0;
 var foundStakePoolConfig = false;
-var currentStakePoolConfig = cfg.get('stakepools');
-var network = cfg.get('network');
-var hiddenAccounts = cfg.get('hiddenaccounts');
+var currentStakePoolConfig = cfg.get("stakepools");
+var network = cfg.get("network");
+var hiddenAccounts = cfg.get("hiddenaccounts");
 if (currentStakePoolConfig !== undefined) {
   for (var i = 0; i < currentStakePoolConfig.length; i++) {
     if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
@@ -29,33 +29,33 @@ if (currentStakePoolConfig !== undefined) {
   }
 }
 if (currentStakePoolConfig == undefined) {
-  setTimeout(currentStakePoolConfig = cfg.get('stakepools'), 1000);
+  setTimeout(currentStakePoolConfig = cfg.get("stakepools"), 1000);
 }
 var blocksPerDay = 0;
-if (network == 'testnet') {
-  grpcport = cfg.get('wallet_port_testnet');
-  startDate = new Date('03/15/2017');
+if (network == "testnet") {
+  grpcport = cfg.get("wallet_port_testnet");
+  startDate = new Date("03/15/2017");
   totalDays = (today.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24;
   blocksPerDay = 720;
   neededBlocks = totalDays * blocksPerDay * (0.95);
 } else {
-  startDate = new Date('02/08/2016');
+  startDate = new Date("02/08/2016");
   totalDays = (today.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24;
   blocksPerDay = 288;
   neededBlocks = totalDays * blocksPerDay * (0.95);
-  grpcport = cfg.get('wallet_port');
+  grpcport = cfg.get("wallet_port");
 }
 
 
 var initialState = {
   settings: {
     currentSettings: {
-      currencyDisplay: cfg.get('currency_display'),
-      network: cfg.get('network'),
+      currencyDisplay: cfg.get("currency_display"),
+      network: cfg.get("network"),
     },
     tempSettings: {
-      currencyDisplay: cfg.get('currency_display'),
-      network: cfg.get('network'),
+      currencyDisplay: cfg.get("currency_display"),
+      network: cfg.get("network"),
     },
     settingsChanged: false,
   },
@@ -63,18 +63,18 @@ var initialState = {
     currentStakePoolConfig: currentStakePoolConfig,
     currentStakePoolConfigRequest: false,
     currentStakePoolConfigError: null,
-    currentStakePoolConfigSuccessMessage: '',
+    currentStakePoolConfigSuccessMessage: "",
     activeStakePoolConfig: foundStakePoolConfig,
   },
   version: {
     // RequiredVersion
-    requiredVersion: '4.16.0',
+    requiredVersion: "4.16.0",
     versionInvalid: false,
     versionInvalidError: null,
     // VersionService
     versionService: null,
     getVersionServiceRequestAttempt: false,
-    getVersionServiceError: '',
+    getVersionServiceError: "",
     // Balance
     getWalletRPCVersionError: null,
     getWalletRPCVersionRequestAttempt: false,
@@ -82,7 +82,7 @@ var initialState = {
   },
   grpc: {
     // WalletService
-    address: cfg.get('wallet_rpc_host'),
+    address: cfg.get("wallet_rpc_host"),
     port: grpcport,
     walletService: null,
     network: network,
@@ -96,7 +96,7 @@ var initialState = {
 
     // GetWalletService
     getWalletServiceRequestAttempt: false,
-    getWalletServiceError: '',
+    getWalletServiceError: "",
     // Balance
     getBalanceError: null,
     getBalanceRequestAttempt: false,
@@ -209,7 +209,7 @@ var initialState = {
   notifications: {
     synced: true,
     currentHeight: 0,
-    timeBackString: '',
+    timeBackString: "",
     blocksPerDay: blocksPerDay,
     transactionNtfnsRequestAttempt: false,
     transactionNtfnsResponse: null,
@@ -248,12 +248,12 @@ var initialState = {
     importScriptRequestAttempt: false,
     importScriptResponse: null,
     importScriptError: null,
-    importScriptSuccess: '',
+    importScriptSuccess: "",
     // ChangePassphrase
     changePassphraseRequestAttempt: false,
     changePassphraseResponse: null,
     changePassphraseError: null,
-    changePassphraseSuccess: '',
+    changePassphraseSuccess: "",
     // ChangePassphrase
     loadActiveDataFiltersRequestAttempt: false,
     loadActiveDataFiltersResponse: null,
@@ -273,22 +273,22 @@ var initialState = {
     // PurchaseTicket
     purchaseTicketsRequestAttempt: false,
     purchaseTicketsResponse: null,
-    purchaseTicketsSuccess: '',
+    purchaseTicketsSuccess: "",
     purchaseTicketsError: null,
     // RevokeTickets
     revokeTicketsRequestAttempt: false,
     revokeTicketsResponse: null,
-    revokeTicketsSuccess: '',
+    revokeTicketsSuccess: "",
     revokeTicketsError: null,
 
     // TicketBuyerService
     ticketBuyerService: null,
     // TicketBuyerConfig
-    balanceToMaintain: cfg.get('balancetomaintain'),
-    maxFee: cfg.get('maxfee'),
-    maxPriceAbsolute: cfg.get('maxpriceabsolute'),
-    maxPriceRelative: cfg.get('maxpricerelative'),
-    maxPerBlock: cfg.get('maxperblock'),
+    balanceToMaintain: cfg.get("balancetomaintain"),
+    maxFee: cfg.get("maxfee"),
+    maxPriceAbsolute: cfg.get("maxpriceabsolute"),
+    maxPriceRelative: cfg.get("maxpricerelative"),
+    maxPerBlock: cfg.get("maxperblock"),
     getTicketBuyerConfigRequestAttempt: false,
     getTicketBuyerConfigResponse: null,
     getTicketBuyerConfigSuccess: null,
@@ -323,5 +323,5 @@ render(
   <Provider store={store}>
     <Router history={history} routes={routes} />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );

@@ -1,17 +1,17 @@
 // @flow
-import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
-import { connect } from 'react-redux';
-import ErrorScreen from '../ErrorScreen';
-import CircularProgress from 'material-ui/CircularProgress';
-import { reverseHash } from '../../helpers/byteActions';
-import SideBar from '../SideBar';
-import Balance from '../Balance';
-import Header from '../Header';
-import KeyBlueButton from '../KeyBlueButton';
-import { SendStyles } from './ViewStyles';
-import PassphraseModal from '../PassphraseModal';
-import Select from 'react-select';
+import React, { Component } from "react";
+import { PropTypes } from "prop-types";
+import { connect } from "react-redux";
+import ErrorScreen from "../ErrorScreen";
+import CircularProgress from "material-ui/CircularProgress";
+import { reverseHash } from "../../helpers/byteActions";
+import SideBar from "../SideBar";
+import Balance from "../Balance";
+import Header from "../Header";
+import KeyBlueButton from "../KeyBlueButton";
+import { SendStyles } from "./ViewStyles";
+import PassphraseModal from "../PassphraseModal";
+import Select from "react-select";
 
 function mapStateToProps(state) {
   return {
@@ -33,7 +33,7 @@ class Send extends Component{
 
     var defaultSpendable = 0;
     var unitDivisor = 1;
-    if (this.props.currentSettings.currencyDisplay == 'DCR') {
+    if (this.props.currentSettings.currencyDisplay == "DCR") {
       unitDivisor = 100000000;
     }
     var accountsList = Array();
@@ -42,8 +42,8 @@ class Send extends Component{
         if (this.props.balances[i].accountNumber == 0) {
           defaultSpendable = this.props.balances[i].spendable;
         }
-        if (this.props.balances[i].accountNumber == 0 || this.props.balances[i].accountName != 'imported' && this.props.balances[i].spendable > 0) {
-          accountsList.push({ value: this.props.balances[i].accountNumber, label: this.props.balances[i].accountName + ': ' +this.props.balances[i].spendable / unitDivisor + ' ' + this.props.currentSettings.currencyDisplay});
+        if (this.props.balances[i].accountNumber == 0 || this.props.balances[i].accountName != "imported" && this.props.balances[i].spendable > 0) {
+          accountsList.push({ value: this.props.balances[i].accountNumber, label: this.props.balances[i].accountName + ": " +this.props.balances[i].spendable / unitDivisor + " " + this.props.currentSettings.currencyDisplay});
         }
       }
     }
@@ -52,7 +52,7 @@ class Send extends Component{
       account: accountsList[0],
       accountSpendable: defaultSpendable,
       confirmations: 0,
-      outputs: [{key:0, destination: '', amount: 0, amountStr: '', addressError: null, amountError: null}],
+      outputs: [{key:0, destination: "", amount: 0, amountStr: "", addressError: null, amountError: null}],
       totalOutputAmount: 0,
       privPassError: null,
       accountsList: accountsList,
@@ -66,7 +66,7 @@ class Send extends Component{
         if (nextProps.balances[i].accountNumber == this.state.account) {
           newAccountSpendableBalance = nextProps.balances[i].spendable;
         }
-        if (nextProps.balances[i].accountNumber == 0 || nextProps.balances[i].accountName != 'imported' && nextProps.balances[i].spendable > 0) {
+        if (nextProps.balances[i].accountNumber == 0 || nextProps.balances[i].accountName != "imported" && nextProps.balances[i].spendable > 0) {
           accountsList.push({ value: nextProps.balances[i].accountNumber, label: nextProps.balances[i].accountName });
         }
       }
@@ -81,7 +81,7 @@ class Send extends Component{
   }
 
   clearTransactionData() {
-    this.setState({confirmTxModal: false, totalOutputAmount: 0, account: 0, confirmations: 0, outputs: [{key:0, destination: '', amount: 0, amountStr: '', addressError: null, amountError: null}]});
+    this.setState({confirmTxModal: false, totalOutputAmount: 0, account: 0, confirmations: 0, outputs: [{key:0, destination: "", amount: 0, amountStr: "", addressError: null, amountError: null}]});
     this.props.clearTransaction();
   }
   confirmTx() {
@@ -102,17 +102,17 @@ class Send extends Component{
     var checkErrors = false;
     var updatedOutputErrors = this.state.outputs;
     for (var i = 0; i < updatedOutputErrors.length; i++ ) {
-      if (updatedOutputErrors[i].destination == null || updatedOutputErrors[i].destination == '' ) {
-        updatedOutputErrors[i].addressError = '*Please enter a valid address';
-        updatedOutputErrors[i].destination = '';
+      if (updatedOutputErrors[i].destination == null || updatedOutputErrors[i].destination == "" ) {
+        updatedOutputErrors[i].addressError = "*Please enter a valid address";
+        updatedOutputErrors[i].destination = "";
         checkErrors = true;
       }
       if (updatedOutputErrors[i].amount == null || updatedOutputErrors[i].amount <= 0) {
-        updatedOutputErrors[i].amountError = '*Please enter a valid amount (> 0)';
+        updatedOutputErrors[i].amountError = "*Please enter a valid amount (> 0)";
         checkErrors = true;
       }
       if (updatedOutputErrors[i].amount > Number.MAX_SAFE_INTEGER) {
-        updatedOutputErrors[i].amountError = '*Please enter a valid amount (too large)';
+        updatedOutputErrors[i].amountError = "*Please enter a valid amount (too large)";
         checkErrors = true;
       }
       if (updatedOutputErrors[i].addressError !== null || updatedOutputErrors[i].amountError !== null ) {
@@ -126,7 +126,7 @@ class Send extends Component{
     this.props.constructTransactionAttempt(this.state.account.value, this.state.confirmations, this.state.outputs);
   }
   appendOutput() {
-    var newOutput = {key:`${this.state.outputs.length}`, destination: '', amount: 0, amountStr: '', addressError: null, amountError: null};
+    var newOutput = {key:`${this.state.outputs.length}`, destination: "", amount: 0, amountStr: "", addressError: null, amountError: null};
     this.setState({ outputs: this.state.outputs.concat([newOutput])});
   }
   removeOutput(outputKey) {
@@ -146,8 +146,8 @@ class Send extends Component{
     // later can do full address validtion from dcrutil code
     var updateOutputs = this.state.outputs;
     updateOutputs[outputKey].destination = dest;
-    if (dest == '') {
-      updateOutputs[outputKey].addressError = '*Please enter a valid address';
+    if (dest == "") {
+      updateOutputs[outputKey].addressError = "*Please enter a valid address";
     } else {
       updateOutputs[outputKey].destination = dest;
       updateOutputs[outputKey].addressError = null;
@@ -176,10 +176,10 @@ class Send extends Component{
 
     // Default to DCR.
     var units = 100000000;
-    if (unitLabel === 'DCR') {
+    if (unitLabel === "DCR") {
       units = 100000000;
     }
-    if (unitLabel === 'atoms') {
+    if (unitLabel === "atoms") {
       units = 1;
     }
     var updateOutputs = this.state.outputs;
@@ -187,11 +187,11 @@ class Send extends Component{
 
     var amount = parseFloat(amountStr);
     if (isNaN(amount)) {
-      updateOutputs[outputKey].amountError = '*Please enter a valid amount';
+      updateOutputs[outputKey].amountError = "*Please enter a valid amount";
       updateOutputs[outputKey].amount = 0;
     } else {
       if (amount <= 0) {
-        updateOutputs[outputKey].amountError = '*Please enter a valid amount (> 0)';
+        updateOutputs[outputKey].amountError = "*Please enter a valid amount (> 0)";
         updateOutputs[outputKey].amount = 0;
       } else {
         updateOutputs[outputKey].amount = amount * units;
@@ -215,9 +215,9 @@ class Send extends Component{
     var unitLabel = currentSettings.currencyDisplay;
     var networkTextDiv = (<div></div>);
     if (getNetworkResponse !== null) {
-      if (getNetworkResponse.networkStr == 'testnet') {
+      if (getNetworkResponse.networkStr == "testnet") {
         networkTextDiv = (<div style={SendStyles.headerMetaSend}>Testnet Decred addresses always begin with letter T contain 26-35 alphanumeric characters e.g. <span style={SendStyles.headerMetaSpanSend}>TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>.</div>);
-      } else if (getNetworkResponse.networkStr == 'mainnet') {
+      } else if (getNetworkResponse.networkStr == "mainnet") {
         networkTextDiv = (<div style={SendStyles.headerMetaSend}>Mainnet Decred addresses always begin with letter D contain 26-35 alphanumeric characters e.g. <span style={SendStyles.headerMetaSpanSend}>DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>.</div>);
       }
     }
@@ -230,7 +230,7 @@ class Send extends Component{
             <div key="signError"  style={SendStyles.viewNotificationError}><div style={SendStyles.sendAddressDeleteIconHeader} onClick={() => this.props.clearSignTxError()}/>{signTransactionError}</div> :
             <div key="signError" ></div>,
           publishTransactionResponse !== null ?
-            <div key="pubSuccess"  style={SendStyles.viewNotificationSuccess}><div style={SendStyles.sendAddressDeleteIconHeader} onClick={() => this.props.clearPublishTxSuccess()}/>Published Tx: {reverseHash(publishTransactionResponse.toString('hex'))}</div> :
+            <div key="pubSuccess"  style={SendStyles.viewNotificationSuccess}><div style={SendStyles.sendAddressDeleteIconHeader} onClick={() => this.props.clearPublishTxSuccess()}/>Published Tx: {reverseHash(publishTransactionResponse.toString("hex"))}</div> :
             <div key="pubSuccess" ></div>]}
         headerTitleOverview={<div style={SendStyles.headerTitleSend}>Send Funds</div>}
         headerMetaOverview={networkTextDiv}>
@@ -248,9 +248,9 @@ class Send extends Component{
     var selectAccounts = (
         <Select
           clearable={false}
-          style={{zIndex:'9'}}
+          style={{zIndex:"9"}}
           onChange={(val) => this.updateAccountNumber(val)}
-          placeholder={'Select account...'}
+          placeholder={"Select account..."}
           multi={false}
           value={this.state.account}
           valueKey="value" labelKey="label"
@@ -265,7 +265,7 @@ class Send extends Component{
             hidden={!this.state.confirmTxModal}
             submitPassphrase={(privpass)=>this.submitSignPublishTx(privpass)}
             cancelPassphrase={()=>this.cancelTx()}
-            heading={'Confirm Transaction'}
+            heading={"Confirm Transaction"}
             description={<div>Please confirm your transaction for <Balance amount={totalSpent}/></div>}
           />
         <div style={!this.state.confirmTxModal ? SendStyles.content : SendStyles.contentBlur}>
@@ -290,7 +290,7 @@ class Send extends Component{
                           value={output.destination}
                           type="text"
                           style={SendStyles.sendAddressHashTo}
-                          key={'destination'+output.key}
+                          key={"destination"+output.key}
                           placeholder="Destination Address"
                           onChange={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}
                           onBlur={()=>this.submitConstructTx()}/>
@@ -305,7 +305,7 @@ class Send extends Component{
                           value={output.amountStr}
                           type="text"
                           style={SendStyles.sendAddressInputAmount}
-                          key={'amount'+output.key}
+                          key={"amount"+output.key}
                           placeholder="Amount"
                           onChange={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}
                           onBlur={()=>this.submitConstructTx()}/>
@@ -331,7 +331,7 @@ class Send extends Component{
                           value={output.destination}
                           type="text"
                           style={SendStyles.sendAddressHashTo}
-                          key={'destination'+output.key}
+                          key={"destination"+output.key}
                           placeholder="Destination Address"
                           onChange={(e) =>{this.updateOutputDestination(output.key, e.target.value);}}
                           onBlur={()=>this.submitConstructTx()}/>
@@ -340,7 +340,7 @@ class Send extends Component{
                     </div>
                     {this.state.outputs.length - 1 === parseInt(output.key) ?
                       <div style={SendStyles.sendAddressDeleteIcon} onClick={() => this.removeOutput(output.key)}></div> :
-                      <div style={{width:'39px', height: '34px', float: 'left'}}></div>
+                      <div style={{width:"39px", height: "34px", float: "left"}}></div>
                     }
                     <div style={SendStyles.sendAmount}>
                       <div style={SendStyles.sendAddressAmountSumAndCurrency}>
@@ -349,7 +349,7 @@ class Send extends Component{
                           value={output.amountStr}
                           type="text"
                           style={SendStyles.sendAddressInputAmount}
-                          key={'amount'+output.key}
+                          key={"amount"+output.key}
                           placeholder="Amount"
                           onChange={(e) =>{this.updateOutputAmount(output.key, e.target.value, unitLabel);}}
                           onBlur={()=>this.submitConstructTx()}/>
@@ -373,7 +373,7 @@ class Send extends Component{
                 Send
               </KeyBlueButton>
               {constructTxError !== null ?
-              <span style={{color: 'red', width: '330px', float: 'left', paddingLeft: '20px', paddingTop: '30px'}}>
+              <span style={{color: "red", width: "330px", float: "left", paddingLeft: "20px", paddingTop: "30px"}}>
                 {constructTxError}
               </span> :
               <div/>

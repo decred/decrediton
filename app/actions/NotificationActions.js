@@ -1,20 +1,20 @@
 // @flow
-import { transactionNtfs, accountNtfs } from '../middleware/grpc/client';
+import { transactionNtfs, accountNtfs } from "../middleware/grpc/client";
 import { getAccountsAttempt, getStakeInfoAttempt,
-  getTicketPriceAttempt, getNetworkAttempt } from './ClientActions';
-import { timeBackString } from '../helpers/dateFormat.js';
-import { reverseHash } from '../helpers/byteActions';
-import { TransactionNotificationsRequest, AccountNotificationsRequest} from '../middleware/walletrpc/api_pb';
-import { GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_COINBASE, GETTRANSACTIONS_PROGRESS_TICKET, GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE } from './ClientActions';
-import { TransactionDetails }  from '../middleware/walletrpc/api_pb';
+  getTicketPriceAttempt, getNetworkAttempt } from "./ClientActions";
+import { timeBackString } from "../helpers/dateFormat.js";
+import { reverseHash } from "../helpers/byteActions";
+import { TransactionNotificationsRequest, AccountNotificationsRequest} from "../middleware/walletrpc/api_pb";
+import { GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_COINBASE, GETTRANSACTIONS_PROGRESS_TICKET, GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE } from "./ClientActions";
+import { TransactionDetails }  from "../middleware/walletrpc/api_pb";
 
-export const TRANSACTIONNTFNS_START = 'TRANSACTIONNTFNS_START';
-export const TRANSACTIONNTFNS_FAILED = 'TRANSACTIONNTFNS_FAILED';
-export const TRANSACTIONNTFNS_DATA = 'TRANSACTIONNTFNS_DATA';
-export const TRANSACTIONNTFNS_DATA_UNMINED = 'TRANSACTIONNTFNS_DATA_UNMINED';
-export const TRANSACTIONNTFNS_DATA_UNMINED_UPDATE = 'TRANSACTIONNTFNS_DATA_UNMINED_UPDATE';
-export const TRANSACTIONNTFNS_SYNCING = 'TRANSACTIONNTFNS_SYNCING';
-export const TRANSACTIONNTFNS_END = 'TRANSACTIONNTFNS_END';
+export const TRANSACTIONNTFNS_START = "TRANSACTIONNTFNS_START";
+export const TRANSACTIONNTFNS_FAILED = "TRANSACTIONNTFNS_FAILED";
+export const TRANSACTIONNTFNS_DATA = "TRANSACTIONNTFNS_DATA";
+export const TRANSACTIONNTFNS_DATA_UNMINED = "TRANSACTIONNTFNS_DATA_UNMINED";
+export const TRANSACTIONNTFNS_DATA_UNMINED_UPDATE = "TRANSACTIONNTFNS_DATA_UNMINED_UPDATE";
+export const TRANSACTIONNTFNS_SYNCING = "TRANSACTIONNTFNS_SYNCING";
+export const TRANSACTIONNTFNS_END = "TRANSACTIONNTFNS_END";
 
 function transactionNtfnsData(response) {
   return (dispatch, getState) => {
@@ -53,7 +53,7 @@ function transactionNtfnsData(response) {
             for (var j = 0; j < attachedBlocks.length; j++){
               var index = 0;
               for (var i = 0; i < attachedBlocks[j].getTransactionsList().length; i++) {
-                if (Buffer.from(unmined[k].getHash()).toString('hex') == Buffer.from(attachedBlocks[j].getTransactionsList()[i].getHash()).toString('hex')) {
+                if (Buffer.from(unmined[k].getHash()).toString("hex") == Buffer.from(attachedBlocks[j].getTransactionsList()[i].getHash()).toString("hex")) {
                   var tx = {
                     height: attachedBlocks[j].getHeight(),
                     index: index,
@@ -117,13 +117,13 @@ function transactionNtfnsData(response) {
       for (var z = 0; z < response.getUnminedTransactionsList().length; z++) {
         var found = false;
         for (var y = 0; y < unmined.length; y++) {
-          if (Buffer.from(unmined[y].getHash()).toString('hex') == Buffer.from(response.getUnminedTransactionsList()[z].getHash()).toString('hex')) {
+          if (Buffer.from(unmined[y].getHash()).toString("hex") == Buffer.from(response.getUnminedTransactionsList()[z].getHash()).toString("hex")) {
             found = true;
             break;
           }
         }
         if (!found) {
-          var type = 'Regular';
+          var type = "Regular";
           var fee = response.getUnminedTransactionsList()[z].getFee();
           var inputAmts = 0;
           var outputAmts = 0;
@@ -135,28 +135,28 @@ function transactionNtfnsData(response) {
           }
           var amount = outputAmts - inputAmts;
           if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.COINBASE) {
-            type = 'Coinbase';
+            type = "Coinbase";
           } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.TICKET_PURCHASE) {
             amount = outputAmts;
-            type = 'Ticket';
+            type = "Ticket";
           } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.VOTE) {
-            type = 'Vote';
+            type = "Vote";
             setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
           } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.REVOKE) {
-            type = 'Revoke';
+            type = "Revoke";
             setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
           }
 
-          if (type == 'Regular' && amount > 0) {
-            type = 'Receive';
+          if (type == "Regular" && amount > 0) {
+            type = "Receive";
             setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
-          } else if (type == 'Regular' && amount < 0 && (fee == Math.abs(amount))) {
-            type = 'Transfer';
-          } else if (type == 'Regular' && amount < 0 && (fee != Math.abs(amount))) {
-            type = 'Send';
+          } else if (type == "Regular" && amount < 0 && (fee == Math.abs(amount))) {
+            type = "Transfer";
+          } else if (type == "Regular" && amount < 0 && (fee != Math.abs(amount))) {
+            type = "Send";
           }
           var message = {
-            txHash: reverseHash(Buffer.from(response.getUnminedTransactionsList()[z].getHash()).toString('hex')),
+            txHash: reverseHash(Buffer.from(response.getUnminedTransactionsList()[z].getHash()).toString("hex")),
             type: type,
             amount: amount,
             fee: fee,
@@ -189,10 +189,10 @@ export function transactionNtfnsEnd() {
   };
 }
 
-export const ACCOUNTNTFNS_START = 'ACCOUNTNTFNS_START';
-export const ACCOUNTNTFNS_FAILED = 'ACCOUNTNTFNS_FAILED';
-export const ACCOUNTNTFNS_DATA = 'ACCOUNTNTFNS_DATA';
-export const ACCOUNTNTFNS_END = 'ACCOUNTNTFNS_END';
+export const ACCOUNTNTFNS_START = "ACCOUNTNTFNS_START";
+export const ACCOUNTNTFNS_FAILED = "ACCOUNTNTFNS_FAILED";
+export const ACCOUNTNTFNS_DATA = "ACCOUNTNTFNS_DATA";
+export const ACCOUNTNTFNS_END = "ACCOUNTNTFNS_END";
 
 export function accountNtfnsStart() {
   var request = new AccountNotificationsRequest();
@@ -214,7 +214,7 @@ export function accountNtfnsEnd() {
   };
 }
 
-export const CLEARUNMINEDMESSAGE = 'CLEARUNMINEDMESSAGE';
+export const CLEARUNMINEDMESSAGE = "CLEARUNMINEDMESSAGE";
 export function clearNewUnminedMessage() {
   return { type: CLEARUNMINEDMESSAGE };
 }
