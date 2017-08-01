@@ -59,7 +59,28 @@ var cfg = getCfg();
 
 var logger = new (winston.Logger)({
   transports: [
-    new (winston.transports.File)({ json: false, filename: path.join(app.getPath("userData"),"decrediton.log") })
+    new (winston.transports.File)({
+      json: false,
+      filename: path.join(app.getPath("userData"),"decrediton.log"),
+      timestamp: function() {
+        // Format the timestamp in local time like the dcrd and dcrwallet logs.
+        let pad = (s, n) => {
+          n = n || 2;
+          s = Array(n).join("0") + s;
+          return s.substring(s.length - n);
+        };
+
+        let date = new Date();
+        let y = date.getFullYear();
+        let mo = pad(date.getMonth() + 1);
+        let d = pad(date.getDate());
+        let h = pad(date.getHours());
+        let mi = pad(date.getMinutes());
+        let s = pad(date.getSeconds());
+        let ms = pad(date.getMilliseconds(), 3);
+        return `${y}-${mo}-${d} ${h}:${mi}:${s}.${ms}`;
+      }
+    })
   ]
 });
 
