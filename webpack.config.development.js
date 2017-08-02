@@ -4,15 +4,12 @@
  * https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
  */
 import webpack from "webpack";
-import validate from "webpack-validator";
 import merge from "webpack-merge";
-import formatter from "eslint-formatter-pretty";
 import baseConfig from "./webpack.config.base";
 
 const port = process.env.PORT || 3000;
 
-export default validate(merge(baseConfig, {
-  debug: true,
+export default merge(baseConfig, {
 
   devtool: "inline-source-map",
 
@@ -27,39 +24,63 @@ export default validate(merge(baseConfig, {
   },
 
   module: {
-    // preLoaders: [
-    //   {
-    //     test: /\.js$/,
-    //     loader: 'eslint-loader',
-    //     exclude: /node_modules/
-    //   }
-    // ],
-    loaders: [
+    rules: [
       {
         test: /\.min\.css$/,
-        loaders: [
-          "style-loader",
-          "css-loader?sourceMap"
-        ]
+        use: [{
+          loader: "style-loader"
+        }, {
+          loader: "css-loader",
+          options: {
+            sourceMap: true
+          }
+        }]
       },
+
       {
         test: /^((?!\.min).)*\.css$/,
-        loaders: [
-          "style-loader",
-          "css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]"
-        ]
+        use: [{
+          loader: "style-loader"
+        }, {
+          loader: "css-loader",
+          options: {
+            sourceMap: true,
+            modules: true,
+            importLoaders: 1,
+            localIdentName: "[name]__[local]___[hash:base64:5]"
+          }
+        }]
       },
 
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" },
-    ]
-  },
+      {
+        test: [ /\.woff(\?v=\d+\.\d+\.\d+)?$/, /\.woff2(\?v=\d+\.\d+\.\d+)?$/ ],
+        use: [{
+          loader: "url-loader",
+          options: { limit: 10000, mimetype: "application/font-woff" }
+        }]
+      },
 
-  eslint: {
-    formatter
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: "url-loader",
+          options: { limit: 10000, mimetype: "application/octet-stream" }
+        }]
+      },
+
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{ loader: "file-loader" }]
+      },
+
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: "url-loader",
+          options: { limit: 10000, mimetype: "image/svg+xml" }
+        }]
+      }
+    ]
   },
 
   plugins: [
@@ -67,15 +88,19 @@ export default validate(merge(baseConfig, {
     new webpack.HotModuleReplacementPlugin(),
 
     // “If you are using the CLI, the webpack process will not exit with an error code by enabling this plugin.”
-    // https://github.com/webpack/docs/wiki/list-of-plugins#noerrorsplugin
-    new webpack.NoErrorsPlugin(),
+    // https://webpack.js.org/plugins/no-emit-on-errors-plugin/
+    new webpack.NoEmitOnErrorsPlugin(),
 
     // NODE_ENV should be production so that modules do not perform certain development checks
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development")
+    }),
+
+    new webpack.LoaderOptionsPlugin({
+      debug: true
     })
   ],
 
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
   target: "electron-renderer"
-}));
+});

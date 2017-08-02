@@ -3,25 +3,33 @@
  */
 
 import path from "path";
-import validate from "webpack-validator";
 import {
   dependencies as externals
 } from "./app/package.json";
 
-export default validate({
+export default {
   module: {
-    loaders: [{
+    rules: [{
       test: /\.jsx?$/,
-      loaders: ["babel-loader"],
-      exclude: /node_modules/
+      exclude: /node_modules/,
+      use: [{
+        loader: "babel-loader"
+      }]
     }, {
       test: /\.json$/,
-      loader: "json-loader"
+      use: [{
+        loader: "json-loader"
+      }]
     },
-    { test: /\.(png|jpg)$/,
-      loader: "url-loader?limit=8192"
-    }
-    ]
+    {
+      test: /\.(png|jpg)$/,
+      use: [{
+        loader: "url-loader",
+        options: {
+          limit: 8192
+        }
+      }]
+    }]
   },
 
   output: {
@@ -34,11 +42,11 @@ export default validate({
 
   // https://webpack.github.io/docs/configuration.html#resolve
   resolve: {
-    extensions: ["", ".js", ".jsx", ".json"],
-    packageMains: ["webpack", "browser", "web", "browserify", ["jam", "main"], "main"]
+    extensions: [".js", ".jsx", ".json"],
+    mainFields: ["webpack", "browser", "web", "browserify", ["jam", "main"], "main"]
   },
 
   plugins: [],
 
   externals: Object.keys(externals || {})
-});
+};
