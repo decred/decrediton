@@ -4,13 +4,12 @@
 
 import path from "path";
 import webpack from "webpack";
-import validate from "webpack-validator";
 import ExtractTextPlugin from "extract-text-webpack-plugin";
 import merge from "webpack-merge";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import baseConfig from "./webpack.config.base";
 
-const config = validate(merge(baseConfig, {
+const config = merge(baseConfig, {
   devtool: "cheap-module-source-map",
 
   entry: [
@@ -24,30 +23,60 @@ const config = validate(merge(baseConfig, {
   },
 
   module: {
-    loaders: [
+    rules: [
       // Extract all .global.css to style.css as is
       {
         test: /\.global\.css$/,
-        loader: ExtractTextPlugin.extract(
-          "style-loader",
-          "css-loader"
-        )
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: "css-loader"
+        })
       },
 
       // Pipe other styles through css modules and append to style.css
       {
         test: /^((?!\.global).)*\.css$/,
-        loader: ExtractTextPlugin.extract(
-          "style-loader",
-          "css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]"
-        )
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: [{
+            loader: "css-loader",
+            options: {
+              modules: true,
+              importLoaders: 1,
+              localIdentName: "[name]__[local]___[hash:base64:5]"
+            }
+          }]
+        })
       },
 
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" },
+      {
+        test: [ /\.woff(\?v=\d+\.\d+\.\d+)?$/, /\.woff2(\?v=\d+\.\d+\.\d+)?$/ ],
+        use: [{
+          loader: "url-loader",
+          options: { limit: 10000, mimetype: "application/font-woff" }
+        }]
+      },
+
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: "url-loader",
+          options: { limit: 10000, mimetype: "application/octet-stream" }
+        }]
+      },
+
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{ loader: "file-loader" }]
+      },
+
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: "url-loader",
+          options: { limit: 10000, mimetype: "image/svg+xml"}
+        }]
+      }
     ]
   },
 
@@ -68,7 +97,7 @@ const config = validate(merge(baseConfig, {
         warnings: false
       }
     }),
-    new ExtractTextPlugin("style.css", { allChunks: true }),
+    new ExtractTextPlugin({ filename: "style.css", allChunks: true }),
     new HtmlWebpackPlugin({
       filename: "../app.html",
       template: "app/app.html",
@@ -78,6 +107,6 @@ const config = validate(merge(baseConfig, {
 
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
   target: "electron-renderer"
-}));
+});
 
 export default config;
