@@ -697,17 +697,15 @@ maxFeePerKb, maxPriceRelative, maxPriceAbsolute, maxPerBlock, stakepool) {
           dispatch({ error, type: STARTAUTOBUYER_FAILED });
         } else {
           var success = "You successfully started the auto ticket buyer.";
-          return (dispatch) => {
-            dispatch({ success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS,
-              balanceToMaintain: balanceToMaintain,
-              maxFeePerKb: maxFeePerKb*1e8,
-              maxPriceRelative: maxPriceRelative,
-              maxPriceAbsolute: maxPriceAbsolute,
-              maxPerBlock: maxPerBlock,
-            });
-            setTimeout(()=>dispatch(getTicketBuyerConfigAttempt(), 1000));
-          };
-        }
+          dispatch({ success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS,
+            balanceToMaintain: balanceToMaintain,
+            maxFeePerKb: maxFeePerKb*1e8,
+            maxPriceRelative: maxPriceRelative,
+            maxPriceAbsolute: maxPriceAbsolute,
+            maxPerBlock: maxPerBlock,
+          });
+          setTimeout(()=>dispatch(getTicketBuyerConfigAttempt(), 1000));
+        };
       });
   };
 }
