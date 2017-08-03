@@ -13,7 +13,7 @@ var styles = {
     color: "#fff",
     fontSize: "13px",
     lineHeight: "9px",
-    fontWeight: "700",
+    fontWeight: "600",
     textAlign: "center",
     textDecoration: "none",
     textTransform: "capitalize",
