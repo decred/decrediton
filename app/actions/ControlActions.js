@@ -705,7 +705,7 @@ maxFeePerKb, maxPriceRelative, maxPriceAbsolute, maxPerBlock, stakepool) {
             maxPerBlock: maxPerBlock,
           });
           setTimeout(()=>dispatch(getTicketBuyerConfigAttempt(), 1000));
-        };
+        }
       });
   };
 }
