@@ -29,9 +29,7 @@
   "build": {
     "appId": "com.Electron.Decrediton",
     "category": "public.app-category.tools",
-    "icon": "icon",
     "dmg": {
-      "icon": "icon.icns",
       "contents": [
         {
           "x": 410,
@@ -62,12 +60,13 @@
     },
     "linux": {
       "target": [
+        "deb",
+        "rpm",
         "tar.gz"
       ]
     }
   },
   "directories": {
-    "buildResources": "resources",
     "output": "release"
   },
   "bin": {
