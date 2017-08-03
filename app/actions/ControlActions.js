@@ -736,19 +736,10 @@ export const STOPAUTOBUYER_CLEAR_SUCCESS= "STOPAUTOBUYER_CLEAR_SUCCESS";
 
 export function stopAutoBuyerAttempt() {
   var request = new StopAutoBuyerRequest();
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: STOPAUTOBUYER_ATTEMPT });
-    dispatch(stopAutoBuyerAction());
-  };
-}
-
-function stopAutoBuyerAction() {
   return (dispatch, getState) => {
+    dispatch({ type: STOPAUTOBUYER_ATTEMPT });
     const { ticketBuyerService } = getState().grpc;
-    const { stopAutoBuyerRequest } = getState().control;
-    ticketBuyerService.stopAutoBuyer(stopAutoBuyerRequest,
+    ticketBuyerService.stopAutoBuyer(request,
       function(error, stopAutoBuyerResponse) {
         if (error) {
           dispatch({ error, type: STOPAUTOBUYER_FAILED });
