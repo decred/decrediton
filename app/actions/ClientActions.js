@@ -400,7 +400,7 @@ function getTransactionsInfoProgress(response) {
         updatedTicket.unshift(tx);
       } else if (tx.type == TransactionDetails.TransactionType.VOTE) {
         updatedVote.unshift(tx);
-      } else if (tx.type == TransactionDetails.TransactionType.REVOKE) {
+      } else if (tx.type == TransactionDetails.TransactionType.REVOCATION) {
         updatedRevoke.unshift(tx);
       }
     }
