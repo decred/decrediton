@@ -38,7 +38,7 @@ mkdir $DIST_DIR && chmod 777 $DIST_DIR
 docker pull decred/$DOCKER_IMAGE_TAG
 
 docker run --rm -it -v $DIST_DIR:/release -v $(pwd):/src decred/$DOCKER_IMAGE_TAG /bin/bash -c "\
-  apt-get install -y rpm
+  apt-get install -y librpmbuild3
   . \$HOME/.nvm/nvm.sh && \
   mkdir decrediton && \
   rsync -ra --filter=':- .gitignore'  /src/ decrediton/ && \
