@@ -124,7 +124,7 @@ const styles = {
     color: "#8997a5",
   },
   agendaCardBottomCfgLastBold: {
-    fontWeight: "600",
+    fontWeight: "700",
   },
   agendaCardPercent: {
     float: "left",
@@ -141,7 +141,7 @@ const styles = {
   },
   agendaPercentNumber: {
     fontSize: "45px",
-    fontWeight: "600",
+    fontWeight: "700",
   },
   agendaCardName: {
     paddingRight: "10px",
@@ -159,7 +159,7 @@ const styles = {
     borderRadius: "3px",
     backgroundColor: "#d4f0fd",
     fontSize: "13px",
-    fontWeight: "600",
+    fontWeight: "700",
     textTransform: "capitalize",
   },
 };

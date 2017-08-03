@@ -2504,7 +2504,7 @@ export const StakePoolStyles = {
     color: "#0c1e3e",
   },
   agendaOverviewAgendaIdId: {
-    fontWeight: "600",
+    fontWeight: "700",
   },
   agendaOverviewReadMore: {
     display: "block",
@@ -2542,7 +2542,7 @@ export const StakePoolStyles = {
     width: "100%",
     color: "#596d81",
     fontSize: "13px",
-    fontWeight: "600",
+    fontWeight: "700",
     cursor: "pointer",
     marginBottom: "5px",
     boxSizing: "borderBox",
@@ -2568,7 +2568,7 @@ export const StakePoolStyles = {
   },
   agendaPercentNumber: {
     fontSize: "45px",
-    fontWeight: "600",
+    fontWeight: "700",
   },
   agendaBottomOptions: {
     width: "240px",
