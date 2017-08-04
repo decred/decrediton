@@ -58,6 +58,7 @@ class KeyBlueButton extends React.Component {
           this.props.block && styles.block
         ] : [styles.baseDisabled,
           this.props.style] }
+        className={this.props.className}
         type={this.props.type}
         disabled={this.props.disabled}
         onClick={this.props.onClick}

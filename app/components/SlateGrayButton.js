@@ -42,6 +42,7 @@ class SlateGrayButton extends React.Component {
           styles.base,
           this.props.block && styles.block
         ]}
+        className={this.props.className}
         type={this.props.type}
         disabled={this.props.disabled}
         onClick={this.props.onClick}>
