@@ -697,16 +697,14 @@ maxFeePerKb, maxPriceRelative, maxPriceAbsolute, maxPerBlock, stakepool) {
           dispatch({ error, type: STARTAUTOBUYER_FAILED });
         } else {
           var success = "You successfully started the auto ticket buyer.";
-          return (dispatch) => {
-            dispatch({ success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS,
-              balanceToMaintain: balanceToMaintain,
-              maxFeePerKb: maxFeePerKb*1e8,
-              maxPriceRelative: maxPriceRelative,
-              maxPriceAbsolute: maxPriceAbsolute,
-              maxPerBlock: maxPerBlock,
-            });
-            setTimeout(()=>dispatch(getTicketBuyerConfigAttempt(), 1000));
-          };
+          dispatch({ success: success, startAutoBuyerResponse: startAutoBuyerResponse, type: STARTAUTOBUYER_SUCCESS,
+            balanceToMaintain: balanceToMaintain,
+            maxFeePerKb: maxFeePerKb*1e8,
+            maxPriceRelative: maxPriceRelative,
+            maxPriceAbsolute: maxPriceAbsolute,
+            maxPerBlock: maxPerBlock,
+          });
+          setTimeout(()=>dispatch(getTicketBuyerConfigAttempt(), 1000));
         }
       });
   };
@@ -738,19 +736,10 @@ export const STOPAUTOBUYER_CLEAR_SUCCESS= "STOPAUTOBUYER_CLEAR_SUCCESS";
 
 export function stopAutoBuyerAttempt() {
   var request = new StopAutoBuyerRequest();
-  return (dispatch) => {
-    dispatch({
-      request: request,
-      type: STOPAUTOBUYER_ATTEMPT });
-    dispatch(stopAutoBuyerAction());
-  };
-}
-
-function stopAutoBuyerAction() {
   return (dispatch, getState) => {
+    dispatch({ type: STOPAUTOBUYER_ATTEMPT });
     const { ticketBuyerService } = getState().grpc;
-    const { stopAutoBuyerRequest } = getState().control;
-    ticketBuyerService.stopAutoBuyer(stopAutoBuyerRequest,
+    ticketBuyerService.stopAutoBuyer(request,
       function(error, stopAutoBuyerResponse) {
         if (error) {
           dispatch({ error, type: STOPAUTOBUYER_FAILED });
