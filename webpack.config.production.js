@@ -50,6 +50,27 @@ const config = merge(baseConfig, {
       },
 
       {
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: [{
+            loader: "css-loader",
+            options: {
+              modules: true,
+              importLoaders: 1,
+              localIdentName: "[local]"
+            }
+          }, {
+            loader: "less-loader",
+            options: {
+              noIeCompat: true,
+              strictMath: true
+            }
+          }]
+        })
+      },
+
+      {
         test: [ /\.woff(\?v=\d+\.\d+\.\d+)?$/, /\.woff2(\?v=\d+\.\d+\.\d+)?$/ ],
         use: [{
           loader: "url-loader",
