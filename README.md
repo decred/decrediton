@@ -168,6 +168,21 @@ npm install
 npm run package
 ```
 
+## Building release versions
+
+### Linux
+
+You need to make sure you have the following packages installed for the building to work:
+- icns2png
+- graphicsmagick
+- rpm-build
+
+```bash
+npm run package-linux
+```
+
+After it is finished it will have the built rpm, deb and tar.gz in the releases/ directory.
+
 ## Docker
 
 A docker file for building decrediton is also provided.  With no options it builds for linux on amd64 although it is possible to attempt OSX or arm builds (neither of which have been tested).
