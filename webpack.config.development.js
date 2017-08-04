@@ -46,8 +46,28 @@ export default merge(baseConfig, {
           options: {
             sourceMap: true,
             modules: true,
-            importLoaders: 1,
             localIdentName: "[name]__[local]___[hash:base64:5]"
+          }
+        }]
+      },
+
+      {
+        test: /\.less$/,
+        use: [{
+          loader: "style-loader"
+        }, {
+          loader: "css-loader",
+          options: {
+            sourceMap: true,
+            modules: true,
+            importLoaders: 1,
+            localIdentName: "[local]"
+          }
+        }, {
+          loader: "less-loader",
+          options: {
+            noIeCompat: true,
+            strictMath: true
           }
         }]
       },
