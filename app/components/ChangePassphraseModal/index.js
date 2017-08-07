@@ -63,9 +63,6 @@ class ChangePassphraseModal extends React.Component {
 
   resetState() {
     this.state = this.getInitialState(); // clear password data from memory
-    document.getElementById("passphrase").value = "";
-    document.getElementById("oldPassphrase").value = "";
-    document.getElementById("confirmPassphrase").value = "";
   }
 
   cancelPassphrase() {
