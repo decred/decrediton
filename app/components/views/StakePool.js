@@ -596,7 +596,7 @@ class StakePool extends Component{
           {getAgendasResponse !== null && this.state.selectedConfigured !== null ? getAgendasResponse.getAgendasList().length > 0 ?
             getAgendasResponse.getAgendasList().map((agenda) => {
               var selectedChoice = "abstain";
-              if (this.state.selectedConfigured.VoteChoices !== undefined) {
+              if (this.state.selectedConfigured.value.VoteChoices !== undefined) {
                 for (var i = 0; i < this.state.selectedConfigured.value.VoteChoices.length; i++) {
                   if (this.state.selectedConfigured.value.VoteChoices[i] !== undefined &&
                   this.state.selectedConfigured.value.VoteChoices[i].agendaId == agenda.getId()) {
