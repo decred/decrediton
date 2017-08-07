@@ -81,7 +81,7 @@ class Send extends Component{
   }
 
   clearTransactionData() {
-    this.setState({confirmTxModal: false, totalOutputAmount: 0, account: 0, confirmations: 0, outputs: [{key:0, destination: "", amount: 0, amountStr: "", addressError: null, amountError: null}]});
+    this.setState({confirmTxModal: false, totalOutputAmount: 0, account: this.state.accountsList[0], confirmations: 0, outputs: [{key:0, destination: "", amount: 0, amountStr: "", addressError: null, amountError: null}]});
     this.props.clearTransaction();
   }
   confirmTx() {
