@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { shell } from "electron";
 import { PropTypes } from "prop-types";
-import CircularProgress from "material-ui/CircularProgress";
+import DecredLoading from "../DecredLoading";
 import ErrorScreen from "../ErrorScreen";
 import Balance from "../Balance";
 import SideBar from "../SideBar";
@@ -1127,7 +1127,9 @@ class StakePool extends Component{
         {(!activeStakePoolConfig || this.state.addAnotherStakePool) && !currentStakePoolConfigRequest ?
           stakePoolConfigInput :
           currentStakePoolConfigRequest || purchaseTicketsRequestAttempt ?
-            <CircularProgress style={StakePoolStyles.loading} size={125} thickness={6}/> :
+          <div style={StakePoolStyles.content}>
+            <DecredLoading/>
+          </div> :
               this.state.purchaseTickets ?
                 this.state.purchaseTicketsStakePoolConfig ?
                   configuredStakePoolInformation :
