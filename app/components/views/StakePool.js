@@ -1127,7 +1127,9 @@ class StakePool extends Component{
         {(!activeStakePoolConfig || this.state.addAnotherStakePool) && !currentStakePoolConfigRequest ?
           stakePoolConfigInput :
           currentStakePoolConfigRequest || purchaseTicketsRequestAttempt ?
-            <DecredLoading/> :
+          <div style={StakePoolStyles.content}>
+            <DecredLoading/>
+          </div> :
               this.state.purchaseTickets ?
                 this.state.purchaseTicketsStakePoolConfig ?
                   configuredStakePoolInformation :
