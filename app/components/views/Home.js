@@ -97,7 +97,7 @@ class Home extends Component{
             }
           />
         }
-        {getTransactionsRequestAttempt ?
+        {!getTransactionsRequestAttempt ?
           <div style={HomeStyles.content}>
             <div style={HomeStyles.contentTitle}>
               <div style={HomeStyles.contentTitleText}>Recent Transactions</div>
@@ -110,7 +110,7 @@ class Home extends Component{
             </div>
           </div> :
           <div style={HomeStyles.content}>
-            <DecredLoading />
+            <DecredLoading/>
           </div>
         }
       </div>);

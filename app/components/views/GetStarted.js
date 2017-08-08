@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import CreateWalletForm from "../CreateWalletForm";
-import CircularProgress from "material-ui/CircularProgress";
+import DecredLoading from "../DecredLoading";
 import ShowError from "../ShowError";
 import Radium from "radium";
 import SideBar from "../SideBar";
@@ -145,7 +145,7 @@ class Home extends Component{
         />
         <div style={GetStartedStyles.contentNewSeed}>
           { walletOpenRequestAttempt ?
-            <CircularProgress style={GetStartedStyles.loading} size={125} thickness={6}/> :
+            <DecredLoading/> :
             <div style={GetStartedStyles.contentNewSeedCreateButton}>
               <div style={GetStartedStyles.contentConfirmWalletCreateInputLeftPadding}>Decrypt Wallet:</div>
               <div style={GetStartedStyles.contentConfirmWalletCreateInputRightPadding}>
@@ -200,7 +200,7 @@ class Home extends Component{
         </Header>
         {walletCreateRequestAttempt ?
         <div style={GetStartedStyles.contentNewSeed}>
-          <CircularProgress style={GetStartedStyles.loading} size={125} thickness={6}/>
+          <DecredLoading/>
         </div>  :
           <CreateWalletForm existing={this.props.createWalletExisting} decodeSeedError={decodeSeedError}/>}
       </div>
@@ -219,7 +219,7 @@ class Home extends Component{
           <div style={GetStartedStyles.content}>
             <div style={GetStartedStyles.contentNest}>
               { startRpcRequestAttempt ?
-                <CircularProgress style={GetStartedStyles.loading} size={125} thickness={6}/> :
+                <DecredLoading/> :
                 <div>
                   <div style={GetStartedStyles.rpcRetryMessage}>Connection to dcrd failed, please try and reconnect.</div>
                   <KeyBlueButton style={GetStartedStyles.rpcRetryButton} onClick={()=>startRpcRequestFunc()}>Retry</KeyBlueButton>
@@ -242,7 +242,7 @@ class Home extends Component{
             headerMetaOverview="Please enter the information below to load your dcrwallet"/>
           <div style={GetStartedStyles.contentNewSeed}>
             { discoverAddressRequestAttempt ?
-            <CircularProgress style={GetStartedStyles.loading} size={125} thickness={6}/> :
+            <DecredLoading/> :
               <div style={GetStartedStyles.contentNewSeedCreateButton}>
                 <div style={GetStartedStyles.contentConfirmWalletCreateInputLeftPadding}>Scan for used accounts:</div>
                 <div style={GetStartedStyles.contentConfirmWalletCreateInputRightPadding}>
@@ -284,7 +284,7 @@ class Home extends Component{
           <div style={GetStartedStyles.contentNewSeed}>
             { fetchHeadersRequestAttempt ?
             <div>
-              <CircularProgress style={GetStartedStyles.loading} size={125} thickness={6}/>
+              <DecredLoading/>
               <div style={GetStartedStyles.fetchHeadersMessage}> If you are syncing the blockchain for the first time, this may take a while. </div>
             </div> :
             <div></div>

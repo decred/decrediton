@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import ErrorScreen from "../ErrorScreen";
-import CircularProgress from "material-ui/CircularProgress";
+import DecredLoading from "../DecredLoading";
 import { reverseHash } from "../../helpers/byteActions";
 import SideBar from "../SideBar";
 import Balance from "../Balance";
@@ -413,7 +413,7 @@ class Send extends Component{
       <div style={SendStyles.view}>
         {sharedHeader}
         <div style={SendStyles.content}>
-          <CircularProgress style={SendStyles.loading} size={125} thickness={6}/>
+          <DecredLoading/>
         </div>
       </div>
     );
