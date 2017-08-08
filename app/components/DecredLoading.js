@@ -1,7 +1,7 @@
 // @flow
 import React from "react";
 import { autobind } from "core-decorators";
-import Loading from "./Loading";
+import "../style/Loading.less";
 
 @autobind
 class DecredLoading extends React.Component {
@@ -11,7 +11,9 @@ class DecredLoading extends React.Component {
 
   render() {
     return (
-      <Loading />
+      <div className="loading">
+        <div className="logo"/>
+      </div>
     );
   }
 }
