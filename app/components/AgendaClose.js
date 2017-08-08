@@ -1,6 +1,6 @@
 // @flow
 import React from "react";
-import "../style/MiscComponents.less";
+import "../style/AgendaCard.less";
 
 export default class AgendaClose extends React.Component {
   render() {
