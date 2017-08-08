@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { shell } from "electron";
 import { PropTypes } from "prop-types";
-import DecredLoading from "../DecredLoading";
+import StakeyBounce from "../StakeyBounce";
 import ErrorScreen from "../ErrorScreen";
 import Balance from "../Balance";
 import SideBar from "../SideBar";
@@ -1128,7 +1128,7 @@ class StakePool extends Component{
           stakePoolConfigInput :
           currentStakePoolConfigRequest || purchaseTicketsRequestAttempt ?
           <div style={StakePoolStyles.content}>
-            <DecredLoading/>
+            <StakeyBounce/>
           </div> :
               this.state.purchaseTickets ?
                 this.state.purchaseTicketsStakePoolConfig ?
