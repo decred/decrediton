@@ -2,7 +2,7 @@
 import React from "react";
 import "../style/StakePool.less";
 
-export default class AutoBuyerSwitch extends React.Component {
+class AutoBuyerSwitch extends React.Component {
   render() {
     return (
       <div className="autobuyer-switch">
@@ -13,3 +13,5 @@ export default class AutoBuyerSwitch extends React.Component {
     );
   }
 }
+
+export default AutoBuyerSwitch;

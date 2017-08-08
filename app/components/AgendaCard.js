@@ -5,7 +5,7 @@ import "../style/AgendaCard.less";
 // Currently removing percent progress until a solution to populate is found
 // <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>XX</span>%</div>
 // should go UNDER agendaCarBottomCfg div
-export default class AgendaCard extends React.Component {
+class AgendaCard extends React.Component {
 
   render() {
     let agendaCardProps;
@@ -43,3 +43,5 @@ export default class AgendaCard extends React.Component {
   }
 
 }
+
+export default AgendaCard;

@@ -9,7 +9,7 @@ import "../style/MiscComponents.less";
 
 
 @autobind
-export default class CopyToClipboardButton extends Component {
+class CopyToClipboardButton extends Component {
 
   static propTypes = {
     textToCopy: PropTypes.string.isRequired
@@ -60,3 +60,5 @@ export default class CopyToClipboardButton extends Component {
   }
 
 }
+
+export default CopyToClipboardButton;
