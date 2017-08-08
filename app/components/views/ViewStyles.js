@@ -13,8 +13,6 @@ import ArrowUpTurquiose from "../icons/arrow-up-turquiose.svg";
 import ArrowRightKeyBlue from "../icons/arrow-right-key-blue.svg";
 import Search from "../icons/search.svg";
 import WalletGray from "../icons/wallet-gray.svg";
-import WalletBlue from "../icons/wallet-blue.svg";
-import AgendaClose from "../icons/tickets-agenda-close.svg";
 import AgendaStripe from "../icons/stripe.svg";
 import TicketsInfo from "../icons/tickets-info.svg";
 import TicketsCogsOpened from "../icons/tickets-cogs-opened.svg";
@@ -189,20 +187,7 @@ export const ReceiveStyles = {
     width: "380px",
     float: "left",
     paddingLeft: "20px",
-  },
-  copyToClipboardIcon: {
-    display: "inline-block",
-    width: "20px",
-    height: "18px",
-    backgroundImage: `url(${WalletGray})`,
-    backgroundPosition: "0 0",
-    backgroundSize: "20px auto",
-    backgroundRepeat: "no-repeat",
-    cursor: "pointer",
-    ":hover": {
-      backgroundImage: `url(${WalletBlue})`,
-    }
-  },
+  }
 };
 export const SendStyles = {
   body: {
@@ -1765,49 +1750,7 @@ export const StakePoolStyles = {
     float: "left",
     position: "relative",
   },
-  switchEnabled: {
-    display: "block",
-    width: "60px",
-    height: "24px",
-    borderRadius: "5px",
-    backgroundColor: "#2971ff",
-    ":hover": {
-      width: "56px",
-      paddingLeft: "4px",
-    },
-    transition: "all 200ms ease-in-out",
-    float: "left",
-  },
 
-  switchDisabled: {
-    display: "block",
-    width: "60px",
-    height: "24px",
-    borderRadius: "5px",
-    backgroundColor: "#c4cbd2",
-    ":hover": {
-      width: "56px",
-      paddingRight: "4px",
-    },
-    transition: "all 200ms ease-in-out",
-    float: "left",
-  },
-
-  switchKnobEnabled: {
-    width: "30px",
-    height: "100%",
-    borderRadius: "5px",
-    boxShadow: "0 0 10px 0 rgba(0, 0, 0, .2)",
-    backgroundColor: "#fff",
-  },
-  switchKnobDisabled: {
-    width: "30px",
-    height: "100%",
-    borderRadius: "5px",
-    boxShadow: "0 0 10px 0 rgba(0, 0, 0, .2)",
-    float: "right",
-    backgroundColor: "#596d81",
-  },
 /*
   .switch.disabled-inactive {
     background-color: #f3f6f6;
@@ -1836,12 +1779,6 @@ export const StakePoolStyles = {
   }
   */
 
-  autoBuyerSwitch: {
-    width: "85px",
-    float: "left",
-    paddingLeft: "15px",
-    paddingTop: "13px",
-  },
   autoBuyerLabel: {
     width: "75px",
     display: "block",
@@ -2250,31 +2187,6 @@ export const StakePoolStyles = {
       opacity: "0.7",
     },
   },
-  balanceOverviewInfoButton: {
-    marginRight: "20px",
-    float: "right",
-    borderRadius: "0px",
-    backgroundImage: `url(${TicketsInfo})`,
-    backgroundPosition: "50% 50%",
-    backgroundSize: "20px",
-    backgroundRepeat: "no-repeat",
-    boxShadow: "none",
-    outline: "0",
-    position: "relative",
-    display: "block",
-    width: "20px",
-    height: "20px",
-    padding: "0px",
-    backgroundColor: "transparent",
-    color: "white",
-    border: "0",
-    lineHeight: "inherit",
-    textDecoration: "none",
-    cursor: "pointer",
-    ":hover": {
-      opacity: "0.7",
-    },
-  },
   ticketCogsOpened: {
     marginRight: "25px",
     float: "right",
@@ -2460,24 +2372,6 @@ export const StakePoolStyles = {
     paddingRight: "10px",
     float: "left",
     fontSize: "19px",
-  },
-  agendaOverviewTitleClose: {
-    position: "absolute",
-    top: "7px",
-    right: "0px",
-    width: "11px",
-    height: "11px",
-    float: "right",
-    backgroundImage: `url(${AgendaClose})`,
-    backgroundPosition: "50% 50%",
-    backgroundSize: "11px",
-    backgroundRepeat: "noRepeat",
-    maxWidth: "100%",
-    display: "inlineBlock",
-    backgroundColor: "transparent",
-    ":hover": {
-      opacity: "0.7",
-    }
   },
   agenda: {
     position: "relative",

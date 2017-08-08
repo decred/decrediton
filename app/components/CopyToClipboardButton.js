@@ -3,10 +3,9 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import ReactTooltip from "react-tooltip";
 import { PropTypes } from "prop-types";
-import Radium from "radium";
 import copy from "clipboard-copy";
 import { autobind } from "core-decorators";
-import { ReceiveStyles } from "./views/ViewStyles";
+import "../style/MiscComponents.less";
 
 
 @autobind
@@ -25,14 +24,11 @@ class CopyToClipboardButton extends Component {
   }
 
   render() {
-    var style = {};
-    Object.assign(style, ReceiveStyles.copyToClipboardIcon);
-    Object.assign(style, this.props.style);
-
     return (
       <a
         ref="copyButtonRef"
-        style={style}
+        className="copy-to-clipboard-icon"
+        style={this.props.style}
         data-place="bottom"
         data-type="info"
         data-effect="solid"
@@ -65,4 +61,4 @@ class CopyToClipboardButton extends Component {
 
 }
 
-export default Radium(CopyToClipboardButton);
+export default CopyToClipboardButton;
