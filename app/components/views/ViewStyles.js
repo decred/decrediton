@@ -14,7 +14,6 @@ import ArrowRightKeyBlue from "../icons/arrow-right-key-blue.svg";
 import Search from "../icons/search.svg";
 import WalletGray from "../icons/wallet-gray.svg";
 import WalletBlue from "../icons/wallet-blue.svg";
-import AgendaClose from "../icons/tickets-agenda-close.svg";
 import AgendaStripe from "../icons/stripe.svg";
 import TicketsInfo from "../icons/tickets-info.svg";
 import TicketsCogsOpened from "../icons/tickets-cogs-opened.svg";
@@ -2460,24 +2459,6 @@ export const StakePoolStyles = {
     paddingRight: "10px",
     float: "left",
     fontSize: "19px",
-  },
-  agendaOverviewTitleClose: {
-    position: "absolute",
-    top: "7px",
-    right: "0px",
-    width: "11px",
-    height: "11px",
-    float: "right",
-    backgroundImage: `url(${AgendaClose})`,
-    backgroundPosition: "50% 50%",
-    backgroundSize: "11px",
-    backgroundRepeat: "noRepeat",
-    maxWidth: "100%",
-    display: "inlineBlock",
-    backgroundColor: "transparent",
-    ":hover": {
-      opacity: "0.7",
-    }
   },
   agenda: {
     position: "relative",
