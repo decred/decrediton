@@ -1,6 +1,6 @@
 @copy-to-clipboard-icon: url(../components/icons/wallet-gray.svg);
 @copy-to-clipboard-hover-icon: url(../components/icons/wallet-blue.svg);
-
+@help-link-icon: url(../components/icons/menu-link-left-color.png);
 
 .copy-to-clipboard-icon {
     display: inline-block;
@@ -14,4 +14,26 @@
 }
 .copy-to-clipboard-icon:hover {
     background-image: @copy-to-clipboard-hover-icon;
+}
+
+
+.help-link {
+    display: block;
+    width: 50%;
+    padding: 15px 0 15px 40px;
+    background-image: @help-link-icon;
+    background-position: 0px 50%;
+    background-size: 0px;
+    background-repeat: repeat-y;
+    color: black;
+    font-size: 18px;
+    text-align: left;
+    text-decoration: none;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+.help-link:hover {
+    background-color: #616262;
+    background-size: 5px;
+    color: #FFF;
 }
