@@ -1764,49 +1764,7 @@ export const StakePoolStyles = {
     float: "left",
     position: "relative",
   },
-  switchEnabled: {
-    display: "block",
-    width: "60px",
-    height: "24px",
-    borderRadius: "5px",
-    backgroundColor: "#2971ff",
-    ":hover": {
-      width: "56px",
-      paddingLeft: "4px",
-    },
-    transition: "all 200ms ease-in-out",
-    float: "left",
-  },
 
-  switchDisabled: {
-    display: "block",
-    width: "60px",
-    height: "24px",
-    borderRadius: "5px",
-    backgroundColor: "#c4cbd2",
-    ":hover": {
-      width: "56px",
-      paddingRight: "4px",
-    },
-    transition: "all 200ms ease-in-out",
-    float: "left",
-  },
-
-  switchKnobEnabled: {
-    width: "30px",
-    height: "100%",
-    borderRadius: "5px",
-    boxShadow: "0 0 10px 0 rgba(0, 0, 0, .2)",
-    backgroundColor: "#fff",
-  },
-  switchKnobDisabled: {
-    width: "30px",
-    height: "100%",
-    borderRadius: "5px",
-    boxShadow: "0 0 10px 0 rgba(0, 0, 0, .2)",
-    float: "right",
-    backgroundColor: "#596d81",
-  },
 /*
   .switch.disabled-inactive {
     background-color: #f3f6f6;
@@ -1835,12 +1793,6 @@ export const StakePoolStyles = {
   }
   */
 
-  autoBuyerSwitch: {
-    width: "85px",
-    float: "left",
-    paddingLeft: "15px",
-    paddingTop: "13px",
-  },
   autoBuyerLabel: {
     width: "75px",
     display: "block",

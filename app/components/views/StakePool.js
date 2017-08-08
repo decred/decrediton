@@ -950,9 +950,7 @@ class StakePool extends Component{
           </div>
           <div style={this.state.autoBuyerHidden ? StakePoolStyles.flexHeightAutoBuyerHidden : StakePoolStyles.flexHeightAutoBuyerShown }>
             <div style={StakePoolStyles.autoBuyerRow}>
-              <div style={StakePoolStyles.autoBuyerSwitch}>
-                <AutoBuyerSwitch enabled={startAutoBuyerResponse} onClick={startAutoBuyerResponse ? ()=>this.disableTicketBuyer() : ()=>this.showPassphraseModal(startAutoBuyerHeading, startAutoBuyerDescription, startAutoBuyerFunc)}/>
-              </div>
+              <AutoBuyerSwitch enabled={startAutoBuyerResponse} onClick={startAutoBuyerResponse ? ()=>this.disableTicketBuyer() : ()=>this.showPassphraseModal(startAutoBuyerHeading, startAutoBuyerDescription, startAutoBuyerFunc)}/>
               <div style={StakePoolStyles.autoBuyerLabel}>{startAutoBuyerResponse ? "Enabled" : "Disabled"}</div>
               <div style={StakePoolStyles.autoBuyerQuickBarRow}>
                 {this.state.autoBuyerHidden ?
