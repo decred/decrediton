@@ -31,6 +31,10 @@ module.exports = {
     "no-console": [
       "off"
     ],
+    "eol-last": [
+      "error",
+      "always"
+    ],
     "react/jsx-uses-vars":1,
     "react/jsx-uses-react":1,
   },
