@@ -13,7 +13,6 @@ import ArrowUpTurquiose from "../icons/arrow-up-turquiose.svg";
 import ArrowRightKeyBlue from "../icons/arrow-right-key-blue.svg";
 import Search from "../icons/search.svg";
 import WalletGray from "../icons/wallet-gray.svg";
-import WalletBlue from "../icons/wallet-blue.svg";
 import AgendaStripe from "../icons/stripe.svg";
 import TicketsInfo from "../icons/tickets-info.svg";
 import TicketsCogsOpened from "../icons/tickets-cogs-opened.svg";
@@ -188,20 +187,7 @@ export const ReceiveStyles = {
     width: "380px",
     float: "left",
     paddingLeft: "20px",
-  },
-  copyToClipboardIcon: {
-    display: "inline-block",
-    width: "20px",
-    height: "18px",
-    backgroundImage: `url(${WalletGray})`,
-    backgroundPosition: "0 0",
-    backgroundSize: "20px auto",
-    backgroundRepeat: "no-repeat",
-    cursor: "pointer",
-    ":hover": {
-      backgroundImage: `url(${WalletBlue})`,
-    }
-  },
+  }
 };
 export const SendStyles = {
   body: {

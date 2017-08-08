@@ -1,0 +1,17 @@
+@copy-to-clipboard-icon: url(../components/icons/wallet-gray.svg);
+@copy-to-clipboard-hover-icon: url(../components/icons/wallet-blue.svg);
+
+
+.copy-to-clipboard-icon {
+    display: inline-block;
+    width: 20px;
+    height: 18px;
+    background-image: @copy-to-clipboard-icon;
+    background-position: 0 0;
+    background-size: 20px auto;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+.copy-to-clipboard-icon:hover {
+    background-image: @copy-to-clipboard-hover-icon;
+}

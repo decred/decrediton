@@ -1,7 +1,7 @@
 // @flow
 import React from "react";
 import SlateGrayButton from "./SlateGrayButton";
-import '../style/StakePool.less';
+import "../style/StakePool.less";
 
 class BalanceOverviewInfoModal extends React.Component {
   render() {
