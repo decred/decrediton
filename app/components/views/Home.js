@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import LinearProgress from "material-ui/LinearProgress";
-import DecredLoading from "../DecredLoading";
+import StakeyBounce from "../StakeyBounce";
 import KeyBlueButton from "../KeyBlueButton";
 import ErrorScreen from "../ErrorScreen";
 import Balance from "../Balance";
@@ -97,7 +97,7 @@ class Home extends Component{
             }
           />
         }
-        {!getTransactionsRequestAttempt ?
+        {getTransactionsRequestAttempt ?
           <div style={HomeStyles.content}>
             <div style={HomeStyles.contentTitle}>
               <div style={HomeStyles.contentTitleText}>Recent Transactions</div>
@@ -110,7 +110,7 @@ class Home extends Component{
             </div>
           </div> :
           <div style={HomeStyles.content}>
-            <DecredLoading/>
+            <StakeyBounce/>
           </div>
         }
       </div>);
