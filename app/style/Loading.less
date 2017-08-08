@@ -3,17 +3,12 @@
 @logo: url(../components/icons/logo.svg);
 
 @keyframes spin {
-    0% {opacity:0;}
-    10% {opacity:0.2;}
-    20% {opacity:0.4;}
-    30% {transform: rotate(182deg); opacity:0.6;}
-    40% {transform: rotate(180deg); opacity:0.8;}
-    50% {transform: rotate(180deg); opacity:1;}
-    60% {opacity:0.8;}
-    70% {opacity:0.6;}
-    80% {transform: rotate(362deg); opacity:0.4;}
-    90% {transform: rotate(360deg); opacity:0.2;}
-    100% {transform: rotate(360deg); opacity:0;}
+    30% {transform: rotate(182deg);}
+    40% {transform: rotate(180deg);}
+    50% {transform: rotate(180deg);}
+    80% {transform: rotate(362deg);}
+    90% {transform: rotate(360deg);}
+    100% {transform: rotate(360deg);}
 }
 
 .loading {
@@ -21,7 +16,7 @@
     margin-top: 62px;
     width: 300px;
     height: 300px;
-    animation: spin 5s linear infinite;
+    animation: spin 3s ease-in-out infinite;
 }
 .logo {
     position: relative;
