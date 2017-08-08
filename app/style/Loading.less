@@ -1,0 +1,28 @@
+@import (less) "./main.less";
+
+@logo: url(../components/icons/logo.svg);
+
+@keyframes spin {
+    30% {transform: rotate(190deg);}
+    40% {transform: rotate(175deg);}
+    50% {transform: rotate(180deg);}
+    80% {transform: rotate(370deg);}
+    90% {transform: rotate(355deg);}
+    100% {transform: rotate(360deg);}
+}
+
+.loading {
+    width: 150px;
+    height: 150px;
+    animation: spin 4s linear infinite;
+}
+.logo {
+    position: relative;
+    overflow: hidden;
+    height: 150px;
+    width: 150px;
+    background-image: @logo;
+    background-position: 0px 0px;
+    background-size: 150px auto;
+    background-repeat: no-repeat;
+}
