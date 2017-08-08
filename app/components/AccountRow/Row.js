@@ -3,6 +3,7 @@ import React from "react";
 import SlateGrayButton from "../SlateGrayButton";
 import KeyBlueButton from "../KeyBlueButton";
 import Balance from "../Balance";
+import ReactToolTip from "react-tooltip";
 import "../fonts.css";
 import "../../style/AccountRow.less";
 
@@ -152,22 +153,26 @@ const Row = ({
               <div
                 key={"renameAccountButton"+account.accountNumber}
                 className="rename-account-button"
-                onClick={showRenameAccount}/>:
+                onClick={showRenameAccount}
+                data-tip="Rename Account"/>:
               <div></div>
             }
             {account.accountName !== "imported" && account.accountName !== "default" && account.total == 0 && !hidden ?
               <div
                 key={"hideAccountButton"+account.accountNumber}
                 className="hide-account-button"
-                onClick={hideAccount}/>:
+                onClick={hideAccount}
+                data-tip="Hide"/>:
               account.accountName !== "imported" && account.accountName !== "default" && hidden ?
               <div
                 className="show-account-button"
                 key={"showAccountButton"+account.accountNumber}
-                onClick={showAccount}/> :
+                onClick={showAccount}
+                data-tip="Show"/> :
               <div></div>
             }
           </div>
+          <ReactToolTip type="info" effect="solid"/>
          </div>
        )
     }
