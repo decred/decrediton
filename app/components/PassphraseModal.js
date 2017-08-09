@@ -17,6 +17,7 @@ const styles = {
   autobuyerPassphraseModalSection: {
     padding: "20px",
     backgroundColor: "#fff",
+    boxShadow: "0px 13px 21px rgba(0, 0, 0, 0.21)",
   },
   autobuyerPassphraseModalSectionHeadingSubSection: {
     minHeight: "0px",
