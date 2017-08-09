@@ -17,7 +17,7 @@ class AccountRow extends Component {
       hidden: this.props.account.hidden,
     };
   }
- componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if(prevState.hidden != this.state.hidden) {
       // The tooltips need to be rebuilt because either the Show or Hide button
       // is now being rendered.
