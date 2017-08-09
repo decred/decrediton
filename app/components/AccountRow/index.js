@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
 import Row from "./Row";
+import ReactTooltip from "react-tooltip";
 
 @autobind
 class AccountRow extends Component {
@@ -15,6 +16,13 @@ class AccountRow extends Component {
       renameAccountNumber: this.props.account.accountNumber,
       hidden: this.props.account.hidden,
     };
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.hidden != this.state.hidden) {
+      // The tooltips need to be rebuilt because either the Show or Hide button
+      // is now being rendered.
+      ReactTooltip.rebuild();
+    }
   }
 
   updateRenameAccountName(accountName) {
@@ -53,7 +61,6 @@ class AccountRow extends Component {
     this.props.hideAccount(this.props.account.accountNumber);
     this.setState({hidden: true});
   }
-
 
   render() {
     const {
