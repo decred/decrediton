@@ -1,0 +1,69 @@
+@arrow-up-key-blue: url(../components/icons/arrow-up-key-blue.svg);
+@arrow-down-key-blue: url(../components/icons/arrow-down-key-blue.svg);
+
+
+.num-tickets-input-area {
+    padding-top: 2px;
+}
+
+.num-tickets-input {
+    width: 126px;
+    padding-top: 6px;
+    float: left;
+    font-family: Inconsolata, sans-serif;
+    color: #0c1e3e;
+    text-align: left;
+}
+
+.num-tickets-input-value {
+    width: 40px;
+    font-size: 19px;
+    font-weight: 700;
+    white-space: pre;
+    margin-right: 10px;
+    margin-bottom: 3px;
+    margin-left: 10px;
+    float: left;
+    text-align: right;
+    border-style: none;
+    line-height: normal;
+}
+
+.num-tickets-input-value-suffix {
+    display: inline-block;
+    padding-right: 5px;
+    font-family: Inconsolata, monospace;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.num-tickets-input-value-span {
+    display: none;
+    font-size: 19px;
+}
+
+.num-tickets-more-less {
+    width: 20px;
+    height: 100%;
+    float: left;
+}
+
+.num-tickets-more,
+.num-tickets-less {
+    width: 20px;
+    height: 16px;
+    float: left;
+    background-size: 10px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+.num-tickets-more {
+    background-image: @arrow-up-key-blue;
+}
+.num-tickets-less {
+    background-image: @arrow-down-key-blue;
+}
+.num-tickets-more:hover,
+.num-tickets-less:hover {
+    opacity: 0.7;
+}
