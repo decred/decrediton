@@ -1,6 +1,7 @@
 @copy-to-clipboard-icon: url(../components/icons/wallet-gray.svg);
 @copy-to-clipboard-hover-icon: url(../components/icons/wallet-blue.svg);
-@help-link-icon: url(../components/icons/menu-link-left-color.png);
+@menu-link-icon: url(../components/icons/menu-link-left-color.png);
+@help-link-icon: @menu-link-icon;
 @manage-pools-icon: url(../components/icons/tickets-manage-stakepools.svg);
 
 .copy-to-clipboard-icon {
@@ -109,4 +110,38 @@
 }
 .manage-pools-button:active {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, .2);
+}
+
+
+.menu-navigation-link {
+    display: block;
+    cursor: pointer;
+    height: 52px;
+    line-height: 52px;
+    padding-left: 58px;
+    color: #c4cbd2;
+    font-size: 18px;
+    text-align: left;
+    text-decoration: none;
+    text-transform: capitalize;
+    background-image: @menu-link-icon;
+    background-position: 0px 50%;
+    background-size: 0px;
+    background-repeat: repeat-y;
+    transition-property: all;
+    transition-duration: 100ms;
+    transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    transition-delay: 0s;
+}
+.menu-navigation-link:hover {
+    background-color: #09182d;
+    background-size: 5px;
+}
+.menu-navigation-link-active {
+    background-color: #09182d;
+    background-image: @menu-link-icon;
+    background-position: 0px 50%;
+    background-size: 5px;
+    background-repeat: repeat-y;
+    cursor: default;
 }
