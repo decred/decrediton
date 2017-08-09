@@ -28,7 +28,6 @@ import MaxFeeIcon from "../icons/max-fee.svg";
 import MaxPriceAbsoluteIcon from "../icons/max-price-absolute.svg";
 import MaxPriceRelativeIcon from "../icons/max-price-relative.svg";
 import MaxPerBlockIcon from "../icons/max-per-block.svg";
-import TicketsManageStakepools from "../icons/tickets-manage-stakepools.svg";
 import TicketSmall from "../icons/tickets-ticket.svg";
 
 export const ReceiveStyles = {
@@ -2134,33 +2133,6 @@ export const StakePoolStyles = {
     color: "red",
     fontSize: "11px",
     paddingTop: "4px",
-  },
-  managePoolsButton: {
-    float: "left",
-    backgroundColor: "#2971ff",
-    backgroundImage: `url(${TicketsManageStakepools})`,
-    backgroundPosition: "50% 50%",
-    backgroundSize: "12px",
-    backgroundRepeat: "no-repeat",
-    outline: "0",
-    position: "relative",
-    display: "block",
-    width: "20px",
-    height: "20px",
-    padding: "0px",
-    borderRadius: "5px",
-    boxShadow: "0 0 10px 0 rgba(0, 0, 0, .2)",
-    color: "white",
-    border: "0",
-    lineHeight: "inherit",
-    textDecoration: "none",
-    cursor: "pointer",
-    ":hover": {
-      backgroundColor: "#1b58ff",
-    },
-    ":active": {
-      boxShadow: "0 0 0 0 rgba(0, 0, 0, .2)",
-    }
   },
   purchaseTicketInfoButton: {
     marginLeft: "197px",
