@@ -1,0 +1,15 @@
+@import (less) "./main.less";
+
+@stakeySprites: url(../components/icons/stakeySprites.png);
+
+.stakey {
+  width: 256px;
+  height: 256px;
+  margin: 2% auto;
+  background: @stakeySprites left center;
+  animation: play .8s steps(24) infinite;
+}
+
+@keyframes play {
+	100% { background-position: -6144px; }
+}
