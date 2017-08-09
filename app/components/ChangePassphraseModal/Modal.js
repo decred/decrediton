@@ -22,7 +22,7 @@ const Modal = ({
   cancelPassphrase
 }) => (
  <div hidden={hidden} className="change-passphrase-modal">
-    <div className="change-passphrase-modal-section">
+    <div className="modal-section">
       <div className="change-passphrase-modal-section-heading-sub-section">{heading}</div>
       <div className="change-passphrase-modal-section-heading-sub-section-notice">{description}</div>
       <div className="change-passphrase-modal-field-ct">
