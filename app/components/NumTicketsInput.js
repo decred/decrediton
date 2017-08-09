@@ -1,20 +1,19 @@
 // @flow
 import React from "react";
-import Radium from "radium";
-import { StakePoolStyles } from "./views/ViewStyles";
+import "../style/NumTicketsInput.less";
 
 class NumTicketsInput extends React.Component {
   render() {
     return (
-      <div style={StakePoolStyles.numTicketsInputArea}>
-        <div style={StakePoolStyles.numTicketsInput}>
-          <input style={StakePoolStyles.numTicketsInputValue} type="text" readOnly placeholder="" value={this.props.numTickets} data-max-width="70"/>
-          <div style={StakePoolStyles.numTicketsInputValueSuffix}>Tickets</div>
-          <span style={StakePoolStyles.numTicketsInputValueSpan} style={{display: "none", fontSize: "19px"}}>10000</span>
+      <div className="num-tickets-input-area">
+        <div className="num-tickets-input">
+          <input className="num-tickets-input-value" type="text" readOnly placeholder="" value={this.props.numTickets} data-max-width="70"/>
+          <div className="num-tickets-input-value-suffix">Tickets</div>
+          <span className="num-tickets-input-value-span">10000</span>
         </div>
-        <div style={StakePoolStyles.numTicketsMoreLess}>
-          <a key='more' style={StakePoolStyles.numTicketsMore} onClick={()=>this.props.incrementNumTickets()}></a>
-          <a key='less' style={StakePoolStyles.numTicketsLess} onClick={()=>this.props.decrementNumTickets()}></a>
+        <div className="num-tickets-more-less">
+          <a key="more" className="num-tickets-more" onClick={()=>this.props.incrementNumTickets()}></a>
+          <a key="less" className="num-tickets-less" onClick={()=>this.props.decrementNumTickets()}></a>
         </div>
       </div>
     );
@@ -22,4 +21,4 @@ class NumTicketsInput extends React.Component {
   }
 }
 
-export default Radium(NumTicketsInput);
+export default NumTicketsInput;

@@ -1,15 +1,14 @@
 // @flow
 import React from "react";
-import Radium from "radium";
-import { StakePoolStyles } from "./views/ViewStyles";
+import "../style/MiscComponents.less";
 
 class ManagePoolsButton extends React.Component {
   render() {
     return (
-      <a style={StakePoolStyles.managePoolsButton} onClick={this.props.onClick}></a>
+      <a className="manage-pools-button" onClick={this.props.onClick} />
     );
 
   }
 }
 
-export default Radium(ManagePoolsButton);
+export default ManagePoolsButton;

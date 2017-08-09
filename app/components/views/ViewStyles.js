@@ -6,7 +6,6 @@ import IndicatorConfirmed from "../icons/indicator-confirmed.svg";
 import PlusBig from "../icons/plus-big.svg";
 import MinusBig from "../icons/minus-big.svg";
 import ArrowDownMidBlue from "../icons/arrow-down-mid-blue.svg";
-import ArrowUpKeyBlue from "../icons/arrow-up-key-blue.svg";
 import ArrowDownKeyBlue from "../icons/arrow-down-key-blue.svg";
 import ArrowUpLightBlue from "../icons/arrow-up-light-blue.svg";
 import ArrowUpTurquiose from "../icons/arrow-up-turquiose.svg";
@@ -28,7 +27,6 @@ import MaxFeeIcon from "../icons/max-fee.svg";
 import MaxPriceAbsoluteIcon from "../icons/max-price-absolute.svg";
 import MaxPriceRelativeIcon from "../icons/max-price-relative.svg";
 import MaxPerBlockIcon from "../icons/max-per-block.svg";
-import TicketsManageStakepools from "../icons/tickets-manage-stakepools.svg";
 import TicketSmall from "../icons/tickets-ticket.svg";
 
 export const ReceiveStyles = {
@@ -1439,66 +1437,6 @@ export const StakePoolStyles = {
   highlighTextOrange: {
     color: "#fd714b",
   },
-  numTicketsInput: {
-    width: "126px",
-    paddingTop: "6px",
-    float: "left",
-    fontFamily: "Inconsolata, sans-serif",
-    color: "#0c1e3e",
-    textAlign: "left",
-  },
-  numTicketsInputValue: {
-    width: "40px",
-    fontSize: "19px",
-    fontWeight: "700",
-    whiteSpace: "pre",
-    display: "inline-block",
-    marginRight: "10px",
-    marginBottom: "3px",
-    marginLeft: "10px",
-    float: "left",
-    textAlign: "right",
-    borderStyle: "none",
-    lineHeight: "normal",
-  },
-  numTicketsInputValueSuffix: {
-    display: "inline-block",
-    paddingRight: "5px",
-    fontFamily: "Inconsolata, monospace",
-    fontSize: "13px",
-    fontWeight: "700",
-  },
-  numTicketsMoreLess: {
-    width: "20px",
-    height: "100%",
-    float: "left",
-  },
-  numTicketsMore: {
-    width: "20px",
-    height: "14px",
-    marginBottom: "2px",
-    float: "left",
-    backgroundImage: `url(${ArrowUpKeyBlue})`,
-    backgroundPosition: "50% 100%",
-    backgroundSize: "10px",
-    backgroundRepeat: "no-repeat",
-    ":hover": {
-      opacity: "0.7",
-    }
-  },
-  numTicketsLess: {
-    width: "20px",
-    height: "12px",
-    marginTop: "2px",
-    float: "left",
-    backgroundImage: `url(${ArrowDownKeyBlue})`,
-    backgroundPosition: "50% 0px",
-    backgroundSize: "10px",
-    backgroundRepeat: "no-repeat",
-    ":hover": {
-      opacity: "0.7",
-    }
-  },
   selectVotingPreferences: {
     display: "block",
     float: "right",
@@ -1739,9 +1677,6 @@ export const StakePoolStyles = {
   },
   selectStakePoolArea: {
     paddingTop: "4px"
-  },
-  numTicketsInputArea: {
-    paddingTop: "2px"
   },
   autoBuyerQuickBarRow: {
     width: "400px",
@@ -2134,33 +2069,6 @@ export const StakePoolStyles = {
     color: "red",
     fontSize: "11px",
     paddingTop: "4px",
-  },
-  managePoolsButton: {
-    float: "left",
-    backgroundColor: "#2971ff",
-    backgroundImage: `url(${TicketsManageStakepools})`,
-    backgroundPosition: "50% 50%",
-    backgroundSize: "12px",
-    backgroundRepeat: "no-repeat",
-    outline: "0",
-    position: "relative",
-    display: "block",
-    width: "20px",
-    height: "20px",
-    padding: "0px",
-    borderRadius: "5px",
-    boxShadow: "0 0 10px 0 rgba(0, 0, 0, .2)",
-    color: "white",
-    border: "0",
-    lineHeight: "inherit",
-    textDecoration: "none",
-    cursor: "pointer",
-    ":hover": {
-      backgroundColor: "#1b58ff",
-    },
-    ":active": {
-      boxShadow: "0 0 0 0 rgba(0, 0, 0, .2)",
-    }
   },
   purchaseTicketInfoButton: {
     marginLeft: "197px",
