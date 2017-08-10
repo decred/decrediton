@@ -59,8 +59,6 @@ class Settings extends Component{
             hidden={!this.state.changePassphraseModal}
             updatePassphrase={(oldPass, newPass, priv) => this.updatePassphrase(oldPass, newPass, priv)}
             cancelPassphrase={()=>this.setState({changePassphraseModal: false})}
-            heading={<div></div>}
-            description={""}
           />
           <div style={this.state.changePassphraseModal ? SettingStyles.contentBlur : SettingStyles.content}>
             <div style={SettingStyles.settingsRow}>

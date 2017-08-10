@@ -13,9 +13,6 @@ import ArrowRightKeyBlue from "../icons/arrow-right-key-blue.svg";
 import Search from "../icons/search.svg";
 import WalletGray from "../icons/wallet-gray.svg";
 import AgendaStripe from "../icons/stripe.svg";
-import TicketsInfo from "../icons/tickets-info.svg";
-import TicketsCogsOpened from "../icons/tickets-cogs-opened.svg";
-import TicketsCogsClosed from "../icons/tickets-cogs-closed.svg";
 import StakePoolIcon from "../icons/stake-pool.svg";
 import ExpiryIcon from "../icons/expiry.svg";
 import SplitFeeIcon from "../icons/split-fee.svg";
@@ -2069,79 +2066,6 @@ export const StakePoolStyles = {
     color: "red",
     fontSize: "11px",
     paddingTop: "4px",
-  },
-  purchaseTicketInfoButton: {
-    marginLeft: "197px",
-    float: "left",
-    borderRadius: "0px",
-    backgroundImage: `url(${TicketsInfo})`,
-    backgroundPosition: "50% 50%",
-    backgroundSize: "20px",
-    backgroundRepeat: "no-repeat",
-    boxShadow: "none",
-    outline: "0",
-    position: "relative",
-    display: "block",
-    width: "20px",
-    height: "20px",
-    padding: "3px",
-    backgroundColor: "transparent",
-    color: "white",
-    border: "0",
-    lineHeight: "inherit",
-    textDecoration: "none",
-    cursor: "pointer",
-    ":hover": {
-      opacity: "0.7",
-    },
-  },
-  ticketCogsOpened: {
-    marginRight: "25px",
-    float: "right",
-    borderRadius: "0px",
-    backgroundImage: `url(${TicketsCogsOpened})`,
-    backgroundPosition: "50% 50%",
-    backgroundSize: "20px",
-    backgroundRepeat: "no-repeat",
-    boxShadow: "none",
-    position: "relative",
-    display: "block",
-    width: "20px",
-    height: "20px",
-    padding: "3px",
-    backgroundColor: "transparent",
-    color: "white",
-    border: "0",
-    lineHeight: "inherit",
-    textDecoration: "none",
-    cursor: "pointer",
-    ":hover": {
-      opacity: "0.7",
-    }
-  },
-  ticketCogsClosed: {
-    marginRight: "25px",
-    float: "right",
-    borderRadius: "0px",
-    backgroundImage: `url(${TicketsCogsClosed})`,
-    backgroundPosition: "50% 50%",
-    backgroundSize: "20px",
-    backgroundRepeat: "no-repeat",
-    boxShadow: "none",
-    position: "relative",
-    display: "block",
-    width: "20px",
-    height: "20px",
-    padding: "3px",
-    backgroundColor: "transparent",
-    color: "white",
-    border: "0",
-    lineHeight: "inherit",
-    textDecoration: "none",
-    cursor: "pointer",
-    ":hover": {
-      opacity: "0.7",
-    }
   },
   areaSpacing: {
     float: "left",

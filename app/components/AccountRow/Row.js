@@ -100,8 +100,8 @@ const Row = ({
         )
        : (
          <div className="account-row-details-bottom" key={"details"+account.accountNumber}>
-           <div className="account-row-details-bottom-columns clearfloat">
-            <div className="account-row-details-bottom-column-left clearfloat">
+           <div className="account-row-details-bottom-columns">
+            <div className="account-row-details-bottom-column-left">
               <div className="account-row-details-bottom-title">
                 <div className="account-row-details-bottom-title-name">Balances</div>
               </div>
@@ -130,7 +130,7 @@ const Row = ({
                 <div className="account-row-details-bottom-spec-value"><Balance amount={account.immatureStakeGeneration}/></div>
               </div>
             </div>
-            <div className="account-row-details-bottom-column-right clearfloat">
+            <div className="account-row-details-bottom-column-right">
               <div className="account-row-details-bottom-title">
                 <div className="account-row-details-bottom-title-name">Properties</div>
               </div>
@@ -148,7 +148,7 @@ const Row = ({
               </div>
             </div>
           </div>
-          <div className="account-actions clearfloat">
+          <div className="account-actions">
             {account.accountName !== "imported" ?
               <div
                 key={"renameAccountButton"+account.accountNumber}

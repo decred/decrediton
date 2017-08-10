@@ -3,6 +3,10 @@
 @menu-link-icon: url(../components/icons/menu-link-left-color.png);
 @help-link-icon: @menu-link-icon;
 @manage-pools-icon: url(../components/icons/tickets-manage-stakepools.svg);
+@tickets-cogs-opened-icon: url(../components/icons/tickets-cogs-opened.svg);
+@tickets-cogs-closed-icon: url(../components/icons/tickets-cogs-closed.svg);
+@tickets-info-icon: url(../components/icons/tickets-info.svg);
+
 
 .copy-to-clipboard-icon {
     display: inline-block;
@@ -66,7 +70,6 @@
 .key-blue-button:active {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, .2);
 }
-
 .key-blue-button-disabled {
     cursor: default;
     display: inline-block;
@@ -81,6 +84,33 @@
     text-align: center;
     text-decoration: none;
     text-transform: capitalize;
+}
+
+
+.slate-gray-button {
+    cursor: pointer;
+    display: inline-block;
+    padding: 17px 18px 18px;
+    border-radius: 5px;
+    background-color: #8997a5;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, .2);
+    color: #fff;
+    font-size: 13px;
+    line-height: 9px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition-property: all;
+    transition-duration: 100ms;
+    transition-timing-function: cubic-bezier(0.86, 0, 0.07, 1);
+    transition-delay: 0s;
+}
+.slate-gray-button:hover {
+    background-color: #596d81;
+}
+.slate-gray-button:active {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, .22);
 }
 
 
@@ -144,4 +174,64 @@
     background-size: 5px;
     background-repeat: repeat-y;
     cursor: default;
+}
+
+
+.purchase-tickets-info-button {
+    margin-left: 197px;
+    float: left;
+    border-radius: 0px;
+    background-image: @tickets-info-icon;
+    background-position: 50% 50%;
+    background-size: 20px;
+    background-repeat: no-repeat;
+    box-shadow: none;
+    outline: 0;
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    background-color: transparent;
+    color: white;
+    border: 0;
+    line-height: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+.purchase-tickets-info-button:hover {
+    opacity: 0.7;
+}
+
+
+.ticket-cogs-opened,
+.ticket-cogs-closed {
+    margin-right: 25px;
+    float: right;
+    border-radius: 0px;
+    background-position: 50% 50%;
+    background-size: 20px;
+    background-repeat: no-repeat;
+    box-shadow: none;
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    background-color: transparent;
+    color: white;
+    border: 0;
+    line-height: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+.ticket-cogs-opened {
+    background-image: @tickets-cogs-opened-icon;
+}
+.ticket-cogs-closed {
+    background-image: @tickets-cogs-closed-icon;
+}
+.ticket-cogs-opened:hover,
+.ticket-cogs-closed:hover {
+    opacity: 0.7;
 }
