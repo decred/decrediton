@@ -2,7 +2,6 @@
 import { loader } from "../middleware/grpc/client";
 import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
-import { getSeederAttempt, generateRandomSeedAttempt } from "./SeedServiceActions";
 import { getCfg, getCfgPath, getDcrdCert,RPCDaemonPort, RPCDaemonHost } from "../config.js";
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
@@ -30,7 +29,6 @@ export function loaderRequest(address, port) {
         dispatch({ error, type: LOADER_FAILED });
       } else {
         dispatch({loader: loader, type: LOADER_SUCCESS });
-        dispatch(getSeederAttempt());
         dispatch(walletExistRequest());
       }
     });
@@ -54,8 +52,6 @@ export function walletExistRequest() {
             dispatch({response: response, type: WALLETEXIST_SUCCESS });
             if (response.getExists()) {
               setTimeout(dispatch(openWalletAttempt("public")), 1000);
-            } else {
-              setTimeout(() => dispatch(generateRandomSeedAttempt()), 500);
             }
           }
         });
@@ -80,7 +76,6 @@ export function createWalletExistingToggle(existing) {
       dispatch({ type: CREATEWALLET_EXISTINGSEED });
     }   else {
       setTimeout(()=>dispatch({ type: CREATEWALLET_NEWSEED }), 50);
-      dispatch(generateRandomSeedAttempt());
     }
   };
 }
