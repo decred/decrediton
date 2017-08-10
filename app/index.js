@@ -193,19 +193,6 @@ var initialState = {
     fetchHeadersResponse: null,
     fetchHeadersError: null,
   },
-  seedService: {
-    getSeederRequestAttempt: false,
-    seeder: null,
-    getSeederError: null,
-
-    generateRandomSeedRequestAttempt: false,
-    generateRandomSeedResponse: null,
-    generateRandomSeedError: null,
-
-    decodeSeedRequestAttempt: false,
-    decodeSeedResponse: null,
-    decodeSeedError: null,
-  },
   notifications: {
     synced: true,
     currentHeight: 0,

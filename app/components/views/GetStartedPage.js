@@ -58,15 +58,6 @@ function mapStateToProps(state) {
     loadActiveDataFiltersError: state.control.loadActiveDataFiltersError,
     loadActiveDataFiltersResponse: state.control.loadActiveDataFiltersResponse,
 
-    // SeedService
-    generateRandomSeedRequestAttempt: state.seedService.generateRandomSeedRequestAttempt,
-    generateRandomSeedResponse: state.seedService.generateRandomSeedResponse,
-    generateRandomSeedError: state.seedService.generateRandomSeedError,
-
-    decodeSeedRequestAttempt: state.seedService.decodeSeedRequestAttempt,
-    decodeSeedResponse: state.seedService.decodeSeedResponse,
-    decodeSeedError: state.seedService.decodeSeedError,
-
     createWalletExisting: state.walletLoader.createWalletExisting,
     confirmNewSeed: state.walletLoader.confirmNewSeed,
   };
