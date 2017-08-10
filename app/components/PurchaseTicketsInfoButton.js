@@ -1,15 +1,11 @@
 // @flow
 import React from "react";
-import Radium from "radium";
-import { StakePoolStyles } from "./views/ViewStyles";
+import "../style/MiscComponents.less";
 
 class PurchaseTicketsInfoButton extends React.Component {
   render() {
-    return (
-      <a style={StakePoolStyles.purchaseTicketInfoButton} onClick={this.props.onClick}></a>
-    );
-
+    return <a className="purchase-tickets-info-button" onClick={this.props.onClick} />;
   }
 }
 
-export default Radium(PurchaseTicketsInfoButton);
+export default PurchaseTicketsInfoButton;
