@@ -356,6 +356,28 @@ function deserialize_walletrpc_GenerateRandomSeedResponse(buffer_arg) {
   return api_pb.GenerateRandomSeedResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_GetTransactionRequest(arg) {
+  if (!(arg instanceof api_pb.GetTransactionRequest)) {
+    throw new Error('Expected argument of type walletrpc.GetTransactionRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_GetTransactionRequest(buffer_arg) {
+  return api_pb.GetTransactionRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_GetTransactionResponse(arg) {
+  if (!(arg instanceof api_pb.GetTransactionResponse)) {
+    throw new Error('Expected argument of type walletrpc.GetTransactionResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_GetTransactionResponse(buffer_arg) {
+  return api_pb.GetTransactionResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_GetTransactionsRequest(arg) {
   if (!(arg instanceof api_pb.GetTransactionsRequest)) {
     throw new Error('Expected argument of type walletrpc.GetTransactionsRequest');
@@ -884,6 +906,28 @@ function deserialize_walletrpc_SetVotingAddressResponse(buffer_arg) {
   return api_pb.SetVotingAddressResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_SignMessageRequest(arg) {
+  if (!(arg instanceof api_pb.SignMessageRequest)) {
+    throw new Error('Expected argument of type walletrpc.SignMessageRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SignMessageRequest(buffer_arg) {
+  return api_pb.SignMessageRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_SignMessageResponse(arg) {
+  if (!(arg instanceof api_pb.SignMessageResponse)) {
+    throw new Error('Expected argument of type walletrpc.SignMessageResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_SignMessageResponse(buffer_arg) {
+  return api_pb.SignMessageResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_SignTransactionRequest(arg) {
   if (!(arg instanceof api_pb.SignTransactionRequest)) {
     throw new Error('Expected argument of type walletrpc.SignTransactionRequest');
@@ -1082,6 +1126,28 @@ function deserialize_walletrpc_TransactionNotificationsResponse(buffer_arg) {
   return api_pb.TransactionNotificationsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_VerifyMessageRequest(arg) {
+  if (!(arg instanceof api_pb.VerifyMessageRequest)) {
+    throw new Error('Expected argument of type walletrpc.VerifyMessageRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_VerifyMessageRequest(buffer_arg) {
+  return api_pb.VerifyMessageRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_VerifyMessageResponse(arg) {
+  if (!(arg instanceof api_pb.VerifyMessageResponse)) {
+    throw new Error('Expected argument of type walletrpc.VerifyMessageResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_VerifyMessageResponse(buffer_arg) {
+  return api_pb.VerifyMessageResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_VersionRequest(arg) {
   if (!(arg instanceof api_pb.VersionRequest)) {
     throw new Error('Expected argument of type walletrpc.VersionRequest');
@@ -1220,6 +1286,17 @@ var WalletServiceService = exports.WalletServiceService = {
     requestDeserialize: deserialize_walletrpc_BalanceRequest,
     responseSerialize: serialize_walletrpc_BalanceResponse,
     responseDeserialize: deserialize_walletrpc_BalanceResponse,
+  },
+  getTransaction: {
+    path: '/walletrpc.WalletService/GetTransaction',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.GetTransactionRequest,
+    responseType: api_pb.GetTransactionResponse,
+    requestSerialize: serialize_walletrpc_GetTransactionRequest,
+    requestDeserialize: deserialize_walletrpc_GetTransactionRequest,
+    responseSerialize: serialize_walletrpc_GetTransactionResponse,
+    responseDeserialize: deserialize_walletrpc_GetTransactionResponse,
   },
   getTransactions: {
     path: '/walletrpc.WalletService/GetTransactions',
@@ -1453,6 +1530,17 @@ var WalletServiceService = exports.WalletServiceService = {
     requestDeserialize: deserialize_walletrpc_LoadActiveDataFiltersRequest,
     responseSerialize: serialize_walletrpc_LoadActiveDataFiltersResponse,
     responseDeserialize: deserialize_walletrpc_LoadActiveDataFiltersResponse,
+  },
+  signMessage: {
+    path: '/walletrpc.WalletService/SignMessage',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.SignMessageRequest,
+    responseType: api_pb.SignMessageResponse,
+    requestSerialize: serialize_walletrpc_SignMessageRequest,
+    requestDeserialize: deserialize_walletrpc_SignMessageRequest,
+    responseSerialize: serialize_walletrpc_SignMessageResponse,
+    responseDeserialize: deserialize_walletrpc_SignMessageResponse,
   },
 };
 
@@ -1752,3 +1840,18 @@ var VotingServiceService = exports.VotingServiceService = {
 };
 
 exports.VotingServiceClient = grpc.makeGenericClientConstructor(VotingServiceService);
+var MessageVerificationServiceService = exports.MessageVerificationServiceService = {
+  verifyMessage: {
+    path: '/walletrpc.MessageVerificationService/VerifyMessage',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.VerifyMessageRequest,
+    responseType: api_pb.VerifyMessageResponse,
+    requestSerialize: serialize_walletrpc_VerifyMessageRequest,
+    requestDeserialize: deserialize_walletrpc_VerifyMessageRequest,
+    responseSerialize: serialize_walletrpc_VerifyMessageResponse,
+    responseDeserialize: deserialize_walletrpc_VerifyMessageResponse,
+  },
+};
+
+exports.MessageVerificationServiceClient = grpc.makeGenericClientConstructor(MessageVerificationServiceService);
