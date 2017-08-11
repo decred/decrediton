@@ -23,6 +23,7 @@ service WalletService {
 	rpc AccountNumber (AccountNumberRequest) returns (AccountNumberResponse);
 	rpc Accounts (AccountsRequest) returns (AccountsResponse);
 	rpc Balance (BalanceRequest) returns (BalanceResponse);
+	rpc GetTransaction (GetTransactionRequest) returns (GetTransactionResponse);
 	rpc GetTransactions (GetTransactionsRequest) returns (stream GetTransactionsResponse);
 	rpc TicketPrice (TicketPriceRequest) returns (TicketPriceResponse);
 	rpc StakeInfo (StakeInfoRequest) returns (StakeInfoResponse);
@@ -48,6 +49,7 @@ service WalletService {
 	rpc PurchaseTickets(PurchaseTicketsRequest) returns (PurchaseTicketsResponse);
 	rpc RevokeTickets(RevokeTicketsRequest) returns (RevokeTicketsResponse);
 	rpc LoadActiveDataFilters(LoadActiveDataFiltersRequest) returns (LoadActiveDataFiltersResponse);
+	rpc SignMessage (SignMessageRequest) returns (SignMessageResponse);
 }
 
 service WalletLoaderService {
@@ -88,6 +90,10 @@ service AgendaService {
 service VotingService {
 	rpc VoteChoices (VoteChoicesRequest) returns (VoteChoicesResponse);
 	rpc SetVoteChoices (SetVoteChoicesRequest) returns (SetVoteChoicesResponse);
+}
+
+service MessageVerificationService {
+	rpc VerifyMessage (VerifyMessageRequest) returns (VerifyMessageResponse);
 }
 
 message TransactionDetails {
@@ -236,6 +242,13 @@ message BalanceResponse {
 	int64 immature_stake_generation = 4;
 	int64 locked_by_tickets = 5;
 	int64 voting_authority = 6;
+}
+
+message GetTransactionRequest {
+	bytes transaction_hash = 1;
+}
+message GetTransactionResponse {
+	TransactionDetails transaction = 1;
 }
 
 message GetTransactionsRequest {
@@ -414,6 +427,15 @@ message RevokeTicketsResponse {}
 
 message LoadActiveDataFiltersRequest {}
 message LoadActiveDataFiltersResponse {}
+
+message SignMessageRequest{
+	string address = 1;
+	string message = 2;
+	bytes passphrase = 3;
+}
+message SignMessageResponse{
+	bytes signature = 1;
+}
 
 message TransactionNotificationsRequest {}
 message TransactionNotificationsResponse {
@@ -653,4 +675,13 @@ message SetVoteChoicesRequest {
 }
 message SetVoteChoicesResponse {
 	uint32 votebits = 1;
+}
+
+message VerifyMessageRequest {
+	string address = 1;
+	string message = 2;
+	bytes signature = 3;
+}
+message VerifyMessageResponse {
+	bool valid = 1;
 }
