@@ -1,3 +1,5 @@
+@accounts-button-icon: url(../components/icons/wallet-gray.svg);
+@accounts-button-hover-icon: url(../components/icons/wallet-blue.svg);
 @copy-to-clipboard-icon: url(../components/icons/wallet-gray.svg);
 @copy-to-clipboard-hover-icon: url(../components/icons/wallet-blue.svg);
 @menu-link-icon: url(../components/icons/menu-link-left-color.png);
@@ -7,6 +9,22 @@
 @tickets-cogs-closed-icon: url(../components/icons/tickets-cogs-closed.svg);
 @tickets-info-icon: url(../components/icons/tickets-info.svg);
 
+
+.accounts-button-icon {
+    display: inline-block;
+    width: 20px;
+    height: 18px;
+    margin-left: 16px;
+    margin-top: 9px;
+    background-image: @accounts-button-icon;
+    background-position: 0 0;
+    background-size: 20px auto;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+.accounts-button-icon:hover {
+    background-image: @accounts-button-hover-icon;
+}
 
 .copy-to-clipboard-icon {
     display: inline-block;
@@ -178,7 +196,6 @@
 
 
 .purchase-tickets-info-button {
-    margin-left: 197px;
     float: left;
     border-radius: 0px;
     background-image: @tickets-info-icon;

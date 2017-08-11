@@ -10,6 +10,8 @@ import CopyToClipboardButton from "../CopyToClipboardButton";
 import ReactTooltip from "react-tooltip";
 import { ReceiveStyles } from "./ViewStyles";
 import Select from "react-select";
+import "../../style/MiscComponents.less";
+import { Link } from "react-router";
 
 //var receiveCopy = 'To maximize privacy, please use addresses one time only.';
 class QRCode extends Component {
@@ -79,7 +81,14 @@ class Receive extends Component{
         <div style={ReceiveStyles.content}>
           <div style={ReceiveStyles.contentNestReceive}>
             <div style={ReceiveStyles.contentNestReceiveForAddress}>
-              <div style={ReceiveStyles.contentNestReceiveForAddressIcon}></div>
+              <Link
+                ref="accountButtonRef"
+                className="accounts-button-icon"
+                data-place="bottom"
+                data-type="info"
+                data-effect="solid"
+                data-tip={"Accounts"}
+                to={"/accounts"} />
               <div style={ReceiveStyles.contentNestPrefixReceive}>This address is for:</div>
               <div style={ReceiveStyles.receiveSelectAccountInput}>
                 {selectAccounts}

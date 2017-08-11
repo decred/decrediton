@@ -2054,9 +2054,14 @@ export const StakePoolStyles = {
     textAlign: "right",
   },
   purchaseTicketInputButtons: {
-    width: "275px",
-    float: "left",
+    width: "90px",
+    float: "right",
     paddingTop: "5px",
+    paddingLeft: "10px",
+  },
+  managePoolButtonArea: {
+    float: "left",
+    paddingTop: "8px",
     paddingLeft: "10px",
   },
   purchaseTicketInputError: {
