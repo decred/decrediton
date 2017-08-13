@@ -7,7 +7,7 @@ import ErrorScreen from "../ErrorScreen";
 import Balance from "../Balance";
 import SideBar from "../SideBar";
 import Header from "../Header";
-import NewExistingSeedToggle from "../NewExistingSeedToggle";
+import TextToggle from "../TextToggle";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
 import { StakePoolStyles } from "./ViewStyles";
@@ -1114,7 +1114,7 @@ class StakePool extends Component{
             <div>
              <Balance amount={getTicketPriceResponse.getTicketPrice()}/>
               <div style={StakePoolStyles.toggle}>
-                <NewExistingSeedToggle
+                <TextToggle
                   activeButton={"left"}
                   leftText={"Purchase Tickets"}
                   rightText={"Vote settings"}
