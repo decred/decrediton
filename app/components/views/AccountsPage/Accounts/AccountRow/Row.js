@@ -1,12 +1,11 @@
 // @flow
 import React from "react";
-import SlateGrayButton from "../SlateGrayButton";
-import KeyBlueButton from "../KeyBlueButton";
-import Balance from "../Balance";
+import SlateGrayButton from "../../../../SlateGrayButton";
+import KeyBlueButton from "../../../../KeyBlueButton";
+import Balance from "../../../../Balance";
 import ReactToolTip from "react-tooltip";
-import "../fonts.css";
-import "../../style/AccountRow.less";
-
+import "../../../../fonts.css";
+import "../../../../../style/AccountRow.less";
 
 const Row = ({
   account,
