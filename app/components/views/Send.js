@@ -12,6 +12,9 @@ import KeyBlueButton from "../KeyBlueButton";
 import { SendStyles } from "./ViewStyles";
 import PassphraseModal from "../PassphraseModal";
 import Select from "react-select";
+import ReactTooltip from "react-tooltip";
+import "../../style/MiscComponents.less";
+import { Link } from "react-router";
 
 function mapStateToProps(state) {
   return {
@@ -275,7 +278,14 @@ class Send extends Component{
               <div style={SendStyles.sendSelectAccountInput}>
                 {selectAccounts}
               </div>
-              <div style={SendStyles.sendFromAddressWalletIcon}></div>
+              <Link
+                ref="accountButtonRef"
+                className="accounts-button-icon"
+                data-place="bottom"
+                data-type="info"
+                data-effect="solid"
+                data-tip={"Accounts"}
+                to={"/accounts"} />
             </div>
             <div id="dynamicInput">
             {this.state.outputs.map((output,i) => {
@@ -427,6 +437,7 @@ class Send extends Component{
         <div style={SendStyles.body}>
           <SideBar />
           {sendView}
+          <ReactTooltip />
         </div>);
     }
   }

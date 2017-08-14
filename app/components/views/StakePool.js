@@ -24,6 +24,8 @@ import ImportScriptModal from "../ImportScriptModal";
 import Select from "react-select";
 import ReactToolTip from "react-tooltip";
 import { addSpacingAroundText } from "../../helpers/strings";
+import "../../style/MiscComponents.less";
+import { Link } from "react-router";
 
 class StakePool extends Component{
   static propTypes = {
@@ -800,6 +802,14 @@ class StakePool extends Component{
               <div style={StakePoolStyles.purchaseTicketInputSelect}>
                 {selectAccounts}
               </div>
+              <Link
+                ref="accountButtonRef"
+                className="accounts-button-icon"
+                data-place="bottom"
+                data-type="info"
+                data-effect="solid"
+                data-tip={"Accounts"}
+                to={"/accounts"} />
               <div style={StakePoolStyles.purchaseTicketInputButtons}>
                 <PurchaseTicketsInfoButton onClick={() => this.showPurchaseInfoModal()}/>
                 <TicketsCogs opened={this.state.advancedHidden} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}/>
@@ -839,7 +849,7 @@ class StakePool extends Component{
               <div style={StakePoolStyles.purchaseTicketInputSelect}>
                 {selectConfiguredStakePool}
               </div>
-              <div style={StakePoolStyles.purchaseTicketInputButtons}>
+              <div style={StakePoolStyles.managePoolButtonArea}>
                 <ManagePoolsButton onClick={() => this.showStakePoolConfig()}/>
               </div>
             </div>
