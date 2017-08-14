@@ -1,35 +1,9 @@
 // @flow
-import React, { Component } from "react";
-import { updateBlockTimeSince } from "../actions/ClientActions";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { autobind } from "core-decorators";
-import arrowUpLightBlue from "./icons/arrow-up-light-blue.svg";
-import menulogo from "./icons/menu-logo.svg";
-import MenuLink from "./MenuLink";
-import "./fonts.css";
-
-function mapStateToProps(state) {
-  return {
-    walletService: state.grpc.walletService,
-
-    getBalanceRequestAttempt: state.grpc.getBalanceRequestAttempt,
-    balances: state.grpc.balances,
-    getStakeInfoRequestAttempt: state.grpc.getStakeInfoRequestAttempt,
-    getStakeInfoResponse: state.grpc.getStakeInfoResponse,
-    network: state.grpc.network,
-    getAccountsResponse: state.grpc.getAccountsResponse,
-    transactionNtfnsResponse: state.notifications.transactionNtfnsResponse,
-    currentHeight: state.notifications.currentHeight,
-    timeBackString: state.notifications.timeBackString,
-    timeSinceString: state.grpc.timeSinceString,
-    synced: state.notifications.synced,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ updateBlockTimeSince }, dispatch);
-}
+import React from "react";
+import arrowUpLightBlue from "../icons/arrow-up-light-blue.svg";
+import menulogo from "../icons/menu-logo.svg";
+import MenuLink from "../MenuLink";
+import "../fonts.css";
 
 const styles = {
   menu:{
@@ -216,54 +190,24 @@ const styles = {
   },
 };
 
-@autobind
-class SideBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      accountsHidden: true,
-      timeSince: "",
-    };
-   //this.updateBlockTimeSince = this.updateBlockTimeSince.bind(this);
-  }
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-  componentDidMount() {
-    this.interval = setInterval(() => this.props.updateBlockTimeSince(), 10000);
-  }
-  showAccounts() {
-    this.setState({accountsHidden: false});
-  }
-  hideAccounts() {
-    this.setState({accountsHidden: true});
-  }
-
-  render() {
-    const { gettingStarted, errorPage } = this.props;
-    const { network } = this.props;
-    if ( gettingStarted || errorPage ) {
-      return (
-        <div style={styles.menu}>
-          <div style={styles.menuLogo}></div>
-          <div style={styles.testnetText}>{network !== null && network == "testnet" ? "Testnet" : ""}</div>
-        </div>);
-    }
-    const { balances, getAccountsResponse } = this.props;
-    const { synced, currentHeight, timeBackString, timeSinceString } = this.props;
-    var totalBalance = 0;
-    if (balances !== null) {
-      for (var i = 0; i < balances.length; i++) {
-        totalBalance += balances[i].total;
-      }
-      if (totalBalance > 0) {
-        totalBalance /= 100000000;
-      }
-    }
-    return (
-      <div style={styles.menu}>
-        <div style={styles.menuLogo}></div>
-        <div style={styles.testnetText}>{network !== null && network == "testnet" ? "Testnet" : ""}</div>
+const Bar = ({
+  gettingStarted,
+  errorPage,
+  isTestNet,
+  balances,
+  synced,
+  currentHeight,
+  timeBackString,
+  totalBalance,
+  isShowingAccounts,
+  onShowAccounts,
+  onHideAccounts
+}) => (
+  <div style={styles.menu}>
+    <div style={styles.menuLogo}></div>
+    {isTestNet ? <div style={styles.testnetText}>Testnet</div> : null}
+    {(gettingStarted || errorPage) ? null : (
+      <div>
         <div style={styles.menuNavigation}>
           <MenuLink to="/home">Overview</MenuLink>
           <MenuLink to="/accounts">Accounts</MenuLink>
@@ -274,48 +218,39 @@ class SideBar extends Component {
           <MenuLink to="/settings">Settings</MenuLink>
           <MenuLink to="/help">Help</MenuLink>
         </div>
-        <div style={!this.state.accountsHidden ? styles.menuTotalBalanceExtended : styles.menuTotalBalanceExtendedHidden }>
+        <div style={isShowingAccounts ? styles.menuTotalBalanceExtended : styles.menuTotalBalanceExtendedHidden }>
           <div style={styles.menuTotalBalanceExtendedBottom}>
-            {balances != null ? balances.map(function(account) {
-              if (!account.hidden) {
-                var accountBalance = 0;
-                if (account.total > 0) {
-                  accountBalance = account.total / 100000000;
-                }
-                return(
-                  <div style={styles.menuTotalBalanceExtendedBottomAccount} key={account.accountName}>
-                    <div style={styles.menuTotalBalanceExtendedBottomAccountName}>{account.accountName}</div>
-                    <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>{accountBalance}</div>
-                  </div>
-                );
-              }
-            }) : <div></div>}
+            {balances.map(({ hidden, total, accountName }) => hidden ? null : (
+              <div style={styles.menuTotalBalanceExtendedBottomAccount} key={accountName}>
+                <div style={styles.menuTotalBalanceExtendedBottomAccountName}>{accountName}</div>
+                <div style={styles.menuTotalBalanceExtendedBottomAccountNumber}>{total / 100000000}</div>
+              </div>
+            ))}
           </div>
         </div>
         <div style={styles.menuBottom}>
-          <div style={styles.menuBottomTotalBalanceShort} onMouseEnter={this.showAccounts} onMouseLeave={this.hideAccounts}>
+          <div
+            style={styles.menuBottomTotalBalanceShort}
+            onMouseEnter={onShowAccounts}
+            onMouseLeave={onHideAccounts}
+          >
             <div style={styles.menuBottomTotalBalanceShortSeperator}></div>
             <div style={styles.menuBottomTotalBalanceShortName}>Total balance:</div>
             <div style={styles.menuBottomTotalBalanceShortValue}>{totalBalance.toString()}</div>
           </div>
-          {synced && getAccountsResponse !== null ?
+          {currentHeight ? (
             <div style={styles.menuBottomLatestBlock}>
-              <a style={styles.menuBottomLatestBlockName}>Latest block: <span style={styles.menuBottomLatestBlockNumber}>{getAccountsResponse.getCurrentBlockHeight()}</span></a>
-              <div style={styles.menuBottomLatestBlockTime}>{timeSinceString}</div>
-            </div>:
-            currentHeight !== 0 ?
-            <div style={styles.menuBottomLatestBlock}>
-              <a style={styles.menuBottomLatestBlockName}>Synced to block: <span style={styles.menuBottomLatestBlockNumber}>{currentHeight}</span></a>
+              <a style={styles.menuBottomLatestBlockName}>
+                {synced ? "Latest block: " : "Synced to block: "}
+                <span style={styles.menuBottomLatestBlockNumber}>{currentHeight}</span>
+              </a>
               <div style={styles.menuBottomLatestBlockTime}>{timeBackString}</div>
-            </div>:
-            <div>
             </div>
-          }
-
+          ) : null}
         </div>
       </div>
-    );
-  }
-}
+    )}
+  </div>
+);
 
-export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
+export default Bar;
