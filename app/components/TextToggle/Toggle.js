@@ -91,29 +91,23 @@ const styles = {
       //textAlign: 'left',
   }
 };
-class NewExistingSeedToggle extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeButton: this.props.activeButton,
-    };
-  }
-  clickButton(side) {
-    this.setState({activeButton:side});
-    this.props.toggleAction(side);
-  }
-  render() {
-    const { leftText, rightText } = this.props;
-    return (
-      <div style={styles.textToggle}>
-        <div style={this.state.activeButton == "right" ? styles.textToggleButtonLeft : styles.textToggleButtonActiveLeft } onClick={this.state.activeButton == "right" ? () => this.clickButton("left") : null}>
-          {leftText}
-        </div>
-        <div style={this.state.activeButton == "left" ? styles.textToggleButtonRight : styles.textToggleButtonActiveRight } onClick={this.state.activeButton == "left" ? () => this.clickButton("right") : null}>
-          {rightText}
-        </div>
-      </div>
-    );
-  }
-}
-export default Radium(NewExistingSeedToggle);
+
+const Toggle = ({
+  leftText,
+  rightText,
+  activeButton,
+  onClick
+}) => (
+  <div style={styles.textToggle}>
+    <div
+      style={activeButton === "right" ? styles.textToggleButtonLeft : styles.textToggleButtonActiveLeft }
+      onClick={activeButton == "right" ? () => onClick("left") : null}
+    >{leftText}</div>
+    <div
+      style={activeButton == "left" ? styles.textToggleButtonRight : styles.textToggleButtonActiveRight }
+      onClick={activeButton == "left" ? () => onClick("right") : null}
+    >{rightText}</div>
+  </div>
+);
+
+export default Radium(Toggle);

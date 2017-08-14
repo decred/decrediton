@@ -6,7 +6,7 @@ import DecredLoading from "../DecredLoading";
 import ShowError from "../ShowError";
 import Radium from "radium";
 import SideBar from "../SideBar";
-import NewExistingSeedToggle from "../NewExistingSeedToggle";
+import TextToggle from "../TextToggle";
 import Header from "../Header";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
@@ -189,7 +189,7 @@ class Home extends Component{
           headerMetaOverview=
             {<div style={GetStartedStyles.toggle}>
               {!this.props.confirmNewSeed ?
-                <NewExistingSeedToggle
+                <TextToggle
                   activeButton={"left"}
                   leftText={"New seed"}
                   rightText={"Existing Seed"}
