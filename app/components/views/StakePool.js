@@ -456,10 +456,10 @@ class StakePool extends Component{
     this.setState({modalHeading: null, modalDescription: null, modalSubmitFunc: null, passphraseModalOpen: false});
   }
   updateConfiguredStakePool(stakePool) {
-    this.setState({selectedConfigured: {value: stakePool, label: stakePool.Host}});
+    this.setState({selectedConfigured: stakePool});
   }
   updateUnconfiguredStakePool(stakePool) {
-    this.setState({selectedUnconfigured: {value: stakePool, label: stakePool.Host}});
+    this.setState({selectedUnconfigured: stakePool});
   }
   render() {
     const { walletService } = this.props;
