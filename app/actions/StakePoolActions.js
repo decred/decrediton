@@ -18,7 +18,6 @@ export function updateStakepoolPurchaseInformation() {
       if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
         var poolHost = currentStakePoolConfig[i].Host;
         var apiKey = currentStakePoolConfig[i].ApiKey;
-        var votingAccount = currentStakePoolConfig[i].VotingAccount;
         getPurchaseInfo(poolHost,apiKey,
             function(response, error) {
               if (error) {
@@ -27,7 +26,7 @@ export function updateStakepoolPurchaseInformation() {
               } else {
                 // parse response data for no err
                 if (response.data.status == "success") {
-                  dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, votingAccount));
+                  dispatch(updateSavedConfig(response.data.data, poolHost));
                 }
               }
             }
@@ -77,22 +76,30 @@ function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
   return (dispatch) => {
     var config = getCfg(true);
     var stakePoolConfigs = config.get("stakepools");
-    var successMessage = "You have successfully configured ";
+    var settingsUpdated = false;
     for (var i = 0; i < stakePoolConfigs.length; i++) {
       if (stakePoolConfigs[i].Host == poolHost) {
-        stakePoolConfigs[i].ApiKey = apiKey;
-        stakePoolConfigs[i].PoolFees = newPoolInfo.PoolFees;
-        stakePoolConfigs[i].PoolAddress = newPoolInfo.PoolAddress;
-        stakePoolConfigs[i].Script = newPoolInfo.Script;
-        stakePoolConfigs[i].TicketAddress = newPoolInfo.TicketAddress;
-        stakePoolConfigs[i].VotingAccount = accountNum;
-        stakePoolConfigs[i].VoteBits = newPoolInfo.VoteBits;
-        successMessage += poolHost;
-        break;
+        if (apiKey || accountNum) {
+          stakePoolConfigs[i].PoolFees = newPoolInfo.PoolFees;
+          stakePoolConfigs[i].PoolAddress = newPoolInfo.PoolAddress;
+          stakePoolConfigs[i].Script = newPoolInfo.Script;
+          stakePoolConfigs[i].TicketAddress = newPoolInfo.TicketAddress;
+          stakePoolConfigs[i].VotingAccount = accountNum;
+          stakePoolConfigs[i].VoteBits = newPoolInfo.VoteBits;
+          settingsUpdated = true;
+        } else {
+          if (stakePoolConfigs[i].PoolFees != newPoolInfo.PoolFees) {
+            stakePoolConfigs[i].PoolFees = newPoolInfo.PoolFees;
+            settingsUpdated = true;
+            break;
+          }
+        }
       }
     }
-    config.set("stakepools", stakePoolConfigs);
-    dispatch({ successMessage: successMessage, currentStakePoolConfig: stakePoolConfigs, type: UPDATESTAKEPOOLCONFIG_SUCCESS });
+    if (settingsUpdated) {
+      config.set("stakepools", stakePoolConfigs);
+      dispatch({ successMessage: "You have successfully configured " + poolHost, currentStakePoolConfig: stakePoolConfigs, type: UPDATESTAKEPOOLCONFIG_SUCCESS });
+    }
   };
 }
 
