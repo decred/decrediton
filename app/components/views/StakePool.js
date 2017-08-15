@@ -796,68 +796,68 @@ class StakePool extends Component{
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Purchase Tickets</div>
           </div>
+          <div style={StakePoolStyles.purchaseTicketInputButtons}>
+            <PurchaseTicketsInfoButton onClick={() => this.showPurchaseInfoModal()}/>
+            <TicketsCogs opened={this.state.advancedHidden} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}/>
+          </div>
           <div style={this.state.advancedHidden ? StakePoolStyles.flexHeightHidden : StakePoolStyles.flexHeightShown }>
             <div style={StakePoolStyles.purchaseTicketRow}>
-              <div style={StakePoolStyles.purchaseTicketLabel}>Account:</div>
-              <div style={StakePoolStyles.purchaseTicketInputSelect}>
-                {selectAccounts}
+              <div style={StakePoolStyles.purchaseTicketRowAccountSelect}>
+                <div style={StakePoolStyles.purchaseTicketAccountSelectLabel}>Account:</div>
+                <div style={StakePoolStyles.purchaseTicketInputSelect}>
+                  {selectAccounts}
+                </div>
+                <Link
+                  ref="accountButtonRef"
+                  className="accounts-button-icon"
+                  data-place="bottom"
+                  data-type="info"
+                  data-effect="solid"
+                  data-tip={"Accounts"}
+                  to={"/accounts"} />
               </div>
-              <Link
-                ref="accountButtonRef"
-                className="accounts-button-icon"
-                data-place="bottom"
-                data-type="info"
-                data-effect="solid"
-                data-tip={"Accounts"}
-                to={"/accounts"} />
-              <div style={StakePoolStyles.purchaseTicketInputButtons}>
-                <PurchaseTicketsInfoButton onClick={() => this.showPurchaseInfoModal()}/>
-                <TicketsCogs opened={this.state.advancedHidden} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}/>
-              </div>
-            </div>
-            <div style={StakePoolStyles.purchaseTicketRow}>
-              <div style={StakePoolStyles.purchaseTicketRowLeft}>
+              <div style={StakePoolStyles.purchaseTicketRowNumTickets}>
                 <div style={StakePoolStyles.purchaseTicketLabel}>Number of Tickets:</div>
-                <div style={StakePoolStyles.purchaseTicketNumInput}>
+                <div style={StakePoolStyles.purchaseTicketNumSelect}>
                   {selectNumTickets}
                 </div>
                 <div style={StakePoolStyles.purchaseTicketInputError}>
                   {this.state.numTicketsError}
                 </div>
               </div>
-              <div style={StakePoolStyles.purchaseTicketRowRight}>
-                <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
-                <div style={StakePoolStyles.purchaseTicketNumInput}>
-                  <div style={StakePoolStyles.inputFormPurchaseTicket}>
-                    <input
-                      type="text"
-                      style={StakePoolStyles.contentNestPurchaseTicketForm}
-                      placeholder="Ticket Fee"
-                      defaultValue={0.001}
-                      onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
-                  </div>
-                </div>
-                <div style={StakePoolStyles.purchaseTicketInputError}>
-                  {this.state.ticketFeeError}
-                </div>
-              </div>
-            </div>
-            <div style={StakePoolStyles.purchaseTicketRow}>
-              <div style={StakePoolStyles.purchaseTicketLabel}>
-                Stake Pool:
-                </div>
-              <div style={StakePoolStyles.purchaseTicketInputSelect}>
-                {selectConfiguredStakePool}
-              </div>
-              <div style={StakePoolStyles.managePoolButtonArea}>
-                <ManagePoolsButton onClick={() => this.showStakePoolConfig()}/>
-              </div>
             </div>
             <div hidden={this.state.advancedHidden ? true : false}>
               <div style={StakePoolStyles.purchaseTicketRow}>
-                <div style={StakePoolStyles.purchaseTicketRowLeft}>
+                <div style={StakePoolStyles.purchaseTicketLabel}>
+                  Stake Pool:
+                  </div>
+                <div style={StakePoolStyles.purchaseTicketInputSelect}>
+                  {selectConfiguredStakePool}
+                </div>
+                <div style={StakePoolStyles.managePoolButtonArea}>
+                  <ManagePoolsButton onClick={() => this.showStakePoolConfig()}/>
+                </div>
+              </div>
+              <div style={StakePoolStyles.purchaseTicketRow}>
+                <div style={StakePoolStyles.purchaseTicketRowThirds}>
+                  <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
+                  <div style={StakePoolStyles.purchaseTicketThirdsInput}>
+                    <div style={StakePoolStyles.inputFormPurchaseTicket}>
+                      <input
+                        type="text"
+                        style={StakePoolStyles.contentNestPurchaseTicketForm}
+                        placeholder="Ticket Fee"
+                        defaultValue={0.001}
+                        onBlur={(e) =>{this.updateTicketFee(e.target.value);}}/>
+                    </div>
+                  </div>
+                  <div style={StakePoolStyles.purchaseTicketInputError}>
+                    {this.state.ticketFeeError}
+                  </div>
+                </div>
+                <div style={StakePoolStyles.purchaseTicketRowThirds}>
                   <div style={StakePoolStyles.purchaseTicketLabel}>Tx Fee (DCR/kB):</div>
-                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                  <div style={StakePoolStyles.purchaseTicketThirdsInput}>
                     <div style={StakePoolStyles.inputFormPurchaseTicket}>
                       <input
                         type="text"
@@ -871,9 +871,9 @@ class StakePool extends Component{
                     {this.state.txFeeError}
                   </div>
                 </div>
-                <div style={StakePoolStyles.purchaseTicketRowRight}>
+                <div style={StakePoolStyles.purchaseTicketRowThirds}>
                   <div style={StakePoolStyles.purchaseTicketLabel}>Expiry:</div>
-                  <div style={StakePoolStyles.purchaseTicketNumInput}>
+                  <div style={StakePoolStyles.purchaseTicketThirdsInput}>
                     <div style={StakePoolStyles.inputFormPurchaseTicket}>
                       <input
                         type="text"
@@ -930,8 +930,9 @@ class StakePool extends Component{
             <div hidden={this.state.advancedHidden ? false : true} style={StakePoolStyles.purchaseTicketQuickBarRow}>
               <div style={StakePoolStyles.quickBarRowLabel}>Settings:</div>
              <div style={StakePoolStyles.stakepoolIcon} data-tip="Current Stakepool">{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.Host : null}</div>
-              <div style={StakePoolStyles.expiryIcon} data-tip="Expiry">{this.state.expiry} Blocks</div>
+              <div style={StakePoolStyles.feeIcon} data-tip="Ticket Fee">{this.state.ticketFee} DCR/KB</div>
               <div style={StakePoolStyles.feeIcon} data-tip="Tx Fee">{this.state.txFee} DCR/KB</div>
+              <div style={StakePoolStyles.expiryIcon} data-tip="Expiry">{this.state.expiry} Blocks</div>
               <div style={StakePoolStyles.ticketAddressIcon} data-tip="Ticket Address">{this.state.selectedConfigured != null ? addSpacingAroundText(this.state.selectedConfigured.value.TicketAddress) : null}</div>
               <div style={StakePoolStyles.feeAddressIcon} data-tip="Pool Address">{this.state.selectedConfigured != null ? addSpacingAroundText(this.state.selectedConfigured.value.PoolAddress) : null}</div>
               <div style={StakePoolStyles.poolFeeIcon} data-tip="Pool Fee">{this.state.selectedConfigured != null ? this.state.selectedConfigured.value.PoolFees : null}%</div>

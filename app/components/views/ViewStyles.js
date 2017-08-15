@@ -2007,6 +2007,28 @@ export const StakePoolStyles = {
     float: "left",
     borderBottom: "1px #E7EAED solid",
   },
+  purchaseTicketRowThirds: {
+    width: "33%",
+    float: "left",
+  },
+  purchaseTicketRowAccountSelect: {
+    width: "58%",
+    float: "left",
+  },
+  purchaseTicketAccountSelectLabel: {
+    width: "86px",
+    paddingRight: "15px",
+    paddingLeft: "5px",
+    float: "left",
+    height: "100%",
+    paddingTop: "5px",
+    fontSize: "16px",
+    textAlign: "right",
+  },
+  purchaseTicketRowNumTickets: {
+    width: "42%",
+    float: "left",
+  },
   purchaseTicketRowLeft: {
     width: "50%",
     float: "left",
@@ -2039,8 +2061,22 @@ export const StakePoolStyles = {
     fontSize: "16px",
     textAlign: "left",
   },
+  purchaseTicketNumSelect: {
+    width: "85px",
+    float: "left",
+    height: "100%",
+    fontSize: "19px",
+    textAlign: "right",
+  },
   purchaseTicketNumInput: {
     width: "146px",
+    float: "left",
+    height: "100%",
+    fontSize: "19px",
+    textAlign: "right",
+  },
+  purchaseTicketThirdsInput: {
+    width: "53px",
     float: "left",
     height: "100%",
     fontSize: "19px",
@@ -2103,7 +2139,7 @@ export const StakePoolStyles = {
   flexHeightHidden: {
     paddingTop: "1px",
     backgroundColor: "#fff",
-    height:"210px",
+    height:"116px",
     width: "740px",
     float: "left",
     overflowY: "auto",
@@ -2117,7 +2153,7 @@ export const StakePoolStyles = {
   flexHeightShown: {
     paddingTop: "1px",
     backgroundColor: "#fff",
-    height:"340px",
+    height:"288px",
     width: "740px",
     float: "left",
     overflowY: "auto",

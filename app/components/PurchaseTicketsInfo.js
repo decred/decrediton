@@ -17,20 +17,16 @@ class PurchaseTicketsInfo extends React.Component {
             "This is the account that will purchase the tickets and receive the reward."
           )}
           {this.renderSection(
-            "Amount",
-            "The number of tickets to purchase."
+            "Number of tickets",
+            "The number of tickets to attempt to purchase."
           )}
           {this.renderSection(
             "Ticket fee (DCR/kB)",
             "Tickets are entered into the voting pool by order of their fee. In times of demand, you will need to increase this value in order to have your tickets accepted. You can view current ticket fees here."
           )}
           {this.renderSection(
-            "Ticket difficulty",
-            "The current price of a ticket."
-          )}
-          {this.renderSection(
-            "Blocks until retarget",
-            "When this reaches 0, a new ticket price is calculated."
+            "Ticket price",
+            "The current price of a ticket as calculated by the network.  Changes every 144 Blocks."
           )}
           {this.renderSection(
             "Stake pool preference",
@@ -43,20 +39,20 @@ class PurchaseTicketsInfo extends React.Component {
         </div>
         <div className="column">
           {this.renderSection(
-            "Split fee (DCR/kB)",
-            "Paymetheus uses a \"split\" transaction to avoid blocking your balance, spliting the exact amount needed for the ticket from the balance in your wallet. The \"split\" transaction needs to be confirmed at least once before you can reuse your balance. This can block your whole balance for several minutes while this confirmation occurs. Without the split, you would have to wait for the confirmation of the ticket transaction, which could take several hours. This can be left at 0.01. It does not affect your chances of buying tickets or voting with them."
+            "Tx fee (DCR/kB)",
+            "Decrediton uses a \"split\" transaction to avoid blocking your balance, spliting the exact amount needed for the ticket from the balance in your wallet. The \"split\" transaction needs to be confirmed at least once before you can reuse your balance. This can block your whole balance for several minutes while this confirmation occurs. Without the split, you would have to wait for the confirmation of the ticket transaction, which could take several hours. This can be left at 0.01. It does not affect your chances of buying tickets or voting with them."
           )}
           {this.renderSection(
             "Voting address",
-            "The Decred address that will do the voting. Solo and custom pool miners only."
+            "The Decred address that will do the voting."
           )}
           {this.renderSection(
             "Pool fee address",
-            "For those using a custom pool."
+            "The address that your stakepool fee will end up getting paid."
           )}
           {this.renderSection(
             "Pool fees (%)",
-            "For those using a custom pool."
+            "The fee in which you will be charged for using the stakepool's service."
           )}
         </div>
       </div>
