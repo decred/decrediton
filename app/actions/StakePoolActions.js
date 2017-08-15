@@ -61,7 +61,7 @@ export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, 
             }));
           } else if (response.data.status == "error") {
             if (response.data.message == "purchaseinfo error - no address submitted") {
-              dispatch(setStakePoolAddressAction(poolHost, apiKey, accountNum));
+              dispatch(setStakePoolAddressAction(privpass, poolHost, apiKey, accountNum));
               return (true);
             } else {
               dispatch({ error: response.data.message, type: UPDATESTAKEPOOLCONFIG_FAILED });
@@ -96,7 +96,7 @@ function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
   };
 }
 
-function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
+function setStakePoolAddressAction(privpass, poolHost, apiKey, accountNum) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
   // get new address for requested VotingAccount
@@ -118,7 +118,7 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
             if (error) {
               dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED });
             } else if (response.data.status == "success") {
-              dispatch(setStakePoolInformation(poolHost, apiKey, accountNum, true));
+              dispatch(setStakePoolInformation(privpass, poolHost, apiKey, accountNum, true));
             } else if (response.data.status == "error") {
               dispatch({ error: response.data.message, type: UPDATESTAKEPOOLCONFIG_FAILED });
             } else {
