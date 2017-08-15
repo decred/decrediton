@@ -45,7 +45,7 @@ class Accounts extends Component {
       onHideAccountDetails,
       onShowAddAccount
     } = this;
-    const accounts = this.props.balances.sort((a, b) => b.accountNumber - a.accountNumber);
+    const accounts = this.props.balances.slice().sort((a, b) => a.accountNumber - b.accountNumber);
 
     return (
       <AccountsList
