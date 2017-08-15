@@ -100,6 +100,7 @@ export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, 
 }
 
 function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
+  console.log(updateSavedConfig);
   return (dispatch) => {
     var config = getCfg(true);
     var stakePoolConfigs = config.get("stakepools");
@@ -113,6 +114,7 @@ function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
           stakePoolConfigs[i].TicketAddress = newPoolInfo.TicketAddress;
           stakePoolConfigs[i].VotingAccount = accountNum;
           stakePoolConfigs[i].VoteBits = newPoolInfo.VoteBits;
+          stakePoolConfigs[i].ApiKey = apiKey;
           settingsUpdated = true;
         } else {
           if (stakePoolConfigs[i].PoolFees != newPoolInfo.PoolFees) {
