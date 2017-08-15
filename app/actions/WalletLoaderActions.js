@@ -6,6 +6,7 @@ import { getCfg, getCfgPath, getDcrdCert,RPCDaemonPort, RPCDaemonHost } from "..
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
   SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from "../middleware/walletrpc/api_pb";
+import { clearStakePoolConfigNewWallet } from "./StakePoolActions";
 
 export function versionCheckAction() {
   return (dispatch) => {
@@ -98,6 +99,7 @@ export function createWalletRequest(pubPass, privPass, seed, existing) {
           dispatch({ error, type: CREATEWALLET_FAILED });
         } else {
           dispatch({response: {}, type: CREATEWALLET_SUCCESS });
+          dispatch(clearStakePoolConfigNewWallet());
           dispatch(startRpcRequestFunc());
         }
       });

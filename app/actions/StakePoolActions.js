@@ -3,12 +3,36 @@ import { getPurchaseInfo, setStakePoolAddress, setVoteChoices } from "../middlew
 import { NextAddressRequest } from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
 import { importScriptAttempt } from "./ControlActions";
+import { stakePoolInfo } from "../middleware/stakepoolapi";
 
 export const UPDATESTAKEPOOLCONFIG_ATTEMPT = "UPDATESTAKEPOOLCONFIG_ATTEMPT";
 export const UPDATESTAKEPOOLCONFIG_FAILED = "UPDATESTAKEPOOLCONFIG_FAILED";
 export const UPDATESTAKEPOOLCONFIG_SUCCESS = "UPDATESTAKEPOOLCONFIG_SUCCESS";
 export const UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS = "UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS";
 export const UPDATESTAKEPOOLCONFIG_CLEAR_ERROR = "UPDATESTAKEPOOLCONFIG_CLEAR_ERROR";
+
+export function clearStakePoolConfigNewWallet() {
+  var config = getCfg();
+  stakePoolInfo(function(response, err) {
+    if (response == null) {
+      console.log(err);
+    } else {
+      var stakePoolNames = Object.keys(response.data);
+      // Only add matching network stakepool info
+      var foundStakePoolConfigs = Array();
+      for (var i = 0; i < stakePoolNames.length; i++) {
+        if (response.data[stakePoolNames[i]].APIEnabled) {
+          foundStakePoolConfigs.push({
+            Host:response.data[stakePoolNames[i]].URL,
+            Network: response.data[stakePoolNames[i]].Network,
+            APIVersionsSupported: response.data[stakePoolNames[i]].APIVersionsSupported,
+          });
+        }
+      }
+      config.set("stakepools", foundStakePoolConfigs);
+    }
+  });
+}
 
 export function updateStakepoolPurchaseInformation() {
   return (dispatch, getState) => {
