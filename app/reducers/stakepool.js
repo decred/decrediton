@@ -1,6 +1,6 @@
 import {
     UPDATESTAKEPOOLCONFIG_ATTEMPT, UPDATESTAKEPOOLCONFIG_FAILED, UPDATESTAKEPOOLCONFIG_SUCCESS,
-    UPDATESTAKEPOOLCONFIG_CLEAR_ERROR, UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS,
+    UPDATESTAKEPOOLCONFIG_CLEAR_ERROR, UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS, CLEARSTAKEPOOLCONFIG
 } from "../actions/StakePoolActions";
 
 export default function stakepool(state = {}, action) {
@@ -31,6 +31,11 @@ export default function stakepool(state = {}, action) {
   case  UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS:
     return {...state,
       currentStakePoolConfigSuccessMessage: "",
+    };
+  case CLEARSTAKEPOOLCONFIG:
+    return {...state,
+      activeStakePoolConfig: false,
+      currentStakePoolConfig: action.currentStakePoolConfig,
     };
   default:
     return state;
