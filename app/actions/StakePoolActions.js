@@ -3,12 +3,39 @@ import { getPurchaseInfo, setStakePoolAddress, setVoteChoices } from "../middlew
 import { NextAddressRequest } from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
 import { importScriptAttempt } from "./ControlActions";
+import { stakePoolInfo } from "../middleware/stakepoolapi";
 
 export const UPDATESTAKEPOOLCONFIG_ATTEMPT = "UPDATESTAKEPOOLCONFIG_ATTEMPT";
 export const UPDATESTAKEPOOLCONFIG_FAILED = "UPDATESTAKEPOOLCONFIG_FAILED";
 export const UPDATESTAKEPOOLCONFIG_SUCCESS = "UPDATESTAKEPOOLCONFIG_SUCCESS";
 export const UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS = "UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS";
 export const UPDATESTAKEPOOLCONFIG_CLEAR_ERROR = "UPDATESTAKEPOOLCONFIG_CLEAR_ERROR";
+export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
+export function clearStakePoolConfigNewWallet() {
+  return (dispatch) => {
+    var config = getCfg(true);
+    stakePoolInfo(function(response, err) {
+      if (response == null) {
+        console.log(err);
+      } else {
+        var stakePoolNames = Object.keys(response.data);
+        // Only add matching network stakepool info
+        var foundStakePoolConfigs = Array();
+        for (var i = 0; i < stakePoolNames.length; i++) {
+          if (response.data[stakePoolNames[i]].APIEnabled) {
+            foundStakePoolConfigs.push({
+              Host:response.data[stakePoolNames[i]].URL,
+              Network: response.data[stakePoolNames[i]].Network,
+              APIVersionsSupported: response.data[stakePoolNames[i]].APIVersionsSupported,
+            });
+          }
+        }
+        config.set("stakepools", foundStakePoolConfigs);
+        dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
+      }
+    });
+  };
+}
 
 export function updateStakepoolPurchaseInformation() {
   return (dispatch, getState) => {
@@ -18,7 +45,6 @@ export function updateStakepoolPurchaseInformation() {
       if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
         var poolHost = currentStakePoolConfig[i].Host;
         var apiKey = currentStakePoolConfig[i].ApiKey;
-        var votingAccount = currentStakePoolConfig[i].VotingAccount;
         getPurchaseInfo(poolHost,apiKey,
             function(response, error) {
               if (error) {
@@ -27,7 +53,7 @@ export function updateStakepoolPurchaseInformation() {
               } else {
                 // parse response data for no err
                 if (response.data.status == "success") {
-                  dispatch(updateSavedConfig(response.data.data, poolHost, apiKey, votingAccount));
+                  dispatch(updateSavedConfig(response.data.data, poolHost));
                 }
               }
             }
@@ -61,7 +87,7 @@ export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, 
             }));
           } else if (response.data.status == "error") {
             if (response.data.message == "purchaseinfo error - no address submitted") {
-              dispatch(setStakePoolAddressAction(poolHost, apiKey, accountNum));
+              dispatch(setStakePoolAddressAction(privpass, poolHost, apiKey, accountNum));
               return (true);
             } else {
               dispatch({ error: response.data.message, type: UPDATESTAKEPOOLCONFIG_FAILED });
@@ -77,26 +103,34 @@ function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
   return (dispatch) => {
     var config = getCfg(true);
     var stakePoolConfigs = config.get("stakepools");
-    var successMessage = "You have successfully configured ";
+    var settingsUpdated = false;
     for (var i = 0; i < stakePoolConfigs.length; i++) {
       if (stakePoolConfigs[i].Host == poolHost) {
-        stakePoolConfigs[i].ApiKey = apiKey;
-        stakePoolConfigs[i].PoolFees = newPoolInfo.PoolFees;
-        stakePoolConfigs[i].PoolAddress = newPoolInfo.PoolAddress;
-        stakePoolConfigs[i].Script = newPoolInfo.Script;
-        stakePoolConfigs[i].TicketAddress = newPoolInfo.TicketAddress;
-        stakePoolConfigs[i].VotingAccount = accountNum;
-        stakePoolConfigs[i].VoteBits = newPoolInfo.VoteBits;
-        successMessage += poolHost;
-        break;
+        if (apiKey || accountNum) {
+          stakePoolConfigs[i].PoolFees = newPoolInfo.PoolFees;
+          stakePoolConfigs[i].PoolAddress = newPoolInfo.PoolAddress;
+          stakePoolConfigs[i].Script = newPoolInfo.Script;
+          stakePoolConfigs[i].TicketAddress = newPoolInfo.TicketAddress;
+          stakePoolConfigs[i].VotingAccount = accountNum;
+          stakePoolConfigs[i].VoteBits = newPoolInfo.VoteBits;
+          settingsUpdated = true;
+        } else {
+          if (stakePoolConfigs[i].PoolFees != newPoolInfo.PoolFees) {
+            stakePoolConfigs[i].PoolFees = newPoolInfo.PoolFees;
+            settingsUpdated = true;
+            break;
+          }
+        }
       }
     }
-    config.set("stakepools", stakePoolConfigs);
-    dispatch({ successMessage: successMessage, currentStakePoolConfig: stakePoolConfigs, type: UPDATESTAKEPOOLCONFIG_SUCCESS });
+    if (settingsUpdated) {
+      config.set("stakepools", stakePoolConfigs);
+      dispatch({ successMessage: "You have successfully configured " + poolHost, currentStakePoolConfig: stakePoolConfigs, type: UPDATESTAKEPOOLCONFIG_SUCCESS });
+    }
   };
 }
 
-function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
+function setStakePoolAddressAction(privpass, poolHost, apiKey, accountNum) {
   return (dispatch, getState) => {
     const { walletService } = getState().grpc;
   // get new address for requested VotingAccount
@@ -118,7 +152,7 @@ function setStakePoolAddressAction(poolHost, apiKey, accountNum) {
             if (error) {
               dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED });
             } else if (response.data.status == "success") {
-              dispatch(setStakePoolInformation(poolHost, apiKey, accountNum, true));
+              dispatch(setStakePoolInformation(privpass, poolHost, apiKey, accountNum, true));
             } else if (response.data.status == "error") {
               dispatch({ error: response.data.message, type: UPDATESTAKEPOOLCONFIG_FAILED });
             } else {

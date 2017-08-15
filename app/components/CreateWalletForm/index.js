@@ -87,7 +87,7 @@ class CreateWalletForm extends React.Component {
       generate().then(response => this.setState({
         decode,
         mnemonic: response.getSeedMnemonic(),
-        seed: this.isTestNet ? response.getSeedBytes() : null // Allows verification skip in dev
+        seed: this.isTestNet() ? response.getSeedBytes() : null // Allows verification skip in dev
       }))
     );
   }
