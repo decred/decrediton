@@ -100,7 +100,6 @@ export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, 
 }
 
 function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
-  console.log(updateSavedConfig);
   return (dispatch) => {
     var config = getCfg(true);
     var stakePoolConfigs = config.get("stakepools");
