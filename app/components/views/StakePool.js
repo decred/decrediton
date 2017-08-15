@@ -795,10 +795,10 @@ class StakePool extends Component{
           {stakeInfoArea}
           <div style={StakePoolStyles.votingTitleArea}>
             <div style={StakePoolStyles.votingTitleAreaName}>Purchase Tickets</div>
-          </div>
-          <div style={StakePoolStyles.purchaseTicketInputButtons}>
-            <PurchaseTicketsInfoButton onClick={() => this.showPurchaseInfoModal()}/>
-            <TicketsCogs opened={this.state.advancedHidden} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}/>
+            <div style={StakePoolStyles.purchaseTicketInputButtons}>
+              <PurchaseTicketsInfoButton onClick={() => this.showPurchaseInfoModal()}/>
+              <TicketsCogs opened={this.state.advancedHidden} onClick={this.state.advancedHidden ? () => this.showAdvanced() : () => this.hideAdvanced()}/>
+            </div>
           </div>
           <div style={this.state.advancedHidden ? StakePoolStyles.flexHeightHidden : StakePoolStyles.flexHeightShown }>
             <div style={StakePoolStyles.purchaseTicketRow}>
