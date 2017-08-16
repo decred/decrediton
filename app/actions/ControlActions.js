@@ -440,7 +440,6 @@ export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requi
     dispatch({ type: PURCHASETICKETS_ATTEMPT });
     dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0, stakepool.TicketAddress, (error) => {
       if (error) {
-        console.log(Object.keys(error.metadata));
         dispatch({ error, type: PURCHASETICKETS_FAILED });
       } else {
         dispatch(purchaseTicketsAction(request));
