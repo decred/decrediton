@@ -1274,7 +1274,7 @@ export const StakePoolStyles = {
   },
   contentNestApiKeyInstructions: {
     width: "600px",
-    height: "260px",
+    height: "285px",
     paddingLeft: "30px",
     float: "left",
   },
