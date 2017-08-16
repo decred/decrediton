@@ -416,7 +416,7 @@ class StakePool extends Component{
       this.state.maxPriceRelative,
       this.state.maxPriceAbsolute,
       this.state.maxPerBlock,
-      this.state.selectedConfigured
+      this.state.selectedConfigured.value
     );
     this.setState({passphraseModalOpen: false});
   }
