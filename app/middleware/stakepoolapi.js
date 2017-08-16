@@ -8,7 +8,7 @@ export function stakePoolInfo(cb) {
     })
     .catch(function (error) {
       cb(null, error);
-    })
+    });
 
 }
 
