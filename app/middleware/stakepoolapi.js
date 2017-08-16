@@ -2,13 +2,15 @@
 import axios from "axios";
 import querystring from "querystring";
 export function stakePoolInfo(cb) {
-  axios.get("https://decred.org/api/?c=gsd")
-  .then(function (response) {
-    cb(response);
-  })
-  .catch(function (error) {
-    cb(null, error);
-  });
+  axios.get("https://api.decred.org/?c=gsd", {
+      headers: { "User-Agent": "decrediton-1.0.7" }
+    })
+    .then(function (response) {
+      cb(response);
+    })
+    .catch(function (error) {
+      cb(null, error);
+    })
 
 }
 
