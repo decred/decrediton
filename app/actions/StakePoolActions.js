@@ -113,6 +113,7 @@ function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
           stakePoolConfigs[i].TicketAddress = newPoolInfo.TicketAddress;
           stakePoolConfigs[i].VotingAccount = accountNum;
           stakePoolConfigs[i].VoteBits = newPoolInfo.VoteBits;
+          stakePoolConfigs[i].ApiKey = apiKey;
           settingsUpdated = true;
         } else {
           if (stakePoolConfigs[i].PoolFees != newPoolInfo.PoolFees) {
