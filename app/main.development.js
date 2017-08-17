@@ -1,9 +1,8 @@
 import { app, BrowserWindow, Menu, shell } from "electron";
-import { getCfg, appDataDirectory, dcrdCfg, dcrwCfg, writeCfgs, getDcrdPath, getWalletFile } from "./config.js";
+import { getCfg, appDataDirectory, dcrdCfg, dcrwCfg, writeCfgs, getDcrdPath } from "./config.js";
 import path from "path";
 import os from "os";
 import parseArgs from "minimist";
-import mv from "mv";
 import winston from "winston";
 
 let menu;
