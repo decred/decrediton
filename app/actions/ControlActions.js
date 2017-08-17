@@ -440,7 +440,6 @@ export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requi
     dispatch({ type: PURCHASETICKETS_ATTEMPT });
     dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0, stakepool.TicketAddress, (error) => {
       if (error) {
-        console.log(Object.keys(error.metadata));
         dispatch({ error, type: PURCHASETICKETS_FAILED });
       } else {
         dispatch(purchaseTicketsAction(request));
@@ -678,10 +677,10 @@ maxFeePerKb, maxPriceRelative, maxPriceAbsolute, maxPerBlock, stakepool) {
   var request = new StartAutoBuyerRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setAccount(accountNum);
-  request.setBalanceToMaintain(balanceToMaintain);
+  request.setBalanceToMaintain(balanceToMaintain*1e8);
   request.setMaxFeePerKb(maxFeePerKb*1e8);
   request.setMaxPriceRelative(maxPriceRelative);
-  request.setMaxPriceAbsolute(maxPriceAbsolute);
+  request.setMaxPriceAbsolute(maxPriceAbsolute*1e8);
   request.setVotingAddress(stakepool.TicketAddress);
   request.setPoolAddress(stakepool.PoolAddress);
   request.setPoolFees(stakepool.PoolFees);
