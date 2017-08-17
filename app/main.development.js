@@ -450,21 +450,6 @@ app.on("ready", async () => {
         click() {
           shell.openItem(path.join(getDcrdPath(), "logs"));
         }
-      }, {
-        label: "Remove Wallet (Requires Restart)",
-        click() {
-          logger.log(getWalletFile());
-          closeDCRW();
-          var origFile = getWalletFile();
-          var date = new Date();
-          var backupFile = origFile + "-" + date.toISOString();
-          mv(origFile, backupFile, function(err) {
-            if (err != undefined) {
-              logger.log("error", "Cannot remove file!", err);
-            }
-          });
-          cleanShutdown();
-        }
       }]
     }, {
       label: "Help",
