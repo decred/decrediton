@@ -17,7 +17,8 @@ class TxHistory extends Component {
     const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
     return txs
       .map(tx => {
-        const { type, blockHash } = tx;
+        const { blockHash } = tx;
+        const type = tx.type || null;
         const txInfo = tx.tx ? tx : {};
         let timestamp = tx.timestamp;
         tx = tx.tx || tx;
