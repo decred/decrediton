@@ -1,9 +1,8 @@
 import { app, BrowserWindow, Menu, shell } from "electron";
-import { getCfg, appDataDirectory, dcrdCfg, dcrwCfg, writeCfgs, getDcrdPath, getWalletFile } from "./config.js";
+import { getCfg, appDataDirectory, dcrdCfg, dcrwCfg, writeCfgs, getDcrdPath } from "./config.js";
 import path from "path";
 import os from "os";
 import parseArgs from "minimist";
-import mv from "mv";
 import winston from "winston";
 
 let menu;
@@ -449,21 +448,6 @@ app.on("ready", async () => {
         label: "Show Daemon Log Files",
         click() {
           shell.openItem(path.join(getDcrdPath(), "logs"));
-        }
-      }, {
-        label: "Remove Wallet (Requires Restart)",
-        click() {
-          logger.log(getWalletFile());
-          closeDCRW();
-          var origFile = getWalletFile();
-          var date = new Date();
-          var backupFile = origFile + "-" + date.toISOString();
-          mv(origFile, backupFile, function(err) {
-            if (err != undefined) {
-              logger.log("error", "Cannot remove file!", err);
-            }
-          });
-          cleanShutdown();
         }
       }]
     }, {
