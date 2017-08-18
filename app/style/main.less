@@ -1,7 +1,31 @@
-// Global variables
+////////////////////////////////////
+//  Global variables
+////////////////////////////////////
+
 @error-text-color: red;
 
-// Global mixin classes
+
+////////////////////////////////////
+//  Global mixin classes
+////////////////////////////////////
+
+// Usage:
+//
+//  <div className="container">
+//      <div className="left">...</div>
+//      <div className="right">...</div>
+//  </div>
+//
+//  .container {
+//      .clearfloat-mixin;
+//  }
+//
+//  .left {
+//      float: left;
+//  }
+//  .right {
+//      float: right;
+//  }
 .clearfloat-mixin {
     content: "";
     clear: both;

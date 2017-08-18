@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles";
+import "../../../style/CreateWalletForm.less";
 
 const PassPhraseInputs = ({
   passPhraseLabel = "Encrypt Wallet",
@@ -16,13 +16,13 @@ const PassPhraseInputs = ({
   setPassPhraseVerification
 }) => (
   <div>
-    <div style={styles.contentNewSeedPrivPass}>
-      <div style={styles.contentConfirmWalletCreateInputLeftPadding}>{passPhraseLabel}:</div>
-      <div style={styles.contentConfirmWalletCreateInputRightPadding}>
-        <div style={styles.inputForm}>
-          <form style={styles.inputForm}>
+    <div className="content-new-seed-priv-pass">
+      <div className="create-wallet-label">{passPhraseLabel}:</div>
+      <div className="create-wallet-field">
+        <div className="input-form">
+          <form className="input-form">
             <input
-              style={styles.inputPrivatePassword}
+              className="input-private-password"
               type="password"
               placeholder={passPhrasePlaceholder}
               value={passPhrase}
@@ -30,16 +30,16 @@ const PassPhraseInputs = ({
             />
           </form>
         </div>
-        {isBlank ? <div style={styles.inputFormError}>{blankPassPhraseError}</div> : null}
+        {isBlank ? <div className="input-form-error">{blankPassPhraseError}</div> : null}
       </div>
     </div>
-    <div style={styles.contentNewSeedPrivPass}>
-      <div style={styles.contentConfirmWalletCreateInputLeftPadding}>{passPhraseVerificationLabel}:</div>
-      <div style={styles.contentConfirmWalletCreateInputRightPadding}>
-        <div style={styles.inputForm}>
-          <form style={styles.inputForm}>
+    <div className="content-new-seed-priv-pass">
+      <div className="create-wallet-label">{passPhraseVerificationLabel}:</div>
+      <div className="create-wallet-field">
+        <div className="input-form">
+          <form className="input-form">
             <input
-              style={styles.inputPrivatePassword}
+              className="input-private-password"
               type="password"
               placeholder={passPhraseVerificationPlaceholder}
               value={passPhraseVerification}
@@ -48,7 +48,7 @@ const PassPhraseInputs = ({
           </form>
         </div>
         {(!isBlank && !isMatching) ? (
-          <div style={styles.inputFormError}>{passPhraseVerificationError}</div>
+          <div className="input-form-error">{passPhraseVerificationError}</div>
         ) : null}
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import SeedEntry from "./SeedEntry";
-import styles from "../styles";
+import "../../../style/CreateWalletForm.less";
 
 const ConfirmSeedForm = ({
   remainingSeedWords,
@@ -9,18 +9,18 @@ const ConfirmSeedForm = ({
   isMatch,
   isEmpty
 }) => (
-  <div style={styles.contentNewSeedConfirmSeed}>
-    <div style={styles.contentConfirmWalletCreateInputLeft}>
-      <span style={{float:"left"}}>Confirm Seed:&nbsp;</span>
-      <span style={{float:"left",fontSize:"13px",color:"white"}}> Seed words remaining: {remainingSeedWords} </span>
+  <div className="confirm-seed">
+    <div className="create-wallet-label">
+      <div className="confirm-seed-label-text">Confirm Seed:</div>
+      <div className="confirm-seed-label-remaining-words">{remainingSeedWords} words remaining</div>
     </div>
-    <div style={styles.contentConfirmWalletCreateInputRight}>
-      <div style={styles.inputForm}>
-        <form style={styles.inputFormConfirmSeed}>
+    <div className="create-wallet-field">
+      <div className="input-form">
+        <form className="input-form-confirm-seed">
           <SeedEntry label="Seed Entry" onChange={setSeedWords}/>
         </form>
       </div>
-      <div style={styles.inputFormError}>
+      <div className="input-form-error">
         {seedError
           ? seedError
           : isMatch || isEmpty
