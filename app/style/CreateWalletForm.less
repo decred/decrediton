@@ -1,0 +1,148 @@
+@import (less) "./main.less";
+
+
+.new-seed {
+    height: 556px;
+    padding: 54px 80px 54px 80px;
+}
+
+.help-text {
+    margin-bottom: 30px;
+}
+.help-text:after {
+    .clearfloat-mixin;
+}
+
+.paragraph {
+    width: 300px;
+    color: #B7D1F0;
+    font-size: 13px;
+    line-height: 16px;
+}
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+
+.cyan-bold {
+    color: #69D5F7;
+    font-weight: 700;
+}
+
+.cyan-regular {
+    color: #69D5F7;
+}
+
+.orange-warning {
+    color: #FD714B;
+}
+
+.seed {
+    min-height: 140px;
+    margin-bottom: 20px;
+    padding: 14px 20px;
+    border: 1px solid #69D5F7;
+    border-radius: 5px;
+    background-color: #E9F8FE;
+    font-family: Inconsolata, monospace;
+    color: #000;
+    font-size: 16px;
+    line-height: 29px;
+}
+
+.wallet-key-blue-button {
+    float: left;
+}
+
+.confirm-seed {
+    height: 200px;
+}
+
+.confirm-seed-label-text {
+    line-height: normal;
+}
+.confirm-seed-label-remaining-words {
+    font-size: 13px;
+    color: #fff;
+    line-height: normal;
+}
+
+.content-new-seed-priv-pass {
+    padding-top: 10px;
+    height: 80px;
+}
+
+.create-wallet-button-container {
+    height: 60px;
+}
+
+.create-wallet-label {
+    width: 160px;
+    margin-right: 20px;
+    float: left;
+    color: #E7EAED;
+    font-size: 19px;
+    text-align: right;
+    letter-spacing: -0.1px;
+    height: 41px;
+    line-height: 41px;
+}
+
+.create-wallet-field {
+    width: 540px;
+    float: left;
+    clear: right;
+}
+
+.input-private-password {
+    background-color: transparent;
+    width: 100%;
+    min-height: 44px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-style: none none solid;
+    border-bottom: 1px solid #69D5F7;
+    color: #69D5F7;
+    font-size: 19px;
+    line-height: normal;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+.input-seed-text-area {
+    background-color: transparent;
+    width: 100%;
+    min-height: 108px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-style: none none solid;
+    border-width: 0px 0px 1px;
+    border-color: #000 #000 #69D5F7;
+    font-family: Inconsolata, monospace;
+    color: #2971FF;
+    font-size: 13px;
+    overflow: auto;
+    margin: 0px;
+}
+
+.input-form {
+    -moz-appearance: none !important;
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 44px;
+}
+
+.input-form-confirm-seed {
+    -moz-appearance: none !important;
+    position: relative;
+    width: 100%;
+    height: 200px;
+    min-height: 44px;
+}
+
+.input-form-error {
+    color: @error-text-color;
+}

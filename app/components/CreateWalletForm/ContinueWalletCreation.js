@@ -3,24 +3,24 @@ import React from "react";
 import KeyBlueButton from "../KeyBlueButton";
 import ConfirmSeed from "./ConfirmSeed";
 import CreatePassPhrase from "./CreatePassPhrase";
-import styles from "./styles";
+import "../../style/CreateWalletForm.less";
 
-export const ContinueWalletCreation = ({
+const ContinueWalletCreation = ({
   isValid,
   setSeed,
   setPassPhrase,
   onCreateWallet,
   ...props
 }) => (
-  <div style={styles.contentNewSeed}>
+  <div className="new-seed">
     <ConfirmSeed {...props} onChange={setSeed} />
     <CreatePassPhrase passPhraseLabel="Encrypt Wallet" onChange={setPassPhrase} />
 
-    <div style={styles.contentNewSeedCreateButton}>
-      <div style={styles.contentConfirmWalletCreateInputLeftPadding}></div>
-      <div style={styles.contentConfirmWalletCreateInputRightPadding}>
+    <div className="create-wallet-button-container">
+      <div className="create-wallet-label"></div>
+      <div className="create-wallet-field">
         <KeyBlueButton
-          style={styles.viewButtonKeyBlueWalletNewSeed}
+          className="wallet-key-blue-button"
           disabled={!isValid}
           onClick={onCreateWallet}
         >Create Wallet</KeyBlueButton>
