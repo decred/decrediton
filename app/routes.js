@@ -8,7 +8,7 @@ import SendPage from "./components/views/SendPage";
 import ReceivePage from "./components/views/ReceivePage";
 import SettingsPage from "./components/views/SettingsPage";
 import StakePoolPage from "./components/views/StakePoolPage";
-import GetStartedPage from "./components/views/GetStartedPage";
+import GetStartedPage from "./containers/GetStarted";
 import AccountsPage from "./components/views/AccountsPage";
 import WalletError from "./components/views/WalletError";
 import Help from "./components/views/Help";
