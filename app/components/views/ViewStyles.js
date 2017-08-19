@@ -864,7 +864,6 @@ export const HistoryStyles = {
   },
   contentTitleButtonsArea: {
     float: "right",
-    width: "138px",
     fontSize: "27px",
     paddingTop: "13px",
   },
