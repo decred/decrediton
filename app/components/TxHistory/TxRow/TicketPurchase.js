@@ -1,13 +1,12 @@
 import React from "react";
 import Status from "./Status";
-import Radium from "radium";
-import styles from "./styles";
+import "../../../style/TxHistory.less";
 
 const TicketPurchase = ({ accountName, pending, date, onClick }) => (
-  <div style={onClick ? styles.ticketTx : styles.ticketTxOverview} {...{ onClick }}>
-    <div style={styles.transactionAmount}>Ticket</div>
+  <div className={onClick ? "ticket-tx" : "ticket-tx-overview"} {...{ onClick }}>
+    <div className="transaction-amount">Ticket</div>
     <Status {...{ accountName, pending, date }} />
   </div>
 );
 
-export default Radium(TicketPurchase);
+export default TicketPurchase;

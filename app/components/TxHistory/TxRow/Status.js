@@ -1,20 +1,20 @@
 import React from "react";
-import styles from "./styles";
+import "../../../style/TxHistory.less";
 
 const Status = ({ accountName, pending, date }) => (
   <div>
-    <div style={styles.transactionAccount}>
-      <div style={styles.transactionAccountName}>{accountName}</div>
-      <div style={styles.transactionAccountIndicator}>
+    <div className="transaction-account">
+      <div className="transaction-account-name">{accountName}</div>
+      <div className="transaction-account-indicator">
         {pending ? (
-          <div style={styles.indicatorPending}>Pending</div>
+          <div className="indicator-pending">Pending</div>
         ) : (
-          <div style={styles.indicatorConfirmed}>Confirmed</div>
+          <div className="indicator-confirmed">Confirmed</div>
         )}
       </div>
     </div>
     {pending ? null : (
-      <div style={styles.transactionTimeDate}><span>{date}</span></div>
+      <div className="transaction-time-date"><span>{date}</span></div>
     )}
   </div>
 );

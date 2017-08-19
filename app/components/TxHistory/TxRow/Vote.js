@@ -1,13 +1,12 @@
 import React from "react";
 import Status from "./Status";
-import Radium from "radium";
-import styles from "./styles";
+import "../../../style/TxHistory.less";
 
 const Vote = ({ accountName, pending, date, onClick }) => (
-  <div  style={onClick ? styles.voteTx : styles.voteTxOverview} {...{ onClick }}>
-    <div style={styles.transactionAmount}>Vote</div>
+  <div className={onClick ? "vote-tx" : "vote-tx-overview"} {...{ onClick }}>
+    <div className="transaction-amount">Vote</div>
     <Status {...{ accountName, pending, date }} />
   </div>
 );
 
-export default Radium(Vote);
+export default Vote;

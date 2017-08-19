@@ -1,13 +1,12 @@
 import React from "react";
 import Status from "./Status";
-import Radium from "radium";
-import styles from "./styles";
+import "../../../style/TxHistory.less";
 
 const Revocation = ({ accountName, pending, date, onClick }) => (
-  <div style={onClick ? styles.revokeTx : styles.revokeTxOverview} {...{ onClick }}>
-    <div style={styles.transactionAmount}>Revoke</div>
+  <div className={onClick ? "revoke-tx" : "revoke-tx-overview"} {...{ onClick }}>
+    <div className="transaction-amount">Revoke</div>
     <Status {...{ accountName, pending, date }} />
   </div>
 );
 
-export default Radium(Revocation);
+export default Revocation;
