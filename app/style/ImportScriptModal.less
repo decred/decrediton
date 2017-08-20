@@ -1,0 +1,80 @@
+@import (less) "./main.less";
+
+
+.import-script-modal {
+    position: absolute;
+    z-index: 10;
+    overflow: auto;
+    height: 556px;
+    padding: 54px 140px 54px 160px;
+    background-color: rgba(12, 30, 62, 0.5);
+}
+
+.import-script-modal-heading {
+    min-height: 0px;
+    padding-bottom: 10px;
+    text-transform: none;
+    color: #0c1e3e;
+    font-size: 19px;
+    line-height: 18px;
+    position: relative;
+    z-index: 0;
+}
+
+.import-script-modal-description {
+    color: #0c1e3e;
+    font-size: 13px;
+    line-height: 15px;
+    position: relative;
+    z-index: 0;
+}
+
+.import-script-modal-field-ct {
+    margin: 10px 10px 3px 0;
+    position: relative;
+    z-index: 0;
+}
+.import-script-modal-field-ct:after {
+    .clearfloat-mixin;
+}
+
+.import-script-modal-label {
+    padding-right: 10px;
+    float: left;
+    color: #0c1e3e;
+    font-size: 19px;
+    height: 100%;
+    width: 200px;
+    padding-top: 5px;
+    text-align: right;
+    text-transform: capitalize;
+}
+
+.import-script-modal-field {
+    width: 290px;
+    padding: 7px 10px;
+    float: left;
+    border-style: solid;
+    border-width: 0px 0px 1px;
+    border-color: #000 #000 #a9b4bf;
+    color: #0c1e3e;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.import-script-modal-error-ct:after {
+    .clearfloat-mixin;
+}
+
+.import-script-modal-error {
+    min-height: 20px;
+    color: @error-text-color;
+    font-size: 10px;
+}
+
+.import-script-modal-toolbar {
+    margin-top: 20px;
+    height: 44px;
+}
