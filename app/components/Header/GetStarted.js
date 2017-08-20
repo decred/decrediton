@@ -1,6 +1,6 @@
 // @flow
 import React from "react";
-import styles from "./styles";
+import "../../style/Header.less";
 
 const GetStarted = ({
   headerTop,
@@ -8,10 +8,10 @@ const GetStarted = ({
   headerMetaOverview,
   children
 }) => (
-  <div style={styles.headerGetStarted}>
-    <div style={styles.headerTopGetStarted}>{headerTop}</div>
-    <div style={styles.headerTitleOverviewGetStarted}>{headerTitleOverview}</div>
-    <div style={styles.headerMetaOverviewGetStarted}>{headerMetaOverview}</div>
+  <div className="header-get-started">
+    <div className="header-top-get-started">{headerTop}</div>
+    <div className="header-title-overview-get-started">{headerTitleOverview}</div>
+    <div className="header-meta-overview-get-started">{headerMetaOverview}</div>
     {children}
   </div>
 );

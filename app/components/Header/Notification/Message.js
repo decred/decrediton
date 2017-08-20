@@ -1,17 +1,17 @@
 // @flow
 import React from "react";
-import styles from "../styles";
+import "../../../style/Header.less";
 
 const Message = ({
   type,
   txHash
 }) => (
-  <div style={styles.SnackbarInformation}>
-    <div style={styles.SnackbarInformationRow}>
-      <div style={styles.SnackbarInformationRowTx}>{txHash}</div>
+  <div className="snackbar-information">
+    <div className="snackbar-information-row">
+      <div className="snackbar-information-row-tx">{txHash}</div>
     </div>
-    <div style={styles.SnackbarInformationRow}>
-      <div style={styles.SnackbarInformationRowType}>{type}</div>
+    <div className="snackbar-information-row">
+      <div className="snackbar-information-row-type">{type}</div>
     </div>
   </div>
 );

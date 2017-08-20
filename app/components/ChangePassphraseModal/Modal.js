@@ -24,48 +24,48 @@ const Modal = ({
  <div hidden={hidden} className="change-passphrase-modal">
     <div className="modal-section">
       {heading ? [
-        <div className="header">{heading}</div>,
-        <div className="description">{description}</div>
+        <div className="change-passphrase-modal-header">{heading}</div>,
+        <div className="change-passphrase-modal-description">{description}</div>
       ] : null}
-      <div className="field-ct">
-        <div className="label">Old Private Passphrase:</div>
+      <div className="change-passphrase-modal-field-ct">
+        <div className="change-passphrase-modal-label">Old Private Passphrase:</div>
         <input
           id="oldPassphrase"
-          className="field"
+          className="change-passphrase-modal-field"
           type="password"
           placeholder=""
           defaultValue={oldPrivPass}
           onChange={(e) => updateOldPrivatePassphrase(e.target.value)}
         />
-        <div className="error">{oldPrivPassError}</div>
+        <div className="change-passphrase-modal-error">{oldPrivPassError}</div>
       </div>
-      <div className="field-ct">
-        <div className="label">New Private Passphrase:</div>
+      <div className="change-passphrase-modal-field-ct">
+        <div className="change-passphrase-modal-label">New Private Passphrase:</div>
         <input
           id="passphrase"
-          className="field"
+          className="change-passphrase-modal-field"
           type="password"
           placeholder=""
           defaultValue={privpass}
           onChange={(e) => updatePrivatePassphrase(e.target.value)}
         />
-        <div className="error">{privPassError}</div>
+        <div className="change-passphrase-modal-error">{privPassError}</div>
       </div>
-      <div className="field-ct">
-        <div className="label">Confirm:</div>
+      <div className="change-passphrase-modal-field-ct">
+        <div className="change-passphrase-modal-label">Confirm:</div>
         <input
           id='confirmPassphrase'
-          className="field"
+          className="change-passphrase-modal-field"
           type="password"
           placeholder=""
           defaultValue={confirmPrivPass}
           onChange={(e) => updateConfirmPrivatePassphrase(e.target.value)}
         />
-        <div className="error">{confirmPrivPassError}</div>
+        <div className="change-passphrase-modal-error">{confirmPrivPassError}</div>
       </div>
-      <div className="toolbar">
-        <KeyBlueButton className="save-button" onClick={submitPassphrase}>Update</KeyBlueButton>
-        <SlateGrayButton className="cancel-button" onClick={cancelPassphrase}>cancel</SlateGrayButton>
+      <div className="change-passphrase-modal-toolbar">
+        <KeyBlueButton className="change-passphrase-modal-save-button" onClick={submitPassphrase}>Update</KeyBlueButton>
+        <SlateGrayButton className="change-passphrase-modal-cancel-button" onClick={cancelPassphrase}>cancel</SlateGrayButton>
       </div>
     </div>
   </div>
