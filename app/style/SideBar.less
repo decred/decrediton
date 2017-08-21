@@ -1,0 +1,172 @@
+@import (less) "./main.less";
+
+@menu-logo: url(../components/icons/menu-logo.svg);
+@arrow-up-light-blue-icon: url(../components/icons/arrow-up-light-blue.svg);
+
+
+.sidebar-menu {
+    position: relative;
+    overflow: hidden;
+    width: 298px;
+    height: 100%;
+    padding-bottom: 54px;
+    float: left;
+    background-color: #0c1e3e;
+}
+
+.sidebar-menu-logo {
+    position: relative;
+    z-index: 3;
+    height: 60px;
+    margin-top: 20px;
+    background-color: #0c1e3e;
+    background-image: @menu-logo;
+    background-position: 58px 50%;
+    background-size: auto 30px;
+    background-repeat: no-repeat;
+}
+
+.sidebar-testnet-text {
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    height: 46px;
+    font-family: Inconsolata, monospace;
+}
+
+.sidebar-menu-navigation {
+    position: absolute;
+    left: 0px;
+    top: 106px;
+    right: 0px;
+    bottom: 122px;
+    z-index: 1;
+    overflow: auto;
+}
+
+.sidebar-menu-total-balance-extended {
+    position: absolute;
+    left: 0px;
+    top: 106px;
+    right: 0px;
+    bottom: 157px;
+    z-index: 2;
+    overflow: auto;
+    background-color: rgba(9, 24, 45, .8);
+    transition: all 100ms cubic-bezier(.86, 0, .07, 1),
+}
+
+.sidebar-menu-total-balance-extended-bottom {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    overflow: auto;
+    max-height: 100%;
+    padding-right: 18px;
+    padding-left: 18px;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.sidebar-menu-total-balance-extended-bottom-account {
+    display: block;
+    height: 44px;
+    padding-top: 24px;
+    align-self: stretch;
+    flex: 0 0 auto;
+}
+
+.sidebar-menu-total-balance-extended-bottom-account-name {
+    float: left;
+    color: #69d5f7;
+    font-size: 13px;
+    line-height: 10px;
+    text-align: left;
+}
+
+.sidebar-menu-total-balance-extended-bottom-account-number {
+    float: right;
+    font-family: Inconsolata, monospace;
+    color: #2ed8a3;
+    font-size: 15px;
+    line-height: 10px;
+    text-align: right;
+}
+
+.sidebar-menu-bottom {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 2;
+}
+
+.sidebar-menu-bottom-total-balance-short {
+    position: relative;
+    height: 56px;
+    padding-top: 14px;
+    padding-right: 18px;
+    padding-left: 18px;
+    background-color: #0c1e3e;
+    cursor: pointer;
+}
+
+.sidebar-menu-bottom-total-balance-short-separator {
+    height: 7px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #69d5f7;
+    background-image: @arrow-up-light-blue-icon;
+    background-position: 50% 0px;
+    background-repeat: no-repeat;
+}
+
+.sidebar-menu-bottom-total-balance-short-name {
+    float: left;
+    color: #69d5f7;
+    font-size: 13px;
+    line-height: 10px;
+    text-align: left;
+    text-decoration: none;
+}
+
+.sidebar-menu-bottom-total-balance-short-value {
+    float: right;
+    font-family: Inconsolata, monospace;
+    color: #2ed8a3;
+    font-size: 13px;
+    line-height: 10px;
+    text-align: right;
+}
+
+.sidebar-menu-bottom-latest-block {
+    position: relative;
+    height: 89px;
+    padding-top: 14px;
+    padding-right: 18px;
+    padding-left: 18px;
+    background-color: #09182d;
+}
+
+.sidebar-menu-bottom-latest-block-name {
+    float: left;
+    color: #69d5f7;
+    font-size: 13px;
+    line-height: 10px;
+    text-align: left;
+    text-decoration: none;
+}
+
+.sidebar-menu-bottom-latest-block-number {
+    font-family: Inconsolata, monospace;
+    color: #2ed8a3;
+}
+
+.sidebar-menu-bottom-latest-block-time {
+    float: right;
+    color: #69d5f7;
+    font-size: 13px;
+    line-height: 10px;
+    text-align: right;
+    text-decoration: none;
+}

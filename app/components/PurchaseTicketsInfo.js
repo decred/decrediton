@@ -6,12 +6,12 @@ import "../style/PurchaseTicketsInfo.less";
 class PurchaseTicketsInfo extends React.Component {
   render() {
     return (
-      <div className="modal">
-        <div className="header">
-          <div className="header-text">Ticket Purchase Information</div>
-          <SlateGrayButton className="close-button" onClick={() =>this.props.closeModal()}>Close</SlateGrayButton>
+      <div className="purchase-tickets-modal">
+        <div className="purchase-tickets-header">
+          <div className="purchase-tickets-header-text">Ticket Purchase Information</div>
+          <SlateGrayButton className="purchase-tickets-close-button" onClick={() =>this.props.closeModal()}>Close</SlateGrayButton>
         </div>
-        <div className="column">
+        <div className="purchase-tickets-column">
           {this.renderSection(
             "Account",
             "This is the account that will purchase the tickets and receive the reward."
@@ -37,7 +37,7 @@ class PurchaseTicketsInfo extends React.Component {
             "Often ticket fees will increase during a window and you may be stopped out by higher fees. By setting an expiry, tickets that are not mined in the given number of blocks are cancelled so you can try again with higher fees if you wish. If this is empty, they will not expire until the end of the window."
           )}
         </div>
-        <div className="column">
+        <div className="purchase-tickets-column">
           {this.renderSection(
             "Tx fee (DCR/kB)",
             "Decrediton uses a \"split\" transaction to avoid blocking your balance, spliting the exact amount needed for the ticket from the balance in your wallet. The \"split\" transaction needs to be confirmed at least once before you can reuse your balance. This can block your whole balance for several minutes while this confirmation occurs. Without the split, you would have to wait for the confirmation of the ticket transaction, which could take several hours. This can be left at 0.01. It does not affect your chances of buying tickets or voting with them."
@@ -61,8 +61,8 @@ class PurchaseTicketsInfo extends React.Component {
 
   renderSection(header, text) {
     return (
-      <div className="section">
-        <span className="section-header">{header}</span> - {text}
+      <div className="purchase-tickets-section">
+        <span className="purchase-tickets-section-header">{header}</span> - {text}
       </div>
     );
   }
