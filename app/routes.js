@@ -3,7 +3,7 @@ import React from "react";
 import { Route, IndexRoute } from "react-router";
 import App from "./containers/App";
 import HomePage from "./components/views/HomePage";
-import HistoryPage from "./components/views/HistoryPage";
+import HistoryPage from "./containers/History";
 import SendPage from "./components/views/SendPage";
 import ReceivePage from "./components/views/ReceivePage";
 import SettingsPage from "./components/views/SettingsPage";

@@ -1,4 +1,4 @@
-import { compose, get, or, and, eq, createSelector } from "./fp";
+import { compose, reduce, get, or, and, eq, createSelectorEager as createSelector} from "./fp";
 
 const START_STEP_OPEN = 2;
 const START_STEP_RPC1 = 3;
@@ -53,4 +53,34 @@ export const startupError = or(
   startRpcError,
   discoverAddrError,
   fetchHeadersError
+);
+
+const balances = get(["grpc", "balances"]);
+export const walletService = get(["grpc", "walletService"]);
+export const txPerPage = get(["grpc", "txPerPage"]);
+export const getBalanceRequestAttempt = get(["grpc", "getBalanceRequestAttempt"]);
+export const transactionDetails = get(["grpc", "transactionDetails"]);
+export const getAccountsResponse = get(["grpc", "getAccountsResponse"]);
+export const getNetworkResponse = get(["grpc", "getNetworkResponse"]);
+export const spendableTotalBalance = createSelector(
+  [balances],
+  reduce(
+    (total, { accountName, spendable }) =>
+      (accountName === "imported") ? total : total + spendable,
+    0
+  )
+);
+
+export const transactions = createSelector(
+  [
+    get(["grpc", "regularTransactionsInfo"]),
+    get(["grpc", "ticketTransactionsInfo"]),
+    get(["grpc", "voteTransactionsInfo"]),
+    get(["grpc", "revokeTransactionsInfo"])
+  ],
+  ( Regular, Tickets, Votes, Revokes ) => ({
+    All: Regular.concat(Tickets).concat(Votes).concat(Revokes)
+      .sort((a, b) => b.timestamp - a.timestamp),
+    Regular, Tickets, Votes, Revokes,
+  })
 );
