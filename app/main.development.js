@@ -7,6 +7,7 @@ import winston from "winston";
 
 let menu;
 let template;
+let daemonWindow = null;
 let mainWindow = null;
 let debug = false;
 let dcrdPID;
@@ -288,13 +289,46 @@ app.on("ready", async () => {
   // Write application config files.
   await writeCfgs();
 
+  daemonWindow = new BrowserWindow({
+    autoHideMenuBar: true,
+    show: false,
+    width: 400,
+    height: 400,
+  });
+
+  mainWindow = new BrowserWindow({
+    show: false,
+    width: 1178,
+    height: 790,
+  });
+
+  await loadDaemonWindow();
+});
+
+const loadDaemonWindow = async () => {
   try {
     await launchDCRD();
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
-  await loadMainWindow();
-});
+
+  daemonWindow.loadURL(`file://${__dirname}/app.html`);
+
+  daemonWindow.once("ready-to-show", () => {
+    if (!require("is-running")(dcrdPID)) {
+      logger.log("error", "Error running dcrd.  Check logs and restart!");
+      daemonWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart!\");");
+      daemonWindow.webContents.executeJavaScript("window.close();");
+    }
+    daemonWindow.show();
+    daemonWindow.focus();
+  });
+
+  daemonWindow.on("closed", () => {
+    daemonWindow = null;
+    loadMainWindow();
+  });
+};
 
 const loadMainWindow = async () => {
   try {
@@ -302,11 +336,6 @@ const loadMainWindow = async () => {
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 1178,
-    height: 790,
-  });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
@@ -315,11 +344,6 @@ const loadMainWindow = async () => {
     if (!require("is-running")(dcrwPID)) {
       logger.log("error", "Error running dcrwallet.  Check logs and restart!");
       mainWindow.webContents.executeJavaScript("alert(\"Error running dcrwallet.  Check logs and restart!\");");
-      mainWindow.webContents.executeJavaScript("window.close();");
-    }
-    if (!require("is-running")(dcrdPID)) {
-      logger.log("error", "Error running dcrd.  Check logs and restart!");
-      mainWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart!\");");
       mainWindow.webContents.executeJavaScript("window.close();");
     }
     mainWindow.show();
