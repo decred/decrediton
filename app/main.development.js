@@ -29,7 +29,7 @@ var opts = {
   unknown: unknownFn
 };
 var argv = parseArgs(process.argv.slice(1), opts);
-debug = argv.debug;
+debug = argv.debug || process.env.NODE_ENV === "development";
 // Output for child processes.
 var stdout = "ignore";
 if (debug) {
@@ -139,16 +139,12 @@ function cleanShutdown() {
   // Attempt a clean shutdown.
   const cliShutDownPause = 2; // in seconds.
   const shutDownPause = 3; // in seconds.
-  if (process.env.NODE_ENV === "production") {
-    closeClis();
-    // Sent shutdown message again as we have seen it missed in the past if they
-    // are still running.
-    setTimeout(function(){closeClis();}, cliShutDownPause*1000);
-    logger.log("info", "Closing decrediton.");
-    setTimeout(function(){app.quit();}, shutDownPause*1000);
-  } else {
-    app.quit();
-  }
+  closeClis();
+  // Sent shutdown message again as we have seen it missed in the past if they
+  // are still running.
+  setTimeout(function(){closeClis();}, cliShutDownPause*1000);
+  logger.log("info", "Closing decrediton.");
+  setTimeout(function(){app.quit();}, shutDownPause*1000);
 }
 
 app.on("window-all-closed", () => {
@@ -273,17 +269,15 @@ app.on("ready", async () => {
   // Write application config files.
   await writeCfgs();
 
-  if (process.env.NODE_ENV === "production") {
-    try {
-      await launchDCRD();
-    } catch (e) {
-      logger.log("error", "error launching dcrd: " + e);
-    }
-    try {
-      await launchDCRWallet();
-    } catch (e) {
-      logger.log("error", "error launching dcrwallet: " + e);
-    }
+  try {
+    await launchDCRD();
+  } catch (e) {
+    logger.log("error", "error launching dcrd: " + e);
+  }
+  try {
+    await launchDCRWallet();
+  } catch (e) {
+    logger.log("error", "error launching dcrwallet: " + e);
   }
 
   mainWindow = new BrowserWindow({
@@ -295,18 +289,16 @@ app.on("ready", async () => {
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   mainWindow.webContents.on("did-finish-load", () => {
-    if (process.env.NODE_ENV === "production") {
-      // Check if daemon and wallet started up and error if not.
-      if (!require("is-running")(dcrwPID)) {
-        logger.log("error", "Error running dcrwallet.  Check logs and restart!");
-        mainWindow.webContents.executeJavaScript("alert(\"Error running dcrwallet.  Check logs and restart!\");");
-        mainWindow.webContents.executeJavaScript("window.close();");
-      }
-      if (!require("is-running")(dcrdPID)) {
-        logger.log("error", "Error running dcrd.  Check logs and restart!");
-        mainWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart!\");");
-        mainWindow.webContents.executeJavaScript("window.close();");
-      }
+    // Check if daemon and wallet started up and error if not.
+    if (!require("is-running")(dcrwPID)) {
+      logger.log("error", "Error running dcrwallet.  Check logs and restart!");
+      mainWindow.webContents.executeJavaScript("alert(\"Error running dcrwallet.  Check logs and restart!\");");
+      mainWindow.webContents.executeJavaScript("window.close();");
+    }
+    if (!require("is-running")(dcrdPID)) {
+      logger.log("error", "Error running dcrd.  Check logs and restart!");
+      mainWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart!\");");
+      mainWindow.webContents.executeJavaScript("window.close();");
     }
     mainWindow.show();
     mainWindow.focus();
