@@ -82,6 +82,15 @@ cd
 Adjust the following steps for the paths you want to use.
 
 ``` bash
+go get -u -v github.com/decred/dcrd
+go get -u -v github.com/decred/dcrwallet
+go get -u -v github.com/Masterminds/glide
+cd $GOPATH/src/github.com/decred/dcrd
+glide i
+go install . ./cmd/dcrctl/
+cd ../dcrwallet
+glide i
+go install
 mkdir code
 cd code
 git clone https://github.com/decred/decrediton.git
