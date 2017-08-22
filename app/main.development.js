@@ -1,5 +1,5 @@
-import { app, BrowserWindow, Menu, shell } from "electron";
-import { getCfg, appDataDirectory, dcrdCfg, dcrwCfg, writeCfgs, getDcrdPath } from "./config.js";
+import { app, BrowserWindow, Menu, shell, dialog } from "electron";
+import { getCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, writeCfgs, getDcrdPath } from "./config.js";
 import path from "path";
 import os from "os";
 import parseArgs from "minimist";
@@ -54,6 +54,15 @@ if (process.env.NODE_ENV === "development") {
 
 // Always use reasonable path for save data.
 app.setPath("userData", appDataDirectory());
+
+// Verify that config.json is valid JSON before fetching it, because
+// it will silently fail when fetching.
+let err = validateCfgFile();
+if(err !== null) {
+  let errMessage = "There was an error while trying to load the config file, the format is invalid.\n\nFile: " + getCfgPath() + "\nError: " + err;
+  dialog.showErrorBox("Config File Error", errMessage);
+  app.quit();
+}
 var cfg = getCfg();
 
 var logger = new (winston.Logger)({
