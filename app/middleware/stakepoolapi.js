@@ -61,9 +61,9 @@ export function getPurchaseInfo(apiUrl, apiToken, cb) {
   var url = apiUrl+"/api/v1/getpurchaseinfo";
   axios.get(url, config)
   .then(function(response) {
-    cb(response);
+    cb(response, null, apiUrl);
   })
   .catch(function(error) {
-    cb(null, error);
+    cb(null, error, apiUrl);
   });
 }

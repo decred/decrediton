@@ -45,8 +45,8 @@ export function updateStakepoolPurchaseInformation() {
       if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
         var poolHost = currentStakePoolConfig[i].Host;
         var apiKey = currentStakePoolConfig[i].ApiKey;
-        getPurchaseInfo(poolHost,apiKey,
-            function(response, error) {
+        getPurchaseInfo(poolHost, apiKey,
+            function(response, error, poolHost) {
               if (error) {
                 dispatch({ error: "Unable to contact stakepool: "+ error +" please try again later", type: UPDATESTAKEPOOLCONFIG_FAILED });
                 return;
@@ -71,7 +71,7 @@ export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, 
     getPurchaseInfo(
       poolHost,
       apiKey,
-      function(response, error) {
+      function(response, error, poolHost) {
         if (error) {
           dispatch({ error: "Unable to contact stakepool: "+ error +" please try again later", type: UPDATESTAKEPOOLCONFIG_FAILED });
           return;

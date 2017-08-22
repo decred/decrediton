@@ -5,8 +5,8 @@ import { stakePoolInfo } from "./middleware/stakepoolapi";
 var ini = require("ini");
 
 export function getCfg(update) {
-  const Config = require("electron-config");
-  const config = new Config();
+  const Store = require("electron-store");
+  const config = new Store();
   // If value is missing (or no config file) write the defaults.
   if (!config.has("network")) {
     config.set("network", "mainnet");
