@@ -129,9 +129,19 @@ export function getCfg(update) {
 }
 
 export function getCfgPath() {
-  const Config = require("electron-config");
-  const config = new Config();
-  return config.path;
+  return path.resolve(appDataDirectory(), "config.json");
+}
+
+export function validateCfgFile() {
+  try {
+    JSON.parse(fs.readFileSync(getCfgPath(), "utf8"));
+  }
+  catch(err) {
+    console.log(err);
+    return err;
+  }
+
+  return null;
 }
 
 // In all the functions below the Windows path is constructed based on
