@@ -40,6 +40,13 @@ if (debug) {
   stderr = "pipe";
 }
 
+var execPath;
+if (process.env.NODE_ENV === "development") {
+  execPath =  __dirname;
+} else {
+  execPath = process.resourcesPath;
+}
+
 if (process.env.NODE_ENV === "production") {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
   sourceMapSupport.install();
@@ -175,7 +182,7 @@ const launchDCRD = () => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrdCfg()];
 
-  var dcrdExe = path.join(process.resourcesPath, "bin", "dcrd");
+  var dcrdExe = path.join(execPath, "bin", "dcrd");
 
   if (os.platform() == "win32") {
     try {
@@ -224,7 +231,7 @@ const launchDCRWallet = () => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrwCfg()];
 
-  var dcrwExe = path.join(process.resourcesPath, "bin", "dcrwallet");
+  var dcrwExe = path.join(execPath, "bin", "dcrwallet");
   if (os.platform() == "win32") {
     try {
       const util = require("util");
