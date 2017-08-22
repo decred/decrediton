@@ -281,12 +281,15 @@ app.on("ready", async () => {
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
+  await loadMainWindow();
+});
+
+const loadMainWindow = async () => {
   try {
     await launchDCRWallet();
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }
-
   mainWindow = new BrowserWindow({
     show: false,
     width: 1178,
@@ -484,4 +487,4 @@ app.on("ready", async () => {
     });
   menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
-});
+};
