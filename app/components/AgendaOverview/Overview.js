@@ -1,8 +1,8 @@
 // @flow
 import React from "react";
-import { StakePoolStyles } from "../views/ViewStyles";
 import AgendaClose from "../AgendaClose";
 import KeyBlueButton from "../KeyBlueButton";
+import "../../style/AgendaOverview.less";
 
 const Overview = ({
   agendaId,
@@ -14,36 +14,34 @@ const Overview = ({
   setSelecedChoiceId,
   updatePreferences
 }) => (
-  <div style={StakePoolStyles.agenda}>
-    <div style={StakePoolStyles.agendaOverview}>
-      <div style={StakePoolStyles.agendaOverviewTitleArea}>
+  <div className="agenda">
+    <div className="agenda-overview">
+      <div className="agenda-overview-title-area">
         <AgendaClose onClick={closeCurrentAgenda}/>
-        <div style={StakePoolStyles.agendaOverviewTitleName}>{agendaId}</div>
+        <div className="agenda-overview-title-name">{agendaId}</div>
       </div>
-      <div style={StakePoolStyles.agendaOverviewMiddle}>
-        <div style={StakePoolStyles.agendaOverviewText}>
-          <span>{agendaDescription}</span><br/>
-          <span style={StakePoolStyles.agendaOverviewAgendaId}>
-            Agenda ID: <span style={StakePoolStyles.agendaOverviewAgendaIdId}>{agendaId}</span>
-          </span>
-          <br/>
-          <br/>
-          <span>
+      <div className="agenda-overview-middle">
+        <div className="agenda-overview-text">
+          <div className="agenda-overview-short-description">{agendaDescription}</div>
+          <div className="agenda-overview-agenda-id-ct">
+            Agenda ID: <span className="agenda-overview-agenda-id">{agendaId}</span>
+          </div>
+          <div className="agenda-overview-description">
             Once the majority of the PoW miners have upgraded (75% of the 100 most recent blocks are at the latest version) and the majority of the PoS
-            miners have upgraded (75% of the votes in a 2016 block interval) have upgraded, the voting process begins.
-          </span><br/>
+            miners have upgraded (75% of the votes in a 2016 block interval), the voting process begins.
+          </div>
         </div>
       </div>
     </div>
-    <div style={StakePoolStyles.agendaOverviewOptionsArea}>
-      <div style={StakePoolStyles.agendaOverviewOptionsSection}>
-        <div style={StakePoolStyles.agendaNameOptions}>Voting for</div>
+    <div className="agenda-overview-options-area">
+      <div className="agenda-overview-options-section">
+        <div className="agenda-name-options">Voting for</div>
       </div>
-      <div style={StakePoolStyles.agendaOverviewOptionsSectionMiddle}>
+      <div className="agenda-overview-options-section-middle">
         {choices.map(({ choiceId }) => (
           <div key={agendaId+choiceId}>
             <input
-              style={StakePoolStyles.agendaOptionsRadio}
+              className="agenda-options-radio"
               id={choiceId}
               type="radio"
               name="field"
@@ -52,20 +50,20 @@ const Overview = ({
               onChange={(e) => setSelecedChoiceId(e.target.value)}
             />
             <label
-              style={StakePoolStyles.agendaOptionsRadioLabel}
+              className="agenda-options-radio-label"
               htmlFor={choiceId}><span><span></span></span>{choiceId}</label>
           </div>
         ))}
       </div>
     </div>
-    <div style={StakePoolStyles.agendaBottom}>
-      <div style={StakePoolStyles.agendaBottomOverview}>
-        <div style={StakePoolStyles.agendaIndicatorPending}>In Progress</div>
+    <div className="agenda-bottom">
+      <div className="agenda-bottom-overview">
+        <div className="agenda-indicator-pending">In Progress</div>
       </div>
-      <div style={StakePoolStyles.agendaBottomOptions}>
+      <div className="agenda-bottom-options">
         <KeyBlueButton
           disabled={!hasModifiedChoice}
-          style={StakePoolStyles.agendaUpdatePreferencesButton}
+          className="agenda-update-preferences-button"
           onClick={updatePreferences}
         >Update Preference</KeyBlueButton>
       </div>
@@ -74,8 +72,8 @@ const Overview = ({
 );
 
 // Need to replace once we have a way to get the agenda progress
-//  <div style={StakePoolStyles.agendaPercent}><span style={StakePoolStyles.agendaPercentNumber}>XX</span>%</div>
-// needs to go below agendaIndicatorPending div
+//  <div className="agenda-percent"><span className="agenda-percent-number">XX</span>%</div>
+// needs to go below div.agenda-indicator-pending
 export default Overview;
 
-//<a target="_blank" href="http://decred.org" style={StakePoolStyles.agendaOverViewReadMore}>Read more »</a>
+//<a target="_blank" href="http://decred.org" className="agenda-overview-read-more">Read more »</a>
