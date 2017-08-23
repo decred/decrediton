@@ -1,0 +1,169 @@
+@import (less) "./main.less";
+
+@agenda-stripe: url(../components/icons/stripe.svg);
+@indicator-pending-icon: url(../components/icons/indicator-pending.svg);
+
+
+.agenda-overview {
+    position: relative;
+    width: 420px;
+    padding: 10px 20px 4px;
+    float: left;
+}
+
+.agenda-overview-title-area {
+    margin-bottom: 29px;
+    position: relative;
+}
+
+.agenda-overview-title-name {
+    padding-right: 10px;
+    float: left;
+    font-size: 19px;
+}
+
+.agenda {
+    position: relative;
+    overflow: hidden;
+    width: 700px;
+    height: 256px;
+    margin-bottom: 20px;
+    float: left;
+    background-color: #fff;
+    background-image: @agenda-stripe;
+    background-position: 460px 50%;
+    background-size: 1px;
+    background-repeat: repeat-y;
+}
+
+.agenda-overview-middle {
+    color: #596d81;
+    font-size: 13px;
+    position: relative;
+}
+
+.agenda-overview-text {
+    line-height: 18px;
+}
+
+.agenda-overview-short-description {
+
+}
+
+.agenda-overview-agenda-id-ct {
+    color: #0c1e3e;
+}
+
+.agenda-overview-agenda-id {
+    font-weight: 600;
+}
+
+.agenda-overview-description {
+    
+}
+
+.agenda-overview-read-more {
+    display: block;
+    color: #2971ff;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.agenda-overview-options-area {
+    position: relative;
+    display: inline;
+    width: 170px;
+    padding-top: 20px;
+    padding-right: 35px;
+    padding-left: 35px;
+    float: left;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.agenda-overview-options-section {
+    margin-bottom: 29px;
+}
+
+.agenda-name-options {
+    padding-right: 10px;
+    float: left;
+    font-size: 19px;
+}
+
+.agenda-overview-options-section-middle {
+
+}
+
+.agenda-options-radio {
+    float: left;
+}
+
+.agenda-options-radio-label {
+    display: block;
+    width: 100%;
+    color: #596d81;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+}
+
+.agenda-bottom {
+    padding-top: 15px;
+    float: left;
+    width: 700px;
+    height: 64px;
+}
+
+.agenda-bottom-overview {
+    position: relative;
+    width: 420px;
+    padding-top: 15px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    float: left;
+}
+
+.agenda-percent {
+    float: left;
+    font-size: 19px;
+}
+
+.agenda-percent-number {
+    font-size: 45px;
+    font-weight: 600;
+}
+
+.agenda-bottom-options {
+    width: 240px;
+    float: left;
+}
+
+.agenda-update-preferences-button {
+    width: 134px;
+    display: block;
+    margin-right: 35px;
+    margin-bottom: 20px;
+    margin-left: 35px;
+}
+
+.agenda-indicator-pending {
+    float: right;
+    padding: 5px 8px 5px 20px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    font-size: 12px;
+    line-height: 8px;
+    text-align: right;
+    text-transform: capitalize;
+    border-color: #2971ff;
+    background-image: @indicator-pending-icon;
+    background-position: 6px 50%;
+    background-size: 10px;
+    background-repeat: no-repeat;
+    color: #2971ff;
+}
