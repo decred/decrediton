@@ -71,9 +71,10 @@ export const spendableTotalBalance = createSelector(
   )
 );
 
+const regularTransactionsInfo = get(["grpc", "regularTransactionsInfo"]);
 export const transactions = createSelector(
   [
-    get(["grpc", "regularTransactionsInfo"]),
+    regularTransactionsInfo,
     get(["grpc", "ticketTransactionsInfo"]),
     get(["grpc", "voteTransactionsInfo"]),
     get(["grpc", "revokeTransactionsInfo"])
@@ -83,4 +84,43 @@ export const transactions = createSelector(
       .sort((a, b) => b.timestamp - a.timestamp),
     Regular, Tickets, Votes, Revokes,
   })
+);
+
+
+const rescanResponse = get(["control", "rescanResponse"]);
+export const rescanRequest = get(["control", "rescanRequest"]);
+export const synced = get(["notifications", "synced"]);
+export const unmined = get(["notifications", "unmined"]);
+export const getTransactionsRequestAttempt = get(["grpc", "getTransactionsRequestAttempt"]);
+
+
+const currentBlockHeight = compose(
+  req => req ? req.getCurrentBlockHeight() : 1, getAccountsResponse
+);
+
+export const rescanEndBlock = currentBlockHeight;
+export const rescanStartBlock = compose(
+  req => req ? req.getBeginHeight() : 0, rescanRequest
+);
+export const rescanCurrentBlock = compose(
+  res => res ? res.getRescannedThrough() : 0, rescanResponse
+);
+
+export const rescanPercentFinished = createSelector(
+  [rescanCurrentBlock, rescanEndBlock],
+  (current, end) => ((current / end) * 100).toFixed(2)
+);
+
+export const homeHistoryMined = createSelector(
+  [unmined, txPerPage, regularTransactionsInfo],
+  (unmined, txPerPage, regularTransactionsInfo) =>
+    unmined.length > 0
+      ? unmined.length > txPerPage
+        ? Array()
+        : regularTransactionsInfo.length + unmined.length >= txPerPage
+          ? regularTransactionsInfo.slice(0,txPerPage-unmined.length)
+          : regularTransactionsInfo.slice(0,regularTransactionsInfo.length+unmined.length)
+      : regularTransactionsInfo.length >= txPerPage
+        ? regularTransactionsInfo.slice(0,txPerPage)
+        : regularTransactionsInfo.slice(0,regularTransactionsInfo.length)
 );
