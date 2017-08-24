@@ -133,8 +133,16 @@ export function getCfgPath() {
 }
 
 export function validateCfgFile() {
+  var fileContents;
   try {
-    JSON.parse(fs.readFileSync(getCfgPath(), "utf8"));
+    fileContents = fs.readFileSync(getCfgPath(), "utf8");
+  }
+  catch(err) {
+    return null;
+  }
+
+  try {
+    JSON.parse(fileContents);
   }
   catch(err) {
     console.log(err);
@@ -169,12 +177,11 @@ export function getDcrdPath() {
 }
 
 export function getCert() {
-  var cert = "";
+  var certPath = "";
   var cfg = getCfg();
   if (cfg.get("cert_path") != "") {
-    return(cfg.get("cert_path"));
+    certPath = cfg.get("cert_path");
   }
-  var certPath = "";
   if (os.platform() == "win32") {
     certPath = path.join(os.homedir(), "AppData", "Local", "Decrediton", "rpc.cert");
   } else if (os.platform() == "darwin") {
@@ -184,6 +191,7 @@ export function getCert() {
     certPath = path.join(os.homedir(), ".config", "decrediton", "rpc.cert");
   }
 
+  var cert;
   try {
     cert = fs.readFileSync(certPath);
   } catch (err) {
