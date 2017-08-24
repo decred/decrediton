@@ -133,8 +133,16 @@ export function getCfgPath() {
 }
 
 export function validateCfgFile() {
+  var fileContents;
   try {
-    JSON.parse(fs.readFileSync(getCfgPath(), "utf8"));
+    fileContents = fs.readFileSync(getCfgPath(), "utf8");
+  }
+  catch(err) {
+    return null;
+  }
+
+  try {
+    JSON.parse(fileContents);
   }
   catch(err) {
     console.log(err);
