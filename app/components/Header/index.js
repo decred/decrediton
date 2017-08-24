@@ -12,6 +12,7 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = { message: null };
+    this.timeout = null;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -19,13 +20,17 @@ class Header extends React.Component {
 
     if (newUnminedMessage && this.props.newUnminedMessage !== newUnminedMessage) {
       if (this.state.message) {
-        setTimeout(()=>this.setState({ message: nextProps.newUnminedMessage }), MSG_DELAY);
+        this.timeout = setTimeout(()=>this.setState({ message: nextProps.newUnminedMessage }), MSG_DELAY);
       } else {
         this.setState({ message: nextProps.newUnminedMessage });
       }
     }
   }
-
+  componentWillUnmount() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+  }
   render() {
     const {
       getStarted,
