@@ -90,7 +90,6 @@ export const transactions = createSelector(
 const rescanResponse = get(["control", "rescanResponse"]);
 export const rescanRequest = get(["control", "rescanRequest"]);
 export const synced = get(["notifications", "synced"]);
-export const unminedTransactions = get(["grpc", "unminedTransactions"]);
 export const unmined = get(["notifications", "unmined"]);
 export const getTransactionsRequestAttempt = get(["grpc", "getTransactionsRequestAttempt"]);
 

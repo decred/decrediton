@@ -8,7 +8,6 @@ import {
   spendableTotalBalance,
   transactions,
   synced,
-  unminedTransactions,
   unmined,
   homeHistoryMined
 } from "../selectors";
@@ -20,7 +19,6 @@ const mapStateToProps = selectorMap({
   spendableTotalBalance,
   transactions,
   synced,
-  unminedTransactions,
   unmined,
   mined: homeHistoryMined
 });
