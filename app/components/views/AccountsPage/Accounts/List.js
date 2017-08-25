@@ -3,7 +3,7 @@ import CircularProgress from "material-ui/CircularProgress";
 import Header from "../../../Header";
 import AccountRow from "./AccountRow";
 import KeyBlueButton from "../../../KeyBlueButton";
-import { AccountStyles } from "../../ViewStyles.js";
+import "../../../../style/AccountsPage.less";
 
 
 const AccountsList = ({
@@ -25,16 +25,16 @@ const AccountsList = ({
   onHideAccountDetails,
   accountNumDetailsShown
 }) => (
-  <div style={AccountStyles.view}>
+  <div className="account-view">
     <Header
       headerTitleOverview="Accounts"
       headerTop={[
         (getNextAccountError !== null) ? (
           <div
             key="accountError"
-            style={AccountStyles.viewNotificationError}
+            className="account-view-notification-error"
           ><div
-            style={AccountStyles.contentNestAddressDeleteIcon}
+            className="account-nest-address-delete-icon"
             onClick={onClearNewAccountError}
           ></div>{getNextAccountError}</div>
         ) : (
@@ -44,9 +44,9 @@ const AccountsList = ({
         (getNextAccountSuccess !== null) ? (
           <div
             key="accountSuccess"
-            style={AccountStyles.viewNotificationSuccess}
+            className="account-view-notification-success"
           ><div
-            style={AccountStyles.contentNestAddressDeleteIcon}
+            className="account-nest-address-delete-icon"
             onClick={onClearNewAccountSuccess}
           ></div>{getNextAccountSuccess}</div>
         ) : (
@@ -56,9 +56,9 @@ const AccountsList = ({
         (renameAccountSuccess !== null) ? (
           <div
             key="renameAccountSuccess"
-            style={AccountStyles.viewNotificationSuccess}
+            className="account-view-notification-success"
           ><div
-            style={AccountStyles.contentNestAddressDeleteIcon}
+            className="account-nest-address-delete-icon"
             onClick={onClearRenameAccountSuccess}
           ></div>{renameAccountSuccess}</div>
         ) : (
@@ -68,9 +68,9 @@ const AccountsList = ({
         (renameAccountError !== null) ? (
           <div
             key="renameAccountError"
-            style={AccountStyles.viewNotificationError}
+            className="account-view-notification-error"
           ><div
-            style={AccountStyles.contentNestAddressDeleteIcon}
+            className="account-nest-address-delete-icon"
             onClick={onClearRenameAccountError}
           ></div>{renameAccountError}</div>
         ) : (
@@ -79,20 +79,18 @@ const AccountsList = ({
       ]}
       headerMetaOverview={
         <KeyBlueButton
-          style={AccountStyles.contentAddNewAccount}
+          className="add-new-account-button"
           onClick={onShowAddAccount}>
           Add New
         </KeyBlueButton>
       }
     />
 
-    <div style={AccountStyles.content}>
+    <div className="account-content">
       {isLoading ? (
-        <div style={AccountStyles.content}>
-          <CircularProgress style={AccountStyles.loading} size={125} thickness={6}/>
-        </div>
+        <CircularProgress className="account-loading" size={125} thickness={6}/>
       ) : (
-        <div style={AccountStyles.contentNest}>
+        <div className="account-content-nest">
           {accounts.map(account => (
             <AccountRow
               key={account.accountName}

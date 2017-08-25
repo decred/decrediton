@@ -1,9 +1,9 @@
 import React from "react";
 import Accounts from "./Accounts";
 import AddAccount from "./AddAccount";
-import { AccountStyles } from "../ViewStyles.js";
 import SideBar from "../../SideBar";
 import ErrorScreen from "../../ErrorScreen";
+import "../../../style/AccountsPage.less";
 
 const Page = ({
   walletService,
@@ -12,7 +12,7 @@ const Page = ({
   onShowAddAccount
 }) => (
   walletService ? (
-    <div style={AccountStyles.body}>
+    <div className="account-body">
       <SideBar />
       {isShowingAddAccount ? (
         <AddAccount onSave={onHideAddAccount} onCancel={onHideAddAccount} />
