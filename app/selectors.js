@@ -124,3 +124,33 @@ export const homeHistoryMined = createSelector(
         ? regularTransactionsInfo.slice(0,txPerPage)
         : regularTransactionsInfo.slice(0,regularTransactionsInfo.length)
 );
+
+export const visibleAccounts = createSelector(
+  [balances],
+  reduce(
+    (accounts, { accountName, accountNumber, hidden, ...data }) =>
+      (accountName === "imported" || hidden)
+        ? accounts
+        : [...accounts, {
+          value: accountNumber,
+          label: accountName,
+          hidden,
+          ...data
+        }],
+    []
+  )
+);
+
+const getNextAddressResponse = get(["control", "getNextAddressResponse"]);
+const nextAddressAccountNumber = compose(
+  res => res ? res.accountNumber : null, getNextAddressResponse
+);
+
+export const getNextAddressRequestAttempt = get(["control", "getNextAddressRequestAttempt"]);
+export const nextAddressAccount = createSelector(
+  [visibleAccounts, nextAddressAccountNumber],
+  (accounts, number) => accounts.find(compose(eq(number), get("value")))
+);
+export const nextAddress = compose(
+  res => res ? res.getAddress() : "", getNextAddressResponse
+);
