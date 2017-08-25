@@ -11,7 +11,7 @@ import SideBar from "../../SideBar";
 import TxHistory from "../../TxHistory";
 import Header from "../../Header";
 import "../../fonts.css";
-import { HomeStyles } from "../ViewStyles";
+import "../../../style/HomePage.less";
 
 const HomePage = ({
   synced,
@@ -23,9 +23,9 @@ const HomePage = ({
   getTransactionsRequestAttempt,
   getAccountsResponse
 }) => (
-  <div style={HomeStyles.body}>
+  <div className="home-body">
     <SideBar />
-    <div style={HomeStyles.view}>
+    <div className="home-view">
       {rescanRequest ? (
         <Header
           headerTitleOverview="Rescanning"
@@ -34,15 +34,15 @@ const HomePage = ({
       ) : (
         <Header
           headerTop={synced ? null : (
-            <div key="notSynced" style={HomeStyles.viewNotificationNotSynced}>
-              Wallet not synced. Note: Balances will not be accurate until syncing is complete.
+            <div key="notSynced" className="home-view-notification-not-synced">
+              The wallet is not fully synced yet. Note: Balances will not be accurate until syncing is complete.
             </div>
           )}
           headerTitleOverview="Available Balance"
           headerMetaOverview={
             <div>
               <Balance amount={spendableTotalBalance} />
-              <div style={HomeStyles.rescanButtonArea} data-tip="Rescanning the blockchain may resolve some balance errors.">
+              <div className="home-rescan-button-area" data-tip="Rescanning the blockchain may resolve some balance errors.">
                 <KeyBlueButton onClick={() => rescanAttempt(0)}>Rescan</KeyBlueButton>
               </div>
               <ReactToolTip place="left" type="info" effect="solid"/>
@@ -51,13 +51,13 @@ const HomePage = ({
         />
       )}
       {getTransactionsRequestAttempt ? (
-        <div style={HomeStyles.content}><DecredLoading/></div>
+        <div className="home-content"><DecredLoading/></div>
       ) : (
-        <div style={HomeStyles.content}>
-          <div style={HomeStyles.contentTitle}>
-            <div style={HomeStyles.contentTitleText}>Recent Transactions</div>
+        <div className="home-content">
+          <div className="home-content-title">
+            <div className="home-content-title-text">Recent Transactions</div>
           </div>
-          <div style={HomeStyles.contentNest}>
+          <div className="home-content-nest">
             {(mined.length > 0 || unmined.length > 0) ? (
               <TxHistory {...{ getAccountsResponse, mined, unmined }} />
             ) : (

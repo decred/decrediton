@@ -10,7 +10,6 @@ import ArrowDownKeyBlue from "../icons/arrow-down-key-blue.svg";
 import ArrowUpLightBlue from "../icons/arrow-up-light-blue.svg";
 import ArrowUpTurquiose from "../icons/arrow-up-turquiose.svg";
 import ArrowRightKeyBlue from "../icons/arrow-right-key-blue.svg";
-import Search from "../icons/search.svg";
 import WalletGray from "../icons/wallet-gray.svg";
 import StakePoolIcon from "../icons/stake-pool.svg";
 import ExpiryIcon from "../icons/expiry.svg";
@@ -693,124 +692,6 @@ export const SendStyles = {
     width: "100%",
     height: "100px",
   }
-};
-export const HomeStyles = {
-  body: {
-    position: "fixed",
-    left: "0px",
-    top: "50%",
-    right: "0px",
-    display: "block",
-    overflow: "hidden",
-    width: "1178px",
-    height: "770px",
-    marginTop: "-385px",
-    marginRight: "auto",
-    marginLeft: "auto",
-    backgroundColor: "#FFF",
-  },
-  view: {
-    width: "880px",
-    height: "100%",
-    float: "right",
-    backgroundColor: "#f3f6f6",
-  },
-  content: {
-    overflow: "auto",
-    height: "556px",
-    padding: "54px 60px 54px 80px",
-  },
-  rescanProgressArea: {
-    fontSize: "16px",
-  },
-  rescanProgressPercent: {
-    float: "right",
-  },
-  rescanProgressFraction: {
-    float: "left",
-  },
-  rescanButtonArea: {
-    float: "right",
-  },
-  rescanButtonMessage: {
-    color: "#596d81",
-    fontSize: "13px",
-    float: "left",
-    width: "100%",
-  },
-  contentTitle: {
-    display: "block",
-    height: "44px",
-    marginRight: "auto",
-    marginBottom: "10px",
-    marginLeft: "auto",
-    borderBottom: "1px solid transparent",
-    color: "#596d81",
-    fontSize: "27px",
-  },
-  contentNest: {
-    paddingTop: "1px",
-  },
-  contentTitleText: {
-    display: "inline-block",
-    overflow: "hidden",
-    width: "600px",
-    height: "100%",
-    paddingTop: "13px",
-    paddingRight: "20px",
-    paddingLeft: "20px",
-    float: "left",
-  },
-
-  contentTitleButtonSearch: {
-    width: "60px",
-    height: "100%",
-    cursor: "pointer",
-    paddingRight: "20px",
-    paddingLeft: "20px",
-    float: "right",
-    backgroundImage: `url(${Search})`,
-    backgroundPosition: "50% 50%",
-    backgroundSize: "20px",
-    backgroundRepeat: "no-repeat",
-    ":hover": {
-      opacity: "0.8",
-    }
-  },
-
-  contentTitleButtonSearchTransition1: {
-    width: "60px",
-    height: "100%",
-    cursor: "pointer",
-  },
-
-  contentTitleTextActive: {
-    color: "#2971ff",
-  },
-
-  contentTitleActive: {
-    borderBottom: "1px solid #2971ff",
-  },
-
-  headerMetaCurrency: {
-    fontSize: "23px",
-  },
-  viewNotificationNotSynced: {
-    display: "inline-block",
-    marginRight: "auto",
-    marginLeft: "auto",
-    padding: "7px 20px",
-    borderRadius: "5px",
-    backgroundColor: "#666666",
-    boxShadow: "0 3px 10px 0 rgba(0, 0, 0, .2)",
-    color: "#fff",
-    fontSize: "13px",
-    textAlign: "center",
-  },
-  loading: {
-    marginTop: "110px",
-    marginLeft: "268px",
-  },
 };
 export const SettingStyles = {
   body: {
