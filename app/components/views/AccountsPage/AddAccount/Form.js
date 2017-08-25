@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../../Header";
 import KeyBlueButton from "../../../KeyBlueButton";
 import SlateGrayButton from "../../../SlateGrayButton";
-import { AccountStyles } from "../../ViewStyles.js";
+import "../../../../style/AccountsPage.less";
 
 const AddAccountForm = ({
   name,
@@ -15,32 +15,32 @@ const AddAccountForm = ({
   onSave,
   onCancel
 }) => (
-  <div style={AccountStyles.view}>
+  <div className="account-view">
     <Header
       headerTitleOverview="Accounts"
       headerTop={[
         errorMsg ? (
-          <div key="accountError" style={AccountStyles.viewNotificationError}>{errorMsg}</div>
+          <div key="accountError" className="account-view-notification-error">{errorMsg}</div>
         ) : (
           <div key="accountError" ></div>
         ),
         successMsg ? (
-          <div key="accountSuccess" style={AccountStyles.viewNotificationSuccess}>{successMsg}</div>
+          <div key="accountSuccess" className="account-view-notification-success">{successMsg}</div>
         ) : (
           <div key="accountSuccess" ></div>
         )
       ]}
     />
 
-    <div style={AccountStyles.content}>
-      <div style={AccountStyles.flexHeight}>
-        <div style={AccountStyles.accountFormRow}>
-          <div style={AccountStyles.accountFormLabel}>Account Name:</div>
-          <div style={AccountStyles.accountFormInput}>
-            <div style={AccountStyles.inputForm}>
+    <div className="account-content">
+      <div className="account-flex-height">
+        <div className="account-form-row">
+          <div className="account-form-label">Account Name:</div>
+          <div className="account-form-input">
+            <div className="account-input-form">
               <input
                 type="text"
-                style={AccountStyles.contentNestAddressHashTo}
+                className="account-nest-address-hash-to"
                 placeholder="New Account Name"
                 maxLength="50"
                 value={name}
@@ -48,18 +48,18 @@ const AddAccountForm = ({
             </div>
           </div>
           {(hasAttemptedSave && !name) ? (
-            <div style={AccountStyles.accountFormInputError}>
+            <div className="account-form-input-error">
               *You must enter an account name
             </div>
           ) : null}
         </div>
-        <div style={AccountStyles.accountFormRow} key="privatePassPhrase">
-          <div style={AccountStyles.accountFormLabel}>Private Passhrase:</div>
-          <div style={AccountStyles.accountFormInput}>
-            <div style={AccountStyles.inputForm}>
+        <div className="account-form-row" key="privatePassPhrase">
+          <div className="account-form-label">Private Passhrase:</div>
+          <div className="account-form-input">
+            <div className="account-input-form">
               <input
                 id="privpass"
-                style={AccountStyles.contentNestAddressHashTo}
+                className="account-nest-address-hash-to"
                 type="password"
                 placeholder="Private Password"
                 value={passPhrase}
@@ -67,7 +67,7 @@ const AddAccountForm = ({
             </div>
           </div>
           {(hasAttemptedSave && !passPhrase) ? (
-            <div style={AccountStyles.accountFormInputError}>
+            <div className="account-form-input-error">
               *Please enter your private passphrase
             </div>
           ) : null}
@@ -75,11 +75,11 @@ const AddAccountForm = ({
         </div>
       </div>
       <KeyBlueButton
-        style={AccountStyles.contentConfirmNewAccount}
+        className="confirm-new-account-button"
         onClick={onSave}
       >Confirm</KeyBlueButton>
       <SlateGrayButton
-        style={AccountStyles.contentHideNewAccount}
+        className="hide-new-account-button"
         onClick={onCancel}
       >Cancel</SlateGrayButton>
     </div>

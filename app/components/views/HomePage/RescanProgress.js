@@ -1,7 +1,7 @@
 import React from "react";
 import LinearProgress from "material-ui/LinearProgress";
-import { HomeStyles } from "../ViewStyles";
 import rescan from "../../../connectors/rescan";
+import "../../../style/HomePage.less";
 
 const RescanProgress = ({
   rescanStartBlock,
@@ -9,15 +9,15 @@ const RescanProgress = ({
   rescanCurrentBlock,
   rescanPercentFinished
 }) => (
-  <div style={HomeStyles.rescanProgressArea} >
+  <div className="home-rescan-progress-area" >
     <LinearProgress
       mode="determinate"
       min={rescanStartBlock}
       max={rescanEndBlock}
       value={rescanCurrentBlock}
     />
-    <span style={HomeStyles.rescanProgressFraction}>{rescanCurrentBlock}/{rescanEndBlock}</span>
-    <span style={HomeStyles.rescanProgressPercent}>{rescanPercentFinished}%</span>
+    <span className="home-rescan-progress-fraction">{rescanCurrentBlock}/{rescanEndBlock}</span>
+    <span className="home-rescan-progress-percent">{rescanPercentFinished}%</span>
   </div>
 );
 

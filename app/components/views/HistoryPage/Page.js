@@ -6,8 +6,8 @@ import TxHistory from "../../TxHistory";
 import Balance from "../../Balance";
 import TxDetails from "./../TxDetails";
 import Header from "../../Header";
-import { HistoryStyles } from "../ViewStyles";
 import Select from "react-select";
+import "../../../style/HistoryPage.less";
 
 const Page = ({
   walletService,
@@ -28,7 +28,7 @@ const Page = ({
   onPageForward
 }) => (
   !walletService ? <ErrorScreen /> : (
-    <div style={HistoryStyles.body}>
+    <div className="history-body">
       <SideBar />
       {transactionDetails ? (
         <TxDetails
@@ -37,30 +37,30 @@ const Page = ({
           {...{ detailType, getAccountsResponse, getNetworkResponse}}
         />
       ) : (
-        <div style={HistoryStyles.view}>
+        <div className="history-view">
           <Header
             headerTitleOverview="Available Balance"
             headerMetaOverview={<Balance amount={spendableTotalBalance} />}
           />
-          <div style={HistoryStyles.content}>
-            <div style={HistoryStyles.contentTitle}>
-              <div style={HistoryStyles.contentTitleText}>Recent Transactions</div>
-              <div style={HistoryStyles.selectTxTypesArea}>
-                <div style={HistoryStyles.selectTxTypesLabel}>Tx Type:</div>
-                <div style={HistoryStyles.selectTxTypes}>
+          <div className="history-content">
+            <div className="history-content-title">
+              <div className="history-content-title-text">Recent Transactions</div>
+              <div className="history-select-tx-types-area">
+                <div className="history-select-tx-types-label">Tx Type:</div>
+                <div className="history-select-tx-types">
                   <Select
                     clearable={false}
                     style={{zIndex:"9"}}
                     onChange={onChangeSelectedType}
                     placeholder={"Select type..."}
                     multi={false}
-                    value={selectedType}
+                   value={selectedType}
                     valueKey="value" labelKey="label"
                     options={txTypes}/>
                 </div>
               </div>
             </div>
-            <div style={HistoryStyles.contentNest}>
+            <div className="history-content-nest">
               {paginatedTxs.length > 0 ? (
                 <TxHistory
                   getAccountsResponse={getAccountsResponse}
@@ -69,15 +69,15 @@ const Page = ({
                 />
               ) : <p>No transactions</p>}
             </div>
-            <div style={HistoryStyles.contentTitleButtonsArea}>
+            <div className="history-content-title-buttons-area">
               <button
-                style={HistoryStyles.contentTitleButtonsLeft}
+                className="history-content-title-buttons-left"
                 disabled={currentPage < 1}
                 onClick={onPageBackward}
               >&lt;</button>
-              <span style={HistoryStyles.contentTitleButtonsText}>{currentPage + 1} of {totalPages}</span>
+              <span className="history-content-title-buttons-text">{currentPage + 1} of {totalPages}</span>
               <button
-                style={HistoryStyles.contentTitleButtonsRight}
+                className="history-content-title-buttons-right"
                 disabled={(currentPage + 1) >= totalPages}
                 onClick={onPageForward}
               >&gt;</button>
