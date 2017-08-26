@@ -1,26 +1,19 @@
 // @flow
 import React, { Component } from "react";
-
-const styles = {
-  error: {
-    color:"red"
-  },
-};
+import "../style/main.less";
 
 class ShowError extends Component {
-  constructor(props){
-    super(props);
-  }
   render() {
     const { error } = this.props;
     if (error === null) {
       return (<div></div>);
-    } else {
-      return (
-        <div style={styles.error}>
-          <p>{error}</p>
-        </div>);
     }
+
+    return (
+      <div className="error">
+        <p>{error}</p>
+      </div>
+    );
   }
 }
 export default ShowError;
