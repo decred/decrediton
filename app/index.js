@@ -8,6 +8,7 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 import routes from "./routes";
 import configureStore from "./store/configureStore";
 import { getCfg } from "./config.js";
+import "./style/main.less";
 
 var cfg = getCfg();
 

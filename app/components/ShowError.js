@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from "react";
-import "../style/main.less";
 
 class ShowError extends Component {
   render() {
