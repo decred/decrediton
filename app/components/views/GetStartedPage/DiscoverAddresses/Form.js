@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../../Header";
 import DecredLoading from "../../../DecredLoading";
 import KeyBlueButton from "../../../KeyBlueButton";
-import { GetStartedStyles } from "../../ViewStyles";
+import "../../../../style/GetStarted.less";
 
 const DiscoverAddressesForm = ({
   startupError,
@@ -12,23 +12,23 @@ const DiscoverAddressesForm = ({
   onSetPassPhrase,
   onDiscoverAddresses
 }) => (
-  <div style={GetStartedStyles.view}>
+  <div className="get-started-view">
     <Header getStarted
       headerTitleOverview="Discovering addresses"
       headerMetaOverview="Please enter the information below to load your dcrwallet"
       headerTop={startupError
-        ? <div key="pubError" style={GetStartedStyles.viewNotificationError}>{startupError}</div>
+        ? <div key="pubError" className="get-started-view-notification-error">{startupError}</div>
         : <div key="pubError" ></div>}
     />
-    <div style={GetStartedStyles.contentNewSeed}>
+    <div className="get-started-content-new-seed">
       {isProcessing ? <DecredLoading/> : (
-        <div style={GetStartedStyles.contentNewSeedCreateButton}>
-          <div style={GetStartedStyles.contentConfirmWalletCreateInputLeftPadding}>Scan for used accounts:</div>
-          <div style={GetStartedStyles.contentConfirmWalletCreateInputRightPadding}>
-            <div style={GetStartedStyles.inputForm}>
-              <form style={GetStartedStyles.inputForm}>
+        <div className="get-started-content-new-seed-create-button">
+          <div className="get-started-content-confirm-wallet-create-input-left-padding">Scan for used accounts:</div>
+          <div className="get-started-content-confirm-wallet-create-input-right-padding">
+            <div className="get-started-input-form">
+              <form className="get-started-input-form">
                 <input
-                  style={GetStartedStyles.inputPrivatePassword}
+                  className="get-started-input-private-password"
                   type="password"
                   placeholder="Private Passphrase"
                   value={passPhrase}
@@ -37,13 +37,13 @@ const DiscoverAddressesForm = ({
             </div>
           </div>
           {(hasAttemptedDiscover && !passPhrase) ? (
-            <div style={GetStartedStyles.privPassError}>*Please enter your private passphrase</div>
+            <div className="get-started-priv-pass-error">*Please enter your private passphrase</div>
           ) : null}
-          <div style={GetStartedStyles.contentNewSeedCreateButton}>
-            <div style={GetStartedStyles.contentConfirmWalletCreateInputLeftPadding}></div>
-            <div style={GetStartedStyles.contentConfirmWalletCreateInputRightPadding}>
+          <div className="get-started-content-new-seed-create-button">
+            <div className="get-started-content-confirm-wallet-create-input-left-padding"></div>
+            <div className="get-started-content-confirm-wallet-create-input-right-padding">
               <KeyBlueButton
-                style={GetStartedStyles.viewButtonKeyBlueWalletNewSeed}
+                className="get-started-view-button-key-blue-wallet-new-seed"
                 onClick={onDiscoverAddresses}
               >Scan</KeyBlueButton>
             </div>

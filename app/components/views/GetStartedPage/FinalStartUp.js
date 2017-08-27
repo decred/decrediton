@@ -1,15 +1,15 @@
 import React from "react";
-import { GetStartedStyles } from "../ViewStyles";
 import Header from "../../Header";
+import "../../../style/GetStarted.less";
 
 const FinalStartUp = () => (
-  <div style={GetStartedStyles.view}>
+  <div className="get-started-view">
     <Header getStarted headerTitleOverview="Final start up" />
-    <div style={GetStartedStyles.content}>
-      <div style={GetStartedStyles.contentTitle}>
-        <div style={GetStartedStyles.contentTitleText}>Last steps if needed</div>
+    <div className="get-started-content">
+      <div className="get-started-content-title">
+        <div className="get-started-content-title-text">Last steps if needed</div>
       </div>
-      <div style={GetStartedStyles.contentNest}>
+      <div className="get-started-content-nest">
       </div>
     </div>
   </div>

@@ -1,19 +1,19 @@
 import React from "react";
-import { GetStartedStyles } from "../ViewStyles";
 import Header from "../../Header";
 import ShowError from "../../ShowError";
+import "../../../style/GetStarted.less";
 
 const CheckWalletState = ({
   getLoaderError,
   getVersionServiceError
 }) => (
-  <div style={GetStartedStyles.view}>
+  <div className="get-started-view">
     <Header getStarted headerTitleOverview="Getting started" />
-    <div style={GetStartedStyles.content}>
-      <div style={GetStartedStyles.contentTitle}>
-        <div style={GetStartedStyles.contentTitleText}>checking wallet state...</div>
+    <div className="get-started-content">
+      <div className="get-started-content-title">
+        <div className="get-started-content-title-text">checking wallet state...</div>
       </div>
-      <div style={GetStartedStyles.contentNest}>
+      <div className="get-started-content-nest">
         <div>
           <ShowError error={getLoaderError} />
           <ShowError error={getVersionServiceError}/>
