@@ -1,5 +1,6 @@
 export { default as compose } from "lodash/fp/compose";
 export { default as reduce } from "lodash/fp/reduce";
+export { default as find } from "lodash/fp/find";
 export { default as get } from "lodash/fp/get";
 export { default as eq } from "lodash/fp/eq";
 export { createSelector } from "reselect";

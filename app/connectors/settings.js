@@ -1,11 +1,10 @@
 import { connect } from "react-redux";
 import { selectorMap } from "../fp";
-import { walletService, isMainNet, isTestNet } from "../selectors";
+import { currencyDisplay, unitDivisor } from "../selectors";
 
 const mapStateToProps = selectorMap({
-  walletService,
-  isMainNet,
-  isTestNet
+  currencyDisplay,
+  unitDivisor
 });
 
 export default connect(mapStateToProps);
