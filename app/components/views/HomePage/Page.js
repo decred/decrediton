@@ -42,8 +42,8 @@ const HomePage = ({
           headerMetaOverview={
             <div>
               <Balance amount={spendableTotalBalance} />
-              <div className="home-rescan-button-area" data-tip="Rescanning the blockchain may resolve some balance errors.">
-                <KeyBlueButton onClick={() => rescanAttempt(0)}>Rescan</KeyBlueButton>
+              <div className="home-rescan-button-area" data-html={true} data-tip="Rescanning may help resolve some balance errors.<br><b>Note:</b> This scans the entire blockchain for transactions.">
+                <KeyBlueButton onClick={() => rescanAttempt(0)}>Rescan Blockchain</KeyBlueButton>
               </div>
               <ReactToolTip place="left" type="info" effect="solid"/>
             </div>
