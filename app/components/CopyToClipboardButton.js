@@ -27,7 +27,7 @@ class CopyToClipboardButton extends Component {
     return (
       <a
         ref="copyButtonRef"
-        className="copy-to-clipboard-icon"
+        className={"copy-to-clipboard-icon" + (this.props.className ? (" " + this.props.className) : "")}
         style={this.props.style}
         data-place="bottom"
         data-type="info"

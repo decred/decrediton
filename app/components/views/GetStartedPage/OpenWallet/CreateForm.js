@@ -4,7 +4,7 @@ import CreateWalletForm from "../../../CreateWalletForm";
 import TextToggle from "../../../TextToggle";
 import DecredLoading from "../../../DecredLoading";
 import SlateGrayButton from "../../../SlateGrayButton";
-import { GetStartedStyles } from "../../ViewStyles";
+import "../../../../style/GetStarted.less";
 
 const OpenWalletCreateForm = ({
   startupError,
@@ -13,18 +13,18 @@ const OpenWalletCreateForm = ({
   onReturnToNewSeed,
   onToggleNewExisting
 }) => (
-  <div style={GetStartedStyles.view}>
+  <div className="get-started-view">
     <Header
       getStarted
       headerTitleOverview={"Create a Wallet"}
       headerTop={startupError
-        ? <div key="walletCreateError" style={GetStartedStyles.viewNotificationError}>{startupError}</div>
+        ? <div key="walletCreateError" className="get-started-view-notification-error">{startupError}</div>
         : <div key="walletCreateError" ></div>}
       headerMetaOverview={
-        <div style={GetStartedStyles.toggle}>
+        <div className="get-started-toggle">
           {confirmNewSeed ? (
             <SlateGrayButton
-              style={GetStartedStyles.viewButtonGoBack}
+              className="get-started-view-button-go-back"
               onClick={onReturnToNewSeed}
             >Back</SlateGrayButton>
           ) : (
@@ -39,7 +39,7 @@ const OpenWalletCreateForm = ({
       }
     />
     {isProcessing
-      ? <div style={GetStartedStyles.contentNewSeed}><DecredLoading/></div>
+      ? <div className="get-started-content-new-seed"><DecredLoading/></div>
       : <CreateWalletForm />}
   </div>
 );

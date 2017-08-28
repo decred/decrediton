@@ -1,13 +1,12 @@
 import React from "react";
-import Radium from "radium";
 import SideBar from "../../SideBar";
-import { GetStartedStyles } from "../ViewStyles";
+import "../../../style/GetStarted.less";
 
 const Page = ({ children }) => (
-  <div style={GetStartedStyles.body}>
+  <div className="get-started-body">
     <SideBar gettingStarted />
-    <div style={GetStartedStyles.view}>{children}</div>
+    <div className="get-started-view">{children}</div>
   </div>
 );
 
-export default Radium(Page);
+export default Page;

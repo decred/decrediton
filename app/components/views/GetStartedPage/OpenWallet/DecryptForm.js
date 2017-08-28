@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../../Header";
 import DecredLoading from "../../../DecredLoading";
 import KeyBlueButton from "../../../KeyBlueButton";
-import { GetStartedStyles } from "../../ViewStyles";
+import "../../../../style/GetStarted.less";
 
 const OpenWalletDecryptForm = ({
   startupError,
@@ -12,23 +12,23 @@ const OpenWalletDecryptForm = ({
   onSetPublicPassPhrase,
   onOpenWallet
 }) => (
-  <div style={GetStartedStyles.view}>
+  <div className="get-started-view">
     <Header getStarted
       headerTitleOverview="Opening Wallet"
       headerMetaOverview="Please enter the information below to  create your dcrwallet"
       headerTop={startupError
-        ? <div key="walletOpenError" style={GetStartedStyles.viewNotificationError}>{startupError}</div>
+        ? <div key="walletOpenError" className="get-started-view-notification-error">{startupError}</div>
         : <div key="walletOpenError" ></div>}
     />
-    <div style={GetStartedStyles.contentNewSeed}>
+    <div className="get-started-content-new-seed">
       {isProcessing ? <DecredLoading/> : (
-        <div style={GetStartedStyles.contentNewSeedCreateButton}>
-          <div style={GetStartedStyles.contentConfirmWalletCreateInputLeftPadding}>Decrypt Wallet:</div>
-          <div style={GetStartedStyles.contentConfirmWalletCreateInputRightPadding}>
-            <div style={GetStartedStyles.inputForm}>
-              <form style={GetStartedStyles.inputForm}>
+        <div className="get-started-content-new-seed-create-button">
+          <div className="get-started-content-confirm-wallet-create-input-left-padding">Decrypt Wallet:</div>
+          <div className="get-started-content-confirm-wallet-create-input-right-padding">
+            <div className="get-started-input-form">
+              <form className="get-started-input-form">
                 <input
-                  style={GetStartedStyles.inputPrivatePassword}
+                  className="get-started-input-private-password"
                   type="password"
                   placeholder="Private Passphrase"
                   value={publicPassPhrase}
@@ -37,13 +37,13 @@ const OpenWalletDecryptForm = ({
             </div>
           </div>
           {(hasAttemptedOpen && !publicPassPhrase) ? (
-            <div style={GetStartedStyles.privPassError}>*Please enter your public passphrase</div>
+            <div className="get-started-priv-pass-error">*Please enter your public passphrase</div>
           ) : null}
-          <div style={GetStartedStyles.contentNewSeedCreateButton}>
-            <div style={GetStartedStyles.contentConfirmWalletCreateInputLeftPadding}></div>
-            <div style={GetStartedStyles.contentConfirmWalletCreateInputRightPadding}>
+          <div className="get-started-content-new-seed-create-button">
+            <div className="get-started-content-confirm-wallet-create-input-left-padding"></div>
+            <div className="get-started-content-confirm-wallet-create-input-right-padding">
               <KeyBlueButton
-                style={GetStartedStyles.viewButtonKeyBlueWalletNewSeed}
+                className="get-started-view-button-key-blue-wallet-new-seed"
                 onClick={onOpenWallet}
               >Open Wallet</KeyBlueButton>
             </div>
