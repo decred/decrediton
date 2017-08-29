@@ -14,9 +14,10 @@
     <script>
     // In renderer process (web page).
     const {ipcRenderer} = require('electron')
-    ipcRenderer.sendSync('start-daemon', '127.0.0.1'); // prints "pong"
+    var args = {rpcuser: "user", rpcpassword: "password"}
+    ipcRenderer.sendSync('start-daemon', args); // prints "pong"
     
-    setInterval(console.log(ipcRenderer.sendSync('check-daemon')), 5000);
+    setInterval(()=>console.log(ipcRenderer.sendSync('check-daemon', args)), 5000);
     </script>
   </body>
 </html>
