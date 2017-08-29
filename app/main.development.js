@@ -192,6 +192,16 @@ ipcMain.on("start-daemon", (event, arg) => {
   event.returnValue = arg;
 });
 
+ipcMain.on("start-wallet", (event, arg) => {
+  logger.log("info", "launching dcrwallet at " + arg);
+  try {
+    launchDCRWallet();
+  } catch (e) {
+    logger.log("error", "error launching dcrd: " + e);
+  }
+  event.returnValue = arg;
+});
+
 ipcMain.on("check-daemon", (event, arg) => {
   var spawn = require("child_process").spawn;
   var args = ["--testnet", "getbestblock"];
@@ -328,50 +338,9 @@ app.on("ready", async () => {
   await installExtensions();
   // Write application config files.
   await writeCfgs();
-
-  daemonWindow = new BrowserWindow({
-    autoHideMenuBar: true,
-    show: false,
-    width: 400,
-    height: 400,
-  });
-
-  await loadDaemonWindow();
+  
+  await loadMainWindow();
 });
-
-const loadDaemonWindow = async () => {
-
-  daemonWindow.loadURL(`file://${__dirname}/loader.html`);
-
-  daemonWindow.once("ready-to-show", () => {
-    daemonWindow.show();
-    daemonWindow.focus();
-  });
-
-  daemonWindow.on("closed", () => {
-    daemonWindow = null;
-    if (daemonReady) {
-      logger.log("info", "daemon rpc ready, opening wallet");
-      loadMainWindow();
-    } else {
-      logger.log("info", "daemon not ready, shutting down");
-    }
-  });
-
-  if (process.env.NODE_ENV === "development") {
-    daemonWindow.openDevTools();
-    daemonWindow.webContents.on("context-menu", (e, props) => {
-      const { x, y } = props;
-
-      Menu.buildFromTemplate([{
-        label: "Inspect element",
-        click() {
-          daemonWindow.inspectElement(x, y);
-        }
-      }]).popup(daemonWindow);
-    });
-  }
-};
 
 const loadMainWindow = async () => {
   mainWindow = new BrowserWindow({
@@ -379,21 +348,10 @@ const loadMainWindow = async () => {
     width: 1178,
     height: 790,
   });
-  try {
-    await launchDCRWallet();
-  } catch (e) {
-    logger.log("error", "error launching dcrwallet: " + e);
-  }
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   mainWindow.webContents.on("did-finish-load", () => {
-    // Check if daemon and wallet started up and error if not.
-    if (!require("is-running")(dcrwPID)) {
-      logger.log("error", "Error running dcrwallet.  Check logs and restart!");
-      mainWindow.webContents.executeJavaScript("alert(\"Error running dcrwallet.  Check logs and restart!\");");
-      mainWindow.webContents.executeJavaScript("window.close();");
-    }
     mainWindow.show();
     mainWindow.focus();
   });
