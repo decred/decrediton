@@ -332,11 +332,6 @@ const loadDaemonWindow = async () => {
   daemonWindow.loadURL(`file://${__dirname}/loader.html`);
 
   daemonWindow.once("ready-to-show", () => {
-    if (!require("is-running")(dcrdPID)) {
-      logger.log("error", "Error running dcrd.  Check logs and restart!");
-      daemonWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart!\");");
-      daemonWindow.webContents.executeJavaScript("window.close();");
-    }
     daemonWindow.show();
     daemonWindow.focus();
   });

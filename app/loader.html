@@ -4,20 +4,28 @@
     <meta charset="utf-8">
     <title>Loading...</title>
     <script>
-
+        (function() {
+          if (!process.env.HOT) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = './dist/style.css';
+            document.write(link.outerHTML);
+          }
+        }());
     </script>
   </head>
   <body>
     <div id="root">
-      Loading Daemon
     </div>
     <script>
-    // In renderer process (web page).
-    const {ipcRenderer} = require('electron')
-    var args = {rpcuser: "user", rpcpassword: "password"}
-    ipcRenderer.sendSync('start-daemon', args); // prints "pong"
-    
-    setInterval(()=>console.log(ipcRenderer.sendSync('check-daemon', args)), 5000);
+      {
+        const script = document.createElement('script');
+        const port = process.env.PORT || 3000;
+        script.src = (process.env.HOT)
+          ? 'http://localhost:' + port + '/dist/bundle.js'
+          : './dist/bundle.js';
+        document.write(script.outerHTML);
+      }
     </script>
   </body>
 </html>
