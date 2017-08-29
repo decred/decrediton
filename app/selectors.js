@@ -1,5 +1,7 @@
 import { compose, reduce, get, or, and, eq, createSelectorEager as createSelector} from "./fp";
 
+export const daemonConnected = get(["daemon", "daemonConnected"]);
+
 const START_STEP_OPEN = 2;
 const START_STEP_RPC1 = 3;
 const START_STEP_RPC2 = 4;

@@ -67,6 +67,9 @@ var initialState = {
     currentStakePoolConfigSuccessMessage: "",
     activeStakePoolConfig: foundStakePoolConfig,
   },
+  daemon: {
+    daemonConnected: false,
+  },
   version: {
     // RequiredVersion
     requiredVersion: "4.20.0",

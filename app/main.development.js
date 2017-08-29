@@ -179,6 +179,17 @@ const installExtensions = async () => {
   }
 };
 
+const {ipcMain} = require("electron");
+ipcMain.on("asynchronous-message", (event, arg) => {
+  console.log(arg);  // prints "ping"
+  event.sender.send("asynchronous-reply", "pong");
+});
+
+ipcMain.on("synchronous-message", (event, arg) => {
+  console.log(arg); // prints "ping"
+  event.returnValue = "pong";
+});
+
 const launchDCRD = () => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrdCfg()];
@@ -300,7 +311,7 @@ const loadDaemonWindow = async () => {
     logger.log("error", "error launching dcrd: " + e);
   }
 
-  daemonWindow.loadURL(`file://${__dirname}/app.html`);
+  daemonWindow.loadURL(`file://${__dirname}/loader.html`);
 
   daemonWindow.once("ready-to-show", () => {
     if (!require("is-running")(dcrdPID)) {
