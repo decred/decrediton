@@ -10,7 +10,7 @@ import {
   isStartupProcessing as isProcessing,
   startupError,
   confirmNewSeed,
-  hasExistingWallet
+  hasExistingWallet,
 } from "../selectors";
 import {
   createWalletGoBackNewSeed as onReturnToNewSeed,
