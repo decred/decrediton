@@ -7,7 +7,11 @@ export const DAEMONSYNCED = "DAEMONSYNCED";
 
 export function startDaemon() {
   var args = {rpcuser: "user", rpcpassword: "password"};
-  ipcRenderer.sendSync("start-daemon", args); // prints "pong"
+  ipcRenderer.sendSync("start-daemon", args);
+}
+export function startWallet() {
+  var args = {rpcuser: "user", rpcpassword: "password"};
+  ipcRenderer.sendSync("start-wallet", args);
 }
 export function checkDaemon() {
   var args = {rpcuser: "user", rpcpassword: "password"};

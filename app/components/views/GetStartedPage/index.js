@@ -1,6 +1,7 @@
 import React from "react";
 import ShowError from "../../ShowError";
 import Page from "./Page";
+import DaemonLoading from "./DaemonLoading";
 import CheckWalletState from "./CheckWalletState";
 import OpenWallet from "./OpenWallet";
 import StartRPC from "./StartRPC";
@@ -11,9 +12,12 @@ import FinalStartUp from "./FinalStartUp";
 const GetStartedPage = ({
   startStepIndex,
   versionInvalidError,
+  daemonReady,
   ...props
 }) => {
   const Step =
+    (!daemonReady)
+     ? DaemonLoading :
     (startStepIndex <= 1)
       ? CheckWalletState :
     (startStepIndex === 2)
