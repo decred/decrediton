@@ -184,34 +184,37 @@ const {ipcMain} = require("electron");
 ipcMain.on("start-daemon", (event, arg) => {
   logger.log("info", "launching dcrd at " + arg);
   try {
-    launchDCRD();
+    launchDCRD(arg.rpcuser, arg.rpcpassword, arg.host);
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
   event.returnValue = arg;
 });
 
-ipcMain.on("check-daemon", (event) => {
+ipcMain.on("check-daemon", (event, arg) => {
   var spawn = require("child_process").spawn;
   var args = ["--testnet", "getbestblock"];
 
   var dcrctlExe = path.join(execPath, "bin", "dcrctl");
+
+  args.push("-u " + arg.rpcuser);
+  args.push("-P " + arg.rpcpassword);
 
   logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
 
   var dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", stdout, stderr, "pipe" ] });
 
   dcrctl.stdout.on("data", (data) => {
-    logger.log("info", data);
+    logger.log("info", data.toString());
     event.returnValue = true;
   });
   dcrctl.stderr.on("data", (data) => {
-    logger.log("error", data);
+    logger.log("error", data.toString());
     event.returnValue = false;
   });
 });
 
-const launchDCRD = () => {
+const launchDCRD = (rpcuser, rpcpassword) => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrdCfg()];
 
@@ -228,6 +231,9 @@ const launchDCRD = () => {
       logger.log("error", "can't find proper module to launch dcrd: " + e);
     }
   }
+
+  args.push("-u " + rpcuser);
+  args.push("-P " + rpcpassword);
 
   logger.log("info", `Starting dcrd with ${args}`);
 
@@ -354,7 +360,9 @@ const loadDaemonWindow = async () => {
   daemonWindow.on("closed", () => {
     daemonWindow = null;
     if (require("is-running")(dcrdPID)) {
-      loadMainWindow();
+      //loadMainWindow();
+      closeDCRD();
+      logger.log("info", "load main window!!!");
     }
   });
 
