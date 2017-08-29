@@ -4,7 +4,7 @@ import { WALLETEXIST_ATTEMPT, WALLETEXIST_FAILED, WALLETEXIST_SUCCESS } from "..
 import { OPENWALLET_ATTEMPT, OPENWALLET_FAILED, OPENWALLET_SUCCESS } from "../actions/WalletLoaderActions";
 import { CLOSEWALLET_ATTEMPT, CLOSEWALLET_FAILED, CLOSEWALLET_SUCCESS } from "../actions/WalletLoaderActions";
 import { STARTRPC_ATTEMPT, STARTRPC_FAILED, STARTRPC_SUCCESS, STARTRPC_RETRY } from "../actions/WalletLoaderActions";
-import { DISCOVERADDRESS_ATTEMPT, DISCOVERADDRESS_FAILED, DISCOVERADDRESS_SUCCESS } from "../actions/WalletLoaderActions";
+import { DISCOVERADDRESS_INPUT, DISCOVERADDRESS_ATTEMPT, DISCOVERADDRESS_FAILED, DISCOVERADDRESS_SUCCESS } from "../actions/WalletLoaderActions";
 import { SUBSCRIBEBLOCKNTFNS_ATTEMPT, SUBSCRIBEBLOCKNTFNS_FAILED, SUBSCRIBEBLOCKNTFNS_SUCCESS } from "../actions/WalletLoaderActions";
 import { FETCHHEADERS_ATTEMPT, FETCHHEADERS_FAILED, FETCHHEADERS_PROGRESS, FETCHHEADERS_SUCCESS } from "../actions/WalletLoaderActions";
 import { CREATEWALLET_EXISTINGSEED, CREATEWALLET_NEWSEED, CREATEWALLET_NEWSEED_CONFIRM, CREATEWALLET_NEWSEED_BACK } from "../actions/WalletLoaderActions";
@@ -36,7 +36,7 @@ export default function walletLoader(state = {}, action) {
     return {...state,
       walletExistError: String(action.error),
       walletExistRequestAttempt: false,
-      walletExistsResponse: null,
+      walletExistResponse: null,
     };
   case WALLETEXIST_SUCCESS:
     return {...state,
@@ -131,8 +131,13 @@ export default function walletLoader(state = {}, action) {
       startRpcResponse: true,
       stepIndex: 4,
     };
+  case DISCOVERADDRESS_INPUT:
+    return {...state,
+      discoverAddressInputRequest: true,
+    };
   case DISCOVERADDRESS_ATTEMPT:
     return {...state,
+      discoverAddressInputRequest: false,
       discoverAddressRequestAttempt: true,
     };
   case DISCOVERADDRESS_FAILED:

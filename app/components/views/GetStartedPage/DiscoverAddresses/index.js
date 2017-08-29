@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
-import DiscoverAddressesForm from "./Form";
+import {
+  DiscoverAddressesFormHeader as DiscoverAddressesHeader,
+  DiscoverAddressesFormBody
+} from "./Form";
 
 @autobind
-class DiscoverAddresses extends Component {
+class DiscoverAddressesBody extends Component {
   constructor(props)  {
     super(props);
     this.state = this.getInitialState();
@@ -25,7 +28,7 @@ class DiscoverAddresses extends Component {
     const { onSetPassPhrase, onDiscoverAddresses } = this;
 
     return (
-      <DiscoverAddressesForm
+      <DiscoverAddressesFormBody
         {...{
           ...this.props,
           passPhrase,
@@ -55,4 +58,4 @@ class DiscoverAddresses extends Component {
   }
 }
 
-export default DiscoverAddresses;
+export { DiscoverAddressesHeader, DiscoverAddressesBody };

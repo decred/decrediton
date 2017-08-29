@@ -4,6 +4,7 @@ import {
 } from "./fp";
 import { reverseHash } from "./helpers/byteActions";
 
+const START_STEP_CHECK = 1;
 const START_STEP_OPEN = 2;
 const START_STEP_RPC1 = 3;
 const START_STEP_RPC2 = 4;
@@ -12,6 +13,7 @@ const START_STEP_FETCH = 6;
 
 const versionInvalid = get(["version", "versionInvalid"]);
 const walletExistResponse = get(["walletLoader", "walletExistResponse"]);
+const walletOpenResponse = get(["walletLoader", "walletOpenResponse"]);
 export const startStepIndex = get(["walletLoader", "stepIndex"]);
 export const getVersionServiceError = get(["version", "getVersionServiceError"]);
 export const getLoaderError = get(["version", "getLoaderError"]);
@@ -22,25 +24,41 @@ export const versionInvalidError = createSelector(
   (invalid, error) => invalid ? error || "Unknown Error" : null
 );
 
+const getLoaderRequestAttempt = get(["walletLoader", "getLoaderRequestAttempt"]);
+const walletExistRequestAttempt = get(["walletLoader", "walletExistRequestAttempt"]);
 const walletOpenRequestAttempt = get(["walletLoader", "walletOpenRequestAttempt"]);
 const walletCreateRequestAttempt = get(["walletLoader", "walletCreateRequestAttempt"]);
+const subscribeBlockNtfnsRequestAttempt = get(["walletLoader", "subscribeBlockNtfnsRequestAttempt"]);
 const discoverAddressRequestAttempt = get(["walletLoader", "discoverAddressRequestAttempt"]);
+const discoverAddressResponse = get(["walletLoader", "discoverAddressResponse"]);
 const startRpcRequestAttempt = get(["walletLoader", "startRpcRequestAttempt"]);
+const startRpcResponse = get(["walletLoader", "startRpcResponse"]);
 const fetchHeadersRequestAttempt = get(["walletLoader", "fetchHeadersRequestAttempt"]);
+const isStartStepCheck = compose(eq(START_STEP_CHECK), startStepIndex);
 const isStartStepOpen = compose(eq(START_STEP_OPEN), startStepIndex);
 const isStartStepDiscover = compose(eq(START_STEP_DISCOVER), startStepIndex);
 const isStartStepRPC = compose(or(eq(START_STEP_RPC1), eq(START_STEP_RPC2)), startStepIndex);
 const isStartStepFetch = compose(eq(START_STEP_FETCH), startStepIndex);
+const isCheckingWallet = or(isStartStepCheck, getLoaderRequestAttempt, walletExistRequestAttempt);
+const beforeOpeningWallet = and(isStartStepOpen, hasExistingWallet, and(not(walletOpenRequestAttempt), not(get(["walletLoader", "walletOpenError"]))));
 const isOpeningWallet = and(isStartStepOpen, hasExistingWallet, walletOpenRequestAttempt);
 const isCreatingWallet = and(isStartStepOpen, walletCreateRequestAttempt);
 const isDiscoveringAddresses = and(isStartStepDiscover, discoverAddressRequestAttempt);
-const isStartingRPC = and(isStartStepRPC, startRpcRequestAttempt);
+const discoveredAddresses = and(isStartStepFetch, discoverAddressResponse, not(fetchHeadersRequestAttempt));
+const beforeStartingRPC = and(isStartStepRPC, walletOpenResponse, not(startRpcRequestAttempt), not(get(["walletLoader", "startRpcError"])));
+const isStartingRPC = and(isStartStepRPC, or(startRpcRequestAttempt, startRpcResponse));
+const isSubscribingToBlockNtfns = and(isStartStepRPC, subscribeBlockNtfnsRequestAttempt);
 const isFetchingHeaders = and(isStartStepFetch, fetchHeadersRequestAttempt);
 export const isStartupProcessing = or(
+  isCheckingWallet,
+  beforeOpeningWallet,
   isOpeningWallet,
   isCreatingWallet,
   isDiscoveringAddresses,
+  discoveredAddresses,
+  beforeStartingRPC,
   isStartingRPC,
+  isSubscribingToBlockNtfns,
   isFetchingHeaders
 );
 

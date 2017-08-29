@@ -1,27 +1,35 @@
 import React from "react";
 import Header from "../../../Header";
-import DecredLoading from "../../../DecredLoading";
 import KeyBlueButton from "../../../KeyBlueButton";
 import "../../../../style/GetStarted.less";
 
-const OpenWalletDecryptForm = ({
-  startupError,
+const OpenWalletDecryptFormHeader = ({
+  startupError
+}) => (
+  <Header getStarted
+    headerTitleOverview="Setting up Decrediton"
+    headerMetaOverview={(
+      <div className="get-started-subheader">Opening wallet</div>
+    )}
+    headerTop={startupError
+      ? <div key="walletOpenError" className="get-started-view-notification-error">{startupError}</div>
+      : <div key="walletOpenError" ></div>}
+  />
+);
+
+const OpenWalletDecryptFormBody = ({
   isProcessing,
   publicPassPhrase,
   hasAttemptedOpen,
   onSetPublicPassPhrase,
   onOpenWallet
-}) => (
-  <div className="get-started-view">
-    <Header getStarted
-      headerTitleOverview="Opening Wallet"
-      headerMetaOverview="Please enter the information below to  create your dcrwallet"
-      headerTop={startupError
-        ? <div key="walletOpenError" className="get-started-view-notification-error">{startupError}</div>
-        : <div key="walletOpenError" ></div>}
-    />
-    <div className="get-started-content-new-seed">
-      {isProcessing ? <DecredLoading/> : (
+}) => {
+  return isProcessing ? null : (
+    <div className="get-started-view">
+      <div className="get-started-open-wallet-instructions">
+        Please enter the information below to create your dcrwallet.
+      </div>
+      <div className="get-started-content-new-seed">
         <div className="get-started-content-new-seed-create-button">
           <div className="get-started-content-confirm-wallet-create-input-left-padding">Decrypt Wallet:</div>
           <div className="get-started-content-confirm-wallet-create-input-right-padding">
@@ -49,9 +57,9 @@ const OpenWalletDecryptForm = ({
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
-export default OpenWalletDecryptForm;
+export { OpenWalletDecryptFormHeader, OpenWalletDecryptFormBody };

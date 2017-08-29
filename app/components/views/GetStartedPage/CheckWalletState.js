@@ -3,24 +3,19 @@ import Header from "../../Header";
 import ShowError from "../../ShowError";
 import "../../../style/GetStarted.less";
 
-const CheckWalletState = ({
+export const CheckWalletStateHeader = () => (
+  <Header getStarted headerTitleOverview="Setting up Decrediton" headerMetaOverview="Checking wallet state" />
+);
+
+export const CheckWalletStateBody = ({
+  isProcessing,
   getLoaderError,
   getVersionServiceError
 }) => (
-  <div className="get-started-view">
-    <Header getStarted headerTitleOverview="Getting started" />
-    <div className="get-started-content">
-      <div className="get-started-content-title">
-        <div className="get-started-content-title-text">checking wallet state...</div>
-      </div>
-      <div className="get-started-content-nest">
-        <div>
-          <ShowError error={getLoaderError} />
-          <ShowError error={getVersionServiceError}/>
-        </div>
-      </div>
+  isProcessing ? null : (
+    <div className="get-started-content-nest">
+      <ShowError error={getLoaderError} />
+      <ShowError error={getVersionServiceError}/>
     </div>
-  </div>
+  )
 );
-
-export default CheckWalletState;

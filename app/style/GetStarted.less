@@ -1,9 +1,18 @@
 @import (reference) "./main.less";
 
 
-.get-started-toggle {
+.get-started-create-wallet-header {
+    position: relative;
+    height: 100%;
+}
+.get-started-button-toolbar {
     font-family: Source Sans Pro, sans-serif;
-    float: right;
+    position: absolute;
+    right: 50px;
+    bottom: 20px;
+}
+.get-started-button-toolbar:after {
+    .clearfloat-mixin;
 }
 
 .get-started-body {
@@ -29,9 +38,11 @@
 }
 
 .get-started-content {
+    /*
     overflow: auto;
     height: 556px;
     padding: 54px 60px 54px 80px;
+    */
 }
 
 .get-started-content-title {
@@ -108,7 +119,6 @@
 
 .get-started-view-button-go-back {
     margin-right: 80px;
-    margin-bottom: 20px;
 }
 
 .get-started-view-button-key-blue-wallet-new-seed {

@@ -45,17 +45,16 @@ export function walletExistRequest() {
   return (dispatch, getState) => {
     dispatch({ type: WALLETEXIST_ATTEMPT });
     const { loader } = getState().walletLoader;
-    loader.walletExists(request,
-        function(error, response) {
-          if (error) {
-            dispatch({ error, type: WALLETEXIST_FAILED });
-          } else {
-            dispatch({response: response, type: WALLETEXIST_SUCCESS });
-            if (response.getExists()) {
-              setTimeout(dispatch(openWalletAttempt("public")), 1000);
-            }
-          }
-        });
+    loader.walletExists(request, function(error, response) {
+      if (error) {
+        dispatch({ error, type: WALLETEXIST_FAILED });
+      } else {
+        dispatch({response: response, type: WALLETEXIST_SUCCESS });
+        if (response.getExists()) {
+          setTimeout(() => dispatch(openWalletAttempt("public")), 1000);
+        }
+      }
+    });
   };
 }
 
@@ -222,6 +221,7 @@ function startRpcAction(request, second) {
   };
 }
 
+export const DISCOVERADDRESS_INPUT = "DISCOVERADDRESS_INPUT";
 export const DISCOVERADDRESS_ATTEMPT = "DISCOVERADDRESS_ATTEMPT";
 export const DISCOVERADDRESS_FAILED = "DISCOVERADDRESS_FAILED";
 export const DISCOVERADDRESS_SUCCESS = "DISCOVERADDRESS_SUCCESS";
@@ -265,14 +265,17 @@ export function subscribeBlockAttempt() {
             dispatch({ error, type: SUBSCRIBEBLOCKNTFNS_FAILED });
           } else {
             dispatch({response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
-            const { walletCreateResponse, createWalletExisting } = getState().walletLoader;
-            if (walletCreateResponse == null || walletCreateResponse !== null && !createWalletExisting) {
+            const { walletCreateResponse, createWalletExisting, discoverAddressResponse } = getState().walletLoader;
+            if (walletCreateResponse == null || (walletCreateResponse !== null && !createWalletExisting)) {
               // CreateWalletSuccess is null which means this is a previously created wallet
               dispatch(discoverAddressAttempt(false));
             }
-            const { discoverAddressResponse } = getState().walletLoader;
-            if ( discoverAddressResponse !== null ) {
+            else if (discoverAddressResponse !== null) {
               dispatch(fetchHeadersAttempt());
+            }
+            else {
+              // This is dispatched to indicate we should wait for user input to discover addresses.
+              dispatch({response: {}, type: DISCOVERADDRESS_INPUT});
             }
           }
         });
