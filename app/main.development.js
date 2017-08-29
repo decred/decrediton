@@ -12,6 +12,7 @@ let mainWindow = null;
 let debug = false;
 let dcrdPID;
 let dcrwPID;
+let daemonReady = false;
 
 // Not going to make incorrect options fatal since running in dev mode has
 // all sorts of things on the cmd line that we don't care about.  If we want
@@ -206,6 +207,7 @@ ipcMain.on("check-daemon", (event, arg) => {
 
   dcrctl.stdout.on("data", (data) => {
     logger.log("info", data.toString());
+    daemonReady = true;
     event.returnValue = true;
   });
   dcrctl.stderr.on("data", (data) => {
@@ -322,12 +324,6 @@ app.on("ready", async () => {
     height: 400,
   });
 
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 1178,
-    height: 790,
-  });
-
   await loadDaemonWindow();
 });
 
@@ -347,10 +343,11 @@ const loadDaemonWindow = async () => {
 
   daemonWindow.on("closed", () => {
     daemonWindow = null;
-    if (require("is-running")(dcrdPID)) {
-      //loadMainWindow();
-      closeDCRD();
-      logger.log("info", "load main window!!!");
+    if (daemonReady) {
+      logger.log("info", "daemon rpc ready, opening wallet");
+      loadMainWindow();
+    } else {
+      logger.log("info", "daemon not ready, shutting down");
     }
   });
 
@@ -370,6 +367,11 @@ const loadDaemonWindow = async () => {
 };
 
 const loadMainWindow = async () => {
+  mainWindow = new BrowserWindow({
+    show: false,
+    width: 1178,
+    height: 790,
+  });
   try {
     await launchDCRWallet();
   } catch (e) {
