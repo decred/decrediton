@@ -8,6 +8,7 @@ import control from "./control";
 import version from "./version";
 import settings from "./settings";
 import stakepool from "./stakepool";
+import daemon from "./daemon";
 
 const rootReducer = combineReducers({
   grpc,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   version,
   settings,
   stakepool,
+  daemon,
   routing
 });
 

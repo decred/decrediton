@@ -180,14 +180,35 @@ const installExtensions = async () => {
 };
 
 const {ipcMain} = require("electron");
-ipcMain.on("asynchronous-message", (event, arg) => {
-  console.log(arg);  // prints "ping"
-  event.sender.send("asynchronous-reply", "pong");
+
+ipcMain.on("start-daemon", (event, arg) => {
+  logger.log("info", "launching dcrd at " + arg);
+  try {
+    launchDCRD();
+  } catch (e) {
+    logger.log("error", "error launching dcrd: " + e);
+  }
+  event.returnValue = arg;
 });
 
-ipcMain.on("synchronous-message", (event, arg) => {
-  console.log(arg); // prints "ping"
-  event.returnValue = "pong";
+ipcMain.on("check-daemon", (event) => {
+  var spawn = require("child_process").spawn;
+  var args = ["--testnet", "getbestblock"];
+
+  var dcrctlExe = path.join(execPath, "bin", "dcrctl");
+
+  logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
+
+  var dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", stdout, stderr, "pipe" ] });
+
+  dcrctl.stdout.on("data", (data) => {
+    logger.log("info", data);
+    event.returnValue = true;
+  });
+  dcrctl.stderr.on("data", (data) => {
+    logger.log("error", data);
+    event.returnValue = false;
+  });
 });
 
 const launchDCRD = () => {
@@ -305,11 +326,6 @@ app.on("ready", async () => {
 });
 
 const loadDaemonWindow = async () => {
-  try {
-    await launchDCRD();
-  } catch (e) {
-    logger.log("error", "error launching dcrd: " + e);
-  }
 
   daemonWindow.loadURL(`file://${__dirname}/loader.html`);
 
@@ -325,8 +341,24 @@ const loadDaemonWindow = async () => {
 
   daemonWindow.on("closed", () => {
     daemonWindow = null;
-    loadMainWindow();
+    if (require("is-running")(dcrdPID)) {
+      loadMainWindow();
+    }
   });
+
+  if (process.env.NODE_ENV === "development") {
+    daemonWindow.openDevTools();
+    daemonWindow.webContents.on("context-menu", (e, props) => {
+      const { x, y } = props;
+
+      Menu.buildFromTemplate([{
+        label: "Inspect element",
+        click() {
+          daemonWindow.inspectElement(x, y);
+        }
+      }]).popup(daemonWindow);
+    });
+  }
 };
 
 const loadMainWindow = async () => {

@@ -12,7 +12,7 @@ import {
   getLoaderError,
   startupError,
   confirmNewSeed,
-  hasExistingWallet
+  hasExistingWallet,
 } from "../selectors";
 import {
   createWalletGoBackNewSeed as onReturnToNewSeed,

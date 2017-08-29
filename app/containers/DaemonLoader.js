@@ -1,20 +1,11 @@
 // @flow
-import React, { Component } from "react";
-import { autobind } from "core-decorators";
-import { connect } from "react-redux";
+import React from "react";
 
-@autobind
-class DaemonLoader extends Component {
-  componentDidMount() {
-    console.log("waiting for daemon");
-  }
-
-  render() {
-    return (
+const DaemonLoader = () => {
+  return (
     <div>
       Loading Daemon
     </div>);
-  }
-}
+};
 
-export default connect(DaemonLoader);
+export default DaemonLoader;
