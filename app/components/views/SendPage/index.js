@@ -99,9 +99,11 @@ class Send extends Component {
   }
   onShowSendAll() {
     this.setState({ isSendAll: true });
+    this.onClearTransaction();
   }
   onHideSendAll() {
     this.setState({ isSendAll: false });
+    this.onClearTransaction();
   }
   onShowConfirm() {
     if (!this.getIsValid()) return;
@@ -126,7 +128,7 @@ class Send extends Component {
   }
 
   onAttemptConstructTransactionAll() {
-    const { onAttemptConstructTransaction, unitDivisor } = this.props;
+    const { onAttemptConstructTransaction } = this.props;
     const confirmations = 0;
     if (this.getHasEmptyFieldsSendAll()) return;
     this.setState({ hastAttemptedConstruct: true });
@@ -135,9 +137,8 @@ class Send extends Component {
     onAttemptConstructTransaction && onAttemptConstructTransaction(
       this.state.account.value,
       confirmations,
-      this.state.outputs.map(({ amountStr, destination }) => ({
+      this.state.outputs.map(({ destination }) => ({
         destination,
-        amount: parseFloat(amountStr) * unitDivisor
       })),
       true
     );
