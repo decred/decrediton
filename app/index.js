@@ -68,7 +68,8 @@ var initialState = {
     activeStakePoolConfig: foundStakePoolConfig,
   },
   daemon: {
-    daemonConnected: false,
+    daemonReady: false,
+    walletReady: false,
   },
   version: {
     // RequiredVersion
