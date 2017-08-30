@@ -1,4 +1,8 @@
-import { compose, reduce, get, or, and, eq, createSelectorEager as createSelector} from "./fp";
+import {
+  compose, reduce, get, not, or, and, eq, find, bool,
+  createSelectorEager as createSelector
+} from "./fp";
+import { reverseHash } from "./helpers/byteActions";
 
 const START_STEP_OPEN = 2;
 const START_STEP_RPC1 = 3;
@@ -154,3 +158,75 @@ export const nextAddressAccount = createSelector(
 export const nextAddress = compose(
   res => res ? res.getAddress() : "", getNextAddressResponse
 );
+
+export const isTestNet = compose(
+  res => res ? res.networkStr === "testnet" : false, getNetworkResponse
+);
+
+export const isMainNet = not(isTestNet);
+export const currencyDisplay = get(["settings", "currentSettings", "currencyDisplay"]);
+export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
+
+export const spendingAccounts = createSelector(
+  [unitDivisor, currencyDisplay, balances],
+  (unitDivisor, currencyDisplay, balances) => reduce(
+    (accounts, { accountName, accountNumber, spendable, ...data }) =>
+      (accountNumber !== 0 && (accountName === "imported" || spendable <= 0))
+        ? accounts
+        : [...accounts, {
+          value: accountNumber,
+          label: `${accountName}: ${spendable / unitDivisor} ${currencyDisplay}`,
+          name: accountName,
+          ...data
+        }],
+    [],
+    balances
+  )
+);
+
+export const defaultSpendingAccount = createSelector(
+  [spendingAccounts], find(compose(eq(0), get("value")))
+);
+
+const constructTxResponse = get(["control", "constructTxResponse"]);
+const constructTxRequestAttempt = get(["control", "constructTxRequestAttempt"]);
+export const constructTxError = get(["control", "constructTxError"]);
+const signTransactionRequestAttempt = get(["control", "signTransactionRequestAttempt"]);
+export const signTransactionError = get(["control", "signTransactionError"]);
+const publishTransactionResponse = get(["control", "publishTransactionResponse"]);
+const publishTransactionRequestAttempt = get(["control", "publishTransactionRequestAttempt"]);
+export const publishTransactionError = get(["control", "publishTransactionError"]);
+const totalOutputAmount = compose(r => r ? r.getTotalOutputAmount() : 0, constructTxResponse);
+const totalAmount = compose(res => res ? res.totalAmount : 0, constructTxResponse);
+const totalPreviousOutputAmount = compose(
+  res => res ? res.getTotalPreviousOutputAmount() : 0, constructTxResponse
+);
+
+export const estimatedSignedSize = compose(
+  res => res ? res.getEstimatedSignedSize() : 0, constructTxResponse
+);
+
+export const unsignedTransaction = createSelector(
+  [constructTxResponse],
+  res => res ? res.getUnsignedTransaction() : null
+);
+
+export const estimatedFee = compose(
+  bytes => (bytes / 1000) * 0.001 * 100000000, estimatedSignedSize
+);
+
+export const totalSpent = createSelector(
+  [totalPreviousOutputAmount, totalOutputAmount, totalAmount],
+  (totalPreviousOutputAmount, totalOutputAmount, totalAmount) =>
+    totalPreviousOutputAmount - totalOutputAmount + totalAmount
+);
+
+export const publishedTransactionHash = compose(
+  r => r ? reverseHash(r.toString("hex")) : null, publishTransactionResponse
+);
+
+export const isSendingTransaction = bool(or(
+  signTransactionRequestAttempt, publishTransactionRequestAttempt
+));
+
+export const isConstructingTransaction = bool(constructTxRequestAttempt);
