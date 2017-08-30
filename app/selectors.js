@@ -7,6 +7,7 @@ import { reverseHash } from "./helpers/byteActions";
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
 export const daemonConnected = get(["daemon", "daemonConnected"]);
+export const daemonReady = get(["daemon", "daemonReady"]);
 
 const START_STEP_OPEN = 2;
 const START_STEP_RPC1 = 3;

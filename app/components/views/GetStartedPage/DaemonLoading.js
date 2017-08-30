@@ -11,7 +11,7 @@ const DaemonLoading = ({
     <Header getStarted headerTitleOverview="Starting DCRD..." />
     <div className="get-started-content">
       <div className="get-started-content-title">
-        <div className="get-started-content-title-text">checking wallet state...</div>
+        <div className="get-started-content-title-text">Starting daemon and wallet</div>
       </div>
       <div className="get-started-content-nest">
         <div>
