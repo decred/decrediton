@@ -204,7 +204,6 @@ ipcMain.on("start-wallet", (event, arg) => {
     return;
   }
   logger.log("info", "launching dcrwallet at " + arg);
-  var dcrwPID = null;
   try {
     dcrwPID = launchDCRWallet();
   } catch (e) {
@@ -332,6 +331,7 @@ const launchDCRWallet = () => {
   logger.log("info", "dcrwallet started with pid:" + dcrwPID);
 
   dcrwallet.unref();
+  return dcrwPID;
 };
 
 app.on("ready", async () => {

@@ -35,7 +35,7 @@ import GetStartedPage from "../components/views/GetStartedPage";
 class GetStarted extends Component {
   componentDidMount() {
     this.props.doVersionCheck();
-    this.props.doStartDaemon();
+    this.props.doStartDaemon("USER", "PASSWORD");
   }
 
   render() {
