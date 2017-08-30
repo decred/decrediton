@@ -44,7 +44,6 @@ class Send extends Component {
       onShowSendAll,
       onHideSendAll,
       onAttemptConstructTransaction,
-      onAttemptConstructTransactionAll,
       onAddOutput,
       getOnRemoveOutput,
       getOnChangeOutputDestination,
@@ -66,7 +65,6 @@ class Send extends Component {
           onShowSendAll,
           onHideSendAll,
           onAttemptConstructTransaction,
-          onAttemptConstructTransactionAll,
           onAddOutput,
           getOnRemoveOutput,
           getOnChangeOutputDestination,
@@ -80,11 +78,7 @@ class Send extends Component {
 
   onChangeAccount(account) {
     this.setState({ account });
-    if (!this.state.isSendAll) {
-      this.onAttemptConstructTransaction();
-    } else {
-      this.onAttemptConstructTransactionAll();
-    }
+    this.onAttemptConstructTransaction();
   }
 
   onAttemptSignTransaction(privpass) {
@@ -99,11 +93,11 @@ class Send extends Component {
   }
   onShowSendAll() {
     this.setState({ isSendAll: true });
-    this.onClearTransaction();
+    //this.onClearTransaction();
   }
   onHideSendAll() {
     this.setState({ isSendAll: false });
-    this.onClearTransaction();
+    //this.onClearTransaction();
   }
   onShowConfirm() {
     if (!this.getIsValid()) return;
@@ -113,35 +107,33 @@ class Send extends Component {
   onAttemptConstructTransaction() {
     const { onAttemptConstructTransaction, unitDivisor } = this.props;
     const confirmations = 0;
-    if (this.getHasEmptyFields()) return;
-    this.setState({ hastAttemptedConstruct: true });
-    if (this.getIsInvalid()) return;
+    if (!this.getIsSendAll()) {
+      if (this.getHasEmptyFields()) return;
+      this.setState({ hastAttemptedConstruct: true });
+      if (this.getIsInvalid()) return;
 
-    onAttemptConstructTransaction && onAttemptConstructTransaction(
-      this.state.account.value,
-      confirmations,
-      this.state.outputs.map(({ amountStr, destination }) => ({
-        destination,
-        amount: parseFloat(amountStr) * unitDivisor
-      }))
-    );
-  }
-
-  onAttemptConstructTransactionAll() {
-    const { onAttemptConstructTransaction } = this.props;
-    const confirmations = 0;
-    if (this.getHasEmptyFieldsSendAll()) return;
-    this.setState({ hastAttemptedConstruct: true });
-    if (this.getIsInvalidSendAll()) return;
-
-    onAttemptConstructTransaction && onAttemptConstructTransaction(
-      this.state.account.value,
-      confirmations,
-      this.state.outputs.map(({ destination }) => ({
-        destination,
-      })),
-      true
-    );
+      onAttemptConstructTransaction && onAttemptConstructTransaction(
+        this.state.account.value,
+        confirmations,
+        this.state.outputs.map(({ amountStr, destination }) => ({
+          destination,
+          amount: parseFloat(amountStr) * unitDivisor
+        }))
+      );
+    } else {
+      console.log("HASFSDF");
+      if (this.getHasEmptyFieldsSendAll()) return;
+      this.setState({ hastAttemptedConstruct: true });
+      if (this.getIsInvalidSendAll()) return;
+      onAttemptConstructTransaction && onAttemptConstructTransaction(
+        this.state.account.value,
+        confirmations,
+        this.state.outputs.map(({ destination }) => ({
+          destination,
+        })),
+        true
+      );
+    }
   }
 
   onAddOutput() {
@@ -199,7 +191,9 @@ class Send extends Component {
       !this.props.isConstructingTransaction
     );
   }
-
+  getIsSendAll() {
+    return this.state.isSendAll;
+  }
   getAddressError(key) {
     // do some more helper address checking here
     // possibly check for Ds/Dc Ts/Tc and length at the least

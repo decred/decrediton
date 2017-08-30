@@ -818,7 +818,7 @@ export function constructTransactionAttempt(account, confirmations, outputs, all
           if (!all) {
             constructTxResponse.totalAmount = totalAmount;
           } else {
-            console.log(constructTxResponse);
+            console.log(constructTxResponse.getTotalOutputAmount());
             constructTxResponse.totalAmount = constructTxResponse.getTotalOutputAmount();
           }
           constructTxResponse.totalAmount = totalAmount;
