@@ -19,6 +19,7 @@ class Send extends Component {
   getInitialState() {
     return {
       isShowingConfirm: false,
+      isSendAll: false,
       hastAttemptedConstruct: false,
       account: this.props.defaultSpendingAccount,
       outputs: [{ key: 0, ...BASE_OUTPUT }]
@@ -38,7 +39,10 @@ class Send extends Component {
       onAttemptSignTransaction,
       onClearTransaction,
       onShowConfirm,
+      onShowSendAll,
+      onHideSendAll,
       onAttemptConstructTransaction,
+      onAttemptConstructTransactionAll,
       onAddOutput,
       getOnRemoveOutput,
       getOnChangeOutputDestination,
@@ -57,7 +61,10 @@ class Send extends Component {
           onAttemptSignTransaction,
           onClearTransaction,
           onShowConfirm,
+          onShowSendAll,
+          onHideSendAll,
           onAttemptConstructTransaction,
+          onAttemptConstructTransactionAll,
           onAddOutput,
           getOnRemoveOutput,
           getOnChangeOutputDestination,
@@ -71,7 +78,11 @@ class Send extends Component {
 
   onChangeAccount(account) {
     this.setState({ account });
-    this.onAttemptConstructTransaction();
+    if (!this.state.isSendAll) {
+      this.onAttemptConstructTransaction();
+    } else {
+      this.onAttemptConstructTransactionAll();
+    }
   }
 
   onAttemptSignTransaction(privpass) {
@@ -84,7 +95,12 @@ class Send extends Component {
   onClearTransaction() {
     this.setState(this.getInitialState(), this.props.onClearTransaction);
   }
-
+  onShowSendAll() {
+    this.setState({ isSendAll: true });
+  }
+  onHideSendAll() {
+    this.setState({ isSendAll: false });
+  }
   onShowConfirm() {
     if (!this.getIsValid()) return;
     this.setState({ isShowingConfirm: true });
@@ -104,6 +120,24 @@ class Send extends Component {
         destination,
         amount: parseFloat(amountStr) * unitDivisor
       }))
+    );
+  }
+
+  onAttemptConstructTransactionAll() {
+    const { onAttemptConstructTransaction, unitDivisor } = this.props;
+    const confirmations = 0;
+    if (this.getHasEmptyFieldsSendAll()) return;
+    this.setState({ hastAttemptedConstruct: true });
+    if (this.getIsInvalidSendAll()) return;
+
+    onAttemptConstructTransaction && onAttemptConstructTransaction(
+      this.state.account.value,
+      confirmations,
+      this.state.outputs.map(({ amountStr, destination }) => ({
+        destination,
+        amount: parseFloat(amountStr) * unitDivisor
+      })),
+      true
     );
   }
 
@@ -139,10 +173,22 @@ class Send extends Component {
     ));
   }
 
+  getIsInvalidSendAll() {
+    return !!(
+      this.state.outputs.length !== 1 &&
+      this.state.outputs.find((o, index) => (
+        this.getAddressError(index)
+      ))
+    );
+  }
+
   getHasEmptyFields() {
     return !!this.state.outputs.find(({ destination, amountStr }) => !destination || !amountStr);
   }
 
+  getHasEmptyFieldsSendAll() {
+    return !!this.state.outputs.find(({ destination }) => !destination);
+  }
   getIsValid() {
     return !!(
       !this.getIsInvalid() &&

@@ -16,6 +16,7 @@ const SendPage = ({
   isSendingTransaction,
   isTestNet,
   isShowingConfirm,
+  isSendAll,
   account,
   spendingAccounts,
   outputs,
