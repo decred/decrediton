@@ -2,18 +2,49 @@ import {ipcRenderer} from "electron";
 
 // @flow
 export const DAEMONSTARTED = "DAEMONSTARTED";
+export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONRPCREADY = "DAEMONRPCREADY";
+export const DAEMONRPCREADY_ERROR = "DAEMONRPCREADY_ERROR";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 
-export function startDaemon() {
-  var args = {rpcuser: "user", rpcpassword: "password"};
-  ipcRenderer.sendSync("start-daemon", args);
+export function startDaemon(rpcuser, rpcpassword) {
+  return (dispatch) => {
+    var args = {rpcuser: rpcuser, rpcpassword: rpcpassword};
+    var dcrdPid = ipcRenderer.sendSync("start-daemon", args);
+    if (dcrdPid) {
+      dispatch({pid: dcrdPid, type: DAEMONSTARTED});
+    } else {
+      dispatch({type: DAEMONSTARTED_ERROR});
+    }
+  };
 }
-export function startWallet() {
-  var args = {rpcuser: "user", rpcpassword: "password"};
-  ipcRenderer.sendSync("start-wallet", args);
+export function startWallet(rpcuser, rpcpassword) {
+  return (dispatch) => {
+    var args = {rpcuser: rpcuser, rpcpassword: rpcpassword};
+    var dcrdPid = ipcRenderer.sendSync("start-wallet", args);
+    if (dcrdPid) {
+      dispatch({pid: dcrdPid, type: DAEMONSTARTED});
+    } else {
+      dispatch({type: DAEMONSTARTED_ERROR});
+    }
+  };
 }
-export function checkDaemon() {
-  var args = {rpcuser: "user", rpcpassword: "password"};
-  setInterval(()=>console.log(ipcRenderer.sendSync("check-daemon", args)), 5000);
+export function checkDaemon(rpcuser, rpcpassword, host, cert) {
+  return (dispatch) => {
+    var args = {rpcuser: rpcuser, rpcpassword: rpcpassword, host: host, cert: cert};
+    var daemonConnectionAttempts = 5;
+    var connected = false;
+    for (var i = 0; i < daemonConnectionAttempts; i++) {
+      connected = ipcRenderer.sendSync("check-daemon", args);
+      if (connected) {
+        break;
+      }
+    }
+    if (connected) {
+      dispatch({type: DAEMONRPCREADY});
+    } else {
+      dispatch({type: DAEMONRPCREADY_ERROR});
+    }
+  };
+  
 }

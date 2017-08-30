@@ -184,22 +184,24 @@ const {ipcMain} = require("electron");
 
 ipcMain.on("start-daemon", (event, arg) => {
   logger.log("info", "launching dcrd at " + arg);
+  var dcrdPID = null;
   try {
-    launchDCRD(arg.rpcuser, arg.rpcpassword, arg.host);
+    dcrdPID = launchDCRD(arg.rpcuser, arg.rpcpassword, arg.host);
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
-  event.returnValue = arg;
+  event.returnValue = dcrdPID;
 });
 
 ipcMain.on("start-wallet", (event, arg) => {
   logger.log("info", "launching dcrwallet at " + arg);
+  var dcrwPID = null;
   try {
-    launchDCRWallet();
+    dcrwPID = launchDCRWallet();
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
-  event.returnValue = arg;
+  event.returnValue = dcrwPID;
 });
 
 ipcMain.on("check-daemon", (event, arg) => {
@@ -269,6 +271,7 @@ const launchDCRD = (rpcuser, rpcpassword) => {
   logger.log("info", "dcrd started with pid:" + dcrdPID);
 
   dcrd.unref();
+  return dcrdPID;
 };
 
 const launchDCRWallet = () => {
