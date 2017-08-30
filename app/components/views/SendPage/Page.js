@@ -35,6 +35,8 @@ const SendPage = ({
   onAttemptSignTransaction,
   onClearTransaction,
   onShowConfirm,
+  onShowSendAll,
+  onHideSendAll,
   getAddressError,
   getAmountError,
   ...props
@@ -109,7 +111,7 @@ const SendPage = ({
               <div id="dynamicInput">
                 {outputs.map((output, index) => (
                   <OutputRow
-                    {...{ index, outputs, ...props, ...output }}
+                    {...{ index, outputs, ...props, ...output, isSendAll }}
                     addressError={getAddressError(index)}
                     amountError={getAmountError(index)}
                   />
@@ -117,6 +119,15 @@ const SendPage = ({
               </div>
             </div>
             <div className="send-button-area">
+              {!isSendAll ?
+              <KeyBlueButton
+              className="content-send"
+                onClick={onShowSendAll}
+              >Send All</KeyBlueButton> :
+              <KeyBlueButton
+              className="content-send"
+                onClick={onHideSendAll}
+              >Close Send All</KeyBlueButton>  }
               <KeyBlueButton
                 className="content-send"
                 disabled={!isValid}

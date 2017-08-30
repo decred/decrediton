@@ -15,7 +15,8 @@ const SendOutputRow = ({
   hastAttemptedConstruct,
   getOnRemoveOutput,
   getOnChangeOutputDestination,
-  getOnChangeOutputAmount
+  getOnChangeOutputAmount,
+  isSendAll,
 }) => (
   <div className="send-row">
     <div className="send-output-row">
@@ -32,13 +33,14 @@ const SendOutputRow = ({
           />
         </div>
       </div>
-      {index === 0 ? (
+      {index === 0 && !isSendAll ? (
         <div className="send-address-wallet-icon" onClick={onAddOutput}></div>
-      ) : (index === (outputs.length - 1)) ? (
+      ) : (index === (outputs.length - 1)) && !isSendAll ? (
         <div className="send-address-delete-icon" onClick={getOnRemoveOutput(index)}></div>
       ) : (
         <div style={{width:"39px", height: "34px", float: "left"}}></div>
       )}
+      {!isSendAll ?
       <div className="send-amount">
         {index === 0 ? <div className="send-amount-label">Amount:</div> : null}
         <div className="send-address-amount-sum-and-currency">
@@ -52,7 +54,9 @@ const SendOutputRow = ({
             onBlur={onAttemptConstructTransaction}
           />
         </div>
-      </div>
+      </div> :
+      <div></div>}
+
     </div>
     {hastAttemptedConstruct ? (
       <div className="send-output-error-row">
