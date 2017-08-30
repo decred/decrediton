@@ -773,21 +773,40 @@ export const CONSTRUCTTX_ATTEMPT = "CONSTRUCTTX_ATTEMPT";
 export const CONSTRUCTTX_FAILED = "CONSTRUCTTX_FAILED";
 export const CONSTRUCTTX_SUCCESS = "CONSTRUCTTX_SUCCESS";
 
-export function constructTransactionAttempt(account, confirmations, outputs) {
+export function constructTransactionAttempt(account, confirmations, outputs, all) {
   var request = new ConstructTransactionRequest();
   request.setSourceAccount(parseInt(account));
   request.setRequiredConfirmations(parseInt(parseInt(confirmations)));
-  request.setOutputSelectionAlgorithm(1);
-  var totalAmount = 0;
-  outputs.map(output => {
-    var outputDest = new ConstructTransactionRequest.OutputDestination();
-    outputDest.setAddress(output.destination);
-    var newOutput = new ConstructTransactionRequest.Output();
-    newOutput.setDestination(outputDest);
-    newOutput.setAmount(parseInt(output.amount));
-    request.addNonChangeOutputs(newOutput);
-    totalAmount += output.amount;
-  });
+  if (!all) {
+    request.setOutputSelectionAlgorithm(0);
+    var totalAmount = 0;
+    outputs.map(output => {
+      var outputDest = new ConstructTransactionRequest.OutputDestination();
+      outputDest.setAddress(output.destination);
+      var newOutput = new ConstructTransactionRequest.Output();
+      newOutput.setDestination(outputDest);
+      newOutput.setAmount(parseInt(output.amount));
+      request.addNonChangeOutputs(newOutput);
+      totalAmount += output.amount;
+    });
+  } else {
+    if (outputs.length > 1) {
+      return (dispatch) => {
+        var error = "Too many outputs provided for a send all request.";
+        dispatch({ error, type: CONSTRUCTTX_FAILED });
+      };
+    } else if (outputs.length == 0) {
+      return (dispatch) => {
+        var error = "No destination specified for send all request.";
+        dispatch({ error, type: CONSTRUCTTX_FAILED });
+      };
+    } else {
+      request.setOutputSelectionAlgorithm(1);
+      var outputDest = new ConstructTransactionRequest.OutputDestination();
+      outputDest.setAddress(outputs[0].destination);
+      request.setChangeDestination(outputDest);
+    }
+  }
   return (dispatch, getState) => {
     dispatch({ type: CONSTRUCTTX_ATTEMPT });
     const { walletService } = getState().grpc;
@@ -796,6 +815,12 @@ export function constructTransactionAttempt(account, confirmations, outputs) {
         if (error) {
           dispatch({ error, type: CONSTRUCTTX_FAILED });
         } else {
+          if (!all) {
+            constructTxResponse.totalAmount = totalAmount;
+          } else {
+            console.log(constructTxResponse);
+            constructTxResponse.totalAmount = constructTxResponse.getTotalOutputAmount();
+          }
           constructTxResponse.totalAmount = totalAmount;
           dispatch({constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
         }
