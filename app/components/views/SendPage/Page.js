@@ -27,7 +27,6 @@ const SendPage = ({
   constructTxError,
   signTransactionError,
   publishTransactionError,
-  publishTransactionResponse,
   onClearPublishTxError,
   onClearSignTxError,
   onClearPublishTxSuccess,
@@ -62,7 +61,7 @@ const SendPage = ({
               {signTransactionError}
             </div>
           ) : null,
-          publishTransactionResponse ? (
+          publishedTransactionHash ? (
             <div key="pubSuccess"  style={SendStyles.viewNotificationSuccess}>
               <div style={SendStyles.sendAddressDeleteIconHeader} onClick={onClearPublishTxSuccess}/>
               Published Tx: {publishedTransactionHash}

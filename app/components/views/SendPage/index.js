@@ -127,7 +127,9 @@ class Send extends Component {
 
   getOnChangeOutputAmount(key) {
     return amountStr => this.setState({
-      outputs: this.state.outputs.map(o => (o.key === key) ? { ...o, amountStr } : o)
+      outputs: this.state.outputs.map(o => (o.key === key) ? {
+        ...o, amountStr: amountStr.replace(/[^\d.-]/g, "")
+      } : o)
     });
   }
 
