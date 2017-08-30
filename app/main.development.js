@@ -183,8 +183,12 @@ const installExtensions = async () => {
 const {ipcMain} = require("electron");
 
 ipcMain.on("start-daemon", (event, arg) => {
+  if (dcrdPID) {
+    logger.log("info", "dcrd already started " + dcrwPID);
+    event.returnValue = dcrdPID;
+    return;
+  }
   logger.log("info", "launching dcrd at " + arg);
-  var dcrdPID = null;
   try {
     dcrdPID = launchDCRD(arg.rpcuser, arg.rpcpassword, arg.host);
   } catch (e) {
@@ -194,6 +198,11 @@ ipcMain.on("start-daemon", (event, arg) => {
 });
 
 ipcMain.on("start-wallet", (event, arg) => {
+  if (dcrwPID) {
+    logger.log("info", "dcrwallet already started " + dcrwPID);
+    event.returnValue = dcrwPID;
+    return;
+  }
   logger.log("info", "launching dcrwallet at " + arg);
   var dcrwPID = null;
   try {

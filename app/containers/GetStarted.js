@@ -12,6 +12,7 @@ import {
   confirmNewSeed,
   hasExistingWallet,
   daemonReady,
+  walletReady,
 } from "../selectors";
 import {
   createWalletGoBackNewSeed as onReturnToNewSeed,
@@ -53,6 +54,7 @@ const mapStateToProps = selectorMap({
   hasExistingWallet,
   isProcessing,
   daemonReady,
+  walletReady,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
