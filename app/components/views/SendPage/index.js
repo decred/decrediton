@@ -32,7 +32,9 @@ class Send extends Component {
     this.props.onClearSignTxError();
     this.props.onClearPublishTxSuccess();
   }
-
+  componentWillUnmount() {
+    this.onClearTransaction();
+  }
   render() {
     const {
       onChangeAccount,
