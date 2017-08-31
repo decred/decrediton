@@ -13,13 +13,12 @@ const GetStartedPage = ({
   startStepIndex,
   versionInvalidError,
   daemonStarted,
-  daemonSyncing,
   daemonSynced,
   walletReady,
   ...props
 }) => {
   const Step =
-    (!daemonStarted || !daemonSyncing || !daemonSynced || !walletReady)
+    (!daemonStarted || !daemonSynced || !walletReady)
      ? DaemonLoading :
     (startStepIndex <= 1)
       ? CheckWalletState :

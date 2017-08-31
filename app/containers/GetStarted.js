@@ -14,8 +14,8 @@ import {
   confirmNewSeed,
   hasExistingWallet,
   daemonStarted,
-  daemonSyncing,
   daemonSynced,
+  currentBlockCount,
   walletReady,
 } from "../selectors";
 import {
@@ -28,8 +28,7 @@ import {
 } from "../actions/WalletLoaderActions";
 import {
   startDaemon as doStartDaemon,
-  checkDaemon as doCheckDaemon,
-  startWallet as doStartWallet,
+  skipDaemonSync as doSkipDaemonSync,
 } from "../actions/DaemonActions";
 import GetStartedPage from "../components/views/GetStartedPage";
 
@@ -59,8 +58,8 @@ const mapStateToProps = selectorMap({
   hasExistingWallet,
   isProcessing,
   daemonStarted,
-  daemonSyncing,
   daemonSynced,
+  currentBlockCount,
   walletReady,
 });
 
@@ -72,8 +71,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onRetryStartRPC,
   doVersionCheck,
   doStartDaemon,
-  doCheckDaemon,
-  doStartWallet,
+  doSkipDaemonSync,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(GetStarted);

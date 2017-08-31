@@ -13,14 +13,18 @@ export const WALLETREADY = "WALLETREADY";
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
+export function skipDaemonSync() {
+  return (dispatch) => {
+    dispatch({type: DAEMONSYNCED});
+  };
+}
 export function startDaemon(rpcuser, rpcpassword) {
   return (dispatch) => {
     var args = {rpcuser: rpcuser, rpcpassword: rpcpassword};
     var dcrdPid = ipcRenderer.sendSync("start-daemon", args);
     if (dcrdPid) {
       dispatch({pid: dcrdPid, type: DAEMONSTARTED});
-      dispatch(checkDaemon(rpcuser, rpcpassword));
+      dispatch(syncDaemon(rpcuser, rpcpassword));
     } else {
       dispatch({type: DAEMONSTARTED_ERROR});
     }
@@ -48,20 +52,26 @@ export function startWallet(rpcuser, rpcpassword) {
     }
   };
 }
-export function checkDaemon(rpcuser, rpcpassword, host, cert) {
+export function syncDaemon(rpcuser, rpcpassword, host, cert) {
   return async (dispatch, getState) => {
     const {neededBlocks} = getState().walletLoader;
     var args = {rpcuser: rpcuser, rpcpassword: rpcpassword, host: host, cert: cert};
     var currentBlockCount = 0;
-    while (currentBlockCount < neededBlocks) {
+    while (true){
+      // check to see if user skipped;
+      const {daemonSynced} = getState().daemon;
+      if (daemonSynced) {
+        break;
+      }
       currentBlockCount = ipcRenderer.sendSync("check-daemon", args);
       console.log(currentBlockCount);
+      if (currentBlockCount >= neededBlocks) {
+        dispatch({currentBlockCount: currentBlockCount, type: DAEMONSYNCED});
+        dispatch(startWallet(rpcuser, rpcpassword));
+        break;
+      }
       dispatch({currentBlockCount: currentBlockCount, type: DAEMONSYNCING});
       await sleep(10000);
-    }
-    if (currentBlockCount) {
-      dispatch({currentBlockCount: currentBlockCount, type: DAEMONSYNCED});
-      dispatch(startWallet(rpcuser, rpcpassword));
     }
   };
 }
