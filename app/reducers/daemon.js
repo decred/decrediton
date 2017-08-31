@@ -18,7 +18,6 @@ export default function version(state = {}, action) {
   case DAEMONSYNCED:
     return {...state,
       daemonSynced: true,
-      currentBlockCount: action.currentBlockCount,
     };
   case WALLETREADY:
     return {...state,

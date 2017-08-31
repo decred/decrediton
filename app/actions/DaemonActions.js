@@ -16,6 +16,7 @@ function sleep(ms) {
 export function skipDaemonSync() {
   return (dispatch) => {
     dispatch({type: DAEMONSYNCED});
+    dispatch(startWallet());
   };
 }
 export function startDaemon(rpcuser, rpcpassword) {
@@ -66,12 +67,12 @@ export function syncDaemon(rpcuser, rpcpassword, host, cert) {
       currentBlockCount = ipcRenderer.sendSync("check-daemon", args);
       console.log(currentBlockCount);
       if (currentBlockCount >= neededBlocks) {
-        dispatch({currentBlockCount: currentBlockCount, type: DAEMONSYNCED});
+        dispatch({type: DAEMONSYNCED});
         dispatch(startWallet());
         break;
       }
       if (currentBlockCount !== 0) {
-        dispatch({currentBlockCount: currentBlockCount, type: DAEMONSYNCING});
+        dispatch({currentBlockCount: parseInt(currentBlockCount), type: DAEMONSYNCING});
       }
       await sleep(10000);
     }

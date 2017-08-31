@@ -16,6 +16,7 @@ import {
   getDaemonStarted,
   getDaemonSynced,
   getCurrentBlockCount,
+  getNeededBlocks,
   getWalletReady,
   isPrepared,
 } from "../selectors";
@@ -61,6 +62,7 @@ const mapStateToProps = selectorMap({
   getDaemonStarted,
   getDaemonSynced,
   getCurrentBlockCount,
+  getNeededBlocks,
   getWalletReady,
   isPrepared,
 });
