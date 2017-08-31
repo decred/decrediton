@@ -3,6 +3,7 @@ import { compose, reduce, get, or, and, eq, createSelectorEager as createSelecto
 export const getDaemonStarted = get(["daemon", "daemonStarted"]);
 export const getCurrentBlockCount = get(["daemon", "currentBlockCount"]);
 export const getNeededBlocks = get(["walletLoader", "neededBlocks"]);
+export const getEstimatedTimeLeft = get(["daemon", "timeLeftEstimate"]);
 export const getDaemonSynced = get(["daemon", "daemonSynced"]);
 export const getWalletReady = get(["daemon", "walletReady"]);
 export const isPrepared = and(

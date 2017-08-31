@@ -18,6 +18,7 @@ import {
   getCurrentBlockCount,
   getNeededBlocks,
   getWalletReady,
+  getEstimatedTimeLeft,
   isPrepared,
 } from "../selectors";
 import {
@@ -64,6 +65,7 @@ const mapStateToProps = selectorMap({
   getCurrentBlockCount,
   getNeededBlocks,
   getWalletReady,
+  getEstimatedTimeLeft,
   isPrepared,
 });
 
