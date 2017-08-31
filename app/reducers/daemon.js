@@ -1,6 +1,7 @@
 import {
   DAEMONSTARTED,
-  DAEMONSYNCING,
+  DAEMONSYNCING_START,
+  DAEMONSYNCING_PROGRESS,
   DAEMONSYNCED,
   WALLETREADY,
 } from "../actions/DaemonActions";
@@ -11,7 +12,13 @@ export default function version(state = {}, action) {
     return {...state,
       daemonStarted: true,
     };
-  case DAEMONSYNCING:
+  case DAEMONSYNCING_START:
+    return {...state,
+      currentBlockCount: action.currentBlockCount,
+      timeStart: action.timeStart,
+      blockStart: action.blockStart,
+    };
+  case DAEMONSYNCING_PROGRESS:
     return {...state,
       currentBlockCount: action.currentBlockCount,
       timeLeftEstimate: action.timeLeftEstimate,
