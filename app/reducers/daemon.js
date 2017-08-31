@@ -1,25 +1,29 @@
 import {
-  DAEMONRPCREADY,
-  DAEMONRPCREADY_ERROR,
+  DAEMONSTARTED,
+  DAEMONSYNCING,
   DAEMONSYNCED,
-  DAEMONREADY,
   WALLETREADY,
 } from "../actions/DaemonActions";
 
 export default function version(state = {}, action) {
   switch (action.type) {
-  case DAEMONRPCREADY:
+  case DAEMONSTARTED:
     return {...state,
-      daemonReady: true,
+      daemonStarted: true,
+    };
+  case DAEMONSYNCING:
+    return {...state,
+      daemonRpcReady: true,
+      currentBlockCount: action.currentBlockCount,
+    };
+  case DAEMONSYNCED:
+    return {...state,
+      daemonSynced: true,
       currentBlockCount: action.currentBlockCount,
     };
   case WALLETREADY:
     return {...state,
       walletReady: true,
-    };
-  case DAEMONRPCREADY_ERROR:
-    return {...state,
-      daemonReady: true,
     };
   default:
     return state;

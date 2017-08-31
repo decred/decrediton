@@ -187,7 +187,7 @@ ipcMain.on("start-daemon", (event, arg) => {
     event.returnValue = dcrdPID;
     return;
   }
-  logger.log("info", "launching dcrd");
+  logger.log("info", "launching dcrd with " + arg);
   try {
     dcrdPID = launchDCRD();
   } catch (e) {
