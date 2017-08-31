@@ -11,7 +11,9 @@ import {
   startupError,
   confirmNewSeed,
   hasExistingWallet,
-  daemonReady,
+  daemonStarted,
+  daemonSyncing,
+  daemonSynced,
   walletReady,
 } from "../selectors";
 import {
@@ -52,7 +54,9 @@ const mapStateToProps = selectorMap({
   confirmNewSeed,
   hasExistingWallet,
   isProcessing,
-  daemonReady,
+  daemonStarted,
+  daemonSyncing,
+  daemonSynced,
   walletReady,
 });
 

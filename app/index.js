@@ -68,7 +68,9 @@ var initialState = {
     activeStakePoolConfig: foundStakePoolConfig,
   },
   daemon: {
-    daemonReady: false,
+    daemonStarted: false,
+    daemonSyncing: false,
+    daemonSynced: false,
     walletReady: false,
     currentBlockCount: null,
   },

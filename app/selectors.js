@@ -6,8 +6,9 @@ import { reverseHash } from "./helpers/byteActions";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
-export const daemonConnected = get(["daemon", "daemonConnected"]);
-export const daemonReady = get(["daemon", "daemonReady"]);
+export const daemonStarted = get(["daemon", "daemonStarted"]);
+export const daemonSyncing = get(["daemon", "daemonSyncing"]);
+export const daemonSynced = get(["daemon", "daemonSynced"]);
 export const walletReady = get(["daemon", "walletReady"]);
 
 const START_STEP_OPEN = 2;
