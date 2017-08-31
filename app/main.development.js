@@ -248,7 +248,7 @@ ipcMain.on("check-daemon", (event) => {
   });
   dcrctl.stderr.on("data", (data) => {
     logger.log("error", data.toString());
-    event.returnValue = currentBlockCount;
+    event.returnValue = 0;
   });
 });
 

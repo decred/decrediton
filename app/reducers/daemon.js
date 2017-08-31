@@ -11,6 +11,7 @@ export default function version(state = {}, action) {
   case DAEMONRPCREADY:
     return {...state,
       daemonReady: true,
+      currentBlockCount: action.currentBlockCount,
     };
   case WALLETREADY:
     return {...state,
