@@ -32,7 +32,6 @@ import GetStartedPage from "../components/views/GetStartedPage";
 @autobind
 class GetStarted extends Component {
   componentDidMount() {
-    this.props.doVersionCheck();
     this.props.doStartDaemon("USER", "PASSWORD");
   }
 

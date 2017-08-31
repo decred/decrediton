@@ -1,5 +1,5 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
-import { getCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, writeCfgs, getDcrdPath } from "./config.js";
+import { getCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath } from "./config.js";
 import path from "path";
 import os from "os";
 import parseArgs from "minimist";
@@ -7,13 +7,12 @@ import winston from "winston";
 
 let menu;
 let template;
-let daemonWindow = null;
 let mainWindow = null;
 let debug = false;
 let dcrdPID;
 let dcrwPID;
 let daemonReady = false;
-
+let currentBlockCount;
 // Not going to make incorrect options fatal since running in dev mode has
 // all sorts of things on the cmd line that we don't care about.  If we want
 // to make this fatal, it must be for production mode only.
@@ -188,13 +187,29 @@ ipcMain.on("start-daemon", (event, arg) => {
     event.returnValue = dcrdPID;
     return;
   }
-  logger.log("info", "launching dcrd at " + arg);
+  logger.log("info", "launching dcrd");
   try {
-    dcrdPID = launchDCRD(arg.rpcuser, arg.rpcpassword, arg.host);
+    dcrdPID = launchDCRD();
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
   event.returnValue = dcrdPID;
+});
+
+ipcMain.on("stop-daemon", (event) => {
+  if (!dcrdPID) {
+    logger.log("info", "dcrd already stopped " + dcrwPID);
+    event.returnValue = true;
+    return;
+  }
+  logger.log("info", "launching dcrd");
+  try {
+    closeDCRD();
+    daemonReady = false;
+  } catch (e) {
+    logger.log("error", "error stopping dcrd: " + e);
+  }
+  event.returnValue = !daemonReady;
 });
 
 ipcMain.on("start-wallet", (event, arg) => {
@@ -212,31 +227,32 @@ ipcMain.on("start-wallet", (event, arg) => {
   event.returnValue = dcrwPID;
 });
 
-ipcMain.on("check-daemon", (event, arg) => {
+ipcMain.on("check-daemon", (event) => {
+  if (daemonReady) {
+    event.returnValue = true;
+    return;
+  }
   var spawn = require("child_process").spawn;
-  var args = ["--testnet", "getbestblock"];
-
+  var args = ["--configfile="+dcrctlCfg(), "getblockcount"];
   var dcrctlExe = path.join(execPath, "bin", "dcrctl");
-
-  args.push("-u " + arg.rpcuser);
-  args.push("-P " + arg.rpcpassword);
 
   logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
 
   var dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", stdout, stderr, "pipe" ] });
 
   dcrctl.stdout.on("data", (data) => {
+    currentBlockCount = data.toString();
     logger.log("info", data.toString());
     daemonReady = true;
-    event.returnValue = true;
+    event.returnValue = currentBlockCount;
   });
   dcrctl.stderr.on("data", (data) => {
     logger.log("error", data.toString());
-    event.returnValue = false;
+    event.returnValue = currentBlockCount;
   });
 });
 
-const launchDCRD = (rpcuser, rpcpassword) => {
+const launchDCRD = () => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrdCfg()];
 
@@ -253,9 +269,6 @@ const launchDCRD = (rpcuser, rpcpassword) => {
       logger.log("error", "can't find proper module to launch dcrd: " + e);
     }
   }
-
-  args.push("-u " + rpcuser);
-  args.push("-P " + rpcpassword);
 
   logger.log("info", `Starting dcrd with ${args}`);
 
@@ -350,7 +363,7 @@ app.on("ready", async () => {
   await installExtensions();
   // Write application config files.
   await writeCfgs();
-  
+
   await loadMainWindow();
 });
 
