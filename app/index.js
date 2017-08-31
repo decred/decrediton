@@ -69,7 +69,6 @@ var initialState = {
   },
   daemon: {
     daemonStarted: false,
-    daemonSyncing: false,
     daemonSynced: false,
     walletReady: false,
     currentBlockCount: null,

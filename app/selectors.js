@@ -7,7 +7,7 @@ import { reverseHash } from "./helpers/byteActions";
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
 export const daemonStarted = get(["daemon", "daemonStarted"]);
-export const daemonSyncing = get(["daemon", "daemonSyncing"]);
+export const currentBlockCount = get(["daemon", "currentBlockCount"]);
 export const daemonSynced = get(["daemon", "daemonSynced"]);
 export const walletReady = get(["daemon", "walletReady"]);
 

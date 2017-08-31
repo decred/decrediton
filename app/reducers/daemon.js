@@ -13,7 +13,6 @@ export default function version(state = {}, action) {
     };
   case DAEMONSYNCING:
     return {...state,
-      daemonRpcReady: true,
       currentBlockCount: action.currentBlockCount,
     };
   case DAEMONSYNCED:
