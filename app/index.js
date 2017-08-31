@@ -70,6 +70,7 @@ var initialState = {
   daemon: {
     daemonReady: false,
     walletReady: false,
+    currentBlockCount: null,
   },
   version: {
     // RequiredVersion

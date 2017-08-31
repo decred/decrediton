@@ -50,19 +50,18 @@ export function startWallet(rpcuser, rpcpassword) {
   };
 }
 export function checkDaemon(rpcuser, rpcpassword, host, cert) {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const {neededBlocks} = getState().walletLoader;
     var args = {rpcuser: rpcuser, rpcpassword: rpcpassword, host: host, cert: cert};
     var daemonConnectionAttempts = 5;
-    var connected = false;
-    for (var i = 0; i < daemonConnectionAttempts; i++) {
-      connected = ipcRenderer.sendSync("check-daemon", args);
-      if (connected) {
-        break;
-      }
+    var currentBlockCount = 0;
+    while (currentBlockCount < neededBlocks) {
+      currentBlockCount = ipcRenderer.sendSync("check-daemon", args);
+      console.log(currentBlockCount);
       await sleep(10000);
     }
-    if (connected) {
-      dispatch({type: DAEMONRPCREADY});
+    if (currentBlockCount) {
+      dispatch({currentBlockCount: currentBlockCount, type: DAEMONRPCREADY});
       dispatch(startWallet(rpcuser, rpcpassword));
     } else {
       dispatch({type: DAEMONRPCREADY_ERROR});
