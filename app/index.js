@@ -72,7 +72,7 @@ var initialState = {
     daemonSynced: false,
     walletReady: false,
     currentBlockCount: null,
-    timeLeftEstimate: "--- estimated minutes remaining",
+    timeLeftEstimate: "Estimated time remaining: ---",
   },
   version: {
     // RequiredVersion
