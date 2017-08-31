@@ -10,13 +10,11 @@ import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
 
 const GetStartedPage = ({
   startStepIndex,
-  walletReady,
-  daemonStarted,
-  daemonSynced,
+  isPrepared,
   ...props
 }) => {
   let Header, Body;
-  if (daemonStarted && daemonSynced && walletReady) {
+  if (isPrepared) {
     switch(startStepIndex || 0) {
     case 0:
     case 1:

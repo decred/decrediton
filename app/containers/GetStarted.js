@@ -11,10 +11,11 @@ import {
   startupError,
   confirmNewSeed,
   hasExistingWallet,
-  daemonStarted,
-  daemonSynced,
-  currentBlockCount,
-  walletReady,
+  getDaemonStarted,
+  getDaemonSynced,
+  getCurrentBlockCount,
+  getWalletReady,
+  isPrepared,
 } from "../selectors";
 import {
   createWalletGoBackNewSeed as onReturnToNewSeed,
@@ -33,7 +34,7 @@ import GetStartedPage from "../components/views/GetStartedPage";
 @autobind
 class GetStarted extends Component {
   componentDidMount() {
-    this.props.doStartDaemon("USER", "PASSWORD");
+    this.props.doStartDaemon();
   }
 
   render() {
@@ -53,10 +54,11 @@ const mapStateToProps = selectorMap({
   confirmNewSeed,
   hasExistingWallet,
   isProcessing,
-  daemonStarted,
-  daemonSynced,
-  currentBlockCount,
-  walletReady,
+  getDaemonStarted,
+  getDaemonSynced,
+  getCurrentBlockCount,
+  getWalletReady,
+  isPrepared,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -67,10 +67,12 @@ export function syncDaemon(rpcuser, rpcpassword, host, cert) {
       console.log(currentBlockCount);
       if (currentBlockCount >= neededBlocks) {
         dispatch({currentBlockCount: currentBlockCount, type: DAEMONSYNCED});
-        dispatch(startWallet(rpcuser, rpcpassword));
+        dispatch(startWallet());
         break;
       }
-      dispatch({currentBlockCount: currentBlockCount, type: DAEMONSYNCING});
+      if (currentBlockCount !== 0) {
+        dispatch({currentBlockCount: currentBlockCount, type: DAEMONSYNCING});
+      }
       await sleep(10000);
     }
   };

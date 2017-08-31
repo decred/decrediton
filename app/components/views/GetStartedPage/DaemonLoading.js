@@ -4,17 +4,17 @@ import DecredLoading from "../../DecredLoading";
 import "../../../style/GetStarted.less";
 
 const DaemonLoading = ({
-  currentBlockCount,
-  daemonStarted,
+  getCurrentBlockCount,
+  getDaemonStarted,
 }) => (
   <div className="get-started-view">
     <Header getStarted headerTitleOverview="Starting DCRD..." />
     <div className="get-started-content">
       <div className="get-started-content-title">
-        {daemonStarted ?
-          (currentBlockCount !== null ?
+        {getDaemonStarted ?
+          (getCurrentBlockCount == null ?
             <div className="get-started-content-title-text">Daemon started, waiting for rpc to start</div> :
-            <div className="get-started-content-title-text">{currentBlockCount}</div>
+            <div className="get-started-content-title-text">Blockchain syncing:  Current height - {getCurrentBlockCount}</div>
           ) :
         <div className="get-started-content-title-text">Starting daemon...</div>
         }
