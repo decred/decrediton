@@ -12,14 +12,12 @@ import FinalStartUp from "./FinalStartUp";
 const GetStartedPage = ({
   startStepIndex,
   versionInvalidError,
-  daemonStarted,
-  daemonSynced,
-  walletReady,
+  isPrepared,
   ...props
 }) => {
   const Step =
-    (!daemonStarted || !daemonSynced || !walletReady)
-     ? DaemonLoading :
+    (!isPrepared)
+      ? DaemonLoading :
     (startStepIndex <= 1)
       ? CheckWalletState :
     (startStepIndex === 2)

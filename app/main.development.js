@@ -228,10 +228,6 @@ ipcMain.on("start-wallet", (event, arg) => {
 });
 
 ipcMain.on("check-daemon", (event) => {
-  if (daemonReady) {
-    event.returnValue = true;
-    return;
-  }
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrctlCfg(), "getblockcount"];
   var dcrctlExe = path.join(execPath, "bin", "dcrctl");

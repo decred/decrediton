@@ -1,10 +1,14 @@
 import { compose, reduce, get, or, and, eq, createSelectorEager as createSelector} from "./fp";
 
-export const daemonStarted = get(["daemon", "daemonStarted"]);
-export const currentBlockCount = get(["daemon", "currentBlockCount"]);
-export const daemonSynced = get(["daemon", "daemonSynced"]);
-export const walletReady = get(["daemon", "walletReady"]);
-
+export const getDaemonStarted = get(["daemon", "daemonStarted"]);
+export const getCurrentBlockCount = get(["daemon", "currentBlockCount"]);
+export const getDaemonSynced = get(["daemon", "daemonSynced"]);
+export const getWalletReady = get(["daemon", "walletReady"]);
+export const isPrepared = and(
+  getDaemonStarted,
+  getDaemonSynced,
+  getWalletReady,
+);
 const START_STEP_OPEN = 2;
 const START_STEP_RPC1 = 3;
 const START_STEP_RPC2 = 4;
