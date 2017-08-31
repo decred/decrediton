@@ -237,3 +237,19 @@ export const tempSettings = get(["settings", "tempSettings"]);
 export const settingsChanged = get(["settings", "settingsChanged"]);
 export const changePassphraseError = get(["control", "changePassphraseError"]);
 export const changePassphraseSuccess = get(["control", "changePassphraseSuccess"]);
+
+const getStakeInfoResponse = get(["grpc", "getStakeInfoResponse"]);
+
+export const ticketPoolSize = compose(r => r ? r.getPoolSize() : 0, getStakeInfoResponse);
+export const votedTicketsCount = compose(r => r ? r.getVoted() : 0, getStakeInfoResponse);
+export const allMempoolTicketsCount = compose(
+  r => r ? r.getAllMempoolTix() : 0, getStakeInfoResponse
+);
+export const missedTicketsCount = compose(r => r ? r.getMissed() : 0, getStakeInfoResponse);
+export const ownMempoolTicketsCount = compose(
+  r => r ? r.getOwnMempoolTix() : 0, getStakeInfoResponse
+);
+export const revokedTicketsCount = compose(r => r ? r.getRevoked() : 0, getStakeInfoResponse);
+export const immatureTicketsCount = compose(r => r ? r.getImmature() : 0, getStakeInfoResponse);
+export const expiredTicketsCount = compose(r => r ? r.getExpired() : 0, getStakeInfoResponse);
+export const liveTicketsCount = compose(r => r ? r.getLive() : 0, getStakeInfoResponse);
