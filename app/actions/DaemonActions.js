@@ -77,8 +77,8 @@ export function syncDaemon(rpcuser, rpcpassword, host, cert) {
         var blocksLeft = neededBlocks - updateCurrentBlockCount;
         var blocksDiff = updateCurrentBlockCount - currentBlockCount;
         if (blocksDiff !== 0 && currentBlockCount > 0) {
-          var minutesLeft = blocksLeft / blocksDiff * 10 / 60;
-          updateTimeLeftEstimate = minutesLeft + " estimated minutes remaining";
+          var minutesLeft = Math.round(blocksLeft / blocksDiff * 10 / 60);
+          updateTimeLeftEstimate = "Estimated time remaining: " + minutesLeft + " minutes" ;
         }
         dispatch({currentBlockCount: parseInt(updateCurrentBlockCount), timeLeftEstimate: updateTimeLeftEstimate, type: DAEMONSYNCING});
       }
