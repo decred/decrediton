@@ -73,6 +73,8 @@ var initialState = {
     walletReady: false,
     currentBlockCount: null,
     timeLeftEstimate: "Estimated time remaining: ---",
+    timeStart: 0,
+    blockStart: 0,
   },
   version: {
     // RequiredVersion

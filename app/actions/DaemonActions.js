@@ -6,7 +6,8 @@ export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONSTOPPED = "DAEMONSTOPPED";
 export const DAEMONSTOPPED_ERROR = "DAEMONSTOPPED_ERROR";
-export const DAEMONSYNCING = "DAEMONSYNCING";
+export const DAEMONSYNCING_START = "DAEMONSYNCING_START";
+export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
 
@@ -24,9 +25,7 @@ export function startDaemon(rpcuser, rpcpassword) {
     var args = {rpcuser: rpcuser, rpcpassword: rpcpassword};
     var dcrdPid = ipcRenderer.sendSync("start-daemon", args);
     if (dcrdPid) {
-      var time = new Date();
-      console.log(time.getTime());
-      dispatch({pid: dcrdPid, timeStarted: time.getTime(), type: DAEMONSTARTED});
+      dispatch({pid: dcrdPid,  type: DAEMONSTARTED});
       dispatch(syncDaemon(rpcuser, rpcpassword));
     } else {
       dispatch({type: DAEMONSTARTED_ERROR});
@@ -62,7 +61,7 @@ export function syncDaemon(rpcuser, rpcpassword, host, cert) {
     var updateCurrentBlockCount = 0;
     while (true){
       // check to see if user skipped;
-      const {daemonSynced, currentBlockCount, timeLeftEstimate} = getState().daemon;
+      const {daemonSynced, currentBlockCount, timeStart, blockStart} = getState().daemon;
       if (daemonSynced) {
         break;
       }
@@ -72,15 +71,19 @@ export function syncDaemon(rpcuser, rpcpassword, host, cert) {
         dispatch(startWallet());
         break;
       }
-      var updateTimeLeftEstimate = timeLeftEstimate;
       if (updateCurrentBlockCount !== 0) {
         var blocksLeft = neededBlocks - updateCurrentBlockCount;
-        var blocksDiff = updateCurrentBlockCount - currentBlockCount;
-        if (blocksDiff !== 0 && currentBlockCount > 0) {
-          var minutesLeft = Math.round(blocksLeft / blocksDiff * 10 / 60);
-          updateTimeLeftEstimate = "Estimated time remaining: " + minutesLeft + " minutes" ;
+        var blocksDiff = updateCurrentBlockCount - blockStart;
+        if (timeStart !== 0 && blockStart !== 0) {
+          var currentTime = new Date();
+          var timeSyncing = (currentTime - timeStart) / 1000;
+          var minutesLeft = Math.round(blocksLeft / blocksDiff * timeSyncing / 60);
+          var updateTimeLeftEstimate = "Estimated time remaining: " + minutesLeft + " minutes" ;
+          dispatch({currentBlockCount: parseInt(updateCurrentBlockCount), timeLeftEstimate: updateTimeLeftEstimate, type: DAEMONSYNCING_PROGRESS});
+        } else if (updateCurrentBlockCount !== 0) {
+          var time = new Date();
+          dispatch({currentBlockCount: parseInt(updateCurrentBlockCount), timeStart: time, blockStart: parseInt(updateCurrentBlockCount), type: DAEMONSYNCING_START});
         }
-        dispatch({currentBlockCount: parseInt(updateCurrentBlockCount), timeLeftEstimate: updateTimeLeftEstimate, type: DAEMONSYNCING});
       }
       await sleep(10000);
     }
