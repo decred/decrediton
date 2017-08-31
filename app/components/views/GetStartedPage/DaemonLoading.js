@@ -9,6 +9,7 @@ const DaemonLoading = ({
   getCurrentBlockCount,
   getDaemonStarted,
   getNeededBlocks,
+  getEstimatedTimeLeft,
   doSkipDaemonSync,
 }) => (
   <div className="get-started-view">
@@ -32,7 +33,8 @@ const DaemonLoading = ({
           max={getNeededBlocks}
           value={getCurrentBlockCount}
         />
-        {getCurrentBlockCount}/{getNeededBlocks}
+        <div className="get-started-fetch-headers-message">{getCurrentBlockCount}/{getNeededBlocks}</div>
+        <div className="get-started-fetch-headers-message">{getEstimatedTimeLeft}</div>
         <KeyBlueButton
           className="get-started-rpc-retry-button"
           onClick={doSkipDaemonSync}

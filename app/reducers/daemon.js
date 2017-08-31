@@ -14,6 +14,7 @@ export default function version(state = {}, action) {
   case DAEMONSYNCING:
     return {...state,
       currentBlockCount: action.currentBlockCount,
+      timeLeftEstimate: action.timeLeftEstimate,
     };
   case DAEMONSYNCED:
     return {...state,

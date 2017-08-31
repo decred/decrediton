@@ -24,7 +24,9 @@ export function startDaemon(rpcuser, rpcpassword) {
     var args = {rpcuser: rpcuser, rpcpassword: rpcpassword};
     var dcrdPid = ipcRenderer.sendSync("start-daemon", args);
     if (dcrdPid) {
-      dispatch({pid: dcrdPid, type: DAEMONSTARTED});
+      var time = new Date();
+      console.log(time.getTime());
+      dispatch({pid: dcrdPid, timeStarted: time.getTime(), type: DAEMONSTARTED});
       dispatch(syncDaemon(rpcuser, rpcpassword));
     } else {
       dispatch({type: DAEMONSTARTED_ERROR});
@@ -57,22 +59,28 @@ export function syncDaemon(rpcuser, rpcpassword, host, cert) {
   return async (dispatch, getState) => {
     const {neededBlocks} = getState().walletLoader;
     var args = {rpcuser: rpcuser, rpcpassword: rpcpassword, host: host, cert: cert};
-    var currentBlockCount = 0;
+    var updateCurrentBlockCount = 0;
     while (true){
       // check to see if user skipped;
-      const {daemonSynced} = getState().daemon;
+      const {daemonSynced, currentBlockCount, timeLeftEstimate} = getState().daemon;
       if (daemonSynced) {
         break;
       }
-      currentBlockCount = ipcRenderer.sendSync("check-daemon", args);
-      console.log(currentBlockCount);
-      if (currentBlockCount >= neededBlocks) {
+      updateCurrentBlockCount = ipcRenderer.sendSync("check-daemon", args);
+      if (updateCurrentBlockCount >= neededBlocks) {
         dispatch({type: DAEMONSYNCED});
         dispatch(startWallet());
         break;
       }
-      if (currentBlockCount !== 0) {
-        dispatch({currentBlockCount: parseInt(currentBlockCount), type: DAEMONSYNCING});
+      var updateTimeLeftEstimate = timeLeftEstimate;
+      if (updateCurrentBlockCount !== 0) {
+        var blocksLeft = neededBlocks - updateCurrentBlockCount;
+        var blocksDiff = updateCurrentBlockCount - currentBlockCount;
+        if (blocksDiff !== 0 && currentBlockCount > 0) {
+          var minutesLeft = blocksLeft / blocksDiff * 10 / 60;
+          updateTimeLeftEstimate = minutesLeft + " estimated minutes remaining";
+        }
+        dispatch({currentBlockCount: parseInt(updateCurrentBlockCount), timeLeftEstimate: updateTimeLeftEstimate, type: DAEMONSYNCING});
       }
       await sleep(10000);
     }
