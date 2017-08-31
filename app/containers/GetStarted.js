@@ -12,7 +12,14 @@ import {
   getLoaderError,
   startupError,
   confirmNewSeed,
-  hasExistingWallet
+  hasExistingWallet,
+  getDaemonStarted,
+  getDaemonSynced,
+  getCurrentBlockCount,
+  getNeededBlocks,
+  getWalletReady,
+  getEstimatedTimeLeft,
+  isPrepared,
 } from "../selectors";
 import {
   createWalletGoBackNewSeed as onReturnToNewSeed,
@@ -22,12 +29,16 @@ import {
   startRpcRequestFunc as onRetryStartRPC,
   versionCheckAction as doVersionCheck
 } from "../actions/WalletLoaderActions";
+import {
+  startDaemon as doStartDaemon,
+  skipDaemonSync as doSkipDaemonSync,
+} from "../actions/DaemonActions";
 import GetStartedPage from "../components/views/GetStartedPage";
 
 @autobind
 class GetStarted extends Component {
   componentDidMount() {
-    this.props.doVersionCheck();
+    this.props.doStartDaemon();
   }
 
   render() {
@@ -48,7 +59,14 @@ const mapStateToProps = selectorMap({
   startupError,
   confirmNewSeed,
   hasExistingWallet,
-  isProcessing
+  isProcessing,
+  getDaemonStarted,
+  getDaemonSynced,
+  getCurrentBlockCount,
+  getNeededBlocks,
+  getWalletReady,
+  getEstimatedTimeLeft,
+  isPrepared,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -57,7 +75,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onDiscoverAddresses,
   onOpenWallet,
   onRetryStartRPC,
-  doVersionCheck
+  doVersionCheck,
+  doStartDaemon,
+  doSkipDaemonSync,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(GetStarted);

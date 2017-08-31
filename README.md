@@ -82,36 +82,24 @@ cd
 Adjust the following steps for the paths you want to use.
 
 ``` bash
+go get -u -v github.com/decred/dcrd
+go get -u -v github.com/decred/dcrwallet
+go get -u -v github.com/Masterminds/glide
+cd $GOPATH/src/github.com/decred/dcrd
+glide i
+go install . ./cmd/dcrctl/
+cd ../dcrwallet
+glide i
+go install
 mkdir code
 cd code
 git clone https://github.com/decred/decrediton.git
 cd decrediton
 npm install
-```
-
-Start dcrd and dcrwallet with the following options.  Note, you must
-NOT already have rpc certs from dcrwallet so it is easiest to start
-with an emtpy $HOME/.dcrwallet
-
-```bash
-dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=$HOME/.dcrd/rpc.cert
-```
-
-```bash
-dcrwallet --testnet --rpcconnect=127.0.0.1:19119 --grpclisten=127.0.0.1:19121 --noinitialload --tlscurve=P-256 --onetimetlskey --appdata=~/.config/decrediton
-```
-
-On macOS you should use:
-```bash
-dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=$HOME/Library/Application\ Support/Dcrd/rpc.cert
-```
-```bash
-dcrwallet --testnet --rpcconnect=127.0.0.1:19119 --grpclisten=127.0.0.1:19121 --noinitialload --tlscurve=P-256 --onetimetlskey --appdata=$HOME/Library/Application\ Support/decrediton
-```
-
-Start decrediton
-
-```bash
+mkdir app/bin/
+cp `which dcrd` app/bin/
+cp `which dcrctl` app/bin/
+cp `which dcrwallet` app/bin/
 npm run dev
 ```
 

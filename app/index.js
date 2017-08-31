@@ -38,12 +38,12 @@ if (network == "testnet") {
   startDate = new Date("03/15/2017");
   totalDays = (today.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24;
   blocksPerDay = 720;
-  neededBlocks = totalDays * blocksPerDay * (0.95);
+  neededBlocks = Math.round(totalDays * blocksPerDay * (0.95));
 } else {
   startDate = new Date("02/08/2016");
   totalDays = (today.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24;
   blocksPerDay = 288;
-  neededBlocks = totalDays * blocksPerDay * (0.95);
+  neededBlocks = Math.round(totalDays * blocksPerDay * (0.95));
   grpcport = cfg.get("wallet_port");
 }
 
@@ -66,6 +66,15 @@ var initialState = {
     currentStakePoolConfigError: null,
     currentStakePoolConfigSuccessMessage: "",
     activeStakePoolConfig: foundStakePoolConfig,
+  },
+  daemon: {
+    daemonStarted: false,
+    daemonSynced: false,
+    walletReady: false,
+    currentBlockCount: null,
+    timeLeftEstimate: "Estimated time remaining: ---",
+    timeStart: 0,
+    blockStart: 0,
   },
   version: {
     // RequiredVersion
