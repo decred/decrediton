@@ -230,3 +230,9 @@ export const isSendingTransaction = bool(or(
 ));
 
 export const isConstructingTransaction = bool(constructTxRequestAttempt);
+
+
+export const tempSettings = get(["settings", "tempSettings"]);
+export const settingsChanged = get(["settings", "settingsChanged"]);
+export const changePassphraseError = get(["control", "changePassphraseError"]);
+export const changePassphraseSuccess = get(["control", "changePassphraseSuccess"]);
