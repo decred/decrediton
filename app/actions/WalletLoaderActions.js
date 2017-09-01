@@ -51,7 +51,7 @@ export function walletExistRequest() {
       } else {
         dispatch({response: response, type: WALLETEXIST_SUCCESS });
         if (response.getExists()) {
-          setTimeout(() => dispatch(openWalletAttempt("public", false)), 1000);
+          dispatch(openWalletAttempt("public", false));
         }
         else {
           dispatch({ type: CREATEWALLET_NEWSEED_INPUT });
