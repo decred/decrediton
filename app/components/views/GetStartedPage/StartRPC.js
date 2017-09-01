@@ -4,9 +4,7 @@ import ShowError from "../../ShowError";
 import KeyBlueButton from "../../KeyBlueButton";
 import "../../../style/GetStarted.less";
 
-export const StartRPCHeader = ({
-  startupError
-}) => (
+export const StartRPCHeader = () => (
   <Header getStarted
     headerTitleOverview="Setting up Decrediton"
     headerMetaOverview="Starting RPC and subscribing block notifications" />

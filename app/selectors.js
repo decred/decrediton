@@ -4,7 +4,6 @@ import {
 } from "./fp";
 import { reverseHash } from "./helpers/byteActions";
 
-const START_STEP_CHECK = 1;
 const START_STEP_OPEN = 2;
 const START_STEP_RPC1 = 3;
 const START_STEP_RPC2 = 4;
