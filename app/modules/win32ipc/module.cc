@@ -1,5 +1,6 @@
 #include <node.h>
 #include <v8.h>
+#include <cstring>
 
 #include "pipe_wrapper.h"
 
@@ -20,9 +21,9 @@ void CreatePipe(v8::FunctionCallbackInfo<v8::Value> const& args) {
     pipe_wrapper::pipe_direction direction;
 
     v8::String::Utf8Value const arg0(args[0]->ToString());
-    if (arg0.length() == 2 && !strcmp("in", *arg0)) {
+    if (arg0.length() == 2 && !std::strcmp("in", *arg0)) {
         direction = pipe_wrapper::pipe_direction::IN;
-    } else if (arg0.length() == 3 && !strcmp("out", *arg0)) {
+    } else if (arg0.length() == 3 && !std::strcmp("out", *arg0)) {
         direction = pipe_wrapper::pipe_direction::OUT;
     } else {
         isolate->ThrowException(v8::Exception::Error(
