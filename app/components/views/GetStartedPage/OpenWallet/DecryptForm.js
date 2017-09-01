@@ -18,48 +18,43 @@ const OpenWalletDecryptFormHeader = ({
 );
 
 const OpenWalletDecryptFormBody = ({
-  isProcessing,
+  isInputRequest,
   publicPassPhrase,
   hasAttemptedOpen,
   onSetPublicPassPhrase,
   onOpenWallet
-}) => {
-  return isProcessing ? null : (
+}) => (
+  isInputRequest ? (
     <div className="get-started-view">
-      <div className="get-started-open-wallet-instructions">
-        Please enter the information below to create your dcrwallet.
-      </div>
-      <div className="get-started-content-new-seed">
-        <div className="get-started-content-new-seed-create-button">
-          <div className="get-started-content-confirm-wallet-create-input-left-padding">Decrypt Wallet:</div>
-          <div className="get-started-content-confirm-wallet-create-input-right-padding">
-            <div className="get-started-input-form">
-              <form className="get-started-input-form">
-                <input
-                  className="get-started-input-private-password"
-                  type="password"
-                  placeholder="Private Passphrase"
-                  value={publicPassPhrase}
-                  onChange={(e) => onSetPublicPassPhrase(e.target.value)}/>
-              </form>
-            </div>
+      <div className="get-started-form-ct">
+        <div className="get-started-open-wallet-instructions">
+          This wallet is encrypted, please enter the public passphrase to decrypt it.
+        </div>
+        <div className="get-started-field-ct">
+          <div className="get-started-label">Decrypt Wallet:</div>
+          <div className="get-started-field">
+            <form className="get-started-input-form">
+              <input
+                className="get-started-input-private-password"
+                type="password"
+                placeholder="Public Passphrase"
+                value={publicPassPhrase}
+                onChange={(e) => onSetPublicPassPhrase(e.target.value)}/>
+            </form>
           </div>
           {(hasAttemptedOpen && !publicPassPhrase) ? (
             <div className="get-started-priv-pass-error">*Please enter your public passphrase</div>
           ) : null}
-          <div className="get-started-content-new-seed-create-button">
-            <div className="get-started-content-confirm-wallet-create-input-left-padding"></div>
-            <div className="get-started-content-confirm-wallet-create-input-right-padding">
-              <KeyBlueButton
-                className="get-started-view-button-key-blue-wallet-new-seed"
-                onClick={onOpenWallet}
-              >Open Wallet</KeyBlueButton>
+          <div className="get-started-field-ct">
+            <div className="get-started-label"></div>
+            <div className="get-started-field">
+              <KeyBlueButton onClick={onOpenWallet}>Open Wallet</KeyBlueButton>
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  ) : null
+);
 
 export { OpenWalletDecryptFormHeader, OpenWalletDecryptFormBody };

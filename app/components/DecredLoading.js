@@ -11,7 +11,9 @@ class DecredLoading extends React.Component {
 
   render() {
     return (
-      <div className="loading" style={{display: this.props.hidden ? "none" : "block"}}>
+      <div
+        className={"loading" + (this.props.className ? (" " + this.props.className) : "")}
+        style={{display: this.props.hidden ? "none" : "block"}}>
         <div className="logo"/>
       </div>
     );

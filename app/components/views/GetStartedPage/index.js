@@ -1,5 +1,4 @@
 import React from "react";
-import ShowError from "../../ShowError";
 import Page from "./Page";
 import { CheckWalletStateHeader, CheckWalletStateBody } from "./CheckWalletState";
 import { OpenWalletHeader, OpenWalletBody } from "./OpenWallet";
@@ -10,11 +9,10 @@ import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 
 const GetStartedPage = ({
   startStepIndex,
-  versionInvalidError,
   ...props
 }) => {
   let Header, Body;
-  switch(startStepIndex) {
+  switch(startStepIndex || 0) {
   case 0:
   case 1:
     Header = CheckWalletStateHeader;
@@ -42,9 +40,7 @@ const GetStartedPage = ({
     Body = FinalStartUpBody;
   }
 
-  return versionInvalidError
-    ? <ShowError error={versionInvalidError} />
-    : <Page Header={Header} Body={Body} {...props} />;
+  return <Page Header={Header} Body={Body} {...props} />;
 };
 
 export default GetStartedPage;

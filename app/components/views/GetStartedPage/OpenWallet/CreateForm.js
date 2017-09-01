@@ -7,7 +7,7 @@ import "../../../../style/GetStarted.less";
 
 const OpenWalletCreateFormHeader = ({
   startupError,
-  isProcessing,
+  isInputRequest,
   confirmNewSeed,
   onReturnToNewSeed,
   onToggleNewExisting
@@ -21,7 +21,7 @@ const OpenWalletCreateFormHeader = ({
     headerMetaOverview={(
       <div className="get-started-create-wallet-header">
         <div className="get-started-subheader">Create a wallet</div>
-        {isProcessing ? null : (
+        {isInputRequest ? (
           <div className="get-started-button-toolbar">
             {confirmNewSeed ? (
               <SlateGrayButton
@@ -37,16 +37,16 @@ const OpenWalletCreateFormHeader = ({
               />
             )}
           </div>
-        )}
+        ) : null}
       </div>
     )}
   />
 );
 
 const OpenWalletCreateFormBody = ({
-  isProcessing
-}) => {
-  return isProcessing ? null : <CreateWalletForm />;
-};
+  isInputRequest
+}) => (
+  isInputRequest ? <CreateWalletForm /> : null
+);
 
 export { OpenWalletCreateFormHeader, OpenWalletCreateFormBody };

@@ -4,18 +4,18 @@ import ShowError from "../../ShowError";
 import "../../../style/GetStarted.less";
 
 export const CheckWalletStateHeader = () => (
-  <Header getStarted headerTitleOverview="Setting up Decrediton" headerMetaOverview="Checking wallet state" />
+  <Header
+    getStarted
+    headerTitleOverview="Setting up Decrediton"
+    headerMetaOverview="Checking wallet state" />
 );
 
 export const CheckWalletStateBody = ({
-  isProcessing,
-  getLoaderError,
-  getVersionServiceError
+  startupError
 }) => (
-  isProcessing ? null : (
-    <div className="get-started-content-nest">
-      <ShowError error={getLoaderError} />
-      <ShowError error={getVersionServiceError}/>
+  startupError ? (
+    <div className="get-started-content-new-seed">
+      <ShowError className="get-started-error" error={startupError} />
     </div>
-  )
+  ) : null
 );

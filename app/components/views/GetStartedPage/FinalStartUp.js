@@ -6,7 +6,7 @@ const FinalStartUpHeader = () => (
   <Header
     getStarted
     headerTitleOverview="Setting up Decrediton"
-    headerMetaOverview="Final start up" />
+    headerMetaOverview="Finalizing setup" />
 );
 
 const FinalStartUpBody = () => (

@@ -51,31 +51,34 @@ export function walletExistRequest() {
       } else {
         dispatch({response: response, type: WALLETEXIST_SUCCESS });
         if (response.getExists()) {
-          setTimeout(() => dispatch(openWalletAttempt("public")), 1000);
+          setTimeout(() => dispatch(openWalletAttempt("public", false)), 1000);
+        }
+        else {
+          dispatch({ type: CREATEWALLET_NEWSEED_INPUT });
         }
       }
     });
   };
 }
 
-export const CREATEWALLET_NEWSEED_CONFIRM = "CREATEWALLET_NEWSEED_CONFIRM";
-export const CREATEWALLET_NEWSEED_BACK = "CREATEWALLET_NEWSEED_BACK";
-export const CREATEWALLET_EXISTINGSEED = "CREATEWALLET_EXISTINGSEED";
-export const CREATEWALLET_NEWSEED = "CREATEWALLET_NEWSEED";
+export const CREATEWALLET_NEWSEED_CONFIRM_INPUT = "CREATEWALLET_NEWSEED_CONFIRM_INPUT";
+export const CREATEWALLET_NEWSEED_BACK_INPUT = "CREATEWALLET_NEWSEED_BACK_INPUT";
+export const CREATEWALLET_EXISTINGSEED_INPUT = "CREATEWALLET_EXISTINGSEED_INPUT";
+export const CREATEWALLET_NEWSEED_INPUT = "CREATEWALLET_NEWSEED_INPUT";
 
 export function createWalletConfirmNewSeed(){
-  return{ type: CREATEWALLET_NEWSEED_CONFIRM };
+  return{ type: CREATEWALLET_NEWSEED_CONFIRM_INPUT };
 }
 export function createWalletGoBackNewSeed(){
-  return{ type: CREATEWALLET_NEWSEED_BACK };
+  return{ type: CREATEWALLET_NEWSEED_BACK_INPUT };
 }
 
 export function createWalletExistingToggle(existing) {
   return (dispatch) => {
     if (existing){
-      dispatch({ type: CREATEWALLET_EXISTINGSEED });
+      dispatch({ type: CREATEWALLET_EXISTINGSEED_INPUT });
     }   else {
-      setTimeout(()=>dispatch({ type: CREATEWALLET_NEWSEED }), 50);
+      setTimeout(()=>dispatch({ type: CREATEWALLET_NEWSEED_INPUT }), 50);
     }
   };
 }
@@ -105,11 +108,13 @@ export function createWalletRequest(pubPass, privPass, seed, existing) {
   };
 }
 
+export const OPENWALLET_INPUT = "OPENWALLET_INPUT";
+export const OPENWALLET_FAILED_INPUT = "OPENWALLET_FAILED_INPUT";
 export const OPENWALLET_ATTEMPT = "OPENWALLET_ATTEMPT";
 export const OPENWALLET_FAILED = "OPENWALLET_FAILED";
 export const OPENWALLET_SUCCESS = "OPENWALLET_SUCCESS";
 
-export function openWalletAttempt(pubPass) {
+export function openWalletAttempt(pubPass, retryAttempt) {
   var request = new OpenWalletRequest();
   request.setPublicPassphrase(new Uint8Array(Buffer.from(pubPass)));
   return (dispatch, getState) => {
@@ -123,6 +128,16 @@ export function openWalletAttempt(pubPass) {
             dispatch(startRpcRequestFunc());
             return;
           }
+          else if (error.message.includes("invalid passphrase") && error.message.includes("public key")) {
+            if (retryAttempt) {
+              dispatch({ error, type: OPENWALLET_FAILED_INPUT });
+            }
+            else {
+              dispatch({ type: OPENWALLET_INPUT });
+            }
+            return;
+          }
+
           dispatch({ error, type: OPENWALLET_FAILED });
         } else {
           dispatch({ type: OPENWALLET_SUCCESS });
@@ -222,6 +237,7 @@ function startRpcAction(request, second) {
 }
 
 export const DISCOVERADDRESS_INPUT = "DISCOVERADDRESS_INPUT";
+export const DISCOVERADDRESS_FAILED_INPUT = "DISCOVERADDRESS_FAILED_INPUT";
 export const DISCOVERADDRESS_ATTEMPT = "DISCOVERADDRESS_ATTEMPT";
 export const DISCOVERADDRESS_FAILED = "DISCOVERADDRESS_FAILED";
 export const DISCOVERADDRESS_SUCCESS = "DISCOVERADDRESS_SUCCESS";
@@ -238,8 +254,13 @@ export function discoverAddressAttempt(discoverAccts, privPass) {
     loader.discoverAddresses(request,
         function(error) {
           if (error) {
+            if (error.message.includes("invalid passphrase") && error.message.includes("private key")) {
+              dispatch({ error, type: DISCOVERADDRESS_FAILED_INPUT });
+              return;
+            }
             dispatch({ error, type: DISCOVERADDRESS_FAILED });
-          } else {
+          }
+          else {
             dispatch({response: {}, type: DISCOVERADDRESS_SUCCESS});
             const { subscribeBlockNtfnsResponse } = getState().walletLoader;
             if ( subscribeBlockNtfnsResponse !== null ) {

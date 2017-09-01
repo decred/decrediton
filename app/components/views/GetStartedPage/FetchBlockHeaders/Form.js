@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "../../Header";
-import "../../../style/GetStarted.less";
+import Header from "../../../Header";
+import "../../../../style/GetStarted.less";
 
-const FetchBlockHeadersHeader = ({
+const FetchBlockHeadersFormHeader = ({
   startupError
 }) => (
   <Header
@@ -14,14 +14,15 @@ const FetchBlockHeadersHeader = ({
       : <div key="fetchHeadersError" ></div>} />
 );
 
-const FetchBlockHeadersBody = ({
-  isProcessing
+const FetchBlockHeadersFormBody = ({
+  isProcessing,
+  showLongWaitMessage
 }) => {
-  return isProcessing ? (
+  return isProcessing && showLongWaitMessage ? (
     <div className="get-started-fetch-headers-message">
       If you are syncing the blockchain for the first time, this may take a while.
     </div>
    ) : null;
 };
 
-export { FetchBlockHeadersHeader, FetchBlockHeadersBody };
+export { FetchBlockHeadersFormHeader, FetchBlockHeadersFormBody };

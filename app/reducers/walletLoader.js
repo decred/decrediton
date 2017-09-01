@@ -1,13 +1,13 @@
 import { CREATEWALLET_ATTEMPT, CREATEWALLET_FAILED, CREATEWALLET_SUCCESS } from "../actions/WalletLoaderActions";
 import { LOADER_ATTEMPT, LOADER_FAILED, LOADER_SUCCESS } from "../actions/WalletLoaderActions";
 import { WALLETEXIST_ATTEMPT, WALLETEXIST_FAILED, WALLETEXIST_SUCCESS } from "../actions/WalletLoaderActions";
-import { OPENWALLET_ATTEMPT, OPENWALLET_FAILED, OPENWALLET_SUCCESS } from "../actions/WalletLoaderActions";
+import { OPENWALLET_INPUT, OPENWALLET_FAILED_INPUT, OPENWALLET_ATTEMPT, OPENWALLET_FAILED, OPENWALLET_SUCCESS } from "../actions/WalletLoaderActions";
 import { CLOSEWALLET_ATTEMPT, CLOSEWALLET_FAILED, CLOSEWALLET_SUCCESS } from "../actions/WalletLoaderActions";
 import { STARTRPC_ATTEMPT, STARTRPC_FAILED, STARTRPC_SUCCESS, STARTRPC_RETRY } from "../actions/WalletLoaderActions";
-import { DISCOVERADDRESS_INPUT, DISCOVERADDRESS_ATTEMPT, DISCOVERADDRESS_FAILED, DISCOVERADDRESS_SUCCESS } from "../actions/WalletLoaderActions";
+import { DISCOVERADDRESS_INPUT, DISCOVERADDRESS_FAILED_INPUT, DISCOVERADDRESS_ATTEMPT, DISCOVERADDRESS_FAILED, DISCOVERADDRESS_SUCCESS } from "../actions/WalletLoaderActions";
 import { SUBSCRIBEBLOCKNTFNS_ATTEMPT, SUBSCRIBEBLOCKNTFNS_FAILED, SUBSCRIBEBLOCKNTFNS_SUCCESS } from "../actions/WalletLoaderActions";
 import { FETCHHEADERS_ATTEMPT, FETCHHEADERS_FAILED, FETCHHEADERS_PROGRESS, FETCHHEADERS_SUCCESS } from "../actions/WalletLoaderActions";
-import { CREATEWALLET_EXISTINGSEED, CREATEWALLET_NEWSEED, CREATEWALLET_NEWSEED_CONFIRM, CREATEWALLET_NEWSEED_BACK } from "../actions/WalletLoaderActions";
+import { CREATEWALLET_EXISTINGSEED_INPUT, CREATEWALLET_NEWSEED_INPUT, CREATEWALLET_NEWSEED_CONFIRM_INPUT, CREATEWALLET_NEWSEED_BACK_INPUT } from "../actions/WalletLoaderActions";
 
 export default function walletLoader(state = {}, action) {
   switch (action.type) {
@@ -45,24 +45,29 @@ export default function walletLoader(state = {}, action) {
       walletExistResponse: action.response,
       stepIndex: 2,
     };
-  case CREATEWALLET_NEWSEED_CONFIRM:
+  case CREATEWALLET_NEWSEED_CONFIRM_INPUT:
     return {...state,
+      createWalletInputRequest: true,
       confirmNewSeed: true,
     };
-  case  CREATEWALLET_NEWSEED_BACK:
+  case  CREATEWALLET_NEWSEED_BACK_INPUT:
     return {...state,
+      createWalletInputRequest: true,
       confirmNewSeed: false,
     };
-  case CREATEWALLET_EXISTINGSEED:
+  case CREATEWALLET_EXISTINGSEED_INPUT:
     return {...state,
+      createWalletInputRequest: true,
       createWalletExisting: true,
     };
-  case CREATEWALLET_NEWSEED:
+  case CREATEWALLET_NEWSEED_INPUT:
     return {...state,
+      createWalletInputRequest: true,
       createWalletExisting: false,
     };
   case CREATEWALLET_ATTEMPT:
     return {...state,
+      createWalletInputRequest: false,
       walletCreateExisting: action.existing,
       walletCreateRequestAttempt: true,
     };
@@ -78,8 +83,19 @@ export default function walletLoader(state = {}, action) {
       walletCreateResponse: action.response,
       stepIndex: 3,
     };
+  case OPENWALLET_INPUT:
+    return {...state,
+      openWalletInputRequest: true,
+    };
+  case OPENWALLET_FAILED_INPUT:
+    return {...state,
+      walletOpenError: String(action.error),
+      openWalletInputRequest: true,
+    };
   case OPENWALLET_ATTEMPT:
     return {...state,
+      walletOpenError: false,
+      openWalletInputRequest: false,
       walletOpenRequestAttempt: true,
     };
   case OPENWALLET_FAILED:
@@ -135,9 +151,15 @@ export default function walletLoader(state = {}, action) {
     return {...state,
       discoverAddressInputRequest: true,
     };
+  case DISCOVERADDRESS_FAILED_INPUT:
+    return {...state,
+      discoverAddressInputRequest: true,
+      discoverAddressError: String(action.error),
+    };
   case DISCOVERADDRESS_ATTEMPT:
     return {...state,
       discoverAddressInputRequest: false,
+      discoverAddressError: null,
       discoverAddressRequestAttempt: true,
     };
   case DISCOVERADDRESS_FAILED:

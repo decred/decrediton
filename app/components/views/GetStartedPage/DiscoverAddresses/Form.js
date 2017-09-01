@@ -17,12 +17,12 @@ const DiscoverAddressesFormHeader = ({
 
 const DiscoverAddressesFormBody = ({
   passPhrase,
-  isProcessing,
+  isInputRequest,
   hasAttemptedDiscover,
   onSetPassPhrase,
   onDiscoverAddresses
-}) => {
-  return isProcessing ? null : (
+}) => (
+  isInputRequest ? (
     <div className="get-started-content-new-seed">
       <div className="get-started-content-new-seed-create-button">
         <div className="get-started-content-confirm-wallet-create-input-left-padding">Scan for used accounts:</div>
@@ -52,7 +52,7 @@ const DiscoverAddressesFormBody = ({
         </div>
       </div>
     </div>
-  );
-};
+  ) : null
+);
 
 export { DiscoverAddressesFormHeader, DiscoverAddressesFormBody };

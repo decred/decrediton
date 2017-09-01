@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../../Header";
+import ShowError from "../../ShowError";
 import KeyBlueButton from "../../KeyBlueButton";
 import "../../../style/GetStarted.less";
 
@@ -8,21 +9,17 @@ export const StartRPCHeader = ({
 }) => (
   <Header getStarted
     headerTitleOverview="Setting up Decrediton"
-    headerMetaOverview="Starting RPC and subscribing block notifications"
-    headerTop={startupError
-      ? <div key="startRpcError" className="get-started-view-notification-error">{startupError}</div>
-      : <div key="startRpcError" ></div>}
-  />
+    headerMetaOverview="Starting RPC and subscribing block notifications" />
 );
 
 export const StartRPCBody = ({
-  isProcessing,
+  startupError,
   onRetryStartRPC
-}) => {
-  return isProcessing ? null : (
-    <div className="get-started-content-nest">
-      <div className="get-started-rpc-retry-message">Connection to dcrd failed, please try and reconnect.</div>
+}) => (
+  startupError ? (
+    <div className="get-started-content-new-seed">
+      <ShowError className="get-started-error" error="Connection to dcrd failed, please try and reconnect." />
       <KeyBlueButton className="get-started-rpc-retry-button" onClick={onRetryStartRPC}>Retry</KeyBlueButton>
     </div>
-  );
-};
+  ) : null
+);

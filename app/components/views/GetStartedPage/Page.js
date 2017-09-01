@@ -9,7 +9,7 @@ const Page = ({ Header, Body, ...props }) => (
     <div className="get-started-view">
       <Header {...props} />
       <div className="get-started-content">
-        <DecredLoading hidden={!props.isProcessing} />
+        <DecredLoading hidden={!props.isProcessing} className="get-started-loading" />
         <Body {...props} />
       </div>
     </div>

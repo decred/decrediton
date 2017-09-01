@@ -56,7 +56,7 @@ class OpenWalletBody extends Component {
     const { publicPassPhrase, hasAttemptedOpen } = this.state;
     const { hasExistingWallet } = this.props;
     const {
-      setPublicPassPhrase,
+      onSetPublicPassPhrase,
       onOpenWallet
     } = this;
 
@@ -66,7 +66,7 @@ class OpenWalletBody extends Component {
           ...this.props,
           publicPassPhrase,
           hasAttemptedOpen,
-          setPublicPassPhrase,
+          onSetPublicPassPhrase,
           onOpenWallet
         }}
       />
@@ -92,7 +92,7 @@ class OpenWalletBody extends Component {
       return this.setState({ hasAttemptedOpen: true });
     }
 
-    this.props.onOpenWallet(this.state.publicPassPhrase);
+    this.props.onOpenWallet(this.state.publicPassPhrase, true);
     this.resetState();
   }
 
