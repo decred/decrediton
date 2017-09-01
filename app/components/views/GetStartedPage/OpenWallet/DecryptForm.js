@@ -27,7 +27,7 @@ const OpenWalletDecryptFormBody = ({
   isInputRequest ? (
     <div className="get-started-view">
       <div className="get-started-form-ct">
-        <div className="get-started-open-wallet-instructions">
+        <div className="get-started-content-instructions">
           This wallet is encrypted, please enter the public passphrase to decrypt it.
         </div>
         <div className="get-started-field-ct">

@@ -24,8 +24,12 @@ const DiscoverAddressesFormBody = ({
 }) => (
   isInputRequest ? (
     <div className="get-started-content-new-seed">
+      <div className="get-started-content-instructions">
+        <p>Enter the passphrase you just created to scan the blockchain for additional accounts you may have previously created with your wallet.</p>
+        <p>Your account names aren't stored on the blockchain, so you will have to rename them after setting up Decrediton.</p>
+      </div>
       <div className="get-started-content-new-seed-create-button">
-        <div className="get-started-content-confirm-wallet-create-input-left-padding">Scan for used accounts:</div>
+        <div className="get-started-content-confirm-wallet-create-input-left-padding">Scan for accounts:</div>
         <div className="get-started-content-confirm-wallet-create-input-right-padding">
           <div className="get-started-input-form">
             <form className="get-started-input-form">
