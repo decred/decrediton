@@ -1,57 +1,62 @@
 import React from "react";
 import Header from "../../../Header";
-import DecredLoading from "../../../DecredLoading";
 import KeyBlueButton from "../../../KeyBlueButton";
 import "../../../../style/GetStarted.less";
 
-const DiscoverAddressesForm = ({
-  startupError,
+const DiscoverAddressesFormHeader = ({
+  startupError
+}) => (
+  <Header getStarted
+    headerTitleOverview="Setting up Decrediton"
+    headerMetaOverview="Discovering addresses"
+    headerTop={startupError
+      ? <div key="pubError" className="get-started-view-notification-error">{startupError}</div>
+      : <div key="pubError" ></div>}
+  />
+);
+
+const DiscoverAddressesFormBody = ({
   passPhrase,
-  isProcessing,
+  isInputRequest,
   hasAttemptedDiscover,
   onSetPassPhrase,
   onDiscoverAddresses
 }) => (
-  <div className="get-started-view">
-    <Header getStarted
-      headerTitleOverview="Discovering addresses"
-      headerMetaOverview="Please enter the information below to load your dcrwallet"
-      headerTop={startupError
-        ? <div key="pubError" className="get-started-view-notification-error">{startupError}</div>
-        : <div key="pubError" ></div>}
-    />
+  isInputRequest ? (
     <div className="get-started-content-new-seed">
-      {isProcessing ? <DecredLoading/> : (
-        <div className="get-started-content-new-seed-create-button">
-          <div className="get-started-content-confirm-wallet-create-input-left-padding">Scan for used accounts:</div>
-          <div className="get-started-content-confirm-wallet-create-input-right-padding">
-            <div className="get-started-input-form">
-              <form className="get-started-input-form">
-                <input
-                  className="get-started-input-private-password"
-                  type="password"
-                  placeholder="Private Passphrase"
-                  value={passPhrase}
-                  onChange={(e) => onSetPassPhrase(e.target.value)}/>
-              </form>
-            </div>
-          </div>
-          {(hasAttemptedDiscover && !passPhrase) ? (
-            <div className="get-started-priv-pass-error">*Please enter your private passphrase</div>
-          ) : null}
-          <div className="get-started-content-new-seed-create-button">
-            <div className="get-started-content-confirm-wallet-create-input-left-padding"></div>
-            <div className="get-started-content-confirm-wallet-create-input-right-padding">
-              <KeyBlueButton
-                className="get-started-view-button-key-blue-wallet-new-seed"
-                onClick={onDiscoverAddresses}
-              >Scan</KeyBlueButton>
-            </div>
+      <div className="get-started-content-instructions">
+        <p>Enter the passphrase you just created to scan the blockchain for additional accounts you may have previously created with your wallet.</p>
+        <p>Your account names aren't stored on the blockchain, so you will have to rename them after setting up Decrediton.</p>
+      </div>
+      <div className="get-started-content-new-seed-create-button">
+        <div className="get-started-content-confirm-wallet-create-input-left-padding">Scan for accounts:</div>
+        <div className="get-started-content-confirm-wallet-create-input-right-padding">
+          <div className="get-started-input-form">
+            <form className="get-started-input-form">
+              <input
+                className="get-started-input-private-password"
+                type="password"
+                placeholder="Private Passphrase"
+                value={passPhrase}
+                onChange={(e) => onSetPassPhrase(e.target.value)}/>
+            </form>
           </div>
         </div>
-      )}
+        {(hasAttemptedDiscover && !passPhrase) ? (
+          <div className="get-started-priv-pass-error">*Please enter your private passphrase</div>
+        ) : null}
+        <div className="get-started-content-new-seed-create-button">
+          <div className="get-started-content-confirm-wallet-create-input-left-padding"></div>
+          <div className="get-started-content-confirm-wallet-create-input-right-padding">
+            <KeyBlueButton
+              className="get-started-view-button-key-blue-wallet-new-seed"
+              onClick={onDiscoverAddresses}
+            >Scan</KeyBlueButton>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  ) : null
 );
 
-export default DiscoverAddressesForm;
+export { DiscoverAddressesFormHeader, DiscoverAddressesFormBody };

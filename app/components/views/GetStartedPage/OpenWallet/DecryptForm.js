@@ -1,57 +1,60 @@
 import React from "react";
 import Header from "../../../Header";
-import DecredLoading from "../../../DecredLoading";
 import KeyBlueButton from "../../../KeyBlueButton";
 import "../../../../style/GetStarted.less";
 
-const OpenWalletDecryptForm = ({
-  startupError,
-  isProcessing,
+const OpenWalletDecryptFormHeader = ({
+  startupError
+}) => (
+  <Header getStarted
+    headerTitleOverview="Setting up Decrediton"
+    headerMetaOverview={(
+      <div className="get-started-subheader">Opening wallet</div>
+    )}
+    headerTop={startupError
+      ? <div key="walletOpenError" className="get-started-view-notification-error">{startupError}</div>
+      : <div key="walletOpenError" ></div>}
+  />
+);
+
+const OpenWalletDecryptFormBody = ({
+  isInputRequest,
   publicPassPhrase,
   hasAttemptedOpen,
   onSetPublicPassPhrase,
   onOpenWallet
 }) => (
-  <div className="get-started-view">
-    <Header getStarted
-      headerTitleOverview="Opening Wallet"
-      headerMetaOverview="Please enter the information below to  create your dcrwallet"
-      headerTop={startupError
-        ? <div key="walletOpenError" className="get-started-view-notification-error">{startupError}</div>
-        : <div key="walletOpenError" ></div>}
-    />
-    <div className="get-started-content-new-seed">
-      {isProcessing ? <DecredLoading/> : (
-        <div className="get-started-content-new-seed-create-button">
-          <div className="get-started-content-confirm-wallet-create-input-left-padding">Decrypt Wallet:</div>
-          <div className="get-started-content-confirm-wallet-create-input-right-padding">
-            <div className="get-started-input-form">
-              <form className="get-started-input-form">
-                <input
-                  className="get-started-input-private-password"
-                  type="password"
-                  placeholder="Private Passphrase"
-                  value={publicPassPhrase}
-                  onChange={(e) => onSetPublicPassPhrase(e.target.value)}/>
-              </form>
-            </div>
+  isInputRequest ? (
+    <div className="get-started-view">
+      <div className="get-started-form-ct">
+        <div className="get-started-content-instructions">
+          This wallet is encrypted, please enter the public passphrase to decrypt it.
+        </div>
+        <div className="get-started-field-ct">
+          <div className="get-started-label">Decrypt Wallet:</div>
+          <div className="get-started-field">
+            <form className="get-started-input-form">
+              <input
+                className="get-started-input-private-password"
+                type="password"
+                placeholder="Public Passphrase"
+                value={publicPassPhrase}
+                onChange={(e) => onSetPublicPassPhrase(e.target.value)}/>
+            </form>
           </div>
           {(hasAttemptedOpen && !publicPassPhrase) ? (
             <div className="get-started-priv-pass-error">*Please enter your public passphrase</div>
           ) : null}
-          <div className="get-started-content-new-seed-create-button">
-            <div className="get-started-content-confirm-wallet-create-input-left-padding"></div>
-            <div className="get-started-content-confirm-wallet-create-input-right-padding">
-              <KeyBlueButton
-                className="get-started-view-button-key-blue-wallet-new-seed"
-                onClick={onOpenWallet}
-              >Open Wallet</KeyBlueButton>
+          <div className="get-started-field-ct">
+            <div className="get-started-label"></div>
+            <div className="get-started-field">
+              <KeyBlueButton onClick={onOpenWallet}>Open Wallet</KeyBlueButton>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
-  </div>
+  ) : null
 );
 
-export default OpenWalletDecryptForm;
+export { OpenWalletDecryptFormHeader, OpenWalletDecryptFormBody };

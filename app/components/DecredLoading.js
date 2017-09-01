@@ -1,15 +1,19 @@
 // @flow
 import React from "react";
+import { PropTypes } from "prop-types";
 import "../style/Loading.less";
 
 class DecredLoading extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+
+  static propTypes = {
+    hidden: PropTypes.bool
+  };
 
   render() {
     return (
-      <div className="loading">
+      <div
+        className={"loading" + (this.props.className ? (" " + this.props.className) : "")}
+        style={{display: this.props.hidden ? "none" : "block"}}>
         <div className="logo"/>
       </div>
     );

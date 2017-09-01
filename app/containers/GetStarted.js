@@ -6,10 +6,8 @@ import { connect } from "react-redux";
 import { selectorMap } from "../fp";
 import {
   startStepIndex,
+  isInputRequest,
   isStartupProcessing as isProcessing,
-  getVersionServiceError,
-  versionInvalidError,
-  getLoaderError,
   startupError,
   confirmNewSeed,
   hasExistingWallet
@@ -42,9 +40,7 @@ class GetStarted extends Component {
 
 const mapStateToProps = selectorMap({
   startStepIndex,
-  getVersionServiceError,
-  versionInvalidError,
-  getLoaderError,
+  isInputRequest,
   startupError,
   confirmNewSeed,
   hasExistingWallet,

@@ -1,9 +1,18 @@
 @import (reference) "./main.less";
 
 
-.get-started-toggle {
+.get-started-create-wallet-header {
+    position: relative;
+    height: 100%;
+}
+.get-started-button-toolbar {
     font-family: Source Sans Pro, sans-serif;
-    float: right;
+    position: absolute;
+    right: 50px;
+    bottom: 20px;
+}
+.get-started-button-toolbar:after {
+    .clearfloat-mixin;
 }
 
 .get-started-body {
@@ -29,9 +38,21 @@
 }
 
 .get-started-content {
+    /*
     overflow: auto;
     height: 556px;
     padding: 54px 60px 54px 80px;
+    */
+}
+
+.get-started-error {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.get-started-loading {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .get-started-content-title {
@@ -45,9 +66,44 @@
     font-size: 27px;
 }
 
+.get-started-form-ct {
+    margin: 50px 80px 0 80px;
+}
+
+.get-started-field-ct {
+    height: 80px;
+    float: left;
+}
+
+.get-started-label {
+    width: 187px;
+    margin-right: 20px;
+    float: left;
+    color: #E7EAED;
+    font-size: 19px;
+    text-align: right;
+    letter-spacing: -0.1px;
+    padding-top: 23px;
+}
+
+.get-started-field {
+    margin-bottom: 5px;
+    width: 300px;
+    padding-top: 11px;
+    float: left;
+    clear: right;
+}
+
 .get-started-fetch-headers-message {
     font-size: 25px;
     color: #c4cbd2;
+    text-align: center;
+}
+
+.get-started-content-instructions {
+    color: #E7EAED;
+    font-size: 18px;
+    margin-bottom: 30px;
 }
 
 .get-started-content-nest {
@@ -99,7 +155,6 @@
 .get-started-rpc-retry-button {
     width: 100px;
     margin-top: 10px;
-    float: right;
 }
 
 .get-started-header-meta-currency {
@@ -108,7 +163,6 @@
 
 .get-started-view-button-go-back {
     margin-right: 80px;
-    margin-bottom: 20px;
 }
 
 .get-started-view-button-key-blue-wallet-new-seed {

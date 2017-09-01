@@ -1,36 +1,46 @@
 import React from "react";
-import ShowError from "../../ShowError";
 import Page from "./Page";
-import CheckWalletState from "./CheckWalletState";
-import OpenWallet from "./OpenWallet";
-import StartRPC from "./StartRPC";
-import DiscoverAddresses from "./DiscoverAddresses";
-import FetchBlockHeaders from "./FetchBlockHeaders";
-import FinalStartUp from "./FinalStartUp";
+import { CheckWalletStateHeader, CheckWalletStateBody } from "./CheckWalletState";
+import { OpenWalletHeader, OpenWalletBody } from "./OpenWallet";
+import { StartRPCHeader, StartRPCBody } from "./StartRPC";
+import { DiscoverAddressesHeader, DiscoverAddressesBody } from "./DiscoverAddresses";
+import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHeaders";
+import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 
 const GetStartedPage = ({
   startStepIndex,
-  versionInvalidError,
   ...props
 }) => {
-  const Step =
-    (startStepIndex <= 1)
-      ? CheckWalletState :
-    (startStepIndex === 2)
-      ? OpenWallet :
-    (startStepIndex === 3 || startStepIndex === 4)
-      ? StartRPC :
-    (startStepIndex === 5)
-      ? DiscoverAddresses :
-    (startStepIndex === 6)
-      ? FetchBlockHeaders :
-    (startStepIndex >= 7)
-      ? FinalStartUp
-      : () => <div>something went wrong</div>;
+  let Header, Body;
+  switch(startStepIndex || 0) {
+  case 0:
+  case 1:
+    Header = CheckWalletStateHeader;
+    Body = CheckWalletStateBody;
+    break;
+  case 2:
+    Header = OpenWalletHeader;
+    Body = OpenWalletBody;
+    break;
+  case 3:
+  case 4:
+    Header = StartRPCHeader;
+    Body = StartRPCBody;
+    break;
+  case 5:
+    Header = DiscoverAddressesHeader;
+    Body = DiscoverAddressesBody;
+    break;
+  case 6:
+    Header = FetchBlockHeadersHeader;
+    Body = FetchBlockHeadersBody;
+    break;
+  default:
+    Header = FinalStartUpHeader;
+    Body = FinalStartUpBody;
+  }
 
-  return versionInvalidError
-    ? <ShowError error={versionInvalidError} />
-    : <Page><Step {...props} /></Page>;
+  return <Page Header={Header} Body={Body} {...props} />;
 };
 
 export default GetStartedPage;
