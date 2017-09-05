@@ -7,9 +7,9 @@ import SideBar from "../../SideBar";
 import Balance from "../../Balance";
 import Header from "../../Header";
 import KeyBlueButton from "../../KeyBlueButton";
-import { SendStyles } from "../ViewStyles";
 import PassphraseModal from "../../PassphraseModal";
 import OutputRow from "./OutputRow";
+import "../../../style/SendPage.less";
 import "../../../style/MiscComponents.less";
 
 const SendPage = ({
@@ -38,39 +38,39 @@ const SendPage = ({
   getAmountError,
   ...props
 }) => (
-  <div style={SendStyles.body}>
+  <div className="send-body">
     <SideBar />
-    <div style={SendStyles.view}>
+    <div className="send-view">
       <Header
-        headerTitleOverview={<div style={SendStyles.headerTitleSend}>Send Funds</div>}
+        headerTitleOverview={<div className="header-title-send">Send Funds</div>}
         headerMetaOverview={isTestNet ? (
-          <div style={SendStyles.headerMetaSend}>Testnet Decred addresses always begin with letter T contain 26-35 alphanumeric characters e.g. <span style={SendStyles.headerMetaSpanSend}>TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>.</div>
+          <div className="header-meta-send">Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters (e.g. <span className="send-styles.header-meta-span-send">TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>).</div>
         ) : (
-          <div style={SendStyles.headerMetaSend}>Mainnet Decred addresses always begin with letter D contain 26-35 alphanumeric characters e.g. <span style={SendStyles.headerMetaSpanSend}>DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>.</div>
+          <div className="header-meta-send">Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters (e.g. <span className="send-styles.header-meta-span-send">DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>).</div>
         )}
         headerTop={[
           publishTransactionError ? (
-            <div key="pubError" style={SendStyles.viewNotificationError}>
-              <div style={SendStyles.sendAddressDeleteIconHeader} onClick={onClearPublishTxError}/>
+            <div key="pubError" className="send-view-notification-error">
+              <div className="send-address-delete-icon-header" onClick={onClearPublishTxError}/>
               {publishTransactionError}
             </div>
           ) : null,
           signTransactionError ? (
-            <div key="signError"  style={SendStyles.viewNotificationError}>
-              <div style={SendStyles.sendAddressDeleteIconHeader} onClick={onClearSignTxError}/>
+            <div key="signError" className="send-view-notification-error">
+              <div className="send-address-delete-icon-header" onClick={onClearSignTxError}/>
               {signTransactionError}
             </div>
           ) : null,
           publishedTransactionHash ? (
-            <div key="pubSuccess"  style={SendStyles.viewNotificationSuccess}>
-              <div style={SendStyles.sendAddressDeleteIconHeader} onClick={onClearPublishTxSuccess}/>
+            <div key="pubSuccess" className="send-view-notification-success">
+              <div className="send-address-delete-icon-header" onClick={onClearPublishTxSuccess}/>
               Published Tx: {publishedTransactionHash}
             </div>
           ) : null
         ]}
       />
       {(isSendingTransaction) ? (
-        <div style={SendStyles.content}><DecredLoading/></div>
+        <div className="send-content"><DecredLoading/></div>
       ) : (
         <div>
           <PassphraseModal
@@ -80,11 +80,11 @@ const SendPage = ({
             heading={"Confirm Transaction"}
             description={<div>Please confirm your transaction for <Balance amount={totalSpent}/></div>}
           />
-          <div style={!isShowingConfirm ? SendStyles.content : SendStyles.contentBlur}>
-            <div style={SendStyles.flexHeight}>
-              <div style={SendStyles.sendSelectAccountArea}>
-                <div style={SendStyles.sendLabel}>From:</div>
-                <div style={SendStyles.sendSelectAccountInput}>
+          <div className={!isShowingConfirm ? "send-content" : "send-content-blur"}>
+            <div className="send-flex-height">
+              <div className="send-select-account-area">
+                <div className="send-label">From:</div>
+                <div className="send-select-account-input">
                   <Select
                     clearable={false}
                     style={{zIndex:"9"}}
@@ -97,7 +97,7 @@ const SendPage = ({
                   />
                 </div>
                 <Link
-                  className="accounts-button-icon"
+                  className="send-accounts-button-icon"
                   data-place="bottom"
                   data-type="info"
                   data-effect="solid"
@@ -115,9 +115,9 @@ const SendPage = ({
                 ))}
               </div>
             </div>
-            <div style={SendStyles.sendButtonArea}>
+            <div className="send-button-area">
               <KeyBlueButton
-                style={SendStyles.contentSend}
+                className="content-send"
                 disabled={!isValid}
                 onClick={onShowConfirm}
               >Send</KeyBlueButton>
@@ -126,22 +126,22 @@ const SendPage = ({
                   {constructTxError}
                 </span>
               ) : null}
-              <div style={SendStyles.estimationAreaSend}>
-                <div style={SendStyles.totalAmountSend}>
-                  <div style={SendStyles.totalAmountSendText}>Total amount sending:</div>
-                  <div style={SendStyles.totalAmountSendAmount}>
+              <div className="estimation-area-send">
+                <div className="total-amount-send">
+                  <div className="total-amount-send-text">Total amount sending:</div>
+                  <div className="total-amount-send-amount">
                     <Balance amount={totalSpent}/>
                   </div>
                 </div>
-                <div style={SendStyles.totalAmountSend}>
-                  <div style={SendStyles.totalAmountSendText}>Estimated Fee:</div>
-                  <div style={SendStyles.totalAmountSendAmount}>
+                <div className="total-amount-send">
+                  <div className="total-amount-send-text">Estimated Fee:</div>
+                  <div className="total-amount-send-amount">
                     <Balance amount={estimatedFee} />
                   </div>
                 </div>
-                <div style={SendStyles.totalAmountSend}>
-                  <div style={SendStyles.totalAmountSendText}>Estimated Size:</div>
-                  <div style={SendStyles.totalAmountSendAmount}>{estimatedSignedSize} bytes</div>
+                <div className="total-amount-send">
+                  <div className="total-amount-send-text">Estimated Size:</div>
+                  <div className="total-amount-send-amount">{estimatedSignedSize} bytes</div>
                 </div>
               </div>
             </div>

@@ -1,0 +1,586 @@
+@import (reference) "./main.less";
+
+@add-icon: url(../components/icons/add.svg);
+@delete-icon: url(../components/icons/delete.svg);
+@minus-big-icon: url(../components/icons/minus-big.svg);
+@wallet-gray-icon: url(../components/icons/wallet-gray.svg);
+@arrow-down-mid-blue: url(../components/icons/arrow-down-mid-blue.svg);
+@arrow-down-key-blue: url(../components/icons/arrow-down-key-blue.svg);
+@minus-big-icon: url(../components/icons/minus-big.svg);
+@minus-big-icon: url(../components/icons/minus-big.svg);
+@minus-big-icon: url(../components/icons/minus-big.svg);
+
+
+.send-body {
+  position: fixed;
+  left: 0px;
+  top: 50%;
+  right: 0px;
+  display: block;
+  overflow: hidden;
+  width: 1178px;
+  height: 770px;
+  margin-top: -385px;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #FFF;
+}
+
+.send-view {
+  width: 880px;
+  height: 100%;
+  float: right;
+  background-color: #f3f6f6;
+}
+
+.send-view-notification-error {
+  margin-top: 20px;
+  display: inline-block;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 7px 20px 7px 7px;
+  border-radius: 5px;
+  background-color: #fd714b;
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, .2);
+  color: #fff;
+  font-size: 13px;
+  text-align: center;
+}
+
+.send-view-notification-success {
+  margin-top: 20px;
+  display: inline-block;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 7px 20px 7px 7px;
+  border-radius: 5px;
+  background-color: #41bf53;
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, .2);
+  color: #fff;
+  font-size: 13px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.send-address-delete-icon-header {
+  width: 26px;
+  height: 19px;
+  float: left;
+  background-image: @delete-icon;
+  background-position: 50% 50%;
+  background-size: 8px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.send-address-delete-icon-header:hover {
+  opacity: 0.85;
+}
+
+.send-transition1 {
+  transition: all 100ms ease-in-out;
+}
+
+.header-title-send {
+  height: 54px;
+  line-height: 49px;
+  color: #596d81;
+  font-size: 27px;
+  text-transform: capitalize;
+  padding-left: 50px;
+  background-image: @minus-big-icon;
+  background-position: 0px 50%;
+  background-size: 30px;
+  background-repeat: no-repeat;
+}
+
+.header-meta-send {
+  height: 54px;
+  width: 480px;
+  padding-left: 50px;
+  color: #0c1e3e;
+  font-size: 14px;
+}
+
+.send-content {
+  overflow: auto;
+  height: 556px;
+  padding: 54px 60px 54px 80px;
+}
+
+.send-content-blur {
+  filter: blur(6px);
+  overflow: auto;
+  height: 556px;
+  padding: 54px 60px 54px 80px;
+}
+
+.send-send {
+  padding-top: 1px;
+  background-color: #fff;
+}
+
+.send-delete-address {
+  width: 625px;
+  height: 54px;
+  padding-top: 10px;
+  padding-left: 116px;
+  float: left;
+}
+
+.send-select-account-area {
+  width: 100%;
+  height: 62px;
+  margin-top: 10px;
+}
+
+.send-select-account-input {
+  width: 290px;
+  float: left;
+}
+
+.send-row {
+  width: 100%;
+  height: 47px;
+  float: left;
+}
+
+.send-output-row {
+  width: 100%;
+  height: 27px;
+  float: left;
+}
+
+.send-output-error-row {
+  width: 100%;
+  height: 12px;
+  float: left;
+  font-size: 11px;
+}
+
+.send-output-address-error {
+  color: red;
+  float: left;
+  width: 290px;
+  padding-left: 110px;
+}
+
+.send-output-amount-error {
+  color: red;
+  float: right;
+  width: 180px;
+  text-align: right;
+  padding-right: 59px;
+}
+
+.send-output-priv-pass-error {
+  color: red;
+  float: left;
+  width: 223px;
+  padding-right: 11px;
+}
+
+.send-label {
+  width: 65px;
+  float: left;
+  padding-right: 15px;
+  padding-top: 5px;
+  font-size: 20px;
+  text-align: right;
+}
+
+.send-address {
+  width : 300px;
+  float: left;
+}
+
+.send-amount {
+  width : 300px;
+  float: left;
+}
+
+.send-prefix-send {
+  width: 100px;
+  padding-right: 15px;
+  float: left;
+  height: 100%;
+  padding-top: 5px;
+  font-size: 19px;
+  text-align: right;
+  text-transform: capitalize;
+}
+
+.send-prefix-confirm {
+  width: 230px;
+  padding-right: 15px;
+  float: left;
+  height: 100%;
+  padding-top: 5px;
+  font-size: 19px;
+  text-align: right;
+  text-transform: capitalize;
+}
+
+.send-from-address {
+  width: 100%;
+  height: 54px;
+  padding-top: 10px;
+  float: left;
+}
+
+.send-from-address-wallet-icon {
+  width: 60px;
+  height: 34px;
+  float: left;
+  background-image: @wallet-gray-icon;
+  background-position: 50% 50%;
+  background-size: 20px;
+  background-repeat: no-repeat;
+}
+
+.send-to-address {
+  width: 100%;
+  height: 54px;
+  padding-top: 10px;
+  float: left;
+}
+
+.send-address-hash-to {
+  width: 96%;
+  height: 100%;
+  padding: 9px 0px 4px 10px;
+  border-style: none;
+  border-bottom: 1px solid;
+  color: #2971ff;
+  font-size: 13px;
+  cursor: text;
+}
+.send-address-hash-to:focus {
+  color: #2971ff;
+}
+
+.send-address-hash-block {
+  width: 299px;
+  height: 34px;
+  float: left;
+  padding-left: 81px;
+  font-size: 13px;
+}
+
+.send-address-sign-priv-pass {
+  width: 299px;
+  height: 34px;
+  float: left;
+  font-size: 13px;
+}
+
+.send-address-hash-block-confirm {
+  position: relative;
+  overflow: hidden;
+  width: 300px;
+  height: 34px;
+  padding-top: 7px;
+  float: left;
+  font-size: 17px;
+}
+
+.send-amount-label {
+  float: left;
+  width: 26%;
+  padding-left: 10px;
+  padding-top: 5px;
+  font-size: 20px;
+}
+
+.select-accounts-send {
+  width: 300px;
+  position: relative;
+  z-index: 3;
+  overflow: visible;
+  height: 34px;
+  min-width: 300px;
+  float: left;
+  border-bottom: 1px solid #2971ff;
+  background-color: #fff;
+  background-image: @arrow-down-mid-blue;
+  background-position: 100% 50%;
+  background-size: 10px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.select-accounts-send:hover {
+  background-image: @arrow-down-key-blue;
+  background-size: 10px;
+}
+
+.send-select-account {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  color: #0c1e3e;
+  font-size: 19px;
+}
+.send-select-account:hover {
+  height: auto;
+}
+
+.send-select-account-nfirst {
+  overflow: hidden;
+  height: 34px;
+  margin-right: 20px;
+  padding-top: 5px;
+  padding-left: 10px;
+  color: #2971ff;
+  font-size: 19px;
+}
+
+.send-select-account-ntext-send {
+  width: 200%;
+  padding-top: 1px;
+  font-size: 13px;
+}
+
+.send-select-account-namount {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  margin-right: 20px;
+  padding-top: 7px;
+  padding-left: 40px;
+  background-image: linear-gradient(90deg, transparent, #fff 28%);
+  font-family: Inconsolata, monospace;
+  color: #596d81;
+  font-size: 11px;
+  font-weight: 400;
+  text-align: right;
+}
+
+.send-select-account-namount-bold {
+  font-family: Inconsolata, monospace;
+  font-weight: 700;
+}
+
+.send-select-account-nnest-send {
+  font-size: 13px;
+  overflow: auto;
+  height: auto;
+  max-height: 413px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #a9b4bf;
+  background-color: #fff;
+}
+
+.send-select-account-ngradient {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  width: 40px;
+  height: 100%;
+  background-image: linear-gradient(90deg, transparent, #fff 75%);
+}
+
+.send-select-account-n {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  padding-left: 10px;
+  float: left;
+}
+.send-select-account-n:hover {
+  color: #2971ff;
+}
+
+.send-select-account-ntext {
+  width: 200%;
+}
+
+.send-input-form {
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 44px;
+}
+
+.send-address-wallet-icon {
+  width: 39px;
+  height: 34px;
+  float: left;
+  background-image: @add-icon;
+  background-position: 50% 50%;
+  background-size: 19px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.send-address-wallet-icon:hover {
+  opacity: 0.85;
+}
+
+.send-address-amount {
+  display: block;
+  height: 34px;
+  float: right;
+}
+
+.send-address-input-amount {
+  width: 68%;
+  float: left;
+  height: 100%;
+  padding: 9px 10px 4px 10px;
+  border-style: none;
+  border-bottom: 1px solid;
+  color: rgb(41, 113, 255);
+  font-size: 13px;
+  text-align: right;
+  cursor: text;
+}
+
+.send-address-amount-sum-and-currency {
+  position: relative;
+  overflow: hidden;
+  width: 70%;
+  height: 100%;
+  float: right;
+  color: #0c1e3e;
+  text-align: right;
+}
+
+.send-address-amount-sum-gradient {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: inline-block;
+  width: 37px;
+  height: 100%;
+  padding-top: 7px;
+  padding-right: 10px;
+  background-color: #fff;
+  font-family: Inconsolata, monospace;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.send-address-amount-sum {
+  display: block;
+  width: 100px;
+  height: 100%;
+  border-style: none;
+  font-family: Inconsolata, monospace;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.send-to-address-amount-sum-number-format-small {
+  font-size: 13px;
+}
+
+.send-address-delete-icon {
+  width: 39px;
+  height: 34px;
+  float: left;
+  background-image: @delete-icon;
+  background-position: 50% 50%;
+  background-size: 8px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.send-address-delete-icon:hover {
+  opacity: 0.85;
+}
+
+.send-address-amount-sum-number-format-small {
+  font-size: 13px;
+}
+
+.content-send {
+  float: left;
+  margin-top: 20px;
+}
+
+.content-send-section {
+  display: block;
+  width: 91%;
+  height: 22px;
+  padding-left: 30px;
+  float: left;
+  color: #0c1e3e;
+}
+
+.content-send-section-checkbox-text {
+  height: 100%;
+  padding-top: 1px;
+  padding-left: 5px;
+  float: left;
+  text-transform: capitalize;
+}
+
+.content-send-section-amount {
+  width: 160px;
+  height: 100%;
+  padding-top: 1px;
+  padding-right: 30px;
+  float: right;
+  font-family: Inconsolata, monospace;
+  font-size: 13px;
+  text-align: right;
+}
+
+.content-send-section-description {
+  height: 100%;
+  padding-top: 1px;
+  padding-right: 20px;
+  float: right;
+  color: #596d81;
+  font-size: 13px;
+}
+
+.content-send-section-amount-currency {
+  padding-left: 5px;
+}
+
+.send-flex-height {
+  padding-top: 1px;
+  background-color: #fff;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.send-loading {
+  margin-top: 110px;
+  margin-left: 268px;
+}
+
+.total-amount-send {
+  float: right;
+  width: 275px;
+  padding-right: 10px;
+  font-size: 15px;
+  text-align: right;
+}
+
+.total-amount-send-text {
+  float: left;
+  padding-bottom: 5px;
+}
+
+.estimation-area-send {
+  padding-top:10px;
+  float: right;
+  height: 100%;
+  width:300px;
+}
+
+.send-total-amount-send-amount {
+  float: right;
+  font-family: Inconsolata, monospace;
+}
+
+.send-button-area {
+  width: 100%;
+  height: 100px;
+}
