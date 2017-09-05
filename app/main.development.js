@@ -5,6 +5,9 @@ import os from "os";
 import parseArgs from "minimist";
 import winston from "winston";
 
+import util from "util";
+import addon from "./modules/win32ipc/build/Release/win32ipc";
+
 let menu;
 let template;
 let mainWindow = null;
