@@ -5,8 +5,8 @@ import os from "os";
 import parseArgs from "minimist";
 import winston from "winston";
 
-import util from "util";
-import addon from "./modules/win32ipc/build/Release/win32ipc";
+if (os.platform() == "win32") {
+}
 
 let menu;
 let template;
@@ -183,7 +183,12 @@ const launchDCRD = () => {
   var args = ["--configfile="+dcrdCfg()];
 
   var dcrdExe = path.join(process.resourcesPath, "bin", "dcrd");
+
   if (os.platform() == "win32") {
+    const util = require("util");
+    const addon = require("./modules/win32ipc/build/Release/win32ipc");
+    var pipe = addon.createPipe("out");
+    args.push(util.format("--piperx=%d", pipe.readEnd));
     dcrdExe = dcrdExe + ".exe";
   }
 
@@ -226,6 +231,10 @@ const launchDCRWallet = () => {
 
   var dcrwExe = path.join(process.resourcesPath, "bin", "dcrwallet");
   if (os.platform() == "win32") {
+    const util = require("util");
+    const addon = require("./modules/win32ipc/build/Release/win32ipc");
+    var pipe = addon.createPipe("out");
+    args.push(util.format("--piperx=%d", pipe.readEnd));
     dcrwExe = dcrwExe + ".exe";
   }
 
