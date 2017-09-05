@@ -182,11 +182,15 @@ const launchDCRD = () => {
   var dcrdExe = path.join(process.resourcesPath, "bin", "dcrd");
 
   if (os.platform() == "win32") {
-    const util = require("util");
-    const addon = require("./modules/win32ipc/build/Release/win32ipc");
-    var pipe = addon.createPipe("out");
-    args.push(util.format("--piperx=%d", pipe.readEnd));
-    dcrdExe = dcrdExe + ".exe";
+    try {
+      const util = require("util");
+      const addon = require("./modules/win32ipc/build/Release/win32ipc");
+      var pipe = addon.createPipe("out");
+      args.push(util.format("--piperx=%d", pipe.readEnd));
+      dcrdExe = dcrdExe + ".exe";
+    } catch(e) {
+      logger.log("error", "can't find proper module to launch dcrd: " + e)
+    }
   }
 
   if (os.platform() != "win32") {
@@ -228,13 +232,16 @@ const launchDCRWallet = () => {
 
   var dcrwExe = path.join(process.resourcesPath, "bin", "dcrwallet");
   if (os.platform() == "win32") {
-    const util = require("util");
-    const addon = require("./modules/win32ipc/build/Release/win32ipc");
-    var pipe = addon.createPipe("out");
-    args.push(util.format("--piperx=%d", pipe.readEnd));
-    dcrwExe = dcrwExe + ".exe";
+    try {
+      const util = require("util");
+      const addon = require("./modules/win32ipc/build/Release/win32ipc");
+      var pipe = addon.createPipe("out");
+      args.push(util.format("--piperx=%d", pipe.readEnd));
+      dcrwExe = dcrwExe + ".exe";
+    }catch (e) {
+      logger.log("error", "can't find proper module to launch dcrwallet: " + e);
+    }
   }
-
   if (os.platform() != "win32") {
     // The spawn() below opens a pipe on fd 4
     // No luck getting this to work on win7.
