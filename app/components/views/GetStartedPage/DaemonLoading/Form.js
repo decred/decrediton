@@ -31,13 +31,17 @@ const DaemonLoadingFormBody = ({
       <div className="get-started-content-instructions">
         <div className="get-started-content-instructions-blockchain-syncing">
           <span className="left">If you are starting decrediton for the first time, this may take a while.</span>
-          <span className="right">
+          <span className="right"
+            data-html={true}
+            data-tip="<b>ATTENTION:</b> <br> You may skip the initial blockchain download, but be aware that<br>
+                      all transactions may not be found until the chain is fully synced.<br>
+                      As a result, your balance may be incorrect until fully synced.">
             <KeyBlueButton
-            className="get-started-view-button-key-blue-wallet-new-seed"
-            onClick={doSkipDaemonSync}
-            data-tip="ATTENTION: You may skip the initial blockchain download, but be aware that all transactions will not be found until the chain is fully synced.  As a result, your balance may be incorrect until fully synced."
+              className="get-started-view-button-key-blue-wallet-new-seed"
+              onClick={doSkipDaemonSync}
             >Skip sync</KeyBlueButton>
           </span>
+          <ReactToolTip place="left" type="info" effect="solid"/>
         </div>
         <LinearProgress
           mode="determinate"
@@ -50,7 +54,6 @@ const DaemonLoadingFormBody = ({
         </p>
       </div> :
       <div></div> }
-      <ReactToolTip type="info" effect="solid"/>
     </div>
   );
 
