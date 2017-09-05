@@ -1,6 +1,6 @@
 import React from "react";
 import compose from "lodash/fp/compose";
-import { SendStyles } from "../ViewStyles";
+import "../../../style/SendPage.less";
 
 const SendOutputRow = ({
   index,
@@ -17,15 +17,15 @@ const SendOutputRow = ({
   getOnChangeOutputDestination,
   getOnChangeOutputAmount
 }) => (
-  <div style={SendStyles.sendRow}>
-    <div style={SendStyles.sendOutputRow}>
-      <div style={SendStyles.sendLabel}>To:</div>
-      <div style={SendStyles.sendAddress}>
-        <div style={SendStyles.inputForm}>
+  <div className="send-row">
+    <div className="send-output-row">
+      <div className="send-label">To:</div>
+      <div className="send-address">
+        <div className="send-input-form">
           <input
             value={destination}
             type="text"
-            style={SendStyles.sendAddressHashTo}
+            className="send-address-hash-to"
             placeholder="Destination Address"
             onChange={compose(getOnChangeOutputDestination(index), e => e.target.value)}
             onBlur={onAttemptConstructTransaction}
@@ -33,20 +33,20 @@ const SendOutputRow = ({
         </div>
       </div>
       {index === 0 ? (
-        <div style={SendStyles.sendAddressWalletIcon} onClick={onAddOutput}></div>
+        <div className="send-address-wallet-icon" onClick={onAddOutput}></div>
       ) : (index === (outputs.length - 1)) ? (
-        <div style={SendStyles.sendAddressDeleteIcon} onClick={getOnRemoveOutput(index)}></div>
+        <div className="send-address-delete-icon" onClick={getOnRemoveOutput(index)}></div>
       ) : (
         <div style={{width:"39px", height: "34px", float: "left"}}></div>
       )}
-      <div style={SendStyles.sendAmount}>
-        {index === 0 ? <div style={SendStyles.sendAmountLabel}>Amount:</div> : null}
-        <div style={SendStyles.sendAddressAmountSumAndCurrency}>
-        <div style={SendStyles.sendAddressAmountSumGradient}>{currencyDisplay}</div>
+      <div className="send-amount">
+        {index === 0 ? <div className="send-amount-label">Amount:</div> : null}
+        <div className="send-address-amount-sum-and-currency">
+        <div className="send-address-amount-sum-gradient">{currencyDisplay}</div>
           <input
             value={amountStr}
             type="text"
-            style={SendStyles.sendAddressInputAmount}
+            className="send-address-input-amount"
             placeholder="Amount"
             onChange={compose(getOnChangeOutputAmount(index), e => e.target.value)}
             onBlur={onAttemptConstructTransaction}
@@ -55,9 +55,9 @@ const SendOutputRow = ({
       </div>
     </div>
     {hastAttemptedConstruct ? (
-      <div style={SendStyles.sendOutputErrorRow}>
-        <div style={SendStyles.sendOutputAddressError}>{addressError}</div>
-        <div style={SendStyles.sendOutputAmountError}>{amountError}</div>
+      <div className="send-output-error-row">
+        <div className="send-output-address-error">{addressError}</div>
+        <div className="send-output-amount-error">{amountError}</div>
       </div>
     ) : null}
   </div>
