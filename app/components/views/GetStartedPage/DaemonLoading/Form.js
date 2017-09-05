@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "../../../Header";
-import DecredLoading from "../../DecredLoading";
 import LinearProgress from "material-ui/LinearProgress";
 import KeyBlueButton from "../../../KeyBlueButton";
 import "../../../../style/GetStarted.less";

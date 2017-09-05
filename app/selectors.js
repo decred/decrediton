@@ -70,6 +70,7 @@ export const isInputRequest = or(
   discoverAddressInputRequest,
 );
 export const isStartupProcessing = and(
+  not(isPrepared),
   not(isInputRequest),
   not(startupError)
 );
