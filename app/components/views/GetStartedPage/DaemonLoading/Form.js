@@ -25,29 +25,31 @@ const DaemonLoadingFormBody = ({
     getEstimatedTimeLeft,
     doSkipDaemonSync,
   }) => (
-    <div className="get-started-view">
-        <div className="get-started-content-nest">
-          {getDaemonStarted && getCurrentBlockCount ?
-          <div>
+    <div className="get-started-content-new-seed">
+    {getDaemonStarted && getCurrentBlockCount ?
+      <div className="get-started-content-instructions">
+        <p>If you are starting decrediton for the first time, this may take a while.</p>
           <LinearProgress
             mode="determinate"
             min={0}
             max={getNeededBlocks}
             value={getCurrentBlockCount}
           />
-          <div className="get-started-fetch-headers-message">
+          <div className="get-started-content-new-seed-create-button">
             {getCurrentBlockCount}/{getNeededBlocks} {getEstimatedTimeLeft}
-            <KeyBlueButton
-              className="get-started-rpc-retry-button"
-              onClick={doSkipDaemonSync}
-            >Skip sync</KeyBlueButton>
+            <div className="get-started-content-new-seed-create-button">
+              <div className="get-started-content-confirm-wallet-create-input-left-padding"></div>
+              <div className="get-started-content-confirm-wallet-create-input-right-padding">
+                <KeyBlueButton
+                  className="get-started-view-button-key-blue-wallet-new-seed"
+                  onClick={doSkipDaemonSync}
+                >Skip sync</KeyBlueButton>
+              </div>
+            </div>
           </div>
-          </div> :
-          <div>
-          </div> }
-          <div className="get-started-fetch-headers-message">If you are syncing the blockchain for the first time, this may take a while.</div>
-        </div>
-      </div>
+        </div> :
+        <div></div> }
+    </div>
   );
 
 export { DaemonLoadingFormHeader, DaemonLoadingFormBody };

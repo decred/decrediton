@@ -69,10 +69,12 @@ export const isInputRequest = or(
   createWalletInputRequest,
   discoverAddressInputRequest,
 );
-export const isStartupProcessing = and(
+export const isStartupProcessing = or(
   not(isPrepared),
-  not(isInputRequest),
-  not(startupError)
+  and(
+    not(isInputRequest),
+    not(startupError)
+  )
 );
 
 const balances = get(["grpc", "balances"]);
