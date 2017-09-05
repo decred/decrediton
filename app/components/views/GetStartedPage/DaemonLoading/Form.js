@@ -3,6 +3,7 @@ import Header from "../../../Header";
 import LinearProgress from "material-ui/LinearProgress";
 import KeyBlueButton from "../../../KeyBlueButton";
 import "../../../../style/GetStarted.less";
+import ReactToolTip from "react-tooltip";
 
 const DaemonLoadingFormHeader = ({
   startupError,
@@ -28,27 +29,28 @@ const DaemonLoadingFormBody = ({
     <div className="get-started-content-new-seed">
     {getDaemonStarted && getCurrentBlockCount ?
       <div className="get-started-content-instructions">
-        <p>If you are starting decrediton for the first time, this may take a while.</p>
-          <LinearProgress
-            mode="determinate"
-            min={0}
-            max={getNeededBlocks}
-            value={getCurrentBlockCount}
-          />
-          <div className="get-started-content-new-seed-create-button">
-            {getCurrentBlockCount}/{getNeededBlocks} {getEstimatedTimeLeft}
-            <div className="get-started-content-new-seed-create-button">
-              <div className="get-started-content-confirm-wallet-create-input-left-padding"></div>
-              <div className="get-started-content-confirm-wallet-create-input-right-padding">
-                <KeyBlueButton
-                  className="get-started-view-button-key-blue-wallet-new-seed"
-                  onClick={doSkipDaemonSync}
-                >Skip sync</KeyBlueButton>
-              </div>
-            </div>
-          </div>
-        </div> :
-        <div></div> }
+        <div className="get-started-content-instructions-blockchain-syncing">
+          <span className="left">If you are starting decrediton for the first time, this may take a while.</span>
+          <span className="right">
+            <KeyBlueButton
+            className="get-started-view-button-key-blue-wallet-new-seed"
+            onClick={doSkipDaemonSync}
+            data-tip="ATTENTION: You may skip the initial blockchain download, but be aware that all transactions will not be found until the chain is fully synced.  As a result, your balance may be incorrect until fully synced."
+            >Skip sync</KeyBlueButton>
+          </span>
+        </div>
+        <LinearProgress
+          mode="determinate"
+          min={0}
+          max={getNeededBlocks}
+          value={getCurrentBlockCount}
+        />
+        <p>
+          <span className="left">{getEstimatedTimeLeft}</span> <span className="right">{getCurrentBlockCount}/{getNeededBlocks}</span>
+        </p>
+      </div> :
+      <div></div> }
+      <ReactToolTip type="info" effect="solid"/>
     </div>
   );
 
