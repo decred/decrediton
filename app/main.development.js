@@ -5,9 +5,6 @@ import os from "os";
 import parseArgs from "minimist";
 import winston from "winston";
 
-if (os.platform() == "win32") {
-}
-
 let menu;
 let template;
 let mainWindow = null;
