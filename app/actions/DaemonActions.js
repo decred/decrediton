@@ -59,9 +59,10 @@ export function syncDaemon(rpcuser, rpcpassword, host, cert) {
     const {neededBlocks} = getState().walletLoader;
     var args = {rpcuser: rpcuser, rpcpassword: rpcpassword, host: host, cert: cert};
     var updateCurrentBlockCount = 0;
-    while (true){
+    //
+    for (;;){
       // check to see if user skipped;
-      const {daemonSynced, currentBlockCount, timeStart, blockStart} = getState().daemon;
+      const {daemonSynced, timeStart, blockStart} = getState().daemon;
       if (daemonSynced) {
         break;
       }
