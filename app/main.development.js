@@ -234,7 +234,7 @@ ipcMain.on("check-daemon", (event) => {
 
   logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
 
-  var dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", stdout, stderr, "pipe" ] });
+  var dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
 
   dcrctl.stdout.on("data", (data) => {
     currentBlockCount = data.toString();
@@ -360,10 +360,6 @@ app.on("ready", async () => {
   // Write application config files.
   await writeCfgs();
 
-  await loadMainWindow();
-});
-
-const loadMainWindow = async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 1178,
@@ -376,7 +372,6 @@ const loadMainWindow = async () => {
     mainWindow.show();
     mainWindow.focus();
   });
-
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
@@ -550,4 +545,4 @@ const loadMainWindow = async () => {
     });
   menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
-};
+});
