@@ -189,7 +189,7 @@ const launchDCRD = () => {
       args.push(util.format("--piperx=%d", pipe.readEnd));
       dcrdExe = dcrdExe + ".exe";
     } catch(e) {
-      logger.log("error", "can't find proper module to launch dcrd: " + e)
+      logger.log("error", "can't find proper module to launch dcrd: " + e);
     }
   }
 
