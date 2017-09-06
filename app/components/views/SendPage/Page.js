@@ -110,13 +110,13 @@ const SendPage = ({
                 <div className="send-send-all-input">
                 {!isSendAll ?
                 <a onClick={onShowSendAll}>Send All</a> :
-                <a onClick={onHideSendAll}>Close</a>  }
+                <a onClick={onClearTransaction}>Close</a>  }
                 </div>
               </div>
               <div id="dynamicInput">
                 {outputs.map((output, index) => (
                   <OutputRow
-                    {...{ index, outputs, ...props, ...output, isSendAll }}
+                    {...{ index, outputs, ...props, ...output, isSendAll, totalSpent }}
                     addressError={getAddressError(index)}
                     amountError={getAmountError(index)}
                   />

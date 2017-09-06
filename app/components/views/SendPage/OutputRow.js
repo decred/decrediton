@@ -17,6 +17,8 @@ const SendOutputRow = ({
   getOnChangeOutputDestination,
   getOnChangeOutputAmount,
   isSendAll,
+  totalSpent,
+  unitDivisor,
 }) => (
   <div className="send-row">
     <div className="send-output-row">
@@ -45,7 +47,14 @@ const SendOutputRow = ({
         <div className="send-address-amount-sum-and-currency">
         <div className="send-address-amount-sum-gradient">{currencyDisplay}</div>
           <input
-            disabled={isSendAll}
+            hidden={!isSendAll}
+            className="send-address-input-amount"
+            disabled={true}
+            type="text"
+            value={totalSpent !== null ? totalSpent / unitDivisor : ""}
+          />
+          <input
+            hidden={isSendAll}
             value={amountStr}
             type="text"
             className="send-address-input-amount"

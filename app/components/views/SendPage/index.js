@@ -92,12 +92,7 @@ class Send extends Component {
     this.setState(this.getInitialState(), this.props.onClearTransaction);
   }
   onShowSendAll() {
-    this.setState({ isSendAll: true });
-    //this.onClearTransaction();
-  }
-  onHideSendAll() {
-    this.setState({ isSendAll: false });
-    //this.onClearTransaction();
+    this.setState({ isSendAll: true }, this.onAttemptConstructTransaction);
   }
   onShowConfirm() {
     if (!this.getIsValid()) return;
@@ -107,11 +102,11 @@ class Send extends Component {
   onAttemptConstructTransaction() {
     const { onAttemptConstructTransaction, unitDivisor } = this.props;
     const confirmations = 0;
-    if (!this.getIsSendAll()) {
-      if (this.getHasEmptyFields()) return;
-      this.setState({ hastAttemptedConstruct: true });
-      if (this.getIsInvalid()) return;
+    if (this.getHasEmptyFields()) return;
+    this.setState({ hastAttemptedConstruct: true });
+    if (this.getIsInvalid()) return;
 
+    if (!this.getIsSendAll()) {
       onAttemptConstructTransaction && onAttemptConstructTransaction(
         this.state.account.value,
         confirmations,
@@ -121,9 +116,6 @@ class Send extends Component {
         }))
       );
     } else {
-      if (this.getHasEmptyFieldsSendAll()) return;
-      this.setState({ hastAttemptedConstruct: true });
-      if (this.getIsInvalidSendAll()) return;
       onAttemptConstructTransaction && onAttemptConstructTransaction(
         this.state.account.value,
         confirmations,
@@ -167,22 +159,10 @@ class Send extends Component {
     ));
   }
 
-  getIsInvalidSendAll() {
-    return !!(
-      this.state.outputs.length !== 1 &&
-      this.state.outputs.find((o, index) => (
-        this.getAddressError(index)
-      ))
-    );
-  }
-
   getHasEmptyFields() {
-    return !!this.state.outputs.find(({ destination, amountStr }) => !destination || !amountStr);
+    return !!this.state.outputs.find(({ destination, amountStr }) => !destination || (!amountStr && !this.state.isSendAll));
   }
 
-  getHasEmptyFieldsSendAll() {
-    return !!this.state.outputs.find(({ destination }) => !destination);
-  }
   getIsValid() {
     return !!(
       !this.getIsInvalid() &&
@@ -204,11 +184,11 @@ class Send extends Component {
   }
 
   getAmountError(key) {
-    const { outputs } = this.state;
+    const { outputs, isSendAll} = this.state;
     const { amountStr } = outputs[key];
     const amount = parseFloat(amountStr);
-    if (isNaN(amount)) return "*Please enter a valid amount";
-    if (amount <= 0) return "*Please enter a valid amount (> 0)";
+    if (isNaN(amount) && !isSendAll) return "*Please enter a valid amount";
+    if (amount <= 0 && !isSendAll) return "*Please enter a valid amount (> 0)";
   }
 }
 
