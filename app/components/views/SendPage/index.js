@@ -121,7 +121,6 @@ class Send extends Component {
         }))
       );
     } else {
-      console.log("HASFSDF");
       if (this.getHasEmptyFieldsSendAll()) return;
       this.setState({ hastAttemptedConstruct: true });
       if (this.getIsInvalidSendAll()) return;
