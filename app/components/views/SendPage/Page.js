@@ -100,13 +100,18 @@ const SendPage = ({
                   />
                 </div>
                 <Link
-                  className="send-accounts-button-icon"
+                  className="accounts-button-icon"
                   data-place="bottom"
                   data-type="info"
                   data-effect="solid"
                   data-tip={"Accounts"}
                   to={"/accounts"}
                 />
+                <div className="send-send-all-input">
+                {!isSendAll ?
+                <a onClick={onShowSendAll}>Send All</a> :
+                <a onClick={onHideSendAll}>Close</a>  }
+                </div>
               </div>
               <div id="dynamicInput">
                 {outputs.map((output, index) => (
@@ -119,15 +124,6 @@ const SendPage = ({
               </div>
             </div>
             <div className="send-button-area">
-              {!isSendAll ?
-              <KeyBlueButton
-              className="content-send"
-                onClick={onShowSendAll}
-              >Send All</KeyBlueButton> :
-              <KeyBlueButton
-              className="content-send"
-                onClick={onHideSendAll}
-              >Close Send All</KeyBlueButton>  }
               <KeyBlueButton
                 className="content-send"
                 disabled={!isValid}

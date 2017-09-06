@@ -40,12 +40,12 @@ const SendOutputRow = ({
       ) : (
         <div style={{width:"39px", height: "34px", float: "left"}}></div>
       )}
-      {!isSendAll ?
       <div className="send-amount">
         {index === 0 ? <div className="send-amount-label">Amount:</div> : null}
         <div className="send-address-amount-sum-and-currency">
         <div className="send-address-amount-sum-gradient">{currencyDisplay}</div>
           <input
+            disabled={isSendAll}
             value={amountStr}
             type="text"
             className="send-address-input-amount"
@@ -54,9 +54,7 @@ const SendOutputRow = ({
             onBlur={onAttemptConstructTransaction}
           />
         </div>
-      </div> :
-      <div></div>}
-
+      </div>
     </div>
     {hastAttemptedConstruct ? (
       <div className="send-output-error-row">
