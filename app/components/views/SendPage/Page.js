@@ -36,7 +36,6 @@ const SendPage = ({
   onClearTransaction,
   onShowConfirm,
   onShowSendAll,
-  onHideSendAll,
   getAddressError,
   getAmountError,
   ...props
