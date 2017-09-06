@@ -4,7 +4,8 @@
 
 import path from "path";
 import {
-  dependencies as externals
+  dependencies,
+  optionalDependencies
 } from "./app/package.json";
 
 export default {
@@ -29,7 +30,12 @@ export default {
           limit: 8192
         }
       }]
-    }]
+    }, {
+      test: /\.node$/,
+      use: [{
+        loader: "node-loader"
+      }]
+    },]
   },
 
   output: {
@@ -42,11 +48,11 @@ export default {
 
   // https://webpack.github.io/docs/configuration.html#resolve
   resolve: {
-    extensions: [".js", ".jsx", ".json"],
-    mainFields: ["webpack", "browser", "web", "browserify", ["jam", "main"], "main"]
+    extensions: [".js", ".jsx", ".json", ".node"],
+    mainFields: ["webpack", "browser", "web", "browserify", ["jam", "main"], "main"],
   },
 
   plugins: [],
 
-  externals: Object.keys(externals || {})
+  externals: Object.keys(dependencies || {}).concat(Object.keys(optionalDependencies || {}))
 };

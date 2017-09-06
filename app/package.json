@@ -14,5 +14,8 @@
     "electron-store": "^1.0.0",
     "grpc": "1.1.1",
     "minimist": "^1.2.0"
+  },
+  "optionalDependencies": {
+    "win32ipc": "./modules/win32ipc"
   }
 }

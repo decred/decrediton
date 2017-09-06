@@ -115,14 +115,14 @@ if (argv.mainnet) {
 }
 
 function closeDCRW() {
-  if (require("is-running")(dcrwPID)) {
+  if (require("is-running")(dcrwPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
     process.kill(dcrwPID, "SIGINT");
   }
 }
 
 function closeDCRD() {
-  if (require("is-running")(dcrdPID)) {
+  if (require("is-running")(dcrdPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrdPID);
     process.kill(dcrdPID, "SIGINT");
   }
@@ -180,18 +180,25 @@ const launchDCRD = () => {
   var args = ["--configfile="+dcrdCfg()];
 
   var dcrdExe = path.join(process.resourcesPath, "bin", "dcrd");
-  if (os.platform() == "win32") {
-    dcrdExe = dcrdExe + ".exe";
-  }
 
-  if (os.platform() != "win32") {
-    // The spawn() below opens a pipe on fd 3
-    args.push("--piperx=3");
+  if (os.platform() == "win32") {
+    try {
+      const util = require("util");
+      const win32ipc = require("./node_modules/win32ipc/build/Release/win32ipc");
+      var pipe = win32ipc.createPipe("out");
+      args.push(util.format("--piperx=%d", pipe.readEnd));
+      dcrdExe = dcrdExe + ".exe";
+    } catch(e) {
+      logger.log("error", "can't find proper module to launch dcrd: " + e);
+    }
   }
 
   logger.log("info", `Starting dcrd with ${args}`);
 
-  var dcrd = spawn(dcrdExe, args, { detached: false, stdio: [ "ignore", stdout, stderr, "pipe" ] });
+  var dcrd = spawn(dcrdExe, args, {
+    detached: os.platform() == "win32",
+    stdio: [ "ignore", stdout, stderr ]
+  });
 
   dcrd.on("error", function (err) {
     logger.log("error", "error starting " + dcrdExe + ": " + path + err);
@@ -223,13 +230,15 @@ const launchDCRWallet = () => {
 
   var dcrwExe = path.join(process.resourcesPath, "bin", "dcrwallet");
   if (os.platform() == "win32") {
-    dcrwExe = dcrwExe + ".exe";
-  }
-
-  if (os.platform() != "win32") {
-    // The spawn() below opens a pipe on fd 4
-    // No luck getting this to work on win7.
-    args.push("--piperx=4");
+    try {
+      const util = require("util");
+      const win32ipc = require("./node_modules/win32ipc/build/Release/win32ipc");
+      var pipe = win32ipc.createPipe("out");
+      args.push(util.format("--piperx=%d", pipe.readEnd));
+      dcrwExe = dcrwExe + ".exe";
+    } catch (e) {
+      logger.log("error", "can't find proper module to launch dcrwallet: " + e);
+    }
   }
 
   // Add any extra args if defined.
@@ -242,7 +251,10 @@ const launchDCRWallet = () => {
 
   logger.log("info", `Starting dcrwallet with ${args}`);
 
-  var dcrwallet = spawn(dcrwExe, args, { detached: false, stdio: [ "ignore", stdout, stderr, "ignore", "pipe"  ] });
+  var dcrwallet = spawn(dcrwExe, args, {
+    detached: os.platform() == "win32",
+    stdio: [ "ignore", stdout, stderr, "ignore" ]
+  });
 
   dcrwallet.on("error", function (err) {
     logger.log("error", "error starting " + dcrwExe + ": " + path + err);
