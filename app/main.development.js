@@ -115,14 +115,14 @@ if (argv.mainnet) {
 }
 
 function closeDCRW() {
-  if (require("is-running")(dcrwPID)) {
+  if (require("is-running")(dcrwPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
     process.kill(dcrwPID, "SIGINT");
   }
 }
 
 function closeDCRD() {
-  if (require("is-running")(dcrdPID)) {
+  if (require("is-running")(dcrdPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrdPID);
     process.kill(dcrdPID, "SIGINT");
   }
@@ -184,8 +184,8 @@ const launchDCRD = () => {
   if (os.platform() == "win32") {
     try {
       const util = require("util");
-      const addon = require("./modules/win32ipc/build/Release/win32ipc");
-      var pipe = addon.createPipe("out");
+      const win32ipc = require("./node_modules/win32ipc/build/Release/win32ipc");
+      var pipe = win32ipc.createPipe("out");
       args.push(util.format("--piperx=%d", pipe.readEnd));
       dcrdExe = dcrdExe + ".exe";
     } catch(e) {
@@ -234,8 +234,8 @@ const launchDCRWallet = () => {
   if (os.platform() == "win32") {
     try {
       const util = require("util");
-      const addon = require("./modules/win32ipc/build/Release/win32ipc");
-      var pipe = addon.createPipe("out");
+      const win32ipc = require("./node_modules/win32ipc/build/Release/win32ipc");
+      var pipe = win32ipc.createPipe("out");
       args.push(util.format("--piperx=%d", pipe.readEnd));
       dcrwExe = dcrwExe + ".exe";
     }catch (e) {

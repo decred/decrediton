@@ -155,6 +155,7 @@
     "less-loader": "^4.0.5",
     "minimist": "^1.2.0",
     "mocha": "^3.1.2",
+    "node-loader": "^0.6.0",
     "radium": "^0.18.1",
     "react-addons-test-utils": "^15.3.2",
     "react-tap-event-plugin": "^2.0.1",
