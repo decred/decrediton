@@ -346,8 +346,8 @@ const launchDCRWallet = () => {
 
   dcrwallet.on("close", (code) => {
     if (code !== 0) {
-      logger.log("error", "dcrwallet closed due to an error.  Check dcrd logs and contact support if the issue persists.");
-      mainWindow.webContents.executeJavaScript("alert(\"dcrwallet closed due to an error.  Check dcrd logs and contact support if the issue persists.\");");
+      logger.log("error", "dcrwallet closed due to an error.  Check dcrwalet logs and contact support if the issue persists.");
+      mainWindow.webContents.executeJavaScript("alert(\"dcrwallet closed due to an error.  Check dcrwallet logs and contact support if the issue persists.\");");
       mainWindow.webContents.executeJavaScript("window.close();");
     } else {
       logger.log("info", `dcrwallet exited with code ${code}`);
