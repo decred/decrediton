@@ -274,11 +274,19 @@ const launchDCRD = () => {
   });
 
   dcrd.on("error", function (err) {
-    logger.log("error", "error starting " + dcrdExe + ": " + path + err);
+    logger.log("error", "Error running dcrd.  Check logs and restart! " + err);
+    mainWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart! " + err + "\");");
+    mainWindow.webContents.executeJavaScript("window.close();");
   });
 
   dcrd.on("close", (code) => {
-    logger.log("info", `dcrd exited with code ${code}`);
+    if (code !== 0) {
+      logger.log("error", "dcrd closed due to an error.  Check dcrd logs and contact support if the issue persists.");
+      mainWindow.webContents.executeJavaScript("alert(\"dcrd closed due to an error.  Check dcrd logs and contact support if the issue persists.\");");
+      mainWindow.webContents.executeJavaScript("window.close();");
+    } else {
+      logger.log("info", `dcrd exited with code ${code}`);
+    }
   });
 
   if (debug) {
@@ -331,11 +339,19 @@ const launchDCRWallet = () => {
   });
 
   dcrwallet.on("error", function (err) {
-    logger.log("error", "error starting " + dcrwExe + ": " + path + err);
+    logger.log("error", "Error running dcrwallet.  Check logs and restart! " + err);
+    mainWindow.webContents.executeJavaScript("alert(\"Error running dcrwallet.  Check logs and restart! " + err + "\");");
+    mainWindow.webContents.executeJavaScript("window.close();");
   });
 
   dcrwallet.on("close", (code) => {
-    logger.log("info", `dcrwallet exited with code ${code}`);
+    if (code !== 0) {
+      logger.log("error", "dcrwallet closed due to an error.  Check dcrd logs and contact support if the issue persists.");
+      mainWindow.webContents.executeJavaScript("alert(\"dcrwallet closed due to an error.  Check dcrd logs and contact support if the issue persists.\");");
+      mainWindow.webContents.executeJavaScript("window.close();");
+    } else {
+      logger.log("info", `dcrwallet exited with code ${code}`);
+    }
   });
 
   if (debug) {
