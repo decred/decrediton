@@ -6,7 +6,6 @@ import { getCfg, getCfgPath, getDcrdCert,RPCDaemonPort, RPCDaemonHost } from "..
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
   SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from "../middleware/walletrpc/api_pb";
-import { clearStakePoolConfigNewWallet } from "./StakePoolActions";
 
 export function versionCheckAction() {
   return (dispatch) => {
@@ -325,5 +324,38 @@ export function fetchHeadersAttempt() {
             dispatch(getAgendaServiceAttempt());
           }
         });
+  };
+}
+
+export const UPDATEDISCOVERACCOUNTS = "UPDATEDISCOVERACCOUNTS";
+export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
+
+export function clearStakePoolConfigNewWallet() {
+  return (dispatch) => {
+    var config = getCfg(true);
+    stakePoolInfo(function(response, err) {
+      if (response == null) {
+        console.log(err);
+      } else {
+        var stakePoolNames = Object.keys(response.data);
+        // Only add matching network stakepool info
+        var foundStakePoolConfigs = Array();
+        for (var i = 0; i < stakePoolNames.length; i++) {
+          if (response.data[stakePoolNames[i]].APIEnabled) {
+            foundStakePoolConfigs.push({
+              Host:response.data[stakePoolNames[i]].URL,
+              Network: response.data[stakePoolNames[i]].Network,
+              APIVersionsSupported: response.data[stakePoolNames[i]].APIVersionsSupported,
+            });
+          }
+        }
+        config.delete("stakepools");
+        config.set("stakepools", foundStakePoolConfigs);
+        config.delete("discoveraccounts");
+        config.set("discoveraccounts", false);
+        dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
+        dispatch({complete: false, type: UPDATEDISCOVERACCOUNTS});
+      }
+    });
   };
 }

@@ -10,32 +10,6 @@ export const UPDATESTAKEPOOLCONFIG_FAILED = "UPDATESTAKEPOOLCONFIG_FAILED";
 export const UPDATESTAKEPOOLCONFIG_SUCCESS = "UPDATESTAKEPOOLCONFIG_SUCCESS";
 export const UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS = "UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS";
 export const UPDATESTAKEPOOLCONFIG_CLEAR_ERROR = "UPDATESTAKEPOOLCONFIG_CLEAR_ERROR";
-export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
-export function clearStakePoolConfigNewWallet() {
-  return (dispatch) => {
-    var config = getCfg(true);
-    stakePoolInfo(function(response, err) {
-      if (response == null) {
-        console.log(err);
-      } else {
-        var stakePoolNames = Object.keys(response.data);
-        // Only add matching network stakepool info
-        var foundStakePoolConfigs = Array();
-        for (var i = 0; i < stakePoolNames.length; i++) {
-          if (response.data[stakePoolNames[i]].APIEnabled) {
-            foundStakePoolConfigs.push({
-              Host:response.data[stakePoolNames[i]].URL,
-              Network: response.data[stakePoolNames[i]].Network,
-              APIVersionsSupported: response.data[stakePoolNames[i]].APIVersionsSupported,
-            });
-          }
-        }
-        config.set("stakepools", foundStakePoolConfigs);
-        dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
-      }
-    });
-  };
-}
 
 export function updateStakepoolPurchaseInformation() {
   return (dispatch, getState) => {

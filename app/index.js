@@ -196,6 +196,7 @@ var initialState = {
     discoverAddressRequestAttempt: false,
     discoverAddressResponse: null,
     discoverAddressError: null,
+    discoverAccountsComplete: cfg.get("discoveraccounts"),
     // SubscribeBlockNtfns
     subscribeBlockNtfnsRequestAttempt: false,
     subscribeBlockNtfnsResponse: null,

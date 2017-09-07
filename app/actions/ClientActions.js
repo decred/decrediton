@@ -3,6 +3,7 @@ import { getWalletService, getTicketBuyerService, getVotingService, getAgendaSer
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, stopAutoBuyerAttempt } from "./ControlActions";
 import { transactionNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
+import { clearStakePoolConfigNewWallet } from "./WalletLoaderActions";
 import { hashHistory } from "react-router";
 import { timeSince } from "../helpers/dateFormat.js";
 import {
@@ -20,6 +21,7 @@ export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
 function getWalletServiceSuccess(walletService) {
   return (dispatch, getState) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
+    dispatch(clearStakePoolConfigNewWallet());
     setTimeout(() => { dispatch(getAccountsAttempt()); }, 10);
     setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 20);
     setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);

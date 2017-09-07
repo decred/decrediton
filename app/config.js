@@ -75,6 +75,9 @@ export function getCfg(update) {
     var hiddenAccounts = Array();
     config.set("hiddenaccounts",hiddenAccounts);
   }
+  if (!config.has("discoveraccounts")) {
+    config.set("discoveraccounts",false);
+  }
   if (!config.has("stakepools") || config.get("stakepools") == null) {
     stakePoolInfo(function(response, err) {
       if (response == null) {
