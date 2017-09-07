@@ -73,9 +73,9 @@ export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, 
 }
 
 function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
-  return (dispatch) => {
-    var config = getCfg(true);
-    var stakePoolConfigs = config.get("stakepools");
+  return (dispatch, getState) => {
+    const { currentStakePoolConfig } = getState().stakepool;
+    var stakePoolConfigs = currentStakePoolConfig;
     var settingsUpdated = false;
     for (var i = 0; i < stakePoolConfigs.length; i++) {
       if (stakePoolConfigs[i].Host == poolHost) {
@@ -98,6 +98,7 @@ function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
       }
     }
     if (settingsUpdated) {
+      var config = getCfg();
       config.set("stakepools", stakePoolConfigs);
       dispatch({ successMessage: "You have successfully configured " + poolHost, currentStakePoolConfig: stakePoolConfigs, type: UPDATESTAKEPOOLCONFIG_SUCCESS });
     }
@@ -141,7 +142,7 @@ function setStakePoolAddressAction(privpass, poolHost, apiKey, accountNum) {
 }
 function updateStakePoolVoteChoicesConfig(stakePool, voteChoices) {
   return (dispatch) => {
-    var config = getCfg(true);
+    var config = getCfg();
     var stakePoolConfigs = config.get("stakepools");
     var voteChoicesConfig = new Array();
     for (var k = 0; k < voteChoices.getChoicesList().length; k++) {

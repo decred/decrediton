@@ -263,7 +263,7 @@ export function discoverAddressAttempt(privPass) {
           }
           else {
             if (!discoverAccountsComplete) {
-              var config = getCfg(true);
+              var config = getCfg();
               config.delete("discoveraccounts");
               config.set("discoveraccounts", true);
               dispatch({complete: true, type: UPDATEDISCOVERACCOUNTS});
@@ -335,7 +335,6 @@ export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
 
 export function clearStakePoolConfigNewWallet(existing) {
   return (dispatch) => {
-    var config = getCfg(true);
     stakePoolInfo(function(response, err) {
       if (response == null) {
         console.log(err);
@@ -352,6 +351,7 @@ export function clearStakePoolConfigNewWallet(existing) {
             });
           }
         }
+        var config = getCfg();
         config.delete("stakepools");
         config.set("stakepools", foundStakePoolConfigs);
         dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
