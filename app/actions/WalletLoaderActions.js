@@ -101,7 +101,11 @@ export function createWalletRequest(pubPass, privPass, seed, existing) {
           dispatch({ error, type: CREATEWALLET_FAILED });
         } else {
           dispatch({response: {}, type: CREATEWALLET_SUCCESS });
-          dispatch(clearStakePoolConfigNewWallet(existing));
+          dispatch(clearStakePoolConfigNewWallet());
+          dispatch({complete: !existing, type: UPDATEDISCOVERACCOUNTS});
+          var config = getCfg();
+          config.delete("discoveraccounts");
+          config.set("discoveraccounts", !existing);
           dispatch(startRpcRequestFunc());
         }
       });
@@ -333,7 +337,7 @@ export function fetchHeadersAttempt() {
 export const UPDATEDISCOVERACCOUNTS = "UPDATEDISCOVERACCOUNTS";
 export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
 
-export function clearStakePoolConfigNewWallet(existing) {
+export function clearStakePoolConfigNewWallet() {
   return (dispatch) => {
     stakePoolInfo(function(response, err) {
       if (response == null) {
@@ -355,9 +359,6 @@ export function clearStakePoolConfigNewWallet(existing) {
         config.delete("stakepools");
         config.set("stakepools", foundStakePoolConfigs);
         dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
-        config.delete("discoveraccounts");
-        config.set("discoveraccounts", !existing);
-        dispatch({complete: !existing, type: UPDATEDISCOVERACCOUNTS});
       }
     });
   };
