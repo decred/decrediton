@@ -101,14 +101,8 @@ export function createWalletRequest(pubPass, privPass, seed, existing) {
           dispatch({ error, type: CREATEWALLET_FAILED });
         } else {
           dispatch({response: {}, type: CREATEWALLET_SUCCESS });
-          dispatch(clearStakePoolConfigNewWallet());
+          dispatch(clearStakePoolConfigNewWallet(existing));
           dispatch(startRpcRequestFunc());
-          if (existing) {
-            var config = getCfg(true);
-            config.delete("discoveraccounts");
-            config.set("discoveraccounts", true);
-            dispatch({complete: true, type: UPDATEDISCOVERACCOUNTS});
-          }
         }
       });
   };
@@ -253,7 +247,7 @@ export function discoverAddressAttempt(privPass) {
     var request = new DiscoverAddressesRequest();
     const { discoverAccountsComplete } = getState().walletLoader;
     request.setDiscoverAccounts(!discoverAccountsComplete);
-    if (discoverAccountsComplete) {
+    if (!discoverAccountsComplete) {
       request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
     }
     dispatch({ type: DISCOVERADDRESS_ATTEMPT });
@@ -292,21 +286,21 @@ export function subscribeBlockAttempt() {
   var request = new SubscribeToBlockNotificationsRequest();
   return (dispatch, getState) => {
     dispatch({request: {}, type: SUBSCRIBEBLOCKNTFNS_ATTEMPT});
-    const { loader } = getState().walletLoader;
+    const { loader, discoverAccountsComplete } = getState().walletLoader;
     loader.subscribeToBlockNotifications(request,
         function(error) {
           if (error) {
             dispatch({ error, type: SUBSCRIBEBLOCKNTFNS_FAILED });
           } else {
             dispatch({response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
-            const { walletCreateResponse, createWalletExisting, discoverAddressResponse } = getState().walletLoader;
-            if (walletCreateResponse == null || (walletCreateResponse !== null && !createWalletExisting)) {
-              // CreateWalletSuccess is null which means this is a previously created wallet
-              dispatch(discoverAddressAttempt(false));
-            }
+            const { discoverAddressResponse } = getState().walletLoader;
+            if (discoverAccountsComplete) {
+              dispatch(discoverAddressAttempt());
+            }/*
             else if (discoverAddressResponse !== null) {
               dispatch(fetchHeadersAttempt());
             }
+            */
             else {
               // This is dispatched to indicate we should wait for user input to discover addresses.
               dispatch({response: {}, type: DISCOVERADDRESS_INPUT});
@@ -344,7 +338,7 @@ export function fetchHeadersAttempt() {
 export const UPDATEDISCOVERACCOUNTS = "UPDATEDISCOVERACCOUNTS";
 export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
 
-export function clearStakePoolConfigNewWallet() {
+export function clearStakePoolConfigNewWallet(existing) {
   return (dispatch) => {
     var config = getCfg(true);
     stakePoolInfo(function(response, err) {
@@ -365,10 +359,10 @@ export function clearStakePoolConfigNewWallet() {
         }
         config.delete("stakepools");
         config.set("stakepools", foundStakePoolConfigs);
-        config.delete("discoveraccounts");
-        config.set("discoveraccounts", false);
         dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
-        dispatch({complete: false, type: UPDATEDISCOVERACCOUNTS});
+        config.delete("discoveraccounts");
+        config.set("discoveraccounts", !existing);
+        dispatch({complete: !existing, type: UPDATEDISCOVERACCOUNTS});
       }
     });
   };
