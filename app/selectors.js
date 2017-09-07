@@ -1,9 +1,10 @@
 import {
-  compose, reduce, get, not, or, and, eq, find, bool,
+  compose, reduce, filter, get, not, or, and, eq, find, bool, map,
   createSelectorEager as createSelector
 } from "./fp";
 import { reverseHash } from "./helpers/byteActions";
 
+const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 const START_STEP_OPEN = 2;
 const START_STEP_RPC1 = 3;
 const START_STEP_RPC2 = 4;
@@ -160,10 +161,9 @@ export const nextAddress = compose(
   res => res ? res.getAddress() : "", getNextAddressResponse
 );
 
-export const isTestNet = compose(
-  res => res ? res.networkStr === "testnet" : false, getNetworkResponse
-);
+const network = compose(r => r ? r.networkStr : null, getNetworkResponse);
 
+export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 export const currencyDisplay = get(["settings", "currentSettings", "currencyDisplay"]);
 export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
@@ -178,6 +178,7 @@ export const spendingAccounts = createSelector(
           value: accountNumber,
           label: `${accountName}: ${spendable / unitDivisor} ${currencyDisplay}`,
           name: accountName,
+          spendable,
           ...data
         }],
     [],
@@ -253,3 +254,79 @@ export const revokedTicketsCount = compose(r => r ? r.getRevoked() : 0, getStake
 export const immatureTicketsCount = compose(r => r ? r.getImmature() : 0, getStakeInfoResponse);
 export const expiredTicketsCount = compose(r => r ? r.getExpired() : 0, getStakeInfoResponse);
 export const liveTicketsCount = compose(r => r ? r.getLive() : 0, getStakeInfoResponse);
+
+
+export const ticketBuyerService = get(["grpc", "ticketBuyerService"]);
+const startAutoBuyerResponse = get(["control", "startAutoBuyerResponse"]);
+
+export const balanceToMaintain = get(["control", "balanceToMaintain"]);
+export const maxFee = get(["control", "maxFee"]);
+export const maxPriceRelative = get(["control", "maxPriceRelative"]);
+export const maxPriceAbsolute = get(["control", "maxPriceAbsolute"]);
+export const maxPerBlock = get(["control", "maxPerBlock"]);
+export const getTicketBuyerConfigResponse = get(["control", "getTicketBuyerConfigResponse"]);
+
+
+const getTicketPriceResponse = get(["grpc", "getTicketPriceResponse"]);
+
+export const ticketPrice = compose(r => r ? r.getTicketPrice() : 0, getTicketPriceResponse);
+
+const getAgendasResponse = get(["grpc", "getAgendasResponse"]);
+export const agendas = createSelector(
+  [getAgendasResponse],
+  response => response ? response.getAgendasList() : EMPTY_ARRAY
+);
+
+const requiredStakepoolAPIVersion = get(["grpc", "requiredStakepoolAPIVersion"]);
+
+export const currentStakePoolConfigError = get(["stakepool", "currentStakePoolConfigError"]);
+export const currentStakePoolConfigSuccessMessage = get(["stakepool", "currentStakePoolConfigSuccessMessage"]);
+export const purchaseTicketsError = get(["control", "purchaseTicketsError"]);
+export const purchaseTicketsSuccess = get(["control", "purchaseTicketsSuccess"]);
+export const revokeTicketsError = get(["control", "revokeTicketsError"]);
+export const revokeTicketsSuccess = get(["control", "revokeTicketsSuccess"]);
+export const importScriptSuccess = get(["control", "importScriptSuccess"]);
+export const importScriptError = get(["control", "importScriptError"]);
+export const startAutoBuyerError = get(["control", "startAutoBuyerError"]);
+export const startAutoBuyerSuccess = get(["control", "startAutoBuyerSuccess"]);
+export const stopAutoBuyerError = get(["control", "stopAutoBuyerError"]);
+export const stopAutoBuyerSuccess = get(["control", "stopAutoBuyerSuccess"]);
+export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
+
+
+const currentStakePoolConfig = get(["stakepool", "currentStakePoolConfig"]);
+
+const allStakePools = createSelector(
+  [currentStakePoolConfig, requiredStakepoolAPIVersion],
+  (pools, requiredVersion) => map(
+    pool => ({
+      ...pool,
+      label: pool.Host,
+      value: pool,
+      isVersionValid: pool.APIVersionsSupported[1] === requiredVersion
+    }),
+    pools
+  )
+);
+
+const networkStakePools = createSelector(
+  [allStakePools, network],
+  (pools, network) => filter(compose(eq(network), get("Network")), pools)
+);
+
+export const configuredStakePools = createSelector(
+  [networkStakePools], filter(bool(get("ApiKey")))
+);
+
+export const unconfiguredStakePools = createSelector(
+  [networkStakePools], filter(not(get("ApiKey")))
+);
+
+export const defaultStakePool = compose(get(0), configuredStakePools);
+
+const currentStakePoolConfigRequest = get(["stakepool", "currentStakePoolConfigRequest"]);
+
+const purchaseTicketsRequestAttempt = get(["control", "purchaseTicketsRequestAttempt"]);
+
+export const isSavingStakePoolConfig = bool(currentStakePoolConfigRequest);
+export const isPurchasingTickets = bool(purchaseTicketsRequestAttempt);

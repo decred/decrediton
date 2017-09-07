@@ -1,6 +1,6 @@
-// @flow
 import React from "react";
 import { autobind } from "core-decorators";
+import { substruct } from "../../fp";
 import StakeInfoDisplay from "./Display";
 import stakeInfo from "../../connectors/stakeInfo";
 
@@ -14,14 +14,15 @@ class StakeInfo extends React.Component {
   }
 
   render() {
-    const { onHideStakeInfo, onShowStakeInfo } = this;
     return (
       <StakeInfoDisplay
         {...{
           ...this.props,
           ...this.state,
-          onHideStakeInfo,
-          onShowStakeInfo
+          ...substruct({
+            onHideStakeInfo: null,
+            onShowStakeInfo: null
+          }, this)
         }}
       />
     );
