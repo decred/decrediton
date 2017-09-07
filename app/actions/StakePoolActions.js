@@ -3,7 +3,6 @@ import { getPurchaseInfo, setStakePoolAddress, setVoteChoices } from "../middlew
 import { NextAddressRequest } from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
 import { importScriptAttempt } from "./ControlActions";
-import { stakePoolInfo } from "../middleware/stakepoolapi";
 
 export const UPDATESTAKEPOOLCONFIG_ATTEMPT = "UPDATESTAKEPOOLCONFIG_ATTEMPT";
 export const UPDATESTAKEPOOLCONFIG_FAILED = "UPDATESTAKEPOOLCONFIG_FAILED";
