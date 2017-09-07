@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
-import { substruct } from "../../../fp";
+import { substruct, compose, eq, get } from "../../../fp";
 import service from "../../../connectors/service";
 import ticketsPage from "../../../connectors/ticketsPage";
 import ErrorScreen from "../../ErrorScreen";
@@ -78,11 +78,13 @@ class Tickets extends Component {
   }
 
   getStakePool() {
-    return this.props.onChangeStakePool ? this.props.stakePool : this.state.stakePool;
+    const pool = this.props.onChangeStakePool ? this.props.stakePool : this.state.stakePool;
+    return this.props.configuredStakePools.find(compose(eq(pool.Host), get("Host")));
   }
 
   getAccount() {
-    return this.props.onChangeAccount ? this.props.account : this.state.account;
+    const account = this.props.onChangeAccount ? this.props.account : this.state.account;
+    return this.props.spendingAccounts.find(compose(eq(account.value), get("value")));
   }
 
   onChangeStakePool(stakePool) {

@@ -6,7 +6,8 @@ import * as controlActions from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
   ...substruct({
-    ticketPrice: null
+    ticketPrice: null,
+    spendingAccounts: null
   }, selectors)
 });
 

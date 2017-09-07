@@ -1,7 +1,7 @@
 import React from "react";
 import { autobind } from "core-decorators";
 import ticketAutoBuyer from "../../connectors/ticketAutoBuyer";
-import { substruct } from "../../fp";
+import { substruct, compose, eq, get } from "../../fp";
 import TicketAutoBuyerForm from "./Form";
 
 @autobind
@@ -67,7 +67,8 @@ class TicketAutoBuyer extends React.Component {
   }
 
   getAccount() {
-    return this.props.onChangeAccount ? this.props.account : this.state.account;
+    const account = this.props.onChangeAccount ? this.props.account : this.state.account;
+    return this.props.spendingAccounts.find(compose(eq(account.value), get("value")));
   }
 
   onToggleShowDetails() {

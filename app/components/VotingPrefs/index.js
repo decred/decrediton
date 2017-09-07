@@ -35,7 +35,8 @@ class VotingPrefs extends React.Component {
   }
 
   getStakePool() {
-    return this.props.onChangeStakePool ? this.props.stakePool : this.state.stakePool;
+    const pool = this.props.onChangeStakePool ? this.props.stakePool : this.state.stakePool;
+    return this.props.configuredStakePools.find(compose(eq(pool.Host), get("Host")));
   }
 
   onChangeStakePool(stakePool) {

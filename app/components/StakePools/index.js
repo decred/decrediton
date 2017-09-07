@@ -1,6 +1,6 @@
 import React from "react";
 import { autobind } from "core-decorators";
-import { substruct } from "../../fp";
+import { substruct, compose, eq, get } from "../../fp";
 import StakePoolsList from "./List";
 import StakePoolsAddForm from "./AddForm";
 import stakePools from "../../connectors/stakePools";
@@ -22,6 +22,7 @@ class StakePools extends React.Component {
         {...{
           ...this.props,
           ...this.state,
+          selectedUnconfigured: this.getSelectedUnconfigured(),
           ...substruct({
             onChangeApiKey: null,
             onSaveStakePool: null,
@@ -49,6 +50,11 @@ class StakePools extends React.Component {
     return this.state.isAdding || this.props.configuredStakePools.length <= 0;
   }
 
+  getSelectedUnconfigured() {
+    const pool = this.state.selectedUnconfigured;
+    return this.props.unconfiguredStakePools.find(compose(eq(pool.Host), get("Host")));
+  }
+
   onChangeSelectedUnconfigured(selectedUnconfigured) {
     this.setState({ selectedUnconfigured });
   }
@@ -72,8 +78,8 @@ class StakePools extends React.Component {
   }
 
   onSetStakePoolInfo(privpass) {
-    const { apiKey, selectedUnconfigured: pool, onSetStakePoolInfo: onSetInfo } = this.state;
-    apiKey ? (onSetInfo && onSetInfo(privpass, pool.Host, apiKey, 0)) : null;
+    const { apiKey, onSetStakePoolInfo: onSetInfo } = this.state;
+    apiKey ? (onSetInfo && onSetInfo(privpass, this.getSelectedUnconfigured().Host, apiKey, 0)) : null;
   }
 }
 
