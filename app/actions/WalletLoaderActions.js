@@ -6,6 +6,7 @@ import { getCfg, getCfgPath, getDcrdCert,RPCDaemonPort, RPCDaemonHost } from "..
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
   SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from "../middleware/walletrpc/api_pb";
+import { stakePoolInfo } from "../middleware/stakepoolapi";
 
 export function versionCheckAction() {
   return (dispatch) => {
@@ -102,6 +103,12 @@ export function createWalletRequest(pubPass, privPass, seed, existing) {
           dispatch({response: {}, type: CREATEWALLET_SUCCESS });
           dispatch(clearStakePoolConfigNewWallet());
           dispatch(startRpcRequestFunc());
+          if (existing) {
+            var config = getCfg(true);
+            config.delete("discoveraccounts");
+            config.set("discoveraccounts", true);
+            dispatch({complete: true, type: UPDATEDISCOVERACCOUNTS});
+          }
         }
       });
   };
@@ -241,13 +248,14 @@ export const DISCOVERADDRESS_ATTEMPT = "DISCOVERADDRESS_ATTEMPT";
 export const DISCOVERADDRESS_FAILED = "DISCOVERADDRESS_FAILED";
 export const DISCOVERADDRESS_SUCCESS = "DISCOVERADDRESS_SUCCESS";
 
-export function discoverAddressAttempt(discoverAccts, privPass) {
-  var request = new DiscoverAddressesRequest();
-  request.setDiscoverAccounts(discoverAccts);
-  if (discoverAccts) {
-    request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
-  }
+export function discoverAddressAttempt(privPass) {
   return (dispatch, getState) => {
+    var request = new DiscoverAddressesRequest();
+    const { discoverAccountsComplete } = getState().walletLoader;
+    request.setDiscoverAccounts(!discoverAccountsComplete);
+    if (discoverAccountsComplete) {
+      request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
+    }
     dispatch({ type: DISCOVERADDRESS_ATTEMPT });
     const { loader } = getState().walletLoader;
     loader.discoverAddresses(request,
@@ -260,6 +268,12 @@ export function discoverAddressAttempt(discoverAccts, privPass) {
             dispatch({ error, type: DISCOVERADDRESS_FAILED });
           }
           else {
+            if (!discoverAccountsComplete) {
+              var config = getCfg(true);
+              config.delete("discoveraccounts");
+              config.set("discoveraccounts", true);
+              dispatch({complete: true, type: UPDATEDISCOVERACCOUNTS});
+            }
             dispatch({response: {}, type: DISCOVERADDRESS_SUCCESS});
             const { subscribeBlockNtfnsResponse } = getState().walletLoader;
             if ( subscribeBlockNtfnsResponse !== null ) {
