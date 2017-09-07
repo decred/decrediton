@@ -293,14 +293,9 @@ export function subscribeBlockAttempt() {
             dispatch({ error, type: SUBSCRIBEBLOCKNTFNS_FAILED });
           } else {
             dispatch({response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
-            const { discoverAddressResponse } = getState().walletLoader;
             if (discoverAccountsComplete) {
               dispatch(discoverAddressAttempt());
-            }/*
-            else if (discoverAddressResponse !== null) {
-              dispatch(fetchHeadersAttempt());
             }
-            */
             else {
               // This is dispatched to indicate we should wait for user input to discover addresses.
               dispatch({response: {}, type: DISCOVERADDRESS_INPUT});
