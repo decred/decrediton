@@ -7,7 +7,7 @@ import HistoryPage from "./containers/History";
 import SendPage from "./components/views/SendPage";
 import ReceivePage from "./components/views/ReceivePage";
 import SettingsPage from "./components/views/SettingsPage";
-import StakePoolPage from "./components/views/StakePoolPage";
+import TicketsPage from "./components/views/TicketsPage";
 import GetStartedPage from "./containers/GetStarted";
 import AccountsPage from "./components/views/AccountsPage";
 import WalletError from "./components/views/WalletError";
@@ -21,7 +21,7 @@ export default (
     <Route path="/send" component={SendPage} />
     <Route path="/receive" component={ReceivePage} />
     <Route path="/settings" component={SettingsPage} />
-    <Route path="/proofofstake" component={StakePoolPage} />
+    <Route path="/proofofstake" component={TicketsPage} />
     <Route path="/accounts" component={AccountsPage} />
     <Route path="/walletError" component={WalletError} />
     <Route path="/help" component={Help} />
