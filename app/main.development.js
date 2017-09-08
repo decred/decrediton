@@ -187,7 +187,7 @@ ipcMain.on("start-daemon", (event, arg) => {
     event.returnValue = dcrdPID;
     return;
   }
-  logger.log("info", "launching dcrd with " + arg);
+  logger.log("info", "launching dcrd with " + JSON.stringify(arg));
   try {
     dcrdPID = launchDCRD();
   } catch (e) {
@@ -218,7 +218,7 @@ ipcMain.on("start-wallet", (event, arg) => {
     event.returnValue = dcrwPID;
     return;
   }
-  logger.log("info", "launching dcrwallet at " + arg);
+  logger.log("info", "launching dcrwallet at " + JSON.stringify(arg));
   try {
     dcrwPID = launchDCRWallet();
   } catch (e) {
@@ -346,7 +346,7 @@ const launchDCRWallet = () => {
 
   dcrwallet.on("close", (code) => {
     if (code !== 0) {
-      logger.log("error", "dcrwallet closed due to an error.  Check dcrwalet logs and contact support if the issue persists.");
+      logger.log("error", "dcrwallet closed due to an error.  Check dcrwallet logs and contact support if the issue persists.");
       mainWindow.webContents.executeJavaScript("alert(\"dcrwallet closed due to an error.  Check dcrwallet logs and contact support if the issue persists.\");");
       mainWindow.webContents.executeJavaScript("window.close();");
     } else {

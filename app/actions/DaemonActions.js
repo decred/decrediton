@@ -89,7 +89,7 @@ export function syncDaemon(rpcuser, rpcpassword, host, cert) {
           dispatch({currentBlockCount: parseInt(updateCurrentBlockCount), timeStart: time, blockStart: parseInt(updateCurrentBlockCount), type: DAEMONSYNCING_START});
         }
       }
-      await sleep(10000);
+      await sleep(1000);
     }
   };
 }

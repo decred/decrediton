@@ -12,7 +12,7 @@ const DaemonLoadingFormHeader = ({
 }) => (
   <Header getStarted
     headerTitleOverview="Setting up Decrediton"
-    headerMetaOverview={getDaemonStarted ? getCurrentBlockCount == null ? "Daemon started, waiting for rpc..." : "Blockchain syncing" : "Starting daemon"}
+    headerMetaOverview={getDaemonStarted ? getCurrentBlockCount == null ? "Preparing node" : "Downloading blockchain" : "Starting node"}
     headerTop={startupError
       ? <div key="pubError" className="get-started-view-notification-error">{startupError}</div>
       : <div key="pubError" ></div>}
