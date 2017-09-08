@@ -5,6 +5,19 @@ import {
 import { reverseHash } from "./helpers/byteActions";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
+
+export const getDaemonStarted = get(["daemon", "daemonStarted"]);
+export const getCurrentBlockCount = get(["daemon", "currentBlockCount"]);
+export const getNeededBlocks = get(["walletLoader", "neededBlocks"]);
+export const getEstimatedTimeLeft = get(["daemon", "timeLeftEstimate"]);
+export const getDaemonSynced = get(["daemon", "daemonSynced"]);
+export const getWalletReady = get(["daemon", "walletReady"]);
+export const isPrepared = and(
+  getDaemonStarted,
+  getDaemonSynced,
+  getWalletReady,
+);
+
 const START_STEP_OPEN = 2;
 const START_STEP_RPC1 = 3;
 const START_STEP_RPC2 = 4;
@@ -56,9 +69,12 @@ export const isInputRequest = or(
   createWalletInputRequest,
   discoverAddressInputRequest,
 );
-export const isStartupProcessing = and(
-  not(isInputRequest),
-  not(startupError)
+export const isStartupProcessing = or(
+  not(isPrepared),
+  and(
+    not(isInputRequest),
+    not(startupError)
+  )
 );
 
 const balances = get(["grpc", "balances"]);

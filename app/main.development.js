@@ -1,5 +1,5 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
-import { getCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, writeCfgs, getDcrdPath } from "./config.js";
+import { getCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath } from "./config.js";
 import path from "path";
 import os from "os";
 import parseArgs from "minimist";
@@ -11,7 +11,8 @@ let mainWindow = null;
 let debug = false;
 let dcrdPID;
 let dcrwPID;
-
+let daemonReady = false;
+let currentBlockCount;
 // Not going to make incorrect options fatal since running in dev mode has
 // all sorts of things on the cmd line that we don't care about.  If we want
 // to make this fatal, it must be for production mode only.
@@ -29,7 +30,7 @@ var opts = {
   unknown: unknownFn
 };
 var argv = parseArgs(process.argv.slice(1), opts);
-debug = argv.debug;
+debug = argv.debug || process.env.NODE_ENV === "development";
 // Output for child processes.
 var stdout = "ignore";
 if (debug) {
@@ -38,6 +39,13 @@ if (debug) {
 var stderr = "ignore";
 if (debug) {
   stderr = "pipe";
+}
+
+var execPath;
+if (process.env.NODE_ENV === "development") {
+  execPath =  __dirname;
+} else {
+  execPath = process.resourcesPath;
 }
 
 if (process.env.NODE_ENV === "production") {
@@ -139,16 +147,12 @@ function cleanShutdown() {
   // Attempt a clean shutdown.
   const cliShutDownPause = 2; // in seconds.
   const shutDownPause = 3; // in seconds.
-  if (process.env.NODE_ENV === "production") {
-    closeClis();
-    // Sent shutdown message again as we have seen it missed in the past if they
-    // are still running.
-    setTimeout(function(){closeClis();}, cliShutDownPause*1000);
-    logger.log("info", "Closing decrediton.");
-    setTimeout(function(){app.quit();}, shutDownPause*1000);
-  } else {
-    app.quit();
-  }
+  closeClis();
+  // Sent shutdown message again as we have seen it missed in the past if they
+  // are still running.
+  setTimeout(function(){closeClis();}, cliShutDownPause*1000);
+  logger.log("info", "Closing decrediton.");
+  setTimeout(function(){app.quit();}, shutDownPause*1000);
 }
 
 app.on("window-all-closed", () => {
@@ -175,11 +179,80 @@ const installExtensions = async () => {
   }
 };
 
+const {ipcMain} = require("electron");
+
+ipcMain.on("start-daemon", (event, arg) => {
+  if (dcrdPID) {
+    logger.log("info", "dcrd already started " + dcrwPID);
+    event.returnValue = dcrdPID;
+    return;
+  }
+  logger.log("info", "launching dcrd with " + JSON.stringify(arg));
+  try {
+    dcrdPID = launchDCRD();
+  } catch (e) {
+    logger.log("error", "error launching dcrd: " + e);
+  }
+  event.returnValue = dcrdPID;
+});
+
+ipcMain.on("stop-daemon", (event) => {
+  if (!dcrdPID) {
+    logger.log("info", "dcrd already stopped " + dcrwPID);
+    event.returnValue = true;
+    return;
+  }
+  logger.log("info", "launching dcrd");
+  try {
+    closeDCRD();
+    daemonReady = false;
+  } catch (e) {
+    logger.log("error", "error stopping dcrd: " + e);
+  }
+  event.returnValue = !daemonReady;
+});
+
+ipcMain.on("start-wallet", (event, arg) => {
+  if (dcrwPID) {
+    logger.log("info", "dcrwallet already started " + dcrwPID);
+    event.returnValue = dcrwPID;
+    return;
+  }
+  logger.log("info", "launching dcrwallet at " + JSON.stringify(arg));
+  try {
+    dcrwPID = launchDCRWallet();
+  } catch (e) {
+    logger.log("error", "error launching dcrd: " + e);
+  }
+  event.returnValue = dcrwPID;
+});
+
+ipcMain.on("check-daemon", (event) => {
+  var spawn = require("child_process").spawn;
+  var args = ["--configfile="+dcrctlCfg(), "getblockcount"];
+  var dcrctlExe = path.join(execPath, "bin", "dcrctl");
+
+  logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
+
+  var dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
+
+  dcrctl.stdout.on("data", (data) => {
+    currentBlockCount = data.toString();
+    logger.log("info", data.toString());
+    daemonReady = true;
+    event.returnValue = currentBlockCount;
+  });
+  dcrctl.stderr.on("data", (data) => {
+    logger.log("error", data.toString());
+    event.returnValue = 0;
+  });
+});
+
 const launchDCRD = () => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrdCfg()];
 
-  var dcrdExe = path.join(process.resourcesPath, "bin", "dcrd");
+  var dcrdExe = path.join(execPath, "bin", "dcrd");
 
   if (os.platform() == "win32") {
     try {
@@ -201,11 +274,19 @@ const launchDCRD = () => {
   });
 
   dcrd.on("error", function (err) {
-    logger.log("error", "error starting " + dcrdExe + ": " + path + err);
+    logger.log("error", "Error running dcrd.  Check logs and restart! " + err);
+    mainWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart! " + err + "\");");
+    mainWindow.webContents.executeJavaScript("window.close();");
   });
 
   dcrd.on("close", (code) => {
-    logger.log("info", `dcrd exited with code ${code}`);
+    if (code !== 0) {
+      logger.log("error", "dcrd closed due to an error.  Check dcrd logs and contact support if the issue persists.");
+      mainWindow.webContents.executeJavaScript("alert(\"dcrd closed due to an error.  Check dcrd logs and contact support if the issue persists.\");");
+      mainWindow.webContents.executeJavaScript("window.close();");
+    } else {
+      logger.log("info", `dcrd exited with code ${code}`);
+    }
   });
 
   if (debug) {
@@ -222,13 +303,14 @@ const launchDCRD = () => {
   logger.log("info", "dcrd started with pid:" + dcrdPID);
 
   dcrd.unref();
+  return dcrdPID;
 };
 
 const launchDCRWallet = () => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrwCfg()];
 
-  var dcrwExe = path.join(process.resourcesPath, "bin", "dcrwallet");
+  var dcrwExe = path.join(execPath, "bin", "dcrwallet");
   if (os.platform() == "win32") {
     try {
       const util = require("util");
@@ -257,11 +339,19 @@ const launchDCRWallet = () => {
   });
 
   dcrwallet.on("error", function (err) {
-    logger.log("error", "error starting " + dcrwExe + ": " + path + err);
+    logger.log("error", "Error running dcrwallet.  Check logs and restart! " + err);
+    mainWindow.webContents.executeJavaScript("alert(\"Error running dcrwallet.  Check logs and restart! " + err + "\");");
+    mainWindow.webContents.executeJavaScript("window.close();");
   });
 
   dcrwallet.on("close", (code) => {
-    logger.log("info", `dcrwallet exited with code ${code}`);
+    if (code !== 0) {
+      logger.log("error", "dcrwallet closed due to an error.  Check dcrwallet logs and contact support if the issue persists.");
+      mainWindow.webContents.executeJavaScript("alert(\"dcrwallet closed due to an error.  Check dcrwallet logs and contact support if the issue persists.\");");
+      mainWindow.webContents.executeJavaScript("window.close();");
+    } else {
+      logger.log("info", `dcrwallet exited with code ${code}`);
+    }
   });
 
   if (debug) {
@@ -278,25 +368,13 @@ const launchDCRWallet = () => {
   logger.log("info", "dcrwallet started with pid:" + dcrwPID);
 
   dcrwallet.unref();
+  return dcrwPID;
 };
 
 app.on("ready", async () => {
   await installExtensions();
   // Write application config files.
   await writeCfgs();
-
-  if (process.env.NODE_ENV === "production") {
-    try {
-      await launchDCRD();
-    } catch (e) {
-      logger.log("error", "error launching dcrd: " + e);
-    }
-    try {
-      await launchDCRWallet();
-    } catch (e) {
-      logger.log("error", "error launching dcrwallet: " + e);
-    }
-  }
 
   mainWindow = new BrowserWindow({
     show: false,
@@ -307,23 +385,9 @@ app.on("ready", async () => {
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   mainWindow.webContents.on("did-finish-load", () => {
-    if (process.env.NODE_ENV === "production") {
-      // Check if daemon and wallet started up and error if not.
-      if (!require("is-running")(dcrwPID)) {
-        logger.log("error", "Error running dcrwallet.  Check logs and restart!");
-        mainWindow.webContents.executeJavaScript("alert(\"Error running dcrwallet.  Check logs and restart!\");");
-        mainWindow.webContents.executeJavaScript("window.close();");
-      }
-      if (!require("is-running")(dcrdPID)) {
-        logger.log("error", "Error running dcrd.  Check logs and restart!");
-        mainWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart!\");");
-        mainWindow.webContents.executeJavaScript("window.close();");
-      }
-    }
     mainWindow.show();
     mainWindow.focus();
   });
-
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
