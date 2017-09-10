@@ -82,7 +82,6 @@ const balances = get(["grpc", "balances"]);
 export const walletService = get(["grpc", "walletService"]);
 export const txPerPage = get(["grpc", "txPerPage"]);
 export const getBalanceRequestAttempt = get(["grpc", "getBalanceRequestAttempt"]);
-export const transactionDetails = get(["grpc", "transactionDetails"]);
 export const getAccountsResponse = get(["grpc", "getAccountsResponse"]);
 export const getNetworkResponse = get(["grpc", "getNetworkResponse"]);
 const accounts = createSelector([getAccountsResponse], r => r ? r.getAccountsList() : []);

@@ -8,7 +8,6 @@ import Select from "react-select";
 import "../../../style/HistoryPage.less";
 
 const Page = ({
-  network,
   transactionDetails,
   spendableTotalBalance,
   selectedType,
@@ -16,7 +15,6 @@ const Page = ({
   paginatedTxs,
   currentPage,
   totalPages,
-  getAccountsResponse,
   onChangeSelectedType,
   onShowTxDetail,
   onClearTxDetail,
@@ -26,7 +24,7 @@ const Page = ({
   <div className="history-body">
     <SideBar />
     {transactionDetails ? (
-      <TxDetails tx={transactionDetails} {...{ getAccountsResponse, onClearTxDetail }} />
+      <TxDetails tx={transactionDetails} {...{ onClearTxDetail }} />
     ) : (
       <div className="history-view">
         <Header
@@ -54,10 +52,8 @@ const Page = ({
           <div className="history-content-nest">
             {paginatedTxs.length > 0 ? (
               <TxHistory
-                getAccountsResponse={getAccountsResponse}
                 mined={paginatedTxs}
                 showTxDetail={onShowTxDetail}
-                network={network}
               />
             ) : <p>No transactions</p>}
           </div>
