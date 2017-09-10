@@ -1,8 +1,9 @@
 import {
-  compose, reduce, filter, get, not, or, and, eq, find, bool, map,
+  compose, reduce, filter, get, not, or, and, eq, find, bool, map, apply,
   createSelectorEager as createSelector
 } from "./fp";
 import { reverseHash } from "./helpers/byteActions";
+import { TransactionDetails }  from "./middleware/walletrpc/api_pb";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
@@ -84,6 +85,7 @@ export const getBalanceRequestAttempt = get(["grpc", "getBalanceRequestAttempt"]
 export const transactionDetails = get(["grpc", "transactionDetails"]);
 export const getAccountsResponse = get(["grpc", "getAccountsResponse"]);
 export const getNetworkResponse = get(["grpc", "getNetworkResponse"]);
+const accounts = createSelector([getAccountsResponse], r => r ? r.getAccountsList() : []);
 export const spendableTotalBalance = createSelector(
   [balances],
   reduce(
@@ -93,28 +95,134 @@ export const spendableTotalBalance = createSelector(
   )
 );
 
-const regularTransactionsInfo = get(["grpc", "regularTransactionsInfo"]);
+export const network = compose(r => r ? r.networkStr : null, getNetworkResponse);
+export const isTestNet = compose(eq("testnet"), network);
+export const isMainNet = not(isTestNet);
+
+const getTxTypeStr = type => ({
+  [TransactionDetails.TransactionType.TICKET_PURCHASE]: "Ticket",
+  [TransactionDetails.TransactionType.VOTE]: "Vote",
+  [TransactionDetails.TransactionType.REVOCATION]: "Revocation"
+})[type];
+
+const transactionNormalizer = createSelector(
+  [accounts, network],
+  (accounts, network) => {
+    const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
+    const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
+    return tx => {
+      const { blockHash } = tx;
+      const type = tx.type || null;
+      let txInfo = tx.tx ? tx : {};
+      let timestamp = tx.timestamp;
+      tx = tx.tx || tx;
+      timestamp = timestamp || tx.timestamp;
+      let totalFundsReceived = 0;
+      let totalChange = 0;
+      let addressStr = [];
+      let debitedAccount;
+      let creditedAccount;
+      const txInputs = [];
+      const txOutputs = [];
+      const txHash = reverseHash(Buffer.from(tx.getHash()).toString("hex"));
+      const txBlockHash = blockHash ? reverseHash(Buffer.from(blockHash).toString("hex")) : null;
+      const fee = tx.getFee();
+      const totalDebit = tx.getDebitsList().reduce((total, debit) => {
+        debitedAccount = debit.getPreviousAccount();
+        const accountName = getAccountName(debitedAccount);
+        const amount = debit.getPreviousAmount();
+        txInputs.push({ accountName, amount });
+        return total + amount;
+      }, 0);
+
+      tx.getCreditsList().forEach((credit) => {
+        const amount = credit.getAmount();
+        const address = credit.getAddress();
+        addressStr.push(address);
+        creditedAccount = credit.getAccount();
+        const accountName = getAccountName(creditedAccount);
+        txOutputs.push({ accountName, amount, address });
+        credit.getInternal() ? (totalChange += amount) : (totalFundsReceived += amount);
+      });
+
+      const txDetails = ((totalFundsReceived + totalChange + fee) < totalDebit)
+        ? {
+          txDescription: { direction: "Sent", addressStr: null },
+          txAmount: totalDebit - fee - totalChange - totalFundsReceived,
+          txDirection: "out",
+          txAccountName: getAccountName(debitedAccount)
+        }
+        : ((totalFundsReceived + totalChange + fee) === totalDebit)
+          ? {
+            txDescription: { direction: "Transferred", addressStr },
+            txAmount: fee,
+            txDirection: "transfer",
+            txAccountName: getAccountName(creditedAccount)
+          }
+          : {
+            txDescription: { direction: "Received at:", addressStr },
+            txAmount: totalFundsReceived,
+            txDirection: "in",
+            txAccountName: getAccountName(creditedAccount)
+          };
+
+      return {
+        txUrl: `https://${network}.decred.org/tx/${txHash}`,
+        txBlockUrl: txBlockHash ? `https://${network}.decred.org/block/${txBlockHash}` : null,
+        txHash,
+        txHeight: txInfo.height,
+        txType: getTxTypeStr(type),
+        txTimestamp: timestamp,
+        txFee: fee,
+        txInputs,
+        txOutputs,
+        txBlockHash,
+        ...txDetails
+      };
+    };
+  }
+);
+
+export const transactionsNormalizer = createSelector([transactionNormalizer], map);
+
+const regularTransactions = createSelector(
+  [transactionsNormalizer, get(["grpc", "regularTransactionsInfo"])], apply
+);
+
+const ticketTransactions = createSelector(
+  [transactionsNormalizer, get(["grpc", "ticketTransactionsInfo"])], apply
+);
+
+const voteTransactions = createSelector(
+  [transactionsNormalizer, get(["grpc", "voteTransactionsInfo"])], apply
+);
+
+const revokeTransactions = createSelector(
+  [transactionsNormalizer, get(["grpc", "revokeTransactionsInfo"])], apply
+);
+
+export const unmined = createSelector(
+  [transactionsNormalizer, get(["notifications", "unmined"])], apply
+);
+
 export const transactions = createSelector(
   [
-    regularTransactionsInfo,
-    get(["grpc", "ticketTransactionsInfo"]),
-    get(["grpc", "voteTransactionsInfo"]),
-    get(["grpc", "revokeTransactionsInfo"])
+    regularTransactions,
+    ticketTransactions,
+    voteTransactions,
+    revokeTransactions
   ],
   ( Regular, Tickets, Votes, Revokes ) => ({
     All: Regular.concat(Tickets).concat(Votes).concat(Revokes)
-      .sort((a, b) => b.timestamp - a.timestamp),
+      .sort((a, b) => b.txTimestamp - a.txTimestamp),
     Regular, Tickets, Votes, Revokes,
   })
 );
 
-
 const rescanResponse = get(["control", "rescanResponse"]);
 export const rescanRequest = get(["control", "rescanRequest"]);
 export const synced = get(["notifications", "synced"]);
-export const unmined = get(["notifications", "unmined"]);
 export const getTransactionsRequestAttempt = get(["grpc", "getTransactionsRequestAttempt"]);
-
 
 export const currentBlockHeight = compose(
   req => req ? req.getCurrentBlockHeight() : 1, getAccountsResponse
@@ -134,17 +242,17 @@ export const rescanPercentFinished = createSelector(
 );
 
 export const homeHistoryMined = createSelector(
-  [unmined, txPerPage, regularTransactionsInfo],
-  (unmined, txPerPage, regularTransactionsInfo) =>
+  [unmined, txPerPage, regularTransactions],
+  (unmined, txPerPage, regularTransactions) =>
     unmined.length > 0
       ? unmined.length > txPerPage
         ? Array()
-        : regularTransactionsInfo.length + unmined.length >= txPerPage
-          ? regularTransactionsInfo.slice(0,txPerPage-unmined.length)
-          : regularTransactionsInfo.slice(0,regularTransactionsInfo.length+unmined.length)
-      : regularTransactionsInfo.length >= txPerPage
-        ? regularTransactionsInfo.slice(0,txPerPage)
-        : regularTransactionsInfo.slice(0,regularTransactionsInfo.length)
+        : regularTransactions.length + unmined.length >= txPerPage
+          ? regularTransactions.slice(0,txPerPage-unmined.length)
+          : regularTransactions.slice(0,regularTransactions.length+unmined.length)
+      : regularTransactions.length >= txPerPage
+        ? regularTransactions.slice(0,txPerPage)
+        : regularTransactions.slice(0,regularTransactions.length)
 );
 
 export const visibleAccounts = createSelector(
@@ -177,9 +285,6 @@ export const nextAddress = compose(
   res => res ? res.getAddress() : "", getNextAddressResponse
 );
 
-export const network = compose(r => r ? r.networkStr : null, getNetworkResponse);
-export const isTestNet = compose(eq("testnet"), network);
-export const isMainNet = not(isTestNet);
 export const currencyDisplay = get(["settings", "currentSettings", "currencyDisplay"]);
 export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
 

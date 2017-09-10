@@ -11,11 +11,11 @@ import { TxDetailsStyles } from "./ViewStyles";
 import { addSpacingAroundText } from "../../helpers/strings";
 import "../fonts.css";
 
-const getHeaderStyle = direction => ({
+const getHeaderStyle = txDirection => ({
   out: TxDetailsStyles.headerMetaTransactionDetailsOut,
   transfer: TxDetailsStyles.headerMetaTransactionDetailsTransfer,
   in: TxDetailsStyles.headerMetaTransactionDetailsIn
-})[direction];
+})[txDirection];
 
 const getFormattedDate = timestamp => dateFormat(new Date(timestamp*1000), "mmm d yyyy, HH:MM:ss");
 
@@ -31,7 +31,7 @@ const TxDetails = ({
     txBlockUrl,
     txAmount,
     txFee,
-    direction,
+    txDirection,
     txTimestamp
   },
   currentBlockHeight,
@@ -46,8 +46,8 @@ const TxDetails = ({
           <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{getFormattedDate(txTimestamp)}</div>
         </div>
       ) : (
-        <div style={getHeaderStyle(direction)}>
-          {direction === "in" ? "" : "-"}<Balance amount={txAmount} />
+        <div style={getHeaderStyle(txDirection)}>
+          {txDirection === "in" ? "" : "-"}<Balance amount={txAmount} />
           <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{getFormattedDate(txTimestamp)}</div>
         </div>
       )}

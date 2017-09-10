@@ -1,67 +1,37 @@
-// @flow
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
-import Page from "./Page";
+import { substruct } from "../../../fp";
+import ErrorScreen from "../../ErrorScreen";
+import HistoryPage from "./Page";
+import historyPageConnector from "../../../connectors/historyPage";
 
 @autobind
-class HistoryPage extends Component {
+class History extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentPage: 0,
       selectedType: "Regular",
-      transactionDetails: null,
-      detailType: null
+      transactionDetails: null
     };
   }
 
   render() {
-    const {
-      onChangeSelectedType,
-      onShowTxDetail,
-      onClearTxDetail,
-      onPageBackward,
-      onPageForward
-    } = this;
-    const {
-      walletService,
-      network,
-      spendableTotalBalance,
-      txPerPage,
-      getAccountsResponse,
-      getNetworkResponse
-    } = this.props;
-    const {
-      currentPage,
-      selectedType,
-      transactionDetails,
-      detailType
-    } = this.state;
-    const txTypes = this.getTxTypes();
-    const paginatedTxs = this.getPaginatedTxs();
-    const totalPages = this.getTotalPages();
-
-    return (
-      <Page
+    return  !this.props.walletService ? <ErrorScreen /> : (
+      <HistoryPage
         {...{
-          walletService,
-          network,
-          transactionDetails,
-          detailType,
-          spendableTotalBalance,
-          selectedType,
-          txTypes,
-          txPerPage,
-          paginatedTxs,
-          currentPage,
-          totalPages,
-          getAccountsResponse,
-          getNetworkResponse,
-          onChangeSelectedType,
-          onShowTxDetail,
-          onClearTxDetail,
-          onPageBackward,
-          onPageForward
+          ...this.props,
+          ...this.state,
+          txTypes: this.getTxTypes(),
+          paginatedTxs: this.getPaginatedTxs(),
+          totalPages: this.getTotalPages(),
+          ...substruct({
+            onChangeSelectedType: null,
+            onShowTxDetail: null,
+            onClearTxDetail: null,
+            onPageBackward: null,
+            onPageForward: null
+          }, this)
         }}
       />
     );
@@ -93,17 +63,14 @@ class HistoryPage extends Component {
   }
 
   onPageForward() {
-    let { currentPage } = this.state;
-    if (currentPage >= this.getTotalPages()) return;
-    currentPage++;
-    this.setState({ currentPage });
+    const { currentPage } = this.state;
+    const totalPages = this.getTotalPages();
+    this.setState({ currentPage: currentPage >= totalPages ? totalPages : currentPage + 1 });
   }
 
   onPageBackward() {
-    let { currentPage } = this.state;
-    if (currentPage <= 0) return;
-    currentPage--;
-    this.setState({ currentPage });
+    const { currentPage } = this.state;
+    this.setState({ currentPage: currentPage <= 0 ? 0 : currentPage - 1 });
   }
 
   onChangeSelectedType(type) {
@@ -113,13 +80,13 @@ class HistoryPage extends Component {
     });
   }
 
-  onShowTxDetail(tx, type) {
-    this.setState({transactionDetails: tx, detailType: type});
+  onShowTxDetail(transactionDetails) {
+    this.setState({ transactionDetails });
   }
 
   onClearTxDetail() {
-    this.setState({transactionDetails: null});
+    this.setState({ transactionDetails: null });
   }
 }
 
-export default HistoryPage;
+export default historyPageConnector(History);
