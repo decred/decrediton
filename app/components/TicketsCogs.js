@@ -1,11 +1,8 @@
-// @flow
 import React from "react";
 import "../style/MiscComponents.less";
 
-class TicketsCogs extends React.Component {
-  render() {
-    return <a className={this.props.opened ? "ticket-cogs-opened" : "ticket-cogs-closed"} onClick={this.props.onClick} />;
-  }
-}
+const TicketsCogs = ({ opened, onClick }) => (
+  <a className={opened ? "ticket-cogs-opened" : "ticket-cogs-closed"} onClick={onClick} />
+);
 
 export default TicketsCogs;

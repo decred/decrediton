@@ -1,11 +1,8 @@
-// @flow
 import React from "react";
 import "../style/MiscComponents.less";
 
-class PurchaseTicketsInfoButton extends React.Component {
-  render() {
-    return <a className="purchase-tickets-info-button" onClick={this.props.onClick} />;
-  }
-}
+const PurchaseTicketsInfoButton = ({ onClick }) => (
+  <a className="purchase-tickets-info-button" onClick={onClick} />
+);
 
 export default PurchaseTicketsInfoButton;
