@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import HistoryPage from "../components/views/HistoryPage";
 import { selectorMap } from "../fp";
 import {
+  network,
   walletService,
   txPerPage,
   spendableTotalBalance,
@@ -15,6 +16,7 @@ import {
 
 const mapStateToProps = selectorMap({
   walletService,
+  network,
   txPerPage,
   spendableTotalBalance,
   getBalanceRequestAttempt,

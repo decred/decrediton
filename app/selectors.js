@@ -116,7 +116,7 @@ export const unmined = get(["notifications", "unmined"]);
 export const getTransactionsRequestAttempt = get(["grpc", "getTransactionsRequestAttempt"]);
 
 
-const currentBlockHeight = compose(
+export const currentBlockHeight = compose(
   req => req ? req.getCurrentBlockHeight() : 1, getAccountsResponse
 );
 
@@ -177,8 +177,7 @@ export const nextAddress = compose(
   res => res ? res.getAddress() : "", getNextAddressResponse
 );
 
-const network = compose(r => r ? r.networkStr : null, getNetworkResponse);
-
+export const network = compose(r => r ? r.networkStr : null, getNetworkResponse);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 export const currencyDisplay = get(["settings", "currentSettings", "currencyDisplay"]);

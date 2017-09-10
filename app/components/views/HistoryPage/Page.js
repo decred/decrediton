@@ -11,6 +11,7 @@ import "../../../style/HistoryPage.less";
 
 const Page = ({
   walletService,
+  network,
   transactionDetails,
   detailType,
   spendableTotalBalance,
@@ -33,8 +34,7 @@ const Page = ({
       {transactionDetails ? (
         <TxDetails
           tx={transactionDetails}
-          clearTxDetails={onClearTxDetail}
-          {...{ detailType, getAccountsResponse, getNetworkResponse}}
+          {...{ detailType, getAccountsResponse, getNetworkResponse, onClearTxDetail }}
         />
       ) : (
         <div className="history-view">
@@ -66,6 +66,7 @@ const Page = ({
                   getAccountsResponse={getAccountsResponse}
                   mined={paginatedTxs}
                   showTxDetail={onShowTxDetail}
+                  network={network}
                 />
               ) : <p>No transactions</p>}
             </div>

@@ -25,6 +25,7 @@ class HistoryPage extends Component {
     } = this;
     const {
       walletService,
+      network,
       spendableTotalBalance,
       txPerPage,
       getAccountsResponse,
@@ -44,6 +45,7 @@ class HistoryPage extends Component {
       <Page
         {...{
           walletService,
+          network,
           transactionDetails,
           detailType,
           spendableTotalBalance,
