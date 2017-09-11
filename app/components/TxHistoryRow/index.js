@@ -1,5 +1,4 @@
 import React from "react";
-import Radium from "radium";
 import TicketPurchase from "./TicketPurchase";
 import Vote from "./Vote";
 import Revocation from "./Revocation";
@@ -39,4 +38,4 @@ const TxRow = ({
   ) : null;
 };
 
-export default Radium(TxRow);
+export default TxRow;
