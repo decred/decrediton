@@ -1,7 +1,7 @@
 import React from "react";
-import CircularProgress from "material-ui/CircularProgress";
 import Header from "../../../Header";
 import AccountRow from "./AccountRow";
+import DecredLoading from "../../../DecredLoading";
 import KeyBlueButton from "../../../KeyBlueButton";
 import "../../../../style/AccountsPage.less";
 
@@ -88,7 +88,7 @@ const AccountsList = ({
 
     <div className="account-content">
       {isLoading ? (
-        <CircularProgress className="account-loading" size={125} thickness={6}/>
+        <DecredLoading/>
       ) : (
         <div className="account-content-nest">
           {accounts.map(account => (
