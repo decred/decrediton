@@ -1,7 +1,5 @@
 @import (reference) "./main.less";
-
-@arrow-up-key-blue: url(../components/icons/arrow-up-key-blue.svg);
-@arrow-down-key-blue: url(../components/icons/arrow-down-key-blue.svg);
+@import (reference) "./Icons.less";
 
 
 .num-tickets-input-area {
@@ -60,10 +58,10 @@
     background-repeat: no-repeat;
 }
 .num-tickets-more {
-    background-image: @arrow-up-key-blue;
+    background-image: @arrow-up-key-blue-icon;
 }
 .num-tickets-less {
-    background-image: @arrow-down-key-blue;
+    background-image: @arrow-down-key-blue-icon;
 }
 .num-tickets-more:hover,
 .num-tickets-less:hover {

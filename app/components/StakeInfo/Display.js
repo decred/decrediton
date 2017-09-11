@@ -1,5 +1,5 @@
 import React from "react";
-import { StakePoolStyles } from "../views/ViewStyles";
+import "../../style/StakePool.less";
 import TicketsCogs from "../TicketsCogs";
 
 const StakeInfoDisplay = ({
@@ -16,15 +16,15 @@ const StakeInfoDisplay = ({
   onHideStakeInfo,
   onShowStakeInfo
 }) => isShowingDetails ? (
-  <div style={StakePoolStyles.stakeInfoArea}>
-    <div style={StakePoolStyles.stakeInfoRow}>
-      <div style={StakePoolStyles.stakeInfoRowLeft}>
-        <div style={StakePoolStyles.stakeInfoLabel}>Poolsize:</div>
-        <div style={StakePoolStyles.stakeInfoValue}>{ticketPoolSize}</div>
+  <div className="stakepool-stake-info-area">
+    <div className="stakepool-stake-info-row">
+      <div className="stakepool-stake-info-row-left">
+        <div className="stakepool-stake-info-label">Poolsize:</div>
+        <div className="stakepool-stake-info-value">{ticketPoolSize}</div>
       </div>
-      <div style={StakePoolStyles.stakeInfoRowRight}>
-        <div style={StakePoolStyles.stakeInfoLabel}>Voted Tickets:</div>
-        <div style={StakePoolStyles.stakeInfoValue}>{votedTicketsCount}</div>
+      <div className="stakepool-stake-info-row-right">
+        <div className="stakepool-stake-info-label">Voted Tickets:</div>
+        <div className="stakepool-stake-info-value">{votedTicketsCount}</div>
         <TicketsCogs
           opened={!isShowingDetails}
           style={{paddingTop: "2px"}}
@@ -32,56 +32,56 @@ const StakeInfoDisplay = ({
         />
       </div>
     </div>
-    <div style={StakePoolStyles.stakeInfoRow}>
-      <div style={StakePoolStyles.stakeInfoRowLeft}>
-        <div style={StakePoolStyles.stakeInfoLabel}>All Mempool Tickets:</div>
-        <div style={StakePoolStyles.stakeInfoValue}>{allMempoolTicketsCount}</div>
+    <div className="stakepool-stake-info-row">
+      <div className="stakepool-stake-info-row-left">
+        <div className="stakepool-stake-info-label">All Mempool Tickets:</div>
+        <div className="stakepool-stake-info-value">{allMempoolTicketsCount}</div>
       </div>
-      <div style={StakePoolStyles.stakeInfoRowRight}>
-        <div style={StakePoolStyles.stakeInfoLabel}>Missed Tickets:</div>
-        <div style={StakePoolStyles.stakeInfoValue}>{missedTicketsCount}</div>
-      </div>
-    </div>
-    <div style={StakePoolStyles.stakeInfoRow}>
-      <div style={StakePoolStyles.stakeInfoRowLeft}>
-        <div style={StakePoolStyles.stakeInfoLabel}>Own Mempool Tickets:</div>
-        <div style={StakePoolStyles.stakeInfoValue}>{ownMempoolTicketsCount}</div>
-      </div>
-      <div style={StakePoolStyles.stakeInfoRowRight}>
-        <div style={StakePoolStyles.stakeInfoLabel}>Revoked Tickets:</div>
-        <div style={StakePoolStyles.stakeInfoValue}>{revokedTicketsCount}</div>
+      <div className="stakepool-stake-info-row-right">
+        <div className="stakepool-stake-info-label">Missed Tickets:</div>
+        <div className="stakepool-stake-info-value">{missedTicketsCount}</div>
       </div>
     </div>
-    <div style={StakePoolStyles.stakeInfoRow}>
-      <div style={StakePoolStyles.stakeInfoRowLeft}>
-        <div style={StakePoolStyles.stakeInfoLabel}>Immature Tickets:</div>
-        <div style={StakePoolStyles.stakeInfoValue}>{immatureTicketsCount}</div>
+    <div className="stakepool-stake-info-row">
+      <div className="stakepool-stake-info-row-left">
+        <div className="stakepool-stake-info-label">Own Mempool Tickets:</div>
+        <div className="stakepool-stake-info-value">{ownMempoolTicketsCount}</div>
       </div>
-      <div style={StakePoolStyles.stakeInfoRowRight}>
-        <div style={StakePoolStyles.stakeInfoLabel}>Expired Tickets:</div>
-        <div style={StakePoolStyles.stakeInfoValue}>{expiredTicketsCount}</div>
+      <div className="stakepool-stake-info-row-right">
+        <div className="stakepool-stake-info-label">Revoked Tickets:</div>
+        <div className="stakepool-stake-info-value">{revokedTicketsCount}</div>
       </div>
     </div>
-    <div style={StakePoolStyles.stakeInfoRow}>
-      <div style={StakePoolStyles.stakeInfoRowLeft}>
-        <div style={StakePoolStyles.stakeInfoLabel}>Live Tickets:</div>
-        <div style={StakePoolStyles.stakeInfoValue}>{liveTicketsCount}</div>
+    <div className="stakepool-stake-info-row">
+      <div className="stakepool-stake-info-row-left">
+        <div className="stakepool-stake-info-label">Immature Tickets:</div>
+        <div className="stakepool-stake-info-value">{immatureTicketsCount}</div>
+      </div>
+      <div className="stakepool-stake-info-row-right">
+        <div className="stakepool-stake-info-label">Expired Tickets:</div>
+        <div className="stakepool-stake-info-value">{expiredTicketsCount}</div>
+      </div>
+    </div>
+    <div className="stakepool-stake-info-row">
+      <div className="stakepool-stake-info-row-left">
+        <div className="stakepool-stake-info-label">Live Tickets:</div>
+        <div className="stakepool-stake-info-value">{liveTicketsCount}</div>
       </div>
     </div>
   </div>
 ) : (
-  <div style={StakePoolStyles.stakeInfoAreaSmall}>
-    <div style={StakePoolStyles.stakeInfoRowSmall}>
-      <div style={StakePoolStyles.stakeInfoLabel}>Own Mempool Tickets:</div>
-      <div style={StakePoolStyles.stakeInfoValue}>{ownMempoolTicketsCount}</div>
+  <div className="stakepool-stake-info-area-small">
+    <div className="stakepool-stake-info-row-small">
+      <div className="stakepool-stake-info-label">Own Mempool Tickets:</div>
+      <div className="stakepool-stake-info-value">{ownMempoolTicketsCount}</div>
     </div>
-    <div style={StakePoolStyles.stakeInfoRowSmall}>
-      <div style={StakePoolStyles.stakeInfoLabel}>Immature Tickets:</div>
-      <div style={StakePoolStyles.stakeInfoValue}>{immatureTicketsCount}</div>
+    <div className="stakepool-stake-info-row-small">
+      <div className="stakepool-stake-info-label">Immature Tickets:</div>
+      <div className="stakepool-stake-info-value">{immatureTicketsCount}</div>
     </div>
-    <div style={StakePoolStyles.stakeInfoRowSmallRight}>
-      <div style={StakePoolStyles.stakeInfoLabel}>Live Tickets:</div>
-      <div style={StakePoolStyles.stakeInfoValue}>{liveTicketsCount}</div>
+    <div className="stakepool-stake-info-row-small-right">
+      <div className="stakepool-stake-info-label">Live Tickets:</div>
+      <div className="stakepool-stake-info-value">{liveTicketsCount}</div>
       <TicketsCogs
         opened={!isShowingDetails}
         style={{paddingTop: "2px"}}

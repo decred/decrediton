@@ -1,7 +1,7 @@
 import React from "react";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
-import { StakePoolStyles } from "../views/ViewStyles";
+import "../../style/StakePool.less";
 
 const StakePoolsList = ({
   configuredStakePools,
@@ -9,43 +9,43 @@ const StakePoolsList = ({
   onShowAddStakePool,
   onHideStakePoolConfig
 }) => (
-  <div style={StakePoolStyles.content}>
-    <div style={StakePoolStyles.flexHeight}>
-      <div style={StakePoolStyles.contentNestFromAddress}>
-        <div style={StakePoolStyles.contentNestPrefixConfigured}>Configured stake pools:</div>
+  <div className="stakepool-content">
+    <div className="stakepool-flex-height">
+      <div className="stakepool-content-nest-from-address">
+        <div className="stakepool-content-nest-prefix-configured">Configured stake pools:</div>
       </div>
       <div id="dynamicInput">
         {configuredStakePools.map(({
           value: { Host, TicketAddress, PoolFees, Script }}
         ) => (
-          <div key={Host} style={StakePoolStyles.contentNestStakePool}>
-            <div style={StakePoolStyles.contentNestStakePoolSettings}>
-              <div style={StakePoolStyles.contentNestPrefixStakePoolSettings}>URL:</div>
-              <div style={StakePoolStyles.contentNestContentStakePoolSettings}>{Host}</div>
+          <div key={Host} className="stakepool-content-nest-stake-pool">
+            <div className="stakepool-content-nest-settings">
+              <div className="stakepool-content-nest-prefix-settings">URL:</div>
+              <div className="stakepool-content-nest-content-settings">{Host}</div>
             </div>
-            <div style={StakePoolStyles.contentNestStakePoolSettings}>
-              <div style={StakePoolStyles.contentNestPrefixStakePoolSettings}>Ticket Address:</div>
-              <div style={StakePoolStyles.contentNestContentStakePoolSettings}>{TicketAddress}</div>
+            <div className="stakepool-content-nest-settings">
+              <div className="stakepool-content-nest-prefix-settings">Ticket Address:</div>
+              <div className="stakepool-content-nest-content-settings">{TicketAddress}</div>
             </div>
-            <div style={StakePoolStyles.contentNestStakePoolSettings}>
-              <div style={StakePoolStyles.contentNestPrefixStakePoolSettings}>Script:</div>
-              <textarea disabled value={Script} style={StakePoolStyles.contentNestContentStakePoolSettings}/>
+            <div className="stakepool-content-nest-settings">
+              <div className="stakepool-content-nest-prefix-settings">Script:</div>
+              <textarea disabled value={Script} className="stakepool-content-nest-content-settings"/>
             </div>
-            <div style={StakePoolStyles.contentNestStakePoolSettingsBottom}>
-              <div style={StakePoolStyles.contentNestPrefixStakePoolSettings}>Pool Fees:</div>
-              <div style={StakePoolStyles.contentNestContentStakePoolSettings}>{PoolFees}</div>
+            <div className="stakepool-content-nest-settings-bottom">
+              <div className="stakepool-content-nest-prefix-settings">Pool Fees:</div>
+              <div className="stakepool-content-nest-content-settings">{PoolFees}</div>
             </div>
           </div>
         ))}
       </div>
     </div>
     {unconfiguredStakePools.length > 0 ? (
-      <KeyBlueButton style={StakePoolStyles.contentSend} onClick={onShowAddStakePool}>
+      <KeyBlueButton className="stakepool-content-send" onClick={onShowAddStakePool}>
         Add stakepool
       </KeyBlueButton>
     ) : null}
     <SlateGrayButton
-      style={StakePoolStyles.hideStakePoolConfig}
+      className="stakepool-hide-config"
       onClick={onHideStakePoolConfig}
     >Cancel</SlateGrayButton>
   </div>

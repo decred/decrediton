@@ -4,7 +4,7 @@ import TicketAutoBuyer from "../../TicketAutoBuyer";
 import PassphraseModal from "../../PassphraseModal";
 import ImportScriptModal from "../../ImportScriptModal";
 import StakeInfo from "../../StakeInfo";
-import { StakePoolStyles } from "../ViewStyles";
+import "../../../style/StakePool.less";
 
 const Tickets = ({
   isRequestingPassphrase,
@@ -32,10 +32,10 @@ const Tickets = ({
       heading={"Enter Passphrase to Import Script"}
       description={<div>Please enter your Script from your configured stakepool:</div>}
     />
-    <div style={isRequestingPassphrase || isShowingImportScript ? StakePoolStyles.contentPurchaseTicketViewBlur : StakePoolStyles.contentPurchaseTicketView}>
+    <div className={isRequestingPassphrase || isShowingImportScript ? "stakepool-content-purchase-ticket-view-blur" : "stakepool-content-purchase-ticket-view"}>
       <StakeInfo />
       <PurchaseTickets {...{ ...props, onCancelPassphraseRequest }} />
-      <div style={StakePoolStyles.areaSpacing}></div>
+      <div className="stakepool-area-spacing"></div>
       <TicketAutoBuyer {...{ ...props, onCancelPassphraseRequest }} />
     </div>
   </div>

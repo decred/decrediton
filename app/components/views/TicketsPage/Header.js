@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../Header";
 import Balance from "../../Balance";
 import TextToggle from "../../TextToggle";
-import { StakePoolStyles } from "../ViewStyles";
+import "../../../style/StakePool.less";
 import ticketsPage from "../../../connectors/ticketsPage";
 
 const TicketsPageHeader = ({
@@ -38,74 +38,74 @@ const TicketsPageHeader = ({
   <Header
     headerTop={[
       currentStakePoolConfigError ? (
-        <div key="updateStakePoolError" style={StakePoolStyles.viewNotificationError}>
-          <div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={onClearStakePoolConfigError}/>
+        <div key="updateStakePoolError" className="stakepool-view-notification-error">
+          <div className="stakepool-content-nest-address-delete-icon" onClick={onClearStakePoolConfigError}/>
           {currentStakePoolConfigError}
         </div>
       ) : null,
       currentStakePoolConfigSuccessMessage ? (
-        <div key="configSuccess"  style={StakePoolStyles.viewNotificationSuccess}>
-          <div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={onClearStakePoolConfigSuccess}/>
+        <div key="configSuccess"  className="stakepool-view-notification-success">
+          <div className="stakepool-content-nest-address-delete-icon" onClick={onClearStakePoolConfigSuccess}/>
           {currentStakePoolConfigSuccessMessage}
         </div>
       ) : null,
       purchaseTicketsError ? (
-        <div key="purchaseTicketsError" style={StakePoolStyles.viewNotificationError}>
-          <div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={onClearPurchaseTicketsError}/>
+        <div key="purchaseTicketsError" className="stakepool-view-notification-error">
+          <div className="stakepool-content-nest-address-delete-icon" onClick={onClearPurchaseTicketsError}/>
           {purchaseTicketsError}
         </div>
       ) : null,
       purchaseTicketsSuccess ? (
-        <div key="purchaseTicketsSuccess" style={StakePoolStyles.viewNotificationSuccess}>
-          <div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={onClearPurchaseTicketsSuccess}/>
+        <div key="purchaseTicketsSuccess" className="stakepool-view-notification-success">
+          <div className="stakepool-content-nest-address-delete-icon" onClick={onClearPurchaseTicketsSuccess}/>
           {purchaseTicketsSuccess}
         </div>
       ) : null,
       revokeTicketsError ? (
-        <div key="revokeTicketsError" style={StakePoolStyles.viewNotificationError}>
-          <div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={onClearRevokeTicketsError}/>
+        <div key="revokeTicketsError" className="stakepool-view-notification-error">
+          <div className="stakepool-content-nest-address-delete-icon" onClick={onClearRevokeTicketsError}/>
           {revokeTicketsError}
         </div>
       ) : null,
       revokeTicketsSuccess ? (
-        <div key="revokeTicketsSuccess" style={StakePoolStyles.viewNotificationSuccess}>
-          <div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={onClearRevokeTicketsSuccess}/>
+        <div key="revokeTicketsSuccess" className="stakepool-view-notification-success">
+          <div className="stakepool-content-nest-address-delete-icon" onClick={onClearRevokeTicketsSuccess}/>
           {revokeTicketsSuccess}
         </div>
       ) : null,
       startAutoBuyerSuccess ? (
-        <div key="startAutoBuyerSuccess" style={StakePoolStyles.viewNotificationSuccess}>
-          <div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={onClearStartAutoBuyerSuccess}/>
+        <div key="startAutoBuyerSuccess" className="stakepool-view-notification-success">
+          <div className="stakepool-content-nest-address-delete-icon" onClick={onClearStartAutoBuyerSuccess}/>
           {startAutoBuyerSuccess}
         </div>
       ) : null,
       stopAutoBuyerSuccess ? (
-        <div key="stopAutoBuyerSuccess" style={StakePoolStyles.viewNotificationSuccess}>
-          <div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={onClearStopAutoBuyerSuccess}/>
+        <div key="stopAutoBuyerSuccess" className="stakepool-view-notification-success">
+          <div className="stakepool-content-nest-address-delete-icon" onClick={onClearStopAutoBuyerSuccess}/>
           {stopAutoBuyerSuccess}
         </div>
       ) : null,
       startAutoBuyerError ? (
-        <div key="startAutoBuyerError" style={StakePoolStyles.viewNotificationError}>
-          <div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={onClearStartAutoBuyerError}/>
+        <div key="startAutoBuyerError" className="stakepool-view-notification-error">
+          <div className="stakepool-content-nest-address-delete-icon" onClick={onClearStartAutoBuyerError}/>
           {startAutoBuyerError}
         </div>
       ) : null,
       stopAutoBuyerError ? (
-        <div key="stopAutoBuyerError" style={StakePoolStyles.viewNotificationError}>
-          <div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={onClearStopAutoBuyerError}/>
+        <div key="stopAutoBuyerError" className="stakepool-view-notification-error">
+          <div className="stakepool-content-nest-address-delete-icon" onClick={onClearStopAutoBuyerError}/>
           {stopAutoBuyerError}
         </div>
       ) : null,
       importScriptError ? (
-        <div key="importScriptError" style={StakePoolStyles.viewNotificationError}>
-          <div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={onClearImportScriptError}/>
+        <div key="importScriptError" className="stakepool-view-notification-error">
+          <div className="stakepool-content-nest-address-delete-icon" onClick={onClearImportScriptError}/>
           {importScriptError}
         </div>
       ) : null,
       importScriptSuccess ? (
-        <div key="importScriptSuccess" style={StakePoolStyles.viewNotificationSuccess}>
-          <div style={StakePoolStyles.contentNestAddressDeleteIcon} onClick={onClearImportScriptSuccess}/>
+        <div key="importScriptSuccess" className="stakepool-view-notification-success">
+          <div className="stakepool-content-nest-address-delete-icon" onClick={onClearImportScriptSuccess}/>
           {importScriptSuccess}
         </div>
       ) : null
@@ -121,7 +121,7 @@ const TicketsPageHeader = ({
       isShowingAddStakePool ? null : (
         <div>
           <Balance amount={ticketPrice} />
-          <div style={StakePoolStyles.toggle}>
+          <div className="stakepool-toggle">
             <TextToggle
               activeButton={"left"}
               leftText={"Purchase Tickets"}

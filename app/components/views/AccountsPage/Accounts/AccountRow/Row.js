@@ -4,7 +4,7 @@ import SlateGrayButton from "../../../../SlateGrayButton";
 import KeyBlueButton from "../../../../KeyBlueButton";
 import Balance from "../../../../Balance";
 import ReactToolTip from "react-tooltip";
-import "../../../../fonts.css";
+import "../../../../../style/Fonts.less";
 import "../../../../../style/AccountRow.less";
 
 const Row = ({

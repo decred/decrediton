@@ -1,15 +1,5 @@
 @import (reference) "./main.less";
-
-@add-icon: url(../components/icons/add.svg);
-@delete-icon: url(../components/icons/delete.svg);
-@minus-big-icon: url(../components/icons/minus-big.svg);
-@wallet-gray-icon: url(../components/icons/wallet-gray.svg);
-@arrow-down-mid-blue: url(../components/icons/arrow-down-mid-blue.svg);
-@arrow-down-key-blue: url(../components/icons/arrow-down-key-blue.svg);
-@minus-big-icon: url(../components/icons/minus-big.svg);
-@minus-big-icon: url(../components/icons/minus-big.svg);
-@minus-big-icon: url(../components/icons/minus-big.svg);
-
+@import (reference) "./Icons.less";
 
 .send-body {
   position: fixed;
@@ -314,14 +304,14 @@
   float: left;
   border-bottom: 1px solid #2971ff;
   background-color: #fff;
-  background-image: @arrow-down-mid-blue;
+  background-image: @arrow-down-mid-blue-icon;
   background-position: 100% 50%;
   background-size: 10px;
   background-repeat: no-repeat;
   cursor: pointer;
 }
 .select-accounts-send:hover {
-  background-image: @arrow-down-key-blue;
+  background-image: @arrow-down-key-blue-icon;
   background-size: 10px;
 }
 

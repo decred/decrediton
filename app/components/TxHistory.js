@@ -1,7 +1,7 @@
 import React from "react";
 import TxHistoryRow from "./TxHistoryRow";
 import dateFormat from "dateformat";
-import "./fonts.css";
+import "../style/Fonts.less";
 
 const TxHistory = ({ mined=[], unmined=[], showTxDetail }) => (
   <div>

@@ -2,7 +2,7 @@ import React from "react";
 import TicketsCogs from "../TicketsCogs";
 import AutoBuyerSwitch from "../AutoBuyerSwitch";
 import KeyBlueButton from "../KeyBlueButton";
-import { StakePoolStyles } from "../views/ViewStyles";
+import "../../style/StakePool.less";
 
 const TicketAutoBuyerForm = ({
   isHidingDetails,
@@ -29,37 +29,37 @@ const TicketAutoBuyerForm = ({
   onToggleShowDetails
 }) => (
   <div>
-    <div style={StakePoolStyles.votingTitleArea}>
-      <div style={StakePoolStyles.votingTitleAreaName}>Automatic Purchase</div>
+    <div className="stakepool-voting-title-area">
+      <div className="stakepool-voting-title-area-name">Automatic Purchase</div>
     </div>
-    <div style={isHidingDetails ? StakePoolStyles.flexHeightAutoBuyerHidden : StakePoolStyles.flexHeightAutoBuyerShown }>
-      <div style={StakePoolStyles.autoBuyerRow}>
+    <div className={isHidingDetails ? "stakepool-flex-height-auto-buyer-hidden" : "stakepool-flex-height-auto-buyer-shown" }>
+      <div className="stakepool-auto-buyer-row">
         <AutoBuyerSwitch enabled={isTicketAutoBuyerEnabled} onClick={onToggleTicketAutoBuyer} />
-        <div style={StakePoolStyles.autoBuyerLabel}>{isTicketAutoBuyerEnabled ? "Enabled" : "Disabled"}</div>
-        <div style={StakePoolStyles.autoBuyerQuickBarRow}>
+        <div className="stakepool-auto-buyer-label">{isTicketAutoBuyerEnabled ? "Enabled" : "Disabled"}</div>
+        <div className="stakepool-auto-buyer-quick-bar-row">
           {isHidingDetails ? (
             <div>
-              <div style={StakePoolStyles.autoBuyerIconAreas} data-tip="Balance To Maintain"><div style={StakePoolStyles.balanceToMaintainIcon}/>{balanceToMaintain}</div>
-              <div style={StakePoolStyles.autoBuyerIconAreas} data-tip="Max Fee"><div style={StakePoolStyles.maxFeeIcon}/>{maxFee} DCR</div>
-              <div style={StakePoolStyles.autoBuyerIconAreas} data-tip="Max Price Absolute"><div style={StakePoolStyles.maxPriceAbsoluteIcon}/>{maxPriceAbsolute} DCR</div>
-              <div style={StakePoolStyles.autoBuyerIconAreas} data-tip="Max Price Relative"><div style={StakePoolStyles.maxPriceRelativeIcon}/>{maxPriceRelative}%</div>
-              <div style={StakePoolStyles.autoBuyerIconAreas} data-tip="Max Per Block"><div style={StakePoolStyles.maxPerBlockIcon}/>{maxPerBlock}</div>
+              <div className="stakepool-auto-buyer-icon-areas" data-tip="Balance To Maintain"><div className="stakepool-balance-to-maintain-icon"/>{balanceToMaintain}</div>
+              <div className="stakepool-auto-buyer-icon-areas" data-tip="Max Fee"><div className="stakepool-max-fee-icon"/>{maxFee} DCR</div>
+              <div className="stakepool-auto-buyer-icon-areas" data-tip="Max Price Absolute"><div className="stakepool-max-price-absolute-icon"/>{maxPriceAbsolute} DCR</div>
+              <div className="stakepool-auto-buyer-icon-areas" data-tip="Max Price Relative"><div className="stakepool-max-price-relative-icon"/>{maxPriceRelative}%</div>
+              <div className="stakepool-auto-buyer-icon-areas" data-tip="Max Per Block"><div className="stakepool-max-per-block-icon"/>{maxPerBlock}</div>
             </div>
           ) : null}
         </div>
-        <div style={StakePoolStyles.autoBuyerShowAdvancedArea}>
+        <div className="stakepool-auto-buyer-show-advanced-area">
           <TicketsCogs opened={isHidingDetails} onClick={onToggleShowDetails} />
         </div>
       </div>
       <div hidden={isHidingDetails ? true : false}>
-        <div style={StakePoolStyles.purchaseTicketRow}>
-          <div style={StakePoolStyles.purchaseTicketRowLeft}>
-            <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.balanceToMaintainIcon}/>Balance to maintain:</div>
-            <div style={StakePoolStyles.purchaseTicketNumInput}>
-              <div style={StakePoolStyles.inputFormPurchaseTicket}>
+        <div className="stakepool-purchase-ticket-row">
+          <div className="stakepool-purchase-ticket-row-left">
+            <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-balance-to-maintain-icon"/>Balance to maintain:</div>
+            <div className="stakepool-purchase-ticket-num-input">
+              <div className="stakepool-input-form-purchase-ticket">
                 <input
                   type="text"
-                  style={StakePoolStyles.contentNestPurchaseTicketForm}
+                  className="stakepool-content-nest-purchase-ticket-form"
                   placeholder="Balance to Maintain"
                   value={balanceToMaintain}
                   onChange={e => onChangeBalanceToMaintain(e.target.value)}
@@ -67,16 +67,16 @@ const TicketAutoBuyerForm = ({
               </div>
             </div>
             {balanceToMaintainError ? (
-              <div style={StakePoolStyles.purchaseTicketInputError}>{balanceToMaintainError}</div>
+              <div className="stakepool-purchase-ticket-input-error">{balanceToMaintainError}</div>
             ) : null}
           </div>
-          <div style={StakePoolStyles.purchaseTicketRowRight}>
-            <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.maxFeeIcon}/>Max Fee:</div>
-            <div style={StakePoolStyles.purchaseTicketNumInput}>
-              <div style={StakePoolStyles.inputFormPurchaseTicket}>
+          <div className="stakepool-purchase-ticket-row-right">
+            <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-fee-icon"/>Max Fee:</div>
+            <div className="stakepool-purchase-ticket-num-input">
+              <div className="stakepool-input-form-purchase-ticket">
                 <input
                   type="text"
-                  style={StakePoolStyles.contentNestPurchaseTicketForm}
+                  className="stakepool-content-nest-purchase-ticket-form"
                   placeholder="Max Fee"
                   value={maxFee}
                   onChange={e => onChangeMaxFee(e.target.value)}
@@ -84,18 +84,18 @@ const TicketAutoBuyerForm = ({
               </div>
             </div>
             {maxFeeError ? (
-              <div style={StakePoolStyles.purchaseTicketInputError}>{maxFeeError}</div>
+              <div className="stakepool-purchase-ticket-input-error">{maxFeeError}</div>
             ) : null}
           </div>
         </div>
-        <div style={StakePoolStyles.purchaseTicketRow}>
-          <div style={StakePoolStyles.purchaseTicketRowLeft}>
-            <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.maxPriceAbsoluteIcon}/>Max Price Absolute:</div>
-            <div style={StakePoolStyles.purchaseTicketNumInput}>
-              <div style={StakePoolStyles.inputFormPurchaseTicket}>
+        <div className="stakepool-purchase-ticket-row">
+          <div className="stakepool-purchase-ticket-row-left">
+            <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-price-absolute-icon"/>Max Price Absolute:</div>
+            <div className="stakepool-purchase-ticket-num-input">
+              <div className="stakepool-input-form-purchase-ticket">
                 <input
                   type="text"
-                  style={StakePoolStyles.contentNestPurchaseTicketForm}
+                  className="stakepool-content-nest-purchase-ticket-form"
                   placeholder="Max Price Absolute"
                   value={maxPriceAbsolute}
                   onChange={e => onChangeMaxPriceAbsolute(e.target.value)}
@@ -103,16 +103,16 @@ const TicketAutoBuyerForm = ({
               </div>
             </div>
             {maxPriceAbsoluteError ? (
-              <div style={StakePoolStyles.purchaseTicketInputError}>{maxPriceAbsoluteError}</div>
+              <div className="stakepool-purchase-ticket-input-error">{maxPriceAbsoluteError}</div>
             ) : null}
           </div>
-          <div style={StakePoolStyles.purchaseTicketRowRight}>
-            <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.maxPriceRelativeIcon}/>Max Price Relative:</div>
-            <div style={StakePoolStyles.purchaseTicketNumInput}>
-              <div style={StakePoolStyles.inputFormPurchaseTicket}>
+          <div className="stakepool-purchase-ticket-row-right">
+            <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-price-relative-icon"/>Max Price Relative:</div>
+            <div className="stakepool-purchase-ticket-num-input">
+              <div className="stakepool-input-form-purchase-ticket">
                 <input
                   type="text"
-                  style={StakePoolStyles.contentNestPurchaseTicketForm}
+                  className="stakepool-content-nest-purchase-ticket-form"
                   placeholder="Max Price Relative"
                   value={maxPriceRelative}
                   onChange={e => onChangeMaxPriceRelative(e.target.value)}
@@ -120,17 +120,17 @@ const TicketAutoBuyerForm = ({
               </div>
             </div>
             {maxPriceRelativeError ? (
-              <div style={StakePoolStyles.purchaseTicketInputError}>{maxPriceRelativeError}</div>
+              <div className="stakepool-purchase-ticket-input-error">{maxPriceRelativeError}</div>
             ) : null}
           </div>
         </div>
-        <div style={StakePoolStyles.purchaseTicketRow}>
-          <div style={StakePoolStyles.autoBuyerIconAreasExpand}><div style={StakePoolStyles.maxPerBlockIcon}/>Max Per Block:</div>
-          <div style={StakePoolStyles.purchaseTicketNumInput}>
-            <div style={StakePoolStyles.inputFormPurchaseTicket}>
+        <div className="stakepool-purchase-ticket-row">
+          <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-per-block-icon"/>Max Per Block:</div>
+          <div className="stakepool-purchase-ticket-num-input">
+            <div className="stakepool-input-form-purchase-ticket">
               <input
                 type="text"
-                style={StakePoolStyles.contentNestPurchaseTicketForm}
+                className="stakepool-content-nest-purchase-ticket-form"
                 placeholder="Max Per Block"
                 value={maxPerBlock}
                 onChange={e => onChangeMaxPerBlock(e.target.value)}
@@ -138,12 +138,12 @@ const TicketAutoBuyerForm = ({
             </div>
           </div>
           {maxPerBlockError ? (
-            <div style={StakePoolStyles.purchaseTicketInputError}>{maxPerBlockError}</div>
+            <div className="stakepool-purchase-ticket-input-error">{maxPerBlockError}</div>
           ) : null}
         </div>
         <div hidden={!getTicketBuyerConfigResponse}>
           <KeyBlueButton
-            style={StakePoolStyles.contentPurchaseButton}
+            className="stakepool-content-purchase-button"
             disabled={!isTicketAutoBuyerConfigDirty}
             onClick={onUpdateTicketAutoBuyerConfig}
           >Update Config</KeyBlueButton>

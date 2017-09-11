@@ -1,0 +1,283 @@
+@import (reference) "./main.less";
+@import (reference) "./Icons.less";
+
+.txdetails-view {
+    width: 880px;
+    height: 100%;
+    float: right;
+    background-color: #f3f6f6;
+}
+.txdetails-header {
+    padding-right: 80px;
+    padding-left: 100px;
+    background-color: #fff;
+}
+.txdetails-content {
+    overflow: auto;
+    height: 556px;
+    padding: 54px 60px 54px 80px;
+}
+.txdetails-header-top {
+    height: 106px;
+    padding-bottom: 20px;
+}
+.txdetails-header-title-overview {
+    height: 54px;
+    padding-top: 13px;
+    color: #596d81;
+    font-size: 27px;
+}
+.txdetails-header-meta-overview {
+    height: 54px;
+    padding-top: 5px;
+    font-family: inconsolata, monospace;
+    font-size: 53px;
+}
+.txdetails-content-title {
+    display: block;
+    height: 44px;
+    margin-right: auto;
+    margin-bottom: 10px;
+    margin-left: auto;
+    border-bottom: 1px solid transparent;
+    color: #596d81;
+    font-size: 27px;
+}
+.txdetails-content-nest {
+    padding-top: 1px;
+}
+.txdetails-indicator-pending {
+    display: inline-block;
+    padding: 5px 8px 5px 20px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    font-size: 12px;
+    line-height: 8px;
+    text-align: right;
+    text-transform: capitalize;
+    border-color: #2971ff;
+    background-image: @indicator-pending-icon;
+    background-position: 6px 50%;
+    background-size: 10px;
+    background-repeat: no-repeat;
+    color: #2971ff;
+}
+
+.txdetails-indicator-confirmed {
+    display: inline-block;
+    padding: 5px 8px 5px 20px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    font-size: 12px;
+    line-height: 8px;
+    text-align: right;
+    text-transform: capitalize;
+    border-color: #2ed8a3;
+    background-image: @indicator-confirmed-icon;
+    background-position: 6px 50%;
+    background-size: 10px;
+    background-repeat: no-repeat;
+    color: #2ed8a3;
+}
+.txdetails-header-meta-stake-tx {
+    height: 38px;
+    padding-top: 16px;
+    padding-left: 50px;
+    background-image: @ticket-small-icon;
+    background-position: 0px 50%;
+    background-size: 30px;
+    background-repeat: no-repeat;
+    font-family: inconsolata, monospace;
+    font-size: 35px;
+    font-weight: 700;
+}
+.txdetails-header-meta-in {
+    height: 38px;
+    padding-top: 16px;
+    padding-left: 50px;
+    background-image: @plus-big-icon;
+    background-position: 0px 50%;
+    background-size: 30px;
+    background-repeat: no-repeat;
+    font-family: inconsolata, monospace;
+    font-size: 35px;
+    font-weight: 700;
+}
+.txdetails-header-meta-transfer {
+    height: 38px;
+    padding-top: 16px;
+    padding-left: 50px;
+    background-image: @wallet-gray-icon;
+    background-position: 0px 50%;
+    background-size: 30px;
+    background-repeat: no-repeat;
+    font-family: inconsolata, monospace;
+    font-size: 35px;
+    font-weight: 700;
+}
+.txdetails-header-meta-currency {
+    font-size: 19px;
+    font-weight: 400;
+}
+
+.txdetails-header-meta-time-and-date {
+    display: inline-block;
+    padding-top: 4px;
+    float: right;
+    font-family: source -sans -pro, sans-serif;
+    font-size: 19px;
+    font-weight: 400;
+}
+
+.txdetails-header-meta-out {
+    height: 38px;
+    padding-top: 16px;
+    padding-left: 50px;
+    background-image: @minus-big-icon;
+    background-position: 0px 50%;
+    background-size: 30px;
+    background-repeat: no-repeat;
+    font-family: inconsolata, monospace;
+    font-size: 35px;
+    font-weight: 700;
+}
+
+.txdetails-details {
+    padding-top: 18px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e7eaed;
+    font-size: 13px;
+    height: 100px;
+}
+
+.txdetails-top {
+    padding-top: 18px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e7eaed;
+    font-size: 13px;
+    height: 240px;
+}
+
+.txdetails-left {
+    width: 150px;
+    float: left;
+}
+
+.txdetails-right {
+    width: 570px;
+    float: right;
+}
+
+.txdetails-name {
+    display: block;
+    width: 160px;
+    height: 28px;
+    padding-top: 4px;
+    padding-right: 20px;
+    float: left;
+    clear: left;
+    font-size: 13px;
+    line-height: 19px;
+    text-align: right;
+}
+.txdetails-overview {
+    height: 100px;
+    width: 100%;
+    padding-left: 80px;
+}
+.txdetails-overview-title {
+    float: left;
+    height: 30px;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 700;
+    border-top: 1px solid #e7eaed;
+    padding-top: 10px;
+}
+.txdetails-overview-title-created {
+    float: right;
+    width: 63%;
+}
+.txdetails-overview-title-consumed {
+    float: left;
+    width: 30%;
+}
+.txdetails-input-area {
+    float: left;
+    width: 30%;
+    height: 100px;
+    overflow: auto;
+    background-image: @arrow-right-key-blue-icon;
+    background-position: 100% 50%;
+    background-size: 15px;
+    background-repeat: no-repeat;
+    padding-right: 35px;
+}
+.txdetails-output-area {
+    float: right;
+    width: 56%;
+    height: 100px;
+    overflow: auto;
+    padding-right: 50px;
+}
+.txdetails-direction {
+    display: block;
+    width: 100%;
+    height: 28px;
+    padding-top: 4px;
+    padding-left: 80px;
+    float: left;
+    clear: left;
+    font-size: 20px;
+    line-height: 19px;
+    text-align: left;
+}
+.txdetails-value {
+    display: inline-block;
+    height: 28px;
+    padding-top: 9px;
+    float: left;
+    font-family: inconsolata, monospace;
+    line-height: 10px;
+    font-weight: 700;
+    text-align: left;
+}
+.txdetails-row {
+    display: inline-block;
+    height: 28px;
+    padding-top: 9px;
+    width: 100%;
+    float: left;
+    font-family: inconsolata, monospace;
+    line-height: 10px;
+    font-weight: 700;
+}
+.txdetails-address {
+    width: 50%;
+    float: left;
+    text-align: left;
+}
+.txdetails-amount {
+    width: 50%;
+    float: right;
+    text-align: right;
+}
+
+.txdetails-value-text {
+    font-weight: 400;
+}
+
+.txdetails-title {
+    width: 140px;
+    height: 28px;
+    padding-top: 4px;
+    color: #596d81;
+    font-size: 20px;
+    text-align: right;
+}
+
+.txdetails-last {
+    border-bottom: 0px none transparent;
+}

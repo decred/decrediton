@@ -1,20 +1,19 @@
 // @flow
 import React from "react";
-import Radium from "radium";
 import Balance from "../Balance";
 import Header from "../Header";
 import { shell } from "electron";
 import dateFormat from "dateformat";
 import transactionDetails from "../../connectors/transactionDetails";
 import SlateGrayButton from "../SlateGrayButton";
-import { TxDetailsStyles } from "./ViewStyles";
+import "../../style/TxDetails.less";
 import { addSpacingAroundText } from "../../helpers/strings";
-import "../fonts.css";
+import "../../style/Fonts.less";
 
-const getHeaderStyle = txDirection => ({
-  out: TxDetailsStyles.headerMetaTransactionDetailsOut,
-  transfer: TxDetailsStyles.headerMetaTransactionDetailsTransfer,
-  in: TxDetailsStyles.headerMetaTransactionDetailsIn
+const getHeaderClassName = txDirection => ({
+  out: "txdetails-header-meta-out",
+  transfer: "txdetails-header-meta-transfer",
+  in: "txdetails-header-meta-in"
 })[txDirection];
 
 const getFormattedDate = timestamp => dateFormat(new Date(timestamp*1000), "mmm d yyyy, HH:MM:ss");
@@ -37,70 +36,70 @@ const TxDetails = ({
   currentBlockHeight,
   onClearTxDetail
 }) => (
-  <div style={TxDetailsStyles.view}>
+  <div className="txdetails-view">
     <Header
       headerTitleOverview={<SlateGrayButton key="back" style={{float: "right"}} onClick={onClearTxDetail}>back</SlateGrayButton>}
       headerMetaOverview={txType ? (
-        <div style={TxDetailsStyles.headerMetaTransactionDetailsStakeTx}>
+        <div className="txdetails-header-meta-stake-tx">
           {txType}
-          <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{getFormattedDate(txTimestamp)}</div>
+          <div className="txdetails-header-meta-time-and-date">{getFormattedDate(txTimestamp)}</div>
         </div>
       ) : (
-        <div style={getHeaderStyle(txDirection)}>
+        <div className={getHeaderClassName(txDirection)}>
           {txDirection === "in" ? "" : "-"}<Balance amount={txAmount} />
-          <div style={TxDetailsStyles.headerMetaTransactionDetailsTimeAndDate}>{getFormattedDate(txTimestamp)}</div>
+          <div className="txdetails-header-meta-time-and-date">{getFormattedDate(txTimestamp)}</div>
         </div>
       )}
     />
-    <div style={TxDetailsStyles.content}>
-      <div style={TxDetailsStyles.contentNest}>
-        <div style={TxDetailsStyles.transactionDetailsTop}>
-          <div style={TxDetailsStyles.transactionDetailsName}>Transaction:</div>
-          <div style={TxDetailsStyles.transactionDetailsValue}>
+    <div className="txdetails-content">
+      <div className="txdetails-content-nest">
+        <div className="txdetails-top">
+          <div className="txdetails-name">Transaction:</div>
+          <div className="txdetails-value">
             <a onClick={() => shell.openExternal(txUrl)} style={{cursor: "pointer"}}>{txHash}</a>
           </div>
-          <div style={TxDetailsStyles.transactionDetailsName}>
-            <div style={TxDetailsStyles.indicatorConfirmed}>confirmed</div>
+          <div className="txdetails-name">
+            <div className="txdetails-indicator-confirmed">confirmed</div>
           </div>
-          <div style={TxDetailsStyles.transactionDetailsValue}>{currentBlockHeight - txHeight} <span style={TxDetailsStyles.transactionDetailsValueText}>confirmations</span></div>
-          <div style={TxDetailsStyles.transactionDetailsOverview}>
-            <div style={TxDetailsStyles.transactionDetailsOverviewTitle}>
-              <div style={TxDetailsStyles.transactionDetailsOverviewTitleConsumed}>Used Inputs</div>
-              <div style={TxDetailsStyles.transactionDetailsOverviewTitleCreated}>New Wallet Outputs</div>
+          <div className="txdetails-value">{currentBlockHeight - txHeight} <span className="txdetails-value-text">confirmations</span></div>
+          <div className="txdetails-overview">
+            <div className="txdetails-overview-title">
+              <div className="txdetails-overview-title-consumed">Used Inputs</div>
+              <div className="txdetails-overview-title-created">New Wallet Outputs</div>
             </div>
-            <div style={TxDetailsStyles.transactionDetailsInputArea}>
+            <div className="txdetails-input-area">
               {txInputs.map(({ accountName, amount }, idx) => (
-                <div key={idx} style={TxDetailsStyles.transactionDetailsRow}>
-                  <div style={TxDetailsStyles.transactionDetailsAddress}>{accountName}</div>
-                  <div style={TxDetailsStyles.transactionDetailsAmount}><Balance amount={amount}/></div>
+                <div key={idx} className="txdetails-row">
+                  <div className="txdetails-address">{accountName}</div>
+                  <div className="txdetails-amount"><Balance amount={amount}/></div>
                 </div>
               ))}
             </div>
-            <div style={TxDetailsStyles.transactionDetailsOutputArea}>
+            <div className="txdetails-output-area">
               {txOutputs.map(({ address, amount }, idx) => (
-                <div key={idx} style={TxDetailsStyles.transactionDetailsRow}>
-                  <div style={TxDetailsStyles.transactionDetailsAddress}>{addSpacingAroundText(address)}</div>
-                  <div style={TxDetailsStyles.transactionDetailsAmount}><Balance amount={amount}/></div>
+                <div key={idx} className="txdetails-row">
+                  <div className="txdetails-address">{addSpacingAroundText(address)}</div>
+                  <div className="txdetails-amount"><Balance amount={amount}/></div>
                 </div>
               ))}
             </div>
           </div>
-          <div style={TxDetailsStyles.transactionDetailsName}>Transaction fee:</div>
-          <div style={TxDetailsStyles.transactionDetailsValue}><Balance amount={txFee} />
+          <div className="txdetails-name">Transaction fee:</div>
+          <div className="txdetails-value"><Balance amount={txFee} />
           </div>
         </div>
-        <div style={TxDetailsStyles.transactionDetails}>
-          <div style={TxDetailsStyles.transactionDetailsTitle}>Properties</div>
-          <div style={TxDetailsStyles.transactionDetailsName}>Block:</div>
-          <div style={TxDetailsStyles.transactionDetailsValue}>
+        <div className="txdetails-details">
+          <div className="txdetails-title">Properties</div>
+          <div className="txdetails-name">Block:</div>
+          <div className="txdetails-value">
             <a onClick={() => shell.openExternal(txBlockUrl)} style={{cursor: "pointer"}}>{txBlockHash}</a>
           </div>
-          <div style={TxDetailsStyles.transactionDetailsName}>Height:</div>
-          <div style={TxDetailsStyles.transactionDetailsValue}>{txHeight}</div>
+          <div className="txdetails-name">Height:</div>
+          <div className="txdetails-value">{txHeight}</div>
         </div>
       </div>
     </div>
   </div>
 );
 
-export default transactionDetails(Radium(TxDetails));
+export default transactionDetails(TxDetails);

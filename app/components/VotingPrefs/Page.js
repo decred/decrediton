@@ -2,7 +2,7 @@ import React from "react";
 import AgendaCard from "../AgendaCard";
 import AgendaOverview from "../AgendaOverview";
 import SelectStakePool from "../SelectStakePool";
-import { StakePoolStyles } from "../views/ViewStyles";
+import "../../style/StakePool.less";
 
 const VotingPrefsPage = ({
   agendas,
@@ -15,10 +15,10 @@ const VotingPrefsPage = ({
   onCloseAgenda,
   onUpdateVotePreference
 }) => (
-  <div style={StakePoolStyles.contentVotingGui}>
-    <div style={StakePoolStyles.votingTitleArea}>
-      <div style={StakePoolStyles.votingTitleAreaName}>Voting Preferences</div>
-      <div style={StakePoolStyles.stakePoolUnconfiguredSelect}>
+  <div className="stakepool-content-voting-gui">
+    <div className="stakepool-voting-title-area">
+      <div className="stakepool-voting-title-area-name">Voting Preferences</div>
+      <div className="stakepool-unconfigured-select">
         <SelectStakePool
           options={configuredStakePools}
           value={stakePool}
@@ -27,7 +27,7 @@ const VotingPrefsPage = ({
       </div>
     </div>
     {(stakePool && stakePool.isVersionValid) ? (
-      <div style={StakePoolStyles.votingAgendaArea}>
+      <div className="stakepool-voting-agenda-area">
         {(selectedAgenda && stakePool) ? (
           <AgendaOverview
             agenda={selectedAgenda}
@@ -48,12 +48,12 @@ const VotingPrefsPage = ({
             ) : null
           )
         ) : (
-          <div style={StakePoolStyles.noAgendasMessage}>There are currently no agendas for voting.</div>
+          <div className="stakepool-no-agendas-message">There are currently no agendas for voting.</div>
         )}
       </div>
     ) : (
-      <div style={StakePoolStyles.votingAgendaArea}>
-        <div style={StakePoolStyles.noAgendasMessage}>This pool is not configured for vote choices.</div>
+      <div className="stakepool-voting-agenda-area">
+        <div className="stakepool-no-agendas-message">This pool is not configured for vote choices.</div>
       </div>
     )}
   </div>
