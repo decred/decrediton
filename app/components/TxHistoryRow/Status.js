@@ -1,10 +1,10 @@
 import React from "react";
-import "../../../style/TxHistory.less";
+import "../../style/TxHistory.less";
 
-const Status = ({ accountName, pending, date }) => (
+const Status = ({ txAccountName, pending, date }) => (
   <div>
     <div className="transaction-account">
-      <div className="transaction-account-name">{accountName}</div>
+      <div className="transaction-account-name">{txAccountName}</div>
       <div className="transaction-account-indicator">
         {pending ? (
           <div className="indicator-pending">Pending</div>

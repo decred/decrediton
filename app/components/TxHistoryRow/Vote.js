@@ -1,11 +1,11 @@
 import React from "react";
 import Status from "./Status";
-import "../../../style/TxHistory.less";
+import "../../style/TxHistory.less";
 
-const Vote = ({ accountName, pending, date, onClick }) => (
+const Vote = ({ txAccountName, pending, date, onClick }) => (
   <div className={onClick ? "vote-tx" : "vote-tx-overview"} {...{ onClick }}>
     <div className="transaction-amount">Vote</div>
-    <Status {...{ accountName, pending, date }} />
+    <Status {...{ txAccountName, pending, date }} />
   </div>
 );
 
