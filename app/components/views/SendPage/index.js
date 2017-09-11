@@ -19,6 +19,7 @@ class Send extends Component {
   getInitialState() {
     return {
       isShowingConfirm: false,
+      isSendAll: false,
       hastAttemptedConstruct: false,
       account: this.props.defaultSpendingAccount,
       outputs: [{ key: 0, ...BASE_OUTPUT }]
@@ -31,13 +32,17 @@ class Send extends Component {
     this.props.onClearSignTxError();
     this.props.onClearPublishTxSuccess();
   }
-
+  componentWillUnmount() {
+    this.onClearTransaction();
+  }
   render() {
     const {
       onChangeAccount,
       onAttemptSignTransaction,
       onClearTransaction,
       onShowConfirm,
+      onShowSendAll,
+      onHideSendAll,
       onAttemptConstructTransaction,
       onAddOutput,
       getOnRemoveOutput,
@@ -57,6 +62,8 @@ class Send extends Component {
           onAttemptSignTransaction,
           onClearTransaction,
           onShowConfirm,
+          onShowSendAll,
+          onHideSendAll,
           onAttemptConstructTransaction,
           onAddOutput,
           getOnRemoveOutput,
@@ -84,7 +91,9 @@ class Send extends Component {
   onClearTransaction() {
     this.setState(this.getInitialState(), this.props.onClearTransaction);
   }
-
+  onShowSendAll() {
+    this.setState({ isSendAll: true }, this.onAttemptConstructTransaction);
+  }
   onShowConfirm() {
     if (!this.getIsValid()) return;
     this.setState({ isShowingConfirm: true });
@@ -97,14 +106,25 @@ class Send extends Component {
     this.setState({ hastAttemptedConstruct: true });
     if (this.getIsInvalid()) return;
 
-    onAttemptConstructTransaction && onAttemptConstructTransaction(
-      this.state.account.value,
-      confirmations,
-      this.state.outputs.map(({ amountStr, destination }) => ({
-        destination,
-        amount: parseFloat(amountStr) * unitDivisor
-      }))
-    );
+    if (!this.getIsSendAll()) {
+      onAttemptConstructTransaction && onAttemptConstructTransaction(
+        this.state.account.value,
+        confirmations,
+        this.state.outputs.map(({ amountStr, destination }) => ({
+          destination,
+          amount: parseFloat(amountStr) * unitDivisor
+        }))
+      );
+    } else {
+      onAttemptConstructTransaction && onAttemptConstructTransaction(
+        this.state.account.value,
+        confirmations,
+        this.state.outputs.map(({ destination }) => ({
+          destination,
+        })),
+        true
+      );
+    }
   }
 
   onAddOutput() {
@@ -140,7 +160,7 @@ class Send extends Component {
   }
 
   getHasEmptyFields() {
-    return !!this.state.outputs.find(({ destination, amountStr }) => !destination || !amountStr);
+    return !!this.state.outputs.find(({ destination, amountStr }) => !destination || (!amountStr && !this.state.isSendAll));
   }
 
   getIsValid() {
@@ -150,7 +170,9 @@ class Send extends Component {
       !this.props.isConstructingTransaction
     );
   }
-
+  getIsSendAll() {
+    return this.state.isSendAll;
+  }
   getAddressError(key) {
     // do some more helper address checking here
     // possibly check for Ds/Dc Ts/Tc and length at the least
@@ -162,11 +184,11 @@ class Send extends Component {
   }
 
   getAmountError(key) {
-    const { outputs } = this.state;
+    const { outputs, isSendAll} = this.state;
     const { amountStr } = outputs[key];
     const amount = parseFloat(amountStr);
-    if (isNaN(amount)) return "*Please enter a valid amount";
-    if (amount <= 0) return "*Please enter a valid amount (> 0)";
+    if (isNaN(amount) && !isSendAll) return "*Please enter a valid amount";
+    if (amount <= 0 && !isSendAll) return "*Please enter a valid amount (> 0)";
   }
 }
 

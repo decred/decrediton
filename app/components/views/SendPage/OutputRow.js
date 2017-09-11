@@ -15,7 +15,10 @@ const SendOutputRow = ({
   hastAttemptedConstruct,
   getOnRemoveOutput,
   getOnChangeOutputDestination,
-  getOnChangeOutputAmount
+  getOnChangeOutputAmount,
+  isSendAll,
+  totalSpent,
+  unitDivisor,
 }) => (
   <div className="send-row">
     <div className="send-output-row">
@@ -32,9 +35,9 @@ const SendOutputRow = ({
           />
         </div>
       </div>
-      {index === 0 ? (
+      {index === 0 && !isSendAll ? (
         <div className="send-address-wallet-icon" onClick={onAddOutput}></div>
-      ) : (index === (outputs.length - 1)) ? (
+      ) : (index === (outputs.length - 1)) && !isSendAll ? (
         <div className="send-address-delete-icon" onClick={getOnRemoveOutput(index)}></div>
       ) : (
         <div style={{width:"39px", height: "34px", float: "left"}}></div>
@@ -44,6 +47,14 @@ const SendOutputRow = ({
         <div className="send-address-amount-sum-and-currency">
         <div className="send-address-amount-sum-gradient">{currencyDisplay}</div>
           <input
+            hidden={!isSendAll}
+            className="send-address-input-amount"
+            disabled={true}
+            type="text"
+            value={totalSpent !== null ? totalSpent / unitDivisor : ""}
+          />
+          <input
+            hidden={isSendAll}
             value={amountStr}
             type="text"
             className="send-address-input-amount"

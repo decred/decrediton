@@ -16,6 +16,7 @@ const SendPage = ({
   isSendingTransaction,
   isTestNet,
   isShowingConfirm,
+  isSendAll,
   account,
   spendingAccounts,
   outputs,
@@ -34,6 +35,7 @@ const SendPage = ({
   onAttemptSignTransaction,
   onClearTransaction,
   onShowConfirm,
+  onShowSendAll,
   getAddressError,
   getAmountError,
   ...props
@@ -97,18 +99,23 @@ const SendPage = ({
                   />
                 </div>
                 <Link
-                  className="send-accounts-button-icon"
+                  className="accounts-button-icon"
                   data-place="bottom"
                   data-type="info"
                   data-effect="solid"
                   data-tip={"Accounts"}
                   to={"/accounts"}
                 />
+                <div className="send-send-all-input">
+                {!isSendAll ?
+                <a onClick={onShowSendAll}>Send All</a> :
+                <a onClick={onClearTransaction}>Close</a>  }
+                </div>
               </div>
               <div id="dynamicInput">
                 {outputs.map((output, index) => (
                   <OutputRow
-                    {...{ index, outputs, ...props, ...output }}
+                    {...{ index, outputs, ...props, ...output, isSendAll, totalSpent }}
                     addressError={getAddressError(index)}
                     amountError={getAmountError(index)}
                   />
