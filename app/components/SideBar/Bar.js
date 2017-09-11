@@ -1,7 +1,7 @@
 // @flow
 import React from "react";
 import MenuLink from "../MenuLink";
-import "../fonts.css";
+import "../../style/Fonts.less";
 import "../../style/SideBar.less";
 
 const Bar = ({

@@ -8,7 +8,7 @@ import transactionDetails from "../../connectors/transactionDetails";
 import SlateGrayButton from "../SlateGrayButton";
 import "../../style/TxDetails.less";
 import { addSpacingAroundText } from "../../helpers/strings";
-import "../fonts.css";
+import "../../style/Fonts.less";
 
 const getHeaderClassName = txDirection => ({
   out: "txdetails-header-meta-out",

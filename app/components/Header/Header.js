@@ -3,10 +3,10 @@ import React from "react";
 import Snackbar from "material-ui/Snackbar";
 import Notification from "./Notification";
 import "../../style/Header.less";
-import WalletGray from "../icons/wallet-gray.svg";
-import TicketSmall from "../icons/tickets-ticket.svg";
-import PlusBig from "../icons/plus-big.svg";
-import MinusBig from "../icons/minus-big.svg";
+import WalletGray from "../../style/icons/wallet-gray.svg";
+import TicketSmall from "../../style/icons/tickets-ticket.svg";
+import PlusBig from "../../style/icons/plus-big.svg";
+import MinusBig from "../../style/icons/minus-big.svg";
 
 const snackbarStyles = {
   stake: {

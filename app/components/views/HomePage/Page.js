@@ -10,7 +10,7 @@ import Balance from "../../Balance";
 import SideBar from "../../SideBar";
 import TxHistory from "../../TxHistory";
 import Header from "../../Header";
-import "../../fonts.css";
+import "../../../style/Fonts.less";
 import "../../../style/HomePage.less";
 
 const HomePage = ({
