@@ -9,6 +9,8 @@ import routes from "./routes";
 import configureStore from "./store/configureStore";
 import { getCfg } from "./config.js";
 import "./style/main.less";
+import "./style/Global.less";
+import "./style/ReactSelectGlobal.less";
 
 var cfg = getCfg();
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { autobind } from "core-decorators";
 import Select from "react-select";
-import "../../../style/ReactSelectGlobal.less";
 import { SEED_LENGTH, SEED_WORDS } from "../../../wallet/seed";
 
 const SEED_WORD_OPTIONS = SEED_WORDS.map(name => ({ name }));

@@ -1,7 +1,6 @@
 // @flow
 import React from "react";
 import KeyBlueButton from "../KeyBlueButton";
-import "../../style/ReactSelectGlobal.less";
 import "../../style/CreateWalletForm.less";
 
 const CreateWallet = ({
