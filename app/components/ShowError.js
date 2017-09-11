@@ -1,14 +1,7 @@
-// @flow
-import React, { Component } from "react";
+import React from "react";
 
-class ShowError extends Component {
-  render() {
-    const { error, className } = this.props;
-    if (error === null) {
-      return null;
-    }
+const ShowError = ({ error, className }) => !error ? null : (
+  <div className={"error" + (className ? (" " + className) : "")}>{error}</div>
+);
 
-    return <div className={"error" + (className ? (" " + className) : "")}>{error}</div>;
-  }
-}
 export default ShowError;
