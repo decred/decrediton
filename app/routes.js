@@ -8,7 +8,7 @@ import SendPage from "./components/views/SendPage";
 import ReceivePage from "./components/views/ReceivePage";
 import SettingsPage from "./components/views/SettingsPage";
 import TicketsPage from "./components/views/TicketsPage";
-import GetStartedPage from "./containers/GetStarted";
+import GetStartedPage from "./components/views/GetStartedPage";
 import AccountsPage from "./components/views/AccountsPage";
 import WalletError from "./components/views/WalletError";
 import Help from "./components/views/Help";

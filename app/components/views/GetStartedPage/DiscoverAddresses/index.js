@@ -53,7 +53,7 @@ class DiscoverAddressesBody extends Component {
       return this.setState({ hasAttemptedDiscover: true });
     }
 
-    this.props.onDiscoverAddresses(this.state.passPhrase);
+    this.props.onDiscoverAddresses(true, this.state.passPhrase);
     this.resetState();
   }
 }
