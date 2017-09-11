@@ -7,7 +7,7 @@ import SelectStakePool from "../SelectStakePool";
 import KeyBlueButton from "../KeyBlueButton";
 import PurchaseTicketsInfoButton from "../PurchaseTicketsInfoButton";
 import TicketsCogs from "../TicketsCogs";
-import { StakePoolStyles } from "../views/ViewStyles";
+import "../../style/StakePool.less";
 import { addSpacingAroundText } from "../../helpers/strings";
 
 const PurchaseTicketsForm = ({
@@ -39,18 +39,18 @@ const PurchaseTicketsForm = ({
   onShowTicketsInfo
 }) => (
   <div>
-    <div style={StakePoolStyles.votingTitleArea}>
-      <div style={StakePoolStyles.votingTitleAreaName}>Purchase Tickets</div>
-      <div style={StakePoolStyles.purchaseTicketInputButtons}>
+    <div className="stakepool-voting-title-area">
+      <div className="stakepool-voting-title-area-name">Purchase Tickets</div>
+      <div className="stakepool-purchase-ticket-input-buttons">
         <PurchaseTicketsInfoButton onClick={onShowTicketsInfo}/>
         <TicketsCogs opened={!isShowingAdvanced} onClick={onToggleShowAdvanced}/>
       </div>
     </div>
-    <div style={isShowingAdvanced ? StakePoolStyles.flexHeightShown : StakePoolStyles.flexHeightHidden }>
-      <div style={StakePoolStyles.purchaseTicketRow}>
-        <div style={StakePoolStyles.purchaseTicketRowAccountSelect}>
-          <div style={StakePoolStyles.purchaseTicketAccountSelectLabel}>Account:</div>
-          <div style={StakePoolStyles.purchaseTicketInputSelect}>
+    <div className={isShowingAdvanced ? "stakepool-flex-height-shown" : "stakepool-flex-height-hidden" }>
+      <div className="stakepool-purchase-ticket-row">
+        <div className="stakepool-purchase-ticket-row-account-select">
+          <div className="stakepool-purchase-ticket-account-select-label">Account:</div>
+          <div className="stakepool-purchase-ticket-input-select">
             <Select
               value={account}
               onChange={onChangeAccount}
@@ -72,9 +72,9 @@ const PurchaseTicketsForm = ({
             to={"/accounts"}
           />
         </div>
-        <div style={StakePoolStyles.purchaseTicketRowNumTickets}>
-          <div style={StakePoolStyles.purchaseTicketLabel}>Number of Tickets:</div>
-          <div style={StakePoolStyles.purchaseTicketNumSelect}>
+        <div className="stakepool-purchase-ticket-row-num-tickets">
+          <div className="stakepool-purchase-ticket-label">Number of Tickets:</div>
+          <div className="stakepool-purchase-ticket-num-select">
             <NumTicketsInput
               numTickets={numTicketsToBuy}
               incrementNumTickets={onIncrementNumTickets}
@@ -84,29 +84,29 @@ const PurchaseTicketsForm = ({
         </div>
       </div>
       <div hidden={isShowingAdvanced ? false : true}>
-        <div style={StakePoolStyles.purchaseTicketRow}>
-          <div style={StakePoolStyles.purchaseTicketLabel}>
+        <div className="stakepool-purchase-ticket-row">
+          <div className="stakepool-purchase-ticket-label">
             Stake Pool:
           </div>
-          <div style={StakePoolStyles.purchaseTicketInputSelect}>
+          <div className="stakepool-purchase-ticket-input-select">
             <SelectStakePool
               options={configuredStakePools}
               value={stakePool}
               onChange={onChangeStakePool}
             />
           </div>
-          <div style={StakePoolStyles.managePoolButtonArea}>
+          <div className="stakepool-manage-pool-button-area">
             <ManagePoolsButton onClick={onShowStakePoolConfig} />
           </div>
         </div>
-        <div style={StakePoolStyles.purchaseTicketRow}>
-          <div style={StakePoolStyles.purchaseTicketRowThirds}>
-            <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Fee (DCR/kB):</div>
-            <div style={StakePoolStyles.purchaseTicketThirdsInput}>
-              <div style={StakePoolStyles.inputFormPurchaseTicket}>
+        <div className="stakepool-purchase-ticket-row">
+          <div className="stakepool-purchase-ticket-row-thirds">
+            <div className="stakepool-purchase-ticket-label">Ticket Fee (DCR/kB):</div>
+            <div className="stakepool-purchase-ticket-thirds-input">
+              <div className="stakepool-input-form-purchase-ticket">
                 <input
                   type="text"
-                  style={StakePoolStyles.contentNestPurchaseTicketForm}
+                  className="stakepool-content-nest-purchase-ticket-form"
                   placeholder="Ticket Fee"
                   value={ticketFee}
                   onChange={e => onChangeTicketFee(e.target.value)}
@@ -114,16 +114,16 @@ const PurchaseTicketsForm = ({
               </div>
             </div>
             {ticketFeeError ? (
-              <div style={StakePoolStyles.purchaseTicketInputError}>{ticketFeeError}</div>
+              <div className="stakepool-purchase-ticket-input-error">{ticketFeeError}</div>
             ) : null}
           </div>
-          <div style={StakePoolStyles.purchaseTicketRowThirds}>
-            <div style={StakePoolStyles.purchaseTicketLabel}>Tx Fee (DCR/kB):</div>
-            <div style={StakePoolStyles.purchaseTicketThirdsInput}>
-              <div style={StakePoolStyles.inputFormPurchaseTicket}>
+          <div className="stakepool-purchase-ticket-row-thirds">
+            <div className="stakepool-purchase-ticket-label">Tx Fee (DCR/kB):</div>
+            <div className="stakepool-purchase-ticket-thirds-input">
+              <div className="stakepool-input-form-purchase-ticket">
                 <input
                   type="text"
-                  style={StakePoolStyles.contentNestPurchaseTicketForm}
+                  className="stakepool-content-nest-purchase-ticket-form"
                   placeholder="Tx Fee"
                   value={txFee}
                   onChange={e => onChangeTxFee(e.target.value)}
@@ -131,16 +131,16 @@ const PurchaseTicketsForm = ({
               </div>
             </div>
             {txFeeError ? (
-              <div style={StakePoolStyles.purchaseTicketInputError}>{txFeeError}</div>
+              <div className="stakepool-purchase-ticket-input-error">{txFeeError}</div>
             ) : null}
           </div>
-          <div style={StakePoolStyles.purchaseTicketRowThirds}>
-            <div style={StakePoolStyles.purchaseTicketLabel}>Expiry:</div>
-            <div style={StakePoolStyles.purchaseTicketThirdsInput}>
-              <div style={StakePoolStyles.inputFormPurchaseTicket}>
+          <div className="stakepool-purchase-ticket-row-thirds">
+            <div className="stakepool-purchase-ticket-label">Expiry:</div>
+            <div className="stakepool-purchase-ticket-thirds-input">
+              <div className="stakepool-input-form-purchase-ticket">
                 <input
                   type="text"
-                  style={StakePoolStyles.contentNestPurchaseTicketForm}
+                  className="stakepool-content-nest-purchase-ticket-form"
                   placeholder="Expiry"
                   value={expiry}
                   onChange={e => onChangeExpiry(e.target.value)}
@@ -148,45 +148,45 @@ const PurchaseTicketsForm = ({
               </div>
             </div>
             {expiryError ? (
-              <div style={StakePoolStyles.purchaseTicketInputError}>{expiryError}</div>
+              <div className="stakepool-purchase-ticket-input-error">{expiryError}</div>
             ) : null}
           </div>
         </div>
-        <div style={StakePoolStyles.purchaseTicketRow}>
-          <div style={StakePoolStyles.purchaseTicketLabel}>Ticket Address:</div>
-          <div style={StakePoolStyles.purchaseTicketAddressInput}>
-            <div style={StakePoolStyles.inputFormPurchaseTicket}>
+        <div className="stakepool-purchase-ticket-row">
+          <div className="stakepool-purchase-ticket-label">Ticket Address:</div>
+          <div className="stakepool-purchase-ticket-address-input">
+            <div className="stakepool-input-form-purchase-ticket">
               <input
                 type="text"
                 disabled readOnly
-                style={StakePoolStyles.contentNestPurchaseTicketFormDisabled}
+                className="stakepool-content-nest-purchase-ticket-form-disabled"
                 value={stakePool ? stakePool.value.TicketAddress : null}
               />
             </div>
           </div>
         </div>
-        <div style={StakePoolStyles.purchaseTicketRow}>
-          <div style={StakePoolStyles.purchaseTicketLabel}>Pool Address:</div>
-          <div style={StakePoolStyles.purchaseTicketAddressInput}>
-            <div style={StakePoolStyles.inputFormPurchaseTicket}>
+        <div className="stakepool-purchase-ticket-row">
+          <div className="stakepool-purchase-ticket-label">Pool Address:</div>
+          <div className="stakepool-purchase-ticket-address-input">
+            <div className="stakepool-input-form-purchase-ticket">
               <input
                 type="text"
                 disabled readOnly
-                style={StakePoolStyles.contentNestPurchaseTicketFormDisabled}
+                className="stakepool-content-nest-purchase-ticket-form-disabled"
                 value={stakePool ? stakePool.value.PoolAddress : null}
               />
             </div>
           </div>
         </div>
-        <div style={StakePoolStyles.purchaseTicketRow}>
-          <div style={StakePoolStyles.purchaseTicketRowLeft}>
-            <div style={StakePoolStyles.purchaseTicketLabel}>Pool Fees:</div>
-            <div style={StakePoolStyles.purchaseTicketNumInput}>
-              <div style={StakePoolStyles.inputFormPurchaseTicket}>
+        <div className="stakepool-purchase-ticket-row">
+          <div className="stakepool-purchase-ticket-row-left">
+            <div className="stakepool-purchase-ticket-label">Pool Fees:</div>
+            <div className="stakepool-purchase-ticket-num-input">
+              <div className="stakepool-input-form-purchase-ticket">
                 <input
                   type="text"
                   disabled readOnly
-                  style={StakePoolStyles.contentNestPurchaseTicketFormDisabled}
+                  className="stakepool-content-nest-purchase-ticket-form-disabled"
                   value={stakePool ? stakePool.value.PoolFees : null}
                 />
               </div>
@@ -194,20 +194,20 @@ const PurchaseTicketsForm = ({
           </div>
         </div>
       </div>
-      <div hidden={isShowingAdvanced ? true : false} style={StakePoolStyles.purchaseTicketQuickBarRow}>
-        <div style={StakePoolStyles.quickBarRowLabel}>Settings:</div>
-        <div style={StakePoolStyles.stakepoolIcon} data-tip="Current Stakepool">{stakePool ? stakePool.value.Host : null}</div>
-        <div style={StakePoolStyles.feeIcon} data-tip="Ticket Fee">{ticketFee} DCR/KB</div>
-        <div style={StakePoolStyles.feeIcon} data-tip="Tx Fee">{txFee} DCR/KB</div>
-        <div style={StakePoolStyles.expiryIcon} data-tip="Expiry">{expiry} Blocks</div>
-        <div style={StakePoolStyles.ticketAddressIcon} data-tip="Ticket Address">{stakePool ? addSpacingAroundText(stakePool.value.TicketAddress) : null}</div>
-        <div style={StakePoolStyles.feeAddressIcon} data-tip="Pool Address">{stakePool ? addSpacingAroundText(stakePool.value.PoolAddress) : null}</div>
-        <div style={StakePoolStyles.poolFeeIcon} data-tip="Pool Fee">{stakePool ? stakePool.value.PoolFees : null}%</div>
+      <div hidden={isShowingAdvanced ? true : false} className="stakepool-purchase-ticket-quick-bar-row">
+        <div className="stakepool-quick-bar-row-label">Settings:</div>
+        <div className="stakepool-icon" data-tip="Current Stakepool">{stakePool ? stakePool.value.Host : null}</div>
+        <div className="stakepool-fee-icon" data-tip="Ticket Fee">{ticketFee} DCR/KB</div>
+        <div className="stakepool-fee-icon" data-tip="Tx Fee">{txFee} DCR/KB</div>
+        <div className="stakepool-expiry-icon" data-tip="Expiry">{expiry} Blocks</div>
+        <div className="stakepool-ticket-address-icon" data-tip="Ticket Address">{stakePool ? addSpacingAroundText(stakePool.value.TicketAddress) : null}</div>
+        <div className="stakepool-fee-address-icon" data-tip="Pool Address">{stakePool ? addSpacingAroundText(stakePool.value.PoolAddress) : null}</div>
+        <div className="stakepool-pool-fee-icon" data-tip="Pool Fee">{stakePool ? stakePool.value.PoolFees : null}%</div>
       </div>
     </div>
-    <div style={StakePoolStyles.purchaseTicketButtonsArea}>
+    <div className="stakepool-purchase-ticket-buttons-area">
       <KeyBlueButton
-        style={StakePoolStyles.contentPurchaseButton}
+        className="stakepool-content-purchase-button"
         disabled={!canAffordTickets}
         onClick={onRequestPassphrase}
       >Purchase</KeyBlueButton>
@@ -219,11 +219,11 @@ const PurchaseTicketsForm = ({
       )}
 
       <KeyBlueButton
-        style={StakePoolStyles.contentImportScriptButton}
+        className="stakepool-content-import-script-button"
         onClick={onShowImportScript}
       >Import Script</KeyBlueButton>
       <KeyBlueButton
-        style={StakePoolStyles.contentRevokeButton}
+        className="stakepool-content-revoke-button"
         onClick={onShowRevokeTicket}
       >Revoke</KeyBlueButton>
     </div>

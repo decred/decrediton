@@ -7,7 +7,7 @@ import VotingPrefs from "../../VotingPrefs";
 import StakePools from "../../StakePools";
 import TicketsPageHeader from "./Header";
 import Tickets from "./Tickets";
-import { StakePoolStyles } from "../ViewStyles";
+import "../../../style/StakePool.less";
 
 const TicketsPage = ({
   isSavingStakePoolConfig,
@@ -21,12 +21,12 @@ const TicketsPage = ({
   onHideStakePoolConfig,
   ...props
 }) => (
-  <div style={StakePoolStyles.body}>
+  <div className="stakepool-body">
     <SideBar />
-    <div style={StakePoolStyles.view}>
+    <div className="stakepool-view">
       <TicketsPageHeader {...{ onToggleTicketStakePool }} />
       {(isSavingStakePoolConfig || isPurchasingTickets)
-        ? <div style={StakePoolStyles.content}><StakeyBounce/></div>
+        ? <div className="stakepool-content"><StakeyBounce/></div>
         : (isShowingStakePools)
           ? <StakePools {...{ onHideStakePoolConfig }} />
           : isShowingVotingPrefs

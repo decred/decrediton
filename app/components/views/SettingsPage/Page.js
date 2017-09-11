@@ -4,7 +4,7 @@ import KeyBlueButton from "../../KeyBlueButton";
 import SideBar from "../../SideBar";
 import Header from "../../Header";
 import ChangePassphraseModal from "../../ChangePassphraseModal";
-import { StakePoolStyles } from "../ViewStyles";
+import "../../../style/StakePool.less";
 import "../../../style/Settings.less";
 
 const SettingsPage = ({
@@ -28,18 +28,18 @@ const SettingsPage = ({
       <Header
         headerTop={[
           changePassphraseError ? (
-            <div key="updateStakePoolError" style={StakePoolStyles.viewNotificationError}>
+            <div key="updateStakePoolError" className="stakepool-view-notification-error">
               <div
-                style={StakePoolStyles.contentNestAddressDeleteIcon}
+                className="stakepool-content-nest-address-delete-icon"
                 onClick={onClearChangePassphraseError}
               />
               {changePassphraseError}
             </div>
           ) : null,
           changePassphraseSuccess ? (
-            <div key="configSuccess"  style={StakePoolStyles.viewNotificationSuccess}>
+            <div key="configSuccess"  className="stakepool-view-notification-success">
               <div
-                style={StakePoolStyles.contentNestAddressDeleteIcon}
+                className="stakepool-content-nest-address-delete-icon"
                 onClick={onClearChangePassphraseSuccess}
               />
               {changePassphraseSuccess}
