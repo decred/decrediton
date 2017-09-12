@@ -27,9 +27,9 @@ function transactionNtfnsData(response) {
         const attachedBlocks = response.getAttachedBlocksList();
         var recentBlockTime = new Date(attachedBlocks[attachedBlocks.length-1].getTimestamp()*1000);
         var seconds = Math.floor((new Date() - recentBlockTime) / 1000);
-        // Only request other wallet information if it is within 2 hours.
-        // 3600 * 2 == 2 hours worth of seconds
-        if (seconds < 3600 * 2) {
+        // Only request other wallet information if it is within 30 minutes.
+        // 60 * 30 == 30 minutes worth of seconds
+        if (seconds < 60 * 30) {
           dispatch({response: response, type: TRANSACTIONNTFNS_DATA });
           setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
           setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
@@ -161,6 +161,7 @@ function transactionNtfnsData(response) {
             amount: amount,
             fee: fee,
           };
+          console.log(message);
           dispatch({unmined: response.getUnminedTransactionsList()[z], unminedMessage: message, type: TRANSACTIONNTFNS_DATA_UNMINED });
         }
       }
