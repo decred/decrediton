@@ -1,0 +1,8 @@
+{
+  "extends": "stylelint-config-standard",
+
+  "rules": {
+      "length-zero-no-unit": null,
+      "shorthand-property-no-redundant-values": null,
+  }
+}
