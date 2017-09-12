@@ -48,7 +48,9 @@ class PurchaseTickets extends React.Component {
 
   getStakePool() {
     const pool = this.props.onChangeStakePool ? this.props.stakePool : this.state.stakePool;
-    return this.props.configuredStakePools.find(compose(eq(pool.Host), get("Host")));
+    return pool
+      ? this.props.configuredStakePools.find(compose(eq(pool.Host), get("Host")))
+      : null;
   }
 
   getAccount() {
