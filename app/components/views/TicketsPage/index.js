@@ -43,6 +43,16 @@ class Tickets extends Component {
     this.props.onClearStopAutoBuyerError();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!this.state.stakePool && nextProps.defaultStakePool) {
+      // Added first stake pool
+      this.setState({
+        stakePool: nextProps.defaultStakePool,
+        isShowingStakePools: false
+      });
+    }
+  }
+
   render() {
     return (!this.props.walletService || !this.props.ticketBuyerService) ? <ErrorScreen /> : (
       <TicketsPage
@@ -79,7 +89,9 @@ class Tickets extends Component {
 
   getStakePool() {
     const pool = this.props.onChangeStakePool ? this.props.stakePool : this.state.stakePool;
-    return this.props.configuredStakePools.find(compose(eq(pool.Host), get("Host")));
+    return pool
+      ? this.props.configuredStakePools.find(compose(eq(pool.Host), get("Host")))
+      : null;
   }
 
   getAccount() {

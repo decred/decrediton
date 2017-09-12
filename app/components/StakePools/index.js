@@ -52,7 +52,9 @@ class StakePools extends React.Component {
 
   getSelectedUnconfigured() {
     const pool = this.state.selectedUnconfigured;
-    return this.props.unconfiguredStakePools.find(compose(eq(pool.Host), get("Host")));
+    return pool
+      ? this.props.unconfiguredStakePools.find(compose(eq(pool.Host), get("Host")))
+      : null;
   }
 
   onChangeSelectedUnconfigured(selectedUnconfigured) {
@@ -61,6 +63,10 @@ class StakePools extends React.Component {
 
   onShowAddStakePool() {
     this.setState({ isAdding: false });
+  }
+
+  onChangeApiKey(apiKey) {
+    this.setState({ apiKey });
   }
 
   onSaveStakePool() {
@@ -78,7 +84,8 @@ class StakePools extends React.Component {
   }
 
   onSetStakePoolInfo(privpass) {
-    const { apiKey, onSetStakePoolInfo: onSetInfo } = this.state;
+    const { apiKey } = this.state;
+    const onSetInfo = this.props.onSetStakePoolInfo;
     apiKey ? (onSetInfo && onSetInfo(privpass, this.getSelectedUnconfigured().Host, apiKey, 0)) : null;
   }
 }
