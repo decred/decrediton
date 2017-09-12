@@ -110,6 +110,33 @@ The first time you run with testnet, you may get a "Failed to connect wallet by 
 "network": "testnet",
 ```
 
+### Using existing dcrd and dcrwallet daemons
+
+During development it may be useful to run the `dcrd` and `dcrwallet` daemons separately from decrediton (to speed up start up time or to test with different versions of the back-ends).
+
+To do that, change the following directives on your config.json file:
+
+```bash
+"daemon_skip_start": true,
+"wallet_skip_start": true,
+```
+
+This will prevent decrediton from starting the daemons. You can then start them manually:
+
+```bash
+dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=$HOME/.dcrd/rpc.cert
+
+dcrwallet --testnet --rpcconnect=127.0.0.1:19119 --grpclisten=127.0.0.1:19121 --noinitialload --tlscurve=P-256 --onetimetlskey --appdata=~/.config/decrediton
+```
+
+Or on MacOS:
+
+```bash
+dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=$HOME/Library/Application\ Support/Dcrd/rpc.cert
+
+dcrwallet --testnet --rpcconnect=127.0.0.1:19119 --grpclisten=127.0.0.1:19121 --noinitialload --tlscurve=P-256 --onetimetlskey --appdata=$HOME/Library/Application\ Support/decrediton
+```
+
 ### Windows
 
 On windows you will need some extra steps to build grpc.  This assumes

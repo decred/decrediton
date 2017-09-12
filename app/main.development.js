@@ -123,6 +123,9 @@ if (argv.mainnet) {
 }
 
 function closeDCRW() {
+  if (cfg.get("wallet_skip_start")) {
+    return;
+  }
   if (require("is-running")(dcrwPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
     process.kill(dcrwPID, "SIGINT");
@@ -130,6 +133,9 @@ function closeDCRW() {
 }
 
 function closeDCRD() {
+  if (cfg.get("daemon_skip_start")) {
+    return;
+  }
   if (require("is-running")(dcrdPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrdPID);
     process.kill(dcrdPID, "SIGINT");
@@ -182,6 +188,12 @@ const installExtensions = async () => {
 const {ipcMain} = require("electron");
 
 ipcMain.on("start-daemon", (event, arg) => {
+  if (cfg.get("daemon_skip_start")) {
+    logger.log("info", "skipping start of dcrd as requested on config");
+    dcrdPID = -1;
+    event.returnValue = dcrdPID;
+    return;
+  }
   if (dcrdPID) {
     logger.log("info", "dcrd already started " + dcrwPID);
     event.returnValue = dcrdPID;
@@ -213,6 +225,12 @@ ipcMain.on("stop-daemon", (event) => {
 });
 
 ipcMain.on("start-wallet", (event, arg) => {
+  if (cfg.get("wallet_skip_start")) {
+    logger.log("info", "skipping start of dcrwallet as requested on config");
+    dcrwPID = -1;
+    event.returnValue = dcrwPID;
+    return;
+  }
   if (dcrwPID) {
     logger.log("info", "dcrwallet already started " + dcrwPID);
     event.returnValue = dcrwPID;
