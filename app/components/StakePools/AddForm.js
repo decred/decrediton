@@ -26,7 +26,7 @@ const StakePoolsAddForm = ({
       cancelPassphrase={onCancelPassphraseRequest}
       heading={"Enter private passphrase to connect to your stakepool"}
     />
-    <div className={isRequestingPassphrase ? "stakepool-contentBlur" : "stakepool-content"}>
+    <div className={isRequestingPassphrase ? "stakepool-content-blur" : "stakepool-content"}>
       <div className="stakepool-flex-height">
         <div className="stakepool-content-nest-from-address">
           <div className="stakepool-content-nest-prefix-send">Stake Pool:</div>
