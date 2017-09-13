@@ -31,7 +31,7 @@ const TxRow = ({
         ...tx,
         date,
         pending,
-        onClick: showTxDetail ? () => showTxDetail(tx) : null,
+        onClick: showTxDetail && date !== null ? () => showTxDetail(tx) : null,
         receiveAddressStr: (tx.txDescription.addressStr || []).join(", "),
       }}
     />
