@@ -1,297 +1,306 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-
 // From AccountStyles
 .account-input-form {
-    position: relative;
-    width: 100%;
-    height: auto;
-    min-height: 44px;
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 44px;
 }
+
 .address-content-nest-address-hash-to {
-    width: 96%;
-    height: 100%;
-    padding: 9px 0px 8px 10px;
-    border-style: none;
-    border-bottom: 1px #2971ff solid;
-    color: #2971ff;
-    font-size: 13px;
-    cursor: text;
+  width: 96%;
+  height: 100%;
+  padding: 9px 0px 8px 10px;
+  border-style: none;
+  border-bottom: 1px #2971ff solid;
+  color: #2971ff;
+  font-size: 13px;
+  cursor: text;
 }
+
 .address-content-nest-address-hash-to:focus {
-    color: #2971ff;
+  color: #2971ff;
 }
+
 .account-form-input-error {
-    width: 290px;
-    float: right;
-    height: 100%;
-    text-align: left;
-    color: red;
-    padding-top: 17px;
+  width: 290px;
+  float: right;
+  height: 100%;
+  text-align: left;
+  color: red;
+  padding-top: 17px;
 }
 // End of CSS from AccountStyles
 
 
 .account-row,
 .account-row-hidden {
-    position: relative;
-    overflow: hidden;
-    height: 77px;
-    border-top: 1px solid #F0F4F4;
-    background-image: @arrow-right-gray-icon;
-    background-position: 60px 24px;
-    background-size: 5px auto;
-    background-repeat: no-repeat;
-    cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  height: 77px;
+  border-top: 1px solid #f0f4f4;
+  background-image: @arrow-right-gray-icon;
+  background-position: 60px 24px;
+  background-size: 5px auto;
+  background-repeat: no-repeat;
+  cursor: pointer;
 }
+
 .account-row {
-    background-color: #FFF;
+  background-color: #fff;
 }
+
 .account-row-hidden {
-    background-color: transparent;
+  background-color: transparent;
 }
+
 .account-row:hover,
 .account-row-hidden:hover {
-    background-color: rgba(212, 240, 253, .5);
-    background-image: @arrow-right-key-blue-icon;
-    background-size: 5px;
+  background-color: rgba(212, 240, 253, 0.5);
+  background-image: @arrow-right-key-blue-icon;
+  background-size: 5px;
 }
 
 .account-row-top-top {
-    width: 100%;
-    height: 40px;
-    padding-left: 80px;
-    float: left;
+  width: 100%;
+  height: 40px;
+  padding-left: 80px;
+  float: left;
 }
 
 .account-row-top-bottom {
-    width: 100%;
-    height: 37px;
-    padding-left: 80px;
-    float: left;
-    font-size: 12px;
+  width: 100%;
+  height: 37px;
+  padding-left: 80px;
+  float: left;
+  font-size: 12px;
 }
 
 .account-row-top-last-tx {
-    display: inline-block;
-    height: 100%;
-    padding-top: 4px;
-    color: #132F4B;
+  display: inline-block;
+  height: 100%;
+  padding-top: 4px;
+  color: #132f4b;
 }
 
 .account-row-top-spendable {
-    width: auto;
-    height: 100%;
-    float: right;
-    padding-right: 100px;
+  width: auto;
+  height: 100%;
+  float: right;
+  padding-right: 100px;
 }
 
 .account-row-wallet-icon {
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-    width: 50px;
-    height: 77px;
-    margin-right: 30px;
-    float: left;
-    background-image: @wallet-gray-icon;
-    background-position: 50% 20px;
-    background-size: 20px auto;
-    background-repeat: no-repeat;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 50px;
+  height: 77px;
+  margin-right: 30px;
+  float: left;
+  background-image: @wallet-gray-icon;
+  background-position: 50% 20px;
+  background-size: 20px auto;
+  background-repeat: no-repeat;
 }
 
 .account-row-top-account-name {
-    height: 100%;
-    padding-top: 19px;
-    float: left;
-    color: #0C1E3E;
-    font-size: 19px;
+  height: 100%;
+  padding-top: 19px;
+  float: left;
+  color: #0c1e3e;
+  font-size: 19px;
 }
 
 .account-row-top-account-funds {
-    padding-top: 18px;
-    padding-right: 100px;
-    float: right;
-    font-family: Inconsolata, monospace;
-    color: #0C1E3E;
-    font-size: 20px;
-    font-weight: 700;
+  padding-top: 18px;
+  padding-right: 100px;
+  float: right;
+  font-family: Inconsolata, monospace;
+  color: #0c1e3e;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .account-row-details-top {
-    position: relative;
-    z-index: 0;
-    width: 100%;
-    height: 77px;
-    min-width: 100px;
-    padding-right: 20px;
-    background-color: transparent;
-    background-image: @arrow-down-mid-blue-icon;
-    background-position: 57px 26px;
-    background-size: 10px auto;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    padding-top: 1px;
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: 77px;
+  min-width: 100px;
+  padding-right: 20px;
+  background-color: transparent;
+  background-image: @arrow-down-mid-blue-icon;
+  background-position: 57px 26px;
+  background-size: 10px auto;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  padding-top: 1px;
 }
+
 .account-row-details-top:hover {
-    background-image: @arrow-down-key-blue-icon;
-    background-size: 10px;
+  background-image: @arrow-down-key-blue-icon;
+  background-size: 10px;
 }
 
 .account-row-details-bottom-column-left {
-    width: 300px;
-    float: left;
+  width: 300px;
+  float: left;
 }
 
 .account-row-details-bottom-column-right {
-    width: 405px;
-    float: right;
+  width: 405px;
+  float: right;
 }
 
-.account-row-details-bottom-columns:after,
-.account-row-details-bottom-column-left:after,
-.account-row-details-bottom-column-right:after,
-.account-actions:after {
-    .clearfloat-mixin;
+.account-row-details-bottom-columns::after,
+.account-row-details-bottom-column-left::after,
+.account-row-details-bottom-column-right::after,
+.account-actions::after {
+  .clearfloat-mixin;
 }
 
 .account-row-details-bottom {
-    width: 100%;
-    padding-right: 20px;
-    padding-Left: 20px;
+  width: 100%;
+  padding-right: 20px;
+  padding-left: 20px;
 }
 
 .account-row-details-bottom-title {
-    width: 100%;
-    height: 30px;
-    float: left;
-    font-size: 19px;
+  width: 100%;
+  height: 30px;
+  float: left;
+  font-size: 19px;
 }
 
 .account-row-details-bottom-title-name {
-    width: 140px;
-    height: 100%;
-    padding-top: 2px;
-    padding-right: 20px;
-    float: left;
-    color: #596D81;
-    text-align: right;
+  width: 140px;
+  height: 100%;
+  padding-top: 2px;
+  padding-right: 20px;
+  float: left;
+  color: #596d81;
+  text-align: right;
 }
 
 .account-row-details-bottom-spec {
-    width: 100%;
-    height: auto;
-    float: left;
-    color: #0C1E3E;
-    font-size: 12px;
+  width: 100%;
+  height: auto;
+  float: left;
+  color: #0c1e3e;
+  font-size: 12px;
 }
 
 .account-row-details-bottom-spec-last {
-    padding-bottom: 9px;
-    border-bottom: 1px solid #E7EAED;
-    width: 100%;
-    height: auto;
-    float: left;
-    color: #0C1E3E;
-    font-size: 12px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #e7eaed;
+  width: 100%;
+  height: auto;
+  float: left;
+  color: #0c1e3e;
+  font-size: 12px;
 }
 
 .account-row-details-bottom-spec-name {
-    width: 140px;
-    height: 26px;
-    padding-right: 20px;
-    float: left;
-    text-align: right;
+  width: 140px;
+  height: 26px;
+  padding-right: 20px;
+  float: left;
+  text-align: right;
 }
 
 .account-row-details-bottom-spec-value {
-    height: 26px;
-    float: left;
-    font-family: Inconsolata, monospace;
-    font-weight: 700;
+  height: 26px;
+  float: left;
+  font-family: Inconsolata, monospace;
+  font-weight: 700;
 }
 
 .account-row-details-bottom-rename {
-    width: 100%;
-    height: 36px;
-    float: left;
-    color: #0C1E3E;
-    font-size: 12px;
+  width: 100%;
+  height: 36px;
+  float: left;
+  color: #0c1e3e;
+  font-size: 12px;
 }
 
 .account-row-details-bottom-rename-name {
-    width: 140px;
-    height: 26px;
-    padding-right: 20px;
-    padding-top: 5px;
-    float: left;
-    text-align: right;
+  width: 140px;
+  height: 26px;
+  padding-right: 20px;
+  padding-top: 5px;
+  float: left;
+  text-align: right;
 }
 
 .account-row-long {
-    margin-top: 1px;
-    border-top: 1px #A9B4BF solid;
-    border-bottom: 1px #A9B4BF solid;
+  margin-top: 1px;
+  border-top: 1px #a9b4bf solid;
+  border-bottom: 1px #a9b4bf solid;
 }
 
 .account-row-short {
-    height: 77px;
+  height: 77px;
 }
 
 .account-row-short-hidden {
-    background-color: transparent;
-    height: 77px;
+  background-color: transparent;
+  height: 77px;
 }
 
 .account-row-rename {
-    height: 248px;
-    margin-top: 1px;
-    border-top: 1px #A9B4BF solid;
-    border-bottom: 1px #A9B4BF solid;
+  height: 248px;
+  margin-top: 1px;
+  border-top: 1px #a9b4bf solid;
+  border-bottom: 1px #a9b4bf solid;
 }
 
 .content-confirm-new-account {
-    margin-top: 20px;
-    margin-left: 20px;
-    float: left;
+  margin-top: 20px;
+  margin-left: 20px;
+  float: left;
 }
-
 
 .rename-account-button,
 .show-account-button,
 .hide-account-button {
-    margin: 15px 8px;
-    float: left;
-    border-radius: 0px;
-    background-position: 50% 50%;
-    background-size: 40px;
-    background-repeat: no-repeat;
-    box-shadow: none;
-    outline: 0;
-    position: relative;
-    display: block;
-    width: 40px;
-    height: 40px;
-    padding: 0px;
-    background-color: transparent;
-    color: white;
-    border: 0;
-    line-height: inherit;
-    text-decoration: none;
-    cursor: pointer;
+  margin: 15px 8px;
+  float: left;
+  border-radius: 0px;
+  background-position: 50% 50%;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  box-shadow: none;
+  outline: 0;
+  position: relative;
+  display: block;
+  width: 40px;
+  height: 40px;
+  padding: 0px;
+  background-color: transparent;
+  color: white;
+  border: 0;
+  line-height: inherit;
+  text-decoration: none;
+  cursor: pointer;
 }
+
 .rename-account-button {
-    background-image: @account-rename-icon;
+  background-image: @account-rename-icon;
 }
+
 .show-account-button {
-    background-image: @show-account-icon;
+  background-image: @show-account-icon;
 }
+
 .hide-account-button {
-    background-image: @hide-account-icon;
+  background-image: @hide-account-icon;
 }
+
 .rename-account-button:hover,
 .show-account-button:hover,
 .hide-account-button:hover {
-    opacity: 0.7;
+  opacity: 0.7;
 }

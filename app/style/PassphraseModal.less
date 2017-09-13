@@ -1,88 +1,93 @@
 @import (reference) "./main.less";
 
-
 .passphrase-modal {
-    position: absolute;
-    z-index: 10;
-    overflow: auto;
-    height: 556px;
-    padding: 54px 160px 54px 180px;
-    width: 46%;
-    background-color: rgba(12, 30, 62, 0.5);
+  position: absolute;
+  z-index: 10;
+  overflow: auto;
+  height: 556px;
+  padding: 54px 160px 54px 180px;
+  width: 46%;
+  background-color: rgba(12, 30, 62, 0.5);
 }
 
 .passphrase-modal-header {
-    min-height: 0px;
-    padding-bottom: 10px;
-    text-transform: none;
-    color: #0c1e3e;
-    font-size: 19px;
-    line-height: 18px;
-    position: relative;
-    z-index: 0;
+  min-height: 0px;
+  padding-bottom: 10px;
+  text-transform: none;
+  color: #0c1e3e;
+  font-size: 19px;
+  line-height: 18px;
+  position: relative;
+  z-index: 0;
 }
 
 .passphrase-modal-description {
-    color: #0c1e3e;
-    font-size: 13px;
-    line-height: 15px;
-    position: relative;
-    z-index: 0;
-    margin-bottom: 10px;
+  color: #0c1e3e;
+  font-size: 13px;
+  line-height: 15px;
+  position: relative;
+  z-index: 0;
+  margin-bottom: 10px;
 }
 
 .passphrase-modal-field-error-ct {
-    margin: 0 10px 10px 0;
+  margin: 0 10px 10px 0;
 }
+
 .passphrase-modal-field-ct,
 .passphrase-modal-error-ct {
-    position: relative;
-    z-index: 0;
+  position: relative;
+  z-index: 0;
 }
-.passphrase-modal-field-ct:after,
-.passphrase-modal-error-ct:after {
-    .clearfloat-mixin;
+
+.passphrase-modal-field-ct::after,
+.passphrase-modal-error-ct::after {
+  .clearfloat-mixin;
 }
 
 .passphrase-modal-label {
-    margin: 5px 10px 0 0;
-    float: left;
-    color: #0c1e3e;
-    font-size: 19px;
-    height: 100%;
-    text-align: right;
-    text-transform: capitalize;
-    width: 160px;
+  margin: 5px 10px 0 0;
+  float: left;
+  color: #0c1e3e;
+  font-size: 19px;
+  height: 100%;
+  text-align: right;
+  text-transform: capitalize;
+  width: 160px;
 }
 
 .passphrase-modal-field,
 .passphrase-modal-error {
-    width: 290px;
-    float: left;
-    margin: 0;
-    min-height: 20px;
+  width: 290px;
+  float: left;
+  margin: 0;
+  min-height: 20px;
 }
+
 .passphrase-modal-field {
-    padding: 7px 10px;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    border-style: solid;
-    border-width: 0px 0px 1px;
-    border-color: #000 #000 #a9b4bf;
-    color: #0c1e3e;
+  padding: 7px 10px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  border-style: solid;
+  border-width: 0px 0px 1px;
+  border-color: #000 #000 #a9b4bf;
+  color: #0c1e3e;
 }
+
 .passphrase-modal-error {
-    color: @error-text-color;
-    font-size: 10px;
+  color: @error-text-color;
+  font-size: 10px;
 }
 
 .passphrase-modal-toolbar {
-    height: 44px;
+  height: 44px;
 }
+
 .passphrase-modal-save-button {
-    float: left;
+  float: left;
 }
+
 .passphrase-modal-cancel-button {
-    float: right;
+  float: right;
 }
