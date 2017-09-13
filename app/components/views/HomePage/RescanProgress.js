@@ -4,7 +4,6 @@ import rescan from "../../../connectors/rescan";
 import "../../../style/HomePage.less";
 
 const RescanProgress = ({
-  rescanStartBlock,
   rescanEndBlock,
   rescanCurrentBlock,
   rescanPercentFinished
@@ -12,9 +11,9 @@ const RescanProgress = ({
   <div className="home-rescan-progress-area" >
     <LinearProgress
       mode="determinate"
-      min={rescanStartBlock}
-      max={rescanEndBlock}
-      value={rescanCurrentBlock}
+      min={0}
+      max={1}
+      value={rescanCurrentBlock/rescanEndBlock}
     />
     <span className="home-rescan-progress-fraction">{rescanCurrentBlock}/{rescanEndBlock}</span>
     <span className="home-rescan-progress-percent">{rescanPercentFinished}%</span>
