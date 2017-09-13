@@ -4,7 +4,13 @@ import os from "os";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
 var ini = require("ini");
 
-export function getCfg(update) {
+export function getCfg() {
+  const Store = require("electron-store");
+  const config = new Store();
+  return (config);
+}
+
+export function initCfg() {
   const Store = require("electron-store");
   const config = new Store();
   // If value is missing (or no config file) write the defaults.
@@ -75,6 +81,9 @@ export function getCfg(update) {
     var hiddenAccounts = Array();
     config.set("hiddenaccounts",hiddenAccounts);
   }
+  if (!config.has("discoveraccounts")) {
+    config.set("discoveraccounts",true);
+  }
   if (!config.has("stakepools") || config.get("stakepools") == null) {
     stakePoolInfo(function(response, err) {
       if (response == null) {
@@ -94,7 +103,7 @@ export function getCfg(update) {
         }
         config.set("stakepools", foundStakePoolConfigs);}
     });
-  } else if (!update) {
+  } else {
     var currentStakePoolConfigs = config.get("stakepools");
     stakePoolInfo(function(response, err) {
       if (response == null) {
@@ -128,6 +137,7 @@ export function getCfg(update) {
           }
         }
       }
+      config.delete("stakepools");
       config.set("stakepools", foundStakePoolConfigs);
     });
   }

@@ -1,5 +1,5 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
-import { getCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath } from "./config.js";
+import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath } from "./config.js";
 import path from "path";
 import os from "os";
 import parseArgs from "minimist";
@@ -71,7 +71,7 @@ if(err !== null) {
   dialog.showErrorBox("Config File Error", errMessage);
   app.quit();
 }
-var cfg = getCfg();
+var cfg = initCfg();
 
 var logger = new (winston.Logger)({
   transports: [

@@ -6,7 +6,7 @@ import { getCfg, getCfgPath, getDcrdCert,RPCDaemonPort, RPCDaemonHost } from "..
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
   SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from "../middleware/walletrpc/api_pb";
-import { clearStakePoolConfigNewWallet } from "./StakePoolActions";
+import { stakePoolInfo } from "../middleware/stakepoolapi";
 
 export function versionCheckAction() {
   return (dispatch) => {
@@ -102,6 +102,10 @@ export function createWalletRequest(pubPass, privPass, seed, existing) {
         } else {
           dispatch({response: {}, type: CREATEWALLET_SUCCESS });
           dispatch(clearStakePoolConfigNewWallet());
+          dispatch({complete: !existing, type: UPDATEDISCOVERACCOUNTS});
+          var config = getCfg();
+          config.delete("discoveraccounts");
+          config.set("discoveraccounts", !existing);
           dispatch(startRpcRequestFunc());
         }
       });
@@ -242,13 +246,14 @@ export const DISCOVERADDRESS_ATTEMPT = "DISCOVERADDRESS_ATTEMPT";
 export const DISCOVERADDRESS_FAILED = "DISCOVERADDRESS_FAILED";
 export const DISCOVERADDRESS_SUCCESS = "DISCOVERADDRESS_SUCCESS";
 
-export function discoverAddressAttempt(discoverAccts, privPass) {
-  var request = new DiscoverAddressesRequest();
-  request.setDiscoverAccounts(discoverAccts);
-  if (discoverAccts) {
-    request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
-  }
+export function discoverAddressAttempt(privPass) {
   return (dispatch, getState) => {
+    var request = new DiscoverAddressesRequest();
+    const { discoverAccountsComplete } = getState().walletLoader;
+    request.setDiscoverAccounts(!discoverAccountsComplete);
+    if (!discoverAccountsComplete) {
+      request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
+    }
     dispatch({ type: DISCOVERADDRESS_ATTEMPT });
     const { loader } = getState().walletLoader;
     loader.discoverAddresses(request,
@@ -261,6 +266,12 @@ export function discoverAddressAttempt(discoverAccts, privPass) {
             dispatch({ error, type: DISCOVERADDRESS_FAILED });
           }
           else {
+            if (!discoverAccountsComplete) {
+              var config = getCfg();
+              config.delete("discoveraccounts");
+              config.set("discoveraccounts", true);
+              dispatch({complete: true, type: UPDATEDISCOVERACCOUNTS});
+            }
             dispatch({response: {}, type: DISCOVERADDRESS_SUCCESS});
             const { subscribeBlockNtfnsResponse } = getState().walletLoader;
             if ( subscribeBlockNtfnsResponse !== null ) {
@@ -279,20 +290,15 @@ export function subscribeBlockAttempt() {
   var request = new SubscribeToBlockNotificationsRequest();
   return (dispatch, getState) => {
     dispatch({request: {}, type: SUBSCRIBEBLOCKNTFNS_ATTEMPT});
-    const { loader } = getState().walletLoader;
+    const { loader, discoverAccountsComplete } = getState().walletLoader;
     loader.subscribeToBlockNotifications(request,
         function(error) {
           if (error) {
             dispatch({ error, type: SUBSCRIBEBLOCKNTFNS_FAILED });
           } else {
             dispatch({response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
-            const { walletCreateResponse, createWalletExisting, discoverAddressResponse } = getState().walletLoader;
-            if (walletCreateResponse == null || (walletCreateResponse !== null && !createWalletExisting)) {
-              // CreateWalletSuccess is null which means this is a previously created wallet
-              dispatch(discoverAddressAttempt(false));
-            }
-            else if (discoverAddressResponse !== null) {
-              dispatch(fetchHeadersAttempt());
+            if (discoverAccountsComplete) {
+              dispatch(discoverAddressAttempt());
             }
             else {
               // This is dispatched to indicate we should wait for user input to discover addresses.
@@ -325,5 +331,35 @@ export function fetchHeadersAttempt() {
             dispatch(getAgendaServiceAttempt());
           }
         });
+  };
+}
+
+export const UPDATEDISCOVERACCOUNTS = "UPDATEDISCOVERACCOUNTS";
+export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
+
+export function clearStakePoolConfigNewWallet() {
+  return (dispatch) => {
+    stakePoolInfo(function(response, err) {
+      if (response == null) {
+        console.log(err);
+      } else {
+        var stakePoolNames = Object.keys(response.data);
+        // Only add matching network stakepool info
+        var foundStakePoolConfigs = Array();
+        for (var i = 0; i < stakePoolNames.length; i++) {
+          if (response.data[stakePoolNames[i]].APIEnabled) {
+            foundStakePoolConfigs.push({
+              Host:response.data[stakePoolNames[i]].URL,
+              Network: response.data[stakePoolNames[i]].Network,
+              APIVersionsSupported: response.data[stakePoolNames[i]].APIVersionsSupported,
+            });
+          }
+        }
+        var config = getCfg();
+        config.delete("stakepools");
+        config.set("stakepools", foundStakePoolConfigs);
+        dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
+      }
+    });
   };
 }

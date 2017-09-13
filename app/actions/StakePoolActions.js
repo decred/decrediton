@@ -3,39 +3,12 @@ import { getPurchaseInfo, setStakePoolAddress, setVoteChoices } from "../middlew
 import { NextAddressRequest } from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
 import { importScriptAttempt } from "./ControlActions";
-import { stakePoolInfo } from "../middleware/stakepoolapi";
 
 export const UPDATESTAKEPOOLCONFIG_ATTEMPT = "UPDATESTAKEPOOLCONFIG_ATTEMPT";
 export const UPDATESTAKEPOOLCONFIG_FAILED = "UPDATESTAKEPOOLCONFIG_FAILED";
 export const UPDATESTAKEPOOLCONFIG_SUCCESS = "UPDATESTAKEPOOLCONFIG_SUCCESS";
 export const UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS = "UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS";
 export const UPDATESTAKEPOOLCONFIG_CLEAR_ERROR = "UPDATESTAKEPOOLCONFIG_CLEAR_ERROR";
-export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
-export function clearStakePoolConfigNewWallet() {
-  return (dispatch) => {
-    var config = getCfg(true);
-    stakePoolInfo(function(response, err) {
-      if (response == null) {
-        console.log(err);
-      } else {
-        var stakePoolNames = Object.keys(response.data);
-        // Only add matching network stakepool info
-        var foundStakePoolConfigs = Array();
-        for (var i = 0; i < stakePoolNames.length; i++) {
-          if (response.data[stakePoolNames[i]].APIEnabled) {
-            foundStakePoolConfigs.push({
-              Host:response.data[stakePoolNames[i]].URL,
-              Network: response.data[stakePoolNames[i]].Network,
-              APIVersionsSupported: response.data[stakePoolNames[i]].APIVersionsSupported,
-            });
-          }
-        }
-        config.set("stakepools", foundStakePoolConfigs);
-        dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
-      }
-    });
-  };
-}
 
 export function updateStakepoolPurchaseInformation() {
   return (dispatch, getState) => {
@@ -100,9 +73,9 @@ export function setStakePoolInformation(privpass, poolHost, apiKey, accountNum, 
 }
 
 function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
-  return (dispatch) => {
-    var config = getCfg(true);
-    var stakePoolConfigs = config.get("stakepools");
+  return (dispatch, getState) => {
+    const { currentStakePoolConfig } = getState().stakepool;
+    var stakePoolConfigs = currentStakePoolConfig;
     var settingsUpdated = false;
     for (var i = 0; i < stakePoolConfigs.length; i++) {
       if (stakePoolConfigs[i].Host == poolHost) {
@@ -125,6 +98,7 @@ function updateSavedConfig(newPoolInfo, poolHost, apiKey, accountNum) {
       }
     }
     if (settingsUpdated) {
+      var config = getCfg();
       config.set("stakepools", stakePoolConfigs);
       dispatch({ successMessage: "You have successfully configured " + poolHost, currentStakePoolConfig: stakePoolConfigs, type: UPDATESTAKEPOOLCONFIG_SUCCESS });
     }
@@ -168,7 +142,7 @@ function setStakePoolAddressAction(privpass, poolHost, apiKey, accountNum) {
 }
 function updateStakePoolVoteChoicesConfig(stakePool, voteChoices) {
   return (dispatch) => {
-    var config = getCfg(true);
+    var config = getCfg();
     var stakePoolConfigs = config.get("stakepools");
     var voteChoicesConfig = new Array();
     for (var k = 0; k < voteChoices.getChoicesList().length; k++) {
