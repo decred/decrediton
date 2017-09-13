@@ -82,7 +82,7 @@ export function initCfg() {
     config.set("hiddenaccounts",hiddenAccounts);
   }
   if (!config.has("discoveraccounts")) {
-    config.set("discoveraccounts",false);
+    config.set("discoveraccounts",true);
   }
   if (!config.has("stakepools") || config.get("stakepools") == null) {
     stakePoolInfo(function(response, err) {
