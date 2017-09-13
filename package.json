@@ -27,7 +27,6 @@
     "flow": "flow"
   },
   "build": {
-    "productName": "Decrediton",
     "appId": "com.Electron.Decrediton",
     "category": "public.app-category.tools",
     "dmg": {
