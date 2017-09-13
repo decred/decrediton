@@ -7,8 +7,7 @@ const mapStateToProps = selectorMap({
     walletService: null,
     txPerPage: null,
     spendableTotalBalance: null,
-    transactions: null,
-    unmined: null
+    transactions: null
   }, selectors)
 });
 
