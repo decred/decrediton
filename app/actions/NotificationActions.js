@@ -161,7 +161,6 @@ function transactionNtfnsData(response) {
             amount: amount,
             fee: fee,
           };
-          console.log(message);
           dispatch({unmined: response.getUnminedTransactionsList()[z], unminedMessage: message, type: TRANSACTIONNTFNS_DATA_UNMINED });
         }
       }

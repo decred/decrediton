@@ -45,8 +45,8 @@ class History extends Component {
 
   getTxs() {
     const { selectedType } = this.state;
-    const { transactions, unmined } = this.props;
-    return unmined.concat(transactions[selectedType]) || [];
+    const { transactions } = this.props;
+    return transactions[selectedType] || [];
   }
 
   getTotalPages() {
