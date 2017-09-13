@@ -4,6 +4,7 @@ import KeyBlueButton from "../../KeyBlueButton";
 import SideBar from "../../SideBar";
 import Header from "../../Header";
 import ChangePassphraseModal from "../../ChangePassphraseModal";
+import "../../../style/Layout.less";
 import "../../../style/StakePool.less";
 import "../../../style/Settings.less";
 
@@ -22,9 +23,9 @@ const SettingsPage = ({
   onClearChangePassphraseSuccess,
   onClearChangePassphraseError
 }) => (
-  <div className="settings-body">
+  <div className="page-body">
     <SideBar />
-    <div className="settings-view">
+    <div className="page-view">
       <Header
         headerTop={[
           changePassphraseError ? (
@@ -53,7 +54,7 @@ const SettingsPage = ({
           updatePassphrase={onAttemptChangePassphrase}
           cancelPassphrase={onCancelChangePassphrase}
         />
-        <div className={isShowingChangePassphrase ? "settings-content-blur" : "settings-content"}>
+        <div className={isShowingChangePassphrase ? "page-content-blur" : "page-content"}>
           <div className="settings-row">
             <div className="settings-label">
               Displayed Units

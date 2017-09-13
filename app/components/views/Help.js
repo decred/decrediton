@@ -3,16 +3,16 @@ import React, {Component} from "react";
 import SideBar from "../SideBar";
 import Header from "../Header";
 import HelpLink from "../HelpLink";
-import "../../style/Help.less";
+import "../../style/Layout.less";
 
 class Help extends Component{
   render() {
     const helpView = (
-      <div className="help-view">
+      <div className="page-view">
         <Header
           headerTitleOverview="Help"
         />
-        <div className="help-content">
+        <div className="page-content">
             <HelpLink href="https://forum.decred.org">Forum</HelpLink>
             <HelpLink href="https://decred.slack.com">Chat</HelpLink>
             <HelpLink href="https://docs.decred.org/">Documentation</HelpLink>
@@ -23,7 +23,7 @@ class Help extends Component{
     );
 
     return(
-      <div className="help-body">
+      <div className="page-body">
         <SideBar />
         {helpView}
       </div>);

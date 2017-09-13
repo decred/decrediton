@@ -4,6 +4,7 @@ import PassphraseModal from "../PassphraseModal";
 import SelectStakePool from "../SelectStakePool";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
+import "../../style/Layout.less";
 import "../../style/StakePool.less";
 
 const StakePoolsAddForm = ({
@@ -26,7 +27,7 @@ const StakePoolsAddForm = ({
       cancelPassphrase={onCancelPassphraseRequest}
       heading={"Enter private passphrase to connect to your stakepool"}
     />
-    <div className={isRequestingPassphrase ? "stakepool-content-blur" : "stakepool-content"}>
+    <div className={isRequestingPassphrase ? "page-content-blur" : "page-content"}>
       <div className="stakepool-flex-height">
         <div className="stakepool-content-nest-from-address">
           <div className="stakepool-content-nest-prefix-send">Stake Pool:</div>

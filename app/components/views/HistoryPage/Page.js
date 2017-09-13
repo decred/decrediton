@@ -5,6 +5,7 @@ import Balance from "../../Balance";
 import TxDetails from "./../TxDetails";
 import Header from "../../Header";
 import Select from "react-select";
+import "../../../style/Layout.less";
 import "../../../style/HistoryPage.less";
 
 const Page = ({
@@ -21,17 +22,17 @@ const Page = ({
   onPageBackward,
   onPageForward
 }) => (
-  <div className="history-body">
+  <div className="page-body">
     <SideBar />
     {transactionDetails ? (
       <TxDetails tx={transactionDetails} {...{ onClearTxDetail }} />
     ) : (
-      <div className="history-view">
+      <div className="page-view">
         <Header
           headerTitleOverview="Available Balance"
           headerMetaOverview={<Balance amount={spendableTotalBalance} />}
         />
-        <div className="history-content">
+        <div className="page-content">
           <div className="history-content-title">
             <div className="history-content-title-text">Recent Transactions</div>
             <div className="history-select-tx-types-area">

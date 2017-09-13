@@ -10,6 +10,7 @@ import Balance from "../../Balance";
 import SideBar from "../../SideBar";
 import TxHistory from "../../TxHistory";
 import Header from "../../Header";
+import "../../../style/Layout.less";
 import "../../../style/Fonts.less";
 import "../../../style/HomePage.less";
 
@@ -23,9 +24,9 @@ const HomePage = ({
   getTransactionsRequestAttempt,
   getAccountsResponse
 }) => (
-  <div className="home-body">
+  <div className="page-body">
     <SideBar />
-    <div className="home-view">
+    <div className="page-view">
       {rescanRequest ? (
         <Header
           headerTitleOverview="Rescanning"
@@ -51,9 +52,9 @@ const HomePage = ({
         />
       )}
       {getTransactionsRequestAttempt ? (
-        <div className="home-content"><DecredLoading/></div>
+        <div className="page-content"><DecredLoading/></div>
       ) : (
-        <div className="home-content">
+        <div className="page-content">
           <div className="home-content-title">
             <div className="home-content-title-text">Recent Transactions</div>
           </div>

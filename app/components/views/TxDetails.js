@@ -6,6 +6,7 @@ import { shell } from "electron";
 import dateFormat from "dateformat";
 import transactionDetails from "../../connectors/transactionDetails";
 import SlateGrayButton from "../SlateGrayButton";
+import "../../style/Layout.less";
 import "../../style/TxDetails.less";
 import { addSpacingAroundText } from "../../helpers/strings";
 import "../../style/Fonts.less";
@@ -36,7 +37,7 @@ const TxDetails = ({
   currentBlockHeight,
   onClearTxDetail
 }) => (
-  <div className="txdetails-view">
+  <div className="page-view">
     <Header
       headerTitleOverview={<SlateGrayButton key="back" style={{float: "right"}} onClick={onClearTxDetail}>back</SlateGrayButton>}
       headerMetaOverview={txType ? (
@@ -51,7 +52,7 @@ const TxDetails = ({
         </div>
       )}
     />
-    <div className="txdetails-content">
+    <div className="page-content">
       <div className="txdetails-content-nest">
         <div className="txdetails-top">
           <div className="txdetails-name">Transaction:</div>

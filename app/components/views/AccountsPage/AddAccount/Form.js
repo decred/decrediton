@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../../../Header";
 import KeyBlueButton from "../../../KeyBlueButton";
 import SlateGrayButton from "../../../SlateGrayButton";
+import "../../../../style/Layout.less";
 import "../../../../style/AccountsPage.less";
 
 const AddAccountForm = ({
@@ -15,7 +16,7 @@ const AddAccountForm = ({
   onSave,
   onCancel
 }) => (
-  <div className="account-view">
+  <div className="page-view">
     <Header
       headerTitleOverview="Accounts"
       headerTop={[

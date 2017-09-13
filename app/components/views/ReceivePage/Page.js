@@ -7,6 +7,7 @@ import SideBar from "../../SideBar";
 import Header from "../../Header";
 import CopyToClipboardButton from "../../CopyToClipboardButton";
 import QRCode from "./QRCode";
+import "../../../style/Layout.less";
 import "../../../style/ReceivePage.less";
 import "../../../style/MiscComponents.less";
 
@@ -17,14 +18,14 @@ const ReceivePage = ({
   onChangeAccountNumber,
   onRequestAddress
 }) => (
-  <div className="receive-body">
+  <div className="page-body">
     <SideBar />
-    <div className="receive-view">
+    <div className="page-view">
       <Header
         headerTitleOverview={<div className="receive-header-title">Receive Funds</div>}
         headerMetaOverview={<div className="receive-header-meta">Each time you request a payment, create a new address to protect your privacy.</div>}
       />
-      <div className="receive-content">
+      <div className="page-content">
         <div className="receive-content-nest">
           <div className="receive-content-nest-for-address">
             <Link

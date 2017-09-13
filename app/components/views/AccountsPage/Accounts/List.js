@@ -3,6 +3,7 @@ import Header from "../../../Header";
 import AccountRow from "./AccountRow";
 import DecredLoading from "../../../DecredLoading";
 import KeyBlueButton from "../../../KeyBlueButton";
+import "../../../../style/Layout.less";
 import "../../../../style/AccountsPage.less";
 
 
@@ -25,7 +26,7 @@ const AccountsList = ({
   onHideAccountDetails,
   accountNumDetailsShown
 }) => (
-  <div className="account-view">
+  <div className="page-view">
     <Header
       headerTitleOverview="Accounts"
       headerTop={[
