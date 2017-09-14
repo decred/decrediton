@@ -8,8 +8,7 @@ Electron.
 
 ## Installation
 
-Currently decrediton has only been tested and built on Linux and
-macOS.  Additional systems will be added in the future.
+Currently decrediton is available on Windows, Linux, and macOS.
 
 Decrediton will NOT use or in any way disrupt the wallet file you may
 already be using at this time.
