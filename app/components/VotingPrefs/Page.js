@@ -38,7 +38,7 @@ const VotingPrefsPage = ({
         ) : null}
         {(agendas.length > 0) ? (
           agendas.map(agenda =>
-            (!selectedAgenda || (selectedAgenda && agenda.getId() !== selectedAgenda.getId())) ? (
+            (!selectedAgenda || selectedAgenda.getId() !== agenda.getId()) ? (
               <AgendaCard
                 key={agenda.getId()}
                 agenda={agenda}
