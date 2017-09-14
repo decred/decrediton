@@ -1,5 +1,8 @@
 # decrediton
 
+[![Build Status](https://travis-ci.org/decred/decrediton.png?branch=master)](https://travis-ci.org/decred/decrediton)
+[![ISC License](http://img.shields.io/badge/license-ISC-blue.svg)](http://copyfree.org)
+
 decrediton is a cross-platform GUI for decred written in node.js using
 Electron.
 
