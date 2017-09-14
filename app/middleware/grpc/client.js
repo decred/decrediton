@@ -14,7 +14,7 @@ export function getWalletService(address, port, cb) {
   var client = new services.WalletServiceClient(address + ":" + port, creds);
 
   var deadline = new Date();
-  var deadlineInSeconds = 5;
+  var deadlineInSeconds = 30;
   deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
   grpc.waitForClientReady(client, deadline, function(err) {
     if (err) {
@@ -34,7 +34,7 @@ export function getTicketBuyerService(address, port, cb) {
   var client = new services.TicketBuyerServiceClient(address + ":" + port, creds);
 
   var deadline = new Date();
-  var deadlineInSeconds = 5;
+  var deadlineInSeconds = 30;
   deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
   grpc.waitForClientReady(client, deadline, function(err) {
     if (err) {
@@ -51,7 +51,7 @@ export function loader(request, cb) {
   var loader = new services.WalletLoaderServiceClient(request.address + ":" + request.port, creds);
 
   var deadline = new Date();
-  var deadlineInSeconds = 10;
+  var deadlineInSeconds = 30;
   deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
   grpc.waitForClientReady(loader, deadline, function(err) {
     if (err) {
@@ -68,7 +68,7 @@ export function seeder(request, cb) {
   var seeder = new services.SeedServiceClient(request.address + ":" + request.port, creds);
 
   var deadline = new Date();
-  var deadlineInSeconds = 5;
+  var deadlineInSeconds = 30;
   deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
   grpc.waitForClientReady(seeder, deadline, function(err) {
     if (err) {
@@ -88,7 +88,7 @@ export function getVersionService(address, port, cb) {
   var version = new services.VersionServiceClient(address + ":" + port, creds);
 
   var deadline = new Date();
-  var deadlineInSeconds = 5;
+  var deadlineInSeconds = 30;
   deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
   grpc.waitForClientReady(version, deadline, function(err) {
     if (err) {
@@ -107,7 +107,7 @@ export function getVotingService(address, port, cb) {
   var votingService = new services.VotingServiceClient(address + ":" + port, creds);
 
   var deadline = new Date();
-  var deadlineInSeconds = 5;
+  var deadlineInSeconds = 30;
   deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
   grpc.waitForClientReady(votingService, deadline, function(err) {
     if (err) {
@@ -126,7 +126,7 @@ export function getAgendaService(address, port, cb) {
   var agendaService = new services.AgendaServiceClient(address + ":" + port, creds);
 
   var deadline = new Date();
-  var deadlineInSeconds = 5;
+  var deadlineInSeconds = 30;
   deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
   grpc.waitForClientReady(agendaService, deadline, function(err) {
     if (err) {
