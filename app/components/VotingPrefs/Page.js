@@ -28,7 +28,7 @@ const VotingPrefsPage = ({
     </div>
     {(stakePool && stakePool.isVersionValid) ? (
       <div className="stakepool-voting-agenda-area">
-        {(selectedAgenda && stakePool) ? (
+        {selectedAgenda ? (
           <AgendaOverview
             agenda={selectedAgenda}
             selectedChoice={getAgendaSelectedChoice(selectedAgenda)}
