@@ -2,12 +2,12 @@
 @import (reference) "./Icons.less";
 
 // From AccountStyles
-.account-input-form {
+/*.account-input-form {
   position: relative;
   width: 100%;
   height: auto;
   min-height: 44px;
-}
+}*/
 
 .address-content-nest-address-hash-to {
   width: 96%;
@@ -23,7 +23,7 @@
 .address-content-nest-address-hash-to:focus {
   color: #2971ff;
 }
-
+/*
 .account-form-input-error {
   width: 290px;
   float: right;
@@ -31,7 +31,7 @@
   text-align: left;
   color: red;
   padding-top: 17px;
-}
+}*/
 // End of CSS from AccountStyles
 
 
@@ -196,7 +196,7 @@
   // padding-top: 2px;
   // padding-right: 20px;
   // float: left;
-  text-align: center;
+  // text-align: center;
   margin-bottom: 1em;
   color: #596d81;
   // text-align: right;
@@ -228,29 +228,36 @@
   // padding-right: 20px;
   // float: left;
   // text-align: right;
+  margin-right: 1em;
+}
+
+.account-row-details-bottom-column-right .account-row-details-bottom-spec-value {
+  width: 70%;
 }
 
 .account-row-details-bottom-spec-value {
   .inline-block-mixin;
   // height: 26px;
   // float: left;
-  text-align: left;
-  width: 45%;
+  // text-align: left;
+  // width: 40%;
   font-family: Inconsolata, monospace;
   font-weight: 700;
 }
 
 .account-row-details-bottom-rename {
   // width: 100%;
-  height: 36px;
+  // height: 36px;
   // float: left;
   color: #0c1e3e;
   font-size: 12px;
 }
 
 .account-row-details-bottom-rename-name {
-  width: 140px;
-  height: 26px;
+  .inline-block-mixin;
+  width: 12em;
+  // width: 140px;
+  // height: 26px;
   // padding-right: 20px;
   // padding-top: 5px;
   // float: left;
@@ -283,11 +290,14 @@
   // margin-top: 20px;
   // margin-left: 20px;
   // float: left;
+  margin-right: 2em;
 }
 
 .rename-account-button,
 .show-account-button,
 .hide-account-button {
+  .inline-block-mixin;
+
   margin: 15px 8px;
   // float: left;
   border-radius: 0px;
@@ -297,7 +307,6 @@
   box-shadow: none;
   outline: 0;
   position: relative;
-  display: block;
   width: 40px;
   height: 40px;
   padding: 0px;

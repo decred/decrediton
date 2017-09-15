@@ -85,16 +85,18 @@ const Row = ({
                 {renameAccountNameError}
               </div>
             </div>
-            <KeyBlueButton
-              className="content-confirm-new-account"
-              onClick={renameAccount}>
-              Rename
-            </KeyBlueButton>
-            <SlateGrayButton
-              className="content-confirm-new-account"
-              onClick={hideRenameAccount}>
-              Cancel
-            </SlateGrayButton>
+            <div className="account-form-buttons">
+              <KeyBlueButton
+                className="content-confirm-new-account"
+                onClick={renameAccount}>
+                Rename
+              </KeyBlueButton>
+              <SlateGrayButton
+                className="content-confirm-new-account"
+                onClick={hideRenameAccount}>
+                Cancel
+              </SlateGrayButton>
+            </div>
           </div>
         )
        : (

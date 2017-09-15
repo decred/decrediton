@@ -33,7 +33,7 @@ const AddAccountForm = ({
       ]}
     />
 
-    <div className="account-content">
+    <div className="page-content">
       <div className="account-flex-height">
         <div className="account-form-row">
           <div className="account-form-label">Account Name:</div>
@@ -75,14 +75,16 @@ const AddAccountForm = ({
 
         </div>
       </div>
-      <KeyBlueButton
-        className="confirm-new-account-button"
-        onClick={onSave}
-      >Confirm</KeyBlueButton>
-      <SlateGrayButton
-        className="hide-new-account-button"
-        onClick={onCancel}
-      >Cancel</SlateGrayButton>
+      <div className="account-form-buttons">
+        <KeyBlueButton
+          className="confirm-new-account-button"
+          onClick={onSave}
+        >Confirm</KeyBlueButton>
+        <SlateGrayButton
+          className="hide-new-account-button"
+          onClick={onCancel}
+        >Cancel</SlateGrayButton>
+      </div>
     </div>
   </div>
 );
