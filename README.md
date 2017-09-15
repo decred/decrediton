@@ -1,12 +1,14 @@
 # decrediton
 
+[![Build Status](https://travis-ci.org/decred/decrediton.png?branch=master)](https://travis-ci.org/decred/decrediton)
+[![ISC License](http://img.shields.io/badge/license-ISC-blue.svg)](http://copyfree.org)
+
 decrediton is a cross-platform GUI for decred written in node.js using
 Electron.
 
 ## Installation
 
-Currently decrediton has only been tested and built on Linux and
-macOS.  Additional systems will be added in the future.
+Currently decrediton is available on Windows, Linux, and macOS.
 
 Decrediton will NOT use or in any way disrupt the wallet file you may
 already be using at this time.
