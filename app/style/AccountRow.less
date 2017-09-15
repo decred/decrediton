@@ -39,10 +39,11 @@
 .account-row-hidden {
   position: relative;
   overflow: hidden;
-  height: 77px;
+  padding-top: 0.5em;
+  //height: 77px;
   border-top: 1px solid #f0f4f4;
   background-image: @arrow-right-gray-icon;
-  background-position: 60px 24px;
+  background-position: 60px 30px;
   background-size: 5px auto;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -64,42 +65,47 @@
 }
 
 .account-row-top-top {
-  width: 100%;
-  height: 40px;
-  padding-left: 80px;
-  float: left;
+  // width: 100%;
+  // height: 40px;
+  // padding-left: 80px;
+  // float: left;
 }
 
 .account-row-top-bottom {
-  width: 100%;
-  height: 37px;
-  padding-left: 80px;
-  float: left;
+  // width: 100%;
+  // height: 37px;
+  // padding-left: 80px;
+  // float: left;
   font-size: 12px;
 }
 
 .account-row-top-last-tx {
-  display: inline-block;
-  height: 100%;
-  padding-top: 4px;
+  // display: inline-block;
+  // height: 100%;
+  // padding-top: 4px;
   color: #132f4b;
+  font-size: 12px;
 }
 
 .account-row-top-spendable {
-  width: auto;
-  height: 100%;
-  float: right;
-  padding-right: 100px;
+  // width: auto;
+  // height: 100%;
+  // float: right;
+  // padding-right: 100px;
+  color: #596d81;
+  font-size: 12px;
 }
 
 .account-row-wallet-icon {
-  position: absolute;
-  left: 0px;
-  bottom: 0px;
+  .inline-block-mixin;
+
+  // position: absolute;
+  // left: 0px;
+  // bottom: 0px;
   width: 50px;
-  height: 77px;
-  margin-right: 30px;
-  float: left;
+  height: 56px;
+  margin-right: 3em;
+  // float: left;
   background-image: @wallet-gray-icon;
   background-position: 50% 20px;
   background-size: 20px auto;
@@ -107,16 +113,19 @@
 }
 
 .account-row-top-account-name {
-  height: 100%;
-  padding-top: 19px;
-  float: left;
+  .inline-block-mixin;
+  // height: 100%;
+  // padding-top: 19px;
+  // float: left;
   color: #0c1e3e;
   font-size: 19px;
 }
 
 .account-row-top-account-funds {
-  padding-top: 18px;
-  padding-right: 100px;
+  .inline-block-mixin;
+  // padding-top: 18px;
+  // padding-right: 100px;
+  margin-top: 0.5em;
   float: right;
   font-family: Inconsolata, monospace;
   color: #0c1e3e;
@@ -127,10 +136,10 @@
 .account-row-details-top {
   position: relative;
   z-index: 0;
-  width: 100%;
-  height: 77px;
-  min-width: 100px;
-  padding-right: 20px;
+  // width: 100%;
+  // height: 77px;
+  // min-width: 100px;
+  // padding-right: 20px;
   background-color: transparent;
   background-image: @arrow-down-mid-blue-icon;
   background-position: 57px 26px;
@@ -146,13 +155,19 @@
 }
 
 .account-row-details-bottom-column-left {
-  width: 300px;
-  float: left;
+  .inline-block-mixin;
+
+  width: 48%;
+  // width: 300px;
+  // float: left;
 }
 
 .account-row-details-bottom-column-right {
-  width: 405px;
-  float: right;
+  .inline-block-mixin;
+  width: 48%;
+  vertical-align: top;
+  // width: 405px;
+  // float: right;
 }
 
 .account-row-details-bottom-columns::after,
@@ -163,65 +178,72 @@
 }
 
 .account-row-details-bottom {
-  width: 100%;
-  padding-right: 20px;
-  padding-left: 20px;
+  // width: 100%;
+  // padding-right: 20px;
+  // padding-left: 20px;
 }
 
 .account-row-details-bottom-title {
-  width: 100%;
-  height: 30px;
-  float: left;
+  // width: 100%;
+  // height: 30px;
+  // float: left;
   font-size: 19px;
 }
 
 .account-row-details-bottom-title-name {
-  width: 140px;
-  height: 100%;
-  padding-top: 2px;
-  padding-right: 20px;
-  float: left;
+  // width: 140px;
+  // height: 100%;
+  // padding-top: 2px;
+  // padding-right: 20px;
+  // float: left;
+  text-align: center;
+  margin-bottom: 1em;
   color: #596d81;
-  text-align: right;
+  // text-align: right;
 }
 
 .account-row-details-bottom-spec {
-  width: 100%;
-  height: auto;
-  float: left;
+  // width: 100%;
+  // height: auto;
+  // float: left;
+  text-align: right;
   color: #0c1e3e;
   font-size: 12px;
 }
 
 .account-row-details-bottom-spec-last {
-  padding-bottom: 9px;
+  // padding-bottom: 9px;
   border-bottom: 1px solid #e7eaed;
-  width: 100%;
-  height: auto;
-  float: left;
+  // width: 100%;
+  // height: auto;
+  // float: left;
   color: #0c1e3e;
   font-size: 12px;
 }
 
 .account-row-details-bottom-spec-name {
-  width: 140px;
-  height: 26px;
-  padding-right: 20px;
-  float: left;
-  text-align: right;
+  .inline-block-mixin;
+  // width: 140px;
+  // height: 26px;
+  // padding-right: 20px;
+  // float: left;
+  // text-align: right;
 }
 
 .account-row-details-bottom-spec-value {
-  height: 26px;
-  float: left;
+  .inline-block-mixin;
+  // height: 26px;
+  // float: left;
+  text-align: left;
+  width: 45%;
   font-family: Inconsolata, monospace;
   font-weight: 700;
 }
 
 .account-row-details-bottom-rename {
-  width: 100%;
+  // width: 100%;
   height: 36px;
-  float: left;
+  // float: left;
   color: #0c1e3e;
   font-size: 12px;
 }
@@ -229,45 +251,45 @@
 .account-row-details-bottom-rename-name {
   width: 140px;
   height: 26px;
-  padding-right: 20px;
-  padding-top: 5px;
-  float: left;
-  text-align: right;
+  // padding-right: 20px;
+  // padding-top: 5px;
+  // float: left;
+  // text-align: right;
 }
 
 .account-row-long {
-  margin-top: 1px;
+  // margin-top: 1px;
   border-top: 1px #a9b4bf solid;
   border-bottom: 1px #a9b4bf solid;
 }
 
 .account-row-short {
-  height: 77px;
+  // height: 77px;
 }
 
 .account-row-short-hidden {
   background-color: transparent;
-  height: 77px;
+  // height: 77px;
 }
 
 .account-row-rename {
-  height: 248px;
-  margin-top: 1px;
+  // height: 248px;
+  // margin-top: 1px;
   border-top: 1px #a9b4bf solid;
   border-bottom: 1px #a9b4bf solid;
 }
 
 .content-confirm-new-account {
-  margin-top: 20px;
-  margin-left: 20px;
-  float: left;
+  // margin-top: 20px;
+  // margin-left: 20px;
+  // float: left;
 }
 
 .rename-account-button,
 .show-account-button,
 .hide-account-button {
   margin: 15px 8px;
-  float: left;
+  // float: left;
   border-radius: 0px;
   background-position: 50% 50%;
   background-size: 40px;
