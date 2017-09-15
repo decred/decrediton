@@ -98,6 +98,7 @@
   float: left;*/
   width: 35%;
   margin-left: 1em;
+  margin-right: 1em;
   display: inline-block;
   vertical-align: middle;
 }
@@ -148,8 +149,8 @@
   text-align: right;
   padding-top: 5px;*/
   font-size: 20px;
-  display: inline-block;
-  vertical-align: middle;
+  width: 3em;
+  text-align: right;
 }
 
 .send-address {
@@ -275,12 +276,25 @@
 }
 
 .content-send {
+  .inline-block-mixin;
+
   /*margin-top: 20px;*/
-  float: left;
+  // float: left;
+  vertical-align: top;
+}
+
+.send-construct-error {
+  .inline-block-mixin;
+
+  color: red;
+  width: 10em;
+  margin-left: 1em;
+  word-wrap: break-word;
 }
 
 .estimation-area-send {
   .inline-block-mixin;
+
   text-align: right;
   float: right;
   /*padding-top: 10px;
@@ -408,6 +422,7 @@
   color: #2971ff;
   font-size: 13px;
   cursor: text;
+  width: 21em;
 }
 
 .send-address-hash-to:focus {

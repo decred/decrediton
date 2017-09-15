@@ -129,9 +129,9 @@ const SendPage = ({
                 onClick={onShowConfirm}
               >Send</KeyBlueButton>
               {constructTxError ? (
-                <span style={{color: "red", width: "330px", float: "left", paddingLeft: "20px", paddingTop: "30px"}}>
+                <div className="send-construct-error">
                   {constructTxError}
-                </span>
+                </div>
               ) : null}
               <div className="estimation-area-send">
                 <div className="total-amount-send">

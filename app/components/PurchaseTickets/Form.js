@@ -211,9 +211,9 @@ const PurchaseTicketsForm = ({
       >Purchase</KeyBlueButton>
 
       {canAffordTickets ? null : (
-        <span style={{color: "red", float: "left", paddingLeft: "20px", paddingTop: "19px"}}>
+        <div className="stakepool-purchase-error">
           Insufficient spendable account balance to purchase tickets.
-        </span>
+        </div>
       )}
 
       <KeyBlueButton

@@ -37,11 +37,13 @@ const SendOutputRow = ({
       </div>
       {index === 0 && !isSendAll ? (
         <div className="send-address-wallet-icon" onClick={onAddOutput}></div>
+      ) : (index === 0 && isSendAll) ? (
+        <div className="send-address-icon-spacer"></div>
       ) : (index === (outputs.length - 1)) && !isSendAll ? (
         <div className="send-address-delete-icon" onClick={getOnRemoveOutput(index)}></div>
-      ) : (
+      ) : (index !== 0) ? (
         <div className="send-address-icon-spacer send-address-amount-spacer" ></div>
-      )}
+      ) : ( null ) }
       <div className="send-amount">
         {index === 0 ? <div className="send-amount-label">Amount:</div> : null}
         <div className="send-address-amount-sum-and-currency">
