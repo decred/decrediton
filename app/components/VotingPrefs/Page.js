@@ -15,7 +15,7 @@ const VotingPrefsPage = ({
   onCloseAgenda,
   onUpdateVotePreference
 }) => (
-  <div className="stakepool-content-voting-gui">
+  <div className="stakepool-content-voting-gui page-content">
     <div className="stakepool-voting-title-area">
       <div className="stakepool-voting-title-area-name">Voting Preferences</div>
       <div className="stakepool-unconfigured-select">

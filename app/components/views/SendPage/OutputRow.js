@@ -40,7 +40,7 @@ const SendOutputRow = ({
       ) : (index === (outputs.length - 1)) && !isSendAll ? (
         <div className="send-address-delete-icon" onClick={getOnRemoveOutput(index)}></div>
       ) : (
-        <div style={{width:"39px", height: "34px", float: "left"}}></div>
+        <div className="send-address-icon-spacer send-address-amount-spacer" ></div>
       )}
       <div className="send-amount">
         {index === 0 ? <div className="send-amount-label">Amount:</div> : null}

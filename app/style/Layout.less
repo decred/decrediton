@@ -9,7 +9,7 @@
 .page-view {
   background-color: #f3f6f6;
   position: fixed;
-  left: 298px;
+  left: @sidebar-width;
   right: 0px;
   bottom: 0px;
   top: 0px;
@@ -26,8 +26,7 @@
 }
 
 .page-content-blur {
+  .page-content;
+
   filter: blur(6px);
-  overflow: auto;
-  height: 556px;
-  padding: 54px 60px 54px 80px;
 }

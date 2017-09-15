@@ -1,8 +1,8 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.indicator-pending {
-  display: inline-block;
+.indicator {
+  //display: inline-block;
   padding: 5px 8px 5px 20px;
   border-style: solid;
   border-width: 1px;
@@ -11,44 +11,49 @@
   line-height: 8px;
   text-align: right;
   text-transform: capitalize;
-  border-color: #2971ff;
-  background-image: @indicator-pending-icon;
   background-position: 6px 50%;
   background-size: 10px;
   background-repeat: no-repeat;
+}
+
+.indicator-pending {
+  .indicator;
+
+  border-color: #2971ff;
+  background-image: @indicator-pending-icon;
   color: #2971ff;
 }
 
 .indicator-confirmed {
-  display: inline-block;
-  padding: 5px 8px 5px 20px;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 3px;
-  font-size: 12px;
-  line-height: 8px;
-  text-align: right;
-  text-transform: capitalize;
+  .indicator;
+
   border-color: #2ed8a3;
   background-image: @indicator-confirmed-icon;
-  background-position: 6px 50%;
-  background-size: 10px;
-  background-repeat: no-repeat;
   color: #2ed8a3;
 }
 
+.transaction {
+  padding: 3vh 7vw 3vh 7vw;
+  border-bottom: 1px solid #e7eaed;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
+}
+
 .transaction-in {
-  height: 52px;
+  /*height: 52px;
   padding-right: 45px;
   padding-left: 56px;
   border-bottom: 1px solid #e7eaed;
   background-color: #fff;
-  cursor: pointer;
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
+  cursor: pointer;*/
+  .transaction;
+
   background-image: @arrow-right-gray-icon, @plus-small-icon;
   background-position: 97% 50%, 20px 50%;
   background-size: 5px 10px, 16px 16px;
   background-repeat: no-repeat, no-repeat;
-  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
 }
 
 .transaction-in:hover {
@@ -58,17 +63,20 @@
 }
 
 .transaction-transfer {
-  height: 52px;
+  /*height: 52px;
   padding-right: 45px;
   padding-left: 56px;
   border-bottom: 1px solid #e7eaed;
   background-color: #fff;
-  cursor: pointer;
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
+  cursor: pointer;*/
+  .transaction;
+
+
   background-image: @arrow-right-gray-icon, @wallet-gray-icon;
   background-position: 97% 50%, 20px 50%;
   background-size: 5px 10px, 16px 16px;
   background-repeat: no-repeat, no-repeat;
-  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
 }
 
 .transaction-transfer:hover {
@@ -78,17 +86,15 @@
 }
 
 .transaction-out {
-  height: 52px;
+  .transaction;
+  /*height: 52px;
   padding-right: 45px;
-  padding-left: 56px;
-  border-bottom: 1px solid #e7eaed;
-  background-color: #fff;
-  cursor: pointer;
+  padding-left: 56px;*/
+
   background-image: @arrow-right-gray-icon, @minus-small-icon;
   background-position: 97% 50%, 20px 50%;
   background-size: 5px 10px, 16px 16px;
   background-repeat: no-repeat, no-repeat;
-  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
 }
 
 .transaction-out:hover {
@@ -98,17 +104,20 @@
 }
 
 .ticket-tx {
-  height: 52px;
+  /*height: 52px;
   padding-right: 45px;
   padding-left: 56px;
   border-bottom: 1px solid #e7eaed;
   background-color: #fff;
   cursor: pointer;
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
+  */
+  .transaction;
+
   background-image: @arrow-right-gray-icon, @ticket-small-icon;
   background-position: 97% 50%, 20px 50%;
   background-size: 5px 10px, 16px 16px;
   background-repeat: no-repeat, no-repeat;
-  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
 }
 
 .ticket-tx:hover {
@@ -118,17 +127,20 @@
 }
 
 .vote-tx {
-  height: 52px;
+  /*height: 52px;
   padding-right: 45px;
   padding-left: 56px;
   border-bottom: 1px solid #e7eaed;
   background-color: #fff;
   cursor: pointer;
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
+  */
+  .transaction;
+
   background-image: @arrow-right-gray-icon, @ticket-small-icon;
   background-position: 97% 50%, 20px 50%;
   background-size: 5px 10px, 16px 16px;
   background-repeat: no-repeat, no-repeat;
-  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
 }
 
 .vote-tx:hover {
@@ -138,17 +150,20 @@
 }
 
 .revoke-tx {
-  height: 52px;
+  /*height: 52px;
   padding-right: 45px;
   padding-left: 56px;
   border-bottom: 1px solid #e7eaed;
   background-color: #fff;
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
   cursor: pointer;
+  */
+  .transaction;
+
   background-image: @arrow-right-gray-icon, @ticket-small-icon;
   background-position: 97% 50%, 20px 50%;
   background-size: 5px 10px, 16px 16px;
   background-repeat: no-repeat, no-repeat;
-  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
 }
 
 .revoke-tx:hover {
@@ -157,56 +172,42 @@
   background-size: 5px, 16px;
 }
 
-.transaction-in-overview {
-  height: 52px;
+.transaction-overview {
+  /*height: 52px;
   padding-right: 45px;
-  padding-left: 56px;
+  padding-left: 56px;*/
+  padding: 3vh 7vw 3vh 7vw;
+
   border-bottom: 1px solid #e7eaed;
   background-color: #fff;
   cursor: default;
-  background-image: @plus-small-icon;
   background-position: 20px 50%;
   background-size: 16px 16px;
   background-repeat: no-repeat;
+}
+
+.transaction-in-overview {
+  .transaction-overview;
+
+  background-image: @plus-small-icon;
 }
 
 .transaction-transfer-overview {
-  height: 52px;
-  padding-right: 45px;
-  padding-left: 56px;
-  border-bottom: 1px solid #e7eaed;
-  background-color: #fff;
-  cursor: default;
+  .transaction-overview;
+
   background-image: @wallet-gray-icon;
-  background-position: 20px 50%;
-  background-size: 16px 16px;
-  background-repeat: no-repeat;
 }
 
 .transaction-out-overview {
-  height: 52px;
-  padding-right: 45px;
-  padding-left: 56px;
-  border-bottom: 1px solid #e7eaed;
-  background-color: #fff;
-  cursor: default;
+  .transaction-overview;
+
   background-image: @minus-small-icon;
-  background-position: 20px 50%;
-  background-size: 16px 16px;
-  background-repeat: no-repeat;
 }
 
 .ticket-tx-overview {
-  height: 52px;
-  padding-right: 45px;
-  padding-left: 56px;
-  border-bottom: 1px solid #e7eaed;
-  background-color: #fff;
-  cursor: default;
+  .transaction-overview;
+
   background-image: @ticket-small-icon;
-  background-position: 20px 50%;
-  background-size: 16px 16px;
-  background-repeat: no-repeat;
 }
 
 .vote-tx-overview {
@@ -235,46 +236,67 @@
   background-repeat: no-repeat;
 }
 
+.transaction-status {
+  display: inline-block;
+  text-align: right;
+  width: 60%;
+  vertical-align: middle;
+}
+
 .transaction-amount {
-  width: 44%;
+  display: inline-block;
+  width: 40%;
+  vertical-align: middle;
+  /*width: 44%;
   height: 35px;
   padding-top: 17px;
   float: left;
-  display: block;
+  display: block;*/
 }
 
 .transaction-account {
-  width: 34%;
+  display: inline-block;
+  vertical-align: middle;
+  /*width: 34%;
   height: 100%;
-  float: left;
+  float: left;*/
 }
 
 .transaction-time-date {
-  width: 22%;
+  /*width: 22%;
   height: 36px;
   padding-top: 16px;
-  float: left;
+  float: left;*/
+  display: inline-block;
   color: #0c1e3e;
   font-size: 13px;
   text-align: right;
+  margin-left: 2em;
+  vertical-align: middle;
 }
 
 .transaction-account-name {
-  width: 45%;
+  /*width: 45%;
   height: 36px;
   padding-top: 17px;
   padding-right: 0px;
-  float: left;
-  font-size: 11px;
   text-align: right;
+  float: left;*/
+  display: inline-block;
+  font-size: 11px;
+  margin-right: 0.5em;
+  width: 55px;
+  vertical-align: middle;
 }
 
 .transaction-account-indicator {
-  width: 50%;
+  /*width: 50%;
   height: 35px;
   padding-top: 17px;
   padding-left: 10px;
-  float: left;
+  float: left;*/
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .transaction-amount-number {

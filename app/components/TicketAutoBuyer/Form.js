@@ -39,11 +39,11 @@ const TicketAutoBuyerForm = ({
         <div className="stakepool-auto-buyer-quick-bar-row">
           {isHidingDetails ? (
             <div>
-              <div className="stakepool-auto-buyer-icon-areas" data-tip="Balance To Maintain"><div className="stakepool-balance-to-maintain-icon"/>{balanceToMaintain}</div>
-              <div className="stakepool-auto-buyer-icon-areas" data-tip="Max Fee"><div className="stakepool-max-fee-icon"/>{maxFee} DCR</div>
-              <div className="stakepool-auto-buyer-icon-areas" data-tip="Max Price Absolute"><div className="stakepool-max-price-absolute-icon"/>{maxPriceAbsolute} DCR</div>
-              <div className="stakepool-auto-buyer-icon-areas" data-tip="Max Price Relative"><div className="stakepool-max-price-relative-icon"/>{maxPriceRelative}%</div>
-              <div className="stakepool-auto-buyer-icon-areas" data-tip="Max Per Block"><div className="stakepool-max-per-block-icon"/>{maxPerBlock}</div>
+              <div data-tip="Balance To Maintain" className="stakepool-balance-to-maintain-icon">{balanceToMaintain}</div>
+              <div data-tip="Max Fee" className="stakepool-max-fee-icon">{maxFee} DCR</div>
+              <div data-tip="Max Price Absolute" className="stakepool-max-price-absolute-icon">{maxPriceAbsolute} DCR</div>
+              <div data-tip="Max Price Relative" className="stakepool-max-price-relative-icon">{maxPriceRelative}%</div>
+              <div data-tip="Max Per Block" className="stakepool-max-per-block-icon">{maxPerBlock}</div>
             </div>
           ) : null}
         </div>
@@ -51,10 +51,10 @@ const TicketAutoBuyerForm = ({
           <TicketsCogs opened={isHidingDetails} onClick={onToggleShowDetails} />
         </div>
       </div>
-      <div hidden={isHidingDetails ? true : false}>
+      <div hidden={isHidingDetails ? true : false} className="stakepool-auto-buyer-advanced-area">
         <div className="stakepool-purchase-ticket-row">
           <div className="stakepool-purchase-ticket-row-left">
-            <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-balance-to-maintain-icon"/>Balance to maintain:</div>
+            <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-balance-to-maintain-icon">Balance to maintain:</div></div>
             <div className="stakepool-purchase-ticket-num-input">
               <div className="stakepool-input-form-purchase-ticket">
                 <input
@@ -71,7 +71,7 @@ const TicketAutoBuyerForm = ({
             ) : null}
           </div>
           <div className="stakepool-purchase-ticket-row-right">
-            <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-fee-icon"/>Max Fee:</div>
+            <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-fee-icon">Max Fee:</div></div>
             <div className="stakepool-purchase-ticket-num-input">
               <div className="stakepool-input-form-purchase-ticket">
                 <input
@@ -90,7 +90,7 @@ const TicketAutoBuyerForm = ({
         </div>
         <div className="stakepool-purchase-ticket-row">
           <div className="stakepool-purchase-ticket-row-left">
-            <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-price-absolute-icon"/>Max Price Absolute:</div>
+            <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-price-absolute-icon">Max Price Absolute:</div></div>
             <div className="stakepool-purchase-ticket-num-input">
               <div className="stakepool-input-form-purchase-ticket">
                 <input
@@ -107,7 +107,7 @@ const TicketAutoBuyerForm = ({
             ) : null}
           </div>
           <div className="stakepool-purchase-ticket-row-right">
-            <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-price-relative-icon"/>Max Price Relative:</div>
+            <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-price-relative-icon">Max Price Relative:</div></div>
             <div className="stakepool-purchase-ticket-num-input">
               <div className="stakepool-input-form-purchase-ticket">
                 <input
@@ -125,21 +125,23 @@ const TicketAutoBuyerForm = ({
           </div>
         </div>
         <div className="stakepool-purchase-ticket-row">
-          <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-per-block-icon"/>Max Per Block:</div>
-          <div className="stakepool-purchase-ticket-num-input">
-            <div className="stakepool-input-form-purchase-ticket">
-              <input
-                type="text"
-                className="stakepool-content-nest-purchase-ticket-form"
-                placeholder="Max Per Block"
-                value={maxPerBlock}
-                onChange={e => onChangeMaxPerBlock(e.target.value)}
-              />
+          <div className="stakepool-purchase-ticket-row-left">
+            <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-per-block-icon">Max Per Block:</div></div>
+            <div className="stakepool-purchase-ticket-num-input">
+              <div className="stakepool-input-form-purchase-ticket">
+                <input
+                  type="text"
+                  className="stakepool-content-nest-purchase-ticket-form"
+                  placeholder="Max Per Block"
+                  value={maxPerBlock}
+                  onChange={e => onChangeMaxPerBlock(e.target.value)}
+                />
+              </div>
             </div>
+            {maxPerBlockError ? (
+              <div className="stakepool-purchase-ticket-input-error">{maxPerBlockError}</div>
+            ) : null}
           </div>
-          {maxPerBlockError ? (
-            <div className="stakepool-purchase-ticket-input-error">{maxPerBlockError}</div>
-          ) : null}
         </div>
         <div hidden={!getTicketBuyerConfigResponse}>
           <KeyBlueButton

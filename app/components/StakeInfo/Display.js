@@ -25,6 +25,8 @@ const StakeInfoDisplay = ({
       <div className="stakepool-stake-info-row-right">
         <div className="stakepool-stake-info-label">Voted Tickets:</div>
         <div className="stakepool-stake-info-value">{votedTicketsCount}</div>
+      </div>
+      <div className="stakepool-stake-info-show-advanced-area">
         <TicketsCogs
           opened={!isShowingDetails}
           style={{paddingTop: "2px"}}
@@ -82,6 +84,8 @@ const StakeInfoDisplay = ({
     <div className="stakepool-stake-info-row-small-right">
       <div className="stakepool-stake-info-label">Live Tickets:</div>
       <div className="stakepool-stake-info-value">{liveTicketsCount}</div>
+    </div>
+    <div className="stakepool-stake-info-show-advanced-area">
       <TicketsCogs
         opened={!isShowingDetails}
         style={{paddingTop: "2px"}}

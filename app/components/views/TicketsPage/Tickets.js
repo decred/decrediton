@@ -32,7 +32,7 @@ const Tickets = ({
       heading={"Enter Passphrase to Import Script"}
       description={<div>Please enter your Script from your configured stakepool:</div>}
     />
-    <div className={isRequestingPassphrase || isShowingImportScript ? "stakepool-content-purchase-ticket-view-blur" : "stakepool-content-purchase-ticket-view"}>
+    <div className={isRequestingPassphrase || isShowingImportScript ? "stakepool-content-purchase-ticket-view-blur page-content" : "stakepool-content-purchase-ticket-view page-content"}>
       <StakeInfo />
       <PurchaseTickets {...{ ...props, onCancelPassphraseRequest }} />
       <div className="stakepool-area-spacing"></div>

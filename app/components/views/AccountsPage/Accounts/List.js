@@ -87,7 +87,7 @@ const AccountsList = ({
       }
     />
 
-    <div className="account-content">
+    <div className="page-content">
       {isLoading ? (
         <DecredLoading/>
       ) : (

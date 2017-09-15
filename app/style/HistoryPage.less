@@ -2,11 +2,11 @@
 @import (reference) "./Icons.less";
 
 .history-content-title {
-  display: block;
+  /*display: block;
   height: 44px;
   margin-right: auto;
   margin-bottom: 10px;
-  margin-left: auto;
+  margin-left: auto;*/
   border-bottom: 1px solid transparent;
   color: #596d81;
   font-size: 27px;
@@ -17,13 +17,16 @@
 }
 
 .history-content-title-text {
-  overflow: hidden;
+  /*overflow: hidden;
   width: 245px;
   height: 100%;
   padding-top: 21px;
   padding-right: 20px;
   padding-left: 20px;
-  float: left;
+  float: left;*/
+  display: inline-block;
+  vertical-align: middle;
+  width: 50%;
 }
 
 .history-content-title-buttons-area {
@@ -51,8 +54,11 @@
 }
 
 .history-select-tx-types-area {
-  width: 235px;
-  float: right;
+  /*width: 235px;
+  float: right;*/
+  display: inline-block;
+  width: 50%;
+  vertical-align: middle;
   background-image: @arrow-down-mid-blue-icon;
   background-position: 100% 50%;
   background-size: 10px;
@@ -66,30 +72,21 @@
 }
 
 .history-select-tx-types-label {
-  float: left;
+  /*float: left;
   margin-left: 13px;
-  margin-top: 19px;
+  margin-top: 19px;*/
+  display: inline-block;
+  width: 50%;
 }
 
 .history-select-tx-types {
-  float: right;
+  /*float: right;
   display: block;
   width: 120px;
-  margin-top: 13px;
+  margin-top: 13px;*/
+  display: inline-block;
+  width: 50%;
+  vertical-align: middle;
   color: #0c1e3e;
   font-size: 19px;
-}
-
-.history-select-tx-types-n {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  padding-top: 18px;
-  padding-bottom: 18px;
-  padding-left: 10px;
-  float: left;
-}
-
-.history-select-tx-types-n:hover {
-  color: #2971ff;
 }

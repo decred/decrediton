@@ -66,9 +66,9 @@ const StakePoolsAddForm = ({
               />
             </div>
           </div>
-          {apiKey ? null : (
-            <div className="stakepool-api-key-error">{"*Please enter your API key"}</div>
-          )}
+          <div className="stakepool-api-key-error">
+            {apiKey ? null : "*Please enter your API key"}
+          </div>
         </div>
       </div>
       <KeyBlueButton className="stakepool-content-send" disabled={!apiKey} onClick={onSaveStakePool}>

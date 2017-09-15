@@ -112,7 +112,7 @@ const SendPage = ({
                 <a onClick={onClearTransaction}>Close</a>  }
                 </div>
               </div>
-              <div id="dynamicInput">
+              <div className="send-amount-area">
                 {outputs.map((output, index) => (
                   <OutputRow
                     {...{ index, outputs, ...props, ...output, isSendAll, totalSpent }}

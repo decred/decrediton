@@ -179,17 +179,15 @@ const PurchaseTicketsForm = ({
           </div>
         </div>
         <div className="stakepool-purchase-ticket-row">
-          <div className="stakepool-purchase-ticket-row-left">
-            <div className="stakepool-purchase-ticket-label">Pool Fees:</div>
-            <div className="stakepool-purchase-ticket-num-input">
-              <div className="stakepool-input-form-purchase-ticket">
-                <input
-                  type="text"
-                  disabled readOnly
-                  className="stakepool-content-nest-purchase-ticket-form-disabled"
-                  value={stakePool ? stakePool.value.PoolFees : null}
-                />
-              </div>
+          <div className="stakepool-purchase-ticket-label">Pool Fees:</div>
+          <div className="stakepool-purchase-ticket-num-input">
+            <div className="stakepool-input-form-purchase-ticket">
+              <input
+                type="text"
+                disabled readOnly
+                className="stakepool-content-nest-purchase-ticket-form-disabled"
+                value={stakePool ? stakePool.value.PoolFees : null}
+              />
             </div>
           </div>
         </div>
