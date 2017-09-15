@@ -47,6 +47,7 @@
       "dist/",
       "node_modules/",
       "app.html",
+      "version/",
       "main.js",
       "main.js.map",
       "package.json"

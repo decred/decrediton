@@ -8,6 +8,7 @@ import winston from "winston";
 let menu;
 let template;
 let mainWindow = null;
+let versionWin = null;
 let debug = false;
 let dcrdPID;
 let dcrwPID;
@@ -408,6 +409,9 @@ app.on("ready", async () => {
   });
   mainWindow.on("closed", () => {
     mainWindow = null;
+    if (versionWin !== null) {
+      versionWin.close();
+    }
   });
 
   if (process.env.NODE_ENV === "development") {
@@ -574,6 +578,23 @@ app.on("ready", async () => {
         label: "Search Issues",
         click() {
           shell.openExternal("https://github.com/decred/decrediton/issues");
+        }
+      }, {
+        label: "About",
+        click() {
+          if (!versionWin) {
+            versionWin = new BrowserWindow({width: 575, height: 275, show: false, autoHideMenuBar: true, resizable: false});
+            versionWin.on("closed", () => {
+              versionWin = null;
+            });
+
+            // Load a remote URL
+            versionWin.loadURL(`file://${__dirname}/version/version.html`);
+
+            versionWin.once("ready-to-show", () => {
+              versionWin.show();
+            });
+          }
         }
       }]
     });
