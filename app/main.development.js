@@ -582,17 +582,19 @@ app.on("ready", async () => {
       }, {
         label: "About",
         click() {
-          versionWin = new BrowserWindow({width: 575, height: 275, show: false, autoHideMenuBar: true, resizable: false});
-          versionWin.on("closed", () => {
-            versionWin = null;
-          });
+          if (!versionWin) {
+            versionWin = new BrowserWindow({width: 575, height: 275, show: false, autoHideMenuBar: true, resizable: false});
+            versionWin.on("closed", () => {
+              versionWin = null;
+            });
 
-          // Load a remote URL
-          versionWin.loadURL(`file://${__dirname}/version/version.html`);
+            // Load a remote URL
+            versionWin.loadURL(`file://${__dirname}/version/version.html`);
 
-          versionWin.once("ready-to-show", () => {
-            versionWin.show();
-          });
+            versionWin.once("ready-to-show", () => {
+              versionWin.show();
+            });
+          }
         }
       }]
     });
