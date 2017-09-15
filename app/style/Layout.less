@@ -15,7 +15,9 @@
   top: 0px;
 }
 
-.page-content {
+// Base definition for the "page client area" (area where main content is
+// displayed")
+.page-content-mixin {
   padding: 54px 60px 54px 80px;
   overflow-y: scroll;
   position: absolute;
@@ -25,8 +27,21 @@
   top: 165px;
 }
 
+// Main content that allows scrolling
+.page-content {
+  .page-content-mixin;
+
+  overflow-y: scroll;
+}
+
+// Main content that *does not* allow scrolling
+.page-content-fixed {
+  overflow: visible;
+}
+
+// Main content that has been blured by something positioned "on top" of it
 .page-content-blur {
-  .page-content;
+  .page-content-mixin;
 
   filter: blur(6px);
 }
