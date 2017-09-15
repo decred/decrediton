@@ -575,6 +575,21 @@ app.on("ready", async () => {
         click() {
           shell.openExternal("https://github.com/decred/decrediton/issues");
         }
+      }, {
+        label: "About",
+        click() {
+          let win = new BrowserWindow({width: 600, height: 275, show: false, autoHideMenuBar: true, resizable: false});
+          win.on("closed", () => {
+            win = null;
+          });
+
+          // Load a remote URL
+          win.loadURL(`file://${__dirname}/version.html`);
+
+          win.once("ready-to-show", () => {
+            win.show();
+          });
+        }
       }]
     });
   menu = Menu.buildFromTemplate(template);
