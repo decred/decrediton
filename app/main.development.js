@@ -8,6 +8,7 @@ import winston from "winston";
 let menu;
 let template;
 let mainWindow = null;
+let versionWin = null;
 let debug = false;
 let dcrdPID;
 let dcrwPID;
@@ -408,6 +409,9 @@ app.on("ready", async () => {
   });
   mainWindow.on("closed", () => {
     mainWindow = null;
+    if (versionWin !== null) {
+      versionWin.close();
+    }
   });
 
   if (process.env.NODE_ENV === "development") {
@@ -578,16 +582,16 @@ app.on("ready", async () => {
       }, {
         label: "About",
         click() {
-          let win = new BrowserWindow({width: 600, height: 275, show: false, autoHideMenuBar: true, resizable: false});
-          win.on("closed", () => {
-            win = null;
+          versionWin = new BrowserWindow({width: 575, height: 275, show: false, autoHideMenuBar: true, resizable: false});
+          versionWin.on("closed", () => {
+            versionWin = null;
           });
 
           // Load a remote URL
-          win.loadURL(`file://${__dirname}/version.html`);
+          versionWin.loadURL(`file://${__dirname}/version/version.html`);
 
-          win.once("ready-to-show", () => {
-            win.show();
+          versionWin.once("ready-to-show", () => {
+            versionWin.show();
           });
         }
       }]
