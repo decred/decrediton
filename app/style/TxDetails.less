@@ -144,19 +144,19 @@
 }
 
 .txdetails-details {
-  padding-top: 18px;
-  padding-bottom: 8px;
+  // padding-top: 18px;
+  // padding-bottom: 8px;
+  // height: 100px;
   border-bottom: 1px solid #e7eaed;
   font-size: 13px;
-  height: 100px;
 }
 
 .txdetails-top {
-  padding-top: 18px;
-  padding-bottom: 8px;
+  // padding-top: 18px;
+  // padding-bottom: 8px;
+  // height: 240px;
   border-bottom: 1px solid #e7eaed;
   font-size: 13px;
-  height: 240px;
 }
 
 .txdetails-left {
@@ -170,62 +170,103 @@
 }
 
 .txdetails-name {
-  display: block;
-  width: 160px;
-  height: 28px;
-  padding-top: 4px;
-  padding-right: 20px;
-  float: left;
-  clear: left;
+  .inline-block-mixin;
+
+  // display: block;
+  // width: 160px;
+  // height: 28px;
+  // padding-top: 4px;
+  // padding-right: 20px;
+  // float: left;
+  // clear: left;
+  width: 20%;
+  margin-bottom: 1em;
+  text-align: right;
   font-size: 13px;
   line-height: 19px;
-  text-align: right;
 }
+
+.txdetails-value {
+  .inline-block-mixin;
+  // display: inline-block;
+  // height: 28px;
+  // padding-top: 9px;
+  // float: left;
+  // text-align: left;
+  // line-height: 10px;
+  width: 70%;
+  margin-bottom: 1em;
+  font-family: inconsolata, monospace;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
 
 .txdetails-overview {
-  height: 100px;
-  width: 100%;
-  padding-left: 80px;
+  // height: 100px;
+  // width: 100%;
+  padding-left: 5em;
+  margin-bottom: 3em;
+  border-top: 1px solid #e7eaed;
 }
 
-.txdetails-overview-title {
-  float: left;
-  height: 30px;
-  width: 100%;
+.txdetails-overview-title-mixin {
+  // float: left;
+  // height: 30px;
+  // width: 100%;
+  padding-top: 0.5em;
   font-size: 20px;
   font-weight: 700;
-  border-top: 1px solid #e7eaed;
-  padding-top: 10px;
 }
 
 .txdetails-overview-title-created {
-  float: right;
-  width: 63%;
+  .inline-block-mixin;
+  .txdetails-overview-title-mixin;
+
+  // float: right;
+  //width: 50%;
 }
 
 .txdetails-overview-title-consumed {
-  float: left;
-  width: 30%;
+  .inline-block-mixin;
+  .txdetails-overview-title-mixin;
+
+  // float: left;
+  //width: 41%;
 }
 
-.txdetails-input-area {
-  float: left;
-  width: 30%;
-  height: 100px;
-  overflow: auto;
+.txdetails-input-arrow {
   background-image: @arrow-right-key-blue-icon;
   background-position: 100% 50%;
   background-size: 15px;
   background-repeat: no-repeat;
-  padding-right: 35px;
+  float: right;
+  height: 40px;
+  width: 20px;
+  margin-top: 3em;
+}
+
+.txdetails-input-area {
+  .inline-block-mixin;
+
+  // float: left;
+  // height: 100px;
+  // overflow: auto;
+  // padding-right: 35px;
+  width: 40%;
+  vertical-align: top;
 }
 
 .txdetails-output-area {
-  float: right;
-  width: 56%;
-  height: 100px;
-  overflow: auto;
-  padding-right: 50px;
+  .inline-block-mixin;
+
+  // height: 100px;
+  // overflow: auto;
+  // padding-right: 50px;
+  // float: right;
+  text-align: right;
+  width: 58%;
+  vertical-align: top;
 }
 
 .txdetails-direction {
@@ -241,38 +282,49 @@
   text-align: left;
 }
 
-.txdetails-value {
-  display: inline-block;
-  height: 28px;
-  padding-top: 9px;
-  float: left;
+.txdetails-row {
+  // display: inline-block;
+  // height: 28px;
+  // padding-top: 9px;
+  // width: 100%;
+  // float: left;
+  // line-height: 10px;
+  padding-top: 1em;
   font-family: inconsolata, monospace;
-  line-height: 10px;
   font-weight: 700;
-  text-align: left;
 }
 
-.txdetails-row {
-  display: inline-block;
-  height: 28px;
-  padding-top: 9px;
-  width: 100%;
-  float: left;
-  font-family: inconsolata, monospace;
-  line-height: 10px;
-  font-weight: 700;
+.txdetails-input-area .txdetails-address {
+  width: 20%;
+  line-height: 1em;
+}
+
+.txdetails-output-area .txdetails-address {
+  width: 66%;
+  line-height: 1em;
+  word-wrap: break-word;
+}
+
+.txdetails-output-area .txdetails-amount {
+  width: 27%;
+  line-height: 1em;
 }
 
 .txdetails-address {
-  width: 50%;
-  float: left;
-  text-align: left;
+  .inline-block-mixin;
+
+  width: 45%;
+  //word-wrap: break-word;
+  // float: left;
+  // text-align: left;
 }
 
 .txdetails-amount {
-  width: 50%;
-  float: right;
+  .inline-block-mixin;
+
+  width: 48%;
   text-align: right;
+  // float: right;
 }
 
 .txdetails-value-text {
@@ -280,12 +332,12 @@
 }
 
 .txdetails-title {
-  width: 140px;
-  height: 28px;
-  padding-top: 4px;
+  // width: 140px;
+  // height: 28px;
+  // text-align: right;
+  padding-top: 1em;
   color: #596d81;
   font-size: 20px;
-  text-align: right;
 }
 
 .txdetails-last {

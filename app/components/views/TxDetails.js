@@ -64,11 +64,9 @@ const TxDetails = ({
           </div>
           <div className="txdetails-value">{currentBlockHeight - txHeight} <span className="txdetails-value-text">confirmations</span></div>
           <div className="txdetails-overview">
-            <div className="txdetails-overview-title">
-              <div className="txdetails-overview-title-consumed">Used Inputs</div>
-              <div className="txdetails-overview-title-created">New Wallet Outputs</div>
-            </div>
             <div className="txdetails-input-area">
+              <div className="txdetails-overview-title-consumed">Used Inputs</div>
+              <div className="txdetails-input-arrow"></div>
               {txInputs.map(({ accountName, amount }, idx) => (
                 <div key={idx} className="txdetails-row">
                   <div className="txdetails-address">{accountName}</div>
@@ -77,6 +75,7 @@ const TxDetails = ({
               ))}
             </div>
             <div className="txdetails-output-area">
+              <div className="txdetails-overview-title-created">New Wallet Outputs</div>
               {txOutputs.map(({ address, amount }, idx) => (
                 <div key={idx} className="txdetails-row">
                   <div className="txdetails-address">{addSpacingAroundText(address)}</div>
@@ -85,8 +84,9 @@ const TxDetails = ({
               ))}
             </div>
           </div>
-          <div className="txdetails-name">Transaction fee:</div>
-          <div className="txdetails-value"><Balance amount={txFee} />
+          <div>
+            <div className="txdetails-name">Transaction fee:</div>
+            <div className="txdetails-value"><Balance amount={txFee} /></div>
           </div>
         </div>
         <div className="txdetails-details">
