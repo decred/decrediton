@@ -47,7 +47,6 @@ const SendOutputRow = ({
       <div className="send-amount">
         {index === 0 ? <div className="send-amount-label">Amount:</div> : null}
         <div className="send-address-amount-sum-and-currency">
-        <div className="send-address-amount-sum-gradient">{currencyDisplay}</div>
           <input
             hidden={!isSendAll}
             className="send-address-input-amount"
@@ -64,6 +63,7 @@ const SendOutputRow = ({
             onChange={compose(getOnChangeOutputAmount(index), e => e.target.value)}
             onBlur={onAttemptConstructTransaction}
           />
+          <div className="send-address-amount-sum-gradient">{currencyDisplay}</div>
         </div>
       </div>
     </div>
