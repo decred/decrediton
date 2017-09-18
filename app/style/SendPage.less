@@ -75,27 +75,11 @@
   background-color: #fff;
 }
 
-
-/*.send-delete-address {
-  width: 625px;
-  height: 54px;
-  padding-top: 10px;
-  padding-left: 116px;
-  float: left;
-}*/
-
-/********************************  account row *****************************/
-
 .send-select-account-area {
-  /*width: 100%;
-  height: 62px;
-  margin-top: 10px;*/
   padding: 1em;
 }
 
 .send-select-account-input {
-  /*width: 290px;
-  float: left;*/
   width: 35%;
   margin-left: 1em;
   margin-right: 1em;
@@ -109,11 +93,6 @@
 }
 
 .send-send-all-input {
-  /*padding-top: 7px;
-  padding-right: 30px;
-  width: 100px;
-  margin-left: 2em;
-  text-align: right;*/
   float: right;
   font-size: 16px;
   color: #2971ff;
@@ -121,46 +100,30 @@
   margin-top: 0.5em;
 }
 
-/*******************************  amount row ****************************/
-
 .send-amount-area {
   padding: 1em;
 }
 
 .send-row {
-  /*width: 100%;
-  height: 47px;
-  float: left;*/
   margin-bottom: 1em;
 }
 
-.send-output-row {
-  /*width: 100%;
-  height: 27px;
-  float: left;*/
-}
+// .send-output-row {
+// }
 
 .send-label {
   .inline-block-mixin;
 
-  /*width: 65px;
-  float: left;
-  padding-right: 15px;
-  text-align: right;
-  padding-top: 5px;*/
   font-size: 20px;
   width: 3em;
   text-align: right;
 }
 
 .send-address {
-  /*width: 300px;
-  float: left;*/
   .inline-block-mixin;
 }
 
 .send-address-wallet-icon {
-  /*float: left;*/
   .inline-block-mixin;
 
   width: 39px;
@@ -178,45 +141,23 @@
 
 .send-amount {
   .inline-block-mixin;
-
-  /*width: 300px;
-  float: left;*/
 }
 
 .send-amount-label {
   .inline-block-mixin;
 
-  /*float: left;
-  width: 26%;
-  padding-left: 10px;
-  padding-top: 5px;*/
   font-size: 20px;
 }
 
 .send-address-amount-sum-and-currency {
   .inline-block-mixin;
 
-  /*position: relative;
-  overflow: hidden;
-  width: 70%;
-  height: 100%;
-  text-align: right;
-  float: right;*/
   color: #0c1e3e;
 }
 
 .send-address-amount-sum-gradient {
   .inline-block-mixin;
 
-  /*position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  display: inline-block;
-  width: 37px;
-  height: 100%;
-  padding-top: 7px;
-  padding-right: 10px;*/
   background-color: #fff;
   font-family: Inconsolata, monospace;
   font-size: 13px;
@@ -226,11 +167,6 @@
 .send-address-input-amount {
   .inline-block-mixin;
 
-  /*width: 68%;
-  float: left;
-  height: 100%;
-  font-size: 13px;
-  padding: 9px 10px 4px 10px;*/
   border-style: none;
   border-bottom: 1px solid;
   color: rgb(41, 113, 255);
@@ -254,9 +190,8 @@
 
 .send-address-delete-icon {
   .inline-block-mixin;
-  /*float: left;*/
-  margin-right: 90px; //needed for spacing equal to the word "amount"
 
+  margin-right: 90px; //needed for spacing equal to the word "amount"
   width: 39px;
   height: 34px;
   background-image: @delete-icon;
@@ -266,20 +201,13 @@
   cursor: pointer;
 }
 
-/**************************  button area **************************/
-
 .send-button-area {
-  /*width: 100%;
-  height: 100px;*/
-  //padding: 1em;
   margin-top: 1em;
 }
 
 .content-send {
   .inline-block-mixin;
 
-  /*margin-top: 20px;*/
-  // float: left;
   vertical-align: top;
 }
 
@@ -297,126 +225,43 @@
 
   text-align: right;
   float: right;
-  /*padding-top: 10px;
-  float: right;
-  height: 100%;
-  width: 300px;*/
 }
 
 .total-amount-send {
-  /*float: right;
-  width: 275px;
-  padding-right: 10px;
-  text-align: right;*/
   font-size: 15px;
   margin-bottom: 0.3em;
 }
 
 .total-amount-send-text {
-  /*float: left;
-  padding-bottom: 5px;*/
   .inline-block-mixin;
 
   width: 20vw;
 }
 
 .total-amount-send-amount {
-  /*float: right;*/
   .inline-block-mixin;
 
   width: 15vw;
   font-family: Inconsolata, monospace;
 }
 
-
-/*************************** end refactoring **********************/
-
 .send-send-all-input:hover {
   color: #1b58ff;
 }
 
 .send-output-error-row {
-  /*width: 100%;
-  height: 12px;
-  float: left;*/
   font-size: 11px;
 }
 
 .send-output-address-error {
-  /*float: left;
-  width: 290px;
-  padding-left: 110px;*/
   color: red;
 }
 
 .send-output-amount-error {
-  /*float: right;
-  width: 180px;
-  text-align: right;
-  padding-right: 59px;*/
   color: red;
 }
-/*
-.send-output-priv-pass-error {
-  color: red;
-  float: left;
-  width: 223px;
-  padding-right: 11px;
-}*/
-
-
-/*
-
-.send-prefix-send {
-  width: 100px;
-  padding-right: 15px;
-  float: left;
-  height: 100%;
-  padding-top: 5px;
-  font-size: 19px;
-  text-align: right;
-  text-transform: capitalize;
-}
-
-.send-prefix-confirm {
-  width: 230px;
-  padding-right: 15px;
-  float: left;
-  height: 100%;
-  padding-top: 5px;
-  font-size: 19px;
-  text-align: right;
-  text-transform: capitalize;
-}
-
-.send-from-address {
-  width: 100%;
-  height: 54px;
-  padding-top: 10px;
-  float: left;
-}
-
-.send-from-address-wallet-icon {
-  width: 60px;
-  height: 34px;
-  float: left;
-  background-image: @wallet-gray-icon;
-  background-position: 50% 50%;
-  background-size: 20px;
-  background-repeat: no-repeat;
-}
-
-.send-to-address {
-  width: 100%;
-  height: 54px;
-  padding-top: 10px;
-  float: left;
-}*/
 
 .send-address-hash-to {
-  /*width: 96%;
-  height: 100%;
-  padding: 9px 0px 4px 10px;*/
   border-style: none;
   border-bottom: 1px solid;
   color: #2971ff;
@@ -428,54 +273,6 @@
 .send-address-hash-to:focus {
   color: #2971ff;
 }
-
-/*.send-address-hash-block {
-  width: 299px;
-  height: 34px;
-  float: left;
-  padding-left: 81px;
-  font-size: 13px;
-}
-
-.send-address-sign-priv-pass {
-  width: 299px;
-  height: 34px;
-  float: left;
-  font-size: 13px;
-}
-
-.send-address-hash-block-confirm {
-  position: relative;
-  overflow: hidden;
-  width: 300px;
-  height: 34px;
-  padding-top: 7px;
-  float: left;
-  font-size: 17px;
-}*/
-
-/*
-.select-accounts-send {
-  width: 300px;
-  position: relative;
-  z-index: 3;
-  overflow: visible;
-  height: 34px;
-  min-width: 300px;
-  float: left;
-  border-bottom: 1px solid #2971ff;
-  background-color: #fff;
-  background-image: @arrow-down-mid-blue-icon;
-  background-position: 100% 50%;
-  background-size: 10px;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-
-.select-accounts-send:hover {
-  background-image: @arrow-down-key-blue-icon;
-  background-size: 10px;
-}*/
 
 .send-select-account {
   display: block;
@@ -489,169 +286,25 @@
 .send-select-account:hover {
   height: auto;
 }
-/*
-.send-select-account-nfirst {
-  overflow: hidden;
-  height: 34px;
-  margin-right: 20px;
-  padding-top: 5px;
-  padding-left: 10px;
-  color: #2971ff;
-  font-size: 19px;
-}
 
-.send-select-account-ntext-send {
-  width: 200%;
-  padding-top: 1px;
-  font-size: 13px;
-}
-
-.send-select-account-namount {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  margin-right: 20px;
-  padding-top: 7px;
-  padding-left: 40px;
-  background-image: linear-gradient(90deg, transparent, #fff 28%);
-  font-family: Inconsolata, monospace;
-  color: #596d81;
-  font-size: 11px;
-  font-weight: 400;
-  text-align: right;
-}
-
-.send-select-account-namount-bold {
-  font-family: Inconsolata, monospace;
-  font-weight: 700;
-}
-
-.send-select-account-nnest-send {
-  font-size: 13px;
-  overflow: auto;
-  height: auto;
-  max-height: 413px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #a9b4bf;
-  background-color: #fff;
-}
-
-.send-select-account-ngradient {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  width: 40px;
-  height: 100%;
-  background-image: linear-gradient(90deg, transparent, #fff 75%);
-}
-
-.send-select-account-n {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  padding-top: 18px;
-  padding-bottom: 18px;
-  padding-left: 10px;
-  float: left;
-}
-
-.send-select-account-n:hover {
-  color: #2971ff;
-}
-
-.send-select-account-ntext {
-  width: 200%;
-}*/
-
-.send-input-form {
-  /*position: relative;
-  width: 100%;
-  height: auto;
-  min-height: 44px;*/
-}
+// .send-input-form {
+// }
 
 
-.send-address-amount {
-  /*display: block;
-  height: 34px;
-  float: right;*/
-}
+// .send-address-amount {
+// }
 
 .send-address-amount-sum {
-  /*display: block;
-  width: 100px;
-  height: 100%;*/
   border-style: none;
   font-family: Inconsolata, monospace;
   font-size: 19px;
   font-weight: 700;
 }
 
-/*.send-to-address-amount-sum-number-format-small {
-  font-size: 13px;
-}*/
-
-/*.send-address-delete-icon:hover {
-  opacity: 0.85;
-}
-
-.send-address-amount-sum-number-format-small {
-  font-size: 13px;
-}*/
-
-/*.content-send-section {
-  display: block;
-  width: 91%;
-  height: 22px;
-  padding-left: 30px;
-  float: left;
-  color: #0c1e3e;
-}
-
-.content-send-section-checkbox-text {
-  height: 100%;
-  padding-top: 1px;
-  padding-left: 5px;
-  float: left;
-  text-transform: capitalize;
-}
-
-.content-send-section-amount {
-  width: 160px;
-  height: 100%;
-  padding-top: 1px;
-  padding-right: 30px;
-  float: right;
-  font-family: Inconsolata, monospace;
-  font-size: 13px;
-  text-align: right;
-}
-
-.content-send-section-description {
-  height: 100%;
-  padding-top: 1px;
-  padding-right: 20px;
-  float: right;
-  color: #596d81;
-  font-size: 13px;
-}
-
-.content-send-section-amount-currency {
-  padding-left: 5px;
-}*/
-
 .send-flex-height {
   padding-top: 1px;
   background-color: #fff;
-  /*overflow-y: auto;
-  overflow-x: hidden;*/
 }
 
-.send-loading {
-  /*margin-top: 110px;
-  margin-left: 268px;*/
-}
-
+// .send-loading {
+// }
