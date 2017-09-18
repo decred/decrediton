@@ -31,7 +31,10 @@ class Settings extends Component {
 
     return !this.props.walletService ? <ErrorScreen /> : (
       <SettingsPage
-        {...{ ...this.props, ...this.state }}
+        {...{
+          networks: [{name: "testnet"}, {name: "mainnet"}],
+          currencies: [{name: "DCR"}, {name: "atoms"}],
+          ...this.props, ...this.state }}
         {...{
           onShowChangePassphrase,
           onCancelChangePassphrase,
