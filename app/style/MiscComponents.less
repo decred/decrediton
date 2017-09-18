@@ -168,17 +168,25 @@
 }
 
 .menu-navigation-link:hover {
-  background-color: #09182d;
   background-size: 5px;
 }
 
 .menu-navigation-link-active {
-  background-color: #09182d;
   background-image: @menu-link-icon;
   background-position: 0px 50%;
   background-size: 5px;
   background-repeat: repeat-y;
   cursor: default;
+}
+
+.sidebar-mainnet .menu-navigation-link:hover,
+.sidebar-mainnet .menu-navigation-link-active {
+  background-color: #09182d;
+}
+
+.sidebar-testnet .menu-navigation-link:hover,
+.sidebar-testnet .menu-navigation-link-active {
+  background-color: #350726;
 }
 
 .purchase-tickets-info-button {

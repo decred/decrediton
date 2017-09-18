@@ -1,9 +1,16 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
+.sidebar-mainnet {
+  background-color: #0c1e3e;
+}
+
+.sidebar-testnet {
+  background-color: #630e47;
+}
+
 .sidebar-menu {
   overflow: hidden;
-  background-color: #0c1e3e;
   width: @sidebar-width;
   position: fixed;
   top: 0px;
@@ -15,7 +22,6 @@
   z-index: 3;
   height: 60px;
   margin-top: 20px;
-  background-color: #0c1e3e;
   background-image: @menu-logo;
   background-position: 50% 50%;
   background-size: auto 30px;
@@ -66,7 +72,7 @@
   left: 0px;
   top: 106px;
   right: 0px;
-  bottom: 157px;
+  bottom: 114px;
   z-index: 2;
   overflow: auto;
   background-color: rgba(9, 24, 45, 0.8);
@@ -125,7 +131,6 @@
   padding-top: 14px;
   padding-right: 18px;
   padding-left: 18px;
-  background-color: #0c1e3e;
   cursor: pointer;
 }
 
@@ -162,7 +167,6 @@
   padding-top: 14px;
   padding-right: 18px;
   padding-left: 18px;
-  background-color: #09182d;
 }
 
 .sidebar-menu-bottom-latest-block-name {
