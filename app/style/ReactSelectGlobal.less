@@ -5,6 +5,8 @@
  * https://twitter.com/jedwatson https://twitter.com/jossmackison https://twitter.com/keystonejs
  * MIT License: https://github.com/JedWatson/react-select
 */
+@import (reference) "./main.less";
+
 .Select {
   position: relative;
 }
@@ -19,7 +21,7 @@
 }
 
 .Select.is-disabled > .Select-control {
-  background-color: #f9f9f9;
+  background-color: @disabled-background-color;
 }
 
 .Select.is-disabled > .Select-control:hover {
@@ -327,7 +329,7 @@
 }
 
 .Select-option.is-disabled {
-  color: #ccc;
+  color: @disabled-color;
   cursor: default;
 }
 
@@ -419,8 +421,8 @@
 }
 
 .Select--multi.is-disabled .Select-value {
-  background-color: #fcfcfc;
-  border: 1px solid #e3e3e3;
+  background-color: @disabled-background-color;
+  box-shadow: @disabled-box-shadow;
   color: #333;
 }
 
@@ -432,7 +434,7 @@
 .Select--multi.is-disabled .Select-value-icon:hover,
 .Select--multi.is-disabled .Select-value-icon:focus,
 .Select--multi.is-disabled .Select-value-icon:active {
-  background-color: #fcfcfc;
+  background-color: @disabled-background-color;
 }
 
 @keyframes Select-animation-spin {
