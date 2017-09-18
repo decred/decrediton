@@ -17,17 +17,28 @@ class DaemonLoadingBody extends Component {
   }
 
   getInitialState() {
-    return {};
+    return {
+      showLongWaitMessage: false
+    };
   }
 
   render() {
+    const { showLongWaitMessage } = this.state;
     return (
       <DaemonLoadingFormBody
         {...{
           ...this.props,
+          showLongWaitMessage
         }}
       />
     );
+  }
+
+  componentDidMount() {
+    this.timeoutId = setTimeout(() => {
+      this.setState({ showLongWaitMessage: true });
+      delete this.timeoutId;
+    }, 2000);
   }
 
   resetState() {

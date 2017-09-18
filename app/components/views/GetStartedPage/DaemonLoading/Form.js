@@ -25,12 +25,15 @@ const DaemonLoadingFormBody = ({
     getNeededBlocks,
     getEstimatedTimeLeft,
     doSkipDaemonSync,
+    showLongWaitMessage,
   }) => (
     <div className="get-started-content-new-seed">
     {getDaemonStarted ? getCurrentBlockCount == null ?
+      showLongWaitMessage ?
       <div className="get-started-fetch-headers-message">
         Daemon is loading your chain, this can take a few minutes.
       </div> :
+      <div></div> :
       <div className="get-started-content-instructions">
         <div className="get-started-content-instructions-blockchain-syncing">
           <span className="left">If you are starting decrediton for the first time, this may take a while.</span>
