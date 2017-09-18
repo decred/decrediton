@@ -27,7 +27,7 @@ const DaemonLoadingFormBody = ({
     doSkipDaemonSync,
     showLongWaitMessage,
   }) => (
-    <div className="get-started-content-new-seed page-content">
+    <div className="get-started-content-new-seed">
     {getDaemonStarted ? getCurrentBlockCount == null ?
       showLongWaitMessage ?
       <div className="get-started-fetch-headers-message">
