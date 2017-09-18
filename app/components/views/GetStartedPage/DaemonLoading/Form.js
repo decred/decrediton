@@ -31,7 +31,7 @@ const DaemonLoadingFormBody = ({
     {getDaemonStarted ? getCurrentBlockCount == null ?
       showLongWaitMessage ?
       <div className="get-started-fetch-headers-message">
-        Daemon is loading your chain, this can take a few minutes.
+        The Decred chain is currently loading and may take a few minutes.
       </div> :
       <div></div> :
       <div className="get-started-content-instructions">
