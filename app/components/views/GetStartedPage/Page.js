@@ -7,7 +7,7 @@ import "../../../style/Layout.less";
 const Page = ({ Header, Body, ...props }) => (
   <div className="page-body">
     <SideBar gettingStarted />
-    <div className="page-view">
+    <div className="page-view inverted-colors">
       <Header {...props} />
       <div className="page-content-fixed">
         <DecredLoading hidden={!props.isProcessing} className="get-started-loading" />
