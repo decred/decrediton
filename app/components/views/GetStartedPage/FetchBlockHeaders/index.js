@@ -12,6 +12,7 @@ class FetchBlockHeadersBody extends Component {
   }
 
   componentWillUnmount() {
+    this.mounted = false;
     this.resetState();
     if(this.timeoutId) {
       clearTimeout(this.timeoutId);
@@ -38,8 +39,11 @@ class FetchBlockHeadersBody extends Component {
   }
 
   componentDidMount() {
+    this.mounted = true;
     this.timeoutId = setTimeout(() => {
-      this.setState({ showLongWaitMessage: true });
+      if(this.mounted) {
+        this.setState({ showLongWaitMessage: true });
+      }
       delete this.timeoutId;
     }, 2000);
   }
