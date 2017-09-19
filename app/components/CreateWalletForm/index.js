@@ -1,16 +1,8 @@
-// @flow
 import React from "react";
 import { autobind } from "core-decorators";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import {
-  createWalletRequest,
-  createWalletConfirmNewSeed,
-  createWalletGoBackNewSeed,
-} from "../../actions/WalletLoaderActions";
-import { getSeedService } from "../../wallet/seed";
 import ContinueWalletCreation from "./ContinueWalletCreation";
 import CreateWallet from "./CreateWallet";
+import createWalletConnector from "../../connectors/createWallet";
 
 @autobind
 class CreateWalletForm extends React.Component {
@@ -122,26 +114,4 @@ class CreateWalletForm extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(
-  {
-    createWalletConfirmNewSeed,
-    createWalletGoBackNewSeed,
-    createWalletRequest
-  },
-  dispatch
-);
-
-const mapStateToProps = ({
-  walletLoader: {
-    createWalletExisting,
-    confirmNewSeed
-  },
-  grpc
-}) => ({
-  seedService: getSeedService({ grpc }),
-  createWalletExisting,
-  confirmNewSeed,
-  network: grpc.network
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateWalletForm);
+export default createWalletConnector(CreateWalletForm);

@@ -1,21 +1,17 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { selectorMap, substruct } from "../fp";
-import * as selectors from "../selectors";
-import * as clientActions from "../actions/ClientActions";
+import { selectorMap } from "../fp";
+import * as sel from "../selectors";
+import * as ca from "../actions/ClientActions";
 
 const mapStateToProps = selectorMap({
-  ...substruct({
-    configuredStakePools: null,
-    defaultStakePool: null,
-    agendas: null
-  }, selectors)
+  configuredStakePools: sel.configuredStakePools,
+  defaultStakePool: sel.defaultStakePool,
+  agendas: sel.agendas
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  ...substruct({
-    setVoteChoicesAttempt: "onUpdateVotePreference"
-  }, clientActions)
+  onUpdateVotePreference: ca.setVoteChoicesAttempt
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

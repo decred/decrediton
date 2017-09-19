@@ -1,53 +1,32 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { selectorMap } from "../fp";
-import {
-  spendingAccounts,
-  defaultSpendingAccount,
-  estimatedSignedSize,
-  unsignedTransaction,
-  estimatedFee,
-  totalSpent,
-  publishedTransactionHash,
-  isSendingTransaction,
-  isConstructingTransaction,
-  constructTxError,
-  signTransactionError,
-  publishTransactionError
-} from "../selectors";
-import {
-  clearConstructTxError,
-  clearPublishTxError,
-  clearSignTxError,
-  clearPublishTxSuccess,
-  clearTransaction,
-  constructTransactionAttempt,
-  signTransactionAttempt
-} from "../actions/ControlActions";
+import * as sel from "../selectors";
+import * as ca from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
-  spendingAccounts,
-  defaultSpendingAccount,
-  estimatedSignedSize,
-  unsignedTransaction,
-  estimatedFee,
-  totalSpent,
-  publishedTransactionHash,
-  isSendingTransaction,
-  isConstructingTransaction,
-  constructTxError,
-  signTransactionError,
-  publishTransactionError
+  spendingAccounts: sel.spendingAccounts,
+  defaultSpendingAccount: sel.defaultSpendingAccount,
+  estimatedSignedSize: sel.estimatedSignedSize,
+  unsignedTransaction: sel.unsignedTransaction,
+  estimatedFee: sel.estimatedFee,
+  totalSpent: sel.totalSpent,
+  publishedTransactionHash: sel.publishedTransactionHash,
+  isSendingTransaction: sel.isSendingTransaction,
+  isConstructingTransaction: sel.isConstructingTransaction,
+  constructTxError: sel.constructTxError,
+  signTransactionError: sel.signTransactionError,
+  publishTransactionError: sel.publishTransactionError
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  onClearConstructTxError: clearConstructTxError,
-  onClearPublishTxError: clearPublishTxError,
-  onClearSignTxError: clearSignTxError,
-  onClearPublishTxSuccess: clearPublishTxSuccess,
-  onClearTransaction: clearTransaction,
-  onAttemptConstructTransaction: constructTransactionAttempt,
-  onAttemptSignTransaction: signTransactionAttempt
+  onClearConstructTxError: ca.clearConstructTxError,
+  onClearPublishTxError: ca.clearPublishTxError,
+  onClearSignTxError: ca.clearSignTxError,
+  onClearPublishTxSuccess: ca.clearPublishTxSuccess,
+  onClearTransaction: ca.clearTransaction,
+  onAttemptConstructTransaction: ca.constructTransactionAttempt,
+  onAttemptSignTransaction: ca.signTransactionAttempt
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

@@ -1,10 +1,7 @@
-// @flow
 import React, { Component, } from "react";
 import { autobind } from "core-decorators";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { getNextAccountAttempt } from "../../../../actions/ControlActions";
 import AddAccountForm from "./Form";
+import addAccountConnector from "../../../../connectors/accountsPageAddAccount";
 
 @autobind
 class AddAccount extends Component {
@@ -26,25 +23,18 @@ class AddAccount extends Component {
   }
 
   render() {
-    const {
-      getNextAccountError: errorMsg,
-      getNextAccountSuccess: successMsg
-    } = this.props;
-    const { setName, setPassPhrase, onSave, onCancel } = this;
-    const { name, passPhrase, hasAttemptedSave } = this.state;
-
     return (
       <AddAccountForm
         {...{
-          name,
-          passPhrase,
-          hasAttemptedSave,
-          successMsg,
-          errorMsg,
-          setName,
-          setPassPhrase,
-          onSave,
-          onCancel
+          name: this.state.name,
+          passPhrase: this.state.passPhrase,
+          hasAttemptedSave: this.state.hasAttemptedSave,
+          successMsg: this.props.getNextAccountSuccess,
+          errorMsg: this.props.getNextAccountError,
+          setName: this.setName,
+          setPassPhrase: this.setPassPhrase,
+          onSave: this.onSave,
+          onCancel: this.onCancel
         }}
       />
     );
@@ -61,7 +51,7 @@ class AddAccount extends Component {
       return this.setState({ hasAttemptedSave: true });
     }
 
-    this.props.getNextAccountAttempt(Buffer.from(passPhrase), name);
+    this.props.onGetNextAccountAttempt(Buffer.from(passPhrase), name);
     this.props.onSave ? this.props.onSave() : null;
     this.resetState();
   }
@@ -80,16 +70,4 @@ class AddAccount extends Component {
   }
 }
 
-const mapStateToProps = ({
-  control: {
-    getNextAccountSuccess,
-    getNextAccountError
-  }
-}) => ({
-  getNextAccountSuccess,
-  getNextAccountError
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({ getNextAccountAttempt }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddAccount);
+export default addAccountConnector(AddAccount);

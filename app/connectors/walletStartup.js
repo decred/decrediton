@@ -1,41 +1,35 @@
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { selectorMap, substruct } from "../fp";
-import * as selectors from "../selectors";
-import * as walletLoaderActions from "../actions/WalletLoaderActions";
-import * as daemonActions from "../actions/DaemonActions";
+import { selectorMap } from "../fp";
+import * as sel from "../selectors";
+import * as wla from "../actions/WalletLoaderActions";
+import * as da from "../actions/DaemonActions";
 
 const mapStateToProps = selectorMap({
-  ...substruct({
-    startStepIndex: null,
-    isInputRequest: null,
-    startupError: null,
-    confirmNewSeed: null,
-    hasExistingWallet: null,
-    isStartupProcessing: "isProcessing",
-    getDaemonStarted: null,
-    getDaemonSynced: null,
-    getCurrentBlockCount: null,
-    getNeededBlocks: null,
-    getWalletReady: null,
-    getEstimatedTimeLeft: null,
-    isPrepared: null
-  }, selectors)
+  startStepIndex: sel.startStepIndex,
+  isInputRequest: sel.isInputRequest,
+  startupError: sel.startupError,
+  confirmNewSeed: sel.confirmNewSeed,
+  hasExistingWallet: sel.hasExistingWallet,
+  isProcessing: sel.isStartupProcessing,
+  getDaemonStarted: sel.getDaemonStarted,
+  getDaemonSynced: sel.getDaemonSynced,
+  getCurrentBlockCount: sel.getCurrentBlockCount,
+  getNeededBlocks: sel.getNeededBlocks,
+  getWalletReady: sel.getWalletReady,
+  getEstimatedTimeLeft: sel.getEstimatedTimeLeft,
+  isPrepared: sel.isPrepared
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  ...substruct({
-    createWalletGoBackNewSeed: "onReturnToNewSeed",
-    createWalletExistingToggle: "onSetCreateWalletFromExisting",
-    discoverAddressAttempt: "onDiscoverAddresses",
-    openWalletAttempt: "onOpenWallet",
-    startRpcRequestFunc: "onRetryStartRPC",
-    versionCheckAction: "doVersionCheck"
-  }, walletLoaderActions),
-  ...substruct({
-    startDaemon: "doStartDaemon",
-    skipDaemonSync: "doSkipDaemonSync"
-  }, daemonActions)
+  onReturnToNewSeed: wla.createWalletGoBackNewSeed,
+  onSetCreateWalletFromExisting: wla.createWalletExistingToggle,
+  onDiscoverAddresses: wla.discoverAddressAttempt,
+  onOpenWallet: wla.openWalletAttempt,
+  onRetryStartRPC: wla.startRpcRequestFunc,
+  doVersionCheck: wla.versionCheckAction,
+  doStartDaemon: da.startDaemon,
+  doSkipDaemonSync: da.skipDaemonSync
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

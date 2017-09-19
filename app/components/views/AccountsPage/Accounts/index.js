@@ -1,17 +1,7 @@
-// @flow
 import React, { Component, } from "react";
 import { autobind } from "core-decorators";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import {
-  renameAccountAttempt,
-  clearNewAccountSuccess,
-  clearNewAccountError,
-  clearRenameAccountSuccess,
-  clearRenameAccountError
-} from "../../../../actions/ControlActions";
-import { hideAccount, showAccount } from "../../../../actions/ClientActions";
 import AccountsList from "./List";
+import accountsConnector from "../../../../connectors/accountsPageAccounts";
 
 @autobind
 class Accounts extends Component {
@@ -23,50 +13,26 @@ class Accounts extends Component {
   }
 
   render() {
-    const {
-      getNextAccountError,
-      getNextAccountSuccess,
-      getNextAccountRequestAttempt,
-      renameAccountError,
-      renameAccountSuccess,
-      renameAccountRequestAttempt,
-      clearNewAccountError: onClearNewAccountError,
-      clearNewAccountSuccess: onClearNewAccountSuccess,
-      clearRenameAccountSuccess: onClearRenameAccountSuccess,
-      clearRenameAccountError: onClearRenameAccountError,
-      hideAccount: onHideAccount,
-      showAccount: onShowAccount,
-      renameAccountAttempt: onRenameAccount
-    } = this.props;
-    const { accountNumDetailsShown } = this.state;
-    const isLoading = !!(getNextAccountRequestAttempt || renameAccountRequestAttempt);
-    const {
-      onShowAccountDetails,
-      onHideAccountDetails,
-      onShowAddAccount
-    } = this;
-    const accounts = this.props.balances.slice().sort((a, b) => a.accountNumber - b.accountNumber);
-
     return (
       <AccountsList
         {...{
-          accounts,
-          isLoading,
-          getNextAccountError,
-          getNextAccountSuccess,
-          renameAccountError,
-          renameAccountSuccess,
-          onClearNewAccountError,
-          onClearNewAccountSuccess,
-          onClearRenameAccountSuccess,
-          onClearRenameAccountError,
-          onHideAccount,
-          onShowAccount,
-          onRenameAccount,
-          accountNumDetailsShown,
-          onShowAccountDetails,
-          onHideAccountDetails,
-          onShowAddAccount
+          accounts: this.props.accounts,
+          isLoading: this.props.isLoading,
+          getNextAccountError: this.props.getNextAccountError,
+          getNextAccountSuccess: this.props.getNextAccountSuccess,
+          renameAccountError: this.props.renameAccountError,
+          renameAccountSuccess: this.props.renameAccountSuccess,
+          onClearNewAccountError: this.props.onClearNewAccountError,
+          onClearNewAccountSuccess: this.props.onClearNewAccountSuccess,
+          onClearRenameAccountSuccess: this.props.onClearRenameAccountSuccess,
+          onClearRenameAccountError: this.props.onClearRenameAccountError,
+          onHideAccount: this.props.onHideAccount,
+          onShowAccount: this.props.onShowAccount,
+          onRenameAccount: this.props.onRenameAccount,
+          accountNumDetailsShown: this.state.accountNumDetailsShown,
+          onShowAccountDetails: this.onShowAccountDetails,
+          onHideAccountDetails: this.onHideAccountDetails,
+          onShowAddAccount: this.onShowAddAccount
         }}
       />
     );
@@ -85,35 +51,4 @@ class Accounts extends Component {
   }
 }
 
-const mapStateToProps = ({
-  grpc: { balances, hiddenAccounts },
-  control: {
-    getNextAccountSuccess,
-    getNextAccountError,
-    getNextAccountRequestAttempt,
-    renameAccountError,
-    renameAccountSuccess,
-    renameAccountRequestAttempt
-  }
-}) => ({
-  balances,
-  hiddenAccounts,
-  getNextAccountSuccess,
-  getNextAccountError,
-  getNextAccountRequestAttempt,
-  renameAccountError,
-  renameAccountSuccess,
-  renameAccountRequestAttempt
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  renameAccountAttempt,
-  clearNewAccountSuccess,
-  clearNewAccountError,
-  clearRenameAccountSuccess,
-  clearRenameAccountError,
-  hideAccount,
-  showAccount
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Accounts);
+export default accountsConnector(Accounts);

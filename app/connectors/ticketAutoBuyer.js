@@ -1,31 +1,27 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { selectorMap, substruct } from "../fp";
-import * as selectors from "../selectors";
-import * as controlActions from "../actions/ControlActions";
+import { selectorMap } from "../fp";
+import * as sel from "../selectors";
+import * as ca from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
-  ...substruct({
-    balanceToMaintain: null,
-    maxFee: null,
-    maxPriceRelative: null,
-    maxPriceAbsolute: null,
-    maxPerBlock: null,
-    getTicketBuyerConfigResponse: null,
-    isTicketAutoBuyerEnabled: null
-  }, selectors)
+  balanceToMaintain: sel.balanceToMaintain,
+  maxFee: sel.maxFee,
+  maxPriceRelative: sel.maxPriceRelative,
+  maxPriceAbsolute: sel.maxPriceAbsolute,
+  maxPerBlock: sel.maxPerBlock,
+  getTicketBuyerConfigResponse: sel.getTicketBuyerConfigResponse,
+  isTicketAutoBuyerEnabled: sel.isTicketAutoBuyerEnabled
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  ...substruct({
-    clearStartAutoBuyerSuccess: null,
-    clearStartAutoBuyerError: null,
-    clearStopAutoBuyerSuccess: null,
-    clearStopAutoBuyerError: null,
-    startAutoBuyerAttempt: "onEnableTicketAutoBuyer",
-    stopAutoBuyerAttempt: "onDisableTicketAutoBuyer",
-    setTicketBuyerConfigAttempt: "onUpdateTicketAutoBuyerConfig"
-  }, controlActions)
+  clearStartAutoBuyerSuccess: ca.clearStartAutoBuyerSuccess,
+  clearStartAutoBuyerError: ca.clearStartAutoBuyerError,
+  clearStopAutoBuyerSuccess: ca.clearStopAutoBuyerSuccess,
+  clearStopAutoBuyerError: ca.clearStopAutoBuyerError,
+  onEnableTicketAutoBuyer: ca.startAutoBuyerAttempt,
+  onDisableTicketAutoBuyer: ca.stopAutoBuyerAttempt,
+  onUpdateTicketAutoBuyerConfig: ca.setTicketBuyerConfigAttempt
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

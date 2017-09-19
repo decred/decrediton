@@ -1,9 +1,8 @@
-// @flow
 import React from "react";
 import { autobind } from "core-decorators";
-import { connect } from "react-redux";
 import GetStarted from "./GetStarted";
 import StandardHeader from "./Header";
+import headerConnector from "../../connectors/header";
 
 const MSG_DELAY = 4500; // Used when multiple messages come in, should probably queue instead
 
@@ -70,8 +69,4 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = ({ notifications: { newUnminedMessage } }) => ({
-  newUnminedMessage
-});
-
-export default connect(mapStateToProps)(Header);
+export default headerConnector(Header);

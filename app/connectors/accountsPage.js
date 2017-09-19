@@ -2,16 +2,17 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { selectorMap } from "../fp";
 import * as sel from "../selectors";
-import * as spa from "../actions/StakePoolActions";
+import * as ca from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
-  configuredStakePools: sel.configuredStakePools,
-  unconfiguredStakePools: sel.unconfiguredStakePools,
-  defaultStakePool: sel.defaultStakePool
+  walletService: sel.walletService
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  onSetStakePoolInfo: spa.setStakePoolInformation
+  onClearNewAccountSuccess: ca.clearNewAccountSuccess,
+  onClearNewAccountError: ca.clearNewAccountError,
+  onClearRenameAccountSuccess: ca.clearRenameAccountSuccess,
+  onClearRenameAccountError: ca.clearRenameAccountError
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

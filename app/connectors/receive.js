@@ -2,23 +2,18 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { selectorMap, bool } from "../fp";
-import { getNextAddressAttempt } from "../actions/ControlActions";
-import {
-  getNextAddressRequestAttempt,
-  nextAddressAccount,
-  nextAddress,
-  visibleAccounts
-} from "../selectors";
+import * as ca from "../actions/ControlActions";
+import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
-  isRequestingAddress: bool(getNextAddressRequestAttempt),
-  nextAddressAccount,
-  nextAddress,
-  visibleAccounts
+  isRequestingAddress: bool(sel.getNextAddressRequestAttempt),
+  nextAddressAccount: sel.nextAddressAccount,
+  nextAddress: sel.nextAddress,
+  visibleAccounts: sel.visibleAccounts
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getNextAddressAttempt
+  getNextAddressAttempt: ca.getNextAddressAttempt
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

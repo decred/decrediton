@@ -1,11 +1,9 @@
 import { connect } from "react-redux";
-import { selectorMap, substruct } from "../fp";
-import * as selectors from "../selectors";
+import { selectorMap } from "../fp";
+import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
-  ...substruct({
-    currentBlockHeight: null
-  }, selectors)
+  currentBlockHeight: sel.currentBlockHeight
 });
 
 export default connect(mapStateToProps);
