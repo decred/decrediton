@@ -220,12 +220,14 @@ export const transactions = createSelector(
     regularTransactions,
     ticketTransactions,
     voteTransactions,
-    revokeTransactions
+    revokeTransactions,
+    unmined
   ],
-  ( Regular, Tickets, Votes, Revokes ) => ({
-    All: Regular.concat(Tickets).concat(Votes).concat(Revokes)
-      .sort((a, b) => b.txTimestamp - a.txTimestamp),
-    Regular, Tickets, Votes, Revokes,
+  ( Regular, Tickets, Votes, Revokes, Unmined ) => ({
+    All: Regular.concat(Tickets).concat(Votes).concat(Revokes).concat(Unmined)
+      .sort((a, b) =>  b.txTimestamp - a.txTimestamp),
+    Regular: Unmined.concat(Regular),
+    Tickets, Votes, Revokes, Unmined
   })
 );
 
@@ -363,7 +365,6 @@ export const isSendingTransaction = bool(or(
 
 export const isConstructingTransaction = bool(constructTxRequestAttempt);
 
-
 export const tempSettings = get(["settings", "tempSettings"]);
 export const settingsChanged = get(["settings", "settingsChanged"]);
 export const changePassphraseError = get(["control", "changePassphraseError"]);
@@ -385,7 +386,6 @@ export const immatureTicketsCount = compose(r => r ? r.getImmature() : 0, getSta
 export const expiredTicketsCount = compose(r => r ? r.getExpired() : 0, getStakeInfoResponse);
 export const liveTicketsCount = compose(r => r ? r.getLive() : 0, getStakeInfoResponse);
 
-
 export const ticketBuyerService = get(["grpc", "ticketBuyerService"]);
 const startAutoBuyerResponse = get(["control", "startAutoBuyerResponse"]);
 
@@ -395,7 +395,6 @@ export const maxPriceRelative = get(["control", "maxPriceRelative"]);
 export const maxPriceAbsolute = get(["control", "maxPriceAbsolute"]);
 export const maxPerBlock = get(["control", "maxPerBlock"]);
 export const getTicketBuyerConfigResponse = get(["control", "getTicketBuyerConfigResponse"]);
-
 
 const getTicketPriceResponse = get(["grpc", "getTicketPriceResponse"]);
 
@@ -422,7 +421,6 @@ export const startAutoBuyerSuccess = get(["control", "startAutoBuyerSuccess"]);
 export const stopAutoBuyerError = get(["control", "stopAutoBuyerError"]);
 export const stopAutoBuyerSuccess = get(["control", "stopAutoBuyerSuccess"]);
 export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
-
 
 const currentStakePoolConfig = get(["stakepool", "currentStakePoolConfig"]);
 
