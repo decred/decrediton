@@ -4,56 +4,23 @@
   font-weight: bold;
 }
 
-.settings-save-button {
-  margin-top: 10px;
-  margin-right: 27px;
-  float: right;
-}
-
 .settings-row {
-  width: 100%;
-  height: 50px;
-  padding-top: 15px;
-  float: left;
   border-bottom: 1px black solid;
+  padding: 1em;
 }
 
 .settings-label {
-  width: 50%;
-  padding-left: 10px;
-  float: left;
-  height: 100%;
-  padding-top: 5px;
+  .inline-block-mixin;
+
+  width: 35%;
   font-size: 20px;
-  text-align: left;
 }
 
 .settings-input {
-  width: 45%;
-  padding-right: 10px;
-  float: left;
-  height: 100%;
+  .inline-block-mixin;
+
+  width: 60%;
   font-size: 20px;
-  padding-top: 5px;
-  text-align: right;
-}
-
-.settings-input-select {
-  display: block;
-  overflow: hidden;
-  float: right;
-  color: rgb(12, 30, 62);
-  font-size: 19px;
-}
-
-.settings-input-select-option {
-  overflow: hidden;
-  height: 34px;
-  margin-right: 20px;
-  padding-top: 5px;
-  padding-left: 10px;
-  color: rgb(41, 113, 255);
-  font-size: 19px;
 }
 
 .settings-input-error {
@@ -63,4 +30,16 @@
   text-align: left;
   color: red;
   padding-top: 5px;
+}
+
+.settings-action-buttons {
+  margin-top: 1em;
+}
+
+.settings-save-button {
+  .inline-block-mixin;
+}
+
+.settings-update-passphrase-button {
+  float: right;
 }

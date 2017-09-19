@@ -4,6 +4,7 @@ import KeyBlueButton from "../../KeyBlueButton";
 import SideBar from "../../SideBar";
 import Header from "../../Header";
 import ChangePassphraseModal from "../../ChangePassphraseModal";
+import Select from "react-select";
 import "../../../style/Layout.less";
 import "../../../style/StakePool.less";
 import "../../../style/Settings.less";
@@ -13,6 +14,8 @@ const SettingsPage = ({
   changePassphraseSuccess,
   areSettingsDirty,
   tempSettings,
+  networks,
+  currencies,
   isShowingChangePassphrase,
   onShowChangePassphrase,
   onCancelChangePassphrase,
@@ -60,14 +63,15 @@ const SettingsPage = ({
               Displayed Units
             </div>
             <div className="settings-input">
-              <select
-                className="settings-input-select"
+
+              <Select
                 value={tempSettings.currencyDisplay}
-                onChange={(e) => onChangeCurrencyDisplay(e.target.value)}
-              >
-                <option className="settings-input-select-option" value="DCR">DCR</option>
-                <option className="settings-input-select-option" value="atoms">atoms</option>
-              </select>
+                onChange={(newCurrency) => onChangeCurrencyDisplay(newCurrency.name)}
+                clearable={false}
+                multi={false}
+                valueKey="name" labelKey="name"
+                options={currencies}
+              />
             </div>
           </div>
           <div className="settings-row">
@@ -75,30 +79,33 @@ const SettingsPage = ({
               Network <span className="settings-restart">(requires restart!)</span>
             </div>
             <div className="settings-input">
-              <select
-                className="settings-input-select"
+
+              <Select
                 value={tempSettings.network}
-                onChange={(e) => onChangeNetwork(e.target.value)}
-              >
-                <option className="settings-input-select-option" value="mainnet">mainnet</option>
-                <option className="settings-input-select-option" value="testnet">testnet</option>
-              </select>
+                onChange={(newNet) => onChangeNetwork(newNet.name)}
+                clearable={false}
+                multi={false}
+                valueKey="name" labelKey="name"
+                options={networks}
+              />
             </div>
           </div>
-          <div className="settings-save-button">
-            <KeyBlueButton
-              disabled={!areSettingsDirty}
-              size="large"
-              block={false}
-              onClick={onSaveSettings}>
-              Save Settings
-            </KeyBlueButton>
-          </div>
-          <div className="settings-save-button">
+          <div className="settings-action-buttons">
+            <div className="settings-save-button">
               <KeyBlueButton
-                onClick={onShowChangePassphrase}>
-                Update Private Passphrase
+                disabled={!areSettingsDirty}
+                size="large"
+                block={false}
+                onClick={onSaveSettings}>
+                Save Settings
               </KeyBlueButton>
+            </div>
+            <div className="settings-update-passphrase-button">
+                <KeyBlueButton
+                  onClick={onShowChangePassphrase}>
+                  Update Private Passphrase
+                </KeyBlueButton>
+            </div>
           </div>
         </div>
       </div>

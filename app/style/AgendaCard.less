@@ -35,17 +35,18 @@
   margin-right: 20px;
   padding: 20px;
   float: left;
-  background-color: #e7eaed;
+  background-color: @disabled-background-color;
   background-image: @agenda-card-kebab-disabled;
   background-size: 10px;
   background-position: 93% 27px;
   background-repeat: no-repeat;
-  color: #8997a5;
+  color: @disabled-color;
+  box-shadow: 0px 3px 6px 0px @disabled-box-shadow-color;
   cursor: default;
 }
 
 .agenda-card-disabled:hover {
-  box-shadow: 0 3px 6px 0 rgba(9, 24, 45, 0.1);
+  box-shadow: 0 2px 2px 0 @disabled-box-shadow-color;
 }
 
 .agenda-card-bottom {
@@ -118,11 +119,11 @@
   height: 80px;
   margin-bottom: 20px;
   float: left;
-  color: #8997a5;
+  color: @disabled-color;
 }
 
 .agenda-card-bottom-cfg-last-disabled {
-  color: #8997a5;
+  color: @disabled-color;
 }
 
 .agenda-card-bottom-cfg-last-bold {

@@ -17,7 +17,7 @@ const Bar = ({
   onShowAccounts,
   onHideAccounts
 }) => (
-  <div className="sidebar-menu">
+  <div className={"sidebar-menu " + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
   <div className="sidebar-menu-logo"></div>
   {isTestNet ? <div className="sidebar-testnet-text">Testnet</div> : null}
   {(gettingStarted || errorPage) ? null : (
