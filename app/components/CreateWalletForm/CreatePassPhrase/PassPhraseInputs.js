@@ -13,7 +13,8 @@ const PassPhraseInputs = ({
   isBlank,
   isMatching,
   setPassPhrase,
-  setPassPhraseVerification
+  setPassPhraseVerification,
+  onKeyDown
 }) => (
   <div>
     <div className="content-new-seed-priv-pass">
@@ -26,6 +27,7 @@ const PassPhraseInputs = ({
               type="password"
               placeholder={passPhrasePlaceholder}
               value={passPhrase}
+              onKeyDown={onKeyDown}
               onChange={(e) => setPassPhrase(e.target.value)}
             />
           </form>
@@ -43,6 +45,7 @@ const PassPhraseInputs = ({
               type="password"
               placeholder={passPhraseVerificationPlaceholder}
               value={passPhraseVerification}
+              onKeyDown={onKeyDown}
               onChange={(e) => setPassPhraseVerification(e.target.value)}
             />
           </form>

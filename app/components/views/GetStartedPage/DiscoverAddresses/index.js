@@ -25,7 +25,7 @@ class DiscoverAddressesBody extends Component {
 
   render() {
     const { passPhrase, hasAttemptedDiscover } = this.state;
-    const { onSetPassPhrase, onDiscoverAddresses } = this;
+    const { onSetPassPhrase, onDiscoverAddresses, onKeyDown } = this;
 
     return (
       <DiscoverAddressesFormBody
@@ -34,7 +34,8 @@ class DiscoverAddressesBody extends Component {
           passPhrase,
           hasAttemptedDiscover,
           onSetPassPhrase,
-          onDiscoverAddresses
+          onDiscoverAddresses,
+          onKeyDown
         }}
       />
     );
@@ -56,6 +57,14 @@ class DiscoverAddressesBody extends Component {
     this.props.onDiscoverAddresses(this.state.passPhrase);
     this.resetState();
   }
+
+  onKeyDown(e) {
+    if(e.keyCode == 13) {   // Enter key
+      e.preventDefault();
+      this.onDiscoverAddresses();
+    }
+  }
+
 }
 
 export { DiscoverAddressesHeader, DiscoverAddressesBody };

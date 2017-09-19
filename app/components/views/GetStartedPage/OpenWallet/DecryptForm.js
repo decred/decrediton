@@ -22,7 +22,8 @@ const OpenWalletDecryptFormBody = ({
   publicPassPhrase,
   hasAttemptedOpen,
   onSetPublicPassPhrase,
-  onOpenWallet
+  onOpenWallet,
+  onKeyDown
 }) => (
   isInputRequest ? (
     <div className="get-started-view">
@@ -35,11 +36,13 @@ const OpenWalletDecryptFormBody = ({
           <div className="get-started-field">
             <form className="get-started-input-form">
               <input
+                autoFocus
                 className="get-started-input-private-password"
                 type="password"
                 placeholder="Public Passphrase"
                 value={publicPassPhrase}
-                onChange={(e) => onSetPublicPassPhrase(e.target.value)}/>
+                onChange={(e) => onSetPublicPassPhrase(e.target.value)}
+                onKeyDown={onKeyDown}/>
             </form>
           </div>
           {(hasAttemptedOpen && !publicPassPhrase) ? (
