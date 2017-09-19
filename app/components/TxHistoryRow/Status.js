@@ -2,7 +2,7 @@ import React from "react";
 import "../../style/TxHistory.less";
 
 const Status = ({ txAccountName, pending, date }) => (
-  <div>
+  <div className="transaction-status">
     <div className="transaction-account">
       <div className="transaction-account-name">{txAccountName}</div>
       <div className="transaction-account-indicator">

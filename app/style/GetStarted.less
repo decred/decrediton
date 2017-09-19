@@ -1,4 +1,5 @@
 @import (reference) "./main.less";
+@import (reference) "./Layout.less";
 
 .get-started-content-instructions-blockchain-syncing {
   padding-bottom: 5px;
@@ -35,34 +36,8 @@
   .clearfloat-mixin;
 }
 
-.get-started-body {
-  position: fixed;
-  left: 0px;
-  top: 50%;
-  right: 0px;
-  display: block;
-  overflow: hidden;
-  width: 1178px;
-  height: 770px;
-  margin-top: -385px;
-  margin-right: auto;
-  margin-left: auto;
-  background-color: #fff;
-}
-
 .get-started-view {
-  width: 880px;
-  height: 100%;
-  float: right;
-  background-color: #0c1e3e;
-}
-
-.get-started-content {
-  /*
-    overflow: auto;
-    height: 556px;
-    padding: 54px 60px 54px 80px;
-    */
+  .page-view;
 }
 
 .get-started-error {
@@ -71,8 +46,7 @@
 }
 
 .get-started-loading {
-  margin-left: auto;
-  margin-right: auto;
+  text-align: center;
 }
 
 .get-started-content-title {
@@ -190,9 +164,7 @@
 }
 
 .get-started-content-new-seed {
-  overflow: auto;
-  height: 556px;
-  padding: 54px 80px 54px 80px;
+  background-color: #0c1e3e;
 }
 
 .get-started-content-new-seed-priv-pass {
@@ -264,11 +236,6 @@
 .get-started-content-new-seed-create-button {
   height: 80px;
   float: left;
-}
-
-.get-started-loading {
-  margin-top: 110px;
-  margin-left: 268px;
 }
 
 .get-started-linear-loading {

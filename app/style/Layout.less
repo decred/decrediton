@@ -1,0 +1,51 @@
+// Classes for laying out the pages
+
+@import (reference) "./main.less";
+
+.page-body {
+  background-color: #fff;
+}
+
+.page-view {
+  background-color: #f3f6f6;
+  position: fixed;
+  left: @sidebar-width;
+  right: 0px;
+  bottom: 0px;
+  top: 0px;
+}
+
+// Base definition for the "page client area" (area where main content is
+// displayed")
+.page-content-mixin {
+  padding: 54px 60px 0px 80px;
+  overflow-y: scroll;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  top: 165px;
+}
+
+// Main content that allows scrolling
+.page-content {
+  .page-content-mixin;
+
+  overflow-y: auto;
+}
+
+// Main content that *does not* allow scrolling
+.page-content-fixed {
+  overflow: visible;
+}
+
+// Main content that has been blured by something positioned "on top" of it
+.page-content-blur {
+  .page-content-mixin;
+
+  filter: blur(6px);
+}
+
+.inverted-colors {
+  background-color: #0c1e3e;
+}

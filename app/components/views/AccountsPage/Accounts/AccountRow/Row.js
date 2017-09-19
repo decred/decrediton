@@ -53,11 +53,11 @@ const Row = ({
             ? <span> (hidden)</span>
             : <span></span>
         }</div>
-        <div className="account-row-top-account-funds"><Balance amount={account.total}/></div>
-      </div>
-      <div className="account-row-top-bottom">
-        <div className="account-row-top-last-tx"></div>
-        <div className="account-row-top-spendable">Spendable <Balance amount={account.spendable}/></div>
+        <div className="account-row-top-account-funds">
+          <Balance amount={account.total}/>
+          <div className="account-row-top-last-tx"></div>
+          <div className="account-row-top-spendable">Spendable <Balance amount={account.spendable}/></div>
+        </div>
       </div>
     </div>
     {!isShowingAccountDetails ? <div></div> :
@@ -85,16 +85,18 @@ const Row = ({
                 {renameAccountNameError}
               </div>
             </div>
-            <KeyBlueButton
-              className="content-confirm-new-account"
-              onClick={renameAccount}>
-              Rename
-            </KeyBlueButton>
-            <SlateGrayButton
-              className="content-confirm-new-account"
-              onClick={hideRenameAccount}>
-              Cancel
-            </SlateGrayButton>
+            <div className="account-form-buttons">
+              <KeyBlueButton
+                className="content-confirm-new-account"
+                onClick={renameAccount}>
+                Rename
+              </KeyBlueButton>
+              <SlateGrayButton
+                className="content-confirm-new-account"
+                onClick={hideRenameAccount}>
+                Cancel
+              </SlateGrayButton>
+            </div>
           </div>
         )
        : (

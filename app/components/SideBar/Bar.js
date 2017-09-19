@@ -52,15 +52,17 @@ const Bar = ({
           <div className="sidebar-menu-bottom-total-balance-short-name">Total balance:</div>
           <div className="sidebar-menu-bottom-total-balance-short-value">{totalBalance.toString()}</div>
         </div>
-        {currentHeight ? (
-          <div className="sidebar-menu-bottom-latest-block">
-            <a className="sidebar-menu-bottom-latest-block-name">
-              {synced ? "Latest block: " : "Synced to block: "}
-              <span className="sidebar-menu-bottom-latest-block-number">{currentHeight}</span>
-            </a>
-            <div className="sidebar-menu-bottom-latest-block-time">{timeBackString}</div>
-          </div>
-        ) : null}
+        <div className="sidebar-menu-bottom-latest-block">
+          {currentHeight ? (
+            <div>
+              <a className="sidebar-menu-bottom-latest-block-name">
+                {synced ? "Latest block: " : "Synced to block: "}
+                <span className="sidebar-menu-bottom-latest-block-number">{currentHeight}</span>
+              </a>
+              <div className="sidebar-menu-bottom-latest-block-time">{timeBackString}</div>
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
   )}

@@ -40,9 +40,9 @@ const SendPage = ({
   getAmountError,
   ...props
 }) => (
-  <div className="send-body">
+  <div className="page-body">
     <SideBar />
-    <div className="send-view">
+    <div className="page-view">
       <Header
         headerTitleOverview={<div className="header-title-send">Send Funds</div>}
         headerMetaOverview={isTestNet ? (
@@ -72,7 +72,7 @@ const SendPage = ({
         ]}
       />
       {(isSendingTransaction) ? (
-        <div className="send-content"><DecredLoading/></div>
+        <div className="page-content"><DecredLoading/></div>
       ) : (
         <div>
           <PassphraseModal
@@ -82,7 +82,7 @@ const SendPage = ({
             heading={"Confirm Transaction"}
             description={<div>Please confirm your transaction for <Balance amount={totalSpent}/></div>}
           />
-          <div className={!isShowingConfirm ? "send-content" : "send-content-blur"}>
+          <div className={!isShowingConfirm ? "page-content" : "page-content-blur"}>
             <div className="send-flex-height">
               <div className="send-select-account-area">
                 <div className="send-label">From:</div>
@@ -112,7 +112,7 @@ const SendPage = ({
                 <a onClick={onClearTransaction}>Close</a>  }
                 </div>
               </div>
-              <div id="dynamicInput">
+              <div className="send-amount-area">
                 {outputs.map((output, index) => (
                   <OutputRow
                     {...{ index, outputs, ...props, ...output, isSendAll, totalSpent }}
@@ -129,9 +129,9 @@ const SendPage = ({
                 onClick={onShowConfirm}
               >Send</KeyBlueButton>
               {constructTxError ? (
-                <span style={{color: "red", width: "330px", float: "left", paddingLeft: "20px", paddingTop: "30px"}}>
+                <div className="send-construct-error">
                   {constructTxError}
-                </span>
+                </div>
               ) : null}
               <div className="estimation-area-send">
                 <div className="total-amount-send">

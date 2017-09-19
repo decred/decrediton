@@ -3,6 +3,7 @@
 ////////////////////////////////////
 
 @error-text-color: red;
+@sidebar-width: 298px;
 
 ////////////////////////////////////
 //  Global mixin classes
@@ -35,6 +36,14 @@
   padding: 20px;
   background-color: #fff;
   box-shadow: 0px 13px 21px rgba(0, 0, 0, 0.21);
+}
+
+// MixIn to be used on UI elements to be displayed side-by-side
+// Adds a minimial margin to the right for the spacing of the next element
+.inline-block-mixin {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5em;
 }
 
 ////////////////////////////////////

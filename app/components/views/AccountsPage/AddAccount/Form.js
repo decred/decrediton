@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../../../Header";
 import KeyBlueButton from "../../../KeyBlueButton";
 import SlateGrayButton from "../../../SlateGrayButton";
+import "../../../../style/Layout.less";
 import "../../../../style/AccountsPage.less";
 
 const AddAccountForm = ({
@@ -15,7 +16,7 @@ const AddAccountForm = ({
   onSave,
   onCancel
 }) => (
-  <div className="account-view">
+  <div className="page-view">
     <Header
       headerTitleOverview="Accounts"
       headerTop={[
@@ -32,7 +33,7 @@ const AddAccountForm = ({
       ]}
     />
 
-    <div className="account-content">
+    <div className="page-content">
       <div className="account-flex-height">
         <div className="account-form-row">
           <div className="account-form-label">Account Name:</div>
@@ -74,14 +75,16 @@ const AddAccountForm = ({
 
         </div>
       </div>
-      <KeyBlueButton
-        className="confirm-new-account-button"
-        onClick={onSave}
-      >Confirm</KeyBlueButton>
-      <SlateGrayButton
-        className="hide-new-account-button"
-        onClick={onCancel}
-      >Cancel</SlateGrayButton>
+      <div className="account-form-buttons">
+        <KeyBlueButton
+          className="confirm-new-account-button"
+          onClick={onSave}
+        >Confirm</KeyBlueButton>
+        <SlateGrayButton
+          className="hide-new-account-button"
+          onClick={onCancel}
+        >Cancel</SlateGrayButton>
+      </div>
     </div>
   </div>
 );

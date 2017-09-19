@@ -5,7 +5,7 @@ const DecredLoading = ({ hidden, className }) => (
   <div
     className={"loading" + (className ? (" " + className) : "")}
     style={{display: hidden ? "none" : "block"}}>
-    <div className="logo"/>
+    <div className="logo spin"/>
   </div>
 );
 

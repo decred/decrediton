@@ -5,8 +5,6 @@
   display: inline-block;
   width: 20px;
   height: 18px;
-  margin-left: 16px;
-  margin-top: 9px;
   background-image: @accounts-button-icon;
   background-position: 0 0;
   background-size: 20px auto;
@@ -184,7 +182,6 @@
 }
 
 .purchase-tickets-info-button {
-  float: left;
   border-radius: 0px;
   background-image: @tickets-info-icon;
   background-position: 50% 50%;
@@ -192,8 +189,8 @@
   background-repeat: no-repeat;
   box-shadow: none;
   outline: 0;
-  position: relative;
-  display: block;
+  display: inline-block;
+  vertical-align: middle;
   width: 20px;
   height: 20px;
   padding: 3px;
@@ -211,22 +208,18 @@
 
 .ticket-cogs-opened,
 .ticket-cogs-closed {
-  margin-right: 25px;
-  float: right;
+  display: inline-block;
+  vertical-align: middle;
   border-radius: 0px;
   background-position: 50% 50%;
   background-size: 20px;
   background-repeat: no-repeat;
   box-shadow: none;
-  position: relative;
-  display: block;
   width: 20px;
   height: 20px;
-  padding: 3px;
   background-color: transparent;
   color: white;
   border: 0;
-  line-height: inherit;
   text-decoration: none;
   cursor: pointer;
 }

@@ -14,7 +14,7 @@ export const CheckWalletStateBody = ({
   startupError
 }) => (
   startupError ? (
-    <div className="get-started-content-new-seed">
+    <div className="get-started-content-new-seed page-content">
       <ShowError className="get-started-error" error={startupError} />
     </div>
   ) : null

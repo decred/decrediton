@@ -1,28 +1,6 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.account-body {
-  position: fixed;
-  left: 0px;
-  top: 50%;
-  right: 0px;
-  display: block;
-  overflow: hidden;
-  width: 1178px;
-  height: 770px;
-  margin-top: -385px;
-  margin-right: auto;
-  margin-left: auto;
-  background-color: #fff;
-}
-
-.account-view {
-  width: 880px;
-  height: 100%;
-  float: right;
-  background-color: #f3f6f6;
-}
-
 .account-view-notification-error {
   margin-top: 20px;
   display: inline-block;
@@ -50,12 +28,6 @@
   font-size: 13px;
   text-align: center;
   text-decoration: none;
-}
-
-.account-content {
-  overflow-y: scroll;
-  height: 512px;
-  padding: 54px 60px 54px 80px;
 }
 
 .account-content-title {
@@ -138,7 +110,6 @@
 
 .account-flex-height {
   background-color: #fff;
-  height: 125px;
 }
 
 .add-new-account-button {
@@ -146,65 +117,51 @@
   float: right;
 }
 
+.account-form-buttons {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
 .confirm-new-account-button {
-  margin-top: 20px;
-  float: left;
+  .inline-block-mixin;
 }
 
 .show-hide-account-button {
-  margin-top: 20px;
-  margin-right: 20px;
   float: right;
 }
 
 .hide-new-account-button {
-  margin-top: 20px;
+  .inline-block-mixin;
+
   float: right;
 }
 
 .account-form-row {
-  width: 100%;
-  height: 60px;
-  padding-top: 2px;
-  float: left;
+  min-height: 4em;
+  padding: 1em;
   border-bottom: 1px #e7eaed solid;
 }
 
 .account-form-label {
-  width: 131px;
-  padding-right: 15px;
-  padding-left: 5px;
-  float: left;
-  height: 100%;
-  padding-top: 17px;
+  .inline-block-mixin;
+
+  width: 20%;
   font-size: 16px;
-  text-align: right;
 }
 
 .account-form-input {
-  width: 286px;
-  float: left;
-  height: 100%;
+  .inline-block-mixin;
+
+  width: 70%;
   font-size: 19px;
-  text-align: right;
-  padding-top: 12px;
 }
 
 .account-form-input-error {
-  width: 290px;
-  float: right;
-  height: 100%;
-  text-align: left;
   color: red;
-  padding-top: 17px;
 }
 
-.account-input-form {
-  position: relative;
-  width: 100%;
-  height: auto;
-  min-height: 44px;
-}
+// .account-input-form {
+// }
 
 .account-nest-address-hash-to {
   width: 96%;

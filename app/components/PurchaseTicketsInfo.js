@@ -6,7 +6,7 @@ import "../style/PurchaseTicketsInfo.less";
 class PurchaseTicketsInfo extends React.Component {
   render() {
     return (
-      <div className="purchase-tickets-modal">
+      <div className="purchase-tickets-modal page-content">
         <div className="purchase-tickets-header">
           <div className="purchase-tickets-header-text">Ticket Purchase Information</div>
           <SlateGrayButton className="purchase-tickets-close-button" onClick={() =>this.props.closeModal()}>Close</SlateGrayButton>
