@@ -111,13 +111,13 @@
 .account-row-details-bottom-column-left {
   .inline-block-mixin;
 
-  width: 48%;
+  width: 44%;
 }
 
 .account-row-details-bottom-column-right {
   .inline-block-mixin;
 
-  width: 48%;
+  width: 52%;
   vertical-align: top;
 }
 
@@ -136,14 +136,24 @@
 }
 
 .account-row-details-bottom-title-name {
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
   color: #596d81;
+  text-align: right;
+}
+
+.account-row-details-bottom-column-left .account-row-details-bottom-title-name {
+  width: 55%;
+}
+
+.account-row-details-bottom-column-right .account-row-details-bottom-title-name {
+  width: 26%;
 }
 
 .account-row-details-bottom-spec {
   text-align: right;
   color: #0c1e3e;
   font-size: 12px;
+  margin-bottom: 0.5em;
 }
 
 .account-row-details-bottom-spec-last {
@@ -158,6 +168,10 @@
   margin-right: 1em;
 }
 
+.account-row-details-bottom-column-right .account-row-details-bottom-spec-name {
+  width: 24%;
+}
+
 .account-row-details-bottom-column-right .account-row-details-bottom-spec-value {
   width: 70%;
 }
@@ -167,6 +181,8 @@
 
   font-family: Inconsolata, monospace;
   font-weight: 700;
+  text-align: left;
+  width: 40%;
 }
 
 .account-row-details-bottom-rename {
