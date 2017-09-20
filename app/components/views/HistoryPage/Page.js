@@ -53,7 +53,7 @@ const Page = ({
           <div className="history-content-nest">
             {paginatedTxs.length > 0 ? (
               <TxHistory
-                mined={paginatedTxs}
+                transactions={paginatedTxs}
                 showTxDetail={onShowTxDetail}
               />
             ) : <p>No transactions</p>}

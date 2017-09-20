@@ -216,22 +216,6 @@ export const unmined = createSelector(
   [transactionsNormalizer, get(["notifications", "unmined"])], apply
 );
 
-// First version (defining one by one)
-/* const regularAndUnminedTransactions = createSelector(
-  [regularTransactions, unmined],
-  (Regular, Unmined) => (Unmined
-    .filter(t => t.txNumericType === TransactionDetails.TransactionType.REGULAR ? t : null ))
-    .concat(Regular)
-);
-
-const ticketAndUnminedTransactions = createSelector(
-  [ticketTransactions, unmined],
-  (Ticket, Unmined) => (Unmined
-    .filter(t => t.txNumericType === TransactionDetails.TransactionType.TICKET_PURCHASE ? t : null ))
-    .concat(Ticket)
-);*/
-
-// second version (maker standard function)
 const minedAndUnminedSelectorCreator = (selector, txType) =>
   createSelector(
     [selector, unmined],
@@ -248,17 +232,23 @@ const regularAndUnminedTransactions = minedAndUnminedSelectorCreator(
 const ticketAndUnminedTransactions = minedAndUnminedSelectorCreator(
   ticketTransactions, TransactionDetails.TransactionType.TICKET_PURCHASE);
 
+const voteAndUnminedTransactions = minedAndUnminedSelectorCreator(
+  voteTransactions, TransactionDetails.TransactionType.VOTE);
+
+const revokeAndUnminedTransactions = minedAndUnminedSelectorCreator(
+  revokeTransactions, TransactionDetails.TransactionType.REVOCATION);
+
 export const transactions = createSelector(
   [
     regularAndUnminedTransactions,
     ticketAndUnminedTransactions,
-    voteTransactions,
-    revokeTransactions,
+    voteAndUnminedTransactions,
+    revokeAndUnminedTransactions,
     unmined
   ],
   ( Regular, Tickets, Votes, Revokes, Unmined ) => ({
-    All: Regular.concat(Tickets).concat(Votes).concat(Revokes).concat(Unmined)
-      .sort((a, b) =>  b.txTimestamp - a.txTimestamp),
+    All: Regular.concat(Tickets).concat(Votes).concat(Revokes)
+      .sort((a, b) => !a.txTimestamp ? -1 : !b.txTimestamp ? +1 : b.txTimestamp - a.txTimestamp),
     Regular, Tickets, Votes, Revokes, Unmined
   })
 );
@@ -285,18 +275,12 @@ export const rescanPercentFinished = createSelector(
   (current, end) => ((current / end) * 100).toFixed(2)
 );
 
-export const homeHistoryMined = createSelector(
-  [unmined, txPerPage, regularTransactions],
-  (unmined, txPerPage, regularTransactions) =>
-    unmined.length > 0
-      ? unmined.length > txPerPage
-        ? Array()
-        : regularTransactions.length + unmined.length >= txPerPage
-          ? regularTransactions.slice(0,txPerPage-unmined.length)
-          : regularTransactions.slice(0,regularTransactions.length+unmined.length)
-      : regularTransactions.length >= txPerPage
-        ? regularTransactions.slice(0,txPerPage)
-        : regularTransactions.slice(0,regularTransactions.length)
+export const homeHistoryTransactions = createSelector(
+  [txPerPage, regularAndUnminedTransactions],
+  (txPerPage, transactions) =>
+    transactions.length >= txPerPage
+      ? transactions.slice(0, txPerPage)
+      : transactions.slice(0, transactions.length)
 );
 
 export const visibleAccounts = createSelector(
