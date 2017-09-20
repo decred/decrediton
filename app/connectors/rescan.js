@@ -2,25 +2,19 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { selectorMap } from "../fp";
-import { rescanAttempt } from "../actions/ControlActions";
-import {
-  rescanRequest,
-  rescanStartBlock,
-  rescanEndBlock,
-  rescanCurrentBlock,
-  rescanPercentFinished
-} from "../selectors";
+import * as ca from "../actions/ControlActions";
+import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
-  rescanRequest,
-  rescanStartBlock,
-  rescanEndBlock,
-  rescanCurrentBlock,
-  rescanPercentFinished
+  rescanRequest: sel.rescanRequest,
+  rescanStartBlock: sel.rescanStartBlock,
+  rescanEndBlock: sel.rescanEndBlock,
+  rescanCurrentBlock: sel.rescanCurrentBlock,
+  rescanPercentFinished: sel.rescanPercentFinished
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  rescanAttempt
+  rescanAttempt: ca.rescanAttempt
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

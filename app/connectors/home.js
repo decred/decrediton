@@ -1,26 +1,16 @@
-// @flow
 import { connect } from "react-redux";
 import { selectorMap } from "../fp";
-import {
-  getTransactionsRequestAttempt,
-  getAccountsResponse,
-  txPerPage,
-  spendableTotalBalance,
-  transactions,
-  synced,
-  unmined,
-  homeHistoryMined
-} from "../selectors";
+import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
-  getTransactionsRequestAttempt,
-  getAccountsResponse,
-  txPerPage,
-  spendableTotalBalance,
-  transactions,
-  synced,
-  unmined,
-  mined: homeHistoryMined
+  getTransactionsRequestAttempt: sel.getTransactionsRequestAttempt,
+  getAccountsResponse: sel.getAccountsResponse,
+  txPerPage: sel.txPerPage,
+  spendableTotalBalance: sel.spendableTotalBalance,
+  transactions: sel.transactions,
+  synced: sel.synced,
+  unmined: sel.unmined,
+  mined: sel.homeHistoryMined
 });
 
 export default connect(mapStateToProps);

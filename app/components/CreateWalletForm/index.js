@@ -1,16 +1,8 @@
-// @flow
 import React from "react";
 import { autobind } from "core-decorators";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import {
-  createWalletRequest,
-  createWalletConfirmNewSeed,
-  createWalletGoBackNewSeed,
-} from "../../actions/WalletLoaderActions";
-import { getSeedService } from "../../wallet/seed";
 import ContinueWalletCreation from "./ContinueWalletCreation";
 import CreateWallet from "./CreateWallet";
+import createWalletConnector from "../../connectors/createWallet";
 
 @autobind
 class CreateWalletForm extends React.Component {
@@ -87,7 +79,7 @@ class CreateWalletForm extends React.Component {
       generate().then(response => this.setState({
         decode,
         mnemonic: response.getSeedMnemonic(),
-        seed: this.isTestNet() ? response.getSeedBytes() : null // Allows verification skip in dev
+        seed: this.props.isTestNet ? response.getSeedBytes() : null // Allows verification skip in dev
       }))
     );
   }
@@ -116,32 +108,6 @@ class CreateWalletForm extends React.Component {
     const { seed, passPhrase } = this.state;
     return !!(seed && passPhrase);
   }
-
-  isTestNet() {
-    return this.props.network === "testnet";
-  }
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(
-  {
-    createWalletConfirmNewSeed,
-    createWalletGoBackNewSeed,
-    createWalletRequest
-  },
-  dispatch
-);
-
-const mapStateToProps = ({
-  walletLoader: {
-    createWalletExisting,
-    confirmNewSeed
-  },
-  grpc
-}) => ({
-  seedService: getSeedService({ grpc }),
-  createWalletExisting,
-  confirmNewSeed,
-  network: grpc.network
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateWalletForm);
+export default createWalletConnector(CreateWalletForm);

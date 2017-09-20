@@ -78,13 +78,24 @@ export const isStartupProcessing = or(
   )
 );
 
-const balances = get(["grpc", "balances"]);
+export const balances = or(get(["grpc", "balances"]), () => []);
 export const walletService = get(["grpc", "walletService"]);
 export const txPerPage = get(["grpc", "txPerPage"]);
 export const getBalanceRequestAttempt = get(["grpc", "getBalanceRequestAttempt"]);
 export const getAccountsResponse = get(["grpc", "getAccountsResponse"]);
 export const getNetworkResponse = get(["grpc", "getNetworkResponse"]);
+export const getNetworkError = get(["grpc", "getNetworkError"]);
 const accounts = createSelector([getAccountsResponse], r => r ? r.getAccountsList() : []);
+
+export const sortedAccounts = createSelector(
+  [balances], balances => balances.slice().sort((a, b) => a.accountNumber - b.accountNumber)
+);
+
+export const totalBalance = createSelector(
+  [balances],
+  reduce((atoms, { total }) => atoms + total, 0)
+);
+
 export const spendableTotalBalance = createSelector(
   [balances],
   reduce(
@@ -94,7 +105,7 @@ export const spendableTotalBalance = createSelector(
   )
 );
 
-export const network = compose(r => r ? r.networkStr : null, getNetworkResponse);
+export const network = get(["grpc", "network"]);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 
@@ -449,3 +460,24 @@ const purchaseTicketsRequestAttempt = get(["control", "purchaseTicketsRequestAtt
 
 export const isSavingStakePoolConfig = bool(currentStakePoolConfigRequest);
 export const isPurchasingTickets = bool(purchaseTicketsRequestAttempt);
+
+export const newUnminedMessage = get(["notifications", "newUnminedMessage"]);
+
+export const createWalletExisting = get(["walletLoader", "createWalletExisting"]);
+
+export const timeBackString = createSelector(
+  [
+    synced,
+    get(["grpc", "timeSinceString"]),
+    get(["notifications", "timeBackString"])
+  ],
+  (synced, since, back) => synced ? since : back
+);
+
+export const getNextAccountSuccess = get(["control", "getNextAccountSuccess"]);
+export const getNextAccountError = get(["control", "getNextAccountError"]);
+export const getNextAccountRequestAttempt = get(["control", "getNextAccountRequestAttempt"]);
+export const hiddenAccounts = get(["grpc", "hiddenAccounts"]);
+export const renameAccountError = get(["control", "renameAccountError"]);
+export const renameAccountSuccess = get(["control", "renameAccountSuccess"]);
+export const renameAccountRequestAttempt = get(["control", "renameAccountRequestAttempt"]);

@@ -1,36 +1,25 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { selectorMap } from "../fp";
-import {
-  currencyDisplay,
-  unitDivisor,
-  tempSettings,
-  changePassphraseError,
-  changePassphraseSuccess,
-  settingsChanged
-} from "../selectors";
-import { saveSettings, updateStateSettingsChanged } from "../actions/SettingsActions";
-import {
-  clearChangePassphraseError,
-  clearChangePassphraseSuccess,
-  changePassphraseAttempt
-} from "../actions/ControlActions";
+import * as sel from "../selectors";
+import * as sa from "../actions/SettingsActions";
+import * as ca from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
-  currencyDisplay,
-  unitDivisor,
-  tempSettings,
-  changePassphraseError,
-  changePassphraseSuccess,
-  areSettingsDirty: settingsChanged
+  currencyDisplay: sel.currencyDisplay,
+  unitDivisor: sel.unitDivisor,
+  tempSettings: sel.tempSettings,
+  changePassphraseError: sel.changePassphraseError,
+  changePassphraseSuccess: sel.changePassphraseSuccess,
+  areSettingsDirty: sel.settingsChanged
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  onClearChangePassphraseError: clearChangePassphraseError,
-  onClearChangePassphraseSuccess: clearChangePassphraseSuccess,
-  onAttemptChangePassphrase: changePassphraseAttempt,
-  onChangeTempSettings: updateStateSettingsChanged,
-  onSaveSettings: saveSettings,
+  onClearChangePassphraseError: ca.clearChangePassphraseError,
+  onClearChangePassphraseSuccess: ca.clearChangePassphraseSuccess,
+  onAttemptChangePassphrase: ca.changePassphraseAttempt,
+  onChangeTempSettings: sa.updateStateSettingsChanged,
+  onSaveSettings: sa.saveSettings,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

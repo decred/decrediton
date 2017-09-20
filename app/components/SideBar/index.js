@@ -1,10 +1,7 @@
-// @flow
 import React, { Component } from "react";
-import { updateBlockTimeSince } from "../../actions/ClientActions";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
 import { autobind } from "core-decorators";
 import Bar from "./Bar";
+import sideBarConnector from "../../connectors/sideBar";
 
 @autobind
 class SideBar extends Component {
@@ -22,44 +19,23 @@ class SideBar extends Component {
   }
 
   render() {
-    const { gettingStarted, errorPage } = this.props;
-    const { isShowingAccounts } = this.state;
-    const { onShowAccounts, onHideAccounts } = this;
-    const isTestNet = this.isTestNet();
-    const balances = this.props.balances || [];
-    const synced = this.props.synced && this.props.getAccountsResponse;
-    const totalBalance = this.getTotalBalance();
-    const currentHeight = synced
-      ? this.props.getAccountsResponse.getCurrentBlockHeight()
-      : this.props.currentHeight;
-    const timeBackString = synced ? this.props.timeSinceString : this.props.timeBackString;
-
     return (
       <Bar
         {...{
-          gettingStarted,
-          errorPage,
-          isTestNet,
-          balances,
-          synced,
-          currentHeight,
-          timeBackString,
-          totalBalance,
-          isShowingAccounts,
-          onShowAccounts,
-          onHideAccounts
+          gettingStarted: this.props.gettingStarted,
+          errorPage: this.props.errorPage,
+          isTestNet: this.props.isTestNet,
+          balances: this.props.balances,
+          synced: this.props.synced,
+          currentHeight: this.props.currentBlockHeight,
+          timeBackString: this.props.timeBackString,
+          totalBalance: this.props.totalBalance / 100000000,
+          isShowingAccounts: this.state.isShowingAccounts,
+          onShowAccounts: this.onShowAccounts,
+          onHideAccounts: this.onHideAccounts
         }}
       />
     );
-  }
-
-  isTestNet() {
-    return this.props.network === "testnet";
-  }
-
-  getTotalBalance() {
-    const atoms = (this.props.balances || []).reduce((atoms, { total }) => atoms + total, 0);
-    return atoms / 100000000;
   }
 
   onShowAccounts() {
@@ -71,38 +47,4 @@ class SideBar extends Component {
   }
 }
 
-const mapStateToProps = ({
-  grpc: {
-    walletService,
-    getBalanceRequestAttempt,
-    balances,
-    getStakeInfoRequestAttempt,
-    getStakeInfoResponse,
-    network,
-    getAccountsResponse,
-    timeSinceString
-  },
-  notifications: {
-    transactionNtfnsResponse,
-    currentHeight,
-    timeBackString,
-    synced
-  }
-}) => ({
-  walletService,
-  getBalanceRequestAttempt,
-  balances,
-  getStakeInfoRequestAttempt,
-  getStakeInfoResponse,
-  network,
-  getAccountsResponse,
-  timeSinceString,
-  transactionNtfnsResponse,
-  currentHeight,
-  timeBackString,
-  synced
-});
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({ updateBlockTimeSince }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
+export default sideBarConnector(SideBar);

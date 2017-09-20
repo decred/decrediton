@@ -1,54 +1,48 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { selectorMap, substruct } from "../fp";
-import * as selectors from "../selectors";
-import * as controlActions from "../actions/ControlActions";
-import * as stakePoolActions from "../actions/StakePoolActions";
+import { selectorMap } from "../fp";
+import * as sel from "../selectors";
+import * as ca from "../actions/ControlActions";
+import * as spa from "../actions/StakePoolActions";
 
 const mapStateToProps = selectorMap({
-  ...substruct({
-    spendingAccounts: null,
-    configuredStakePools: null,
-    unconfiguredStakePools: null,
-    defaultSpendingAccount: null,
-    defaultStakePool: null,
-    ticketPrice: null,
-    currentStakePoolConfigError: null,
-    currentStakePoolConfigSuccessMessage: null,
-    purchaseTicketsError: null,
-    purchaseTicketsSuccess: null,
-    revokeTicketsError: null,
-    revokeTicketsSuccess: null,
-    startAutoBuyerSuccess: null,
-    stopAutoBuyerSuccess: null,
-    startAutoBuyerError: null,
-    stopAutoBuyerError: null,
-    importScriptError: null,
-    importScriptSuccess: null,
-    isPurchasingTickets: null,
-    isSavingStakePoolConfig: null
-  }, selectors),
+  spendingAccounts: sel.spendingAccounts,
+  configuredStakePools: sel.configuredStakePools,
+  unconfiguredStakePools: sel.unconfiguredStakePools,
+  defaultSpendingAccount: sel.defaultSpendingAccount,
+  defaultStakePool: sel.defaultStakePool,
+  ticketPrice: sel.ticketPrice,
+  currentStakePoolConfigError: sel.currentStakePoolConfigError,
+  currentStakePoolConfigSuccessMessage: sel.currentStakePoolConfigSuccessMessage,
+  purchaseTicketsError: sel.purchaseTicketsError,
+  purchaseTicketsSuccess: sel.purchaseTicketsSuccess,
+  revokeTicketsError: sel.revokeTicketsError,
+  revokeTicketsSuccess: sel.revokeTicketsSuccess,
+  startAutoBuyerSuccess: sel.startAutoBuyerSuccess,
+  stopAutoBuyerSuccess: sel.stopAutoBuyerSuccess,
+  startAutoBuyerError: sel.startAutoBuyerError,
+  stopAutoBuyerError: sel.stopAutoBuyerError,
+  importScriptError: sel.importScriptError,
+  importScriptSuccess: sel.importScriptSuccess,
+  isPurchasingTickets: sel.isPurchasingTickets,
+  isSavingStakePoolConfig: sel.isSavingStakePoolConfig
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  ...substruct({
-    clearStakePoolConfigError: "onClearStakePoolConfigError",
-    clearStakePoolConfigSuccess: "onClearStakePoolConfigSuccess"
-  }, stakePoolActions),
-  ...substruct({
-    revokeTicketsAttempt: "onRevokeTickets",
-    importScriptAttempt: "onImportScript",
-    clearPurchaseTicketsError: "onClearPurchaseTicketsError",
-    clearPurchaseTicketsSuccess: "onClearPurchaseTicketsSuccess",
-    clearRevokeTicketsError: "onClearRevokeTicketsError",
-    clearRevokeTicketsSuccess: "onClearRevokeTicketsSuccess",
-    clearStartAutoBuyerSuccess: "onClearStartAutoBuyerSuccess",
-    clearStopAutoBuyerSuccess: "onClearStopAutoBuyerSuccess",
-    clearStartAutoBuyerError: "onClearStartAutoBuyerError",
-    clearStopAutoBuyerError: "onClearStopAutoBuyerError",
-    clearImportScriptError: "onClearImportScriptError",
-    clearImportScriptSuccess: "onClearImportScriptSuccess"
-  }, controlActions)
+  onClearStakePoolConfigError: spa.clearStakePoolConfigError,
+  onClearStakePoolConfigSuccess: spa.clearStakePoolConfigSuccess,
+  onRevokeTickets: ca.revokeTicketsAttempt,
+  onImportScript: ca.importScriptAttempt,
+  onClearPurchaseTicketsError: ca.clearPurchaseTicketsError,
+  onClearPurchaseTicketsSuccess: ca.clearPurchaseTicketsSuccess,
+  onClearRevokeTicketsError: ca.clearRevokeTicketsError,
+  onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
+  onClearStartAutoBuyerSuccess: ca.clearStartAutoBuyerSuccess,
+  onClearStartAutoBuyerError: ca.clearStartAutoBuyerError,
+  onClearStopAutoBuyerSuccess: ca.clearStopAutoBuyerSuccess,
+  onClearStopAutoBuyerError: ca.clearStopAutoBuyerError,
+  onClearImportScriptError: ca.clearImportScriptError,
+  onClearImportScriptSuccess: ca.clearImportScriptSuccess
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

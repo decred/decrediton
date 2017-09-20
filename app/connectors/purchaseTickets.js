@@ -1,20 +1,16 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { selectorMap, substruct } from "../fp";
-import * as selectors from "../selectors";
-import * as controlActions from "../actions/ControlActions";
+import { selectorMap } from "../fp";
+import * as sel from "../selectors";
+import * as ca from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
-  ...substruct({
-    ticketPrice: null,
-    spendingAccounts: null
-  }, selectors)
+  ticketPrice: sel.ticketPrice,
+  spendingAccounts: sel.spendingAccounts
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  ...substruct({
-    purchaseTicketsAttempt: "onPurchaseTickets"
-  }, controlActions)
+  onPurchaseTickets: ca.purchaseTicketsAttempt
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);
