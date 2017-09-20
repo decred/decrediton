@@ -51,10 +51,7 @@ const Bar = ({
           onMouseLeave={rescanRequest ? null : onHideAccounts}
         >
           {rescanRequest ?
-          <div>
-            Rescanning
-            <RescanProgress/>
-          </div>:
+          <RescanProgress/> :
           <div>
             <div className="sidebar-menu-bottom-total-balance-short-separator"></div>
             <div className="sidebar-menu-bottom-total-balance-short-name">Total balance:</div>
