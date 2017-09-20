@@ -13,7 +13,9 @@ const Status = ({ txAccountName, pending, date }) => (
         )}
       </div>
     </div>
-    {pending ? null : (
+    {pending ? (
+      <div className="transaction-time-date-spacer"></div>
+    ) : (
       <div className="transaction-time-date"><span>{date}</span></div>
     )}
   </div>
