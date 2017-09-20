@@ -105,7 +105,7 @@ export const spendableTotalBalance = createSelector(
   )
 );
 
-export const network = compose(r => r ? r.networkStr : null, getNetworkResponse);
+export const network = get(["grpc", "network"]);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 

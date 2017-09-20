@@ -9,7 +9,7 @@ const mapStateToProps = selectorMap({
   seedService: getSeedService,
   createWalletExisting: sel.createWalletExisting,
   confirmNewSeed: sel.confirmNewSeed,
-  network: sel.network
+  isTestNet: sel.isTestNet
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

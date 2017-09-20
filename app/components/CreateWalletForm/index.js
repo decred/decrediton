@@ -79,7 +79,7 @@ class CreateWalletForm extends React.Component {
       generate().then(response => this.setState({
         decode,
         mnemonic: response.getSeedMnemonic(),
-        seed: this.isTestNet() ? response.getSeedBytes() : null // Allows verification skip in dev
+        seed: this.props.isTestNet ? response.getSeedBytes() : null // Allows verification skip in dev
       }))
     );
   }
@@ -107,10 +107,6 @@ class CreateWalletForm extends React.Component {
   isValid() {
     const { seed, passPhrase } = this.state;
     return !!(seed && passPhrase);
-  }
-
-  isTestNet() {
-    return this.props.network === "testnet";
   }
 }
 
