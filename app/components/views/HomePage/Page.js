@@ -3,7 +3,7 @@ import React from "react";
 import ReactToolTip from "react-tooltip";
 import rescan from "../../../connectors/rescan";
 import home from "../../../connectors/home";
-import RescanProgress from "./RescanProgress";
+import RescanProgress from "../../RescanProgress";
 import DecredLoading from "../../DecredLoading";
 import KeyBlueButton from "../../KeyBlueButton";
 import Balance from "../../Balance";

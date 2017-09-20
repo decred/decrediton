@@ -32,7 +32,8 @@ class SideBar extends Component {
           totalBalance: this.props.totalBalance / 100000000,
           isShowingAccounts: this.state.isShowingAccounts,
           onShowAccounts: this.onShowAccounts,
-          onHideAccounts: this.onHideAccounts
+          onHideAccounts: this.onHideAccounts,
+          rescanRequest: this.rescanRequest
         }}
       />
     );

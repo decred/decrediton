@@ -1,7 +1,7 @@
 import React from "react";
 import LinearProgress from "material-ui/LinearProgress";
-import rescan from "../../../connectors/rescan";
-import "../../../style/HomePage.less";
+import rescan from "../connectors/rescan";
+import "../style/HomePage.less";
 
 const RescanProgress = ({
   rescanEndBlock,
