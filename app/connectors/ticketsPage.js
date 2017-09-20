@@ -39,6 +39,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
   onClearStartAutoBuyerSuccess: ca.clearStartAutoBuyerSuccess,
   onClearStartAutoBuyerError: ca.clearStartAutoBuyerError,
+  onClearStopAutoBuyerSuccess: ca.clearStopAutoBuyerSuccess,
+  onClearStopAutoBuyerError: ca.clearStopAutoBuyerError,
   onClearImportScriptError: ca.clearImportScriptError,
   onClearImportScriptSuccess: ca.clearImportScriptSuccess
 }, dispatch);
