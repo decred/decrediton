@@ -20,7 +20,8 @@ const DiscoverAddressesFormBody = ({
   isInputRequest,
   hasAttemptedDiscover,
   onSetPassPhrase,
-  onDiscoverAddresses
+  onDiscoverAddresses,
+  onKeyDown
 }) => (
   isInputRequest ? (
     <div className="get-started-content-new-seed page-content">
@@ -34,11 +35,13 @@ const DiscoverAddressesFormBody = ({
           <div className="get-started-input-form">
             <form className="get-started-input-form">
               <input
+                autoFocus
                 className="get-started-input-private-password"
                 type="password"
                 placeholder="Private Passphrase"
                 value={passPhrase}
-                onChange={(e) => onSetPassPhrase(e.target.value)}/>
+                onChange={(e) => onSetPassPhrase(e.target.value)}
+                onKeyDown={onKeyDown}/>
             </form>
           </div>
         </div>

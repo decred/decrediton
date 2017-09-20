@@ -53,7 +53,7 @@ class OpenWalletBody extends Component {
   }
 
   render() {
-    const { publicPassPhrase, hasAttemptedOpen } = this.state;
+    const { publicPassPhrase, hasAttemptedOpen, onKeyDown } = this.state;
     const { hasExistingWallet } = this.props;
     const {
       onSetPublicPassPhrase,
@@ -67,7 +67,8 @@ class OpenWalletBody extends Component {
           publicPassPhrase,
           hasAttemptedOpen,
           onSetPublicPassPhrase,
-          onOpenWallet
+          onOpenWallet,
+          onKeyDown
         }}
       />
     ) : (
@@ -94,6 +95,13 @@ class OpenWalletBody extends Component {
 
     this.props.onOpenWallet(this.state.publicPassPhrase, true);
     this.resetState();
+  }
+
+  onKeyDown(e) {
+    if(e.keyCode == 13) {     // Enter key
+      e.preventDefault();
+      this.onOpenWallet();
+    }
   }
 
 }

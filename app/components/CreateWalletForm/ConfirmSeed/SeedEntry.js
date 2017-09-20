@@ -26,6 +26,7 @@ class SeedEntry extends React.Component {
         onKeyDown={this.handleKeyDown}
       >
         <Select.Async
+          autofocus
           clearable={false}
           placeholder={"Enter your seed..."}
           multi={true}
@@ -59,8 +60,15 @@ class SeedEntry extends React.Component {
   }
 
   handleKeyDown (e) {
-    if (e.keyCode == 9 && this.state.value.length < SEED_LENGTH) {
+    switch(e.keyCode) {
+    case 9:   // TAB
+      if(this.state.value.length < SEED_LENGTH) {
+        e.preventDefault();
+      }
+      break;
+    case 13:  // ENTER
       e.preventDefault();
+      break;
     }
   }
 

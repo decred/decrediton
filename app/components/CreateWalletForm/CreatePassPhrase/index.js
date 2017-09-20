@@ -22,7 +22,7 @@ class CreatePassPhrase extends React.Component {
   }
 
   render() {
-    const { setPassPhrase, setPassPhraseVerification } = this;
+    const { setPassPhrase, setPassPhraseVerification, onKeyDown } = this;
     const { passPhrase, passPhraseVerification } = this.state;
     const isValid = this.isValid();
     const isBlank = this.isBlank();
@@ -38,7 +38,8 @@ class CreatePassPhrase extends React.Component {
           isBlank,
           isMatching,
           setPassPhrase,
-          setPassPhraseVerification
+          setPassPhraseVerification,
+          onKeyDown
         }}
       />
     );
@@ -62,6 +63,15 @@ class CreatePassPhrase extends React.Component {
 
   setPassPhraseVerification(passPhraseVerification) {
     this.setState({ passPhraseVerification }, this.onChange);
+  }
+
+  onKeyDown(e) {
+    if(e.keyCode == 13) {      // Enter key
+      e.preventDefault();
+      if(this.props.onSubmit) {
+        this.props.onSubmit();
+      }
+    }
   }
 
   onChange() {

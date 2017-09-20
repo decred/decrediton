@@ -13,7 +13,11 @@ class DaemonLoadingBody extends Component {
   }
 
   componentWillUnmount() {
+    this.mounted = false;
     this.resetState();
+    if(this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
   }
 
   getInitialState() {
@@ -35,8 +39,11 @@ class DaemonLoadingBody extends Component {
   }
 
   componentDidMount() {
+    this.mounted = true;
     this.timeoutId = setTimeout(() => {
-      this.setState({ showLongWaitMessage: true });
+      if(this.mounted) {
+        this.setState({ showLongWaitMessage: true });
+      }
       delete this.timeoutId;
     }, 2000);
   }
