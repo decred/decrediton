@@ -122,7 +122,7 @@ const transactionNormalizer = createSelector(
     const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
     return tx => {
       const { blockHash } = tx;
-      const type = tx.type || null;
+      const type = tx.type || (tx.getTransactionType ? tx.getTransactionType() : null);
       let txInfo = tx.tx ? tx : {};
       let timestamp = tx.timestamp;
       tx = tx.tx || tx;
@@ -187,6 +187,7 @@ const transactionNormalizer = createSelector(
         txInputs,
         txOutputs,
         txBlockHash,
+        txNumericType: type,
         ...txDetails
       };
     };
@@ -215,10 +216,42 @@ export const unmined = createSelector(
   [transactionsNormalizer, get(["notifications", "unmined"])], apply
 );
 
+// First version (defining one by one)
+/* const regularAndUnminedTransactions = createSelector(
+  [regularTransactions, unmined],
+  (Regular, Unmined) => (Unmined
+    .filter(t => t.txNumericType === TransactionDetails.TransactionType.REGULAR ? t : null ))
+    .concat(Regular)
+);
+
+const ticketAndUnminedTransactions = createSelector(
+  [ticketTransactions, unmined],
+  (Ticket, Unmined) => (Unmined
+    .filter(t => t.txNumericType === TransactionDetails.TransactionType.TICKET_PURCHASE ? t : null ))
+    .concat(Ticket)
+);*/
+
+// second version (maker standard function)
+const minedAndUnminedSelectorCreator = (selector, txType) =>
+  createSelector(
+    [selector, unmined],
+      (Mined, Unmined) => (Unmined
+        .filter(t => t.txNumericType === txType ? t : null )
+        .concat(Mined)
+    )
+
+  );
+
+const regularAndUnminedTransactions = minedAndUnminedSelectorCreator(
+  regularTransactions, TransactionDetails.TransactionType.REGULAR);
+
+const ticketAndUnminedTransactions = minedAndUnminedSelectorCreator(
+  ticketTransactions, TransactionDetails.TransactionType.TICKET_PURCHASE);
+
 export const transactions = createSelector(
   [
-    regularTransactions,
-    ticketTransactions,
+    regularAndUnminedTransactions,
+    ticketAndUnminedTransactions,
     voteTransactions,
     revokeTransactions,
     unmined
@@ -226,8 +259,7 @@ export const transactions = createSelector(
   ( Regular, Tickets, Votes, Revokes, Unmined ) => ({
     All: Regular.concat(Tickets).concat(Votes).concat(Revokes).concat(Unmined)
       .sort((a, b) =>  b.txTimestamp - a.txTimestamp),
-    Regular: Unmined.concat(Regular),
-    Tickets, Votes, Revokes, Unmined
+    Regular, Tickets, Votes, Revokes, Unmined
   })
 );
 
