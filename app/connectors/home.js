@@ -7,7 +7,6 @@ const mapStateToProps = selectorMap({
   getAccountsResponse: sel.getAccountsResponse,
   txPerPage: sel.txPerPage,
   spendableTotalBalance: sel.spendableTotalBalance,
-  transactions: sel.transactions,
   synced: sel.synced,
   transactions: sel.homeHistoryTransactions
 });
