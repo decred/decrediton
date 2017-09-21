@@ -390,6 +390,40 @@ const launchDCRWallet = () => {
   return dcrwPID;
 };
 
+const readExesVersion = () => {
+  let spawn = require("child_process").spawnSync;
+  let args = ["--version"];
+  let exes = ["dcrd", "dcrwallet", "dcrctl"];
+  let versions = {
+    decrediton: app.getVersion()
+  };
+
+  for (let exe of exes) {
+    let exePath = path.join(execPath, "bin", "dcrd");
+
+    let proc = spawn(exePath, args, { encoding: "utf8" });
+    if (proc.error) {
+      logger.log("error", `Error trying to read version of ${exe}: ${proc.error}`);
+      continue;
+    }
+
+    let versionLine = proc.stdout.toString();
+    if (!versionLine) {
+      logger.log("error", `Empty version line when reading version of ${exe}`);
+      continue;
+    }
+
+    let decodedLine = versionLine.match(/\w+ version ([^\s]+)/);
+    if (decodedLine !== null) {
+      versions[exe] = decodedLine[1];
+    } else {
+      logger.log("error", `Unable to decode version line ${versionLine}`);
+    }
+  }
+
+  return versions;
+};
+
 app.on("ready", async () => {
   await installExtensions();
   // Write application config files.
@@ -592,6 +626,7 @@ app.on("ready", async () => {
             versionWin.loadURL(`file://${__dirname}/version/version.html`);
 
             versionWin.once("ready-to-show", () => {
+              versionWin.webContents.send("exes-versions", readExesVersion());
               versionWin.show();
             });
           }
