@@ -122,7 +122,7 @@ const transactionNormalizer = createSelector(
     const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
     return tx => {
       const { blockHash } = tx;
-      const type = tx.type || null;
+      const type = tx.type || (tx.getTransactionType ? tx.getTransactionType() : null);
       let txInfo = tx.tx ? tx : {};
       let timestamp = tx.timestamp;
       tx = tx.tx || tx;
@@ -187,6 +187,7 @@ const transactionNormalizer = createSelector(
         txInputs,
         txOutputs,
         txBlockHash,
+        txNumericType: type,
         ...txDetails
       };
     };
@@ -215,17 +216,40 @@ export const unmined = createSelector(
   [transactionsNormalizer, get(["notifications", "unmined"])], apply
 );
 
+const minedAndUnminedSelectorCreator = (selector, txType) =>
+  createSelector(
+    [selector, unmined],
+      (Mined, Unmined) => (Unmined
+        .filter(t => t.txNumericType === txType ? t : null )
+        .concat(Mined)
+    )
+
+  );
+
+const regularAndUnminedTransactions = minedAndUnminedSelectorCreator(
+  regularTransactions, TransactionDetails.TransactionType.REGULAR);
+
+const ticketAndUnminedTransactions = minedAndUnminedSelectorCreator(
+  ticketTransactions, TransactionDetails.TransactionType.TICKET_PURCHASE);
+
+const voteAndUnminedTransactions = minedAndUnminedSelectorCreator(
+  voteTransactions, TransactionDetails.TransactionType.VOTE);
+
+const revokeAndUnminedTransactions = minedAndUnminedSelectorCreator(
+  revokeTransactions, TransactionDetails.TransactionType.REVOCATION);
+
 export const transactions = createSelector(
   [
-    regularTransactions,
-    ticketTransactions,
-    voteTransactions,
-    revokeTransactions
+    regularAndUnminedTransactions,
+    ticketAndUnminedTransactions,
+    voteAndUnminedTransactions,
+    revokeAndUnminedTransactions,
+    unmined
   ],
-  ( Regular, Tickets, Votes, Revokes ) => ({
+  ( Regular, Tickets, Votes, Revokes, Unmined ) => ({
     All: Regular.concat(Tickets).concat(Votes).concat(Revokes)
-      .sort((a, b) => b.txTimestamp - a.txTimestamp),
-    Regular, Tickets, Votes, Revokes,
+      .sort((a, b) => !a.txTimestamp ? -1 : !b.txTimestamp ? +1 : b.txTimestamp - a.txTimestamp),
+    Regular, Tickets, Votes, Revokes, Unmined
   })
 );
 
@@ -251,18 +275,12 @@ export const rescanPercentFinished = createSelector(
   (current, end) => ((current / end) * 100).toFixed(2)
 );
 
-export const homeHistoryMined = createSelector(
-  [unmined, txPerPage, regularTransactions],
-  (unmined, txPerPage, regularTransactions) =>
-    unmined.length > 0
-      ? unmined.length > txPerPage
-        ? Array()
-        : regularTransactions.length + unmined.length >= txPerPage
-          ? regularTransactions.slice(0,txPerPage-unmined.length)
-          : regularTransactions.slice(0,regularTransactions.length+unmined.length)
-      : regularTransactions.length >= txPerPage
-        ? regularTransactions.slice(0,txPerPage)
-        : regularTransactions.slice(0,regularTransactions.length)
+export const homeHistoryTransactions = createSelector(
+  [txPerPage, transactions],
+  (txPerPage, transactions) =>
+    transactions.All.length >= txPerPage
+      ? transactions.All.slice(0, txPerPage)
+      : transactions.All.slice(0, transactions.All.length)
 );
 
 export const visibleAccounts = createSelector(
@@ -363,7 +381,6 @@ export const isSendingTransaction = bool(or(
 
 export const isConstructingTransaction = bool(constructTxRequestAttempt);
 
-
 export const tempSettings = get(["settings", "tempSettings"]);
 export const settingsChanged = get(["settings", "settingsChanged"]);
 export const changePassphraseError = get(["control", "changePassphraseError"]);
@@ -385,7 +402,6 @@ export const immatureTicketsCount = compose(r => r ? r.getImmature() : 0, getSta
 export const expiredTicketsCount = compose(r => r ? r.getExpired() : 0, getStakeInfoResponse);
 export const liveTicketsCount = compose(r => r ? r.getLive() : 0, getStakeInfoResponse);
 
-
 export const ticketBuyerService = get(["grpc", "ticketBuyerService"]);
 const startAutoBuyerResponse = get(["control", "startAutoBuyerResponse"]);
 
@@ -395,7 +411,6 @@ export const maxPriceRelative = get(["control", "maxPriceRelative"]);
 export const maxPriceAbsolute = get(["control", "maxPriceAbsolute"]);
 export const maxPerBlock = get(["control", "maxPerBlock"]);
 export const getTicketBuyerConfigResponse = get(["control", "getTicketBuyerConfigResponse"]);
-
 
 const getTicketPriceResponse = get(["grpc", "getTicketPriceResponse"]);
 
@@ -422,7 +437,6 @@ export const startAutoBuyerSuccess = get(["control", "startAutoBuyerSuccess"]);
 export const stopAutoBuyerError = get(["control", "stopAutoBuyerError"]);
 export const stopAutoBuyerSuccess = get(["control", "stopAutoBuyerSuccess"]);
 export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
-
 
 const currentStakePoolConfig = get(["stakepool", "currentStakePoolConfig"]);
 

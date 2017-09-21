@@ -3,16 +3,15 @@ import TxHistoryRow from "./TxHistoryRow";
 import dateFormat from "dateformat";
 import "../style/Fonts.less";
 
-const TxHistory = ({ mined=[], unmined=[], showTxDetail }) => (
+const TxHistory = ({ transactions=[], showTxDetail }) => (
   <div>
     <div>
-      {unmined.map(tx => <TxHistoryRow key={tx.txHash} pending {...{ tx }} />)}
-      {!unmined.length ? (<p/>) : null}
-    </div><div>
-      {mined.map(tx => (
+      {transactions.map(tx => (
         <TxHistoryRow
           key={tx.txHash}
-          {...{ showTxDetail, tx }}
+          pending={tx.txTimestamp ? false : true}
+          showTxDetail={tx.txTimestamp ? showTxDetail : false}
+          {...{ tx }}
           date={tx.txTimestamp ? dateFormat(new Date(tx.txTimestamp*1000), "mmm d yyyy, HH:MM:ss") : null}
         />
       ))}

@@ -7,10 +7,8 @@ const mapStateToProps = selectorMap({
   getAccountsResponse: sel.getAccountsResponse,
   txPerPage: sel.txPerPage,
   spendableTotalBalance: sel.spendableTotalBalance,
-  transactions: sel.transactions,
   synced: sel.synced,
-  unmined: sel.unmined,
-  mined: sel.homeHistoryMined
+  transactions: sel.homeHistoryTransactions
 });
 
 export default connect(mapStateToProps);

@@ -17,8 +17,7 @@ const HomePage = ({
   synced,
   spendableTotalBalance,
   rescanAttempt,
-  mined,
-  unmined,
+  transactions,
   getTransactionsRequestAttempt,
   getAccountsResponse
 }) => (
@@ -50,8 +49,8 @@ const HomePage = ({
             <div className="home-content-title-text">Recent Transactions</div>
           </div>
           <div className="home-content-nest">
-            {(mined.length > 0 || unmined.length > 0) ? (
-              <TxHistory {...{ getAccountsResponse, mined, unmined }} />
+            {(transactions.length > 0) ? (
+              <TxHistory {...{ getAccountsResponse, transactions }} />
             ) : (
               <p>No transactions</p>
             )}
