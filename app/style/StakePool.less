@@ -138,7 +138,7 @@
 }
 
 .stakepool-purchase-ticket-row {
-  padding: 0.5em;
+  padding: 0em 0em 0.7em 0em;
   border-bottom: 1px #e7eaed solid;
 }
 
@@ -208,7 +208,6 @@
 
 .stakepool-purchase-ticket-quick-bar-row {
   padding: 1em;
-  text-align: center;
 }
 
 .stakepool-auto-buyer-quick-bar-row {
@@ -219,6 +218,7 @@
   .inline-block-mixin;
 
   height: 6em;
+  width: 5em;
   float: left;
   color: #0c1e3e;
   font-size: 13px;
@@ -538,89 +538,62 @@
 }
 
 .stakepool-content-nest-prefix-configured {
-  width: 200px;
-  padding-right: 15px;
-  float: left;
-  height: 100%;
-  padding-top: 5px;
   font-size: 19px;
-  text-align: right;
   text-transform: capitalize;
 }
 
 .stakepool-content-nest-stake-pool {
   border-top: 1px solid;
-  height: 185px;
-  position: relative;
   border-bottom: 1px solid;
-  float: left;
+  margin-bottom: 1em;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 
 .stakepool-content-nest-balance {
   border-top: 1px solid;
-  height: 260px;
-  position: relative;
   border-bottom: 1px solid;
-  float: left;
 }
 
 .stakepool-content-nest-settings {
-  width: 100%;
-  height: 20px;
-  margin-top: 20px;
-  float: left;
+  margin-bottom: 1em;
 }
 
-.stakepool-content-nest-balance-overview {
-  width: 100%;
-  height: 25px;
-  margin-top: 10px;
-  float: left;
-}
+// .stakepool-content-nest-balance-overview {
+// }
 
 .stakepool-content-nest-prefix-settings {
-  width: 125px;
-  padding-right: 15px;
-  float: left;
-  height: 100%;
+  .inline-block-mixin;
+
   font-size: 19px;
   text-align: right;
   text-transform: capitalize;
+  width: 20%;
+  vertical-align: top;
+  padding-right: 0.5em;
 }
 
 .stakepool-content-nest-prefix-balance-overview {
-  width: 245px;
-  padding-right: 15px;
-  float: left;
-  height: 100%;
   font-size: 19px;
   text-align: right;
   text-transform: capitalize;
 }
 
-.stakepool-content-nest-settings-bottom {
-  width: 100%;
-  height: 20px;
-  margin-top: 30px;
-  float: left;
-}
+// .stakepool-content-nest-settings-bottom {
+// }
 
-.stakepool-content-nest-balance-overview-bottom {
-  width: 100%;
-  height: 20px;
-  margin-top: 30px;
-  float: left;
-}
+// .stakepool-content-nest-balance-overview-bottom {
+// }
 
 .stakepool-content-nest-content-settings {
-  position: relative;
-  overflow-y: hidden;
-  overflow-x: auto;
-  width: 575px;
-  height: 30px;
-  float: left;
+  .inline-block-mixin;
+
   font-size: 13px;
-  padding-top: 2px;
+  width: 72%;
+}
+
+textarea.stakepool-content-nest-content-settings {
+  height: 3em;
 }
 
 .stakepool-content-nest-content-balance-overview {
