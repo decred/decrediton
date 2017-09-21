@@ -199,7 +199,7 @@ export function importScriptAttempt(passphrase, script, rescan, scanFrom, voting
   var request = new ImportScriptRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setScript(new Uint8Array(Buffer.from(hexToBytes(script))));
-  request.setRescan(rescan);
+  request.setRescan(false);
   request.setScanFrom(scanFrom);
   request.setRequireRedeemable(true);
   return (dispatch, getState) => {
@@ -219,6 +219,9 @@ export function importScriptAttempt(passphrase, script, rescan, scanFrom, voting
             }
           }
         } else {
+          if (rescan) {
+            dispatch(rescanAttempt(0));
+          }
           dispatch(importScriptSuccess(importScriptResponse, votingAddress, cb));
           if (!votingAddress && !cb) {
             setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);

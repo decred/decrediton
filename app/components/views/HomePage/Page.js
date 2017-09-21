@@ -3,7 +3,6 @@ import React from "react";
 import ReactToolTip from "react-tooltip";
 import rescan from "../../../connectors/rescan";
 import home from "../../../connectors/home";
-import RescanProgress from "./RescanProgress";
 import DecredLoading from "../../DecredLoading";
 import KeyBlueButton from "../../KeyBlueButton";
 import Balance from "../../Balance";
@@ -16,7 +15,6 @@ import "../../../style/HomePage.less";
 
 const HomePage = ({
   synced,
-  rescanRequest,
   spendableTotalBalance,
   rescanAttempt,
   mined,
@@ -27,30 +25,23 @@ const HomePage = ({
   <div className="page-body">
     <SideBar />
     <div className="page-view">
-      {rescanRequest ? (
-        <Header
-          headerTitleOverview="Rescanning"
-          headerMetaOverview={<RescanProgress/>}
-        />
-      ) : (
-        <Header
-          headerTop={synced ? null : (
-            <div key="notSynced" className="home-view-notification-not-synced">
-              The wallet is not fully synced yet. Note: Balances will not be accurate until syncing is complete.
+      <Header
+        headerTop={synced ? null : (
+          <div key="notSynced" className="home-view-notification-not-synced">
+            The wallet is not fully synced yet. Note: Balances will not be accurate until syncing is complete.
+          </div>
+        )}
+        headerTitleOverview="Available Balance"
+        headerMetaOverview={
+          <div>
+            <Balance amount={spendableTotalBalance} />
+            <div className="home-rescan-button-area" data-html={true} data-tip="Rescanning may help resolve some balance errors.<br><br><b>Note:</b> This scans the entire blockchain for transactions,<br>but does not re-download it.">
+              <KeyBlueButton onClick={() => rescanAttempt(0)}>Rescan Blockchain</KeyBlueButton>
             </div>
-          )}
-          headerTitleOverview="Available Balance"
-          headerMetaOverview={
-            <div>
-              <Balance amount={spendableTotalBalance} />
-              <div className="home-rescan-button-area" data-html={true} data-tip="Rescanning may help resolve some balance errors.<br><br><b>Note:</b> This scans the entire blockchain for transactions,<br>but does not re-download it.">
-                <KeyBlueButton onClick={() => rescanAttempt(0)}>Rescan Blockchain</KeyBlueButton>
-              </div>
-              <ReactToolTip place="left" type="info" effect="solid"/>
-            </div>
-          }
-        />
-      )}
+            <ReactToolTip place="left" type="info" effect="solid"/>
+          </div>
+        }
+      />
       {getTransactionsRequestAttempt ? (
         <div className="page-content"><DecredLoading/></div>
       ) : (

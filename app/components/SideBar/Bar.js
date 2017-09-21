@@ -3,6 +3,7 @@ import React from "react";
 import MenuLink from "../MenuLink";
 import "../../style/Fonts.less";
 import "../../style/SideBar.less";
+import RescanProgress from "../RescanProgress";
 
 const Bar = ({
   gettingStarted,
@@ -15,7 +16,8 @@ const Bar = ({
   totalBalance,
   isShowingAccounts,
   onShowAccounts,
-  onHideAccounts
+  onHideAccounts,
+  rescanRequest,
 }) => (
   <div className={"sidebar-menu " + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
   <div className="sidebar-menu-logo"></div>
@@ -45,12 +47,16 @@ const Bar = ({
       <div className="sidebar-menu-bottom">
         <div
           className="sidebar-menu-bottom-total-balance-short"
-          onMouseEnter={onShowAccounts}
-          onMouseLeave={onHideAccounts}
+          onMouseEnter={rescanRequest ? null : onShowAccounts}
+          onMouseLeave={rescanRequest ? null : onHideAccounts}
         >
-          <div className="sidebar-menu-bottom-total-balance-short-separator"></div>
-          <div className="sidebar-menu-bottom-total-balance-short-name">Total balance:</div>
-          <div className="sidebar-menu-bottom-total-balance-short-value">{totalBalance.toString()}</div>
+          {rescanRequest ?
+          <RescanProgress/> :
+          <div>
+            <div className="sidebar-menu-bottom-total-balance-short-separator"></div>
+            <div className="sidebar-menu-bottom-total-balance-short-name">Total balance:</div>
+            <div className="sidebar-menu-bottom-total-balance-short-value">{totalBalance.toString()}</div>
+          </div> }
         </div>
         <div className="sidebar-menu-bottom-latest-block">
           {currentHeight ? (

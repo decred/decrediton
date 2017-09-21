@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
 import Bar from "./Bar";
+import rescan from "../../connectors/rescan";
 import sideBarConnector from "../../connectors/sideBar";
 
 @autobind
@@ -32,7 +33,8 @@ class SideBar extends Component {
           totalBalance: this.props.totalBalance / 100000000,
           isShowingAccounts: this.state.isShowingAccounts,
           onShowAccounts: this.onShowAccounts,
-          onHideAccounts: this.onHideAccounts
+          onHideAccounts: this.onHideAccounts,
+          rescanRequest: this.props.rescanRequest
         }}
       />
     );
@@ -47,4 +49,4 @@ class SideBar extends Component {
   }
 }
 
-export default sideBarConnector(SideBar);
+export default sideBarConnector(rescan(SideBar));
