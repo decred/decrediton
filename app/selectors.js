@@ -276,11 +276,11 @@ export const rescanPercentFinished = createSelector(
 );
 
 export const homeHistoryTransactions = createSelector(
-  [txPerPage, regularAndUnminedTransactions],
+  [txPerPage, transactions],
   (txPerPage, transactions) =>
-    transactions.length >= txPerPage
-      ? transactions.slice(0, txPerPage)
-      : transactions.slice(0, transactions.length)
+    transactions.All.length >= txPerPage
+      ? transactions.All.slice(0, txPerPage)
+      : transactions.All.slice(0, transactions.All.length)
 );
 
 export const visibleAccounts = createSelector(
