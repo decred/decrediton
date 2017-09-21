@@ -413,7 +413,7 @@ const readExesVersion = () => {
       continue;
     }
 
-    let decodedLine = versionLine.match(/\w+ version ([^\s\+]+)/);
+    let decodedLine = versionLine.match(/\w+ version ([^\s]+)/);
     if (decodedLine !== null) {
       versions[exe] = decodedLine[1];
     } else {
