@@ -73,7 +73,8 @@ class Tickets extends Component {
             onCancelImportScript: null,
             onToggleTicketStakePool: null,
             onShowStakePoolConfig: null,
-            onHideStakePoolConfig: null
+            onHideStakePoolConfig: null,
+            onImportScript: null
           }, this)
         }}
       />
