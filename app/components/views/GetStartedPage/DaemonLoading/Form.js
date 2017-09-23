@@ -36,14 +36,17 @@ const DaemonLoadingFormBody = ({
       <div></div> :
       <div className="get-started-content-instructions">
         <div className="get-started-content-instructions-blockchain-syncing">
-          <span className="left">If you are starting decrediton for the first time, this may take a while.</span>
-          <span className="right"
+          <div className="get-started-instructions-txt">
+            If you are starting decrediton for the first time, this may take a while.
+          </div>
+          <span
+            className="get-started-skip-sync-button-and-tip"
             data-html={true}
             data-tip="<b>ATTENTION:</b> <br> You may skip the initial blockchain download, but be aware that<br>
                       all transactions may not be found until the chain is fully synced.<br>
                       As a result, your balance may be incorrect until fully synced.">
             <KeyBlueButton
-              className="get-started-view-button-key-blue-wallet-new-seed"
+              className="get-started-button-skip-sync"
               onClick={doSkipDaemonSync}
             >Skip sync</KeyBlueButton>
           </span>
@@ -56,7 +59,7 @@ const DaemonLoadingFormBody = ({
           value={getCurrentBlockCount}
         />
         <p>
-          <span className="left">{getEstimatedTimeLeft}</span> <span className="right">{getCurrentBlockCount}/{getNeededBlocks}</span>
+          <span>{getEstimatedTimeLeft}</span> <span>{getCurrentBlockCount}/{getNeededBlocks}</span>
         </p>
       </div> :
       <div></div> }
