@@ -14,6 +14,7 @@ let dcrdPID;
 let dcrwPID;
 let daemonReady = false;
 let currentBlockCount;
+
 // Not going to make incorrect options fatal since running in dev mode has
 // all sorts of things on the cmd line that we don't care about.  If we want
 // to make this fatal, it must be for production mode only.
@@ -22,9 +23,25 @@ function unknownFn(arg) {
   return;
 }
 
+function showUsage() {
+  console.log(`${app.getName()} version ${app.getVersion()}
+Usage
+  $ ${app.getName()} [--help] [--version] [--debug] [--testnet|--mainnet]
+               [--extrawalletargs=...]
+
+Options
+  --help             Show help and exit
+  --version          Show version and exit
+  --debug  -d        Debug daemon/wallet messages
+  --testnet          Connect to testnet
+  --mainnet          Connect to mainnet
+  --extrawalletargs  Pass extra arguments to dcrwallet
+`);
+}
+
 // Allowed cmd line options are defined here.
 var opts = {
-  boolean: ["debug", "testnet", "mainnet"],
+  boolean: ["debug", "testnet", "mainnet", "help", "version"],
   string: ["extrawalletargs"],
   default: { debug: false },
   alias: { d: "debug" },
@@ -40,6 +57,16 @@ if (debug) {
 var stderr = "ignore";
 if (debug) {
   stderr = "pipe";
+}
+
+if (argv.help) {
+  showUsage();
+  app.exit(0);
+}
+
+if (argv.version) {
+  console.log(`${app.getName()} version ${app.getVersion()}`);
+  app.exit(0);
 }
 
 var execPath;
