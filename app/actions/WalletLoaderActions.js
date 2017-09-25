@@ -10,7 +10,7 @@ import { stakePoolInfo } from "../middleware/stakepoolapi";
 
 export function versionCheckAction() {
   return (dispatch) => {
-    dispatch(getVersionServiceAttempt());
+    setTimeout(()=>dispatch(getVersionServiceAttempt()), 2000);
   };
 }
 
