@@ -16,7 +16,7 @@ class Help extends Component{
             <HelpLink href="https://forum.decred.org">Forum</HelpLink>
             <HelpLink href="https://decred.slack.com">Chat</HelpLink>
             <HelpLink href="https://docs.decred.org/">Documentation</HelpLink>
-            <HelpLink href="http://decred.org/index.html#modalOpen">Stakepools Overview</HelpLink>
+            <HelpLink href="https://decred.org/#modalOpen">Stakepools Overview</HelpLink>
             <HelpLink href="https://github.com/decred/decrediton/issues">Issues</HelpLink>
         </div>
       </div>
