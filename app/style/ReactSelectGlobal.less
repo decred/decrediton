@@ -35,11 +35,13 @@
 }
 
 .Select-control {
-  background-color: #fff;
-  border-color: #d9d9d9 #ccc #b3b3b3;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  color: #333;
+  border: 0px;
+  border-radius: 0px;
+  background-color: inherit;
+  border-bottom: 1px solid @input-color;
+  box-shadow: none;
+
+  //color: #333;
   cursor: default;
   display: table;
   border-spacing: 0;
@@ -71,8 +73,6 @@
   z-index: 100 !important;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-  background: #fff;
-  border-color: #b3b3b3 #ccc #d9d9d9;
 }
 
 .is-open > .Select-control .Select-arrow {
@@ -85,19 +85,13 @@
   cursor: text;
 }
 
-.is-focused:not(.is-open) > .Select-control {
-  border-color: #007eff;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);
-}
-
 .Select-placeholder,
 .Select--single > .Select-control .Select-value {
   bottom: 0;
   color: #aaa;
   left: 0;
   line-height: 34px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 0px 25px 0px 0px;
   position: absolute;
   right: 0;
   top: 0;
@@ -109,7 +103,7 @@
 
 .has-value.Select--single > .Select-control .Select-value .Select-value-label,
 .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
-  color: #333;
+  color: @input-color;
 }
 
 .has-value.Select--single > .Select-control .Select-value a.Select-value-label,
@@ -122,7 +116,7 @@
 .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label:hover,
 .has-value.Select--single > .Select-control .Select-value a.Select-value-label:focus,
 .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label:focus {
-  color: #007eff;
+  color: @input-color;
   outline: none;
   text-decoration: underline;
 }
@@ -301,7 +295,7 @@
 .Select-option {
   box-sizing: border-box;
   background-color: #fff;
-  color: #666;
+  color: @input-color;
   cursor: pointer;
   display: block;
   padding: 8px 10px;
@@ -343,7 +337,6 @@
 
 .Select--multi .Select-input {
   vertical-align: middle;
-  margin-left: 10px;
   padding: 0;
 }
 
@@ -384,7 +377,7 @@
 }
 
 .Select--multi a.Select-value-label {
-  color: #007eff;
+  color: @input-color;
   cursor: pointer;
   text-decoration: none;
 }
@@ -447,4 +440,13 @@
   to {
     -webkit-transform: rotate(1turn);
   }
+}
+
+.accounts-select-name {
+  margin-right: 0.5em;
+}
+
+.accounts-select-spendable {
+  font-family: @font-family-monospaced;
+  color: @input-color-alt;
 }

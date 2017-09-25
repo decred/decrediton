@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
-import Select from "react-select";
+import AccountsSelect from "../../AccountsSelect";
 import ReactTooltip from "react-tooltip";
 import DecredLoading from "../../DecredLoading";
 import SideBar from "../../SideBar";
@@ -17,8 +17,6 @@ const SendPage = ({
   isTestNet,
   isShowingConfirm,
   isSendAll,
-  account,
-  spendingAccounts,
   outputs,
   totalSpent,
   estimatedFee,
@@ -87,15 +85,8 @@ const SendPage = ({
               <div className="send-select-account-area">
                 <div className="send-label">From:</div>
                 <div className="send-select-account-input">
-                  <Select
-                    clearable={false}
-                    style={{zIndex:"9"}}
+                  <AccountsSelect
                     onChange={onChangeAccount}
-                    placeholder={"Select account..."}
-                    multi={false}
-                    value={account}
-                    valueKey="value" labelKey="label"
-                    options={spendingAccounts}
                   />
                 </div>
                 <Link

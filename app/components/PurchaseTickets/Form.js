@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
-import Select from "react-select";
+import AccountsSelect from "../AccountsSelect";
 import NumTicketsInput from "../NumTicketsInput";
 import ManagePoolsButton from "../ManagePoolsButton";
 import SelectStakePool from "../SelectStakePool";
@@ -12,8 +12,6 @@ import { addSpacingAroundText } from "../../helpers/strings";
 
 const PurchaseTicketsForm = ({
   isShowingAdvanced,
-  spendingAccounts,
-  account,
   configuredStakePools,
   stakePool,
   numTicketsToBuy,
@@ -52,17 +50,7 @@ const PurchaseTicketsForm = ({
         <div className="stakepool-purchase-ticket-row-account-select">
           <div className="stakepool-purchase-ticket-account-select-label">Account:</div>
           <div className="stakepool-purchase-ticket-input-select">
-            <Select
-              value={account}
-              onChange={onChangeAccount}
-              clearable={false}
-              style={{zIndex:"9"}}
-              placeholder={"Select account..."}
-              multi={false}
-              valueKey="value"
-              labelKey="label"
-              options={spendingAccounts}
-            />
+            <AccountsSelect onChange={onChangeAccount} />
           </div>
           <Link
             className="accounts-button-icon"
