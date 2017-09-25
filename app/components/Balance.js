@@ -2,7 +2,7 @@ import React from "react";
 import "../style/Balance.less";
 import balanceConnector from "../connectors/balance";
 
-const Balance = ({ currencyDisplay, amount, onClick }) => {
+export const Balance = ({ currencyDisplay, amount, onClick }) => {
   if (currencyDisplay === "DCR") {
     var totalDcr = 0;
     var numberFormatPart = ["0","0"];
