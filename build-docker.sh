@@ -44,6 +44,7 @@ docker run --rm -it -v $DIST_DIR:/release -v $(pwd):/src decred/$DOCKER_IMAGE_TA
   cd decrediton && \
   npm install && \
   npm run lint && \
+  npm run test && \
   mkdir -p bin && \
   curl -L ${DCRD_RELEASE_URL} | tar zxvf - --strip-components=1 -C ./bin/ && \
   npm run package-$BUILD_TARGET && \
