@@ -253,6 +253,11 @@ export const transactions = createSelector(
   })
 );
 
+export const viewedTransaction = createSelector(
+  [transactions, (state, { params: { txHash }}) => txHash],
+  (transactions, txHash) => find({ txHash }, transactions.All)
+);
+
 const rescanResponse = get(["control", "rescanResponse"]);
 export const rescanRequest = get(["control", "rescanRequest"]);
 export const synced = get(["notifications", "synced"]);

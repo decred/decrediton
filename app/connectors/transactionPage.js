@@ -2,11 +2,9 @@ import { connect } from "react-redux";
 import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 
-const mapStateToProps = () => {
-  return selectorMap({
-    walletService: sel.walletService,
-    transactions: sel.transactions,
-  });
-};
+const mapStateToProps = selectorMap({
+  walletService: sel.walletService,
+  viewedTransaction: sel.viewedTransaction,
+});
 
 export default connect(mapStateToProps);
