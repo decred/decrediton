@@ -1,5 +1,6 @@
 // @flow
 import React from "react";
+import PropTypes from "prop-types";
 import Balance from "../Balance";
 import Header from "../Header";
 import { shell } from "electron";
@@ -17,7 +18,7 @@ const getHeaderClassName = txDirection => ({
   in: "txdetails-header-meta-in"
 })[txDirection];
 
-const getFormattedDate = timestamp => dateFormat(new Date(timestamp*1000), "mmm d yyyy, HH:MM:ss");
+const getFormattedDate = timestamp => timestamp ? dateFormat(new Date(timestamp*1000), "mmm d yyyy, HH:MM:ss") : 'N/A';
 
 const TxDetails = ({
   tx: {
@@ -35,11 +36,10 @@ const TxDetails = ({
     txTimestamp
   },
   currentBlockHeight,
-  onClearTxDetail
-}) => (
+}, { router }) => (
   <div className="page-view">
     <Header
-      headerTitleOverview={<SlateGrayButton key="back" style={{float: "right"}} onClick={onClearTxDetail}>back</SlateGrayButton>}
+      headerTitleOverview={<SlateGrayButton key="back" style={{float: "right"}} onClick={() => router.goBack()}>back</SlateGrayButton>}
       headerMetaOverview={txType ? (
         <div className="txdetails-header-meta-stake-tx">
           {txType}
@@ -60,7 +60,7 @@ const TxDetails = ({
             <a onClick={() => shell.openExternal(txUrl)} style={{cursor: "pointer"}}>{txHash}</a>
           </div>
           <div className="txdetails-name">
-            <div className="txdetails-indicator-confirmed">confirmed</div>
+            {txTimestamp ? (<div className="txdetails-indicator-confirmed">confirmed</div>) : (<div className="txdetails-indicator-pending">Pending</div>)}
           </div>
           <div className="txdetails-value">{currentBlockHeight - txHeight} <span className="txdetails-value-text">confirmations</span></div>
           <div className="txdetails-overview">
@@ -102,5 +102,9 @@ const TxDetails = ({
     </div>
   </div>
 );
+
+TxDetails.contextTypes = {
+  router: PropTypes.object.isRequired,
+};
 
 export default transactionDetails(TxDetails);
