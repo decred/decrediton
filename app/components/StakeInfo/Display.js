@@ -1,6 +1,7 @@
 import React from "react";
 import "../../style/StakePool.less";
 import TicketsCogs from "../TicketsCogs";
+import Balance from "../Balance";
 
 const StakeInfoDisplay = ({
   isShowingDetails,
@@ -12,6 +13,7 @@ const StakeInfoDisplay = ({
   revokedTicketsCount,
   immatureTicketsCount,
   expiredTicketsCount,
+  totalSubsidy,
   liveTicketsCount,
   onHideStakeInfo,
   onShowStakeInfo
@@ -68,6 +70,10 @@ const StakeInfoDisplay = ({
       <div className="stakepool-stake-info-row-left">
         <div className="stakepool-stake-info-label">Live Tickets:</div>
         <div className="stakepool-stake-info-value">{liveTicketsCount}</div>
+      </div>
+      <div className="stakepool-stake-info-row-right">
+        <div className="stakepool-stake-info-label">Total Subsidy:</div>
+        <div className="stakepool-stake-info-value"><Balance amount={totalSubsidy}/></div>
       </div>
     </div>
   </div>
