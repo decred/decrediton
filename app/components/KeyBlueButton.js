@@ -1,7 +1,9 @@
 // @flow
 import React from "react";
+import { autobind } from "core-decorators";
 import "../style/MiscComponents.less";
 
+@autobind
 class KeyBlueButton extends React.Component {
   render() {
     let className = !this.props.disabled ? "key-blue-button"
@@ -22,11 +24,17 @@ class KeyBlueButton extends React.Component {
           style={style}
           type={this.props.type}
           disabled={this.props.disabled}
-          onClick = {this.props.onClick}
+          onClick = {this.onClick}
           hidden={this.props.hidden}>
         {this.props.children}
       </div>
     );
+  }
+
+  onClick (e) {
+    if (!this.props.disabled && this.props.onClick) {
+      this.props.onClick(e);
+    }
   }
 }
 

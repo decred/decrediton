@@ -24,6 +24,7 @@ const PurchaseTicketsForm = ({
   ticketFeeError,
   txFeeError,
   expiryError,
+  rescanRequest,
   onIncrementNumTickets,
   onDecrementNumTickets,
   onShowStakePoolConfig,
@@ -216,10 +217,18 @@ const PurchaseTicketsForm = ({
         </div>
       )}
 
-      <KeyBlueButton
-        className="stakepool-content-import-script-button"
-        onClick={onShowImportScript}
-      >Import Script</KeyBlueButton>
+      <div className="stakepool-content-import-script-button"
+        data-html={true}
+        data-tip-disable={!rescanRequest}
+        data-type="warning"
+        data-place="top"
+        data-tip="Importing scripts is disabled during a rescan.">
+        <KeyBlueButton
+          className=""
+          disabled={rescanRequest}
+          onClick={onShowImportScript}
+        >Import Script</KeyBlueButton>
+      </div>
       <KeyBlueButton
         className="stakepool-content-revoke-button"
         onClick={onShowRevokeTicket}
