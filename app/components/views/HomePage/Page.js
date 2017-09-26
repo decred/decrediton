@@ -8,6 +8,7 @@ import KeyBlueButton from "../../KeyBlueButton";
 import Balance from "../../Balance";
 import SideBar from "../../SideBar";
 import TxHistory from "../../TxHistory";
+import TxDetails from "./../TxDetails";
 import Header from "../../Header";
 import "../../../style/Layout.less";
 import "../../../style/Fonts.less";
@@ -18,46 +19,53 @@ const HomePage = ({
   spendableTotalBalance,
   rescanAttempt,
   transactions,
+  transactionDetails,
   getTransactionsRequestAttempt,
-  getAccountsResponse
+  onShowTxDetail,
+  onClearTxDetail
 }) => (
   <div className="page-body">
     <SideBar />
-    <div className="page-view">
-      <Header
-        headerTop={synced ? null : (
-          <div key="notSynced" className="home-view-notification-not-synced">
-            The wallet is not fully synced yet. Note: Balances will not be accurate until syncing is complete.
+    {transactionDetails ? (
+      <TxDetails tx={transactionDetails} {...{ onClearTxDetail }} />
+    ) : (
+      <div className="page-view">
+        <Header
+          headerTop={synced ? null : (
+            <div key="notSynced" className="home-view-notification-not-synced">
+              The wallet is not fully synced yet. Note: Balances will not be accurate until syncing is complete.
+            </div>
+          )}
+          headerTitleOverview="Available Balance"
+          headerMetaOverview={
+            <div>
+              <Balance amount={spendableTotalBalance} />
+              <div className="home-rescan-button-area" data-html={true} data-tip="Rescanning may help resolve some balance errors.<br><br><b>Note:</b> This scans the entire blockchain for transactions,<br>but does not re-download it.">
+                <KeyBlueButton onClick={() => rescanAttempt(0)}>Rescan Blockchain</KeyBlueButton>
+              </div>
+              <ReactToolTip place="left" type="info" effect="solid"/>
+            </div>
+          }
+        />
+        {getTransactionsRequestAttempt ? (
+          <div className="page-content"><DecredLoading/></div>
+        ) : (
+          <div className="page-content">
+            <div className="home-content-title">
+              <div className="home-content-title-text">Recent Transactions</div>
+            </div>
+            <div className="home-content-nest">
+              {(transactions.length > 0) ? (
+                <TxHistory {...{ showTxDetail: onShowTxDetail, transactions }} />
+              ) : (
+                <p>No transactions</p>
+              )}
+            </div>
           </div>
         )}
-        headerTitleOverview="Available Balance"
-        headerMetaOverview={
-          <div>
-            <Balance amount={spendableTotalBalance} />
-            <div className="home-rescan-button-area" data-html={true} data-tip="Rescanning may help resolve some balance errors.<br><br><b>Note:</b> This scans the entire blockchain for transactions,<br>but does not re-download it.">
-              <KeyBlueButton onClick={() => rescanAttempt(0)}>Rescan Blockchain</KeyBlueButton>
-            </div>
-            <ReactToolTip place="left" type="info" effect="solid"/>
-          </div>
-        }
-      />
-      {getTransactionsRequestAttempt ? (
-        <div className="page-content"><DecredLoading/></div>
-      ) : (
-        <div className="page-content">
-          <div className="home-content-title">
-            <div className="home-content-title-text">Recent Transactions</div>
-          </div>
-          <div className="home-content-nest">
-            {(transactions.length > 0) ? (
-              <TxHistory {...{ getAccountsResponse, transactions }} />
-            ) : (
-              <p>No transactions</p>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+      </div>
+    )
+  }
   </div>
 );
 
