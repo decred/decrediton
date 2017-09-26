@@ -19,7 +19,7 @@ export default (
     <IndexRoute component={GetStartedPage} />
     <Route path="/home" component={HomePage} />
     <Route path="/history" component={HistoryPage} />
-    <Route path="/transactions/:txHash" component={TransactionPage} />
+    <Route path="/transactions/history/:txHash" component={TransactionPage} />
     <Route path="/send" component={SendPage} />
     <Route path="/receive" component={ReceivePage} />
     <Route path="/settings" component={SettingsPage} />

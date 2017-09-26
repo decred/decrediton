@@ -12,7 +12,7 @@ const Transfer = ({
 }) => (
   <div className="snackbar-information">
     <div className="snackbar-information-row">
-      <div className="snackbar-information-row-tx"><Link to={`/transactions/${txHash}`}>{txHash}</Link></div>
+      <div className="snackbar-information-row-tx"><Link to={`/transactions/history/${txHash}`}>{txHash}</Link></div>
     </div>
     <div className="snackbar-information-row">
       <div className="snackbar-information-row-type">{type}</div>
