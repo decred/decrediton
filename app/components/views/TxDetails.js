@@ -18,7 +18,7 @@ const getHeaderClassName = txDirection => ({
   in: "txdetails-header-meta-in"
 })[txDirection];
 
-const getFormattedDate = timestamp => timestamp ? dateFormat(new Date(timestamp*1000), "mmm d yyyy, HH:MM:ss") : 'N/A';
+const getFormattedDate = timestamp => timestamp ? dateFormat(new Date(timestamp*1000), "mmm d yyyy, HH:MM:ss") : "N/A";
 
 const TxDetails = ({
   tx: {
