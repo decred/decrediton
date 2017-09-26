@@ -2,14 +2,12 @@ import React from "react";
 import SideBar from "../../SideBar";
 import TxHistory from "../../TxHistory";
 import Balance from "../../Balance";
-import TxDetails from "./../TxDetails";
 import Header from "../../Header";
 import Select from "react-select";
 import "../../../style/Layout.less";
 import "../../../style/HistoryPage.less";
 
 const Page = ({
-  transactionDetails,
   spendableTotalBalance,
   selectedType,
   txTypes,
@@ -17,16 +15,11 @@ const Page = ({
   currentPage,
   totalPages,
   onChangeSelectedType,
-  onShowTxDetail,
-  onClearTxDetail,
   onPageBackward,
   onPageForward
 }) => (
   <div className="page-body">
     <SideBar />
-    {transactionDetails ? (
-      <TxDetails tx={transactionDetails} {...{ onClearTxDetail }} />
-    ) : (
       <div className="page-view">
         <Header
           headerTitleOverview="Available Balance"
@@ -54,7 +47,6 @@ const Page = ({
             {paginatedTxs.length > 0 ? (
               <TxHistory
                 transactions={paginatedTxs}
-                showTxDetail={onShowTxDetail}
               />
             ) : <p>No transactions</p>}
           </div>
@@ -73,7 +65,6 @@ const Page = ({
           </div>
         </div>
       </div>
-    )}
   </div>
 );
 
