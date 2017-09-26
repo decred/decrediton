@@ -219,7 +219,7 @@ const PurchaseTicketsForm = ({
 
       <div className="stakepool-content-import-script-button"
         data-html={true}
-        data-tip-disable={rescanRequest ? false : true}
+        data-tip-disable={!rescanRequest}
         data-type="warning"
         data-place="top"
         data-tip="Importing scripts is disabled during a rescan.">
