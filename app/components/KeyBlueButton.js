@@ -35,7 +35,9 @@ class KeyBlueButton extends React.Component {
     if (this.props.disabled) {
       return;
     }
-    this.props.onClick(e);
+    if (this.props.onClick) {
+      this.props.onClick(e);
+    }
   }
 }
 
