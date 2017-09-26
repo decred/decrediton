@@ -91,7 +91,7 @@ cd $GOPATH/src/github.com/decred/dcrd
 glide i
 go install . ./cmd/dcrctl/
 cd ../dcrwallet
-glide i
+dep ensure
 go install
 mkdir code
 cd code
