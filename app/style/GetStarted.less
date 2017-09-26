@@ -1,23 +1,25 @@
 @import (reference) "./main.less";
 @import (reference) "./Layout.less";
 
+.get-started-content-instructions {
+  color: #e7eaed;
+  font-size: 18px;
+  padding: 0em 2em 0em 2em;
+}
+
+.get-started-instructions-txt {
+  .inline-block-mixin;
+
+  width: 75%;
+}
+
 .get-started-content-instructions-blockchain-syncing {
-  padding-bottom: 5px;
-  height: 50px;
+  margin-bottom: 1em;
 }
 
-.get-started-content-instructions-blockchain-syncing .left {
-  padding-top: 10px;
-}
-
-.left {
-  float: left;
-  text-align: left;
-}
-
-.right {
+.get-started-skip-sync-button-and-tip {
   float: right;
-  text-align: right;
+  margin: -1em 0em 1em 0em;
 }
 
 .get-started-create-wallet-header {
@@ -92,12 +94,6 @@
   font-size: 25px;
   color: #c4cbd2;
   text-align: center;
-}
-
-.get-started-content-instructions {
-  color: #e7eaed;
-  font-size: 18px;
-  margin-bottom: 30px;
 }
 
 .get-started-content-nest {
