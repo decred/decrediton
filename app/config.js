@@ -77,6 +77,9 @@ export function initCfg() {
   if (!config.has("currency_display")) {
     config.set("currency_display","DCR");
   }
+  if (!config.has("locale")) {
+    config.set("locale","en"); //TODO: find out user's default locale
+  }
   if (!config.has("hiddenaccounts")) {
     var hiddenAccounts = Array();
     config.set("hiddenaccounts",hiddenAccounts);
@@ -273,7 +276,6 @@ export function RPCDaemonHost() {
   }
   return cfg.get("daemon_rpc_host_testnet");
 }
-
 
 export function dcrdCfg() {
   var cfgLoc = appDataDirectory();

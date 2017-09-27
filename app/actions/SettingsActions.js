@@ -8,8 +8,30 @@ export const saveSettings = (settings) => {
   const cfg = getCfg();
   cfg.set("currency_display", settings.currencyDisplay);
   cfg.set("network", settings.network);
-  return { type: SETTINGS_SAVE, settings };
-};
+  return {
+    settings,
+    type: SETTINGS_SAVE
+  };
+}
+
+export function updateStateSettingsChanged(settings) {
+  return (dispatch, getState) => {
+    const { tempSettings, currentSettings } = getState().settings;
+    if ((settings.currencyDisplay !== tempSettings.currencyDisplay) ||
+  (settings.network !== tempSettings.network) ||
+  (settings.locale !== tempSettings.locale)){
+      if (settings.currencyDisplay !== currentSettings.currencyDisplay) {
+        dispatch({ tempSettings: settings, type: SETTINGS_CHANGED});
+      } else if (settings.network !== currentSettings.network) {
+        dispatch({ tempSettings: settings, type: SETTINGS_CHANGED});
+      } else if (settings.locale !== currentSettings.locale) {
+        dispatch({ tempSettings: settings, type: SETTINGS_CHANGED});
+      } else {
+        dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED});
+      }
+    }
+  };
+}
 
 export const updateStateSettingsChanged = (settings) => (dispatch, getState) => {
   const { settings: { tempSettings, currentSettings }} = getState();

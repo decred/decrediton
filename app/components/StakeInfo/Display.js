@@ -2,6 +2,7 @@ import React from "react";
 import "../../style/StakePool.less";
 import TicketsCogs from "../TicketsCogs";
 import Balance from "../Balance";
+import { FormattedNumber, FormattedMessage } from "react-intl";
 
 const StakeInfoDisplay = ({
   isShowingDetails,
@@ -22,7 +23,7 @@ const StakeInfoDisplay = ({
     <div className="stakepool-stake-info-row">
       <div className="stakepool-stake-info-row-left">
         <div className="stakepool-stake-info-label">Poolsize:</div>
-        <div className="stakepool-stake-info-value">{ticketPoolSize}</div>
+        <div className="stakepool-stake-info-value"><FormattedNumber value={ticketPoolSize} /></div>
       </div>
       <div className="stakepool-stake-info-row-right">
         <div className="stakepool-stake-info-label">Voted Tickets:</div>
@@ -49,11 +50,16 @@ const StakeInfoDisplay = ({
     <div className="stakepool-stake-info-row">
       <div className="stakepool-stake-info-row-left">
         <div className="stakepool-stake-info-label">Own Mempool Tickets:</div>
-        <div className="stakepool-stake-info-value">{ownMempoolTicketsCount}</div>
+        <div className="stakepool-stake-info-value">
+          <FormattedMessage id="stakepool.ownMempoolTicketsCount"
+            defaultMessage="{ownMempoolTicketsCount, plural, one {# ticket} other {# tickets}}" values={{ownMempoolTicketsCount}}/></div>
       </div>
       <div className="stakepool-stake-info-row-right">
         <div className="stakepool-stake-info-label">Revoked Tickets:</div>
-        <div className="stakepool-stake-info-value">{revokedTicketsCount}</div>
+        <div className="stakepool-stake-info-value">
+          <FormattedMessage id="stakepool.revokedTicketsCount"
+            defaultMessage="{revokedTicketsCount, plural, one {# ticket} other {# tickets}}" values={{revokedTicketsCount}}/>
+        </div>
       </div>
     </div>
     <div className="stakepool-stake-info-row">
@@ -69,7 +75,9 @@ const StakeInfoDisplay = ({
     <div className="stakepool-stake-info-row">
       <div className="stakepool-stake-info-row-left">
         <div className="stakepool-stake-info-label">Live Tickets:</div>
-        <div className="stakepool-stake-info-value">{liveTicketsCount}</div>
+        <div className="stakepool-stake-info-value">
+          <FormattedMessage id="stakepool.liveTicketsCount"
+            defaultMessage="{liveTicketsCount, plural, one {# ticket} other {# tickets}}" values={{liveTicketsCount}}/></div>
       </div>
       <div className="stakepool-stake-info-row-right">
         <div className="stakepool-stake-info-label">Total Subsidy:</div>

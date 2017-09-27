@@ -1,7 +1,9 @@
 import React from "react";
 import "../../style/TxHistory.less";
+import { FormattedDate, FormattedTime } from "react-intl";
+import { tsToDate } from "../../helpers/dateFormat";
 
-const Status = ({ txAccountName, pending, date }) => (
+const Status = ({ txAccountName, pending, txTimestamp }) => (
   <div className="transaction-status">
     <div className="transaction-account">
       <div className="transaction-account-name">{txAccountName}</div>
@@ -16,7 +18,12 @@ const Status = ({ txAccountName, pending, date }) => (
     {pending ? (
       <div className="transaction-time-date-spacer"></div>
     ) : (
-      <div className="transaction-time-date"><span>{date}</span></div>
+      <div className="transaction-time-date">
+        { /* TODO: componentize */ }
+        <FormattedDate value={tsToDate(txTimestamp)} />
+        <span> </span>
+        <FormattedTime value={tsToDate(txTimestamp)} />
+      </div>
     )}
   </div>
 );

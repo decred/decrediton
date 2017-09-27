@@ -3,13 +3,13 @@ import Status from "./Status";
 import Balance from "../Balance";
 import "../../style/TxHistory.less";
 
-const Transfer = ({ txAccountName, txAmount, pending, date, receiveAddressStr, onClick }) => (
+const Transfer = ({ txAccountName, txAmount, pending, date, receiveAddressStr, onClick, txTimestamp }) => (
   <div className={onClick ? "transaction-transfer" : "transaction-transfer-overview"} {...{ onClick }}>
     <div className="transaction-amount">
       <div className="transaction-amount-number">-<Balance amount={txAmount} /></div>
       <div className="transaction-amount-hash">{receiveAddressStr}</div>
     </div>
-    <Status {...{ txAccountName, pending, date }} />
+    <Status {...{ txAccountName, pending, date, txTimestamp }} />
   </div>
 );
 

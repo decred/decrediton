@@ -110,6 +110,7 @@ export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 export const currencyDisplay = get(["settings", "currentSettings", "currencyDisplay"]);
 export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
+export const locale = get(["settings", "currentSettings", "locale"]);
 
 const getTxTypeStr = type => ({
   [TransactionDetails.TransactionType.TICKET_PURCHASE]: "Ticket",

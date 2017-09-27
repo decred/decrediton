@@ -49,16 +49,17 @@ if (network == "testnet") {
   grpcport = cfg.get("wallet_port");
 }
 
-
 var initialState = {
   settings: {
     currentSettings: {
       currencyDisplay: cfg.get("currency_display"),
       network: cfg.get("network"),
+      locale: cfg.get("locale"),
     },
     tempSettings: {
       currencyDisplay: cfg.get("currency_display"),
       network: cfg.get("network"),
+      locale: cfg.get("locale"),
     },
     settingsChanged: false,
   },

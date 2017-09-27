@@ -26,6 +26,7 @@ class Settings extends Component {
       onAttemptChangePassphrase,
       onChangeNetwork,
       onChangeCurrencyDisplay,
+      onChangeLocale,
       onSaveSettings
     } = this;
 
@@ -34,6 +35,8 @@ class Settings extends Component {
         {...{
           networks: [{name: "testnet"}, {name: "mainnet"}],
           currencies: [{name: "DCR"}, {name: "atoms"}],
+          //TODO: get from available locales
+          locales: [{name: "English", value: "en"}, {name:"Português/Brasil", value: "pt_BR"}],
           ...this.props, ...this.state }}
         {...{
           onShowChangePassphrase,
@@ -41,6 +44,7 @@ class Settings extends Component {
           onAttemptChangePassphrase,
           onChangeNetwork,
           onChangeCurrencyDisplay,
+          onChangeLocale,
           onSaveSettings
         }}
       />
@@ -69,6 +73,11 @@ class Settings extends Component {
   onChangeCurrencyDisplay(currencyDisplay) {
     const { onChangeTempSettings, tempSettings } = this.props;
     onChangeTempSettings && onChangeTempSettings({ ...tempSettings, currencyDisplay });
+  }
+
+  onChangeLocale(locale) {
+    const { onChangeTempSettings, tempSettings } = this.props;
+    onChangeTempSettings && onChangeTempSettings({ ...tempSettings, locale });
   }
 
   onSaveSettings() {

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 import AccountsSelect from "../../AccountsSelect";
 import ReactTooltip from "react-tooltip";
+import { FormattedMessage } from "react-intl";
 import DecredLoading from "../../DecredLoading";
 import SideBar from "../../SideBar";
 import Balance from "../../Balance";
@@ -83,7 +84,7 @@ const SendPage = ({
           <div className={!isShowingConfirm ? "page-content" : "page-content-blur"}>
             <div className="send-flex-height">
               <div className="send-select-account-area">
-                <div className="send-label">From:</div>
+                <div className="send-label"><FormattedMessage id="send.from" defaultMessage="From:"></FormattedMessage></div>
                 <div className="send-select-account-input">
                   <AccountsSelect
                     onChange={onChangeAccount}

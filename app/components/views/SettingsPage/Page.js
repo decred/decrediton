@@ -1,6 +1,7 @@
 
 import React from "react";
 import KeyBlueButton from "../../KeyBlueButton";
+import { FormattedMessage } from "react-intl";
 import SideBar from "../../SideBar";
 import Header from "../../Header";
 import ChangePassphraseModal from "../../ChangePassphraseModal";
@@ -16,12 +17,14 @@ const SettingsPage = ({
   tempSettings,
   networks,
   currencies,
+  locales,
   isShowingChangePassphrase,
   onShowChangePassphrase,
   onCancelChangePassphrase,
   onAttemptChangePassphrase,
   onChangeCurrencyDisplay,
   onChangeNetwork,
+  onChangeLocale,
   onSaveSettings,
   onClearChangePassphraseSuccess,
   onClearChangePassphraseError
@@ -58,9 +61,27 @@ const SettingsPage = ({
           cancelPassphrase={onCancelChangePassphrase}
         />
         <div className={isShowingChangePassphrase ? "page-content-blur" : "page-content"}>
+
           <div className="settings-row">
             <div className="settings-label">
-              Displayed Units
+              <FormattedMessage id="settings.locale" defaultMessage="Locale" />
+            </div>
+            <div className="settings-input">
+
+              <Select
+                value={tempSettings.locale}
+                onChange={(newLocale) => onChangeLocale(newLocale.value)}
+                clearable={false}
+                multi={false}
+                valueKey="value" labelKey="name"
+                options={locales}
+              />
+            </div>
+          </div>
+
+          <div className="settings-row">
+            <div className="settings-label">
+              <FormattedMessage id="settings.displayedUnits" defaultMessage="Displayed Units" />
             </div>
             <div className="settings-input">
 
@@ -74,9 +95,14 @@ const SettingsPage = ({
               />
             </div>
           </div>
+
           <div className="settings-row">
             <div className="settings-label">
-              Network <span className="settings-restart">(requires restart!)</span>
+              <FormattedMessage id="settings.network"
+                defaultMessage="Network" />
+               <span className="settings-restart"> (
+                 <FormattedMessage id="settings.requiresRestart" defaultMessage="requires restart" />
+                )</span>
             </div>
             <div className="settings-input">
 
@@ -97,13 +123,13 @@ const SettingsPage = ({
                 size="large"
                 block={false}
                 onClick={onSaveSettings}>
-                Save Settings
+                <FormattedMessage id="settings.save" defaultMessage="Save Settings" />
               </KeyBlueButton>
             </div>
             <div className="settings-update-passphrase-button">
                 <KeyBlueButton
                   onClick={onShowChangePassphrase}>
-                  Update Private Passphrase
+                  <FormattedMessage id="settings.updatePrivatePassphrase" defaultMessage="Update Private Passphrase" />
                 </KeyBlueButton>
             </div>
           </div>
