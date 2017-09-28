@@ -52,7 +52,7 @@ export default {
     mainFields: ["webpack", "browser", "web", "browserify", ["jam", "main"], "main"],
     root: [
       path.resolve("./app/node_modules"),
-      path.resolve("./app/modules/win32ipc/build/Release")
+      path.resolve("./app/node_modules/win32ipc/build/Release")
     ],
     moduleDirectories: []
   },
