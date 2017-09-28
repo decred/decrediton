@@ -53,7 +53,9 @@
       "package.json"
     ],
     "extraResources": [
-      "bin/*"
+      { "from": "bin/dcrd.exe", "to": "bin/dcrd.exe"},
+      { "from": "bin/dcrwallet.exe", "to": "bin/dcrwallet.exe"},
+      { "from": "bin/dcrctl.exe", "to": "bin/dcrctl.exe"}
     ],
     "win": {
       "target": "nsis"
