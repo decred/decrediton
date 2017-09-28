@@ -50,6 +50,11 @@ export default {
   resolve: {
     extensions: [".js", ".jsx", ".json", ".node"],
     mainFields: ["webpack", "browser", "web", "browserify", ["jam", "main"], "main"],
+    root: [
+      path.resolve("./app/node_modules"),
+      path.resolve("./app/modules/win32ipc/build/Release")
+    ],
+    moduleDirectories: []
   },
 
   plugins: [],
