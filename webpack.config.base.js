@@ -36,7 +36,7 @@ export default {
       use: [{
         loader: "node-addon-loader",
         options: {
-          basePath: path.resolve(__dirname, "app/node_modules/win32ipc/build/Release")
+          basePath: path.resolve(__dirname, "bin")
         }
       }]
     }
