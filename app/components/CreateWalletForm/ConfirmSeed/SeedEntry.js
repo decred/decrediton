@@ -60,6 +60,7 @@ class SeedEntry extends React.Component {
   }
 
   handleKeyDown (e) {
+    const charCode = String.fromCharCode(event.which).toLowerCase();
     switch(e.keyCode) {
     case 9:   // TAB
       if(this.state.value.length < SEED_LENGTH) {
@@ -69,7 +70,14 @@ class SeedEntry extends React.Component {
     case 13:  // ENTER
       e.preventDefault();
       break;
+    case 86: // V
+      e.preventDefault();
+      if(!e.ctrlKey) 
+        return; 
+      this.props.onCtrlVClick();
+      break;
     }
+    
   }
 
 }
