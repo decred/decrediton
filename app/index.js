@@ -8,6 +8,7 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 import routes from "./routes";
 import configureStore from "./store/configureStore";
 import { getCfg } from "./config.js";
+import locales from "./i18n/locales";
 import "./style/main.less";
 import "./style/Global.less";
 import "./style/ReactSelectGlobal.less";
@@ -308,7 +309,8 @@ var initialState = {
     constructTxRequestAttempt: false,
     constructTxResponse: null,
     constructTxError: null,
-  }
+  },
+  locales: locales
 };
 
 //Needed for onTouchTap

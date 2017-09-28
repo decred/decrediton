@@ -58,6 +58,7 @@ const StakeInfoDisplay = ({
         <div className="stakepool-stake-info-label">Revoked Tickets:</div>
         <div className="stakepool-stake-info-value">
           <FormattedMessage id="stakepool.revokedTicketsCount"
+            description="Number of revoked tickets"
             defaultMessage="{revokedTicketsCount, plural, one {# ticket} other {# tickets}}" values={{revokedTicketsCount}}/>
         </div>
       </div>
@@ -77,6 +78,7 @@ const StakeInfoDisplay = ({
         <div className="stakepool-stake-info-label">Live Tickets:</div>
         <div className="stakepool-stake-info-value">
           <FormattedMessage id="stakepool.liveTicketsCount"
+            description="number of live tickets"
             defaultMessage="{liveTicketsCount, plural, one {# ticket} other {# tickets}}" values={{liveTicketsCount}}/></div>
       </div>
       <div className="stakepool-stake-info-row-right">

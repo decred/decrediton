@@ -9,6 +9,7 @@ import version from "./version";
 import settings from "./settings";
 import stakepool from "./stakepool";
 import daemon from "./daemon";
+import locales from "./locales";
 
 const rootReducer = combineReducers({
   grpc,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   settings,
   stakepool,
   daemon,
-  routing
+  routing,
+  locales
 });
 
 export default rootReducer;

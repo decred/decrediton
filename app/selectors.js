@@ -110,7 +110,21 @@ export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 export const currencyDisplay = get(["settings", "currentSettings", "currencyDisplay"]);
 export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
-export const locale = get(["settings", "currentSettings", "locale"]);
+export const currentLocaleName = get(["settings", "currentSettings", "locale"]);
+
+export const sortedLocales = createSelector(
+  [get(["locales"])],
+  (locales) => (locales.sort((a, b) => (a.description.localeCompare(b.description))))
+);
+export const namedLocales = createSelector(
+  [get(["locales"])], (locales) => reduce((nl, l) => { (nl[l.key] = l); return nl; }, {}, locales));
+export const locale = createSelector(
+  [namedLocales, currentLocaleName],
+  (namedLocales, currentLocaleName) => {
+    return namedLocales[currentLocaleName];
+  }
+);
+
 
 const getTxTypeStr = type => ({
   [TransactionDetails.TransactionType.TICKET_PURCHASE]: "Ticket",

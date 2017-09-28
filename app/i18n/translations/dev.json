@@ -1,0 +1,21 @@
+{
+  "menu.accounts": "Contas",
+  "menu.help": "Ajuda",
+  "menu.history": "Histórico",
+  "menu.overview": "Visão Geral",
+  "menu.receive": "Receber",
+  "menu.send": "Enviar",
+  "menu.settings": "Configurações",
+  "menu.tickets": "Tickets",
+  "send.from": "De:",
+  "settings.displayedUnits": "Unidade",
+  "settings.locale": "Língua",
+  "settings.network": "Rede",
+  "settings.requiresRestart": "Requer Reinício",
+  "settings.save": "Salvar configurações",
+  "settings.updatePrivatePassphrase": "Atualizar senha",
+  "sidebar.totalBalance": "Total",
+  "stakepool.liveTicketsCount": "{liveTicketsCount, plural, =0 {zero} one {# card} other {# cards}}",
+  "stakepool.ownMempoolTicketsCount": "{ownMempoolTicketsCount, plural, one {# card} other {# cards}}",
+  "stakepool.revokedTicketsCount": "{revokedTicketsCount, plural, one {# card} other {# cards}}"
+}

@@ -4,6 +4,7 @@ import MenuLink from "../MenuLink";
 import "../../style/Fonts.less";
 import "../../style/SideBar.less";
 import RescanProgress from "../RescanProgress";
+import { FormattedMessage } from "react-intl";
 
 const Bar = ({
   gettingStarted,
@@ -25,14 +26,14 @@ const Bar = ({
   {(gettingStarted || errorPage) ? null : (
     <div>
       <div className="sidebar-menu-navigation">
-        <MenuLink to="/home">Overview</MenuLink>
-        <MenuLink to="/accounts">Accounts</MenuLink>
-        <MenuLink to="/send">Send</MenuLink>
-        <MenuLink to="/receive">Receive</MenuLink>
-        <MenuLink to="/history">History</MenuLink>
-        <MenuLink to="/proofofstake">Tickets</MenuLink>
-        <MenuLink to="/settings">Settings</MenuLink>
-        <MenuLink to="/help">Help</MenuLink>
+        <MenuLink to="/home"><FormattedMessage id="menu.overview" defaultMessage="Overview"/></MenuLink>
+        <MenuLink to="/accounts"><FormattedMessage id="menu.accounts" defaultMessage="Accounts"/></MenuLink>
+        <MenuLink to="/send"><FormattedMessage id="menu.send" defaultMessage="Send"/></MenuLink>
+        <MenuLink to="/receive"><FormattedMessage id="menu.receive" defaultMessage="Receive"/></MenuLink>
+        <MenuLink to="/history"><FormattedMessage id="menu.history" defaultMessage="History"/></MenuLink>
+        <MenuLink to="/proofofstake"><FormattedMessage id="menu.tickets" defaultMessage="Tickets"/></MenuLink>
+        <MenuLink to="/settings"><FormattedMessage id="menu.settings" defaultMessage="Settings"/></MenuLink>
+        <MenuLink to="/help"><FormattedMessage id="menu.help" defaultMessage="Help"/></MenuLink>
       </div>
       <div className="sidebar-menu-total-balance-extended" style={{ display: isShowingAccounts ? "block" : "none" }}>
         <div className="sidebar-menu-total-balance-extended-bottom">
@@ -54,7 +55,7 @@ const Bar = ({
           <RescanProgress/> :
           <div>
             <div className="sidebar-menu-bottom-total-balance-short-separator"></div>
-            <div className="sidebar-menu-bottom-total-balance-short-name">Total balance:</div>
+            <div className="sidebar-menu-bottom-total-balance-short-name"><FormattedMessage id="sidebar.totalBalance" defaultMessage="Total Balance"/>:</div>
             <div className="sidebar-menu-bottom-total-balance-short-value">{totalBalance.toString()}</div>
           </div> }
         </div>

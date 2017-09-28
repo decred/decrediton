@@ -1,12 +1,17 @@
 // translationRunner.js
 const manageTranslations = require('react-intl-translations-manager').default;
 
-// es2015 import
-// import manageTranslations from 'react-intl-translations-manager';
-
 manageTranslations({
   messagesDirectory: "app/i18n/extracted",
   translationsDirectory: "app/i18n/translations/",
-  whitelistsDirectory: "app/i18n/translations-whitelists/",
-  languages: ['pt-BR'], // any language you need
+  jsonOptions: {
+    space: 2,
+    trailingNewline: true,
+  },
+
+  // untranslated lang gets all messages from the app
+  // dev lang is used during development to test translated strings (can
+  // be freely modified)
+  // all other production languages are translated at transifex
+  languages: ['untranslated', "dev"],
 });

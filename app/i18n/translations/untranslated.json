@@ -1,0 +1,21 @@
+{
+  "menu.accounts": "Accounts",
+  "menu.help": "Help",
+  "menu.history": "History",
+  "menu.overview": "Overview",
+  "menu.receive": "Receive",
+  "menu.send": "Send",
+  "menu.settings": "Settings",
+  "menu.tickets": "Tickets",
+  "send.from": "From:",
+  "settings.displayedUnits": "Displayed Units",
+  "settings.locale": "Locale",
+  "settings.network": "Network",
+  "settings.requiresRestart": "requires restart",
+  "settings.save": "Save Settings",
+  "settings.updatePrivatePassphrase": "Update Private Passphrase",
+  "sidebar.totalBalance": "Total Balance",
+  "stakepool.liveTicketsCount": "{liveTicketsCount, plural, one {# ticket} other {# tickets}}",
+  "stakepool.ownMempoolTicketsCount": "{ownMempoolTicketsCount, plural, one {# ticket} other {# tickets}}",
+  "stakepool.revokedTicketsCount": "{revokedTicketsCount, plural, one {# ticket} other {# tickets}}"
+}

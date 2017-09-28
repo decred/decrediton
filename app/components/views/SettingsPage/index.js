@@ -21,6 +21,7 @@ class Settings extends Component {
 
   render() {
     const {
+      locales,
       onShowChangePassphrase,
       onCancelChangePassphrase,
       onAttemptChangePassphrase,
@@ -35,8 +36,7 @@ class Settings extends Component {
         {...{
           networks: [{name: "testnet"}, {name: "mainnet"}],
           currencies: [{name: "DCR"}, {name: "atoms"}],
-          //TODO: get from available locales
-          locales: [{name: "English", value: "en"}, {name:"Português/Brasil", value: "pt_BR"}],
+          locales: locales,
           ...this.props, ...this.state }}
         {...{
           onShowChangePassphrase,

@@ -4,7 +4,7 @@ import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
-  locale: sel.locale
+  locale: sel.locale,
 });
 
 export default connect(mapStateToProps);

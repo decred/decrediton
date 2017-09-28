@@ -70,10 +70,10 @@ const SettingsPage = ({
 
               <Select
                 value={tempSettings.locale}
-                onChange={(newLocale) => onChangeLocale(newLocale.value)}
+                onChange={(newLocale) => onChangeLocale(newLocale.key)}
                 clearable={false}
                 multi={false}
-                valueKey="value" labelKey="name"
+                valueKey="key" labelKey="description"
                 options={locales}
               />
             </div>
