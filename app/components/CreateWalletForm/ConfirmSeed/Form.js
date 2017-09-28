@@ -19,7 +19,6 @@ class ConfirmSeedForm extends React.Component{
 
   render(){
     const { remainingSeedWords, setSeedWords, isMatch, seedError, isEmpty } = this.props;
-    const { showPasteWarning } = this.state
     return (
       <div className="confirm-seed">
           <div className="create-wallet-label">
