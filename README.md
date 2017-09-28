@@ -87,6 +87,7 @@ Adjust the following steps for the paths you want to use.
 go get -u -v github.com/decred/dcrd
 go get -u -v github.com/decred/dcrwallet
 go get -u -v github.com/Masterminds/glide
+go get -u -v github.com/golang/dep/cmd/dep
 cd $GOPATH/src/github.com/decred/dcrd
 glide i
 go install . ./cmd/dcrctl/
