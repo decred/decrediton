@@ -53,8 +53,7 @@ export default {
     root: [
       path.resolve("./app/node_modules"),
       path.resolve("./app/node_modules/win32ipc/build/Release")
-    ],
-    moduleDirectories: []
+    ]
   },
 
   plugins: [],
