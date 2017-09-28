@@ -11,7 +11,8 @@ class ConfirmSeedForm extends React.Component{
     }
   }
 
-  handleCtrlVClick = () => {
+  handleOnPaste = (e) => {
+    e.preventDefault();
     this.setState({
       showPasteWarning : true
     })
@@ -31,7 +32,7 @@ class ConfirmSeedForm extends React.Component{
                 ? ''
                   : "*You should not paste your Seeds. Please type it"}</div>
               <form className="input-form-confirm-seed">
-                <SeedEntry label="Seed Entry" onChange={setSeedWords} onCtrlVClick={this.handleCtrlVClick} />
+                <SeedEntry label="Seed Entry" onChange={setSeedWords} onPaste={this.handleOnPaste} />
               </form>
             </div>
             <div className="input-form-error">
