@@ -30,12 +30,17 @@ export default {
           limit: 8192
         }
       }]
-    }, {
+    }, 
+    {
       test: /\.node$/,
       use: [{
-        loader: "node-loader"
+        loader: "node-addon-loader",
+        options: {
+          basePath: path.resolve(__dirname, "app/node_modules/win32ipc/build/Release")
+        }
       }]
-    },]
+    }
+    ]
   },
 
   output: {
@@ -50,7 +55,9 @@ export default {
   resolve: {
     extensions: [".js", ".jsx", ".json", ".node"],
     mainFields: ["webpack", "browser", "web", "browserify", ["jam", "main"], "main"],
-    modules: [path.resolve(__dirname,"app/node_modules/win32ipc/build/Release"), "node_modules" ],
+    alias: {
+      "win32ipc": path.resolve(__dirname,"app/node_modules/win32ipc/build/Release/win32ipc.node")
+    }
   },
 
   plugins: [],
