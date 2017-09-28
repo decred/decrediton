@@ -54,10 +54,7 @@ export default {
   // https://webpack.github.io/docs/configuration.html#resolve
   resolve: {
     extensions: [".js", ".jsx", ".json", ".node"],
-    mainFields: ["webpack", "browser", "web", "browserify", ["jam", "main"], "main"],
-    alias: {
-      "win32ipc": path.resolve(__dirname,"app/node_modules/win32ipc/build/Release/win32ipc.node")
-    }
+    mainFields: ["webpack", "browser", "web", "browserify", ["jam", "main"], "main"]
   },
 
   plugins: [],
