@@ -3,9 +3,9 @@ import Header from "../../../Header";
 import AccountRow from "./AccountRow";
 import DecredLoading from "../../../DecredLoading";
 import KeyBlueButton from "../../../KeyBlueButton";
+import { FormattedMessage } from "react-intl";
 import "../../../../style/Layout.less";
 import "../../../../style/AccountsPage.less";
-
 
 const AccountsList = ({
   accounts,
@@ -82,7 +82,7 @@ const AccountsList = ({
         <KeyBlueButton
           className="add-new-account-button"
           onClick={onShowAddAccount}>
-          Add New
+          <FormattedMessage id="accounts.addNewButton" defaultMessage="Add New" />
         </KeyBlueButton>
       }
     />

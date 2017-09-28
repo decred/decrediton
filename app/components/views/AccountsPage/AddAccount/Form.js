@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../../../Header";
 import KeyBlueButton from "../../../KeyBlueButton";
 import SlateGrayButton from "../../../SlateGrayButton";
+import { FormattedMessage } from "react-intl";
 import "../../../../style/Layout.less";
 import "../../../../style/AccountsPage.less";
 
@@ -36,7 +37,9 @@ const AddAccountForm = ({
     <div className="page-content">
       <div className="account-flex-height">
         <div className="account-form-row">
-          <div className="account-form-label">Account Name:</div>
+          <div className="account-form-label">
+            <FormattedMessage id="accounts.formNew.name" defaultMessage="Account Name" />
+            :</div>
           <div className="account-form-input">
             <div className="account-input-form">
               <input
@@ -50,12 +53,12 @@ const AddAccountForm = ({
           </div>
           {(hasAttemptedSave && !name) ? (
             <div className="account-form-input-error">
-              *You must enter an account name
+              <FormattedMessage id="accounts.formNew.errors.noName" defaultMessage="*You must enter an account name" />
             </div>
           ) : null}
         </div>
         <div className="account-form-row" key="privatePassPhrase">
-          <div className="account-form-label">Private Passhrase:</div>
+          <div className="account-form-label"><FormattedMessage id="accounts.formNew.privatePassphrase" defaultMessage="Private Passphrase" />:</div>
           <div className="account-form-input">
             <div className="account-input-form">
               <input
@@ -69,7 +72,7 @@ const AddAccountForm = ({
           </div>
           {(hasAttemptedSave && !passPhrase) ? (
             <div className="account-form-input-error">
-              *Please enter your private passphrase
+              <FormattedMessage id="accounts.formNew.errors.noPassphrase" defaultMessage="*Please enter your private passphrase" />
             </div>
           ) : null}
 
@@ -79,11 +82,11 @@ const AddAccountForm = ({
         <KeyBlueButton
           className="confirm-new-account-button"
           onClick={onSave}
-        >Confirm</KeyBlueButton>
+        ><FormattedMessage id="accounts.formNew.confirmBtn" defaultMessage="Confirm" /></KeyBlueButton>
         <SlateGrayButton
           className="hide-new-account-button"
           onClick={onCancel}
-        >Cancel</SlateGrayButton>
+        ><FormattedMessage id="accounts.formNew.cancelBtn" defaultMessage="Cancel" /></SlateGrayButton>
       </div>
     </div>
   </div>

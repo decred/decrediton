@@ -8,6 +8,7 @@ export const saveSettings = (settings) => {
   const cfg = getCfg();
   cfg.set("currency_display", settings.currencyDisplay);
   cfg.set("network", settings.network);
+  cfg.set("locale", settings.locale);
   return {
     settings,
     type: SETTINGS_SAVE

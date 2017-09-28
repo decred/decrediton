@@ -2,6 +2,7 @@
 import React from "react";
 import AgendaClose from "../AgendaClose";
 import KeyBlueButton from "../KeyBlueButton";
+import { FormattedMessage } from "react-intl";
 import "../../style/AgendaOverview.less";
 
 const Overview = ({
@@ -24,18 +25,20 @@ const Overview = ({
         <div className="agenda-overview-text">
           <div className="agenda-overview-short-description">{agendaDescription}</div>
           <div className="agenda-overview-agenda-id-ct">
-            Agenda ID: <span className="agenda-overview-agenda-id">{agendaId}</span>
+            <FormattedMessage id="agenda.id" defaultMessage="Agenda ID" />
+            : <span className="agenda-overview-agenda-id">{agendaId}</span>
           </div>
           <div className="agenda-overview-description">
-            Once the majority of the PoW miners have upgraded (75% of the 100 most recent blocks are at the latest version) and the majority of the PoS
-            miners have upgraded (75% of the votes in a 2016 block interval), the voting process begins.
+            <FormattedMessage id="agenda.overviewDescription" defaultMessage="Once the majority of the PoW miners have upgraded (75% of the 100 most recent blocks are at the latest version) and the majority of the PoS miners have upgraded (75% of the votes in a 2016 block interval), the voting process begins." />
           </div>
         </div>
       </div>
     </div>
     <div className="agenda-overview-options-area">
       <div className="agenda-overview-options-section">
-        <div className="agenda-name-options">Voting for</div>
+        <div className="agenda-name-options">
+          <FormattedMessage id="agenda.votingFor" defaultMessage="Voting for" />
+        </div>
       </div>
       <div className="agenda-overview-options-section-middle">
         {choices.map(({ choiceId }) => (
@@ -58,14 +61,16 @@ const Overview = ({
     </div>
     <div className="agenda-bottom">
       <div className="agenda-bottom-overview">
-        <div className="agenda-indicator-pending">In Progress</div>
+        <div className="agenda-indicator-pending">
+          <FormattedMessage id="agenda.inProgress" defaultMessage="In Progress" />
+        </div>
       </div>
       <div className="agenda-bottom-options">
         <KeyBlueButton
           disabled={!hasModifiedChoice}
           className="agenda-update-preferences-button"
           onClick={updatePreferences}
-        >Update Preference</KeyBlueButton>
+        ><FormattedMessage id="agenda.updatePreference" defaultMessage="Update Preference" /></KeyBlueButton>
       </div>
     </div>
   </div>

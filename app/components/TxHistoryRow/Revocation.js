@@ -2,10 +2,10 @@ import React from "react";
 import Status from "./Status";
 import "../../style/TxHistory.less";
 
-const Revocation = ({ txAccountName, pending, date, onClick }) => (
+const Revocation = ({ txAccountName, pending, txTimestamp, onClick }) => (
   <div className={onClick ? "revoke-tx" : "revoke-tx-overview"} {...{ onClick }}>
     <div className="transaction-amount">Revoke</div>
-    <Status {...{ txAccountName, pending, date }} />
+    <Status {...{ txAccountName, pending, txTimestamp }} />
   </div>
 );
 

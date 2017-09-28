@@ -63,7 +63,9 @@ const Bar = ({
           {currentHeight ? (
             <div>
               <a className="sidebar-menu-bottom-latest-block-name">
-                {synced ? "Latest block: " : "Synced to block: "}
+                {synced
+                  ? <FormattedMessage id="sidebar.latestBlock" defaultMessage="Latest Block" />
+                  : <FormattedMessage id="sidebar.syncedToBlock" defaultMessage="Synced to block" /> }:
                 <span className="sidebar-menu-bottom-latest-block-number">{currentHeight}</span>
               </a>
               <div className="sidebar-menu-bottom-latest-block-time">{timeBackString}</div>

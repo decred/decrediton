@@ -84,7 +84,7 @@ const SendPage = ({
           <div className={!isShowingConfirm ? "page-content" : "page-content-blur"}>
             <div className="send-flex-height">
               <div className="send-select-account-area">
-                <div className="send-label"><FormattedMessage id="send.from" defaultMessage="From:"></FormattedMessage></div>
+                <div className="send-label"><FormattedMessage id="send.from" defaultMessage="From" />:</div>
                 <div className="send-select-account-input">
                   <AccountsSelect
                     onChange={onChangeAccount}

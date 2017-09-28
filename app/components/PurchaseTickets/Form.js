@@ -7,6 +7,7 @@ import SelectStakePool from "../SelectStakePool";
 import KeyBlueButton from "../KeyBlueButton";
 import PurchaseTicketsInfoButton from "../PurchaseTicketsInfoButton";
 import TicketsCogs from "../TicketsCogs";
+import { FormattedMessage } from "react-intl";
 import "../../style/StakePool.less";
 import { addSpacingAroundText } from "../../helpers/strings";
 
@@ -39,7 +40,8 @@ const PurchaseTicketsForm = ({
 }) => (
   <div>
     <div className="stakepool-voting-title-area">
-      <div className="stakepool-voting-title-area-name">Purchase Tickets</div>
+      <div className="stakepool-voting-title-area-name">
+        <FormattedMessage id="purchaseTickets.title" defaultMessage="Purchase Titckets" /></div>
       <div className="stakepool-purchase-ticket-input-buttons">
         <PurchaseTicketsInfoButton onClick={onShowTicketsInfo}/>
         <TicketsCogs opened={!isShowingAdvanced} onClick={onToggleShowAdvanced}/>
@@ -48,7 +50,7 @@ const PurchaseTicketsForm = ({
     <div className={isShowingAdvanced ? "stakepool-flex-height-shown" : "stakepool-flex-height-hidden" }>
       <div className="stakepool-purchase-ticket-row">
         <div className="stakepool-purchase-ticket-row-account-select">
-          <div className="stakepool-purchase-ticket-account-select-label">Account:</div>
+          <div className="stakepool-purchase-ticket-account-select-label"><FormattedMessage id="purchaseTickets.account" defaultMessage="Account" />:</div>
           <div className="stakepool-purchase-ticket-input-select">
             <AccountsSelect onChange={onChangeAccount} />
           </div>
@@ -62,7 +64,8 @@ const PurchaseTicketsForm = ({
           />
         </div>
         <div className="stakepool-purchase-ticket-row-num-tickets">
-          <div className="stakepool-purchase-ticket-label">Number of Tickets:</div>
+          <div className="stakepool-purchase-ticket-label">
+            <FormattedMessage id="purchaseTickets.number" defaultMessage="Number of Tickets" />:</div>
           <div className="stakepool-purchase-ticket-num-select">
             <NumTicketsInput
               numTickets={numTicketsToBuy}
@@ -90,7 +93,9 @@ const PurchaseTicketsForm = ({
         </div>
         <div className="stakepool-purchase-ticket-row">
           <div className="stakepool-purchase-ticket-row-thirds">
-            <div className="stakepool-purchase-ticket-label">Ticket Fee (DCR/kB):</div>
+            <div className="stakepool-purchase-ticket-label">
+              <FormattedMessage id="purchaseTickets.ticketFee" defaultMessage="Ticket Fee (DCR/kB)" />
+              :</div>
             <div className="stakepool-purchase-ticket-thirds-input">
               <div className="stakepool-input-form-purchase-ticket">
                 <input
@@ -107,7 +112,8 @@ const PurchaseTicketsForm = ({
             ) : null}
           </div>
           <div className="stakepool-purchase-ticket-row-thirds">
-            <div className="stakepool-purchase-ticket-label">Tx Fee (DCR/kB):</div>
+            <div className="stakepool-purchase-ticket-label">
+              <FormattedMessage id="purchaseTickets.txFee" defaultMessage="Tx Fee (DCR/kB)" />:</div>
             <div className="stakepool-purchase-ticket-thirds-input">
               <div className="stakepool-input-form-purchase-ticket">
                 <input
@@ -124,7 +130,8 @@ const PurchaseTicketsForm = ({
             ) : null}
           </div>
           <div className="stakepool-purchase-ticket-row-thirds">
-            <div className="stakepool-purchase-ticket-label">Expiry:</div>
+            <div className="stakepool-purchase-ticket-label">
+              <FormattedMessage id="purchaseTickets.expiry" defaultMessage="Expiry" />:</div>
             <div className="stakepool-purchase-ticket-thirds-input">
               <div className="stakepool-input-form-purchase-ticket">
                 <input
@@ -142,7 +149,8 @@ const PurchaseTicketsForm = ({
           </div>
         </div>
         <div className="stakepool-purchase-ticket-row">
-          <div className="stakepool-purchase-ticket-label">Ticket Address:</div>
+          <div className="stakepool-purchase-ticket-label">
+            <FormattedMessage id="purchaseTickets.ticketAddress" defaultMessage="Ticket Address" /> :</div>
           <div className="stakepool-purchase-ticket-address-input">
             <div className="stakepool-input-form-purchase-ticket">
               <input
@@ -155,7 +163,9 @@ const PurchaseTicketsForm = ({
           </div>
         </div>
         <div className="stakepool-purchase-ticket-row">
-          <div className="stakepool-purchase-ticket-label">Pool Address:</div>
+          <div className="stakepool-purchase-ticket-label">
+            <FormattedMessage id="purchaseTickets.poolAddress" defaultMessage="Pool Address" />
+            :</div>
           <div className="stakepool-purchase-ticket-address-input">
             <div className="stakepool-input-form-purchase-ticket">
               <input
@@ -168,7 +178,8 @@ const PurchaseTicketsForm = ({
           </div>
         </div>
         <div className="stakepool-purchase-ticket-row">
-          <div className="stakepool-purchase-ticket-label">Pool Fees:</div>
+          <div className="stakepool-purchase-ticket-label">
+            <FormattedMessage id="purchaseTickets.poolFees" defaultMessage="Pool Fees" />:</div>
           <div className="stakepool-purchase-ticket-num-input">
             <div className="stakepool-input-form-purchase-ticket">
               <input
@@ -182,7 +193,7 @@ const PurchaseTicketsForm = ({
         </div>
       </div>
       <div hidden={isShowingAdvanced ? true : false} className="stakepool-purchase-ticket-quick-bar-row">
-        <div className="stakepool-quick-bar-row-label">Settings:</div>
+        <div className="stakepool-quick-bar-row-label"><FormattedMessage id="purchaseTickets.settings" defaultMessage="Settings" />:</div>
         <div className="stakepool-icon" data-tip="Current Stakepool">{stakePool ? stakePool.value.Host : null}</div>
         <div className="stakepool-fee-icon" data-tip="Ticket Fee">{ticketFee} DCR/KB</div>
         <div className="stakepool-fee-icon" data-tip="Tx Fee">{txFee} DCR/KB</div>
@@ -201,7 +212,7 @@ const PurchaseTicketsForm = ({
 
       {canAffordTickets ? null : (
         <div className="stakepool-purchase-error">
-          Insufficient spendable account balance to purchase tickets.
+          <FormattedMessage id="purchaseTickets.errors.insufficientBalance" defaultMessage="Insufficient spendable account balance to purchase tickets." />
         </div>
       )}
 

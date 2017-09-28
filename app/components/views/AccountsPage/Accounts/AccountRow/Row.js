@@ -4,6 +4,7 @@ import SlateGrayButton from "../../../../SlateGrayButton";
 import KeyBlueButton from "../../../../KeyBlueButton";
 import Balance from "../../../../Balance";
 import ReactToolTip from "react-tooltip";
+import { FormattedMessage } from "react-intl";
 import "../../../../../style/Fonts.less";
 import "../../../../../style/AccountRow.less";
 
@@ -56,7 +57,7 @@ const Row = ({
         <div className="account-row-top-account-funds">
           <Balance amount={account.total}/>
           <div className="account-row-top-last-tx"></div>
-          <div className="account-row-top-spendable">Spendable <Balance amount={account.spendable}/></div>
+          <div className="account-row-top-spendable"><FormattedMessage id="accounts.spendable" defaultMessage="Spendable" /> <Balance amount={account.spendable}/></div>
         </div>
       </div>
     </div>
@@ -65,10 +66,14 @@ const Row = ({
         ? (
           <div className="account-row-details-bottom" key={"details"+account.accountNumber}>
             <div className="account-row-details-bottom-title">
-              <div className="account-row-details-bottom-title-name">Rename Account</div>
+              <div className="account-row-details-bottom-title-name">
+                <FormattedMessage id="accounts.rename" defaultMessage="Rename Account" />
+              </div>
             </div>
             <div className="account-row-details-bottom-rename">
-              <div className="account-row-details-bottom-rename-name">New Account Name:</div>
+              <div className="account-row-details-bottom-rename-name">
+                <FormattedMessage id="accounts.newName" defaultMessage="New Account Name" />:
+              </div>
               <div className="account-row-details-bottom-spec-value">
                 <div className="account-input-form">
                   <input
@@ -89,12 +94,12 @@ const Row = ({
               <KeyBlueButton
                 className="content-confirm-new-account"
                 onClick={renameAccount}>
-                Rename
+                <FormattedMessage id="accounts.renameBtn" defaultMessage="Rename" />
               </KeyBlueButton>
               <SlateGrayButton
                 className="content-confirm-new-account"
                 onClick={hideRenameAccount}>
-                Cancel
+                <FormattedMessage id="accounts.cancelRenameBtn" defaultMessage="Cancel" />
               </SlateGrayButton>
             </div>
           </div>
@@ -104,48 +109,66 @@ const Row = ({
            <div className="account-row-details-bottom-columns">
             <div className="account-row-details-bottom-column-left">
               <div className="account-row-details-bottom-title">
-                <div className="account-row-details-bottom-title-name">Balances</div>
+                <div className="account-row-details-bottom-title-name">
+                  <FormattedMessage id="accounts.balances" defaultMessage="Balances" />
+                </div>
               </div>
               <div className="account-row-details-bottom-spec">
-                <div className="account-row-details-bottom-spec-name">Total</div>
+                <div className="account-row-details-bottom-spec-name">
+                  <FormattedMessage id="accounts.total" defaultMessage="Total" />
+                </div>
                 <div className="account-row-details-bottom-spec-value"><Balance amount={account.total}/></div>
               </div>
               <div className="account-row-details-bottom-spec">
-                <div className="account-row-details-bottom-spec-name">Spendable</div>
+                <div className="account-row-details-bottom-spec-name">
+                  <FormattedMessage id="accounts.spendable" defaultMessage="Spendable" />
+                </div>
                 <div className="account-row-details-bottom-spec-value"><Balance amount={account.spendable}/></div>
               </div>
               <div className="account-row-details-bottom-spec">
-                <div className="account-row-details-bottom-spec-name">Immature Rewards</div>
+                <div className="account-row-details-bottom-spec-name">
+                  <FormattedMessage id="accounts.immatureRewards" defaultMessage="Immature Rewards" />
+                </div>
                 <div className="account-row-details-bottom-spec-value"><Balance amount={account.immatureReward}/></div>
               </div>
               <div className="account-row-details-bottom-spec">
-                <div className="account-row-details-bottom-spec-name">Locked By Tickets</div>
+                <div className="account-row-details-bottom-spec-name">
+                  <FormattedMessage id="accounts.lockedByTickets" defaultMessage="Locked By Tickets" />
+                </div>
                 <div className="account-row-details-bottom-spec-value"><Balance amount={account.lockedByTickets}/></div>
               </div>
               <div className="account-row-details-bottom-spec">
-                <div className="account-row-details-bottom-spec-name">Voting Authority</div>
+                <div className="account-row-details-bottom-spec-name">
+                  <FormattedMessage id="accounts.votingAuthority" defaultMessage="Voting Authority" />
+                </div>
                 <div className="account-row-details-bottom-spec-value"><Balance amount={account.votingAuthority}/></div>
               </div>
               <div className="account-row-details-bottom-spec">
-                <div className="account-row-details-bottom-spec-name">Immature Stake Generation</div>
+                <div className="account-row-details-bottom-spec-name">
+                  <FormattedMessage id="accounts.immatureStake" defaultMessage="Immature Stake Generation" />
+                </div>
                 <div className="account-row-details-bottom-spec-value"><Balance amount={account.immatureStakeGeneration}/></div>
               </div>
             </div>
             <div className="account-row-details-bottom-column-right">
               <div className="account-row-details-bottom-title">
-                <div className="account-row-details-bottom-title-name">Properties</div>
+                <div className="account-row-details-bottom-title-name"><FormattedMessage id="accounts.properties" defaultMessage="Properties" /></div>
               </div>
               <div className="account-row-details-bottom-spec">
-                <div className="account-row-details-bottom-spec-name">Account number</div>
+                <div className="account-row-details-bottom-spec-name"><FormattedMessage id="accounts.number" defaultMessage="Account number" /></div>
                 <div className="account-row-details-bottom-spec-value">{account.accountNumber}</div>
               </div>
               <div className="account-row-details-bottom-spec">
-                <div className="account-row-details-bottom-spec-name">HD Path</div>
+                <div className="account-row-details-bottom-spec-name"><FormattedMessage id="accounts.hdPath" defaultMessage="HD Path" /></div>
                 <div className="account-row-details-bottom-spec-value">{account.HDPath}</div>
               </div>
               <div className="account-row-details-bottom-spec">
-                <div className="account-row-details-bottom-spec-name">Keys</div>
-                <div className="account-row-details-bottom-spec-value">{account.externalKeys} external, {account.internalKeys} internal, {account.importedKeys} imported</div>
+                <div className="account-row-details-bottom-spec-name"><FormattedMessage id="accounts.keys" defaultMessage="Keys" /></div>
+                <div className="account-row-details-bottom-spec-value">
+                  <FormattedMessage id="accounts.keys.external" defaultMessage="{keys} external" values={{keys: account.externalKeys}} />
+                  <FormattedMessage id="accounts.keys.internal" defaultMessage="{keys} internal" values={{keys: account.internalKeys}} />
+                  <FormattedMessage id="accounts.keys.imported" defaultMessage="{keys} imported" values={{keys: account.importedKeys}} />
+                </div>
               </div>
             </div>
           </div>
