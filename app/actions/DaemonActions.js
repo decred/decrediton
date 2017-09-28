@@ -40,7 +40,7 @@ export const syncDaemon = (rpcuser, rpcpassword, host, cert) =>
   (dispatch, getState) => {
     const { walletLoader: { neededBlocks }} = getState();
     const updateBlockCount = () => {
-      const { daemonSynced, timeStart, blockStart } = getState().daemon;
+      const { daemon: { daemonSynced, timeStart, blockStart } } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
       return daemon
@@ -51,19 +51,19 @@ export const syncDaemon = (rpcuser, rpcpassword, host, cert) =>
             dispatch(startWallet());
             return;
           } else if (updateCurrentBlockCount !== 0) {
-            var blocksLeft = neededBlocks - updateCurrentBlockCount;
-            var blocksDiff = updateCurrentBlockCount - blockStart;
+            const blocksLeft = neededBlocks - updateCurrentBlockCount;
+            const blocksDiff = updateCurrentBlockCount - blockStart;
             if (timeStart !== 0 && blockStart !== 0 && blocksDiff !== 0) {
-              var currentTime = new Date();
-              var timeSyncing = (currentTime - timeStart) / 1000;
-              var minutesLeft = Math.round(blocksLeft / blocksDiff * timeSyncing / 60);
+              const currentTime = new Date();
+              const timeSyncing = (currentTime - timeStart) / 1000;
+              let minutesLeft = Math.round(blocksLeft / blocksDiff * timeSyncing / 60);
               if (minutesLeft == 0) {
                 minutesLeft = "<1";
               }
-              var updateTimeLeftEstimate = "Estimated time remaining: " + minutesLeft + " minutes" ;
+              const updateTimeLeftEstimate = "Estimated time remaining: " + minutesLeft + " minutes" ;
               dispatch({currentBlockCount: parseInt(updateCurrentBlockCount), timeLeftEstimate: updateTimeLeftEstimate, type: DAEMONSYNCING_PROGRESS});
             } else if (updateCurrentBlockCount !== 0) {
-              var time = new Date();
+              const time = new Date();
               dispatch({currentBlockCount: parseInt(updateCurrentBlockCount), timeStart: time, blockStart: parseInt(updateCurrentBlockCount), type: DAEMONSYNCING_START});
             }
           }
