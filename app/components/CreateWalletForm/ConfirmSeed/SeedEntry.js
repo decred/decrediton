@@ -24,6 +24,7 @@ class SeedEntry extends React.Component {
         className="section"
         style={{fontFamily: "Inconsolata,monospace"}}
         onKeyDown={this.handleKeyDown}
+        onPaste={this.props.onPaste}
       >
         <Select.Async
           autofocus
