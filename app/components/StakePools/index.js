@@ -62,7 +62,7 @@ class StakePools extends React.Component {
   }
 
   onShowAddStakePool() {
-    this.setState({ isAdding: false });
+    this.setState({ isAdding: true });
   }
 
   onChangeApiKey(apiKey) {
