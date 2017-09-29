@@ -17,6 +17,7 @@ const snackbarClasses = ({ type }) => ({
 const Header = ({
   headerTop,
   headerTitleOverview,
+  headerSubtitleOverview,
   headerMetaOverview,
   message,
   onDismissMessage,
@@ -34,6 +35,7 @@ const Header = ({
     <div className="header">
       <div className="header-top">{headerTop}</div>
       <div className="header-title-overview">{headerTitleOverview}</div>
+      <div className="header-subtitle-overview">{headerSubtitleOverview}</div>
       <div className="header-meta-overview">{headerMetaOverview}</div>
       {children}
     </div>
