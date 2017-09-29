@@ -78,11 +78,13 @@ $ npm run i18n-prepare-untranslated
 
 ## Assembling translated files
 
-Transifex will generate a bunch of *.po files (one per language). Save them on the `translations/` dir. To get back the json files that the app actually uses, execute the following:
+Transifex will generate a bunch of *.po files (one per language). Save them on the `po/` dir. To get back the json files that the app actually uses, execute the following:
 
 ```shell
 $ npm run i18n-assemble-translated
 ```
+
+**Note**: Transifex generates files with a filename following the pattern `decrediton_(lang).po` but react-intl-po expects a filename with the pattern `decrediton.(lang).po`. The `i18n-assemble-translated` script deletes old and renames the files in the po dir accordingly, so just extract the zip with all translations in the appropriate directory and the script will take care of the rest.
 
 
 ## Adding a new locale
