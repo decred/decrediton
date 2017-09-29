@@ -1,6 +1,7 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath } from "./config.js";
 import path from "path";
+import fs from "fs";
 import os from "os";
 import parseArgs from "minimist";
 import winston from "winston";
@@ -21,6 +22,10 @@ let currentBlockCount;
 function unknownFn(arg) {
   console.log("%s is not a valid option!", arg);
   return;
+}
+
+function getExecutableName(name) {
+  return os.platform() !== "win32" ? name : name + ".exe";
 }
 
 function showUsage() {
@@ -276,7 +281,11 @@ ipcMain.on("start-wallet", (event, arg) => {
 ipcMain.on("check-daemon", (event) => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrctlCfg(), "getblockcount"];
-  var dcrctlExe = path.join(execPath, "bin", "dcrctl");
+
+  var dcrctlExe = path.join(execPath, "bin", getExecutableName("dcrctl"));
+  if (!fs.existsSync(dcrctlExe)) {
+    logger.log("error", "The dcrctl file does not exists");
+  }
 
   logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
 
@@ -298,7 +307,11 @@ const launchDCRD = () => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrdCfg()];
 
-  var dcrdExe = path.join(execPath, "bin", "dcrd");
+  var dcrdExe = path.join(execPath, "bin", getExecutableName("dcrd"));
+  if (!fs.existsSync(dcrdExe)) {
+    logger.log("error", "The dcrd file does not exists");
+    return;
+  }
 
   if (os.platform() == "win32") {
     try {
@@ -306,7 +319,6 @@ const launchDCRD = () => {
       const win32ipc = require("./node_modules/win32ipc/build/Release/win32ipc");
       var pipe = win32ipc.createPipe("out");
       args.push(util.format("--piperx=%d", pipe.readEnd));
-      dcrdExe = dcrdExe + ".exe";
     } catch(e) {
       logger.log("error", "can't find proper module to launch dcrd: " + e);
     }
@@ -356,14 +368,18 @@ const launchDCRWallet = () => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrwCfg()];
 
-  var dcrwExe = path.join(execPath, "bin", "dcrwallet");
+  var dcrwExe = path.join(execPath, "bin", getExecutableName("dcrwallet"));
+  if (!fs.existsSync(dcrwExe)) {
+    logger.log("error", "The dcrwallet file does not exists");
+    return;
+  }
+
   if (os.platform() == "win32") {
     try {
       const util = require("util");
       const win32ipc = require("./node_modules/win32ipc/build/Release/win32ipc");
       var pipe = win32ipc.createPipe("out");
       args.push(util.format("--piperx=%d", pipe.readEnd));
-      dcrwExe = dcrwExe + ".exe";
     } catch (e) {
       logger.log("error", "can't find proper module to launch dcrwallet: " + e);
     }
@@ -426,7 +442,10 @@ const readExesVersion = () => {
   };
 
   for (let exe of exes) {
-    let exePath = path.join(execPath, "bin", "dcrd");
+    let exePath = path.join(execPath, "bin", getExecutableName("dcrd"));
+    if (!fs.existsSync(exePath)) {
+      logger.log("error", "The dcrd file does not exists");
+    }
 
     let proc = spawn(exePath, args, { encoding: "utf8" });
     if (proc.error) {

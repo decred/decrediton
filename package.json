@@ -61,7 +61,7 @@
       "package.json"
     ],
     "extraResources": [
-      "bin/*"
+      { "from": "bin", "to": "bin"}
     ],
     "win": {
       "target": "nsis"

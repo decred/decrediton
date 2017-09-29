@@ -1,0 +1,52 @@
+version: 0.1.{build}
+
+cache:
+  - node_modules
+  - app\node_modules
+  - '%APPDATA%\npm-cache'
+  - '%USERPROFILE%\.electron'
+
+platform:
+  - x64
+
+init:
+  - git config --global core.autocrlf input
+  - set PATH=%GOROOT%\bin;%GOPATH%\bin;%PATH%
+
+install:
+  - ps: Install-Product node 6 x64
+  - git reset --hard HEAD
+  - npm install npm -g
+  - go version
+  - go env
+  - go get -u -v github.com/decred/dcrd
+  - go get -u -v github.com/decred/dcrwallet
+  - go get -u -v github.com/Masterminds/glide
+  - go get -u github.com/golang/dep/cmd/dep
+  - cd %GOPATH%\\src\\github.com\\decred\\dcrd
+  - glide i
+  - go install . ./cmd/dcrctl/
+  - cd ../dcrwallet
+  - dep ensure
+  - go install
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - mkdir bin
+  - cp %GOPATH%\\bin\\dcrd.exe bin/
+  - cp %GOPATH%\\bin\\dcrctl.exe bin/
+  - cp %GOPATH%\\bin\\dcrwallet.exe bin/
+  - npm install
+
+build_script:
+  - node --version
+  - npm --version
+  - npm run package-win
+
+test: off
+
+environment:
+  GOPATH: c:\gopath
+  GOROOT: C:\go
+
+artifacts:
+  - path: 'release\*.exe'
+    name: DecreditonRelease
