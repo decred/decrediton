@@ -7,6 +7,7 @@ import SideBar from "../../SideBar";
 import Header from "../../Header";
 import CopyToClipboardButton from "../../CopyToClipboardButton";
 import QRCode from "./QRCode";
+import { FormattedMessage } from "react-intl";
 import "../../../style/Layout.less";
 import "../../../style/ReceivePage.less";
 import "../../../style/MiscComponents.less";
@@ -20,8 +21,12 @@ const ReceivePage = ({
     <SideBar />
     <div className="page-view">
       <Header
-        headerTitleOverview={<div className="receive-header-title">Receive Funds</div>}
-        headerMetaOverview={<div className="receive-header-meta">Each time you request a payment, create a new address to protect your privacy.</div>}
+        headerTitleOverview={<div className="receive-header-title">
+          <FormattedMessage id="receive.title" defaultMessage="Receive Funds" />
+          </div>}
+        headerMetaOverview={<div className="receive-header-meta">
+          <FormattedMessage id="receive.titleInfo" defaultMessage="Each time you request a payment, create a new address to protect your privacy." />
+        </div>}
       />
       <div className="page-content">
         <div className="receive-content-nest">
@@ -34,7 +39,8 @@ const ReceivePage = ({
               data-tip={"Accounts"}
               to={"/accounts"}
             />
-            <div className="receive-content-nest-prefix">This address is for:</div>
+            <div className="receive-content-nest-prefix">
+              <FormattedMessage id="receive.accountLabel" defaultMessage="This address is for" />:</div>
             <div className="receive-select-account-input">
               <AccountsSelect onChange={onChangeAccountNumber} accountsType="visible" />
             </div>
@@ -55,7 +61,7 @@ const ReceivePage = ({
         </div>
         <div className="receive-toolbar">
           <KeyBlueButton size="large" block={false} onClick={onRequestAddress}>
-            Generate new address
+            <FormattedMessage id="receive.newAddressBtn" defaultMessage="Generate new address" />
           </KeyBlueButton>
         </div>
       </div>

@@ -53,7 +53,8 @@ const SettingsPage = ({
             </div>
           ) : null
         ]}
-        headerTitleOverview="Settings" />
+        headerTitleOverview={<FormattedMessage id="settings.title" defaultMessage="Settings" />}
+      />
       <div>
         <ChangePassphraseModal
           hidden={!isShowingChangePassphrase}

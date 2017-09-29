@@ -1,5 +1,6 @@
 import React from "react";
 import compose from "lodash/fp/compose";
+import { FormattedMessage } from "react-intl";
 import "../../../style/SendPage.less";
 
 const SendOutputRow = ({
@@ -22,7 +23,7 @@ const SendOutputRow = ({
 }) => (
   <div className="send-row">
     <div className="send-output-row">
-      <div className="send-label">To:</div>
+      <div className="send-label"><FormattedMessage id="send.to" defaultMessage="To" />:</div>
       <div className="send-address">
         <div className="send-input-form">
           <input
@@ -45,7 +46,7 @@ const SendOutputRow = ({
         <div className="send-address-icon-spacer send-address-amount-spacer" ></div>
       ) : ( null ) }
       <div className="send-amount">
-        {index === 0 ? <div className="send-amount-label">Amount:</div> : null}
+        {index === 0 ? <div className="send-amount-label"><FormattedMessage id="send.amount" defaultMessage="Amount" />:</div> : null}
         <div className="send-address-amount-sum-and-currency">
           <input
             hidden={!isSendAll}

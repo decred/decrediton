@@ -4,6 +4,7 @@ import Balance from "../../Balance";
 import TextToggle from "../../TextToggle";
 import "../../../style/StakePool.less";
 import ticketsPage from "../../../connectors/ticketsPage";
+import { FormattedMessage } from "react-intl";
 
 const TicketsPageHeader = ({
   isShowingVotingPrefs,
@@ -113,7 +114,9 @@ const TicketsPageHeader = ({
     headerTitleOverview={
       <div style={{height: "100%"}}>
         <div style={{float: "left"}}>
-          {isShowingAddStakePool ? "Stake pool settings" : isShowingVotingPrefs ? "" : "Ticket price:"}
+          {isShowingAddStakePool
+            ? <FormattedMessage id="stake.titleSettings" defaultMessage="Stake pool settings" />
+            : isShowingVotingPrefs ? "" : <FormattedMessage id="stake.titleTicketPrice" defaultMessage="Ticket price" />}:
         </div>
       </div>
     }

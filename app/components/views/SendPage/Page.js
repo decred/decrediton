@@ -43,11 +43,17 @@ const SendPage = ({
     <SideBar />
     <div className="page-view">
       <Header
-        headerTitleOverview={<div className="header-title-send">Send Funds</div>}
+        headerTitleOverview={<div className="header-title-send">
+          <FormattedMessage id="send.title" defaultMessage="Send Funds" /></div>}
         headerMetaOverview={isTestNet ? (
-          <div className="header-meta-send">Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters (e.g. <span className="send-styles.header-meta-span-send">TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>).</div>
+          <div className="header-meta-send">
+            <FormattedMessage id="send.testnetInfo"
+              defaultMessage="Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters (e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)." />
+          </div>
         ) : (
-          <div className="header-meta-send">Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters (e.g. <span className="send-styles.header-meta-span-send">DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>).</div>
+          <div className="header-meta-send">
+            <FormattedMessage id="send.mainnetInfo" defaultMessage="Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)." />
+          </div>
         )}
         headerTop={[
           publishTransactionError ? (
@@ -79,7 +85,9 @@ const SendPage = ({
             submitPassphrase={onAttemptSignTransaction}
             cancelPassphrase={onClearTransaction}
             heading={"Confirm Transaction"}
-            description={<div>Please confirm your transaction for <Balance amount={totalSpent}/></div>}
+            description={<div>
+              <FormattedMessage id="send.confirmAmountLabel" defaultMessage="Please confirm your transaction for" />
+              : <Balance amount={totalSpent}/></div>}
           />
           <div className={!isShowingConfirm ? "page-content" : "page-content-blur"}>
             <div className="send-flex-height">
@@ -100,8 +108,8 @@ const SendPage = ({
                 />
                 <div className="send-send-all-input">
                 {!isSendAll ?
-                <a onClick={onShowSendAll}>Send All</a> :
-                <a onClick={onClearTransaction}>Close</a>  }
+                <a onClick={onShowSendAll}><FormattedMessage id="send.sendAllBtn" defaultMessage="Send All" /></a> :
+                <a onClick={onClearTransaction}><FormattedMessage id="send.cancelSendAll" defaultMessage="Close" /></a>  }
                 </div>
               </div>
               <div className="send-amount-area">
@@ -119,7 +127,7 @@ const SendPage = ({
                 className="content-send"
                 disabled={!isValid}
                 onClick={onShowConfirm}
-              >Send</KeyBlueButton>
+              ><FormattedMessage id="send.sendBtn" defaultMessage="Send" /></KeyBlueButton>
               {constructTxError ? (
                 <div className="send-construct-error">
                   {constructTxError}
@@ -127,19 +135,25 @@ const SendPage = ({
               ) : null}
               <div className="estimation-area-send">
                 <div className="total-amount-send">
-                  <div className="total-amount-send-text">Total amount sending:</div>
+                  <div className="total-amount-send-text">
+                    <FormattedMessage id="send.totalAmountEstimation" defaultMessage="Total amount sending" />
+                    :</div>
                   <div className="total-amount-send-amount">
                     <Balance amount={totalSpent}/>
                   </div>
                 </div>
                 <div className="total-amount-send">
-                  <div className="total-amount-send-text">Estimated Fee:</div>
+                  <div className="total-amount-send-text">
+                    <FormattedMessage id="send.feeEstimation" defaultMessage="Estimated Fee" />
+                    :</div>
                   <div className="total-amount-send-amount">
                     <Balance amount={estimatedFee} />
                   </div>
                 </div>
                 <div className="total-amount-send">
-                  <div className="total-amount-send-text">Estimated Size:</div>
+                  <div className="total-amount-send-text">
+                    <FormattedMessage id="send.sizeEstimation" defaultMessage="Estimated Size" />
+                    :</div>
                   <div className="total-amount-send-amount">{estimatedSignedSize} bytes</div>
                 </div>
               </div>

@@ -10,6 +10,7 @@ import SlateGrayButton from "../SlateGrayButton";
 import "../../style/Layout.less";
 import "../../style/TxDetails.less";
 import { addSpacingAroundText } from "../../helpers/strings";
+import { FormattedMessage } from "react-intl";
 import "../../style/Fonts.less";
 
 const getHeaderClassName = txDirection => ({
@@ -59,17 +60,24 @@ const TxDetails = ({
       <div className="page-content">
         <div className="txdetails-content-nest">
           <div className="txdetails-top">
-            <div className="txdetails-name">Transaction:</div>
+            <div className="txdetails-name">
+              <FormattedMessage id="txDetails.transactionLabel" defaultMessage="Transaction" />:
+            </div>
             <div className="txdetails-value">
               <a onClick={() => shell.openExternal(txUrl)} style={{ cursor: "pointer" }}>{txHash}</a>
             </div>
             <div className="txdetails-name">
-              {isConfirmed ? (<div className="txdetails-indicator-confirmed">confirmed</div>) : (<div className="txdetails-indicator-pending">Pending</div>)}
+              {isConfirmed ? (<div className="txdetails-indicator-confirmed">
+                <FormattedMessage id="transaction.indicatorConfirmed" defaultMessage="Confirmed" />
+              </div>) : (<div className="txdetails-indicator-pending">
+                <FormattedMessage id="transaction.indicatorPending" defaultMessage="Pending" /></div>)}
             </div>
             <div className="txdetails-value">{isConfirmed ? currentBlockHeight - txHeight : 0} <span className="txdetails-value-text">confirmations</span></div>
             <div className="txdetails-overview">
               <div className="txdetails-input-area">
-                <div className="txdetails-overview-title-consumed">Used Inputs</div>
+                <div className="txdetails-overview-title-consumed">
+                  <FormattedMessage id="txDetails.usedInputs" defaultMessage="Used Inputs" />
+                </div>
                 <div className="txdetails-input-arrow"></div>
                 {txInputs.map(({ accountName, amount }, idx) => (
                   <div key={idx} className="txdetails-row">
@@ -79,7 +87,9 @@ const TxDetails = ({
                 ))}
               </div>
               <div className="txdetails-output-area">
-                <div className="txdetails-overview-title-created">New Wallet Outputs</div>
+                <div className="txdetails-overview-title-created">
+                  <FormattedMessage id="txDetails.walletOutputs" defaultMessage="New Wallet Outputs" />
+                </div>
                 {txOutputs.map(({ address, amount }, idx) => (
                   <div key={idx} className="txdetails-row">
                     <div className="txdetails-address">{addSpacingAroundText(address)}</div>
@@ -89,18 +99,18 @@ const TxDetails = ({
               </div>
             </div>
             <div>
-              <div className="txdetails-name">Transaction fee:</div>
+              <div className="txdetails-name"><FormattedMessage id="txDetails.transactionFeeLabel" defaultMessage="Transaction fee" />:</div>
               <div className="txdetails-value"><Balance amount={txFee} /></div>
             </div>
           </div>
           {isConfirmed ?
             <div className="txdetails-details">
-              <div className="txdetails-title">Properties</div>
-              <div className="txdetails-name">Block:</div>
+              <div className="txdetails-title"><FormattedMessage id="txDetails.properties" defaultMessage="Properties" /></div>
+              <div className="txdetails-name"><FormattedMessage id="txDetails.blockLabel" defaultMessage="Block" />:</div>
               <div className="txdetails-value">
                 <a onClick={() => shell.openExternal(txBlockUrl)} style={{ cursor: "pointer" }}>{txBlockHash}</a>
               </div>
-              <div className="txdetails-name">Height:</div>
+              <div className="txdetails-name"><FormattedMessage id="txDetails.blockHeightLabel" defaultMessage="Height" /> :</div>
               <div className="txdetails-value">{txHeight}</div>
             </div>
             : null

@@ -3,6 +3,7 @@ import PurchaseTickets from "../../PurchaseTickets";
 import TicketAutoBuyer from "../../TicketAutoBuyer";
 import PassphraseModal from "../../PassphraseModal";
 import ImportScriptModal from "../../ImportScriptModal";
+import { FormattedMessage } from "react-intl";
 import StakeInfo from "../../StakeInfo";
 import "../../../style/StakePool.less";
 
@@ -29,8 +30,8 @@ const Tickets = ({
       hidden={!isShowingImportScript}
       submitImportScript={onImportScript}
       cancelImportScript={onCancelImportScript}
-      heading={"Enter Passphrase to Import Script"}
-      description={<div>Please enter your Script from your configured stakepool:</div>}
+      heading={<FormattedMessage id="importScript.title" defaultMessage="Enter Passphrase to Import Script" />}
+      description={<div><FormattedMessage id="importScript.description" defaultMessage="Please enter your Script from your configured stakepool" />:</div>}
     />
     <div className={isRequestingPassphrase || isShowingImportScript ? "stakepool-content-purchase-ticket-view-blur page-content" : "stakepool-content-purchase-ticket-view page-content"}>
       <StakeInfo />

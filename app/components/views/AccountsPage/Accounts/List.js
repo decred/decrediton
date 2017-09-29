@@ -28,7 +28,7 @@ const AccountsList = ({
 }) => (
   <div className="page-view">
     <Header
-      headerTitleOverview="Accounts"
+      headerTitleOverview={<FormattedMessage id="accounts.title" defaultMessage="Accounts" />}
       headerTop={[
         (getNextAccountError !== null) ? (
           <div
