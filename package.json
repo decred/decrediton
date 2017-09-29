@@ -61,7 +61,8 @@
       "package.json"
     ],
     "extraResources": [
-      { "from": "bin", "to": "bin"}
+      { "from": "bin", "to": "bin"},
+      "*.node"
     ],
     "win": {
       "target": "nsis"
@@ -191,6 +192,7 @@
     "lodash": "^4.17.4",
     "material-ui": "^0.17.4",
     "mv": "^2.1.1",
+    "node-addon-loader": "alexlyp/node-addon-loader#master",
     "prop-types": "^15.5.10",
     "qr-image": "^3.2.0",
     "react": "^15.3.2",

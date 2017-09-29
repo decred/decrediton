@@ -30,12 +30,17 @@ export default {
           limit: 8192
         }
       }]
-    }, {
+    },
+    {
       test: /\.node$/,
       use: [{
-        loader: "node-loader"
+        loader: "node-addon-loader",
+        options: {
+          basePath: path.resolve(__dirname, "bin")
+        }
       }]
-    },]
+    }
+    ]
   },
 
   output: {
@@ -49,7 +54,7 @@ export default {
   // https://webpack.github.io/docs/configuration.html#resolve
   resolve: {
     extensions: [".js", ".jsx", ".json", ".node"],
-    mainFields: ["webpack", "browser", "web", "browserify", ["jam", "main"], "main"],
+    mainFields: ["webpack", "browser", "web", "browserify", ["jam", "main"], "main"]
   },
 
   plugins: [],
