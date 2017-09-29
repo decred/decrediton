@@ -8,14 +8,14 @@ class ConfirmSeedForm extends React.Component{
     super(props);
     this.state = {
       showPasteWarning : false
-    }
+    };
   }
 
   handleOnPaste = (e) => {
     e.preventDefault();
     this.setState({
       showPasteWarning : true
-    })
+    });
   }
 
   render(){
@@ -29,7 +29,7 @@ class ConfirmSeedForm extends React.Component{
           <div className="create-wallet-field">
             <div className="input-form">
               <div className="orange-warning">{!this.state.showPasteWarning
-                ? ''
+                ? ""
                   : "*You should not paste your Seeds. Please type it"}</div>
               <form className="input-form-confirm-seed">
                 <SeedEntry label="Seed Entry" onChange={setSeedWords} onPaste={this.handleOnPaste} />

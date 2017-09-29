@@ -71,7 +71,6 @@ class SeedEntry extends React.Component {
       e.preventDefault();
       break;
     }
-    
   }
 
 }
