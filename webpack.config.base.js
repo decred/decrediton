@@ -30,7 +30,7 @@ export default {
           limit: 8192
         }
       }]
-    }, 
+    },
     {
       test: /\.node$/,
       use: [{
