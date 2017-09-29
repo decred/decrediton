@@ -9,7 +9,7 @@ const pt_BR = {
   key: "pt-BR",
   language: "pt-BR",
   description: "Português do Brasil",
-  messages: require("../translations/pt-BR.json")
+  messages: require("../translations/decrediton_pt.json")
 };
 
 // pseudo-locale for i18n testing during development. Can be freely

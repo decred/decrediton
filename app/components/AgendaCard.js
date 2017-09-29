@@ -16,16 +16,16 @@ const AgendaCard = ({
     <div className="agenda-card-bottom">
       {agenda.finished ? (
         <div className="agenda-card-indicator-finished">
-          <FormattedMessage id="agenda.finished" defaultMessage="Finished" />
+          <FormattedMessage id="agenda.card.finishedIndicator" defaultMessage="Finished" />
         </div>
       ) : (
         <div className="agenda-card-indicator-pending">
-          <FormattedMessage id="agenda.inProgress" defaultMessage="In Progress" />
+          <FormattedMessage id="agenda.card.inProgressIndicator" defaultMessage="In Progress" />
         </div>
       )}
       <div className="agenda-card-bottom-cfg">
         {agenda.getDescription()} <span className="agenda-card-bottom-cfg-last">
-          <FormattedMessage id="agenda.id" defaultMessage="Agenda ID" />:
+          <FormattedMessage id="agenda.overview.idLabel" defaultMessage="Agenda ID" />:
           <span className="agenda-card-bottom-cfg-last-bold">{agenda.getId()}</span></span>
       </div>
     </div>

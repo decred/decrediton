@@ -9,9 +9,8 @@ manageTranslations({
     trailingNewline: true,
   },
 
-  // untranslated lang gets all messages from the app
   // dev lang is used during development to test translated strings (can
   // be freely modified)
   // all other production languages are translated at transifex
-  languages: ['untranslated', "dev"],
+  languages: ["dev"],
 });

@@ -25,7 +25,7 @@ const Overview = ({
         <div className="agenda-overview-text">
           <div className="agenda-overview-short-description">{agendaDescription}</div>
           <div className="agenda-overview-agenda-id-ct">
-            <FormattedMessage id="agenda.id" defaultMessage="Agenda ID" />
+            <FormattedMessage id="agenda.card.idLabel" defaultMessage="Agenda ID" />
             : <span className="agenda-overview-agenda-id">{agendaId}</span>
           </div>
           <div className="agenda-overview-description">
@@ -62,7 +62,7 @@ const Overview = ({
     <div className="agenda-bottom">
       <div className="agenda-bottom-overview">
         <div className="agenda-indicator-pending">
-          <FormattedMessage id="agenda.inProgress" defaultMessage="In Progress" />
+          <FormattedMessage id="agenda.overview.inProgressIndicator" defaultMessage="In Progress" />
         </div>
       </div>
       <div className="agenda-bottom-options">
