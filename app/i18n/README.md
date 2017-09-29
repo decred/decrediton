@@ -57,7 +57,8 @@ The following directories and files comprise the i18n subsystem:
 
 - **extracted/**: Generated automatically by [babel-plugin-react-intl](https://github.com/yahoo/babel-plugin-react-intl)
 - **locales/index.js**: Entrypoint for all i18n data
-- **sources/**: *.pot and *.po files managed by scripts and Transifex
+- **pot/**: source *.pot files to be sent to translation
+- **po/**: source *.po files received from translators
 - **translations/\*.json**: Translated files to be used by the app
 
 Inside the `translations/` directory, there are a few special files:
@@ -65,7 +66,7 @@ Inside the `translations/` directory, there are a few special files:
 - **dev.json**: All strings of the app but not maintained on transifex (mainly useful while developing the i18n system and to check if all strings are translated).
 - **whitelist_dev.json**: Created automatically by [react-intl-translations-manager](https://github.com/GertjanReynaert/react-intl-translations-manager)
 
-The files inside the `sources/` subdir are managed by the scripts and by transifex and shouldn't be manually updated.
+The files inside the `po/` and `pot/` subdir are managed by the scripts and by transifex and shouldn't be manually updated.
 
 ## Generating files for translation
 
