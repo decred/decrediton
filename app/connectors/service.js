@@ -6,7 +6,10 @@ const mapStateToProps = selectorMap({
   walletService: sel.walletService,
   ticketBuyerService: sel.ticketBuyerService,
   isMainNet: sel.isMainNet,
-  isTestNet: sel.isTestNet
+  isTestNet: sel.isTestNet,
+  revokedTicketsCount: sel.revokedTicketsCount,
+  expiredTicketsCount: sel.expiredTicketsCount,
+  missedTicketsCount: sel.missedTicketsCount
 });
 
 export default connect(mapStateToProps);

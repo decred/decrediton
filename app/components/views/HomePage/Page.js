@@ -17,11 +17,16 @@ const HomePage = ({
   synced,
   spendableTotalBalance,
   rescanAttempt,
+  revokedTicketsCount,
+  expiredTicketsCount,
+  missedTicketsCount,
   rescanRequest,
   transactions,
   getTransactionsRequestAttempt,
   getAccountsResponse
-}) => (
+}) => {
+  const ticketsToBeRevoked = revokedTicketsCount !== (expiredTicketsCount+missedTicketsCount)
+  return (
   <div className="page-body">
     <SideBar />
     <div className="page-view">
@@ -45,22 +50,25 @@ const HomePage = ({
       {getTransactionsRequestAttempt ? (
         <div className="page-content"><DecredLoading/></div>
       ) : (
-        <div className="page-content">
-          <div className="home-content-title">
-            <div className="home-content-title-text">Recent Transactions</div>
-          </div>
-          <div className="home-content-nest">
-            {(transactions.length > 0) ? (
-              <TxHistory {...{ getAccountsResponse, transactions }} />
-            ) : (
-              <p>No transactions</p>
-            )}
+        <div>
+          {ticketsToBeRevoked ? <div className="tickets-to-revoke-warning">You have outstanding missed or expired tickets, please revoke them to unlock your funds</div> : null}
+          <div className="page-content">
+            <div className="home-content-title">
+              <div className="home-content-title-text">Recent Transactions</div>
+            </div>
+            <div className="home-content-nest">
+              {(transactions.length > 0) ? (
+                <TxHistory {...{ getAccountsResponse, transactions }} />
+              ) : (
+                <p>No transactions</p>
+              )}
+            </div>
           </div>
         </div>
       )}
     </div>
   </div>
-);
+)};
 
 export default home(rescan(HomePage));
 
