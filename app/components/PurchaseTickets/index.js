@@ -25,6 +25,8 @@ class PurchaseTickets extends React.Component {
           ...this.props,
           ...this.state,
           canAffordTickets: this.getCanAffordTickets(),
+          expectedRevoked: this.getExpectedRevoked(),
+          revoked: this.getRevoked(),
           stakePool: this.getStakePool(),
           account: this.getAccount(),
           ...this.getErrors(),
@@ -51,6 +53,14 @@ class PurchaseTickets extends React.Component {
     return pool
       ? this.props.configuredStakePools.find(compose(eq(pool.Host), get("Host")))
       : null;
+  }
+
+  getExpectedRevoked(){
+    return this.props.expiredTicketsCount + this.props.missedTicketsCount;
+  }
+
+  getRevoked(){
+    return this.props.revokedTicketsCount;
   }
 
   getAccount() {

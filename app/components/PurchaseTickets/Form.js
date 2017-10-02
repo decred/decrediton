@@ -14,6 +14,8 @@ const PurchaseTicketsForm = ({
   isShowingAdvanced,
   configuredStakePools,
   stakePool,
+  expectedRevoked,
+  getRevoked,
   numTicketsToBuy,
   canAffordTickets,
   ticketFee,
@@ -217,10 +219,10 @@ const PurchaseTicketsForm = ({
           onClick={onShowImportScript}
         >Import Script</KeyBlueButton>
       </div>
-      <KeyBlueButton
+      {expectedRevoked === getRevoked ? <KeyBlueButton
         className="stakepool-content-revoke-button"
         onClick={onShowRevokeTicket}
-      >Revoke</KeyBlueButton>
+      >Revoke</KeyBlueButton> : null}
     </div>
   </div>
 );
