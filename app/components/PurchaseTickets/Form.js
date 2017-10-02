@@ -7,9 +7,48 @@ import SelectStakePool from "../SelectStakePool";
 import KeyBlueButton from "../KeyBlueButton";
 import PurchaseTicketsInfoButton from "../PurchaseTicketsInfoButton";
 import TicketsCogs from "../TicketsCogs";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, defineMessages } from "react-intl";
 import "../../style/StakePool.less";
 import { addSpacingAroundText } from "../../helpers/strings";
+
+const messages = defineMessages({
+  accounts: {
+    id: "purchaseTickets.accountsTip",
+    defaultMessage: "Accounts"
+  },
+  currentStakepool: {
+    id: "purchaseTickets.currentStakepool",
+    defaultMessage: "Current StakePool",
+  },
+  currentFee: {
+    id: "purchaseTickets.currentFee",
+    defaultMessage: "Current Fee",
+  },
+  txFeeTip: {
+    id: "purchaseTickets.txFeeTip",
+    defaultMessage: "Tx Fee",
+  },
+  ticketFeeTip: {
+    id: "purchaseTickets.ticketFeeTip",
+    defaultMessage: "Ticket Fee",
+  },
+  expiry: {
+    id: "purchaseTickets.expiry",
+    defaultMessage: "Expiry",
+  },
+  ticketAddress: {
+    id: "purchaseTickets.ticketAddress",
+    defaultMessage: "Ticket Address",
+  },
+  poolAddress: {
+    id: "purchaseTickets.poolAddress",
+    defaultMessage: "Pool Address",
+  },
+  poolFee: {
+    id: "purchaseTickets.poolFee",
+    defaultMessage: "Pool Fee",
+  },
+});
 
 const PurchaseTicketsForm = ({
   isShowingAdvanced,
@@ -24,6 +63,7 @@ const PurchaseTicketsForm = ({
   txFeeError,
   expiryError,
   rescanRequest,
+  formatMessage,
   onIncrementNumTickets,
   onDecrementNumTickets,
   onShowStakePoolConfig,
@@ -59,7 +99,7 @@ const PurchaseTicketsForm = ({
             data-place="bottom"
             data-type="info"
             data-effect="solid"
-            data-tip={"Accounts"}
+            data-tip={formatMessage(messages.accounts)}
             to={"/accounts"}
           />
         </div>
@@ -78,7 +118,7 @@ const PurchaseTicketsForm = ({
       <div hidden={isShowingAdvanced ? false : true}>
         <div className="stakepool-purchase-ticket-row">
           <div className="stakepool-purchase-ticket-label">
-            Stake Pool:
+            <FormattedMessage id="purchaseTickets.stakePoolLabel" defaultMessage="Stake Pool" />:
           </div>
           <div className="stakepool-purchase-ticket-input-select">
             <SelectStakePool
@@ -194,13 +234,13 @@ const PurchaseTicketsForm = ({
       </div>
       <div hidden={isShowingAdvanced ? true : false} className="stakepool-purchase-ticket-quick-bar-row">
         <div className="stakepool-quick-bar-row-label"><FormattedMessage id="purchaseTickets.settings" defaultMessage="Settings" />:</div>
-        <div className="stakepool-icon" data-tip="Current Stakepool">{stakePool ? stakePool.value.Host : null}</div>
-        <div className="stakepool-fee-icon" data-tip="Ticket Fee">{ticketFee} DCR/KB</div>
-        <div className="stakepool-fee-icon" data-tip="Tx Fee">{txFee} DCR/KB</div>
-        <div className="stakepool-expiry-icon" data-tip="Expiry">{expiry} Blocks</div>
-        <div className="stakepool-ticket-address-icon" data-tip="Ticket Address">{stakePool ? addSpacingAroundText(stakePool.value.TicketAddress) : null}</div>
-        <div className="stakepool-fee-address-icon" data-tip="Pool Address">{stakePool ? addSpacingAroundText(stakePool.value.PoolAddress) : null}</div>
-        <div className="stakepool-pool-fee-icon" data-tip="Pool Fee">{stakePool ? stakePool.value.PoolFees : null}%</div>
+        <div className="stakepool-icon" data-tip={formatMessage(messages.currentStakepool)}>{stakePool ? stakePool.value.Host : null}</div>
+        <div className="stakepool-fee-icon" data-tip={formatMessage(messages.ticketFeeTip)}>{ticketFee} DCR/KB</div>
+        <div className="stakepool-fee-icon" data-tip={formatMessage(messages.txFeeTip)}>{txFee} DCR/KB</div>
+        <div className="stakepool-expiry-icon" data-tip={formatMessage(messages.expiry)}>{expiry} Blocks</div>
+        <div className="stakepool-ticket-address-icon" data-tip={formatMessage(messages.ticketAddress)}>{stakePool ? addSpacingAroundText(stakePool.value.TicketAddress) : null}</div>
+        <div className="stakepool-fee-address-icon" data-tip={formatMessage(messages.poolAddress)}>{stakePool ? addSpacingAroundText(stakePool.value.PoolAddress) : null}</div>
+        <div className="stakepool-pool-fee-icon" data-tip={formatMessage(messages.poolFee)}>{stakePool ? stakePool.value.PoolFees : null}%</div>
       </div>
     </div>
     <div className="stakepool-purchase-ticket-buttons-area">
@@ -208,7 +248,9 @@ const PurchaseTicketsForm = ({
         className="stakepool-content-purchase-button"
         disabled={!canAffordTickets}
         onClick={onRequestPassphrase}
-      >Purchase</KeyBlueButton>
+      >
+        <FormattedMessage id="puchaseTickets.purchaseBtn" defaultMessage="Purchase" />
+      </KeyBlueButton>
 
       {canAffordTickets ? null : (
         <div className="stakepool-purchase-error">
@@ -226,12 +268,16 @@ const PurchaseTicketsForm = ({
           className=""
           disabled={rescanRequest}
           onClick={onShowImportScript}
-        >Import Script</KeyBlueButton>
+        >
+          <FormattedMessage id="purchaseTickets.importScriptBtn" defaultMessage="Import Script" />
+        </KeyBlueButton>
       </div>
       <KeyBlueButton
         className="stakepool-content-revoke-button"
         onClick={onShowRevokeTicket}
-      >Revoke</KeyBlueButton>
+      >
+        <FormattedMessage id="purchaseTickets.revokeBtn" defaultMessage="Revoke" />
+      </KeyBlueButton>
     </div>
   </div>
 );

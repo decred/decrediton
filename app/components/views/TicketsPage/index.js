@@ -5,6 +5,7 @@ import service from "../../../connectors/service";
 import ticketsPage from "../../../connectors/ticketsPage";
 import ErrorScreen from "../../ErrorScreen";
 import TicketsPage from "./Page";
+import { FormattedMessage } from "react-intl";
 
 @autobind
 class Tickets extends Component {
@@ -163,7 +164,9 @@ class Tickets extends Component {
   }
 
   onShowRevokeTicket() {
-    this.onRequestPassphrase("Enter Passphrase to Revoke Tickets", null, this.onRevokeTickets);
+    this.onRequestPassphrase(
+      <FormattedMessage id="stake.revokeTicketsPassphrase" defaultMessage="Enter Passphrase to Revoke Tickets" />,
+      null, this.onRevokeTickets);
   }
 
   onCancelImportScript() {

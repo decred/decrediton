@@ -1,11 +1,19 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-09-29T14:41:25.223Z\n"
+"POT-Creation-Date: 2017-10-02T16:54:47.089Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
 "X-Generator: react-intl-po\n"
 
+
+#: app/i18n/extracted/app/components/StakePools/AddForm.json
+#. [stake.addPool.errors.noApiKey]
+#. defaultMessage is:
+#. *Please enter your API key
+msgctxt "stake.addPool.errors.noApiKey"
+msgid "*Please enter your API key"
+msgstr ""
 
 #: app/i18n/extracted/app/components/ImportScriptModal/Modal.json
 #. [importScriptModal.errors.noPassphrase]
@@ -79,6 +87,14 @@ msgctxt "accounts.number"
 msgid "Account number"
 msgstr ""
 
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#. [purchaseTickets.accountsTip]
+#. defaultMessage is:
+#. Accounts
+msgctxt "purchaseTickets.accountsTip"
+msgid "Accounts"
+msgstr ""
+
 #: app/i18n/extracted/app/components/SideBar/Bar.json
 #. [menu.accounts]
 #. defaultMessage is:
@@ -93,6 +109,14 @@ msgstr ""
 #. Accounts
 msgctxt "accounts.title"
 msgid "Accounts"
+msgstr ""
+
+#: app/i18n/extracted/app/components/StakePools/AddForm.json
+#. [stake.addPool.addBtn]
+#. defaultMessage is:
+#. Add
+msgctxt "stake.addPool.addBtn"
+msgid "Add"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/List.json
@@ -151,6 +175,14 @@ msgctxt "tickets.info.poolPreference.message"
 msgid "Automate setup with PoS pools. See below for more information."
 msgstr ""
 
+#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
+#. [autobuyer.title]
+#. defaultMessage is:
+#. Automatic Purchase
+msgctxt "autobuyer.title"
+msgid "Automatic Purchase"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/HistoryPage/Page.json
 #. [history.availableBalanceTitle]
 #. defaultMessage is:
@@ -175,6 +207,14 @@ msgctxt "errors.goHome"
 msgid "Back to Home"
 msgstr ""
 
+#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
+#. [autobuyer.balanceToMaintain]
+#. defaultMessage is:
+#. Balance to Maintain
+msgctxt "autobuyer.balanceToMaintain"
+msgid "Balance to Maintain"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 #. [accounts.balances]
 #. defaultMessage is:
@@ -196,6 +236,14 @@ msgstr ""
 #. defaultMessage is:
 #. Cancel
 msgctxt "changePassModal.cancel"
+msgid "Cancel"
+msgstr ""
+
+#: app/i18n/extracted/app/components/StakePools/AddForm.json
+#. [stake.addPool.cancelBtn]
+#. defaultMessage is:
+#. Cancel
+msgctxt "stake.addPool.cancelBtn"
 msgid "Cancel"
 msgstr ""
 
@@ -263,12 +311,36 @@ msgctxt "txDetails.indicatorConfirmed"
 msgid "Confirmed"
 msgstr ""
 
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#. [purchaseTickets.currentFee]
+#. defaultMessage is:
+#. Current Fee
+msgctxt "purchaseTickets.currentFee"
+msgid "Current Fee"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#. [purchaseTickets.currentStakepool]
+#. defaultMessage is:
+#. Current StakePool
+msgctxt "purchaseTickets.currentStakepool"
+msgid "Current StakePool"
+msgstr ""
+
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 #. [tickets.info.txFee.message]
 #. defaultMessage is:
 #. Decrediton uses a "split" transaction to avoid blocking your balance, spliting the exact amount needed for the ticket from the balance in your wallet. The "split" transaction needs to be confirmed at least once before you can reuse your balance. This can block your whole balance for several minutes while this confirmation occurs. Without the split, you would have to wait for the confirmation of the ticket transaction, which could take several hours. This can be left at 0.01. It does not affect your chances of buying tickets or voting with them.
 msgctxt "tickets.info.txFee.message"
 msgid "Decrediton uses a \"split\" transaction to avoid blocking your balance, spliting the exact amount needed for the ticket from the balance in your wallet. The \"split\" transaction needs to be confirmed at least once before you can reuse your balance. This can block your whole balance for several minutes while this confirmation occurs. Without the split, you would have to wait for the confirmation of the ticket transaction, which could take several hours. This can be left at 0.01. It does not affect your chances of buying tickets or voting with them."
+msgstr ""
+
+#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
+#. [autobuyer.disabled]
+#. defaultMessage is:
+#. Disabled
+msgctxt "autobuyer.disabled"
+msgid "Disabled"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
@@ -295,12 +367,44 @@ msgctxt "receive.titleInfo"
 msgid "Each time you request a payment, create a new address to protect your privacy."
 msgstr ""
 
+#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
+#. [autobuyer.enabled]
+#. defaultMessage is:
+#. Enabled
+msgctxt "autobuyer.enabled"
+msgid "Enabled"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/TicketsPage/Tickets.json
 #. [importScript.title]
 #. defaultMessage is:
 #. Enter Passphrase to Import Script
 msgctxt "importScript.title"
 msgid "Enter Passphrase to Import Script"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PurchaseTickets/index.json
+#. [purchaseTickets.requestPassphrase]
+#. defaultMessage is:
+#. Enter Passphrase to Purchase Tickets
+msgctxt "purchaseTickets.requestPassphrase"
+msgid "Enter Passphrase to Purchase Tickets"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TicketsPage/index.json
+#. [stake.revokeTicketsPassphrase]
+#. defaultMessage is:
+#. Enter Passphrase to Revoke Tickets
+msgctxt "stake.revokeTicketsPassphrase"
+msgid "Enter Passphrase to Revoke Tickets"
+msgstr ""
+
+#: app/i18n/extracted/app/components/StakePools/AddForm.json
+#. [stake.addForm.passhraseHeading]
+#. defaultMessage is:
+#. Enter private passphrase to connect to your stakepool
+msgctxt "stake.addForm.passhraseHeading"
+msgid "Enter private passphrase to connect to your stakepool"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/SendPage/Page.json
@@ -447,6 +551,14 @@ msgctxt "stake.immatureTickets"
 msgid "Immature Tickets"
 msgstr ""
 
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#. [purchaseTickets.importScriptBtn]
+#. defaultMessage is:
+#. Import Script
+msgctxt "purchaseTickets.importScriptBtn"
+msgid "Import Script"
+msgstr ""
+
 #: app/i18n/extracted/app/components/AgendaCard.json
 #. [agenda.card.inProgressIndicator]
 #. defaultMessage is:
@@ -527,6 +639,38 @@ msgctxt "send.mainnetInfo"
 msgid "Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 msgstr ""
 
+#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
+#. [autobuyer.maxFee]
+#. defaultMessage is:
+#. Max Fee
+msgctxt "autobuyer.maxFee"
+msgid "Max Fee"
+msgstr ""
+
+#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
+#. [autobuyer.maxPerBlock]
+#. defaultMessage is:
+#. Max Per Block
+msgctxt "autobuyer.maxPerBlock"
+msgid "Max Per Block"
+msgstr ""
+
+#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
+#. [autobuyer.maxPriceAbsolute]
+#. defaultMessage is:
+#. Max Price Absolute
+msgctxt "autobuyer.maxPriceAbsolute"
+msgid "Max Price Absolute"
+msgstr ""
+
+#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
+#. [autobuyer.maxPriceRelative]
+#. defaultMessage is:
+#. Max Price Relative
+msgctxt "autobuyer.maxPriceRelative"
+msgid "Max Price Relative"
+msgstr ""
+
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
 #. [stake.missedTickets]
 #. defaultMessage is:
@@ -581,6 +725,14 @@ msgstr ""
 #. No transactions
 msgctxt "home.noTransactions"
 msgid "No transactions"
+msgstr ""
+
+#: app/i18n/extracted/app/components/StakePools/AddForm.json
+#. [stake.addPool.notice]
+#. defaultMessage is:
+#. Notice!
+msgctxt "stake.addPool.notice"
+msgid "Notice!"
 msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
@@ -663,12 +815,37 @@ msgctxt "importScript.description"
 msgid "Please enter your Script from your configured stakepool"
 msgstr ""
 
+#: app/i18n/extracted/app/components/StakePools/AddForm.json
+#. [stake.addPool.info]
+#. defaultMessage is:
+#. Please select your desired stakepool from the above dropdown and follow these instructions:
+#. 
+#.               1) Create an account or login to your existing account at {stakePoolLink}.
+#.               2) Once logged in, select the 'Settings' tab.
+#.               3) Copy and paste your Api Key into the field below (typically starts with 'eyJhb...').
+#.               4) Click Add and enter your private passphrase.
+#. 
+#.               {noticeSpan} If you receive an error about the script not being redeemable when attempting to add your stakepool, you can try the following:
+#.               - Each stakepool account you create can only be associated with 1 wallet.  If you have previously created this stakepool account with a different wallet (different seed), then you must create a new account.
+#.               - If you had previously used a 'voting account', for your ticket purchases, please go to the Accounts page and create a new account.  This may now allow you to successfully import your script for your stakepool.
+msgctxt "stake.addPool.info"
+msgid "Please select your desired stakepool from the above dropdown and follow these instructions:\n\n              1) Create an account or login to your existing account at {stakePoolLink}.\n              2) Once logged in, select the 'Settings' tab.\n              3) Copy and paste your Api Key into the field below (typically starts with 'eyJhb...').\n              4) Click Add and enter your private passphrase.\n\n              {noticeSpan} If you receive an error about the script not being redeemable when attempting to add your stakepool, you can try the following:\n              - Each stakepool account you create can only be associated with 1 wallet.  If you have previously created this stakepool account with a different wallet (different seed), then you must create a new account.\n              - If you had previously used a 'voting account', for your ticket purchases, please go to the Accounts page and create a new account.  This may now allow you to successfully import your script for your stakepool."
+msgstr ""
+
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 #. [purchaseTickets.poolAddress]
 #. defaultMessage is:
 #. Pool Address
 msgctxt "purchaseTickets.poolAddress"
 msgid "Pool Address"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#. [purchaseTickets.poolFee]
+#. defaultMessage is:
+#. Pool Fee
+msgctxt "purchaseTickets.poolFee"
+msgid "Pool Fee"
 msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
@@ -741,6 +918,22 @@ msgstr ""
 #. Properties
 msgctxt "txDetails.properties"
 msgid "Properties"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#. [puchaseTickets.purchaseBtn]
+#. defaultMessage is:
+#. Purchase
+msgctxt "puchaseTickets.purchaseBtn"
+msgid "Purchase"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TicketsPage/Header.json
+#. [stake.purchaseTicketsTab]
+#. defaultMessage is:
+#. Purchase Tickets
+msgctxt "stake.purchaseTicketsTab"
+msgid "Purchase Tickets"
 msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
@@ -821,6 +1014,14 @@ msgstr ""
 #. Rescanning
 msgctxt "rescan.rescanning"
 msgid "Rescanning"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#. [purchaseTickets.revokeBtn]
+#. defaultMessage is:
+#. Revoke
+msgctxt "purchaseTickets.revokeBtn"
+msgid "Revoke"
 msgstr ""
 
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
@@ -909,6 +1110,22 @@ msgstr ""
 #. Spendable
 msgctxt "accounts.spendable"
 msgid "Spendable"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#. [purchaseTickets.stakePoolLabel]
+#. defaultMessage is:
+#. Stake Pool
+msgctxt "purchaseTickets.stakePoolLabel"
+msgid "Stake Pool"
+msgstr ""
+
+#: app/i18n/extracted/app/components/StakePools/AddForm.json
+#. [stake.addPoolTitle]
+#. defaultMessage is:
+#. Stake Pool
+msgctxt "stake.addPoolTitle"
+msgid "Stake Pool"
 msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
@@ -1040,6 +1257,14 @@ msgid "Ticket Address"
 msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#. [purchaseTickets.ticketFeeTip]
+#. defaultMessage is:
+#. Ticket Fee
+msgctxt "purchaseTickets.ticketFeeTip"
+msgid "Ticket Fee"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 #. [purchaseTickets.ticketFee]
 #. defaultMessage is:
 #. Ticket Fee (DCR/kB)
@@ -1152,6 +1377,14 @@ msgid "Transaction fee"
 msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#. [purchaseTickets.txFeeTip]
+#. defaultMessage is:
+#. Tx Fee
+msgctxt "purchaseTickets.txFeeTip"
+msgid "Tx Fee"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 #. [purchaseTickets.txFee]
 #. defaultMessage is:
 #. Tx Fee (DCR/kB)
@@ -1183,6 +1416,14 @@ msgctxt "changePassModal.update"
 msgid "Update"
 msgstr ""
 
+#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
+#. [autobuyer.updateConfigBtn]
+#. defaultMessage is:
+#. Update Config
+msgctxt "autobuyer.updateConfigBtn"
+msgid "Update Config"
+msgstr ""
+
 #: app/i18n/extracted/app/components/AgendaOverview/Overview.json
 #. [agenda.updatePreference]
 #. defaultMessage is:
@@ -1205,6 +1446,14 @@ msgstr ""
 #. Used Inputs
 msgctxt "txDetails.usedInputs"
 msgid "Used Inputs"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TicketsPage/Header.json
+#. [stake.voteSettingsTab]
+#. defaultMessage is:
+#. Vote Settings
+msgctxt "stake.voteSettingsTab"
+msgid "Vote Settings"
 msgstr ""
 
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
@@ -1309,28 +1558,4 @@ msgstr ""
 #. {keys} internal
 msgctxt "accounts.keys.internal"
 msgid "{keys} internal"
-msgstr ""
-
-#: app/i18n/extracted/app/components/StakeInfo/Display.json
-#. [stakepool.liveTicketsCount] - number of live tickets
-#. defaultMessage is:
-#. {liveTicketsCount, plural, one {# ticket} other {# tickets}}
-msgctxt "stakepool.liveTicketsCount"
-msgid "{liveTicketsCount, plural, one {# ticket} other {# tickets}}"
-msgstr ""
-
-#: app/i18n/extracted/app/components/StakeInfo/Display.json
-#. [stakepool.ownMempoolTicketsCount]
-#. defaultMessage is:
-#. {ownMempoolTicketsCount, plural, one {# ticket} other {# tickets}}
-msgctxt "stakepool.ownMempoolTicketsCount"
-msgid "{ownMempoolTicketsCount, plural, one {# ticket} other {# tickets}}"
-msgstr ""
-
-#: app/i18n/extracted/app/components/StakeInfo/Display.json
-#. [stakepool.revokedTicketsCount] - Number of revoked tickets
-#. defaultMessage is:
-#. {revokedTicketsCount, plural, one {# ticket} other {# tickets}}
-msgctxt "stakepool.revokedTicketsCount"
-msgid "{revokedTicketsCount, plural, one {# ticket} other {# tickets}}"
 msgstr ""

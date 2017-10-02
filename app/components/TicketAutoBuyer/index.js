@@ -2,6 +2,7 @@ import React from "react";
 import { autobind } from "core-decorators";
 import ticketAutoBuyer from "../../connectors/ticketAutoBuyer";
 import { substruct, compose, eq, get } from "../../fp";
+import {injectIntl} from "react-intl";
 import TicketAutoBuyerForm from "./Form";
 
 @autobind
@@ -23,6 +24,7 @@ class TicketAutoBuyer extends React.Component {
       <TicketAutoBuyerForm
         {...{
           isTicketAutoBuyerConfigDirty: this.getIsDirty(),
+          formatMessage: this.props.intl.formatMessage,
           ...this.getInputErrors(),
           ...this.props,
           ...this.state,
@@ -147,4 +149,4 @@ class TicketAutoBuyer extends React.Component {
   }
 }
 
-export default ticketAutoBuyer(TicketAutoBuyer);
+export default ticketAutoBuyer(injectIntl(TicketAutoBuyer));

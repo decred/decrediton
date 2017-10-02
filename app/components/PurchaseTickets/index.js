@@ -3,6 +3,7 @@ import { autobind } from "core-decorators";
 import { substruct, compose, eq, get } from "../../fp";
 import PurchaseTicketsForm from "./Form";
 import purchaseTickets from "../../connectors/purchaseTickets";
+import { injectIntl, FormattedMessage } from "react-intl";
 
 @autobind
 class PurchaseTickets extends React.Component {
@@ -27,6 +28,7 @@ class PurchaseTickets extends React.Component {
           canAffordTickets: this.getCanAffordTickets(),
           stakePool: this.getStakePool(),
           account: this.getAccount(),
+          formatMessage: this.props.intl.formatMessage,
           ...this.getErrors(),
           ...substruct({
             onShowAdvanced: null,
@@ -107,7 +109,7 @@ class PurchaseTickets extends React.Component {
     const { onRequestPassphrase } = this.props;
     if (!this.getIsValid()) return;
     onRequestPassphrase && onRequestPassphrase(
-      "Enter Passphrase to Purchase Tickets",
+      (<FormattedMessage id="purchaseTickets.requestPassphrase" defaultMessage="Enter Passphrase to Purchase Tickets" />),
       null,
       this.onPurchaseTickets
     );
@@ -160,4 +162,4 @@ class PurchaseTickets extends React.Component {
   }
 }
 
-export default purchaseTickets(PurchaseTickets);
+export default purchaseTickets(injectIntl(PurchaseTickets));

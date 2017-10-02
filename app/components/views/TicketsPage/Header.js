@@ -127,8 +127,8 @@ const TicketsPageHeader = ({
           <div className="stakepool-toggle">
             <TextToggle
               activeButton={"left"}
-              leftText={"Purchase Tickets"}
-              rightText={"Vote settings"}
+              leftText={<FormattedMessage id="stake.purchaseTicketsTab" defaultMessage="Purchase Tickets" />}
+              rightText={<FormattedMessage id="stake.voteSettingsTab" defaultMessage="Vote Settings" />}
               toggleAction={onToggleTicketStakePool}
             />
           </div>
