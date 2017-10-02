@@ -108,6 +108,8 @@ export const spendableTotalBalance = createSelector(
 export const network = get(["grpc", "network"]);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
+export const currencyDisplay = get(["settings", "currentSettings", "currencyDisplay"]);
+export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
 
 const getTxTypeStr = type => ({
   [TransactionDetails.TransactionType.TICKET_PURCHASE]: "Ticket",
@@ -289,18 +291,41 @@ export const homeHistoryTransactions = createSelector(
 );
 
 export const visibleAccounts = createSelector(
-  [balances],
-  reduce(
-    (accounts, { accountName, accountNumber, hidden, ...data }) =>
+  [unitDivisor, currencyDisplay, balances],
+  (unitDivisor, currencyDisplay, balances) => reduce(
+    (accounts, { accountName, accountNumber, hidden, spendable, ...data }) =>
       (accountName === "imported" || hidden)
         ? accounts
         : [...accounts, {
           value: accountNumber,
-          label: accountName,
+          label: `${accountName}: ${spendable / unitDivisor} ${currencyDisplay}`,
+          name: accountName,
+          spendableAndUnit: `${spendable / unitDivisor} ${currencyDisplay}`,
+          spendable,
           hidden,
           ...data
         }],
-    []
+    [],
+    balances
+  )
+);
+
+export const spendingAccounts = createSelector(
+  [unitDivisor, currencyDisplay, balances],
+  (unitDivisor, currencyDisplay, balances) => reduce(
+    (accounts, { accountName, accountNumber, spendable, ...data }) =>
+      (accountNumber !== 0 && (accountName === "imported" || spendable <= 0))
+        ? accounts
+        : [...accounts, {
+          value: accountNumber,
+          label: `${accountName}: ${spendable / unitDivisor} ${currencyDisplay}`,
+          name: accountName,
+          spendableAndUnit: `${spendable / unitDivisor} ${currencyDisplay}`,
+          spendable,
+          ...data
+        }],
+    [],
+    balances
   )
 );
 
@@ -316,27 +341,6 @@ export const nextAddressAccount = createSelector(
 );
 export const nextAddress = compose(
   res => res ? res.getAddress() : "", getNextAddressResponse
-);
-
-export const currencyDisplay = get(["settings", "currentSettings", "currencyDisplay"]);
-export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
-
-export const spendingAccounts = createSelector(
-  [unitDivisor, currencyDisplay, balances],
-  (unitDivisor, currencyDisplay, balances) => reduce(
-    (accounts, { accountName, accountNumber, spendable, ...data }) =>
-      (accountNumber !== 0 && (accountName === "imported" || spendable <= 0))
-        ? accounts
-        : [...accounts, {
-          value: accountNumber,
-          label: `${accountName}: ${spendable / unitDivisor} ${currencyDisplay}`,
-          name: accountName,
-          spendable,
-          ...data
-        }],
-    [],
-    balances
-  )
 );
 
 export const defaultSpendingAccount = createSelector(

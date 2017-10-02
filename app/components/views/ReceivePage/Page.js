@@ -1,6 +1,6 @@
 import React from "react";
 import ReactTooltip from "react-tooltip";
-import Select from "react-select";
+import AccountsSelect from "../../AccountsSelect";
 import { Link } from "react-router";
 import KeyBlueButton from "../../KeyBlueButton";
 import SideBar from "../../SideBar";
@@ -12,8 +12,6 @@ import "../../../style/ReceivePage.less";
 import "../../../style/MiscComponents.less";
 
 const ReceivePage = ({
-  account,
-  visibleAccounts,
   nextAddress,
   onChangeAccountNumber,
   onRequestAddress
@@ -38,16 +36,7 @@ const ReceivePage = ({
             />
             <div className="receive-content-nest-prefix">This address is for:</div>
             <div className="receive-select-account-input">
-              <Select
-                clearable={false}
-                style={{zIndex:"9"}}
-                onChange={onChangeAccountNumber}
-                placeholder={"Select account..."}
-                multi={false}
-                value={account}
-                valueKey="value" labelKey="label"
-                options={visibleAccounts}
-              />
+              <AccountsSelect onChange={onChangeAccountNumber} accountsType="visible" />
             </div>
             <div style={{clear: "both"}}></div>
           </div>

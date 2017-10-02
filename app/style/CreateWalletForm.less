@@ -58,7 +58,7 @@
 }
 
 .confirm-seed {
-  height: 200px;
+  height: 180px;
 }
 
 .confirm-seed-label-text {
@@ -142,8 +142,24 @@
   width: 100%;
   height: 200px;
   min-height: 44px;
+  border-bottom: 1px solid @input-color;
+
+  .Select-control {
+    border: 0px;
+
+    input,
+    .Select-value-label,
+    .Select-value-icon {
+      color: #fff;
+    }
+
+    .Select-arrow {
+      border-style: none;
+    }
+  }
 }
 
 .input-form-error {
   color: @error-text-color;
 }
+

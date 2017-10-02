@@ -37,7 +37,7 @@ const Page = ({
                   onChange={onChangeSelectedType}
                   placeholder={"Select type..."}
                   multi={false}
-                 value={selectedType}
+                  value={selectedType}
                   valueKey="value" labelKey="label"
                   options={txTypes}/>
               </div>
