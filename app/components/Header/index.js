@@ -35,6 +35,7 @@ class Header extends React.Component {
       getStarted,
       headerTop,
       headerTitleOverview,
+      headerSubtitleOverview,
       headerMetaOverview,
       children
     } = this.props;
@@ -46,6 +47,7 @@ class Header extends React.Component {
         {...{
           headerTop,
           headerTitleOverview,
+          headerSubtitleOverview,
           headerMetaOverview,
           children
         }}
@@ -55,6 +57,7 @@ class Header extends React.Component {
         {...{
           headerTop,
           headerTitleOverview,
+          headerSubtitleOverview,
           headerMetaOverview,
           message,
           onDismissMessage,

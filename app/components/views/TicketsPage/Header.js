@@ -113,9 +113,16 @@ const TicketsPageHeader = ({
     headerTitleOverview={
       <div style={{height: "100%"}}>
         <div style={{float: "left"}}>
-          {isShowingAddStakePool ? "Stake pool settings" : isShowingVotingPrefs ? "" : "Ticket price:"}
+          {isShowingAddStakePool ? "Stake pool settings" : isShowingVotingPrefs ? "" : "Tickets"}
         </div>
       </div>
+    }
+    headerSubtitleOverview={
+      <div style={{height: "100%"}}>
+      <div style={{float: "left"}}>
+        {isShowingAddStakePool ? "Stake pool settings" : isShowingVotingPrefs ? "" : "Ticket Price:"}
+      </div>
+    </div>
     }
     headerMetaOverview={
       isShowingAddStakePool ? null : (
