@@ -5,7 +5,6 @@ import * as sel from "../selectors";
 import * as ca from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
-  spendingAccounts: sel.spendingAccounts,
   defaultSpendingAccount: sel.defaultSpendingAccount,
   estimatedSignedSize: sel.estimatedSignedSize,
   unsignedTransaction: sel.unsignedTransaction,
