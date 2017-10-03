@@ -44,7 +44,8 @@ const TxDetails = ({
     <div className="page-view">
 
       <Header
-        headerTitleOverview={<SlateGrayButton key="back" style={{ float: "right" }} onClick={() => router.goBack()}>back</SlateGrayButton>}
+        headerTitleOverview={<SlateGrayButton key="back" style={{ float: "right" }} onClick={() => router.goBack()}>
+          <FormattedMessage id="txDetails.backBtn" defaultMessage="Back" /></SlateGrayButton>}
         headerMetaOverview={txType ? (
           <div className="txdetails-header-meta-stake-tx">
             {txType}
@@ -72,7 +73,13 @@ const TxDetails = ({
               </div>) : (<div className="txdetails-indicator-pending">
                 <FormattedMessage id="transaction.indicatorPending" defaultMessage="Pending" /></div>)}
             </div>
-            <div className="txdetails-value">{isConfirmed ? currentBlockHeight - txHeight : 0} <span className="txdetails-value-text">confirmations</span></div>
+            <div className="txdetails-value">
+              <span className="txdetails-value-text">
+                <FormattedMessage id="transaction.confirmationHeight"
+                  defaultMessage="{confirmations, plural, =0 {pending} one {# confirmation} other {# confirmations}}"
+                  values={{confirmations: (isConfirmed ? currentBlockHeight - txHeight : 0)}} />
+              </span>
+            </div>
             <div className="txdetails-overview">
               <div className="txdetails-input-area">
                 <div className="txdetails-overview-title-consumed">

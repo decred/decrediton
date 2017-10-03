@@ -13,7 +13,7 @@ export const saveSettings = (settings) => {
     settings,
     type: SETTINGS_SAVE
   };
-}
+};
 
 export function updateStateSettingsChanged(settings) {
   return (dispatch, getState) => {
@@ -33,22 +33,6 @@ export function updateStateSettingsChanged(settings) {
     }
   };
 }
-
-export const updateStateSettingsChanged = (settings) => (dispatch, getState) => {
-  const { settings: { tempSettings, currentSettings }} = getState();
-  if (
-    (settings.currencyDisplay !== tempSettings.currencyDisplay) ||
-    (settings.network !== tempSettings.network)
-  ){
-    if (settings.currencyDisplay !== currentSettings.currencyDisplay) {
-      dispatch({ tempSettings: settings, type: SETTINGS_CHANGED});
-    } else if (settings.network !== currentSettings.network) {
-      dispatch({ tempSettings: settings, type: SETTINGS_CHANGED});
-    } else {
-      dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED});
-    }
-  }
-};
 
 export const updateStateVoteSettingsChanged = (settings) => (dispatch, getState) => {
   const cfg = getCfg();

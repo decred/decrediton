@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-10-03T14:27:35.561Z\n"
+"POT-Creation-Date: 2017-10-03T16:28:29.366Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -290,6 +290,14 @@ msgctxt "getStarted.backBtn"
 msgid "Back"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/TxDetails.json
+#. [txDetails.backBtn]
+#. defaultMessage is:
+#. Back
+msgctxt "txDetails.backBtn"
+msgid "Back"
+msgstr ""
+
 #: app/i18n/extracted/app/components/ErrorScreen.json
 #. [errors.goHome]
 #. defaultMessage is:
@@ -406,15 +414,11 @@ msgstr ""
 #. [transaction.indicatorConfirmed]
 #. defaultMessage is:
 #. Confirmed
-msgctxt "transaction.indicatorConfirmed"
-msgid "Confirmed"
-msgstr ""
-
 #: app/i18n/extracted/app/components/views/TxDetails.json
-#. [txDetails.indicatorConfirmed]
+#. [transaction.indicatorConfirmed]
 #. defaultMessage is:
 #. Confirmed
-msgctxt "txDetails.indicatorConfirmed"
+msgctxt "transaction.indicatorConfirmed"
 msgid "Confirmed"
 msgstr ""
 
@@ -1101,6 +1105,10 @@ msgid "Own Mempool Tickets"
 msgstr ""
 
 #: app/i18n/extracted/app/components/TxHistoryRow/Status.json
+#. [transaction.indicatorPending]
+#. defaultMessage is:
+#. Pending
+#: app/i18n/extracted/app/components/views/TxDetails.json
 #. [transaction.indicatorPending]
 #. defaultMessage is:
 #. Pending
@@ -2064,14 +2072,6 @@ msgctxt "passphraseModal.cancel"
 msgid "cancel"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/TxDetails.json
-#. [txDetails.confirmationsLabel]
-#. defaultMessage is:
-#. confirmations
-msgctxt "txDetails.confirmationsLabel"
-msgid "confirmations"
-msgstr ""
-
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 #. [settings.requiresRestart]
 #. defaultMessage is:
@@ -2086,6 +2086,14 @@ msgstr ""
 #. save
 msgctxt "passphraseModal.save"
 msgid "save"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TxDetails.json
+#. [transaction.confirmationHeight]
+#. defaultMessage is:
+#. {confirmations, plural, =0 {pending} one {# confirmation} other {# confirmations}}
+msgctxt "transaction.confirmationHeight"
+msgid "{confirmations, plural, =0 {pending} one {# confirmation} other {# confirmations}}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/HistoryPage/Page.json
