@@ -11,7 +11,7 @@ import {
 } from "../middleware/walletrpc/api_pb";
 import { TransactionDetails }  from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
-
+import { reverseHash } from "../helpers/byteActions.js";
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
 export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
@@ -21,6 +21,7 @@ function getWalletServiceSuccess(walletService) {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
     setTimeout(() => { dispatch(getAccountsAttempt()); }, 10);
     setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 20);
+    setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 20);
     setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNextAddressAttempt(0)); }, 1000);
     setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
@@ -337,7 +338,7 @@ export function getTicketsInfoAttempt() {
       startRequestHeight = 0;
     } else {
       // Wait a little then re-dispatch this call since we have no starting height yet
-      setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 1000);
+      setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 1000);
       return;
     }
     var request = new GetTicketsRequest();
@@ -362,8 +363,9 @@ function getTicketsInfoProgress(response) {
   return (dispatch, getState) => {
     const { ticketsInfo } = getState().grpc;
     var updatedTickets = ticketsInfo;
-    for (var i = 0; i < response.getTickets().length; i++) {
-      console.log(Buffer.from(response.getTickets()[i].getHash()).toString());
+    console.log(response.getTicketsList().length);
+    for (var i = 0; i < response.getTicketsList().length; i++) {
+      console.log(reverseHash(Buffer.from(response.getTicketsList()[i].getHash()).toString("hex")));
     }
     dispatch({tickets: updatedTickets, type: GETTICKETS_PROGRESS});
     response = null;
