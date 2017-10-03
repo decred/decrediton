@@ -169,6 +169,20 @@ export function transactionNtfs(client, request, cb) {
     console.log("Transaction notifications status:", status);
   });
 }
+export function signMessage(client, request, cb) {
+    // Register Notification Streams from Wallet
+  var signMessage = client.signMessage(request);
+  signMessage.on("data", function(response) {
+    return cb(response);
+  });
+  signMessage.on("end", function() {
+    console.log("Sign message done");
+        // The server has finished sending
+  });
+  signMessage.on("status", function(status) {
+    console.log("Sign message status:", status);
+  });
+}
 
 export function spentnessNtfs(client, request, cb) {
   var spentnessNtfns = client.spentnessNotifications(request);

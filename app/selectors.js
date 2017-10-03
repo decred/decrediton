@@ -411,6 +411,12 @@ export const settingsChanged = get(["settings", "settingsChanged"]);
 export const changePassphraseError = get(["control", "changePassphraseError"]);
 export const changePassphraseSuccess = get(["control", "changePassphraseSuccess"]);
 
+export const signMessageError = (state) => { console.log(state); return get(["gprc", "getSignMessageError"], state) };
+export const signMessageResponse = get(["gprc", "getSignMessageResponse"]);
+export const signMessageSuccess = compose(
+  r => r ? r.toObject() : null, signMessageResponse
+);
+
 const getStakeInfoResponse = get(["grpc", "getStakeInfoResponse"]);
 
 export const ticketPoolSize = compose(r => r ? r.getPoolSize() : 0, getStakeInfoResponse);

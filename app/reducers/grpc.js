@@ -23,6 +23,7 @@ import {
   SETVOTECHOICES_ATTEMPT, SETVOTECHOICES_FAILED, SETVOTECHOICES_SUCCESS,
   UPDATEHIDDENACCOUNTS,
 } from "../actions/ClientActions";
+import { SIGNMESSAGE_ATTEMPT, SIGNMESSAGE_SUCCESS, SIGNMESSAGE_FAILED } from "../actions/SignMessage";
 
 export default function grpc(state = {}, action) {
   switch (action.type) {
@@ -318,6 +319,29 @@ export default function grpc(state = {}, action) {
       ...state,
       getVotingServiceRequestAttempt: false,
       votingService: action.votingService,
+    };
+  case SIGNMESSAGE_ATTEMPT:
+    return {
+      ...state,
+      getSignMessageRequestAttempt: true,
+    };
+  case SIGNMESSAGE_FAILED:
+    console.log(action);
+
+    return {
+      ...state,
+      getSignMessageSuccess: null,
+      getSignMessageError: String(action.error),
+      getSignMessageRequestAttempt: false,
+    };
+  case SIGNMESSAGE_SUCCESS:
+    console.log(action);
+
+    return {
+      ...state,
+      getSignMessageError: null,
+      getSignMessageResponse: action.getSignMessageResponse,
+      getSignMessageRequestAttempt: false,
     };
   case GETAGENDAS_ATTEMPT:
     return {
