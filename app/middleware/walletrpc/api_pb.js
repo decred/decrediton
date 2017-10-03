@@ -7302,12 +7302,19 @@ proto.walletrpc.GetTicketsRequest.prototype.setEndingBlockHeight = function(valu
  * @constructor
  */
 proto.walletrpc.GetTicketsResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.walletrpc.GetTicketsResponse.repeatedFields_, null);
 };
 goog.inherits(proto.walletrpc.GetTicketsResponse, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
   proto.walletrpc.GetTicketsResponse.displayName = 'proto.walletrpc.GetTicketsResponse';
 }
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.walletrpc.GetTicketsResponse.repeatedFields_ = [1];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -7337,7 +7344,8 @@ proto.walletrpc.GetTicketsResponse.prototype.toObject = function(opt_includeInst
  */
 proto.walletrpc.GetTicketsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    ticket: (f = msg.getTicket()) && proto.walletrpc.TicketDetails.toObject(includeInstance, f)
+    ticketsList: jspb.Message.toObjectList(msg.getTicketsList(),
+    proto.walletrpc.TicketDetails.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -7377,7 +7385,7 @@ proto.walletrpc.GetTicketsResponse.deserializeBinaryFromReader = function(msg, r
     case 1:
       var value = new proto.walletrpc.TicketDetails;
       reader.readMessage(value,proto.walletrpc.TicketDetails.deserializeBinaryFromReader);
-      msg.setTicket(value);
+      msg.addTickets(value);
       break;
     default:
       reader.skipField();
@@ -7408,9 +7416,9 @@ proto.walletrpc.GetTicketsResponse.prototype.serializeBinary = function() {
  */
 proto.walletrpc.GetTicketsResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getTicket();
-  if (f != null) {
-    writer.writeMessage(
+  f = message.getTicketsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
       1,
       f,
       proto.walletrpc.TicketDetails.serializeBinaryToWriter
@@ -7420,32 +7428,33 @@ proto.walletrpc.GetTicketsResponse.serializeBinaryToWriter = function(message, w
 
 
 /**
- * optional TicketDetails ticket = 1;
- * @return {?proto.walletrpc.TicketDetails}
+ * repeated TicketDetails tickets = 1;
+ * @return {!Array.<!proto.walletrpc.TicketDetails>}
  */
-proto.walletrpc.GetTicketsResponse.prototype.getTicket = function() {
-  return /** @type{?proto.walletrpc.TicketDetails} */ (
-    jspb.Message.getWrapperField(this, proto.walletrpc.TicketDetails, 1));
+proto.walletrpc.GetTicketsResponse.prototype.getTicketsList = function() {
+  return /** @type{!Array.<!proto.walletrpc.TicketDetails>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.TicketDetails, 1));
 };
 
 
-/** @param {?proto.walletrpc.TicketDetails|undefined} value */
-proto.walletrpc.GetTicketsResponse.prototype.setTicket = function(value) {
-  jspb.Message.setWrapperField(this, 1, value);
-};
-
-
-proto.walletrpc.GetTicketsResponse.prototype.clearTicket = function() {
-  this.setTicket(undefined);
+/** @param {!Array.<!proto.walletrpc.TicketDetails>} value */
+proto.walletrpc.GetTicketsResponse.prototype.setTicketsList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 1, value);
 };
 
 
 /**
- * Returns whether this field is set.
- * @return {!boolean}
+ * @param {!proto.walletrpc.TicketDetails=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.walletrpc.TicketDetails}
  */
-proto.walletrpc.GetTicketsResponse.prototype.hasTicket = function() {
-  return jspb.Message.getField(this, 1) != null;
+proto.walletrpc.GetTicketsResponse.prototype.addTickets = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.walletrpc.TicketDetails, opt_index);
+};
+
+
+proto.walletrpc.GetTicketsResponse.prototype.clearTicketsList = function() {
+  this.setTicketsList([]);
 };
 
 
