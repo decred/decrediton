@@ -3,6 +3,7 @@ import { autobind } from "core-decorators";
 import { substruct, compose, eq, get } from "../../fp";
 import PurchaseTicketsForm from "./Form";
 import purchaseTickets from "../../connectors/purchaseTickets";
+import stakeInfo from "../../connectors/stakeInfo";
 
 @autobind
 class PurchaseTickets extends React.Component {
@@ -25,8 +26,7 @@ class PurchaseTickets extends React.Component {
           ...this.props,
           ...this.state,
           canAffordTickets: this.getCanAffordTickets(),
-          expectedRevoked: this.getExpectedRevoked(),
-          revoked: this.getRevoked(),
+          hasTicketsToRevoke: this.hasTicketsToRevoke(),
           stakePool: this.getStakePool(),
           account: this.getAccount(),
           ...this.getErrors(),
@@ -53,6 +53,10 @@ class PurchaseTickets extends React.Component {
     return pool
       ? this.props.configuredStakePools.find(compose(eq(pool.Host), get("Host")))
       : null;
+  }
+
+  hasTicketsToRevoke(){
+    return this.getExpectedRevoked() !== this.getRevoked()
   }
 
   getExpectedRevoked(){

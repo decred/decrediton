@@ -10,7 +10,7 @@ const MSG_DELAY = 4500; // Used when multiple messages come in, should probably 
 class Header extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { message: "teste" };
+    this.state = { message: null };
     this.timeout = null;
   }
 
