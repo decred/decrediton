@@ -33,6 +33,7 @@ const Bar = ({
         <MenuLink to="/receive"><T id="menu.receive" m="Receive"/></MenuLink>
         <MenuLink to="/history"><T id="menu.history" m="History"/></MenuLink>
         <MenuLink to="/proofofstake"><T id="menu.tickets" m="Tickets"/></MenuLink>
+        <MenuLink to="/security">Security Center</MenuLink>
         <MenuLink to="/settings"><T id="menu.settings" m="Settings"/></MenuLink>
         <MenuLink to="/help"><T id="menu.help" m="Help"/></MenuLink>
       </div>
