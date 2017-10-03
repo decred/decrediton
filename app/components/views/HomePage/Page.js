@@ -18,14 +18,16 @@ const HomePage = ({
   spendableTotalBalance,
   rescanAttempt,
   revokedTicketsCount,
+  onShowRevokeTicket,
   expiredTicketsCount,
   missedTicketsCount,
   rescanRequest,
   transactions,
   getTransactionsRequestAttempt,
-  getAccountsResponse
+  getAccountsResponse,
+  ...props
 }) => {
-  const ticketsToBeRevoked = revokedTicketsCount !== (expiredTicketsCount+missedTicketsCount)
+  const ticketsToBeRevoked = revokedTicketsCount === (expiredTicketsCount+missedTicketsCount)
   return (
   <div className="page-body">
     <SideBar />
@@ -51,8 +53,15 @@ const HomePage = ({
         <div className="page-content"><DecredLoading/></div>
       ) : (
         <div>
-          {ticketsToBeRevoked ? <div className="tickets-to-revoke-warning">You have outstanding missed or expired tickets, please revoke them to unlock your funds</div> : null}
+          
           <div className="page-content">
+          {ticketsToBeRevoked ? <div className="tickets-to-revoke-warning">
+            You have outstanding missed or expired tickets, please revoke them to unlock your funds
+            <KeyBlueButton
+              className="stakepool-content-revoke-button"
+              onClick={onShowRevokeTicket}
+            >Revoke</KeyBlueButton>
+            </div> : null}
             <div className="home-content-title">
               <div className="home-content-title-text">Recent Transactions</div>
             </div>

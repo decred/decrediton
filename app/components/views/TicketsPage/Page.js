@@ -21,24 +21,28 @@ const TicketsPage = ({
   onHideTicketsInfo,
   onHideStakePoolConfig,
   ...props
-}) => (
-  <div className="page-body">
-    <SideBar />
-    <div className="page-view">
-      <TicketsPageHeader {...{ onToggleTicketStakePool }} />
-      {(isSavingStakePoolConfig || isPurchasingTickets)
-        ? <div className="page-content"><StakeyBounce/></div>
-        : (isShowingStakePools)
-          ? <StakePools {...{ onHideStakePoolConfig }} />
-          : isShowingVotingPrefs
-            ? <VotingPrefs />
-            : isShowingTicketsInfo
-              ? <PurchaseTicketsInfo closeModal={onHideTicketsInfo} />
-              : <Tickets {...{ stakePool, ...props }} />
-      }
-    </div>
-    <ReactToolTip type="info" effect="solid"/>
-  </div>
-);
+}) => 
+
+  {
+    return (
+        <div className="page-body">
+          <SideBar />
+          <div className="page-view">
+            <TicketsPageHeader {...{ onToggleTicketStakePool }} />
+            {(isSavingStakePoolConfig || isPurchasingTickets)
+              ? <div className="page-content"><StakeyBounce/></div>
+              : (isShowingStakePools)
+                ? <StakePools {...{ onHideStakePoolConfig }} />
+                : isShowingVotingPrefs
+                  ? <VotingPrefs />
+                  : isShowingTicketsInfo
+                    ? <PurchaseTicketsInfo closeModal={onHideTicketsInfo} />
+                    : <Tickets {...{ stakePool, ...props }} />
+            }
+          </div>
+          <ReactToolTip type="info" effect="solid"/>
+        </div>
+      );
+  }
 
 export default TicketsPage;
