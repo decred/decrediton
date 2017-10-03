@@ -1,12 +1,21 @@
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
 import "../../../style/CreateWalletForm.less";
+
+const messages = defineMessages({
+  passphrasePlaceholder: {
+    id: "createWallet.passphrasePlaceholder",
+    defaultMessage: "Private Passphrase"
+  },
+  verifyPassphrasePlaceholder: {
+    id: "createWallet.verifyPassphrasePlaceholder",
+    defaultMessage: "Private Passphrase"
+  }
+});
 
 const PassPhraseInputs = ({
   passPhraseLabel = <FormattedMessage id="createWallet.passhraseInput.label" defaultMessage="Encrypt Wallet" />,
-  passPhrasePlaceholder = "Private Passphrase",
   passPhraseVerificationLabel = <FormattedMessage id="createWallet.passphraseInput.verifyLabel" defaultMessage="Verify" />,
-  passPhraseVerificationPlaceholder = "Private Passphrase",
   blankPassPhraseError = <FormattedMessage id="createWallet.passphraseInput.errors.noPassPhrase" defaultMessage="*Please enter your private passphrase" />,
   passPhraseVerificationError = <FormattedMessage id="createWallet.passphraseInput.errors.noMatch" defaultMessage="*Passwords do not match" />,
   passPhrase,
@@ -15,6 +24,7 @@ const PassPhraseInputs = ({
   isMatching,
   setPassPhrase,
   setPassPhraseVerification,
+  intl,
   onKeyDown
 }) => (
   <div>
@@ -26,7 +36,7 @@ const PassPhraseInputs = ({
             <input
               className="input-private-password"
               type="password"
-              placeholder={passPhrasePlaceholder}
+              placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
               value={passPhrase}
               onKeyDown={onKeyDown}
               onChange={(e) => setPassPhrase(e.target.value)}
@@ -44,7 +54,7 @@ const PassPhraseInputs = ({
             <input
               className="input-private-password"
               type="password"
-              placeholder={passPhraseVerificationPlaceholder}
+              placeholder={intl.formatMessage(messages.verifyPassphrasePlaceholder)}
               value={passPhraseVerification}
               onKeyDown={onKeyDown}
               onChange={(e) => setPassPhraseVerification(e.target.value)}
@@ -59,4 +69,4 @@ const PassPhraseInputs = ({
   </div>
 );
 
-export default PassPhraseInputs;
+export default injectIntl(PassPhraseInputs);

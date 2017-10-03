@@ -4,9 +4,16 @@ import SlateGrayButton from "../../../../SlateGrayButton";
 import KeyBlueButton from "../../../../KeyBlueButton";
 import Balance from "../../../../Balance";
 import ReactToolTip from "react-tooltip";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
 import "../../../../../style/Fonts.less";
 import "../../../../../style/AccountRow.less";
+
+const messages = defineMessages({
+  newNamePlaceholder: {
+    id: "accounts.rename.newNamePlaceholder",
+    defaultMessage: "New Account Name"
+  }
+});
 
 const Row = ({
   account,
@@ -21,7 +28,8 @@ const Row = ({
   showRenameAccount,
   hideRenameAccount,
   showAccount,
-  hideAccount
+  hideAccount,
+  intl
 }) => (
   <div
     className={
@@ -80,7 +88,7 @@ const Row = ({
                     key={"rename"+account.accountNumber}
                     type="text"
                     className="address-content-nest-address-hash-to"
-                    placeholder="New Account Name"
+                    placeholder={intl.formatMessage(messages.newNamePlaceholder)}
                     maxLength="50"
                     onBlur={(e) =>updateRenameAccountName(e.target.value)}
                   />
@@ -203,4 +211,4 @@ const Row = ({
   </div>
 );
 
-export default Row;
+export default injectIntl(Row);

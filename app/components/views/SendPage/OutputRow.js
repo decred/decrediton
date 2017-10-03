@@ -1,7 +1,18 @@
 import React from "react";
 import compose from "lodash/fp/compose";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
 import "../../../style/SendPage.less";
+
+const messages = defineMessages({
+  destinationAddrPlaceholder: {
+    id: "send.destinationAddrPlaceholder",
+    defaultMessage: "Destination Address"
+  },
+  amountPlaceholder: {
+    id: "send.amountPlaceholder",
+    defaultMessage: "Amount"
+  }
+});
 
 const SendOutputRow = ({
   index,
@@ -20,6 +31,7 @@ const SendOutputRow = ({
   isSendAll,
   totalSpent,
   unitDivisor,
+  intl
 }) => (
   <div className="send-row">
     <div className="send-output-row">
@@ -30,7 +42,7 @@ const SendOutputRow = ({
             value={destination}
             type="text"
             className="send-address-hash-to"
-            placeholder="Destination Address"
+            placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
             onChange={compose(getOnChangeOutputDestination(index), e => e.target.value)}
             onBlur={onAttemptConstructTransaction}
           />
@@ -60,7 +72,7 @@ const SendOutputRow = ({
             value={amountStr}
             type="text"
             className="send-address-input-amount"
-            placeholder="Amount"
+            placeholder={intl.formatMessage(messages.amountPlaceholder)}
             onChange={compose(getOnChangeOutputAmount(index), e => e.target.value)}
             onBlur={onAttemptConstructTransaction}
           />
@@ -77,4 +89,4 @@ const SendOutputRow = ({
   </div>
 );
 
-export default SendOutputRow;
+export default injectIntl(SendOutputRow);

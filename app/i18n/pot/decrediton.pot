@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-10-03T12:09:12.325Z\n"
+"POT-Creation-Date: 2017-10-03T13:28:54.039Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -93,6 +93,14 @@ msgstr ""
 #. *You must enter an account name
 msgctxt "accounts.formNew.errors.noName"
 msgid "*You must enter an account name"
+msgstr ""
+
+#: app/i18n/extracted/app/components/StakePools/AddForm.json
+#. [stake.apiKeyPlaceholder]
+#. defaultMessage is:
+#. API Key
+msgctxt "stake.apiKeyPlaceholder"
+msgid "API Key"
 msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
@@ -196,6 +204,14 @@ msgstr ""
 #. defaultMessage is:
 #. Amount
 msgctxt "notification.transfer.amount"
+msgid "Amount"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/SendPage/OutputRow.json
+#. [send.amountPlaceholder]
+#. defaultMessage is:
+#. Amount
+msgctxt "send.amountPlaceholder"
 msgid "Amount"
 msgstr ""
 
@@ -431,6 +447,14 @@ msgctxt "getStarted.decrypt.label"
 msgid "Decrypt Wallet"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/SendPage/OutputRow.json
+#. [send.destinationAddrPlaceholder]
+#. defaultMessage is:
+#. Destination Address
+msgctxt "send.destinationAddrPlaceholder"
+msgid "Destination Address"
+msgstr ""
+
 #: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
 #. [autobuyer.disabled]
 #. defaultMessage is:
@@ -545,6 +569,14 @@ msgctxt "getStarted.discoverAccountsInfo"
 msgid "Enter the passphrase you just created to scan the blockchain for additional accounts you may have previously created with your wallet.\n\n          Your account names aren't stored on the blockchain, so you will have to rename them after setting up Decrediton."
 msgstr ""
 
+#: app/i18n/extracted/app/components/CreateWalletForm/ConfirmSeed/SeedEntry.json
+#. [createWallet.enterSeed.placeholder]
+#. defaultMessage is:
+#. Enter your seed...
+msgctxt "createWallet.enterSeed.placeholder"
+msgid "Enter your seed..."
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/SendPage/Page.json
 #. [send.feeEstimation]
 #. defaultMessage is:
@@ -582,6 +614,14 @@ msgstr ""
 #. defaultMessage is:
 #. Expiry
 msgctxt "purchaseTickets.expiry"
+msgid "Expiry"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#. [purchaseTickets.expiryPlaceholder]
+#. defaultMessage is:
+#. Expiry
+msgctxt "purchaseTickets.expiryPlaceholder"
 msgid "Expiry"
 msgstr ""
 
@@ -866,10 +906,26 @@ msgid "Network"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
+#. [accounts.rename.newNamePlaceholder]
+#. defaultMessage is:
+#. New Account Name
+msgctxt "accounts.rename.newNamePlaceholder"
+msgid "New Account Name"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 #. [accounts.newName]
 #. defaultMessage is:
 #. New Account Name
 msgctxt "accounts.newName"
+msgid "New Account Name"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/AccountsPage/AddAccount/Form.json
+#. [accounts.formNew.namePlaceholder]
+#. defaultMessage is:
+#. New Account Name
+msgctxt "accounts.formNew.namePlaceholder"
 msgid "New Account Name"
 msgstr ""
 
@@ -1090,6 +1146,22 @@ msgctxt "getStarted.header.daemonLoading.meta"
 msgid "Preparing background process"
 msgstr ""
 
+#: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
+#. [createWallet.passphrasePlaceholder]
+#. defaultMessage is:
+#. Private Passphrase
+msgctxt "createWallet.passphrasePlaceholder"
+msgid "Private Passphrase"
+msgstr ""
+
+#: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
+#. [createWallet.verifyPassphrasePlaceholder]
+#. defaultMessage is:
+#. Private Passphrase
+msgctxt "createWallet.verifyPassphrasePlaceholder"
+msgid "Private Passphrase"
+msgstr ""
+
 #: app/i18n/extracted/app/components/ImportScriptModal/Modal.json
 #. [importScriptModal.privatePassphrase]
 #. defaultMessage is:
@@ -1114,6 +1186,22 @@ msgctxt "accounts.formNew.privatePassphrase"
 msgid "Private Passphrase"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/GetStartedPage/DiscoverAddresses/Form.json
+#. [getStarted.discoverAddresses.passphrasePlaceholder]
+#. defaultMessage is:
+#. Private Passphrase
+msgctxt "getStarted.discoverAddresses.passphrasePlaceholder"
+msgid "Private Passphrase"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/AccountsPage/AddAccount/Form.json
+#. [accounts.formNew.passphrasePlaceholder]
+#. defaultMessage is:
+#. Private Password
+msgctxt "accounts.formNew.passphrasePlaceholder"
+msgid "Private Password"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 #. [accounts.properties]
 #. defaultMessage is:
@@ -1128,6 +1216,14 @@ msgstr ""
 #. Properties
 msgctxt "txDetails.properties"
 msgid "Properties"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/DecryptForm.json
+#. [getStarted.decrypt.publicPassphrasePlaceholder]
+#. defaultMessage is:
+#. Public Passphrase
+msgctxt "getStarted.decrypt.publicPassphrasePlaceholder"
+msgid "Public Passphrase"
 msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
@@ -1264,6 +1360,22 @@ msgstr ""
 #. Scan
 msgctxt "getStarted.discoverAddresses.scanBtn"
 msgid "Scan"
+msgstr ""
+
+#: app/i18n/extracted/app/components/SelectStakePool.json
+#. [selectStakepool.placeholder]
+#. defaultMessage is:
+#. Select Stakepool...
+msgctxt "selectStakepool.placeholder"
+msgid "Select Stakepool..."
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/HistoryPage/Page.json
+#. [history.txTypePlaceholder]
+#. defaultMessage is:
+#. Select type...
+msgctxt "history.txTypePlaceholder"
+msgid "Select type..."
 msgstr ""
 
 #: app/i18n/extracted/app/components/SideBar/Bar.json
@@ -1567,6 +1679,14 @@ msgid "Ticket Fee"
 msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#. [purchaseTickets.ticketFeePlaceholder]
+#. defaultMessage is:
+#. Ticket Fee
+msgctxt "purchaseTickets.ticketFeePlaceholder"
+msgid "Ticket Fee"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 #. [purchaseTickets.ticketFee]
 #. defaultMessage is:
 #. Ticket Fee (DCR/kB)
@@ -1693,6 +1813,14 @@ msgstr ""
 #. defaultMessage is:
 #. Tx Fee
 msgctxt "purchaseTickets.txFeeTip"
+msgid "Tx Fee"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#. [purchaseTickets.txFeePlaceholder]
+#. defaultMessage is:
+#. Tx Fee
+msgctxt "purchaseTickets.txFeePlaceholder"
 msgid "Tx Fee"
 msgstr ""
 

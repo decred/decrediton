@@ -2,9 +2,20 @@ import React from "react";
 import Header from "../../../Header";
 import KeyBlueButton from "../../../KeyBlueButton";
 import SlateGrayButton from "../../../SlateGrayButton";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
 import "../../../../style/Layout.less";
 import "../../../../style/AccountsPage.less";
+
+const messages = defineMessages({
+  newNamePlaceholder: {
+    id: "accounts.formNew.namePlaceholder",
+    defaultMessage: "New Account Name"
+  },
+  passphrasePlaceholder: {
+    id: "accounts.formNew.passphrasePlaceholder",
+    defaultMessage: "Private Password"
+  }
+});
 
 const AddAccountForm = ({
   name,
@@ -14,6 +25,7 @@ const AddAccountForm = ({
   errorMsg,
   setName,
   setPassPhrase,
+  intl,
   onSave,
   onCancel
 }) => (
@@ -45,7 +57,7 @@ const AddAccountForm = ({
               <input
                 type="text"
                 className="account-nest-address-hash-to"
-                placeholder="New Account Name"
+                placeholder={intl.formatMessage(messages.newNamePlaceholder)}
                 maxLength="50"
                 value={name}
                 onChange={(e) => setName(e.target.value)}/>
@@ -65,7 +77,7 @@ const AddAccountForm = ({
                 id="privpass"
                 className="account-nest-address-hash-to"
                 type="password"
-                placeholder="Private Password"
+                placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
                 value={passPhrase}
                 onChange={(e) => setPassPhrase(e.target.value)}/>
             </div>
@@ -92,4 +104,4 @@ const AddAccountForm = ({
   </div>
 );
 
-export default AddAccountForm;
+export default injectIntl(AddAccountForm);

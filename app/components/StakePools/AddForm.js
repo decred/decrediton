@@ -4,9 +4,16 @@ import PassphraseModal from "../PassphraseModal";
 import SelectStakePool from "../SelectStakePool";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
 import "../../style/Layout.less";
 import "../../style/StakePool.less";
+
+const messages = defineMessages({
+  apiKeyPlaceholder: {
+    id: "stake.apiKeyPlaceholder",
+    defaultMessage: "API Key"
+  }
+});
 
 const StakePoolsAddForm = ({
   selectedUnconfigured,
@@ -14,6 +21,7 @@ const StakePoolsAddForm = ({
   configuredStakePools,
   apiKey,
   isRequestingPassphrase,
+  intl,
   onChangeSelectedUnconfigured,
   onChangeApiKey,
   onSetStakePoolInfo,
@@ -71,7 +79,7 @@ const StakePoolsAddForm = ({
               <input
                 type="text"
                 className="stakepool-content-nest-address-amount-sum"
-                placeholder="API Key"
+                placeholder={intl.formatMessage(messages.apiKeyPlaceholder)}
                 value={apiKey}
                 onChange={e => onChangeApiKey(e.target.value)}
               />
@@ -95,4 +103,4 @@ const StakePoolsAddForm = ({
   </div>
 );
 
-export default StakePoolsAddForm;
+export default injectIntl(StakePoolsAddForm);

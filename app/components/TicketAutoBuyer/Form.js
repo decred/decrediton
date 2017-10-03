@@ -92,7 +92,7 @@ const TicketAutoBuyerForm = ({
                 <input
                   type="text"
                   className="stakepool-content-nest-purchase-ticket-form"
-                  placeholder="Balance to Maintain"
+                  placeholder={formatMessage(messages.balanceToMaintain)}
                   value={balanceToMaintain}
                   onChange={e => onChangeBalanceToMaintain(e.target.value)}
                 />
@@ -111,7 +111,7 @@ const TicketAutoBuyerForm = ({
                 <input
                   type="text"
                   className="stakepool-content-nest-purchase-ticket-form"
-                  placeholder="Max Fee"
+                  placeholder={formatMessage(messages.maxFee)}
                   value={maxFee}
                   onChange={e => onChangeMaxFee(e.target.value)}
                 />
@@ -132,7 +132,7 @@ const TicketAutoBuyerForm = ({
                 <input
                   type="text"
                   className="stakepool-content-nest-purchase-ticket-form"
-                  placeholder="Max Price Absolute"
+                  placeholder={formatMessage(messages.maxPriceAbsolute)}
                   value={maxPriceAbsolute}
                   onChange={e => onChangeMaxPriceAbsolute(e.target.value)}
                 />
@@ -151,7 +151,7 @@ const TicketAutoBuyerForm = ({
                 <input
                   type="text"
                   className="stakepool-content-nest-purchase-ticket-form"
-                  placeholder="Max Price Relative"
+                  placeholder={formatMessage(messages.maxPriceRelative)}
                   value={maxPriceRelative}
                   onChange={e => onChangeMaxPriceRelative(e.target.value)}
                 />
@@ -172,7 +172,7 @@ const TicketAutoBuyerForm = ({
                 <input
                   type="text"
                   className="stakepool-content-nest-purchase-ticket-form"
-                  placeholder="Max Per Block"
+                  placeholder={formatMessage(messages.maxPerBlock)}
                   value={maxPerBlock}
                   onChange={e => onChangeMaxPerBlock(e.target.value)}
                 />

@@ -28,12 +28,24 @@ const messages = defineMessages({
     id: "purchaseTickets.txFeeTip",
     defaultMessage: "Tx Fee",
   },
+  txFeePlaceholder: {
+    id: "purchaseTickets.txFeePlaceholder",
+    defaultMessage: "Tx Fee",
+  },
   ticketFeeTip: {
     id: "purchaseTickets.ticketFeeTip",
     defaultMessage: "Ticket Fee",
   },
+  ticketFeePlaceholder: {
+    id: "purchaseTickets.ticketFeePlaceholder",
+    defaultMessage: "Ticket Fee",
+  },
   expiry: {
     id: "purchaseTickets.expiry",
+    defaultMessage: "Expiry",
+  },
+  expiryPlaceholder: {
+    id: "purchaseTickets.expiryPlaceholder",
     defaultMessage: "Expiry",
   },
   ticketAddress: {
@@ -141,7 +153,7 @@ const PurchaseTicketsForm = ({
                 <input
                   type="text"
                   className="stakepool-content-nest-purchase-ticket-form"
-                  placeholder="Ticket Fee"
+                  placeholder={formatMessage(messages.ticketFeePlaceholder)}
                   value={ticketFee}
                   onChange={e => onChangeTicketFee(e.target.value)}
                 />
@@ -159,7 +171,7 @@ const PurchaseTicketsForm = ({
                 <input
                   type="text"
                   className="stakepool-content-nest-purchase-ticket-form"
-                  placeholder="Tx Fee"
+                  placeholder={formatMessage(messages.txFeePlaceholder)}
                   value={txFee}
                   onChange={e => onChangeTxFee(e.target.value)}
                 />
@@ -177,7 +189,7 @@ const PurchaseTicketsForm = ({
                 <input
                   type="text"
                   className="stakepool-content-nest-purchase-ticket-form"
-                  placeholder="Expiry"
+                  placeholder={formatMessage(messages.expiryPlaceholder)}
                   value={expiry}
                   onChange={e => onChangeExpiry(e.target.value)}
                 />

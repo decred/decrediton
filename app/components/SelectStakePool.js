@@ -1,18 +1,26 @@
 import React from "react";
 import Select from "react-select";
+import { injectIntl, defineMessages } from "react-intl";
+
+const messages = defineMessages({
+  placeholder: {
+    id: "selectStakepool.placeholder",
+    defaultMessage: "Select Stakepool..."
+  }
+});
 
 const SelectStakePool = ({
-  placeholder="Select stake pool...",
   valueKey="value",
   labelKey="label",
   multi=false,
   clearable=false,
   style={zIndex:"9"},
+  intl,
   ...props
 }) => (
   <Select
+    placeholder={intl.formatMessage(messages.placeholder)}
     {...{
-      placeholder,
       valueKey,
       labelKey,
       multi,
@@ -23,4 +31,4 @@ const SelectStakePool = ({
   />
 );
 
-export default SelectStakePool;
+export default injectIntl(SelectStakePool);

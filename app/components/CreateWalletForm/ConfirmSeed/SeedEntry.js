@@ -2,8 +2,16 @@ import React from "react";
 import { autobind } from "core-decorators";
 import Select from "react-select";
 import { SEED_LENGTH, SEED_WORDS } from "../../../wallet/seed";
+import { defineMessages, injectIntl } from "react-intl";
 
 const SEED_WORD_OPTIONS = SEED_WORDS.map(name => ({ name }));
+
+const messages = defineMessages({
+  enterSeedPlaceholder: {
+    id: "createWallet.enterSeed.placeholder",
+    defaultMessage: "Enter your seed..."
+  }
+});
 
 @autobind
 class SeedEntry extends React.Component {
@@ -19,6 +27,8 @@ class SeedEntry extends React.Component {
   }
 
   render () {
+    const { formatMessage } = this.props.intl;
+
     return (
       <div
         className="section"
@@ -29,7 +39,7 @@ class SeedEntry extends React.Component {
         <Select.Async
           autofocus
           clearable={false}
-          placeholder={"Enter your seed..."}
+          placeholder={formatMessage(messages.enterSeedPlaceholder)}
           multi={true}
           filterOptions={false}
           value={this.state.value}
@@ -75,4 +85,4 @@ class SeedEntry extends React.Component {
 
 }
 
-export default SeedEntry;
+export default injectIntl(SeedEntry);

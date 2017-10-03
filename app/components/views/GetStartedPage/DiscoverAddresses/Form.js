@@ -1,8 +1,15 @@
 import React from "react";
 import Header from "../../../Header";
 import KeyBlueButton from "../../../KeyBlueButton";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
 import "../../../../style/GetStarted.less";
+
+const messages = defineMessages({
+  passphrasePlaceholder: {
+    id: "getStarted.discoverAddresses.passphrasePlaceholder",
+    defaultMessage: "Private Passphrase"
+  }
+});
 
 const DiscoverAddressesFormHeader = ({
   startupError
@@ -16,10 +23,11 @@ const DiscoverAddressesFormHeader = ({
   />
 );
 
-const DiscoverAddressesFormBody = ({
+const DiscoverAddressesFormBodyBase = ({
   passPhrase,
   isInputRequest,
   hasAttemptedDiscover,
+  intl,
   onSetPassPhrase,
   onDiscoverAddresses,
   onKeyDown
@@ -42,7 +50,7 @@ const DiscoverAddressesFormBody = ({
                 autoFocus
                 className="get-started-input-private-password"
                 type="password"
-                placeholder="Private Passphrase"
+                placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
                 value={passPhrase}
                 onChange={(e) => onSetPassPhrase(e.target.value)}
                 onKeyDown={onKeyDown}/>
@@ -69,5 +77,6 @@ const DiscoverAddressesFormBody = ({
     </div>
   ) : null
 );
+const DiscoverAddressesFormBody = injectIntl(DiscoverAddressesFormBodyBase);
 
 export { DiscoverAddressesFormHeader, DiscoverAddressesFormBody };

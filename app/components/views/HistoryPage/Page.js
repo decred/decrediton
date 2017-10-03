@@ -4,9 +4,16 @@ import TxHistory from "../../TxHistory";
 import Balance from "../../Balance";
 import Header from "../../Header";
 import Select from "react-select";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
 import "../../../style/Layout.less";
 import "../../../style/HistoryPage.less";
+
+const messages = defineMessages({
+  typePlaceholder: {
+    id: "history.txTypePlaceholder",
+    defaultMessage: "Select type..."
+  }
+});
 
 const Page = ({
   spendableTotalBalance,
@@ -15,6 +22,7 @@ const Page = ({
   paginatedTxs,
   currentPage,
   totalPages,
+  intl,
   onChangeSelectedType,
   onPageBackward,
   onPageForward
@@ -38,7 +46,7 @@ const Page = ({
                   clearable={false}
                   style={{zIndex:"9"}}
                   onChange={onChangeSelectedType}
-                  placeholder={"Select type..."}
+                  placeholder={intl.formatMessage(messages.typePlaceholder)}
                   multi={false}
                   value={selectedType}
                   valueKey="value" labelKey="label"
@@ -74,4 +82,4 @@ const Page = ({
   </div>
 );
 
-export default Page;
+export default injectIntl(Page);
