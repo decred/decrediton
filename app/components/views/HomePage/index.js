@@ -2,7 +2,7 @@ import React from "react";
 import ErrorScreen from "../../ErrorScreen";
 import HomePage from "./Page";
 import service from "../../../connectors/service";
-import {substruct} from "../../../fp.js"
+import {substruct} from "../../../fp.js";
 
 class Home extends React.Component{
   constructor(props) {
@@ -20,8 +20,7 @@ class Home extends React.Component{
   }
 
   render() {
-    return this.props.walletService ? 
-    <HomePage 
+    return this.props.walletService ? <HomePage
     {...{
       ...this.props,
       ...this.state,
@@ -30,11 +29,11 @@ class Home extends React.Component{
         onRequestPassphrase: null,
         onCancelPassphraseRequest: null,
       }, this)
-      }} /> : <ErrorScreen />;
+    }} /> : <ErrorScreen />;
   }
 
   checkTicketsToBeRevoked(){
-    return revokedTicketsCount !== (expiredTicketsCount+missedTicketsCount)
+    return this.props.revokedTicketsCount !== (this.props.expiredTicketsCount + this.props.missedTicketsCount);
   }
 
   onRevokeTickets(privpass) {
@@ -42,7 +41,7 @@ class Home extends React.Component{
     onRevokeTickets && onRevokeTickets(privpass);
     this.onCancelPassphraseRequest();
   }
-  
+
   onRequestPassphrase(passphraseHeading, passphraseDescription, passphraseCallback) {
     this.setState({
       passphraseHeading,
@@ -53,7 +52,7 @@ class Home extends React.Component{
   }
 
   onShowRevokeTicket() {
-    this.onRequestPassphrase("Enter Passphrase to Revoke Tickets", null, this.onRevokeTickets)
+    this.onRequestPassphrase("Enter Passphrase to Revoke Tickets", null, this.onRevokeTickets);
   }
 
   onCancelPassphraseRequest() {
@@ -64,7 +63,7 @@ class Home extends React.Component{
       passphraseCallback: null
     });
   }
-  
+
 }
 
 export default service(Home);

@@ -21,10 +21,8 @@ const TicketsPage = ({
   onHideTicketsInfo,
   onHideStakePoolConfig,
   ...props
-}) => 
-
-  {
-    return (
+}) => {
+  return (
         <div className="page-body">
           <SideBar />
           <div className="page-view">
@@ -42,7 +40,7 @@ const TicketsPage = ({
           </div>
           <ReactToolTip type="info" effect="solid"/>
         </div>
-      );
-  }
+  );
+};
 
 export default TicketsPage;

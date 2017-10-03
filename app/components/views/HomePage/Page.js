@@ -24,10 +24,9 @@ const HomePage = ({
   rescanRequest,
   transactions,
   getTransactionsRequestAttempt,
-  getAccountsResponse,
-  ...props
+  getAccountsResponse
 }) => {
-  const ticketsToBeRevoked = revokedTicketsCount === (expiredTicketsCount+missedTicketsCount)
+  const ticketsToBeRevoked = revokedTicketsCount === (expiredTicketsCount+missedTicketsCount);
   return (
   <div className="page-body">
     <SideBar />
@@ -53,7 +52,6 @@ const HomePage = ({
         <div className="page-content"><DecredLoading/></div>
       ) : (
         <div>
-          
           <div className="page-content">
           {ticketsToBeRevoked ? <div className="tickets-to-revoke-warning">
             You have outstanding missed or expired tickets, please revoke them to unlock your funds
@@ -77,7 +75,7 @@ const HomePage = ({
       )}
     </div>
   </div>
-)};
+  );};
 
 export default home(rescan(HomePage));
 

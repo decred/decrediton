@@ -3,7 +3,6 @@ import { autobind } from "core-decorators";
 import { substruct, compose, eq, get } from "../../fp";
 import PurchaseTicketsForm from "./Form";
 import purchaseTickets from "../../connectors/purchaseTickets";
-import stakeInfo from "../../connectors/stakeInfo";
 
 @autobind
 class PurchaseTickets extends React.Component {
@@ -56,7 +55,7 @@ class PurchaseTickets extends React.Component {
   }
 
   hasTicketsToRevoke(){
-    return this.getExpectedRevoked() !== this.getRevoked()
+    return this.getExpectedRevoked() !== this.getRevoked();
   }
 
   getExpectedRevoked(){
