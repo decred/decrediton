@@ -7,13 +7,21 @@ import SideBar from "../../SideBar";
 import Header from "../../Header";
 import CopyToClipboardButton from "../../CopyToClipboardButton";
 import QRCode from "./QRCode";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
 import "../../../style/Layout.less";
 import "../../../style/ReceivePage.less";
 import "../../../style/MiscComponents.less";
 
+const messages = defineMessages({
+  accountsTip: {
+    id: "receive.accounts.tip",
+    defaultMessage: "Accounts"
+  }
+});
+
 const ReceivePage = ({
   nextAddress,
+  intl,
   onChangeAccountNumber,
   onRequestAddress
 }) => (
@@ -36,7 +44,7 @@ const ReceivePage = ({
               data-place="bottom"
               data-type="info"
               data-effect="solid"
-              data-tip={"Accounts"}
+              data-tip={intl.formatMessage(messages.accountsTip)}
               to={"/accounts"}
             />
             <div className="receive-content-nest-prefix">
@@ -70,4 +78,4 @@ const ReceivePage = ({
   </div>
 );
 
-export default ReceivePage;
+export default injectIntl(ReceivePage);

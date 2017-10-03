@@ -60,6 +60,10 @@ const messages = defineMessages({
     id: "purchaseTickets.poolFee",
     defaultMessage: "Pool Fee",
   },
+  importDisabledRescan: {
+    id: "purchaseTickets.importDisabledRescan",
+    defaultMessage: "Importing scripts is disabled during a rescan."
+  }
 });
 
 const PurchaseTicketsForm = ({
@@ -275,7 +279,7 @@ const PurchaseTicketsForm = ({
         data-tip-disable={!rescanRequest}
         data-type="warning"
         data-place="top"
-        data-tip="Importing scripts is disabled during a rescan.">
+        data-tip={formatMessage(messages.importDisabledRescan)}>
         <KeyBlueButton
           className=""
           disabled={rescanRequest}

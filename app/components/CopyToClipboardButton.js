@@ -5,14 +5,22 @@ import ReactTooltip from "react-tooltip";
 import { PropTypes } from "prop-types";
 import copy from "clipboard-copy";
 import { autobind } from "core-decorators";
+import { injectIntl, defineMessages, intlShape } from "react-intl";
 import "../style/MiscComponents.less";
 
+const messages = defineMessages({
+  copied: {
+    id: "clipboard.copied",
+    defaultMessage: "Copied"
+  }
+});
 
 @autobind
 class CopyToClipboardButton extends Component {
 
   static propTypes = {
-    textToCopy: PropTypes.string.isRequired
+    textToCopy: PropTypes.string.isRequired,
+    intl: intlShape.isRequired
   };
 
   constructor(props) {
@@ -24,6 +32,7 @@ class CopyToClipboardButton extends Component {
   }
 
   render() {
+    const { formatMessage } = this.props.intl;
     return (
       <a
         ref="copyButtonRef"
@@ -32,7 +41,7 @@ class CopyToClipboardButton extends Component {
         data-place="bottom"
         data-type="info"
         data-effect="solid"
-        data-tip={this.state.showTooltip ? "Copied!" : ""}
+        data-tip={this.state.showTooltip ? formatMessage(messages.copied) : ""}
         onClick={this.onClick}
         onMouseLeave={this.onMouseLeave} />
     );
@@ -61,4 +70,4 @@ class CopyToClipboardButton extends Component {
 
 }
 
-export default CopyToClipboardButton;
+export default injectIntl(CopyToClipboardButton);

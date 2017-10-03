@@ -37,6 +37,13 @@ If the string has a variable element within it (eg., a number, amount or a varia
     total: totalPages}} />
 ```
 
+### Input Placeholder
+
+### Tooltip
+
+### Pluralized Strings
+
+### Strings with embedded HTML
 
 ### DCR Amount
 

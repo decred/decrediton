@@ -2,9 +2,19 @@ import React from "react";
 import Header from "../../../Header";
 import LinearProgress from "material-ui/LinearProgress";
 import KeyBlueButton from "../../../KeyBlueButton";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
 import "../../../../style/GetStarted.less";
 import ReactToolTip from "react-tooltip";
+
+const messages = defineMessages({
+  skipBtnTip: {
+    id: "getStarted.chainLoading.skipBtn.tip",
+    defaultMessage: `ATTENTION<br>
+      You may skip the initial blockchain download, but be aware that
+      all transactions may not be found until the chain is fully synced.
+      As a result, your balance may be incorrect until fully synced.`
+  }
+});
 
 const DaemonLoadingFormHeader = ({
   startupError,
@@ -24,13 +34,14 @@ const DaemonLoadingFormHeader = ({
   />
 );
 
-const DaemonLoadingFormBody = ({
+const DaemonLoadingFormBodyBase = ({
     getCurrentBlockCount,
     getDaemonStarted,
     getNeededBlocks,
     getEstimatedTimeLeft,
     doSkipDaemonSync,
     showLongWaitMessage,
+    intl
   }) => (
     <div className="get-started-content-new-seed">
     {getDaemonStarted ? getCurrentBlockCount == null ?
@@ -46,14 +57,14 @@ const DaemonLoadingFormBody = ({
           </div>
           <span
             className="get-started-skip-sync-button-and-tip"
-            data-html={true}
-            data-tip="<b>ATTENTION:</b> <br> You may skip the initial blockchain download, but be aware that<br>
-                      all transactions may not be found until the chain is fully synced.<br>
-                      As a result, your balance may be incorrect until fully synced.">
+            data-multiline={true}
+            data-tip={intl.formatMessage(messages.skipBtnTip)}>
             <KeyBlueButton
               className="get-started-button-skip-sync"
               onClick={doSkipDaemonSync}
-            >Skip sync</KeyBlueButton>
+            >
+              <FormattedMessage id="getStarted.chainLoading.skipBtn" defaultMessage="Skip Sync" />
+            </KeyBlueButton>
           </span>
           <ReactToolTip place="left" type="info" effect="solid"/>
         </div>
@@ -70,5 +81,6 @@ const DaemonLoadingFormBody = ({
       <div></div> }
     </div>
   );
+const DaemonLoadingFormBody = injectIntl(DaemonLoadingFormBodyBase);
 
 export { DaemonLoadingFormHeader, DaemonLoadingFormBody };

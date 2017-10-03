@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-10-03T13:28:54.039Z\n"
+"POT-Creation-Date: 2017-10-03T14:27:35.561Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -103,6 +103,17 @@ msgctxt "stake.apiKeyPlaceholder"
 msgid "API Key"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
+#. [getStarted.chainLoading.skipBtn.tip]
+#. defaultMessage is:
+#. ATTENTION<br>
+#.       You may skip the initial blockchain download, but be aware that
+#.       all transactions may not be found until the chain is fully synced.
+#.       As a result, your balance may be incorrect until fully synced.
+msgctxt "getStarted.chainLoading.skipBtn.tip"
+msgid "ATTENTION<br>\n      You may skip the initial blockchain download, but be aware that\n      all transactions may not be found until the chain is fully synced.\n      As a result, your balance may be incorrect until fully synced."
+msgstr ""
+
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 #. [purchaseTickets.account]
 #. defaultMessage is:
@@ -156,6 +167,22 @@ msgstr ""
 #. defaultMessage is:
 #. Accounts
 msgctxt "accounts.title"
+msgid "Accounts"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/ReceivePage/Page.json
+#. [receive.accounts.tip]
+#. defaultMessage is:
+#. Accounts
+msgctxt "receive.accounts.tip"
+msgid "Accounts"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/SendPage/Page.json
+#. [send.accounts.tip]
+#. defaultMessage is:
+#. Accounts
+msgctxt "send.accounts.tip"
 msgid "Accounts"
 msgstr ""
 
@@ -397,6 +424,14 @@ msgstr ""
 #. Continue
 msgctxt "createWallet.continueBtn"
 msgid "Continue"
+msgstr ""
+
+#: app/i18n/extracted/app/components/CopyToClipboardButton.json
+#. [clipboard.copied]
+#. defaultMessage is:
+#. Copied
+msgctxt "clipboard.copied"
+msgid "Copied"
 msgstr ""
 
 #: app/i18n/extracted/app/components/CreateWalletForm/ContinueWalletCreation.json
@@ -721,6 +756,14 @@ msgctxt "help.title"
 msgid "Help"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
+#. [accounts.hide.tip]
+#. defaultMessage is:
+#. Hide
+msgctxt "accounts.hide.tip"
+msgid "Hide"
+msgstr ""
+
 #: app/i18n/extracted/app/components/SideBar/Bar.json
 #. [menu.history]
 #. defaultMessage is:
@@ -775,6 +818,14 @@ msgstr ""
 #. Import Script
 msgctxt "purchaseTickets.importScriptBtn"
 msgid "Import Script"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#. [purchaseTickets.importDisabledRescan]
+#. defaultMessage is:
+#. Importing scripts is disabled during a rescan.
+msgctxt "purchaseTickets.importDisabledRescan"
+msgid "Importing scripts is disabled during a rescan."
 msgstr ""
 
 #: app/i18n/extracted/app/components/AgendaCard.json
@@ -1299,6 +1350,14 @@ msgid "Rename"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
+#. [accounts.rename.tip]
+#. defaultMessage is:
+#. Rename Account
+msgctxt "accounts.rename.tip"
+msgid "Rename Account"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 #. [accounts.rename]
 #. defaultMessage is:
 #. Rename Account
@@ -1320,6 +1379,16 @@ msgstr ""
 #. Rescanning
 msgctxt "rescan.rescanning"
 msgid "Rescanning"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/HomePage/Page.json
+#. [home.rescanBtn.tip]
+#. defaultMessage is:
+#. Rescanning may help resolve some balance errors.
+#.       <br><br>Note: This scans the entire blockchain for transactions,
+#.       but does not re-download it.
+msgctxt "home.rescanBtn.tip"
+msgid "Rescanning may help resolve some balance errors.\n      <br><br>Note: This scans the entire blockchain for transactions,\n      but does not re-download it."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/StartRPC.json
@@ -1468,6 +1537,22 @@ msgstr ""
 #. Settings
 msgctxt "settings.title"
 msgid "Settings"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
+#. [accounts.show.tip]
+#. defaultMessage is:
+#. Show
+msgctxt "accounts.show.tip"
+msgid "Show"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
+#. [getStarted.chainLoading.skipBtn]
+#. defaultMessage is:
+#. Skip Sync
+msgctxt "getStarted.chainLoading.skipBtn"
+msgid "Skip Sync"
 msgstr ""
 
 #: app/i18n/extracted/app/components/ErrorScreen.json

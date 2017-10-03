@@ -9,10 +9,19 @@ import Balance from "../../Balance";
 import SideBar from "../../SideBar";
 import TxHistory from "../../TxHistory";
 import Header from "../../Header";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
 import "../../../style/Layout.less";
 import "../../../style/Fonts.less";
 import "../../../style/HomePage.less";
+
+const messages = defineMessages({
+  rescanBtnTip: {
+    id: "home.rescanBtn.tip",
+    defaultMessage: `Rescanning may help resolve some balance errors.
+      <br><br>Note: This scans the entire blockchain for transactions,
+      but does not re-download it.`
+  }
+});
 
 const HomePage = ({
   synced,
@@ -21,7 +30,8 @@ const HomePage = ({
   rescanRequest,
   transactions,
   getTransactionsRequestAttempt,
-  getAccountsResponse
+  getAccountsResponse,
+  intl
 }) => (
   <div className="page-body">
     <SideBar />
@@ -36,7 +46,9 @@ const HomePage = ({
         headerMetaOverview={
           <div>
             <Balance amount={spendableTotalBalance} />
-            <div className="home-rescan-button-area" data-html={true} data-tip="Rescanning may help resolve some balance errors.<br><br><b>Note:</b> This scans the entire blockchain for transactions,<br>but does not re-download it.">
+            <div className="home-rescan-button-area"
+              data-multiline={true}
+              data-tip={intl.formatMessage(messages.rescanBtnTip)}>
               <KeyBlueButton disabled={rescanRequest} onClick={() => rescanAttempt(0)}>
                 <FormattedMessage id="home.rescanBtn" defaultMessage="Rescan Blockchain" />
               </KeyBlueButton>
@@ -67,7 +79,7 @@ const HomePage = ({
   </div>
 );
 
-export default home(rescan(HomePage));
+export default home(rescan(injectIntl(HomePage)));
 
 /*
   This is the transaction search button that needs to get implemented

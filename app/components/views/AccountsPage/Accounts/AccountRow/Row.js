@@ -12,6 +12,18 @@ const messages = defineMessages({
   newNamePlaceholder: {
     id: "accounts.rename.newNamePlaceholder",
     defaultMessage: "New Account Name"
+  },
+  renameAccountTip: {
+    id: "accounts.rename.tip",
+    defaultMessage: "Rename Account"
+  },
+  showTip: {
+    id: "accounts.show.tip",
+    defaultMessage: "Show"
+  },
+  hideTip: {
+    id: "accounts.hide.tip",
+    defaultMessage: "Hide"
   }
 });
 
@@ -186,7 +198,7 @@ const Row = ({
                 key={"renameAccountButton"+account.accountNumber}
                 className="rename-account-button"
                 onClick={showRenameAccount}
-                data-tip="Rename Account"/>:
+                data-tip={intl.formatMessage(messages.renameAccountTip)}/>:
               <div></div>
             }
             {account.accountName !== "imported" && account.accountName !== "default" && account.total == 0 && !hidden ?
@@ -194,13 +206,13 @@ const Row = ({
                 key={"hideAccountButton"+account.accountNumber}
                 className="hide-account-button"
                 onClick={hideAccount}
-                data-tip="Hide"/>:
+                data-tip={intl.formatMessage(messages.hideTip)}/>:
               account.accountName !== "imported" && account.accountName !== "default" && hidden ?
               <div
                 className="show-account-button"
                 key={"showAccountButton"+account.accountNumber}
                 onClick={showAccount}
-                data-tip="Show"/> :
+                data-tip={intl.formatMessage(messages.showTip)}/> :
               <div></div>
             }
           </div>

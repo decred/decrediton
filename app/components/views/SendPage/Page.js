@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 import AccountsSelect from "../../AccountsSelect";
 import ReactTooltip from "react-tooltip";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
 import DecredLoading from "../../DecredLoading";
 import SideBar from "../../SideBar";
 import Balance from "../../Balance";
@@ -12,6 +12,13 @@ import PassphraseModal from "../../PassphraseModal";
 import OutputRow from "./OutputRow";
 import "../../../style/SendPage.less";
 import "../../../style/MiscComponents.less";
+
+const messages = defineMessages({
+  accountsTip: {
+    id: "send.accounts.tip",
+    defaultMessage: "Accounts"
+  }
+});
 
 const SendPage = ({
   isSendingTransaction,
@@ -37,6 +44,7 @@ const SendPage = ({
   onShowSendAll,
   getAddressError,
   getAmountError,
+  intl,
   ...props
 }) => (
   <div className="page-body">
@@ -103,7 +111,7 @@ const SendPage = ({
                   data-place="bottom"
                   data-type="info"
                   data-effect="solid"
-                  data-tip={"Accounts"}
+                  data-tip={intl.formatMessage(messages.accountsTip)}
                   to={"/accounts"}
                 />
                 <div className="send-send-all-input">
@@ -166,4 +174,4 @@ const SendPage = ({
   </div>
 );
 
-export default SendPage;
+export default injectIntl(SendPage);
