@@ -1,6 +1,8 @@
 /**
  * @fileoverview
  * @enhanceable
+ * @suppress {messageConventions} JS Compiler reports an error if a variable or
+ *     field starts with 'MSG_' and isn't a translatable message.
  * @public
  */
 // GENERATED CODE -- DO NOT EDIT!
@@ -39,6 +41,9 @@ goog.exportSymbol('proto.walletrpc.ConstructTransactionRequest.Output', null, gl
 goog.exportSymbol('proto.walletrpc.ConstructTransactionRequest.OutputDestination', null, global);
 goog.exportSymbol('proto.walletrpc.ConstructTransactionRequest.OutputSelectionAlgorithm', null, global);
 goog.exportSymbol('proto.walletrpc.ConstructTransactionResponse', null, global);
+goog.exportSymbol('proto.walletrpc.CreateSignatureRequest', null, global);
+goog.exportSymbol('proto.walletrpc.CreateSignatureRequest.SigHashType', null, global);
+goog.exportSymbol('proto.walletrpc.CreateSignatureResponse', null, global);
 goog.exportSymbol('proto.walletrpc.CreateWalletRequest', null, global);
 goog.exportSymbol('proto.walletrpc.CreateWalletResponse', null, global);
 goog.exportSymbol('proto.walletrpc.DecodeSeedRequest', null, global);
@@ -52,6 +57,8 @@ goog.exportSymbol('proto.walletrpc.FundTransactionResponse', null, global);
 goog.exportSymbol('proto.walletrpc.FundTransactionResponse.PreviousOutput', null, global);
 goog.exportSymbol('proto.walletrpc.GenerateRandomSeedRequest', null, global);
 goog.exportSymbol('proto.walletrpc.GenerateRandomSeedResponse', null, global);
+goog.exportSymbol('proto.walletrpc.GetTicketsRequest', null, global);
+goog.exportSymbol('proto.walletrpc.GetTicketsResponse', null, global);
 goog.exportSymbol('proto.walletrpc.GetTransactionRequest', null, global);
 goog.exportSymbol('proto.walletrpc.GetTransactionResponse', null, global);
 goog.exportSymbol('proto.walletrpc.GetTransactionsRequest', null, global);
@@ -108,6 +115,7 @@ goog.exportSymbol('proto.walletrpc.SetVotingAddressResponse', null, global);
 goog.exportSymbol('proto.walletrpc.SignMessageRequest', null, global);
 goog.exportSymbol('proto.walletrpc.SignMessageResponse', null, global);
 goog.exportSymbol('proto.walletrpc.SignTransactionRequest', null, global);
+goog.exportSymbol('proto.walletrpc.SignTransactionRequest.AdditionalScript', null, global);
 goog.exportSymbol('proto.walletrpc.SignTransactionResponse', null, global);
 goog.exportSymbol('proto.walletrpc.StakeInfoRequest', null, global);
 goog.exportSymbol('proto.walletrpc.StakeInfoResponse', null, global);
@@ -121,6 +129,8 @@ goog.exportSymbol('proto.walletrpc.SubscribeToBlockNotificationsRequest', null, 
 goog.exportSymbol('proto.walletrpc.SubscribeToBlockNotificationsResponse', null, global);
 goog.exportSymbol('proto.walletrpc.TicketBuyerConfigRequest', null, global);
 goog.exportSymbol('proto.walletrpc.TicketBuyerConfigResponse', null, global);
+goog.exportSymbol('proto.walletrpc.TicketDetails', null, global);
+goog.exportSymbol('proto.walletrpc.TicketDetails.TicketStatus', null, global);
 goog.exportSymbol('proto.walletrpc.TicketPriceRequest', null, global);
 goog.exportSymbol('proto.walletrpc.TicketPriceResponse', null, global);
 goog.exportSymbol('proto.walletrpc.TransactionDetails', null, global);
@@ -181,6 +191,7 @@ proto.walletrpc.VersionRequest.prototype.toObject = function(opt_includeInstance
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.VersionRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.VersionRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -246,6 +257,7 @@ proto.walletrpc.VersionRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.VersionRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.VersionRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -295,6 +307,7 @@ proto.walletrpc.VersionResponse.prototype.toObject = function(opt_includeInstanc
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.VersionResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.VersionResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -389,6 +402,7 @@ proto.walletrpc.VersionResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.VersionResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.VersionResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -538,6 +552,262 @@ proto.walletrpc.VersionResponse.prototype.setBuildMetadata = function(value) {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.walletrpc.TicketDetails = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.TicketDetails, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.TicketDetails.displayName = 'proto.walletrpc.TicketDetails';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.TicketDetails.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.TicketDetails.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.TicketDetails} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.TicketDetails.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    hash: msg.getHash_asB64(),
+    spenderHash: msg.getSpenderHash_asB64(),
+    ticketStatus: jspb.Message.getFieldWithDefault(msg, 3, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.TicketDetails}
+ */
+proto.walletrpc.TicketDetails.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.TicketDetails;
+  return proto.walletrpc.TicketDetails.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.TicketDetails} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.TicketDetails}
+ */
+proto.walletrpc.TicketDetails.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setHash(value);
+      break;
+    case 2:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setSpenderHash(value);
+      break;
+    case 3:
+      var value = /** @type {!proto.walletrpc.TicketDetails.TicketStatus} */ (reader.readEnum());
+      msg.setTicketStatus(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.TicketDetails.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.TicketDetails.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.TicketDetails} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.TicketDetails.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getHash_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      1,
+      f
+    );
+  }
+  f = message.getSpenderHash_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      2,
+      f
+    );
+  }
+  f = message.getTicketStatus();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.walletrpc.TicketDetails.TicketStatus = {
+  LIVE: 0,
+  IMMATURE: 1,
+  VOTED: 2,
+  REVOKED: 3,
+  MISSED: 4,
+  EXPIRED: 5
+};
+
+/**
+ * optional bytes hash = 1;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.TicketDetails.prototype.getHash = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * optional bytes hash = 1;
+ * This is a type-conversion wrapper around `getHash()`
+ * @return {string}
+ */
+proto.walletrpc.TicketDetails.prototype.getHash_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getHash()));
+};
+
+
+/**
+ * optional bytes hash = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getHash()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.TicketDetails.prototype.getHash_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getHash()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.TicketDetails.prototype.setHash = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional bytes spender_hash = 2;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.TicketDetails.prototype.getSpenderHash = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * optional bytes spender_hash = 2;
+ * This is a type-conversion wrapper around `getSpenderHash()`
+ * @return {string}
+ */
+proto.walletrpc.TicketDetails.prototype.getSpenderHash_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getSpenderHash()));
+};
+
+
+/**
+ * optional bytes spender_hash = 2;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getSpenderHash()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.TicketDetails.prototype.getSpenderHash_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getSpenderHash()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.TicketDetails.prototype.setSpenderHash = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional TicketStatus ticket_status = 3;
+ * @return {!proto.walletrpc.TicketDetails.TicketStatus}
+ */
+proto.walletrpc.TicketDetails.prototype.getTicketStatus = function() {
+  return /** @type {!proto.walletrpc.TicketDetails.TicketStatus} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {!proto.walletrpc.TicketDetails.TicketStatus} value */
+proto.walletrpc.TicketDetails.prototype.setTicketStatus = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.walletrpc.TransactionDetails = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, proto.walletrpc.TransactionDetails.repeatedFields_, null);
 };
@@ -577,6 +847,7 @@ proto.walletrpc.TransactionDetails.prototype.toObject = function(opt_includeInst
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.TransactionDetails} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TransactionDetails.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -680,6 +951,7 @@ proto.walletrpc.TransactionDetails.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.TransactionDetails} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TransactionDetails.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -791,6 +1063,7 @@ proto.walletrpc.TransactionDetails.Input.prototype.toObject = function(opt_inclu
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.TransactionDetails.Input} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TransactionDetails.Input.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -870,6 +1143,7 @@ proto.walletrpc.TransactionDetails.Input.prototype.serializeBinary = function() 
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.TransactionDetails.Input} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TransactionDetails.Input.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -985,6 +1259,7 @@ proto.walletrpc.TransactionDetails.Output.prototype.toObject = function(opt_incl
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.TransactionDetails.Output} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TransactionDetails.Output.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -1079,6 +1354,7 @@ proto.walletrpc.TransactionDetails.Output.prototype.serializeBinary = function()
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.TransactionDetails.Output} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TransactionDetails.Output.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -1323,8 +1599,6 @@ proto.walletrpc.TransactionDetails.prototype.setTransaction = function(value) {
 
 /**
  * repeated Input debits = 3;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.walletrpc.TransactionDetails.Input>}
  */
 proto.walletrpc.TransactionDetails.prototype.getDebitsList = function() {
@@ -1356,8 +1630,6 @@ proto.walletrpc.TransactionDetails.prototype.clearDebitsList = function() {
 
 /**
  * repeated Output credits = 4;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.walletrpc.TransactionDetails.Output>}
  */
 proto.walletrpc.TransactionDetails.prototype.getCreditsList = function() {
@@ -1482,6 +1754,7 @@ proto.walletrpc.BlockDetails.prototype.toObject = function(opt_includeInstance) 
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.BlockDetails} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.BlockDetails.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -1568,6 +1841,7 @@ proto.walletrpc.BlockDetails.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.BlockDetails} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.BlockDetails.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -1674,8 +1948,6 @@ proto.walletrpc.BlockDetails.prototype.setTimestamp = function(value) {
 
 /**
  * repeated TransactionDetails transactions = 4;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.walletrpc.TransactionDetails>}
  */
 proto.walletrpc.BlockDetails.prototype.getTransactionsList = function() {
@@ -1748,6 +2020,7 @@ proto.walletrpc.AccountBalance.prototype.toObject = function(opt_includeInstance
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.AccountBalance} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountBalance.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -1822,6 +2095,7 @@ proto.walletrpc.AccountBalance.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.AccountBalance} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountBalance.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -1915,6 +2189,7 @@ proto.walletrpc.PingRequest.prototype.toObject = function(opt_includeInstance) {
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.PingRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.PingRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -1980,6 +2255,7 @@ proto.walletrpc.PingRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.PingRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.PingRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -2029,6 +2305,7 @@ proto.walletrpc.PingResponse.prototype.toObject = function(opt_includeInstance) 
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.PingResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.PingResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -2094,6 +2371,7 @@ proto.walletrpc.PingResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.PingResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.PingResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -2143,6 +2421,7 @@ proto.walletrpc.NetworkRequest.prototype.toObject = function(opt_includeInstance
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.NetworkRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.NetworkRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -2208,6 +2487,7 @@ proto.walletrpc.NetworkRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.NetworkRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.NetworkRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -2257,6 +2537,7 @@ proto.walletrpc.NetworkResponse.prototype.toObject = function(opt_includeInstanc
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.NetworkResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.NetworkResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -2326,6 +2607,7 @@ proto.walletrpc.NetworkResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.NetworkResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.NetworkResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -2397,6 +2679,7 @@ proto.walletrpc.AccountNumberRequest.prototype.toObject = function(opt_includeIn
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.AccountNumberRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountNumberRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -2466,6 +2749,7 @@ proto.walletrpc.AccountNumberRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.AccountNumberRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountNumberRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -2537,6 +2821,7 @@ proto.walletrpc.AccountNumberResponse.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.AccountNumberResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountNumberResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -2606,6 +2891,7 @@ proto.walletrpc.AccountNumberResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.AccountNumberResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountNumberResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -2677,6 +2963,7 @@ proto.walletrpc.AccountsRequest.prototype.toObject = function(opt_includeInstanc
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.AccountsRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -2742,6 +3029,7 @@ proto.walletrpc.AccountsRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.AccountsRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountsRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -2798,6 +3086,7 @@ proto.walletrpc.AccountsResponse.prototype.toObject = function(opt_includeInstan
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.AccountsResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -2879,6 +3168,7 @@ proto.walletrpc.AccountsResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.AccountsResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountsResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -2950,6 +3240,7 @@ proto.walletrpc.AccountsResponse.Account.prototype.toObject = function(opt_inclu
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.AccountsResponse.Account} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountsResponse.Account.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -3044,6 +3335,7 @@ proto.walletrpc.AccountsResponse.Account.prototype.serializeBinary = function() 
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.AccountsResponse.Account} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountsResponse.Account.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -3184,8 +3476,6 @@ proto.walletrpc.AccountsResponse.Account.prototype.setImportedKeyCount = functio
 
 /**
  * repeated Account accounts = 1;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.walletrpc.AccountsResponse.Account>}
  */
 proto.walletrpc.AccountsResponse.prototype.getAccountsList = function() {
@@ -3312,6 +3602,7 @@ proto.walletrpc.RenameAccountRequest.prototype.toObject = function(opt_includeIn
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.RenameAccountRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.RenameAccountRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -3386,6 +3677,7 @@ proto.walletrpc.RenameAccountRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.RenameAccountRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.RenameAccountRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -3479,6 +3771,7 @@ proto.walletrpc.RenameAccountResponse.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.RenameAccountResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.RenameAccountResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -3544,6 +3837,7 @@ proto.walletrpc.RenameAccountResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.RenameAccountResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.RenameAccountResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -3593,6 +3887,7 @@ proto.walletrpc.RescanRequest.prototype.toObject = function(opt_includeInstance)
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.RescanRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.RescanRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -3662,6 +3957,7 @@ proto.walletrpc.RescanRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.RescanRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.RescanRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -3733,6 +4029,7 @@ proto.walletrpc.RescanResponse.prototype.toObject = function(opt_includeInstance
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.RescanResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.RescanResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -3802,6 +4099,7 @@ proto.walletrpc.RescanResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.RescanResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.RescanResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -3873,6 +4171,7 @@ proto.walletrpc.NextAccountRequest.prototype.toObject = function(opt_includeInst
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.NextAccountRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.NextAccountRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -3947,6 +4246,7 @@ proto.walletrpc.NextAccountRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.NextAccountRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.NextAccountRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -4064,6 +4364,7 @@ proto.walletrpc.NextAccountResponse.prototype.toObject = function(opt_includeIns
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.NextAccountResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.NextAccountResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -4133,6 +4434,7 @@ proto.walletrpc.NextAccountResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.NextAccountResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.NextAccountResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -4204,6 +4506,7 @@ proto.walletrpc.NextAddressRequest.prototype.toObject = function(opt_includeInst
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.NextAddressRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.NextAddressRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -4283,6 +4586,7 @@ proto.walletrpc.NextAddressRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.NextAddressRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.NextAddressRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -4416,6 +4720,7 @@ proto.walletrpc.NextAddressResponse.prototype.toObject = function(opt_includeIns
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.NextAddressResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.NextAddressResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -4490,6 +4795,7 @@ proto.walletrpc.NextAddressResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.NextAddressResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.NextAddressResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -4583,6 +4889,7 @@ proto.walletrpc.ImportPrivateKeyRequest.prototype.toObject = function(opt_includ
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.ImportPrivateKeyRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ImportPrivateKeyRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -4672,6 +4979,7 @@ proto.walletrpc.ImportPrivateKeyRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.ImportPrivateKeyRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ImportPrivateKeyRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -4857,6 +5165,7 @@ proto.walletrpc.ImportPrivateKeyResponse.prototype.toObject = function(opt_inclu
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.ImportPrivateKeyResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ImportPrivateKeyResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -4922,6 +5231,7 @@ proto.walletrpc.ImportPrivateKeyResponse.prototype.serializeBinary = function() 
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.ImportPrivateKeyResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ImportPrivateKeyResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -4971,6 +5281,7 @@ proto.walletrpc.ImportScriptRequest.prototype.toObject = function(opt_includeIns
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.ImportScriptRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ImportScriptRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -5060,6 +5371,7 @@ proto.walletrpc.ImportScriptRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.ImportScriptRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ImportScriptRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -5271,6 +5583,7 @@ proto.walletrpc.ImportScriptResponse.prototype.toObject = function(opt_includeIn
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.ImportScriptResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ImportScriptResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -5345,6 +5658,7 @@ proto.walletrpc.ImportScriptResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.ImportScriptResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ImportScriptResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -5440,6 +5754,7 @@ proto.walletrpc.BalanceRequest.prototype.toObject = function(opt_includeInstance
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.BalanceRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.BalanceRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -5514,6 +5829,7 @@ proto.walletrpc.BalanceRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.BalanceRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.BalanceRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -5607,6 +5923,7 @@ proto.walletrpc.BalanceResponse.prototype.toObject = function(opt_includeInstanc
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.BalanceResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.BalanceResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -5615,7 +5932,8 @@ proto.walletrpc.BalanceResponse.toObject = function(includeInstance, msg) {
     immatureReward: jspb.Message.getFieldWithDefault(msg, 3, 0),
     immatureStakeGeneration: jspb.Message.getFieldWithDefault(msg, 4, 0),
     lockedByTickets: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    votingAuthority: jspb.Message.getFieldWithDefault(msg, 6, 0)
+    votingAuthority: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    unconfirmed: jspb.Message.getFieldWithDefault(msg, 7, 0)
   };
 
   if (includeInstance) {
@@ -5676,6 +5994,10 @@ proto.walletrpc.BalanceResponse.deserializeBinaryFromReader = function(msg, read
       var value = /** @type {number} */ (reader.readInt64());
       msg.setVotingAuthority(value);
       break;
+    case 7:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setUnconfirmed(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -5701,6 +6023,7 @@ proto.walletrpc.BalanceResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.BalanceResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.BalanceResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -5743,6 +6066,13 @@ proto.walletrpc.BalanceResponse.serializeBinaryToWriter = function(message, writ
   if (f !== 0) {
     writer.writeInt64(
       6,
+      f
+    );
+  }
+  f = message.getUnconfirmed();
+  if (f !== 0) {
+    writer.writeInt64(
+      7,
       f
     );
   }
@@ -5839,6 +6169,21 @@ proto.walletrpc.BalanceResponse.prototype.setVotingAuthority = function(value) {
 };
 
 
+/**
+ * optional int64 unconfirmed = 7;
+ * @return {number}
+ */
+proto.walletrpc.BalanceResponse.prototype.getUnconfirmed = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.BalanceResponse.prototype.setUnconfirmed = function(value) {
+  jspb.Message.setField(this, 7, value);
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -5882,6 +6227,7 @@ proto.walletrpc.GetTransactionRequest.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.GetTransactionRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.GetTransactionRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -5951,6 +6297,7 @@ proto.walletrpc.GetTransactionRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.GetTransactionRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.GetTransactionRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -6046,6 +6393,7 @@ proto.walletrpc.GetTransactionResponse.prototype.toObject = function(opt_include
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.GetTransactionResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.GetTransactionResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -6116,6 +6464,7 @@ proto.walletrpc.GetTransactionResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.GetTransactionResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.GetTransactionResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -6203,6 +6552,7 @@ proto.walletrpc.GetTransactionsRequest.prototype.toObject = function(opt_include
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.GetTransactionsRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.GetTransactionsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -6292,6 +6642,7 @@ proto.walletrpc.GetTransactionsRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.GetTransactionsRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.GetTransactionsRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -6506,6 +6857,7 @@ proto.walletrpc.GetTransactionsResponse.prototype.toObject = function(opt_includ
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.GetTransactionsResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.GetTransactionsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -6583,6 +6935,7 @@ proto.walletrpc.GetTransactionsResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.GetTransactionsResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.GetTransactionsResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -6637,8 +6990,6 @@ proto.walletrpc.GetTransactionsResponse.prototype.hasMinedTransactions = functio
 
 /**
  * repeated TransactionDetails unmined_transactions = 2;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.walletrpc.TransactionDetails>}
  */
 proto.walletrpc.GetTransactionsResponse.prototype.getUnminedTransactionsList = function() {
@@ -6665,6 +7016,436 @@ proto.walletrpc.GetTransactionsResponse.prototype.addUnminedTransactions = funct
 
 proto.walletrpc.GetTransactionsResponse.prototype.clearUnminedTransactionsList = function() {
   this.setUnminedTransactionsList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.GetTicketsRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.GetTicketsRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.GetTicketsRequest.displayName = 'proto.walletrpc.GetTicketsRequest';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.GetTicketsRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.GetTicketsRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.GetTicketsRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.GetTicketsRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    startingBlockHash: msg.getStartingBlockHash_asB64(),
+    startingBlockHeight: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    endingBlockHash: msg.getEndingBlockHash_asB64(),
+    endingBlockHeight: jspb.Message.getFieldWithDefault(msg, 4, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.GetTicketsRequest}
+ */
+proto.walletrpc.GetTicketsRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.GetTicketsRequest;
+  return proto.walletrpc.GetTicketsRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.GetTicketsRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.GetTicketsRequest}
+ */
+proto.walletrpc.GetTicketsRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setStartingBlockHash(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readSint32());
+      msg.setStartingBlockHeight(value);
+      break;
+    case 3:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setEndingBlockHash(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setEndingBlockHeight(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.GetTicketsRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.GetTicketsRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.GetTicketsRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.GetTicketsRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getStartingBlockHash_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      1,
+      f
+    );
+  }
+  f = message.getStartingBlockHeight();
+  if (f !== 0) {
+    writer.writeSint32(
+      2,
+      f
+    );
+  }
+  f = message.getEndingBlockHash_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      3,
+      f
+    );
+  }
+  f = message.getEndingBlockHeight();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bytes starting_block_hash = 1;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.GetTicketsRequest.prototype.getStartingBlockHash = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * optional bytes starting_block_hash = 1;
+ * This is a type-conversion wrapper around `getStartingBlockHash()`
+ * @return {string}
+ */
+proto.walletrpc.GetTicketsRequest.prototype.getStartingBlockHash_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getStartingBlockHash()));
+};
+
+
+/**
+ * optional bytes starting_block_hash = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getStartingBlockHash()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.GetTicketsRequest.prototype.getStartingBlockHash_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getStartingBlockHash()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.GetTicketsRequest.prototype.setStartingBlockHash = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional sint32 starting_block_height = 2;
+ * @return {number}
+ */
+proto.walletrpc.GetTicketsRequest.prototype.getStartingBlockHeight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.GetTicketsRequest.prototype.setStartingBlockHeight = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional bytes ending_block_hash = 3;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.GetTicketsRequest.prototype.getEndingBlockHash = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * optional bytes ending_block_hash = 3;
+ * This is a type-conversion wrapper around `getEndingBlockHash()`
+ * @return {string}
+ */
+proto.walletrpc.GetTicketsRequest.prototype.getEndingBlockHash_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getEndingBlockHash()));
+};
+
+
+/**
+ * optional bytes ending_block_hash = 3;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getEndingBlockHash()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.GetTicketsRequest.prototype.getEndingBlockHash_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getEndingBlockHash()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.GetTicketsRequest.prototype.setEndingBlockHash = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional int32 ending_block_height = 4;
+ * @return {number}
+ */
+proto.walletrpc.GetTicketsRequest.prototype.getEndingBlockHeight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.GetTicketsRequest.prototype.setEndingBlockHeight = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.GetTicketsResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.GetTicketsResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.GetTicketsResponse.displayName = 'proto.walletrpc.GetTicketsResponse';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.GetTicketsResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.GetTicketsResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.GetTicketsResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.GetTicketsResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    ticket: (f = msg.getTicket()) && proto.walletrpc.TicketDetails.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.GetTicketsResponse}
+ */
+proto.walletrpc.GetTicketsResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.GetTicketsResponse;
+  return proto.walletrpc.GetTicketsResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.GetTicketsResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.GetTicketsResponse}
+ */
+proto.walletrpc.GetTicketsResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.walletrpc.TicketDetails;
+      reader.readMessage(value,proto.walletrpc.TicketDetails.deserializeBinaryFromReader);
+      msg.setTicket(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.GetTicketsResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.GetTicketsResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.GetTicketsResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.GetTicketsResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getTicket();
+  if (f != null) {
+    writer.writeMessage(
+      1,
+      f,
+      proto.walletrpc.TicketDetails.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional TicketDetails ticket = 1;
+ * @return {?proto.walletrpc.TicketDetails}
+ */
+proto.walletrpc.GetTicketsResponse.prototype.getTicket = function() {
+  return /** @type{?proto.walletrpc.TicketDetails} */ (
+    jspb.Message.getWrapperField(this, proto.walletrpc.TicketDetails, 1));
+};
+
+
+/** @param {?proto.walletrpc.TicketDetails|undefined} value */
+proto.walletrpc.GetTicketsResponse.prototype.setTicket = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.walletrpc.GetTicketsResponse.prototype.clearTicket = function() {
+  this.setTicket(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.walletrpc.GetTicketsResponse.prototype.hasTicket = function() {
+  return jspb.Message.getField(this, 1) != null;
 };
 
 
@@ -6711,6 +7492,7 @@ proto.walletrpc.TicketPriceRequest.prototype.toObject = function(opt_includeInst
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.TicketPriceRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TicketPriceRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -6776,6 +7558,7 @@ proto.walletrpc.TicketPriceRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.TicketPriceRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TicketPriceRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -6825,6 +7608,7 @@ proto.walletrpc.TicketPriceResponse.prototype.toObject = function(opt_includeIns
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.TicketPriceResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TicketPriceResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -6899,6 +7683,7 @@ proto.walletrpc.TicketPriceResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.TicketPriceResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TicketPriceResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -6992,6 +7777,7 @@ proto.walletrpc.StakeInfoRequest.prototype.toObject = function(opt_includeInstan
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.StakeInfoRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StakeInfoRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -7057,6 +7843,7 @@ proto.walletrpc.StakeInfoRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.StakeInfoRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StakeInfoRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -7106,6 +7893,7 @@ proto.walletrpc.StakeInfoResponse.prototype.toObject = function(opt_includeInsta
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.StakeInfoResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StakeInfoResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -7220,6 +8008,7 @@ proto.walletrpc.StakeInfoResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.StakeInfoResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StakeInfoResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -7489,6 +8278,7 @@ proto.walletrpc.BlockInfoRequest.prototype.toObject = function(opt_includeInstan
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.BlockInfoRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.BlockInfoRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -7563,6 +8353,7 @@ proto.walletrpc.BlockInfoRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.BlockInfoRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.BlockInfoRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -7680,6 +8471,7 @@ proto.walletrpc.BlockInfoResponse.prototype.toObject = function(opt_includeInsta
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.BlockInfoResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.BlockInfoResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -7774,6 +8566,7 @@ proto.walletrpc.BlockInfoResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.BlockInfoResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.BlockInfoResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -8005,6 +8798,7 @@ proto.walletrpc.ChangePassphraseRequest.prototype.toObject = function(opt_includ
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.ChangePassphraseRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ChangePassphraseRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -8084,6 +8878,7 @@ proto.walletrpc.ChangePassphraseRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.ChangePassphraseRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ChangePassphraseRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -8255,6 +9050,7 @@ proto.walletrpc.ChangePassphraseResponse.prototype.toObject = function(opt_inclu
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.ChangePassphraseResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ChangePassphraseResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -8320,6 +9116,7 @@ proto.walletrpc.ChangePassphraseResponse.prototype.serializeBinary = function() 
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.ChangePassphraseResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ChangePassphraseResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -8369,6 +9166,7 @@ proto.walletrpc.FundTransactionRequest.prototype.toObject = function(opt_include
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.FundTransactionRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.FundTransactionRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -8458,6 +9256,7 @@ proto.walletrpc.FundTransactionRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.FundTransactionRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.FundTransactionRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -8628,6 +9427,7 @@ proto.walletrpc.FundTransactionResponse.prototype.toObject = function(opt_includ
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.FundTransactionResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.FundTransactionResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -8709,6 +9509,7 @@ proto.walletrpc.FundTransactionResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.FundTransactionResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.FundTransactionResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -8780,6 +9581,7 @@ proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.toObject = func
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.FundTransactionResponse.PreviousOutput} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.FundTransactionResponse.PreviousOutput.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -8879,6 +9681,7 @@ proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.serializeBinary
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.FundTransactionResponse.PreviousOutput} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.FundTransactionResponse.PreviousOutput.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -9091,8 +9894,6 @@ proto.walletrpc.FundTransactionResponse.PreviousOutput.prototype.setTree = funct
 
 /**
  * repeated PreviousOutput selected_outputs = 1;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.walletrpc.FundTransactionResponse.PreviousOutput>}
  */
 proto.walletrpc.FundTransactionResponse.prototype.getSelectedOutputsList = function() {
@@ -9226,6 +10027,7 @@ proto.walletrpc.ConstructTransactionRequest.prototype.toObject = function(opt_in
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.ConstructTransactionRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ConstructTransactionRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -9323,6 +10125,7 @@ proto.walletrpc.ConstructTransactionRequest.prototype.serializeBinary = function
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.ConstructTransactionRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ConstructTransactionRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -9424,6 +10227,7 @@ proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.toObject
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.ConstructTransactionRequest.OutputDestination} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ConstructTransactionRequest.OutputDestination.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -9503,6 +10307,7 @@ proto.walletrpc.ConstructTransactionRequest.OutputDestination.prototype.serializ
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.ConstructTransactionRequest.OutputDestination} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ConstructTransactionRequest.OutputDestination.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -9642,6 +10447,7 @@ proto.walletrpc.ConstructTransactionRequest.Output.prototype.toObject = function
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.ConstructTransactionRequest.Output} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ConstructTransactionRequest.Output.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -9717,6 +10523,7 @@ proto.walletrpc.ConstructTransactionRequest.Output.prototype.serializeBinary = f
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.ConstructTransactionRequest.Output} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ConstructTransactionRequest.Output.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -9845,8 +10652,6 @@ proto.walletrpc.ConstructTransactionRequest.prototype.setOutputSelectionAlgorith
 
 /**
  * repeated Output non_change_outputs = 5;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.walletrpc.ConstructTransactionRequest.Output>}
  */
 proto.walletrpc.ConstructTransactionRequest.prototype.getNonChangeOutputsList = function() {
@@ -9949,6 +10754,7 @@ proto.walletrpc.ConstructTransactionResponse.prototype.toObject = function(opt_i
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.ConstructTransactionResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ConstructTransactionResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -10033,6 +10839,7 @@ proto.walletrpc.ConstructTransactionResponse.prototype.serializeBinary = functio
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.ConstructTransactionResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ConstructTransactionResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -10174,7 +10981,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.walletrpc.SignTransactionRequest.repeatedFields_ = [3];
+proto.walletrpc.SignTransactionRequest.repeatedFields_ = [3,4];
 
 
 
@@ -10201,12 +11008,15 @@ proto.walletrpc.SignTransactionRequest.prototype.toObject = function(opt_include
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SignTransactionRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SignTransactionRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     passphrase: msg.getPassphrase_asB64(),
     serializedTransaction: msg.getSerializedTransaction_asB64(),
-    inputIndexesList: jspb.Message.getField(msg, 3)
+    inputIndexesList: jspb.Message.getRepeatedField(msg, 3),
+    additionalScriptsList: jspb.Message.toObjectList(msg.getAdditionalScriptsList(),
+    proto.walletrpc.SignTransactionRequest.AdditionalScript.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -10255,6 +11065,11 @@ proto.walletrpc.SignTransactionRequest.deserializeBinaryFromReader = function(ms
       var value = /** @type {!Array.<number>} */ (reader.readPackedUint32());
       msg.setInputIndexesList(value);
       break;
+    case 4:
+      var value = new proto.walletrpc.SignTransactionRequest.AdditionalScript;
+      reader.readMessage(value,proto.walletrpc.SignTransactionRequest.AdditionalScript.deserializeBinaryFromReader);
+      msg.addAdditionalScripts(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -10280,6 +11095,7 @@ proto.walletrpc.SignTransactionRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SignTransactionRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SignTransactionRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -10304,6 +11120,285 @@ proto.walletrpc.SignTransactionRequest.serializeBinaryToWriter = function(messag
       f
     );
   }
+  f = message.getAdditionalScriptsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      4,
+      f,
+      proto.walletrpc.SignTransactionRequest.AdditionalScript.serializeBinaryToWriter
+    );
+  }
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.SignTransactionRequest.AdditionalScript, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.SignTransactionRequest.AdditionalScript.displayName = 'proto.walletrpc.SignTransactionRequest.AdditionalScript';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.SignTransactionRequest.AdditionalScript.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.SignTransactionRequest.AdditionalScript} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    transactionHash: msg.getTransactionHash_asB64(),
+    outputIndex: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    tree: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    pkScript: msg.getPkScript_asB64()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.SignTransactionRequest.AdditionalScript}
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.SignTransactionRequest.AdditionalScript;
+  return proto.walletrpc.SignTransactionRequest.AdditionalScript.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.SignTransactionRequest.AdditionalScript} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.SignTransactionRequest.AdditionalScript}
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setTransactionHash(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setOutputIndex(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setTree(value);
+      break;
+    case 4:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setPkScript(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.SignTransactionRequest.AdditionalScript.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.SignTransactionRequest.AdditionalScript} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getTransactionHash_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      1,
+      f
+    );
+  }
+  f = message.getOutputIndex();
+  if (f !== 0) {
+    writer.writeUint32(
+      2,
+      f
+    );
+  }
+  f = message.getTree();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
+  f = message.getPkScript_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bytes transaction_hash = 1;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.getTransactionHash = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * optional bytes transaction_hash = 1;
+ * This is a type-conversion wrapper around `getTransactionHash()`
+ * @return {string}
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.getTransactionHash_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getTransactionHash()));
+};
+
+
+/**
+ * optional bytes transaction_hash = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getTransactionHash()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.getTransactionHash_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getTransactionHash()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.setTransactionHash = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional uint32 output_index = 2;
+ * @return {number}
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.getOutputIndex = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.setOutputIndex = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional int32 tree = 3;
+ * @return {number}
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.getTree = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.setTree = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional bytes pk_script = 4;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.getPkScript = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * optional bytes pk_script = 4;
+ * This is a type-conversion wrapper around `getPkScript()`
+ * @return {string}
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.getPkScript_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getPkScript()));
+};
+
+
+/**
+ * optional bytes pk_script = 4;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getPkScript()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.getPkScript_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getPkScript()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.SignTransactionRequest.AdditionalScript.prototype.setPkScript = function(value) {
+  jspb.Message.setField(this, 4, value);
 };
 
 
@@ -10387,12 +11482,10 @@ proto.walletrpc.SignTransactionRequest.prototype.setSerializedTransaction = func
 
 /**
  * repeated uint32 input_indexes = 3;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<number>}
  */
 proto.walletrpc.SignTransactionRequest.prototype.getInputIndexesList = function() {
-  return /** @type {!Array.<number>} */ (jspb.Message.getField(this, 3));
+  return /** @type {!Array.<number>} */ (jspb.Message.getRepeatedField(this, 3));
 };
 
 
@@ -10413,6 +11506,37 @@ proto.walletrpc.SignTransactionRequest.prototype.addInputIndexes = function(valu
 
 proto.walletrpc.SignTransactionRequest.prototype.clearInputIndexesList = function() {
   this.setInputIndexesList([]);
+};
+
+
+/**
+ * repeated AdditionalScript additional_scripts = 4;
+ * @return {!Array.<!proto.walletrpc.SignTransactionRequest.AdditionalScript>}
+ */
+proto.walletrpc.SignTransactionRequest.prototype.getAdditionalScriptsList = function() {
+  return /** @type{!Array.<!proto.walletrpc.SignTransactionRequest.AdditionalScript>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.SignTransactionRequest.AdditionalScript, 4));
+};
+
+
+/** @param {!Array.<!proto.walletrpc.SignTransactionRequest.AdditionalScript>} value */
+proto.walletrpc.SignTransactionRequest.prototype.setAdditionalScriptsList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 4, value);
+};
+
+
+/**
+ * @param {!proto.walletrpc.SignTransactionRequest.AdditionalScript=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.walletrpc.SignTransactionRequest.AdditionalScript}
+ */
+proto.walletrpc.SignTransactionRequest.prototype.addAdditionalScripts = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 4, opt_value, proto.walletrpc.SignTransactionRequest.AdditionalScript, opt_index);
+};
+
+
+proto.walletrpc.SignTransactionRequest.prototype.clearAdditionalScriptsList = function() {
+  this.setAdditionalScriptsList([]);
 };
 
 
@@ -10466,11 +11590,12 @@ proto.walletrpc.SignTransactionResponse.prototype.toObject = function(opt_includ
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SignTransactionResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SignTransactionResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     transaction: msg.getTransaction_asB64(),
-    unsignedInputIndexesList: jspb.Message.getField(msg, 2)
+    unsignedInputIndexesList: jspb.Message.getRepeatedField(msg, 2)
   };
 
   if (includeInstance) {
@@ -10540,6 +11665,7 @@ proto.walletrpc.SignTransactionResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SignTransactionResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SignTransactionResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -10601,12 +11727,10 @@ proto.walletrpc.SignTransactionResponse.prototype.setTransaction = function(valu
 
 /**
  * repeated uint32 unsigned_input_indexes = 2;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<number>}
  */
 proto.walletrpc.SignTransactionResponse.prototype.getUnsignedInputIndexesList = function() {
-  return /** @type {!Array.<number>} */ (jspb.Message.getField(this, 2));
+  return /** @type {!Array.<number>} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
 
@@ -10627,6 +11751,584 @@ proto.walletrpc.SignTransactionResponse.prototype.addUnsignedInputIndexes = func
 
 proto.walletrpc.SignTransactionResponse.prototype.clearUnsignedInputIndexesList = function() {
   this.setUnsignedInputIndexesList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.CreateSignatureRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.CreateSignatureRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.CreateSignatureRequest.displayName = 'proto.walletrpc.CreateSignatureRequest';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.CreateSignatureRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.CreateSignatureRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.CreateSignatureRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.CreateSignatureRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    passphrase: msg.getPassphrase_asB64(),
+    address: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    serializedTransaction: msg.getSerializedTransaction_asB64(),
+    inputIndex: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    hashType: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    previousPkScript: msg.getPreviousPkScript_asB64()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.CreateSignatureRequest}
+ */
+proto.walletrpc.CreateSignatureRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.CreateSignatureRequest;
+  return proto.walletrpc.CreateSignatureRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.CreateSignatureRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.CreateSignatureRequest}
+ */
+proto.walletrpc.CreateSignatureRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setPassphrase(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAddress(value);
+      break;
+    case 3:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setSerializedTransaction(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setInputIndex(value);
+      break;
+    case 5:
+      var value = /** @type {!proto.walletrpc.CreateSignatureRequest.SigHashType} */ (reader.readEnum());
+      msg.setHashType(value);
+      break;
+    case 6:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setPreviousPkScript(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.CreateSignatureRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.CreateSignatureRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.CreateSignatureRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.CreateSignatureRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getPassphrase_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      1,
+      f
+    );
+  }
+  f = message.getAddress();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getSerializedTransaction_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      3,
+      f
+    );
+  }
+  f = message.getInputIndex();
+  if (f !== 0) {
+    writer.writeUint32(
+      4,
+      f
+    );
+  }
+  f = message.getHashType();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      5,
+      f
+    );
+  }
+  f = message.getPreviousPkScript_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      6,
+      f
+    );
+  }
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.walletrpc.CreateSignatureRequest.SigHashType = {
+  SIGHASH_OLD: 0,
+  SIGHASH_ALL: 1,
+  SIGHASH_NONE: 2,
+  SIGHASH_SINGLE: 3,
+  SIGHASH_ALLVALUE: 4,
+  SIGHASH_ANYONECANPAY: 128
+};
+
+/**
+ * optional bytes passphrase = 1;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.CreateSignatureRequest.prototype.getPassphrase = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * optional bytes passphrase = 1;
+ * This is a type-conversion wrapper around `getPassphrase()`
+ * @return {string}
+ */
+proto.walletrpc.CreateSignatureRequest.prototype.getPassphrase_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getPassphrase()));
+};
+
+
+/**
+ * optional bytes passphrase = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getPassphrase()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.CreateSignatureRequest.prototype.getPassphrase_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getPassphrase()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.CreateSignatureRequest.prototype.setPassphrase = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional string address = 2;
+ * @return {string}
+ */
+proto.walletrpc.CreateSignatureRequest.prototype.getAddress = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.walletrpc.CreateSignatureRequest.prototype.setAddress = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional bytes serialized_transaction = 3;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.CreateSignatureRequest.prototype.getSerializedTransaction = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * optional bytes serialized_transaction = 3;
+ * This is a type-conversion wrapper around `getSerializedTransaction()`
+ * @return {string}
+ */
+proto.walletrpc.CreateSignatureRequest.prototype.getSerializedTransaction_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getSerializedTransaction()));
+};
+
+
+/**
+ * optional bytes serialized_transaction = 3;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getSerializedTransaction()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.CreateSignatureRequest.prototype.getSerializedTransaction_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getSerializedTransaction()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.CreateSignatureRequest.prototype.setSerializedTransaction = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional uint32 input_index = 4;
+ * @return {number}
+ */
+proto.walletrpc.CreateSignatureRequest.prototype.getInputIndex = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.CreateSignatureRequest.prototype.setInputIndex = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional SigHashType hash_type = 5;
+ * @return {!proto.walletrpc.CreateSignatureRequest.SigHashType}
+ */
+proto.walletrpc.CreateSignatureRequest.prototype.getHashType = function() {
+  return /** @type {!proto.walletrpc.CreateSignatureRequest.SigHashType} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/** @param {!proto.walletrpc.CreateSignatureRequest.SigHashType} value */
+proto.walletrpc.CreateSignatureRequest.prototype.setHashType = function(value) {
+  jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * optional bytes previous_pk_script = 6;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.CreateSignatureRequest.prototype.getPreviousPkScript = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/**
+ * optional bytes previous_pk_script = 6;
+ * This is a type-conversion wrapper around `getPreviousPkScript()`
+ * @return {string}
+ */
+proto.walletrpc.CreateSignatureRequest.prototype.getPreviousPkScript_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getPreviousPkScript()));
+};
+
+
+/**
+ * optional bytes previous_pk_script = 6;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getPreviousPkScript()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.CreateSignatureRequest.prototype.getPreviousPkScript_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getPreviousPkScript()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.CreateSignatureRequest.prototype.setPreviousPkScript = function(value) {
+  jspb.Message.setField(this, 6, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.CreateSignatureResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.CreateSignatureResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.walletrpc.CreateSignatureResponse.displayName = 'proto.walletrpc.CreateSignatureResponse';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.CreateSignatureResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.CreateSignatureResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.CreateSignatureResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.CreateSignatureResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    signature: msg.getSignature_asB64(),
+    publicKey: msg.getPublicKey_asB64()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.CreateSignatureResponse}
+ */
+proto.walletrpc.CreateSignatureResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.CreateSignatureResponse;
+  return proto.walletrpc.CreateSignatureResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.CreateSignatureResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.CreateSignatureResponse}
+ */
+proto.walletrpc.CreateSignatureResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setSignature(value);
+      break;
+    case 2:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setPublicKey(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.CreateSignatureResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.CreateSignatureResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.CreateSignatureResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.CreateSignatureResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getSignature_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      1,
+      f
+    );
+  }
+  f = message.getPublicKey_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bytes signature = 1;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.CreateSignatureResponse.prototype.getSignature = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * optional bytes signature = 1;
+ * This is a type-conversion wrapper around `getSignature()`
+ * @return {string}
+ */
+proto.walletrpc.CreateSignatureResponse.prototype.getSignature_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getSignature()));
+};
+
+
+/**
+ * optional bytes signature = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getSignature()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.CreateSignatureResponse.prototype.getSignature_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getSignature()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.CreateSignatureResponse.prototype.setSignature = function(value) {
+  jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional bytes public_key = 2;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.CreateSignatureResponse.prototype.getPublicKey = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * optional bytes public_key = 2;
+ * This is a type-conversion wrapper around `getPublicKey()`
+ * @return {string}
+ */
+proto.walletrpc.CreateSignatureResponse.prototype.getPublicKey_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getPublicKey()));
+};
+
+
+/**
+ * optional bytes public_key = 2;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getPublicKey()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.CreateSignatureResponse.prototype.getPublicKey_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getPublicKey()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.walletrpc.CreateSignatureResponse.prototype.setPublicKey = function(value) {
+  jspb.Message.setField(this, 2, value);
 };
 
 
@@ -10673,6 +12375,7 @@ proto.walletrpc.PublishTransactionRequest.prototype.toObject = function(opt_incl
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.PublishTransactionRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.PublishTransactionRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -10742,6 +12445,7 @@ proto.walletrpc.PublishTransactionRequest.prototype.serializeBinary = function()
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.PublishTransactionRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.PublishTransactionRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -10837,6 +12541,7 @@ proto.walletrpc.PublishTransactionResponse.prototype.toObject = function(opt_inc
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.PublishTransactionResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.PublishTransactionResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -10906,6 +12611,7 @@ proto.walletrpc.PublishTransactionResponse.prototype.serializeBinary = function(
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.PublishTransactionResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.PublishTransactionResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -11001,6 +12707,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.toObject = function(opt_include
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.PurchaseTicketsRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.PurchaseTicketsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -11120,6 +12827,7 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.PurchaseTicketsRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.PurchaseTicketsRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -11442,6 +13150,7 @@ proto.walletrpc.PurchaseTicketsResponse.prototype.toObject = function(opt_includ
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.PurchaseTicketsResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.PurchaseTicketsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -11511,6 +13220,7 @@ proto.walletrpc.PurchaseTicketsResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.PurchaseTicketsResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.PurchaseTicketsResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -11526,19 +13236,15 @@ proto.walletrpc.PurchaseTicketsResponse.serializeBinaryToWriter = function(messa
 
 /**
  * repeated bytes ticket_hashes = 1;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!(Array<!Uint8Array>|Array<string>)}
  */
 proto.walletrpc.PurchaseTicketsResponse.prototype.getTicketHashesList = function() {
-  return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getField(this, 1));
+  return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getRepeatedField(this, 1));
 };
 
 
 /**
  * repeated bytes ticket_hashes = 1;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * This is a type-conversion wrapper around `getTicketHashesList()`
  * @return {!Array.<string>}
  */
@@ -11550,8 +13256,6 @@ proto.walletrpc.PurchaseTicketsResponse.prototype.getTicketHashesList_asB64 = fu
 
 /**
  * repeated bytes ticket_hashes = 1;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getTicketHashesList()`
@@ -11626,6 +13330,7 @@ proto.walletrpc.RevokeTicketsRequest.prototype.toObject = function(opt_includeIn
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.RevokeTicketsRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.RevokeTicketsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -11695,6 +13400,7 @@ proto.walletrpc.RevokeTicketsRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.RevokeTicketsRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.RevokeTicketsRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -11790,6 +13496,7 @@ proto.walletrpc.RevokeTicketsResponse.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.RevokeTicketsResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.RevokeTicketsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -11855,6 +13562,7 @@ proto.walletrpc.RevokeTicketsResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.RevokeTicketsResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.RevokeTicketsResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -11904,6 +13612,7 @@ proto.walletrpc.LoadActiveDataFiltersRequest.prototype.toObject = function(opt_i
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.LoadActiveDataFiltersRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.LoadActiveDataFiltersRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -11969,6 +13678,7 @@ proto.walletrpc.LoadActiveDataFiltersRequest.prototype.serializeBinary = functio
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.LoadActiveDataFiltersRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.LoadActiveDataFiltersRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -12018,6 +13728,7 @@ proto.walletrpc.LoadActiveDataFiltersResponse.prototype.toObject = function(opt_
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.LoadActiveDataFiltersResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.LoadActiveDataFiltersResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -12083,6 +13794,7 @@ proto.walletrpc.LoadActiveDataFiltersResponse.prototype.serializeBinary = functi
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.LoadActiveDataFiltersResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.LoadActiveDataFiltersResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -12132,6 +13844,7 @@ proto.walletrpc.SignMessageRequest.prototype.toObject = function(opt_includeInst
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SignMessageRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SignMessageRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -12211,6 +13924,7 @@ proto.walletrpc.SignMessageRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SignMessageRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SignMessageRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -12350,6 +14064,7 @@ proto.walletrpc.SignMessageResponse.prototype.toObject = function(opt_includeIns
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SignMessageResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SignMessageResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -12419,6 +14134,7 @@ proto.walletrpc.SignMessageResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SignMessageResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SignMessageResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -12514,6 +14230,7 @@ proto.walletrpc.TransactionNotificationsRequest.prototype.toObject = function(op
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.TransactionNotificationsRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TransactionNotificationsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -12579,6 +14296,7 @@ proto.walletrpc.TransactionNotificationsRequest.prototype.serializeBinary = func
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.TransactionNotificationsRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TransactionNotificationsRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -12635,6 +14353,7 @@ proto.walletrpc.TransactionNotificationsResponse.prototype.toObject = function(o
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.TransactionNotificationsResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TransactionNotificationsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -12723,6 +14442,7 @@ proto.walletrpc.TransactionNotificationsResponse.prototype.serializeBinary = fun
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.TransactionNotificationsResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TransactionNotificationsResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -12761,8 +14481,6 @@ proto.walletrpc.TransactionNotificationsResponse.serializeBinaryToWriter = funct
 
 /**
  * repeated BlockDetails attached_blocks = 1;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.walletrpc.BlockDetails>}
  */
 proto.walletrpc.TransactionNotificationsResponse.prototype.getAttachedBlocksList = function() {
@@ -12794,19 +14512,15 @@ proto.walletrpc.TransactionNotificationsResponse.prototype.clearAttachedBlocksLi
 
 /**
  * repeated bytes detached_blocks = 2;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!(Array<!Uint8Array>|Array<string>)}
  */
 proto.walletrpc.TransactionNotificationsResponse.prototype.getDetachedBlocksList = function() {
-  return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getField(this, 2));
+  return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
 
 /**
  * repeated bytes detached_blocks = 2;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * This is a type-conversion wrapper around `getDetachedBlocksList()`
  * @return {!Array.<string>}
  */
@@ -12818,8 +14532,6 @@ proto.walletrpc.TransactionNotificationsResponse.prototype.getDetachedBlocksList
 
 /**
  * repeated bytes detached_blocks = 2;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getDetachedBlocksList()`
@@ -12853,8 +14565,6 @@ proto.walletrpc.TransactionNotificationsResponse.prototype.clearDetachedBlocksLi
 
 /**
  * repeated TransactionDetails unmined_transactions = 3;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.walletrpc.TransactionDetails>}
  */
 proto.walletrpc.TransactionNotificationsResponse.prototype.getUnminedTransactionsList = function() {
@@ -12886,19 +14596,15 @@ proto.walletrpc.TransactionNotificationsResponse.prototype.clearUnminedTransacti
 
 /**
  * repeated bytes unmined_transaction_hashes = 4;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!(Array<!Uint8Array>|Array<string>)}
  */
 proto.walletrpc.TransactionNotificationsResponse.prototype.getUnminedTransactionHashesList = function() {
-  return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getField(this, 4));
+  return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getRepeatedField(this, 4));
 };
 
 
 /**
  * repeated bytes unmined_transaction_hashes = 4;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * This is a type-conversion wrapper around `getUnminedTransactionHashesList()`
  * @return {!Array.<string>}
  */
@@ -12910,8 +14616,6 @@ proto.walletrpc.TransactionNotificationsResponse.prototype.getUnminedTransaction
 
 /**
  * repeated bytes unmined_transaction_hashes = 4;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getUnminedTransactionHashesList()`
@@ -12986,6 +14690,7 @@ proto.walletrpc.AccountNotificationsRequest.prototype.toObject = function(opt_in
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.AccountNotificationsRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountNotificationsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -13051,6 +14756,7 @@ proto.walletrpc.AccountNotificationsRequest.prototype.serializeBinary = function
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.AccountNotificationsRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountNotificationsRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -13100,6 +14806,7 @@ proto.walletrpc.AccountNotificationsResponse.prototype.toObject = function(opt_i
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.AccountNotificationsResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountNotificationsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -13189,6 +14896,7 @@ proto.walletrpc.AccountNotificationsResponse.prototype.serializeBinary = functio
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.AccountNotificationsResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AccountNotificationsResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -13355,6 +15063,7 @@ proto.walletrpc.ConfirmationNotificationsRequest.prototype.toObject = function(o
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.ConfirmationNotificationsRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ConfirmationNotificationsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -13429,6 +15138,7 @@ proto.walletrpc.ConfirmationNotificationsRequest.prototype.serializeBinary = fun
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.ConfirmationNotificationsRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ConfirmationNotificationsRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -13451,19 +15161,15 @@ proto.walletrpc.ConfirmationNotificationsRequest.serializeBinaryToWriter = funct
 
 /**
  * repeated bytes tx_hashes = 1;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!(Array<!Uint8Array>|Array<string>)}
  */
 proto.walletrpc.ConfirmationNotificationsRequest.prototype.getTxHashesList = function() {
-  return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getField(this, 1));
+  return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getRepeatedField(this, 1));
 };
 
 
 /**
  * repeated bytes tx_hashes = 1;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * This is a type-conversion wrapper around `getTxHashesList()`
  * @return {!Array.<string>}
  */
@@ -13475,8 +15181,6 @@ proto.walletrpc.ConfirmationNotificationsRequest.prototype.getTxHashesList_asB64
 
 /**
  * repeated bytes tx_hashes = 1;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getTxHashesList()`
@@ -13573,6 +15277,7 @@ proto.walletrpc.ConfirmationNotificationsResponse.prototype.toObject = function(
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.ConfirmationNotificationsResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ConfirmationNotificationsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -13644,6 +15349,7 @@ proto.walletrpc.ConfirmationNotificationsResponse.prototype.serializeBinary = fu
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.ConfirmationNotificationsResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ConfirmationNotificationsResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -13701,6 +15407,7 @@ proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations.proto
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -13785,6 +15492,7 @@ proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations.proto
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -13929,8 +15637,6 @@ proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations.proto
 
 /**
  * repeated TransactionConfirmations confirmations = 1;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.walletrpc.ConfirmationNotificationsResponse.TransactionConfirmations>}
  */
 proto.walletrpc.ConfirmationNotificationsResponse.prototype.getConfirmationsList = function() {
@@ -14003,6 +15709,7 @@ proto.walletrpc.CreateWalletRequest.prototype.toObject = function(opt_includeIns
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.CreateWalletRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.CreateWalletRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -14082,6 +15789,7 @@ proto.walletrpc.CreateWalletRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.CreateWalletRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.CreateWalletRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -14269,6 +15977,7 @@ proto.walletrpc.CreateWalletResponse.prototype.toObject = function(opt_includeIn
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.CreateWalletResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.CreateWalletResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -14334,6 +16043,7 @@ proto.walletrpc.CreateWalletResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.CreateWalletResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.CreateWalletResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -14383,6 +16093,7 @@ proto.walletrpc.OpenWalletRequest.prototype.toObject = function(opt_includeInsta
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.OpenWalletRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.OpenWalletRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -14452,6 +16163,7 @@ proto.walletrpc.OpenWalletRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.OpenWalletRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.OpenWalletRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -14547,6 +16259,7 @@ proto.walletrpc.OpenWalletResponse.prototype.toObject = function(opt_includeInst
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.OpenWalletResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.OpenWalletResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -14612,6 +16325,7 @@ proto.walletrpc.OpenWalletResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.OpenWalletResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.OpenWalletResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -14661,6 +16375,7 @@ proto.walletrpc.CloseWalletRequest.prototype.toObject = function(opt_includeInst
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.CloseWalletRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.CloseWalletRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -14726,6 +16441,7 @@ proto.walletrpc.CloseWalletRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.CloseWalletRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.CloseWalletRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -14775,6 +16491,7 @@ proto.walletrpc.CloseWalletResponse.prototype.toObject = function(opt_includeIns
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.CloseWalletResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.CloseWalletResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -14840,6 +16557,7 @@ proto.walletrpc.CloseWalletResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.CloseWalletResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.CloseWalletResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -14889,6 +16607,7 @@ proto.walletrpc.WalletExistsRequest.prototype.toObject = function(opt_includeIns
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.WalletExistsRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.WalletExistsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -14954,6 +16673,7 @@ proto.walletrpc.WalletExistsRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.WalletExistsRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.WalletExistsRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -15003,6 +16723,7 @@ proto.walletrpc.WalletExistsResponse.prototype.toObject = function(opt_includeIn
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.WalletExistsResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.WalletExistsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -15072,6 +16793,7 @@ proto.walletrpc.WalletExistsResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.WalletExistsResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.WalletExistsResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -15145,6 +16867,7 @@ proto.walletrpc.StartConsensusRpcRequest.prototype.toObject = function(opt_inclu
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.StartConsensusRpcRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StartConsensusRpcRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -15229,6 +16952,7 @@ proto.walletrpc.StartConsensusRpcRequest.prototype.serializeBinary = function() 
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.StartConsensusRpcRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StartConsensusRpcRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -15414,6 +17138,7 @@ proto.walletrpc.StartConsensusRpcResponse.prototype.toObject = function(opt_incl
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.StartConsensusRpcResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StartConsensusRpcResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -15479,6 +17204,7 @@ proto.walletrpc.StartConsensusRpcResponse.prototype.serializeBinary = function()
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.StartConsensusRpcResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StartConsensusRpcResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -15528,6 +17254,7 @@ proto.walletrpc.DiscoverAddressesRequest.prototype.toObject = function(opt_inclu
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.DiscoverAddressesRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.DiscoverAddressesRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -15602,6 +17329,7 @@ proto.walletrpc.DiscoverAddressesRequest.prototype.serializeBinary = function() 
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.DiscoverAddressesRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.DiscoverAddressesRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -15721,6 +17449,7 @@ proto.walletrpc.DiscoverAddressesResponse.prototype.toObject = function(opt_incl
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.DiscoverAddressesResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.DiscoverAddressesResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -15786,6 +17515,7 @@ proto.walletrpc.DiscoverAddressesResponse.prototype.serializeBinary = function()
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.DiscoverAddressesResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.DiscoverAddressesResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -15835,6 +17565,7 @@ proto.walletrpc.SubscribeToBlockNotificationsRequest.prototype.toObject = functi
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SubscribeToBlockNotificationsRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SubscribeToBlockNotificationsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -15900,6 +17631,7 @@ proto.walletrpc.SubscribeToBlockNotificationsRequest.prototype.serializeBinary =
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SubscribeToBlockNotificationsRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SubscribeToBlockNotificationsRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -15949,6 +17681,7 @@ proto.walletrpc.SubscribeToBlockNotificationsResponse.prototype.toObject = funct
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SubscribeToBlockNotificationsResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SubscribeToBlockNotificationsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -16014,6 +17747,7 @@ proto.walletrpc.SubscribeToBlockNotificationsResponse.prototype.serializeBinary 
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SubscribeToBlockNotificationsResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SubscribeToBlockNotificationsResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -16063,6 +17797,7 @@ proto.walletrpc.FetchHeadersRequest.prototype.toObject = function(opt_includeIns
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.FetchHeadersRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.FetchHeadersRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -16128,6 +17863,7 @@ proto.walletrpc.FetchHeadersRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.FetchHeadersRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.FetchHeadersRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -16177,6 +17913,7 @@ proto.walletrpc.FetchHeadersResponse.prototype.toObject = function(opt_includeIn
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.FetchHeadersResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.FetchHeadersResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -16266,6 +18003,7 @@ proto.walletrpc.FetchHeadersResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.FetchHeadersResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.FetchHeadersResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -16473,6 +18211,7 @@ proto.walletrpc.GenerateRandomSeedRequest.prototype.toObject = function(opt_incl
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.GenerateRandomSeedRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.GenerateRandomSeedRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -16542,6 +18281,7 @@ proto.walletrpc.GenerateRandomSeedRequest.prototype.serializeBinary = function()
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.GenerateRandomSeedRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.GenerateRandomSeedRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -16613,6 +18353,7 @@ proto.walletrpc.GenerateRandomSeedResponse.prototype.toObject = function(opt_inc
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.GenerateRandomSeedResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.GenerateRandomSeedResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -16692,6 +18433,7 @@ proto.walletrpc.GenerateRandomSeedResponse.prototype.serializeBinary = function(
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.GenerateRandomSeedResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.GenerateRandomSeedResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -16831,6 +18573,7 @@ proto.walletrpc.DecodeSeedRequest.prototype.toObject = function(opt_includeInsta
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.DecodeSeedRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.DecodeSeedRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -16900,6 +18643,7 @@ proto.walletrpc.DecodeSeedRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.DecodeSeedRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.DecodeSeedRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -16971,6 +18715,7 @@ proto.walletrpc.DecodeSeedResponse.prototype.toObject = function(opt_includeInst
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.DecodeSeedResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.DecodeSeedResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -17040,6 +18785,7 @@ proto.walletrpc.DecodeSeedResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.DecodeSeedResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.DecodeSeedResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -17135,6 +18881,7 @@ proto.walletrpc.StartAutoBuyerRequest.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.StartAutoBuyerRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StartAutoBuyerRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -17249,6 +18996,7 @@ proto.walletrpc.StartAutoBuyerRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.StartAutoBuyerRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StartAutoBuyerRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -17542,6 +19290,7 @@ proto.walletrpc.StartAutoBuyerResponse.prototype.toObject = function(opt_include
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.StartAutoBuyerResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StartAutoBuyerResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -17607,6 +19356,7 @@ proto.walletrpc.StartAutoBuyerResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.StartAutoBuyerResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StartAutoBuyerResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -17656,6 +19406,7 @@ proto.walletrpc.StopAutoBuyerRequest.prototype.toObject = function(opt_includeIn
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.StopAutoBuyerRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StopAutoBuyerRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -17721,6 +19472,7 @@ proto.walletrpc.StopAutoBuyerRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.StopAutoBuyerRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StopAutoBuyerRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -17770,6 +19522,7 @@ proto.walletrpc.StopAutoBuyerResponse.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.StopAutoBuyerResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StopAutoBuyerResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -17835,6 +19588,7 @@ proto.walletrpc.StopAutoBuyerResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.StopAutoBuyerResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.StopAutoBuyerResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -17884,6 +19638,7 @@ proto.walletrpc.TicketBuyerConfigRequest.prototype.toObject = function(opt_inclu
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.TicketBuyerConfigRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TicketBuyerConfigRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -17949,6 +19704,7 @@ proto.walletrpc.TicketBuyerConfigRequest.prototype.serializeBinary = function() 
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.TicketBuyerConfigRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TicketBuyerConfigRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -17998,6 +19754,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.toObject = function(opt_incl
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.TicketBuyerConfigResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TicketBuyerConfigResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -18162,6 +19919,7 @@ proto.walletrpc.TicketBuyerConfigResponse.prototype.serializeBinary = function()
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.TicketBuyerConfigResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.TicketBuyerConfigResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -18655,6 +20413,7 @@ proto.walletrpc.SetAccountRequest.prototype.toObject = function(opt_includeInsta
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetAccountRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetAccountRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -18724,6 +20483,7 @@ proto.walletrpc.SetAccountRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetAccountRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetAccountRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -18795,6 +20555,7 @@ proto.walletrpc.SetAccountResponse.prototype.toObject = function(opt_includeInst
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetAccountResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetAccountResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -18860,6 +20621,7 @@ proto.walletrpc.SetAccountResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetAccountResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetAccountResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -18909,6 +20671,7 @@ proto.walletrpc.SetBalanceToMaintainRequest.prototype.toObject = function(opt_in
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetBalanceToMaintainRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetBalanceToMaintainRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -18978,6 +20741,7 @@ proto.walletrpc.SetBalanceToMaintainRequest.prototype.serializeBinary = function
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetBalanceToMaintainRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetBalanceToMaintainRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -19049,6 +20813,7 @@ proto.walletrpc.SetBalanceToMaintainResponse.prototype.toObject = function(opt_i
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetBalanceToMaintainResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetBalanceToMaintainResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -19114,6 +20879,7 @@ proto.walletrpc.SetBalanceToMaintainResponse.prototype.serializeBinary = functio
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetBalanceToMaintainResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetBalanceToMaintainResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -19163,6 +20929,7 @@ proto.walletrpc.SetMaxFeeRequest.prototype.toObject = function(opt_includeInstan
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetMaxFeeRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxFeeRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -19232,6 +20999,7 @@ proto.walletrpc.SetMaxFeeRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetMaxFeeRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxFeeRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -19303,6 +21071,7 @@ proto.walletrpc.SetMaxFeeResponse.prototype.toObject = function(opt_includeInsta
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetMaxFeeResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxFeeResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -19368,6 +21137,7 @@ proto.walletrpc.SetMaxFeeResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetMaxFeeResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxFeeResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -19417,6 +21187,7 @@ proto.walletrpc.SetMaxPriceRelativeRequest.prototype.toObject = function(opt_inc
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetMaxPriceRelativeRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxPriceRelativeRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -19486,6 +21257,7 @@ proto.walletrpc.SetMaxPriceRelativeRequest.prototype.serializeBinary = function(
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetMaxPriceRelativeRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxPriceRelativeRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -19557,6 +21329,7 @@ proto.walletrpc.SetMaxPriceRelativeResponse.prototype.toObject = function(opt_in
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetMaxPriceRelativeResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxPriceRelativeResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -19622,6 +21395,7 @@ proto.walletrpc.SetMaxPriceRelativeResponse.prototype.serializeBinary = function
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetMaxPriceRelativeResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxPriceRelativeResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -19671,6 +21445,7 @@ proto.walletrpc.SetMaxPriceAbsoluteRequest.prototype.toObject = function(opt_inc
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetMaxPriceAbsoluteRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxPriceAbsoluteRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -19740,6 +21515,7 @@ proto.walletrpc.SetMaxPriceAbsoluteRequest.prototype.serializeBinary = function(
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetMaxPriceAbsoluteRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxPriceAbsoluteRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -19811,6 +21587,7 @@ proto.walletrpc.SetMaxPriceAbsoluteResponse.prototype.toObject = function(opt_in
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetMaxPriceAbsoluteResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxPriceAbsoluteResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -19876,6 +21653,7 @@ proto.walletrpc.SetMaxPriceAbsoluteResponse.prototype.serializeBinary = function
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetMaxPriceAbsoluteResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxPriceAbsoluteResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -19925,6 +21703,7 @@ proto.walletrpc.SetVotingAddressRequest.prototype.toObject = function(opt_includ
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetVotingAddressRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetVotingAddressRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -19994,6 +21773,7 @@ proto.walletrpc.SetVotingAddressRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetVotingAddressRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetVotingAddressRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -20065,6 +21845,7 @@ proto.walletrpc.SetVotingAddressResponse.prototype.toObject = function(opt_inclu
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetVotingAddressResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetVotingAddressResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -20130,6 +21911,7 @@ proto.walletrpc.SetVotingAddressResponse.prototype.serializeBinary = function() 
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetVotingAddressResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetVotingAddressResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -20179,6 +21961,7 @@ proto.walletrpc.SetPoolAddressRequest.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetPoolAddressRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetPoolAddressRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -20248,6 +22031,7 @@ proto.walletrpc.SetPoolAddressRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetPoolAddressRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetPoolAddressRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -20319,6 +22103,7 @@ proto.walletrpc.SetPoolAddressResponse.prototype.toObject = function(opt_include
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetPoolAddressResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetPoolAddressResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -20384,6 +22169,7 @@ proto.walletrpc.SetPoolAddressResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetPoolAddressResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetPoolAddressResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -20433,6 +22219,7 @@ proto.walletrpc.SetPoolFeesRequest.prototype.toObject = function(opt_includeInst
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetPoolFeesRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetPoolFeesRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -20502,6 +22289,7 @@ proto.walletrpc.SetPoolFeesRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetPoolFeesRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetPoolFeesRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -20573,6 +22361,7 @@ proto.walletrpc.SetPoolFeesResponse.prototype.toObject = function(opt_includeIns
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetPoolFeesResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetPoolFeesResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -20638,6 +22427,7 @@ proto.walletrpc.SetPoolFeesResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetPoolFeesResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetPoolFeesResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -20687,6 +22477,7 @@ proto.walletrpc.SetMaxPerBlockRequest.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetMaxPerBlockRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxPerBlockRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -20756,6 +22547,7 @@ proto.walletrpc.SetMaxPerBlockRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetMaxPerBlockRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxPerBlockRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -20827,6 +22619,7 @@ proto.walletrpc.SetMaxPerBlockResponse.prototype.toObject = function(opt_include
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetMaxPerBlockResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxPerBlockResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -20892,6 +22685,7 @@ proto.walletrpc.SetMaxPerBlockResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetMaxPerBlockResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetMaxPerBlockResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -20941,6 +22735,7 @@ proto.walletrpc.AgendasRequest.prototype.toObject = function(opt_includeInstance
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.AgendasRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AgendasRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -21006,6 +22801,7 @@ proto.walletrpc.AgendasRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.AgendasRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AgendasRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -21062,6 +22858,7 @@ proto.walletrpc.AgendasResponse.prototype.toObject = function(opt_includeInstanc
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.AgendasResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AgendasResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -21138,6 +22935,7 @@ proto.walletrpc.AgendasResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.AgendasResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AgendasResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -21209,6 +23007,7 @@ proto.walletrpc.AgendasResponse.Agenda.prototype.toObject = function(opt_include
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.AgendasResponse.Agenda} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AgendasResponse.Agenda.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -21305,6 +23104,7 @@ proto.walletrpc.AgendasResponse.Agenda.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.AgendasResponse.Agenda} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AgendasResponse.Agenda.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -21401,8 +23201,6 @@ proto.walletrpc.AgendasResponse.Agenda.prototype.setMask = function(value) {
 
 /**
  * repeated Choice choices = 4;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.walletrpc.AgendasResponse.Choice>}
  */
 proto.walletrpc.AgendasResponse.Agenda.prototype.getChoicesList = function() {
@@ -21505,6 +23303,7 @@ proto.walletrpc.AgendasResponse.Choice.prototype.toObject = function(opt_include
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.AgendasResponse.Choice} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AgendasResponse.Choice.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -21594,6 +23393,7 @@ proto.walletrpc.AgendasResponse.Choice.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.AgendasResponse.Choice} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.AgendasResponse.Choice.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -21731,8 +23531,6 @@ proto.walletrpc.AgendasResponse.prototype.setVersion = function(value) {
 
 /**
  * repeated Agenda agendas = 2;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.walletrpc.AgendasResponse.Agenda>}
  */
 proto.walletrpc.AgendasResponse.prototype.getAgendasList = function() {
@@ -21805,6 +23603,7 @@ proto.walletrpc.VoteChoicesRequest.prototype.toObject = function(opt_includeInst
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.VoteChoicesRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.VoteChoicesRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -21870,6 +23669,7 @@ proto.walletrpc.VoteChoicesRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.VoteChoicesRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.VoteChoicesRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -21926,6 +23726,7 @@ proto.walletrpc.VoteChoicesResponse.prototype.toObject = function(opt_includeIns
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.VoteChoicesResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.VoteChoicesResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -22007,6 +23808,7 @@ proto.walletrpc.VoteChoicesResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.VoteChoicesResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.VoteChoicesResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -22078,6 +23880,7 @@ proto.walletrpc.VoteChoicesResponse.Choice.prototype.toObject = function(opt_inc
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.VoteChoicesResponse.Choice} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.VoteChoicesResponse.Choice.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -22162,6 +23965,7 @@ proto.walletrpc.VoteChoicesResponse.Choice.prototype.serializeBinary = function(
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.VoteChoicesResponse.Choice} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.VoteChoicesResponse.Choice.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -22273,8 +24077,6 @@ proto.walletrpc.VoteChoicesResponse.prototype.setVersion = function(value) {
 
 /**
  * repeated Choice choices = 2;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.walletrpc.VoteChoicesResponse.Choice>}
  */
 proto.walletrpc.VoteChoicesResponse.prototype.getChoicesList = function() {
@@ -22369,6 +24171,7 @@ proto.walletrpc.SetVoteChoicesRequest.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetVoteChoicesRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetVoteChoicesRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -22440,6 +24243,7 @@ proto.walletrpc.SetVoteChoicesRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetVoteChoicesRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetVoteChoicesRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -22497,6 +24301,7 @@ proto.walletrpc.SetVoteChoicesRequest.Choice.prototype.toObject = function(opt_i
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetVoteChoicesRequest.Choice} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetVoteChoicesRequest.Choice.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -22571,6 +24376,7 @@ proto.walletrpc.SetVoteChoicesRequest.Choice.prototype.serializeBinary = functio
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetVoteChoicesRequest.Choice} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetVoteChoicesRequest.Choice.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -22623,8 +24429,6 @@ proto.walletrpc.SetVoteChoicesRequest.Choice.prototype.setChoiceId = function(va
 
 /**
  * repeated Choice choices = 1;
- * If you change this array by adding, removing or replacing elements, or if you
- * replace the array itself, then you must call the setter to update it.
  * @return {!Array.<!proto.walletrpc.SetVoteChoicesRequest.Choice>}
  */
 proto.walletrpc.SetVoteChoicesRequest.prototype.getChoicesList = function() {
@@ -22697,6 +24501,7 @@ proto.walletrpc.SetVoteChoicesResponse.prototype.toObject = function(opt_include
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.SetVoteChoicesResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetVoteChoicesResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -22766,6 +24571,7 @@ proto.walletrpc.SetVoteChoicesResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.SetVoteChoicesResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.SetVoteChoicesResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -22837,6 +24643,7 @@ proto.walletrpc.VerifyMessageRequest.prototype.toObject = function(opt_includeIn
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.VerifyMessageRequest} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.VerifyMessageRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -22916,6 +24723,7 @@ proto.walletrpc.VerifyMessageRequest.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.VerifyMessageRequest} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.VerifyMessageRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
@@ -23055,6 +24863,7 @@ proto.walletrpc.VerifyMessageResponse.prototype.toObject = function(opt_includeI
  *     http://goto/soy-param-migration
  * @param {!proto.walletrpc.VerifyMessageResponse} msg The msg instance to transform.
  * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.VerifyMessageResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
@@ -23124,6 +24933,7 @@ proto.walletrpc.VerifyMessageResponse.prototype.serializeBinary = function() {
  * format), writing to the given BinaryWriter.
  * @param {!proto.walletrpc.VerifyMessageResponse} message
  * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.VerifyMessageResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
