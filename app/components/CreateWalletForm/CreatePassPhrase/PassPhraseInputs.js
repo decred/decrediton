@@ -1,13 +1,14 @@
 import React from "react";
+import { FormattedMessage } from "react-intl";
 import "../../../style/CreateWalletForm.less";
 
 const PassPhraseInputs = ({
-  passPhraseLabel = "Encrypt Wallet",
+  passPhraseLabel = <FormattedMessage id="createWallet.passhraseInput.label" defaultMessage="Encrypt Wallet" />,
   passPhrasePlaceholder = "Private Passphrase",
-  passPhraseVerificationLabel = "Verify",
+  passPhraseVerificationLabel = <FormattedMessage id="createWallet.passphraseInput.verifyLabel" defaultMessage="Verify" />,
   passPhraseVerificationPlaceholder = "Private Passphrase",
-  blankPassPhraseError = "*Please enter your private passphrase",
-  passPhraseVerificationError = "*Passwords do not match",
+  blankPassPhraseError = <FormattedMessage id="createWallet.passphraseInput.errors.noPassPhrase" defaultMessage="*Please enter your private passphrase" />,
+  passPhraseVerificationError = <FormattedMessage id="createWallet.passphraseInput.errors.noMatch" defaultMessage="*Passwords do not match" />,
   passPhrase,
   passPhraseVerification,
   isBlank,

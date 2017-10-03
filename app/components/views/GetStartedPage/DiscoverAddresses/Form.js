@@ -1,14 +1,15 @@
 import React from "react";
 import Header from "../../../Header";
 import KeyBlueButton from "../../../KeyBlueButton";
+import { FormattedMessage } from "react-intl";
 import "../../../../style/GetStarted.less";
 
 const DiscoverAddressesFormHeader = ({
   startupError
 }) => (
   <Header getStarted
-    headerTitleOverview="Setting up Decrediton"
-    headerMetaOverview="Discovering addresses"
+    headerTitleOverview={<FormattedMessage id="getStarted.header.title" defaultMessage="Setting up Decrediton" />}
+    headerMetaOverview={<FormattedMessage id="getStarted.header.discoveringAddresses.meta" defaultMessage="Discovering addresses" />}
     headerTop={startupError
       ? <div key="pubError" className="get-started-view-notification-error">{startupError}</div>
       : <div key="pubError" ></div>}
@@ -26,8 +27,11 @@ const DiscoverAddressesFormBody = ({
   isInputRequest ? (
     <div className="get-started-content-new-seed page-content">
       <div className="get-started-content-instructions">
-        <p>Enter the passphrase you just created to scan the blockchain for additional accounts you may have previously created with your wallet.</p>
-        <p>Your account names aren't stored on the blockchain, so you will have to rename them after setting up Decrediton.</p>
+        <FormattedMessage id="getStarted.discoverAccountsInfo" defaultMessage={`
+          Enter the passphrase you just created to scan the blockchain for additional accounts you may have previously created with your wallet.
+
+          Your account names aren't stored on the blockchain, so you will have to rename them after setting up Decrediton.
+        `}/>
       </div>
       <div className="get-started-content-new-seed-create-button">
         <div className="get-started-content-confirm-wallet-create-input-left-padding">Scan for accounts:</div>
@@ -46,7 +50,9 @@ const DiscoverAddressesFormBody = ({
           </div>
         </div>
         {(hasAttemptedDiscover && !passPhrase) ? (
-          <div className="get-started-priv-pass-error">*Please enter your private passphrase</div>
+          <div className="get-started-priv-pass-error">
+            <FormattedMessage id="getStarted.discoverAddresses.errors.noPassphrase" defaultMessage="*Please enter your private passphrase" />
+          </div>
         ) : null}
         <div className="get-started-content-new-seed-create-button">
           <div className="get-started-content-confirm-wallet-create-input-left-padding"></div>
@@ -54,7 +60,9 @@ const DiscoverAddressesFormBody = ({
             <KeyBlueButton
               className="get-started-view-button-key-blue-wallet-new-seed"
               onClick={onDiscoverAddresses}
-            >Scan</KeyBlueButton>
+            >
+              <FormattedMessage id="getStarted.discoverAddresses.scanBtn" defaultMessage="Scan" />
+            </KeyBlueButton>
           </div>
         </div>
       </div>
