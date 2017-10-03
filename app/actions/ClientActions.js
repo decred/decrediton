@@ -7,7 +7,7 @@ import { push as pushHistory } from "react-router-redux";
 import {
   PingRequest, NetworkRequest, AccountNumberRequest, AccountsRequest,
   BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest,
-  AgendasRequest, VoteChoicesRequest, SetVoteChoicesRequest,
+  AgendasRequest, VoteChoicesRequest, SetVoteChoicesRequest, GetTicketsRequest,
 } from "../middleware/walletrpc/api_pb";
 import { TransactionDetails }  from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
@@ -319,6 +319,54 @@ export function showAccount(accountNumber) {
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
     dispatch(getAccountsAttempt());
+  };
+}
+
+export const GETTICKETS_ATTEMPT = "GETTICKETS_ATTEMPT";
+export const GETTICKETS_FAILED = "GETTICKETS_FAILED";
+export const GETTICKETS_PROGRESS = "GETTICKETS_PROGRESS";
+export const GETTICKETS_COMPLETE = "GETTICKETS_COMPLETE";
+
+export function getTicketsInfoAttempt() {
+  return (dispatch, getState) => {
+    const { getAccountsResponse } = getState().grpc;
+    var startRequestHeight, endRequestHeight = 0;
+    // Check to make sure getAccountsResponse (which has current block height) is available
+    if (getAccountsResponse !== null) {
+      endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
+      startRequestHeight = 0;
+    } else {
+      // Wait a little then re-dispatch this call since we have no starting height yet
+      setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 1000);
+      return;
+    }
+    var request = new GetTicketsRequest();
+    request.setStartingBlockHeight(startRequestHeight);
+    request.setEndingBlockHeight(endRequestHeight);
+    dispatch({ type: GETTICKETS_ATTEMPT });
+    const { walletService } = getState().grpc;
+    var getTx = walletService.getTickets(request);
+    getTx.on("data", function (response) {
+      dispatch(getTicketsInfoProgress(response));
+    });
+    getTx.on("end", function () {
+      setTimeout(() => { dispatch({ type: GETTICKETS_COMPLETE });}, 1000);
+    });
+    getTx.on("error", function (error) {
+      console.error(error + " Please try again");
+    });
+  };
+}
+
+function getTicketsInfoProgress(response) {
+  return (dispatch, getState) => {
+    const { ticketsInfo } = getState().grpc;
+    var updatedTickets = ticketsInfo;
+    for (var i = 0; i < response.getTickets().length; i++) {
+      console.log(Buffer.from(response.getTickets()[i].getHash()).toString());
+    }
+    dispatch({tickets: updatedTickets, type: GETTICKETS_PROGRESS});
+    response = null;
   };
 }
 
