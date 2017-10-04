@@ -57,6 +57,7 @@
   "changePassModal.oldPassphrase": "Senha antiga",
   "changePassModal.update": "Atualizar",
   "clipboard.copied": "Copiado",
+  "confirmSeed.errors.noPaste": "*Não cole a semente",
   "confirmSeed.errors.seedsDontMatch": "*Sementes diferentes",
   "confirmSeed.label": "Confirmar semente",
   "confirmSeed.wordsRemaining": "{remainingSeedWords, plural, =0 {completo} one {falta uma palavra} other {faltam # palavras}}",

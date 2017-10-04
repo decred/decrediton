@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-10-04T20:46:09.409Z\n"
+"POT-Creation-Date: 2017-10-04T21:03:30.355Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -141,6 +141,14 @@ msgstr ""
 #. *You must enter an account name
 msgctxt "accounts.formNew.errors.noName"
 msgid "*You must enter an account name"
+msgstr ""
+
+#: app/i18n/extracted/app/components/CreateWalletForm/ConfirmSeed/Form.json
+#. [confirmSeed.errors.noPaste]
+#. defaultMessage is:
+#. *You should not paste your Seeds. Please type it
+msgctxt "confirmSeed.errors.noPaste"
+msgid "*You should not paste your Seeds. Please type it"
 msgstr ""
 
 #: app/i18n/extracted/app/components/StakePools/AddForm.json

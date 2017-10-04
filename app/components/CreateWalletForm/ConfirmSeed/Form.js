@@ -34,7 +34,9 @@ class ConfirmSeedForm extends React.Component{
         </div>
         <div className="create-wallet-field">
           <div className="input-form">
-            {!this.state.showPasteWarning ? null : <div className="orange-warning">*You should not paste your Seeds. Please type it</div>}
+            {!this.state.showPasteWarning ? null : <div className="orange-warning">
+              <T id="confirmSeed.errors.noPaste" m="*You should not paste your Seeds. Please type it" />
+            </div>}
             <form className="input-form-confirm-seed">
               <SeedEntry label="Seed Entry" onChange={setSeedWords} onPaste={this.handleOnPaste} />
             </form>
