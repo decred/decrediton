@@ -2,7 +2,7 @@ import React from "react";
 import TicketsCogs from "../TicketsCogs";
 import AutoBuyerSwitch from "../AutoBuyerSwitch";
 import KeyBlueButton from "../KeyBlueButton";
-import {defineMessages, FormattedMessage} from "react-intl";
+import {defineMessages, FormattedMessage as T} from "react-intl";
 import "../../style/StakePool.less";
 
 const messages = defineMessages({
@@ -56,15 +56,15 @@ const TicketAutoBuyerForm = ({
   <div>
     <div className="stakepool-voting-title-area">
       <div className="stakepool-voting-title-area-name">
-        <FormattedMessage id="autobuyer.title" defaultMessage="Automatic Purchase" /></div>
+        <T id="autobuyer.title" m="Automatic Purchase" /></div>
     </div>
     <div className={isHidingDetails ? "stakepool-flex-height-auto-buyer-hidden" : "stakepool-flex-height-auto-buyer-shown" }>
       <div className="stakepool-auto-buyer-row">
         <AutoBuyerSwitch enabled={isTicketAutoBuyerEnabled} onClick={onToggleTicketAutoBuyer} />
         <div className="stakepool-auto-buyer-label">
           {isTicketAutoBuyerEnabled
-            ? <FormattedMessage id="autobuyer.enabled" defaultMessage="Enabled" />
-            : <FormattedMessage id="autobuyer.disabled" defaultMessage="Disabled" />}
+            ? <T id="autobuyer.enabled" m="Enabled" />
+            : <T id="autobuyer.disabled" m="Disabled" />}
         </div>
         <div className="stakepool-auto-buyer-quick-bar-row">
           {isHidingDetails ? (
@@ -85,7 +85,7 @@ const TicketAutoBuyerForm = ({
         <div className="stakepool-purchase-ticket-row">
           <div className="stakepool-purchase-ticket-row-left">
             <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-balance-to-maintain-icon">
-              {<FormattedMessage id="autobuyer.balanceToMaintain" defaultMessage="Balance to Maintain" />}:
+              {<T id="autobuyer.balanceToMaintain" m="Balance to Maintain" />}:
             </div></div>
             <div className="stakepool-purchase-ticket-num-input">
               <div className="stakepool-input-form-purchase-ticket">
@@ -104,7 +104,7 @@ const TicketAutoBuyerForm = ({
           </div>
           <div className="stakepool-purchase-ticket-row-right">
             <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-fee-icon">
-              {<FormattedMessage id="autobuyer.maxFee" defaultMessage="Max Fee" />}:
+              {<T id="autobuyer.maxFee" m="Max Fee" />}:
             </div></div>
             <div className="stakepool-purchase-ticket-num-input">
               <div className="stakepool-input-form-purchase-ticket">
@@ -125,7 +125,7 @@ const TicketAutoBuyerForm = ({
         <div className="stakepool-purchase-ticket-row">
           <div className="stakepool-purchase-ticket-row-left">
             <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-price-absolute-icon">
-              {<FormattedMessage id="autobuyer.maxPriceAbsolute" defaultMessage="Max Price Absolute" />}:
+              {<T id="autobuyer.maxPriceAbsolute" m="Max Price Absolute" />}:
             </div></div>
             <div className="stakepool-purchase-ticket-num-input">
               <div className="stakepool-input-form-purchase-ticket">
@@ -144,7 +144,7 @@ const TicketAutoBuyerForm = ({
           </div>
           <div className="stakepool-purchase-ticket-row-right">
             <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-price-relative-icon">
-              {<FormattedMessage id="autobuyer.maxPriceRelative" defaultMessage="Max Price Relative" />}:
+              {<T id="autobuyer.maxPriceRelative" m="Max Price Relative" />}:
             </div></div>
             <div className="stakepool-purchase-ticket-num-input">
               <div className="stakepool-input-form-purchase-ticket">
@@ -165,7 +165,7 @@ const TicketAutoBuyerForm = ({
         <div className="stakepool-purchase-ticket-row">
           <div className="stakepool-purchase-ticket-row-left">
             <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-per-block-icon">
-              {<FormattedMessage id="autobuyer.maxPerBlock" defaultMessage="Max Per Block" />}:
+              {<T id="autobuyer.maxPerBlock" m="Max Per Block" />}:
             </div></div>
             <div className="stakepool-purchase-ticket-num-input">
               <div className="stakepool-input-form-purchase-ticket">
@@ -189,7 +189,7 @@ const TicketAutoBuyerForm = ({
             disabled={!isTicketAutoBuyerConfigDirty}
             onClick={onUpdateTicketAutoBuyerConfig}
           >
-          <FormattedMessage id="autobuyer.updateConfigBtn" defaultMessage="Update Config" />
+          <T id="autobuyer.updateConfigBtn" m="Update Config" />
           </KeyBlueButton>
         </div>
       </div>

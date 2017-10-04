@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 import AccountsSelect from "../../AccountsSelect";
 import ReactTooltip from "react-tooltip";
-import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import DecredLoading from "../../DecredLoading";
 import SideBar from "../../SideBar";
 import Balance from "../../Balance";
@@ -52,15 +52,15 @@ const SendPage = ({
     <div className="page-view">
       <Header
         headerTitleOverview={<div className="header-title-send">
-          <FormattedMessage id="send.title" defaultMessage="Send Funds" /></div>}
+          <T id="send.title" m="Send Funds" /></div>}
         headerMetaOverview={isTestNet ? (
           <div className="header-meta-send">
-            <FormattedMessage id="send.testnetInfo"
-              defaultMessage="Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters (e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)." />
+            <T id="send.testnetInfo"
+              m="Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters (e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)." />
           </div>
         ) : (
           <div className="header-meta-send">
-            <FormattedMessage id="send.mainnetInfo" defaultMessage="Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)." />
+            <T id="send.mainnetInfo" m="Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)." />
           </div>
         )}
         headerTop={[
@@ -79,9 +79,9 @@ const SendPage = ({
           publishedTransactionHash ? (
             <div key="pubSuccess" className="send-view-notification-success">
               <div className="send-address-delete-icon-header" onClick={onClearPublishTxSuccess}/>
-              <FormattedMessage
+              <T
                 id="send.publishedTxHeader"
-                defaultMessage="Published tx: {hash}"
+                m="Published tx: {hash}"
                 values={{hash: publishedTransactionHash}}/>
             </div>
           ) : null
@@ -97,13 +97,13 @@ const SendPage = ({
             cancelPassphrase={onClearTransaction}
             heading={"Confirm Transaction"}
             description={<div>
-              <FormattedMessage id="send.confirmAmountLabel" defaultMessage="Please confirm your transaction for" />
+              <T id="send.confirmAmountLabel" m="Please confirm your transaction for" />
               : <Balance amount={totalSpent}/></div>}
           />
           <div className={!isShowingConfirm ? "page-content" : "page-content-blur"}>
             <div className="send-flex-height">
               <div className="send-select-account-area">
-                <div className="send-label"><FormattedMessage id="send.from" defaultMessage="From" />:</div>
+                <div className="send-label"><T id="send.from" m="From" />:</div>
                 <div className="send-select-account-input">
                   <AccountsSelect
                     onChange={onChangeAccount}
@@ -119,8 +119,8 @@ const SendPage = ({
                 />
                 <div className="send-send-all-input">
                 {!isSendAll ?
-                <a onClick={onShowSendAll}><FormattedMessage id="send.sendAllBtn" defaultMessage="Send All" /></a> :
-                <a onClick={onClearTransaction}><FormattedMessage id="send.cancelSendAll" defaultMessage="Close" /></a>  }
+                <a onClick={onShowSendAll}><T id="send.sendAllBtn" m="Send All" /></a> :
+                <a onClick={onClearTransaction}><T id="send.cancelSendAll" m="Close" /></a>  }
                 </div>
               </div>
               <div className="send-amount-area">
@@ -138,7 +138,7 @@ const SendPage = ({
                 className="content-send"
                 disabled={!isValid}
                 onClick={onShowConfirm}
-              ><FormattedMessage id="send.sendBtn" defaultMessage="Send" /></KeyBlueButton>
+              ><T id="send.sendBtn" m="Send" /></KeyBlueButton>
               {constructTxError ? (
                 <div className="send-construct-error">
                   {constructTxError}
@@ -147,7 +147,7 @@ const SendPage = ({
               <div className="estimation-area-send">
                 <div className="total-amount-send">
                   <div className="total-amount-send-text">
-                    <FormattedMessage id="send.totalAmountEstimation" defaultMessage="Total amount sending" />
+                    <T id="send.totalAmountEstimation" m="Total amount sending" />
                     :</div>
                   <div className="total-amount-send-amount">
                     <Balance amount={totalSpent}/>
@@ -155,7 +155,7 @@ const SendPage = ({
                 </div>
                 <div className="total-amount-send">
                   <div className="total-amount-send-text">
-                    <FormattedMessage id="send.feeEstimation" defaultMessage="Estimated Fee" />
+                    <T id="send.feeEstimation" m="Estimated Fee" />
                     :</div>
                   <div className="total-amount-send-amount">
                     <Balance amount={estimatedFee} />
@@ -163,7 +163,7 @@ const SendPage = ({
                 </div>
                 <div className="total-amount-send">
                   <div className="total-amount-send-text">
-                    <FormattedMessage id="send.sizeEstimation" defaultMessage="Estimated Size" />
+                    <T id="send.sizeEstimation" m="Estimated Size" />
                     :</div>
                   <div className="total-amount-send-amount">{estimatedSignedSize} bytes</div>
                 </div>

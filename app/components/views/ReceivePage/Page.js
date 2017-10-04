@@ -7,7 +7,7 @@ import SideBar from "../../SideBar";
 import Header from "../../Header";
 import CopyToClipboardButton from "../../CopyToClipboardButton";
 import QRCode from "./QRCode";
-import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import "../../../style/Layout.less";
 import "../../../style/ReceivePage.less";
 import "../../../style/MiscComponents.less";
@@ -30,10 +30,10 @@ const ReceivePage = ({
     <div className="page-view">
       <Header
         headerTitleOverview={<div className="receive-header-title">
-          <FormattedMessage id="receive.title" defaultMessage="Receive Funds" />
+          <T id="receive.title" m="Receive Funds" />
           </div>}
         headerMetaOverview={<div className="receive-header-meta">
-          <FormattedMessage id="receive.titleInfo" defaultMessage="Each time you request a payment, create a new address to protect your privacy." />
+          <T id="receive.titleInfo" m="Each time you request a payment, create a new address to protect your privacy." />
         </div>}
       />
       <div className="page-content">
@@ -48,7 +48,7 @@ const ReceivePage = ({
               to={"/accounts"}
             />
             <div className="receive-content-nest-prefix">
-              <FormattedMessage id="receive.accountLabel" defaultMessage="This address is for" />:</div>
+              <T id="receive.accountLabel" m="This address is for" />:</div>
             <div className="receive-select-account-input">
               <AccountsSelect onChange={onChangeAccountNumber} accountsType="visible" />
             </div>
@@ -69,7 +69,7 @@ const ReceivePage = ({
         </div>
         <div className="receive-toolbar">
           <KeyBlueButton size="large" block={false} onClick={onRequestAddress}>
-            <FormattedMessage id="receive.newAddressBtn" defaultMessage="Generate new address" />
+            <T id="receive.newAddressBtn" m="Generate new address" />
           </KeyBlueButton>
         </div>
       </div>

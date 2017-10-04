@@ -4,7 +4,7 @@ import Balance from "../../Balance";
 import TextToggle from "../../TextToggle";
 import "../../../style/StakePool.less";
 import ticketsPage from "../../../connectors/ticketsPage";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 
 const TicketsPageHeader = ({
   isShowingVotingPrefs,
@@ -115,8 +115,8 @@ const TicketsPageHeader = ({
       <div style={{height: "100%"}}>
         <div style={{float: "left"}}>
           {isShowingAddStakePool
-            ? <FormattedMessage id="stake.titleSettings" defaultMessage="Stake pool settings" />
-            : isShowingVotingPrefs ? "" : <FormattedMessage id="stake.titleTicketPrice" defaultMessage="Ticket price" />}:
+            ? <T id="stake.titleSettings" m="Stake pool settings" />
+            : isShowingVotingPrefs ? "" : <T id="stake.titleTicketPrice" m="Ticket price" />}:
         </div>
       </div>
     }
@@ -127,8 +127,8 @@ const TicketsPageHeader = ({
           <div className="stakepool-toggle">
             <TextToggle
               activeButton={"left"}
-              leftText={<FormattedMessage id="stake.purchaseTicketsTab" defaultMessage="Purchase Tickets" />}
-              rightText={<FormattedMessage id="stake.voteSettingsTab" defaultMessage="Vote Settings" />}
+              leftText={<T id="stake.purchaseTicketsTab" m="Purchase Tickets" />}
+              rightText={<T id="stake.voteSettingsTab" m="Vote Settings" />}
               toggleAction={onToggleTicketStakePool}
             />
           </div>

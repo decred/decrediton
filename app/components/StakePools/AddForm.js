@@ -4,7 +4,7 @@ import PassphraseModal from "../PassphraseModal";
 import SelectStakePool from "../SelectStakePool";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
-import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import "../../style/Layout.less";
 import "../../style/StakePool.less";
 
@@ -34,13 +34,13 @@ const StakePoolsAddForm = ({
       hidden={!isRequestingPassphrase}
       submitPassphrase={onSetStakePoolInfo}
       cancelPassphrase={onCancelPassphraseRequest}
-      heading={<FormattedMessage id="stake.addForm.passhraseHeading" defaultMessage="Enter private passphrase to connect to your stakepool" /> }
+      heading={<T id="stake.addForm.passhraseHeading" m="Enter private passphrase to connect to your stakepool" /> }
     />
     <div className={isRequestingPassphrase ? "page-content-blur" : "page-content"}>
       <div className="stakepool-flex-height">
         <div className="stakepool-content-nest-from-address">
           <div className="stakepool-content-nest-prefix-send">
-            <FormattedMessage id="stake.addPoolTitle" defaultMessage="Stake Pool" />
+            <T id="stake.addPoolTitle" m="Stake Pool" />
           :</div>
           <div className="stakepool-unconfigured-select">
             <SelectStakePool
@@ -53,7 +53,7 @@ const StakePoolsAddForm = ({
         </div>
         <div className="stakepool-content-nest-api-key-instructions">
           <span>
-            <FormattedMessage id="stake.addPool.info" defaultMessage={`
+            <T id="stake.addPool.info" m={`
               Please select your desired stakepool from the above dropdown and follow these instructions:
 
               1) Create an account or login to your existing account at {stakePoolLink}.
@@ -68,7 +68,7 @@ const StakePoolsAddForm = ({
             values={{
               stakePoolLink: <a className="stakepool-link" onClick={function(x){shell.openExternal(x);}.bind(null, selectedUnconfigured.label)}>{selectedUnconfigured.label}</a>,
               noticeSpan: <span className="stakepool-highligh-text-orange">
-                <FormattedMessage id="stake.addPool.notice" defaultMessage="Notice!" />
+                <T id="stake.addPool.notice" m="Notice!" />
               </span>
             }}/>
           </span>
@@ -86,18 +86,18 @@ const StakePoolsAddForm = ({
             </div>
           </div>
           <div className="stakepool-api-key-error">
-            {apiKey ? null : <FormattedMessage id="stake.addPool.errors.noApiKey" defaultMessage="*Please enter your API key" /> }
+            {apiKey ? null : <T id="stake.addPool.errors.noApiKey" m="*Please enter your API key" /> }
           </div>
         </div>
       </div>
       <KeyBlueButton className="stakepool-content-send" disabled={!apiKey} onClick={onSaveStakePool}>
-        <FormattedMessage id="stake.addPool.addBtn" defaultMessage="Add" />
+        <T id="stake.addPool.addBtn" m="Add" />
       </KeyBlueButton>
       {configuredStakePools.length ? (
         <SlateGrayButton
           className="stakepool-hide-config"
           onClick={onCancelAddStakePool}
-        ><FormattedMessage id="stake.addPool.cancelBtn" defaultMessage="Cancel" /></SlateGrayButton>
+        ><T id="stake.addPool.cancelBtn" m="Cancel" /></SlateGrayButton>
       ) : null}
     </div>
   </div>

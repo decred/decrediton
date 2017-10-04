@@ -1,7 +1,7 @@
 
 import React from "react";
 import KeyBlueButton from "../../KeyBlueButton";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import SideBar from "../../SideBar";
 import Header from "../../Header";
 import ChangePassphraseModal from "../../ChangePassphraseModal";
@@ -53,7 +53,7 @@ const SettingsPage = ({
             </div>
           ) : null
         ]}
-        headerTitleOverview={<FormattedMessage id="settings.title" defaultMessage="Settings" />}
+        headerTitleOverview={<T id="settings.title" m="Settings" />}
       />
       <div>
         <ChangePassphraseModal
@@ -65,7 +65,7 @@ const SettingsPage = ({
 
           <div className="settings-row">
             <div className="settings-label">
-              <FormattedMessage id="settings.locale" defaultMessage="Locale" />
+              <T id="settings.locale" m="Locale" />
             </div>
             <div className="settings-input">
 
@@ -82,7 +82,7 @@ const SettingsPage = ({
 
           <div className="settings-row">
             <div className="settings-label">
-              <FormattedMessage id="settings.displayedUnits" defaultMessage="Displayed Units" />
+              <T id="settings.displayedUnits" m="Displayed Units" />
             </div>
             <div className="settings-input">
 
@@ -99,10 +99,10 @@ const SettingsPage = ({
 
           <div className="settings-row">
             <div className="settings-label">
-              <FormattedMessage id="settings.network"
-                defaultMessage="Network" />
+              <T id="settings.network"
+                m="Network" />
                <span className="settings-restart"> (
-                 <FormattedMessage id="settings.requiresRestart" defaultMessage="requires restart" />
+                 <T id="settings.requiresRestart" m="requires restart" />
                 )</span>
             </div>
             <div className="settings-input">
@@ -124,13 +124,13 @@ const SettingsPage = ({
                 size="large"
                 block={false}
                 onClick={onSaveSettings}>
-                <FormattedMessage id="settings.save" defaultMessage="Save Settings" />
+                <T id="settings.save" m="Save Settings" />
               </KeyBlueButton>
             </div>
             <div className="settings-update-passphrase-button">
                 <KeyBlueButton
                   onClick={onShowChangePassphrase}>
-                  <FormattedMessage id="settings.updatePrivatePassphrase" defaultMessage="Update Private Passphrase" />
+                  <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
                 </KeyBlueButton>
             </div>
           </div>

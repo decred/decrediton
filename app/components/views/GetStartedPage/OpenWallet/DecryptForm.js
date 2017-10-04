@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../../Header";
 import KeyBlueButton from "../../../KeyBlueButton";
-import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import "../../../../style/GetStarted.less";
 
 const messages = defineMessages({
@@ -15,10 +15,10 @@ const OpenWalletDecryptFormHeader = ({
   startupError
 }) => (
   <Header getStarted
-    headerTitleOverview={<FormattedMessage id="getStarted.header.title" defaultMessage="Setting up Decrediton" />}
+    headerTitleOverview={<T id="getStarted.header.title" m="Setting up Decrediton" />}
     headerMetaOverview={(
       <div className="get-started-subheader">
-        <FormattedMessage id="getStarted.header.openingWallet.meta" defaultMessage="Opening wallet" />
+        <T id="getStarted.header.openingWallet.meta" m="Opening wallet" />
       </div>
     )}
     headerTop={startupError
@@ -40,11 +40,11 @@ const OpenWalletDecryptFormBodyBase = ({
     <div className="get-started-view">
       <div className="get-started-form-ct">
         <div className="get-started-content-instructions">
-          <FormattedMessage id="getStarted.decrypt.info" defaultMessage="This wallet is encrypted, please enter the public passphrase to decrypt it." />
+          <T id="getStarted.decrypt.info" m="This wallet is encrypted, please enter the public passphrase to decrypt it." />
         </div>
         <div className="get-started-field-ct">
           <div className="get-started-label">
-            <FormattedMessage id="getStarted.decrypt.label" defaultMessage="Decrypt Wallet" />
+            <T id="getStarted.decrypt.label" m="Decrypt Wallet" />
             :</div>
           <div className="get-started-field">
             <form className="get-started-input-form">
@@ -60,14 +60,14 @@ const OpenWalletDecryptFormBodyBase = ({
           </div>
           {(hasAttemptedOpen && !publicPassPhrase) ? (
             <div className="get-started-priv-pass-error">
-              <FormattedMessage id="getStarted.decrypt.errors.noPublicPassphrase" defaultMessage="*Please enter your public passphrase" />
+              <T id="getStarted.decrypt.errors.noPublicPassphrase" m="*Please enter your public passphrase" />
             </div>
           ) : null}
           <div className="get-started-field-ct">
             <div className="get-started-label"></div>
             <div className="get-started-field">
               <KeyBlueButton onClick={onOpenWallet}>
-                <FormattedMessage id="getStarted.decrypt.openWalletBtn" defaultMessage="Open Wallet" />
+                <T id="getStarted.decrypt.openWalletBtn" m="Open Wallet" />
               </KeyBlueButton>
             </div>
           </div>

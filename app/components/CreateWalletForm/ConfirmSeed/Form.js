@@ -1,6 +1,6 @@
 import React from "react";
 import SeedEntry from "./SeedEntry";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import "../../../style/CreateWalletForm.less";
 
 class ConfirmSeedForm extends React.Component{
@@ -25,10 +25,10 @@ class ConfirmSeedForm extends React.Component{
       <div className="confirm-seed">
         <div className="create-wallet-label">
           <div className="confirm-seed-label-text">
-            <FormattedMessage id="confirmSeed.label" defaultMessage="Confirm Seed" />:
+            <T id="confirmSeed.label" m="Confirm Seed" />:
           </div>
           <div className="confirm-seed-label-remaining-words">
-            <FormattedMessage id="confirmSeed.wordsRemaining" defaultMessage="{remainingSeedWords, plural, one {one word remaining} other {# words remaining} }"
+            <T id="confirmSeed.wordsRemaining" m="{remainingSeedWords, plural, one {one word remaining} other {# words remaining} }"
               values={{remainingSeedWords: remainingSeedWords}} />
           </div>
         </div>
@@ -44,7 +44,7 @@ class ConfirmSeedForm extends React.Component{
               ? seedError
               : isMatch || isEmpty
                 ? null
-                : <FormattedMessage id="confirmSeed.errors.seedsDontMatch" defaultMessage="*Seeds do not match" /> }
+                : <T id="confirmSeed.errors.seedsDontMatch" m="*Seeds do not match" /> }
           </div>
         </div>
       </div>

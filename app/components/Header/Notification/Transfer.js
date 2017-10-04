@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router";
 import Balance from "../../Balance";
-import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import "../../../style/Header.less";
 
 const messages = defineMessages({
@@ -39,10 +39,10 @@ const Transfer = ({
     <div className="snackbar-information-row">
       <div className="snackbar-information-row-type">{intl.formatMessage(messages[type])}</div>
       <div className="snackbar-information-row-amount">
-        <FormattedMessage id="notification.transfer.amount" defaultMessage="Amount" />  <Balance amount={amount}/>
+        <T id="notification.transfer.amount" m="Amount" />  <Balance amount={amount}/>
       </div>
       <div className="snackbar-information-row-fee">
-        <FormattedMessage id="notification.transfer.fee" defaultMessage="Fee" />  <Balance amount={fee}/>
+        <T id="notification.transfer.fee" m="Fee" />  <Balance amount={fee}/>
       </div>
     </div>
   </div>

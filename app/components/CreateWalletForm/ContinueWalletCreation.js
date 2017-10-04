@@ -3,7 +3,7 @@ import React from "react";
 import KeyBlueButton from "../KeyBlueButton";
 import ConfirmSeed from "./ConfirmSeed";
 import CreatePassPhrase from "./CreatePassPhrase";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import "../../style/CreateWalletForm.less";
 
 const ContinueWalletCreation = ({
@@ -16,7 +16,7 @@ const ContinueWalletCreation = ({
   <div className="page-content new-seed">
     <ConfirmSeed {...props} onChange={setSeed} />
     <CreatePassPhrase passPhraseLabel={
-      <FormattedMessage id="createWallet.encryptWallet" defaultMessage="Encrypt Wallet" />}
+      <T id="createWallet.encryptWallet" m="Encrypt Wallet" />}
       onChange={setPassPhrase} onSubmit={onCreateWallet} />
 
     <div className="create-wallet-button-container">
@@ -27,7 +27,7 @@ const ContinueWalletCreation = ({
           disabled={!isValid}
           onClick={onCreateWallet}
         >
-          <FormattedMessage id="createWallet.createWalletBtn" defaultMessage="Create Wallet" />
+          <T id="createWallet.createWalletBtn" m="Create Wallet" />
         </KeyBlueButton>
       </div>
     </div>

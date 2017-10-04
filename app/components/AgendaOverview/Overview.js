@@ -2,7 +2,7 @@
 import React from "react";
 import AgendaClose from "../AgendaClose";
 import KeyBlueButton from "../KeyBlueButton";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import "../../style/AgendaOverview.less";
 
 const Overview = ({
@@ -25,11 +25,11 @@ const Overview = ({
         <div className="agenda-overview-text">
           <div className="agenda-overview-short-description">{agendaDescription}</div>
           <div className="agenda-overview-agenda-id-ct">
-            <FormattedMessage id="agenda.card.idLabel" defaultMessage="Agenda ID" />
+            <T id="agenda.card.idLabel" m="Agenda ID" />
             : <span className="agenda-overview-agenda-id">{agendaId}</span>
           </div>
           <div className="agenda-overview-description">
-            <FormattedMessage id="agenda.overviewDescription" defaultMessage="Once the majority of the PoW miners have upgraded (75% of the 100 most recent blocks are at the latest version) and the majority of the PoS miners have upgraded (75% of the votes in a 2016 block interval), the voting process begins." />
+            <T id="agenda.overviewDescription" m="Once the majority of the PoW miners have upgraded (75% of the 100 most recent blocks are at the latest version) and the majority of the PoS miners have upgraded (75% of the votes in a 2016 block interval), the voting process begins." />
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@ const Overview = ({
     <div className="agenda-overview-options-area">
       <div className="agenda-overview-options-section">
         <div className="agenda-name-options">
-          <FormattedMessage id="agenda.votingFor" defaultMessage="Voting for" />
+          <T id="agenda.votingFor" m="Voting for" />
         </div>
       </div>
       <div className="agenda-overview-options-section-middle">
@@ -62,7 +62,7 @@ const Overview = ({
     <div className="agenda-bottom">
       <div className="agenda-bottom-overview">
         <div className="agenda-indicator-pending">
-          <FormattedMessage id="agenda.overview.inProgressIndicator" defaultMessage="In Progress" />
+          <T id="agenda.overview.inProgressIndicator" m="In Progress" />
         </div>
       </div>
       <div className="agenda-bottom-options">
@@ -70,7 +70,7 @@ const Overview = ({
           disabled={!hasModifiedChoice}
           className="agenda-update-preferences-button"
           onClick={updatePreferences}
-        ><FormattedMessage id="agenda.updatePreference" defaultMessage="Update Preference" /></KeyBlueButton>
+        ><T id="agenda.updatePreference" m="Update Preference" /></KeyBlueButton>
       </div>
     </div>
   </div>

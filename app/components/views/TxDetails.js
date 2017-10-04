@@ -9,7 +9,7 @@ import SlateGrayButton from "../SlateGrayButton";
 import "../../style/Layout.less";
 import "../../style/TxDetails.less";
 import { addSpacingAroundText } from "../../helpers/strings";
-import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { tsToDate } from "../../helpers/dateFormat";
 import "../../style/Fonts.less";
 
@@ -59,14 +59,14 @@ const TxDetails = ({
 
       <Header
         headerTitleOverview={<SlateGrayButton key="back" style={{ float: "right" }} onClick={() => router.goBack()}>
-          <FormattedMessage id="txDetails.backBtn" defaultMessage="Back" /></SlateGrayButton>}
+          <T id="txDetails.backBtn" m="Back" /></SlateGrayButton>}
         headerMetaOverview={txType ? (
           <div className="txdetails-header-meta-stake-tx">
             {intl.formatMessage(messages[txType])}
             { isConfirmed
                 ? <div className="txdetails-header-meta-time-and-date">
-                    <FormattedMessage id="txDetails.timestamp"
-                      defaultMessage="{timestamp, date, medium} {timestamp, time, medium}"
+                    <T id="txDetails.timestamp"
+                      m="{timestamp, date, medium} {timestamp, time, medium}"
                       values={{timestamp: tsToDate(txTimestamp)}}
                     /></div>
                 : null }
@@ -76,8 +76,8 @@ const TxDetails = ({
             {txDirection === "in" ? "" : "-"}<Balance amount={txAmount} />
             { isConfirmed
               ? <div className="txdetails-header-meta-time-and-date">
-                  <FormattedMessage id="txDetails.timestamp"
-                      defaultMessage="{timestamp, date, medium} {timestamp, time, medium}"
+                  <T id="txDetails.timestamp"
+                      m="{timestamp, date, medium} {timestamp, time, medium}"
                       values={{timestamp: tsToDate(txTimestamp)}}
                     /></div>
               : null }
@@ -88,28 +88,28 @@ const TxDetails = ({
         <div className="txdetails-content-nest">
           <div className="txdetails-top">
             <div className="txdetails-name">
-              <FormattedMessage id="txDetails.transactionLabel" defaultMessage="Transaction" />:
+              <T id="txDetails.transactionLabel" m="Transaction" />:
             </div>
             <div className="txdetails-value">
               <a onClick={() => shell.openExternal(txUrl)} style={{ cursor: "pointer" }}>{txHash}</a>
             </div>
             <div className="txdetails-name">
               {isConfirmed ? (<div className="txdetails-indicator-confirmed">
-                <FormattedMessage id="transaction.indicatorConfirmed" defaultMessage="Confirmed" />
+                <T id="transaction.indicatorConfirmed" m="Confirmed" />
               </div>) : (<div className="txdetails-indicator-pending">
-                <FormattedMessage id="transaction.indicatorPending" defaultMessage="Pending" /></div>)}
+                <T id="transaction.indicatorPending" m="Pending" /></div>)}
             </div>
             <div className="txdetails-value">
               <span className="txdetails-value-text">
-                <FormattedMessage id="transaction.confirmationHeight"
-                  defaultMessage="{confirmations, plural, =0 {pending} one {# confirmation} other {# confirmations}}"
+                <T id="transaction.confirmationHeight"
+                  m="{confirmations, plural, =0 {pending} one {# confirmation} other {# confirmations}}"
                   values={{confirmations: (isConfirmed ? currentBlockHeight - txHeight : 0)}} />
               </span>
             </div>
             <div className="txdetails-overview">
               <div className="txdetails-input-area">
                 <div className="txdetails-overview-title-consumed">
-                  <FormattedMessage id="txDetails.usedInputs" defaultMessage="Used Inputs" />
+                  <T id="txDetails.usedInputs" m="Used Inputs" />
                 </div>
                 <div className="txdetails-input-arrow"></div>
                 {txInputs.map(({ accountName, amount }, idx) => (
@@ -121,7 +121,7 @@ const TxDetails = ({
               </div>
               <div className="txdetails-output-area">
                 <div className="txdetails-overview-title-created">
-                  <FormattedMessage id="txDetails.walletOutputs" defaultMessage="New Wallet Outputs" />
+                  <T id="txDetails.walletOutputs" m="New Wallet Outputs" />
                 </div>
                 {txOutputs.map(({ address, amount }, idx) => (
                   <div key={idx} className="txdetails-row">
@@ -132,18 +132,18 @@ const TxDetails = ({
               </div>
             </div>
             <div>
-              <div className="txdetails-name"><FormattedMessage id="txDetails.transactionFeeLabel" defaultMessage="Transaction fee" />:</div>
+              <div className="txdetails-name"><T id="txDetails.transactionFeeLabel" m="Transaction fee" />:</div>
               <div className="txdetails-value"><Balance amount={txFee} /></div>
             </div>
           </div>
           {isConfirmed ?
             <div className="txdetails-details">
-              <div className="txdetails-title"><FormattedMessage id="txDetails.properties" defaultMessage="Properties" /></div>
-              <div className="txdetails-name"><FormattedMessage id="txDetails.blockLabel" defaultMessage="Block" />:</div>
+              <div className="txdetails-title"><T id="txDetails.properties" m="Properties" /></div>
+              <div className="txdetails-name"><T id="txDetails.blockLabel" m="Block" />:</div>
               <div className="txdetails-value">
                 <a onClick={() => shell.openExternal(txBlockUrl)} style={{ cursor: "pointer" }}>{txBlockHash}</a>
               </div>
-              <div className="txdetails-name"><FormattedMessage id="txDetails.blockHeightLabel" defaultMessage="Height" /> :</div>
+              <div className="txdetails-name"><T id="txDetails.blockHeightLabel" m="Height" /> :</div>
               <div className="txdetails-value">{txHeight}</div>
             </div>
             : null

@@ -12,11 +12,11 @@ Don't hardcode strings or messages. On react components use the following syntax
 
 ```javascript
 ...
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 
 ...
 
-<FormattedMessage id="send.title" defaultMessage="Send Funds" /></div>
+<T id="send.title" m="Send Funds" /></div>
 ...
 
 ```
@@ -28,9 +28,9 @@ The id string is meant to uniquely identify the string being translated. Don't r
 If the string has a variable element within it (eg., a number, amount or a variable name) use the following syntax:
 
 ```javascript
-<FormattedMessage
+<T
   id="history.paginationPages"
-  defaultMessage="{current} of {total}"
+  m="{current} of {total}"
   values={{
     current: currentPage+1,
     total: totalPages}} />
@@ -90,8 +90,8 @@ It is currently impossible to use the react-intl and react-tooltip libraries tog
 Use the plural format for values:
 
 ```javascript
-<FormattedMessage id="confirmSeed.wordsRemaining"
-  defaultMessage="{remainingSeedWords, plural, one {one word remaining} other {# words remaining} }"
+<T id="confirmSeed.wordsRemaining"
+  m="{remainingSeedWords, plural, one {one word remaining} other {# words remaining} }"
   values={{remainingSeedWords: remainingSeedWords}} />
 ```
 
@@ -102,7 +102,7 @@ This is currently tricky to do. In general, HTML should **not** be included in s
 Current way of embedding an styled substring in a translated message is passing the substring as a value (example in [CreateWallet.js](../components/CreateWalletForm/CreateWallet.js)):
 
 ```javascript
-<FormattedMessage id="createWallet.lossInfo" defaultMessage={`
+<T id="createWallet.lossInfo" m={`
   To help avoid permanent loss of your wallet, the seed must be backed up before continuing.
 
   {warningNotice} Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else.
@@ -110,7 +110,7 @@ Current way of embedding an styled substring in a translated message is passing 
   values={{
     warningNotice:
       <span className="orange-warning">
-        <FormattedMessage id="createWallet.warningNotice" defaultMessage="Warning"/>
+        <T id="createWallet.warningNotice" m="Warning"/>
       </span>
   }}
 ```
@@ -122,12 +122,12 @@ Notice the use of a `FormattedMessage` (actually, a JSX value) as the value to b
 Use the `date` and `time` formats on the values inside the translation string. Custom formats may be available or written as needed on the [main locales file](locales/index.js).
 
 ```javascript
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import { tsToDate } from "../../helpers/dateFormat";
 
 
-<FormattedMessage id="transaction.timestamp"
-  defaultMessage="{timestamp, date, medium} {timestamp, time, medium}"
+<T id="transaction.timestamp"
+  m="{timestamp, date, medium} {timestamp, time, medium}"
   values={{timestamp: tsToDate(txTimestamp)}}/>
 
 ```

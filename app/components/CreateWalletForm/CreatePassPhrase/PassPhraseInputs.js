@@ -1,5 +1,5 @@
 import React from "react";
-import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import "../../../style/CreateWalletForm.less";
 
 const messages = defineMessages({
@@ -14,10 +14,10 @@ const messages = defineMessages({
 });
 
 const PassPhraseInputs = ({
-  passPhraseLabel = <FormattedMessage id="createWallet.passhraseInput.label" defaultMessage="Encrypt Wallet" />,
-  passPhraseVerificationLabel = <FormattedMessage id="createWallet.passphraseInput.verifyLabel" defaultMessage="Verify" />,
-  blankPassPhraseError = <FormattedMessage id="createWallet.passphraseInput.errors.noPassPhrase" defaultMessage="*Please enter your private passphrase" />,
-  passPhraseVerificationError = <FormattedMessage id="createWallet.passphraseInput.errors.noMatch" defaultMessage="*Passwords do not match" />,
+  passPhraseLabel = <T id="createWallet.passhraseInput.label" m="Encrypt Wallet" />,
+  passPhraseVerificationLabel = <T id="createWallet.passphraseInput.verifyLabel" m="Verify" />,
+  blankPassPhraseError = <T id="createWallet.passphraseInput.errors.noPassPhrase" m="*Please enter your private passphrase" />,
+  passPhraseVerificationError = <T id="createWallet.passphraseInput.errors.noMatch" m="*Passwords do not match" />,
   passPhrase,
   passPhraseVerification,
   isBlank,

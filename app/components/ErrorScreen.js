@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 
 const ErrorScreen = () => (
   <div>
     <p>
-      <FormattedMessage id="errors.general" defaultMessage="Something went wrong, please go back " />
+      <T id="errors.general" m="Something went wrong, please go back " />
     </p>
-    <Link to='/'><FormattedMessage id="errors.goHome" defaultMessage="Back to Home" /></Link>
+    <Link to='/'><T id="errors.goHome" m="Back to Home" /></Link>
   </div>
 );
 

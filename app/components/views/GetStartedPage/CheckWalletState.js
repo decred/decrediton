@@ -1,14 +1,14 @@
 import React from "react";
 import Header from "../../Header";
 import ShowError from "../../ShowError";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import "../../../style/GetStarted.less";
 
 export const CheckWalletStateHeader = () => (
   <Header
     getStarted
-    headerTitleOverview={<FormattedMessage id="getStarted.header.title" defaultMessage="Setting up Decrediton" />}
-    headerMetaOverview={<FormattedMessage id="getStarted.header.checkingWalletState.meta" defaultMessage="Checking wallet state" />} />
+    headerTitleOverview={<T id="getStarted.header.title" m="Setting up Decrediton" />}
+    headerMetaOverview={<T id="getStarted.header.checkingWalletState.meta" m="Checking wallet state" />} />
 );
 
 export const CheckWalletStateBody = ({

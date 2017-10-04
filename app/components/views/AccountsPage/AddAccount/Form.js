@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../../Header";
 import KeyBlueButton from "../../../KeyBlueButton";
 import SlateGrayButton from "../../../SlateGrayButton";
-import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import "../../../../style/Layout.less";
 import "../../../../style/AccountsPage.less";
 
@@ -50,7 +50,7 @@ const AddAccountForm = ({
       <div className="account-flex-height">
         <div className="account-form-row">
           <div className="account-form-label">
-            <FormattedMessage id="accounts.formNew.name" defaultMessage="Account Name" />
+            <T id="accounts.formNew.name" m="Account Name" />
             :</div>
           <div className="account-form-input">
             <div className="account-input-form">
@@ -65,12 +65,12 @@ const AddAccountForm = ({
           </div>
           {(hasAttemptedSave && !name) ? (
             <div className="account-form-input-error">
-              <FormattedMessage id="accounts.formNew.errors.noName" defaultMessage="*You must enter an account name" />
+              <T id="accounts.formNew.errors.noName" m="*You must enter an account name" />
             </div>
           ) : null}
         </div>
         <div className="account-form-row" key="privatePassPhrase">
-          <div className="account-form-label"><FormattedMessage id="accounts.formNew.privatePassphrase" defaultMessage="Private Passphrase" />:</div>
+          <div className="account-form-label"><T id="accounts.formNew.privatePassphrase" m="Private Passphrase" />:</div>
           <div className="account-form-input">
             <div className="account-input-form">
               <input
@@ -84,7 +84,7 @@ const AddAccountForm = ({
           </div>
           {(hasAttemptedSave && !passPhrase) ? (
             <div className="account-form-input-error">
-              <FormattedMessage id="accounts.formNew.errors.noPassphrase" defaultMessage="*Please enter your private passphrase" />
+              <T id="accounts.formNew.errors.noPassphrase" m="*Please enter your private passphrase" />
             </div>
           ) : null}
 
@@ -94,11 +94,11 @@ const AddAccountForm = ({
         <KeyBlueButton
           className="confirm-new-account-button"
           onClick={onSave}
-        ><FormattedMessage id="accounts.formNew.confirmBtn" defaultMessage="Confirm" /></KeyBlueButton>
+        ><T id="accounts.formNew.confirmBtn" m="Confirm" /></KeyBlueButton>
         <SlateGrayButton
           className="hide-new-account-button"
           onClick={onCancel}
-        ><FormattedMessage id="accounts.formNew.cancelBtn" defaultMessage="Cancel" /></SlateGrayButton>
+        ><T id="accounts.formNew.cancelBtn" m="Cancel" /></SlateGrayButton>
       </div>
     </div>
   </div>

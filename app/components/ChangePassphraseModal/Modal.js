@@ -2,7 +2,7 @@
 import React from "react";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import "../../style/ChangePassphraseModal.less";
 
 const Modal = ({
@@ -29,7 +29,7 @@ const Modal = ({
       ] : null}
       <div className="change-passphrase-modal-field-ct">
         <div className="change-passphrase-modal-label">
-          <FormattedMessage id="changePassModal.oldPassphrase" defaultMessage="Old Private Passphrase" />
+          <T id="changePassModal.oldPassphrase" m="Old Private Passphrase" />
           :</div>
         <input
           id="oldPassphrase"
@@ -43,7 +43,7 @@ const Modal = ({
       </div>
       <div className="change-passphrase-modal-field-ct">
         <div className="change-passphrase-modal-label">
-          <FormattedMessage id="changePassModal.newPassphrase" defaultMessage="New Private Passphrase" />
+          <T id="changePassModal.newPassphrase" m="New Private Passphrase" />
           :</div>
         <input
           id="passphrase"
@@ -57,7 +57,7 @@ const Modal = ({
       </div>
       <div className="change-passphrase-modal-field-ct">
         <div className="change-passphrase-modal-label">
-          <FormattedMessage id="changePassModal.confirm" defaultMessage="Confirm" />
+          <T id="changePassModal.confirm" m="Confirm" />
           :</div>
         <input
           id='confirmPassphrase'
@@ -71,10 +71,10 @@ const Modal = ({
       </div>
       <div className="change-passphrase-modal-toolbar">
         <KeyBlueButton className="change-passphrase-modal-save-button" onClick={submitPassphrase}>
-          <FormattedMessage id="changePassModal.update" defaultMessage="Update" />
+          <T id="changePassModal.update" m="Update" />
         </KeyBlueButton>
         <SlateGrayButton className="change-passphrase-modal-cancel-button" onClick={cancelPassphrase}>
-          <FormattedMessage id="changePassModal.cancel" defaultMessage="Cancel" />
+          <T id="changePassModal.cancel" m="Cancel" />
         </SlateGrayButton>
       </div>
     </div>

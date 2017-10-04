@@ -4,7 +4,7 @@ import MenuLink from "../MenuLink";
 import "../../style/Fonts.less";
 import "../../style/SideBar.less";
 import RescanProgress from "../RescanProgress";
-import { FormattedMessage, FormattedRelative } from "react-intl";
+import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { tsToDate } from "../../helpers/dateFormat";
 
 const Bar = ({
@@ -27,14 +27,14 @@ const Bar = ({
   {(gettingStarted || errorPage) ? null : (
     <div>
       <div className="sidebar-menu-navigation">
-        <MenuLink to="/home"><FormattedMessage id="menu.overview" defaultMessage="Overview"/></MenuLink>
-        <MenuLink to="/accounts"><FormattedMessage id="menu.accounts" defaultMessage="Accounts"/></MenuLink>
-        <MenuLink to="/send"><FormattedMessage id="menu.send" defaultMessage="Send"/></MenuLink>
-        <MenuLink to="/receive"><FormattedMessage id="menu.receive" defaultMessage="Receive"/></MenuLink>
-        <MenuLink to="/history"><FormattedMessage id="menu.history" defaultMessage="History"/></MenuLink>
-        <MenuLink to="/proofofstake"><FormattedMessage id="menu.tickets" defaultMessage="Tickets"/></MenuLink>
-        <MenuLink to="/settings"><FormattedMessage id="menu.settings" defaultMessage="Settings"/></MenuLink>
-        <MenuLink to="/help"><FormattedMessage id="menu.help" defaultMessage="Help"/></MenuLink>
+        <MenuLink to="/home"><T id="menu.overview" m="Overview"/></MenuLink>
+        <MenuLink to="/accounts"><T id="menu.accounts" m="Accounts"/></MenuLink>
+        <MenuLink to="/send"><T id="menu.send" m="Send"/></MenuLink>
+        <MenuLink to="/receive"><T id="menu.receive" m="Receive"/></MenuLink>
+        <MenuLink to="/history"><T id="menu.history" m="History"/></MenuLink>
+        <MenuLink to="/proofofstake"><T id="menu.tickets" m="Tickets"/></MenuLink>
+        <MenuLink to="/settings"><T id="menu.settings" m="Settings"/></MenuLink>
+        <MenuLink to="/help"><T id="menu.help" m="Help"/></MenuLink>
       </div>
       <div className="sidebar-menu-total-balance-extended" style={{ display: isShowingAccounts ? "block" : "none" }}>
         <div className="sidebar-menu-total-balance-extended-bottom">
@@ -56,7 +56,7 @@ const Bar = ({
           <RescanProgress/> :
           <div>
             <div className="sidebar-menu-bottom-total-balance-short-separator"></div>
-            <div className="sidebar-menu-bottom-total-balance-short-name"><FormattedMessage id="sidebar.totalBalance" defaultMessage="Total Balance"/>:</div>
+            <div className="sidebar-menu-bottom-total-balance-short-name"><T id="sidebar.totalBalance" m="Total Balance"/>:</div>
             <div className="sidebar-menu-bottom-total-balance-short-value">{totalBalance.toString()}</div>
           </div> }
         </div>
@@ -65,8 +65,8 @@ const Bar = ({
             <div>
               <a className="sidebar-menu-bottom-latest-block-name">
                 {synced
-                  ? <FormattedMessage id="sidebar.latestBlock" defaultMessage="Latest Block" />
-                  : <FormattedMessage id="sidebar.syncedToBlock" defaultMessage="Synced to block" /> }:
+                  ? <T id="sidebar.latestBlock" m="Latest Block" />
+                  : <T id="sidebar.syncedToBlock" m="Synced to block" /> }:
                 <span className="sidebar-menu-bottom-latest-block-number"> {currentHeight}</span>
               </a>
               <div className="sidebar-menu-bottom-latest-block-time">

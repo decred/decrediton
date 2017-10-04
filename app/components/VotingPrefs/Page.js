@@ -2,7 +2,7 @@ import React from "react";
 import AgendaCard from "../AgendaCard";
 import AgendaOverview from "../AgendaOverview";
 import SelectStakePool from "../SelectStakePool";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import "../../style/StakePool.less";
 
 const VotingPrefsPage = ({
@@ -19,7 +19,7 @@ const VotingPrefsPage = ({
   <div className="stakepool-content-voting-gui page-content">
     <div className="stakepool-voting-title-area">
       <div className="stakepool-voting-title-area-name">
-        <FormattedMessage id="votingPreferences.title" defaultMessage="Voting Preferences" />
+        <T id="votingPreferences.title" m="Voting Preferences" />
       </div>
       <div className="stakepool-unconfigured-select">
         <SelectStakePool
@@ -52,14 +52,14 @@ const VotingPrefsPage = ({
           )
         ) : (
           <div className="stakepool-no-agendas-message">
-            <FormattedMessage id="votingPreferences.noAgenda" defaultMessage="There are currently no agendas for voting." />
+            <T id="votingPreferences.noAgenda" m="There are currently no agendas for voting." />
           </div>
         )}
       </div>
     ) : (
       <div className="stakepool-voting-agenda-area">
         <div className="stakepool-no-agendas-message">
-          <FormattedMessage id="votingPreferences.noVoteChoices" defaultMessage="This pool is not configured for vote choices." /></div>
+          <T id="votingPreferences.noVoteChoices" m="This pool is not configured for vote choices." /></div>
       </div>
     )}
   </div>

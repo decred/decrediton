@@ -2,7 +2,7 @@
 import React from "react";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import "../../style/ImportScriptModal.less";
 
 const Modal = ({
@@ -23,7 +23,7 @@ const Modal = ({
       <div className="import-script-modal-description">{description}</div>
       <div className="import-script-modal-field-ct">
         <div className="import-script-modal-label">
-          <FormattedMessage id="importScriptModal.redeemScript" defaultMessage="Redeem Script" />
+          <T id="importScriptModal.redeemScript" m="Redeem Script" />
           :</div>
         <input
           id="script"
@@ -37,12 +37,12 @@ const Modal = ({
       <div className="import-script-modal-error-ct">
         <div className="import-script-modal-label"></div>
         <div className="import-script-modal-error">{(hasFailedAttempt && !script)
-          ? <FormattedMessage id="importScriptModal.errors.noScript" defaultMessage="*Please enter your script" />
+          ? <T id="importScriptModal.errors.noScript" m="*Please enter your script" />
           : null}</div>
       </div>
       <div className="import-script-modal-field-ct">
         <div className="import-script-modal-label">
-          <FormattedMessage id="importScriptModal.privatePassphrase" defaultMessage="Private Passphrase" />
+          <T id="importScriptModal.privatePassphrase" m="Private Passphrase" />
            :</div>
         <input
           id="passphrase"
@@ -56,7 +56,7 @@ const Modal = ({
       <div className="import-script-modal-error-ct">
         <div className="import-script-modal-label"></div>
         <div className="import-script-modal-error">{(hasFailedAttempt && !passPhrase)
-          ? <FormattedMessage id="importScriptModal.errors.noPassphrase" defaultMessage="*Please enter your private passphrase" />
+          ? <T id="importScriptModal.errors.noPassphrase" m="*Please enter your private passphrase" />
           : null}</div>
       </div>
       <div className="import-script-modal-toolbar">

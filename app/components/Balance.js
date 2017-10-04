@@ -1,6 +1,6 @@
 import React from "react";
 import "../style/Balance.less";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import balanceConnector from "../connectors/balance";
 
 export const Balance = ({ currencyDisplay, amount, onClick }) => {
@@ -16,9 +16,9 @@ export const Balance = ({ currencyDisplay, amount, onClick }) => {
         className="balance-base"
         onClick={onClick}
       >
-        <FormattedMessage
+        <T
           id="balance.dcr"
-          defaultMessage="{amount, number, two-decimals}{smallAmount} {unit}"
+          m="{amount, number, two-decimals}{smallAmount} {unit}"
           values={{
             amount: numberFormatPart[0]+"."+numberFormatPart[1].toString().slice(0,2),
             smallAmount:
@@ -36,9 +36,9 @@ export const Balance = ({ currencyDisplay, amount, onClick }) => {
       className="balance-base"
       onClick={onClick}
       >
-        <FormattedMessage
+        <T
           id="balance.atoms"
-          defaultMessage="{amount} {unit}"
+          m="{amount} {unit}"
           values={{
             amount: amount,
             unit: <span className="balance-small"> atoms</span>

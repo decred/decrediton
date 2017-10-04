@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../../../Header";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import "../../../../style/GetStarted.less";
 
 const FetchBlockHeadersFormHeader = ({
@@ -8,8 +8,8 @@ const FetchBlockHeadersFormHeader = ({
 }) => (
   <Header
     getStarted
-    headerTitleOverview={<FormattedMessage id="getStarted.header.title" defaultMessage="Setting up Decrediton" />}
-    headerMetaOverview={<FormattedMessage id="getStarted.header.fetchingBlockHeaders.meta" defaultMessage="Fetching block headers" />}
+    headerTitleOverview={<T id="getStarted.header.title" m="Setting up Decrediton" />}
+    headerMetaOverview={<T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />}
     headerTop={startupError
       ? <div key="fetchHeadersError" className="get-started-view-notification-error">{startupError}</div>
       : <div key="fetchHeadersError" ></div>} />
@@ -21,7 +21,7 @@ const FetchBlockHeadersFormBody = ({
 }) => {
   return isProcessing && showLongWaitMessage ? (
     <div className="get-started-fetch-headers-message">
-      <FormattedMessage id="getStarted.firstTimeSyncDelayReminder" defaultMessage="If you are syncing the blockchain for the first time, this may take a while." />
+      <T id="getStarted.firstTimeSyncDelayReminder" m="If you are syncing the blockchain for the first time, this may take a while." />
     </div>
    ) : null;
 };

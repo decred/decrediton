@@ -1,6 +1,6 @@
 import React from "react";
 import "../../style/TxHistory.less";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import { tsToDate } from "../../helpers/dateFormat";
 
 const Status = ({ txAccountName, pending, txTimestamp }) => (
@@ -10,11 +10,11 @@ const Status = ({ txAccountName, pending, txTimestamp }) => (
       <div className="transaction-account-indicator">
         {pending ? (
           <div className="indicator-pending">
-            <FormattedMessage id="transaction.indicatorPending" defaultMessage="Pending" />
+            <T id="transaction.indicatorPending" m="Pending" />
           </div>
         ) : (
           <div className="indicator-confirmed">
-            <FormattedMessage id="transaction.indicatorConfirmed" defaultMessage="Confirmed" />
+            <T id="transaction.indicatorConfirmed" m="Confirmed" />
           </div>
         )}
       </div>
@@ -23,8 +23,8 @@ const Status = ({ txAccountName, pending, txTimestamp }) => (
       <div className="transaction-time-date-spacer"></div>
     ) : (
       <div className="transaction-time-date">
-        <FormattedMessage id="transaction.timestamp"
-          defaultMessage="{timestamp, date, medium} {timestamp, time, medium}"
+        <T id="transaction.timestamp"
+          m="{timestamp, date, medium} {timestamp, time, medium}"
           values={{timestamp: tsToDate(txTimestamp)}}/>
       </div>
     )}

@@ -4,7 +4,7 @@ import TxHistory from "../../TxHistory";
 import Balance from "../../Balance";
 import Header from "../../Header";
 import Select from "react-select";
-import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import "../../../style/Layout.less";
 import "../../../style/HistoryPage.less";
 
@@ -31,16 +31,16 @@ const Page = ({
     <SideBar />
       <div className="page-view">
         <Header
-          headerTitleOverview={<FormattedMessage id="history.availableBalanceTitle" defaultMessage="Available Balance" />}
+          headerTitleOverview={<T id="history.availableBalanceTitle" m="Available Balance" />}
           headerMetaOverview={<Balance amount={spendableTotalBalance} />}
         />
         <div className="page-content">
           <div className="history-content-title">
             <div className="history-content-title-text">
-              <FormattedMessage id="history.title" defaultMessage="Recent Transactions" />
+              <T id="history.title" m="Recent Transactions" />
             </div>
             <div className="history-select-tx-types-area">
-              <div className="history-select-tx-types-label"><FormattedMessage id="history.txTypeLabel" defaultMessage="Tx Type" />:</div>
+              <div className="history-select-tx-types-label"><T id="history.txTypeLabel" m="Tx Type" />:</div>
               <div className="history-select-tx-types">
                 <Select
                   clearable={false}
@@ -59,7 +59,7 @@ const Page = ({
               <TxHistory
                 transactions={paginatedTxs}
               />
-            ) : <p><FormattedMessage id="history.noTransactions" defaultMessage="No transactions" /> </p>}
+            ) : <p><T id="history.noTransactions" m="No transactions" /> </p>}
           </div>
           <div className="history-content-title-buttons-area">
             <button
@@ -68,7 +68,7 @@ const Page = ({
               onClick={onPageBackward}
             >&lt;</button>
             <span className="history-content-title-buttons-text">
-              <FormattedMessage id="history.paginationPages" defaultMessage="{current} of {total}"
+              <T id="history.paginationPages" m="{current} of {total}"
                 values={{current: currentPage+1, total: totalPages}} />
             </span>
             <button

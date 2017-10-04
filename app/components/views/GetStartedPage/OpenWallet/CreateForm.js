@@ -3,7 +3,7 @@ import Header from "../../../Header";
 import CreateWalletForm from "../../../CreateWalletForm";
 import TextToggle from "../../../TextToggle";
 import SlateGrayButton from "../../../SlateGrayButton";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import "../../../../style/GetStarted.less";
 
 const OpenWalletCreateFormHeader = ({
@@ -15,26 +15,26 @@ const OpenWalletCreateFormHeader = ({
 }) => (
   <Header
     getStarted
-    headerTitleOverview={<FormattedMessage id="getStarted.header.title" defaultMessage="Setting up Decrediton" />}
+    headerTitleOverview={<T id="getStarted.header.title" m="Setting up Decrediton" />}
     headerTop={startupError
       ? <div key="walletCreateError" className="get-started-view-notification-error">{startupError}</div>
       : null}
     headerMetaOverview={(
       <div className="get-started-create-wallet-header">
         <div className="get-started-subheader">
-          <FormattedMessage id="getStarted.header.createWallet.meta" defaultMessage="Create a wallet" /></div>
+          <T id="getStarted.header.createWallet.meta" m="Create a wallet" /></div>
         {isInputRequest ? (
           <div className="get-started-button-toolbar">
             {confirmNewSeed ? (
               <SlateGrayButton
                 className="get-started-view-button-go-back"
                 onClick={onReturnToNewSeed}
-              ><FormattedMessage id="getStarted.backBtn" defaultMessage="Back" /> </SlateGrayButton>
+              ><T id="getStarted.backBtn" m="Back" /> </SlateGrayButton>
             ) : (
               <TextToggle
                 activeButton={"left"}
-                leftText={<FormattedMessage id="getStarted.newSeedTab" defaultMessage="New Seed" />}
-                rightText={<FormattedMessage id="getStarted.existingSeedTab" defaultMessage="Existing Seed" />}
+                leftText={<T id="getStarted.newSeedTab" m="New Seed" />}
+                rightText={<T id="getStarted.existingSeedTab" m="Existing Seed" />}
                 toggleAction={onToggleNewExisting}
               />
             )}
