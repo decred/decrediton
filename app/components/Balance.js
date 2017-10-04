@@ -18,7 +18,7 @@ export const Balance = ({ currencyDisplay, amount, onClick }) => {
       >
         <FormattedMessage
           id="balance.dcr"
-          defaultMessage="{amount, number}{smallAmount} {unit}"
+          defaultMessage="{amount, number, two-decimals}{smallAmount} {unit}"
           values={{
             amount: numberFormatPart[0]+"."+numberFormatPart[1].toString().slice(0,2),
             smallAmount:

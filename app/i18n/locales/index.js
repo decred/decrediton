@@ -1,13 +1,9 @@
 // Extra formats. May be customized by each locale.
-const defaultFormats = {
-  time: {
-    medium24: { //FIXME: not working for the default locale
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false
-    },
-    missing: undefined
+export const defaultFormats = {
+  number: {
+    "two-decimals": {
+      minimumFractionDigits: 2
+    }
   }
 };
 
@@ -29,7 +25,7 @@ const pt_BR = {
 
 // pseudo-locale for i18n testing during development. Can be freely
 // modified.
-export const dev = {
+const dev = {
   key: "dev",
   language: "pt-BR", // must be one of the allowed locales of format.js/react-intl
   description: "Dev Locale for testing",

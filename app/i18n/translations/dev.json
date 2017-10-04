@@ -50,7 +50,7 @@
   "autobuyer.title": "Compra automática",
   "autobuyer.updateConfigBtn": "Atualizar Config",
   "balance.atoms": "{amount, number} {unit}",
-  "balance.dcr": "{amount, number}{smallAmount} {unit}",
+  "balance.dcr": "{amount, number, two-decimals}{smallAmount} {unit}",
   "changePassModal.cancel": "Cancelar",
   "changePassModal.confirm": "Confirmar",
   "changePassModal.newPassphrase": "Nova senha",
