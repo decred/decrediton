@@ -363,10 +363,14 @@ function getTicketsInfoProgress(response) {
   return (dispatch, getState) => {
     const { ticketsInfo } = getState().grpc;
     var updatedTickets = ticketsInfo;
-    console.log(response.getTicketsList().length);
-    for (var i = 0; i < response.getTicketsList().length; i++) {
-      console.log(reverseHash(Buffer.from(response.getTicketsList()[i].getHash()).toString("hex")));
-    }
+    console.log(
+    response.getTicket().getTicketStatus(),
+    response.getTicket().getTicketAge(),
+    response.getTicket().getTicketPrice(),
+    response.getTicket().getTicketCost(),
+    response.getTicket().getSpenderReturn(),
+    reverseHash(Buffer.from(response.getTicket().getHash()).toString("hex")),
+    reverseHash(Buffer.from(response.getTicket().getSpenderHash()).toString("hex")));
     dispatch({tickets: updatedTickets, type: GETTICKETS_PROGRESS});
     response = null;
   };

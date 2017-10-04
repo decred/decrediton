@@ -590,7 +590,11 @@ proto.walletrpc.TicketDetails.toObject = function(includeInstance, msg) {
   var f, obj = {
     hash: msg.getHash_asB64(),
     spenderHash: msg.getSpenderHash_asB64(),
-    ticketStatus: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    ticketAge: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    ticketPrice: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    ticketCost: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    spenderReturn: jspb.Message.getFieldWithDefault(msg, 6, 0),
+    ticketStatus: jspb.Message.getFieldWithDefault(msg, 7, 0)
   };
 
   if (includeInstance) {
@@ -636,6 +640,22 @@ proto.walletrpc.TicketDetails.deserializeBinaryFromReader = function(msg, reader
       msg.setSpenderHash(value);
       break;
     case 3:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setTicketAge(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setTicketPrice(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setTicketCost(value);
+      break;
+    case 6:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setSpenderReturn(value);
+      break;
+    case 7:
       var value = /** @type {!proto.walletrpc.TicketDetails.TicketStatus} */ (reader.readEnum());
       msg.setTicketStatus(value);
       break;
@@ -682,10 +702,38 @@ proto.walletrpc.TicketDetails.serializeBinaryToWriter = function(message, writer
       f
     );
   }
+  f = message.getTicketAge();
+  if (f !== 0) {
+    writer.writeInt64(
+      3,
+      f
+    );
+  }
+  f = message.getTicketPrice();
+  if (f !== 0) {
+    writer.writeInt64(
+      4,
+      f
+    );
+  }
+  f = message.getTicketCost();
+  if (f !== 0) {
+    writer.writeInt64(
+      5,
+      f
+    );
+  }
+  f = message.getSpenderReturn();
+  if (f !== 0) {
+    writer.writeInt64(
+      6,
+      f
+    );
+  }
   f = message.getTicketStatus();
   if (f !== 0.0) {
     writer.writeEnum(
-      3,
+      7,
       f
     );
   }
@@ -701,7 +749,8 @@ proto.walletrpc.TicketDetails.TicketStatus = {
   VOTED: 2,
   REVOKED: 3,
   MISSED: 4,
-  EXPIRED: 5
+  EXPIRED: 5,
+  UNMINED: 6
 };
 
 /**
@@ -783,17 +832,77 @@ proto.walletrpc.TicketDetails.prototype.setSpenderHash = function(value) {
 
 
 /**
- * optional TicketStatus ticket_status = 3;
+ * optional int64 ticket_age = 3;
+ * @return {number}
+ */
+proto.walletrpc.TicketDetails.prototype.getTicketAge = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.TicketDetails.prototype.setTicketAge = function(value) {
+  jspb.Message.setField(this, 3, value);
+};
+
+
+/**
+ * optional int64 ticket_price = 4;
+ * @return {number}
+ */
+proto.walletrpc.TicketDetails.prototype.getTicketPrice = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.TicketDetails.prototype.setTicketPrice = function(value) {
+  jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * optional int64 ticket_cost = 5;
+ * @return {number}
+ */
+proto.walletrpc.TicketDetails.prototype.getTicketCost = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.TicketDetails.prototype.setTicketCost = function(value) {
+  jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * optional int64 spender_return = 6;
+ * @return {number}
+ */
+proto.walletrpc.TicketDetails.prototype.getSpenderReturn = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.TicketDetails.prototype.setSpenderReturn = function(value) {
+  jspb.Message.setField(this, 6, value);
+};
+
+
+/**
+ * optional TicketStatus ticket_status = 7;
  * @return {!proto.walletrpc.TicketDetails.TicketStatus}
  */
 proto.walletrpc.TicketDetails.prototype.getTicketStatus = function() {
-  return /** @type {!proto.walletrpc.TicketDetails.TicketStatus} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+  return /** @type {!proto.walletrpc.TicketDetails.TicketStatus} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
 };
 
 
 /** @param {!proto.walletrpc.TicketDetails.TicketStatus} value */
 proto.walletrpc.TicketDetails.prototype.setTicketStatus = function(value) {
-  jspb.Message.setField(this, 3, value);
+  jspb.Message.setField(this, 7, value);
 };
 
 
@@ -7302,19 +7411,12 @@ proto.walletrpc.GetTicketsRequest.prototype.setEndingBlockHeight = function(valu
  * @constructor
  */
 proto.walletrpc.GetTicketsResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.walletrpc.GetTicketsResponse.repeatedFields_, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.walletrpc.GetTicketsResponse, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
   proto.walletrpc.GetTicketsResponse.displayName = 'proto.walletrpc.GetTicketsResponse';
 }
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.walletrpc.GetTicketsResponse.repeatedFields_ = [1];
-
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -7344,8 +7446,7 @@ proto.walletrpc.GetTicketsResponse.prototype.toObject = function(opt_includeInst
  */
 proto.walletrpc.GetTicketsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    ticketsList: jspb.Message.toObjectList(msg.getTicketsList(),
-    proto.walletrpc.TicketDetails.toObject, includeInstance)
+    ticket: (f = msg.getTicket()) && proto.walletrpc.TicketDetails.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -7385,7 +7486,7 @@ proto.walletrpc.GetTicketsResponse.deserializeBinaryFromReader = function(msg, r
     case 1:
       var value = new proto.walletrpc.TicketDetails;
       reader.readMessage(value,proto.walletrpc.TicketDetails.deserializeBinaryFromReader);
-      msg.addTickets(value);
+      msg.setTicket(value);
       break;
     default:
       reader.skipField();
@@ -7416,9 +7517,9 @@ proto.walletrpc.GetTicketsResponse.prototype.serializeBinary = function() {
  */
 proto.walletrpc.GetTicketsResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getTicketsList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
+  f = message.getTicket();
+  if (f != null) {
+    writer.writeMessage(
       1,
       f,
       proto.walletrpc.TicketDetails.serializeBinaryToWriter
@@ -7428,33 +7529,32 @@ proto.walletrpc.GetTicketsResponse.serializeBinaryToWriter = function(message, w
 
 
 /**
- * repeated TicketDetails tickets = 1;
- * @return {!Array.<!proto.walletrpc.TicketDetails>}
+ * optional TicketDetails ticket = 1;
+ * @return {?proto.walletrpc.TicketDetails}
  */
-proto.walletrpc.GetTicketsResponse.prototype.getTicketsList = function() {
-  return /** @type{!Array.<!proto.walletrpc.TicketDetails>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.walletrpc.TicketDetails, 1));
+proto.walletrpc.GetTicketsResponse.prototype.getTicket = function() {
+  return /** @type{?proto.walletrpc.TicketDetails} */ (
+    jspb.Message.getWrapperField(this, proto.walletrpc.TicketDetails, 1));
 };
 
 
-/** @param {!Array.<!proto.walletrpc.TicketDetails>} value */
-proto.walletrpc.GetTicketsResponse.prototype.setTicketsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
+/** @param {?proto.walletrpc.TicketDetails|undefined} value */
+proto.walletrpc.GetTicketsResponse.prototype.setTicket = function(value) {
+  jspb.Message.setWrapperField(this, 1, value);
+};
+
+
+proto.walletrpc.GetTicketsResponse.prototype.clearTicket = function() {
+  this.setTicket(undefined);
 };
 
 
 /**
- * @param {!proto.walletrpc.TicketDetails=} opt_value
- * @param {number=} opt_index
- * @return {!proto.walletrpc.TicketDetails}
+ * Returns whether this field is set.
+ * @return {!boolean}
  */
-proto.walletrpc.GetTicketsResponse.prototype.addTickets = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.walletrpc.TicketDetails, opt_index);
-};
-
-
-proto.walletrpc.GetTicketsResponse.prototype.clearTicketsList = function() {
-  this.setTicketsList([]);
+proto.walletrpc.GetTicketsResponse.prototype.hasTicket = function() {
+  return jspb.Message.getField(this, 1) != null;
 };
 
 
