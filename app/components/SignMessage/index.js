@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { autobind } from "core-decorators";
 import SignMessagePage from "./Page";
 import signMessageConnector from "../../connectors/signMessagePage";
@@ -39,17 +40,23 @@ class SignMessage extends React.Component {
     return (
       <div className="page-content message-sign">
         <div className="message-header-title">Sign Message</div>
-        {error}
-        <SignMessagePage onSubmit={this.onSubmit} />
+        <SignMessagePage onSubmit={this.onSubmit} rpcError={signMessageError} />
         {result}
       </div>
     );
   }
 
   onSubmit(props) {
-    console.log(props);
     this.props.signMessageAttempt(props);
   }
 }
+
+SignMessage.propTypes = {
+  signMessageCleanStore: PropTypes.func.isRequired,
+  signMessageError: PropTypes.string,
+  signMessageSuccess: PropTypes.shape({
+    signature: PropTypes.string,
+  }),
+};
 
 export default signMessageConnector(SignMessage);

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Header from "../../Header";
 import TextToggle from "../../TextToggle";
 import "../../../style/StakePool.less";
@@ -30,5 +31,9 @@ const SecurityPageHeader = ({
     }
   />
 );
+
+SecurityPageHeader.propTypes = {
+  onToggleSecurityMessage: PropTypes.func.isRequired,
+};
 
 export default SecurityPageHeader;

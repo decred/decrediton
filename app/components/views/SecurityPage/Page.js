@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import ReactToolTip from "react-tooltip";
 import SideBar from "../../SideBar";
 import SignMessage from "../../SignMessage";
@@ -11,7 +12,6 @@ const SecurityPage = ({
   isShowingVerifyMessage,
   onToggleSecurityMessage,
 }) => {
-  console.log(onToggleSecurityMessage, isShowingVerifyMessage);
   return (
     <div className="page-body">
       <SideBar />
@@ -25,6 +25,11 @@ const SecurityPage = ({
       <ReactToolTip type="info" effect="solid" />
     </div>
   );
+};
+
+SecurityPage.propTypes = {
+  isShowingVerify: PropTypes.bool,
+  onToggleSecurityMessage: PropTypes.func.isRequired,
 };
 
 export default SecurityPage;
