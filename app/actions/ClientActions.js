@@ -348,7 +348,7 @@ export function getTicketsInfoAttempt() {
     const { walletService } = getState().grpc;
     var getTx = walletService.getTickets(request);
     getTx.on("data", function (response) {
-      dispatch(getTicketsInfoProgress(response));
+      //dispatch(getTicketsInfoProgress(response));
     });
     getTx.on("end", function () {
       setTimeout(() => { dispatch({ type: GETTICKETS_COMPLETE });}, 1000);
@@ -396,10 +396,12 @@ export function getTransactionInfoAttempt() {
       endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
       startRequestHeight = 0;
     } else {
+      console.log("here1");
       // Wait a little then re-dispatch this call since we have no starting height yet
       setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 1000);
       return;
     }
+    console.log("here2");
     var request = new GetTransactionsRequest();
     request.setStartingBlockHeight(startRequestHeight);
     request.setEndingBlockHeight(endRequestHeight);
@@ -440,7 +442,6 @@ export function getTransactionInfoAttempt() {
         dispatch({unmined: response.getUnminedTransactionsList(), type: GETTRANSACTIONS_UNMINED_PROGRESS});
       }
       response = null;
-
     });
     getTx.on("end", function () {
       dispatch({ regularTransactionsInfo: updatedRegular, coinbaseTransactionsInfo: updatedCoinbase,  ticketTransactionsInfo: updatedTicket, voteTransactionsInfo: updatedVote, revokeTransactionsInfo: updatedRevoke, type: GETTRANSACTIONS_COMPLETE });
