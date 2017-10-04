@@ -1,5 +1,5 @@
 // @flow
-import { getWalletService, getTicketBuyerService, getVotingService, getAgendaService } from "../middleware/grpc/client";
+import { getWalletService, getTicketBuyerService, getVotingService, getAgendaService, getMessageVerificationService } from "../middleware/grpc/client";
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, stopAutoBuyerAttempt } from "./ControlActions";
 import { transactionNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
@@ -543,3 +543,22 @@ export function setVoteChoicesAttempt(stakePool, agendaId, choiceId) {
   };
 }
 
+export const GETMESSAGEVERIFICATIONSERVICE_ATTEMPT = "GETMESSAGEVERIFICATIONSERVICE_ATTEMPT";
+export const GETMESSAGEVERIFICATIONSERVICE_FAILED = "GETMESSAGEVERIFICATIONSERVICE_FAILED";
+export const GETMESSAGEVERIFICATIONSERVICE_SUCCESS = "GETMESSAGEVERIFICATIONSERVICE_SUCCESS";
+
+export function getMessageVerificationServiceAttempt() {
+  return (dispatch, getState) => {
+    dispatch({ type: GETMESSAGEVERIFICATIONSERVICE_ATTEMPT });
+
+    const grpc = getState().grpc;
+
+    getMessageVerificationService(grpc.address, grpc.port, function(messageVerificationService, error) {
+      if (error) {
+        dispatch({error, type: GETMESSAGEVERIFICATIONSERVICE_FAILED });
+      } else {
+        dispatch({ messageVerificationService, type: GETMESSAGEVERIFICATIONSERVICE_SUCCESS });
+      }
+    });
+  };
+}

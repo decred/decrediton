@@ -16,6 +16,7 @@ import {
   UPDATETIMESINCEBLOCK,
 
   GETAGENDASERVICE_ATTEMPT, GETAGENDASERVICE_FAILED, GETAGENDASERVICE_SUCCESS,
+  GETMESSAGEVERIFICATIONSERVICE_ATTEMPT, GETMESSAGEVERIFICATIONSERVICE_FAILED, GETMESSAGEVERIFICATIONSERVICE_SUCCESS,
   GETVOTINGSERVICE_ATTEMPT, GETVOTINGSERVICE_FAILED, GETVOTINGSERVICE_SUCCESS,
   GETAGENDAS_ATTEMPT, GETAGENDAS_FAILED, GETAGENDAS_SUCCESS,
   GETVOTECHOICES_ATTEMPT, GETVOTECHOICES_FAILED, GETVOTECHOICES_SUCCESS,
@@ -43,6 +44,25 @@ export default function grpc(state = {}, action) {
       getWalletServiceError: null,
       getWalletServiceRequestAttempt: false,
       walletService: action.walletService,
+    };
+  case GETMESSAGEVERIFICATIONSERVICE_ATTEMPT:
+    return {
+      ...state,
+      getMessageVerificationServiceError: null,
+      getMessageVerificationServiceRequestAttempt: true,
+    };
+  case GETMESSAGEVERIFICATIONSERVICE_FAILED:
+    return {
+      ...state,
+      getMessageVerificationServiceError: String(action.error),
+      getMessageVerificationServiceRequestAttempt: false,
+    };
+  case GETMESSAGEVERIFICATIONSERVICE_SUCCESS:
+    return {
+      ...state,
+      getMessageVerificationServiceError: null,
+      getMessageVerificationServiceRequestAttempt: false,
+      messageVerificationService: action.messageVerificationService,
     };
   case GETTICKETBUYERSERVICE_ATTEMPT:
     return {

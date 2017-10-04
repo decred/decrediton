@@ -136,6 +136,25 @@ export function getAgendaService(address, port, cb) {
     }
   });
 }
+export function getMessageVerificationService(address, port, cb) {
+  var cert = getCert();
+  if (cert == "") {
+    return cb(null, "Unable to load dcrwallet certificate.  dcrwallet not running?");
+  }
+  var creds = grpc.credentials.createSsl(cert);
+  var messageVerificationService = new services.MessageVerificationServiceClient(address + ":" + port, creds);
+
+  var deadline = new Date();
+  var deadlineInSeconds = 30;
+  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
+  grpc.waitForClientReady(messageVerificationService, deadline, function(err) {
+    if (err) {
+      return cb(null, err);
+    } else {
+      return cb(messageVerificationService);
+    }
+  });
+}
 export function transactionNtfs(client, request, cb) {
     // Register Notification Streams from Wallet
   var transactionNtfns = client.transactionNotifications(request);
