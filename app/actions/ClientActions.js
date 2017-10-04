@@ -376,11 +376,11 @@ function getTransactionsInfoProgress(response) {
     const { ticketTransactionsInfo } = getState().grpc;
     const { voteTransactionsInfo } = getState().grpc;
     const { revokeTransactionsInfo } = getState().grpc;
-    var updatedRegular = regularTransactionsInfo;
-    var updatedCoinbase = coinbaseTransactionsInfo;
-    var updatedTicket = ticketTransactionsInfo;
-    var updatedVote = voteTransactionsInfo;
-    var updatedRevoke = revokeTransactionsInfo;
+    var updatedRegular = regularTransactionsInfo.slice();
+    var updatedCoinbase = coinbaseTransactionsInfo.slice();
+    var updatedTicket = ticketTransactionsInfo.slice();
+    var updatedVote = voteTransactionsInfo.slice();
+    var updatedRevoke = revokeTransactionsInfo.slice();
     for (var i = 0; i < response.getMinedTransactions().getTransactionsList().length; i++) {
       var newHeight = response.getMinedTransactions().getHeight();
       var tx = {
@@ -405,7 +405,6 @@ function getTransactionsInfoProgress(response) {
       }
     }
     if (updatedRegular.length !== regularTransactionsInfo.length) {
-      console.log("here?", updatedRegular.length);
       dispatch({ regularTransactionsInfo: updatedRegular, type: GETTRANSACTIONS_PROGRESS_REGULAR });
     }
     if (updatedCoinbase.length !== coinbaseTransactionsInfo.length) {
