@@ -9,9 +9,24 @@ import SlateGrayButton from "../SlateGrayButton";
 import "../../style/Layout.less";
 import "../../style/TxDetails.less";
 import { addSpacingAroundText } from "../../helpers/strings";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
 import { tsToDate } from "../../helpers/dateFormat";
 import "../../style/Fonts.less";
+
+const messages = defineMessages({
+  Ticket: {
+    id: "transaction.type.ticket",
+    defaultMessage: "Ticket"
+  },
+  Vote: {
+    id: "transaction.type.vote",
+    defaultMessage: "Vote"
+  },
+  Revocation: {
+    id: "transaction.type.revoke",
+    defaultMessage: "Revoke"
+  }
+});
 
 const getHeaderClassName = txDirection => ({
   out: "txdetails-header-meta-out",
@@ -35,6 +50,7 @@ const TxDetails = ({
                        txTimestamp
                      },
                      currentBlockHeight,
+                     intl
                    }, { router }) => {
   const isConfirmed = !!txTimestamp;
 
@@ -46,7 +62,7 @@ const TxDetails = ({
           <FormattedMessage id="txDetails.backBtn" defaultMessage="Back" /></SlateGrayButton>}
         headerMetaOverview={txType ? (
           <div className="txdetails-header-meta-stake-tx">
-            {txType}
+            {intl.formatMessage(messages[txType])}
             { isConfirmed
                 ? <div className="txdetails-header-meta-time-and-date">
                     <FormattedMessage id="txDetails.timestamp"
@@ -142,4 +158,4 @@ TxDetails.contextTypes = {
   router: PropTypes.object.isRequired,
 };
 
-export default transactionDetails(TxDetails);
+export default transactionDetails(injectIntl(TxDetails));

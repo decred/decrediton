@@ -4,6 +4,34 @@ import { substruct } from "../../../fp";
 import ErrorScreen from "../../ErrorScreen";
 import HistoryPage from "./Page";
 import historyPageConnector from "../../../connectors/historyPage";
+import { injectIntl, defineMessages } from "react-intl";
+
+const messages = defineMessages({
+  All: {
+    id: "transaction.type.all",
+    defaultMessage: "All"
+  },
+  Regular: {
+    id: "transaction.type.regular",
+    defaultMessage: "Regular"
+  },
+  Tickets: {
+    id: "transaction.type.tickets",
+    defaultMessage: "Tickets"
+  },
+  Votes: {
+    id: "transaction.type.votes",
+    defaultMessage: "Votes"
+  },
+  Revokes: {
+    id: "transaction.type.revokes",
+    defaultMessage: "Revokes"
+  },
+  Unmined: {
+    id: "transaction.type.unmined",
+    defaultMessage: "Unmined"
+  }
+});
 
 @autobind
 class History extends Component {
@@ -38,9 +66,12 @@ class History extends Component {
   }
 
   getTxTypes() {
+    const { formatMessage } = this.props.intl;
     return Object.keys(this.props.transactions)
       .filter(key => this.props.transactions[key].length > 0)
-      .map(name => ({ value: name, label: name }));
+      .map(name => {
+        console.log(name);
+        return ({ value: name, label: formatMessage(messages[name]) }); });
   }
 
   getTxs() {
@@ -89,4 +120,4 @@ class History extends Component {
   }
 }
 
-export default historyPageConnector(History);
+export default historyPageConnector(injectIntl(History));

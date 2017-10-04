@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-10-04T19:33:15.014Z\n"
+"POT-Creation-Date: 2017-10-04T19:57:50.709Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -264,6 +264,14 @@ msgstr ""
 #. Agenda ID
 msgctxt "agenda.card.idLabel"
 msgid "Agenda ID"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/HistoryPage/index.json
+#. [transaction.type.all]
+#. defaultMessage is:
+#. All
+msgctxt "transaction.type.all"
+msgid "All"
 msgstr ""
 
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
@@ -1421,6 +1429,14 @@ msgctxt "importScriptModal.redeemScript"
 msgid "Redeem Script"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/HistoryPage/index.json
+#. [transaction.type.regular]
+#. defaultMessage is:
+#. Regular
+msgctxt "transaction.type.regular"
+msgid "Regular"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 #. [accounts.renameBtn]
 #. defaultMessage is:
@@ -1487,12 +1503,32 @@ msgctxt "purchaseTickets.revokeBtn"
 msgid "Revoke"
 msgstr ""
 
+#: app/i18n/extracted/app/components/TxHistoryRow/Revocation.json
+#. [transaction.type.revoke]
+#. defaultMessage is:
+#. Revoke
+#: app/i18n/extracted/app/components/views/TxDetails.json
+#. [transaction.type.revoke]
+#. defaultMessage is:
+#. Revoke
+msgctxt "transaction.type.revoke"
+msgid "Revoke"
+msgstr ""
+
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
 #. [stake.revokedTickets]
 #. defaultMessage is:
 #. Revoked Tickets
 msgctxt "stake.revokedTickets"
 msgid "Revoked Tickets"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/HistoryPage/index.json
+#. [transaction.type.revokes]
+#. defaultMessage is:
+#. Revokes
+msgctxt "transaction.type.revokes"
+msgid "Revokes"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
@@ -1851,6 +1887,18 @@ msgctxt "notifications.type.ticket"
 msgid "Ticket"
 msgstr ""
 
+#: app/i18n/extracted/app/components/TxHistoryRow/TicketPurchase.json
+#. [transaction.type.ticket]
+#. defaultMessage is:
+#. Ticket
+#: app/i18n/extracted/app/components/views/TxDetails.json
+#. [transaction.type.ticket]
+#. defaultMessage is:
+#. Ticket
+msgctxt "transaction.type.ticket"
+msgid "Ticket"
+msgstr ""
+
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 #. [purchaseTickets.ticketAddress]
 #. defaultMessage is:
@@ -1920,6 +1968,14 @@ msgstr ""
 #. defaultMessage is:
 #. Tickets
 msgctxt "menu.tickets"
+msgid "Tickets"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/HistoryPage/index.json
+#. [transaction.type.tickets]
+#. defaultMessage is:
+#. Tickets
+msgctxt "transaction.type.tickets"
 msgid "Tickets"
 msgstr ""
 
@@ -2045,6 +2101,14 @@ msgctxt "tickets.info.txFee.header"
 msgid "Tx fee (DCR/kB)"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/HistoryPage/index.json
+#. [transaction.type.unmined]
+#. defaultMessage is:
+#. Unmined
+msgctxt "transaction.type.unmined"
+msgid "Unmined"
+msgstr ""
+
 #: app/i18n/extracted/app/components/ChangePassphraseModal/Modal.json
 #. [changePassModal.update]
 #. defaultMessage is:
@@ -2093,6 +2157,18 @@ msgctxt "createWallet.passphraseInput.verifyLabel"
 msgid "Verify"
 msgstr ""
 
+#: app/i18n/extracted/app/components/TxHistoryRow/Vote.json
+#. [transaction.type.vote]
+#. defaultMessage is:
+#. Vote
+#: app/i18n/extracted/app/components/views/TxDetails.json
+#. [transaction.type.vote]
+#. defaultMessage is:
+#. Vote
+msgctxt "transaction.type.vote"
+msgid "Vote"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/TicketsPage/Header.json
 #. [stake.voteSettingsTab]
 #. defaultMessage is:
@@ -2107,6 +2183,14 @@ msgstr ""
 #. Voted Tickets
 msgctxt "stake.votedTickets"
 msgid "Voted Tickets"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/HistoryPage/index.json
+#. [transaction.type.votes]
+#. defaultMessage is:
+#. Votes
+msgctxt "transaction.type.votes"
+msgid "Votes"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
