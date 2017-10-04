@@ -45,6 +45,10 @@ If the string has a variable element within it (eg., a number, amount or a varia
 
 ### Strings with embedded HTML
 
+### Date and Time
+
+**Note**: Due to how react-intl works, the date and time is only translated if the format string is translated (i.e. it can't rely on the `defaultMessage` string).
+
 ### DCR Amount
 
 To display an amount of DCR, use the `Balance` component:

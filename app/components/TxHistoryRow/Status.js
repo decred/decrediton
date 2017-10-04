@@ -1,6 +1,6 @@
 import React from "react";
 import "../../style/TxHistory.less";
-import { FormattedDate, FormattedTime, FormattedMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { tsToDate } from "../../helpers/dateFormat";
 
 const Status = ({ txAccountName, pending, txTimestamp }) => (
@@ -23,10 +23,9 @@ const Status = ({ txAccountName, pending, txTimestamp }) => (
       <div className="transaction-time-date-spacer"></div>
     ) : (
       <div className="transaction-time-date">
-        { /* TODO: componentize */ }
-        <FormattedDate value={tsToDate(txTimestamp)} />
-        <span> </span>
-        <FormattedTime value={tsToDate(txTimestamp)} />
+        <FormattedMessage id="transaction.timestamp"
+          defaultMessage="{timestamp, date, medium} {timestamp, time, medium}"
+          values={{timestamp: tsToDate(txTimestamp)}}/>
       </div>
     )}
   </div>

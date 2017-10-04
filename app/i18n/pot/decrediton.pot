@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-10-04T11:37:02.081Z\n"
+"POT-Creation-Date: 2017-10-04T12:44:30.985Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -2142,4 +2142,20 @@ msgstr ""
 #. {remainingSeedWords, plural, one {one word remaining} other {# words remaining}}
 msgctxt "confirmSeed.wordsRemaining"
 msgid "{remainingSeedWords, plural, one {one word remaining} other {# words remaining}}"
+msgstr ""
+
+#: app/i18n/extracted/app/components/TxHistoryRow/Status.json
+#. [transaction.timestamp]
+#. defaultMessage is:
+#. {timestamp, date, medium} {timestamp, time, medium}
+msgctxt "transaction.timestamp"
+msgid "{timestamp, date, medium} {timestamp, time, medium}"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TxDetails.json
+#. [txDetails.timestamp]
+#. defaultMessage is:
+#. {timestamp, date, medium} {timestamp, time, medium}
+msgctxt "txDetails.timestamp"
+msgid "{timestamp, date, medium} {timestamp, time, medium}"
 msgstr ""

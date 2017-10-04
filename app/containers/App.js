@@ -18,8 +18,9 @@ class App extends Component {
         <IntlProvider
           locale={locale.language}
           messages={locale.messages}
+          formats={locale.formats}
           key={locale.key}>
-          {this.props.children}
+            {this.props.children}
         </IntlProvider>
       </MuiThemeProvider>
     );

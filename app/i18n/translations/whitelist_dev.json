@@ -1,2 +1,4 @@
 [
+  "transaction.timestamp",
+  "txDetails.timestamp"
 ]

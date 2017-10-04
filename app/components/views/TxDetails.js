@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 import Balance from "../Balance";
 import Header from "../Header";
 import { shell } from "electron";
-import dateFormat from "dateformat";
 import transactionDetails from "../../connectors/transactionDetails";
 import SlateGrayButton from "../SlateGrayButton";
 import "../../style/Layout.less";
 import "../../style/TxDetails.less";
 import { addSpacingAroundText } from "../../helpers/strings";
 import { FormattedMessage } from "react-intl";
+import { tsToDate } from "../../helpers/dateFormat";
 import "../../style/Fonts.less";
 
 const getHeaderClassName = txDirection => ({
@@ -18,8 +18,6 @@ const getHeaderClassName = txDirection => ({
   transfer: "txdetails-header-meta-transfer",
   in: "txdetails-header-meta-in"
 })[txDirection];
-
-const getFormattedDate = timestamp => timestamp ? dateFormat(new Date(timestamp*1000), "mmm d yyyy, HH:MM:ss") : "N/A";
 
 const TxDetails = ({
                      tx: {
@@ -49,12 +47,24 @@ const TxDetails = ({
         headerMetaOverview={txType ? (
           <div className="txdetails-header-meta-stake-tx">
             {txType}
-            { isConfirmed ? <div className="txdetails-header-meta-time-and-date">{getFormattedDate(txTimestamp)}</div> : null }
+            { isConfirmed
+                ? <div className="txdetails-header-meta-time-and-date">
+                    <FormattedMessage id="txDetails.timestamp"
+                      defaultMessage="{timestamp, date, medium} {timestamp, time, medium}"
+                      values={{timestamp: tsToDate(txTimestamp)}}
+                    /></div>
+                : null }
           </div>
         ) : (
           <div className={getHeaderClassName(txDirection)}>
             {txDirection === "in" ? "" : "-"}<Balance amount={txAmount} />
-            { isConfirmed ? <div className="txdetails-header-meta-time-and-date">{getFormattedDate(txTimestamp)}</div> : null }
+            { isConfirmed
+              ? <div className="txdetails-header-meta-time-and-date">
+                  <FormattedMessage id="txDetails.timestamp"
+                      defaultMessage="{timestamp, date, medium} {timestamp, time, medium}"
+                      values={{timestamp: tsToDate(txTimestamp)}}
+                    /></div>
+              : null }
           </div>
         )}
       />
