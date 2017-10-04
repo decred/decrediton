@@ -89,7 +89,6 @@ function transactionNtfnsData(response) {
           }
           if (unmined.length != updatedUnmined.length) {
             if (updatedRegular.length !== regularTransactionsInfo.length) {
-              console.log("ntfns here?", updatedRegular.length);
               dispatch({ regularTransactionsInfo: updatedRegular, type: GETTRANSACTIONS_PROGRESS_REGULAR });
             }
             if (updatedCoinbase.length !== coinbaseTransactionsInfo.length) {

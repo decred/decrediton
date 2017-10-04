@@ -335,7 +335,8 @@ export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
 
 export function getTransactionInfoAttempt() {
   return (dispatch, getState) => {
-    const { getAccountsResponse } = getState().grpc;
+    const { getAccountsResponse, getTransactionsRequestAttempt } = getState().grpc;
+    if (getTransactionsRequestAttempt) return;
     var startRequestHeight, endRequestHeight = 0;
     // Check to make sure getAccountsResponse (which has current block height) is available
     if (getAccountsResponse !== null) {
@@ -352,11 +353,44 @@ export function getTransactionInfoAttempt() {
     dispatch({ type: GETTRANSACTIONS_ATTEMPT });
     const { walletService } = getState().grpc;
     var getTx = walletService.getTransactions(request);
+    var updatedRegular = Array();
+    var updatedCoinbase = Array();
+    var updatedTicket = Array();
+    var updatedVote = Array();
+    var updatedRevoke = Array();
     getTx.on("data", function (response) {
-      dispatch(getTransactionsInfoProgress(response));
+      for (var i = 0; i < response.getMinedTransactions().getTransactionsList().length; i++) {
+        var newHeight = response.getMinedTransactions().getHeight();
+        var tx = {
+          timestamp: response.getMinedTransactions().getTimestamp(),
+          tx: response.getMinedTransactions().getTransactionsList()[i],
+          height: newHeight,
+          index: i,
+          hash: response.getMinedTransactions().getTransactionsList()[i].getHash(),
+          blockHash: response.getMinedTransactions().getHash(),
+          type: response.getMinedTransactions().getTransactionsList()[i].getTransactionType(),
+        };
+        if (tx.type == TransactionDetails.TransactionType.REGULAR) {
+          updatedRegular.unshift(tx);
+        } else if (tx.type == TransactionDetails.TransactionType.COINBASE) {
+          updatedCoinbase.unshift(tx);
+        } else if (tx.type == TransactionDetails.TransactionType.TICKET_PURCHASE) {
+          updatedTicket.unshift(tx);
+        } else if (tx.type == TransactionDetails.TransactionType.VOTE) {
+          updatedVote.unshift(tx);
+        } else if (tx.type == TransactionDetails.TransactionType.REVOCATION) {
+          updatedRevoke.unshift(tx);
+        }
+      }
+      if (response.getUnminedTransactionsList().length > 0) {
+        console.log("unmined!", response.getUnminedTransactionsList());
+        dispatch({unmined: response.getUnminedTransactionsList(), type: GETTRANSACTIONS_UNMINED_PROGRESS});
+      }
+      response = null;
+
     });
     getTx.on("end", function () {
-      setTimeout(() => { dispatch({ type: GETTRANSACTIONS_COMPLETE });}, 1000);
+      dispatch({ regularTransactionsInfo: updatedRegular, coinbaseTransactionsInfo: updatedCoinbase,  ticketTransactionsInfo: updatedTicket, voteTransactionsInfo: updatedVote, revokeTransactionsInfo: updatedRevoke, type: GETTRANSACTIONS_COMPLETE });
     });
     /*
     getTx.on('status', function (status) {
@@ -369,63 +403,6 @@ export function getTransactionInfoAttempt() {
   };
 }
 
-function getTransactionsInfoProgress(response) {
-  return (dispatch, getState) => {
-    const { regularTransactionsInfo } = getState().grpc;
-    const { coinbaseTransactionsInfo } = getState().grpc;
-    const { ticketTransactionsInfo } = getState().grpc;
-    const { voteTransactionsInfo } = getState().grpc;
-    const { revokeTransactionsInfo } = getState().grpc;
-    var updatedRegular = regularTransactionsInfo.slice();
-    var updatedCoinbase = coinbaseTransactionsInfo.slice();
-    var updatedTicket = ticketTransactionsInfo.slice();
-    var updatedVote = voteTransactionsInfo.slice();
-    var updatedRevoke = revokeTransactionsInfo.slice();
-    for (var i = 0; i < response.getMinedTransactions().getTransactionsList().length; i++) {
-      var newHeight = response.getMinedTransactions().getHeight();
-      var tx = {
-        timestamp: response.getMinedTransactions().getTimestamp(),
-        tx: response.getMinedTransactions().getTransactionsList()[i],
-        height: newHeight,
-        index: i,
-        hash: response.getMinedTransactions().getTransactionsList()[i].getHash(),
-        blockHash: response.getMinedTransactions().getHash(),
-        type: response.getMinedTransactions().getTransactionsList()[i].getTransactionType(),
-      };
-      if (tx.type == TransactionDetails.TransactionType.REGULAR) {
-        updatedRegular.unshift(tx);
-      } else if (tx.type == TransactionDetails.TransactionType.COINBASE) {
-        updatedCoinbase.unshift(tx);
-      } else if (tx.type == TransactionDetails.TransactionType.TICKET_PURCHASE) {
-        updatedTicket.unshift(tx);
-      } else if (tx.type == TransactionDetails.TransactionType.VOTE) {
-        updatedVote.unshift(tx);
-      } else if (tx.type == TransactionDetails.TransactionType.REVOCATION) {
-        updatedRevoke.unshift(tx);
-      }
-    }
-    if (updatedRegular.length !== regularTransactionsInfo.length) {
-      dispatch({ regularTransactionsInfo: updatedRegular, type: GETTRANSACTIONS_PROGRESS_REGULAR });
-    }
-    if (updatedCoinbase.length !== coinbaseTransactionsInfo.length) {
-      dispatch({ coinbaseTransactionsInfo: updatedCoinbase, type: GETTRANSACTIONS_PROGRESS_COINBASE });
-    }
-    if (updatedTicket.length !== ticketTransactionsInfo.length) {
-      dispatch({ ticketTransactionsInfo: updatedTicket, type: GETTRANSACTIONS_PROGRESS_TICKET });
-    }
-    if (updatedVote.length !== voteTransactionsInfo.length) {
-      dispatch({ voteTransactionsInfo: updatedVote, type: GETTRANSACTIONS_PROGRESS_VOTE });
-    }
-    if (updatedRevoke.length !== revokeTransactionsInfo.length) {
-      dispatch({ revokeTransactionsInfo: updatedRevoke, type: GETTRANSACTIONS_PROGRESS_REVOKE });
-    }
-    if (response.getUnminedTransactionsList().length > 0) {
-      console.log("unmined!", response.getUnminedTransactionsList());
-      dispatch({unmined: response.getUnminedTransactionsList(), type: GETTRANSACTIONS_UNMINED_PROGRESS});
-    }
-    response = null;
-  };
-}
 
 export const UPDATETIMESINCEBLOCK = "UPDATETIMESINCEBLOCK";
 export function updateBlockTimeSince() {
