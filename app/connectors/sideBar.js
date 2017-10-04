@@ -9,7 +9,7 @@ const mapStateToProps = selectorMap({
   balances: sel.balances,
   synced: sel.synced,
   currentBlockHeight: sel.currentBlockHeight,
-  timeBackString: sel.timeBackString,
+  lastBlockTimestamp: sel.lastBlockTimestamp,
   totalBalance: sel.totalBalance
 });
 

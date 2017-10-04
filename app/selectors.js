@@ -125,7 +125,6 @@ export const locale = createSelector(
   }
 );
 
-
 const getTxTypeStr = type => ({
   [TransactionDetails.TransactionType.TICKET_PURCHASE]: "Ticket",
   [TransactionDetails.TransactionType.VOTE]: "Vote",
@@ -279,9 +278,11 @@ const rescanResponse = get(["control", "rescanResponse"]);
 export const rescanRequest = get(["control", "rescanRequest"]);
 export const synced = get(["notifications", "synced"]);
 export const getTransactionsRequestAttempt = get(["grpc", "getTransactionsRequestAttempt"]);
+export const notifiedBlockHeight = get(["notifications", "currentHeight"]);
 
-export const currentBlockHeight = compose(
-  req => req ? req.getCurrentBlockHeight() : 1, getAccountsResponse
+export const currentBlockHeight = createSelector(
+  [synced, getAccountsResponse, notifiedBlockHeight],
+  (synced, req, notifHeight) => ((synced && req) ? req.getCurrentBlockHeight() : notifHeight)
 );
 
 export const rescanEndBlock = currentBlockHeight;
@@ -504,13 +505,12 @@ export const newUnminedMessage = get(["notifications", "newUnminedMessage"]);
 
 export const createWalletExisting = get(["walletLoader", "createWalletExisting"]);
 
-export const timeBackString = createSelector(
-  [
-    synced,
-    get(["grpc", "timeSinceString"]),
-    get(["notifications", "timeBackString"])
+export const lastBlockTimestamp = createSelector(
+  [ synced,
+    get(["grpc", "recentBlockTimestamp"]),
+    get(["notifications", "syncedToTimestamp"])
   ],
-  (synced, since, back) => synced ? since : back
+  (synced, recent, old) => synced ? recent : old
 );
 
 export const getNextAccountSuccess = get(["control", "getNextAccountSuccess"]);

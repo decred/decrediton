@@ -4,7 +4,8 @@ import MenuLink from "../MenuLink";
 import "../../style/Fonts.less";
 import "../../style/SideBar.less";
 import RescanProgress from "../RescanProgress";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, FormattedRelative } from "react-intl";
+import { tsToDate } from "../../helpers/dateFormat";
 
 const Bar = ({
   gettingStarted,
@@ -13,7 +14,7 @@ const Bar = ({
   balances,
   synced,
   currentHeight,
-  timeBackString,
+  lastBlockTimestamp,
   totalBalance,
   isShowingAccounts,
   onShowAccounts,
@@ -66,9 +67,15 @@ const Bar = ({
                 {synced
                   ? <FormattedMessage id="sidebar.latestBlock" defaultMessage="Latest Block" />
                   : <FormattedMessage id="sidebar.syncedToBlock" defaultMessage="Synced to block" /> }:
-                <span className="sidebar-menu-bottom-latest-block-number">{currentHeight}</span>
+                <span className="sidebar-menu-bottom-latest-block-number"> {currentHeight}</span>
               </a>
-              <div className="sidebar-menu-bottom-latest-block-time">{timeBackString}</div>
+              <div className="sidebar-menu-bottom-latest-block-time">
+                {lastBlockTimestamp
+                  ? <FormattedRelative
+                    value={tsToDate(lastBlockTimestamp)}
+                    updateInterval={30*1000}/>
+                  : null}
+              </div>
             </div>
           ) : null}
         </div>

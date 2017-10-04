@@ -101,7 +101,8 @@ var initialState = {
     walletService: null,
     network: network,
     requiredStakepoolAPIVersion: 2,
-    timeSinceString: null,
+    recentBlockTimestamp: null,
+
     // ints for mainnet and testnet protocol hex
     // TestNet2 CurrencyNet = 0x48e7a065
     testnet: 1223139429,
@@ -211,7 +212,7 @@ var initialState = {
   notifications: {
     synced: true,
     currentHeight: 0,
-    timeBackString: "",
+    syncedToTimestamp: null,
     blocksPerDay: blocksPerDay,
     transactionNtfnsRequestAttempt: false,
     transactionNtfnsResponse: null,
