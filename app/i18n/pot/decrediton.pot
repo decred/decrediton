@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-10-04T18:03:07.646Z\n"
+"POT-Creation-Date: 2017-10-04T18:07:20.691Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -1283,6 +1283,14 @@ msgstr ""
 #. Public Passphrase
 msgctxt "getStarted.decrypt.publicPassphrasePlaceholder"
 msgid "Public Passphrase"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/SendPage/Page.json
+#. [send.publishedTxHeader]
+#. defaultMessage is:
+#. Published tx: {hash}
+msgctxt "send.publishedTxHeader"
+msgid "Published tx: {hash}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json

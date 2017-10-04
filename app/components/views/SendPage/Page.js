@@ -79,7 +79,10 @@ const SendPage = ({
           publishedTransactionHash ? (
             <div key="pubSuccess" className="send-view-notification-success">
               <div className="send-address-delete-icon-header" onClick={onClearPublishTxSuccess}/>
-              Published Tx: {publishedTransactionHash}
+              <FormattedMessage
+                id="send.publishedTxHeader"
+                defaultMessage="Published tx: {hash}"
+                values={{hash: publishedTransactionHash}}/>
             </div>
           ) : null
         ]}

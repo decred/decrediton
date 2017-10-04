@@ -190,6 +190,7 @@
   "send.feeEstimation": "Taxa estimada",
   "send.from": "De",
   "send.mainnetInfo": "Mainnet começa com D (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X).",
+  "send.publishedTxHeader": "Publicada tx: {hash}",
   "send.sendAllBtn": "Enviar tudo",
   "send.sendBtn": "Enviar",
   "send.sizeEstimation": "Tamanho estimado",
