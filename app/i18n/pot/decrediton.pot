@@ -1,11 +1,35 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-10-04T18:33:11.317Z\n"
+"POT-Creation-Date: 2017-10-04T19:33:15.014Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
 "X-Generator: react-intl-po\n"
 
+
+#: app/i18n/extracted/app/components/PurchaseTickets/index.json
+#. [puchaseTickets.invalidExpiry]
+#. defaultMessage is:
+#. *Invalid expiry (>= 0)
+msgctxt "puchaseTickets.invalidExpiry"
+msgid "*Invalid expiry (>= 0)"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PurchaseTickets/index.json
+#. [purchaseTickets.errors.invalidTicketFee]
+#. defaultMessage is:
+#. *Invalid ticket fee (0 - 1 DCR/KB)
+msgctxt "purchaseTickets.errors.invalidTicketFee"
+msgid "*Invalid ticket fee (0 - 1 DCR/KB)"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PurchaseTickets/index.json
+#. [purchaseTickets.invalidTxFee]
+#. defaultMessage is:
+#. *Invalid tx fee (0 - 1 DCR/KB)
+msgctxt "purchaseTickets.invalidTxFee"
+msgid "*Invalid tx fee (0 - 1 DCR/KB)"
+msgstr ""
 
 #: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
 #. [createWallet.passphraseInput.errors.noMatch]
@@ -13,6 +37,30 @@ msgstr ""
 #. *Passwords do not match
 msgctxt "createWallet.passphraseInput.errors.noMatch"
 msgid "*Passwords do not match"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/SendPage/index.json
+#. [send.errors.invalidAddress]
+#. defaultMessage is:
+#. *Please enter a valid address
+msgctxt "send.errors.invalidAddress"
+msgid "*Please enter a valid address"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/SendPage/index.json
+#. [send.errors.invalidAmount]
+#. defaultMessage is:
+#. *Please enter a valid amount
+msgctxt "send.errors.invalidAmount"
+msgid "*Please enter a valid amount"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/SendPage/index.json
+#. [send.errors.negativeAmount]
+#. defaultMessage is:
+#. *Please enter a valid amount (> 0)
+msgctxt "send.errors.negativeAmount"
+msgid "*Please enter a valid amount (> 0)"
 msgstr ""
 
 #: app/i18n/extracted/app/components/StakePools/AddForm.json
@@ -635,9 +683,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
 #. [getStarted.chainLoading.syncEstimation]
 #. defaultMessage is:
-#. Estimated time remaining: {timeEstimation} {currentBlockCount} / {neededBlocks}
+#. Estimated ending {timeEstimation} ({currentBlockCount} / {neededBlocks})
 msgctxt "getStarted.chainLoading.syncEstimation"
-msgid "Estimated time remaining: {timeEstimation} {currentBlockCount} / {neededBlocks}"
+msgid "Estimated ending {timeEstimation} ({currentBlockCount} / {neededBlocks})"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/CreateForm.json

@@ -7,6 +7,7 @@ import send from "../../../connectors/send";
 import SendPage from "./Page";
 import ErrorScreen from "../../ErrorScreen";
 import { restrictToStdDecimalNumber } from "../../../helpers/strings";
+import { FormattedMessage } from "react-intl";
 
 const BASE_OUTPUT = { destination: "", amountStr: "" };
 
@@ -181,15 +182,15 @@ class Send extends Component {
     // (actually we should do this in selectors once state is moved to redux)
     const { outputs } = this.state;
     const { destination } = outputs[key];
-    if (!destination) return "* Please enter a valid address";
+    if (!destination) return <FormattedMessage id="send.errors.invalidAddress" defaultMessage="*Please enter a valid address" />;
   }
 
   getAmountError(key) {
     const { outputs, isSendAll} = this.state;
     const { amountStr } = outputs[key];
     const amount = parseFloat(amountStr);
-    if (isNaN(amount) && !isSendAll) return "*Please enter a valid amount";
-    if (amount <= 0 && !isSendAll) return "*Please enter a valid amount (> 0)";
+    if (isNaN(amount) && !isSendAll) return <FormattedMessage id="send.errors.invalidAmount" defaultMessage="*Please enter a valid amount" /> ;
+    if (amount <= 0 && !isSendAll) return <FormattedMessage id="send.errors.negativeAmount" defaultMessage="*Please enter a valid amount (> 0)" />;
   }
 }
 

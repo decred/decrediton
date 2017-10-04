@@ -148,13 +148,13 @@ class PurchaseTickets extends React.Component {
     const { ticketFee, txFee, expiry } = this.state;
     const errors = {
       ticketFeeError: (isNaN(ticketFee) || ticketFee <= 0 || ticketFee >= 1)
-        ? "*Invalid ticket fee (0 - 1 DCR/KB)"
+        ? <FormattedMessage id="purchaseTickets.errors.invalidTicketFee" defaultMessage="*Invalid ticket fee (0 - 1 DCR/KB)" />
         : null,
       txFeeError: (isNaN(txFee) || txFee <= 0 || txFee >= 1)
-        ? "*Invalid tx fee (0 - 1 DCR/KB)"
+        ? <FormattedMessage id="purchaseTickets.invalidTxFee" defaultMessage="*Invalid tx fee (0 - 1 DCR/KB)" />
         : null,
       expiryError: (isNaN(expiry) || expiry < 0)
-        ? "*Invalid expiry (>= 0)"
+        ? <FormattedMessage id="puchaseTickets.invalidExpiry" defaultMessage="*Invalid expiry (>= 0)" />
         : null
     };
     Object.keys(errors).forEach(key => errors[key] ? null : delete errors[key]);
