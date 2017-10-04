@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
 import SecurityPage from "./Page";
+import ErrorScreen from "../../ErrorScreen";
+import securityPageConnector from "../../../connectors/securityPage";
 
 @autobind
 class Security extends Component {
@@ -12,6 +14,10 @@ class Security extends Component {
   }
 
   render() {
+    if (!this.props.walletService) {
+      return <ErrorScreen />;
+    }
+
     return (
       <SecurityPage {
         ...{
@@ -30,4 +36,4 @@ class Security extends Component {
   }
 }
 
-export default Security;
+export default securityPageConnector(Security);
