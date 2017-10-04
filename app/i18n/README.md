@@ -79,9 +79,9 @@ export default injectIntl(SendOutputRow);
 
 ### Tooltip
 
-To define a translated tooltip use the same method as the placeholder. See files [CopyToClipboardButton.js](../components/CopyToClipboardButton.js) or [DaemonLoading/Form.js](../components/views/GetStarted/DaemonLoading/Form.js) as examples.
+To define a translated tooltip use the same method as the placeholder. See files [CopyToClipboardButton.js](../components/CopyToClipboardButton.js) or [DaemonLoading/Form.js](../components/views/GetStartedPage/DaemonLoading/Form.js) as examples.
 
-**Note**: Due to security issues, html is **not** allowed inside the contents of the tip. The only exception is the `<br>` tag on multi line (`data-multiline={true}`) tips, where it can be used to signal a line break.
+**:exclamation: Note**: Due to security issues, html is **not** allowed inside the contents of the tip. The only exception is the `<br>` tag on multi line (`data-multiline={true}`) tips, where it can be used to signal a line break.
 
 It is currently impossible to use the react-intl and react-tooltip libraries together to translate messages with embedded html tags in a safe way.
 
@@ -132,7 +132,7 @@ import { tsToDate } from "../../helpers/dateFormat";
 
 ```
 
-**Note**: Due to how react-intl works, the date and time is only translated if the format string is translated (i.e. it can't rely on the `defaultMessage` string). So the translation must be filled, even if using the exact same date and time formats.
+**:exclamation: Note**: Due to how react-intl works, the date and time is only translated if the format string is translated (i.e. it can't rely on the `defaultMessage` string). So the translation must be filled, even if using the exact same date and time formats.
 
 ### DCR Amount
 
@@ -180,7 +180,7 @@ Transifex will generate a bunch of *.po files (one per language). Save them on t
 $ npm run i18n-assemble-translated
 ```
 
-**Note**: Transifex generates files with a filename following the pattern `decrediton_(lang).po` but react-intl-po expects a filename with the pattern `decrediton.(lang).po`. The `i18n-assemble-translated` script deletes old and renames the files in the po dir accordingly, so just extract the zip with all translations in the appropriate directory and the script will take care of the rest.
+**:exclamation: Note**: Transifex generates files with a filename following the pattern `decrediton_(lang).po` but react-intl-po expects a filename with the pattern `decrediton.(lang).po`. The `i18n-assemble-translated` script deletes old and renames the files in the po dir accordingly, so just extract the zip with all translations in the appropriate directory and the script will take care of the rest.
 
 
 ## Adding a new locale
