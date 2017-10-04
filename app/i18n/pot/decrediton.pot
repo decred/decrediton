@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-10-03T16:28:29.366Z\n"
+"POT-Creation-Date: 2017-10-04T11:37:02.081Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -1445,6 +1445,14 @@ msgstr ""
 #. Select Stakepool...
 msgctxt "selectStakepool.placeholder"
 msgid "Select Stakepool..."
+msgstr ""
+
+#: app/i18n/extracted/app/components/AccountsSelect.json
+#. [accountsSelect.placeholder]
+#. defaultMessage is:
+#. Select account
+msgctxt "accountsSelect.placeholder"
+msgid "Select account"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/HistoryPage/Page.json

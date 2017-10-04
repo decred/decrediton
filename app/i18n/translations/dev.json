@@ -31,6 +31,7 @@
   "accounts.title": "Contas",
   "accounts.total": "Total...",
   "accounts.votingAuthority": "Sob autoridade de votação",
+  "accountsSelect.placeholder": "Selecionar conta",
   "agenda.card.finishedIndicator": "Finalizada",
   "agenda.card.idLabel": "ID da agenda",
   "agenda.card.inProgressIndicator": "Em progresso",
