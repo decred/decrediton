@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-10-04T12:44:30.985Z\n"
+"POT-Creation-Date: 2017-10-04T14:07:15.369Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -2094,6 +2094,22 @@ msgstr ""
 #. save
 msgctxt "passphraseModal.save"
 msgid "save"
+msgstr ""
+
+#: app/i18n/extracted/app/components/Balance.json
+#. [balance.dcr]
+#. defaultMessage is:
+#. {amount, number}{smallAmount} {unit}
+msgctxt "balance.dcr"
+msgid "{amount, number}{smallAmount} {unit}"
+msgstr ""
+
+#: app/i18n/extracted/app/components/Balance.json
+#. [balance.atoms]
+#. defaultMessage is:
+#. {amount} {unit}
+msgctxt "balance.atoms"
+msgid "{amount} {unit}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TxDetails.json
