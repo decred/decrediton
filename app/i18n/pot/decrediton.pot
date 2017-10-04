@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-10-04T14:07:15.369Z\n"
+"POT-Creation-Date: 2017-10-04T18:03:07.646Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -1309,6 +1309,14 @@ msgctxt "purchaseTickets.title"
 msgid "Purchase Titckets"
 msgstr ""
 
+#: app/i18n/extracted/app/components/Header/Notification/Transfer.json
+#. [notifications.type.receive]
+#. defaultMessage is:
+#. Receive
+msgctxt "notifications.type.receive"
+msgid "Receive"
+msgstr ""
+
 #: app/i18n/extracted/app/components/SideBar/Bar.json
 #. [menu.receive]
 #. defaultMessage is:
@@ -1461,6 +1469,14 @@ msgstr ""
 #. Select type...
 msgctxt "history.txTypePlaceholder"
 msgid "Select type..."
+msgstr ""
+
+#: app/i18n/extracted/app/components/Header/Notification/Transfer.json
+#. [notifications.type.send]
+#. defaultMessage is:
+#. Send
+msgctxt "notifications.type.send"
+msgid "Send"
 msgstr ""
 
 #: app/i18n/extracted/app/components/SideBar/Bar.json
@@ -1763,6 +1779,14 @@ msgctxt "getStarted.decrypt.info"
 msgid "This wallet is encrypted, please enter the public passphrase to decrypt it."
 msgstr ""
 
+#: app/i18n/extracted/app/components/Header/Notification/Transfer.json
+#. [notifications.type.ticket]
+#. defaultMessage is:
+#. Ticket
+msgctxt "notifications.type.ticket"
+msgid "Ticket"
+msgstr ""
+
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 #. [purchaseTickets.ticketAddress]
 #. defaultMessage is:
@@ -1907,6 +1931,14 @@ msgstr ""
 #. Transaction fee
 msgctxt "txDetails.transactionFeeLabel"
 msgid "Transaction fee"
+msgstr ""
+
+#: app/i18n/extracted/app/components/Header/Notification/Transfer.json
+#. [notifications.type.transfer]
+#. defaultMessage is:
+#. Transfer
+msgctxt "notifications.type.transfer"
+msgid "Transfer"
 msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
@@ -2099,9 +2131,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/Balance.json
 #. [balance.dcr]
 #. defaultMessage is:
-#. {amount, number}{smallAmount} {unit}
+#. {amount, number, two-decimals}{smallAmount} {unit}
 msgctxt "balance.dcr"
-msgid "{amount, number}{smallAmount} {unit}"
+msgid "{amount, number, two-decimals}{smallAmount} {unit}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/Balance.json
