@@ -1,7 +1,7 @@
 import React from "react";
 import { autobind } from "core-decorators";
 import VerifyMessagePage from "./Page";
-import { find, compose, eq, get, substruct } from "../../fp";
+import { find, compose, eq, get } from "../../fp";
 
 @autobind
 class VerifyMessage extends React.Component {
