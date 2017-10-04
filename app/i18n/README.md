@@ -194,3 +194,5 @@ Then modify the file `locales/index.js` by adding a new locale. Use one of the e
 The "dev" locale ("Dev Locale for testing" in the app) is used mainly for testing the i18n subsystem. It doesn't go through transifex for translation and is mainly used by developers (it should not be shown in production).
 
 Any developer can change any string, format or property of this locale as needed for testing and without risking to modify a locale actually used in production.
+
+**:exclamation: Note**: If you test a packaged version of decrediton locally while still using the `dev` locale, you'll get an error on the debug console saying _language is not defined_. Just edit your local `config.json` and change locale to "en".

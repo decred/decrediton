@@ -12,7 +12,7 @@ const en = {
   language: "en",
   description: "English",
   messages: {}, // uses defaultMessage
-  formats: defaultFormats
+  formats: defaultFormats //dont customize for en language
 };
 
 const pt_BR = {
