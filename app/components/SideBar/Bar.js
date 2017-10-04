@@ -18,6 +18,7 @@ const Bar = ({
   onShowAccounts,
   onHideAccounts,
   rescanRequest,
+  onBottomSidebarClick
 }) => (
   <div className={"sidebar-menu " + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
   <div className="sidebar-menu-logo"></div>
@@ -34,7 +35,7 @@ const Bar = ({
         <MenuLink to="/settings">Settings</MenuLink>
         <MenuLink to="/help">Help</MenuLink>
       </div>
-      <div className="sidebar-menu-total-balance-extended" style={{ display: isShowingAccounts ? "block" : "none" }}>
+      <div className="sidebar-menu-total-balance-extended" id="sidebar-menu-total-balance-extended" style={{ display: isShowingAccounts ? "block" : "none" }}>
         <div className="sidebar-menu-total-balance-extended-bottom">
           {balances.map(({ hidden, total, accountName }) => hidden ? null : (
             <div className="sidebar-menu-total-balance-extended-bottom-account" key={accountName}>
@@ -49,6 +50,7 @@ const Bar = ({
           className="sidebar-menu-bottom-total-balance-short"
           onMouseEnter={rescanRequest ? null : onShowAccounts}
           onMouseLeave={rescanRequest ? null : onHideAccounts}
+          onClick={ onBottomSidebarClick }
         >
           {rescanRequest ?
           <RescanProgress/> :
