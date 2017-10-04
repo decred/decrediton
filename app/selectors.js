@@ -505,3 +505,5 @@ export const hiddenAccounts = get(["grpc", "hiddenAccounts"]);
 export const renameAccountError = get(["control", "renameAccountError"]);
 export const renameAccountSuccess = get(["control", "renameAccountSuccess"]);
 export const renameAccountRequestAttempt = get(["control", "renameAccountRequestAttempt"]);
+
+export const messageVerificationService = get(["grpc", "messageVerificationService"]);
