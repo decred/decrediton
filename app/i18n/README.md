@@ -28,7 +28,6 @@ The id string is meant to uniquely identify the string being translated. Don't r
 If the string has a variable element within it (eg., a number, amount or a variable name) use the following syntax:
 
 ```javascript
-
 <FormattedMessage
   id="history.paginationPages"
   defaultMessage="{current} of {total}"
@@ -39,15 +38,101 @@ If the string has a variable element within it (eg., a number, amount or a varia
 
 ### Input Placeholder
 
+A placeholder can't use a jsx component as value, only a simple string. So you need to use the react-intl API to get a translated string (see [OutputRow.js](../components/views/SendPage/OutputRow.js) or [AccountsSelect.js](../components/AccountsSelect.js) as examples.
+
+The main steps to using a placeholder are:
+
+- Import `injectIntl` and `defineMessages`
+- Define a custom intl message (id and defaultMessage)
+- Get the translated string using `int.formatMessage()`
+- Inject the `intl` prop by using the `injectIntl` HOC
+
+Simplified example:
+
+```javascript
+import { injectIntl, defineMessages } from "react-intl";
+
+const messages = defineMessages({
+  destinationAddrPlaceholder: {
+    id: "send.destinationAddrPlaceholder",
+    defaultMessage: "Destination Address"
+  },
+});
+
+const SendOutputRow = ({
+  ...
+  intl,
+  ...
+) => (...
+
+  <input
+    value={destination}
+    type="text"
+    className="send-address-hash-to"
+    placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
+    onChange={compose(getOnChangeOutputDestination(index), e => e.target.value)}
+    onBlur={onAttemptConstructTransaction}
+);
+
+export default injectIntl(SendOutputRow);
+```
+
 ### Tooltip
+
+To define a translated tooltip use the same method as the placeholder. See files [CopyToClipboardButton.js](../components/CopyToClipboardButton.js) or [DaemonLoading/Form.js](../components/views/GetStarted/DaemonLoading/Form.js) as examples.
+
+**Note**: Due to security issues, html is **not** allowed inside the contents of the tip. The only exception is the `<br>` tag on multi line (`data-multiline={true}`) tips, where it can be used to signal a line break.
+
+It is currently impossible to use the react-intl and react-tooltip libraries together to translate messages with embedded html tags in a safe way.
 
 ### Pluralized Strings
 
+Use the plural format for values:
+
+```javascript
+<FormattedMessage id="confirmSeed.wordsRemaining"
+  defaultMessage="{remainingSeedWords, plural, one {one word remaining} other {# words remaining} }"
+  values={{remainingSeedWords: remainingSeedWords}} />
+```
+
 ### Strings with embedded HTML
+
+This is currently tricky to do. In general, HTML should **not** be included in strings to be translated because of possible compromise vectors (imagine some escaping combination allowing a translator to insert a `<script>` tag).
+
+Current way of embedding an styled substring in a translated message is passing the substring as a value (example in [CreateWallet.js](../components/CreateWalletForm/CreateWallet.js)):
+
+```javascript
+<FormattedMessage id="createWallet.lossInfo" defaultMessage={`
+  To help avoid permanent loss of your wallet, the seed must be backed up before continuing.
+
+  {warningNotice} Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else.
+  `}
+  values={{
+    warningNotice:
+      <span className="orange-warning">
+        <FormattedMessage id="createWallet.warningNotice" defaultMessage="Warning"/>
+      </span>
+  }}
+```
+
+Notice the use of a `FormattedMessage` (actually, a JSX value) as the value to be passed to the `lossInfo` message.
 
 ### Date and Time
 
-**Note**: Due to how react-intl works, the date and time is only translated if the format string is translated (i.e. it can't rely on the `defaultMessage` string).
+Use the `date` and `time` formats on the values inside the translation string. Custom formats may be available or written as needed on the [main locales file](locales/index.js).
+
+```javascript
+import { FormattedMessage } from "react-intl";
+import { tsToDate } from "../../helpers/dateFormat";
+
+
+<FormattedMessage id="transaction.timestamp"
+  defaultMessage="{timestamp, date, medium} {timestamp, time, medium}"
+  values={{timestamp: tsToDate(txTimestamp)}}/>
+
+```
+
+**Note**: Due to how react-intl works, the date and time is only translated if the format string is translated (i.e. it can't rely on the `defaultMessage` string). So the translation must be filled, even if using the exact same date and time formats.
 
 ### DCR Amount
 
