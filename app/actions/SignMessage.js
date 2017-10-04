@@ -4,6 +4,7 @@ import { SignMessageRequest }  from "../middleware/walletrpc/api_pb";
 export const SIGNMESSAGE_ATTEMPT = "SIGNMESSAGE_ATTEMPT";
 export const SIGNMESSAGE_FAILED = "SIGNMESSAGE_FAILED";
 export const SIGNMESSAGE_SUCCESS = "SIGNMESSAGE_SUCCESS";
+export const SIGNMESSAGE_CLEANSTORE = "SIGNMESSAGE_CLEANSTORE";
 
 export function signMessageAttempt({ address, message, passphrase }) {
   return (dispatch, getState) => {
@@ -22,5 +23,11 @@ export function signMessageAttempt({ address, message, passphrase }) {
           dispatch({ getSignMessageResponse, type: SIGNMESSAGE_SUCCESS });
         }
       });
+  };
+}
+
+export function signMessageCleanStore() {
+  return (dispatch) => {
+    dispatch({ type: SIGNMESSAGE_CLEANSTORE });
   };
 }

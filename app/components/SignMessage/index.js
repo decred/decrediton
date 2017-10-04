@@ -11,14 +11,12 @@ class SignMessage extends React.Component {
     super(props);
   }
 
+  componentWillUnmount() {
+    this.props.signMessageCleanStore();
+  }
+
   render() {
     const { signMessageError, signMessageSuccess } = this.props;
-    let error = null;
-    if (signMessageError) {
-      error = (
-        <div className="error">{signMessageError}</div>
-      );
-    }
 
     let result = null;
     if (signMessageSuccess) {
