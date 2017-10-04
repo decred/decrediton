@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../../Header";
 import LinearProgress from "material-ui/LinearProgress";
 import KeyBlueButton from "../../../KeyBlueButton";
-import { FormattedMessage, injectIntl, defineMessages } from "react-intl";
+import { FormattedMessage, FormattedRelative, injectIntl, defineMessages } from "react-intl";
 import "../../../../style/GetStarted.less";
 import ReactToolTip from "react-tooltip";
 
@@ -38,9 +38,9 @@ const DaemonLoadingFormBodyBase = ({
     getCurrentBlockCount,
     getDaemonStarted,
     getNeededBlocks,
-    getEstimatedTimeLeft,
     doSkipDaemonSync,
     showLongWaitMessage,
+    finishDateEstimation,
     intl
   }) => (
     <div className="get-started-content-new-seed">
@@ -75,7 +75,17 @@ const DaemonLoadingFormBodyBase = ({
           value={getCurrentBlockCount}
         />
         <p>
-          <span>{getEstimatedTimeLeft}</span> <span>{getCurrentBlockCount}/{getNeededBlocks}</span>
+          <FormattedMessage
+            id="getStarted.chainLoading.syncEstimation"
+            defaultMessage="Estimated ending {timeEstimation} ({currentBlockCount} / {neededBlocks})"
+            values={{
+              timeEstimation: (finishDateEstimation !== null
+                ? <FormattedRelative value={finishDateEstimation}/>
+                : "---"),
+              currentBlockCount: getCurrentBlockCount,
+              neededBlocks: getNeededBlocks
+            }}
+            />
         </p>
       </div> :
       <div></div> }

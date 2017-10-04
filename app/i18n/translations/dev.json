@@ -81,6 +81,7 @@
   "getStarted.chainLoading": "A blochain do decred está sendo carregada.",
   "getStarted.chainLoading.skipBtn": "Pular sincronização",
   "getStarted.chainLoading.skipBtn.tip": "ATENÇÃO<br>\nVocê pode pular o download inicial, mas fique ciente\n      Que nem todas as transações podem ser achadas.\n      As a result, your balance may be incorrect until fully synced.",
+  "getStarted.chainLoading.syncEstimation": "Tempo estimado: {timeEstimation} ({currentBlockCount, number} / {neededBlocks, number})",
   "getStarted.chainLoadingDelayReminder": "Pode levar um tempo (1a vez).",
   "getStarted.decrypt.errors.noPublicPassphrase": "*Entre com a senha",
   "getStarted.decrypt.info": "wallet criptografada. entre com a senha.",

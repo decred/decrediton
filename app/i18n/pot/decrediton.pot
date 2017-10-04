@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-10-04T18:07:20.691Z\n"
+"POT-Creation-Date: 2017-10-04T18:33:11.317Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -630,6 +630,14 @@ msgstr ""
 #. Estimated Size
 msgctxt "send.sizeEstimation"
 msgid "Estimated Size"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
+#. [getStarted.chainLoading.syncEstimation]
+#. defaultMessage is:
+#. Estimated time remaining: {timeEstimation} {currentBlockCount} / {neededBlocks}
+msgctxt "getStarted.chainLoading.syncEstimation"
+msgid "Estimated time remaining: {timeEstimation} {currentBlockCount} / {neededBlocks}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/CreateForm.json

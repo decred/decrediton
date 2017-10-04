@@ -76,7 +76,7 @@ var initialState = {
     daemonSynced: false,
     walletReady: false,
     currentBlockCount: null,
-    timeLeftEstimate: "Estimated time remaining: ---",
+    timeLeftEstimate: null,
     timeStart: 0,
     blockStart: 0,
   },
