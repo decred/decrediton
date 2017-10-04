@@ -405,6 +405,7 @@ function getTransactionsInfoProgress(response) {
       }
     }
     if (updatedRegular.length !== regularTransactionsInfo.length) {
+      console.log("here?", updatedRegular.length);
       dispatch({ regularTransactionsInfo: updatedRegular, type: GETTRANSACTIONS_PROGRESS_REGULAR });
     }
     if (updatedCoinbase.length !== coinbaseTransactionsInfo.length) {
