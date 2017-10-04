@@ -325,12 +325,12 @@ export function showAccount(accountNumber) {
 
 export const GETTICKETS_ATTEMPT = "GETTICKETS_ATTEMPT";
 export const GETTICKETS_FAILED = "GETTICKETS_FAILED";
-export const GETTICKETS_PROGRESS = "GETTICKETS_PROGRESS";
 export const GETTICKETS_COMPLETE = "GETTICKETS_COMPLETE";
 
 export function getTicketsInfoAttempt() {
   return (dispatch, getState) => {
-    const { getAccountsResponse } = getState().grpc;
+    const { getAccountsResponse, getTicketsRequestAttempt } = getState().grpc;
+    if (getTicketsRequestAttempt) return;
     var startRequestHeight, endRequestHeight = 0;
     // Check to make sure getAccountsResponse (which has current block height) is available
     if (getAccountsResponse !== null) {
@@ -347,32 +347,33 @@ export function getTicketsInfoAttempt() {
     dispatch({ type: GETTICKETS_ATTEMPT });
     const { walletService } = getState().grpc;
     var getTx = walletService.getTickets(request);
+    var tickets = Array();
     getTx.on("data", function (response) {
-      //dispatch(getTicketsInfoProgress(response));
+      var newTicket = {
+        status: response.getTicket().getTicketStatus(),
+        ticket_age: response.getTicket().getTicketAge(),
+        ticket_price: response.getTicket().getTicketPrice(),
+        ticket_cost: response.getTicket().getTicketCost(),
+        spender_return: response.getTicket().getSpenderReturn(),
+        ticket_hash: reverseHash(Buffer.from(response.getTicket().getHash()).toString("hex")),
+        spender_hash: reverseHash(Buffer.from(response.getTicket().getSpenderHash()).toString("hex")),
+      };
+      console.log(
+      response.getTicket().getTicketStatus(),
+      response.getTicket().getTicketAge(),
+      response.getTicket().getTicketPrice(),
+      response.getTicket().getTicketCost(),
+      response.getTicket().getSpenderReturn(),
+      reverseHash(Buffer.from(response.getTicket().getHash()).toString("hex")),
+      reverseHash(Buffer.from(response.getTicket().getSpenderHash()).toString("hex")));
+      tickets.unshift(newTicket);
     });
     getTx.on("end", function () {
-      setTimeout(() => { dispatch({ type: GETTICKETS_COMPLETE });}, 1000);
+      setTimeout(() => { dispatch({ tickets: tickets, type: GETTICKETS_COMPLETE });}, 1000);
     });
     getTx.on("error", function (error) {
       console.error(error + " Please try again");
     });
-  };
-}
-
-function getTicketsInfoProgress(response) {
-  return (dispatch, getState) => {
-    const { ticketsInfo } = getState().grpc;
-    var updatedTickets = ticketsInfo;
-    console.log(
-    response.getTicket().getTicketStatus(),
-    response.getTicket().getTicketAge(),
-    response.getTicket().getTicketPrice(),
-    response.getTicket().getTicketCost(),
-    response.getTicket().getSpenderReturn(),
-    reverseHash(Buffer.from(response.getTicket().getHash()).toString("hex")),
-    reverseHash(Buffer.from(response.getTicket().getSpenderHash()).toString("hex")));
-    dispatch({tickets: updatedTickets, type: GETTICKETS_PROGRESS});
-    response = null;
   };
 }
 

@@ -165,6 +165,11 @@ var initialState = {
     getTransactionsResponse: null,
     unminedTransactions: null,
 
+    // GetTickets
+    getTicketsError: null,
+    getTicketsRequestAttempt: false,
+    tickets: Array(),
+
     // Agenda/VoteChoices
     getAgendasResponse: null,
     getVoteChoicesResponse: null,
