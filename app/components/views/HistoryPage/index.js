@@ -70,7 +70,6 @@ class History extends Component {
     return Object.keys(this.props.transactions)
       .filter(key => this.props.transactions[key].length > 0)
       .map(name => {
-        console.log(name);
         return ({ value: name, label: formatMessage(messages[name]) }); });
   }
 
