@@ -19,13 +19,7 @@ class SideBar extends Component {
     this.interval = setInterval(() => this.props.updateBlockTimeSince(), 10000);
   }
 
-  onBottomSidebarClick() {
-    const a = document.getElementById("sidebar-menu-total-balance-extended");
-    a.style.display = (a.style.display === "block") ? "none" : "block";
-  }
-
   render() {
-    const { onBottomSidebarClick } = this;
     return (
       <Bar
         {...{
@@ -40,8 +34,7 @@ class SideBar extends Component {
           isShowingAccounts: this.state.isShowingAccounts,
           onShowAccounts: this.onShowAccounts,
           onHideAccounts: this.onHideAccounts,
-          rescanRequest: this.props.rescanRequest,
-          onBottomSidebarClick: onBottomSidebarClick
+          rescanRequest: this.props.rescanRequest
         }}
       />
     );
