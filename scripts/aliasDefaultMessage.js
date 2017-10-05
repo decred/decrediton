@@ -15,7 +15,7 @@ const COMPONENT_NAMES = [
 
 const DESCRIPTOR_PROPS = new Set(['m']);
 
-export default function ({types: t}) {
+function aliasDefaultMessagePlugin({types: t}) {
 
     function referencesImport(path, mod, importedNames) {
         if (!(path.isIdentifier() || path.isJSXIdentifier())) {
@@ -87,3 +87,5 @@ export default function ({types: t}) {
         }
     }
 }
+
+module.exports = aliasDefaultMessagePlugin;
