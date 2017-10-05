@@ -151,7 +151,8 @@ Decrediton implements i18n by using the tools provided by the [react-intl](https
 
 The following directories and files comprise the i18n subsystem:
 
-- **extracted/**: Generated automatically by [babel-plugin-react-intl](https://github.com/yahoo/babel-plugin-react-intl)
+- **extracted/app**: Generated automatically by [babel-plugin-react-intl](https://github.com/yahoo/babel-plugin-react-intl)
+- **extract/static**: Static translation files (manually written)
 - **locales/index.js**: Entrypoint for all i18n data
 - **pot/**: source *.pot files to be sent to translation
 - **po/**: source *.po files received from translators

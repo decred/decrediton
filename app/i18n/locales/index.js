@@ -1,3 +1,5 @@
+import staticDefaults from "../extracted/static";
+
 // Extra formats. May be customized by each locale.
 export const defaultFormats = {
   number: {
@@ -11,7 +13,7 @@ const en = {
   key: "en",
   language: "en",
   description: "English",
-  messages: {}, // uses defaultMessage
+  messages: staticDefaults, // uses defaultMessage for anything not on the staticDefaults
   formats: defaultFormats //dont customize for en language
 };
 

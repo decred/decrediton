@@ -11,4 +11,4 @@ bin/
 .DS_Store
 .vagrant
 dist/
-app/i18n/extracted/
+app/i18n/extracted/app

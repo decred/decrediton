@@ -5,6 +5,7 @@ import fs from "fs";
 import os from "os";
 import parseArgs from "minimist";
 import winston from "winston";
+import locales from "./i18n/locales";
 
 let menu;
 let template;
@@ -153,6 +154,13 @@ if (argv.testnet) {
 if (argv.mainnet) {
   cfg.set("network", "mainnet");
   logger.log("info", "Running on mainnet.");
+}
+
+var cfgLocale = cfg.get("locale", "en");
+var locale = locales.find(value => value.key === cfgLocale);
+if (!locale) {
+  logger.log("error", `Locale ${cfgLocale} not found. Returning to default`);
+  locale = locales.find(value => value.name === "en");
 }
 
 function closeDCRW() {
@@ -510,68 +518,68 @@ app.on("ready", async () => {
 
   if (process.platform === "darwin") {
     template = [{
-      label: "Decrediton",
+      label: locale.messages["appMenu.decrediton"],
       submenu: [{
-        label: "About Decrediton",
+        label: locale.messages["appMenu.aboutDecrediton"],
         selector: "orderFrontStandardAboutPanel:"
       }, {
         type: "separator"
       }, {
-        label: "Services",
+        label: locale.messages["appMenu.services"],
         submenu: []
       }, {
         type: "separator"
       }, {
-        label: "Hide Decrediton",
+        label: locale.messages["appMenu.hideDecrediton"],
         accelerator: "Command+H",
         selector: "hide:"
       }, {
-        label: "Hide Others",
+        label: locale.messages["appMenu.hideOthers"],
         accelerator: "Command+Shift+H",
         selector: "hideOtherApplications:"
       }, {
-        label: "Show All",
+        label: locale.messages["appMenu.showAll"],
         selector: "unhideAllApplications:"
       }, {
         type: "separator"
       }, {
-        label: "Quit",
+        label: locale.messages["appMenu.quit"],
         accelerator: "Command+Q",
         click() {
           cleanShutdown();
         }
       }]
     }, {
-      label: "Edit",
+      label: locale.messages["appMenu.edit"],
       submenu: [{
-        label: "Undo",
+        label: locale.messages["appMenu.undo"],
         accelerator: "Command+Z",
         selector: "undo:"
       }, {
-        label: "Redo",
+        label: locale.messages["appMenu.redo"],
         accelerator: "Shift+Command+Z",
         selector: "redo:"
       }, {
         type: "separator"
       }, {
-        label: "Cut",
+        label: locale.messages["appMenu.cut"],
         accelerator: "Command+X",
         selector: "cut:"
       }, {
-        label: "Copy",
+        label: locale.messages["appMenu.copy"],
         accelerator: "Command+C",
         selector: "copy:"
       }, {
-        label: "Paste",
+        label: locale.messages["appMenu.paste"],
         accelerator: "Command+V",
         selector: "paste:"
       }, {
-        label: "Select All",
+        label: locale.messages["appMenu.selectAll"],
         accelerator: "Command+A",
         selector: "selectAll:"
       }]
     }, {
-      label: "View",
+      label: locale.messages["appMenu.view"],
       submenu: [{
         label: "Toggle Full Screen",
         accelerator: "Ctrl+Command+F",
@@ -580,25 +588,25 @@ app.on("ready", async () => {
         }
       }]
     }, {
-      label: "Window",
+      label: locale.messages["appMenu.window"],
       submenu: [{
-        label: "Minimize",
+        label: locale.messages["appMenu.minimize"],
         accelerator: "Command+M",
         selector: "performMiniaturize:"
       }, {
-        label: "Close",
+        label: locale.messages["appMenu.close"],
         accelerator: "Command+W",
         selector: "performClose:"
       }, {
         type: "separator"
       }, {
-        label: "Bring All to Front",
+        label: locale.messages["appMenu.bringAllFront"],
         selector: "arrangeInFront:"
       }]
     }];
   } else {
     template = [{
-      label: "&File",
+      label: locale.messages["appMenu.file"],
       submenu: [{
         label: "&Close",
         accelerator: "Ctrl+W",
@@ -607,9 +615,9 @@ app.on("ready", async () => {
         }
       }]
     }, {
-      label: "&View",
+      label: locale.messages["appMenu.view"],
       submenu: [{
-        label: "Toggle &Full Screen",
+        label: locale.messages["appMenu.toggleFullScreen"],
         accelerator: "F11",
         click() {
           mainWindow.setFullScreen(!mainWindow.isFullScreen());
@@ -619,48 +627,48 @@ app.on("ready", async () => {
   }
   template.push(
     {
-      label: "Advanced",
+      label: locale.messages["appMenu.advanced"],
       submenu: [{
-        label: "Toggle Developer Tools",
+        label: locale.messages["appMenu.developerTools"],
         accelerator: "Alt+Ctrl+I",
         click() {
           mainWindow.toggleDevTools();
         }
       }, {
-        label: "Show Wallet Log Files",
+        label: locale.messages["appMenu.showWalletLog"],
         click() {
           shell.openItem(path.join(appDataDirectory(), "logs"));
         }
       }, {
-        label: "Show Daemon Log Files",
+        label: locale.messages["appMenu.showDaemonLog"],
         click() {
           shell.openItem(path.join(getDcrdPath(), "logs"));
         }
       }]
     }, {
-      label: "Help",
+      label: locale.messages["appMenu.help"],
       submenu: [{
-        label: "Learn More",
+        label: locale.messages["appMenu.learnMore"],
         click() {
           shell.openExternal("https://decred.org");
         }
       }, {
-        label: "Documentation",
+        label: locale.messages["appMenu.documentation"],
         click() {
           shell.openExternal("https://github.com/decred/decrediton");
         }
       }, {
-        label: "Community Discussions",
+        label: locale.messages["appMenu.communityDiscussions"],
         click() {
           shell.openExternal("https://forum.decred.org");
         }
       }, {
-        label: "Search Issues",
+        label: locale.messages["appMenu.searchIssues"],
         click() {
           shell.openExternal("https://github.com/decred/decrediton/issues");
         }
       }, {
-        label: "About",
+        label: locale.messages["appMenu.about"],
         click() {
           if (!versionWin) {
             versionWin = new BrowserWindow({width: 575, height: 275, show: false, autoHideMenuBar: true, resizable: false});
