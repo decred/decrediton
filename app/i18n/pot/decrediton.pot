@@ -1,11 +1,35 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-10-04T21:03:30.355Z\n"
+"POT-Creation-Date: 2017-10-06T12:17:35.033Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
 "X-Generator: react-intl-po\n"
 
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.close]
+#. defaultMessage is:
+#. &Close
+msgctxt "appMenu.close"
+msgid "&Close"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.file]
+#. defaultMessage is:
+#. &File
+msgctxt "appMenu.file"
+msgid "&File"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.view]
+#. defaultMessage is:
+#. &View
+msgctxt "appMenu.view"
+msgid "&View"
+msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTickets/index.json
 #. [puchaseTickets.invalidExpiry]
@@ -170,6 +194,22 @@ msgctxt "getStarted.chainLoading.skipBtn.tip"
 msgid "ATTENTION<br>\n      You may skip the initial blockchain download, but be aware that\n      all transactions may not be found until the chain is fully synced.\n      As a result, your balance may be incorrect until fully synced."
 msgstr ""
 
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.about]
+#. defaultMessage is:
+#. About
+msgctxt "appMenu.about"
+msgid "About"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.aboutDecrediton]
+#. defaultMessage is:
+#. About Decrediton
+msgctxt "appMenu.aboutDecrediton"
+msgid "About Decrediton"
+msgstr ""
+
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 #. [purchaseTickets.account]
 #. defaultMessage is:
@@ -256,6 +296,14 @@ msgstr ""
 #. Add New
 msgctxt "accounts.addNewButton"
 msgid "Add New"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.advanced]
+#. defaultMessage is:
+#. Advanced
+msgctxt "appMenu.advanced"
+msgid "Advanced"
 msgstr ""
 
 #: app/i18n/extracted/app/components/AgendaCard.json
@@ -394,6 +442,14 @@ msgctxt "txDetails.blockLabel"
 msgid "Block"
 msgstr ""
 
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.bringAllFront]
+#. defaultMessage is:
+#. Bring All to Front
+msgctxt "appMenu.bringAllFront"
+msgid "Bring All to Front"
+msgstr ""
+
 #: app/i18n/extracted/app/components/ChangePassphraseModal/Modal.json
 #. [changePassModal.cancel]
 #. defaultMessage is:
@@ -450,6 +506,14 @@ msgctxt "send.cancelSendAll"
 msgid "Close"
 msgstr ""
 
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.communityDiscussions]
+#. defaultMessage is:
+#. Community Discussions
+msgctxt "appMenu.communityDiscussions"
+msgid "Community Discussions"
+msgstr ""
+
 #: app/i18n/extracted/app/components/ChangePassphraseModal/Modal.json
 #. [changePassModal.confirm]
 #. defaultMessage is:
@@ -502,6 +566,14 @@ msgctxt "clipboard.copied"
 msgid "Copied"
 msgstr ""
 
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.copy]
+#. defaultMessage is:
+#. Copy
+msgctxt "appMenu.copy"
+msgid "Copy"
+msgstr ""
+
 #: app/i18n/extracted/app/components/CreateWalletForm/ContinueWalletCreation.json
 #. [createWallet.createWalletBtn]
 #. defaultMessage is:
@@ -532,6 +604,22 @@ msgstr ""
 #. Current StakePool
 msgctxt "purchaseTickets.currentStakepool"
 msgid "Current StakePool"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.cut]
+#. defaultMessage is:
+#. Cut
+msgctxt "appMenu.cut"
+msgid "Cut"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.decrediton]
+#. defaultMessage is:
+#. Decrediton
+msgctxt "appMenu.decrediton"
+msgid "Decrediton"
 msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
@@ -590,6 +678,14 @@ msgctxt "help.documentation"
 msgid "Documentation"
 msgstr ""
 
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.documentation]
+#. defaultMessage is:
+#. Documentation
+msgctxt "appMenu.documentation"
+msgid "Documentation"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
 #. [getStarted.header.downloadingBlockchain.meta]
 #. defaultMessage is:
@@ -604,6 +700,14 @@ msgstr ""
 #. Each time you request a payment, create a new address to protect your privacy.
 msgctxt "receive.titleInfo"
 msgid "Each time you request a payment, create a new address to protect your privacy."
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.edit]
+#. defaultMessage is:
+#. Edit
+msgctxt "appMenu.edit"
+msgid "Edit"
 msgstr ""
 
 #: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
@@ -832,12 +936,36 @@ msgctxt "help.title"
 msgid "Help"
 msgstr ""
 
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.help]
+#. defaultMessage is:
+#. Help
+msgctxt "appMenu.help"
+msgid "Help"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 #. [accounts.hide.tip]
 #. defaultMessage is:
 #. Hide
 msgctxt "accounts.hide.tip"
 msgid "Hide"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.hideDecrediton]
+#. defaultMessage is:
+#. Hide Decrediton
+msgctxt "appMenu.hideDecrediton"
+msgid "Hide Decrediton"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.hideOthers]
+#. defaultMessage is:
+#. Hide Others
+msgctxt "appMenu.hideOthers"
+msgid "Hide Others"
 msgstr ""
 
 #: app/i18n/extracted/app/components/SideBar/Bar.json
@@ -952,6 +1080,14 @@ msgctxt "sidebar.latestBlock"
 msgid "Latest Block"
 msgstr ""
 
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.learnMore]
+#. defaultMessage is:
+#. Learn More
+msgctxt "appMenu.learnMore"
+msgid "Learn More"
+msgstr ""
+
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
 #. [stake.liveTickets]
 #. defaultMessage is:
@@ -1014,6 +1150,14 @@ msgstr ""
 #. Max Price Relative
 msgctxt "autobuyer.maxPriceRelative"
 msgid "Max Price Relative"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.minimize]
+#. defaultMessage is:
+#. Minimize
+msgctxt "appMenu.minimize"
+msgid "Minimize"
 msgstr ""
 
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
@@ -1174,6 +1318,14 @@ msgstr ""
 #. Own Mempool Tickets
 msgctxt "stake.ownMempoolTickets"
 msgid "Own Mempool Tickets"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.paste]
+#. defaultMessage is:
+#. Paste
+msgctxt "appMenu.paste"
+msgid "Paste"
 msgstr ""
 
 #: app/i18n/extracted/app/components/TxHistoryRow/Status.json
@@ -1389,6 +1541,14 @@ msgctxt "purchaseTickets.title"
 msgid "Purchase Titckets"
 msgstr ""
 
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.quit]
+#. defaultMessage is:
+#. Quit
+msgctxt "appMenu.quit"
+msgid "Quit"
+msgstr ""
+
 #: app/i18n/extracted/app/components/Header/Notification/Transfer.json
 #. [notifications.type.receive]
 #. defaultMessage is:
@@ -1435,6 +1595,14 @@ msgstr ""
 #. Redeem Script
 msgctxt "importScriptModal.redeemScript"
 msgid "Redeem Script"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.redo]
+#. defaultMessage is:
+#. Redo
+msgctxt "appMenu.redo"
+msgid "Redo"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/HistoryPage/index.json
@@ -1555,6 +1723,22 @@ msgctxt "getStarted.discoverAddresses.scanBtn"
 msgid "Scan"
 msgstr ""
 
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.searchIssues]
+#. defaultMessage is:
+#. Search Issues
+msgctxt "appMenu.searchIssues"
+msgid "Search Issues"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.selectAll]
+#. defaultMessage is:
+#. Select All
+msgctxt "appMenu.selectAll"
+msgid "Select All"
+msgstr ""
+
 #: app/i18n/extracted/app/components/SelectStakePool.json
 #. [selectStakepool.placeholder]
 #. defaultMessage is:
@@ -1617,6 +1801,14 @@ msgstr ""
 #. Send Funds
 msgctxt "send.title"
 msgid "Send Funds"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.services]
+#. defaultMessage is:
+#. Services
+msgctxt "appMenu.services"
+msgid "Services"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/CheckWalletState.json
@@ -1685,6 +1877,30 @@ msgstr ""
 #. Show
 msgctxt "accounts.show.tip"
 msgid "Show"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.showAll]
+#. defaultMessage is:
+#. Show All
+msgctxt "appMenu.showAll"
+msgid "Show All"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.showDaemonLog]
+#. defaultMessage is:
+#. Show Daemon Log Files
+msgctxt "appMenu.showDaemonLog"
+msgid "Show Daemon Log Files"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.showWalletLog]
+#. defaultMessage is:
+#. Show Wallet Log Files
+msgctxt "appMenu.showWalletLog"
+msgid "Show Wallet Log Files"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
@@ -2013,6 +2229,22 @@ msgctxt "createWallet.lossInfo"
 msgid "To help avoid permanent loss of your wallet, the seed must be backed up before continuing.\n\n          {warningNotice} Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else."
 msgstr ""
 
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.toggleFullScreen]
+#. defaultMessage is:
+#. Toggle &Full Screen
+msgctxt "appMenu.toggleFullScreen"
+msgid "Toggle &Full Screen"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.developerTools]
+#. defaultMessage is:
+#. Toggle Developer Tools
+msgctxt "appMenu.developerTools"
+msgid "Toggle Developer Tools"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 #. [accounts.total]
 #. defaultMessage is:
@@ -2107,6 +2339,14 @@ msgstr ""
 #. Tx fee (DCR/kB)
 msgctxt "tickets.info.txFee.header"
 msgid "Tx fee (DCR/kB)"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.undo]
+#. defaultMessage is:
+#. Undo
+msgctxt "appMenu.undo"
+msgid "Undo"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/HistoryPage/index.json
@@ -2250,6 +2490,14 @@ msgstr ""
 #. Warning
 msgctxt "createWallet.warningNotice"
 msgid "Warning"
+msgstr ""
+
+#: app/i18n/extracted/static/menus.json
+#. [appMenu.window]
+#. defaultMessage is:
+#. Window
+msgctxt "appMenu.window"
+msgid "Window"
 msgstr ""
 
 #: app/i18n/extracted/app/components/CreateWalletForm/CreateWallet.json
