@@ -31,8 +31,8 @@ class VerifyMessage extends React.Component {
       const isValid = verifyMessageSuccess.valid;
       result = (
         <div className="message-nest">
-          <div className={`message-content ${isValid ? 'valid' : 'invalid'}`}>
-            Signature {isValid ? 'valid' : 'invalid'}!
+          <div className={`message-content ${isValid ? "valid" : "invalid"}`}>
+            Signature {isValid ? "valid" : "invalid"}!
           </div>
         </div>
       );
