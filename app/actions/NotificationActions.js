@@ -50,11 +50,11 @@ function transactionNtfnsData(response) {
           const { ticketTransactionsInfo } = getState().grpc;
           const { voteTransactionsInfo } = getState().grpc;
           const { revokeTransactionsInfo } = getState().grpc;
-          var updatedRegular = regularTransactionsInfo;
-          var updatedCoinbase = coinbaseTransactionsInfo;
-          var updatedTicket = ticketTransactionsInfo;
-          var updatedVote = voteTransactionsInfo;
-          var updatedRevoke = revokeTransactionsInfo;
+          var updatedRegular = regularTransactionsInfo.slice();
+          var updatedCoinbase = coinbaseTransactionsInfo.slice();
+          var updatedTicket = ticketTransactionsInfo.slice();
+          var updatedVote = voteTransactionsInfo.slice();
+          var updatedRevoke = revokeTransactionsInfo.slice();
           for (var k = 0; k < unmined.length; k++) {
             var unminedFound = false;
             for (var j = 0; j < attachedBlocks.length; j++){

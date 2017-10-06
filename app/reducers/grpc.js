@@ -241,6 +241,11 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       getTransactionsRequestError: "",
+      regularTransactionsInfo: action.regularTransactionsInfo,
+      coinbaseTransactionsInfo: action.coinbaseTransactionsInfo,
+      ticketTransactionsInfo: action.ticketTransactionsInfo,
+      voteTransactionsInfo: action.voteTransactionsInfo,
+      revokeTransactionsInfo: action.revokeTransactionsInfo,
       getTransactionsRequestAttempt: false,
     };
   case GETTRANSACTIONS_PROGRESS_REGULAR:
