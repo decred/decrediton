@@ -304,21 +304,11 @@ export function dcrctlCfg() {
 export function writeCfgs(dcrd, dcrwallet, dcrctl) {
   var cfg = getCfg();
   if (dcrd) {
-    var net = 0;
-    var autobuy = 0;
-    if (cfg.get("network") === "testnet") {
-      net = 1;
-    }
-    if (cfg.get("enableticketbuyer") === "1") {
-      autobuy = 1;
-    }
     var dcrdConf = {
       "Application Options":
       {
-        testnet: net,
         rpcuser: cfg.get("rpc_user"),
         rpcpass: cfg.get("rpc_pass"),
-        rpclisten: cfg.get("daemon_rpc_host") + ":" + RPCDaemonPort(),
       }
     };
     fs.writeFileSync(dcrdCfg(), ini.stringify(dcrdConf));
@@ -327,26 +317,13 @@ export function writeCfgs(dcrd, dcrwallet, dcrctl) {
     var dcrwConf = {
       "Application Options":
       {
-        testnet: net,
         username: cfg.get("rpc_user"),
         password: cfg.get("rpc_pass"),
         appdata: appDataDirectory(),
-        rpcconnect: cfg.get("daemon_rpc_host") + ":" + RPCDaemonPort(),
-        rpclisten: cfg.get("wallet_rpc_host") + ":" + RPCWalletPort(),
-        grpclisten: cfg.get("wallet_rpc_host") + ":" + GRPCWalletPort(),
         tlscurve: "P-256",
         noinitialload: "1",
         onetimetlskey: "1",
-        enableticketbuyer: autobuy,
       },
-      "Ticket Buyer Options":
-      {
-        "ticketbuyer.balancetomaintainabsolute": cfg.get("balancetomaintain"),
-        "ticketbuyer.maxfee": cfg.get("maxfee"),
-        "ticketbuyer.maxpricerelative": cfg.get("maxpricerelative"),
-        "ticketbuyer.maxpriceabsolute": cfg.get("maxpriceabsolute"),
-        "ticketbuyer.maxperblock": cfg.get("maxperblock"),
-      }
     };
     fs.writeFileSync(dcrwCfg(), ini.stringify(dcrwConf));
   }
@@ -354,11 +331,8 @@ export function writeCfgs(dcrd, dcrwallet, dcrctl) {
     var dcrctlConf = {
       "Application Options":
       {
-        testnet: net,
         rpcuser: cfg.get("rpc_user"),
         rpcpass: cfg.get("rpc_pass"),
-        rpcserver: cfg.get("daemon_rpc_host") + ":" + RPCDaemonPort(),
-        walletrpcserver: cfg.get("wallet_rpc_host") + ":" + RPCWalletPort(),
       }
     };
     fs.writeFileSync(dcrctlCfg(), ini.stringify(dcrctlConf));

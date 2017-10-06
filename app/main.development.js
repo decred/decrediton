@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath } from "./config.js";
+import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, RPCDaemonHost, RPCDaemonPort, RPCWalletPort, GRPCWalletPort } from "./config.js";
 import path from "path";
 import fs from "fs";
 import os from "os";
@@ -307,6 +307,9 @@ ipcMain.on("check-daemon", (event) => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrctlCfg(), "getblockcount"];
 
+  args.push("--rpcserver=" + RPCDaemonHost() + ":" + RPCDaemonPort());
+  args.push("--walletrpcserver=" + cfg.get("wallet_rpc_host") + ":" + RPCWalletPort());
+
   var dcrctlExe = path.join(execPath, "bin", getExecutableName("dcrctl"));
   if (!fs.existsSync(dcrctlExe)) {
     logger.log("error", "The dcrctl file does not exists");
@@ -331,6 +334,11 @@ ipcMain.on("check-daemon", (event) => {
 const launchDCRD = () => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrdCfg()];
+
+  if (cfg.get("network") === "testnet") {
+    args.push("--testnet");
+  }
+  args.push("--rpclisten=" + RPCDaemonHost() + ":" + RPCDaemonPort());
 
   var dcrdExe = path.join(execPath, "bin", getExecutableName("dcrd"));
   if (!fs.existsSync(dcrdExe)) {
@@ -392,6 +400,22 @@ const launchDCRD = () => {
 const launchDCRWallet = () => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrwCfg()];
+
+  if (cfg.get("network") === "testnet") {
+    args.push("--testnet");
+  }
+  if (cfg.get("enableticketbuyer") === "1") {
+    args.push("--enableticketbuyer");
+  }
+  args.push("--rpcconnect=" + RPCDaemonHost() + ":" + RPCDaemonPort());
+  args.push("--rpclisten=" + cfg.get("wallet_rpc_host") + ":" + RPCWalletPort());
+  args.push("--grpclisten=" + cfg.get("wallet_rpc_host") + ":" + GRPCWalletPort());
+
+  args.push("--ticketbuyer.balancetomaintainabsolute=" + cfg.get("balancetomaintain"));
+  args.push("--ticketbuyer.maxfee=" + cfg.get("maxfee"));
+  args.push("--ticketbuyer.maxpricerelative=" + cfg.get("maxpricerelative"));
+  args.push("--ticketbuyer.maxpriceabsolute=" + cfg.get("maxpriceabsolute"));
+  args.push("--ticketbuyer.maxperblock=" + cfg.get("maxperblock"));
 
   var dcrwExe = path.join(execPath, "bin", getExecutableName("dcrwallet"));
   if (!fs.existsSync(dcrwExe)) {
