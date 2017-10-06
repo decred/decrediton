@@ -307,6 +307,10 @@ ipcMain.on("check-daemon", (event) => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrctlCfg(), "getblockcount"];
 
+  if (cfg.get("network") === "testnet") {
+    args.push("--testnet");
+  }
+  
   args.push("--rpcserver=" + RPCDaemonHost() + ":" + RPCDaemonPort());
   args.push("--walletrpcserver=" + cfg.get("wallet_rpc_host") + ":" + RPCWalletPort());
 
