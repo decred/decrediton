@@ -310,7 +310,6 @@ ipcMain.on("check-daemon", (event) => {
   if (cfg.get("network") === "testnet") {
     args.push("--testnet");
   }
-  
   args.push("--rpcserver=" + RPCDaemonHost() + ":" + RPCDaemonPort());
   args.push("--walletrpcserver=" + cfg.get("wallet_rpc_host") + ":" + RPCWalletPort());
 
