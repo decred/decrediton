@@ -3,6 +3,7 @@ import { autobind } from "core-decorators";
 import { substruct, compose, eq, get } from "../../fp";
 import PurchaseTicketsForm from "./Form";
 import purchaseTickets from "../../connectors/purchaseTickets";
+import { injectIntl, FormattedMessage as T } from "react-intl";
 
 @autobind
 class PurchaseTickets extends React.Component {
@@ -27,6 +28,7 @@ class PurchaseTickets extends React.Component {
           canAffordTickets: this.getCanAffordTickets(),
           stakePool: this.getStakePool(),
           account: this.getAccount(),
+          formatMessage: this.props.intl.formatMessage,
           ...this.getErrors(),
           ...substruct({
             onShowAdvanced: null,
@@ -107,7 +109,7 @@ class PurchaseTickets extends React.Component {
     const { onRequestPassphrase } = this.props;
     if (!this.getIsValid()) return;
     onRequestPassphrase && onRequestPassphrase(
-      "Enter Passphrase to Purchase Tickets",
+      (<T id="purchaseTickets.requestPassphrase" m="Enter Passphrase to Purchase Tickets" />),
       null,
       this.onPurchaseTickets
     );
@@ -146,13 +148,13 @@ class PurchaseTickets extends React.Component {
     const { ticketFee, txFee, expiry } = this.state;
     const errors = {
       ticketFeeError: (isNaN(ticketFee) || ticketFee <= 0 || ticketFee >= 1)
-        ? "*Invalid ticket fee (0 - 1 DCR/KB)"
+        ? <T id="purchaseTickets.errors.invalidTicketFee" m="*Invalid ticket fee (0 - 1 DCR/KB)" />
         : null,
       txFeeError: (isNaN(txFee) || txFee <= 0 || txFee >= 1)
-        ? "*Invalid tx fee (0 - 1 DCR/KB)"
+        ? <T id="purchaseTickets.invalidTxFee" m="*Invalid tx fee (0 - 1 DCR/KB)" />
         : null,
       expiryError: (isNaN(expiry) || expiry < 0)
-        ? "*Invalid expiry (>= 0)"
+        ? <T id="puchaseTickets.invalidExpiry" m="*Invalid expiry (>= 0)" />
         : null
     };
     Object.keys(errors).forEach(key => errors[key] ? null : delete errors[key]);
@@ -160,4 +162,4 @@ class PurchaseTickets extends React.Component {
   }
 }
 
-export default purchaseTickets(PurchaseTickets);
+export default purchaseTickets(injectIntl(PurchaseTickets));

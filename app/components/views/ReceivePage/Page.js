@@ -7,12 +7,21 @@ import SideBar from "../../SideBar";
 import Header from "../../Header";
 import CopyToClipboardButton from "../../CopyToClipboardButton";
 import QRCode from "./QRCode";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import "../../../style/Layout.less";
 import "../../../style/ReceivePage.less";
 import "../../../style/MiscComponents.less";
 
+const messages = defineMessages({
+  accountsTip: {
+    id: "receive.accounts.tip",
+    defaultMessage: "Accounts"
+  }
+});
+
 const ReceivePage = ({
   nextAddress,
+  intl,
   onChangeAccountNumber,
   onRequestAddress
 }) => (
@@ -20,8 +29,12 @@ const ReceivePage = ({
     <SideBar />
     <div className="page-view">
       <Header
-        headerTitleOverview={<div className="receive-header-title">Receive Funds</div>}
-        headerMetaOverview={<div className="receive-header-meta">Each time you request a payment, create a new address to protect your privacy.</div>}
+        headerTitleOverview={<div className="receive-header-title">
+          <T id="receive.title" m="Receive Funds" />
+          </div>}
+        headerMetaOverview={<div className="receive-header-meta">
+          <T id="receive.titleInfo" m="Each time you request a payment, create a new address to protect your privacy." />
+        </div>}
       />
       <div className="page-content">
         <div className="receive-content-nest">
@@ -31,10 +44,11 @@ const ReceivePage = ({
               data-place="bottom"
               data-type="info"
               data-effect="solid"
-              data-tip={"Accounts"}
+              data-tip={intl.formatMessage(messages.accountsTip)}
               to={"/accounts"}
             />
-            <div className="receive-content-nest-prefix">This address is for:</div>
+            <div className="receive-content-nest-prefix">
+              <T id="receive.accountLabel" m="This address is for" />:</div>
             <div className="receive-select-account-input">
               <AccountsSelect onChange={onChangeAccountNumber} accountsType="visible" />
             </div>
@@ -55,7 +69,7 @@ const ReceivePage = ({
         </div>
         <div className="receive-toolbar">
           <KeyBlueButton size="large" block={false} onClick={onRequestAddress}>
-            Generate new address
+            <T id="receive.newAddressBtn" m="Generate new address" />
           </KeyBlueButton>
         </div>
       </div>
@@ -64,4 +78,4 @@ const ReceivePage = ({
   </div>
 );
 
-export default ReceivePage;
+export default injectIntl(ReceivePage);

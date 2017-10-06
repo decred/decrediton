@@ -2,6 +2,7 @@
 import React from "react";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
+import { FormattedMessage as T } from "react-intl";
 import "../../style/PassphraseModal.less";
 
 const Modal =({
@@ -20,7 +21,9 @@ const Modal =({
       <div className="passphrase-modal-description">{description}</div>
       <div className="passphrase-modal-field-error-ct">
         <div className="passphrase-modal-field-ct">
-          <div className="passphrase-modal-label">Private Passphrase:</div>
+          <div className="passphrase-modal-label">
+            <T id="passphraseModal.privatePassphrase" m="Private Passphrase" />
+            :</div>
           <input
             id="passphrase"
             className="passphrase-modal-field"
@@ -33,13 +36,19 @@ const Modal =({
         <div className="passphrase-modal-error-ct">
           <div className="passphrase-modal-label"></div>
           <div className="passphrase-modal-error">
-            {(hasAttemptedSubmit && !passPhrase) ? "*Please enter your private passphrase" : null}
+            {(hasAttemptedSubmit && !passPhrase)
+            ? <T id="passphraseModal.errors.noPassphrase" m="*Please enter your private passphrase" />
+            : null}
           </div>
         </div>
       </div>
       <div className="passphrase-modal-toolbar">
-        <KeyBlueButton className="passphrase-modal-save-button" onClick={onSubmit}>save</KeyBlueButton>
-        <SlateGrayButton className="passphrase-modal-cancel-button" onClick={onCancel}>cancel</SlateGrayButton>
+        <KeyBlueButton className="passphrase-modal-save-button" onClick={onSubmit}>
+          <T id="passphraseModal.save" m="save" />
+        </KeyBlueButton>
+        <SlateGrayButton className="passphrase-modal-cancel-button" onClick={onCancel}>
+          <T id="passphraseModal.cancel" m="cancel" />
+        </SlateGrayButton>
       </div>
     </div>
   </div>

@@ -1,4 +1,9 @@
 {
   "presets": ["es2015", "stage-0", "react", "flow"],
-  "plugins": ["transform-object-rest-spread", "transform-decorators-legacy"]
+  "plugins": [
+    "transform-object-rest-spread",
+    "transform-decorators-legacy",
+    "./scripts/aliasDefaultMessage.js",
+    ["react-intl", {"messagesDir": "app/i18n/extracted"}]
+  ]
 }

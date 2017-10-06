@@ -2,11 +2,11 @@
 import { transactionNtfs, accountNtfs } from "../middleware/grpc/client";
 import { getAccountsAttempt, getStakeInfoAttempt,
   getTicketPriceAttempt, getNetworkAttempt } from "./ClientActions";
-import { timeBackString } from "../helpers/dateFormat.js";
 import { reverseHash } from "../helpers/byteActions";
 import { TransactionNotificationsRequest, AccountNotificationsRequest} from "../middleware/walletrpc/api_pb";
 import { GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_COINBASE, GETTRANSACTIONS_PROGRESS_TICKET, GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE } from "./ClientActions";
 import { TransactionDetails }  from "../middleware/walletrpc/api_pb";
+import { UPDATETIMESINCEBLOCK } from "./ClientActions";
 
 export const TRANSACTIONNTFNS_START = "TRANSACTIONNTFNS_START";
 export const TRANSACTIONNTFNS_FAILED = "TRANSACTIONNTFNS_FAILED";
@@ -21,12 +21,19 @@ function transactionNtfnsData(response) {
     const { neededBlocks } = getState().walletLoader;
     const { unmined } = getState().notifications;
     var currentHeight = 0;
+    var { recentBlockTimestamp } = getState().grpc;
     if (response.getAttachedBlocksList().length > 0) {
       currentHeight = response.getAttachedBlocksList()[0].getHeight();
       if (currentHeight > neededBlocks) {
         const attachedBlocks = response.getAttachedBlocksList();
-        var recentBlockTime = new Date(attachedBlocks[attachedBlocks.length-1].getTimestamp()*1000);
+        var lastBlockTimestamp = attachedBlocks[attachedBlocks.length-1].getTimestamp();
+        var recentBlockTime = new Date(recentBlockTimestamp*1000);
         var seconds = Math.floor((new Date() - recentBlockTime) / 1000);
+
+        if (lastBlockTimestamp !== recentBlockTimestamp) {
+          dispatch({recentBlockTimestamp: lastBlockTimestamp, type: UPDATETIMESINCEBLOCK });
+        }
+
         // Only request other wallet information if it is within 30 minutes.
         // 60 * 30 == 30 minutes worth of seconds
         if (seconds < 60 * 30) {
@@ -109,9 +116,11 @@ function transactionNtfnsData(response) {
           dispatch({response: response, type: TRANSACTIONNTFNS_DATA });
         }
       } else if (currentHeight%100 == 0) {
-        const { blocksPerDay } = getState().notifications;
-        var daysBack = Math.floor((neededBlocks - currentHeight) / blocksPerDay);
-        dispatch({currentHeight: currentHeight, timeBackString: timeBackString(daysBack), type: TRANSACTIONNTFNS_SYNCING });
+        var syncedToTimestamp = response.getAttachedBlocksList()[0].getTimestamp();
+        dispatch({
+          currentHeight: currentHeight,
+          syncedToTimestamp: syncedToTimestamp,
+          type: TRANSACTIONNTFNS_SYNCING });
       }
     } else if (response.getUnminedTransactionsList().length > 0) {
       for (var z = 0; z < response.getUnminedTransactionsList().length; z++) {

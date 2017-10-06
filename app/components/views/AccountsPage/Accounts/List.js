@@ -3,9 +3,9 @@ import Header from "../../../Header";
 import AccountRow from "./AccountRow";
 import DecredLoading from "../../../DecredLoading";
 import KeyBlueButton from "../../../KeyBlueButton";
+import { FormattedMessage as T } from "react-intl";
 import "../../../../style/Layout.less";
 import "../../../../style/AccountsPage.less";
-
 
 const AccountsList = ({
   accounts,
@@ -28,7 +28,7 @@ const AccountsList = ({
 }) => (
   <div className="page-view">
     <Header
-      headerTitleOverview="Accounts"
+      headerTitleOverview={<T id="accounts.title" m="Accounts" />}
       headerTop={[
         (getNextAccountError !== null) ? (
           <div
@@ -82,7 +82,7 @@ const AccountsList = ({
         <KeyBlueButton
           className="add-new-account-button"
           onClick={onShowAddAccount}>
-          Add New
+          <T id="accounts.addNewButton" m="Add New" />
         </KeyBlueButton>
       }
     />

@@ -21,7 +21,7 @@ export default function notifications(state = {}, action) {
     return {...state,
       currentHeight: action.currentHeight,
       synced: false,
-      timeBackString: action.timeBackString,
+      syncedToTimestamp: action.syncedToTimestamp,
     };
   case TRANSACTIONNTFNS_DATA_UNMINED:
     return {...state,

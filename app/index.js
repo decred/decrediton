@@ -8,6 +8,7 @@ import injectTapEventPlugin from "react-tap-event-plugin";
 import routes from "./routes";
 import configureStore from "./store/configureStore";
 import { getCfg } from "./config.js";
+import locales from "./i18n/locales";
 import "./style/main.less";
 import "./style/Global.less";
 import "./style/ReactSelectGlobal.less";
@@ -49,16 +50,17 @@ if (network == "testnet") {
   grpcport = cfg.get("wallet_port");
 }
 
-
 var initialState = {
   settings: {
     currentSettings: {
       currencyDisplay: cfg.get("currency_display"),
       network: cfg.get("network"),
+      locale: cfg.get("locale"),
     },
     tempSettings: {
       currencyDisplay: cfg.get("currency_display"),
       network: cfg.get("network"),
+      locale: cfg.get("locale"),
     },
     settingsChanged: false,
   },
@@ -74,7 +76,7 @@ var initialState = {
     daemonSynced: false,
     walletReady: false,
     currentBlockCount: null,
-    timeLeftEstimate: "Estimated time remaining: ---",
+    timeLeftEstimate: null,
     timeStart: 0,
     blockStart: 0,
   },
@@ -99,7 +101,8 @@ var initialState = {
     walletService: null,
     network: network,
     requiredStakepoolAPIVersion: 2,
-    timeSinceString: null,
+    recentBlockTimestamp: null,
+
     // ints for mainnet and testnet protocol hex
     // TestNet2 CurrencyNet = 0x48e7a065
     testnet: 1223139429,
@@ -209,7 +212,7 @@ var initialState = {
   notifications: {
     synced: true,
     currentHeight: 0,
-    timeBackString: "",
+    syncedToTimestamp: null,
     blocksPerDay: blocksPerDay,
     transactionNtfnsRequestAttempt: false,
     transactionNtfnsResponse: null,
@@ -307,7 +310,8 @@ var initialState = {
     constructTxRequestAttempt: false,
     constructTxResponse: null,
     constructTxError: null,
-  }
+  },
+  locales: locales
 };
 
 //Needed for onTouchTap

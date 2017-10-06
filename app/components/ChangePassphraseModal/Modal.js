@@ -2,8 +2,8 @@
 import React from "react";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
+import { FormattedMessage as T } from "react-intl";
 import "../../style/ChangePassphraseModal.less";
-
 
 const Modal = ({
   hidden,
@@ -28,7 +28,9 @@ const Modal = ({
         <div className="change-passphrase-modal-description">{description}</div>
       ] : null}
       <div className="change-passphrase-modal-field-ct">
-        <div className="change-passphrase-modal-label">Old Private Passphrase:</div>
+        <div className="change-passphrase-modal-label">
+          <T id="changePassModal.oldPassphrase" m="Old Private Passphrase" />
+          :</div>
         <input
           id="oldPassphrase"
           className="change-passphrase-modal-field"
@@ -40,7 +42,9 @@ const Modal = ({
         <div className="change-passphrase-modal-error">{oldPrivPassError}</div>
       </div>
       <div className="change-passphrase-modal-field-ct">
-        <div className="change-passphrase-modal-label">New Private Passphrase:</div>
+        <div className="change-passphrase-modal-label">
+          <T id="changePassModal.newPassphrase" m="New Private Passphrase" />
+          :</div>
         <input
           id="passphrase"
           className="change-passphrase-modal-field"
@@ -52,7 +56,9 @@ const Modal = ({
         <div className="change-passphrase-modal-error">{privPassError}</div>
       </div>
       <div className="change-passphrase-modal-field-ct">
-        <div className="change-passphrase-modal-label">Confirm:</div>
+        <div className="change-passphrase-modal-label">
+          <T id="changePassModal.confirm" m="Confirm" />
+          :</div>
         <input
           id='confirmPassphrase'
           className="change-passphrase-modal-field"
@@ -64,8 +70,12 @@ const Modal = ({
         <div className="change-passphrase-modal-error">{confirmPrivPassError}</div>
       </div>
       <div className="change-passphrase-modal-toolbar">
-        <KeyBlueButton className="change-passphrase-modal-save-button" onClick={submitPassphrase}>Update</KeyBlueButton>
-        <SlateGrayButton className="change-passphrase-modal-cancel-button" onClick={cancelPassphrase}>cancel</SlateGrayButton>
+        <KeyBlueButton className="change-passphrase-modal-save-button" onClick={submitPassphrase}>
+          <T id="changePassModal.update" m="Update" />
+        </KeyBlueButton>
+        <SlateGrayButton className="change-passphrase-modal-cancel-button" onClick={cancelPassphrase}>
+          <T id="changePassModal.cancel" m="Cancel" />
+        </SlateGrayButton>
       </div>
     </div>
   </div>

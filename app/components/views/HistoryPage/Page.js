@@ -4,8 +4,16 @@ import TxHistory from "../../TxHistory";
 import Balance from "../../Balance";
 import Header from "../../Header";
 import Select from "react-select";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import "../../../style/Layout.less";
 import "../../../style/HistoryPage.less";
+
+const messages = defineMessages({
+  typePlaceholder: {
+    id: "history.txTypePlaceholder",
+    defaultMessage: "Select type..."
+  }
+});
 
 const Page = ({
   spendableTotalBalance,
@@ -14,6 +22,7 @@ const Page = ({
   paginatedTxs,
   currentPage,
   totalPages,
+  intl,
   onChangeSelectedType,
   onPageBackward,
   onPageForward
@@ -22,20 +31,22 @@ const Page = ({
     <SideBar />
       <div className="page-view">
         <Header
-          headerTitleOverview="Available Balance"
+          headerTitleOverview={<T id="history.availableBalanceTitle" m="Available Balance" />}
           headerMetaOverview={<Balance amount={spendableTotalBalance} />}
         />
         <div className="page-content">
           <div className="history-content-title">
-            <div className="history-content-title-text">Recent Transactions</div>
+            <div className="history-content-title-text">
+              <T id="history.title" m="Recent Transactions" />
+            </div>
             <div className="history-select-tx-types-area">
-              <div className="history-select-tx-types-label">Tx Type:</div>
+              <div className="history-select-tx-types-label"><T id="history.txTypeLabel" m="Tx Type" />:</div>
               <div className="history-select-tx-types">
                 <Select
                   clearable={false}
                   style={{zIndex:"9"}}
                   onChange={onChangeSelectedType}
-                  placeholder={"Select type..."}
+                  placeholder={intl.formatMessage(messages.typePlaceholder)}
                   multi={false}
                   value={selectedType}
                   valueKey="value" labelKey="label"
@@ -48,7 +59,7 @@ const Page = ({
               <TxHistory
                 transactions={paginatedTxs}
               />
-            ) : <p>No transactions</p>}
+            ) : <p><T id="history.noTransactions" m="No transactions" /> </p>}
           </div>
           <div className="history-content-title-buttons-area">
             <button
@@ -56,7 +67,10 @@ const Page = ({
               disabled={currentPage < 1}
               onClick={onPageBackward}
             >&lt;</button>
-            <span className="history-content-title-buttons-text">{currentPage + 1} of {totalPages}</span>
+            <span className="history-content-title-buttons-text">
+              <T id="history.paginationPages" m="{current} of {total}"
+                values={{current: currentPage+1, total: totalPages}} />
+            </span>
             <button
               className="history-content-title-buttons-right"
               disabled={(currentPage + 1) >= totalPages}
@@ -68,4 +82,4 @@ const Page = ({
   </div>
 );
 
-export default Page;
+export default injectIntl(Page);

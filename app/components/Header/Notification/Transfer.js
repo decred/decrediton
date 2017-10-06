@@ -2,28 +2,50 @@
 import React from "react";
 import { Link } from "react-router";
 import Balance from "../../Balance";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import "../../../style/Header.less";
+
+const messages = defineMessages({
+  //same as the types used in index.js
+  Ticket: {
+    id: "notifications.type.ticket",
+    defaultMessage: "Ticket"
+  },
+  Send: {
+    id: "notifications.type.send",
+    defaultMessage: "Send"
+  },
+  Transfer: {
+    id: "notifications.type.transfer",
+    defaultMessage: "Transfer"
+  },
+  Receive: {
+    id: "notifications.type.receive",
+    defaultMessage: "Receive"
+  }
+});
 
 const Transfer = ({
   type,
   txHash,
   amount,
-  fee
+  fee,
+  intl
 }) => (
   <div className="snackbar-information">
     <div className="snackbar-information-row">
       <div className="snackbar-information-row-tx"><Link to={`/transactions/history/${txHash}`}>{txHash}</Link></div>
     </div>
     <div className="snackbar-information-row">
-      <div className="snackbar-information-row-type">{type}</div>
+      <div className="snackbar-information-row-type">{intl.formatMessage(messages[type])}</div>
       <div className="snackbar-information-row-amount">
-        Amount  <Balance amount={amount}/>
+        <T id="notification.transfer.amount" m="Amount" />  <Balance amount={amount}/>
       </div>
       <div className="snackbar-information-row-fee">
-        Fee  <Balance amount={fee}/>
+        <T id="notification.transfer.fee" m="Fee" />  <Balance amount={fee}/>
       </div>
     </div>
   </div>
 );
 
-export default Transfer;
+export default injectIntl(Transfer);

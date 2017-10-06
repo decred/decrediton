@@ -9,6 +9,7 @@ const mapStateToProps = selectorMap({
   currencyDisplay: sel.currencyDisplay,
   unitDivisor: sel.unitDivisor,
   tempSettings: sel.tempSettings,
+  locales: sel.sortedLocales,
   changePassphraseError: sel.changePassphraseError,
   changePassphraseSuccess: sel.changePassphraseSuccess,
   areSettingsDirty: sel.settingsChanged

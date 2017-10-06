@@ -1,5 +1,6 @@
 import React from "react";
 import "../style/AgendaCard.less";
+import { FormattedMessage as T } from "react-intl";
 
 // Currently removing percent progress until a solution to populate is found
 // <div style={styles.agendaCardPercent}><span style={styles.agendaPercentNumber}>XX</span>%</div>
@@ -14,12 +15,18 @@ const AgendaCard = ({
   )}>
     <div className="agenda-card-bottom">
       {agenda.finished ? (
-        <div className="agenda-card-indicator-finished">Finished</div>
+        <div className="agenda-card-indicator-finished">
+          <T id="agenda.card.finishedIndicator" m="Finished" />
+        </div>
       ) : (
-        <div className="agenda-card-indicator-pending">In Progress</div>
+        <div className="agenda-card-indicator-pending">
+          <T id="agenda.card.inProgressIndicator" m="In Progress" />
+        </div>
       )}
       <div className="agenda-card-bottom-cfg">
-        {agenda.getDescription()} <span className="agenda-card-bottom-cfg-last">Agenda ID: <span className="agenda-card-bottom-cfg-last-bold">{agenda.getId()}</span></span>
+        {agenda.getDescription()} <span className="agenda-card-bottom-cfg-last">
+          <T id="agenda.overview.idLabel" m="Agenda ID" />:
+          <span className="agenda-card-bottom-cfg-last-bold">{agenda.getId()}</span></span>
       </div>
     </div>
     <div className="agenda-card-top">

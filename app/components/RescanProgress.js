@@ -1,6 +1,7 @@
 import React from "react";
 import LinearProgress from "material-ui/LinearProgress";
 import rescan from "../connectors/rescan";
+import { FormattedMessage as T } from "react-intl";
 import "../style/MiscComponents.less";
 
 const RescanProgress = ({
@@ -9,7 +10,7 @@ const RescanProgress = ({
   rescanPercentFinished
 }) => (
   <div className="rescan-progress-area" >
-    Rescanning
+    <T id="rescan.rescanning" m="Rescanning" />
     <LinearProgress
       mode="determinate"
       min={0}

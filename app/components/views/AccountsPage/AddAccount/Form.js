@@ -2,8 +2,20 @@ import React from "react";
 import Header from "../../../Header";
 import KeyBlueButton from "../../../KeyBlueButton";
 import SlateGrayButton from "../../../SlateGrayButton";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import "../../../../style/Layout.less";
 import "../../../../style/AccountsPage.less";
+
+const messages = defineMessages({
+  newNamePlaceholder: {
+    id: "accounts.formNew.namePlaceholder",
+    defaultMessage: "New Account Name"
+  },
+  passphrasePlaceholder: {
+    id: "accounts.formNew.passphrasePlaceholder",
+    defaultMessage: "Private Password"
+  }
+});
 
 const AddAccountForm = ({
   name,
@@ -13,6 +25,7 @@ const AddAccountForm = ({
   errorMsg,
   setName,
   setPassPhrase,
+  intl,
   onSave,
   onCancel
 }) => (
@@ -36,13 +49,15 @@ const AddAccountForm = ({
     <div className="page-content">
       <div className="account-flex-height">
         <div className="account-form-row">
-          <div className="account-form-label">Account Name:</div>
+          <div className="account-form-label">
+            <T id="accounts.formNew.name" m="Account Name" />
+            :</div>
           <div className="account-form-input">
             <div className="account-input-form">
               <input
                 type="text"
                 className="account-nest-address-hash-to"
-                placeholder="New Account Name"
+                placeholder={intl.formatMessage(messages.newNamePlaceholder)}
                 maxLength="50"
                 value={name}
                 onChange={(e) => setName(e.target.value)}/>
@@ -50,26 +65,26 @@ const AddAccountForm = ({
           </div>
           {(hasAttemptedSave && !name) ? (
             <div className="account-form-input-error">
-              *You must enter an account name
+              <T id="accounts.formNew.errors.noName" m="*You must enter an account name" />
             </div>
           ) : null}
         </div>
         <div className="account-form-row" key="privatePassPhrase">
-          <div className="account-form-label">Private Passhrase:</div>
+          <div className="account-form-label"><T id="accounts.formNew.privatePassphrase" m="Private Passphrase" />:</div>
           <div className="account-form-input">
             <div className="account-input-form">
               <input
                 id="privpass"
                 className="account-nest-address-hash-to"
                 type="password"
-                placeholder="Private Password"
+                placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
                 value={passPhrase}
                 onChange={(e) => setPassPhrase(e.target.value)}/>
             </div>
           </div>
           {(hasAttemptedSave && !passPhrase) ? (
             <div className="account-form-input-error">
-              *Please enter your private passphrase
+              <T id="accounts.formNew.errors.noPassphrase" m="*Please enter your private passphrase" />
             </div>
           ) : null}
 
@@ -79,14 +94,14 @@ const AddAccountForm = ({
         <KeyBlueButton
           className="confirm-new-account-button"
           onClick={onSave}
-        >Confirm</KeyBlueButton>
+        ><T id="accounts.formNew.confirmBtn" m="Confirm" /></KeyBlueButton>
         <SlateGrayButton
           className="hide-new-account-button"
           onClick={onCancel}
-        >Cancel</SlateGrayButton>
+        ><T id="accounts.formNew.cancelBtn" m="Cancel" /></SlateGrayButton>
       </div>
     </div>
   </div>
 );
 
-export default AddAccountForm;
+export default injectIntl(AddAccountForm);

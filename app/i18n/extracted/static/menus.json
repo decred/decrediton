@@ -1,0 +1,126 @@
+[
+  {
+    "id": "appMenu.file",
+    "defaultMessage": "&File"
+  },
+  {
+    "id": "appMenu.close",
+    "defaultMessage": "&Close"
+  },
+  {
+    "id": "appMenu.view",
+    "defaultMessage": "&View"
+  },
+  {
+    "id": "appMenu.toggleFullScreen",
+    "defaultMessage": "Toggle &Full Screen"
+  },
+  {
+    "id": "appMenu.advanced",
+    "defaultMessage": "Advanced"
+  },
+  {
+    "id": "appMenu.developerTools",
+    "defaultMessage": "Toggle Developer Tools"
+  },
+  {
+    "id": "appMenu.showWalletLog",
+    "defaultMessage": "Show Wallet Log Files"
+  },
+  {
+    "id": "appMenu.showDaemonLog",
+    "defaultMessage": "Show Daemon Log Files"
+  },
+  {
+    "id": "appMenu.help",
+    "defaultMessage": "Help"
+  },
+  {
+    "id": "appMenu.learnMore",
+    "defaultMessage": "Learn More"
+  },
+  {
+    "id": "appMenu.documentation",
+    "defaultMessage": "Documentation"
+  },
+  {
+    "id": "appMenu.communityDiscussions",
+    "defaultMessage": "Community Discussions"
+  },
+  {
+    "id": "appMenu.searchIssues",
+    "defaultMessage": "Search Issues"
+  },
+  {
+    "id": "appMenu.about",
+    "defaultMessage": "About"
+  },
+  {
+    "id": "appMenu.window",
+    "defaultMessage": "Window"
+  },
+  {
+    "id": "appMenu.minimize",
+    "defaultMessage": "Minimize"
+  },
+  {
+    "id": "appMenu.bringAllFront",
+    "defaultMessage": "Bring All to Front"
+  },
+  {
+    "id": "appMenu.edit",
+    "defaultMessage": "Edit"
+  },
+  {
+    "id": "appMenu.undo",
+    "defaultMessage": "Undo"
+  },
+  {
+    "id": "appMenu.redo",
+    "defaultMessage": "Redo"
+  },
+  {
+    "id": "appMenu.cut",
+    "defaultMessage": "Cut"
+  },
+  {
+    "id": "appMenu.copy",
+    "defaultMessage": "Copy"
+  },
+  {
+    "id": "appMenu.paste",
+    "defaultMessage": "Paste"
+  },
+  {
+    "id": "appMenu.selectAll",
+    "defaultMessage": "Select All"
+  },
+  {
+    "id": "appMenu.decrediton",
+    "defaultMessage": "Decrediton"
+  },
+  {
+    "id": "appMenu.aboutDecrediton",
+    "defaultMessage": "About Decrediton"
+  },
+  {
+    "id": "appMenu.services",
+    "defaultMessage": "Services"
+  },
+  {
+    "id": "appMenu.hideDecrediton",
+    "defaultMessage": "Hide Decrediton"
+  },
+  {
+    "id": "appMenu.hideOthers",
+    "defaultMessage": "Hide Others"
+  },
+  {
+    "id": "appMenu.showAll",
+    "defaultMessage": "Show All"
+  },
+  {
+    "id": "appMenu.quit",
+    "defaultMessage": "Quit"
+  }
+]

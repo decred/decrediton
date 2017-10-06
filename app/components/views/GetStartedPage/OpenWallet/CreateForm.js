@@ -3,6 +3,7 @@ import Header from "../../../Header";
 import CreateWalletForm from "../../../CreateWalletForm";
 import TextToggle from "../../../TextToggle";
 import SlateGrayButton from "../../../SlateGrayButton";
+import { FormattedMessage as T } from "react-intl";
 import "../../../../style/GetStarted.less";
 
 const OpenWalletCreateFormHeader = ({
@@ -14,25 +15,26 @@ const OpenWalletCreateFormHeader = ({
 }) => (
   <Header
     getStarted
-    headerTitleOverview={"Setting up Decrediton"}
+    headerTitleOverview={<T id="getStarted.header.title" m="Setting up Decrediton" />}
     headerTop={startupError
       ? <div key="walletCreateError" className="get-started-view-notification-error">{startupError}</div>
       : null}
     headerMetaOverview={(
       <div className="get-started-create-wallet-header">
-        <div className="get-started-subheader">Create a wallet</div>
+        <div className="get-started-subheader">
+          <T id="getStarted.header.createWallet.meta" m="Create a wallet" /></div>
         {isInputRequest ? (
           <div className="get-started-button-toolbar">
             {confirmNewSeed ? (
               <SlateGrayButton
                 className="get-started-view-button-go-back"
                 onClick={onReturnToNewSeed}
-              >Back</SlateGrayButton>
+              ><T id="getStarted.backBtn" m="Back" /> </SlateGrayButton>
             ) : (
               <TextToggle
                 activeButton={"left"}
-                leftText={"New seed"}
-                rightText={"Existing Seed"}
+                leftText={<T id="getStarted.newSeedTab" m="New Seed" />}
+                rightText={<T id="getStarted.existingSeedTab" m="Existing Seed" />}
                 toggleAction={onToggleNewExisting}
               />
             )}

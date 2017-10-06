@@ -3,12 +3,21 @@ import { autobind } from "core-decorators";
 import Select from "react-select";
 import { PropTypes } from "prop-types";
 import accountsSelect from "../connectors/accountsSelect";
+import { injectIntl, defineMessages, intlShape } from "react-intl";
+
+const messages = defineMessages({
+  placeholder: {
+    id: "accountsSelect.placeholder",
+    defaultMessage: "Select account"
+  }
+});
 
 @autobind
 class AccountsSelect extends Component {
 
   static propTypes = {
-    accountsType: PropTypes.oneOf(["spending", "visible"])
+    accountsType: PropTypes.oneOf(["spending", "visible"]),
+    intl: intlShape.isRequired
   };
 
   constructor(props) {
@@ -24,11 +33,12 @@ class AccountsSelect extends Component {
   }
 
   render() {
+    const { formatMessage } = this.props.intl;
     return (
       <Select
         clearable={false}
         style={{zIndex:"9"}}
-        placeholder={"Select account..."}
+        placeholder={formatMessage(messages.placeholder)}
         multi={false}
         value={this.state.account}
         valueKey="value"
@@ -58,4 +68,4 @@ class AccountsSelect extends Component {
   }
 }
 
-export default accountsSelect(AccountsSelect);
+export default accountsSelect(injectIntl(AccountsSelect));

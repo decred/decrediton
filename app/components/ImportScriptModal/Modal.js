@@ -2,6 +2,7 @@
 import React from "react";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
+import { FormattedMessage as T } from "react-intl";
 import "../../style/ImportScriptModal.less";
 
 const Modal = ({
@@ -21,7 +22,9 @@ const Modal = ({
       <div className="import-script-modal-heading">{heading}</div>
       <div className="import-script-modal-description">{description}</div>
       <div className="import-script-modal-field-ct">
-        <div className="import-script-modal-label">Redeem Script:</div>
+        <div className="import-script-modal-label">
+          <T id="importScriptModal.redeemScript" m="Redeem Script" />
+          :</div>
         <input
           id="script"
           className="import-script-modal-field"
@@ -33,10 +36,14 @@ const Modal = ({
       </div>
       <div className="import-script-modal-error-ct">
         <div className="import-script-modal-label"></div>
-        <div className="import-script-modal-error">{(hasFailedAttempt && !script) ? "*Please enter your script" : null}</div>
+        <div className="import-script-modal-error">{(hasFailedAttempt && !script)
+          ? <T id="importScriptModal.errors.noScript" m="*Please enter your script" />
+          : null}</div>
       </div>
       <div className="import-script-modal-field-ct">
-        <div className="import-script-modal-label">Private Passphrase:</div>
+        <div className="import-script-modal-label">
+          <T id="importScriptModal.privatePassphrase" m="Private Passphrase" />
+           :</div>
         <input
           id="passphrase"
           className="import-script-modal-field"
@@ -48,7 +55,9 @@ const Modal = ({
       </div>
       <div className="import-script-modal-error-ct">
         <div className="import-script-modal-label"></div>
-        <div className="import-script-modal-error">{(hasFailedAttempt && !passPhrase) ? "*Please enter your private passphrase" : null}</div>
+        <div className="import-script-modal-error">{(hasFailedAttempt && !passPhrase)
+          ? <T id="importScriptModal.errors.noPassphrase" m="*Please enter your private passphrase" />
+          : null}</div>
       </div>
       <div className="import-script-modal-toolbar">
         <KeyBlueButton style={{float: "left"}} onClick={onSubmit}>save</KeyBlueButton>

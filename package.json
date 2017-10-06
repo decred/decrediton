@@ -24,7 +24,9 @@
     "package-mac": "npm run build && build --mac",
     "package-all": "npm run build && build -mwl",
     "cleanup": "mop -v",
-    "flow": "flow"
+    "flow": "flow",
+    "i18n-prepare-untranslated": "node ./scripts/prepareUntranslated.js && ./node_modules/.bin/rip json2pot 'app/i18n/extracted/**/*.json' -c id -o app/i18n/pot/decrediton.pot",
+    "i18n-assemble-translated": "node ./scripts/assembleTranslated.js && ./node_modules/.bin/rip po2json 'app/i18n/po/*.po' -m app/i18n/extracted/**/*.json -c id -o app/i18n/translations"
   },
   "jest": {
     "verbose": true,
@@ -168,6 +170,7 @@
     "mocha": "^3.1.2",
     "node-loader": "^0.6.0",
     "react-addons-test-utils": "^15.3.2",
+    "react-intl-translations-manager": "^5.0.0",
     "react-tap-event-plugin": "^2.0.1",
     "redux-logger": "^2.7.4",
     "sinon": "^1.17.6",
@@ -184,6 +187,7 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "babel-plugin-react-intl": "^2.3.1",
     "electron-debug": "^1.0.1",
     "eslint-formatter-pretty": "^1.1.0",
     "eslint-plugin-react": "^6.9.0",
@@ -197,6 +201,8 @@
     "qr-image": "^3.2.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-intl": "^2.4.0",
+    "react-intl-po": "^2.1.1",
     "react-redux": "^4.4.5",
     "react-redux-form": "^1.2.4",
     "react-router": "^3.0.4",

@@ -1,6 +1,18 @@
 import React from "react";
 import compose from "lodash/fp/compose";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import "../../../style/SendPage.less";
+
+const messages = defineMessages({
+  destinationAddrPlaceholder: {
+    id: "send.destinationAddrPlaceholder",
+    defaultMessage: "Destination Address"
+  },
+  amountPlaceholder: {
+    id: "send.amountPlaceholder",
+    defaultMessage: "Amount"
+  }
+});
 
 const SendOutputRow = ({
   index,
@@ -19,17 +31,18 @@ const SendOutputRow = ({
   isSendAll,
   totalSpent,
   unitDivisor,
+  intl
 }) => (
   <div className="send-row">
     <div className="send-output-row">
-      <div className="send-label">To:</div>
+      <div className="send-label"><T id="send.to" m="To" />:</div>
       <div className="send-address">
         <div className="send-input-form">
           <input
             value={destination}
             type="text"
             className="send-address-hash-to"
-            placeholder="Destination Address"
+            placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
             onChange={compose(getOnChangeOutputDestination(index), e => e.target.value)}
             onBlur={onAttemptConstructTransaction}
           />
@@ -45,7 +58,7 @@ const SendOutputRow = ({
         <div className="send-address-icon-spacer send-address-amount-spacer" ></div>
       ) : ( null ) }
       <div className="send-amount">
-        {index === 0 ? <div className="send-amount-label">Amount:</div> : null}
+        {index === 0 ? <div className="send-amount-label"><T id="send.amount" m="Amount" />:</div> : null}
         <div className="send-address-amount-sum-and-currency">
           <input
             hidden={!isSendAll}
@@ -59,7 +72,7 @@ const SendOutputRow = ({
             value={amountStr}
             type="text"
             className="send-address-input-amount"
-            placeholder="Amount"
+            placeholder={intl.formatMessage(messages.amountPlaceholder)}
             onChange={compose(getOnChangeOutputAmount(index), e => e.target.value)}
             onBlur={onAttemptConstructTransaction}
           />
@@ -76,4 +89,4 @@ const SendOutputRow = ({
   </div>
 );
 
-export default SendOutputRow;
+export default injectIntl(SendOutputRow);

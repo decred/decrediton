@@ -276,7 +276,7 @@ export default function grpc(state = {}, action) {
   case UPDATETIMESINCEBLOCK:
     return {
       ...state,
-      timeSinceString: action.timeSinceString,
+      recentBlockTimestamp: action.recentBlockTimestamp,
     };
   case GETAGENDASERVICE_ATTEMPT:
     return {

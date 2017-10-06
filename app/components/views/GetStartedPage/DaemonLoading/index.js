@@ -28,11 +28,18 @@ class DaemonLoadingBody extends Component {
 
   render() {
     const { showLongWaitMessage } = this.state;
+    const minutesLeft = this.props.getEstimatedTimeLeft;
+    let finishDateEstimation = null;
+    if (minutesLeft !== null) {
+      finishDateEstimation = new Date();
+      finishDateEstimation.setMinutes(finishDateEstimation.getMinutes() + minutesLeft);
+    }
     return (
       <DaemonLoadingFormBody
         {...{
           ...this.props,
-          showLongWaitMessage
+          showLongWaitMessage,
+          finishDateEstimation
         }}
       />
     );

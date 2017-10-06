@@ -11,14 +11,6 @@ class SideBar extends Component {
     this.state = { isShowingAccounts: false };
   }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  componentDidMount() {
-    this.interval = setInterval(() => this.props.updateBlockTimeSince(), 10000);
-  }
-
   render() {
     return (
       <Bar
@@ -29,7 +21,7 @@ class SideBar extends Component {
           balances: this.props.balances,
           synced: this.props.synced,
           currentHeight: this.props.currentBlockHeight,
-          timeBackString: this.props.timeBackString,
+          lastBlockTimestamp: this.props.lastBlockTimestamp,
           totalBalance: this.props.totalBalance / 100000000,
           isShowingAccounts: this.state.isShowingAccounts,
           onShowAccounts: this.onShowAccounts,

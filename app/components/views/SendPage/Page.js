@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 import AccountsSelect from "../../AccountsSelect";
 import ReactTooltip from "react-tooltip";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import DecredLoading from "../../DecredLoading";
 import SideBar from "../../SideBar";
 import Balance from "../../Balance";
@@ -11,6 +12,13 @@ import PassphraseModal from "../../PassphraseModal";
 import OutputRow from "./OutputRow";
 import "../../../style/SendPage.less";
 import "../../../style/MiscComponents.less";
+
+const messages = defineMessages({
+  accountsTip: {
+    id: "send.accounts.tip",
+    defaultMessage: "Accounts"
+  }
+});
 
 const SendPage = ({
   isSendingTransaction,
@@ -36,17 +44,24 @@ const SendPage = ({
   onShowSendAll,
   getAddressError,
   getAmountError,
+  intl,
   ...props
 }) => (
   <div className="page-body">
     <SideBar />
     <div className="page-view">
       <Header
-        headerTitleOverview={<div className="header-title-send">Send Funds</div>}
+        headerTitleOverview={<div className="header-title-send">
+          <T id="send.title" m="Send Funds" /></div>}
         headerMetaOverview={isTestNet ? (
-          <div className="header-meta-send">Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters (e.g. <span className="send-styles.header-meta-span-send">TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>).</div>
+          <div className="header-meta-send">
+            <T id="send.testnetInfo"
+              m="Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters (e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)." />
+          </div>
         ) : (
-          <div className="header-meta-send">Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters (e.g. <span className="send-styles.header-meta-span-send">DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X</span>).</div>
+          <div className="header-meta-send">
+            <T id="send.mainnetInfo" m="Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)." />
+          </div>
         )}
         headerTop={[
           publishTransactionError ? (
@@ -64,7 +79,10 @@ const SendPage = ({
           publishedTransactionHash ? (
             <div key="pubSuccess" className="send-view-notification-success">
               <div className="send-address-delete-icon-header" onClick={onClearPublishTxSuccess}/>
-              Published Tx: {publishedTransactionHash}
+              <T
+                id="send.publishedTxHeader"
+                m="Published tx: {hash}"
+                values={{hash: publishedTransactionHash}}/>
             </div>
           ) : null
         ]}
@@ -78,12 +96,14 @@ const SendPage = ({
             submitPassphrase={onAttemptSignTransaction}
             cancelPassphrase={onClearTransaction}
             heading={"Confirm Transaction"}
-            description={<div>Please confirm your transaction for <Balance amount={totalSpent}/></div>}
+            description={<div>
+              <T id="send.confirmAmountLabel" m="Please confirm your transaction for" />
+              : <Balance amount={totalSpent}/></div>}
           />
           <div className={!isShowingConfirm ? "page-content" : "page-content-blur"}>
             <div className="send-flex-height">
               <div className="send-select-account-area">
-                <div className="send-label">From:</div>
+                <div className="send-label"><T id="send.from" m="From" />:</div>
                 <div className="send-select-account-input">
                   <AccountsSelect
                     onChange={onChangeAccount}
@@ -94,13 +114,13 @@ const SendPage = ({
                   data-place="bottom"
                   data-type="info"
                   data-effect="solid"
-                  data-tip={"Accounts"}
+                  data-tip={intl.formatMessage(messages.accountsTip)}
                   to={"/accounts"}
                 />
                 <div className="send-send-all-input">
                 {!isSendAll ?
-                <a onClick={onShowSendAll}>Send All</a> :
-                <a onClick={onClearTransaction}>Close</a>  }
+                <a onClick={onShowSendAll}><T id="send.sendAllBtn" m="Send All" /></a> :
+                <a onClick={onClearTransaction}><T id="send.cancelSendAll" m="Close" /></a>  }
                 </div>
               </div>
               <div className="send-amount-area">
@@ -118,7 +138,7 @@ const SendPage = ({
                 className="content-send"
                 disabled={!isValid}
                 onClick={onShowConfirm}
-              >Send</KeyBlueButton>
+              ><T id="send.sendBtn" m="Send" /></KeyBlueButton>
               {constructTxError ? (
                 <div className="send-construct-error">
                   {constructTxError}
@@ -126,19 +146,25 @@ const SendPage = ({
               ) : null}
               <div className="estimation-area-send">
                 <div className="total-amount-send">
-                  <div className="total-amount-send-text">Total amount sending:</div>
+                  <div className="total-amount-send-text">
+                    <T id="send.totalAmountEstimation" m="Total amount sending" />
+                    :</div>
                   <div className="total-amount-send-amount">
                     <Balance amount={totalSpent}/>
                   </div>
                 </div>
                 <div className="total-amount-send">
-                  <div className="total-amount-send-text">Estimated Fee:</div>
+                  <div className="total-amount-send-text">
+                    <T id="send.feeEstimation" m="Estimated Fee" />
+                    :</div>
                   <div className="total-amount-send-amount">
                     <Balance amount={estimatedFee} />
                   </div>
                 </div>
                 <div className="total-amount-send">
-                  <div className="total-amount-send-text">Estimated Size:</div>
+                  <div className="total-amount-send-text">
+                    <T id="send.sizeEstimation" m="Estimated Size" />
+                    :</div>
                   <div className="total-amount-send-amount">{estimatedSignedSize} bytes</div>
                 </div>
               </div>
@@ -151,4 +177,4 @@ const SendPage = ({
   </div>
 );
 
-export default SendPage;
+export default injectIntl(SendPage);

@@ -1,9 +1,18 @@
 // @flow
 import React, { Component } from "react";
+import { injectIntl, defineMessages }  from "react-intl";
 import "../style/MiscComponents.less";
+
+const messages = defineMessages({
+  accountsTip: {
+    id: "accountsButton.tip",
+    defaultMessage: "Accounts"
+  }
+});
 
 class GoToAccountsButton extends Component {
   render() {
+    const { formatMessage } = this.props.intl;
     return (
       <a
         ref="accountButtonRef"
@@ -11,10 +20,10 @@ class GoToAccountsButton extends Component {
         data-place="bottom"
         data-type="info"
         data-effect="solid"
-        data-tip={"Accounts"}
+        data-tip={formatMessage(messages.accountsTip)}
         onClick={this.onClick} />
     );
   }
 }
 
-export default GoToAccountsButton;
+export default injectIntl(GoToAccountsButton);
