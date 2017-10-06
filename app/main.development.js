@@ -56,20 +56,6 @@ var opts = {
   unknown: unknownFn
 };
 
-var createDcrdConf, createDcrwalletConf, createDcrctlConf = false;
-if (!fs.existsSync(dcrdCfg())) {
-  createDcrdConf = true;
-  logger.log("info", "The dcrd config file does not exists, creating");
-}
-if (!fs.existsSync(dcrwCfg())) {
-  createDcrwalletConf = true;
-  logger.log("info", "The dcrwallet config file does not exists, creating");
-}
-if (!fs.existsSync(dcrctlCfg())) {
-  createDcrctlConf = true;
-  logger.log("info", "The dcrctl config file does not exists, creating");
-}
-
 var argv = parseArgs(process.argv.slice(1), opts);
 debug = argv.debug || process.env.NODE_ENV === "development";
 // Output for child processes.
@@ -156,6 +142,20 @@ if (debug) {
 }
 
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
+
+var createDcrdConf, createDcrwalletConf, createDcrctlConf = false;
+if (!fs.existsSync(dcrdCfg())) {
+  createDcrdConf = true;
+  logger.log("info", "The dcrd config file does not exists, creating");
+}
+if (!fs.existsSync(dcrwCfg())) {
+  createDcrwalletConf = true;
+  logger.log("info", "The dcrwallet config file does not exists, creating");
+}
+if (!fs.existsSync(dcrctlCfg())) {
+  createDcrctlConf = true;
+  logger.log("info", "The dcrctl config file does not exists, creating");
+}
 
 // Check if network was set on command line (but only allow one!).
 if (argv.testnet && argv.mainnet) {
