@@ -7,7 +7,8 @@ import * as spa from "../actions/StakePoolActions";
 const mapStateToProps = selectorMap({
   configuredStakePools: sel.configuredStakePools,
   unconfiguredStakePools: sel.unconfiguredStakePools,
-  defaultStakePool: sel.defaultStakePool
+  defaultStakePool: sel.defaultStakePool,
+  rescanRequest: sel.rescanRequest
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

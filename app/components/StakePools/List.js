@@ -10,7 +10,8 @@ const StakePoolsList = ({
   configuredStakePools,
   unconfiguredStakePools,
   onShowAddStakePool,
-  onHideStakePoolConfig
+  onHideStakePoolConfig,
+  rescanRequest
 }) => (
   <div className="page-content">
     <div className="stakepool-flex-height">
@@ -43,7 +44,7 @@ const StakePoolsList = ({
       </div>
     </div>
     {unconfiguredStakePools.length > 0 ? (
-      <KeyBlueButton className="stakepool-content-send" onClick={onShowAddStakePool}>
+      <KeyBlueButton className="stakepool-content-send" disabled={rescanRequest} onClick={onShowAddStakePool}>
         <T id="stakepools.list.form.submit" m="Add stakepool" />
       </KeyBlueButton>
     ) : null}
