@@ -71,7 +71,6 @@ function transactionNtfnsData(response) {
                     type: attachedBlocks[j].getTransactionsList()[i].getTransactionType(),
                   };
                   if (tx.type == TransactionDetails.TransactionType.REGULAR) {
-                    console.log("here somehow?");
                     updatedRegular.unshift(tx);
                   } else if (tx.type == TransactionDetails.TransactionType.COINBASE) {
                     updatedCoinbase.unshift(tx);
