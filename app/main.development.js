@@ -55,6 +55,21 @@ var opts = {
   alias: { d: "debug" },
   unknown: unknownFn
 };
+
+var createDcrdConf, createDcrwalletConf, createDcrctlConf = false;
+if (!fs.existsSync(dcrdCfg())) {
+  createDcrdConf = true;
+  logger.log("info", "The dcrd config file does not exists, creating");
+}
+if (!fs.existsSync(dcrwCfg())) {
+  createDcrwalletConf = true;
+  logger.log("info", "The dcrwallet config file does not exists, creating");
+}
+if (!fs.existsSync(dcrctlCfg())) {
+  createDcrctlConf = true;
+  logger.log("info", "The dcrctl config file does not exists, creating");
+}
+
 var argv = parseArgs(process.argv.slice(1), opts);
 debug = argv.debug || process.env.NODE_ENV === "development";
 // Output for child processes.
@@ -480,7 +495,7 @@ const readExesVersion = () => {
 app.on("ready", async () => {
   await installExtensions();
   // Write application config files.
-  await writeCfgs();
+  await writeCfgs(createDcrdConf, createDcrwalletConf, createDcrctlConf);
 
   mainWindow = new BrowserWindow({
     show: false,
