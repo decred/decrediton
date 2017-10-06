@@ -5,6 +5,7 @@ import fs from "fs";
 import os from "os";
 import parseArgs from "minimist";
 import winston from "winston";
+import stringArgv from "string-argv";
 import locales from "./i18n/locales";
 
 let menu;
@@ -395,7 +396,7 @@ const launchDCRWallet = () => {
 
   // Add any extra args if defined.
   if (argv.extrawalletargs !== undefined) {
-    args.push(argv.extrawalletargs);
+    args.concat(stringArgv(argv.extrawalletargs));
   }
 
   logger.log("info", `Starting dcrwallet with ${args}`);
