@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { autobind } from "core-decorators";
+import { FormattedMessage as T, injectIntl } from "react-intl";
 import SignMessageForm from "./Form";
 import signMessageConnector from "../../connectors/signMessagePage";
 import CopyToClipboardButton from "../CopyToClipboardButton";
@@ -45,8 +46,8 @@ class SignMessage extends React.Component {
 
     return (
       <div className="page-content message message-sign">
-        <div className="message-header-title">Sign Message</div>
-        <SignMessageForm onSubmit={this.onSubmit} rpcError={signMessageError} />
+        <div className="message-header-title"><T id="securitycenter.sign.header" m="Sign Message" /></div>
+        <SignMessageForm onSubmit={this.onSubmit} rpcError={signMessageError} formatMessage={this.props.intl.formatMessage} />
         {result}
       </div>
     );
@@ -58,6 +59,7 @@ class SignMessage extends React.Component {
 }
 
 SignMessage.propTypes = {
+  intl: PropTypes.object.isRequired,
   walletService: PropTypes.object,
   signMessageCleanStore: PropTypes.func.isRequired,
   signMessageError: PropTypes.string,
@@ -70,4 +72,4 @@ SignMessage.contextTypes = {
   router: PropTypes.object.isRequired,
 };
 
-export default signMessageConnector(SignMessage);
+export default signMessageConnector(injectIntl(SignMessage));
