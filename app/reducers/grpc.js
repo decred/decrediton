@@ -23,7 +23,8 @@ import {
   SETVOTECHOICES_ATTEMPT, SETVOTECHOICES_FAILED, SETVOTECHOICES_SUCCESS,
   UPDATEHIDDENACCOUNTS,
 } from "../actions/ClientActions";
-import { SIGNMESSAGE_ATTEMPT, SIGNMESSAGE_SUCCESS, SIGNMESSAGE_FAILED, SIGNMESSAGE_CLEANSTORE } from "../actions/SignMessage";
+import { SIGNMESSAGE_ATTEMPT, SIGNMESSAGE_SUCCESS, SIGNMESSAGE_FAILED, SIGNMESSAGE_CLEANSTORE } from "../actions/SignMessageActions";
+import { VERIFYMESSAGE_ATTEMPT, VERIFYMESSAGE_SUCCESS, VERIFYMESSAGE_FAILED, VERIFYMESSAGE_CLEANSTORE } from "../actions/VerifyMessageActions";
 
 export default function grpc(state = {}, action) {
   switch (action.type) {
@@ -345,6 +346,32 @@ export default function grpc(state = {}, action) {
       getSignMessageError: null,
       getSignMessageResponse: null,
       getSignMessageRequestAttempt: false,
+    };
+  case VERIFYMESSAGE_ATTEMPT:
+    return {
+      ...state,
+      getVerifyMessageRequestAttempt: true,
+    };
+  case VERIFYMESSAGE_FAILED:
+    return {
+      ...state,
+      getVerifyMessageSuccess: null,
+      getVerifyMessageError: String(action.error),
+      getVerifyMessageRequestAttempt: false,
+    };
+  case VERIFYMESSAGE_SUCCESS:
+    return {
+      ...state,
+      getVerifyMessageError: null,
+      getVerifyMessageResponse: action.getVerifyMessageResponse,
+      getVerifyMessageRequestAttempt: false,
+    };
+  case VERIFYMESSAGE_CLEANSTORE:
+    return {
+      ...state,
+      getVerifyMessageError: null,
+      getVerifyMessageResponse: null,
+      getVerifyMessageRequestAttempt: false,
     };
   case GETAGENDAS_ATTEMPT:
     return {

@@ -140,6 +140,10 @@ var initialState = {
     getSignMessageError: null,
     getSignMessageRequestAttempt: false,
     getSignMessageResponse: null,
+    // VerifyMessage
+    getVerifyMessageError: null,
+    getVerifyMessageRequestAttempt: false,
+    getVerifyMessageResponse: null,
     // Accounts
     hiddenAccounts: hiddenAccounts,
     getAccountsError: null,
