@@ -39,15 +39,12 @@ const Page = ({
         <div className="history-select-tx-types-area">
           <div className="history-select-tx-types-label"><T id="history.txTypeLabel" m="Tx Type" />:</div>
           <div className="history-select-tx-types">
-            <Select
-              clearable={false}
-              style={{ zIndex: "9" }}
-              onChange={onChangeSelectedType}
-              placeholder={intl.formatMessage(messages.typePlaceholder)}
-              multi={false}
-              value={selectedType}
+            <EyeFilterMenu
               valueKey="value" labelKey="label"
-              options={txTypes} />
+              options={txTypes}
+              onChange={onChangeSelectedType}
+              labelKey="label"
+            />
           </div>
         </div>
       </div>
@@ -78,4 +75,4 @@ const Page = ({
   </div>
 );
 
-export default injectIntl(Page);
+export default Page;
