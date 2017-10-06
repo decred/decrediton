@@ -448,7 +448,7 @@ export const stopAutoBuyerError = get(["control", "stopAutoBuyerError"]);
 export const stopAutoBuyerSuccess = get(["control", "stopAutoBuyerSuccess"]);
 export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
 
-const currentStakePoolConfig = get(["stakepool", "currentStakePoolConfig"]);
+export const currentStakePoolConfig = get(["stakepool", "currentStakePoolConfig"]);
 
 const allStakePools = createSelector(
   [currentStakePoolConfig, requiredStakepoolAPIVersion],
