@@ -6,7 +6,7 @@ import TextareaField from "../Form/TextareaField";
 import ErrorField from "../Form/ErrorField";
 import { validate } from "./validator";
 
-const SignMessagePage = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError }) => {
+const SignMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError }) => {
   if (rpcError) {
     error = (
       <div className="error">{rpcError}</div>
@@ -51,7 +51,7 @@ const SignMessagePage = ({ handleSubmit, onSubmit, pristine, submitting, error, 
   );
 };
 
-SignMessagePage.propTypes = {
+SignMessageForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
@@ -60,4 +60,4 @@ SignMessagePage.propTypes = {
   rpcError: PropTypes.string,
 };
 
-export default reduxForm({ form: "message/sign", validate })(SignMessagePage);
+export default reduxForm({ form: "message/sign", validate })(SignMessageForm);

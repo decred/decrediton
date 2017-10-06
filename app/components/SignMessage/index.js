@@ -1,15 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { autobind } from "core-decorators";
-import SignMessagePage from "./Page";
+import SignMessageForm from "./Form";
 import signMessageConnector from "../../connectors/signMessagePage";
 import CopyToClipboardButton from "../CopyToClipboardButton";
-import "../../style/SecurityCenterSignMessagePage.less";
+import "../../style/SecurityCenterMessagePage.less";
 
 @autobind
 class SignMessage extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentWillMount() {
+    if (!this.props.walletService) {
+      this.context.router.push("/error");
+    }
   }
 
   componentWillUnmount() {
@@ -22,8 +28,8 @@ class SignMessage extends React.Component {
     let result = null;
     if (signMessageSuccess) {
       result = (
-        <div className="message-signature-nest">
-          <div className="message-signature-content">
+        <div className="message-nest">
+          <div className="message-content">
             <div>
               {signMessageSuccess.signature}
             </div>
@@ -38,9 +44,9 @@ class SignMessage extends React.Component {
     }
 
     return (
-      <div className="page-content message-sign">
+      <div className="page-content message message-sign">
         <div className="message-header-title">Sign Message</div>
-        <SignMessagePage onSubmit={this.onSubmit} rpcError={signMessageError} />
+        <SignMessageForm onSubmit={this.onSubmit} rpcError={signMessageError} />
         {result}
       </div>
     );
@@ -52,11 +58,16 @@ class SignMessage extends React.Component {
 }
 
 SignMessage.propTypes = {
+  walletService: PropTypes.object,
   signMessageCleanStore: PropTypes.func.isRequired,
   signMessageError: PropTypes.string,
   signMessageSuccess: PropTypes.shape({
     signature: PropTypes.string,
   }),
+};
+
+SignMessage.contextTypes = {
+  router: PropTypes.object.isRequired,
 };
 
 export default signMessageConnector(SignMessage);

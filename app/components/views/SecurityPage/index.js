@@ -1,23 +1,16 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { autobind } from "core-decorators";
 import SecurityPage from "./Page";
-import ErrorScreen from "../../ErrorScreen";
 import securityPageConnector from "../../../connectors/securityPage";
 
 @autobind
 class Security extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isShowingVerifyMessage: false,
-    };
   }
 
   render() {
-    if (!this.props.walletService) {
-      return <ErrorScreen />;
-    }
-
     return (
       <SecurityPage {
         ...{
@@ -30,10 +23,16 @@ class Security extends Component {
   }
 
   onToggleSecurityMessage(side) {
-    this.setState({
-      isShowingVerifyMessage: side === "right",
-    });
+    if (side === "right") {
+      return this.context.router.push("/security/verify");
+    }
+    this.context.router.push("/security/sign");
   }
 }
+
+Security.contextTypes = {
+  router: PropTypes.object.isRequired,
+};
+
 
 export default securityPageConnector(Security);
