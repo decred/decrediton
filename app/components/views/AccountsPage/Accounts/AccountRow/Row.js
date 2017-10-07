@@ -206,17 +206,19 @@ const Row = ({
                 key={"hideAccountButton"+account.accountNumber}
                 className="hide-account-button"
                 onClick={hideAccount}
+                data-for="accountTip"
                 data-tip={intl.formatMessage(messages.hideTip)}/>:
               account.accountName !== "imported" && account.accountName !== "default" && hidden ?
               <div
                 className="show-account-button"
                 key={"showAccountButton"+account.accountNumber}
                 onClick={showAccount}
+                data-for="accountTip"
                 data-tip={intl.formatMessage(messages.showTip)}/> :
               <div></div>
             }
           </div>
-          <ReactToolTip type="info" effect="solid"/>
+          <ReactToolTip id="accountTip" type="info" effect="solid" getContent={[() => { return (hidden) ? intl.formatMessage(messages.showTip): intl.formatMessage(messages.hideTip); }]}/>
          </div>
        )
     }
