@@ -214,7 +214,7 @@ const Row = ({
                 key={"showAccountButton"+account.accountNumber}
                 onClick={showAccount}
                 data-for="accountTip"
-                data-tip={intl.formatMessage(messages.showTip)}/> :
+                data-tip={intl.formatMessage(messages.showTip)}/>:
               <div></div>
             }
           </div>
