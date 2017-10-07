@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Header from "../../../Header";
 import AccountRow from "./AccountRow";
 import DecredLoading from "../../../DecredLoading";
@@ -121,5 +122,28 @@ const AccountsList = ({
     </div>
   </div>
 );
+
+AccountsList.propTypes = {
+  accounts: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  isShowingBalanceOverviewInfoModal: PropTypes.bool.isRequired,
+  getNextAccountSuccess: PropTypes.object,
+  onClearNewAccountError: PropTypes.func.isRequired,
+  getNextAccountError: PropTypes.object,
+  onClearNewAccountSuccess: PropTypes.func.isRequired,
+  renameAccountSuccess: PropTypes.object,
+  onClearRenameAccountSuccess: PropTypes.func.isRequired,
+  renameAccountError: PropTypes.object,
+  onClearRenameAccountError: PropTypes.func.isRequired,
+  onShowAddAccount: PropTypes.func.isRequired,
+  onShowAccount: PropTypes.func.isRequired,
+  onHideAccount: PropTypes.func.isRequired,
+  onRenameAccount: PropTypes.func.isRequired,
+  onShowAccountDetails: PropTypes.func.isRequired,
+  onHideAccountDetails: PropTypes.func.isRequired,
+  accountNumDetailsShown: PropTypes.number,
+  onShowBalanceOverviewInfoModal: PropTypes.func.isRequired,
+  onCloseBalanceOverviewInfoModal: PropTypes.func.isRequired,
+};
 
 export default AccountsList;

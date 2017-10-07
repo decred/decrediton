@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import SlateGrayButton from "./SlateGrayButton";
 import "../style/StakePool.less";
 
@@ -31,5 +32,9 @@ const BalanceOverviewInfoModal = ({ closeModal }) => (
     </div>
   </div>
 );
+
+BalanceOverviewInfoModal.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+};
 
 export default BalanceOverviewInfoModal;
