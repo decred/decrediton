@@ -8,7 +8,8 @@ class Accounts extends Component {
   constructor(props)  {
     super(props);
     this.state = {
-      accountNumDetailsShown: null
+      accountNumDetailsShown: null,
+      isShowingBalanceOverviewInfoModal: false,
     };
   }
 
@@ -18,6 +19,7 @@ class Accounts extends Component {
         {...{
           accounts: this.props.accounts,
           isLoading: this.props.isLoading,
+          isShowingBalanceOverviewInfoModal: this.state.isShowingBalanceOverviewInfoModal,
           getNextAccountError: this.props.getNextAccountError,
           getNextAccountSuccess: this.props.getNextAccountSuccess,
           renameAccountError: this.props.renameAccountError,
@@ -32,7 +34,9 @@ class Accounts extends Component {
           accountNumDetailsShown: this.state.accountNumDetailsShown,
           onShowAccountDetails: this.onShowAccountDetails,
           onHideAccountDetails: this.onHideAccountDetails,
-          onShowAddAccount: this.onShowAddAccount
+          onShowAddAccount: this.onShowAddAccount,
+          onShowBalanceOverviewInfoModal: this.onShowBalanceOverviewInfoModal,
+          onCloseBalanceOverviewInfoModal: this.onCloseBalanceOverviewInfoModal,
         }}
       />
     );
@@ -40,6 +44,14 @@ class Accounts extends Component {
 
   onShowAccountDetails(accountNumDetailsShown) {
     this.setState({ accountNumDetailsShown });
+  }
+
+  onShowBalanceOverviewInfoModal() {
+    this.setState({ isShowingBalanceOverviewInfoModal: true });
+  }
+
+  onCloseBalanceOverviewInfoModal() {
+    this.setState({ isShowingBalanceOverviewInfoModal: false });
   }
 
   onHideAccountDetails() {

@@ -6,6 +6,8 @@ import KeyBlueButton from "../../../KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
 import "../../../../style/Layout.less";
 import "../../../../style/AccountsPage.less";
+import BalanceOverviewInfoModal from "../../../BalanceOverviewInfoModal";
+import PurchaseTicketsInfoButton from "../../../PurchaseTicketsInfoButton";
 
 const AccountsList = ({
   accounts,
@@ -24,7 +26,10 @@ const AccountsList = ({
   onRenameAccount,
   onShowAccountDetails,
   onHideAccountDetails,
-  accountNumDetailsShown
+  accountNumDetailsShown,
+  isShowingBalanceOverviewInfoModal,
+  onShowBalanceOverviewInfoModal,
+  onCloseBalanceOverviewInfoModal,
 }) => (
   <div className="page-view">
     <Header
@@ -86,24 +91,31 @@ const AccountsList = ({
         </KeyBlueButton>
       }
     />
-
+    {isShowingBalanceOverviewInfoModal ? <BalanceOverviewInfoModal closeModal={onCloseBalanceOverviewInfoModal} /> : null}
     <div className="page-content">
       {isLoading ? (
         <DecredLoading/>
       ) : (
-        <div className="account-content-nest">
-          {accounts.map(account => (
-            <AccountRow
-              key={account.accountName}
-              account={account}
-              accountNumDetailsShown={accountNumDetailsShown}
-              renameAccount={onRenameAccount}
-              hideAccount={onHideAccount}
-              showAccount={onShowAccount}
-              showAccountDetails={onShowAccountDetails}
-              hideAccountDetails={onHideAccountDetails}
-            />
-          ))}
+        <div>
+          <div className="account-content-title">
+            <div className="account-content-title-buttons-area">
+              <PurchaseTicketsInfoButton onClick={onShowBalanceOverviewInfoModal} />
+            </div>
+          </div>
+          <div className="account-content-nest">
+            {accounts.map(account => (
+              <AccountRow
+                key={account.accountName}
+                account={account}
+                accountNumDetailsShown={accountNumDetailsShown}
+                renameAccount={onRenameAccount}
+                hideAccount={onHideAccount}
+                showAccount={onShowAccount}
+                showAccountDetails={onShowAccountDetails}
+                hideAccountDetails={onHideAccountDetails}
+              />
+            ))}
+          </div>
         </div>
       )}
     </div>
