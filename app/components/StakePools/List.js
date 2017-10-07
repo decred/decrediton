@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { FormattedMessage as T } from "react-intl";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
@@ -52,5 +53,12 @@ const StakePoolsList = ({
     ><T id="stakepools.list.form.cancel" m="Cancel" /></SlateGrayButton>
   </div>
 );
+
+StakePoolsList.propTypes = {
+  configuredStakePools: PropTypes.array.isRequired,
+  unconfiguredStakePools: PropTypes.array.isRequired,
+  onShowAddStakePool: PropTypes.func.isRequired,
+  onHideStakePoolConfig: PropTypes.func.isRequired,
+};
 
 export default StakePoolsList;
