@@ -1,7 +1,6 @@
 import React from "react";
 import Accounts from "./Accounts";
 import AddAccount from "./AddAccount";
-import SideBar from "../../SideBar";
 import ErrorScreen from "../../ErrorScreen";
 import "../../../style/Layout.less";
 import "../../../style/AccountsPage.less";
@@ -13,8 +12,7 @@ const Page = ({
   onShowAddAccount
 }) => (
   walletService ? (
-    <div className="page-body">
-      <SideBar />
+    <div>
       {isShowingAddAccount ? (
         <AddAccount onSave={onHideAddAccount} onCancel={onHideAddAccount} />
       ) : (

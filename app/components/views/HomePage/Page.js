@@ -6,7 +6,6 @@ import home from "../../../connectors/home";
 import DecredLoading from "../../DecredLoading";
 import KeyBlueButton from "../../KeyBlueButton";
 import Balance from "../../Balance";
-import SideBar from "../../SideBar";
 import TxHistory from "../../TxHistory";
 import Header from "../../Header";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
@@ -32,9 +31,8 @@ const HomePage = ({
   getTransactionsRequestAttempt,
   getAccountsResponse,
   intl
-}) => (
-  <div className="page-body">
-    <SideBar />
+}) => {
+  return (
     <div className="page-view">
       <Header
         headerTop={synced ? null : (
@@ -47,18 +45,18 @@ const HomePage = ({
           <div>
             <Balance amount={spendableTotalBalance} />
             <div className="home-rescan-button-area"
-              data-multiline={true}
-              data-tip={intl.formatMessage(messages.rescanBtnTip)}>
+                 data-multiline={true}
+                 data-tip={intl.formatMessage(messages.rescanBtnTip)}>
               <KeyBlueButton disabled={rescanRequest} onClick={() => rescanAttempt(0)}>
                 <T id="home.rescanBtn" m="Rescan Blockchain" />
               </KeyBlueButton>
             </div>
-            <ReactToolTip disable={rescanRequest ? true : false} place="left" type="info" effect="solid"/>
+            <ReactToolTip disable={rescanRequest ? true : false} place="left" type="info" effect="solid" />
           </div>
         }
       />
       {getTransactionsRequestAttempt ? (
-        <div className="page-content"><DecredLoading/></div>
+        <div className="page-content"><DecredLoading /></div>
       ) : (
         <div className="page-content">
           <div className="home-content-title">
@@ -76,8 +74,8 @@ const HomePage = ({
         </div>
       )}
     </div>
-  </div>
-);
+  );
+};
 
 export default home(rescan(injectIntl(HomePage)));
 

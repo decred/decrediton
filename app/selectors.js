@@ -522,3 +522,5 @@ export const renameAccountSuccess = get(["control", "renameAccountSuccess"]);
 export const renameAccountRequestAttempt = get(["control", "renameAccountRequestAttempt"]);
 
 export const messageVerificationService = get(["grpc", "messageVerificationService"]);
+export const showingSidebar = get(["sidebar", "showingSidebar"]);
+export const showingSidebarMenu = get(["sidebar", "showingSidebarMenu"]);

@@ -10,7 +10,9 @@ const mapStateToProps = selectorMap({
   synced: sel.synced,
   currentBlockHeight: sel.currentBlockHeight,
   lastBlockTimestamp: sel.lastBlockTimestamp,
-  totalBalance: sel.totalBalance
+  totalBalance: sel.totalBalance,
+  showingSidebar: sel.showingSidebar,
+  showingSidebarMenu: sel.showingSidebarMenu,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

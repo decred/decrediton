@@ -1,6 +1,5 @@
 // @flow
 import React, {Component} from "react";
-import SideBar from "../SideBar";
 import Header from "../Header";
 import HelpLink from "../HelpLink";
 import { FormattedMessage as T } from "react-intl";
@@ -8,7 +7,7 @@ import "../../style/Layout.less";
 
 class Help extends Component{
   render() {
-    const helpView = (
+    return (
       <div className="page-view">
         <Header
           headerTitleOverview={<T id="help.title" m="Help" />}
@@ -22,13 +21,6 @@ class Help extends Component{
         </div>
       </div>
     );
-
-    return(
-      <div className="page-body">
-        <SideBar />
-        {helpView}
-      </div>);
-
   }
 }
 

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { autobind } from "core-decorators";
 import Bar from "./Bar";
 import rescan from "../../connectors/rescan";
@@ -12,11 +13,13 @@ class SideBar extends Component {
   }
 
   render() {
+    if (!this.props.showingSidebar) {
+      return null;
+    }
+
     return (
       <Bar
         {...{
-          gettingStarted: this.props.gettingStarted,
-          errorPage: this.props.errorPage,
           isTestNet: this.props.isTestNet,
           balances: this.props.balances,
           synced: this.props.synced,
@@ -26,7 +29,8 @@ class SideBar extends Component {
           isShowingAccounts: this.state.isShowingAccounts,
           onShowAccounts: this.onShowAccounts,
           onHideAccounts: this.onHideAccounts,
-          rescanRequest: this.props.rescanRequest
+          rescanRequest: this.props.rescanRequest,
+          showingSidebarMenu: this.props.showingSidebarMenu,
         }}
       />
     );
@@ -40,5 +44,10 @@ class SideBar extends Component {
     this.setState({ isShowingAccounts: false });
   }
 }
+
+SideBar.propTypes = {
+  showingSidebar: PropTypes.bool.isRequired,
+  showingSidebarMenu: PropTypes.bool.isRequired,
+};
 
 export default sideBarConnector(rescan(SideBar));

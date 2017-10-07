@@ -1,5 +1,6 @@
 // @flow
 import React from "react";
+import PropTypes from "prop-types";
 import MenuLink from "../MenuLink";
 import "../../style/Fonts.less";
 import "../../style/SideBar.less";
@@ -8,8 +9,6 @@ import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { tsToDate } from "../../helpers/dateFormat";
 
 const Bar = ({
-  gettingStarted,
-  errorPage,
   isTestNet,
   balances,
   synced,
@@ -20,11 +19,12 @@ const Bar = ({
   onShowAccounts,
   onHideAccounts,
   rescanRequest,
+  showingSidebarMenu,
 }) => (
   <div className={"sidebar-menu " + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
   <div className="sidebar-menu-logo"></div>
   {isTestNet ? <div className="sidebar-testnet-text">Testnet</div> : null}
-  {(gettingStarted || errorPage) ? null : (
+  {(!showingSidebarMenu) ? null : (
     <div>
       <div className="sidebar-menu-navigation">
         <MenuLink to="/home"><T id="menu.overview" m="Overview"/></MenuLink>
@@ -84,5 +84,9 @@ const Bar = ({
   )}
 </div>
 );
+
+Bar.propTypes = {
+  showingSidebarMenu: PropTypes.bool.isRequired,
+};
 
 export default Bar;

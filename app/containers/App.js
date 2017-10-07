@@ -5,6 +5,7 @@ import { IntlProvider } from "react-intl";
 import theme from "../materialUITheme";
 import { defaultFormats } from "../i18n/locales";
 import app from "../connectors/app";
+import SideBar from "../components/SideBar";
 
 class App extends Component {
   static propTypes = {
@@ -14,6 +15,7 @@ class App extends Component {
 
   render() {
     let locale = this.props.locale;
+
     return (
       <MuiThemeProvider muiTheme={theme}>
         <IntlProvider
@@ -22,7 +24,10 @@ class App extends Component {
           formats={locale.formats}
           defaultFormats={defaultFormats}
           key={locale.key}>
+          <div className="page-body">
+            <SideBar />
             {this.props.children}
+          </div>
         </IntlProvider>
       </MuiThemeProvider>
     );
