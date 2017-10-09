@@ -45,6 +45,8 @@ class History extends Component {
   }
 
   render() {
+    console.log("txPerPage", this.props.txPerPage,
+      "total pages", this.getTotalPages(), "total tx", this.getTxs().length);
     return  !this.props.walletService ? <ErrorScreen /> : (
       <HistoryPage
         {...{
@@ -57,8 +59,7 @@ class History extends Component {
             onChangeSelectedType: null,
             onShowTxDetail: null,
             onClearTxDetail: null,
-            onPageBackward: null,
-            onPageForward: null
+            onPageChanged: null
           }, this)
         }}
       />
@@ -92,15 +93,8 @@ class History extends Component {
     return this.getTxs().slice(start, start + txPerPage);
   }
 
-  onPageForward() {
-    const { currentPage } = this.state;
-    const totalPages = this.getTotalPages();
-    this.setState({ currentPage: currentPage >= totalPages ? totalPages : currentPage + 1 });
-  }
-
-  onPageBackward() {
-    const { currentPage } = this.state;
-    this.setState({ currentPage: currentPage <= 0 ? 0 : currentPage - 1 });
+  onPageChanged(newPage) {
+    this.setState({ currentPage: newPage });
   }
 
   onChangeSelectedType(type) {

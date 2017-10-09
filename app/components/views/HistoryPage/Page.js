@@ -2,8 +2,14 @@ import React from "react";
 import TxHistory from "../../TxHistory";
 import Balance from "../../Balance";
 import Header from "../../Header";
+<<<<<<< HEAD
 import Select from "react-select";
 import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";
+=======
+import EyeFilterMenu from "../../EyeFilterMenu";
+import { FormattedMessage as T } from "react-intl";
+import Paginator from "../../Paginator";
+>>>>>>> 022c704... Improve paginator styles
 import "../../../style/Layout.less";
 import "../../../style/HistoryPage.less";
 
@@ -56,20 +62,7 @@ const Page = ({
         ) : <p><T id="history.noTransactions" m="No transactions" /></p>}
       </div>
       <div className="history-content-title-buttons-area">
-        <button
-          className="history-content-title-buttons-left"
-          disabled={currentPage < 1}
-          onClick={onPageBackward}
-        >&lt;</button>
-        <span className="history-content-title-buttons-text">
-              <T id="history.paginationPages" m="{current} of {total}"
-                 values={{ current: currentPage + 1, total: totalPages }} />
-            </span>
-        <button
-          className="history-content-title-buttons-right"
-          disabled={(currentPage + 1) >= totalPages}
-          onClick={onPageForward}
-        >&gt;</button>
+        <Paginator {...{totalPages, currentPage, onPageChanged}} />
       </div>
     </div>
   </div>
