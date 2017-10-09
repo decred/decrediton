@@ -1,7 +1,6 @@
 import React from "react";
 import ReactToolTip from "react-tooltip";
 import StakeyBounce from "../../StakeyBounce";
-import SideBar from "../../SideBar";
 import PurchaseTicketsInfo from "../../PurchaseTicketsInfo";
 import VotingPrefs from "../../VotingPrefs";
 import StakePools from "../../StakePools";
@@ -22,21 +21,18 @@ const TicketsPage = ({
   onHideStakePoolConfig,
   ...props
 }) => (
-  <div className="page-body">
-    <SideBar />
-    <div className="page-view">
-      <TicketsPageHeader {...{ onToggleTicketStakePool }} />
-      {(isSavingStakePoolConfig || isPurchasingTickets)
-        ? <div className="page-content"><StakeyBounce/></div>
-        : (isShowingStakePools)
-          ? <StakePools {...{ onHideStakePoolConfig }} />
-          : isShowingVotingPrefs
-            ? <VotingPrefs />
-            : isShowingTicketsInfo
-              ? <PurchaseTicketsInfo closeModal={onHideTicketsInfo} />
-              : <Tickets {...{ stakePool, ...props }} />
-      }
-    </div>
+  <div className="page-view">
+    <TicketsPageHeader {...{ onToggleTicketStakePool }} />
+    {(isSavingStakePoolConfig || isPurchasingTickets)
+      ? <div className="page-content"><StakeyBounce/></div>
+      : (isShowingStakePools)
+        ? <StakePools {...{ onHideStakePoolConfig }} />
+        : isShowingVotingPrefs
+          ? <VotingPrefs />
+          : isShowingTicketsInfo
+            ? <PurchaseTicketsInfo closeModal={onHideTicketsInfo} />
+            : <Tickets {...{ stakePool, ...props }} />
+    }
     <ReactToolTip type="info" effect="solid"/>
   </div>
 );

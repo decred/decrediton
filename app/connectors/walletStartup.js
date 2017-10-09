@@ -4,6 +4,7 @@ import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 import * as wla from "../actions/WalletLoaderActions";
 import * as da from "../actions/DaemonActions";
+import { showSidebarMenu, showSidebar, hideSidebarMenu } from "../actions/SidebarActions";
 
 const mapStateToProps = selectorMap({
   startStepIndex: sel.startStepIndex,
@@ -29,7 +30,10 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onRetryStartRPC: wla.startRpcRequestFunc,
   doVersionCheck: wla.versionCheckAction,
   doStartDaemon: da.startDaemon,
-  doSkipDaemonSync: da.skipDaemonSync
+  doSkipDaemonSync: da.skipDaemonSync,
+  showSidebarMenu,
+  showSidebar,
+  hideSidebarMenu,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

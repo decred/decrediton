@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Page from "./Page";
 import { CheckWalletStateHeader, CheckWalletStateBody } from "./CheckWalletState";
 import { OpenWalletHeader, OpenWalletBody } from "./OpenWallet";
@@ -10,8 +11,18 @@ import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
 import walletStartup from "../../../connectors/walletStartup";
 
 class GetStartedPage extends Component {
+
+  componentWillMount() {
+    this.props.showSidebar();
+    this.props.hideSidebarMenu();
+  }
+
   componentDidMount() {
     this.props.doStartDaemon();
+  }
+
+  componentWillUnmount() {
+    this.props.showSidebarMenu();
   }
 
   render() {
@@ -57,5 +68,11 @@ class GetStartedPage extends Component {
     return <Page Header={Header} Body={Body} {...props} />;
   }
 }
+
+GetStartedPage.propTypes = {
+  showSidebar: PropTypes.func.isRequired,
+  showSidebarMenu: PropTypes.func.isRequired,
+  hideSidebarMenu: PropTypes.func.isRequired,
+};
 
 export default walletStartup(GetStartedPage);
