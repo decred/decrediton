@@ -1,10 +1,12 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
+import { concat, isString } from "lodash";
 import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath } from "./config.js";
 import path from "path";
 import fs from "fs";
 import os from "os";
 import parseArgs from "minimist";
 import winston from "winston";
+import stringArgv from "string-argv";
 import locales from "./i18n/locales";
 
 let menu;
@@ -394,11 +396,8 @@ const launchDCRWallet = () => {
   }
 
   // Add any extra args if defined.
-  if (argv.extrawalletargs != undefined) {
-    var extraArgs = argv.extrawalletargs.split(" ");
-    for (var i = 0; i < extraArgs.length; i++) {
-      args.push(extraArgs[i]);
-    }
+  if (argv.extrawalletargs !== undefined && isString(argv.extrawalletargs)) {
+    args = concat(args, stringArgv(argv.extrawalletargs));
   }
 
   logger.log("info", `Starting dcrwallet with ${args}`);

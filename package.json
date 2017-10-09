@@ -213,6 +213,7 @@
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.1",
     "source-map-support": "^0.4.6",
+    "string-argv": "0.0.2",
     "winston": "^2.3.1"
   },
   "devEngines": {
