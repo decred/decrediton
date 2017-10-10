@@ -6,6 +6,7 @@ import ticketsPage from "../../../connectors/ticketsPage";
 import ErrorScreen from "../../ErrorScreen";
 import TicketsPage from "./Page";
 import { FormattedMessage as T } from "react-intl";
+import ReactToolTip from "react-tooltip";
 
 @autobind
 class Tickets extends Component {
@@ -51,6 +52,12 @@ class Tickets extends Component {
         stakePool: nextProps.defaultStakePool,
         isShowingStakePools: false
       });
+    }
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (prevState != this.state) {
+      ReactToolTip.rebuild();
     }
   }
 
