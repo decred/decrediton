@@ -70,6 +70,7 @@ const PurchaseTicketsForm = ({
   isShowingAdvanced,
   configuredStakePools,
   stakePool,
+  hasTicketsToRevoke,
   numTicketsToBuy,
   canAffordTickets,
   ticketFee,
@@ -288,12 +289,14 @@ const PurchaseTicketsForm = ({
           <T id="purchaseTickets.importScriptBtn" m="Import Script" />
         </KeyBlueButton>
       </div>
-      <KeyBlueButton
+      {hasTicketsToRevoke ? (
+        <KeyBlueButton
         className="stakepool-content-revoke-button"
         onClick={onShowRevokeTicket}
       >
         <T id="purchaseTickets.revokeBtn" m="Revoke" />
       </KeyBlueButton>
+      ) : null}
     </div>
   </div>
 );

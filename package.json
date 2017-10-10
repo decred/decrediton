@@ -63,7 +63,10 @@
       "package.json"
     ],
     "extraResources": [
-      { "from": "bin", "to": "bin"},
+      {
+        "from": "bin",
+        "to": "bin"
+      },
       "*.node"
     ],
     "win": {

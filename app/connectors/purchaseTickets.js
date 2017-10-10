@@ -7,7 +7,8 @@ import * as ca from "../actions/ControlActions";
 const mapStateToProps = selectorMap({
   ticketPrice: sel.ticketPrice,
   spendingAccounts: sel.spendingAccounts,
-  rescanRequest: sel.rescanRequest
+  rescanRequest: sel.rescanRequest,
+  hasTicketsToRevoke: sel.hasTicketsToRevoke
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
