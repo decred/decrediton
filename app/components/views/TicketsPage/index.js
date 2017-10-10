@@ -54,7 +54,7 @@ class Tickets extends Component {
       });
     }
   }
-  
+
   componentDidUpdate (prevProps, prevState) {
     if (prevState != this.state) {
       ReactToolTip.rebuild();
