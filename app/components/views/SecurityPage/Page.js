@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ReactToolTip from "react-tooltip";
-import SideBar from "../../SideBar";
 import SecurityPageHeader from "./Header";
 import "../../../style/Layout.less";
 import "../../../style/StakePool.less";
@@ -11,12 +10,9 @@ const SecurityPage = ({
   children,
 }) => {
   return (
-    <div className="page-body">
-      <SideBar />
-      <div className="page-view">
-        <SecurityPageHeader {...{ onToggleSecurityMessage }} />
-        {children}
-      </div>
+    <div className="page-view">
+      <SecurityPageHeader {...{ onToggleSecurityMessage }} />
+      {children}
       <ReactToolTip type="info" effect="solid" />
     </div>
   );
