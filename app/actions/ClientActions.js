@@ -351,21 +351,13 @@ export function getTicketsInfoAttempt() {
     getTx.on("data", function (response) {
       var newTicket = {
         status: response.getTicket().getTicketStatus(),
-        ticket_age: response.getTicket().getTicketAge(),
-        ticket_price: response.getTicket().getTicketPrice(),
-        ticket_cost: response.getTicket().getTicketCost(),
-        spender_return: response.getTicket().getSpenderReturn(),
-        ticket_hash: reverseHash(Buffer.from(response.getTicket().getHash()).toString("hex")),
-        spender_hash: reverseHash(Buffer.from(response.getTicket().getSpenderHash()).toString("hex")),
+        ticket: response.getTicket().getTicket(),
+        spender: response.getTicket().getSpender(),
       };
       console.log(
       response.getTicket().getTicketStatus(),
-      response.getTicket().getTicketAge(),
-      response.getTicket().getTicketPrice(),
-      response.getTicket().getTicketCost(),
-      response.getTicket().getSpenderReturn(),
-      reverseHash(Buffer.from(response.getTicket().getHash()).toString("hex")),
-      reverseHash(Buffer.from(response.getTicket().getSpenderHash()).toString("hex")));
+      reverseHash(Buffer.from(response.getTicket().getTicket().getHash()).toString("hex")),
+      reverseHash(Buffer.from(response.getTicket().getSpender().getHash()).toString("hex")));
       tickets.unshift(newTicket);
     });
     getTx.on("end", function () {
