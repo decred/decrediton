@@ -4,6 +4,9 @@ import { Route, IndexRoute } from "react-router";
 import App from "./containers/App";
 import HomePage from "./components/views/HomePage";
 import HistoryPage from "./components/views/HistoryPage";
+import TransactionsPage from "./components/views/TransactionsPage";
+import TransactionsSendTab from "./components/views/TransactionsPage/SendTab";
+import TransactionsReceiveTab from "./components/views/TransactionsPage/ReceiveTab";
 import TransactionPage from "./components/views/TransactionPage";
 import SendPage from "./components/views/SendPage";
 import ReceivePage from "./components/views/ReceivePage";
@@ -23,6 +26,12 @@ export default (
     <IndexRoute component={GetStartedPage} />
     <Route path="/home" component={HomePage} />
     <Route path="/history" component={HistoryPage} />
+
+    <Route path="/transactions" component={TransactionsPage}>
+      <Route path="send" component={TransactionsSendTab} />
+      <Route path="receive" component={TransactionsReceiveTab} />
+    </Route>
+
     <Route path="/transactions/history/:txHash" component={TransactionPage} />
     <Route path="/send" component={SendPage} />
     <Route path="/receive" component={ReceivePage} />
