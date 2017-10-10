@@ -504,6 +504,7 @@ export function revokeTicketsAttempt(passphrase) {
           dispatch({ error, type: REVOKETICKETS_FAILED });
         } else {
           var success = "You successfully revoked tickets.";
+          setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 4000);
           dispatch({ success: success, revokeTicketsResponse: revokeTicketsResponse, type: REVOKETICKETS_SUCCESS });
         }
       });

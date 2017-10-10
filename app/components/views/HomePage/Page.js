@@ -5,6 +5,7 @@ import rescan from "../../../connectors/rescan";
 import home from "../../../connectors/home";
 import DecredLoading from "../../DecredLoading";
 import KeyBlueButton from "../../KeyBlueButton";
+import PassphraseModal from "../../PassphraseModal";
 import Balance from "../../Balance";
 import TxHistory from "../../TxHistory";
 import Header from "../../Header";
@@ -26,27 +27,58 @@ const HomePage = ({
   synced,
   spendableTotalBalance,
   rescanAttempt,
+  isRequestingPassphrase,
+  passphraseCallback,
+  hasTicketsToRevoke,
+  revokeTicketsSuccess,
+  revokeTicketsError,
+  passphraseHeading,
+  passphraseDescription,
+  onCancelPassphraseRequest,
+  onShowRevokeTicket,
   rescanRequest,
   transactions,
   getTransactionsRequestAttempt,
+  intl,
   getAccountsResponse,
-  intl
+  onClearRevokeTicketsError,
+  onClearRevokeTicketsSuccess
 }) => {
   return (
     <div className="page-view">
+      <PassphraseModal
+        hidden={!isRequestingPassphrase}
+        submitPassphrase={passphraseCallback}
+        cancelPassphrase={onCancelPassphraseRequest}
+        heading={passphraseHeading}
+        description={passphraseDescription}
+      />
       <Header
-        headerTop={synced ? null : (
+        headerTop={[synced ? null : (
           <div key="notSynced" className="home-view-notification-not-synced">
             <T id="home.notSyncedInfo" m="The wallet is not fully synced yet. Note: Balances will not be accurate until syncing is complete." />
           </div>
-        )}
+        ),
+          revokeTicketsError ? (
+          <div key="revokeTicketsError" className="stakepool-view-notification-error">
+            <div className="stakepool-content-nest-address-delete-icon" onClick={onClearRevokeTicketsError} />
+            {revokeTicketsError}
+          </div>
+        ) : null,
+          revokeTicketsSuccess ? (
+          <div key="revokeTicketsSuccess" className="stakepool-view-notification-success">
+            <div className="stakepool-content-nest-address-delete-icon" onClick={onClearRevokeTicketsSuccess} />
+            {revokeTicketsSuccess}
+          </div>
+        ) : null,
+        ]}
         headerTitleOverview={<T id="home.availableBalanceTitle" m="Available Balance" />}
         headerMetaOverview={
           <div>
             <Balance amount={spendableTotalBalance} />
             <div className="home-rescan-button-area"
-                 data-multiline={true}
-                 data-tip={intl.formatMessage(messages.rescanBtnTip)}>
+              data-multiline={true}
+              data-tip={intl.formatMessage(messages.rescanBtnTip)}>
               <KeyBlueButton disabled={rescanRequest} onClick={() => rescanAttempt(0)}>
                 <T id="home.rescanBtn" m="Rescan Blockchain" />
               </KeyBlueButton>
@@ -58,21 +90,31 @@ const HomePage = ({
       {getTransactionsRequestAttempt ? (
         <div className="page-content"><DecredLoading /></div>
       ) : (
-        <div className="page-content">
-          <div className="home-content-title">
-            <div className="home-content-title-text">
-              <T id="home.recentTransactionsTitle" m="Recent Transactions" />
+          <div className="page-content">
+            {hasTicketsToRevoke ? <div className="tickets-to-revoke-warning">
+              <T id="home.revokeTicketMessage"
+                m="You have outstanding missed or expired tickets, please revoke them to unlock your funds" />
+              <KeyBlueButton
+                className="stakepool-content-revoke-button"
+                onClick={onShowRevokeTicket}
+              >
+                <T id="purchaseTickets.revokeBtn" m="Revoke" />
+              </KeyBlueButton>
+            </div> : null}
+            <div className="home-content-title">
+              <div className="home-content-title-text">
+                <T id="home.recentTransactionsTitle" m="Recent Transactions" />
+              </div>
+            </div>
+            <div className="home-content-nest">
+              {(transactions.length > 0) ? (
+                <TxHistory {...{ getAccountsResponse, transactions }} />
+              ) : (
+                  <p><T id="home.noTransactions" m="No transactions" /></p>
+                )}
             </div>
           </div>
-          <div className="home-content-nest">
-            {(transactions.length > 0) ? (
-              <TxHistory {...{ getAccountsResponse, transactions }} />
-            ) : (
-              <p><T id="home.noTransactions" m="No transactions" /></p>
-            )}
-          </div>
-        </div>
-      )}
+        )}
     </div>
   );
 };
