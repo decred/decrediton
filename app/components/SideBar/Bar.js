@@ -29,6 +29,8 @@ const Bar = ({
       <div className="sidebar-menu-navigation">
         <MenuLink to="/home"><T id="menu.overview" m="Overview"/></MenuLink>
         <MenuLink to="/accounts"><T id="menu.accounts" m="Accounts"/></MenuLink>
+        <MenuLink to="/transactions/send"><T id="menu.transactions" m="Transactions"/></MenuLink>
+        <MenuLink to="/transactions/receive"><T id="menu.transactions2" m="Transactions 2"/></MenuLink>
         <MenuLink to="/send"><T id="menu.send" m="Send"/></MenuLink>
         <MenuLink to="/receive"><T id="menu.receive" m="Receive"/></MenuLink>
         <MenuLink to="/history"><T id="menu.history" m="History"/></MenuLink>

@@ -1,5 +1,6 @@
 // @flow
 import React from "react";
+import { Link } from "react-router";
 import "../../style/Header.less";
 
 const Header = ({
@@ -9,19 +10,25 @@ const Header = ({
     <div className="header">
       <div className="header-top"></div>
 
-      <div className="header-title-overview">
+      <div className="tabbedheader-title">
+        <span className={"tabbedheader-icon " + (iconClassName ? iconClassName : "")} />
         {title}
       </div>
 
-      <div className="header-meta-overview">
+      <div className="tabbedheader-description">
         {description}
       </div>
 
-      <div className="header-tabs">
+      <div className="tabbedheader-tabs">
         {tabRoutes.map(tabRoute => (
-          <div className="header-tab">
-            <div className="header-tab-title">{tabRoute.title}</div>
-          </div>
+          <Link
+            to={tabRoute.route}
+            className="tabbedheader-tab"
+            activeClassName="active"
+            key={tabRoute.route}
+          >
+            {tabRoute.title}
+          </Link>
         ))}
       </div>
     </div>

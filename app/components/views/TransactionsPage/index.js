@@ -18,6 +18,7 @@ class Transactions extends React.Component {
   render() {
     return (
       <TabbedPage
+        iconClassName="header-icon-transactions"
         title={<T id="transactions.title" m="Transactions" />}
         description={<T id="transactions.description" m="Descr" />}
         tabRoutes={[

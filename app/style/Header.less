@@ -1,4 +1,5 @@
 @import (reference) "./main.less";
+@import (reference) "./Icons.less";
 
 .header-get-started {
   padding-right: 42px;
@@ -89,4 +90,57 @@
   float: left;
   text-align: center;
   font-family: Inconsolata, monospace;
+}
+
+.header-icon-mixin {
+  background-position: 0px 50%;
+  background-size: 30px;
+  background-repeat: no-repeat;
+}
+
+.header-icon-transactions {
+  .header-icon-mixin;
+
+  background-image: @minus-big-icon;
+}
+
+.tabbedheader-title {
+  height: 54px;
+  line-height: 49px;
+  color: #596d81;
+  font-size: 27px;
+  text-transform: capitalize;
+  //padding-left: 50px;
+}
+
+.tabbedheader-description {
+  height: 54px;
+  width: 480px;
+  padding-left: 50px;
+  color: #0c1e3e;
+  font-size: 14px;
+}
+
+.tabbedheader-icon::before {
+  content: "";
+}
+
+.tabbedheader-icon {
+  padding-left: 30px;
+  margin-right: 20px;
+}
+
+.tabbedheader-tab {
+  .inline-block-mixin;
+  text-align: center;
+  padding: 0px 5px 8px 5px;
+  margin: 0px 10px 0px 10px;
+  box-sizing: border-box;
+  height: 28px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.tabbedheader-tab.active {
+  border-bottom: 5px solid #2ed8a3;
 }
