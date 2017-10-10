@@ -136,6 +136,14 @@ var initialState = {
     getTicketPriceError: null,
     getTicketPriceRequestAttempt: false,
     getTicketPriceResponse: null,
+    // SignMessage
+    getSignMessageError: null,
+    getSignMessageRequestAttempt: false,
+    getSignMessageResponse: null,
+    // VerifyMessage
+    getVerifyMessageError: null,
+    getVerifyMessageRequestAttempt: false,
+    getVerifyMessageResponse: null,
     // Accounts
     hiddenAccounts: hiddenAccounts,
     getAccountsError: null,

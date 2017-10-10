@@ -61,6 +61,7 @@
   border-radius: 5px;
   background-color: #2971ff;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid transparent;
   color: #fff;
   font-size: 13px;
   line-height: 9px;
@@ -77,9 +78,10 @@
 
 .key-blue-button:active {
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+  background-color: #0025cc;
 }
 
-.key-blue-button-disabled {
+.key-blue-button-disabled, .key-blue-button[disabled] {
   cursor: default;
   display: inline-block;
   padding: 17px 18px 18px;

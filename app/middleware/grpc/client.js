@@ -169,7 +169,6 @@ export function transactionNtfs(client, request, cb) {
     console.log("Transaction notifications status:", status);
   });
 }
-
 export function spentnessNtfs(client, request, cb) {
   var spentnessNtfns = client.spentnessNotifications(request);
   spentnessNtfns.on("data", function(response) {

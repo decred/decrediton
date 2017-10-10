@@ -411,6 +411,19 @@ export const settingsChanged = get(["settings", "settingsChanged"]);
 export const changePassphraseError = get(["control", "changePassphraseError"]);
 export const changePassphraseSuccess = get(["control", "changePassphraseSuccess"]);
 
+export const signMessageError = get(["grpc", "getSignMessageError"]);
+export const signMessageResponse = get(["grpc", "getSignMessageResponse"]);
+export const signMessageSuccess = compose(
+  r => r ? r.toObject() : null, signMessageResponse
+);
+
+export const messageVerificationService = get(["grpc", "messageVerificationService"]);
+export const verifyMessageError = get(["grpc", "getVerifyMessageError"]);
+export const verifyMessageResponse = get(["grpc", "getVerifyMessageResponse"]);
+export const verifyMessageSuccess = compose(
+  r => r ? r.toObject() : null, verifyMessageResponse
+);
+
 const getStakeInfoResponse = get(["grpc", "getStakeInfoResponse"]);
 
 export const ticketPoolSize = compose(r => r ? r.getPoolSize() : 0, getStakeInfoResponse);
@@ -521,6 +534,5 @@ export const renameAccountError = get(["control", "renameAccountError"]);
 export const renameAccountSuccess = get(["control", "renameAccountSuccess"]);
 export const renameAccountRequestAttempt = get(["control", "renameAccountRequestAttempt"]);
 
-export const messageVerificationService = get(["grpc", "messageVerificationService"]);
 export const showingSidebar = get(["sidebar", "showingSidebar"]);
 export const showingSidebarMenu = get(["sidebar", "showingSidebarMenu"]);
