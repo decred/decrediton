@@ -31,7 +31,6 @@ export function withTabSlide(component) {
         const nextPosition = nextState.routes[nextState.routes.length-1].position || 0;
         const transtionName = (nextPosition > prevPosition) ? "fromright" : "fromleft";
 
-        console.log("replacing", transtionName);
         replace({
           component: "div",
           transitionName: transtionName,
