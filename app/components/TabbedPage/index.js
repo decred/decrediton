@@ -11,17 +11,6 @@ const propTypes = {
 @autobind
 class TabbedPage extends React.Component {
 
-  constructor(props) {
-    super(props);
-    //this.state = {activeRoute: props.router.location.pathname}
-    //props.router.listen(this.onRouteChanged);
-  }
-
-  onRouteChanged(location, action) {
-    //console.log("changed route", location, action);
-    //this.setState({activeRoute: location.pathname})
-  }
-
   render() {
     const { children } = this.props;
     return (

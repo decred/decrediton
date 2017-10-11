@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { autobind } from "core-decorators";
 import TabbedPage from "../../TabbedPage";
 import { FormattedMessage as T } from "react-intl";
+import { withTabSlide } from "../../PageTransitions";
 
 const propTypes = {
 };
@@ -35,4 +36,4 @@ class Transactions extends React.Component {
 
 Transactions.propTypes = propTypes;
 
-export default Transactions;
+export default withTabSlide(Transactions);

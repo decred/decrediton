@@ -8,7 +8,7 @@ class Header extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {caretLeft: 10, caretWidth: 15};
+    this.state = {caretLeft: 10, caretWidth: 15, updating: false};
   }
 
   componentDidMount() {
@@ -20,7 +20,8 @@ class Header extends React.Component {
   componentWillReceiveProps(oldState, newState) {
     const caretPosition = this.neededCaretPosition();
     if ((caretPosition.caretLeft != newState.caretLeft) || (caretPosition.caretWidth != newState.caretWidth)) {
-      this.setState({...newState, ...caretPosition})
+      const updating = true;
+      this.setState({...newState, ...caretPosition, updating})
     }
   }
 
@@ -35,7 +36,7 @@ class Header extends React.Component {
 
   render() {
     const { iconClassName, title, description, tabRoutes, pathname } = this.props;
-    const { caretLeft, caretWidth } = this.state;
+    const { caretLeft, caretWidth, updating } = this.state;
     return (
       <div>
         <div className="header">
@@ -62,7 +63,7 @@ class Header extends React.Component {
               </Link>
             ))}
             <div
-              className="tabbedheader-active-tab-caret"
+              className={"tabbedheader-active-tab-caret " + (updating ? "updating" : "")}
               style={{left: caretLeft, width: caretWidth}}
             />
           </div>

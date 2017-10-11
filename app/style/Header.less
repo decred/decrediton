@@ -150,10 +150,12 @@
 }
 
 .tabbedheader-active-tab-caret {
-  transition: width 150ms ease-in-out;
-  transition: left 250ms ease-in-out;
   height: 5px;
   width: 15px;
   background-color: #2ed8a3;
   position: relative;
+}
+.tabbedheader-active-tab-caret.updating {
+  transition: width 150ms ease-in-out;
+  transition: left 250ms ease-in-out;
 }
