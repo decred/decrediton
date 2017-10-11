@@ -2,10 +2,9 @@
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { Router, hashHistory, applyRouterMiddleware } from "react-router";
+import { Router, hashHistory } from "react-router";
 import { syncHistoryWithStore } from "react-router-redux";
-import { useTransitions } from "react-router-transitions";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import { pageTransitionsRender } from "./components/PageTransitions";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import routes from "./routes";
 import configureStore from "./store/configureStore";
@@ -332,14 +331,7 @@ render(
     <Router
       history={history}
       routes={routes}
-      render={applyRouterMiddleware(useTransitions({
-        TransitionGroup: ReactCSSTransitionGroup,
-        defaultTransition: {
-          transitionName: "fade",
-          transitionEnterTimeout: 500,
-          transitionLeaveTimeout: 300
-        }
-      }))}
+      render={pageTransitionsRender()}
       />
   </Provider>,
   document.getElementById("root")
