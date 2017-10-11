@@ -320,6 +320,9 @@ var initialState = {
     constructTxResponse: null,
     constructTxError: null,
   },
+  snackbar: {
+    messages: Array()
+  },
   locales: locales
 };
 

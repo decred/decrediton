@@ -1,6 +1,62 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
+.snackbar {
+  font-family: inherit;
+  left: 61% !important;
+  background-color: rgba(12, 30, 62, 0.5);
+  font-family: Source Sans Pro, sans-serif;
+}
+
+.snackbar.snackbar-warning,
+.snackbar.snackbar-error {
+  background-color: rgba(253, 110, 75, 0.8)
+}
+
+.snackbar.snackbar-success {
+  background-color: rgba(69, 191, 87, 0.8);
+}
+
+.snackbar-information {
+  width: 100%;
+}
+
+.snackbar-message {
+  word-break: break-all;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+}
+
+.snackbar-information-row {
+  width: 100%;
+  float: left;
+  height: 25px;
+}
+
+.snackbar-information-row-type {
+  width: 30%;
+  float: left;
+}
+
+.snackbar-information-row-amount {
+  width: 40%;
+  float: left;
+}
+
+.snackbar-information-row-fee {
+  width: 30%;
+  float: left;
+  text-align: right;
+}
+
+.snackbar-information-row-tx {
+  width: 100%;
+  float: left;
+  text-align: center;
+  font-family: Inconsolata, monospace;
+}
+
+
 .snackbar-stake {
   height: 78px;
   padding: 0px 50px;
