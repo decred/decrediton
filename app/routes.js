@@ -9,7 +9,7 @@ import TransactionsPage from "./components/views/TransactionsPage";
 import TransactionsSendTab from "./components/views/TransactionsPage/SendTab";
 import TransactionsReceiveTab from "./components/views/TransactionsPage/ReceiveTab";
 import TransactionPage from "./components/views/TransactionPage";
-import SendPage from "./components/views/SendPage";
+//import SendPage from "./components/views/SendPage";
 import ReceivePage from "./components/views/ReceivePage";
 import SettingsPage from "./components/views/SettingsPage";
 import SecurityPage from "./components/views/SecurityPage";
@@ -34,7 +34,7 @@ export default (
     </Route>
 
     <Route path="/transactions/history/:txHash" component={TransactionPage} />
-    <Route path="/send" component={SendPage} />
+
     <Route path="/receive" component={ReceivePage} />
     <Route path="/security" component={SecurityPage}>
       <Route path="/security/sign" component={SignPage} />
