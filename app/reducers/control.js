@@ -224,53 +224,33 @@ export default function control(state = {}, action) {
     };
   case SIGNTX_ATTEMPT:
     return {...state,
-      signTransactionError: null,
       signTransactionRequestAttempt: true,
+      signTransactionResponse: null
     };
   case SIGNTX_FAILED:
     return {...state,
-      signTransactionError: String(action.error),
       signTransactionRequestAttempt: false,
+      signTransactionResponse: null,
     };
   case SIGNTX_SUCCESS:
     return {...state,
-      signTransactionError: null,
       signTransactionRequestAttempt: false,
       signTransactionResponse: action.signTransactionResponse,
     };
   case PUBLISHTX_ATTEMPT:
     return {...state,
-      publishTransactionError: null,
       publishTransactionRequestAttempt: true,
     };
   case PUBLISHTX_FAILED:
     return {...state,
-      publishTransactionError: String(action.error),
       publishTransactionRequestAttempt: false,
     };
   case PUBLISHTX_SUCCESS:
     return {...state,
-      publishTransactionError: null,
       publishTransactionRequestAttempt: false,
       publishTransactionResponse: action.publishTransactionResponse,
       constructTxResponse: null,
       signTxResponse: null,
-    };
-  case  PUBLISHTX_CLEAR_ERROR:
-    return {...state,
-      publishTransactionError: null,
-    };
-  case  PUBLISHTX_CLEAR_SUCCESS:
-    return {...state,
-      publishTransactionResponse: null,
-    };
-  case  SIGNTX_CLEAR_ERROR:
-    return {...state,
-      signTransactionError: null,
-    };
-  case CONSTRUCTTX_CLEAR_ERROR:
-    return {...state,
-      constructTxError: null,
     };
   case PURCHASETICKETS_ATTEMPT:
     return {...state,
@@ -445,18 +425,15 @@ export default function control(state = {}, action) {
     };
   case CONSTRUCTTX_ATTEMPT:
     return {...state,
-      constructTxError: null,
       constructTxRequestAttempt: true,
     };
   case CONSTRUCTTX_FAILED:
     return {...state,
-      constructTxError: String(action.error),
       constructTxRequestAttempt: false,
       constructTxResponse: null,
     };
   case CONSTRUCTTX_SUCCESS:
     return {...state,
-      constructTxError: null,
       constructTxRequestAttempt: false,
       constructTxResponse: action.constructTxResponse,
     };

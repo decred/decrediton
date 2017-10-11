@@ -277,11 +277,9 @@ var initialState = {
     // SignTransaction
     signTransactionRequestAttempt: false,
     signTransactionRespsonse: null,
-    signTransactionError: null,
     // PublishTransaction
     publishTransactionRequestAttempt: false,
     publishTransactionResponse: null,
-    publishTransactionError: null,
     // PurchaseTicket
     purchaseTicketsRequestAttempt: false,
     purchaseTicketsResponse: null,
@@ -318,7 +316,6 @@ var initialState = {
     // ConstructTransaction
     constructTxRequestAttempt: false,
     constructTxResponse: null,
-    constructTxError: null,
   },
   snackbar: {
     messages: Array()

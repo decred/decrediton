@@ -28,15 +28,10 @@ class Send extends Component {
     };
   }
 
-  componentWillMount() {
-    this.props.onClearConstructTxError();
-    this.props.onClearPublishTxError();
-    this.props.onClearSignTxError();
-    this.props.onClearPublishTxSuccess();
-  }
   componentWillUnmount() {
     this.onClearTransaction();
   }
+
   render() {
     const {
       onChangeAccount,

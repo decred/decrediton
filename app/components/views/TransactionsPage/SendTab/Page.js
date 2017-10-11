@@ -39,12 +39,6 @@ const SendPage = ({
                     estimatedSignedSize,
                     publishedTransactionHash,
                     isValid,
-                    constructTxError,
-                    signTransactionError,
-                    publishTransactionError,
-                    onClearPublishTxError,
-                    onClearSignTxError,
-                    onClearPublishTxSuccess,
                     onChangeAccount,
                     onAttemptSignTransaction,
                     onClearTransaction,
@@ -109,11 +103,6 @@ const SendPage = ({
               disabled={!isValid}
               onClick={onShowConfirm}
             ><T id="send.sendBtn" m="Send" /></KeyBlueButton>
-            {constructTxError ? (
-              <div className="send-construct-error">
-                {constructTxError}
-              </div>
-            ) : null}
             <div className="estimation-area-send">
               <div className="total-amount-send">
                 <div className="total-amount-send-text">
