@@ -10,12 +10,8 @@ class Message extends React.Component {
     const { intl, message, values } = this.props;
     const txt = intl.formatMessage(message, values);
     return (
-      <div className={"snackbar-information"}>
-        <div className="snackbar-information-">
-          <div className="snackbar-message">
-            {txt}
-          </div>
-        </div>
+      <div className="snackbar-message">
+        {txt}
       </div>
     );
   }
