@@ -45,8 +45,6 @@ class History extends Component {
   }
 
   render() {
-    console.log("txPerPage", this.props.txPerPage,
-      "total pages", this.getTotalPages(), "total tx", this.getTxs().length);
     return  !this.props.walletService ? <ErrorScreen /> : (
       <HistoryPage
         {...{
