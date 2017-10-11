@@ -1,5 +1,4 @@
 // @flow
-import React from "react";
 import { withTransition } from "react-router-transitions";
 import { applyRouterMiddleware } from "react-router";
 import { useTransitions } from "react-router-transitions";
@@ -10,13 +9,13 @@ const defaultPageTransition = {
   component: "div",
   transitionEnterTimeout: 500,
   transitionLeaveTimeout: 300
-}
+};
 
 export function pageTransitionsRender() {
   return applyRouterMiddleware(useTransitions({
     TransitionGroup: ReactCSSTransitionGroup,
     defaultTransition: defaultPageTransition
-  }))
+  }));
 }
 
 // withTabSlide is a HOC to add a transition to slide between routes as if they

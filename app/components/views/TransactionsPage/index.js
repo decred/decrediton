@@ -5,9 +5,11 @@ import { autobind } from "core-decorators";
 import TabbedPage from "../../TabbedPage";
 import { FormattedMessage as T } from "react-intl";
 import { withTabSlide } from "../../PageTransitions";
-import transactions from "../../../connectors/transactionsPage"
+import transactions from "../../../connectors/transactionsPage";
 
 const propTypes = {
+  router: PropTypes.object.isRequired,
+  isTestNet: PropTypes.bool.isRequired,
 };
 
 @autobind
@@ -30,7 +32,7 @@ class Transactions extends React.Component {
         ]}
         children={this.props.children}
       />
-    )
+    );
   }
 }
 

@@ -9,14 +9,16 @@ class Message extends React.Component {
   render() {
     const { intl, message, values } = this.props;
     const txt = intl.formatMessage(message, values);
-    return <div className={"snackbar-information"}>
-      <div className="snackbar-information-">
-        <div className="snackbar-message">
-          {txt}
+    return (
+      <div className={"snackbar-information"}>
+        <div className="snackbar-information-">
+          <div className="snackbar-message">
+            {txt}
+          </div>
         </div>
       </div>
-    </div>
+    );
   }
-};
+}
 
 export default injectIntl(Message);

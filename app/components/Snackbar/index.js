@@ -32,7 +32,7 @@ class Snackbar extends React.Component {
       message: props.messages.length > 0
         ? props.messages[props.messages.length-1]
         : null
-    }
+    };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -73,7 +73,7 @@ class Snackbar extends React.Component {
         style={{fontFamily: null}}
         onRequestClose={this.onRequestClose}
       />
-    )
+    );
   }
 }
 

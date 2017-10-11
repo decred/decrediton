@@ -1,11 +1,11 @@
 // @flow
 import React from "react";
-import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { autobind } from "core-decorators";
 import Header from "./Header";
 
 const propTypes = {
+  children: PropTypes.object.isRequired
 };
 
 @autobind
@@ -20,7 +20,7 @@ class TabbedPage extends React.Component {
           {children}
         </div>
       </div>
-    )
+    );
   }
 }
 

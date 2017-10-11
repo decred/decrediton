@@ -4,7 +4,6 @@ import ReactTooltip from "react-tooltip";
 import AccountsSelect from "../../../AccountsSelect";
 import { Link } from "react-router";
 import KeyBlueButton from "../../../KeyBlueButton";
-import Header from "../../../Header";
 import CopyToClipboardButton from "../../../CopyToClipboardButton";
 import QRCode from "./QRCode";
 import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";

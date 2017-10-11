@@ -5,7 +5,6 @@ import ReactTooltip from "react-tooltip";
 import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";
 import DecredLoading from "../../../DecredLoading";
 import Balance from "../../../Balance";
-import Header from "../../../Header";
 import KeyBlueButton from "../../../KeyBlueButton";
 import PassphraseModal from "../../../PassphraseModal";
 import OutputRow from "./OutputRow";
@@ -30,14 +29,12 @@ const messages = defineMessages({
 
 const SendPage = ({
                     isSendingTransaction,
-                    isTestNet,
                     isShowingConfirm,
                     isSendAll,
                     outputs,
                     totalSpent,
                     estimatedFee,
                     estimatedSignedSize,
-                    publishedTransactionHash,
                     isValid,
                     onChangeAccount,
                     onAttemptSignTransaction,
