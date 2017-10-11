@@ -131,12 +131,12 @@
 }
 
 .tabbedheader-tab {
-  .inline-block-mixin;
+  display: inline-block;
+  vertical-align: middle;
   text-align: center;
-  padding: 0px 5px 8px 5px;
+  padding: 0px 4px 3px 4px;
   margin: 0px 10px 0px 10px;
   box-sizing: border-box;
-  height: 28px;
   color: inherit;
   text-decoration: none;
 }
@@ -156,6 +156,6 @@
   position: relative;
 }
 .tabbedheader-active-tab-caret.updating {
-  transition: width 150ms ease-in-out;
-  transition: left 250ms ease-in-out;
+  transition: width 130ms @easeInOutQuart;
+  transition: left 210ms @easeInOutQuart;
 }

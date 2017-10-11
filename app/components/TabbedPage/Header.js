@@ -37,8 +37,8 @@ class Header extends React.Component {
     }
 
     const tabRect = tabForRoute.getBoundingClientRect();
-    const caretLeft = tabForRoute.offsetLeft - 5;
-    const caretWidth = tabRect.width + 5;
+    const caretLeft = tabForRoute.offsetLeft;
+    const caretWidth = tabRect.width;
     return {caretLeft, caretWidth};
   }
 
