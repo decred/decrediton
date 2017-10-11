@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { autobind } from "core-decorators";
+import TabContent from "../../../TabbedPage/TabContent";
 import send from "../../../../connectors/send";
 
 const propTypes = {
@@ -16,7 +17,33 @@ class SendTab extends React.Component {
 
   render() {
     return (
-      <div>send tab</div>
+      <TabContent>
+        <div className="tab-content-card">
+        send tab<br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br /><br />
+        <br />
+        <br /><br />
+        <br />
+        <br /><br />
+        <br />
+        <br /><br />
+        <br />
+        <br /><br />
+        <br />
+        <br /><br />
+        <br />
+        <br /><br />
+        <br />
+        <br /><br />
+        <br />
+        <br />
+        sdifjaosdf bla :)
+        </div></TabContent>
     )
   }
 }

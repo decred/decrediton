@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { autobind } from "core-decorators";
+import TabContent from "../../../TabbedPage/TabContent";
 
 const propTypes = {
 };
@@ -15,7 +16,7 @@ class ReceiveTab extends React.Component {
 
   render() {
     return (
-      <div>receive tab</div>
+      <TabContent>receive tab</TabContent>
     )
   }
 }

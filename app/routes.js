@@ -2,6 +2,7 @@
 import React from "react";
 import { Route, IndexRoute } from "react-router";
 import App from "./containers/App";
+import { withTransition } from "react-router-transitions";
 import HomePage from "./components/views/HomePage";
 import HistoryPage from "./components/views/HistoryPage";
 import TransactionsPage from "./components/views/TransactionsPage";
@@ -27,9 +28,31 @@ export default (
     <Route path="/home" component={HomePage} />
     <Route path="/history" component={HistoryPage} />
 
-    <Route path="/transactions" component={TransactionsPage}>
-      <Route path="send" component={TransactionsSendTab} />
-      <Route path="receive" component={TransactionsReceiveTab} />
+    <Route path="/transactions" component={withTransition(
+      TransactionsPage, {
+        onShow: (prevState, nextState, replace) => {
+          console.log("onShow", prevState, nextState)
+          const prevPosition = prevState.routes[prevState.routes.length-1].position;
+          const nextPosition = nextState.routes[nextState.routes.length-1].position;
+
+          const transition = {
+            transitionName: "fromleft",
+            transitionEnterTimeout: 500,
+            transitionLeaveTimeout: 500, component: "div"
+          }
+
+          if (nextPosition > prevPosition) transition.transitionName = "fromright"
+          else transition.transitionName = "fromleft";
+          replace(transition);
+        },
+        defaultTransition: {
+          transitionName: "fromleft",
+          transitionEnterTimeout: 500,
+          transitionLeaveTimeout: 500, component: "div"
+        }
+      })}>
+      <Route path="send" component={TransactionsSendTab} position={1}/>
+      <Route path="receive" component={TransactionsReceiveTab} position={2}/>
     </Route>
 
     <Route path="/transactions/history/:txHash" component={TransactionPage} />
