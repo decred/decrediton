@@ -7,6 +7,8 @@ import MUISnackbar from "material-ui/Snackbar";
 import Notification from "./Notification";
 
 const propTypes = {
+  messages: PropTypes.array.isRequired,
+  onDismissAllMessages: PropTypes.func.isRequired,
 };
 
 const snackbarClasses = ({ type }) => ({
@@ -50,6 +52,13 @@ class Snackbar extends React.Component {
   onDismissMessage() {
     const state = this.state;
     this.setState({ ...state, message: null });
+    this.props.onDismissAllMessages();
+  }
+
+  onRequestClose(reason) {
+    if (reason !== "clickaway") {
+      this.onDismissMessage();
+    }
   }
 
   render() {
@@ -59,10 +68,10 @@ class Snackbar extends React.Component {
         className={snackbarClasses(message || "")}
         open={!!message}
         message={message ? <Notification {...message} /> : ""}
-        autoHideDuration={40000}
+        autoHideDuration={4000}
         bodyStyle={{backgroundColor: "inherited", fontFamily: null}}
         style={{fontFamily: null}}
-        onRequestClose={reason => reason !== "clickaway" ? this.onDismissMessage() : null}
+        onRequestClose={this.onRequestClose}
       />
     )
   }
