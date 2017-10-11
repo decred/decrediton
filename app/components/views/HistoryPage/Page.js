@@ -2,35 +2,20 @@ import React from "react";
 import TxHistory from "../../TxHistory";
 import Balance from "../../Balance";
 import Header from "../../Header";
-<<<<<<< HEAD
-import Select from "react-select";
-import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";
-=======
 import EyeFilterMenu from "../../EyeFilterMenu";
-import { FormattedMessage as T } from "react-intl";
 import Paginator from "../../Paginator";
->>>>>>> 022c704... Improve paginator styles
+import { FormattedMessage as T } from "react-intl";
 import "../../../style/Layout.less";
 import "../../../style/HistoryPage.less";
 
-const messages = defineMessages({
-  typePlaceholder: {
-    id: "history.txTypePlaceholder",
-    defaultMessage: "Select type...",
-  },
-});
-
 const Page = ({
                 spendableTotalBalance,
-                selectedType,
                 txTypes,
                 paginatedTxs,
                 currentPage,
                 totalPages,
-                intl,
                 onChangeSelectedType,
-                onPageBackward,
-                onPageForward,
+                onPageChanged,
               }) => (
   <div className="page-view">
     <Header
