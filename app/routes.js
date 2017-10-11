@@ -9,8 +9,6 @@ import TransactionsPage from "./components/views/TransactionsPage";
 import TransactionsSendTab from "./components/views/TransactionsPage/SendTab";
 import TransactionsReceiveTab from "./components/views/TransactionsPage/ReceiveTab";
 import TransactionPage from "./components/views/TransactionPage";
-//import SendPage from "./components/views/SendPage";
-import ReceivePage from "./components/views/ReceivePage";
 import SettingsPage from "./components/views/SettingsPage";
 import SecurityPage from "./components/views/SecurityPage";
 import SignPage from "./components/SignMessage";
@@ -27,15 +25,11 @@ export default (
     <IndexRoute component={GetStartedPage} />
     <Route path="/home" component={HomePage} />
     <Route path="/history" component={HistoryPage} />
-
     <Route path="/transactions" component={TransactionsPage}>
       <Route path="send" component={TransactionsSendTab} position={0}/>
       <Route path="receive" component={TransactionsReceiveTab} position={1}/>
     </Route>
-
     <Route path="/transactions/history/:txHash" component={TransactionPage} />
-
-    <Route path="/receive" component={ReceivePage} />
     <Route path="/security" component={SecurityPage}>
       <Route path="/security/sign" component={SignPage} />
       <Route path="/security/verify" component={VerifyPage} />

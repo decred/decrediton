@@ -1,26 +1,39 @@
-// @flow
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Component } from "react";
 import { autobind } from "core-decorators";
-import TabContent from "../../../TabbedPage/TabContent";
-
-const propTypes = {
-};
+import ErrorScreen from "../../../ErrorScreen";
+import ReceivePage from "./Page";
+import service from "../../../../connectors/service";
+import receive from "../../../../connectors/receive";
 
 @autobind
-class ReceiveTab extends React.Component {
-
+class Receive extends Component{
   constructor(props) {
     super(props);
+    this.state = {
+      account: props.nextAddressAccount
+    };
   }
 
   render() {
-    return (
-      <TabContent>receive tab</TabContent>
-    )
+    const { walletService } = this.props;
+    const { onChangeAccountNumber, onRequestAddress } = this;
+
+    return walletService
+      ? <ReceivePage {...{
+        onChangeAccountNumber, onRequestAddress, ...this.props, ...this.state
+      }} />
+      : <ErrorScreen />;
+  }
+
+  onChangeAccountNumber(account) {
+    this.setState({ account });
+    this.props.getNextAddressAttempt(account.value);
+  }
+
+  onRequestAddress() {
+    const { isRequestingAddress, getNextAddressAttempt } = this.props;
+    isRequestingAddress ? null : getNextAddressAttempt(this.state.account.value);
   }
 }
 
-ReceiveTab.propTypes = propTypes;
-
-export default ReceiveTab;
+export default service(receive(Receive));

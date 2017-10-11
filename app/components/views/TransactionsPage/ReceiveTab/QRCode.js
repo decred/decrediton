@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import qr from "qr-image";
-import "../../../style/ReceivePage.less";
+import "../../../../style/ReceivePage.less";
 
 class QRCode extends Component {
   static propTypes = {

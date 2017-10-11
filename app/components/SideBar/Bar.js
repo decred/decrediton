@@ -31,7 +31,6 @@ const Bar = ({
         <MenuLink to="/accounts"><T id="menu.accounts" m="Accounts"/></MenuLink>
         <MenuLink to="/transactions/send"><T id="menu.send" m="Send"/></MenuLink>
         <MenuLink to="/transactions/receive"><T id="menu.receive" m="Receive"/></MenuLink>
-        <MenuLink to="/receive"><T id="menu.receive" m="Receive"/></MenuLink>
         <MenuLink to="/history"><T id="menu.history" m="History"/></MenuLink>
         <MenuLink to="/proofofstake"><T id="menu.tickets" m="Tickets"/></MenuLink>
         <MenuLink to="/security/sign"><T id="menu.securitycenter" m="Security Center"/></MenuLink>
