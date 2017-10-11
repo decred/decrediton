@@ -1,6 +1,7 @@
 // @flow
 import React from "react";
 import { Route, IndexRoute } from "react-router";
+import { withTransition } from "react-router-transitions";
 import App from "./containers/App";
 import HomePage from "./components/views/HomePage";
 import HistoryPage from "./components/views/HistoryPage";
@@ -22,7 +23,7 @@ import Help from "./components/views/Help";
 import ErrorScreen from "./components/ErrorScreen";
 
 export default (
-  <Route path="/" component={App}>
+  <Route path="/" component={withTransition(App)}>
     <IndexRoute component={GetStartedPage} />
     <Route path="/home" component={HomePage} />
     <Route path="/history" component={HistoryPage} />

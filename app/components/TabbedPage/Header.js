@@ -13,13 +13,17 @@ class Header extends React.Component {
 
   componentDidMount() {
     const caretPosition = this.neededCaretPosition();
-    const state = this.state;
-    this.setState({...state, ...caretPosition})
+    if (caretPosition) {
+      const state = this.state;
+      this.setState({...state, ...caretPosition})
+    }
   }
 
   componentWillReceiveProps(oldState, newState) {
     const caretPosition = this.neededCaretPosition();
-    if ((caretPosition.caretLeft != newState.caretLeft) || (caretPosition.caretWidth != newState.caretWidth)) {
+    if (caretPosition &&
+        ((caretPosition.caretLeft != newState.caretLeft) || (caretPosition.caretWidth != newState.caretWidth)))
+    {
       const updating = true;
       this.setState({...newState, ...caretPosition, updating})
     }
@@ -28,6 +32,10 @@ class Header extends React.Component {
   neededCaretPosition() {
     const { router } = this.props;
     const tabForRoute = ReactDOM.findDOMNode(this.refs[router.location.pathname])
+    if (!tabForRoute) {
+      return null;
+    }
+
     const tabRect = tabForRoute.getBoundingClientRect();
     const caretLeft = tabForRoute.offsetLeft - 5;
     const caretWidth = tabRect.width + 5;
