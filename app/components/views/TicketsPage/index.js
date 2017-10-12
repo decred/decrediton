@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
-import { substruct, compose, eq, get } from "../../../fp";
-import service from "../../../connectors/service";
-import ticketsPage from "../../../connectors/ticketsPage";
-import ErrorScreen from "../../ErrorScreen";
+import { substruct, compose, eq, get } from "fp";
+import { service, ticketsPage } from "connectors";
+import ErrorScreen from "components/ErrorScreen";
 import TicketsPage from "./Page";
 import { FormattedMessage as T } from "react-intl";
 import ReactToolTip from "react-tooltip";
