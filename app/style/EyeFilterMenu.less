@@ -1,6 +1,17 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
+.eye-filter-menu.menu-open::after {
+  content: "";
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #fff;
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  transition: all 100ms ease-in-out;
+}
+
 .eye-filter-menu-button {
   background-color: #000;
   height: 34px;

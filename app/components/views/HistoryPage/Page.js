@@ -28,7 +28,6 @@ const Page = ({
           <T id="history.title" m="Recent Transactions" />
         </div>
         <div className="history-select-tx-types-area">
-          <div className="history-select-tx-types-label"><T id="history.txTypeLabel" m="Tx Type" />:</div>
           <div className="history-select-tx-types">
             <EyeFilterMenu
               valueKey="value" labelKey="label"

@@ -17,8 +17,8 @@ class ActionButton extends React.Component {
 
   render() {
     const labels = {
-      next: "→",
-      previous: "←"
+      next: "▶",
+      previous: "◀"
     };
     const classNames = {
       next: "paginator-action-button-next",
@@ -29,10 +29,11 @@ class ActionButton extends React.Component {
     return (
       <FlatButton
         className={classNames[direction]}
-        style={{fontSize: null, minWidth: null, height: null, buttonHeight: null, margin: null}}
+        style={{fontSize: null, minWidth: null,
+          height: null, buttonHeight: null, margin: null, color: null}}
         label={labels[direction]}
         onClick={this.onClick}
-        hoverColor={"#e9f8ff"}
+        hoverColor={"#fff"}
       />
     );
   }

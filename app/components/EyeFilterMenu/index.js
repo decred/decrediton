@@ -10,20 +10,32 @@ import "../../style/MiscComponents.less";
 @autobind
 class EyeFilterMenu extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = { menuOpen: false };
+  }
+
   onMenuChanged(event, value) {
     if (this.props.onChange) {
       this.props.onChange(value);
     }
   }
 
+  onMenuRequestChange(opening) {
+    this.setState({ menuOpen: opening });
+  }
+
   render() {
     //<span className="eye-filter-menu-button-icon-arrow" />
     const options = this.props.options;
     const labelKey = this.props.labelKey || "label";
+    const { menuOpen } = this.state;
     return (
       <IconMenu
-        className="eye-filter-menu"
+        className={"eye-filter-menu " + (menuOpen ? "menu-open" : "")}
         onChange={this.onMenuChanged}
+        onRequestChange={this.onMenuRequestChange}
+        open={menuOpen}
         iconButtonElement={
           <IconButton
             className="eye-filter-menu-button"
