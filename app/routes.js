@@ -1,6 +1,6 @@
 // @flow
 import React from "react";
-import { Route, IndexRoute } from "react-router";
+import { Route, IndexRoute, IndexRedirect } from "react-router";
 import { withTransition } from "react-router-transitions";
 import App from "./containers/App";
 import HomePage from "./components/views/HomePage";
@@ -26,6 +26,7 @@ export default (
     <Route path="/home" component={HomePage} />
     <Route path="/history" component={HistoryPage} />
     <Route path="/transactions" component={TransactionsPage}>
+      <IndexRedirect to="/transactions/send" />
       <Route path="send" component={TransactionsSendTab} position={0}/>
       <Route path="receive" component={TransactionsReceiveTab} position={1}/>
     </Route>

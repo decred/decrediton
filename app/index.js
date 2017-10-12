@@ -2,10 +2,9 @@
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { Router, hashHistory } from "react-router";
+import { Router, createMemoryHistory } from "react-router";
 import { syncHistoryWithStore } from "react-router-redux";
 import { pageTransitionsRender } from "./components/PageTransitions";
-import injectTapEventPlugin from "react-tap-event-plugin";
 import routes from "./routes";
 import configureStore from "./store/configureStore";
 import { getCfg } from "./config.js";
@@ -323,16 +322,17 @@ var initialState = {
   locales: locales
 };
 
-const store = configureStore(initialState);
-const history = syncHistoryWithStore(hashHistory, store);
+const history = createMemoryHistory();
+const store = configureStore(initialState, history);
+const syncedHistory = syncHistoryWithStore(history, store);
 
 render(
   <Provider store={store}>
     <Router
-      history={history}
+      history={syncedHistory}
       routes={routes}
       render={pageTransitionsRender()}
-      />
+    />
   </Provider>,
   document.getElementById("root")
 );
