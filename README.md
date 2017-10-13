@@ -65,45 +65,30 @@ decrediton --extrawalletargs='-d=debug'
 ## Developing
 
 Due to potential compatibility issues, for now, all work should be
-done with node v6.9.5 and electron 1.4.15.  The recommended way to install
-node is using nvm.
+done with electron 1.4.15.
 
-This has primarily been tested on Linux at the moment although OSX
-should work similarly.
-
-``` bash
-git clone https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
-. ~/.nvm/nvm.sh
-nvm install v6.9.5
-nvm use v6.9.5
-nvm alias default v6.9.5
-npm install -g npm
-cd
-```
+This has been tested on Linux and OSX.
 
 Adjust the following steps for the paths you want to use.
 
 ``` bash
 go get -u -v github.com/decred/dcrd
 go get -u -v github.com/decred/dcrwallet
-go get -u -v github.com/Masterminds/glide
 go get -u -v github.com/golang/dep/cmd/dep
 cd $GOPATH/src/github.com/decred/dcrd
-glide i
+$GOPATH/bin/dep ensure
 go install . ./cmd/dcrctl/
 cd ../dcrwallet
-dep ensure
+$GOPATH/bin/dep ensure
 go install
 mkdir code
 cd code
 git clone https://github.com/decred/decrediton.git
 cd decrediton
-npm install
+yarn
 mkdir app/bin/
-cp `which dcrd` app/bin/
-cp `which dcrctl` app/bin/
-cp `which dcrwallet` app/bin/
-npm run dev
+cp $GOPATH/bin/dcr* app/bin/
+yarn dev
 ```
 
 ### Note about developing with testnet
