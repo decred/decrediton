@@ -301,62 +301,40 @@ export function dcrctlCfg() {
   return path.join(cfgLoc, "dcrctl.conf");
 }
 
-export function writeCfgs() {
+export function writeCfgs(dcrd, dcrwallet, dcrctl) {
   var cfg = getCfg();
-  var net = 0;
-  var autobuy = 0;
-  if (cfg.get("network") === "testnet") {
-    net = 1;
+  if (dcrd) {
+    var dcrdConf = {
+      "Application Options":
+      {
+        rpcuser: cfg.get("rpc_user"),
+        rpcpass: cfg.get("rpc_pass"),
+      }
+    };
+    fs.writeFileSync(dcrdCfg(), ini.stringify(dcrdConf));
   }
-  if (cfg.get("enableticketbuyer") === "1") {
-    autobuy = 1;
+  if (dcrwallet) {
+    var dcrwConf = {
+      "Application Options":
+      {
+        username: cfg.get("rpc_user"),
+        password: cfg.get("rpc_pass"),
+        appdata: appDataDirectory(),
+        tlscurve: "P-256",
+        noinitialload: "1",
+        onetimetlskey: "1",
+      },
+    };
+    fs.writeFileSync(dcrwCfg(), ini.stringify(dcrwConf));
   }
-  var dcrdConf = {
-    "Application Options":
-    {
-      testnet: net,
-      rpcuser: cfg.get("rpc_user"),
-      rpcpass: cfg.get("rpc_pass"),
-      rpclisten: cfg.get("daemon_rpc_host") + ":" + RPCDaemonPort(),
-    }
-  };
-  fs.writeFileSync(dcrdCfg(), ini.stringify(dcrdConf));
-
-  var dcrwConf = {
-    "Application Options":
-    {
-      testnet: net,
-      username: cfg.get("rpc_user"),
-      password: cfg.get("rpc_pass"),
-      appdata: appDataDirectory(),
-      rpcconnect: cfg.get("daemon_rpc_host") + ":" + RPCDaemonPort(),
-      rpclisten: cfg.get("wallet_rpc_host") + ":" + RPCWalletPort(),
-      grpclisten: cfg.get("wallet_rpc_host") + ":" + GRPCWalletPort(),
-      tlscurve: "P-256",
-      noinitialload: "1",
-      onetimetlskey: "1",
-      enableticketbuyer: autobuy,
-    },
-    "Ticket Buyer Options":
-    {
-      "ticketbuyer.balancetomaintainabsolute": cfg.get("balancetomaintain"),
-      "ticketbuyer.maxfee": cfg.get("maxfee"),
-      "ticketbuyer.maxpricerelative": cfg.get("maxpricerelative"),
-      "ticketbuyer.maxpriceabsolute": cfg.get("maxpriceabsolute"),
-      "ticketbuyer.maxperblock": cfg.get("maxperblock"),
-    }
-  };
-  fs.writeFileSync(dcrwCfg(), ini.stringify(dcrwConf));
-
-  var dcrctlConf = {
-    "Application Options":
-    {
-      testnet: net,
-      rpcuser: cfg.get("rpc_user"),
-      rpcpass: cfg.get("rpc_pass"),
-      rpcserver: cfg.get("daemon_rpc_host") + ":" + RPCDaemonPort(),
-      walletrpcserver: cfg.get("wallet_rpc_host") + ":" + RPCWalletPort(),
-    }
-  };
-  fs.writeFileSync(dcrctlCfg(), ini.stringify(dcrctlConf));
+  if (dcrctl) {
+    var dcrctlConf = {
+      "Application Options":
+      {
+        rpcuser: cfg.get("rpc_user"),
+        rpcpass: cfg.get("rpc_pass"),
+      }
+    };
+    fs.writeFileSync(dcrctlCfg(), ini.stringify(dcrctlConf));
+  }
 }
