@@ -1,7 +1,6 @@
 // @flow
 import { combineReducers } from "redux";
 import { reducer as form } from "redux-form";
-import { routerReducer as routing } from "react-router-redux";
 import grpc from "./grpc";
 import walletLoader from "./walletLoader";
 import notifications from "./notifications";
@@ -23,7 +22,6 @@ const rootReducer = combineReducers({
   stakepool,
   daemon,
   locales,
-  routing,
   form,
   sidebar,
 });
