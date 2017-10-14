@@ -28,7 +28,7 @@ class App extends Component {
           <div className="page-body">
             <SideBar />
             {this.props.children}
-            <ReactToolTip type="info" effect="solid"/>
+            <ReactToolTip id="appToolTip"/>
           </div>
         </IntlProvider>
       </MuiThemeProvider>
