@@ -1,5 +1,4 @@
 import React from "react";
-import ReactTooltip from "react-tooltip";
 import AccountsSelect from "../../AccountsSelect";
 import { Link } from "react-router";
 import KeyBlueButton from "../../KeyBlueButton";
@@ -71,7 +70,6 @@ const ReceivePage = ({
         </KeyBlueButton>
       </div>
     </div>
-    <ReactTooltip />
   </div>
 );
 
