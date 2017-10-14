@@ -5,10 +5,9 @@ import NumTicketsInput from "../NumTicketsInput";
 import ManagePoolsButton from "../ManagePoolsButton";
 import SelectStakePool from "../SelectStakePool";
 import KeyBlueButton from "../KeyBlueButton";
-import PurchaseTicketsInfoButton from "../PurchaseTicketsInfoButton";
-import TicketsCogs from "../TicketsCogs";
+import { Icon, Flex, Heading } from "shared";
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import "../../style/StakePool.less";
+import "style/StakePool.less";
 import { addSpacingAroundText } from "../../helpers/strings";
 
 const messages = defineMessages({
@@ -96,14 +95,11 @@ const PurchaseTicketsForm = ({
   onShowTicketsInfo
 }) => (
   <div>
-    <div className="stakepool-voting-title-area">
-      <div className="stakepool-voting-title-area-name">
-        <T id="purchaseTickets.title" m="Purchase Titckets" /></div>
-      <div className="stakepool-purchase-ticket-input-buttons">
-        <PurchaseTicketsInfoButton onClick={onShowTicketsInfo}/>
-        <TicketsCogs opened={!isShowingAdvanced} onClick={onToggleShowAdvanced}/>
-      </div>
-    </div>
+    <Flex my="1em" align="center">
+      <Heading f={ 20 }><T id="purchaseTickets.title" m="Purchase Titckets" /></Heading>
+      <Icon i="info" ml="auto" onClick={onShowTicketsInfo}/>
+      <Icon i="cog" mx="1em" active={isShowingAdvanced} onClick={onToggleShowAdvanced}/>
+    </Flex>
     <div className={isShowingAdvanced ? "stakepool-flex-height-shown" : "stakepool-flex-height-hidden" }>
       <div className="stakepool-purchase-ticket-row">
         <div className="stakepool-purchase-ticket-row-account-select">

@@ -1,6 +1,6 @@
 import React from "react";
 import "../../style/StakePool.less";
-import TicketsCogs from "../TicketsCogs";
+import { Icon } from "shared";
 import Balance from "../Balance";
 import { FormattedNumber, FormattedMessage as T } from "react-intl";
 
@@ -30,11 +30,7 @@ const StakeInfoDisplay = ({
         <div className="stakepool-stake-info-value"><FormattedNumber value={votedTicketsCount} /></div>
       </div>
       <div className="stakepool-stake-info-show-advanced-area">
-        <TicketsCogs
-          opened={!isShowingDetails}
-          style={{paddingTop: "2px"}}
-          onClick={onHideStakeInfo}
-        />
+        <Icon i="cog" active={isShowingDetails} onClick={onHideStakeInfo} />
       </div>
     </div>
     <div className="stakepool-stake-info-row">
@@ -93,11 +89,7 @@ const StakeInfoDisplay = ({
       <div className="stakepool-stake-info-value"><FormattedNumber value={liveTicketsCount} /></div>
     </div>
     <div className="stakepool-stake-info-show-advanced-area">
-      <TicketsCogs
-        opened={!isShowingDetails}
-        style={{paddingTop: "2px"}}
-        onClick={onShowStakeInfo}
-      />
+      <Icon i="cog" active={isShowingDetails} onClick={onShowStakeInfo} />
     </div>
   </div>
 );

@@ -3,27 +3,15 @@ import React from "react";
 import SlateGrayButton from "../../../../SlateGrayButton";
 import KeyBlueButton from "../../../../KeyBlueButton";
 import Balance from "../../../../Balance";
-import ReactToolTip from "react-tooltip";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import "../../../../../style/Fonts.less";
-import "../../../../../style/AccountRow.less";
+import { Icon, Tooltip } from "shared";
+import "style/Fonts.less";
+import "style/AccountRow.less";
 
 const messages = defineMessages({
   newNamePlaceholder: {
     id: "accounts.rename.newNamePlaceholder",
     defaultMessage: "New Account Name"
-  },
-  renameAccountTip: {
-    id: "accounts.rename.tip",
-    defaultMessage: "Rename Account"
-  },
-  showTip: {
-    id: "accounts.show.tip",
-    defaultMessage: "Show"
-  },
-  hideTip: {
-    id: "accounts.hide.tip",
-    defaultMessage: "Hide"
   }
 });
 
@@ -194,31 +182,20 @@ const Row = ({
           </div>
           <div className="account-actions">
             {account.accountName !== "imported" ?
-              <div
-                key={"renameAccountButton"+account.accountNumber}
-                className="rename-account-button"
-                onClick={showRenameAccount}
-                data-tip={intl.formatMessage(messages.renameAccountTip)}/>:
-              <div></div>
+              <Tooltip text={ <T id="accounts.rename.tip" m="Rename Account" /> }>
+                <Icon i="accountRename" s={ 10/13 } onClick={ showRenameAccount }/>
+              </Tooltip> : null
             }
             {account.accountName !== "imported" && account.accountName !== "default" && account.total == 0 && !hidden ?
-              <div
-                key={"hideAccountButton"+account.accountNumber}
-                className="hide-account-button"
-                onClick={hideAccount}
-                data-for="accountTip"
-                data-tip={intl.formatMessage(messages.hideTip)}/>:
+              <Tooltip text={ <T id="accounts.hide.tip" m="Hide" /> }>
+                <Icon i="hideAccount" s={ 10/13 } onClick={ hideAccount }/>
+              </Tooltip> :
               account.accountName !== "imported" && account.accountName !== "default" && hidden ?
-              <div
-                className="show-account-button"
-                key={"showAccountButton"+account.accountNumber}
-                onClick={showAccount}
-                data-for="accountTip"
-                data-tip={intl.formatMessage(messages.showTip)}/>:
-              <div></div>
+              <Tooltip text={ <T id="accounts.show.tip" m="Show" /> }>
+                <Icon i="showAccount" s={ 10/13 } onClick={ showAccount }/>
+              </Tooltip> : null
             }
           </div>
-          <ReactToolTip id="accountTip" type="info" effect="solid" getContent={[() => { return (hidden) ? intl.formatMessage(messages.showTip): intl.formatMessage(messages.hideTip); }]}/>
          </div>
        )
     }

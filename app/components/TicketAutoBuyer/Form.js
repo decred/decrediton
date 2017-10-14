@@ -1,5 +1,5 @@
 import React from "react";
-import TicketsCogs from "../TicketsCogs";
+import { Icon, Heading } from "shared";
 import AutoBuyerSwitch from "../AutoBuyerSwitch";
 import KeyBlueButton from "../KeyBlueButton";
 import {defineMessages, FormattedMessage as T} from "react-intl";
@@ -54,10 +54,7 @@ const TicketAutoBuyerForm = ({
   onToggleShowDetails
 }) => (
   <div>
-    <div className="stakepool-voting-title-area">
-      <div className="stakepool-voting-title-area-name">
-        <T id="autobuyer.title" m="Automatic Purchase" /></div>
-    </div>
+    <Heading py="1em" f={ 20 }><T id="autobuyer.title" m="Automatic Purchase" /></Heading>
     <div className={isHidingDetails ? "stakepool-flex-height-auto-buyer-hidden" : "stakepool-flex-height-auto-buyer-shown" }>
       <div className="stakepool-auto-buyer-row">
         <AutoBuyerSwitch enabled={isTicketAutoBuyerEnabled} onClick={onToggleTicketAutoBuyer} />
@@ -78,7 +75,7 @@ const TicketAutoBuyerForm = ({
           ) : null}
         </div>
         <div className="stakepool-auto-buyer-show-advanced-area">
-          <TicketsCogs opened={isHidingDetails} onClick={onToggleShowDetails} />
+          <Icon i="cog" active={!isHidingDetails} onClick={onToggleShowDetails} />
         </div>
       </div>
       <div hidden={isHidingDetails ? true : false} className="stakepool-auto-buyer-advanced-area">

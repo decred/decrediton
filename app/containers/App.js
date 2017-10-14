@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { PropTypes } from "prop-types";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { IntlProvider } from "react-intl";
-import theme from "../materialUITheme";
 import { defaultFormats } from "../i18n/locales";
+import ThemeProvider from "cxs/ThemeProvider";
+import theme from "theme";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import muiTheme from "../materialUITheme";
 import app from "../connectors/app";
 import SideBar from "../components/SideBar";
 
@@ -17,18 +19,20 @@ class App extends Component {
     let locale = this.props.locale;
 
     return (
-      <MuiThemeProvider muiTheme={theme}>
-        <IntlProvider
-          locale={locale.language}
-          messages={locale.messages}
-          formats={locale.formats}
-          defaultFormats={defaultFormats}
-          key={locale.key}>
-          <div className="page-body">
-            <SideBar />
-            {this.props.children}
-          </div>
-        </IntlProvider>
+      <MuiThemeProvider muiTheme={ muiTheme }>
+        <ThemeProvider theme={ theme }>
+          <IntlProvider
+            locale={ locale.language }
+            messages={ locale.messages }
+            formats={ locale.formats }
+            defaultFormats={ defaultFormats }
+            key={ locale.key }>
+            <div className="page-body">
+              <SideBar />
+              { this.props.children }
+            </div>
+          </IntlProvider>
+        </ThemeProvider>
       </MuiThemeProvider>
     );
   }

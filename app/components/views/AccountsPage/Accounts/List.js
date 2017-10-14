@@ -5,10 +5,10 @@ import AccountRow from "./AccountRow";
 import DecredLoading from "../../../DecredLoading";
 import KeyBlueButton from "../../../KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
-import "../../../../style/Layout.less";
-import "../../../../style/AccountsPage.less";
+import "style/Layout.less";
+import "style/AccountsPage.less";
 import BalanceOverviewInfoModal from "../../../BalanceOverviewInfoModal";
-import PurchaseTicketsInfoButton from "../../../PurchaseTicketsInfoButton";
+import { Icon } from "shared";
 
 const AccountsList = ({
   accounts,
@@ -100,7 +100,7 @@ const AccountsList = ({
         <div>
           <div className="account-content-title">
             <div className="account-content-title-buttons-area">
-              <PurchaseTicketsInfoButton onClick={onShowBalanceOverviewInfoModal} />
+              <Icon i="info" onClick={onShowBalanceOverviewInfoModal} />
             </div>
           </div>
           <div className="account-content-nest">

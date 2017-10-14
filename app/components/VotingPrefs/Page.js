@@ -3,7 +3,8 @@ import AgendaCard from "../AgendaCard";
 import AgendaOverview from "../AgendaOverview";
 import SelectStakePool from "../SelectStakePool";
 import { FormattedMessage as T } from "react-intl";
-import "../../style/StakePool.less";
+import { Heading, Flex, Box } from "shared";
+import "style/StakePool.less";
 
 const VotingPrefsPage = ({
   agendas,
@@ -17,18 +18,16 @@ const VotingPrefsPage = ({
   onUpdateVotePreference
 }) => (
   <div className="stakepool-content-voting-gui page-content">
-    <div className="stakepool-voting-title-area">
-      <div className="stakepool-voting-title-area-name">
-        <T id="votingPreferences.title" m="Voting Preferences" />
-      </div>
-      <div className="stakepool-unconfigured-select">
+    <Flex my="1em">
+      <Heading f={ 20 } ><T id="votingPreferences.title" m="Voting Preferences" /></Heading>
+      <Box w="20em" ml="auto" f={ 16 }>
         <SelectStakePool
           options={configuredStakePools}
           value={stakePool}
           onChange={onChangeStakePool}
         />
-      </div>
-    </div>
+      </Box>
+    </Flex>
     {(stakePool && stakePool.isVersionValid) ? (
       <div className="stakepool-voting-agenda-area">
         {selectedAgenda ? (

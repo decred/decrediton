@@ -1,11 +1,12 @@
 import React from "react";
+import { FormattedMessage as T, injectIntl } from "react-intl";
+import { Icon, Flex, Box, Heading } from "shared";
 import PropTypes from "prop-types";
 import { autobind } from "core-decorators";
-import { FormattedMessage as T, injectIntl } from "react-intl";
 import SignMessageForm from "./Form";
-import signMessageConnector from "../../connectors/signMessagePage";
+import { signMessagePage } from "connectors";
 import CopyToClipboardButton from "../CopyToClipboardButton";
-import "../../style/SecurityCenterMessagePage.less";
+import "style/SecurityCenterMessagePage.less";
 
 @autobind
 class SignMessage extends React.Component {
@@ -45,11 +46,16 @@ class SignMessage extends React.Component {
     }
 
     return (
-      <div className="page-content message message-sign">
-        <div className="message-header-title"><T id="securitycenter.sign.header" m="Sign Message" /></div>
-        <SignMessageForm onSubmit={this.onSubmit} rpcError={signMessageError} formatMessage={this.props.intl.formatMessage} />
-        {result}
-      </div>
+      <Box p={ 70 }>
+        <Flex align="center" pb={ 10 }>
+          <Icon i="cog" s={ 3/4 } pr={ 20 } />
+          <Heading><T id="securitycenter.sign.header" m="Sign Message" /></Heading>
+        </Flex>
+        <div className="message">
+          <SignMessageForm onSubmit={this.onSubmit} rpcError={signMessageError} formatMessage={this.props.intl.formatMessage} />
+          {result}
+        </div>
+      </Box>
     );
   }
 
@@ -72,4 +78,4 @@ SignMessage.contextTypes = {
   router: PropTypes.object.isRequired,
 };
 
-export default signMessageConnector(injectIntl(SignMessage));
+export default signMessagePage(injectIntl(SignMessage));
