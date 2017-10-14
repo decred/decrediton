@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactToolTip from "react-tooltip";
 import SecurityPageHeader from "./Header";
 import "../../../style/Layout.less";
 import "../../../style/StakePool.less";
@@ -13,7 +12,6 @@ const SecurityPage = ({
     <div className="page-view">
       <SecurityPageHeader {...{ onToggleSecurityMessage }} />
       {children}
-      <ReactToolTip type="info" effect="solid" />
     </div>
   );
 };
