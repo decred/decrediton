@@ -3,7 +3,6 @@ import { loader as rpcLoader } from "middleware/grpc/client";
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
   SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from "middleware/walletrpc/api_pb";
-import { stakePoolInfo } from "middleware/stakepoolapi";
 
 export const getLoader = ({ address, port }) =>
   new Promise((resolve, reject) =>
