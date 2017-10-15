@@ -10,6 +10,7 @@ import PassphraseModal from "../../PassphraseModal";
 import OutputRow from "./OutputRow";
 import "../../../style/SendPage.less";
 import "../../../style/MiscComponents.less";
+import ReactToolTip from "react-tooltip";
 
 const messages = defineMessages({
   accountsTip: {
