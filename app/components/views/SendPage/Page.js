@@ -110,6 +110,7 @@ const SendPage = ({
                 data-place="bottom"
                 data-type="info"
                 data-effect="solid"
+                onClick={()=> { ReactToolTip.hide(); }}
                 data-for="appToolTip"
                 data-tip={intl.formatMessage(messages.accountsTip)}
                 to={"/accounts"}
