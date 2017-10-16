@@ -9,15 +9,6 @@ export const getLoader = ({ address, port }) =>
     rpcLoader({ address, port }, (loader, error) =>
       error ? reject(error) : resolve(loader)));
 
-export const getStartRpcRequest = (daemonhost, rpcport, rpcuser, rpcpass, cert) => {
-  const request = new StartConsensusRpcRequest();
-  request.setNetworkAddress(daemonhost + ":" + rpcport);
-  request.setUsername(rpcuser);
-  request.setPassword(new Uint8Array(Buffer.from(rpcpass)));
-  request.setCertificate(new Uint8Array(cert));
-  return request;
-};
-
 export const startRpc = (loader, daemonhost, rpcport, rpcuser, rpcpass, cert) =>
   new Promise((resolve, reject) => {
     const request = new StartConsensusRpcRequest();
