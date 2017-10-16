@@ -7,32 +7,22 @@ import receive from "../../../../connectors/receive";
 
 @autobind
 class Receive extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-      account: props.nextAddressAccount
-    };
-  }
-
   render() {
     const { walletService } = this.props;
-    const { onChangeAccountNumber, onRequestAddress } = this;
+    const { onRequestAddress } = this;
 
     return walletService
       ? <ReceivePage {...{
-        onChangeAccountNumber, onRequestAddress, ...this.props, ...this.state
+        ...this.props,
+        ...this.state,
+        onRequestAddress
       }} />
       : <ErrorScreen />;
   }
 
-  onChangeAccountNumber(account) {
-    this.setState({ account });
-    this.props.getNextAddressAttempt(account.value);
-  }
-
-  onRequestAddress() {
-    const { isRequestingAddress, getNextAddressAttempt } = this.props;
-    isRequestingAddress ? null : getNextAddressAttempt(this.state.account.value);
+  onRequestAddress () {
+    const { getNextAddressAttempt, account } = this.props;
+    getNextAddressAttempt(account.value);
   }
 }
 
