@@ -183,16 +183,16 @@ const Row = ({
           <div className="account-actions">
             {account.accountName !== "imported" ?
               <Tooltip text={ <T id="accounts.rename.tip" m="Rename Account" /> }>
-                <Icon i="accountRename" s={ 10/13 } onClick={ showRenameAccount }/>
+                <Icon i="accountRename" s={ 40 } onClick={ showRenameAccount }/>
               </Tooltip> : null
             }
             {account.accountName !== "imported" && account.accountName !== "default" && account.total == 0 && !hidden ?
               <Tooltip text={ <T id="accounts.hide.tip" m="Hide" /> }>
-                <Icon i="hideAccount" s={ 10/13 } onClick={ hideAccount }/>
+                <Icon i="hideAccount" s={ 40 } onClick={ hideAccount }/>
               </Tooltip> :
               account.accountName !== "imported" && account.accountName !== "default" && hidden ?
               <Tooltip text={ <T id="accounts.show.tip" m="Show" /> }>
-                <Icon i="showAccount" s={ 10/13 } onClick={ showAccount }/>
+                <Icon i="showAccount" s={ 40 } onClick={ showAccount }/>
               </Tooltip> : null
             }
           </div>
