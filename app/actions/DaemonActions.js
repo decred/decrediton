@@ -56,10 +56,10 @@ export const syncDaemon = (rpcuser, rpcpassword, host, cert) =>
             if (timeStart !== 0 && blockStart !== 0 && blocksDiff !== 0) {
               const currentTime = new Date();
               const timeSyncing = (currentTime - timeStart) / 1000;
-              let minutesLeft = Math.round(blocksLeft / blocksDiff * timeSyncing / 60);
+              const secondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
               dispatch({
                 currentBlockCount: parseInt(updateCurrentBlockCount),
-                timeLeftEstimate: minutesLeft,
+                timeLeftEstimate: secondsLeft,
                 type: DAEMONSYNCING_PROGRESS});
             } else if (updateCurrentBlockCount !== 0) {
               const time = new Date();
