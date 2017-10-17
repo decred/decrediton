@@ -40,7 +40,7 @@ class SideBar extends Component {
       const timeFromLastBlock = now.getTime() - lastBlockDate.getTime();
       lastBlockIsRecent = timeFromLastBlock < 60000;
       if (lastBlockIsRecent) {
-        updateRecentTimer = this.props.setTimeout(this.updateRecentBlockTime, 60000 - timeFromLastBlock +100);
+        updateRecentTimer = this.props.setTimeout(this.updateRecentBlockTime, 60000 - timeFromLastBlock);
       }
     }
     return {lastBlockDate, lastBlockIsRecent, updateRecentTimer};
