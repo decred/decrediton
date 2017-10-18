@@ -59,7 +59,6 @@ export const createWalletExistingToggle = (existing) => (dispatch) =>
     ? dispatch({ type: CREATEWALLET_EXISTINGSEED_INPUT })
     : setTimeout(() => dispatch({ type: CREATEWALLET_NEWSEED_INPUT }), 50);
 
-
 export const CREATEWALLET_ATTEMPT = "CREATEWALLET_ATTEMPT";
 export const CREATEWALLET_FAILED = "CREATEWALLET_FAILED";
 export const CREATEWALLET_SUCCESS = "CREATEWALLET_SUCCESS";
@@ -236,15 +235,17 @@ export const fetchHeadersAttempt = () => (dispatch, getState) => {
 export const UPDATEDISCOVERACCOUNTS = "UPDATEDISCOVERACCOUNTS";
 export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
 
-export const clearStakePoolConfigNewWallet = () => (dispatch) =>
-  getStakePoolInfo()
-    .then(response => {
-      const config = getCfg();
-      // Only add matching network stakepool info
-      const foundStakePoolConfigs = Object.values(response.data).map(
-        ({ URL, Network, APIVersionsSupported }) => ({ Host: URL, Network, APIVersionsSupported }));
-      config.delete("stakepools");
-      config.set("stakepools", foundStakePoolConfigs);
-      dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
-    })
-    .catch(error => console.error(error));
+export function clearStakePoolConfigNewWallet() {
+  return (dispatch) => {
+    let config = getCfg();
+    config.delete("stakepools");
+
+    stakePoolInfo(function(foundStakePoolConfigs) {
+      if (foundStakePoolConfigs !== null) {
+        let config = getCfg();
+        config.set("stakepools", foundStakePoolConfigs);
+        dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
+      }
+    });
+  };
+}
