@@ -1,6 +1,8 @@
 // @flow
 import { loaderRequest } from "./WalletLoaderActions";
 import { getVersionService, getVersionResponse } from "../wallet/version";
+import { push as pushHistory } from "react-router-redux";
+
 export const GETVERSIONSERVICE_ATTEMPT = "GETVERSIONSERVICE_ATTEMPT";
 export const GETVERSIONSERVICE_FAILED = "GETVERSIONSERVICE_FAILED";
 export const GETVERSIONSERVICE_SUCCESS = "GETVERSIONSERVICE_SUCCESS";
@@ -41,6 +43,7 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => {
       }
       if (versionErr) {
         dispatch({error: versionErr, type: VERSION_NOT_VALID});
+        dispatch(pushHistory("/invalidRPCVersion"));
       } else {
         const { address, port } = getState().grpc;
         dispatch(loaderRequest(address,port));

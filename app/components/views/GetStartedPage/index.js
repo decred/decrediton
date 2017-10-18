@@ -22,10 +22,6 @@ class GetStartedPage extends Component {
     this.props.doStartDaemon();
   }
 
-  componentWillUnmount() {
-    this.props.showSidebarMenu();
-  }
-
   render() {
     const {
       startStepIndex,
