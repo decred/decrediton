@@ -5,11 +5,7 @@ import { px } from "fp";
 
 const tooltipContainer = cxs({
   display: "inline-block",
-  ":hover": {
-    " > span": {
-      display: "block"
-    }
-  }
+  ":hover": { " > span": { display: "block" }}
 });
 
 const tip = cxs({
