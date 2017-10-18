@@ -13,6 +13,8 @@ const mapStateToProps = selectorMap({
   publishedTransactionHash: sel.publishedTransactionHash,
   isSendingTransaction: sel.isSendingTransaction,
   isConstructingTransaction: sel.isConstructingTransaction,
+  nextAddress: sel.nextAddress,
+  nextAddressAccount: sel.nextAddressAccount
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

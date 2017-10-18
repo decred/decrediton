@@ -107,11 +107,11 @@ class Send extends Component {
     this.setState(this.getInitialState(), this.props.onClearTransaction);
   }
   onShowSendAll() {
-    let { outputs, isSendSelf } = this.state;
+    let { outputs } = this.state;
     if (outputs.length > 1) {
       outputs = [outputs[0]];
     }
-    this.setState({ isSendAll: true, outputs }, isSendSelf ? this.onAttemptConstructTransaction : null);
+    this.setState({ isSendAll: true, outputs }, this.onAttemptConstructTransaction);
   }
   onHideSendAll() {
     let { outputs } = this.state;

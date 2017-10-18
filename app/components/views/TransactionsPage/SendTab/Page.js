@@ -1,5 +1,5 @@
 import React from "react";
-import AccountsSelect from "../../AccountsSelect";
+import AccountsSelect from "../../../AccountsSelect";
 import ReactTooltip from "react-tooltip";
 import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";
 import DecredLoading from "../../../DecredLoading";

@@ -1,8 +1,8 @@
 import React from "react";
 import compose from "lodash/fp/compose";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import ReceiveAccountsSelect from "../../ReceiveAccountsSelect";
-import "../../../style/SendPage.less";
+import ReceiveAccountsSelect from "../../../ReceiveAccountsSelect";
+import "../../../../style/SendPage.less";
 
 const messages = defineMessages({
   amountPlaceholder: {
