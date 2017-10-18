@@ -6,6 +6,7 @@ import theme from "../materialUITheme";
 import { defaultFormats } from "../i18n/locales";
 import app from "../connectors/app";
 import SideBar from "../components/SideBar";
+import ReactToolTip from "react-tooltip";
 
 class App extends Component {
   static propTypes = {
@@ -27,6 +28,7 @@ class App extends Component {
           <div className="page-body">
             <SideBar />
             {this.props.children}
+            <ReactToolTip id="appToolTip"/>
           </div>
         </IntlProvider>
       </MuiThemeProvider>

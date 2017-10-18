@@ -58,6 +58,9 @@ const DaemonLoadingFormBodyBase = ({
           <span
             className="get-started-skip-sync-button-and-tip"
             data-multiline={true}
+            data-place="left"
+            data-type="info"
+            data-effect="solid"
             data-tip={intl.formatMessage(messages.skipBtnTip)}>
             <KeyBlueButton
               className="get-started-button-skip-sync"
@@ -66,7 +69,7 @@ const DaemonLoadingFormBodyBase = ({
               <T id="getStarted.chainLoading.skipBtn" m="Skip Sync" />
             </KeyBlueButton>
           </span>
-          <ReactToolTip place="left" type="info" effect="solid"/>
+          <ReactToolTip/>
         </div>
         <LinearProgress
           mode="determinate"

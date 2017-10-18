@@ -78,12 +78,15 @@ const HomePage = ({
             <Balance amount={spendableTotalBalance} />
             <div className="home-rescan-button-area"
               data-multiline={true}
+              data-type="info"
+              data-effect="solid"
+              data-place="left"
               data-tip={intl.formatMessage(messages.rescanBtnTip)}>
               <KeyBlueButton disabled={rescanRequest} onClick={() => rescanAttempt(0)}>
                 <T id="home.rescanBtn" m="Rescan Blockchain" />
               </KeyBlueButton>
             </div>
-            <ReactToolTip disable={rescanRequest ? true : false} place="left" type="info" effect="solid" />
+            <ReactToolTip disable={rescanRequest ? true : false} />
           </div>
         }
       />

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
 import AccountsSelect from "../../AccountsSelect";
-import ReactTooltip from "react-tooltip";
 import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";
 import DecredLoading from "../../DecredLoading";
 import Balance from "../../Balance";
@@ -11,6 +10,7 @@ import PassphraseModal from "../../PassphraseModal";
 import OutputRow from "./OutputRow";
 import "../../../style/SendPage.less";
 import "../../../style/MiscComponents.less";
+import ReactToolTip from "react-tooltip";
 
 const messages = defineMessages({
   accountsTip: {
@@ -119,6 +119,8 @@ const SendPage = ({
                 data-place="bottom"
                 data-type="info"
                 data-effect="solid"
+                onClick={()=> { ReactToolTip.hide(); }}
+                data-for="appToolTip"
                 data-tip={intl.formatMessage(messages.accountsTip)}
                 to={"/accounts"}
               />
@@ -181,7 +183,6 @@ const SendPage = ({
         </div>
       </div>
     )}
-    < ReactTooltip />
   </div>
 );
 

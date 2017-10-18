@@ -41,6 +41,7 @@ class CopyToClipboardButton extends Component {
         data-place="bottom"
         data-type="info"
         data-effect="solid"
+        data-for="appToolTip"
         data-tip={this.state.showTooltip ? formatMessage(messages.copied) : ""}
         onClick={this.onClick}
         onMouseLeave={this.onMouseLeave} />
