@@ -440,8 +440,12 @@ export const immatureTicketsCount = compose(r => r ? r.getImmature() : 0, getSta
 export const expiredTicketsCount = compose(r => r ? r.getExpired() : 0, getStakeInfoResponse);
 export const liveTicketsCount = compose(r => r ? r.getLive() : 0, getStakeInfoResponse);
 export const totalSubsidy = compose(r => r ? r.getTotalSubsidy() : 0, getStakeInfoResponse);
-export const hasTicketsToRevoke = compose( r => r ?
-  r.getRevoked() !== r.getExpired() + r.getMissed() : 0, getStakeInfoResponse
+export const hasTicketsToRevoke = and(
+  synced,
+  compose(
+    r => r ? r.getRevoked() !== r.getExpired() + r.getMissed() : 0,
+    getStakeInfoResponse
+  )
 );
 
 export const ticketBuyerService = get(["grpc", "ticketBuyerService"]);

@@ -1,0 +1,37 @@
+@import (reference) "./main.less";
+
+.paginator {
+  background-color: #fff;
+  min-height: 44px;
+  padding: 10px 20px 10px 20px;
+  display: inline-block;
+  box-sizing: border-box;
+  transition: all @input-transition-time @input-timing-function;
+}
+
+.paginator-page-button {
+  padding: 0px;
+  width: 23px;
+  height: 21px;
+}
+
+.paginator-action-button-next:hover,
+.paginator-action-button-previous:hover {
+  color: @input-color-hovered;
+}
+
+.paginator-action-button-next,
+.paginator-action-button-previous {
+  font-size: 17px;
+  height: 21px;
+  transform: scale(0.5, 1);
+  color: #8997a5;
+}
+
+.paginator-action-button-next {
+  margin-left: 12px;
+}
+
+.paginator-action-button-previous {
+  margin-right: 8px;
+}

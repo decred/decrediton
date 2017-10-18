@@ -17,6 +17,14 @@ const messages = defineMessages({
     id: "send.accounts.tip",
     defaultMessage: "Accounts",
   },
+  sendAllTitle: {
+    id: "send.sendAllTitle",
+    defaultMessage: "Send all funds from selected account"
+  },
+  cancelSendAllTitle: {
+    id: "send.cancelSendAllTitle",
+    defaultMessage: "Cancel sending all funds"
+  }
 });
 
 const SendPage = ({
@@ -115,9 +123,10 @@ const SendPage = ({
                 to={"/accounts"}
               />
               <div className="send-send-all-input">
-                {!isSendAll ?
-                  <a onClick={onShowSendAll}><T id="send.sendAllBtn" m="Send All" /></a> :
-                  <a onClick={onClearTransaction}><T id="send.cancelSendAll" m="Close" /></a>}
+                {!isSendAll
+                  ? <a className="send-all-wallet-icon" onClick={onShowSendAll} title={intl.formatMessage(messages.sendAllTitle)} ></a>
+                  : <a className="send-all-cancel-wallet-icon" onClick={onClearTransaction} title={intl.formatMessage(messages.cancelSendAllTitle)} ></a>
+                }
               </div>
             </div>
             <div className="send-amount-area">

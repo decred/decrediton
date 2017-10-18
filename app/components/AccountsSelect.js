@@ -4,6 +4,7 @@ import Select from "react-select";
 import { PropTypes } from "prop-types";
 import accountsSelect from "../connectors/accountsSelect";
 import { injectIntl, defineMessages, intlShape } from "react-intl";
+import Balance from "./Balance";
 
 const messages = defineMessages({
   placeholder: {
@@ -55,10 +56,12 @@ class AccountsSelect extends Component {
   valueRenderer(option) {
     //return <span><span>{option.name}</span></span>;
     return (
-      <span>
-        <span className="accounts-select-name">{option.name}</span>
-        <span className="accounts-select-spendable">({option.spendableAndUnit})</span>
-      </span>
+      <div className="accounts-select-value">
+        <div className="accounts-select-name">{option.name}</div>
+        <div className="accounts-select-spendable">
+          (<Balance amount={option.spendable} />)
+        </div>
+      </div>
     );
   }
 

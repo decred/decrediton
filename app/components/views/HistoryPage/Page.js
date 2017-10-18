@@ -2,29 +2,20 @@ import React from "react";
 import TxHistory from "../../TxHistory";
 import Balance from "../../Balance";
 import Header from "../../Header";
-import Select from "react-select";
-import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";
+import EyeFilterMenu from "../../EyeFilterMenu";
+import Paginator from "../../Paginator";
+import { FormattedMessage as T } from "react-intl";
 import "../../../style/Layout.less";
 import "../../../style/HistoryPage.less";
 
-const messages = defineMessages({
-  typePlaceholder: {
-    id: "history.txTypePlaceholder",
-    defaultMessage: "Select type...",
-  },
-});
-
 const Page = ({
                 spendableTotalBalance,
-                selectedType,
                 txTypes,
                 paginatedTxs,
                 currentPage,
                 totalPages,
-                intl,
                 onChangeSelectedType,
-                onPageBackward,
-                onPageForward,
+                onPageChanged,
               }) => (
   <div className="page-view">
     <Header
@@ -37,17 +28,13 @@ const Page = ({
           <T id="history.title" m="Recent Transactions" />
         </div>
         <div className="history-select-tx-types-area">
-          <div className="history-select-tx-types-label"><T id="history.txTypeLabel" m="Tx Type" />:</div>
           <div className="history-select-tx-types">
-            <Select
-              clearable={false}
-              style={{ zIndex: "9" }}
-              onChange={onChangeSelectedType}
-              placeholder={intl.formatMessage(messages.typePlaceholder)}
-              multi={false}
-              value={selectedType}
+            <EyeFilterMenu
               valueKey="value" labelKey="label"
-              options={txTypes} />
+              options={txTypes}
+              onChange={onChangeSelectedType}
+              labelKey="label"
+            />
           </div>
         </div>
       </div>
@@ -59,23 +46,10 @@ const Page = ({
         ) : <p><T id="history.noTransactions" m="No transactions" /></p>}
       </div>
       <div className="history-content-title-buttons-area">
-        <button
-          className="history-content-title-buttons-left"
-          disabled={currentPage < 1}
-          onClick={onPageBackward}
-        >&lt;</button>
-        <span className="history-content-title-buttons-text">
-              <T id="history.paginationPages" m="{current} of {total}"
-                 values={{ current: currentPage + 1, total: totalPages }} />
-            </span>
-        <button
-          className="history-content-title-buttons-right"
-          disabled={(currentPage + 1) >= totalPages}
-          onClick={onPageForward}
-        >&gt;</button>
+        <Paginator {...{totalPages, currentPage, onPageChanged}} />
       </div>
     </div>
   </div>
 );
 
-export default injectIntl(Page);
+export default Page;
