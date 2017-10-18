@@ -55,7 +55,11 @@ export default {
   resolve: {
     extensions: [".js", ".jsx", ".json", ".node"],
     mainFields: ["webpack", "browser", "web", "browserify", ["jam", "main"], "main"],
-    modules: [path.resolve(__dirname, "app"), "node_modules"]
+    modules: [
+      path.resolve(__dirname, "app"),
+      path.resolve(__dirname, "app/components"),
+      "node_modules"
+    ]
   },
 
   plugins: [],
