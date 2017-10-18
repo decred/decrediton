@@ -6743,6 +6743,13 @@ react-select@^1.0.0-rc.5:
     prop-types "^15.5.8"
     react-input-autosize "^2.0.1"
 
+react-timeout@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-timeout/-/react-timeout-1.0.1.tgz#7fa61bea1340a6b3a40bd9335cbfbd551e832f18"
+  dependencies:
+    create-react-class "^15.5.2"
+    object-assign "^4.0.1"
+
 react-tooltip@^3.3.0:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.3.1.tgz#c8eb0f64c3852e5aadb10b1569bcd469562b326d"
