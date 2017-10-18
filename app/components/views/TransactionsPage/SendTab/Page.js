@@ -79,8 +79,8 @@ const SendPage = ({
                 {...{account}} onChange={onChangeAccount} showAccountsButton={true} />
               <div className="send-send-all-input">
                 {!isSendSelf
-                  ? <a className="send-others-wallet-icon" onClick={onShowSendSelf} title={intl.formatMessage(messages.sendOthersTitle)} />
-                  : <a className="send-self-wallet-icon" onClick={onShowSendOthers} title={intl.formatMessage(messages.sendSelfTitle)} />
+                  ? <a className="send-self-wallet-icon" onClick={onShowSendSelf} title={intl.formatMessage(messages.sendSelfTitle)} />
+                  : <a className="send-others-wallet-icon" onClick={onShowSendOthers} title={intl.formatMessage(messages.sendOthersTitle)} />
                 }
                 {!isSendAll
                   ? <a className="send-all-wallet-icon" onClick={onShowSendAll} title={intl.formatMessage(messages.sendAllTitle)} />
