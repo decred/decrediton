@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="6079 239 20 10.561">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #2971ff;
+      }
+    </style>
+  </defs>
+  <g id="Symbol_21_1" data-name="Symbol 21 – 1" transform="translate(5036)">
+    <circle id="XMLID_1_" class="cls-1" cx="2.319" cy="2.319" r="2.319" transform="translate(1050.656 241.959)"/>
+    <g id="Group_569" data-name="Group 569" transform="translate(1043 242.378)">
+      <path id="Path_219" data-name="Path 219" class="cls-1" d="M1.193,76.459l.878-.883a.354.354,0,0,0,0-.482.354.354,0,0,0-.482,0L.126,76.563A.478.478,0,0,0,0,76.815a.33.33,0,0,0,.1.23l1.468,1.468a.354.354,0,0,0,.482,0,.354.354,0,0,0,0-.482l-.883-.883H6.755v-.689Z" transform="translate(0 -75)"/>
+    </g>
+    <g id="Group_570" data-name="Group 570" transform="translate(1056.195 242.373)">
+      <path id="Path_220" data-name="Path 220" class="cls-1" d="M298.607,77.053l-.878.878a.341.341,0,0,0,.482.482l1.468-1.468a.478.478,0,0,0,.126-.252.33.33,0,0,0-.1-.23l-1.468-1.468a.341.341,0,0,0-.482.482l.878.878H293v.689h5.607Z" transform="translate(-293 -74.9)"/>
+    </g>
+    <g id="Group_573" data-name="Group 573" transform="translate(1051.183 239)">
+      <g id="Group_571" data-name="Group 571" transform="translate(0.005 8.39)">
+        <path id="Path_221" data-name="Path 221" class="cls-1" d="M183.255,187.273l-.878-.878a.341.341,0,0,0-.482.482l1.468,1.468a.478.478,0,0,0,.252.126.33.33,0,0,0,.23-.1l1.468-1.468a.341.341,0,1,0-.482-.482l-.878.878v-.887h-.689v.865Z" transform="translate(-181.8 -186.3)"/>
+      </g>
+      <g id="Group_572" data-name="Group 572">
+        <path id="Path_222" data-name="Path 222" class="cls-1" d="M183.848,1.193l.883.878a.354.354,0,0,0,.482,0,.354.354,0,0,0,0-.482L183.745.126A.478.478,0,0,0,183.492,0a.33.33,0,0,0-.23.1l-1.468,1.468a.354.354,0,0,0,0,.482.354.354,0,0,0,.482,0l.883-.883v.887h.689Z" transform="translate(-181.7)"/>
+      </g>
+    </g>
+  </g>
+</svg>

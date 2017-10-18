@@ -5,12 +5,17 @@ import { PropTypes } from "prop-types";
 import accountsSelect from "../connectors/accountsSelect";
 import { injectIntl, defineMessages, intlShape } from "react-intl";
 import Balance from "./Balance";
+import { Link } from "react-router";
 
 const messages = defineMessages({
   placeholder: {
     id: "accountsSelect.placeholder",
     defaultMessage: "Select account"
-  }
+  },
+  accountsTip: {
+    id: "send.accounts.tip",
+    defaultMessage: "Accounts",
+  },
 });
 
 @autobind
@@ -18,7 +23,10 @@ class AccountsSelect extends Component {
 
   static propTypes = {
     accountsType: PropTypes.oneOf(["spending", "visible"]),
-    intl: intlShape.isRequired
+    intl: intlShape.isRequired,
+    className: PropTypes.string,
+    showAccountsButton: PropTypes.bool,
+    getAddressForSelected: PropTypes.bool
   };
 
   constructor(props) {
@@ -28,28 +36,47 @@ class AccountsSelect extends Component {
       "visible": this.props.visibleAccounts
     };
     this.state = {
-      account: this.props.defaultSpendingAccount,
+      account: props.account || props.defaultSpendingAccount,
       accounts: accountsPerType[this.props.accountsType||"spending"]
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.state.account !== nextProps.account) {
+      this.setState({account: nextProps.account});
+    }
+  }
+
   render() {
     const { formatMessage } = this.props.intl;
+    const { className, showAccountsButton } = this.props;
     return (
-      <Select
-        clearable={false}
-        style={{zIndex:"9"}}
-        placeholder={formatMessage(messages.placeholder)}
-        multi={false}
-        value={this.state.account}
-        valueKey="value"
-        labelKey="label"
-        options={this.state.accounts}
-        valueRenderer={this.valueRenderer}
-        optionRenderer={this.valueRenderer}
-        onChange={this.onChangeAccount}
-        className="accounts-select"
-      />
+      <div className={className}>
+        <Select
+          clearable={false}
+          style={{zIndex:"9"}}
+          placeholder={formatMessage(messages.placeholder)}
+          multi={false}
+          value={this.state.account}
+          valueKey="value"
+          labelKey="label"
+          options={this.state.accounts}
+          valueRenderer={this.valueRenderer}
+          optionRenderer={this.valueRenderer}
+          onChange={this.onChangeAccount}
+          className="accounts-select"
+        />
+        { showAccountsButton
+          ? <Link
+            className="accounts-button-icon"
+            data-place="bottom"
+            data-type="info"
+            data-effect="solid"
+            data-tip={formatMessage(messages.accountsTip)}
+            to={"/accounts"}
+          />
+          : null }
+      </div>
     );
   }
 
@@ -66,8 +93,7 @@ class AccountsSelect extends Component {
   }
 
   onChangeAccount(account) {
-    this.setState({ account: account });
-    this.props.onChange(account);
+    this.props.onChange && this.props.onChange(account);
   }
 }
 

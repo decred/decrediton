@@ -22,10 +22,21 @@ class Send extends Component {
     return {
       isShowingConfirm: false,
       isSendAll: false,
+      isSendSelf: false,
       hastAttemptedConstruct: false,
       account: this.props.defaultSpendingAccount,
-      outputs: [{ key: 0, ...BASE_OUTPUT }]
+      outputs: [{ key: 0, ...BASE_OUTPUT }],
+      outputAccount: this.props.defaultSpendingAccount,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { nextAddress } = this.props;
+    const { isSendSelf, outputs } = this.state;
+    if (isSendSelf && (nextAddress != nextProps.nextAddress)) {
+      let newOutputs = outputs.map(o => ({...o, destination: nextProps.nextAddress}));
+      this.setState({outputs: newOutputs}, this.onAttemptConstructTransaction);
+    }
   }
 
   componentWillUnmount() {
@@ -35,11 +46,14 @@ class Send extends Component {
   render() {
     const {
       onChangeAccount,
+      onChangeOutputAccount,
       onAttemptSignTransaction,
       onClearTransaction,
       onShowConfirm,
       onShowSendAll,
       onHideSendAll,
+      onShowSendSelf,
+      onShowSendOthers,
       onAttemptConstructTransaction,
       onAddOutput,
       getOnRemoveOutput,
@@ -56,32 +70,36 @@ class Send extends Component {
         {...{
           isValid,
           onChangeAccount,
+          onChangeOutputAccount,
           onAttemptSignTransaction,
           onClearTransaction,
           onShowConfirm,
           onShowSendAll,
           onHideSendAll,
+          onShowSendSelf,
+          onShowSendOthers,
           onAttemptConstructTransaction,
           onAddOutput,
           getOnRemoveOutput,
           getOnChangeOutputDestination,
           getOnChangeOutputAmount,
           getAddressError,
-          getAmountError
+          getAmountError,
         }}
       />
     );
   }
 
   onChangeAccount(account) {
-    this.setState({ account });
-    this.onAttemptConstructTransaction();
+    this.setState({ account }, this.onAttemptConstructTransaction);
   }
 
   onAttemptSignTransaction(privpass) {
-    const { unsignedTransaction, onAttemptSignTransaction } = this.props;
+    const { unsignedTransaction, onAttemptSignTransaction,
+      getNextAddressAttempt, nextAddressAccount } = this.props;
     if (!privpass || !this.getIsValid()) return;
     onAttemptSignTransaction && onAttemptSignTransaction(privpass, unsignedTransaction);
+    getNextAddressAttempt && nextAddressAccount && getNextAddressAttempt(nextAddressAccount.value);
     this.onClearTransaction();
   }
 
@@ -89,11 +107,30 @@ class Send extends Component {
     this.setState(this.getInitialState(), this.props.onClearTransaction);
   }
   onShowSendAll() {
-    this.setState({ isSendAll: true }, this.onAttemptConstructTransaction);
+    let { outputs } = this.state;
+    if (outputs.length > 1) {
+      outputs = [outputs[0]];
+    }
+    this.setState({ isSendAll: true, outputs }, this.onAttemptConstructTransaction);
+  }
+  onHideSendAll() {
+    let { outputs } = this.state;
+    if (outputs.length > 1) {
+      outputs = [{...outputs[0], amountStr: ""}];
+    }
+    this.setState({ isSendAll: false, outputs}, this.onAttemptConstructTransaction);
   }
   onShowConfirm() {
     if (!this.getIsValid()) return;
     this.setState({ isShowingConfirm: true });
+  }
+  onShowSendSelf() {
+    let outputs = [{key: 0, destination: this.props.nextAddress, amountStr: ""}];
+    this.setState({ isSendSelf: true, outputs }, this.onAttemptConstructTransaction);
+  }
+  onShowSendOthers() {
+    let outputs = [{key: 0, destination: "", amountStr: ""}];
+    this.setState({ isSendSelf: false, outputs }, this.onAttemptConstructTransaction);
   }
 
   onAttemptConstructTransaction() {
@@ -169,6 +206,9 @@ class Send extends Component {
   }
   getIsSendAll() {
     return this.state.isSendAll;
+  }
+  getIsSendSelf() {
+    return this.state.isSendSelf;
   }
   getAddressError(key) {
     // do some more helper address checking here

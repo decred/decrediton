@@ -1,7 +1,7 @@
 import React from "react";
 import TabContent from "../../../TabbedPage/TabContent";
 import ReactTooltip from "react-tooltip";
-import AccountsSelect from "../../../AccountsSelect";
+import ReceiveAccountsSelect from "../../../ReceiveAccountsSelect";
 import { Link } from "react-router";
 import KeyBlueButton from "../../../KeyBlueButton";
 import CopyToClipboardButton from "../../../CopyToClipboardButton";
@@ -21,7 +21,6 @@ const messages = defineMessages({
 const ReceivePage = ({
                        nextAddress,
                        intl,
-                       onChangeAccountNumber,
                        onRequestAddress,
                      }) => (
   <TabContent>
@@ -39,7 +38,7 @@ const ReceivePage = ({
           <T id="receive.accountLabel" m="This address is for" />:
         </div>
         <div className="receive-select-account-input">
-          <AccountsSelect onChange={onChangeAccountNumber} accountsType="visible" />
+          <ReceiveAccountsSelect />
         </div>
         <div style={{ clear: "both" }}></div>
       </div>
