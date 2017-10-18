@@ -1,30 +1,18 @@
 // @flow
 import React from "react";
-import SlateGrayButton from "../../../../SlateGrayButton";
-import KeyBlueButton from "../../../../KeyBlueButton";
-import Balance from "../../../../Balance";
-import ReactToolTip from "react-tooltip";
+import SlateGrayButton from "SlateGrayButton";
+import KeyBlueButton from "KeyBlueButton";
+import Balance from "Balance";
+import { Tooltip } from "shared";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import "../../../../../style/Fonts.less";
-import "../../../../../style/AccountRow.less";
+import "style/Fonts.less";
+import "style/AccountRow.less";
 
 const messages = defineMessages({
   newNamePlaceholder: {
     id: "accounts.rename.newNamePlaceholder",
     defaultMessage: "New Account Name"
   },
-  renameAccountTip: {
-    id: "accounts.rename.tip",
-    defaultMessage: "Rename Account"
-  },
-  showTip: {
-    id: "accounts.show.tip",
-    defaultMessage: "Show"
-  },
-  hideTip: {
-    id: "accounts.hide.tip",
-    defaultMessage: "Hide"
-  }
 });
 
 const Row = ({
@@ -194,31 +182,22 @@ const Row = ({
           </div>
           <div className="account-actions">
             {account.accountName !== "imported" ?
-              <div
-                key={"renameAccountButton"+account.accountNumber}
-                className="rename-account-button"
-                onClick={showRenameAccount}
-                data-tip={intl.formatMessage(messages.renameAccountTip)}/>:
+              <Tooltip text={ <T id="accounts.rename.tip" m="Rename Account" /> }>
+                <div className="rename-account-button" onClick={showRenameAccount}/>
+              </Tooltip> :
               <div></div>
             }
             {account.accountName !== "imported" && account.accountName !== "default" && account.total == 0 && !hidden ?
-              <div
-                key={"hideAccountButton"+account.accountNumber}
-                className="hide-account-button"
-                onClick={hideAccount}
-                data-for="accountTip"
-                data-tip={intl.formatMessage(messages.hideTip)}/>:
+              <Tooltip text={ <T id="accounts.show.tip" m="Show" /> }>
+                <div className="hide-account-button" onClick={hideAccount} />
+              </Tooltip> :
               account.accountName !== "imported" && account.accountName !== "default" && hidden ?
-              <div
-                className="show-account-button"
-                key={"showAccountButton"+account.accountNumber}
-                onClick={showAccount}
-                data-for="accountTip"
-                data-tip={intl.formatMessage(messages.showTip)}/>:
+              <Tooltip text={ <T id="accounts.hide.tip" m="Hide" /> }>
+                <div className="show-account-button" onClick={showAccount} />
+              </Tooltip> :
               <div></div>
             }
           </div>
-          <ReactToolTip id="accountTip" type="info" effect="solid" getContent={[() => { return (hidden) ? intl.formatMessage(messages.showTip): intl.formatMessage(messages.hideTip); }]}/>
          </div>
        )
     }
