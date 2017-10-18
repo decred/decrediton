@@ -75,6 +75,5 @@ function semverCompatible(req, act) {
    && required[version.PATCH] > actual[version.PATCH]) {
     return false;
   }
-
   return true;
 }

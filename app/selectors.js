@@ -25,7 +25,11 @@ const START_STEP_RPC2 = 4;
 const START_STEP_DISCOVER = 5;
 const START_STEP_FETCH = 6;
 
-const versionInvalid = get(["version", "versionInvalid"]);
+export const versionInvalid = get(["version", "versionInvalid"]);
+export const requiredWalletRPCVersion = get(["version", "requiredVersion"]);
+export const walletRPCVersion = createSelector(
+  [get(["version", "getWalletRPCVersionResponse"])],
+  (r) => r ? r.getVersionString() : null);
 const walletExistResponse = get(["walletLoader", "walletExistResponse"]);
 export const startStepIndex = get(["walletLoader", "stepIndex"]);
 export const getVersionServiceError = get(["version", "getVersionServiceError"]);

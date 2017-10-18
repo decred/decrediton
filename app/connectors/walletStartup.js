@@ -21,6 +21,7 @@ const mapStateToProps = selectorMap({
   getEstimatedTimeLeft: sel.getEstimatedTimeLeft,
   isPrepared: sel.isPrepared,
   network: sel.network,
+  versionInvalid: sel.versionInvalid
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
