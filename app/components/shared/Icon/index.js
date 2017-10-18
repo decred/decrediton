@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import cxs from "cxs/component";
 import icons from "iconMap";
-import theme from "theme";
+import { theme } from "theme";
 import { Box } from "grid";
 
 const clickableStyle = { cursor: "pointer", ":hover": { opacity: 0.7 }};
 
-const changeColorOnActive = ({ active, theme: { colors: { iconActive, iconBase }}}) => ({ color: active ? iconActive : iconBase });
+const changeColorOnActive = ({ active, theme }) => ({ color: active ? theme("colors.iconActive") : theme("colors.iconBase") });
 
 const mayClick = ({ onClick }) => onClick ? clickableStyle : null;
 

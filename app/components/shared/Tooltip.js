@@ -1,9 +1,8 @@
 import React from "react";
 import cxs from "cxs";
 import { Box } from "shared";
-import theme from "theme";
-
-const px = n => typeof n === "number" ? n + "px" : n;
+import { theme } from "theme";
+import { px } from "fp";
 
 const tooltipContainer = cxs({
   display: "inline-block",
@@ -14,16 +13,14 @@ const tooltipContainer = cxs({
   }
 });
 
-const { radii, shadows, colors: { lightestGrey, darkGrey }} = theme;
-
 const tip = cxs({
   position: "fixed",
   whiteSpace: "nowrap",
   display: "none",
-  background: lightestGrey,
-  color: darkGrey,
-  borderRadius: px(radii[2]),
-  boxShadow: shadows[0],
+  background: theme("colors.tooltipBg"),
+  color: theme("colors.tooltip"),
+  borderRadius: px(theme("radii.2")),
+  boxShadow: theme("shadows.tooltip"),
   padding: px(5),
   zIndex: 1000
 });

@@ -29,3 +29,5 @@ export const substruct = (structure, obj) => Object.keys(structure)
   .reduce((res, key) => ({ ...res, [structure[key] || key]: get(key, obj) }), {});
 
 export const apply = (fn, ...args) => fn(...args);
+
+export const px = n => typeof n === "number" ? n + "px" : n;

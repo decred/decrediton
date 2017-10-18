@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import { IntlProvider } from "react-intl";
 import { defaultFormats } from "../i18n/locales";
-import ThemeProvider from "cxs/ThemeProvider";
-import theme from "theme";
+import ThemeProvider from "theme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import muiTheme from "../materialUITheme";
 import app from "../connectors/app";
@@ -20,7 +19,7 @@ class App extends Component {
 
     return (
       <MuiThemeProvider muiTheme={ muiTheme }>
-        <ThemeProvider theme={ theme }>
+        <ThemeProvider>
           <IntlProvider
             locale={ locale.language }
             messages={ locale.messages }
