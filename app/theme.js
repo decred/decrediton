@@ -1,4 +1,5 @@
 import { Component, createElement as h } from "react";
+import { get } from "fp";
 import PropTypes from "prop-types";
 
 const colors = {
@@ -23,7 +24,7 @@ const colors = {
   gradient:     "linear-gradient(0deg, #2971ff, #2ed6a1)",
 };
 
-const decredStyles = {
+const styles = {
   colors: {
     tooltipBg:    colors.lightestGrey,
     tooltip:      colors.darkGrey,
@@ -48,8 +49,9 @@ const decredStyles = {
   space: [],
 };
 
-export const theme = Object.assign(function (keys) {
-  return keys.split(".").reduce((a, b) => (a && a[b]) ? a[b] : null, decredStyles); }, decredStyles);
+const getStyles = key => get(key, styles);
+
+export const theme = Object.assign(getStyles, styles);
 
 class ThemeProvider extends Component {
   getChildContext () { return ({ theme: theme }); }

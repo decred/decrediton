@@ -1,5 +1,5 @@
 import React from "react";
-import cxs from "cxs/component";
+import { cxs } from "..";
 import { number, string, array, oneOfType } from "prop-types";
 import { width, space, fontSize, color, flex, responsiveStyle, propTypes } from "styled-system";
 

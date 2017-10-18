@@ -58,7 +58,6 @@ export default {
     modules: [
       path.resolve(__dirname, "app"),
       path.resolve(__dirname, "app/components"),
-      path.resolve(__dirname, "app/components/shared"),
       "node_modules"]
   },
 

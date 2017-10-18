@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import cxs from "cxs/component";
+import { cxs, Box } from "shared";
 import icons from "iconMap";
 import { theme } from "theme";
-import { Box } from "grid";
 
 const clickableStyle      = { cursor: "pointer", ":hover": { opacity: 0.7 }};
-const mayClick            = ({ onClick }) => onClick ? clickableStyle : null;
+const mayClick            = ({ onClick }) => onClick && clickableStyle;
 const changeColorOnActive = ({ active, theme }) => ({ color: active ? theme("colors.iconActive") : theme("colors.iconBase") });
 
 const Svg     = cxs("svg")({ fill: "currentColor" });

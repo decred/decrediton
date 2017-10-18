@@ -1,6 +1,5 @@
 import React from "react";
-import { Box } from "shared";
-import cxs from "cxs/component";
+import { Box, cxs } from "shared";
 import PropTypes from "prop-types";
 import { textAlign, fontWeight, propTypes } from "styled-system";
 

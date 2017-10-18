@@ -1,5 +1,6 @@
 import React from "react";
-import "../style/AgendaCard.less";
+import "style/AgendaCard.less";
+import { showCheck } from "shared";
 import { FormattedMessage as T } from "react-intl";
 
 // Currently removing percent progress until a solution to populate is found
@@ -38,4 +39,4 @@ const AgendaCard = ({
   </div>
 );
 
-export default AgendaCard;
+export default showCheck(AgendaCard);

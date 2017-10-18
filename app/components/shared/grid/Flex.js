@@ -1,7 +1,7 @@
-import cxs from "cxs/component";
+import Box from "./Box";
+import { cxs } from "..";
 import PropTypes from "prop-types";
 import { flexWrap, flexDirection, alignItems, justifyContent, propTypes } from "styled-system";
-import Box from "./Box";
 
 const column = props => props.column ? "flex-direction:column;" : null;
 
