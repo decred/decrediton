@@ -1,10 +1,10 @@
 // @flow
 import React from "react";
-import SlateGrayButton from "../../../../SlateGrayButton";
-import KeyBlueButton from "../../../../KeyBlueButton";
-import Balance from "../../../../Balance";
-import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { Icon, Tooltip } from "shared";
+import SlateGrayButton from "SlateGrayButton";
+import KeyBlueButton from "KeyBlueButton";
+import Balance from "Balance";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import "style/Fonts.less";
 import "style/AccountRow.less";
 

@@ -365,12 +365,10 @@ export const defaultSpendingAccount = createSelector(
 
 const constructTxResponse = get(["control", "constructTxResponse"]);
 const constructTxRequestAttempt = get(["control", "constructTxRequestAttempt"]);
-export const constructTxError = get(["control", "constructTxError"]);
 const signTransactionRequestAttempt = get(["control", "signTransactionRequestAttempt"]);
 export const signTransactionError = get(["control", "signTransactionError"]);
 const publishTransactionResponse = get(["control", "publishTransactionResponse"]);
 const publishTransactionRequestAttempt = get(["control", "publishTransactionRequestAttempt"]);
-export const publishTransactionError = get(["control", "publishTransactionError"]);
 const totalOutputAmount = compose(r => r ? r.getTotalOutputAmount() : 0, constructTxResponse);
 const totalAmount = compose(res => res ? res.totalAmount : 0, constructTxResponse);
 const totalPreviousOutputAmount = compose(
@@ -543,3 +541,5 @@ export const renameAccountRequestAttempt = get(["control", "renameAccountRequest
 
 export const showingSidebar = get(["sidebar", "showingSidebar"]);
 export const showingSidebarMenu = get(["sidebar", "showingSidebarMenu"]);
+
+export const snackbarMessages = get(["snackbar", "messages"]);

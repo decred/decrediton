@@ -13,19 +13,14 @@ const mapStateToProps = selectorMap({
   publishedTransactionHash: sel.publishedTransactionHash,
   isSendingTransaction: sel.isSendingTransaction,
   isConstructingTransaction: sel.isConstructingTransaction,
-  constructTxError: sel.constructTxError,
-  signTransactionError: sel.signTransactionError,
-  publishTransactionError: sel.publishTransactionError
+  nextAddress: sel.nextAddress,
+  nextAddressAccount: sel.nextAddressAccount
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  onClearConstructTxError: ca.clearConstructTxError,
-  onClearPublishTxError: ca.clearPublishTxError,
-  onClearSignTxError: ca.clearSignTxError,
-  onClearPublishTxSuccess: ca.clearPublishTxSuccess,
-  onClearTransaction: ca.clearTransaction,
   onAttemptConstructTransaction: ca.constructTransactionAttempt,
-  onAttemptSignTransaction: ca.signTransactionAttempt
+  onAttemptSignTransaction: ca.signTransactionAttempt,
+  getNextAddressAttempt: ca.getNextAddressAttempt
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

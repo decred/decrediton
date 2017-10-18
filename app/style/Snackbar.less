@@ -1,42 +1,88 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.snackbar-stake {
-  height: 78px;
-  padding: 0px 50px;
+.snackbar {
+  left: 61% !important;
   background-color: rgba(12, 30, 62, 0.5);
-  background-image: @ticket-small-icon;
+  font-family: Source Sans Pro, sans-serif;
+  margin-bottom: 0.5em;
+}
+
+.snackbar.snackbar-warning,
+.snackbar.snackbar-error {
+  background-color: rgba(253, 110, 75, 0.8);
+}
+
+.snackbar.snackbar-success {
+  background-color: rgba(69, 191, 87, 0.8);
+}
+
+// .snackbar-information {
+// }
+
+.snackbar-message {
+  //word-break: break-all;
+  padding: 0.5em;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+}
+
+// .snackbar-information-row {
+// }
+
+.snackbar-information-row-type {
+  width: 30%;
+  float: left;
+}
+
+.snackbar-information-row-amount {
+  width: 40%;
+  float: left;
+}
+
+.snackbar-information-row-fee {
+  width: 30%;
+  float: left;
+  text-align: right;
+}
+
+.snackbar-information-row-tx {
+  width: 100%;
+  float: left;
+  text-align: center;
+  font-family: Inconsolata, monospace;
+}
+
+.snackbar-tx-mixin {
+  height: 78px;
+  padding: 0px 50px 20px;
+  background-color: rgba(12, 30, 62, 0.5);
   background-position: 15px 50%;
-  background-size: 20px;
+  background-size: 24px;
   background-repeat: no-repeat;
+  margin-bottom: 0px;
+}
+
+.snackbar-stake {
+  .snackbar-tx-mixin;
+
+  background-image: @ticket-small-icon;
 }
 
 .snackbar-receive {
-  height: 78px;
-  padding: 0px 50px;
-  background-color: rgba(12, 30, 62, 0.5);
+  .snackbar-tx-mixin;
+
   background-image: @plus-big-icon;
-  background-position: 15px 50%;
-  background-size: 20px;
-  background-repeat: no-repeat;
 }
 
 .snackbar-send {
-  height: 78px;
-  padding: 0px 50px;
-  background-color: rgba(12, 30, 62, 0.5);
+  .snackbar-tx-mixin;
+
   background-image: @minus-big-icon;
-  background-position: 15px 50%;
-  background-size: 20px;
-  background-repeat: no-repeat;
 }
 
 .snackbar-transfer {
-  height: 78px;
-  padding: 0px 50px;
-  background-color: rgba(12, 30, 62, 0.5);
+  .snackbar-tx-mixin;
+
   background-image: @wallet-gray-icon;
-  background-position: 15px 50%;
-  background-size: 20px;
-  background-repeat: no-repeat;
 }

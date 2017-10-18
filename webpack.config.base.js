@@ -58,7 +58,8 @@ export default {
     modules: [
       path.resolve(__dirname, "app"),
       path.resolve(__dirname, "app/components"),
-      "node_modules"]
+      "node_modules"
+    ]
   },
 
   plugins: [],

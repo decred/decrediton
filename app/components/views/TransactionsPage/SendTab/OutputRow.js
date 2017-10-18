@@ -1,7 +1,7 @@
 import React from "react";
 import compose from "lodash/fp/compose";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import "../../../style/SendPage.less";
+import "../../../../style/SendPage.less";
 
 const messages = defineMessages({
   destinationAddrPlaceholder: {
@@ -47,18 +47,18 @@ const SendOutputRow = ({
             onBlur={onAttemptConstructTransaction}
           />
         </div>
+        {index === 0 && !isSendAll ? (
+          <div className="send-address-wallet-icon" onClick={onAddOutput}></div>
+        ) : (index === 0 && isSendAll) ? (
+          <div className="send-address-icon-spacer"></div>
+        ) : (index === (outputs.length - 1)) && !isSendAll ? (
+          <div className="send-address-delete-icon" onClick={getOnRemoveOutput(index)}></div>
+        ) : ( null ) }
       </div>
-      {index === 0 && !isSendAll ? (
-        <div className="send-address-wallet-icon" onClick={onAddOutput}></div>
-      ) : (index === 0 && isSendAll) ? (
-        <div className="send-address-icon-spacer"></div>
-      ) : (index === (outputs.length - 1)) && !isSendAll ? (
-        <div className="send-address-delete-icon" onClick={getOnRemoveOutput(index)}></div>
-      ) : (index !== 0) ? (
-        <div className="send-address-icon-spacer send-address-amount-spacer" ></div>
-      ) : ( null ) }
       <div className="send-amount">
-        {index === 0 ? <div className="send-amount-label"><T id="send.amount" m="Amount" />:</div> : null}
+        <div className="send-amount-label">
+          {index === 0 ? <span><T id="send.amount" m="Amount" />:</span> : null}
+        </div>
         <div className="send-address-amount-sum-and-currency">
           <input
             hidden={!isSendAll}

@@ -32,6 +32,7 @@
   .page-content-mixin;
 
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 // Main content that *does not* allow scrolling
@@ -48,4 +49,29 @@
 
 .inverted-colors {
   background-color: #0c1e3e;
+}
+
+.tabbedpage-content {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 180px;
+  bottom: 0px;
+}
+
+.tab-content-wrapper {
+  position: absolute;
+  left: 60px;
+  right: 60px;
+  top: 60px;
+}
+
+.tab-content-card {
+  background-color: white;
+}
+
+.tab-content-blur {
+  filter: blur(6px);
 }

@@ -7,6 +7,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import muiTheme from "../materialUITheme";
 import app from "../connectors/app";
 import SideBar from "../components/SideBar";
+import Snackbar from "../components/Snackbar";
 
 class App extends Component {
   static propTypes = {
@@ -28,6 +29,7 @@ class App extends Component {
             key={ locale.key }>
             <div className="page-body">
               <SideBar />
+              <Snackbar />
               { this.props.children }
             </div>
           </IntlProvider>
