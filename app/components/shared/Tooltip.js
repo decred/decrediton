@@ -1,6 +1,5 @@
 import React from "react";
 import cxs from "cxs";
-import { Box } from "shared";
 import { theme } from "theme";
 import { px } from "fp";
 
@@ -38,12 +37,12 @@ const Tooltip = ({ text, children }) => {
   };
 
   return (
-    <Box className={ tooltipContainer } onMouseMove={ onMouseMove }>
+    <div className={ tooltipContainer } onMouseMove={ onMouseMove }>
       { children }
       <span className={ tip } ref={ tip => tooltip = tip }>
         { text }
       </span>
-    </Box>
+    </div>
   );
 };
 

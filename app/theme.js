@@ -1,5 +1,5 @@
-import React from "react";
-import ThemeProvider from "cxs/ThemeProvider";
+import { Component, createElement as h } from "react";
+import PropTypes from "prop-types";
 
 const colors = {
   // Primary Colors
@@ -23,7 +23,7 @@ const colors = {
   gradient:     "linear-gradient(0deg, #2971ff, #2ed6a1)",
 };
 
-const t = {
+const decredStyles = {
   colors: {
     tooltipBg:    colors.lightestGrey,
     tooltip:      colors.darkGrey,
@@ -49,6 +49,13 @@ const t = {
 };
 
 export const theme = Object.assign(function (keys) {
-  return keys.split(".").reduce((a, b) => (a && a[b]) ? a[b] : null, t); }, t);
+  return keys.split(".").reduce((a, b) => (a && a[b]) ? a[b] : null, decredStyles); }, decredStyles);
 
-export default props => <ThemeProvider theme={ t } { ...props }/>;
+class ThemeProvider extends Component {
+  getChildContext () { return ({ theme: theme }); }
+  render () { return h("div", null, this.props.children); }
+}
+
+ThemeProvider.childContextTypes = { theme: PropTypes.func };
+
+export default ThemeProvider;
