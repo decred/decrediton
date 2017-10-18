@@ -240,12 +240,13 @@ export function clearStakePoolConfigNewWallet() {
     let config = getCfg();
     config.delete("stakepools");
 
-    stakePoolInfo(function(foundStakePoolConfigs) {
-      if (foundStakePoolConfigs) {
-        let config = getCfg();
-        config.set("stakepools", foundStakePoolConfigs);
-        dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
-      }
-    });
+    getStakePoolInfo()
+      .then(foundStakePoolConfigs => {
+        if (foundStakePoolConfigs) {
+          let config = getCfg();
+          config.set("stakepools", foundStakePoolConfigs);
+          dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
+        }
+      });
   };
 }
