@@ -46,7 +46,7 @@ const SendPage = ({
                     intl,
                     ...props
                   }) => (
-  <TabContent>
+  <div>
     <PassphraseModal
         hidden={!isShowingConfirm}
         submitPassphrase={onAttemptSignTransaction}
@@ -56,6 +56,7 @@ const SendPage = ({
           <T id="send.confirmAmountLabel" m="Please confirm your transaction for" />
           : <Balance amount={totalSpent} /></div>}
       />
+    <TabContent>
 
     {(isSendingTransaction) ? (
       <DecredLoading />
@@ -131,7 +132,8 @@ const SendPage = ({
         </div>
     )}
     < ReactTooltip />
-  </TabContent>
+    </TabContent>
+  </div>
 );
 
 export default injectIntl(SendPage);

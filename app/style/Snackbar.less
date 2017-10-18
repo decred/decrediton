@@ -53,42 +53,35 @@
   font-family: Inconsolata, monospace;
 }
 
-.snackbar-stake {
+.snackbar-tx-mixin {
   height: 78px;
-  padding: 0px 50px;
+  padding: 0px 50px 20px;
   background-color: rgba(12, 30, 62, 0.5);
-  background-image: @ticket-small-icon;
   background-position: 15px 50%;
   background-size: 20px;
   background-repeat: no-repeat;
+}
+
+.snackbar-stake {
+  .snackbar-tx-mixin;
+
+  background-image: @ticket-small-icon;
 }
 
 .snackbar-receive {
-  height: 78px;
-  padding: 0px 50px;
-  background-color: rgba(12, 30, 62, 0.5);
+  .snackbar-tx-mixin;
+
   background-image: @plus-big-icon;
-  background-position: 15px 50%;
-  background-size: 20px;
-  background-repeat: no-repeat;
 }
 
 .snackbar-send {
-  height: 78px;
-  padding: 0px 50px;
-  background-color: rgba(12, 30, 62, 0.5);
+  .snackbar-tx-mixin;
+
   background-image: @minus-big-icon;
-  background-position: 15px 50%;
-  background-size: 20px;
-  background-repeat: no-repeat;
 }
 
 .snackbar-transfer {
-  height: 78px;
-  padding: 0px 50px;
-  background-color: rgba(12, 30, 62, 0.5);
+  .snackbar-tx-mixin;
+
   background-image: @wallet-gray-icon;
-  background-position: 15px 50%;
-  background-size: 20px;
-  background-repeat: no-repeat;
 }
