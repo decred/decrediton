@@ -241,7 +241,7 @@ export function clearStakePoolConfigNewWallet() {
     config.delete("stakepools");
 
     stakePoolInfo(function(foundStakePoolConfigs) {
-      if (foundStakePoolConfigs !== null) {
+      if (foundStakePoolConfigs) {
         let config = getCfg();
         config.set("stakepools", foundStakePoolConfigs);
         dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});

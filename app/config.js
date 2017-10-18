@@ -88,23 +88,9 @@ export function initCfg() {
     config.set("discoveraccounts",true);
   }
 
-  var currentStakePoolConfigs = config.has("stakepools") && Array.isArray(config.get("stakepools"))
-    ? config.get("stakepools")
-    : [];
-
-  var currentConfigsByHost = currentStakePoolConfigs.reduce((l, s) => {
-    l[s.Host] = s;
-    return l;
-  }, {});
-
   stakePoolInfo(function(foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
-      let newStakePoolConfigs = foundStakePoolConfigs.map(s => {
-        return currentConfigsByHost[s.Host]
-            ? { ...currentConfigsByHost[s.Host], ...s }
-            : s;
-      });
-      config.set("stakepools", newStakePoolConfigs);
+      updateStakePoolConfig(config, foundStakePoolConfigs);
     }
   });
 
@@ -300,5 +286,25 @@ export function writeCfgs(dcrd, dcrwallet, dcrctl) {
       }
     };
     fs.writeFileSync(dcrctlCfg(), ini.stringify(dcrctlConf));
+  }
+}
+
+export function updateStakePoolConfig(config, foundStakePoolConfigs) {
+  var currentStakePoolConfigs = config.has("stakepools") && Array.isArray(config.get("stakepools"))
+    ? config.get("stakepools")
+    : [];
+
+  var currentConfigsByHost = currentStakePoolConfigs.reduce((l, s) => {
+    l[s.Host] = s;
+    return l;
+  }, {});
+
+  if (foundStakePoolConfigs !== null) {
+    let newStakePoolConfigs = foundStakePoolConfigs.map(s => {
+      return currentConfigsByHost[s.Host]
+          ? { ...currentConfigsByHost[s.Host], ...s }
+          : s;
+    });
+    config.set("stakepools", newStakePoolConfigs);
   }
 }
