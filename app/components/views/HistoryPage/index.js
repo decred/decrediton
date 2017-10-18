@@ -57,8 +57,7 @@ class History extends Component {
             onChangeSelectedType: null,
             onShowTxDetail: null,
             onClearTxDetail: null,
-            onPageBackward: null,
-            onPageForward: null
+            onPageChanged: null
           }, this)
         }}
       />
@@ -92,15 +91,8 @@ class History extends Component {
     return this.getTxs().slice(start, start + txPerPage);
   }
 
-  onPageForward() {
-    const { currentPage } = this.state;
-    const totalPages = this.getTotalPages();
-    this.setState({ currentPage: currentPage >= totalPages ? totalPages : currentPage + 1 });
-  }
-
-  onPageBackward() {
-    const { currentPage } = this.state;
-    this.setState({ currentPage: currentPage <= 0 ? 0 : currentPage - 1 });
+  onPageChanged(newPage) {
+    this.setState({ currentPage: newPage });
   }
 
   onChangeSelectedType(type) {

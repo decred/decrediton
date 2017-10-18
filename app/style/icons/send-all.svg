@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="4829.587 237.591 20 13.258">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #2971ff;
+      }
+
+      .cls-2 {
+        fill: #d4f0fd;
+      }
+
+      .cls-3 {
+        fill: #e9f8fe;
+      }
+    </style>
+  </defs>
+  <g id="Symbol_19_1" data-name="Symbol 19 – 1" transform="translate(3756)">
+    <g id="XMLID_1_" transform="translate(1073.587 237.591)">
+      <rect id="XMLID_4_" class="cls-1" width="14.607" height="7.865" transform="translate(0 5.393)"/>
+      <path id="XMLID_3_" class="cls-2" d="M0,0H14.607V7.865H0Z" transform="translate(2.697 2.697)"/>
+      <path id="XMLID_2_" class="cls-1" d="M0,0H14.607V7.865H0Z" transform="translate(5.393)"/>
+    </g>
+    <g id="Group_561" data-name="Group 561" transform="translate(1081.263 240.288)">
+      <path id="Path_211" data-name="Path 211" class="cls-3" d="M170.8,63.142,171.335,60h.8l.638,1.676L173.452,60h.813l.472,3.142h-.818l-.234-1.807-.76,1.807H172.6l-.724-1.807-.27,1.807Z" transform="translate(-170.8 -60)"/>
+      <path id="Path_212" data-name="Path 212" class="cls-3" d="M265.5,62.593h-1.124l-.216.548H263.3L264.5,60h.89l1.182,3.142H265.7Zm-.22-.62-.337-1-.342,1Z" transform="translate(-259.143 -60)"/>
+      <path id="Path_213" data-name="Path 213" class="cls-3" d="M338.227,61.465,337.22,60h1.007l.467.813L339.18,60h1l-1.025,1.465,1.187,1.676h-.984l-.67-1.025-.706,1.025H337Z" transform="translate(-329.53 -60)"/>
+    </g>
+  </g>
+</svg>

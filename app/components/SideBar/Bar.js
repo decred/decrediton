@@ -6,14 +6,14 @@ import "../../style/Fonts.less";
 import "../../style/SideBar.less";
 import RescanProgress from "../RescanProgress";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
-import { tsToDate } from "../../helpers/dateFormat";
 
 const Bar = ({
   isTestNet,
   balances,
   synced,
   currentHeight,
-  lastBlockTimestamp,
+  lastBlockDate,
+  lastBlockIsRecent,
   totalBalance,
   isShowingAccounts,
   onShowAccounts,
@@ -71,11 +71,13 @@ const Bar = ({
                 <span className="sidebar-menu-bottom-latest-block-number"> {currentHeight}</span>
               </a>
               <div className="sidebar-menu-bottom-latest-block-time">
-                {lastBlockTimestamp
-                  ? <FormattedRelative
-                    value={tsToDate(lastBlockTimestamp)}
-                    updateInterval={30*1000}/>
-                  : null}
+                {lastBlockDate && lastBlockIsRecent
+                  ? <T id="sidebar.lastBlockIsRecent" m="< 1 minute ago" />
+                  : lastBlockDate
+                    ? <FormattedRelative
+                      value={lastBlockDate}
+                      updateInterval={1*1000}/>
+                    : null}
               </div>
             </div>
           ) : null}

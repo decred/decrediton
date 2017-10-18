@@ -4,6 +4,39 @@ import { spacing, getMuiTheme } from "material-ui/styles";
 
 const rawBaseTheme = {
   ...spacing,
+
+  fontFamily: null,
+
+  menuItem: {
+    hoverColor: "#e9f8ff",
+    fontSize: "13px",
+    lineHeight: "1.5em"
+  },
+
+  spacing: {
+    desktopGutterLess: null
+  },
+
+  flatButton: {
+    fontSize: null,
+    hoverColor: "#e9f8ff"
+  },
+
+  button: {
+    height: null,
+    hoverColor: "#e9f8ff"
+  },
+
+  paper: {
+    zDepthShadows: [ //original values on material-ui's styles/getMuiTheme.js
+      "0px 3px 5px rgba(0, 0, 0, 0.16)",
+      "0px 6px 5px rgba(0, 0, 0, 0.16)",
+      "0px 9px 5px rgba(0, 0, 0, 0.16)",
+      "0px 12px 5px rgba(0, 0, 0, 0.16)",
+      "0px 15px 5px rgba(0, 0, 0, 0.16)"
+    ]
+  },
+
   palette: {
     // Primary Blue
     primary1Color: "#2971ff",
