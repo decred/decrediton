@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
-import ErrorScreen from "../../ErrorScreen";
+import ErrorScreen from "../../../ErrorScreen";
 import ReceivePage from "./Page";
-import service from "../../../connectors/service";
-import receive from "../../../connectors/receive";
+import service from "../../../../connectors/service";
+import receive from "../../../../connectors/receive";
 
 @autobind
 class Receive extends Component{

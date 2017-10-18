@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router";
-import AccountsSelect from "../../AccountsSelect";
+import AccountsSelect from "../../../AccountsSelect";
 import ReactTooltip from "react-tooltip";
 import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";
-import DecredLoading from "../../DecredLoading";
-import Balance from "../../Balance";
-import Header from "../../Header";
-import KeyBlueButton from "../../KeyBlueButton";
-import PassphraseModal from "../../PassphraseModal";
+import DecredLoading from "../../../DecredLoading";
+import Balance from "../../../Balance";
+import KeyBlueButton from "../../../KeyBlueButton";
+import PassphraseModal from "../../../PassphraseModal";
 import OutputRow from "./OutputRow";
-import "../../../style/SendPage.less";
-import "../../../style/MiscComponents.less";
+import TabContent from "../../../TabbedPage/TabContent";
+import "../../../../style/SendPage.less";
+import "../../../../style/MiscComponents.less";
 
 const messages = defineMessages({
   accountsTip: {
@@ -29,21 +29,13 @@ const messages = defineMessages({
 
 const SendPage = ({
                     isSendingTransaction,
-                    isTestNet,
                     isShowingConfirm,
                     isSendAll,
                     outputs,
                     totalSpent,
                     estimatedFee,
                     estimatedSignedSize,
-                    publishedTransactionHash,
                     isValid,
-                    constructTxError,
-                    signTransactionError,
-                    publishTransactionError,
-                    onClearPublishTxError,
-                    onClearSignTxError,
-                    onClearPublishTxSuccess,
                     onChangeAccount,
                     onAttemptSignTransaction,
                     onClearTransaction,
@@ -54,58 +46,22 @@ const SendPage = ({
                     intl,
                     ...props
                   }) => (
-  <div className="page-view">
-    <Header
-      headerTitleOverview={<div className="header-title-send">
-        <T id="send.title" m="Send Funds" /></div>}
-      headerMetaOverview={isTestNet ? (
-        <div className="header-meta-send">
-          <T id="send.testnetInfo"
-             m="Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters (e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)." />
-        </div>
-      ) : (
-        <div className="header-meta-send">
-          <T id="send.mainnetInfo" m="Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)." />
-        </div>
-      )}
-      headerTop={[
-        publishTransactionError ? (
-          <div key="pubError" className="send-view-notification-error">
-            <div className="send-address-delete-icon-header" onClick={onClearPublishTxError} />
-            {publishTransactionError}
-          </div>
-        ) : null,
-        signTransactionError ? (
-          <div key="signError" className="send-view-notification-error">
-            <div className="send-address-delete-icon-header" onClick={onClearSignTxError} />
-            {signTransactionError}
-          </div>
-        ) : null,
-        publishedTransactionHash ? (
-          <div key="pubSuccess" className="send-view-notification-success">
-            <div className="send-address-delete-icon-header" onClick={onClearPublishTxSuccess} />
-            <T
-              id="send.publishedTxHeader"
-              m="Published tx: {hash}"
-              values={{ hash: publishedTransactionHash }} />
-          </div>
-        ) : null,
-      ]}
-    />
+  <div>
+    <PassphraseModal
+        hidden={!isShowingConfirm}
+        submitPassphrase={onAttemptSignTransaction}
+        cancelPassphrase={onClearTransaction}
+        heading={"Confirm Transaction"}
+        description={<div>
+          <T id="send.confirmAmountLabel" m="Please confirm your transaction for" />
+          : <Balance amount={totalSpent} /></div>}
+      />
+    <TabContent>
+
     {(isSendingTransaction) ? (
-      <div className="page-content"><DecredLoading /></div>
+      <DecredLoading />
     ) : (
-      <div>
-        <PassphraseModal
-          hidden={!isShowingConfirm}
-          submitPassphrase={onAttemptSignTransaction}
-          cancelPassphrase={onClearTransaction}
-          heading={"Confirm Transaction"}
-          description={<div>
-            <T id="send.confirmAmountLabel" m="Please confirm your transaction for" />
-            : <Balance amount={totalSpent} /></div>}
-        />
-        <div className={!isShowingConfirm ? "page-content" : "page-content-blur"}>
+        <div className={isShowingConfirm ? "tab-content-blur" : ""}>
           <div className="send-flex-height">
             <div className="send-select-account-area">
               <div className="send-label"><T id="send.from" m="From" />:</div>
@@ -145,11 +101,6 @@ const SendPage = ({
               disabled={!isValid}
               onClick={onShowConfirm}
             ><T id="send.sendBtn" m="Send" /></KeyBlueButton>
-            {constructTxError ? (
-              <div className="send-construct-error">
-                {constructTxError}
-              </div>
-            ) : null}
             <div className="estimation-area-send">
               <div className="total-amount-send">
                 <div className="total-amount-send-text">
@@ -179,9 +130,9 @@ const SendPage = ({
             </div>
           </div>
         </div>
-      </div>
     )}
     < ReactTooltip />
+    </TabContent>
   </div>
 );
 

@@ -12,6 +12,7 @@ import stakepool from "./stakepool";
 import daemon from "./daemon";
 import locales from "./locales";
 import sidebar from "./sidebar";
+import snackbar from "./snackbar";
 
 const rootReducer = combineReducers({
   grpc,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   routing,
   form,
   sidebar,
+  snackbar,
 });
 
 export default rootReducer;

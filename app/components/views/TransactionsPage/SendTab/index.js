@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
-import { compose, not, eq, get } from "../../../fp";
-import service from "../../../connectors/service";
-import settings from "../../../connectors/settings";
-import send from "../../../connectors/send";
+import { compose, not, eq, get } from "../../../../fp";
+import service from "../../../../connectors/service";
+import settings from "../../../../connectors/settings";
+import send from "../../../../connectors/send";
 import SendPage from "./Page";
-import ErrorScreen from "../../ErrorScreen";
-import { restrictToStdDecimalNumber } from "../../../helpers/strings";
+import ErrorScreen from "../../../ErrorScreen";
+import { restrictToStdDecimalNumber } from "../../../../helpers/strings";
 import { FormattedMessage as T } from "react-intl";
 
 const BASE_OUTPUT = { destination: "", amountStr: "" };
@@ -28,15 +28,10 @@ class Send extends Component {
     };
   }
 
-  componentWillMount() {
-    this.props.onClearConstructTxError();
-    this.props.onClearPublishTxError();
-    this.props.onClearSignTxError();
-    this.props.onClearPublishTxSuccess();
-  }
   componentWillUnmount() {
     this.onClearTransaction();
   }
+
   render() {
     const {
       onChangeAccount,

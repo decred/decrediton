@@ -3,7 +3,7 @@ import { getWalletService, getTicketBuyerService, getVotingService, getAgendaSer
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, stopAutoBuyerAttempt } from "./ControlActions";
 import { transactionNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
-import { hashHistory } from "react-router";
+import { push as pushHistory } from "react-router-redux";
 import {
   PingRequest, NetworkRequest, AccountNumberRequest, AccountsRequest,
   BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest,
@@ -40,7 +40,7 @@ function getWalletServiceSuccess(walletService) {
 
       setTimeout(() => { dispatch(rescanAttempt(fetchHeadersResponse.getFirstNewBlockHeight())); }, 1000);
     }
-    setTimeout(() => { hashHistory.push("/home"); }, 1000);
+    setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);
   };
 }
 
@@ -183,7 +183,7 @@ function getNetworkSuccess(getNetworkResponse) {
       dispatch({ getNetworkResponse: getNetworkResponse, type: GETNETWORK_SUCCESS });
     } else {
       dispatch({ error: "Invalid network detected", type: GETNETWORK_FAILED });
-      setTimeout(() => { hashHistory.push("/walletError"); }, 1000);
+      setTimeout(() => { dispatch(pushHistory("/walletError")); }, 1000);
     }
   };
 }
@@ -197,7 +197,7 @@ export function getNetworkAttempt() {
       function (error, getNetworkResponse) {
         if (error) {
           dispatch({ error, type: GETNETWORK_FAILED });
-          setTimeout(() => { hashHistory.push("/walletError"); }, 1000);
+          setTimeout(() => { dispatch(pushHistory("/walletError")); }, 1000);
         } else {
           dispatch(getNetworkSuccess(getNetworkResponse));
         }
@@ -216,7 +216,7 @@ export function getPingAttempt() {
       function (error) {
         if (error) {
           dispatch({ error, type: GETPING_FAILED });
-          setTimeout(() => { hashHistory.push("/walletError"); }, 1000);
+          setTimeout(() => { dispatch(pushHistory("/walletError")); }, 1000);
         } else {
           setTimeout(() => { dispatch(getPingAttempt()); }, 10000);
         }
@@ -401,7 +401,6 @@ export function getTransactionInfoAttempt() {
     });
   };
 }
-
 
 export const UPDATETIMESINCEBLOCK = "UPDATETIMESINCEBLOCK";
 export function updateBlockTimeSince() {

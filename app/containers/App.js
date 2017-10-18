@@ -6,6 +6,7 @@ import theme from "../materialUITheme";
 import { defaultFormats } from "../i18n/locales";
 import app from "../connectors/app";
 import SideBar from "../components/SideBar";
+import Snackbar from "../components/Snackbar";
 
 class App extends Component {
   static propTypes = {
@@ -26,6 +27,7 @@ class App extends Component {
           key={locale.key}>
           <div className="page-body">
             <SideBar />
+            <Snackbar />
             {this.props.children}
           </div>
         </IntlProvider>
