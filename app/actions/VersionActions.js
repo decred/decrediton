@@ -2,6 +2,7 @@
 import { loaderRequest } from "./WalletLoaderActions";
 import { getVersionService, getVersionResponse } from "../wallet/version";
 import { push as pushHistory } from "react-router-redux";
+import { ipcRenderer } from "electron";
 
 export const GETVERSIONSERVICE_ATTEMPT = "GETVERSIONSERVICE_ATTEMPT";
 export const GETVERSIONSERVICE_FAILED = "GETVERSIONSERVICE_FAILED";
@@ -31,12 +32,14 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => {
       dispatch({ getWalletRPCVersionResponse, type: WALLETRPCVERSION_SUCCESS });
       const { version: { requiredVersion }} = getState();
       let versionErr = null;
-      if (!getWalletRPCVersionResponse.getVersionString()) {
+      let walletVersion = getWalletRPCVersionResponse.getVersionString();
+      ipcRenderer.send("grpc-versions-determined", { requiredVersion, walletVersion });
+      if (!walletVersion) {
         versionErr = "Unable to obtain Dcrwallet API version";
       } else {
-        if (!semverCompatible(requiredVersion, getWalletRPCVersionResponse.getVersionString())) {
+        if (!semverCompatible(requiredVersion, walletVersion)) {
           versionErr = "API versions not compatible..  Decrediton requires "
-            + requiredVersion + " but wallet " + getWalletRPCVersionResponse.getVersionString()
+            + requiredVersion + " but wallet " + walletVersion
             + " does not satisfy the requirement. Please check your"
             + " installation, Decrediton and Dcrwallet versions should match.";
         }
