@@ -19,6 +19,7 @@ import AccountsPage from "./components/views/AccountsPage";
 import WalletError from "./components/views/WalletError";
 import Help from "./components/views/Help";
 import ErrorScreen from "./components/ErrorScreen";
+import InvalidRPCVersion from "./components/views/InvalidRPCVersion";
 
 export default (
   <Route path="/" component={withTransition(App)}>
@@ -41,5 +42,6 @@ export default (
     <Route path="/walletError" component={WalletError} />
     <Route path="/error" component={ErrorScreen} />
     <Route path="/help" component={Help} />
+    <Route path="/invalidRPCVersion" component={InvalidRPCVersion} />
   </Route>
 );

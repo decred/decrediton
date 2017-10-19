@@ -13,6 +13,7 @@ let menu;
 let template;
 let mainWindow = null;
 let versionWin = null;
+let grpcVersions = {requiredVersion: null, walletVersion: null};
 let debug = false;
 let dcrdPID;
 let dcrwPID;
@@ -332,6 +333,10 @@ ipcMain.on("check-daemon", (event) => {
   });
 });
 
+ipcMain.on("grpc-versions-determined", (event, versions) => {
+  grpcVersions = { ...grpcVersions, ...versions };
+});
+
 const launchDCRD = () => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrdCfg()];
@@ -485,6 +490,7 @@ const readExesVersion = () => {
   let args = ["--version"];
   let exes = ["dcrd", "dcrwallet", "dcrctl"];
   let versions = {
+    grpc: grpcVersions,
     decrediton: app.getVersion()
   };
 
