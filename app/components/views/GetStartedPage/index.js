@@ -23,7 +23,9 @@ class GetStartedPage extends Component {
   }
 
   componentWillUnmount() {
-    this.props.showSidebarMenu();
+    if (!this.props.versionInvalid) {
+      this.props.showSidebarMenu();
+    }
   }
 
   render() {
