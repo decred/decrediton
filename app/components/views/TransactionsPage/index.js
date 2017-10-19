@@ -4,8 +4,11 @@ import PropTypes from "prop-types";
 import { autobind } from "core-decorators";
 import TabbedPage from "../../TabbedPage";
 import { FormattedMessage as T } from "react-intl";
-import { withTabSlide } from "../../PageTransitions";
 import transactions from "../../../connectors/transactionsPage";
+
+// const enterLeft = { atEnter: { offset: -100 }, atActive: { offset: 0 }, atLeave: { offset: -100 }, mapStyles: (styles) => ({ transform: `translateX(${styles.offset}%)` })};
+// const enterRight = { atEnter: { offset: 100 }, atActive: { offset: 0 }, atLeave: { offset: 100 }, mapStyles: (styles) => ({ transform: `translateX(${styles.offset}%)` })};
+
 
 const propTypes = {
   router: PropTypes.object.isRequired,
@@ -38,4 +41,4 @@ class Transactions extends React.Component {
 
 Transactions.propTypes = propTypes;
 
-export default withTabSlide(transactions(Transactions));
+export default transactions(Transactions);

@@ -7,6 +7,10 @@ import { defaultFormats } from "../i18n/locales";
 import app from "../connectors/app";
 import SideBar from "../components/SideBar";
 import Snackbar from "../components/Snackbar";
+import RouteTransition from "./RT";
+
+const opts = { stiffness: 37, damping: 30 };
+const fade = { atEnter: { opacity: 0 }, atActive: { opacity: 1 }, atLeave: { opacity: 0 }};
 
 class App extends Component {
   static propTypes = {
@@ -16,7 +20,7 @@ class App extends Component {
 
   render() {
     let locale = this.props.locale;
-
+    const pathname = this.props.location.pathname;
     return (
       <MuiThemeProvider muiTheme={theme}>
         <IntlProvider
@@ -28,7 +32,9 @@ class App extends Component {
           <div className="page-body">
             <SideBar />
             <Snackbar />
-            {this.props.children}
+            <RouteTransition pathname={ pathname } {...fade} opts={ opts }>
+              { this.props.children }
+            </RouteTransition>
           </div>
         </IntlProvider>
       </MuiThemeProvider>

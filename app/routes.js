@@ -1,7 +1,6 @@
 // @flow
 import React from "react";
 import { Route, IndexRoute, IndexRedirect } from "react-router";
-import { withTransition } from "react-router-transitions";
 import App from "./containers/App";
 import HomePage from "./components/views/HomePage";
 import HistoryPage from "./components/views/HistoryPage";
@@ -21,14 +20,14 @@ import Help from "./components/views/Help";
 import ErrorScreen from "./components/ErrorScreen";
 
 export default (
-  <Route path="/" component={withTransition(App)}>
+  <Route path="/" component={App}>
     <IndexRoute component={GetStartedPage} />
     <Route path="/home" component={HomePage} />
     <Route path="/history" component={HistoryPage} />
     <Route path="/transactions" component={TransactionsPage}>
       <IndexRedirect to="/transactions/send" />
-      <Route path="send" component={TransactionsSendTab} position={0}/>
-      <Route path="receive" component={TransactionsReceiveTab} position={1}/>
+      <Route path="send" component={TransactionsSendTab}/>
+      <Route path="receive" component={TransactionsReceiveTab}/>
     </Route>
     <Route path="/transactions/history/:txHash" component={TransactionPage} />
     <Route path="/security" component={SecurityPage}>
