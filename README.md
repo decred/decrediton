@@ -86,8 +86,8 @@ cd code
 git clone https://github.com/decred/decrediton.git
 cd decrediton
 yarn
-mkdir app/bin/
-cp $GOPATH/bin/dcr* app/bin/
+mkdir bin/
+cp $GOPATH/bin/dcr* bin/
 yarn dev
 ```
 
@@ -212,4 +212,3 @@ is used for this project.
 ## License
 
 decrediton is licensed under the [copyfree](http://copyfree.org) ISC License.
-

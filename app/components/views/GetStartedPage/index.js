@@ -15,6 +15,7 @@ class GetStartedPage extends Component {
   componentWillMount() {
     this.props.showSidebar();
     this.props.hideSidebarMenu();
+    this.props.determineNeededBlocks();
   }
 
   componentDidMount() {
