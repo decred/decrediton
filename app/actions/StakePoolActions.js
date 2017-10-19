@@ -4,7 +4,7 @@ import { getPurchaseInfo, setStakePoolAddress, setVoteChoices } from "../wallet/
 import { getNextAddress } from "../wallet/service";
 import { getCfg, updateStakePoolConfig } from "../config.js";
 import { importScriptAttempt } from "./ControlActions";
-import { stakePoolInfo } from "../middleware/stakepoolapi";
+import { getStakePoolInfo } from "wallet/config";
 import * as sel from "../selectors";
 
 export const UPDATESTAKEPOOLCONFIG_ATTEMPT = "UPDATESTAKEPOOLCONFIG_ATTEMPT";
@@ -148,10 +148,11 @@ export const clearStakePoolConfigSuccess = () => (dispatch, getState) =>
 
 export const DISCOVERAVAILABLESTAKEPOOLS_SUCCESS = "DISCOVERAVAILABLESTAKEPOOLS_SUCCESS";
 export const discoverAvailableStakepools = () => (dispatch) =>
-  stakePoolInfo((foundStakepoolConfigs) => {
-    if (foundStakepoolConfigs) {
-      let config = getCfg();
-      updateStakePoolConfig(config, foundStakepoolConfigs);
-      dispatch({ type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, currentStakePoolConfig: config.get("stakepools")});
-    } // TODO: add error notification after global snackbar is merged
-  });
+  getStakePoolInfo()
+    .then((foundStakepoolConfigs) => {
+      if (foundStakepoolConfigs) {
+        let config = getCfg();
+        updateStakePoolConfig(config, foundStakepoolConfigs);
+        dispatch({ type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, currentStakePoolConfig: config.get("stakepools")});
+      } // TODO: add error notification after global snackbar is merged
+    });
