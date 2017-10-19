@@ -360,8 +360,8 @@ export function getTicketsInfoAttempt() {
       case GetTicketsResponse.TicketDetails.TicketStatus.IMMATURE:
         ticketStatus = "Immature";
         break;
-      case GetTicketsResponse.TicketDetails.TicketStatus.LIVE:
-        ticketStatus = "Live";
+      case GetTicketsResponse.TicketDetails.TicketStatus.VOTED:
+        ticketStatus = "Voted";
         break;
       case GetTicketsResponse.TicketDetails.TicketStatus.EXPIRED:
         ticketStatus = "Expired";
