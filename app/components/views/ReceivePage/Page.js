@@ -4,7 +4,7 @@ import ReceiveAccountsSelect from "../../ReceiveAccountsSelect";
 import { Link } from "react-router";
 import KeyBlueButton from "../../KeyBlueButton";
 import Header from "../../Header";
-import CopyToClipboardButton from "../../CopyToClipboardButton";
+import { CopyToClipboard } from "shared";
 import QRCode from "./QRCode";
 import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";
 import "../../../style/Layout.less";
@@ -54,11 +54,7 @@ const ReceivePage = ({
         <div className="receive-content-nest-qr">
           <div className="receive-content-nest-qrhash">
             <span key="addressSpan">{nextAddress}</span>
-            <CopyToClipboardButton
-              key="copyToClipboard"
-              className="receive-content-nest-copy-to-clipboard-icon"
-              textToCopy={nextAddress}
-            />
+            <CopyToClipboard textToCopy={nextAddress} className="receive-content-nest-copy-to-clipboard-icon" />
           </div>
           <QRCode addr={nextAddress} />
           <div style={{ clear: "both" }}></div>
