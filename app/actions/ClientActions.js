@@ -9,7 +9,7 @@ import {
   BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest,
   AgendasRequest, VoteChoicesRequest, SetVoteChoicesRequest, GetTicketsRequest,
 } from "../middleware/walletrpc/api_pb";
-import { TransactionDetails }  from "../middleware/walletrpc/api_pb";
+import { TransactionDetails, GetTicketsResponse }  from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
 import { reverseHash } from "../helpers/byteActions.js";
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
@@ -349,18 +349,43 @@ export function getTicketsInfoAttempt() {
     var getTx = walletService.getTickets(request);
     var tickets = Array();
     getTx.on("data", function (response) {
+      var ticketStatus = "Live";
+      switch (response.getTicket().getTicketStatus()) {
+      case GetTicketsResponse.TicketDetails.TicketStatus.UNKNOWN:
+        ticketStatus = "Unknown";
+        break;
+      case GetTicketsResponse.TicketDetails.TicketStatus.UNMINED:
+        ticketStatus = "Unmined";
+        break;
+      case GetTicketsResponse.TicketDetails.TicketStatus.IMMATURE:
+        ticketStatus = "Immature";
+        break;
+      case GetTicketsResponse.TicketDetails.TicketStatus.LIVE:
+        ticketStatus = "Live";
+        break;
+      case GetTicketsResponse.TicketDetails.TicketStatus.EXPIRED:
+        ticketStatus = "Expired";
+        break;
+      case GetTicketsResponse.TicketDetails.TicketStatus.MISSED:
+        ticketStatus = "Missed";
+        break;
+      case GetTicketsResponse.TicketDetails.TicketStatus.REVOKED:
+        ticketStatus = "Revoked";
+        break;
+      }
       var newTicket = {
-        status: response.getTicket().getTicketStatus(),
+        status: ticketStatus,
         ticket: response.getTicket().getTicket(),
         spender: response.getTicket().getSpender(),
       };
       console.log(
-      response.getTicket().getTicketStatus(),
+      ticketStatus,
       reverseHash(Buffer.from(response.getTicket().getTicket().getHash()).toString("hex")),
       reverseHash(Buffer.from(response.getTicket().getSpender().getHash()).toString("hex")));
       tickets.unshift(newTicket);
     });
     getTx.on("end", function () {
+      console.log(tickets.length);
       setTimeout(() => { dispatch({ tickets: tickets, type: GETTICKETS_COMPLETE });}, 1000);
     });
     getTx.on("error", function (error) {
