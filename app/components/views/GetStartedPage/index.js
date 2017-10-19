@@ -18,14 +18,14 @@ class GetStartedPage extends Component {
     this.props.determineNeededBlocks();
   }
 
+  componentDidMount() {
+    this.props.doStartDaemon();
+  }
+
   componentWillUnmount() {
     if (!this.props.versionInvalid) {
       this.props.showSidebarMenu();
     }
-  }
-
-  componentDidMount() {
-    this.props.doStartDaemon();
   }
 
   render() {
