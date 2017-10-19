@@ -138,7 +138,7 @@ const SendPage = ({
           </div>
         </div>
     )}
-    < ReactTooltip />
+    <ReactTooltip />
     </TabContent>
   </div>
 );

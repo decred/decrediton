@@ -1,55 +1,46 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
+import { Link } from "react-router";
 import Header from "../../Header";
-import TextToggle from "../../TextToggle";
-import "../../../style/StakePool.less";
+import "style/StakePool.less";
 
-const messages = defineMessages({
-  signMessage: {
-    id: "securitycenter.header.toggle.sign",
-    defaultMessage: "Sign message",
-  },
-  verifyMessage: {
-    id: "securitycenter.header.toggle.verify",
-    defaultMessage: "Verify message",
-  },
-});
-
-const SecurityPageHeader = ({
-  onToggleSecurityMessage,
-  intl: { formatMessage }
-}) => (
-  <Header
-    headerTitleOverview={
-      <div style={{height: "100%"}}>
-        <div style={{float: "left"}}>
-          <T id="securitycenter.header.title" m="Security Center" />
-        </div>
-      </div>
-    }
-    headerMetaOverview={
-      (
-        <div>
-          <div className="stakepool-toggle">
-            <TextToggle
-              activeButton={"left"}
-              leftText={formatMessage(messages.signMessage)}
-              rightText={formatMessage(messages.verifyMessage)}
-              toggleAction={onToggleSecurityMessage}
-            />
+const SecurityPageHeader = ({ location }) => {
+  let left = "text-toggle-button-left";
+  let right = "text-toggle-button-right";
+  const active = "text-toggle-button-active";
+  location.pathname === "/security/sign" ? left = [left, active].join(" ") : right = [right, active].join(" ");
+  return (
+    <Header
+      headerTitleOverview={
+        <div style={{height: "100%"}}>
+          <div style={{float: "left"}}>
+            <T id="securitycenter.header.title" m="Security Center" />
           </div>
         </div>
-      )
-    }
-  />
-);
-
-SecurityPageHeader.propTypes = {
-  intl: PropTypes.shape({
-    formatMessage: PropTypes.func.isRequired,
-  }).isRequired,
-  onToggleSecurityMessage: PropTypes.func.isRequired,
+      }
+      headerMetaOverview={
+        (
+          <div>
+            <div className="stakepool-toggle">
+              <div className="text-toggle">
+                <Link to="/security/sign" className={ left }>
+                  <T id="securitycenter.header.toggle.sign" m="Sign message" />
+                </Link>
+                <Link to="/security/verify" className={ right }>
+                  <T id="securitycenter.header.toggle.verify" m="Verify message" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        )
+      }
+    />
+  );
 };
 
-export default injectIntl(SecurityPageHeader);
+SecurityPageHeader.propTypes = {
+  location: PropTypes.object.isRequired
+};
+
+export default SecurityPageHeader;
