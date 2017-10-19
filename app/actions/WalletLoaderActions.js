@@ -7,6 +7,7 @@ import { getStakePoolInfo } from "wallet/config";
 import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { getCfg, getCfgPath, getDcrdCert,RPCDaemonPort, RPCDaemonHost } from "config";
+import axios from "axios";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
@@ -248,5 +249,20 @@ export function clearStakePoolConfigNewWallet() {
           dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
         }
       });
+  };
+}
+
+export const NEEDED_BLOCKS_DETERMINED = "NEEDED_BLOCKS_DETERMINED";
+export function determineNeededBlocks() {
+  return (dispatch, getState) => {
+    const network = getState().grpc.network;
+    const explorerInfoURL = `https://${network}.decred.org/api/status`;
+    axios.get(explorerInfoURL, {timeout: 5000})
+    .then(function (response) {
+      dispatch({ neededBlocks: response.data.info.blocks, type: NEEDED_BLOCKS_DETERMINED});
+    })
+    .catch(function (error) {
+      console.log("Unable to obtain latest block number.", error);
+    });
   };
 }
