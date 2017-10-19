@@ -5,22 +5,14 @@ import ReactTooltip from "react-tooltip";
 import { PropTypes } from "prop-types";
 import copy from "clipboard-copy";
 import { autobind } from "core-decorators";
-import { injectIntl, defineMessages, intlShape } from "react-intl";
-import "../style/MiscComponents.less";
-
-const messages = defineMessages({
-  copied: {
-    id: "clipboard.copied",
-    defaultMessage: "Copied"
-  }
-});
+import { FormattedMessage as T } from "react-intl";
+import "style/MiscComponents.less";
 
 @autobind
 class CopyToClipboardButton extends Component {
 
   static propTypes = {
     textToCopy: PropTypes.string.isRequired,
-    intl: intlShape.isRequired
   };
 
   constructor(props) {
@@ -32,28 +24,17 @@ class CopyToClipboardButton extends Component {
   }
 
   render() {
-    const { formatMessage } = this.props.intl;
     return (
+      { this.state.showTooltip && <Tooltip text={ <T id="clipboard.copied" m="Copied" /> }> }
       <a
         ref="copyButtonRef"
         className={"copy-to-clipboard-icon" + (this.props.className ? (" " + this.props.className) : "")}
         style={this.props.style}
         data-place="bottom"
-        data-type="info"
-        data-effect="solid"
-        data-tip={this.state.showTooltip ? formatMessage(messages.copied) : ""}
         onClick={this.onClick}
         onMouseLeave={this.onMouseLeave} />
+      </Tooltip>
     );
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if(!prevState.showTooltip && this.state.showTooltip) {
-      ReactTooltip.show(ReactDOM.findDOMNode(this.refs.copyButtonRef));
-    }
-    else if(prevState.showTooltip && !this.state.showTooltip) {
-      ReactTooltip.hide(ReactDOM.findDOMNode(this.refs.copyButtonRef));
-    }
   }
 
   onClick() {
@@ -70,4 +51,4 @@ class CopyToClipboardButton extends Component {
 
 }
 
-export default injectIntl(CopyToClipboardButton);
+export default CopyToClipboardButton;

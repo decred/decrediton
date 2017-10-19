@@ -3,18 +3,15 @@ import { autobind } from "core-decorators";
 import Select from "react-select";
 import { PropTypes } from "prop-types";
 import accountsSelect from "../connectors/accountsSelect";
-import { injectIntl, defineMessages, intlShape } from "react-intl";
+import { injectIntl, defineMessages, intlShape, FormattedMessage as T } from "react-intl";
 import Balance from "./Balance";
 import { Link } from "react-router";
+import { Tooltip } from "shared";
 
 const messages = defineMessages({
   placeholder: {
     id: "accountsSelect.placeholder",
     defaultMessage: "Select account"
-  },
-  accountsTip: {
-    id: "send.accounts.tip",
-    defaultMessage: "Accounts",
   },
 });
 
@@ -67,14 +64,9 @@ class AccountsSelect extends Component {
           className="accounts-select"
         />
         { showAccountsButton
-          ? <Link
-            className="accounts-button-icon"
-            data-place="bottom"
-            data-type="info"
-            data-effect="solid"
-            data-tip={formatMessage(messages.accountsTip)}
-            to={"/accounts"}
-          />
+          ? <Tooltip text={<T id="send.accounts.tip" m="Accounts" /> }>
+              <Link to={"/accounts"} className="accounts-button-icon" data-place="bottom" />
+            </Tooltip>
           : null }
       </div>
     );

@@ -54,11 +54,7 @@ const ReceivePage = ({
         <div className="receive-content-nest-qr">
           <div className="receive-content-nest-qrhash">
             <span key="addressSpan">{nextAddress}</span>
-            <CopyToClipboardButton
-              key="copyToClipboard"
-              className="receive-content-nest-copy-to-clipboard-icon"
-              textToCopy={nextAddress}
-            />
+            <CopyToClipboardButton textToCopy={nextAddress} className="receive-content-nest-copy-to-clipboard-icon" />
           </div>
           <QRCode addr={nextAddress} />
           <div style={{ clear: "both" }}></div>
