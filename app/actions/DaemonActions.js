@@ -38,8 +38,8 @@ export const startWallet = (rpcuser, rpcpassword) => (dispatch) => daemon
 
 export const syncDaemon = (rpcuser, rpcpassword, host, cert) =>
   (dispatch, getState) => {
-    const { walletLoader: { neededBlocks }} = getState();
     const updateBlockCount = () => {
+      const { walletLoader: { neededBlocks }} = getState();
       const { daemon: { daemonSynced, timeStart, blockStart } } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
