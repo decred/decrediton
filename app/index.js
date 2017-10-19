@@ -80,7 +80,7 @@ var initialState = {
   },
   version: {
     // RequiredVersion
-    requiredVersion: "4.20.0",
+    requiredVersion: "4.24.0",
     versionInvalid: false,
     versionInvalidError: null,
     // VersionService
@@ -164,6 +164,11 @@ var initialState = {
     getTransactionsRequestAttempt: false,
     getTransactionsResponse: null,
     unminedTransactions: null,
+
+    // GetTickets
+    getTicketsError: null,
+    getTicketsRequestAttempt: false,
+    tickets: Array(),
 
     // Agenda/VoteChoices
     getAgendasResponse: null,
