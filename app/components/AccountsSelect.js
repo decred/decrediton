@@ -3,10 +3,9 @@ import { autobind } from "core-decorators";
 import Select from "react-select";
 import { PropTypes } from "prop-types";
 import accountsSelect from "../connectors/accountsSelect";
-import { injectIntl, defineMessages, intlShape, FormattedMessage as T } from "react-intl";
+import { injectIntl, defineMessages, intlShape } from "react-intl";
 import Balance from "./Balance";
-import { Link } from "react-router";
-import { Tooltip } from "shared";
+import { LinkToAccounts } from "shared";
 
 const messages = defineMessages({
   placeholder: {
@@ -63,11 +62,7 @@ class AccountsSelect extends Component {
           onChange={this.onChangeAccount}
           className="accounts-select"
         />
-        { showAccountsButton
-          ? <Tooltip text={<T id="send.accounts.tip" m="Accounts" /> }>
-              <Link to={"/accounts"} className="accounts-button-icon" data-place="bottom" />
-            </Tooltip>
-          : null }
+        { showAccountsButton && <LinkToAccounts /> }
       </div>
     );
   }

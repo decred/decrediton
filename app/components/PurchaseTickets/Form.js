@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router";
 import AccountsSelect from "../AccountsSelect";
 import NumTicketsInput from "../NumTicketsInput";
 import ManagePoolsButton from "../ManagePoolsButton";
@@ -8,14 +7,11 @@ import KeyBlueButton from "../KeyBlueButton";
 import PurchaseTicketsInfoButton from "../PurchaseTicketsInfoButton";
 import TicketsCogs from "../TicketsCogs";
 import { FormattedMessage as T, defineMessages } from "react-intl";
+import { LinkToAccounts } from "shared";
 import "../../style/StakePool.less";
 import { addSpacingAroundText } from "../../helpers/strings";
 
 const messages = defineMessages({
-  accounts: {
-    id: "purchaseTickets.accountsTip",
-    defaultMessage: "Accounts"
-  },
   currentStakepool: {
     id: "purchaseTickets.currentStakepool",
     defaultMessage: "Current StakePool",
@@ -111,14 +107,7 @@ const PurchaseTicketsForm = ({
           <div className="stakepool-purchase-ticket-input-select">
             <AccountsSelect onChange={onChangeAccount} />
           </div>
-          <Link
-            className="accounts-button-icon"
-            data-place="bottom"
-            data-type="info"
-            data-effect="solid"
-            data-tip={formatMessage(messages.accounts)}
-            to={"/accounts"}
-          />
+          <LinkToAccounts />
         </div>
         <div className="stakepool-purchase-ticket-row-num-tickets">
           <div className="stakepool-purchase-ticket-label">

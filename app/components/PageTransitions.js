@@ -1,8 +1,7 @@
 // @flow
-import { withTransition } from "react-router-transitions";
+import { useTransitions, withTransition } from "react-router-transitions";
 import { applyRouterMiddleware } from "react-router";
-import { useTransitions } from "react-router-transitions";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import CSSTransitionGroup from "react-transition-group";
 
 const defaultPageTransition = {
   transitionName: "fade",
@@ -13,7 +12,7 @@ const defaultPageTransition = {
 
 export function pageTransitionsRender() {
   return applyRouterMiddleware(useTransitions({
-    TransitionGroup: ReactCSSTransitionGroup,
+    TransitionGroup: CSSTransitionGroup,
     defaultTransition: defaultPageTransition
   }));
 }

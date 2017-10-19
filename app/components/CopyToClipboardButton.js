@@ -1,7 +1,5 @@
 // @flow
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import ReactTooltip from "react-tooltip";
 import { PropTypes } from "prop-types";
 import copy from "clipboard-copy";
 import { autobind } from "core-decorators";
@@ -23,14 +21,14 @@ class CopyToClipboardButton extends Component {
     };
   }
 
+
+
   render() {
     return (
-      { this.state.showTooltip && <Tooltip text={ <T id="clipboard.copied" m="Copied" /> }> }
+      <Tooltip text={ <T id="clipboard.copied" m="Copied" /> } disabled={ !this.state.showTooltip }>
       <a
         ref="copyButtonRef"
         className={"copy-to-clipboard-icon" + (this.props.className ? (" " + this.props.className) : "")}
-        style={this.props.style}
-        data-place="bottom"
         onClick={this.onClick}
         onMouseLeave={this.onMouseLeave} />
       </Tooltip>

@@ -1,7 +1,7 @@
 import React from "react";
 import "style/Tooltip.less";
 
-const Tooltip = ({ text, children }) => {
+const Tooltip = ({ text, disabled, children }) => {
   let tooltip = null;
 
   const onMouseMove = ({clientX, clientY}) => {
@@ -13,7 +13,7 @@ const Tooltip = ({ text, children }) => {
       clientY + 10 + "px" : window.innerHeight + 5 - tooltip.clientHeight + "px";
   };
 
-  return (
+  return disabled ? children : (
     <div className="tooltipContainer" onMouseMove={ onMouseMove }>
       { children }
       <span className="tip" ref={ tip => tooltip = tip }>

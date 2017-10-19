@@ -6,34 +6,21 @@ import { Link } from "react-router";
 import KeyBlueButton from "../../../KeyBlueButton";
 import CopyToClipboardButton from "../../../CopyToClipboardButton";
 import QRCode from "./QRCode";
-import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";
-import "../../../../style/Layout.less";
-import "../../../../style/ReceivePage.less";
-import "../../../../style/MiscComponents.less";
-
-const messages = defineMessages({
-  accountsTip: {
-    id: "receive.accounts.tip",
-    defaultMessage: "Accounts",
-  },
-});
+import { FormattedMessage as T } from "react-intl";
+import "style/Layout.less";
+import "style/ReceivePage.less";
+import "style/MiscComponents.less";
 
 const ReceivePage = ({
                        nextAddress,
-                       intl,
                        onRequestAddress,
                      }) => (
   <TabContent>
     <div className="receive-content-nest">
       <div className="receive-content-nest-for-address">
-        <Link
-          className="receive-accounts-button-icon"
-          data-place="bottom"
-          data-type="info"
-          data-effect="solid"
-          data-tip={intl.formatMessage(messages.accountsTip)}
-          to={"/accounts"}
-        />
+        <Tooltip text={ <T id="receive.accounts.tip" m="Accounts" /> }>
+          <Link to={"/accounts"} className="receive-accounts-button-icon" />
+        </Tooltip>
         <div className="receive-content-nest-prefix">
           <T id="receive.accountLabel" m="This address is for" />:
         </div>
@@ -64,4 +51,4 @@ const ReceivePage = ({
   </TabContent>
 );
 
-export default injectIntl(ReceivePage);
+export default ReceivePage;
