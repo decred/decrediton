@@ -7322,13 +7322,14 @@ proto.walletrpc.GetTicketsResponse.TicketDetails.serializeBinaryToWriter = funct
  * @enum {number}
  */
 proto.walletrpc.GetTicketsResponse.TicketDetails.TicketStatus = {
-  UNMINED: 0,
-  IMMATURE: 1,
-  LIVE: 2,
-  VOTED: 3,
-  MISSED: 4,
-  EXPIRED: 5,
-  REVOKED: 6
+  UNKNOWN: 0,
+  UNMINED: 1,
+  IMMATURE: 2,
+  LIVE: 3,
+  VOTED: 4,
+  MISSED: 5,
+  EXPIRED: 6,
+  REVOKED: 7
 };
 
 /**
