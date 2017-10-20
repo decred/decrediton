@@ -1,16 +1,33 @@
 import React from "react";
 import TabContent from "../../../TabbedPage/TabContent";
-import ReactTooltip from "react-tooltip";
-import "../../../../style/Layout.less";
-import "../../../../style/ReceivePage.less";
-import "../../../../style/MiscComponents.less";
+import ReactToolTip from "react-tooltip";
+import StakeyBounce from "../../../StakeyBounce";
+import PurchaseTicketsInfo from "../../../PurchaseTicketsInfo";
+import StakePools from "../../../StakePools";
+import Tickets from "./Tickets";
+import "style/Layout.less";
+import "style/StakePool.less";
 
-const PurchasePage = () => (
+const PurchasePage = ({
+  isSavingStakePoolConfig,
+  isPurchasingTickets,
+  stakePool,
+  isShowingTicketsInfo,
+  isShowingStakePools,
+  onHideTicketsInfo,
+  onHideStakePoolConfig,
+  ...props
+}) => (
   <TabContent>
-    <div className="receive-content-nest">
-      PurchasePage
-    </div>
-    <ReactTooltip />
+    {(isSavingStakePoolConfig || isPurchasingTickets)
+      ? <StakeyBounce/>
+      : (isShowingStakePools)
+        ? <StakePools {...{ onHideStakePoolConfig }} />
+          : isShowingTicketsInfo
+            ? <PurchaseTicketsInfo closeModal={onHideTicketsInfo} />
+            : <Tickets {...{ stakePool, ...props }} />
+    }
+    <ReactToolTip type="info" effect="solid"/>
   </TabContent>
 );
 

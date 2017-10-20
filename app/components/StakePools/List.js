@@ -13,7 +13,7 @@ const StakePoolsList = ({
   onHideStakePoolConfig,
   rescanRequest
 }) => (
-  <div className="page-content">
+  <div>
     <div className="stakepool-flex-height">
       <div className="stakepool-content-nest-from-address">
         <div className="stakepool-content-nest-prefix-configured"><T id="stakepools.list.title" m="Configured stake pools:" /></div>

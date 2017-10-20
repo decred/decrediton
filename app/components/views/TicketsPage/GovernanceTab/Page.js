@@ -1,4 +1,5 @@
 import React from "react";
+import TabContent from "../../../TabbedPage/TabContent";
 import AgendaCard from "../../../AgendaCard";
 import AgendaOverview from "../../../AgendaOverview";
 import SelectStakePool from "../../../SelectStakePool";
