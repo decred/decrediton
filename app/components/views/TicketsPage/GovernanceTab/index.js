@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { autobind } from "core-decorators";
 import ErrorScreen from "../../../ErrorScreen";
 import GovernancePage from "./Page";
+import service from "../../../../connectors/service";
 
 @autobind
 class Governance extends Component{
@@ -17,4 +18,4 @@ class Governance extends Component{
   }
 }
 
-export default Governance;
+export default service(Governance);

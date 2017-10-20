@@ -25,7 +25,8 @@ const mapStateToProps = selectorMap({
   importScriptError: sel.importScriptError,
   importScriptSuccess: sel.importScriptSuccess,
   isPurchasingTickets: sel.isPurchasingTickets,
-  isSavingStakePoolConfig: sel.isSavingStakePoolConfig
+  isSavingStakePoolConfig: sel.isSavingStakePoolConfig,
+  isTestNet: sel.isTestNet,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

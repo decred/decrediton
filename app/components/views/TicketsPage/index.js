@@ -6,25 +6,27 @@ import TabbedPage from "../../TabbedPage";
 import { FormattedMessage as T } from "react-intl";
 import { withTabSlide } from "../../PageTransitions";
 import tickets from "../../../connectors/ticketsPage";
+import Balance from "../../Balance";
 
 const propTypes = {
   router: PropTypes.object.isRequired,
-  isTestNet: PropTypes.bool.isRequired,
+  ticketPrice: PropTypes.number.isRequired
 };
 
 @autobind
 class Tickets extends React.Component {
   render() {
-    const { router, isTestNet } = this.props;
+    const { router, ticketPrice } = this.props;
     return (
       <TabbedPage
         {...{router}}
-        iconClassName="header-icon-transactions"
+        iconClassName="header-icon-tickets"
         title={<T id="tickets.title" m="Tickets" />}
         description={(
-          isTestNet
-            ? <T id="transactions.description.testnet" m="Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters (e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)." />
-            : <T id="transactions.description.mainnet" m="Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)." />
+          <div>
+            <T id="tickets.description.currentPrice" m="Current Ticket Price" />
+            <Balance amount={ticketPrice}/>
+          </div>
         )}
         tabRoutes={[
           {title: <T id="tickets.tabPurchase" m="Purchase Tickets" />, route:"/tickets/purchase"},

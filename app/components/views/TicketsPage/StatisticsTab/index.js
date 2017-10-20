@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { autobind } from "core-decorators";
 import ErrorScreen from "../../../ErrorScreen";
 import StatisticsPage from "./Page";
+import service from "../../../../connectors/service";
 
 @autobind
 class Statistics extends Component{
@@ -17,4 +18,4 @@ class Statistics extends Component{
   }
 }
 
-export default Statistics;
+export default service(Statistics);

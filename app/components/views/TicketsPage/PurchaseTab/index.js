@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { autobind } from "core-decorators";
 import ErrorScreen from "../../../ErrorScreen";
 import PurchasePage from "./Page";
+import service from "../../../../connectors/service";
 
 @autobind
 class Purchase extends Component{
@@ -17,4 +18,4 @@ class Purchase extends Component{
   }
 }
 
-export default Purchase;
+export default service(Purchase);
