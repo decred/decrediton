@@ -4,7 +4,6 @@ import { render } from "react-dom";
 import { Provider } from "react-redux";
 import { Router, createMemoryHistory } from "react-router";
 import { syncHistoryWithStore } from "react-router-redux";
-import { pageTransitionsRender } from "./components/PageTransitions";
 import routes from "./routes";
 import configureStore from "./store/configureStore";
 import { getCfg } from "./config.js";
@@ -334,7 +333,6 @@ render(
     <Router
       history={syncedHistory}
       routes={routes}
-      render={pageTransitionsRender()}
     />
   </Provider>,
   document.getElementById("root")
