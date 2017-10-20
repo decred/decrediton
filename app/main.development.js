@@ -340,8 +340,11 @@ ipcMain.on("check-daemon", (event, arg) => {
   let args = ["getblockcount"];
   const { rpcpassword, rpcuser, cert } = arg;
 
-  if (rpcuser || rpcpassword || cert)
-    args.push([`-u ${rpcuser}`, `-P ${rpcpassword}`, `--rpccert=${cert}`]);
+  if (rpcuser || rpcpassword || cert){
+    args.push(`-u ${rpcuser}`);
+    args.push(`-P ${rpcpassword}`);
+    args.push(`--rpccert=${cert}`);
+  }
   else
     args.push(["--configfile=" + dcrdCfg()]);
 
