@@ -67,20 +67,16 @@ decrediton --extrawalletargs='-d=debug'
 Due to potential compatibility issues, for now, all work should be
 done with electron 1.4.15.
 
+You need to install dcrd, dcrwallet and dcrctl.  
+
+- [dcrd/dcrctl installation instructions](https://github.com/decred/dcrd#updating)
+- [dcrwallet installation instructions](https://github.com/decred/dcrwallet#installation-and-updating)
+
 This has been tested on Linux and OSX.
 
 Adjust the following steps for the paths you want to use.
 
 ``` bash
-go get -u -v github.com/decred/dcrd
-go get -u -v github.com/decred/dcrwallet
-go get -u -v github.com/golang/dep/cmd/dep
-cd $GOPATH/src/github.com/decred/dcrd
-$GOPATH/bin/dep ensure
-go install . ./cmd/dcrctl/
-cd ../dcrwallet
-$GOPATH/bin/dep ensure
-go install
 mkdir code
 cd code
 git clone https://github.com/decred/decrediton.git
@@ -147,21 +143,16 @@ Then build grpc as described above.
 
 ## Building the package
 
+You need to install dcrd, dcrwallet and dcrctl.  
+
+- [dcrd/dcrctl installation instructions](https://github.com/decred/dcrd#updating)
+- [dcrwallet installation instructions](https://github.com/decred/dcrwallet#installation-and-updating)
+
 To build a packaged version of decrediton (including a dmg on OSX and
 exe on Windows), follow the development steps above.  Then build the
 dcr command line tools:
 
 ```bash
-go get -u -v github.com/decred/dcrd
-go get -u -v github.com/decred/dcrwallet
-go get -u -v github.com/Masterminds/glide
-cd $GOPATH/src/github.com/decred/dcrd
-glide i
-go install . ./cmd/dcrctl/
-cd ../dcrwallet
-glide i
-go install
-cd
 cd code/decrediton
 mkdir bin
 cp `which dcrd` bin/
