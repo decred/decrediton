@@ -12,6 +12,10 @@ import SecurityPage from "./components/views/SecurityPage";
 import SignPage from "./components/SignMessage";
 import VerifyPage from "./components/VerifyMessage";
 import TicketsPage from "./components/views/TicketsPage";
+import TicketsPurchaseTab from "./components/views/TicketsPage/PurchaseTab";
+import TicketsMyTicketsTab from "./components/views/TicketsPage/MyTicketsTab";
+import TicketsGovernanceTab from "./components/views/TicketsPage/GovernanceTab";
+import TicketsStatisticsTab from "./components/views/TicketsPage/StatisticsTab";
 import GetStartedPage from "./components/views/GetStartedPage";
 import AccountsPage from "./components/views/AccountsPage";
 import WalletError from "./components/views/WalletError";
@@ -36,7 +40,13 @@ export default (
       <Route path="verify" component={VerifyPage} />
     </Route>
     <Route path="/settings" component={SettingsPage} />
-    <Route path="/proofofstake" component={TicketsPage} />
+    <Route path="/tickets" component={TicketsPage}>
+      <IndexRedirect to="/tickets/purchase" />
+      <Route path="purchase" component={TicketsPurchaseTab} position={0}/>
+      <Route path="mytickets" component={TicketsMyTicketsTab} position={1}/>
+      <Route path="governance" component={TicketsGovernanceTab} position={2}/>
+      <Route path="statistics" component={TicketsStatisticsTab} position={3}/>
+    </Route>
     <Route path="/accounts" component={AccountsPage} />
     <Route path="/walletError" component={WalletError} />
     <Route path="/error" component={ErrorScreen} />
