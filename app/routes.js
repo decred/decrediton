@@ -33,6 +33,7 @@ export default (
     </Route>
     <Route path="/transactions/history/:txHash" component={TransactionPage} />
     <Route path="/security" component={SecurityPage}>
+      <IndexRedirect to="/security/sign"/>
       <Route path="/security/sign" component={SignPage} />
       <Route path="/security/verify" component={VerifyPage} />
     </Route>
