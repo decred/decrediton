@@ -1,5 +1,4 @@
 import React from "react";
-import TabContent from "../../../TabbedPage/TabContent";
 import ReactToolTip from "react-tooltip";
 import StakeyBounce from "../../../StakeyBounce";
 import PurchaseTicketsInfo from "../../../PurchaseTicketsInfo";
@@ -18,7 +17,7 @@ const PurchasePage = ({
   onHideStakePoolConfig,
   ...props
 }) => (
-  <TabContent>
+  <div>
     {(isSavingStakePoolConfig || isPurchasingTickets)
       ? <StakeyBounce/>
       : (isShowingStakePools)
@@ -28,7 +27,7 @@ const PurchasePage = ({
             : <Tickets {...{ stakePool, ...props }} />
     }
     <ReactToolTip type="info" effect="solid"/>
-  </TabContent>
+  </div>
 );
 
 export default PurchasePage;
