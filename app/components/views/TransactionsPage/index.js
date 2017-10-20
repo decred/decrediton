@@ -1,6 +1,6 @@
 // @flow
 import Header from "./Header";
-import RouteTransition from "containers/RT";
+import { RouteTransition } from "shared";
 
 const enterLeft = { atEnter: { offset: -100 }, atActive: { offset: 0 }, atLeave: { offset: 100 }, mapStyles: (styles) => ({ transform: `translateX(${styles.offset}%)` })};
 const enterRight = { atEnter: { offset: 100 }, atActive: { offset: 0 }, atLeave: { offset: -100 }, mapStyles: (styles) => ({ transform: `translateX(${styles.offset}%)` })};

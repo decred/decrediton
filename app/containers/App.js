@@ -7,7 +7,7 @@ import { defaultFormats } from "i18n/locales";
 import app from "connectors/app";
 import SideBar from "components/SideBar";
 import Snackbar from "components/Snackbar";
-import RouteTransition from "./RT";
+import { RouteTransition } from "shared";
 
 const opts = { stiffness: 150, damping: 15 };
 const fade = { atEnter: { opacity: 0 }, atActive: { opacity: 1 }, atLeave: { opacity: 0 }};
