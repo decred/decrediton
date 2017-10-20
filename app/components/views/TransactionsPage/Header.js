@@ -1,6 +1,6 @@
 import { spring, Motion } from "react-motion";
 import { Link } from "react-router";
-import { injectIntl, defineMessages } from "react-intl";
+import { injectIntl, defineMessages, intlShape } from "react-intl";
 import "style/Header.less";
 import headerConnector from "connectors/header";
 
@@ -75,5 +75,12 @@ class Header extends React.Component {
     );
   }
 }
+
+Header.propTypes = {
+  isTestNet: PropTypes.bool,
+  page: PropTypes.string.isRequired,
+  tabs: PropTypes.arrayOf(PropTypes.string),
+  intl: intlShape
+};
 
 export default injectIntl(headerConnector(Header));
