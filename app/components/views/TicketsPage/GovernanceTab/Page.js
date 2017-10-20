@@ -16,7 +16,7 @@ const VotingPrefsPage = ({
   onCloseAgenda,
   onUpdateVotePreference
 }) => (
-  <div className="stakepool-content-voting-gui page-content">
+  <TabContent>
     <div className="stakepool-voting-title-area">
       <div className="stakepool-voting-title-area-name">
         <T id="votingPreferences.title" m="Voting Preferences" />
@@ -59,7 +59,7 @@ const VotingPrefsPage = ({
         </div>
       )}
       </div>
-  </div>
+  </TabContent>
 );
 
 export default VotingPrefsPage;
