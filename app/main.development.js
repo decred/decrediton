@@ -102,7 +102,7 @@ app.setPath("userData", appDataDirectory());
 // Verify that config.json is valid JSON before fetching it, because
 // it will silently fail when fetching.
 let err = validateCfgFile();
-if(err !== null) {
+if (err !== null) {
   let errMessage = "There was an error while trying to load the config file, the format is invalid.\n\nFile: " + getCfgPath() + "\nError: " + err;
   dialog.showErrorBox("Config File Error", errMessage);
   app.quit();
@@ -113,8 +113,8 @@ var logger = new (winston.Logger)({
   transports: [
     new (winston.transports.File)({
       json: false,
-      filename: path.join(app.getPath("userData"),"decrediton.log"),
-      timestamp: function() {
+      filename: path.join(app.getPath("userData"), "decrediton.log"),
+      timestamp: function () {
         // Format the timestamp in local time like the dcrd and dcrwallet logs.
         let pad = (s, n) => {
           n = n || 2;
@@ -137,7 +137,7 @@ var logger = new (winston.Logger)({
 });
 
 if (debug) {
-  logger.add(winston.transports.Console, {colorize: "all"});
+  logger.add(winston.transports.Console, { colorize: "all" });
 }
 
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
@@ -213,9 +213,9 @@ function cleanShutdown() {
   closeClis();
   // Sent shutdown message again as we have seen it missed in the past if they
   // are still running.
-  setTimeout(function(){closeClis();}, cliShutDownPause*1000);
+  setTimeout(function () { closeClis(); }, cliShutDownPause * 1000);
   logger.log("info", "Closing decrediton.");
-  setTimeout(function(){app.quit();}, shutDownPause*1000);
+  setTimeout(function () { app.quit(); }, shutDownPause * 1000);
 }
 
 app.on("window-all-closed", () => {
@@ -237,30 +237,64 @@ const installExtensions = async () => {
     for (const name of extensions) { // eslint-disable-line
       try {
         await installer.default(installer[name], forceDownload);
-      } catch (e) {} // eslint-disable-line
+      } catch (e) { } // eslint-disable-line
     }
   }
 };
 
-const {ipcMain} = require("electron");
+const { ipcMain } = require("electron");
 
 ipcMain.on("start-daemon", (event, arg) => {
+  if (cfg.get("daemon_start_advanced")) {
+    logger.log("info", "Daemon starting on advanced mode as requested on config");
+    dcrdPID = -1;
+    event.returnValue = {
+      pid: dcrdPID,
+      advancedDaemon: true
+    };
+    return;
+  }
   if (cfg.get("daemon_skip_start")) {
     logger.log("info", "skipping start of dcrd as requested on config");
     dcrdPID = -1;
-    event.returnValue = dcrdPID;
+    event.returnValue = {
+      pid: dcrdPID,
+      advancedDaemon: false,
+    };
     return;
   }
   if (dcrdPID) {
-    logger.log("info", "dcrd already started " + dcrwPID);
-    event.returnValue = dcrdPID;
+    logger.log("info", "dcrd already started " + dcrdPID);
+    event.returnValue = {
+      pid: dcrdPID,
+      advancedDaemon: false,
+    };
     return;
   }
+
   logger.log("info", "launching dcrd with " + JSON.stringify(arg));
   try {
     dcrdPID = launchDCRD();
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
+  }
+  event.returnValue = {
+    pid: dcrdPID,
+    advancedDaemon: false,
+  };
+});
+
+ipcMain.on("start-daemon-advanced", (event, args) => {
+  const { rpcpassword, rpcuser, rpccert } = args;
+  logger.log("info","Start-advanced-daemon on main.developement.js\n");
+  logger.log("info","rpcuser: "+ rpcuser);
+  logger.log("info","rpcpassword: "+ rpcpassword);
+  logger.log("info","rpccert: "+ rpccert);
+  try {
+    logger.log("info", "launching dcrd with different rpcuser and rpcpassword");
+    dcrdPID = launchDCRD(rpcuser, rpcpassword, rpccert);
+  } catch (e) {
+    logger.log("error", "error stopping dcrd: " + e);
   }
   event.returnValue = dcrdPID;
 });
@@ -302,9 +336,16 @@ ipcMain.on("start-wallet", (event, arg) => {
   event.returnValue = dcrwPID;
 });
 
-ipcMain.on("check-daemon", (event) => {
+ipcMain.on("check-daemon", (event, arg) => {
+  let args = ["getblockcount"];
+  const { rpcpassword, rpcuser, cert } = arg;
+
+  if (rpcuser || rpcpassword || cert)
+    args.push([`-u ${rpcuser}`, `-P ${rpcpassword}`, `--rpccert=${cert}`]);
+  else
+    args.push(["--configfile=" + dcrdCfg()]);
+
   var spawn = require("child_process").spawn;
-  var args = ["--configfile="+dcrctlCfg(), "getblockcount"];
 
   if (cfg.get("network") === "testnet") {
     args.push("--testnet");
@@ -319,7 +360,7 @@ ipcMain.on("check-daemon", (event) => {
 
   logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
 
-  var dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
+  var dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: ["ignore", "pipe", "pipe", "pipe"] });
 
   dcrctl.stdout.on("data", (data) => {
     currentBlockCount = data.toString();
@@ -337,13 +378,20 @@ ipcMain.on("grpc-versions-determined", (event, versions) => {
   grpcVersions = { ...grpcVersions, ...versions };
 });
 
-const launchDCRD = () => {
+const launchDCRD = (rpcuser, rpcpassword, rpccert) => {
   var spawn = require("child_process").spawn;
-  var args = ["--configfile="+dcrdCfg()];
+  let args = [];
+
+  if (rpcuser || rpcpassword || rpccert)
+    args = [`-u ${rpcuser}`, `-P ${rpcpassword}`, `--rpccert=${rpccert}`];
+
+  else
+    args = ["--configfile=" + dcrdCfg()];
 
   if (cfg.get("network") === "testnet") {
     args.push("--testnet");
   }
+
   args.push("--rpclisten=" + RPCDaemonHost() + ":" + RPCDaemonPort());
 
   var dcrdExe = getExecutablePath("dcrd");
@@ -358,25 +406,29 @@ const launchDCRD = () => {
       const win32ipc = require("./node_modules/win32ipc/build/Release/win32ipc.node");
       var pipe = win32ipc.createPipe("out");
       args.push(util.format("--piperx=%d", pipe.readEnd));
-    } catch(e) {
+    } catch (e) {
       logger.log("error", "can't find proper module to launch dcrd: " + e);
     }
   }
 
-  logger.log("info", `Starting dcrd with ${args}`);
+  logger.log("info", `Starting with dcrd ${args}`);
 
   var dcrd = spawn(dcrdExe, args, {
     detached: os.platform() == "win32",
-    stdio: [ "ignore", stdout, stderr ]
+    stdio: ["ignore", stdout, stderr]
   });
 
   dcrd.on("error", function (err) {
+    // if (daemonIsAdvanced)
+    //   return;
     logger.log("error", "Error running dcrd.  Check logs and restart! " + err);
     mainWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart! " + err + "\");");
     mainWindow.webContents.executeJavaScript("window.close();");
   });
 
   dcrd.on("close", (code) => {
+    // if (daemonIsAdvanced)
+    //   return;
     if (code !== 0) {
       logger.log("error", "dcrd closed due to an error.  Check dcrd logs and contact support if the issue persists.");
       mainWindow.webContents.executeJavaScript("alert(\"dcrd closed due to an error.  Check dcrd logs and contact support if the issue persists.\");");
@@ -405,7 +457,7 @@ const launchDCRD = () => {
 
 const launchDCRWallet = () => {
   var spawn = require("child_process").spawn;
-  var args = ["--configfile="+dcrwCfg()];
+  var args = ["--configfile=" + dcrwCfg()];
 
   if (cfg.get("network") === "testnet") {
     args.push("--testnet");
@@ -449,7 +501,7 @@ const launchDCRWallet = () => {
 
   var dcrwallet = spawn(dcrwExe, args, {
     detached: os.platform() == "win32",
-    stdio: [ "ignore", stdout, stderr, "ignore" ]
+    stdio: ["ignore", stdout, stderr, "ignore"]
   });
 
   dcrwallet.on("error", function (err) {
@@ -716,7 +768,7 @@ app.on("ready", async () => {
         label: locale.messages["appMenu.about"],
         click() {
           if (!versionWin) {
-            versionWin = new BrowserWindow({width: 575, height: 275, show: false, autoHideMenuBar: true, resizable: false});
+            versionWin = new BrowserWindow({ width: 575, height: 275, show: false, autoHideMenuBar: true, resizable: false });
             versionWin.on("closed", () => {
               versionWin = null;
             });

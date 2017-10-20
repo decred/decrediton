@@ -18,14 +18,17 @@ export const versionCheckAction = () => (dispatch) =>
 export const LOADER_ATTEMPT = "LOADER_ATTEMPT";
 export const LOADER_FAILED = "LOADER_FAILED";
 export const LOADER_SUCCESS = "LOADER_SUCCESS";
+export const LOADER_ADVANCED_SUCCESS = "LOADER_ADVANCED_SUCCESS";
 
-export const loaderRequest = (address, port) => (dispatch) => {
+export const loaderRequest = (address, port) => (dispatch, getState) => {
   const request = { address, port };
   dispatch({ request, type: LOADER_ATTEMPT });
+  const { daemonAdvanced } = getState().daemon;
   return getLoader(request)
     .then(loader => {
       dispatch({ loader, type: LOADER_SUCCESS });
-      dispatch(walletExistRequest());
+      const nextRequest = daemonAdvanced ? {type: LOADER_ADVANCED_SUCCESS} : walletExistRequest();
+      dispatch(nextRequest);
     })
     .catch(error => dispatch({ error, type: LOADER_FAILED }));
 };

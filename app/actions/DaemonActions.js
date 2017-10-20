@@ -1,7 +1,10 @@
 import {versionCheckAction} from "./WalletLoaderActions";
 import * as daemon from "../wallet/daemon";
+import { RPCDaemonHost} from "config";
 
 export const DAEMONSTARTED = "DAEMONSTARTED";
+export const DAEMONSTARTED_ADVANCED = "DAEMONSTARTED_ADVANCED";
+export const DAEMONSTARTED_ADVANCED_ERROR = "DAEMONSTARTED_ADVANCED_ERROR";
 export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONSTOPPED = "DAEMONSTOPPED";
 export const DAEMONSTOPPED_ERROR = "DAEMONSTOPPED_ERROR";
@@ -15,13 +18,31 @@ export const skipDaemonSync = () => (dispatch) => {
   dispatch(startWallet());
 };
 
-export const startDaemon = (rpcuser, rpcpassword) => (dispatch) => daemon
-  .startDaemon(rpcuser, rpcpassword)
-  .then(pid => {
+export const startDaemon = () => (dispatch) => {
+  daemon.startDaemon()
+  .then(res => {
+    const {pid, advancedDaemon} = res;
     dispatch({type: DAEMONSTARTED, pid});
-    dispatch(syncDaemon(rpcuser, rpcpassword));
+    dispatch({type: DAEMONSTARTED_ADVANCED, advancedDaemon});
+    advancedDaemon ? null : dispatch(syncDaemon());
   })
   .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));
+};
+
+export const startDaemonAdvanced = ({rpcuser, rpcpassword, rpccert}) => (dispatch) => {
+  // const cert = getDcrdCert(rpccert)
+  // const pass = new Uint8Array(Buffer.from(rpcpassword))
+  const rpchost = RPCDaemonHost();
+  console.log("startDaemonAdvanced on DaemonActions.js\n");
+  console.log("rpcuser: "+ rpcuser);
+  console.log("rpcpassword: "+ rpcpassword);
+  console.log("rpccert: "+ rpccert);
+  daemon.startDaemonAdvanced(rpcuser, rpcpassword, rpccert)
+  .then( () => {
+    dispatch(syncDaemon(rpcuser, rpcpassword, rpchost, rpccert));
+  })
+  .catch(() => dispatch({type: DAEMONSTARTED_ADVANCED_ERROR}));
+};
 
 export const stopDaemon = () => (dispatch) => daemon
   .stopDaemon()
@@ -38,6 +59,10 @@ export const startWallet = (rpcuser, rpcpassword) => (dispatch) => daemon
 
 export const syncDaemon = (rpcuser, rpcpassword, host, cert) =>
   (dispatch, getState) => {
+    console.log("syncDaemon on DaemonActions.js\n");
+    console.log("rpcuser: "+ rpcuser);
+    console.log("rpcpassword: "+ rpcpassword);
+    console.log("cert: "+ cert);
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks }} = getState();
       const { daemon: { daemonSynced, timeStart, blockStart } } = getState();

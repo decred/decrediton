@@ -4,6 +4,7 @@ import {
   DAEMONSYNCING_PROGRESS,
   DAEMONSYNCED,
   WALLETREADY,
+  DAEMONSTARTED_ADVANCED
 } from "../actions/DaemonActions";
 
 export default function version(state = {}, action) {
@@ -11,6 +12,10 @@ export default function version(state = {}, action) {
   case DAEMONSTARTED:
     return {...state,
       daemonStarted: true,
+    };
+  case DAEMONSTARTED_ADVANCED:
+    return {...state,
+      daemonAdvanced: true,
     };
   case DAEMONSYNCING_START:
     return {...state,

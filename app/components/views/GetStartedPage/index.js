@@ -9,7 +9,11 @@ import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHead
 import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
 import walletStartup from "../../../connectors/walletStartup";
+import {LoginRPCHeader, LoginRPCBody } from "./LoginForm";
+import {injectIntl} from "react-intl";
+import { autobind } from "core-decorators";
 
+@autobind
 class GetStartedPage extends Component {
 
   componentWillMount() {
@@ -32,12 +36,16 @@ class GetStartedPage extends Component {
     const {
       startStepIndex,
       isPrepared,
+      isAdvancedDaemon,
       ...props
     } = this.props;
     let Header, Body;
     if (isPrepared) {
       switch(startStepIndex || 0) {
       case 0:
+        Header = LoginRPCHeader;
+        Body = LoginRPCBody;
+        break;
       case 1:
         Header = CheckWalletStateHeader;
         Body = CheckWalletStateBody;
@@ -64,8 +72,13 @@ class GetStartedPage extends Component {
         Body = FinalStartUpBody;
       }
     } else {
-      Header = DaemonLoadingHeader;
-      Body = DaemonLoadingBody;
+      if(isAdvancedDaemon){
+        Header = LoginRPCHeader;
+        Body = LoginRPCBody;
+      } else{
+        Header = DaemonLoadingHeader;
+        Body = DaemonLoadingBody;
+      }
     }
 
     return <Page Header={Header} Body={Body} {...props} />;
@@ -78,4 +91,4 @@ GetStartedPage.propTypes = {
   hideSidebarMenu: PropTypes.func.isRequired,
 };
 
-export default walletStartup(GetStartedPage);
+export default injectIntl(walletStartup(GetStartedPage));
