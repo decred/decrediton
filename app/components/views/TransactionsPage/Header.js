@@ -2,7 +2,7 @@ import { spring, Motion } from "react-motion";
 import { Link } from "react-router";
 import { injectIntl, defineMessages } from "react-intl";
 import "style/Header.less";
-import headerConnector from "connectors/transactionsPage";
+import headerConnector from "connectors/header";
 
 const opts = { stiffness: 150, damping: 20 };
 
@@ -60,7 +60,7 @@ class Header extends React.Component {
             const title = [page, "tab", tab].join(".");
             const route = ["", page, tab].join("/");
             return (
-              <div className="tabbedheader-tab" ref={ ref => this._nodes.set(tab, ref) } key={ tab }>
+              <div className="tabbedheader-ref" ref={ ref => this._nodes.set(tab, ref) } key={ tab }>
                 <Link to={ route } onClick={() => this.updateCaretPosition(tab) } className="tabbedheader-tab" >
                   { intl.formatMessage(messages[title]) }
                 </Link>
