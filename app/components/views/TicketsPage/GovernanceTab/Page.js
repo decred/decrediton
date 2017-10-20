@@ -21,13 +21,16 @@ const VotingPrefsPage = ({
       <div className="stakepool-voting-title-area-name">
         <T id="votingPreferences.title" m="Voting Preferences" />
       </div>
+      {configuredStakePools.length > 0 ?
       <div className="stakepool-unconfigured-select">
         <SelectStakePool
           options={configuredStakePools}
           value={stakePool}
           onChange={onChangeStakePool}
         />
-      </div>
+      </div> :
+      <div></div>
+      }
     </div>
     <div className="stakepool-voting-agenda-area">
       {selectedAgenda ? (
