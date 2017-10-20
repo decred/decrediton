@@ -1,6 +1,5 @@
 import StakeyBounce from "../../StakeyBounce";
 import PurchaseTicketsInfo from "../../PurchaseTicketsInfo";
-import VotingPrefs from "../../VotingPrefs";
 import StakePools from "../../StakePools";
 import TicketsPageHeader from "./Header";
 import Tickets from "./Tickets";
@@ -11,7 +10,6 @@ const TicketsPage = ({
   isSavingStakePoolConfig,
   isPurchasingTickets,
   stakePool,
-  isShowingVotingPrefs,
   isShowingTicketsInfo,
   isShowingStakePools,
   onToggleTicketStakePool,
@@ -25,8 +23,6 @@ const TicketsPage = ({
       ? <div className="page-content"><StakeyBounce/></div>
       : (isShowingStakePools)
         ? <StakePools {...{ onHideStakePoolConfig }} />
-        : isShowingVotingPrefs
-          ? <VotingPrefs />
           : isShowingTicketsInfo
             ? <PurchaseTicketsInfo closeModal={onHideTicketsInfo} />
             : <Tickets {...{ stakePool, ...props }} />
