@@ -2,15 +2,15 @@ import { createElement as h } from "react";
 import { spring, TransitionMotion } from "react-motion";
 import { object, string, func, bool } from "prop-types";
 
-const e = (styles, o) => (
+const ensureSpring = (styles, options) => (
   Object.keys(styles).reduce((acc, key) => {
     const value = styles[key];
-    acc[key] = typeof value === "number" ? spring(value, o) : value;
+    acc[key] = typeof value === "number" ? spring(value, options) : value;
     return acc;
   }, {})
 );
 
-const RT = props => {
+const RouteTransition = props => {
   const base = { data: props.children, key: props.pathname };
   const defaultStyles =
     !props.runOnMount ? null :
@@ -19,25 +19,26 @@ const RT = props => {
 
   const styles =
     !props.children ? [] :
-    [{...base, style: e(props.atActive, props.opts) }];
+    [{...base, style: ensureSpring(props.atActive, props.opts) }];
 
   const willEnter = () => props.atEnter;
-  const willLeave = () => e(props.atLeave, props.opts);
+  const willLeave = () => ensureSpring(props.atLeave, props.opts);
   const tmProps = { willEnter, willLeave, defaultStyles, styles };
   const route = ({ key, style, data }) => {
-    const routeProps = {...{key}, style: props.mapStyles(style) }; return h("div", routeProps, data);
+    const routeProps = {...{key}, style: props.mapStyles(style) };
+    return h("div", routeProps, data);
   };
   const routes = routes => h("div", null, routes.map(route));
   return h(TransitionMotion, tmProps, routes);
 };
 
-RT.defaultProps = {
+RouteTransition.defaultProps = {
   runOnMount: true,
   mapStyles: val => val,
   opts: { stiffness: 40, damping: 26 }
 };
 
-RT.propTypes = {
+RouteTransition.propTypes = {
   atEnter: object.isRequired,
   atActive: object.isRequired,
   atLeave: object.isRequired,
@@ -47,4 +48,4 @@ RT.propTypes = {
   opts: object
 };
 
-export default RT;
+export default RouteTransition;

@@ -19,11 +19,19 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this._nodes = new Map();
-    this.state = { caretLeft: null, caretWidth: null };
+    this.state = { caretLeft: null, caretWidth: null, selectedTab: null };
   }
   componentDidMount() {
     this.updateCaretPosition(this.props.pathname);
   }
+
+  componentDidUpdate() {
+    if (this.state.selectedTab != this.props.pathname) {
+      const caretPosition = this.neededCaretPosition(this.props.pathname);
+      this.setState({ selectedTab: this.props.pathname, ...caretPosition });
+    }
+  }
+
   updateCaretPosition(tab) {
     const caretPosition = this.neededCaretPosition(tab);
     if (caretPosition) this.setState(caretPosition);
