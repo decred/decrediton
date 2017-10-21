@@ -1,12 +1,27 @@
 // @flow
 import axios from "axios";
 import querystring from "querystring";
+
+// stakepPoolInfoResponseToConfig converts a response object for the
+// stakePoolInfo call into an object array of available stakepool configs.
+function stakepPoolInfoResponseToConfig(response) {
+  var stakePoolNames = Object.keys(response.data);
+
+  return stakePoolNames.map(name => {
+    let { APIEnabled, URL, Network, APIVersionsSupported } = response.data[name];
+    return !APIEnabled
+      ? null
+      : {Host: URL, Network, APIVersionsSupported};
+  }).filter(v => v);
+}
+
 export function stakePoolInfo(cb) {
   axios.get("https://api.decred.org/?c=gsd")
     .then(function (response) {
-      cb(response);
+      cb(stakepPoolInfoResponseToConfig(response));
     })
     .catch(function (error) {
+      console.log("Error contacting remote stakepools api.", error);
       cb(null, error);
     });
 

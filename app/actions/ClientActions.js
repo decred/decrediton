@@ -7,11 +7,11 @@ import { push as pushHistory } from "react-router-redux";
 import {
   PingRequest, NetworkRequest, AccountNumberRequest, AccountsRequest,
   BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest,
-  AgendasRequest, VoteChoicesRequest, SetVoteChoicesRequest,
+  AgendasRequest, VoteChoicesRequest, SetVoteChoicesRequest, GetTicketsRequest,
 } from "../middleware/walletrpc/api_pb";
-import { TransactionDetails }  from "../middleware/walletrpc/api_pb";
+import { TransactionDetails, GetTicketsResponse }  from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
-
+import { reverseHash } from "../helpers/byteActions.js";
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
 export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
@@ -21,6 +21,7 @@ function getWalletServiceSuccess(walletService) {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
     setTimeout(() => { dispatch(getAccountsAttempt()); }, 10);
     setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 20);
+    setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 20);
     setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNextAddressAttempt(0)); }, 1000);
     setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
@@ -319,6 +320,77 @@ export function showAccount(accountNumber) {
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
     dispatch(getAccountsAttempt());
+  };
+}
+
+export const GETTICKETS_ATTEMPT = "GETTICKETS_ATTEMPT";
+export const GETTICKETS_FAILED = "GETTICKETS_FAILED";
+export const GETTICKETS_COMPLETE = "GETTICKETS_COMPLETE";
+
+export function getTicketsInfoAttempt() {
+  return (dispatch, getState) => {
+    const { getAccountsResponse, getTicketsRequestAttempt } = getState().grpc;
+    if (getTicketsRequestAttempt) return;
+    var startRequestHeight, endRequestHeight = 0;
+    // Check to make sure getAccountsResponse (which has current block height) is available
+    if (getAccountsResponse !== null) {
+      endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
+      startRequestHeight = 0;
+    } else {
+      // Wait a little then re-dispatch this call since we have no starting height yet
+      setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 1000);
+      return;
+    }
+    var request = new GetTicketsRequest();
+    request.setStartingBlockHeight(startRequestHeight);
+    request.setEndingBlockHeight(endRequestHeight);
+    dispatch({ type: GETTICKETS_ATTEMPT });
+    const { walletService } = getState().grpc;
+    var getTx = walletService.getTickets(request);
+    var tickets = Array();
+    getTx.on("data", function (response) {
+      var ticketStatus = "Live";
+      switch (response.getTicket().getTicketStatus()) {
+      case GetTicketsResponse.TicketDetails.TicketStatus.UNKNOWN:
+        ticketStatus = "Unknown";
+        break;
+      case GetTicketsResponse.TicketDetails.TicketStatus.UNMINED:
+        ticketStatus = "Unmined";
+        break;
+      case GetTicketsResponse.TicketDetails.TicketStatus.IMMATURE:
+        ticketStatus = "Immature";
+        break;
+      case GetTicketsResponse.TicketDetails.TicketStatus.VOTED:
+        ticketStatus = "Voted";
+        break;
+      case GetTicketsResponse.TicketDetails.TicketStatus.EXPIRED:
+        ticketStatus = "Expired";
+        break;
+      case GetTicketsResponse.TicketDetails.TicketStatus.MISSED:
+        ticketStatus = "Missed";
+        break;
+      case GetTicketsResponse.TicketDetails.TicketStatus.REVOKED:
+        ticketStatus = "Revoked";
+        break;
+      }
+      var newTicket = {
+        status: ticketStatus,
+        ticket: response.getTicket().getTicket(),
+        spender: response.getTicket().getSpender(),
+      };
+      console.log(
+      ticketStatus,
+      reverseHash(Buffer.from(response.getTicket().getTicket().getHash()).toString("hex")),
+      reverseHash(Buffer.from(response.getTicket().getSpender().getHash()).toString("hex")));
+      tickets.unshift(newTicket);
+    });
+    getTx.on("end", function () {
+      console.log(tickets.length);
+      setTimeout(() => { dispatch({ tickets: tickets, type: GETTICKETS_COMPLETE });}, 1000);
+    });
+    getTx.on("error", function (error) {
+      console.error(error + " Please try again");
+    });
   };
 }
 
