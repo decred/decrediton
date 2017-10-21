@@ -17,6 +17,11 @@
   background-image: @accounts-button-hover-icon;
 }
 
+.clipboard-box {
+  position: relative;
+  display: inline-block;
+}
+
 .copy-to-clipboard-icon {
   display: inline-block;
   width: 20px;
@@ -30,6 +35,23 @@
 
 .copy-to-clipboard-icon:hover {
   background-image: @copy-to-clipboard-hover-icon;
+}
+
+.copy-to-clipboard-success {
+  font-size: 12px;
+  color: #fff;
+  background-color: #69d3f5;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  padding: 5px 10px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, -4px);
+}
+
+.copy-to-clipboard-success.hidden {
+  display: none;
 }
 
 .help-link {

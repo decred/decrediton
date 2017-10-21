@@ -1,51 +1,37 @@
 // @flow
-import React, { Component } from "react";
-import { PropTypes } from "prop-types";
 import copy from "clipboard-copy";
-import { autobind } from "core-decorators";
 import { FormattedMessage as T } from "react-intl";
-import { Aux } from "shared";
-import "../style/MiscComponents.less";
+import "style/MiscComponents.less";
 
 @autobind
-class CopyToClipboardButton extends Component {
-
-  static propTypes = {
-    textToCopy: PropTypes.string.isRequired,
-  };
-
+class CopyToClipboard extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      successState: "hidden"
-    };
-  }
-
-  render() {
-    const successBannerClassname = ["copy-to-clipboard-success", this.state.successState].join(" ");
-    const buttonclassName = ["copy-to-clipboard-icon", this.props.className].join(" ");
-    return (
-      <Aux>
-        <div className={ successBannerClassname }>
-          <T id="clipboard.copied" m="Copied" />
-        </div>
-        <a className={ buttonclassName } onClick={this.onClick} onMouseLeave={this.onMouseLeave} />
-      </Aux>
-    );
+    this.state = { success: "hidden" };
   }
 
   onClick() {
-    if(copy(this.props.textToCopy)) {
-      this.setState({ showTooltip: "success" });
-    }
+    if (copy(this.props.textToCopy)) this.setState({ success: "" });
   }
 
   onMouseLeave() {
-    if(this.state.showTooltip) {
-      this.setState({ showTooltip: "hidden" });
-    }
+    if (this.state.success === "") this.setState({ success: "hidden" });
+  }
+
+  render() {
+    const successBanner = ["copy-to-clipboard-success", this.state.success].join(" ");
+    const button = ["clipboard-box", this.props.className].join(" ");
+    return (
+      <div className={ button }>
+        <div className={ successBanner }>
+          <T id="clipboard.copied" m="Copied" />
+        </div>
+        <a className="copy-to-clipboard-icon" onClick={this.onClick} onMouseLeave={this.onMouseLeave} />
+      </div>
+    );
   }
 }
 
-export default CopyToClipboardButton;
+CopyToClipboard.propTypes = { textToCopy: PropTypes.string.isRequired };
+
+export default CopyToClipboard;
