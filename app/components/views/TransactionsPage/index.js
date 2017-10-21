@@ -9,6 +9,7 @@ const opts = { stiffness: 150, damping: 20 };
 const Transactions = ({ children, location }) => {
   const tabs = ["send", "receive"];
   const page = "transactions";
+  // this will be removed w/ react router 4
   const pathname = location.pathname.split("/")[2];
   const effect = pathname === "send" ? enterLeft : enterRight;
   return (
