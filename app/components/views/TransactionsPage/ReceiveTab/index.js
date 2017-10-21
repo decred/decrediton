@@ -11,13 +11,12 @@ class Receive extends Component{
     const { walletService } = this.props;
     const { onRequestAddress } = this;
 
-    return walletService
-      ? <ReceivePage {...{
+    return !walletService ? <ErrorScreen /> :
+      <ReceivePage {...{
         ...this.props,
         ...this.state,
         onRequestAddress
-      }} />
-      : <ErrorScreen />;
+      }} />;
   }
 
   onRequestAddress () {

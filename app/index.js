@@ -1,10 +1,8 @@
 // @flow
-import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
 import { Router, createMemoryHistory } from "react-router";
 import { syncHistoryWithStore } from "react-router-redux";
-import { pageTransitionsRender } from "./components/PageTransitions";
 import routes from "./routes";
 import configureStore from "./store/configureStore";
 import { getCfg } from "./config.js";
@@ -331,11 +329,7 @@ const syncedHistory = syncHistoryWithStore(history, store);
 
 render(
   <Provider store={store}>
-    <Router
-      history={syncedHistory}
-      routes={routes}
-      render={pageTransitionsRender()}
-    />
+    <Router history={syncedHistory} routes={routes} />
   </Provider>,
   document.getElementById("root")
 );

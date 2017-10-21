@@ -7,7 +7,6 @@ import Balance from "../../../Balance";
 import KeyBlueButton from "../../../KeyBlueButton";
 import PassphraseModal from "../../../PassphraseModal";
 import OutputRow from "./OutputRow";
-import TabContent from "../../../TabbedPage/TabContent";
 import OutputAccountRow from "./OutputAccountRow";
 import "../../../../style/SendPage.less";
 import "../../../../style/MiscComponents.less";
@@ -66,8 +65,8 @@ const SendPage = ({
           <T id="send.confirmAmountLabel" m="Please confirm your transaction for" />
           : <Balance amount={totalSpent} /></div>}
       />
-    <TabContent>
 
+    <div className="tab-content-wrapper">
     {(isSendingTransaction) ? (
       <DecredLoading />
     ) : (
@@ -138,8 +137,8 @@ const SendPage = ({
           </div>
         </div>
     )}
-    < ReactTooltip />
-    </TabContent>
+    <ReactTooltip />
+    </div>
   </div>
 );
 

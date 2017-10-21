@@ -1,7 +1,5 @@
 // @flow
-import React from "react";
 import { Route, IndexRoute, IndexRedirect } from "react-router";
-import { withTransition } from "react-router-transitions";
 import App from "./containers/App";
 import HomePage from "./components/views/HomePage";
 import HistoryPage from "./components/views/HistoryPage";
@@ -22,20 +20,20 @@ import ErrorScreen from "./components/ErrorScreen";
 import InvalidRPCVersion from "./components/views/InvalidRPCVersion";
 
 export default (
-  <Route path="/" component={withTransition(App)}>
+  <Route path="/" component={App}>
     <IndexRoute component={GetStartedPage} />
     <Route path="/home" component={HomePage} />
     <Route path="/history" component={HistoryPage} />
     <Route path="/transactions" component={TransactionsPage}>
-      <IndexRedirect to="/transactions/send" />
-      <Route path="send" component={TransactionsSendTab} position={0}/>
-      <Route path="receive" component={TransactionsReceiveTab} position={1}/>
+      <IndexRedirect to="send" />
+      <Route path="send" component={TransactionsSendTab}/>
+      <Route path="receive" component={TransactionsReceiveTab}/>
     </Route>
     <Route path="/transactions/history/:txHash" component={TransactionPage} />
     <Route path="/security" component={SecurityPage}>
-      <IndexRedirect to="/security/sign"/>
-      <Route path="/security/sign" component={SignPage} />
-      <Route path="/security/verify" component={VerifyPage} />
+      <IndexRedirect to="sign"/>
+      <Route path="sign" component={SignPage} />
+      <Route path="verify" component={VerifyPage} />
     </Route>
     <Route path="/settings" component={SettingsPage} />
     <Route path="/proofofstake" component={TicketsPage} />

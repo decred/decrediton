@@ -1,15 +1,14 @@
 import React from "react";
-import TabContent from "../../../TabbedPage/TabContent";
 import ReactTooltip from "react-tooltip";
-import ReceiveAccountsSelect from "../../../ReceiveAccountsSelect";
+import ReceiveAccountsSelect from "ReceiveAccountsSelect";
 import { Link } from "react-router";
-import KeyBlueButton from "../../../KeyBlueButton";
-import CopyToClipboardButton from "../../../CopyToClipboardButton";
+import KeyBlueButton from "KeyBlueButton";
+import CopyToClipboardButton from "CopyToClipboardButton";
 import QRCode from "./QRCode";
 import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";
-import "../../../../style/Layout.less";
-import "../../../../style/ReceivePage.less";
-import "../../../../style/MiscComponents.less";
+import "style/Layout.less";
+import "style/ReceivePage.less";
+import "style/MiscComponents.less";
 
 const messages = defineMessages({
   accountsTip: {
@@ -23,7 +22,7 @@ const ReceivePage = ({
                        intl,
                        onRequestAddress,
                      }) => (
-  <TabContent>
+  <div className="tab-content-wrapper">
     <div className="receive-content-nest">
       <div className="receive-content-nest-for-address">
         <Link
@@ -61,7 +60,7 @@ const ReceivePage = ({
       </KeyBlueButton>
     </div>
     <ReactTooltip />
-  </TabContent>
+  </div>
 );
 
 export default injectIntl(ReceivePage);
