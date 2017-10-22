@@ -247,7 +247,7 @@ const { ipcMain } = require("electron");
 ipcMain.on("start-daemon", (event, arg) => {
   if (cfg.get("daemon_start_advanced")) {
     logger.log("info", "Daemon starting on advanced mode as requested on config");
-    dcrdPID = -1;
+    dcrdPID = dcrdPID ? dcrdPID : -1;
     event.returnValue = {
       pid: dcrdPID,
       advancedDaemon: true
@@ -286,10 +286,11 @@ ipcMain.on("start-daemon", (event, arg) => {
 
 ipcMain.on("start-daemon-advanced", (event, args) => {
   const { rpcpassword, rpcuser, rpccert } = args;
-  logger.log("info","Start-advanced-daemon on main.developement.js\n");
-  logger.log("info","rpcuser: "+ rpcuser);
-  logger.log("info","rpcpassword: "+ rpcpassword);
-  logger.log("info","rpccert: "+ rpccert);
+  if (dcrdPID && dcrdPID !== -1) {
+    logger.log("info", "dcrd already started " + dcrdPID);
+    event.returnValue = dcrdPID;
+    return;
+  }
   try {
     logger.log("info", "launching dcrd with different rpcuser and rpcpassword");
     dcrdPID = launchDCRD(rpcuser, rpcpassword, rpccert);

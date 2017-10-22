@@ -9,10 +9,6 @@ export const startDaemon = () => Promise
   });
 
 export const startDaemonAdvanced = (rpcuser, rpcpassword, rpccert) => {
-  console.log("Start-advanced-daemon on daemon.js\n");
-  console.log("rpcuser: "+ rpcuser);
-  console.log("rpcpassword: "+ rpcpassword);
-  console.log("rpccert: "+ rpccert);
   return Promise
     .resolve(ipcRenderer
       .sendSync("start-daemon-advanced", { rpcuser, rpcpassword, rpccert }))

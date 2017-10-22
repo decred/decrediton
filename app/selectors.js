@@ -18,7 +18,6 @@ export const isPrepared = and(
   getDaemonStarted,
   getDaemonSynced,
   getWalletReady,
-  !isAdvancedDaemon
 );
 
 const START_STEP_OPEN = 2;

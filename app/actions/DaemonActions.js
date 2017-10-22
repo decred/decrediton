@@ -12,6 +12,7 @@ export const DAEMONSYNCING_START = "DAEMONSYNCING_START";
 export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
+export const LOADER_ADVANCED_SUCCESS = "LOADER_ADVANCED_SUCCESS";
 
 export const skipDaemonSync = () => (dispatch) => {
   dispatch({type: DAEMONSYNCED});
@@ -30,16 +31,11 @@ export const startDaemon = () => (dispatch) => {
 };
 
 export const startDaemonAdvanced = ({rpcuser, rpcpassword, rpccert}) => (dispatch) => {
-  // const cert = getDcrdCert(rpccert)
-  // const pass = new Uint8Array(Buffer.from(rpcpassword))
   const rpchost = RPCDaemonHost();
-  console.log("startDaemonAdvanced on DaemonActions.js\n");
-  console.log("rpcuser: "+ rpcuser);
-  console.log("rpcpassword: "+ rpcpassword);
-  console.log("rpccert: "+ rpccert);
   daemon.startDaemonAdvanced(rpcuser, rpcpassword, rpccert)
   .then( () => {
     dispatch(syncDaemon(rpcuser, rpcpassword, rpchost, rpccert));
+    dispatch({type: LOADER_ADVANCED_SUCCESS});
   })
   .catch(() => dispatch({type: DAEMONSTARTED_ADVANCED_ERROR}));
 };
@@ -55,14 +51,13 @@ export const startWallet = (rpcuser, rpcpassword) => (dispatch) => daemon
     dispatch({type: WALLETREADY, pid});
     setTimeout(()=>dispatch(versionCheckAction()), 1000);
   })
-  .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));
+  .catch((err) => {
+    console.log(err);
+    dispatch({type: "DAEMONSTARTED_ERROR_ON_START_WALLET"});
+  });
 
 export const syncDaemon = (rpcuser, rpcpassword, host, cert) =>
   (dispatch, getState) => {
-    console.log("syncDaemon on DaemonActions.js\n");
-    console.log("rpcuser: "+ rpcuser);
-    console.log("rpcpassword: "+ rpcpassword);
-    console.log("cert: "+ cert);
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks }} = getState();
       const { daemon: { daemonSynced, timeStart, blockStart } } = getState();
@@ -71,6 +66,7 @@ export const syncDaemon = (rpcuser, rpcpassword, host, cert) =>
       return daemon
         .getBlockCount(rpcuser, rpcpassword, host, cert)
         .then(updateCurrentBlockCount => {
+          console.log('getBlockCount RESPONSE:'+ updateCurrentBlockCount)
           if (updateCurrentBlockCount >= neededBlocks) {
             dispatch({type: DAEMONSYNCED});
             dispatch(startWallet());
