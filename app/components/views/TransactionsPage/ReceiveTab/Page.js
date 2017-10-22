@@ -12,7 +12,7 @@ const ReceivePage = ({
                        nextAddress,
                        onRequestAddress,
                      }) => (
-  <div className="tab-content-wrapper">
+  <div className="tab-card">
     <div className="receive-content-nest">
       <div className="receive-content-nest-for-address">
         <Tooltip text={ <T id="receive.accounts.tip" m="Accounts" /> }>

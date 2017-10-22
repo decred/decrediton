@@ -1,5 +1,3 @@
-import React, { Component } from "react";
-import { autobind } from "core-decorators";
 import { compose, not, eq, get } from "fp";
 import { service, settings, send } from "connectors";
 import SendPage from "./Page";
@@ -10,7 +8,7 @@ import { FormattedMessage as T } from "react-intl";
 const BASE_OUTPUT = { destination: "", amountStr: "" };
 
 @autobind
-class Send extends Component {
+class Send extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();

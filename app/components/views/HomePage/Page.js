@@ -7,14 +7,14 @@ import Balance from "../../Balance";
 import TxHistory from "../../TxHistory";
 import Header from "../../Header";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "shared";
+import { Tooltip, Aux } from "shared";
 import "style/Layout.less";
 import "style/Fonts.less";
 import "style/HomePage.less";
 
-const rescanBtnMessage =`Rescanning may help resolve some balance errors.
-      <br><br>Note: This scans the entire blockchain for transactions,
-      but does not re-download it.`;
+const rescanBtnMessage =
+  `Rescanning may help resolve some balance errors.
+  Note: This scans the entire blockchain for transactions, but does not re-download it.`;
 
 const HomePage = ({
   synced,
@@ -37,7 +37,7 @@ const HomePage = ({
   onClearRevokeTicketsSuccess
 }) => {
   return (
-    <div className="page-view">
+    <Aux>
       <PassphraseModal
         hidden={!isRequestingPassphrase}
         submitPassphrase={passphraseCallback}
@@ -68,8 +68,9 @@ const HomePage = ({
         headerMetaOverview={
           <div>
             <Balance amount={spendableTotalBalance} />
-            <Tooltip text={ <T id="home.rescanBtn.tip" m={ rescanBtnMessage} /> } disabled={ rescanRequest }>
-              <KeyBlueButton disabled={rescanRequest} onClick={() => rescanAttempt(0)} className="home-rescan-button-area">
+            <Tooltip text={ <T id="home.rescanBtn.tip" m={ rescanBtnMessage} /> } disabled={ rescanRequest }
+              className="home-rescan-button-area" tipWidth={ 300 }>
+              <KeyBlueButton disabled={rescanRequest} onClick={() => rescanAttempt(0)}>
                 <T id="home.rescanBtn" m="Rescan Blockchain" />
               </KeyBlueButton>
             </Tooltip>
@@ -104,7 +105,7 @@ const HomePage = ({
             </div>
           </div>
         )}
-    </div>
+    </Aux>
   );
 };
 

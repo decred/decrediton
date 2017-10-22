@@ -71,7 +71,7 @@ const TicketAutoBuyerForm = ({
           {isHidingDetails ? (
             <div>
               <Tooltip text={<T id="autobuyer.balanceToMaintain" m="Balance to Maintain" /> }>
-                <div className="stakepool-balance-to-maintain-icon" data-html={true}>{balanceToMaintain}</div>
+                <div className="stakepool-balance-to-maintain-icon">{balanceToMaintain}</div>
               </Tooltip>
               <Tooltip text={<T id="autobuyer.maxFee" m="Max Fee" /> }>
                 <div className="stakepool-max-fee-icon">{maxFee} DCR</div>

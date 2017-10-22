@@ -6,7 +6,7 @@ import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { Tooltip } from "shared";
 import "style/GetStarted.less";
 
-const skipButtonMessage = `ATTENTION<br>
+const skipButtonMessage = `ATTENTION
   You may skip the initial blockchain download, but be aware that
   all transactions may not be found until the chain is fully synced.
   As a result, your balance may be incorrect until fully synced.`;

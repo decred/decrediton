@@ -55,7 +55,7 @@ const PurchaseTicketsForm = ({
   intl: { formatMessage }
 }) => {
 
-  const v = e => e.target.value
+  const v = e => e.target.value;
   const changeTicketFee = e => onChangeTicketFee(v(e));
   const changeTxFee = e => onChangeTxFee(v(e));
   const changeExpiry = e => onChangeExpiry(v(e));

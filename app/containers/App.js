@@ -13,6 +13,8 @@ const opts = { stiffness: 150, damping: 15 };
 const fade = { atEnter: { opacity: 0 }, atActive: { opacity: 1 }, atLeave: { opacity: 0 }};
 const rootPath = ({ pathname }) => pathname.split("/")[1];
 
+const wrapperComponent = props => <div className="page-view" { ...props } />;
+
 class App extends Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
@@ -33,7 +35,7 @@ class App extends Component {
           <div className="page-body">
             <SideBar />
             <Snackbar />
-            <RouteTransition {...{ pathname, opts, ...fade }}>
+            <RouteTransition className="page-container" {...{ wrapperComponent, pathname, opts, ...fade }}>
               { this.props.children }
             </RouteTransition>
           </div>

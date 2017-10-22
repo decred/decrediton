@@ -5,6 +5,7 @@ import MenuLink from "../MenuLink";
 import "../../style/Fonts.less";
 import "../../style/SideBar.less";
 import RescanProgress from "../RescanProgress";
+import { Aux } from "shared";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
 
 const Bar = ({
@@ -24,8 +25,8 @@ const Bar = ({
   <div className={"sidebar-menu " + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
   <div className="sidebar-menu-logo"></div>
   {isTestNet ? <div className="sidebar-testnet-text">Testnet</div> : null}
-  {(!showingSidebarMenu) ? null : (
-    <div>
+  { showingSidebarMenu &&
+    <Aux>
       <div className="sidebar-menu-navigation">
         <MenuLink to="/home"><T id="menu.overview" m="Overview"/></MenuLink>
         <MenuLink to="/accounts"><T id="menu.accounts" m="Accounts"/></MenuLink>
@@ -35,15 +36,15 @@ const Bar = ({
         <MenuLink to="/security"><T id="menu.securitycenter" m="Security Center"/></MenuLink>
         <MenuLink to="/settings"><T id="menu.settings" m="Settings"/></MenuLink>
         <MenuLink to="/help"><T id="menu.help" m="Help"/></MenuLink>
-      </div>
-      <div className="sidebar-menu-total-balance-extended" style={{ display: isShowingAccounts ? "block" : "none" }}>
-        <div className="sidebar-menu-total-balance-extended-bottom">
-          {balances.map(({ hidden, total, accountName }) => hidden ? null : (
-            <div className="sidebar-menu-total-balance-extended-bottom-account" key={accountName}>
-              <div className="sidebar-menu-total-balance-extended-bottom-account-name">{accountName}</div>
-              <div className="sidebar-menu-total-balance-extended-bottom-account-number">{total / 100000000}</div>
-            </div>
-          ))}
+        <div className="sidebar-menu-total-balance-extended" style={{ display: isShowingAccounts ? "block" : "none" }}>
+          <div className="sidebar-menu-total-balance-extended-bottom">
+            {balances.map(({ hidden, total, accountName }) => hidden ? null : (
+              <div className="sidebar-menu-total-balance-extended-bottom-account" key={accountName}>
+                <div className="sidebar-menu-total-balance-extended-bottom-account-name">{accountName}</div>
+                <div className="sidebar-menu-total-balance-extended-bottom-account-number">{total / 100000000}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <div className="sidebar-menu-bottom">
@@ -82,8 +83,7 @@ const Bar = ({
           ) : null}
         </div>
       </div>
-    </div>
-  )}
+    </Aux> }
 </div>
 );
 

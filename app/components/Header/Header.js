@@ -2,6 +2,7 @@
 import React from "react";
 import Snackbar from "material-ui/Snackbar";
 import Notification from "./Notification";
+import { Aux } from "shared";
 import "../../style/Header.less";
 import "../../style/Snackbar.less";
 
@@ -22,7 +23,7 @@ const Header = ({
   onDismissMessage,
   children
 }) => (
-  <div>
+  <Aux>
     <Snackbar
       className={snackbarClasses(message || "")}
       open={!!message}
@@ -37,7 +38,7 @@ const Header = ({
       <div className="header-meta-overview">{headerMetaOverview}</div>
       {children}
     </div>
-  </div>
+  </Aux>
 );
 
 export default Header;

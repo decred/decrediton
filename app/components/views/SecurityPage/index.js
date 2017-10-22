@@ -1,5 +1,6 @@
 import SecurityPageHeader from "./Header";
 import { securityPage } from "connectors";
+import { Aux } from "shared";
 import "style/Layout.less";
 import "style/StakePool.less";
 
@@ -9,10 +10,10 @@ const SecurityPage = ({
   children,
 }) => {
   return (
-    <div className="page-view">
+    <Aux>
       <SecurityPageHeader {...{ onToggleSecurityMessage, location }} />
       {children}
-    </div>
+    </Aux>
   );
 };
 
