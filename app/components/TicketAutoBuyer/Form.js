@@ -2,6 +2,7 @@ import React from "react";
 import TicketsCogs from "../TicketsCogs";
 import AutoBuyerSwitch from "../AutoBuyerSwitch";
 import KeyBlueButton from "../KeyBlueButton";
+import { Tooltip } from "shared";
 import {defineMessages, FormattedMessage as T} from "react-intl";
 import "../../style/StakePool.less";
 

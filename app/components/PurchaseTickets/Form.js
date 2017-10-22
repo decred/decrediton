@@ -1,4 +1,3 @@
-import React from "react";
 import AccountsSelect from "../AccountsSelect";
 import NumTicketsInput from "../NumTicketsInput";
 import ManagePoolsButton from "../ManagePoolsButton";
@@ -6,60 +5,24 @@ import SelectStakePool from "../SelectStakePool";
 import KeyBlueButton from "../KeyBlueButton";
 import PurchaseTicketsInfoButton from "../PurchaseTicketsInfoButton";
 import TicketsCogs from "../TicketsCogs";
-import { FormattedMessage as T, defineMessages } from "react-intl";
-import { LinkToAccounts } from "shared";
-import "../../style/StakePool.less";
-import { addSpacingAroundText } from "../../helpers/strings";
+import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
+import { LinkToAccounts, Tooltip } from "shared";
+import { addSpacingAroundText } from "helpers/strings";
+import "style/StakePool.less";
 
 const messages = defineMessages({
-  currentStakepool: {
-    id: "purchaseTickets.currentStakepool",
-    defaultMessage: "Current StakePool",
-  },
-  currentFee: {
-    id: "purchaseTickets.currentFee",
-    defaultMessage: "Current Fee",
-  },
-  txFeeTip: {
-    id: "purchaseTickets.txFeeTip",
-    defaultMessage: "Tx Fee",
-  },
   txFeePlaceholder: {
     id: "purchaseTickets.txFeePlaceholder",
     defaultMessage: "Tx Fee",
-  },
-  ticketFeeTip: {
-    id: "purchaseTickets.ticketFeeTip",
-    defaultMessage: "Ticket Fee",
   },
   ticketFeePlaceholder: {
     id: "purchaseTickets.ticketFeePlaceholder",
     defaultMessage: "Ticket Fee",
   },
-  expiry: {
-    id: "purchaseTickets.expiry",
-    defaultMessage: "Expiry",
-  },
   expiryPlaceholder: {
     id: "purchaseTickets.expiryPlaceholder",
     defaultMessage: "Expiry",
   },
-  ticketAddress: {
-    id: "purchaseTickets.ticketAddress",
-    defaultMessage: "Ticket Address",
-  },
-  poolAddress: {
-    id: "purchaseTickets.poolAddress",
-    defaultMessage: "Pool Address",
-  },
-  poolFee: {
-    id: "purchaseTickets.poolFee",
-    defaultMessage: "Pool Fee",
-  },
-  importDisabledRescan: {
-    id: "purchaseTickets.importDisabledRescan",
-    defaultMessage: "Importing scripts is disabled during a rescan."
-  }
 });
 
 const PurchaseTicketsForm = ({
@@ -76,7 +39,6 @@ const PurchaseTicketsForm = ({
   txFeeError,
   expiryError,
   rescanRequest,
-  formatMessage,
   onIncrementNumTickets,
   onDecrementNumTickets,
   onShowStakePoolConfig,
@@ -89,8 +51,16 @@ const PurchaseTicketsForm = ({
   onShowImportScript,
   onShowRevokeTicket,
   onToggleShowAdvanced,
-  onShowTicketsInfo
-}) => (
+  onShowTicketsInfo,
+  intl: { formatMessage }
+}) => {
+
+  const v = e => e.target.value
+  const changeTicketFee = e => onChangeTicketFee(v(e));
+  const changeTxFee = e => onChangeTxFee(v(e));
+  const changeExpiry = e => onChangeExpiry(v(e));
+
+  return (
   <div>
     <div className="stakepool-voting-title-area">
       <div className="stakepool-voting-title-area-name">
@@ -149,7 +119,7 @@ const PurchaseTicketsForm = ({
                   className="stakepool-content-nest-purchase-ticket-form"
                   placeholder={formatMessage(messages.ticketFeePlaceholder)}
                   value={ticketFee}
-                  onChange={e => onChangeTicketFee(e.target.value)}
+                  onChange={ changeTicketFee }
                 />
               </div>
             </div>
@@ -167,7 +137,7 @@ const PurchaseTicketsForm = ({
                   className="stakepool-content-nest-purchase-ticket-form"
                   placeholder={formatMessage(messages.txFeePlaceholder)}
                   value={txFee}
-                  onChange={e => onChangeTxFee(e.target.value)}
+                  onChange={ changeTxFee }
                 />
               </div>
             </div>
@@ -185,7 +155,7 @@ const PurchaseTicketsForm = ({
                   className="stakepool-content-nest-purchase-ticket-form"
                   placeholder={formatMessage(messages.expiryPlaceholder)}
                   value={expiry}
-                  onChange={e => onChangeExpiry(e.target.value)}
+                  onChange={ changeExpiry }
                 />
               </div>
             </div>
@@ -238,56 +208,56 @@ const PurchaseTicketsForm = ({
           </div>
         </div>
       </div>
-      <div hidden={isShowingAdvanced ? true : false} className="stakepool-purchase-ticket-quick-bar-row">
+      <div hidden={ isShowingAdvanced } className="stakepool-purchase-ticket-quick-bar-row">
         <div className="stakepool-quick-bar-row-label"><T id="purchaseTickets.settings" m="Settings" />:</div>
-        <div className="stakepool-icon" data-tip={formatMessage(messages.currentStakepool)}>{stakePool ? stakePool.value.Host : null}</div>
-        <div className="stakepool-fee-icon" data-tip={formatMessage(messages.ticketFeeTip)}>{ticketFee} DCR/KB</div>
-        <div className="stakepool-fee-icon" data-tip={formatMessage(messages.txFeeTip)}>{txFee} DCR/KB</div>
-        <div className="stakepool-expiry-icon" data-tip={formatMessage(messages.expiry)}>{expiry} Blocks</div>
-        <div className="stakepool-ticket-address-icon" data-tip={formatMessage(messages.ticketAddress)}>{stakePool ? addSpacingAroundText(stakePool.value.TicketAddress) : null}</div>
-        <div className="stakepool-fee-address-icon" data-tip={formatMessage(messages.poolAddress)}>{stakePool ? addSpacingAroundText(stakePool.value.PoolAddress) : null}</div>
-        <div className="stakepool-pool-fee-icon" data-tip={formatMessage(messages.poolFee)}>{stakePool ? stakePool.value.PoolFees : null}%</div>
+        <Tooltip text={ <T id="purchaseTickets.currentStakepool" m="Current StakePool" /> }>
+          <div className="stakepool-icon">{ stakePool && stakePool.value.Host }</div>
+        </Tooltip>
+        <Tooltip text={ <T id="purchaseTickets.ticketFeeTip" m="Ticket Fee" /> }>
+          <div className="stakepool-fee-icon">{ ticketFee } DCR/KB</div>
+        </Tooltip>
+        <Tooltip text={ <T id="purchaseTickets.txFeeTip" m="Tx Fee" /> }>
+          <div className="stakepool-fee-icon">{txFee} DCR/KB</div>
+        </Tooltip>
+        <Tooltip text={ <T id="purchaseTickets.expiry" m="Expiry" /> }>
+          <div className="stakepool-expiry-icon">{expiry} Blocks</div>
+        </Tooltip>
+        <Tooltip text={ <T id="purchaseTickets.ticketAddress" m="Ticket Address" /> }>
+          <div className="stakepool-ticket-address-icon">{ stakePool && addSpacingAroundText(stakePool.value.TicketAddress) }</div>
+        </Tooltip>
+        <Tooltip text={ <T id="purchaseTickets.poolAddress" m="Pool Address" /> }>
+          <div className="stakepool-fee-address-icon">{ stakePool && addSpacingAroundText(stakePool.value.PoolAddress) }</div>
+        </Tooltip>
+        <Tooltip text={ <T id="purchaseTickets.poolFee" m="Pool Fee" /> }>
+          <div className="stakepool-pool-fee-icon">{ stakePool && stakePool.value.PoolFees }%</div>
+        </Tooltip>
       </div>
     </div>
     <div className="stakepool-purchase-ticket-buttons-area">
-      <KeyBlueButton
-        className="stakepool-content-purchase-button"
-        disabled={!canAffordTickets}
-        onClick={onRequestPassphrase}
-      >
+      <KeyBlueButton onClick={onRequestPassphrase} className="stakepool-content-purchase-button" disabled={!canAffordTickets}>
         <T id="puchaseTickets.purchaseBtn" m="Purchase" />
       </KeyBlueButton>
 
-      {canAffordTickets ? null : (
+      { !canAffordTickets &&
         <div className="stakepool-purchase-error">
           <T id="purchaseTickets.errors.insufficientBalance" m="Insufficient spendable account balance to purchase tickets." />
+        </div> }
+
+      <Tooltip warning disabled={ !rescanRequest }
+        text={ <T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan."/> }>
+        <div className="stakepool-content-import-script-button">
+          <KeyBlueButton disabled={rescanRequest} onClick={onShowImportScript}>
+            <T id="purchaseTickets.importScriptBtn" m="Import Script" />
+          </KeyBlueButton>
         </div>
-      )}
+      </Tooltip>
 
-      <div className="stakepool-content-import-script-button"
-        data-html={true}
-        data-tip-disable={!rescanRequest}
-        data-type="warning"
-        data-place="top"
-        data-tip={formatMessage(messages.importDisabledRescan)}>
-        <KeyBlueButton
-          className=""
-          disabled={rescanRequest}
-          onClick={onShowImportScript}
-        >
-          <T id="purchaseTickets.importScriptBtn" m="Import Script" />
-        </KeyBlueButton>
-      </div>
-      {hasTicketsToRevoke ? (
-        <KeyBlueButton
-        className="stakepool-content-revoke-button"
-        onClick={onShowRevokeTicket}
-      >
-        <T id="purchaseTickets.revokeBtn" m="Revoke" />
-      </KeyBlueButton>
-      ) : null}
+      { hasTicketsToRevoke &&
+        <KeyBlueButton className="stakepool-content-revoke-button" onClick={onShowRevokeTicket}>
+          <T id="purchaseTickets.revokeBtn" m="Revoke" />
+        </KeyBlueButton> }
     </div>
-  </div>
-);
+  </div>);
+};
 
-export default PurchaseTicketsForm;
+export default injectIntl(PurchaseTicketsForm);

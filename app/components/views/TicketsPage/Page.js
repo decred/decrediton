@@ -1,13 +1,11 @@
-import React from "react";
-import ReactToolTip from "react-tooltip";
 import StakeyBounce from "../../StakeyBounce";
 import PurchaseTicketsInfo from "../../PurchaseTicketsInfo";
 import VotingPrefs from "../../VotingPrefs";
 import StakePools from "../../StakePools";
 import TicketsPageHeader from "./Header";
 import Tickets from "./Tickets";
-import "../../../style/Layout.less";
-import "../../../style/StakePool.less";
+import "style/Layout.less";
+import "style/StakePool.less";
 
 const TicketsPage = ({
   isSavingStakePoolConfig,
@@ -33,7 +31,6 @@ const TicketsPage = ({
             ? <PurchaseTicketsInfo closeModal={onHideTicketsInfo} />
             : <Tickets {...{ stakePool, ...props }} />
     }
-    <ReactToolTip type="info" effect="solid"/>
   </div>
 );
 

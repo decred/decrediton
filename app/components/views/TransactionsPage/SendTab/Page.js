@@ -1,6 +1,4 @@
-import React from "react";
 import AccountsSelect from "../../../AccountsSelect";
-import ReactTooltip from "react-tooltip";
 import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";
 import DecredLoading from "../../../DecredLoading";
 import Balance from "../../../Balance";
@@ -8,8 +6,8 @@ import KeyBlueButton from "../../../KeyBlueButton";
 import PassphraseModal from "../../../PassphraseModal";
 import OutputRow from "./OutputRow";
 import OutputAccountRow from "./OutputAccountRow";
-import "../../../../style/SendPage.less";
-import "../../../../style/MiscComponents.less";
+import "style/SendPage.less";
+import "style/MiscComponents.less";
 
 const messages = defineMessages({
   sendAllTitle: {
@@ -137,7 +135,6 @@ const SendPage = ({
           </div>
         </div>
     )}
-    <ReactTooltip />
     </div>
   </div>
 );

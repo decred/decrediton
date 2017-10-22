@@ -3,7 +3,7 @@ import { autobind } from "core-decorators";
 import { substruct, compose, eq, get } from "../../fp";
 import PurchaseTicketsForm from "./Form";
 import purchaseTickets from "../../connectors/purchaseTickets";
-import { injectIntl, FormattedMessage as T } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 
 @autobind
 class PurchaseTickets extends React.Component {
@@ -28,7 +28,6 @@ class PurchaseTickets extends React.Component {
           canAffordTickets: this.getCanAffordTickets(),
           stakePool: this.getStakePool(),
           account: this.getAccount(),
-          formatMessage: this.props.intl.formatMessage,
           ...this.getErrors(),
           ...substruct({
             onShowAdvanced: null,
@@ -162,4 +161,4 @@ class PurchaseTickets extends React.Component {
   }
 }
 
-export default purchaseTickets(injectIntl(PurchaseTickets));
+export default purchaseTickets(PurchaseTickets);

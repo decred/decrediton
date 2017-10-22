@@ -1,5 +1,6 @@
 // @flow
 import React from "react";
+import Tooltip from "./Tooltip";
 import { Link } from "react-router";
 import { FormattedMessage as T }  from "react-intl";
 import "style/MiscComponents.less";

@@ -1,8 +1,5 @@
 // @flow
-import React from "react";
-import ReactToolTip from "react-tooltip";
-import rescan from "../../../connectors/rescan";
-import home from "../../../connectors/home";
+import { rescan, home } from "connectors";
 import DecredLoading from "../../DecredLoading";
 import KeyBlueButton from "../../KeyBlueButton";
 import PassphraseModal from "../../PassphraseModal";
@@ -10,9 +7,10 @@ import Balance from "../../Balance";
 import TxHistory from "../../TxHistory";
 import Header from "../../Header";
 import { FormattedMessage as T } from "react-intl";
-import "../../../style/Layout.less";
-import "../../../style/Fonts.less";
-import "../../../style/HomePage.less";
+import { Tooltip } from "shared";
+import "style/Layout.less";
+import "style/Fonts.less";
+import "style/HomePage.less";
 
 const rescanBtnMessage =`Rescanning may help resolve some balance errors.
       <br><br>Note: This scans the entire blockchain for transactions,

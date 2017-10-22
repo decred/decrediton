@@ -3,7 +3,8 @@ import Header from "../../../Header";
 import LinearProgress from "material-ui/LinearProgress";
 import KeyBlueButton from "../../../KeyBlueButton";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
-import "../../../../style/GetStarted.less";
+import { Tooltip } from "shared";
+import "style/GetStarted.less";
 
 const skipButtonMessage = `ATTENTION<br>
   You may skip the initial blockchain download, but be aware that

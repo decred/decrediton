@@ -1,7 +1,5 @@
-import React from "react";
-import ReactToolTip from "react-tooltip";
 import SecurityPageHeader from "./Header";
-import securityPageConnector from "connectors/securityPage";
+import { securityPage } from "connectors";
 import "style/Layout.less";
 import "style/StakePool.less";
 
@@ -14,9 +12,8 @@ const SecurityPage = ({
     <div className="page-view">
       <SecurityPageHeader {...{ onToggleSecurityMessage, location }} />
       {children}
-      <ReactToolTip type="info" effect="solid" />
     </div>
   );
 };
 
-export default securityPageConnector(SecurityPage);
+export default securityPage(SecurityPage);
