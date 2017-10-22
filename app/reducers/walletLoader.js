@@ -9,7 +9,7 @@ import {
   SUBSCRIBEBLOCKNTFNS_ATTEMPT, SUBSCRIBEBLOCKNTFNS_FAILED, SUBSCRIBEBLOCKNTFNS_SUCCESS,
   FETCHHEADERS_ATTEMPT, FETCHHEADERS_FAILED, FETCHHEADERS_PROGRESS, FETCHHEADERS_SUCCESS,
   CREATEWALLET_EXISTINGSEED_INPUT, CREATEWALLET_NEWSEED_INPUT, CREATEWALLET_NEWSEED_CONFIRM_INPUT, CREATEWALLET_NEWSEED_BACK_INPUT,
-  UPDATEDISCOVERACCOUNTS,
+  UPDATEDISCOVERACCOUNTS, NEEDED_BLOCKS_DETERMINED
 } from "../actions/WalletLoaderActions";
 export default function walletLoader(state = {}, action) {
   switch (action.type) {
@@ -216,6 +216,10 @@ export default function walletLoader(state = {}, action) {
   case UPDATEDISCOVERACCOUNTS:
     return {...state,
       discoverAccountsComplete: action.complete,
+    };
+  case NEEDED_BLOCKS_DETERMINED:
+    return {...state,
+      neededBlocks: action.neededBlocks
     };
   default:
     return state;

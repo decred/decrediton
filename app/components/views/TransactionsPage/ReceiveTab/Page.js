@@ -1,10 +1,9 @@
 import React from "react";
-import TabContent from "../../../TabbedPage/TabContent";
 import ReactTooltip from "react-tooltip";
-import ReceiveAccountsSelect from "../../../ReceiveAccountsSelect";
+import ReceiveAccountsSelect from "ReceiveAccountsSelect";
 import { Link } from "react-router";
-import KeyBlueButton from "../../../KeyBlueButton";
-import CopyToClipboardButton from "../../../CopyToClipboardButton";
+import { CopyToClipboard } from "shared";
+import KeyBlueButton from "KeyBlueButton";
 import QRCode from "./QRCode";
 import { FormattedMessage as T } from "react-intl";
 import "style/Layout.less";
@@ -15,7 +14,7 @@ const ReceivePage = ({
                        nextAddress,
                        onRequestAddress,
                      }) => (
-  <TabContent>
+  <div className="tab-content-wrapper">
     <div className="receive-content-nest">
       <div className="receive-content-nest-for-address">
         <Tooltip text={ <T id="receive.accounts.tip" m="Accounts" /> }>
@@ -32,11 +31,7 @@ const ReceivePage = ({
       <div className="receive-content-nest-qr">
         <div className="receive-content-nest-qrhash">
           <span key="addressSpan">{nextAddress}</span>
-          <CopyToClipboardButton
-            key="copyToClipboard"
-            className="receive-content-nest-copy-to-clipboard-icon"
-            textToCopy={nextAddress}
-          />
+          <CopyToClipboard textToCopy={nextAddress} className="receive-content-nest-copy-to-clipboard-icon" />
         </div>
         <QRCode addr={nextAddress} />
         <div style={{ clear: "both" }}></div>
@@ -48,7 +43,7 @@ const ReceivePage = ({
       </KeyBlueButton>
     </div>
     <ReactTooltip />
-  </TabContent>
+  </div>
 );
 
 export default ReceivePage;
