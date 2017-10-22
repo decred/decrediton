@@ -69,7 +69,7 @@ class Header extends React.Component {
             const route = ["", page, tab].join("/");
             return (
               <div className="tabbedheader-ref" ref={ ref => this._nodes.set(tab, ref) } key={ tab }>
-                <Link to={ route } onClick={() => this.updateCaretPosition(tab) } className="tabbedheader-tab" >
+                <Link to={ route } className="tabbedheader-tab" >
                   { intl.formatMessage(messages[title]) }
                 </Link>
               </div>

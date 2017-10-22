@@ -4,7 +4,7 @@ import { autobind } from "core-decorators";
 import { FormattedMessage as T, injectIntl } from "react-intl";
 import SignMessageForm from "./Form";
 import signMessageConnector from "../../connectors/signMessagePage";
-import CopyToClipboardButton from "../CopyToClipboardButton";
+import { CopyToClipboard } from "shared";
 import "../../style/SecurityCenterMessagePage.less";
 
 @autobind
@@ -34,11 +34,7 @@ class SignMessage extends React.Component {
             <div>
               {signMessageSuccess.signature}
             </div>
-            <CopyToClipboardButton
-              key="copyToClipboard"
-              className="message-content-nest-copy-to-clipboard-icon"
-              textToCopy={signMessageSuccess.signature}
-            />
+            <CopyToClipboard textToCopy={signMessageSuccess.signature} className="message-content-nest-copy-to-clipboard-icon" />
           </div>
         </div>
       );
