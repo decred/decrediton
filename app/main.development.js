@@ -347,7 +347,7 @@ ipcMain.on("check-daemon", (event, arg) => {
     args.push(`--rpccert=${cert}`);
   }
   else
-    args.push(["--configfile=" + dcrdCfg()]);
+    args.push(["--configfile=" + dcrctlCfg()]);
 
   var spawn = require("child_process").spawn;
 
