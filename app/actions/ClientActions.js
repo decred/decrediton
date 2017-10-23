@@ -13,6 +13,7 @@ import { TransactionDetails, GetTicketsResponse }  from "../middleware/walletrpc
 import { getCfg } from "../config.js";
 import { reverseHash } from "../helpers/byteActions.js";
 import { onAppReloadRequested } from "wallet/app";
+import { TicketTypes } from "../helpers/tickets";
 
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
@@ -354,39 +355,15 @@ export function getTicketsInfoAttempt() {
     var getTx = walletService.getTickets(request);
     var tickets = Array();
     getTx.on("data", function (response) {
-      var ticketStatus = "Live";
-      switch (response.getTicket().getTicketStatus()) {
-      case GetTicketsResponse.TicketDetails.TicketStatus.UNKNOWN:
-        ticketStatus = "Unknown";
-        break;
-      case GetTicketsResponse.TicketDetails.TicketStatus.UNMINED:
-        ticketStatus = "Unmined";
-        break;
-      case GetTicketsResponse.TicketDetails.TicketStatus.IMMATURE:
-        ticketStatus = "Immature";
-        break;
-      case GetTicketsResponse.TicketDetails.TicketStatus.VOTED:
-        ticketStatus = "Voted";
-        break;
-      case GetTicketsResponse.TicketDetails.TicketStatus.EXPIRED:
-        ticketStatus = "Expired";
-        break;
-      case GetTicketsResponse.TicketDetails.TicketStatus.MISSED:
-        ticketStatus = "Missed";
-        break;
-      case GetTicketsResponse.TicketDetails.TicketStatus.REVOKED:
-        ticketStatus = "Revoked";
-        break;
-      }
       var newTicket = {
-        status: ticketStatus,
+        status: TicketTypes.get(response.getTicket().getTicketStatus()),
         ticket: response.getTicket().getTicket(),
         spender: response.getTicket().getSpender(),
       };
-      console.log(
+      /*console.log(
       ticketStatus,
       reverseHash(Buffer.from(response.getTicket().getTicket().getHash()).toString("hex")),
-      reverseHash(Buffer.from(response.getTicket().getSpender().getHash()).toString("hex")));
+      reverseHash(Buffer.from(response.getTicket().getSpender().getHash()).toString("hex"))); */
       tickets.unshift(newTicket);
     });
     getTx.on("end", function () {
@@ -620,4 +597,9 @@ export function listenForAppReloadRequest(cb) {
   return () => {
     onAppReloadRequested(cb);
   };
+}
+export function showTicketList(status) {
+  return (dispatch, getState) => {
+    dispatch(pushHistory("/tickets/" + status));
+  }
 }

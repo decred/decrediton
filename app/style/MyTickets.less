@@ -1,0 +1,129 @@
+@import (reference) "./main.less";
+@import (reference) "./Icons.less";
+
+.tickets-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.ticket-card {
+  min-height: 90px;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-size: 31px 43px;
+  background-position: 20px 26px;
+  background-image: @ticket-small-icon;
+  //padding-left: 68px;
+  margin-bottom: 20px;
+  justify-content: space-between;
+  flex-grow: 1;
+  margin-right: 20px;
+  min-width: 300px;
+  transition: all 125ms ease-in-out;
+}
+
+.ticket-card:hover {
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.16);
+}
+
+.ticket-overview-header {
+  font-family: @font-family-monospaced;
+  font-weight: bold;
+  font-size: 17px;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 26px 0px 4px 0px;
+}
+
+.ticket-overview-count {
+  color: @disabled-color;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.ticket-info-price {
+  margin: 28px 0px 0px 62px;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.ticket-reward {
+  .inline-block-mixin;
+
+  color: @disabled-color;
+  border-right: 1px solid @input-color-disabled;
+  margin: 0px 0px 4px 62px;
+  padding-right: 0.5em;
+}
+
+.ticket-timestamp {
+  .inline-block-mixin;
+
+  color: @disabled-color;
+  margin-left: 0.5em;
+  font-family: @font-family-monospaced;
+}
+
+.ticket-info-expanded-indicator {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-image: @agenda-card-kebab-disabled;
+  float: right;
+  width: 17px;
+  height: 24px;
+  margin-top: 40px;
+  margin-right: 10px;
+}
+
+.ticket-card.ticket-info-card.is-expanded .ticket-info-expanded-indicator {
+  background-image: @indicator-invalid-icon;
+}
+
+.ticket-expanded-info {
+  margin-left: 62px;
+  padding-bottom: 1em;
+}
+
+.ticket-info-label {
+  width: 5em;
+  text-align: right;
+  display: inline-block;
+}
+
+.ticket-transaction-hash {
+  .inline-block-mixin;
+
+  margin-left: 0.5em;
+  max-width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ticket-card.ticket-expired {
+  background-image: @ticket-expired-icon;
+}
+
+.ticket-card.ticket-immature {
+  background-image: @ticket-immature-icon;
+}
+
+.ticket-card.ticket-live {
+  background-image: @ticket-live-icon;
+}
+
+.ticket-card.ticket-missed {
+  background-image: @ticket-missed-icon;
+}
+
+.ticket-card.ticket-revoked {
+  background-image: @ticket-revoked-icon;
+}
+
+.ticket-card.ticket-unmined {
+  background-image: @ticket-unmined-icon;
+}
+
+.ticket-card.ticket-voted {
+  background-image: @ticket-voted-icon;
+}

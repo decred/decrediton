@@ -3,7 +3,8 @@ import {
   createSelectorEager as createSelector
 } from "./fp";
 import { reverseHash } from "./helpers/byteActions";
-import { TransactionDetails }  from "./middleware/walletrpc/api_pb";
+import { TransactionDetails, GetTicketsResponse }  from "./middleware/walletrpc/api_pb";
+import { TicketTypes } from "./helpers/tickets";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
@@ -280,6 +281,43 @@ export const transactions = createSelector(
 export const viewedTransaction = createSelector(
   [transactions, (state, { params: { txHash }}) => txHash],
   (transactions, txHash) => find({ txHash }, transactions.All)
+);
+
+const ticketNormalizer = createSelector(
+  [],
+  () => {
+    return ticket => {
+      const ticketTx = ticket.ticket;
+      const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"))
+      const fee = ticketTx.getFee();
+      const enterTimestamp = ticketTx.getTimestamp();
+      return {
+        hash,
+        fee,
+        enterTimestamp,
+        ...ticket
+      }
+    }
+  }
+);
+const ticketsNormalizer = createSelector([ticketNormalizer], map);
+const allTickets = createSelector(
+  [ticketsNormalizer, get(["grpc", "tickets"])], apply
+);
+export const ticketsPerStatus = createSelector(
+  [allTickets],
+  tickets => tickets.reduce(
+    (perStatus, ticket) => {
+      perStatus[ticket.status].push(ticket);
+      return perStatus;
+    },
+    Array.from(TicketTypes.values()).reduce((a, v) => (a[v] = [], a), {}),
+  )
+);
+
+export const viewedTicketListing = createSelector(
+  [ticketsPerStatus, (state, { params: { status }}) => status],
+  (tickets, status) => tickets[status]
 );
 
 const rescanResponse = get(["control", "rescanResponse"]);
