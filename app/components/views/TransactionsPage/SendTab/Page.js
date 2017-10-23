@@ -66,7 +66,6 @@ const SendPage = ({
           : <Balance amount={totalSpent} /></div>}
       />
 
-    <div className="tab-content-wrapper">
       { isSendingTransaction ? <DecredLoading /> :
       <div className={ ["tab-card", isShowingConfirm ? "tab-card-blur" : null].join(" ").trim() }>
         <div className="send-flex-height">
@@ -135,7 +134,6 @@ const SendPage = ({
         </div>
       </div> }
     <ReactTooltip />
-    </div>
   </Aux>
 );
 
