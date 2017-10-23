@@ -5,7 +5,7 @@ import PassphraseModal from "../../PassphraseModal";
 import ImportScriptModal from "../../ImportScriptModal";
 import { FormattedMessage as T } from "react-intl";
 import StakeInfo from "../../StakeInfo";
-import "../../../style/StakePool.less";
+import "style/StakePool.less";
 
 const Tickets = ({
   isRequestingPassphrase,
@@ -18,7 +18,7 @@ const Tickets = ({
   onCancelImportScript,
   ...props
 }) => (
-  <div>
+  <Aux>
     <PassphraseModal
       hidden={!isRequestingPassphrase}
       submitPassphrase={passphraseCallback}
@@ -39,7 +39,7 @@ const Tickets = ({
       <div className="stakepool-area-spacing"></div>
       <TicketAutoBuyer {...{ ...props, onCancelPassphraseRequest }} />
     </div>
-  </div>
+  </Aux>
 );
 
 export default Tickets;

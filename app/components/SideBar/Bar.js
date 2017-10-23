@@ -24,8 +24,8 @@ const Bar = ({
   <div className={"sidebar-menu " + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
   <div className="sidebar-menu-logo"></div>
   {isTestNet ? <div className="sidebar-testnet-text">Testnet</div> : null}
-  {(!showingSidebarMenu) ? null : (
-    <div>
+  { showingSidebarMenu &&
+    <Aux>
       <div className="sidebar-menu-navigation">
         <MenuLink to="/home"><T id="menu.overview" m="Overview"/></MenuLink>
         <MenuLink to="/accounts"><T id="menu.accounts" m="Accounts"/></MenuLink>
@@ -35,15 +35,14 @@ const Bar = ({
         <MenuLink to="/security"><T id="menu.securitycenter" m="Security Center"/></MenuLink>
         <MenuLink to="/settings"><T id="menu.settings" m="Settings"/></MenuLink>
         <MenuLink to="/help"><T id="menu.help" m="Help"/></MenuLink>
-      </div>
-      <div className="sidebar-menu-total-balance-extended" style={{ display: isShowingAccounts ? "block" : "none" }}>
-        <div className="sidebar-menu-total-balance-extended-bottom">
-          {balances.map(({ hidden, total, accountName }) => hidden ? null : (
+        <div className="sidebar-menu-total-balance-extended" style={{ display: isShowingAccounts ? "block" : "none" }}>
+          <div className="sidebar-menu-total-balance-extended-bottom">
+            { balances.map(({ hidden, total, accountName }) => !hidden &&
             <div className="sidebar-menu-total-balance-extended-bottom-account" key={accountName}>
               <div className="sidebar-menu-total-balance-extended-bottom-account-name">{accountName}</div>
               <div className="sidebar-menu-total-balance-extended-bottom-account-number">{total / 100000000}</div>
-            </div>
-          ))}
+            </div> )}
+          </div>
         </div>
       </div>
       <div className="sidebar-menu-bottom">
@@ -52,38 +51,31 @@ const Bar = ({
           onMouseEnter={rescanRequest ? null : onShowAccounts}
           onMouseLeave={rescanRequest ? null : onHideAccounts}
         >
-          {rescanRequest ?
-          <RescanProgress/> :
-          <div>
+          { rescanRequest ? <RescanProgress/> :
+          <Aux>
             <div className="sidebar-menu-bottom-total-balance-short-separator"></div>
             <div className="sidebar-menu-bottom-total-balance-short-name"><T id="sidebar.totalBalance" m="Total Balance"/>:</div>
             <div className="sidebar-menu-bottom-total-balance-short-value">{totalBalance.toString()}</div>
-          </div> }
+          </Aux> }
         </div>
         <div className="sidebar-menu-bottom-latest-block">
-          {currentHeight ? (
-            <div>
-              <a className="sidebar-menu-bottom-latest-block-name">
-                {synced
-                  ? <T id="sidebar.latestBlock" m="Latest Block" />
-                  : <T id="sidebar.syncedToBlock" m="Synced to block" /> }:
-                <span className="sidebar-menu-bottom-latest-block-number"> {currentHeight}</span>
-              </a>
-              <div className="sidebar-menu-bottom-latest-block-time">
-                {lastBlockDate && lastBlockIsRecent
-                  ? <T id="sidebar.lastBlockIsRecent" m="< 1 minute ago" />
-                  : lastBlockDate
-                    ? <FormattedRelative
-                      value={lastBlockDate}
-                      updateInterval={1*1000}/>
-                    : null}
-              </div>
+          { currentHeight &&
+          <Aux>
+            <a className="sidebar-menu-bottom-latest-block-name">
+              { synced ?
+                <T id="sidebar.latestBlock" m="Latest Block" /> :
+                <T id="sidebar.syncedToBlock" m="Synced to block" /> }
+              <span className="sidebar-menu-bottom-latest-block-number"> {currentHeight}</span>
+            </a>
+            <div className="sidebar-menu-bottom-latest-block-time">
+              { lastBlockDate && lastBlockIsRecent ?
+                <T id="sidebar.lastBlockIsRecent" m="< 1 minute ago" /> :
+                lastBlockDate && <FormattedRelative value={lastBlockDate} updateInterval={1*1000}/> }
             </div>
-          ) : null}
+          </Aux> }
         </div>
       </div>
-    </div>
-  )}
+    </Aux> }
 </div>
 );
 

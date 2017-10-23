@@ -22,7 +22,7 @@ const ReceivePage = ({
                        intl,
                        onRequestAddress,
                      }) => (
-  <div className="tab-content-wrapper">
+  <div className="tab-card">
     <div className="receive-content-nest">
       <div className="receive-content-nest-for-address">
         <Link
