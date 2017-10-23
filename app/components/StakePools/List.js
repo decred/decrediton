@@ -1,5 +1,4 @@
 import React from "react";
-import TabContent from "../TabbedPage/TabContent";
 import PropTypes from "prop-types";
 import { FormattedMessage as T } from "react-intl";
 import KeyBlueButton from "../KeyBlueButton";
@@ -14,7 +13,7 @@ const StakePoolsList = ({
   onHideStakePoolConfig,
   rescanRequest
 }) => (
-  <TabContent>
+  <div className="tab-content-wrapper">
     <div className="stakepool-flex-height">
       <div className="stakepool-content-nest-from-address">
         <div className="stakepool-content-nest-prefix-configured"><T id="stakepools.list.title" m="Configured stake pools:" /></div>
@@ -53,7 +52,7 @@ const StakePoolsList = ({
       className="stakepool-hide-config"
       onClick={onHideStakePoolConfig}
     ><T id="stakepools.list.form.cancel" m="Cancel" /></SlateGrayButton>
-  </TabContent>
+  </div>
 );
 
 StakePoolsList.propTypes = {

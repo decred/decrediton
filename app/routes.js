@@ -41,7 +41,7 @@ export default (
     </Route>
     <Route path="/settings" component={SettingsPage} />
     <Route path="/tickets" component={TicketsPage}>
-      <IndexRedirect to="/tickets/purchase" />
+      <IndexRedirect to="purchase" />
       <Route path="purchase" component={TicketsPurchaseTab} position={0}/>
       <Route path="mytickets" component={TicketsMyTicketsTab} position={1}/>
       <Route path="governance" component={TicketsGovernanceTab} position={2}/>

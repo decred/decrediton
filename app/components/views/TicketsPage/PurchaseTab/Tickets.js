@@ -6,7 +6,7 @@ import ImportScriptModal from "../../../ImportScriptModal";
 import { FormattedMessage as T } from "react-intl";
 import StakeInfo from "../../../StakeInfo";
 import "style/StakePool.less";
-import "../../../../style/Layout.less";
+import "style/Layout.less";
 
 const Tickets = ({
   isRequestingPassphrase,

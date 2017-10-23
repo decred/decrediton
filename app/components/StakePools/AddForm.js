@@ -1,5 +1,4 @@
 import React from "react";
-import TabContent from "../TabbedPage/TabContent";
 import { shell } from "electron";
 import PassphraseModal from "../PassphraseModal";
 import SelectStakePool from "../SelectStakePool";
@@ -37,7 +36,7 @@ const StakePoolsAddForm = ({
       cancelPassphrase={onCancelPassphraseRequest}
       heading={<T id="stake.addForm.passhraseHeading" m="Enter private passphrase to connect to your stakepool" /> }
     />
-    <TabContent>
+    <div className="tab-content-wrapper">
       <div className={isRequestingPassphrase ? "tab-content-blur" : ""}>
         <div className="stakepool-flex-height">
           <div className="stakepool-content-nest-from-address">
@@ -102,7 +101,7 @@ const StakePoolsAddForm = ({
           ><T id="stake.addPool.cancelBtn" m="Cancel" /></SlateGrayButton>
         ) : null}
       </div>
-    </TabContent>
+    </div>
   </div>
 );
 

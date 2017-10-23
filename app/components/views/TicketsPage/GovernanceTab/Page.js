@@ -1,5 +1,4 @@
 import React from "react";
-import TabContent from "../../../TabbedPage/TabContent";
 import AgendaCard from "../../../AgendaCard";
 import AgendaOverview from "../../../AgendaOverview";
 import SelectStakePool from "../../../SelectStakePool";
@@ -17,7 +16,7 @@ const VotingPrefsPage = ({
   onCloseAgenda,
   onUpdateVotePreference
 }) => (
-  <TabContent>
+  <div className="tab-content-wrapper">
     <div className="stakepool-voting-title-area">
       <div className="stakepool-voting-title-area-name">
         <T id="votingPreferences.title" m="Voting Preferences" />
@@ -59,8 +58,8 @@ const VotingPrefsPage = ({
           <T id="votingPreferences.noAgenda" m="There are currently no agendas for voting." />
         </div>
       )}
-      </div>
-  </TabContent>
+    </div>
+  </div>
 );
 
 export default VotingPrefsPage;

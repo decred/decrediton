@@ -1,17 +1,16 @@
 import React from "react";
-import TabContent from "../../../TabbedPage/TabContent";
 import ReactTooltip from "react-tooltip";
-import "../../../../style/Layout.less";
-import "../../../../style/ReceivePage.less";
-import "../../../../style/MiscComponents.less";
+import "style/Layout.less";
+import "style/ReceivePage.less";
+import "style/MiscComponents.less";
 
 const MyTicketsPage = () => (
-  <TabContent>
+  <div className="tab-content-wrapper">
     <div className="receive-content-nest">
       Statistics Page
     </div>
     <ReactTooltip />
-  </TabContent>
+  </div>
 );
 
 export default MyTicketsPage;
