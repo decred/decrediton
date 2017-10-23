@@ -12,7 +12,7 @@ const messages = defineMessages({
   "tickets.tab.purchase":        { id: "tickets.tab.purchase",        defaultMessage: "Purchase Tickets" },
   "tickets.tab.mytickets":       { id: "tickets.tab.mytickets",       defaultMessage: "My Tickets" },
   "tickets.tab.governance":      { id: "tickets.tab.governance",      defaultMessage: "Governance" },
-  "tickets.tab.stastics":        { id: "tickets.tab.statisics",       defaultMessage: "Statisics" },
+  "tickets.tab.statistics":      { id: "tickets.tab.statistics",       defaultMessage: "Statistics" },
 });
 
 @autobind
@@ -86,7 +86,6 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-  isTestNet: PropTypes.bool,
   page: PropTypes.string.isRequired,
   tabs: PropTypes.arrayOf(PropTypes.string),
   intl: intlShape

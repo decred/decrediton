@@ -7,11 +7,11 @@ const enterRight = { atEnter: { offset: 100 }, atActive: { offset: 0 }, atLeave:
 const opts = { stiffness: 150, damping: 20 };
 
 const Tickets = ({ children, location }) => {
-  const tabs = ["purchase", "mytickets", "governance", "statisics"];
+  const tabs = ["purchase", "mytickets", "governance", "statistics"];
   const page = "tickets";
   // this will be removed w/ react router 4
   const pathname = location.pathname.split("/")[2];
-  const effect = pathname === "send" ? enterLeft : enterRight;
+  const effect = pathname === "purchase" ? enterLeft : enterRight;
   return (
     <div className="page-view">
       <Header {...{ tabs, page, pathname }}/>
