@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "../../Header";
-import KeyBlueButton from "../../KeyBlueButton";
-import InputField from "../../Form/InputField";
+import Header from "Header";
+import KeyBlueButton from "KeyBlueButton";
+import InputField from "Form/InputField";
 import { Field, reduxForm } from "redux-form";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 
@@ -30,6 +30,14 @@ const messages = defineMessages({
     id: "login.form.rpccert.placeholder.",
     defaultMessage: "Enter your cert location here",
   },
+  appdataFieldLabel: {
+    id: "login.form.appdata.label",
+    defaultMessage: "Aplication Path:",
+  },
+  appdataFieldPlaceholder: {
+    id: "login.form.appdata.placeholder.",
+    defaultMessage: "Enter your Path to application home directory",
+  },
 });
 
 export const LoginRPCHeader = () => (
@@ -38,24 +46,39 @@ export const LoginRPCHeader = () => (
     headerMetaOverview={<T id="getStarted.header.startRpc.meta" m="Login to your RPC" />} />
 );
 
-const LoginRPCBodyForm = ({ ...props, }) => {
-  const { onRetryStartRPC, handleSubmit, doStartAdvancedDaemon } = props;
+const LoginRPCBodyForm = ({
+   ...props,
+   ...state,
+   onSubmit,
+   onChangeRpcuser,
+   onChangeRpcpass,
+   onChangeRpccert,
+   onChangeRpcappdata,
+  }) => {
+  const { onRetryStartRPC, handleSubmit } = props;
+  const { rpcuserFilled, rpcpasswordFilled, rpccertFilled, rpcappdataFilled } = state
   const { formatMessage } = props.intl;
+
   return (
     <div className="get-started-content-new-seed page-content">
-      <form onSubmit={handleSubmit(doStartAdvancedDaemon)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Field
           label={formatMessage(messages.messageLoginLabel)}
           name="rpcuser"
           component={InputField}
           type="text"
+          required
+          onChange={(e) => onChangeRpcuser(e.target.value)}
           placeholder={formatMessage(messages.messageLoginPlaceholder)}
         />
+        {}
         <Field
           label={formatMessage(messages.passphraseFieldLabel)}
           name="rpcpassword"
           component={InputField}
           type="password"
+          required
+          onChange={(e) => onChangeRpcpass(e.target.value)}
           placeholder={formatMessage(messages.passphraseFieldPlaceholder)}
         />
         <Field
@@ -63,17 +86,23 @@ const LoginRPCBodyForm = ({ ...props, }) => {
           name="rpccert"
           component={InputField}
           type="text"
+          required
+          onChange={(e) => onChangeRpccert(e.target.value)}
           placeholder={formatMessage(messages.certFieldPlaceholder)}
+        />
+        <Field
+          label={formatMessage(messages.appdataFieldLabel)}
+          name="appdata"
+          component={InputField}
+          type="text"
+          required
+          onChange={(e) => onChangeRpcappdata(e.target.value)}
+          placeholder={formatMessage(messages.appdataFieldPlaceholder)}
         />
         <button className="key-blue-button"  type="submit" >
           <T id="securitycenter.sign.form.submit" m="Sign" />
         </button>
       </form>
-
-
-      <KeyBlueButton className="get-started-rpc-retry-button" onClick={() => onRetryStartRPC()}>
-        <T id="getStarted.runningDaemon" m="Keep with running daemon" />
-      </KeyBlueButton>
     </div>
   );
 };

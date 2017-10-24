@@ -9,7 +9,7 @@ import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHead
 import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
 import walletStartup from "../../../connectors/walletStartup";
-import {LoginRPCHeader, LoginRPCBody } from "./LoginForm";
+import {LoginRPCHeader, LoginFormBody } from "./LoginForm";
 import {injectIntl} from "react-intl";
 import { autobind } from "core-decorators";
 
@@ -71,7 +71,7 @@ class GetStartedPage extends Component {
     } else {
       if(isAdvancedDaemon){
         Header = LoginRPCHeader;
-        Body = LoginRPCBody;
+        Body = LoginFormBody;
       } else{
         Header = DaemonLoadingHeader;
         Body = DaemonLoadingBody;
