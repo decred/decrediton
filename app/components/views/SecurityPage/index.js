@@ -1,6 +1,5 @@
 import SecurityPageHeader from "./Header";
 import { securityPage } from "connectors";
-import { Aux } from "shared";
 import "style/Layout.less";
 import "style/StakePool.less";
 

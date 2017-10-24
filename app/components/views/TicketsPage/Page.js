@@ -3,7 +3,6 @@ import PurchaseTicketsInfo from "../../PurchaseTicketsInfo";
 import VotingPrefs from "../../VotingPrefs";
 import StakePools from "../../StakePools";
 import TicketsPageHeader from "./Header";
-import { Aux } from "shared";
 import Tickets from "./Tickets";
 import "style/Layout.less";
 import "style/StakePool.less";

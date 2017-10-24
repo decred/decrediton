@@ -28,7 +28,7 @@ const RouteTransition = props => {
     const routeProps = {...{key}, style: props.mapStyles(style) };
     return h(props.wrapperComponent, routeProps, data);
   };
-  const routes = routes => h( "div", { className: props.className }, routes.map(route));
+  const routes = routes => h("div", { className: props.className }, routes.map(route));
   return h(TransitionMotion, tmProps, routes);
 };
 

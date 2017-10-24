@@ -4,7 +4,6 @@ import { FormattedMessage as T } from "react-intl";
 import Header from "../../Header";
 import ChangePassphraseModal from "../../ChangePassphraseModal";
 import Select from "react-select";
-import { Aux } from "shared";
 import "style/Layout.less";
 import "style/StakePool.less";
 import "style/Settings.less";

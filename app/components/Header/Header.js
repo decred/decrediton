@@ -1,10 +1,8 @@
 // @flow
-import React from "react";
 import Snackbar from "material-ui/Snackbar";
 import Notification from "./Notification";
-import { Aux } from "shared";
-import "../../style/Header.less";
-import "../../style/Snackbar.less";
+import "style/Header.less";
+import "style/Snackbar.less";
 
 const snackbarClasses = ({ type }) => ({
   "Ticket": "snackbar snackbar-stake",

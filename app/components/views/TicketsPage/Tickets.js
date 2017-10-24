@@ -5,8 +5,7 @@ import PassphraseModal from "../../PassphraseModal";
 import ImportScriptModal from "../../ImportScriptModal";
 import { FormattedMessage as T } from "react-intl";
 import StakeInfo from "../../StakeInfo";
-import { Aux } from "shared";
-import "../../../style/StakePool.less";
+import "style/StakePool.less";
 
 const Tickets = ({
   isRequestingPassphrase,
