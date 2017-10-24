@@ -3,28 +3,31 @@
 @import (reference) "./main.less";
 
 .page-body {
-  background-color: #fff;
+  display: flex;
+  height: 100vh;
+}
+
+.page-container {
+  width: calc(100% - @sidebar-width);
+  height: 100%;
+  position: relative;
 }
 
 .page-view {
-  background-color: #f3f6f6;
-  position: fixed;
-  left: @sidebar-width;
-  right: 0px;
-  bottom: 0px;
-  top: 0px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }
 
 // Base definition for the "page client area" (area where main content is
 // displayed")
 .page-content-mixin {
   padding: 54px 60px 0px 80px;
+  background-color: #f3f6f6;
   overflow-y: scroll;
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  top: 165px;
+  height: 100%;
 }
 
 // Main content that allows scrolling
@@ -51,28 +54,24 @@
   background-color: #0c1e3e;
 }
 
-.tabbedpage-content {
-  overflow-y: scroll;
+.tabbed-page {
+  background-color: #f3f6f6;
+  position: relative;
+  height: 100%;
   overflow-x: hidden;
+}
+
+.tab-content {
   position: absolute;
-  left: 0px;
-  right: 0px;
-  top: 180px;
-  bottom: 0px;
+  width: 100%;
+  height: 100%;
 }
 
-.tab-content-wrapper {
-  position: absolute;
-  left: 60px;
-  right: 60px;
-  top: 60px;
+.tab-card {
+  margin: 60px;
 }
 
-.tab-content-card {
-  background-color: white;
-}
-
-.tab-content-blur {
+.tab-card-blur {
   filter: blur(6px);
 }
 

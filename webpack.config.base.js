@@ -66,7 +66,8 @@ export default {
   plugins: [new webpack.ProvidePlugin({
     React:     "react",
     PropTypes: "prop-types",
-    autobind: ["core-decorators", "autobind"]
+    autobind: ["core-decorators", "autobind"],
+    Aux:      ["shared",          "Aux"]
   })],
 
   externals: Object.keys(dependencies || {}).concat(Object.keys(optionalDependencies || {}))

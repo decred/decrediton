@@ -34,7 +34,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   doVersionCheck: wla.versionCheckAction,
   doStartAdvancedDaemon: da.startDaemonAdvanced,
   doStartDaemon: da.startDaemon,
-  doSkipDaemonSync: da.skipDaemonSync,
   determineNeededBlocks: wla.determineNeededBlocks,
   showSidebarMenu,
   showSidebar,

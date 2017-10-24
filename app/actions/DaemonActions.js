@@ -14,18 +14,13 @@ export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
 export const LOADER_ADVANCED_SUCCESS = "LOADER_ADVANCED_SUCCESS";
 
-export const skipDaemonSync = () => (dispatch) => {
-  dispatch({type: DAEMONSYNCED});
-  dispatch(startWallet());
-};
-
 export const startDaemon = () => (dispatch) => {
   daemon.startDaemon()
   .then(res => {
     const {pid, advancedDaemon} = res;
     dispatch({type: DAEMONSTARTED, pid});
     const next = advancedDaemon ? {type: DAEMONSTARTED_ADVANCED, advancedDaemon} : syncDaemon();
-    dispatch(next);
+    dispatch(next);rpcappdataFilled
   })
   .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));
 };
