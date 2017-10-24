@@ -8,7 +8,7 @@ const opts = { stiffness: 150, damping: 20 };
 
 const messages = defineMessages({
   "tickets.title":               { id: "tickets.title",               defaultMessage: "Tickets" },
-  "tickets.description":         { id: "tickets.description",         defaultMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+  "tickets.description":         { id: "tickets.description",         defaultMessage: "" },
   "tickets.tab.purchase":        { id: "tickets.tab.purchase",        defaultMessage: "Purchase Tickets" },
   "tickets.tab.mytickets":       { id: "tickets.tab.mytickets",       defaultMessage: "My Tickets" },
   "tickets.tab.governance":      { id: "tickets.tab.governance",      defaultMessage: "Governance" },
