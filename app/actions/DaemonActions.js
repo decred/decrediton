@@ -20,7 +20,7 @@ export const startDaemon = () => (dispatch) => {
     const {pid, advancedDaemon} = res;
     dispatch({type: DAEMONSTARTED, pid});
     const next = advancedDaemon ? {type: DAEMONSTARTED_ADVANCED, advancedDaemon} : syncDaemon();
-    dispatch(next);rpcappdataFilled
+    dispatch(next);
   })
   .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));
 };

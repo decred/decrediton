@@ -335,7 +335,7 @@ ipcMain.on("start-wallet", (event, arg) => {
       event.returnValue = dcrwPID;
       return;
     }
-    logger.log("info", "dcrwallet already started, closing it to start again");    
+    logger.log("info", "dcrwallet already started, closing it to start again");
     try{
       closeDCRW();
     } catch (e) {

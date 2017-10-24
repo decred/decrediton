@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
 import { substruct } from "fp";
-import ReactTimeout from "react-timeout";
 import { LoginRPCHeader, LoginRPCBody } from "./Form";
 
 @autobind
@@ -29,7 +28,7 @@ class LoginFormBody extends Component {
           ...this.props,
           ...this.state,
           ...substruct({
-            onSubmit: null,                      
+            onSubmit: null,
             onChangeRpcuser: null,
             onChangeRpcpass: null,
             onChangeRpccert: null,
@@ -43,13 +42,8 @@ class LoginFormBody extends Component {
   getIsValid() {
     const { rpcuserFilled, rpcpasswordFilled, rpccertFilled, rpcappdataFilled } = this.state;
 
-    console.log(rpcuserFilled)
-    console.log(rpcpasswordFilled)
-    console.log(rpcuserFilled)
-    console.log(rpcappdataFilled)
-
     if (!rpcuserFilled || !rpcpasswordFilled || !rpccertFilled || !rpcappdataFilled){
-      this.setState({ hasErrors: true })
+      this.setState({ hasErrors: true });
       return false;
     }
     return true;
@@ -80,7 +74,7 @@ class LoginFormBody extends Component {
   }
 
   onSubmit(args) {
-    this.setState({ isSubmited: true })
+    this.setState({ isSubmited: true });
     if (this.getIsValid())
       this.props.doStartAdvancedDaemon(args);
   }

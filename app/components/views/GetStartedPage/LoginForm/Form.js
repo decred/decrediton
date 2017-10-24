@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "Header";
-import KeyBlueButton from "KeyBlueButton";
 import InputField from "Form/InputField";
 import { Field, reduxForm } from "redux-form";
 import { FormattedMessage as T, defineMessages } from "react-intl";
@@ -56,8 +55,8 @@ const LoginRPCBodyForm = ({
   onChangeRpccert,
   onChangeRpcappdata,
   }) => {
-  const { onRetryStartRPC, handleSubmit } = props;
-  const { hasErrors, isSubmited } = state
+  const { handleSubmit } = props;
+  const { hasErrors, isSubmited } = state;
   const { formatMessage } = props.intl;
 
   return (
