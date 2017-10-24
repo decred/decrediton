@@ -8,7 +8,7 @@ import { DiscoverAddressesHeader, DiscoverAddressesBody } from "./DiscoverAddres
 import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHeaders";
 import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
-import walletStartup from "../../../connectors/walletStartup";
+import { walletStartup } from "connectors";
 
 class GetStartedPage extends Component {
 
