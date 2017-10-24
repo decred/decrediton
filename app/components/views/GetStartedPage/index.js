@@ -9,12 +9,29 @@ import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHead
 import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
 import { walletStartup } from "connectors";
-import {LoginRPCHeader, LoginFormBody } from "./LoginForm";
-import {injectIntl} from "react-intl";
+import { LoginRPCHeader, LoginRPCBody } from "./LoginForm";
+import { injectIntl } from "react-intl";
 import { autobind } from "core-decorators";
+import { substruct } from "fp";
 
 @autobind
 class GetStartedPage extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = this.getInitialState();
+  }
+
+  getInitialState() {
+    return {
+      isSubmited: false,
+      hasErrors: false,
+      rpcuserFilled: false,
+      rpcpasswordFilled: false,
+      rpccertFilled: false,
+      rpcappdataFilled: false,
+    };
+  }
 
   componentWillMount() {
     this.props.showSidebar();
@@ -37,48 +54,100 @@ class GetStartedPage extends Component {
       startStepIndex,
       isPrepared,
       isAdvancedDaemon,
-      ...props
     } = this.props;
     let Header, Body;
     if (isPrepared) {
-      switch(startStepIndex || 0) {
-      case 0:
-      case 1:
-        Header = CheckWalletStateHeader;
-        Body = CheckWalletStateBody;
-        break;
-      case 2:
-        Header = OpenWalletHeader;
-        Body = OpenWalletBody;
-        break;
-      case 3:
-      case 4:
-        Header = StartRPCHeader;
-        Body = StartRPCBody;
-        break;
-      case 5:
-        Header = DiscoverAddressesHeader;
-        Body = DiscoverAddressesBody;
-        break;
-      case 6:
-        Header = FetchBlockHeadersHeader;
-        Body = FetchBlockHeadersBody;
-        break;
-      default:
-        Header = FinalStartUpHeader;
-        Body = FinalStartUpBody;
+      switch (startStepIndex || 0) {
+        case 0:
+        case 1:
+          Header = CheckWalletStateHeader;
+          Body = CheckWalletStateBody;
+          break;
+        case 2:
+          Header = OpenWalletHeader;
+          Body = OpenWalletBody;
+          break;
+        case 3:
+        case 4:
+          Header = StartRPCHeader;
+          Body = StartRPCBody;
+          break;
+        case 5:
+          Header = DiscoverAddressesHeader;
+          Body = DiscoverAddressesBody;
+          break;
+        case 6:
+          Header = FetchBlockHeadersHeader;
+          Body = FetchBlockHeadersBody;
+          break;
+        default:
+          Header = FinalStartUpHeader;
+          Body = FinalStartUpBody;
       }
     } else {
       if(isAdvancedDaemon){
         Header = LoginRPCHeader;
-        Body = LoginFormBody;
+        Body = LoginRPCBody;
       } else{
         Header = DaemonLoadingHeader;
         Body = DaemonLoadingBody;
       }
     }
 
-    return <Page Header={Header} Body={Body} {...props} />;
+    return<Page Header={Header} Body={Body}
+      {...{
+        ...this.props,
+        ...this.state,
+        ...substruct({
+          onSubmit: null,
+          onChangeRpcuser: null,
+          onChangeRpcpass: null,
+          onChangeRpccert: null,
+          onChangeRpcappdata: null,
+        }, this)
+      }}
+    />;
+  }
+
+  getIsValid() {
+    const { rpcuserFilled, rpcpasswordFilled, rpccertFilled, rpcappdataFilled } = this.state;
+
+    if (!rpcuserFilled || !rpcpasswordFilled || !rpccertFilled || !rpcappdataFilled) {
+      this.setState({ hasErrors: true });
+      return false;
+    }
+    this.setState({ hasErrors: false });
+    return true;
+  }
+
+  onChangeRpcuser(rpcuser) {
+    if (!rpcuser)
+      return this.setState({ rpcuserFilled: false });
+    this.setState({ rpcuserFilled: true });
+  }
+
+  onChangeRpcpass(rpcpass) {
+    if (!rpcpass)
+      return this.setState({ rpcpasswordFilled: false });
+    this.setState({ rpcpasswordFilled: true });
+  }
+
+  onChangeRpccert(rpccert) {
+    if (!rpccert)
+      return this.setState({ rpccertFilled: false });
+    this.setState({ rpccertFilled: true });
+  }
+
+  onChangeRpcappdata(rpcappdata) {
+    if (!rpcappdata)
+      return this.setState({ rpcappdataFilled: false });
+    this.setState({ rpcappdataFilled: true });
+  }
+
+  onSubmit(args) {
+    this.setState({ isSubmited: true });
+    if (this.getIsValid())
+      this.props.doStartAdvancedDaemon(args);
   }
 }
 
