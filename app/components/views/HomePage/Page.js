@@ -1,5 +1,4 @@
 // @flow
-import React from "react";
 import ReactToolTip from "react-tooltip";
 import rescan from "../../../connectors/rescan";
 import home from "../../../connectors/home";
@@ -10,9 +9,9 @@ import Balance from "../../Balance";
 import TxHistory from "../../TxHistory";
 import Header from "../../Header";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import "../../../style/Layout.less";
-import "../../../style/Fonts.less";
-import "../../../style/HomePage.less";
+import "style/Layout.less";
+import "style/Fonts.less";
+import "style/HomePage.less";
 
 const messages = defineMessages({
   rescanBtnTip: {
@@ -45,7 +44,7 @@ const HomePage = ({
   onClearRevokeTicketsSuccess
 }) => {
   return (
-    <div className="page-view">
+    <Aux>
       <PassphraseModal
         hidden={!isRequestingPassphrase}
         submitPassphrase={passphraseCallback}
@@ -115,7 +114,7 @@ const HomePage = ({
             </div>
           </div>
         )}
-    </div>
+    </Aux>
   );
 };
 

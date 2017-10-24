@@ -6,8 +6,8 @@ import VotingPrefs from "../../VotingPrefs";
 import StakePools from "../../StakePools";
 import TicketsPageHeader from "./Header";
 import Tickets from "./Tickets";
-import "../../../style/Layout.less";
-import "../../../style/StakePool.less";
+import "style/Layout.less";
+import "style/StakePool.less";
 
 const TicketsPage = ({
   isSavingStakePoolConfig,
@@ -21,7 +21,7 @@ const TicketsPage = ({
   onHideStakePoolConfig,
   ...props
 }) => (
-  <div className="page-view">
+  <Aux>
     <TicketsPageHeader {...{ onToggleTicketStakePool }} />
     {(isSavingStakePoolConfig || isPurchasingTickets)
       ? <div className="page-content"><StakeyBounce/></div>
@@ -34,7 +34,7 @@ const TicketsPage = ({
             : <Tickets {...{ stakePool, ...props }} />
     }
     <ReactToolTip type="info" effect="solid"/>
-  </div>
+  </Aux>
 );
 
 export default TicketsPage;

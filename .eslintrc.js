@@ -45,5 +45,6 @@ module.exports = {
     "React": true,
     "PropTypes": true,
     "autobind": true,
+    "Aux": true,
   }
 };
