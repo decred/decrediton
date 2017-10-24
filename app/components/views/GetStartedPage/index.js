@@ -58,43 +58,43 @@ class GetStartedPage extends Component {
     let Header, Body;
     if (isPrepared) {
       switch (startStepIndex || 0) {
-        case 0:
-        case 1:
-          Header = CheckWalletStateHeader;
-          Body = CheckWalletStateBody;
-          break;
-        case 2:
-          Header = OpenWalletHeader;
-          Body = OpenWalletBody;
-          break;
-        case 3:
-        case 4:
-          Header = StartRPCHeader;
-          Body = StartRPCBody;
-          break;
-        case 5:
-          Header = DiscoverAddressesHeader;
-          Body = DiscoverAddressesBody;
-          break;
-        case 6:
-          Header = FetchBlockHeadersHeader;
-          Body = FetchBlockHeadersBody;
-          break;
-        default:
-          Header = FinalStartUpHeader;
-          Body = FinalStartUpBody;
+      case 0:
+      case 1:
+        Header = CheckWalletStateHeader;
+        Body = CheckWalletStateBody;
+        break;
+      case 2:
+        Header = OpenWalletHeader;
+        Body = OpenWalletBody;
+        break;
+      case 3:
+      case 4:
+        Header = StartRPCHeader;
+        Body = StartRPCBody;
+        break;
+      case 5:
+        Header = DiscoverAddressesHeader;
+        Body = DiscoverAddressesBody;
+        break;
+      case 6:
+        Header = FetchBlockHeadersHeader;
+        Body = FetchBlockHeadersBody;
+        break;
+      default:
+        Header = FinalStartUpHeader;
+        Body = FinalStartUpBody;
       }
     } else {
-      if(isAdvancedDaemon){
+      if (isAdvancedDaemon) {
         Header = LoginRPCHeader;
         Body = LoginRPCBody;
-      } else{
+      } else {
         Header = DaemonLoadingHeader;
         Body = DaemonLoadingBody;
       }
     }
 
-    return<Page Header={Header} Body={Body}
+    return <Page Header={Header} Body={Body}
       {...{
         ...this.props,
         ...this.state,

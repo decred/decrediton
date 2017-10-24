@@ -10,13 +10,13 @@ const Page = ({ Header, Body, ...props }) => {
       <Header {...props} />
       <div className="page-content-fixed">
         {
-          isAdvancedDaemon ? 
-            isSubmited && !hasErrors ? <DecredLoading hidden={!props.isProcessing} className="get-started-loading" /> : null 
+          isAdvancedDaemon ?
+            isSubmited && !hasErrors ? <DecredLoading hidden={!props.isProcessing} className="get-started-loading" /> : null
             : <DecredLoading hidden={!props.isProcessing} className="get-started-loading" />
         }
         <Body {...props} />
       </div>
     </div>
   );
-}
+};
 export default Page;
