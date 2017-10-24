@@ -551,3 +551,5 @@ export const showingSidebar = get(["sidebar", "showingSidebar"]);
 export const showingSidebarMenu = get(["sidebar", "showingSidebarMenu"]);
 
 export const snackbarMessages = get(["snackbar", "messages"]);
+
+export const mainWindow = () => window;

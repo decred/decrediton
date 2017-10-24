@@ -12,6 +12,8 @@ import {
 import { TransactionDetails, GetTicketsResponse }  from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
 import { reverseHash } from "../helpers/byteActions.js";
+import { onAppReloadRequested } from "wallet/app";
+
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
 export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
@@ -608,5 +610,11 @@ export function getMessageVerificationServiceAttempt() {
         dispatch({ messageVerificationService, type: GETMESSAGEVERIFICATIONSERVICE_SUCCESS });
       }
     });
+  };
+}
+
+export function listenForAppReloadRequest(cb) {
+  return () => {
+    onAppReloadRequested(cb);
   };
 }

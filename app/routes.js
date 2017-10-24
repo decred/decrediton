@@ -22,6 +22,7 @@ import WalletError from "./components/views/WalletError";
 import Help from "./components/views/Help";
 import ErrorScreen from "./components/ErrorScreen";
 import InvalidRPCVersion from "./components/views/InvalidRPCVersion";
+import ShutdownAppPage from "./components/views/ShutdownAppPage";
 
 export default (
   <Route path="/" component={App}>
@@ -52,5 +53,6 @@ export default (
     <Route path="/error" component={ErrorScreen} />
     <Route path="/help" component={Help} />
     <Route path="/invalidRPCVersion" component={InvalidRPCVersion} />
+    <Route path="/shutdown" component={ShutdownAppPage} />
   </Route>
 );

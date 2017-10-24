@@ -18,7 +18,6 @@ let debug = false;
 let daemonIsAdvanced = false;
 let dcrdPID;
 let dcrwPID;
-let daemonReady = false;
 let currentBlockCount;
 
 // Not going to make incorrect options fatal since running in dev mode has
@@ -91,7 +90,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 if (process.env.NODE_ENV === "development") {
-  require("electron-debug")(); // eslint-disable-line global-require
   const path = require('path'); // eslint-disable-line
   const p = path.join(__dirname, '..', 'app', 'node_modules'); // eslint-disable-line
   require('module').globalPaths.push(p); // eslint-disable-line
@@ -218,15 +216,12 @@ function cleanShutdown() {
   // are still running.
   setTimeout(function () { closeClis(); }, cliShutDownPause * 1000);
   logger.log("info", "Closing decrediton.");
-  setTimeout(function () { app.quit(); }, shutDownPause * 1000);
+  setTimeout(function(){
+    logger.log("info", "Final shutdown pause. Closing window.");
+    mainWindow && mainWindow.close();
+    app.quit();
+  }, shutDownPause*1000);
 }
-
-app.on("window-all-closed", () => {
-  // If we could reopen after closing all windows on OSX we might want
-  // to on do this only if !== 'darwin' but since we don't, better to
-  // have the same behavior on all platforms.
-  cleanShutdown();
-});
 
 const installExtensions = async () => {
   if (process.env.NODE_ENV === "development") {
@@ -262,22 +257,6 @@ ipcMain.on("start-daemon", (event, appData) => {
     logger.log("error", "error launching dcrd: " + e);
   }
   event.returnValue = dcrdPID;
-});
-
-ipcMain.on("stop-daemon", (event) => {
-  if (!dcrdPID) {
-    logger.log("info", "dcrd already stopped " + dcrwPID);
-    event.returnValue = true;
-    return;
-  }
-  logger.log("info", "stopping dcrd");
-  try {
-    closeDCRD();
-    daemonReady = false;
-  } catch (e) {
-    logger.log("error", "error stopping dcrd: " + e);
-  }
-  event.returnValue = !daemonReady;
 });
 
 ipcMain.on("start-wallet", (event, arg) => {
@@ -352,13 +331,20 @@ ipcMain.on("check-daemon", (event, rpcCreds, appData) => {
   dcrctl.stdout.on("data", (data) => {
     currentBlockCount = data.toString();
     logger.log("info", data.toString());
-    daemonReady = true;
     event.returnValue = currentBlockCount;
   });
   dcrctl.stderr.on("data", (data) => {
     logger.log("error", data.toString());
     event.returnValue = 0;
   });
+});
+
+ipcMain.on("clean-shutdown", () => {
+  cleanShutdown();
+});
+
+ipcMain.on("app-reload-ui", () => {
+  mainWindow.reload();
 });
 
 ipcMain.on("grpc-versions-determined", (event, versions) => {
@@ -704,7 +690,13 @@ app.on("ready", async () => {
         accelerator: "F11",
         click() {
           mainWindow.setFullScreen(!mainWindow.isFullScreen());
-        }
+        },
+      }, {
+        label: locale.messages["appMenu.reloadUI"],
+        accelerator: "F5",
+        click() {
+          mainWindow.webContents.send("app-reload-requested", mainWindow);
+        },
       }]
     }];
   }

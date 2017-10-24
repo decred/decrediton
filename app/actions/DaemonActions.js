@@ -1,5 +1,6 @@
 import {versionCheckAction} from "./WalletLoaderActions";
 import * as daemon from "../wallet/daemon";
+import { push as pushHistory } from "react-router-redux";
 
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
@@ -33,10 +34,10 @@ export const startDaemon = (rpcCreds, appData) => (dispatch) => {
   }
 };
 
-export const stopDaemon = () => (dispatch) => daemon
-  .stopDaemon()
-  .then(() => dispatch({type: DAEMONSTOPPED}))
-  .catch(() => dispatch({type: DAEMONSTOPPED_ERROR}));
+export const shutdownApp = () => (dispatch) => dispatch(pushHistory("/shutdown"));
+
+export const cleanShutdown = () => () => daemon
+  .cleanShutdown();
 
 export const startWallet = () => (dispatch) => {
   daemon.startWallet()

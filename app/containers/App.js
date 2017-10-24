@@ -7,17 +7,50 @@ import SideBar from "components/SideBar";
 import Snackbar from "components/Snackbar";
 import { RouteTransition } from "shared";
 import theme from "theme";
+import { autobind } from "core-decorators";
 
 const fade = { atEnter: { opacity: 0 }, atActive: { opacity: 1 }, atLeave: { opacity: 0 }};
 const rootPath = ({ pathname }) => pathname.split("/")[1];
 
 const wrapperComponent = props => <div className="page-view" { ...props } />;
 
+@autobind
 class App extends React.Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
     locale: PropTypes.object.isRequired,
+    window: PropTypes.object.isRequired,
+    shutdownApp: PropTypes.func.isRequired,
   };
+
+  constructor (props) {
+    super(props);
+    const { window } = props;
+    this.windowUnloadHandler = window.addEventListener("beforeunload", this.beforeWindowUnload);
+    this.refreshing = false;
+    this.shuttingDown = false;
+
+    props.listenForAppReloadRequest(this.onReloadRequested);
+  }
+
+  componentWillUnmount () {
+    const { window } = this.props;
+    window.removeEventListener(this.windowUnloadHandler);
+  }
+
+  beforeWindowUnload(event) {
+    if (!this.refreshing && !this.shuttingDown) {
+      event.preventDefault();
+      event.returnValue = false;
+      this.shuttingDown = true;
+      this.props.shutdownApp();
+    }
+  }
+
+  onReloadRequested(event) {
+    this.refreshing = true;
+    event.sender.send("app-reload-ui");
+  }
 
   render() {
     let locale = this.props.locale;
