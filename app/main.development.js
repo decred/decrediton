@@ -216,10 +216,19 @@ function cleanShutdown() {
   // are still running.
   setTimeout(function () { closeClis(); }, cliShutDownPause * 1000);
   logger.log("info", "Closing decrediton.");
-  setTimeout(function(){
-    logger.log("info", "Final shutdown pause. Closing window.");
-    mainWindow && mainWindow.close();
-    app.quit();
+
+  let shutdownTimer = setInterval(function(){
+    const stillRunning = (require("is-running")(dcrdPID) && os.platform() != "win32");
+
+    if (cfg.get("daemon_skip_start") || !stillRunning) {
+      logger.log("info", "Final shutdown pause. Quitting app.");
+      clearInterval(shutdownTimer);
+      mainWindow && mainWindow.close();
+      app.quit();
+      return;
+    }
+    logger.log("info", "Daemon still running in final shutdown pause. Waiting.");
+
   }, shutDownPause*1000);
 }
 
