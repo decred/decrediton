@@ -13,7 +13,8 @@ const Tickets = ({ children, location }) => {
   const page = "tickets";
   // this will be removed w/ react router 4
   const pathname = location.pathname.split("/")[2];
-  const effect = pathname === "purchase" ? enterLeft : enterRight;
+  // Still unable to determine 'from' tab which would determine which transition to use for middle tabs
+  const effect = pathname === tabs[0] ? enterLeft : pathname === tabs[tabs.length - 1] ? enterRight : enterLeft;
   return (
     <Aux>
       <Header {...{ tabs, page, pathname }}/>
