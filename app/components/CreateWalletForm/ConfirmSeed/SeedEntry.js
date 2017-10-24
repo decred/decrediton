@@ -47,6 +47,7 @@ class SeedEntry extends React.Component {
           valueKey="name"
           labelKey="name"
           loadOptions={this.getSeedWords}
+          onInputKeyDown={this.selectKeyDown}
         />
       </div>
     );
@@ -68,6 +69,14 @@ class SeedEntry extends React.Component {
       options: options.slice(0, SEED_LENGTH),
       complete: this.state.value.length >= SEED_LENGTH,
     });
+  }
+
+  selectKeyDown (e) {
+    switch(e.keyCode) {
+    case 32:
+      e.keyCode = 9;
+      break;
+    }
   }
 
   handleKeyDown (e) {
