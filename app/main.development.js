@@ -225,7 +225,7 @@ function cleanShutdown() {
       clearInterval(shutdownTimer);
       if (mainWindow) {
         mainWindow.webContents.send("daemon-stopped");
-        setTimeout(() => mainWindow.close() && app.quit(), 1000);
+        setTimeout(() => {mainWindow.close(); app.quit();}, 1000);
       } else {
         app.quit();
       }
