@@ -8,11 +8,11 @@ const opts = { stiffness: 150, damping: 20 };
 
 const messages = defineMessages({
   "tickets.title":               { id: "tickets.title",               defaultMessage: "Tickets" },
-  "tickets.description":         { id: "tickets.description",         defaultMessage: "" },
+  //"tickets.description":         { id: "tickets.description",         defaultMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
   "tickets.tab.purchase":        { id: "tickets.tab.purchase",        defaultMessage: "Purchase Tickets" },
   "tickets.tab.mytickets":       { id: "tickets.tab.mytickets",       defaultMessage: "My Tickets" },
   "tickets.tab.governance":      { id: "tickets.tab.governance",      defaultMessage: "Governance" },
-  "tickets.tab.statistics":      { id: "tickets.tab.statistics",       defaultMessage: "Statistics" },
+  "tickets.tab.statistics":      { id: "tickets.tab.statistics",      defaultMessage: "Statistics" },
 });
 
 @autobind
@@ -48,7 +48,7 @@ class Header extends React.Component {
   render () {
     const { page, tabs, intl } = this.props;
     const { caretLeft, caretWidth } = this.state;
-    const description = [page, "description"].join(".");
+    //const description = [page, "description"].join(".");
     const headerIcon = ["header-icon", page].join("-");
     const title = [page, "title"].join(".");
     return (
@@ -61,7 +61,7 @@ class Header extends React.Component {
         </div>
 
         <div className="tabbedheader-description">
-          { intl.formatMessage(messages[description]) }
+          { /*intl.formatMessage(messages[description])*/ }
         </div>
 
         <div className="tabbedheader-tabs">
