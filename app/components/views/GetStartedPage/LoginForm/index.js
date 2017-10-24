@@ -14,6 +14,7 @@ class LoginFormBody extends Component {
   getInitialState() {
     return {
       isSubmited: false,
+      hasErrors: false,
       rpcuserFilled: false,
       rpcpasswordFilled: false,
       rpccertFilled: false,
@@ -47,8 +48,10 @@ class LoginFormBody extends Component {
     console.log(rpcuserFilled)
     console.log(rpcappdataFilled)
 
-    if (!rpcuserFilled || !rpcpasswordFilled || !rpccertFilled || !rpcappdataFilled)
+    if (!rpcuserFilled || !rpcpasswordFilled || !rpccertFilled || !rpcappdataFilled){
+      this.setState({ hasErrors: true })
       return false;
+    }
     return true;
   }
 
@@ -77,6 +80,7 @@ class LoginFormBody extends Component {
   }
 
   onSubmit(args) {
+    this.setState({ isSubmited: true })
     if (this.getIsValid())
       this.props.doStartAdvancedDaemon(args);
   }

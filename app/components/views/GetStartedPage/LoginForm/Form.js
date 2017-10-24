@@ -4,6 +4,7 @@ import KeyBlueButton from "KeyBlueButton";
 import InputField from "Form/InputField";
 import { Field, reduxForm } from "redux-form";
 import { FormattedMessage as T, defineMessages } from "react-intl";
+import "style/LoginForm.less";
 
 const messages = defineMessages({
   messageLoginLabel: {
@@ -48,20 +49,20 @@ export const LoginRPCHeader = () => (
 
 const LoginRPCBodyForm = ({
    ...props,
-   ...state,
-   onSubmit,
-   onChangeRpcuser,
-   onChangeRpcpass,
-   onChangeRpccert,
-   onChangeRpcappdata,
+  ...state,
+  onSubmit,
+  onChangeRpcuser,
+  onChangeRpcpass,
+  onChangeRpccert,
+  onChangeRpcappdata,
   }) => {
   const { onRetryStartRPC, handleSubmit } = props;
-  const { rpcuserFilled, rpcpasswordFilled, rpccertFilled, rpcappdataFilled } = state
+  const { hasErrors, isSubmited } = state
   const { formatMessage } = props.intl;
 
   return (
     <div className="get-started-content-new-seed page-content">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
         <Field
           label={formatMessage(messages.messageLoginLabel)}
           name="rpcuser"
@@ -71,7 +72,6 @@ const LoginRPCBodyForm = ({
           onChange={(e) => onChangeRpcuser(e.target.value)}
           placeholder={formatMessage(messages.messageLoginPlaceholder)}
         />
-        {}
         <Field
           label={formatMessage(messages.passphraseFieldLabel)}
           name="rpcpassword"
@@ -99,7 +99,8 @@ const LoginRPCBodyForm = ({
           onChange={(e) => onChangeRpcappdata(e.target.value)}
           placeholder={formatMessage(messages.appdataFieldPlaceholder)}
         />
-        <button className="key-blue-button"  type="submit" >
+        {isSubmited && hasErrors ? <div className="orange-warning">*Please Fill All Fields</div> : null}
+        <button className="key-blue-button" type="submit" >
           <T id="securitycenter.sign.form.submit" m="Sign" />
         </button>
       </form>
