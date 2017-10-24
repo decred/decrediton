@@ -19,7 +19,7 @@ class Tickets extends React.Component{
       prevRoute: null,
     };
   }
-  
+
   componentWillReceiveProps(nextProps) {
     if (this.props.location.pathname !== nextProps.location.pathname) {
       this.setState({prevRoute: this.props.location.pathname.split("/")[2]});
