@@ -61,7 +61,7 @@ const PurchaseTicketsForm = ({
   const changeExpiry = e => onChangeExpiry(v(e));
 
   return (
-  <div>
+  <Aux>
     <div className="stakepool-voting-title-area">
       <div className="stakepool-voting-title-area-name">
         <T id="purchaseTickets.title" m="Purchase Tickets" /></div>
@@ -243,13 +243,11 @@ const PurchaseTicketsForm = ({
           <T id="purchaseTickets.errors.insufficientBalance" m="Insufficient spendable account balance to purchase tickets." />
         </div> }
 
-      <Tooltip warning disabled={ !rescanRequest }
+      <Tooltip className="stakepool-content-import-script-button" warning disabled={ !rescanRequest }
         text={ <T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan."/> }>
-        <div className="stakepool-content-import-script-button">
           <KeyBlueButton disabled={rescanRequest} onClick={onShowImportScript}>
             <T id="purchaseTickets.importScriptBtn" m="Import Script" />
           </KeyBlueButton>
-        </div>
       </Tooltip>
 
       { hasTicketsToRevoke &&
@@ -257,7 +255,7 @@ const PurchaseTicketsForm = ({
           <T id="purchaseTickets.revokeBtn" m="Revoke" />
         </KeyBlueButton> }
     </div>
-  </div>);
+  </Aux>);
 };
 
 export default injectIntl(PurchaseTicketsForm);
