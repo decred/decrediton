@@ -36,15 +36,14 @@ export const startDaemonAdvanced = ({rpcuser, rpcpassword, rpccert}) => (dispatc
     rpcuser: rpcuser,
     rpcpassword: rpcpassword,
     rpccert: rpccert
-  }
+  };
   daemon.startDaemonAdvanced(rpcuser, rpcpassword, rpccert)
   .then( () => {
     dispatch(syncDaemon(credentials, rpchost));
     dispatch({type: LOADER_ADVANCED_SUCCESS});
   })
-  .catch( err => {
-    console.log(err)
-    dispatch({type: DAEMONSTARTED_ADVANCED_ERROR})
+  .catch( () => {
+    dispatch({type: DAEMONSTARTED_ADVANCED_ERROR});
   });
 };
 
@@ -57,7 +56,7 @@ export const startWallet = (rpcCredentials, walletCredentials) => (dispatch) => 
   let username, password;
   if(walletCredentials){
     username = walletCredentials.username;
-    password = walletCredentials.password; 
+    password = walletCredentials.password;
   }
   daemon.startWallet(username, password)
   .then(pid => {
@@ -68,7 +67,7 @@ export const startWallet = (rpcCredentials, walletCredentials) => (dispatch) => 
     console.log(err);
     dispatch({type: "DAEMONSTARTED_ERROR_ON_START_WALLET"});
   });
-}
+};
 
 export const syncDaemon = (credentials, host) =>
   (dispatch, getState) => {

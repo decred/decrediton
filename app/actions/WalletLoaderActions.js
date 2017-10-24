@@ -12,18 +12,16 @@ import axios from "axios";
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
 
-export const versionCheckAction = (credentials) => (dispatch) => {
+export const versionCheckAction = (credentials) => (dispatch) =>
   setTimeout(() => dispatch(getVersionServiceAttempt(credentials)), 2000);
-}
 
 export const LOADER_ATTEMPT = "LOADER_ATTEMPT";
 export const LOADER_FAILED = "LOADER_FAILED";
 export const LOADER_SUCCESS = "LOADER_SUCCESS";
 
-export const loaderRequest = (credentials, address, port) => (dispatch, getState) => {
+export const loaderRequest = (credentials, address, port) => (dispatch) => {
   const request = { address, port };
   dispatch({ request, type: LOADER_ATTEMPT });
-  const { daemonAdvanced } = getState().daemon;
   return getLoader(request)
     .then(loader => {
       dispatch({ loader, type: LOADER_SUCCESS });
@@ -129,7 +127,7 @@ export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
 export const startRpcRequestFunc = (isRetry, credentials) =>
 (dispatch, getState) => {
-  let rpcuser, rpccertPath, rpcpassword;
+  let rpcuser, rpccertPath, rpcpass;
   if(credentials){
     rpcuser = credentials.rpcuser;
     rpccertPath = credentials.rpccert;
