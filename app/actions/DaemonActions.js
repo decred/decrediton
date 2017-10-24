@@ -32,12 +32,20 @@ export const startDaemon = () => (dispatch) => {
 
 export const startDaemonAdvanced = ({rpcuser, rpcpassword, rpccert}) => (dispatch) => {
   const rpchost = RPCDaemonHost();
+  const credentials = {
+    rpcuser: rpcuser,
+    rpcpassword: rpcpassword,
+    rpccert: rpccert
+  }
   daemon.startDaemonAdvanced(rpcuser, rpcpassword, rpccert)
   .then( () => {
-    dispatch(syncDaemon(rpcuser, rpcpassword, rpchost, rpccert));
+    dispatch(syncDaemon(credentials, rpchost));
     dispatch({type: LOADER_ADVANCED_SUCCESS});
   })
-  .catch(() => dispatch({type: DAEMONSTARTED_ADVANCED_ERROR}));
+  .catch( err => {
+    console.log(err)
+    dispatch({type: DAEMONSTARTED_ADVANCED_ERROR})
+  });
 };
 
 export const stopDaemon = () => (dispatch) => daemon
@@ -45,31 +53,37 @@ export const stopDaemon = () => (dispatch) => daemon
   .then(() => dispatch({type: DAEMONSTOPPED}))
   .catch(() => dispatch({type: DAEMONSTOPPED_ERROR}));
 
-export const startWallet = (rpcuser, rpcpassword) => (dispatch) => daemon
-  .startWallet(rpcuser, rpcpassword)
+export const startWallet = (rpcCredentials, walletCredentials) => (dispatch) => {
+  let username, password;
+  if(walletCredentials){
+    username = walletCredentials.username;
+    password = walletCredentials.password; 
+  }
+  daemon.startWallet(username, password)
   .then(pid => {
     dispatch({type: WALLETREADY, pid});
-    setTimeout(()=>dispatch(versionCheckAction()), 1000);
+    setTimeout(()=>dispatch(versionCheckAction(rpcCredentials)), 1000);
   })
   .catch((err) => {
     console.log(err);
     dispatch({type: "DAEMONSTARTED_ERROR_ON_START_WALLET"});
   });
+}
 
-export const syncDaemon = (rpcuser, rpcpassword, host, cert) =>
+export const syncDaemon = (credentials, host) =>
   (dispatch, getState) => {
+    const {rpcuser, rpcpassword, rpccert} = credentials;
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks }} = getState();
       const { daemon: { daemonSynced, timeStart, blockStart } } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
       return daemon
-        .getBlockCount(rpcuser, rpcpassword, host, cert)
+        .getBlockCount(rpcuser, rpcpassword, host, rpccert)
         .then(updateCurrentBlockCount => {
-          console.log('getBlockCount RESPONSE:'+ updateCurrentBlockCount)
           if (updateCurrentBlockCount >= neededBlocks) {
             dispatch({type: DAEMONSYNCED});
-            dispatch(startWallet());
+            dispatch(startWallet(credentials));
             return;
           } else if (updateCurrentBlockCount !== 0) {
             const blocksLeft = neededBlocks - updateCurrentBlockCount;
@@ -88,7 +102,7 @@ export const syncDaemon = (rpcuser, rpcpassword, host, cert) =>
             }
           }
           setTimeout(updateBlockCount, 1000);
-        });
+        }).catch(err=>console.log(err));
     };
     updateBlockCount();
   };

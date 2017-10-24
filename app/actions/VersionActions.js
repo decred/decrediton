@@ -8,13 +8,13 @@ export const GETVERSIONSERVICE_ATTEMPT = "GETVERSIONSERVICE_ATTEMPT";
 export const GETVERSIONSERVICE_FAILED = "GETVERSIONSERVICE_FAILED";
 export const GETVERSIONSERVICE_SUCCESS = "GETVERSIONSERVICE_SUCCESS";
 
-export const getVersionServiceAttempt = () => (dispatch, getState) => {
+export const getVersionServiceAttempt = (credentials) => (dispatch, getState) => {
   dispatch({ type: GETVERSIONSERVICE_ATTEMPT });
   const { grpc: { address, port } } = getState();
   return getVersionService(address, port)
     .then(versionService => {
       dispatch({ versionService, type: GETVERSIONSERVICE_SUCCESS });
-      dispatch(getWalletRPCVersionAttempt());
+      dispatch(getWalletRPCVersionAttempt(credentials));
     })
     .catch(error => dispatch({ error, type: GETVERSIONSERVICE_FAILED }));
 };
@@ -24,7 +24,7 @@ export const WALLETRPCVERSION_FAILED = "WALLETRPCVERSION_FAILED";
 export const WALLETRPCVERSION_SUCCESS = "WALLETRPCVERSION_SUCCESS";
 export const VERSION_NOT_VALID = "VERSION_NOT_VALID";
 
-export const getWalletRPCVersionAttempt = () => (dispatch, getState) => {
+export const getWalletRPCVersionAttempt = (credentials) => (dispatch, getState) => {
   dispatch({ type: WALLETRPCVERSION_ATTEMPT });
   const { version: { versionService } }= getState();
   return getVersionResponse(versionService)
@@ -49,7 +49,7 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => {
         dispatch(pushHistory("/invalidRPCVersion"));
       } else {
         const { address, port } = getState().grpc;
-        dispatch(loaderRequest(address,port));
+        dispatch(loaderRequest(credentials,address,port));
       }
     })
     .catch(error => dispatch({ error, type: WALLETRPCVERSION_FAILED }));
