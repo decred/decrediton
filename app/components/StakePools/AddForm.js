@@ -29,7 +29,7 @@ const StakePoolsAddForm = ({
   onCancelPassphraseRequest,
   onCancelAddStakePool
 }) => (
-  <div>
+  <Aux>
     <PassphraseModal
       hidden={!isRequestingPassphrase}
       submitPassphrase={onSetStakePoolInfo}
@@ -100,7 +100,7 @@ const StakePoolsAddForm = ({
           ><T id="stake.addPool.cancelBtn" m="Cancel" /></SlateGrayButton>
         ) : null}
       </div>
-  </div>
+  </Aux>
 );
 
 export default injectIntl(StakePoolsAddForm);

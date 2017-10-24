@@ -1,5 +1,4 @@
 import React from "react";
-import ReactToolTip from "react-tooltip";
 import StakeyBounce from "../../../StakeyBounce";
 import PurchaseTicketsInfo from "../../../PurchaseTicketsInfo";
 import StakePools from "../../../StakePools";
@@ -17,17 +16,13 @@ const PurchasePage = ({
   onHideStakePoolConfig,
   ...props
 }) => (
-  <Aux>
-    {(isSavingStakePoolConfig || isPurchasingTickets)
+    (isSavingStakePoolConfig || isPurchasingTickets)
       ? <StakeyBounce/>
       : (isShowingStakePools)
         ? <StakePools {...{ onHideStakePoolConfig }} />
           : isShowingTicketsInfo
             ? <PurchaseTicketsInfo closeModal={onHideTicketsInfo} />
             : <Tickets {...{ stakePool, ...props }} />
-    }
-    <ReactToolTip type="info" effect="solid"/>
-  </Aux>
 );
 
 export default PurchasePage;
