@@ -24,8 +24,8 @@ export const startDaemon = () => (dispatch) => {
   .then(res => {
     const {pid, advancedDaemon} = res;
     dispatch({type: DAEMONSTARTED, pid});
-    dispatch({type: DAEMONSTARTED_ADVANCED, advancedDaemon});
-    advancedDaemon ? null : dispatch(syncDaemon());
+    const next = advancedDaemon ? {type: DAEMONSTARTED_ADVANCED, advancedDaemon} : syncDaemon();
+    dispatch(next);
   })
   .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));
 };
@@ -71,7 +71,12 @@ export const startWallet = (rpcCredentials, walletCredentials) => (dispatch) => 
 
 export const syncDaemon = (credentials, host) =>
   (dispatch, getState) => {
-    const {rpcuser, rpcpassword, rpccert} = credentials;
+    let rpcuser, rpcpassword, rpccert;
+    if(credentials){
+      rpcuser = credentials.rpcuser;
+      rpcpassword = credentials.rpcpassword;
+      rpccert = credentials.rpccert;
+    }
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks }} = getState();
       const { daemon: { daemonSynced, timeStart, blockStart } } = getState();

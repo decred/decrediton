@@ -43,9 +43,6 @@ class GetStartedPage extends Component {
     if (isPrepared) {
       switch(startStepIndex || 0) {
       case 0:
-        Header = LoginRPCHeader;
-        Body = LoginRPCBody;
-        break;
       case 1:
         Header = CheckWalletStateHeader;
         Body = CheckWalletStateBody;
