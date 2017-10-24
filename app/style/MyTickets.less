@@ -8,7 +8,8 @@
 }
 
 .ticket-card {
-  min-height: 90px;
+  height: 90px;
+  width: 300px;
   background-color: #fff;
   background-repeat: no-repeat;
   background-size: 31px 43px;
@@ -20,7 +21,12 @@
   flex-grow: 1;
   margin-right: 20px;
   min-width: 300px;
+  overflow: hidden;
   transition: all 125ms ease-in-out;
+}
+
+.ticket-card.is-expanded {
+  height: 164px;
 }
 
 .ticket-card:hover {
@@ -81,21 +87,22 @@
 }
 
 .ticket-expanded-info {
-  margin-left: 62px;
+  margin: 10px 0px 0px 62px;
   padding-bottom: 1em;
 }
 
 .ticket-info-label {
+  .inline-block-mixin;
+
   width: 5em;
   text-align: right;
-  display: inline-block;
 }
 
 .ticket-transaction-hash {
   .inline-block-mixin;
 
   margin-left: 0.5em;
-  max-width: 70%;
+  max-width: 60%;
   overflow: hidden;
   text-overflow: ellipsis;
 }

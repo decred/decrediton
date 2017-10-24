@@ -22,7 +22,7 @@ const TicketInfoCard = ({ ticket, onClick, expanded }) => {
         m="{timestamp, date, medium} {timestamp, time, medium}"
         values={{timestamp: tsToDate(ticket.enterTimestamp)}} />
     </div>
-    { expanded ? (<ExpandedInfo {...{ticket}} />) : null }
+    <ExpandedInfo {...{ticket}} />
   </TicketCard>);
 };
 

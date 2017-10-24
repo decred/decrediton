@@ -140,9 +140,21 @@ const getTxTypeStr = type => ({
   [TransactionDetails.TransactionType.REVOCATION]: "Revocation"
 })[type];
 
+export const txURLBuilder= createSelector(
+  [network],
+  (network) =>
+    (txHash) => `https://${network}.decred.org/tx/${txHash}`
+);
+
+export const blockURLBuilder= createSelector(
+  [network],
+  (network) =>
+    (txHash) => `https://${network}.decred.org/block/${txHash}`
+);
+
 const transactionNormalizer = createSelector(
-  [accounts, network],
-  (accounts, network) => {
+  [accounts, txURLBuilder, blockURLBuilder],
+  (accounts, txURLBuilder, blockURLBuilder) => {
     const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
     const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
     return tx => {
@@ -202,8 +214,8 @@ const transactionNormalizer = createSelector(
           };
 
       return {
-        txUrl: `https://${network}.decred.org/tx/${txHash}`,
-        txBlockUrl: txBlockHash ? `https://${network}.decred.org/block/${txBlockHash}` : null,
+        txUrl: txURLBuilder(txHash),
+        txBlockUrl: txBlockHash ? blockURLBuilder(txBlockHash) : null,
         txHash,
         txHeight: txInfo.height,
         txType: getTxTypeStr(type),
