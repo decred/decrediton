@@ -21,6 +21,8 @@ class App extends React.Component {
     locale: PropTypes.object.isRequired,
     window: PropTypes.object.isRequired,
     shutdownApp: PropTypes.func.isRequired,
+    shutdownRequested: PropTypes.bool.isRequired,
+    daemonStopped: PropTypes.bool.isRequired,
   };
 
   constructor (props) {
@@ -28,7 +30,6 @@ class App extends React.Component {
     const { window } = props;
     this.windowUnloadHandler = window.addEventListener("beforeunload", this.beforeWindowUnload);
     this.refreshing = false;
-    this.shuttingDown = false;
 
     props.listenForAppReloadRequest(this.onReloadRequested);
   }
@@ -39,10 +40,17 @@ class App extends React.Component {
   }
 
   beforeWindowUnload(event) {
-    if (!this.refreshing && !this.shuttingDown) {
+    if (this.refreshing) {
+      return;
+    }
+
+    const { shutdownRequested, daemonStopped } = this.props;
+    if (!daemonStopped) {
       event.preventDefault();
       event.returnValue = false;
-      this.shuttingDown = true;
+    }
+
+    if (!shutdownRequested) {
       this.props.shutdownApp();
     }
   }

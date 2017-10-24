@@ -9,6 +9,8 @@ import * as ca from "actions/ClientActions";
 const mapStateToProps = selectorMap({
   locale: sel.locale,
   window: sel.mainWindow,
+  daemonStopped: sel.daemonStopped,
+  shutdownRequested: sel.shutdownRequested,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

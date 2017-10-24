@@ -223,8 +223,12 @@ function cleanShutdown() {
     if (cfg.get("daemon_skip_start") || !stillRunning) {
       logger.log("info", "Final shutdown pause. Quitting app.");
       clearInterval(shutdownTimer);
-      mainWindow && mainWindow.close();
-      app.quit();
+      if (mainWindow) {
+        mainWindow.webContents.send("daemon-stopped");
+        setTimeout(() => mainWindow.close() && app.quit(), 1000);
+      } else {
+        app.quit();
+      }
       return;
     }
     logger.log("info", "Daemon still running in final shutdown pause. Waiting.");
