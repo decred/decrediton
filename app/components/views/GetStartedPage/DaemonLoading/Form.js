@@ -1,15 +1,7 @@
-import React from "react";
 import Header from "../../../Header";
 import LinearProgress from "material-ui/LinearProgress";
-import KeyBlueButton from "../../../KeyBlueButton";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
-import { Tooltip } from "shared";
 import "style/GetStarted.less";
-
-const skipButtonMessage = `ATTENTION
-  You may skip the initial blockchain download, but be aware that
-  all transactions may not be found until the chain is fully synced.
-  As a result, your balance may be incorrect until fully synced.`;
 
 const DaemonLoadingFormHeader = ({
   startupError,
@@ -33,7 +25,6 @@ const DaemonLoadingFormBody = ({
     getCurrentBlockCount,
     getDaemonStarted,
     getNeededBlocks,
-    doSkipDaemonSync,
     showLongWaitMessage,
     finishDateEstimation,
   }) => (
@@ -49,11 +40,6 @@ const DaemonLoadingFormBody = ({
           <div className="get-started-instructions-txt">
             <T id="getStarted.chainLoadingDelayReminder" m="If you are starting decrediton for the first time, this may take a while." />
           </div>
-          <Tooltip text={ <T id="skipBtnTip" m={ skipButtonMessage } /> }>
-            <KeyBlueButton onClick={doSkipDaemonSync} className="get-started-button-skip-sync">
-              <T id="getStarted.chainLoading.skipBtn" m="Skip Sync" />
-            </KeyBlueButton>
-          </Tooltip>
         </div>
         <LinearProgress
           mode="determinate"

@@ -10,11 +10,6 @@ export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
 
-export const skipDaemonSync = () => (dispatch) => {
-  dispatch({type: DAEMONSYNCED});
-  dispatch(startWallet());
-};
-
 export const startDaemon = (rpcuser, rpcpassword) => (dispatch) => daemon
   .startDaemon(rpcuser, rpcpassword)
   .then(pid => {
