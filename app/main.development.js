@@ -342,8 +342,8 @@ ipcMain.on("check-daemon", (event, arg) => {
   const { rpcpassword, rpcuser, cert } = arg;
 
   if (rpcuser || rpcpassword || cert){
-    args.push(`-u ${rpcuser}`);
-    args.push(`-P ${rpcpassword}`);
+    args.push(`--rpcuser=${rpcuser}`);
+    args.push(`--rpcpass=${rpcpassword}`);
     args.push(`--rpccert=${cert}`);
   }
   else
@@ -387,7 +387,7 @@ const launchDCRD = (rpcuser, rpcpassword, rpccert) => {
   let args = [];
 
   if (rpcuser || rpcpassword || rpccert)
-    args = [`-u ${rpcuser}`, `-P ${rpcpassword}`, `--rpccert=${rpccert}`];
+    args = [`--rpcuser=${rpcuser}`, `--rpcpass=${rpcpassword}`, `--rpccert=${rpccert}`];
 
   else
     args = ["--configfile=" + dcrdCfg()];
