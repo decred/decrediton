@@ -15,6 +15,7 @@ let mainWindow = null;
 let versionWin = null;
 let grpcVersions = {requiredVersion: null, walletVersion: null};
 let debug = false;
+let daemonIsAdvanced = false;
 let dcrdPID;
 let dcrwPID;
 let daemonReady = false;
@@ -247,6 +248,7 @@ const { ipcMain } = require("electron");
 ipcMain.on("start-daemon", (event, arg) => {
   if (cfg.get("daemon_start_advanced")) {
     logger.log("info", "Daemon starting on advanced mode as requested on config");
+    daemonIsAdvanced = true;
     dcrdPID = dcrdPID ? dcrdPID : -1;
     event.returnValue = {
       pid: dcrdPID,
@@ -286,16 +288,20 @@ ipcMain.on("start-daemon", (event, arg) => {
 
 ipcMain.on("start-daemon-advanced", (event, args) => {
   const { rpcpassword, rpcuser, rpccert } = args;
-  if (dcrdPID && dcrdPID !== -1) {
+  if (dcrdPID !== -1) {
+    logger.log("info", "dcrd already started, closing it to start again");
+    try{
+      closeDCRD();
+    } catch (e) {
+      logger.log("error", "error stopping dcrd: " + e);
+    }
     logger.log("info", "dcrd already started " + dcrdPID);
-    event.returnValue = dcrdPID;
-    return;
   }
   try {
     logger.log("info", "launching dcrd with different rpcuser and rpcpassword");
     dcrdPID = launchDCRD(rpcuser, rpcpassword, rpccert);
   } catch (e) {
-    logger.log("error", "error stopping dcrd: " + e);
+    logger.log("error", "error launching dcrd with different rpcuser and rpcpassword: " + e);
   }
   event.returnValue = dcrdPID;
 });
@@ -324,9 +330,17 @@ ipcMain.on("start-wallet", (event, arg) => {
     return;
   }
   if (dcrwPID) {
-    logger.log("info", "dcrwallet already started " + dcrwPID);
-    event.returnValue = dcrwPID;
-    return;
+    if(!daemonIsAdvanced){
+      logger.log("info", "dcrwallet already started " + dcrwPID);
+      event.returnValue = dcrwPID;
+      return;
+    }
+    logger.log("info", "dcrwallet already started, closing it to start again");    
+    try{
+      closeDCRW();
+    } catch (e) {
+      logger.log("error", "error stopping dcrw: " + e);
+    }
   }
   logger.log("info", "launching dcrwallet at " + JSON.stringify(arg));
   try {
@@ -388,7 +402,6 @@ const launchDCRD = (rpcuser, rpcpassword, rpccert) => {
 
   if (rpcuser || rpcpassword || rpccert)
     args = [`--rpcuser=${rpcuser}`, `--rpcpass=${rpcpassword}`, `--rpccert=${rpccert}`];
-
   else
     args = ["--configfile=" + dcrdCfg()];
 
@@ -423,16 +436,14 @@ const launchDCRD = (rpcuser, rpcpassword, rpccert) => {
   });
 
   dcrd.on("error", function (err) {
-    // if (daemonIsAdvanced)
-    //   return;
     logger.log("error", "Error running dcrd.  Check logs and restart! " + err);
     mainWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart! " + err + "\");");
     mainWindow.webContents.executeJavaScript("window.close();");
   });
 
   dcrd.on("close", (code) => {
-    // if (daemonIsAdvanced)
-    //   return;
+    if (daemonIsAdvanced)
+      return;
     if (code !== 0) {
       logger.log("error", "dcrd closed due to an error.  Check dcrd logs and contact support if the issue persists.");
       mainWindow.webContents.executeJavaScript("alert(\"dcrd closed due to an error.  Check dcrd logs and contact support if the issue persists.\");");
@@ -515,6 +526,8 @@ const launchDCRWallet = () => {
   });
 
   dcrwallet.on("close", (code) => {
+    if(daemonIsAdvanced)
+      return;
     if (code !== 0) {
       logger.log("error", "dcrwallet closed due to an error.  Check dcrwallet logs and contact support if the issue persists.");
       mainWindow.webContents.executeJavaScript("alert(\"dcrwallet closed due to an error.  Check dcrwallet logs and contact support if the issue persists.\");");
