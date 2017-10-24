@@ -8,10 +8,10 @@ export const startDaemon = () => Promise
     throw "Error starting daemon";
   });
 
-export const startDaemonAdvanced = (rpcuser, rpcpassword, rpccert) => {
+export const startDaemonAdvanced = (args) => {
   return Promise
     .resolve(ipcRenderer
-      .sendSync("start-daemon-advanced", { rpcuser, rpcpassword, rpccert }))
+      .sendSync("start-daemon-advanced", args))
     .then(PIDAndAdvancedMode => {
       if (PIDAndAdvancedMode) return PIDAndAdvancedMode;
       throw "Error starting daemon in advanced mode";

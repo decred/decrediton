@@ -287,7 +287,7 @@ ipcMain.on("start-daemon", (event, arg) => {
 });
 
 ipcMain.on("start-daemon-advanced", (event, args) => {
-  const { rpcpassword, rpcuser, rpccert } = args;
+  const { rpcpassword, rpcuser, rpccert, rpcappdata} = args;
   if (dcrdPID !== -1) {
     logger.log("info", "dcrd already started, closing it to start again");
     try{
@@ -299,7 +299,7 @@ ipcMain.on("start-daemon-advanced", (event, args) => {
   }
   try {
     logger.log("info", "launching dcrd with different rpcuser and rpcpassword");
-    dcrdPID = launchDCRD(rpcuser, rpcpassword, rpccert);
+    dcrdPID = launchDCRD(rpcuser, rpcpassword, rpccert, rpcappdata);
   } catch (e) {
     logger.log("error", "error launching dcrd with different rpcuser and rpcpassword: " + e);
   }
@@ -396,12 +396,12 @@ ipcMain.on("grpc-versions-determined", (event, versions) => {
   grpcVersions = { ...grpcVersions, ...versions };
 });
 
-const launchDCRD = (rpcuser, rpcpassword, rpccert) => {
+const launchDCRD = (rpcuser, rpcpassword, rpccert, rpcappdata) => {
   var spawn = require("child_process").spawn;
   let args = [];
 
   if (rpcuser || rpcpassword || rpccert)
-    args = [`--rpcuser=${rpcuser}`, `--rpcpass=${rpcpassword}`, `--rpccert=${rpccert}`];
+    args = [`--rpcuser=${rpcuser}`, `--rpcpass=${rpcpassword}`, `--rpccert=${rpccert}`, `--appdata=${rpcappdata}`];
   else
     args = ["--configfile=" + dcrdCfg()];
 

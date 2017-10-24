@@ -25,14 +25,15 @@ export const startDaemon = () => (dispatch) => {
   .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));
 };
 
-export const startDaemonAdvanced = ({rpcuser, rpcpassword, rpccert}) => (dispatch) => {
+export const startDaemonAdvanced = (args) => (dispatch) => {
+  const {rpcuser, rpcpassword, rpccert, rpcappdata} = args;
   const rpchost = RPCDaemonHost();
   const credentials = {
     rpcuser: rpcuser,
     rpcpassword: rpcpassword,
     rpccert: rpccert
   };
-  daemon.startDaemonAdvanced(rpcuser, rpcpassword, rpccert)
+  daemon.startDaemonAdvanced(args)
   .then( () => {
     dispatch(syncDaemon(credentials, rpchost));
     dispatch({type: LOADER_ADVANCED_SUCCESS});

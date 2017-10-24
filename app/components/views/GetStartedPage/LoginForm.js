@@ -91,7 +91,7 @@ const LoginRPCBodyForm = ({
         />
         <Field
           label={formatMessage(messages.appdataFieldLabel)}
-          name="appdata"
+          name="rpcappdata"
           component={InputField}
           type="text"
           required
