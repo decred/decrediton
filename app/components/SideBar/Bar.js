@@ -5,7 +5,6 @@ import MenuLink from "../MenuLink";
 import "../../style/Fonts.less";
 import "../../style/SideBar.less";
 import RescanProgress from "../RescanProgress";
-import { Aux } from "shared";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
 
 const Bar = ({

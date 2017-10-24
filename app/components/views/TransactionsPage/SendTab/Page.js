@@ -63,70 +63,6 @@ const SendPage = ({
           <T id="send.confirmAmountLabel" m="Please confirm your transaction for" />
           : <Balance amount={totalSpent} /></div>}
       />
-<<<<<<< HEAD
-  { isSendingTransaction  ? <DecredLoading /> :
-    <div className={ ["tab-card", isShowingConfirm ? "tab-card-blur" : null].join(" ").trim() }>
-      <div className="send-flex-height">
-        <div className="send-select-account-area">
-          <div className="send-label"><T id="send.from" m="From" />:</div>
-          <AccountsSelect className="send-select-account-input"
-            {...{account}} onChange={onChangeAccount} showAccountsButton={true} />
-          <div className="send-send-all-input">
-            {!isSendSelf
-              ? <a className="send-self-wallet-icon" onClick={onShowSendSelf} title={intl.formatMessage(messages.sendSelfTitle)} />
-              : <a className="send-others-wallet-icon" onClick={onShowSendOthers} title={intl.formatMessage(messages.sendOthersTitle)} />
-            }
-            {!isSendAll
-              ? <a className="send-all-wallet-icon" onClick={onShowSendAll} title={intl.formatMessage(messages.sendAllTitle)} />
-              : <a className="send-all-cancel-wallet-icon" onClick={onHideSendAll} title={intl.formatMessage(messages.cancelSendAllTitle)} />
-            }
-          </div>
-        </div>
-        <div className="send-amount-area">
-          {!isSendSelf
-            ? outputs.map((output, index) => (
-              <OutputRow
-                {...{ index, outputs, ...props, ...output, isSendAll, totalSpent }}
-                addressError={getAddressError(index)}
-                amountError={getAmountError(index)}
-              /> ))
-            : <OutputAccountRow
-              {...{  index: 0, ...props, isSendAll, totalSpent, onChangeOutputAccount }}
-              amountError={getAmountError(0)} />
-          }
-        </div>
-      </div>
-      <div className="send-button-area">
-        <KeyBlueButton
-          className="content-send"
-          disabled={!isValid}
-          onClick={onShowConfirm}
-        ><T id="send.sendBtn" m="Send" /></KeyBlueButton>
-        <div className="estimation-area-send">
-          <div className="total-amount-send">
-            <div className="total-amount-send-text">
-              <T id="send.totalAmountEstimation" m="Total amount sending" />
-              :
-            </div>
-            <div className="total-amount-send-amount">
-              <Balance amount={totalSpent} />
-            </div>
-          </div>
-          <div className="total-amount-send">
-            <div className="total-amount-send-text">
-              <T id="send.feeEstimation" m="Estimated Fee" />
-              :
-            </div>
-            <div className="total-amount-send-amount">
-              <Balance amount={estimatedFee} />
-            </div>
-          </div>
-          <div className="total-amount-send">
-            <div className="total-amount-send-text">
-              <T id="send.sizeEstimation" m="Estimated Size" />
-              :
-=======
-
       { isSendingTransaction ? <DecredLoading /> :
       <div className={ ["tab-card", isShowingConfirm ? "tab-card-blur" : null].join(" ").trim() }>
         <div className="send-flex-height">
@@ -190,18 +126,11 @@ const SendPage = ({
                 :
               </div>
               <div className="total-amount-send-amount">{estimatedSignedSize} bytes</div>
->>>>>>> master
             </div>
             <div className="total-amount-send-amount">{estimatedSignedSize} bytes</div>
           </div>
         </div>
-<<<<<<< HEAD
-      </div>
-    </div> }
-=======
       </div> }
-    <ReactTooltip />
->>>>>>> master
   </Aux>
 );
 
