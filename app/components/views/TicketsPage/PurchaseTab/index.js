@@ -5,7 +5,6 @@ import { service, ticketsPage } from "connectors";
 import ErrorScreen from "components/ErrorScreen";
 import PurchasePage from "./Page";
 import { FormattedMessage as T } from "react-intl";
-import ReactToolTip from "react-tooltip";
 
 @autobind
 class Purchase extends Component {
@@ -36,12 +35,6 @@ class Purchase extends Component {
         stakePool: nextProps.defaultStakePool,
         isShowingStakePools: false
       });
-    }
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-    if (prevState != this.state) {
-      ReactToolTip.rebuild();
     }
   }
 
