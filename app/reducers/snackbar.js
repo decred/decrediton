@@ -49,7 +49,7 @@ const messages = defineMessages({
     defaultMessage: "{originalError}"
   },
   IMPORTSCRIPT_SUCCESS: {
-    id: "tickets.revokeTicketsHeader",
+    id: "tickets.importScriptHeader",
     defaultMessage: "You successfully imported a script tickets"
   },
   IMPORTSCRIPT_FAILED: {
