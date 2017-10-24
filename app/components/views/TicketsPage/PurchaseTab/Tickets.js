@@ -34,7 +34,8 @@ const Tickets = ({
       heading={<T id="importScript.title" m="Enter Passphrase to Import Script" />}
       description={<div><T id="importScript.description" m="Please enter your Script from your configured stakepool" />:</div>}
     />
-    <div className={isRequestingPassphrase || isShowingImportScript ? "tab-content-blur" : ""}>
+    <div className={ ["tab-card", isRequestingPassphrase || isShowingImportScript ? "tab-card-blur" : null].join(" ").trim() }>
+
       <StakeInfo />
       <PurchaseTickets {...{ ...props, onCancelPassphraseRequest }} />
       <div className="stakepool-area-spacing"></div>

@@ -6,6 +6,8 @@ const enterLeft = { atEnter: { offset: -100 }, atActive: { offset: 0 }, atLeave:
 const enterRight = { atEnter: { offset: 100 }, atActive: { offset: 0 }, atLeave: { offset: -100 }, mapStyles: (styles) => ({ transform: `translateX(${styles.offset}%)` })};
 const opts = { stiffness: 150, damping: 20 };
 
+const wrapperComponent = props => <div className="tab-content" { ...props } />;
+
 const Tickets = ({ children, location }) => {
   const tabs = ["purchase", "mytickets", "governance", "statistics"];
   const page = "tickets";
@@ -13,14 +15,12 @@ const Tickets = ({ children, location }) => {
   const pathname = location.pathname.split("/")[2];
   const effect = pathname === "purchase" ? enterLeft : enterRight;
   return (
-    <div className="page-view">
+    <Aux>
       <Header {...{ tabs, page, pathname }}/>
-      <div className="tabbedpage-content">
-      <RouteTransition {...{ opts, pathname, ...effect }}>
+      <RouteTransition className="tabbed-page" {...{ wrapperComponent, opts, pathname, ...effect }}>
         { children }
       </RouteTransition>
-      </div>
-    </div>
+    </Aux>
   );
 };
 

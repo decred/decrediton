@@ -17,7 +17,7 @@ const PurchasePage = ({
   onHideStakePoolConfig,
   ...props
 }) => (
-  <div>
+  <Aux>
     {(isSavingStakePoolConfig || isPurchasingTickets)
       ? <StakeyBounce/>
       : (isShowingStakePools)
@@ -27,7 +27,7 @@ const PurchasePage = ({
             : <Tickets {...{ stakePool, ...props }} />
     }
     <ReactToolTip type="info" effect="solid"/>
-  </div>
+  </Aux>
 );
 
 export default PurchasePage;

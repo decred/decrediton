@@ -16,7 +16,7 @@ const VotingPrefsPage = ({
   onCloseAgenda,
   onUpdateVotePreference
 }) => (
-  <div className="tab-content-wrapper">
+  <div className="tab-card">
     <div className="stakepool-voting-title-area">
       <div className="stakepool-voting-title-area-name">
         <T id="votingPreferences.title" m="Voting Preferences" />
