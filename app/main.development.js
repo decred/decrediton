@@ -583,9 +583,8 @@ app.on("ready", async () => {
       versionWin.close();
     }
     if (!primaryInstance) {
-      logger.log("error", "not primey on close");
       app.quit();
-      setTimeout(() => { logger.log("error", "quitting"); app.quit(); }, 2000);
+      setTimeout(() => { app.quit(); }, 2000);
     }
   });
 
