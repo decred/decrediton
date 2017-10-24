@@ -547,18 +547,31 @@ const readExesVersion = () => {
   return versions;
 };
 
+let primaryInstance = !app.makeSingleInstance(function () {
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.focus();
+  }
+});
+
+if (!primaryInstance) {
+  logger.log("error", "Another instance of decrediton is already running");
+}
+
 app.on("ready", async () => {
-  await installExtensions();
-  // Write application config files.
-  await writeCfgs(createDcrdConf, createDcrwalletConf, createDcrctlConf);
 
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 1178,
-    height: 790,
-  });
+  let windowOpts = {show: false, width: 1178, height: 790, page: "app.html"};
+  if (!primaryInstance) {
+    windowOpts = {show: true, width: 575, height: 275, autoHideMenuBar: true,
+      resizable: false, page: "staticPages/secondInstance.html"};
+  } else {
+    await installExtensions();
+    // Write application config files.
+    await writeCfgs(createDcrdConf, createDcrwalletConf, createDcrctlConf);
+  }
 
-  mainWindow.loadURL(`file://${__dirname}/app.html`);
+  mainWindow = new BrowserWindow(windowOpts);
+  mainWindow.loadURL(`file://${__dirname}/${windowOpts.page}`);
 
   mainWindow.webContents.on("did-finish-load", () => {
     mainWindow.show();
@@ -569,7 +582,17 @@ app.on("ready", async () => {
     if (versionWin !== null) {
       versionWin.close();
     }
+    if (!primaryInstance) {
+      logger.log("error", "not primey on close");
+      app.quit();
+      setTimeout(() => { logger.log("error", "quitting"); app.quit(); }, 2000);
+    }
   });
+
+  if (!primaryInstance) {
+    logger.log("error", "stopping ready");
+    return;
+  }
 
   if (process.env.NODE_ENV === "development") {
     mainWindow.openDevTools();
@@ -584,6 +607,8 @@ app.on("ready", async () => {
       }]).popup(mainWindow);
     });
   }
+
+  if (!primaryInstance) return;
 
   if (process.platform === "darwin") {
     template = [{
@@ -752,7 +777,7 @@ app.on("ready", async () => {
             });
 
             // Load a remote URL
-            versionWin.loadURL(`file://${__dirname}/version/version.html`);
+            versionWin.loadURL(`file://${__dirname}/staticPages/version.html`);
 
             versionWin.once("ready-to-show", () => {
               versionWin.webContents.send("exes-versions", readExesVersion());
