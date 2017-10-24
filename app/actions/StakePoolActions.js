@@ -10,8 +10,6 @@ import * as sel from "../selectors";
 export const UPDATESTAKEPOOLCONFIG_ATTEMPT = "UPDATESTAKEPOOLCONFIG_ATTEMPT";
 export const UPDATESTAKEPOOLCONFIG_FAILED = "UPDATESTAKEPOOLCONFIG_FAILED";
 export const UPDATESTAKEPOOLCONFIG_SUCCESS = "UPDATESTAKEPOOLCONFIG_SUCCESS";
-export const UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS = "UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS";
-export const UPDATESTAKEPOOLCONFIG_CLEAR_ERROR = "UPDATESTAKEPOOLCONFIG_CLEAR_ERROR";
 
 const updateSavedConfig = (newPoolInfo, poolHost, apiKey, accountNum) =>
   (dispatch, getState) => {
@@ -137,14 +135,6 @@ export const setStakePoolVoteChoices = (stakePool, voteChoices) => (dispatch) =>
       }
     })
     .catch(error => dispatch({ error, type: SETSTAKEPOOLVOTECHOICES_FAILED }));
-
-export const clearStakePoolConfigError = () => (dispatch, getState) =>
-  sel.currentStakePoolConfigError(getState())
-    ? dispatch({ type: UPDATESTAKEPOOLCONFIG_CLEAR_ERROR }) : null;
-
-export const clearStakePoolConfigSuccess = () => (dispatch, getState) =>
-  sel.currentStakePoolConfigSuccessMessage(getState())
-    ? dispatch({ type: UPDATESTAKEPOOLCONFIG_CLEAR_SUCCESS }) : null;
 
 export const DISCOVERAVAILABLESTAKEPOOLS_SUCCESS = "DISCOVERAVAILABLESTAKEPOOLS_SUCCESS";
 export const discoverAvailableStakepools = () => (dispatch) =>

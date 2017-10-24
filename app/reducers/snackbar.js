@@ -1,8 +1,16 @@
 import { reverseHash } from "../helpers/byteActions";
 import { defineMessages } from "react-intl";
 import {
-  PUBLISHTX_SUCCESS, PUBLISHTX_FAILED, SIGNTX_FAILED, CONSTRUCTTX_FAILED
+  PUBLISHTX_SUCCESS, PUBLISHTX_FAILED,
+  SIGNTX_FAILED, CONSTRUCTTX_FAILED,
+  PURCHASETICKETS_SUCCESS, PURCHASETICKETS_FAILED,
+  STARTAUTOBUYER_SUCCESS, STARTAUTOBUYER_FAILED,
+  STOPAUTOBUYER_SUCCESS, STOPAUTOBUYER_FAILED,
 } from "../actions/ControlActions";
+import {
+  UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
+  SETSTAKEPOOLVOTECHOICES_SUCCESS, SETSTAKEPOOLVOTECHOICES_FAILED
+} from "../actions/StakePoolActions";
 import { SNACKBAR_DISMISS_MESSAGES } from "../actions/SnackbarActions";
 
 const messages = defineMessages({
@@ -21,7 +29,47 @@ const messages = defineMessages({
   CONSTRUCTTX_FAILED: {
     id: "send.errors.constructTxFailed",
     defaultMessage: "{originalError}"
-  }
+  },
+  PURCHASETICKETS_SUCCESS: {
+    id: "tickets.purchaseTicketsHeader",
+    defaultMessage: "You bought {numTickets} tickets"
+  },
+  PURCHASETICKETS_FAILED: {
+    id: "tickets.errors.purchaseTicketsFailed",
+    defaultMessage: "{originalError}"
+  },
+  STARTAUTOBUYER_SUCCESS: {
+    id: "tickets.startAutoBuyerHeader",
+    defaultMessage: "Ticket buyer is now running."
+  },
+  STARTAUTOBUYER_FAILED: {
+    id: "tickets.errors.startAutoBuyerFailed",
+    defaultMessage: "{originalError}"
+  },
+  STOPAUTOBUYER_SUCCESS: {
+    id: "tickets.stopAutoBuyerHeader",
+    defaultMessage: "Ticket buyer is now stopped."
+  },
+  STOPAUTOBUYER_FAILED: {
+    id: "tickets.errors.stopAutoBuyerFailed",
+    defaultMessage: "{originalError}"
+  },
+  UPDATESTAKEPOOLCONFIG_SUCCESS: {
+    id: "tickets.updateStakePoolConfigHeader",
+    defaultMessage: "You have successfully updated your stakepool settings."
+  },
+  UPDATESTAKEPOOLCONFIG_FAILED: {
+    id: "tickets.errors.updateStakePoolConfigFailed",
+    defaultMessage: "{originalError}"
+  },
+  SETSTAKEPOOLVOTECHOICES_SUCCESS: {
+    id: "tickets.setStakePoolVoteChoices",
+    defaultMessage: "Successfully set vote choices."
+  },
+  SETSTAKEPOOLVOTECHOICES_FAILED: {
+    id: "tickets.errors.setStakePoolVoteChoicesFailed",
+    defaultMessage: "{originalError}"
+  },
 });
 
 export default function snackbar(state = {}, action) {
@@ -54,8 +102,52 @@ export default function snackbar(state = {}, action) {
     values = { originalError: String(action.error) };
     type = "Error";
     break;
-  }
 
+  case PURCHASETICKETS_SUCCESS:
+    type = "Success";
+    break;
+
+  case PURCHASETICKETS_FAILED:
+    values = { originalError: String(action.error) };
+    type = "Error";
+    break;
+
+  case STARTAUTOBUYER_SUCCESS:
+    type = "Success";
+    break;
+
+  case STARTAUTOBUYER_FAILED:
+    values = { originalError: String(action.error) };
+    type = "Error";
+    break;
+
+  case STOPAUTOBUYER_SUCCESS:
+    type = "Success";
+    break;
+
+  case STOPAUTOBUYER_FAILED:
+    values = { originalError: String(action.error) };
+    type = "Error";
+    break;
+
+  case UPDATESTAKEPOOLCONFIG_SUCCESS:
+    type = "Success";
+    break;
+
+  case UPDATESTAKEPOOLCONFIG_FAILED:
+    values = { originalError: String(action.error) };
+    type = "Error";
+    break;
+
+  case SETSTAKEPOOLVOTECHOICES_SUCCESS:
+    type = "Success";
+    break;
+
+  case SETSTAKEPOOLVOTECHOICES_FAILED:
+    values = { originalError: String(action.error) };
+    type = "Error";
+    break;
+  }
   if (values || type) {
     state.messages = state.messages.slice();
     state.messages.push({
