@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
-import ErrorScreen from "../../../ErrorScreen";
+import ErrorScreen from "ErrorScreen";
 import MyTicketsPage from "./Page";
-import service from "../../../../connectors/service";
+import service from "connectors/service";
 
 @autobind
 class MyTickets extends Component{

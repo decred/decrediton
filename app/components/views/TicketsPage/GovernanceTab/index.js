@@ -1,8 +1,8 @@
 import React from "react";
 import { autobind } from "core-decorators";
 import VotingPrefsPage from "./Page";
-import votingPrefs from "../../../../connectors/votingPrefs";
-import { find, compose, eq, get, substruct } from "../../../../fp";
+import votingPrefs from "connectors/votingPrefs";
+import { find, compose, eq, get, substruct } from "fp";
 
 @autobind
 class VotingPrefs extends React.Component {

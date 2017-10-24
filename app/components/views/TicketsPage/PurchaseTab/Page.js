@@ -1,7 +1,7 @@
 import React from "react";
-import StakeyBounce from "../../../StakeyBounce";
-import PurchaseTicketsInfo from "../../../PurchaseTicketsInfo";
-import StakePools from "../../../StakePools";
+import StakeyBounce from "StakeyBounce";
+import PurchaseTicketsInfo from "PurchaseTicketsInfo";
+import StakePools from "StakePools";
 import Tickets from "./Tickets";
 import "style/Layout.less";
 import "style/StakePool.less";

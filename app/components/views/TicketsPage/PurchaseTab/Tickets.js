@@ -1,10 +1,10 @@
 import React from "react";
-import PurchaseTickets from "../../../PurchaseTickets";
-import TicketAutoBuyer from "../../../TicketAutoBuyer";
-import PassphraseModal from "../../../PassphraseModal";
-import ImportScriptModal from "../../../ImportScriptModal";
+import PurchaseTickets from "PurchaseTickets";
+import TicketAutoBuyer from "TicketAutoBuyer";
+import PassphraseModal from "PassphraseModal";
+import ImportScriptModal from "ImportScriptModal";
 import { FormattedMessage as T } from "react-intl";
-import StakeInfo from "../../../StakeInfo";
+import StakeInfo from "StakeInfo";
 import "style/StakePool.less";
 import "style/Layout.less";
 
