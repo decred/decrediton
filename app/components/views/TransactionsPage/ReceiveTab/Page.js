@@ -1,38 +1,23 @@
-import React from "react";
-import ReactTooltip from "react-tooltip";
 import ReceiveAccountsSelect from "ReceiveAccountsSelect";
 import { Link } from "react-router";
-import { CopyToClipboard } from "shared";
+import { CopyToClipboard, Tooltip } from "shared";
 import KeyBlueButton from "KeyBlueButton";
 import QRCode from "./QRCode";
-import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import "style/Layout.less";
 import "style/ReceivePage.less";
 import "style/MiscComponents.less";
 
-const messages = defineMessages({
-  accountsTip: {
-    id: "receive.accounts.tip",
-    defaultMessage: "Accounts",
-  },
-});
-
 const ReceivePage = ({
                        nextAddress,
-                       intl,
                        onRequestAddress,
                      }) => (
   <div className="tab-card">
     <div className="receive-content-nest">
       <div className="receive-content-nest-for-address">
-        <Link
-          className="receive-accounts-button-icon"
-          data-place="bottom"
-          data-type="info"
-          data-effect="solid"
-          data-tip={intl.formatMessage(messages.accountsTip)}
-          to={"/accounts"}
-        />
+        <Tooltip text={ <T id="receive.accounts.tip" m="Accounts" /> }>
+          <Link to={"/accounts"} className="accounts-button-icon" />
+        </Tooltip>
         <div className="receive-content-nest-prefix">
           <T id="receive.accountLabel" m="This address is for" />:
         </div>
@@ -55,8 +40,7 @@ const ReceivePage = ({
         <T id="receive.newAddressBtn" m="Generate new address" />
       </KeyBlueButton>
     </div>
-    <ReactTooltip />
   </div>
 );
 
-export default injectIntl(ReceivePage);
+export default ReceivePage;

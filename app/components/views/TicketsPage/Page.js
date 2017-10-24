@@ -1,5 +1,3 @@
-import React from "react";
-import ReactToolTip from "react-tooltip";
 import StakeyBounce from "../../StakeyBounce";
 import PurchaseTicketsInfo from "../../PurchaseTicketsInfo";
 import VotingPrefs from "../../VotingPrefs";
@@ -33,7 +31,6 @@ const TicketsPage = ({
             ? <PurchaseTicketsInfo closeModal={onHideTicketsInfo} />
             : <Tickets {...{ stakePool, ...props }} />
     }
-    <ReactToolTip type="info" effect="solid"/>
   </Aux>
 );
 
