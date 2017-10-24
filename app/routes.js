@@ -42,10 +42,10 @@ export default (
     <Route path="/settings" component={SettingsPage} />
     <Route path="/tickets" component={TicketsPage}>
       <IndexRedirect to="purchase" />
-      <Route path="purchase" component={TicketsPurchaseTab} position={0}/>
-      <Route path="mytickets" component={TicketsMyTicketsTab} position={1}/>
-      <Route path="governance" component={TicketsGovernanceTab} position={2}/>
-      <Route path="statistics" component={TicketsStatisticsTab} position={3}/>
+      <Route path="purchase" component={TicketsPurchaseTab}/>
+      <Route path="mytickets" component={TicketsMyTicketsTab}/>
+      <Route path="governance" component={TicketsGovernanceTab}/>
+      <Route path="statistics" component={TicketsStatisticsTab}/>
     </Route>
     <Route path="/accounts" component={AccountsPage} />
     <Route path="/walletError" component={WalletError} />
