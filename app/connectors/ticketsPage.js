@@ -30,18 +30,10 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  onClearStakePoolConfigError: spa.clearStakePoolConfigError,
-  onClearStakePoolConfigSuccess: spa.clearStakePoolConfigSuccess,
   onRevokeTickets: ca.revokeTicketsAttempt,
   onImportScript: ca.importScriptAttempt,
-  onClearPurchaseTicketsError: ca.clearPurchaseTicketsError,
-  onClearPurchaseTicketsSuccess: ca.clearPurchaseTicketsSuccess,
   onClearRevokeTicketsError: ca.clearRevokeTicketsError,
   onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
-  onClearStartAutoBuyerSuccess: ca.clearStartAutoBuyerSuccess,
-  onClearStartAutoBuyerError: ca.clearStartAutoBuyerError,
-  onClearStopAutoBuyerSuccess: ca.clearStopAutoBuyerSuccess,
-  onClearStopAutoBuyerError: ca.clearStopAutoBuyerError,
   onClearImportScriptError: ca.clearImportScriptError,
   onClearImportScriptSuccess: ca.clearImportScriptSuccess
 }, dispatch);

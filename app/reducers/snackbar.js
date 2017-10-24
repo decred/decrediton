@@ -6,6 +6,8 @@ import {
   PURCHASETICKETS_SUCCESS, PURCHASETICKETS_FAILED,
   STARTAUTOBUYER_SUCCESS, STARTAUTOBUYER_FAILED,
   STOPAUTOBUYER_SUCCESS, STOPAUTOBUYER_FAILED,
+  REVOKETICKETS_SUCCESS, REVOKETICKETS_FAILED,
+  IMPORTSCRIPT_SUCCESS, IMPORTSCRIPT_FAILED,
 } from "../actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
@@ -36,6 +38,22 @@ const messages = defineMessages({
   },
   PURCHASETICKETS_FAILED: {
     id: "tickets.errors.purchaseTicketsFailed",
+    defaultMessage: "{originalError}"
+  },
+  REVOKETICKETS_SUCCESS: {
+    id: "tickets.revokeTicketsHeader",
+    defaultMessage: "You successfully revoked tickets"
+  },
+  REVOKETICKETS_FAILED: {
+    id: "tickets.errors.revokeTicketsFailed",
+    defaultMessage: "{originalError}"
+  },
+  IMPORTSCRIPT_SUCCESS: {
+    id: "tickets.revokeTicketsHeader",
+    defaultMessage: "You successfully revoked tickets"
+  },
+  IMPORTSCRIPT_FAILED: {
+    id: "tickets.errors.importScriptFailed",
     defaultMessage: "{originalError}"
   },
   STARTAUTOBUYER_SUCCESS: {
@@ -104,10 +122,29 @@ export default function snackbar(state = {}, action) {
     break;
 
   case PURCHASETICKETS_SUCCESS:
+    values = { numTickets: action.purchaseTicketsResponse.getTicketHashesList().length };
     type = "Success";
     break;
 
   case PURCHASETICKETS_FAILED:
+    values = { originalError: String(action.error) };
+    type = "Error";
+    break;
+
+  case REVOKETICKETS_SUCCESS:
+    type = "Success";
+    break;
+
+  case REVOKETICKETS_FAILED:
+    values = { originalError: String(action.error) };
+    type = "Error";
+    break;
+
+  case IMPORTSCRIPT_SUCCESS:
+    type = "Success";
+    break;
+
+  case IMPORTSCRIPT_FAILED:
     values = { originalError: String(action.error) };
     type = "Error";
     break;

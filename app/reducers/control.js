@@ -150,15 +150,6 @@ export default function control(state = {}, action) {
       importScriptError: null,
       importScriptRequestAttempt: false,
       importScriptResponse: action.importScriptResponse,
-      importScriptSuccess: action.importScriptSuccess,
-    };
-  case IMPORTSCRIPT_CLEAR_ERROR:
-    return {...state,
-      importScriptError: null,
-    };
-  case  IMPORTSCRIPT_CLEAR_SUCCESS:
-    return {...state,
-      importScriptSuccess: "",
     };
   case CHANGEPASSPHRASE_ATTEMPT:
     return {...state,
@@ -264,17 +255,8 @@ export default function control(state = {}, action) {
   case PURCHASETICKETS_SUCCESS:
     return {...state,
       purchaseTicketsError: null,
-      purchaseTicketsSuccess: action.success,
       purchaseTicketsRequestAttempt: false,
       purchaseTicketsResponse: action.purchaseTicketsResponse,
-    };
-  case PURCHASETICKETS_CLEAR_ERROR:
-    return {...state,
-      purchaseTicketsError: null,
-    };
-  case  PURCHASETICKETS_CLEAR_SUCCESS:
-    return {...state,
-      purchaseTicketsSuccess: "",
     };
   case REVOKETICKETS_ATTEMPT:
     return {...state,
@@ -289,17 +271,8 @@ export default function control(state = {}, action) {
   case REVOKETICKETS_SUCCESS:
     return {...state,
       revokeTicketsError: null,
-      revokeTicketsSuccess: action.success,
       revokeTicketsRequestAttempt: false,
       revokeTicketsResponse: action.revokeTicketsResponse,
-    };
-  case REVOKETICKETS_CLEAR_ERROR:
-    return {...state,
-      revokeTicketsError: null,
-    };
-  case  REVOKETICKETS_CLEAR_SUCCESS:
-    return {...state,
-      revokeTicketsSuccess: "",
     };
   case GETTICKETBUYERCONFIG_ATTEMPT:
     return {
@@ -376,24 +349,14 @@ export default function control(state = {}, action) {
   case STARTAUTOBUYER_SUCCESS:
     return {...state,
       startAutoBuyerError: null,
-      startAutoBuyerSuccess: action.success,
       startAutoBuyerRequestAttempt: false,
       startAutoBuyerResponse: action.startAutoBuyerResponse,
-      stopAutoBuyerSuccess: null,
       stopAutoBuyerResponse: null,
       balanceToMaintain: action.balanceToMaintain,
       maxFeePerKb: action.maxFeePerKb,
       maxPriceRelative: action.maxPriceRelative,
       maxPriceAbsolute: action.maxPriceAbsolute,
       maxPerBlock: action.maxPerBlock,
-    };
-  case STARTAUTOBUYER_CLEAR_ERROR:
-    return {...state,
-      startAutoBuyerError: null,
-    };
-  case  STARTAUTOBUYER_CLEAR_SUCCESS:
-    return {...state,
-      startAutoBuyerSuccess: null,
     };
   case STOPAUTOBUYER_ATTEMPT:
     return {...state,
@@ -413,14 +376,6 @@ export default function control(state = {}, action) {
       stopAutoBuyerResponse: action.stopAutoBuyerResponse,
       startAutoBuyerSuccess: null,
       startAutoBuyerResponse: null,
-    };
-  case STOPAUTOBUYER_CLEAR_ERROR:
-    return {...state,
-      stopAutoBuyerError: null,
-    };
-  case  STOPAUTOBUYER_CLEAR_SUCCESS:
-    return {...state,
-      stopAutoBuyerSuccess: null,
     };
   case CONSTRUCTTX_ATTEMPT:
     return {...state,

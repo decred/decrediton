@@ -29,21 +29,6 @@ class Purchase extends Component {
     };
   }
 
-  componentWillMount() {
-    this.props.onClearStakePoolConfigError();
-    this.props.onClearStakePoolConfigSuccess();
-    this.props.onClearPurchaseTicketsSuccess();
-    this.props.onClearPurchaseTicketsError();
-    this.props.onClearRevokeTicketsSuccess();
-    this.props.onClearRevokeTicketsError();
-    this.props.onClearImportScriptSuccess();
-    this.props.onClearImportScriptError();
-    this.props.onClearStartAutoBuyerSuccess();
-    this.props.onClearStartAutoBuyerError();
-    this.props.onClearStopAutoBuyerSuccess();
-    this.props.onClearStopAutoBuyerError();
-  }
-
   componentWillReceiveProps(nextProps) {
     if (!this.state.stakePool && nextProps.defaultStakePool) {
       // Added first stake pool

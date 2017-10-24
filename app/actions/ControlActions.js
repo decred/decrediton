@@ -176,8 +176,6 @@ export function importPrivateKeyAttempt(passphrase, accountNum, wif, rescan, sca
 export const IMPORTSCRIPT_ATTEMPT = "IMPORTSCRIPT_ATTEMPT";
 export const IMPORTSCRIPT_FAILED = "IMPORTSCRIPT_FAILED";
 export const IMPORTSCRIPT_SUCCESS = "IMPORTSCRIPT_SUCCESS";
-export const IMPORTSCRIPT_CLEAR_ERROR = "IMPORTSCRIPT_CLEAR_ERROR";
-export const IMPORTSCRIPT_CLEAR_SUCCESS= "IMPORTSCRIPT_CLEAR_SUCCESS";
 
 function importScriptSuccess(importScriptResponse, votingAddress, cb) {
   var message = "Script successfully imported, rescanning now";
@@ -235,24 +233,6 @@ function hexToBytes(hex) {
   for (var bytes = [], c = 0; c < hex.length; c += 2)
     bytes.push(parseInt(hex.substr(c, 2), 16));
   return bytes;
-}
-
-export function clearImportScriptSuccess() {
-  return (dispatch, getState) => {
-    const { importScriptSuccess } = getState().control;
-    if (importScriptSuccess !== "") {
-      dispatch({type: IMPORTSCRIPT_CLEAR_SUCCESS});
-    }
-  };
-}
-
-export function clearImportScriptError() {
-  return (dispatch, getState) => {
-    const { importScriptError } = getState().control;
-    if (importScriptError !== null) {
-      dispatch({type: IMPORTSCRIPT_CLEAR_ERROR});
-    }
-  };
 }
 
 export const CHANGEPASSPHRASE_ATTEMPT = "CHANGEPASSPHRASE_ATTEMPT";
@@ -416,8 +396,7 @@ function purchaseTicketsAction(request) {
         if (error) {
           dispatch({ error, type: PURCHASETICKETS_FAILED });
         } else {
-          var success = "You successfully purchased " + purchaseTicketsResponse.getTicketHashesList().length + " tickets.";
-          dispatch({ success: success, purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+          dispatch({ purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
           setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
           setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 4000);
         }
@@ -440,9 +419,8 @@ export function revokeTicketsAttempt(passphrase) {
         if (error) {
           dispatch({ error, type: REVOKETICKETS_FAILED });
         } else {
-          var success = "You successfully revoked tickets.";
           setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 4000);
-          dispatch({ success: success, revokeTicketsResponse: revokeTicketsResponse, type: REVOKETICKETS_SUCCESS });
+          dispatch({ revokeTicketsResponse: revokeTicketsResponse, type: REVOKETICKETS_SUCCESS });
         }
       });
   };
