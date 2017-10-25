@@ -11,7 +11,8 @@ const mapStateToProps = selectorMap({
   maxPriceAbsolute: sel.maxPriceAbsolute,
   maxPerBlock: sel.maxPerBlock,
   getTicketBuyerConfigResponse: sel.getTicketBuyerConfigResponse,
-  isTicketAutoBuyerEnabled: sel.isTicketAutoBuyerEnabled
+  isTicketAutoBuyerEnabled: sel.isTicketAutoBuyerEnabled,
+  currencyDisplay: sel.currencyDisplay
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

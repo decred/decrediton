@@ -1,5 +1,6 @@
 import StakeyBounce from "../../StakeyBounce";
 import PurchaseTicketsInfo from "../../PurchaseTicketsInfo";
+import TicketAutoBuyerInfo from "../../TicketAutoBuyerInfo";
 import VotingPrefs from "../../VotingPrefs";
 import StakePools from "../../StakePools";
 import TicketsPageHeader from "./Header";
@@ -17,6 +18,8 @@ const TicketsPage = ({
   onToggleTicketStakePool,
   onHideTicketsInfo,
   onHideStakePoolConfig,
+  isShowingAutoBuyerTicketsInfo,
+  onHideAutoBuyerTicketsInfo,
   ...props
 }) => (
   <Aux>
@@ -29,7 +32,8 @@ const TicketsPage = ({
           ? <VotingPrefs />
           : isShowingTicketsInfo
             ? <PurchaseTicketsInfo closeModal={onHideTicketsInfo} />
-            : <Tickets {...{ stakePool, ...props }} />
+              : isShowingAutoBuyerTicketsInfo ? <TicketAutoBuyerInfo closeModal={onHideAutoBuyerTicketsInfo} />
+                : <Tickets {...{ stakePool, ...props }} />
     }
   </Aux>
 );
