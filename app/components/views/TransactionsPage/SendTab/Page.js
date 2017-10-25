@@ -116,7 +116,6 @@ const SendPage = ({
               </div>
               <div className="total-amount-send-amount">{estimatedSignedSize} bytes</div>
             </div>
-            <div className="total-amount-send-amount">{estimatedSignedSize} bytes</div>
           </div>
         </div>
       </div> }
