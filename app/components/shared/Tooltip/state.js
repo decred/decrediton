@@ -3,8 +3,8 @@ import { spring } from "react-motion";
 
 export default provideState({
   initialState: () => ({
-    tooltipLeft: 400,
-    tooltipTop: 400,
+    tooltipLeft: null,
+    tooltipTop: null,
     tooltipOpacity: 0,
   }),
   effects: {
@@ -26,13 +26,6 @@ export default provideState({
         top: spring(tooltipTop),
         left: spring(tooltipLeft),
         opacity: spring(tooltipOpacity)
-      }
-    ),
-    startingPosition: () => (
-      {
-        top: 400,
-        left: 400,
-        opacity: 0
       }
     )
   }

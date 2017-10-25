@@ -1,3 +1,4 @@
+import React, { Component } from "react";
 import { PropTypes } from "prop-types";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { IntlProvider } from "react-intl";
@@ -14,7 +15,7 @@ const rootPath = ({ pathname }) => pathname.split("/")[1];
 
 const wrapperComponent = props => <div className="page-view" { ...props } />;
 
-class App extends React.Component {
+class App extends Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
     locale: PropTypes.object.isRequired,
