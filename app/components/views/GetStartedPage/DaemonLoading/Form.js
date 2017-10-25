@@ -2,7 +2,6 @@ import Header from "../../../Header";
 import LinearProgress from "material-ui/LinearProgress";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import "style/GetStarted.less";
-import ReactToolTip from "react-tooltip";
 
 const DaemonLoadingFormHeader = ({
   startupError,
@@ -41,7 +40,6 @@ const DaemonLoadingFormBody = ({
           <div className="get-started-instructions-txt">
             <T id="getStarted.chainLoadingDelayReminder" m="If you are starting decrediton for the first time, this may take a while." />
           </div>
-          <ReactToolTip place="left" type="info" effect="solid"/>
         </div>
         <LinearProgress
           mode="determinate"

@@ -1751,7 +1751,7 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
-classnames@^2.2.4, classnames@^2.2.5:
+classnames@^2.2.4:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
@@ -6757,13 +6757,6 @@ react-timeout@^1.0.1:
   dependencies:
     create-react-class "^15.5.2"
     object-assign "^4.0.1"
-
-react-tooltip@^3.3.0:
-  version "3.4.0"
-  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.4.0.tgz#037f38f797c3e6b1b58d2534ccc8c2c76af4f52d"
-  dependencies:
-    classnames "^2.2.5"
-    prop-types "^15.6.0"
 
 react-transform-catch-errors@^1.0.2:
   version "1.0.2"

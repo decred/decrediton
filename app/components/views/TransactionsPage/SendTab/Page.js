@@ -1,6 +1,4 @@
-import React from "react";
 import AccountsSelect from "../../../AccountsSelect";
-import ReactTooltip from "react-tooltip";
 import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";
 import DecredLoading from "../../../DecredLoading";
 import Balance from "../../../Balance";
@@ -65,7 +63,6 @@ const SendPage = ({
           <T id="send.confirmAmountLabel" m="Please confirm your transaction for" />
           : <Balance amount={totalSpent} /></div>}
       />
-
       { isSendingTransaction ? <DecredLoading /> :
       <div className={ ["tab-card", isShowingConfirm ? "tab-card-blur" : null].join(" ").trim() }>
         <div className="send-flex-height">
@@ -130,10 +127,10 @@ const SendPage = ({
               </div>
               <div className="total-amount-send-amount">{estimatedSignedSize} bytes</div>
             </div>
+            <div className="total-amount-send-amount">{estimatedSignedSize} bytes</div>
           </div>
         </div>
       </div> }
-    <ReactTooltip />
   </Aux>
 );
 
