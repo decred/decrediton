@@ -1,32 +1,14 @@
-import AccountsSelect from "../../../AccountsSelect";
-import { defineMessages, FormattedMessage as T, injectIntl } from "react-intl";
-import DecredLoading from "../../../DecredLoading";
-import Balance from "../../../Balance";
-import KeyBlueButton from "../../../KeyBlueButton";
-import PassphraseModal from "../../../PassphraseModal";
+import AccountsSelect from "AccountsSelect";
+import {FormattedMessage as T} from "react-intl";
+import { Tooltip } from "shared";
+import DecredLoading from "DecredLoading";
+import Balance from "Balance";
+import KeyBlueButton from "KeyBlueButton";
+import PassphraseModal from "PassphraseModal";
 import OutputRow from "./OutputRow";
 import OutputAccountRow from "./OutputAccountRow";
 import "style/SendPage.less";
 import "style/MiscComponents.less";
-
-const messages = defineMessages({
-  sendAllTitle: {
-    id: "send.sendAllTitle",
-    defaultMessage: "Send all funds from selected account"
-  },
-  cancelSendAllTitle: {
-    id: "send.cancelSendAllTitle",
-    defaultMessage: "Cancel sending all funds"
-  },
-  sendSelfTitle: {
-    id: "send.sendSelfTitle",
-    defaultMessage: "Send funds to another account"
-  },
-  sendOthersTitle: {
-    id: "send.sendOthersTitle",
-    defaultMessage: "Send funds to another wallet"
-  }
-});
 
 const SendPage = ({
                     account,
@@ -50,7 +32,6 @@ const SendPage = ({
                     onShowSendOthers,
                     getAddressError,
                     getAmountError,
-                    intl,
                     ...props
                   }) => (
   <Aux>
@@ -71,13 +52,21 @@ const SendPage = ({
             <AccountsSelect className="send-select-account-input"
               {...{account}} onChange={onChangeAccount} showAccountsButton={true} />
             <div className="send-send-all-input">
-              {!isSendSelf
-                ? <a className="send-self-wallet-icon" onClick={onShowSendSelf} title={intl.formatMessage(messages.sendSelfTitle)} />
-                : <a className="send-others-wallet-icon" onClick={onShowSendOthers} title={intl.formatMessage(messages.sendOthersTitle)} />
+              {!isSendSelf ?
+                <Tooltip text={<T id="send.sendSelfTitle" m="Send funds to another account"/>}>
+                  <a className="send-self-wallet-icon" onClick={onShowSendSelf}/>
+                </Tooltip> :
+                <Tooltip text={<T id="send.sendOthersTitle" m="Send funds to another wallet"/>} >
+                  <a className="send-others-wallet-icon" onClick={onShowSendOthers}/>
+                </Tooltip>
               }
-              {!isSendAll
-                ? <a className="send-all-wallet-icon" onClick={onShowSendAll} title={intl.formatMessage(messages.sendAllTitle)} />
-                : <a className="send-all-cancel-wallet-icon" onClick={onHideSendAll} title={intl.formatMessage(messages.cancelSendAllTitle)} />
+              {!isSendAll ?
+                <Tooltip text={<T id="send.sendAllTitle" m="Send all funds from selected account"/>}>
+                  <a className="send-all-wallet-icon" onClick={onShowSendAll}/>
+                </Tooltip> :
+                <Tooltip text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds"/>}>
+                  <a className="send-all-cancel-wallet-icon" onClick={onHideSendAll}/>
+                </Tooltip>
               }
             </div>
           </div>
@@ -134,4 +123,4 @@ const SendPage = ({
   </Aux>
 );
 
-export default injectIntl(SendPage);
+export default SendPage;
