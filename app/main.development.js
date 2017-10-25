@@ -203,8 +203,10 @@ function closeDCRD() {
 function closeClis() {
   // shutdown daemon and wallet.
   // Don't try to close if not running.
-  closeDCRW();
-  closeDCRD();
+  if(dcrdPID && dcrdPID !== -1)
+    closeDCRD();
+  if(dcrwPID && dcrwPID !== -1)
+    closeDCRW();
 }
 
 function cleanShutdown() {
