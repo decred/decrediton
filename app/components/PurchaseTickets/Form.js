@@ -120,7 +120,7 @@ const PurchaseTicketsForm = ({
                   <DecredInput
                     placeholder={formatMessage(messages.ticketFeePlaceholder)}
                     value={ticketFee}
-                    onChange={e => onChangeTicketFee(e.target.value)}
+                    onChange={changeTicketFee}
                     required
                     invalid={ticketFeeError}
                     invalidMessage={<T id="purchaseTickets.errors.invalidTicketFee" m="*Invalid ticket fee (0 - 0.1 DCR/KB)" />}
@@ -137,7 +137,7 @@ const PurchaseTicketsForm = ({
                   <DecredInput
                     placeholder={formatMessage(messages.txFeePlaceholder)}
                     value={txFee}
-                    onChange={e => onChangeTxFee(e.target.value)}
+                    onChange={changeTxFee}
                     required
                     invalid={txFeeError}
                     invalidMessage={<T id="purchaseTickets.errors.invalidTxFee" m="*Invalid tx fee (0 - 0.1 DCR/KB)" />}
@@ -154,7 +154,7 @@ const PurchaseTicketsForm = ({
                   <NumericInput
                     placeholder={formatMessage(messages.expiryPlaceholder)}
                     value={expiry}
-                    onChange={e => onChangeExpiry(e.target.value)}
+                    onChange={changeExpiry}
                     required
                     submited={isSubmited}
                     invalid={expiryError}
