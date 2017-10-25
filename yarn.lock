@@ -3491,6 +3491,13 @@ forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
 
+freactal@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/freactal/-/freactal-1.1.1.tgz#c3d0a4c5f34427e0e5aefa209bd4ccdb889f0d9d"
+  dependencies:
+    lodash "^4.17.4"
+    prop-types "^15.5.8"
+
 fresh@0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
