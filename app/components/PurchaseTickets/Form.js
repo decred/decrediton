@@ -124,7 +124,7 @@ const PurchaseTicketsForm = ({
                     required
                     invalid={ticketFeeError}
                     invalidMessage={<T id="purchaseTickets.errors.invalidTicketFee" m="*Invalid ticket fee (0 - 0.1 DCR/KB)" />}
-                    showErrors={isSubmited}
+                    showErrors
                   />
                 </div>
               </div>
@@ -141,7 +141,7 @@ const PurchaseTicketsForm = ({
                     required
                     invalid={txFeeError}
                     invalidMessage={<T id="purchaseTickets.errors.invalidTxFee" m="*Invalid tx fee (0 - 0.1 DCR/KB)" />}
-                    showErrors={isSubmited}
+                    showErrors
                   />
                 </div>
               </div>
