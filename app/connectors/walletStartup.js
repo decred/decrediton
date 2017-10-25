@@ -32,7 +32,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onRetryStartRPC: wla.startRpcRequestFunc,
   doVersionCheck: wla.versionCheckAction,
   doStartDaemon: da.startDaemon,
-  doSkipDaemonSync: da.skipDaemonSync,
   determineNeededBlocks: wla.determineNeededBlocks,
   showSidebarMenu,
   showSidebar,

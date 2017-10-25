@@ -1,14 +1,11 @@
-import React, { Component } from "react";
-import { autobind } from "core-decorators";
 import { substruct, compose, eq, get } from "fp";
 import { service, ticketsPage } from "connectors";
 import ErrorScreen from "components/ErrorScreen";
 import TicketsPage from "./Page";
 import { FormattedMessage as T } from "react-intl";
-import ReactToolTip from "react-tooltip";
 
 @autobind
-class Tickets extends Component {
+class Tickets extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -51,12 +48,6 @@ class Tickets extends Component {
         stakePool: nextProps.defaultStakePool,
         isShowingStakePools: false
       });
-    }
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-    if (prevState != this.state) {
-      ReactToolTip.rebuild();
     }
   }
 

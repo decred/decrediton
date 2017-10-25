@@ -1,10 +1,7 @@
-import React from "react";
-import { autobind } from "core-decorators";
 import ErrorScreen from "../../ErrorScreen";
 import HomePage from "./Page";
-import service from "../../../connectors/service";
-import home from "../../../connectors/home";
-import {substruct} from "../../../fp.js";
+import { service, home } from "connectors";
+import {substruct} from "fp";
 
 @autobind
 class Home extends React.Component{

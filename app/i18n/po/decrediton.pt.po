@@ -1450,10 +1450,10 @@ msgstr ""
 
 #. [purchaseTickets.title]
 #. defaultMessage is:
-#. Purchase Titckets
+#. Purchase Tickets
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.title"
-msgid "Purchase Titckets"
+msgid "Purchase Tickets"
 msgstr ""
 
 #. [notifications.type.receive]

@@ -79,11 +79,7 @@ export default injectIntl(SendOutputRow);
 
 ### Tooltip
 
-To define a translated tooltip use the same method as the placeholder. See files [CopyToClipboardButton.js](../components/CopyToClipboardButton.js) or [DaemonLoading/Form.js](../components/views/GetStartedPage/DaemonLoading/Form.js) as examples.
-
-**:exclamation: Note**: Due to security issues, html is **not** allowed inside the contents of the tip. The only exception is the `<br>` tag on multi line (`data-multiline={true}`) tips, where it can be used to signal a line break.
-
-It is currently impossible to use the react-intl and react-tooltip libraries together to translate messages with embedded html tags in a safe way.
+Tooltips now accept embedded HTML safely. Use the `T` component described below. See files [CopyToClipboard.js](../components/shared/CopyToClipboard.js) or [DaemonLoading/Form.js](../components/views/GetStartedPage/DaemonLoading/Form.js) as examples.
 
 ### Pluralized Strings
 
