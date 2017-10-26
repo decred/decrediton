@@ -66,7 +66,7 @@ const PurchaseTicketsForm = ({
       <div className="stakepool-voting-title-area-name">
         <T id="purchaseTickets.title" m="Purchase Tickets" /></div>
       <div className="stakepool-purchase-ticket-input-buttons">
-        <PurchaseTicketsInfoButton onClick={onShowTicketsInfo}/>
+        <PurchaseTicketsInfoButton onClick={onShowTicketsInfo} tooltipText={<T id="accounts.balanceInfo" m="Ticket Purchase Information"/>}/>
         <TicketsCogs opened={!isShowingAdvanced} onClick={onToggleShowAdvanced}/>
       </div>
     </div>
