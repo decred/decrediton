@@ -55,6 +55,8 @@ class GetStartedPage extends Component {
       isPrepared,
       isAdvancedDaemon,
     } = this.props;
+
+    const { isSubmited, hasErrors } = this.state;
     let Header, Body;
     if (isPrepared) {
       switch (startStepIndex || 0) {
@@ -86,8 +88,15 @@ class GetStartedPage extends Component {
       }
     } else {
       if (isAdvancedDaemon) {
-        Header = LoginRPCHeader;
-        Body = LoginRPCBody;
+
+        if(isSubmited && !hasErrors){
+          Header = DaemonLoadingHeader;
+          Body = DaemonLoadingBody;
+        } else {
+          Header = LoginRPCHeader;
+          Body = LoginRPCBody;
+        }
+        
       } else {
         Header = DaemonLoadingHeader;
         Body = DaemonLoadingBody;
