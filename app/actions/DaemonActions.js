@@ -15,6 +15,7 @@ export const WALLETREADY = "WALLETREADY";
 export const DAEMONSTARTED_ERROR_ON_START_WALLET = "DAEMONSTARTED_ERROR_ON_START_WALLET";
 export const LOADER_ADVANCED_SUCCESS = "LOADER_ADVANCED_SUCCESS";
 export const SAVE_START_ADVANCED_DAEMON_CREDENTIALS = "SAVE_START_ADVANCED_DAEMON_CREDENTIALS";
+export const SKIPPED_START_ADVANCED_LOGIN = "SKIPPED_START_ADVANCED_LOGIN";
 
 export const startDaemon = () => (dispatch) => {
   daemon.startDaemon()
@@ -47,6 +48,10 @@ export const startDaemonAdvanced = (args, startType) => (dispatch) => {
     break;
   }
   }
+  
+  if(!args )
+    dispatch({ type: SKIPPED_START_ADVANCED_LOGIN });
+  
   daemon.startDaemonAdvanced(args, startType)
   .then( () => {
     dispatch(syncDaemon(credentials, rpchost));

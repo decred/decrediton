@@ -5,7 +5,8 @@ import {
   DAEMONSYNCED,
   WALLETREADY,
   DAEMONSTARTED_ADVANCED,
-  SAVE_START_ADVANCED_DAEMON_CREDENTIALS
+  SAVE_START_ADVANCED_DAEMON_CREDENTIALS,
+  SKIPPED_START_ADVANCED_LOGIN
 } from "../actions/DaemonActions";
 
 export default function version(state = {}, action) {
@@ -42,6 +43,10 @@ export default function version(state = {}, action) {
       credentials: action.credentials,
       startType: action.startType
     };
+  case SKIPPED_START_ADVANCED_LOGIN:
+    return {...state,
+      skippedAdvancedLoing: true,
+    }
   default:
     return state;
   }

@@ -58,6 +58,7 @@ class GetStartedPage extends Component {
       startStepIndex,
       isPrepared,
       isAdvancedDaemon,
+      getSkippedAdvancedLogin
     } = this.props;
     const { isSubmited, hasErrors } = this.state;
     let Header, Body;
@@ -92,7 +93,7 @@ class GetStartedPage extends Component {
     } else {
       if (isAdvancedDaemon) {
 
-        if(isSubmited && !hasErrors){
+        if((isSubmited && !hasErrors) || getSkippedAdvancedLogin){
           Header = DaemonLoadingHeader;
           Body = DaemonLoadingBody;
         } else {
