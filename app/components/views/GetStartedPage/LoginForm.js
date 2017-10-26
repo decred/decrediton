@@ -46,22 +46,28 @@ export const LoginRPCHeader = () => (
     headerMetaOverview={<T id="getStarted.header.startRpc.meta" m="Login to your RPC" />} />
 );
 
-const LoginRPCBodyForm = ({
+const LoginRPCRemoteForm = ({
    ...props,
   ...state,
-  onSubmit,
+  onSubmitRemoteForm,
   onChangeRpcuser,
   onChangeRpcpass,
   onChangeRpccert,
-  onChangeRpcappdata,
+  changeForm,
+  intl: { formatMessage }
+
   }) => {
   const { handleSubmit } = props;
-  const { hasErrors, isSubmited } = state;
-  const { formatMessage } = props.intl;
+  const { remoteFormHasErrors, isSubmitedRemoteForm } = state;
 
   return (
     <div className="get-started-content-new-seed page-content">
-      <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+      <div>
+        <a className="key-blue-button" onClick={() => changeForm(1)}>Select Remote Form</a>
+        <a className="key-blue-button" onClick={() => changeForm(2)}>Select other app data directory Form</a>
+      </div>
+      <div className="login-form-title">Login to a remote rpc</div>
+      <form className="login-form" onSubmit={handleSubmit(onSubmitRemoteForm)}>
         <Field
           label={formatMessage(messages.messageLoginLabel)}
           name="rpcuser"
@@ -89,6 +95,35 @@ const LoginRPCBodyForm = ({
           onChange={(e) => onChangeRpccert(e.target.value)}
           placeholder={formatMessage(messages.certFieldPlaceholder)}
         />
+        {isSubmitedRemoteForm && remoteFormHasErrors ?
+          <div className="orange-warning">*Please Fill All Fields</div> : null}
+        <button className="key-blue-button" type="submit" >
+          <T id="securitycenter.sign.form.submit" m="Sign" />
+        </button>
+      </form>
+    </div>
+  );
+};
+
+const LoginDiffAppdataForm = ({
+  ...props,
+  ...state,
+  onSubmitDiffAppdataForm,
+  onChangeRpcappdata,
+  changeForm,
+  intl: { formatMessage }
+ }) => {
+  const { handleSubmit } = props;
+  const { diffAppdataFormHasErrors, isSubmitedDiffAppdataForm } = state;
+
+  return (
+    <div className="get-started-content-new-seed page-content">
+      <div>
+        <a className="key-blue-button" onClick={() => changeForm(1)}>Select Remote Form</a>
+        <a className="key-blue-button" onClick={() => changeForm(2)}>Select other app data directory Form</a>
+      </div>
+      <form className="login-form" onSubmit={handleSubmit(onSubmitDiffAppdataForm)}>
+        <div className="login-form-title">Login to a Different appdata directory</div>
         <Field
           label={formatMessage(messages.appdataFieldLabel)}
           name="rpcappdata"
@@ -98,7 +133,8 @@ const LoginRPCBodyForm = ({
           onChange={(e) => onChangeRpcappdata(e.target.value)}
           placeholder={formatMessage(messages.appdataFieldPlaceholder)}
         />
-        {isSubmited && hasErrors ? <div className="orange-warning">*Please Fill All Fields</div> : null}
+        {isSubmitedDiffAppdataForm && diffAppdataFormHasErrors
+          ? <div className="orange-warning">*Please Fill the app data directory</div> : null}
         <button className="key-blue-button" type="submit" >
           <T id="securitycenter.sign.form.submit" m="Sign" />
         </button>
@@ -107,4 +143,5 @@ const LoginRPCBodyForm = ({
   );
 };
 
-export const LoginRPCBody = reduxForm({ form: "login/verify" })(LoginRPCBodyForm);
+export const LoginRPCRemote = reduxForm({ form: "loginToRemoteRPC/verify" })(LoginRPCRemoteForm);
+export const LoginDiffAppdata = reduxForm({ form: "loginToDiffAppdataRPC/verify" })(LoginDiffAppdataForm);

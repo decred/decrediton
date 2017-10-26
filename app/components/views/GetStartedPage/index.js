@@ -9,7 +9,7 @@ import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHead
 import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
 import { walletStartup } from "connectors";
-import { LoginRPCHeader, LoginRPCBody } from "./LoginForm";
+import { LoginRPCHeader, LoginRPCRemote, LoginDiffAppdata } from "./LoginForm";
 import { injectIntl } from "react-intl";
 import { autobind } from "core-decorators";
 import { substruct } from "fp";
@@ -24,8 +24,13 @@ class GetStartedPage extends Component {
 
   getInitialState() {
     return {
+      isSubmitedRemoteForm: false,
+      isSubmitedDiffAppdataForm: false,
       isSubmited: false,
       hasErrors: false,
+      formToSend: 1,
+      remoteFormHasErrors: false,
+      diffAppdataFormHasErrors: false,
       rpcuserFilled: false,
       rpcpasswordFilled: false,
       rpccertFilled: false,
@@ -55,8 +60,7 @@ class GetStartedPage extends Component {
       isPrepared,
       isAdvancedDaemon,
     } = this.props;
-
-    const { isSubmited, hasErrors } = this.state;
+    const { isSubmited, hasErrors, formToSend } = this.state;
     let Header, Body;
     if (isPrepared) {
       switch (startStepIndex || 0) {
@@ -94,38 +98,72 @@ class GetStartedPage extends Component {
           Body = DaemonLoadingBody;
         } else {
           Header = LoginRPCHeader;
-          Body = LoginRPCBody;
+          Body = formToSend === 1 ? LoginRPCRemote : LoginDiffAppdata;
         }
-        
+
       } else {
         Header = DaemonLoadingHeader;
         Body = DaemonLoadingBody;
       }
     }
 
-    return <Page Header={Header} Body={Body}
-      {...{
-        ...this.props,
-        ...this.state,
-        ...substruct({
-          onSubmit: null,
-          onChangeRpcuser: null,
-          onChangeRpcpass: null,
-          onChangeRpccert: null,
-          onChangeRpcappdata: null,
-        }, this)
-      }}
-    />;
+    return (
+      <div>
+        <Page Header={Header} Body={Body}
+          {...{
+            ...this.props,
+            ...this.state,
+            ...substruct({
+              changeForm: null,
+              onSubmitRemoteForm: null,
+              onSubmitDiffAppdataForm: null,
+              onChangeRpcuser: null,
+              onChangeRpcpass: null,
+              onChangeRpccert: null,
+              onChangeRpcappdata: null,
+            }, this)
+          }}
+        />
+      </div>
+    );
   }
 
-  getIsValid() {
-    const { rpcuserFilled, rpcpasswordFilled, rpccertFilled, rpcappdataFilled } = this.state;
+  changeForm(formType) {
+    this.setState({ formToSend: formType })
+  }
 
-    if (!rpcuserFilled || !rpcpasswordFilled || !rpccertFilled || !rpcappdataFilled) {
-      this.setState({ hasErrors: true });
+  getRemoteFormIsValid() {
+    const { rpcuserFilled, rpcpasswordFilled, rpccertFilled } = this.state;
+
+    if (!rpcuserFilled || !rpcpasswordFilled || !rpccertFilled ) {
+      this.setState({
+         remoteFormHasErrors: true,
+         hasErrors: true,
+      });
       return false;
     }
-    this.setState({ hasErrors: false });
+    this.setState({
+       remoteFormHasErrors: false,
+       hasErrors: false,
+    });
+    return true;
+  }
+
+  getDiffAppdataFormIsValid() {
+    const { rpcappdataFilled } = this.state;
+    
+    if (!rpcappdataFilled ) {
+      this.setState({ 
+        diffAppdataFormHasErrors: true,
+        hasErrors: true,
+      });
+      return false;
+    }
+    
+    this.setState({ 
+      diffAppdataFormHasErrors: false,
+      hasErrors: false 
+    });
     return true;
   }
 
@@ -153,11 +191,24 @@ class GetStartedPage extends Component {
     this.setState({ rpcappdataFilled: true });
   }
 
-  onSubmit(args) {
-    this.setState({ isSubmited: true });
-    if (this.getIsValid())
+  onSubmitRemoteForm(args) {
+    this.setState({
+       isSubmitedRemoteForm: true,
+       isSubmited: true,
+    });
+    if (this.getRemoteFormIsValid())
       this.props.doStartAdvancedDaemon(args);
   }
+
+  onSubmitDiffAppdataForm(args) {
+    this.setState({
+       isSubmitedDiffAppdataForm: true,
+       isSubmited: true,
+    });
+    if (this.getDiffAppdataFormIsValid())
+      this.props.doStartAdvancedDaemon(args);
+  }
+
 }
 
 GetStartedPage.propTypes = {
