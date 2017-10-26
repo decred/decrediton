@@ -47,7 +47,11 @@ export const startDaemonAdvanced = (args, startType) => (dispatch) => {
   daemon.startDaemonAdvanced(args, startType)
   .then( () => {
     dispatch(syncDaemon(credentials, rpchost));
-    dispatch({type: SAVE_START_ADVANCED_DAEMON_CREDENTIALS, args});
+    dispatch({
+      type: SAVE_START_ADVANCED_DAEMON_CREDENTIALS, 
+      credentials: args,
+      startType: startType
+    });
     dispatch({type: LOADER_ADVANCED_SUCCESS});
   })
   .catch( () => {

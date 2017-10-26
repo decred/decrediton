@@ -39,7 +39,8 @@ export default function version(state = {}, action) {
     };
   case SAVE_START_ADVANCED_DAEMON_CREDENTIALS:
     return {...state,
-      credentials: action.args
+      credentials: action.credentials,
+      startType: action.startType
     }
   default:
     return state;
