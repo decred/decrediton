@@ -152,7 +152,7 @@ class GetStartedPage extends Component {
   getDiffAppdataFormIsValid() {
     const { rpcappdataFilled } = this.state;
     
-    if (!rpcappdataFilled ) {
+    if (!rpcappdataFilled) {
       this.setState({ 
         diffAppdataFormHasErrors: true,
         hasErrors: true,
@@ -197,7 +197,7 @@ class GetStartedPage extends Component {
        isSubmited: true,
     });
     if (this.getRemoteFormIsValid())
-      this.props.doStartAdvancedDaemon(args);
+      this.props.doStartAdvancedDaemon(args, 1);
   }
 
   onSubmitDiffAppdataForm(args) {
@@ -206,7 +206,7 @@ class GetStartedPage extends Component {
        isSubmited: true,
     });
     if (this.getDiffAppdataFormIsValid())
-      this.props.doStartAdvancedDaemon(args);
+      this.props.doStartAdvancedDaemon(args, 2);
   }
 
 }

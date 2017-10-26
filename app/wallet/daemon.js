@@ -8,10 +8,10 @@ export const startDaemon = () => Promise
     throw "Error starting daemon";
   });
 
-export const startDaemonAdvanced = (args) => {
+export const startDaemonAdvanced = (args, startType) => {
   return Promise
     .resolve(ipcRenderer
-      .sendSync("start-daemon-advanced", args))
+      .sendSync("start-daemon-advanced", {args, startType}))
     .then(PIDAndAdvancedMode => {
       if (PIDAndAdvancedMode) return PIDAndAdvancedMode;
       throw "Error starting daemon in advanced mode";

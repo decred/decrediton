@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, RPCDaemonHost, RPCDaemonPort, RPCWalletPort, GRPCWalletPort } from "./config.js";
+import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, RPCDaemonHost, RPCDaemonPort, RPCWalletPort, GRPCWalletPort, getDcrdCert } from "./config.js";
 import path from "path";
 import fs from "fs";
 import os from "os";
@@ -288,8 +288,32 @@ ipcMain.on("start-daemon", (event, arg) => {
   };
 });
 
-ipcMain.on("start-daemon-advanced", (event, args) => {
-  const { rpcpassword, rpcuser, rpccert, rpcappdata} = args;
+ipcMain.on("start-daemon-advanced", (event, data) => {
+  const {startType, args} = data;
+  let credentials;
+  let rpccert;
+  logger.log("info", `startType: ${startType}`)
+
+  switch(startType) {
+    case 1:
+      logger.log("info", "launching dcrd with different rpcuser and rpcpassword");
+      const {rpcuser, rpcpassword } = args;
+      credentials = {
+        rpcuser: rpcuser,
+        rpcpassword: rpcpassword,
+        rpccert: args.rpccert,
+      };
+      break;
+    case 2:
+      logger.log("info", "launching dcrd with different appdata directory");
+      const {rpcappdata} = args;
+      credentials = {
+        rpcappdata: rpcappdata,
+        rpccert: args.rpccert
+      }
+      break;
+  }
+
   if (dcrdPID !== -1) {
     logger.log("info", "dcrd already started, closing it to start again");
     try{
@@ -300,8 +324,7 @@ ipcMain.on("start-daemon-advanced", (event, args) => {
     logger.log("info", "dcrd already started " + dcrdPID);
   }
   try {
-    logger.log("info", "launching dcrd with different rpcuser and rpcpassword");
-    dcrdPID = launchDCRD(rpcuser, rpcpassword, rpccert, rpcappdata);
+    dcrdPID = launchDCRD(startType, credentials);
   } catch (e) {
     logger.log("error", "error launching dcrd with different rpcuser and rpcpassword: " + e);
   }
@@ -398,13 +421,24 @@ ipcMain.on("grpc-versions-determined", (event, versions) => {
   grpcVersions = { ...grpcVersions, ...versions };
 });
 
-const launchDCRD = (rpcuser, rpcpassword, rpccert, rpcappdata) => {
+const launchDCRD = (startType, credentials) => {
   var spawn = require("child_process").spawn;
   let args = [];
+  let rpccert;
 
-  if (rpcuser || rpcpassword || rpccert)
-    args = [`--rpcuser=${rpcuser}`, `--rpcpass=${rpcpassword}`, `--rpccert=${rpccert}`, `--appdata=${rpcappdata}`];
-  else
+  switch(startType) {
+    case 1:
+      const {rpcuser, rpcpassword } = credentials;
+      rpccert = credentials.rpccert;
+      args = [`--rpcuser=${rpcuser}`, `--rpcpass=${rpcpassword}`, `--rpccert=${rpccert}`];
+      break;
+    case 2:
+      const {rpcappdata} = credentials;
+      rpccert = credentials.rpccert ? `--rpccert=${rpccert}` : null;
+      args = [`--appdata=${rpcappdata}`,"--configfile=" + dcrdCfg(), rpccert];
+      break;
+  }
+  if(!startType)
     args = ["--configfile=" + dcrdCfg()];
 
   if (cfg.get("network") === "testnet") {

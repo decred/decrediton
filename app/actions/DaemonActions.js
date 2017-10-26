@@ -25,15 +25,27 @@ export const startDaemon = () => (dispatch) => {
   .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));
 };
 
-export const startDaemonAdvanced = (args) => (dispatch) => {
-  const {rpcuser, rpcpassword, rpccert } = args;
+/*
+ * startType can be 1 for connecting to a remote rpc or 2 for connecting to a different appData directory
+ */
+export const startDaemonAdvanced = (args, startType) => (dispatch) => {
+  let credentials;
   const rpchost = RPCDaemonHost();
-  const credentials = {
-    rpcuser: rpcuser,
-    rpcpassword: rpcpassword,
-    rpccert: rpccert
-  };
-  daemon.startDaemonAdvanced(args)
+
+  switch(startType) {
+    case 1: 
+      const {rpcuser, rpcpassword, rpccert } = args;
+      credentials = {
+        rpcuser: rpcuser,
+        rpcpassword: rpcpassword,
+        rpccert: rpccert
+      };
+      break;
+    case 2:
+      break;
+  }
+  
+  daemon.startDaemonAdvanced(args, startType)
   .then( () => {
     dispatch(syncDaemon(credentials, rpchost));
     dispatch({type: LOADER_ADVANCED_SUCCESS});

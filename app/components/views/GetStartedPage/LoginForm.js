@@ -110,6 +110,7 @@ const LoginDiffAppdataForm = ({
   ...state,
   onSubmitDiffAppdataForm,
   onChangeRpcappdata,
+  onChangeRpccert,
   changeForm,
   intl: { formatMessage }
  }) => {
@@ -132,6 +133,14 @@ const LoginDiffAppdataForm = ({
           required
           onChange={(e) => onChangeRpcappdata(e.target.value)}
           placeholder={formatMessage(messages.appdataFieldPlaceholder)}
+        />
+        <Field
+          label={formatMessage(messages.certFieldLabel)}
+          name="rpccert"
+          component={InputField}
+          type="text"
+          onChange={(e) => onChangeRpccert(e.target.value)}
+          placeholder={formatMessage(messages.certFieldPlaceholder)}
         />
         {isSubmitedDiffAppdataForm && diffAppdataFormHasErrors
           ? <div className="orange-warning">*Please Fill the app data directory</div> : null}

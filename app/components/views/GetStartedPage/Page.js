@@ -10,7 +10,7 @@ const Page = ({ Header, Body, ...props, ...state }) => {
     <div className="page-view inverted-colors">
       <Header {...props} />
       <div className="page-content-fixed">
-        <DecredLoading 
+        <DecredLoading
           hidden={ !props.isProcessing || (isAdvancedDaemon && (!isSubmited || hasErrors )) }
           className="get-started-loading" 
         />
