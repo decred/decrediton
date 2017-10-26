@@ -33,6 +33,8 @@ class GetStartedPage extends Component {
       rpcuserFilled: false,
       rpcpasswordFilled: false,
       rpccertFilled: false,
+      rpcportFilled: false,
+      rpchostFilled: false,
       rpcappdataFilled: false,
     };
   }
@@ -120,6 +122,8 @@ class GetStartedPage extends Component {
               onChangeRpcuser: null,
               onChangeRpcpass: null,
               onChangeRpccert: null,
+              onChangeRpchost: null,
+              onChangeRpcport: null,
               onChangeRpcappdata: null,
             }, this)
           }}
@@ -129,9 +133,9 @@ class GetStartedPage extends Component {
   }
 
   getRemoteFormIsValid() {
-    const { rpcuserFilled, rpcpasswordFilled, rpccertFilled } = this.state;
+    const { rpcuserFilled, rpcpasswordFilled, rpccertFilled, rpcportFilled, rpchostFilled } = this.state;
 
-    if (!rpcuserFilled || !rpcpasswordFilled || !rpccertFilled ) {
+    if (!rpcuserFilled || !rpcpasswordFilled || !rpccertFilled || !rpcportFilled || !rpchostFilled ) {
       this.setState({
         remoteFormHasErrors: true,
         hasErrors: true,
@@ -177,6 +181,18 @@ class GetStartedPage extends Component {
     if (!rpccert)
       return this.setState({ rpccertFilled: false });
     this.setState({ rpccertFilled: true });
+  }
+
+  onChangeRpchost(rpchost) {
+    if (!rpchost)
+      return this.setState({ rpchostFilled: false });
+    this.setState({ rpchostFilled: true });
+  }
+
+  onChangeRpcport(rpcport) {
+    if (!rpcport)
+      return this.setState({ rpcportFilled: false });
+    this.setState({ rpcportFilled: true });
   }
 
   onChangeRpcappdata(rpcappdata) {

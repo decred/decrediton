@@ -130,29 +130,35 @@ export const startRpcRequestFunc = (isRetry) =>
   const credentials = getState().daemon.credentials;
   const startType = getState().daemon.startType;
   const cfg = getCfg();
-  let rpcuser, rpccertPath, rpcpass;
+  let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
   switch (startType) {
   case 1:{
     rpcuser = credentials.rpcuser;
     rpccertPath = credentials.rpccert;
     rpcpass = credentials.rpcpassword;
+    daemonhost = credentials.rpchost;
+    rpcport = credentials.rpcport;
     break;
   }
   case 2:{
     rpcuser = cfg.get("rpc_user");
     rpcpass = cfg.get("rpc_pass");
     rpccertPath = credentials.rpccert;
+    daemonhost = RPCDaemonHost();
+    rpcport = RPCDaemonPort();
     break;
   }
   }
+  
   if(!startType){
     rpcuser = cfg.get("rpc_user");
     rpcpass = cfg.get("rpc_pass");
+    daemonhost = RPCDaemonHost();
+    rpcport = RPCDaemonPort();
   }
   const loader = getState().walletLoader.loader;
-  const daemonhost = RPCDaemonHost();
-  const rpcport = RPCDaemonPort();
+  
   const cert = getDcrdCert(rpccertPath);
 
   if (!isRetry) dispatch({type: STARTRPC_ATTEMPT});

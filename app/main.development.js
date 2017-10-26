@@ -291,28 +291,14 @@ ipcMain.on("start-daemon", (event, arg) => {
 ipcMain.on("start-daemon-advanced", (event, data) => {
   const {startType, args} = data;
   let credentials;
-  logger.log("info", `startType: ${startType}`);
 
-  switch(startType) {
-  case 1:{
-    logger.log("info", "launching dcrd with different rpcuser and rpcpassword");
-    const {rpcuser, rpcpassword } = args;
-    credentials = {
-      rpcuser: rpcuser,
-      rpcpassword: rpcpassword,
-      rpccert: args.rpccert,
-    };
-    break;
-  }
-  case 2:{
+  if(startType === 2){
     logger.log("info", "launching dcrd with different appdata directory");
     const {rpcappdata} = args;
     credentials = {
       rpcappdata: rpcappdata,
       rpccert: args.rpccert
     };
-    break;
-  }
   }
 
   if (dcrdPID !== -1) {
@@ -325,7 +311,7 @@ ipcMain.on("start-daemon-advanced", (event, data) => {
     logger.log("info", "dcrd already started " + dcrdPID);
   }
   try {
-    dcrdPID = launchDCRD(startType, credentials);
+    dcrdPID = launchDCRD(credentials);
   } catch (e) {
     logger.log("error", "error launching dcrd with different rpcuser and rpcpassword: " + e);
   }
@@ -379,22 +365,28 @@ ipcMain.on("start-wallet", (event, arg) => {
 
 ipcMain.on("check-daemon", (event, arg) => {
   let args = ["getblockcount"];
-  const { rpcpassword, rpcuser, cert } = arg;
+  let host, port;
+  const { rpcpassword, rpcuser, rpccert, rpchost, rpcport } = arg;
 
-  if (rpcuser || rpcpassword || cert){
+  if (rpcuser && rpcpassword && rpccert && rpchost && rpcport){
     args.push(`--rpcuser=${rpcuser}`);
     args.push(`--rpcpass=${rpcpassword}`);
-    args.push(`--rpccert=${cert}`);
+    args.push(`--rpccert=${rpccert}`)
+    host = rpchost;
+    port = rpcport;
   }
-  else
+  else{
+    host = RPCDaemonHost();
+    port = RPCDaemonPort();
     args.push(["--configfile=" + dcrctlCfg()]);
+  }
 
   var spawn = require("child_process").spawn;
 
   if (cfg.get("network") === "testnet") {
     args.push("--testnet");
   }
-  args.push("--rpcserver=" + RPCDaemonHost() + ":" + RPCDaemonPort());
+  args.push("--rpcserver=" + host + ":" + port);
   args.push("--walletrpcserver=" + cfg.get("wallet_rpc_host") + ":" + RPCWalletPort());
 
   var dcrctlExe = getExecutablePath("dcrctl");
@@ -422,28 +414,19 @@ ipcMain.on("grpc-versions-determined", (event, versions) => {
   grpcVersions = { ...grpcVersions, ...versions };
 });
 
-const launchDCRD = (startType, credentials) => {
+const launchDCRD = (credentials) => {
   var spawn = require("child_process").spawn;
   let args = [];
   let rpccert;
 
-  switch(startType) {
-  case 1: {
-    const {rpcuser, rpcpassword } = credentials;
-    rpccert = credentials.rpccert;
-    args = [`--rpcuser=${rpcuser}`, `--rpcpass=${rpcpassword}`, `--rpccert=${rpccert}`];
-    break;
-  }
-  case 2:{
+  if(credentials){
     const {rpcappdata} = credentials;
     rpccert = credentials.rpccert ? `--rpccert=${rpccert}` : null;
     args = [`--appdata=${rpcappdata}`,"--configfile=" + dcrdCfg(), rpccert];
-    break;
-  }
-  }
-  if(!startType)
+  } else{
     args = ["--configfile=" + dcrdCfg()];
-
+  }
+  
   if (cfg.get("network") === "testnet") {
     args.push("--testnet");
   }

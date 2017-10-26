@@ -29,6 +29,22 @@ const messages = defineMessages({
     id: "login.form.rpccert.placeholder.",
     defaultMessage: "Enter your cert location here",
   },
+  hostFieldLabel: {
+    id: "login.form.rpchost.label",
+    defaultMessage: "Host:",
+  },
+  hostFieldPlaceholder: {
+    id: "login.form.rpchost.placeholder.",
+    defaultMessage: "Enter your host here",
+  },
+  portFieldLabel: {
+    id: "login.form.rpcport.label",
+    defaultMessage: "Port:",
+  },
+  portFieldPlaceholder: {
+    id: "login.form.rpcport.placeholder.",
+    defaultMessage: "Enter your port here",
+  },
 });
 
 const LoginRPCRemoteForm = ({
@@ -38,6 +54,8 @@ const LoginRPCRemoteForm = ({
   onChangeRpcuser,
   onChangeRpcpass,
   onChangeRpccert,
+  onChangeRpchost,
+  onChangeRpcport,
   formatMessage
   }) => {
 
@@ -74,6 +92,24 @@ const LoginRPCRemoteForm = ({
           required
           onChange={(e) => onChangeRpccert(e.target.value)}
           placeholder={formatMessage(messages.certFieldPlaceholder)}
+        />
+        <Field
+          label={formatMessage(messages.hostFieldLabel)}
+          name="rpchost"
+          component={InputField}
+          type="text"
+          required
+          onChange={(e) => onChangeRpchost(e.target.value)}
+          placeholder={formatMessage(messages.hostFieldPlaceholder)}
+        />
+        <Field
+          label={formatMessage(messages.portFieldLabel)}
+          name="rpcport"
+          component={InputField}
+          type="text"
+          required
+          onChange={(e) => onChangeRpcport(e.target.value)}
+          placeholder={formatMessage(messages.portFieldPlaceholder)}
         />
         {isSubmitedRemoteForm && remoteFormHasErrors ?
           <div className="orange-warning">*Please Fill All Fields</div> : null}

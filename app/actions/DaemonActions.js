@@ -32,28 +32,23 @@ export const startDaemon = () => (dispatch) => {
  * startType can be 1 for connecting to a remote rpc or 2 for connecting to a different appData directory
  */
 export const startDaemonAdvanced = (args, startType) => (dispatch) => {
-  let credentials;
-  const rpchost = RPCDaemonHost();
-  switch(startType) {
-  case 1:{
-    const {rpcuser, rpcpassword, rpccert } = args;
-    credentials = {
-      rpcuser: rpcuser,
-      rpcpassword: rpcpassword,
-      rpccert: rpccert
-    };
-    break;
-  }
-  case 2:{
-    break;
-  }
+  if(startType === 1){
+    dispatch(syncDaemon(args));
+    dispatch({
+      type: SAVE_START_ADVANCED_DAEMON_CREDENTIALS,
+      credentials: args,
+      startType: startType
+    });
+    dispatch({type: LOADER_ADVANCED_SUCCESS});
+    return;
   }
 
-  if(!args )
+  if(!args)
     dispatch({ type: SKIPPED_START_ADVANCED_LOGIN });
+
   daemon.startDaemonAdvanced(args, startType)
   .then( () => {
-    dispatch(syncDaemon(credentials, rpchost));
+    dispatch(syncDaemon());
     dispatch({
       type: SAVE_START_ADVANCED_DAEMON_CREDENTIALS,
       credentials: args,
@@ -88,13 +83,15 @@ export const startWallet = (walletCredentials) => (dispatch) => {
   });
 };
 
-export const syncDaemon = (credentials, host) =>
+export const syncDaemon = (credentials) =>
   (dispatch, getState) => {
-    let rpcuser, rpcpassword, rpccert;
+    let rpcuser, rpcpassword, rpccert, rpchost, rpcport;
     if(credentials){
       rpcuser = credentials.rpcuser;
       rpcpassword = credentials.rpcpassword;
       rpccert = credentials.rpccert;
+      rpchost = credentials.rpchost;
+      rpcport = credentials.rpcport;
     }
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks }} = getState();
@@ -102,7 +99,7 @@ export const syncDaemon = (credentials, host) =>
       // check to see if user skipped;
       if (daemonSynced) return;
       return daemon
-        .getBlockCount(rpcuser, rpcpassword, host, rpccert)
+        .getBlockCount(rpcuser, rpcpassword, rpccert, rpchost, rpcport)
         .then(updateCurrentBlockCount => {
           if (updateCurrentBlockCount >= neededBlocks) {
             dispatch({type: DAEMONSYNCED});
