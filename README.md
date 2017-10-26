@@ -44,6 +44,11 @@ This will start dcrd and dcrwallet for you.
 On macOS, double-click the .dmg file, drag the .app to your
 Applications folder.  Double click on Decrediton.app to start.
 
+You can also install via [brew cask](https://caskroom.github.io): 
+```bash
+brew cask install decrediton
+```
+
 From there follow the on screen instructions to setup your wallet.
 
 ### Options
