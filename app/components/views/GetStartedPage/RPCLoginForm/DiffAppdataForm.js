@@ -29,7 +29,6 @@ const LoginDiffAppdataForm = ({
   onSubmitDiffAppdataForm,
   onChangeRpcappdata,
   onChangeRpccert,
-  changeForm,
   formatMessage
   }) => {
 

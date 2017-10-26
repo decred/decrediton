@@ -114,7 +114,7 @@ class GetStartedPage extends Component {
             ...this.props,
             ...this.state,
             ...substruct({
-              changeForm: null,
+              skipAdvancedDaemon: null,
               onSubmitRemoteForm: null,
               onSubmitDiffAppdataForm: null,
               onChangeRpcuser: null,
@@ -126,10 +126,6 @@ class GetStartedPage extends Component {
         />
       </div>
     );
-  }
-
-  changeForm(formType) {
-    this.setState({ formToSend: formType })
   }
 
   getRemoteFormIsValid() {
@@ -207,6 +203,10 @@ class GetStartedPage extends Component {
     });
     if (this.getDiffAppdataFormIsValid())
       this.props.doStartAdvancedDaemon(args, 2);
+  }
+
+  skipAdvancedDaemon(){
+    this.props.doStartAdvancedDaemon();
   }
 
 }

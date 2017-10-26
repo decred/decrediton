@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "Header";
+import KeyBlueButton from "KeyBlueButton"
 import {LoginRPCRemote} from "./RemoteRPCForm"
 import {LoginDiffAppdata} from "./DiffAppdataForm"
 import { FormattedMessage as T } from "react-intl";
@@ -14,37 +15,40 @@ export const LoginRPCHeader = () => (
 export const LoginFormBody = ({
   ...props,
   ...state,
-  changeForm,
   onSubmitDiffAppdataForm,
   onChangeRpcappdata,
   onSubmitRemoteForm,
   onChangeRpcuser,
   onChangeRpcpass,
   onChangeRpccert,
+  skipAdvancedDaemon,
   intl: { formatMessage }
  }) => {
   return (
-    <div className="login-forms-wrapper">
-      <LoginRPCRemote {...{
-        ...props,
-        ...state,
-        onSubmitRemoteForm,
-        onChangeRpcuser,
-        onChangeRpcpass,
-        onChangeRpccert,
-        changeForm,
-        formatMessage
-      }}
-      />
-      <LoginDiffAppdata {...{
-        ...props,
-        ...state,
-        onSubmitDiffAppdataForm,
-        onChangeRpcappdata,
-        onChangeRpccert,
-        changeForm,
-        formatMessage
-      }} />
+    <div className="login-form-wrapper">
+      <div className="login-forms-wrapper">
+        <LoginRPCRemote {...{
+          ...props,
+          ...state,
+          onSubmitRemoteForm,
+          onChangeRpcuser,
+          onChangeRpcpass,
+          onChangeRpccert,
+          formatMessage
+        }}
+        />
+        <LoginDiffAppdata {...{
+          ...props,
+          ...state,
+          onSubmitDiffAppdataForm,
+          onChangeRpcappdata,
+          onChangeRpccert,
+          formatMessage
+        }} />
+      </div>
+      <KeyBlueButton onClick={skipAdvancedDaemon}>
+        Skip Advanced Daemon Connection
+      </KeyBlueButton>
     </div>
   )
 }

@@ -38,7 +38,6 @@ const LoginRPCRemoteForm = ({
   onChangeRpcuser,
   onChangeRpcpass,
   onChangeRpccert,
-  changeForm,
   formatMessage
   }) => {
 

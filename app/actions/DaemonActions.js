@@ -30,6 +30,9 @@ export const startDaemon = () => (dispatch) => {
  * startType can be 1 for connecting to a remote rpc or 2 for connecting to a different appData directory
  */
 export const startDaemonAdvanced = (args, startType) => (dispatch) => {
+  if(!args && !startType)
+    return dispatch(syncDaemon());
+    
   let credentials;
   const rpchost = RPCDaemonHost();
   switch(startType) {
