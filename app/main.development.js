@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, RPCDaemonHost, RPCDaemonPort, RPCWalletPort, GRPCWalletPort, getDcrdCert } from "./config.js";
+import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, RPCDaemonHost, RPCDaemonPort, RPCWalletPort, GRPCWalletPort } from "./config.js";
 import path from "path";
 import fs from "fs";
 import os from "os";
@@ -291,27 +291,28 @@ ipcMain.on("start-daemon", (event, arg) => {
 ipcMain.on("start-daemon-advanced", (event, data) => {
   const {startType, args} = data;
   let credentials;
-  let rpccert;
-  logger.log("info", `startType: ${startType}`)
+  logger.log("info", `startType: ${startType}`);
 
   switch(startType) {
-    case 1:
-      logger.log("info", "launching dcrd with different rpcuser and rpcpassword");
-      const {rpcuser, rpcpassword } = args;
-      credentials = {
-        rpcuser: rpcuser,
-        rpcpassword: rpcpassword,
-        rpccert: args.rpccert,
-      };
-      break;
-    case 2:
-      logger.log("info", "launching dcrd with different appdata directory");
-      const {rpcappdata} = args;
-      credentials = {
-        rpcappdata: rpcappdata,
-        rpccert: args.rpccert
-      }
-      break;
+  case 1:{
+    logger.log("info", "launching dcrd with different rpcuser and rpcpassword");
+    const {rpcuser, rpcpassword } = args;
+    credentials = {
+      rpcuser: rpcuser,
+      rpcpassword: rpcpassword,
+      rpccert: args.rpccert,
+    };
+    break;
+  }
+  case 2:{
+    logger.log("info", "launching dcrd with different appdata directory");
+    const {rpcappdata} = args;
+    credentials = {
+      rpcappdata: rpcappdata,
+      rpccert: args.rpccert
+    };
+    break;
+  }
   }
 
   if (dcrdPID !== -1) {
@@ -427,16 +428,18 @@ const launchDCRD = (startType, credentials) => {
   let rpccert;
 
   switch(startType) {
-    case 1:
-      const {rpcuser, rpcpassword } = credentials;
-      rpccert = credentials.rpccert;
-      args = [`--rpcuser=${rpcuser}`, `--rpcpass=${rpcpassword}`, `--rpccert=${rpccert}`];
-      break;
-    case 2:
-      const {rpcappdata} = credentials;
-      rpccert = credentials.rpccert ? `--rpccert=${rpccert}` : null;
-      args = [`--appdata=${rpcappdata}`,"--configfile=" + dcrdCfg(), rpccert];
-      break;
+  case 1: {
+    const {rpcuser, rpcpassword } = credentials;
+    rpccert = credentials.rpccert;
+    args = [`--rpcuser=${rpcuser}`, `--rpcpass=${rpcpassword}`, `--rpccert=${rpccert}`];
+    break;
+  }
+  case 2:{
+    const {rpcappdata} = credentials;
+    rpccert = credentials.rpccert ? `--rpccert=${rpccert}` : null;
+    args = [`--appdata=${rpcappdata}`,"--configfile=" + dcrdCfg(), rpccert];
+    break;
+  }
   }
   if(!startType)
     args = ["--configfile=" + dcrdCfg()];

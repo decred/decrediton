@@ -28,7 +28,6 @@ class GetStartedPage extends Component {
       isSubmitedDiffAppdataForm: false,
       isSubmited: false,
       hasErrors: false,
-      formToSend: 1,
       remoteFormHasErrors: false,
       diffAppdataFormHasErrors: false,
       rpcuserFilled: false,
@@ -60,7 +59,7 @@ class GetStartedPage extends Component {
       isPrepared,
       isAdvancedDaemon,
     } = this.props;
-    const { isSubmited, hasErrors, formToSend } = this.state;
+    const { isSubmited, hasErrors } = this.state;
     let Header, Body;
     if (isPrepared) {
       switch (startStepIndex || 0) {
@@ -133,32 +132,30 @@ class GetStartedPage extends Component {
 
     if (!rpcuserFilled || !rpcpasswordFilled || !rpccertFilled ) {
       this.setState({
-         remoteFormHasErrors: true,
-         hasErrors: true,
+        remoteFormHasErrors: true,
+        hasErrors: true,
       });
       return false;
     }
     this.setState({
-       remoteFormHasErrors: false,
-       hasErrors: false,
+      remoteFormHasErrors: false,
+      hasErrors: false,
     });
     return true;
   }
 
   getDiffAppdataFormIsValid() {
     const { rpcappdataFilled } = this.state;
-    
     if (!rpcappdataFilled) {
-      this.setState({ 
+      this.setState({
         diffAppdataFormHasErrors: true,
         hasErrors: true,
       });
       return false;
     }
-    
-    this.setState({ 
+    this.setState({
       diffAppdataFormHasErrors: false,
-      hasErrors: false 
+      hasErrors: false
     });
     return true;
   }
@@ -189,8 +186,8 @@ class GetStartedPage extends Component {
 
   onSubmitRemoteForm(args) {
     this.setState({
-       isSubmitedRemoteForm: true,
-       isSubmited: true,
+      isSubmitedRemoteForm: true,
+      isSubmited: true,
     });
     if (this.getRemoteFormIsValid())
       this.props.doStartAdvancedDaemon(args, 1);
@@ -198,8 +195,8 @@ class GetStartedPage extends Component {
 
   onSubmitDiffAppdataForm(args) {
     this.setState({
-       isSubmitedDiffAppdataForm: true,
-       isSubmited: true,
+      isSubmitedDiffAppdataForm: true,
+      isSubmited: true,
     });
     if (this.getDiffAppdataFormIsValid())
       this.props.doStartAdvancedDaemon(args, 2);

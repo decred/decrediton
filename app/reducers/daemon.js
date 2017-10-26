@@ -41,7 +41,7 @@ export default function version(state = {}, action) {
     return {...state,
       credentials: action.credentials,
       startType: action.startType
-    }
+    };
   default:
     return state;
   }

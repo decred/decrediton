@@ -1,8 +1,8 @@
 import React from "react";
 import Header from "Header";
-import KeyBlueButton from "KeyBlueButton"
-import {LoginRPCRemote} from "./RemoteRPCForm"
-import {LoginDiffAppdata} from "./DiffAppdataForm"
+import KeyBlueButton from "KeyBlueButton";
+import {LoginRPCRemote} from "./RemoteRPCForm";
+import {LoginDiffAppdata} from "./DiffAppdataForm";
 import { FormattedMessage as T } from "react-intl";
 import "style/LoginForm.less";
 
@@ -50,5 +50,5 @@ export const LoginFormBody = ({
         Skip Advanced Daemon Connection
       </KeyBlueButton>
     </div>
-  )
-}
+  );
+};

@@ -12,7 +12,7 @@ const Page = ({ Header, Body, ...props, ...state }) => {
       <div className="page-content-fixed">
         <DecredLoading
           hidden={ !props.isProcessing || (isAdvancedDaemon && (!isSubmited || hasErrors )) }
-          className="get-started-loading" 
+          className="get-started-loading"
         />
         <Body {...props} />
       </div>

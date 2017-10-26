@@ -13,7 +13,7 @@ export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
 export const LOADER_ADVANCED_SUCCESS = "LOADER_ADVANCED_SUCCESS";
-export const SAVE_START_ADVANCED_DAEMON_CREDENTIALS = "SAVE_START_ADVANCED_DAEMON_CREDENTIALS"
+export const SAVE_START_ADVANCED_DAEMON_CREDENTIALS = "SAVE_START_ADVANCED_DAEMON_CREDENTIALS";
 
 export const startDaemon = () => (dispatch) => {
   daemon.startDaemon()
@@ -32,26 +32,28 @@ export const startDaemon = () => (dispatch) => {
 export const startDaemonAdvanced = (args, startType) => (dispatch) => {
   if(!args && !startType)
     return dispatch(syncDaemon());
-    
+
   let credentials;
   const rpchost = RPCDaemonHost();
   switch(startType) {
-    case 1: 
-      const {rpcuser, rpcpassword, rpccert } = args;
-      credentials = {
-        rpcuser: rpcuser,
-        rpcpassword: rpcpassword,
-        rpccert: rpccert
-      };
-      break;
-    case 2:
-      break;
+  case 1:{
+    const {rpcuser, rpcpassword, rpccert } = args;
+    credentials = {
+      rpcuser: rpcuser,
+      rpcpassword: rpcpassword,
+      rpccert: rpccert
+    };
+    break;
+  }
+  case 2:{
+    break;
+  }
   }
   daemon.startDaemonAdvanced(args, startType)
   .then( () => {
     dispatch(syncDaemon(credentials, rpchost));
     dispatch({
-      type: SAVE_START_ADVANCED_DAEMON_CREDENTIALS, 
+      type: SAVE_START_ADVANCED_DAEMON_CREDENTIALS,
       credentials: args,
       startType: startType
     });
