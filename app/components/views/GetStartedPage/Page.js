@@ -11,7 +11,9 @@ const Page = ({ Header, Body, ...props, ...state }) => {
       <Header {...props} />
       <div className="page-content-fixed">
         <DecredLoading
-          hidden={ !props.isProcessing || !((isSubmited && !hasErrors) || getSkippedAdvancedLogin) }
+          hidden={
+            !props.isProcessing ||
+            isAdvancedDaemon && ( !((isSubmited && !hasErrors) || getSkippedAdvancedLogin)) }
           className="get-started-loading"
         />
         <Body {...props} />

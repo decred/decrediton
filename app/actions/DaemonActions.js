@@ -48,10 +48,9 @@ export const startDaemonAdvanced = (args, startType) => (dispatch) => {
     break;
   }
   }
-  
+
   if(!args )
     dispatch({ type: SKIPPED_START_ADVANCED_LOGIN });
-  
   daemon.startDaemonAdvanced(args, startType)
   .then( () => {
     dispatch(syncDaemon(credentials, rpchost));

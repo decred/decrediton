@@ -46,7 +46,7 @@ export default function version(state = {}, action) {
   case SKIPPED_START_ADVANCED_LOGIN:
     return {...state,
       skippedAdvancedLoing: true,
-    }
+    };
   default:
     return state;
   }
