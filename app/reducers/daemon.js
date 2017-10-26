@@ -4,7 +4,8 @@ import {
   DAEMONSYNCING_PROGRESS,
   DAEMONSYNCED,
   WALLETREADY,
-  DAEMONSTARTED_ADVANCED
+  DAEMONSTARTED_ADVANCED,
+  SAVE_START_ADVANCED_DAEMON_CREDENTIALS
 } from "../actions/DaemonActions";
 
 export default function version(state = {}, action) {
@@ -36,6 +37,10 @@ export default function version(state = {}, action) {
     return {...state,
       walletReady: true,
     };
+  case SAVE_START_ADVANCED_DAEMON_CREDENTIALS:
+    return {...state,
+      credentials: action.args
+    }
   default:
     return state;
   }

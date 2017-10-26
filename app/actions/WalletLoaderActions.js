@@ -12,20 +12,20 @@ import axios from "axios";
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
 
-export const versionCheckAction = (credentials) => (dispatch) =>
-  setTimeout(() => dispatch(getVersionServiceAttempt(credentials)), 2000);
+export const versionCheckAction = () => (dispatch) =>
+  setTimeout(() => dispatch(getVersionServiceAttempt()), 2000);
 
 export const LOADER_ATTEMPT = "LOADER_ATTEMPT";
 export const LOADER_FAILED = "LOADER_FAILED";
 export const LOADER_SUCCESS = "LOADER_SUCCESS";
 
-export const loaderRequest = (credentials, address, port) => (dispatch) => {
+export const loaderRequest = ( address, port) => (dispatch) => {
   const request = { address, port };
   dispatch({ request, type: LOADER_ATTEMPT });
   return getLoader(request)
     .then(loader => {
       dispatch({ loader, type: LOADER_SUCCESS });
-      dispatch(walletExistRequest(credentials));
+      dispatch(walletExistRequest());
     })
     .catch(error => dispatch({ error, type: LOADER_FAILED }));
 };
@@ -34,13 +34,13 @@ export const WALLETEXIST_ATTEMPT = "WALLETEXIST_ATTEMPT";
 export const WALLETEXIST_FAILED = "WALLETEXIST_FAILED";
 export const WALLETEXIST_SUCCESS = "WALLETEXIST_SUCCESS";
 
-export const walletExistRequest = (credentials) =>
+export const walletExistRequest = () =>
   (dispatch, getState) =>
     getWalletExists(getState().walletLoader.loader)
       .then(response => {
         dispatch({response: response, type: WALLETEXIST_SUCCESS });
         if (response.getExists()) {
-          dispatch(openWalletAttempt(credentials, "public", false));
+          dispatch(openWalletAttempt("public", false));
         }
         else {
           dispatch({ type: CREATEWALLET_NEWSEED_INPUT });
@@ -86,17 +86,17 @@ export const OPENWALLET_ATTEMPT = "OPENWALLET_ATTEMPT";
 export const OPENWALLET_FAILED = "OPENWALLET_FAILED";
 export const OPENWALLET_SUCCESS = "OPENWALLET_SUCCESS";
 
-export const openWalletAttempt = (credentials, pubPass, retryAttempt) => (dispatch, getState) => {
+export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState) => {
   dispatch({ type: OPENWALLET_ATTEMPT });
   return openWallet(getState().walletLoader.loader, pubPass)
     .then(() => {
       dispatch({ type: OPENWALLET_SUCCESS });
-      dispatch(startRpcRequestFunc(false, credentials));
+      dispatch(startRpcRequestFunc(false));
     })
     .catch(error => {
       if (error.message.includes("wallet already loaded")) {
         dispatch({response: {}, type: OPENWALLET_SUCCESS});
-        dispatch(startRpcRequestFunc(false, credentials));
+        dispatch(startRpcRequestFunc(false));
       } else if (error.message.includes("invalid passphrase") && error.message.includes("public key")) {
         if (retryAttempt) {
           dispatch({ error, type: OPENWALLET_FAILED_INPUT });
@@ -125,8 +125,9 @@ export const STARTRPC_FAILED = "STARTRPC_FAILED";
 export const STARTRPC_SUCCESS = "STARTRPC_SUCCESS";
 export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
-export const startRpcRequestFunc = (isRetry, credentials) =>
+export const startRpcRequestFunc = (isRetry) =>
 (dispatch, getState) => {
+  const credentials = getState().daemon.credentials
   let rpcuser, rpccertPath, rpcpass;
   if(credentials){
     rpcuser = credentials.rpcuser;
@@ -156,7 +157,7 @@ export const startRpcRequestFunc = (isRetry, credentials) =>
         const { rpcRetryAttempts } = getState().walletLoader;
         if (rpcRetryAttempts < MAX_RPC_RETRIES) {
           dispatch({ rpcRetryAttempts: rpcRetryAttempts+1, type: STARTRPC_RETRY });
-          setTimeout(() => dispatch(startRpcRequestFunc(isRetry, credentials)), RPC_RETRY_DELAY);
+          setTimeout(() => dispatch(startRpcRequestFunc(isRetry)), RPC_RETRY_DELAY);
         } else {
           dispatch({
             error: `${error}.  You may need to edit ${getCfgPath()} and try again`,
@@ -164,7 +165,7 @@ export const startRpcRequestFunc = (isRetry, credentials) =>
           });
         }
       } else {
-        dispatch(startRpcRequestFunc(true, credentials));
+        dispatch(startRpcRequestFunc(true));
       }
     });
 };

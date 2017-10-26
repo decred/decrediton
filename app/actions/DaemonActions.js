@@ -13,6 +13,7 @@ export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
 export const LOADER_ADVANCED_SUCCESS = "LOADER_ADVANCED_SUCCESS";
+export const SAVE_START_ADVANCED_DAEMON_CREDENTIALS = "SAVE_START_ADVANCED_DAEMON_CREDENTIALS"
 
 export const startDaemon = () => (dispatch) => {
   daemon.startDaemon()
@@ -31,7 +32,6 @@ export const startDaemon = () => (dispatch) => {
 export const startDaemonAdvanced = (args, startType) => (dispatch) => {
   let credentials;
   const rpchost = RPCDaemonHost();
-
   switch(startType) {
     case 1: 
       const {rpcuser, rpcpassword, rpccert } = args;
@@ -44,10 +44,10 @@ export const startDaemonAdvanced = (args, startType) => (dispatch) => {
     case 2:
       break;
   }
-  
   daemon.startDaemonAdvanced(args, startType)
   .then( () => {
     dispatch(syncDaemon(credentials, rpchost));
+    dispatch({type: SAVE_START_ADVANCED_DAEMON_CREDENTIALS, args});
     dispatch({type: LOADER_ADVANCED_SUCCESS});
   })
   .catch( () => {
@@ -60,7 +60,7 @@ export const stopDaemon = () => (dispatch) => daemon
   .then(() => dispatch({type: DAEMONSTOPPED}))
   .catch(() => dispatch({type: DAEMONSTOPPED_ERROR}));
 
-export const startWallet = (rpcCredentials, walletCredentials) => (dispatch) => {
+export const startWallet = (walletCredentials) => (dispatch) => {
   let username, password;
   if(walletCredentials){
     username = walletCredentials.username;
@@ -69,7 +69,7 @@ export const startWallet = (rpcCredentials, walletCredentials) => (dispatch) => 
   daemon.startWallet(username, password)
   .then(pid => {
     dispatch({type: WALLETREADY, pid});
-    setTimeout(()=>dispatch(versionCheckAction(rpcCredentials)), 1000);
+    setTimeout(()=>dispatch(versionCheckAction()), 1000);
   })
   .catch((err) => {
     console.log(err);
@@ -95,7 +95,7 @@ export const syncDaemon = (credentials, host) =>
         .then(updateCurrentBlockCount => {
           if (updateCurrentBlockCount >= neededBlocks) {
             dispatch({type: DAEMONSYNCED});
-            dispatch(startWallet(credentials));
+            dispatch(startWallet());
             return;
           } else if (updateCurrentBlockCount !== 0) {
             const blocksLeft = neededBlocks - updateCurrentBlockCount;
