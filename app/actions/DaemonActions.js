@@ -12,6 +12,7 @@ export const DAEMONSYNCING_START = "DAEMONSYNCING_START";
 export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
+export const DAEMONSTARTED_ERROR_ON_START_WALLET = "DAEMONSTARTED_ERROR_ON_START_WALLET";
 export const LOADER_ADVANCED_SUCCESS = "LOADER_ADVANCED_SUCCESS";
 export const SAVE_START_ADVANCED_DAEMON_CREDENTIALS = "SAVE_START_ADVANCED_DAEMON_CREDENTIALS";
 
@@ -82,7 +83,7 @@ export const startWallet = (walletCredentials) => (dispatch) => {
   })
   .catch((err) => {
     console.log(err);
-    dispatch({type: "DAEMONSTARTED_ERROR_ON_START_WALLET"});
+    dispatch({type: DAEMONSTARTED_ERROR_ON_START_WALLET});
   });
 };
 
