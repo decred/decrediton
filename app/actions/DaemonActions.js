@@ -1,6 +1,5 @@
 import {versionCheckAction} from "./WalletLoaderActions";
 import * as daemon from "../wallet/daemon";
-import { RPCDaemonHost} from "config";
 
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_ADVANCED = "DAEMONSTARTED_ADVANCED";

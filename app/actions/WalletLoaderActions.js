@@ -150,7 +150,7 @@ export const startRpcRequestFunc = (isRetry) =>
     break;
   }
   }
-  
+
   if(!startType){
     rpcuser = cfg.get("rpc_user");
     rpcpass = cfg.get("rpc_pass");
@@ -158,7 +158,7 @@ export const startRpcRequestFunc = (isRetry) =>
     rpcport = RPCDaemonPort();
   }
   const loader = getState().walletLoader.loader;
-  
+
   const cert = getDcrdCert(rpccertPath);
 
   if (!isRetry) dispatch({type: STARTRPC_ATTEMPT});

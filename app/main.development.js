@@ -371,7 +371,7 @@ ipcMain.on("check-daemon", (event, arg) => {
   if (rpcuser && rpcpassword && rpccert && rpchost && rpcport){
     args.push(`--rpcuser=${rpcuser}`);
     args.push(`--rpcpass=${rpcpassword}`);
-    args.push(`--rpccert=${rpccert}`)
+    args.push(`--rpccert=${rpccert}`);
     host = rpchost;
     port = rpcport;
   }
@@ -426,7 +426,7 @@ const launchDCRD = (credentials) => {
   } else{
     args = ["--configfile=" + dcrdCfg()];
   }
-  
+
   if (cfg.get("network") === "testnet") {
     args.push("--testnet");
   }
