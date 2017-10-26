@@ -54,7 +54,7 @@ const LoginRPCRemoteForm = ({
   onChangeRpcpass,
   onChangeRpccert,
   changeForm,
-  intl: { formatMessage }
+  formatMessage
 
   }) => {
   const { handleSubmit } = props;
@@ -62,10 +62,7 @@ const LoginRPCRemoteForm = ({
 
   return (
     <div className="get-started-content-new-seed page-content">
-      <div>
-        <a className="key-blue-button" onClick={() => changeForm(1)}>Select Remote Form</a>
-        <a className="key-blue-button" onClick={() => changeForm(2)}>Select other app data directory Form</a>
-      </div>
+
       <div className="login-form-title">Login to a remote rpc</div>
       <form className="login-form" onSubmit={handleSubmit(onSubmitRemoteForm)}>
         <Field
@@ -112,17 +109,14 @@ const LoginDiffAppdataForm = ({
   onChangeRpcappdata,
   onChangeRpccert,
   changeForm,
-  intl: { formatMessage }
+  formatMessage
  }) => {
   const { handleSubmit } = props;
   const { diffAppdataFormHasErrors, isSubmitedDiffAppdataForm } = state;
 
   return (
     <div className="get-started-content-new-seed page-content">
-      <div>
-        <a className="key-blue-button" onClick={() => changeForm(1)}>Select Remote Form</a>
-        <a className="key-blue-button" onClick={() => changeForm(2)}>Select other app data directory Form</a>
-      </div>
+
       <form className="login-form" onSubmit={handleSubmit(onSubmitDiffAppdataForm)}>
         <div className="login-form-title">Login to a Different appdata directory</div>
         <Field
@@ -152,5 +146,43 @@ const LoginDiffAppdataForm = ({
   );
 };
 
-export const LoginRPCRemote = reduxForm({ form: "loginToRemoteRPC/verify" })(LoginRPCRemoteForm);
-export const LoginDiffAppdata = reduxForm({ form: "loginToDiffAppdataRPC/verify" })(LoginDiffAppdataForm);
+const LoginRPCRemote = reduxForm({ form: "loginToRemoteRPC/verify" })(LoginRPCRemoteForm);
+const LoginDiffAppdata = reduxForm({ form: "loginToDiffAppdataRPC/verify" })(LoginDiffAppdataForm);
+
+export const loginFormBody = ({
+  ...props,
+  ...state,
+  changeForm,
+  onSubmitDiffAppdataForm,
+  onChangeRpcappdata,
+  onSubmitRemoteForm,
+  onChangeRpcuser,
+  onChangeRpcpass,
+  onChangeRpccert,
+  intl: { formatMessage }
+ }) => {
+  return (
+    <div className="login-forms-wrapper">
+      <LoginRPCRemote {...{
+        ...props,
+        ...state,
+        onSubmitRemoteForm,
+        onChangeRpcuser,
+        onChangeRpcpass,
+        onChangeRpccert,
+        changeForm,
+        formatMessage
+      }}
+      />
+      <LoginDiffAppdata {...{
+        ...props,
+        ...state,
+        onSubmitDiffAppdataForm,
+        onChangeRpcappdata,
+        onChangeRpccert,
+        changeForm,
+        formatMessage
+      }} />
+    </div>
+  )
+}

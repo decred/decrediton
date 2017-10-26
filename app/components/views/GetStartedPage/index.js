@@ -9,7 +9,7 @@ import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHead
 import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
 import { walletStartup } from "connectors";
-import { LoginRPCHeader, LoginRPCRemote, LoginDiffAppdata } from "./LoginForm";
+import { LoginRPCHeader, loginFormBody } from "./LoginForm";
 import { injectIntl } from "react-intl";
 import { autobind } from "core-decorators";
 import { substruct } from "fp";
@@ -98,7 +98,7 @@ class GetStartedPage extends Component {
           Body = DaemonLoadingBody;
         } else {
           Header = LoginRPCHeader;
-          Body = formToSend === 1 ? LoginRPCRemote : LoginDiffAppdata;
+          Body = loginFormBody;
         }
 
       } else {
