@@ -421,7 +421,7 @@ const launchDCRD = (credentials) => {
 
   if(credentials){
     const {rpcappdata} = credentials;
-    rpccert = credentials.rpccert ? `--rpccert=${rpccert}` : null;
+    rpccert = credentials.rpccert ? `--rpccert=${credentials.rpccert}` : null;
     args = [`--appdata=${rpcappdata}`,"--configfile=" + dcrdCfg(), rpccert];
   } else{
     args = ["--configfile=" + dcrdCfg()];
