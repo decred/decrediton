@@ -1,4 +1,3 @@
-import React from "react";
 import PurchaseTickets from "PurchaseTickets";
 import TicketAutoBuyer from "TicketAutoBuyer";
 import PassphraseModal from "PassphraseModal";

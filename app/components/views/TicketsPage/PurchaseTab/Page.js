@@ -1,4 +1,3 @@
-import React from "react";
 import StakeyBounce from "StakeyBounce";
 import PurchaseTicketsInfo from "PurchaseTicketsInfo";
 import StakePools from "StakePools";

@@ -1,5 +1,3 @@
-import React, { Component } from "react";
-import { autobind } from "core-decorators";
 import { substruct, compose, eq, get } from "fp";
 import { service, ticketsPage } from "connectors";
 import ErrorScreen from "components/ErrorScreen";
@@ -7,7 +5,7 @@ import PurchasePage from "./Page";
 import { FormattedMessage as T } from "react-intl";
 
 @autobind
-class Purchase extends Component {
+class Purchase extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();

@@ -1,4 +1,3 @@
-import React from "react";
 import AgendaCard from "AgendaCard";
 import AgendaOverview from "AgendaOverview";
 import SelectStakePool from "SelectStakePool";
@@ -21,16 +20,14 @@ const VotingPrefsPage = ({
       <div className="stakepool-voting-title-area-name">
         <T id="votingPreferences.title" m="Voting Preferences" />
       </div>
-      {configuredStakePools.length > 0 ?
+      {configuredStakePools.length > 0 &&
       <div className="stakepool-unconfigured-select">
         <SelectStakePool
           options={configuredStakePools}
           value={stakePool}
           onChange={onChangeStakePool}
         />
-      </div> :
-      <div></div>
-      }
+      </div>}
     </div>
     <div className="stakepool-voting-agenda-area">
       {selectedAgenda ? (
@@ -42,18 +39,17 @@ const VotingPrefsPage = ({
           disabled={!stakePool || !stakePool.isVersionValid}
         />
       ) : null}
-      {(agendas.length > 0) ? (
+      {(agendas.length > 0) ?
         agendas.map(agenda =>
-          (!selectedAgenda || selectedAgenda.getId() !== agenda.getId()) ? (
+          (!selectedAgenda || selectedAgenda.getId() !== agenda.getId()) &&
             <AgendaCard
               key={agenda.getId()}
               agenda={agenda}
               selectedChoice={getAgendaSelectedChoice(agenda)}
               onClick={() => onShowAgenda(agenda)}
             />
-          ) : null
-        )
-      ) : (
+          )
+        : (
         <div className="stakepool-no-agendas-message">
           <T id="votingPreferences.noAgenda" m="There are currently no agendas for voting." />
         </div>
