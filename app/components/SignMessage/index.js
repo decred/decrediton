@@ -1,6 +1,5 @@
 import { FormattedMessage as T, injectIntl } from "react-intl";
 import { Icon, Flex, Box, Heading, CopyToClipboard } from "shared";
-import { autobind } from "core-decorators";
 import SignMessageForm from "./Form";
 import { signMessagePage } from "connectors";
 import "style/SecurityCenterMessagePage.less";
