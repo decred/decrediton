@@ -8,6 +8,7 @@ import app from "connectors/app";
 import SideBar from "components/SideBar";
 import Snackbar from "components/Snackbar";
 import { RouteTransition } from "shared";
+import { TooltipProvider } from "shared/Tooltip";
 
 const opts = { stiffness: 150, damping: 15 };
 const fade = { atEnter: { opacity: 0 }, atActive: { opacity: 1 }, atLeave: { opacity: 0 }};
