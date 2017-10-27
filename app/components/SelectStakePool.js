@@ -1,4 +1,3 @@
-import React from "react";
 import Select from "react-select";
 import { Box } from "shared";
 import { injectIntl, defineMessages } from "react-intl";

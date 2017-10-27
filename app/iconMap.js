@@ -1,7 +1,3 @@
-import React from "react";
-
-const Aux = ({ children }) => children;
-
 export default {
   accounts: {
     viewBox: "5358 46 30 30",

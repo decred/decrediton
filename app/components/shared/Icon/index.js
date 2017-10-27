@@ -1,6 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { cxs, Box } from "shared";
+import cxs from "cxs/component";
+import { Box } from "shared";
 import icons from "iconMap";
 import { theme } from "theme";
 

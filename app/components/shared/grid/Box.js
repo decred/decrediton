@@ -1,5 +1,5 @@
 import { createElement as h } from "react";
-import { cxs } from "..";
+import cxs from "cxs/component";
 import Tooltip from "../Tooltip";
 import { number, string, array, oneOfType } from "prop-types";
 import { width, space, fontSize, color, flex, responsiveStyle, propTypes } from "styled-system";

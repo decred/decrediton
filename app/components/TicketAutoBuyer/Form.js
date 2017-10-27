@@ -1,8 +1,6 @@
-import React from "react";
-import { Icon, Heading } from "shared";
+import { Icon, Heading, Tooltip } from "shared";
 import AutoBuyerSwitch from "../AutoBuyerSwitch";
 import KeyBlueButton from "../KeyBlueButton";
-import { Tooltip } from "shared";
 import {defineMessages, FormattedMessage as T} from "react-intl";
 import "../../style/StakePool.less";
 
@@ -65,8 +63,8 @@ const TicketAutoBuyerForm = ({
             : <T id="autobuyer.disabled" m="Disabled" />}
         </div>
         <div className="stakepool-auto-buyer-quick-bar-row">
-          {isHidingDetails ? (
-            <div>
+          { isHidingDetails &&
+            <Aux>
               <Tooltip text={<T id="autobuyer.balanceToMaintain" m="Balance to Maintain" /> }>
                 <div className="stakepool-balance-to-maintain-icon">{balanceToMaintain}</div>
               </Tooltip>
@@ -82,8 +80,7 @@ const TicketAutoBuyerForm = ({
               <Tooltip text={<T id="autobuyer.maxPerBlock" m="Max Per Block" /> }>
                 <div className="stakepool-max-per-block-icon">{maxPerBlock}</div>
               </Tooltip>
-            </div>
-          ) : null}
+            </Aux> }
         </div>
         <div className="stakepool-auto-buyer-show-advanced-area">
           <Icon i="cog" active={!isHidingDetails} onClick={onToggleShowDetails} />
@@ -186,9 +183,7 @@ const TicketAutoBuyerForm = ({
                 />
               </div>
             </div>
-            {maxPerBlockError ? (
-              <div className="stakepool-purchase-ticket-input-error">{maxPerBlockError}</div>
-            ) : null}
+            { maxPerBlockError && <div className="stakepool-purchase-ticket-input-error">{maxPerBlockError}</div> }
           </div>
         </div>
         <div hidden={!getTicketBuyerConfigResponse}>

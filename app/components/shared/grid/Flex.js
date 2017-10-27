@@ -1,5 +1,5 @@
 import Box from "./Box";
-import { cxs } from "..";
+import cxs from "cxs/component";
 import PropTypes from "prop-types";
 import { flexWrap, flexDirection, alignItems, justifyContent, propTypes } from "styled-system";
 

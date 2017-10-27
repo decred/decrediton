@@ -1,4 +1,3 @@
-import React from "react";
 import { FormattedMessage as T, injectIntl } from "react-intl";
 import { Icon, Flex, Box, Heading } from "shared";
 import PropTypes from "prop-types";

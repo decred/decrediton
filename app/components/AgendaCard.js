@@ -1,4 +1,3 @@
-import React from "react";
 import "style/AgendaCard.less";
 import { showCheck } from "shared";
 import { FormattedMessage as T } from "react-intl";
