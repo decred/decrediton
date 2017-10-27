@@ -63,30 +63,29 @@ const TicketAutoBuyerForm = ({
             : <T id="autobuyer.disabled" m="Disabled" />}
         </div>
         <div className="stakepool-auto-buyer-quick-bar-row">
-          { isHidingDetails &&
-            <Aux>
-              <Tooltip text={<T id="autobuyer.balanceToMaintain" m="Balance to Maintain" /> }>
-                <div className="stakepool-balance-to-maintain-icon">{balanceToMaintain}</div>
-              </Tooltip>
-              <Tooltip text={<T id="autobuyer.maxFee" m="Max Fee" /> }>
-                <div className="stakepool-max-fee-icon">{maxFee} DCR</div>
-              </Tooltip>
-              <Tooltip text={<T id="autobuyer.maxPriceAbsolute" m="Max Price Absolute" /> }>
-                <div className="stakepool-max-price-absolute-icon">{maxPriceAbsolute} DCR</div>
-              </Tooltip>
-              <Tooltip text={<T id="autobuyer.maxPriceRelative" m="Max Price Relative" /> }>
-                <div className="stakepool-max-price-relative-icon">{maxPriceRelative}%</div>
-              </Tooltip>
-              <Tooltip text={<T id="autobuyer.maxPerBlock" m="Max Per Block" /> }>
-                <div className="stakepool-max-per-block-icon">{maxPerBlock}</div>
-              </Tooltip>
-            </Aux> }
+          <Aux hidden={ !isHidingDetails }>
+            <Tooltip text={<T id="autobuyer.balanceToMaintain" m="Balance to Maintain" /> }>
+              <div className="stakepool-balance-to-maintain-icon">{balanceToMaintain}</div>
+            </Tooltip>
+            <Tooltip text={<T id="autobuyer.maxFee" m="Max Fee" /> }>
+              <div className="stakepool-max-fee-icon">{maxFee} DCR</div>
+            </Tooltip>
+            <Tooltip text={<T id="autobuyer.maxPriceAbsolute" m="Max Price Absolute" /> }>
+              <div className="stakepool-max-price-absolute-icon">{maxPriceAbsolute} DCR</div>
+            </Tooltip>
+            <Tooltip text={<T id="autobuyer.maxPriceRelative" m="Max Price Relative" /> }>
+              <div className="stakepool-max-price-relative-icon">{maxPriceRelative}%</div>
+            </Tooltip>
+            <Tooltip text={<T id="autobuyer.maxPerBlock" m="Max Per Block" /> }>
+              <div className="stakepool-max-per-block-icon">{maxPerBlock}</div>
+            </Tooltip>
+          </Aux>
         </div>
         <div className="stakepool-auto-buyer-show-advanced-area">
           <Icon i="cog" active={!isHidingDetails} onClick={onToggleShowDetails} />
         </div>
       </div>
-      <div hidden={isHidingDetails ? true : false} className="stakepool-auto-buyer-advanced-area">
+      <div hidden={ isHidingDetails } className="stakepool-auto-buyer-advanced-area">
         <div className="stakepool-purchase-ticket-row">
           <div className="stakepool-purchase-ticket-row-left">
             <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-balance-to-maintain-icon">
@@ -103,14 +102,15 @@ const TicketAutoBuyerForm = ({
                 />
               </div>
             </div>
-            {balanceToMaintainError ? (
-              <div className="stakepool-purchase-ticket-input-error">{balanceToMaintainError}</div>
-            ) : null}
+            { balanceToMaintainError &&
+              <div className="stakepool-purchase-ticket-input-error">{balanceToMaintainError}</div> }
           </div>
           <div className="stakepool-purchase-ticket-row-right">
-            <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-fee-icon">
-              {<T id="autobuyer.maxFee" m="Max Fee" />}:
-            </div></div>
+            <div className="stakepool-auto-buyer-icon-areas-expand">
+              <div className="stakepool-max-fee-icon">
+                {<T id="autobuyer.maxFee" m="Max Fee" />}:
+              </div>
+            </div>
             <div className="stakepool-purchase-ticket-num-input">
               <div className="stakepool-input-form-purchase-ticket">
                 <input
@@ -122,9 +122,8 @@ const TicketAutoBuyerForm = ({
                 />
               </div>
             </div>
-            {maxFeeError ? (
-              <div className="stakepool-purchase-ticket-input-error">{maxFeeError}</div>
-            ) : null}
+            { maxFeeError &&
+              <div className="stakepool-purchase-ticket-input-error">{maxFeeError}</div> }
           </div>
         </div>
         <div className="stakepool-purchase-ticket-row">
@@ -143,9 +142,8 @@ const TicketAutoBuyerForm = ({
                 />
               </div>
             </div>
-            {maxPriceAbsoluteError ? (
-              <div className="stakepool-purchase-ticket-input-error">{maxPriceAbsoluteError}</div>
-            ) : null}
+            { maxPriceAbsoluteError &&
+              <div className="stakepool-purchase-ticket-input-error">{maxPriceAbsoluteError}</div> }
           </div>
           <div className="stakepool-purchase-ticket-row-right">
             <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-price-relative-icon">
@@ -162,9 +160,8 @@ const TicketAutoBuyerForm = ({
                 />
               </div>
             </div>
-            {maxPriceRelativeError ? (
-              <div className="stakepool-purchase-ticket-input-error">{maxPriceRelativeError}</div>
-            ) : null}
+            { maxPriceRelativeError &&
+              <div className="stakepool-purchase-ticket-input-error">{maxPriceRelativeError}</div> }
           </div>
         </div>
         <div className="stakepool-purchase-ticket-row">
@@ -192,7 +189,7 @@ const TicketAutoBuyerForm = ({
             disabled={!isTicketAutoBuyerConfigDirty}
             onClick={onUpdateTicketAutoBuyerConfig}
           >
-          <T id="autobuyer.updateConfigBtn" m="Update Config" />
+            <T id="autobuyer.updateConfigBtn" m="Update Config" />
           </KeyBlueButton>
         </div>
       </div>

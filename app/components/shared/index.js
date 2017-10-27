@@ -1,7 +1,7 @@
 import { createElement as h } from "react";
 
 export const showCheck = C => ({ show, ...p }) => !!show && h(C, p);
-export const Aux = ({ children }) => children;
+export const Aux = ({ hidden, children }) => !hidden && children;
 
 export * from "./grid";
 export * from "./typography";
