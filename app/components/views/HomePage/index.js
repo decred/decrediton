@@ -20,11 +20,6 @@ class Home extends React.Component{
     };
   }
 
-  componentWillMount() {
-    this.props.onClearRevokeTicketsSuccess();
-    this.props.onClearRevokeTicketsError();
-  }
-
   render() {
     return this.props.walletService ? <HomePage
     {...{

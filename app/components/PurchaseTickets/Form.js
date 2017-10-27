@@ -52,7 +52,8 @@ const PurchaseTicketsForm = ({
   onShowRevokeTicket,
   onToggleShowAdvanced,
   onShowTicketsInfo,
-  intl: { formatMessage }
+  intl: { formatMessage },
+  account
 }) => {
 
   const v = e => e.target.value;
@@ -75,7 +76,8 @@ const PurchaseTicketsForm = ({
         <div className="stakepool-purchase-ticket-row-account-select">
           <div className="stakepool-purchase-ticket-account-select-label"><T id="purchaseTickets.account" m="Account" />:</div>
           <div className="stakepool-purchase-ticket-input-select">
-            <AccountsSelect onChange={onChangeAccount} />
+            <AccountsSelect
+                {...{account}} onChange={onChangeAccount}/>
           </div>
           <LinkToAccounts />
         </div>

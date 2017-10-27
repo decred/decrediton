@@ -23,8 +23,6 @@ const HomePage = ({
   isRequestingPassphrase,
   passphraseCallback,
   hasTicketsToRevoke,
-  revokeTicketsSuccess,
-  revokeTicketsError,
   passphraseHeading,
   passphraseDescription,
   onCancelPassphraseRequest,
@@ -32,9 +30,7 @@ const HomePage = ({
   rescanRequest,
   transactions,
   getTransactionsRequestAttempt,
-  getAccountsResponse,
-  onClearRevokeTicketsError,
-  onClearRevokeTicketsSuccess
+  getAccountsResponse
 }) => {
   return (
     <Aux>
@@ -46,24 +42,11 @@ const HomePage = ({
         description={passphraseDescription}
       />
       <Header
-        headerTop={[synced ? null : (
+        headerTop={synced ? null : (
           <div key="notSynced" className="home-view-notification-not-synced">
             <T id="home.notSyncedInfo" m="The wallet is not fully synced yet. Note: Balances will not be accurate until syncing is complete." />
           </div>
-        ),
-          revokeTicketsError ? (
-          <div key="revokeTicketsError" className="stakepool-view-notification-error">
-            <div className="stakepool-content-nest-address-delete-icon" onClick={onClearRevokeTicketsError} />
-            {revokeTicketsError}
-          </div>
-        ) : null,
-          revokeTicketsSuccess ? (
-          <div key="revokeTicketsSuccess" className="stakepool-view-notification-success">
-            <div className="stakepool-content-nest-address-delete-icon" onClick={onClearRevokeTicketsSuccess} />
-            {revokeTicketsSuccess}
-          </div>
-        ) : null,
-        ]}
+        )}
         headerTitleOverview={<T id="home.availableBalanceTitle" m="Available Balance" />}
         headerMetaOverview={
           <div>

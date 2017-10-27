@@ -7,7 +7,7 @@ import { FormattedMessage as T } from "react-intl";
 class PurchaseTicketsInfo extends React.Component {
   render() {
     return (
-      <div className="purchase-tickets-modal page-content">
+      <div className="purchase-tickets-modal">
         <div className="purchase-tickets-header">
           <div className="purchase-tickets-header-text">
             <T id="tickets.info.title" m="Ticket Purchase Information" />
