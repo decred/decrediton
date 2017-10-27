@@ -1,20 +1,7 @@
-import React from "react";
 import Header from "../../../Header";
 import LinearProgress from "material-ui/LinearProgress";
-import KeyBlueButton from "../../../KeyBlueButton";
-import { FormattedMessage as T, FormattedRelative, injectIntl, defineMessages } from "react-intl";
-import "../../../../style/GetStarted.less";
-import ReactToolTip from "react-tooltip";
-
-const messages = defineMessages({
-  skipBtnTip: {
-    id: "getStarted.chainLoading.skipBtn.tip",
-    defaultMessage: `ATTENTION<br>
-      You may skip the initial blockchain download, but be aware that
-      all transactions may not be found until the chain is fully synced.
-      As a result, your balance may be incorrect until fully synced.`
-  }
-});
+import { FormattedMessage as T, FormattedRelative } from "react-intl";
+import "style/GetStarted.less";
 
 const DaemonLoadingFormHeader = ({
   startupError,
@@ -34,14 +21,12 @@ const DaemonLoadingFormHeader = ({
   />
 );
 
-const DaemonLoadingFormBodyBase = ({
+const DaemonLoadingFormBody = ({
     getCurrentBlockCount,
     getDaemonStarted,
     getNeededBlocks,
-    doSkipDaemonSync,
     showLongWaitMessage,
     finishDateEstimation,
-    intl
   }) => (
     <div className="get-started-content-new-seed">
     {getDaemonStarted ? getCurrentBlockCount == null ?
@@ -55,18 +40,6 @@ const DaemonLoadingFormBodyBase = ({
           <div className="get-started-instructions-txt">
             <T id="getStarted.chainLoadingDelayReminder" m="If you are starting decrediton for the first time, this may take a while." />
           </div>
-          <span
-            className="get-started-skip-sync-button-and-tip"
-            data-multiline={true}
-            data-tip={intl.formatMessage(messages.skipBtnTip)}>
-            <KeyBlueButton
-              className="get-started-button-skip-sync"
-              onClick={doSkipDaemonSync}
-            >
-              <T id="getStarted.chainLoading.skipBtn" m="Skip Sync" />
-            </KeyBlueButton>
-          </span>
-          <ReactToolTip place="left" type="info" effect="solid"/>
         </div>
         <LinearProgress
           mode="determinate"
@@ -91,6 +64,5 @@ const DaemonLoadingFormBodyBase = ({
       <div></div> }
     </div>
   );
-const DaemonLoadingFormBody = injectIntl(DaemonLoadingFormBodyBase);
 
 export { DaemonLoadingFormHeader, DaemonLoadingFormBody };

@@ -40,6 +40,11 @@ module.exports = {
     "react/jsx-uses-react":1,
   },
   "globals": {
-    "Uint8Array": true
+    "Uint8Array": true,
+    "Map": true,
+    "React": true,
+    "PropTypes": true,
+    "autobind": true,
+    "Aux": true,
   }
 };

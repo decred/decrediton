@@ -59,6 +59,12 @@
   background-repeat: no-repeat;
 }
 
+.header-icon-tickets {
+  .header-icon-mixin;
+
+  background-image: @ticket-small-icon;
+}
+
 .header-icon-transactions {
   .header-icon-mixin;
 
@@ -91,13 +97,15 @@
   margin-right: 20px;
 }
 
-.tabbedheader-tab {
+.tabbedheader-ref {
+  box-sizing: border-box;
   display: inline-block;
+}
+
+.tabbedheader-tab {
   vertical-align: middle;
   text-align: center;
-  padding: 0px 4px 3px 4px;
-  margin: 0px 10px 0px 10px;
-  box-sizing: border-box;
+  margin: 0px 14px 3px 14px;
   color: inherit;
   text-decoration: none;
 }
@@ -115,9 +123,4 @@
   width: 15px;
   background-color: #2ed8a3;
   position: relative;
-}
-
-.tabbedheader-active-tab-caret.updating {
-  transition: width 130ms @easeInOutQuart;
-  transition: left 210ms @easeInOutQuart;
 }

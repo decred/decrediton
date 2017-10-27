@@ -7,6 +7,7 @@ import { getStakePoolInfo } from "wallet/config";
 import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { getCfg, getCfgPath, getDcrdCert,RPCDaemonPort, RPCDaemonHost } from "config";
+import axios from "axios";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
@@ -58,7 +59,6 @@ export const createWalletExistingToggle = (existing) => (dispatch) =>
   existing
     ? dispatch({ type: CREATEWALLET_EXISTINGSEED_INPUT })
     : setTimeout(() => dispatch({ type: CREATEWALLET_NEWSEED_INPUT }), 50);
-
 
 export const CREATEWALLET_ATTEMPT = "CREATEWALLET_ATTEMPT";
 export const CREATEWALLET_FAILED = "CREATEWALLET_FAILED";
@@ -236,15 +236,33 @@ export const fetchHeadersAttempt = () => (dispatch, getState) => {
 export const UPDATEDISCOVERACCOUNTS = "UPDATEDISCOVERACCOUNTS";
 export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
 
-export const clearStakePoolConfigNewWallet = () => (dispatch) =>
-  getStakePoolInfo()
-    .then(response => {
-      const config = getCfg();
-      // Only add matching network stakepool info
-      const foundStakePoolConfigs = Object.values(response.data).map(
-        ({ URL, Network, APIVersionsSupported }) => ({ Host: URL, Network, APIVersionsSupported }));
-      config.delete("stakepools");
-      config.set("stakepools", foundStakePoolConfigs);
-      dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
+export function clearStakePoolConfigNewWallet() {
+  return (dispatch) => {
+    let config = getCfg();
+    config.delete("stakepools");
+
+    getStakePoolInfo()
+      .then(foundStakePoolConfigs => {
+        if (foundStakePoolConfigs) {
+          let config = getCfg();
+          config.set("stakepools", foundStakePoolConfigs);
+          dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
+        }
+      });
+  };
+}
+
+export const NEEDED_BLOCKS_DETERMINED = "NEEDED_BLOCKS_DETERMINED";
+export function determineNeededBlocks() {
+  return (dispatch, getState) => {
+    const network = getState().grpc.network;
+    const explorerInfoURL = `https://${network}.decred.org/api/status`;
+    axios.get(explorerInfoURL, {timeout: 5000})
+    .then(function (response) {
+      dispatch({ neededBlocks: response.data.info.blocks, type: NEEDED_BLOCKS_DETERMINED});
     })
-    .catch(error => console.error(error));
+    .catch(function (error) {
+      console.log("Unable to obtain latest block number.", error);
+    });
+  };
+}

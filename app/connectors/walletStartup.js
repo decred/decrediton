@@ -19,7 +19,9 @@ const mapStateToProps = selectorMap({
   getNeededBlocks: sel.getNeededBlocks,
   getWalletReady: sel.getWalletReady,
   getEstimatedTimeLeft: sel.getEstimatedTimeLeft,
-  isPrepared: sel.isPrepared
+  isPrepared: sel.isPrepared,
+  network: sel.network,
+  versionInvalid: sel.versionInvalid
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -30,7 +32,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onRetryStartRPC: wla.startRpcRequestFunc,
   doVersionCheck: wla.versionCheckAction,
   doStartDaemon: da.startDaemon,
-  doSkipDaemonSync: da.skipDaemonSync,
+  determineNeededBlocks: wla.determineNeededBlocks,
   showSidebarMenu,
   showSidebar,
   hideSidebarMenu,

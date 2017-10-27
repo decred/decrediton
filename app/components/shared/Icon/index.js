@@ -31,4 +31,8 @@ Icon.propTypes = {
   s: PropTypes.number
 };
 
+Icon.defaultProps = {
+  tipWidth: 120
+};
+
 export default Icon;

@@ -1536,9 +1536,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 #. [purchaseTickets.title]
 #. defaultMessage is:
-#. Purchase Titckets
+#. Purchase Tickets
 msgctxt "purchaseTickets.title"
-msgid "Purchase Titckets"
+msgid "Purchase Tickets"
 msgstr ""
 
 #: app/i18n/extracted/static/menus.json

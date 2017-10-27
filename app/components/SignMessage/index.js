@@ -1,11 +1,8 @@
-import React from "react";
 import { FormattedMessage as T, injectIntl } from "react-intl";
-import { Icon, Flex, Box, Heading } from "shared";
-import PropTypes from "prop-types";
+import { Icon, Flex, Box, Heading, CopyToClipboard } from "shared";
 import { autobind } from "core-decorators";
 import SignMessageForm from "./Form";
 import { signMessagePage } from "connectors";
-import CopyToClipboardButton from "../CopyToClipboardButton";
 import "style/SecurityCenterMessagePage.less";
 
 @autobind
@@ -35,11 +32,7 @@ class SignMessage extends React.Component {
             <div>
               {signMessageSuccess.signature}
             </div>
-            <CopyToClipboardButton
-              key="copyToClipboard"
-              className="message-content-nest-copy-to-clipboard-icon"
-              textToCopy={signMessageSuccess.signature}
-            />
+            <CopyToClipboard textToCopy={signMessageSuccess.signature} className="message-content-nest-copy-to-clipboard-icon" />
           </div>
         </div>
       );

@@ -1,5 +1,3 @@
-import React from "react";
-import PropTypes from "prop-types";
 import Header from "../../../Header";
 import AccountRow from "./AccountRow";
 import DecredLoading from "../../../DecredLoading";
@@ -100,7 +98,7 @@ const AccountsList = ({
         <div>
           <div className="account-content-title">
             <div className="account-content-title-buttons-area">
-              <Icon i="info" onClick={onShowBalanceOverviewInfoModal} />
+              <Icon i="info" onClick={onShowBalanceOverviewInfoModal} tooltip={<T id="accounts.balanceInfo" m="Balance Information"/>} />
             </div>
           </div>
           <div className="account-content-nest">

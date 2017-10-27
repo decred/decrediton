@@ -5,16 +5,12 @@ import { PropTypes } from "prop-types";
 import accountsSelect from "../connectors/accountsSelect";
 import { injectIntl, defineMessages, intlShape } from "react-intl";
 import Balance from "./Balance";
-import { Link } from "react-router";
+import { LinkToAccounts } from "shared";
 
 const messages = defineMessages({
   placeholder: {
     id: "accountsSelect.placeholder",
     defaultMessage: "Select account"
-  },
-  accountsTip: {
-    id: "send.accounts.tip",
-    defaultMessage: "Accounts",
   },
 });
 
@@ -66,16 +62,7 @@ class AccountsSelect extends Component {
           onChange={this.onChangeAccount}
           className="accounts-select"
         />
-        { showAccountsButton
-          ? <Link
-            className="accounts-button-icon"
-            data-place="bottom"
-            data-type="info"
-            data-effect="solid"
-            data-tip={formatMessage(messages.accountsTip)}
-            to={"/accounts"}
-          />
-          : null }
+        { showAccountsButton && <LinkToAccounts /> }
       </div>
     );
   }

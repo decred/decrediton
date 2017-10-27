@@ -8,13 +8,14 @@ import { DiscoverAddressesHeader, DiscoverAddressesBody } from "./DiscoverAddres
 import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHeaders";
 import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
-import walletStartup from "../../../connectors/walletStartup";
+import { walletStartup } from "connectors";
 
 class GetStartedPage extends Component {
 
   componentWillMount() {
     this.props.showSidebar();
     this.props.hideSidebarMenu();
+    this.props.determineNeededBlocks();
   }
 
   componentDidMount() {
@@ -22,7 +23,9 @@ class GetStartedPage extends Component {
   }
 
   componentWillUnmount() {
-    this.props.showSidebarMenu();
+    if (!this.props.versionInvalid) {
+      this.props.showSidebarMenu();
+    }
   }
 
   render() {

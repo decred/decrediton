@@ -13,6 +13,7 @@ let menu;
 let template;
 let mainWindow = null;
 let versionWin = null;
+let grpcVersions = {requiredVersion: null, walletVersion: null};
 let debug = false;
 let dcrdPID;
 let dcrwPID;
@@ -27,8 +28,13 @@ function unknownFn(arg) {
   return;
 }
 
-function getExecutableName(name) {
-  return os.platform() !== "win32" ? name : name + ".exe";
+function getExecutablePath(name) {
+  let binPath = process.env.NODE_ENV === "development"
+    ? path.join(__dirname, "..", "bin")
+    : path.join(process.resourcesPath, "bin");
+  let execName = os.platform() !== "win32" ? name : name + ".exe";
+
+  return path.join(binPath, execName);
 }
 
 function showUsage() {
@@ -76,13 +82,6 @@ if (argv.help) {
 if (argv.version) {
   console.log(`${app.getName()} version ${app.getVersion()}`);
   app.exit(0);
-}
-
-var execPath;
-if (process.env.NODE_ENV === "development") {
-  execPath =  __dirname;
-} else {
-  execPath = process.resourcesPath;
 }
 
 if (process.env.NODE_ENV === "production") {
@@ -313,7 +312,7 @@ ipcMain.on("check-daemon", (event) => {
   args.push("--rpcserver=" + RPCDaemonHost() + ":" + RPCDaemonPort());
   args.push("--walletrpcserver=" + cfg.get("wallet_rpc_host") + ":" + RPCWalletPort());
 
-  var dcrctlExe = path.join(execPath, "bin", getExecutableName("dcrctl"));
+  var dcrctlExe = getExecutablePath("dcrctl");
   if (!fs.existsSync(dcrctlExe)) {
     logger.log("error", "The dcrctl file does not exists");
   }
@@ -334,6 +333,10 @@ ipcMain.on("check-daemon", (event) => {
   });
 });
 
+ipcMain.on("grpc-versions-determined", (event, versions) => {
+  grpcVersions = { ...grpcVersions, ...versions };
+});
+
 const launchDCRD = () => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile="+dcrdCfg()];
@@ -343,7 +346,7 @@ const launchDCRD = () => {
   }
   args.push("--rpclisten=" + RPCDaemonHost() + ":" + RPCDaemonPort());
 
-  var dcrdExe = path.join(execPath, "bin", getExecutableName("dcrd"));
+  var dcrdExe = getExecutablePath("dcrd");
   if (!fs.existsSync(dcrdExe)) {
     logger.log("error", "The dcrd file does not exists");
     return;
@@ -420,7 +423,7 @@ const launchDCRWallet = () => {
   args.push("--ticketbuyer.maxpriceabsolute=" + cfg.get("maxpriceabsolute"));
   args.push("--ticketbuyer.maxperblock=" + cfg.get("maxperblock"));
 
-  var dcrwExe = path.join(execPath, "bin", getExecutableName("dcrwallet"));
+  var dcrwExe = getExecutablePath("dcrwallet");
   if (!fs.existsSync(dcrwExe)) {
     logger.log("error", "The dcrwallet file does not exists");
     return;
@@ -487,11 +490,12 @@ const readExesVersion = () => {
   let args = ["--version"];
   let exes = ["dcrd", "dcrwallet", "dcrctl"];
   let versions = {
+    grpc: grpcVersions,
     decrediton: app.getVersion()
   };
 
   for (let exe of exes) {
-    let exePath = path.join(execPath, "bin", getExecutableName("dcrd"));
+    let exePath = getExecutablePath("dcrd");
     if (!fs.existsSync(exePath)) {
       logger.log("error", "The dcrd file does not exists");
     }

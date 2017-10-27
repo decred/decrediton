@@ -14,7 +14,7 @@ import {
   GETTRANSACTIONS_PROGRESS_TICKET,
   GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE,
   UPDATETIMESINCEBLOCK,
-
+  GETTICKETS_ATTEMPT, GETTICKETS_FAILED, GETTICKETS_COMPLETE,
   GETAGENDASERVICE_ATTEMPT, GETAGENDASERVICE_FAILED, GETAGENDASERVICE_SUCCESS,
   GETMESSAGEVERIFICATIONSERVICE_ATTEMPT, GETMESSAGEVERIFICATIONSERVICE_FAILED, GETMESSAGEVERIFICATIONSERVICE_SUCCESS,
   GETVOTINGSERVICE_ATTEMPT, GETVOTINGSERVICE_FAILED, GETVOTINGSERVICE_SUCCESS,
@@ -222,6 +222,25 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       hiddenAccounts: action.hiddenAccounts,
+    };
+  case GETTICKETS_ATTEMPT:
+    return {
+      ...state,
+      tickets: Array(),
+      getTicketsRequestAttempt: true,
+    };
+  case GETTICKETS_FAILED:
+    return {
+      ...state,
+      getTicketsRequestError: String(action.error),
+      getTicketsRequestAttempt: false,
+    };
+  case GETTICKETS_COMPLETE:
+    return {
+      ...state,
+      tickets: action.tickets,
+      getTicketsRequestError: "",
+      getTicketsRequestAttempt: false,
     };
   case GETTRANSACTIONS_ATTEMPT:
     return {

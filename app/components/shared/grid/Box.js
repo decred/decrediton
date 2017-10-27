@@ -1,5 +1,6 @@
-import React from "react";
+import { createElement as h } from "react";
 import { cxs } from "..";
+import Tooltip from "../Tooltip";
 import { number, string, array, oneOfType } from "prop-types";
 import { width, space, fontSize, color, flex, responsiveStyle, propTypes } from "styled-system";
 
@@ -10,7 +11,7 @@ const Base = ({ is, ...props }) => {
 
 const order = responsiveStyle({ cssProperty: "order" });
 
-const Box = cxs(Base)(
+export const BaseBox = cxs(Base)(
   { boxSizing: "border-box" },
   width,
   space,
@@ -19,6 +20,11 @@ const Box = cxs(Base)(
   flex,
   order,
 );
+
+const Box = ({ tooltip, ...props }) =>
+  tooltip ?
+  h(Tooltip, Object.assign({text: tooltip}, props), h(BaseBox)) :
+  h(BaseBox, props);
 
 Box.displayName = "Box";
 
