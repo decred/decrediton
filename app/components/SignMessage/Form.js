@@ -1,7 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { Field, reduxForm } from "redux-form";
 import InputField from "../Form/InputField";
-import TextareaField from "../Form/TextareaField";
 import ErrorField from "../Form/ErrorField";
 import { validate } from "./validator";
 import { Link } from "react-router";
@@ -9,27 +8,27 @@ import { Link } from "react-router";
 const messages = defineMessages({
   addressFieldLabel: {
     id: "securitycenter.sign.form.field.address.label",
-    defaultMessage: "Address:",
+    defaultMessage: "Address",
   },
   addressFieldPlaceholder: {
     id: "securitycenter.sign.form.field.address.placeholder",
-    defaultMessage: "Enter your address here",
+    defaultMessage: "Enter your address",
   },
   messageFieldLabel: {
     id: "securitycenter.sign.form.field.message.label",
-    defaultMessage: "Message:",
+    defaultMessage: "Message",
   },
   messageFieldPlaceholder: {
     id: "securitycenter.sign.form.field.message.placeholder",
-    defaultMessage: "Enter your message here",
+    defaultMessage: "Enter your message",
   },
   passphraseFieldLabel: {
     id: "securitycenter.sign.form.field.passphrase.label",
-    defaultMessage: "Passphrase:",
+    defaultMessage: "Passphrase",
   },
   passphraseFieldPlaceholder: {
     id: "securitycenter.sign.form.field.passphrase.placeholder",
-    defaultMessage: "Enter your passphrase here",
+    defaultMessage: "Enter your passphrase",
   },
 });
 
@@ -52,9 +51,8 @@ const SignMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, 
           </Link>
         </div>
       </div>
-      <div className="message-content-nest">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {error ? <div className="error">{error}</div> : null}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="message-content-nest">
           <Field
             name="global"
             component={ErrorField}
@@ -69,7 +67,7 @@ const SignMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, 
           <Field
             label={formatMessage(messages.messageFieldLabel)}
             name="message"
-            component={TextareaField}
+            component={InputField}
             placeholder={formatMessage(messages.messageFieldPlaceholder)}
           />
           <Field
@@ -79,13 +77,14 @@ const SignMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, 
             type="password"
             placeholder={formatMessage(messages.passphraseFieldPlaceholder)}
           />
-          <div className="message-toolbar">
-            <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
-              <T id="securitycenter.sign.form.submit" m="Sign" />
-            </button>
-          </div>
-        </form>
-      </div>
+        </div>
+        {error && <div className="error">{error}</div>}
+        <div className="message-toolbar">
+          <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
+            <T id="securitycenter.sign.form.submit" m="Sign" />
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

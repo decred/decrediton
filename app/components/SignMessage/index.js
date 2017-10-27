@@ -1,7 +1,4 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { autobind } from "core-decorators";
-import { FormattedMessage as T, injectIntl } from "react-intl";
+import { injectIntl } from "react-intl";
 import SignMessageForm from "./Form";
 import signMessageConnector from "../../connectors/signMessagePage";
 import { CopyToClipboard } from "shared";
