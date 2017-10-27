@@ -4,13 +4,11 @@ import "style/Layout.less";
 import "style/StakePool.less";
 
 const SecurityPage = ({
-  location,
-  onToggleSecurityMessage,
   children,
 }) => {
   return (
     <Aux>
-      <SecurityPageHeader {...{ onToggleSecurityMessage, location }} />
+      <SecurityPageHeader />
       {children}
     </Aux>
   );

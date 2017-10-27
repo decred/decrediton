@@ -1,11 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { Field, reduxForm } from "redux-form";
 import InputField from "../Form/InputField";
 import TextareaField from "../Form/TextareaField";
 import ErrorField from "../Form/ErrorField";
 import { validate } from "./validator";
+import { Link } from "react-router";
 
 const messages = defineMessages({
   addressFieldLabel: {
@@ -42,39 +41,51 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
   }
 
   return (
-    <div className="message-content-nest">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {error ? <div className="error">{error}</div> : null}
-        <Field
-          name="global"
-          component={ErrorField}
-        />
-        <Field
-          label={formatMessage(messages.addressFieldLabel)}
-          name="address"
-          component={InputField}
-          type="text"
-          placeholder={formatMessage(messages.addressFieldPlaceholder)}
-        />
-        <Field
-          label={formatMessage(messages.signatureFieldLabel)}
-          name="signature"
-          component={InputField}
-          type="text"
-          placeholder={formatMessage(messages.signatureFieldPlaceholder)}
-        />
-        <Field
-          label={formatMessage(messages.messageFieldLabel)}
-          name="message"
-          component={TextareaField}
-          placeholder={formatMessage(messages.messageFieldPlaceholder)}
-        />
-        <div className="message-toolbar">
-          <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
-            <T id="securitycenter.verify.form.submit" m="Verify" />
-          </button>
+    <div>
+      <div className="security-page-toggle">
+        <div className="text-toggle">
+          <Link to="/security/sign" className="text-toggle-button-left">
+            <T id="securitycenter.header.toggle.sign" m="Sign" />
+          </Link>
+          <div className="text-toggle-button-right text-toggle-button-active">
+            <T id="securitycenter.header.toggle.verify" m="Verify" />
+          </div>
         </div>
-      </form>
+      </div>
+      <div className="message-content-nest">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {error ? <div className="error">{error}</div> : null}
+          <Field
+            name="global"
+            component={ErrorField}
+          />
+          <Field
+            label={formatMessage(messages.addressFieldLabel)}
+            name="address"
+            component={InputField}
+            type="text"
+            placeholder={formatMessage(messages.addressFieldPlaceholder)}
+          />
+          <Field
+            label={formatMessage(messages.signatureFieldLabel)}
+            name="signature"
+            component={InputField}
+            type="text"
+            placeholder={formatMessage(messages.signatureFieldPlaceholder)}
+          />
+          <Field
+            label={formatMessage(messages.messageFieldLabel)}
+            name="message"
+            component={TextareaField}
+            placeholder={formatMessage(messages.messageFieldPlaceholder)}
+          />
+          <div className="message-toolbar">
+            <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
+              <T id="securitycenter.verify.form.submit" m="Verify" />
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

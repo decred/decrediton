@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { autobind } from "core-decorators";
 import VerifyMessageForm from "./Form";
 import verifyMessageConnector from "../../connectors/verifyMessagePage";
-import "../../style/SecurityCenterMessagePage.less";
+import "style/SecurityCenterMessagePage.less";
 
 @autobind
 class VerifyMessage extends React.Component {
@@ -48,7 +48,6 @@ class VerifyMessage extends React.Component {
 
     return (
       <div className="page-content message message-verify">
-        <div className="message-header-title"><T id="securitycenter.verify.header" m="Verify Message" /></div>
         <VerifyMessageForm onSubmit={this.onSubmit} rpcError={verifyMessageError} formatMessage={this.props.intl.formatMessage} />
         {result}
       </div>

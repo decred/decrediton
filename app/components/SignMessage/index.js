@@ -42,7 +42,6 @@ class SignMessage extends React.Component {
 
     return (
       <div className="page-content message message-sign">
-        <div className="message-header-title"><T id="securitycenter.sign.header" m="Sign Message" /></div>
         <SignMessageForm onSubmit={this.onSubmit} rpcError={signMessageError} formatMessage={this.props.intl.formatMessage} />
         {result}
       </div>
