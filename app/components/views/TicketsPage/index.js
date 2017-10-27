@@ -33,7 +33,6 @@ class Tickets extends React.Component{
     const page = "tickets";
     // this will be removed w/ react router 4
     const pathname = location.pathname.split("/")[2];
-    // Still unable to determine 'from' tab which would determine which transition to use for middle tabs
     const effect = !prevRoute ? enterLeft : tabs.indexOf(prevRoute) > tabs.indexOf(pathname) ? enterLeft : enterRight;
     return (
       <Aux>
