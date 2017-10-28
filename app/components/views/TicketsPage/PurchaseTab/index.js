@@ -55,50 +55,50 @@ class Purchase extends React.Component {
       />
     );
   }
-  
+
   onToggleTicketStakePool(side) {
     this.setState({
       isShowingVotingPrefs: (side === "right") ? true : false,
       purchaseTicketsStakePoolConfig: false
     });
   }
-  
+
   getStakePool() {
     const pool = this.props.onChangeStakePool ? this.props.stakePool : this.state.stakePool;
     return pool
       ? this.props.configuredStakePools.find(compose(eq(pool.Host), get("Host")))
       : null;
   }
-  
+
   getAccount() {
     const account = this.props.onChangeAccount ? this.props.account : this.state.account;
     return this.props.spendingAccounts.find(compose(eq(account.value), get("value")));
   }
-  
+
   onChangeStakePool(stakePool) {
     const { onChangeStakePool } = this.props;
     this.setState({ stakePool });
     onChangeStakePool && onChangeStakePool(stakePool);
   }
-  
+
   onChangeAccount(account) {
     const { onChangeAccount } = this.props;
     this.setState({ account });
     onChangeAccount && onChangeAccount(account);
   }
-  
+
   onImportScript(privpass, script) {
     const { onImportScript } = this.props;
     onImportScript && onImportScript(privpass, script, true, 0, null);
     this.setState({ isShowingImportScript: false });
   }
-  
+
   onRevokeTickets(privpass) {
     const { onRevokeTickets } = this.props;
     onRevokeTickets && onRevokeTickets(privpass);
     this.onCancelPassphraseRequest();
   }
-  
+
   onCancelPassphraseRequest() {
     this.setState({
       isRequestingPassphrase: false,
@@ -107,30 +107,30 @@ class Purchase extends React.Component {
       passphraseCallback: null
     });
   }
-  
+
   onShowTicketsInfo() {
     this.setState({ isShowingTicketsInfo: true });
   }
-  
+
   onHideTicketsInfo() {
     this.setState({ isShowingTicketsInfo: false });
   }
-  
+
   onShowAutoBuyerTicketsInfo() {
     this.setState({ isShowingAutoBuyerTicketsInfo: true });
   }
   onHideAutoBuyerTicketsInfo() {
     this.setState({ isShowingAutoBuyerTicketsInfo: false });
   }
-  
+
   onShowStakePoolConfig() {
     this.setState({ isShowingStakePools: true });
   }
-  
+
   onHideStakePoolConfig() {
     this.setState({ isShowingStakePools: false });
   }
-  
+
   onRequestPassphrase(passphraseHeading, passphraseDescription, passphraseCallback) {
     this.setState({
       passphraseHeading,
@@ -139,17 +139,17 @@ class Purchase extends React.Component {
       isRequestingPassphrase: true
     });
   }
-  
+
   onShowImportScript() {
     this.setState({ isShowingImportScript: true });
   }
-  
+
   onShowRevokeTicket() {
     this.onRequestPassphrase(
       <T id="stake.revokeTicketsPassphrase" m="Enter Passphrase to Revoke Tickets" />,
       null, this.onRevokeTickets);
   }
-  
+
   onCancelImportScript() {
     this.setState({ isShowingImportScript: false });
   }

@@ -8,7 +8,7 @@ import TicketsCogs from "../TicketsCogs";
 import DecredInput from "../DecredInput";
 import NumericInput from "../NumericInput";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
-import { LinkToAccounts, Tooltip } from "shared";
+import { Tooltip } from "shared";
 import { addSpacingAroundText } from "helpers/strings";
 import "style/StakePool.less";
 

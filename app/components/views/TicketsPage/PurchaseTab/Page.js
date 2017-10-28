@@ -24,7 +24,7 @@ const PurchasePage = ({
         ? <StakePools {...{ onHideStakePoolConfig }} />
           : isShowingTicketsInfo
             ? <PurchaseTicketsInfo closeModal={onHideTicketsInfo} />
-            : isShowingAutoBuyerTicketsInfo 
+            : isShowingAutoBuyerTicketsInfo
               ? <TicketAutoBuyerInfo closeModal={onHideAutoBuyerTicketsInfo} />
                 : <Tickets {...{ stakePool, ...props }} />
 );
