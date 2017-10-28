@@ -366,7 +366,6 @@ ipcMain.on("check-daemon", (event, arg) => {
   let args = ["getblockcount"];
   let host, port;
   const { startType, credentials } = arg;
-  logger.log("info", JSON.stringify(arg));
 
   if(startType === 1){
     args.push(`--rpcuser=${credentials.rpcuser}`);
@@ -421,7 +420,6 @@ ipcMain.on("grpc-versions-determined", (event, versions) => {
 const launchDCRD = (credentials) => {
   var spawn = require("child_process").spawn;
   let args = [];
-  let rpccert;
 
   if(credentials){
     const {rpcappdata} = credentials;
