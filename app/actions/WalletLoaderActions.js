@@ -141,7 +141,7 @@ export const startRpcRequestFunc = (isRetry) =>
   } else if (startType === 2) {
     rpcuser = cfg.get("rpc_user");
     rpcpass = cfg.get("rpc_pass");
-    rpccertPath = credentials.rpccert;
+    rpccertPath = `${credentials.rpcappdata}/rpc.cert`;
     daemonhost = RPCDaemonHost();
     rpcport = RPCDaemonPort();
   } else {
