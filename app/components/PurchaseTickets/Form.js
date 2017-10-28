@@ -8,7 +8,7 @@ import TicketsCogs from "../TicketsCogs";
 import DecredInput from "../DecredInput";
 import NumericInput from "../NumericInput";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
-import { Tooltip } from "shared";
+import { LinkToAccounts, Tooltip } from "shared";
 import { addSpacingAroundText } from "helpers/strings";
 import "style/StakePool.less";
 
@@ -82,6 +82,7 @@ const PurchaseTicketsForm = ({
               <AccountsSelect
                 {...{ account }} onChange={onChangeAccount} />
             </div>
+            <LinkToAccounts />
           </div>
           <div className="stakepool-purchase-ticket-row-num-tickets">
             <div className="stakepool-purchase-ticket-label">
