@@ -1,6 +1,7 @@
 import { createElement as h } from "react";
 import { spring, TransitionMotion } from "react-motion";
 import { object, string, func, bool, oneOfType } from "prop-types";
+import theme from "theme";
 
 const ensureSpring = (styles, options) => (
   Object.keys(styles).reduce((acc, key) => {
@@ -36,7 +37,7 @@ RouteTransition.defaultProps = {
   wrapperComponent: "div",
   runOnMount: true,
   mapStyles: val => val,
-  opts: { stiffness: 40, damping: 26 }
+  opts: theme("springs.testing")
 };
 
 RouteTransition.propTypes = {

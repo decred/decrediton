@@ -1,11 +1,11 @@
 import Header from "./Header";
 import { RouteTransition } from "shared";
+import theme from "theme";
 
 const mapStyles = styles => ({ left: styles.left + "%" });
 
 const enterLeft = { atEnter: { left: -100 }, atActive: { left: 0 }, atLeave: { left: 100 }, mapStyles };
 const enterRight = { atEnter: { left: 100 }, atActive: { left: 0 }, atLeave: { left: -100 }, mapStyles };
-const opts = { stiffness: 150, damping: 20 };
 
 const wrapperComponent = props => <div className="tab-content" { ...props } />;
 
@@ -37,7 +37,7 @@ class Tickets extends React.Component{
     return (
       <Aux>
         <Header {...{ tabs, page, pathname }}/>
-        <RouteTransition className="tabbed-page" {...{ wrapperComponent, opts, pathname, ...effect }}>
+        <RouteTransition className="tabbed-page" opts={ theme("springs.tab") } {...{ wrapperComponent, pathname, ...effect }}>
           { children }
         </RouteTransition>
       </Aux>
