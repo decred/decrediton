@@ -28,7 +28,7 @@ class Purchase extends React.Component {
   }
   render() {
     return (!this.props.walletService || !this.props.ticketBuyerService) ? <ErrorScreen /> : (
-      <TicketsPage
+      <PurchasePage
         {...{
           ...this.props,
           ...this.state,

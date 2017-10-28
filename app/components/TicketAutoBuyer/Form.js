@@ -93,7 +93,7 @@ const TicketAutoBuyerForm = ({
           ) : null}
         </div>
         <div className="stakepool-purchase-ticket-input-buttons">
-        <PurchaseTicketsInfoButton onClick={onShowAutoBuyerTicketsInfo} />
+        <PurchaseTicketsInfoButton onClick={onShowAutoBuyerTicketsInfo} tooltipText={<T id="accounts.automaticPurchaseInfo" m="Automatic Purchase Information" />} />
         <TicketsCogs opened={isHidingDetails} onClick={onToggleShowDetails} />
       </div>
 

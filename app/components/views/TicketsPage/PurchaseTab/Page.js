@@ -1,5 +1,6 @@
 import StakeyBounce from "StakeyBounce";
 import PurchaseTicketsInfo from "PurchaseTicketsInfo";
+import TicketAutoBuyerInfo from "TicketAutoBuyerInfo";
 import StakePools from "StakePools";
 import Tickets from "./Tickets";
 import "style/Layout.less";
@@ -11,8 +12,10 @@ const PurchasePage = ({
   stakePool,
   isShowingTicketsInfo,
   isShowingStakePools,
+  isShowingAutoBuyerTicketsInfo,
   onHideTicketsInfo,
   onHideStakePoolConfig,
+  onHideAutoBuyerTicketsInfo,
   ...props
 }) => (
     (isSavingStakePoolConfig || isPurchasingTickets)
@@ -21,7 +24,9 @@ const PurchasePage = ({
         ? <StakePools {...{ onHideStakePoolConfig }} />
           : isShowingTicketsInfo
             ? <PurchaseTicketsInfo closeModal={onHideTicketsInfo} />
-            : <Tickets {...{ stakePool, ...props }} />
+            : isShowingAutoBuyerTicketsInfo 
+              ? <TicketAutoBuyerInfo closeModal={onHideAutoBuyerTicketsInfo} />
+                : <Tickets {...{ stakePool, ...props }} />
 );
 
 export default PurchasePage;
