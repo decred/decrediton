@@ -32,7 +32,7 @@ export const startDaemon = () => (dispatch) => {
  */
 export const startDaemonAdvanced = (args, startType) => (dispatch) => {
   if(startType === 1){
-    dispatch(syncDaemon(args));
+    dispatch(syncDaemon(startType, args));
     dispatch({
       type: SAVE_START_ADVANCED_DAEMON_CREDENTIALS,
       credentials: args,
@@ -47,7 +47,7 @@ export const startDaemonAdvanced = (args, startType) => (dispatch) => {
 
   daemon.startDaemonAdvanced(args, startType)
   .then( () => {
-    dispatch(syncDaemon());
+    dispatch(syncDaemon(startType, args));
     dispatch({
       type: SAVE_START_ADVANCED_DAEMON_CREDENTIALS,
       credentials: args,
@@ -82,23 +82,15 @@ export const startWallet = (walletCredentials) => (dispatch) => {
   });
 };
 
-export const syncDaemon = (credentials) =>
-  (dispatch, getState) => {
-    let rpcuser, rpcpassword, rpccert, rpchost, rpcport;
-    if(credentials){
-      rpcuser = credentials.rpcuser;
-      rpcpassword = credentials.rpcpassword;
-      rpccert = credentials.rpccert;
-      rpchost = credentials.rpchost;
-      rpcport = credentials.rpcport;
-    }
+export const syncDaemon = (startType, credentials) =>
+  (dispatch, getState) => {    
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks }} = getState();
       const { daemon: { daemonSynced, timeStart, blockStart } } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
       return daemon
-        .getBlockCount(rpcuser, rpcpassword, rpccert, rpchost, rpcport)
+        .getBlockCount(startType, credentials)
         .then(updateCurrentBlockCount => {
           if (updateCurrentBlockCount >= neededBlocks) {
             dispatch({type: DAEMONSYNCED});

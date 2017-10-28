@@ -365,16 +365,21 @@ ipcMain.on("start-wallet", (event, arg) => {
 ipcMain.on("check-daemon", (event, arg) => {
   let args = ["getblockcount"];
   let host, port;
-  const { rpcpassword, rpcuser, rpccert, rpchost, rpcport } = arg;
+  const { startType, credentials } = arg;
+  logger.log("info", JSON.stringify(arg));
 
-  if (rpcuser && rpcpassword && rpccert && rpchost && rpcport){
-    args.push(`--rpcuser=${rpcuser}`);
-    args.push(`--rpcpass=${rpcpassword}`);
+  if(startType === 1){
+    args.push(`--rpcuser=${credentials.rpcuser}`);
+    args.push(`--rpcpass=${credentials.rpcpassword}`);
+    args.push(`--rpccert=${credentials.rpccert}`);
+    host = credentials.rpchost;
+    port = credentials.rpcport;
+  } else if (startType === 2) {
+    const rpccert = `${credentials.rpcappdata}/rpc.cert`;
     args.push(`--rpccert=${rpccert}`);
-    host = rpchost;
-    port = rpcport;
-  }
-  else{
+    host = RPCDaemonHost();
+    port = RPCDaemonPort();
+  } else {
     host = RPCDaemonHost();
     port = RPCDaemonPort();
     args.push(["--configfile=" + dcrctlCfg()]);
@@ -421,7 +426,7 @@ const launchDCRD = (credentials) => {
   if(credentials){
     const {rpcappdata} = credentials;
     args = [`--appdata=${rpcappdata}`,"--configfile=" + dcrdCfg()];
-  } else{
+  } else {
     args = ["--configfile=" + dcrdCfg()];
   }
 
