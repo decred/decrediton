@@ -31,7 +31,7 @@ const Bar = ({
         <MenuLink to="/accounts"><T id="menu.accounts" m="Accounts"/></MenuLink>
         <MenuLink to="/transactions"><T id="menu.transactions" m="Transactions"/></MenuLink>
         <MenuLink to="/history"><T id="menu.history" m="History"/></MenuLink>
-        <MenuLink to="/proofofstake"><T id="menu.tickets" m="Tickets"/></MenuLink>
+        <MenuLink to="/tickets"><T id="menu.tickets" m="Tickets"/></MenuLink>
         <MenuLink to="/security"><T id="menu.securitycenter" m="Security Center"/></MenuLink>
         <MenuLink to="/settings"><T id="menu.settings" m="Settings"/></MenuLink>
         <MenuLink to="/help"><T id="menu.help" m="Help"/></MenuLink>

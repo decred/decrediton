@@ -100,7 +100,7 @@ const AccountsList = ({
         <div>
           <div className="account-content-title">
             <div className="account-content-title-buttons-area">
-              <PurchaseTicketsInfoButton onClick={onShowBalanceOverviewInfoModal} />
+              <PurchaseTicketsInfoButton onClick={onShowBalanceOverviewInfoModal} tooltipText={<T id="accounts.balanceInfo" m="Balance Information"/>}/>
             </div>
           </div>
           <div className="account-content-nest">

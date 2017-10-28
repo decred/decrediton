@@ -176,8 +176,6 @@ export function importPrivateKeyAttempt(passphrase, accountNum, wif, rescan, sca
 export const IMPORTSCRIPT_ATTEMPT = "IMPORTSCRIPT_ATTEMPT";
 export const IMPORTSCRIPT_FAILED = "IMPORTSCRIPT_FAILED";
 export const IMPORTSCRIPT_SUCCESS = "IMPORTSCRIPT_SUCCESS";
-export const IMPORTSCRIPT_CLEAR_ERROR = "IMPORTSCRIPT_CLEAR_ERROR";
-export const IMPORTSCRIPT_CLEAR_SUCCESS= "IMPORTSCRIPT_CLEAR_SUCCESS";
 
 function importScriptSuccess(importScriptResponse, votingAddress, cb) {
   var message = "Script successfully imported, rescanning now";
@@ -235,24 +233,6 @@ function hexToBytes(hex) {
   for (var bytes = [], c = 0; c < hex.length; c += 2)
     bytes.push(parseInt(hex.substr(c, 2), 16));
   return bytes;
-}
-
-export function clearImportScriptSuccess() {
-  return (dispatch, getState) => {
-    const { importScriptSuccess } = getState().control;
-    if (importScriptSuccess !== "") {
-      dispatch({type: IMPORTSCRIPT_CLEAR_SUCCESS});
-    }
-  };
-}
-
-export function clearImportScriptError() {
-  return (dispatch, getState) => {
-    const { importScriptError } = getState().control;
-    if (importScriptError !== null) {
-      dispatch({type: IMPORTSCRIPT_CLEAR_ERROR});
-    }
-  };
 }
 
 export const CHANGEPASSPHRASE_ATTEMPT = "CHANGEPASSPHRASE_ATTEMPT";
@@ -376,8 +356,6 @@ export function publishTransactionAttempt(tx) {
 export const PURCHASETICKETS_ATTEMPT = "PURCHASETICKETS_ATTEMPT";
 export const PURCHASETICKETS_FAILED = "PURCHASETICKETS_FAILED";
 export const PURCHASETICKETS_SUCCESS = "PURCHASETICKETS_SUCCESS";
-export const PURCHASETICKETS_CLEAR_ERROR = "PURCHASETICKETS_CLEAR_ERROR";
-export const PURCHASETICKETS_CLEAR_SUCCESS= "PURCHASETICKETS_CLEAR_SUCCESS";
 
 export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requiredConf,
   numTickets, expiry, ticketFee, txFee, stakepool) {
@@ -418,8 +396,7 @@ function purchaseTicketsAction(request) {
         if (error) {
           dispatch({ error, type: PURCHASETICKETS_FAILED });
         } else {
-          var success = "You successfully purchased " + purchaseTicketsResponse.getTicketHashesList().length + " tickets.";
-          dispatch({ success: success, purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+          dispatch({ purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
           setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
           setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 4000);
         }
@@ -427,29 +404,9 @@ function purchaseTicketsAction(request) {
   };
 }
 
-export function clearPurchaseTicketsSuccess() {
-  return (dispatch, getState) => {
-    const { purchaseTicketsSuccess } = getState().control;
-    if (purchaseTicketsSuccess !== "") {
-      dispatch({type: PURCHASETICKETS_CLEAR_SUCCESS});
-    }
-  };
-}
-
-export function clearPurchaseTicketsError() {
-  return (dispatch, getState) => {
-    const { purchaseTicketsError } = getState().control;
-    if (purchaseTicketsError !== null) {
-      dispatch({type: PURCHASETICKETS_CLEAR_ERROR});
-    }
-  };
-}
-
 export const REVOKETICKETS_ATTEMPT = "REVOKETICKETS_ATTEMPT";
 export const REVOKETICKETS_FAILED = "REVOKETICKETS_FAILED";
 export const REVOKETICKETS_SUCCESS = "REVOKETICKETS_SUCCESS";
-export const REVOKETICKETS_CLEAR_ERROR = "REVOKETICKETS_CLEAR_ERROR";
-export const REVOKETICKETS_CLEAR_SUCCESS= "REVOKETICKETS_CLEAR_SUCCESS";
 
 export function revokeTicketsAttempt(passphrase) {
   var request = new RevokeTicketsRequest();
@@ -462,29 +419,10 @@ export function revokeTicketsAttempt(passphrase) {
         if (error) {
           dispatch({ error, type: REVOKETICKETS_FAILED });
         } else {
-          var success = "You successfully revoked tickets.";
           setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 4000);
-          dispatch({ success: success, revokeTicketsResponse: revokeTicketsResponse, type: REVOKETICKETS_SUCCESS });
+          dispatch({ revokeTicketsResponse: revokeTicketsResponse, type: REVOKETICKETS_SUCCESS });
         }
       });
-  };
-}
-
-export function clearRevokeTicketsSuccess() {
-  return (dispatch, getState) => {
-    const { revokeTicketsSuccess } = getState().control;
-    if (revokeTicketsSuccess !== "") {
-      dispatch({type: REVOKETICKETS_CLEAR_SUCCESS});
-    }
-  };
-}
-
-export function clearRevokeTicketsError() {
-  return (dispatch, getState) => {
-    const { revokeTicketsError } = getState().control;
-    if (revokeTicketsError !== null) {
-      dispatch({type: REVOKETICKETS_CLEAR_ERROR});
-    }
   };
 }
 
@@ -632,8 +570,6 @@ export function setTicketBuyerConfigAttempt(account, balanceToMaintain, maxFee, 
 export const STARTAUTOBUYER_ATTEMPT = "STARTAUTOBUYER_ATTEMPT";
 export const STARTAUTOBUYER_FAILED = "STARTAUTOBUYER_FAILED";
 export const STARTAUTOBUYER_SUCCESS = "STARTAUTOBUYER_SUCCESS";
-export const STARTAUTOBUYER_CLEAR_ERROR = "STARTAUTOBUYER_CLEAR_ERROR";
-export const STARTAUTOBUYER_CLEAR_SUCCESS= "STARTAUTOBUYER_CLEAR_SUCCESS";
 
 export function startAutoBuyerAttempt(passphrase, accountNum, balanceToMaintain,
 maxFeePerKb, maxPriceRelative, maxPriceAbsolute, maxPerBlock, stakepool) {
@@ -672,29 +608,9 @@ maxFeePerKb, maxPriceRelative, maxPriceAbsolute, maxPerBlock, stakepool) {
   };
 }
 
-export function clearStartAutoBuyerSuccess() {
-  return (dispatch, getState) => {
-    const { startAutoBuyerSuccess } = getState().control;
-    if (startAutoBuyerSuccess !== null) {
-      dispatch({type: STARTAUTOBUYER_CLEAR_SUCCESS});
-    }
-  };
-}
-
-export function clearStartAutoBuyerError() {
-  return (dispatch, getState) => {
-    const { startAutoBuyerError } = getState().control;
-    if (startAutoBuyerError !== null) {
-      dispatch({type: STARTAUTOBUYER_CLEAR_ERROR});
-    }
-  };
-}
-
 export const STOPAUTOBUYER_ATTEMPT = "STOPAUTOBUYER_ATTEMPT";
 export const STOPAUTOBUYER_FAILED = "STOPAUTOBUYER_FAILED";
 export const STOPAUTOBUYER_SUCCESS = "STOPAUTOBUYER_SUCCESS";
-export const STOPAUTOBUYER_CLEAR_ERROR = "STOPAUTOBUYER_CLEAR_ERROR";
-export const STOPAUTOBUYER_CLEAR_SUCCESS= "STOPAUTOBUYER_CLEAR_SUCCESS";
 
 export function stopAutoBuyerAttempt() {
   var request = new StopAutoBuyerRequest();
@@ -710,25 +626,6 @@ export function stopAutoBuyerAttempt() {
           dispatch({ success: success, stopAutoBuyerResponse: stopAutoBuyerResponse, type: STOPAUTOBUYER_SUCCESS });
         }
       });
-  };
-}
-
-
-export function clearStopAutoBuyerSuccess() {
-  return (dispatch, getState) => {
-    const { stopAutoBuyerSuccess } = getState().control;
-    if (stopAutoBuyerSuccess !== null) {
-      dispatch({type: STOPAUTOBUYER_CLEAR_SUCCESS});
-    }
-  };
-}
-
-export function clearStopAutoBuyerError() {
-  return (dispatch, getState) => {
-    const { stopAutoBuyerError } = getState().control;
-    if (stopAutoBuyerError !== null) {
-      dispatch({type: STOPAUTOBUYER_CLEAR_ERROR});
-    }
   };
 }
 

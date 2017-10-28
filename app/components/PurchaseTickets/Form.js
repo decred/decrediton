@@ -54,8 +54,9 @@ const PurchaseTicketsForm = ({
   onShowRevokeTicket,
   onToggleShowAdvanced,
   onShowTicketsInfo,
+  intl: { formatMessage },
   isSubmited,
-  intl: { formatMessage }
+  account
 }) => {
 
   const v = e => e.target.value;
@@ -69,7 +70,7 @@ const PurchaseTicketsForm = ({
         <div className="stakepool-voting-title-area-name">
           <T id="purchaseTickets.title" m="Purchase Tickets" /></div>
         <div className="stakepool-purchase-ticket-input-buttons">
-          <PurchaseTicketsInfoButton onClick={onShowTicketsInfo} />
+          <PurchaseTicketsInfoButton onClick={onShowTicketsInfo} tooltipText={<T id="accounts.balanceInfo" m="Ticket Purchase Information" />} />
           <TicketsCogs opened={!isShowingAdvanced} onClick={onToggleShowAdvanced} />
         </div>
       </div>
@@ -78,9 +79,9 @@ const PurchaseTicketsForm = ({
           <div className="stakepool-purchase-ticket-row-account-select">
             <div className="stakepool-purchase-ticket-account-select-label"><T id="purchaseTickets.account" m="Account" />:</div>
             <div className="stakepool-purchase-ticket-input-select">
-              <AccountsSelect onChange={onChangeAccount} />
+              <AccountsSelect
+                {...{ account }} onChange={onChangeAccount} />
             </div>
-            <LinkToAccounts />
           </div>
           <div className="stakepool-purchase-ticket-row-num-tickets">
             <div className="stakepool-purchase-ticket-label">
