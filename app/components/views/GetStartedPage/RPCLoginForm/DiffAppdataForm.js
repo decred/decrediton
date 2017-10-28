@@ -5,14 +5,6 @@ import { FormattedMessage as T, defineMessages } from "react-intl";
 import "style/LoginForm.less";
 
 const messages = defineMessages({
-  certFieldLabel: {
-    id: "login.form.rpccert.label",
-    defaultMessage: "Cert:",
-  },
-  certFieldPlaceholder: {
-    id: "login.form.rpccert.placeholder.",
-    defaultMessage: "Enter your cert location here",
-  },
   appdataFieldLabel: {
     id: "login.form.appdata.label",
     defaultMessage: "Aplication Path:",
@@ -28,7 +20,6 @@ const LoginDiffAppdataForm = ({
   ...state,
   onSubmitDiffAppdataForm,
   onChangeRpcappdata,
-  onChangeRpccert,
   formatMessage
   }) => {
 
@@ -48,16 +39,8 @@ const LoginDiffAppdataForm = ({
           onChange={(e) => onChangeRpcappdata(e.target.value)}
           placeholder={formatMessage(messages.appdataFieldPlaceholder)}
         />
-        <Field
-          label={formatMessage(messages.certFieldLabel)}
-          name="rpccert"
-          component={InputField}
-          type="text"
-          onChange={(e) => onChangeRpccert(e.target.value)}
-          placeholder={formatMessage(messages.certFieldPlaceholder)}
-        />
         {isSubmitedDiffAppdataForm && diffAppdataFormHasErrors
-          ? <div className="orange-warning">*Please Fill the app data directory</div> : null}
+          ? <div className="orange-warning">*Please Fill the appdata directory</div> : null}
         <button className="key-blue-button" type="submit" >
           <T id="securitycenter.sign.form.submit" m="Sign" />
         </button>

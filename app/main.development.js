@@ -297,7 +297,6 @@ ipcMain.on("start-daemon-advanced", (event, data) => {
     const {rpcappdata} = args;
     credentials = {
       rpcappdata: rpcappdata,
-      rpccert: args.rpccert
     };
   }
 
@@ -421,8 +420,7 @@ const launchDCRD = (credentials) => {
 
   if(credentials){
     const {rpcappdata} = credentials;
-    rpccert = credentials.rpccert ? `--rpccert=${credentials.rpccert}` : null;
-    args = [`--appdata=${rpcappdata}`,"--configfile=" + dcrdCfg(), rpccert];
+    args = [`--appdata=${rpcappdata}`,"--configfile=" + dcrdCfg()];
   } else{
     args = ["--configfile=" + dcrdCfg()];
   }
