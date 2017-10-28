@@ -30,7 +30,8 @@ const styles = {
     tooltip:      colors.darkGrey,
     heading:      colors.darkGrey,
     iconBase:     "#8795A2",
-    iconActive:   "#2970FF"
+    iconActive:   "#2970FF",
+    ...colors
   },
 
   font: "Source Sans Pro",

@@ -1,9 +1,28 @@
-import "style/Tooltip.less";
-import { Aux } from "./";
+import ReactDOM from "react-dom";
+import cxs from "cxs/component";
 import { BaseBox } from "./grid/Box";
+import theme from "theme";
 
-const Tooltip = ({ text, tipWarning, tipDisabled, className, children, tipWidth }) => {
-  let tooltip = null;
+const warningStyle = ({ color: theme("colors.white"),    backgroundColor: theme("colors.orange") });
+const plainStyle   = ({ color: theme("colors.darkGrey"), backgroundColor: theme("colors.lightestGrey") });
+const canSetWidth  = ({ tipWidth }) => tipWidth ? ({ width: tipWidth + "px" }) : null;
+const canWarn      = ({ tipWarning }) => tipWarning ? warningStyle : plainStyle;
+
+const Tip = cxs(props =>
+  <Box is="span" f={ 13 } p={ 5 } { ...props }/>
+)({
+  borderRadius: theme("radii.3"),
+  boxShadow: theme("shadows.tooltip"),
+  zIndex: 1000
+}, canWarn, canSetWidth);
+
+Tip.propTypes = {
+  tipWidth: PropTypes.number,
+  tipWarning: PropTypes.bool
+};
+
+const Tooltip = ({ text, tipDisabled, children, ...props }) => {
+  let tooltip = document.getElementById("tooltip");
 
   const onMouseMove = ({clientX, clientY}) => {
     tooltip.style.left =
@@ -14,19 +33,16 @@ const Tooltip = ({ text, tipWarning, tipDisabled, className, children, tipWidth 
       clientY + 10 + "px" : window.innerHeight + 5 - tooltip.clientHeight + "px";
   };
 
-  const container = ["tooltipContainer", className].join(" ");
-  const width = tipWidth ? { width: tipWidth + "px" } : {};
-  const tip = ["tip", tipWarning ? "warning" : null].join(" ");
-  const Wrapper = className ? "div" : Aux;
-
-  return tipDisabled ? <Wrapper className={ className }>{ children }</Wrapper> : (
-    <BaseBox className={ container } onMouseMove={ onMouseMove }>
+  return tipDisabled ? React.cloneElement(children, props) : (
+    <BaseBox { ...props } onMouseMove={ onMouseMove }>
       { children }
-      <span className={ tip } ref={ tip => tooltip = tip } style={ width }>
-        { text }
-      </span>
+      { ReactDOM.creatPortal(<Tip>{ text }</Tip>, tooltip) }
     </BaseBox>
   );
+};
+
+Tooltip.propTypes = {
+  children: PropTypes.element.isRequired
 };
 
 export default Tooltip;
