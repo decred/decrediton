@@ -423,9 +423,10 @@ const launchDCRD = (credentials) => {
 
   if(credentials){
     const {rpcappdata} = credentials;
-    args = [`--appdata=${rpcappdata}`,"--configfile=" + dcrdCfg()];
+    const rpccert = `--rpccert=${rpcappdata}/rpc.cert`;
+    args = [`--appdata=${rpcappdata}`,`--configfile=${dcrdCfg()}`, rpccert];
   } else {
-    args = ["--configfile=" + dcrdCfg()];
+    args = [`--configfile=${dcrdCfg()}`];
   }
 
   if (cfg.get("network") === "testnet") {
