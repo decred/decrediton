@@ -3,7 +3,6 @@ import { bindActionCreators } from "redux";
 import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 import * as ca from "../actions/ControlActions";
-import * as spa from "../actions/StakePoolActions";
 
 const mapStateToProps = selectorMap({
   spendingAccounts: sel.spendingAccounts,
@@ -25,22 +24,15 @@ const mapStateToProps = selectorMap({
   importScriptError: sel.importScriptError,
   importScriptSuccess: sel.importScriptSuccess,
   isPurchasingTickets: sel.isPurchasingTickets,
-  isSavingStakePoolConfig: sel.isSavingStakePoolConfig
+  isSavingStakePoolConfig: sel.isSavingStakePoolConfig,
+  isTestNet: sel.isTestNet,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  onClearStakePoolConfigError: spa.clearStakePoolConfigError,
-  onClearStakePoolConfigSuccess: spa.clearStakePoolConfigSuccess,
   onRevokeTickets: ca.revokeTicketsAttempt,
   onImportScript: ca.importScriptAttempt,
-  onClearPurchaseTicketsError: ca.clearPurchaseTicketsError,
-  onClearPurchaseTicketsSuccess: ca.clearPurchaseTicketsSuccess,
   onClearRevokeTicketsError: ca.clearRevokeTicketsError,
   onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
-  onClearStartAutoBuyerSuccess: ca.clearStartAutoBuyerSuccess,
-  onClearStartAutoBuyerError: ca.clearStartAutoBuyerError,
-  onClearStopAutoBuyerSuccess: ca.clearStopAutoBuyerSuccess,
-  onClearStopAutoBuyerError: ca.clearStopAutoBuyerError,
   onClearImportScriptError: ca.clearImportScriptError,
   onClearImportScriptSuccess: ca.clearImportScriptSuccess
 }, dispatch);

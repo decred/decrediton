@@ -13,7 +13,8 @@ const Overview = ({
   hasModifiedChoice,
   closeCurrentAgenda,
   setSelecedChoiceId,
-  updatePreferences
+  updatePreferences,
+  disabled
 }) => (
   <div className="agenda">
     <div className="agenda-overview">
@@ -44,6 +45,7 @@ const Overview = ({
         {choices.map(({ choiceId }) => (
           <div key={agendaId+choiceId}>
             <input
+              disabled={disabled}
               className="agenda-options-radio"
               id={choiceId}
               type="radio"
@@ -67,7 +69,7 @@ const Overview = ({
       </div>
       <div className="agenda-bottom-options">
         <KeyBlueButton
-          disabled={!hasModifiedChoice}
+          disabled={!hasModifiedChoice || disabled}
           className="agenda-update-preferences-button"
           onClick={updatePreferences}
         ><T id="agenda.updatePreference" m="Update Preference" /></KeyBlueButton>

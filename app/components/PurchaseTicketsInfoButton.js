@@ -1,8 +1,10 @@
-import React from "react";
-import "../style/MiscComponents.less";
+import "style/MiscComponents.less";
+import { Tooltip } from "shared";
 
-const PurchaseTicketsInfoButton = ({ onClick }) => (
-  <a className="purchase-tickets-info-button" onClick={onClick} />
+const PurchaseTicketsInfoButton = ({ tooltipText, onClick }) => (
+  <Tooltip tipWidth={ 120 } text={tooltipText}>
+    <a className="purchase-tickets-info-button" onClick={onClick} />
+  </Tooltip>
 );
 
 export default PurchaseTicketsInfoButton;
