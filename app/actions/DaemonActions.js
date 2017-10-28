@@ -83,7 +83,7 @@ export const startWallet = (walletCredentials) => (dispatch) => {
 };
 
 export const syncDaemon = (startType, credentials) =>
-  (dispatch, getState) => {    
+  (dispatch, getState) => {
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks }} = getState();
       const { daemon: { daemonSynced, timeStart, blockStart } } = getState();
