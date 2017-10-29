@@ -1,14 +1,10 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { autobind } from "core-decorators";
 import Bar from "./Bar";
-import rescan from "../../connectors/rescan";
-import sideBarConnector from "../../connectors/sideBar";
+import { rescan, sideBar } from "connectors";
 import { tsToDate } from "../../helpers/dateFormat";
 import ReactTimeout from "react-timeout";
 
 @autobind
-class SideBar extends Component {
+class SideBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -89,4 +85,4 @@ SideBar.propTypes = {
   showingSidebarMenu: PropTypes.bool.isRequired,
 };
 
-export default sideBarConnector(rescan(ReactTimeout(SideBar)));
+export default sideBar(rescan(ReactTimeout(SideBar)));
