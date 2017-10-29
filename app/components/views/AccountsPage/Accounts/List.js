@@ -30,7 +30,7 @@ const AccountsList = ({
   onShowBalanceOverviewInfoModal,
   onCloseBalanceOverviewInfoModal,
 }) => (
-  <div className="page-view">
+  <Aux>
     <Header
       headerTitleOverview={<T id="accounts.title" m="Accounts" />}
       headerTop={[
@@ -90,35 +90,32 @@ const AccountsList = ({
         </KeyBlueButton>
       }
     />
-    {isShowingBalanceOverviewInfoModal ? <BalanceOverviewInfoModal closeModal={onCloseBalanceOverviewInfoModal} /> : null}
+    {isShowingBalanceOverviewInfoModal && <BalanceOverviewInfoModal closeModal={onCloseBalanceOverviewInfoModal} /> }
     <div className="page-content">
-      {isLoading ? (
-        <DecredLoading/>
-      ) : (
-        <div>
-          <div className="account-content-title">
-            <div className="account-content-title-buttons-area">
-              <Icon i="info" onClick={onShowBalanceOverviewInfoModal} tooltip={<T id="accounts.balanceInfo" m="Balance Information"/>} />
-            </div>
-          </div>
-          <div className="account-content-nest">
-            {accounts.map(account => (
-              <AccountRow
-                key={account.accountName}
-                account={account}
-                accountNumDetailsShown={accountNumDetailsShown}
-                renameAccount={onRenameAccount}
-                hideAccount={onHideAccount}
-                showAccount={onShowAccount}
-                showAccountDetails={onShowAccountDetails}
-                hideAccountDetails={onHideAccountDetails}
-              />
-            ))}
+      { isLoading ? <DecredLoading/> :
+      <Aux>
+        <div className="account-content-title">
+          <div className="account-content-title-buttons-area">
+            <Icon i="info" onClick={onShowBalanceOverviewInfoModal} tooltip={<T id="accounts.balanceInfo" m="Balance Information"/>} />
           </div>
         </div>
-      )}
+        <div className="account-content-nest">
+          {accounts.map(account => (
+            <AccountRow
+              key={account.accountName}
+              account={account}
+              accountNumDetailsShown={accountNumDetailsShown}
+              renameAccount={onRenameAccount}
+              hideAccount={onHideAccount}
+              showAccount={onShowAccount}
+              showAccountDetails={onShowAccountDetails}
+              hideAccountDetails={onHideAccountDetails}
+            />
+          ))}
+        </div>
+      </Aux> }
     </div>
-  </div>
+  </Aux>
 );
 
 AccountsList.propTypes = {

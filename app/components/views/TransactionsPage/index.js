@@ -1,6 +1,6 @@
 // @flow
 import Header from "./Header";
-import { RouteTransition, Aux } from "shared";
+import { RouteTransition } from "shared";
 import theme from "theme";
 
 const mapStyles = styles => ({ left: styles.left + "%" });

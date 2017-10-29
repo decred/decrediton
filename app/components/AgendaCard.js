@@ -1,5 +1,5 @@
 import "style/AgendaCard.less";
-import { showCheck } from "shared";
+import { showCheck } from "helpers";
 import { FormattedMessage as T } from "react-intl";
 
 // Currently removing percent progress until a solution to populate is found

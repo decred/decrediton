@@ -64,7 +64,7 @@ const PurchaseTicketsForm = ({
   <Aux>
     <Flex my="1em" align="center">
       <Heading f={ 20 }><T id="purchaseTickets.title" m="Purchase Titckets" /></Heading>
-      <Icon i="info" ml="auto" onClick={onShowTicketsInfo} tooltipText={<T id="accounts.balanceInfo" m="Ticket Purchase Information"/>} />
+      <Icon i="info" ml="auto" onClick={onShowTicketsInfo} tooltip={<T id="accounts.balanceInfo" m="Ticket Purchase Information"/>} />
       <Icon i="cog" mx="1em" active={isShowingAdvanced} onClick={onToggleShowAdvanced}/>
     </Flex>
     <div className={isShowingAdvanced ? "stakepool-flex-height-shown" : "stakepool-flex-height-hidden" }>
@@ -206,30 +206,32 @@ const PurchaseTicketsForm = ({
           </div>
         </div>
       </div>
-      <div hidden={ isShowingAdvanced } className="stakepool-purchase-ticket-quick-bar-row">
+      <Flex show={ !isShowingAdvanced } className="stakepool-purchase-ticket-quick-bar-row">
         <div className="stakepool-quick-bar-row-label"><T id="purchaseTickets.settings" m="Settings" />:</div>
-        <Tooltip text={ <T id="purchaseTickets.currentStakepool" m="Current StakePool" /> }>
-          <div className="stakepool-icon">{ stakePool && stakePool.value.Host }</div>
-        </Tooltip>
-        <Tooltip text={ <T id="purchaseTickets.ticketFeeTip" m="Ticket Fee" /> }>
-          <div className="stakepool-fee-icon">{ ticketFee } DCR/KB</div>
-        </Tooltip>
-        <Tooltip text={ <T id="purchaseTickets.txFeeTip" m="Tx Fee" /> }>
-          <div className="stakepool-fee-icon">{txFee} DCR/KB</div>
-        </Tooltip>
-        <Tooltip text={ <T id="purchaseTickets.expiry" m="Expiry" /> }>
-          <div className="stakepool-expiry-icon">{expiry} Blocks</div>
-        </Tooltip>
-        <Tooltip text={ <T id="purchaseTickets.ticketAddress" m="Ticket Address" /> }>
-          <div className="stakepool-ticket-address-icon">{ stakePool && addSpacingAroundText(stakePool.value.TicketAddress) }</div>
-        </Tooltip>
-        <Tooltip text={ <T id="purchaseTickets.poolAddress" m="Pool Address" /> }>
-          <div className="stakepool-fee-address-icon">{ stakePool && addSpacingAroundText(stakePool.value.PoolAddress) }</div>
-        </Tooltip>
-        <Tooltip text={ <T id="purchaseTickets.poolFee" m="Pool Fee" /> }>
-          <div className="stakepool-pool-fee-icon">{ stakePool && stakePool.value.PoolFees }%</div>
-        </Tooltip>
-      </div>
+        <Flex wrap>
+          <Tooltip text={ <T id="purchaseTickets.currentStakepool" m="Current StakePool" /> }>
+            <div className="stakepool-icon">{ stakePool && stakePool.value.Host }</div>
+          </Tooltip>
+          <Tooltip text={ <T id="purchaseTickets.ticketFeeTip" m="Ticket Fee" /> }>
+            <div className="stakepool-fee-icon">{ ticketFee } DCR/KB</div>
+          </Tooltip>
+          <Tooltip text={ <T id="purchaseTickets.txFeeTip" m="Tx Fee" /> }>
+            <div className="stakepool-fee-icon">{txFee} DCR/KB</div>
+          </Tooltip>
+          <Tooltip text={ <T id="purchaseTickets.expiry" m="Expiry" /> }>
+            <div className="stakepool-expiry-icon">{expiry} Blocks</div>
+          </Tooltip>
+          <Tooltip text={ <T id="purchaseTickets.ticketAddress" m="Ticket Address" /> }>
+            <div className="stakepool-ticket-address-icon">{ stakePool && addSpacingAroundText(stakePool.value.TicketAddress) }</div>
+          </Tooltip>
+          <Tooltip text={ <T id="purchaseTickets.poolAddress" m="Pool Address" /> }>
+            <div className="stakepool-fee-address-icon">{ stakePool && addSpacingAroundText(stakePool.value.PoolAddress) }</div>
+          </Tooltip>
+          <Tooltip text={ <T id="purchaseTickets.poolFee" m="Pool Fee" /> }>
+            <div className="stakepool-pool-fee-icon">{ stakePool && stakePool.value.PoolFees }%</div>
+          </Tooltip>
+        </Flex>
+      </Flex>
     </div>
     <div className="stakepool-purchase-ticket-buttons-area">
       <KeyBlueButton onClick={onRequestPassphrase} className="stakepool-content-purchase-button" disabled={!canAffordTickets}>

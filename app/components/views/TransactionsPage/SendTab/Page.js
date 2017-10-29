@@ -1,6 +1,6 @@
 import AccountsSelect from "AccountsSelect";
 import {FormattedMessage as T} from "react-intl";
-import { Tooltip } from "shared";
+import { Tooltip, Flex } from "shared";
 import DecredLoading from "DecredLoading";
 import Balance from "Balance";
 import KeyBlueButton from "KeyBlueButton";
@@ -47,12 +47,11 @@ const SendPage = ({
       { isSendingTransaction ? <DecredLoading /> :
       <div className={ ["tab-card", isShowingConfirm ? "tab-card-blur" : null].join(" ").trim() }>
         <div className="send-flex-height">
-          <div className="send-select-account-area">
+          <Flex p="1em" align="center">
             <div className="send-label"><T id="send.from" m="From" />:</div>
-            <AccountsSelect className="send-select-account-input"
-              {...{account}} onChange={onChangeAccount} showAccountsButton={true} />
-            <div className="send-send-all-input">
-              {!isSendSelf ?
+            <AccountsSelect className="send-select-account-input" {...{account}} onChange={onChangeAccount} showAccountsButton={true} />
+            <Flex ml="auto" f={ 5 }>
+              { !isSendSelf ?
                 <Tooltip tipWidth={ 100 } text={<T id="send.sendSelfTitle" m="Send funds to another account"/>}>
                   <a className="send-self-wallet-icon" onClick={onShowSendSelf}/>
                 </Tooltip> :
@@ -60,7 +59,7 @@ const SendPage = ({
                   <a className="send-others-wallet-icon" onClick={onShowSendOthers}/>
                 </Tooltip>
               }
-              {!isSendAll ?
+              { !isSendAll ?
                 <Tooltip tipWidth={ 100 } text={<T id="send.sendAllTitle" m="Send all funds from selected account"/>}>
                   <a className="send-all-wallet-icon" onClick={onShowSendAll}/>
                 </Tooltip> :
@@ -68,8 +67,8 @@ const SendPage = ({
                   <a className="send-all-cancel-wallet-icon" onClick={onHideSendAll}/>
                 </Tooltip>
               }
-            </div>
-          </div>
+            </Flex>
+          </Flex>
           <div className="send-amount-area">
             {!isSendSelf
               ? outputs.map((output, index) => (

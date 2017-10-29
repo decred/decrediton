@@ -4,13 +4,15 @@ import icons from "iconMap";
 import theme from "theme";
 
 const clickableStyle      = { cursor: "pointer", ":hover": { opacity: 0.7 }};
-const mayClick            = ({ onClick }) => onClick && clickableStyle;
+const mayClick            = ({ onClick }) => onClick ? clickableStyle : null;
 const changeColorOnActive = ({ active, theme }) => ({ color: active ? theme("colors.iconActive") : theme("colors.iconBase") });
 
 const Svg     = cxs("svg")({ fill: "currentColor" });
 const IconBox = cxs(Box)(changeColorOnActive, mayClick);
 
+Svg.displayName = "Svg";
 IconBox.propTypes = { active: PropTypes.bool };
+IconBox.displayName = "IconBox";
 
 const Icon = ({ i, s, ...props }) => {
   const { width, height, path, viewBox, markup } = icons[i];
@@ -28,10 +30,6 @@ const Icon = ({ i, s, ...props }) => {
 Icon.propTypes = {
   i: PropTypes.string.isRequired,
   s: PropTypes.number
-};
-
-Icon.defaultProps = {
-  tipWidth: 120
 };
 
 export default Icon;
