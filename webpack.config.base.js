@@ -67,7 +67,7 @@ export default {
     React:     "react",
     PropTypes: "prop-types",
     autobind: ["core-decorators", "autobind"],
-    Aux:      ["shared",          "Aux"]
+    Aux:      ["shared/Aux",      "default"]
   })],
 
   externals: Object.keys(dependencies || {}).concat(Object.keys(optionalDependencies || {}))

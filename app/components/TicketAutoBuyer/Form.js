@@ -1,4 +1,4 @@
-import { Icon, Heading, Tooltip } from "shared";
+import { Icon, Heading, Tooltip, Flex } from "shared";
 import AutoBuyerSwitch from "../AutoBuyerSwitch";
 import KeyBlueButton from "../KeyBlueButton";
 import {defineMessages, FormattedMessage as T} from "react-intl";
@@ -52,7 +52,7 @@ const TicketAutoBuyerForm = ({
   onToggleTicketAutoBuyer,
   onToggleShowDetails
 }) => (
-  <div>
+  <Aux>
     <Heading py="1em" f={ 20 }><T id="autobuyer.title" m="Automatic Purchase" /></Heading>
     <div className={isHidingDetails ? "stakepool-flex-height-auto-buyer-hidden" : "stakepool-flex-height-auto-buyer-shown" }>
       <div className="stakepool-auto-buyer-row">
@@ -63,7 +63,7 @@ const TicketAutoBuyerForm = ({
             : <T id="autobuyer.disabled" m="Disabled" />}
         </div>
         <div className="stakepool-auto-buyer-quick-bar-row">
-          <Aux hidden={ !isHidingDetails }>
+          <Flex show={ isHidingDetails }>
             <Tooltip text={<T id="autobuyer.balanceToMaintain" m="Balance to Maintain" /> }>
               <div className="stakepool-balance-to-maintain-icon">{balanceToMaintain}</div>
             </Tooltip>
@@ -79,7 +79,7 @@ const TicketAutoBuyerForm = ({
             <Tooltip text={<T id="autobuyer.maxPerBlock" m="Max Per Block" /> }>
               <div className="stakepool-max-per-block-icon">{maxPerBlock}</div>
             </Tooltip>
-          </Aux>
+          </Flex>
         </div>
         <div className="stakepool-auto-buyer-show-advanced-area">
           <Icon i="cog" active={!isHidingDetails} onClick={onToggleShowDetails} />
@@ -102,8 +102,7 @@ const TicketAutoBuyerForm = ({
                 />
               </div>
             </div>
-            { balanceToMaintainError &&
-              <div className="stakepool-purchase-ticket-input-error">{balanceToMaintainError}</div> }
+            { balanceToMaintainError && <div className="stakepool-purchase-ticket-input-error">{balanceToMaintainError}</div> }
           </div>
           <div className="stakepool-purchase-ticket-row-right">
             <div className="stakepool-auto-buyer-icon-areas-expand">
@@ -122,8 +121,7 @@ const TicketAutoBuyerForm = ({
                 />
               </div>
             </div>
-            { maxFeeError &&
-              <div className="stakepool-purchase-ticket-input-error">{maxFeeError}</div> }
+            { maxFeeError && <div className="stakepool-purchase-ticket-input-error">{maxFeeError}</div> }
           </div>
         </div>
         <div className="stakepool-purchase-ticket-row">
@@ -194,7 +192,7 @@ const TicketAutoBuyerForm = ({
         </div>
       </div>
     </div>
-  </div>
+  </Aux>
 );
 
 export default TicketAutoBuyerForm;

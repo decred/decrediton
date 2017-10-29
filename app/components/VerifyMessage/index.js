@@ -47,7 +47,7 @@ class VerifyMessage extends React.Component {
     }
 
     return (
-      <Box p={ 70 }>
+      <Box p={ 70 } bg="lightestGrey">
         <Flex align="center" pb={ 10 }>
           <Icon i="cog" s={ 30 } pr={ 20 } />
           <Heading><T id="securitycenter.verify.header" m="Verify Message" /></Heading>

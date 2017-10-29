@@ -1,10 +1,4 @@
-import { createElement as h } from "react";
-
-export const Aux = ({ show, children }) => !!show && children;
-Aux.defaultProps = { show: true };
-
-export const showCheck = C => ({ show, ...p }) => !!show && h(C, p);
-
+export { default as Aux } from "./Aux";
 export * from "./grid";
 export * from "./typography";
 export { default as Icon } from "./Icon";
