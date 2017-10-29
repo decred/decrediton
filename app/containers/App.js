@@ -1,14 +1,13 @@
-import { IntlProvider } from "react-intl";
-import ThemeProvider from "theme";
+import theme, { ThemeProvider } from "theme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import theme from "materialUITheme";
+import { IntlProvider } from "react-intl";
+import MUItheme from "materialUITheme";
 import { defaultFormats } from "i18n/locales";
 import app from "connectors/app";
 import SideBar from "components/SideBar";
 import Snackbar from "components/Snackbar";
 import { RouteTransition } from "shared";
 
-const opts = { stiffness: 150, damping: 15 };
 const fade = { atEnter: { opacity: 0 }, atActive: { opacity: 1 }, atLeave: { opacity: 0 }};
 const rootPath = ({ pathname }) => pathname.split("/")[1];
 
@@ -18,7 +17,7 @@ const App = ({ locale, children, location }) => {
   const pathname = rootPath(location);
 
   return (
-    <MuiThemeProvider muiTheme={theme}>
+    <MuiThemeProvider muiTheme={MUItheme}>
       <ThemeProvider>
         <IntlProvider
           locale={locale.language}
@@ -29,7 +28,7 @@ const App = ({ locale, children, location }) => {
           <div className="page-body">
             <SideBar />
             <Snackbar />
-            <RouteTransition className="page-container" {...{ wrapperComponent, pathname, opts, ...fade }}>
+            <RouteTransition className="page-container" opts={ theme("springs.page") } {...{ wrapperComponent, pathname, ...fade }}>
               { children }
             </RouteTransition>
           </div>

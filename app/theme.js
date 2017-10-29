@@ -1,6 +1,4 @@
-import { Component, createElement as h } from "react";
 import { get } from "fp";
-import PropTypes from "prop-types";
 
 const colors = {
   // Primary Colors
@@ -48,17 +46,23 @@ const styles = {
   },
   // TODO: Create a consistent spacing scale
   space: [],
+
+  springs: {
+    sideBar: { stiffness: 150, damping: 20 },
+    tab:     { stiffness: 150, damping: 20 },
+    page:    { stiffness: 150, damping: 15 },
+    testing: { stiffness: 40,  damping: 26 },
+  }
 };
 
 const getStyles = key => get(key, styles);
+const theme = Object.assign(getStyles, styles);
 
-export const theme = Object.assign(getStyles, styles);
-
-class ThemeProvider extends Component {
+export class ThemeProvider extends React.Component {
   getChildContext () { return ({ theme: theme }); }
-  render () { return h("div", null, this.props.children); }
+  render () { return this.props.children; }
 }
 
 ThemeProvider.childContextTypes = { theme: PropTypes.func };
 
-export default ThemeProvider;
+export default theme;

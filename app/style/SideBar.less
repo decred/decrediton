@@ -34,78 +34,52 @@
   font-family: Inconsolata, monospace;
 }
 
-.sidebar-menu-navigation {
+.sidebar-main {
+  position: relative;
+  flex-grow: 1;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+.sidebar-scroll {
+  overflow-x: hidden;
+  flex-grow: 1;
   position: relative;
-  overflow-y: auto;
-  height: 100%;
-}
-
-.sidebar-menu-navigation::-webkit-scrollbar-track {
-  background-color: rgba(0, 0, 0, 0);
-  border-radius: 10px;
-}
-
-.sidebar-menu-navigation::-webkit-scrollbar {
-  width: 10px;
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.sidebar-menu-navigation::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: rgba(41, 113, 255, 0.5);
-}
-
-.sidebar-menu-navigation::-webkit-scrollbar-thumb:hover {
-  border: 1px solid rgba(31, 100, 200, 1);
-  background-color: rgba(41, 113, 255, 1);
 }
 
 .sidebar-menu-total-balance-extended {
+  z-index: 2;
   position: absolute;
+  top: 0;
   height: 100%;
   width: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
   background-color: rgba(9, 24, 45, 0.8);
   transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1);
 }
 
 .sidebar-menu-total-balance-extended-bottom {
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  overflow: auto;
-  max-height: 100%;
   padding-right: 18px;
   padding-left: 18px;
-  flex-direction: column;
-  justify-content: flex-end;
 }
 
 .sidebar-menu-total-balance-extended-bottom-account {
-  display: block;
   height: 44px;
-  padding-top: 24px;
-  align-self: stretch;
-  flex: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
 }
 
 .sidebar-menu-total-balance-extended-bottom-account-name {
-  float: left;
   color: #69d5f7;
   font-size: 13px;
-  line-height: 10px;
-  text-align: left;
 }
 
 .sidebar-menu-total-balance-extended-bottom-account-number {
-  float: right;
   font-family: Inconsolata, monospace;
   color: #2ed8a3;
   font-size: 15px;
-  line-height: 10px;
-  text-align: right;
 }
 
 .sidebar-menu-bottom-total-balance-short {

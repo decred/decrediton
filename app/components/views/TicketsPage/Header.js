@@ -1,10 +1,9 @@
 import { spring, Motion } from "react-motion";
 import { Link } from "react-router";
 import { injectIntl, defineMessages, intlShape } from "react-intl";
+import { header } from "connectors";
+import theme from "theme";
 import "style/Header.less";
-import headerConnector from "connectors/header";
-
-const opts = { stiffness: 150, damping: 20 };
 
 const messages = defineMessages({
   "tickets.title":               { id: "tickets.title",               defaultMessage: "Tickets" },
@@ -76,7 +75,7 @@ class Header extends React.Component {
               </div>
             );
           })}
-          <Motion style={{ left: spring(caretLeft, opts), width: spring(caretWidth, opts) }}>
+          <Motion style={{ left: spring(caretLeft, theme("springs.tab")), width: spring(caretWidth, theme("springs.tab")) }}>
             { style => <div className="tabbedheader-active-tab-caret" style={ style }/> }
           </Motion>
         </div>
@@ -91,4 +90,4 @@ Header.propTypes = {
   intl: intlShape
 };
 
-export default injectIntl(headerConnector(Header));
+export default injectIntl(header(Header));

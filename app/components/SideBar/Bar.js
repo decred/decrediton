@@ -1,11 +1,9 @@
 // @flow
-import React from "react";
-import PropTypes from "prop-types";
-import MenuLink from "../MenuLink";
-import "../../style/Fonts.less";
-import "../../style/SideBar.less";
-import RescanProgress from "../RescanProgress";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
+import RescanProgress from "../RescanProgress";
+import MenuLinks from "./MenuLinks";
+import "style/Fonts.less";
+import "style/SideBar.less";
 
 const Bar = ({
   isTestNet,
@@ -22,20 +20,12 @@ const Bar = ({
   showingSidebarMenu,
 }) => (
   <div className={"sidebar-menu " + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
-  <div className="sidebar-menu-logo"></div>
-  {isTestNet ? <div className="sidebar-testnet-text">Testnet</div> : null}
-  { showingSidebarMenu &&
-    <Aux>
-      <div className="sidebar-menu-navigation">
-        <MenuLink to="/home"><T id="menu.overview" m="Overview"/></MenuLink>
-        <MenuLink to="/accounts"><T id="menu.accounts" m="Accounts"/></MenuLink>
-        <MenuLink to="/transactions"><T id="menu.transactions" m="Transactions"/></MenuLink>
-        <MenuLink to="/history"><T id="menu.history" m="History"/></MenuLink>
-        <MenuLink to="/tickets"><T id="menu.tickets" m="Tickets"/></MenuLink>
-        <MenuLink to="/security"><T id="menu.securitycenter" m="Security Center"/></MenuLink>
-        <MenuLink to="/settings"><T id="menu.settings" m="Settings"/></MenuLink>
-        <MenuLink to="/help"><T id="menu.help" m="Help"/></MenuLink>
-        <div className="sidebar-menu-total-balance-extended" style={{ display: isShowingAccounts ? "block" : "none" }}>
+    <div className="sidebar-menu-logo"></div>
+    { isTestNet && <div className="sidebar-testnet-text">Testnet</div> }
+    <Aux show={ showingSidebarMenu }>
+      <div className="sidebar-main">
+        <MenuLinks />
+        <div className="sidebar-menu-total-balance-extended" style={{ display: isShowingAccounts ? "flex" : "none" }}>
           <div className="sidebar-menu-total-balance-extended-bottom">
             { balances.map(({ hidden, total, accountName }) => !hidden &&
             <div className="sidebar-menu-total-balance-extended-bottom-account" key={accountName}>
@@ -59,8 +49,7 @@ const Bar = ({
           </Aux> }
         </div>
         <div className="sidebar-menu-bottom-latest-block">
-          { currentHeight &&
-          <Aux>
+          <Aux show={ currentHeight }>
             <a className="sidebar-menu-bottom-latest-block-name">
               { synced ?
                 <T id="sidebar.latestBlock" m="Latest Block" /> :
@@ -72,11 +61,11 @@ const Bar = ({
                 <T id="sidebar.lastBlockIsRecent" m="< 1 minute ago" /> :
                 lastBlockDate && <FormattedRelative value={lastBlockDate} updateInterval={1*1000}/> }
             </div>
-          </Aux> }
+          </Aux>
         </div>
       </div>
-    </Aux> }
-</div>
+    </Aux>
+  </div>
 );
 
 Bar.propTypes = {

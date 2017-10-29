@@ -21,14 +21,7 @@ export const BaseBox = cxs(Base)(
   order,
 );
 
-const Box = ({ tooltip, ...props }) =>
-  tooltip ?
-  h(Tooltip, Object.assign({text: tooltip}, props), h(BaseBox)) :
-  h(BaseBox, props);
-
-Box.displayName = "Box";
-
-Box.propTypes = {
+BaseBox.propTypes = {
   ...propTypes.width,
   ...propTypes.space,
   ...propTypes.fontSize,
@@ -36,5 +29,12 @@ Box.propTypes = {
   ...propTypes.flex,
   order: oneOfType([number, string, array])
 };
+
+const Box = ({ tooltip, ...props }) =>
+  tooltip ?
+  h(Tooltip, Object.assign({text: tooltip}, props), h(BaseBox)) :
+  h(BaseBox, props);
+
+Box.displayName = "Box";
 
 export default Box;

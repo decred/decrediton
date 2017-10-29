@@ -21,7 +21,7 @@ Tip.propTypes = {
   tipWarning: PropTypes.bool
 };
 
-const Tooltip = ({ text, tipDisabled, children, ...props }) => {
+const Tooltip = ({ text, tipWidth, tipWarning, tipDisabled, children, ...props }) => {
   let tooltip = document.getElementById("tooltip");
 
   const onMouseMove = ({clientX, clientY}) => {
@@ -36,7 +36,7 @@ const Tooltip = ({ text, tipDisabled, children, ...props }) => {
   return tipDisabled ? React.cloneElement(children, props) : (
     <BaseBox { ...props } onMouseMove={ onMouseMove }>
       { children }
-      { ReactDOM.creatPortal(<Tip>{ text }</Tip>, tooltip) }
+      { ReactDOM.creatPortal(<Tip {...{ tipWarning, tipWidth }}>{ text }</Tip>, tooltip) }
     </BaseBox>
   );
 };

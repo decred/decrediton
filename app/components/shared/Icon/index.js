@@ -1,7 +1,7 @@
 import cxs from "cxs/component";
 import { Box } from "shared";
 import icons from "iconMap";
-import { theme } from "theme";
+import theme from "theme";
 
 const clickableStyle      = { cursor: "pointer", ":hover": { opacity: 0.7 }};
 const mayClick            = ({ onClick }) => onClick && clickableStyle;

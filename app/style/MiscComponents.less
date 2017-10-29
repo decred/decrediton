@@ -58,10 +58,6 @@
   display: block;
   width: 50%;
   padding: 15px 0 15px 40px;
-  background-image: @help-link-icon;
-  background-position: 0px 50%;
-  background-size: 0px;
-  background-repeat: repeat-y;
   color: black;
   font-size: 18px;
   text-align: left;
@@ -72,7 +68,7 @@
 
 .help-link:hover {
   background-color: #616262;
-  background-size: 5px;
+  border-left: 5px solid #2ed8a3;
   color: #fff;
 }
 
@@ -174,43 +170,42 @@
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
 }
 
-.menu-navigation-link {
-  display: block;
+.menu-link {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  align-items: center;
   cursor: pointer;
   height: 52px;
-  line-height: 52px;
   padding-left: 58px;
   color: #c4cbd2;
   font-size: 18px;
-  text-align: left;
   text-decoration: none;
   text-transform: capitalize;
-  background-image: @menu-link-icon;
-  background-position: 0px 50%;
-  background-size: 0px;
-  background-repeat: repeat-y;
-  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
+  transition: color 0.13s ease-in-out;
 }
 
-.menu-navigation-link:hover {
-  background-size: 5px;
+.menu-link:hover,
+.menu-link-active {
+  color: #fff;
 }
 
-.menu-navigation-link-active {
-  background-image: @menu-link-icon;
-  background-position: 0px 50%;
-  background-size: 5px;
-  background-repeat: repeat-y;
+.menu-link-active {
   cursor: default;
 }
 
-.sidebar-mainnet .menu-navigation-link:hover,
-.sidebar-mainnet .menu-navigation-link-active {
+.menu-caret {
+  position: absolute;
+  height: 52px;
+  width: 100%;
+  border-left: 5px solid #2ed8a3;
+}
+
+.sidebar-mainnet .menu-caret {
   background-color: #09182d;
 }
 
-.sidebar-testnet .menu-navigation-link:hover,
-.sidebar-testnet .menu-navigation-link-active {
+.sidebar-testnet .menu-caret {
   background-color: #2151a7;
 }
 
