@@ -3,11 +3,11 @@ import { shell } from "electron";
 import "style/MiscComponents.less";
 
 const HelpLink = ({ className, href, children }) => (
-  <div className={className} onClick={() => shell.openExternal(href)}>
-    <div className="help-text">
+  <Aux>
+    <div className={"help-icon " + className} onClick={() => shell.openExternal(href)}>
       {children}
     </div>
-  </div>
+  </Aux>
 );
 
 export default HelpLink;
