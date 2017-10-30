@@ -4,6 +4,7 @@ import InputField from "../Form/InputField";
 import ErrorField from "../Form/ErrorField";
 import { validate } from "./validator";
 import { Link } from "react-router";
+import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
 
 const messages = defineMessages({
   addressFieldLabel: {
@@ -32,7 +33,7 @@ const messages = defineMessages({
   },
 });
 
-const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError, formatMessage }) => {
+const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError, formatMessage, onShowVerifyMessageInfo }) => {
   if (rpcError) {
     error = (
       <div className="error">{rpcError}</div>
@@ -41,6 +42,7 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
 
   return (
     <Aux>
+      <PurchaseTicketsInfoButton onClick={onShowVerifyMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Verify Message Information"/>}/>
       <div className="security-page-toggle">
         <div className="text-toggle">
           <Link to="/security/sign" className="text-toggle-button-left">

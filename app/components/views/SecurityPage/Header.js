@@ -12,7 +12,7 @@ const SecurityPageHeader = () => {
       </div>
 
       <div className="tabbedheader-description">
-        <T id="securitycenter.header.description" m="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+        <T id="securitycenter.header.description" m="Various tools that help in different aspects of crypto currency security will be located here." />
       </div>
 
       <div className="tabbedheader-tabs">
