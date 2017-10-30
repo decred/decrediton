@@ -15,6 +15,12 @@ class TicketListPage extends Component{/*  */
     super(props);
     const pagination = this.calcPagination(props.tickets);
     this.state = { currentPage: 0, expandedTicket: null, ...pagination };
+
+    if (props.tickets.length > 0) {
+      // just to see what information a ticket has. Remove before going to production.
+      console.log(props.tickets[0]);
+      this.props.decodeRawTransaction(props.tickets[0].spenderRawTx);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -61,11 +67,6 @@ class TicketListPage extends Component{/*  */
         <TicketInfoCard {...{key, ticket, expanded}} onClick={this.onInfoCardClick} />
       ));
     }*/
-
-    if (visibleTickets.length > 0) {
-      // just to see what information a ticket has. Remove before going to production.
-      console.log(visibleTickets[0]);
-    }
 
     return (
       <Aux>

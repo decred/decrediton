@@ -23,6 +23,10 @@ import {
   SETVOTECHOICES_ATTEMPT, SETVOTECHOICES_FAILED, SETVOTECHOICES_SUCCESS,
   UPDATEHIDDENACCOUNTS,
 } from "../actions/ClientActions";
+import {
+  GETDECODEMESSAGESERVICE_ATTEMPT, GETDECODEMESSAGESERVICE_FAILED, GETDECODEMESSAGESERVICE_SUCCESS,
+  DECODERAWTX_ATTEMPT
+} from "../actions/DecodeMessageActions";
 import { SIGNMESSAGE_ATTEMPT, SIGNMESSAGE_SUCCESS, SIGNMESSAGE_FAILED, SIGNMESSAGE_CLEANSTORE } from "../actions/SignMessageActions";
 import { VERIFYMESSAGE_ATTEMPT, VERIFYMESSAGE_SUCCESS, VERIFYMESSAGE_FAILED, VERIFYMESSAGE_CLEANSTORE } from "../actions/VerifyMessageActions";
 
@@ -446,6 +450,25 @@ export default function grpc(state = {}, action) {
       setVoteChoicesRequestAttempt: false,
       setVoteChoicesResponse: action.voteChoices,
     };
+  case GETDECODEMESSAGESERVICE_ATTEMPT:
+    return {
+      ...state,
+      getMessageDecodeServiceRequestAttempt: true,
+      getMessageDecodeServiceError: null
+    }
+  case GETDECODEMESSAGESERVICE_FAILED:
+    return {
+      ...state,
+      getMessageDecodeServiceRequestAttempt: false,
+      getMessageDecodeServiceError: String(action.error)
+    }
+  case GETDECODEMESSAGESERVICE_SUCCESS:
+    return {
+      ...state,
+      getMessageDecodeServiceRequestAttempt: false,
+      getMessageDecodeServiceError: null,
+      decodeMessageService: action.decodeMessageService,
+    }
   default:
     return state;
   }

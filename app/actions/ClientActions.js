@@ -3,6 +3,7 @@ import { getWalletService, getTicketBuyerService, getVotingService, getAgendaSer
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, stopAutoBuyerAttempt } from "./ControlActions";
 import { transactionNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
+import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { push as pushHistory } from "react-router-redux";
 import {
   PingRequest, NetworkRequest, AccountNumberRequest, AccountsRequest,
@@ -32,6 +33,8 @@ function getWalletServiceSuccess(walletService) {
     setTimeout(() => { dispatch(getNetworkAttempt()); }, 1000);
     setTimeout(() => { dispatch(transactionNtfnsStart()); }, 1000);
     setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
+    setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
+    setTimeout(() => { dispatch(getDecodeMessageServiceAttempt()); }, 1000);
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.
@@ -354,6 +357,7 @@ export function getTicketsInfoAttempt() {
     var getTx = walletService.getTickets(request);
     var tickets = Array();
     getTx.on("data", function (response) {
+      console.log(response);
       var newTicket = {
         status: TicketTypes.get(response.getTicket().getTicketStatus()),
         ticket: response.getTicket().getTicket(),

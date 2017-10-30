@@ -176,6 +176,13 @@ var initialState = {
     // Agenda/VoteChoices
     getAgendasResponse: null,
     getVoteChoicesResponse: null,
+
+    // GetMessageDecodeService
+    decodeMessageService: null,
+    getMessageDecodeServiceRequestAttempt: false,
+    getMessageDecodeServiceError: null,
+
+
   },
   walletLoader: {
     rpcRetryAttempts: 0,

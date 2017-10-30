@@ -299,15 +299,18 @@ const ticketNormalizer = createSelector(
   [],
   () => {
     return ticket => {
+      const hasSpender = ticket.spender && ticket.spender.getHash();
       const ticketTx = ticket.ticket;
+      const spenderTx = hasSpender ? ticket.spender : null;
       const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
-      const fee = ticketTx.getFee();
-      const enterTimestamp = ticketTx.getTimestamp();
       return {
         hash,
-        fee,
-        enterTimestamp,
-        ...ticket
+        ticketTx,
+        spenderTx,
+        enterTimestamp: ticketTx.getTimestamp(),
+        status: ticket.status,
+        ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),
+        spenderRawTx: hasSpender ? Buffer.from(spenderTx.getTransaction()).toString("hex") : null,
       };
     };
   }
