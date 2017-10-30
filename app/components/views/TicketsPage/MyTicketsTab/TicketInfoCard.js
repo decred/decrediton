@@ -2,7 +2,7 @@ import React from "react";
 import TicketCard from "./TicketCard";
 import ExpandedInfo from "./ExpandedInfo";
 import Balance from "Balance";
-import { tsToDate } from "../../../helpers/dateFormat";
+import { tsToDate } from "helpers/dateFormat";
 import { FormattedMessage as T, FormattedDate } from "react-intl";
 
 const TicketInfoCard = ({ ticket, onClick, expanded }) => {

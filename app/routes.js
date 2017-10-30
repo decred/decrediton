@@ -22,12 +22,9 @@ import WalletError from "./components/views/WalletError";
 import Help from "./components/views/Help";
 import ErrorScreen from "./components/ErrorScreen";
 import InvalidRPCVersion from "./components/views/InvalidRPCVersion";
-<<<<<<< HEAD
 import ShutdownAppPage from "./components/views/ShutdownAppPage";
-=======
 import MyTicketsPage from "./components/views/MyTicketsPage";
 import TicketListPage from "./components/views/MyTicketsPage/TicketListPage";
->>>>>>> dc662b5... First version of MyTickets page
 
 export default (
   <Route path="/" component={App}>

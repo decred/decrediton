@@ -4,10 +4,9 @@ import Header from "Header";
 import ticketList from "connectors/ticketList";
 import TicketsCardList from "./TicketsCardList";
 import TicketInfoCard from "./TicketInfoCard";
-import { push as pushHistory } from "react-router-redux";
 import { FormattedMessage as T } from "react-intl";
 import Paginator from "Paginator";
-import "../../../style/MyTickets.less"
+import "style/MyTickets.less";
 
 @autobind
 class TicketListPage extends Component{/*  */
