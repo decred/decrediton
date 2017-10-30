@@ -1,40 +1,39 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { Field, reduxForm } from "redux-form";
 import InputField from "../Form/InputField";
-import TextareaField from "../Form/TextareaField";
 import ErrorField from "../Form/ErrorField";
+import { Link } from "react-router";
+import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
 import { validate } from "./validator";
 
 const messages = defineMessages({
   addressFieldLabel: {
     id: "securitycenter.sign.form.field.address.label",
-    defaultMessage: "Address:",
+    defaultMessage: "Address",
   },
   addressFieldPlaceholder: {
     id: "securitycenter.sign.form.field.address.placeholder",
-    defaultMessage: "Enter your address here",
+    defaultMessage: "Enter your address",
   },
   messageFieldLabel: {
     id: "securitycenter.sign.form.field.message.label",
-    defaultMessage: "Message:",
+    defaultMessage: "Message",
   },
   messageFieldPlaceholder: {
     id: "securitycenter.sign.form.field.message.placeholder",
-    defaultMessage: "Enter your message here",
+    defaultMessage: "Enter your message",
   },
   passphraseFieldLabel: {
     id: "securitycenter.sign.form.field.passphrase.label",
-    defaultMessage: "Passphrase:",
+    defaultMessage: "Passphrase",
   },
   passphraseFieldPlaceholder: {
     id: "securitycenter.sign.form.field.passphrase.placeholder",
-    defaultMessage: "Enter your passphrase here",
+    defaultMessage: "Enter your passphrase",
   },
 });
 
-const SignMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError, formatMessage }) => {
+const SignMessageForm = ({ handleSubmit, onSubmit, pristine, error, submitting, rpcError, formatMessage, onShowSignMessageInfo }) => {
   if (rpcError) {
     error = (
       <div className="error">{rpcError}</div>
@@ -42,40 +41,55 @@ const SignMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, 
   }
 
   return (
-    <div className="message-content-nest">
+    <Aux>
+      <div className="security-page-toggle">
+        <div className="text-toggle">
+          <div className="text-toggle-button-left text-toggle-button-active">
+            <T id="securitycenter.header.toggle.sign" m="Sign" />
+          </div>
+          <Link to="/security/verify" className="text-toggle-button-right">
+            <T id="securitycenter.header.toggle.verify" m="Verify" />
+          </Link>
+        </div>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {error ? <div className="error">{error}</div> : null}
-        <Field
-          name="global"
-          component={ErrorField}
-        />
-        <Field
-          label={formatMessage(messages.addressFieldLabel)}
-          name="address"
-          component={InputField}
-          type="text"
-          placeholder={formatMessage(messages.addressFieldPlaceholder)}
-        />
-        <Field
-          label={formatMessage(messages.messageFieldLabel)}
-          name="message"
-          component={TextareaField}
-          placeholder={formatMessage(messages.messageFieldPlaceholder)}
-        />
-        <Field
-          label={formatMessage(messages.passphraseFieldLabel)}
-          name="passphrase"
-          component={InputField}
-          type="password"
-          placeholder={formatMessage(messages.passphraseFieldPlaceholder)}
-        />
+        <div className="message-content-nest">
+          <div className="button-right">
+            <PurchaseTicketsInfoButton onClick={onShowSignMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Sign Message Information"/>}/>
+          </div>
+          <Field
+            label={formatMessage(messages.addressFieldLabel)}
+            name="address"
+            component={InputField}
+            type="text"
+            placeholder={formatMessage(messages.addressFieldPlaceholder)}
+          />
+          <Field
+            label={formatMessage(messages.messageFieldLabel)}
+            name="message"
+            component={InputField}
+            placeholder={formatMessage(messages.messageFieldPlaceholder)}
+          />
+          <Field
+            label={formatMessage(messages.passphraseFieldLabel)}
+            name="passphrase"
+            component={InputField}
+            type="password"
+            placeholder={formatMessage(messages.passphraseFieldPlaceholder)}
+          />
+          <Field
+            name="global"
+            component={ErrorField}
+          />
+        </div>
+        {error && <div className="error">{error}</div>}
         <div className="message-toolbar">
           <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
             <T id="securitycenter.sign.form.submit" m="Sign" />
           </button>
         </div>
       </form>
-    </div>
+    </Aux>
   );
 };
 
