@@ -1,9 +1,13 @@
 import React from "react";
 import { shell } from "electron";
-import "../style/MiscComponents.less";
+import "style/MiscComponents.less";
 
-const HelpLink = ({ href, children }) => (
-  <a className="help-link" onClick={() => shell.openExternal(href)}>{children}</a>
+const HelpLink = ({ className, href, children }) => (
+  <div className={className} onClick={() => shell.openExternal(href)}>
+    <div className="help-text">
+      {children}
+    </div>
+  </div>
 );
 
 export default HelpLink;
