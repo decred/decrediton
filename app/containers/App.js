@@ -1,3 +1,4 @@
+import theme, { ThemeProvider } from "theme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { IntlProvider } from "react-intl";
 import MUItheme from "materialUITheme";
@@ -6,24 +7,18 @@ import app from "connectors/app";
 import SideBar from "components/SideBar";
 import Snackbar from "components/Snackbar";
 import { RouteTransition } from "shared";
-import theme from "theme";
 
 const fade = { atEnter: { opacity: 0 }, atActive: { opacity: 1 }, atLeave: { opacity: 0 }};
 const rootPath = ({ pathname }) => pathname.split("/")[1];
 
 const wrapperComponent = props => <div className="page-view" { ...props } />;
 
-class App extends React.Component {
-  static propTypes = {
-    children: PropTypes.element.isRequired,
-    locale: PropTypes.object.isRequired,
-  };
+const App = ({ locale, children, location }) => {
+  const pathname = rootPath(location);
 
-  render() {
-    let locale = this.props.locale;
-    const pathname = rootPath(this.props.location);
-    return (
-      <MuiThemeProvider muiTheme={MUItheme}>
+  return (
+    <MuiThemeProvider muiTheme={MUItheme}>
+      <ThemeProvider>
         <IntlProvider
           locale={locale.language}
           messages={locale.messages}
@@ -34,13 +29,18 @@ class App extends React.Component {
             <SideBar />
             <Snackbar />
             <RouteTransition className="page-container" opts={ theme("springs.page") } {...{ wrapperComponent, pathname, ...fade }}>
-              { this.props.children }
+              { children }
             </RouteTransition>
           </div>
         </IntlProvider>
-      </MuiThemeProvider>
-    );
-  }
-}
+      </ThemeProvider>
+    </MuiThemeProvider>
+  );
+};
+
+App.propTypes = {
+  children: PropTypes.element.isRequired,
+  locale: PropTypes.object.isRequired,
+};
 
 export default app(App);

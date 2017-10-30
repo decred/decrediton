@@ -1,14 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
 import Header from "../../../Header";
 import AccountRow from "./AccountRow";
 import DecredLoading from "../../../DecredLoading";
 import KeyBlueButton from "../../../KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
-import "../../../../style/Layout.less";
-import "../../../../style/AccountsPage.less";
+import "style/Layout.less";
+import "style/AccountsPage.less";
 import BalanceOverviewInfoModal from "../../../BalanceOverviewInfoModal";
-import PurchaseTicketsInfoButton from "../../../PurchaseTicketsInfoButton";
+import { Icon } from "shared";
 
 const AccountsList = ({
   accounts,
@@ -32,7 +30,7 @@ const AccountsList = ({
   onShowBalanceOverviewInfoModal,
   onCloseBalanceOverviewInfoModal,
 }) => (
-  <div className="page-view">
+  <Aux>
     <Header
       headerTitleOverview={<T id="accounts.title" m="Accounts" />}
       headerTop={[
@@ -92,35 +90,32 @@ const AccountsList = ({
         </KeyBlueButton>
       }
     />
-    {isShowingBalanceOverviewInfoModal ? <BalanceOverviewInfoModal closeModal={onCloseBalanceOverviewInfoModal} /> : null}
+    {isShowingBalanceOverviewInfoModal && <BalanceOverviewInfoModal closeModal={onCloseBalanceOverviewInfoModal} /> }
     <div className="page-content">
-      {isLoading ? (
-        <DecredLoading/>
-      ) : (
-        <div>
-          <div className="account-content-title">
-            <div className="account-content-title-buttons-area">
-              <PurchaseTicketsInfoButton onClick={onShowBalanceOverviewInfoModal} tooltipText={<T id="accounts.balanceInfo" m="Balance Information"/>}/>
-            </div>
-          </div>
-          <div className="account-content-nest">
-            {accounts.map(account => (
-              <AccountRow
-                key={account.accountName}
-                account={account}
-                accountNumDetailsShown={accountNumDetailsShown}
-                renameAccount={onRenameAccount}
-                hideAccount={onHideAccount}
-                showAccount={onShowAccount}
-                showAccountDetails={onShowAccountDetails}
-                hideAccountDetails={onHideAccountDetails}
-              />
-            ))}
+      { isLoading ? <DecredLoading/> :
+      <Aux>
+        <div className="account-content-title">
+          <div className="account-content-title-buttons-area">
+            <Icon i="info" onClick={onShowBalanceOverviewInfoModal} tooltip={<T id="accounts.balanceInfo" m="Balance Information"/>} />
           </div>
         </div>
-      )}
+        <div className="account-content-nest">
+          {accounts.map(account => (
+            <AccountRow
+              key={account.accountName}
+              account={account}
+              accountNumDetailsShown={accountNumDetailsShown}
+              renameAccount={onRenameAccount}
+              hideAccount={onHideAccount}
+              showAccount={onShowAccount}
+              showAccountDetails={onShowAccountDetails}
+              hideAccountDetails={onHideAccountDetails}
+            />
+          ))}
+        </div>
+      </Aux> }
     </div>
-  </div>
+  </Aux>
 );
 
 AccountsList.propTypes = {

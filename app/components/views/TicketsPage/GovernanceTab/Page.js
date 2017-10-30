@@ -39,21 +39,19 @@ const VotingPrefsPage = ({
           disabled={!stakePool || !stakePool.isVersionValid}
         />
       ) : null}
-      {(agendas.length > 0) ?
+      { agendas.length > 0  ?
         agendas.map(agenda =>
-          (!selectedAgenda || selectedAgenda.getId() !== agenda.getId()) &&
-            <AgendaCard
-              key={agenda.getId()}
-              agenda={agenda}
-              selectedChoice={getAgendaSelectedChoice(agenda)}
-              onClick={() => onShowAgenda(agenda)}
-            />
-          )
-        : (
+          <AgendaCard
+            show={ !selectedAgenda || selectedAgenda.getId() !== agenda.getId() }
+            key={agenda.getId()}
+            agenda={agenda}
+            selectedChoice={getAgendaSelectedChoice(agenda)}
+            onClick={() => onShowAgenda(agenda)}
+          />) :
         <div className="stakepool-no-agendas-message">
           <T id="votingPreferences.noAgenda" m="There are currently no agendas for voting." />
         </div>
-      )}
+      }
     </div>
   </div>
 );

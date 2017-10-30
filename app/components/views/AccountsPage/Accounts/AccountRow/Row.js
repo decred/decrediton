@@ -1,9 +1,8 @@
 // @flow
-import React from "react";
+import { Icon } from "shared";
 import SlateGrayButton from "SlateGrayButton";
 import KeyBlueButton from "KeyBlueButton";
 import Balance from "Balance";
-import { Tooltip } from "shared";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import "style/Fonts.less";
 import "style/AccountRow.less";
@@ -12,7 +11,7 @@ const messages = defineMessages({
   newNamePlaceholder: {
     id: "accounts.rename.newNamePlaceholder",
     defaultMessage: "New Account Name"
-  },
+  }
 });
 
 const Row = ({
@@ -181,21 +180,13 @@ const Row = ({
             </div>
           </div>
           <div className="account-actions">
-            {account.accountName !== "imported" ?
-              <Tooltip text={ <T id="accounts.rename.tip" m="Rename Account" /> }>
-                <div className="rename-account-button" onClick={showRenameAccount}/>
-              </Tooltip> :
-              <div></div>
+            { account.accountName !== "imported" &&
+              <Icon i="accountRename" s={ 40 } onClick={ showRenameAccount } tooltip={ <T id="accounts.rename.tip" m="Rename Account" /> }/>
             }
-            {account.accountName !== "imported" && account.accountName !== "default" && account.total == 0 && !hidden ?
-              <Tooltip text={ <T id="accounts.show.tip" m="Show" /> }>
-                <div className="hide-account-button" onClick={hideAccount} />
-              </Tooltip> :
-              account.accountName !== "imported" && account.accountName !== "default" && hidden ?
-              <Tooltip text={ <T id="accounts.hide.tip" m="Hide" /> }>
-                <div className="show-account-button" onClick={showAccount} />
-              </Tooltip> :
-              <div></div>
+            { account.accountName !== "imported" && account.accountName !== "default" && account.total == 0 && !hidden ?
+              <Icon i="hideAccount" s={ 40 } onClick={ hideAccount } tooltip={ <T id="accounts.hide.tip" m="Hide" /> } /> :
+              account.accountName !== "imported" && account.accountName !== "default" && hidden &&
+              <Icon i="showAccount" s={ 40 } onClick={ showAccount } tooltip={ <T id="accounts.show.tip" m="Show" /> } />
             }
           </div>
          </div>

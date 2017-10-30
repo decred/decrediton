@@ -1,5 +1,5 @@
-import React from "react";
 import Select from "react-select";
+import { Box } from "shared";
 import { injectIntl, defineMessages } from "react-intl";
 
 const messages = defineMessages({
@@ -14,21 +14,20 @@ const SelectStakePool = ({
   labelKey="label",
   multi=false,
   clearable=false,
-  style={zIndex:"9"},
   intl,
+  options,
+  value,
+  onChange,
   ...props
 }) => (
-  <Select
-    placeholder={intl.formatMessage(messages.placeholder)}
-    {...{
-      valueKey,
-      labelKey,
-      multi,
-      clearable,
-      style,
-      ...props
-    }}
-  />
+  <Box f={ 16 } { ...props }>
+    <Select
+      placeholder={intl.formatMessage(messages.placeholder)}
+      {...{
+        valueKey, labelKey, multi, clearable,
+        options,  value, onChange
+      }} />
+  </Box>
 );
 
 export default injectIntl(SelectStakePool);

@@ -1,10 +1,10 @@
-import React from "react";
 import { FormattedMessage as T, injectIntl } from "react-intl";
+import { Icon, Flex, Box, Heading } from "shared";
 import PropTypes from "prop-types";
 import { autobind } from "core-decorators";
 import VerifyMessageForm from "./Form";
-import verifyMessageConnector from "../../connectors/verifyMessagePage";
-import "../../style/SecurityCenterMessagePage.less";
+import { verifyMessagePage } from "connectors";
+import "style/SecurityCenterMessagePage.less";
 
 @autobind
 class VerifyMessage extends React.Component {
@@ -47,11 +47,16 @@ class VerifyMessage extends React.Component {
     }
 
     return (
-      <div className="page-content message message-verify">
-        <div className="message-header-title"><T id="securitycenter.verify.header" m="Verify Message" /></div>
-        <VerifyMessageForm onSubmit={this.onSubmit} rpcError={verifyMessageError} formatMessage={this.props.intl.formatMessage} />
-        {result}
-      </div>
+      <Box p={ 70 } bg="lightestGrey">
+        <Flex align="center" pb={ 10 }>
+          <Icon i="cog" s={ 30 } pr={ 20 } />
+          <Heading><T id="securitycenter.verify.header" m="Verify Message" /></Heading>
+        </Flex>
+        <div className="message">
+          <VerifyMessageForm onSubmit={this.onSubmit} rpcError={verifyMessageError} formatMessage={this.props.intl.formatMessage} />
+          {result}
+        </div>
+      </Box>
     );
   }
 
@@ -70,4 +75,4 @@ VerifyMessage.propTypes = {
   }),
 };
 
-export default verifyMessageConnector(injectIntl(VerifyMessage));
+export default verifyMessagePage(injectIntl(VerifyMessage));

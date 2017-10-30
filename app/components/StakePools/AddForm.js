@@ -5,8 +5,8 @@ import SelectStakePool from "../SelectStakePool";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import "../../style/Layout.less";
-import "../../style/StakePool.less";
+import "style/Layout.less";
+import "style/StakePool.less";
 
 const messages = defineMessages({
   apiKeyPlaceholder: {
@@ -42,13 +42,10 @@ const StakePoolsAddForm = ({
           <div className="stakepool-content-nest-prefix-send">
             <T id="stake.addPoolTitle" m="Stake Pool" />
           :</div>
-          <div className="stakepool-unconfigured-select">
-            <SelectStakePool
-              options={unconfiguredStakePools}
-              value={selectedUnconfigured}
-              onChange={onChangeSelectedUnconfigured}
-            />
-          </div>
+          <SelectStakePool w="20em" ml="auto"
+            options={unconfiguredStakePools}
+            value={selectedUnconfigured}
+            onChange={onChangeSelectedUnconfigured}/>
           <div className="stakepool-content-nest-from-address-wallet-icon"></div>
         </div>
         <div className="stakepool-content-nest-api-key-instructions">

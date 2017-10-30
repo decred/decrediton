@@ -12,13 +12,13 @@ const Page = ({
   onShowAddAccount
 }) => (
   walletService ? (
-    <div>
+    <Aux>
       {isShowingAddAccount ? (
         <AddAccount onSave={onHideAddAccount} onCancel={onHideAddAccount} />
       ) : (
         <Accounts {...{ onShowAddAccount }} />
       )}
-    </div>
+    </Aux>
   ) : (
     <ErrorScreen />
   )

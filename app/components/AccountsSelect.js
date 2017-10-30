@@ -1,11 +1,8 @@
-import React, { Component } from "react";
-import { autobind } from "core-decorators";
 import Select from "react-select";
-import { PropTypes } from "prop-types";
-import accountsSelect from "../connectors/accountsSelect";
+import { accountsSelect } from "connectors";
 import { injectIntl, defineMessages, intlShape } from "react-intl";
 import Balance from "./Balance";
-import { LinkToAccounts } from "shared";
+import { LinkToAccounts, Flex } from "shared";
 
 const messages = defineMessages({
   placeholder: {
@@ -15,7 +12,7 @@ const messages = defineMessages({
 });
 
 @autobind
-class AccountsSelect extends Component {
+class AccountsSelect extends React.Component {
 
   static propTypes = {
     accountsType: PropTypes.oneOf(["spending", "visible"]),
@@ -47,7 +44,7 @@ class AccountsSelect extends Component {
     const { formatMessage } = this.props.intl;
     const { className, showAccountsButton } = this.props;
     return (
-      <div className={className}>
+      <Flex className={className}>
         <Select
           clearable={false}
           style={{zIndex:"9"}}
@@ -63,7 +60,7 @@ class AccountsSelect extends Component {
           className="accounts-select"
         />
         { showAccountsButton && <LinkToAccounts /> }
-      </div>
+      </Flex>
     );
   }
 
