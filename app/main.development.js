@@ -378,10 +378,11 @@ ipcMain.on("check-daemon", (event, arg) => {
     args.push(`--rpccert=${rpccert}`);
     host = RPCDaemonHost();
     port = RPCDaemonPort();
+    args.push(`--configfile=${dcrctlCfg()}`);
   } else {
     host = RPCDaemonHost();
     port = RPCDaemonPort();
-    args.push(["--configfile=" + dcrctlCfg()]);
+    args.push(`--configfile=${dcrctlCfg()}`);
   }
 
   var spawn = require("child_process").spawn;
@@ -422,9 +423,7 @@ const launchDCRD = (credentials) => {
   let args = [];
 
   if(credentials){
-    const {rpcappdata} = credentials;
-    const rpccert = `--rpccert=${rpcappdata}/rpc.cert`;
-    args = [`--appdata=${rpcappdata}`,`--configfile=${dcrdCfg()}`, rpccert];
+    args = [`--appdata=${credentials.rpcappdata}`,`--configfile=${dcrdCfg()}`];
   } else {
     args = [`--configfile=${dcrdCfg()}`];
   }
