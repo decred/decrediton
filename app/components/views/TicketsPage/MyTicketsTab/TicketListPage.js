@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import { autobind } from "core-decorators";
-import Header from "Header";
 import ticketList from "connectors/ticketList";
 import TicketsCardList from "./TicketsCardList";
 import TicketInfoCard from "./TicketInfoCard";
@@ -12,7 +11,7 @@ import "style/MyTickets.less";
 class TicketListPage extends Component{/*  */
 
   constructor(props) {
-    console.log("constructor");
+    console.log("constructor", props);
     super(props);
     const pagination = this.calcPagination(props.tickets);
     this.state = { currentPage: 0, expandedTicket: null, ...pagination };
@@ -22,11 +21,11 @@ class TicketListPage extends Component{/*  */
     const ticketsPerPage = 6;
     const totalPages = tickets.length > 0 ? Math.ceil(tickets.length / ticketsPerPage) : 0;
 
-    return { ticketsPerPage, totalPages }
+    return { ticketsPerPage, totalPages };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState(this.calcPagination());
+    this.setState(this.calcPagination(nextProps));
   }
 
   onInfoCardClick(ticket) {
@@ -42,7 +41,6 @@ class TicketListPage extends Component{/*  */
   }
 
   render() {
-    const visible = Array();
     const { currentPage, ticketsPerPage, totalPages, expandedTicket } = this.state;
 
     const startIndex = currentPage * ticketsPerPage;
@@ -69,20 +67,15 @@ class TicketListPage extends Component{/*  */
     }
 
     return (
-      <div className="page-view">
-        <Header
-          headerTitleOverview="NOT YET FINAL"
-        />
-        <div className="page-content">
+      <Aux>
           {(visibleCards.length > 0
-            ? <div>
+            ? <Aux>
                 <TicketsCardList>{visibleCards}</TicketsCardList>
                 <Paginator {...{totalPages, currentPage, onPageChanged: this.onPageChanged}} />
-              </div>
+              </Aux>
             : <T id="myTickets.noTicketsWithStatus" m="No tickets found" />
           )}
-        </div>
-      </div>
+      </Aux>
     );
   }
 }
