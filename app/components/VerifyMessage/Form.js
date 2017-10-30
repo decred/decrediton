@@ -40,7 +40,7 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
   }
 
   return (
-    <div>
+    <Aux>
       <div className="security-page-toggle">
         <div className="text-toggle">
           <Link to="/security/sign" className="text-toggle-button-left">
@@ -88,7 +88,7 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
           </button>
         </div>
       </form>
-    </div>
+    </Aux>
   );
 };
 

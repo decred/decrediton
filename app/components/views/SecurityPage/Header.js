@@ -7,7 +7,7 @@ const SecurityPageHeader = () => {
       <div className="header-top"></div>
 
       <div className="tabbedheader-title">
-        <span className={ "tabbedheader-icon header-icon-security" } />
+        <span className={ "tabbedheader-icon header-icon-security-center" } />
         <T id="securitycenter.header.title" m="Security Center" />
       </div>
 

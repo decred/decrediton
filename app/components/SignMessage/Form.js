@@ -40,7 +40,7 @@ const SignMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, 
   }
 
   return (
-    <div>
+    <Aux>
       <div className="security-page-toggle">
         <div className="text-toggle">
           <div className="text-toggle-button-left text-toggle-button-active">
@@ -85,7 +85,7 @@ const SignMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, 
           </button>
         </div>
       </form>
-    </div>
+    </Aux>
   );
 };
 
