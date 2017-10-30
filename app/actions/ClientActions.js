@@ -599,7 +599,7 @@ export function listenForAppReloadRequest(cb) {
   };
 }
 export function showTicketList(status) {
-  return (dispatch, getState) => {
-    dispatch(pushHistory("/tickets/" + status));
-  }
+  return (dispatch) => {
+    dispatch(pushHistory("/tickets/mytickets/" + status));
+  };
 }

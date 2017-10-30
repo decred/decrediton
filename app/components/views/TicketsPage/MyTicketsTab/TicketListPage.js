@@ -12,6 +12,7 @@ import "style/MyTickets.less";
 class TicketListPage extends Component{/*  */
 
   constructor(props) {
+    console.log("constructor");
     super(props);
     const pagination = this.calcPagination(props.tickets);
     this.state = { currentPage: 0, expandedTicket: null, ...pagination };

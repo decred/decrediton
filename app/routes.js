@@ -46,7 +46,7 @@ export default (
     <Route path="/tickets" component={TicketsPage}>
       <IndexRedirect to="purchase" />
       <Route path="purchase" component={TicketsPurchaseTab}/>
-      <Route path="mytickets" component={TicketsMyTicketsTab}/>
+      <Route path="mytickets" component={TicketsMyTicketsTab} />
       <Route path="governance" component={TicketsGovernanceTab}/>
       <Route path="statistics" component={TicketsStatisticsTab}/>
     </Route>

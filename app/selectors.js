@@ -300,7 +300,7 @@ const ticketNormalizer = createSelector(
   () => {
     return ticket => {
       const ticketTx = ticket.ticket;
-      const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"))
+      const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
       const fee = ticketTx.getFee();
       const enterTimestamp = ticketTx.getTimestamp();
       return {
@@ -308,8 +308,8 @@ const ticketNormalizer = createSelector(
         fee,
         enterTimestamp,
         ...ticket
-      }
-    }
+      };
+    };
   }
 );
 const ticketsNormalizer = createSelector([ticketNormalizer], map);
