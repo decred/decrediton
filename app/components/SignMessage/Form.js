@@ -2,9 +2,9 @@ import { FormattedMessage as T, defineMessages } from "react-intl";
 import { Field, reduxForm } from "redux-form";
 import InputField from "../Form/InputField";
 import ErrorField from "../Form/ErrorField";
-import { validate } from "./validator";
 import { Link } from "react-router";
 import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
+import { validate } from "./validator";
 
 const messages = defineMessages({
   addressFieldLabel: {
@@ -33,7 +33,7 @@ const messages = defineMessages({
   },
 });
 
-const SignMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError, formatMessage, onShowSignMessageInfo }) => {
+const SignMessageForm = ({ handleSubmit, onSubmit, pristine, error, submitting, rpcError, formatMessage, onShowSignMessageInfo }) => {
   if (rpcError) {
     error = (
       <div className="error">{rpcError}</div>
@@ -42,7 +42,6 @@ const SignMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, 
 
   return (
     <Aux>
-      <PurchaseTicketsInfoButton onClick={onShowSignMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Sign Message Information"/>}/>
       <div className="security-page-toggle">
         <div className="text-toggle">
           <div className="text-toggle-button-left text-toggle-button-active">
@@ -55,10 +54,9 @@ const SignMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, 
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="message-content-nest">
-          <Field
-            name="global"
-            component={ErrorField}
-          />
+          <div className="button-right">
+            <PurchaseTicketsInfoButton onClick={onShowSignMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Sign Message Information"/>}/>
+          </div>
           <Field
             label={formatMessage(messages.addressFieldLabel)}
             name="address"
@@ -78,6 +76,10 @@ const SignMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, 
             component={InputField}
             type="password"
             placeholder={formatMessage(messages.passphraseFieldPlaceholder)}
+          />
+          <Field
+            name="global"
+            component={ErrorField}
           />
         </div>
         {error && <div className="error">{error}</div>}

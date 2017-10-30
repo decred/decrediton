@@ -42,7 +42,6 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
 
   return (
     <Aux>
-      <PurchaseTicketsInfoButton onClick={onShowVerifyMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Verify Message Information"/>}/>
       <div className="security-page-toggle">
         <div className="text-toggle">
           <Link to="/security/sign" className="text-toggle-button-left">
@@ -55,10 +54,9 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="message-content-nest">
-          <Field
-            name="global"
-            component={ErrorField}
-          />
+          <div className="button-right">
+            <PurchaseTicketsInfoButton onClick={onShowVerifyMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Verify Message Information"/>}/>
+          </div>
           <Field
             classname="address"
             label={formatMessage(messages.addressFieldLabel)}
@@ -81,6 +79,10 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
             name="message"
             component={InputField}
             placeholder={formatMessage(messages.messageFieldPlaceholder)}
+          />
+          <Field
+            name="global"
+            component={ErrorField}
           />
         </div>
         {error && <div className="error">{error}</div>}
