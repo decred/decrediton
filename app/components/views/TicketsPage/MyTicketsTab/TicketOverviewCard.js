@@ -2,7 +2,7 @@ import React from "react";
 import TicketCard from "./TicketCard";
 import { FormattedMessage as T } from "react-intl";
 
-const TicketOverviewCard = ({ status, tickets , onClick}) => (
+const TicketOverviewCard = ({ status, tickets , onClick }) => (
   <TicketCard
     {...{ status }}
     className="ticket-overview-card"

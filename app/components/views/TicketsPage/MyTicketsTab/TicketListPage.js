@@ -1,20 +1,24 @@
 import React, {Component} from "react";
 import { autobind } from "core-decorators";
-import ticketList from "connectors/ticketList";
+import ticketsList from "connectors/ticketsList";
 import TicketsCardList from "./TicketsCardList";
 import TicketInfoCard from "./TicketInfoCard";
 import { FormattedMessage as T } from "react-intl";
 import Paginator from "Paginator";
+import SlateGrayButton from "SlateGrayButton";
 import "style/MyTickets.less";
 
 @autobind
 class TicketListPage extends Component{/*  */
 
   constructor(props) {
-    console.log("constructor", props);
     super(props);
     const pagination = this.calcPagination(props.tickets);
     this.state = { currentPage: 0, expandedTicket: null, ...pagination };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState(this.calcPagination(nextProps.tickets));
   }
 
   calcPagination(tickets) {
@@ -22,10 +26,6 @@ class TicketListPage extends Component{/*  */
     const totalPages = tickets.length > 0 ? Math.ceil(tickets.length / ticketsPerPage) : 0;
 
     return { ticketsPerPage, totalPages };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState(this.calcPagination(nextProps));
   }
 
   onInfoCardClick(ticket) {
@@ -42,6 +42,7 @@ class TicketListPage extends Component{/*  */
 
   render() {
     const { currentPage, ticketsPerPage, totalPages, expandedTicket } = this.state;
+    const { router } = this.props;
 
     const startIndex = currentPage * ticketsPerPage;
     const endIndex = startIndex + ticketsPerPage;
@@ -75,9 +76,12 @@ class TicketListPage extends Component{/*  */
               </Aux>
             : <T id="myTickets.noTicketsWithStatus" m="No tickets found" />
           )}
+          <SlateGrayButton key="back" className="ticket-list-back-btn" onClick={() => router.goBack()}>
+            <T id="ticketList.backBtn" m="Back" />
+          </SlateGrayButton>
       </Aux>
     );
   }
 }
 
-export default ticketList(TicketListPage);
+export default ticketsList(TicketListPage);

@@ -1,7 +1,7 @@
 import React from "react";
 import TicketsCardList from "./TicketsCardList";
 import TicketOverviewCard from "./TicketOverviewCard";
-import myTickets from "connectors/myTickets";
+import ticketsOverview from "connectors/ticketsOverview";
 
 const TicketsOverview = ({ ticketsPerStatus, showTicketList }) => {
   const cardStatus = ["revoked", "voted", "expired", "missed", "unmined",
@@ -14,4 +14,4 @@ const TicketsOverview = ({ ticketsPerStatus, showTicketList }) => {
   return (<TicketsCardList>{cards}</TicketsCardList>);
 };
 
-export default myTickets(TicketsOverview);
+export default ticketsOverview(TicketsOverview);

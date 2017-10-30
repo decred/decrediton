@@ -1,18 +1,13 @@
-import React, {Component} from "react";
-import Header from "Header";
 
-class TicketCard extends Component{
-  render() {
-    const { status, children, onClick } = this.props;
-    const className = "ticket-card ticket-" + status +
-      (this.props.className ? " " + this.props.className : "");
+const TicketCard = ({ status, children, onClick, className }) => {
+  const thisClsName = "ticket-card ticket-" + status +
+    (className ? " " + className : "");
 
-    return (
-      <div {...{className, onClick}}>
-        {children}
-      </div>
-    );
-  }
-}
+  return (
+    <div {...{onClick}} className={thisClsName}>
+      {children}
+    </div>
+  );
+};
 
 export default TicketCard;
