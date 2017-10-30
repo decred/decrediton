@@ -50,7 +50,7 @@ class TicketListPage extends Component{/*  */
     const visibleCards = visibleTickets.map(ticket => {
       const key = ticket.hash;
       const expanded = ticket === expandedTicket;
-      return <TicketInfoCard {...{key, ticket, expanded}} onClick={this.onInfoCardClick} />
+      return <TicketInfoCard {...{key, ticket, expanded}} onClick={this.onInfoCardClick} />;
     });
 
     /*for (let i = 0; i < this.state.shownTo; i++) {

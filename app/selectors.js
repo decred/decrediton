@@ -3,7 +3,7 @@ import {
   createSelectorEager as createSelector
 } from "./fp";
 import { reverseHash } from "./helpers/byteActions";
-import { TransactionDetails, GetTicketsResponse }  from "./middleware/walletrpc/api_pb";
+import { TransactionDetails }  from "./middleware/walletrpc/api_pb";
 import { TicketTypes } from "./helpers/tickets";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;

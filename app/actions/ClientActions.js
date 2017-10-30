@@ -9,9 +9,8 @@ import {
   BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest,
   AgendasRequest, VoteChoicesRequest, SetVoteChoicesRequest, GetTicketsRequest,
 } from "../middleware/walletrpc/api_pb";
-import { TransactionDetails, GetTicketsResponse }  from "../middleware/walletrpc/api_pb";
+import { TransactionDetails }  from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
-import { reverseHash } from "../helpers/byteActions.js";
 import { onAppReloadRequested } from "wallet/app";
 import { TicketTypes } from "../helpers/tickets";
 
