@@ -1,63 +1,23 @@
 // @flow
 import React from "react";
-import SlateGrayButton from "./SlateGrayButton";
-import "../style/PurchaseTicketsInfo.less";
+import SlateGrayButton from "SlateGrayButton";
+import "style/PurchaseTicketsInfo.less";
 import { FormattedMessage as T } from "react-intl";
 
-class PurchaseTicketsInfo extends React.Component {
+class SignMessageInfo extends React.Component {
   render() {
     return (
       <div className="purchase-tickets-modal">
         <div className="purchase-tickets-header">
           <div className="purchase-tickets-header-text">
-            <T id="tickets.info.title" m="Ticket Purchase Information" />
+            <T id="sign.info.title" m="Sign Message Information" />
           </div>
           <SlateGrayButton className="purchase-tickets-close-button" onClick={() =>this.props.closeModal()}>Close</SlateGrayButton>
         </div>
-        <div className="purchase-tickets-column">
+        <div className="purchase-tickets-column-double">
           {this.renderSection(
-            <T id="tickets.info.account.header" m="Account" />,
-            <T id="tickets.info.account.message" m="This is the account that will purchase the tickets and receive the reward." />
-          )}
-          {this.renderSection(
-            <T id="tickets.info.number.header" m="Number of tickets" />,
-            <T id="tickets.info.number.message" m="The number of tickets to attempt to purchase." />
-          )}
-          {this.renderSection(
-            <T id="tickets.info.ticketFee.header" m="Ticket fee (DCR/kB)" />,
-            <T id="tickets.info.ticketFee.message" m="Tickets are entered into the voting pool by order of their fee. In times of demand, you will need to increase this value in order to have your tickets accepted. You can view current ticket fees here." />
-          )}
-          {this.renderSection(
-            <T id="tickets.info.ticketPrice.header" m="Ticket price" />,
-            <T id="tickets.info.ticketPrice.message" m="The current price of a ticket as calculated by the network.  Changes every 144 Blocks." />
-          )}
-          {this.renderSection(
-            <T id="tickets.info.poolPreference.header" m="Stake pool preference" />,
-            <T id="tickets.info.poolPreference.message" m="Automate setup with PoS pools. See below for more information." />
-
-          )}
-          {this.renderSection(
-            <T id="tickets.info.expiry.header" m="Expiry (blocks)" />,
-            <T id="tickets.info.expiry.message" m="Often ticket fees will increase during a window and you may be stopped out by higher fees. By setting an expiry, tickets that are not mined in the given number of blocks are cancelled so you can try again with higher fees if you wish. If this is empty, they will not expire until the end of the window." />
-          )}
-        </div>
-        <div className="purchase-tickets-column">
-          {this.renderSection(
-            <T id="tickets.info.txFee.header" m="Tx fee (DCR/kB)" />,
-            <T id="tickets.info.txFee.message" m="Decrediton uses a &quot;split&quot; transaction to avoid blocking your balance, spliting the exact amount needed for the ticket from the balance in your wallet. The &quot;split&quot; transaction needs to be confirmed at least once before you can reuse your balance. This can block your whole balance for several minutes while this confirmation occurs. Without the split, you would have to wait for the confirmation of the ticket transaction, which could take several hours. This can be left at 0.01. It does not affect your chances of buying tickets or voting with them." />
-          )}
-          {this.renderSection(
-            <T id="tickets.info.votingAddress.header" m="Voting address" />,
-            <T id="tickets.info.votingAddress.message" m="The Decred address that will do the voting." />
-
-          )}
-          {this.renderSection(
-            <T id="tickets.info.poolFeeAddress.header" m="Pool fee address" />,
-            <T id="tickets.info.poolFeeAddress.message" m="The address that your stakepool fee will end up getting paid." />
-          )}
-          {this.renderSection(
-            <T id="tickets.info.poolFeePercentage.header" m="Pool fees (%)" />,
-            <T id="tickets.info.poolFeePercentage.message" m="The fee in which you will be charged for using the stakepool's service." />
+            <T id="sign.info.header" m="Signing a message" />,
+            <T id="sign.info.message" m="Signing a message with an address' private key allows you to prove that you are the owner of a given address to a possible counterparty.  For instance, let's say you sent 100 DCR to a merchant and you have yet to receive your merchandise.  You contact the merchant and explain the situation, but need a way to prove you are, in fact, the owner of the address that the funds were sent from.  To do this you can generate a signature based on a message only known to you and your counterparty and the private key associated with the address.  Upon receipt, the counterparty may use the Verify Message form to ensure the signature is VALID." />
           )}
         </div>
       </div>
@@ -74,4 +34,4 @@ class PurchaseTicketsInfo extends React.Component {
 
 }
 
-export default PurchaseTicketsInfo;
+export default SignMessageInfo;
