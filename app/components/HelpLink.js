@@ -1,4 +1,3 @@
-import React from "react";
 import { shell } from "electron";
 import "style/MiscComponents.less";
 

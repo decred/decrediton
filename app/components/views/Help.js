@@ -1,12 +1,10 @@
-// @flow
-import React, {Component} from "react";
 import Header from "Header";
 import HelpLink from "HelpLink";
 import { FormattedMessage as T } from "react-intl";
 import "style/Layout.less";
 import "style/Help.less";
 
-class Help extends Component{
+class Help extends React.Component{
   render() {
     return (
       <div className="page-view">
