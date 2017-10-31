@@ -36,13 +36,13 @@ export function decodeRawTransaction(hexTx) {
     dispatch({ request, type: DECODERAWTX_ATTEMPT });
     decodeMessageService.decodeRawTransaction(request, (error, tx) => {
       if (error) {
-        console.log("decodeRawTx Error", error)
+        console.log("decodeRawTx Error", error);
         return;
       }
       console.log("decodeRawTx response", tx.toObject());
 
     });
 
-  }
+  };
 
 }
