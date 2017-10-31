@@ -25,7 +25,7 @@ import {
 } from "../actions/ClientActions";
 import {
   GETDECODEMESSAGESERVICE_ATTEMPT, GETDECODEMESSAGESERVICE_FAILED, GETDECODEMESSAGESERVICE_SUCCESS,
-  DECODERAWTX_SUCCESS
+  DECODERAWTXS_SUCCESS
 } from "../actions/DecodeMessageActions";
 import { SIGNMESSAGE_ATTEMPT, SIGNMESSAGE_SUCCESS, SIGNMESSAGE_FAILED, SIGNMESSAGE_CLEANSTORE } from "../actions/SignMessageActions";
 import { VERIFYMESSAGE_ATTEMPT, VERIFYMESSAGE_SUCCESS, VERIFYMESSAGE_FAILED, VERIFYMESSAGE_CLEANSTORE } from "../actions/VerifyMessageActions";
@@ -469,13 +469,12 @@ export default function grpc(state = {}, action) {
       getMessageDecodeServiceError: null,
       decodeMessageService: action.decodeMessageService,
     };
-  case DECODERAWTX_SUCCESS:
-    const original = state.decodedTransactions;
+  case DECODERAWTXS_SUCCESS:
     return {
       ...state,
       decodedTransactions: {
-        ...original,
-        [action.transaction.hash]: action.transaction
+        ...state.decodedTransactions,
+        ...action.transactions
       }
     };
   default:

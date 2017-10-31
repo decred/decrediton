@@ -15,12 +15,7 @@ class TicketListPage extends Component{/*  */
     super(props);
     const pagination = this.calcPagination(props.tickets);
     this.state = { currentPage: 0, expandedTicket: null, ...pagination };
-
-    // if (props.tickets.length > 0) {
-    //   // just to see what information a ticket has. Remove before going to production.
-    //   console.log("ticket 0", props.tickets[0]);
-    //   this.props.decodeRawTransaction(props.tickets[0].ticketRawTx);
-    // }
+    this.requestTicketsRawTx();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -40,41 +35,41 @@ class TicketListPage extends Component{/*  */
     } else {
       this.setState({expandedTicket: ticket});
     }
-
-    console.log("expanding ticket", ticket);
-    if (!ticket.decodedTicketTx) {
-      this.props.decodeRawTransaction(ticket.ticketRawTx);
-    }
-    if (!ticket.decodedSpenderTx && ticket.spenderRawTx) {
-      this.props.decodeRawTransaction(ticket.spenderRawTx);
-    }
   }
 
   onPageChanged(pageNumber) {
-    this.setState({currentPage: pageNumber});
+    this.setState({currentPage: pageNumber}, this.requestTicketsRawTx);
+  }
+
+  getVisibleTickets() {
+    const { currentPage, ticketsPerPage } = this.state;
+    const startIndex = currentPage * ticketsPerPage;
+    const endIndex = startIndex + ticketsPerPage;
+    return this.props.tickets.slice(startIndex, endIndex);
+  }
+
+  requestTicketsRawTx() {
+    const visibleTickets = this.getVisibleTickets();
+    const toDecode = visibleTickets.reduce((a, t) => {
+      if ((t.status === "voted") && (!t.decodedTicketTx)) {
+        a.push(t.ticketRawTx);
+        a.push(t.spenderRawTx);
+      }
+      return a;
+    }, []);
+    this.props.decodeRawTransactions(toDecode);
   }
 
   render() {
-    const { currentPage, ticketsPerPage, totalPages, expandedTicket } = this.state;
+    const { currentPage, totalPages, expandedTicket } = this.state;
     const { router } = this.props;
 
-    const startIndex = currentPage * ticketsPerPage;
-    const endIndex = startIndex + ticketsPerPage;
-    const visibleTickets = this.props.tickets.slice(startIndex, endIndex);
+    const visibleTickets = this.getVisibleTickets();
     const visibleCards = visibleTickets.map(ticket => {
       const key = ticket.hash;
       const expanded = ticket === expandedTicket;
       return <TicketInfoCard {...{key, ticket, expanded}} onClick={this.onInfoCardClick} />;
     });
-
-    /*for (let i = 0; i < this.state.shownTo; i++) {
-      const ticket = this.props.tickets[i];
-      const key = ticket.status + "/" + i;
-      const expanded = ticket === this.state.expandedTicket;
-      visible.push((
-        <TicketInfoCard {...{key, ticket, expanded}} onClick={this.onInfoCardClick} />
-      ));
-    }*/
 
     return (
       <Aux>
