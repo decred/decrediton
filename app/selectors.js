@@ -328,17 +328,19 @@ const ticketNormalizer = createSelector(
         - ticketChange + ticketTxFee;
 
       let ticketReward = null;
+      let ticketROI = null;
       if (isVote) {
         // everything returned to the wallet after voting
         let rawTicketReward = spenderTx.getCreditsList().reduce((a, v) => a+v.getAmount(), 0);
 
         // this is liquid from applicable fees (i.e, what the wallet actually made)
         ticketReward = rawTicketReward - ticketInvestment;
+
+        ticketROI = ticketReward / ticketInvestment;
       }
 
       let ticketPoolFee = null;
       if ( isVote &&  decodedSpenderTx) {
-        console.log("yy", decodedSpenderTx);
         // pool fee are all OP_SSGEN txo that have not made it into our own wallet
         // the match is made between fields "index" (on creditsList) and "n" (on outputsList)
         const walletOutputIndices = spenderTx.getCreditsList().reduce((a, v) => [...a, v.getIndex()], []);
@@ -361,6 +363,7 @@ const ticketNormalizer = createSelector(
         ticketInvestment,
         ticketTxFee,
         ticketPoolFee,
+        ticketROI,
         enterTimestamp: ticketTx.getTimestamp(),
         leaveTimestamp: hasSpender ? spenderTx.getTimestamp() : null,
         status: ticket.status,
