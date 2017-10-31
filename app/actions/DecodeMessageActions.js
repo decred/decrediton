@@ -38,11 +38,12 @@ export function decodeRawTransactions(hexTxs) {
     var { decodeMessageService } = getState().grpc;
 
     const resolved = resps => {
-      let transactions = resps.map(resp => {
+      let transactions = resps.reduce((map, resp) => {
         const decodedTransaction = resp.getTransaction();
         const hash = reverseHash(Buffer.from(decodedTransaction.getTransactionHash()).toString("hex"));
-        return {hash: hash, transaction: decodedTransaction};
-      });
+        map[hash] = {hash: hash, transaction: decodedTransaction};
+        return map;
+      }, {});
       dispatch({transactions, type: DECODERAWTXS_SUCCESS});
     };
 

@@ -5,19 +5,20 @@ import TransactionLink from "TransactionLink";
 const ExpandedInfo = ({ ticket }) => (
   <div className="ticket-expanded-info">
     <div>
-      <span className="ticket-info-label"><T id="myTickets.transaction" m="Transaction"/>:</span>
+      <span className="ticket-info-label"><T id="myTickets.ticketTx" m="Transaction"/>:</span>
       <span className="ticket-transaction-hash">
         <TransactionLink txHash={ticket.hash} />
       </span>
     </div>
-    <div>
-    <span className="ticket-info-label"><T id="myTickets.block" m="Block"/>:</span>
-      <span className="ticket-transaction-hash">...</span>
-    </div>
-    <div>
-      <span className="ticket-info-label"><T id="myTickets.height" m="Height"/>:</span>
-      <span className="ticket-transaction-hash">...</span>
-    </div>
+
+    { ticket.spenderTx
+      ? (<div>
+        <span className="ticket-info-label"><T id="myTickets.spenderTx" m="Spender"/>:</span>
+        <span className="ticket-transaction-hash">
+          <TransactionLink txHash={ticket.spenderHash} />
+        </span>
+      </div>)
+      : null }
 
   </div>
 );

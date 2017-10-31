@@ -6,6 +6,17 @@ import { Tooltip } from "shared";
 import { tsToDate } from "helpers/dateFormat";
 import { FormattedMessage as T } from "react-intl";
 
+const statusTxt = {
+  "unknown": <T id="ticket.status.unknown" m="unknown" />,
+  "unmined": <T id="ticket.status.unmined" m="unmined" />,
+  "immature": <T id="ticket.status.immature" m="immature" />,
+  "live": <T id="ticket.status.live" m="live" />,
+  "voted": <T id="ticket.status.voted" m="voted" />,
+  "missed": <T id="ticket.status.missed" m="missed" />,
+  "expired": <T id="ticket.status.expired" m="expired" />,
+  "revoked": <T id="ticket.status.revoked" m="revoked" />,
+};
+
 const TicketInfoCard = ({ ticket, onClick, expanded }) => {
 
   const className = "ticket-info-card" + (expanded ? " is-expanded" : "");
@@ -27,8 +38,8 @@ const TicketInfoCard = ({ ticket, onClick, expanded }) => {
   if (ticket.leaveTimestamp) {
     const days = Math.ceil((ticket.leaveTimestamp - ticket.enterTimestamp) / 86400);
     timeToLeaveTipText = <T id="ticket.daysToLeave"
-      m="~ {days, plural, one {# day} other {# days}}"
-      values={{days}} />;
+      m="~ {days, plural, one {# day} other {# days}} from buying until {status}"
+      values={{days, status: statusTxt[ticket.status]}} />;
   }
 
   return (<TicketCard
@@ -43,7 +54,7 @@ const TicketInfoCard = ({ ticket, onClick, expanded }) => {
         </Tooltip>
       : null }
     <div className="ticket-timestamp">
-      <Tooltip tipWidth={150} text={timeToLeaveTipText} disabled={!timeToLeaveTipText}>
+      <Tooltip tipWidth={200} text={timeToLeaveTipText} disabled={!timeToLeaveTipText}>
         <T
           id="ticket.timestamp"
           m="{timestamp, date, medium} {timestamp, time, medium}"
