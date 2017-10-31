@@ -1,7 +1,9 @@
 import { getDecodeMessageService } from "../middleware/grpc/client";
 import {
-  DecodeRawTransactionRequest, DecodeRawTransactionResponse
+  DecodeRawTransactionRequest
 } from "../middleware/walletrpc/api_pb";
+import { decodeTransaction } from "wallet/service";
+import { reverseHash } from "../helpers/byteActions";
 
 export const GETDECODEMESSAGESERVICE_ATTEMPT = "GETDECODEMESSAGESERVICE_ATTEMPT";
 export const GETDECODEMESSAGESERVICE_FAILED = "GETDECODEMESSAGESERVICE_FAILED";
@@ -45,4 +47,22 @@ export function decodeRawTransaction(hexTx) {
 
   };
 
+}
+
+export function decodeTicketTransactions(ticket) {
+  return (dispatch, getState) => {
+    var { decodeMessageService } = getState().grpc;
+    const responseResolved = decodedTransactionResponse => {
+      const decodedTransaction = decodedTransactionResponse.getTransaction();
+      const hash = reverseHash(Buffer.from(decodedTransaction.getTransactionHash()).toString("hex"));
+      const transaction = {hash: hash, transaction: decodedTransaction};
+      console.log("gonna dispatch XXXX", transaction);
+      dispatch({transaction, type: "XXXX"});
+    };
+
+    decodeTransaction(decodeMessageService, ticket.ticketRawTx)
+      .then(responseResolved);
+    decodeTransaction(decodeMessageService, ticket.spenderRawTx)
+      .then(responseResolved);
+  };
 }

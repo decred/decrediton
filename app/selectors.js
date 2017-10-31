@@ -295,18 +295,27 @@ export const viewedTransaction = createSelector(
   (transactions, txHash) => find({ txHash }, transactions.All)
 );
 
+export const decodedTransactions = get(["grpc", "decodedTransactions"]);
+
 const ticketNormalizer = createSelector(
-  [],
-  () => {
+  [decodedTransactions],
+  (decodedTransactions) => {
     return ticket => {
       const hasSpender = ticket.spender && ticket.spender.getHash();
       const ticketTx = ticket.ticket;
       const spenderTx = hasSpender ? ticket.spender : null;
       const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
+      const spenderHash = hasSpender ? reverseHash(Buffer.from(spenderTx.getHash()).toString("hex")) : null;
+      const decodedTicketTx = decodedTransactions[hash] || null;
+      //console.log("normalizing ticket", hash, decodedTransactions);
+      const decodedSpenderTx = hasSpender ? (decodedTransactions[spenderHash] || null) : null;
       return {
         hash,
+        spenderHash,
         ticketTx,
         spenderTx,
+        decodedSpenderTx,
+        decodedTicketTx,
         enterTimestamp: ticketTx.getTimestamp(),
         status: ticket.status,
         ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),

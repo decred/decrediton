@@ -10,6 +10,7 @@ const mapStateToProps = selectorMap({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   decodeRawTransaction: dma.decodeRawTransaction,
+  decodeTicketTransactions: dma.decodeTicketTransactions,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

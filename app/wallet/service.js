@@ -1,5 +1,8 @@
 import Promise from "promise";
-import { NextAddressRequest } from "../middleware/walletrpc/api_pb";
+import {
+  NextAddressRequest,
+  DecodeRawTransactionRequest,
+ } from "../middleware/walletrpc/api_pb";
 
 export const getNextAddress = (walletService, accountNum) =>
   new Promise((resolve, reject) => {
@@ -12,3 +15,19 @@ export const getNextAddress = (walletService, accountNum) =>
   .then(response => ({
     publicKey: response.getPublicKey()
   }));
+
+export const decodeTransaction = (decodeMessageService, hexTx) =>
+  new Promise((resolve, reject) => {
+    var request = new DecodeRawTransactionRequest();
+    var buff = new Uint8Array(Buffer.from(hexTx, "hex"));
+    request.setSerializedTransaction(buff);
+    decodeMessageService.decodeRawTransaction(request, (error, tx) => {
+      if (error) {
+        console.log("Error decoding transaction", error);
+        reject(error);
+      } else {
+        console.log("resolved decode transaction", tx);
+        resolve(tx);
+      }
+    });
+  });

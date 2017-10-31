@@ -455,20 +455,30 @@ export default function grpc(state = {}, action) {
       ...state,
       getMessageDecodeServiceRequestAttempt: true,
       getMessageDecodeServiceError: null
-    }
+    };
   case GETDECODEMESSAGESERVICE_FAILED:
     return {
       ...state,
       getMessageDecodeServiceRequestAttempt: false,
       getMessageDecodeServiceError: String(action.error)
-    }
+    };
   case GETDECODEMESSAGESERVICE_SUCCESS:
     return {
       ...state,
       getMessageDecodeServiceRequestAttempt: false,
       getMessageDecodeServiceError: null,
       decodeMessageService: action.decodeMessageService,
-    }
+    };
+  case "XXXX":
+    console.log("on reducer");
+    const original = state.decodedTransactions;
+    return {
+      ...state,
+      decodedTransactions: {
+        ...original,
+        [action.transaction.hash]: action.transaction
+      }
+    };
   default:
     return state;
   }

@@ -182,6 +182,8 @@ var initialState = {
     getMessageDecodeServiceRequestAttempt: false,
     getMessageDecodeServiceError: null,
 
+    // map from (reversed) transaction hash to fully decoded transaction
+    decodedTransactions: {},
 
   },
   walletLoader: {

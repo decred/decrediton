@@ -18,8 +18,9 @@ class TicketListPage extends Component{/*  */
 
     if (props.tickets.length > 0) {
       // just to see what information a ticket has. Remove before going to production.
-      console.log(props.tickets[0]);
-      this.props.decodeRawTransaction(props.tickets[0].spenderRawTx);
+      console.log("ticket 0", props.tickets[0]);
+      //this.props.decodeRawTransaction(props.tickets[0].spenderRawTx);
+      this.props.decodeTicketTransactions(props.tickets[0]);
     }
   }
 

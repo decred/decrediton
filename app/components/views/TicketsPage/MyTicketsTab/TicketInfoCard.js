@@ -8,6 +8,7 @@ import { FormattedMessage as T } from "react-intl";
 const TicketInfoCard = ({ ticket, onClick, expanded }) => {
 
   const className = "ticket-info-card" + (expanded ? " is-expanded" : "");
+  console.log("rendering", ticket.decodedTicketTx);
 
   return (<TicketCard
     {...{ className, status: ticket.status }}
