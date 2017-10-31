@@ -1,7 +1,4 @@
 import { getDecodeMessageService } from "../middleware/grpc/client";
-import {
-  DecodeRawTransactionRequest
-} from "../middleware/walletrpc/api_pb";
 import { decodeTransaction } from "wallet/service";
 import { reverseHash } from "../helpers/byteActions";
 
@@ -25,44 +22,22 @@ export function getDecodeMessageServiceAttempt() {
   };
 }
 
-export const DECODERAWTX_ATTEMPT = "DECODERAWTX_ATTEMPT";
+export const DECODERAWTX_SUCCESS = "DECODERAWTX_SUCCESS";
 
+// decodeRawTransaction requests decodification of a raw, hex-encoded transaction.
 export function decodeRawTransaction(hexTx) {
-  console.log("gonna hex", hexTx);
-  return (dispatch, getState) => {
-    var request = new DecodeRawTransactionRequest();
-    var { decodeMessageService } = getState().grpc;
-    var buff = new Uint8Array(Buffer.from(hexTx, "hex"));
-    console.log(buff);
-    request.setSerializedTransaction(buff);
-    dispatch({ request, type: DECODERAWTX_ATTEMPT });
-    decodeMessageService.decodeRawTransaction(request, (error, tx) => {
-      if (error) {
-        console.log("decodeRawTx Error", error);
-        return;
-      }
-      console.log("decodeRawTx response", tx.toObject());
-
-    });
-
-  };
-
-}
-
-export function decodeTicketTransactions(ticket) {
   return (dispatch, getState) => {
     var { decodeMessageService } = getState().grpc;
-    const responseResolved = decodedTransactionResponse => {
-      const decodedTransaction = decodedTransactionResponse.getTransaction();
+
+    const resolved = resp => {
+      const decodedTransaction = resp.getTransaction();
       const hash = reverseHash(Buffer.from(decodedTransaction.getTransactionHash()).toString("hex"));
       const transaction = {hash: hash, transaction: decodedTransaction};
-      console.log("gonna dispatch XXXX", transaction);
-      dispatch({transaction, type: "XXXX"});
+      dispatch({transaction, type: DECODERAWTX_SUCCESS});
     };
 
-    decodeTransaction(decodeMessageService, ticket.ticketRawTx)
-      .then(responseResolved);
-    decodeTransaction(decodeMessageService, ticket.spenderRawTx)
-      .then(responseResolved);
+    decodeTransaction(decodeMessageService, hexTx)
+      .then(resolved)
+      .catch(error => console.log("DecodeRawTx Error", error));
   };
 }

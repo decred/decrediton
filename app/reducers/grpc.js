@@ -25,7 +25,7 @@ import {
 } from "../actions/ClientActions";
 import {
   GETDECODEMESSAGESERVICE_ATTEMPT, GETDECODEMESSAGESERVICE_FAILED, GETDECODEMESSAGESERVICE_SUCCESS,
-  DECODERAWTX_ATTEMPT
+  DECODERAWTX_SUCCESS
 } from "../actions/DecodeMessageActions";
 import { SIGNMESSAGE_ATTEMPT, SIGNMESSAGE_SUCCESS, SIGNMESSAGE_FAILED, SIGNMESSAGE_CLEANSTORE } from "../actions/SignMessageActions";
 import { VERIFYMESSAGE_ATTEMPT, VERIFYMESSAGE_SUCCESS, VERIFYMESSAGE_FAILED, VERIFYMESSAGE_CLEANSTORE } from "../actions/VerifyMessageActions";
@@ -469,8 +469,7 @@ export default function grpc(state = {}, action) {
       getMessageDecodeServiceError: null,
       decodeMessageService: action.decodeMessageService,
     };
-  case "XXXX":
-    console.log("on reducer");
+  case DECODERAWTX_SUCCESS:
     const original = state.decodedTransactions;
     return {
       ...state,

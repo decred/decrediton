@@ -8,20 +8,21 @@ import { FormattedMessage as T } from "react-intl";
 const TicketInfoCard = ({ ticket, onClick, expanded }) => {
 
   const className = "ticket-info-card" + (expanded ? " is-expanded" : "");
-  console.log("rendering", ticket.decodedTicketTx);
 
   return (<TicketCard
     {...{ className, status: ticket.status }}
     onClick={() => onClick(ticket)}
   >
     <div className="ticket-info-expanded-indicator"></div>
-    <div className="ticket-info-price"><Balance value={6430865276} /></div>
-    <div className="ticket-reward"><Balance value={144565276}/></div>
+    <div className="ticket-info-price"><Balance amount={ticket.ticketPrice} /></div>
+    {ticket.ticketReward
+      ? <div className="ticket-reward"><Balance amount={ticket.ticketReward} noSmallAmount /></div>
+      : null }
     <div className="ticket-timestamp">
       <T
         id="ticket.timestamp"
         m="{timestamp, date, medium} {timestamp, time, medium}"
-        values={{timestamp: tsToDate(ticket.enterTimestamp)}} />
+        values={{timestamp: tsToDate(ticket.leaveTimestamp || ticket.enterTimestamp)}} />
     </div>
     <ExpandedInfo {...{ticket}} />
   </TicketCard>);

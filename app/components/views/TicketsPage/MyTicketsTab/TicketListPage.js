@@ -16,12 +16,11 @@ class TicketListPage extends Component{/*  */
     const pagination = this.calcPagination(props.tickets);
     this.state = { currentPage: 0, expandedTicket: null, ...pagination };
 
-    if (props.tickets.length > 0) {
-      // just to see what information a ticket has. Remove before going to production.
-      console.log("ticket 0", props.tickets[0]);
-      //this.props.decodeRawTransaction(props.tickets[0].spenderRawTx);
-      this.props.decodeTicketTransactions(props.tickets[0]);
-    }
+    // if (props.tickets.length > 0) {
+    //   // just to see what information a ticket has. Remove before going to production.
+    //   console.log("ticket 0", props.tickets[0]);
+    //   this.props.decodeRawTransaction(props.tickets[0].ticketRawTx);
+    // }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,6 +40,14 @@ class TicketListPage extends Component{/*  */
     } else {
       this.setState({expandedTicket: ticket});
     }
+
+    console.log("expanding ticket", ticket);
+    if (!ticket.decodedTicketTx) {
+      this.props.decodeRawTransaction(ticket.ticketRawTx);
+    }
+    if (!ticket.decodedSpenderTx && ticket.spenderRawTx) {
+      this.props.decodeRawTransaction(ticket.spenderRawTx);
+    }
   }
 
   onPageChanged(pageNumber) {
@@ -53,7 +60,7 @@ class TicketListPage extends Component{/*  */
 
     const startIndex = currentPage * ticketsPerPage;
     const endIndex = startIndex + ticketsPerPage;
-    const visibleTickets = this.props.tickets.slice(startIndex, endIndex+1);
+    const visibleTickets = this.props.tickets.slice(startIndex, endIndex);
     const visibleCards = visibleTickets.map(ticket => {
       const key = ticket.hash;
       const expanded = ticket === expandedTicket;

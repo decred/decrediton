@@ -302,13 +302,52 @@ const ticketNormalizer = createSelector(
   (decodedTransactions) => {
     return ticket => {
       const hasSpender = ticket.spender && ticket.spender.getHash();
+      const isVote = ticket.status == "voted";
       const ticketTx = ticket.ticket;
       const spenderTx = hasSpender ? ticket.spender : null;
       const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
       const spenderHash = hasSpender ? reverseHash(Buffer.from(spenderTx.getHash()).toString("hex")) : null;
       const decodedTicketTx = decodedTransactions[hash] || null;
-      //console.log("normalizing ticket", hash, decodedTransactions);
       const decodedSpenderTx = hasSpender ? (decodedTransactions[spenderHash] || null) : null;
+
+      // effective ticket price is the output 0 for the ticket transaction
+      // (stakesubmission script class)
+      const ticketPrice = ticketTx.getCreditsList()[0].getAmount();
+
+      // ticket tx fee is the fee for the transaction where the ticket was bought
+      const ticketTxFee = ticketTx.getFee();
+
+      // missing: split tx fee
+
+      // ticket change is anything returned to the wallet on ticket purchase.
+      // (don't know if it is currently possible to have change due to split transactions)
+      const ticketChange = ticketTx.getCreditsList().slice(1).reduce((a, v) => a+v.getAmount(), 0);
+
+      // ticket investment is the full amount paid by the wallet
+      const ticketInvestment = ticketTx.getDebitsList().reduce((a, v) => a+v.getPreviousAmount(), 0)
+        - ticketChange + ticketTxFee;
+
+      let ticketReward = null;
+      if (isVote) {
+        // everything returned to the wallet after voting
+        let rawTicketReward = spenderTx.getCreditsList().reduce((a, v) => a+v.getAmount(), 0);
+
+        // this is liquid from applicable fees (i.e, what the wallet actually made)
+        ticketReward = rawTicketReward - ticketInvestment;
+      }
+
+      let ticketPoolFee = null;
+      if ( isVote &&  decodedSpenderTx) {
+        console.log("yy", decodedSpenderTx);
+        // pool fee are all OP_SSGEN txo that have not made it into our own wallet
+        // the match is made between fields "index" (on creditsList) and "n" (on outputsList)
+        const walletOutputIndices = spenderTx.getCreditsList().reduce((a, v) => [...a, v.getIndex()], []);
+        ticketPoolFee = decodedSpenderTx.transaction.getOutputsList().reduce((a, v) => {
+          if (!v.getScriptAsm().match(/^OP_SSGEN /)) return a;
+          return walletOutputIndices.indexOf(v.getN()) > -1 ? a : a + v.getValue();
+        }, 0);
+      }
+
       return {
         hash,
         spenderHash,
@@ -316,7 +355,14 @@ const ticketNormalizer = createSelector(
         spenderTx,
         decodedSpenderTx,
         decodedTicketTx,
+        ticketPrice,
+        ticketReward,
+        ticketChange,
+        ticketInvestment,
+        ticketTxFee,
+        ticketPoolFee,
         enterTimestamp: ticketTx.getTimestamp(),
+        leaveTimestamp: hasSpender ? spenderTx.getTimestamp() : null,
         status: ticket.status,
         ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),
         spenderRawTx: hasSpender ? Buffer.from(spenderTx.getTransaction()).toString("hex") : null,

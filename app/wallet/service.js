@@ -23,10 +23,8 @@ export const decodeTransaction = (decodeMessageService, hexTx) =>
     request.setSerializedTransaction(buff);
     decodeMessageService.decodeRawTransaction(request, (error, tx) => {
       if (error) {
-        console.log("Error decoding transaction", error);
         reject(error);
       } else {
-        console.log("resolved decode transaction", tx);
         resolve(tx);
       }
     });
