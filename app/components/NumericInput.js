@@ -16,7 +16,7 @@ const NumericInput = ({
   unit
 }) => {
   return (
-    <div>
+    <Aux>
       <input
         type="text"
         className="numeric-input"
@@ -43,9 +43,7 @@ const NumericInput = ({
           ) : null}
         </div>
       ) : null}
-
-
-    </div>
+    </Aux>
   );
 };
 

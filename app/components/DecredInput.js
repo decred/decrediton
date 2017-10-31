@@ -16,22 +16,19 @@ const DcrInput = ({
   currencyDisplay
 }) => {
   return (
-    <div>
-      <NumericInput
-        showErrors={showErrors}
-        invalidMessage={invalidMessage}
-        requiredMessage={requiredMessage}
-        disabled={disabled}
-        readOnly={readOnly}
-        placeholder={placeholder}
-        required={required}
-        invalid={invalid}
-        value={value}
-        onChange={onChange}
-        unit= {currencyDisplay}
-      />
-
-    </div>
+    <NumericInput
+      showErrors={showErrors}
+      invalidMessage={invalidMessage}
+      requiredMessage={requiredMessage}
+      disabled={disabled}
+      readOnly={readOnly}
+      placeholder={placeholder}
+      required={required}
+      invalid={invalid}
+      value={value}
+      onChange={onChange}
+      unit= {currencyDisplay}
+    />
   );
 };
 
