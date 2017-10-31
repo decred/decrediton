@@ -4,7 +4,7 @@ import {
 } from "./fp";
 import { reverseHash } from "./helpers/byteActions";
 import { TransactionDetails }  from "./middleware/walletrpc/api_pb";
-import { TicketTypes } from "./helpers/tickets";
+import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
@@ -298,8 +298,8 @@ export const viewedTransaction = createSelector(
 export const decodedTransactions = get(["grpc", "decodedTransactions"]);
 
 const ticketNormalizer = createSelector(
-  [decodedTransactions],
-  (decodedTransactions) => {
+  [decodedTransactions, network],
+  (decodedTransactions, network) => {
     return ticket => {
       const hasSpender = ticket.spender && ticket.spender.getHash();
       const isVote = ticket.status == "voted";
@@ -340,6 +340,7 @@ const ticketNormalizer = createSelector(
       }
 
       let ticketPoolFee = null;
+      let voteChoices = null;
       if ( isVote &&  decodedSpenderTx) {
         // pool fee are all OP_SSGEN txo that have not made it into our own wallet
         // the match is made between fields "index" (on creditsList) and "n" (on outputsList)
@@ -348,6 +349,9 @@ const ticketNormalizer = createSelector(
           if (!v.getScriptAsm().match(/^OP_SSGEN /)) return a;
           return walletOutputIndices.indexOf(v.getN()) > -1 ? a : a + v.getValue();
         }, 0);
+
+        let voteScript = decodedSpenderTx.transaction.getOutputsList()[1].getScript();
+        voteChoices = decodeVoteScript(network, voteScript);
       }
 
       return {
@@ -364,6 +368,7 @@ const ticketNormalizer = createSelector(
         ticketTxFee,
         ticketPoolFee,
         ticketROI,
+        voteChoices,
         enterTimestamp: ticketTx.getTimestamp(),
         leaveTimestamp: hasSpender ? spenderTx.getTimestamp() : null,
         status: ticket.status,

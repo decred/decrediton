@@ -1,6 +1,7 @@
 import React from "react";
 import { FormattedMessage as T } from "react-intl";
 import TransactionLink from "TransactionLink";
+import VoteChoice from "./VoteChoice";
 
 const ExpandedInfo = ({ ticket }) => (
   <div className="ticket-expanded-info">
@@ -18,6 +19,17 @@ const ExpandedInfo = ({ ticket }) => (
           <TransactionLink txHash={ticket.spenderHash} />
         </span>
       </div>)
+      : null }
+
+    { ticket.voteChoices
+      ? (<div>
+        <span className="ticket-info-label"><T id="myTickets.voteChoices" m="Vote"/>:</span>
+        <span className="ticket-transaction-hash">
+          {Object.keys(ticket.voteChoices).map((agendaId =>
+            <VoteChoice {...{ agendaId, choice: ticket.voteChoices[agendaId] }} />
+          )) }
+        </span>
+        </div>)
       : null }
 
   </div>
