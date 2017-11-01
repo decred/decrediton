@@ -14,7 +14,7 @@ const AppDataForm = ({
   ...state,
   onSubmitDiffAppdataForm,
   onChangeRpcappdata,
-  formatMessage
+  intl
   }) => {
 
   const { diffAppdataFormHasErrors, isSubmittedDiffAppdataForm } = state;
@@ -33,7 +33,7 @@ const AppDataForm = ({
                 showErrors
                 required
                 onChange={(e) => onChangeRpcappdata(e.target.value)}
-                placeholder={formatMessage(messages.appdataFieldPlaceholder)}
+                placeholder={intl.formatMessage(messages.appdataFieldPlaceholder)}
               />
             </div>
           </div>

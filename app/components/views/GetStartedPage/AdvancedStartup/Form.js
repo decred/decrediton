@@ -3,7 +3,7 @@ import Header from "Header";
 import KeyBlueButton from "KeyBlueButton";
 import RemoteDaemonForm from "./RemoteDaemonForm";
 import AppDataForm from "./AppDataForm";
-import { FormattedMessage as T } from "react-intl";
+import { FormattedMessage as T, injectIntl } from "react-intl";
 import "style/LoginForm.less";
 
 export const AdvancedHeader = () => (
@@ -12,7 +12,7 @@ export const AdvancedHeader = () => (
     headerMetaOverview={<T id="getStarted.advanced.meta" m="Please complete one of the following forms to start Decrediton according to your local setup." />} />
 );
 
-export const AdvancedBody = ({
+const AdvancedBodyBase = ({
   ...props,
   ...state,
   onSubmitDiffAppdataForm,
@@ -22,7 +22,7 @@ export const AdvancedBody = ({
   onChangeRpcpass,
   onChangeRpccert,
   skipAdvancedDaemon,
-  intl: { formatMessage }
+  intl
  }) => {
   return (
     <div className="login-form-wrapper">
@@ -34,7 +34,7 @@ export const AdvancedBody = ({
           onChangeRpcuser,
           onChangeRpcpass,
           onChangeRpccert,
-          formatMessage
+          intl
         }}
         />
         <AppDataForm {...{
@@ -43,7 +43,7 @@ export const AdvancedBody = ({
           onSubmitDiffAppdataForm,
           onChangeRpcappdata,
           onChangeRpccert,
-          formatMessage
+          intl
         }} />
       </div>
       <KeyBlueButton onClick={skipAdvancedDaemon}>
@@ -52,3 +52,5 @@ export const AdvancedBody = ({
     </div>
   );
 };
+
+export const AdvancedBody = injectIntl(AdvancedBodyBase);
