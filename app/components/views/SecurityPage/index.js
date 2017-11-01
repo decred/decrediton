@@ -28,7 +28,7 @@ class SecurityPage extends React.Component {
     if(form === 0)
       this.props.getSignMessageCleanStore();
     else if (form === 1)
-      this.props.verifyMessageCleanStore();
+      this.props.getVerifyMessageCleanStore();
   }
 
   render() {
