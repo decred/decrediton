@@ -1,8 +1,8 @@
-import React from "react";
 import Header from "../../../Header";
 import KeyBlueButton from "../../../KeyBlueButton";
 import SlateGrayButton from "../../../SlateGrayButton";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
+import { TextInput, PasswordInput } from "inputs";
 import "../../../../style/Layout.less";
 import "../../../../style/AccountsPage.less";
 
@@ -54,7 +54,7 @@ const AddAccountForm = ({
             :</div>
           <div className="account-form-input">
             <div className="account-input-form">
-              <input
+              <TextInput
                 type="text"
                 className="account-nest-address-hash-to"
                 placeholder={intl.formatMessage(messages.newNamePlaceholder)}
@@ -73,10 +73,9 @@ const AddAccountForm = ({
           <div className="account-form-label"><T id="accounts.formNew.privatePassphrase" m="Private Passphrase" />:</div>
           <div className="account-form-input">
             <div className="account-input-form">
-              <input
+              <PasswordInput
                 id="privpass"
                 className="account-nest-address-hash-to"
-                type="password"
                 placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
                 value={passPhrase}
                 onChange={(e) => setPassPhrase(e.target.value)}/>

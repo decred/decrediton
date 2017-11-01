@@ -1,10 +1,9 @@
-// @flow
-import React from "react";
 import SlateGrayButton from "SlateGrayButton";
 import KeyBlueButton from "KeyBlueButton";
 import Balance from "Balance";
 import { Tooltip } from "shared";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
+import { TextInput } from "inputs";
 import "style/Fonts.less";
 import "style/AccountRow.less";
 
@@ -84,7 +83,7 @@ const Row = ({
               </div>
               <div className="account-row-details-bottom-spec-value">
                 <div className="account-input-form">
-                  <input
+                  <TextInput
                     key={"rename"+account.accountNumber}
                     type="text"
                     className="address-content-nest-address-hash-to"

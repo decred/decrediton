@@ -1,8 +1,8 @@
-import React from "react";
 import Header from "../../../Header";
 import KeyBlueButton from "../../../KeyBlueButton";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import "../../../../style/GetStarted.less";
+import { PasswordInput } from "inputs";
+import "style/GetStarted.less";
 
 const messages = defineMessages({
   passphrasePlaceholder: {
@@ -46,10 +46,9 @@ const DiscoverAddressesFormBodyBase = ({
         <div className="get-started-content-confirm-wallet-create-input-right-padding">
           <div className="get-started-input-form">
             <form className="get-started-input-form">
-              <input
+              <PasswordInput
                 autoFocus
                 className="get-started-input-private-password"
-                type="password"
                 placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
                 value={passPhrase}
                 onChange={(e) => onSetPassPhrase(e.target.value)}

@@ -1,6 +1,6 @@
-import React from "react";
 import compose from "lodash/fp/compose";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
+import { AddressInput, DcrInput } from "inputs";
 import "../../../../style/SendPage.less";
 
 const messages = defineMessages({
@@ -17,7 +17,6 @@ const messages = defineMessages({
 const SendOutputRow = ({
   index,
   outputs,
-  currencyDisplay,
   destination,
   amountStr,
   addressError,
@@ -38,9 +37,8 @@ const SendOutputRow = ({
       <div className="send-label"><T id="send.to" m="To" />:</div>
       <div className="send-address">
         <div className="send-input-form">
-          <input
+          <AddressInput
             value={destination}
-            type="text"
             className="send-address-hash-to"
             placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
             onChange={compose(getOnChangeOutputDestination(index), e => e.target.value)}
@@ -60,23 +58,20 @@ const SendOutputRow = ({
           {index === 0 ? <span><T id="send.amount" m="Amount" />:</span> : null}
         </div>
         <div className="send-address-amount-sum-and-currency">
-          <input
+          <DcrInput
             hidden={!isSendAll}
             className="send-address-input-amount"
             disabled={true}
-            type="text"
             value={totalSpent !== null ? totalSpent / unitDivisor : ""}
           />
-          <input
+          <DcrInput
             hidden={isSendAll}
             value={amountStr}
-            type="text"
             className="send-address-input-amount"
             placeholder={intl.formatMessage(messages.amountPlaceholder)}
             onChange={compose(getOnChangeOutputAmount(index), e => e.target.value)}
             onBlur={onAttemptConstructTransaction}
           />
-          <div className="send-address-amount-sum-gradient">{currencyDisplay}</div>
         </div>
       </div>
     </div>
