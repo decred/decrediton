@@ -97,7 +97,7 @@ const VerifyMessageForm = ({
       {
         verifyMessageError &&
         (<div className="sign-message-error">
-          {formatMessage({ id: "securitycenter.sign.form.error", defaultMessage: verifyMessageError })}
+          {formatMessage({ id: "securitycenter.verify.form.error", defaultMessage: verifyMessageError })}
         </div>)
       }
     </Aux>
@@ -106,13 +106,15 @@ const VerifyMessageForm = ({
 };
 
 VerifyMessageForm.propTypes = {
-  // formatMessage: PropTypes.func.isRequired,
-  // handleSubmit: PropTypes.func.isRequired,
-  // onSubmit: PropTypes.func.isRequired,
-  // pristine: PropTypes.bool.isRequired,
-  // submitting: PropTypes.bool.isRequired,
-  // error: PropTypes.string,
-  // rpcError: PropTypes.string,
+  handleSubmit: PropTypes.func.isRequired,
+  onSubmitVerifyMessage: PropTypes.func.isRequired,
+  pristine: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  valid: PropTypes.bool.isRequired,
+  formatMessage: PropTypes.func.isRequired,
+  onShowVerifyMessageInfo: PropTypes.func.isRequired,
+  verifyMessageError: PropTypes.string,
+  verifyMessageSuccess: PropTypes.object,
 };
 
 export default reduxForm({ form: "message/verify", validate: verifyMessageValidator })(VerifyMessageForm);
