@@ -19,7 +19,7 @@ export const LOADER_ATTEMPT = "LOADER_ATTEMPT";
 export const LOADER_FAILED = "LOADER_FAILED";
 export const LOADER_SUCCESS = "LOADER_SUCCESS";
 
-export const loaderRequest = (address, port) => (dispatch) => {
+export const loaderRequest = ( address, port) => (dispatch) => {
   const request = { address, port };
   dispatch({ request, type: LOADER_ATTEMPT });
   return getLoader(request)
@@ -91,12 +91,12 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState)
   return openWallet(getState().walletLoader.loader, pubPass)
     .then(() => {
       dispatch({ type: OPENWALLET_SUCCESS });
-      dispatch(startRpcRequestFunc());
+      dispatch(startRpcRequestFunc(false));
     })
     .catch(error => {
       if (error.message.includes("wallet already loaded")) {
         dispatch({response: {}, type: OPENWALLET_SUCCESS});
-        dispatch(startRpcRequestFunc());
+        dispatch(startRpcRequestFunc(false));
       } else if (error.message.includes("invalid passphrase") && error.message.includes("public key")) {
         if (retryAttempt) {
           dispatch({ error, type: OPENWALLET_FAILED_INPUT });
@@ -126,41 +126,61 @@ export const STARTRPC_SUCCESS = "STARTRPC_SUCCESS";
 export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
 export const startRpcRequestFunc = (isRetry) =>
-  (dispatch, getState) => {
-    const loader = getState().walletLoader.loader;
-    const cfg = getCfg();
-    const daemonhost = RPCDaemonHost();
-    const rpcport = RPCDaemonPort();
-    const rpcuser = cfg.get("rpc_user");
-    const rpcpass = cfg.get("rpc_pass");
-    const cert = getDcrdCert();
+(dispatch, getState) => {
+  const credentials = getState().daemon.credentials;
+  const startType = getState().daemon.startType;
+  const cfg = getCfg();
+  let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
-    if (!isRetry) dispatch({type: STARTRPC_ATTEMPT});
-    return startRpc(loader, daemonhost, rpcport, rpcuser, rpcpass, cert)
-      .then(() => {
+  if(startType === 1) {
+    rpcuser = credentials.rpcuser;
+    rpccertPath = credentials.rpccert;
+    rpcpass = credentials.rpcpassword;
+    daemonhost = credentials.rpchost;
+    rpcport = credentials.rpcport;
+  } else if (startType === 2) {
+    rpcuser = cfg.get("rpc_user");
+    rpcpass = cfg.get("rpc_pass");
+    rpccertPath = `${credentials.rpcappdata}/rpc.cert`;
+    daemonhost = RPCDaemonHost();
+    rpcport = RPCDaemonPort();
+  } else {
+    rpcuser = cfg.get("rpc_user");
+    rpcpass = cfg.get("rpc_pass");
+    daemonhost = RPCDaemonHost();
+    rpcport = RPCDaemonPort();
+  }
+
+  const loader = getState().walletLoader.loader;
+
+  const cert = getDcrdCert(rpccertPath);
+
+  if (!isRetry) dispatch({type: STARTRPC_ATTEMPT});
+  return startRpc(loader, daemonhost, rpcport, rpcuser, rpcpass, cert)
+    .then(() => {
+      dispatch({ type: STARTRPC_SUCCESS});
+      dispatch(subscribeBlockAttempt());
+    })
+    .catch(error => {
+      if (error.message.includes("RPC client already created")) {
         dispatch({ type: STARTRPC_SUCCESS});
         dispatch(subscribeBlockAttempt());
-      })
-      .catch(error => {
-        if (error.message.includes("RPC client already created")) {
-          dispatch({ type: STARTRPC_SUCCESS});
-          dispatch(subscribeBlockAttempt());
-        } else if (isRetry) {
-          const { rpcRetryAttempts } = getState().walletLoader;
-          if (rpcRetryAttempts < MAX_RPC_RETRIES) {
-            dispatch({ rpcRetryAttempts: rpcRetryAttempts+1, type: STARTRPC_RETRY });
-            setTimeout(() => dispatch(startRpcRequestFunc(isRetry)), RPC_RETRY_DELAY);
-          } else {
-            dispatch({
-              error: `${error}.  You may need to edit ${getCfgPath()} and try again`,
-              type: STARTRPC_FAILED
-            });
-          }
+      } else if (isRetry) {
+        const { rpcRetryAttempts } = getState().walletLoader;
+        if (rpcRetryAttempts < MAX_RPC_RETRIES) {
+          dispatch({ rpcRetryAttempts: rpcRetryAttempts+1, type: STARTRPC_RETRY });
+          setTimeout(() => dispatch(startRpcRequestFunc(isRetry)), RPC_RETRY_DELAY);
         } else {
-          dispatch(startRpcRequestFunc(true));
+          dispatch({
+            error: `${error}.  You may need to edit ${getCfgPath()} and try again`,
+            type: STARTRPC_FAILED
+          });
         }
-      });
-  };
+      } else {
+        dispatch(startRpcRequestFunc(true));
+      }
+    });
+};
 
 export const DISCOVERADDRESS_INPUT = "DISCOVERADDRESS_INPUT";
 export const DISCOVERADDRESS_FAILED_INPUT = "DISCOVERADDRESS_FAILED_INPUT";

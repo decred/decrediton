@@ -44,6 +44,9 @@ export function initCfg() {
   if (!config.has("daemon_skip_start")) {
     config.set("daemon_skip_start", false);
   }
+  if (!config.has("daemon_start_advanced")) {
+    config.set("daemon_start_advanced", false);
+  }
   if (!config.has("wallet_skip_start")) {
     config.set("wallet_skip_start", false);
   }
@@ -148,6 +151,7 @@ export function getDcrdPath() {
 export function getCert() {
   var certPath = "";
   var cfg = getCfg();
+
   if (cfg.get("cert_path") != "") {
     certPath = cfg.get("cert_path");
   }
@@ -176,7 +180,11 @@ export function getCert() {
   return(cert);
 }
 
-export function getDcrdCert() {
+export function getDcrdCert(dcrdCertPath) {
+  if(dcrdCertPath)
+    if(fs.existsSync(dcrdCertPath))
+      return fs.readFileSync(dcrdCertPath);
+
   var cfg = getCfg();
   if (cfg.get("daemon_cert_path") != "") {
     return(cfg.get("daemon_cert_path"));
