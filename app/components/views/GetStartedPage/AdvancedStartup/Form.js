@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "Header";
 import KeyBlueButton from "KeyBlueButton";
-import {LoginRPCRemote} from "./RemoteRPCForm";
+import {LoginRPCRemote} from "./RemoteDaemonForm";
 import AppDataForm from "./AppDataForm";
 import { FormattedMessage as T } from "react-intl";
 import "style/LoginForm.less";

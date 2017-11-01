@@ -28,9 +28,9 @@ const AppDataForm = ({
           <div className="stakepool-purchase-ticket-input">
             <div className="stakepool-input-form-purchase-ticket">
               <TextInput
-                label={formatMessage(messages.appdataFieldLabel)}
                 name="rpcappdata"
                 type="text"
+                showErrors
                 required
                 onChange={(e) => onChangeRpcappdata(e.target.value)}
                 placeholder={formatMessage(messages.appdataFieldPlaceholder)}
