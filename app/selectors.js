@@ -343,11 +343,11 @@ const ticketNormalizer = createSelector(
       let voteChoices = null;
       if ( isVote &&  decodedSpenderTx) {
         // pool fee are all OP_SSGEN txo that have not made it into our own wallet
-        // the match is made between fields "index" (on creditsList) and "n" (on outputsList)
+        // the match is made between fields "index" (on creditsList) and "index" (on outputsList)
         const walletOutputIndices = spenderTx.getCreditsList().reduce((a, v) => [...a, v.getIndex()], []);
         ticketPoolFee = decodedSpenderTx.transaction.getOutputsList().reduce((a, v) => {
           if (!v.getScriptAsm().match(/^OP_SSGEN /)) return a;
-          return walletOutputIndices.indexOf(v.getN()) > -1 ? a : a + v.getValue();
+          return walletOutputIndices.indexOf(v.getIndex()) > -1 ? a : a + v.getValue();
         }, 0);
 
         let voteScript = decodedSpenderTx.transaction.getOutputsList()[1].getScript();

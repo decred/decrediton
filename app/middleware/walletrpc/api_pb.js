@@ -25641,7 +25641,7 @@ proto.walletrpc.DecodedTransaction.Output.prototype.toObject = function(opt_incl
 proto.walletrpc.DecodedTransaction.Output.toObject = function(includeInstance, msg) {
   var f, obj = {
     value: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    n: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    index: jspb.Message.getFieldWithDefault(msg, 2, 0),
     version: jspb.Message.getFieldWithDefault(msg, 3, 0),
     script: msg.getScript_asB64(),
     scriptAsm: jspb.Message.getFieldWithDefault(msg, 5, ""),
@@ -25691,7 +25691,7 @@ proto.walletrpc.DecodedTransaction.Output.deserializeBinaryFromReader = function
       break;
     case 2:
       var value = /** @type {number} */ (reader.readUint32());
-      msg.setN(value);
+      msg.setIndex(value);
       break;
     case 3:
       var value = /** @type {number} */ (reader.readInt32());
@@ -25757,7 +25757,7 @@ proto.walletrpc.DecodedTransaction.Output.serializeBinaryToWriter = function(mes
       f
     );
   }
-  f = message.getN();
+  f = message.getIndex();
   if (f !== 0) {
     writer.writeUint32(
       2,
@@ -25850,16 +25850,16 @@ proto.walletrpc.DecodedTransaction.Output.prototype.setValue = function(value) {
 
 
 /**
- * optional uint32 n = 2;
+ * optional uint32 index = 2;
  * @return {number}
  */
-proto.walletrpc.DecodedTransaction.Output.prototype.getN = function() {
+proto.walletrpc.DecodedTransaction.Output.prototype.getIndex = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
 /** @param {number} value */
-proto.walletrpc.DecodedTransaction.Output.prototype.setN = function(value) {
+proto.walletrpc.DecodedTransaction.Output.prototype.setIndex = function(value) {
   jspb.Message.setField(this, 2, value);
 };
 

@@ -26,7 +26,7 @@ const ExpandedInfo = ({ ticket }) => (
         <span className="ticket-info-label"><T id="myTickets.voteChoices" m="Vote"/>:</span>
         <span className="ticket-transaction-hash">
           {Object.keys(ticket.voteChoices).map((agendaId =>
-            <VoteChoice {...{ agendaId, choice: ticket.voteChoices[agendaId] }} />
+            <VoteChoice {...{ agendaId, key: agendaId, choice: ticket.voteChoices[agendaId] }} />
           )) }
         </span>
         </div>)
