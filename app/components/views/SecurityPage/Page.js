@@ -15,6 +15,8 @@ const Page = ({
   onShowSignMessageInfo,
   onSubmitVerifyMessage,
   onShowVerifyMessageInfo,
+  onHideVerifyMessageInfo,
+  onHideSignMessageInfo,
 }) => {
   const { signMessageSuccess, signMessageError, verifyMessageSuccess, verifyMessageError } = props;
   const { isShowingSignMessageInfo, isShowingVerifyMessageInfo } = state;
@@ -26,8 +28,8 @@ const Page = ({
       />
       <div className="page-content message message-sign">
         {
-          isShowingSignMessageInfo ? <SignMessageInfo /> :
-            isShowingVerifyMessageInfo ? <VerifyMessageInfo /> :
+          isShowingSignMessageInfo ? <SignMessageInfo closeModal={onHideSignMessageInfo}/> :
+            isShowingVerifyMessageInfo ? <VerifyMessageInfo closeModal={onHideVerifyMessageInfo}/> :
               <FormSelector {...{
                 form,
                 onSetForm,
