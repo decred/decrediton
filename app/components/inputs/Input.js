@@ -14,11 +14,21 @@ const Input = ({
   disabled,
   readOnly,
   className,
-  unit
+  unit,
+  hidden,
+  type,
+  onFocus,
+  onBlur
 }) => {
   let inputUnitDiv = null;
-  const onInputFocus = () => { inputUnitDiv.classList.add("active"); };
-  const onInputBlur = () => { inputUnitDiv.classList.remove("active"); };
+  const onInputFocus = (e) => {
+    inputUnitDiv.classList.add("active");
+    onFocus && onFocus(e);
+  };
+  const onInputBlur = (e) => {
+    inputUnitDiv.classList.remove("active");
+    onBlur && onBlur(e);
+  };
 
   const divClassName =
     "input-and-unit "
@@ -26,10 +36,11 @@ const Input = ({
     + (disabled ? " disabled " : "");
 
   return (
+    hidden ? null :
     <Aux>
       <div className={divClassName} ref={div => { inputUnitDiv = div; }}>
         <input
-          type="text"
+          type={type||"text"}
           className="input"
           disabled={disabled ? disabled : null}
           readOnly={readOnly ? readOnly : null}

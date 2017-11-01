@@ -5,6 +5,7 @@ import SelectStakePool from "../SelectStakePool";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
+import { TextInput } from "inputs";
 import "../../style/Layout.less";
 import "../../style/StakePool.less";
 
@@ -76,7 +77,7 @@ const StakePoolsAddForm = ({
           <div className="stakepool-content-nest-to-address">
             <div className="stakepool-content-nest-api-key">
               <div className="stakepool-input-form">
-                <input
+                <TextInput
                   type="text"
                   className="stakepool-content-nest-address-amount-sum"
                   placeholder={intl.formatMessage(messages.apiKeyPlaceholder)}
