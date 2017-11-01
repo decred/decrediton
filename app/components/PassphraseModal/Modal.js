@@ -3,7 +3,8 @@ import React from "react";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
 import { FormattedMessage as T } from "react-intl";
-import "../../style/PassphraseModal.less";
+import { PasswordInput } from "inputs";
+import "style/PassphraseModal.less";
 
 const Modal =({
   hidden,
@@ -24,7 +25,7 @@ const Modal =({
           <div className="passphrase-modal-label">
             <T id="passphraseModal.privatePassphrase" m="Private Passphrase" />
             :</div>
-          <input
+          <PasswordInput
             id="passphrase"
             className="passphrase-modal-field"
             type="password"

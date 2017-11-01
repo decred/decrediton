@@ -1,6 +1,7 @@
 import React from "react";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import "../../../style/CreateWalletForm.less";
+import { PasswordInput } from "inputs";
+import "style/CreateWalletForm.less";
 
 const messages = defineMessages({
   passphrasePlaceholder: {
@@ -33,7 +34,7 @@ const PassPhraseInputs = ({
       <div className="create-wallet-field">
         <div className="input-form">
           <form className="input-form">
-            <input
+            <PasswordInput
               className="input-private-password"
               type="password"
               placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
@@ -51,7 +52,7 @@ const PassPhraseInputs = ({
       <div className="create-wallet-field">
         <div className="input-form">
           <form className="input-form">
-            <input
+            <PasswordInput
               className="input-private-password"
               type="password"
               placeholder={intl.formatMessage(messages.verifyPassphrasePlaceholder)}
