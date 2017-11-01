@@ -82,6 +82,26 @@ const VerifyMessageForm = ({
           </button>
         </div>
       </form>
+      {
+        verifyMessageSuccess ?
+          verifyMessageSuccess.valid ?
+            (<div className="message-nest">
+              <div className={`message-content valid`}>
+                <T id="securitycenter.verify.result.valid" m="Valid signature!" />
+              </div>
+            </div>) : (<div className="message-nest">
+              <div className="message-content invalid">
+                <T id="securitycenter.verify.result.invalid" m="Invalid signature!" />
+              </div>
+            </div>) :
+          null
+      }
+      {
+        verifyMessageError &&
+        (<div className="sign-message-error">
+          {formatMessage({ id: "securitycenter.sign.form.error", defaultMessage: verifyMessageError })}
+        </div>)
+      }
     </Aux>
 
   );

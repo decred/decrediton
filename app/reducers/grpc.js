@@ -371,6 +371,8 @@ export default function grpc(state = {}, action) {
   case VERIFYMESSAGE_ATTEMPT:
     return {
       ...state,
+      getVerifyMessageError: null,
+      getVerifyMessageResponse: null,
       getVerifyMessageRequestAttempt: true,
     };
   case VERIFYMESSAGE_FAILED:

@@ -3,7 +3,7 @@ import { Field, reduxForm } from "redux-form";
 import InputField from "Form/InputField";
 import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
 import { CopyToClipboard } from "shared";
-import {signMessageValidator} from "../validator"
+import { signMessageValidator } from "../validator"
 
 const messages = defineMessages({
   addressFieldLabel: {
@@ -46,7 +46,7 @@ const SignMessage = ({
  }) => {
   return (
     <Aux>
-      <form onSubmit={ handleSubmit(onSubmitSignMessage) }>
+      <form onSubmit={handleSubmit(onSubmitSignMessage)}>
         <div className="message-content-nest">
           <div className="button-right">
             <PurchaseTicketsInfoButton onClick={onShowSignMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Sign Message Information" />} />
@@ -79,22 +79,22 @@ const SignMessage = ({
         </div>
       </form>
       {
-          signMessageSuccess &&
-            (<div className="message-nest">
-              <div className="message-content">
-                <div>
-                  {signMessageSuccess.signature}
-                </div>
-                <CopyToClipboard textToCopy={signMessageSuccess.signature} className="message-content-nest-copy-to-clipboard-icon" />
-              </div>
-            </div>)
-        }
-        {
-          signMessageError &&
-            (<div className="sign-message-error">
-              {formatMessage({id:"securitycenter.sign.form.error",defaultMessage:signMessageError})}
-            </div>)
-        }
+        signMessageSuccess &&
+        (<div className="message-nest">
+          <div className="message-content">
+            <div>
+              {signMessageSuccess.signature}
+            </div>
+            <CopyToClipboard textToCopy={signMessageSuccess.signature} className="message-content-nest-copy-to-clipboard-icon" />
+          </div>
+        </div>)
+      }
+      {
+        signMessageError &&
+        (<div className="sign-message-error">
+          {formatMessage({ id: "securitycenter.sign.form.error", defaultMessage: signMessageError })}
+        </div>)
+      }
     </Aux>
   );
 };

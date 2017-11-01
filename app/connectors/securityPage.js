@@ -3,6 +3,7 @@ import { bindActionCreators } from "redux";
 import * as sel from "../selectors";
 import * as sm from "../actions/SignMessageActions";
 import * as vm from "../actions/VerifyMessageActions";
+import { getMessageVerificationServiceAttempt } from "../actions/ClientActions";
 import { selectorMap } from "../fp";
 
 const mapStateToProps = selectorMap({
@@ -19,7 +20,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getSignMessageCleanStore: sm.signMessageCleanStore,
   getVerifyMessageAttempt: vm.verifyMessageAttempt,
   getVerifyMessageCleanStore: vm.verifyMessageCleanStore,
-  getMessageVerificationServiceAttempt: vm.getMessageVerificationServiceAttempt
+  getMessageVerificationServiceAttempt: getMessageVerificationServiceAttempt
 
 }, dispatch);
 

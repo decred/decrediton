@@ -22,9 +22,7 @@ class SecurityPage extends React.Component {
     if (!this.props.walletService) {
       this.context.router.push("/error");
     }
-    if (form === 1) {
-      this.props.getMessageVerificationServiceAttempt();
-    }
+    this.props.getMessageVerificationServiceAttempt();
   }
 
   componentWillUnmount() {
