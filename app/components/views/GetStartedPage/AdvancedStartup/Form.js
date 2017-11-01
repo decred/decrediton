@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "Header";
 import KeyBlueButton from "KeyBlueButton";
 import RemoteDaemonForm from "./RemoteDaemonForm";
@@ -25,31 +24,43 @@ const AdvancedBodyBase = ({
   intl
  }) => {
   return (
-    <div className="login-form-wrapper">
-      <div className="login-forms-wrapper">
-        <RemoteDaemonForm {...{
-          ...props,
-          ...state,
-          onSubmitRemoteForm,
-          onChangeRpcuser,
-          onChangeRpcpass,
-          onChangeRpccert,
-          intl
-        }}
-        />
-        <AppDataForm {...{
-          ...props,
-          ...state,
-          onSubmitDiffAppdataForm,
-          onChangeRpcappdata,
-          onChangeRpccert,
-          intl
-        }} />
+    <Aux>
+      <div className="advanced-page-toggle">
+        <div className="text-toggle">
+          <div className="text-toggle-button-left text-toggle-button-active">
+            <T id="advancedDaemon.toggle.remote" m="Remote Daemon" />
+          </div>
+          <div className="text-toggle-button-right">
+            <T id="advancedDaemon.toggle.appdata" m="Different Local Daemon Location" />
+          </div>
+        </div>
       </div>
-      <KeyBlueButton onClick={skipAdvancedDaemon}>
-        <T id="advancedStartup.skip" m="Skip Advanced Daemon Connection"/>
-      </KeyBlueButton>
-    </div>
+      <div className="login-form-wrapper">
+        <div className="login-forms-wrapper">
+          <RemoteDaemonForm {...{
+            ...props,
+            ...state,
+            onSubmitRemoteForm,
+            onChangeRpcuser,
+            onChangeRpcpass,
+            onChangeRpccert,
+            intl
+          }}
+          />
+          <AppDataForm {...{
+            ...props,
+            ...state,
+            onSubmitDiffAppdataForm,
+            onChangeRpcappdata,
+            onChangeRpccert,
+            intl
+          }} />
+        </div>
+        <KeyBlueButton onClick={skipAdvancedDaemon}>
+          <T id="advancedStartup.skip" m="Skip Advanced Daemon Connection"/>
+        </KeyBlueButton>
+      </div>
+    </Aux>
   );
 };
 

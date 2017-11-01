@@ -20,9 +20,12 @@ export const startDaemon = () => (dispatch) => {
   daemon.startDaemon()
   .then(res => {
     const {pid, advancedDaemon} = res;
-    dispatch({type: DAEMONSTARTED, pid});
-    const next = advancedDaemon ? {type: DAEMONSTARTED_ADVANCED, advancedDaemon} : syncDaemon();
-    dispatch(next);
+    if (advancedDaemon) {
+      dispatch({type: DAEMONSTARTED_ADVANCED, advancedDaemon});
+    } else {
+      dispatch({type: DAEMONSTARTED, pid});
+      dispatch(syncDaemon())
+    }
   })
   .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));
 };
