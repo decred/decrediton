@@ -35,7 +35,6 @@ const Modal = ({
         <PasswordInput
           id="oldPassphrase"
           className="change-passphrase-modal-field"
-          type="password"
           placeholder=""
           defaultValue={oldPrivPass}
           onChange={(e) => updateOldPrivatePassphrase(e.target.value)}
@@ -49,7 +48,6 @@ const Modal = ({
         <PasswordInput
           id="passphrase"
           className="change-passphrase-modal-field"
-          type="password"
           placeholder=""
           defaultValue={privpass}
           onChange={(e) => updatePrivatePassphrase(e.target.value)}
@@ -63,7 +61,6 @@ const Modal = ({
         <PasswordInput
           id='confirmPassphrase'
           className="change-passphrase-modal-field"
-          type="password"
           placeholder=""
           defaultValue={confirmPrivPass}
           onChange={(e) => updateConfirmPrivatePassphrase(e.target.value)}

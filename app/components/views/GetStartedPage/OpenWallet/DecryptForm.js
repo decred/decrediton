@@ -52,7 +52,6 @@ const OpenWalletDecryptFormBodyBase = ({
               <PasswordInput
                 autoFocus
                 className="get-started-input-private-password"
-                type="password"
                 placeholder={intl.formatMessage(messages.publicPassphrasePlaceholder)}
                 value={publicPassPhrase}
                 onChange={(e) => onSetPublicPassPhrase(e.target.value)}

@@ -77,7 +77,6 @@ const AddAccountForm = ({
               <PasswordInput
                 id="privpass"
                 className="account-nest-address-hash-to"
-                type="password"
                 placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
                 value={passPhrase}
                 onChange={(e) => setPassPhrase(e.target.value)}/>

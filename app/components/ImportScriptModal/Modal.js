@@ -48,7 +48,6 @@ const Modal = ({
         <PasswordInput
           id="passphrase"
           className="import-script-modal-field"
-          type="password"
           placeholder=""
           value={passPhrase}
           onChange={(e) => setPassPhrase(e.target.value)}

@@ -50,7 +50,6 @@ const DiscoverAddressesFormBodyBase = ({
               <PasswordInput
                 autoFocus
                 className="get-started-input-private-password"
-                type="password"
                 placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
                 value={passPhrase}
                 onChange={(e) => onSetPassPhrase(e.target.value)}

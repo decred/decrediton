@@ -36,7 +36,6 @@ const PassPhraseInputs = ({
           <form className="input-form">
             <PasswordInput
               className="input-private-password"
-              type="password"
               placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
               value={passPhrase}
               onKeyDown={onKeyDown}
@@ -54,7 +53,6 @@ const PassPhraseInputs = ({
           <form className="input-form">
             <PasswordInput
               className="input-private-password"
-              type="password"
               placeholder={intl.formatMessage(messages.verifyPassphrasePlaceholder)}
               value={passPhraseVerification}
               onKeyDown={onKeyDown}
