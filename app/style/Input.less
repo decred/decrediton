@@ -8,35 +8,36 @@
   font-family: @font-family-regular;
   font-size: 13px;
   color: @input-color-default;
+  padding-right: 6px;
 }
 
 .input-and-unit.numeric-input {
   font-family: @font-family-monospaced;
 }
 
-.input-and-unit:hover:not(:focus):not(:disabled):not(.active) {
+.input-and-unit:hover:not(.disabled):not(.active) {
   color: @input-color-hovered;
   border-bottom: 1px @stroke-color-hovered solid;
 }
 
-.input-and-unit.active:not(:disabled) {
+.input-and-unit.active:not(.disabled) {
   color: @input-color-focused;
   border-bottom: 1px @stroke-color-focused solid;
   outline: none;
 }
 
+.input-and-unit.disabled {
+  background-color: @disabled-background-color;
+}
+
 .input {
-  padding: 9px 0px 6px 10px;
+  padding: 9px 4px 6px 10px;
   border-style: none;
   cursor: text;
   background: transparent;
   flex-grow: 1;
   width: 100%;
   outline: none;
-}
-
-.input:disabled {
-  background-color: @disabled-background-color;
 }
 
 .input-errors-area {
@@ -50,8 +51,8 @@
   .inline-block-mixin;
 
   margin: 0;
-  max-width: 2em;
-  padding: 8px 0px 2px 10px;
+  line-height: normal;
+  padding: 9px 0px 6px 0px;
 }
 
 /*.input .text {

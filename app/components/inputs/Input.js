@@ -20,9 +20,14 @@ const Input = ({
   const onInputFocus = () => { inputUnitDiv.classList.add("active"); };
   const onInputBlur = () => { inputUnitDiv.classList.remove("active"); };
 
+  const divClassName =
+    "input-and-unit "
+    + (className || "")
+    + (disabled ? " disabled " : "");
+
   return (
     <Aux>
-      <div className={"input-and-unit " + (className || "")} ref={div => { inputUnitDiv = div; }}>
+      <div className={divClassName} ref={div => { inputUnitDiv = div; }}>
         <input
           type="text"
           className="input"
