@@ -2,14 +2,14 @@ import React from "react";
 import Header from "Header";
 import KeyBlueButton from "KeyBlueButton";
 import {LoginRPCRemote} from "./RemoteRPCForm";
-import {LoginDiffAppdata} from "./DiffAppdataForm";
+import AppDataForm from "./AppDataForm";
 import { FormattedMessage as T } from "react-intl";
 import "style/LoginForm.less";
 
 export const LoginRPCHeader = () => (
   <Header getStarted
-    headerTitleOverview={<T id="getStarted.header.title" m="Setting up Decrediton" />}
-    headerMetaOverview={<T id="getStarted.header.startRpc.meta" m="Login to your RPC" />} />
+    headerTitleOverview={<T id="getStarted.advanced.title" m="Advanced Start Up" />}
+    headerMetaOverview={<T id="getStarted.advanced.meta" m="Please complete one of the following forms to start Decrediton according to your local setup." />} />
 );
 
 export const LoginFormBody = ({
@@ -37,7 +37,7 @@ export const LoginFormBody = ({
           formatMessage
         }}
         />
-        <LoginDiffAppdata {...{
+        <AppDataForm {...{
           ...props,
           ...state,
           onSubmitDiffAppdataForm,
@@ -47,7 +47,7 @@ export const LoginFormBody = ({
         }} />
       </div>
       <KeyBlueButton onClick={skipAdvancedDaemon}>
-        Skip Advanced Daemon Connection
+        <T id="advancedStartup.skip" m="Skip Advanced Daemon Connection"/>
       </KeyBlueButton>
     </div>
   );
