@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as sel from "../selectors";
-import * as ca from "../actions/SignMessageActions";
+import * as sm from "../actions/SignMessageActions";
+import * as vm from "../actions/VerifyMessageActions";
 import { selectorMap } from "../fp";
 
 const mapStateToProps = selectorMap({
@@ -14,8 +15,12 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  getSignMessageAttempt: ca.signMessageAttempt,
-  getSignMessageCleanStore: ca.signMessageCleanStore
+  getSignMessageAttempt: sm.signMessageAttempt,
+  getSignMessageCleanStore: sm.signMessageCleanStore,
+  getVerifyMessageAttempt: vm.verifyMessageAttempt,
+  getVerifyMessageCleanStore: vm.verifyMessageCleanStore,
+  getMessageVerificationServiceAttempt: vm.getMessageVerificationServiceAttempt
+
 }, dispatch);
 
 

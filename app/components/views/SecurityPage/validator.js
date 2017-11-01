@@ -3,10 +3,21 @@ import { FormattedMessage as T } from "react-intl";
 
 export const signMessageValidator = values => {
   const errors = {};
-  
-  errors.address = !values.address ? <T id="securitycenter.form.error.mandatory.all" m="Required Field" /> : null;
-  errors.message = !values.message ? <T id="securitycenter.form.error.mandatory.all" m="Required Field" /> : null;
-  errors.passphrase = !values.passphrase ? <T id="securitycenter.form.error.mandatory.all" m="Required Field" /> : null;
+
+  errors.address = !values.address ? <T id="securitycenter.form.error.address.mandatory" m="Required Field" /> : null;
+  errors.message = !values.message ? <T id="securitycenter.form.error.message.mandatory" m="Required Field" /> : null;
+  errors.passphrase = !values.passphrase ? <T id="securitycenter.form.passphrase.error.mandatory" m="Required Field" /> : null;
 
   return errors;
 };
+
+export const verifyMessageValidator = values => {
+  const errors = {};
+
+  errors.address = !values.address ? <T id="securitycenter.form.error.address.mandatory" m="Required Field" /> : null;
+  errors.message = !values.message ? <T id="securitycenter.form.error.message.mandatory" m="Required Field" /> : null;
+  errors.signature = !values.signature ? <T id="securitycenter.form.error.signature.mandatory" m="Required Field" /> : null;
+
+  return errors;
+};
+

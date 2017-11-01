@@ -1,7 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { Field, reduxForm } from "redux-form";
 import InputField from "Form/InputField";
-import ErrorField from "Form/ErrorField";
 import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
 import { CopyToClipboard } from "shared";
 import {signMessageValidator} from "../validator"
@@ -44,7 +43,6 @@ const SignMessage = ({
   signMessageError,
   onShowSignMessageInfo,
   ...props,
-  ...state
  }) => {
   return (
     <Aux>
@@ -74,7 +72,13 @@ const SignMessage = ({
             placeholder={formatMessage(messages.passphraseFieldPlaceholder)}
           />
         </div>
-        {
+        <div className="message-toolbar">
+          <button className="key-blue-button" type="submit" disabled={pristine || submitting || !valid}>
+            <T id="securitycenter.sign.form.submit" m="Sign" />
+          </button>
+        </div>
+      </form>
+      {
           signMessageSuccess &&
             (<div className="message-nest">
               <div className="message-content">
@@ -91,12 +95,6 @@ const SignMessage = ({
               {formatMessage({id:"securitycenter.sign.form.error",defaultMessage:signMessageError})}
             </div>)
         }
-        <div className="message-toolbar">
-          <button className="key-blue-button" type="submit" disabled={pristine || submitting || !valid}>
-            <T id="securitycenter.sign.form.submit" m="Sign" />
-          </button>
-        </div>
-      </form>
     </Aux>
   );
 };

@@ -14,18 +14,25 @@ class SecurityPage extends React.Component {
       form: 0,
       isShowingSignMessageInfo: false,
       isShowingVerifyMessageInfo: false,
-      submittingSignMessage: false,
     };
   }
 
   componentWillMount() {
+    const {form} = this.state;    
     if (!this.props.walletService) {
       this.context.router.push("/error");
+    }
+    if (form === 1) {
+      this.props.getMessageVerificationServiceAttempt();
     }
   }
 
   componentWillUnmount() {
-    this.props.getSignMessageCleanStore();
+    const {form} = this.state;    
+    if(form === 0)
+      this.props.getSignMessageCleanStore();
+    else if (form === 1)
+      this.props.verifyMessageCleanStore();
   }
 
   render() {
@@ -42,6 +49,10 @@ class SecurityPage extends React.Component {
               onSubmitSignMessage: null,
               onShowSignMessageInfo: null,
               onHideSignMessageInfo: null,
+              onSubmitVerifyMessage: null,
+              onShowVerifyMessageInfo: null,
+              onHideVerifyMessageInfo: null,
+              onSetForm: null,
             }, this)
 
           }}
@@ -49,18 +60,35 @@ class SecurityPage extends React.Component {
       </Aux>
     );
   }
+
+  onSetForm(formNumber){
+    this.setState({form: formNumber})
+  }
+
   onSubmitSignMessage(props) {
-    this.setState({
-      submittingSignMessage: true
-    })
     this.props.getSignMessageAttempt(props);
   }
+
   onShowSignMessageInfo() {
     this.setState({ isShowingSignMessageInfo: true });
   }
+
   onHideSignMessageInfo() {
     this.setState({ isShowingSignMessageInfo: false });
   }
+
+  onSubmitVerifyMessage(props) {
+    this.props.getVerifyMessageAttempt(props);
+  }
+
+  onShowVerifyMessageInfo() {
+    this.setState({ isShowingVerifyMessageInfo: true });
+  }
+
+  onHideVerifyMessageInfo() {
+    this.setState({ isShowingVerifyMessageInfo: false });
+  }
+
 }
 
 export default injectIntl(securityPage(SecurityPage));
