@@ -25,7 +25,7 @@ class SecurityPage extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.signMessageCleanStore();
+    this.props.getSignMessageCleanStore();
   }
 
   render() {

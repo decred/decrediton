@@ -343,6 +343,8 @@ export default function grpc(state = {}, action) {
   case SIGNMESSAGE_ATTEMPT:
     return {
       ...state,
+      getSignMessageError: null,
+      getSignMessageResponse: null,
       getSignMessageRequestAttempt: true,
     };
   case SIGNMESSAGE_FAILED:

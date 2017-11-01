@@ -12,7 +12,10 @@ const Page = ({
   formatMessage,
   onSubmitSignMessage,
   onShowSignMessageInfo,
-}) => (
+}) => {
+  const { signMessageSuccess, signMessageError} = props;
+  
+  return (
   <div className="page-view">
     <Header
       headerTitleOverview={<T id="invalidRPCVersion.title" m="Invalid RPC Version" />}
@@ -32,13 +35,15 @@ const Page = ({
         ...{
           formatMessage,
           onSubmitSignMessage,
-          onShowSignMessageInfo          
+          onShowSignMessageInfo,
+          signMessageSuccess,
+          signMessageError,
         }
       }/>
 
     </div>
 
   </div>
-);
+)};
 
 export default Page;
