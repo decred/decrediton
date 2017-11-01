@@ -39,7 +39,6 @@ class SecurityPage extends React.Component {
             ...this.props,
             ...this.state,
             formatMessage: this.props.intl.formatMessage,
-            rpcError: false,
             ...substruct({
               onSubmitSignMessage: null,
               onShowSignMessageInfo: null,
