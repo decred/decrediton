@@ -38,6 +38,10 @@ const Page = ({
                 onShowSignMessageInfo,
                 onSubmitVerifyMessage,
                 onShowVerifyMessageInfo,
+                signMessageSuccess,
+                signMessageError,
+                verifyMessageSuccess,
+                verifyMessageError 
               }} />
         }
       </div>
