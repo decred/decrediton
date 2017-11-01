@@ -1,4 +1,3 @@
-import React from "react";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
 import "style/CreateWalletForm.less";

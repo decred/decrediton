@@ -1,5 +1,3 @@
-// @flow
-import React from "react";
 import SlateGrayButton from "SlateGrayButton";
 import KeyBlueButton from "KeyBlueButton";
 import Balance from "Balance";

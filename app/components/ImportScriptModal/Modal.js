@@ -1,5 +1,3 @@
-// @flow
-import React from "react";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
 import { FormattedMessage as T } from "react-intl";

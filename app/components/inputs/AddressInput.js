@@ -1,4 +1,3 @@
-import React from "react";
 import Input from "./Input";
 
 // AddressInput is an input that restricts values to a decred address

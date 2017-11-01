@@ -1,4 +1,3 @@
-import React from "react";
 import compose from "lodash/fp/compose";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { DcrInput, ReceiveAccountsSelect } from "inputs";

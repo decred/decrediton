@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { autobind } from "core-decorators";
 import Select from "react-select";
 import { PropTypes } from "prop-types";

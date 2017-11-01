@@ -1,4 +1,3 @@
-import React from "react";
 import { FormattedMessage as T } from "react-intl";
 import "style/Input.less";
 
