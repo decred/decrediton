@@ -1,13 +1,10 @@
-import AccountsSelect from "inputs/AccountsSelect";
 import NumTicketsInput from "../NumTicketsInput";
 import ManagePoolsButton from "../ManagePoolsButton";
 import SelectStakePool from "../SelectStakePool";
 import KeyBlueButton from "../KeyBlueButton";
 import PurchaseTicketsInfoButton from "../PurchaseTicketsInfoButton";
 import TicketsCogs from "../TicketsCogs";
-import FeeInput from "inputs/FeeInput";
-import BlocksInput from "inputs/BlocksInput";
-import AddressInput from "inputs/AddressInput";
+import { FeeInput, BlocksInput, AddressInput, AccountsSelect } from "inputs";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
 import { LinkToAccounts, Tooltip } from "shared";
 import { addSpacingAroundText } from "helpers/strings";

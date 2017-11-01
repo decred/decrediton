@@ -1,4 +1,4 @@
-import ReceiveAccountsSelect from "inputs/ReceiveAccountsSelect";
+import { ReceiveAccountsSelect } from "inputs";
 import { CopyToClipboard } from "shared";
 import KeyBlueButton from "KeyBlueButton";
 import QRCode from "./QRCode";
