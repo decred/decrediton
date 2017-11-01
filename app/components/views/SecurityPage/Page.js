@@ -41,7 +41,7 @@ const Page = ({
                 signMessageSuccess,
                 signMessageError,
                 verifyMessageSuccess,
-                verifyMessageError 
+                verifyMessageError
               }} />
         }
       </div>

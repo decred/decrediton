@@ -3,7 +3,6 @@ import { Field, reduxForm } from "redux-form";
 import InputField from "Form/InputField";
 import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
 import { verifyMessageValidator } from "../validator";
-import { Link } from "react-router";
 
 const messages = defineMessages({
   addressFieldLabel: {
@@ -42,7 +41,6 @@ const VerifyMessageForm = ({
   verifyMessageSuccess,
   verifyMessageError,
   onShowVerifyMessageInfo,
-  ...props,
   }) => {
 
   return (
@@ -86,7 +84,7 @@ const VerifyMessageForm = ({
         verifyMessageSuccess ?
           verifyMessageSuccess.valid ?
             (<div className="message-nest">
-              <div className={`message-content valid`}>
+              <div className="message-content valid">
                 <T id="securitycenter.verify.result.valid" m="Valid signature!" />
               </div>
             </div>) : (<div className="message-nest">

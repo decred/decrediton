@@ -1,7 +1,7 @@
 import { securityPage } from "connectors";
 import { autobind } from "core-decorators";
 import Page from "./Page";
-import { injectIntl, defineMessages, intlShape } from "react-intl";
+import { injectIntl } from "react-intl";
 import { substruct } from "fp";
 
 @autobind
@@ -17,7 +17,6 @@ class SecurityPage extends React.Component {
   }
 
   componentWillMount() {
-    const {form} = this.state;    
     if (!this.props.walletService) {
       this.context.router.push("/error");
     }
@@ -25,7 +24,7 @@ class SecurityPage extends React.Component {
   }
 
   componentWillUnmount() {
-    const {form} = this.state;    
+    const {form} = this.state;
     if(form === 0)
       this.props.getSignMessageCleanStore();
     else if (form === 1)
@@ -58,7 +57,7 @@ class SecurityPage extends React.Component {
   }
 
   onSetForm(formNumber){
-    this.setState({form: formNumber})
+    this.setState({form: formNumber});
   }
 
   onSubmitSignMessage(props) {

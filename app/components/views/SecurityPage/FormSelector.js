@@ -1,5 +1,4 @@
 // @flow
-import Header from "./Header";
 import { FormattedMessage as T } from "react-intl";
 import "style/Layout.less";
 import "style/SecurityCenterMessagePage.less";

@@ -3,7 +3,7 @@ import { Field, reduxForm } from "redux-form";
 import InputField from "Form/InputField";
 import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
 import { CopyToClipboard } from "shared";
-import { signMessageValidator } from "../validator"
+import { signMessageValidator } from "../validator";
 
 const messages = defineMessages({
   addressFieldLabel: {
@@ -42,7 +42,6 @@ const SignMessage = ({
   signMessageSuccess,
   signMessageError,
   onShowSignMessageInfo,
-  ...props,
  }) => {
   return (
     <Aux>
