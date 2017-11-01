@@ -34,11 +34,7 @@ const messages = defineMessages({
 });
 
 const SignMessageForm = ({ handleSubmit, onSubmit, pristine, error, submitting, rpcError, formatMessage, onShowSignMessageInfo }) => {
-  if (rpcError) {
-    error = (
-      <div className="error">{rpcError}</div>
-    );
-  }
+  
 
   return (
     <Aux>
@@ -82,7 +78,6 @@ const SignMessageForm = ({ handleSubmit, onSubmit, pristine, error, submitting, 
             component={ErrorField}
           />
         </div>
-        {error && <div className="error">{error}</div>}
         <div className="message-toolbar">
           <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
             <T id="securitycenter.sign.form.submit" m="Sign" />

@@ -38,16 +38,11 @@ const SignMessage = ({
   handleSubmit,
   submitting,
   pristine,
-   touched, error,
   onShowSignMessageInfo,
   ...props,
   ...state
  }) => {
   const { signMessageSuccess, signMessageError} = props;
-  const required = value => value ? undefined : 'Required'
-  
-  console.log(props);
-  
 
   return (
     <Aux>
@@ -92,10 +87,9 @@ const SignMessage = ({
               </div>
             </div>)
         }
-        {error && <div className="error">{error}</div>}
         {signMessageError && <div className="error">{error}</div>}
         <div className="message-toolbar">
-          <button className="key-blue-button" type="submit" >
+          <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
             <T id="securitycenter.sign.form.submit" m="Sign" />
           </button>
         </div>
@@ -104,7 +98,7 @@ const SignMessage = ({
   );
 };
 
-SignMessageForm.propTypes = {
+SignMessage.propTypes = {
   // handleSubmit: PropTypes.func.isRequired,
   // onSubmit: PropTypes.func.isRequired,
   // pristine: PropTypes.bool.isRequired,
@@ -114,4 +108,4 @@ SignMessageForm.propTypes = {
   // rpcError: PropTypes.string,
 };
 
-export default reduxForm({ form: "message/sign", signMessageValidator })(SignMessage);
+export default reduxForm({ form: "message/sign", validate: signMessageValidator })(SignMessage);
