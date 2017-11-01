@@ -5,15 +5,13 @@ import "style/Layout.less";
 import "style/SecurityCenterMessagePage.less";
 import SignMessageForm from "./Forms/SignMessageForm"
 
-const Page = ({ 
-  handleSubmit,
-  onSubmit,
-  pristine,
-  error,
+const Page = ({
+  ...props,
+  ...state,
   submitting,
-  rpcError,
   formatMessage,
-  onShowSignMessageInfo
+  onSubmitSignMessage,
+  onShowSignMessageInfo,
 }) => (
   <div className="page-view">
     <Header
@@ -33,6 +31,8 @@ const Page = ({
       <SignMessageForm  {
         ...{
           formatMessage,
+          onSubmitSignMessage,
+          onShowSignMessageInfo          
         }
       }/>
 

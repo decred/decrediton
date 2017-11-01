@@ -3,6 +3,7 @@ import { Field, reduxForm } from "redux-form";
 import InputField from "Form/InputField";
 import ErrorField from "Form/ErrorField";
 import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
+import {signMessageValidator} from "../validator"
 
 const messages = defineMessages({
   addressFieldLabel: {
@@ -31,20 +32,29 @@ const messages = defineMessages({
   },
 });
 
-const SignMessageForm = ({ handleSubmit, onSubmit, pristine, error, submitting, rpcError, formatMessage, onShowSignMessageInfo }) => {
-  if (rpcError) {
-    error = (
-      <div className="error">{rpcError}</div>
-    );
-  }
+const SignMessage = ({
+  onSubmitSignMessage,
+  formatMessage,
+  handleSubmit,
+  submitting,
+  pristine,
+   touched, error,
+  onShowSignMessageInfo,
+  ...props,
+  ...state
+ }) => {
+  const { signMessageSuccess, signMessageError} = props;
+  const required = value => value ? undefined : 'Required'
+  
+  console.log(props);
+  
 
   return (
     <Aux>
-      {/* <form onSubmit={handleSubmit(onSubmit)}> */}
-      <form>
+      <form onSubmit={ handleSubmit(onSubmitSignMessage) }>
         <div className="message-content-nest">
           <div className="button-right">
-            <PurchaseTicketsInfoButton onClick={onShowSignMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Sign Message Information"/>}/>
+            <PurchaseTicketsInfoButton onClick={onShowSignMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Sign Message Information" />} />
           </div>
           <Field
             label={formatMessage(messages.addressFieldLabel)}
@@ -71,9 +81,21 @@ const SignMessageForm = ({ handleSubmit, onSubmit, pristine, error, submitting, 
             component={ErrorField}
           />
         </div>
+        {
+          signMessageSuccess &&
+            (<div className="message-nest">
+              <div className="message-content">
+                <div>
+                  {signMessageSuccess.signature}
+                </div>
+                <CopyToClipboard textToCopy={signMessageSuccess.signature} className="message-content-nest-copy-to-clipboard-icon" />
+              </div>
+            </div>)
+        }
         {error && <div className="error">{error}</div>}
+        {signMessageError && <div className="error">{error}</div>}
         <div className="message-toolbar">
-          <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
+          <button className="key-blue-button" type="submit" >
             <T id="securitycenter.sign.form.submit" m="Sign" />
           </button>
         </div>
@@ -92,4 +114,4 @@ SignMessageForm.propTypes = {
   // rpcError: PropTypes.string,
 };
 
-export default reduxForm({ form: "message/sign" })(SignMessageForm);
+export default reduxForm({ form: "message/sign", signMessageValidator })(SignMessage);
