@@ -1,5 +1,5 @@
-import AccountsSelect from "AccountsSelect";
-import {FormattedMessage as T} from "react-intl";
+import { AccountsSelect } from "inputs";
+import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
 import DecredLoading from "DecredLoading";
 import Balance from "Balance";

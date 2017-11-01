@@ -9,8 +9,35 @@ import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHead
 import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
 import { walletStartup } from "connectors";
+import { LoginRPCHeader, LoginFormBody } from "./RPCLoginForm";
+import { injectIntl } from "react-intl";
+import { autobind } from "core-decorators";
+import { substruct } from "fp";
 
+@autobind
 class GetStartedPage extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = this.getInitialState();
+  }
+
+  getInitialState() {
+    return {
+      isSubmitedRemoteForm: false,
+      isSubmitedDiffAppdataForm: false,
+      isSubmited: false,
+      hasErrors: false,
+      remoteFormHasErrors: false,
+      diffAppdataFormHasErrors: false,
+      rpcuserFilled: false,
+      rpcpasswordFilled: false,
+      rpccertFilled: false,
+      rpcportFilled: false,
+      rpchostFilled: false,
+      rpcappdataFilled: false,
+    };
+  }
 
   componentWillMount() {
     this.props.showSidebar();
@@ -32,11 +59,13 @@ class GetStartedPage extends Component {
     const {
       startStepIndex,
       isPrepared,
-      ...props
+      isAdvancedDaemon,
+      getSkippedAdvancedLogin
     } = this.props;
+    const { isSubmited, hasErrors } = this.state;
     let Header, Body;
     if (isPrepared) {
-      switch(startStepIndex || 0) {
+      switch (startStepIndex || 0) {
       case 0:
       case 1:
         Header = CheckWalletStateHeader;
@@ -64,12 +93,136 @@ class GetStartedPage extends Component {
         Body = FinalStartUpBody;
       }
     } else {
-      Header = DaemonLoadingHeader;
-      Body = DaemonLoadingBody;
+      if (isAdvancedDaemon) {
+
+        if((isSubmited && !hasErrors) || getSkippedAdvancedLogin){
+          Header = DaemonLoadingHeader;
+          Body = DaemonLoadingBody;
+        } else {
+          Header = LoginRPCHeader;
+          Body = LoginFormBody;
+        }
+
+      } else {
+        Header = DaemonLoadingHeader;
+        Body = DaemonLoadingBody;
+      }
     }
 
-    return <Page Header={Header} Body={Body} {...props} />;
+    return (
+      <div>
+        <Page Header={Header} Body={Body}
+          {...{
+            ...this.props,
+            ...this.state,
+            ...substruct({
+              skipAdvancedDaemon: null,
+              onSubmitRemoteForm: null,
+              onSubmitDiffAppdataForm: null,
+              onChangeRpcuser: null,
+              onChangeRpcpass: null,
+              onChangeRpccert: null,
+              onChangeRpchost: null,
+              onChangeRpcport: null,
+              onChangeRpcappdata: null,
+            }, this)
+          }}
+        />
+      </div>
+    );
   }
+
+  getRemoteFormIsValid() {
+    const { rpcuserFilled, rpcpasswordFilled, rpccertFilled, rpcportFilled, rpchostFilled } = this.state;
+
+    if (!rpcuserFilled || !rpcpasswordFilled || !rpccertFilled || !rpcportFilled || !rpchostFilled ) {
+      this.setState({
+        remoteFormHasErrors: true,
+        hasErrors: true,
+      });
+      return false;
+    }
+    this.setState({
+      remoteFormHasErrors: false,
+      hasErrors: false,
+    });
+    return true;
+  }
+
+  getDiffAppdataFormIsValid() {
+    const { rpcappdataFilled } = this.state;
+    if (!rpcappdataFilled) {
+      this.setState({
+        diffAppdataFormHasErrors: true,
+        hasErrors: true,
+      });
+      return false;
+    }
+    this.setState({
+      diffAppdataFormHasErrors: false,
+      hasErrors: false
+    });
+    return true;
+  }
+
+  onChangeRpcuser(rpcuser) {
+    if (!rpcuser)
+      return this.setState({ rpcuserFilled: false });
+    this.setState({ rpcuserFilled: true });
+  }
+
+  onChangeRpcpass(rpcpass) {
+    if (!rpcpass)
+      return this.setState({ rpcpasswordFilled: false });
+    this.setState({ rpcpasswordFilled: true });
+  }
+
+  onChangeRpccert(rpccert) {
+    if (!rpccert)
+      return this.setState({ rpccertFilled: false });
+    this.setState({ rpccertFilled: true });
+  }
+
+  onChangeRpchost(rpchost) {
+    if (!rpchost)
+      return this.setState({ rpchostFilled: false });
+    this.setState({ rpchostFilled: true });
+  }
+
+  onChangeRpcport(rpcport) {
+    if (!rpcport)
+      return this.setState({ rpcportFilled: false });
+    this.setState({ rpcportFilled: true });
+  }
+
+  onChangeRpcappdata(rpcappdata) {
+    if (!rpcappdata)
+      return this.setState({ rpcappdataFilled: false });
+    this.setState({ rpcappdataFilled: true });
+  }
+
+  onSubmitRemoteForm(args) {
+    this.setState({
+      isSubmitedRemoteForm: true,
+      isSubmited: true,
+    });
+    if (this.getRemoteFormIsValid())
+      this.props.doStartAdvancedDaemon(args, 1);
+  }
+
+  onSubmitDiffAppdataForm(args) {
+    this.setState({
+      isSubmitedDiffAppdataForm: true,
+      isSubmited: true,
+    });
+    if (this.getDiffAppdataFormIsValid())
+      this.props.doStartAdvancedDaemon(args, 2);
+  }
+
+  skipAdvancedDaemon(){
+    this.props.doStartAdvancedDaemon();
+  }
+
 }
 
 GetStartedPage.propTypes = {
@@ -78,4 +231,4 @@ GetStartedPage.propTypes = {
   hideSidebarMenu: PropTypes.func.isRequired,
 };
 
-export default walletStartup(GetStartedPage);
+export default injectIntl(walletStartup(GetStartedPage));

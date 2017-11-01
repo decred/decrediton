@@ -12,6 +12,8 @@ export const getCurrentBlockCount = get(["daemon", "currentBlockCount"]);
 export const getNeededBlocks = get(["walletLoader", "neededBlocks"]);
 export const getEstimatedTimeLeft = get(["daemon", "timeLeftEstimate"]);
 export const getDaemonSynced = get(["daemon", "daemonSynced"]);
+export const isAdvancedDaemon = get(["daemon", "daemonAdvanced"]);
+export const getSkippedAdvancedLogin = get(["daemon", "skippedAdvancedLoing"]);
 export const getWalletReady = get(["daemon", "walletReady"]);
 export const isPrepared = and(
   getDaemonStarted,

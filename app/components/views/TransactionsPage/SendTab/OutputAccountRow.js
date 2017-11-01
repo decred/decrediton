@@ -1,7 +1,6 @@
-import React from "react";
 import compose from "lodash/fp/compose";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import ReceiveAccountsSelect from "../../../ReceiveAccountsSelect";
+import { DcrInput, ReceiveAccountsSelect } from "inputs";
 import "../../../../style/SendPage.less";
 
 const messages = defineMessages({
@@ -13,7 +12,6 @@ const messages = defineMessages({
 
 const SendOutputAccountRow = ({
   index,
-  currencyDisplay,
   amountStr,
   amountError,
   onAttemptConstructTransaction,
@@ -36,14 +34,14 @@ const SendOutputAccountRow = ({
       <div className="send-amount">
         <div className="send-amount-label"><T id="send.amount" m="Amount" />:</div>
         <div className="send-address-amount-sum-and-currency">
-          <input
+          <DcrInput
             hidden={!isSendAll}
             className="send-address-input-amount"
             disabled={true}
             type="text"
             value={totalSpent !== null ? totalSpent / unitDivisor : ""}
           />
-          <input
+          <DcrInput
             hidden={isSendAll}
             value={amountStr}
             type="text"
@@ -52,7 +50,6 @@ const SendOutputAccountRow = ({
             onChange={compose(getOnChangeOutputAmount(index), e => e.target.value)}
             onBlur={onAttemptConstructTransaction}
           />
-          <div className="send-address-amount-sum-gradient">{currencyDisplay}</div>
         </div>
       </div>
     </div>

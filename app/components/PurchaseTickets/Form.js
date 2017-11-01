@@ -1,12 +1,10 @@
-import AccountsSelect from "../AccountsSelect";
 import NumTicketsInput from "../NumTicketsInput";
 import ManagePoolsButton from "../ManagePoolsButton";
 import SelectStakePool from "../SelectStakePool";
 import KeyBlueButton from "../KeyBlueButton";
 import PurchaseTicketsInfoButton from "../PurchaseTicketsInfoButton";
 import TicketsCogs from "../TicketsCogs";
-import DecredInput from "../DecredInput";
-import NumericInput from "../NumericInput";
+import { FeeInput, BlocksInput, AddressInput, AccountsSelect } from "inputs";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
 import { LinkToAccounts, Tooltip } from "shared";
 import { addSpacingAroundText } from "helpers/strings";
@@ -113,13 +111,13 @@ const PurchaseTicketsForm = ({
             </div>
           </div>
           <div className="stakepool-purchase-ticket-row">
-            <div className="stakepool-purchase-ticket-row-thirds">
+            <div className="stakepool-purchase-ticket-row-thirds-first">
               <div className="stakepool-purchase-ticket-label">
-                <T id="purchaseTickets.ticketFee" m="Ticket Fee (DCR/kB)" />
+                <T id="purchaseTickets.ticketFee" m="Ticket Fee" />
                 :</div>
               <div className="stakepool-purchase-ticket-thirds-input">
                 <div className="stakepool-input-form-purchase-ticket">
-                  <DecredInput
+                  <FeeInput
                     placeholder={formatMessage(messages.ticketFeePlaceholder)}
                     value={ticketFee}
                     onChange={changeTicketFee}
@@ -132,11 +130,11 @@ const PurchaseTicketsForm = ({
               </div>
             </div>
             <div className="stakepool-purchase-ticket-row-thirds">
-              <div className="stakepool-purchase-ticket-label">
-                <T id="purchaseTickets.txFee" m="Tx Fee (DCR/kB)" />:</div>
+              <div className="stakepool-purchase-ticket-label-second">
+                <T id="purchaseTickets.txFee" m="Tx Fee" />:</div>
               <div className="stakepool-purchase-ticket-thirds-input">
                 <div className="stakepool-input-form-purchase-ticket">
-                  <DecredInput
+                  <FeeInput
                     placeholder={formatMessage(messages.txFeePlaceholder)}
                     value={txFee}
                     onChange={changeTxFee}
@@ -149,11 +147,11 @@ const PurchaseTicketsForm = ({
               </div>
             </div>
             <div className="stakepool-purchase-ticket-row-thirds">
-              <div className="stakepool-purchase-ticket-label">
+              <div className="stakepool-purchase-ticket-label-second">
                 <T id="purchaseTickets.expiry" m="Expiry" />:</div>
               <div className="stakepool-purchase-ticket-thirds-input">
                 <div className="stakepool-input-form-purchase-ticket">
-                  <NumericInput
+                  <BlocksInput
                     placeholder={formatMessage(messages.expiryPlaceholder)}
                     value={expiry}
                     onChange={changeExpiry}
@@ -171,8 +169,7 @@ const PurchaseTicketsForm = ({
               <T id="purchaseTickets.ticketAddress" m="Ticket Address" /> :</div>
             <div className="stakepool-purchase-ticket-address-input">
               <div className="stakepool-input-form-purchase-ticket">
-                <input
-                  type="text"
+                <AddressInput
                   disabled readOnly
                   className="stakepool-content-nest-purchase-ticket-form-disabled"
                   value={stakePool ? stakePool.value.TicketAddress : null}
@@ -186,8 +183,7 @@ const PurchaseTicketsForm = ({
               :</div>
             <div className="stakepool-purchase-ticket-address-input">
               <div className="stakepool-input-form-purchase-ticket">
-                <input
-                  type="text"
+                <AddressInput
                   disabled readOnly
                   className="stakepool-content-nest-purchase-ticket-form-disabled"
                   value={stakePool ? stakePool.value.PoolAddress : null}
@@ -200,8 +196,7 @@ const PurchaseTicketsForm = ({
               <T id="purchaseTickets.poolFees" m="Pool Fees" />:</div>
             <div className="stakepool-purchase-ticket-num-input">
               <div className="stakepool-input-form-purchase-ticket">
-                <input
-                  type="text"
+                <FeeInput
                   disabled readOnly
                   className="stakepool-content-nest-purchase-ticket-form-disabled"
                   value={stakePool ? stakePool.value.PoolFees : null}

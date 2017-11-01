@@ -1,10 +1,8 @@
-import React from "react";
 import TicketsCogs from "../TicketsCogs";
 import AutoBuyerSwitch from "../AutoBuyerSwitch";
 import KeyBlueButton from "../KeyBlueButton";
 import PurchaseTicketsInfoButton from "../PurchaseTicketsInfoButton";
-import NumericInput from "../NumericInput";
-import DecredInput from "../DecredInput";
+import { DcrInput, NumericInput, FeeInput } from "inputs";
 import { Tooltip } from "shared";
 import { defineMessages, FormattedMessage as T } from "react-intl";
 import "../../style/StakePool.less";
@@ -111,7 +109,7 @@ const TicketAutoBuyerForm = ({
             </div></div>
               <div className="stakepool-purchase-ticket-num-input">
                 <div className="stakepool-input-form-purchase-ticket">
-                  <DecredInput
+                  <DcrInput
                     placeholder={formatMessage(messages.balanceToMaintain)}
                     value={balanceToMaintain}
                     onChange={e => onChangeBalanceToMaintain(e.target.value)}
@@ -130,7 +128,7 @@ const TicketAutoBuyerForm = ({
             </div></div>
               <div className="stakepool-purchase-ticket-num-input">
                 <div className="stakepool-input-form-purchase-ticket">
-                  <DecredInput
+                  <FeeInput
                     placeholder={formatMessage(messages.maxFee)}
                     value={maxFee}
                     onChange={e => onChangeMaxFee(e.target.value)}
@@ -150,7 +148,7 @@ const TicketAutoBuyerForm = ({
             </div></div>
               <div className="stakepool-purchase-ticket-num-input">
                 <div className="stakepool-input-form-purchase-ticket">
-                  <DecredInput
+                  <DcrInput
                     placeholder={formatMessage(messages.maxPriceAbsolute)}
                     value={maxPriceAbsolute}
                     onChange={e => onChangeMaxPriceAbsolute(e.target.value)}
