@@ -1,18 +1,18 @@
 import React from "react";
 import Header from "Header";
 import KeyBlueButton from "KeyBlueButton";
-import {LoginRPCRemote} from "./RemoteDaemonForm";
+import RemoteDaemonForm from "./RemoteDaemonForm";
 import AppDataForm from "./AppDataForm";
 import { FormattedMessage as T } from "react-intl";
 import "style/LoginForm.less";
 
-export const LoginRPCHeader = () => (
+export const AdvancedHeader = () => (
   <Header getStarted
     headerTitleOverview={<T id="getStarted.advanced.title" m="Advanced Start Up" />}
     headerMetaOverview={<T id="getStarted.advanced.meta" m="Please complete one of the following forms to start Decrediton according to your local setup." />} />
 );
 
-export const LoginFormBody = ({
+export const AdvancedBody = ({
   ...props,
   ...state,
   onSubmitDiffAppdataForm,
@@ -27,7 +27,7 @@ export const LoginFormBody = ({
   return (
     <div className="login-form-wrapper">
       <div className="login-forms-wrapper">
-        <LoginRPCRemote {...{
+        <RemoteDaemonForm {...{
           ...props,
           ...state,
           onSubmitRemoteForm,

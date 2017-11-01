@@ -40,13 +40,8 @@ class GetStartedPage extends React.Component {
       switch (startStepIndex || 0) {
       case 0:
       case 1:
-        if (isAdvancedDaemon) {
-          Header = AdvancedStartupHeader;
-          Body = AdvancedStartupBody;
-        } else {
-          Header = CheckWalletStateHeader;
-          Body = CheckWalletStateBody;
-        }
+        Header = CheckWalletStateHeader;
+        Body = CheckWalletStateBody;
         break;
       case 2:
         Header = OpenWalletHeader;
@@ -70,8 +65,13 @@ class GetStartedPage extends React.Component {
         Body = FinalStartUpBody;
       }
     } else {
-      Header = DaemonLoadingHeader;
-      Body = DaemonLoadingBody;
+      if (isAdvancedDaemon) {
+        Header = AdvancedStartupHeader;
+        Body = AdvancedStartupBody;
+      } else {
+        Header = DaemonLoadingHeader;
+        Body = DaemonLoadingBody;
+      }
     }
 
     return <Page Header={Header} Body={Body} {...props} />;

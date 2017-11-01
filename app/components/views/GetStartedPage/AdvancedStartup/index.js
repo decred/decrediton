@@ -1,9 +1,9 @@
-import {LoginRPCHeader, LoginFormBody} from "./Form";
+import {AdvancedHeader, AdvancedBody} from "./Form";
 
 @autobind
 class AdvancedStartupHeader extends React.Component {
   render() {
-    return (<LoginRPCHeader
+    return (<AdvancedHeader
         {...{
           ...this.props
         }}
@@ -42,7 +42,7 @@ class AdvancedStartupBody extends React.Component {
 
   render() {
     return (
-      <LoginFormBody
+      <AdvancedBody
       {...{
         ...this.props,
         ...this.state,

@@ -1,7 +1,6 @@
-import React from "react";
-import DecredLoading from "../../DecredLoading";
-import "../../../style/GetStarted.less";
-import "../../../style/Layout.less";
+import DecredLoading from "DecredLoading";
+import "style/GetStarted.less";
+import "style/Layout.less";
 
 const Page = ({ Header, Body, ...props, ...state }) => {
   const { isAdvancedDaemon, getSkippedAdvancedLogin } = props;

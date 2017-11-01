@@ -1,55 +1,51 @@
 import React from "react";
-import InputField from "Form/InputField";
-import { Field, reduxForm } from "redux-form";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import "style/LoginForm.less";
 
 const messages = defineMessages({
   messageLoginLabel: {
     id: "login.form.rpcuser.label",
-    defaultMessage: "Login: ",
+    defaultMessage: "RPC User ",
   },
   messageLoginPlaceholder: {
     id: "login.form.rpcuser.placeholder",
-    defaultMessage: "Enter your Login here",
+    defaultMessage: "Enter your RPC User here",
   },
   passphraseFieldLabel: {
     id: "login.form.rpcpassword.label",
-    defaultMessage: "Passphrase:",
+    defaultMessage: "RPC Password:",
   },
   passphraseFieldPlaceholder: {
     id: "login.form.rpcpassword.placeholder",
-    defaultMessage: "Enter your passphrase here",
+    defaultMessage: "Enter your RPC Password here",
   },
   certFieldLabel: {
     id: "login.form.rpccert.label",
-    defaultMessage: "Cert:",
+    defaultMessage: "RPC Cert:",
   },
   certFieldPlaceholder: {
     id: "login.form.rpccert.placeholder.",
-    defaultMessage: "Enter your cert location here",
+    defaultMessage: "Enter your RPC cert location here",
   },
   hostFieldLabel: {
     id: "login.form.rpchost.label",
-    defaultMessage: "Host:",
+    defaultMessage: "RPC Host:",
   },
   hostFieldPlaceholder: {
     id: "login.form.rpchost.placeholder.",
-    defaultMessage: "Enter your host here",
+    defaultMessage: "Enter your RPC host here",
   },
   portFieldLabel: {
     id: "login.form.rpcport.label",
-    defaultMessage: "Port:",
+    defaultMessage: "RPC Port:",
   },
   portFieldPlaceholder: {
     id: "login.form.rpcport.placeholder.",
-    defaultMessage: "Enter your port here",
+    defaultMessage: "Enter your RPC port here",
   },
 });
 
-const LoginRPCRemoteForm = ({
-  ...props,
-  ...state,
+const RemoteDaemonForm = ({
   onSubmitRemoteForm,
   onChangeRpcuser,
   onChangeRpcpass,
@@ -58,67 +54,56 @@ const LoginRPCRemoteForm = ({
   onChangeRpcport,
   formatMessage
   }) => {
-
-  const { handleSubmit } = props;
-  const { remoteFormHasErrors, isSubmitedRemoteForm } = state;
   return (
     <div className="get-started-content-new-seed page-content">
-
-      <div className="login-form-title">Login to a remote rpc</div>
-      <form className="login-form" onSubmit={handleSubmit(onSubmitRemoteForm)}>
-        <Field
+      <div className="login-form-title">Connect to a remote daemon</div>
+      <div className="login-form">
+        <TextInput
           label={formatMessage(messages.messageLoginLabel)}
-          name="rpcuser"
-          component={InputField}
           type="text"
           required
           onChange={(e) => onChangeRpcuser(e.target.value)}
           placeholder={formatMessage(messages.messageLoginPlaceholder)}
+          showErrors
         />
-        <Field
+        <PasswordInput
           label={formatMessage(messages.passphraseFieldLabel)}
-          name="rpcpassword"
-          component={InputField}
           type="password"
           required
           onChange={(e) => onChangeRpcpass(e.target.value)}
           placeholder={formatMessage(messages.passphraseFieldPlaceholder)}
+          showErrors
         />
-        <Field
+        <TextInput
           label={formatMessage(messages.certFieldLabel)}
-          name="rpccert"
-          component={InputField}
           type="text"
           required
           onChange={(e) => onChangeRpccert(e.target.value)}
           placeholder={formatMessage(messages.certFieldPlaceholder)}
+          showErrors
         />
-        <Field
+        <TextInput
           label={formatMessage(messages.hostFieldLabel)}
-          name="rpchost"
-          component={InputField}
           type="text"
           required
           onChange={(e) => onChangeRpchost(e.target.value)}
           placeholder={formatMessage(messages.hostFieldPlaceholder)}
+          showErrors
         />
-        <Field
+        <TextInput
           label={formatMessage(messages.portFieldLabel)}
-          name="rpcport"
-          component={InputField}
           type="text"
           required
           onChange={(e) => onChangeRpcport(e.target.value)}
           placeholder={formatMessage(messages.portFieldPlaceholder)}
+          showErrors
         />
-        {isSubmitedRemoteForm && remoteFormHasErrors ?
-          <div className="orange-warning">*Please Fill All Fields</div> : null}
-        <button className="key-blue-button" type="submit" >
-          <T id="securitycenter.sign.form.submit" m="Sign" />
-        </button>
-      </form>
+        <KeyBlueButton onClick={onSubmitRemoteForm}>
+            <T id="login.form.appdata.button" m="Start Decrediton" />
+        </KeyBlueButton>
+      </div>
     </div>
   );
 };
 
-export const LoginRPCRemote = reduxForm({ form: "loginToRemoteRPC/verify" })(LoginRPCRemoteForm);
+export default RemoteDaemonForm;
