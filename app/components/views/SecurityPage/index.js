@@ -1,7 +1,6 @@
-import SecurityPageHeader from "./Header";
 import { securityPage } from "connectors";
 import { autobind } from "core-decorators";
-import FormSelector from "./FormSelector";
+import Page from "./Page";
 import { injectIntl, defineMessages, intlShape } from "react-intl";
 import { substruct } from "fp";
 
@@ -36,8 +35,7 @@ class SecurityPage extends React.Component {
   render() {
     return (
       <Aux>
-        <SecurityPageHeader />
-        <FormSelector
+        <Page
           {...{
             ...this.props,
             ...this.state,
