@@ -38,6 +38,7 @@ const SignMessage = ({
   handleSubmit,
   submitting,
   pristine,
+  valid,
   onShowSignMessageInfo,
   ...props,
   ...state
@@ -71,10 +72,6 @@ const SignMessage = ({
             type="password"
             placeholder={formatMessage(messages.passphraseFieldPlaceholder)}
           />
-          <Field
-            name="global"
-            component={ErrorField}
-          />
         </div>
         {
           signMessageSuccess &&
@@ -89,7 +86,7 @@ const SignMessage = ({
         }
         {signMessageError && <div className="error">{error}</div>}
         <div className="message-toolbar">
-          <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
+          <button className="key-blue-button" type="submit" disabled={pristine || submitting || !valid}>
             <T id="securitycenter.sign.form.submit" m="Sign" />
           </button>
         </div>

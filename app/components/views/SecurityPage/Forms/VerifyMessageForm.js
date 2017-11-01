@@ -69,7 +69,6 @@ const VerifyMessageForm = ({  }) => {
             component={ErrorField}
           />
         </div>
-        {error && <div className="error">{error}</div>}
         <div className="message-toolbar">
           <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
             <T id="securitycenter.verify.form.submit" m="Verify" />
