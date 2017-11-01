@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { autobind } from "core-decorators";
 import Select from "react-select";
 import { PropTypes } from "prop-types";
-import accountsSelect from "../connectors/accountsSelect";
+import accountsSelect from "connectors/accountsSelect";
 import { injectIntl, defineMessages, intlShape } from "react-intl";
-import Balance from "./Balance";
+import Balance from "Balance";
 import { LinkToAccounts } from "shared";
 
 const messages = defineMessages({

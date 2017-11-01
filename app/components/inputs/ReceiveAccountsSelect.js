@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
 import AccountsSelect from "./AccountsSelect";
-import receiveAccountsSelect from "../connectors/receiveAccountsSelect";
+import receiveAccountsSelect from "connectors/receiveAccountsSelect";
 
 @autobind
 class ReceiveAccountsSelect extends Component {

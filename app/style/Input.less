@@ -1,16 +1,81 @@
-.errors-area {
-  width: 200px;
+@import (reference) "./main.less";
+
+.input-and-unit {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  border-bottom: 1px @stroke-color-default solid;
+  font-family: @font-family-regular;
+  font-size: 13px;
+  color: @input-color-default;
+}
+
+.input-and-unit.numeric-input {
+  font-family: @font-family-monospaced;
+}
+
+.input-and-unit:hover:not(:focus):not(:disabled):not(.active) {
+  color: @input-color-hovered;
+  border-bottom: 1px @stroke-color-hovered solid;
+}
+
+.input-and-unit.active:not(:disabled) {
+  color: @input-color-focused;
+  border-bottom: 1px @stroke-color-focused solid;
+  outline: none;
+}
+
+.input {
+  padding: 9px 0px 6px 10px;
+  border-style: none;
+  cursor: text;
+  background: transparent;
+  flex-grow: 1;
+  width: 100%;
+  outline: none;
+}
+
+.input:disabled {
+  background-color: @disabled-background-color;
+}
+
+.input-errors-area {
   text-align: left;
-  color: red;
+  color: @error-text-color;
   font-size: 11px;
   padding-top: 4px;
 }
 
 .unit-area {
-  height: 20px;
+  .inline-block-mixin;
+
+  margin: 0;
+  max-width: 2em;
+  padding: 8px 0px 2px 10px;
 }
 
-.right-balance-small {
-  float: right;
-  font-size: 0.6em;
+/*.input .text {
+  font-family: Source Sans Pro, sans-serif;
+  font-size: 13px;
 }
+
+.input .number-large {
+  font-family: Inconsolata, sans-serif;
+  font-weight: 600;
+  font-size: 19px;
+}
+
+.input .number-small {
+  font-family: Inconsolata, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.input-type {
+  font-family: Inconsolata, sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  color: #091440;
+  text-align: left;
+  padding-left: 10px;
+}*/

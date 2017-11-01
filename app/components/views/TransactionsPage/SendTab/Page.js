@@ -1,4 +1,4 @@
-import AccountsSelect from "AccountsSelect";
+import AccountsSelect from "inputs/AccountsSelect";
 import {FormattedMessage as T} from "react-intl";
 import { Tooltip } from "shared";
 import DecredLoading from "DecredLoading";

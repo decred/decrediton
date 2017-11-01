@@ -1,4 +1,4 @@
-import ReceiveAccountsSelect from "ReceiveAccountsSelect";
+import ReceiveAccountsSelect from "inputs/ReceiveAccountsSelect";
 import { Link } from "react-router";
 import { CopyToClipboard, Tooltip } from "shared";
 import KeyBlueButton from "KeyBlueButton";

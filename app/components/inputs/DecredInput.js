@@ -1,6 +1,6 @@
 import React from "react";
 import NumericInput from "./NumericInput";
-import balanceConnector from "../connectors/balance";
+import balanceConnector from "connectors/balance";
 
 const DcrInput = ({
   showErrors,
