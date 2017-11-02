@@ -22,8 +22,7 @@ const mapStateToProps = selectorMap({
   isPrepared: sel.isPrepared,
   network: sel.network,
   versionInvalid: sel.versionInvalid,
-  isAdvancedDaemon: sel.isAdvancedDaemon,
-  getSkippedAdvancedLogin: sel.getSkippedAdvancedLogin
+  isAdvancedDaemon: sel.isAdvancedDaemon
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

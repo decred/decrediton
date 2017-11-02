@@ -4,9 +4,6 @@ import {
   DAEMONSYNCING_PROGRESS,
   DAEMONSYNCED,
   WALLETREADY,
-  DAEMONSTARTED_ADVANCED,
-  SAVE_START_ADVANCED_DAEMON_CREDENTIALS,
-  SKIPPED_START_ADVANCED_LOGIN
 } from "../actions/DaemonActions";
 
 export default function version(state = {}, action) {
@@ -14,10 +11,7 @@ export default function version(state = {}, action) {
   case DAEMONSTARTED:
     return {...state,
       daemonStarted: true,
-    };
-  case DAEMONSTARTED_ADVANCED:
-    return {...state,
-      daemonAdvanced: true,
+      daemonAdvanced: false,
     };
   case DAEMONSYNCING_START:
     return {...state,
@@ -37,15 +31,6 @@ export default function version(state = {}, action) {
   case WALLETREADY:
     return {...state,
       walletReady: true,
-    };
-  case SAVE_START_ADVANCED_DAEMON_CREDENTIALS:
-    return {...state,
-      credentials: action.credentials,
-      startType: action.startType
-    };
-  case SKIPPED_START_ADVANCED_LOGIN:
-    return {...state,
-      skippedAdvancedLoing: true,
     };
   default:
     return state;

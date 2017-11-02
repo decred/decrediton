@@ -2,8 +2,6 @@ import {versionCheckAction} from "./WalletLoaderActions";
 import * as daemon from "../wallet/daemon";
 
 export const DAEMONSTARTED = "DAEMONSTARTED";
-export const DAEMONSTARTED_ADVANCED = "DAEMONSTARTED_ADVANCED";
-export const DAEMONSTARTED_ADVANCED_ERROR = "DAEMONSTARTED_ADVANCED_ERROR";
 export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONSTOPPED = "DAEMONSTOPPED";
 export const DAEMONSTOPPED_ERROR = "DAEMONSTOPPED_ERROR";
@@ -12,20 +10,14 @@ export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
 
-
-export const DAEMONSTARTED_ERROR_ON_START_WALLET = "DAEMONSTARTED_ERROR_ON_START_WALLET";
-export const LOADER_ADVANCED_SUCCESS = "LOADER_ADVANCED_SUCCESS";
-export const SAVE_START_ADVANCED_DAEMON_CREDENTIALS = "SAVE_START_ADVANCED_DAEMON_CREDENTIALS";
-export const SKIPPED_START_ADVANCED_LOGIN = "SKIPPED_START_ADVANCED_LOGIN";
-
-export const startDaemon = () => (dispatch, getState) => {
-  const { daemon: { advancedDaemon, remoteDaemon, differentAppData } } = getState();
+export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
+  const { daemon: { advancedDaemon } } = getState();
   if (advancedDaemon) {
-    if (remoteDaemon) {
+    if (rpcCreds) {
       dispatch({type: DAEMONSTARTED, pid: -1});
       dispatch(syncDaemon());
-    } else if (differentAppData) {
-      daemon.startDaemon(differentAppData)
+    } else if (appData) {
+      daemon.startDaemon(appData)
       .then(pid => {
         dispatch({type: DAEMONSTARTED, pid});
         dispatch(syncDaemon());
@@ -62,7 +54,7 @@ export const startWallet = (walletCredentials) => (dispatch) => {
   })
   .catch((err) => {
     console.log(err);
-    dispatch({type: DAEMONSTARTED_ERROR_ON_START_WALLET});
+    dispatch({type: DAEMONSTARTED_ERROR});
   });
 };
 
