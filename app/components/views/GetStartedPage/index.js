@@ -20,6 +20,7 @@ class GetStartedPage extends React.Component {
 
   componentDidMount() {
     if (!this.props.isAdvancedDaemon) {
+      console.log(this.props.isAdvancedDaemon);
       this.props.doStartDaemon();
     }
   }
@@ -68,6 +69,7 @@ class GetStartedPage extends React.Component {
       }
     } else {
       if (isAdvancedDaemon) {
+        console.log("here!");
         Header = AdvancedStartupHeader;
         Body = AdvancedStartupBody;
       } else {

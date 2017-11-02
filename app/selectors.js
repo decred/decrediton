@@ -74,13 +74,15 @@ export const isInputRequest = or(
   openWalletInputRequest,
   createWalletInputRequest,
   discoverAddressInputRequest,
-  isAdvancedDaemon,
 );
-export const isStartupProcessing = or(
-  not(isPrepared),
-  and(
-    not(isInputRequest),
-    not(startupError)
+export const isStartupProcessing = and(
+  not(isAdvancedDaemon),
+  or(
+    not(isPrepared),
+    and(
+      not(isInputRequest),
+      not(startupError)
+    )
   )
 );
 

@@ -75,7 +75,7 @@ var initialState = {
     timeLeftEstimate: null,
     timeStart: 0,
     blockStart: 0,
-    advancedDaemon: cfg.get("daemon_start_advanced"),
+    daemonAdvanced: cfg.get("daemon_start_advanced"),
   },
   version: {
     // RequiredVersion
