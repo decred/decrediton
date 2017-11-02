@@ -50,7 +50,7 @@ class AdvancedStartupBody extends React.Component {
         ...substruct({
           skipAdvancedDaemon: null,
           onSubmitRemoteForm: null,
-          onSubmitDiffAppdataForm: null,
+          onSubmitAppData: null,
           onChangeRpcuser: null,
           onChangeRpcpass: null,
           onChangeRpccert: null,
@@ -136,26 +136,22 @@ class AdvancedStartupBody extends React.Component {
     this.setState({ rpcappdataFilled: true });
   }
 
-  onSubmitRemoteForm(args) {
+  onSubmitRemoteForm() {
     this.setState({
       isSubmitedRemoteForm: true,
       isSubmited: true,
     });
-    if (this.getRemoteFormIsValid())
-      this.props.doStartAdvancedDaemon(args, 1);
+    this.props.doStartdDaemon();
   }
 
-  onSubmitDiffAppdataForm(args) {
-    this.setState({
-      isSubmitedDiffAppdataForm: true,
-      isSubmited: true,
-    });
-    if (this.getDiffAppdataFormIsValid())
-      this.props.doStartAdvancedDaemon(args, 2);
+  onSubmitAppData() {
+    if (this.state.rpcappdata) {
+      this.props.doStartDaemon(null, this.state.rpcappdata);
+    }
   }
 
   skipAdvancedDaemon(){
-    this.props.doStartAdvancedDaemon();
+    this.props.doStartDaemon();
   }
 }
 

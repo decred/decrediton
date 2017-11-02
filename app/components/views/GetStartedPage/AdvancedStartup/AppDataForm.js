@@ -18,26 +18,24 @@ const AppDataForm = ({
 
   return (
     <div className="get-started-content-new-seed page-content">
-      <div className="login-form">
-        <div className="stakepool-purchase-ticket-row">
-          <div className="stakepool-purchase-ticket-label">
-            <T id="login.form.appdata.label" m="Daemon Data Directory"/>:
-          </div>
-          <div className="stakepool-purchase-ticket-input">
-            <div className="stakepool-input-form-purchase-ticket">
-              <TextInput
-                type="text"
-                showErrors
-                required
-                onChange={(e) => onChangeRpcappdata(e.target.value)}
-                placeholder={intl.formatMessage(messages.appdataFieldPlaceholder)}
-              />
-            </div>
-          </div>
-          <KeyBlueButton onClick={onSubmitAppData}>
-            <T id="login.form.appdata.button" m="Start AppData Daemon" />
-          </KeyBlueButton>
+      <div className="stakepool-purchase-ticket-row">
+        <div className="stakepool-purchase-ticket-label">
+          <T id="login.form.appdata.label" m="Daemon Data Directory:"/>:
         </div>
+        <div className="stakepool-purchase-ticket-input">
+          <div className="stakepool-input-form-purchase-ticket">
+            <TextInput
+              type="text"
+              showErrors
+              required
+              onChange={(e) => onChangeRpcappdata(e.target.value)}
+              placeholder={intl.formatMessage(messages.appdataFieldPlaceholder)}
+            />
+          </div>
+        </div>
+        <KeyBlueButton onClick={onSubmitAppData}>
+          <T id="login.form.appdata.button" m="Start AppData Daemon" />
+        </KeyBlueButton>
       </div>
     </div>
   );

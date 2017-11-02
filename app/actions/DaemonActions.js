@@ -2,6 +2,7 @@ import {versionCheckAction} from "./WalletLoaderActions";
 import * as daemon from "../wallet/daemon";
 
 export const DAEMONSTARTED = "DAEMONSTARTED";
+export const DAEMONSTARTED_REMOTE = "DAEMONSTARTED_REMOTE";
 export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONSTOPPED = "DAEMONSTOPPED";
 export const DAEMONSTOPPED_ERROR = "DAEMONSTOPPED_ERROR";
@@ -14,8 +15,8 @@ export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
   const { daemon: { advancedDaemon } } = getState();
   if (advancedDaemon) {
     if (rpcCreds) {
-      dispatch({type: DAEMONSTARTED, pid: -1});
-      dispatch(syncDaemon());
+      dispatch({type: DAEMONSTARTED_REMOTE, rpcUser: rpcCreds.rpcUser, rpcPass: rpcCreds. rpcPass, pid: -1});
+      dispatch(syncDaemon(rpcCreds));
     } else if (appData) {
       daemon.startDaemon(appData)
       .then(pid => {
@@ -41,13 +42,9 @@ export const stopDaemon = () => (dispatch) => daemon
   .then(() => dispatch({type: DAEMONSTOPPED}))
   .catch(() => dispatch({type: DAEMONSTOPPED_ERROR}));
 
-export const startWallet = (walletCredentials) => (dispatch) => {
-  let username, password;
-  if(walletCredentials){
-    username = walletCredentials.username;
-    password = walletCredentials.password;
-  }
-  daemon.startWallet(username, password)
+export const startWallet = () => (dispatch, getState) => {
+  const { daemon: { rpcUser, rpcPass } } = getState();
+  daemon.startWallet(rpcUser, rpcPass)
   .then(pid => {
     dispatch({type: WALLETREADY, pid});
     setTimeout(()=>dispatch(versionCheckAction()), 1000);
@@ -58,7 +55,7 @@ export const startWallet = (walletCredentials) => (dispatch) => {
   });
 };
 
-export const syncDaemon = () =>
+export const syncDaemon = (rpcCreds) =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks }} = getState();
@@ -66,7 +63,7 @@ export const syncDaemon = () =>
       // check to see if user skipped;
       if (daemonSynced) return;
       return daemon
-        .getBlockCount()
+        .getBlockCount(rpcCreds)
         .then(updateCurrentBlockCount => {
           if (updateCurrentBlockCount >= neededBlocks) {
             dispatch({type: DAEMONSYNCED});
