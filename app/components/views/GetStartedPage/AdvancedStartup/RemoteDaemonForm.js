@@ -57,7 +57,6 @@ const RemoteDaemonForm = ({
   }) => {
   return (
     <div className="get-started-content-new-seed page-content">
-      <div className="login-form-title">Connect to a remote daemon</div>
       <div className="login-form">
         <TextInput
           label={intl.formatMessage(messages.messageLoginLabel)}
@@ -100,7 +99,7 @@ const RemoteDaemonForm = ({
           showErrors
         />
         <KeyBlueButton onClick={onSubmitRemoteForm}>
-            <T id="login.form.appdata.button" m="Start Decrediton" />
+            <T id="login.form.appdata.button" m="Connect to Remote" />
         </KeyBlueButton>
       </div>
     </div>

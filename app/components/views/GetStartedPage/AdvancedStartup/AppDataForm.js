@@ -11,13 +11,11 @@ const messages = defineMessages({
 });
 
 const AppDataForm = ({
-  ...state,
-  onSubmitDiffAppdataForm,
+  onSubmitAppData,
   onChangeRpcappdata,
   intl
   }) => {
 
-  const { diffAppdataFormHasErrors, isSubmittedDiffAppdataForm } = state;
   return (
     <div className="get-started-content-new-seed page-content">
       <div className="login-form">
@@ -28,7 +26,6 @@ const AppDataForm = ({
           <div className="stakepool-purchase-ticket-input">
             <div className="stakepool-input-form-purchase-ticket">
               <TextInput
-                name="rpcappdata"
                 type="text"
                 showErrors
                 required
@@ -37,9 +34,8 @@ const AppDataForm = ({
               />
             </div>
           </div>
-          {isSubmittedDiffAppdataForm && diffAppdataFormHasErrors && <div className="orange-warning">*Please Fill the appdata directory</div>}
-          <KeyBlueButton onClick={onSubmitDiffAppdataForm}>
-            <T id="login.form.appdata.button" m="Start Decrediton" />
+          <KeyBlueButton onClick={onSubmitAppData}>
+            <T id="login.form.appdata.button" m="Start AppData Daemon" />
           </KeyBlueButton>
         </div>
       </div>
