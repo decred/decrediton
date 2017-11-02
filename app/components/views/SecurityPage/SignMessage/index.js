@@ -1,13 +1,21 @@
-import { FormattedMessage as T, injectIntl } from "react-intl";
+import { injectIntl } from "react-intl";
 import SignMessageForm from "./Form";
 import { signMessagePage } from "connectors";
 import { CopyToClipboard } from "shared";
 import "style/SecurityCenterMessagePage.less";
+import SignMessageInfo from "SignMessageInfo";
 
 @autobind
 class SignMessage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = this.getInitialState();
+  }
+
+  getInitialState() {
+    return {
+      isShowingSignMessageInfo: false,
+    };
   }
 
   componentWillMount() {
@@ -22,7 +30,7 @@ class SignMessage extends React.Component {
 
   render() {
     const { signMessageError, signMessageSuccess } = this.props;
-
+    const { isShowingSignMessageInfo } = this.state;
     let result = null;
     if (signMessageSuccess) {
       result = (
@@ -38,9 +46,10 @@ class SignMessage extends React.Component {
     }
 
     return (
+      isShowingSignMessageInfo ?
+      <SignMessageInfo closeModal={this.onHideSignMessageInfo} /> :
       <div className="page-content message message-sign">
-        <div className="message-header-title"><T id="securitycenter.sign.header" m="Sign Message" /></div>
-        <SignMessageForm onSubmit={this.onSubmit} rpcError={signMessageError} formatMessage={this.props.intl.formatMessage} />
+        <SignMessageForm onShowSignMessageInfo={this.onShowSignMessageInfo} onSubmit={this.onSubmit} rpcError={signMessageError} formatMessage={this.props.intl.formatMessage} />
         {result}
       </div>
     );
@@ -48,6 +57,12 @@ class SignMessage extends React.Component {
 
   onSubmit(props) {
     this.props.signMessageAttempt(props);
+  }
+  onShowSignMessageInfo() {
+    this.setState({ isShowingSignMessageInfo: true });
+  }
+  onHideSignMessageInfo() {
+    this.setState({ isShowingSignMessageInfo: false });
   }
 }
 

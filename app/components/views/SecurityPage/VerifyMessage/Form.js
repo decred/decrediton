@@ -1,38 +1,39 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { Field, reduxForm } from "redux-form";
 import InputField from "Form/InputField";
-import TextareaField from "Form/TextareaField";
 import ErrorField from "Form/ErrorField";
 import { validate } from "./validator";
+import { Link } from "react-router";
+import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
 
 const messages = defineMessages({
   addressFieldLabel: {
     id: "securitycenter.verify.form.field.address.label",
-    defaultMessage: "Address:",
+    defaultMessage: "Address",
   },
   addressFieldPlaceholder: {
     id: "securitycenter.verify.form.field.address.placeholder",
-    defaultMessage: "Enter your address here",
+    defaultMessage: "Enter your address",
   },
   messageFieldLabel: {
     id: "securitycenter.verify.form.field.message.label",
-    defaultMessage: "Message:",
+    defaultMessage: "Message",
   },
   messageFieldPlaceholder: {
     id: "securitycenter.verify.form.field.message.placeholder",
-    defaultMessage: "Enter your message here",
+    defaultMessage: "Enter your message",
   },
   signatureFieldLabel: {
     id: "securitycenter.verify.form.field.signature.label",
-    defaultMessage: "Signature:",
+    defaultMessage: "Signature",
   },
   signatureFieldPlaceholder: {
     id: "securitycenter.verify.form.field.signature.placeholder",
-    defaultMessage: "Enter your signature here",
+    defaultMessage: "Enter your signature",
   },
 });
 
-const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError, formatMessage }) => {
+const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError, formatMessage, onShowVerifyMessageInfo }) => {
   if (rpcError) {
     error = (
       <div className="error">{rpcError}</div>
@@ -40,14 +41,13 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
   }
 
   return (
-    <div className="message-content-nest">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {error ? <div className="error">{error}</div> : null}
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="message-content-nest">
+        <div className="button-right">
+          <PurchaseTicketsInfoButton onClick={onShowVerifyMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Verify Message Information"/>}/>
+        </div>
         <Field
-          name="global"
-          component={ErrorField}
-        />
-        <Field
+          classname="address"
           label={formatMessage(messages.addressFieldLabel)}
           name="address"
           component={InputField}
@@ -55,6 +55,7 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
           placeholder={formatMessage(messages.addressFieldPlaceholder)}
         />
         <Field
+          classname="address"
           label={formatMessage(messages.signatureFieldLabel)}
           name="signature"
           component={InputField}
@@ -62,18 +63,24 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
           placeholder={formatMessage(messages.signatureFieldPlaceholder)}
         />
         <Field
+          classname="message"
           label={formatMessage(messages.messageFieldLabel)}
           name="message"
-          component={TextareaField}
+          component={InputField}
           placeholder={formatMessage(messages.messageFieldPlaceholder)}
         />
-        <div className="message-toolbar">
-          <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
-            <T id="securitycenter.verify.form.submit" m="Verify" />
-          </button>
-        </div>
-      </form>
-    </div>
+        <Field
+          name="global"
+          component={ErrorField}
+        />
+      </div>
+      {error && <div className="error">{error}</div>}
+      <div className="message-toolbar">
+        <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
+          <T id="securitycenter.verify.form.submit" m="Verify" />
+        </button>
+      </div>
+    </form>
   );
 };
 

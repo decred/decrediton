@@ -1,44 +1,42 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
+.button-right {
+  float: right;
+}
+
 .message {
   .message-content-nest {
     background-color: #fff;
     padding: 1em;
+    position: relative;
+    top: 20px;
+    padding-top: 40px;
+    height: 172px;
   }
 
   .error {
     font-size: 14px;
-    text-align: center;
+    text-align: left;
   }
 
-  // .message-content-nest-for-address {
-  // }
-
   .message-form-group {
-    margin: 1em;
-    display: flex;
+    float: left;
+    width: 100%;
+    padding-bottom: 32px;
 
     .message-label {
+      float: left;
+      width: 150px;
       font-size: 19px;
-      display: flex;
-      width: 25%;
       text-transform: capitalize;
+      text-align: right;
+      padding-right: 20px;
     }
 
-    input,
-    textarea {
-      display: flex;
-      border-style: none;
-      border-bottom: 1px solid;
-      color: #2971ff;
-      font-size: 13px;
-      cursor: text;
-      width: 100%;
-
-      &:focus {
-        color: #2971ff;
-      }
+    input {
+      float: left;
+      width: 540px;
     }
 
     .error {
@@ -70,7 +68,7 @@
       border: 1px solid #69d5f7;
       border-radius: 5px;
       background-color: #e9f8fe;
-      font-family: Inconsolata, monospace;
+      font-family: @font-family-regular;
       color: #0c1e3e;
       font-size: 23px;
       font-weight: 700;
@@ -89,8 +87,7 @@
   }
 
   .message-toolbar {
-    margin-top: 1em;
-    text-align: center;
+    margin-top: 27px;
   }
 
   .message-header-title {

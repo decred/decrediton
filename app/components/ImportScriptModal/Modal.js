@@ -1,8 +1,7 @@
-// @flow
-import React from "react";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
 import { FormattedMessage as T } from "react-intl";
+import { TextInput, PasswordInput } from "inputs";
 import "../../style/ImportScriptModal.less";
 
 const Modal = ({
@@ -25,7 +24,7 @@ const Modal = ({
         <div className="import-script-modal-label">
           <T id="importScriptModal.redeemScript" m="Redeem Script" />
           :</div>
-        <input
+        <TextInput
           id="script"
           className="import-script-modal-field"
           type="text"
@@ -44,10 +43,9 @@ const Modal = ({
         <div className="import-script-modal-label">
           <T id="importScriptModal.privatePassphrase" m="Private Passphrase" />
            :</div>
-        <input
+        <PasswordInput
           id="passphrase"
           className="import-script-modal-field"
-          type="password"
           placeholder=""
           value={passPhrase}
           onChange={(e) => setPassPhrase(e.target.value)}

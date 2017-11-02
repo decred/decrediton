@@ -1,9 +1,8 @@
-// @flow
-import React from "react";
 import KeyBlueButton from "../KeyBlueButton";
 import SlateGrayButton from "../SlateGrayButton";
 import { FormattedMessage as T } from "react-intl";
-import "../../style/ChangePassphraseModal.less";
+import { PasswordInput } from "inputs";
+import "style/ChangePassphraseModal.less";
 
 const Modal = ({
   hidden,
@@ -31,10 +30,9 @@ const Modal = ({
         <div className="change-passphrase-modal-label">
           <T id="changePassModal.oldPassphrase" m="Old Private Passphrase" />
           :</div>
-        <input
+        <PasswordInput
           id="oldPassphrase"
           className="change-passphrase-modal-field"
-          type="password"
           placeholder=""
           defaultValue={oldPrivPass}
           onChange={(e) => updateOldPrivatePassphrase(e.target.value)}
@@ -45,10 +43,9 @@ const Modal = ({
         <div className="change-passphrase-modal-label">
           <T id="changePassModal.newPassphrase" m="New Private Passphrase" />
           :</div>
-        <input
+        <PasswordInput
           id="passphrase"
           className="change-passphrase-modal-field"
-          type="password"
           placeholder=""
           defaultValue={privpass}
           onChange={(e) => updatePrivatePassphrase(e.target.value)}
@@ -59,10 +56,9 @@ const Modal = ({
         <div className="change-passphrase-modal-label">
           <T id="changePassModal.confirm" m="Confirm" />
           :</div>
-        <input
+        <PasswordInput
           id='confirmPassphrase'
           className="change-passphrase-modal-field"
-          type="password"
           placeholder=""
           defaultValue={confirmPrivPass}
           onChange={(e) => updateConfirmPrivatePassphrase(e.target.value)}

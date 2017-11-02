@@ -105,7 +105,7 @@
 .stakepool-stake-info-value {
   .inline-block-mixin;
 
-  font-family: inconsolata, monospace;
+  font-family: Inconsolata, monospace;
 }
 
 .stakepool-voting-title-area {
@@ -177,6 +177,13 @@
   font-size: 16px;
 }
 
+.stakepool-purchase-ticket-label-second {
+  .inline-block-mixin;
+
+  text-align: right;
+  font-size: 16px;
+}
+
 .stakepool-purchase-ticket-num-select {
   .inline-block-mixin;
 
@@ -189,6 +196,14 @@
 
 .stakepool-purchase-ticket-row-thirds {
   .inline-block-mixin;
+
+  width: 28%;
+}
+
+.stakepool-purchase-ticket-row-thirds-first {
+  .inline-block-mixin;
+
+  width: 40%;
 }
 
 .stakepool-purchase-ticket-address-input {
@@ -202,7 +217,7 @@
 .stakepool-purchase-ticket-thirds-input {
   .inline-block-mixin;
 
-  width: 2em;
+  width: 5em;
   font-size: 19px;
   text-align: right;
 }
@@ -372,8 +387,7 @@
   .inline-block-mixin;
 
   font-size: 19px;
-  width: 4em;
-  margin-left: 1em;
+  width: 5em;
 }
 
 .stakepool-input-form-purchase-ticket {
@@ -382,28 +396,10 @@
 
 .stakepool-content-nest-purchase-ticket-form {
   width: 100%;
-  border-style: none;
-  color: #2971ff;
-  border-bottom: 1px solid;
-  font-size: 15px;
-  cursor: text;
-
-  &:focus {
-    color: #2971ff;
-  }
 }
 
 .stakepool-content-nest-purchase-ticket-form-disabled {
   width: 100%;
-  padding: 0.5em;
-  border-style: none;
-  color: #2971ff;
-  font-size: 15px;
-  cursor: text;
-
-  &:focus {
-    color: #2971ff;
-  }
 }
 
 .stakepool-stake-info-area {
@@ -1111,15 +1107,6 @@ textarea.stakepool-content-nest-content-settings {
   height: 100%;
   font-size: 19px;
   text-align: right;
-}
-
-.stakepool-purchase-ticket-input-error {
-  float: right;
-  width: 200px;
-  text-align: left;
-  color: red;
-  font-size: 11px;
-  padding-top: 4px;
 }
 
 .stakepool-area-spacing {

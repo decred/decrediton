@@ -19,23 +19,13 @@ class Purchase extends React.Component {
       passphraseDescription: null,
       passphraseCallback: null,
       isShowingTicketsInfo: false,
+      isShowingAutoBuyerTicketsInfo: false,
       isShowingStakePools: !this.props.defaultStakePool,
       isShowingVotingPrefs: false,
       isShowingImportScript: false,
       isRequestingPassphrase: false
     };
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (!this.state.stakePool && nextProps.defaultStakePool) {
-      // Added first stake pool
-      this.setState({
-        stakePool: nextProps.defaultStakePool,
-        isShowingStakePools: false
-      });
-    }
-  }
-
   render() {
     return (!this.props.walletService || !this.props.ticketBuyerService) ? <ErrorScreen /> : (
       <PurchasePage
@@ -47,6 +37,8 @@ class Purchase extends React.Component {
           ...substruct({
             onShowTicketsInfo: null,
             onHideTicketsInfo: null,
+            onShowAutoBuyerTicketsInfo: null,
+            onHideAutoBuyerTicketsInfo: null,
             onChangeStakePool: null,
             onChangeAccount: null,
             onShowImportScript: null,
@@ -54,6 +46,7 @@ class Purchase extends React.Component {
             onRequestPassphrase: null,
             onCancelPassphraseRequest: null,
             onCancelImportScript: null,
+            onToggleTicketStakePool: null,
             onShowStakePoolConfig: null,
             onHideStakePoolConfig: null,
             onImportScript: null
@@ -61,6 +54,13 @@ class Purchase extends React.Component {
         }}
       />
     );
+  }
+
+  onToggleTicketStakePool(side) {
+    this.setState({
+      isShowingVotingPrefs: (side === "right") ? true : false,
+      purchaseTicketsStakePoolConfig: false
+    });
   }
 
   getStakePool() {
@@ -114,6 +114,13 @@ class Purchase extends React.Component {
 
   onHideTicketsInfo() {
     this.setState({ isShowingTicketsInfo: false });
+  }
+
+  onShowAutoBuyerTicketsInfo() {
+    this.setState({ isShowingAutoBuyerTicketsInfo: true });
+  }
+  onHideAutoBuyerTicketsInfo() {
+    this.setState({ isShowingAutoBuyerTicketsInfo: false });
   }
 
   onShowStakePoolConfig() {

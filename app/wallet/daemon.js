@@ -1,13 +1,22 @@
 import Promise from "promise";
 import { ipcRenderer } from "electron";
 
-export const startDaemon = (rpcuser, rpcpassword) => Promise
-  .resolve(ipcRenderer
-    .sendSync("start-daemon", { rpcuser, rpcpassword }))
-  .then(pid => {
-    if (pid) return pid;
+export const startDaemon = () => Promise
+  .resolve(ipcRenderer.sendSync("start-daemon"))
+  .then(PIDAndAdvancedMode => {
+    if (PIDAndAdvancedMode) return PIDAndAdvancedMode;
     throw "Error starting daemon";
   });
+
+export const startDaemonAdvanced = (args, startType) => {
+  return Promise
+    .resolve(ipcRenderer
+      .sendSync("start-daemon-advanced", {args, startType}))
+    .then(PIDAndAdvancedMode => {
+      if (PIDAndAdvancedMode) return PIDAndAdvancedMode;
+      throw "Error starting daemon in advanced mode";
+    });
+};
 
 export const stopDaemon = () => Promise
   .resolve(ipcRenderer.sendSync("stop-daemon"))
@@ -23,6 +32,6 @@ export const startWallet = (rpcuser, rpcpassword) => Promise
     throw "Error starting wallet";
   });
 
-export const getBlockCount = (rpcuser, rpcpassword, host, cert) => Promise
+export const getBlockCount = (startType, credentials) => Promise
   .resolve(ipcRenderer
-    .sendSync("check-daemon", { rpcuser, rpcpassword, host, cert }));
+    .sendSync("check-daemon", {startType, credentials}));
