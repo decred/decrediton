@@ -7,7 +7,8 @@ import VerifyMessageInfo from "VerifyMessageInfo";
 
 const Page = ({
   ...props,
-  ...state,
+  isShowingSignMessageInfo,
+  isShowingVerifyMessageInfo,
   form,
   onSetForm,
   formatMessage,
@@ -19,7 +20,6 @@ const Page = ({
   onHideSignMessageInfo,
 }) => {
   const { signMessageSuccess, signMessageError, verifyMessageSuccess, verifyMessageError } = props;
-  const { isShowingSignMessageInfo, isShowingVerifyMessageInfo } = state;
 
   return (
     <div className="page-view">

@@ -24,8 +24,8 @@ class SecurityPage extends React.Component {
   }
 
   componentWillUnmount() {
-    const {form} = this.state;
-    if(form === 0)
+    const { form } = this.state;
+    if (form === 0)
       this.props.getSignMessageCleanStore();
     else if (form === 1)
       this.props.getVerifyMessageCleanStore();
@@ -33,30 +33,28 @@ class SecurityPage extends React.Component {
 
   render() {
     return (
-      <Aux>
-        <Page
-          {...{
-            ...this.props,
-            ...this.state,
-            formatMessage: this.props.intl.formatMessage,
-            ...substruct({
-              onSubmitSignMessage: null,
-              onShowSignMessageInfo: null,
-              onHideSignMessageInfo: null,
-              onSubmitVerifyMessage: null,
-              onShowVerifyMessageInfo: null,
-              onHideVerifyMessageInfo: null,
-              onSetForm: null,
-            }, this)
+      <Page
+        {...{
+          ...this.props,
+          ...this.state,
+          formatMessage: this.props.intl.formatMessage,
+          ...substruct({
+            onSubmitSignMessage: null,
+            onShowSignMessageInfo: null,
+            onHideSignMessageInfo: null,
+            onSubmitVerifyMessage: null,
+            onShowVerifyMessageInfo: null,
+            onHideVerifyMessageInfo: null,
+            onSetForm: null,
+          }, this)
 
-          }}
-        />
-      </Aux>
+        }}
+      />
     );
   }
 
-  onSetForm(formNumber){
-    this.setState({form: formNumber});
+  onSetForm(formNumber) {
+    this.setState({ form: formNumber });
   }
 
   onSubmitSignMessage(props) {
