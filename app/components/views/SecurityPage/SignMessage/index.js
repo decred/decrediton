@@ -1,11 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { autobind } from "core-decorators";
 import { FormattedMessage as T, injectIntl } from "react-intl";
 import SignMessageForm from "./Form";
-import signMessageConnector from "../../connectors/signMessagePage";
+import { signMessagePage } from "connectors";
 import { CopyToClipboard } from "shared";
-import "../../style/SecurityCenterMessagePage.less";
+import "style/SecurityCenterMessagePage.less";
 
 @autobind
 class SignMessage extends React.Component {
@@ -68,4 +65,4 @@ SignMessage.contextTypes = {
   router: PropTypes.object.isRequired,
 };
 
-export default signMessageConnector(injectIntl(SignMessage));
+export default signMessagePage(injectIntl(SignMessage));

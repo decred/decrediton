@@ -1,40 +1,38 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { Field, reduxForm } from "redux-form";
-import InputField from "../Form/InputField";
-import TextareaField from "../Form/TextareaField";
-import ErrorField from "../Form/ErrorField";
+import InputField from "Form/InputField";
+import TextareaField from "Form/TextareaField";
+import ErrorField from "Form/ErrorField";
 import { validate } from "./validator";
 
 const messages = defineMessages({
   addressFieldLabel: {
-    id: "securitycenter.verify.form.field.address.label",
+    id: "securitycenter.sign.form.field.address.label",
     defaultMessage: "Address:",
   },
   addressFieldPlaceholder: {
-    id: "securitycenter.verify.form.field.address.placeholder",
+    id: "securitycenter.sign.form.field.address.placeholder",
     defaultMessage: "Enter your address here",
   },
   messageFieldLabel: {
-    id: "securitycenter.verify.form.field.message.label",
+    id: "securitycenter.sign.form.field.message.label",
     defaultMessage: "Message:",
   },
   messageFieldPlaceholder: {
-    id: "securitycenter.verify.form.field.message.placeholder",
+    id: "securitycenter.sign.form.field.message.placeholder",
     defaultMessage: "Enter your message here",
   },
-  signatureFieldLabel: {
-    id: "securitycenter.verify.form.field.signature.label",
-    defaultMessage: "Signature:",
+  passphraseFieldLabel: {
+    id: "securitycenter.sign.form.field.passphrase.label",
+    defaultMessage: "Passphrase:",
   },
-  signatureFieldPlaceholder: {
-    id: "securitycenter.verify.form.field.signature.placeholder",
-    defaultMessage: "Enter your signature here",
+  passphraseFieldPlaceholder: {
+    id: "securitycenter.sign.form.field.passphrase.placeholder",
+    defaultMessage: "Enter your passphrase here",
   },
 });
 
-const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError, formatMessage }) => {
+const SignMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError, formatMessage }) => {
   if (rpcError) {
     error = (
       <div className="error">{rpcError}</div>
@@ -57,21 +55,21 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
           placeholder={formatMessage(messages.addressFieldPlaceholder)}
         />
         <Field
-          label={formatMessage(messages.signatureFieldLabel)}
-          name="signature"
-          component={InputField}
-          type="text"
-          placeholder={formatMessage(messages.signatureFieldPlaceholder)}
-        />
-        <Field
           label={formatMessage(messages.messageFieldLabel)}
           name="message"
           component={TextareaField}
           placeholder={formatMessage(messages.messageFieldPlaceholder)}
         />
+        <Field
+          label={formatMessage(messages.passphraseFieldLabel)}
+          name="passphrase"
+          component={InputField}
+          type="password"
+          placeholder={formatMessage(messages.passphraseFieldPlaceholder)}
+        />
         <div className="message-toolbar">
           <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
-            <T id="securitycenter.verify.form.submit" m="Verify" />
+            <T id="securitycenter.sign.form.submit" m="Sign" />
           </button>
         </div>
       </form>
@@ -79,14 +77,14 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
   );
 };
 
-VerifyMessageForm.propTypes = {
-  formatMessage: PropTypes.func.isRequired,
+SignMessageForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
+  formatMessage: PropTypes.func.isRequired,
   error: PropTypes.string,
   rpcError: PropTypes.string,
 };
 
-export default reduxForm({ form: "message/verify", validate })(VerifyMessageForm);
+export default reduxForm({ form: "message/sign", validate })(SignMessageForm);

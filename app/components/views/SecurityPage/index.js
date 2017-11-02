@@ -1,19 +1,16 @@
-import SecurityPageHeader from "./Header";
-import { securityPage } from "connectors";
+import { TabbedHeader } from "shared";
 import "style/Layout.less";
 import "style/StakePool.less";
 
 const SecurityPage = ({
-  location,
-  onToggleSecurityMessage,
   children,
 }) => {
   return (
     <Aux>
-      <SecurityPageHeader {...{ onToggleSecurityMessage, location }} />
+      <TabbedHeader/>
       {children}
     </Aux>
   );
 };
 
-export default securityPage(SecurityPage);
+export default SecurityPage;

@@ -12,7 +12,6 @@ export { default as home } from "./home";
 export { default as purchaseTickets } from "./purchaseTickets";
 export { default as receive } from "./receive";
 export { default as rescan } from "./rescan";
-export { default as securityPage } from "./securityPage";
 export { default as send } from "./send";
 export { default as service } from "./service";
 export { default as settings } from "./settings";

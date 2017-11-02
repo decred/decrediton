@@ -9,8 +9,8 @@ import TransactionsReceiveTab from "./components/views/TransactionsPage/ReceiveT
 import TransactionPage from "./components/views/TransactionPage";
 import SettingsPage from "./components/views/SettingsPage";
 import SecurityPage from "./components/views/SecurityPage";
-import SignPage from "./components/SignMessage";
-import VerifyPage from "./components/VerifyMessage";
+import SignPage from "./components/views/SecurityPage/SignMessage";
+import VerifyPage from "./components/views/SecurityPage/VerifyMessage";
 import TicketsPage from "./components/views/TicketsPage";
 import TicketsPurchaseTab from "./components/views/TicketsPage/PurchaseTab";
 import TicketsMyTicketsTab from "./components/views/TicketsPage/MyTicketsTab";

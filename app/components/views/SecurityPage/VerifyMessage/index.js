@@ -1,10 +1,7 @@
-import React from "react";
 import { FormattedMessage as T, injectIntl } from "react-intl";
-import PropTypes from "prop-types";
-import { autobind } from "core-decorators";
 import VerifyMessageForm from "./Form";
-import verifyMessageConnector from "../../connectors/verifyMessagePage";
-import "../../style/SecurityCenterMessagePage.less";
+import { verifyMessagePage } from "connectors";
+import "style/SecurityCenterMessagePage.less";
 
 @autobind
 class VerifyMessage extends React.Component {
@@ -70,4 +67,4 @@ VerifyMessage.propTypes = {
   }),
 };
 
-export default verifyMessageConnector(injectIntl(VerifyMessage));
+export default verifyMessagePage(injectIntl(VerifyMessage));
