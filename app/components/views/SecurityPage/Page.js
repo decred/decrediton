@@ -26,10 +26,10 @@ const Page = ({
       <Header
         headerTitleOverview={<T id="invalidRPCVersion.title" m="Invalid RPC Version" />}
       />
-      <div className="page-content message message-sign">
-        {
-          isShowingSignMessageInfo ? <SignMessageInfo closeModal={onHideSignMessageInfo}/> :
-            isShowingVerifyMessageInfo ? <VerifyMessageInfo closeModal={onHideVerifyMessageInfo}/> :
+      {
+        isShowingSignMessageInfo ? <SignMessageInfo closeModal={onHideSignMessageInfo} /> :
+          isShowingVerifyMessageInfo ? <VerifyMessageInfo closeModal={onHideVerifyMessageInfo} /> :
+            <div className="page-content message message-sign">
               <FormSelector {...{
                 form,
                 onSetForm,
@@ -43,8 +43,8 @@ const Page = ({
                 verifyMessageSuccess,
                 verifyMessageError
               }} />
-        }
-      </div>
+            </div>
+      }
     </div>
   );
 };
