@@ -248,13 +248,11 @@ const installExtensions = async () => {
 const { ipcMain } = require("electron");
 
 ipcMain.on("start-daemon", (event, args) => {
-  let credentials;
+  let addData = null;
   if(args){
     logger.log("info", "launching dcrd with different appdata directory");
     const {rpcappdata} = args;
-    credentials = {
-      rpcappdata: rpcappdata,
-    };
+    addData = rpcappdata;
   }
   if (dcrdPID !== -1) {
     logger.log("info", "dcrd already started, closing it to start again");
@@ -266,7 +264,7 @@ ipcMain.on("start-daemon", (event, args) => {
     logger.log("info", "dcrd already started " + dcrdPID);
   }
   try {
-    dcrdPID = launchDCRD(credentials);
+    dcrdPID = launchDCRD(addData);
   } catch (e) {
     logger.log("error", "error launching dcrd with different rpcuser and rpcpassword: " + e);
   }
@@ -321,24 +319,35 @@ ipcMain.on("start-wallet", (event, arg) => {
 ipcMain.on("check-daemon", (event, arg) => {
   let args = ["getblockcount"];
   let host, port;
-  const { startType, credentials } = arg;
-
-  if(startType === 1){
-    args.push(`--rpcuser=${credentials.rpcuser}`);
-    args.push(`--rpcpass=${credentials.rpcpassword}`);
-    args.push(`--rpccert=${credentials.rpccert}`);
-    host = credentials.rpchost;
-    port = credentials.rpcport;
-  } else if (startType === 2) {
-    const rpccert = `${credentials.rpcappdata}/rpc.cert`;
-    args.push(`--rpccert=${rpccert}`);
+  if (Object.keys(arg).length === 0 && arg.constructor === Object) {
     host = RPCDaemonHost();
     port = RPCDaemonPort();
     args.push(`--configfile=${dcrctlCfg()}`);
   } else {
-    host = RPCDaemonHost();
-    port = RPCDaemonPort();
-    args.push(`--configfile=${dcrctlCfg()}`);
+    if (arg.rpcuser) {
+      args.push(`--rpcuser=${arg.rpcuser}`);
+    }
+    if (arg.rpcpassword) {
+      args.push(`--rpcpass=${arg.rpcpassword}`);
+    }
+    if (arg.rpccert) {
+      args.push(`--rpccert=${arg.rpccert}`);
+    }
+    if (arg.rpchost) {
+      host = args.rpchost;
+    } else {
+      host = RPCDaemonHost();
+    }
+    if (arg.rpcport) {
+      port = arg.rpcport;
+    } else {
+      port = RPCDaemonPort();
+    }
+    if (arg.rpcappdata) {
+      const rpccert = `${arg.rpcappdata}/rpc.cert`;
+      args.push(`--rpccert=${rpccert}`);
+      args.push(`--configfile=${dcrctlCfg()}`);
+    }
   }
 
   var spawn = require("child_process").spawn;

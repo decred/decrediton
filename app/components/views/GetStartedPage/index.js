@@ -19,7 +19,9 @@ class GetStartedPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.doStartDaemon();
+    if (!this.props.isAdvancedDaemon) {
+      this.props.doStartDaemon();
+    }
   }
 
   componentWillUnmount() {
@@ -30,20 +32,11 @@ class GetStartedPage extends React.Component {
 
   render() {
     const {
-      getDaemonStarted,
-      getDaemonSynced,
-      getWalletReady,
       startStepIndex,
       isPrepared,
       isAdvancedDaemon,
       ...props
     } = this.props;
-    console.log(
-      getDaemonStarted,
-      getDaemonSynced,
-      getWalletReady,
-      isAdvancedDaemon,
-      isPrepared);
     let Header, Body;
     if (isPrepared) {
       switch (startStepIndex || 0) {

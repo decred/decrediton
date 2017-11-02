@@ -22,6 +22,6 @@ export const startWallet = (rpcuser, rpcpassword) => Promise
     throw "Error starting wallet";
   });
 
-export const getBlockCount = (startType, credentials) => Promise
+export const getBlockCount = (credentials) => Promise
   .resolve(ipcRenderer
-    .sendSync("check-daemon", {startType, credentials}));
+    .sendSync("check-daemon", {credentials}));
