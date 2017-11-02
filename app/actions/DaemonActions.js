@@ -11,56 +11,37 @@ export const DAEMONSYNCING_START = "DAEMONSYNCING_START";
 export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
+
+
 export const DAEMONSTARTED_ERROR_ON_START_WALLET = "DAEMONSTARTED_ERROR_ON_START_WALLET";
 export const LOADER_ADVANCED_SUCCESS = "LOADER_ADVANCED_SUCCESS";
 export const SAVE_START_ADVANCED_DAEMON_CREDENTIALS = "SAVE_START_ADVANCED_DAEMON_CREDENTIALS";
 export const SKIPPED_START_ADVANCED_LOGIN = "SKIPPED_START_ADVANCED_LOGIN";
 
-export const startDaemon = () => (dispatch) => {
-  daemon.startDaemon()
-  .then(res => {
-    const {pid, advancedDaemon} = res;
-    if (advancedDaemon) {
-      dispatch({type: DAEMONSTARTED_ADVANCED, advancedDaemon});
+export const startDaemon = () => (dispatch, getState) => {
+  const { daemon: { advancedDaemon, remoteDaemon, differentAppData } } = getState();
+  if (advancedDaemon) {
+    if (remoteDaemon) {
+      dispatch({type: DAEMONSTARTED, pid: -1});
+      dispatch(syncDaemon());
+    } else if (differentAppData) {
+      daemon.startDaemon(differentAppData)
+      .then(pid => {
+        dispatch({type: DAEMONSTARTED, pid});
+        dispatch(syncDaemon());
+      })
+      .catch((err) => dispatch({err, type: DAEMONSTARTED_ERROR}));
     } else {
-      dispatch({type: DAEMONSTARTED, pid});
-      dispatch(syncDaemon())
+      dispatch({err: "Unexpected Error, please try again", type: DAEMONSTARTED_ERROR});
     }
-  })
-  .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));
-};
-
-/*
- * startType can be 1 for connecting to a remote rpc or 2 for connecting to a different appData directory
- */
-export const startDaemonAdvanced = (args, startType) => (dispatch) => {
-  if(startType === 1){
-    dispatch(syncDaemon(startType, args));
-    dispatch({
-      type: SAVE_START_ADVANCED_DAEMON_CREDENTIALS,
-      credentials: args,
-      startType: startType
-    });
-    dispatch({type: LOADER_ADVANCED_SUCCESS});
-    return;
+  } else {
+    daemon.startDaemon()
+    .then(pid => {
+      dispatch({type: DAEMONSTARTED, pid});
+      dispatch(syncDaemon());
+    })
+    .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));
   }
-
-  if(!args)
-    dispatch({ type: SKIPPED_START_ADVANCED_LOGIN });
-
-  daemon.startDaemonAdvanced(args, startType)
-  .then( () => {
-    dispatch(syncDaemon(startType, args));
-    dispatch({
-      type: SAVE_START_ADVANCED_DAEMON_CREDENTIALS,
-      credentials: args,
-      startType: startType
-    });
-    dispatch({type: LOADER_ADVANCED_SUCCESS});
-  })
-  .catch( () => {
-    dispatch({type: DAEMONSTARTED_ADVANCED_ERROR});
-  });
 };
 
 export const stopDaemon = () => (dispatch) => daemon
@@ -85,7 +66,7 @@ export const startWallet = (walletCredentials) => (dispatch) => {
   });
 };
 
-export const syncDaemon = (startType, credentials) =>
+export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks }} = getState();
@@ -93,7 +74,7 @@ export const syncDaemon = (startType, credentials) =>
       // check to see if user skipped;
       if (daemonSynced) return;
       return daemon
-        .getBlockCount(startType, credentials)
+        .getBlockCount()
         .then(updateCurrentBlockCount => {
           if (updateCurrentBlockCount >= neededBlocks) {
             dispatch({type: DAEMONSYNCED});

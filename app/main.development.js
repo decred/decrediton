@@ -247,59 +247,15 @@ const installExtensions = async () => {
 
 const { ipcMain } = require("electron");
 
-ipcMain.on("start-daemon", (event, arg) => {
-  if (cfg.get("daemon_start_advanced")) {
-    logger.log("info", "Daemon starting on advanced mode as requested on config");
-    daemonIsAdvanced = true;
-    dcrdPID = dcrdPID ? dcrdPID : -1;
-    event.returnValue = {
-      pid: dcrdPID,
-      advancedDaemon: true
-    };
-    return;
-  }
-  if (cfg.get("daemon_skip_start")) {
-    logger.log("info", "skipping start of dcrd as requested on config");
-    dcrdPID = -1;
-    event.returnValue = {
-      pid: dcrdPID,
-      advancedDaemon: false,
-    };
-    return;
-  }
-  if (dcrdPID) {
-    logger.log("info", "dcrd already started " + dcrdPID);
-    event.returnValue = {
-      pid: dcrdPID,
-      advancedDaemon: false,
-    };
-    return;
-  }
-
-  logger.log("info", "launching dcrd with " + JSON.stringify(arg));
-  try {
-    dcrdPID = launchDCRD();
-  } catch (e) {
-    logger.log("error", "error launching dcrd: " + e);
-  }
-  event.returnValue = {
-    pid: dcrdPID,
-    advancedDaemon: false,
-  };
-});
-
-ipcMain.on("start-daemon-advanced", (event, data) => {
-  const {startType, args} = data;
+ipcMain.on("start-daemon", (event, args) => {
   let credentials;
-
-  if(startType === 2){
+  if(args){
     logger.log("info", "launching dcrd with different appdata directory");
     const {rpcappdata} = args;
     credentials = {
       rpcappdata: rpcappdata,
     };
   }
-
   if (dcrdPID !== -1) {
     logger.log("info", "dcrd already started, closing it to start again");
     try{
@@ -418,12 +374,12 @@ ipcMain.on("grpc-versions-determined", (event, versions) => {
   grpcVersions = { ...grpcVersions, ...versions };
 });
 
-const launchDCRD = (credentials) => {
+const launchDCRD = (appdata) => {
   var spawn = require("child_process").spawn;
   let args = [];
 
-  if(credentials){
-    args = [`--appdata=${credentials.rpcappdata}`,`--configfile=${dcrdCfg()}`];
+  if(appdata){
+    args = [`--appdata=${appdata}`,`--configfile=${dcrdCfg()}`];
   } else {
     args = [`--configfile=${dcrdCfg()}`];
   }
