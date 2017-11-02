@@ -248,11 +248,11 @@ const installExtensions = async () => {
 const { ipcMain } = require("electron");
 
 ipcMain.on("start-daemon", (event, args) => {
-  let addData = null;
+  let appData = null;
   if(args){
     logger.log("info", "launching dcrd with different appdata directory");
     const {rpcappdata} = args;
-    addData = rpcappdata;
+    appData = rpcappdata;
   }
   if (dcrdPID !== -1) {
     logger.log("info", "dcrd already started, closing it to start again");
@@ -264,9 +264,9 @@ ipcMain.on("start-daemon", (event, args) => {
     logger.log("info", "dcrd already started " + dcrdPID);
   }
   try {
-    dcrdPID = launchDCRD(addData);
+    dcrdPID = launchDCRD(appData);
   } catch (e) {
-    logger.log("error", "error launching dcrd with different rpcuser and rpcpassword: " + e);
+    logger.log("error", "error launching dcrd: " + e);
   }
   event.returnValue = dcrdPID;
 });
@@ -386,7 +386,7 @@ ipcMain.on("grpc-versions-determined", (event, versions) => {
 const launchDCRD = (appdata) => {
   var spawn = require("child_process").spawn;
   let args = [];
-
+  
   if(appdata){
     args = [`--appdata=${appdata}`,`--configfile=${dcrdCfg()}`];
   } else {
