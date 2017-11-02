@@ -48,11 +48,11 @@ const messages = defineMessages({
 
 const RemoteDaemonForm = ({
   onSubmitRemoteForm,
-  onChangeRpcuser,
-  onChangeRpcpass,
-  onChangeRpccert,
-  onChangeRpchost,
-  onChangeRpcport,
+  setRpcUser,
+  setRpcPass,
+  setRpcCert,
+  setRpcHost,
+  setRpcPort,
   intl
   }) => {
   return (
@@ -62,7 +62,7 @@ const RemoteDaemonForm = ({
           label={intl.formatMessage(messages.messageLoginLabel)}
           type="text"
           required
-          onChange={(e) => onChangeRpcuser(e.target.value)}
+          onChange={(e) => setRpcUser(e.target.value)}
           placeholder={intl.formatMessage(messages.messageLoginPlaceholder)}
           showErrors
         />
@@ -70,7 +70,7 @@ const RemoteDaemonForm = ({
           label={intl.formatMessage(messages.passphraseFieldLabel)}
           type="password"
           required
-          onChange={(e) => onChangeRpcpass(e.target.value)}
+          onChange={(e) => setRpcPass(e.target.value)}
           placeholder={intl.formatMessage(messages.passphraseFieldPlaceholder)}
           showErrors
         />
@@ -78,7 +78,7 @@ const RemoteDaemonForm = ({
           label={intl.formatMessage(messages.certFieldLabel)}
           type="text"
           required
-          onChange={(e) => onChangeRpccert(e.target.value)}
+          onChange={(e) => setRpcCert(e.target.value)}
           placeholder={intl.formatMessage(messages.certFieldPlaceholder)}
           showErrors
         />
@@ -86,7 +86,7 @@ const RemoteDaemonForm = ({
           label={intl.formatMessage(messages.hostFieldLabel)}
           type="text"
           required
-          onChange={(e) => onChangeRpchost(e.target.value)}
+          onChange={(e) => setRpcHost(e.target.value)}
           placeholder={intl.formatMessage(messages.hostFieldPlaceholder)}
           showErrors
         />
@@ -94,7 +94,7 @@ const RemoteDaemonForm = ({
           label={intl.formatMessage(messages.portFieldLabel)}
           type="text"
           required
-          onChange={(e) => onChangeRpcport(e.target.value)}
+          onChange={(e) => setRpcPort(e.target.value)}
           placeholder={intl.formatMessage(messages.portFieldPlaceholder)}
           showErrors
         />

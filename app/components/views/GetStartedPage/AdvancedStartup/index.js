@@ -22,18 +22,12 @@ class AdvancedStartupBody extends React.Component {
 
   getInitialState() {
     return {
-      isSubmitedRemoteForm: false,
-      isSubmitedDiffAppdataForm: false,
-      isSubmited: false,
-      hasErrors: false,
-      remoteFormHasErrors: false,
-      diffAppdataFormHasErrors: false,
-      rpcuserFilled: false,
-      rpcpasswordFilled: false,
-      rpccertFilled: false,
-      rpcportFilled: false,
-      rpchostFilled: false,
-      rpcappdataFilled: false,
+      rpcuser: "",
+      rpcpas: "",
+      rpccert: "",
+      rpcport: "",
+      rpchost: "",
+      rpcappdata: "",
     };
   }
 
@@ -42,22 +36,29 @@ class AdvancedStartupBody extends React.Component {
   }
 
   render() {
+    const {
+      setRpcUser,
+      setRpcPass,
+      setRpcCert,
+      setRpcHost,
+      setRpcPort,
+      setAppData,
+      onSubmitAppData,
+      onSubmitRemoteForm,
+    } = this;
     return (
       <AdvancedBody
       {...{
         ...this.props,
         ...this.state,
-        ...substruct({
-          skipAdvancedDaemon: null,
-          onSubmitRemoteForm: null,
-          onSubmitAppData: null,
-          onChangeRpcuser: null,
-          onChangeRpcpass: null,
-          onChangeRpccert: null,
-          onChangeRpchost: null,
-          onChangeRpcport: null,
-          onChangeRpcappdata: null,
-        }, this)
+        onSubmitAppData,
+        onSubmitRemoteForm,
+        setRpcUser,
+        setRpcPass,
+        setRpcCert,
+        setRpcHost,
+        setRpcPort,
+        setAppData,
       }}
       />
     );
@@ -67,91 +68,53 @@ class AdvancedStartupBody extends React.Component {
     this.setState(this.getInitialState());
   }
 
-  getRemoteFormIsValid() {
-    const { rpcuserFilled, rpcpasswordFilled, rpccertFilled, rpcportFilled, rpchostFilled } = this.state;
-
-    if (!rpcuserFilled || !rpcpasswordFilled || !rpccertFilled || !rpcportFilled || !rpchostFilled ) {
-      this.setState({
-        remoteFormHasErrors: true,
-        hasErrors: true,
-      });
-      return false;
-    }
-    this.setState({
-      remoteFormHasErrors: false,
-      hasErrors: false,
-    });
-    return true;
+  setRpcUser(rpcuser) {
+    this.setState({ rpcuser });
   }
 
-  getDiffAppdataFormIsValid() {
-    const { rpcappdataFilled } = this.state;
-    if (!rpcappdataFilled) {
-      this.setState({
-        diffAppdataFormHasErrors: true,
-        hasErrors: true,
-      });
-      return false;
-    }
-    this.setState({
-      diffAppdataFormHasErrors: false,
-      hasErrors: false
-    });
-    return true;
+  setRpcPass(rpcpass) {
+    this.setState({ rpcpass });
   }
 
-  onChangeRpcuser(rpcuser) {
-    if (!rpcuser)
-      return this.setState({ rpcuserFilled: false });
-    this.setState({ rpcuserFilled: true });
+  setRpcHost(rpchost) {
+    this.setState({ rpchost });
   }
 
-  onChangeRpcpass(rpcpass) {
-    if (!rpcpass)
-      return this.setState({ rpcpasswordFilled: false });
-    this.setState({ rpcpasswordFilled: true });
+  setRpcPort(rpcport) {
+    this.setState({ rpcport });
   }
 
-  onChangeRpccert(rpccert) {
-    if (!rpccert)
-      return this.setState({ rpccertFilled: false });
-    this.setState({ rpccertFilled: true });
+  setRpcCert(rpccert) {
+    this.setState({ rpccert });
   }
-
-  onChangeRpchost(rpchost) {
-    if (!rpchost)
-      return this.setState({ rpchostFilled: false });
-    this.setState({ rpchostFilled: true });
-  }
-
-  onChangeRpcport(rpcport) {
-    if (!rpcport)
-      return this.setState({ rpcportFilled: false });
-    this.setState({ rpcportFilled: true });
-  }
-
-  onChangeRpcappdata(rpcappdata) {
-    if (!rpcappdata)
-      return this.setState({ rpcappdataFilled: false });
-    this.setState({ rpcappdataFilled: true });
+  
+  setAppData(appdata) {
+    this.setState({ aopdata });
   }
 
   onSubmitRemoteForm() {
-    this.setState({
-      isSubmitedRemoteForm: true,
-      isSubmited: true,
-    });
-    this.props.doStartdDaemon();
+    if (!this.isRemoteValid()) return;
+    const { rpcuser, rpcpass, rpccert, rpchost, rpcport } = this.state;
+    let args = {rpcuser, rpcpass, rpccert, rpchost, rpcport};
+    this.props.onStartDaemon(args);
   }
 
   onSubmitAppData() {
-    if (this.state.rpcappdata) {
-      this.props.doStartDaemon(null, this.state.rpcappdata);
-    }
+    if (!this.isAppDataValid()) return;
+    this.props.onStartDaemon(null, this.state.appdata);
+  }
+
+  isRemoteValid() {
+    const { rpcuser, rpcpass, rpccert, rpchost, rpcport } = this.state;
+    return !!(rpcuser && rpcpass && rpccert && rpchost && rpcport);
+  }
+
+  isAppDataValid() {
+    return !this.state.appdata;
   }
 
   skipAdvancedDaemon(){
-    this.props.doStartDaemon();
+    this.props.onStartDaemon();
   }
 }
 

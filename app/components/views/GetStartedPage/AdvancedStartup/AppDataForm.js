@@ -12,7 +12,7 @@ const messages = defineMessages({
 
 const AppDataForm = ({
   onSubmitAppData,
-  onChangeRpcappdata,
+  setAppData,
   intl
   }) => {
 
@@ -28,7 +28,7 @@ const AppDataForm = ({
               type="text"
               showErrors
               required
-              onChange={(e) => onChangeRpcappdata(e.target.value)}
+              onChange={(e) => setAppData(e.target.value)}
               placeholder={intl.formatMessage(messages.appdataFieldPlaceholder)}
             />
           </div>

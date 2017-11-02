@@ -14,12 +14,14 @@ export const AdvancedHeader = () => (
 const AdvancedBodyBase = ({
   ...props,
   ...state,
-  onSubmitDiffAppdataForm,
-  onChangeRpcappdata,
+  onSubmitAppDataForm,
   onSubmitRemoteForm,
-  onChangeRpcuser,
-  onChangeRpcpass,
-  onChangeRpccert,
+  setRpcUser,
+  setRpcPass,
+  setRpcCert,
+  setRpcHost,
+  setRpcPort,
+  setAppData,
   skipAdvancedDaemon,
   intl
  }) => {
@@ -41,18 +43,19 @@ const AdvancedBodyBase = ({
             ...props,
             ...state,
             onSubmitRemoteForm,
-            onChangeRpcuser,
-            onChangeRpcpass,
-            onChangeRpccert,
+            setRpcUser,
+            setRpcPass,
+            setRpcCert,
+            setRpcHost,
+            setRpcPort,
             intl
           }}
           />
           <AppDataForm {...{
             ...props,
             ...state,
-            onSubmitDiffAppdataForm,
-            onChangeRpcappdata,
-            onChangeRpccert,
+            onSubmitAppDataForm,
+            setAppData,
             intl
           }} />
         </div>
