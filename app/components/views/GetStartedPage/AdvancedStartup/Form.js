@@ -23,6 +23,7 @@ const AdvancedBodyBase = ({
   setRpcPort,
   setAppData,
   skipAdvancedDaemon,
+  appData,
   intl
  }) => {
   return (
@@ -56,6 +57,7 @@ const AdvancedBodyBase = ({
             ...state,
             onSubmitAppDataForm,
             setAppData,
+            appData,
             intl
           }} />
         </div>

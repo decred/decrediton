@@ -27,7 +27,7 @@ class AdvancedStartupBody extends React.Component {
       rpccert: "",
       rpcport: "",
       rpchost: "",
-      rpcappdata: "",
+      appData: "",
     };
   }
 
@@ -46,6 +46,14 @@ class AdvancedStartupBody extends React.Component {
       onSubmitAppData,
       onSubmitRemoteForm,
     } = this;
+    const {
+      rpcuser,
+      rpcpas,
+      rpccert,
+      rpcport,
+      rpchost,
+      appData,
+    } = this.state;
     return (
       <AdvancedBody
       {...{
@@ -59,6 +67,12 @@ class AdvancedStartupBody extends React.Component {
         setRpcHost,
         setRpcPort,
         setAppData,
+        rpcuser,
+        rpcpas,
+        rpccert,
+        rpcport,
+        rpchost,
+        appData,
       }}
       />
     );
@@ -88,8 +102,8 @@ class AdvancedStartupBody extends React.Component {
     this.setState({ rpccert });
   }
   
-  setAppData(appdata) {
-    this.setState({ aopdata });
+  setAppData(appData) {
+    this.setState({ appData });
   }
 
   onSubmitRemoteForm() {
@@ -100,8 +114,9 @@ class AdvancedStartupBody extends React.Component {
   }
 
   onSubmitAppData() {
+    console.log(this.state.appData, this.isAppDataValid());
     if (!this.isAppDataValid()) return;
-    this.props.onStartDaemon(null, this.state.appdata);
+    this.props.onStartDaemon(null, this.state.appData);
   }
 
   isRemoteValid() {
@@ -110,7 +125,7 @@ class AdvancedStartupBody extends React.Component {
   }
 
   isAppDataValid() {
-    return !this.state.appdata;
+    return !this.state.appData;
   }
 
   skipAdvancedDaemon(){

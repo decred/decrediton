@@ -13,6 +13,7 @@ const messages = defineMessages({
 const AppDataForm = ({
   onSubmitAppData,
   setAppData,
+  appData,
   intl
   }) => {
 
@@ -28,6 +29,7 @@ const AppDataForm = ({
               type="text"
               showErrors
               required
+              value={appData}
               onChange={(e) => setAppData(e.target.value)}
               placeholder={intl.formatMessage(messages.appdataFieldPlaceholder)}
             />
