@@ -32,8 +32,8 @@ export default (
       <IndexRedirect to="send" />
       <Route path="send" component={TransactionsSendTab}/>
       <Route path="receive" component={TransactionsReceiveTab}/>
+      <Route path="history/:txHash" component={TransactionPage} />
     </Route>
-    <Route path="transactions/history/:txHash" component={TransactionPage} />
     <Route path="security" component={SecurityPage}>
       <IndexRedirect to="sign"/>
       <Route path="sign" component={SignPage} />

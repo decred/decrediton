@@ -1,4 +1,6 @@
 import { createElement as h } from "react";
+export { tsToDate } from "./dateFormat";
+export { addSpacingAroundText, restrictToStdDecimalNumber } from "./strings";
 
 export const kidCheck = C => {
   const Comp = p => !!p.children && h(C, p);
