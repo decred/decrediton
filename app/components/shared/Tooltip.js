@@ -1,5 +1,4 @@
 import "style/Tooltip.less";
-import { Aux } from "./";
 
 const Tooltip = ({ text, warning, disabled, className, children, tipWidth }) => {
   let tooltip = null;

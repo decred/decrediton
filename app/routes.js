@@ -26,31 +26,31 @@ import InvalidRPCVersion from "./components/views/InvalidRPCVersion";
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={GetStartedPage} />
-    <Route path="/home" component={HomePage} />
-    <Route path="/history" component={HistoryPage} />
-    <Route path="/transactions" component={TransactionsPage}>
+    <Route path="home" component={HomePage} />
+    <Route path="history" component={HistoryPage} />
+    <Route path="transactions" component={TransactionsPage}>
       <IndexRedirect to="send" />
       <Route path="send" component={TransactionsSendTab}/>
       <Route path="receive" component={TransactionsReceiveTab}/>
     </Route>
-    <Route path="/transactions/history/:txHash" component={TransactionPage} />
-    <Route path="/security" component={SecurityPage}>
+    <Route path="transactions/history/:txHash" component={TransactionPage} />
+    <Route path="security" component={SecurityPage}>
       <IndexRedirect to="sign"/>
       <Route path="sign" component={SignPage} />
       <Route path="verify" component={VerifyPage} />
     </Route>
-    <Route path="/settings" component={SettingsPage} />
-    <Route path="/tickets" component={TicketsPage}>
+    <Route path="settings" component={SettingsPage} />
+    <Route path="tickets" component={TicketsPage}>
       <IndexRedirect to="purchase" />
       <Route path="purchase" component={TicketsPurchaseTab}/>
       <Route path="mytickets" component={TicketsMyTicketsTab}/>
       <Route path="governance" component={TicketsGovernanceTab}/>
       <Route path="statistics" component={TicketsStatisticsTab}/>
     </Route>
-    <Route path="/accounts" component={AccountsPage} />
-    <Route path="/walletError" component={WalletError} />
-    <Route path="/error" component={ErrorScreen} />
-    <Route path="/help" component={Help} />
-    <Route path="/invalidRPCVersion" component={InvalidRPCVersion} />
+    <Route path="accounts" component={AccountsPage} />
+    <Route path="walletError" component={WalletError} />
+    <Route path="error" component={ErrorScreen} />
+    <Route path="help" component={Help} />
+    <Route path="invalidRPCVersion" component={InvalidRPCVersion} />
   </Route>
 );

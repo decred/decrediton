@@ -1,5 +1,4 @@
-import Header from "./Header";
-import { RouteTransition } from "shared";
+import { RouteTransition, TabbedHeader } from "shared";
 import theme from "theme";
 
 const mapStyles = styles => ({ left: styles.left + "%" });
@@ -10,16 +9,8 @@ const enterRight = { atEnter: { left: 100 }, atActive: { left: 0 }, atLeave: { l
 const wrapperComponent = props => <div className="tab-content" { ...props } />;
 
 class Tickets extends React.Component{
-  constructor(props) {
-    super(props);
-    this.state = this.getInitialState();
-  }
-
-  getInitialState() {
-    return {
-      prevRoute: null,
-    };
-  }
+  constructor(props) { super(props); }
+  state = { prevRoute: null };
 
   componentWillReceiveProps(nextProps) {
     if (this.props.location.pathname !== nextProps.location.pathname) {
@@ -30,13 +21,12 @@ class Tickets extends React.Component{
     const { children, location } = this.props;
     const { prevRoute } = this.state;
     const tabs = ["purchase", "mytickets", "governance", "statistics"];
-    const page = "tickets";
     // this will be removed w/ react router 4
     const pathname = location.pathname.split("/")[2];
     const effect = !prevRoute ? enterLeft : tabs.indexOf(prevRoute) > tabs.indexOf(pathname) ? enterLeft : enterRight;
     return (
       <Aux>
-        <Header {...{ tabs, page, pathname }}/>
+        <TabbedHeader />
         <RouteTransition className="tabbed-page" opts={ theme("springs.tab") } {...{ wrapperComponent, pathname, ...effect }}>
           { children }
         </RouteTransition>

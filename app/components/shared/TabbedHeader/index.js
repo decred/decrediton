@@ -1,37 +1,27 @@
 import { spring, Motion } from "react-motion";
-import { Link } from "react-router";
-import { injectIntl, defineMessages, intlShape } from "react-intl";
+import { Link, withRouter } from "react-router";
+import { injectIntl, intlShape } from "react-intl";
 import { header } from "connectors";
+import messages from "messages";
+import Description from "./Description";
 import theme from "theme";
 import "style/Header.less";
 
-const messages = defineMessages({
-  "tickets.title":               { id: "tickets.title",               defaultMessage: "Tickets" },
-  //"tickets.description":         { id: "tickets.description",         defaultMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-  "tickets.tab.purchase":        { id: "tickets.tab.purchase",        defaultMessage: "Purchase Tickets" },
-  "tickets.tab.mytickets":       { id: "tickets.tab.mytickets",       defaultMessage: "My Tickets" },
-  "tickets.tab.governance":      { id: "tickets.tab.governance",      defaultMessage: "Governance" },
-  "tickets.tab.statistics":      { id: "tickets.tab.statistics",      defaultMessage: "Statistics" },
-});
-
 @autobind
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this._nodes = new Map();
-    this.state = { caretLeft: null, caretWidth: null, selectedTab: null };
-  }
-  componentDidMount() {
-    this.updateCaretPosition(this.props.pathname);
-  }
+class TabbedHeader extends React.Component {
+  constructor(props) { super(props); }
+  _nodes = new Map();
+  state = { caretLeft: null, caretWidth: null, selectedTab: null };
+
+  componentDidMount() { this.updateCaretPosition(this.getPathname(this.props)); }
 
   componentDidUpdate() {
-    if (this.state.selectedTab != this.props.pathname) {
-      const caretPosition = this.neededCaretPosition(this.props.pathname);
-      this.setState({ selectedTab: this.props.pathname, ...caretPosition });
+    const pathname = this.getPathname(this.props);
+    if (this.state.selectedTab != pathname) {
+      const caretPosition = this.neededCaretPosition(pathname);
+      this.setState({ selectedTab: pathname, ...caretPosition });
     }
   }
-
   updateCaretPosition(tab) {
     const caretPosition = this.neededCaretPosition(tab);
     if (caretPosition) this.setState(caretPosition);
@@ -44,10 +34,15 @@ class Header extends React.Component {
     const caretWidth = tabRect.width;
     return {caretLeft, caretWidth};
   }
+  getTabs(props) { return props.routes[1].childRoutes.map( route => route.path ); }
+  getPage(props) { return props.routes[1].path; }
+  getPathname(props) { return props.routes[2].path; }
+
   render () {
-    const { page, tabs, intl } = this.props;
+    const { intl, children } = this.props;
+    const tabs = this.getTabs(this.props);
+    const page = this.getPage(this.props);
     const { caretLeft, caretWidth } = this.state;
-    //const description = [page, "description"].join(".");
     const headerIcon = ["header-icon", page].join("-");
     const title = [page, "title"].join(".");
     return (
@@ -59,9 +54,9 @@ class Header extends React.Component {
           { intl.formatMessage(messages[title]) }
         </div>
 
-        <div className="tabbedheader-description">
-          { /*intl.formatMessage(messages[description])*/ }
-        </div>
+        <Description>
+          { children }
+        </Description>
 
         <div className="tabbedheader-tabs">
           { tabs.map((tab) => {
@@ -84,10 +79,9 @@ class Header extends React.Component {
   }
 }
 
-Header.propTypes = {
-  page: PropTypes.string.isRequired,
-  tabs: PropTypes.arrayOf(PropTypes.string),
+TabbedHeader.propTypes = {
+  routes: PropTypes.array,
   intl: intlShape
 };
 
-export default injectIntl(header(Header));
+export default injectIntl(header(withRouter(TabbedHeader)));
