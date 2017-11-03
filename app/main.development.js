@@ -247,12 +247,9 @@ const installExtensions = async () => {
 
 const { ipcMain } = require("electron");
 
-ipcMain.on("start-daemon", (event, args) => {
-  let appData = null;
-  if(args){
+ipcMain.on("start-daemon", (event, appData) => {
+  if(appData){
     logger.log("info", "launching dcrd with different appdata directory");
-    const {rpcappdata} = args;
-    appData = rpcappdata;
   }
   if (dcrdPID !== -1) {
     logger.log("info", "dcrd already started, closing it to start again");
@@ -316,39 +313,35 @@ ipcMain.on("start-wallet", (event, arg) => {
   event.returnValue = dcrwPID;
 });
 
-ipcMain.on("check-daemon", (event, arg) => {
+ipcMain.on("check-daemon", (event, rpcCreds, appData) => {
   let args = ["getblockcount"];
   let host, port;
-  if (Object.keys(arg).length === 0 && arg.constructor === Object) {
+  if (!rpcCreds && !appData){
     host = RPCDaemonHost();
     port = RPCDaemonPort();
     args.push(`--configfile=${dcrctlCfg()}`);
-  } else {
-    console.log("connecting to remote", arg);
-    if (arg.rpcuser) {
-      args.push(`--rpcuser=${arg.rpcuser}`);
+  } else if (rpcCreds) {
+    if (rpcCreds.rpcuser) {
+      args.push(`--rpcuser=${rpcCreds.rpcuser}`);
     }
-    if (arg.rpcpass) {
-      args.push(`--rpcpass=${arg.rpcpassword}`);
+    if (rpcCreds.rpcpass) {
+      args.push(`--rpcpass=${rpcCreds.rpcpass}`);
     }
-    if (arg.rpccert) {
-      args.push(`--rpccert=${arg.rpccert}`);
+    if (rpcCreds.rpccert) {
+      args.push(`--rpccert=${rpcCreds.rpccert}`);
     }
-    if (arg.rpchost) {
-      host = args.rpchost;
-    } else {
-      host = RPCDaemonHost();
+    if (rpcCreds.rpchost) {
+      host = rpcCreds.rpchost;
     }
-    if (arg.rpcport) {
-      port = arg.rpcport;
-    } else {
-      port = RPCDaemonPort();
+    if (rpcCreds.rpcport) {
+      port = rpcCreds.rpcport;
     }
-    if (arg.rpcappdata) {
-      const rpccert = `${arg.rpcappdata}/rpc.cert`;
-      args.push(`--rpccert=${rpccert}`);
-      args.push(`--configfile=${dcrctlCfg()}`);
-    }
+  } else if (appData) {
+    const rpccert = `${appData}/rpc.cert`;
+    args.push(`--rpccert=${rpccert}`);
+    args.push(`--configfile=${dcrctlCfg()}`);
+    host = RPCDaemonHost();
+    port = RPCDaemonPort();
   }
 
   var spawn = require("child_process").spawn;
@@ -387,7 +380,6 @@ ipcMain.on("grpc-versions-determined", (event, versions) => {
 const launchDCRD = (appdata) => {
   var spawn = require("child_process").spawn;
   let args = [];
-  
   if(appdata){
     args = [`--appdata=${appdata}`,`--configfile=${dcrdCfg()}`];
   } else {

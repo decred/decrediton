@@ -45,6 +45,7 @@ class AdvancedStartupBody extends React.Component {
       setAppData,
       onSubmitAppData,
       onSubmitRemoteForm,
+      skipAdvancedDaemon
     } = this;
     const {
       rpcuser,
@@ -61,6 +62,7 @@ class AdvancedStartupBody extends React.Component {
         ...this.state,
         onSubmitAppData,
         onSubmitRemoteForm,
+        skipAdvancedDaemon,
         setRpcUser,
         setRpcPass,
         setRpcCert,
@@ -115,6 +117,7 @@ class AdvancedStartupBody extends React.Component {
 
   onSubmitAppData() {
     if (!this.isAppDataValid()) return;
+    console.log(this.state.appData);
     this.props.onStartDaemon(null, this.state.appData);
   }
 

@@ -14,14 +14,13 @@ export const WALLETREADY = "WALLETREADY";
 
 export const startDaemon = (rpcCreds, appData) => (dispatch) => {
   if (rpcCreds) {
-    console.log("Here", rpcCreds);
     dispatch({type: DAEMONSTARTED_REMOTE, credentials: rpcCreds, pid: -1});
-    dispatch(syncDaemon(rpcCreds));
+    dispatch(syncDaemon());
   } else if (appData) {
     daemon.startDaemon(appData)
     .then(pid => {
       dispatch({type: DAEMONSTARTED_APPDATA, appData: appData, pid});
-      dispatch(syncDaemon());
+      dispatch(syncDaemon(null, appData));
     })
     .catch((err) => dispatch({err, type: DAEMONSTARTED_ERROR}));
   } else {
@@ -39,8 +38,7 @@ export const stopDaemon = () => (dispatch) => daemon
   .then(() => dispatch({type: DAEMONSTOPPED}))
   .catch(() => dispatch({type: DAEMONSTOPPED_ERROR}));
 
-export const startWallet = () => (dispatch, getState) => {
-  const { daemon: { credentials } } = getState();
+export const startWallet = () => (dispatch) => {
   daemon.startWallet()
   .then(pid => {
     dispatch({type: WALLETREADY, pid});
@@ -52,15 +50,15 @@ export const startWallet = () => (dispatch, getState) => {
   });
 };
 
-export const syncDaemon = (rpcCreds) =>
+export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks }} = getState();
-      const { daemon: { daemonSynced, timeStart, blockStart } } = getState();
+      const { daemon: { daemonSynced, timeStart, blockStart, credentials, appData} } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
       return daemon
-        .getBlockCount(rpcCreds)
+        .getBlockCount(credentials, appData)
         .then(updateCurrentBlockCount => {
           if (updateCurrentBlockCount >= neededBlocks) {
             dispatch({type: DAEMONSYNCED});
