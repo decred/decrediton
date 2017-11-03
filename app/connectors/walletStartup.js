@@ -22,8 +22,7 @@ const mapStateToProps = selectorMap({
   isPrepared: sel.isPrepared,
   network: sel.network,
   versionInvalid: sel.versionInvalid,
-  isAdvancedDaemon: sel.isAdvancedDaemon,
-  getSkippedAdvancedLogin: sel.getSkippedAdvancedLogin
+  isAdvancedDaemon: sel.isAdvancedDaemon
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -33,8 +32,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onOpenWallet: wla.openWalletAttempt,
   onRetryStartRPC: wla.startRpcRequestFunc,
   doVersionCheck: wla.versionCheckAction,
-  doStartAdvancedDaemon: da.startDaemonAdvanced,
-  doStartDaemon: da.startDaemon,
+  onStartDaemon: da.startDaemon,
   determineNeededBlocks: wla.determineNeededBlocks,
   showSidebarMenu,
   showSidebar,

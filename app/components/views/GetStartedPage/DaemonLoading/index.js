@@ -1,5 +1,3 @@
-import React, { Component } from "react";
-import { autobind } from "core-decorators";
 import ReactTimeout from "react-timeout";
 import {
   DaemonLoadingFormHeader as DaemonLoadingHeader,
@@ -7,7 +5,7 @@ import {
 } from "./Form";
 
 @autobind
-class DaemonLoadingBodyBase extends Component {
+class DaemonLoadingBodyBase extends React.Component {
   constructor(props)  {
     super(props);
     this.state = this.getInitialState();

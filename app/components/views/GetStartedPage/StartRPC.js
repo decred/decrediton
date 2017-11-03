@@ -1,9 +1,8 @@
-import React from "react";
-import Header from "../../Header";
-import ShowError from "../../ShowError";
-import KeyBlueButton from "../../KeyBlueButton";
+import Header from "Header";
+import ShowError from "ShowError";
+import KeyBlueButton from "KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
-import "../../../style/GetStarted.less";
+import "style/GetStarted.less";
 
 export const StartRPCHeader = () => (
   <Header getStarted

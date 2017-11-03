@@ -1,10 +1,8 @@
-import React, { Component } from "react";
-import { autobind } from "core-decorators";
 import { OpenWalletDecryptFormHeader, OpenWalletDecryptFormBody } from "./DecryptForm";
 import { OpenWalletCreateFormHeader, OpenWalletCreateFormBody } from "./CreateForm";
 
 @autobind
-class OpenWalletHeader extends Component {
+class OpenWalletHeader extends React.Component {
   render() {
     const { hasExistingWallet } = this.props;
     const { onToggleNewExisting } = this;
@@ -35,7 +33,7 @@ class OpenWalletHeader extends Component {
 }
 
 @autobind
-class OpenWalletBody extends Component {
+class OpenWalletBody extends React.Component {
   constructor(props)  {
     super(props);
     this.state = this.getInitialState();

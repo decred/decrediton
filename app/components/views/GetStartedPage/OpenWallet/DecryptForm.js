@@ -1,5 +1,5 @@
-import Header from "../../../Header";
-import KeyBlueButton from "../../../KeyBlueButton";
+import Header from "Header";
+import KeyBlueButton from "KeyBlueButton";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
 import "style/GetStarted.less";

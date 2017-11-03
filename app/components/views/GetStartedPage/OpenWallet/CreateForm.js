@@ -1,10 +1,9 @@
-import React from "react";
-import Header from "../../../Header";
-import CreateWalletForm from "../../../CreateWalletForm";
-import TextToggle from "../../../TextToggle";
-import SlateGrayButton from "../../../SlateGrayButton";
+import Header from "Header";
+import CreateWalletForm from "CreateWalletForm";
+import TextToggle from "TextToggle";
+import SlateGrayButton from "SlateGrayButton";
 import { FormattedMessage as T } from "react-intl";
-import "../../../../style/GetStarted.less";
+import "style/GetStarted.less";
 
 const OpenWalletCreateFormHeader = ({
   startupError,
