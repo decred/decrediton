@@ -53,6 +53,11 @@ const RemoteDaemonForm = ({
   setRpcCert,
   setRpcHost,
   setRpcPort,
+  rpcuser,
+  rpcpass,
+  rpccert,
+  rpchost,
+  rpcport,
   intl
   }) => {
   return (
@@ -62,6 +67,7 @@ const RemoteDaemonForm = ({
           label={intl.formatMessage(messages.messageLoginLabel)}
           type="text"
           required
+          value={rpcuser}
           onChange={(e) => setRpcUser(e.target.value)}
           placeholder={intl.formatMessage(messages.messageLoginPlaceholder)}
           showErrors
@@ -70,6 +76,7 @@ const RemoteDaemonForm = ({
           label={intl.formatMessage(messages.passphraseFieldLabel)}
           type="password"
           required
+          value={rpcpass}
           onChange={(e) => setRpcPass(e.target.value)}
           placeholder={intl.formatMessage(messages.passphraseFieldPlaceholder)}
           showErrors
@@ -78,6 +85,7 @@ const RemoteDaemonForm = ({
           label={intl.formatMessage(messages.certFieldLabel)}
           type="text"
           required
+          value={rpccert}
           onChange={(e) => setRpcCert(e.target.value)}
           placeholder={intl.formatMessage(messages.certFieldPlaceholder)}
           showErrors
@@ -86,6 +94,7 @@ const RemoteDaemonForm = ({
           label={intl.formatMessage(messages.hostFieldLabel)}
           type="text"
           required
+          value={rpchost}
           onChange={(e) => setRpcHost(e.target.value)}
           placeholder={intl.formatMessage(messages.hostFieldPlaceholder)}
           showErrors
@@ -94,6 +103,7 @@ const RemoteDaemonForm = ({
           label={intl.formatMessage(messages.portFieldLabel)}
           type="text"
           required
+          value={rpcport}
           onChange={(e) => setRpcPort(e.target.value)}
           placeholder={intl.formatMessage(messages.portFieldPlaceholder)}
           showErrors

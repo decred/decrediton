@@ -2,6 +2,7 @@ import {versionCheckAction} from "./WalletLoaderActions";
 import * as daemon from "../wallet/daemon";
 
 export const DAEMONSTARTED = "DAEMONSTARTED";
+export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
 export const DAEMONSTARTED_REMOTE = "DAEMONSTARTED_REMOTE";
 export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONSTOPPED = "DAEMONSTOPPED";
@@ -11,22 +12,18 @@ export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
 
-export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
-  const { daemon: { advancedDaemon } } = getState();
-  if (advancedDaemon) {
-    if (rpcCreds) {
-      dispatch({type: DAEMONSTARTED_REMOTE, rpcUser: rpcCreds.rpcUser, rpcPass: rpcCreds. rpcPass, pid: -1});
-      dispatch(syncDaemon(rpcCreds));
-    } else if (appData) {
-      daemon.startDaemon(appData)
-      .then(pid => {
-        dispatch({type: DAEMONSTARTED, pid});
-        dispatch(syncDaemon());
-      })
-      .catch((err) => dispatch({err, type: DAEMONSTARTED_ERROR}));
-    } else {
-      dispatch({err: "Unexpected Error, please try again", type: DAEMONSTARTED_ERROR});
-    }
+export const startDaemon = (rpcCreds, appData) => (dispatch) => {
+  if (rpcCreds) {
+    console.log("Here", rpcCreds);
+    dispatch({type: DAEMONSTARTED_REMOTE, credentials: rpcCreds, pid: -1});
+    dispatch(syncDaemon(rpcCreds));
+  } else if (appData) {
+    daemon.startDaemon(appData)
+    .then(pid => {
+      dispatch({type: DAEMONSTARTED_APPDATA, appData: appData, pid});
+      dispatch(syncDaemon());
+    })
+    .catch((err) => dispatch({err, type: DAEMONSTARTED_ERROR}));
   } else {
     daemon.startDaemon()
     .then(pid => {
@@ -43,8 +40,8 @@ export const stopDaemon = () => (dispatch) => daemon
   .catch(() => dispatch({type: DAEMONSTOPPED_ERROR}));
 
 export const startWallet = () => (dispatch, getState) => {
-  const { daemon: { rpcUser, rpcPass } } = getState();
-  daemon.startWallet(rpcUser, rpcPass)
+  const { daemon: { credentials } } = getState();
+  daemon.startWallet()
   .then(pid => {
     dispatch({type: WALLETREADY, pid});
     setTimeout(()=>dispatch(versionCheckAction()), 1000);

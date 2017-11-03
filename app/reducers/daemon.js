@@ -1,6 +1,7 @@
 import {
   DAEMONSTARTED,
   DAEMONSTARTED_REMOTE,
+  DAEMONSTARTED_APPDATA,
   DAEMONSYNCING_START,
   DAEMONSYNCING_PROGRESS,
   DAEMONSYNCED,
@@ -18,9 +19,14 @@ export default function version(state = {}, action) {
     return {...state,
       daemonStarted: true,
       daemonAdvanced: false,
-      rpcUser: action.rpcUser,
-      rpcPass: action.rpcPass,
+      credentials: action.credentials,
     };
+  case DAEMONSTARTED_APPDATA:
+    return {...state,
+      daemonStarted: true,
+      daemonAdvanced: false,
+      appData: action.appData,
+    }
   case DAEMONSYNCING_START:
     return {...state,
       currentBlockCount: action.currentBlockCount,

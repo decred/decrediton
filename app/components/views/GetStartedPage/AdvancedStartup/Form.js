@@ -23,6 +23,11 @@ const AdvancedBodyBase = ({
   setRpcPort,
   setAppData,
   skipAdvancedDaemon,
+  rpcuser,
+  rpcpass,
+  rpccert,
+  rpchost,
+  rpcport,
   appData,
   intl
  }) => {
@@ -49,6 +54,11 @@ const AdvancedBodyBase = ({
             setRpcCert,
             setRpcHost,
             setRpcPort,
+            rpcuser,
+            rpcpass,
+            rpccert,
+            rpchost,
+            rpcport,
             intl
           }}
           />

@@ -324,10 +324,11 @@ ipcMain.on("check-daemon", (event, arg) => {
     port = RPCDaemonPort();
     args.push(`--configfile=${dcrctlCfg()}`);
   } else {
+    console.log("connecting to remote", arg);
     if (arg.rpcuser) {
       args.push(`--rpcuser=${arg.rpcuser}`);
     }
-    if (arg.rpcpassword) {
+    if (arg.rpcpass) {
       args.push(`--rpcpass=${arg.rpcpassword}`);
     }
     if (arg.rpccert) {

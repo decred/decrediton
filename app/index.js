@@ -76,8 +76,8 @@ var initialState = {
     timeStart: 0,
     blockStart: 0,
     daemonAdvanced: cfg.get("daemon_start_advanced"),
-    rpcUser: cfg.get("rpc_user"),
-    rpcPass: cfg.get("rpc_pass"),
+    credentials: null,
+    appData: null,
   },
   version: {
     // RequiredVersion

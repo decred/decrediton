@@ -23,7 +23,7 @@ class AdvancedStartupBody extends React.Component {
   getInitialState() {
     return {
       rpcuser: "",
-      rpcpas: "",
+      rpcpass: "",
       rpccert: "",
       rpcport: "",
       rpchost: "",
@@ -48,7 +48,7 @@ class AdvancedStartupBody extends React.Component {
     } = this;
     const {
       rpcuser,
-      rpcpas,
+      rpcpass,
       rpccert,
       rpcport,
       rpchost,
@@ -68,7 +68,7 @@ class AdvancedStartupBody extends React.Component {
         setRpcPort,
         setAppData,
         rpcuser,
-        rpcpas,
+        rpcpass,
         rpccert,
         rpcport,
         rpchost,
@@ -101,7 +101,7 @@ class AdvancedStartupBody extends React.Component {
   setRpcCert(rpccert) {
     this.setState({ rpccert });
   }
-  
+
   setAppData(appData) {
     this.setState({ appData });
   }
