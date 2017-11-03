@@ -114,7 +114,6 @@ class AdvancedStartupBody extends React.Component {
   }
 
   onSubmitAppData() {
-    console.log(this.state.appData, this.isAppDataValid());
     if (!this.isAppDataValid()) return;
     this.props.onStartDaemon(null, this.state.appData);
   }
@@ -125,7 +124,7 @@ class AdvancedStartupBody extends React.Component {
   }
 
   isAppDataValid() {
-    return !this.state.appData;
+    return !!(this.state.appData);
   }
 
   skipAdvancedDaemon(){
