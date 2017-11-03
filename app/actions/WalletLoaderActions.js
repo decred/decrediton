@@ -149,7 +149,7 @@ export const startRpcRequestFunc = (isRetry) =>
     daemonhost = RPCDaemonHost();
     rpcport = RPCDaemonPort();
   }
-  console.log(rpccertPath);
+  
   const loader = getState().walletLoader.loader;
 
   const cert = getDcrdCert(rpccertPath);
