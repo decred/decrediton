@@ -28,11 +28,11 @@ export default (
     <IndexRoute component={GetStartedPage} />
     <Route path="home" component={HomePage} />
     <Route path="history" component={HistoryPage} />
+    <Route path="transaction/history/:txHash" component={TransactionPage} />
     <Route path="transactions" component={TransactionsPage}>
       <IndexRedirect to="send" />
       <Route path="send" component={TransactionsSendTab}/>
       <Route path="receive" component={TransactionsReceiveTab}/>
-      <Route path="history/:txHash" component={TransactionPage} />
     </Route>
     <Route path="security" component={SecurityPage}>
       <IndexRedirect to="sign"/>

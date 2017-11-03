@@ -1,10 +1,10 @@
-import Header from "../../../Header";
-import KeyBlueButton from "../../../KeyBlueButton";
-import SlateGrayButton from "../../../SlateGrayButton";
+import { TabbedHeader } from "shared";
+import KeyBlueButton from "KeyBlueButton";
+import SlateGrayButton from "SlateGrayButton";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, PasswordInput } from "inputs";
-import "../../../../style/Layout.less";
-import "../../../../style/AccountsPage.less";
+import "style/Layout.less";
+import "style/AccountsPage.less";
 
 const messages = defineMessages({
   newNamePlaceholder: {
@@ -21,8 +21,6 @@ const AddAccountForm = ({
   name,
   passPhrase,
   hasAttemptedSave,
-  successMsg,
-  errorMsg,
   setName,
   setPassPhrase,
   intl,
@@ -30,22 +28,7 @@ const AddAccountForm = ({
   onCancel
 }) => (
   <div className="page-view">
-    <Header
-      headerTitleOverview="Accounts"
-      headerTop={[
-        errorMsg ? (
-          <div key="accountError" className="account-view-notification-error">{errorMsg}</div>
-        ) : (
-          <div key="accountError" ></div>
-        ),
-        successMsg ? (
-          <div key="accountSuccess" className="account-view-notification-success">{successMsg}</div>
-        ) : (
-          <div key="accountSuccess" ></div>
-        )
-      ]}
-    />
-
+    <TabbedHeader/>
     <div className="page-content">
       <div className="account-flex-height">
         <div className="account-form-row">

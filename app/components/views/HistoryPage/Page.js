@@ -1,12 +1,11 @@
-import React from "react";
 import TxHistory from "../../TxHistory";
 import Balance from "../../Balance";
-import Header from "../../Header";
 import EyeFilterMenu from "../../EyeFilterMenu";
 import Paginator from "../../Paginator";
+import { TabbedHeader } from "shared";
 import { FormattedMessage as T } from "react-intl";
-import "../../../style/Layout.less";
-import "../../../style/HistoryPage.less";
+import "style/Layout.less";
+import "style/HistoryPage.less";
 
 const Page = ({
                 spendableTotalBalance,
@@ -18,10 +17,9 @@ const Page = ({
                 onPageChanged,
               }) => (
   <div className="page-view">
-    <Header
-      headerTitleOverview={<T id="history.availableBalanceTitle" m="Available Balance" />}
-      headerMetaOverview={<Balance amount={spendableTotalBalance} />}
-    />
+    <TabbedHeader>
+      <Balance amount={spendableTotalBalance} />
+    </TabbedHeader>
     <div className="page-content">
       <div className="history-content-title">
         <div className="history-content-title-text">

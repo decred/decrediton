@@ -49,12 +49,12 @@ const HomePage = ({
         )}
         headerTitleOverview={<T id="home.availableBalanceTitle" m="Available Balance" />}
         headerMetaOverview={
-          <div>
+          <div className="df">
             <Balance amount={spendableTotalBalance} />
             <Tooltip text={ <T id="home.rescanBtn.tip" m={ rescanBtnMessage} /> } disabled={ rescanRequest }
-              className="home-rescan-button-area" tipWidth={ 300 }>
+              className="mla home-rescan-button-area" tipWidth={ 300 }>
               <KeyBlueButton disabled={rescanRequest} onClick={() => rescanAttempt(0)}>
-                <T id="home.rescanBtn" m="Rescan Blockchain" />
+                <T id="home.rescanBtn" m="Rescan" />
               </KeyBlueButton>
             </Tooltip>
           </div>

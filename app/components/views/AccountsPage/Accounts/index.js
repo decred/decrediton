@@ -1,10 +1,8 @@
-import React, { Component, } from "react";
-import { autobind } from "core-decorators";
 import AccountsList from "./List";
-import accountsConnector from "../../../../connectors/accountsPageAccounts";
+import accountsPageAccounts from "connectors";
 
 @autobind
-class Accounts extends Component {
+class Accounts extends React.Component {
   constructor(props)  {
     super(props);
     this.state = {
@@ -20,21 +18,13 @@ class Accounts extends Component {
           accounts: this.props.accounts,
           isLoading: this.props.isLoading,
           isShowingBalanceOverviewInfoModal: this.state.isShowingBalanceOverviewInfoModal,
-          getNextAccountError: this.props.getNextAccountError,
-          getNextAccountSuccess: this.props.getNextAccountSuccess,
-          renameAccountError: this.props.renameAccountError,
-          renameAccountSuccess: this.props.renameAccountSuccess,
-          onClearNewAccountError: this.props.onClearNewAccountError,
-          onClearNewAccountSuccess: this.props.onClearNewAccountSuccess,
-          onClearRenameAccountSuccess: this.props.onClearRenameAccountSuccess,
-          onClearRenameAccountError: this.props.onClearRenameAccountError,
           onHideAccount: this.props.onHideAccount,
           onShowAccount: this.props.onShowAccount,
           onRenameAccount: this.props.onRenameAccount,
           accountNumDetailsShown: this.state.accountNumDetailsShown,
           onShowAccountDetails: this.onShowAccountDetails,
           onHideAccountDetails: this.onHideAccountDetails,
-          onShowAddAccount: this.onShowAddAccount,
+          onToggleAddAccount: this.props.onToggleAddAccount,
           onShowBalanceOverviewInfoModal: this.onShowBalanceOverviewInfoModal,
           onCloseBalanceOverviewInfoModal: this.onCloseBalanceOverviewInfoModal,
         }}
@@ -57,10 +47,6 @@ class Accounts extends Component {
   onHideAccountDetails() {
     this.setState({ accountNumDetailsShown: null });
   }
-
-  onShowAddAccount() {
-    this.props.onShowAddAccount ? this.props.onShowAddAccount() : null;
-  }
 }
 
-export default accountsConnector(Accounts);
+export default accountsPageAccounts(Accounts);

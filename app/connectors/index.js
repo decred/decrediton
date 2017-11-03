@@ -9,6 +9,7 @@ export { default as errorScreenConnector } from "./errorScreenConnector";
 export { default as header } from "./header";
 export { default as historyPage } from "./historyPage";
 export { default as home } from "./home";
+export { default as messageBanner } from "./messageBanner";
 export { default as purchaseTickets } from "./purchaseTickets";
 export { default as receive } from "./receive";
 export { default as rescan } from "./rescan";
