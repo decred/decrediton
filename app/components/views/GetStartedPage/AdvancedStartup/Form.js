@@ -35,8 +35,7 @@ const AdvancedBodyBase = ({
   intl
  }) => {
   return (
-    <div className="get-started-view">
-      <div className="get-started-form-ct">
+    <div className="advanced-page">
         <div className="advanced-page-toggle">
           <div className="text-toggle">
             <div className={"text-toggle-button-left " + (!sideActive && "text-toggle-button-active")} onClick={sideActive ? onShowRemote : null}>
@@ -48,8 +47,7 @@ const AdvancedBodyBase = ({
           </div>
         </div>
         <div className="advanced-page-form">
-          <div>
-            {sideActive ?
+          {sideActive ?
             <RemoteDaemonForm {...{
               ...props,
               ...state,
@@ -76,13 +74,11 @@ const AdvancedBodyBase = ({
               intl
             }} />
           }
-          </div>
-          <KeyBlueButton onClick={skipAdvancedDaemon}>
-            <T id="advancedStartup.skip" m="Skip Advanced Daemon Connection"/>
-          </KeyBlueButton>
         </div>
+        <KeyBlueButton onClick={skipAdvancedDaemon}>
+          <T id="advancedStartup.skip" m="Skip Advanced Daemon Connection"/>
+        </KeyBlueButton>
       </div>
-    </div>
   );
 };
 
