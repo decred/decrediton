@@ -4,41 +4,21 @@ import KeyBlueButton from "KeyBlueButton";
 import "style/LoginForm.less";
 
 const messages = defineMessages({
-  messageLoginLabel: {
-    id: "login.form.rpcuser.label",
-    defaultMessage: "RPC User ",
-  },
   messageLoginPlaceholder: {
     id: "login.form.rpcuser.placeholder",
     defaultMessage: "Enter your RPC User here",
-  },
-  passphraseFieldLabel: {
-    id: "login.form.rpcpassword.label",
-    defaultMessage: "RPC Password:",
   },
   passphraseFieldPlaceholder: {
     id: "login.form.rpcpassword.placeholder",
     defaultMessage: "Enter your RPC Password here",
   },
-  certFieldLabel: {
-    id: "login.form.rpccert.label",
-    defaultMessage: "RPC Cert:",
-  },
   certFieldPlaceholder: {
     id: "login.form.rpccert.placeholder.",
     defaultMessage: "Enter your RPC cert location here",
   },
-  hostFieldLabel: {
-    id: "login.form.rpchost.label",
-    defaultMessage: "RPC Host:",
-  },
   hostFieldPlaceholder: {
     id: "login.form.rpchost.placeholder.",
     defaultMessage: "Enter your RPC host here",
-  },
-  portFieldLabel: {
-    id: "login.form.rpcport.label",
-    defaultMessage: "RPC Port:",
   },
   portFieldPlaceholder: {
     id: "login.form.rpcport.placeholder.",
@@ -61,28 +41,43 @@ const RemoteDaemonForm = ({
   intl
   }) => {
   return (
-    <div className="get-started-content-new-seed page-content">
-      <div className="login-form">
+    <Aux>
+      <div className="advanced-daemon-row">
+        <div className="advanced-daemon-label">
+          <T id="advanced.remote.rpcuser" m="RPC User:"/>:
+        </div>
+        <div className="advanced-daemon-input">
+          <TextInput
+            type="text"
+            required
+            value={rpcuser}
+            onChange={(e) => setRpcUser(e.target.value)}
+            placeholder={intl.formatMessage(messages.messageLoginPlaceholder)}
+            showErrors
+          />
+        </div>
+      </div>
+      <div className="advanced-daemon-row">
+        <div className="advanced-daemon-label">
+          <T id="advanced.remote.rpcpass" m="RPC Password:"/>:
+        </div>
+        <div className="advanced-daemon-input">
+          <PasswordInput
+            type="password"
+            required
+            value={rpcpass}
+            onChange={(e) => setRpcPass(e.target.value)}
+            placeholder={intl.formatMessage(messages.passphraseFieldPlaceholder)}
+            showErrors
+          />
+        </div>
+      </div>
+      <div className="advanced-daemon-row">
+        <div className="advanced-daemon-label">
+          <T id="advanced.remote.rpccert" m="RPC Cert Path:"/>:
+        </div>
+        <div className="advanced-daemon-input">
         <TextInput
-          label={intl.formatMessage(messages.messageLoginLabel)}
-          type="text"
-          required
-          value={rpcuser}
-          onChange={(e) => setRpcUser(e.target.value)}
-          placeholder={intl.formatMessage(messages.messageLoginPlaceholder)}
-          showErrors
-        />
-        <PasswordInput
-          label={intl.formatMessage(messages.passphraseFieldLabel)}
-          type="password"
-          required
-          value={rpcpass}
-          onChange={(e) => setRpcPass(e.target.value)}
-          placeholder={intl.formatMessage(messages.passphraseFieldPlaceholder)}
-          showErrors
-        />
-        <TextInput
-          label={intl.formatMessage(messages.certFieldLabel)}
           type="text"
           required
           value={rpccert}
@@ -90,8 +85,14 @@ const RemoteDaemonForm = ({
           placeholder={intl.formatMessage(messages.certFieldPlaceholder)}
           showErrors
         />
+        </div>
+      </div>
+      <div className="advanced-daemon-row">
+        <div className="advanced-daemon-label">
+          <T id="advanced.remote.rpchost" m="RPC Host:"/>:
+        </div>
+        <div className="advanced-daemon-input">
         <TextInput
-          label={intl.formatMessage(messages.hostFieldLabel)}
           type="text"
           required
           value={rpchost}
@@ -99,8 +100,14 @@ const RemoteDaemonForm = ({
           placeholder={intl.formatMessage(messages.hostFieldPlaceholder)}
           showErrors
         />
+        </div>
+      </div>
+      <div className="advanced-daemon-row">
+        <div className="advanced-daemon-label">
+          <T id="advanced.remote.rpcport" m="RPC Port:"/>:
+        </div>
+        <div className="advanced-daemon-input">
         <TextInput
-          label={intl.formatMessage(messages.portFieldLabel)}
           type="text"
           required
           value={rpcport}
@@ -108,11 +115,14 @@ const RemoteDaemonForm = ({
           placeholder={intl.formatMessage(messages.portFieldPlaceholder)}
           showErrors
         />
+        </div>
+      </div>
+      <div className="advanced-daemon-row">
         <KeyBlueButton onClick={onSubmitRemoteForm}>
-            <T id="login.form.appdata.button" m="Connect to Remote" />
+          <T id="login.form.appdata.button" m="Connect to Remote" />
         </KeyBlueButton>
       </div>
-    </div>
+    </Aux>
   );
 };
 

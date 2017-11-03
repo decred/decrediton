@@ -34,54 +34,55 @@ const AdvancedBodyBase = ({
   appData,
   intl
  }) => {
-  console.log(sideActive);
   return (
-    <Aux>
-      <div className="advanced-page-toggle">
-        <div className="text-toggle">
-          <div className={"text-toggle-button-left " + (!sideActive && "text-toggle-button-active")} onClick={sideActive ? onShowRemote : null}>
-            <T id="advancedDaemon.toggle.remote" m="Remote Daemon" />
-          </div>
-          <div className={"text-toggle-button-right " + (sideActive && "text-toggle-button-active")} onClick={!sideActive ? onShowAppData : null}>
-            <T id="advancedDaemon.toggle.appdata" m="Different Local Daemon Location" />
+    <div className="get-started-view">
+      <div className="get-started-form-ct">
+        <div className="advanced-page-toggle">
+          <div className="text-toggle">
+            <div className={"text-toggle-button-left " + (!sideActive && "text-toggle-button-active")} onClick={sideActive ? onShowRemote : null}>
+              <T id="advancedDaemon.toggle.remote" m="Remote Daemon" />
+            </div>
+            <div className={"text-toggle-button-right " + (sideActive && "text-toggle-button-active")} onClick={!sideActive ? onShowAppData : null}>
+              <T id="advancedDaemon.toggle.appdata" m="Different Local Daemon Location" />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="login-form-wrapper">
-        <div className="login-forms-wrapper">
-          {sideActive ?
-          <RemoteDaemonForm {...{
-            ...props,
-            ...state,
-            onSubmitRemoteForm,
-            setRpcUser,
-            setRpcPass,
-            setRpcCert,
-            setRpcHost,
-            setRpcPort,
-            rpcuser,
-            rpcpass,
-            rpccert,
-            rpchost,
-            rpcport,
-            intl
-          }}
-          /> :
-          <AppDataForm {...{
-            ...props,
-            ...state,
-            onSubmitAppDataForm,
-            setAppData,
-            appData,
-            intl
-          }} />
-        }
+        <div className="advanced-page-form">
+          <div>
+            {sideActive ?
+            <RemoteDaemonForm {...{
+              ...props,
+              ...state,
+              onSubmitRemoteForm,
+              setRpcUser,
+              setRpcPass,
+              setRpcCert,
+              setRpcHost,
+              setRpcPort,
+              rpcuser,
+              rpcpass,
+              rpccert,
+              rpchost,
+              rpcport,
+              intl
+            }}
+            /> :
+            <AppDataForm {...{
+              ...props,
+              ...state,
+              onSubmitAppDataForm,
+              setAppData,
+              appData,
+              intl
+            }} />
+          }
+          </div>
+          <KeyBlueButton onClick={skipAdvancedDaemon}>
+            <T id="advancedStartup.skip" m="Skip Advanced Daemon Connection"/>
+          </KeyBlueButton>
         </div>
-        <KeyBlueButton onClick={skipAdvancedDaemon}>
-          <T id="advancedStartup.skip" m="Skip Advanced Daemon Connection"/>
-        </KeyBlueButton>
       </div>
-    </Aux>
+    </div>
   );
 };
 

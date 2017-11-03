@@ -18,28 +18,28 @@ const AppDataForm = ({
   }) => {
 
   return (
-    <div className="get-started-content-new-seed page-content">
-      <div className="stakepool-purchase-ticket-row">
-        <div className="stakepool-purchase-ticket-label">
+    <Aux>
+      <div className="advanced-daemon-row">
+        <div className="advanced-daemon-label">
           <T id="login.form.appdata.label" m="Daemon Data Directory:"/>:
         </div>
-        <div className="stakepool-purchase-ticket-input">
-          <div className="stakepool-input-form-purchase-ticket">
-            <TextInput
-              type="text"
-              showErrors
-              required
-              value={appData}
-              onChange={(e) => setAppData(e.target.value)}
-              placeholder={intl.formatMessage(messages.appdataFieldPlaceholder)}
-            />
-          </div>
+        <div className="advanced-daemon-input">
+          <TextInput
+            type="text"
+            showErrors
+            required
+            value={appData}
+            onChange={(e) => setAppData(e.target.value)}
+            placeholder={intl.formatMessage(messages.appdataFieldPlaceholder)}
+          />
         </div>
+      </div>
+      <div className="advanced-daemon-row">
         <KeyBlueButton onClick={onSubmitAppData}>
           <T id="login.form.appdata.button" m="Start AppData Daemon" />
         </KeyBlueButton>
       </div>
-    </div>
+    </Aux>
   );
 };
 
