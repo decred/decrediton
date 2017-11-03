@@ -22,6 +22,7 @@ class AdvancedStartupBody extends React.Component {
 
   getInitialState() {
     return {
+      sideActive: false,
       rpcuser: "",
       rpcpass: "",
       rpccert: "",
@@ -45,7 +46,9 @@ class AdvancedStartupBody extends React.Component {
       setAppData,
       onSubmitAppData,
       onSubmitRemoteForm,
-      skipAdvancedDaemon
+      skipAdvancedDaemon,
+      onShowRemote,
+      onShowAppData,
     } = this;
     const {
       rpcuser,
@@ -54,6 +57,7 @@ class AdvancedStartupBody extends React.Component {
       rpcport,
       rpchost,
       appData,
+      sideActive
     } = this.state;
     return (
       <AdvancedBody
@@ -63,6 +67,9 @@ class AdvancedStartupBody extends React.Component {
         onSubmitAppData,
         onSubmitRemoteForm,
         skipAdvancedDaemon,
+        onShowRemote,
+        onShowAppData,
+        sideActive,
         setRpcUser,
         setRpcPass,
         setRpcCert,
@@ -132,6 +139,13 @@ class AdvancedStartupBody extends React.Component {
 
   skipAdvancedDaemon(){
     this.props.onStartDaemon();
+  }
+
+  onShowRemote() {
+    this.setState({ sideActive: false });
+  }
+  onShowAppData() {
+    this.setState({ sideActive: true });
   }
 }
 

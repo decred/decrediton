@@ -14,6 +14,9 @@ export const AdvancedHeader = () => (
 const AdvancedBodyBase = ({
   ...props,
   ...state,
+  onShowRemote,
+  onShowAppData,
+  sideActive,
   onSubmitAppDataForm,
   onSubmitRemoteForm,
   setRpcUser,
@@ -31,20 +34,22 @@ const AdvancedBodyBase = ({
   appData,
   intl
  }) => {
+  console.log(sideActive);
   return (
     <Aux>
       <div className="advanced-page-toggle">
         <div className="text-toggle">
-          <div className="text-toggle-button-left text-toggle-button-active">
+          <div className={"text-toggle-button-left " + (!sideActive && "text-toggle-button-active")} onClick={sideActive ? onShowRemote : null}>
             <T id="advancedDaemon.toggle.remote" m="Remote Daemon" />
           </div>
-          <div className="text-toggle-button-right">
+          <div className={"text-toggle-button-right " + (sideActive && "text-toggle-button-active")} onClick={!sideActive ? onShowAppData : null}>
             <T id="advancedDaemon.toggle.appdata" m="Different Local Daemon Location" />
           </div>
         </div>
       </div>
       <div className="login-form-wrapper">
         <div className="login-forms-wrapper">
+          {sideActive ?
           <RemoteDaemonForm {...{
             ...props,
             ...state,
@@ -61,7 +66,7 @@ const AdvancedBodyBase = ({
             rpcport,
             intl
           }}
-          />
+          /> :
           <AppDataForm {...{
             ...props,
             ...state,
@@ -70,6 +75,7 @@ const AdvancedBodyBase = ({
             appData,
             intl
           }} />
+        }
         </div>
         <KeyBlueButton onClick={skipAdvancedDaemon}>
           <T id="advancedStartup.skip" m="Skip Advanced Daemon Connection"/>
