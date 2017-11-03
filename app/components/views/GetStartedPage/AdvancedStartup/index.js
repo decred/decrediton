@@ -1,5 +1,4 @@
 import {AdvancedHeader, AdvancedBody} from "./Form";
-import { substruct } from "fp";
 
 @autobind
 class AdvancedStartupHeader extends React.Component {

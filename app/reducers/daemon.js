@@ -26,7 +26,7 @@ export default function version(state = {}, action) {
       daemonStarted: true,
       daemonAdvanced: false,
       appData: action.appData,
-    }
+    };
   case DAEMONSYNCING_START:
     return {...state,
       currentBlockCount: action.currentBlockCount,
