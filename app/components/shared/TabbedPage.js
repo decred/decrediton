@@ -1,4 +1,5 @@
 import { RouteTransition, TabbedHeader } from "shared";
+import { getTabs, getPage } from "helpers";
 import theme from "theme";
 
 const mapStyles = styles => ({ left: styles.left + "%" });
@@ -8,7 +9,7 @@ const enterRight = { atEnter: { left: 100 }, atActive: { left: 0 }, atLeave: { l
 
 const wrapperComponent = props => <div className="tab-content" { ...props } />;
 
-class Tickets extends React.Component{
+class TabbedPage extends React.Component{
   constructor(props) { super(props); }
   state = { prevRoute: null };
 
@@ -18,15 +19,14 @@ class Tickets extends React.Component{
     }
   }
   render () {
-    const { children, location } = this.props;
+    const { children, routes, route: { testNet, noDesc}} = this.props;
     const { prevRoute } = this.state;
-    const tabs = ["purchase", "mytickets", "governance", "statistics"];
-    // this will be removed w/ react router 4
-    const pathname = location.pathname.split("/")[2];
+    const tabs = getTabs(routes);
+    const pathname = getPage(routes);
     const effect = !prevRoute ? enterLeft : tabs.indexOf(prevRoute) > tabs.indexOf(pathname) ? enterLeft : enterRight;
     return (
       <Aux>
-        <TabbedHeader noDesc/>
+        <TabbedHeader {...{ testNet, noDesc }}/>
         <RouteTransition className="tabbed-page" opts={ theme("springs.tab") } {...{ wrapperComponent, pathname, ...effect }}>
           { children }
         </RouteTransition>
@@ -35,6 +35,6 @@ class Tickets extends React.Component{
   }
 }
 
-Tickets.propTypes = { location: PropTypes.object.isRequired };
+TabbedPage.propTypes = { location: PropTypes.object.isRequired };
 
-export default Tickets;
+export default TabbedPage;

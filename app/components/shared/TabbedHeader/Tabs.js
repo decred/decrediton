@@ -1,6 +1,7 @@
 import { spring, Motion } from "react-motion";
 import { Link, withRouter } from "react-router";
 import { injectIntl, intlShape } from "react-intl";
+import { getTabs, getTab, getPage } from "helpers";
 import messages from "messages";
 import theme from "theme";
 
@@ -10,10 +11,10 @@ class Tabs extends React.Component {
   _nodes = new Map();
   state = { caretLeft: null, caretWidth: null, selectedTab: null };
 
-  componentDidMount() { this.updateCaretPosition(this.getPathname(this.props)); }
+  componentDidMount() { this.updateCaretPosition(getTab(this.props.routes)); }
 
   componentDidUpdate() {
-    const pathname = this.getPathname(this.props);
+    const pathname = getTab(this.props.routes);
     if (this.state.selectedTab != pathname) {
       const caretPosition = this.neededCaretPosition(pathname);
       this.setState({ selectedTab: pathname, ...caretPosition });
@@ -31,14 +32,11 @@ class Tabs extends React.Component {
     const caretWidth = tabRect.width;
     return {caretLeft, caretWidth};
   }
-  getPathname(props) { return props.routes[2] && props.routes[2].path; }
-  getPage(routes) { return routes[1].path; }
-  getTabs(routes) { return routes[1].childRoutes && routes[1].childRoutes.map( route => route.path ); }
 
   render () {
     const { intl, routes } = this.props;
-    const tabs = this.getTabs(routes);
-    const page = this.getPage(routes);
+    const tabs = getTabs(routes);
+    const page = getPage(routes);
     const { caretLeft, caretWidth } = this.state;
     return (
       <div className="tabbedheader-tabs">

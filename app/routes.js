@@ -1,9 +1,9 @@
 // @flow
 import { Route, IndexRoute, IndexRedirect } from "react-router";
+import { TabbedPage } from "shared";
 import App from "./containers/App";
 import HomePage from "./components/views/HomePage";
 import HistoryPage from "./components/views/HistoryPage";
-import TransactionsPage from "./components/views/TransactionsPage";
 import TransactionsSendTab from "./components/views/TransactionsPage/SendTab";
 import TransactionsReceiveTab from "./components/views/TransactionsPage/ReceiveTab";
 import TransactionPage from "./components/views/TransactionPage";
@@ -11,7 +11,6 @@ import SettingsPage from "./components/views/SettingsPage";
 import SecurityPage from "./components/views/SecurityPage";
 import SignPage from "./components/views/SecurityPage/SignMessage";
 import VerifyPage from "./components/views/SecurityPage/VerifyMessage";
-import TicketsPage from "./components/views/TicketsPage";
 import TicketsPurchaseTab from "./components/views/TicketsPage/PurchaseTab";
 import TicketsMyTicketsTab from "./components/views/TicketsPage/MyTicketsTab";
 import TicketsGovernanceTab from "./components/views/TicketsPage/GovernanceTab";
@@ -29,18 +28,18 @@ export default (
     <Route path="home" component={HomePage} />
     <Route path="history" component={HistoryPage} />
     <Route path="transaction/history/:txHash" component={TransactionPage} />
-    <Route path="transactions" component={TransactionsPage}>
+    <Route path="transactions" component={TabbedPage} testNet>
       <IndexRedirect to="send" />
       <Route path="send" component={TransactionsSendTab}/>
       <Route path="receive" component={TransactionsReceiveTab}/>
     </Route>
     <Route path="security" component={SecurityPage}>
       <IndexRedirect to="sign"/>
-      <Route path="sign" component={SignPage} />
-      <Route path="verify" component={VerifyPage} />
+      <Route path="sign" component={SignPage}/>
+      <Route path="verify" component={VerifyPage}/>
     </Route>
-    <Route path="settings" component={SettingsPage} />
-    <Route path="tickets" component={TicketsPage}>
+    <Route path="settings" component={SettingsPage}/>
+    <Route path="tickets" component={TabbedPage} noDesc>
       <IndexRedirect to="purchase" />
       <Route path="purchase" component={TicketsPurchaseTab}/>
       <Route path="mytickets" component={TicketsMyTicketsTab}/>

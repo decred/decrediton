@@ -3,7 +3,7 @@ import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
-  isTestNet: sel.isTestNet,
+  isTestNet: sel.isTestNet
 });
 
 export default connect(mapStateToProps);
