@@ -1,16 +1,18 @@
 import { withRouter } from "react-router";
 import { injectIntl, intlShape } from "react-intl";
-import messages from "messages";
-import Description from "./Description";
-import Tabs from "./Tabs";
 import MessageBanner from "./MessageBanner";
+import Description from "./Description";
+import messages from "messages";
+import Icon from "../Icon";
+import Tabs from "./Tabs";
 import "style/Header.less";
 
-const TabbedHeader = ({ intl, children, routes }) => {
+const TabbedHeader = ({ intl, children, routes, noDesc, testNet, isTestNet, noIcon }) => {
   const page = routes[1].path;
   const tabs = routes[1].childRoutes;
-  const headerIcon = ["header-icon", page].join("-");
   const title = [page, "title"].join(".");
+  let description = [page, "description"].join(".");
+  if (testNet) description = description + isTestNet ? ".testnet" : ".mainnet";
 
   return (
     <div className="header">
@@ -18,14 +20,18 @@ const TabbedHeader = ({ intl, children, routes }) => {
         <MessageBanner/>
       </div>
 
+      <div className="tabbedheader-icon">
+        { !noIcon && <Icon i={ page } s={ 30 }/> }
+      </div>
+
       <div className="tabbedheader-title">
-        <span className={ "tabbedheader-icon " + headerIcon } />
         { intl.formatMessage(messages[title]) }
       </div>
 
-      <Description>
+      <div className="tabbedheader-content">
+        { !noDesc && <Description>{ intl.formatMessage(messages[description]) }</Description> }
         { children }
-      </Description>
+      </div>
 
       { tabs && <Tabs/> }
     </div>
@@ -33,8 +39,12 @@ const TabbedHeader = ({ intl, children, routes }) => {
 };
 
 TabbedHeader.propTypes = {
+  intl: intlShape,
   routes: PropTypes.array,
-  intl: intlShape
+  noDesc: PropTypes.bool,
+  isTestNet: PropTypes.bool,
+  testNet: PropTypes.bool,
+  noIcon: PropTypes.bool,
 };
 
 export default injectIntl(withRouter(TabbedHeader));

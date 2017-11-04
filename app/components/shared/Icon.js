@@ -5,11 +5,11 @@ const Icon = ({ i, s }) => {
   const { width, height, path, viewBox, markup } = icons[i];
   const size = (theme.space[s] || s || 20);
   return (
-    <span className="icon">
+    <div className="icon">
       <svg viewBox={ viewBox || `0 0 ${height} ${(width || height)}` } height={ size }>
         { markup || <path d={ path } /> }
       </svg>
-    </span>
+    </div>
   );
 };
 

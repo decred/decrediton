@@ -9,15 +9,28 @@ const MessageBanner = ({
   onClearNewAccountSuccess,
   onClearNewAccountError,
   onClearRenameAccountSuccess,
-  onClearRenameAccountError
+  onClearRenameAccountError,
+  changePassphraseError,
+  changePassphraseSuccess,
+  onClearChangePassphraseSuccess,
+  onClearChangePassphraseError,
 }) => {
-  const message = getNextAccountSuccess || getNextAccountError || renameAccountError || renameAccountSuccess;
-  const error = !!renameAccountError || !!getNextAccountError;
+  const message = (
+    getNextAccountSuccess   ||
+    renameAccountSuccess    ||
+    changePassphraseSuccess ||
+    getNextAccountError     ||
+    renameAccountError      ||
+    changePassphraseError
+  );
+  const error = !!renameAccountError || !!getNextAccountError || changePassphraseError;
   const onClick = () => {
     onClearNewAccountSuccess();
     onClearRenameAccountSuccess();
     onClearNewAccountError();
     onClearRenameAccountError();
+    onClearChangePassphraseSuccess();
+    onClearChangePassphraseError();
   };
   return (
     <Message {...{ error, onClick }}>

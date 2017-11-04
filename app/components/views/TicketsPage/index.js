@@ -26,7 +26,7 @@ class Tickets extends React.Component{
     const effect = !prevRoute ? enterLeft : tabs.indexOf(prevRoute) > tabs.indexOf(pathname) ? enterLeft : enterRight;
     return (
       <Aux>
-        <TabbedHeader />
+        <TabbedHeader noDesc/>
         <RouteTransition className="tabbed-page" opts={ theme("springs.tab") } {...{ wrapperComponent, pathname, ...effect }}>
           { children }
         </RouteTransition>

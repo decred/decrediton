@@ -1,5 +1,5 @@
 import AccountsList from "./List";
-import accountsPageAccounts from "connectors";
+import { accountsPageAccounts } from "connectors";
 
 @autobind
 class Accounts extends React.Component {

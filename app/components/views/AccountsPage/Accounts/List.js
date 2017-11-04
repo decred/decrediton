@@ -24,7 +24,7 @@ const AccountsList = ({
 }) => (
   <div className="page-view">
     <TabbedHeader>
-      <KeyBlueButton className="add-new-account-button" onClick={onToggleAddAccount}>
+      <KeyBlueButton onClick={onToggleAddAccount}>
         <T id="accounts.addNewButton" m="Add New" />
       </KeyBlueButton>
     </TabbedHeader>

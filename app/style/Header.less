@@ -29,20 +29,20 @@
 }
 
 .header {
-  padding-right: 42px;
-  padding-left: 80px;
+  position:relative;
+  margin-right: 60px;
+  margin-left: 100px;
+  margin-top: 45px;
+  padding-bottom:30px;
   background-color: #fff;
 }
 
 .header-top {
-  height: 34px;
-  padding-top: 5px;
   text-align: center;
 }
 
 .header-title-overview {
-  height: 54px;
-  padding-top: 13px;
+  padding-top: 14px;
   color: #596d81;
   font-size: 27px;
 }
@@ -53,54 +53,29 @@
   font-size: 53px;
 }
 
-.header-icon-mixin {
-  background-position: 0px 50%;
-  background-size: 30px;
-  background-repeat: no-repeat;
-}
-
-.header-icon-tickets {
-  .header-icon-mixin;
-
-  background-image: @ticket-small-icon;
-}
-
-.header-icon-transactions {
-  .header-icon-mixin;
-
-  background-image: @transactions-big-icon;
-}
-
-.header-icon-security {
-  .header-icon-mixin;
-
-  background-image: @security-center-icon;
-}
-
 .tabbedheader-title {
-  height: 54px;
-  line-height: 49px;
+  margin-bottom: 8px;
   color: #596d81;
   font-size: 27px;
-  text-transform: capitalize;
-  //padding-left: 50px;
-}
-
-.tabbedheader-description {
-  height: 54px;
-  width: 480px;
-  padding-left: 50px;
-  color: #0c1e3e;
-  font-size: 14px;
-}
-
-.tabbedheader-icon::before {
-  content: "";
 }
 
 .tabbedheader-icon {
-  padding-left: 30px;
-  margin-right: 20px;
+  position: absolute;
+  top: -4px;
+  left: -40px;
+}
+
+.tabbedheader-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.tabbedheader-description {
+  white-space: pre-wrap;
+  color: #48566e;
+  font-size: 13px;
+  margin-bottom: 11px;
 }
 
 .tabbedheader-ref {
@@ -117,11 +92,8 @@
 }
 
 .tabbedheader-tabs {
-  position: relative;
-}
-
-.tabbedheader-tabs-stub {
-  height: 27px;
+  position: absolute;
+  bottom: 0;
 }
 
 .tabbedheader-tab.active {

@@ -4,7 +4,6 @@ import EyeFilterMenu from "../../EyeFilterMenu";
 import Paginator from "../../Paginator";
 import { TabbedHeader } from "shared";
 import { FormattedMessage as T } from "react-intl";
-import "style/Layout.less";
 import "style/HistoryPage.less";
 
 const Page = ({
@@ -17,7 +16,7 @@ const Page = ({
                 onPageChanged,
               }) => (
   <div className="page-view">
-    <TabbedHeader>
+    <TabbedHeader noDesc>
       <Balance amount={spendableTotalBalance} />
     </TabbedHeader>
     <div className="page-content">

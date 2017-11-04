@@ -7,6 +7,7 @@ import SideBar from "components/SideBar";
 import Snackbar from "components/Snackbar";
 import { RouteTransition } from "shared";
 import theme from "theme";
+import "style/Layout.less";
 
 const fade = { atEnter: { opacity: 0 }, atActive: { opacity: 1 }, atLeave: { opacity: 0 }};
 const rootPath = ({ pathname }) => pathname.split("/")[1];

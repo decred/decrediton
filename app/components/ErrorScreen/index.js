@@ -1,22 +1,11 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import ErrorScreenPage from "./Page";
-import errorScreenConnector from "../../connectors/errorScreenConnector";
+import { Link } from "react-router";
+import { FormattedMessage as T } from "react-intl";
 
-class ErrorScreen extends Component {
-  componentWillMount() {
-    this.props.hideSidebar();
-    this.props.hideSidebarMenu();
-  }
+const ErrorScreen = () => (
+  <Aux>
+    <p><T id="errors.general" m="Something went wrong, please go back " /></p>
+    <Link to='/'><T id="errors.goHome" m="Back to Home" /></Link>
+  </Aux>
+);
 
-  render() {
-    return (<ErrorScreenPage />);
-  }
-}
-
-ErrorScreen.propTypes = {
-  hideSidebar: PropTypes.func.isRequired,
-  hideSidebarMenu: PropTypes.func.isRequired,
-};
-
-export default errorScreenConnector(ErrorScreen);
+export default ErrorScreen;

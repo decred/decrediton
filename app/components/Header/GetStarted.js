@@ -1,6 +1,5 @@
 // @flow
-import React from "react";
-import "../../style/Header.less";
+import "style/Header.less";
 
 const GetStarted = ({
   headerTop,

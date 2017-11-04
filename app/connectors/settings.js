@@ -10,8 +10,6 @@ const mapStateToProps = selectorMap({
   unitDivisor: sel.unitDivisor,
   tempSettings: sel.tempSettings,
   locales: sel.sortedLocales,
-  changePassphraseError: sel.changePassphraseError,
-  changePassphraseSuccess: sel.changePassphraseSuccess,
   areSettingsDirty: sel.settingsChanged
 });
 

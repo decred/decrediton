@@ -1,6 +1,7 @@
 import { get } from "fp";
 
 const styles = {
+  space: [],
   springs: {
     sideBar: { stiffness: 150, damping: 20 },
     tab:     { stiffness: 150, damping: 20 },

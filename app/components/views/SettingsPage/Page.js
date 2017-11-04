@@ -1,16 +1,12 @@
-import React from "react";
 import KeyBlueButton from "../../KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
-import Header from "../../Header";
+import { TabbedHeader } from "shared";
 import ChangePassphraseModal from "../../ChangePassphraseModal";
 import Select from "react-select";
-import "style/Layout.less";
 import "style/StakePool.less";
 import "style/Settings.less";
 
 const SettingsPage = ({
-                        changePassphraseError,
-                        changePassphraseSuccess,
                         areSettingsDirty,
                         tempSettings,
                         networks,
@@ -24,33 +20,9 @@ const SettingsPage = ({
                         onChangeNetwork,
                         onChangeLocale,
                         onSaveSettings,
-                        onClearChangePassphraseSuccess,
-                        onClearChangePassphraseError,
                       }) => (
   <Aux>
-    <Header
-      headerTop={[
-        changePassphraseError ? (
-          <div key="updateStakePoolError" className="stakepool-view-notification-error">
-            <div
-              className="stakepool-content-nest-address-delete-icon"
-              onClick={onClearChangePassphraseError}
-            />
-            {changePassphraseError}
-          </div>
-        ) : null,
-        changePassphraseSuccess ? (
-          <div key="configSuccess" className="stakepool-view-notification-success">
-            <div
-              className="stakepool-content-nest-address-delete-icon"
-              onClick={onClearChangePassphraseSuccess}
-            />
-            {changePassphraseSuccess}
-          </div>
-        ) : null,
-      ]}
-      headerTitleOverview={<T id="settings.title" m="Settings" />}
-    />
+    <TabbedHeader noDesc/>
     <ChangePassphraseModal
       hidden={!isShowingChangePassphrase}
       updatePassphrase={onAttemptChangePassphrase}

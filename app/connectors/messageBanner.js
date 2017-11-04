@@ -5,6 +5,8 @@ import * as sel from "../selectors";
 import * as ca from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
+  changePassphraseError: sel.changePassphraseError,
+  changePassphraseSuccess: sel.changePassphraseSuccess,
   getNextAccountSuccess: sel.getNextAccountSuccess,
   getNextAccountError: sel.getNextAccountError,
   renameAccountError: sel.renameAccountError,
@@ -12,6 +14,8 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  onClearChangePassphraseError: ca.clearChangePassphraseError,
+  onClearChangePassphraseSuccess: ca.clearChangePassphraseSuccess,
   onClearNewAccountSuccess: ca.clearNewAccountSuccess,
   onClearNewAccountError: ca.clearNewAccountError,
   onClearRenameAccountSuccess: ca.clearRenameAccountSuccess,
