@@ -20,9 +20,10 @@ const SettingsPage = ({
                         onChangeNetwork,
                         onChangeLocale,
                         onSaveSettings,
+                        routes,
                       }) => (
   <Aux>
-    <TabbedHeader noDesc/>
+    <TabbedHeader noDesc {...{ routes }}/>
     <ChangePassphraseModal
       hidden={!isShowingChangePassphrase}
       updatePassphrase={onAttemptChangePassphrase}

@@ -18,6 +18,7 @@ const messages = defineMessages({
 });
 
 const AddAccountForm = ({
+  routes,
   name,
   passPhrase,
   hasAttemptedSave,
@@ -28,7 +29,7 @@ const AddAccountForm = ({
   onCancel
 }) => (
   <div className="page-view">
-    <TabbedHeader/>
+    <TabbedHeader {...{ routes }}/>
     <div className="page-content">
       <div className="account-flex-height">
         <div className="account-form-row">

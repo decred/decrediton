@@ -21,12 +21,14 @@ class AccountsPage extends React.Component {
   }
 
   render() {
+    const { routes } = this.props;
     return (
       <Page
         {...{
           walletService: this.props.walletService,
           isShowingAddAccount: this.state.isShowingAddAccount,
           onToggleAddAccount: this.onToggleAddAccount,
+          routes,
         }}
       />
     );

@@ -27,6 +27,7 @@ class Accounts extends React.Component {
           onToggleAddAccount: this.props.onToggleAddAccount,
           onShowBalanceOverviewInfoModal: this.onShowBalanceOverviewInfoModal,
           onCloseBalanceOverviewInfoModal: this.onCloseBalanceOverviewInfoModal,
+          routes: this.props.routes,
         }}
       />
     );

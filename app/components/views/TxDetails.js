@@ -4,7 +4,6 @@ import Header from "../Header";
 import { shell } from "electron";
 import { transactionDetails } from "connectors";
 import SlateGrayButton from "../SlateGrayButton";
-import "style/Layout.less";
 import "style/TxDetails.less";
 import { tsToDate, addSpacingAroundText } from "helpers";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";

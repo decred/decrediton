@@ -26,7 +26,8 @@ class AddAccount extends React.Component {
           setName: this.setName,
           setPassPhrase: this.setPassPhrase,
           onSave: this.onSave,
-          onCancel: this.onCancel
+          onCancel: this.onCancel,
+          routes: this.props.routes
         }}
       />
     );

@@ -1,8 +1,8 @@
 import { TabbedHeader } from "shared";
 
-const SecurityPage = ({ children }) => (
+const SecurityPage = ({ children, routes }) => (
   <Aux>
-    <TabbedHeader/>
+    <TabbedHeader {...{ routes }}/>
     {children}
   </Aux>
 );

@@ -2,12 +2,10 @@
 import { FormattedMessage as T } from "react-intl";
 import { invalidRPCVersion } from "connectors";
 import { TabbedHeader } from "shared";
-import "style/Layout.less";
 
-
-const InvalidRPCVersion = ({ requiredWalletRPCVersion, walletRPCVersion }) => (
+const InvalidRPCVersion = ({ requiredWalletRPCVersion, walletRPCVersion, routes }) => (
   <div className="page-view">
-    <TabbedHeader noDesc/>
+    <TabbedHeader noDesc {...{ routes }}/>
     <div className="page-content">
       <div className="invalid-rpc-info">
         <T

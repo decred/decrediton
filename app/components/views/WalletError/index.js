@@ -15,9 +15,9 @@ const styles = {
   },
 };
 
-const WalletError = ({ getNetworkError }) => (
+const WalletError = ({ getNetworkError, routes }) => (
   <div style={styles.view}>
-    <TabbedHeader/>
+    <TabbedHeader {...{ routes }}/>
     <div style={styles.content}>
       { getNetworkError ?
         <p>{getNetworkError} Please verify that your dcrd is configured correctly and restart.</p> :

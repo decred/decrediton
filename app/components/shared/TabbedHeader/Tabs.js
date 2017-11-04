@@ -1,5 +1,5 @@
 import { spring, Motion } from "react-motion";
-import { Link, withRouter } from "react-router";
+import { Link } from "react-router";
 import { injectIntl, intlShape } from "react-intl";
 import { getTabs, getTab, getPage } from "helpers";
 import messages from "messages";
@@ -60,8 +60,8 @@ class Tabs extends React.Component {
 }
 
 Tabs.propTypes = {
-  routes: PropTypes.array,
+  routes: PropTypes.array.isRequired,
   intl: intlShape
 };
 
-export default injectIntl(withRouter(Tabs));
+export default injectIntl(Tabs);

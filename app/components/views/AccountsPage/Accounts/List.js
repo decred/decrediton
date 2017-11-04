@@ -9,6 +9,7 @@ import BalanceOverviewInfoModal from "BalanceOverviewInfoModal";
 import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
 
 const AccountsList = ({
+  routes,
   accounts,
   isLoading,
   onToggleAddAccount,
@@ -23,7 +24,7 @@ const AccountsList = ({
   onCloseBalanceOverviewInfoModal,
 }) => (
   <div className="page-view">
-    <TabbedHeader>
+    <TabbedHeader {...{ routes }}>
       <KeyBlueButton onClick={onToggleAddAccount}>
         <T id="accounts.addNewButton" m="Add New" />
       </KeyBlueButton>

@@ -14,9 +14,10 @@ const Page = ({
                 totalPages,
                 onChangeSelectedType,
                 onPageChanged,
+                routes,
               }) => (
   <div className="page-view">
-    <TabbedHeader noDesc>
+    <TabbedHeader noDesc {...{ routes }}>
       <Balance amount={spendableTotalBalance} />
     </TabbedHeader>
     <div className="page-content">

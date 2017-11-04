@@ -5,6 +5,7 @@ import "style/Layout.less";
 import "style/AccountsPage.less";
 
 const Page = ({
+  routes,
   walletService,
   isShowingAddAccount,
   onToggleAddAccount
@@ -12,8 +13,8 @@ const Page = ({
   !walletService ? <ErrorScreen/> :
   <Aux>
     { isShowingAddAccount ?
-    <AddAccount onAction={onToggleAddAccount} /> :
-    <Accounts {...{ onToggleAddAccount }} /> }
+    <AddAccount onAction={onToggleAddAccount} {...{ routes }} /> :
+    <Accounts {...{ onToggleAddAccount, routes }} /> }
   </Aux>
 );
 

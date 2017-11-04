@@ -1,5 +1,5 @@
-import { withRouter } from "react-router";
 import { injectIntl, intlShape } from "react-intl";
+import { getPage, getTabs } from "helpers";
 import { tabbedHeader } from "connectors";
 import MessageBanner from "./MessageBanner";
 import Description from "./Description";
@@ -9,8 +9,8 @@ import Tabs from "./Tabs";
 import "style/Header.less";
 
 const TabbedHeader = ({ intl, children, routes, noDesc, testNet, isTestNet, noIcon }) => {
-  const page = routes[1].path;
-  const tabs = routes[1].childRoutes;
+  const page = getPage(routes);
+  const tabs = getTabs(routes);
   const title = [page, "title"].join(".");
   let description = [page, "description"].join(".");
   if (testNet) description = [description, isTestNet ? "testnet" : "mainnet"].join(".");
@@ -34,7 +34,7 @@ const TabbedHeader = ({ intl, children, routes, noDesc, testNet, isTestNet, noIc
         { children }
       </div>
 
-      { tabs && <Tabs/> }
+      { tabs && <Tabs {...{ routes }}/> }
     </div>
   );
 };
@@ -48,4 +48,4 @@ TabbedHeader.propTypes = {
   noIcon: PropTypes.bool,
 };
 
-export default injectIntl(withRouter(tabbedHeader(TabbedHeader)));
+export default injectIntl(tabbedHeader(TabbedHeader));

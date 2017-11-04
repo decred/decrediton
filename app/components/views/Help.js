@@ -3,9 +3,9 @@ import { TabbedHeader } from "shared";
 import HelpLink from "HelpLink";
 import "style/Help.less";
 
-const Help = () => (
+const Help = ({ routes }) => (
   <div className="page-view">
-    <TabbedHeader/>
+    <TabbedHeader {... { routes }}/>
     <div className="page-content">
       <div className={"help-icon-row"}>
         <HelpLink className={"help-github-icon"} href="https://github.com/decred/decrediton"><T id="help.github" m="Github" /></HelpLink>

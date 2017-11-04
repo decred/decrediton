@@ -1,5 +1,5 @@
 import { RouteTransition, TabbedHeader } from "shared";
-import { getTabs, getPage } from "helpers";
+import { getTabs, getTab } from "helpers";
 import theme from "theme";
 
 const mapStyles = styles => ({ left: styles.left + "%" });
@@ -11,22 +11,22 @@ const wrapperComponent = props => <div className="tab-content" { ...props } />;
 
 class TabbedPage extends React.Component{
   constructor(props) { super(props); }
-  state = { prevRoute: null };
+  state = { prevTab: null };
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.location.pathname !== nextProps.location.pathname) {
-      this.setState({prevRoute: this.props.location.pathname.split("/")[2]});
+    if (getTab(this.props.routes) !== getTab(nextProps.routes)) {
+      this.setState({ prevTab: getTab(this.props.routes) });
     }
   }
   render () {
-    const { children, routes, route: { testNet, noDesc}} = this.props;
-    const { prevRoute } = this.state;
+    const { children, routes, route: { testNet, noDesc }} = this.props;
+    const { prevTab } = this.state;
     const tabs = getTabs(routes);
-    const pathname = getPage(routes);
-    const effect = !prevRoute ? enterLeft : tabs.indexOf(prevRoute) > tabs.indexOf(pathname) ? enterLeft : enterRight;
+    const pathname = getTab(routes);
+    const effect = !prevTab ? enterLeft : tabs.indexOf(prevTab) > tabs.indexOf(pathname) ? enterLeft : enterRight;
     return (
       <Aux>
-        <TabbedHeader {...{ testNet, noDesc }}/>
+        <TabbedHeader {...{ testNet, noDesc, routes }}/>
         <RouteTransition className="tabbed-page" opts={ theme("springs.tab") } {...{ wrapperComponent, pathname, ...effect }}>
           { children }
         </RouteTransition>
