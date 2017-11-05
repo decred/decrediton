@@ -9,8 +9,8 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large, flat, t
     if (typeof amount !== "undefined" && amount !== 0) { totalDcr = parseInt(amount) / 100000000; }
     const tail = totalDcr.toFixed(8).toString().split(".")[1].slice(2);
     return (
-      <span {...{ onClick }}>
-        <span className={["balance-base", bold ? "bold" : null].join(" ") }>
+      <span className="mono" {...{ onClick }}>
+        <span className={ bold ? "bold" : null }>
           <FormattedNumber value={ totalDcr } maximumFractionDigits={ 2 } minimumFractionDigits={ 2 }/>
         </span>
         <span className={[secondary, bold ? "bold" : null].join(" ") }>
@@ -23,7 +23,7 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large, flat, t
     );
   } else if (currencyDisplay === "atoms") {
     return (
-      <span {...{ onClick }}>
+      <span className="mono" {...{ onClick }}>
         <span className={[secondary, bold ? "bold" : null].join(" ") }>
           { amount + " "}
         </span>
