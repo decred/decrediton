@@ -7,7 +7,6 @@ import Balance from "../../Balance";
 import TxHistory from "../../TxHistory";
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip, TabbedHeader } from "shared";
-import "style/Layout.less";
 import "style/Fonts.less";
 import "style/HomePage.less";
 

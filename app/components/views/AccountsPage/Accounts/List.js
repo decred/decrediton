@@ -3,8 +3,6 @@ import { TabbedHeader } from "shared";
 import AccountRow from "./AccountRow";
 import DecredLoading from "DecredLoading";
 import KeyBlueButton from "KeyBlueButton";
-import "style/Layout.less";
-import "style/AccountsPage.less";
 import BalanceOverviewInfoModal from "BalanceOverviewInfoModal";
 import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
 

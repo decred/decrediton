@@ -3,7 +3,6 @@ import PurchaseTicketsInfo from "PurchaseTicketsInfo";
 import TicketAutoBuyerInfo from "TicketAutoBuyerInfo";
 import StakePools from "StakePools";
 import Tickets from "./Tickets";
-import "style/Layout.less";
 import "style/StakePool.less";
 
 const PurchasePage = ({

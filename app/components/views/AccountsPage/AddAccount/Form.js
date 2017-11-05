@@ -3,8 +3,6 @@ import KeyBlueButton from "KeyBlueButton";
 import SlateGrayButton from "SlateGrayButton";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, PasswordInput } from "inputs";
-import "style/Layout.less";
-import "style/AccountsPage.less";
 
 const messages = defineMessages({
   newNamePlaceholder: {

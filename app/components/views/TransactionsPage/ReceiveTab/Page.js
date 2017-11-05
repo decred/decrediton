@@ -3,7 +3,6 @@ import { CopyToClipboard } from "shared";
 import KeyBlueButton from "KeyBlueButton";
 import QRCode from "./QRCode";
 import { FormattedMessage as T } from "react-intl";
-import "style/Layout.less";
 import "style/ReceivePage.less";
 import "style/MiscComponents.less";
 
