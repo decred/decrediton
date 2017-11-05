@@ -41,7 +41,7 @@ const HomePage = ({
         heading={passphraseHeading}
         description={passphraseDescription}
       />
-      <TabbedHeader noDesc noIcon {...{ routes }}>
+      <TabbedHeader {...{ routes }}>
         <div className="overview-balance">
           <Balance amount={spendableTotalBalance} tiny/>
         </div>

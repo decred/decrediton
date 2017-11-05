@@ -35,7 +35,7 @@ const MessageBanner = ({
   };
   return (
     !synced ?
-    <div key="notSynced" className="home-view-notification-not-synced">
+    <div key="notSynced" className="notification not-synced">
       <T id="home.notSyncedInfo" m="The wallet is not fully synced yet. Note: Balances will not be accurate until syncing is complete." />
     </div> :
     <Message {...{ error, onClick }}>

@@ -1,5 +1,5 @@
 import { injectIntl, intlShape } from "react-intl";
-import { getPage, getTabs } from "helpers";
+import { getPage, getTabs, getTab } from "helpers";
 import { tabbedHeader } from "connectors";
 import MessageBanner from "./MessageBanner";
 import Description from "./Description";
@@ -8,12 +8,14 @@ import Icon from "../Icon";
 import Tabs from "./Tabs";
 import "style/Header.less";
 
-const TabbedHeader = ({ intl, children, routes, noDesc, testNet, isTestNet, noIcon }) => {
+const TabbedHeader = ({ intl, children, routes, isTestNet }) => {
+  const { tabDesc, noDesc, noIcon } = routes[1];
   const page = getPage(routes);
   const tabs = getTabs(routes);
   const title = [page, "title"].join(".");
   let description = [page, "description"].join(".");
-  if (testNet) description = [description, isTestNet ? "testnet" : "mainnet"].join(".");
+  if (tabDesc) description = [description, getTab(routes)].join(".");
+  if (routes[2] && routes[2].testNet) description = [description, isTestNet ? "testnet" : "mainnet"].join(".");
 
   return (
     <div className="header">
@@ -43,10 +45,7 @@ const TabbedHeader = ({ intl, children, routes, noDesc, testNet, isTestNet, noIc
 TabbedHeader.propTypes = {
   intl: intlShape,
   routes: PropTypes.array,
-  noDesc: PropTypes.bool,
   isTestNet: PropTypes.bool,
-  testNet: PropTypes.bool,
-  noIcon: PropTypes.bool,
 };
 
 export default injectIntl(tabbedHeader(TabbedHeader));

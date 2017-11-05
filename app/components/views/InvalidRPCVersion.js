@@ -5,7 +5,7 @@ import { TabbedHeader } from "shared";
 
 const InvalidRPCVersion = ({ requiredWalletRPCVersion, walletRPCVersion, routes }) => (
   <div className="page-view">
-    <TabbedHeader noDesc {...{ routes }}/>
+    <TabbedHeader {...{ routes }}/>
     <div className="page-content">
       <div className="invalid-rpc-info">
         <T

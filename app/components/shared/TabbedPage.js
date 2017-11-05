@@ -19,14 +19,14 @@ class TabbedPage extends React.Component{
     }
   }
   render () {
-    const { children, routes, route: { testNet, noDesc }} = this.props;
+    const { children, routes } = this.props;
     const { prevTab } = this.state;
     const tabs = getTabs(routes);
     const pathname = getTab(routes);
     const effect = !prevTab ? enterLeft : tabs.indexOf(prevTab) > tabs.indexOf(pathname) ? enterLeft : enterRight;
     return (
       <Aux>
-        <TabbedHeader {...{ testNet, noDesc, routes }}/>
+        <TabbedHeader {...{ routes }}/>
         <RouteTransition className="tabbed-page" opts={ theme("springs.tab") } {...{ wrapperComponent, pathname, ...effect }}>
           { children }
         </RouteTransition>

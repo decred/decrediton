@@ -23,7 +23,7 @@ const SettingsPage = ({
                         routes,
                       }) => (
   <Aux>
-    <TabbedHeader noDesc {...{ routes }}/>
+    <TabbedHeader {...{ routes }}/>
     <ChangePassphraseModal
       hidden={!isShowingChangePassphrase}
       updatePassphrase={onAttemptChangePassphrase}
