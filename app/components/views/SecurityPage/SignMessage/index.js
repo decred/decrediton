@@ -48,7 +48,7 @@ class SignMessage extends React.Component {
     return (
       isShowingSignMessageInfo ?
       <SignMessageInfo closeModal={this.onHideSignMessageInfo} /> :
-      <div className="page-content message message-sign">
+      <div className="tab-card message message-sign">
         <SignMessageForm onShowSignMessageInfo={this.onShowSignMessageInfo} onSubmit={this.onSubmit} rpcError={signMessageError} formatMessage={this.props.intl.formatMessage} />
         {result}
       </div>

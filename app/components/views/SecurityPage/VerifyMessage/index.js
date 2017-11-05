@@ -55,7 +55,7 @@ class VerifyMessage extends React.Component {
     return (
       isShowingVerifyMessageInfo ?
       <VerifyMessageInfo closeModal={this.onHideVerifyMessageInfo} /> :
-      <div className="page-content message message-verify">
+      <div className="tab-card message message-verify">
         <VerifyMessageForm onShowVerifyMessageInfo={this.onShowVerifyMessageInfo} onSubmit={this.onSubmit} rpcError={verifyMessageError} formatMessage={this.props.intl.formatMessage} />
         {result}
       </div>

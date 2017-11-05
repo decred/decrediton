@@ -17,7 +17,6 @@ class MenuLinks extends React.Component {
         <MenuLink onClick={ this.onClick } to="/home"        ><T id="menu.overview"       m="Overview"       /></MenuLink>
         <MenuLink onClick={ this.onClick } to="/accounts"    ><T id="menu.accounts"       m="Accounts"       /></MenuLink>
         <MenuLink onClick={ this.onClick } to="/transactions"><T id="menu.transactions"   m="Transactions"   /></MenuLink>
-        <MenuLink onClick={ this.onClick } to="/history"     ><T id="menu.history"        m="History"        /></MenuLink>
         <MenuLink onClick={ this.onClick } to="/tickets"     ><T id="menu.tickets"        m="Tickets"        /></MenuLink>
         <MenuLink onClick={ this.onClick } to="/security"    ><T id="menu.securitycenter" m="Security Center"/></MenuLink>
         <MenuLink onClick={ this.onClick } to="/settings"    ><T id="menu.settings"       m="Settings"       /></MenuLink>

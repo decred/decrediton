@@ -1,9 +1,7 @@
-import React, { Component } from "react";
-import { autobind } from "core-decorators";
-import { substruct } from "../../../fp";
-import ErrorScreen from "../../ErrorScreen";
+import { substruct } from "fp";
+import ErrorScreen from "ErrorScreen";
 import HistoryPage from "./Page";
-import historyPageConnector from "../../../connectors/historyPage";
+import { historyPage } from "connectors";
 import { injectIntl, defineMessages } from "react-intl";
 
 const messages = defineMessages({
@@ -34,7 +32,7 @@ const messages = defineMessages({
 });
 
 @autobind
-class History extends Component {
+class History extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -111,4 +109,4 @@ class History extends Component {
   }
 }
 
-export default historyPageConnector(injectIntl(History));
+export default historyPage(injectIntl(History));
