@@ -13,7 +13,6 @@ export const getNeededBlocks = get(["walletLoader", "neededBlocks"]);
 export const getEstimatedTimeLeft = get(["daemon", "timeLeftEstimate"]);
 export const getDaemonSynced = get(["daemon", "daemonSynced"]);
 export const isAdvancedDaemon = get(["daemon", "daemonAdvanced"]);
-export const getSkippedAdvancedLogin = get(["daemon", "skippedAdvancedLoing"]);
 export const getWalletReady = get(["daemon", "walletReady"]);
 export const isPrepared = and(
   getDaemonStarted,
@@ -76,11 +75,14 @@ export const isInputRequest = or(
   createWalletInputRequest,
   discoverAddressInputRequest,
 );
-export const isStartupProcessing = or(
-  not(isPrepared),
-  and(
-    not(isInputRequest),
-    not(startupError)
+export const isStartupProcessing = and(
+  not(isAdvancedDaemon),
+  or(
+    not(isPrepared),
+    and(
+      not(isInputRequest),
+      not(startupError)
+    )
   )
 );
 

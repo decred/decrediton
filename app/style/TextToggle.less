@@ -1,5 +1,12 @@
 @import (reference) "./main.less";
 
+.advanced-page-toggle {
+  float: left;
+  z-index: 10;
+  position: absolute;
+  left: 100px;
+}
+
 .text-toggle {
   display: block;
   height: 40px;
@@ -9,6 +16,17 @@
 
 .text-toggle::after {
   .clearfloat-mixin;
+}
+
+.inverted-colors .text-toggle-button-left,
+.inverted-colors .text-toggle-button-right {
+  background-color: #8997a5;
+  color: #ddd;
+}
+
+.inverted-colors .text-toggle-button-active {
+  background-color: #091440;
+  color: #f3f6f6;
 }
 
 .text-toggle-button-left,

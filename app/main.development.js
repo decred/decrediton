@@ -247,59 +247,10 @@ const installExtensions = async () => {
 
 const { ipcMain } = require("electron");
 
-ipcMain.on("start-daemon", (event, arg) => {
-  if (cfg.get("daemon_start_advanced")) {
-    logger.log("info", "Daemon starting on advanced mode as requested on config");
-    daemonIsAdvanced = true;
-    dcrdPID = dcrdPID ? dcrdPID : -1;
-    event.returnValue = {
-      pid: dcrdPID,
-      advancedDaemon: true
-    };
-    return;
-  }
-  if (cfg.get("daemon_skip_start")) {
-    logger.log("info", "skipping start of dcrd as requested on config");
-    dcrdPID = -1;
-    event.returnValue = {
-      pid: dcrdPID,
-      advancedDaemon: false,
-    };
-    return;
-  }
-  if (dcrdPID) {
-    logger.log("info", "dcrd already started " + dcrdPID);
-    event.returnValue = {
-      pid: dcrdPID,
-      advancedDaemon: false,
-    };
-    return;
-  }
-
-  logger.log("info", "launching dcrd with " + JSON.stringify(arg));
-  try {
-    dcrdPID = launchDCRD();
-  } catch (e) {
-    logger.log("error", "error launching dcrd: " + e);
-  }
-  event.returnValue = {
-    pid: dcrdPID,
-    advancedDaemon: false,
-  };
-});
-
-ipcMain.on("start-daemon-advanced", (event, data) => {
-  const {startType, args} = data;
-  let credentials;
-
-  if(startType === 2){
+ipcMain.on("start-daemon", (event, appData) => {
+  if(appData){
     logger.log("info", "launching dcrd with different appdata directory");
-    const {rpcappdata} = args;
-    credentials = {
-      rpcappdata: rpcappdata,
-    };
   }
-
   if (dcrdPID !== -1) {
     logger.log("info", "dcrd already started, closing it to start again");
     try{
@@ -310,9 +261,9 @@ ipcMain.on("start-daemon-advanced", (event, data) => {
     logger.log("info", "dcrd already started " + dcrdPID);
   }
   try {
-    dcrdPID = launchDCRD(credentials);
+    dcrdPID = launchDCRD(appData);
   } catch (e) {
-    logger.log("error", "error launching dcrd with different rpcuser and rpcpassword: " + e);
+    logger.log("error", "error launching dcrd: " + e);
   }
   event.returnValue = dcrdPID;
 });
@@ -362,27 +313,35 @@ ipcMain.on("start-wallet", (event, arg) => {
   event.returnValue = dcrwPID;
 });
 
-ipcMain.on("check-daemon", (event, arg) => {
+ipcMain.on("check-daemon", (event, rpcCreds, appData) => {
   let args = ["getblockcount"];
   let host, port;
-  const { startType, credentials } = arg;
-
-  if(startType === 1){
-    args.push(`--rpcuser=${credentials.rpcuser}`);
-    args.push(`--rpcpass=${credentials.rpcpassword}`);
-    args.push(`--rpccert=${credentials.rpccert}`);
-    host = credentials.rpchost;
-    port = credentials.rpcport;
-  } else if (startType === 2) {
-    const rpccert = `${credentials.rpcappdata}/rpc.cert`;
+  if (!rpcCreds && !appData){
+    host = RPCDaemonHost();
+    port = RPCDaemonPort();
+    args.push(`--configfile=${dcrctlCfg()}`);
+  } else if (rpcCreds) {
+    if (rpcCreds.rpcuser) {
+      args.push(`--rpcuser=${rpcCreds.rpcuser}`);
+    }
+    if (rpcCreds.rpcpass) {
+      args.push(`--rpcpass=${rpcCreds.rpcpass}`);
+    }
+    if (rpcCreds.rpccert) {
+      args.push(`--rpccert=${rpcCreds.rpccert}`);
+    }
+    if (rpcCreds.rpchost) {
+      host = rpcCreds.rpchost;
+    }
+    if (rpcCreds.rpcport) {
+      port = rpcCreds.rpcport;
+    }
+  } else if (appData) {
+    const rpccert = `${appData}/rpc.cert`;
     args.push(`--rpccert=${rpccert}`);
+    args.push(`--configfile=${dcrctlCfg()}`);
     host = RPCDaemonHost();
     port = RPCDaemonPort();
-    args.push(`--configfile=${dcrctlCfg()}`);
-  } else {
-    host = RPCDaemonHost();
-    port = RPCDaemonPort();
-    args.push(`--configfile=${dcrctlCfg()}`);
   }
 
   var spawn = require("child_process").spawn;
@@ -418,12 +377,11 @@ ipcMain.on("grpc-versions-determined", (event, versions) => {
   grpcVersions = { ...grpcVersions, ...versions };
 });
 
-const launchDCRD = (credentials) => {
+const launchDCRD = (appdata) => {
   var spawn = require("child_process").spawn;
   let args = [];
-
-  if(credentials){
-    args = [`--appdata=${credentials.rpcappdata}`,`--configfile=${dcrdCfg()}`];
+  if(appdata){
+    args = [`--appdata=${appdata}`,`--configfile=${dcrdCfg()}`];
   } else {
     args = [`--configfile=${dcrdCfg()}`];
   }

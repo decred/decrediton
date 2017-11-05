@@ -1,11 +1,11 @@
-import TicketsCogs from "../TicketsCogs";
-import AutoBuyerSwitch from "../AutoBuyerSwitch";
-import KeyBlueButton from "../KeyBlueButton";
-import PurchaseTicketsInfoButton from "../PurchaseTicketsInfoButton";
+import TicketsCogs from "TicketsCogs";
+import AutoBuyerSwitch from "AutoBuyerSwitch";
+import KeyBlueButton from "KeyBlueButton";
+import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
 import { DcrInput, NumericInput, FeeInput } from "inputs";
 import { Tooltip } from "shared";
 import { defineMessages, FormattedMessage as T } from "react-intl";
-import "../../style/StakePool.less";
+import "style/StakePool.less";
 
 const messages = defineMessages({
   balanceToMaintain: {
@@ -64,11 +64,6 @@ const TicketAutoBuyerForm = ({
     <div className={isHidingDetails ? "stakepool-flex-height-auto-buyer-hidden" : "stakepool-flex-height-auto-buyer-shown" }>
       <div className="stakepool-auto-buyer-row">
         <AutoBuyerSwitch enabled={isTicketAutoBuyerEnabled} onClick={onToggleTicketAutoBuyer} />
-        <div className="stakepool-auto-buyer-label">
-          {isTicketAutoBuyerEnabled
-            ? <T id="autobuyer.enabled" m="Enabled" />
-            : <T id="autobuyer.disabled" m="Disabled" />}
-        </div>
         <div className="stakepool-auto-buyer-quick-bar-row">
           {isHidingDetails ? (
             <div>

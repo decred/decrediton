@@ -1,7 +1,6 @@
-import React from "react";
-import Header from "../../Header";
+import Header from "Header";
 import { FormattedMessage as T } from "react-intl";
-import "../../../style/GetStarted.less";
+import "style/GetStarted.less";
 
 const DaemonLoading = () => (
   <div className="get-started-view">

@@ -127,21 +127,20 @@ export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
 export const startRpcRequestFunc = (isRetry) =>
 (dispatch, getState) => {
-  const credentials = getState().daemon.credentials;
-  const startType = getState().daemon.startType;
+  const {daemon: { credentials, appData} }= getState();
   const cfg = getCfg();
   let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
-  if(startType === 1) {
+  if(credentials) {
     rpcuser = credentials.rpcuser;
     rpccertPath = credentials.rpccert;
-    rpcpass = credentials.rpcpassword;
+    rpcpass = credentials.rpcpass;
     daemonhost = credentials.rpchost;
     rpcport = credentials.rpcport;
-  } else if (startType === 2) {
+  } else if (appData) {
     rpcuser = cfg.get("rpc_user");
     rpcpass = cfg.get("rpc_pass");
-    rpccertPath = `${credentials.rpcappdata}/rpc.cert`;
+    rpccertPath = `${appData}/rpc.cert`;
     daemonhost = RPCDaemonHost();
     rpcport = RPCDaemonPort();
   } else {

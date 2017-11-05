@@ -1,8 +1,7 @@
-import React from "react";
-import Header from "../../Header";
-import ShowError from "../../ShowError";
+import Header from "Header";
+import ShowError from "ShowError";
 import { FormattedMessage as T } from "react-intl";
-import "../../../style/GetStarted.less";
+import "style/GetStarted.less";
 
 export const CheckWalletStateHeader = () => (
   <Header
