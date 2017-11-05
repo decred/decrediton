@@ -45,7 +45,7 @@ const Bar = ({
           <Aux>
             <div className="sidebar-menu-bottom-total-balance-short-separator"></div>
             <div className="sidebar-menu-bottom-total-balance-short-name"><T id="sidebar.totalBalance" m="Total Balance"/>:</div>
-            <div className="sidebar-menu-bottom-total-balance-short-value">{totalBalance.toString()}</div>
+            <div className="sidebar-menu-bottom-total-balance-short-value">{totalBalance}</div>
           </Aux> }
         </div>
         <div className="sidebar-menu-bottom-latest-block">

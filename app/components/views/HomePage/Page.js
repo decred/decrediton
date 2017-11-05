@@ -1,10 +1,11 @@
 // @flow
 import { rescan, home } from "connectors";
-import DecredLoading from "../../DecredLoading";
-import KeyBlueButton from "../../KeyBlueButton";
-import PassphraseModal from "../../PassphraseModal";
-import Balance from "../../Balance";
-import TxHistory from "../../TxHistory";
+import DecredLoading from "DecredLoading";
+import KeyBlueButton from "KeyBlueButton";
+import SlateGrayButton from "SlateGrayButton";
+import PassphraseModal from "PassphraseModal";
+import Balance from "Balance";
+import TxHistory from "TxHistory";
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip, TabbedHeader } from "shared";
 import "style/Fonts.less";
@@ -51,34 +52,26 @@ const HomePage = ({
           </KeyBlueButton>
         </Tooltip>
       </TabbedHeader>
-      {getTransactionsRequestAttempt ? (
-        <div className="page-content"><DecredLoading /></div>
-      ) : (
-          <div className="page-content">
-            {hasTicketsToRevoke ? <div className="tickets-to-revoke-warning">
-              <T id="home.revokeTicketMessage"
-                m="You have outstanding missed or expired tickets, please revoke them to unlock your funds" />
-              <KeyBlueButton
-                className="stakepool-content-revoke-button"
-                onClick={onShowRevokeTicket}
-              >
-                <T id="purchaseTickets.revokeBtn" m="Revoke" />
-              </KeyBlueButton>
-            </div> : null}
-            <div className="home-content-title">
-              <div className="home-content-title-text">
-                <T id="home.recentTransactionsTitle" m="Recent Transactions" />
-              </div>
-            </div>
-            <div className="home-content-nest">
-              {(transactions.length > 0) ? (
-                <TxHistory {...{ getAccountsResponse, transactions }} />
-              ) : (
-                  <p><T id="home.noTransactions" m="No transactions" /></p>
-                )}
-            </div>
+      { getTransactionsRequestAttempt ? <div className="page-content"><DecredLoading /></div> :
+      <div className="page-content">
+        { hasTicketsToRevoke &&
+        <div className="tickets-to-revoke-warning">
+          <T id="home.revokeTicketMessage" m="You have outstanding missed or expired tickets, please revoke them to unlock your funds" />
+          <SlateGrayButton className="stakepool-content-revoke-button" onClick={onShowRevokeTicket}>
+            <T id="purchaseTickets.revokeBtn" m="Revoke" />
+          </SlateGrayButton>
+        </div> }
+        <div className="home-content-title">
+          <div className="home-content-title-text">
+            <T id="home.recentTransactionsTitle" m="Recent Transactions" />
           </div>
-        )}
+        </div>
+        <div className="home-content-nest">
+          { transactions.length > 0 ?
+          <TxHistory {...{ getAccountsResponse, transactions }} /> :
+          <p><T id="home.noTransactions" m="No transactions" /></p> }
+        </div>
+      </div> }
     </Aux>
   );
 };

@@ -9,7 +9,7 @@ import Icon from "../Icon";
 import Tabs from "./Tabs";
 import "style/Header.less";
 
-const TabbedHeader = ({ intl, children, routes, isTestNet, icon, title, subtitle }) => {
+const TabbedHeader = ({ intl, children, routes, totalBalance, isTestNet, icon, title, subtitle }) => {
   const { tabDesc, noDesc, noIcon } = routes[1];
   const page = getPage(routes);
   const tabs = getTabs(routes);
@@ -38,7 +38,7 @@ const TabbedHeader = ({ intl, children, routes, isTestNet, icon, title, subtitle
         <Description>{ subtitle || description }</Description>
         { routes[2] && routes[2].balance &&
         <div className="small-balance">
-          <Balance flat/>
+          <Balance flat amount={ totalBalance }/>
         </div> }
         { children }
       </div>

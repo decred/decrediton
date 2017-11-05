@@ -63,17 +63,18 @@
 }
 
 .tickets-to-revoke-warning {
-  background: #fd714b;
-  padding: 10px;
-  margin-bottom: 10px;
-  height: 65px;
-  -webkit-border-bottom-right-radius: 10px;
-  -webkit-border-bottom-left-radius: 10px;
-  -moz-border-radius-bottomright: 10px;
-  -moz-border-radius-bottomleft: 10px;
+  position: absolute;
+  width: calc(100% - 40px);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  top: 0px;
+  left: 20px;
+  background-color: rgba(9, 24, 45, 0.8);
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1);
+  height: 55px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
-  text-align: center;
   font-size: 12pt;
   color: #fff;
 

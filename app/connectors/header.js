@@ -4,8 +4,7 @@ import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
   isTestNet: sel.isTestNet,
-  newUnminedMessage: sel.newUnminedMessage,
-  spendableTotalBalance: sel.spendableTotalBalance,
+  newUnminedMessage: sel.newUnminedMessage
 });
 
 export default connect(mapStateToProps);

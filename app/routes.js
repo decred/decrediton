@@ -23,7 +23,7 @@ import InvalidRPCVersion from "./components/views/InvalidRPCVersion";
 
 export default (
   <Route     path="/"                           component={App}>
-<IndexRoute                                 component={GetStartedPage}/>
+    <IndexRoute                                 component={GetStartedPage}/>
     <Route   path="transaction/history/:txHash" component={TransactionPage}/>
     <Route   path="home"                        component={HomePage}          noDesc noIcon/>
     <Route   path="accounts"                    component={AccountsPage}/>
@@ -47,8 +47,8 @@ export default (
     </Route>
     <Route   path="settings"                    component={SettingsPage}      noDesc/>
     <Route   path="help"                        component={Help}/>
-    <Route   path="walletError"                 component={WalletError}       noDesc/>
-    <Route   path="error"                       component={ErrorScreen}       noDesc/>
-    <Route   path="invalidRPCVersion"           component={InvalidRPCVersion} noDesc/>
+    <Route   path="walletError"                 component={WalletError}       noDesc noIcon/>
+    <Route   path="error"                       component={ErrorScreen}       noDesc noIcon/>
+    <Route   path="invalidRPCVersion"           component={InvalidRPCVersion} noDesc noIcon/>
   </Route>
 );
