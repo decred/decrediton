@@ -4,7 +4,7 @@ import HelpLink from "HelpLink";
 import "style/Help.less";
 
 const Help = ({ routes }) => (
-  <div className="page-view">
+  <Aux>
     <TabbedHeader {... { routes }}/>
     <div className="page-content">
       <div className={"help-icon-row"}>
@@ -17,7 +17,7 @@ const Help = ({ routes }) => (
         <HelpLink className={"help-forum-icon"} href="https://forum.decred.org"><T id="help.forum" m="Forum" /> </HelpLink>
       </div>
     </div>
-  </div>
+  </Aux>
 );
 
 export default Help;

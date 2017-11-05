@@ -2,9 +2,11 @@ import { defineMessages } from "react-intl";
 
 export default defineMessages({
   "accounts.title":                   { id: "accounts.title",                   defaultMessage: "Accounts" },
-  "accounts.description":             { id: "accounts.description",             defaultMessage: "Accounts allow you to keep separate records of your DCR funds.\nTransferring DCR across accounts will create a transaction on the blockchain." },
+  "accounts.description":             { id: "accounts.description",             defaultMessage: "Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit\nLorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit\nLorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit Lorem ipsum dolor sit" },
+  // "accounts.description":             { id: "accounts.description",             defaultMessage: "Accounts allow you to keep separate records of your DCR funds.\nTransferring DCR across accounts will create a transaction on the blockchain." },
 
   "history.title":                    { id: "history.title",                    defaultMessage: "Available Balance" },
+  "home.title":                       { id: "home.title",                       defaultMessage: "Available Balance" },
 
   "tickets.title":                    { id: "tickets.title",                    defaultMessage: "Tickets" },
   "tickets.tab.purchase":             { id: "tickets.tab.purchase",             defaultMessage: "Purchase Tickets" },

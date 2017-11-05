@@ -2,6 +2,7 @@ import { messageBanner } from "connectors";
 import Message from "./Message";
 
 const MessageBanner = ({
+  synced,
   getNextAccountSuccess,
   getNextAccountError,
   renameAccountSuccess,
@@ -33,6 +34,10 @@ const MessageBanner = ({
     onClearChangePassphraseError();
   };
   return (
+    !synced ?
+    <div key="notSynced" className="home-view-notification-not-synced">
+      <T id="home.notSyncedInfo" m="The wallet is not fully synced yet. Note: Balances will not be accurate until syncing is complete." />
+    </div> :
     <Message {...{ error, onClick }}>
       { message }
     </Message>

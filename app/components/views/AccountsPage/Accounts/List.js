@@ -23,7 +23,7 @@ const AccountsList = ({
   onShowBalanceOverviewInfoModal,
   onCloseBalanceOverviewInfoModal,
 }) => (
-  <div className="page-view">
+  <Aux>
     <TabbedHeader {...{ routes }}>
       <KeyBlueButton onClick={onToggleAddAccount}>
         <T id="accounts.addNewButton" m="Add New" />
@@ -54,7 +54,7 @@ const AccountsList = ({
         </div>
       </Aux> }
     </div>
-  </div>
+  </Aux>
 );
 
 AccountsList.propTypes = {

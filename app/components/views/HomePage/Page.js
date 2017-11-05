@@ -5,19 +5,20 @@ import KeyBlueButton from "../../KeyBlueButton";
 import PassphraseModal from "../../PassphraseModal";
 import Balance from "../../Balance";
 import TxHistory from "../../TxHistory";
-import Header from "../../Header";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "shared";
+import { Tooltip, TabbedHeader } from "shared";
 import "style/Layout.less";
 import "style/Fonts.less";
 import "style/HomePage.less";
 
 const rescanBtnMessage =
-  `Rescanning may help resolve some balance errors.
-  Note: This scans the entire blockchain for transactions, but does not re-download it.`;
+`Rescanning may help resolve some balance errors.
+
+Note: This scans the entire blockchain for transactions,
+but does not re-download it.`;
 
 const HomePage = ({
-  synced,
+  routes,
   spendableTotalBalance,
   rescanAttempt,
   isRequestingPassphrase,
@@ -41,25 +42,14 @@ const HomePage = ({
         heading={passphraseHeading}
         description={passphraseDescription}
       />
-      <Header
-        headerTop={synced ? null : (
-          <div key="notSynced" className="home-view-notification-not-synced">
-            <T id="home.notSyncedInfo" m="The wallet is not fully synced yet. Note: Balances will not be accurate until syncing is complete." />
-          </div>
-        )}
-        headerTitleOverview={<T id="home.availableBalanceTitle" m="Available Balance" />}
-        headerMetaOverview={
-          <div className="df">
-            <Balance amount={spendableTotalBalance} />
-            <Tooltip text={ <T id="home.rescanBtn.tip" m={ rescanBtnMessage} /> } disabled={ rescanRequest }
-              className="mla home-rescan-button-area" tipWidth={ 300 }>
-              <KeyBlueButton disabled={rescanRequest} onClick={() => rescanAttempt(0)}>
-                <T id="home.rescanBtn" m="Rescan" />
-              </KeyBlueButton>
-            </Tooltip>
-          </div>
-        }
-      />
+      <TabbedHeader noDesc noIcon {...{ routes }}>
+        <Balance amount={spendableTotalBalance} />
+        <Tooltip text={ <T id="home.rescanBtn.tip" m={ rescanBtnMessage} /> } disabled={ rescanRequest }>
+          <KeyBlueButton disabled={rescanRequest} onClick={() => rescanAttempt(0)}>
+            <T id="home.rescanBtn" m="Rescan" />
+          </KeyBlueButton>
+        </Tooltip>
+      </TabbedHeader>
       {getTransactionsRequestAttempt ? (
         <div className="page-content"><DecredLoading /></div>
       ) : (

@@ -5,6 +5,7 @@ import * as sel from "../selectors";
 import * as ca from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
+  synced: sel.synced,
   changePassphraseError: sel.changePassphraseError,
   changePassphraseSuccess: sel.changePassphraseSuccess,
   getNextAccountSuccess: sel.getNextAccountSuccess,

@@ -21,9 +21,10 @@ const TabbedHeader = ({ intl, children, routes, noDesc, testNet, isTestNet, noIc
         <MessageBanner/>
       </div>
 
+      { !noIcon &&
       <div className="tabbedheader-icon">
-        { !noIcon && <Icon i={ page } s={ 30 }/> }
-      </div>
+        <Icon i={ page } s={ 30 }/>
+      </div> }
 
       <div className="tabbedheader-title">
         { intl.formatMessage(messages[title]) }
