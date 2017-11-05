@@ -23,7 +23,7 @@ import InvalidRPCVersion from "./components/views/InvalidRPCVersion";
 
 export default (
   <Route     path="/"                           component={App}>
-    <IndexRoute                                 component={GetStartedPage}/>
+<IndexRoute                                 component={GetStartedPage}/>
     <Route   path="transaction/history/:txHash" component={TransactionPage}/>
     <Route   path="home"                        component={HomePage}          noDesc noIcon/>
     <Route   path="accounts"                    component={AccountsPage}/>
@@ -31,7 +31,7 @@ export default (
       <IndexRedirect to="send"/>
       <Route path="send"                        component={SendTab}           testNet/>
       <Route path="receive"                     component={ReceiveTab}/>
-      <Route path="history"                     component={HistoryTab}/>
+      <Route path="history"                     component={HistoryTab}        balance/>
     </Route>
     <Route   path="tickets"                     component={TabbedPage}        noDesc>
       <IndexRedirect to="purchase"/>
@@ -48,7 +48,7 @@ export default (
     <Route   path="settings"                    component={SettingsPage}      noDesc/>
     <Route   path="help"                        component={Help}/>
     <Route   path="walletError"                 component={WalletError}       noDesc/>
-    <Route   path="error"                       component={ErrorScreen}/>
+    <Route   path="error"                       component={ErrorScreen}       noDesc/>
     <Route   path="invalidRPCVersion"           component={InvalidRPCVersion} noDesc/>
   </Route>
 );

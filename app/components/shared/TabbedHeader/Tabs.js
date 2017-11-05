@@ -45,7 +45,7 @@ class Tabs extends React.Component {
           const route = ["", page, tab].join("/");
           return (
             <div className="tabbedheader-ref" ref={ ref => this._nodes.set(tab, ref) } key={ tab }>
-              <Link to={ route } className="tabbedheader-tab" >
+              <Link to={ route } className="tabbedheader-tab" activeClassName="tabbedheader-tab-active">
                 { intl.formatMessage(messages[title]) }
               </Link>
             </div>

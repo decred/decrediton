@@ -6,7 +6,7 @@ const Icon = ({ i, s }) => {
   const size = (theme.space[s] || s || 20);
   return (
     <div className="icon">
-      <svg viewBox={ viewBox || `0 0 ${height} ${(width || height)}` } height={ size }>
+      <svg viewBox={ viewBox || `0 0 ${ width || height } ${ height }` } height={ size }>
         { markup || <path d={ path } /> }
       </svg>
     </div>
