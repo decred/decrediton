@@ -3,7 +3,8 @@ import "../style/Balance.less";
 import { FormattedMessage as T } from "react-intl";
 import balanceConnector from "../connectors/balance";
 
-export const Balance = ({ currencyDisplay, amount, onClick }) => {
+export const Balance = ({ currencyDisplay, amount, onClick, tiny }) => {
+  const secondary = tiny ? "balance-tiny" : "balance-small";
   if (currencyDisplay === "DCR") {
     var totalDcr = 0;
     var numberFormatPart = ["0","0"];
@@ -22,10 +23,10 @@ export const Balance = ({ currencyDisplay, amount, onClick }) => {
           values={{
             amount: numberFormatPart[0]+"."+numberFormatPart[1].toString().slice(0,2),
             smallAmount:
-              <span className="balance-small">
+              <span className={ secondary }>
                 {numberFormatPart[1].toString().slice(2)}
               </span>,
-            unit: <span className="balance-small">DCR</span>
+            unit: <span className={ secondary }>DCR</span>
           }}
           />
       </span>
@@ -41,7 +42,7 @@ export const Balance = ({ currencyDisplay, amount, onClick }) => {
           m="{amount} {unit}"
           values={{
             amount: amount,
-            unit: <span className="balance-small"> atoms</span>
+            unit: <span className={ secondary }> atoms</span>
           }} />
       </span>
     );

@@ -42,7 +42,9 @@ const HomePage = ({
         description={passphraseDescription}
       />
       <TabbedHeader noDesc noIcon {...{ routes }}>
-        <Balance amount={spendableTotalBalance} />
+        <div className="overview-balance">
+          <Balance amount={spendableTotalBalance} tiny/>
+        </div>
         <Tooltip text={ <T id="home.rescanBtn.tip" m={ rescanBtnMessage} /> } disabled={ rescanRequest }>
           <KeyBlueButton disabled={rescanRequest} onClick={() => rescanAttempt(0)}>
             <T id="home.rescanBtn" m="Rescan" />

@@ -26,7 +26,7 @@ const AddAccountForm = ({
   onSave,
   onCancel
 }) => (
-  <div className="page-view">
+  <Aux>
     <TabbedHeader {...{ routes }}/>
     <div className="page-content">
       <div className="account-flex-height">
@@ -82,7 +82,7 @@ const AddAccountForm = ({
         ><T id="accounts.formNew.cancelBtn" m="Cancel" /></SlateGrayButton>
       </div>
     </div>
-  </div>
+  </Aux>
 );
 
 export default injectIntl(AddAccountForm);
