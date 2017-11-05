@@ -1,52 +1,38 @@
-import React from "react";
-import "../style/Balance.less";
-import { FormattedMessage as T } from "react-intl";
-import balanceConnector from "../connectors/balance";
+import "style/Balance.less";
+import { FormattedNumber } from "react-intl";
+import { balance } from "connectors";
 
-export const Balance = ({ currencyDisplay, amount, onClick, large, flat, title }) => {
+export const Balance = ({ currencyDisplay, amount, onClick, bold, large, flat, title }) => {
   const secondary = large ? "balance-tiny" : flat ? "balance-base" : title ? "balance-title" : "balance-small";
   if (currencyDisplay === "DCR") {
     var totalDcr = 0;
-    var numberFormatPart = ["0","0"];
-    if (typeof amount !== "undefined" && amount !== 0) {
-      totalDcr = parseInt(amount) / 100000000;
-      numberFormatPart = totalDcr.toFixed(8).toString().split(".");
-    }
+    if (typeof amount !== "undefined" && amount !== 0) { totalDcr = parseInt(amount) / 100000000; }
+    const tail = totalDcr.toFixed(8).toString().split(".")[1].slice(2);
     return (
-      <span
-        className="balance-base"
-        onClick={onClick}
-      >
-        <T
-          id="balance.dcr"
-          m="{amount, number, two-decimals}{smallAmount} {unit}"
-          values={{
-            amount: numberFormatPart[0]+"."+numberFormatPart[1].toString().slice(0,2),
-            smallAmount:
-              <span className={ secondary }>
-                {numberFormatPart[1].toString().slice(2)}
-              </span>,
-            unit: <span className={ secondary }>DCR</span>
-          }}
-          />
+      <span {...{ onClick }}>
+        <span className={["balance-base", bold ? "bold" : null].join(" ") }>
+          <FormattedNumber value={ totalDcr } maximumFractionDigits={ 2 } minimumFractionDigits={ 2 }/>
+        </span>
+        <span className={[secondary, bold ? "bold" : null].join(" ") }>
+          { tail + " "}
+        </span>
+        <span className={ secondary }>
+          DCR
+        </span>
       </span>
     );
   } else if (currencyDisplay === "atoms") {
     return (
-      <span
-      className="balance-base"
-      onClick={onClick}
-      >
-        <T
-          id="balance.atoms"
-          m="{amount} {unit}"
-          values={{
-            amount: amount,
-            unit: <span className={ secondary }> atoms</span>
-          }} />
+      <span {...{ onClick }}>
+        <span className={[secondary, bold ? "bold" : null].join(" ") }>
+          { amount + " "}
+        </span>
+        <span className={ secondary }>
+          DCR
+        </span>
       </span>
     );
   }
 };
 
-export default balanceConnector(Balance);
+export default balance(Balance);

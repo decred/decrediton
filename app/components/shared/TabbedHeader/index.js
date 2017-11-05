@@ -17,6 +17,7 @@ const TabbedHeader = ({ intl, children, routes, isTestNet, icon, title, subtitle
   let description = [page, "description"].join(".");
   if (tabDesc) description = [description, getTab(routes)].join(".");
   if (routes[2] && routes[2].testNet) description = [description, isTestNet ? "testnet" : "mainnet"].join(".");
+  description = !noDesc && typeof subtitle === "undefined" && intl.formatMessage(messages[description]);
 
   return (
     <div className="header">
@@ -34,7 +35,7 @@ const TabbedHeader = ({ intl, children, routes, isTestNet, icon, title, subtitle
       </div>
 
       <div className="tabbedheader-content">
-        { !noDesc && <Description>{ subtitle || intl.formatMessage(messages[description]) }</Description> }
+        <Description>{ subtitle || description }</Description>
         { routes[2] && routes[2].balance &&
         <div className="small-balance">
           <Balance flat/>
