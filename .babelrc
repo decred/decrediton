@@ -5,5 +5,8 @@
     "transform-decorators-legacy",
     "./scripts/aliasDefaultMessage.js",
     ["react-intl", {"messagesDir": "app/i18n/extracted"}]
+  ],
+  "ignore": [
+    "app/middleware/walletrpc/*.js"
   ]
 }
