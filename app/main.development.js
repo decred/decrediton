@@ -257,12 +257,6 @@ const installExtensions = async () => {
 const { ipcMain } = require("electron");
 
 ipcMain.on("start-daemon", (event, appData) => {
-  if (cfg.get("daemon_skip_start")) {
-    logger.log("info", "skipping start of dcrd as requested on config");
-    dcrdPID = -1;
-    event.returnValue = dcrdPID;
-    return;
-  }
   if(appData){
     logger.log("info", "launching dcrd with different appdata directory");
   }
