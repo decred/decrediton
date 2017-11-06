@@ -15,7 +15,6 @@ let mainWindow = null;
 let versionWin = null;
 let grpcVersions = {requiredVersion: null, walletVersion: null};
 let debug = false;
-let daemonIsAdvanced = false;
 let dcrdPID;
 let dcrwPID;
 let currentBlockCount;
@@ -178,6 +177,8 @@ if (!locale) {
   locale = locales.find(value => value.name === "en");
 }
 
+let daemonIsAdvanced = cfg.get("daemon_start_advanced");
+
 function closeDCRW() {
   if (cfg.get("wallet_skip_start")) {
     return;
@@ -256,6 +257,12 @@ const installExtensions = async () => {
 const { ipcMain } = require("electron");
 
 ipcMain.on("start-daemon", (event, appData) => {
+  if (cfg.get("daemon_skip_start")) {
+    logger.log("info", "skipping start of dcrd as requested on config");
+    dcrdPID = -1;
+    event.returnValue = dcrdPID;
+    return;
+  }
   if(appData){
     logger.log("info", "launching dcrd with different appdata directory");
   }
@@ -288,7 +295,7 @@ ipcMain.on("start-wallet", (event, arg) => {
   try {
     dcrwPID = launchDCRWallet();
   } catch (e) {
-    logger.log("error", "error launching dcrd: " + e);
+    logger.log("error", "error launching dcrwallet: " + e);
   }
   event.returnValue = dcrwPID;
 });
@@ -396,7 +403,7 @@ const launchDCRD = (appdata) => {
     }
   }
 
-  logger.log("info", `Starting with dcrd ${args}`);
+  logger.log("info", `Starting dcrd with ${args}`);
 
   var dcrd = spawn(dcrdExe, args, {
     detached: os.platform() == "win32",

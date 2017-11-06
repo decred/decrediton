@@ -13,6 +13,7 @@ const rootPath = ({ pathname }) => pathname.split("/")[1];
 
 const wrapperComponent = props => <div className="page-view" { ...props } />;
 
+@autobind
 class App extends React.Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
