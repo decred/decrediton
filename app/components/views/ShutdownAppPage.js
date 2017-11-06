@@ -1,12 +1,10 @@
-// @flow
-import React, {Component} from "react";
 import Header from "../Header";
 import { FormattedMessage as T } from "react-intl";
 import shutdownPage from "connectors/shutdownPage";
 import DecredLoading from "../DecredLoading";
 import "../../style/Layout.less";
 
-class ShutdownAppPage extends Component{
+class ShutdownAppPage extends React.Component{
   componentWillMount() {
     this.props.showSidebar();
     this.props.hideSidebarMenu();
