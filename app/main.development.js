@@ -279,7 +279,7 @@ ipcMain.on("start-daemon", (event, appData) => {
   event.returnValue = dcrdPID;
 });
 
-ipcMain.on("start-wallet", (event, arg) => {
+ipcMain.on("start-wallet", (event) => {
   if (cfg.get("wallet_skip_start")) {
     logger.log("info", "skipping start of dcrwallet as requested on config");
     dcrwPID = -1;
@@ -291,7 +291,6 @@ ipcMain.on("start-wallet", (event, arg) => {
     event.returnValue = dcrwPID;
     return;
   }
-  logger.log("info", "launching dcrwallet at " + JSON.stringify(arg));
   try {
     dcrwPID = launchDCRWallet();
   } catch (e) {
