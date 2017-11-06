@@ -44,11 +44,17 @@ const TxDetails = ({ routes, router,
                    }) => {
   const isConfirmed = !!txTimestamp;
   const icon = headerIcons[txType || txDirection];
-  const title = txType ? intl.formatMessage(messages[txType]) : <div className="txdetails-header-title">{txDirection === "in" ? "" : "-"}<Balance title bold amount={txAmount}/></div>;
   const subtitle = isConfirmed && <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsToDate(txTimestamp) }}/>;
   const goBack = () => router.goBack();
   const openTxUrl = () => shell.openExternal(txUrl);
   const openBlockUrl = () => shell.openExternal(txBlockUrl);
+  const title = txType ? intl.formatMessage(messages[txType]) :
+    <div className="txdetails-header-title">
+      <span className="bold">
+        {txDirection === "in" ? "" : "-"}
+      </span>
+      <Balance title bold amount={txAmount}/>
+    </div>;
 
   return (
     <Aux>

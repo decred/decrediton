@@ -8,8 +8,8 @@ import ReceiveTab from "./components/views/TransactionsPage/ReceiveTab";
 import HistoryTab from "./components/views/TransactionsPage/HistoryTab";
 import TransactionPage from "./components/views/TransactionPage";
 import SettingsPage from "./components/views/SettingsPage";
-import SignPage from "./components/views/SecurityPage/SignMessage";
-import VerifyPage from "./components/views/SecurityPage/VerifyMessage";
+import SignTab from "./components/views/SecurityPage/SignMessage";
+import VerifyTab from "./components/views/SecurityPage/VerifyMessage";
 import PurchaseTab from "./components/views/TicketsPage/PurchaseTab";
 import MyTicketsTab from "./components/views/TicketsPage/MyTicketsTab";
 import GovernanceTab from "./components/views/TicketsPage/GovernanceTab";
@@ -42,8 +42,8 @@ export default (
     </Route>
     <Route   path="security"                    component={TabbedPage}>
       <IndexRedirect to="sign"/>
-      <Route path="sign"                        component={SignPage}/>
-      <Route path="verify"                      component={VerifyPage}/>
+      <Route path="sign"                        component={SignTab}/>
+      <Route path="verify"                      component={VerifyTab}/>
     </Route>
     <Route   path="settings"                    component={SettingsPage}      noDesc/>
     <Route   path="help"                        component={Help}/>

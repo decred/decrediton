@@ -53,18 +53,18 @@ const SendPage = ({
               {...{account}} onChange={onChangeAccount} showAccountsButton={true} />
             <div className="send-send-all-input">
               {!isSendSelf ?
-                <Tooltip tipWidth={ 100 } text={<T id="send.sendSelfTitle" m="Send funds to another account"/>}>
+                <Tooltip text={<T id="send.sendSelfTitle" m="Send funds to another account"/>}>
                   <a className="send-self-wallet-icon" onClick={onShowSendSelf}/>
                 </Tooltip> :
-                <Tooltip tipWidth={ 100 } text={<T id="send.sendOthersTitle" m="Send funds to another wallet"/>} >
+                <Tooltip text={<T id="send.sendOthersTitle" m="Send funds to another wallet"/>} >
                   <a className="send-others-wallet-icon" onClick={onShowSendOthers}/>
                 </Tooltip>
               }
               {!isSendAll ?
-                <Tooltip tipWidth={ 100 } text={<T id="send.sendAllTitle" m="Send all funds from selected account"/>}>
+                <Tooltip text={<T id="send.sendAllTitle" m="Send all funds from selected account"/>}>
                   <a className="send-all-wallet-icon" onClick={onShowSendAll}/>
                 </Tooltip> :
-                <Tooltip tipWidth={ 100 } text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds"/>}>
+                <Tooltip text={<T id="send.cancelSendAllTitle" m="Cancel sending all funds"/>}>
                   <a className="send-all-cancel-wallet-icon" onClick={onHideSendAll}/>
                 </Tooltip>
               }

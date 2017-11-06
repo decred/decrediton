@@ -3,7 +3,6 @@ import { Field, reduxForm } from "redux-form";
 import InputField from "Form/InputField";
 import ErrorField from "Form/ErrorField";
 import { validate } from "./validator";
-import { Link } from "react-router";
 import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
 
 const messages = defineMessages({
