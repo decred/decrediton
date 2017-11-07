@@ -280,6 +280,7 @@ message GetTransactionsRequest {
 	int32 minimum_recent_transactions = 5;
 
 	// TODO: limit max number of txs?
+	int32 maximum_transaction_count = 6;
 }
 message GetTransactionsResponse {
 	BlockDetails mined_transactions = 1;

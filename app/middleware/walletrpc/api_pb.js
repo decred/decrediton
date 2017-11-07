@@ -6314,7 +6314,8 @@ proto.walletrpc.GetTransactionsRequest.toObject = function(includeInstance, msg)
     startingBlockHeight: jspb.Message.getFieldWithDefault(msg, 2, 0),
     endingBlockHash: msg.getEndingBlockHash_asB64(),
     endingBlockHeight: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    minimumRecentTransactions: jspb.Message.getFieldWithDefault(msg, 5, 0)
+    minimumRecentTransactions: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    maximumTransactionCount: jspb.Message.getFieldWithDefault(msg, 6, 0)
   };
 
   if (includeInstance) {
@@ -6370,6 +6371,10 @@ proto.walletrpc.GetTransactionsRequest.deserializeBinaryFromReader = function(ms
     case 5:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setMinimumRecentTransactions(value);
+      break;
+    case 6:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setMaximumTransactionCount(value);
       break;
     default:
       reader.skipField();
@@ -6432,6 +6437,13 @@ proto.walletrpc.GetTransactionsRequest.serializeBinaryToWriter = function(messag
   if (f !== 0) {
     writer.writeInt32(
       5,
+      f
+    );
+  }
+  f = message.getMaximumTransactionCount();
+  if (f !== 0) {
+    writer.writeInt32(
+      6,
       f
     );
   }
@@ -6558,6 +6570,21 @@ proto.walletrpc.GetTransactionsRequest.prototype.getMinimumRecentTransactions = 
 /** @param {number} value */
 proto.walletrpc.GetTransactionsRequest.prototype.setMinimumRecentTransactions = function(value) {
   jspb.Message.setField(this, 5, value);
+};
+
+
+/**
+ * optional int32 maximum_transaction_count = 6;
+ * @return {number}
+ */
+proto.walletrpc.GetTransactionsRequest.prototype.getMaximumTransactionCount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
+};
+
+
+/** @param {number} value */
+proto.walletrpc.GetTransactionsRequest.prototype.setMaximumTransactionCount = function(value) {
+  jspb.Message.setField(this, 6, value);
 };
 
 

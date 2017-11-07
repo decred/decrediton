@@ -9,7 +9,7 @@ import {
   GETTICKETPRICE_ATTEMPT, GETTICKETPRICE_FAILED, GETTICKETPRICE_SUCCESS,
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
   GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED,  GETTRANSACTIONS_COMPLETE,
-  GETTRANSACTIONS_UNMINED_PROGRESS,
+  GETTRANSACTIONS_PROGRESS, GETTRANSACTIONS_UNMINED_PROGRESS,
   GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_COINBASE,
   GETTRANSACTIONS_PROGRESS_TICKET,
   GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE,
@@ -249,11 +249,11 @@ export default function grpc(state = {}, action) {
   case GETTRANSACTIONS_ATTEMPT:
     return {
       ...state,
-      regularTransactionsInfo: Array(),
+      /*regularTransactionsInfo: Array(),
       coinbaseTransactionsInfo: Array(),
       ticketTransactionsInfo: Array(),
       voteTransactionsInfo: Array(),
-      revokeTransactionsInfo: Array(),
+      revokeTransactionsInfo: Array(),*/
       getTransactionsRequestAttempt: true,
     };
   case GETTRANSACTIONS_FAILED:
@@ -265,13 +265,19 @@ export default function grpc(state = {}, action) {
   case GETTRANSACTIONS_COMPLETE:
     return {
       ...state,
-      getTransactionsRequestError: "",
-      regularTransactionsInfo: action.regularTransactionsInfo,
+      /*regularTransactionsInfo: action.regularTransactionsInfo,
       coinbaseTransactionsInfo: action.coinbaseTransactionsInfo,
       ticketTransactionsInfo: action.ticketTransactionsInfo,
       voteTransactionsInfo: action.voteTransactionsInfo,
-      revokeTransactionsInfo: action.revokeTransactionsInfo,
+      revokeTransactionsInfo: action.revokeTransactionsInfo,*/
+      transactions: action.mined,
+      getTransactionsRequestError: "",
       getTransactionsRequestAttempt: false,
+    };
+  case GETTRANSACTIONS_PROGRESS:
+    return {
+      ...state,
+      transactions: action.mined.slice()
     };
   case GETTRANSACTIONS_PROGRESS_REGULAR:
     return {

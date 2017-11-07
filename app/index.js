@@ -159,6 +159,10 @@ var initialState = {
     currentPage: 0,
     transactionDetails: null,
 
+    // GetTransactions
+    transactions: [], // visible transactions
+    transactionsListDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
+
     // GetTransactionInfo
     regularTransactionsInfo: Array(),
     coinbaseTransactionsInfo: Array(),

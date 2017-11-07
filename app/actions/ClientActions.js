@@ -21,7 +21,8 @@ function getWalletServiceSuccess(walletService) {
   return (dispatch, getState) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
     setTimeout(() => { dispatch(getAccountsAttempt()); }, 10);
-    setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 20);
+    //setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 20);
+    setTimeout(() => { dispatch(getTransactions()); }, 20);
     setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 20);
     setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNextAddressAttempt(0)); }, 1000);
@@ -269,6 +270,7 @@ export const getTicketsInfoAttempt = () => (dispatch, getState) => {
 
 export const GETTRANSACTIONS_ATTEMPT = "GETTRANSACTIONS_ATTEMPT";
 export const GETTRANSACTIONS_FAILED = "GETTRANSACTIONS_FAILED";
+export const GETTRANSACTIONS_PROGRESS = "GETTRANSACTIONS_PROGRESS";
 export const GETTRANSACTIONS_PROGRESS_REGULAR = "GETTRANSACTIONS_PROGRESS_REGULAR";
 export const GETTRANSACTIONS_PROGRESS_COINBASE = "GETTRANSACTIONS_PROGRESS_COINBASE";
 export const GETTRANSACTIONS_PROGRESS_TICKET = "GETTRANSACTIONS_PROGRESS_TICKET";
@@ -341,6 +343,63 @@ export function getTransactionInfoAttempt() {
       //console.log('GetTx status:', status);
     });
     */
+    getTx.on("error", function (error) {
+      console.error(error + " Please try again");
+    });
+  };
+}
+
+export function getTransactions() {
+  return (dispatch, getState) => {
+    const { getAccountsResponse, getTransactionsRequestAttempt,
+      transactionsListDirection } = getState().grpc;
+    if (getTransactionsRequestAttempt) return;
+
+    // Check to make sure getAccountsResponse (which has current block height) is available
+    if (getAccountsResponse === null) {
+      // Wait a little then re-dispatch this call since we have no starting height yet
+      setTimeout(() => { dispatch(getTransactions()); }, 1000);
+      return;
+    }
+    dispatch({ type: GETTRANSACTIONS_ATTEMPT });
+
+    var endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
+    var startRequestHeight = 0;
+    if ( transactionsListDirection === "desc" ) {
+      [endRequestHeight, startRequestHeight] = [startRequestHeight, endRequestHeight];
+    }
+    const maximumTransactionCount = 20;
+
+    var request = new GetTransactionsRequest();
+    request.setStartingBlockHeight(startRequestHeight);
+    request.setEndingBlockHeight(endRequestHeight);
+    request.setMaximumTransactionCount(maximumTransactionCount);
+
+    const { walletService } = getState().grpc;
+    var getTx = walletService.getTransactions(request);
+    var mined = [];
+    getTx.on("data", function (response) {
+
+      for (var i = 0; i < response.getMinedTransactions().getTransactionsList().length; i++) {
+        var newHeight = response.getMinedTransactions().getHeight();
+        var tx = {
+          timestamp: response.getMinedTransactions().getTimestamp(),
+          tx: response.getMinedTransactions().getTransactionsList()[i],
+          height: newHeight,
+          index: i,
+          hash: response.getMinedTransactions().getTransactionsList()[i].getHash(),
+          blockHash: response.getMinedTransactions().getHash(),
+          type: response.getMinedTransactions().getTransactionsList()[i].getTransactionType(),
+        };
+        mined.push(tx);
+      }
+
+      // TODO: unmined
+      dispatch({ mined, type: GETTRANSACTIONS_PROGRESS});
+    });
+    getTx.on("end", function () {
+      dispatch({ mined, type: GETTRANSACTIONS_COMPLETE });
+    });
     getTx.on("error", function (error) {
       console.error(error + " Please try again");
     });
