@@ -37,7 +37,7 @@ const messages = defineMessages({
   },
   PURCHASETICKETS_SUCCESS: {
     id: "tickets.purchaseTicketsHeader",
-    defaultMessage: "You bought {numTickets} tickets"
+    defaultMessage: "You bought {numTickets, plural, one { # ticket } other { # tickets }}"
   },
   PURCHASETICKETS_FAILED: {
     id: "tickets.errors.purchaseTicketsFailed",
