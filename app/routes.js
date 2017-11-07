@@ -25,8 +25,6 @@ import Help from "./components/views/Help";
 import ErrorScreen from "./components/ErrorScreen";
 import InvalidRPCVersion from "./components/views/InvalidRPCVersion";
 import ShutdownAppPage from "./components/views/ShutdownAppPage";
-import MyTicketsPage from "./components/views/MyTicketsPage";
-import TicketListPage from "./components/views/MyTicketsPage/TicketListPage";
 
 export default (
   <Route path="/" component={App}>
@@ -61,7 +59,5 @@ export default (
     <Route path="/help" component={Help} />
     <Route path="/invalidRPCVersion" component={InvalidRPCVersion} />
     <Route path="/shutdown" component={ShutdownAppPage} />
-    <Route path="/tickets" component={MyTicketsPage} />
-    <Route path="/tickets/:status" component={TicketListPage} />
   </Route>
 );
