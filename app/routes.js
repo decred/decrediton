@@ -24,31 +24,31 @@ import InvalidRPCVersion from "./components/views/InvalidRPCVersion";
 export default (
   <Route     path="/"                           component={App}>
     <IndexRoute                                 component={GetStartedPage}/>
-    <Route   path="transaction/history/:txHash" component={TransactionPage}/>
-    <Route   path="home"                        component={HomePage}          noDesc noIcon/>
-    <Route   path="accounts"                    component={AccountsPage}/>
+    <Route   path="transaction/history/:txHash" component={TransactionPage}   desc/>
+    <Route   path="home"                        component={HomePage}          noIcon/>
+    <Route   path="accounts"                    component={AccountsPage}      desc/>
     <Route   path="transactions"                component={TabbedPage}        tabDesc>
       <IndexRedirect to="send"/>
       <Route path="send"                        component={SendTab}           testNet/>
       <Route path="receive"                     component={ReceiveTab}/>
       <Route path="history"                     component={HistoryTab}        balance/>
     </Route>
-    <Route   path="tickets"                     component={TabbedPage}        noDesc>
+    <Route   path="tickets"                     component={TabbedPage}        desc ticketprice>
       <IndexRedirect to="purchase"/>
       <Route path="purchase"                    component={PurchaseTab}/>
       <Route path="mytickets"                   component={MyTicketsTab}/>
       <Route path="governance"                  component={GovernanceTab}/>
       <Route path="statistics"                  component={StatisticsTab}/>
     </Route>
-    <Route   path="security"                    component={TabbedPage}>
+    <Route   path="security"                    component={TabbedPage}        desc>
       <IndexRedirect to="sign"/>
       <Route path="sign"                        component={SignTab}/>
       <Route path="verify"                      component={VerifyTab}/>
     </Route>
-    <Route   path="settings"                    component={SettingsPage}      noDesc/>
-    <Route   path="help"                        component={Help}/>
-    <Route   path="walletError"                 component={WalletError}       noDesc noIcon/>
-    <Route   path="error"                       component={ErrorScreen}       noDesc noIcon/>
-    <Route   path="invalidRPCVersion"           component={InvalidRPCVersion} noDesc noIcon/>
+    <Route   path="settings"                    component={SettingsPage}/>
+    <Route   path="help"                        component={Help}              desc/>
+    <Route   path="walletError"                 component={WalletError}       noIcon/>
+    <Route   path="error"                       component={ErrorScreen}       noIcon/>
+    <Route   path="invalidRPCVersion"           component={InvalidRPCVersion} noIcon/>
   </Route>
 );

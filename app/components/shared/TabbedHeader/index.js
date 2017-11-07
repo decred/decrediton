@@ -9,15 +9,15 @@ import Icon from "../Icon";
 import Tabs from "./Tabs";
 import "style/Header.less";
 
-const TabbedHeader = ({ intl, children, routes, totalBalance, isTestNet, icon, title, subtitle }) => {
-  const { tabDesc, noDesc, noIcon } = routes[1];
+const TabbedHeader = ({ intl, children, routes, totalBalance, ticketPrice, isTestNet, icon, title, subtitle }) => {
+  const { tabDesc, desc, noIcon, ticketprice, balance } = routes[1] || routes[2];
   const page = getPage(routes);
   const tabs = getTabs(routes);
   const titleText = [page, "title"].join(".");
   let description = [page, "description"].join(".");
   if (tabDesc) description = [description, getTab(routes)].join(".");
   if (routes[2] && routes[2].testNet) description = [description, isTestNet ? "testnet" : "mainnet"].join(".");
-  description = !noDesc && typeof subtitle === "undefined" && intl.formatMessage(messages[description]);
+  description = (desc || tabDesc) && typeof subtitle === "undefined" && intl.formatMessage(messages[description]);
 
   return (
     <div className="header">
@@ -36,10 +36,8 @@ const TabbedHeader = ({ intl, children, routes, totalBalance, isTestNet, icon, t
 
       <div className="tabbedheader-content">
         <Description>{ subtitle || description }</Description>
-        { routes[2] && routes[2].balance &&
-        <div className="small-balance">
-          <Balance flat amount={ totalBalance }/>
-        </div> }
+        { balance ? <div className="small-balance"><Balance flat amount={ totalBalance }/></div> :
+        ticketprice && <div className="small-balance"><Balance flat amount={ ticketPrice }/></div> }
         { children }
       </div>
 
