@@ -257,6 +257,11 @@ const installExtensions = async () => {
 const { ipcMain } = require("electron");
 
 ipcMain.on("start-daemon", (event, appData) => {
+  if (dcrdPID && !daemonIsAdvanced) {
+    logger.log("info", "Skipping restart of daemon as it is already running");
+    event.returnValue = dcrdPID;
+    return;
+  }
   if(appData){
     logger.log("info", "launching dcrd with different appdata directory");
   }
