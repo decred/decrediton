@@ -251,14 +251,10 @@ ipcMain.on("start-daemon", (event, appData) => {
   if(appData){
     logger.log("info", "launching dcrd with different appdata directory");
   }
-  if (dcrdPID !== -1) {
-    logger.log("info", "dcrd already started, closing it to start again");
-    try{
-      closeDCRD();
-    } catch (e) {
-      logger.log("error", "error stopping dcrd: " + e);
-    }
+  if (dcrdPID) {
     logger.log("info", "dcrd already started " + dcrdPID);
+    event.returnValue = dcrdPID;
+    return;
   }
   try {
     dcrdPID = launchDCRD(appData);
@@ -274,7 +270,7 @@ ipcMain.on("stop-daemon", (event) => {
     event.returnValue = true;
     return;
   }
-  logger.log("info", "launching dcrd");
+  logger.log("info", "stopping dcrd");
   try {
     closeDCRD();
     daemonReady = false;
@@ -292,17 +288,9 @@ ipcMain.on("start-wallet", (event, arg) => {
     return;
   }
   if (dcrwPID) {
-    if(!daemonIsAdvanced){
-      logger.log("info", "dcrwallet already started " + dcrwPID);
-      event.returnValue = dcrwPID;
-      return;
-    }
-    logger.log("info", "dcrwallet already started, closing it to start again");
-    try{
-      closeDCRW();
-    } catch (e) {
-      logger.log("error", "error stopping dcrw: " + e);
-    }
+    logger.log("info", "dcrwallet already started " + dcrwPID);
+    event.returnValue = dcrwPID;
+    return;
   }
   logger.log("info", "launching dcrwallet at " + JSON.stringify(arg));
   try {
