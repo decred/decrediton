@@ -1,4 +1,5 @@
 import { messageBanner } from "connectors";
+import { FormattedMessage as T } from "react-intl";
 import Message from "./Message";
 
 const MessageBanner = ({

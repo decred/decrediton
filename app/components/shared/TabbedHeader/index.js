@@ -21,7 +21,7 @@ const TabbedHeader = ({ intl, children, routes, totalBalance, isTestNet, icon, t
 
   return (
     <div className="header">
-      <div className="header-top">
+      <div className="tabbedheader-top">
         <MessageBanner/>
       </div>
 

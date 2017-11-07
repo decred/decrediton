@@ -16,7 +16,7 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large, flat, t
           <FormattedNumber value={ head } maximumFractionDigits={ 2 } minimumFractionDigits={ 2 }/>
         </span>
         <span className={[secondary, bold ? "bold" : null].join(" ") }>
-          { tail + " "}
+          { tail + " " }
         </span>
         <span className={ secondary }>
           DCR
@@ -27,7 +27,7 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large, flat, t
     return (
       <span className="mono" {...{ onClick }}>
         <span className={[secondary, bold ? "bold" : null].join(" ") }>
-          { amount + " "}
+          { amount + " " }
         </span>
         <span className={ secondary }>
           DCR
