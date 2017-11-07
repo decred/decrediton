@@ -14,27 +14,31 @@ const fade = { atEnter: { opacity: 0 }, atActive: { opacity: 1 }, atLeave: { opa
 
 const wrapperComponent = props => <div className="page-view" { ...props } />;
 
-const App = ({ routes, children, locale }) => {
-  const pathname = getPage(routes);
-  return (
-    <MuiThemeProvider muiTheme={MUItheme}>
-      <IntlProvider
-        locale={locale.language}
-        messages={locale.messages}
-        formats={locale.formats}
-        defaultFormats={defaultFormats}
-        key={locale.key}>
-        <div className="page-body">
-          <SideBar />
-          <Snackbar />
-          <RouteTransition className="page-container" opts={ theme("springs.page") } {...{ wrapperComponent, pathname, ...fade }}>
-            { children }
-          </RouteTransition>
-        </div>
-      </IntlProvider>
-    </MuiThemeProvider>
-  );
-};
+class App extends React.Component {
+  constructor(props) { super(props); }
+  render () {
+    const { locale, routes, children } = this.props;
+    const pathname = getPage(routes);
+    return (
+      <MuiThemeProvider muiTheme={MUItheme}>
+        <IntlProvider
+          locale={locale.language}
+          messages={locale.messages}
+          formats={locale.formats}
+          defaultFormats={defaultFormats}
+          key={locale.key}>
+          <div className="page-body">
+            <SideBar />
+            <Snackbar />
+            <RouteTransition className="page-container" opts={ theme("springs.page") } {...{ wrapperComponent, pathname, ...fade }}>
+              { children }
+            </RouteTransition>
+          </div>
+        </IntlProvider>
+      </MuiThemeProvider>
+    );
+  }
+}
 
 App.propTypes = {
   children: PropTypes.element.isRequired,
