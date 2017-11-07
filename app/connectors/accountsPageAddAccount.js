@@ -6,4 +6,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onGetNextAccountAttempt: ca.getNextAccountAttempt
 }, dispatch);
 
-export default connect(mapDispatchToProps);
+export default connect(null, mapDispatchToProps);
