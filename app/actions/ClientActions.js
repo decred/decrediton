@@ -219,7 +219,10 @@ export function getPingAttempt() {
       function (error) {
         if (error) {
           dispatch({ error, type: GETPING_FAILED });
-          setTimeout(() => { dispatch(pushHistory("/walletError")); }, 1000);
+          const { shutdownRequested } = getState().daemon;
+          if (!shutdownRequested) {
+            setTimeout(() => { dispatch(pushHistory("/walletError")); }, 1000);
+          }
         } else {
           setTimeout(() => { dispatch(getPingAttempt()); }, 10000);
         }
