@@ -13,11 +13,51 @@ const rootPath = ({ pathname }) => pathname.split("/")[1];
 
 const wrapperComponent = props => <div className="page-view" { ...props } />;
 
+@autobind
 class App extends React.Component {
   static propTypes = {
     children: PropTypes.element.isRequired,
     locale: PropTypes.object.isRequired,
+    window: PropTypes.object.isRequired,
+    shutdownApp: PropTypes.func.isRequired,
+    shutdownRequested: PropTypes.bool.isRequired,
+    daemonStopped: PropTypes.bool.isRequired,
   };
+
+  constructor (props) {
+    super(props);
+    const { window } = props;
+    this.windowUnloadHandler = window.addEventListener("beforeunload", this.beforeWindowUnload);
+    this.refreshing = false;
+
+    props.listenForAppReloadRequest(this.onReloadRequested);
+  }
+
+  componentWillUnmount () {
+    const { window } = this.props;
+    window.removeEventListener(this.windowUnloadHandler);
+  }
+
+  beforeWindowUnload(event) {
+    if (this.refreshing) {
+      return;
+    }
+
+    const { shutdownRequested, daemonStopped } = this.props;
+    if (!daemonStopped) {
+      event.preventDefault();
+      event.returnValue = false;
+    }
+
+    if (!shutdownRequested) {
+      this.props.shutdownApp();
+    }
+  }
+
+  onReloadRequested(event) {
+    this.refreshing = true;
+    event.sender.send("app-reload-ui");
+  }
 
   render() {
     let locale = this.props.locale;

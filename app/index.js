@@ -70,6 +70,7 @@ var initialState = {
   daemon: {
     daemonStarted: false,
     daemonSynced: false,
+    daemonStopped: false,
     walletReady: false,
     currentBlockCount: null,
     timeLeftEstimate: null,
@@ -78,6 +79,7 @@ var initialState = {
     daemonAdvanced: cfg.get("daemon_start_advanced"),
     credentials: null,
     appData: null,
+    shutdownRequested: false,
   },
   version: {
     // RequiredVersion

@@ -15,10 +15,8 @@ let mainWindow = null;
 let versionWin = null;
 let grpcVersions = {requiredVersion: null, walletVersion: null};
 let debug = false;
-let daemonIsAdvanced = false;
 let dcrdPID;
 let dcrwPID;
-let daemonReady = false;
 let currentBlockCount;
 
 // Not going to make incorrect options fatal since running in dev mode has
@@ -91,7 +89,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 if (process.env.NODE_ENV === "development") {
-  require("electron-debug")(); // eslint-disable-line global-require
   const path = require('path'); // eslint-disable-line
   const p = path.join(__dirname, '..', 'app', 'node_modules'); // eslint-disable-line
   require('module').globalPaths.push(p); // eslint-disable-line
@@ -180,6 +177,8 @@ if (!locale) {
   locale = locales.find(value => value.name === "en");
 }
 
+let daemonIsAdvanced = cfg.get("daemon_start_advanced");
+
 function closeDCRW() {
   if (cfg.get("wallet_skip_start")) {
     return;
@@ -218,15 +217,25 @@ function cleanShutdown() {
   // are still running.
   setTimeout(function () { closeClis(); }, cliShutDownPause * 1000);
   logger.log("info", "Closing decrediton.");
-  setTimeout(function () { app.quit(); }, shutDownPause * 1000);
-}
 
-app.on("window-all-closed", () => {
-  // If we could reopen after closing all windows on OSX we might want
-  // to on do this only if !== 'darwin' but since we don't, better to
-  // have the same behavior on all platforms.
-  cleanShutdown();
-});
+  let shutdownTimer = setInterval(function(){
+    const stillRunning = (require("is-running")(dcrdPID) && os.platform() != "win32");
+
+    if (cfg.get("daemon_skip_start") || !stillRunning) {
+      logger.log("info", "Final shutdown pause. Quitting app.");
+      clearInterval(shutdownTimer);
+      if (mainWindow) {
+        mainWindow.webContents.send("daemon-stopped");
+        setTimeout(() => {mainWindow.close(); app.quit();}, 1000);
+      } else {
+        app.quit();
+      }
+      return;
+    }
+    logger.log("info", "Daemon still running in final shutdown pause. Waiting.");
+
+  }, shutDownPause*1000);
+}
 
 const installExtensions = async () => {
   if (process.env.NODE_ENV === "development") {
@@ -248,6 +257,11 @@ const installExtensions = async () => {
 const { ipcMain } = require("electron");
 
 ipcMain.on("start-daemon", (event, appData) => {
+  if (dcrdPID && !daemonIsAdvanced) {
+    logger.log("info", "Skipping restart of daemon as it is already running");
+    event.returnValue = dcrdPID;
+    return;
+  }
   if(appData){
     logger.log("info", "launching dcrd with different appdata directory");
   }
@@ -264,23 +278,7 @@ ipcMain.on("start-daemon", (event, appData) => {
   event.returnValue = dcrdPID;
 });
 
-ipcMain.on("stop-daemon", (event) => {
-  if (!dcrdPID) {
-    logger.log("info", "dcrd already stopped " + dcrwPID);
-    event.returnValue = true;
-    return;
-  }
-  logger.log("info", "stopping dcrd");
-  try {
-    closeDCRD();
-    daemonReady = false;
-  } catch (e) {
-    logger.log("error", "error stopping dcrd: " + e);
-  }
-  event.returnValue = !daemonReady;
-});
-
-ipcMain.on("start-wallet", (event, arg) => {
+ipcMain.on("start-wallet", (event) => {
   if (cfg.get("wallet_skip_start")) {
     logger.log("info", "skipping start of dcrwallet as requested on config");
     dcrwPID = -1;
@@ -292,11 +290,10 @@ ipcMain.on("start-wallet", (event, arg) => {
     event.returnValue = dcrwPID;
     return;
   }
-  logger.log("info", "launching dcrwallet at " + JSON.stringify(arg));
   try {
     dcrwPID = launchDCRWallet();
   } catch (e) {
-    logger.log("error", "error launching dcrd: " + e);
+    logger.log("error", "error launching dcrwallet: " + e);
   }
   event.returnValue = dcrwPID;
 });
@@ -352,13 +349,20 @@ ipcMain.on("check-daemon", (event, rpcCreds, appData) => {
   dcrctl.stdout.on("data", (data) => {
     currentBlockCount = data.toString();
     logger.log("info", data.toString());
-    daemonReady = true;
     event.returnValue = currentBlockCount;
   });
   dcrctl.stderr.on("data", (data) => {
     logger.log("error", data.toString());
     event.returnValue = 0;
   });
+});
+
+ipcMain.on("clean-shutdown", () => {
+  cleanShutdown();
+});
+
+ipcMain.on("app-reload-ui", () => {
+  mainWindow.reload();
 });
 
 ipcMain.on("grpc-versions-determined", (event, versions) => {
@@ -397,7 +401,7 @@ const launchDCRD = (appdata) => {
     }
   }
 
-  logger.log("info", `Starting with dcrd ${args}`);
+  logger.log("info", `Starting dcrd with ${args}`);
 
   var dcrd = spawn(dcrdExe, args, {
     detached: os.platform() == "win32",
@@ -561,18 +565,31 @@ const readExesVersion = () => {
   return versions;
 };
 
+let primaryInstance = !app.makeSingleInstance(function () {
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore();
+    mainWindow.focus();
+  }
+});
+
+if (!primaryInstance) {
+  logger.log("error", "Another instance of decrediton is already running");
+}
+
 app.on("ready", async () => {
-  await installExtensions();
-  // Write application config files.
-  await writeCfgs(createDcrdConf, createDcrwalletConf, createDcrctlConf);
 
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 1178,
-    height: 790,
-  });
+  let windowOpts = {show: false, width: 1178, height: 790, page: "app.html"};
+  if (!primaryInstance) {
+    windowOpts = {show: true, width: 575, height: 275, autoHideMenuBar: true,
+      resizable: false, page: "staticPages/secondInstance.html"};
+  } else {
+    await installExtensions();
+    // Write application config files.
+    await writeCfgs(createDcrdConf, createDcrwalletConf, createDcrctlConf);
+  }
 
-  mainWindow.loadURL(`file://${__dirname}/app.html`);
+  mainWindow = new BrowserWindow(windowOpts);
+  mainWindow.loadURL(`file://${__dirname}/${windowOpts.page}`);
 
   mainWindow.webContents.on("did-finish-load", () => {
     mainWindow.show();
@@ -583,7 +600,16 @@ app.on("ready", async () => {
     if (versionWin !== null) {
       versionWin.close();
     }
+    if (!primaryInstance) {
+      app.quit();
+      setTimeout(() => { app.quit(); }, 2000);
+    }
   });
+
+  if (!primaryInstance) {
+    logger.log("error", "stopping ready");
+    return;
+  }
 
   if (process.env.NODE_ENV === "development") {
     mainWindow.openDevTools();
@@ -598,6 +624,8 @@ app.on("ready", async () => {
       }]).popup(mainWindow);
     });
   }
+
+  if (!primaryInstance) return;
 
   if (process.platform === "darwin") {
     template = [{
@@ -704,7 +732,13 @@ app.on("ready", async () => {
         accelerator: "F11",
         click() {
           mainWindow.setFullScreen(!mainWindow.isFullScreen());
-        }
+        },
+      }, {
+        label: locale.messages["appMenu.reloadUI"],
+        accelerator: "F5",
+        click() {
+          mainWindow.webContents.send("app-reload-requested", mainWindow);
+        },
       }]
     }];
   }
@@ -760,7 +794,7 @@ app.on("ready", async () => {
             });
 
             // Load a remote URL
-            versionWin.loadURL(`file://${__dirname}/version/version.html`);
+            versionWin.loadURL(`file://${__dirname}/staticPages/version.html`);
 
             versionWin.once("ready-to-show", () => {
               versionWin.webContents.send("exes-versions", readExesVersion());

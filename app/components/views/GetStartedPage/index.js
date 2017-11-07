@@ -25,7 +25,7 @@ class GetStartedPage extends React.Component {
   }
 
   componentWillUnmount() {
-    if (!this.props.versionInvalid) {
+    if (!this.props.versionInvalid && !this.props.shutdownRequested) {
       this.props.showSidebarMenu();
     }
   }
@@ -84,6 +84,8 @@ GetStartedPage.propTypes = {
   showSidebar: PropTypes.func.isRequired,
   showSidebarMenu: PropTypes.func.isRequired,
   hideSidebarMenu: PropTypes.func.isRequired,
+  shutdownRequested: PropTypes.bool.isRequired,
+  versionInvalid: PropTypes.bool.isRequired,
 };
 
 export default walletStartup(GetStartedPage);

@@ -1,16 +1,18 @@
 import {versionCheckAction} from "./WalletLoaderActions";
 import * as daemon from "../wallet/daemon";
+import { push as pushHistory } from "react-router-redux";
+import { ipcRenderer } from "electron";
 
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
 export const DAEMONSTARTED_REMOTE = "DAEMONSTARTED_REMOTE";
 export const DAEMONSTARTED_ERROR = "DAEMONSTARTED_ERROR";
 export const DAEMONSTOPPED = "DAEMONSTOPPED";
-export const DAEMONSTOPPED_ERROR = "DAEMONSTOPPED_ERROR";
 export const DAEMONSYNCING_START = "DAEMONSYNCING_START";
 export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
+export const SHUTDOWN_REQUESTED = "SHUTDOWN_REQUESTED";
 
 export const startDaemon = (rpcCreds, appData) => (dispatch) => {
   if (rpcCreds) {
@@ -33,10 +35,16 @@ export const startDaemon = (rpcCreds, appData) => (dispatch) => {
   }
 };
 
-export const stopDaemon = () => (dispatch) => daemon
-  .stopDaemon()
-  .then(() => dispatch({type: DAEMONSTOPPED}))
-  .catch(() => dispatch({type: DAEMONSTOPPED_ERROR}));
+export const shutdownApp = () => (dispatch) => {
+  ipcRenderer.on("daemon-stopped", () => {
+    dispatch({type: DAEMONSTOPPED});
+  });
+  dispatch({type: SHUTDOWN_REQUESTED});
+  dispatch(pushHistory("/shutdown"));
+};
+
+export const cleanShutdown = () => () => daemon
+  .cleanShutdown();
 
 export const startWallet = () => (dispatch) => {
   daemon.startWallet()

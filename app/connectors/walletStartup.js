@@ -22,7 +22,8 @@ const mapStateToProps = selectorMap({
   isPrepared: sel.isPrepared,
   network: sel.network,
   versionInvalid: sel.versionInvalid,
-  isAdvancedDaemon: sel.isAdvancedDaemon
+  isAdvancedDaemon: sel.isAdvancedDaemon,
+  shutdownRequested: sel.shutdownRequested,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
