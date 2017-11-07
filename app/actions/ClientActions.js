@@ -33,7 +33,6 @@ function getWalletServiceSuccess(walletService) {
     setTimeout(() => { dispatch(getNetworkAttempt()); }, 1000);
     setTimeout(() => { dispatch(transactionNtfnsStart()); }, 1000);
     setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
-    setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
     setTimeout(() => { dispatch(getDecodeMessageServiceAttempt()); }, 1000);
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
