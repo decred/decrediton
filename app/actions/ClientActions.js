@@ -357,20 +357,14 @@ export function getTicketsInfoAttempt() {
     var getTx = walletService.getTickets(request);
     var tickets = Array();
     getTx.on("data", function (response) {
-      console.log(response);
       var newTicket = {
         status: TicketTypes.get(response.getTicket().getTicketStatus()),
         ticket: response.getTicket().getTicket(),
         spender: response.getTicket().getSpender(),
       };
-      /*console.log(
-      ticketStatus,
-      reverseHash(Buffer.from(response.getTicket().getTicket().getHash()).toString("hex")),
-      reverseHash(Buffer.from(response.getTicket().getSpender().getHash()).toString("hex"))); */
       tickets.unshift(newTicket);
     });
     getTx.on("end", function () {
-      console.log(tickets.length);
       setTimeout(() => { dispatch({ tickets: tickets, type: GETTICKETS_COMPLETE });}, 1000);
     });
     getTx.on("error", function (error) {

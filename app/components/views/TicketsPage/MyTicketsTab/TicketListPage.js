@@ -35,7 +35,6 @@ class TicketListPage extends Component{/*  */
     } else {
       this.setState({expandedTicket: ticket});
     }
-    console.log("expanded", ticket); // FIXME: remove. just to debug available info.
   }
 
   onPageChanged(pageNumber) {
