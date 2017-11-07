@@ -241,7 +241,7 @@ const transactionNormalizer = createSelector(
 export const transactionsNormalizer = createSelector([transactionNormalizer], map);
 
 const regularTransactions = createSelector(
-  [transactionsNormalizer, get(["grpc", "regularTransactionsInfo"])], apply
+  [transactionsNormalizer, get(["grpc", "transactions"])], apply
 );
 
 const ticketTransactions = createSelector(

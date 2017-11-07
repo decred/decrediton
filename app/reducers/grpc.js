@@ -10,6 +10,7 @@ import {
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
   GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED,  GETTRANSACTIONS_COMPLETE,
   GETTRANSACTIONS_PROGRESS, GETTRANSACTIONS_UNMINED_PROGRESS,
+  TRANSACTIONS_FILTERED,
   GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_COINBASE,
   GETTRANSACTIONS_PROGRESS_TICKET,
   GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE,
@@ -270,9 +271,14 @@ export default function grpc(state = {}, action) {
       ticketTransactionsInfo: action.ticketTransactionsInfo,
       voteTransactionsInfo: action.voteTransactionsInfo,
       revokeTransactionsInfo: action.revokeTransactionsInfo,*/
-      transactions: action.mined,
+      transactions: action.transactions,
+      noMoreTransactions: action.noMoreTransactions,
       getTransactionsRequestError: "",
       getTransactionsRequestAttempt: false,
+    };
+  case TRANSACTIONS_FILTERED:
+    return {
+      filteredTransactions: action.filteredTransactions
     };
   case GETTRANSACTIONS_PROGRESS:
     return {

@@ -160,8 +160,11 @@ var initialState = {
     transactionDetails: null,
 
     // GetTransactions
-    transactions: [], // visible transactions
+    transactions: [], // all transactions obtained
     transactionsListDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
+    maximumTransactionCount: 40,
+    noMoreTransactions: true,
+    filteredTransactions: [],
 
     // GetTransactionInfo
     regularTransactionsInfo: Array(),

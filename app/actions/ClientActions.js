@@ -278,6 +278,7 @@ export const GETTRANSACTIONS_PROGRESS_VOTE = "GETTRANSACTIONS_PROGRESS_VOTE";
 export const GETTRANSACTIONS_PROGRESS_REVOKE = "GETTRANSACTIONS_PROGRESS_REVOKE";
 export const GETTRANSACTIONS_UNMINED_PROGRESS = "GETTRANSACTIONS_UNMINED_PROGRESS";
 export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
+export const TRANSACTIONS_FILTERED = "TRANSACTIONS_FILTERED";
 
 export function getTransactionInfoAttempt() {
   return (dispatch, getState) => {
@@ -349,10 +350,24 @@ export function getTransactionInfoAttempt() {
   };
 }
 
+function filterTransactions() {
+  return (dispatch, getState) => {
+    const { transactions, maximumTransactionCount, noMoreTransactions } = getState().grpc;
+
+    const filteredTransactions = transactions.slice(0, maximumTransactionCount);
+    if ( (transactions.length >= maximumTransactionCount) || noMoreTransactions )   {
+      dispatch({filteredTransactions, noMoreTransactions, type: TRANSACTIONS_FILTERED});
+    } else {
+      dispatch(getTransactions());
+    }
+  };
+}
+
 export function getTransactions() {
+
   return (dispatch, getState) => {
     const { getAccountsResponse, getTransactionsRequestAttempt,
-      transactionsListDirection } = getState().grpc;
+      transactionsListDirection, maximumTransactionCount, transactions } = getState().grpc;
     if (getTransactionsRequestAttempt) return;
 
     // Check to make sure getAccountsResponse (which has current block height) is available
@@ -363,23 +378,26 @@ export function getTransactions() {
     }
     dispatch({ type: GETTRANSACTIONS_ATTEMPT });
 
-    var endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
-    var startRequestHeight = 0;
+    var startRequestHeight, endRequestHeight;
     if ( transactionsListDirection === "desc" ) {
-      [endRequestHeight, startRequestHeight] = [startRequestHeight, endRequestHeight];
+      startRequestHeight = transactions.length ? transactions[transactions.length-1].height -1 : getAccountsResponse.getCurrentBlockHeight();
+      endRequestHeight = 1;
+    } else {
+      startRequestHeight = transactions.length ? transactions[transactions.length-1].height +1 : 1;
+      endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
     }
-    const maximumTransactionCount = 20;
+
+    const pageCount = 20; // TODO == maximumTransactionCount
 
     var request = new GetTransactionsRequest();
     request.setStartingBlockHeight(startRequestHeight);
     request.setEndingBlockHeight(endRequestHeight);
-    request.setMaximumTransactionCount(maximumTransactionCount);
+    request.setMaximumTransactionCount(pageCount);
 
     const { walletService } = getState().grpc;
     var getTx = walletService.getTransactions(request);
-    var mined = [];
+    var found = [];
     getTx.on("data", function (response) {
-
       for (var i = 0; i < response.getMinedTransactions().getTransactionsList().length; i++) {
         var newHeight = response.getMinedTransactions().getHeight();
         var tx = {
@@ -391,14 +409,17 @@ export function getTransactions() {
           blockHash: response.getMinedTransactions().getHash(),
           type: response.getMinedTransactions().getTransactionsList()[i].getTransactionType(),
         };
-        mined.push(tx);
+        found.push(tx);
       }
 
       // TODO: unmined
-      dispatch({ mined, type: GETTRANSACTIONS_PROGRESS});
+      //dispatch({ mined, type: GETTRANSACTIONS_PROGRESS});
     });
     getTx.on("end", function () {
-      dispatch({ mined, type: GETTRANSACTIONS_COMPLETE });
+      const noMoreTransactions = found.length === 0;
+      const updated = [...transactions, ...found];
+      dispatch({ transactions: updated, noMoreTransactions, type: GETTRANSACTIONS_COMPLETE});
+      dispatch(filterTransactions());
     });
     getTx.on("error", function (error) {
       console.error(error + " Please try again");
