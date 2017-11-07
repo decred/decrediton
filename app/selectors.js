@@ -317,10 +317,8 @@ const ticketNormalizer = createSelector(
       // ticket tx fee is the fee for the transaction where the ticket was bought
       const ticketTxFee = ticketTx.getFee();
 
-      // missing: split tx fee
-
       // ticket change is anything returned to the wallet on ticket purchase.
-      // (don't know if it is currently possible to have change due to split transactions)
+      // double check after changes in splitFee flag (dcrwallet #933)
       const ticketChange = ticketTx.getCreditsList().slice(1).reduce((a, v) => a+v.getAmount(), 0);
 
       // ticket investment is the full amount paid by the wallet

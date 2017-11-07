@@ -36,7 +36,7 @@ const TicketInfoCard = ({ ticket, onClick, expanded }) => {
 
   let timeToLeaveTipText;
   if (ticket.leaveTimestamp) {
-    const days = Math.ceil((ticket.leaveTimestamp - ticket.enterTimestamp) / 86400);
+    const days = Math.ceil((ticket.leaveTimestamp - ticket.enterTimestamp) / (24 * 60 * 60));
     timeToLeaveTipText = <T id="ticket.daysToLeave"
       m="~ {days, plural, one {# day} other {# days}} from buying until {status}"
       values={{days, status: statusTxt[ticket.status]}} />;
