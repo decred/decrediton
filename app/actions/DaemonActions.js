@@ -2,6 +2,7 @@ import {versionCheckAction} from "./WalletLoaderActions";
 import * as daemon from "../wallet/daemon";
 import { push as pushHistory } from "react-router-redux";
 import { ipcRenderer } from "electron";
+import {setMustOpenForm} from "config";
 
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
@@ -70,6 +71,7 @@ export const syncDaemon = () =>
         .then(updateCurrentBlockCount => {
           if (updateCurrentBlockCount >= neededBlocks) {
             dispatch({type: DAEMONSYNCED});
+            setMustOpenForm(false);
             dispatch(startWallet());
             return;
           } else if (updateCurrentBlockCount !== 0) {

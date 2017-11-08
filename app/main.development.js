@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, RPCDaemonHost, RPCDaemonPort, RPCWalletPort, GRPCWalletPort } from "./config.js";
+import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, RPCDaemonHost, RPCDaemonPort, RPCWalletPort, GRPCWalletPort, setMustOpenForm } from "./config.js";
 import path from "path";
 import fs from "fs";
 import os from "os";
@@ -806,4 +806,11 @@ app.on("ready", async () => {
     });
   menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
+});
+
+app.on("before-quit", (event) => {
+  logger.log("info","Caught before-quit. Set decredition as was closed");
+  event.preventDefault();
+  setMustOpenForm(true);
+  app.exit(0);
 });

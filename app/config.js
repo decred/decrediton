@@ -90,6 +90,12 @@ export function initCfg() {
   if (!config.has("discoveraccounts")) {
     config.set("discoveraccounts",true);
   }
+  if (!config.has("appdata_path")) {
+    config.set("appdata_path","");
+  }
+  if (!config.has("must_open_form")) {
+    config.set("must_open_form",true);
+  }
 
   stakePoolInfo(function(foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
@@ -315,4 +321,24 @@ export function updateStakePoolConfig(config, foundStakePoolConfigs) {
     });
     config.set("stakepools", newStakePoolConfigs);
   }
+}
+
+export function getAppdataPath() {
+  const config = getCfg();
+  return config.get("appdata_path");
+}
+
+export function setAppdataPath(appdataPath) {
+  const config = getCfg();
+  return config.set("appdata_path",appdataPath);
+}
+
+export function getMustOpenForm() {
+  const config = getCfg();
+  return config.get("must_open_form");
+}
+
+export function setMustOpenForm(openForm) {
+  const config = getCfg();
+  return config.set("must_open_form", openForm);
 }
