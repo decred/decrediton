@@ -112,7 +112,7 @@ class AdvancedStartupBody extends React.Component {
   }
 
   setAppData(appData) {
-    setAppdataPath(appData)
+    setAppdataPath(appData);
     this.setState({ appData });
   }
 
