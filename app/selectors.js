@@ -4,6 +4,7 @@ import {
 } from "./fp";
 import { reverseHash } from "./helpers/byteActions";
 import { TransactionDetails }  from "./middleware/walletrpc/api_pb";
+import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
@@ -139,9 +140,21 @@ const getTxTypeStr = type => ({
   [TransactionDetails.TransactionType.REVOCATION]: "Revocation"
 })[type];
 
+export const txURLBuilder= createSelector(
+  [network],
+  (network) =>
+    (txHash) => `https://${network}.decred.org/tx/${txHash}`
+);
+
+export const blockURLBuilder= createSelector(
+  [network],
+  (network) =>
+    (txHash) => `https://${network}.decred.org/block/${txHash}`
+);
+
 const transactionNormalizer = createSelector(
-  [accounts, network],
-  (accounts, network) => {
+  [accounts, txURLBuilder, blockURLBuilder],
+  (accounts, txURLBuilder, blockURLBuilder) => {
     const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
     const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
     return tx => {
@@ -201,8 +214,8 @@ const transactionNormalizer = createSelector(
           };
 
       return {
-        txUrl: `https://${network}.decred.org/tx/${txHash}`,
-        txBlockUrl: txBlockHash ? `https://${network}.decred.org/block/${txBlockHash}` : null,
+        txUrl: txURLBuilder(txHash),
+        txBlockUrl: txBlockHash ? blockURLBuilder(txBlockHash) : null,
         txHash,
         txHeight: txInfo.height,
         txType: getTxTypeStr(type),
@@ -280,6 +293,115 @@ export const transactions = createSelector(
 export const viewedTransaction = createSelector(
   [transactions, (state, { params: { txHash }}) => txHash],
   (transactions, txHash) => find({ txHash }, transactions.All)
+);
+
+export const decodedTransactions = get(["grpc", "decodedTransactions"]);
+
+const ticketNormalizer = createSelector(
+  [decodedTransactions, network],
+  (decodedTransactions, network) => {
+    return ticket => {
+      const hasSpender = ticket.spender && ticket.spender.getHash();
+      const isVote = ticket.status === "voted";
+      const ticketTx = ticket.ticket;
+      const spenderTx = hasSpender ? ticket.spender : null;
+      const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
+      const spenderHash = hasSpender ? reverseHash(Buffer.from(spenderTx.getHash()).toString("hex")) : null;
+      const decodedTicketTx = decodedTransactions[hash] || null;
+      const decodedSpenderTx = hasSpender ? (decodedTransactions[spenderHash] || null) : null;
+
+      // effective ticket price is the output 0 for the ticket transaction
+      // (stakesubmission script class)
+      const ticketPrice = ticketTx.getCreditsList()[0].getAmount();
+
+      // ticket tx fee is the fee for the transaction where the ticket was bought
+      const ticketTxFee = ticketTx.getFee();
+
+      // revocations have a tx fee that influences the ROI calc
+      const spenderTxFee = hasSpender ? spenderTx.getFee() : 0;
+
+      // ticket change is anything returned to the wallet on ticket purchase.
+      // double check after changes in splitFee flag (dcrwallet #933)
+      const ticketChange = ticketTx.getCreditsList().slice(1).reduce((a, v) => a+v.getAmount(), 0);
+
+      // ticket investment is the full amount paid by the wallet on the ticket purchase
+      const ticketInvestment = ticketTx.getDebitsList().reduce((a, v) => a+v.getPreviousAmount(), 0)
+        - ticketChange + ticketTxFee;
+
+      let ticketReward, ticketROI, ticketReturnAmount;
+      if (hasSpender) {
+        // everything returned to the wallet after voting/revoking
+        ticketReturnAmount = spenderTx.getCreditsList().reduce((a, v) => a+v.getAmount(), 0);
+
+        // this is liquid from applicable fees (i.e, what the wallet actually made)
+        ticketReward = ticketReturnAmount - ticketInvestment;
+
+        ticketROI = ticketReward / ticketInvestment;
+      }
+
+      let ticketPoolFee, voteChoices;
+      if (decodedSpenderTx) {
+        // pool fees are all (OP_SSGEN/OP_SSRTX) txo that have not made it into our own wallet.
+        // the match to know whether an output is directed to our wallet
+        // is made between fields "index" (on creditsList) and "index" (on outputsList).
+        const scriptTag = isVote ? /^OP_SSGEN / : /^OP_SSRTX /;
+
+        const walletOutputIndices = spenderTx.getCreditsList().reduce((a, v) => [...a, v.getIndex()], []);
+        ticketPoolFee = decodedSpenderTx.transaction.getOutputsList().reduce((a, v) => {
+          if (!v.getScriptAsm().match(scriptTag)) return a;
+          return walletOutputIndices.indexOf(v.getIndex()) > -1 ? a : a + v.getValue();
+        }, 0);
+
+        if (isVote) {
+          let voteScript = decodedSpenderTx.transaction.getOutputsList()[1].getScript();
+          voteChoices = decodeVoteScript(network, voteScript);
+        }
+      }
+
+      return {
+        hash,
+        spenderHash,
+        ticketTx,
+        spenderTx,
+        decodedSpenderTx,
+        decodedTicketTx,
+        ticketPrice,
+        ticketReward,
+        ticketChange,
+        ticketInvestment,
+        ticketTxFee,
+        ticketPoolFee,
+        ticketROI,
+        ticketReturnAmount,
+        voteChoices,
+        spenderTxFee,
+        enterTimestamp: ticketTx.getTimestamp(),
+        leaveTimestamp: hasSpender ? spenderTx.getTimestamp() : null,
+        status: ticket.status,
+        ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),
+        spenderRawTx: hasSpender ? Buffer.from(spenderTx.getTransaction()).toString("hex") : null,
+      };
+    };
+  }
+);
+const ticketsNormalizer = createSelector([ticketNormalizer], map);
+const allTickets = createSelector(
+  [ticketsNormalizer, get(["grpc", "tickets"])], apply
+);
+export const ticketsPerStatus = createSelector(
+  [allTickets],
+  tickets => tickets.reduce(
+    (perStatus, ticket) => {
+      perStatus[ticket.status].push(ticket);
+      return perStatus;
+    },
+    Array.from(TicketTypes.values()).reduce((a, v) => (a[v] = [], a), {}),
+  )
+);
+
+export const viewedTicketListing = createSelector(
+  [ticketsPerStatus, (state, { params: { status }}) => status],
+  (tickets, status) => tickets[status]
 );
 
 const rescanResponse = get(["control", "rescanResponse"]);

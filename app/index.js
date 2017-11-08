@@ -176,6 +176,15 @@ var initialState = {
     // Agenda/VoteChoices
     getAgendasResponse: null,
     getVoteChoicesResponse: null,
+
+    // GetMessageDecodeService
+    decodeMessageService: null,
+    getMessageDecodeServiceRequestAttempt: false,
+    getMessageDecodeServiceError: null,
+
+    // map from (reversed) transaction hash to fully decoded transaction
+    decodedTransactions: {},
+
   },
   walletLoader: {
     rpcRetryAttempts: 0,

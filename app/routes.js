@@ -14,6 +14,8 @@ import VerifyPage from "./components/VerifyMessage";
 import TicketsPage from "./components/views/TicketsPage";
 import TicketsPurchaseTab from "./components/views/TicketsPage/PurchaseTab";
 import TicketsMyTicketsTab from "./components/views/TicketsPage/MyTicketsTab";
+import TicketsMyTicketsOverview from "./components/views/TicketsPage/MyTicketsTab/TicketsOverview";
+import TicketsMyTicketsList from "./components/views/TicketsPage/MyTicketsTab/TicketListPage";
 import TicketsGovernanceTab from "./components/views/TicketsPage/GovernanceTab";
 import TicketsStatisticsTab from "./components/views/TicketsPage/StatisticsTab";
 import GetStartedPage from "./components/views/GetStartedPage";
@@ -44,7 +46,10 @@ export default (
     <Route path="/tickets" component={TicketsPage}>
       <IndexRedirect to="purchase" />
       <Route path="purchase" component={TicketsPurchaseTab}/>
-      <Route path="mytickets" component={TicketsMyTicketsTab}/>
+      <Route path="mytickets" component={TicketsMyTicketsTab}>
+        <IndexRoute component={TicketsMyTicketsOverview} />
+        <Route path=":status" component={TicketsMyTicketsList} />
+      </Route>
       <Route path="governance" component={TicketsGovernanceTab}/>
       <Route path="statistics" component={TicketsStatisticsTab}/>
     </Route>
