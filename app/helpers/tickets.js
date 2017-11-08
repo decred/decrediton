@@ -46,11 +46,13 @@ export function decodeVoteScript(network, outputScript) {
       ],
     },
     mainnet: {
-      5: [
+      4: [
         { mask: 0x06, name: "DCP0001", choices: {0x02: "no", 0x04: "yes"},
+          defaultChoice: "abstain"},
+        { mask: 0x18, name: "lnsupport", choices: {0x08: "no", 0x10: "yes"},
           defaultChoice: "abstain"}
       ],
-      6: [
+      5: [
         {mask: 0x06, name: "DCP0002&3", choices: {0x02: "no", 0x04: "yes"},
           defaultChoice: "abstain"}
       ],

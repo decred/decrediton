@@ -303,7 +303,6 @@ const ticketNormalizer = createSelector(
     return ticket => {
       const hasSpender = ticket.spender && ticket.spender.getHash();
       const isVote = ticket.status === "voted";
-      const isRevocation = ticket.status === "revoked";
       const ticketTx = ticket.ticket;
       const spenderTx = hasSpender ? ticket.spender : null;
       const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
@@ -340,26 +339,23 @@ const ticketNormalizer = createSelector(
         ticketROI = ticketReward / ticketInvestment;
       }
 
-      let ticketPoolFee, voteChoices, revocationRelayFee;
-      if (isVote &&  decodedSpenderTx ) {
-        // pool fee are all OP_SSGEN txo that have not made it into our own wallet
-        // the match is made between fields "index" (on creditsList) and "index" (on outputsList)
+      let ticketPoolFee, voteChoices;
+      if (decodedSpenderTx) {
+        // pool fees are all (OP_SSGEN/OP_SSRTX) txo that have not made it into our own wallet.
+        // the match to know whether an output is directed to our wallet
+        // is made between fields "index" (on creditsList) and "index" (on outputsList).
+        const scriptTag = isVote ? /^OP_SSGEN / : /^OP_SSRTX /;
+
         const walletOutputIndices = spenderTx.getCreditsList().reduce((a, v) => [...a, v.getIndex()], []);
         ticketPoolFee = decodedSpenderTx.transaction.getOutputsList().reduce((a, v) => {
-          if (!v.getScriptAsm().match(/^OP_SSGEN /)) return a;
+          if (!v.getScriptAsm().match(scriptTag)) return a;
           return walletOutputIndices.indexOf(v.getIndex()) > -1 ? a : a + v.getValue();
         }, 0);
 
-        let voteScript = decodedSpenderTx.transaction.getOutputsList()[1].getScript();
-        voteChoices = decodeVoteScript(network, voteScript);
-      } else if (isRevocation && decodedSpenderTx) {
-        // similar to pool fees, relay fees are all OP_SSRTX that have not mande into
-        // our own wallet (ie. outputs that have not returned to the wallet after revocation)
-        const walletOutputIndices = spenderTx.getCreditsList().reduce((a, v) => [...a, v.getIndex()], []);
-        revocationRelayFee = decodedSpenderTx.transaction.getOutputsList().reduce((a, v) => {
-          if (!v.getScriptAsm().match(/^OP_SSRTX /)) return a;
-          return walletOutputIndices.indexOf(v.getIndex()) > -1 ? a : a + v.getValue();
-        }, 0);
+        if (isVote) {
+          let voteScript = decodedSpenderTx.transaction.getOutputsList()[1].getScript();
+          voteChoices = decodeVoteScript(network, voteScript);
+        }
       }
 
       return {
@@ -378,7 +374,6 @@ const ticketNormalizer = createSelector(
         ticketROI,
         ticketReturnAmount,
         voteChoices,
-        revocationRelayFee,
         spenderTxFee,
         enterTimestamp: ticketTx.getTimestamp(),
         leaveTimestamp: hasSpender ? spenderTx.getTimestamp() : null,

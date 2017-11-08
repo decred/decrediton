@@ -11,31 +11,22 @@ const TicketInfoCard = ({ ticket, onClick, expanded }) => {
 
   const className = "ticket-info-card" + (expanded ? " is-expanded" : "");
   let returnTipText;
-  if (ticket.status === "voted") {
+  if (["voted", "revoked"].indexOf(ticket.status) > -1 ) {
+    const rewardLabel = ticket.ticketReward > 0
+      ? <T id="ticket.rewardLabel" m="Ticket Reward" />
+      : <T id="ticket.lossLabel" m="Ticket Loss" />;
+
     returnTipText = <T id="ticket.rewardCalc"
       m={`Investment: {investment}
       Transaction Fee: {txFee}
       Pool Fee: {poolFee}
-      Ticket Reward: {reward}
+      {rewardLabel}: {reward}
       ROI: {roi, number, precise-percent}`}
       values={{
         investment: <Balance amount={ticket.ticketInvestment || 0} />,
         txFee: <Balance amount={ticket.ticketTxFee || 0} />,
         poolFee: <Balance amount={ticket.ticketPoolFee || 0} />,
-        reward: <Balance amount={ticket.ticketReward || 0} />,
-        roi: ticket.ticketROI
-      }} />;
-  } else if (ticket.status === "revoked") {
-    returnTipText = <T id="ticket.revokeCalc"
-      m={`Investment: {investment}
-      Transaction and Revocation Fees: {txFee}
-      Revocation Relay Fee: {relayFee}
-      Total Loss: {reward}
-      ROI: {roi, number, precise-percent}`}
-      values={{
-        investment: <Balance amount={ticket.ticketInvestment || 0} />,
-        txFee: <Balance amount={(ticket.ticketTxFee + ticket.spenderTxFee) || 0} />,
-        relayFee: <Balance amount={ticket.revocationRelayFee || 0} />,
+        rewardLabel: rewardLabel,
         reward: <Balance amount={ticket.ticketReward || 0} />,
         roi: ticket.ticketROI
       }} />;
