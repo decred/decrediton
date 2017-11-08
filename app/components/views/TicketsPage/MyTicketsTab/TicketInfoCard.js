@@ -20,19 +20,36 @@ const statusTxt = {
 const TicketInfoCard = ({ ticket, onClick, expanded }) => {
 
   const className = "ticket-info-card" + (expanded ? " is-expanded" : "");
-  const rewardTipText = <T id="ticket.rewardCalc"
-    m={`Investment: {investment}
-    Transaction Fee: {txFee}
-    Pool Fee: {poolFee}
-    Ticket Reward: {reward}
-    ROI: {roi, number, precise-percent}`}
-    values={{
-      investment: <Balance amount={ticket.ticketInvestment || 0} />,
-      txFee: <Balance amount={ticket.ticketTxFee || 0} />,
-      poolFee: <Balance amount={ticket.ticketPoolFee || 0} />,
-      reward: <Balance amount={ticket.ticketReward || 0} />,
-      roi: ticket.ticketROI
-    }} />;
+  let returnTipText;
+  if (ticket.status === "voted") {
+    returnTipText = <T id="ticket.rewardCalc"
+      m={`Investment: {investment}
+      Transaction Fee: {txFee}
+      Pool Fee: {poolFee}
+      Ticket Reward: {reward}
+      ROI: {roi, number, precise-percent}`}
+      values={{
+        investment: <Balance amount={ticket.ticketInvestment || 0} />,
+        txFee: <Balance amount={ticket.ticketTxFee || 0} />,
+        poolFee: <Balance amount={ticket.ticketPoolFee || 0} />,
+        reward: <Balance amount={ticket.ticketReward || 0} />,
+        roi: ticket.ticketROI
+      }} />;
+  } else if (ticket.status === "revoked") {
+    returnTipText = <T id="ticket.revokeCalc"
+      m={`Investment: {investment}
+      Transaction and Revocation Fees: {txFee}
+      Revocation Relay Fee: {relayFee}
+      Total Loss: {reward}
+      ROI: {roi, number, precise-percent}`}
+      values={{
+        investment: <Balance amount={ticket.ticketInvestment || 0} />,
+        txFee: <Balance amount={(ticket.ticketTxFee + ticket.spenderTxFee) || 0} />,
+        relayFee: <Balance amount={ticket.revocationRelayFee || 0} />,
+        reward: <Balance amount={ticket.ticketReward || 0} />,
+        roi: ticket.ticketROI
+      }} />;
+  }
 
   let timeToLeaveTipText;
   if (ticket.leaveTimestamp) {
@@ -48,8 +65,8 @@ const TicketInfoCard = ({ ticket, onClick, expanded }) => {
   >
     <div className="ticket-info-expanded-indicator"></div>
     <div className="ticket-info-price"><Balance amount={ticket.ticketPrice} /></div>
-    {ticket.ticketReward
-      ? <Tooltip tipWidth={ 250 } text={rewardTipText} className="tooltip-pre-line">
+    {returnTipText
+      ? <Tooltip tipWidth={ 300 } text={returnTipText} className="tooltip-pre-line">
           <div className="ticket-reward"><Balance amount={ticket.ticketReward} noSmallAmount /></div>
         </Tooltip>
       : null }

@@ -302,7 +302,8 @@ const ticketNormalizer = createSelector(
   (decodedTransactions, network) => {
     return ticket => {
       const hasSpender = ticket.spender && ticket.spender.getHash();
-      const isVote = ticket.status == "voted";
+      const isVote = ticket.status === "voted";
+      const isRevocation = ticket.status === "revoked";
       const ticketTx = ticket.ticket;
       const spenderTx = hasSpender ? ticket.spender : null;
       const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
@@ -317,29 +318,30 @@ const ticketNormalizer = createSelector(
       // ticket tx fee is the fee for the transaction where the ticket was bought
       const ticketTxFee = ticketTx.getFee();
 
+      // revocations have a tx fee that influences the ROI calc
+      const spenderTxFee = hasSpender ? spenderTx.getFee() : 0;
+
       // ticket change is anything returned to the wallet on ticket purchase.
       // double check after changes in splitFee flag (dcrwallet #933)
       const ticketChange = ticketTx.getCreditsList().slice(1).reduce((a, v) => a+v.getAmount(), 0);
 
-      // ticket investment is the full amount paid by the wallet
+      // ticket investment is the full amount paid by the wallet on the ticket purchase
       const ticketInvestment = ticketTx.getDebitsList().reduce((a, v) => a+v.getPreviousAmount(), 0)
         - ticketChange + ticketTxFee;
 
-      let ticketReward = null;
-      let ticketROI = null;
-      if (isVote) {
-        // everything returned to the wallet after voting
-        let rawTicketReward = spenderTx.getCreditsList().reduce((a, v) => a+v.getAmount(), 0);
+      let ticketReward, ticketROI, ticketReturnAmount;
+      if (hasSpender) {
+        // everything returned to the wallet after voting/revoking
+        ticketReturnAmount = spenderTx.getCreditsList().reduce((a, v) => a+v.getAmount(), 0);
 
         // this is liquid from applicable fees (i.e, what the wallet actually made)
-        ticketReward = rawTicketReward - ticketInvestment;
+        ticketReward = ticketReturnAmount - ticketInvestment;
 
         ticketROI = ticketReward / ticketInvestment;
       }
 
-      let ticketPoolFee = null;
-      let voteChoices = null;
-      if ( isVote &&  decodedSpenderTx) {
+      let ticketPoolFee, voteChoices, revocationRelayFee;
+      if (isVote &&  decodedSpenderTx ) {
         // pool fee are all OP_SSGEN txo that have not made it into our own wallet
         // the match is made between fields "index" (on creditsList) and "index" (on outputsList)
         const walletOutputIndices = spenderTx.getCreditsList().reduce((a, v) => [...a, v.getIndex()], []);
@@ -350,6 +352,14 @@ const ticketNormalizer = createSelector(
 
         let voteScript = decodedSpenderTx.transaction.getOutputsList()[1].getScript();
         voteChoices = decodeVoteScript(network, voteScript);
+      } else if (isRevocation && decodedSpenderTx) {
+        // similar to pool fees, relay fees are all OP_SSRTX that have not mande into
+        // our own wallet (ie. outputs that have not returned to the wallet after revocation)
+        const walletOutputIndices = spenderTx.getCreditsList().reduce((a, v) => [...a, v.getIndex()], []);
+        revocationRelayFee = decodedSpenderTx.transaction.getOutputsList().reduce((a, v) => {
+          if (!v.getScriptAsm().match(/^OP_SSRTX /)) return a;
+          return walletOutputIndices.indexOf(v.getIndex()) > -1 ? a : a + v.getValue();
+        }, 0);
       }
 
       return {
@@ -366,7 +376,10 @@ const ticketNormalizer = createSelector(
         ticketTxFee,
         ticketPoolFee,
         ticketROI,
+        ticketReturnAmount,
         voteChoices,
+        revocationRelayFee,
+        spenderTxFee,
         enterTimestamp: ticketTx.getTimestamp(),
         leaveTimestamp: hasSpender ? spenderTx.getTimestamp() : null,
         status: ticket.status,

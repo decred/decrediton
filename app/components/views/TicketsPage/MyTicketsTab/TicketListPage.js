@@ -51,7 +51,7 @@ class TicketListPage extends Component{/*  */
   requestTicketsRawTx() {
     const visibleTickets = this.getVisibleTickets();
     const toDecode = visibleTickets.reduce((a, t) => {
-      if ((t.status === "voted") && (!t.decodedTicketTx)) {
+      if ((t.spenderHash) && (!t.decodedTicketTx)) {
         a.push(t.ticketRawTx);
         a.push(t.spenderRawTx);
       }
