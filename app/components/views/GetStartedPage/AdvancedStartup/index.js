@@ -1,4 +1,5 @@
 import {AdvancedHeader, AdvancedBody} from "./Form";
+import { setAppdataPath } from "config.js";
 
 @autobind
 class AdvancedStartupHeader extends React.Component {
@@ -111,6 +112,7 @@ class AdvancedStartupBody extends React.Component {
   }
 
   setAppData(appData) {
+    setAppdataPath(appData)
     this.setState({ appData });
   }
 

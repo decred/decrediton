@@ -8,6 +8,7 @@ import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
 import { AdvancedStartupHeader, AdvancedStartupBody } from "./AdvancedStartup";
 import { walletStartup } from "connectors";
+import { getMustOpenForm, getAppdataPath } from "config.js";
 
 @autobind
 class GetStartedPage extends React.Component {
@@ -31,6 +32,11 @@ class GetStartedPage extends React.Component {
   }
 
   render() {
+    const skipForm = getMustOpenForm() === false && getAppdataPath().length>0;
+
+    if(skipForm) {
+      this.props.onStartDaemon(null, getAppdataPath());
+    }
     const {
       startStepIndex,
       isPrepared,
@@ -67,7 +73,7 @@ class GetStartedPage extends React.Component {
         Body = FinalStartUpBody;
       }
     } else {
-      if (isAdvancedDaemon) {
+      if (isAdvancedDaemon && !skipForm) {
         Header = AdvancedStartupHeader;
         Body = AdvancedStartupBody;
       } else {
