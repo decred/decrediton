@@ -623,7 +623,7 @@ export function stopAutoBuyerAttempt() {
           // The only error that can be returned here is if the autobuyer is not running when requested to stop.
           // We're currently issuing a stop auto buyer request on startup, so to avoid that error being shown,
           // it makes sense to just remove the error consumption altogether.
-          // dispatch({ error, type: STOPAUTOBUYER_FAILED });
+          dispatch({ type: STOPAUTOBUYER_FAILED });
         } else {
           var success = "You successfully stopped the auto ticket buyer.";
           dispatch({ success: success, stopAutoBuyerResponse: stopAutoBuyerResponse, type: STOPAUTOBUYER_SUCCESS });
