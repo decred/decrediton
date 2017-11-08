@@ -1,6 +1,7 @@
 import React from "react";
 import TicketCard from "./TicketCard";
 import { FormattedMessage as T } from "react-intl";
+import { statusTxt } from "./messages";
 
 const TicketOverviewCard = ({ status, tickets , onClick }) => (
   <TicketCard
@@ -8,7 +9,7 @@ const TicketOverviewCard = ({ status, tickets , onClick }) => (
     className="ticket-overview-card"
     onClick={() => onClick(status)}
   >
-    <h1 className="ticket-overview-header">{status}</h1>
+    <h1 className="ticket-overview-header">{statusTxt[status]}</h1>
     <div className="ticket-overview-count">
       <T
         id="myTickets.statusCount"
