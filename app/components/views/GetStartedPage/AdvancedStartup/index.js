@@ -1,5 +1,5 @@
 import {AdvancedHeader, AdvancedBody} from "./Form";
-import { setAppdataPath } from "config.js";
+import { setAppdataPath, getAppdataPath } from "config.js";
 
 @autobind
 class AdvancedStartupHeader extends React.Component {
@@ -28,7 +28,7 @@ class AdvancedStartupBody extends React.Component {
       rpccert: "",
       rpcport: "",
       rpchost: "",
-      appData: "",
+      appData: getAppdataPath(),
     };
   }
 
