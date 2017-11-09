@@ -77,29 +77,29 @@ class AdvancedStartupBody extends React.Component {
     this.setState(this.getInitialState());
   }
 
-  setRpcUser(rpcuser) {
-    setRemoteCredentials("rpc_user", rpcuser)
-    this.setState({ rpcuser });
+  setRpcUser(rpc_user) {
+    setRemoteCredentials("rpc_user", rpc_user)
+    this.setState({ rpc_user });
   }
 
-  setRpcPass(rpcpass) {
-    setRemoteCredentials("rpc_password", rpcpass)
-    this.setState({ rpcpass });
+  setRpcPass(rpc_password) {
+    setRemoteCredentials("rpc_password", rpc_password)
+    this.setState({ rpc_password });
   }
 
-  setRpcHost(rpchost) {
-    setRemoteCredentials("rpc_host", rpchost)
-    this.setState({ rpchost });
+  setRpcHost(rpc_host) {
+    setRemoteCredentials("rpc_host", rpc_host)
+    this.setState({ rpc_host });
   }
 
-  setRpcPort(rpcport) {
-    setRemoteCredentials("rpc_port", rpcport)
-    this.setState({ rpcport });
+  setRpcPort(rpc_port) {
+    setRemoteCredentials("rpc_port", rpc_port)
+    this.setState({ rpc_port });
   }
 
-  setRpcCert(rpccert) {
-    setRemoteCredentials("rpc_cert", rpccert)
-    this.setState({ rpccert });
+  setRpcCert(rpc_cert) {
+    setRemoteCredentials("rpc_cert", rpc_cert)
+    this.setState({ rpc_cert });
   }
 
   setAppData(appData) {
