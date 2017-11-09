@@ -24,11 +24,11 @@ class AdvancedStartupBody extends React.Component {
     const {rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port} = getRemoteCredentials();
     return {
       sideActive: false,
-      rpcuser: rpc_user,
-      rpcpass: rpc_password,
-      rpccert: rpc_cert,
-      rpcport: rpc_host,
-      rpchost: rpc_port,
+      rpc_user: rpc_user,
+      rpc_password: rpc_password,
+      rpc_cert: rpc_cert,
+      rpc_host: rpc_host,
+      rpc_port: rpc_port,
       appData: getAppdataPath(),
     };
   }
@@ -51,15 +51,6 @@ class AdvancedStartupBody extends React.Component {
       onShowRemote,
       onShowAppData,
     } = this;
-    const {
-      rpcuser,
-      rpcpass,
-      rpccert,
-      rpcport,
-      rpchost,
-      appData,
-      sideActive
-    } = this.state;
     return (
       <AdvancedBody
       {...{
@@ -70,19 +61,12 @@ class AdvancedStartupBody extends React.Component {
         skipAdvancedDaemon,
         onShowRemote,
         onShowAppData,
-        sideActive,
         setRpcUser,
         setRpcPass,
         setRpcCert,
         setRpcHost,
         setRpcPort,
         setAppData,
-        rpcuser,
-        rpcpass,
-        rpccert,
-        rpcport,
-        rpchost,
-        appData,
       }}
       />
     );
@@ -124,8 +108,8 @@ class AdvancedStartupBody extends React.Component {
 
   onSubmitRemoteForm() {
     if (!this.isRemoteValid()) return;
-    const { rpcuser, rpcpass, rpccert, rpchost, rpcport } = this.state;
-    let args = {rpcuser, rpcpass, rpccert, rpchost, rpcport};
+    const { rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port } = this.state;
+    let args = {rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port};
     this.props.onStartDaemon(args);
   }
 
@@ -136,8 +120,8 @@ class AdvancedStartupBody extends React.Component {
   }
 
   isRemoteValid() {
-    const { rpcuser, rpcpass, rpccert, rpchost, rpcport } = this.state;
-    return !!(rpcuser && rpcpass && rpccert && rpchost && rpcport);
+    const { rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port } = this.state;
+    return !!(rpc_user && rpc_password && rpc_cert && rpc_host && rpc_port);
   }
 
   isAppDataValid() {

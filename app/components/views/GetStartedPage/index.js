@@ -23,7 +23,7 @@ class GetStartedPage extends React.Component {
     const {rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port} = getRemoteCredentials();
     const hasAllCredentials = rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
     const hasAppData = getAppdataPath().length > 0;
-    
+
     if (!this.props.openForm && hasAppData) {
       this.props.onStartDaemon(null, getAppdataPath());
     } else if (!this.props.openForm && hasAllCredentials) {
