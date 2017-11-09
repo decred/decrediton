@@ -5,7 +5,7 @@ import {
   SIGNTX_FAILED, CONSTRUCTTX_FAILED,
   PURCHASETICKETS_SUCCESS, PURCHASETICKETS_FAILED,
   STARTAUTOBUYER_SUCCESS, STARTAUTOBUYER_FAILED,
-  STOPAUTOBUYER_SUCCESS, STOPAUTOBUYER_FAILED,
+  STOPAUTOBUYER_SUCCESS,
   REVOKETICKETS_SUCCESS, REVOKETICKETS_FAILED,
   IMPORTSCRIPT_SUCCESS, IMPORTSCRIPT_FAILED,
 } from "../actions/ControlActions";
@@ -67,10 +67,6 @@ const messages = defineMessages({
   STOPAUTOBUYER_SUCCESS: {
     id: "tickets.stopAutoBuyerHeader",
     defaultMessage: "Ticket buyer is now stopped."
-  },
-  STOPAUTOBUYER_FAILED: {
-    id: "tickets.errors.stopAutoBuyerFailed",
-    defaultMessage: "{originalError}"
   },
   UPDATESTAKEPOOLCONFIG_SUCCESS: {
     id: "tickets.updateStakePoolConfigHeader",
@@ -160,11 +156,6 @@ export default function snackbar(state = {}, action) {
 
   case STOPAUTOBUYER_SUCCESS:
     type = "Success";
-    break;
-
-  case STOPAUTOBUYER_FAILED:
-    values = { originalError: String(action.error) };
-    type = "Error";
     break;
 
   case UPDATESTAKEPOOLCONFIG_SUCCESS:
