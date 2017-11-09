@@ -1,7 +1,6 @@
-import { reverseHash } from "../helpers/byteActions";
 import { defineMessages } from "react-intl";
 import {
-  PUBLISHTX_SUCCESS, PUBLISHTX_FAILED,
+  PUBLISHTX_FAILED,
   SIGNTX_FAILED, CONSTRUCTTX_FAILED,
   PURCHASETICKETS_SUCCESS, PURCHASETICKETS_FAILED,
   STARTAUTOBUYER_SUCCESS, STARTAUTOBUYER_FAILED,
@@ -100,13 +99,6 @@ export default function snackbar(state = {}, action) {
     type = action.unminedMessage.type;
     break;
   }
-  // events that generate a snackbar message
-  case PUBLISHTX_SUCCESS: {
-    const r = action.publishTransactionResponse;
-    values = { hash: reverseHash(r.toString("hex")) };
-    type = "Success";
-    break;
-  }
 
   case PUBLISHTX_FAILED:
     values = { originalError: String(action.error) };
@@ -182,11 +174,18 @@ export default function snackbar(state = {}, action) {
     type = "Error";
     break;
   }
-  if (values || type) {
+  if ((values || type) && action.type !== TRANSACTIONNTFNS_DATA_UNMINED) {
     state.messages = state.messages.slice();
     state.messages.push({
       type: type,
       message: messages[action.type],
+      values: values
+    });
+  } else if (action.type == TRANSACTIONNTFNS_DATA_UNMINED) {
+    state.messages = state.messages.slice();
+    state.messages.push({
+      type: type,
+      message: action.unminedMessage,
       values: values
     });
   }
