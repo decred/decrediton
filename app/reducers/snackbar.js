@@ -13,6 +13,7 @@ import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
   SETSTAKEPOOLVOTECHOICES_SUCCESS, SETSTAKEPOOLVOTECHOICES_FAILED
 } from "../actions/StakePoolActions";
+import { TRANSACTIONNTFNS_DATA_UNMINED } from "../actions/NotificationActions";
 import { SNACKBAR_DISMISS_MESSAGES } from "../actions/SnackbarActions";
 
 const messages = defineMessages({
@@ -94,6 +95,11 @@ export default function snackbar(state = {}, action) {
   case SNACKBAR_DISMISS_MESSAGES:
     return { state, messages: Array() };
 
+  case TRANSACTIONNTFNS_DATA_UNMINED: {
+    values = { message: action.unminedMessage};
+    type = action.unminedMessage.type;
+    break;
+  }
   // events that generate a snackbar message
   case PUBLISHTX_SUCCESS: {
     const r = action.publishTransactionResponse;
