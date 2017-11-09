@@ -1,5 +1,5 @@
 import {AdvancedHeader, AdvancedBody} from "./Form";
-import { setAppdataPath, getAppdataPath } from "config.js";
+import { setAppdataPath, getAppdataPath, getRemoteCredentials, setRemoteCredentials} from "config.js";
 
 @autobind
 class AdvancedStartupHeader extends React.Component {
@@ -21,13 +21,14 @@ class AdvancedStartupBody extends React.Component {
   }
 
   getInitialState() {
+    const {rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port} = getRemoteCredentials();
     return {
       sideActive: false,
-      rpcuser: "",
-      rpcpass: "",
-      rpccert: "",
-      rpcport: "",
-      rpchost: "",
+      rpcuser: rpc_user,
+      rpcpass: rpc_password,
+      rpccert: rpc_cert,
+      rpcport: rpc_host,
+      rpchost: rpc_port,
       appData: getAppdataPath(),
     };
   }
@@ -92,22 +93,27 @@ class AdvancedStartupBody extends React.Component {
   }
 
   setRpcUser(rpcuser) {
+    setRemoteCredentials("rpc_user", rpcuser)
     this.setState({ rpcuser });
   }
 
   setRpcPass(rpcpass) {
+    setRemoteCredentials("rpc_password", rpcpass)
     this.setState({ rpcpass });
   }
 
   setRpcHost(rpchost) {
+    setRemoteCredentials("rpc_host", rpchost)
     this.setState({ rpchost });
   }
 
   setRpcPort(rpcport) {
+    setRemoteCredentials("rpc_port", rpcport)
     this.setState({ rpcport });
   }
 
   setRpcCert(rpccert) {
+    setRemoteCredentials("rpc_cert", rpccert)
     this.setState({ rpccert });
   }
 
