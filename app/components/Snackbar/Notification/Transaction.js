@@ -39,9 +39,11 @@ const Transaction = ({
       <div className="snackbar-information-row-amount">
         <T id="notification.transfer.amount" m="Amount" />  <Balance amount={message.amount}/>
       </div>
-      <div className="snackbar-information-row-fee">
-        <T id="notification.transfer.fee" m="Fee" />  <Balance amount={message.fee}/>
-      </div>
+      {message.fee > 0 &&
+        <div className="snackbar-information-row-fee">
+          <T id="notification.transfer.fee" m="Fee" />  <Balance amount={message.fee}/>
+        </div>
+      }
     </div>
   </div>
 );
