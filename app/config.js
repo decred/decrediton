@@ -103,7 +103,7 @@ export function initCfg() {
       rpc_cert : "",
       rpc_host : "",
       rpc_port : "",
-    }
+    };
     config.set("remote_credentials",credentialKeys);
   }
 
@@ -346,8 +346,8 @@ export function setAppdataPath(appdataPath) {
     rpc_cert : "",
     rpc_host : "",
     rpc_port : "",
-  }
-  config.set("remote_credentials",credentialKeys)
+  };
+  config.set("remote_credentials",credentialKeys);
   return config.set("appdata_path",appdataPath);
 }
 

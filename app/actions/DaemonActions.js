@@ -38,8 +38,8 @@ export const startDaemon = (rpcCreds, appData) => (dispatch) => {
 };
 
 export const setCredentialsAppdataError = () => (dispatch) => {
-  dispatch({type: SET_CREDENTIALS_APPDATA_ERROR})
-}
+  dispatch({type: SET_CREDENTIALS_APPDATA_ERROR});
+};
 
 export const shutdownApp = () => (dispatch) => {
   ipcRenderer.on("daemon-stopped", () => {

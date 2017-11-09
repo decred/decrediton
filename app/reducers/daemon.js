@@ -64,7 +64,7 @@ export default function version(state = {}, action) {
   case SET_CREDENTIALS_APPDATA_ERROR:
     return {...state,
       remoteAppdataError: true,
-    }
+    };
   default:
     return state;
   }
