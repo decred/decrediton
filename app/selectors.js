@@ -8,7 +8,9 @@ import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
+export const openForm = get(["daemon", "openForm"]);
 export const getDaemonStarted = get(["daemon", "daemonStarted"]);
+export const getRemoteAppdataError = get(["daemon", "remoteAppdataError"]);
 export const getCurrentBlockCount = get(["daemon", "currentBlockCount"]);
 export const getNeededBlocks = get(["walletLoader", "neededBlocks"]);
 export const getEstimatedTimeLeft = get(["daemon", "timeLeftEstimate"]);

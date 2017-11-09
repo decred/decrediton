@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, RPCDaemonHost, RPCDaemonPort, RPCWalletPort, GRPCWalletPort } from "./config.js";
+import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, RPCDaemonHost, RPCDaemonPort, RPCWalletPort, GRPCWalletPort, setMustOpenForm } from "./config.js";
 import path from "path";
 import fs from "fs";
 import os from "os";
@@ -306,20 +306,20 @@ ipcMain.on("check-daemon", (event, rpcCreds, appData) => {
     port = RPCDaemonPort();
     args.push(`--configfile=${dcrctlCfg()}`);
   } else if (rpcCreds) {
-    if (rpcCreds.rpcuser) {
-      args.push(`--rpcuser=${rpcCreds.rpcuser}`);
+    if (rpcCreds.rpc_user) {
+      args.push(`--rpcuser=${rpcCreds.rpc_user}`);
     }
-    if (rpcCreds.rpcpass) {
-      args.push(`--rpcpass=${rpcCreds.rpcpass}`);
+    if (rpcCreds.rpc_password) {
+      args.push(`--rpcpass=${rpcCreds.rpc_password}`);
     }
-    if (rpcCreds.rpccert) {
-      args.push(`--rpccert=${rpcCreds.rpccert}`);
+    if (rpcCreds.rpc_cert) {
+      args.push(`--rpccert=${rpcCreds.rpc_cert}`);
     }
-    if (rpcCreds.rpchost) {
-      host = rpcCreds.rpchost;
+    if (rpcCreds.rpc_host) {
+      host = rpcCreds.rpc_host;
     }
-    if (rpcCreds.rpcport) {
-      port = rpcCreds.rpcport;
+    if (rpcCreds.rpc_port) {
+      port = rpcCreds.rpc_port;
     }
   } else if (appData) {
     const rpccert = `${appData}/rpc.cert`;
@@ -806,4 +806,11 @@ app.on("ready", async () => {
     });
   menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
+});
+
+app.on("before-quit", (event) => {
+  logger.log("info","Caught before-quit. Set decredition as was closed");
+  event.preventDefault();
+  setMustOpenForm(true);
+  app.exit(0);
 });

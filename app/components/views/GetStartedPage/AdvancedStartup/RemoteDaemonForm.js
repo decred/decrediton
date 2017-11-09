@@ -33,11 +33,11 @@ const RemoteDaemonForm = ({
   setRpcCert,
   setRpcHost,
   setRpcPort,
-  rpcuser,
-  rpcpass,
-  rpccert,
-  rpchost,
-  rpcport,
+  rpc_user,
+  rpc_password,
+  rpc_cert,
+  rpc_host,
+  rpc_port,
   intl
   }) => {
   return (
@@ -50,7 +50,7 @@ const RemoteDaemonForm = ({
           <TextInput
             type="text"
             required
-            value={rpcuser}
+            value={rpc_user}
             onChange={(e) => setRpcUser(e.target.value)}
             placeholder={intl.formatMessage(messages.messageLoginPlaceholder)}
             showErrors
@@ -65,7 +65,7 @@ const RemoteDaemonForm = ({
           <PasswordInput
             type="password"
             required
-            value={rpcpass}
+            value={rpc_password}
             onChange={(e) => setRpcPass(e.target.value)}
             placeholder={intl.formatMessage(messages.passphraseFieldPlaceholder)}
             showErrors
@@ -80,7 +80,7 @@ const RemoteDaemonForm = ({
         <TextInput
           type="text"
           required
-          value={rpccert}
+          value={rpc_cert}
           onChange={(e) => setRpcCert(e.target.value)}
           placeholder={intl.formatMessage(messages.certFieldPlaceholder)}
           showErrors
@@ -95,7 +95,7 @@ const RemoteDaemonForm = ({
         <TextInput
           type="text"
           required
-          value={rpchost}
+          value={rpc_host}
           onChange={(e) => setRpcHost(e.target.value)}
           placeholder={intl.formatMessage(messages.hostFieldPlaceholder)}
           showErrors
@@ -110,7 +110,7 @@ const RemoteDaemonForm = ({
         <TextInput
           type="text"
           required
-          value={rpcport}
+          value={rpc_port}
           onChange={(e) => setRpcPort(e.target.value)}
           placeholder={intl.formatMessage(messages.portFieldPlaceholder)}
           showErrors

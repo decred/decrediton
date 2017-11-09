@@ -90,6 +90,22 @@ export function initCfg() {
   if (!config.has("discoveraccounts")) {
     config.set("discoveraccounts",true);
   }
+  if (!config.has("appdata_path")) {
+    config.set("appdata_path","");
+  }
+  if (!config.has("must_open_form")) {
+    config.set("must_open_form",true);
+  }
+  if (!config.has("remote_credentials")) {
+    const credentialKeys = {
+      rpc_user : "",
+      rpc_password : "",
+      rpc_cert : "",
+      rpc_host : "",
+      rpc_port : "",
+    };
+    config.set("remote_credentials",credentialKeys);
+  }
 
   stakePoolInfo(function(foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
@@ -315,4 +331,45 @@ export function updateStakePoolConfig(config, foundStakePoolConfigs) {
     });
     config.set("stakepools", newStakePoolConfigs);
   }
+}
+
+export function getAppdataPath() {
+  const config = getCfg();
+  return config.get("appdata_path");
+}
+
+export function setAppdataPath(appdataPath) {
+  const config = getCfg();
+  const credentialKeys = {
+    rpc_user : "",
+    rpc_password : "",
+    rpc_cert : "",
+    rpc_host : "",
+    rpc_port : "",
+  };
+  config.set("remote_credentials",credentialKeys);
+  return config.set("appdata_path",appdataPath);
+}
+
+export function getRemoteCredentials() {
+  const config = getCfg();
+  return config.get("remote_credentials");
+}
+
+export function setRemoteCredentials(key, value) {
+  const config = getCfg();
+  config.set("appdata_path","");
+  let credentials = config.get("remote_credentials");
+  credentials[key] = value;
+  return config.set("remote_credentials",credentials);
+}
+
+export function getMustOpenForm() {
+  const config = getCfg();
+  return config.get("must_open_form");
+}
+
+export function setMustOpenForm(openForm) {
+  const config = getCfg();
+  return config.set("must_open_form", openForm);
 }
