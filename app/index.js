@@ -80,6 +80,7 @@ var initialState = {
     credentials: null,
     appData: null,
     shutdownRequested: false,
+    openForm: cfg.get("must_open_form")
   },
   version: {
     // RequiredVersion

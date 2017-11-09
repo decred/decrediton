@@ -132,11 +132,11 @@ export const startRpcRequestFunc = (isRetry) =>
   let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
   if(credentials) {
-    rpcuser = credentials.rpcuser;
-    rpccertPath = credentials.rpccert;
-    rpcpass = credentials.rpcpass;
-    daemonhost = credentials.rpchost;
-    rpcport = credentials.rpcport;
+    rpcuser = credentials.rpc_user;
+    rpccertPath = credentials.rpc_cert;
+    rpcpass = credentials.rpc_password;
+    daemonhost = credentials.rpc_host;
+    rpcport = credentials.rpc_port;
   } else if (appData) {
     rpcuser = cfg.get("rpc_user");
     rpcpass = cfg.get("rpc_pass");

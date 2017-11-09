@@ -24,6 +24,7 @@ const mapStateToProps = selectorMap({
   versionInvalid: sel.versionInvalid,
   isAdvancedDaemon: sel.isAdvancedDaemon,
   shutdownRequested: sel.shutdownRequested,
+  openForm: sel.openForm,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
