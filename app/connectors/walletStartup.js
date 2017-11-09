@@ -25,6 +25,7 @@ const mapStateToProps = selectorMap({
   isAdvancedDaemon: sel.isAdvancedDaemon,
   shutdownRequested: sel.shutdownRequested,
   openForm: sel.openForm,
+  remoteAppdataError: sel.getRemoteAppdataError,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -39,6 +40,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   showSidebarMenu,
   showSidebar,
   hideSidebarMenu,
+  setCredentialsAppdataError: da.setCredentialsAppdataError
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

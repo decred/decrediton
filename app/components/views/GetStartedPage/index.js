@@ -6,7 +6,7 @@ import { DiscoverAddressesHeader, DiscoverAddressesBody } from "./DiscoverAddres
 import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHeaders";
 import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
-import { AdvancedStartupHeader, AdvancedStartupBody } from "./AdvancedStartup";
+import { AdvancedStartupHeader, AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
 import { walletStartup } from "connectors";
 import { getAppdataPath, getRemoteCredentials } from "config.js";
 
@@ -23,6 +23,9 @@ class GetStartedPage extends React.Component {
     const {rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port} = getRemoteCredentials();
     const hasAllCredentials = rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
     const hasAppData = getAppdataPath().length > 0;
+
+    if(hasAllCredentials && hasAppData)
+      this.props.setCredentialsAppdataError();
 
     if (!this.props.openForm && hasAppData) {
       this.props.onStartDaemon(null, getAppdataPath());
@@ -45,6 +48,7 @@ class GetStartedPage extends React.Component {
       isPrepared,
       isAdvancedDaemon,
       openForm,
+      remoteAppdataError,
       ...props
     } = this.props;
     let Header, Body;
@@ -77,9 +81,12 @@ class GetStartedPage extends React.Component {
           Body = FinalStartUpBody;
       }
     } else {
-      if (isAdvancedDaemon && openForm) {
+      if (isAdvancedDaemon && openForm && !remoteAppdataError) {
         Header = AdvancedStartupHeader;
         Body = AdvancedStartupBody;
+      } else if (remoteAppdataError) {
+        Header = AdvancedStartupHeader;
+        Body = RemoteAppdataError;
       } else {
         Header = DaemonLoadingHeader;
         Body = DaemonLoadingBody;

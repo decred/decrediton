@@ -14,6 +14,7 @@ export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
 export const SHUTDOWN_REQUESTED = "SHUTDOWN_REQUESTED";
+export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 
 export const startDaemon = (rpcCreds, appData) => (dispatch) => {
   if (rpcCreds) {
@@ -35,6 +36,10 @@ export const startDaemon = (rpcCreds, appData) => (dispatch) => {
     .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));
   }
 };
+
+export const setCredentialsAppdataError = () => (dispatch) => {
+  dispatch({type: SET_CREDENTIALS_APPDATA_ERROR})
+}
 
 export const shutdownApp = () => (dispatch) => {
   ipcRenderer.on("daemon-stopped", () => {

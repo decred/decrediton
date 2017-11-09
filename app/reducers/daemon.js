@@ -8,6 +8,7 @@ import {
   DAEMONSTOPPED,
   WALLETREADY,
   SHUTDOWN_REQUESTED,
+  SET_CREDENTIALS_APPDATA_ERROR
 } from "../actions/DaemonActions";
 
 export default function version(state = {}, action) {
@@ -60,6 +61,10 @@ export default function version(state = {}, action) {
       daemonStarted: false,
       daemonStopped: true,
     };
+  case SET_CREDENTIALS_APPDATA_ERROR:
+    return {...state,
+      remoteAppdataError: true,
+    }
   default:
     return state;
   }
