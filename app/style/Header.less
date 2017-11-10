@@ -138,6 +138,7 @@
 .header-icon-mixin {
   height: 30px;
   width: 30px;
+  background-size: 30px;
   background-repeat: no-repeat;
 }
 .accounts {
@@ -153,7 +154,9 @@
   background-image: @wallet-gray-icon;
 }
 .mainnet {
-  .header-icon-mixin;
+  height: 30px;
+  background-size: 150px;
+  background-repeat: no-repeat;
   background-image: @menu-logo;
 }
 .minusBig {
@@ -175,7 +178,9 @@
   background-image: @settings-page-icon;
 }
 .testnet {
-  .header-icon-mixin;
+  height: 30px;
+  background-size: 150px;
+  background-repeat: no-repeat;
   background-image: @testnet-logo;
 }
 .tickets {
@@ -184,7 +189,6 @@
 }
 .ticketSmall {
   .header-icon-mixin;
-  height: 60;
   background-image: @ticket-small-icon;
 }
 .transactions {
