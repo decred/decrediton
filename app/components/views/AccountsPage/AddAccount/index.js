@@ -29,8 +29,6 @@ class AddAccount extends Component {
           name: this.state.name,
           passPhrase: this.state.passPhrase,
           hasAttemptedSave: this.state.hasAttemptedSave,
-          successMsg: this.props.getNextAccountSuccess,
-          errorMsg: this.props.getNextAccountError,
           setName: this.setName,
           setPassPhrase: this.setPassPhrase,
           onSave: this.onSave,

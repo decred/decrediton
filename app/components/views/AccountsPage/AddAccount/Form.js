@@ -21,8 +21,6 @@ const AddAccountForm = ({
   name,
   passPhrase,
   hasAttemptedSave,
-  successMsg,
-  errorMsg,
   setName,
   setPassPhrase,
   intl,
@@ -30,21 +28,7 @@ const AddAccountForm = ({
   onCancel
 }) => (
   <div className="page-view">
-    <Header
-      headerTitleOverview="Accounts"
-      headerTop={[
-        errorMsg ? (
-          <div key="accountError" className="account-view-notification-error">{errorMsg}</div>
-        ) : (
-          <div key="accountError" ></div>
-        ),
-        successMsg ? (
-          <div key="accountSuccess" className="account-view-notification-success">{successMsg}</div>
-        ) : (
-          <div key="accountSuccess" ></div>
-        )
-      ]}
-    />
+    <Header headerTitleOverview="Accounts" />
 
     <div className="page-content">
       <div className="account-flex-height">

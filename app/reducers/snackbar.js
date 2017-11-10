@@ -128,6 +128,7 @@ export default function snackbar(state = {}, action) {
   }
 
   case RENAMEACCOUNT_SUCCESS: {
+    type = "Success";
     break;
   }
   case RENAMEACCOUNT_FAILED: {
@@ -136,6 +137,7 @@ export default function snackbar(state = {}, action) {
     break;
   }
   case GETNEXTACCOUNT_SUCCESS: {
+    type = "Success";
     break;
   }
   case GETNEXTACCOUNT_FAILED: {
@@ -144,6 +146,7 @@ export default function snackbar(state = {}, action) {
     break;
   }
   case CHANGEPASSPHRASE_SUCCESS: {
+    type = "Success";
     break;
   }
   case CHANGEPASSPHRASE_FAILED: {
