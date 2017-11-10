@@ -7,6 +7,9 @@ import {
   STOPAUTOBUYER_SUCCESS,
   REVOKETICKETS_SUCCESS, REVOKETICKETS_FAILED,
   IMPORTSCRIPT_SUCCESS, IMPORTSCRIPT_FAILED,
+  RENAMEACCOUNT_SUCCESS, RENAMEACCOUNT_FAILED,
+  GETNEXTACCOUNT_SUCCESS, GETNEXTACCOUNT_FAILED,
+  CHANGEPASSPHRASE_SUCCESS, CHANGEPASSPHRASE_FAILED
 } from "../actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
@@ -84,6 +87,30 @@ const messages = defineMessages({
     id: "tickets.errors.setStakePoolVoteChoicesFailed",
     defaultMessage: "{originalError}"
   },
+  RENAMEACCOUNT_SUCCESS: {
+    id: "accounts.renameAccount",
+    defaultMessage: "Successfully renamed account."
+  },
+  RENAMEACCOUNT_FAILED:{
+    id: "accounts.errors.renameAccountFailed",
+    defaultMessage: "{originalError}"
+  },
+  GETNEXTACCOUNT_SUCCESS:{
+    id: "accounts.nextAccount",
+    defaultMessage: "Successfully created a new account."
+  },
+  GETNEXTACCOUNT_FAILED:{
+    id: "accounts.errors.getNextAccountFailed",
+    defaultMessage: "{originalError}"
+  },
+  CHANGEPASSPHRASE_SUCCESS:{
+    id: "settings.changePassphrase",
+    defaultMessage: "Successfully changed private passphrase."
+  },
+  CHANGEPASSPHRASE_FAILED: {
+    id: "settings.errors.changePassphraseFailed",
+    defaultMessage: "{originalError}"
+  },
 });
 
 export default function snackbar(state = {}, action) {
@@ -97,6 +124,34 @@ export default function snackbar(state = {}, action) {
   case TRANSACTIONNTFNS_DATA_UNMINED: {
     values = { message: action.unminedMessage};
     type = action.unminedMessage.type;
+    break;
+  }
+
+  case RENAMEACCOUNT_SUCCESS: {
+    type = "Success";
+    break;
+  }
+  case RENAMEACCOUNT_FAILED: {
+    values = { originalError: String(action.error) };
+    type = "Error";
+    break;
+  }
+  case GETNEXTACCOUNT_SUCCESS: {
+    type = "Success";
+    break;
+  }
+  case GETNEXTACCOUNT_FAILED: {
+    values = { originalError: String(action.error) };
+    type = "Error";
+    break;
+  }
+  case CHANGEPASSPHRASE_SUCCESS: {
+    type = "Success";
+    break;
+  }
+  case CHANGEPASSPHRASE_FAILED: {
+    values = { originalError: String(action.error) };
+    type = "Error";
     break;
   }
 

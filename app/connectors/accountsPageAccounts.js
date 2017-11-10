@@ -20,10 +20,6 @@ const mapStateToProps = selectorMap({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onRenameAccount: ca.renameAccountAttempt,
-  onClearNewAccountSuccess: ca.clearNewAccountSuccess,
-  onClearNewAccountError: ca.clearNewAccountError,
-  onClearRenameAccountSuccess: ca.clearRenameAccountSuccess,
-  onClearRenameAccountError: ca.clearRenameAccountError,
   onHideAccount: cla.hideAccount,
   onShowAccount: cla.showAccount
 }, dispatch);

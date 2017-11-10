@@ -12,13 +12,6 @@ class AccountsPage extends Component {
     };
   }
 
-  componentWillMount() {
-    this.props.onClearNewAccountSuccess();
-    this.props.onClearNewAccountError();
-    this.props.onClearRenameAccountSuccess();
-    this.props.onClearRenameAccountError();
-  }
-
   render() {
     return (
       <Page
@@ -34,18 +27,10 @@ class AccountsPage extends Component {
 
   onShowAddAccount() {
     this.setState({ isShowingAddAccount: true });
-    this.props.onClearNewAccountSuccess();
-    this.props.onClearNewAccountError();
-    this.props.onClearRenameAccountSuccess();
-    this.props.onClearRenameAccountError();
   }
 
   onHideAddAccount() {
     this.setState({ isShowingAddAccount: false });
-    this.props.onClearNewAccountSuccess();
-    this.props.onClearNewAccountError();
-    this.props.onClearRenameAccountSuccess();
-    this.props.onClearRenameAccountError();
   }
 }
 

@@ -38,8 +38,6 @@ export function getNextAddressAttempt(accountNum) {
 export const RENAMEACCOUNT_ATTEMPT = "RENAMEACCOUNT_ATTEMPT";
 export const RENAMEACCOUNT_FAILED = "RENAMEACCOUNT_FAILED";
 export const RENAMEACCOUNT_SUCCESS = "RENAMEACCOUNT_SUCCESS";
-export const RENAMEACCOUNT_CLEAR_ERROR = "RENAMEACCOUNT_CLEAR_ERROR";
-export const RENAMEACCOUNT_CLEAR_SUCCESS= "RENAMEACCOUNT_CLEAR_SUCCESS";
 
 export function renameAccountAttempt(accountNumber, newName) {
   var request = new RenameAccountRequest();
@@ -60,23 +58,7 @@ export function renameAccountAttempt(accountNumber, newName) {
         });
   };
 }
-export function clearRenameAccountSuccess() {
-  return (dispatch, getState) => {
-    const { renameAccountSuccess } = getState().control;
-    if (renameAccountSuccess !== null) {
-      dispatch({type: RENAMEACCOUNT_CLEAR_SUCCESS});
-    }
-  };
-}
 
-export function clearRenameAccountError() {
-  return (dispatch, getState) => {
-    const { renameAccountError } = getState().control;
-    if ( renameAccountError !== null) {
-      dispatch({type: RENAMEACCOUNT_CLEAR_ERROR});
-    }
-  };
-}
 export const RESCAN_ATTEMPT = "RESCAN_ATTEMPT";
 export const RESCAN_FAILED = "RESCAN_FAILED";
 export const RESCAN_PROGRESS = "RESCAN_PROGRESS";
@@ -108,8 +90,6 @@ export function rescanAttempt(beginHeight) {
 export const GETNEXTACCOUNT_ATTEMPT = "GETNEXTACCOUNT_ATTEMPT";
 export const GETNEXTACCOUNT_FAILED = "GETNEXTACCOUNT_FAILED";
 export const GETNEXTACCOUNT_SUCCESS = "GETNEXTACCOUNT_SUCCESS";
-export const GETNEXTACCOUNT_CLEAR_ERROR = "GETNEXTACCOUNT_CLEAR_ERROR";
-export const GETNEXTACCOUNT_CLEAR_SUCCESS= "GETNEXTACCOUNT_CLEAR_SUCCESS";
 
 export function getNextAccountAttempt(passphrase, accountName) {
   var request = new NextAccountRequest();
@@ -131,23 +111,6 @@ export function getNextAccountAttempt(passphrase, accountName) {
   };
 }
 
-export function clearNewAccountSuccess() {
-  return (dispatch, getState) => {
-    const { getNextAccountSuccess } = getState().control;
-    if (getNextAccountSuccess !== null) {
-      dispatch({type: GETNEXTACCOUNT_CLEAR_SUCCESS});
-    }
-  };
-}
-
-export function clearNewAccountError() {
-  return (dispatch, getState) => {
-    const { getNextAccountError } = getState().control;
-    if (getNextAccountError !== null) {
-      dispatch({type: GETNEXTACCOUNT_CLEAR_ERROR});
-    }
-  };
-}
 export const IMPORTPRIVKEY_ATTEMPT = "IMPORTPRIVKEY_ATTEMPT";
 export const IMPORTPRIVKEY_FAILED = "IMPORTPRIVKEY_FAILED";
 export const IMPORTPRIVKEY_SUCCESS = "IMPORTPRIVKEY_SUCCESS";
@@ -238,8 +201,6 @@ function hexToBytes(hex) {
 export const CHANGEPASSPHRASE_ATTEMPT = "CHANGEPASSPHRASE_ATTEMPT";
 export const CHANGEPASSPHRASE_FAILED = "CHANGEPASSPHRASE_FAILED";
 export const CHANGEPASSPHRASE_SUCCESS = "CHANGEPASSPHRASE_SUCCESS";
-export const CHANGEPASSPHRASE_CLEAR_ERROR = "CHANGEPASSPHRASE_CLEAR_ERROR";
-export const CHANGEPASSPHRASE_CLEAR_SUCCESS = "CHANGEPASSPHRASE_CLEAR_SUCCESS";
 
 export function changePassphraseAttempt(oldPass, newPass, priv) {
   var request = new ChangePassphraseRequest();
@@ -261,24 +222,6 @@ export function changePassphraseAttempt(oldPass, newPass, priv) {
             dispatch({ changePassphraseResponse: changePassphraseResponse, type: CHANGEPASSPHRASE_SUCCESS });
           }
         });
-  };
-}
-
-export function clearChangePassphraseSuccess() {
-  return (dispatch, getState) => {
-    const { changePassphraseSuccess } = getState().control;
-    if (changePassphraseSuccess !== "") {
-      dispatch({type: CHANGEPASSPHRASE_CLEAR_SUCCESS});
-    }
-  };
-}
-
-export function clearChangePassphraseError() {
-  return (dispatch, getState) => {
-    const { changePassphraseError } = getState().control;
-    if (changePassphraseError !== null) {
-      dispatch({type: CHANGEPASSPHRASE_CLEAR_ERROR});
-    }
   };
 }
 

@@ -9,8 +9,6 @@ import "style/StakePool.less";
 import "style/Settings.less";
 
 const SettingsPage = ({
-                        changePassphraseError,
-                        changePassphraseSuccess,
                         areSettingsDirty,
                         tempSettings,
                         networks,
@@ -24,33 +22,9 @@ const SettingsPage = ({
                         onChangeNetwork,
                         onChangeLocale,
                         onSaveSettings,
-                        onClearChangePassphraseSuccess,
-                        onClearChangePassphraseError,
                       }) => (
   <Aux>
-    <Header
-      headerTop={[
-        changePassphraseError ? (
-          <div key="updateStakePoolError" className="stakepool-view-notification-error">
-            <div
-              className="stakepool-content-nest-address-delete-icon"
-              onClick={onClearChangePassphraseError}
-            />
-            {changePassphraseError}
-          </div>
-        ) : null,
-        changePassphraseSuccess ? (
-          <div key="configSuccess" className="stakepool-view-notification-success">
-            <div
-              className="stakepool-content-nest-address-delete-icon"
-              onClick={onClearChangePassphraseSuccess}
-            />
-            {changePassphraseSuccess}
-          </div>
-        ) : null,
-      ]}
-      headerTitleOverview={<T id="settings.title" m="Settings" />}
-    />
+    <Header headerTitleOverview={<T id="settings.title" m="Settings" />} />
     <ChangePassphraseModal
       hidden={!isShowingChangePassphrase}
       updatePassphrase={onAttemptChangePassphrase}
