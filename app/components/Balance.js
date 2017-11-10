@@ -2,7 +2,7 @@ import "style/Balance.less";
 import { FormattedNumber } from "react-intl";
 import { balance } from "connectors";
 
-export const Balance = ({ currencyDisplay, amount, onClick, bold, large, flat, title }) => {
+export const Balance = ({ currencyDisplay, amount, onClick, bold, large, flat, title, noSmallAmount }) => {
   const secondary = large ? "balance-tiny" : flat ? "balance-base" : title ? "balance-title" : "balance-small";
   if (currencyDisplay === "DCR") {
     var totalDcr = 0;
@@ -15,9 +15,9 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large, flat, t
         <span className={ bold ? "bold" : null }>
           <FormattedNumber value={ head } maximumFractionDigits={ 2 } minimumFractionDigits={ 2 }/>
         </span>
-        <span className={[secondary, bold ? "bold" : null].join(" ") }>
+        { !noSmallAmount && <span className={[secondary, bold ? "bold" : null].join(" ") }>
           { tail + " " }
-        </span>
+        </span> }
         <span className={ secondary }>
           DCR
         </span>

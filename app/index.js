@@ -70,6 +70,7 @@ var initialState = {
   daemon: {
     daemonStarted: false,
     daemonSynced: false,
+    daemonStopped: false,
     walletReady: false,
     currentBlockCount: null,
     timeLeftEstimate: null,
@@ -78,6 +79,9 @@ var initialState = {
     daemonAdvanced: cfg.get("daemon_start_advanced"),
     credentials: null,
     appData: null,
+    shutdownRequested: false,
+    openForm: cfg.get("must_open_form"),
+    remoteAppdataError: false
   },
   version: {
     // RequiredVersion
@@ -174,6 +178,15 @@ var initialState = {
     // Agenda/VoteChoices
     getAgendasResponse: null,
     getVoteChoicesResponse: null,
+
+    // GetMessageDecodeService
+    decodeMessageService: null,
+    getMessageDecodeServiceRequestAttempt: false,
+    getMessageDecodeServiceError: null,
+
+    // map from (reversed) transaction hash to fully decoded transaction
+    decodedTransactions: {},
+
   },
   walletLoader: {
     rpcRetryAttempts: 0,

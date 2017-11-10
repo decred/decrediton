@@ -22,7 +22,10 @@ const mapStateToProps = selectorMap({
   isPrepared: sel.isPrepared,
   network: sel.network,
   versionInvalid: sel.versionInvalid,
-  isAdvancedDaemon: sel.isAdvancedDaemon
+  isAdvancedDaemon: sel.isAdvancedDaemon,
+  shutdownRequested: sel.shutdownRequested,
+  openForm: sel.openForm,
+  remoteAppdataError: sel.getRemoteAppdataError,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -37,6 +40,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   showSidebarMenu,
   showSidebar,
   hideSidebarMenu,
+  setCredentialsAppdataError: da.setCredentialsAppdataError
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

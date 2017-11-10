@@ -57,7 +57,7 @@
       "dist/",
       "node_modules/",
       "app.html",
-      "version/",
+      "staticPages/",
       "main.js",
       "main.js.map",
       "package.json"
@@ -190,7 +190,6 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
-    "electron-debug": "^1.0.1",
     "ini": "^1.3.4",
     "is-running": "^2.1.0",
     "lodash": "^4.17.4",

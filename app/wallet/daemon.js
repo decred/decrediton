@@ -8,10 +8,10 @@ export const startDaemon = (appData) => Promise
     throw "Error starting daemon";
   });
 
-export const stopDaemon = () => Promise
-  .resolve(ipcRenderer.sendSync("stop-daemon"))
+export const cleanShutdown = () => Promise
+  .resolve(ipcRenderer.send("clean-shutdown"))
   .then(stopped => {
-    if (!stopped) throw "Error stopping daemon";
+    if (!stopped) throw "Error shutting down app";
   });
 
 export const startWallet = () => Promise

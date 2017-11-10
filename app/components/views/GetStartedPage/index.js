@@ -6,8 +6,9 @@ import { DiscoverAddressesHeader, DiscoverAddressesBody } from "./DiscoverAddres
 import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHeaders";
 import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
-import { AdvancedStartupHeader, AdvancedStartupBody } from "./AdvancedStartup";
+import { AdvancedStartupHeader, AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
 import { walletStartup } from "connectors";
+import { getAppdataPath, getRemoteCredentials } from "config.js";
 
 @autobind
 class GetStartedPage extends React.Component {
@@ -21,11 +22,25 @@ class GetStartedPage extends React.Component {
   componentDidMount() {
     if (!this.props.isAdvancedDaemon) {
       this.props.onStartDaemon();
+      return;
+    }
+
+    const {rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port} = getRemoteCredentials();
+    const hasAllCredentials = rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
+    const hasAppData = getAppdataPath().length > 0;
+
+    if(hasAllCredentials && hasAppData)
+      this.props.setCredentialsAppdataError();
+
+    if (!this.props.openForm && hasAppData) {
+      this.props.onStartDaemon(null, getAppdataPath());
+    } else if (!this.props.openForm && hasAllCredentials) {
+      this.props.onStartDaemon(getRemoteCredentials());
     }
   }
 
   componentWillUnmount() {
-    if (!this.props.versionInvalid) {
+    if (!this.props.versionInvalid && !this.props.shutdownRequested) {
       this.props.showSidebarMenu();
     }
   }
@@ -35,6 +50,8 @@ class GetStartedPage extends React.Component {
       startStepIndex,
       isPrepared,
       isAdvancedDaemon,
+      openForm,
+      remoteAppdataError,
       ...props
     } = this.props;
     let Header, Body;
@@ -67,9 +84,12 @@ class GetStartedPage extends React.Component {
         Body = FinalStartUpBody;
       }
     } else {
-      if (isAdvancedDaemon) {
+      if (isAdvancedDaemon && openForm && !remoteAppdataError) {
         Header = AdvancedStartupHeader;
         Body = AdvancedStartupBody;
+      } else if (remoteAppdataError) {
+        Header = AdvancedStartupHeader;
+        Body = RemoteAppdataError;
       } else {
         Header = DaemonLoadingHeader;
         Body = DaemonLoadingBody;
@@ -84,6 +104,8 @@ GetStartedPage.propTypes = {
   showSidebar: PropTypes.func.isRequired,
   showSidebarMenu: PropTypes.func.isRequired,
   hideSidebarMenu: PropTypes.func.isRequired,
+  shutdownRequested: PropTypes.bool.isRequired,
+  versionInvalid: PropTypes.bool.isRequired,
 };
 
 export default walletStartup(GetStartedPage);

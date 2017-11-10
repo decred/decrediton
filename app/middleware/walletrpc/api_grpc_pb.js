@@ -268,6 +268,28 @@ function deserialize_walletrpc_CreateWalletResponse(buffer_arg) {
   return api_pb.CreateWalletResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_DecodeRawTransactionRequest(arg) {
+  if (!(arg instanceof api_pb.DecodeRawTransactionRequest)) {
+    throw new Error('Expected argument of type walletrpc.DecodeRawTransactionRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_DecodeRawTransactionRequest(buffer_arg) {
+  return api_pb.DecodeRawTransactionRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_DecodeRawTransactionResponse(arg) {
+  if (!(arg instanceof api_pb.DecodeRawTransactionResponse)) {
+    throw new Error('Expected argument of type walletrpc.DecodeRawTransactionResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_DecodeRawTransactionResponse(buffer_arg) {
+  return api_pb.DecodeRawTransactionResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_DecodeSeedRequest(arg) {
   if (!(arg instanceof api_pb.DecodeSeedRequest)) {
     throw new Error('Expected argument of type walletrpc.DecodeSeedRequest');
@@ -1921,3 +1943,18 @@ var MessageVerificationServiceService = exports.MessageVerificationServiceServic
 };
 
 exports.MessageVerificationServiceClient = grpc.makeGenericClientConstructor(MessageVerificationServiceService);
+var DecodeMessageServiceService = exports.DecodeMessageServiceService = {
+  decodeRawTransaction: {
+    path: '/walletrpc.DecodeMessageService/DecodeRawTransaction',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.DecodeRawTransactionRequest,
+    responseType: api_pb.DecodeRawTransactionResponse,
+    requestSerialize: serialize_walletrpc_DecodeRawTransactionRequest,
+    requestDeserialize: deserialize_walletrpc_DecodeRawTransactionRequest,
+    responseSerialize: serialize_walletrpc_DecodeRawTransactionResponse,
+    responseDeserialize: deserialize_walletrpc_DecodeRawTransactionResponse,
+  },
+};
+
+exports.DecodeMessageServiceClient = grpc.makeGenericClientConstructor(DecodeMessageServiceService);

@@ -1,4 +1,6 @@
 import {AdvancedHeader, AdvancedBody} from "./Form";
+import Error from "./Error";
+import { setAppdataPath, getAppdataPath, getRemoteCredentials, setRemoteCredentials} from "config.js";
 
 @autobind
 class AdvancedStartupHeader extends React.Component {
@@ -20,14 +22,15 @@ class AdvancedStartupBody extends React.Component {
   }
 
   getInitialState() {
+    const {rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port} = getRemoteCredentials();
     return {
       sideActive: false,
-      rpcuser: "",
-      rpcpass: "",
-      rpccert: "",
-      rpcport: "",
-      rpchost: "",
-      appData: "",
+      rpc_user: rpc_user,
+      rpc_password: rpc_password,
+      rpc_cert: rpc_cert,
+      rpc_host: rpc_host,
+      rpc_port: rpc_port,
+      appData: getAppdataPath(),
     };
   }
 
@@ -49,15 +52,6 @@ class AdvancedStartupBody extends React.Component {
       onShowRemote,
       onShowAppData,
     } = this;
-    const {
-      rpcuser,
-      rpcpass,
-      rpccert,
-      rpcport,
-      rpchost,
-      appData,
-      sideActive
-    } = this.state;
     return (
       <AdvancedBody
       {...{
@@ -68,19 +62,12 @@ class AdvancedStartupBody extends React.Component {
         skipAdvancedDaemon,
         onShowRemote,
         onShowAppData,
-        sideActive,
         setRpcUser,
         setRpcPass,
         setRpcCert,
         setRpcHost,
         setRpcPort,
         setAppData,
-        rpcuser,
-        rpcpass,
-        rpccert,
-        rpcport,
-        rpchost,
-        appData,
       }}
       />
     );
@@ -90,34 +77,40 @@ class AdvancedStartupBody extends React.Component {
     this.setState(this.getInitialState());
   }
 
-  setRpcUser(rpcuser) {
-    this.setState({ rpcuser });
+  setRpcUser(rpc_user) {
+    setRemoteCredentials("rpc_user", rpc_user);
+    this.setState({ rpc_user });
   }
 
-  setRpcPass(rpcpass) {
-    this.setState({ rpcpass });
+  setRpcPass(rpc_password) {
+    setRemoteCredentials("rpc_password", rpc_password);
+    this.setState({ rpc_password });
   }
 
-  setRpcHost(rpchost) {
-    this.setState({ rpchost });
+  setRpcHost(rpc_host) {
+    setRemoteCredentials("rpc_host", rpc_host);
+    this.setState({ rpc_host });
   }
 
-  setRpcPort(rpcport) {
-    this.setState({ rpcport });
+  setRpcPort(rpc_port) {
+    setRemoteCredentials("rpc_port", rpc_port);
+    this.setState({ rpc_port });
   }
 
-  setRpcCert(rpccert) {
-    this.setState({ rpccert });
+  setRpcCert(rpc_cert) {
+    setRemoteCredentials("rpc_cert", rpc_cert);
+    this.setState({ rpc_cert });
   }
 
   setAppData(appData) {
+    setAppdataPath(appData);
     this.setState({ appData });
   }
 
   onSubmitRemoteForm() {
     if (!this.isRemoteValid()) return;
-    const { rpcuser, rpcpass, rpccert, rpchost, rpcport } = this.state;
-    let args = {rpcuser, rpcpass, rpccert, rpchost, rpcport};
+    const { rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port } = this.state;
+    let args = {rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port};
     this.props.onStartDaemon(args);
   }
 
@@ -128,8 +121,8 @@ class AdvancedStartupBody extends React.Component {
   }
 
   isRemoteValid() {
-    const { rpcuser, rpcpass, rpccert, rpchost, rpcport } = this.state;
-    return !!(rpcuser && rpcpass && rpccert && rpchost && rpcport);
+    const { rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port } = this.state;
+    return !!(rpc_user && rpc_password && rpc_cert && rpc_host && rpc_port);
   }
 
   isAppDataValid() {
@@ -148,4 +141,4 @@ class AdvancedStartupBody extends React.Component {
   }
 }
 
-export { AdvancedStartupHeader, AdvancedStartupBody };
+export { AdvancedStartupHeader, AdvancedStartupBody, Error as RemoteAppdataError };

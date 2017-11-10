@@ -5,6 +5,10 @@ export const defaultFormats = {
   number: {
     "two-decimals": {
       minimumFractionDigits: 2
+    },
+    "precise-percent": {
+      style: "percent",
+      minimumFractionDigits: 4
     }
   }
 };

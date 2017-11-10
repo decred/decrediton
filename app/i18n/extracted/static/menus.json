@@ -122,5 +122,9 @@
   {
     "id": "appMenu.quit",
     "defaultMessage": "Quit"
+  },
+  {
+    "id": "appMenu.reloadUI",
+    "defaultMessage": "Reload UI"
   }
 ]

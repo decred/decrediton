@@ -3,15 +3,18 @@ import { getWalletService, getTicketBuyerService, getVotingService, getAgendaSer
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, stopAutoBuyerAttempt } from "./ControlActions";
 import { transactionNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
+import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { push as pushHistory } from "react-router-redux";
 import {
   PingRequest, NetworkRequest, AccountNumberRequest, AccountsRequest,
   BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest,
   AgendasRequest, VoteChoicesRequest, SetVoteChoicesRequest, GetTicketsRequest,
 } from "../middleware/walletrpc/api_pb";
-import { TransactionDetails, GetTicketsResponse }  from "../middleware/walletrpc/api_pb";
+import { TransactionDetails }  from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
-import { reverseHash } from "../helpers/byteActions.js";
+import { onAppReloadRequested } from "wallet/app";
+import { TicketTypes } from "../helpers/tickets";
+
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
 export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
@@ -30,6 +33,7 @@ function getWalletServiceSuccess(walletService) {
     setTimeout(() => { dispatch(getNetworkAttempt()); }, 1000);
     setTimeout(() => { dispatch(transactionNtfnsStart()); }, 1000);
     setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
+    setTimeout(() => { dispatch(getDecodeMessageServiceAttempt()); }, 1000);
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.
@@ -217,7 +221,10 @@ export function getPingAttempt() {
       function (error) {
         if (error) {
           dispatch({ error, type: GETPING_FAILED });
-          setTimeout(() => { dispatch(pushHistory("/walletError")); }, 1000);
+          const { shutdownRequested } = getState().daemon;
+          if (!shutdownRequested) {
+            setTimeout(() => { dispatch(pushHistory("/walletError")); }, 1000);
+          }
         } else {
           setTimeout(() => { dispatch(getPingAttempt()); }, 10000);
         }
@@ -349,43 +356,14 @@ export function getTicketsInfoAttempt() {
     var getTx = walletService.getTickets(request);
     var tickets = Array();
     getTx.on("data", function (response) {
-      var ticketStatus = "Live";
-      switch (response.getTicket().getTicketStatus()) {
-      case GetTicketsResponse.TicketDetails.TicketStatus.UNKNOWN:
-        ticketStatus = "Unknown";
-        break;
-      case GetTicketsResponse.TicketDetails.TicketStatus.UNMINED:
-        ticketStatus = "Unmined";
-        break;
-      case GetTicketsResponse.TicketDetails.TicketStatus.IMMATURE:
-        ticketStatus = "Immature";
-        break;
-      case GetTicketsResponse.TicketDetails.TicketStatus.VOTED:
-        ticketStatus = "Voted";
-        break;
-      case GetTicketsResponse.TicketDetails.TicketStatus.EXPIRED:
-        ticketStatus = "Expired";
-        break;
-      case GetTicketsResponse.TicketDetails.TicketStatus.MISSED:
-        ticketStatus = "Missed";
-        break;
-      case GetTicketsResponse.TicketDetails.TicketStatus.REVOKED:
-        ticketStatus = "Revoked";
-        break;
-      }
       var newTicket = {
-        status: ticketStatus,
+        status: TicketTypes.get(response.getTicket().getTicketStatus()),
         ticket: response.getTicket().getTicket(),
         spender: response.getTicket().getSpender(),
       };
-      console.log(
-      ticketStatus,
-      reverseHash(Buffer.from(response.getTicket().getTicket().getHash()).toString("hex")),
-      reverseHash(Buffer.from(response.getTicket().getSpender().getHash()).toString("hex")));
       tickets.unshift(newTicket);
     });
     getTx.on("end", function () {
-      console.log(tickets.length);
       setTimeout(() => { dispatch({ tickets: tickets, type: GETTICKETS_COMPLETE });}, 1000);
     });
     getTx.on("error", function (error) {
@@ -608,5 +586,16 @@ export function getMessageVerificationServiceAttempt() {
         dispatch({ messageVerificationService, type: GETMESSAGEVERIFICATIONSERVICE_SUCCESS });
       }
     });
+  };
+}
+
+export function listenForAppReloadRequest(cb) {
+  return () => {
+    onAppReloadRequested(cb);
+  };
+}
+export function showTicketList(status) {
+  return (dispatch) => {
+    dispatch(pushHistory("/tickets/mytickets/" + status));
   };
 }

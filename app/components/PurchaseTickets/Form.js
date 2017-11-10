@@ -1,12 +1,12 @@
-import NumTicketsInput from "../NumTicketsInput";
-import ManagePoolsButton from "../ManagePoolsButton";
-import SelectStakePool from "../SelectStakePool";
-import KeyBlueButton from "../KeyBlueButton";
-import PurchaseTicketsInfoButton from "../PurchaseTicketsInfoButton";
-import TicketsCogs from "../TicketsCogs";
+import NumTicketsInput from "NumTicketsInput";
+import ManagePoolsButton from "ManagePoolsButton";
+import SelectStakePool from "SelectStakePool";
+import KeyBlueButton from "KeyBlueButton";
+import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
+import TicketsCogs from "TicketsCogs";
 import { FeeInput, BlocksInput, AddressInput, AccountsSelect } from "inputs";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
-import { LinkToAccounts, Tooltip } from "shared";
+import { Tooltip } from "shared";
 import { addSpacingAroundText } from "helpers/strings";
 import "style/StakePool.less";
 
@@ -78,9 +78,8 @@ const PurchaseTicketsForm = ({
             <div className="stakepool-purchase-ticket-account-select-label"><T id="purchaseTickets.account" m="Account" />:</div>
             <div className="stakepool-purchase-ticket-input-select">
               <AccountsSelect
-                {...{ account }} onChange={onChangeAccount} />
+                {...{ account }} onChange={onChangeAccount} showAccountsButton={true} />
             </div>
-            <LinkToAccounts />
           </div>
           <div className="stakepool-purchase-ticket-row-num-tickets">
             <div className="stakepool-purchase-ticket-label">

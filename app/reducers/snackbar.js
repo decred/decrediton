@@ -1,11 +1,10 @@
-import { reverseHash } from "../helpers/byteActions";
 import { defineMessages } from "react-intl";
 import {
-  PUBLISHTX_SUCCESS, PUBLISHTX_FAILED,
+  PUBLISHTX_FAILED,
   SIGNTX_FAILED, CONSTRUCTTX_FAILED,
   PURCHASETICKETS_SUCCESS, PURCHASETICKETS_FAILED,
   STARTAUTOBUYER_SUCCESS, STARTAUTOBUYER_FAILED,
-  STOPAUTOBUYER_SUCCESS, STOPAUTOBUYER_FAILED,
+  STOPAUTOBUYER_SUCCESS,
   REVOKETICKETS_SUCCESS, REVOKETICKETS_FAILED,
   IMPORTSCRIPT_SUCCESS, IMPORTSCRIPT_FAILED,
 } from "../actions/ControlActions";
@@ -13,6 +12,7 @@ import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
   SETSTAKEPOOLVOTECHOICES_SUCCESS, SETSTAKEPOOLVOTECHOICES_FAILED
 } from "../actions/StakePoolActions";
+import { TRANSACTIONNTFNS_DATA_UNMINED } from "../actions/NotificationActions";
 import { SNACKBAR_DISMISS_MESSAGES } from "../actions/SnackbarActions";
 
 const messages = defineMessages({
@@ -68,10 +68,6 @@ const messages = defineMessages({
     id: "tickets.stopAutoBuyerHeader",
     defaultMessage: "Ticket buyer is now stopped."
   },
-  STOPAUTOBUYER_FAILED: {
-    id: "tickets.errors.stopAutoBuyerFailed",
-    defaultMessage: "{originalError}"
-  },
   UPDATESTAKEPOOLCONFIG_SUCCESS: {
     id: "tickets.updateStakePoolConfigHeader",
     defaultMessage: "You have successfully updated your stakepool settings."
@@ -98,11 +94,9 @@ export default function snackbar(state = {}, action) {
   case SNACKBAR_DISMISS_MESSAGES:
     return { state, messages: Array() };
 
-  // events that generate a snackbar message
-  case PUBLISHTX_SUCCESS: {
-    const r = action.publishTransactionResponse;
-    values = { hash: reverseHash(r.toString("hex")) };
-    type = "Success";
+  case TRANSACTIONNTFNS_DATA_UNMINED: {
+    values = { message: action.unminedMessage};
+    type = action.unminedMessage.type;
     break;
   }
 
@@ -162,11 +156,6 @@ export default function snackbar(state = {}, action) {
     type = "Success";
     break;
 
-  case STOPAUTOBUYER_FAILED:
-    values = { originalError: String(action.error) };
-    type = "Error";
-    break;
-
   case UPDATESTAKEPOOLCONFIG_SUCCESS:
     type = "Success";
     break;
@@ -185,11 +174,18 @@ export default function snackbar(state = {}, action) {
     type = "Error";
     break;
   }
-  if (values || type) {
+  if ((values || type) && action.type !== TRANSACTIONNTFNS_DATA_UNMINED) {
     state.messages = state.messages.slice();
     state.messages.push({
       type: type,
       message: messages[action.type],
+      values: values
+    });
+  } else if (action.type == TRANSACTIONNTFNS_DATA_UNMINED) {
+    state.messages = state.messages.slice();
+    state.messages.push({
+      type: type,
+      message: action.unminedMessage,
       values: values
     });
   }

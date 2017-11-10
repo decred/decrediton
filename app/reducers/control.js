@@ -360,7 +360,7 @@ export default function control(state = {}, action) {
     };
   case STOPAUTOBUYER_FAILED:
     return {...state,
-      stopAutoBuyerError: String(action.error),
+      //stopAutoBuyerError: String(action.error),
       stopAutoBuyerRequestAttempt: false,
     };
   case STOPAUTOBUYER_SUCCESS:

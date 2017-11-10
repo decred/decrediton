@@ -12,6 +12,8 @@ import SignTab from "./components/views/SecurityPage/SignMessage";
 import VerifyTab from "./components/views/SecurityPage/VerifyMessage";
 import PurchaseTab from "./components/views/TicketsPage/PurchaseTab";
 import MyTicketsTab from "./components/views/TicketsPage/MyTicketsTab";
+import MyTicketsOverview from "./components/views/TicketsPage/MyTicketsTab/TicketsOverview";
+import MyTicketsList from "./components/views/TicketsPage/MyTicketsTab/TicketListPage";
 import GovernanceTab from "./components/views/TicketsPage/GovernanceTab";
 import StatisticsTab from "./components/views/TicketsPage/StatisticsTab";
 import GetStartedPage from "./components/views/GetStartedPage";
@@ -20,6 +22,7 @@ import WalletError from "./components/views/WalletError";
 import Help from "./components/views/Help";
 import ErrorScreen from "./components/ErrorScreen";
 import InvalidRPCVersion from "./components/views/InvalidRPCVersion";
+import ShutdownAppPage from "./components/views/ShutdownAppPage";
 
 export default (
   <Route     path="/"                           component={App}>
@@ -36,7 +39,10 @@ export default (
     <Route   path="tickets"                     component={TabbedPage}        desc ticketprice>
       <IndexRedirect to="purchase"/>
       <Route path="purchase"                    component={PurchaseTab}/>
-      <Route path="mytickets"                   component={MyTicketsTab}/>
+      <Route path="mytickets"                   component={MyTicketsTab}>
+        <IndexRoute                             component={MyTicketsOverview}/>
+        <Route path=":status"                   component={MyTicketsList}/>
+      </Route>
       <Route path="governance"                  component={GovernanceTab}/>
       <Route path="statistics"                  component={StatisticsTab}/>
     </Route>
@@ -50,5 +56,6 @@ export default (
     <Route   path="walletError"                 component={WalletError}       noIcon/>
     <Route   path="error"                       component={ErrorScreen}       noIcon/>
     <Route   path="invalidRPCVersion"           component={InvalidRPCVersion} noIcon/>
+    <Route   path="shutdown"                    component={ShutdownAppPage}/>
   </Route>
 );
