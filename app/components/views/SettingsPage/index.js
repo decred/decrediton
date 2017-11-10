@@ -14,11 +14,6 @@ class Settings extends Component {
     };
   }
 
-  componentWillMount() {
-    this.props.onClearChangePassphraseError();
-    this.props.onClearChangePassphraseSuccess();
-  }
-
   render() {
     const {
       locales,
