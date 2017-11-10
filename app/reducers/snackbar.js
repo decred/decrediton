@@ -84,6 +84,30 @@ const messages = defineMessages({
     id: "tickets.errors.setStakePoolVoteChoicesFailed",
     defaultMessage: "{originalError}"
   },
+  RENAMEACCOUNT_SUCCESS: {
+    id: "accounts.renameAccount",
+    defaultMessage: "Successfully renamed account."
+  },
+  RENAMEACCOUNT_FAILED:{
+    id: "accounts.errors.renameAccountFailed",
+    defaultMessage: "{originalError}"
+  },
+  GETNEXTACCOUNT_SUCCESS:{
+    id: "accounts.nextAccount",
+    defaultMessage: "Successfully created a new account."
+  },
+  GETNEXTACCOUNT_FAILED:{
+    id: "accounts.errors.getNextAccountFailed",
+    defaultMessage: "{originalError}"
+  },
+  CHANGEPASSPHRASE_SUCCESS:{
+    id: "settings.changePassphrase",
+    defaultMessage: "Successfully changed private passphrase."
+  },
+  CHANGEPASSPHRASE_FAILED: {
+    id: "settings.errors.changePassphraseFailed",
+    defaultMessage: "{originalError}"
+  },
 });
 
 export default function snackbar(state = {}, action) {
@@ -97,6 +121,31 @@ export default function snackbar(state = {}, action) {
   case TRANSACTIONNTFNS_DATA_UNMINED: {
     values = { message: action.unminedMessage};
     type = action.unminedMessage.type;
+    break;
+  }
+
+  case RENAMEACCOUNT_SUCCESS: {
+    break;
+  }
+  case RENAMEACCOUNT_FAILED: {
+    values = { originalError: String(action.error) };
+    type = "Error";
+    break;
+  }
+  case GETNEXTACCOUNT_SUCCESS: {
+    break;
+  }
+  case GETNEXTACCOUNT_FAILED: {
+    values = { originalError: String(action.error) };
+    type = "Error";
+    break;
+  }
+  case CHANGEPASSPHRASE_SUCCESS: {
+    break;
+  }
+  case CHANGEPASSPHRASE_FAILED: {
+    values = { originalError: String(action.error) };
+    type = "Error";
     break;
   }
 

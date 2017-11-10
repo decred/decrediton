@@ -16,8 +16,6 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  onClearChangePassphraseError: ca.clearChangePassphraseError,
-  onClearChangePassphraseSuccess: ca.clearChangePassphraseSuccess,
   onAttemptChangePassphrase: ca.changePassphraseAttempt,
   onChangeTempSettings: sa.updateStateSettingsChanged,
   onSaveSettings: sa.saveSettings,

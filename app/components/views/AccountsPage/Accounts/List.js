@@ -13,14 +13,6 @@ import PurchaseTicketsInfoButton from "../../../PurchaseTicketsInfoButton";
 const AccountsList = ({
   accounts,
   isLoading,
-  getNextAccountSuccess,
-  onClearNewAccountError,
-  getNextAccountError,
-  onClearNewAccountSuccess,
-  renameAccountSuccess,
-  onClearRenameAccountSuccess,
-  renameAccountError,
-  onClearRenameAccountError,
   onShowAddAccount,
   onShowAccount,
   onHideAccount,
@@ -35,55 +27,6 @@ const AccountsList = ({
   <div className="page-view">
     <Header
       headerTitleOverview={<T id="accounts.title" m="Accounts" />}
-      headerTop={[
-        (getNextAccountError !== null) ? (
-          <div
-            key="accountError"
-            className="account-view-notification-error"
-          ><div
-            className="account-nest-address-delete-icon"
-            onClick={onClearNewAccountError}
-          ></div>{getNextAccountError}</div>
-        ) : (
-          <div key="accountError" ></div>
-        ),
-
-        (getNextAccountSuccess !== null) ? (
-          <div
-            key="accountSuccess"
-            className="account-view-notification-success"
-          ><div
-            className="account-nest-address-delete-icon"
-            onClick={onClearNewAccountSuccess}
-          ></div>{getNextAccountSuccess}</div>
-        ) : (
-          <div key="accountSuccess" ></div>
-        ),
-
-        (renameAccountSuccess !== null) ? (
-          <div
-            key="renameAccountSuccess"
-            className="account-view-notification-success"
-          ><div
-            className="account-nest-address-delete-icon"
-            onClick={onClearRenameAccountSuccess}
-          ></div>{renameAccountSuccess}</div>
-        ) : (
-          <div key="renameAccountSuccess" ></div>
-        ),
-
-        (renameAccountError !== null) ? (
-          <div
-            key="renameAccountError"
-            className="account-view-notification-error"
-          ><div
-            className="account-nest-address-delete-icon"
-            onClick={onClearRenameAccountError}
-          ></div>{renameAccountError}</div>
-        ) : (
-          <div key="renameAccountError" ></div>
-        )
-      ]}
       headerMetaOverview={
         <KeyBlueButton
           className="add-new-account-button"
