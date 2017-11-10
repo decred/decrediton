@@ -2,7 +2,7 @@
 # Matheus Degiovani <mathdegiovani@gmail.com>, 2017
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-11-07T20:14:35.959Z\n"
+"POT-Creation-Date: 2017-11-10T17:58:25.484Z\n"
 "Last-Translator: Matheus Degiovani <mathdegiovani@gmail.com>, 2017\n"
 "Language-Team: Portuguese (https://www.transifex.com/decred/teams/79156/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -1385,24 +1385,24 @@ msgstr "Assinatura inválida"
 #. [ticket.rewardCalc]
 #. defaultMessage is:
 #. Investment: {investment}
-#.     Transaction Fee: {txFee}
-#.     Pool Fee: {poolFee}
-#.     Ticket Reward: {reward}
-#.     ROI: {roi, number, precise-percent}
+#.       Transaction Fee: {txFee}
+#.       Pool Fee: {poolFee}
+#.       {rewardLabel}: {reward}
+#.       ROI: {roi, number, precise-percent}
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
 msgctxt "ticket.rewardCalc"
 msgid ""
 "Investment: {investment}\n"
-"    Transaction Fee: {txFee}\n"
-"    Pool Fee: {poolFee}\n"
-"    Ticket Reward: {reward}\n"
-"    ROI: {roi, number, precise-percent}"
+"      Transaction Fee: {txFee}\n"
+"      Pool Fee: {poolFee}\n"
+"      {rewardLabel}: {reward}\n"
+"      ROI: {roi, number, precise-percent}"
 msgstr ""
-"Investimento: {investment}\n"
-"    Taxa de transação: {txFee}\n"
-"    Taxa de Pool: {poolFee}\n"
-"    Recompensa do ticket: {reward}\n"
-"    ROI: {roi, number, precise-percent}"
+"Investmento: {investment}\n"
+"      Taxa de Transação: {txFee}\n"
+"      Taxa da Pool: {poolFee}\n"
+"      {rewardLabel}: {reward}\n"
+"      ROI: {roi, number, precise-percent}"
 
 #. [accounts.keys]
 #. defaultMessage is:
@@ -2956,6 +2956,14 @@ msgctxt "purchaseTickets.ticketFeeTip"
 msgid "Ticket Fee"
 msgstr "Taxa do Ticket"
 
+#. [ticket.lossLabel]
+#. defaultMessage is:
+#. Ticket Loss
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+msgctxt "ticket.lossLabel"
+msgid "Ticket Loss"
+msgstr "Valor Gasto"
+
 #. [accounts.balanceInfo]
 #. defaultMessage is:
 #. Ticket Purchase Information
@@ -2971,6 +2979,14 @@ msgstr "Informação sobre Compra de Tickets"
 msgctxt "tickets.info.title"
 msgid "Ticket Purchase Information"
 msgstr "Informações de compra de ticket"
+
+#. [ticket.rewardLabel]
+#. defaultMessage is:
+#. Ticket Reward
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+msgctxt "ticket.rewardLabel"
+msgid "Ticket Reward"
+msgstr "Recompensa do Ticket"
 
 #. [tickets.startAutoBuyerHeader]
 #. defaultMessage is:
@@ -3502,13 +3518,11 @@ msgstr "Escreva a seed a seguir e salve-a em um lugar seguro."
 
 #. [tickets.purchaseTicketsHeader]
 #. defaultMessage is:
-#. You bought {numTickets} tickets
+#. You bought {numTickets, plural, one {# ticket } other {# tickets }}
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "tickets.purchaseTicketsHeader"
-msgid "You bought {numTickets} tickets"
-msgstr ""
-"Você comprou {numTIckets, plural, one { # ticket } other { # tickets } } "
-"tickets"
+msgid "You bought {numTickets, plural, one {# ticket } other {# tickets }}"
+msgstr "Você comprou {numTickets, plural, one {# ticket } other {# tickets }}"
 
 #. [home.revokeTicketMessage]
 #. defaultMessage is:
@@ -3574,7 +3588,7 @@ msgstr "cancelar"
 #. [ticket.status.expired]
 #. defaultMessage is:
 #. expired
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.expired"
 msgid "expired"
 msgstr "expirado"
@@ -3582,7 +3596,7 @@ msgstr "expirado"
 #. [ticket.status.immature]
 #. defaultMessage is:
 #. immature
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.immature"
 msgid "immature"
 msgstr "imaturo"
@@ -3590,7 +3604,7 @@ msgstr "imaturo"
 #. [ticket.status.live]
 #. defaultMessage is:
 #. live
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.live"
 msgid "live"
 msgstr "live"
@@ -3598,7 +3612,7 @@ msgstr "live"
 #. [ticket.status.missed]
 #. defaultMessage is:
 #. missed
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.missed"
 msgid "missed"
 msgstr "perdidos"
@@ -3614,7 +3628,7 @@ msgstr "requer reinício"
 #. [ticket.status.revoked]
 #. defaultMessage is:
 #. revoked
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.revoked"
 msgid "revoked"
 msgstr "revogado"
@@ -3638,7 +3652,7 @@ msgstr "esse link"
 #. [ticket.status.unknown]
 #. defaultMessage is:
 #. unknown
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.unknown"
 msgid "unknown"
 msgstr "desconhecido"
@@ -3646,7 +3660,7 @@ msgstr "desconhecido"
 #. [ticket.status.unmined]
 #. defaultMessage is:
 #. unmined
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.unmined"
 msgid "unmined"
 msgstr "não minerado"
@@ -3654,7 +3668,7 @@ msgstr "não minerado"
 #. [ticket.status.voted]
 #. defaultMessage is:
 #. voted
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 msgctxt "ticket.status.voted"
 msgid "voted"
 msgstr "votado"
@@ -3694,7 +3708,8 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketOverviewCard.json
 msgctxt "myTickets.statusCount"
 msgid "{count, plural, one {# ticket} other {# tickets}}"
-msgstr "{count, plural, one {# ticket} other {# tickets}}"
+msgstr ""
+"{count, plural, =0 { nenhum ticket } one {# ticket} other {# tickets}}"
 
 #. [accounts.keys.external]
 #. defaultMessage is:
@@ -3773,14 +3788,6 @@ msgstr "{originalError}"
 #. {originalError}
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "tickets.errors.startAutoBuyerFailed"
-msgid "{originalError}"
-msgstr "{originalError}"
-
-#. [tickets.errors.stopAutoBuyerFailed]
-#. defaultMessage is:
-#. {originalError}
-#: app/i18n/extracted/app/reducers/snackbar.json
-msgctxt "tickets.errors.stopAutoBuyerFailed"
 msgid "{originalError}"
 msgstr "{originalError}"
 

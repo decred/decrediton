@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-11-07T20:14:35.959Z\n"
+"POT-Creation-Date: 2017-11-10T17:58:25.484Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -1309,12 +1309,12 @@ msgstr ""
 #. [ticket.rewardCalc]
 #. defaultMessage is:
 #. Investment: {investment}
-#.     Transaction Fee: {txFee}
-#.     Pool Fee: {poolFee}
-#.     Ticket Reward: {reward}
-#.     ROI: {roi, number, precise-percent}
+#.       Transaction Fee: {txFee}
+#.       Pool Fee: {poolFee}
+#.       {rewardLabel}: {reward}
+#.       ROI: {roi, number, precise-percent}
 msgctxt "ticket.rewardCalc"
-msgid "Investment: {investment}\n    Transaction Fee: {txFee}\n    Pool Fee: {poolFee}\n    Ticket Reward: {reward}\n    ROI: {roi, number, precise-percent}"
+msgid "Investment: {investment}\n      Transaction Fee: {txFee}\n      Pool Fee: {poolFee}\n      {rewardLabel}: {reward}\n      ROI: {roi, number, precise-percent}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
@@ -2735,6 +2735,14 @@ msgctxt "purchaseTickets.ticketFeeTip"
 msgid "Ticket Fee"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#. [ticket.lossLabel]
+#. defaultMessage is:
+#. Ticket Loss
+msgctxt "ticket.lossLabel"
+msgid "Ticket Loss"
+msgstr ""
+
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 #. [accounts.balanceInfo]
 #. defaultMessage is:
@@ -2749,6 +2757,14 @@ msgstr ""
 #. Ticket Purchase Information
 msgctxt "tickets.info.title"
 msgid "Ticket Purchase Information"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#. [ticket.rewardLabel]
+#. defaultMessage is:
+#. Ticket Reward
+msgctxt "ticket.rewardLabel"
+msgid "Ticket Reward"
 msgstr ""
 
 #: app/i18n/extracted/app/reducers/snackbar.json
@@ -3239,9 +3255,9 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 #. [tickets.purchaseTicketsHeader]
 #. defaultMessage is:
-#. You bought {numTickets} tickets
+#. You bought {numTickets, plural, one {# ticket } other {# tickets }}
 msgctxt "tickets.purchaseTicketsHeader"
-msgid "You bought {numTickets} tickets"
+msgid "You bought {numTickets, plural, one {# ticket } other {# tickets }}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/HomePage/Page.json
@@ -3300,7 +3316,7 @@ msgctxt "passphraseModal.cancel"
 msgid "cancel"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 #. [ticket.status.expired]
 #. defaultMessage is:
 #. expired
@@ -3308,7 +3324,7 @@ msgctxt "ticket.status.expired"
 msgid "expired"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 #. [ticket.status.immature]
 #. defaultMessage is:
 #. immature
@@ -3316,7 +3332,7 @@ msgctxt "ticket.status.immature"
 msgid "immature"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 #. [ticket.status.live]
 #. defaultMessage is:
 #. live
@@ -3324,7 +3340,7 @@ msgctxt "ticket.status.live"
 msgid "live"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 #. [ticket.status.missed]
 #. defaultMessage is:
 #. missed
@@ -3340,7 +3356,7 @@ msgctxt "settings.requiresRestart"
 msgid "requires restart"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 #. [ticket.status.revoked]
 #. defaultMessage is:
 #. revoked
@@ -3364,7 +3380,7 @@ msgctxt "stake.discoverStakeOoolsAPILink"
 msgid "this link"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 #. [ticket.status.unknown]
 #. defaultMessage is:
 #. unknown
@@ -3372,7 +3388,7 @@ msgctxt "ticket.status.unknown"
 msgid "unknown"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 #. [ticket.status.unmined]
 #. defaultMessage is:
 #. unmined
@@ -3380,7 +3396,7 @@ msgctxt "ticket.status.unmined"
 msgid "unmined"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 #. [ticket.status.voted]
 #. defaultMessage is:
 #. voted
@@ -3497,14 +3513,6 @@ msgstr ""
 #. defaultMessage is:
 #. {originalError}
 msgctxt "tickets.errors.startAutoBuyerFailed"
-msgid "{originalError}"
-msgstr ""
-
-#: app/i18n/extracted/app/reducers/snackbar.json
-#. [tickets.errors.stopAutoBuyerFailed]
-#. defaultMessage is:
-#. {originalError}
-msgctxt "tickets.errors.stopAutoBuyerFailed"
 msgid "{originalError}"
 msgstr ""
 
