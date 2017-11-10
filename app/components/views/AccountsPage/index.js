@@ -6,19 +6,7 @@ class AccountsPage extends React.Component {
   constructor(props)  { super(props); }
   state = { isShowingAddAccount: false };
 
-  componentWillMount() { this.clear(); }
-
-  clear() {
-    this.props.onClearNewAccountSuccess();
-    this.props.onClearNewAccountError();
-    this.props.onClearRenameAccountSuccess();
-    this.props.onClearRenameAccountError();
-  }
-
-  onToggleAddAccount() {
-    this.setState({ isShowingAddAccount: !this.state.isShowingAddAccount });
-    this.clear();
-  }
+  onToggleAddAccount() { this.setState({ isShowingAddAccount: !this.state.isShowingAddAccount }); }
 
   render() {
     const { routes } = this.props;

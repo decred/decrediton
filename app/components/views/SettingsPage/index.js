@@ -11,11 +11,6 @@ class Settings extends React.Component {
     };
   }
 
-  componentWillMount() {
-    this.props.onClearChangePassphraseError();
-    this.props.onClearChangePassphraseSuccess();
-  }
-
   render() {
     const {
       locales,

@@ -1,13 +1,10 @@
 import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   RENAMEACCOUNT_ATTEMPT, RENAMEACCOUNT_FAILED, RENAMEACCOUNT_SUCCESS,
-  RENAMEACCOUNT_CLEAR_ERROR, RENAMEACCOUNT_CLEAR_SUCCESS,
   RESCAN_ATTEMPT, RESCAN_FAILED, RESCAN_PROGRESS, RESCAN_COMPLETE,
   GETNEXTACCOUNT_ATTEMPT, GETNEXTACCOUNT_FAILED, GETNEXTACCOUNT_SUCCESS,
-  GETNEXTACCOUNT_CLEAR_ERROR, GETNEXTACCOUNT_CLEAR_SUCCESS,
   IMPORTPRIVKEY_ATTEMPT, IMPORTPRIVKEY_FAILED, IMPORTPRIVKEY_SUCCESS,
   IMPORTSCRIPT_ATTEMPT, IMPORTSCRIPT_FAILED, IMPORTSCRIPT_SUCCESS,
   CHANGEPASSPHRASE_ATTEMPT, CHANGEPASSPHRASE_FAILED, CHANGEPASSPHRASE_SUCCESS,
-  CHANGEPASSPHRASE_CLEAR_ERROR, CHANGEPASSPHRASE_CLEAR_SUCCESS,
   LOADACTIVEDATAFILTERS_ATTEMPT, LOADACTIVEDATAFILTERS_FAILED, LOADACTIVEDATAFILTERS_SUCCESS,
   FUNDTX_ATTEMPT, FUNDTX_FAILED, FUNDTX_SUCCESS,
   CLEARTX,
@@ -58,14 +55,6 @@ export default function control(state = {}, action) {
       renameAccountResponse: action.renameAccountResponse,
       renameAccountSuccess: action.renameAccountSuccess,
     };
-  case  RENAMEACCOUNT_CLEAR_ERROR:
-    return {...state,
-      renameAccountError: null,
-    };
-  case  RENAMEACCOUNT_CLEAR_SUCCESS:
-    return {...state,
-      renameAccountSuccess: null,
-    };
   case RESCAN_ATTEMPT:
     return {...state,
       rescanError: null,
@@ -104,14 +93,6 @@ export default function control(state = {}, action) {
       getNextAccountRequestAttempt: false,
       getNextAccountResponse: action.getNextAccountResponse,
       getNextAccountSuccess: action.successMessage,
-    };
-  case  GETNEXTACCOUNT_CLEAR_ERROR:
-    return {...state,
-      getNextAccountError: null,
-    };
-  case  GETNEXTACCOUNT_CLEAR_SUCCESS:
-    return {...state,
-      getNextAccountSuccess: null,
     };
   case IMPORTPRIVKEY_ATTEMPT:
     return {...state,
@@ -162,14 +143,6 @@ export default function control(state = {}, action) {
       changePassphraseRequestAttempt: false,
       changePassphraseResponse: action.changePassphraseResponse,
       changePassphraseSuccess: "Your private passphrase was successfully updated.",
-    };
-  case CHANGEPASSPHRASE_CLEAR_ERROR:
-    return {...state,
-      changePassphraseError: null,
-    };
-  case  CHANGEPASSPHRASE_CLEAR_SUCCESS:
-    return {...state,
-      changePassphraseSuccess: "",
     };
   case LOADACTIVEDATAFILTERS_ATTEMPT:
     return {...state,
