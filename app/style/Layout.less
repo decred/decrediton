@@ -57,12 +57,17 @@
   background-color: #f3f6f6;
   position: relative;
   height: calc(100% - 160px);
-  overflow-x: hidden;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .tab-content {
   position: absolute;
   width: 100%;
+  height: 100%;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .tab-card {
