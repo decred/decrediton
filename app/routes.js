@@ -9,8 +9,6 @@ import TransactionsReceiveTab from "./components/views/TransactionsPage/ReceiveT
 import TransactionPage from "./components/views/TransactionPage";
 import SettingsPage from "./components/views/SettingsPage";
 import SecurityPage from "./components/views/SecurityPage";
-import SignPage from "./components/SignMessage";
-import VerifyPage from "./components/VerifyMessage";
 import TicketsPage from "./components/views/TicketsPage";
 import TicketsPurchaseTab from "./components/views/TicketsPage/PurchaseTab";
 import TicketsMyTicketsTab from "./components/views/TicketsPage/MyTicketsTab";
@@ -37,11 +35,7 @@ export default (
       <Route path="receive" component={TransactionsReceiveTab}/>
     </Route>
     <Route path="/transactions/history/:txHash" component={TransactionPage} />
-    <Route path="/security" component={SecurityPage}>
-      <IndexRedirect to="sign"/>
-      <Route path="sign" component={SignPage} />
-      <Route path="verify" component={VerifyPage} />
-    </Route>
+    <Route path="/security" component={SecurityPage} />
     <Route path="/settings" component={SettingsPage} />
     <Route path="/tickets" component={TicketsPage}>
       <IndexRedirect to="purchase" />

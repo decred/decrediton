@@ -1,10 +1,8 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { Field, reduxForm } from "redux-form";
-import InputField from "../Form/InputField";
-import ErrorField from "../Form/ErrorField";
-import { validate } from "./validator";
-import { Link } from "react-router";
+import InputField from "Form/InputField";
 import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
+import { verifyMessageValidator } from "../validator";
 
 const messages = defineMessages({
   addressFieldLabel: {
@@ -33,29 +31,24 @@ const messages = defineMessages({
   },
 });
 
-const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError, formatMessage, onShowVerifyMessageInfo }) => {
-  if (rpcError) {
-    error = (
-      <div className="error">{rpcError}</div>
-    );
-  }
+const VerifyMessageForm = ({
+  onSubmitVerifyMessage,
+  formatMessage,
+  handleSubmit,
+  submitting,
+  pristine,
+  valid,
+  verifyMessageSuccess,
+  verifyMessageError,
+  onShowVerifyMessageInfo,
+  }) => {
 
   return (
     <Aux>
-      <div className="security-page-toggle">
-        <div className="text-toggle">
-          <Link to="/security/sign" className="text-toggle-button-left">
-            <T id="securitycenter.header.toggle.sign" m="Sign" />
-          </Link>
-          <div className="text-toggle-button-right text-toggle-button-active">
-            <T id="securitycenter.header.toggle.verify" m="Verify" />
-          </div>
-        </div>
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmitVerifyMessage)}>
         <div className="message-content-nest">
           <div className="button-right">
-            <PurchaseTicketsInfoButton onClick={onShowVerifyMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Verify Message Information"/>}/>
+            <PurchaseTicketsInfoButton onClick={onShowVerifyMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Verify Message Information" />} />
           </div>
           <Field
             classname="address"
@@ -80,30 +73,48 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
             component={InputField}
             placeholder={formatMessage(messages.messageFieldPlaceholder)}
           />
-          <Field
-            name="global"
-            component={ErrorField}
-          />
         </div>
-        {error && <div className="error">{error}</div>}
         <div className="message-toolbar">
-          <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
+          <button className="key-blue-button" type="submit" disabled={pristine || submitting || !valid}>
             <T id="securitycenter.verify.form.submit" m="Verify" />
           </button>
         </div>
       </form>
+      {
+        verifyMessageSuccess ?
+          verifyMessageSuccess.valid ?
+            (<div className="message-nest">
+              <div className="message-content valid">
+                <T id="securitycenter.verify.result.valid" m="Valid signature!" />
+              </div>
+            </div>) : (<div className="message-nest">
+              <div className="message-content invalid">
+                <T id="securitycenter.verify.result.invalid" m="Invalid signature!" />
+              </div>
+            </div>) :
+          null
+      }
+      {
+        verifyMessageError &&
+        (<div className="sign-message-error">
+          {formatMessage({ id: "securitycenter.verify.form.error", defaultMessage: verifyMessageError })}
+        </div>)
+      }
     </Aux>
+
   );
 };
 
 VerifyMessageForm.propTypes = {
-  formatMessage: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  onSubmitVerifyMessage: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
-  error: PropTypes.string,
-  rpcError: PropTypes.string,
+  valid: PropTypes.bool.isRequired,
+  formatMessage: PropTypes.func.isRequired,
+  onShowVerifyMessageInfo: PropTypes.func.isRequired,
+  verifyMessageError: PropTypes.string,
+  verifyMessageSuccess: PropTypes.object,
 };
 
-export default reduxForm({ form: "message/verify", validate })(VerifyMessageForm);
+export default reduxForm({ form: "message/verify", validate: verifyMessageValidator })(VerifyMessageForm);

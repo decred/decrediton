@@ -1,10 +1,9 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { Field, reduxForm } from "redux-form";
-import InputField from "../Form/InputField";
-import ErrorField from "../Form/ErrorField";
-import { Link } from "react-router";
+import InputField from "Form/InputField";
 import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
-import { validate } from "./validator";
+import { CopyToClipboard } from "shared";
+import { signMessageValidator } from "../validator";
 
 const messages = defineMessages({
   addressFieldLabel: {
@@ -33,29 +32,23 @@ const messages = defineMessages({
   },
 });
 
-const SignMessageForm = ({ handleSubmit, onSubmit, pristine, error, submitting, rpcError, formatMessage, onShowSignMessageInfo }) => {
-  if (rpcError) {
-    error = (
-      <div className="error">{rpcError}</div>
-    );
-  }
-
+const SignMessage = ({
+  onSubmitSignMessage,
+  formatMessage,
+  handleSubmit,
+  submitting,
+  pristine,
+  valid,
+  signMessageSuccess,
+  signMessageError,
+  onShowSignMessageInfo,
+ }) => {
   return (
     <Aux>
-      <div className="security-page-toggle">
-        <div className="text-toggle">
-          <div className="text-toggle-button-left text-toggle-button-active">
-            <T id="securitycenter.header.toggle.sign" m="Sign" />
-          </div>
-          <Link to="/security/verify" className="text-toggle-button-right">
-            <T id="securitycenter.header.toggle.verify" m="Verify" />
-          </Link>
-        </div>
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmitSignMessage)}>
         <div className="message-content-nest">
           <div className="button-right">
-            <PurchaseTicketsInfoButton onClick={onShowSignMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Sign Message Information"/>}/>
+            <PurchaseTicketsInfoButton onClick={onShowSignMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Sign Message Information" />} />
           </div>
           <Field
             label={formatMessage(messages.addressFieldLabel)}
@@ -77,30 +70,44 @@ const SignMessageForm = ({ handleSubmit, onSubmit, pristine, error, submitting, 
             type="password"
             placeholder={formatMessage(messages.passphraseFieldPlaceholder)}
           />
-          <Field
-            name="global"
-            component={ErrorField}
-          />
         </div>
-        {error && <div className="error">{error}</div>}
         <div className="message-toolbar">
-          <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
+          <button className="key-blue-button" type="submit" disabled={pristine || submitting || !valid}>
             <T id="securitycenter.sign.form.submit" m="Sign" />
           </button>
         </div>
       </form>
+      {
+        signMessageSuccess &&
+        (<div className="message-nest">
+          <div className="message-content">
+            <div>
+              {signMessageSuccess.signature}
+            </div>
+            <CopyToClipboard textToCopy={signMessageSuccess.signature} className="message-content-nest-copy-to-clipboard-icon" />
+          </div>
+        </div>)
+      }
+      {
+        signMessageError &&
+        (<div className="sign-message-error">
+          {formatMessage({ id: "securitycenter.sign.form.error", defaultMessage: signMessageError })}
+        </div>)
+      }
     </Aux>
   );
 };
 
-SignMessageForm.propTypes = {
+SignMessage.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  onSubmitSignMessage: PropTypes.func.isRequired,
   pristine: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
+  valid: PropTypes.bool.isRequired,
   formatMessage: PropTypes.func.isRequired,
-  error: PropTypes.string,
-  rpcError: PropTypes.string,
+  onShowSignMessageInfo: PropTypes.func.isRequired,
+  signMessageError: PropTypes.string,
+  signMessageSuccess: PropTypes.object,
 };
 
-export default reduxForm({ form: "message/sign", validate })(SignMessageForm);
+export default reduxForm({ form: "message/sign", validate: signMessageValidator })(SignMessage);

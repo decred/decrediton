@@ -347,6 +347,8 @@ export default function grpc(state = {}, action) {
   case SIGNMESSAGE_ATTEMPT:
     return {
       ...state,
+      getSignMessageError: null,
+      getSignMessageResponse: null,
       getSignMessageRequestAttempt: true,
     };
   case SIGNMESSAGE_FAILED:
@@ -373,6 +375,8 @@ export default function grpc(state = {}, action) {
   case VERIFYMESSAGE_ATTEMPT:
     return {
       ...state,
+      getVerifyMessageError: null,
+      getVerifyMessageResponse: null,
       getVerifyMessageRequestAttempt: true,
     };
   case VERIFYMESSAGE_FAILED:
