@@ -1,11 +1,10 @@
 // @flow
-import { transactionNtfs, accountNtfs } from "../middleware/grpc/client";
+import { getTransactionNotifications, getAccountNotifications, TransactionType } from "wallet";
+import * as sel from "selectors";
 import { getAccountsAttempt, getStakeInfoAttempt,
   getTicketPriceAttempt, getNetworkAttempt } from "./ClientActions";
 import { reverseHash } from "../helpers/byteActions";
-import { TransactionNotificationsRequest, AccountNotificationsRequest} from "../middleware/walletrpc/api_pb";
 import { GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_COINBASE, GETTRANSACTIONS_PROGRESS_TICKET, GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE } from "./ClientActions";
-import { TransactionDetails }  from "../middleware/walletrpc/api_pb";
 import { UPDATETIMESINCEBLOCK } from "./ClientActions";
 
 export const TRANSACTIONNTFNS_START = "TRANSACTIONNTFNS_START";
@@ -70,15 +69,15 @@ function transactionNtfnsData(response) {
                     blockHash: attachedBlocks[j].getHash(),
                     type: attachedBlocks[j].getTransactionsList()[i].getTransactionType(),
                   };
-                  if (tx.type == TransactionDetails.TransactionType.REGULAR) {
+                  if (tx.type == TransactionType.REGULAR) {
                     updatedRegular.unshift(tx);
-                  } else if (tx.type == TransactionDetails.TransactionType.COINBASE) {
+                  } else if (tx.type == TransactionType.COINBASE) {
                     updatedCoinbase.unshift(tx);
-                  } else if (tx.type == TransactionDetails.TransactionType.TICKET_PURCHASE) {
+                  } else if (tx.type == TransactionType.TICKET_PURCHASE) {
                     updatedTicket.unshift(tx);
-                  } else if (tx.type == TransactionDetails.TransactionType.VOTE) {
+                  } else if (tx.type == TransactionType.VOTE) {
                     updatedVote.unshift(tx);
-                  } else if (tx.type == TransactionDetails.TransactionType.REVOKE) {
+                  } else if (tx.type == TransactionType.REVOKE) {
                     updatedRevoke.unshift(tx);
                   }
                   unminedFound = true;
@@ -143,15 +142,15 @@ function transactionNtfnsData(response) {
             outputAmts += response.getUnminedTransactionsList()[z].getCreditsList()[i].getAmount();
           }
           var amount = outputAmts - inputAmts;
-          if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.COINBASE) {
+          if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionType.COINBASE) {
             type = "Coinbase";
-          } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.TICKET_PURCHASE) {
+          } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionType.TICKET_PURCHASE) {
             amount = outputAmts;
             type = "Ticket";
-          } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.VOTE) {
+          } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionType.VOTE) {
             type = "Vote";
             setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
-          } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionDetails.TransactionType.REVOKE) {
+          } else if (response.getUnminedTransactionsList()[z].getTransactionType() == TransactionType.REVOKE) {
             type = "Revoke";
             setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
           }
@@ -177,53 +176,26 @@ function transactionNtfnsData(response) {
   };
 }
 
-export function transactionNtfnsStart() {
-  var request = new TransactionNotificationsRequest();
-  return (dispatch, getState) => {
-    dispatch({ type: TRANSACTIONNTFNS_START });
-    const { walletService } = getState().grpc;
-    transactionNtfs(walletService, request,
-      function(data) {
-        dispatch(transactionNtfnsData(data));
-      }
-    );
-  };
-}
+export const transactionNtfnsStart = () => (dispatch, getState) => {
+  dispatch({ type: TRANSACTIONNTFNS_START });
+  return getTransactionNotifications(sel.walletService(getState()))
+    .then(data => dispatch(transactionNtfnsData(data)));
+};
 
-export function transactionNtfnsEnd() {
-  var request = {};
-  return (dispatch) => {
-    dispatch({request: request, type: TRANSACTIONNTFNS_END });
-    //
-  };
-}
+export const transactionNtfnsEnd = () => (dispatch) =>
+  dispatch({ request: {}, type: TRANSACTIONNTFNS_END });
 
 export const ACCOUNTNTFNS_START = "ACCOUNTNTFNS_START";
 export const ACCOUNTNTFNS_FAILED = "ACCOUNTNTFNS_FAILED";
 export const ACCOUNTNTFNS_DATA = "ACCOUNTNTFNS_DATA";
 export const ACCOUNTNTFNS_END = "ACCOUNTNTFNS_END";
 
-export function accountNtfnsStart() {
-  var request = new AccountNotificationsRequest();
-  return (dispatch, getState) => {
-    dispatch({request: request, type: ACCOUNTNTFNS_START });
-    const { walletService } = getState().grpc;
-    accountNtfs(walletService, request,
-      function(data) {
-        dispatch({ response: data, type: ACCOUNTNTFNS_DATA });
-      }
-    );
-  };
-}
+export const accountNtfnsStart = () => (dispatch, getState) => {
+  dispatch({ type: ACCOUNTNTFNS_START });
+  return getAccountNotifications(sel.walletService(getState()))
+    .then(response => dispatch({ response, type: ACCOUNTNTFNS_DATA }));
+};
 
-export function accountNtfnsEnd() {
-  return (dispatch) => {
-    dispatch({ type: ACCOUNTNTFNS_END });
-    //
-  };
-}
-
+export const accountNtfnsEnd = () => (dispatch) => dispatch({ type: ACCOUNTNTFNS_END });
 export const CLEARUNMINEDMESSAGE = "CLEARUNMINEDMESSAGE";
-export function clearNewUnminedMessage() {
-  return { type: CLEARUNMINEDMESSAGE };
-}
+export const clearNewUnminedMessage = () => ({ type: CLEARUNMINEDMESSAGE });
