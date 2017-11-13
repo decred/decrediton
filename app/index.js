@@ -161,9 +161,13 @@ var initialState = {
 
     // GetTransactions
     transactions: [], // all transactions obtained
-    transactionsListDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
-    maximumTransactionCount: 40,
-    noMoreTransactions: true,
+    maximumTransactionCount: 2,
+    noMoreTransactions: false,
+    transactionsFilter: {
+      listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
+      types: [], // desired transaction types (code). All if blank.
+    },
+    lastTransaction: null, //last transaction obtained
     filteredTransactions: [],
 
     // GetTransactionInfo

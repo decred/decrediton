@@ -14,6 +14,7 @@ import {
   GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_COINBASE,
   GETTRANSACTIONS_PROGRESS_TICKET,
   GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE,
+  CHANGE_TRANSACTIONS_FILTER,
   UPDATETIMESINCEBLOCK,
   GETTICKETS_ATTEMPT, GETTICKETS_FAILED, GETTICKETS_COMPLETE,
   GETAGENDASERVICE_ATTEMPT, GETAGENDASERVICE_FAILED, GETAGENDASERVICE_SUCCESS,
@@ -273,12 +274,22 @@ export default function grpc(state = {}, action) {
       revokeTransactionsInfo: action.revokeTransactionsInfo,*/
       transactions: action.transactions,
       noMoreTransactions: action.noMoreTransactions,
+      lastTransaction: action.lastTransaction,
       getTransactionsRequestError: "",
       getTransactionsRequestAttempt: false,
     };
   case TRANSACTIONS_FILTERED:
     return {
+      ...state,
       filteredTransactions: action.filteredTransactions
+    };
+  case CHANGE_TRANSACTIONS_FILTER:
+    return {
+      ...state,
+      transactionsFilter: action.transactionsFilter,
+      transactions: [],
+      lastTransaction: null,
+      noMoreTransactions: false
     };
   case GETTRANSACTIONS_PROGRESS:
     return {

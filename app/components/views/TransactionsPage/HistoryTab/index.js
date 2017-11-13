@@ -55,7 +55,8 @@ class History extends React.Component {
             onChangeSelectedType: null,
             onShowTxDetail: null,
             onClearTxDetail: null,
-            onPageChanged: null
+            onPageChanged: null,
+            onLoadMoreTransactions: null
           }, this)
         }}
       />
@@ -63,11 +64,24 @@ class History extends React.Component {
   }
 
   getTxTypes() {
-    const { formatMessage } = this.props.intl;
-    return Object.keys(this.props.transactions)
-      .filter(key => this.props.transactions[key].length > 0)
-      .map(name => {
-        return ({ value: name, label: formatMessage(messages[name]) }); });
+    //const { formatMessage } = this.props.intl;
+    // TODO: get from api_pb
+    // REGULAR: 0,
+    // COINBASE: 4,
+    // TICKET_PURCHASE: 1,
+    // VOTE: 2,
+    // REVOCATION: 3
+    return [
+      {value: [0], label: "Regular"},
+      {value: [4], label: "Coinbase"},
+      {value: [1], label: "Ticket"},
+      {value: [2], label: "Vote"},
+      {value: [3], label: "Revocation"},
+    ];
+    // return Object.keys(this.props.transactions)
+    //   .filter(key => this.props.transactions[key].length > 0)
+    //   .map(name => {
+    //     return ({ value: name, label: formatMessage(messages[name]) }); });
   }
 
   getTxs() {
@@ -83,10 +97,15 @@ class History extends React.Component {
   }
 
   getPaginatedTxs() {
-    const { currentPage } = this.state;
-    const { txPerPage } = this.props;
-    const start = currentPage * txPerPage;
-    return this.getTxs().slice(start, start + txPerPage);
+    // const { currentPage } = this.state;
+    // const { txPerPage } = this.props;
+    // const start = currentPage * txPerPage;
+    // return this.getTxs().slice(start, start + txPerPage);
+    return this.props.transactions;
+  }
+
+  onLoadMoreTransactions() {
+    this.props.getTransactions();
   }
 
   onPageChanged(newPage) {
@@ -94,10 +113,15 @@ class History extends React.Component {
   }
 
   onChangeSelectedType(type) {
-    this.setState({
-      selectedType: type.value,
-      currentPage: 0
-    });
+    // this.setState({
+    //   selectedType: type.value,
+    //   currentPage: 0
+    // });
+    const newFilter = {
+      ...this.props.transactionsFilter,
+      types: type.value
+    };
+    this.props.changeTransactionsFilter(newFilter);
   }
 
   onShowTxDetail(transactionDetails) {

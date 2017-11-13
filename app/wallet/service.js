@@ -4,6 +4,7 @@ import {
   NextAddressRequest,
   DecodeRawTransactionRequest,
   ValidateAddressRequest,
+  GetTransactionsRequest,
 } from "middleware/walletrpc/api_pb";
 
 const promisify = fn => (...args) => new Promise((ok, fail) => fn(...args,
@@ -46,5 +47,44 @@ export const decodeTransaction = (decodeMessageService, hexTx) =>
       } else {
         resolve(tx);
       }
+    });
+  });
+
+export const getTransactions = (walletService, startBlockHeight,
+  endBlockHeight, maximumBlockCount) =>
+  new Promise((resolve, reject) => {
+    var request = new GetTransactionsRequest();
+    request.setStartingBlockHeight(startBlockHeight);
+    request.setEndingBlockHeight(endBlockHeight);
+    request.setMaximumTransactionCount(maximumBlockCount);
+
+    var found = [];
+    var getTx = walletService.getTransactions(request);
+
+    getTx.on("data", (response) => {
+      var minedBlocks = response.getMinedTransactions();
+      for (var i = 0; i < minedBlocks.getTransactionsList().length; i++) {
+        var newHeight = response.getMinedTransactions().getHeight();
+        var t = minedBlocks.getTransactionsList()[i];
+        var tx = {
+          timestamp: response.getMinedTransactions().getTimestamp(),
+          tx: t,
+          height: newHeight,
+          index: i,
+          hash: t.getHash(),
+          blockHash: response.getMinedTransactions().getHash(),
+          type: t.getTransactionType(),
+        };
+        found.push(tx);
+      }
+
+      // TODO: unmined
+      //dispatch({ mined, type: GETTRANSACTIONS_PROGRESS});
+    });
+    getTx.on("end", () => {
+      resolve(found);
+    });
+    getTx.on("error", (err) => {
+      reject(err);
     });
   });

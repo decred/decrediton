@@ -12,6 +12,7 @@ import { GetTransactionsRequest } from "../middleware/walletrpc/api_pb";
 import { TransactionDetails }  from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
 import { onAppReloadRequested } from "wallet";
+import { getTransactions as walletGetTransactions } from "wallet/service";
 
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
@@ -350,25 +351,19 @@ export function getTransactionInfoAttempt() {
   };
 }
 
-function filterTransactions() {
-  return (dispatch, getState) => {
-    const { transactions, maximumTransactionCount, noMoreTransactions } = getState().grpc;
-
-    const filteredTransactions = transactions.slice(0, maximumTransactionCount);
-    if ( (transactions.length >= maximumTransactionCount) || noMoreTransactions )   {
-      dispatch({filteredTransactions, noMoreTransactions, type: TRANSACTIONS_FILTERED});
-    } else {
-      dispatch(getTransactions());
-    }
-  };
+function filterTransactions(transactions, filter) {
+  console.log("filtering", filter, transactions);
+  return transactions
+    .filter(v => filter.types.length ? filter.types.indexOf(v.type) > -1 : true );
 }
 
 export function getTransactions() {
-
   return (dispatch, getState) => {
     const { getAccountsResponse, getTransactionsRequestAttempt,
-      transactionsListDirection, maximumTransactionCount, transactions } = getState().grpc;
-    if (getTransactionsRequestAttempt) return;
+      transactionsFilter, walletService, transactions,
+      maximumTransactionCount } = getState().grpc;
+    let { noMoreTransactions, lastTransaction } = getState().grpc;
+    if (getTransactionsRequestAttempt || noMoreTransactions) return;
 
     // Check to make sure getAccountsResponse (which has current block height) is available
     if (getAccountsResponse === null) {
@@ -378,52 +373,46 @@ export function getTransactions() {
     }
     dispatch({ type: GETTRANSACTIONS_ATTEMPT });
 
-    var startRequestHeight, endRequestHeight;
-    if ( transactionsListDirection === "desc" ) {
-      startRequestHeight = transactions.length ? transactions[transactions.length-1].height -1 : getAccountsResponse.getCurrentBlockHeight();
-      endRequestHeight = 1;
-    } else {
-      startRequestHeight = transactions.length ? transactions[transactions.length-1].height +1 : 1;
-      endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
-    }
+    (async function () {
+      const pageCount = maximumTransactionCount;
+      var filtered = [];
+      var startRequestHeight, endRequestHeight;
 
-    const pageCount = 20; // TODO == maximumTransactionCount
+      while (!noMoreTransactions && (filtered.length < maximumTransactionCount)) {
+        if ( transactionsFilter.listDirection === "desc" ) {
+          startRequestHeight = lastTransaction ? lastTransaction.height -1 : getAccountsResponse.getCurrentBlockHeight();
+          endRequestHeight = 1;
+        } else {
+          startRequestHeight = lastTransaction ? lastTransaction.height +1 : 1;
+          endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
+        }
 
-    var request = new GetTransactionsRequest();
-    request.setStartingBlockHeight(startRequestHeight);
-    request.setEndingBlockHeight(endRequestHeight);
-    request.setMaximumTransactionCount(pageCount);
-
-    const { walletService } = getState().grpc;
-    var getTx = walletService.getTransactions(request);
-    var found = [];
-    getTx.on("data", function (response) {
-      for (var i = 0; i < response.getMinedTransactions().getTransactionsList().length; i++) {
-        var newHeight = response.getMinedTransactions().getHeight();
-        var tx = {
-          timestamp: response.getMinedTransactions().getTimestamp(),
-          tx: response.getMinedTransactions().getTransactionsList()[i],
-          height: newHeight,
-          index: i,
-          hash: response.getMinedTransactions().getTransactionsList()[i].getHash(),
-          blockHash: response.getMinedTransactions().getHash(),
-          type: response.getMinedTransactions().getTransactionsList()[i].getTransactionType(),
-        };
-        found.push(tx);
+        try {
+          var found = await walletGetTransactions(walletService,
+            startRequestHeight, endRequestHeight, pageCount);
+          noMoreTransactions = found.length === 0;
+          lastTransaction = found.length ? found[found.length -1] : lastTransaction;
+          var foundFiltered = filterTransactions(found, transactionsFilter);
+          filtered = [...filtered, ...foundFiltered];
+        } catch (error) {
+          dispatch({ type: GETTRANSACTIONS_FAILED, error});
+          return;
+        }
       }
 
-      // TODO: unmined
-      //dispatch({ mined, type: GETTRANSACTIONS_PROGRESS});
-    });
-    getTx.on("end", function () {
-      const noMoreTransactions = found.length === 0;
-      const updated = [...transactions, ...found];
-      dispatch({ transactions: updated, noMoreTransactions, type: GETTRANSACTIONS_COMPLETE});
-      dispatch(filterTransactions());
-    });
-    getTx.on("error", function (error) {
-      console.error(error + " Please try again");
-    });
+      const updated = [...transactions, ...filtered];
+
+      dispatch({ transactions: updated, noMoreTransactions,
+        lastTransaction, type: GETTRANSACTIONS_COMPLETE});
+    })();
+  };
+}
+
+export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
+export function changeTransactionsFilter(newFilter) {
+  return (dispatch) => {
+    dispatch({transactionsFilter: newFilter, type: CHANGE_TRANSACTIONS_FILTER});
+    dispatch(getTransactions());
   };
 }
 

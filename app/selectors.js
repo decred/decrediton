@@ -240,6 +240,12 @@ const transactionNormalizer = createSelector(
 
 export const transactionsNormalizer = createSelector([transactionNormalizer], map);
 
+export const transactionsFilter = get(["grpc", "transactionsFilter"]);
+
+export const filteredTransactions = createSelector(
+  [transactionsNormalizer, get(["grpc", "transactions"])], apply
+);
+
 const regularTransactions = createSelector(
   [transactionsNormalizer, get(["grpc", "transactions"])], apply
 );
