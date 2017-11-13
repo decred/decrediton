@@ -8,8 +8,6 @@ import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./S
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { showSidebarMenu } from "./SidebarActions";
 import { push as pushHistory } from "react-router-redux";
-import { GetTransactionsRequest } from "../middleware/walletrpc/api_pb";
-import { TransactionDetails }  from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
 import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";

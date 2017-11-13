@@ -2,7 +2,7 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import { isValidAddress } from "helpers";
-import { getAccountsAttempt, getTransactionInfoAttempt, getStakeInfoAttempt } from "./ClientActions";
+import { getAccountsAttempt, getStakeInfoAttempt } from "./ClientActions";
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   ConstructTransactionRequest, SignTransactionRequest,

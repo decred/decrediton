@@ -2,34 +2,34 @@ import { substruct } from "fp";
 import ErrorScreen from "ErrorScreen";
 import HistoryPage from "./Page";
 import { historyPage } from "connectors";
-import { injectIntl, defineMessages } from "react-intl";
+import { injectIntl } from "react-intl";
 
-const messages = defineMessages({
-  All: {
-    id: "transaction.type.all",
-    defaultMessage: "All"
-  },
-  Regular: {
-    id: "transaction.type.regular",
-    defaultMessage: "Regular"
-  },
-  Tickets: {
-    id: "transaction.type.tickets",
-    defaultMessage: "Tickets"
-  },
-  Votes: {
-    id: "transaction.type.votes",
-    defaultMessage: "Votes"
-  },
-  Revokes: {
-    id: "transaction.type.revokes",
-    defaultMessage: "Revokes"
-  },
-  Unmined: {
-    id: "transaction.type.unmined",
-    defaultMessage: "Unmined"
-  }
-});
+// const messages = defineMessages({
+//   All: {
+//     id: "transaction.type.all",
+//     defaultMessage: "All"
+//   },
+//   Regular: {
+//     id: "transaction.type.regular",
+//     defaultMessage: "Regular"
+//   },
+//   Tickets: {
+//     id: "transaction.type.tickets",
+//     defaultMessage: "Tickets"
+//   },
+//   Votes: {
+//     id: "transaction.type.votes",
+//     defaultMessage: "Votes"
+//   },
+//   Revokes: {
+//     id: "transaction.type.revokes",
+//     defaultMessage: "Revokes"
+//   },
+//   Unmined: {
+//     id: "transaction.type.unmined",
+//     defaultMessage: "Unmined"
+//   }
+// });
 
 @autobind
 class History extends React.Component {
