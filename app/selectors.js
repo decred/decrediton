@@ -91,6 +91,8 @@ export const isStartupProcessing = and(
 
 export const balances = or(get(["grpc", "balances"]), () => []);
 export const walletService = get(["grpc", "walletService"]);
+export const agendaService = get(["grpc", "agendaService"]);
+export const votingService = get(["grpc", "votingService"]);
 export const txPerPage = get(["grpc", "txPerPage"]);
 export const getBalanceRequestAttempt = get(["grpc", "getBalanceRequestAttempt"]);
 export const getAccountsResponse = get(["grpc", "getAccountsResponse"]);

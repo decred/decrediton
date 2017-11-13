@@ -1,9 +1,19 @@
 import Promise from "promise";
-import { getDecodeMessageService } from "middleware/grpc/client";
+import * as client from "middleware/grpc/client";
 import {
   NextAddressRequest,
   DecodeRawTransactionRequest,
 } from "middleware/walletrpc/api_pb";
+
+const promisify = fn => (...args) => new Promise((ok, fail) => fn(...args,
+  (res, err) => err ? fail(err) : ok(res)));
+
+export const getWalletService = promisify(client.getWalletService);
+export const getTicketBuyerService = promisify(client.getTicketBuyerService);
+export const getVotingService = promisify(client.getVotingService);
+export const getAgendaService = promisify(client.getAgendaService);
+export const getMessageVerificationService = promisify(client.getMessageVerificationService);
+export const getDecodeService = promisify(client.getDecodeMessageService);
 
 export const getNextAddress = (walletService, accountNum) =>
   new Promise((resolve, reject) => {
@@ -30,8 +40,3 @@ export const decodeTransaction = (decodeMessageService, hexTx) =>
       }
     });
   });
-
-export const getDecodeService = (address, port) =>
-  new Promise((resolve, reject) => getDecodeMessageService(
-    address, port, (service, error) => error ? reject(error) : resolve(service)
-  ));

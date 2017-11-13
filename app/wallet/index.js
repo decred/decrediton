@@ -2,6 +2,7 @@ import { TransactionDetails } from "../middleware/walletrpc/api_pb";
 
 export * from "./app";
 export * from "./config";
+export * from "./client";
 export * from "./daemon";
 export * from "./loader";
 export * from "./message";
