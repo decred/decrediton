@@ -82,7 +82,7 @@ export function rescanAttempt(beginHeight) {
       console.log("Rescan done");
       dispatch({ type: RESCAN_COMPLETE });
       setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
-      // setTimeout( () => {dispatch(getTransactionInfoAttempt());}, 1000);
+      // FIXME reload most recent transactions (clear grpc.transactions() and call getTransactions())
     });
     rescanCall.on("status", function(status) {
       console.log("Rescan status:", status);
