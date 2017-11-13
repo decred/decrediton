@@ -134,3 +134,68 @@
   background-color: #2ed8a3;
   position: relative;
 }
+
+.header-icon-mixin {
+  height: 30px;
+  width: 30px;
+  background-size: 30px;
+  background-repeat: no-repeat;
+}
+.accounts {
+  .header-icon-mixin;
+  background-image: @accounts-page-icon;
+}
+.help {
+  .header-icon-mixin;
+  background-image: @help-page-icon;
+}
+.history {
+  .header-icon-mixin;
+  background-image: @wallet-gray-icon;
+}
+.mainnet {
+  height: 30px;
+  background-size: 150px;
+  background-repeat: no-repeat;
+  background-image: @menu-logo;
+}
+.minusBig {
+  .header-icon-mixin;
+  height: 60px;
+  background-image: @minus-big-icon;
+}
+.plusBig {
+  .header-icon-mixin;
+  height: 60px;
+  background-image: @plus-big-icon;
+}
+.security {
+  .header-icon-mixin;
+  background-image: @security-center-icon;
+}
+.settings {
+  .header-icon-mixin;
+  background-image: @settings-page-icon;
+}
+.testnet {
+  height: 30px;
+  background-size: 150px;
+  background-repeat: no-repeat;
+  background-image: @testnet-logo;
+}
+.tickets {
+  .header-icon-mixin;
+  background-image: @tickets-page-icon;
+}
+.ticketSmall {
+  .header-icon-mixin;
+  background-image: @ticket-small-icon;
+}
+.transactions {
+  .header-icon-mixin;
+  background-image: @transactions-page-icon;
+}
+.walletGray {
+  .header-icon-mixin;
+  background-image: @wallet-gray-icon;
+}

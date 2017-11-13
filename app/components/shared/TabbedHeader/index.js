@@ -5,7 +5,6 @@ import MessageBanner from "./MessageBanner";
 import Balance from "Balance";
 import Description from "./Description";
 import messages from "messages";
-import Icon from "../Icon";
 import Tabs from "./Tabs";
 import "style/Header.less";
 
@@ -27,7 +26,7 @@ const TabbedHeader = ({ intl, children, routes, totalBalance, ticketPrice, isTes
 
       { !noIcon &&
       <div className="tabbedheader-icon">
-        <Icon i={ icon || page } s={ 30 }/>
+        <div className={icon || page} />
       </div> }
 
       <div className="tabbedheader-title">
