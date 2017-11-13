@@ -1,5 +1,5 @@
 import {versionCheckAction} from "./WalletLoaderActions";
-import * as daemon from "../wallet/daemon";
+import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { ipcRenderer } from "electron";
 import {setMustOpenForm} from "config";
@@ -21,14 +21,14 @@ export const startDaemon = (rpcCreds, appData) => (dispatch) => {
     dispatch({type: DAEMONSTARTED_REMOTE, credentials: rpcCreds, pid: -1});
     dispatch(syncDaemon());
   } else if (appData) {
-    daemon.startDaemon(appData)
+    wallet.startDaemon(appData)
     .then(pid => {
       dispatch({type: DAEMONSTARTED_APPDATA, appData: appData, pid});
       dispatch(syncDaemon(null, appData));
     })
     .catch((err) => dispatch({err, type: DAEMONSTARTED_ERROR}));
   } else {
-    daemon.startDaemon()
+    wallet.startDaemon()
     .then(pid => {
       dispatch({type: DAEMONSTARTED, pid});
       dispatch(syncDaemon());
@@ -49,11 +49,10 @@ export const shutdownApp = () => (dispatch) => {
   dispatch(pushHistory("/shutdown"));
 };
 
-export const cleanShutdown = () => () => daemon
-  .cleanShutdown();
+export const cleanShutdown = () => () => wallet.cleanShutdown();
 
 export const startWallet = () => (dispatch) => {
-  daemon.startWallet()
+  wallet.startWallet()
   .then(pid => {
     dispatch({type: WALLETREADY, pid});
     setTimeout(()=>dispatch(versionCheckAction()), 1000);
@@ -71,7 +70,7 @@ export const syncDaemon = () =>
       const { daemon: { daemonSynced, timeStart, blockStart, credentials, appData} } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
-      return daemon
+      return wallet
         .getBlockCount(credentials, appData)
         .then(updateCurrentBlockCount => {
           if (updateCurrentBlockCount >= neededBlocks) {

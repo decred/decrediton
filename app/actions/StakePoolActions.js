@@ -1,10 +1,10 @@
 // @flow
 import Promise from "promise";
-import { getPurchaseInfo, setStakePoolAddress, setVoteChoices } from "../wallet/stakePool";
-import { getNextAddress } from "../wallet/service";
+import {
+  getPurchaseInfo, setStakePoolAddress, setVoteChoices, getNextAddress, getStakePoolInfo
+} from "wallet";
 import { getCfg, updateStakePoolConfig } from "../config.js";
 import { importScriptAttempt } from "./ControlActions";
-import { getStakePoolInfo } from "wallet/config";
 import * as sel from "../selectors";
 
 export const UPDATESTAKEPOOLCONFIG_ATTEMPT = "UPDATESTAKEPOOLCONFIG_ATTEMPT";

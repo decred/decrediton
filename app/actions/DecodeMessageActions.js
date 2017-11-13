@@ -1,5 +1,5 @@
 import { getDecodeMessageService } from "../middleware/grpc/client";
-import { decodeTransaction } from "wallet/service";
+import { decodeTransaction } from "wallet";
 import { reverseHash } from "../helpers/byteActions";
 import Promise from "promise";
 

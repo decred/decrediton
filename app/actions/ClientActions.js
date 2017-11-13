@@ -12,7 +12,7 @@ import {
 } from "../middleware/walletrpc/api_pb";
 import { TransactionDetails }  from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
-import { onAppReloadRequested } from "wallet/app";
+import { onAppReloadRequested } from "wallet";
 import { TicketTypes } from "../helpers/tickets";
 
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";

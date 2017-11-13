@@ -1,9 +1,8 @@
 // @flow
 import {
   getLoader, startRpc, getWalletExists, createWallet, openWallet, closeWallet, discoverAddresses,
-  subscribeToBlockNotifications, fetchHeaders
-} from "wallet/loader";
-import { getStakePoolInfo } from "wallet/config";
+  subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo
+} from "wallet";
 import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { getCfg, getCfgPath, getDcrdCert,RPCDaemonPort, RPCDaemonHost } from "config";
