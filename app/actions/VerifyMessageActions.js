@@ -1,36 +1,18 @@
 // @flow
-import { VerifyMessageRequest }  from "../middleware/walletrpc/api_pb";
-
-
+import { verifyMessage } from "wallet";
+import * as sel from "selectors";
 
 export const VERIFYMESSAGE_ATTEMPT = "VERIFYMESSAGE_ATTEMPT";
 export const VERIFYMESSAGE_FAILED = "VERIFYMESSAGE_FAILED";
 export const VERIFYMESSAGE_SUCCESS = "VERIFYMESSAGE_SUCCESS";
 export const VERIFYMESSAGE_CLEANSTORE = "VERIFYMESSAGE_CLEANSTORE";
 
-export function verifyMessageAttempt({ address, message, signature }) {
-  return (dispatch, getState) => {
-    dispatch({ type: VERIFYMESSAGE_ATTEMPT });
-    const request = new VerifyMessageRequest();
-    request.setAddress(address);
-    request.setMessage(message);
-    request.setSignature(signature);
+export const verifyMessageAttempt = ({ address, message, signature }) => (dispatch, getState) => {
+  dispatch({ type: VERIFYMESSAGE_ATTEMPT });
+  verifyMessage(sel.messageVerificationService(getState()), address, message, signature)
+    .then(getVerifyMessageResponse =>
+      dispatch({ getVerifyMessageResponse, type: VERIFYMESSAGE_SUCCESS }))
+    .catch(error => dispatch({ error, type: VERIFYMESSAGE_FAILED }));
+};
 
-    const { messageVerificationService } = getState().grpc;
-
-    messageVerificationService.verifyMessage(request,
-      function (error, getVerifyMessageResponse) {
-        if (error) {
-          dispatch({ error, type: VERIFYMESSAGE_FAILED });
-        } else {
-          dispatch({ getVerifyMessageResponse, type: VERIFYMESSAGE_SUCCESS });
-        }
-      });
-  };
-}
-
-export function verifyMessageCleanStore() {
-  return (dispatch) => {
-    dispatch({ type: VERIFYMESSAGE_CLEANSTORE });
-  };
-}
+export const verifyMessageCleanStore = () => ({ type: VERIFYMESSAGE_CLEANSTORE });

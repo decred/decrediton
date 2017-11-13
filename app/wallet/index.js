@@ -4,6 +4,7 @@ export * from "./app";
 export * from "./config";
 export * from "./daemon";
 export * from "./loader";
+export * from "./message";
 export * from "./notifications";
 export * from "./seed";
 export * from "./service";
