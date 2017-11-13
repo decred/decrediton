@@ -1,5 +1,5 @@
 import Promise from "promise";
-import { SignMessageRequest, VerifyMessageRequest }  from "../middleware/walletrpc/api_pb";
+import { SignMessageRequest, VerifyMessageRequest }  from "middleware/walletrpc/api_pb";
 
 export const signMessage = (walletService, address, message, passphrase) => {
   const request = new SignMessageRequest();
