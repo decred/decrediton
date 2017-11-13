@@ -8,7 +8,7 @@ const mapStateToProps = selectorMap({
   walletService: sel.walletService,
   txPerPage: sel.txPerPage,
   spendableTotalBalance: sel.spendableTotalBalance,
-  transactions: sel.filteredTransactions,
+  transactions: sel.transactions,
   transactionsFilter: sel.transactionsFilter,
 });
 

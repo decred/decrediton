@@ -168,7 +168,6 @@ var initialState = {
       types: [], // desired transaction types (code). All if blank.
     },
     lastTransaction: null, //last transaction obtained
-    filteredTransactions: [],
 
     // GetTransactionInfo
     regularTransactionsInfo: Array(),

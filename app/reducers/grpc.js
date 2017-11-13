@@ -278,11 +278,6 @@ export default function grpc(state = {}, action) {
       getTransactionsRequestError: "",
       getTransactionsRequestAttempt: false,
     };
-  case TRANSACTIONS_FILTERED:
-    return {
-      ...state,
-      filteredTransactions: action.filteredTransactions
-    };
   case CHANGE_TRANSACTIONS_FILTER:
     return {
       ...state,
