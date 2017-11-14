@@ -1,8 +1,9 @@
 import Promise from "promise";
+import { getDecodeMessageService } from "middleware/grpc/client";
 import {
   NextAddressRequest,
   DecodeRawTransactionRequest,
- } from "../middleware/walletrpc/api_pb";
+} from "middleware/walletrpc/api_pb";
 
 export const getNextAddress = (walletService, accountNum) =>
   new Promise((resolve, reject) => {
@@ -29,3 +30,8 @@ export const decodeTransaction = (decodeMessageService, hexTx) =>
       }
     });
   });
+
+export const getDecodeService = (address, port) =>
+  new Promise((resolve, reject) => getDecodeMessageService(
+    address, port, (service, error) => error ? reject(error) : resolve(service)
+  ));

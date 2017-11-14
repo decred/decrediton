@@ -1,6 +1,6 @@
 // @flow
 import { loaderRequest } from "./WalletLoaderActions";
-import { getVersionService, getVersionResponse } from "../wallet/version";
+import { getVersionService, getVersionResponse } from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { ipcRenderer } from "electron";
 
