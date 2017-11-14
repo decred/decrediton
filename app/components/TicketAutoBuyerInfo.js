@@ -7,14 +7,14 @@ import { FormattedMessage as T } from "react-intl";
 class TicketAutobuyerInfo extends React.Component {
   render() {
     return (
-      <div className="purchase-tickets-modal page-content">
+      <div className="purchase-tickets-modal">
         <div className="purchase-tickets-header">
           <div className="purchase-tickets-header-text">
             <T id="TicketAutoBuyer.info.title" m="Ticket Auto Buyer Information" />
           </div>
           <SlateGrayButton className="purchase-tickets-close-button" onClick={() =>this.props.closeModal()}>Close</SlateGrayButton>
         </div>
-        <div className="purchase-tickets-column">
+        <div className="purchase-tickets-column-double">
           {this.renderSection(
             <T id="TicketAutoBuyer.info.balanceToMaintain.header" m="Balance to Maintain" />,
             <T id="TicketAutoBuyer.info.balanceToMaintain.message" m="If your balance is lower than this number, you will not buy tickets. The default of 0 will use all the funds in your account to buy tickets." />

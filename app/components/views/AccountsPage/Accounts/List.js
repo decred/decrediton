@@ -27,30 +27,30 @@ const AccountsList = ({
         <T id="accounts.addNewButton" m="Add New" />
       </KeyBlueButton>
     </TabbedHeader>
-    { isShowingBalanceOverviewInfoModal && <BalanceOverviewInfoModal closeModal={onCloseBalanceOverviewInfoModal} /> }
-    <div className="page-content">
-      { isLoading ? <DecredLoading/> :
-      <Aux>
-        <div className="account-content-title">
-          <div className="account-content-title-buttons-area">
-            <PurchaseTicketsInfoButton onClick={onShowBalanceOverviewInfoModal} tooltipText={<T id="accounts.balanceInfo" m="Balance Information"/>}/>
+    <div className="tabbed-page">
+      { isShowingBalanceOverviewInfoModal ? <BalanceOverviewInfoModal closeModal={onCloseBalanceOverviewInfoModal} /> :
+        isLoading ? <DecredLoading/> :
+        <div className="tab-card">
+          <div className="account-content-title">
+            <div className="account-content-title-buttons-area">
+              <PurchaseTicketsInfoButton onClick={onShowBalanceOverviewInfoModal} tooltipText={<T id="accounts.balanceInfo" m="Balance Information"/>}/>
+            </div>
           </div>
-        </div>
-        <div className="account-content-nest">
-          {accounts.map(account => (
-            <AccountRow
-              key={account.accountName}
-              account={account}
-              accountNumDetailsShown={accountNumDetailsShown}
-              renameAccount={onRenameAccount}
-              hideAccount={onHideAccount}
-              showAccount={onShowAccount}
-              showAccountDetails={onShowAccountDetails}
-              hideAccountDetails={onHideAccountDetails}
-            />
-          ))}
-        </div>
-      </Aux> }
+          <div className="account-content-nest">
+            {accounts.map(account => (
+              <AccountRow
+                key={account.accountName}
+                account={account}
+                accountNumDetailsShown={accountNumDetailsShown}
+                renameAccount={onRenameAccount}
+                hideAccount={onHideAccount}
+                showAccount={onShowAccount}
+                showAccountDetails={onShowAccountDetails}
+                hideAccountDetails={onHideAccountDetails}
+              />
+            ))}
+          </div>
+        </div> }
     </div>
   </Aux>
 );

@@ -32,7 +32,7 @@ export default defineMessages({
   "settings.title":                           { id: "settings.title",                        defaultMessage: "Settings" },
 
   "help.title":                               { id: "help.title",                            defaultMessage: "Help" },
-  "help.description":                         { id: "help.description",                      defaultMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt\nut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. " },
+  "help.description":                         { id: "help.description",                      defaultMessage: "If you have any difficulty with decrediton, please use the following links to help find a solution." },
 
   "error.title":                              { id: "error.title",                           defaultMessage: "An error has occured" },
   "walletError.title":                        { id: "walletError.title",                     defaultMessage: "An error has occured" },

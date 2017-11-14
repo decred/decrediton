@@ -110,10 +110,11 @@ const TxDetails = ({ routes, router,
                 ))}
               </div>
             </div>
-            <div>
+            {txDirection !== "in" && txType !== "Vote" &&
+            <Aux>
               <div className="txdetails-name"><T id="txDetails.transactionFeeLabel" m="Transaction fee" />:</div>
               <div className="txdetails-value"><Balance amount={txFee} /></div>
-            </div>
+            </Aux> }
           </div>
           {isConfirmed ?
             <div className="txdetails-details">
