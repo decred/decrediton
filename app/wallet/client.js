@@ -2,7 +2,7 @@ import Promise from "promise";
 import { TicketTypes } from "helpers/tickets";
 import {
   PingRequest, NetworkRequest, AccountNumberRequest, AccountsRequest,
-  BalanceRequest, GetTransactionsRequest, TicketPriceRequest, StakeInfoRequest,
+  BalanceRequest, TicketPriceRequest, StakeInfoRequest,
   AgendasRequest, VoteChoicesRequest, SetVoteChoicesRequest, GetTicketsRequest,
 } from "middleware/walletrpc/api_pb";
 
