@@ -6,10 +6,11 @@ import app from "connectors/app";
 import SideBar from "components/SideBar";
 import Snackbar from "components/Snackbar";
 import { RouteTransition } from "shared";
+import { getPage } from "helpers";
 import theme from "theme";
+import "style/Layout.less";
 
 const fade = { atEnter: { opacity: 0 }, atActive: { opacity: 1 }, atLeave: { opacity: 0 }};
-const rootPath = ({ pathname }) => pathname.split("/")[1];
 
 const wrapperComponent = props => <div className="page-view" { ...props } />;
 
@@ -60,8 +61,8 @@ class App extends React.Component {
   }
 
   render() {
-    let locale = this.props.locale;
-    const pathname = rootPath(this.props.location);
+    const { locale, routes, children } = this.props;
+    const pathname = getPage(routes);
     return (
       <MuiThemeProvider muiTheme={MUItheme}>
         <IntlProvider
@@ -74,7 +75,7 @@ class App extends React.Component {
             <SideBar />
             <Snackbar />
             <RouteTransition className="page-container" opts={ theme("springs.page") } {...{ wrapperComponent, pathname, ...fade }}>
-              { this.props.children }
+              { children }
             </RouteTransition>
           </div>
         </IntlProvider>

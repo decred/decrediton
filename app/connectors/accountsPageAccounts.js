@@ -8,14 +8,10 @@ import * as cla from "../actions/ClientActions";
 const mapStateToProps = selectorMap({
   accounts: sel.sortedAccounts,
   hiddenAccounts: sel.hiddenAccounts,
-  getNextAccountSuccess: sel.getNextAccountSuccess,
   isLoading: bool(or(
     sel.getNextAccountRequestAttempt,
     sel.renameAccountRequestAttempt
   )),
-  getNextAccountError: sel.getNextAccountError,
-  renameAccountError: sel.renameAccountError,
-  renameAccountSuccess: sel.renameAccountSuccess
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

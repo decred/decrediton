@@ -1,9 +1,11 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.home-rescan-button-area {
-  float: right;
-  display: inline-block;
+.overview-balance {
+  align-self: flex-end;
+  margin-bottom: -8px;
+  font-size: 53px;
+  line-height: 1;
 }
 
 .home-content-title {
@@ -55,36 +57,24 @@
   font-size: 23px;
 }
 
-.home-view-notification-not-synced {
-  display: inline-block;
-  margin-right: auto;
-  margin-left: auto;
-  padding: 7px 20px;
-  border-radius: 5px;
-  background-color: #666;
-  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
-  color: #fff;
-  font-size: 13px;
-  text-align: center;
-}
-
 .home-loading {
   margin-top: 110px;
   margin-left: 268px;
 }
 
 .tickets-to-revoke-warning {
-  background: #fd714b;
-  padding: 10px;
-  margin-bottom: 10px;
-  height: 65px;
-  -webkit-border-bottom-right-radius: 10px;
-  -webkit-border-bottom-left-radius: 10px;
-  -moz-border-radius-bottomright: 10px;
-  -moz-border-radius-bottomleft: 10px;
+  position: absolute;
+  width: calc(100% - 40px);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  top: 0px;
+  left: 20px;
+  background-color: rgba(9, 24, 45, 0.8);
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1);
+  height: 55px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
-  text-align: center;
   font-size: 12pt;
   color: #fff;
 

@@ -1,10 +1,8 @@
-import Header from "../../../Header";
-import KeyBlueButton from "../../../KeyBlueButton";
-import SlateGrayButton from "../../../SlateGrayButton";
+import { TabbedHeader } from "shared";
+import KeyBlueButton from "KeyBlueButton";
+import SlateGrayButton from "SlateGrayButton";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, PasswordInput } from "inputs";
-import "../../../../style/Layout.less";
-import "../../../../style/AccountsPage.less";
 
 const messages = defineMessages({
   newNamePlaceholder: {
@@ -18,6 +16,7 @@ const messages = defineMessages({
 });
 
 const AddAccountForm = ({
+  routes,
   name,
   passPhrase,
   hasAttemptedSave,
@@ -27,9 +26,8 @@ const AddAccountForm = ({
   onSave,
   onCancel
 }) => (
-  <div className="page-view">
-    <Header headerTitleOverview="Accounts" />
-
+  <Aux>
+    <TabbedHeader {...{ routes }}/>
     <div className="page-content">
       <div className="account-flex-height">
         <div className="account-form-row">
@@ -84,7 +82,7 @@ const AddAccountForm = ({
         ><T id="accounts.formNew.cancelBtn" m="Cancel" /></SlateGrayButton>
       </div>
     </div>
-  </div>
+  </Aux>
 );
 
 export default injectIntl(AddAccountForm);

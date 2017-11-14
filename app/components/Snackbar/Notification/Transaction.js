@@ -1,5 +1,4 @@
 // @flow
-import React from "react";
 import { Link } from "react-router";
 import Balance from "Balance";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";

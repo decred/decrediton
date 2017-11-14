@@ -1,6 +1,6 @@
 import { injectIntl } from "react-intl";
 import SignMessageForm from "./Form";
-import signMessageConnector from "../../connectors/signMessagePage";
+import { signMessagePage } from "connectors";
 import { CopyToClipboard } from "shared";
 import "style/SecurityCenterMessagePage.less";
 import SignMessageInfo from "SignMessageInfo";
@@ -48,7 +48,7 @@ class SignMessage extends React.Component {
     return (
       isShowingSignMessageInfo ?
       <SignMessageInfo closeModal={this.onHideSignMessageInfo} /> :
-      <div className="page-content message message-sign">
+      <div className="tab-card message message-sign">
         <SignMessageForm onShowSignMessageInfo={this.onShowSignMessageInfo} onSubmit={this.onSubmit} rpcError={signMessageError} formatMessage={this.props.intl.formatMessage} />
         {result}
       </div>
@@ -80,4 +80,4 @@ SignMessage.contextTypes = {
   router: PropTypes.object.isRequired,
 };
 
-export default signMessageConnector(injectIntl(SignMessage));
+export default signMessagePage(injectIntl(SignMessage));

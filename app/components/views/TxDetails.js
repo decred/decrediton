@@ -1,40 +1,30 @@
 // @flow
-import React from "react";
-import PropTypes from "prop-types";
 import Balance from "../Balance";
-import Header from "../Header";
+import { TabbedHeader } from "shared";
 import { shell } from "electron";
-import transactionDetails from "../../connectors/transactionDetails";
+import { transactionDetails } from "connectors";
 import SlateGrayButton from "../SlateGrayButton";
-import "../../style/Layout.less";
-import "../../style/TxDetails.less";
-import { addSpacingAroundText } from "../../helpers/strings";
+import "style/TxDetails.less";
+import { tsToDate, addSpacingAroundText } from "helpers";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { tsToDate } from "../../helpers/dateFormat";
-import "../../style/Fonts.less";
+import "style/Fonts.less";
 
 const messages = defineMessages({
-  Ticket: {
-    id: "transaction.type.ticket",
-    defaultMessage: "Ticket"
-  },
-  Vote: {
-    id: "transaction.type.vote",
-    defaultMessage: "Vote"
-  },
-  Revocation: {
-    id: "transaction.type.revoke",
-    defaultMessage: "Revoke"
-  }
+  Ticket:     { id: "transaction.type.ticket", defaultMessage: "Ticket" },
+  Vote:       { id: "transaction.type.vote",   defaultMessage: "Vote" },
+  Revocation: { id: "transaction.type.revoke", defaultMessage: "Revoke" }
 });
 
-const getHeaderClassName = txDirection => ({
-  out: "txdetails-header-meta-out",
-  transfer: "txdetails-header-meta-transfer",
-  in: "txdetails-header-meta-in"
-})[txDirection];
+const headerIcons = {
+  in:         "plusBig",
+  out:        "minusBig",
+  transfer:   "walletGray",
+  Ticket:     "ticketSmall",
+  Vote:       "ticketSmall",
+  Revocation: "ticketSmall",
+};
 
-const TxDetails = ({
+const TxDetails = ({ routes, router,
                      tx: {
                        txHash,
                        txUrl,
@@ -51,39 +41,28 @@ const TxDetails = ({
                      },
                      currentBlockHeight,
                      intl
-                   }, { router }) => {
+                   }) => {
   const isConfirmed = !!txTimestamp;
+  const icon = headerIcons[txType || txDirection];
+  const subtitle = isConfirmed && <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsToDate(txTimestamp) }}/>;
+  const goBack = () => router.goBack();
+  const openTxUrl = () => shell.openExternal(txUrl);
+  const openBlockUrl = () => shell.openExternal(txBlockUrl);
+  const title = txType ? intl.formatMessage(messages[txType]) :
+    <div className="txdetails-header-title">
+      <span className="bold">
+        {txDirection === "in" ? "" : "-"}
+      </span>
+      <Balance title bold amount={txAmount}/>
+    </div>;
 
   return (
-    <div className="page-view">
-
-      <Header
-        headerTitleOverview={<SlateGrayButton key="back" style={{ float: "right" }} onClick={() => router.goBack()}>
-          <T id="txDetails.backBtn" m="Back" /></SlateGrayButton>}
-        headerMetaOverview={txType ? (
-          <div className="txdetails-header-meta-stake-tx">
-            {intl.formatMessage(messages[txType])}
-            { isConfirmed
-                ? <div className="txdetails-header-meta-time-and-date">
-                    <T id="txDetails.timestamp"
-                      m="{timestamp, date, medium} {timestamp, time, medium}"
-                      values={{timestamp: tsToDate(txTimestamp)}}
-                    /></div>
-                : null }
-          </div>
-        ) : (
-          <div className={getHeaderClassName(txDirection)}>
-            {txDirection === "in" ? "" : "-"}<Balance amount={txAmount} />
-            { isConfirmed
-              ? <div className="txdetails-header-meta-time-and-date">
-                  <T id="txDetails.timestamp"
-                      m="{timestamp, date, medium} {timestamp, time, medium}"
-                      values={{timestamp: tsToDate(txTimestamp)}}
-                    /></div>
-              : null }
-          </div>
-        )}
-      />
+    <Aux>
+      <TabbedHeader {...{ routes, icon, title, subtitle }}>
+        <SlateGrayButton onClick={ goBack }>
+          <T id="txDetails.backBtn" m="Back" />
+        </SlateGrayButton>
+      </TabbedHeader>
       <div className="page-content">
         <div className="txdetails-content-nest">
           <div className="txdetails-top">
@@ -91,7 +70,7 @@ const TxDetails = ({
               <T id="txDetails.transactionLabel" m="Transaction" />:
             </div>
             <div className="txdetails-value">
-              <a onClick={() => shell.openExternal(txUrl)} style={{ cursor: "pointer" }}>{txHash}</a>
+              <a onClick={ openTxUrl } style={{ cursor: "pointer" }}>{txHash}</a>
             </div>
             <div className="txdetails-name">
               {isConfirmed ? (<div className="txdetails-indicator-confirmed">
@@ -141,7 +120,7 @@ const TxDetails = ({
               <div className="txdetails-title"><T id="txDetails.properties" m="Properties" /></div>
               <div className="txdetails-name"><T id="txDetails.blockLabel" m="Block" />:</div>
               <div className="txdetails-value">
-                <a onClick={() => shell.openExternal(txBlockUrl)} style={{ cursor: "pointer" }}>{txBlockHash}</a>
+                <a onClick={ openBlockUrl } style={{ cursor: "pointer" }}>{txBlockHash}</a>
               </div>
               <div className="txdetails-name"><T id="txDetails.blockHeightLabel" m="Height" /> :</div>
               <div className="txdetails-value">{txHeight}</div>
@@ -150,12 +129,8 @@ const TxDetails = ({
           }
         </div>
       </div>
-    </div>
+    </Aux>
   );
-};
-
-TxDetails.contextTypes = {
-  router: PropTypes.object.isRequired,
 };
 
 export default transactionDetails(injectIntl(TxDetails));

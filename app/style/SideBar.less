@@ -6,7 +6,7 @@
 }
 
 .sidebar-testnet {
-  background-color: #2966d2;
+  background-color: #586d82;
 }
 
 .sidebar-menu {
@@ -15,37 +15,27 @@
   flex-direction: column;
 }
 
-.sidebar-menu-logo {
+.sidebar-logo {
   position: relative;
   z-index: 3;
   height: 60px;
-  margin-top: 20px;
-  background-image: @menu-logo;
-  background-position: 50% 50%;
-  background-size: auto 30px;
-  background-repeat: no-repeat;
-}
-
-.sidebar-testnet-text {
-  color: white;
-  text-align: center;
-  font-size: 18px;
-  height: 46px;
-  font-family: Inconsolata, monospace;
+  padding-left: 58px;
+  padding-top: 53px;
+  padding-bottom: 53px;
 }
 
 .sidebar-main {
   position: relative;
-  flex-grow: 1;
+  flex: 1;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
 .sidebar-scroll {
-  overflow-x: hidden;
-  flex-grow: 1;
   position: relative;
+  overflow-y: auto;
+  flex: 1;
 }
 
 .sidebar-menu-total-balance-extended {
@@ -127,6 +117,7 @@
   padding-top: 14px;
   padding-right: 18px;
   padding-left: 18px;
+  background-color: #08172e;
 }
 
 .sidebar-menu-bottom-latest-block-name {

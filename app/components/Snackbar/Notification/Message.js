@@ -1,7 +1,4 @@
 // @flow
-import React from "react";
-import "../../../style/Header.less";
-import { autobind } from "core-decorators";
 import { injectIntl } from "react-intl";
 
 @autobind

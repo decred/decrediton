@@ -1,14 +1,10 @@
-import React, { Component, } from "react";
-import { autobind } from "core-decorators";
 import AddAccountForm from "./Form";
-import addAccountConnector from "../../../../connectors/accountsPageAddAccount";
+import { accountsPageAddAccount } from "connectors";
 
 @autobind
-class AddAccount extends Component {
-  constructor(props)  {
-    super(props);
-    this.state = this.getInitialState();
-  }
+class AddAccount extends React.Component {
+  constructor(props)  { super(props); }
+  state = this.getInitialState();
 
   getInitialState() {
     return {
@@ -18,9 +14,7 @@ class AddAccount extends Component {
     };
   }
 
-  componentWillUnmount() {
-    this.resetState();
-  }
+  componentWillUnmount() { this.resetState(); }
 
   render() {
     return (
@@ -32,15 +26,16 @@ class AddAccount extends Component {
           setName: this.setName,
           setPassPhrase: this.setPassPhrase,
           onSave: this.onSave,
-          onCancel: this.onCancel
+          onCancel: this.onCancel,
+          routes: this.props.routes
         }}
       />
     );
   }
 
-  resetState() {
-    this.setState(this.getInitialState());
-  }
+  resetState()              { this.setState(this.getInitialState()); }
+  setName(name)             { this.setState({ name }); }
+  setPassPhrase(passPhrase) { this.setState({ passPhrase }); }
 
   onSave() {
     const { name, passPhrase } = this.state;
@@ -50,22 +45,14 @@ class AddAccount extends Component {
     }
 
     this.props.onGetNextAccountAttempt(Buffer.from(passPhrase), name);
-    this.props.onSave ? this.props.onSave() : null;
+    this.props.onAction();
     this.resetState();
   }
 
   onCancel() {
+    this.props.onAction();
     this.resetState();
-    this.props.onCancel ? this.props.onCancel() : null;
-  }
-
-  setName(name) {
-    this.setState({ name });
-  }
-
-  setPassPhrase(passPhrase) {
-    this.setState({ passPhrase });
   }
 }
 
-export default addAccountConnector(AddAccount);
+export default accountsPageAddAccount(AddAccount);

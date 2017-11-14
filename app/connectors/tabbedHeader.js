@@ -3,7 +3,9 @@ import * as sel from "../selectors";
 import { selectorMap } from "../fp";
 
 const mapStateToProps = selectorMap({
-  walletService: sel.walletService,
+  isTestNet: sel.isTestNet,
+  totalBalance: sel.totalBalance,
+  ticketPrice: sel.ticketPrice,
 });
 
 export default connect(mapStateToProps);

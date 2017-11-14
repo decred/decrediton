@@ -1,7 +1,6 @@
 import "style/Tooltip.less";
-import { Aux } from "./";
 
-const Tooltip = ({ text, warning, disabled, className, children, tipWidth }) => {
+const Tooltip = ({ text, warning, disabled, className, children }) => {
   let tooltip = null;
 
   const onMouseMove = ({clientX, clientY}) => {
@@ -14,14 +13,13 @@ const Tooltip = ({ text, warning, disabled, className, children, tipWidth }) => 
   };
 
   const container = ["tooltipContainer", className].join(" ");
-  const width = tipWidth ? { width: tipWidth + "px" } : {};
   const tip = ["tip", warning ? "warning" : null].join(" ");
   const Wrapper = className ? "div" : Aux;
 
   return disabled ? <Wrapper className={ className }>{ children }</Wrapper> : (
     <div className={ container } onMouseMove={ onMouseMove }>
       { children }
-      <span className={ tip } ref={ tip => tooltip = tip } style={ width }>
+      <span className={ tip } ref={ tip => tooltip = tip }>
         { text }
       </span>
     </div>

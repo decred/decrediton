@@ -1,6 +1,20 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
+.small-balance {
+  align-self: flex-start;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 0px 5px;
+  color: #0c1e3e;
+  background-color: #d4f0fd;
+  margin-left: 5px;
+  margin-right: auto;
+  margin-top: -4px;
+  border-radius: 5px;
+}
+
 .header-get-started {
   padding-right: 42px;
   padding-left: 80px;
@@ -29,20 +43,29 @@
 }
 
 .header {
-  padding-right: 42px;
-  padding-left: 80px;
+  position: relative;
+  margin-right: 60px;
+  margin-left: 100px;
+  margin-top: 53px;
+  padding-bottom: 30px;
   background-color: #fff;
+  height: 77px;
 }
 
 .header-top {
-  height: 34px;
-  padding-top: 5px;
   text-align: center;
 }
 
+.tabbedheader-top {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  margin-top: -44px;
+  width: 100%;
+}
+
 .header-title-overview {
-  height: 54px;
-  padding-top: 13px;
+  padding-top: 14px;
   color: #596d81;
   font-size: 27px;
 }
@@ -53,54 +76,32 @@
   font-size: 53px;
 }
 
-.header-icon-mixin {
-  background-position: 0px 50%;
-  background-size: 30px;
-  background-repeat: no-repeat;
-}
-
-.header-icon-tickets {
-  .header-icon-mixin;
-
-  background-image: @ticket-small-icon;
-}
-
-.header-icon-transactions {
-  .header-icon-mixin;
-
-  background-image: @transactions-big-icon;
-}
-
-.header-icon-security-center {
-  .header-icon-mixin;
-
-  background-image: @security-center-icon;
-}
-
 .tabbedheader-title {
-  height: 54px;
-  line-height: 49px;
+  margin-bottom: 14px;
   color: #596d81;
   font-size: 27px;
-  text-transform: capitalize;
-  //padding-left: 50px;
-}
-
-.tabbedheader-description {
-  height: 54px;
-  width: 480px;
-  padding-left: 50px;
-  color: #0c1e3e;
-  font-size: 14px;
-}
-
-.tabbedheader-icon::before {
-  content: "";
 }
 
 .tabbedheader-icon {
-  padding-left: 30px;
-  margin-right: 20px;
+  position: absolute;
+  top: -4px;
+  left: -40px;
+}
+
+.tabbedheader-content {
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tabbedheader-description {
+  align-self: flex-start;
+  margin-top: -3px;
+  white-space: pre-wrap;
+  color: #48566e;
+  font-size: 13px;
+  line-height: 17px;
 }
 
 .tabbedheader-ref {
@@ -112,20 +113,19 @@
   vertical-align: middle;
   text-align: center;
   margin: 0px 14px 3px 14px;
-  color: inherit;
   text-decoration: none;
+  color: #9ca8b5;
+  transition: color 0.13s ease-in-out;
+}
+
+.tabbedheader-tab:hover,
+.tabbedheader-tab-active {
+  color: #0c1e3e;
 }
 
 .tabbedheader-tabs {
-  position: relative;
-}
-
-.tabbedheader-tabs-stub {
-  height: 27px;
-}
-
-.tabbedheader-tab.active {
-  border-bottom: 5px solid #2ed8a3;
+  position: absolute;
+  bottom: 0;
 }
 
 .tabbedheader-active-tab-caret {
@@ -133,4 +133,93 @@
   width: 15px;
   background-color: #2ed8a3;
   position: relative;
+}
+
+.header-icon-mixin {
+  height: 30px;
+  width: 30px;
+  background-size: 30px;
+  background-repeat: no-repeat;
+}
+
+.accounts {
+  .header-icon-mixin;
+
+  background-image: @accounts-page-icon;
+}
+
+.help {
+  .header-icon-mixin;
+
+  background-image: @help-page-icon;
+}
+
+.history {
+  .header-icon-mixin;
+
+  background-image: @wallet-gray-icon;
+}
+
+.mainnet {
+  height: 30px;
+  background-size: 150px;
+  background-repeat: no-repeat;
+  background-image: @menu-logo;
+}
+
+.minusBig {
+  .header-icon-mixin;
+
+  height: 60px;
+  background-image: @minus-big-icon;
+}
+
+.plusBig {
+  .header-icon-mixin;
+
+  height: 60px;
+  background-image: @plus-big-icon;
+}
+
+.security {
+  .header-icon-mixin;
+
+  background-image: @security-center-icon;
+}
+
+.settings {
+  .header-icon-mixin;
+
+  background-image: @settings-page-icon;
+}
+
+.testnet {
+  height: 30px;
+  background-size: 150px;
+  background-repeat: no-repeat;
+  background-image: @testnet-logo;
+}
+
+.tickets {
+  .header-icon-mixin;
+
+  background-image: @tickets-page-icon;
+}
+
+.ticketSmall {
+  .header-icon-mixin;
+
+  background-image: @ticket-small-icon;
+}
+
+.transactions {
+  .header-icon-mixin;
+
+  background-image: @transactions-page-icon;
+}
+
+.walletGray {
+  .header-icon-mixin;
+
+  background-image: @wallet-gray-icon;
 }

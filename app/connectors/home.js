@@ -9,7 +9,6 @@ const mapStateToProps = selectorMap({
   getAccountsResponse: sel.getAccountsResponse,
   txPerPage: sel.txPerPage,
   spendableTotalBalance: sel.spendableTotalBalance,
-  synced: sel.synced,
   transactions: sel.homeHistoryTransactions,
   revokeTicketsError: sel.revokeTicketsError,
   revokeTicketsSuccess: sel.revokeTicketsSuccess,

@@ -1,10 +1,8 @@
-import React, { Component, } from "react";
-import { autobind } from "core-decorators";
 import AccountsList from "./List";
-import accountsConnector from "../../../../connectors/accountsPageAccounts";
+import { accountsPageAccounts } from "connectors";
 
 @autobind
-class Accounts extends Component {
+class Accounts extends React.Component {
   constructor(props)  {
     super(props);
     this.state = {
@@ -26,9 +24,10 @@ class Accounts extends Component {
           accountNumDetailsShown: this.state.accountNumDetailsShown,
           onShowAccountDetails: this.onShowAccountDetails,
           onHideAccountDetails: this.onHideAccountDetails,
-          onShowAddAccount: this.onShowAddAccount,
+          onToggleAddAccount: this.props.onToggleAddAccount,
           onShowBalanceOverviewInfoModal: this.onShowBalanceOverviewInfoModal,
           onCloseBalanceOverviewInfoModal: this.onCloseBalanceOverviewInfoModal,
+          routes: this.props.routes,
         }}
       />
     );
@@ -49,10 +48,6 @@ class Accounts extends Component {
   onHideAccountDetails() {
     this.setState({ accountNumDetailsShown: null });
   }
-
-  onShowAddAccount() {
-    this.props.onShowAddAccount ? this.props.onShowAddAccount() : null;
-  }
 }
 
-export default accountsConnector(Accounts);
+export default accountsPageAccounts(Accounts);

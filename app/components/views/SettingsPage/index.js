@@ -1,12 +1,9 @@
-import React, { Component } from "react";
-import { autobind } from "core-decorators";
-import service from "../../../connectors/service";
-import settings from "../../../connectors/settings";
+import { service, settings } from "connectors";
 import ErrorScreen from "../../ErrorScreen";
 import SettingsPage from "./Page";
 
 @autobind
-class Settings extends Component {
+class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

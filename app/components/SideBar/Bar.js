@@ -2,6 +2,7 @@
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import RescanProgress from "../RescanProgress";
 import MenuLinks from "./MenuLinks";
+import Logo from "./Logo";
 import "style/Fonts.less";
 import "style/SideBar.less";
 
@@ -20,8 +21,7 @@ const Bar = ({
   showingSidebarMenu,
 }) => (
   <div className={"sidebar-menu " + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
-    <div className="sidebar-menu-logo"></div>
-    { isTestNet && <div className="sidebar-testnet-text">Testnet</div> }
+    <Logo {...{ isTestNet }}/>
     <Aux show={ showingSidebarMenu }>
       <div className="sidebar-main">
         <MenuLinks />
@@ -45,7 +45,7 @@ const Bar = ({
           <Aux>
             <div className="sidebar-menu-bottom-total-balance-short-separator"></div>
             <div className="sidebar-menu-bottom-total-balance-short-name"><T id="sidebar.totalBalance" m="Total Balance"/>:</div>
-            <div className="sidebar-menu-bottom-total-balance-short-value">{totalBalance.toString()}</div>
+            <div className="sidebar-menu-bottom-total-balance-short-value">{totalBalance}</div>
           </Aux> }
         </div>
         <div className="sidebar-menu-bottom-latest-block">

@@ -1,8 +1,5 @@
 // @flow
-import React from "react";
-import PropTypes from "prop-types";
-import { autobind } from "core-decorators";
-import snackbar from "../../connectors/snackbar";
+import { snackbar } from "connectors";
 import MUISnackbar from "material-ui/Snackbar";
 import Notification from "./Notification";
 

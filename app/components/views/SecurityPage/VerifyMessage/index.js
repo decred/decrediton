@@ -1,9 +1,6 @@
-import React from "react";
 import { FormattedMessage as T, injectIntl } from "react-intl";
-import PropTypes from "prop-types";
-import { autobind } from "core-decorators";
 import VerifyMessageForm from "./Form";
-import verifyMessageConnector from "../../connectors/verifyMessagePage";
+import { verifyMessagePage } from "connectors";
 import "style/SecurityCenterMessagePage.less";
 import VerifyMessageInfo from "VerifyMessageInfo";
 
@@ -58,7 +55,7 @@ class VerifyMessage extends React.Component {
     return (
       isShowingVerifyMessageInfo ?
       <VerifyMessageInfo closeModal={this.onHideVerifyMessageInfo} /> :
-      <div className="page-content message message-verify">
+      <div className="tab-card message message-verify">
         <VerifyMessageForm onShowVerifyMessageInfo={this.onShowVerifyMessageInfo} onSubmit={this.onSubmit} rpcError={verifyMessageError} formatMessage={this.props.intl.formatMessage} />
         {result}
       </div>
@@ -86,4 +83,4 @@ VerifyMessage.propTypes = {
   }),
 };
 
-export default verifyMessageConnector(injectIntl(VerifyMessage));
+export default verifyMessagePage(injectIntl(VerifyMessage));

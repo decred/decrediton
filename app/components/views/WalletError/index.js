@@ -1,22 +1,31 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import walletErrorConnector from "../../../connectors/walletError";
-import WalletErrorPage from "./Page";
+import { TabbedHeader } from "shared";
+import { walletError } from "connectors";
 
-class WalletError extends Component {
-  componentWillMount() {
-    this.props.hideSidebarMenu();
-    this.props.hideSidebar();
-  }
-
-  render() {
-    return <WalletErrorPage />;
-  }
-}
-
-WalletError.propTypes = {
-  hideSidebar: PropTypes.func.isRequired,
-  hideSidebarMenu: PropTypes.func.isRequired,
+const styles = {
+  view: {
+    width: "880px",
+    height: "100%",
+    float: "right",
+    backgroundColor: "#f3f6f6",
+  },
+  content: {
+    overflow: "auto",
+    height: "556px",
+    padding: "54px 60px 54px 80px",
+  },
 };
 
-export default walletErrorConnector(WalletError);
+const WalletError = ({ getNetworkError, routes }) => (
+  <div style={styles.view}>
+    <TabbedHeader {...{ routes }}/>
+    <div style={styles.content}>
+      { getNetworkError ?
+        <p>{getNetworkError} Please verify that your dcrd is configured correctly and restart.</p> :
+        <p> We have detected that your wallet has disconnected.
+          Please reload Decrediton to fix this problem. </p>
+      }
+    </div>
+  </div>
+);
+
+export default walletError(WalletError);

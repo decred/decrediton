@@ -1,37 +1,26 @@
-import React, { Component, } from "react";
-import { autobind } from "core-decorators";
 import Page from "./Page";
-import accountsPageConnector from "../../../connectors/accountsPage";
+import { accountsPage } from "connectors";
 
 @autobind
-class AccountsPage extends Component {
-  constructor(props)  {
-    super(props);
-    this.state = {
-      isShowingAddAccount: false
-    };
-  }
+class AccountsPage extends React.Component {
+  constructor(props)  { super(props); }
+  state = { isShowingAddAccount: false };
+
+  onToggleAddAccount() { this.setState({ isShowingAddAccount: !this.state.isShowingAddAccount }); }
 
   render() {
+    const { routes } = this.props;
     return (
       <Page
         {...{
           walletService: this.props.walletService,
           isShowingAddAccount: this.state.isShowingAddAccount,
-          onShowAddAccount: this.onShowAddAccount,
-          onHideAddAccount: this.onHideAddAccount
+          onToggleAddAccount: this.onToggleAddAccount,
+          routes,
         }}
       />
     );
   }
-
-  onShowAddAccount() {
-    this.setState({ isShowingAddAccount: true });
-  }
-
-  onHideAddAccount() {
-    this.setState({ isShowingAddAccount: false });
-  }
 }
 
-export default accountsPageConnector(AccountsPage);
+export default accountsPage(AccountsPage);

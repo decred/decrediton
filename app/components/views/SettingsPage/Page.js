@@ -1,10 +1,8 @@
-import React from "react";
 import KeyBlueButton from "../../KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
-import Header from "../../Header";
+import { TabbedHeader } from "shared";
 import ChangePassphraseModal from "../../ChangePassphraseModal";
 import Select from "react-select";
-import "style/Layout.less";
 import "style/StakePool.less";
 import "style/Settings.less";
 
@@ -22,9 +20,10 @@ const SettingsPage = ({
                         onChangeNetwork,
                         onChangeLocale,
                         onSaveSettings,
+                        routes,
                       }) => (
   <Aux>
-    <Header headerTitleOverview={<T id="settings.title" m="Settings" />} />
+    <TabbedHeader {...{ routes }}/>
     <ChangePassphraseModal
       hidden={!isShowingChangePassphrase}
       updatePassphrase={onAttemptChangePassphrase}

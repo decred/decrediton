@@ -1,9 +1,7 @@
 // @flow
-import React from "react";
 import { Link } from "react-router";
-import Balance from "../../Balance";
+import Balance from "Balance";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import "../../../style/Header.less";
 
 const messages = defineMessages({
   //same as the types used in index.js

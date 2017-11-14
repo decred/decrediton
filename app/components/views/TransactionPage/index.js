@@ -1,13 +1,14 @@
-import React from "react";
-import ErrorScreen from "../../ErrorScreen";
+import ErrorScreen from "ErrorScreen";
 import TransactionPage from "./Page";
-import transactionPageConnector from "../../../connectors/transactionPage";
+import { transactionPage } from "connectors";
 
-const Transaction = ({ walletService, viewedTransaction }) => (!walletService ? <ErrorScreen /> : (
+const Transaction = ({ walletService, viewedTransaction, routes, router }) => (
+  !walletService ? <ErrorScreen /> :
   <TransactionPage
     {...{
       transactionDetails: viewedTransaction,
+      routes, router
     }}
   />
-));
-export default transactionPageConnector(Transaction);
+);
+export default transactionPage(Transaction);

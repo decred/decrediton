@@ -1,4 +1,3 @@
-import React from "react";
 import { FormattedMessage as T } from "react-intl";
 
 export const validate = values => {

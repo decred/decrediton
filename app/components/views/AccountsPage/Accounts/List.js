@@ -1,19 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Header from "../../../Header";
-import AccountRow from "./AccountRow";
-import DecredLoading from "../../../DecredLoading";
-import KeyBlueButton from "../../../KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
-import "../../../../style/Layout.less";
-import "../../../../style/AccountsPage.less";
-import BalanceOverviewInfoModal from "../../../BalanceOverviewInfoModal";
-import PurchaseTicketsInfoButton from "../../../PurchaseTicketsInfoButton";
+import { TabbedHeader } from "shared";
+import AccountRow from "./AccountRow";
+import DecredLoading from "DecredLoading";
+import KeyBlueButton from "KeyBlueButton";
+import BalanceOverviewInfoModal from "BalanceOverviewInfoModal";
+import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
 
 const AccountsList = ({
+  routes,
   accounts,
   isLoading,
-  onShowAddAccount,
+  onToggleAddAccount,
   onShowAccount,
   onHideAccount,
   onRenameAccount,
@@ -24,57 +21,45 @@ const AccountsList = ({
   onShowBalanceOverviewInfoModal,
   onCloseBalanceOverviewInfoModal,
 }) => (
-  <div className="page-view">
-    <Header
-      headerTitleOverview={<T id="accounts.title" m="Accounts" />}
-      headerMetaOverview={
-        <KeyBlueButton
-          className="add-new-account-button"
-          onClick={onShowAddAccount}>
-          <T id="accounts.addNewButton" m="Add New" />
-        </KeyBlueButton>
-      }
-    />
-    {isShowingBalanceOverviewInfoModal ? <BalanceOverviewInfoModal closeModal={onCloseBalanceOverviewInfoModal} /> : null}
+  <Aux>
+    <TabbedHeader {...{ routes }}>
+      <KeyBlueButton onClick={onToggleAddAccount}>
+        <T id="accounts.addNewButton" m="Add New" />
+      </KeyBlueButton>
+    </TabbedHeader>
+    { isShowingBalanceOverviewInfoModal && <BalanceOverviewInfoModal closeModal={onCloseBalanceOverviewInfoModal} /> }
     <div className="page-content">
-      {isLoading ? (
-        <DecredLoading/>
-      ) : (
-        <div>
-          <div className="account-content-title">
-            <div className="account-content-title-buttons-area">
-              <PurchaseTicketsInfoButton onClick={onShowBalanceOverviewInfoModal} tooltipText={<T id="accounts.balanceInfo" m="Balance Information"/>}/>
-            </div>
-          </div>
-          <div className="account-content-nest">
-            {accounts.map(account => (
-              <AccountRow
-                key={account.accountName}
-                account={account}
-                accountNumDetailsShown={accountNumDetailsShown}
-                renameAccount={onRenameAccount}
-                hideAccount={onHideAccount}
-                showAccount={onShowAccount}
-                showAccountDetails={onShowAccountDetails}
-                hideAccountDetails={onHideAccountDetails}
-              />
-            ))}
+      { isLoading ? <DecredLoading/> :
+      <Aux>
+        <div className="account-content-title">
+          <div className="account-content-title-buttons-area">
+            <PurchaseTicketsInfoButton onClick={onShowBalanceOverviewInfoModal} tooltipText={<T id="accounts.balanceInfo" m="Balance Information"/>}/>
           </div>
         </div>
-      )}
+        <div className="account-content-nest">
+          {accounts.map(account => (
+            <AccountRow
+              key={account.accountName}
+              account={account}
+              accountNumDetailsShown={accountNumDetailsShown}
+              renameAccount={onRenameAccount}
+              hideAccount={onHideAccount}
+              showAccount={onShowAccount}
+              showAccountDetails={onShowAccountDetails}
+              hideAccountDetails={onHideAccountDetails}
+            />
+          ))}
+        </div>
+      </Aux> }
     </div>
-  </div>
+  </Aux>
 );
 
 AccountsList.propTypes = {
   accounts: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
   isShowingBalanceOverviewInfoModal: PropTypes.bool.isRequired,
-  getNextAccountSuccess: PropTypes.object,
-  getNextAccountError: PropTypes.object,
-  renameAccountSuccess: PropTypes.object,
-  renameAccountError: PropTypes.object,
-  onShowAddAccount: PropTypes.func.isRequired,
+  onToggleAddAccount: PropTypes.func.isRequired,
   onShowAccount: PropTypes.func.isRequired,
   onHideAccount: PropTypes.func.isRequired,
   onRenameAccount: PropTypes.func.isRequired,
