@@ -1,5 +1,3 @@
-import { Icon } from "shared";
-
 const Logo = ({ isTestNet }) => (
   <div className="sidebar-logo">
     <div className={isTestNet ? "testnet" : "mainnet"} />

@@ -9,13 +9,14 @@ import Tabs from "./Tabs";
 import "style/Header.less";
 
 const TabbedHeader = ({ intl, children, routes, totalBalance, ticketPrice, isTestNet, icon, title, subtitle }) => {
-  const { tabDesc, desc, noIcon, ticketprice, balance } = routes[1] || routes[2];
+  const { tabDesc, desc, noIcon, ticketprice } = routes[1];
+  const { balance, testNet } = routes[2] || {};
   const page = getPage(routes);
   const tabs = getTabs(routes);
   const titleText = [page, "title"].join(".");
   let description = [page, "description"].join(".");
   if (tabDesc) description = [description, getTab(routes)].join(".");
-  if (routes[2] && routes[2].testNet) description = [description, isTestNet ? "testnet" : "mainnet"].join(".");
+  if (testNet) description = [description, isTestNet ? "testnet" : "mainnet"].join(".");
   description = (desc || tabDesc) && typeof subtitle === "undefined" && intl.formatMessage(messages[description]);
 
   return (
