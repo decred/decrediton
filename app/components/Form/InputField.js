@@ -1,4 +1,5 @@
 import React from "react";
+import {Input} from "inputs";
 
 const inputField = ({
                        input,
@@ -11,7 +12,7 @@ const inputField = ({
     <div className="message-label">
       {label}
     </div>
-    <input {...input} placeholder={placeholder} type={type} />
+    <Input {...input} placeholder={placeholder} type={type} />
     {touched && (error && <span className="error">{error}</span>)}
   </div>
 );
