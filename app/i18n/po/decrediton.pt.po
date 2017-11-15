@@ -2,7 +2,7 @@
 # Matheus Degiovani <mathdegiovani@gmail.com>, 2017
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-10-04T20:46:09.409Z\n"
+"POT-Creation-Date: 2017-11-15T09:06:12.749Z\n"
 "Last-Translator: Matheus Degiovani <mathdegiovani@gmail.com>, 2017\n"
 "Language-Team: Portuguese (https://www.transifex.com/decred/teams/79156/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -12,29 +12,73 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: react-intl-po\n"
 
-#. [puchaseTickets.invalidExpiry]
+#. [appMenu.close]
 #. defaultMessage is:
-#. *Invalid expiry (>= 0)
-#: app/i18n/extracted/app/components/PurchaseTickets/index.json
-msgctxt "puchaseTickets.invalidExpiry"
-msgid "*Invalid expiry (>= 0)"
-msgstr ""
+#. &Close
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.close"
+msgid "&Close"
+msgstr "&Fechar"
+
+#. [appMenu.file]
+#. defaultMessage is:
+#. &File
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.file"
+msgid "&File"
+msgstr "&Arquivo"
+
+#. [appMenu.view]
+#. defaultMessage is:
+#. &View
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.view"
+msgid "&View"
+msgstr "&Ver"
+
+#. [securitycenter.form.error.mandatory.all]
+#. defaultMessage is:
+#. * All fields are mandatory
+#. [securitycenter.form.error.mandatory.all]
+#. defaultMessage is:
+#. * All fields are mandatory
+#. [securitycenter.form.error.mandatory.all]
+#. defaultMessage is:
+#. * All fields are mandatory
+#. [securitycenter.form.error.mandatory.all]
+#. defaultMessage is:
+#. * All fields are mandatory
+#: app/i18n/extracted/app/components/SignMessage/validator.json
+#: app/i18n/extracted/app/components/VerifyMessage/validator.json
+#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/validator.json
+#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/validator.json
+msgctxt "securitycenter.form.error.mandatory.all"
+msgid "* All fields are mandatory"
+msgstr "* Todos os campos são obrigatórios"
+
+#. [autobuyer.invalidMaxFee]
+#. defaultMessage is:
+#. *Invalid max fee (0 - 0.1 DCR/KB)
+#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
+msgctxt "autobuyer.invalidMaxFee"
+msgid "*Invalid max fee (0 - 0.1 DCR/KB)"
+msgstr "* Taxa máxima inválida (0-0.1 DCR/KB)"
 
 #. [purchaseTickets.errors.invalidTicketFee]
 #. defaultMessage is:
-#. *Invalid ticket fee (0 - 1 DCR/KB)
-#: app/i18n/extracted/app/components/PurchaseTickets/index.json
+#. *Invalid ticket fee (0 - 0.1 DCR/KB)
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.errors.invalidTicketFee"
-msgid "*Invalid ticket fee (0 - 1 DCR/KB)"
-msgstr ""
+msgid "*Invalid ticket fee (0 - 0.1 DCR/KB)"
+msgstr "* Taxa de ticket inválida (0-0.1 DCR/KB)"
 
-#. [purchaseTickets.invalidTxFee]
+#. [purchaseTickets.errors.invalidTxFee]
 #. defaultMessage is:
-#. *Invalid tx fee (0 - 1 DCR/KB)
-#: app/i18n/extracted/app/components/PurchaseTickets/index.json
-msgctxt "purchaseTickets.invalidTxFee"
-msgid "*Invalid tx fee (0 - 1 DCR/KB)"
-msgstr ""
+#. *Invalid tx fee (0 - 0.1 DCR/KB)
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+msgctxt "purchaseTickets.errors.invalidTxFee"
+msgid "*Invalid tx fee (0 - 0.1 DCR/KB)"
+msgstr "* Taxa de transação inválida (0 - 0.1 DCR/KB)"
 
 #. [createWallet.passphraseInput.errors.noMatch]
 #. defaultMessage is:
@@ -42,31 +86,31 @@ msgstr ""
 #: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
 msgctxt "createWallet.passphraseInput.errors.noMatch"
 msgid "*Passwords do not match"
-msgstr ""
+msgstr "*Senhas não são iguais"
 
 #. [send.errors.invalidAddress]
 #. defaultMessage is:
 #. *Please enter a valid address
-#: app/i18n/extracted/app/components/views/SendPage/index.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/index.json
 msgctxt "send.errors.invalidAddress"
 msgid "*Please enter a valid address"
-msgstr ""
+msgstr "*Digite um endereço válido"
 
 #. [send.errors.invalidAmount]
 #. defaultMessage is:
 #. *Please enter a valid amount
-#: app/i18n/extracted/app/components/views/SendPage/index.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/index.json
 msgctxt "send.errors.invalidAmount"
 msgid "*Please enter a valid amount"
-msgstr ""
+msgstr "*Digite um valor válido"
 
 #. [send.errors.negativeAmount]
 #. defaultMessage is:
 #. *Please enter a valid amount (> 0)
-#: app/i18n/extracted/app/components/views/SendPage/index.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/index.json
 msgctxt "send.errors.negativeAmount"
 msgid "*Please enter a valid amount (> 0)"
-msgstr ""
+msgstr "*Digite um valor válido (> 0)"
 
 #. [stake.addPool.errors.noApiKey]
 #. defaultMessage is:
@@ -74,7 +118,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakePools/AddForm.json
 msgctxt "stake.addPool.errors.noApiKey"
 msgid "*Please enter your API key"
-msgstr ""
+msgstr "*Digite sua chave de API"
 
 #. [createWallet.passphraseInput.errors.noPassPhrase]
 #. defaultMessage is:
@@ -82,7 +126,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
 msgctxt "createWallet.passphraseInput.errors.noPassPhrase"
 msgid "*Please enter your private passphrase"
-msgstr ""
+msgstr "*Digite sua senha particular"
 
 #. [importScriptModal.errors.noPassphrase]
 #. defaultMessage is:
@@ -90,7 +134,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/ImportScriptModal/Modal.json
 msgctxt "importScriptModal.errors.noPassphrase"
 msgid "*Please enter your private passphrase"
-msgstr ""
+msgstr "*Digite sua senha particular"
 
 #. [passphraseModal.errors.noPassphrase]
 #. defaultMessage is:
@@ -98,7 +142,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PassphraseModal/Modal.json
 msgctxt "passphraseModal.errors.noPassphrase"
 msgid "*Please enter your private passphrase"
-msgstr ""
+msgstr "*Digite sua senha particular"
 
 #. [accounts.formNew.errors.noPassphrase]
 #. defaultMessage is:
@@ -106,7 +150,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/AddAccount/Form.json
 msgctxt "accounts.formNew.errors.noPassphrase"
 msgid "*Please enter your private passphrase"
-msgstr ""
+msgstr "*Digite sua senha particular"
 
 #. [getStarted.discoverAddresses.errors.noPassphrase]
 #. defaultMessage is:
@@ -114,7 +158,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/DiscoverAddresses/Form.json
 msgctxt "getStarted.discoverAddresses.errors.noPassphrase"
 msgid "*Please enter your private passphrase"
-msgstr ""
+msgstr "*Digite sua senha particular"
 
 #. [getStarted.decrypt.errors.noPublicPassphrase]
 #. defaultMessage is:
@@ -122,7 +166,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/DecryptForm.json
 msgctxt "getStarted.decrypt.errors.noPublicPassphrase"
 msgid "*Please enter your public passphrase"
-msgstr ""
+msgstr "*Digite sua senha particular"
 
 #. [importScriptModal.errors.noScript]
 #. defaultMessage is:
@@ -130,7 +174,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/ImportScriptModal/Modal.json
 msgctxt "importScriptModal.errors.noScript"
 msgid "*Please enter your script"
-msgstr ""
+msgstr "*Digite seu script"
+
+#. [autobuyer.canNotEnableAutobuyer]
+#. defaultMessage is:
+#. *Please fix fields with errors
+#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
+msgctxt "autobuyer.canNotEnableAutobuyer"
+msgid "*Please fix fields with errors"
+msgstr "* Por favor corrija os campos com erros"
 
 #. [confirmSeed.errors.seedsDontMatch]
 #. defaultMessage is:
@@ -138,7 +190,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/CreateWalletForm/ConfirmSeed/Form.json
 msgctxt "confirmSeed.errors.seedsDontMatch"
 msgid "*Seeds do not match"
-msgstr ""
+msgstr "*As seeds digitadas não são iguais"
 
 #. [accounts.formNew.errors.noName]
 #. defaultMessage is:
@@ -146,7 +198,23 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/AddAccount/Form.json
 msgctxt "accounts.formNew.errors.noName"
 msgid "*You must enter an account name"
-msgstr ""
+msgstr "*Você deve digitar um nome para a conta"
+
+#. [confirmSeed.errors.noPaste]
+#. defaultMessage is:
+#. *You should not paste your Seeds. Please type it
+#: app/i18n/extracted/app/components/CreateWalletForm/ConfirmSeed/Form.json
+msgctxt "confirmSeed.errors.noPaste"
+msgid "*You should not paste your Seeds. Please type it"
+msgstr "*Não cole as suas seeds. Por favor, digite-as."
+
+#. [sidebar.lastBlockIsRecent]
+#. defaultMessage is:
+#. < 1 minute ago
+#: app/i18n/extracted/app/components/SideBar/Bar.json
+msgctxt "sidebar.lastBlockIsRecent"
+msgid "< 1 minute ago"
+msgstr "< 1 minuto atrás"
 
 #. [stake.apiKeyPlaceholder]
 #. defaultMessage is:
@@ -154,22 +222,23 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakePools/AddForm.json
 msgctxt "stake.apiKeyPlaceholder"
 msgid "API Key"
-msgstr ""
+msgstr "Chave de API"
 
-#. [getStarted.chainLoading.skipBtn.tip]
+#. [appMenu.about]
 #. defaultMessage is:
-#. ATTENTION<br>
-#.       You may skip the initial blockchain download, but be aware that
-#.       all transactions may not be found until the chain is fully synced.
-#.       As a result, your balance may be incorrect until fully synced.
-#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
-msgctxt "getStarted.chainLoading.skipBtn.tip"
-msgid ""
-"ATTENTION<br>\n"
-"      You may skip the initial blockchain download, but be aware that\n"
-"      all transactions may not be found until the chain is fully synced.\n"
-"      As a result, your balance may be incorrect until fully synced."
-msgstr ""
+#. About
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.about"
+msgid "About"
+msgstr "Sobre"
+
+#. [appMenu.aboutDecrediton]
+#. defaultMessage is:
+#. About Decrediton
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.aboutDecrediton"
+msgid "About Decrediton"
+msgstr "Sobre Decrediton"
 
 #. [purchaseTickets.account]
 #. defaultMessage is:
@@ -177,7 +246,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.account"
 msgid "Account"
-msgstr ""
+msgstr "Conta"
 
 #. [tickets.info.account.header]
 #. defaultMessage is:
@@ -185,7 +254,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 msgctxt "tickets.info.account.header"
 msgid "Account"
-msgstr ""
+msgstr "Conta"
 
 #. [accounts.formNew.name]
 #. defaultMessage is:
@@ -193,7 +262,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/AddAccount/Form.json
 msgctxt "accounts.formNew.name"
 msgid "Account Name"
-msgstr ""
+msgstr "Nome da Conta"
 
 #. [accounts.number]
 #. defaultMessage is:
@@ -201,47 +270,45 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.number"
 msgid "Account number"
-msgstr ""
+msgstr "Nome da conta"
 
-#. [purchaseTickets.accountsTip]
+#. [accountsButton.tip]
 #. defaultMessage is:
 #. Accounts
-#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
-msgctxt "purchaseTickets.accountsTip"
+#: app/i18n/extracted/app/components/shared/LinkToAccounts.json
+msgctxt "accountsButton.tip"
 msgid "Accounts"
-msgstr ""
+msgstr "Contas"
 
 #. [menu.accounts]
 #. defaultMessage is:
 #. Accounts
-#: app/i18n/extracted/app/components/SideBar/Bar.json
+#: app/i18n/extracted/app/components/SideBar/MenuLinks/index.json
 msgctxt "menu.accounts"
 msgid "Accounts"
-msgstr ""
+msgstr "Contas"
 
 #. [accounts.title]
 #. defaultMessage is:
 #. Accounts
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/List.json
+#: app/i18n/extracted/app/messages.json
 msgctxt "accounts.title"
 msgid "Accounts"
-msgstr ""
+msgstr "Contas"
 
-#. [receive.accounts.tip]
+#. [accounts.description]
 #. defaultMessage is:
-#. Accounts
-#: app/i18n/extracted/app/components/views/ReceivePage/Page.json
-msgctxt "receive.accounts.tip"
-msgid "Accounts"
+#. Accounts allow you to keep separate records of your DCR funds.
+#. Transferring DCR across accounts will create a transaction on the
+#. blockchain.
+#: app/i18n/extracted/app/messages.json
+msgctxt "accounts.description"
+msgid ""
+"Accounts allow you to keep separate records of your DCR funds.\n"
+"Transferring DCR across accounts will create a transaction on the blockchain."
 msgstr ""
-
-#. [send.accounts.tip]
-#. defaultMessage is:
-#. Accounts
-#: app/i18n/extracted/app/components/views/SendPage/Page.json
-msgctxt "send.accounts.tip"
-msgid "Accounts"
-msgstr ""
+"Contas permitem que você mantenha registros separados dos seus fundos DCR.\n"
+"Transferir DCR entre contas irá criar uma transação na blockchain."
 
 #. [stake.addPool.addBtn]
 #. defaultMessage is:
@@ -249,7 +316,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakePools/AddForm.json
 msgctxt "stake.addPool.addBtn"
 msgid "Add"
-msgstr ""
+msgstr "Adicionar"
 
 #. [accounts.addNewButton]
 #. defaultMessage is:
@@ -257,7 +324,77 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/List.json
 msgctxt "accounts.addNewButton"
 msgid "Add New"
+msgstr "Adicionar nova"
+
+#. [stakepools.list.form.submit]
+#. defaultMessage is:
+#. Add stakepool
+#: app/i18n/extracted/app/components/StakePools/List.json
+msgctxt "stakepools.list.form.submit"
+msgid "Add stakepool"
+msgstr "Adicionar stakepoo"
+
+#. [securitycenter.sign.form.field.address.label]
+#. defaultMessage is:
+#. Address
+#. [securitycenter.sign.form.field.address.label]
+#. defaultMessage is:
+#. Address
+#: app/i18n/extracted/app/components/SignMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/Form.json
+msgctxt "securitycenter.sign.form.field.address.label"
+msgid "Address"
+msgstr "Endereço"
+
+#. [securitycenter.verify.form.field.address.label]
+#. defaultMessage is:
+#. Address
+#. [securitycenter.verify.form.field.address.label]
+#. defaultMessage is:
+#. Address
+#: app/i18n/extracted/app/components/VerifyMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/Form.json
+msgctxt "securitycenter.verify.form.field.address.label"
+msgid "Address"
+msgstr "Endereço"
+
+#. [appMenu.advanced]
+#. defaultMessage is:
+#. Advanced
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.advanced"
+msgid "Advanced"
+msgstr "Avançado"
+
+#. [getStarted.advanced.title]
+#. defaultMessage is:
+#. Advanced Start Up
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/Form.json
+msgctxt "getStarted.advanced.title"
+msgid "Advanced Start Up"
+msgstr "Início Avançado"
+
+#. [verify.info.message]
+#. defaultMessage is:
+#. After you or your counterparty has generated a signature, you can use this
+#. form to verify the validity of the signature.  Once you have entered the
+#. address, the message and the corresponding signature, you will see VALID if
+#. the signature appropriately matches the address and message, otherwise
+#. INVALID.
+#: app/i18n/extracted/app/components/VerifyMessageInfo.json
+msgctxt "verify.info.message"
+msgid ""
+"After you or your counterparty has generated a signature, you can use this "
+"form to verify the validity of the signature.  Once you have entered the "
+"address, the message and the corresponding signature, you will see VALID if "
+"the signature appropriately matches the address and message, otherwise "
+"INVALID."
 msgstr ""
+"Após você ou a contraparte terem gerado uma assinatura, você pode utilizar "
+"esse formulário para verificar a validade da assinatura. Uma vez que você "
+"tenha digitado o endereço, a mensagem e a assinatura correspondente, você "
+"verá VÁLIDO se a assinatura confere com o endereço e a mensagem, caso "
+"contrário você verá INVÁLIDO"
 
 #. [agenda.overview.idLabel]
 #. defaultMessage is:
@@ -265,7 +402,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/AgendaCard.json
 msgctxt "agenda.overview.idLabel"
 msgid "Agenda ID"
-msgstr ""
+msgstr "ID da Agenda"
 
 #. [agenda.card.idLabel]
 #. defaultMessage is:
@@ -273,15 +410,19 @@ msgstr ""
 #: app/i18n/extracted/app/components/AgendaOverview/Overview.json
 msgctxt "agenda.card.idLabel"
 msgid "Agenda ID"
-msgstr ""
+msgstr "ID da Agenda"
 
 #. [transaction.type.all]
 #. defaultMessage is:
 #. All
+#. [transaction.type.all]
+#. defaultMessage is:
+#. All
 #: app/i18n/extracted/app/components/views/HistoryPage/index.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/index.json
 msgctxt "transaction.type.all"
 msgid "All"
-msgstr ""
+msgstr "Todas"
 
 #. [stake.mempoolTickets]
 #. defaultMessage is:
@@ -289,31 +430,59 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
 msgctxt "stake.mempoolTickets"
 msgid "All Mempool Tickets"
-msgstr ""
+msgstr "Todas os tickets na Mempool"
 
 #. [notification.transfer.amount]
 #. defaultMessage is:
 #. Amount
+#. [notification.transfer.amount]
+#. defaultMessage is:
+#. Amount
 #: app/i18n/extracted/app/components/Header/Notification/Transfer.json
+#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
 msgctxt "notification.transfer.amount"
 msgid "Amount"
-msgstr ""
+msgstr "Valor"
 
 #. [send.amountPlaceholder]
 #. defaultMessage is:
 #. Amount
-#: app/i18n/extracted/app/components/views/SendPage/OutputRow.json
+#. [send.amountPlaceholder]
+#. defaultMessage is:
+#. Amount
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputAccountRow.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputRow.json
 msgctxt "send.amountPlaceholder"
 msgid "Amount"
-msgstr ""
+msgstr "Valor"
 
 #. [send.amount]
 #. defaultMessage is:
 #. Amount
-#: app/i18n/extracted/app/components/views/SendPage/OutputRow.json
+#. [send.amount]
+#. defaultMessage is:
+#. Amount
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputAccountRow.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputRow.json
 msgctxt "send.amount"
 msgid "Amount"
-msgstr ""
+msgstr "Valor"
+
+#. [error.title]
+#. defaultMessage is:
+#. An error has occured
+#: app/i18n/extracted/app/messages.json
+msgctxt "error.title"
+msgid "An error has occured"
+msgstr "Ocorreu um erro"
+
+#. [walletError.title]
+#. defaultMessage is:
+#. An error has occured
+#: app/i18n/extracted/app/messages.json
+msgctxt "walletError.title"
+msgid "An error has occured"
+msgstr "Ocorreu um erro"
 
 #. [tickets.info.poolPreference.message]
 #. defaultMessage is:
@@ -322,6 +491,7 @@ msgstr ""
 msgctxt "tickets.info.poolPreference.message"
 msgid "Automate setup with PoS pools. See below for more information."
 msgstr ""
+"Automatizar configuração com PoS pools. Veja abaixo para mais informações."
 
 #. [autobuyer.title]
 #. defaultMessage is:
@@ -329,7 +499,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.title"
 msgid "Automatic Purchase"
-msgstr ""
+msgstr "Compra Automática"
+
+#. [accounts.automaticPurchaseInfo]
+#. defaultMessage is:
+#. Automatic Purchase Information
+#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
+msgctxt "accounts.automaticPurchaseInfo"
+msgid "Automatic Purchase Information"
+msgstr "Informação de compra automática"
 
 #. [history.availableBalanceTitle]
 #. defaultMessage is:
@@ -337,15 +515,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/HistoryPage/Page.json
 msgctxt "history.availableBalanceTitle"
 msgid "Available Balance"
-msgstr ""
+msgstr "Saldo Disponível"
 
-#. [home.availableBalanceTitle]
+#. [home.title]
 #. defaultMessage is:
 #. Available Balance
-#: app/i18n/extracted/app/components/views/HomePage/Page.json
-msgctxt "home.availableBalanceTitle"
+#: app/i18n/extracted/app/messages.json
+msgctxt "home.title"
 msgid "Available Balance"
-msgstr ""
+msgstr "Saldo Disponível"
 
 #. [getStarted.backBtn]
 #. defaultMessage is:
@@ -353,7 +531,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/CreateForm.json
 msgctxt "getStarted.backBtn"
 msgid "Back"
-msgstr ""
+msgstr "Voltar"
+
+#. [ticketList.backBtn]
+#. defaultMessage is:
+#. Back
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketListPage.json
+msgctxt "ticketList.backBtn"
+msgid "Back"
+msgstr "Voltar"
 
 #. [txDetails.backBtn]
 #. defaultMessage is:
@@ -361,15 +547,27 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.backBtn"
 msgid "Back"
-msgstr ""
+msgstr "Voltar"
 
 #. [errors.goHome]
 #. defaultMessage is:
 #. Back to Home
-#: app/i18n/extracted/app/components/ErrorScreen.json
+#. [errors.goHome]
+#. defaultMessage is:
+#. Back to Home
+#: app/i18n/extracted/app/components/ErrorScreen/index.json
+#: app/i18n/extracted/app/components/ErrorScreen/Page.json
 msgctxt "errors.goHome"
 msgid "Back to Home"
-msgstr ""
+msgstr "Voltar ao Início"
+
+#. [accounts.balanceInfo]
+#. defaultMessage is:
+#. Balance Information
+#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/List.json
+msgctxt "accounts.balanceInfo"
+msgid "Balance Information"
+msgstr "Informação de Saldo"
 
 #. [autobuyer.balanceToMaintain]
 #. defaultMessage is:
@@ -377,7 +575,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.balanceToMaintain"
 msgid "Balance to Maintain"
-msgstr ""
+msgstr "Saldo a ser mantido"
+
+#. [ticketAutoBuyer.info.balanceToMaintain.header]
+#. defaultMessage is:
+#. Balance to Maintain
+#: app/i18n/extracted/app/components/TicketAutoBuyerInfo.json
+msgctxt "ticketAutoBuyer.info.balanceToMaintain.header"
+msgid "Balance to Maintain"
+msgstr "Saldo a ser mantido"
 
 #. [accounts.balances]
 #. defaultMessage is:
@@ -385,7 +591,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.balances"
 msgid "Balances"
-msgstr ""
+msgstr "Saldos"
 
 #. [txDetails.blockLabel]
 #. defaultMessage is:
@@ -393,7 +599,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.blockLabel"
 msgid "Block"
-msgstr ""
+msgstr "Bloco"
+
+#. [appMenu.bringAllFront]
+#. defaultMessage is:
+#. Bring All to Front
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.bringAllFront"
+msgid "Bring All to Front"
+msgstr "Trazer Todos para Frente"
 
 #. [changePassModal.cancel]
 #. defaultMessage is:
@@ -401,7 +615,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/ChangePassphraseModal/Modal.json
 msgctxt "changePassModal.cancel"
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. [stake.addPool.cancelBtn]
 #. defaultMessage is:
@@ -409,7 +623,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakePools/AddForm.json
 msgctxt "stake.addPool.cancelBtn"
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
+
+#. [stakepools.list.form.cancel]
+#. defaultMessage is:
+#. Cancel
+#: app/i18n/extracted/app/components/StakePools/List.json
+msgctxt "stakepools.list.form.cancel"
+msgid "Cancel"
+msgstr "Cancelar"
 
 #. [accounts.cancelRenameBtn]
 #. defaultMessage is:
@@ -417,7 +639,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.cancelRenameBtn"
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. [accounts.formNew.cancelBtn]
 #. defaultMessage is:
@@ -425,15 +647,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/AddAccount/Form.json
 msgctxt "accounts.formNew.cancelBtn"
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
-#. [help.chat]
+#. [send.cancelSendAllTitle]
 #. defaultMessage is:
-#. Chat
-#: app/i18n/extracted/app/components/views/Help.json
-msgctxt "help.chat"
-msgid "Chat"
-msgstr ""
+#. Cancel sending all funds
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+msgctxt "send.cancelSendAllTitle"
+msgid "Cancel sending all funds"
+msgstr "Cancelar envio de todos os fundos"
 
 #. [getStarted.header.checkingWalletState.meta]
 #. defaultMessage is:
@@ -441,15 +663,23 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/CheckWalletState.json
 msgctxt "getStarted.header.checkingWalletState.meta"
 msgid "Checking wallet state"
-msgstr ""
+msgstr "Checando estado da carteira"
 
-#. [send.cancelSendAll]
+#. [appMenu.communityDiscussions]
 #. defaultMessage is:
-#. Close
-#: app/i18n/extracted/app/components/views/SendPage/Page.json
-msgctxt "send.cancelSendAll"
-msgid "Close"
-msgstr ""
+#. Community Discussions
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.communityDiscussions"
+msgid "Community Discussions"
+msgstr "Discussões da Comunidade"
+
+#. [stakepools.list.title]
+#. defaultMessage is:
+#. Configured stake pools:
+#: app/i18n/extracted/app/components/StakePools/List.json
+msgctxt "stakepools.list.title"
+msgid "Configured stake pools:"
+msgstr "Stake pools configuradas:"
 
 #. [changePassModal.confirm]
 #. defaultMessage is:
@@ -457,7 +687,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/ChangePassphraseModal/Modal.json
 msgctxt "changePassModal.confirm"
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #. [accounts.formNew.confirmBtn]
 #. defaultMessage is:
@@ -465,7 +695,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/AddAccount/Form.json
 msgctxt "accounts.formNew.confirmBtn"
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #. [confirmSeed.label]
 #. defaultMessage is:
@@ -473,7 +703,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/CreateWalletForm/ConfirmSeed/Form.json
 msgctxt "confirmSeed.label"
 msgid "Confirm Seed"
-msgstr ""
+msgstr "Confirmar seed"
 
 #. [transaction.indicatorConfirmed]
 #. defaultMessage is:
@@ -485,7 +715,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "transaction.indicatorConfirmed"
 msgid "Confirmed"
-msgstr ""
+msgstr "Confirmada"
+
+#. [login.form.appdata.button]
+#. defaultMessage is:
+#. Connect to Remote
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/RemoteDaemonForm.json
+msgctxt "login.form.appdata.button"
+msgid "Connect to Remote"
+msgstr "Conectar ao Remoto:"
 
 #. [createWallet.continueBtn]
 #. defaultMessage is:
@@ -493,15 +731,23 @@ msgstr ""
 #: app/i18n/extracted/app/components/CreateWalletForm/CreateWallet.json
 msgctxt "createWallet.continueBtn"
 msgid "Continue"
-msgstr ""
+msgstr "Continuar"
 
 #. [clipboard.copied]
 #. defaultMessage is:
 #. Copied
-#: app/i18n/extracted/app/components/CopyToClipboardButton.json
+#: app/i18n/extracted/app/components/shared/CopyToClipboard.json
 msgctxt "clipboard.copied"
 msgid "Copied"
-msgstr ""
+msgstr "Copiada"
+
+#. [appMenu.copy]
+#. defaultMessage is:
+#. Copy
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.copy"
+msgid "Copy"
+msgstr "Copiar"
 
 #. [createWallet.createWalletBtn]
 #. defaultMessage is:
@@ -509,7 +755,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/CreateWalletForm/ContinueWalletCreation.json
 msgctxt "createWallet.createWalletBtn"
 msgid "Create Wallet"
-msgstr ""
+msgstr "Criar Carteira"
 
 #. [getStarted.header.createWallet.meta]
 #. defaultMessage is:
@@ -517,15 +763,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/CreateForm.json
 msgctxt "getStarted.header.createWallet.meta"
 msgid "Create a wallet"
-msgstr ""
+msgstr "Criar a Carteira"
 
-#. [purchaseTickets.currentFee]
+#. [tickets.description]
 #. defaultMessage is:
-#. Current Fee
-#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
-msgctxt "purchaseTickets.currentFee"
-msgid "Current Fee"
-msgstr ""
+#. Current Price:
+#: app/i18n/extracted/app/messages.json
+msgctxt "tickets.description"
+msgid "Current Price:"
+msgstr "Preço Atual:"
 
 #. [purchaseTickets.currentStakepool]
 #. defaultMessage is:
@@ -533,7 +779,39 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.currentStakepool"
 msgid "Current StakePool"
-msgstr ""
+msgstr "StakePool Atual"
+
+#. [appMenu.cut]
+#. defaultMessage is:
+#. Cut
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.cut"
+msgid "Cut"
+msgstr "Cortar"
+
+#. [login.form.appdata.label]
+#. defaultMessage is:
+#. Daemon Data Directory
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/AppDataForm.json
+msgctxt "login.form.appdata.label"
+msgid "Daemon Data Directory"
+msgstr "Diretório de dados do daemon"
+
+#. [transaction.description]
+#. defaultMessage is:
+#. Date and time will appear as soon as we get a confirmation.
+#: app/i18n/extracted/app/messages.json
+msgctxt "transaction.description"
+msgid "Date and time will appear as soon as we get a confirmation."
+msgstr "Data e Hora aparecerão assim que tivermos uma confirmação."
+
+#. [appMenu.decrediton]
+#. defaultMessage is:
+#. Decrediton
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.decrediton"
+msgid "Decrediton"
+msgstr "Decrediton"
 
 #. [tickets.info.txFee.message]
 #. defaultMessage is:
@@ -557,6 +835,14 @@ msgid ""
 "several hours. This can be left at 0.01. It does not affect your chances of "
 "buying tickets or voting with them."
 msgstr ""
+"Decrediton usa uma transação \"split\" para evitar bloquear o seu saldo, "
+"dividindo o valor exato necessário para a compra do ticket do saldo da sua "
+"carteira. Essa transação \"split\" precisa ser confirmada pelo menos uma vez"
+" para que você possa reutilizar o seu saldo. Isso pode bloquear o seu saldo "
+"por vários minutos, enquanto a confirmação ocorre. Sem a divisão, você pode "
+"ter que esperar a confirmação da transação do ticket, o que pode levar "
+"várias horas. Ela pode ser deixada em 0.01. Isso não afeta as suas chances "
+"de comprar tickets ou votar com eles."
 
 #. [getStarted.decrypt.label]
 #. defaultMessage is:
@@ -564,23 +850,23 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/DecryptForm.json
 msgctxt "getStarted.decrypt.label"
 msgid "Decrypt Wallet"
-msgstr ""
+msgstr "Descriptografar Carteira"
 
 #. [send.destinationAddrPlaceholder]
 #. defaultMessage is:
 #. Destination Address
-#: app/i18n/extracted/app/components/views/SendPage/OutputRow.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputRow.json
 msgctxt "send.destinationAddrPlaceholder"
 msgid "Destination Address"
-msgstr ""
+msgstr "Endereço de Destino"
 
-#. [autobuyer.disabled]
+#. [advancedDaemon.toggle.appdata]
 #. defaultMessage is:
-#. Disabled
-#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
-msgctxt "autobuyer.disabled"
-msgid "Disabled"
-msgstr ""
+#. Different Local Daemon Location
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/Form.json
+msgctxt "advancedDaemon.toggle.appdata"
+msgid "Different Local Daemon Location"
+msgstr "Daemon local em local diferente"
 
 #. [getStarted.header.discoveringAddresses.meta]
 #. defaultMessage is:
@@ -588,7 +874,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/DiscoverAddresses/Form.json
 msgctxt "getStarted.header.discoveringAddresses.meta"
 msgid "Discovering addresses"
-msgstr ""
+msgstr "Descobrindo Endereços"
 
 #. [settings.displayedUnits]
 #. defaultMessage is:
@@ -596,7 +882,23 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.displayedUnits"
 msgid "Displayed Units"
+msgstr "Unidades Exibidas"
+
+#. [ticketAutoBuyer.info.maxPerBlock.message]
+#. defaultMessage is:
+#. Do not buy more than this number of tickets per block. A negative number
+#. means buy one ticket every n blocks. e.g. -2 would mean buy a ticket every
+#. second block.
+#: app/i18n/extracted/app/components/TicketAutoBuyerInfo.json
+msgctxt "ticketAutoBuyer.info.maxPerBlock.message"
+msgid ""
+"Do not buy more than this number of tickets per block. A negative number "
+"means buy one ticket every n blocks. e.g. -2 would mean buy a ticket every "
+"second block."
 msgstr ""
+"Não comprar mais do que esse número de tickets por bloco. Um número negativo"
+" significa que comprar um ticket a cada n blocos. Ex: -2 significaria "
+"comprar um ticket bloco sim, bloco não"
 
 #. [help.documentation]
 #. defaultMessage is:
@@ -604,7 +906,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/Help.json
 msgctxt "help.documentation"
 msgid "Documentation"
-msgstr ""
+msgstr "Documentação"
+
+#. [appMenu.documentation]
+#. defaultMessage is:
+#. Documentation
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.documentation"
+msgid "Documentation"
+msgstr "Documentação"
 
 #. [getStarted.header.downloadingBlockchain.meta]
 #. defaultMessage is:
@@ -612,26 +922,28 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
 msgctxt "getStarted.header.downloadingBlockchain.meta"
 msgid "Downloading blockchain"
-msgstr ""
+msgstr "Baixando blockchain"
 
-#. [receive.titleInfo]
+#. [transactions.description.receive]
 #. defaultMessage is:
 #. Each time you request a payment, create a new address to protect your
 #. privacy.
-#: app/i18n/extracted/app/components/views/ReceivePage/Page.json
-msgctxt "receive.titleInfo"
+#: app/i18n/extracted/app/messages.json
+msgctxt "transactions.description.receive"
 msgid ""
 "Each time you request a payment, create a new address to protect your "
 "privacy."
 msgstr ""
+"Cada vez que você requisitar um pagamento, crie um novo endereço para "
+"proteger sua privacidade"
 
-#. [autobuyer.enabled]
+#. [appMenu.edit]
 #. defaultMessage is:
-#. Enabled
-#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
-msgctxt "autobuyer.enabled"
-msgid "Enabled"
-msgstr ""
+#. Edit
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.edit"
+msgid "Edit"
+msgstr "Editar"
 
 #. [createWallet.encryptWallet]
 #. defaultMessage is:
@@ -639,7 +951,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/CreateWalletForm/ContinueWalletCreation.json
 msgctxt "createWallet.encryptWallet"
 msgid "Encrypt Wallet"
-msgstr ""
+msgstr "Criptografar Carteira"
 
 #. [createWallet.passhraseInput.label]
 #. defaultMessage is:
@@ -647,15 +959,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
 msgctxt "createWallet.passhraseInput.label"
 msgid "Encrypt Wallet"
-msgstr ""
+msgstr "Criptografar Carteira"
 
 #. [importScript.title]
 #. defaultMessage is:
 #. Enter Passphrase to Import Script
-#: app/i18n/extracted/app/components/views/TicketsPage/Tickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/Tickets.json
 msgctxt "importScript.title"
 msgid "Enter Passphrase to Import Script"
-msgstr ""
+msgstr "Digite a Senha para Importar o Script"
 
 #. [purchaseTickets.requestPassphrase]
 #. defaultMessage is:
@@ -663,15 +975,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/index.json
 msgctxt "purchaseTickets.requestPassphrase"
 msgid "Enter Passphrase to Purchase Tickets"
-msgstr ""
+msgstr "Digite a Senha para Comprar Tickets"
 
 #. [stake.revokeTicketsPassphrase]
 #. defaultMessage is:
 #. Enter Passphrase to Revoke Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/index.json
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/index.json
 msgctxt "stake.revokeTicketsPassphrase"
 msgid "Enter Passphrase to Revoke Tickets"
-msgstr ""
+msgstr "Digite a Senha para Revogar Tickets"
 
 #. [stake.addForm.passhraseHeading]
 #. defaultMessage is:
@@ -679,7 +991,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakePools/AddForm.json
 msgctxt "stake.addForm.passhraseHeading"
 msgid "Enter private passphrase to connect to your stakepool"
-msgstr ""
+msgstr "Digite a senha para conectar-se a sua stakepool"
 
 #. [getStarted.discoverAccountsInfo]
 #. defaultMessage is:
@@ -694,6 +1006,117 @@ msgid ""
 "\n"
 "          Your account names aren't stored on the blockchain, so you will have to rename them after setting up Decrediton."
 msgstr ""
+"Digite a senha particular que você acabou de criar para escanear a blockchain por contas adicionais que você pode ter criado em sua carteira.\n"
+"\n"
+"Os nomes das contas não são armazenados na blockchain, portanto você precisará renomea-las após sua configuração no Decrediton"
+
+#. [login.form.appdata.placeholder]
+#. defaultMessage is:
+#. Enter your Path to application home directory
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/AppDataForm.json
+msgctxt "login.form.appdata.placeholder"
+msgid "Enter your Path to application home directory"
+msgstr "Digite o caminho até o diretório home da aplicação"
+
+#. [login.form.rpcpassword.placeholder]
+#. defaultMessage is:
+#. Enter your RPC Password here
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/RemoteDaemonForm.json
+msgctxt "login.form.rpcpassword.placeholder"
+msgid "Enter your RPC Password here"
+msgstr "Digite a sua senha RPC aqui"
+
+#. [login.form.rpcuser.placeholder]
+#. defaultMessage is:
+#. Enter your RPC User here
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/RemoteDaemonForm.json
+msgctxt "login.form.rpcuser.placeholder"
+msgid "Enter your RPC User here"
+msgstr "Digite o seu usuário RPC aqui"
+
+#. [login.form.rpccert.placeholder.]
+#. defaultMessage is:
+#. Enter your RPC cert location here
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/RemoteDaemonForm.json
+msgctxt "login.form.rpccert.placeholder."
+msgid "Enter your RPC cert location here"
+msgstr "Digite o local do certificado RPC aqui"
+
+#. [login.form.rpchost.placeholder.]
+#. defaultMessage is:
+#. Enter your RPC host here
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/RemoteDaemonForm.json
+msgctxt "login.form.rpchost.placeholder."
+msgid "Enter your RPC host here"
+msgstr "Digite o host RPC aqui"
+
+#. [login.form.rpcport.placeholder.]
+#. defaultMessage is:
+#. Enter your RPC port here
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/RemoteDaemonForm.json
+msgctxt "login.form.rpcport.placeholder."
+msgid "Enter your RPC port here"
+msgstr "Digite a porta RPC aqui"
+
+#. [securitycenter.sign.form.field.address.placeholder]
+#. defaultMessage is:
+#. Enter your address
+#. [securitycenter.sign.form.field.address.placeholder]
+#. defaultMessage is:
+#. Enter your address
+#: app/i18n/extracted/app/components/SignMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/Form.json
+msgctxt "securitycenter.sign.form.field.address.placeholder"
+msgid "Enter your address"
+msgstr "Digite o seu endereço"
+
+#. [securitycenter.verify.form.field.address.placeholder]
+#. defaultMessage is:
+#. Enter your address
+#. [securitycenter.verify.form.field.address.placeholder]
+#. defaultMessage is:
+#. Enter your address
+#: app/i18n/extracted/app/components/VerifyMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/Form.json
+msgctxt "securitycenter.verify.form.field.address.placeholder"
+msgid "Enter your address"
+msgstr "Digite o seu endereço"
+
+#. [securitycenter.sign.form.field.message.placeholder]
+#. defaultMessage is:
+#. Enter your message
+#. [securitycenter.sign.form.field.message.placeholder]
+#. defaultMessage is:
+#. Enter your message
+#: app/i18n/extracted/app/components/SignMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/Form.json
+msgctxt "securitycenter.sign.form.field.message.placeholder"
+msgid "Enter your message"
+msgstr "Digite a sua mensagem"
+
+#. [securitycenter.verify.form.field.message.placeholder]
+#. defaultMessage is:
+#. Enter your message
+#. [securitycenter.verify.form.field.message.placeholder]
+#. defaultMessage is:
+#. Enter your message
+#: app/i18n/extracted/app/components/VerifyMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/Form.json
+msgctxt "securitycenter.verify.form.field.message.placeholder"
+msgid "Enter your message"
+msgstr "Digite a sua mensagem"
+
+#. [securitycenter.sign.form.field.passphrase.placeholder]
+#. defaultMessage is:
+#. Enter your passphrase
+#. [securitycenter.sign.form.field.passphrase.placeholder]
+#. defaultMessage is:
+#. Enter your passphrase
+#: app/i18n/extracted/app/components/SignMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/Form.json
+msgctxt "securitycenter.sign.form.field.passphrase.placeholder"
+msgid "Enter your passphrase"
+msgstr "Digite a sua senha"
 
 #. [createWallet.enterSeed.placeholder]
 #. defaultMessage is:
@@ -701,23 +1124,35 @@ msgstr ""
 #: app/i18n/extracted/app/components/CreateWalletForm/ConfirmSeed/SeedEntry.json
 msgctxt "createWallet.enterSeed.placeholder"
 msgid "Enter your seed..."
-msgstr ""
+msgstr "Entre com a seed..."
+
+#. [securitycenter.verify.form.field.signature.placeholder]
+#. defaultMessage is:
+#. Enter your signature
+#. [securitycenter.verify.form.field.signature.placeholder]
+#. defaultMessage is:
+#. Enter your signature
+#: app/i18n/extracted/app/components/VerifyMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/Form.json
+msgctxt "securitycenter.verify.form.field.signature.placeholder"
+msgid "Enter your signature"
+msgstr "Digite a sua assinatura"
 
 #. [send.feeEstimation]
 #. defaultMessage is:
 #. Estimated Fee
-#: app/i18n/extracted/app/components/views/SendPage/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.feeEstimation"
 msgid "Estimated Fee"
-msgstr ""
+msgstr "Taxa Estimada"
 
 #. [send.sizeEstimation]
 #. defaultMessage is:
 #. Estimated Size
-#: app/i18n/extracted/app/components/views/SendPage/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.sizeEstimation"
 msgid "Estimated Size"
-msgstr ""
+msgstr "Tamanho Estimado"
 
 #. [getStarted.chainLoading.syncEstimation]
 #. defaultMessage is:
@@ -727,6 +1162,7 @@ msgctxt "getStarted.chainLoading.syncEstimation"
 msgid ""
 "Estimated ending {timeEstimation} ({currentBlockCount} / {neededBlocks})"
 msgstr ""
+"Estimando terminar {timeEstimation} ({currentBlockCount} / {neededBlocks})"
 
 #. [getStarted.existingSeedTab]
 #. defaultMessage is:
@@ -734,7 +1170,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/CreateForm.json
 msgctxt "getStarted.existingSeedTab"
 msgid "Existing Seed"
-msgstr ""
+msgstr "Seed Existente"
 
 #. [stake.expiredTickets]
 #. defaultMessage is:
@@ -742,15 +1178,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
 msgctxt "stake.expiredTickets"
 msgid "Expired Tickets"
-msgstr ""
-
-#. [purchaseTickets.expiry]
-#. defaultMessage is:
-#. Expiry
-#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
-msgctxt "purchaseTickets.expiry"
-msgid "Expiry"
-msgstr ""
+msgstr "Tickets Expirados"
 
 #. [purchaseTickets.expiryPlaceholder]
 #. defaultMessage is:
@@ -758,7 +1186,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.expiryPlaceholder"
 msgid "Expiry"
-msgstr ""
+msgstr "Expiração"
+
+#. [purchaseTickets.expiry]
+#. defaultMessage is:
+#. Expiry
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+msgctxt "purchaseTickets.expiry"
+msgid "Expiry"
+msgstr "Expiração"
 
 #. [tickets.info.expiry.header]
 #. defaultMessage is:
@@ -766,15 +1202,19 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 msgctxt "tickets.info.expiry.header"
 msgid "Expiry (blocks)"
-msgstr ""
+msgstr "Expiração (blocos)"
 
 #. [notification.transfer.fee]
 #. defaultMessage is:
 #. Fee
+#. [notification.transfer.fee]
+#. defaultMessage is:
+#. Fee
 #: app/i18n/extracted/app/components/Header/Notification/Transfer.json
+#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
 msgctxt "notification.transfer.fee"
 msgid "Fee"
-msgstr ""
+msgstr "Taxa"
 
 #. [getStarted.header.fetchingBlockHeaders.meta]
 #. defaultMessage is:
@@ -782,7 +1222,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/FetchBlockHeaders/Form.json
 msgctxt "getStarted.header.fetchingBlockHeaders.meta"
 msgid "Fetching block headers"
-msgstr ""
+msgstr "Obtendo cabeçalhos dos blocos"
 
 #. [getStarted.header.finalizingSetup.meta]
 #. defaultMessage is:
@@ -790,7 +1230,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/FinalStartUp.json
 msgctxt "getStarted.header.finalizingSetup.meta"
 msgid "Finalizing setup"
-msgstr ""
+msgstr "Finalizando configuração"
 
 #. [agenda.card.finishedIndicator]
 #. defaultMessage is:
@@ -798,7 +1238,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/AgendaCard.json
 msgctxt "agenda.card.finishedIndicator"
 msgid "Finished"
-msgstr ""
+msgstr "Finalizado"
 
 #. [help.forum]
 #. defaultMessage is:
@@ -806,23 +1246,51 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/Help.json
 msgctxt "help.forum"
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
+
+#. [help.freenode]
+#. defaultMessage is:
+#. Freenode
+#: app/i18n/extracted/app/components/views/Help.json
+msgctxt "help.freenode"
+msgid "Freenode"
+msgstr "Freenode"
 
 #. [send.from]
 #. defaultMessage is:
 #. From
-#: app/i18n/extracted/app/components/views/SendPage/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.from"
 msgid "From"
-msgstr ""
+msgstr "Forum"
 
 #. [receive.newAddressBtn]
 #. defaultMessage is:
 #. Generate new address
-#: app/i18n/extracted/app/components/views/ReceivePage/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/ReceiveTab/Page.json
 msgctxt "receive.newAddressBtn"
 msgid "Generate new address"
-msgstr ""
+msgstr "Gerar um novo endereço"
+
+#. [help.github]
+#. defaultMessage is:
+#. Github
+#: app/i18n/extracted/app/components/views/Help.json
+msgctxt "help.github"
+msgid "Github"
+msgstr "Github"
+
+#. [tickets.tab.governance]
+#. defaultMessage is:
+#. Governance
+#. [tickets.tab.governance]
+#. defaultMessage is:
+#. Governance
+#: app/i18n/extracted/app/components/views/TicketsPage/Header.json
+#: app/i18n/extracted/app/messages.json
+msgctxt "tickets.tab.governance"
+msgid "Governance"
+msgstr "Governance"
 
 #. [accounts.hdPath]
 #. defaultMessage is:
@@ -830,7 +1298,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.hdPath"
 msgid "HD Path"
-msgstr ""
+msgstr "Caminho HD"
 
 #. [txDetails.blockHeightLabel]
 #. defaultMessage is:
@@ -838,12 +1306,12 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.blockHeightLabel"
 msgid "Height"
-msgstr ""
+msgstr "Altura"
 
 #. [menu.help]
 #. defaultMessage is:
 #. Help
-#: app/i18n/extracted/app/components/SideBar/Bar.json
+#: app/i18n/extracted/app/components/SideBar/MenuLinks/index.json
 msgctxt "menu.help"
 msgid "Help"
 msgstr "Ajuda"
@@ -851,10 +1319,18 @@ msgstr "Ajuda"
 #. [help.title]
 #. defaultMessage is:
 #. Help
-#: app/i18n/extracted/app/components/views/Help.json
+#: app/i18n/extracted/app/messages.json
 msgctxt "help.title"
 msgid "Help"
-msgstr ""
+msgstr "Ajuda"
+
+#. [appMenu.help]
+#. defaultMessage is:
+#. Help
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.help"
+msgid "Help"
+msgstr "Ajuda"
 
 #. [accounts.hide.tip]
 #. defaultMessage is:
@@ -862,15 +1338,44 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.hide.tip"
 msgid "Hide"
-msgstr ""
+msgstr "Ajuda"
 
-#. [menu.history]
+#. [appMenu.hideDecrediton]
+#. defaultMessage is:
+#. Hide Decrediton
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.hideDecrediton"
+msgid "Hide Decrediton"
+msgstr "Esconder Decrediton"
+
+#. [appMenu.hideOthers]
+#. defaultMessage is:
+#. Hide Others
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.hideOthers"
+msgid "Hide Others"
+msgstr "Esconder Outros"
+
+#. [transactions.tab.history]
 #. defaultMessage is:
 #. History
-#: app/i18n/extracted/app/components/SideBar/Bar.json
-msgctxt "menu.history"
+#: app/i18n/extracted/app/messages.json
+msgctxt "transactions.tab.history"
 msgid "History"
+msgstr "Histórico"
+
+#. [ticketAutoBuyer.info.maxPriceAbsolute.message]
+#. defaultMessage is:
+#. If the ticket price is above this value, you will not buy more tickets. The
+#. default of 0 turns this off.
+#: app/i18n/extracted/app/components/TicketAutoBuyerInfo.json
+msgctxt "ticketAutoBuyer.info.maxPriceAbsolute.message"
+msgid ""
+"If the ticket price is above this value, you will not buy more tickets. The "
+"default of 0 turns this off."
 msgstr ""
+"Se o preço do ticket estiver acima desse valor, você não poderá comprar mais"
+" tickets. O valor padrão 0 desliga isso."
 
 #. [getStarted.chainLoadingDelayReminder]
 #. defaultMessage is:
@@ -894,13 +1399,40 @@ msgstr ""
 "Se está sincronizando a blockchain pela primeira vez, isso pode levar um "
 "tempo."
 
+#. [help.description]
+#. defaultMessage is:
+#. If you have any difficulty with decrediton, please use the following links
+#. to help find a solution.
+#: app/i18n/extracted/app/messages.json
+msgctxt "help.description"
+msgid ""
+"If you have any difficulty with decrediton, please use the following links "
+"to help find a solution."
+msgstr ""
+"Se você tiver qualquer dificuldade ao utilizar o decrediton, por favor "
+"utilize os links abaixo para tentar encontrar uma solução."
+
+#. [ticketAutoBuyer.info.balanceToMaintain.message]
+#. defaultMessage is:
+#. If your balance is lower than this number, you will not buy tickets. The
+#. default of 0 will use all the funds in your account to buy tickets.
+#: app/i18n/extracted/app/components/TicketAutoBuyerInfo.json
+msgctxt "ticketAutoBuyer.info.balanceToMaintain.message"
+msgid ""
+"If your balance is lower than this number, you will not buy tickets. The "
+"default of 0 will use all the funds in your account to buy tickets."
+msgstr ""
+"Se o seu saldo é menor do que esse número, você não comprará mais tickets. O"
+" valor de 0 significa que todos os fundos da sua conta irão para a compra de"
+" tickets."
+
 #. [accounts.immatureRewards]
 #. defaultMessage is:
 #. Immature Rewards
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.immatureRewards"
 msgid "Immature Rewards"
-msgstr ""
+msgstr "Recompensas imaturas"
 
 #. [accounts.immatureStake]
 #. defaultMessage is:
@@ -908,7 +1440,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.immatureStake"
 msgid "Immature Stake Generation"
-msgstr ""
+msgstr "Geração de stake imaturo"
 
 #. [stake.immatureTickets]
 #. defaultMessage is:
@@ -916,7 +1448,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
 msgctxt "stake.immatureTickets"
 msgid "Immature Tickets"
-msgstr ""
+msgstr "Tickets imaturos"
 
 #. [purchaseTickets.importScriptBtn]
 #. defaultMessage is:
@@ -924,7 +1456,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.importScriptBtn"
 msgid "Import Script"
-msgstr ""
+msgstr "Importar Script"
 
 #. [purchaseTickets.importDisabledRescan]
 #. defaultMessage is:
@@ -932,7 +1464,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.importDisabledRescan"
 msgid "Importing scripts is disabled during a rescan."
-msgstr ""
+msgstr "A importação de scripts fica desabilitada durante um rescan"
 
 #. [agenda.card.inProgressIndicator]
 #. defaultMessage is:
@@ -940,7 +1472,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/AgendaCard.json
 msgctxt "agenda.card.inProgressIndicator"
 msgid "In Progress"
-msgstr ""
+msgstr "Em progresso"
 
 #. [agenda.overview.inProgressIndicator]
 #. defaultMessage is:
@@ -948,7 +1480,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/AgendaOverview/Overview.json
 msgctxt "agenda.overview.inProgressIndicator"
 msgid "In Progress"
-msgstr ""
+msgstr "Em progresso"
 
 #. [purchaseTickets.errors.insufficientBalance]
 #. defaultMessage is:
@@ -956,15 +1488,49 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.errors.insufficientBalance"
 msgid "Insufficient spendable account balance to purchase tickets."
-msgstr ""
+msgstr "Saldo transferível insuficiente para comprar tickets."
 
-#. [help.issues]
+#. [invalidRPCVersion.title]
 #. defaultMessage is:
-#. Issues
-#: app/i18n/extracted/app/components/views/Help.json
-msgctxt "help.issues"
-msgid "Issues"
+#. Invalid RPC Version
+#: app/i18n/extracted/app/messages.json
+msgctxt "invalidRPCVersion.title"
+msgid "Invalid RPC Version"
+msgstr "Versão RPC inválida"
+
+#. [securitycenter.verify.result.invalid]
+#. defaultMessage is:
+#. Invalid signature!
+#. [securitycenter.verify.result.invalid]
+#. defaultMessage is:
+#. Invalid signature!
+#: app/i18n/extracted/app/components/VerifyMessage/index.json
+#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/index.json
+msgctxt "securitycenter.verify.result.invalid"
+msgid "Invalid signature!"
+msgstr "Assinatura inválida"
+
+#. [ticket.rewardCalc]
+#. defaultMessage is:
+#. Investment: {investment}
+#.       Transaction Fee: {txFee}
+#.       Pool Fee: {poolFee}
+#.       {rewardLabel}: {reward}
+#.       ROI: {roi, number, precise-percent}
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+msgctxt "ticket.rewardCalc"
+msgid ""
+"Investment: {investment}\n"
+"      Transaction Fee: {txFee}\n"
+"      Pool Fee: {poolFee}\n"
+"      {rewardLabel}: {reward}\n"
+"      ROI: {roi, number, precise-percent}"
 msgstr ""
+"Investmento: {investment}\n"
+"      Taxa de Transação: {txFee}\n"
+"      Taxa da Pool: {poolFee}\n"
+"      {rewardLabel}: {reward}\n"
+"      ROI: {roi, number, precise-percent}"
 
 #. [accounts.keys]
 #. defaultMessage is:
@@ -972,7 +1538,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.keys"
 msgid "Keys"
-msgstr ""
+msgstr "Chaves"
 
 #. [sidebar.latestBlock]
 #. defaultMessage is:
@@ -980,7 +1546,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/SideBar/Bar.json
 msgctxt "sidebar.latestBlock"
 msgid "Latest Block"
-msgstr ""
+msgstr "Último Bloco"
+
+#. [appMenu.learnMore]
+#. defaultMessage is:
+#. Learn More
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.learnMore"
+msgid "Learn More"
+msgstr "Saber Mais"
 
 #. [stake.liveTickets]
 #. defaultMessage is:
@@ -988,7 +1562,19 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
 msgctxt "stake.liveTickets"
 msgid "Live Tickets"
-msgstr ""
+msgstr "Tickets Maduros"
+
+#. [securitycenter.loading]
+#. defaultMessage is:
+#. Loading...
+#. [securitycenter.loading]
+#. defaultMessage is:
+#. Loading...
+#: app/i18n/extracted/app/components/VerifyMessage/index.json
+#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/index.json
+msgctxt "securitycenter.loading"
+msgid "Loading..."
+msgstr "Carregando..."
 
 #. [settings.locale]
 #. defaultMessage is:
@@ -996,7 +1582,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.locale"
 msgid "Locale"
-msgstr ""
+msgstr "Linguagem"
 
 #. [accounts.lockedByTickets]
 #. defaultMessage is:
@@ -1004,18 +1590,34 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.lockedByTickets"
 msgid "Locked By Tickets"
-msgstr ""
+msgstr "Bloqueado por Tickets"
 
-#. [send.mainnetInfo]
+#. [transactions.description.send.mainnet]
+#. defaultMessage is:
+#. Mainnet Decred addresses always begin with letter D and contain 26-35
+#. alphanumeric characters
+#. (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X).
+#: app/i18n/extracted/app/messages.json
+msgctxt "transactions.description.send.mainnet"
+msgid ""
+"Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters\n"
+"(e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
+msgstr ""
+"Endereços da mainnet sempre começam com a letra D e contém 26-35 caracteres alfanuméricos\n"
+"(ex: DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)"
+
+#. [transactions.description.mainnet]
 #. defaultMessage is:
 #. Mainnet Decred addresses always begin with letter D and contain 26-35
 #. alphanumeric characters (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X).
-#: app/i18n/extracted/app/components/views/SendPage/Page.json
-msgctxt "send.mainnetInfo"
+#: app/i18n/extracted/app/components/views/TransactionsPage/Header.json
+msgctxt "transactions.description.mainnet"
 msgid ""
 "Mainnet Decred addresses always begin with letter D and contain 26-35 "
 "alphanumeric characters (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 msgstr ""
+"Endereços Decred da mainnet sempre começam com a letra D e contém 26-35 "
+"caractres alfanuméricos (ex: DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 
 #. [autobuyer.maxFee]
 #. defaultMessage is:
@@ -1023,7 +1625,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.maxFee"
 msgid "Max Fee"
-msgstr ""
+msgstr "Taxa Máxima"
+
+#. [ticketAutoBuyer.info.maxFee.header]
+#. defaultMessage is:
+#. Max Fee
+#: app/i18n/extracted/app/components/TicketAutoBuyerInfo.json
+msgctxt "ticketAutoBuyer.info.maxFee.header"
+msgid "Max Fee"
+msgstr "Taxa máxima"
 
 #. [autobuyer.maxPerBlock]
 #. defaultMessage is:
@@ -1031,7 +1641,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.maxPerBlock"
 msgid "Max Per Block"
-msgstr ""
+msgstr "Máximo por Bloco"
+
+#. [ticketAutoBuyer.info.maxPerBlock.header]
+#. defaultMessage is:
+#. Max Per Block
+#: app/i18n/extracted/app/components/TicketAutoBuyerInfo.json
+msgctxt "ticketAutoBuyer.info.maxPerBlock.header"
+msgid "Max Per Block"
+msgstr "Máximo por bloco"
 
 #. [autobuyer.maxPriceAbsolute]
 #. defaultMessage is:
@@ -1039,7 +1657,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.maxPriceAbsolute"
 msgid "Max Price Absolute"
-msgstr ""
+msgstr "Preço Máximo Absoluto"
+
+#. [ticketAutoBuyer.info.maxPriceAbsolute.header]
+#. defaultMessage is:
+#. Max Price Absolute
+#: app/i18n/extracted/app/components/TicketAutoBuyerInfo.json
+msgctxt "ticketAutoBuyer.info.maxPriceAbsolute.header"
+msgid "Max Price Absolute"
+msgstr "Preço máximo absoluto"
 
 #. [autobuyer.maxPriceRelative]
 #. defaultMessage is:
@@ -1047,7 +1673,47 @@ msgstr ""
 #: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.maxPriceRelative"
 msgid "Max Price Relative"
-msgstr ""
+msgstr "Preço Máximo Relativo"
+
+#. [ticketAutoBuyer.info.maxPriceRelative.header]
+#. defaultMessage is:
+#. Max Price Relative
+#: app/i18n/extracted/app/components/TicketAutoBuyerInfo.json
+msgctxt "ticketAutoBuyer.info.maxPriceRelative.header"
+msgid "Max Price Relative"
+msgstr "Preço máximo relativo"
+
+#. [securitycenter.sign.form.field.message.label]
+#. defaultMessage is:
+#. Message
+#. [securitycenter.sign.form.field.message.label]
+#. defaultMessage is:
+#. Message
+#: app/i18n/extracted/app/components/SignMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/Form.json
+msgctxt "securitycenter.sign.form.field.message.label"
+msgid "Message"
+msgstr "Mensagem"
+
+#. [securitycenter.verify.form.field.message.label]
+#. defaultMessage is:
+#. Message
+#. [securitycenter.verify.form.field.message.label]
+#. defaultMessage is:
+#. Message
+#: app/i18n/extracted/app/components/VerifyMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/Form.json
+msgctxt "securitycenter.verify.form.field.message.label"
+msgid "Message"
+msgstr "Mensagem"
+
+#. [appMenu.minimize]
+#. defaultMessage is:
+#. Minimize
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.minimize"
+msgid "Minimize"
+msgstr "Minimizar"
 
 #. [stake.missedTickets]
 #. defaultMessage is:
@@ -1055,7 +1721,19 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
 msgctxt "stake.missedTickets"
 msgid "Missed Tickets"
-msgstr ""
+msgstr "Tickets Perdidos"
+
+#. [tickets.tab.mytickets]
+#. defaultMessage is:
+#. My Tickets
+#. [tickets.tab.mytickets]
+#. defaultMessage is:
+#. My Tickets
+#: app/i18n/extracted/app/components/views/TicketsPage/Header.json
+#: app/i18n/extracted/app/messages.json
+msgctxt "tickets.tab.mytickets"
+msgid "My Tickets"
+msgstr "Meus tickets"
 
 #. [settings.network]
 #. defaultMessage is:
@@ -1063,7 +1741,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.network"
 msgid "Network"
-msgstr ""
+msgstr "Rede"
 
 #. [accounts.rename.newNamePlaceholder]
 #. defaultMessage is:
@@ -1071,7 +1749,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.rename.newNamePlaceholder"
 msgid "New Account Name"
-msgstr ""
+msgstr "Novo nome da Conta"
 
 #. [accounts.newName]
 #. defaultMessage is:
@@ -1079,7 +1757,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.newName"
 msgid "New Account Name"
-msgstr ""
+msgstr "Nome da nova conta"
 
 #. [accounts.formNew.namePlaceholder]
 #. defaultMessage is:
@@ -1087,7 +1765,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/AddAccount/Form.json
 msgctxt "accounts.formNew.namePlaceholder"
 msgid "New Account Name"
-msgstr ""
+msgstr "Novo Nome"
 
 #. [changePassModal.newPassphrase]
 #. defaultMessage is:
@@ -1095,7 +1773,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/ChangePassphraseModal/Modal.json
 msgctxt "changePassModal.newPassphrase"
 msgid "New Private Passphrase"
-msgstr ""
+msgstr "Nova Senha Particular"
 
 #. [getStarted.newSeedTab]
 #. defaultMessage is:
@@ -1103,7 +1781,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/CreateForm.json
 msgctxt "getStarted.newSeedTab"
 msgid "New Seed"
-msgstr ""
+msgstr "Nova seed"
 
 #. [txDetails.walletOutputs]
 #. defaultMessage is:
@@ -1111,15 +1789,40 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.walletOutputs"
 msgid "New Wallet Outputs"
+msgstr "Novas Saídas da Carteira"
+
+#. [stake.noAvailableStakepools]
+#. defaultMessage is:
+#. No stakepool found. Check your internet connection or {link} to see if the
+#. StakePool API is down.
+#: app/i18n/extracted/app/components/StakePools/index.json
+msgctxt "stake.noAvailableStakepools"
+msgid ""
+"No stakepool found. Check your internet connection or {link} to see if the "
+"StakePool API is down."
 msgstr ""
+"Nenhuma stakepool encontrada. Cheque sua conexão com a internet ou {link} "
+"para ver se a api de stakepools está fora do ar"
+
+#. [myTickets.noTicketsWithStatus]
+#. defaultMessage is:
+#. No tickets found
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketListPage.json
+msgctxt "myTickets.noTicketsWithStatus"
+msgid "No tickets found"
+msgstr "Nenhum ticket encontrado"
 
 #. [history.noTransactions]
 #. defaultMessage is:
 #. No transactions
+#. [history.noTransactions]
+#. defaultMessage is:
+#. No transactions
 #: app/i18n/extracted/app/components/views/HistoryPage/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/Page.json
 msgctxt "history.noTransactions"
 msgid "No transactions"
-msgstr ""
+msgstr "Sem transações"
 
 #. [home.noTransactions]
 #. defaultMessage is:
@@ -1127,7 +1830,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/HomePage/Page.json
 msgctxt "home.noTransactions"
 msgid "No transactions"
-msgstr ""
+msgstr "Sem transações"
 
 #. [stake.addPool.notice]
 #. defaultMessage is:
@@ -1135,7 +1838,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakePools/AddForm.json
 msgctxt "stake.addPool.notice"
 msgid "Notice!"
-msgstr ""
+msgstr "Atenção!"
 
 #. [purchaseTickets.number]
 #. defaultMessage is:
@@ -1143,7 +1846,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.number"
 msgid "Number of Tickets"
-msgstr ""
+msgstr "Número de Tickets"
 
 #. [tickets.info.number.header]
 #. defaultMessage is:
@@ -1151,7 +1854,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 msgctxt "tickets.info.number.header"
 msgid "Number of tickets"
-msgstr ""
+msgstr "Número de Tickets"
 
 #. [tickets.info.expiry.message]
 #. defaultMessage is:
@@ -1169,6 +1872,12 @@ msgid ""
 "if you wish. If this is empty, they will not expire until the end of the "
 "window."
 msgstr ""
+"É comum que a taxa de tickets aumente durante uma janela e que você seja "
+"impedido de comprar por outras pessoas com taxas maiores. Configurando uma "
+"expiração, tickets não minerados na quantidade de blocos especificada como "
+"expiração são cancelados para que você possa tentar novamente com taxas mais"
+" altas se quiser. Se esse campo ficar em branco, os tickets não vão expirar "
+"até o fim da janela."
 
 #. [changePassModal.oldPassphrase]
 #. defaultMessage is:
@@ -1176,7 +1885,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/ChangePassphraseModal/Modal.json
 msgctxt "changePassModal.oldPassphrase"
 msgid "Old Private Passphrase"
-msgstr ""
+msgstr "Senha Particular Antiga"
 
 #. [agenda.overviewDescription]
 #. defaultMessage is:
@@ -1192,6 +1901,10 @@ msgid ""
 "have upgraded (75% of the votes in a 2016 block interval), the voting "
 "process begins."
 msgstr ""
+"Uma vez que a maior parte dos mineradores PoW tenha atualizado (75% dos 100 "
+"blocos mais recentes  estejam na última versão) e a maior parte dos "
+"mineradores PoS tenha atualizado (75% dos votos em um intervalo de 2016 "
+"blocos) o processo de votação começa."
 
 #. [getStarted.decrypt.openWalletBtn]
 #. defaultMessage is:
@@ -1199,7 +1912,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/DecryptForm.json
 msgctxt "getStarted.decrypt.openWalletBtn"
 msgid "Open Wallet"
-msgstr ""
+msgstr "Abrir Carteira"
 
 #. [getStarted.header.openingWallet.meta]
 #. defaultMessage is:
@@ -1207,15 +1920,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/DecryptForm.json
 msgctxt "getStarted.header.openingWallet.meta"
 msgid "Opening wallet"
-msgstr ""
+msgstr "Abrindo Carteira"
 
 #. [menu.overview]
 #. defaultMessage is:
 #. Overview
-#: app/i18n/extracted/app/components/SideBar/Bar.json
+#: app/i18n/extracted/app/components/SideBar/MenuLinks/index.json
 msgctxt "menu.overview"
 msgid "Overview"
-msgstr ""
+msgstr "Visão Geral"
 
 #. [stake.ownMempoolTickets]
 #. defaultMessage is:
@@ -1223,7 +1936,27 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
 msgctxt "stake.ownMempoolTickets"
 msgid "Own Mempool Tickets"
-msgstr ""
+msgstr "Tickets Próprios na Mempool"
+
+#. [securitycenter.sign.form.field.passphrase.label]
+#. defaultMessage is:
+#. Passphrase
+#. [securitycenter.sign.form.field.passphrase.label]
+#. defaultMessage is:
+#. Passphrase
+#: app/i18n/extracted/app/components/SignMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/Form.json
+msgctxt "securitycenter.sign.form.field.passphrase.label"
+msgid "Passphrase"
+msgstr "Senha"
+
+#. [appMenu.paste]
+#. defaultMessage is:
+#. Paste
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.paste"
+msgid "Paste"
+msgstr "Colar"
 
 #. [transaction.indicatorPending]
 #. defaultMessage is:
@@ -1235,23 +1968,36 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "transaction.indicatorPending"
 msgid "Pending"
+msgstr "Pendente"
+
+#. [getStarted.advanced.meta]
+#. defaultMessage is:
+#. Please complete one of the following forms to start Decrediton according to
+#. your local setup.
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/Form.json
+msgctxt "getStarted.advanced.meta"
+msgid ""
+"Please complete one of the following forms to start Decrediton according to "
+"your local setup."
 msgstr ""
+"Por favor complete um dos formulários para iniciar o Decrediton de acordo "
+"com sua configuração"
 
 #. [send.confirmAmountLabel]
 #. defaultMessage is:
 #. Please confirm your transaction for
-#: app/i18n/extracted/app/components/views/SendPage/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.confirmAmountLabel"
 msgid "Please confirm your transaction for"
-msgstr ""
+msgstr "Por favor, confirme sua transação para"
 
 #. [importScript.description]
 #. defaultMessage is:
 #. Please enter your Script from your configured stakepool
-#: app/i18n/extracted/app/components/views/TicketsPage/Tickets.json
+#: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/Tickets.json
 msgctxt "importScript.description"
 msgid "Please enter your Script from your configured stakepool"
-msgstr ""
+msgstr "Digite o script da sua stekepool configurada"
 
 #. [stake.addPool.info]
 #. defaultMessage is:
@@ -1287,6 +2033,16 @@ msgid ""
 "              - Each stakepool account you create can only be associated with 1 wallet.  If you have previously created this stakepool account with a different wallet (different seed), then you must create a new account.\n"
 "              - If you had previously used a 'voting account', for your ticket purchases, please go to the Accounts page and create a new account.  This may now allow you to successfully import your script for your stakepool."
 msgstr ""
+"Por favor selecione a stakepool desejada da lista acima e siga essas instruções:\n"
+"\n"
+"1) Crie uma conta ou faça login na sua conta existente em {stakePoolLink}.\n"
+"2) Uma vez logado, selecione a aba \"Configurações\"\n"
+"3) Copie e cole sua chave de API no campo abaixo (normalmente ela começa com 'eyJhb...')\n"
+"4) Clique em \"Adicionar\" e digite sua senha particular\n"
+"\n"
+"    {noticeSpan} Se você receber um erro sobre o script não ser resgatável (\"script not redeemable\" ou similar) ao tentar adicionar sua stakepool, você pode tentar o seguinte:\n"
+"    - Cada conta de stakepool que você criar só pode ser associada a 1 carteira. Se você criou essa conta de stakepool com uma carteira diferente (ou seja, com uma seed diferente) então você deve criar uma nova conta.\n"
+"    Se você já usou previamente uma conta de votação (\"voting account\" ou similar) para suas compras de tickets, por favor vá para a página Contas e crie uma nova conta. Isso poderá permitir que você importe seu script para a stakepool."
 
 #. [purchaseTickets.poolAddress]
 #. defaultMessage is:
@@ -1294,7 +2050,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.poolAddress"
 msgid "Pool Address"
-msgstr ""
+msgstr "Endereço da Pool"
 
 #. [purchaseTickets.poolFee]
 #. defaultMessage is:
@@ -1302,7 +2058,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.poolFee"
 msgid "Pool Fee"
-msgstr ""
+msgstr "Taxa da Pool"
 
 #. [purchaseTickets.poolFees]
 #. defaultMessage is:
@@ -1310,7 +2066,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.poolFees"
 msgid "Pool Fees"
-msgstr ""
+msgstr "Taxas da Pool"
+
+#. [stakepools.list.form.field.poolfees]
+#. defaultMessage is:
+#. Pool Fees:
+#: app/i18n/extracted/app/components/StakePools/List.json
+msgctxt "stakepools.list.form.field.poolfees"
+msgid "Pool Fees:"
+msgstr "Taxas de Pool:"
 
 #. [stake.poolSize]
 #. defaultMessage is:
@@ -1318,7 +2082,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
 msgctxt "stake.poolSize"
 msgid "Pool Size"
-msgstr ""
+msgstr "Tamanho da Pool"
 
 #. [tickets.info.poolFeeAddress.header]
 #. defaultMessage is:
@@ -1326,7 +2090,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 msgctxt "tickets.info.poolFeeAddress.header"
 msgid "Pool fee address"
-msgstr ""
+msgstr "Endereço das taxas da Pool"
 
 #. [tickets.info.poolFeePercentage.header]
 #. defaultMessage is:
@@ -1334,7 +2098,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 msgctxt "tickets.info.poolFeePercentage.header"
 msgid "Pool fees (%)"
-msgstr ""
+msgstr "Taxas da pool (%)"
 
 #. [getStarted.header.daemonLoading.meta]
 #. defaultMessage is:
@@ -1342,7 +2106,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
 msgctxt "getStarted.header.daemonLoading.meta"
 msgid "Preparing background process"
-msgstr ""
+msgstr "Preparando processo de segundo plano"
 
 #. [createWallet.passphrasePlaceholder]
 #. defaultMessage is:
@@ -1350,7 +2114,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
 msgctxt "createWallet.passphrasePlaceholder"
 msgid "Private Passphrase"
-msgstr ""
+msgstr "Senha Particular"
 
 #. [createWallet.verifyPassphrasePlaceholder]
 #. defaultMessage is:
@@ -1358,7 +2122,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
 msgctxt "createWallet.verifyPassphrasePlaceholder"
 msgid "Private Passphrase"
-msgstr ""
+msgstr "Senha Particular"
 
 #. [importScriptModal.privatePassphrase]
 #. defaultMessage is:
@@ -1366,7 +2130,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/ImportScriptModal/Modal.json
 msgctxt "importScriptModal.privatePassphrase"
 msgid "Private Passphrase"
-msgstr ""
+msgstr "Senha Particular"
 
 #. [passphraseModal.privatePassphrase]
 #. defaultMessage is:
@@ -1374,7 +2138,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PassphraseModal/Modal.json
 msgctxt "passphraseModal.privatePassphrase"
 msgid "Private Passphrase"
-msgstr ""
+msgstr "Senha Particular"
 
 #. [accounts.formNew.privatePassphrase]
 #. defaultMessage is:
@@ -1382,7 +2146,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/AddAccount/Form.json
 msgctxt "accounts.formNew.privatePassphrase"
 msgid "Private Passphrase"
-msgstr ""
+msgstr "Senha Particular"
 
 #. [getStarted.discoverAddresses.passphrasePlaceholder]
 #. defaultMessage is:
@@ -1390,7 +2154,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/DiscoverAddresses/Form.json
 msgctxt "getStarted.discoverAddresses.passphrasePlaceholder"
 msgid "Private Passphrase"
-msgstr ""
+msgstr "Senha Particular"
 
 #. [accounts.formNew.passphrasePlaceholder]
 #. defaultMessage is:
@@ -1398,7 +2162,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/AddAccount/Form.json
 msgctxt "accounts.formNew.passphrasePlaceholder"
 msgid "Private Password"
-msgstr ""
+msgstr "Senha Particular"
 
 #. [accounts.properties]
 #. defaultMessage is:
@@ -1406,7 +2170,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.properties"
 msgid "Properties"
-msgstr ""
+msgstr "Propriedades"
 
 #. [txDetails.properties]
 #. defaultMessage is:
@@ -1414,7 +2178,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.properties"
 msgid "Properties"
-msgstr ""
+msgstr "Propriedades"
 
 #. [getStarted.decrypt.publicPassphrasePlaceholder]
 #. defaultMessage is:
@@ -1422,15 +2186,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/DecryptForm.json
 msgctxt "getStarted.decrypt.publicPassphrasePlaceholder"
 msgid "Public Passphrase"
-msgstr ""
+msgstr "Senha Pública"
 
 #. [send.publishedTxHeader]
 #. defaultMessage is:
 #. Published tx: {hash}
-#: app/i18n/extracted/app/components/views/SendPage/Page.json
+#: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "send.publishedTxHeader"
 msgid "Published tx: {hash}"
-msgstr ""
+msgstr "Transação publicada: {hash}"
 
 #. [puchaseTickets.purchaseBtn]
 #. defaultMessage is:
@@ -1438,15 +2202,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "puchaseTickets.purchaseBtn"
 msgid "Purchase"
-msgstr ""
-
-#. [stake.purchaseTicketsTab]
-#. defaultMessage is:
-#. Purchase Tickets
-#: app/i18n/extracted/app/components/views/TicketsPage/Header.json
-msgctxt "stake.purchaseTicketsTab"
-msgid "Purchase Tickets"
-msgstr ""
+msgstr "Comprar"
 
 #. [purchaseTickets.title]
 #. defaultMessage is:
@@ -1454,39 +2210,103 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.title"
 msgid "Purchase Tickets"
-msgstr ""
+msgstr "Comprar Tickets"
+
+#. [tickets.tab.purchase]
+#. defaultMessage is:
+#. Purchase Tickets
+#. [tickets.tab.purchase]
+#. defaultMessage is:
+#. Purchase Tickets
+#: app/i18n/extracted/app/components/views/TicketsPage/Header.json
+#: app/i18n/extracted/app/messages.json
+msgctxt "tickets.tab.purchase"
+msgid "Purchase Tickets"
+msgstr "Comprar Tickets"
+
+#. [appMenu.quit]
+#. defaultMessage is:
+#. Quit
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.quit"
+msgid "Quit"
+msgstr "Sair"
+
+#. [advanced.remote.rpccert]
+#. defaultMessage is:
+#. RPC Cert Path
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/RemoteDaemonForm.json
+msgctxt "advanced.remote.rpccert"
+msgid "RPC Cert Path"
+msgstr "Caminho ao Cert RPC"
+
+#. [advanced.remote.rpchost]
+#. defaultMessage is:
+#. RPC Host
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/RemoteDaemonForm.json
+msgctxt "advanced.remote.rpchost"
+msgid "RPC Host"
+msgstr "Host RPC"
+
+#. [advanced.remote.rpcpass]
+#. defaultMessage is:
+#. RPC Password
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/RemoteDaemonForm.json
+msgctxt "advanced.remote.rpcpass"
+msgid "RPC Password"
+msgstr "Senha RPC"
+
+#. [advanced.remote.rpcport]
+#. defaultMessage is:
+#. RPC Port
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/RemoteDaemonForm.json
+msgctxt "advanced.remote.rpcport"
+msgid "RPC Port"
+msgstr "Porta RPC"
+
+#. [advanced.remote.rpcuser]
+#. defaultMessage is:
+#. RPC User
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/RemoteDaemonForm.json
+msgctxt "advanced.remote.rpcuser"
+msgid "RPC User"
+msgstr "Usuário RPC"
 
 #. [notifications.type.receive]
 #. defaultMessage is:
 #. Receive
-#: app/i18n/extracted/app/components/Header/Notification/Transfer.json
-msgctxt "notifications.type.receive"
-msgid "Receive"
-msgstr ""
-
-#. [menu.receive]
+#. [notifications.type.receive]
 #. defaultMessage is:
 #. Receive
-#: app/i18n/extracted/app/components/SideBar/Bar.json
-msgctxt "menu.receive"
+#: app/i18n/extracted/app/components/Header/Notification/Transfer.json
+#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
+msgctxt "notifications.type.receive"
 msgid "Receive"
-msgstr ""
+msgstr "Receber"
 
-#. [receive.title]
+#. [transactions.tab.receive]
 #. defaultMessage is:
-#. Receive Funds
-#: app/i18n/extracted/app/components/views/ReceivePage/Page.json
-msgctxt "receive.title"
-msgid "Receive Funds"
-msgstr ""
+#. Receive
+#. [transactions.tab.receive]
+#. defaultMessage is:
+#. Receive
+#: app/i18n/extracted/app/components/views/TransactionsPage/Header.json
+#: app/i18n/extracted/app/messages.json
+msgctxt "transactions.tab.receive"
+msgid "Receive"
+msgstr "Receber"
 
 #. [history.title]
 #. defaultMessage is:
 #. Recent Transactions
+#. [history.title]
+#. defaultMessage is:
+#. Recent Transactions
 #: app/i18n/extracted/app/components/views/HistoryPage/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/Page.json
 msgctxt "history.title"
 msgid "Recent Transactions"
-msgstr ""
+msgstr "Transações Recentes"
 
 #. [home.recentTransactionsTitle]
 #. defaultMessage is:
@@ -1494,7 +2314,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/HomePage/Page.json
 msgctxt "home.recentTransactionsTitle"
 msgid "Recent Transactions"
-msgstr ""
+msgstr "Transações Recentes"
 
 #. [importScriptModal.redeemScript]
 #. defaultMessage is:
@@ -1502,15 +2322,43 @@ msgstr ""
 #: app/i18n/extracted/app/components/ImportScriptModal/Modal.json
 msgctxt "importScriptModal.redeemScript"
 msgid "Redeem Script"
-msgstr ""
+msgstr "Script de Resgate"
+
+#. [appMenu.redo]
+#. defaultMessage is:
+#. Redo
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.redo"
+msgid "Redo"
+msgstr "Refazer"
 
 #. [transaction.type.regular]
 #. defaultMessage is:
 #. Regular
+#. [transaction.type.regular]
+#. defaultMessage is:
+#. Regular
 #: app/i18n/extracted/app/components/views/HistoryPage/index.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/index.json
 msgctxt "transaction.type.regular"
 msgid "Regular"
-msgstr ""
+msgstr "Regular"
+
+#. [appMenu.reloadUI]
+#. defaultMessage is:
+#. Reload UI
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.reloadUI"
+msgid "Reload UI"
+msgstr "Recarregar UI"
+
+#. [advancedDaemon.toggle.remote]
+#. defaultMessage is:
+#. Remote Daemon
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/Form.json
+msgctxt "advancedDaemon.toggle.remote"
+msgid "Remote Daemon"
+msgstr "Daemon Remoto"
 
 #. [accounts.renameBtn]
 #. defaultMessage is:
@@ -1518,15 +2366,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.renameBtn"
 msgid "Rename"
-msgstr ""
-
-#. [accounts.rename.tip]
-#. defaultMessage is:
-#. Rename Account
-#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
-msgctxt "accounts.rename.tip"
-msgid "Rename Account"
-msgstr ""
+msgstr "Renomear"
 
 #. [accounts.rename]
 #. defaultMessage is:
@@ -1534,15 +2374,23 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.rename"
 msgid "Rename Account"
-msgstr ""
+msgstr "Renomear Conta"
+
+#. [accounts.rename.tip]
+#. defaultMessage is:
+#. Rename Account
+#: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
+msgctxt "accounts.rename.tip"
+msgid "Rename Account"
+msgstr "Renomear Conta"
 
 #. [home.rescanBtn]
 #. defaultMessage is:
-#. Rescan Blockchain
+#. Rescan
 #: app/i18n/extracted/app/components/views/HomePage/Page.json
 msgctxt "home.rescanBtn"
-msgid "Rescan Blockchain"
-msgstr ""
+msgid "Rescan"
+msgstr "Reescanear"
 
 #. [rescan.rescanning]
 #. defaultMessage is:
@@ -1550,20 +2398,25 @@ msgstr ""
 #: app/i18n/extracted/app/components/RescanProgress.json
 msgctxt "rescan.rescanning"
 msgid "Rescanning"
-msgstr ""
+msgstr "Reescaneando"
 
 #. [home.rescanBtn.tip]
 #. defaultMessage is:
 #. Rescanning may help resolve some balance errors.
-#.       <br><br>Note: This scans the entire blockchain for transactions,
-#.       but does not re-download it.
+#. Note: This scans the entire blockchain for transactions,
+#. but does not re-download it.
 #: app/i18n/extracted/app/components/views/HomePage/Page.json
 msgctxt "home.rescanBtn.tip"
 msgid ""
 "Rescanning may help resolve some balance errors.\n"
-"      <br><br>Note: This scans the entire blockchain for transactions,\n"
-"      but does not re-download it."
+"\n"
+"Note: This scans the entire blockchain for transactions,\n"
+"but does not re-download it."
 msgstr ""
+"Reescanear pode ajudar a resolver alguns problemas de saldo.\n"
+"\n"
+"Nota: as transações serão procuradas através da blockchain\n"
+"inteira, mas o seu download não será refeito."
 
 #. [getStarted.retryBtn]
 #. defaultMessage is:
@@ -1571,15 +2424,19 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/StartRPC.json
 msgctxt "getStarted.retryBtn"
 msgid "Retry"
-msgstr ""
+msgstr "Tentar Novamente"
 
 #. [purchaseTickets.revokeBtn]
 #. defaultMessage is:
 #. Revoke
+#. [purchaseTickets.revokeBtn]
+#. defaultMessage is:
+#. Revoke
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+#: app/i18n/extracted/app/components/views/HomePage/Page.json
 msgctxt "purchaseTickets.revokeBtn"
 msgid "Revoke"
-msgstr ""
+msgstr "Revogar"
 
 #. [transaction.type.revoke]
 #. defaultMessage is:
@@ -1591,7 +2448,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "transaction.type.revoke"
 msgid "Revoke"
-msgstr ""
+msgstr "Revogar"
 
 #. [stake.revokedTickets]
 #. defaultMessage is:
@@ -1599,15 +2456,19 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
 msgctxt "stake.revokedTickets"
 msgid "Revoked Tickets"
-msgstr ""
+msgstr "Revogar Tickets"
 
 #. [transaction.type.revokes]
 #. defaultMessage is:
 #. Revokes
+#. [transaction.type.revokes]
+#. defaultMessage is:
+#. Revokes
 #: app/i18n/extracted/app/components/views/HistoryPage/index.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/index.json
 msgctxt "transaction.type.revokes"
 msgid "Revokes"
-msgstr ""
+msgstr "Revogações"
 
 #. [settings.save]
 #. defaultMessage is:
@@ -1615,7 +2476,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.save"
 msgid "Save Settings"
-msgstr ""
+msgstr "Salvar Configurações"
 
 #. [getStarted.discoverAddresses.scanBtn]
 #. defaultMessage is:
@@ -1623,7 +2484,55 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/DiscoverAddresses/Form.json
 msgctxt "getStarted.discoverAddresses.scanBtn"
 msgid "Scan"
-msgstr ""
+msgstr "Escanear"
+
+#. [stakepools.list.form.field.script]
+#. defaultMessage is:
+#. Script:
+#: app/i18n/extracted/app/components/StakePools/List.json
+msgctxt "stakepools.list.form.field.script"
+msgid "Script:"
+msgstr "Script:"
+
+#. [appMenu.searchIssues]
+#. defaultMessage is:
+#. Search Issues
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.searchIssues"
+msgid "Search Issues"
+msgstr "Buscar Problemas"
+
+#. [menu.securitycenter]
+#. defaultMessage is:
+#. Security Center
+#: app/i18n/extracted/app/components/SideBar/MenuLinks/index.json
+msgctxt "menu.securitycenter"
+msgid "Security Center"
+msgstr "Centro de Segurança"
+
+#. [securitycenter.header.title]
+#. defaultMessage is:
+#. Security Center
+#: app/i18n/extracted/app/components/views/SecurityPage/Header.json
+msgctxt "securitycenter.header.title"
+msgid "Security Center"
+msgstr "Centro de Segurança"
+
+#. [security.title]
+#. defaultMessage is:
+#. Security Center
+#: app/i18n/extracted/app/messages.json
+msgctxt "security.title"
+msgid "Security Center"
+msgstr "Centro de Segurança"
+
+#. [appMenu.selectAll]
+#. defaultMessage is:
+#. Select All
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.selectAll"
+msgid "Select All"
+msgstr "Selecionar Tudo"
 
 #. [selectStakepool.placeholder]
 #. defaultMessage is:
@@ -1631,63 +2540,79 @@ msgstr ""
 #: app/i18n/extracted/app/components/SelectStakePool.json
 msgctxt "selectStakepool.placeholder"
 msgid "Select Stakepool..."
-msgstr ""
+msgstr "Selecionar Stakepool"
 
 #. [accountsSelect.placeholder]
 #. defaultMessage is:
 #. Select account
-#: app/i18n/extracted/app/components/AccountsSelect.json
+#: app/i18n/extracted/app/components/inputs/AccountsSelect.json
 msgctxt "accountsSelect.placeholder"
 msgid "Select account"
-msgstr ""
-
-#. [history.txTypePlaceholder]
-#. defaultMessage is:
-#. Select type...
-#: app/i18n/extracted/app/components/views/HistoryPage/Page.json
-msgctxt "history.txTypePlaceholder"
-msgid "Select type..."
-msgstr ""
+msgstr "Selecionar Conta"
 
 #. [notifications.type.send]
 #. defaultMessage is:
 #. Send
-#: app/i18n/extracted/app/components/Header/Notification/Transfer.json
-msgctxt "notifications.type.send"
-msgid "Send"
-msgstr ""
-
-#. [menu.send]
+#. [notifications.type.send]
 #. defaultMessage is:
 #. Send
-#: app/i18n/extracted/app/components/SideBar/Bar.json
-msgctxt "menu.send"
+#: app/i18n/extracted/app/components/Header/Notification/Transfer.json
+#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
+msgctxt "notifications.type.send"
 msgid "Send"
-msgstr ""
+msgstr "Enviar"
+
+#. [transactions.tab.send]
+#. defaultMessage is:
+#. Send
+#. [transactions.tab.send]
+#. defaultMessage is:
+#. Send
+#: app/i18n/extracted/app/components/views/TransactionsPage/Header.json
+#: app/i18n/extracted/app/messages.json
+msgctxt "transactions.tab.send"
+msgid "Send"
+msgstr "Enviar"
 
 #. [send.sendBtn]
 #. defaultMessage is:
 #. Send
-#: app/i18n/extracted/app/components/views/SendPage/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.sendBtn"
 msgid "Send"
-msgstr ""
+msgstr "Enviar"
 
-#. [send.sendAllBtn]
+#. [send.sendAllTitle]
 #. defaultMessage is:
-#. Send All
-#: app/i18n/extracted/app/components/views/SendPage/Page.json
-msgctxt "send.sendAllBtn"
-msgid "Send All"
-msgstr ""
+#. Send all funds from selected account
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+msgctxt "send.sendAllTitle"
+msgid "Send all funds from selected account"
+msgstr "Enviar todos os fundos para a conta selecionada"
 
-#. [send.title]
+#. [send.sendSelfTitle]
 #. defaultMessage is:
-#. Send Funds
-#: app/i18n/extracted/app/components/views/SendPage/Page.json
-msgctxt "send.title"
-msgid "Send Funds"
-msgstr ""
+#. Send funds to another account
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+msgctxt "send.sendSelfTitle"
+msgid "Send funds to another account"
+msgstr "Enviar fundos para outra conta"
+
+#. [send.sendOthersTitle]
+#. defaultMessage is:
+#. Send funds to another wallet
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
+msgctxt "send.sendOthersTitle"
+msgid "Send funds to another wallet"
+msgstr "Enviar fundos para outra carteira"
+
+#. [appMenu.services]
+#. defaultMessage is:
+#. Services
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.services"
+msgid "Services"
+msgstr "Serviços"
 
 #. [getStarted.header.title]
 #. defaultMessage is:
@@ -1723,7 +2648,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/StartRPC.json
 msgctxt "getStarted.header.title"
 msgid "Setting up Decrediton"
-msgstr "Inicializando Decrediton"
+msgstr "Configurando Decrediton"
 
 #. [purchaseTickets.settings]
 #. defaultMessage is:
@@ -1731,23 +2656,23 @@ msgstr "Inicializando Decrediton"
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.settings"
 msgid "Settings"
-msgstr ""
+msgstr "Configurações"
 
 #. [menu.settings]
 #. defaultMessage is:
 #. Settings
-#: app/i18n/extracted/app/components/SideBar/Bar.json
+#: app/i18n/extracted/app/components/SideBar/MenuLinks/index.json
 msgctxt "menu.settings"
 msgid "Settings"
-msgstr ""
+msgstr "Configurações"
 
 #. [settings.title]
 #. defaultMessage is:
 #. Settings
-#: app/i18n/extracted/app/components/views/SettingsPage/Page.json
+#: app/i18n/extracted/app/messages.json
 msgctxt "settings.title"
 msgid "Settings"
-msgstr ""
+msgstr "Configurações"
 
 #. [accounts.show.tip]
 #. defaultMessage is:
@@ -1755,23 +2680,173 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.show.tip"
 msgid "Show"
-msgstr ""
+msgstr "Exibir"
 
-#. [getStarted.chainLoading.skipBtn]
+#. [appMenu.showAll]
 #. defaultMessage is:
-#. Skip Sync
-#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
-msgctxt "getStarted.chainLoading.skipBtn"
-msgid "Skip Sync"
+#. Show All
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.showAll"
+msgid "Show All"
+msgstr "Exibir Tudo"
+
+#. [appMenu.showDaemonLog]
+#. defaultMessage is:
+#. Show Daemon Log Files
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.showDaemonLog"
+msgid "Show Daemon Log Files"
+msgstr "Exibir arquivos de logs do Daemon"
+
+#. [appMenu.showWalletLog]
+#. defaultMessage is:
+#. Show Wallet Log Files
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.showWalletLog"
+msgid "Show Wallet Log Files"
+msgstr "Exibir arquivos de logs da Carteira"
+
+#. [shutdown.header.title]
+#. defaultMessage is:
+#. Shutting down Decrediton
+#: app/i18n/extracted/app/components/views/ShutdownAppPage.json
+msgctxt "shutdown.header.title"
+msgid "Shutting down Decrediton"
+msgstr "Desligando o Decrediton"
+
+#. [shutdown.header.meta]
+#. defaultMessage is:
+#. Shutting down daemons and wallet
+#: app/i18n/extracted/app/components/views/ShutdownAppPage.json
+msgctxt "shutdown.header.meta"
+msgid "Shutting down daemons and wallet"
+msgstr "Desligando daemons e carteira"
+
+#. [securitycenter.header.toggle.sign]
+#. defaultMessage is:
+#. Sign
+#. [securitycenter.header.toggle.sign]
+#. defaultMessage is:
+#. Sign
+#: app/i18n/extracted/app/components/SignMessage/Form.json
+#: app/i18n/extracted/app/components/VerifyMessage/Form.json
+msgctxt "securitycenter.header.toggle.sign"
+msgid "Sign"
+msgstr "Assinar"
+
+#. [securitycenter.sign.form.submit]
+#. defaultMessage is:
+#. Sign
+#. [securitycenter.sign.form.submit]
+#. defaultMessage is:
+#. Sign
+#: app/i18n/extracted/app/components/SignMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/Form.json
+msgctxt "securitycenter.sign.form.submit"
+msgid "Sign"
+msgstr "Assinar"
+
+#. [security.tab.sign]
+#. defaultMessage is:
+#. Sign Message
+#: app/i18n/extracted/app/messages.json
+msgctxt "security.tab.sign"
+msgid "Sign Message"
+msgstr "Assinar Mensagem"
+
+#. [securitycenter.signInfo]
+#. defaultMessage is:
+#. Sign Message Information
+#. [securitycenter.signInfo]
+#. defaultMessage is:
+#. Sign Message Information
+#: app/i18n/extracted/app/components/SignMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/Form.json
+msgctxt "securitycenter.signInfo"
+msgid "Sign Message Information"
+msgstr "Informação sobre Assinatura de Mensagem"
+
+#. [sign.info.title]
+#. defaultMessage is:
+#. Sign Message Information
+#: app/i18n/extracted/app/components/SignMessageInfo.json
+msgctxt "sign.info.title"
+msgid "Sign Message Information"
+msgstr "Informação sobre Assinatura de Mensagem"
+
+#. [securitycenter.verify.form.field.signature.label]
+#. defaultMessage is:
+#. Signature
+#. [securitycenter.verify.form.field.signature.label]
+#. defaultMessage is:
+#. Signature
+#: app/i18n/extracted/app/components/VerifyMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/Form.json
+msgctxt "securitycenter.verify.form.field.signature.label"
+msgid "Signature"
+msgstr "Assinatura"
+
+#. [sign.info.header]
+#. defaultMessage is:
+#. Signing a message
+#: app/i18n/extracted/app/components/SignMessageInfo.json
+msgctxt "sign.info.header"
+msgid "Signing a message"
+msgstr "Assinando uma mensagem"
+
+#. [sign.info.message]
+#. defaultMessage is:
+#. Signing a message with an address' private key allows you to prove that you
+#. are the owner of a given address to a possible counterparty.  For instance,
+#. let's say you sent 100 DCR to a merchant and you have yet to receive your
+#. merchandise.  You contact the merchant and explain the situation, but need
+#. a way to prove you are, in fact, the owner of the address that the funds
+#. were sent from.  To do this you can generate a signature based on a message
+#. only known to you and your counterparty and the private key associated with
+#. the address.  Upon receipt, the counterparty may use the Verify Message
+#. form to ensure the signature is VALID.
+#: app/i18n/extracted/app/components/SignMessageInfo.json
+msgctxt "sign.info.message"
+msgid ""
+"Signing a message with an address' private key allows you to prove that you "
+"are the owner of a given address to a possible counterparty.  For instance, "
+"let's say you sent 100 DCR to a merchant and you have yet to receive your "
+"merchandise.  You contact the merchant and explain the situation, but need a"
+" way to prove you are, in fact, the owner of the address that the funds were"
+" sent from.  To do this you can generate a signature based on a message only"
+" known to you and your counterparty and the private key associated with the "
+"address.  Upon receipt, the counterparty may use the Verify Message form to "
+"ensure the signature is VALID."
 msgstr ""
+"Assinar uma mensagem com a chave privada de um endereço permite que você "
+"prove que você é o dono de um endereço para uma possível contraparte. Por "
+"exemplo, digamos que você envie 100 DCR para um vendedor e você não recebeu "
+"sua mercadoria. Você contacta o vendedor para explicar a situação mas "
+"precisa prova que você, de fator, é o dono do endereço de onde os fundos "
+"foram enviados. Para fazer isso, você pode gerar uma assinatura baseada em "
+"uma mensagem conhecida apenas por você e pela sua contraparte e a chave "
+"privada associada ao endereço. Ao receber, a contraparte pode usar o "
+"formulário Verificar Mensagem  para garantir que a assinatura é VÁLIDA."
+
+#. [advancedStartup.skip]
+#. defaultMessage is:
+#. Skip Advanced Daemon Connection
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/Form.json
+msgctxt "advancedStartup.skip"
+msgid "Skip Advanced Daemon Connection"
+msgstr "Pular Conexão Avançada do Daemon"
 
 #. [errors.general]
 #. defaultMessage is:
 #. Something went wrong, please go back
-#: app/i18n/extracted/app/components/ErrorScreen.json
+#. [errors.general]
+#. defaultMessage is:
+#. Something went wrong, please go back
+#: app/i18n/extracted/app/components/ErrorScreen/index.json
+#: app/i18n/extracted/app/components/ErrorScreen/Page.json
 msgctxt "errors.general"
 msgid "Something went wrong, please go back"
-msgstr ""
+msgstr "Algo deu errado, por favor retorne"
 
 #. [accounts.spendable]
 #. defaultMessage is:
@@ -1779,7 +2854,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.spendable"
 msgid "Spendable"
-msgstr ""
+msgstr "Transferível"
+
+#. [myTickets.spenderTx]
+#. defaultMessage is:
+#. Spender
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/ExpandedInfo.json
+msgctxt "myTickets.spenderTx"
+msgid "Spender"
+msgstr "Gasto"
 
 #. [purchaseTickets.stakePoolLabel]
 #. defaultMessage is:
@@ -1787,7 +2870,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.stakePoolLabel"
 msgid "Stake Pool"
-msgstr ""
+msgstr "Stake Pool"
 
 #. [stake.addPoolTitle]
 #. defaultMessage is:
@@ -1795,7 +2878,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakePools/AddForm.json
 msgctxt "stake.addPoolTitle"
 msgid "Stake Pool"
-msgstr ""
+msgstr "Stake Pool"
 
 #. [tickets.info.poolPreference.header]
 #. defaultMessage is:
@@ -1803,23 +2886,23 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 msgctxt "tickets.info.poolPreference.header"
 msgid "Stake pool preference"
-msgstr ""
-
-#. [stake.titleSettings]
-#. defaultMessage is:
-#. Stake pool settings
-#: app/i18n/extracted/app/components/views/TicketsPage/Header.json
-msgctxt "stake.titleSettings"
-msgid "Stake pool settings"
-msgstr ""
+msgstr "Preferências da Stake Pool"
 
 #. [help.stakepools]
 #. defaultMessage is:
-#. Stakepools Overview
+#. Stakepools
 #: app/i18n/extracted/app/components/views/Help.json
 msgctxt "help.stakepools"
-msgid "Stakepools Overview"
-msgstr ""
+msgid "Stakepools"
+msgstr "Stakepools"
+
+#. [login.form.appdata.button]
+#. defaultMessage is:
+#. Start AppData Daemon
+#: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/AppDataForm.json
+msgctxt "login.form.appdata.button"
+msgid "Start AppData Daemon"
+msgstr "Iniciar Daemon por AppData"
 
 #. [getStarted.header.startRpc.meta]
 #. defaultMessage is:
@@ -1827,7 +2910,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/StartRPC.json
 msgctxt "getStarted.header.startRpc.meta"
 msgid "Starting RPC and subscribing block notifications"
-msgstr ""
+msgstr "Iniciando RPC e assinando notificações de blocos"
 
 #. [getStarted.header.startingProcess.meta]
 #. defaultMessage is:
@@ -1835,7 +2918,51 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
 msgctxt "getStarted.header.startingProcess.meta"
 msgid "Starting background process"
-msgstr ""
+msgstr "Iniciando processo de segundo plano"
+
+#. [tickets.tab.statistics]
+#. defaultMessage is:
+#. Statistics
+#. [tickets.tab.statistics]
+#. defaultMessage is:
+#. Statistics
+#: app/i18n/extracted/app/components/views/TicketsPage/Header.json
+#: app/i18n/extracted/app/messages.json
+msgctxt "tickets.tab.statistics"
+msgid "Statistics"
+msgstr "Estatísticas"
+
+#. [settings.changePassphrase]
+#. defaultMessage is:
+#. Successfully changed private passphrase.
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "settings.changePassphrase"
+msgid "Successfully changed private passphrase."
+msgstr "Senha particular alterada com sucesso."
+
+#. [accounts.nextAccount]
+#. defaultMessage is:
+#. Successfully created a new account.
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "accounts.nextAccount"
+msgid "Successfully created a new account."
+msgstr "Nova conta criada com sucesso."
+
+#. [accounts.renameAccount]
+#. defaultMessage is:
+#. Successfully renamed account.
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "accounts.renameAccount"
+msgid "Successfully renamed account."
+msgstr "Conta renomeada com sucesso."
+
+#. [tickets.setStakePoolVoteChoices]
+#. defaultMessage is:
+#. Successfully set vote choices.
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "tickets.setStakePoolVoteChoices"
+msgid "Successfully set vote choices."
+msgstr "Configurou com sucesso as escolhas de votação."
 
 #. [sidebar.syncedToBlock]
 #. defaultMessage is:
@@ -1843,18 +2970,57 @@ msgstr ""
 #: app/i18n/extracted/app/components/SideBar/Bar.json
 msgctxt "sidebar.syncedToBlock"
 msgid "Synced to block"
-msgstr ""
+msgstr "Sincronizado até o bloco"
 
-#. [send.testnetInfo]
+#. [transactions.description.send.testnet]
+#. defaultMessage is:
+#. Testnet Decred addresses always begin with letter T and contain 26-35
+#. alphanumeric characters
+#. (e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0).
+#: app/i18n/extracted/app/messages.json
+msgctxt "transactions.description.send.testnet"
+msgid ""
+"Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters\n"
+"(e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."
+msgstr ""
+"Endereços Decred da testnet sempre começam com a letra T e contém 26-35 caracteres alfanuméricos\n"
+"(ex. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."
+
+#. [transactions.description.testnet]
 #. defaultMessage is:
 #. Testnet Decred addresses always begin with letter T and contain 26-35
 #. alphanumeric characters (e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0).
-#: app/i18n/extracted/app/components/views/SendPage/Page.json
-msgctxt "send.testnetInfo"
+#: app/i18n/extracted/app/components/views/TransactionsPage/Header.json
+msgctxt "transactions.description.testnet"
 msgid ""
 "Testnet Decred addresses always begin with letter T and contain 26-35 "
 "alphanumeric characters (e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."
 msgstr ""
+"Endereços Decred Testnet sempre começam com a letra T e contém 26-35 "
+"caracteres alfanuméricos (ex: TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."
+
+#. [invalidRPCVersion.info]
+#. defaultMessage is:
+#. The API of the currently running wallet ({walletRPCVersion}) is not
+#. compatible with Decrediton (required version {requiredWalletRPCVersion}).
+#.           Please update the daemon (dcrd) and wallet (dcrwallet) to the
+#. latest version, then try again.
+#.           See the "Help ⮕ About" menu for the current version of the
+#. executables.
+#: app/i18n/extracted/app/components/views/InvalidRPCVersion.json
+msgctxt "invalidRPCVersion.info"
+msgid ""
+"The API of the currently running wallet ({walletRPCVersion}) is not compatible with Decrediton (required version {requiredWalletRPCVersion}).\n"
+"\n"
+"          Please update the daemon (dcrd) and wallet (dcrwallet) to the latest version, then try again.\n"
+"\n"
+"          See the \"Help ⮕ About\" menu for the current version of the executables."
+msgstr ""
+"A API da carteira em execução ({walletRPCVersion}) não é compatível com o Decrediton (versão requerida {requiredWalletRPCVersion}).\n"
+"\n"
+"          Por favor atualize o daemon (dcrd) e a carteira (dcrwallet) para suas versões mais recentes, e então tente novamente.\n"
+"\n"
+"          Acesse o menu \"Ajuda ⮕ Sobre\" para .ver a versão atual dos executáveis."
 
 #. [tickets.info.votingAddress.message]
 #. defaultMessage is:
@@ -1862,7 +3028,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 msgctxt "tickets.info.votingAddress.message"
 msgid "The Decred address that will do the voting."
-msgstr ""
+msgstr "O endereço Decred que irá realizar a votação"
 
 #. [getStarted.chainLoading]
 #. defaultMessage is:
@@ -1870,7 +3036,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
 msgctxt "getStarted.chainLoading"
 msgid "The Decred chain is currently loading and may take a few minutes."
-msgstr ""
+msgstr "A cadeia Decred is carregando e isso pode levar alguns minutos."
 
 #. [tickets.info.poolFeeAddress.message]
 #. defaultMessage is:
@@ -1878,7 +3044,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 msgctxt "tickets.info.poolFeeAddress.message"
 msgid "The address that your stakepool fee will end up getting paid."
-msgstr ""
+msgstr "O endereço para onde a taxa da stakepool será paga."
 
 #. [tickets.info.ticketPrice.message]
 #. defaultMessage is:
@@ -1890,6 +3056,8 @@ msgid ""
 "The current price of a ticket as calculated by the network.  Changes every "
 "144 Blocks."
 msgstr ""
+"O preço atual de um ticket, conforme calculado pela rede. Muda a cada 144 "
+"blocos."
 
 #. [tickets.info.poolFeePercentage.message]
 #. defaultMessage is:
@@ -1898,7 +3066,7 @@ msgstr ""
 msgctxt "tickets.info.poolFeePercentage.message"
 msgid ""
 "The fee in which you will be charged for using the stakepool's service."
-msgstr ""
+msgstr "A taxa que você será cobrado por usar os serviços da stakepool."
 
 #. [createWallet.nextPromptSeed]
 #. defaultMessage is:
@@ -1909,7 +3077,7 @@ msgctxt "createWallet.nextPromptSeed"
 msgid ""
 "The next prompt will require entering this seed to confirm it has been "
 "saved."
-msgstr ""
+msgstr "A próxima tela vai pedir uma confirmação de que essa seed foi salva."
 
 #. [tickets.info.number.message]
 #. defaultMessage is:
@@ -1917,34 +3085,52 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 msgctxt "tickets.info.number.message"
 msgid "The number of tickets to attempt to purchase."
-msgstr ""
+msgstr "O número de tickets que deve-se tentar adquirir."
 
 #. [home.notSyncedInfo]
 #. defaultMessage is:
 #. The wallet is not fully synced yet. Note: Balances will not be accurate
 #. until syncing is complete.
-#: app/i18n/extracted/app/components/views/HomePage/Page.json
+#: app/i18n/extracted/app/components/shared/TabbedHeader/MessageBanner/index.json
 msgctxt "home.notSyncedInfo"
 msgid ""
 "The wallet is not fully synced yet. Note: Balances will not be accurate "
 "until syncing is complete."
 msgstr ""
+"A caretira não está completamente sincronizada ainda. Note: os saldos não "
+"estarão corretos até que a sincronização esteja completa."
 
 #. [votingPreferences.noAgenda]
 #. defaultMessage is:
 #. There are currently no agendas for voting.
-#: app/i18n/extracted/app/components/VotingPrefs/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/Page.json
 msgctxt "votingPreferences.noAgenda"
 msgid "There are currently no agendas for voting."
-msgstr ""
+msgstr "Não existem agendas para votação"
 
 #. [receive.accountLabel]
 #. defaultMessage is:
 #. This address is for
-#: app/i18n/extracted/app/components/views/ReceivePage/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/ReceiveTab/Page.json
 msgctxt "receive.accountLabel"
 msgid "This address is for"
-msgstr ""
+msgstr "Esse endereço é para"
+
+#. [input.requiredInput]
+#. defaultMessage is:
+#. This field is required
+#: app/i18n/extracted/app/components/inputs/Input.json
+msgctxt "input.requiredInput"
+msgid "This field is required"
+msgstr "Esse campo é obrigatório"
+
+#. [input.invalidInput]
+#. defaultMessage is:
+#. This field is wrong
+#: app/i18n/extracted/app/components/inputs/Input.json
+msgctxt "input.invalidInput"
+msgid "This field is wrong"
+msgstr "Esse campo está errado"
 
 #. [tickets.info.account.message]
 #. defaultMessage is:
@@ -1953,15 +3139,7 @@ msgstr ""
 msgctxt "tickets.info.account.message"
 msgid ""
 "This is the account that will purchase the tickets and receive the reward."
-msgstr ""
-
-#. [votingPreferences.noVoteChoices]
-#. defaultMessage is:
-#. This pool is not configured for vote choices.
-#: app/i18n/extracted/app/components/VotingPrefs/Page.json
-msgctxt "votingPreferences.noVoteChoices"
-msgid "This pool is not configured for vote choices."
-msgstr ""
+msgstr "Essa é a conta que vai comprar tickets e receber a recompensa"
 
 #. [getStarted.decrypt.info]
 #. defaultMessage is:
@@ -1971,14 +3149,20 @@ msgctxt "getStarted.decrypt.info"
 msgid ""
 "This wallet is encrypted, please enter the public passphrase to decrypt it."
 msgstr ""
+"A carteira está criptografada. Digite a senha pública para descriptografa-"
+"la."
 
 #. [notifications.type.ticket]
 #. defaultMessage is:
 #. Ticket
+#. [notifications.type.ticket]
+#. defaultMessage is:
+#. Ticket
 #: app/i18n/extracted/app/components/Header/Notification/Transfer.json
+#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
 msgctxt "notifications.type.ticket"
 msgid "Ticket"
-msgstr ""
+msgstr "Ticket"
 
 #. [transaction.type.ticket]
 #. defaultMessage is:
@@ -1990,7 +3174,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "transaction.type.ticket"
 msgid "Ticket"
-msgstr ""
+msgstr "Ticket"
 
 #. [purchaseTickets.ticketAddress]
 #. defaultMessage is:
@@ -1998,15 +3182,23 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.ticketAddress"
 msgid "Ticket Address"
-msgstr ""
+msgstr "Endereço do Ticket"
 
-#. [purchaseTickets.ticketFeeTip]
+#. [stakepools.list.form.field.ticketaddress]
 #. defaultMessage is:
-#. Ticket Fee
-#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
-msgctxt "purchaseTickets.ticketFeeTip"
-msgid "Ticket Fee"
-msgstr ""
+#. Ticket Address:
+#: app/i18n/extracted/app/components/StakePools/List.json
+msgctxt "stakepools.list.form.field.ticketaddress"
+msgid "Ticket Address:"
+msgstr "Endereço do Ticket:"
+
+#. [ticketAutoBuyer.info.title]
+#. defaultMessage is:
+#. Ticket Auto Buyer Information
+#: app/i18n/extracted/app/components/TicketAutoBuyerInfo.json
+msgctxt "ticketAutoBuyer.info.title"
+msgid "Ticket Auto Buyer Information"
+msgstr "Informação de Compra Automática de Tickets"
 
 #. [purchaseTickets.ticketFeePlaceholder]
 #. defaultMessage is:
@@ -2014,15 +3206,39 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.ticketFeePlaceholder"
 msgid "Ticket Fee"
-msgstr ""
+msgstr "Taxa do Ticket"
 
 #. [purchaseTickets.ticketFee]
 #. defaultMessage is:
-#. Ticket Fee (DCR/kB)
+#. Ticket Fee
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.ticketFee"
-msgid "Ticket Fee (DCR/kB)"
-msgstr ""
+msgid "Ticket Fee"
+msgstr "Taxa de Ticket"
+
+#. [purchaseTickets.ticketFeeTip]
+#. defaultMessage is:
+#. Ticket Fee
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+msgctxt "purchaseTickets.ticketFeeTip"
+msgid "Ticket Fee"
+msgstr "Taxa do Ticket"
+
+#. [ticket.lossLabel]
+#. defaultMessage is:
+#. Ticket Loss
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+msgctxt "ticket.lossLabel"
+msgid "Ticket Loss"
+msgstr "Valor Gasto"
+
+#. [accounts.balanceInfo]
+#. defaultMessage is:
+#. Ticket Purchase Information
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+msgctxt "accounts.balanceInfo"
+msgid "Ticket Purchase Information"
+msgstr "Informação sobre Compra de Tickets"
 
 #. [tickets.info.title]
 #. defaultMessage is:
@@ -2030,7 +3246,31 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 msgctxt "tickets.info.title"
 msgid "Ticket Purchase Information"
-msgstr ""
+msgstr "Informações de compra de ticket"
+
+#. [ticket.rewardLabel]
+#. defaultMessage is:
+#. Ticket Reward
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+msgctxt "ticket.rewardLabel"
+msgid "Ticket Reward"
+msgstr "Recompensa do Ticket"
+
+#. [tickets.startAutoBuyerHeader]
+#. defaultMessage is:
+#. Ticket buyer is now running.
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "tickets.startAutoBuyerHeader"
+msgid "Ticket buyer is now running."
+msgstr "O Ticket Buyer está em execução"
+
+#. [tickets.stopAutoBuyerHeader]
+#. defaultMessage is:
+#. Ticket buyer is now stopped.
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "tickets.stopAutoBuyerHeader"
+msgid "Ticket buyer is now stopped."
+msgstr "O Ticket Buyer está parado."
 
 #. [tickets.info.ticketFee.header]
 #. defaultMessage is:
@@ -2038,7 +3278,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 msgctxt "tickets.info.ticketFee.header"
 msgid "Ticket fee (DCR/kB)"
-msgstr ""
+msgstr "Taxa de Ticket (DCR/kB)"
 
 #. [tickets.info.ticketPrice.header]
 #. defaultMessage is:
@@ -2046,31 +3286,65 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 msgctxt "tickets.info.ticketPrice.header"
 msgid "Ticket price"
-msgstr ""
-
-#. [stake.titleTicketPrice]
-#. defaultMessage is:
-#. Ticket price
-#: app/i18n/extracted/app/components/views/TicketsPage/Header.json
-msgctxt "stake.titleTicketPrice"
-msgid "Ticket price"
-msgstr ""
+msgstr "Preço do Ticket"
 
 #. [menu.tickets]
 #. defaultMessage is:
 #. Tickets
-#: app/i18n/extracted/app/components/SideBar/Bar.json
+#: app/i18n/extracted/app/components/SideBar/MenuLinks/index.json
 msgctxt "menu.tickets"
 msgid "Tickets"
-msgstr ""
+msgstr "Tickets"
 
 #. [transaction.type.tickets]
 #. defaultMessage is:
 #. Tickets
+#. [transaction.type.tickets]
+#. defaultMessage is:
+#. Tickets
 #: app/i18n/extracted/app/components/views/HistoryPage/index.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/index.json
 msgctxt "transaction.type.tickets"
 msgid "Tickets"
+msgstr "Tickets"
+
+#. [tickets.title]
+#. defaultMessage is:
+#. Tickets
+#. [tickets.title]
+#. defaultMessage is:
+#. Tickets
+#: app/i18n/extracted/app/components/views/TicketsPage/Header.json
+#: app/i18n/extracted/app/messages.json
+msgctxt "tickets.title"
+msgid "Tickets"
+msgstr "Tickets"
+
+#. [ticketAutoBuyer.info.maxFee.message]
+#. defaultMessage is:
+#. Tickets are entered into the mempool in order of their fee per kilobyte.
+#. This sets the maximum fee you are willing to pay.
+#: app/i18n/extracted/app/components/TicketAutoBuyerInfo.json
+msgctxt "ticketAutoBuyer.info.maxFee.message"
+msgid ""
+"Tickets are entered into the mempool in order of their fee per kilobyte. "
+"This sets the maximum fee you are willing to pay."
 msgstr ""
+"Tickets entram na mempool na ordem de sua taxa por kilobyte. Esse parâmetro "
+"estabelece a taxa máxima que você está disposto a pagar."
+
+#. [ticketAutoBuyer.info.maxPriceRelative.message]
+#. defaultMessage is:
+#. Tickets are entered into the mempool in order of their fee per kilobyte.
+#. This sets the maximum fee you are willing to pay.
+#: app/i18n/extracted/app/components/TicketAutoBuyerInfo.json
+msgctxt "ticketAutoBuyer.info.maxPriceRelative.message"
+msgid ""
+"Tickets are entered into the mempool in order of their fee per kilobyte. "
+"This sets the maximum fee you are willing to pay."
+msgstr ""
+"Tickets entram na mempool na ordem de sua taxa por kilobyte. Esse parâmetro "
+"estabelece a taxa máxima que você está disposto a pagar."
 
 #. [tickets.info.ticketFee.message]
 #. defaultMessage is:
@@ -2084,14 +3358,21 @@ msgid ""
 "demand, you will need to increase this value in order to have your tickets "
 "accepted. You can view current ticket fees here."
 msgstr ""
+"Tickets entram na pool de votação na ordem de sua taxa. Em tempos de alta "
+"demanda você poderá precisar aumentar esse valor para ter seus tickets "
+"aceitos. Você pode ver a taxa de tickets atual aqui."
 
 #. [send.to]
 #. defaultMessage is:
 #. To
-#: app/i18n/extracted/app/components/views/SendPage/OutputRow.json
+#. [send.to]
+#. defaultMessage is:
+#. To
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputAccountRow.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputRow.json
 msgctxt "send.to"
 msgid "To"
-msgstr ""
+msgstr "Para"
 
 #. [createWallet.lossInfo]
 #. defaultMessage is:
@@ -2107,6 +3388,25 @@ msgid ""
 "\n"
 "          {warningNotice} Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else."
 msgstr ""
+"Para evitar perda permanente da sua carteira, a seed precisa ser armazenada em uma cópia de segurança (backup) antes de continuar.\n"
+"\n"
+"{warningNotice} Caso alguém descubra a sua seed particular, essa pessoa poderá roubar a sua carteira inteira. Sob nenhuma circunstância essa seed deve ser revelada para alguém."
+
+#. [appMenu.toggleFullScreen]
+#. defaultMessage is:
+#. Toggle &Full Screen
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.toggleFullScreen"
+msgid "Toggle &Full Screen"
+msgstr "Mudar para &Tela Cheia"
+
+#. [appMenu.developerTools]
+#. defaultMessage is:
+#. Toggle Developer Tools
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.developerTools"
+msgid "Toggle Developer Tools"
+msgstr "Exibir Ferramentas de Desenvolvimento"
 
 #. [accounts.total]
 #. defaultMessage is:
@@ -2114,7 +3414,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.total"
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. [sidebar.totalBalance]
 #. defaultMessage is:
@@ -2122,7 +3422,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/SideBar/Bar.json
 msgctxt "sidebar.totalBalance"
 msgid "Total Balance"
-msgstr ""
+msgstr "Saldo Total"
+
+#. [transactions.description.history]
+#. defaultMessage is:
+#. Total Balance:
+#: app/i18n/extracted/app/messages.json
+msgctxt "transactions.description.history"
+msgid "Total Balance:"
+msgstr "Saldo Total:"
 
 #. [stake.totalSubsidy]
 #. defaultMessage is:
@@ -2130,15 +3438,23 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
 msgctxt "stake.totalSubsidy"
 msgid "Total Subsidy"
-msgstr ""
+msgstr "Subsídio Total"
 
 #. [send.totalAmountEstimation]
 #. defaultMessage is:
 #. Total amount sending
-#: app/i18n/extracted/app/components/views/SendPage/Page.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.totalAmountEstimation"
 msgid "Total amount sending"
-msgstr ""
+msgstr "Valor total sendo enviado"
+
+#. [myTickets.ticketTx]
+#. defaultMessage is:
+#. Transaction
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/ExpandedInfo.json
+msgctxt "myTickets.ticketTx"
+msgid "Transaction"
+msgstr "Transação"
 
 #. [txDetails.transactionLabel]
 #. defaultMessage is:
@@ -2146,7 +3462,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.transactionLabel"
 msgid "Transaction"
-msgstr ""
+msgstr "Transação"
 
 #. [txDetails.transactionFeeLabel]
 #. defaultMessage is:
@@ -2154,23 +3470,55 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.transactionFeeLabel"
 msgid "Transaction fee"
-msgstr ""
+msgstr "Taxa de transação"
+
+#. [menu.transactions]
+#. defaultMessage is:
+#. Transactions
+#: app/i18n/extracted/app/components/SideBar/MenuLinks/index.json
+msgctxt "menu.transactions"
+msgid "Transactions"
+msgstr "Transações"
+
+#. [transactions.title]
+#. defaultMessage is:
+#. Transactions
+#. [transactions.title]
+#. defaultMessage is:
+#. Transactions
+#: app/i18n/extracted/app/components/views/TransactionsPage/Header.json
+#: app/i18n/extracted/app/messages.json
+msgctxt "transactions.title"
+msgid "Transactions"
+msgstr "Transações"
 
 #. [notifications.type.transfer]
 #. defaultMessage is:
 #. Transfer
+#. [notifications.type.transfer]
+#. defaultMessage is:
+#. Transfer
 #: app/i18n/extracted/app/components/Header/Notification/Transfer.json
+#: app/i18n/extracted/app/components/Snackbar/Notification/Transaction.json
 msgctxt "notifications.type.transfer"
 msgid "Transfer"
-msgstr ""
+msgstr "Transferência"
 
-#. [purchaseTickets.txFeeTip]
+#. [autobuyer.enabled]
 #. defaultMessage is:
-#. Tx Fee
-#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
-msgctxt "purchaseTickets.txFeeTip"
-msgid "Tx Fee"
-msgstr ""
+#. Turn off auto buyer
+#: app/i18n/extracted/app/components/AutoBuyerSwitch.json
+msgctxt "autobuyer.enabled"
+msgid "Turn off auto buyer"
+msgstr "Desligar auto buyer"
+
+#. [autobuyer.disabled]
+#. defaultMessage is:
+#. Turn on auto buyer
+#: app/i18n/extracted/app/components/AutoBuyerSwitch.json
+msgctxt "autobuyer.disabled"
+msgid "Turn on auto buyer"
+msgstr "Ligar auto buyer"
 
 #. [purchaseTickets.txFeePlaceholder]
 #. defaultMessage is:
@@ -2178,23 +3526,23 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.txFeePlaceholder"
 msgid "Tx Fee"
-msgstr ""
+msgstr "Taxa de transação"
 
 #. [purchaseTickets.txFee]
 #. defaultMessage is:
-#. Tx Fee (DCR/kB)
+#. Tx Fee
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.txFee"
-msgid "Tx Fee (DCR/kB)"
-msgstr ""
+msgid "Tx Fee"
+msgstr "Taxa de Transação"
 
-#. [history.txTypeLabel]
+#. [purchaseTickets.txFeeTip]
 #. defaultMessage is:
-#. Tx Type
-#: app/i18n/extracted/app/components/views/HistoryPage/Page.json
-msgctxt "history.txTypeLabel"
-msgid "Tx Type"
-msgstr ""
+#. Tx Fee
+#: app/i18n/extracted/app/components/PurchaseTickets/Form.json
+msgctxt "purchaseTickets.txFeeTip"
+msgid "Tx Fee"
+msgstr "Taxa de transação"
 
 #. [tickets.info.txFee.header]
 #. defaultMessage is:
@@ -2202,15 +3550,35 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 msgctxt "tickets.info.txFee.header"
 msgid "Tx fee (DCR/kB)"
-msgstr ""
+msgstr "Taxa de Transação (DCR/kB)"
+
+#. [stakepools.list.form.field.url]
+#. defaultMessage is:
+#. URL:
+#: app/i18n/extracted/app/components/StakePools/List.json
+msgctxt "stakepools.list.form.field.url"
+msgid "URL:"
+msgstr "URL:"
+
+#. [appMenu.undo]
+#. defaultMessage is:
+#. Undo
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.undo"
+msgid "Undo"
+msgstr "Desfazer"
 
 #. [transaction.type.unmined]
 #. defaultMessage is:
 #. Unmined
+#. [transaction.type.unmined]
+#. defaultMessage is:
+#. Unmined
 #: app/i18n/extracted/app/components/views/HistoryPage/index.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/index.json
 msgctxt "transaction.type.unmined"
 msgid "Unmined"
-msgstr ""
+msgstr "Não minerado"
 
 #. [changePassModal.update]
 #. defaultMessage is:
@@ -2218,7 +3586,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/ChangePassphraseModal/Modal.json
 msgctxt "changePassModal.update"
 msgid "Update"
-msgstr ""
+msgstr "Atualizar"
 
 #. [autobuyer.updateConfigBtn]
 #. defaultMessage is:
@@ -2226,7 +3594,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.updateConfigBtn"
 msgid "Update Config"
-msgstr ""
+msgstr "Atualizar Configuração"
 
 #. [agenda.updatePreference]
 #. defaultMessage is:
@@ -2234,7 +3602,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/AgendaOverview/Overview.json
 msgctxt "agenda.updatePreference"
 msgid "Update Preference"
-msgstr ""
+msgstr "Atualizar Preferências"
 
 #. [settings.updatePrivatePassphrase]
 #. defaultMessage is:
@@ -2242,7 +3610,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.updatePrivatePassphrase"
 msgid "Update Private Passphrase"
-msgstr ""
+msgstr "Atualizar Chave Particular"
 
 #. [txDetails.usedInputs]
 #. defaultMessage is:
@@ -2250,7 +3618,45 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.usedInputs"
 msgid "Used Inputs"
+msgstr "Entradas Usadas"
+
+#. [securitycenter.verify.result.valid]
+#. defaultMessage is:
+#. Valid signature!
+#. [securitycenter.verify.result.valid]
+#. defaultMessage is:
+#. Valid signature!
+#: app/i18n/extracted/app/components/VerifyMessage/index.json
+#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/index.json
+msgctxt "securitycenter.verify.result.valid"
+msgid "Valid signature!"
+msgstr "Assinatura Válida!"
+
+#. [securitycenter.header.description]
+#. defaultMessage is:
+#. Various tools that help in different aspects of crypto currency security
+#. will be located here.
+#: app/i18n/extracted/app/components/views/SecurityPage/Header.json
+msgctxt "securitycenter.header.description"
+msgid ""
+"Various tools that help in different aspects of crypto currency security "
+"will be located here."
 msgstr ""
+"Várias ferramentas que ajudam em aspectos diferentes da segurança da moeda "
+"estão localizados aqui"
+
+#. [security.description]
+#. defaultMessage is:
+#. Various tools that help in different aspects of crypto currency security
+#. will be located here.
+#: app/i18n/extracted/app/messages.json
+msgctxt "security.description"
+msgid ""
+"Various tools that help in different aspects of crypto currency security "
+"will be located here."
+msgstr ""
+"Várias ferramentas que ajudam em diferentes aspectos da segurança da "
+"criptomoeda estão localizadas aqui."
 
 #. [createWallet.passphraseInput.verifyLabel]
 #. defaultMessage is:
@@ -2258,7 +3664,67 @@ msgstr ""
 #: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
 msgctxt "createWallet.passphraseInput.verifyLabel"
 msgid "Verify"
-msgstr ""
+msgstr "Verificar"
+
+#. [securitycenter.header.toggle.verify]
+#. defaultMessage is:
+#. Verify
+#. [securitycenter.header.toggle.verify]
+#. defaultMessage is:
+#. Verify
+#: app/i18n/extracted/app/components/SignMessage/Form.json
+#: app/i18n/extracted/app/components/VerifyMessage/Form.json
+msgctxt "securitycenter.header.toggle.verify"
+msgid "Verify"
+msgstr "Verificar"
+
+#. [securitycenter.verify.form.submit]
+#. defaultMessage is:
+#. Verify
+#. [securitycenter.verify.form.submit]
+#. defaultMessage is:
+#. Verify
+#: app/i18n/extracted/app/components/VerifyMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/Form.json
+msgctxt "securitycenter.verify.form.submit"
+msgid "Verify"
+msgstr "Verificar"
+
+#. [security.tab.verify]
+#. defaultMessage is:
+#. Verify Message
+#: app/i18n/extracted/app/messages.json
+msgctxt "security.tab.verify"
+msgid "Verify Message"
+msgstr "Verificar Mensagem"
+
+#. [securitycenter.signInfo]
+#. defaultMessage is:
+#. Verify Message Information
+#. [securitycenter.signInfo]
+#. defaultMessage is:
+#. Verify Message Information
+#: app/i18n/extracted/app/components/VerifyMessage/Form.json
+#: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/Form.json
+msgctxt "securitycenter.signInfo"
+msgid "Verify Message Information"
+msgstr "Verificar Informações da Mensagem"
+
+#. [verify.info.title]
+#. defaultMessage is:
+#. Verify Message Information
+#: app/i18n/extracted/app/components/VerifyMessageInfo.json
+msgctxt "verify.info.title"
+msgid "Verify Message Information"
+msgstr "Verificar Informações da Mensagem"
+
+#. [verify.info.header]
+#. defaultMessage is:
+#. Verifying Signature
+#: app/i18n/extracted/app/components/VerifyMessageInfo.json
+msgctxt "verify.info.header"
+msgid "Verifying Signature"
+msgstr "Verificar Assinatura"
 
 #. [transaction.type.vote]
 #. defaultMessage is:
@@ -2270,15 +3736,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "transaction.type.vote"
 msgid "Vote"
-msgstr ""
+msgstr "Votar"
 
-#. [stake.voteSettingsTab]
+#. [myTickets.voteChoices]
 #. defaultMessage is:
-#. Vote Settings
-#: app/i18n/extracted/app/components/views/TicketsPage/Header.json
-msgctxt "stake.voteSettingsTab"
-msgid "Vote Settings"
-msgstr ""
+#. Vote
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/ExpandedInfo.json
+msgctxt "myTickets.voteChoices"
+msgid "Vote"
+msgstr "Votar"
 
 #. [stake.votedTickets]
 #. defaultMessage is:
@@ -2286,15 +3752,19 @@ msgstr ""
 #: app/i18n/extracted/app/components/StakeInfo/Display.json
 msgctxt "stake.votedTickets"
 msgid "Voted Tickets"
-msgstr ""
+msgstr "Tickets Votados"
 
 #. [transaction.type.votes]
 #. defaultMessage is:
 #. Votes
+#. [transaction.type.votes]
+#. defaultMessage is:
+#. Votes
 #: app/i18n/extracted/app/components/views/HistoryPage/index.json
+#: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/index.json
 msgctxt "transaction.type.votes"
 msgid "Votes"
-msgstr ""
+msgstr "Votos"
 
 #. [accounts.votingAuthority]
 #. defaultMessage is:
@@ -2302,15 +3772,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.votingAuthority"
 msgid "Voting Authority"
-msgstr ""
+msgstr "Autoridade de Votação"
 
 #. [votingPreferences.title]
 #. defaultMessage is:
 #. Voting Preferences
-#: app/i18n/extracted/app/components/VotingPrefs/Page.json
+#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/Page.json
 msgctxt "votingPreferences.title"
 msgid "Voting Preferences"
-msgstr ""
+msgstr "Preferências de Votação"
 
 #. [tickets.info.votingAddress.header]
 #. defaultMessage is:
@@ -2318,7 +3788,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 msgctxt "tickets.info.votingAddress.header"
 msgid "Voting address"
-msgstr ""
+msgstr "Endereço de Votação"
 
 #. [agenda.votingFor]
 #. defaultMessage is:
@@ -2326,7 +3796,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/AgendaOverview/Overview.json
 msgctxt "agenda.votingFor"
 msgid "Voting for"
-msgstr ""
+msgstr "Votando para"
 
 #. [createWallet.info]
 #. defaultMessage is:
@@ -2345,6 +3815,11 @@ msgid ""
 "          any time using it. If the wallet encryption passphrase is forgotten\n"
 "          or the wallet is destroyed, the seed can be used to recover the wallet."
 msgstr ""
+"Carteiras são geradas deterministicamente por uma seed (semente). Essa seed "
+"é uma chave mestre da sua carteira - ela pode ser recriada a qualquer "
+"momento através do uso da seed. Se a chave de criptografia da carteira for "
+"perdida ou se os arquivos da carteira forem destruídos, a seed pode ser "
+"usada para recuperar a carteira."
 
 #. [createWallet.warningNotice]
 #. defaultMessage is:
@@ -2352,7 +3827,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/CreateWalletForm/CreateWallet.json
 msgctxt "createWallet.warningNotice"
 msgid "Warning"
-msgstr ""
+msgstr "Alerta"
+
+#. [appMenu.window]
+#. defaultMessage is:
+#. Window
+#: app/i18n/extracted/static/menus.json
+msgctxt "appMenu.window"
+msgid "Window"
+msgstr "Janela"
 
 #. [creteWallet.writeSeedReminder]
 #. defaultMessage is:
@@ -2360,7 +3843,68 @@ msgstr ""
 #: app/i18n/extracted/app/components/CreateWalletForm/CreateWallet.json
 msgctxt "creteWallet.writeSeedReminder"
 msgid "Write down the following seed and save it in a secure location."
+msgstr "Escreva a seed a seguir e salve-a em um lugar seguro."
+
+#. [tickets.purchaseTicketsHeader]
+#. defaultMessage is:
+#. You bought {numTickets, plural, one {# ticket } other {# tickets }}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "tickets.purchaseTicketsHeader"
+msgid "You bought {numTickets, plural, one {# ticket } other {# tickets }}"
+msgstr "Você comprou {numTickets, plural, one {# ticket } other {# tickets }}"
+
+#. [home.revokeTicketMessage]
+#. defaultMessage is:
+#. You have outstanding missed or expired tickets, please revoke them to
+#. unlock your funds
+#: app/i18n/extracted/app/components/views/HomePage/Page.json
+msgctxt "home.revokeTicketMessage"
+msgid ""
+"You have outstanding missed or expired tickets, please revoke them to unlock"
+" your funds"
 msgstr ""
+"Você tem tickets perdidos ou expirados. Por favor, revogue-os para "
+"desbloquear seus fundos."
+
+#. [tickets.updateStakePoolConfigHeader]
+#. defaultMessage is:
+#. You have successfully updated your stakepool settings.
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "tickets.updateStakePoolConfigHeader"
+msgid "You have successfully updated your stakepool settings."
+msgstr "Você atualizou a sua configuração de stakepools com sucesso."
+
+#. [tickets.importScriptHeader]
+#. defaultMessage is:
+#. You successfully imported a script tickets
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "tickets.importScriptHeader"
+msgid "You successfully imported a script tickets"
+msgstr "Você importou o script de tickets com sucesso."
+
+#. [tickets.revokeTicketsHeader]
+#. defaultMessage is:
+#. You successfully revoked tickets
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "tickets.revokeTicketsHeader"
+msgid "You successfully revoked tickets"
+msgstr "Você revogou seus tickets com sucesso"
+
+#. [autobuyer.balanceToMaintainError]
+#. defaultMessage is:
+#. Your balance to mantain is invalid
+#: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
+msgctxt "autobuyer.balanceToMaintainError"
+msgid "Your balance to mantain is invalid"
+msgstr "Seu saldo a ser mantido está inválido"
+
+#. [blocksInput.blocks]
+#. defaultMessage is:
+#. blocks
+#: app/i18n/extracted/app/components/inputs/BlocksInput.json
+msgctxt "blocksInput.blocks"
+msgid "blocks"
+msgstr "blocos"
 
 #. [passphraseModal.cancel]
 #. defaultMessage is:
@@ -2368,7 +3912,71 @@ msgstr ""
 #: app/i18n/extracted/app/components/PassphraseModal/Modal.json
 msgctxt "passphraseModal.cancel"
 msgid "cancel"
-msgstr ""
+msgstr "cancelar"
+
+#. [ticket.status.expired]
+#. defaultMessage is:
+#. expired
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.expired"
+msgid "expired"
+msgstr "expirado"
+
+#. [ticket.status.multiple.expired]
+#. defaultMessage is:
+#. expired
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.multiple.expired"
+msgid "expired"
+msgstr "expirados"
+
+#. [ticket.status.immature]
+#. defaultMessage is:
+#. immature
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.immature"
+msgid "immature"
+msgstr "imaturo"
+
+#. [ticket.status.multiple.immature]
+#. defaultMessage is:
+#. immature
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.multiple.immature"
+msgid "immature"
+msgstr "imaturos"
+
+#. [ticket.status.live]
+#. defaultMessage is:
+#. live
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.live"
+msgid "live"
+msgstr "live"
+
+#. [ticket.status.multiple.live]
+#. defaultMessage is:
+#. live
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.multiple.live"
+msgid "live"
+msgstr "vivos"
+
+#. [ticket.status.missed]
+#. defaultMessage is:
+#. missed
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.missed"
+msgid "missed"
+msgstr "perdidos"
+
+#. [ticket.status.multiple.missed]
+#. defaultMessage is:
+#. missed
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.multiple.missed"
+msgid "missed"
+msgstr "perdidos"
 
 #. [settings.requiresRestart]
 #. defaultMessage is:
@@ -2376,7 +3984,23 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.requiresRestart"
 msgid "requires restart"
-msgstr ""
+msgstr "requer reinício"
+
+#. [ticket.status.revoked]
+#. defaultMessage is:
+#. revoked
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.revoked"
+msgid "revoked"
+msgstr "revogado"
+
+#. [ticket.status.multiple.revoked]
+#. defaultMessage is:
+#. revoked
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.multiple.revoked"
+msgid "revoked"
+msgstr "revogados"
 
 #. [passphraseModal.save]
 #. defaultMessage is:
@@ -2384,7 +4008,63 @@ msgstr ""
 #: app/i18n/extracted/app/components/PassphraseModal/Modal.json
 msgctxt "passphraseModal.save"
 msgid "save"
-msgstr ""
+msgstr "salvar"
+
+#. [stake.discoverStakeOoolsAPILink]
+#. defaultMessage is:
+#. this link
+#: app/i18n/extracted/app/components/StakePools/index.json
+msgctxt "stake.discoverStakeOoolsAPILink"
+msgid "this link"
+msgstr "esse link"
+
+#. [ticket.status.unknown]
+#. defaultMessage is:
+#. unknown
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.unknown"
+msgid "unknown"
+msgstr "desconhecido"
+
+#. [ticket.status.multiple.unknown]
+#. defaultMessage is:
+#. unknown
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.multiple.unknown"
+msgid "unknown"
+msgstr "desconhecidos"
+
+#. [ticket.status.unmined]
+#. defaultMessage is:
+#. unmined
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.unmined"
+msgid "unmined"
+msgstr "não minerado"
+
+#. [ticket.status.multiple.unmined]
+#. defaultMessage is:
+#. unmined
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.multiple.unmined"
+msgid "unmined"
+msgstr "não minerados"
+
+#. [ticket.status.voted]
+#. defaultMessage is:
+#. voted
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.voted"
+msgid "voted"
+msgstr "votado"
+
+#. [ticket.status.multiple.voted]
+#. defaultMessage is:
+#. voted
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
+msgctxt "ticket.status.multiple.voted"
+msgid "voted"
+msgstr "votados"
 
 #. [balance.dcr]
 #. defaultMessage is:
@@ -2392,7 +4072,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/Balance.json
 msgctxt "balance.dcr"
 msgid "{amount, number, two-decimals}{smallAmount} {unit}"
-msgstr ""
+msgstr "{amount, number, two-decimals}{smallAmount} {unit}"
 
 #. [balance.atoms]
 #. defaultMessage is:
@@ -2400,7 +4080,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/Balance.json
 msgctxt "balance.atoms"
 msgid "{amount} {unit}"
-msgstr ""
+msgstr "{amount} {unit}"
 
 #. [transaction.confirmationHeight]
 #. defaultMessage is:
@@ -2412,14 +4092,17 @@ msgid ""
 "{confirmations, plural, =0 {pending} one {# confirmation} other {# "
 "confirmations}}"
 msgstr ""
+"{confirmations, plural, =0 {pendente} one {# confirmação} other {# "
+"confirmações}}"
 
-#. [history.paginationPages]
+#. [myTickets.statusCount]
 #. defaultMessage is:
-#. {current} of {total}
-#: app/i18n/extracted/app/components/views/HistoryPage/Page.json
-msgctxt "history.paginationPages"
-msgid "{current} of {total}"
+#. {count, plural, one {# ticket} other {# tickets}}
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketOverviewCard.json
+msgctxt "myTickets.statusCount"
+msgid "{count, plural, one {# ticket} other {# tickets}}"
 msgstr ""
+"{count, plural, =0 { nenhum ticket } one {# ticket} other {# tickets}}"
 
 #. [accounts.keys.external]
 #. defaultMessage is:
@@ -2427,7 +4110,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.keys.external"
 msgid "{keys} external"
-msgstr ""
+msgstr "{keys} externas"
 
 #. [accounts.keys.imported]
 #. defaultMessage is:
@@ -2435,7 +4118,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.keys.imported"
 msgid "{keys} imported"
-msgstr ""
+msgstr "{keys} importadas"
 
 #. [accounts.keys.internal]
 #. defaultMessage is:
@@ -2443,7 +4126,103 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
 msgctxt "accounts.keys.internal"
 msgid "{keys} internal"
-msgstr ""
+msgstr "{keys} internas"
+
+#. [send.errors.publishTxFailed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "send.errors.publishTxFailed"
+msgid "{originalError}"
+msgstr "{originalError}"
+
+#. [send.errors.signTxFailed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "send.errors.signTxFailed"
+msgid "{originalError}"
+msgstr "{originalError}"
+
+#. [send.errors.constructTxFailed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "send.errors.constructTxFailed"
+msgid "{originalError}"
+msgstr "{originalError}"
+
+#. [tickets.errors.purchaseTicketsFailed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "tickets.errors.purchaseTicketsFailed"
+msgid "{originalError}"
+msgstr "{originalError}"
+
+#. [tickets.errors.revokeTicketsFailed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "tickets.errors.revokeTicketsFailed"
+msgid "{originalError}"
+msgstr "{originalError}"
+
+#. [tickets.errors.importScriptFailed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "tickets.errors.importScriptFailed"
+msgid "{originalError}"
+msgstr "{originalError}"
+
+#. [tickets.errors.startAutoBuyerFailed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "tickets.errors.startAutoBuyerFailed"
+msgid "{originalError}"
+msgstr "{originalError}"
+
+#. [tickets.errors.updateStakePoolConfigFailed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "tickets.errors.updateStakePoolConfigFailed"
+msgid "{originalError}"
+msgstr "{originalError}"
+
+#. [tickets.errors.setStakePoolVoteChoicesFailed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "tickets.errors.setStakePoolVoteChoicesFailed"
+msgid "{originalError}"
+msgstr "{originalError}"
+
+#. [accounts.errors.renameAccountFailed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "accounts.errors.renameAccountFailed"
+msgid "{originalError}"
+msgstr "{originalError}"
+
+#. [accounts.errors.getNextAccountFailed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "accounts.errors.getNextAccountFailed"
+msgid "{originalError}"
+msgstr "{originalError}"
+
+#. [settings.errors.changePassphraseFailed]
+#. defaultMessage is:
+#. {originalError}
+#: app/i18n/extracted/app/reducers/snackbar.json
+msgctxt "settings.errors.changePassphraseFailed"
+msgid "{originalError}"
+msgstr "{originalError}"
 
 #. [confirmSeed.wordsRemaining]
 #. defaultMessage is:
@@ -2455,6 +4234,8 @@ msgid ""
 "{remainingSeedWords, plural, one {one word remaining} other {# words "
 "remaining}}"
 msgstr ""
+"{remainingSeedWords, plural, =0 {completo} one {uma palavra restante} other "
+"{# palavras restantes}}"
 
 #. [transaction.timestamp]
 #. defaultMessage is:
@@ -2462,7 +4243,15 @@ msgstr ""
 #: app/i18n/extracted/app/components/TxHistoryRow/Status.json
 msgctxt "transaction.timestamp"
 msgid "{timestamp, date, medium} {timestamp, time, medium}"
-msgstr ""
+msgstr "{timestamp, date, medium} {timestamp, time, medium}"
+
+#. [ticket.timestamp]
+#. defaultMessage is:
+#. {timestamp, date, medium} {timestamp, time, medium}
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+msgctxt "ticket.timestamp"
+msgid "{timestamp, date, medium} {timestamp, time, medium}"
+msgstr "{timestamp, date, medium} {timestamp, time, medium}"
 
 #. [txDetails.timestamp]
 #. defaultMessage is:
@@ -2470,4 +4259,14 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.timestamp"
 msgid "{timestamp, date, medium} {timestamp, time, medium}"
+msgstr "{timestamp, date, medium} {timestamp, time, medium}"
+
+#. [ticket.daysToLeave]
+#. defaultMessage is:
+#. ~ {days, plural, one {# day} other {# days}} from buying until {status}
+#: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketInfoCard.json
+msgctxt "ticket.daysToLeave"
+msgid ""
+"~ {days, plural, one {# day} other {# days}} from buying until {status}"
 msgstr ""
+"~ {days, plural, one {# day} other {# days}} desde a compra até {status}"
