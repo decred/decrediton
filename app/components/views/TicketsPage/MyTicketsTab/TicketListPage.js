@@ -51,9 +51,11 @@ class TicketListPage extends Component{/*  */
   requestTicketsRawTx() {
     const visibleTickets = this.getVisibleTickets();
     const toDecode = visibleTickets.reduce((a, t) => {
-      if ((t.spenderHash) && (!t.decodedTicketTx)) {
+      if (!t.decodedTicketTx) {
         a.push(t.ticketRawTx);
-        a.push(t.spenderRawTx);
+        if (t.senderHash) {
+          a.push(t.spenderRawTx);
+        }
       }
       return a;
     }, []);

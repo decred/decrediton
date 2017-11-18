@@ -313,10 +313,13 @@ const ticketNormalizer = createSelector(
       const spenderHash = hasSpender ? reverseHash(Buffer.from(spenderTx.getHash()).toString("hex")) : null;
       const decodedTicketTx = decodedTransactions[hash] || null;
       const decodedSpenderTx = hasSpender ? (decodedTransactions[spenderHash] || null) : null;
+      const hasCredits = ticketTx.getCreditsList().length > 0;
 
       // effective ticket price is the output 0 for the ticket transaction
       // (stakesubmission script class)
-      const ticketPrice = ticketTx.getCreditsList()[0].getAmount();
+      const ticketPrice = decodedTicketTx
+        ? decodedTicketTx.transaction.getOutputsList()[0].getValue()
+        : hasCredits ? ticketTx.getCreditsList()[0].getAmount() : 0;
 
       // ticket tx fee is the fee for the transaction where the ticket was bought
       const ticketTxFee = ticketTx.getFee();
@@ -326,7 +329,9 @@ const ticketNormalizer = createSelector(
 
       // ticket change is anything returned to the wallet on ticket purchase.
       // double check after changes in splitFee flag (dcrwallet #933)
-      const ticketChange = ticketTx.getCreditsList().slice(1).reduce((a, v) => a+v.getAmount(), 0);
+      const ticketChange = decodedTicketTx
+        ? decodedTicketTx.transaction.getOutputsList().slice(1).reduce((a, v) => a+v.getValue(), 0)
+        : ticketTx.getCreditsList().slice(1).reduce((a, v) => a+v.getAmount(), 0);
 
       // ticket investment is the full amount paid by the wallet on the ticket purchase
       const ticketInvestment = ticketTx.getDebitsList().reduce((a, v) => a+v.getPreviousAmount(), 0)
