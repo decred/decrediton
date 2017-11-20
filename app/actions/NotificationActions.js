@@ -1,11 +1,12 @@
 // @flow
-import { getTransactionNotifications, getAccountNotifications, TransactionType } from "wallet";
-import * as sel from "selectors";
+import { TransactionType } from "wallet";
 import { getAccountsAttempt, getStakeInfoAttempt,
   getTicketPriceAttempt, getNetworkAttempt } from "./ClientActions";
 import { reverseHash } from "../helpers/byteActions";
 import { GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_COINBASE, GETTRANSACTIONS_PROGRESS_TICKET, GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE } from "./ClientActions";
 import { UPDATETIMESINCEBLOCK } from "./ClientActions";
+import { TransactionNotificationsRequest } from "middleware/walletrpc/api_pb";
+import { transactionNtfs } from "middleware/grpc/client";
 
 export const TRANSACTIONNTFNS_START = "TRANSACTIONNTFNS_START";
 export const TRANSACTIONNTFNS_FAILED = "TRANSACTIONNTFNS_FAILED";
@@ -26,7 +27,7 @@ function transactionNtfnsData(response) {
       if (currentHeight > neededBlocks) {
         const attachedBlocks = response.getAttachedBlocksList();
         var lastBlockTimestamp = attachedBlocks[attachedBlocks.length-1].getTimestamp();
-        var recentBlockTime = new Date(recentBlockTimestamp*1000);
+        var recentBlockTime = recentBlockTimestamp ? new Date(recentBlockTimestamp*1000) : new Date(lastBlockTimestamp*1000);
         var seconds = Math.floor((new Date() - recentBlockTime) / 1000);
 
         if (lastBlockTimestamp !== recentBlockTimestamp) {
@@ -177,25 +178,18 @@ function transactionNtfnsData(response) {
 }
 
 export const transactionNtfnsStart = () => (dispatch, getState) => {
+  var request = new TransactionNotificationsRequest();
   dispatch({ type: TRANSACTIONNTFNS_START });
-  return getTransactionNotifications(sel.walletService(getState()))
-    .then(data => dispatch(transactionNtfnsData(data)));
+  const { walletService } = getState().grpc;
+  transactionNtfs(walletService, request,
+    function(data) {
+      dispatch(transactionNtfnsData(data));
+    }
+  );
 };
 
 export const transactionNtfnsEnd = () => (dispatch) =>
   dispatch({ request: {}, type: TRANSACTIONNTFNS_END });
 
-export const ACCOUNTNTFNS_START = "ACCOUNTNTFNS_START";
-export const ACCOUNTNTFNS_FAILED = "ACCOUNTNTFNS_FAILED";
-export const ACCOUNTNTFNS_DATA = "ACCOUNTNTFNS_DATA";
-export const ACCOUNTNTFNS_END = "ACCOUNTNTFNS_END";
-
-export const accountNtfnsStart = () => (dispatch, getState) => {
-  dispatch({ type: ACCOUNTNTFNS_START });
-  return getAccountNotifications(sel.walletService(getState()))
-    .then(response => dispatch({ response, type: ACCOUNTNTFNS_DATA }));
-};
-
-export const accountNtfnsEnd = () => (dispatch) => dispatch({ type: ACCOUNTNTFNS_END });
 export const CLEARUNMINEDMESSAGE = "CLEARUNMINEDMESSAGE";
 export const clearNewUnminedMessage = () => ({ type: CLEARUNMINEDMESSAGE });
