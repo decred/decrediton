@@ -58,31 +58,44 @@ export const getTransactions = (walletService, startBlockHeight,
     request.setEndingBlockHeight(endBlockHeight);
     request.setMaximumTransactionCount(maximumBlockCount);
 
-    var found = [];
-    var getTx = walletService.getTransactions(request);
+    var foundMined = [];
+    var foundUnmined = [];
 
+    const unminedBlock = {
+      getTimestamp() { return null; },
+      getHeight() { return -1; },
+      getHash() { return null; }
+    };
+
+    const formatTx = (block, tx, index) => ({
+      timestamp: block.getTimestamp(),
+      height: block.getHeight(),
+      blockHash: block.getHash(),
+      index: index,
+      type: tx.getTransactionType(),
+      hash: tx.getHash(),
+      tx: tx
+    });
+
+    let getTx = walletService.getTransactions(request);
     getTx.on("data", (response) => {
-      var minedBlocks = response.getMinedTransactions();
-      for (var i = 0; i < minedBlocks.getTransactionsList().length; i++) {
-        var newHeight = response.getMinedTransactions().getHeight();
-        var t = minedBlocks.getTransactionsList()[i];
-        var tx = {
-          timestamp: response.getMinedTransactions().getTimestamp(),
-          tx: t,
-          height: newHeight,
-          index: i,
-          hash: t.getHash(),
-          blockHash: response.getMinedTransactions().getHash(),
-          type: t.getTransactionType(),
-        };
-        found.push(tx);
+      let minedBlock = response.getMinedTransactions();
+      if (minedBlock) {
+        minedBlock
+          .getTransactionsList()
+          .map((v, i) => formatTx(minedBlock, v, i))
+          .forEach(v => { foundMined.push(v); });
       }
 
-      // TODO: unmined
-      //dispatch({ mined, type: GETTRANSACTIONS_PROGRESS});
+      let unmined = response.getUnminedTransactionsList();
+      if (unmined) {
+        unmined
+          .map((v, i) => formatTx(unminedBlock, v, i))
+          .forEach(v => foundUnmined.push(v));
+      }
     });
     getTx.on("end", () => {
-      resolve(found);
+      resolve({mined: foundMined, unmined: foundUnmined});
     });
     getTx.on("error", (err) => {
       reject(err);

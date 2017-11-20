@@ -305,11 +305,22 @@ export const getTransactions = () => async (dispatch, getState) => {
   }
   dispatch({ type: GETTRANSACTIONS_ATTEMPT });
 
+  // Amount of transactions to obtain at each walletService.getTransactions request (a "page")
   const pageCount = maximumTransactionCount;
-  var filtered = [];
-  var startRequestHeight, endRequestHeight;
 
+  // List of transactions found after filtering (this is what will become the
+  // new grp.transactions state)
+  var filtered = [];
+
+  // first, request unmined transactions. They always come first in decrediton.
+  let { unmined } = await walletGetTransactions(walletService, -1, -1, 0);
+  let unminedFiltered = filterTransactions(unmined, transactionsFilter);
+
+  // now, request a batch of mined transactions until `maximumTransactionCount`
+  // transactions have been obtained (after filtering)
   while (!noMoreTransactions && (filtered.length < maximumTransactionCount)) {
+    let startRequestHeight, endRequestHeight;
+
     if ( transactionsFilter.listDirection === "desc" ) {
       startRequestHeight = lastTransaction ? lastTransaction.height -1 : getAccountsResponse.getCurrentBlockHeight();
       endRequestHeight = 1;
@@ -319,11 +330,11 @@ export const getTransactions = () => async (dispatch, getState) => {
     }
 
     try {
-      var found = await walletGetTransactions(walletService,
+      let { mined } = await walletGetTransactions(walletService,
         startRequestHeight, endRequestHeight, pageCount);
-      noMoreTransactions = found.length === 0;
-      lastTransaction = found.length ? found[found.length -1] : lastTransaction;
-      var foundFiltered = filterTransactions(found, transactionsFilter);
+      noMoreTransactions = mined.length === 0;
+      lastTransaction = mined.length ? mined[mined.length -1] : lastTransaction;
+      let foundFiltered = filterTransactions(mined, transactionsFilter);
       filtered = [...filtered, ...foundFiltered];
     } catch (error) {
       dispatch({ type: GETTRANSACTIONS_FAILED, error});
@@ -331,7 +342,11 @@ export const getTransactions = () => async (dispatch, getState) => {
     }
   }
 
-  const updated = [...transactions, ...filtered];
+  // get only the mined transactions that were previously added, as we always
+  // request an update on unmined transactions
+  const oldMined = transactions.filter(v => v.height > -1);
+
+  const updated = [...unminedFiltered, ...oldMined, ...filtered];
 
   dispatch({ transactions: updated, noMoreTransactions,
     lastTransaction, type: GETTRANSACTIONS_COMPLETE});

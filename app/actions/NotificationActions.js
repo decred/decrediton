@@ -18,6 +18,7 @@ export const TRANSACTIONNTFNS_END = "TRANSACTIONNTFNS_END";
 
 function transactionNtfnsData(response) {
   return (dispatch, getState) => {
+    console.log("transactionNtfnsData", response);
     const { neededBlocks } = getState().walletLoader;
     const { unmined } = getState().notifications;
     var currentHeight = 0;
