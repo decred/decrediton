@@ -290,56 +290,52 @@ function filterTransactions(transactions, filter) {
 //
 // When no more transactions are available given the current filter,
 // `grpc.noMoreTransactions` is set to true.
-export function getTransactions() {
-  return (dispatch, getState) => {
-    const { getAccountsResponse, getTransactionsRequestAttempt,
-      transactionsFilter, walletService, transactions,
-      maximumTransactionCount } = getState().grpc;
-    let { noMoreTransactions, lastTransaction } = getState().grpc;
-    if (getTransactionsRequestAttempt || noMoreTransactions) return;
+export const getTransactions = () => async (dispatch, getState) => {
+  const { getAccountsResponse, getTransactionsRequestAttempt,
+    transactionsFilter, walletService, transactions,
+    maximumTransactionCount } = getState().grpc;
+  let { noMoreTransactions, lastTransaction } = getState().grpc;
+  if (getTransactionsRequestAttempt || noMoreTransactions) return;
 
-    // Check to make sure getAccountsResponse (which has current block height) is available
-    if (getAccountsResponse === null) {
-      // Wait a little then re-dispatch this call since we have no starting height yet
-      setTimeout(() => { dispatch(getTransactions()); }, 1000);
+  // Check to make sure getAccountsResponse (which has current block height) is available
+  if (getAccountsResponse === null) {
+    // Wait a little then re-dispatch this call since we have no starting height yet
+    setTimeout(() => { dispatch(getTransactions()); }, 1000);
+    return;
+  }
+  dispatch({ type: GETTRANSACTIONS_ATTEMPT });
+
+  const pageCount = maximumTransactionCount;
+  var filtered = [];
+  var startRequestHeight, endRequestHeight;
+
+  while (!noMoreTransactions && (filtered.length < maximumTransactionCount)) {
+    if ( transactionsFilter.listDirection === "desc" ) {
+      startRequestHeight = lastTransaction ? lastTransaction.height -1 : getAccountsResponse.getCurrentBlockHeight();
+      endRequestHeight = 1;
+    } else {
+      startRequestHeight = lastTransaction ? lastTransaction.height +1 : 1;
+      endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
+    }
+
+    try {
+      var found = await walletGetTransactions(walletService,
+        startRequestHeight, endRequestHeight, pageCount);
+      noMoreTransactions = found.length === 0;
+      lastTransaction = found.length ? found[found.length -1] : lastTransaction;
+      var foundFiltered = filterTransactions(found, transactionsFilter);
+      filtered = [...filtered, ...foundFiltered];
+    } catch (error) {
+      dispatch({ type: GETTRANSACTIONS_FAILED, error});
       return;
     }
-    dispatch({ type: GETTRANSACTIONS_ATTEMPT });
+  }
 
-    (async function () {
-      const pageCount = maximumTransactionCount;
-      var filtered = [];
-      var startRequestHeight, endRequestHeight;
+  const updated = [...transactions, ...filtered];
 
-      while (!noMoreTransactions && (filtered.length < maximumTransactionCount)) {
-        if ( transactionsFilter.listDirection === "desc" ) {
-          startRequestHeight = lastTransaction ? lastTransaction.height -1 : getAccountsResponse.getCurrentBlockHeight();
-          endRequestHeight = 1;
-        } else {
-          startRequestHeight = lastTransaction ? lastTransaction.height +1 : 1;
-          endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
-        }
-
-        try {
-          var found = await walletGetTransactions(walletService,
-            startRequestHeight, endRequestHeight, pageCount);
-          noMoreTransactions = found.length === 0;
-          lastTransaction = found.length ? found[found.length -1] : lastTransaction;
-          var foundFiltered = filterTransactions(found, transactionsFilter);
-          filtered = [...filtered, ...foundFiltered];
-        } catch (error) {
-          dispatch({ type: GETTRANSACTIONS_FAILED, error});
-          return;
-        }
-      }
-
-      const updated = [...transactions, ...filtered];
-
-      dispatch({ transactions: updated, noMoreTransactions,
-        lastTransaction, type: GETTRANSACTIONS_COMPLETE});
-    })();
-  };
-}
+  dispatch({ transactions: updated, noMoreTransactions,
+    lastTransaction, type: GETTRANSACTIONS_COMPLETE});
+};
 
 export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
 export function changeTransactionsFilter(newFilter) {
