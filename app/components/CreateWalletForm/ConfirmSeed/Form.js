@@ -3,6 +3,7 @@ import SeedEntry from "./SeedEntry";
 import { FormattedMessage as T } from "react-intl";
 import "style/CreateWalletForm.less";
 import { Tooltip } from "shared";
+import SeedInfoModal from "SeedInfoModal";
 
 class ConfirmSeedForm extends React.Component{
 
@@ -21,9 +22,10 @@ class ConfirmSeedForm extends React.Component{
   }
 
   render(){
-    const { remainingSeedWords, setSeedWords, isMatch, seedError, isEmpty, showSeedInformation, isShowingSeedInformation } = this.props;
+    const { remainingSeedWords, setSeedWords, isMatch, seedError, isEmpty, showSeedInformation, hideSeedInformation, isShowingSeedInformation } = this.props;
     return (
-      isShowingSeedInformation ? <div></div> :
+      isShowingSeedInformation ?
+      <SeedInfoModal closeModal={hideSeedInformation} />  :
       <div className="confirm-seed">
         <div className="create-wallet-label">
           <div className="confirm-seed-label-text">

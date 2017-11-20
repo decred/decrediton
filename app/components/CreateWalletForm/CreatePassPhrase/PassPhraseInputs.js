@@ -2,6 +2,7 @@ import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
 import "style/CreateWalletForm.less";
 import { Tooltip } from "shared";
+import PassphraseInfoModal from "PassphraseInfoModal";
 
 const messages = defineMessages({
   passphrasePlaceholder: {
@@ -27,11 +28,12 @@ const PassPhraseInputs = ({
   setPassPhraseVerification,
   intl,
   showPassphraseInformation,
+  hidePassphraseInformation,
   isShowingPassphraseInformation,
   onKeyDown
 }) => (
     isShowingPassphraseInformation ?
-    <div></div> :
+    <PassphraseInfoModal closeModal={hidePassphraseInformation} /> :
     <Aux>
       <div className="content-new-seed-priv-pass">
         <div className="create-wallet-label">{passPhraseLabel}:
