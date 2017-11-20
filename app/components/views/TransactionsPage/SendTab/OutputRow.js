@@ -21,9 +21,7 @@ const SendOutputRow = ({
   amountStr,
   addressError,
   amountError,
-  onAttemptConstructTransaction,
   onAddOutput,
-  hastAttemptedConstruct,
   getOnRemoveOutput,
   getOnChangeOutputDestination,
   getOnChangeOutputAmount,
@@ -38,11 +36,13 @@ const SendOutputRow = ({
       <div className="send-address">
         <div className="send-input-form">
           <AddressInput
+            showErrors={true}
+            invalid={!!addressError}
+            invalidMessage={addressError}
             value={destination}
             className="send-address-hash-to"
             placeholder={intl.formatMessage(messages.destinationAddrPlaceholder)}
             onChange={compose(getOnChangeOutputDestination(index), e => e.target.value)}
-            onBlur={onAttemptConstructTransaction}
           />
         </div>
         {index === 0 && !isSendAll ? (
@@ -59,28 +59,25 @@ const SendOutputRow = ({
         </div>
         <div className="send-address-amount-sum-and-currency">
           <DcrInput
+            showErrors={true}
             hidden={!isSendAll}
             className="send-address-input-amount"
             disabled={true}
             value={totalSpent !== null ? totalSpent / unitDivisor : ""}
           />
           <DcrInput
+            showErrors={true}
+            invalid={!!amountError}
+            invalidMessage={amountError}
             hidden={isSendAll}
             value={amountStr}
             className="send-address-input-amount"
             placeholder={intl.formatMessage(messages.amountPlaceholder)}
             onChange={compose(getOnChangeOutputAmount(index), e => e.target.value)}
-            onBlur={onAttemptConstructTransaction}
           />
         </div>
       </div>
     </div>
-    {hastAttemptedConstruct ? (
-      <div className="send-output-error-row">
-        <div className="send-output-address-error">{addressError}</div>
-        <div className="send-output-amount-error">{amountError}</div>
-      </div>
-    ) : null}
   </div>
 );
 

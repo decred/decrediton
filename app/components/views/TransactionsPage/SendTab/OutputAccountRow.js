@@ -14,8 +14,6 @@ const SendOutputAccountRow = ({
   index,
   amountStr,
   amountError,
-  onAttemptConstructTransaction,
-  hastAttemptedConstruct,
   getOnChangeOutputAmount,
   isSendAll,
   totalSpent,
@@ -35,6 +33,7 @@ const SendOutputAccountRow = ({
         <div className="send-amount-label"><T id="send.amount" m="Amount" />:</div>
         <div className="send-address-amount-sum-and-currency">
           <DcrInput
+            showErrors={true}
             hidden={!isSendAll}
             className="send-address-input-amount"
             disabled={true}
@@ -42,22 +41,19 @@ const SendOutputAccountRow = ({
             value={totalSpent !== null ? totalSpent / unitDivisor : ""}
           />
           <DcrInput
+            showErrors={true}
+            invalid={!!amountError}
+            invalidMessage={amountError}
             hidden={isSendAll}
             value={amountStr}
             type="text"
             className="send-address-input-amount"
             placeholder={intl.formatMessage(messages.amountPlaceholder)}
             onChange={compose(getOnChangeOutputAmount(index), e => e.target.value)}
-            onBlur={onAttemptConstructTransaction}
           />
         </div>
       </div>
     </div>
-    {hastAttemptedConstruct ? (
-      <div className="send-output-error-row">
-        <div className="send-output-amount-error">{amountError}</div>
-      </div>
-    ) : null}
   </div>
 );
 

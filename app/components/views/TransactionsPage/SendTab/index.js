@@ -172,7 +172,7 @@ class Send extends React.Component {
   getOnChangeOutputDestination(key) {
     return destination => this.setState({
       outputs: this.state.outputs.map(o => (o.key === key) ? { ...o, destination } : o)
-    });
+    }, this.onAttemptConstructTransaction);
   }
 
   getOnChangeOutputAmount(key) {
@@ -180,7 +180,7 @@ class Send extends React.Component {
       outputs: this.state.outputs.map(o => (o.key === key) ? {
         ...o, amountStr: restrictToStdDecimalNumber(amountStr)
       } : o)
-    });
+    }, this.onAttemptConstructTransaction);
   }
 
   getIsInvalid() {
