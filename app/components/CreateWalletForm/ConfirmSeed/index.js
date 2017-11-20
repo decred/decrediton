@@ -19,14 +19,14 @@ class ConfirmSeed extends React.Component {
   }
 
   render() {
-    const { setSeedWords } = this;
+    const { setSeedWords, showSeedInformation } = this;
     const remainingSeedWords = this.getRemainingSeedWords();
     const isMatch = this.isMatch();
     const isEmpty = this.state.seedWords.length <= 1; // Weird errors with one word, better to count as empty
     const seedError = isEmpty ? null : this.state.seedError;
-
+    const { isShowingSeedInformation } = this.state;
     return (
-      <ConfirmSeedForm {...{ remainingSeedWords, setSeedWords, isMatch, seedError, isEmpty }} />
+      <ConfirmSeedForm {...{ remainingSeedWords, setSeedWords, isMatch, seedError, isEmpty, showSeedInformation, isShowingSeedInformation }} />
     );
   }
 

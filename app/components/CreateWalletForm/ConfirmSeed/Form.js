@@ -1,7 +1,8 @@
 import React from "react";
 import SeedEntry from "./SeedEntry";
 import { FormattedMessage as T } from "react-intl";
-import "../../../style/CreateWalletForm.less";
+import "style/CreateWalletForm.less";
+import { Tooltip } from "shared";
 
 class ConfirmSeedForm extends React.Component{
 
@@ -20,12 +21,16 @@ class ConfirmSeedForm extends React.Component{
   }
 
   render(){
-    const { remainingSeedWords, setSeedWords, isMatch, seedError, isEmpty } = this.props;
+    const { remainingSeedWords, setSeedWords, isMatch, seedError, isEmpty, showSeedInformation, isShowingSeedInformation } = this.props;
     return (
+      isShowingSeedInformation ? <div></div> :
       <div className="confirm-seed">
         <div className="create-wallet-label">
           <div className="confirm-seed-label-text">
             <T id="confirmSeed.label" m="Confirm Seed" />:
+            <Tooltip text={<T id="confirmSeed.seedInformation" m="Seed information" />}>
+              <a className="purchase-tickets-info-button" onClick={showSeedInformation} />
+            </Tooltip>
           </div>
           <div className="confirm-seed-label-remaining-words">
             <T id="confirmSeed.wordsRemaining" m="{remainingSeedWords, plural, one {one word remaining} other {# words remaining} }"

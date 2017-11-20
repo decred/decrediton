@@ -1,6 +1,7 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
 import "style/CreateWalletForm.less";
+import { Tooltip } from "shared";
 
 const messages = defineMessages({
   passphrasePlaceholder: {
@@ -9,13 +10,13 @@ const messages = defineMessages({
   },
   verifyPassphrasePlaceholder: {
     id: "createWallet.verifyPassphrasePlaceholder",
-    defaultMessage: "Private Passphrase"
+    defaultMessage: "Confirm Private Passphrase"
   }
 });
 
 const PassPhraseInputs = ({
-  passPhraseLabel = <T id="createWallet.passhraseInput.label" m="Encrypt Wallet" />,
-  passPhraseVerificationLabel = <T id="createWallet.passphraseInput.verifyLabel" m="Verify" />,
+  passPhraseLabel = <T id="createWallet.passhraseInput.label" m="Create wallet private passphrase" />,
+  passPhraseVerificationLabel = <T id="createWallet.passphraseInput.verifyLabel" m="Confirm private passphrase" />,
   blankPassPhraseError = <T id="createWallet.passphraseInput.errors.noPassPhrase" m="*Please enter your private passphrase" />,
   passPhraseVerificationError = <T id="createWallet.passphraseInput.errors.noMatch" m="*Passwords do not match" />,
   passPhrase,
@@ -25,46 +26,52 @@ const PassPhraseInputs = ({
   setPassPhrase,
   setPassPhraseVerification,
   intl,
+  showPassphraseInformation,
+  isShowingPassphraseInformation,
   onKeyDown
 }) => (
-  <div>
-    <div className="content-new-seed-priv-pass">
-      <div className="create-wallet-label">{passPhraseLabel}:</div>
-      <div className="create-wallet-field">
-        <div className="input-form">
-          <form className="input-form">
-            <PasswordInput
-              className="input-private-password"
-              placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
-              value={passPhrase}
-              onKeyDown={onKeyDown}
-              onChange={(e) => setPassPhrase(e.target.value)}
-            />
-          </form>
+    isShowingPassphraseInformation ?
+    <div></div> :
+    <Aux>
+      <div className="content-new-seed-priv-pass">
+        <div className="create-wallet-label">{passPhraseLabel}:
+          <Tooltip text={<T id="confirmSeed.seedInformation" m="Private passphrase information" />}>
+            <a className="purchase-tickets-info-button" onClick={showPassphraseInformation} />
+          </Tooltip>
         </div>
-        {isBlank ? <div className="input-form-error">{blankPassPhraseError}</div> : null}
-      </div>
-    </div>
-    <div className="content-new-seed-priv-pass">
-      <div className="create-wallet-label">{passPhraseVerificationLabel}:</div>
-      <div className="create-wallet-field">
-        <div className="input-form">
-          <form className="input-form">
-            <PasswordInput
-              className="input-private-password"
-              placeholder={intl.formatMessage(messages.verifyPassphrasePlaceholder)}
-              value={passPhraseVerification}
-              onKeyDown={onKeyDown}
-              onChange={(e) => setPassPhraseVerification(e.target.value)}
-            />
-          </form>
+        <div className="create-wallet-field">
+          <div className="input-form">
+            <form className="input-form">
+              <PasswordInput
+                className="input-private-password"
+                placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
+                value={passPhrase}
+                onKeyDown={onKeyDown}
+                onChange={(e) => setPassPhrase(e.target.value)}
+              />
+            </form>
+          </div>
+          {isBlank ? <div className="input-form-error">{blankPassPhraseError}</div> : null}
         </div>
-        {(!isBlank && !isMatching) ? (
-          <div className="input-form-error">{passPhraseVerificationError}</div>
-        ) : null}
       </div>
-    </div>
-  </div>
+      <div className="content-new-seed-priv-pass">
+        <div className="create-wallet-label">{passPhraseVerificationLabel}:</div>
+        <div className="create-wallet-field">
+          <div className="input-form">
+            <form className="input-form">
+              <PasswordInput
+                className="input-private-password"
+                placeholder={intl.formatMessage(messages.verifyPassphrasePlaceholder)}
+                value={passPhraseVerification}
+                onKeyDown={onKeyDown}
+                onChange={(e) => setPassPhraseVerification(e.target.value)}
+              />
+            </form>
+          </div>
+          {(!isBlank && !isMatching) && <div className="input-form-error">{passPhraseVerificationError}</div>}
+        </div>
+      </div>
+    </Aux>
 );
 
 export default injectIntl(PassPhraseInputs);
