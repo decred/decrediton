@@ -12,8 +12,8 @@ class SeedInfoModal extends React.Component {
         </div>
         <div className="purchase-tickets-column-double">
           {this.renderSection(
-            <T id="seedEntry.info.header" m="Your wallet's seed:" />,
-            <T id="seedEntry.info.message" m="Your seed is what defines everything about your particular wallet.  Using this seed will always" />
+            <T id="seedEntry.info.header" m="Wallet Seed" />,
+            <T id="seedEntry.info.message" m="This 33 word seed is what is used to derive everything about your particular wallet.  With this seed you can regenerate this wallet from anywhere in the world.  While this does offer flexibility and easy back ups, it also means that this seed should be handled with the utmost security.  We recommend only having seeds written by hand in the most secure location you have. " />
           )}
         </div>
       </div>

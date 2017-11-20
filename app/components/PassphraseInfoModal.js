@@ -12,8 +12,8 @@ class PassphraseInfoModal extends React.Component {
         </div>
         <div className="purchase-tickets-column-double">
           {this.renderSection(
-            <T id="passphrase.info.header" m="Wallet's private passphrase" />,
-            <T id="passphrase.info.message" m="This passphrase should be " />
+            <T id="passphrase.info.header" m="Private passphrase" />,
+            <T id="passphrase.info.message" m="This passphrase ensures that no funds may be spent from this wallet without it.  It is used to encrypt your private keys associated with your addresses.  These private keys are required to sign transactions that spend from the addresses.  Make sure to use a high-security passphrase and keep this passphrase in a secure place.   With your wallet file and this private passphrase an attacker would have full control over any funds associated with this wallet." />
           )}
         </div>
       </div>
