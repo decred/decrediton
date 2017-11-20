@@ -11,6 +11,7 @@ const Page = ({
                 totalPages,
                 onChangeSelectedType,
                 onPageChanged,
+                onLoadMoreTransactions,
               }) => (
   <div className="tab-card">
     <div className="history-content-title">
@@ -20,10 +21,10 @@ const Page = ({
       <div className="history-select-tx-types-area">
         <div className="history-select-tx-types">
           <EyeFilterMenu
-            valueKey="value" labelKey="label"
+            valueKey="value"
+            labelKey="label"
             options={txTypes}
             onChange={onChangeSelectedType}
-            labelKey="label"
           />
         </div>
       </div>
@@ -35,6 +36,7 @@ const Page = ({
         />
       ) : <p><T id="history.noTransactions" m="No transactions" /></p>}
     </div>
+    <button onClick={onLoadMoreTransactions}>MOAH TRANSACTIONS</button>
     <div className="history-content-title-buttons-area">
       <Paginator {...{totalPages, currentPage, onPageChanged}} />
     </div>
