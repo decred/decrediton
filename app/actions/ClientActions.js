@@ -292,9 +292,8 @@ function filterTransactions(transactions, filter) {
 // `grpc.noMoreTransactions` is set to true.
 export const getTransactions = () => async (dispatch, getState) => {
   const { getAccountsResponse, getTransactionsRequestAttempt,
-    transactionsFilter, walletService, transactions,
-    maximumTransactionCount } = getState().grpc;
-  let { noMoreTransactions, lastTransaction } = getState().grpc;
+    transactionsFilter, walletService, maximumTransactionCount } = getState().grpc;
+  let { noMoreTransactions, lastTransaction, minedTransactions } = getState().grpc;
   if (getTransactionsRequestAttempt || noMoreTransactions) return;
 
   // Check to make sure getAccountsResponse (which has current block height) is available
@@ -308,13 +307,12 @@ export const getTransactions = () => async (dispatch, getState) => {
   // Amount of transactions to obtain at each walletService.getTransactions request (a "page")
   const pageCount = maximumTransactionCount;
 
-  // List of transactions found after filtering (this is what will become the
-  // new grp.transactions state)
-  var filtered = [];
+  // List of transactions found after filtering
+  let filtered = [];
 
   // first, request unmined transactions. They always come first in decrediton.
   let { unmined } = await walletGetTransactions(walletService, -1, -1, 0);
-  let unminedFiltered = filterTransactions(unmined, transactionsFilter);
+  let unminedTransactions = filterTransactions(unmined, transactionsFilter);
 
   // now, request a batch of mined transactions until `maximumTransactionCount`
   // transactions have been obtained (after filtering)
@@ -334,22 +332,46 @@ export const getTransactions = () => async (dispatch, getState) => {
         startRequestHeight, endRequestHeight, pageCount);
       noMoreTransactions = mined.length === 0;
       lastTransaction = mined.length ? mined[mined.length -1] : lastTransaction;
-      let foundFiltered = filterTransactions(mined, transactionsFilter);
-      filtered = [...filtered, ...foundFiltered];
+      filterTransactions(mined, transactionsFilter)
+        .forEach(v => filtered.push(v));
     } catch (error) {
       dispatch({ type: GETTRANSACTIONS_FAILED, error});
       return;
     }
   }
 
-  // get only the mined transactions that were previously added, as we always
-  // request an update on unmined transactions
-  const oldMined = transactions.filter(v => v.height > -1);
+  minedTransactions = [...minedTransactions, ...filtered];
 
-  const updated = [...unminedFiltered, ...oldMined, ...filtered];
+  dispatch({ unminedTransactions, minedTransactions,
+    noMoreTransactions, lastTransaction, type: GETTRANSACTIONS_COMPLETE});
+};
 
-  dispatch({ transactions: updated, noMoreTransactions,
-    lastTransaction, type: GETTRANSACTIONS_COMPLETE});
+export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
+export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
+  console.log("newTransactionsReceived", newlyMinedTransactions, newlyUnminedTransactions);
+
+  let { unminedTransactions, minedTransactions } = getState().grpc;
+  const { transactionsFilter } = getState().grpc;
+
+  const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
+  const newlyUnminedMap = newlyUnminedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
+
+  unminedTransactions = filterTransactions([
+    ...newlyUnminedTransactions,
+    ...unminedTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
+  ], transactionsFilter);
+
+  // TODO: filter newlyMinedTransactions against minedTransactions if this
+  // starts generating a duplicated key error
+
+  if (transactionsFilter.listDirection === "desc") {
+    minedTransactions = [...newlyMinedTransactions, ...minedTransactions];
+  } else {
+    minedTransactions = [...minedTransactions, ...newlyMinedTransactions];
+  }
+
+  dispatch({unminedTransactions, minedTransactions, newlyUnminedTransactions,
+    newlyMinedTransactions, type: NEW_TRANSACTIONS_RECEIVED});
 };
 
 export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";

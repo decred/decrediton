@@ -50,6 +50,34 @@ export const decodeTransaction = (decodeMessageService, hexTx) =>
     });
   });
 
+// UNMINED_BLOCK_TEMPLATE is a helper const that defines what an unmined block
+// looks like (null timestamp, height == -1, etc).
+export const UNMINED_BLOCK_TEMPLATE = {
+  getTimestamp() { return null; },
+  getHeight() { return -1; },
+  getHash() { return null; }
+};
+
+// formatTransaction converts a transaction from the structure of a grpc reply
+// into a structure more amenable to use within decrediton. It stores the block
+// information of when the transaction was mined into the transaction.
+// Index is the index of the transaction within the block.
+export function formatTransaction(block, transaction, index) {
+  return {
+    timestamp: block.getTimestamp(),
+    height: block.getHeight(),
+    blockHash: block.getHash(),
+    index: index,
+    type: transaction.getTransactionType(),
+    hash: transaction.getHash(),
+    tx: transaction
+  };
+}
+
+export function formatUnminedTransaction(transaction, index) {
+  return formatTransaction(UNMINED_BLOCK_TEMPLATE, transaction, index);
+}
+
 export const getTransactions = (walletService, startBlockHeight,
   endBlockHeight, maximumBlockCount) =>
   new Promise((resolve, reject) => {
@@ -61,36 +89,20 @@ export const getTransactions = (walletService, startBlockHeight,
     var foundMined = [];
     var foundUnmined = [];
 
-    const unminedBlock = {
-      getTimestamp() { return null; },
-      getHeight() { return -1; },
-      getHash() { return null; }
-    };
-
-    const formatTx = (block, tx, index) => ({
-      timestamp: block.getTimestamp(),
-      height: block.getHeight(),
-      blockHash: block.getHash(),
-      index: index,
-      type: tx.getTransactionType(),
-      hash: tx.getHash(),
-      tx: tx
-    });
-
     let getTx = walletService.getTransactions(request);
     getTx.on("data", (response) => {
       let minedBlock = response.getMinedTransactions();
       if (minedBlock) {
         minedBlock
           .getTransactionsList()
-          .map((v, i) => formatTx(minedBlock, v, i))
+          .map((v, i) => formatTransaction(minedBlock, v, i))
           .forEach(v => { foundMined.push(v); });
       }
 
       let unmined = response.getUnminedTransactionsList();
       if (unmined) {
         unmined
-          .map((v, i) => formatTx(unminedBlock, v, i))
+          .map((v, i) => formatUnminedTransaction(v, i))
           .forEach(v => foundUnmined.push(v));
       }
     });

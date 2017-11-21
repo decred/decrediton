@@ -160,7 +160,9 @@ var initialState = {
     transactionDetails: null,
 
     // GetTransactions
-    transactions: [], // all transactions obtained
+    minedTransactions: Array(),
+    unminedTransactions: Array(),
+    transactions: Array(), // unmined + mined. Calculated on the grpc reducer.
     maximumTransactionCount: 2,
     noMoreTransactions: false,
     transactionsFilter: {
@@ -178,7 +180,6 @@ var initialState = {
     getTransactionsError: null,
     getTransactionsRequestAttempt: false,
     getTransactionsResponse: null,
-    unminedTransactions: null,
 
     // GetTickets
     getTicketsError: null,
