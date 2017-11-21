@@ -44,7 +44,7 @@ const Modal =({
       </div>
       <div className="passphrase-modal-toolbar">
         <KeyBlueButton className="passphrase-modal-save-button" onClick={onSubmit}>
-          <T id="passphraseModal.save" m="save" />
+          <T id="passphraseModal.confirm" m="confirm" />
         </KeyBlueButton>
         <SlateGrayButton className="passphrase-modal-cancel-button" onClick={onCancel}>
           <T id="passphraseModal.cancel" m="cancel" />
