@@ -1,5 +1,8 @@
 import { defineMessages } from "react-intl";
 import {
+  DECODERAWTXS_FAILED
+} from "../actions/DecodeMessageActions";
+import {
   PUBLISHTX_FAILED,
   SIGNTX_FAILED, CONSTRUCTTX_FAILED,
   PURCHASETICKETS_SUCCESS, PURCHASETICKETS_FAILED,
@@ -116,6 +119,10 @@ const messages = defineMessages({
     id: "settings.errors.changePassphraseFailed",
     defaultMessage: "{originalError}"
   },
+  DECODERAWTXS_FAILED: {
+    id: "decodeRawTx.errors.decodeFailed",
+    defaultMessage: "{originalError}"
+  }
 });
 
 export default function snackbar(state = {}, action) {
@@ -238,6 +245,12 @@ export default function snackbar(state = {}, action) {
     values = { originalError: String(action.error) };
     type = "Error";
     break;
+
+  case DECODERAWTXS_FAILED:
+    values = { originalError: String(action.error) };
+    type = "Error";
+    break;
+
   }
 
   const newMessages = state.messages ? state.messages.slice() : Array();

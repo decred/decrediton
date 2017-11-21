@@ -16,6 +16,7 @@ export const getDecodeMessageServiceAttempt = () => (dispatch, getState) => {
 };
 
 export const DECODERAWTXS_SUCCESS = "DECODERAWTXS_SUCCESS";
+export const DECODERAWTXS_FAILED = "DECODERAWTXS_FAILED";
 
 // decodeRawTransaction requests decodification of a list of hex transactions.
 // Dispatches the event when all transactions have been decoded. Better
@@ -36,7 +37,7 @@ export const decodeRawTransactions = (hexTxs) => (dispatch, getState) => {
   Promise
     .all(hexTxs.map(hex => decodeTransaction(decodeMessageService, hex)))
     .then(resolved)
-    .catch(error => console.log("DecodeRawTx Error", error));
+    .catch(error => dispatch({error, type: DECODERAWTXS_FAILED}));
 };
 
 // decodeRawTransaction requests decodification of a raw, hex-encoded transaction.
