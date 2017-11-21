@@ -79,7 +79,7 @@ const SendPage = ({
                   amountError={getAmountError(index)}
                 /> ))
               : <OutputAccountRow
-                {...{  index: 0, ...props, isSendAll, totalSpent, onChangeOutputAccount }}
+                {...{  index: 0, ...props, ...outputs[0], isSendAll, totalSpent, onChangeOutputAccount }}
                 amountError={getAmountError(0)} />
             }
           </div>

@@ -37,7 +37,6 @@ const SendOutputAccountRow = ({
             hidden={!isSendAll}
             className="send-address-input-amount"
             disabled={true}
-            type="text"
             value={totalSpent !== null ? totalSpent / unitDivisor : ""}
           />
           <DcrInput
@@ -46,7 +45,6 @@ const SendOutputAccountRow = ({
             invalidMessage={amountError}
             hidden={isSendAll}
             value={amountStr}
-            type="text"
             className="send-address-input-amount"
             placeholder={intl.formatMessage(messages.amountPlaceholder)}
             onChange={compose(getOnChangeOutputAmount(index), e => e.target.value)}
