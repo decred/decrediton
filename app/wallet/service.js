@@ -3,6 +3,7 @@ import * as client from "middleware/grpc/client";
 import {
   NextAddressRequest,
   DecodeRawTransactionRequest,
+  ValidateAddressRequest,
 } from "middleware/walletrpc/api_pb";
 
 const promisify = fn => (...args) => new Promise((ok, fail) => fn(...args,
@@ -26,6 +27,13 @@ export const getNextAddress = (walletService, accountNum) =>
   .then(response => ({
     publicKey: response.getPublicKey()
   }));
+
+export const validateAddress = (walletService, address) =>
+  new Promise((resolve, reject) => {
+    const request = new ValidateAddressRequest();
+    request.setAddress(address);
+    walletService.validateAddress(request, (error, response) => error ? reject(error) : resolve(response));
+  });
 
 export const decodeTransaction = (decodeMessageService, hexTx) =>
   new Promise((resolve, reject) => {

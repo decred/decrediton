@@ -1192,6 +1192,28 @@ function deserialize_walletrpc_TransactionNotificationsResponse(buffer_arg) {
   return api_pb.TransactionNotificationsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_ValidateAddressRequest(arg) {
+  if (!(arg instanceof api_pb.ValidateAddressRequest)) {
+    throw new Error('Expected argument of type walletrpc.ValidateAddressRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_ValidateAddressRequest(buffer_arg) {
+  return api_pb.ValidateAddressRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_ValidateAddressResponse(arg) {
+  if (!(arg instanceof api_pb.ValidateAddressResponse)) {
+    throw new Error('Expected argument of type walletrpc.ValidateAddressResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_ValidateAddressResponse(buffer_arg) {
+  return api_pb.ValidateAddressResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_VerifyMessageRequest(arg) {
   if (!(arg instanceof api_pb.VerifyMessageRequest)) {
     throw new Error('Expected argument of type walletrpc.VerifyMessageRequest');
@@ -1629,6 +1651,17 @@ var WalletServiceService = exports.WalletServiceService = {
     requestDeserialize: deserialize_walletrpc_SignMessageRequest,
     responseSerialize: serialize_walletrpc_SignMessageResponse,
     responseDeserialize: deserialize_walletrpc_SignMessageResponse,
+  },
+  validateAddress: {
+    path: '/walletrpc.WalletService/ValidateAddress',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.ValidateAddressRequest,
+    responseType: api_pb.ValidateAddressResponse,
+    requestSerialize: serialize_walletrpc_ValidateAddressRequest,
+    requestDeserialize: deserialize_walletrpc_ValidateAddressRequest,
+    responseSerialize: serialize_walletrpc_ValidateAddressResponse,
+    responseDeserialize: deserialize_walletrpc_ValidateAddressResponse,
   },
 };
 

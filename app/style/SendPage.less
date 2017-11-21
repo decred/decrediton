@@ -84,6 +84,7 @@
   margin-right: 1em;
   display: inline-block;
   vertical-align: middle;
+  padding-bottom: 2em; // this is to match the padding for the inputs
 }
 
 .send-select-account-area .accounts-button-icon {
@@ -113,6 +114,7 @@
   font-size: 20px;
   width: 3em;
   text-align: right;
+  margin-top: -1em;
 }
 
 .send-address {
@@ -135,6 +137,11 @@
   background-size: 19px;
   background-repeat: no-repeat;
   cursor: pointer;
+  margin-top: -1em;
+}
+
+.send-address .accounts-select {
+  margin-top: -1em;
 }
 
 .send-all-wallet-icon {
@@ -201,6 +208,7 @@
 
   font-size: 20px;
   min-width: 3.5em;
+  margin-top: -1em;
 }
 
 .send-address-amount-sum-and-currency {
@@ -296,25 +304,6 @@
 
   width: 15vw;
   font-family: Inconsolata, monospace;
-}
-
-.send-output-error-row {
-  font-size: 11px;
-}
-
-.send-output-address-error {
-  .inline-block-mixin;
-
-  width: 57%;
-  margin-left: 6em;
-  color: red;
-}
-
-.send-output-amount-error {
-  .inline-block-mixin;
-
-  width: 25%;
-  color: red;
 }
 
 .send-address-hash-to {

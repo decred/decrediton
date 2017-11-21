@@ -170,9 +170,24 @@ class Send extends React.Component {
   }
 
   getOnChangeOutputDestination(key) {
-    return destination => this.setState({
-      outputs: this.state.outputs.map(o => (o.key === key) ? { ...o, destination } : o)
-    });
+    return destination => {
+      let destinationInvalid = false;
+      let updateDestinationState = () => {
+        this.setState({
+          outputs: this.state.outputs.map(o => (o.key === key) ? { ...o, destination, destinationInvalid } : o)
+        }, this.onAttemptConstructTransaction);
+      };
+
+      this.props.validateAddress(destination)
+        .then(resp => {
+          destinationInvalid = !resp.getIsValid();
+          updateDestinationState();
+        })
+        .catch(() => {
+          destinationInvalid = true;
+          updateDestinationState();
+        });
+    };
   }
 
   getOnChangeOutputAmount(key) {
@@ -180,7 +195,7 @@ class Send extends React.Component {
       outputs: this.state.outputs.map(o => (o.key === key) ? {
         ...o, amountStr: restrictToStdDecimalNumber(amountStr)
       } : o)
-    });
+    }, this.onAttemptConstructTransaction);
   }
 
   getIsInvalid() {
@@ -207,13 +222,9 @@ class Send extends React.Component {
     return this.state.isSendSelf;
   }
   getAddressError(key) {
-    // do some more helper address checking here
-    // possibly check for Ds/Dc Ts/Tc and length at the least
-    // later can do full address validtion from dcrutil code
-    // (actually we should do this in selectors once state is moved to redux)
     const { outputs } = this.state;
-    const { destination } = outputs[key];
-    if (!destination) return <T id="send.errors.invalidAddress" m="*Please enter a valid address" />;
+    const { destination, destinationInvalid } = outputs[key];
+    if (!destination || destinationInvalid) return <T id="send.errors.invalidAddress" m="*Please enter a valid address" />;
   }
 
   getAmountError(key) {
