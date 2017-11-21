@@ -7,6 +7,7 @@ import SlateGrayButton from "../SlateGrayButton";
 import "style/TxDetails.less";
 import { tsToDate, addSpacingAroundText } from "helpers";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
+import { reverseHash } from "helpers/byteActions";
 import "style/Fonts.less";
 
 const messages = defineMessages({
@@ -62,17 +63,20 @@ const TxDetails = ({ routes, router,
   if (decodedTransaction) {
     const walletOutputIndices = txOutputs.map(v => v.index);
     const walletInputIndices = txInputs.map(v => v.index);
-    console.log("decoded", walletInputIndices, walletOutputIndices, decodedTransaction);
 
     nonWalletInputs = decodedTransaction.transaction.getInputsList()
       .filter((v, i) => walletInputIndices.indexOf(i) === -1)
-      .map(v => v.toObject());
+      .map(v => ({
+        address: reverseHash(Buffer.from(v.getPreviousTransactionHash()).toString("hex")) + ":" + v.getPreviousTransactionIndex(),
+        amount: v.getAmountIn(), rest: v.toObject() }));
     nonWalletOutputs = decodedTransaction.transaction.getOutputsList()
       .filter((v, i) => walletOutputIndices.indexOf(i) === -1)
-      .map(v => ({ amount: v.getValue() }));
+      .map(v => ({ amount: v.getValue(), rest: v.toObject() }));
+
+    //console.log("decoded", walletInputIndices, walletOutputIndices, decodedTransaction.transaction.toObject());
+    console.log("Non Wallet", "inputs", nonWalletInputs, "outputs", nonWalletOutputs);
+    console.log("Wallet", "inputs", txInputs, "outputs", txOutputs);
   }
-  console.log("xxxx", nonWalletInputs, nonWalletOutputs);
-  console.log("yyyy", txInputs, txOutputs);
 
   return (
     <Aux>
