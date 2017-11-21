@@ -1,6 +1,7 @@
 // @flow
 import * as wallet from "wallet";
 import * as sel from "selectors";
+import { isValidAddress } from "helpers";
 import { getAccountsAttempt, getTransactionInfoAttempt, getStakeInfoAttempt } from "./ClientActions";
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
@@ -637,6 +638,9 @@ export function constructTransactionAttempt(account, confirmations, outputs, all
 export const VALIDATEADDRESS_FAILED = "VALIDATEADDRESS_FAILED";
 export const validateAddress = address => async (dispatch, getState) => {
   try {
+    const { network } = getState().grpc;
+    const validationErr = isValidAddress(address, network);
+    if (validationErr) { return { isValid: false, error: validationErr, getIsValid () { false; } }; }
     return await wallet.validateAddress(sel.walletService(getState()), address);
   } catch (error) {
     dispatch({address, error, type: VALIDATEADDRESS_FAILED});
