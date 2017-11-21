@@ -20,7 +20,8 @@ const mapStateToProps = selectorMap({
 const mapDispatchToProps = dispatch => bindActionCreators({
   onAttemptConstructTransaction: ca.constructTransactionAttempt,
   onAttemptSignTransaction: ca.signTransactionAttempt,
-  getNextAddressAttempt: ca.getNextAddressAttempt
+  getNextAddressAttempt: ca.getNextAddressAttempt,
+  validateAddress: ca.validateAddress
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

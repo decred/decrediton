@@ -9,7 +9,8 @@ import {
   IMPORTSCRIPT_SUCCESS, IMPORTSCRIPT_FAILED,
   RENAMEACCOUNT_SUCCESS, RENAMEACCOUNT_FAILED,
   GETNEXTACCOUNT_SUCCESS, GETNEXTACCOUNT_FAILED,
-  CHANGEPASSPHRASE_SUCCESS, CHANGEPASSPHRASE_FAILED
+  CHANGEPASSPHRASE_SUCCESS, CHANGEPASSPHRASE_FAILED,
+  VALIDATEADDRESS_FAILED
 } from "../actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
@@ -33,6 +34,10 @@ const messages = defineMessages({
   },
   CONSTRUCTTX_FAILED: {
     id: "send.errors.constructTxFailed",
+    defaultMessage: "{originalError}"
+  },
+  VALIDATEADDRESS_FAILED: {
+    id: "send.errors.validateAddressFailed",
     defaultMessage: "{originalError}"
   },
   PURCHASETICKETS_SUCCESS: {
@@ -119,7 +124,7 @@ export default function snackbar(state = {}, action) {
   switch (action.type) {
   // snackbar management events
   case SNACKBAR_DISMISS_MESSAGES:
-    return { state, messages: Array() };
+    return { ...state, messages: Array() };
 
   case TRANSACTIONNTFNS_DATA_UNMINED: {
     values = { message: action.unminedMessage};
@@ -166,6 +171,11 @@ export default function snackbar(state = {}, action) {
     break;
 
   case CONSTRUCTTX_FAILED:
+    values = { originalError: String(action.error) };
+    type = "Error";
+    break;
+
+  case VALIDATEADDRESS_FAILED:
     values = { originalError: String(action.error) };
     type = "Error";
     break;
@@ -229,22 +239,22 @@ export default function snackbar(state = {}, action) {
     type = "Error";
     break;
   }
+
+  const newMessages = state.messages ? state.messages.slice() : Array();
   if ((values || type) && action.type !== TRANSACTIONNTFNS_DATA_UNMINED) {
-    state.messages = state.messages.slice();
-    state.messages.push({
+    newMessages.push({
       type: type,
       message: messages[action.type],
       values: values
     });
   } else if (action.type == TRANSACTIONNTFNS_DATA_UNMINED) {
-    state.messages = state.messages.slice();
-    state.messages.push({
+    newMessages.push({
       type: type,
       message: action.unminedMessage,
       values: values
     });
   }
 
-  return state;
+  return {...state, messages: newMessages};
 
 }
