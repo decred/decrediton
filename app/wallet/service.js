@@ -5,6 +5,7 @@ import {
   DecodeRawTransactionRequest,
   ValidateAddressRequest,
   GetTransactionsRequest,
+  TransactionDetails,
 } from "middleware/walletrpc/api_pb";
 
 const promisify = fn => (...args) => new Promise((ok, fail) => fn(...args,
@@ -56,6 +57,15 @@ export const UNMINED_BLOCK_TEMPLATE = {
   getTimestamp() { return null; },
   getHeight() { return -1; },
   getHash() { return null; }
+};
+
+// Map from numerical into string transaction type
+export const TRANSACTION_TYPES = {
+  [TransactionDetails.TransactionType.REGULAR]: "Regular",
+  [TransactionDetails.TransactionType.TICKET_PURCHASE]: "Ticket",
+  [TransactionDetails.TransactionType.VOTE]: "Vote",
+  [TransactionDetails.TransactionType.REVOCATION]: "Revocation",
+  [TransactionDetails.TransactionType.COINBASE]: "Coinbase"
 };
 
 // formatTransaction converts a transaction from the structure of a grpc reply
