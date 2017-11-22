@@ -1,7 +1,7 @@
 import compose from "lodash/fp/compose";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { DcrInput, ReceiveAccountsSelect } from "inputs";
-import "../../../../style/SendPage.less";
+import "style/SendPage.less";
 
 const messages = defineMessages({
   amountPlaceholder: {
@@ -26,7 +26,7 @@ const SendOutputAccountRow = ({
       <div className="send-address">
         <ReceiveAccountsSelect
           getAddressForSelected={true}
-          showAccountsButton={true} />
+          showAccountsButton={false} />
       </div>
 
       <div className="send-amount">

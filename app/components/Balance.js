@@ -30,7 +30,7 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large, flat, t
           { amount + " " }
         </span>
         <span className={ secondary }>
-          DCR
+          atoms
         </span>
       </span>
     );

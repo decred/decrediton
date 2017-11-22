@@ -28,6 +28,7 @@ const AccountsList = ({
       </KeyBlueButton>
     </TabbedHeader>
     <div className="tabbed-page">
+      <div className="tab-content">
       { isShowingBalanceOverviewInfoModal ? <BalanceOverviewInfoModal closeModal={onCloseBalanceOverviewInfoModal} /> :
         isLoading ? <DecredLoading/> :
         <div className="tab-card">
@@ -51,6 +52,7 @@ const AccountsList = ({
             ))}
           </div>
         </div> }
+      </div>
     </div>
   </Aux>
 );
