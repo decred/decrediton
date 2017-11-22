@@ -6,11 +6,8 @@ import "style/HistoryPage.less";
 
 const Page = ({
                 txTypes,
-                paginatedTxs,
-                currentPage,
-                totalPages,
+                transactions,
                 onChangeSelectedType,
-                onPageChanged,
                 onLoadMoreTransactions,
               }) => (
   <div className="tab-card">
@@ -23,6 +20,7 @@ const Page = ({
           <EyeFilterMenu
             valueKey="value"
             labelKey="label"
+            keyField="key"
             options={txTypes}
             onChange={onChangeSelectedType}
           />
@@ -30,16 +28,13 @@ const Page = ({
       </div>
     </div>
     <div className="history-content-nest">
-      {paginatedTxs.length > 0 ? (
+      {transactions.length > 0 ? (
         <TxHistory
-          transactions={paginatedTxs}
+          transactions={transactions}
         />
       ) : <p><T id="history.noTransactions" m="No transactions" /></p>}
     </div>
     <button onClick={onLoadMoreTransactions}>MOAH TRANSACTIONS</button>
-    <div className="history-content-title-buttons-area">
-      <Paginator {...{totalPages, currentPage, onPageChanged}} />
-    </div>
   </div>
 );
 
