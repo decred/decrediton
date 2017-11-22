@@ -1,3 +1,10 @@
 import { Link } from "react-router";
 
-export default props => <Link className="menu-link" activeClassName="menu-link-active" { ...props }/>;
+class MenuLink extends React.Component {
+  constructor(props) { super(props); }
+  render() {
+    return <Link className="menu-link" activeClassName="menu-link-active" { ...this.props }/>;
+  }
+}
+
+export default MenuLink;

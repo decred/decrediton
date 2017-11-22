@@ -24,7 +24,9 @@ const Bar = ({
     <Logo {...{ isTestNet }}/>
     <Aux show={ showingSidebarMenu }>
       <div className="sidebar-main">
-        <MenuLinks />
+        <div className="sidebar-scroll">
+          <MenuLinks/>
+        </div>
         <div className="sidebar-menu-total-balance-extended" style={{ display: isShowingAccounts ? "flex" : "none" }}>
           <div className="sidebar-menu-total-balance-extended-bottom">
             { balances.map(({ hidden, total, accountName }) => !hidden &&

@@ -1,32 +1,46 @@
-import { FormattedMessage as T } from "react-intl";
+import { injectIntl } from "react-intl";
 import { spring, Motion } from "react-motion";
+import { withRouter } from "react-router";
+import { getPage } from "helpers";
 import MenuLink from "./MenuLink";
+import messages from "messages";
 import theme from "theme";
+
+const linkList = [
+  "home",
+  "accounts",
+  "transactions",
+  "tickets",
+  "security",
+  "settings",
+  "help"
+];
 
 @autobind
 class MenuLinks extends React.Component {
   constructor (props) { super(props); }
+  _nodes = new Map();
+  state = { top: 0 };
 
-  state = { top: spring(0) };
-
-  onClick (e) { this.setState({ top: spring(e.currentTarget.offsetTop, theme("springs.sideBar"))}); }
+  componentWillReceiveProps(nextProps) {
+    const activeLink = getPage(nextProps.routes);
+    const newTop = this._nodes.get(activeLink).offsetTop;
+    this.setState({ top: spring(newTop, theme("springs.sideBar")) });
+  }
 
   render () {
     return (
-      <div className="sidebar-scroll">
-        <MenuLink onClick={ this.onClick } to="/home"        ><T id="menu.overview"       m="Overview"       /></MenuLink>
-        <MenuLink onClick={ this.onClick } to="/accounts"    ><T id="menu.accounts"       m="Accounts"       /></MenuLink>
-        <MenuLink onClick={ this.onClick } to="/transactions"><T id="menu.transactions"   m="Transactions"   /></MenuLink>
-        <MenuLink onClick={ this.onClick } to="/tickets"     ><T id="menu.tickets"        m="Tickets"        /></MenuLink>
-        <MenuLink onClick={ this.onClick } to="/security"    ><T id="menu.securitycenter" m="Security Center"/></MenuLink>
-        <MenuLink onClick={ this.onClick } to="/settings"    ><T id="menu.settings"       m="Settings"       /></MenuLink>
-        <MenuLink onClick={ this.onClick } to="/help"        ><T id="menu.help"           m="Help"           /></MenuLink>
+      <Aux>
+        { linkList.map(link =>
+          <MenuLink to={ "/" + link } ref={ ref => this._nodes.set(link, ref) }>
+            { this.props.intl.formatMessage(messages["menu." + link]) }
+          </MenuLink> )}
         <Motion style={ this.state }>
           { style => <div className="menu-caret" {...{ style }}/> }
         </Motion>
-      </div>
+      </Aux>
     );
   }
 }
 
-export default MenuLinks;
+export default withRouter(injectIntl(MenuLinks));
