@@ -1,6 +1,5 @@
 import TxHistory from "TxHistory";
 import EyeFilterMenu from "EyeFilterMenu";
-import Paginator from "Paginator";
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
 import SlateGrayButton from "SlateGrayButton";
