@@ -2,12 +2,15 @@ import TxHistory from "TxHistory";
 import EyeFilterMenu from "EyeFilterMenu";
 import Paginator from "Paginator";
 import { FormattedMessage as T } from "react-intl";
+import { Tooltip } from "shared";
 import "style/HistoryPage.less";
 
 const Page = ({
+                sortTypes,
                 txTypes,
                 transactions,
                 onChangeSelectedType,
+                onChangeSortType,
                 onLoadMoreTransactions,
               }) => (
   <div className="tab-card">
@@ -17,13 +20,23 @@ const Page = ({
       </div>
       <div className="history-select-tx-types-area">
         <div className="history-select-tx-types">
-          <EyeFilterMenu
-            valueKey="value"
-            labelKey="label"
-            keyField="key"
-            options={txTypes}
-            onChange={onChangeSelectedType}
-          />
+          <Tooltip tipWidth={ 300 } text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
+            <EyeFilterMenu
+              labelKey="label"
+              keyField="value"
+              options={sortTypes}
+              onChange={onChangeSortType}
+              className="sort-by"
+            />
+          </Tooltip>
+          <Tooltip tipWidth={ 300 } text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
+            <EyeFilterMenu
+              labelKey="label"
+              keyField="key"
+              options={txTypes}
+              onChange={onChangeSelectedType}
+            />
+          </Tooltip>
         </div>
       </div>
     </div>

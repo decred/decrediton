@@ -68,19 +68,44 @@ export const TRANSACTION_TYPES = {
   [TransactionDetails.TransactionType.COINBASE]: "Coinbase"
 };
 
+export const TRANSACTION_DIR_SENT = "sent";
+export const TRANSACTION_DIR_RECEIVED = "received";
+export const TRANSACTION_DIR_TRANSFERED = "transfer";
+
 // formatTransaction converts a transaction from the structure of a grpc reply
 // into a structure more amenable to use within decrediton. It stores the block
 // information of when the transaction was mined into the transaction.
 // Index is the index of the transaction within the block.
 export function formatTransaction(block, transaction, index) {
+
+  const inputAmounts = transaction.getDebitsList().reduce((s, input) => s + input.getPreviousAmount(), 0);
+  const outputAmounts = transaction.getCreditsList().reduce((s, input) => s + input.getAmount(), 0);
+  const amount = outputAmounts - inputAmounts;
+  const fee = transaction.getFee();
+  const type = transaction.getTransactionType();
+  let direction = "";
+
+  if (type === TransactionDetails.TransactionType.REGULAR) {
+    if (amount > 0) {
+      direction = TRANSACTION_DIR_RECEIVED;
+    } else if (amount < 0 && (fee == Math.abs(amount))) {
+      direction = TRANSACTION_DIR_TRANSFERED;
+    } else {
+      direction = TRANSACTION_DIR_SENT;
+    }
+  }
+
   return {
     timestamp: block.getTimestamp(),
     height: block.getHeight(),
     blockHash: block.getHash(),
     index: index,
-    type: transaction.getTransactionType(),
     hash: transaction.getHash(),
-    tx: transaction
+    tx: transaction,
+    type,
+    direction,
+    amount,
+    fee
   };
 }
 

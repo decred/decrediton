@@ -31,9 +31,10 @@ class EyeFilterMenu extends React.Component {
     const labelKey = this.props.labelKey || "label";
     const keyField = this.props.keyField || labelKey;
     const { menuOpen } = this.state;
+    const extraClassName = " " + this.props.className || "";
     return (
       <IconMenu
-        className={"eye-filter-menu " + (menuOpen ? "menu-open" : "")}
+        className={"eye-filter-menu " + (menuOpen ? "menu-open" : "") + extraClassName}
         onChange={this.onMenuChanged}
         onRequestChange={this.onMenuRequestChange}
         open={menuOpen}

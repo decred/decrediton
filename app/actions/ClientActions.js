@@ -275,10 +275,13 @@ export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
 //
 // Currently supported filters in the filter object:
 // - type (array): Array of types a transaction must belong to, to be accepted.
+// - direction (string): A string of one of the allowed directions for regular
+//   transactions (sent/received/transfered)
 // If empty, all transactions are accepted.
 function filterTransactions(transactions, filter) {
   return transactions
-    .filter(v => filter.types.length ? filter.types.indexOf(v.type) > -1 : true );
+    .filter(v => filter.types.length ? filter.types.indexOf(v.type) > -1 : true )
+    .filter(v => filter.direction ? filter.direction === v.direction : true);
 }
 
 // getTransactions loads a list of transactions from the wallet, given the
