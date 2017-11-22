@@ -51,7 +51,7 @@ export default (
       <Route path="sign"                        component={SignTab}/>
       <Route path="verify"                      component={VerifyTab}/>
     </Route>
-    <Route   path="settings"                    component={SettingsPage}/>
+    <Route   path="settings"                    component={SettingsPage}      desc/>
     <Route   path="help"                        component={Help}              desc/>
     <Route   path="walletError"                 component={WalletError}       noIcon/>
     <Route   path="error"                       component={ErrorScreen}       noIcon/>

@@ -1,25 +1,73 @@
 @import (reference) "./main.less";
+@import (reference) "./Icons.less";
+
+.settings-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 740px;
+  background: white;
+  margin-bottom: 20px;
+  padding: 1em;
+}
+
+.settings-general {
+  padding: 2em;
+}
+
+.settings-security {
+  padding: 2em;
+}
+
+.settings-colunm-title {
+  font-size: 19px;
+  text-transform: capitalize;
+  margin-bottom: 32px;
+}
+
+.settings-column-content {
+  margin-left: 60px;
+}
 
 .settings-restart {
   font-weight: bold;
 }
 
 .settings-row {
-  border-bottom: 1px black solid;
-  padding: 1em;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .settings-label {
   .inline-block-mixin;
 
-  width: 35%;
-  font-size: 20px;
+  text-align: right;
+  margin: 5px 10px 20px 0;
+}
+
+.change-password-default-icon {
+  background: @change-password-default-icon no-repeat center;
+  background-color: #2971ff;
+  background-size: 16px;
+  cursor: pointer;
+  width: 19px;
+  height: 19px;
+  margin-left: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.13);
+}
+
+.change-password-default-icon:hover {
+  background-color: #1b58ff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
 }
 
 .settings-input {
   .inline-block-mixin;
 
-  width: 60%;
+  width: 150px;
 }
 
 .settings-input-error {
