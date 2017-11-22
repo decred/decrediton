@@ -6,7 +6,6 @@ import * as ca from "../actions/ClientActions";
 
 const mapStateToProps = selectorMap({
   walletService: sel.walletService,
-  txPerPage: sel.txPerPage,
   spendableTotalBalance: sel.spendableTotalBalance,
   transactions: sel.transactions,
   transactionsFilter: sel.transactionsFilter,

@@ -9,7 +9,7 @@ import {
   GETTICKETPRICE_ATTEMPT, GETTICKETPRICE_FAILED, GETTICKETPRICE_SUCCESS,
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
   GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED,  GETTRANSACTIONS_COMPLETE,
-  NEW_TRANSACTIONS_RECEIVED, CHANGE_TRANSACTIONS_FILTER,
+  NEW_TRANSACTIONS_RECEIVED, CHANGE_TRANSACTIONS_FILTER, CLEAR_CURRENT_TRANSACTIONS,
   UPDATETIMESINCEBLOCK,
   GETTICKETS_ATTEMPT, GETTICKETS_FAILED, GETTICKETS_COMPLETE,
   GETAGENDASERVICE_ATTEMPT, GETAGENDASERVICE_FAILED, GETAGENDASERVICE_SUCCESS,
@@ -276,6 +276,15 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       transactionsFilter: action.transactionsFilter,
+      minedTransactions: [],
+      unminedTransactions: [],
+      transactions: [],
+      lastTransaction: null,
+      noMoreTransactions: false
+    };
+  case CLEAR_CURRENT_TRANSACTIONS:
+    return {
+      ...state,
       minedTransactions: [],
       unminedTransactions: [],
       transactions: [],

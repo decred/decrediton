@@ -154,10 +154,7 @@ var initialState = {
     getAccountsResponse: null,
 
     // PaginateTransactions
-    paginatedTxs: Array(),
     txPerPage: 8,
-    currentPage: 0,
-    transactionDetails: null,
 
     // GetTransactions
     minedTransactions: Array(),
@@ -168,15 +165,10 @@ var initialState = {
     transactionsFilter: {
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
       types: [], // desired transaction types (code). All if blank.
+      direction: null, // direction of desired transactions (sent/received/transfer)
     },
     lastTransaction: null, //last transaction obtained
 
-    // GetTransactionInfo
-    regularTransactionsInfo: Array(),
-    coinbaseTransactionsInfo: Array(),
-    ticketTransactionsInfo: Array(),
-    voteTransactionsInfo: Array(),
-    revokeTransactionsInfo: Array(),
     getTransactionsError: null,
     getTransactionsRequestAttempt: false,
     getTransactionsResponse: null,

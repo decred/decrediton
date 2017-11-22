@@ -11,15 +11,6 @@ import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
 
 @autobind
 class History extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentPage: 0,
-      selectedType: "Regular",
-      transactionDetails: null
-    };
-  }
-
   render() {
     return  !this.props.walletService ? <ErrorScreen /> : (
       <HistoryPage
@@ -73,7 +64,6 @@ class History extends React.Component {
       ...this.props.transactionsFilter,
       ...value
     };
-    console.log(newFilter);
     this.props.changeTransactionsFilter(newFilter);
   }
 

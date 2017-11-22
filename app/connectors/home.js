@@ -7,7 +7,6 @@ import * as ca from "../actions/ControlActions";
 const mapStateToProps = selectorMap({
   getTransactionsRequestAttempt: sel.getTransactionsRequestAttempt,
   getAccountsResponse: sel.getAccountsResponse,
-  txPerPage: sel.txPerPage,
   spendableTotalBalance: sel.spendableTotalBalance,
   transactions: sel.homeHistoryTransactions,
   revokeTicketsError: sel.revokeTicketsError,

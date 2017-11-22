@@ -268,7 +268,6 @@ export const getTicketsInfoAttempt = () => (dispatch, getState) => {
 
 export const GETTRANSACTIONS_ATTEMPT = "GETTRANSACTIONS_ATTEMPT";
 export const GETTRANSACTIONS_FAILED = "GETTRANSACTIONS_FAILED";
-export const GETTRANSACTIONS_PROGRESS = "GETTRANSACTIONS_PROGRESS";
 export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
 
 // filterTransactions filters a list of transactions given a filtering object.
@@ -277,6 +276,7 @@ export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
 // - type (array): Array of types a transaction must belong to, to be accepted.
 // - direction (string): A string of one of the allowed directions for regular
 //   transactions (sent/received/transfered)
+//
 // If empty, all transactions are accepted.
 function filterTransactions(transactions, filter) {
   return transactions
@@ -351,6 +351,9 @@ export const getTransactions = () => async (dispatch, getState) => {
 };
 
 export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
+
+// newTransactionsReceived should be called when a new set of transactions has
+// been received from the wallet (through a notification).
 export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
 
@@ -376,6 +379,15 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
 
   dispatch({unminedTransactions, minedTransactions, newlyUnminedTransactions,
     newlyMinedTransactions, type: NEW_TRANSACTIONS_RECEIVED});
+};
+
+export const CLEAR_CURRENT_TRANSACTIONS = "CLEAR_CURRENT_TRANSACTIONS";
+
+// reloadTransactions clears and reloads the initial page of transactions, given
+// the current transaction filter.
+export const reloadTransactions = () => dispatch => {
+  dispatch({type: CLEAR_CURRENT_TRANSACTIONS});
+  dispatch(getTransactions());
 };
 
 export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
