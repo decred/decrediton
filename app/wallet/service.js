@@ -1,5 +1,6 @@
 import Promise from "promise";
 import * as client from "middleware/grpc/client";
+import { reverseHash } from "../helpers/byteActions";
 import {
   NextAddressRequest,
   DecodeRawTransactionRequest,
@@ -101,6 +102,7 @@ export function formatTransaction(block, transaction, index) {
     blockHash: block.getHash(),
     index: index,
     hash: transaction.getHash(),
+    txHash: reverseHash(Buffer.from(transaction.getHash()).toString("hex")),
     tx: transaction,
     type,
     direction,

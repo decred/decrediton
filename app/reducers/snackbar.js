@@ -1,6 +1,5 @@
 import * as wallet from "wallet";
 import { defineMessages } from "react-intl";
-import { reverseHash } from "../helpers/byteActions";
 import {
   DECODERAWTXS_FAILED
 } from "../actions/DecodeMessageActions";
@@ -142,26 +141,10 @@ export default function snackbar(state = {}, action) {
     const tx = action.newlyMinedTransactions.length
       ? action.newlyMinedTransactions[0]
       : action.newlyUnminedTransactions[0];
-    type = wallet.TRANSACTION_TYPES[tx.type];
 
-    const inputAmts = tx.tx.getDebitsList().reduce((s, input) => s + input.getPreviousAmount(), 0);
-    const outputAmts = tx.tx.getCreditsList().reduce((s, input) => s + input.getAmount(), 0);
-    const amount = outputAmts - inputAmts;
-    const fee = tx.tx.getFee();
-
-    if (type == "Regular" && amount > 0) {
-      type = "Receive";
-    } else if (type == "Regular" && amount < 0 && (fee == Math.abs(amount))) {
-      type = "Transfer";
-    } else if (type == "Regular") {
-      type = "Send";
-    }
-
-    const txHash = reverseHash(Buffer.from(tx.hash).toString("hex"));
-    message = { type, txHash, amount, fee };
-
+    type = tx.direction || wallet.TRANSACTION_TYPES[tx.type];
+    message = { ...tx, type };
     values = { message };
-    type = message.type;
     break;
   }
 
