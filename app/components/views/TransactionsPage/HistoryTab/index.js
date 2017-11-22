@@ -3,33 +3,8 @@ import ErrorScreen from "ErrorScreen";
 import HistoryPage from "./Page";
 import { historyPage } from "connectors";
 import { injectIntl } from "react-intl";
-
-// const messages = defineMessages({
-//   All: {
-//     id: "transaction.type.all",
-//     defaultMessage: "All"
-//   },
-//   Regular: {
-//     id: "transaction.type.regular",
-//     defaultMessage: "Regular"
-//   },
-//   Tickets: {
-//     id: "transaction.type.tickets",
-//     defaultMessage: "Tickets"
-//   },
-//   Votes: {
-//     id: "transaction.type.votes",
-//     defaultMessage: "Votes"
-//   },
-//   Revokes: {
-//     id: "transaction.type.revokes",
-//     defaultMessage: "Revokes"
-//   },
-//   Unmined: {
-//     id: "transaction.type.unmined",
-//     defaultMessage: "Unmined"
-//   }
-// });
+import { TransactionDetails }  from "middleware/walletrpc/api_pb";
+import { FormattedMessage as T } from "react-intl";
 
 @autobind
 class History extends React.Component {
@@ -64,24 +39,14 @@ class History extends React.Component {
   }
 
   getTxTypes() {
-    //const { formatMessage } = this.props.intl;
-    // TODO: get from api_pb
-    // REGULAR: 0,
-    // COINBASE: 4,
-    // TICKET_PURCHASE: 1,
-    // VOTE: 2,
-    // REVOCATION: 3
+    const types = TransactionDetails.TransactionType;
     return [
-      {value: [0], label: "Regular"},
-      {value: [4], label: "Coinbase"},
-      {value: [1], label: "Ticket"},
-      {value: [2], label: "Vote"},
-      {value: [3], label: "Revocation"},
+      {value: [],                       label: (<T id="transaction.type.all" m="All"/>)},
+      {value: [types.REGULAR],          label: (<T id="transaction.type.regular" m="Regular"/>)},
+      {value: [types.TICKET_PURCHASE],  label: (<T id="transaction.type.tickets" m="Tickets"/>)},
+      {value: [types.VOTE],             label: (<T id="transaction.type.votes" m="Votes"/>)},
+      {value: [types.REVOCATION],       label: (<T id="transaction.type.revokes" m="Revokes"/>)},
     ];
-    // return Object.keys(this.props.transactions)
-    //   .filter(key => this.props.transactions[key].length > 0)
-    //   .map(name => {
-    //     return ({ value: name, label: formatMessage(messages[name]) }); });
   }
 
   getTxs() {
@@ -97,10 +62,6 @@ class History extends React.Component {
   }
 
   getPaginatedTxs() {
-    // const { currentPage } = this.state;
-    // const { txPerPage } = this.props;
-    // const start = currentPage * txPerPage;
-    // return this.getTxs().slice(start, start + txPerPage);
     return this.props.transactions;
   }
 
@@ -113,10 +74,6 @@ class History extends React.Component {
   }
 
   onChangeSelectedType(type) {
-    // this.setState({
-    //   selectedType: type.value,
-    //   currentPage: 0
-    // });
     const newFilter = {
       ...this.props.transactionsFilter,
       types: type.value

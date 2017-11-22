@@ -351,8 +351,6 @@ export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
 export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
 
-  console.log("newTransactionsReceived", newlyMinedTransactions, newlyUnminedTransactions);
-
   let { unminedTransactions, minedTransactions } = getState().grpc;
   const { transactionsFilter } = getState().grpc;
 
