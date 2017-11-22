@@ -53,7 +53,7 @@ class TicketListPage extends Component{/*  */
     const toDecode = visibleTickets.reduce((a, t) => {
       if (!t.decodedTicketTx) {
         a.push(t.ticketRawTx);
-        if (t.senderHash) {
+        if (t.spenderHash) {
           a.push(t.spenderRawTx);
         }
       }
