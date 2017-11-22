@@ -238,6 +238,7 @@ const transactionNormalizer = createSelector(
   }
 );
 
+export const noMoreTransactions = get(["grpc", "noMoreTransactions"]);
 export const transactionsNormalizer = createSelector([transactionNormalizer], map);
 export const transactionsFilter = get(["grpc", "transactionsFilter"]);
 export const transactions = createSelector(

@@ -16,7 +16,6 @@ export const TRANSACTIONNTFNS_END = "TRANSACTIONNTFNS_END";
 
 function transactionNtfnsData(response) {
   return (dispatch, getState) => {
-    console.log("transactionNtfnsData", response);
     const { neededBlocks } = getState().walletLoader;
     var currentHeight = 0;
     var { recentBlockTimestamp } = getState().grpc;
@@ -24,7 +23,6 @@ function transactionNtfnsData(response) {
     const unminedTxList = response.getUnminedTransactionsList();
 
     if (attachedBlocks.length > 0) {
-      console.log("attached blocks");
       currentHeight = attachedBlocks[0].getHeight();
       if (currentHeight > neededBlocks) {
         var lastBlockTimestamp = attachedBlocks[attachedBlocks.length-1].getTimestamp();
@@ -66,7 +64,6 @@ function transactionNtfnsData(response) {
           type: TRANSACTIONNTFNS_SYNCING });
       }
     } else if (unminedTxList.length > 0) {
-      console.log("received unmined", unminedTxList);
       const newlyUnmined = unminedTxList.map((t, i) => wallet.formatUnminedTransaction(t, i));
       dispatch(newTransactionsReceived([], newlyUnmined));
     }

@@ -10,6 +10,7 @@ const mapStateToProps = selectorMap({
   spendableTotalBalance: sel.spendableTotalBalance,
   transactions: sel.transactions,
   transactionsFilter: sel.transactionsFilter,
+  noMoreTransactions: sel.noMoreTransactions,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

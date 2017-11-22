@@ -3,12 +3,14 @@ import EyeFilterMenu from "EyeFilterMenu";
 import Paginator from "Paginator";
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
+import SlateGrayButton from "SlateGrayButton";
 import "style/HistoryPage.less";
 
 const Page = ({
                 sortTypes,
                 txTypes,
                 transactions,
+                noMoreTransactions,
                 onChangeSelectedType,
                 onChangeSortType,
                 onLoadMoreTransactions,
@@ -47,7 +49,9 @@ const Page = ({
         />
       ) : <p><T id="history.noTransactions" m="No transactions" /></p>}
     </div>
-    <button onClick={onLoadMoreTransactions}>MOAH TRANSACTIONS</button>
+    {!noMoreTransactions
+      ? <SlateGrayButton onClick={onLoadMoreTransactions}><T id="history.moreTransactions" m="More Transactions" /></SlateGrayButton>
+      : null}
   </div>
 );
 
