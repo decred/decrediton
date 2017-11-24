@@ -30,6 +30,7 @@ export default defineMessages({
   "security.tab.verify":                      { id: "security.tab.verify",                   defaultMessage: "Verify Message" },
 
   "settings.title":                           { id: "settings.title",                        defaultMessage: "Settings" },
+  "settings.description":                     { id: "settings.description",                  defaultMessage: "Changing network settings requires a restart" },
 
   "help.title":                               { id: "help.title",                            defaultMessage: "Help" },
   "help.description":                         { id: "help.description",                      defaultMessage: "If you have any difficulty with decrediton, please use the following links to help find a solution." },

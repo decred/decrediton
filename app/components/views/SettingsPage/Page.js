@@ -1,8 +1,8 @@
-import KeyBlueButton from "../../KeyBlueButton";
+import KeyBlueButton from "KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
 import { TabbedHeader } from "shared";
-import ChangePassphraseModal from "../../ChangePassphraseModal";
-import Select from "react-select";
+import ChangePassphraseModal from "ChangePassphraseModal";
+import SettingsInput from "inputs/SettingsInput";
 import "style/StakePool.less";
 import "style/Settings.less";
 
@@ -31,78 +31,80 @@ const SettingsPage = ({
         cancelPassphrase={onCancelChangePassphrase}
       />
       <div className={ ["tab-card", isShowingChangePassphrase ? "tab-card-blur" : null].join(" ").trim() }>
-        <div className="settings-row">
-          <div className="settings-label">
-            <T id="settings.locale" m="Locale" />
-          </div>
-          <div className="settings-input">
+        <div className="settings-wrapper">
+          <div className="settings-general">
 
-            <Select
-              value={tempSettings.locale}
-              onChange={(newLocale) => onChangeLocale(newLocale.key)}
-              clearable={false}
-              multi={false}
-              valueKey="key" labelKey="description"
-              options={locales}
-            />
+            <div className="settings-colunm-title">General</div>
+              <div className="settings-column-content">
+
+                <div className="settings-row">
+                  <div className="settings-label">
+                    <T id="settings.displayedUnits" m="Displayed Units" />
+                  </div>
+                  <SettingsInput
+                    className="settings-input"
+                    value={tempSettings.currencyDisplay}
+                    onChange={(newCurrency) => onChangeCurrencyDisplay(newCurrency.name)}
+                    valueKey="name" labelKey="name"
+                    options={currencies}
+                  />
+                </div>
+
+                <div className="settings-row">
+                  <div className="settings-label">
+                    <T id="settings.locale" m="Locale" />
+                  </div>
+                  <SettingsInput
+                    className="settings-input"
+                    value={tempSettings.locale}
+                    onChange={(newLocale) => onChangeLocale(newLocale.key)}
+                    valueKey="key" labelKey="description"
+                    options={locales}
+                  />
+                </div>
+
+                <div className="settings-row">
+                  <div className="settings-label">
+                    <T id="settings.network" m="Network" />
+                  </div>
+                  <SettingsInput
+                    className="settings-input"
+                    value={tempSettings.network}
+                    onChange={(newNet) => onChangeNetwork(newNet.name)}
+                    valueKey="name" labelKey="name"
+                    options={networks}
+                  />
+                </div>
+            </div>
+          </div>
+
+          <div className="settings-security">
+            <div className="settings-colunm-title">Security</div>
+            <div className="settings-action-buttons">
+              <div className="settings-update-passphrase-button">
+                <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
+                <button
+                  className="change-password-default-icon"
+                  onClick={onShowChangePassphrase}
+                >
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="settings-row">
-          <div className="settings-label">
-            <T id="settings.displayedUnits" m="Displayed Units" />
-          </div>
-          <div className="settings-input">
-
-            <Select
-              value={tempSettings.currencyDisplay}
-              onChange={(newCurrency) => onChangeCurrencyDisplay(newCurrency.name)}
-              clearable={false}
-              multi={false}
-              valueKey="name" labelKey="name"
-              options={currencies}
-            />
-          </div>
+        <div className="settings-save-button">
+          <KeyBlueButton
+            disabled={!areSettingsDirty}
+            size="large"
+            block={false}
+            onClick={onSaveSettings}>
+            <T id="settings.save" m="Save" />
+          </KeyBlueButton>
         </div>
 
-        <div className="settings-row">
-          <div className="settings-label">
-            <T id="settings.network"
-              m="Network" />
-            <span className="settings-restart"> (
-                <T id="settings.requiresRestart" m="requires restart" />
-                )</span>
-          </div>
-          <div className="settings-input">
-
-            <Select
-              value={tempSettings.network}
-              onChange={(newNet) => onChangeNetwork(newNet.name)}
-              clearable={false}
-              multi={false}
-              valueKey="name" labelKey="name"
-              options={networks}
-            />
-          </div>
-        </div>
-        <div className="settings-action-buttons">
-          <div className="settings-save-button">
-            <KeyBlueButton
-              disabled={!areSettingsDirty}
-              size="large"
-              block={false}
-              onClick={onSaveSettings}>
-              <T id="settings.save" m="Save Settings" />
-            </KeyBlueButton>
-          </div>
-          <div className="settings-update-passphrase-button">
-            <KeyBlueButton
-              onClick={onShowChangePassphrase}>
-              <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
-            </KeyBlueButton>
-          </div>
-        </div>
       </div>
+
     </div>
   </Aux>
 );
