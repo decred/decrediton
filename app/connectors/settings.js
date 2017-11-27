@@ -6,10 +6,10 @@ import * as sa from "../actions/SettingsActions";
 import * as ca from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
-  currencyDisplay: sel.currencyDisplay,
-  unitDivisor: sel.unitDivisor,
-  tempSettings: sel.tempSettings,
+  currencies: sel.currencies,
+  networks: sel.networks,
   locales: sel.sortedLocales,
+  tempSettings: sel.tempSettings,
   areSettingsDirty: sel.settingsChanged
 });
 

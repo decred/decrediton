@@ -18,18 +18,17 @@ export const saveSettings = (settings) => {
 export function updateStateSettingsChanged(settings) {
   return (dispatch, getState) => {
     const { tempSettings, currentSettings } = getState().settings;
-    if ((settings.currencyDisplay !== tempSettings.currencyDisplay) ||
-  (settings.network !== tempSettings.network) ||
-  (settings.locale !== tempSettings.locale)){
-      if (settings.currencyDisplay !== currentSettings.currencyDisplay) {
-        dispatch({ tempSettings: settings, type: SETTINGS_CHANGED});
-      } else if (settings.network !== currentSettings.network) {
-        dispatch({ tempSettings: settings, type: SETTINGS_CHANGED});
-      } else if (settings.locale !== currentSettings.locale) {
-        dispatch({ tempSettings: settings, type: SETTINGS_CHANGED});
-      } else {
-        dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED});
-      }
+    const newSettings = {...tempSettings, ...settings};
+    const settingsFields = Object.keys(tempSettings);
+    const newDiffersFromTemp = settingsFields
+      .reduce((d, f) => (d || newSettings[f] !== tempSettings[f]), false);
+
+    if (newDiffersFromTemp) {
+      const newDiffersFromCurrent = settingsFields
+        .reduce((d, f) => (d || newSettings[f] !== currentSettings[f]), false);
+      newDiffersFromCurrent
+        ? dispatch({ tempSettings: newSettings, type: SETTINGS_CHANGED})
+        : dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED});
     }
   };
 }
