@@ -16,7 +16,7 @@ const Help = ({ routes }) => (
         <HelpLink className={"help-rocketchat-icon"} href="https://rocketchat.decred.org"><T id="help.rocketchat" m="RocketChat" /></HelpLink>
       </div>
       <div className={"help-icon-row"}>
-        <Tooltip text={ <T id="help.matrix.info" m="Use matrix.decred.org as your custom server." /> }><HelpLink className={"help-matrix-icon"} href="https://riot.im/app"><T id="help.freenode" m="Freenode" /></HelpLink></Tooltip>
+        <Tooltip text={ <T id="help.matrix.info" m="Use matrix.decred.org as your custom server URL." /> }><HelpLink className={"help-matrix-icon"} href="https://riot.im/app/#/login"><T id="help.freenode" m="Freenode" /></HelpLink></Tooltip>
         <HelpLink className={"help-freenode-icon"} href="https://webchat.freenode.net/?channels=decred&uio=d4"><T id="help.freenode" m="Freenode" /></HelpLink>
         <HelpLink className={"help-forum-icon"} href="https://forum.decred.org"><T id="help.forum" m="Forum" /> </HelpLink>
         <HelpLinkInfoModal className={"help-constitution-icon"}
