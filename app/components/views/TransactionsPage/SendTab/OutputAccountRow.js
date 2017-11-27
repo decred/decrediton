@@ -18,7 +18,7 @@ const SendOutputAccountRow = ({
   isSendAll,
   totalSpent,
   unitDivisor,
-  intl
+  intl,
 }) => (
   <div className="send-row">
     <div className="send-output-row">
@@ -26,7 +26,8 @@ const SendOutputAccountRow = ({
       <div className="send-address">
         <ReceiveAccountsSelect
           getAddressForSelected={true}
-          showAccountsButton={false} />
+          showAccountsButton={false}
+          />
       </div>
 
       <div className="send-amount">

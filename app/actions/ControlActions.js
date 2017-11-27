@@ -612,7 +612,7 @@ export function constructTransactionAttempt(account, confirmations, outputs, all
     } else {
       request.setOutputSelectionAlgorithm(1);
       var outputDest = new ConstructTransactionRequest.OutputDestination();
-      outputDest.setAddress(outputs[0].destination);
+      outputDest.setAddress(outputs[0].data.destination);
       request.setChangeDestination(outputDest);
     }
   }

@@ -26,8 +26,6 @@ const SendOutputRow = ({
   getOnChangeOutputDestination,
   getOnChangeOutputAmount,
   isSendAll,
-  totalSpent,
-  unitDivisor,
   intl
 }) => (
   <div className="send-row">
@@ -50,7 +48,7 @@ const SendOutputRow = ({
         ) : (index === 0 && isSendAll) ? (
           <div className="send-address-icon-spacer"></div>
         ) : (index === (outputs.length - 1)) && !isSendAll ? (
-          <div className="send-address-delete-icon" onClick={getOnRemoveOutput(index)}></div>
+          <div className="send-address-delete-icon" onClick={getOnRemoveOutput}></div>
         ) : ( null ) }
       </div>
       <div className="send-amount">
@@ -63,7 +61,7 @@ const SendOutputRow = ({
             hidden={!isSendAll}
             className="send-address-input-amount"
             disabled={true}
-            value={totalSpent !== null ? totalSpent / unitDivisor : ""}
+            value={amountStr}
           />
           <DcrInput
             showErrors={true}
