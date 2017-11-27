@@ -182,7 +182,7 @@ const transactionNormalizer = createSelector(
         debitedAccount = debit.getPreviousAccount();
         const accountName = getAccountName(debitedAccount);
         const amount = debit.getPreviousAmount();
-        txInputs.push({ accountName, amount });
+        txInputs.push({ accountName, amount, index: debit.getIndex() });
         return total + amount;
       }, 0);
 
@@ -192,7 +192,7 @@ const transactionNormalizer = createSelector(
         addressStr.push(address);
         creditedAccount = credit.getAccount();
         const accountName = getAccountName(creditedAccount);
-        txOutputs.push({ accountName, amount, address });
+        txOutputs.push({ accountName, amount, address, index: credit.getIndex() });
         credit.getInternal() ? (totalChange += amount) : (totalFundsReceived += amount);
       });
 
@@ -229,6 +229,7 @@ const transactionNormalizer = createSelector(
         txOutputs,
         txBlockHash,
         txNumericType: type,
+        rawTx: Buffer.from(tx.getTransaction()).toString("hex"),
         ...txDetails
       };
     };
@@ -300,6 +301,11 @@ export const viewedTransaction = createSelector(
 );
 
 export const decodedTransactions = get(["grpc", "decodedTransactions"]);
+
+export const viewedDecodedTransaction = createSelector(
+  [transactions, (state, { params: { txHash }}) => txHash, decodedTransactions],
+  (transactions, txHash, decodedTransactions) => decodedTransactions[txHash]
+);
 
 const ticketNormalizer = createSelector(
   [decodedTransactions, network],
