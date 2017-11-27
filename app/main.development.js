@@ -579,7 +579,7 @@ app.on("ready", async () => {
     let newCfgLocale = appLocaleFromElectronLocale(app.getLocale());
     logger.log("error", `Locale ${cfgLocale} not found. Switching to locale ${newCfgLocale}.`);
     cfg.set("locale", newCfgLocale);
-    locale = locales.find(value => value.name === newCfgLocale);
+    locale = locales.find(value => value.key === newCfgLocale);
   }
 
   let windowOpts = {show: false, width: 1178, height: 790, page: "app.html"};
