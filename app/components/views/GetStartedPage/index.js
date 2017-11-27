@@ -13,12 +13,6 @@ import { getAppdataPath, getRemoteCredentials } from "config.js";
 @autobind
 class GetStartedPage extends React.Component {
 
-  componentWillMount() {
-    this.props.showSidebar();
-    this.props.hideSidebarMenu();
-    this.props.determineNeededBlocks();
-  }
-
   componentDidMount() {
     if (!this.props.isAdvancedDaemon) {
       this.props.onStartDaemon();
@@ -36,12 +30,6 @@ class GetStartedPage extends React.Component {
       this.props.onStartDaemon(null, getAppdataPath());
     } else if (!this.props.openForm && hasAllCredentials) {
       this.props.onStartDaemon(getRemoteCredentials());
-    }
-  }
-
-  componentWillUnmount() {
-    if (!this.props.versionInvalid && !this.props.shutdownRequested) {
-      this.props.showSidebarMenu();
     }
   }
 
@@ -99,13 +87,5 @@ class GetStartedPage extends React.Component {
     return <Page Header={Header} Body={Body} {...props} />;
   }
 }
-
-GetStartedPage.propTypes = {
-  showSidebar: PropTypes.func.isRequired,
-  showSidebarMenu: PropTypes.func.isRequired,
-  hideSidebarMenu: PropTypes.func.isRequired,
-  shutdownRequested: PropTypes.bool.isRequired,
-  versionInvalid: PropTypes.bool.isRequired,
-};
 
 export default walletStartup(GetStartedPage);

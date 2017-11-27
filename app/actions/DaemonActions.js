@@ -3,6 +3,7 @@ import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { ipcRenderer } from "electron";
 import {setMustOpenForm} from "config";
+import { hideSidebarMenu } from "./SidebarActions";
 
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
@@ -46,6 +47,7 @@ export const shutdownApp = () => (dispatch) => {
     dispatch({type: DAEMONSTOPPED});
   });
   dispatch({type: SHUTDOWN_REQUESTED});
+  dispatch(hideSidebarMenu());
   dispatch(pushHistory("/shutdown"));
 };
 

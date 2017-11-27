@@ -6,6 +6,7 @@ import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, sto
 import { transactionNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
+import { showSidebarMenu } from "./SidebarActions";
 import { push as pushHistory } from "react-router-redux";
 import { GetTransactionsRequest } from "../middleware/walletrpc/api_pb";
 import { TransactionDetails }  from "../middleware/walletrpc/api_pb";
@@ -43,6 +44,7 @@ function getWalletServiceSuccess(walletService) {
       setTimeout(() => { dispatch(rescanAttempt(fetchHeadersResponse.getFirstNewBlockHeight())); }, 1000);
     }
     setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);
+    setTimeout(() => { dispatch(showSidebarMenu()); }, 1000);
   };
 }
 
