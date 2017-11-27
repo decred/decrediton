@@ -81,7 +81,7 @@ export function initCfg() {
     config.set("currency_display","DCR");
   }
   if (!config.has("locale")) {
-    config.set("locale","en"); //TODO: find out user's default locale
+    config.set("locale","");
   }
   if (!config.has("hiddenaccounts")) {
     var hiddenAccounts = Array();
