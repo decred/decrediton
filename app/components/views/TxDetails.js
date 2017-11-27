@@ -8,6 +8,7 @@ import "style/TxDetails.less";
 import { tsToDate, addSpacingAroundText } from "helpers";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { reverseHash } from "helpers/byteActions";
+import { DecodedTransaction }  from "middleware/walletrpc/api_pb";
 import "style/Fonts.less";
 
 const messages = defineMessages({
@@ -24,6 +25,27 @@ const headerIcons = {
   Vote:       "ticketSmall",
   Revocation: "ticketSmall",
 };
+
+function mapNonWalletOutput(output) {
+  const address = output.getAddressesList()[0] || "[script]";
+
+  const amount = output.getScriptClass() === DecodedTransaction.Output.ScriptClass.NULL_DATA
+    ? "[null data]"
+    : <Balance amount={output.getValue()} />;
+
+  return {address, amount};
+}
+
+function mapNonWalletInput(input) {
+  const address =
+    reverseHash(Buffer.from(input.getPreviousTransactionHash()).toString("hex")) +
+    ":" +
+    input.getPreviousTransactionIndex();
+
+  const amount = input.getAmountIn();
+
+  return {address, amount};
+}
 
 const TxDetails = ({ routes, router,
                      decodedTransaction,
@@ -66,17 +88,12 @@ const TxDetails = ({ routes, router,
 
     nonWalletInputs = decodedTransaction.transaction.getInputsList()
       .filter((v, i) => walletInputIndices.indexOf(i) === -1)
-      .map(v => ({
-        address: reverseHash(Buffer.from(v.getPreviousTransactionHash()).toString("hex")) + ":" + v.getPreviousTransactionIndex(),
-        amount: v.getAmountIn(), rest: v.toObject() }));
+      .map(mapNonWalletInput);
     nonWalletOutputs = decodedTransaction.transaction.getOutputsList()
       .filter((v, i) => walletOutputIndices.indexOf(i) === -1)
-      .map(v => ({ amount: v.getValue(), rest: v.toObject() }));
-
-    //console.log("decoded", walletInputIndices, walletOutputIndices, decodedTransaction.transaction.toObject());
-    console.log("Non Wallet", "inputs", nonWalletInputs, "outputs", nonWalletOutputs);
-    console.log("Wallet", "inputs", txInputs, "outputs", txOutputs);
+      .map(mapNonWalletOutput);
   }
+  const hasNonWalletIO = nonWalletInputs.length || nonWalletOutputs.length;
 
   return (
     <Aux>
@@ -133,30 +150,33 @@ const TxDetails = ({ routes, router,
               </div>
             </div>
 
-            <div className="txdetails-overview">
-              <div className="txdetails-input-area">
-                <div className="txdetails-overview-title-consumed">
-                  <T id="txDetails.nonWalletInputs" m="Non Wallet Inputs" />
-                </div>
-                {nonWalletInputs.map(({ address, amount }, idx) => (
-                  <div key={idx} className="txdetails-row">
-                    <div className="txdetails-address">{addSpacingAroundText(address)}</div>
-                    <div className="txdetails-amount"><Balance amount={amount} /></div>
+            {hasNonWalletIO
+              ? <Aux>
+              <div className="txdetails-overview">
+                <div className="txdetails-input-area">
+                  <div className="txdetails-overview-title-consumed">
+                    <T id="txDetails.nonWalletInputs" m="Non Wallet Inputs" />
                   </div>
-                ))}
-              </div>
-              <div className="txdetails-output-area">
-                <div className="txdetails-overview-title-created">
-                  <T id="txDetails.nonWalletOutputs" m="Non Wallet Outputs" />
+                  {nonWalletInputs.map(({ address, amount }, idx) => (
+                    <div key={idx} className="txdetails-row">
+                      <div className="txdetails-address">{addSpacingAroundText(address)}</div>
+                      <div className="txdetails-amount"><Balance amount={amount} /></div>
+                    </div>
+                  ))}
                 </div>
-                {nonWalletOutputs.map(({ address, amount }, idx) => (
-                  <div key={idx} className="txdetails-row">
-                    <div className="txdetails-address">{addSpacingAroundText(address)}</div>
-                    <div className="txdetails-amount"><Balance amount={amount} /></div>
+                <div className="txdetails-output-area">
+                  <div className="txdetails-overview-title-created">
+                    <T id="txDetails.nonWalletOutputs" m="Non Wallet Outputs" />
                   </div>
-                ))}
+                  {nonWalletOutputs.map(({ address, amount }, idx) => (
+                    <div key={idx} className="txdetails-row">
+                      <div className="txdetails-address">{addSpacingAroundText(address)}</div>
+                      <div className="txdetails-amount">{amount}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            </Aux> : null}
 
             {txDirection !== "in" && txType !== "Vote" &&
             <Aux>
