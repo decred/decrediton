@@ -46,3 +46,19 @@ if (process.env.NODE_ENV === "development") {
 }
 
 export default locales;
+
+// appLocaleFromElectronLocale returns the app locale that should be used for a given
+// locale returned by electron's app.getLocale() function. Note that
+// app.getLocale() can only be called after the app's ready() event is fired.
+//
+// The locale key returned by this function is guaranteed to exist.
+export function appLocaleFromElectronLocale(electronLocale) {
+  switch (electronLocale) {
+  case "pt":
+  case "pt-BR":
+  case "pt-PT":
+    return "pt-BR";
+
+  default: return "en";
+  }
+}

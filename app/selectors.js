@@ -134,7 +134,7 @@ export const namedLocales = createSelector(
 export const locale = createSelector(
   [namedLocales, currentLocaleName],
   (namedLocales, currentLocaleName) => {
-    return namedLocales[currentLocaleName];
+    return namedLocales[currentLocaleName] || namedLocales["en"];
   }
 );
 

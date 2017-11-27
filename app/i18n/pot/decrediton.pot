@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-11-15T09:21:56.051Z\n"
+"POT-Creation-Date: 2017-11-27T11:57:22.751Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -632,6 +632,14 @@ msgctxt "send.cancelSendAllTitle"
 msgid "Cancel sending all funds"
 msgstr ""
 
+#: app/i18n/extracted/app/messages.json
+#. [settings.description]
+#. defaultMessage is:
+#. Changing network settings requires a restart
+msgctxt "settings.description"
+msgid "Changing network settings requires a restart"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/GetStartedPage/CheckWalletState.json
 #. [getStarted.header.checkingWalletState.meta]
 #. defaultMessage is:
@@ -672,12 +680,28 @@ msgctxt "accounts.formNew.confirmBtn"
 msgid "Confirm"
 msgstr ""
 
+#: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
+#. [createWallet.verifyPassphrasePlaceholder]
+#. defaultMessage is:
+#. Confirm Private Passphrase
+msgctxt "createWallet.verifyPassphrasePlaceholder"
+msgid "Confirm Private Passphrase"
+msgstr ""
+
 #: app/i18n/extracted/app/components/CreateWalletForm/ConfirmSeed/Form.json
 #. [confirmSeed.label]
 #. defaultMessage is:
 #. Confirm Seed
 msgctxt "confirmSeed.label"
 msgid "Confirm Seed"
+msgstr ""
+
+#: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
+#. [createWallet.passphraseInput.verifyLabel]
+#. defaultMessage is:
+#. Confirm private passphrase
+msgctxt "createWallet.passphraseInput.verifyLabel"
+msgid "Confirm private passphrase"
 msgstr ""
 
 #: app/i18n/extracted/app/components/TxHistoryRow/Status.json
@@ -738,6 +762,22 @@ msgstr ""
 #. Create a wallet
 msgctxt "getStarted.header.createWallet.meta"
 msgid "Create a wallet"
+msgstr ""
+
+#: app/i18n/extracted/app/components/CreateWalletForm/ContinueWalletCreation.json
+#. [createWallet.encryptWallet]
+#. defaultMessage is:
+#. Create wallet private passphrase
+msgctxt "createWallet.encryptWallet"
+msgid "Create wallet private passphrase"
+msgstr ""
+
+#: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
+#. [createWallet.passhraseInput.label]
+#. defaultMessage is:
+#. Create wallet private passphrase
+msgctxt "createWallet.passhraseInput.label"
+msgid "Create wallet private passphrase"
 msgstr ""
 
 #: app/i18n/extracted/app/messages.json
@@ -882,22 +922,6 @@ msgstr ""
 #. Edit
 msgctxt "appMenu.edit"
 msgid "Edit"
-msgstr ""
-
-#: app/i18n/extracted/app/components/CreateWalletForm/ContinueWalletCreation.json
-#. [createWallet.encryptWallet]
-#. defaultMessage is:
-#. Encrypt Wallet
-msgctxt "createWallet.encryptWallet"
-msgid "Encrypt Wallet"
-msgstr ""
-
-#: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
-#. [createWallet.passhraseInput.label]
-#. defaultMessage is:
-#. Encrypt Wallet
-msgctxt "createWallet.passhraseInput.label"
-msgid "Encrypt Wallet"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/Tickets.json
@@ -1940,14 +1964,6 @@ msgctxt "createWallet.passphrasePlaceholder"
 msgid "Private Passphrase"
 msgstr ""
 
-#: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
-#. [createWallet.verifyPassphrasePlaceholder]
-#. defaultMessage is:
-#. Private Passphrase
-msgctxt "createWallet.verifyPassphrasePlaceholder"
-msgid "Private Passphrase"
-msgstr ""
-
 #: app/i18n/extracted/app/components/ImportScriptModal/Modal.json
 #. [importScriptModal.privatePassphrase]
 #. defaultMessage is:
@@ -1986,6 +2002,22 @@ msgstr ""
 #. Private Password
 msgctxt "accounts.formNew.passphrasePlaceholder"
 msgid "Private Password"
+msgstr ""
+
+#: app/i18n/extracted/app/components/PassphraseInfoModal.json
+#. [passphrase.info.header]
+#. defaultMessage is:
+#. Private passphrase
+msgctxt "passphrase.info.header"
+msgid "Private passphrase"
+msgstr ""
+
+#: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
+#. [confirmSeed.seedInformation]
+#. defaultMessage is:
+#. Private passphrase information
+msgctxt "confirmSeed.seedInformation"
+msgid "Private passphrase information"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/Row.json
@@ -2290,9 +2322,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 #. [settings.save]
 #. defaultMessage is:
-#. Save Settings
+#. Save
 msgctxt "settings.save"
-msgid "Save Settings"
+msgid "Save"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/DiscoverAddresses/Form.json
@@ -2341,6 +2373,14 @@ msgstr ""
 #. Security Center
 msgctxt "security.title"
 msgid "Security Center"
+msgstr ""
+
+#: app/i18n/extracted/app/components/CreateWalletForm/ConfirmSeed/Form.json
+#. [confirmSeed.seedInformation]
+#. defaultMessage is:
+#. Seed information
+msgctxt "confirmSeed.seedInformation"
+msgid "Seed information"
 msgstr ""
 
 #: app/i18n/extracted/static/menus.json
@@ -2864,6 +2904,14 @@ msgctxt "votingPreferences.noAgenda"
 msgid "There are currently no agendas for voting."
 msgstr ""
 
+#: app/i18n/extracted/app/components/SeedInfoModal.json
+#. [seedEntry.info.message]
+#. defaultMessage is:
+#. This 33 word seed is what is used to derive everything about your particular wallet.  With this seed you can regenerate this wallet from anywhere in the world.  While this does offer flexibility and easy back ups, it also means that this seed should be handled with the utmost security.  We recommend only having seeds written by hand in the most secure location you have.
+msgctxt "seedEntry.info.message"
+msgid "This 33 word seed is what is used to derive everything about your particular wallet.  With this seed you can regenerate this wallet from anywhere in the world.  While this does offer flexibility and easy back ups, it also means that this seed should be handled with the utmost security.  We recommend only having seeds written by hand in the most secure location you have."
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/TransactionsPage/ReceiveTab/Page.json
 #. [receive.accountLabel]
 #. defaultMessage is:
@@ -2894,6 +2942,14 @@ msgstr ""
 #. This is the account that will purchase the tickets and receive the reward.
 msgctxt "tickets.info.account.message"
 msgid "This is the account that will purchase the tickets and receive the reward."
+msgstr ""
+
+#: app/i18n/extracted/app/components/PassphraseInfoModal.json
+#. [passphrase.info.message]
+#. defaultMessage is:
+#. This passphrase ensures that no funds may be spent from this wallet without it.  It is used to encrypt your private keys associated with your addresses.  These private keys are required to sign transactions that spend from the addresses.  Make sure to use a high-security passphrase and keep this passphrase in a secure place.   With your wallet file and this private passphrase an attacker would have full control over any funds associated with this wallet.
+msgctxt "passphrase.info.message"
+msgid "This passphrase ensures that no funds may be spent from this wallet without it.  It is used to encrypt your private keys associated with your addresses.  These private keys are required to sign transactions that spend from the addresses.  Make sure to use a high-security passphrase and keep this passphrase in a secure place.   With your wallet file and this private passphrase an attacker would have full control over any funds associated with this wallet."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/DecryptForm.json
@@ -3374,14 +3430,6 @@ msgctxt "security.description"
 msgid "Various tools that help in different aspects of crypto currency security will be located here."
 msgstr ""
 
-#: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
-#. [createWallet.passphraseInput.verifyLabel]
-#. defaultMessage is:
-#. Verify
-msgctxt "createWallet.passphraseInput.verifyLabel"
-msgid "Verify"
-msgstr ""
-
 #: app/i18n/extracted/app/components/SignMessage/Form.json
 #. [securitycenter.header.toggle.verify]
 #. defaultMessage is:
@@ -3514,6 +3562,14 @@ msgctxt "agenda.votingFor"
 msgid "Voting for"
 msgstr ""
 
+#: app/i18n/extracted/app/components/SeedInfoModal.json
+#. [seedEntry.info.header]
+#. defaultMessage is:
+#. Wallet Seed
+msgctxt "seedEntry.info.header"
+msgid "Wallet Seed"
+msgstr ""
+
 #: app/i18n/extracted/app/components/CreateWalletForm/CreateWallet.json
 #. [createWallet.info]
 #. defaultMessage is:
@@ -3613,6 +3669,14 @@ msgctxt "passphraseModal.cancel"
 msgid "cancel"
 msgstr ""
 
+#: app/i18n/extracted/app/components/PassphraseModal/Modal.json
+#. [passphraseModal.confirm]
+#. defaultMessage is:
+#. confirm
+msgctxt "passphraseModal.confirm"
+msgid "confirm"
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 #. [ticket.status.expired]
 #. defaultMessage is:
@@ -3677,14 +3741,6 @@ msgctxt "ticket.status.multiple.missed"
 msgid "missed"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/SettingsPage/Page.json
-#. [settings.requiresRestart]
-#. defaultMessage is:
-#. requires restart
-msgctxt "settings.requiresRestart"
-msgid "requires restart"
-msgstr ""
-
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json
 #. [ticket.status.revoked]
 #. defaultMessage is:
@@ -3699,14 +3755,6 @@ msgstr ""
 #. revoked
 msgctxt "ticket.status.multiple.revoked"
 msgid "revoked"
-msgstr ""
-
-#: app/i18n/extracted/app/components/PassphraseModal/Modal.json
-#. [passphraseModal.save]
-#. defaultMessage is:
-#. save
-msgctxt "passphraseModal.save"
-msgid "save"
 msgstr ""
 
 #: app/i18n/extracted/app/components/StakePools/index.json
@@ -3842,6 +3890,14 @@ msgstr ""
 #. defaultMessage is:
 #. {originalError}
 msgctxt "send.errors.constructTxFailed"
+msgid "{originalError}"
+msgstr ""
+
+#: app/i18n/extracted/app/reducers/snackbar.json
+#. [send.errors.validateAddressFailed]
+#. defaultMessage is:
+#. {originalError}
+msgctxt "send.errors.validateAddressFailed"
 msgid "{originalError}"
 msgstr ""
 

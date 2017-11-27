@@ -7,7 +7,7 @@ import os from "os";
 import parseArgs from "minimist";
 import winston from "winston";
 import stringArgv from "string-argv";
-import locales from "./i18n/locales";
+import { appLocaleFromElectronLocale, default as locales} from "./i18n/locales";
 
 let menu;
 let template;
@@ -168,13 +168,6 @@ if (argv.testnet) {
 if (argv.mainnet) {
   cfg.set("network", "mainnet");
   logger.log("info", "Running on mainnet.");
-}
-
-var cfgLocale = cfg.get("locale", "en");
-var locale = locales.find(value => value.key === cfgLocale);
-if (!locale) {
-  logger.log("error", `Locale ${cfgLocale} not found. Returning to default`);
-  locale = locales.find(value => value.name === "en");
 }
 
 let daemonIsAdvanced = cfg.get("daemon_start_advanced");
@@ -577,6 +570,17 @@ if (!primaryInstance) {
 }
 
 app.on("ready", async () => {
+
+  // when installing (on first run) locale will be empty. Determine the user's
+  // OS locale and set that as decrediton's locale.
+  let cfgLocale = cfg.get("locale", "");
+  let locale = locales.find(value => value.key === cfgLocale);
+  if (!locale) {
+    let newCfgLocale = appLocaleFromElectronLocale(app.getLocale());
+    logger.log("error", `Locale ${cfgLocale} not found. Switching to locale ${newCfgLocale}.`);
+    cfg.set("locale", newCfgLocale);
+    locale = locales.find(value => value.key === newCfgLocale);
+  }
 
   let windowOpts = {show: false, width: 1178, height: 790, page: "app.html"};
   if (!primaryInstance) {
