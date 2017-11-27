@@ -8,7 +8,7 @@ const Page = ({ Header, Body, ...props }) => {
       <Header {...props} />
       <div className="page-content-fixed">
         <DecredLoading
-          hidden={!props.isProcessing}
+          hidden={!props.isProcessing || props.showSettings}
           className="get-started-loading"
         />
         <Body {...props} />

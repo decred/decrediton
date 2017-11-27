@@ -7,11 +7,17 @@ import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHead
 import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
 import { AdvancedStartupHeader, AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
+import { SettingsBody, SettingsHeader } from "./Settings";
 import { walletStartup } from "connectors";
 import { getAppdataPath, getRemoteCredentials } from "config.js";
 
 @autobind
 class GetStartedPage extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { showSettings: false };
+  }
 
   componentDidMount() {
     if (!this.props.isAdvancedDaemon) {
@@ -33,6 +39,14 @@ class GetStartedPage extends React.Component {
     }
   }
 
+  onShowSettings() {
+    this.setState({ showSettings: true });
+  }
+
+  onHideSettings() {
+    this.setState({ showSettings: false });
+  }
+
   render() {
     const {
       startStepIndex,
@@ -42,8 +56,23 @@ class GetStartedPage extends React.Component {
       remoteAppdataError,
       ...props
     } = this.props;
+
+    const {
+      showSettings,
+      ...state
+    } = this.state;
+
+    const {
+      onShowSettings,
+      onHideSettings
+    } = this;
+
     let Header, Body;
-    if (isPrepared) {
+
+    if (showSettings) {
+      Header = SettingsHeader;
+      Body = SettingsBody;
+    } else if (isPrepared) {
       switch (startStepIndex || 0) {
       case 0:
       case 1:
@@ -84,7 +113,13 @@ class GetStartedPage extends React.Component {
       }
     }
 
-    return <Page Header={Header} Body={Body} {...props} />;
+    return <Page Header={Header} Body={Body}
+      {...{
+        ...props,
+        ...state,
+        showSettings,
+        onShowSettings,
+        onHideSettings}} />;
   }
 }
 
