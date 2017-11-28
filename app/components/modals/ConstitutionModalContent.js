@@ -1,15 +1,15 @@
 export default () => (
   <Aux>
     <p>
-      <em>Decred</em> (/ˈdi:ˈkred/, /dɪˈkred/, dee-cred) is an open, progressive,
+      <em>Decred</em>(/ˈdi:ˈkred/, /dɪˈkred/, dee-cred) is an open, progressive,
   and self-funding cryptocurrency with a system of community-based governance
   integrated into its blockchain. The project mission is to develop technology
   for the public benefit, with a primary focus on cryptocurrency technology.
-  <em>Decred</em>, as a currency and as a project, is bound by the following set
+  {" "}<em>Decred</em>, as a currency and as a project, is bound by the following set
   of rules, which include guiding principles, a system of governance, and a
   funding mechanism. These rules have been established in an effort to create an
   equitable and sustainable framework within which to achieve
-  <em>Decred</em>&lsquo;s goals.</p>
+  {" "}<em>Decred</em>&lsquo;s goals.</p>
 
     <hr />
 
@@ -17,7 +17,7 @@ export default () => (
     <ul>
       <li>
         <em>Free and Open-Source Software</em> - All software developed as part of
-    <em>Decred</em> shall be free and open source-software.</li>
+        {" "}<em>Decred</em> shall be free and open source-software.</li>
       <li>
         <em>Free Speech and Consideration</em> - Everyone has the right to
     communicate opinions and ideas without fear of censorship. Consideration
@@ -28,7 +28,7 @@ export default () => (
     multi-stakeholder system and an active effort shall be maintained to include
     a diverse set of views and users. While it would be ideal to include
     everyone,
-    <em>Decred</em> shall comply with all relevant bodies of law in the
+    {" "}<em>Decred</em> shall comply with all relevant bodies of law in the
     jurisdictions where applicable, such as embargoes and other trade
     sanctions.</li>
       <li>
@@ -40,14 +40,14 @@ export default () => (
       <li>
         <em>Fixed Finite Supply</em> - Issuance is finite and the total maximum
     number of coins in
-    <em>Decred</em> shall not change. The total maximum supply for
-    <em>Decred</em> is 20,999,999.99800912 coins, with a per-block subsidy that
+    {" "}<em>Decred</em> shall not change. The total maximum supply for
+    {" "}<em>Decred</em> is 20,999,999.99800912 coins, with a per-block subsidy that
     adjusts every 6,144 blocks (approximately 21.33 days) by reducing by a
     factor of 100/101. The genesis block subsidy starts at 31.19582664
     coins.</li>
       <li>
         <em>Universal Fungibility</em> - Universal fungibility is fundamental to
-    <em>Decred</em> being a store of value and attacks against it shall be
+        {" "}<em>Decred</em> being a store of value and attacks against it shall be
     actively monitored and countermeasures pursued as necessary.</li>
     </ul>
 
@@ -93,39 +93,39 @@ export default () => (
     <ul>
       <li>Off-chain decision-making shall be used to resolve disputes related to
   development and voted on by the
-    <em>Decred Assembly</em> as they arise, as an effective proof-of-assembly
+  {" "}<em>Decred Assembly</em> as they arise, as an effective proof-of-assembly
     (&ldquo;PoA&rdquo;), until such time PoA is integrated into the
     blockchain.</li>
       <li>The
-    <em>Decred Assembly</em> shall be composed of diverse Assembly members who
+      {" "}<em>Decred Assembly</em> shall be composed of diverse Assembly members who
     are selected for membership by the
-    <em>Admission Council</em> from the project ecosystem for
+    {" "}<em>Admission Council</em> from the project ecosystem for
     representation.</li>
       <li>Councils that are composed of Assembly members shall be formed to address
   ongoing and episodic matters. The initial Councils shall serve the separate
   functions of admission (
-    <em>Admission Council</em>), creation (
-    <em>Creation Council</em>), and attrition (
-    <em>Attrition Council</em>).</li>
+    {" "}<em>Admission Council</em>), creation (
+      {" "}<em>Creation Council</em>), and attrition (
+        {" "}<em>Attrition Council</em>).</li>
       <li>The
-    <em>Admission Council</em> shall vote on the inclusion of new members into
+      {" "}<em>Admission Council</em> shall vote on the inclusion of new members into
     the Assembly. All additional Councils shall be created by the
-    <em>Creation Council</em>. The
-    <em>Attrition Council</em> shall be responsible for deactivating both
+    {" "}<em>Creation Council</em>. The
+    {" "}<em>Attrition Council</em> shall be responsible for deactivating both
     Councils and Assembly members as necessary.</li>
       <li>Membership of the
-    <em>Decred Assembly</em> shall consist of Assembly members who have been
+      {" "}<em>Decred Assembly</em> shall consist of Assembly members who have been
     confirmed by a 60% or greater affirmative vote by the
-    <em>Admission Council</em>. There is no restriction on the age or
+    {" "}<em>Admission Council</em>. There is no restriction on the age or
     nationality of Assembly members, the only requirement is that of merit as
     judged by the
-    <em>Admission Council</em>. Merit is judged on the basis of two
+    {" "}<em>Admission Council</em>. Merit is judged on the basis of two
     characteristics: (1) the amount of time over which one has been involved
     with the project, and (2) one&rsquo;s body of work and its impact in the
     context of the project.</li>
       <li>Attrition is embraced by temporarily deactivating or actively expelling
   Assembly members by a 60% or greater affirmative vote by the
-    <em>Attrition Council</em> on the basis of: (1) substantial non-fulfillment
+  {" "}<em>Attrition Council</em> on the basis of: (1) substantial non-fulfillment
     of duties for one or more Councils or the Assembly, and/or (2)
     counterproductive behaviour that goes against the framework set forth in the
     Constitution without constructive action toward solutions.</li>
@@ -140,7 +140,7 @@ export default () => (
       <li>Sustainability and longevity require that a subsidy of 10% of all block
   rewards be given to a development organization on an ongoing basis. The
   initial development organization shall be
-    <em>Decred Holdings Group</em> LLC (&ldquo;DHG&rdquo;), a Nevis LLC that is
+  {" "}<em>Decred Holdings Group</em> LLC (&ldquo;DHG&rdquo;), a Nevis LLC that is
     responsible for funding work related to the development of the project, such
     as software development, infrastructure, and awareness.</li>
       <li>DHG shall only fund work that adheres to the guiding principles.</li>
@@ -150,11 +150,11 @@ export default () => (
       <li>DHG shall put forth a budget proposal each year on March 8th, after the
   corresponding public financial statement has been issued.</li>
       <li>The
-    <em>Funding Council</em> shall review, propose changes, make changes, and
+      {" "}<em>Funding Council</em> shall review, propose changes, make changes, and
     ultimately approve the proposal by April 8th, one month from the initial
     budget proposal.</li>
       <li>Final approval of the budget via PoA vote shall occur after
-    <em>Funding Council</em> approval by April 18th, two months from the initial
+      {" "}<em>Funding Council</em> approval by April 18th, two months from the initial
     proposal.</li>
       <li>DHG shall make public requests for proposals (&ldquo;RFPs&rdquo;) for
   projects that are to be completed by parties on a contractual basis. RFPs
@@ -166,7 +166,7 @@ export default () => (
       <li>All proposals, both submitted and accepted, shall be made public one week
   after a proposal has been selected. Once the selection occurs, the associated
   RFP shall be removed. Contracted parties shall be paid exclusively in
-    <em>decred</em> (&ldquo;DCR&rdquo;) at the current effective DCR/USD rate at
+  {" "}<em>decred</em> (&ldquo;DCR&rdquo;) at the current effective DCR/USD rate at
     the time of payment, unless specifically noted otherwise.</li>
       <li>In the future, the development organization may need to change from DHG to
   another entity that serves an identical function. If and when this occurs, DHG
