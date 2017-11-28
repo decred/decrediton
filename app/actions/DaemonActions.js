@@ -17,7 +17,10 @@ export const WALLETREADY = "WALLETREADY";
 export const SHUTDOWN_REQUESTED = "SHUTDOWN_REQUESTED";
 export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 
-export const startDaemon = (rpcCreds, appData) => (dispatch) => {
+export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
+  const { daemonStarted } = getState().daemon;
+  if (daemonStarted) return;
+
   if (rpcCreds) {
     dispatch({type: DAEMONSTARTED_REMOTE, credentials: rpcCreds, pid: -1});
     dispatch(syncDaemon());
