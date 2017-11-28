@@ -47,19 +47,6 @@ const GeneralSettings = ({
             options={locales}
           />
         </div>
-
-        <div className="settings-row">
-          <div className="settings-label">
-            <T id="settings.network" m="Network" />
-          </div>
-          <SettingsInput
-            className="settings-input"
-            value={tempSettings.network}
-            onChange={(newNet) => onChangeTempSettings({network: newNet.name})}
-            valueKey="name" labelKey="name"
-            options={networks}
-          />
-        </div>
     </div>
   </div>
 );
