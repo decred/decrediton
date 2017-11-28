@@ -15,7 +15,6 @@ const GeneralSettings = ({
   tempSettings,
   currencies,
   locales,
-  networks,
   onChangeTempSettings
 }) => (
   <div className="settings-general">
