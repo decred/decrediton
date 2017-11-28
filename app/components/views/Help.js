@@ -1,6 +1,8 @@
 import { FormattedMessage as T } from "react-intl";
 import { TabbedHeader } from "shared";
 import HelpLink from "HelpLink";
+import HelpLinkInfoModal from "HelpLinkInfoModal";
+import { ConstitutionModalContent } from "modals";
 import "style/Help.less";
 
 const Help = ({ routes }) => (
@@ -15,6 +17,12 @@ const Help = ({ routes }) => (
       <div className={"help-icon-row"}>
         <HelpLink className={"help-freenode-icon"} href="https://webchat.freenode.net/?channels=decred&uio=d4"><T id="help.freenode" m="Freenode" /></HelpLink>
         <HelpLink className={"help-forum-icon"} href="https://forum.decred.org"><T id="help.forum" m="Forum" /> </HelpLink>
+        <HelpLinkInfoModal className={"help-constitution-icon"}
+          modalTitle={<h1><T id="help.constitution.modal.title" m="Decred Constitution" /></h1>}
+          modalContent={<ConstitutionModalContent />}
+        >
+          <T id="help.constitution" m="Constitution" />
+        </HelpLinkInfoModal>
       </div>
     </div>
   </Aux>
