@@ -17,6 +17,7 @@ class GetStartedPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { showSettings: false };
+    props.determineNeededBlocks();
   }
 
   componentDidMount() {
