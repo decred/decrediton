@@ -1,0 +1,44 @@
+@import (reference) "./main.less";
+
+.app-modal-overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 100;
+}
+
+.app-modal {
+  position: fixed;
+  left: 20px;
+  right: 20px;
+  top: 20px;
+  bottom: 20px;
+  background-color: #fff;
+  z-index: 200;
+  border-radius: 5px;
+  overflow-y: scroll;
+}
+
+.app-modal.info-modal {
+  background-color: rgba(12, 30, 62, 0.9);
+  padding: 2em;
+  color: #fff;
+}
+
+.info-modal-close-button {
+  height: 1em;
+}
+
+.info-modal-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-modal-header-title {
+  font-size: 19px;
+  text-transform: capitalize;
+  height: 60px;
+}
