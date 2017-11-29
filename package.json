@@ -78,10 +78,10 @@
         "rpm",
         "tar.gz"
       ]
+    },
+    "directories": {
+      "output": "release"
     }
-  },
-  "directories": {
-    "output": "release"
   },
   "bin": {
     "electron": "./node_modules/.bin/electron"
