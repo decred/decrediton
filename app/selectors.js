@@ -500,9 +500,7 @@ export const nextAddressAccount = createSelector(
   [visibleAccounts, nextAddressAccountNumber],
   (accounts, number) => accounts.find(compose(eq(number), get("value")))
 );
-export const nextAddress = compose(
-  res => res ? res.getAddress() : "", getNextAddressResponse
-);
+export const nextAddress = compose(get("address"), getNextAddressResponse);
 
 export const defaultSpendingAccount = createSelector(
   [spendingAccounts], find(compose(eq(0), get("value")))
