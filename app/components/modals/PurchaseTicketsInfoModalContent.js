@@ -21,8 +21,6 @@ export default () => (
       <div className="purchase-tickets-section">
         <span className="purchase-tickets-section-header"><T id="tickets.info.expiry.header" m="Expiry (blocks)" /></span> - <T id="tickets.info.expiry.message" m="Often ticket fees will increase during a window and you may be stopped out by higher fees. By setting an expiry, tickets that are not mined in the given number of blocks are cancelled so you can try again with higher fees if you wish. If this is empty, they will not expire until the end of the window." />
       </div>
-    </div>
-    <div className="purchase-tickets-column">
       <div className="purchase-tickets-section">
         <span className="purchase-tickets-section-header"><T id="tickets.info.txFee.header" m="Tx fee (DCR/kB)" /></span> - <T id="tickets.info.txFee.message" m="Decrediton uses a &quot;split&quot; transaction to avoid blocking your balance, spliting the exact amount needed for the ticket from the balance in your wallet. The &quot;split&quot; transaction needs to be confirmed at least once before you can reuse your balance. This can block your whole balance for several minutes while this confirmation occurs. Without the split, you would have to wait for the confirmation of the ticket transaction, which could take several hours. This can be left at 0.01. It does not affect your chances of buying tickets or voting with them." />
       </div>
