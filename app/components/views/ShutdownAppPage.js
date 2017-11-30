@@ -5,11 +5,6 @@ import DecredLoading from "../DecredLoading";
 import "../../style/Layout.less";
 
 class ShutdownAppPage extends React.Component{
-  componentWillMount() {
-    this.props.showSidebar();
-    this.props.hideSidebarMenu();
-  }
-
   componentDidMount() {
     this.props.cleanShutdown();
   }

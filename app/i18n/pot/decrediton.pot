@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2017-11-27T11:57:22.751Z\n"
+"POT-Creation-Date: 2017-11-27T18:55:30.965Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -460,6 +460,14 @@ msgctxt "walletError.title"
 msgid "An error has occured"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
+#. [getStarted.btnSettings]
+#. defaultMessage is:
+#. Application Settings
+msgctxt "getStarted.btnSettings"
+msgid "Application Settings"
+msgstr ""
+
 #: app/i18n/extracted/app/components/PurchaseTicketsInfo.json
 #. [tickets.info.poolPreference.message]
 #. defaultMessage is:
@@ -505,6 +513,14 @@ msgstr ""
 #. defaultMessage is:
 #. Back
 msgctxt "getStarted.backBtn"
+msgid "Back"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/Settings/Form.json
+#. [getStarted.btnHideSettings]
+#. defaultMessage is:
+#. Back
+msgctxt "getStarted.btnHideSettings"
 msgid "Back"
 msgstr ""
 
@@ -868,7 +884,7 @@ msgctxt "getStarted.header.discoveringAddresses.meta"
 msgid "Discovering addresses"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/SettingsPage/Page.json
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 #. [settings.displayedUnits]
 #. defaultMessage is:
 #. Displayed Units
@@ -1498,7 +1514,7 @@ msgctxt "securitycenter.loading"
 msgid "Loading..."
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/SettingsPage/Page.json
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 #. [settings.locale]
 #. defaultMessage is:
 #. Locale
@@ -1647,7 +1663,7 @@ msgctxt "tickets.tab.mytickets"
 msgid "My Tickets"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/SettingsPage/Page.json
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 #. [settings.network]
 #. defaultMessage is:
 #. Network
@@ -2319,6 +2335,10 @@ msgctxt "transaction.type.revokes"
 msgid "Revokes"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/GetStartedPage/Settings/Form.json
+#. [settings.save]
+#. defaultMessage is:
+#. Save
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 #. [settings.save]
 #. defaultMessage is:
@@ -2499,6 +2519,10 @@ msgstr ""
 #. [getStarted.header.title]
 #. defaultMessage is:
 #. Setting up Decrediton
+#: app/i18n/extracted/app/components/views/GetStartedPage/Settings/Header.json
+#. [getStarted.header.title]
+#. defaultMessage is:
+#. Setting up Decrediton
 #: app/i18n/extracted/app/components/views/GetStartedPage/StartRPC.json
 #. [getStarted.header.title]
 #. defaultMessage is:
@@ -2520,6 +2544,14 @@ msgstr ""
 #. defaultMessage is:
 #. Settings
 msgctxt "menu.settings"
+msgid "Settings"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/GetStartedPage/Settings/Header.json
+#. [getStarted.header.settings.meta]
+#. defaultMessage is:
+#. Settings
+msgctxt "getStarted.header.settings.meta"
 msgid "Settings"
 msgstr ""
 

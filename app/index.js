@@ -336,6 +336,10 @@ var initialState = {
   snackbar: {
     messages: Array()
   },
+  sidebar: {
+    showingSidebar: true,
+    showingSidebarMenu: false,
+  },
   locales: locales
 };
 

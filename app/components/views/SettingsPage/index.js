@@ -13,30 +13,20 @@ class Settings extends React.Component {
 
   render() {
     const {
-      locales,
       onShowChangePassphrase,
       onCancelChangePassphrase,
       onAttemptChangePassphrase,
-      onChangeNetwork,
-      onChangeCurrencyDisplay,
-      onChangeLocale,
       onSaveSettings
     } = this;
 
     return !this.props.walletService ? <ErrorScreen /> : (
       <SettingsPage
         {...{
-          networks: [{name: "testnet"}, {name: "mainnet"}],
-          currencies: [{name: "DCR"}, {name: "atoms"}],
-          locales: locales,
           ...this.props, ...this.state }}
         {...{
           onShowChangePassphrase,
           onCancelChangePassphrase,
           onAttemptChangePassphrase,
-          onChangeNetwork,
-          onChangeCurrencyDisplay,
-          onChangeLocale,
           onSaveSettings
         }}
       />
@@ -55,21 +45,6 @@ class Settings extends React.Component {
 
   onCancelChangePassphrase() {
     this.setState({ isShowingChangePassphrase: false });
-  }
-
-  onChangeNetwork(network) {
-    const { onChangeTempSettings, tempSettings } = this.props;
-    onChangeTempSettings && onChangeTempSettings({ ...tempSettings, network });
-  }
-
-  onChangeCurrencyDisplay(currencyDisplay) {
-    const { onChangeTempSettings, tempSettings } = this.props;
-    onChangeTempSettings && onChangeTempSettings({ ...tempSettings, currencyDisplay });
-  }
-
-  onChangeLocale(locale) {
-    const { onChangeTempSettings, tempSettings } = this.props;
-    onChangeTempSettings && onChangeTempSettings({ ...tempSettings, locale });
   }
 
   onSaveSettings() {

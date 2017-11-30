@@ -2,7 +2,7 @@ import KeyBlueButton from "KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
 import { TabbedHeader } from "shared";
 import ChangePassphraseModal from "ChangePassphraseModal";
-import SettingsInput from "inputs/SettingsInput";
+import GeneralSettings from "./GeneralSettings";
 import "style/StakePool.less";
 import "style/Settings.less";
 
@@ -16,9 +16,7 @@ const SettingsPage = ({
                         onShowChangePassphrase,
                         onCancelChangePassphrase,
                         onAttemptChangePassphrase,
-                        onChangeCurrencyDisplay,
-                        onChangeNetwork,
-                        onChangeLocale,
+                        onChangeTempSettings,
                         onSaveSettings,
                         routes,
                       }) => (
@@ -32,51 +30,8 @@ const SettingsPage = ({
       />
       <div className={ ["tab-card", isShowingChangePassphrase ? "tab-card-blur" : null].join(" ").trim() }>
         <div className="settings-wrapper">
-          <div className="settings-general">
-
-            <div className="settings-colunm-title">General</div>
-              <div className="settings-column-content">
-
-                <div className="settings-row">
-                  <div className="settings-label">
-                    <T id="settings.displayedUnits" m="Displayed Units" />
-                  </div>
-                  <SettingsInput
-                    className="settings-input"
-                    value={tempSettings.currencyDisplay}
-                    onChange={(newCurrency) => onChangeCurrencyDisplay(newCurrency.name)}
-                    valueKey="name" labelKey="name"
-                    options={currencies}
-                  />
-                </div>
-
-                <div className="settings-row">
-                  <div className="settings-label">
-                    <T id="settings.locale" m="Locale" />
-                  </div>
-                  <SettingsInput
-                    className="settings-input"
-                    value={tempSettings.locale}
-                    onChange={(newLocale) => onChangeLocale(newLocale.key)}
-                    valueKey="key" labelKey="description"
-                    options={locales}
-                  />
-                </div>
-
-                <div className="settings-row">
-                  <div className="settings-label">
-                    <T id="settings.network" m="Network" />
-                  </div>
-                  <SettingsInput
-                    className="settings-input"
-                    value={tempSettings.network}
-                    onChange={(newNet) => onChangeNetwork(newNet.name)}
-                    valueKey="name" labelKey="name"
-                    options={networks}
-                  />
-                </div>
-            </div>
-          </div>
+          <GeneralSettings {...{tempSettings, networks, currencies, locales,
+            onChangeTempSettings}} />
 
           <div className="settings-security">
             <div className="settings-colunm-title">Security</div>

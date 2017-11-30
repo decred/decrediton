@@ -7,16 +7,17 @@ import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHead
 import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
 import { AdvancedStartupHeader, AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
+import { SettingsBody, SettingsHeader } from "./Settings";
 import { walletStartup } from "connectors";
 import { getAppdataPath, getRemoteCredentials } from "config.js";
 
 @autobind
 class GetStartedPage extends React.Component {
 
-  componentWillMount() {
-    this.props.showSidebar();
-    this.props.hideSidebarMenu();
-    this.props.determineNeededBlocks();
+  constructor(props) {
+    super(props);
+    this.state = { showSettings: false };
+    props.determineNeededBlocks();
   }
 
   componentDidMount() {
@@ -39,10 +40,12 @@ class GetStartedPage extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    if (!this.props.versionInvalid && !this.props.shutdownRequested) {
-      this.props.showSidebarMenu();
-    }
+  onShowSettings() {
+    this.setState({ showSettings: true });
+  }
+
+  onHideSettings() {
+    this.setState({ showSettings: false });
   }
 
   render() {
@@ -54,8 +57,23 @@ class GetStartedPage extends React.Component {
       remoteAppdataError,
       ...props
     } = this.props;
+
+    const {
+      showSettings,
+      ...state
+    } = this.state;
+
+    const {
+      onShowSettings,
+      onHideSettings
+    } = this;
+
     let Header, Body;
-    if (isPrepared) {
+
+    if (showSettings) {
+      Header = SettingsHeader;
+      Body = SettingsBody;
+    } else if (isPrepared) {
       switch (startStepIndex || 0) {
       case 0:
       case 1:
@@ -96,16 +114,14 @@ class GetStartedPage extends React.Component {
       }
     }
 
-    return <Page Header={Header} Body={Body} {...props} />;
+    return <Page Header={Header} Body={Body}
+      {...{
+        ...props,
+        ...state,
+        showSettings,
+        onShowSettings,
+        onHideSettings}} />;
   }
 }
-
-GetStartedPage.propTypes = {
-  showSidebar: PropTypes.func.isRequired,
-  showSidebarMenu: PropTypes.func.isRequired,
-  hideSidebarMenu: PropTypes.func.isRequired,
-  shutdownRequested: PropTypes.bool.isRequired,
-  versionInvalid: PropTypes.bool.isRequired,
-};
 
 export default walletStartup(GetStartedPage);

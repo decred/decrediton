@@ -3,6 +3,7 @@ import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { ipcRenderer } from "electron";
 import {setMustOpenForm} from "config";
+import { hideSidebarMenu } from "./SidebarActions";
 
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
@@ -16,7 +17,10 @@ export const WALLETREADY = "WALLETREADY";
 export const SHUTDOWN_REQUESTED = "SHUTDOWN_REQUESTED";
 export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 
-export const startDaemon = (rpcCreds, appData) => (dispatch) => {
+export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
+  const { daemonStarted } = getState().daemon;
+  if (daemonStarted) return;
+
   if (rpcCreds) {
     dispatch({type: DAEMONSTARTED_REMOTE, credentials: rpcCreds, pid: -1});
     dispatch(syncDaemon());
@@ -46,6 +50,7 @@ export const shutdownApp = () => (dispatch) => {
     dispatch({type: DAEMONSTOPPED});
   });
   dispatch({type: SHUTDOWN_REQUESTED});
+  dispatch(hideSidebarMenu());
   dispatch(pushHistory("/shutdown"));
 };
 

@@ -4,7 +4,6 @@ import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 import * as wla from "../actions/WalletLoaderActions";
 import * as da from "../actions/DaemonActions";
-import { showSidebarMenu, showSidebar, hideSidebarMenu } from "../actions/SidebarActions";
 
 const mapStateToProps = selectorMap({
   startStepIndex: sel.startStepIndex,
@@ -21,9 +20,7 @@ const mapStateToProps = selectorMap({
   getEstimatedTimeLeft: sel.getEstimatedTimeLeft,
   isPrepared: sel.isPrepared,
   network: sel.network,
-  versionInvalid: sel.versionInvalid,
   isAdvancedDaemon: sel.isAdvancedDaemon,
-  shutdownRequested: sel.shutdownRequested,
   openForm: sel.openForm,
   remoteAppdataError: sel.getRemoteAppdataError,
 });
@@ -37,9 +34,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   doVersionCheck: wla.versionCheckAction,
   onStartDaemon: da.startDaemon,
   determineNeededBlocks: wla.determineNeededBlocks,
-  showSidebarMenu,
-  showSidebar,
-  hideSidebarMenu,
   setCredentialsAppdataError: da.setCredentialsAppdataError
 }, dispatch);
 
