@@ -3,7 +3,7 @@ import { TabbedHeader } from "shared";
 import AccountRow from "./AccountRow";
 import DecredLoading from "DecredLoading";
 import KeyBlueButton from "KeyBlueButton";
-import InfoModalButton from "InfoButtonModal";
+import InfoModalButton from "InfoModalButton";
 import { BalanceOverviewModalContent } from "modals";
 
 const AccountsList = ({
