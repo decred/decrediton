@@ -279,7 +279,7 @@ message GetTransactionsRequest {
 	// TODO: remove until spec adds it back in some way.
 	int32 minimum_recent_transactions = 5;
 
-	// TODO: limit max number of txs?
+	// Include at most this many transactions in the reply
 	int32 maximum_transaction_count = 6;
 }
 message GetTransactionsResponse {
