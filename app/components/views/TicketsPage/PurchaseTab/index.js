@@ -18,8 +18,6 @@ class Purchase extends React.Component {
       passphraseHeading: null,
       passphraseDescription: null,
       passphraseCallback: null,
-      isShowingTicketsInfo: false,
-      isShowingAutoBuyerTicketsInfo: false,
       isShowingStakePools: !this.props.defaultStakePool,
       isShowingVotingPrefs: false,
       isShowingImportScript: false,
@@ -35,10 +33,6 @@ class Purchase extends React.Component {
           stakePool: this.getStakePool(),
           account: this.getAccount(),
           ...substruct({
-            onShowTicketsInfo: null,
-            onHideTicketsInfo: null,
-            onShowAutoBuyerTicketsInfo: null,
-            onHideAutoBuyerTicketsInfo: null,
             onChangeStakePool: null,
             onChangeAccount: null,
             onShowImportScript: null,
@@ -106,21 +100,6 @@ class Purchase extends React.Component {
       passphraseDescription: null,
       passphraseCallback: null
     });
-  }
-
-  onShowTicketsInfo() {
-    this.setState({ isShowingTicketsInfo: true });
-  }
-
-  onHideTicketsInfo() {
-    this.setState({ isShowingTicketsInfo: false });
-  }
-
-  onShowAutoBuyerTicketsInfo() {
-    this.setState({ isShowingAutoBuyerTicketsInfo: true });
-  }
-  onHideAutoBuyerTicketsInfo() {
-    this.setState({ isShowingAutoBuyerTicketsInfo: false });
   }
 
   onShowStakePoolConfig() {

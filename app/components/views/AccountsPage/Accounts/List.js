@@ -59,7 +59,6 @@ const AccountsList = ({
 AccountsList.propTypes = {
   accounts: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  isShowingBalanceOverviewInfoModal: PropTypes.bool.isRequired,
   onToggleAddAccount: PropTypes.func.isRequired,
   onShowAccount: PropTypes.func.isRequired,
   onHideAccount: PropTypes.func.isRequired,
@@ -67,8 +66,6 @@ AccountsList.propTypes = {
   onShowAccountDetails: PropTypes.func.isRequired,
   onHideAccountDetails: PropTypes.func.isRequired,
   accountNumDetailsShown: PropTypes.number,
-  onShowBalanceOverviewInfoModal: PropTypes.func.isRequired,
-  onCloseBalanceOverviewInfoModal: PropTypes.func.isRequired,
 };
 
 export default AccountsList;
