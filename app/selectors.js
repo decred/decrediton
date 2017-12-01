@@ -238,70 +238,16 @@ const transactionNormalizer = createSelector(
   }
 );
 
+export const noMoreTransactions = get(["grpc", "noMoreTransactions"]);
 export const transactionsNormalizer = createSelector([transactionNormalizer], map);
-
-const regularTransactions = createSelector(
-  [transactionsNormalizer, get(["grpc", "regularTransactionsInfo"])], apply
-);
-
-const ticketTransactions = createSelector(
-  [transactionsNormalizer, get(["grpc", "ticketTransactionsInfo"])], apply
-);
-
-const voteTransactions = createSelector(
-  [transactionsNormalizer, get(["grpc", "voteTransactionsInfo"])], apply
-);
-
-const revokeTransactions = createSelector(
-  [transactionsNormalizer, get(["grpc", "revokeTransactionsInfo"])], apply
-);
-
-export const unmined = createSelector(
-  [transactionsNormalizer, get(["notifications", "unmined"])], apply
-);
-
-const minedAndUnminedSelectorCreator = (selector, txType) =>
-  createSelector(
-    [selector, unmined],
-      (Mined, Unmined) => (Unmined
-        .filter(t => t.txNumericType === txType ? t : null )
-        .concat(Mined)
-    )
-
-  );
-
-const regularAndUnminedTransactions = minedAndUnminedSelectorCreator(
-  regularTransactions, TransactionDetails.TransactionType.REGULAR);
-
-const ticketAndUnminedTransactions = minedAndUnminedSelectorCreator(
-  ticketTransactions, TransactionDetails.TransactionType.TICKET_PURCHASE);
-
-const voteAndUnminedTransactions = minedAndUnminedSelectorCreator(
-  voteTransactions, TransactionDetails.TransactionType.VOTE);
-
-const revokeAndUnminedTransactions = minedAndUnminedSelectorCreator(
-  revokeTransactions, TransactionDetails.TransactionType.REVOCATION);
-
+export const transactionsFilter = get(["grpc", "transactionsFilter"]);
 export const transactions = createSelector(
-  [
-    regularAndUnminedTransactions,
-    ticketAndUnminedTransactions,
-    voteAndUnminedTransactions,
-    revokeAndUnminedTransactions,
-    unmined
-  ],
-  ( Regular, Tickets, Votes, Revokes, Unmined ) => ({
-    All: Regular.concat(Tickets).concat(Votes).concat(Revokes)
-      .sort((a, b) => !a.txTimestamp ? -1 : !b.txTimestamp ? +1 : b.txTimestamp - a.txTimestamp),
-    Regular, Tickets, Votes, Revokes, Unmined
-  })
+  [transactionsNormalizer, get(["grpc", "transactions"])], apply
 );
-
 export const viewedTransaction = createSelector(
   [transactions, (state, { params: { txHash }}) => txHash],
-  (transactions, txHash) => find({ txHash }, transactions.All)
+  (transactions, txHash) => find({ txHash }, transactions)
 );
-
 export const decodedTransactions = get(["grpc", "decodedTransactions"]);
 
 export const viewedDecodedTransaction = createSelector(
@@ -448,9 +394,9 @@ export const rescanPercentFinished = createSelector(
 export const homeHistoryTransactions = createSelector(
   [txPerPage, transactions],
   (txPerPage, transactions) =>
-    transactions.All.length >= txPerPage
-      ? transactions.All.slice(0, txPerPage)
-      : transactions.All.slice(0, transactions.All.length)
+    transactions.length >= txPerPage
+      ? transactions.slice(0, txPerPage)
+      : transactions.slice(0, transactions.length)
 );
 
 export const visibleAccounts = createSelector(

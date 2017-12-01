@@ -8,10 +8,9 @@ import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./S
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { showSidebarMenu } from "./SidebarActions";
 import { push as pushHistory } from "react-router-redux";
-import { GetTransactionsRequest } from "../middleware/walletrpc/api_pb";
-import { TransactionDetails }  from "../middleware/walletrpc/api_pb";
 import { getCfg } from "../config.js";
 import { onAppReloadRequested } from "wallet";
+import { getTransactions as walletGetTransactions } from "wallet/service";
 
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
@@ -21,7 +20,7 @@ function getWalletServiceSuccess(walletService) {
   return (dispatch, getState) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
     setTimeout(() => { dispatch(getAccountsAttempt()); }, 10);
-    setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 20);
+    setTimeout(() => { dispatch(getTransactions()); }, 20);
     setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 20);
     setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNextAddressAttempt(0)); }, 1000);
@@ -269,81 +268,133 @@ export const getTicketsInfoAttempt = () => (dispatch, getState) => {
 
 export const GETTRANSACTIONS_ATTEMPT = "GETTRANSACTIONS_ATTEMPT";
 export const GETTRANSACTIONS_FAILED = "GETTRANSACTIONS_FAILED";
-export const GETTRANSACTIONS_PROGRESS_REGULAR = "GETTRANSACTIONS_PROGRESS_REGULAR";
-export const GETTRANSACTIONS_PROGRESS_COINBASE = "GETTRANSACTIONS_PROGRESS_COINBASE";
-export const GETTRANSACTIONS_PROGRESS_TICKET = "GETTRANSACTIONS_PROGRESS_TICKET";
-export const GETTRANSACTIONS_PROGRESS_VOTE = "GETTRANSACTIONS_PROGRESS_VOTE";
-export const GETTRANSACTIONS_PROGRESS_REVOKE = "GETTRANSACTIONS_PROGRESS_REVOKE";
-export const GETTRANSACTIONS_UNMINED_PROGRESS = "GETTRANSACTIONS_UNMINED_PROGRESS";
 export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
 
-export function getTransactionInfoAttempt() {
-  return (dispatch, getState) => {
-    const { getAccountsResponse, getTransactionsRequestAttempt } = getState().grpc;
-    if (getTransactionsRequestAttempt) return;
-    var startRequestHeight, endRequestHeight = 0;
-    // Check to make sure getAccountsResponse (which has current block height) is available
-    if (getAccountsResponse !== null) {
-      endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
-      startRequestHeight = 0;
+// filterTransactions filters a list of transactions given a filtering object.
+//
+// Currently supported filters in the filter object:
+// - type (array): Array of types a transaction must belong to, to be accepted.
+// - direction (string): A string of one of the allowed directions for regular
+//   transactions (sent/received/transfered)
+//
+// If empty, all transactions are accepted.
+function filterTransactions(transactions, filter) {
+  return transactions
+    .filter(v => filter.types.length ? filter.types.indexOf(v.type) > -1 : true )
+    .filter(v => filter.direction ? filter.direction === v.direction : true);
+}
+
+// getTransactions loads a list of transactions from the wallet, given the
+// current grpc state.
+//
+// Every call to getTransactions() tries to get `grpc.maximumTransactionCount`
+// transactions from the wallet, given the current filter for transactions.
+// Note that more than that amount of transactions may be obtained, as the
+// iteration of transactions on the wallet is done by block height.
+//
+// When no more transactions are available given the current filter,
+// `grpc.noMoreTransactions` is set to true.
+export const getTransactions = () => async (dispatch, getState) => {
+  const { getAccountsResponse, getTransactionsRequestAttempt,
+    transactionsFilter, walletService, maximumTransactionCount } = getState().grpc;
+  let { noMoreTransactions, lastTransaction, minedTransactions } = getState().grpc;
+  if (getTransactionsRequestAttempt || noMoreTransactions) return;
+
+  // Check to make sure getAccountsResponse (which has current block height) is available
+  if (getAccountsResponse === null) {
+    // Wait a little then re-dispatch this call since we have no starting height yet
+    setTimeout(() => { dispatch(getTransactions()); }, 1000);
+    return;
+  }
+  dispatch({ type: GETTRANSACTIONS_ATTEMPT });
+
+  // Amount of transactions to obtain at each walletService.getTransactions request (a "page")
+  const pageCount = maximumTransactionCount;
+
+  // List of transactions found after filtering
+  let filtered = [];
+
+  // first, request unmined transactions. They always come first in decrediton.
+  let { unmined } = await walletGetTransactions(walletService, -1, -1, 0);
+  let unminedTransactions = filterTransactions(unmined, transactionsFilter);
+
+  // now, request a batch of mined transactions until `maximumTransactionCount`
+  // transactions have been obtained (after filtering)
+  while (!noMoreTransactions && (filtered.length < maximumTransactionCount)) {
+    let startRequestHeight, endRequestHeight;
+
+    if ( transactionsFilter.listDirection === "desc" ) {
+      startRequestHeight = lastTransaction ? lastTransaction.height -1 : getAccountsResponse.getCurrentBlockHeight();
+      endRequestHeight = 1;
     } else {
-      // Wait a little then re-dispatch this call since we have no starting height yet
-      setTimeout(() => { dispatch(getTransactionInfoAttempt()); }, 1000);
+      startRequestHeight = lastTransaction ? lastTransaction.height +1 : 1;
+      endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
+    }
+
+    try {
+      let { mined } = await walletGetTransactions(walletService,
+        startRequestHeight, endRequestHeight, pageCount);
+      noMoreTransactions = mined.length === 0;
+      lastTransaction = mined.length ? mined[mined.length -1] : lastTransaction;
+      filterTransactions(mined, transactionsFilter)
+        .forEach(v => filtered.push(v));
+    } catch (error) {
+      dispatch({ type: GETTRANSACTIONS_FAILED, error});
       return;
     }
-    var request = new GetTransactionsRequest();
-    request.setStartingBlockHeight(startRequestHeight);
-    request.setEndingBlockHeight(endRequestHeight);
-    dispatch({ type: GETTRANSACTIONS_ATTEMPT });
-    const { walletService } = getState().grpc;
-    var getTx = walletService.getTransactions(request);
-    var updatedRegular = Array();
-    var updatedCoinbase = Array();
-    var updatedTicket = Array();
-    var updatedVote = Array();
-    var updatedRevoke = Array();
-    getTx.on("data", function (response) {
-      for (var i = 0; i < response.getMinedTransactions().getTransactionsList().length; i++) {
-        var newHeight = response.getMinedTransactions().getHeight();
-        var tx = {
-          timestamp: response.getMinedTransactions().getTimestamp(),
-          tx: response.getMinedTransactions().getTransactionsList()[i],
-          height: newHeight,
-          index: i,
-          hash: response.getMinedTransactions().getTransactionsList()[i].getHash(),
-          blockHash: response.getMinedTransactions().getHash(),
-          type: response.getMinedTransactions().getTransactionsList()[i].getTransactionType(),
-        };
-        if (tx.type == TransactionDetails.TransactionType.REGULAR) {
-          updatedRegular.unshift(tx);
-        } else if (tx.type == TransactionDetails.TransactionType.COINBASE) {
-          updatedCoinbase.unshift(tx);
-        } else if (tx.type == TransactionDetails.TransactionType.TICKET_PURCHASE) {
-          updatedTicket.unshift(tx);
-        } else if (tx.type == TransactionDetails.TransactionType.VOTE) {
-          updatedVote.unshift(tx);
-        } else if (tx.type == TransactionDetails.TransactionType.REVOCATION) {
-          updatedRevoke.unshift(tx);
-        }
-      }
-      if (response.getUnminedTransactionsList().length > 0) {
-        console.log("unmined!", response.getUnminedTransactionsList());
-        dispatch({unmined: response.getUnminedTransactionsList(), type: GETTRANSACTIONS_UNMINED_PROGRESS});
-      }
-      response = null;
+  }
 
-    });
-    getTx.on("end", function () {
-      dispatch({ regularTransactionsInfo: updatedRegular, coinbaseTransactionsInfo: updatedCoinbase,  ticketTransactionsInfo: updatedTicket, voteTransactionsInfo: updatedVote, revokeTransactionsInfo: updatedRevoke, type: GETTRANSACTIONS_COMPLETE });
-    });
-    /*
-    getTx.on('status', function (status) {
-      //console.log('GetTx status:', status);
-    });
-    */
-    getTx.on("error", function (error) {
-      console.error(error + " Please try again");
-    });
+  minedTransactions = [...minedTransactions, ...filtered];
+
+  dispatch({ unminedTransactions, minedTransactions,
+    noMoreTransactions, lastTransaction, type: GETTRANSACTIONS_COMPLETE});
+};
+
+export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
+
+// newTransactionsReceived should be called when a new set of transactions has
+// been received from the wallet (through a notification).
+export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
+  if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
+
+  let { unminedTransactions, minedTransactions } = getState().grpc;
+  const { transactionsFilter } = getState().grpc;
+
+  const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
+  const newlyUnminedMap = newlyUnminedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
+
+  unminedTransactions = filterTransactions([
+    ...newlyUnminedTransactions,
+    ...unminedTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
+  ], transactionsFilter);
+
+  // TODO: filter newlyMinedTransactions against minedTransactions if this
+  // starts generating a duplicated key error
+
+  if (transactionsFilter.listDirection === "desc") {
+    minedTransactions = [...newlyMinedTransactions, ...minedTransactions];
+  } else {
+    minedTransactions = [...minedTransactions, ...newlyMinedTransactions];
+  }
+
+  dispatch({unminedTransactions, minedTransactions, newlyUnminedTransactions,
+    newlyMinedTransactions, type: NEW_TRANSACTIONS_RECEIVED});
+};
+
+export const CLEAR_CURRENT_TRANSACTIONS = "CLEAR_CURRENT_TRANSACTIONS";
+
+// reloadTransactions clears and reloads the initial page of transactions, given
+// the current transaction filter.
+export const reloadTransactions = () => dispatch => {
+  dispatch({type: CLEAR_CURRENT_TRANSACTIONS});
+  dispatch(getTransactions());
+};
+
+export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
+export function changeTransactionsFilter(newFilter) {
+  return (dispatch) => {
+    dispatch({transactionsFilter: newFilter, type: CHANGE_TRANSACTIONS_FILTER});
+    dispatch(getTransactions());
   };
 }
 

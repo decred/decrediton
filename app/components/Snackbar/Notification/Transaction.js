@@ -2,6 +2,9 @@
 import { Link } from "react-router";
 import Balance from "Balance";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
+import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
+  TRANSACTION_DIR_TRANSFERED
+} from "wallet/service";
 import "style/Header.less";
 
 const messages = defineMessages({
@@ -10,15 +13,15 @@ const messages = defineMessages({
     id: "notifications.type.ticket",
     defaultMessage: "Ticket"
   },
-  Send: {
+  [TRANSACTION_DIR_SENT]: {
     id: "notifications.type.send",
     defaultMessage: "Send"
   },
-  Transfer: {
+  [TRANSACTION_DIR_TRANSFERED]: {
     id: "notifications.type.transfer",
     defaultMessage: "Transfer"
   },
-  Receive: {
+  [TRANSACTION_DIR_RECEIVED]: {
     id: "notifications.type.receive",
     defaultMessage: "Receive"
   }

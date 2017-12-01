@@ -2,6 +2,9 @@
 import { snackbar } from "connectors";
 import MUISnackbar from "material-ui/Snackbar";
 import Notification from "./Notification";
+import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
+  TRANSACTION_DIR_TRANSFERED
+} from "wallet/service";
 
 const propTypes = {
   messages: PropTypes.array.isRequired,
@@ -12,9 +15,9 @@ const snackbarClasses = ({ type }) => ({
   "Ticket": "snackbar snackbar-stake",
   "Vote": "snackbar snackbar-stake",
   "Revoke": "snackbar snackbar-stake",
-  "Receive": "snackbar snackbar-receive",
-  "Send": "snackbar snackbar-send",
-  "Transfer": "snackbar snackbar-transfer",
+  [TRANSACTION_DIR_RECEIVED]: "snackbar snackbar-receive",
+  [TRANSACTION_DIR_SENT]: "snackbar snackbar-send",
+  [TRANSACTION_DIR_TRANSFERED]: "snackbar snackbar-transfer",
   "Warning": "snackbar snackbar-warning",
   "Error": "snackbar snackbar-error",
   "Success": "snackbar snackbar-success",

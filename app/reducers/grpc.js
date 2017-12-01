@@ -9,10 +9,7 @@ import {
   GETTICKETPRICE_ATTEMPT, GETTICKETPRICE_FAILED, GETTICKETPRICE_SUCCESS,
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
   GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED,  GETTRANSACTIONS_COMPLETE,
-  GETTRANSACTIONS_UNMINED_PROGRESS,
-  GETTRANSACTIONS_PROGRESS_REGULAR, GETTRANSACTIONS_PROGRESS_COINBASE,
-  GETTRANSACTIONS_PROGRESS_TICKET,
-  GETTRANSACTIONS_PROGRESS_VOTE, GETTRANSACTIONS_PROGRESS_REVOKE,
+  NEW_TRANSACTIONS_RECEIVED, CHANGE_TRANSACTIONS_FILTER, CLEAR_CURRENT_TRANSACTIONS,
   UPDATETIMESINCEBLOCK,
   GETTICKETS_ATTEMPT, GETTICKETS_FAILED, GETTICKETS_COMPLETE,
   GETAGENDASERVICE_ATTEMPT, GETAGENDASERVICE_FAILED, GETAGENDASERVICE_SUCCESS,
@@ -249,11 +246,6 @@ export default function grpc(state = {}, action) {
   case GETTRANSACTIONS_ATTEMPT:
     return {
       ...state,
-      regularTransactionsInfo: Array(),
-      coinbaseTransactionsInfo: Array(),
-      ticketTransactionsInfo: Array(),
-      voteTransactionsInfo: Array(),
-      revokeTransactionsInfo: Array(),
       getTransactionsRequestAttempt: true,
     };
   case GETTRANSACTIONS_FAILED:
@@ -265,43 +257,39 @@ export default function grpc(state = {}, action) {
   case GETTRANSACTIONS_COMPLETE:
     return {
       ...state,
+      minedTransactions: action.minedTransactions,
+      unminedTransactions: action.unminedTransactions,
+      transactions: [...action.unminedTransactions, ...action.minedTransactions],
+      noMoreTransactions: action.noMoreTransactions,
+      lastTransaction: action.lastTransaction,
       getTransactionsRequestError: "",
-      regularTransactionsInfo: action.regularTransactionsInfo,
-      coinbaseTransactionsInfo: action.coinbaseTransactionsInfo,
-      ticketTransactionsInfo: action.ticketTransactionsInfo,
-      voteTransactionsInfo: action.voteTransactionsInfo,
-      revokeTransactionsInfo: action.revokeTransactionsInfo,
       getTransactionsRequestAttempt: false,
     };
-  case GETTRANSACTIONS_PROGRESS_REGULAR:
+  case NEW_TRANSACTIONS_RECEIVED:
     return {
       ...state,
-      regularTransactionsInfo: action.regularTransactionsInfo,
+      minedTransactions: action.minedTransactions,
+      unminedTransactions: action.unminedTransactions,
+      transactions: [...action.unminedTransactions, ...action.minedTransactions],
     };
-  case GETTRANSACTIONS_PROGRESS_COINBASE:
+  case CHANGE_TRANSACTIONS_FILTER:
     return {
       ...state,
-      coinbaseTransactionsInfo: action.coinbaseTransactionsInfo,
+      transactionsFilter: action.transactionsFilter,
+      minedTransactions: [],
+      unminedTransactions: [],
+      transactions: [],
+      lastTransaction: null,
+      noMoreTransactions: false
     };
-  case GETTRANSACTIONS_PROGRESS_TICKET:
+  case CLEAR_CURRENT_TRANSACTIONS:
     return {
       ...state,
-      ticketTransactionsInfo: action.ticketTransactionsInfo,
-    };
-  case GETTRANSACTIONS_PROGRESS_VOTE:
-    return {
-      ...state,
-      voteTransactionsInfo: action.voteTransactionsInfo,
-    };
-  case GETTRANSACTIONS_PROGRESS_REVOKE:
-    return {
-      ...state,
-      revokeTransactionsInfo: action.revokeTransactionsInfo,
-    };
-  case GETTRANSACTIONS_UNMINED_PROGRESS:
-    return {
-      ...state,
-      unminedTransactions: action.unmined,
+      minedTransactions: [],
+      unminedTransactions: [],
+      transactions: [],
+      lastTransaction: null,
+      noMoreTransactions: false
     };
   case UPDATETIMESINCEBLOCK:
     return {

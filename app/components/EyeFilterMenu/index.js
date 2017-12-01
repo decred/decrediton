@@ -29,10 +29,12 @@ class EyeFilterMenu extends React.Component {
     //<span className="eye-filter-menu-button-icon-arrow" />
     const options = this.props.options;
     const labelKey = this.props.labelKey || "label";
+    const keyField = this.props.keyField || labelKey;
     const { menuOpen } = this.state;
+    const extraClassName = " " + this.props.className || "";
     return (
       <IconMenu
-        className={"eye-filter-menu " + (menuOpen ? "menu-open" : "")}
+        className={"eye-filter-menu " + (menuOpen ? "menu-open" : "") + extraClassName}
         onChange={this.onMenuChanged}
         onRequestChange={this.onMenuRequestChange}
         open={menuOpen}
@@ -47,7 +49,7 @@ class EyeFilterMenu extends React.Component {
         {options.map(opt => (
           <MenuItem
             className="context-menu-item"
-            key={opt[labelKey]}
+            key={opt[keyField]}
             value={opt}
             style={{fontSize: null, lineHeight: null, minHeight: null}}
             primaryText={opt[labelKey]} />

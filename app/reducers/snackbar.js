@@ -1,3 +1,4 @@
+import * as wallet from "wallet";
 import { defineMessages } from "react-intl";
 import {
   DECODERAWTXS_FAILED
@@ -19,7 +20,9 @@ import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
   SETSTAKEPOOLVOTECHOICES_SUCCESS, SETSTAKEPOOLVOTECHOICES_FAILED
 } from "../actions/StakePoolActions";
-import { TRANSACTIONNTFNS_DATA_UNMINED } from "../actions/NotificationActions";
+import {
+  NEW_TRANSACTIONS_RECEIVED
+} from "../actions/ClientActions";
 import { SNACKBAR_DISMISS_MESSAGES } from "../actions/SnackbarActions";
 
 const messages = defineMessages({
@@ -126,16 +129,22 @@ const messages = defineMessages({
 });
 
 export default function snackbar(state = {}, action) {
-  let values, type;
+  let values, type, message;
 
   switch (action.type) {
   // snackbar management events
   case SNACKBAR_DISMISS_MESSAGES:
     return { ...state, messages: Array() };
 
-  case TRANSACTIONNTFNS_DATA_UNMINED: {
-    values = { message: action.unminedMessage};
-    type = action.unminedMessage.type;
+  case NEW_TRANSACTIONS_RECEIVED: {
+    // TODO: show more notifications or a summary when receiving many transactions.
+    const tx = action.newlyMinedTransactions.length
+      ? action.newlyMinedTransactions[0]
+      : action.newlyUnminedTransactions[0];
+
+    type = tx.direction || wallet.TRANSACTION_TYPES[tx.type];
+    message = { ...tx, type };
+    values = { message };
     break;
   }
 
@@ -254,18 +263,14 @@ export default function snackbar(state = {}, action) {
   }
 
   const newMessages = state.messages ? state.messages.slice() : Array();
-  if ((values || type) && action.type !== TRANSACTIONNTFNS_DATA_UNMINED) {
+  if ((values || type) && action.type !== NEW_TRANSACTIONS_RECEIVED) {
     newMessages.push({
       type: type,
       message: messages[action.type],
       values: values
     });
-  } else if (action.type == TRANSACTIONNTFNS_DATA_UNMINED) {
-    newMessages.push({
-      type: type,
-      message: action.unminedMessage,
-      values: values
-    });
+  } else if (action.type == NEW_TRANSACTIONS_RECEIVED) {
+    newMessages.push({ type, message, values });
   }
 
   return {...state, messages: newMessages};

@@ -85,7 +85,7 @@ var initialState = {
   },
   version: {
     // RequiredVersion
-    requiredVersion: "4.26.0",
+    requiredVersion: "4.27.0",
     versionInvalid: false,
     versionInvalidError: null,
     // VersionService
@@ -154,21 +154,24 @@ var initialState = {
     getAccountsResponse: null,
 
     // PaginateTransactions
-    paginatedTxs: Array(),
     txPerPage: 8,
-    currentPage: 0,
-    transactionDetails: null,
 
-    // GetTransactionInfo
-    regularTransactionsInfo: Array(),
-    coinbaseTransactionsInfo: Array(),
-    ticketTransactionsInfo: Array(),
-    voteTransactionsInfo: Array(),
-    revokeTransactionsInfo: Array(),
+    // GetTransactions
+    minedTransactions: Array(),
+    unminedTransactions: Array(),
+    transactions: Array(), // unmined + mined. Calculated on the grpc reducer.
+    maximumTransactionCount: 10,
+    noMoreTransactions: false,
+    transactionsFilter: {
+      listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
+      types: [], // desired transaction types (code). All if blank.
+      direction: null, // direction of desired transactions (sent/received/transfer)
+    },
+    lastTransaction: null, //last transaction obtained
+
     getTransactionsError: null,
     getTransactionsRequestAttempt: false,
     getTransactionsResponse: null,
-    unminedTransactions: null,
 
     // GetTickets
     getTicketsError: null,

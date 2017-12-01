@@ -2,46 +2,15 @@ import { substruct } from "fp";
 import ErrorScreen from "ErrorScreen";
 import HistoryPage from "./Page";
 import { historyPage } from "connectors";
-import { injectIntl, defineMessages } from "react-intl";
-
-const messages = defineMessages({
-  All: {
-    id: "transaction.type.all",
-    defaultMessage: "All"
-  },
-  Regular: {
-    id: "transaction.type.regular",
-    defaultMessage: "Regular"
-  },
-  Tickets: {
-    id: "transaction.type.tickets",
-    defaultMessage: "Tickets"
-  },
-  Votes: {
-    id: "transaction.type.votes",
-    defaultMessage: "Votes"
-  },
-  Revokes: {
-    id: "transaction.type.revokes",
-    defaultMessage: "Revokes"
-  },
-  Unmined: {
-    id: "transaction.type.unmined",
-    defaultMessage: "Unmined"
-  }
-});
+import { injectIntl } from "react-intl";
+import { TransactionDetails }  from "middleware/walletrpc/api_pb";
+import { FormattedMessage as T } from "react-intl";
+import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
+  TRANSACTION_DIR_TRANSFERED
+} from "wallet/service";
 
 @autobind
 class History extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentPage: 0,
-      selectedType: "Regular",
-      transactionDetails: null
-    };
-  }
-
   render() {
     return  !this.props.walletService ? <ErrorScreen /> : (
       <HistoryPage
@@ -49,13 +18,12 @@ class History extends React.Component {
           ...this.props,
           ...this.state,
           txTypes: this.getTxTypes(),
-          paginatedTxs: this.getPaginatedTxs(),
-          totalPages: this.getTotalPages(),
+          sortTypes: this.getSortTypes(),
+          transactions: this.getTransactions(),
           ...substruct({
             onChangeSelectedType: null,
-            onShowTxDetail: null,
-            onClearTxDetail: null,
-            onPageChanged: null
+            onChangeSortType: null,
+            onLoadMoreTransactions: null
           }, this)
         }}
       />
@@ -63,49 +31,48 @@ class History extends React.Component {
   }
 
   getTxTypes() {
-    const { formatMessage } = this.props.intl;
-    return Object.keys(this.props.transactions)
-      .filter(key => this.props.transactions[key].length > 0)
-      .map(name => {
-        return ({ value: name, label: formatMessage(messages[name]) }); });
+    const types = TransactionDetails.TransactionType;
+    return [
+      {key: "all",      value: {types: [],                      direction: null},  label: (<T id="transaction.type.all" m="All"/>)},
+      {key: "regular",  value: {types: [types.REGULAR],         direction: null},  label: (<T id="transaction.type.regular" m="Regular"/>)},
+      {key: "ticket",   value: {types: [types.TICKET_PURCHASE], direction: null},  label: (<T id="transaction.type.tickets" m="Tickets"/>)},
+      {key: "vote",     value: {types: [types.VOTE],            direction: null},  label: (<T id="transaction.type.votes" m="Votes"/>)},
+      {key: "revoke",   value: {types: [types.REVOCATION],      direction: null},  label: (<T id="transaction.type.revokes" m="Revokes"/>)},
+      {key: "sent",     value: {types: [types.REGULAR],         direction: TRANSACTION_DIR_SENT},       label: (<T id="transaction.type.sent" m="Sent"/>)},
+      {key: "receiv",   value: {types: [types.REGULAR],         direction: TRANSACTION_DIR_RECEIVED},   label: (<T id="transaction.type.received" m="Received"/>)},
+      {key: "transf",   value: {types: [types.REGULAR],         direction: TRANSACTION_DIR_TRANSFERED}, label: (<T id="transaction.type.transfered" m="Transfered"/>)},
+    ];
   }
 
-  getTxs() {
-    const { selectedType } = this.state;
-    const { transactions } = this.props;
-    return transactions[selectedType] || [];
+  getSortTypes() {
+    return [
+      {value: "desc", label: (<T id="transaction.sortby.newest" m="Newest"/>)},
+      {value: "asc", label: (<T id="transaction.sortby.oldest" m="Oldest"/>)}
+    ];
   }
 
-  getTotalPages() {
-    const { txPerPage } = this.props;
-    const allTxs = this.getTxs();
-    return (allTxs.length > 0) ? Math.ceil(allTxs.length / txPerPage) : 1;
+  getTransactions() {
+    return this.props.transactions;
   }
 
-  getPaginatedTxs() {
-    const { currentPage } = this.state;
-    const { txPerPage } = this.props;
-    const start = currentPage * txPerPage;
-    return this.getTxs().slice(start, start + txPerPage);
+  onLoadMoreTransactions() {
+    this.props.getTransactions();
   }
 
-  onPageChanged(newPage) {
-    this.setState({ currentPage: newPage });
+  onChangeFilter(value) {
+    const newFilter = {
+      ...this.props.transactionsFilter,
+      ...value
+    };
+    this.props.changeTransactionsFilter(newFilter);
   }
 
   onChangeSelectedType(type) {
-    this.setState({
-      selectedType: type.value,
-      currentPage: 0
-    });
+    this.onChangeFilter(type.value);
   }
 
-  onShowTxDetail(transactionDetails) {
-    this.setState({ transactionDetails });
-  }
-
-  onClearTxDetail() {
-    this.setState({ transactionDetails: null });
+  onChangeSortType(type) {
+    this.onChangeFilter({listDirection: type.value});
   }
 }
 

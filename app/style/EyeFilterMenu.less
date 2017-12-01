@@ -1,6 +1,10 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
+.eye-filter-menu {
+  margin-left: 0.5em;
+}
+
 .eye-filter-menu.menu-open::after {
   content: "";
   border-left: 5px solid transparent;
@@ -49,4 +53,8 @@
 
 .eye-filter-menu-button-icon:disabled {
   background-image: @contextbutton-eye-disabled-icon;
+}
+
+.sort-by .eye-filter-menu-button-icon {
+  background-image: @sort-by-icon;
 }
