@@ -815,6 +815,7 @@ app.on("ready", async () => {
 app.on("before-quit", (event) => {
   logger.log("info","Caught before-quit. Set decredition as was closed");
   event.preventDefault();
+  cleanShutdown();
   setMustOpenForm(true);
   app.exit(0);
 });
