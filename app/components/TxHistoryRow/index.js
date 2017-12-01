@@ -36,7 +36,7 @@ class TxRow extends Component {
           ...tx,
           date,
           pending,
-          onClick: () => this.context.router.push(`/transaction/history/${tx.txHash}`),
+          onClick: () => this.context.router.push(`/transactions/history/${tx.txHash}`),
           receiveAddressStr: (tx.txDescription.addressStr || []).join(", "),
         }}
       />
