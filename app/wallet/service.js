@@ -116,12 +116,12 @@ export function formatUnminedTransaction(transaction, index) {
 }
 
 export const getTransactions = (walletService, startBlockHeight,
-  endBlockHeight, maximumTransactionCount) =>
+  endBlockHeight, targetTransactionCount) =>
   new Promise((resolve, reject) => {
     var request = new GetTransactionsRequest();
     request.setStartingBlockHeight(startBlockHeight);
     request.setEndingBlockHeight(endBlockHeight);
-    request.setMaximumTransactionCount(maximumTransactionCount);
+    request.setTargetTransactionCount(targetTransactionCount);
 
     var foundMined = [];
     var foundUnmined = [];

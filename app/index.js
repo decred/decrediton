@@ -160,7 +160,7 @@ var initialState = {
     minedTransactions: Array(),
     unminedTransactions: Array(),
     transactions: Array(), // unmined + mined. Calculated on the grpc reducer.
-    maximumTransactionCount: 2,
+    maximumTransactionCount: 10,
     noMoreTransactions: false,
     transactionsFilter: {
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
