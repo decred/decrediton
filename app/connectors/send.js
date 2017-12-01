@@ -14,7 +14,8 @@ const mapStateToProps = selectorMap({
   isSendingTransaction: sel.isSendingTransaction,
   isConstructingTransaction: sel.isConstructingTransaction,
   nextAddress: sel.nextAddress,
-  nextAddressAccount: sel.nextAddressAccount
+  nextAddressAccount: sel.nextAddressAccount,
+  unitDivisor: sel.unitDivisor
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
