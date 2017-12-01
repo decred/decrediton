@@ -1,8 +1,8 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
 import "style/CreateWalletForm.less";
-import { Tooltip } from "shared";
-import PassphraseInfoModal from "PassphraseInfoModal";
+import InfoModalButton from "InfoModalButton";
+import { PassphraseInfoModalContent } from "modals";
 
 const messages = defineMessages({
   passphrasePlaceholder: {
@@ -27,19 +27,15 @@ const PassPhraseInputs = ({
   setPassPhrase,
   setPassPhraseVerification,
   intl,
-  showPassphraseInformation,
-  hidePassphraseInformation,
-  isShowingPassphraseInformation,
   onKeyDown
 }) => (
-    isShowingPassphraseInformation ?
-    <PassphraseInfoModal closeModal={hidePassphraseInformation} /> :
     <Aux>
       <div className="content-new-seed-priv-pass">
         <div className="create-wallet-label">{passPhraseLabel}:
-          <Tooltip text={<T id="confirmSeed.seedInformation" m="Private passphrase information" />}>
-            <a className="purchase-tickets-info-button" onClick={showPassphraseInformation} />
-          </Tooltip>
+          <InfoModalButton
+            modalTitle={<h1><T id="confirmSeed.seedInformation" m="Private passphrase information" /></h1>}
+            modalContent={<PassphraseInfoModalContent />}
+          />
         </div>
         <div className="create-wallet-field">
           <div className="input-form">

@@ -2,7 +2,8 @@ import NumTicketsInput from "NumTicketsInput";
 import ManagePoolsButton from "ManagePoolsButton";
 import SelectStakePool from "SelectStakePool";
 import KeyBlueButton from "KeyBlueButton";
-import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
+import InfoModalButton from "InfoModalButton";
+import { PurchaseTicketsInfoModalContent } from "modals";
 import TicketsCogs from "TicketsCogs";
 import { FeeInput, BlocksInput, AddressInput, AccountsSelect } from "inputs";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
@@ -51,7 +52,6 @@ const PurchaseTicketsForm = ({
   onShowImportScript,
   onShowRevokeTicket,
   onToggleShowAdvanced,
-  onShowTicketsInfo,
   intl: { formatMessage },
   isSubmited,
   account
@@ -66,9 +66,13 @@ const PurchaseTicketsForm = ({
     <Aux>
       <div className="stakepool-voting-title-area">
         <div className="stakepool-voting-title-area-name">
-          <T id="purchaseTickets.title" m="Purchase Tickets" /></div>
+          <T id="purchaseTickets.title" m="Purchase Tickets" />
+        </div>
         <div className="stakepool-purchase-ticket-input-buttons">
-          <PurchaseTicketsInfoButton onClick={onShowTicketsInfo} tooltipText={<T id="accounts.balanceInfo" m="Ticket Purchase Information" />} />
+          <InfoModalButton
+            modalTitle={<h1><T id="accounts.balanceInfo" m="Ticket Purchase Information" /></h1>}
+            modalContent={<PurchaseTicketsInfoModalContent />}
+          />
           <TicketsCogs opened={!isShowingAdvanced} onClick={onToggleShowAdvanced} />
         </div>
       </div>

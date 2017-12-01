@@ -11,7 +11,7 @@ class ConfirmSeed extends React.Component {
   }
 
   getInitialState() {
-    return { seedWords: [], seedError: null, isShowingSeedInformation: false };
+    return { seedWords: [], seedError: null };
   }
 
   componentWillUnmount() {
@@ -19,21 +19,14 @@ class ConfirmSeed extends React.Component {
   }
 
   render() {
-    const { setSeedWords, showSeedInformation, hideSeedInformation } = this;
+    const { setSeedWords } = this;
     const remainingSeedWords = this.getRemainingSeedWords();
     const isMatch = this.isMatch();
     const isEmpty = this.state.seedWords.length <= 1; // Weird errors with one word, better to count as empty
     const seedError = isEmpty ? null : this.state.seedError;
-    const { isShowingSeedInformation } = this.state;
     return (
-      <ConfirmSeedForm {...{ remainingSeedWords, setSeedWords, isMatch, seedError, isEmpty, showSeedInformation, hideSeedInformation, isShowingSeedInformation }} />
+      <ConfirmSeedForm {...{ remainingSeedWords, setSeedWords, isMatch, seedError, isEmpty }} />
     );
-  }
-  showSeedInformation() {
-    this.setState({isShowingSeedInformation: true});
-  }
-  hideSeedInformation() {
-    this.setState({isShowingSeedInformation: false});
   }
   getRemainingSeedWords() {
     return SEED_LENGTH - this.state.seedWords.length;

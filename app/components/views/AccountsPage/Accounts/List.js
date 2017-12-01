@@ -3,8 +3,8 @@ import { TabbedHeader } from "shared";
 import AccountRow from "./AccountRow";
 import DecredLoading from "DecredLoading";
 import KeyBlueButton from "KeyBlueButton";
-import BalanceOverviewInfoModal from "BalanceOverviewInfoModal";
-import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
+import InfoModalButton from "InfoModalButton";
+import { BalanceOverviewModalContent } from "modals";
 
 const AccountsList = ({
   routes,
@@ -17,9 +17,6 @@ const AccountsList = ({
   onShowAccountDetails,
   onHideAccountDetails,
   accountNumDetailsShown,
-  isShowingBalanceOverviewInfoModal,
-  onShowBalanceOverviewInfoModal,
-  onCloseBalanceOverviewInfoModal,
 }) => (
   <Aux>
     <TabbedHeader {...{ routes }}>
@@ -29,12 +26,14 @@ const AccountsList = ({
     </TabbedHeader>
     <div className="tabbed-page">
       <div className="tab-content">
-      { isShowingBalanceOverviewInfoModal ? <BalanceOverviewInfoModal closeModal={onCloseBalanceOverviewInfoModal} /> :
-        isLoading ? <DecredLoading/> :
+      { isLoading ? <DecredLoading/> :
         <div className="tab-card">
           <div className="account-content-title">
             <div className="account-content-title-buttons-area">
-              <PurchaseTicketsInfoButton onClick={onShowBalanceOverviewInfoModal} tooltipText={<T id="accounts.balanceInfo" m="Balance Information"/>}/>
+              <InfoModalButton
+                modalTitle={<h1><T id="accounts.balanceInfo" m="Balance Information" /></h1>}
+                modalContent={<BalanceOverviewModalContent />}
+              />
             </div>
           </div>
           <div className="account-content-nest">
@@ -60,7 +59,6 @@ const AccountsList = ({
 AccountsList.propTypes = {
   accounts: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  isShowingBalanceOverviewInfoModal: PropTypes.bool.isRequired,
   onToggleAddAccount: PropTypes.func.isRequired,
   onShowAccount: PropTypes.func.isRequired,
   onHideAccount: PropTypes.func.isRequired,
@@ -68,8 +66,6 @@ AccountsList.propTypes = {
   onShowAccountDetails: PropTypes.func.isRequired,
   onHideAccountDetails: PropTypes.func.isRequired,
   accountNumDetailsShown: PropTypes.number,
-  onShowBalanceOverviewInfoModal: PropTypes.func.isRequired,
-  onCloseBalanceOverviewInfoModal: PropTypes.func.isRequired,
 };
 
 export default AccountsList;

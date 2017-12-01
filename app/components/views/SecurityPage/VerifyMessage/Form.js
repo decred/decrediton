@@ -2,8 +2,9 @@ import { FormattedMessage as T, defineMessages } from "react-intl";
 import { Field, reduxForm } from "redux-form";
 import InputField from "Form/InputField";
 import ErrorField from "Form/ErrorField";
+import InfoModalButton from "InfoModalButton";
+import { VerifyMessageInfoModalContent } from "modals";
 import { validate } from "./validator";
-import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
 
 const messages = defineMessages({
   addressFieldLabel: {
@@ -32,7 +33,7 @@ const messages = defineMessages({
   },
 });
 
-const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError, formatMessage, onShowVerifyMessageInfo }) => {
+const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError, formatMessage }) => {
   if (rpcError) {
     error = (
       <div className="error">{rpcError}</div>
@@ -43,7 +44,10 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="message-content-nest">
         <div className="button-right">
-          <PurchaseTicketsInfoButton onClick={onShowVerifyMessageInfo} tooltipText={<T id="securitycenter.signInfo" m="Verify Message Information"/>}/>
+          <InfoModalButton
+            modalTitle={<h1><T id="securitycenter.verifyInfo" m="Verify Message Information"/></h1>}
+            modalContent={<VerifyMessageInfoModalContent />}
+          />
         </div>
         <Field
           classname="address"

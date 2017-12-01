@@ -3,7 +3,6 @@ import SignMessageForm from "./Form";
 import { signMessagePage } from "connectors";
 import { CopyToClipboard } from "shared";
 import "style/SecurityCenterMessagePage.less";
-import SignMessageInfo from "SignMessageInfo";
 
 @autobind
 class SignMessage extends React.Component {
@@ -30,7 +29,6 @@ class SignMessage extends React.Component {
 
   render() {
     const { signMessageError, signMessageSuccess } = this.props;
-    const { isShowingSignMessageInfo } = this.state;
     let result = null;
     if (signMessageSuccess) {
       result = (
@@ -46,10 +44,8 @@ class SignMessage extends React.Component {
     }
 
     return (
-      isShowingSignMessageInfo ?
-      <SignMessageInfo closeModal={this.onHideSignMessageInfo} /> :
       <div className="tab-card message message-sign">
-        <SignMessageForm onShowSignMessageInfo={this.onShowSignMessageInfo} onSubmit={this.onSubmit} rpcError={signMessageError} formatMessage={this.props.intl.formatMessage} />
+        <SignMessageForm onSubmit={this.onSubmit} rpcError={signMessageError} formatMessage={this.props.intl.formatMessage} />
         {result}
       </div>
     );
@@ -57,12 +53,6 @@ class SignMessage extends React.Component {
 
   onSubmit(props) {
     this.props.signMessageAttempt(props);
-  }
-  onShowSignMessageInfo() {
-    this.setState({ isShowingSignMessageInfo: true });
-  }
-  onHideSignMessageInfo() {
-    this.setState({ isShowingSignMessageInfo: false });
   }
 }
 

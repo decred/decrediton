@@ -1,7 +1,8 @@
 import TicketsCogs from "TicketsCogs";
 import AutoBuyerSwitch from "AutoBuyerSwitch";
 import KeyBlueButton from "KeyBlueButton";
-import PurchaseTicketsInfoButton from "PurchaseTicketsInfoButton";
+import InfoModalButton from "InfoModalButton";
+import { TicketAutoBuyerInfoModalContent } from "modals";
 import { DcrInput, NumericInput, FeeInput } from "inputs";
 import { Tooltip } from "shared";
 import { defineMessages, FormattedMessage as T } from "react-intl";
@@ -53,7 +54,6 @@ const TicketAutoBuyerForm = ({
   onUpdateTicketAutoBuyerConfig,
   onToggleTicketAutoBuyer,
   onToggleShowDetails,
-  onShowAutoBuyerTicketsInfo,
   canNotEnableAutobuyer
 }) => (
   <div>
@@ -86,10 +86,12 @@ const TicketAutoBuyerForm = ({
           ) : null}
         </div>
         <div className="stakepool-purchase-ticket-input-buttons">
-        <PurchaseTicketsInfoButton onClick={onShowAutoBuyerTicketsInfo} tooltipText={<T id="accounts.automaticPurchaseInfo" m="Automatic Purchase Information" />} />
-        <TicketsCogs opened={isHidingDetails} onClick={onToggleShowDetails} />
-      </div>
-
+          <InfoModalButton
+            modalTitle={<h1><T id="accounts.automaticPurchaseInfo" m="Automatic Purchase Information" /></h1>}
+            modalContent={<TicketAutoBuyerInfoModalContent />}
+          />
+          <TicketsCogs opened={isHidingDetails} onClick={onToggleShowDetails} />
+        </div>
       </div>
       <div className={isHidingDetails ? "stakepool-flex-height-auto-buyer-hidden" : "stakepool-flex-height-auto-buyer-shown"}>
         <div hidden={isHidingDetails ? true : false} className="stakepool-auto-buyer-advanced-area">

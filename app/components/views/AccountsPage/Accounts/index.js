@@ -7,7 +7,6 @@ class Accounts extends React.Component {
     super(props);
     this.state = {
       accountNumDetailsShown: null,
-      isShowingBalanceOverviewInfoModal: false,
     };
   }
 
@@ -35,14 +34,6 @@ class Accounts extends React.Component {
 
   onShowAccountDetails(accountNumDetailsShown) {
     this.setState({ accountNumDetailsShown });
-  }
-
-  onShowBalanceOverviewInfoModal() {
-    this.setState({ isShowingBalanceOverviewInfoModal: true });
-  }
-
-  onCloseBalanceOverviewInfoModal() {
-    this.setState({ isShowingBalanceOverviewInfoModal: false });
   }
 
   onHideAccountDetails() {
