@@ -32,7 +32,7 @@ class MenuLinks extends React.Component {
     return (
       <Aux>
         { linkList.map(link =>
-          <MenuLink to={ "/" + link } ref={ ref => this._nodes.set(link, ref) }>
+          <MenuLink to={ "/" + link } linkRef={ ref => this._nodes.set(link, ref) } key={ link }>
             { this.props.intl.formatMessage(messages["menu." + link]) }
           </MenuLink> )}
         <Motion style={ this.state }>

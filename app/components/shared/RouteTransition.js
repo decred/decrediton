@@ -26,7 +26,7 @@ const RouteTransition = props => {
   const willLeave = () => ensureSpring(props.atLeave, props.opts);
   const tmProps = { willEnter, willLeave, defaultStyles, styles };
   const route = ({ key, style, data }) => {
-    const routeProps = {...{key}, style: props.mapStyles(style) };
+    const routeProps = { key, style: props.mapStyles(style) };
     return h(props.wrapperComponent, routeProps, data);
   };
   const routes = routes => h("div", { className: props.className }, routes.map(route));
