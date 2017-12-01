@@ -1,5 +1,4 @@
 import NumTicketsInput from "NumTicketsInput";
-import ManagePoolsButton from "ManagePoolsButton";
 import SelectStakePool from "SelectStakePool";
 import KeyBlueButton from "KeyBlueButton";
 import InfoModalButton from "InfoModalButton";
@@ -110,7 +109,7 @@ const PurchaseTicketsForm = ({
               />
             </div>
             <div className="stakepool-manage-pool-button-area">
-              <ManagePoolsButton onClick={onShowStakePoolConfig} />
+              <a className="manage-pools-button" onClick={onShowStakePoolConfig} />
             </div>
           </div>
           <div className="stakepool-purchase-ticket-row">

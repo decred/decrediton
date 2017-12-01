@@ -1,9 +1,8 @@
 // @flow
 import React from "react";
-import AgendaClose from "../AgendaClose";
 import KeyBlueButton from "../KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
-import "../../style/AgendaOverview.less";
+import "style/AgendaOverview.less";
 
 const Overview = ({
   agendaId,
@@ -19,7 +18,7 @@ const Overview = ({
   <div className="agenda">
     <div className="agenda-overview">
       <div className="agenda-overview-title-area">
-        <AgendaClose onClick={closeCurrentAgenda}/>
+        <a className="agenda-overview-title-close" onClick={closeCurrentAgenda}></a>
         <div className="agenda-overview-title-name">{agendaId}</div>
       </div>
       <div className="agenda-overview-middle">
