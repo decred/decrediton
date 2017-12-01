@@ -478,7 +478,7 @@ export const unsignedTransaction = createSelector(
 );
 
 export const estimatedFee = compose(
-  bytes => (bytes / 1000) * 0.001 * 100000000, estimatedSignedSize
+  bytes => (bytes / 1000) * (0.001 * 100000000), estimatedSignedSize
 );
 
 export const totalSpent = createSelector(
