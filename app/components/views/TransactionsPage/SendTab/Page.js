@@ -5,37 +5,40 @@ import DecredLoading from "DecredLoading";
 import Balance from "Balance";
 import KeyBlueButton from "KeyBlueButton";
 import PassphraseModal from "PassphraseModal";
-import OutputRow from "./OutputRow";
 import OutputAccountRow from "./OutputAccountRow";
 import "style/SendPage.less";
 import "style/MiscComponents.less";
+import TransitionMotionWrapper from "TransitionMotionWrapper";
+
+const wrapperComponent = props => <div className="output-row" { ...props } />;
 
 const SendPage = ({
                     account,
-                    isSendingTransaction,
-                    isShowingConfirm,
-                    isSendAll,
-                    isSendSelf,
-                    outputs,
-                    totalSpent,
-                    estimatedFee,
-                    estimatedSignedSize,
-                    isValid,
-                    onChangeAccount,
-                    onChangeOutputAccount,
-                    onAttemptSignTransaction,
-                    onClearTransaction,
-                    onShowConfirm,
-                    onShowSendAll,
-                    onHideSendAll,
-                    onShowSendSelf,
-                    onShowSendOthers,
-                    getAddressError,
-                    getAmountError,
-                    ...props
+  isSendingTransaction,
+  isShowingConfirm,
+  isSendAll,
+  isSendSelf,
+  outputs,
+  totalSpent,
+  estimatedFee,
+  estimatedSignedSize,
+  isValid,
+  onChangeAccount,
+  onAttemptSignTransaction,
+  onClearTransaction,
+  onShowConfirm,
+  onShowSendAll,
+  onHideSendAll,
+  onShowSendSelf,
+  onShowSendOthers,
+  getAmountError,
+  getStyles,
+  willLeave,
+  willEnter,
+  ...props
                   }) => (
-  <Aux>
-    <PassphraseModal
+    <Aux>
+      <PassphraseModal
         hidden={!isShowingConfirm}
         submitPassphrase={onAttemptSignTransaction}
         cancelPassphrase={onClearTransaction}
@@ -69,57 +72,53 @@ const SendPage = ({
                 </Tooltip>
               }
             </div>
-          </div>
-          <div className="send-amount-area">
-            {!isSendSelf
-              ? outputs.map((output, index) => (
-                <OutputRow
-                  {...{ index, outputs, ...props, ...output, isSendAll, totalSpent }}
-                  addressError={getAddressError(index)}
-                  amountError={getAmountError(index)}
-                /> ))
-              : <OutputAccountRow
-                {...{  index: 0, ...props, ...outputs[0], isSendAll, totalSpent, onChangeOutputAccount }}
-                amountError={getAmountError(0)} />
-            }
-          </div>
-        </div>
-        <div className="send-button-area">
-          <KeyBlueButton
-            className="content-send"
-            disabled={!isValid}
-            onClick={onShowConfirm}
-          ><T id="send.sendBtn" m="Send" /></KeyBlueButton>
-          <div className="estimation-area-send">
-            <div className="total-amount-send">
-              <div className="total-amount-send-text">
-                <T id="send.totalAmountEstimation" m="Total amount sending" />
-                :
-              </div>
-              <div className="total-amount-send-amount">
-                <Balance amount={totalSpent} />
-              </div>
             </div>
-            <div className="total-amount-send">
-              <div className="total-amount-send-text">
-                <T id="send.feeEstimation" m="Estimated Fee" />
-                :
-              </div>
-              <div className="total-amount-send-amount">
-                <Balance amount={estimatedFee} />
-              </div>
-            </div>
-            <div className="total-amount-send">
-              <div className="total-amount-send-text">
-                <T id="send.sizeEstimation" m="Estimated Size" />
-                :
-              </div>
-              <div className="total-amount-send-amount">{estimatedSignedSize} bytes</div>
+            <div className="send-amount-area">
+              {
+                !isSendSelf
+                  ? <TransitionMotionWrapper {...{ styles: getStyles(), willLeave, willEnter, wrapperComponent }} />
+                  : <OutputAccountRow
+                    {...{ index: 0, ...props, ...outputs[0], isSendAll, totalSpent }}
+                    amountError={getAmountError(0)} />
+              }
             </div>
           </div>
-        </div>
-      </div> }
-  </Aux>
-);
+          <div className="send-button-area">
+            <KeyBlueButton
+              className="content-send"
+              disabled={!isValid}
+              onClick={onShowConfirm}
+            ><T id="send.sendBtn" m="Send" /></KeyBlueButton>
+            <div className="estimation-area-send">
+              <div className="total-amount-send">
+                <div className="total-amount-send-text">
+                  <T id="send.totalAmountEstimation" m="Total amount sending" />
+                  :
+              </div>
+                <div className="total-amount-send-amount">
+                  <Balance amount={totalSpent} />
+                </div>
+              </div>
+              <div className="total-amount-send">
+                <div className="total-amount-send-text">
+                  <T id="send.feeEstimation" m="Estimated Fee" />
+                  :
+              </div>
+                <div className="total-amount-send-amount">
+                  <Balance amount={estimatedFee} />
+                </div>
+              </div>
+              <div className="total-amount-send">
+                <div className="total-amount-send-text">
+                  <T id="send.sizeEstimation" m="Estimated Size" />
+                  :
+              </div>
+                <div className="total-amount-send-amount">{estimatedSignedSize} bytes</div>
+              </div>
+            </div>
+          </div>
+        </div> }
+    </Aux>
+  );
 
 export default SendPage;

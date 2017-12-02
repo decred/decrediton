@@ -17,6 +17,7 @@ class ReceiveAccountsSelect extends Component {
   }
 
   onChangeAccount(account) {
+    this.props.onChange && this.props.onChange(account);
     this.props.getNextAddressAttempt(account.value);
   }
 }
