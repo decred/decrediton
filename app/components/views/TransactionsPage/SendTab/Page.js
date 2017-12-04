@@ -1,7 +1,7 @@
 import { AccountsSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
-import DecredLoading from "DecredLoading";
+import { DecredLoading } from "indicators";
 import Balance from "Balance";
 import KeyBlueButton from "KeyBlueButton";
 import PassphraseModal from "PassphraseModal";

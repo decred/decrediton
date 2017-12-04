@@ -1,6 +1,6 @@
 // @flow
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
-import RescanProgress from "../RescanProgress";
+import { RescanProgress } from "indicators";
 import MenuLinks from "./MenuLinks";
 import Logo from "./Logo";
 import "style/Fonts.less";

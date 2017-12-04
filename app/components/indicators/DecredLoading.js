@@ -1,5 +1,5 @@
 import React from "react";
-import "../style/Loading.less";
+import "style/Loading.less";
 
 const DecredLoading = ({ hidden, className }) => (
   <div

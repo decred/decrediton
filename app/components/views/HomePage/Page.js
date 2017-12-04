@@ -1,6 +1,6 @@
 // @flow
 import { rescan, home } from "connectors";
-import DecredLoading from "DecredLoading";
+import { DecredLoading } from "indicators";
 import KeyBlueButton from "KeyBlueButton";
 import SlateGrayButton from "SlateGrayButton";
 import PassphraseModal from "PassphraseModal";

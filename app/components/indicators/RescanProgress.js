@@ -1,8 +1,8 @@
 import React from "react";
 import LinearProgress from "material-ui/LinearProgress";
-import rescan from "../connectors/rescan";
+import rescan from "connectors/rescan";
 import { FormattedMessage as T } from "react-intl";
-import "../style/MiscComponents.less";
+import "style/MiscComponents.less";
 
 const RescanProgress = ({
   rescanEndBlock,
