@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { TabbedHeader } from "shared";
 import AccountRow from "./AccountRow";
-import DecredLoading from "DecredLoading";
+import { DecredLoading } from "indicators";
 import KeyBlueButton from "KeyBlueButton";
 import InfoModalButton from "InfoModalButton";
 import { BalanceOverviewModalContent } from "modals";

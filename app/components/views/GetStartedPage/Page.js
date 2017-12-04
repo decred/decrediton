@@ -1,4 +1,4 @@
-import DecredLoading from "DecredLoading";
+import { DecredLoading } from "indicators";
 import "style/GetStarted.less";
 import "style/Layout.less";
 
