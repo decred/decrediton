@@ -1,5 +1,5 @@
 import React from "react";
-import "../style/NumTicketsInput.less";
+import "style/NumTicketsInput.less";
 
 const NumTicketsInput = ({
   numTickets,

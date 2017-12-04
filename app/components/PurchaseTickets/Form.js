@@ -1,10 +1,8 @@
-import NumTicketsInput from "NumTicketsInput";
-import SelectStakePool from "SelectStakePool";
 import KeyBlueButton from "KeyBlueButton";
 import InfoModalButton from "InfoModalButton";
 import { PurchaseTicketsInfoModalContent } from "modals";
 import TicketsCogs from "TicketsCogs";
-import { FeeInput, BlocksInput, AddressInput, AccountsSelect } from "inputs";
+import { FeeInput, BlocksInput, AddressInput, AccountsSelect, StakePoolSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
 import { Tooltip } from "shared";
 import { addSpacingAroundText } from "helpers/strings";
@@ -102,7 +100,7 @@ const PurchaseTicketsForm = ({
               <T id="purchaseTickets.stakePoolLabel" m="Stake Pool" />:
           </div>
             <div className="stakepool-purchase-ticket-input-select">
-              <SelectStakePool
+              <StakePoolSelect
                 options={configuredStakePools}
                 value={stakePool}
                 onChange={onChangeStakePool}
