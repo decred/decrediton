@@ -27,7 +27,7 @@ import ShutdownAppPage from "./components/views/ShutdownAppPage";
 export default (
   <Route     path="/"                           component={App}>
     <IndexRoute                                 component={GetStartedPage}/>
-    <Route   path="transaction/history/:txHash" component={TransactionPage}   desc/>
+    <Route   path="transactions/history/:txHash" component={TransactionPage}  desc/>
     <Route   path="home"                        component={HomePage}          noIcon/>
     <Route   path="accounts"                    component={AccountsPage}      desc/>
     <Route   path="transactions"                component={TabbedPage}        tabDesc>

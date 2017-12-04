@@ -24,7 +24,8 @@ class MenuLinks extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const activeLink = getPage(nextProps.routes);
-    const newTop = this._nodes.get(activeLink).offsetTop;
+    const basePage = activeLink.split("/")[0];
+    const newTop = this._nodes.get(basePage).offsetTop;
     this.setState({ top: spring(newTop, theme("springs.sideBar")) });
   }
 
