@@ -109,17 +109,6 @@ class PurchaseTickets extends React.Component {
     return true;
   }
 
-  onRequestPassphrase() {
-    this.setState({isSubmited: true});
-    const { onRequestPassphrase } = this.props;
-    if (!this.getIsValid()) return;
-    onRequestPassphrase && onRequestPassphrase(
-      (<T id="purchaseTickets.requestPassphrase" m="Enter Passphrase to Purchase Tickets" />),
-      null,
-      this.onPurchaseTickets
-    );
-  }
-
   onPurchaseTickets(privpass) {
     const { onPurchaseTickets, onCancelPassphraseRequest } = this.props;
     if (!this.getIsValid() || !privpass) return;

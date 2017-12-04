@@ -119,14 +119,14 @@ class Purchase extends React.Component {
     });
   }
 
-  onShowImportScript() {
-    this.setState({ isShowingImportScript: true });
-  }
-
   onShowRevokeTicket() {
     this.onRequestPassphrase(
       <T id="stake.revokeTicketsPassphrase" m="Enter Passphrase to Revoke Tickets" />,
       null, this.onRevokeTickets);
+  }
+
+  onShowImportScript() {
+    this.setState({ isShowingImportScript: true });
   }
 
   onCancelImportScript() {

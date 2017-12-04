@@ -1,6 +1,5 @@
 import PurchaseTickets from "PurchaseTickets";
 import TicketAutoBuyer from "TicketAutoBuyer";
-import PassphraseModal from "PassphraseModal";
 import ImportScriptModal from "ImportScriptModal";
 import { FormattedMessage as T } from "react-intl";
 import StakeInfo from "StakeInfo";
@@ -9,22 +8,12 @@ import "style/StakePool.less";
 const Tickets = ({
   isRequestingPassphrase,
   isShowingImportScript,
-  passphraseCallback,
-  passphraseHeading,
-  passphraseDescription,
   onCancelPassphraseRequest,
   onImportScript,
   onCancelImportScript,
   ...props
 }) => (
   <Aux>
-    <PassphraseModal
-      hidden={!isRequestingPassphrase}
-      submitPassphrase={passphraseCallback}
-      cancelPassphrase={onCancelPassphraseRequest}
-      heading={passphraseHeading}
-      description={passphraseDescription}
-    />
     <ImportScriptModal
       hidden={!isShowingImportScript}
       submitImportScript={onImportScript}

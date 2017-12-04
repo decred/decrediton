@@ -22,21 +22,16 @@ class PassphraseModalContent extends React.Component {
   }
 
   render() {
-    const { hidden, heading, description } = this.props;
     const { passPhrase, hasAttemptedSubmit } = this.state;
-    const { setPassPhrase, onSubmit, onCancel } = this;
+    const { setPassPhrase, onSubmit } = this;
 
     return (
       <Modal
         {...{
-          hidden,
-          heading,
-          description,
           passPhrase,
           hasAttemptedSubmit,
           setPassPhrase,
-          onSubmit,
-          onCancel
+          onSubmit
         }}
       />
     );

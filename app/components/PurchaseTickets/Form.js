@@ -46,7 +46,7 @@ const PurchaseTicketsForm = ({
   onChangeTicketFee,
   onChangeTxFee,
   onChangeExpiry,
-  onRequestPassphrase,
+  onPurchaseTickets,
   onShowImportScript,
   onShowRevokeTicket,
   onToggleShowAdvanced,
@@ -234,7 +234,7 @@ const PurchaseTicketsForm = ({
       <div className="stakepool-purchase-ticket-buttons-area">
         <PassphraseModalButton
             modalTitle={<h1><T id="tickets.purchaseConfirmation" m="Ticket Purchase Confirmation" /></h1>}
-            modalContent={<PassphraseModalContent onClick={onRequestPassphrase} />}
+            modalContent={<PassphraseModalContent onSubmit={onPurchaseTickets(privpass)}/>}
             className="stakepool-content-purchase-button"
             disabled={!canAffordTickets}
         >
