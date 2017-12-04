@@ -14,7 +14,7 @@ const propTypes = {
 const snackbarClasses = ({ type }) => ({
   "Ticket": "snackbar snackbar-stake",
   "Vote": "snackbar snackbar-stake",
-  "Revoke": "snackbar snackbar-stake",
+  "Revocation": "snackbar snackbar-stake",
   [TRANSACTION_DIR_RECEIVED]: "snackbar snackbar-receive",
   [TRANSACTION_DIR_SENT]: "snackbar snackbar-send",
   [TRANSACTION_DIR_TRANSFERED]: "snackbar snackbar-transfer",

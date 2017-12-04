@@ -3,7 +3,7 @@ import {
   createSelectorEager as createSelector
 } from "./fp";
 import { reverseHash } from "./helpers/byteActions";
-import { TransactionDetails }  from "./middleware/walletrpc/api_pb";
+import { TRANSACTION_TYPES }  from "wallet/service";
 import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
@@ -140,11 +140,7 @@ export const locale = createSelector(
   }
 );
 
-const getTxTypeStr = type => ({
-  [TransactionDetails.TransactionType.TICKET_PURCHASE]: "Ticket",
-  [TransactionDetails.TransactionType.VOTE]: "Vote",
-  [TransactionDetails.TransactionType.REVOCATION]: "Revocation"
-})[type];
+const getTxTypeStr = type => (TRANSACTION_TYPES)[type];
 
 export const txURLBuilder= createSelector(
   [network],

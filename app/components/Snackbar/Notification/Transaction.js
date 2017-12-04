@@ -13,6 +13,14 @@ const messages = defineMessages({
     id: "notifications.type.ticket",
     defaultMessage: "Ticket"
   },
+  Vote: {
+    id: "notifications.type.vote",
+    defaultMessage: "Vote"
+  },
+  Revocation: {
+    id: "notifications.type.revocation",
+    defaultMessage: "Revocation"
+  },
   [TRANSACTION_DIR_SENT]: {
     id: "notifications.type.send",
     defaultMessage: "Send"
