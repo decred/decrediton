@@ -20,7 +20,7 @@ const Page = ({
     loadMore={onLoadMoreTransactions}
     initialLoad={false}
     useWindow={false}
-    threshold={10}
+    threshold={90}
   >
     <div className="tab-card">
       <div className="history-content-title">
