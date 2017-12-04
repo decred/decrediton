@@ -1,6 +1,7 @@
 import KeyBlueButton from "KeyBlueButton";
 import InfoModalButton from "InfoModalButton";
-import { PurchaseTicketsInfoModalContent } from "modals";
+import PassphraseModalButton from "PassphraseModalButton";
+import { PurchaseTicketsInfoModalContent, PassphraseModalContent } from "modals";
 import TicketsCogs from "TicketsCogs";
 import { FeeInput, BlocksInput, AddressInput, AccountsSelect, StakePoolSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
@@ -231,9 +232,14 @@ const PurchaseTicketsForm = ({
         </div>
       </div>
       <div className="stakepool-purchase-ticket-buttons-area">
-        <KeyBlueButton onClick={onRequestPassphrase} className="stakepool-content-purchase-button" disabled={!canAffordTickets}>
+        <PassphraseModalButton
+            modalTitle={<h1><T id="tickets.purchaseConfirmation" m="Ticket Purchase Confirmation" /></h1>}
+            modalContent={<PassphraseModalContent onClick={onRequestPassphrase} />}
+            className="stakepool-content-purchase-button"
+            disabled={!canAffordTickets}
+        >
           <T id="puchaseTickets.purchaseBtn" m="Purchase" />
-        </KeyBlueButton>
+        </PassphraseModalButton>
 
         {!canAffordTickets &&
           <div className="stakepool-purchase-error">
