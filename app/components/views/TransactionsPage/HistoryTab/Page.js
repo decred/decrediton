@@ -3,6 +3,7 @@ import EyeFilterMenu from "EyeFilterMenu";
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
 import SlateGrayButton from "SlateGrayButton";
+import { LoadingMoreTransactionsIndicator } from "indicators";
 import "style/HistoryPage.less";
 
 const Page = ({
@@ -48,6 +49,9 @@ const Page = ({
         />
       ) : <p><T id="history.noTransactions" m="No transactions" /></p>}
     </div>
+    {!noMoreTransactions
+      ? <LoadingMoreTransactionsIndicator />
+      : null}
     {!noMoreTransactions
       ? <SlateGrayButton onClick={onLoadMoreTransactions}><T id="history.moreTransactions" m="More Transactions" /></SlateGrayButton>
       : null}
