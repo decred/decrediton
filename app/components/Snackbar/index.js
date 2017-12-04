@@ -5,6 +5,7 @@ import Notification from "./Notification";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERED
 } from "wallet/service";
+import "style/Snackbar.less";
 
 const propTypes = {
   messages: PropTypes.array.isRequired,
