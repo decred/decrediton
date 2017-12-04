@@ -9,7 +9,7 @@ const messages = defineMessages({
   }
 });
 
-const SelectStakePool = ({
+const StakePoolSelect = ({
   valueKey="value",
   labelKey="label",
   multi=false,
@@ -31,4 +31,4 @@ const SelectStakePool = ({
   />
 );
 
-export default injectIntl(SelectStakePool);
+export default injectIntl(StakePoolSelect);

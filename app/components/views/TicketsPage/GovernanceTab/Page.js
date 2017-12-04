@@ -1,6 +1,6 @@
 import AgendaCard from "AgendaCard";
 import AgendaOverview from "AgendaOverview";
-import SelectStakePool from "SelectStakePool";
+import { StakePoolSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import "style/StakePool.less";
 
@@ -22,7 +22,7 @@ const VotingPrefsPage = ({
       </div>
       {configuredStakePools.length > 0 &&
       <div className="stakepool-unconfigured-select">
-        <SelectStakePool
+        <StakePoolSelect
           options={configuredStakePools}
           value={stakePool}
           onChange={onChangeStakePool}

@@ -1,12 +1,11 @@
 import { shell } from "electron";
 import PassphraseModal from "../PassphraseModal";
-import SelectStakePool from "../SelectStakePool";
-import KeyBlueButton from "../KeyBlueButton";
-import SlateGrayButton from "../SlateGrayButton";
+import KeyBlueButton from "KeyBlueButton";
+import SlateGrayButton from "SlateGrayButton";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { TextInput } from "inputs";
-import "../../style/Layout.less";
-import "../../style/StakePool.less";
+import { TextInput, StakePoolSelect } from "inputs";
+import "style/Layout.less";
+import "style/StakePool.less";
 
 const messages = defineMessages({
   apiKeyPlaceholder: {
@@ -43,7 +42,7 @@ const StakePoolsAddForm = ({
             <T id="stake.addPoolTitle" m="Stake Pool" />
           :</div>
           <div className="stakepool-unconfigured-select">
-            <SelectStakePool
+            <StakePoolSelect
               options={unconfiguredStakePools}
               value={selectedUnconfigured}
               onChange={onChangeSelectedUnconfigured}

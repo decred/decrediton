@@ -8,4 +8,5 @@ export { default as Input } from "./Input";
 export { default as NumericInput } from "./NumericInput";
 export { default as PasswordInput } from "./PasswordInput";
 export { default as ReceiveAccountsSelect } from "./ReceiveAccountsSelect";
+export { default as StakePoolSelect } from "./StakePoolSelect";
 export { default as TextInput } from "./TextInput";
