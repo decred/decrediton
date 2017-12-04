@@ -143,7 +143,7 @@ const TxDetails = ({ routes, router,
                 </div>
                 {txOutputs.map(({ address, amount }, idx) => (
                   <div key={idx} className="txdetails-row">
-                    <div className="txdetails-address">{addSpacingAroundText(address)}</div>
+                    <div className="txdetails-address">{txDirection !== "out" ? addSpacingAroundText(address) : "change"}</div>
                     <div className="txdetails-amount"><Balance amount={amount} /></div>
                   </div>
                 ))}
