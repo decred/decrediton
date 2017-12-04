@@ -141,9 +141,9 @@ const TxDetails = ({ routes, router,
                 <div className="txdetails-overview-title-created">
                   <T id="txDetails.walletOutputs" m="Wallet Outputs" />
                 </div>
-                {txOutputs.map(({ address, amount }, idx) => (
+                {txOutputs.map(({ accountName, address, amount }, idx) => (
                   <div key={idx} className="txdetails-row">
-                    <div className="txdetails-address">{txDirection !== "out" ? addSpacingAroundText(address) : "change"}</div>
+                    <div className="txdetails-address">{txDirection === "out" ? "change" : txDirection === "transfer" ? addSpacingAroundText(accountName) : addSpacingAroundText(address)}</div>
                     <div className="txdetails-amount"><Balance amount={amount} /></div>
                   </div>
                 ))}
