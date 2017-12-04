@@ -1,9 +1,8 @@
-import NumTicketsInput from "NumTicketsInput";
 import KeyBlueButton from "KeyBlueButton";
 import InfoModalButton from "InfoModalButton";
 import { PurchaseTicketsInfoModalContent } from "modals";
 import TicketsCogs from "TicketsCogs";
-import { FeeInput, BlocksInput, AddressInput, AccountsSelect, StakePoolSelect } from "inputs";
+import { FeeInput, BlocksInput, AddressInput, AccountsSelect, StakePoolSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
 import { Tooltip } from "shared";
 import { addSpacingAroundText } from "helpers/strings";
