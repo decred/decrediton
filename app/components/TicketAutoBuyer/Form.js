@@ -1,6 +1,8 @@
 import TicketsCogs from "TicketsCogs";
 import AutoBuyerSwitch from "AutoBuyerSwitch";
 import KeyBlueButton from "KeyBlueButton";
+import PassphraseModalSwitch from "PassphraseModalSwitch";
+import { PassphraseModalContent } from "modals";
 import InfoModalButton from "InfoModalButton";
 import { TicketAutoBuyerInfoModalContent } from "modals";
 import { DcrInput, NumericInput, FeeInput } from "inputs";
@@ -52,7 +54,8 @@ const TicketAutoBuyerForm = ({
   onChangeMaxPriceRelative,
   onChangeMaxPerBlock,
   onUpdateTicketAutoBuyerConfig,
-  onToggleTicketAutoBuyer,
+  onStartAutoBuyer,
+  onDisableTicketAutoBuyer,
   onToggleShowDetails,
   canNotEnableAutobuyer
 }) => (
@@ -63,7 +66,15 @@ const TicketAutoBuyerForm = ({
     </div>
     <div className={isHidingDetails ? "stakepool-flex-height-auto-buyer-hidden" : "stakepool-flex-height-auto-buyer-shown" }>
       <div className="stakepool-auto-buyer-row">
-        <AutoBuyerSwitch enabled={isTicketAutoBuyerEnabled} onClick={onToggleTicketAutoBuyer} />
+      { isTicketAutoBuyerEnabled ?
+        <AutoBuyerSwitch enabled onClick={onDisableTicketAutoBuyer} /> :
+        <PassphraseModalSwitch
+          modalTitle={<h1><T id="tickets.purchaseConfirmation" m="Ticket Purchase Confirmation" /></h1>}
+          modalContent={<PassphraseModalContent onSubmit={onStartAutoBuyer}/>}
+        >
+          <T id="purchaseTickets.importScriptBtn" m="Import Script" />
+        </PassphraseModalSwitch>
+      }
         <div className="stakepool-auto-buyer-quick-bar-row">
           {isHidingDetails ? (
             <div>
