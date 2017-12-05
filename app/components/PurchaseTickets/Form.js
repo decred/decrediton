@@ -51,7 +51,6 @@ const PurchaseTicketsForm = ({
   onShowRevokeTicket,
   onToggleShowAdvanced,
   intl: { formatMessage },
-  isSubmited,
   account
 }) => {
 
@@ -157,9 +156,8 @@ const PurchaseTicketsForm = ({
                     value={expiry}
                     onChange={changeExpiry}
                     required
-                    submited={isSubmited}
                     invalid={expiryError}
-                    showErrors={isSubmited}
+                    showErrors
                   />
                 </div>
               </div>
@@ -234,7 +232,7 @@ const PurchaseTicketsForm = ({
       <div className="stakepool-purchase-ticket-buttons-area">
         <PassphraseModalButton
             modalTitle={<h1><T id="tickets.purchaseConfirmation" m="Ticket Purchase Confirmation" /></h1>}
-            modalContent={<PassphraseModalContent onSubmit={onPurchaseTickets(privpass)}/>}
+            modalContent={<PassphraseModalContent onSubmit={onPurchaseTickets}/>}
             className="stakepool-content-purchase-button"
             disabled={!canAffordTickets}
         >

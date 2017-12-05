@@ -46,12 +46,7 @@ class PassphraseModalContent extends React.Component {
       return this.setState({ hasAttemptedSubmit: true });
     }
 
-    this.props.submitPassphrase(this.state.passPhrase);
-    this.resetState();
-  }
-
-  onCancel() {
-    this.props.cancelPassphrase();
+    this.props.onSubmit(this.state.passPhrase);
     this.resetState();
   }
 

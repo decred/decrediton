@@ -15,13 +15,9 @@ class Purchase extends React.Component {
     return {
       account: this.props.defaultSpendingAccount,
       stakePool: this.props.defaultStakePool,
-      passphraseHeading: null,
-      passphraseDescription: null,
-      passphraseCallback: null,
       isShowingStakePools: !this.props.defaultStakePool,
       isShowingVotingPrefs: false,
       isShowingImportScript: false,
-      isRequestingPassphrase: false
     };
   }
   render() {
@@ -37,8 +33,6 @@ class Purchase extends React.Component {
             onChangeAccount: null,
             onShowImportScript: null,
             onShowRevokeTicket: null,
-            onRequestPassphrase: null,
-            onCancelPassphraseRequest: null,
             onCancelImportScript: null,
             onToggleTicketStakePool: null,
             onShowStakePoolConfig: null,
@@ -93,30 +87,12 @@ class Purchase extends React.Component {
     this.onCancelPassphraseRequest();
   }
 
-  onCancelPassphraseRequest() {
-    this.setState({
-      isRequestingPassphrase: false,
-      passphraseHeading: null,
-      passphraseDescription: null,
-      passphraseCallback: null
-    });
-  }
-
   onShowStakePoolConfig() {
     this.setState({ isShowingStakePools: true });
   }
 
   onHideStakePoolConfig() {
     this.setState({ isShowingStakePools: false });
-  }
-
-  onRequestPassphrase(passphraseHeading, passphraseDescription, passphraseCallback) {
-    this.setState({
-      passphraseHeading,
-      passphraseDescription,
-      passphraseCallback,
-      isRequestingPassphrase: true
-    });
   }
 
   onShowRevokeTicket() {

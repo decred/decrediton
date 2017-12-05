@@ -19,11 +19,11 @@ class PassphraseModalButton extends React.Component {
   }
 
   render() {
-    const { modalTitle, modalContent, className, children } = this.props;
+    const { modalTitle, modalContent, className, children, disabled } = this.props;
     const { show } = this.state;
 
     return <Aux>
-      <KeyBlueButton className={className} onClick={this.showModal}>
+      <KeyBlueButton disabled={disabled} className={className} onClick={this.showModal}>
         {children}
       </KeyBlueButton>
 

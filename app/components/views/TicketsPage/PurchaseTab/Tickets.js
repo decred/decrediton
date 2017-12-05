@@ -6,9 +6,7 @@ import StakeInfo from "StakeInfo";
 import "style/StakePool.less";
 
 const Tickets = ({
-  isRequestingPassphrase,
   isShowingImportScript,
-  onCancelPassphraseRequest,
   onImportScript,
   onCancelImportScript,
   ...props
@@ -21,11 +19,11 @@ const Tickets = ({
       heading={<T id="importScript.title" m="Enter Passphrase to Import Script" />}
       description={<div><T id="importScript.description" m="Please enter your Script from your configured stakepool" />:</div>}
     />
-    <div className={ ["tab-card", isRequestingPassphrase || isShowingImportScript ? "tab-card-blur" : null].join(" ").trim() }>
+    <div className={ ["tab-card", isShowingImportScript ? "tab-card-blur" : null].join(" ").trim() }>
       <StakeInfo />
-      <PurchaseTickets {...{ ...props, onCancelPassphraseRequest }} />
+      <PurchaseTickets {...{ ...props }} />
       <div className="stakepool-area-spacing"></div>
-      <TicketAutoBuyer {...{ ...props, onCancelPassphraseRequest }} />
+      <TicketAutoBuyer {...{ ...props }} />
     </div>
   </Aux>
 );

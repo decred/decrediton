@@ -12,7 +12,6 @@ class PurchaseTickets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSubmited: false,
       ticketFeeError: false,
       txFeeError: false,
       expiryError: false,
@@ -45,7 +44,7 @@ class PurchaseTickets extends React.Component {
             onChangeTicketFee: null,
             onChangeTxFee: null,
             onChangeExpiry: null,
-            onRequestPassphrase: null
+            onPurchaseTickets: null
           }, this)
         }}
       />
@@ -110,7 +109,7 @@ class PurchaseTickets extends React.Component {
   }
 
   onPurchaseTickets(privpass) {
-    const { onPurchaseTickets, onCancelPassphraseRequest } = this.props;
+    const { onPurchaseTickets } = this.props;
     if (!this.getIsValid() || !privpass) return;
     onPurchaseTickets && onPurchaseTickets(
       privpass,
@@ -123,7 +122,6 @@ class PurchaseTickets extends React.Component {
       this.state.txFee,
       this.getStakePool().value
     );
-    onCancelPassphraseRequest && onCancelPassphraseRequest();
   }
 
   onChangeTicketFee(ticketFee) {
