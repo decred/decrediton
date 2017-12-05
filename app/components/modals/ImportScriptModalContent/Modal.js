@@ -1,25 +1,18 @@
-import KeyBlueButton from "../KeyBlueButton";
-import SlateGrayButton from "../SlateGrayButton";
+import KeyBlueButton from "KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
 import { TextInput, PasswordInput } from "inputs";
-import "../../style/ImportScriptModal.less";
+import "style/ImportScriptModal.less";
 
 const Modal = ({
-  hidden,
-  heading,
-  description,
   script,
   passPhrase,
   hasFailedAttempt,
   setScript,
   setPassPhrase,
-  onSubmit,
-  onCancel
+  onSubmit
 }) => (
-  <div hidden={hidden} className="import-script-modal">
+  <div className="import-script-modal">
     <div className="modal-section">
-      <div className="import-script-modal-heading">{heading}</div>
-      <div className="import-script-modal-description">{description}</div>
       <div className="import-script-modal-field-ct">
         <div className="import-script-modal-label">
           <T id="importScriptModal.redeemScript" m="Redeem Script" />
@@ -59,7 +52,6 @@ const Modal = ({
       </div>
       <div className="import-script-modal-toolbar">
         <KeyBlueButton style={{float: "left"}} onClick={onSubmit}>import</KeyBlueButton>
-        <SlateGrayButton style={{float: "right"}} onClick={onCancel}>cancel</SlateGrayButton>
       </div>
     </div>
   </div>

@@ -1,7 +1,6 @@
-import KeyBlueButton from "KeyBlueButton";
 import InfoModalButton from "InfoModalButton";
 import PassphraseModalButton from "PassphraseModalButton";
-import { PurchaseTicketsInfoModalContent, PassphraseModalContent } from "modals";
+import { PurchaseTicketsInfoModalContent, PassphraseModalContent, ImportScriptModalContent } from "modals";
 import TicketsCogs from "TicketsCogs";
 import { FeeInput, BlocksInput, AddressInput, AccountsSelect, StakePoolSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
@@ -47,8 +46,8 @@ const PurchaseTicketsForm = ({
   onChangeTxFee,
   onChangeExpiry,
   onPurchaseTickets,
-  onShowImportScript,
-  onShowRevokeTicket,
+  onImportScript,
+  onRevokeTickets,
   onToggleShowAdvanced,
   intl: { formatMessage },
   account
@@ -238,23 +237,30 @@ const PurchaseTicketsForm = ({
         >
           <T id="puchaseTickets.purchaseBtn" m="Purchase" />
         </PassphraseModalButton>
-
         {!canAffordTickets &&
           <div className="stakepool-purchase-error">
             <T id="purchaseTickets.errors.insufficientBalance" m="Insufficient spendable account balance to purchase tickets." />
           </div>}
-
         <Tooltip className="stakepool-content-import-script-button" warning disabled={!rescanRequest}
           text={<T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan." />}>
-          <KeyBlueButton disabled={rescanRequest} onClick={onShowImportScript}>
+          <PassphraseModalButton
+              modalTitle={<h1><T id="tickets.importScriptConfirmation" m="Enter Passphrase to Import Script" /></h1>}
+              modalContent={<ImportScriptModalContent onSubmit={onImportScript}/>}
+              className="stakepool-content-purchase-button"
+              disabled={rescanRequest}
+          >
             <T id="purchaseTickets.importScriptBtn" m="Import Script" />
-          </KeyBlueButton>
+          </PassphraseModalButton>
         </Tooltip>
-
         {hasTicketsToRevoke &&
-          <KeyBlueButton className="stakepool-content-revoke-button" onClick={onShowRevokeTicket}>
-            <T id="purchaseTickets.revokeBtn" m="Revoke" />
-          </KeyBlueButton>}
+          <PassphraseModalButton
+              modalTitle={<h1><T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" /></h1>}
+              modalContent={<PassphraseModalContent onSubmit={onRevokeTickets}/>}
+              className="stakepool-content-revoke-button"
+          >
+            <T id="puchaseTickets.revokeBtn" m="Revoke" />
+          </PassphraseModalButton>
+        }
       </div>
     </Aux>);
 };

@@ -23,6 +23,7 @@ const mapStateToProps = selectorMap({
   stopAutoBuyerError: sel.stopAutoBuyerError,
   importScriptError: sel.importScriptError,
   importScriptSuccess: sel.importScriptSuccess,
+  isImportingScript: sel.isImportingScript,
   isPurchasingTickets: sel.isPurchasingTickets,
   isSavingStakePoolConfig: sel.isSavingStakePoolConfig,
   isTestNet: sel.isTestNet,

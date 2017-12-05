@@ -37,7 +37,8 @@ class Purchase extends React.Component {
             onToggleTicketStakePool: null,
             onShowStakePoolConfig: null,
             onHideStakePoolConfig: null,
-            onImportScript: null
+            onImportScript: null,
+            onRevokeTickets: null,
           }, this)
         }}
       />
@@ -78,13 +79,11 @@ class Purchase extends React.Component {
   onImportScript(privpass, script) {
     const { onImportScript } = this.props;
     onImportScript && onImportScript(privpass, script, true, 0, null);
-    this.setState({ isShowingImportScript: false });
   }
 
   onRevokeTickets(privpass) {
     const { onRevokeTickets } = this.props;
     onRevokeTickets && onRevokeTickets(privpass);
-    this.onCancelPassphraseRequest();
   }
 
   onShowStakePoolConfig() {
