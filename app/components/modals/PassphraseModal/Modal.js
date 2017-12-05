@@ -12,17 +12,17 @@ const propTypes = {
 
 const PassphraseModal = ({title, children, show, onCancelModal}) => (
   <Modal className="passphrase-modal" {...{show}}>
-     <div className="passphrase-modal-header">
-       <div className="passphrase-modal-header-title">
-         {title}
-       </div>
-       <SlateGrayButton className="passphrase-modal-close-button" onClick={onCancelModal}>
-         <T id="passphraseModal.btnCancel" m="Cancel" />
-       </SlateGrayButton>
-     </div>
-     <div className="passphrase-modal-content">
-       {children}
-     </div>
+    <div className="passphrase-modal-header">
+      <div className="passphrase-modal-header-title">
+        {title}
+      </div>
+    </div>
+    <div className="passphrase-modal-content">
+      {children}
+    </div>
+    <SlateGrayButton className="passphrase-modal-close-button" onClick={onCancelModal}>
+      <T id="passphraseModal.btnCancel" m="Cancel" />
+    </SlateGrayButton>
   </Modal>
 );
 

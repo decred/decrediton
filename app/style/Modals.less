@@ -60,7 +60,9 @@
 }
 
 .passphrase-modal-close-button {
-  height: 1em;
+  position: absolute;
+  right: 2em;
+  bottom: 2em;
 }
 
 .passphrase-modal-header {
@@ -71,5 +73,78 @@
 .passphrase-modal-header-title {
   font-size: 15px;
   text-transform: capitalize;
-  height: 60px;
+}
+
+.passphrase-modal-field-ct {
+  margin: 10px 10px 3px 0;
+  position: relative;
+  z-index: 0;
+}
+
+.passphrase-modal-field-ct::after {
+  .clearfloat-mixin;
+}
+
+.passphrase-modal-label {
+  padding-right: 10px;
+  float: left;
+  color: #0c1e3e;
+  font-size: 19px;
+  height: 100%;
+  width: 200px;
+  padding-top: 5px;
+  text-align: right;
+  text-transform: capitalize;
+}
+
+.passphrase-modal-error-ct::after {
+  .clearfloat-mixin;
+}
+
+.passphrase-modal-error {
+  min-height: 20px;
+  color: @error-text-color;
+  font-size: 10px;
+}
+
+.passphrase-modal-toolbar {
+  margin-top: 20px;
+  height: 44px;
+}
+
+.import-script-modal-field-ct {
+  margin: 10px 10px 3px 0;
+  position: relative;
+  z-index: 0;
+}
+
+.import-script-modal-field-ct::after {
+  .clearfloat-mixin;
+}
+
+.import-script-modal-label {
+  padding-right: 10px;
+  float: left;
+  color: #0c1e3e;
+  font-size: 19px;
+  height: 100%;
+  width: 200px;
+  padding-top: 5px;
+  text-align: right;
+  text-transform: capitalize;
+}
+
+.import-script-modal-error-ct::after {
+  .clearfloat-mixin;
+}
+
+.import-script-modal-error {
+  min-height: 20px;
+  color: @error-text-color;
+  font-size: 10px;
+}
+
+.import-script-modal-toolbar {
+  margin-top: 20px;
+  height: 44px;
 }

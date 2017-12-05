@@ -3,7 +3,7 @@ import React from "react";
 import KeyBlueButton from "KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
 import { PasswordInput } from "inputs";
-import "style/PassphraseModal.less";
+import "style/Modals.less";
 
 const Modal =({
   passPhrase,
