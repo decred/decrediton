@@ -71,9 +71,7 @@ const TicketAutoBuyerForm = ({
         <PassphraseModalSwitch
           modalTitle={<h1><T id="tickets.startAutoBuyerConfirmation" m="Start Ticket Buyer Confirmation" /></h1>}
           modalContent={<PassphraseModalContent onSubmit={onStartAutoBuyer}/>}
-        >
-          <T id="purchaseTickets.importScriptBtn" m="Import Script" />
-        </PassphraseModalSwitch>
+        />
       }
         <div className="stakepool-auto-buyer-quick-bar-row">
           {isHidingDetails ? (
