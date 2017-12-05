@@ -5,6 +5,7 @@ import Notification from "./Notification";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERED
 } from "wallet/service";
+import "style/Snackbar.less";
 
 const propTypes = {
   messages: PropTypes.array.isRequired,
@@ -14,7 +15,7 @@ const propTypes = {
 const snackbarClasses = ({ type }) => ({
   "Ticket": "snackbar snackbar-stake",
   "Vote": "snackbar snackbar-stake",
-  "Revoke": "snackbar snackbar-stake",
+  "Revocation": "snackbar snackbar-stake",
   [TRANSACTION_DIR_RECEIVED]: "snackbar snackbar-receive",
   [TRANSACTION_DIR_SENT]: "snackbar snackbar-send",
   [TRANSACTION_DIR_TRANSFERED]: "snackbar snackbar-transfer",

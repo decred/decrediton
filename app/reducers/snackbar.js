@@ -26,6 +26,15 @@ import {
 import { SNACKBAR_DISMISS_MESSAGES } from "../actions/SnackbarActions";
 
 const messages = defineMessages({
+  defaultSuccessMessage: {
+    id: "snackbar.defaults.success",
+    defaultMessage: "Success!"
+  },
+  defaultErrorMessage: {
+    id: "snackbar.defaults.error",
+    defaultMessage: "{originalError}"
+  },
+
   PUBLISHTX_SUCCESS: {
     id: "send.publishedTxHeader",
     defaultMessage: "Published tx: {hash}"
@@ -148,131 +157,55 @@ export default function snackbar(state = {}, action) {
     break;
   }
 
-  case RENAMEACCOUNT_SUCCESS: {
-    type = "Success";
-    break;
-  }
-  case RENAMEACCOUNT_FAILED: {
-    values = { originalError: String(action.error) };
-    type = "Error";
-    break;
-  }
-  case GETNEXTACCOUNT_SUCCESS: {
-    type = "Success";
-    break;
-  }
-  case GETNEXTACCOUNT_FAILED: {
-    values = { originalError: String(action.error) };
-    type = "Error";
-    break;
-  }
-  case CHANGEPASSPHRASE_SUCCESS: {
-    type = "Success";
-    break;
-  }
-  case CHANGEPASSPHRASE_FAILED: {
-    values = { originalError: String(action.error) };
-    type = "Error";
-    break;
-  }
-
-  case PUBLISHTX_FAILED:
-    values = { originalError: String(action.error) };
-    type = "Error";
-    break;
-
-  case SIGNTX_FAILED:
-    values = { originalError: String(action.error) };
-    type = "Error";
-    break;
-
-  case CONSTRUCTTX_FAILED:
-    values = { originalError: String(action.error) };
-    type = "Error";
-    break;
-
-  case VALIDATEADDRESS_FAILED:
-    values = { originalError: String(action.error) };
-    type = "Error";
-    break;
-
-  case PURCHASETICKETS_SUCCESS:
-    values = { numTickets: action.purchaseTicketsResponse.getTicketHashesList().length };
-    type = "Success";
-    break;
-
-  case PURCHASETICKETS_FAILED:
-    values = { originalError: String(action.error) };
-    type = "Error";
-    break;
-
+  // all simple success notifications. Just add the type below and the message
+  // on the messages variable above if you need a simple message, without extra
+  // data.
+  case RENAMEACCOUNT_SUCCESS:
+  case GETNEXTACCOUNT_SUCCESS:
+  case CHANGEPASSPHRASE_SUCCESS:
   case REVOKETICKETS_SUCCESS:
-    type = "Success";
-    break;
-
-  case REVOKETICKETS_FAILED:
-    values = { originalError: String(action.error) };
-    type = "Error";
-    break;
-
   case IMPORTSCRIPT_SUCCESS:
-    type = "Success";
-    break;
-
-  case IMPORTSCRIPT_FAILED:
-    values = { originalError: String(action.error) };
-    type = "Error";
-    break;
-
-  case STARTAUTOBUYER_SUCCESS:
-    type = "Success";
-    break;
-
-  case STARTAUTOBUYER_FAILED:
-    values = { originalError: String(action.error) };
-    type = "Error";
-    break;
-
   case STOPAUTOBUYER_SUCCESS:
-    type = "Success";
-    break;
-
+  case STARTAUTOBUYER_SUCCESS:
   case UPDATESTAKEPOOLCONFIG_SUCCESS:
-    type = "Success";
-    break;
-
-  case UPDATESTAKEPOOLCONFIG_FAILED:
-    values = { originalError: String(action.error) };
-    type = "Error";
-    break;
-
   case SETSTAKEPOOLVOTECHOICES_SUCCESS:
     type = "Success";
+    message = messages[action.type] || messages.defaultSuccessMessage;
     break;
 
+  // all simple error messages. Note that the action *must* have an action.error
+  // attribute.
+  case RENAMEACCOUNT_FAILED:
+  case GETNEXTACCOUNT_FAILED:
+  case CHANGEPASSPHRASE_FAILED:
+  case VALIDATEADDRESS_FAILED:
+  case CONSTRUCTTX_FAILED:
+  case SIGNTX_FAILED:
+  case PUBLISHTX_FAILED:
+  case PURCHASETICKETS_FAILED:
+  case REVOKETICKETS_FAILED:
+  case IMPORTSCRIPT_FAILED:
+  case STARTAUTOBUYER_FAILED:
+  case UPDATESTAKEPOOLCONFIG_FAILED:
   case SETSTAKEPOOLVOTECHOICES_FAILED:
-    values = { originalError: String(action.error) };
-    type = "Error";
-    break;
-
   case DECODERAWTXS_FAILED:
-    values = { originalError: String(action.error) };
     type = "Error";
+    message = messages[action.type] || messages.defaultErrorMessage;
+    values = { originalError: String(action.error) };
     break;
 
+  // success messages that add some context/interpolation/values.
+  case PURCHASETICKETS_SUCCESS:
+    type = "Success";
+    message = messages[PURCHASETICKETS_SUCCESS];
+    values = { numTickets: action.purchaseTicketsResponse.getTicketHashesList().length };
+    break;
   }
 
-  const newMessages = state.messages ? state.messages.slice() : Array();
-  if ((values || type) && action.type !== NEW_TRANSACTIONS_RECEIVED) {
-    newMessages.push({
-      type: type,
-      message: messages[action.type],
-      values: values
-    });
-  } else if (action.type == NEW_TRANSACTIONS_RECEIVED) {
-    newMessages.push({ type, message, values });
+  if (message && type) {
+    const newMessage = {type, message, values};
+    return {...state, messages: [...state.messages, newMessage]};
   }
 
-  return {...state, messages: newMessages};
-
+  return {...state};
 }

@@ -28,15 +28,14 @@ class App extends React.Component {
   constructor (props) {
     super(props);
     const { window } = props;
-    this.windowUnloadHandler = window.addEventListener("beforeunload", this.beforeWindowUnload);
+    window.addEventListener("beforeunload", this.beforeWindowUnload);
     this.refreshing = false;
 
     props.listenForAppReloadRequest(this.onReloadRequested);
   }
 
   componentWillUnmount () {
-    const { window } = this.props;
-    window.removeEventListener(this.windowUnloadHandler);
+    window.removeEventListener("beforeunload", this.beforeWindowUnload);
   }
 
   beforeWindowUnload(event) {
