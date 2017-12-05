@@ -1,5 +1,4 @@
 import { shell } from "electron";
-import PassphraseModal from "../PassphraseModal";
 import KeyBlueButton from "KeyBlueButton";
 import SlateGrayButton from "SlateGrayButton";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
@@ -25,16 +24,9 @@ const StakePoolsAddForm = ({
   onChangeApiKey,
   onSetStakePoolInfo,
   onSaveStakePool,
-  onCancelPassphraseRequest,
   onCancelAddStakePool
 }) => (
   <Aux>
-    <PassphraseModal
-      hidden={!isRequestingPassphrase}
-      submitPassphrase={onSetStakePoolInfo}
-      cancelPassphrase={onCancelPassphraseRequest}
-      heading={<T id="stake.addForm.passhraseHeading" m="Enter private passphrase to connect to your stakepool" /> }
-    />
     <div className={ ["tab-card", isRequestingPassphrase ? "tab-card-blur" : null].join(" ").trim() }>
       <div className="stakepool-flex-height">
         <div className="stakepool-content-nest-from-address">
@@ -89,9 +81,14 @@ const StakePoolsAddForm = ({
             </div>
           </div>
         </div>
-        <KeyBlueButton className="stakepool-content-send" disabled={!apiKey} onClick={onSaveStakePool}>
+        <PassphraseModalButton
+          modalTitle={<h1><T id="stake.addPoolConfirmation" m="Stakepool Confirmation" /></h1>}
+          modalContent={<PassphraseModalContent onSubmit={onSetStakePoolInfo}/>}
+          disabled={!apiKey}
+          className="stakepool-content-send"
+        >
           <T id="stake.addPool.addBtn" m="Add" />
-        </KeyBlueButton>
+        </PassphraseModalButton>
         {configuredStakePools.length ? (
           <SlateGrayButton
             className="stakepool-hide-config"

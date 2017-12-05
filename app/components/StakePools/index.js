@@ -49,7 +49,6 @@ class StakePools extends React.Component {
             onCancelPassphraseRequest: null,
             onCancelAddStakePool: null
           }, this),
-          onSetStakePoolInfo: this.onSetStakePoolInfo
         }}
       />
     ) : (
@@ -89,14 +88,6 @@ class StakePools extends React.Component {
 
   onChangeApiKey(apiKey) {
     this.setState({ apiKey });
-  }
-
-  onSaveStakePool() {
-    this.state.apiKey ? this.setState({ isRequestingPassphrase: true }) : null;
-  }
-
-  onCancelPassphraseRequest() {
-    this.setState({ isRequestingPassphrase: false });
   }
 
   onCancelAddStakePool() {

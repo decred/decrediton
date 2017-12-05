@@ -1,8 +1,9 @@
 // @flow
 import { rescan, home } from "connectors";
 import { DecredLoading } from "indicators";
-import SlateGrayButton from "SlateGrayButton";
-import PassphraseModal from "PassphraseModal";
+import KeyBlueButton from "KeyBlueButton";
+import PassphraseModalButton from "PassphraseModalButton";
+import { PassphraseModalContent } from "modals";
 import Balance from "Balance";
 import TxHistory from "TxHistory";
 import { FormattedMessage as T } from "react-intl";
@@ -13,26 +14,16 @@ import "style/HomePage.less";
 const HomePage = ({
   routes,
   spendableTotalBalance,
-  isRequestingPassphrase,
-  passphraseCallback,
+  rescanAttempt,
   hasTicketsToRevoke,
-  passphraseHeading,
-  passphraseDescription,
-  onCancelPassphraseRequest,
-  onShowRevokeTicket,
+  rescanRequest,
   transactions,
   getTransactionsRequestAttempt,
-  getAccountsResponse
+  getAccountsResponse,
+  onRevokeTickets
 }) => {
   return (
     <Aux>
-      <PassphraseModal
-        hidden={!isRequestingPassphrase}
-        submitPassphrase={passphraseCallback}
-        cancelPassphrase={onCancelPassphraseRequest}
-        heading={passphraseHeading}
-        description={passphraseDescription}
-      />
       <TabbedHeader {...{ routes }}>
         <div className="overview-balance">
           <Balance amount={spendableTotalBalance} large/>
@@ -43,9 +34,13 @@ const HomePage = ({
         { hasTicketsToRevoke &&
         <div className="tickets-to-revoke-warning">
           <T id="home.revokeTicketMessage" m="You have outstanding missed or expired tickets, please revoke them to unlock your funds" />
-          <SlateGrayButton className="stakepool-content-revoke-button" onClick={onShowRevokeTicket}>
-            <T id="purchaseTickets.revokeBtn" m="Revoke" />
-          </SlateGrayButton>
+          <PassphraseModalButton
+              modalTitle={<h1><T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" /></h1>}
+              modalContent={<PassphraseModalContent onSubmit={onRevokeTickets}/>}
+              className="stakepool-content-revoke-button"
+          >
+            <T id="puchaseTickets.revokeBtn" m="Revoke" />
+          </PassphraseModalButton>
         </div> }
         <div className="home-content-title">
           <div className="home-content-title-text">
