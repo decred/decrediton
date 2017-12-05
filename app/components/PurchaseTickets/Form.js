@@ -244,7 +244,7 @@ const PurchaseTicketsForm = ({
         <Tooltip className="stakepool-content-import-script-button" warning disabled={!rescanRequest}
           text={<T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan." />}>
           <PassphraseModalButton
-              modalTitle={<h1><T id="tickets.importScriptConfirmation" m="Enter Passphrase to Import Script" /></h1>}
+              modalTitle={<h1><T id="tickets.importScriptConfirmation" m="Import Script Confirmation" /></h1>}
               modalContent={<ImportScriptModalContent onSubmit={onImportScript}/>}
               className="stakepool-content-purchase-button"
               disabled={rescanRequest}
