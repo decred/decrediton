@@ -3,7 +3,6 @@ import { autobind } from "core-decorators";
 import { substruct, compose, eq, get } from "../../fp";
 import PurchaseTicketsForm from "./Form";
 import purchaseTickets from "../../connectors/purchaseTickets";
-import { FormattedMessage as T } from "react-intl";
 
 const MAX_POSSIBLE_FEE_INPUT = 0.1;
 
