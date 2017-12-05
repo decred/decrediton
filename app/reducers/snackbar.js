@@ -189,19 +189,20 @@ export default function snackbar(state = {}, action) {
   case UPDATESTAKEPOOLCONFIG_FAILED:
   case SETSTAKEPOOLVOTECHOICES_FAILED:
   case DECODERAWTXS_FAILED:
+    type = "Error";
     message = messages[action.type] || messages.defaultErrorMessage;
     values = { originalError: String(action.error) };
-    type = "Error";
     break;
 
   // success messages that add some context/interpolation/values.
   case PURCHASETICKETS_SUCCESS:
-    values = { numTickets: action.purchaseTicketsResponse.getTicketHashesList().length };
     type = "Success";
+    message = messages[PURCHASETICKETS_SUCCESS];
+    values = { numTickets: action.purchaseTicketsResponse.getTicketHashesList().length };
     break;
   }
 
-  if (values || type || message) {
+  if (message && type) {
     const newMessage = {type, message, values};
     return {...state, messages: [...state.messages, newMessage]};
   }
