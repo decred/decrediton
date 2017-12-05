@@ -1,5 +1,6 @@
 import { shell } from "electron";
-import KeyBlueButton from "KeyBlueButton";
+import PassphraseModalButton from "PassphraseModalButton";
+import { PassphraseModalContent } from "modals";
 import SlateGrayButton from "SlateGrayButton";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, StakePoolSelect } from "inputs";
@@ -18,16 +19,14 @@ const StakePoolsAddForm = ({
   unconfiguredStakePools,
   configuredStakePools,
   apiKey,
-  isRequestingPassphrase,
   intl,
   onChangeSelectedUnconfigured,
   onChangeApiKey,
   onSetStakePoolInfo,
-  onSaveStakePool,
   onCancelAddStakePool
 }) => (
   <Aux>
-    <div className={ ["tab-card", isRequestingPassphrase ? "tab-card-blur" : null].join(" ").trim() }>
+    <div className="tab-card">
       <div className="stakepool-flex-height">
         <div className="stakepool-content-nest-from-address">
           <div className="stakepool-content-nest-prefix-send">
