@@ -3,32 +3,26 @@ import "../../style/TxHistory.less";
 import { FormattedMessage as T } from "react-intl";
 import { tsToDate } from "../../helpers/dateFormat";
 
+// TODO: use a global component for these indicators
+const indicators = {
+  [true]: <span className="indicator pending"><T id="transaction.indicatorPending" m="Pending" /></span>,
+  [false]: <span className="indicator confirmed"><T id="transaction.indicatorConfirmed" m="Confirmed" /></span>
+};
+
 const Status = ({ txAccountName, pending, txTimestamp }) => (
-  <div className="transaction-status">
-    <div className="transaction-account">
-      <div className="transaction-account-name">{txAccountName}</div>
-      <div className="transaction-account-indicator">
-        {pending ? (
-          <div className="indicator-pending">
-            <T id="transaction.indicatorPending" m="Pending" />
-          </div>
-        ) : (
-          <div className="indicator-confirmed">
-            <T id="transaction.indicatorConfirmed" m="Confirmed" />
-          </div>
-        )}
-      </div>
+  <Aux>
+    <div className="transaction-status">
+      <span className="transaction-account-name">{txAccountName}</span>
+      {indicators[!!pending]}
     </div>
-    {pending ? (
-      <div className="transaction-time-date-spacer"></div>
-    ) : (
+    {pending ? <div className="transaction-time-date-spacer" /> : (
       <div className="transaction-time-date">
         <T id="transaction.timestamp"
           m="{timestamp, date, medium} {timestamp, time, medium}"
           values={{timestamp: tsToDate(txTimestamp)}}/>
       </div>
     )}
-  </div>
+  </Aux>
 );
 
 export default Status;
