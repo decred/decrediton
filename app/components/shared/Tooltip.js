@@ -9,7 +9,7 @@ const Tooltip = ({ text, warning, disabled, className, children }) => {
       clientX + 10 + "px" : window.innerWidth - 5 - tooltip.clientWidth + "px";
     tooltip.style.top =
       clientY + tooltip.clientHeight + 10 < window.innerHeight ?
-      clientY + 10 + "px" : window.innerHeight + 5 - tooltip.clientHeight + "px";
+      clientY + 10 + "px" : window.innerHeight - 5 - tooltip.clientHeight + "px";
   };
 
   const container = ["tooltipContainer", className].join(" ");

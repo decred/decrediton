@@ -17,7 +17,6 @@ const RescanProgress = ({
         max={1}
         value={rescanCurrentBlock/rescanEndBlock}
         color="#2ed8a3"
-        margin
       />
     </div>
     <T
