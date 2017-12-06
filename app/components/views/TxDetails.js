@@ -187,8 +187,6 @@ const TxDetails = ({ routes, router,
           </div>
           <div className="txdetails-details">
             <div className="txdetails-title"><T id="txDetails.properties" m="Properties" /></div>
-            <div className="txdetails-name"><T id="txDetails.rawTransactionLabel" m="Raw Transaction" />:</div>
-            <div className="txdetails-value"><div className="txdetails-value-rawtx">{rawTx}</div><CopyToClipboard textToCopy={rawTx} className="receive-content-nest-copy-to-clipboard-icon" /></div>
             {isConfirmed &&
               <Aux>
                 <div className="txdetails-name"><T id="txDetails.blockLabel" m="Block" />:</div>
@@ -199,6 +197,8 @@ const TxDetails = ({ routes, router,
                 <div className="txdetails-value">{txHeight}</div>
               </Aux>
             }
+            <div className="txdetails-name"><T id="txDetails.rawTransactionLabel" m="Raw Transaction" />:</div>
+            <div className="txdetails-value"><div className="txdetails-value-rawtx">{rawTx}</div><CopyToClipboard textToCopy={rawTx} className="receive-content-nest-copy-to-clipboard-icon" /></div>
             </div>
         </div>
       </div>
