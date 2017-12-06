@@ -65,6 +65,7 @@ class SideBar extends React.Component {
           onShowAccounts: this.onShowAccounts,
           onHideAccounts: this.onHideAccounts,
           rescanRequest: this.props.rescanRequest,
+          rescanAttempt: this.props.rescanAttempt,
           showingSidebarMenu: this.props.showingSidebarMenu,
         }}
       />

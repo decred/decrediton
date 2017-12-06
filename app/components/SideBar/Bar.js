@@ -4,6 +4,7 @@ import { RescanProgress } from "indicators";
 import MenuLinks from "./MenuLinks";
 import Logo from "./Logo";
 import Balance from "Balance";
+import { RescanButton } from "buttons";
 import "style/Fonts.less";
 import "style/SideBar.less";
 
@@ -19,6 +20,7 @@ const Bar = ({
   onShowAccounts,
   onHideAccounts,
   rescanRequest,
+  rescanAttempt,
   showingSidebarMenu,
 }) => (
   <div className={"sidebar-menu " + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
@@ -51,6 +53,7 @@ const Bar = ({
         <div className="sidebar-menu-bottom-latest-block">
           { rescanRequest ? <RescanProgress/> : null }
           <Aux show={ currentHeight && !rescanRequest }>
+            <RescanButton {...{rescanRequest, rescanAttempt}} />
             <a className="sidebar-menu-bottom-latest-block-name">
               { synced ?
                 <T id="sidebar.latestBlock" m="Latest Block" /> :
