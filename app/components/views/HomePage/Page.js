@@ -32,7 +32,7 @@ const HomePage = ({
         <div className="tickets-to-revoke-warning">
           <T id="home.revokeTicketMessage" m="You have outstanding missed or expired tickets, please revoke them to unlock your funds" />
           <PassphraseModalButton
-              modalTitle={<h1><T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" /></h1>}
+              modalTitle={<T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />}
               modalContent={<PassphraseModalContent onSubmit={onRevokeTickets}/>}
               className="stakepool-content-revoke-button"
           >

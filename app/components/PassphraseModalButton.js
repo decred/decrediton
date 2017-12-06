@@ -19,7 +19,7 @@ class PassphraseModalButton extends React.Component {
   }
 
   render() {
-    const { modalTitle, modalContent, className, children, disabled } = this.props;
+    const { modalTitle, modalDescription, modalContent, className, children, disabled } = this.props;
     const { show } = this.state;
 
     return <Aux>
@@ -27,7 +27,7 @@ class PassphraseModalButton extends React.Component {
         {children}
       </KeyBlueButton>
 
-      <PassphraseModal {...{show, title: modalTitle, onCancelModal: this.hideModal}}>
+      <PassphraseModal {...{show, title: modalTitle, description: modalDescription, onCancelModal: this.hideModal}}>
         {modalContent}
       </PassphraseModal>
     </Aux>;

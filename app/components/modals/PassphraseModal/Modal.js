@@ -7,14 +7,18 @@ const propTypes = {
   title: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
   children: PropTypes.object.isRequired,
-  onCancelModal: PropTypes.func.isRequired
+  onCancelModal: PropTypes.func.isRequired,
+  description: PropTypes.object
 };
 
-const PassphraseModal = ({title, children, show, onCancelModal}) => (
+const PassphraseModal = ({title, description, children, show, onCancelModal}) => (
   <Modal className="passphrase-modal" {...{show}}>
     <div className="passphrase-modal-header">
       <div className="passphrase-modal-header-title">
         {title}
+      </div>
+      <div className="passphrase-modal-header-description">
+        {description}
       </div>
     </div>
     <div className="passphrase-modal-content">

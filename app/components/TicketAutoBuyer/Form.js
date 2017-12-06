@@ -69,7 +69,7 @@ const TicketAutoBuyerForm = ({
       { isTicketAutoBuyerEnabled ?
         <AutoBuyerSwitch enabled onClick={onDisableTicketAutoBuyer} /> :
         <PassphraseModalSwitch
-          modalTitle={<h1><T id="tickets.startAutoBuyerConfirmation" m="Start Ticket Buyer Confirmation" /></h1>}
+          modalTitle={<T id="tickets.startAutoBuyerConfirmation" m="Start Ticket Buyer Confirmation" />}
           modalContent={<PassphraseModalContent onSubmit={onStartAutoBuyer}/>}
         />
       }
