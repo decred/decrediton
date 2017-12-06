@@ -30,7 +30,7 @@ const SendOutputRow = ({
 }) => (
   <div className="send-row">
     <div className="send-output-row">
-      <div className="send-label"><T id="send.to" m="To" />:</div>
+      <div className="send-label">{index === 0 && <span><T id="send.to" m="To" />:</span>}</div>
       <div className="send-address">
         <div className="send-input-form">
           <AddressInput
