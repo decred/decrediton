@@ -28,13 +28,11 @@ const AccountsList = ({
       <div className="tab-content">
       { isLoading ? <DecredLoading/> :
         <div className="tab-card">
-          <div className="account-content-title">
-            <div className="account-content-title-buttons-area">
-              <InfoModalButton
-                modalTitle={<h1><T id="accounts.balanceInfo" m="Balance Information" /></h1>}
-                modalContent={<BalanceOverviewModalContent />}
-              />
-            </div>
+          <div className="account-content-title-buttons-area">
+            <InfoModalButton
+              modalTitle={<h1><T id="accounts.balanceInfo" m="Balance Information" /></h1>}
+              modalContent={<BalanceOverviewModalContent />}
+            />
           </div>
           <div className="account-content-nest">
             {accounts.map(account => (
