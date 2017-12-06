@@ -1,48 +1,31 @@
-import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { autobind } from "core-decorators";
-import TicketPurchase from "./TicketPurchase";
-import Vote from "./Vote";
-import Revocation from "./Revocation";
-import Send from "./Send";
-import Receive from "./Receive";
-import Transfer from "./Transfer";
+import { RegularTxRowOfClass as regular } from "./RegularTxRow";
+import { StakeTxRowOfType as stake } from "./StakeTxRow";
+import "../../style/TxHistory.less";
 
-@autobind
-class TxRow extends Component {
-  render() {
-    const {
-      date,
-      pending,
-      tx
-    } = this.props;
-    const Component = (tx.txType === "Ticket") ? (
-      TicketPurchase
-    ) : (tx.txType === "Vote") ? (
-      Vote
-    ) : (tx.txType === "Revocation") ? (
-      Revocation
-    ) : (tx.txDirection === "out") ? (
-      Send
-    ) : (tx.txDirection === "in") ? (
-      Receive
-    ) : (tx.txDirection === "transfer") ? (
-      Transfer
-    ) : null;
+const TxRowByType = { // TODO: use constants instead of string
+  "Ticket": stake("Ticket"),
+  "Vote": stake("Vote"),
+  "Revocation": stake("Revocation"),
+  "out": regular("Send", true),
+  "in": regular("Receive", false),
+  "transfer": regular("Transfer", true)
+};
 
-    return Component ? (
-      <Component
-        {...{
-          ...tx,
-          date,
-          pending,
-          onClick: () => this.context.router.push(`/transactions/history/${tx.txHash}`),
-          receiveAddressStr: (tx.txDescription.addressStr || []).join(", "),
-        }}
-      />
-    ) : null;
-  }
-}
+const TxRow = ({ tx }, { router }) => {
+  const rowType = tx.txType || tx.txDirection;
+  const Component = TxRowByType[rowType];
+
+  return Component ? (
+    <Component
+      {...{
+        ...tx,
+        pending: !tx.txTimestamp,
+        onClick: () => router.push(`/transactions/history/${tx.txHash}`)
+      }}
+    />
+  ) : null;
+};
 
 TxRow.contextTypes = {
   router: PropTypes.object.isRequired,
