@@ -1,6 +1,6 @@
 // @flow
 import Balance from "../Balance";
-import { TabbedHeader } from "shared";
+import { TabbedHeader, CopyToClipboard } from "shared";
 import { shell } from "electron";
 import { transactionDetails } from "connectors";
 import SlateGrayButton from "../SlateGrayButton";
@@ -61,7 +61,8 @@ const TxDetails = ({ routes, router,
                        txAmount,
                        txFee,
                        txDirection,
-                       txTimestamp
+                       txTimestamp,
+                       rawTx
                      },
                      currentBlockHeight,
                      intl
@@ -184,18 +185,21 @@ const TxDetails = ({ routes, router,
               <div className="txdetails-value"><Balance amount={txFee} /></div>
             </Aux> }
           </div>
-          {isConfirmed ?
-            <div className="txdetails-details">
-              <div className="txdetails-title"><T id="txDetails.properties" m="Properties" /></div>
-              <div className="txdetails-name"><T id="txDetails.blockLabel" m="Block" />:</div>
-              <div className="txdetails-value">
-                <a onClick={ openBlockUrl } style={{ cursor: "pointer" }}>{txBlockHash}</a>
-              </div>
-              <div className="txdetails-name"><T id="txDetails.blockHeightLabel" m="Height" /> :</div>
-              <div className="txdetails-value">{txHeight}</div>
+          <div className="txdetails-details">
+            <div className="txdetails-title"><T id="txDetails.properties" m="Properties" /></div>
+            <div className="txdetails-name"><T id="txDetails.rawTransactionLabel" m="Raw Transaction" />:</div>
+            <div className="txdetails-value"><div className="txdetails-value-rawtx">{rawTx}</div><CopyToClipboard textToCopy={rawTx} className="receive-content-nest-copy-to-clipboard-icon" /></div>
+            {isConfirmed &&
+              <Aux>
+                <div className="txdetails-name"><T id="txDetails.blockLabel" m="Block" />:</div>
+                <div className="txdetails-value">
+                  <a onClick={ openBlockUrl } style={{ cursor: "pointer" }}>{txBlockHash}</a>
+                </div>
+                <div className="txdetails-name"><T id="txDetails.blockHeightLabel" m="Height" /> :</div>
+                <div className="txdetails-value">{txHeight}</div>
+              </Aux>
+            }
             </div>
-            : null
-          }
         </div>
       </div>
     </Aux>
