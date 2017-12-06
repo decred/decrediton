@@ -3,6 +3,7 @@ import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { RescanProgress } from "indicators";
 import MenuLinks from "./MenuLinks";
 import Logo from "./Logo";
+import Balance from "Balance";
 import "style/Fonts.less";
 import "style/SideBar.less";
 
@@ -47,7 +48,7 @@ const Bar = ({
           <Aux>
             <div className="sidebar-menu-bottom-total-balance-short-separator"></div>
             <div className="sidebar-menu-bottom-total-balance-short-name"><T id="sidebar.totalBalance" m="Total Balance"/>:</div>
-            <div className="sidebar-menu-bottom-total-balance-short-value">{totalBalance}</div>
+            <div className="sidebar-menu-bottom-total-balance-short-value"><Balance amount={totalBalance} /></div>
           </Aux> }
         </div>
         <div className="sidebar-menu-bottom-latest-block">

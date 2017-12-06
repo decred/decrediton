@@ -60,7 +60,7 @@ class SideBar extends React.Component {
           currentHeight: this.props.currentBlockHeight,
           lastBlockDate: this.state.lastBlockDate,
           lastBlockIsRecent: this.state.lastBlockIsRecent,
-          totalBalance: this.props.totalBalance / 100000000,
+          totalBalance: this.props.totalBalance,
           isShowingAccounts: this.state.isShowingAccounts,
           onShowAccounts: this.onShowAccounts,
           onHideAccounts: this.onHideAccounts,
