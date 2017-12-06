@@ -3,7 +3,7 @@ import AutoBuyerSwitch from "AutoBuyerSwitch";
 import "style/MiscComponents.less";
 
 @autobind
-class PassphraseModalButton extends React.Component {
+class PassphraseModalSwitch extends React.Component {
 
   constructor(props) {
     super(props);
@@ -32,4 +32,4 @@ class PassphraseModalButton extends React.Component {
   }
 }
 
-export default PassphraseModalButton;
+export default PassphraseModalSwitch;
