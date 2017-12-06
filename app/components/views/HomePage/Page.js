@@ -1,7 +1,6 @@
 // @flow
 import { rescan, home } from "connectors";
 import { DecredLoading } from "indicators";
-import KeyBlueButton from "KeyBlueButton";
 import PassphraseModalButton from "PassphraseModalButton";
 import { PassphraseModalContent } from "modals";
 import Balance from "Balance";
@@ -14,9 +13,7 @@ import "style/HomePage.less";
 const HomePage = ({
   routes,
   spendableTotalBalance,
-  rescanAttempt,
   hasTicketsToRevoke,
-  rescanRequest,
   transactions,
   getTransactionsRequestAttempt,
   getAccountsResponse,
