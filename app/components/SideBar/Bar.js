@@ -44,15 +44,13 @@ const Bar = ({
           onMouseEnter={rescanRequest ? null : onShowAccounts}
           onMouseLeave={rescanRequest ? null : onHideAccounts}
         >
-          { rescanRequest ? <RescanProgress/> :
-          <Aux>
-            <div className="sidebar-menu-bottom-total-balance-short-separator"></div>
-            <div className="sidebar-menu-bottom-total-balance-short-name"><T id="sidebar.totalBalance" m="Total Balance"/>:</div>
-            <div className="sidebar-menu-bottom-total-balance-short-value"><Balance amount={totalBalance} /></div>
-          </Aux> }
+          <div className="sidebar-menu-bottom-total-balance-short-separator"></div>
+          <div className="sidebar-menu-bottom-total-balance-short-name"><T id="sidebar.totalBalance" m="Total Balance"/>:</div>
+          <div className="sidebar-menu-bottom-total-balance-short-value"><Balance amount={totalBalance} /></div>
         </div>
         <div className="sidebar-menu-bottom-latest-block">
-          <Aux show={ currentHeight }>
+          { rescanRequest ? <RescanProgress/> : null }
+          <Aux show={ currentHeight && !rescanRequest }>
             <a className="sidebar-menu-bottom-latest-block-name">
               { synced ?
                 <T id="sidebar.latestBlock" m="Latest Block" /> :

@@ -248,19 +248,25 @@
 
 .rescan-progress-area {
   color: #69d5f7;
-  font-size: 16px;
+  background-image: @menu-rescan-icon;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-position: 2px 12px;
+  padding-left: 22px;
 }
 
 .rescan-progress-percent {
-  float: right;
+  color: @accent-color;
 }
 
 .rescan-progress-fraction {
-  float: left;
+  color: @accent-color;
+  margin: 0px 4px 0px 4px;
 }
 
-.rescan-button-area {
-  float: right;
+.rescan-progress-indicator {
+  margin: -14px 0px 7px -40px;
+  width: @sidebar-width;
 }
 
 .context-menu-item {

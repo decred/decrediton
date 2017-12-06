@@ -10,15 +10,27 @@ const RescanProgress = ({
   rescanPercentFinished
 }) => (
   <div className="rescan-progress-area" >
-    <T id="rescan.rescanning" m="Rescanning" />
-    <LinearProgress
-      mode="determinate"
-      min={0}
-      max={1}
-      value={rescanCurrentBlock/rescanEndBlock}
+    <div className="rescan-progress-indicator">
+      <LinearProgress
+        mode="determinate"
+        min={0}
+        max={1}
+        value={rescanCurrentBlock/rescanEndBlock}
+        color="#2ed8a3"
+        margin
+      />
+    </div>
+    <T
+      id="rescan.rescanning"
+      m="Rescanning {blockProgress} ({progressPercent})"
+      values={{
+        blockProgress: (<span className="rescan-progress-fraction">{rescanCurrentBlock}/{rescanEndBlock}</span>),
+        progressPercent:
+          (<span className="rescan-progress-percent">
+            <T id="rescan.progressPercent" m="{progress, number, percent}" values={{progress: rescanPercentFinished/100}} />
+          </span>)
+      }}
     />
-    <span className="rescan-progress-fraction">{rescanCurrentBlock}/{rescanEndBlock}</span>
-    <span className="rescan-progress-percent">{rescanPercentFinished}%</span>
   </div>
 );
 
