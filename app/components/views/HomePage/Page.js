@@ -1,26 +1,18 @@
 // @flow
 import { rescan, home } from "connectors";
 import { DecredLoading } from "indicators";
-import KeyBlueButton from "KeyBlueButton";
 import SlateGrayButton from "SlateGrayButton";
 import PassphraseModal from "PassphraseModal";
 import Balance from "Balance";
 import TxHistory from "TxHistory";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip, TabbedHeader } from "shared";
+import { TabbedHeader } from "shared";
 import "style/Fonts.less";
 import "style/HomePage.less";
-
-const rescanBtnMessage =
-`Rescanning may help resolve some balance errors.
-
-Note: This scans the entire blockchain for transactions,
-but does not re-download it.`;
 
 const HomePage = ({
   routes,
   spendableTotalBalance,
-  rescanAttempt,
   isRequestingPassphrase,
   passphraseCallback,
   hasTicketsToRevoke,
@@ -28,7 +20,6 @@ const HomePage = ({
   passphraseDescription,
   onCancelPassphraseRequest,
   onShowRevokeTicket,
-  rescanRequest,
   transactions,
   getTransactionsRequestAttempt,
   getAccountsResponse
@@ -46,11 +37,6 @@ const HomePage = ({
         <div className="overview-balance">
           <Balance amount={spendableTotalBalance} large/>
         </div>
-        <Tooltip text={ <T id="home.rescanBtn.tip" m={ rescanBtnMessage} /> } disabled={ rescanRequest }>
-          <KeyBlueButton disabled={rescanRequest} onClick={() => rescanAttempt(0)}>
-            <T id="home.rescanBtn" m="Rescan" />
-          </KeyBlueButton>
-        </Tooltip>
       </TabbedHeader>
       { getTransactionsRequestAttempt ? <div className="page-content"><DecredLoading /></div> :
       <div className="page-content">

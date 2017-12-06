@@ -3,6 +3,8 @@ import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { RescanProgress } from "indicators";
 import MenuLinks from "./MenuLinks";
 import Logo from "./Logo";
+import Balance from "Balance";
+import { RescanButton } from "buttons";
 import "style/Fonts.less";
 import "style/SideBar.less";
 
@@ -18,6 +20,7 @@ const Bar = ({
   onShowAccounts,
   onHideAccounts,
   rescanRequest,
+  rescanAttempt,
   showingSidebarMenu,
 }) => (
   <div className={"sidebar-menu " + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
@@ -43,15 +46,14 @@ const Bar = ({
           onMouseEnter={rescanRequest ? null : onShowAccounts}
           onMouseLeave={rescanRequest ? null : onHideAccounts}
         >
-          { rescanRequest ? <RescanProgress/> :
-          <Aux>
-            <div className="sidebar-menu-bottom-total-balance-short-separator"></div>
-            <div className="sidebar-menu-bottom-total-balance-short-name"><T id="sidebar.totalBalance" m="Total Balance"/>:</div>
-            <div className="sidebar-menu-bottom-total-balance-short-value">{totalBalance}</div>
-          </Aux> }
+          <div className="sidebar-menu-bottom-total-balance-short-separator"></div>
+          <div className="sidebar-menu-bottom-total-balance-short-name"><T id="sidebar.totalBalance" m="Total Balance"/>:</div>
+          <div className="sidebar-menu-bottom-total-balance-short-value"><Balance amount={totalBalance} /></div>
         </div>
         <div className="sidebar-menu-bottom-latest-block">
-          <Aux show={ currentHeight }>
+          { rescanRequest ? <RescanProgress/> : null }
+          <Aux show={ currentHeight && !rescanRequest }>
+            <RescanButton {...{rescanRequest, rescanAttempt}} />
             <a className="sidebar-menu-bottom-latest-block-name">
               { synced ?
                 <T id="sidebar.latestBlock" m="Latest Block" /> :
