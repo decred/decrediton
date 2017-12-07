@@ -9,7 +9,8 @@ import {
   GETTICKETPRICE_ATTEMPT, GETTICKETPRICE_FAILED, GETTICKETPRICE_SUCCESS,
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
   GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED,  GETTRANSACTIONS_COMPLETE,
-  NEW_TRANSACTIONS_RECEIVED, CHANGE_TRANSACTIONS_FILTER, CLEAR_CURRENT_TRANSACTIONS,
+  NEW_TRANSACTIONS_RECEIVED, CHANGE_TRANSACTIONS_FILTER,
+  CLEAR_MOSTRECENTTRANSACTIONS,
   UPDATETIMESINCEBLOCK,
   GETTICKETS_ATTEMPT, GETTICKETS_FAILED, GETTICKETS_COMPLETE,
   GETAGENDASERVICE_ATTEMPT, GETAGENDASERVICE_FAILED, GETAGENDASERVICE_SUCCESS,
@@ -255,15 +256,19 @@ export default function grpc(state = {}, action) {
       getTransactionsRequestAttempt: false,
     };
   case GETTRANSACTIONS_COMPLETE:
+    var transactions = [...action.unminedTransactions, ...action.minedTransactions];
     return {
       ...state,
       minedTransactions: action.minedTransactions,
       unminedTransactions: action.unminedTransactions,
-      transactions: [...action.unminedTransactions, ...action.minedTransactions],
+      transactions: transactions,
       noMoreTransactions: action.noMoreTransactions,
       lastTransaction: action.lastTransaction,
       getTransactionsRequestError: "",
       getTransactionsRequestAttempt: false,
+      recentTransactions: state.recentTransactions.length
+        ? state.recentTransactions
+        : transactions.slice(0, state.recentTransactionCount)
     };
   case NEW_TRANSACTIONS_RECEIVED:
     return {
@@ -271,6 +276,7 @@ export default function grpc(state = {}, action) {
       minedTransactions: action.minedTransactions,
       unminedTransactions: action.unminedTransactions,
       transactions: [...action.unminedTransactions, ...action.minedTransactions],
+      recentTransactions: action.recentTransactions,
     };
   case CHANGE_TRANSACTIONS_FILTER:
     return {
@@ -282,14 +288,10 @@ export default function grpc(state = {}, action) {
       lastTransaction: null,
       noMoreTransactions: false
     };
-  case CLEAR_CURRENT_TRANSACTIONS:
+  case CLEAR_MOSTRECENTTRANSACTIONS:
     return {
       ...state,
-      minedTransactions: [],
-      unminedTransactions: [],
-      transactions: [],
-      lastTransaction: null,
-      noMoreTransactions: false
+      recentTransactions: [],
     };
   case UPDATETIMESINCEBLOCK:
     return {

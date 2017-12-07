@@ -20,7 +20,7 @@ function getWalletServiceSuccess(walletService) {
   return (dispatch, getState) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
     setTimeout(() => { dispatch(getAccountsAttempt()); }, 10);
-    setTimeout(() => { dispatch(getTransactions()); }, 20);
+    setTimeout(() => { dispatch(getMostRecentTransactions()); }, 20);
     setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 20);
     setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNextAddressAttempt(0)); }, 1000);
@@ -357,9 +357,10 @@ export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
 export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
 
-  let { unminedTransactions, minedTransactions } = getState().grpc;
-  const { transactionsFilter } = getState().grpc;
+  let { unminedTransactions, minedTransactions, recentTransactions } = getState().grpc;
+  const { transactionsFilter, recentTransactionCount } = getState().grpc;
 
+  // aux maps of [txhash] => tx (used to ensure no duplicate txs)
   const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
   const newlyUnminedMap = newlyUnminedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
 
@@ -367,6 +368,12 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     ...newlyUnminedTransactions,
     ...unminedTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
   ], transactionsFilter);
+
+  recentTransactions = [
+    ...newlyUnminedTransactions,
+    ...newlyMinedTransactions,
+    ...recentTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
+  ].slice(0, recentTransactionCount);
 
   // TODO: filter newlyMinedTransactions against minedTransactions if this
   // starts generating a duplicated key error
@@ -376,18 +383,25 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   } else {
     minedTransactions = [...minedTransactions, ...newlyMinedTransactions];
   }
+  minedTransactions = filterTransactions(minedTransactions, transactionsFilter);
 
   dispatch({unminedTransactions, minedTransactions, newlyUnminedTransactions,
-    newlyMinedTransactions, type: NEW_TRANSACTIONS_RECEIVED});
+    newlyMinedTransactions, recentTransactions, type: NEW_TRANSACTIONS_RECEIVED});
 };
 
-export const CLEAR_CURRENT_TRANSACTIONS = "CLEAR_CURRENT_TRANSACTIONS";
+export const CLEAR_MOSTRECENTTRANSACTIONS = "CLEAR_MOSTRECENTTRANSACTIONS";
 
-// reloadTransactions clears and reloads the initial page of transactions, given
-// the current transaction filter.
-export const reloadTransactions = () => dispatch => {
-  dispatch({type: CLEAR_CURRENT_TRANSACTIONS});
-  dispatch(getTransactions());
+// getMostRecentTransactions clears the transaction filter and refetches
+// the first page of transactions. This is used to get and store the initial
+// list of recent transactions.
+export const getMostRecentTransactions = () => dispatch => {
+  const defaultFilter = {
+    listDirection: "desc",
+    types: [],
+    direction: null,
+  };
+  dispatch({type: CLEAR_MOSTRECENTTRANSACTIONS});
+  dispatch(changeTransactionsFilter(defaultFilter));
 };
 
 export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";

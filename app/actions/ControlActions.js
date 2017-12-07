@@ -2,7 +2,7 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import { isValidAddress } from "helpers";
-import { getAccountsAttempt, getStakeInfoAttempt, reloadTransactions } from "./ClientActions";
+import { getAccountsAttempt, getStakeInfoAttempt, getMostRecentTransactions } from "./ClientActions";
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   ConstructTransactionRequest, SignTransactionRequest,
@@ -82,7 +82,7 @@ export function rescanAttempt(beginHeight) {
       console.log("Rescan done");
       dispatch({ type: RESCAN_COMPLETE });
       setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
-      setTimeout( () => {dispatch(reloadTransactions());}, 1000);
+      setTimeout( () => {dispatch(getMostRecentTransactions());}, 1000);
     });
     rescanCall.on("status", function(status) {
       console.log("Rescan status:", status);
