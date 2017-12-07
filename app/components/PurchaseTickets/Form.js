@@ -158,7 +158,7 @@ const PurchaseTicketsForm = ({
                     required
                     submited={isSubmited}
                     invalid={expiryError}
-                    showErrors={isSubmited}
+                    showErrors
                   />
                 </div>
               </div>
