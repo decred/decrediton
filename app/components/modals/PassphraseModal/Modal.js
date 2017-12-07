@@ -2,12 +2,12 @@ import Modal from "../Modal";
 import SlateGrayButton from "SlateGrayButton";
 import { FormattedMessage as T } from "react-intl";
 import PropTypes from "prop-types";
-import PassphraseModalContent from "../PassphraseInfoModalContent";
+import PassphraseModalContent from "../PassphraseModalContent";
 
 const propTypes = {
   title: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
-  children: PropTypes.object.isRequired,
+  content: PropTypes.object,
   onCancelModal: PropTypes.func.isRequired,
   description: PropTypes.object
 };
