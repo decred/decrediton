@@ -219,6 +219,7 @@ export default function control(state = {}, action) {
     return {...state,
       purchaseTicketsError: String(action.error),
       purchaseTicketsRequestAttempt: false,
+      importScriptRequestAttempt: false,
     };
   case PURCHASETICKETS_SUCCESS:
     return {...state,
