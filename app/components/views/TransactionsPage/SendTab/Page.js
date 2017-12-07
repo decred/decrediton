@@ -1,7 +1,6 @@
 import { AccountsSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
-import { DecredLoading } from "indicators";
 import Balance from "Balance";
 import PassphraseModalButton from "PassphraseModalButton";
 import OutputAccountRow from "./OutputAccountRow";
@@ -34,7 +33,6 @@ const SendPage = ({
   ...props
                   }) => (
     <Aux>
-      { isSendingTransaction ? <DecredLoading /> :
       <div className="tab-card">
         <div className="send-flex-height">
           <div className="send-select-account-area">
@@ -77,6 +75,7 @@ const SendPage = ({
                 disabled={!isValid}
                 className="content-send"
                 onSubmit={onAttemptSignTransaction}
+                loading={isSendingTransaction}
             >
               <T id="send.sendBtn" m="Send" />
             </PassphraseModalButton>
@@ -108,7 +107,7 @@ const SendPage = ({
               </div>
             </div>
           </div>
-        </div> }
+        </div>
     </Aux>
   );
 
