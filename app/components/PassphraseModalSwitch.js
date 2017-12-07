@@ -19,13 +19,13 @@ class PassphraseModalSwitch extends React.Component {
   }
 
   render() {
-    const { modalTitle, modalContent, enabled } = this.props;
+    const { modalTitle, modalContent, enabled, onSubmit } = this.props;
     const { show } = this.state;
 
     return <Aux>
       <AutoBuyerSwitch enabled={enabled} onClick={this.showModal} />
 
-      <PassphraseModal {...{show, title: modalTitle, onCancelModal: this.hideModal}}>
+      <PassphraseModal {...{show, title: modalTitle, onCancelModal: this.hideModal, onSubmit}}>
         {modalContent}
       </PassphraseModal>
     </Aux>;

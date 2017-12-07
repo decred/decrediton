@@ -231,9 +231,9 @@ const PurchaseTicketsForm = ({
       <div className="stakepool-purchase-ticket-buttons-area">
         <PassphraseModalButton
             modalTitle={<T id="tickets.purchaseConfirmation" m="Ticket Purchase Confirmation" />}
-            modalContent={<PassphraseModalContent onSubmit={onPurchaseTickets}/>}
             className="stakepool-content-purchase-button"
             disabled={!canAffordTickets}
+            onSubmit={onPurchaseTickets}
         >
           <T id="puchaseTickets.purchaseBtn" m="Purchase" />
         </PassphraseModalButton>
@@ -245,9 +245,10 @@ const PurchaseTicketsForm = ({
           text={<T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan." />}>
           <PassphraseModalButton
               modalTitle={<T id="tickets.importScriptConfirmation" m="Import Script Confirmation" />}
-              modalContent={<ImportScriptModalContent onSubmit={onImportScript}/>}
+              modalContent={<ImportScriptModalContent/>}
               className="stakepool-content-purchase-button"
               disabled={rescanRequest}
+              onSubmit={onImportScript}
           >
             <T id="purchaseTickets.importScriptBtn" m="Import Script" />
           </PassphraseModalButton>
@@ -255,8 +256,8 @@ const PurchaseTicketsForm = ({
         {hasTicketsToRevoke &&
           <PassphraseModalButton
               modalTitle={<T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />}
-              modalContent={<PassphraseModalContent onSubmit={onRevokeTickets}/>}
               className="stakepool-content-revoke-button"
+              onSubmit={onRevokeTickets}
           >
             <T id="puchaseTickets.revokeBtn" m="Revoke" />
           </PassphraseModalButton>

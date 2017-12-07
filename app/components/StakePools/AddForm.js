@@ -82,9 +82,9 @@ const StakePoolsAddForm = ({
         </div>
         <PassphraseModalButton
           modalTitle={<T id="stake.addPoolConfirmation" m="Stakepool Confirmation" />}
-          modalContent={<PassphraseModalContent onSubmit={onSetStakePoolInfo}/>}
           disabled={!apiKey}
           className="stakepool-content-send"
+          onSubmit={onSetStakePoolInfo}
         >
           <T id="stake.addPool.addBtn" m="Add" />
         </PassphraseModalButton>
