@@ -6,7 +6,6 @@ export { default as VerifyMessageInfoModalContent } from "./VerifyMessageInfoMod
 export { default as TicketAutoBuyerInfoModalContent } from "./TicketAutoBuyerInfoModalContent";
 export { default as SeedInfoModalContent } from "./SeedInfoModalContent";
 export { default as PassphraseInfoModalContent } from "./PassphraseInfoModalContent";
-export { default as PassphraseModalContent } from "./PassphraseModalContent";
 export { default as ImportScriptModalContent } from "./ImportScriptModalContent";
 
 export { default as InfoModal } from "./InfoModal/Modal";

@@ -2,7 +2,6 @@
 import { rescan, home } from "connectors";
 import { DecredLoading } from "indicators";
 import PassphraseModalButton from "PassphraseModalButton";
-import { PassphraseModalContent } from "modals";
 import Balance from "Balance";
 import TxHistory from "TxHistory";
 import { FormattedMessage as T } from "react-intl";
@@ -33,8 +32,8 @@ const HomePage = ({
           <T id="home.revokeTicketMessage" m="You have outstanding missed or expired tickets, please revoke them to unlock your funds" />
           <PassphraseModalButton
               modalTitle={<T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />}
-              modalContent={<PassphraseModalContent onSubmit={onRevokeTickets}/>}
               className="stakepool-content-revoke-button"
+              onSubmit={onRevokeTickets}
           >
             <T id="puchaseTickets.revokeBtn" m="Revoke" />
           </PassphraseModalButton>

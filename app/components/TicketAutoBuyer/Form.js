@@ -2,7 +2,6 @@ import TicketsCogs from "TicketsCogs";
 import AutoBuyerSwitch from "AutoBuyerSwitch";
 import KeyBlueButton from "KeyBlueButton";
 import PassphraseModalSwitch from "PassphraseModalSwitch";
-import { PassphraseModalContent } from "modals";
 import InfoModalButton from "InfoModalButton";
 import { TicketAutoBuyerInfoModalContent } from "modals";
 import { DcrInput, NumericInput, FeeInput } from "inputs";

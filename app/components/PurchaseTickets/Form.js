@@ -1,6 +1,6 @@
 import InfoModalButton from "InfoModalButton";
 import PassphraseModalButton from "PassphraseModalButton";
-import { PurchaseTicketsInfoModalContent, PassphraseModalContent, ImportScriptModalContent } from "modals";
+import { PurchaseTicketsInfoModalContent, ImportScriptModalContent } from "modals";
 import TicketsCogs from "TicketsCogs";
 import { FeeInput, BlocksInput, AddressInput, AccountsSelect, StakePoolSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
@@ -245,7 +245,7 @@ const PurchaseTicketsForm = ({
           text={<T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan." />}>
           <PassphraseModalButton
               modalTitle={<T id="tickets.importScriptConfirmation" m="Import Script Confirmation" />}
-              modalContent={<ImportScriptModalContent/>}
+              modalContent={<ImportScriptModalContent {...{onSubmit: onImportScript}}/>}
               className="stakepool-content-purchase-button"
               disabled={rescanRequest}
               onSubmit={onImportScript}

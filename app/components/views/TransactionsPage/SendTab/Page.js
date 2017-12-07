@@ -4,7 +4,6 @@ import { Tooltip } from "shared";
 import { DecredLoading } from "indicators";
 import Balance from "Balance";
 import PassphraseModalButton from "PassphraseModalButton";
-import { PassphraseModalContent } from "modals";
 import OutputAccountRow from "./OutputAccountRow";
 import "style/SendPage.less";
 import "style/MiscComponents.less";
