@@ -153,8 +153,9 @@ var initialState = {
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
 
-    // PaginateTransactions
-    txPerPage: 8,
+    // Transactions for Overview Page
+    recentTransactionCount: 8,
+    recentTransactions: Array(),
 
     // GetTransactions
     minedTransactions: Array(),
