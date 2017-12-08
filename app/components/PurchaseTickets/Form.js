@@ -83,7 +83,7 @@ const PurchaseTicketsForm = ({
             </div>
           </div>
           <div className="stakepool-purchase-ticket-row-num-tickets">
-            <div className="stakepool-purchase-ticket-label">
+            <div className="stakepool-purchase-num-tickets-label">
               <T id="purchaseTickets.number" m="Number of Tickets" />:</div>
             <div className="stakepool-purchase-ticket-num-select">
               <NumTicketsInput
@@ -158,7 +158,7 @@ const PurchaseTicketsForm = ({
                     required
                     submited={isSubmited}
                     invalid={expiryError}
-                    showErrors={isSubmited}
+                    showErrors
                   />
                 </div>
               </div>

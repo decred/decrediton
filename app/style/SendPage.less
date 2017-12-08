@@ -87,6 +87,10 @@
   padding-bottom: 2em; // this is to match the padding for the inputs
 }
 
+.send-address .accounts-select {
+  margin-bottom: 2em;
+}
+
 .send-select-account-area .accounts-button-icon {
   vertical-align: middle;
   margin-top: 0px;
@@ -111,16 +115,17 @@
 .send-label {
   .inline-block-mixin;
 
+  vertical-align: top;
   font-size: 20px;
   width: 3em;
   text-align: right;
-  margin-top: -1em;
 }
 
 .send-address {
   .inline-block-mixin;
 
   width: 39%;
+  padding-top: 2px;
 }
 
 .send-address.send-output-address {
@@ -130,20 +135,20 @@
 .send-address-wallet-icon {
   .inline-block-mixin;
 
+  vertical-align: top;
   margin-left: 0.5em;
-  margin-bottom: 1em;
   width: 20px;
-  height: 34px;
+  height: 19px;
   background-image: @add-icon;
   background-position: 50% 50%;
   background-size: 19px;
   background-repeat: no-repeat;
   cursor: pointer;
-  margin-top: -1em;
+  // margin-top: -1em;
 }
 
 .send-address .accounts-select {
-  margin-top: -1em;
+  // margin-top: -1em;
 }
 
 .send-all-wallet-icon {
@@ -203,6 +208,9 @@
 
 .send-amount {
   .inline-block-mixin;
+
+  vertical-align: top;
+  margin-top: -2px;
 }
 
 .send-amount-label {
@@ -210,13 +218,15 @@
 
   font-size: 20px;
   min-width: 3.5em;
-  margin-top: -1em;
+  margin-top: -1px;
 }
 
 .send-address-amount-sum-and-currency {
   .inline-block-mixin;
 
   color: #0c1e3e;
+  height: 19px;
+  padding-top: 4px;
 }
 
 .send-address-amount-sum-gradient {
@@ -346,6 +356,7 @@
 .send-flex-height {
   padding-top: 1px;
   background-color: #fff;
+  min-height: 13em;
 }
 
 // .send-loading {
