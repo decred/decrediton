@@ -245,7 +245,7 @@ const PurchaseTicketsForm = ({
           text={<T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan." />}>
           <PassphraseModalButton
               modalTitle={<T id="tickets.importScriptConfirmation" m="Import Script Confirmation" />}
-              modalContent={<ImportScriptModalContent {...{onSubmit: onImportScript}}/>}
+              modalContent={ImportScriptModalContent}
               className="stakepool-content-purchase-button"
               disabled={rescanRequest}
               onSubmit={onImportScript}

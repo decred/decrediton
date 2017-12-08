@@ -7,12 +7,11 @@ import PassphraseModalContent from "../PassphraseModalContent";
 const propTypes = {
   title: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
-  content: PropTypes.object,
   onCancelModal: PropTypes.func.isRequired,
   description: PropTypes.object
 };
 
-const PassphraseModal = ({title, description, content, show, onCancelModal, onSubmit}) => (
+const PassphraseModal = ({title, description, Content, show, onCancelModal, onSubmit}) => (
   <Modal className="passphrase-modal" {...{show}}>
     <div className="passphrase-modal-header">
       <div className="passphrase-modal-header-title">
@@ -23,7 +22,7 @@ const PassphraseModal = ({title, description, content, show, onCancelModal, onSu
       </div>
     </div>
     <div className="passphrase-modal-content">
-      {!content ? <PassphraseModalContent {...{onSubmit}}/> : content}
+      {!Content ? <PassphraseModalContent {...{onSubmit}}/> : <Content {...{onSubmit}} />}
     </div>
     <SlateGrayButton className="passphrase-modal-close-button" onClick={onCancelModal}>
       <T id="passphraseModal.btnCancel" m="Cancel" />

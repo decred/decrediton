@@ -22,7 +22,7 @@ const AccountsList = ({
     <TabbedHeader {...{ routes }}>
       <PassphraseModalButton
         modalTitle={<T id="accounts.newAccountConfirmations" m="Create new account" />}
-        modalContent={<AddAccountModalContent {...{onSubmit: onGetNextAccountAttempt}} /> }
+        modalContent={AddAccountModalContent}
         className="content-send"
         onSubmit={onGetNextAccountAttempt}
       >
