@@ -60,7 +60,18 @@ class AccountRow extends Component {
     return [{ key: "output_0",style: {height: 0, opacity: 0}}];
   }
 
-  getStyles() {
+  getNullStyles () {
+    return [{
+      data: <div />,
+      key: "output_0",
+      style: {
+        height: spring(0, {stiffness: 110, damping: 14}),
+        opacity: spring(0, {stiffness: 65, damping: 35}),
+      }
+    }];
+  }
+
+  getAccountDetailsStyles() {
     const { account } = this.props;
     const {
       showRenameAccount,
@@ -88,8 +99,8 @@ class AccountRow extends Component {
 
   willLeave() {
     return {
-      height: spring(0),
-      opacity: spring(0),
+      height: 300,
+      opacity: 1,
     };
   }
 
@@ -101,7 +112,8 @@ class AccountRow extends Component {
       hideRenameAccount,
       showAccount,
       hideAccount,
-      getStyles,
+      getAccountDetailsStyles,
+      getNullStyles,
       getDefaultStyles,
       willEnter,
       willLeave
@@ -139,7 +151,8 @@ class AccountRow extends Component {
           hideRenameAccount,
           showAccount,
           hideAccount,
-          getStyles,
+          getAccountDetailsStyles,
+          getNullStyles,
           getDefaultStyles,
           willEnter,
           willLeave
