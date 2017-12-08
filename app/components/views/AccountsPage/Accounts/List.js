@@ -2,15 +2,15 @@ import { FormattedMessage as T } from "react-intl";
 import { TabbedHeader } from "shared";
 import AccountRow from "./AccountRow";
 import { DecredLoading } from "indicators";
-import KeyBlueButton from "KeyBlueButton";
 import InfoModalButton from "InfoModalButton";
-import { BalanceOverviewModalContent } from "modals";
+import PassphraseModalButton from "PassphraseModalButton";
+import { BalanceOverviewModalContent, AddAccountModalContent } from "modals";
 
 const AccountsList = ({
   routes,
   accounts,
   isLoading,
-  onToggleAddAccount,
+  onGetNextAccountAttempt,
   onShowAccount,
   onHideAccount,
   onRenameAccount,
@@ -20,9 +20,14 @@ const AccountsList = ({
 }) => (
   <Aux>
     <TabbedHeader {...{ routes }}>
-      <KeyBlueButton onClick={onToggleAddAccount}>
+      <PassphraseModalButton
+        modalTitle={<T id="accounts.newAccountConfirmations" m="Create new account" />}
+        modalContent={<AddAccountModalContent {...{onSubmit: onGetNextAccountAttempt}} /> }
+        className="content-send"
+        onSubmit={onGetNextAccountAttempt}
+      >
         <T id="accounts.addNewButton" m="Add New" />
-      </KeyBlueButton>
+      </PassphraseModalButton>
     </TabbedHeader>
     <div className="tabbed-page">
       <div className="tab-content">
@@ -57,7 +62,7 @@ const AccountsList = ({
 AccountsList.propTypes = {
   accounts: PropTypes.array.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  onToggleAddAccount: PropTypes.func.isRequired,
+  onGetNextAccountAttempt: PropTypes.func.isRequired,
   onShowAccount: PropTypes.func.isRequired,
   onHideAccount: PropTypes.func.isRequired,
   onRenameAccount: PropTypes.func.isRequired,
