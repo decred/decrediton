@@ -1,13 +1,9 @@
-import KeyBlueButton from "../KeyBlueButton";
-import SlateGrayButton from "../SlateGrayButton";
+import KeyBlueButton from "KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
 import { PasswordInput } from "inputs";
 import "style/ChangePassphraseModal.less";
 
 const Modal = ({
-  hidden,
-  heading,
-  description,
   privpass,
   oldPrivPass,
   confirmPrivPass,
@@ -17,21 +13,15 @@ const Modal = ({
   updateOldPrivatePassphrase,
   updatePrivatePassphrase,
   updateConfirmPrivatePassphrase,
-  submitPassphrase,
-  cancelPassphrase
+  onSubmit
 }) => (
- <div hidden={hidden} className="change-passphrase-modal">
-    <div className="modal-section">
-      {heading ? [
-        <div className="change-passphrase-modal-header">{heading}</div>,
-        <div className="change-passphrase-modal-description">{description}</div>
-      ] : null}
-      <div className="change-passphrase-modal-field-ct">
-        <div className="change-passphrase-modal-label">
-          <T id="changePassModal.oldPassphrase" m="Old Private Passphrase" />
-          :</div>
-        <PasswordInput
-          id="oldPassphrase"
+ <Aux>
+  <div className="change-passphrase-modal-field-ct">
+    <div className="change-passphrase-modal-label">
+      <T id="changePassModal.oldPassphrase" m="Old Private Passphrase" />
+      :</div>
+    <PasswordInput
+      id="oldPassphrase"
           className="change-passphrase-modal-field"
           placeholder=""
           defaultValue={oldPrivPass}
@@ -66,15 +56,11 @@ const Modal = ({
         <div className="change-passphrase-modal-error">{confirmPrivPassError}</div>
       </div>
       <div className="change-passphrase-modal-toolbar">
-        <KeyBlueButton className="change-passphrase-modal-save-button" onClick={submitPassphrase}>
+        <KeyBlueButton className="change-passphrase-modal-save-button" onClick={onSubmit}>
           <T id="changePassModal.update" m="Update" />
         </KeyBlueButton>
-        <SlateGrayButton className="change-passphrase-modal-cancel-button" onClick={cancelPassphrase}>
-          <T id="changePassModal.cancel" m="Cancel" />
-        </SlateGrayButton>
       </div>
-    </div>
-  </div>
+  </Aux>
 );
 
 export default Modal;

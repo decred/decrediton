@@ -4,7 +4,7 @@ import { autobind } from "core-decorators";
 import Modal from "./Modal";
 
 @autobind
-class ChangePassphraseModal extends React.Component {
+class ChangePassphraseModalContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -22,7 +22,6 @@ class ChangePassphraseModal extends React.Component {
   }
 
   render() {
-    const { hidden, heading, description } = this.props;
     const {
       privpass,
       oldPrivPass,
@@ -35,16 +34,12 @@ class ChangePassphraseModal extends React.Component {
       updateOldPrivatePassphrase,
       updatePrivatePassphrase,
       updateConfirmPrivatePassphrase,
-      submitPassphrase,
-      cancelPassphrase
+      onSubmit,
     } = this;
 
     return (
       <Modal
         {...{
-          hidden,
-          heading,
-          description,
           privpass,
           oldPrivPass,
           confirmPrivPass,
@@ -54,8 +49,7 @@ class ChangePassphraseModal extends React.Component {
           updateOldPrivatePassphrase,
           updatePrivatePassphrase,
           updateConfirmPrivatePassphrase,
-          submitPassphrase,
-          cancelPassphrase
+          onSubmit
         }}
       />
     );
@@ -65,12 +59,7 @@ class ChangePassphraseModal extends React.Component {
     this.state = this.getInitialState(); // clear password data from memory
   }
 
-  cancelPassphrase() {
-    this.resetState();
-    this.props.cancelPassphrase();
-  }
-
-  submitPassphrase() {
+  onSubmit() {
     if (this.state.privpass === null || this.state.privPassError !== null) {
       this.setState({ privPassError: "*Please enter your private passphrase" });
       return;
@@ -86,7 +75,7 @@ class ChangePassphraseModal extends React.Component {
       return;
     }
 
-    this.props.updatePassphrase(this.state.oldPrivpass, this.state.privpass, true);
+    this.props.onSubmit(this.state.oldPrivpass, this.state.privpass, true);
     this.resetState();
   }
 
@@ -94,7 +83,7 @@ class ChangePassphraseModal extends React.Component {
     if (privpass !== "") {
       this.setState({ privpass: privpass, privPassError: null });
     } else {
-      this.setState({ privpass: null });
+      this.setState({ privpass: null, privPassError: "*Please enter your private passphrase" });
     }
   }
 
@@ -102,7 +91,7 @@ class ChangePassphraseModal extends React.Component {
     if (privpass !== "") {
       this.setState({ oldPrivpass: privpass, oldPrivPassError: null });
     } else {
-      this.setState({ oldPrivpass: null });
+      this.setState({ oldPrivpass: null, oldPrivPassError: "*Please enter your old private passphrase" });
     }
   }
 
@@ -119,4 +108,4 @@ class ChangePassphraseModal extends React.Component {
   }
 }
 
-export default ChangePassphraseModal;
+export default ChangePassphraseModalContent;

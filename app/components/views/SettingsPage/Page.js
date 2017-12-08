@@ -1,7 +1,8 @@
 import KeyBlueButton from "KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
 import { TabbedHeader } from "shared";
-import ChangePassphraseModal from "ChangePassphraseModal";
+import ChangePassphraseButton from "ChangePassphraseButton";
+import { ChangePassphraseModalContent } from "modals";
 import GeneralSettings from "./GeneralSettings";
 import "style/StakePool.less";
 import "style/Settings.less";
@@ -12,23 +13,15 @@ const SettingsPage = ({
                         networks,
                         currencies,
                         locales,
-                        isShowingChangePassphrase,
-                        onShowChangePassphrase,
-                        onCancelChangePassphrase,
-                        onAttemptChangePassphrase,
                         onChangeTempSettings,
                         onSaveSettings,
+                        onAttemptChangePassphrase,
                         routes,
                       }) => (
   <Aux>
     <TabbedHeader {...{ routes }}/>
     <div className="tabbed-page">
-      <ChangePassphraseModal
-        hidden={!isShowingChangePassphrase}
-        updatePassphrase={onAttemptChangePassphrase}
-        cancelPassphrase={onCancelChangePassphrase}
-      />
-      <div className={ ["tab-card", isShowingChangePassphrase ? "tab-card-blur" : null].join(" ").trim() }>
+      <div className="tab-card">
         <div className="settings-wrapper">
           <GeneralSettings {...{tempSettings, networks, currencies, locales,
             onChangeTempSettings}} />
@@ -38,11 +31,10 @@ const SettingsPage = ({
             <div className="settings-action-buttons">
               <div className="settings-update-passphrase-button">
                 <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
-                <button
-                  className="change-password-default-icon"
-                  onClick={onShowChangePassphrase}
-                >
-                </button>
+                <ChangePassphraseButton
+                  modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
+                  modalContent={ChangePassphraseModalContent}
+                  onSubmit={onAttemptChangePassphrase} />
               </div>
             </div>
           </div>
