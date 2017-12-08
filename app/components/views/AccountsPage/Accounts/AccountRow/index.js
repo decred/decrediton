@@ -2,6 +2,10 @@
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
 import Row from "./Row";
+import { spring } from "react-motion";
+import AccountDetails from "./AccountDetails";
+import RenameAccount from "./RenameAccount";
+import { injectIntl } from "react-intl";
 
 @autobind
 class AccountRow extends Component {
@@ -54,14 +58,82 @@ class AccountRow extends Component {
     this.setState({hidden: true});
   }
 
-  render() {
+  getDefaultStyles() {
+    return [{ key: "output_0",style: {height: 0, opacity: 0}}];
+  }
+
+  getNullStyles () {
+    return [{
+      data: <div />,
+      key: "output_0",
+      style: {
+        height: spring(0, {stiffness: 90, damping: 16}),
+        opacity: spring(0, {stiffness: 30, damping: 15}),
+      }
+    }];
+  }
+
+  getRenameAccountStyles () {
+    const { account, intl } = this.props;
     const {
       updateRenameAccountName,
       renameAccount,
-      showRenameAccount,
       hideRenameAccount,
+    } = this;
+    const { renameAccountNameError } = this.state;
+    return [{
+      data: <RenameAccount
+        {...{
+          account,
+          updateRenameAccountName,
+          renameAccount,
+          hideRenameAccount,
+          intl,
+          renameAccountNameError,
+        }}
+      />,
+      key: "output_0",
+      style: {
+        height: spring(140, {stiffness: 110, damping: 14}),
+        opacity: spring(1, {stiffness: 65, damping: 35}),
+      }
+    }];
+  }
+
+  getAccountDetailsStyles() {
+    const { account } = this.props;
+    const {
+      showRenameAccount,
       showAccount,
-      hideAccount
+      hideAccount,
+    } = this;
+    const { hidden } = this.state;
+    return [{
+      data: <AccountDetails
+        {...{
+          account,
+          showRenameAccount,
+          hidden,
+          hideAccount,
+          showAccount,
+        }}
+      />,
+      key: "output_0",
+      style: {
+        height: spring(280, {stiffness: 110, damping: 14}),
+        opacity: spring(1, {stiffness: 65, damping: 35}),
+      }
+    }];
+  }
+
+  render() {
+    const {
+      getAccountDetailsStyles,
+      getNullStyles,
+      getDefaultStyles,
+      willEnter,
+      willLeave,
+      getRenameAccountStyles
     } = this;
     const {
       account,
@@ -71,9 +143,6 @@ class AccountRow extends Component {
     } = this.props;
     const {
       isShowingRenameAccount,
-      renameAccountName,
-      renameAccountNameError,
-      renameAccountNumber,
       hidden
     } = this.state;
     const isShowingAccountDetails = accountNumDetailsShown !== null && accountNumDetailsShown == account.accountNumber ;
@@ -86,20 +155,17 @@ class AccountRow extends Component {
           showAccountDetails,
           isShowingAccountDetails,
           isShowingRenameAccount,
-          renameAccountName,
-          renameAccountNameError,
-          renameAccountNumber,
           hidden,
-          updateRenameAccountName,
-          renameAccount,
-          showRenameAccount,
-          hideRenameAccount,
-          showAccount,
-          hideAccount
+          getRenameAccountStyles,
+          getAccountDetailsStyles,
+          getNullStyles,
+          getDefaultStyles,
+          willEnter,
+          willLeave
         }}
       />
     );
   }
 }
 
-export default AccountRow;
+export default injectIntl(AccountRow);
