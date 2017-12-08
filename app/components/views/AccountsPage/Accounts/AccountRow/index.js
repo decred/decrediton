@@ -77,10 +77,10 @@ class AccountRow extends Component {
     const { account, intl } = this.props;
     const {
       updateRenameAccountName,
-      renameAccountNameError,
       renameAccount,
       hideRenameAccount,
     } = this;
+    const { renameAccountNameError } = this.state;
     return [{
       data: <RenameAccount
         {...{

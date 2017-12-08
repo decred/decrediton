@@ -60,11 +60,12 @@ const RenameAccount = ({
   );
 
 RenameAccount.propTypes = {
-  // account: PropTypes.object.isRequired,
-  // showRenameAccount: PropTypes.func.isRequired,
-  // hidden: PropTypes.bool.isRequired,
-  // hideAccount: PropTypes.func.isRequired,
-  // showAccount: PropTypes.func.isRequired,
+  account: PropTypes.object.isRequired,
+  updateRenameAccountName: PropTypes.func.isRequired,
+  renameAccount: PropTypes.func.isRequired,
+  hideRenameAccount: PropTypes.func.isRequired,
+  renameAccountNameError: PropTypes.string,
+  intl: PropTypes.object.isRequired
 };
 
 export default RenameAccount;

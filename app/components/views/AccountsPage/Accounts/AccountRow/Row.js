@@ -59,19 +59,19 @@ const Row = ({
           </div>
         </div>
       </div>
-      {!isShowingAccountDetails ?
+      {
         <TransitionMotionWrapper
-          {...{ styles: getNullStyles(), wrapperComponent }}
-        /> :
-        isShowingRenameAccount
-          ? (
-            <TransitionMotionWrapper
-              {...{ styles: getRenameAccountStyles(), wrapperComponent }}
-            />
-          )
-          : (
-            <TransitionMotionWrapper {...{ styles: getAccountDetailsStyles(), defaultStyles: getDefaultStyles(), wrapperComponent, willEnter, willLeave }} />
-          )
+          {
+            ...{
+              styles: !isShowingAccountDetails ?
+                getNullStyles() :
+                  isShowingRenameAccount ? getRenameAccountStyles() :
+                    getAccountDetailsStyles(),
+              defaultStyles: getDefaultStyles(),
+              wrapperComponent,
+              willEnter,
+              willLeave }}
+          />
       }
     </div>
   );
