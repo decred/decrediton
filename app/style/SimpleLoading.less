@@ -1,0 +1,37 @@
+@import (reference) "./main.less";
+
+.spinner > div {
+  text-align: center;
+  width: 6px;
+  height: 6px;
+  background-color: #fff;
+  border-radius: 100%;
+  display: inline-block;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner.disabled > div {
+  background-color: @disabled-color;
+}
+
+.spinner .bounce1 {
+  animation-delay: -0.32s;
+  margin-right: 6px;
+}
+
+.spinner .bounce2 {
+  animation-delay: -0.16s;
+  margin-right: 6px;
+}
+
+@keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+
+  40% {
+    transform: scale(1);
+  }
+}

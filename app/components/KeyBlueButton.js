@@ -1,7 +1,8 @@
 // @flow
 import React from "react";
 import { autobind } from "core-decorators";
-import "../style/MiscComponents.less";
+import { SimpleLoading } from "indicators";
+import "style/MiscComponents.less";
 
 @autobind
 class KeyBlueButton extends React.Component {
@@ -26,7 +27,7 @@ class KeyBlueButton extends React.Component {
           disabled={this.props.disabled}
           onClick = {this.onClick}
           hidden={this.props.hidden}>
-        {this.props.children}
+        {this.props.loading ? <SimpleLoading {...{disabled: this.props.disabled}}/> : this.props.children}
       </div>
     );
   }
