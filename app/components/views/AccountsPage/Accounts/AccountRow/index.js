@@ -67,8 +67,8 @@ class AccountRow extends Component {
       data: <div />,
       key: "output_0",
       style: {
-        height: spring(0, {stiffness: 110, damping: 14}),
-        opacity: spring(0, {stiffness: 65, damping: 35}),
+        height: spring(0, {stiffness: 90, damping: 16}),
+        opacity: spring(0, {stiffness: 30, damping: 15}),
       }
     }];
   }
@@ -94,7 +94,7 @@ class AccountRow extends Component {
       />,
       key: "output_0",
       style: {
-        height: spring(280, {stiffness: 110, damping: 14}),
+        height: spring(140, {stiffness: 110, damping: 14}),
         opacity: spring(1, {stiffness: 65, damping: 35}),
       }
     }];
@@ -124,13 +124,6 @@ class AccountRow extends Component {
         opacity: spring(1, {stiffness: 65, damping: 35}),
       }
     }];
-  }
-
-  willLeave() {
-    return {
-      height: 300,
-      opacity: 1,
-    };
   }
 
   render() {
