@@ -1,11 +1,10 @@
-
 import Balance from "Balance";
 import { FormattedMessage as T } from "react-intl";
 import TransitionMotionWrapper from "TransitionMotionWrapper";
 import "style/Fonts.less";
 import "style/AccountRow.less";
 
-const wrapperComponent = props => <div className="output-row" { ...props } />;
+const wrapperComponent = props => <div className="account-wrapper" { ...props } />;
 
 const Row = ({
   account,
@@ -15,9 +14,9 @@ const Row = ({
   isShowingRenameAccount,
   hidden,
   willEnter,
-  getRenameAccountStyles,
   willLeave,
   getAccountDetailsStyles,
+  getRenameAccountStyles,
   getNullStyles,
   getDefaultStyles,
 }) => (

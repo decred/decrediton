@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
 import Row from "./Row";
-import { spring, presets } from "react-motion";
+import { spring } from "react-motion";
 import AccountDetails from "./AccountDetails";
 import RenameAccount from "./RenameAccount";
 import { injectIntl } from "react-intl";
@@ -135,12 +135,6 @@ class AccountRow extends Component {
 
   render() {
     const {
-      updateRenameAccountName,
-      renameAccount,
-      showRenameAccount,
-      hideRenameAccount,
-      showAccount,
-      hideAccount,
       getAccountDetailsStyles,
       getNullStyles,
       getDefaultStyles,
@@ -156,9 +150,6 @@ class AccountRow extends Component {
     } = this.props;
     const {
       isShowingRenameAccount,
-      renameAccountName,
-      renameAccountNameError,
-      renameAccountNumber,
       hidden
     } = this.state;
     const isShowingAccountDetails = accountNumDetailsShown !== null && accountNumDetailsShown == account.accountNumber ;
@@ -171,16 +162,7 @@ class AccountRow extends Component {
           showAccountDetails,
           isShowingAccountDetails,
           isShowingRenameAccount,
-          renameAccountName,
-          renameAccountNameError,
-          renameAccountNumber,
           hidden,
-          updateRenameAccountName,
-          renameAccount,
-          showRenameAccount,
-          hideRenameAccount,
-          showAccount,
-          hideAccount,
           getRenameAccountStyles,
           getAccountDetailsStyles,
           getNullStyles,
