@@ -3,8 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
 import { DecredLoading } from "indicators";
 import Balance from "Balance";
-import KeyBlueButton from "KeyBlueButton";
-import PassphraseModal from "PassphraseModal";
+import PassphraseModalButton from "PassphraseModalButton";
 import OutputAccountRow from "./OutputAccountRow";
 import "style/SendPage.less";
 import "style/MiscComponents.less";
@@ -15,7 +14,6 @@ const wrapperComponent = props => <div className="output-row" { ...props } />;
 const SendPage = ({
                     account,
   isSendingTransaction,
-  isShowingConfirm,
   isSendAll,
   isSendSelf,
   outputs,
@@ -25,8 +23,6 @@ const SendPage = ({
   isValid,
   onChangeAccount,
   onAttemptSignTransaction,
-  onClearTransaction,
-  onShowConfirm,
   onShowSendAll,
   onHideSendAll,
   onShowSendSelf,
@@ -38,17 +34,8 @@ const SendPage = ({
   ...props
                   }) => (
     <Aux>
-      <PassphraseModal
-        hidden={!isShowingConfirm}
-        submitPassphrase={onAttemptSignTransaction}
-        cancelPassphrase={onClearTransaction}
-        heading={"Confirm Transaction"}
-        description={<div>
-          <T id="send.confirmAmountLabel" m="Please confirm your transaction for" />
-          : <Balance amount={totalSpent} /></div>}
-      />
       { isSendingTransaction ? <DecredLoading /> :
-      <div className={ ["tab-card", isShowingConfirm ? "tab-card-blur" : null].join(" ").trim() }>
+      <div className="tab-card">
         <div className="send-flex-height">
           <div className="send-select-account-area">
             <div className="send-label"><T id="send.from" m="From" />:</div>
@@ -84,11 +71,15 @@ const SendPage = ({
             </div>
           </div>
           <div className="send-button-area">
-            <KeyBlueButton
-              className="content-send"
-              disabled={!isValid}
-              onClick={onShowConfirm}
-            ><T id="send.sendBtn" m="Send" /></KeyBlueButton>
+            <PassphraseModalButton
+                modalTitle={<T id="send.sendConfirmations" m="Transaction Confirmation" />}
+                modalDescription={<Aux><T id="send.confirmAmountLabel" m="Please confirm your transaction for" />:  <Balance amount={totalSpent} /></Aux>}
+                disabled={!isValid}
+                className="content-send"
+                onSubmit={onAttemptSignTransaction}
+            >
+              <T id="send.sendBtn" m="Send" />
+            </PassphraseModalButton>
             <div className="estimation-area-send">
               <div className="total-amount-send">
                 <div className="total-amount-send-text">

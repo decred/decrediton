@@ -600,8 +600,11 @@ const currentStakePoolConfigRequest = get(["stakepool", "currentStakePoolConfigR
 
 const purchaseTicketsRequestAttempt = get(["control", "purchaseTicketsRequestAttempt"]);
 
+const importScriptRequestAttempt = get(["control", "importScriptRequestAttempt"]);
+
 export const isSavingStakePoolConfig = bool(currentStakePoolConfigRequest);
 export const isPurchasingTickets = bool(purchaseTicketsRequestAttempt);
+export const isImportingScript = bool(importScriptRequestAttempt);
 
 export const newUnminedMessage = get(["notifications", "newUnminedMessage"]);
 

@@ -15,13 +15,9 @@ class Purchase extends React.Component {
     return {
       account: this.props.defaultSpendingAccount,
       stakePool: this.props.defaultStakePool,
-      passphraseHeading: null,
-      passphraseDescription: null,
-      passphraseCallback: null,
       isShowingStakePools: !this.props.defaultStakePool,
       isShowingVotingPrefs: false,
       isShowingImportScript: false,
-      isRequestingPassphrase: false
     };
   }
   render() {
@@ -37,13 +33,12 @@ class Purchase extends React.Component {
             onChangeAccount: null,
             onShowImportScript: null,
             onShowRevokeTicket: null,
-            onRequestPassphrase: null,
-            onCancelPassphraseRequest: null,
             onCancelImportScript: null,
             onToggleTicketStakePool: null,
             onShowStakePoolConfig: null,
             onHideStakePoolConfig: null,
-            onImportScript: null
+            onImportScript: null,
+            onRevokeTickets: null,
           }, this)
         }}
       />
@@ -84,22 +79,11 @@ class Purchase extends React.Component {
   onImportScript(privpass, script) {
     const { onImportScript } = this.props;
     onImportScript && onImportScript(privpass, script, true, 0, null);
-    this.setState({ isShowingImportScript: false });
   }
 
   onRevokeTickets(privpass) {
     const { onRevokeTickets } = this.props;
     onRevokeTickets && onRevokeTickets(privpass);
-    this.onCancelPassphraseRequest();
-  }
-
-  onCancelPassphraseRequest() {
-    this.setState({
-      isRequestingPassphrase: false,
-      passphraseHeading: null,
-      passphraseDescription: null,
-      passphraseCallback: null
-    });
   }
 
   onShowStakePoolConfig() {
@@ -110,23 +94,14 @@ class Purchase extends React.Component {
     this.setState({ isShowingStakePools: false });
   }
 
-  onRequestPassphrase(passphraseHeading, passphraseDescription, passphraseCallback) {
-    this.setState({
-      passphraseHeading,
-      passphraseDescription,
-      passphraseCallback,
-      isRequestingPassphrase: true
-    });
-  }
-
-  onShowImportScript() {
-    this.setState({ isShowingImportScript: true });
-  }
-
   onShowRevokeTicket() {
     this.onRequestPassphrase(
       <T id="stake.revokeTicketsPassphrase" m="Enter Passphrase to Revoke Tickets" />,
       null, this.onRevokeTickets);
+  }
+
+  onShowImportScript() {
+    this.setState({ isShowingImportScript: true });
   }
 
   onCancelImportScript() {

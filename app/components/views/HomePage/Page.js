@@ -1,8 +1,7 @@
 // @flow
 import { rescan, home } from "connectors";
 import { DecredLoading } from "indicators";
-import SlateGrayButton from "SlateGrayButton";
-import PassphraseModal from "PassphraseModal";
+import PassphraseModalButton from "PassphraseModalButton";
 import Balance from "Balance";
 import TxHistory from "TxHistory";
 import { FormattedMessage as T } from "react-intl";
@@ -13,26 +12,14 @@ import "style/HomePage.less";
 const HomePage = ({
   routes,
   spendableTotalBalance,
-  isRequestingPassphrase,
-  passphraseCallback,
   hasTicketsToRevoke,
-  passphraseHeading,
-  passphraseDescription,
-  onCancelPassphraseRequest,
-  onShowRevokeTicket,
   transactions,
   getTransactionsRequestAttempt,
-  getAccountsResponse
+  getAccountsResponse,
+  onRevokeTickets
 }) => {
   return (
     <Aux>
-      <PassphraseModal
-        hidden={!isRequestingPassphrase}
-        submitPassphrase={passphraseCallback}
-        cancelPassphrase={onCancelPassphraseRequest}
-        heading={passphraseHeading}
-        description={passphraseDescription}
-      />
       <TabbedHeader {...{ routes }}>
         <div className="overview-balance">
           <Balance amount={spendableTotalBalance} large/>
@@ -43,9 +30,13 @@ const HomePage = ({
         { hasTicketsToRevoke &&
         <div className="tickets-to-revoke-warning">
           <T id="home.revokeTicketMessage" m="You have outstanding missed or expired tickets, please revoke them to unlock your funds" />
-          <SlateGrayButton className="stakepool-content-revoke-button" onClick={onShowRevokeTicket}>
-            <T id="purchaseTickets.revokeBtn" m="Revoke" />
-          </SlateGrayButton>
+          <PassphraseModalButton
+              modalTitle={<T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />}
+              className="stakepool-content-revoke-button"
+              onSubmit={onRevokeTickets}
+          >
+            <T id="puchaseTickets.revokeBtn" m="Revoke" />
+          </PassphraseModalButton>
         </div> }
         <div className="home-content-title">
           <div className="home-content-title-text">

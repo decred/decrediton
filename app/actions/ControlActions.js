@@ -146,9 +146,8 @@ export const IMPORTSCRIPT_SUCCESS = "IMPORTSCRIPT_SUCCESS";
 function importScriptSuccess(importScriptResponse, votingAddress, cb) {
   var message = "Script successfully imported, rescanning now";
   return (dispatch) => {
-    if (!votingAddress) {
-      dispatch({ importScriptSuccess: message, importScriptResponse: importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
-    } else {
+    dispatch({ importScriptSuccess: message, importScriptResponse: importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
+    if (votingAddress) {
       if (importScriptResponse.getP2shAddress() == votingAddress) {
         dispatch(() => cb());
       } else {

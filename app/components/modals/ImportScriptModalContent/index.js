@@ -4,7 +4,7 @@ import { autobind } from "core-decorators";
 import Modal from "./Modal";
 
 @autobind
-class ImportScriptModal extends React.Component {
+class ImportScriptModalContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -24,11 +24,6 @@ class ImportScriptModal extends React.Component {
 
   render() {
     const {
-      hidden,
-      heading,
-      description
-    } = this.props;
-    const {
       passPhrase,
       script,
       hasFailedAttempt
@@ -36,23 +31,18 @@ class ImportScriptModal extends React.Component {
     const {
       setScript,
       setPassPhrase,
-      onSubmit,
-      onCancel
+      onSubmit
     } = this;
 
     return (
       <Modal
         {...{
-          hidden,
-          heading,
-          description,
           passPhrase,
           script,
           hasFailedAttempt,
           setScript,
           setPassPhrase,
-          onSubmit,
-          onCancel
+          onSubmit
         }}
       />
     );
@@ -77,14 +67,9 @@ class ImportScriptModal extends React.Component {
       return this.setState({ hasFailedAttempt: true });
     }
 
-    this.props.submitImportScript(passPhrase, script);
+    this.props.onSubmit(passPhrase, script);
     this.resetState();
-  }
-
-  onCancel() {
-    this.resetState();
-    this.props.cancelImportScript();
   }
 }
 
-export default ImportScriptModal;
+export default ImportScriptModalContent;

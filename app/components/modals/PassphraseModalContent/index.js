@@ -4,7 +4,7 @@ import { autobind } from "core-decorators";
 import Modal from "./Modal";
 
 @autobind
-class PassphraseModal extends React.Component {
+class PassphraseModalContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -22,21 +22,16 @@ class PassphraseModal extends React.Component {
   }
 
   render() {
-    const { hidden, heading, description } = this.props;
     const { passPhrase, hasAttemptedSubmit } = this.state;
-    const { setPassPhrase, onSubmit, onCancel } = this;
+    const { setPassPhrase, onSubmit } = this;
 
     return (
       <Modal
         {...{
-          hidden,
-          heading,
-          description,
           passPhrase,
           hasAttemptedSubmit,
           setPassPhrase,
-          onSubmit,
-          onCancel
+          onSubmit
         }}
       />
     );
@@ -51,12 +46,7 @@ class PassphraseModal extends React.Component {
       return this.setState({ hasAttemptedSubmit: true });
     }
 
-    this.props.submitPassphrase(this.state.passPhrase);
-    this.resetState();
-  }
-
-  onCancel() {
-    this.props.cancelPassphrase();
+    this.props.onSubmit(this.state.passPhrase);
     this.resetState();
   }
 
@@ -65,4 +55,4 @@ class PassphraseModal extends React.Component {
   }
 }
 
-export default PassphraseModal;
+export default PassphraseModalContent;

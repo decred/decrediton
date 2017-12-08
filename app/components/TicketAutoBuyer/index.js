@@ -41,7 +41,8 @@ class TicketAutoBuyer extends React.Component {
             onChangeMaxPriceRelative: null,
             onChangeMaxPerBlock: null,
             onUpdateTicketAutoBuyerConfig: null,
-            onToggleShowDetails: null
+            onToggleShowDetails: null,
+            onStartAutoBuyer: null
           }, this)
         }}
       />
@@ -133,25 +134,8 @@ class TicketAutoBuyer extends React.Component {
     });
   }
 
-  onToggleTicketAutoBuyer() {
-    if (this.getErrors())
-      return;
-    return this.props.isTicketAutoBuyerEnabled
-      ? this.props.onDisableTicketAutoBuyer()
-      : this.onRequestPassphrase();
-  }
-
-  onRequestPassphrase() {
-    const { onRequestPassphrase } = this.props;
-    onRequestPassphrase && onRequestPassphrase(
-      "Enter Passphrase to Start Autobuyer",
-      null,
-      this.onStartAutoBuyer
-    );
-  }
-
   onStartAutoBuyer(passphrase) {
-    const { onEnableTicketAutoBuyer, onCancelPassphraseRequest } = this.props;
+    const { onEnableTicketAutoBuyer } = this.props;
     onEnableTicketAutoBuyer && onEnableTicketAutoBuyer(
       passphrase,
       this.getAccount().value,
@@ -162,7 +146,6 @@ class TicketAutoBuyer extends React.Component {
       this.state.maxPerBlock,
       this.props.stakePool.value
     );
-    onCancelPassphraseRequest && onCancelPassphraseRequest();
   }
 
   onUpdateTicketAutoBuyerConfig() {
