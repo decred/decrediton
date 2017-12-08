@@ -1,20 +1,13 @@
 import Accounts from "./Accounts";
-import AddAccount from "./AddAccount";
 import ErrorScreen from "ErrorScreen";
 import "style/AccountsPage.less";
 
 const Page = ({
   routes,
-  walletService,
-  isShowingAddAccount,
-  onToggleAddAccount
+  walletService
 }) => (
   !walletService ? <ErrorScreen/> :
-  <Aux>
-    { isShowingAddAccount ?
-    <AddAccount onAction={onToggleAddAccount} {...{ routes }} /> :
-    <Accounts {...{ onToggleAddAccount, routes }} /> }
-  </Aux>
+  <Accounts {...{ routes }} />
 );
 
 export default Page;

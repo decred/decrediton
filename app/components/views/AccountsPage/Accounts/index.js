@@ -16,20 +16,23 @@ class Accounts extends React.Component {
         {...{
           accounts: this.props.accounts,
           isLoading: this.props.isLoading,
-          isShowingBalanceOverviewInfoModal: this.state.isShowingBalanceOverviewInfoModal,
+          onGetNextAccountAttempt: this.onGetNextAccountAttempt,
           onHideAccount: this.props.onHideAccount,
           onShowAccount: this.props.onShowAccount,
           onRenameAccount: this.props.onRenameAccount,
           accountNumDetailsShown: this.state.accountNumDetailsShown,
           onShowAccountDetails: this.onShowAccountDetails,
           onHideAccountDetails: this.onHideAccountDetails,
-          onToggleAddAccount: this.props.onToggleAddAccount,
-          onShowBalanceOverviewInfoModal: this.onShowBalanceOverviewInfoModal,
-          onCloseBalanceOverviewInfoModal: this.onCloseBalanceOverviewInfoModal,
           routes: this.props.routes,
         }}
       />
     );
+  }
+
+  onGetNextAccountAttempt(privpass, name) {
+    const { onGetNextAccountAttempt } = this.props;
+    if (!privpass || !name) return;
+    onGetNextAccountAttempt && onGetNextAccountAttempt(privpass, name);
   }
 
   onShowAccountDetails(accountNumDetailsShown) {

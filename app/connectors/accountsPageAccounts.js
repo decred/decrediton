@@ -17,7 +17,8 @@ const mapStateToProps = selectorMap({
 const mapDispatchToProps = dispatch => bindActionCreators({
   onRenameAccount: ca.renameAccountAttempt,
   onHideAccount: cla.hideAccount,
-  onShowAccount: cla.showAccount
+  onShowAccount: cla.showAccount,
+  onGetNextAccountAttempt: ca.getNextAccountAttempt
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);
