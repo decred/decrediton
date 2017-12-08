@@ -1,14 +1,17 @@
-.spinner {
-  text-align: center;
-}
+@import (reference) "./main.less";
 
 .spinner > div {
+  text-align: center;
   width: 6px;
   height: 6px;
   background-color: #fff;
   border-radius: 100%;
   display: inline-block;
   animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner.disabled > div {
+  background-color: @disabled-color;
 }
 
 .spinner .bounce1 {
