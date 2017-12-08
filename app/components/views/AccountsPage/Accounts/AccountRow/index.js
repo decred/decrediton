@@ -4,6 +4,8 @@ import { autobind } from "core-decorators";
 import Row from "./Row";
 import { spring, presets } from "react-motion";
 import AccountDetails from "./AccountDetails";
+import RenameAccount from "./RenameAccount";
+import { injectIntl } from "react-intl";
 
 @autobind
 class AccountRow extends Component {
@@ -71,6 +73,33 @@ class AccountRow extends Component {
     }];
   }
 
+  getRenameAccountStyles () {
+    const { account, intl } = this.props;
+    const {
+      updateRenameAccountName,
+      renameAccountNameError,
+      renameAccount,
+      hideRenameAccount,
+    } = this;
+    return [{
+      data: <RenameAccount
+        {...{
+          account,
+          updateRenameAccountName,
+          renameAccount,
+          hideRenameAccount,
+          intl,
+          renameAccountNameError,
+        }}
+      />,
+      key: "output_0",
+      style: {
+        height: spring(280, {stiffness: 110, damping: 14}),
+        opacity: spring(1, {stiffness: 65, damping: 35}),
+      }
+    }];
+  }
+
   getAccountDetailsStyles() {
     const { account } = this.props;
     const {
@@ -116,7 +145,8 @@ class AccountRow extends Component {
       getNullStyles,
       getDefaultStyles,
       willEnter,
-      willLeave
+      willLeave,
+      getRenameAccountStyles
     } = this;
     const {
       account,
@@ -151,6 +181,7 @@ class AccountRow extends Component {
           hideRenameAccount,
           showAccount,
           hideAccount,
+          getRenameAccountStyles,
           getAccountDetailsStyles,
           getNullStyles,
           getDefaultStyles,
@@ -162,4 +193,4 @@ class AccountRow extends Component {
   }
 }
 
-export default AccountRow;
+export default injectIntl(AccountRow);

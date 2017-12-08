@@ -1,18 +1,9 @@
-import SlateGrayButton from "SlateGrayButton";
-import KeyBlueButton from "KeyBlueButton";
+
 import Balance from "Balance";
-import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { TextInput } from "inputs";
+import { FormattedMessage as T } from "react-intl";
 import TransitionMotionWrapper from "TransitionMotionWrapper";
 import "style/Fonts.less";
 import "style/AccountRow.less";
-
-const messages = defineMessages({
-  newNamePlaceholder: {
-    id: "accounts.rename.newNamePlaceholder",
-    defaultMessage: "New Account Name"
-  },
-});
 
 const wrapperComponent = props => <div className="output-row" { ...props } />;
 
@@ -22,13 +13,9 @@ const Row = ({
   showAccountDetails,
   isShowingAccountDetails,
   isShowingRenameAccount,
-  renameAccountNameError,
   hidden,
-  updateRenameAccountName,
-  renameAccount,
-  hideRenameAccount,
-  intl,
   willEnter,
+  getRenameAccountStyles,
   willLeave,
   getAccountDetailsStyles,
   getNullStyles,
@@ -78,45 +65,9 @@ const Row = ({
         /> :
         isShowingRenameAccount
           ? (
-            <div className="account-row-details-bottom" key={"details" + account.accountNumber}>
-              <div className="account-row-details-bottom-title">
-                <div className="account-row-details-bottom-title-name">
-                  <T id="accounts.rename" m="Rename Account" />
-                </div>
-              </div>
-              <div className="account-row-details-bottom-rename">
-                <div className="account-row-details-bottom-rename-name">
-                  <T id="accounts.newName" m="New Account Name" />:
-              </div>
-                <div className="account-row-details-bottom-spec-value">
-                  <div className="account-input-form">
-                    <TextInput
-                      key={"rename" + account.accountNumber}
-                      type="text"
-                      className="address-content-nest-address-hash-to"
-                      placeholder={intl.formatMessage(messages.newNamePlaceholder)}
-                      maxLength="50"
-                      onBlur={(e) => updateRenameAccountName(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="account-form-input-error">
-                  {renameAccountNameError}
-                </div>
-              </div>
-              <div className="account-form-buttons">
-                <KeyBlueButton
-                  className="content-confirm-new-account"
-                  onClick={renameAccount}>
-                  <T id="accounts.renameBtn" m="Rename" />
-                </KeyBlueButton>
-                <SlateGrayButton
-                  className="content-confirm-new-account"
-                  onClick={hideRenameAccount}>
-                  <T id="accounts.cancelRenameBtn" m="Cancel" />
-                </SlateGrayButton>
-              </div>
-            </div>
+            <TransitionMotionWrapper
+              {...{ styles: getRenameAccountStyles(), wrapperComponent }}
+            />
           )
           : (
             <TransitionMotionWrapper {...{ styles: getAccountDetailsStyles(), defaultStyles: getDefaultStyles(), wrapperComponent, willEnter, willLeave }} />
@@ -125,4 +76,4 @@ const Row = ({
     </div>
   );
 
-export default injectIntl(Row);
+export default Row;
