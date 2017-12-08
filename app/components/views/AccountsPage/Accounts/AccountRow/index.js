@@ -2,6 +2,8 @@
 import React, { Component } from "react";
 import { autobind } from "core-decorators";
 import Row from "./Row";
+import { spring, presets } from "react-motion";
+import AccountDetails from "./AccountDetails";
 
 @autobind
 class AccountRow extends Component {
@@ -54,6 +56,43 @@ class AccountRow extends Component {
     this.setState({hidden: true});
   }
 
+  getDefaultStyles() {
+    return [{ key: "output_0",style: {height: 0, opacity: 0}}];
+  }
+
+  getStyles() {
+    const { account } = this.props;
+    const {
+      showRenameAccount,
+      showAccount,
+      hideAccount,
+    } = this;
+    const { hidden } = this.state;
+    return [{
+      data: <AccountDetails
+        {...{
+          account,
+          showRenameAccount,
+          hidden,
+          hideAccount,
+          showAccount,
+        }}
+      />,
+      key: "output_0",
+      style: {
+        height: spring(280, {stiffness: 110, damping: 14}),
+        opacity: spring(1, {stiffness: 65, damping: 35}),
+      }
+    }];
+  }
+
+  willLeave() {
+    return {
+      height: spring(0),
+      opacity: spring(0),
+    };
+  }
+
   render() {
     const {
       updateRenameAccountName,
@@ -61,7 +100,11 @@ class AccountRow extends Component {
       showRenameAccount,
       hideRenameAccount,
       showAccount,
-      hideAccount
+      hideAccount,
+      getStyles,
+      getDefaultStyles,
+      willEnter,
+      willLeave
     } = this;
     const {
       account,
@@ -95,7 +138,11 @@ class AccountRow extends Component {
           showRenameAccount,
           hideRenameAccount,
           showAccount,
-          hideAccount
+          hideAccount,
+          getStyles,
+          getDefaultStyles,
+          willEnter,
+          willLeave
         }}
       />
     );

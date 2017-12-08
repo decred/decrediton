@@ -3,7 +3,7 @@ import KeyBlueButton from "KeyBlueButton";
 import Balance from "Balance";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
-import AccountDetails from "./AccountDetails"
+import TransitionMotionWrapper from "TransitionMotionWrapper";
 import "style/Fonts.less";
 import "style/AccountRow.less";
 
@@ -13,6 +13,8 @@ const messages = defineMessages({
     defaultMessage: "New Account Name"
   },
 });
+
+const wrapperComponent = props => <div className="output-row" { ...props } />;
 
 const Row = ({
   account,
@@ -24,11 +26,12 @@ const Row = ({
   hidden,
   updateRenameAccountName,
   renameAccount,
-  showRenameAccount,
   hideRenameAccount,
-  showAccount,
-  hideAccount,
-  intl
+  intl,
+  willEnter,
+  willLeave,
+  getStyles,
+  getDefaultStyles,
 }) => (
   <div
     className={
@@ -111,14 +114,8 @@ const Row = ({
             </div>
           </div>
         )
-       : (
-         <AccountDetails {...{
-           account,
-           showRenameAccount,
-           hidden,
-           hideAccount,
-           showAccount,
-         }}/>
+       :(
+        <TransitionMotionWrapper {...{ styles: getStyles(), defaultStyles: getDefaultStyles(), wrapperComponent, willEnter, willLeave}} />
        )
     }
   </div>
