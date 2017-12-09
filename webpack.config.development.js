@@ -94,6 +94,11 @@ export default merge(baseConfig, {
       },
 
       {
+        test: /\.gif(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{ loader: "file-loader" }]
+      },
+
+      {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         use: [{
           loader: "url-loader",
