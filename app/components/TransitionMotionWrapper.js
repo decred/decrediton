@@ -8,7 +8,9 @@ const TransitionMotionWrapper = ({
   styles,
   ...props
 }) => {
-  const tmProps = { willEnter, willLeave, defaultStyles, styles };
+  const willEnterFunc = () => willEnter;
+  const willLeaveFunc = () => willLeave;
+  const tmProps = { willEnter: willEnterFunc, willLeave: willLeaveFunc, defaultStyles, styles };
   const child = ({ key, style, data }) => {
     const childProps = { ...{ key }, style: props.mapStyles(style) };
     return props.wrapperComponent ?
