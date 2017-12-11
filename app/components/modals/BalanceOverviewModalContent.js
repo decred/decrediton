@@ -1,3 +1,5 @@
+import { FormattedMessage as T } from "react-intl";
+
 export default () => (
   <Aux>
     <p className="info-modal-column">
