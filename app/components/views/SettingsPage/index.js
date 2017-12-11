@@ -6,15 +6,10 @@ import SettingsPage from "./Page";
 class Settings extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isShowingChangePassphrase: false
-    };
   }
 
   render() {
     const {
-      onShowChangePassphrase,
-      onCancelChangePassphrase,
       onAttemptChangePassphrase,
       onSaveSettings
     } = this;
@@ -24,8 +19,6 @@ class Settings extends React.Component {
         {...{
           ...this.props, ...this.state }}
         {...{
-          onShowChangePassphrase,
-          onCancelChangePassphrase,
           onAttemptChangePassphrase,
           onSaveSettings
         }}
@@ -33,18 +26,9 @@ class Settings extends React.Component {
     );
   }
 
-  onShowChangePassphrase() {
-    this.setState({ isShowingChangePassphrase: true });
-  }
-
   onAttemptChangePassphrase(oldPass, newPass, priv) {
     const { onAttemptChangePassphrase } = this.props;
-    this.onCancelChangePassphrase();
     onAttemptChangePassphrase && onAttemptChangePassphrase(oldPass, newPass, priv);
-  }
-
-  onCancelChangePassphrase() {
-    this.setState({ isShowingChangePassphrase: false });
   }
 
   onSaveSettings() {
