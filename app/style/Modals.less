@@ -16,10 +16,10 @@
 }
 
 .app-modal.info-modal {
-  left: 20px;
-  right: 20px;
-  top: 20px;
-  bottom: 20px;
+  left: 10%;
+  right: 10%;
+  top: 10%;
+  bottom: 10%;
   z-index: 200;
   border-radius: 5px;
   overflow-y: auto;
@@ -31,18 +31,22 @@
 }
 
 .info-modal-close-button {
-  height: 1em;
+  position: absolute;
+  right: 2em;
+  top: 2em;
 }
 
 .info-modal-header {
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid #fff;
 }
 
 .info-modal-header-title {
   font-size: 19px;
   text-transform: capitalize;
   height: 60px;
+  margin-bottom: 1em;
 }
 
 .app-modal.passphrase-modal {
@@ -150,4 +154,40 @@
 .import-script-modal-toolbar {
   margin-top: 20px;
   height: 44px;
+}
+
+.info-modal-column {
+  float: left;
+  color: #fff;
+}
+
+.info-modal-row {
+  font-size: 15px;
+  font-weight: 400;
+  padding-bottom: 1em;
+  float: left;
+  width: 100%;
+  line-height: 20px;
+}
+
+.info-modal-row-label {
+  font-size: 17px;
+  font-weight: 600;
+  float: left;
+  width: 25%;
+  text-align: left;
+}
+
+.info-modal-row-label.highlight-blue {
+  color: #69d5f7;
+}
+
+.info-modal-row-label.highlight-green {
+  color: #2ed8a3;
+}
+
+.info-modal-row-text {
+  float: left;
+  width: 75%;
+  text-align: left;
 }
