@@ -28,7 +28,6 @@ class Settings extends React.Component {
 
   onAttemptChangePassphrase(oldPass, newPass, priv) {
     const { onAttemptChangePassphrase } = this.props;
-    this.onCancelChangePassphrase();
     onAttemptChangePassphrase && onAttemptChangePassphrase(oldPass, newPass, priv);
   }
 
