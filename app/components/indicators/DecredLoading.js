@@ -1,12 +1,10 @@
 import React from "react";
 import "style/Loading.less";
 
-const DecredLoading = ({ hidden, className }) => (
+const DecredLoading = ({ hidden }) => (
   <div
-    className={"loading" + (className ? (" " + className) : "")}
-    style={{display: hidden ? "none" : "block"}}>
-    <div className="logo spin"/>
-  </div>
+    className={"new-logo-animation"}
+    style={{display: hidden ? "none" : "block"}}/>
 );
 
 export default DecredLoading;
