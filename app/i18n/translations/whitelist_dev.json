@@ -1,5 +1,21 @@
 [
-  "balance.dcr",
+  "rescan.progressPercent",
   "transaction.timestamp",
-  "txDetails.timestamp"
+  "ticket.timestamp",
+  "txDetails.timestamp",
+  "snackbar.defaults.error",
+  "send.errors.publishTxFailed",
+  "send.errors.signTxFailed",
+  "send.errors.constructTxFailed",
+  "send.errors.validateAddressFailed",
+  "tickets.errors.purchaseTicketsFailed",
+  "tickets.errors.revokeTicketsFailed",
+  "tickets.errors.importScriptFailed",
+  "tickets.errors.startAutoBuyerFailed",
+  "tickets.errors.updateStakePoolConfigFailed",
+  "tickets.errors.setStakePoolVoteChoicesFailed",
+  "accounts.errors.renameAccountFailed",
+  "accounts.errors.getNextAccountFailed",
+  "settings.errors.changePassphraseFailed",
+  "decodeRawTx.errors.decodeFailed"
 ]
