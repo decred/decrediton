@@ -21,8 +21,8 @@ const StakeInfoDisplay = ({
         defaultStyles: getDefaultStyles(height),
         styles: !isShowingDetails ? getStakeInfoRowStyles() : getStakeInfoDetailsStyles(),
         wrapperComponent,
-        willLeave: willLeave && willLeave(),
-        willEnter: willEnter && willEnter()
+        willLeave,
+        willEnter
       }}
     />
   );
