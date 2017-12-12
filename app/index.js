@@ -267,6 +267,7 @@ var initialState = {
     rescaneRequest: null,
     rescanResponse: null,
     rescanError: null,
+    rescanCall: null,
     // NextAccount
     getNextAccountRequestAttempt: false,
     getNextAccountResponse: null,

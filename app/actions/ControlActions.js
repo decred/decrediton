@@ -66,6 +66,7 @@ export const RESCAN_ATTEMPT = "RESCAN_ATTEMPT";
 export const RESCAN_FAILED = "RESCAN_FAILED";
 export const RESCAN_PROGRESS = "RESCAN_PROGRESS";
 export const RESCAN_COMPLETE = "RESCAN_COMPLETE";
+export const RESCAN_CANCEL = "RESCAN_CANCEL";
 
 export function rescanAttempt(beginHeight) {
   var request = new RescanRequest();
@@ -75,18 +76,24 @@ export function rescanAttempt(beginHeight) {
     const { walletService } = getState().grpc;
     var rescanCall = walletService.rescan(request);
     rescanCall.on("data", function(response) {
-      console.log("Rescanned thru", response.getRescannedThrough());
-      dispatch({ rescanResponse: response, type: RESCAN_PROGRESS });
+      dispatch({ rescanCall: rescanCall, rescanResponse: response, type: RESCAN_PROGRESS });
     });
     rescanCall.on("end", function() {
-      console.log("Rescan done");
       dispatch({ type: RESCAN_COMPLETE });
       setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
       setTimeout( () => {dispatch(getMostRecentTransactions());}, 1000);
     });
-    rescanCall.on("status", function(status) {
-      console.log("Rescan status:", status);
+    rescanCall.on("error", function(status) {
+      console.error("Rescan error", status);
     });
+  };
+}
+
+export function rescanCancel() {
+  return (dispatch, getState) => {
+    const { rescanCall } = getState().control;
+    rescanCall.cancel();
+    dispatch({type: RESCAN_CANCEL});
   };
 }
 
