@@ -14,7 +14,8 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  rescanAttempt: ca.rescanAttempt
+  rescanAttempt: ca.rescanAttempt,
+  rescanCancel: ca.rescanCancel
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

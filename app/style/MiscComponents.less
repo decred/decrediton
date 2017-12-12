@@ -265,15 +265,20 @@
   width: @sidebar-width;
 }
 
+.rescan-button-area {
+  padding-top: 2px;
+  padding-right: 10px;
+  float: left;
+}
+
 .rescan-button {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   border: none;
   outline: none;
   background-color: transparent;
   background-image: @menu-rescan-icon;
-  background-size: 14px 14px;
-  margin-right: 5px;
+  background-size: 16px 16px;
 }
 
 .rescan-button:hover {
@@ -290,6 +295,25 @@
 
 .rescan-button.spin:hover {
   opacity: 1;
+}
+
+.rescan-cancel-button-area {
+  padding-top: 2px;
+  float: right;
+}
+
+.rescan-cancel-button {
+  width: 16px;
+  height: 16px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-image: @menu-cancel-rescan-icon;
+  background-size: 16px 16px;
+}
+
+.rescan-cancel-button:hover {
+  opacity: 0.7;
 }
 
 .context-menu-item {

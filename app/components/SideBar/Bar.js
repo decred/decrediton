@@ -53,7 +53,9 @@ const Bar = ({
         <div className="sidebar-menu-bottom-latest-block">
           { rescanRequest ? <RescanProgress/> : null }
           <Aux show={ currentHeight && !rescanRequest }>
-            <RescanButton {...{rescanRequest, rescanAttempt}} />
+            <div className="rescan-button-area">
+              <RescanButton {...{rescanRequest, rescanAttempt}} />
+            </div>
             <a className="sidebar-menu-bottom-latest-block-name">
               { synced ?
                 <T id="sidebar.latestBlock" m="Latest Block" /> :

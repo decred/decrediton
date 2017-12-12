@@ -1,6 +1,6 @@
 import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   RENAMEACCOUNT_ATTEMPT, RENAMEACCOUNT_FAILED, RENAMEACCOUNT_SUCCESS,
-  RESCAN_ATTEMPT, RESCAN_FAILED, RESCAN_PROGRESS, RESCAN_COMPLETE,
+  RESCAN_ATTEMPT, RESCAN_FAILED, RESCAN_PROGRESS, RESCAN_COMPLETE, RESCAN_CANCEL,
   GETNEXTACCOUNT_ATTEMPT, GETNEXTACCOUNT_FAILED, GETNEXTACCOUNT_SUCCESS,
   IMPORTPRIVKEY_ATTEMPT, IMPORTPRIVKEY_FAILED, IMPORTPRIVKEY_SUCCESS,
   IMPORTSCRIPT_ATTEMPT, IMPORTSCRIPT_FAILED, IMPORTSCRIPT_SUCCESS,
@@ -17,7 +17,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   STARTAUTOBUYER_ATTEMPT, STARTAUTOBUYER_FAILED, STARTAUTOBUYER_SUCCESS,
   STOPAUTOBUYER_ATTEMPT, STOPAUTOBUYER_FAILED, STOPAUTOBUYER_SUCCESS,
   CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS,
-  SETBALANCETOMAINTAIN, SETMAXFEE, SETMAXPRICEABSOLUTE, SETMAXPRICERELATIVE, SETMAXPERBLOCK
+  SETBALANCETOMAINTAIN, SETMAXFEE, SETMAXPRICEABSOLUTE, SETMAXPRICERELATIVE, SETMAXPERBLOCK,
  } from "../actions/ControlActions";
 
 export default function control(state = {}, action) {
@@ -57,21 +57,26 @@ export default function control(state = {}, action) {
     };
   case RESCAN_ATTEMPT:
     return {...state,
+      rescanCall: null,
       rescanError: null,
       rescanRequest: action.request,
       rescanRequestAttempt: true,
     };
   case RESCAN_FAILED:
     return {...state,
+      rescanCall: null,
       rescanError: String(action.error),
       rescanRequestAttempt: false,
     };
   case RESCAN_PROGRESS:
     return {...state,
+      rescanCall: action.rescanCall,
       rescanResponse: action.rescanResponse,
     };
+  case RESCAN_CANCEL:
   case RESCAN_COMPLETE:
     return {...state,
+      rescanCall: null,
       rescanError: "",
       rescanRequest: null,
       rescanRequestAttempt: false,
