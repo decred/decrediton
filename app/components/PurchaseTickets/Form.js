@@ -2,7 +2,7 @@ import InfoModalButton from "InfoModalButton";
 import PassphraseModalButton from "PassphraseModalButton";
 import { PurchaseTicketsInfoModalContent, ImportScriptModalContent } from "modals";
 import TicketsCogs from "TicketsCogs";
-import { FeeInput, BlocksInput, AddressInput, AccountsSelect, StakePoolSelect, NumTicketsInput } from "inputs";
+import { FeeInput, PercentInput, BlocksInput, AddressInput, AccountsSelect, StakePoolSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
 import { Tooltip } from "shared";
 import { addSpacingAroundText } from "helpers/strings";
@@ -194,7 +194,7 @@ const PurchaseTicketsForm = ({
               <T id="purchaseTickets.poolFees" m="Pool Fees" />:</div>
             <div className="stakepool-purchase-ticket-num-input">
               <div className="stakepool-input-form-purchase-ticket">
-                <FeeInput
+                <PercentInput
                   disabled readOnly
                   className="stakepool-content-nest-purchase-ticket-form-disabled"
                   value={stakePool ? stakePool.value.PoolFees : null}
