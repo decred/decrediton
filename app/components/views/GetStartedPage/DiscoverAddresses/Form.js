@@ -1,4 +1,4 @@
-import Header from "../../../Header";
+import Header from "../DefaultHeader";
 import KeyBlueButton from "../../../KeyBlueButton";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
@@ -14,8 +14,7 @@ const messages = defineMessages({
 const DiscoverAddressesFormHeader = ({
   startupError
 }) => (
-  <Header getStarted
-    headerTitleOverview={<T id="getStarted.header.title" m="Setting up Decrediton" />}
+  <Header
     headerMetaOverview={<T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />}
     headerTop={startupError
       ? <div key="pubError" className="get-started-view-notification-error">{startupError}</div>

@@ -18,7 +18,7 @@ const GeneralSettings = ({
   onChangeTempSettings
 }) => (
   <div className="settings-general">
-    <div className="settings-colunm-title">General</div>
+    <div className="settings-colunm-title"><T id="settings.general.title" m="General" /></div>
       <div className="settings-column-content">
 
         <div className="settings-row">

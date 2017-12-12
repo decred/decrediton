@@ -1,12 +1,11 @@
-import Header from "Header";
+import Header from "./DefaultHeader";
 import ShowError from "ShowError";
 import KeyBlueButton from "KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
 import "style/GetStarted.less";
 
 export const StartRPCHeader = () => (
-  <Header getStarted
-    headerTitleOverview={<T id="getStarted.header.title" m="Setting up Decrediton" />}
+  <Header
     headerMetaOverview={<T id="getStarted.header.startRpc.meta" m="Starting RPC and subscribing block notifications" />} />
 );
 

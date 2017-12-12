@@ -50,7 +50,9 @@ const Modal = ({
         : null}</div>
     </div>
     <div className="import-script-modal-toolbar">
-      <KeyBlueButton style={{float: "left"}} onClick={onSubmit}>import</KeyBlueButton>
+      <KeyBlueButton style={{float: "left"}} onClick={onSubmit}>
+        <T id="importScriptModal.importBtn" m="Import" />
+      </KeyBlueButton>
     </div>
   </Aux>
 );

@@ -1,4 +1,4 @@
-import Header from "../../../Header";
+import Header from "../DefaultHeader";
 import LinearProgress from "material-ui/LinearProgress";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import SlateGrayButton from "SlateGrayButton";
@@ -9,8 +9,7 @@ const DaemonLoadingFormHeader = ({
   getDaemonStarted,
   getCurrentBlockCount,
 }) => (
-  <Header getStarted
-    headerTitleOverview={<T id="getStarted.header.title" m="Setting up Decrediton" />}
+  <Header
     headerMetaOverview={getDaemonStarted
       ? getCurrentBlockCount == null
         ? <T id="getStarted.header.daemonLoading.meta" m="Preparing background process" />
