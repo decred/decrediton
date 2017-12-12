@@ -2,12 +2,14 @@ import React from "react";
 import LinearProgress from "material-ui/LinearProgress";
 import rescan from "connectors/rescan";
 import { FormattedMessage as T } from "react-intl";
+import { RescanButton } from "buttons";
 import "style/MiscComponents.less";
 
 const RescanProgress = ({
   rescanEndBlock,
   rescanCurrentBlock,
-  rescanPercentFinished
+  rescanPercentFinished,
+  rescanRequest,
 }) => (
   <div className="rescan-progress-area" >
     <div className="rescan-progress-indicator">
@@ -19,6 +21,7 @@ const RescanProgress = ({
         color="#2ed8a3"
       />
     </div>
+    <RescanButton {...{rescanRequest}} />
     <T
       id="rescan.rescanning"
       m="Rescanning {blockProgress} ({progressPercent})"

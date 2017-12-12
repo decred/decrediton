@@ -248,11 +248,6 @@
 
 .rescan-progress-area {
   color: #69d5f7;
-  background-image: @menu-rescan-icon;
-  background-size: 16px 16px;
-  background-repeat: no-repeat;
-  background-position: 0px 15px;
-  padding-left: 19px;
   font-size: 13px;
 }
 
@@ -271,14 +266,30 @@
 }
 
 .rescan-button {
-  width: 16px;
+  width: 14px;
   height: 14px;
   border: none;
   outline: none;
   background-color: transparent;
   background-image: @menu-rescan-icon;
-  background-size: 16px 16px;
-  margin-right: 3px;
+  background-size: 14px 14px;
+  margin-right: 5px;
+}
+
+.rescan-button:hover {
+  opacity: 0.7;
+}
+
+@keyframes spin {
+  100% { transform: rotate(0deg); }
+}
+
+.rescan-button.spin {
+  animation: spin 1s linear infinite;
+}
+
+.rescan-button.spin:hover {
+  opacity: 1;
 }
 
 .context-menu-item {
