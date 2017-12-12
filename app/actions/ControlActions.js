@@ -76,20 +76,15 @@ export function rescanAttempt(beginHeight) {
     const { walletService } = getState().grpc;
     var rescanCall = walletService.rescan(request);
     rescanCall.on("data", function(response) {
-      console.log("Rescanned thru", response.getRescannedThrough());
       dispatch({ rescanCall: rescanCall, rescanResponse: response, type: RESCAN_PROGRESS });
     });
     rescanCall.on("end", function() {
-      console.log("Rescan done");
       dispatch({ type: RESCAN_COMPLETE });
       setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
       setTimeout( () => {dispatch(getMostRecentTransactions());}, 1000);
     });
-    rescanCall.on("status", function(status) {
-      console.log("Rescan status:", status);
-    });
     rescanCall.on("error", function(status) {
-      console.log("Rescan canceled", status);
+      console.error("Rescan error", status);
     });
   };
 }
