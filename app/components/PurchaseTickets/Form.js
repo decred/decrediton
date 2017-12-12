@@ -66,7 +66,7 @@ const PurchaseTicketsForm = ({
         </div>
         <div className="stakepool-purchase-ticket-input-buttons">
           <InfoModalButton
-            modalTitle={<h1><T id="accounts.balanceInfo" m="Ticket Purchase Information" /></h1>}
+            modalTitle={<h1><T id="purchaseInfoModal.title" m="Ticket Purchase Information" /></h1>}
             modalContent={<PurchaseTicketsInfoModalContent />}
           />
           <TicketsCogs opened={!isShowingAdvanced} onClick={onToggleShowAdvanced} />
@@ -235,7 +235,7 @@ const PurchaseTicketsForm = ({
             disabled={!canAffordTickets}
             onSubmit={onPurchaseTickets}
         >
-          <T id="puchaseTickets.purchaseBtn" m="Purchase" />
+          <T id="purchaseTickets.purchaseBtn" m="Purchase" />
         </PassphraseModalButton>
         {!canAffordTickets &&
           <div className="stakepool-purchase-error">
@@ -259,7 +259,7 @@ const PurchaseTicketsForm = ({
               className="stakepool-content-revoke-button"
               onSubmit={onRevokeTickets}
           >
-            <T id="puchaseTickets.revokeBtn" m="Revoke" />
+            <T id="purchaseTickets.revokeBtn" m="Revoke" />
           </PassphraseModalButton>
         }
       </div>

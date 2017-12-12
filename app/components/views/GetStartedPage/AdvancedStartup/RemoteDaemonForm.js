@@ -119,7 +119,7 @@ const RemoteDaemonForm = ({
       </div>
       <div className="advanced-daemon-row">
         <KeyBlueButton onClick={onSubmitRemoteForm}>
-          <T id="login.form.appdata.button" m="Connect to Remote" />
+          <T id="login.form.connect.button" m="Connect to Remote" />
         </KeyBlueButton>
       </div>
     </Aux>

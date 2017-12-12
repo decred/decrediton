@@ -54,7 +54,7 @@ const Page = ({
           <TxHistory
             transactions={transactions}
           />
-        ) : noMoreTransactions ? <p><T id="history.noTransactions" m="No transactions" /></p> : null}
+        ) : null}
       </div>
       {!noMoreTransactions
       ? <LoadingMoreTransactionsIndicator />

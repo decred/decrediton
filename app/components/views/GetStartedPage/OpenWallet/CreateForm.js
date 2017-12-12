@@ -1,4 +1,4 @@
-import Header from "Header";
+import Header from "../DefaultHeader";
 import CreateWalletForm from "CreateWalletForm";
 import TextToggle from "TextToggle";
 import SlateGrayButton from "SlateGrayButton";
@@ -13,8 +13,6 @@ const OpenWalletCreateFormHeader = ({
   onToggleNewExisting
 }) => (
   <Header
-    getStarted
-    headerTitleOverview={<T id="getStarted.header.title" m="Setting up Decrediton" />}
     headerTop={startupError
       ? <div key="walletCreateError" className="get-started-view-notification-error">{startupError}</div>
       : null}

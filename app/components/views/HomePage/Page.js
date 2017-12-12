@@ -35,7 +35,7 @@ const HomePage = ({
               className="stakepool-content-revoke-button"
               onSubmit={onRevokeTickets}
           >
-            <T id="puchaseTickets.revokeBtn" m="Revoke" />
+            <T id="purchaseTickets.revokeBtn" m="Revoke" />
           </PassphraseModalButton>
         </div> }
         <div className="home-content-title">

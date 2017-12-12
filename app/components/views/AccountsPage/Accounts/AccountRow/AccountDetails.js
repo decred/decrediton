@@ -25,7 +25,7 @@ const AccountsList = ({
           </div>
           <div className="account-row-details-bottom-spec">
             <div className="account-row-details-bottom-spec-name">
-              <T id="accounts.spendable" m="Spendable" />
+              <T id="accounts.details.spendable" m="Spendable" />
             </div>
             <div className="account-row-details-bottom-spec-value"><Balance amount={account.spendable} /></div>
           </div>

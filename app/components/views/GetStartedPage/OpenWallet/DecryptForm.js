@@ -1,4 +1,4 @@
-import Header from "Header";
+import Header from "../DefaultHeader";
 import KeyBlueButton from "KeyBlueButton";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
@@ -14,8 +14,7 @@ const messages = defineMessages({
 const OpenWalletDecryptFormHeader = ({
   startupError
 }) => (
-  <Header getStarted
-    headerTitleOverview={<T id="getStarted.header.title" m="Setting up Decrediton" />}
+  <Header
     headerMetaOverview={(
       <div className="get-started-subheader">
         <T id="getStarted.header.openingWallet.meta" m="Opening wallet" />

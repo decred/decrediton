@@ -27,7 +27,7 @@ const SettingsPage = ({
             onChangeTempSettings}} />
 
           <div className="settings-security">
-            <div className="settings-colunm-title">Security</div>
+            <div className="settings-colunm-title"><T id="settings.security.title" m="Security" /></div>
             <div className="settings-action-buttons">
               <div className="settings-update-passphrase-button">
                 <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />

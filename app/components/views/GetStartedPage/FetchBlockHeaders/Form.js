@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../../../Header";
+import Header from "../DefaultHeader";
 import { FormattedMessage as T } from "react-intl";
 import "../../../../style/GetStarted.less";
 
@@ -7,8 +7,6 @@ const FetchBlockHeadersFormHeader = ({
   startupError
 }) => (
   <Header
-    getStarted
-    headerTitleOverview={<T id="getStarted.header.title" m="Setting up Decrediton" />}
     headerMetaOverview={<T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />}
     headerTop={startupError
       ? <div key="fetchHeadersError" className="get-started-view-notification-error">{startupError}</div>

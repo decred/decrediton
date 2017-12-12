@@ -33,7 +33,7 @@ const PassPhraseInputs = ({
       <div className="content-new-seed-priv-pass">
         <div className="create-wallet-label">{passPhraseLabel}:
           <InfoModalButton
-            modalTitle={<h1><T id="confirmSeed.seedInformation" m="Private passphrase information" /></h1>}
+            modalTitle={<h1><T id="confirmSeed.passphraseInformation" m="Private passphrase information" /></h1>}
             modalContent={<PassphraseInfoModalContent />}
           />
         </div>
