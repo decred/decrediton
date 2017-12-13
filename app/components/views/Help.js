@@ -12,7 +12,7 @@ const Help = ({ routes }) => (
       <div className={"help-icon-row"}>
         <HelpLink className={"help-github-icon"} href="https://github.com/decred/decrediton"><T id="help.github" m="Github" /></HelpLink>
         <HelpLink className={"help-docs-icon"} href="https://docs.decred.org/"><T id="help.documentation" m="Documentation" /></HelpLink>
-        <HelpLink className={"help-stakepools-icon"} href="https://decred.org/#modalOpen"><T id="help.stakepools" m=" Stakepools" /></HelpLink>
+        <HelpLink className={"help-stakepools-icon"} href="https://decred.org/stakepools"><T id="help.stakepools" m=" Stakepools" /></HelpLink>
         <HelpLink className={"help-rocketchat-icon"} href="https://rocketchat.decred.org"><T id="help.rocketchat" m="RocketChat" /></HelpLink>
       </div>
       <div className={"help-icon-row"}>
