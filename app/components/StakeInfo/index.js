@@ -54,7 +54,8 @@ class StakeInfo extends React.Component {
       />,
       key: "output_0",
       style: {
-        height: spring(180, {stiffness: 170, damping: 15}),
+        height: spring(150, {stiffness: 170, damping: 15}),
+        opacity: spring(1, {stiffness: 100, damping: 20}),
       }
     }];
   }
@@ -65,6 +66,7 @@ class StakeInfo extends React.Component {
       key: "output_0",
       style: {
         height: spring(0, {stiffness: 100, damping: 14}),
+        opacity: spring(0, {stiffness: 100, damping: 20}),
       }
     }];
   }
