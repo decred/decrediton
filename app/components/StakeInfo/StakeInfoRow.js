@@ -21,7 +21,7 @@ const StakeInfoDisplay = ({
       <div className="stakepool-stake-info-label"><T id="stake.immatureTickets" m="Immature Tickets" />:</div>
       <div className="stakepool-stake-info-value"><FormattedNumber value={immatureTicketsCount} /></div>
     </div>
-    <div className="stakepool-stake-info-row-small-right">
+    <div className="stakepool-stake-info-row-small">
       <div className="stakepool-stake-info-label"><T id="stake.liveTickets" m="Live Tickets" />:</div>
       <div className="stakepool-stake-info-value"><FormattedNumber value={liveTicketsCount} /></div>
     </div>
