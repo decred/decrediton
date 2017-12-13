@@ -1,30 +1,49 @@
 import React from "react";
 import "style/StakePool.less";
 import TransitionMotionWrapper from "TransitionMotionWrapper";
+import StakeInfoRow from "./StakeInfoRow";
 
 const wrapperComponent = props => <div className="account-wrapper" { ...props } />;
 
 const StakeInfoDisplay = ({
-  getStakeInfoDetailsStyles,
+  getNullStyles,
   getDefaultStyles,
-  getStakeInfoRowStyles,
+  getStakeInfoDetailsComponent,
   isShowingDetails,
   willLeave,
-  willEnter
+  willEnter,
+  ownMempoolTicketsCount,
+  immatureTicketsCount,
+  liveTicketsCount,
+  onShowStakeInfo,
+  onHideStakeInfo
 }) => {
   const height = !isShowingDetails ? 48 : 180;
 
   return (
-    <TransitionMotionWrapper
-      {
-      ...{
-        defaultStyles: getDefaultStyles(height),
-        styles: !isShowingDetails ? getStakeInfoRowStyles() : getStakeInfoDetailsStyles(),
-        wrapperComponent,
-        willLeave,
-        willEnter
-      }}
-    />
+    <Aux>
+      <StakeInfoRow
+        {...{
+          isShowingDetails,
+          ownMempoolTicketsCount,
+          immatureTicketsCount,
+          liveTicketsCount,
+          onShowStakeInfo,
+          onHideStakeInfo
+        }}
+      />
+      <TransitionMotionWrapper
+        {
+        ...{
+          defaultStyles: getDefaultStyles(height),
+          styles: !isShowingDetails ? getNullStyles() : getStakeInfoDetailsComponent(),
+          wrapperComponent,
+          willLeave,
+          willEnter
+        }}
+      />
+    </Aux>
+
   );
 };
 

@@ -9,7 +9,8 @@ const StakeInfoDisplay = ({
   ownMempoolTicketsCount,
   immatureTicketsCount,
   liveTicketsCount,
-  onShowStakeInfo
+  onShowStakeInfo,
+  onHideStakeInfo
 }) => (
   <div className="stakepool-stake-info-area-small">
     <div className="stakepool-stake-info-row-small">
@@ -28,7 +29,7 @@ const StakeInfoDisplay = ({
       <TicketsCogs
         opened={!isShowingDetails}
         style={{paddingTop: "2px"}}
-        onClick={onShowStakeInfo}
+        onClick={isShowingDetails ? onHideStakeInfo : onShowStakeInfo}
       />
     </div>
   </div>

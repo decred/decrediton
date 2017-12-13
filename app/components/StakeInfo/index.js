@@ -5,7 +5,6 @@ import { substruct } from "fp";
 import StakeInfoDisplay from "./Display";
 import StakeInfoDetails from "./StakeInfoDetails";
 import stakeInfo from "connectors/stakeInfo";
-import StakeInfoRow from "./StakeInfoRow";
 
 @autobind
 class StakeInfo extends React.Component {
@@ -20,7 +19,7 @@ class StakeInfo extends React.Component {
     return [{ key: "output_0",style: {height: height, opacity: 0}}];
   }
 
-  getStakeInfoDetailsStyles () {
+  getStakeInfoDetailsComponent () {
     const {
       ticketPoolSize,
       votedTicketsCount,
@@ -33,7 +32,7 @@ class StakeInfo extends React.Component {
       totalSubsidy,
       liveTicketsCount,
      } = this.props;
-    const { onHideStakeInfo } = this;
+    const { onHideStakeInfo, onShowStakeInfo } = this;
     const { isShowingDetails } = this.state;
     return [{
       data: <StakeInfoDetails
@@ -50,6 +49,7 @@ class StakeInfo extends React.Component {
           totalSubsidy,
           liveTicketsCount,
           onHideStakeInfo,
+          onShowStakeInfo,
         }}
       />,
       key: "output_0",
@@ -59,23 +59,12 @@ class StakeInfo extends React.Component {
     }];
   }
 
-  getStakeInfoRowStyles() {
-    const {
-      ownMempoolTicketsCount,
-      immatureTicketsCount,
-      liveTicketsCount,
-     } = this.props;
-    const { onShowStakeInfo } = this;
+  getNullStyles() {
     return [{
-      data: <StakeInfoRow {...{
-        ownMempoolTicketsCount,
-        immatureTicketsCount,
-        liveTicketsCount,
-        onShowStakeInfo
-      }}/>,
+      data: null,
       key: "output_0",
       style: {
-        height: spring(50, {stiffness: 100, damping: 14}),
+        height: spring(0, {stiffness: 100, damping: 14}),
       }
     }];
   }
@@ -87,17 +76,25 @@ class StakeInfo extends React.Component {
   }
 
   render() {
+    const {
+      ownMempoolTicketsCount,
+      immatureTicketsCount,
+      liveTicketsCount,
+     } = this.props;
     return (
       <StakeInfoDisplay
         {...{
+          ownMempoolTicketsCount,
+          immatureTicketsCount,
+          liveTicketsCount,
           ...this.props,
           ...this.state,
           ...substruct({
             onHideStakeInfo: null,
             onShowStakeInfo: null,
-            getStakeInfoDetailsStyles: null,
+            getStakeInfoDetailsComponent: null,
+            getNullStyles: null,
             getDefaultStyles: null,
-            getStakeInfoRowStyles: null,
             willLeave: null,
             willEnter: null,
           }, this)
