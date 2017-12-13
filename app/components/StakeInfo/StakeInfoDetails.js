@@ -44,7 +44,7 @@ const StakeInfoDisplay = ({
       </div>
     </div>
     <div className="stakepool-stake-info-row">
-      <div className="stakepool-stake-info-row-center">
+      <div className="stakepool-stake-info-row-left">
         <div className="stakepool-stake-info-label"><T id="stake.totalSubsidy" m="Total Subsidy" />:</div>
         <div className="stakepool-stake-info-value"><Balance amount={totalSubsidy}/></div>
       </div>
