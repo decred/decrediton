@@ -1,7 +1,7 @@
-import compose from "lodash/fp/compose";
+import compose from "fp";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { AddressInput, DcrInput } from "inputs";
-import "../../../../style/SendPage.less";
+import "style/SendPage.less";
 
 const messages = defineMessages({
   destinationAddrPlaceholder: {

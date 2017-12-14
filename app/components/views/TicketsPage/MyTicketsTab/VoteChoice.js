@@ -1,5 +1,3 @@
-import React from "react";
-
 const VoteChoice = ({ agendaId, choice }) =>
   <span className="vote-choice">
     <span className="vote-choice-agenda-id">{agendaId}: </span>

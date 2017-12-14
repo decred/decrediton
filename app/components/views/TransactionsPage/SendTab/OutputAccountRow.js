@@ -1,4 +1,4 @@
-import compose from "lodash/fp/compose";
+import compose from "fp";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { DcrInput, ReceiveAccountsSelect } from "inputs";
 import "style/SendPage.less";
