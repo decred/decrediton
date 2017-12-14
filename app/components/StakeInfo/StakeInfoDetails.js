@@ -1,7 +1,6 @@
-import React from "react";
-import "style/StakePool.less";
-import Balance from "Balance";
+import { Balance } from "shared";
 import { FormattedNumber, FormattedMessage as T } from "react-intl";
+import "style/StakePool.less";
 
 const StakeInfoDisplay = ({
   ticketPoolSize,

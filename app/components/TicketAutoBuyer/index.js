@@ -1,7 +1,5 @@
-import React from "react";
-import { autobind } from "core-decorators";
-import ticketAutoBuyer from "../../connectors/ticketAutoBuyer";
-import { substruct, compose, eq, get } from "../../fp";
+import ticketAutoBuyer from "connectors/ticketAutoBuyer";
+import { substruct, compose, eq, get } from "fp";
 import { injectIntl } from "react-intl";
 import TicketAutoBuyerForm from "./Form";
 

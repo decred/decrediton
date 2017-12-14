@@ -1,7 +1,6 @@
-import PropTypes from "prop-types";
 import { RegularTxRowOfClass as regular } from "./RegularTxRow";
 import { StakeTxRowOfType as stake } from "./StakeTxRow";
-import "../../style/TxHistory.less";
+import "style/TxHistory.less";
 
 const TxRowByType = { // TODO: use constants instead of string
   "Ticket": stake("Ticket"),

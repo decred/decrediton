@@ -1,5 +1,3 @@
-import React from "react";
-import { autobind } from "core-decorators";
 import { spring } from "react-motion";
 import { substruct } from "fp";
 import StakeInfoDisplay from "./Display";

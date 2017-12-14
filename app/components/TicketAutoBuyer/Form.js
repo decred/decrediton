@@ -1,8 +1,4 @@
-import TicketsCogs from "TicketsCogs";
-import AutoBuyerSwitch from "AutoBuyerSwitch";
-import KeyBlueButton from "KeyBlueButton";
-import PassphraseModalSwitch from "PassphraseModalSwitch";
-import InfoModalButton from "InfoModalButton";
+import { AutoBuyerSwitch, InfoModalButton, KeyBlueButton, PassphraseModalSwitch, TicketsCogs }from "buttons";
 import { TicketAutoBuyerInfoModalContent } from "modals";
 import { DcrInput, NumericInput, FeeInput } from "inputs";
 import { Tooltip } from "shared";

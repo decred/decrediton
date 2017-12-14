@@ -1,6 +1,5 @@
-import Balance from "Balance";
 import { FormattedMessage as T } from "react-intl";
-import TransitionMotionWrapper from "TransitionMotionWrapper";
+import { Balance, TransitionMotionWrapper } from "shared";
 import "style/Fonts.less";
 import "style/AccountRow.less";
 

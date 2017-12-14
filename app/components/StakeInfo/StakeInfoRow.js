@@ -1,8 +1,6 @@
-import React from "react";
-import "style/StakePool.less";
-import TicketsCogs from "TicketsCogs";
-
+import { TicketsCogs } from "buttons";
 import { FormattedNumber, FormattedMessage as T } from "react-intl";
+import "style/StakePool.less";
 
 const StakeInfoDisplay = ({
   isShowingDetails,

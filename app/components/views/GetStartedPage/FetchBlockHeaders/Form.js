@@ -1,7 +1,6 @@
-import React from "react";
 import Header from "../DefaultHeader";
 import { FormattedMessage as T } from "react-intl";
-import "../../../../style/GetStarted.less";
+import "style/GetStarted.less";
 
 const FetchBlockHeadersFormHeader = ({
   startupError

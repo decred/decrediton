@@ -1,6 +1,6 @@
 import Bar from "./Bar";
 import { rescan, sideBar } from "connectors";
-import { tsToDate } from "../../helpers/dateFormat";
+import { tsToDate } from "helpers/dateFormat";
 import ReactTimeout from "react-timeout";
 
 @autobind

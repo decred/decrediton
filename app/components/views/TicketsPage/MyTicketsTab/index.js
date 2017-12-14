@@ -1,4 +1,3 @@
-
 const MyTickets = ({ children }) => (
   <div className="tab-card">
     {children}

@@ -1,7 +1,6 @@
-import KeyBlueButton from "KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
 import { TabbedHeader } from "shared";
-import ChangePassphraseButton from "ChangePassphraseButton";
+import { ChangePassphraseButton, KeyBlueButton } from "buttons";
 import { ChangePassphraseModalContent } from "modals";
 import GeneralSettings from "./GeneralSettings";
 import "style/StakePool.less";

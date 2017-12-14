@@ -1,10 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { FormattedMessage as T } from "react-intl";
-import KeyBlueButton from "../KeyBlueButton";
-import SlateGrayButton from "../SlateGrayButton";
-import "../../style/Layout.less";
-import "../../style/StakePool.less";
+import { KeyBlueButton, SlateGrayButton }from "buttons";
+import "style/Layout.less";
+import "style/StakePool.less";
 
 const StakePoolsList = ({
   configuredStakePools,

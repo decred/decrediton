@@ -1,11 +1,9 @@
-import React from "react";
-import { autobind } from "core-decorators";
-import { substruct, compose, eq, get } from "../../fp";
+import { substruct, compose, eq, get } from "fp";
 import { FormattedMessage as T } from "react-intl";
 import { shell } from "electron";
 import StakePoolsList from "./List";
 import StakePoolsAddForm from "./AddForm";
-import stakePools from "../../connectors/stakePools";
+import stakePools from "connectors/stakePools";
 
 @autobind
 class StakePools extends React.Component {

@@ -1,6 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput, PasswordInput } from "inputs";
-import KeyBlueButton from "KeyBlueButton";
+import { KeyBlueButton } from "buttons";
 import "style/LoginForm.less";
 
 const messages = defineMessages({

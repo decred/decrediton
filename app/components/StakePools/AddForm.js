@@ -1,6 +1,5 @@
 import { shell } from "electron";
-import PassphraseModalButton from "PassphraseModalButton";
-import SlateGrayButton from "SlateGrayButton";
+import { PassphraseModalButton, SlateGrayButton } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, StakePoolSelect } from "inputs";
 import "style/Layout.less";

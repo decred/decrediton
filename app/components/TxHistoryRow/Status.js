@@ -1,7 +1,6 @@
-import React from "react";
-import "../../style/TxHistory.less";
 import { FormattedMessage as T } from "react-intl";
 import { tsToDate } from "../../helpers/dateFormat";
+import "style/TxHistory.less";
 
 // TODO: use a global component for these indicators
 const indicators = {

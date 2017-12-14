@@ -1,7 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import SlateGrayButton from "SlateGrayButton";
+import { KeyBlueButton, SlateGrayButton } from "buttons";
 import { TextInput } from "inputs";
-import KeyBlueButton from "KeyBlueButton";
 
 const messages = defineMessages({
   newNamePlaceholder: {

@@ -1,5 +1,5 @@
 import Row from "./Row";
-import Balance from "../Balance";
+import { Balance } from "shared";
 import { createElement as h } from "react";
 
 const RegularTxRow = ({ txAmount, txDescription, negativeAmount, ...props }) => (

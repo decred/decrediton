@@ -1,6 +1,5 @@
 import GeneralSettings from "views/SettingsPage/GeneralSettings";
-import KeyBlueButton from "KeyBlueButton";
-import SlateGrayButton from "SlateGrayButton";
+import { KeyBlueButton, SlateGrayButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import "style/StakePool.less";
 import "style/Settings.less";

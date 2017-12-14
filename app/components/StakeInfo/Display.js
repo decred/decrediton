@@ -1,7 +1,6 @@
-import React from "react";
-import "style/StakePool.less";
-import TransitionMotionWrapper from "TransitionMotionWrapper";
+import { TransitionMotionWrapper } from "shared";
 import StakeInfoRow from "./StakeInfoRow";
+import "style/StakePool.less";
 
 const wrapperComponent = props => <div className="account-wrapper" { ...props } />;
 

@@ -1,11 +1,9 @@
 // @flow
 import { rescan, home } from "connectors";
 import { DecredLoading } from "indicators";
-import PassphraseModalButton from "PassphraseModalButton";
-import Balance from "Balance";
-import TxHistory from "TxHistory";
+import { PassphraseModalButton } from "buttons";
+import { Balance, TabbedHeader, TxHistory }from "shared";
 import { FormattedMessage as T } from "react-intl";
-import { TabbedHeader } from "shared";
 import "style/Fonts.less";
 import "style/HomePage.less";
 
