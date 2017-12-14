@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import TransactionLink from "TransactionLink";
+import { TransactionLink } from "buttons";
 import VoteChoice from "./VoteChoice";
 
 const ExpandedInfo = ({ ticket }) => (

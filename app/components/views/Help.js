@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { TabbedHeader, Tooltip } from "shared";
-import { HelpLink, HelpLinkInfoModal from "buttons";
+import { HelpLink, HelpLinkInfoModal } from "buttons";
 import { ConstitutionModalContent } from "modals";
 import "style/Help.less";
 

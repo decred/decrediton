@@ -1,7 +1,6 @@
-import TxHistory from "TxHistory";
 import EyeFilterMenu from "EyeFilterMenu";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "shared";
+import { Tooltip, TxHistory } from "shared";
 import { LoadingMoreTransactionsIndicator, NoMoreTransactionsIndicator } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
 import "style/HistoryPage.less";

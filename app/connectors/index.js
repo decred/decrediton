@@ -22,6 +22,7 @@ export { default as stakePools } from "./stakePools";
 export { default as tabbedHeader } from "./tabbedHeader";
 export { default as ticketAutoBuyer } from "./ticketAutoBuyer";
 export { default as ticketsPage } from "./ticketsPage";
+export { default as ticketsOverview } from "./ticketsOverview";
 export { default as transactionDetails } from "./transactionDetails";
 export { default as transactionPage } from "./transactionPage";
 export { default as verifyMessagePage } from "./verifyMessagePage";
