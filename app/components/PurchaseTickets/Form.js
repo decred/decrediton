@@ -2,26 +2,12 @@ import InfoModalButton from "InfoModalButton";
 import PassphraseModalButton from "PassphraseModalButton";
 import { PurchaseTicketsInfoModalContent, ImportScriptModalContent } from "modals";
 import TicketsCogs from "TicketsCogs";
-import { FeeInput, PercentInput, BlocksInput, AddressInput, AccountsSelect, StakePoolSelect, NumTicketsInput } from "inputs";
-import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
+import { AccountsSelect, NumTicketsInput } from "inputs";
 import { Tooltip } from "shared";
-import { addSpacingAroundText } from "helpers/strings";
+import { FormattedMessage as T, injectIntl } from "react-intl";
+import PurchaseTicketsAdvanced from "./PurchaseTicketsAdvanced";
+import PurchaseTicketsQuickBar from "./PurchaseTicketsQuickBar";
 import "style/StakePool.less";
-
-const messages = defineMessages({
-  txFeePlaceholder: {
-    id: "purchaseTickets.txFeePlaceholder",
-    defaultMessage: "Tx Fee",
-  },
-  ticketFeePlaceholder: {
-    id: "purchaseTickets.ticketFeePlaceholder",
-    defaultMessage: "Ticket Fee",
-  },
-  expiryPlaceholder: {
-    id: "purchaseTickets.expiryPlaceholder",
-    defaultMessage: "Expiry",
-  },
-});
 
 const PurchaseTicketsForm = ({
   isShowingAdvanced,
@@ -93,147 +79,37 @@ const PurchaseTicketsForm = ({
             </div>
           </div>
         </div>
-        <div hidden={isShowingAdvanced ? false : true}>
-          <div className="stakepool-purchase-ticket-row">
-            <div className="stakepool-purchase-ticket-label">
-              <T id="purchaseTickets.stakePoolLabel" m="Stake Pool" />:
-          </div>
-            <div className="stakepool-purchase-ticket-input-select">
-              <StakePoolSelect
-                options={configuredStakePools}
-                value={stakePool}
-                onChange={onChangeStakePool}
-              />
-            </div>
-            <div className="stakepool-manage-pool-button-area">
-              <a className="manage-pools-button" onClick={onShowStakePoolConfig} />
-            </div>
-          </div>
-          <div className="stakepool-purchase-ticket-row">
-            <div className="stakepool-purchase-ticket-row-thirds-first">
-              <div className="stakepool-purchase-ticket-label">
-                <T id="purchaseTickets.ticketFee" m="Ticket Fee" />
-                :</div>
-              <div className="stakepool-purchase-ticket-thirds-input">
-                <div className="stakepool-input-form-purchase-ticket">
-                  <FeeInput
-                    placeholder={formatMessage(messages.ticketFeePlaceholder)}
-                    value={ticketFee}
-                    onChange={changeTicketFee}
-                    required
-                    invalid={ticketFeeError}
-                    invalidMessage={<T id="purchaseTickets.errors.invalidTicketFee" m="*Invalid ticket fee (0 - 0.1 DCR/KB)" />}
-                    showErrors
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="stakepool-purchase-ticket-row-thirds">
-              <div className="stakepool-purchase-ticket-label-second">
-                <T id="purchaseTickets.txFee" m="Tx Fee" />:</div>
-              <div className="stakepool-purchase-ticket-thirds-input">
-                <div className="stakepool-input-form-purchase-ticket">
-                  <FeeInput
-                    placeholder={formatMessage(messages.txFeePlaceholder)}
-                    value={txFee}
-                    onChange={changeTxFee}
-                    required
-                    invalid={txFeeError}
-                    invalidMessage={<T id="purchaseTickets.errors.invalidTxFee" m="*Invalid tx fee (0 - 0.1 DCR/KB)" />}
-                    showErrors
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="stakepool-purchase-ticket-row-thirds">
-              <div className="stakepool-purchase-ticket-label-second">
-                <T id="purchaseTickets.expiry" m="Expiry" />:</div>
-              <div className="stakepool-purchase-ticket-thirds-input">
-                <div className="stakepool-input-form-purchase-ticket">
-                  <BlocksInput
-                    placeholder={formatMessage(messages.expiryPlaceholder)}
-                    value={expiry}
-                    onChange={changeExpiry}
-                    required
-                    invalid={expiryError}
-                    showErrors
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="stakepool-purchase-ticket-row">
-            <div className="stakepool-purchase-ticket-label">
-              <T id="purchaseTickets.ticketAddress" m="Ticket Address" /> :</div>
-            <div className="stakepool-purchase-ticket-address-input">
-              <div className="stakepool-input-form-purchase-ticket">
-                <AddressInput
-                  disabled readOnly
-                  className="stakepool-content-nest-purchase-ticket-form-disabled"
-                  value={stakePool ? stakePool.value.TicketAddress : null}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="stakepool-purchase-ticket-row">
-            <div className="stakepool-purchase-ticket-label">
-              <T id="purchaseTickets.poolAddress" m="Pool Address" />
-              :</div>
-            <div className="stakepool-purchase-ticket-address-input">
-              <div className="stakepool-input-form-purchase-ticket">
-                <AddressInput
-                  disabled readOnly
-                  className="stakepool-content-nest-purchase-ticket-form-disabled"
-                  value={stakePool ? stakePool.value.PoolAddress : null}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="stakepool-purchase-ticket-row">
-            <div className="stakepool-purchase-ticket-label">
-              <T id="purchaseTickets.poolFees" m="Pool Fees" />:</div>
-            <div className="stakepool-purchase-ticket-num-input">
-              <div className="stakepool-input-form-purchase-ticket">
-                <PercentInput
-                  disabled readOnly
-                  className="stakepool-content-nest-purchase-ticket-form-disabled"
-                  value={stakePool ? stakePool.value.PoolFees : null}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div hidden={isShowingAdvanced} className="stakepool-purchase-ticket-quick-bar-row">
-          <div className="stakepool-quick-bar-row-label"><T id="purchaseTickets.settings" m="Settings" />:</div>
-          <Tooltip text={<T id="purchaseTickets.currentStakepool" m="Current StakePool" />}>
-            <div className="stakepool-icon">{stakePool && stakePool.value.Host}</div>
-          </Tooltip>
-          <Tooltip text={<T id="purchaseTickets.ticketFeeTip" m="Ticket Fee" />}>
-            <div className="stakepool-fee-icon">{ticketFee} DCR/KB</div>
-          </Tooltip>
-          <Tooltip text={<T id="purchaseTickets.txFeeTip" m="Tx Fee" />}>
-            <div className="stakepool-fee-icon">{txFee} DCR/KB</div>
-          </Tooltip>
-          <Tooltip text={<T id="purchaseTickets.expiry" m="Expiry" />}>
-            <div className="stakepool-expiry-icon">{expiry} Blocks</div>
-          </Tooltip>
-          <Tooltip text={<T id="purchaseTickets.ticketAddress" m="Ticket Address" />}>
-            <div className="stakepool-ticket-address-icon">{stakePool && addSpacingAroundText(stakePool.value.TicketAddress)}</div>
-          </Tooltip>
-          <Tooltip text={<T id="purchaseTickets.poolAddress" m="Pool Address" />}>
-            <div className="stakepool-fee-address-icon">{stakePool && addSpacingAroundText(stakePool.value.PoolAddress)}</div>
-          </Tooltip>
-          <Tooltip text={<T id="purchaseTickets.poolFee" m="Pool Fee" />}>
-            <div className="stakepool-pool-fee-icon">{stakePool && stakePool.value.PoolFees}%</div>
-          </Tooltip>
-        </div>
+        {
+          isShowingAdvanced ? <PurchaseTicketsAdvanced {...{
+            configuredStakePools,
+            stakePool,
+            ticketFee,
+            txFee,
+            expiry,
+            ticketFeeError,
+            txFeeError,
+            expiryError,
+            onShowStakePoolConfig,
+            onChangeStakePool,
+            changeTicketFee,
+            changeTxFee,
+            changeExpiry,
+            formatMessage,
+          }}
+          /> : <PurchaseTicketsQuickBar {...{
+            stakePool,
+            ticketFee,
+            txFee,
+            expiry,
+          }}/>
+        }
       </div>
       <div className="stakepool-purchase-ticket-buttons-area">
         <PassphraseModalButton
-            modalTitle={<T id="tickets.purchaseConfirmation" m="Ticket Purchase Confirmation" />}
-            className="stakepool-content-purchase-button"
-            disabled={!canAffordTickets}
-            onSubmit={onPurchaseTickets}
+          modalTitle={<T id="tickets.purchaseConfirmation" m="Ticket Purchase Confirmation" />}
+          className="stakepool-content-purchase-button"
+          disabled={!canAffordTickets}
+          onSubmit={onPurchaseTickets}
         >
           <T id="purchaseTickets.purchaseBtn" m="Purchase" />
         </PassphraseModalButton>
@@ -244,20 +120,20 @@ const PurchaseTicketsForm = ({
         <Tooltip className="stakepool-content-import-script-button" warning disabled={!rescanRequest}
           text={<T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan." />}>
           <PassphraseModalButton
-              modalTitle={<T id="tickets.importScriptConfirmation" m="Import Script Confirmation" />}
-              modalContent={ImportScriptModalContent}
-              className="stakepool-content-purchase-button"
-              disabled={rescanRequest}
-              onSubmit={onImportScript}
+            modalTitle={<T id="tickets.importScriptConfirmation" m="Import Script Confirmation" />}
+            modalContent={ImportScriptModalContent}
+            className="stakepool-content-purchase-button"
+            disabled={rescanRequest}
+            onSubmit={onImportScript}
           >
             <T id="purchaseTickets.importScriptBtn" m="Import Script" />
           </PassphraseModalButton>
         </Tooltip>
         {hasTicketsToRevoke &&
           <PassphraseModalButton
-              modalTitle={<T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />}
-              className="stakepool-content-revoke-button"
-              onSubmit={onRevokeTickets}
+            modalTitle={<T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />}
+            className="stakepool-content-revoke-button"
+            onSubmit={onRevokeTickets}
           >
             <T id="purchaseTickets.revokeBtn" m="Revoke" />
           </PassphraseModalButton>
