@@ -7,20 +7,14 @@ const wrapperComponent = props => <div className="account-wrapper" { ...props } 
 
 const StakeInfoDisplay = ({
   getNullStyles,
-  getDefaultStyles,
   getStakeInfoDetailsComponent,
   isShowingDetails,
-  willLeave,
-  willEnter,
   ownMempoolTicketsCount,
   immatureTicketsCount,
   liveTicketsCount,
   onShowStakeInfo,
   onHideStakeInfo
-}) => {
-  const height = !isShowingDetails ? 48 : 180;
-
-  return (
+}) => (
     <Aux>
       <StakeInfoRow
         {...{
@@ -35,16 +29,10 @@ const StakeInfoDisplay = ({
       <TransitionMotionWrapper
         {
         ...{
-          defaultStyles: getDefaultStyles(height),
           styles: !isShowingDetails ? getNullStyles() : getStakeInfoDetailsComponent(),
           wrapperComponent,
-          willLeave,
-          willEnter
         }}
       />
-    </Aux>
-
-  );
-};
+    </Aux>);
 
 export default StakeInfoDisplay;

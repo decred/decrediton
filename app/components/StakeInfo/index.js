@@ -15,10 +15,6 @@ class StakeInfo extends React.Component {
     };
   }
 
-  getDefaultStyles(height) {
-    return [{ key: "output_0",style: {height: height, opacity: 0}}];
-  }
-
   getStakeInfoDetailsComponent () {
     const {
       ticketPoolSize,
@@ -71,12 +67,6 @@ class StakeInfo extends React.Component {
     }];
   }
 
-  willLeave() {
-    return {
-      opacity: spring(0, {stiffness: 60, damping: 14}),
-    };
-  }
-
   render() {
     const {
       ownMempoolTicketsCount,
@@ -96,9 +86,6 @@ class StakeInfo extends React.Component {
             onShowStakeInfo: null,
             getStakeInfoDetailsComponent: null,
             getNullStyles: null,
-            getDefaultStyles: null,
-            willLeave: null,
-            willEnter: null,
           }, this)
         }}
       />

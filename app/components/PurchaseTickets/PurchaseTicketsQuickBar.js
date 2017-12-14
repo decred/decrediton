@@ -7,8 +7,7 @@ const PurchaseTicketsAdvanced = ({
   ticketFee,
   txFee,
   expiry,
-}) => {
-  return (
+}) => (
     <Aux>
       <div className="stakepool-purchase-ticket-quick-bar-row">
         <div className="stakepool-quick-bar-row-label"><T id="purchaseTickets.settings" m="Settings" />:</div>
@@ -35,6 +34,5 @@ const PurchaseTicketsAdvanced = ({
         </Tooltip>
       </div>
     </Aux>);
-};
 
 export default PurchaseTicketsAdvanced;

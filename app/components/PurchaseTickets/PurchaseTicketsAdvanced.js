@@ -31,8 +31,7 @@ const PurchaseTicketsAdvanced = ({
   changeTxFee,
   changeExpiry,
   formatMessage,
-}) => {
-  return (
+}) => (
     <Aux>
       <div className="stakepool-purchase-ticket-row">
         <div className="stakepool-purchase-ticket-label">
@@ -143,6 +142,5 @@ const PurchaseTicketsAdvanced = ({
         </div>
       </div>
     </Aux>);
-};
 
 export default PurchaseTicketsAdvanced;
