@@ -27,9 +27,9 @@ const PurchaseTicketsAdvanced = ({
   expiryError,
   onShowStakePoolConfig,
   onChangeStakePool,
-  changeTicketFee,
-  changeTxFee,
-  changeExpiry,
+  onChangeTicketFee,
+  onChangeTxFee,
+  onChangeExpiry,
   formatMessage,
 }) => (
     <Aux>
@@ -58,7 +58,7 @@ const PurchaseTicketsAdvanced = ({
               <FeeInput
                 placeholder={formatMessage(messages.ticketFeePlaceholder)}
                 value={ticketFee}
-                onChange={changeTicketFee}
+                onChange={onChangeTicketFee}
                 required
                 invalid={ticketFeeError}
                 invalidMessage={<T id="purchaseTickets.errors.invalidTicketFee" m="*Invalid ticket fee (0 - 0.1 DCR/KB)" />}
@@ -75,7 +75,7 @@ const PurchaseTicketsAdvanced = ({
               <FeeInput
                 placeholder={formatMessage(messages.txFeePlaceholder)}
                 value={txFee}
-                onChange={changeTxFee}
+                onChange={onChangeTxFee}
                 required
                 invalid={txFeeError}
                 invalidMessage={<T id="purchaseTickets.errors.invalidTxFee" m="*Invalid tx fee (0 - 0.1 DCR/KB)" />}
@@ -92,7 +92,7 @@ const PurchaseTicketsAdvanced = ({
               <BlocksInput
                 placeholder={formatMessage(messages.expiryPlaceholder)}
                 value={expiry}
-                onChange={changeExpiry}
+                onChange={onChangeExpiry}
                 required
                 invalid={expiryError}
                 showErrors

@@ -4,45 +4,30 @@ import { PurchaseTicketsInfoModalContent, ImportScriptModalContent } from "modal
 import TicketsCogs from "TicketsCogs";
 import { AccountsSelect, NumTicketsInput } from "inputs";
 import { Tooltip } from "shared";
-import { FormattedMessage as T, injectIntl } from "react-intl";
-import PurchaseTicketsAdvanced from "./PurchaseTicketsAdvanced";
-import PurchaseTicketsQuickBar from "./PurchaseTicketsQuickBar";
+import { FormattedMessage as T } from "react-intl";
+import TransitionMotionWrapper from "TransitionMotionWrapper";
+
 import "style/StakePool.less";
 
 const PurchaseTicketsForm = ({
   isShowingAdvanced,
-  configuredStakePools,
-  stakePool,
+  getQuickBarComponent,
+  getAdvancedComponent,
   hasTicketsToRevoke,
   numTicketsToBuy,
   canAffordTickets,
-  ticketFee,
-  txFee,
-  expiry,
-  ticketFeeError,
-  txFeeError,
-  expiryError,
   rescanRequest,
   onIncrementNumTickets,
   onDecrementNumTickets,
-  onShowStakePoolConfig,
   onChangeAccount,
-  onChangeStakePool,
-  onChangeTicketFee,
-  onChangeTxFee,
-  onChangeExpiry,
   onPurchaseTickets,
   onImportScript,
   onRevokeTickets,
   onToggleShowAdvanced,
-  intl: { formatMessage },
   account
 }) => {
 
-  const v = e => e.target.value;
-  const changeTicketFee = e => onChangeTicketFee(v(e));
-  const changeTxFee = e => onChangeTxFee(v(e));
-  const changeExpiry = e => onChangeExpiry(v(e));
+  const wrapperComponent = props => <div className="account-wrapper" { ...props } />;
 
   return (
     <Aux>
@@ -79,30 +64,11 @@ const PurchaseTicketsForm = ({
             </div>
           </div>
         </div>
-        {
-          isShowingAdvanced ? <PurchaseTicketsAdvanced {...{
-            configuredStakePools,
-            stakePool,
-            ticketFee,
-            txFee,
-            expiry,
-            ticketFeeError,
-            txFeeError,
-            expiryError,
-            onShowStakePoolConfig,
-            onChangeStakePool,
-            changeTicketFee,
-            changeTxFee,
-            changeExpiry,
-            formatMessage,
-          }}
-          /> : <PurchaseTicketsQuickBar {...{
-            stakePool,
-            ticketFee,
-            txFee,
-            expiry,
-          }}/>
-        }
+        <TransitionMotionWrapper {...{
+          styles: !isShowingAdvanced ? getQuickBarComponent() : getAdvancedComponent(),
+          wrapperComponent,
+        }}
+        />
       </div>
       <div className="stakepool-purchase-ticket-buttons-area">
         <PassphraseModalButton
@@ -142,4 +108,4 @@ const PurchaseTicketsForm = ({
     </Aux>);
 };
 
-export default injectIntl(PurchaseTicketsForm);
+export default PurchaseTicketsForm;
