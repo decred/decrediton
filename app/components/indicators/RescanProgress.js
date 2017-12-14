@@ -1,5 +1,5 @@
 import LinearProgress from "material-ui/LinearProgress";
-import rescan from "connectors/rescan";
+import { rescan } from "connectors";
 import { FormattedMessage as T } from "react-intl";
 import { RescanButton, RescanCancelButton } from "buttons";
 import "style/MiscComponents.less";

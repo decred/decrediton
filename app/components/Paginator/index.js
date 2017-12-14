@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { substruct } from "fp";
 import SmallPaginator from "./SmallPaginator";
 import MediumPaginator from "./MediumPaginator";

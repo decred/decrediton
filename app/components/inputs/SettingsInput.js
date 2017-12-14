@@ -1,5 +1,4 @@
 import Select from "react-select";
-import { PropTypes } from "prop-types";
 import { injectIntl, intlShape } from "react-intl";
 import "style/Input.less";
 

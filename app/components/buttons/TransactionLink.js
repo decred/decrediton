@@ -1,4 +1,4 @@
-import transactionLink from "connectors/transactionLink";
+import { transactionLink } from "connectors";
 import { shell } from "electron";
 import "style/MiscComponents.less";
 

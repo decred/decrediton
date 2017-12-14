@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import FlatButton from "material-ui/FlatButton";
 
 const propTypes = {

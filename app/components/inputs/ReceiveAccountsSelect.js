@@ -1,5 +1,5 @@
 import AccountsSelect from "./AccountsSelect";
-import receiveAccountsSelect from "connectors/receiveAccountsSelect";
+import { receiveAccountsSelect } from "connectors";
 
 @autobind
 class ReceiveAccountsSelect extends React.Component {

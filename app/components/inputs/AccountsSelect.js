@@ -1,6 +1,5 @@
 import Select from "react-select";
-import { PropTypes } from "prop-types";
-import accountsSelect from "connectors/accountsSelect";
+import { accountsSelect } from "connectors";
 import { injectIntl, defineMessages, intlShape } from "react-intl";
 import { Balance, LinkToAccounts } from "shared";
 
