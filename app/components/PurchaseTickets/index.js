@@ -45,21 +45,21 @@ class PurchaseTickets extends React.Component {
   }
 
   getAdvancedComponent () {
+    const v = e => e.target.value;
+    const changeTicketFee = e => this.onChangeTicketFee(v(e));
+    const changeTxFee = e => this.onChangeTxFee(v(e));
+    const changeExpiry = e => this.onChangeExpiry(v(e));
     const { configuredStakePools,
       onShowStakePoolConfig,
       onChangeStakePool,
       intl: { formatMessage }
     } = this.props;
-    const { getStakePool,
-      onChangeTicketFee,
-      onChangeTxFee,
-      onChangeExpiry, } = this;
     const { ticketFee, txFee, expiry,
       ticketFeeError, txFeeError, expiryError } = this.state;
     return [{
       data: <PurchaseTicketsAdvanced {...{
         configuredStakePools,
-        stakePool: getStakePool(),
+        stakePool: this.getStakePool(),
         ticketFee,
         txFee,
         expiry,
@@ -68,9 +68,9 @@ class PurchaseTickets extends React.Component {
         expiryError,
         onShowStakePoolConfig,
         onChangeStakePool,
-        onChangeTicketFee,
-        onChangeTxFee,
-        onChangeExpiry,
+        onChangeTicketFee: changeTicketFee,
+        onChangeTxFee: changeTxFee,
+        onChangeExpiry: changeExpiry,
         formatMessage,
       }}
       />,

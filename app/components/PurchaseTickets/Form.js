@@ -65,7 +65,7 @@ const PurchaseTicketsForm = ({
           </div>
         </div>
         <TransitionMotionWrapper {...{
-          styles: !isShowingAdvanced ? getQuickBarComponent() : getAdvancedComponent(),
+          styles: !isShowingAdvanced ? getQuickBarComponent : getAdvancedComponent,
           wrapperComponent,
         }}
         />
