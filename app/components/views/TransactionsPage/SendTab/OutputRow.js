@@ -1,4 +1,4 @@
-import compose from "fp";
+import { compose } from "fp";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { AddressInput, DcrInput } from "inputs";
 import "style/SendPage.less";

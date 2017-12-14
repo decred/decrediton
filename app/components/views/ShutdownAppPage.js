@@ -1,6 +1,6 @@
 import Header from "Header";
 import { FormattedMessage as T } from "react-intl";
-import shutdownPage from "connectors";
+import { shutdownPage } from "connectors";
 import { DecredLoading } from "indicators";
 import "style/Layout.less";
 

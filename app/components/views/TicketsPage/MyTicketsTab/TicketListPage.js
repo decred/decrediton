@@ -1,4 +1,4 @@
-import ticketsList from "connectors";
+import { ticketsList } from "connectors";
 import TicketsCardList from "./TicketsCardList";
 import TicketInfoCard from "./TicketInfoCard";
 import { FormattedMessage as T } from "react-intl";
