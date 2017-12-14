@@ -1,6 +1,3 @@
-// @flow
-import React from "react";
-import { autobind } from "core-decorators";
 import { SimpleLoading } from "indicators";
 import "style/MiscComponents.less";
 

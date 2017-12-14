@@ -2,7 +2,7 @@ import { injectIntl, intlShape } from "react-intl";
 import { getPage, getTabs, getTab } from "helpers";
 import { tabbedHeader } from "connectors";
 import MessageBanner from "./MessageBanner";
-import Balance from "Balance";
+import { Balance } from "shared";
 import Description from "./Description";
 import messages from "messages";
 import Tabs from "./Tabs";

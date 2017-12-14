@@ -1,12 +1,9 @@
-// @flow
-import React from "react";
 import PropTypes from "prop-types";
-import { autobind } from "core-decorators";
-import { substruct } from "../../fp";
+import { substruct } from "fp";
 import SmallPaginator from "./SmallPaginator";
 import MediumPaginator from "./MediumPaginator";
 import LargePaginator from "./LargePaginator";
-import "../../style/Paginator.less";
+import "style/Paginator.less";
 
 const propTypes = {
   totalPages: PropTypes.number.isRequired,

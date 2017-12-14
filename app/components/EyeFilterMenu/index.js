@@ -1,11 +1,8 @@
-// @flow
-import React from "react";
-import { autobind } from "core-decorators";
 import IconMenu from "material-ui/IconMenu";
 import MenuItem from "material-ui/MenuItem";
 import IconButton from "material-ui/IconButton";
-import "../../style/EyeFilterMenu.less";
-import "../../style/MiscComponents.less";
+import "style/EyeFilterMenu.less";
+import "style/MiscComponents.less";
 
 @autobind
 class EyeFilterMenu extends React.Component {

@@ -1,8 +1,6 @@
-import React from "react";
-import { autobind } from "core-decorators";
-import { substruct, compose, eq, get } from "../../fp";
+import { substruct, compose, eq, get } from "fp";
 import PurchaseTicketsForm from "./Form";
-import purchaseTickets from "../../connectors/purchaseTickets";
+import purchaseTickets from "connectors/purchaseTickets";
 
 const MAX_POSSIBLE_FEE_INPUT = 0.1;
 

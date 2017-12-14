@@ -1,7 +1,5 @@
-import InfoModalButton from "InfoModalButton";
-import PassphraseModalButton from "PassphraseModalButton";
 import { PurchaseTicketsInfoModalContent, ImportScriptModalContent } from "modals";
-import TicketsCogs from "TicketsCogs";
+import { TicketsCogs, InfoModalButton, PassphraseModalButton } from "buttons";
 import { FeeInput, PercentInput, BlocksInput, AddressInput, AccountsSelect, StakePoolSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
 import { Tooltip } from "shared";

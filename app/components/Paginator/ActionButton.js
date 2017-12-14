@@ -1,7 +1,4 @@
-// @flow
-import React from "react";
 import PropTypes from "prop-types";
-import { autobind } from "core-decorators";
 import FlatButton from "material-ui/FlatButton";
 
 const propTypes = {

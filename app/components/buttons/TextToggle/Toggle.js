@@ -1,6 +1,4 @@
-// @flow
-import React from "react";
-import "../../style/TextToggle.less";
+import "style/TextToggle.less";
 
 const Toggle = ({
   leftText,

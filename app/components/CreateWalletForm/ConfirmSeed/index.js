@@ -1,5 +1,3 @@
-import React from "react";
-import { autobind } from "core-decorators";
 import ConfirmSeedForm from "./Form";
 import { SEED_LENGTH } from "../../../wallet/seed";
 

@@ -1,5 +1,3 @@
-import React from "react";
-import { autobind } from "core-decorators";
 import Select from "react-select";
 import { SEED_LENGTH, SEED_WORDS } from "../../../wallet/seed";
 import { defineMessages, injectIntl } from "react-intl";

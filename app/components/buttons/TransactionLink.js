@@ -1,4 +1,3 @@
-import React from "react";
 import transactionLink from "connectors/transactionLink";
 import { shell } from "electron";
 import "style/MiscComponents.less";

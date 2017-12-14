@@ -1,8 +1,6 @@
-// @flow
-import React from "react";
-import KeyBlueButton from "../KeyBlueButton";
+import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import "../../style/CreateWalletForm.less";
+import "style/CreateWalletForm.less";
 
 const CreateWallet = ({
   mnemonic,

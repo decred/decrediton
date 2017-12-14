@@ -1,8 +1,7 @@
-import React from "react";
 import SeedEntry from "./SeedEntry";
 import { FormattedMessage as T } from "react-intl";
 import "style/CreateWalletForm.less";
-import InfoModalButton from "InfoModalButton";
+import { InfoModalButton } from "buttons";
 import { SeedInfoModalContent } from "modals";
 
 class ConfirmSeedForm extends React.Component{

@@ -1,4 +1,4 @@
-import KeyBlueButton from "KeyBlueButton";
+import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { PasswordInput } from "inputs";
 import "style/ChangePassphraseModal.less";

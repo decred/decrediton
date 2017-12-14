@@ -1,10 +1,8 @@
-// @flow
-import React from "react";
-import KeyBlueButton from "../KeyBlueButton";
 import ConfirmSeed from "./ConfirmSeed";
 import CreatePassPhrase from "./CreatePassPhrase";
 import { FormattedMessage as T } from "react-intl";
-import "../../style/CreateWalletForm.less";
+import { KeyBlueButton } from "buttons";
+import "style/CreateWalletForm.less";
 
 const ContinueWalletCreation = ({
   isValid,

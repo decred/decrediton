@@ -1,5 +1,5 @@
 import { PassphraseModal } from "modals";
-import KeyBlueButton from "KeyBlueButton";
+import KeyBlueButton from "./KeyBlueButton";
 import "style/MiscComponents.less";
 
 @autobind

@@ -1,8 +1,8 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
-import "style/CreateWalletForm.less";
-import InfoModalButton from "InfoModalButton";
+import { InfoModalButton } from "buttons";
 import { PassphraseInfoModalContent } from "modals";
+import "style/CreateWalletForm.less";
 
 const messages = defineMessages({
   passphrasePlaceholder: {

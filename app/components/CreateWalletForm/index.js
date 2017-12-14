@@ -1,5 +1,3 @@
-import React from "react";
-import { autobind } from "core-decorators";
 import ContinueWalletCreation from "./ContinueWalletCreation";
 import CreateWallet from "./CreateWallet";
 import createWalletConnector from "../../connectors/createWallet";

@@ -1,5 +1,5 @@
 import { PassphraseModal } from "modals";
-import AutoBuyerSwitch from "AutoBuyerSwitch";
+import AutoBuyerSwitch from "./AutoBuyerSwitch";
 import "style/MiscComponents.less";
 
 @autobind

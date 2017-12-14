@@ -1,5 +1,3 @@
-import React from "react";
-
 const SlateGrayButton = ({ className, style, block, type, disabled, onClick, children }) => (
   <div
     className={"slate-gray-button" + (className ? (" " + className) : "")}

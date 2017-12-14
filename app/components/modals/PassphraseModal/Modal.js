@@ -1,5 +1,5 @@
 import Modal from "../Modal";
-import SlateGrayButton from "SlateGrayButton";
+import { SlateGrayButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import PropTypes from "prop-types";
 import PassphraseModalContent from "../PassphraseModalContent";

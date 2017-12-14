@@ -1,6 +1,6 @@
-import KeyBlueButton from "KeyBlueButton";
 import { FormattedMessage as T } from "react-intl";
 import { TextInput, PasswordInput } from "inputs";
+import { KeyBlueButton } from "buttons";
 import "style/Modals.less";
 
 const Modal = ({

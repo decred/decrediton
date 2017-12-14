@@ -1,4 +1,4 @@
-import TxHistoryRow from "./TxHistoryRow";
+import TxHistoryRow from "TxHistoryRow";
 
 const TxHistory = ({ transactions=[] }) => (
   <div>

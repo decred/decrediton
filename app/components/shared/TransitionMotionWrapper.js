@@ -1,4 +1,4 @@
-import { React, createElement as h } from "react";
+import { cloneElement as k, createElement as h } from "react";
 import { TransitionMotion } from "react-motion";
 
 const TransitionMotionWrapper = ({
@@ -13,7 +13,7 @@ const TransitionMotionWrapper = ({
     const childProps = { ...{ key }, style: props.mapStyles(style) };
     return props.wrapperComponent ?
       h(props.wrapperComponent, childProps, data) :
-      React.cloneElement(data, childProps);
+      k(data, childProps);
   };
   const children = children => h("div", { className: props.className }, children.map(child));
   return h(TransitionMotion, tmProps, children);
