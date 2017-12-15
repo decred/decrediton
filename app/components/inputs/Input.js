@@ -2,6 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import "style/Input.less";
 
 const Input = ({
+  autoFocus,
   showErrors,
   invalidMessage,
   requiredMessage,
@@ -39,6 +40,7 @@ const Input = ({
     <Aux>
       <div className={divClassName} ref={div => { inputUnitDiv = div; }}>
         <input
+          autoFocus={autoFocus}
           type={type||"text"}
           className="input"
           disabled={disabled ? disabled : null}
