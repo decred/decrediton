@@ -1,5 +1,5 @@
 import ConfirmSeedForm from "./Form";
-import { SEED_LENGTH } from "../../../wallet/seed";
+import { SEED_LENGTH } from "wallet/seed";
 
 @autobind
 class ConfirmSeed extends React.Component {

@@ -1,5 +1,6 @@
 export { default as AutoBuyerSwitch } from "./AutoBuyerSwitch";
 export { default as ChangePassphraseButton } from "./ChangePassphraseButton";
+export { default as EyeFilterMenu } from "./EyeFilterMenu";
 export { default as HelpLink } from "./HelpLink";
 export { default as HelpLinkInfoModal } from "./HelpLinkInfoModal";
 export { default as InfoModalButton } from "./InfoModalButton";

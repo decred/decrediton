@@ -1,4 +1,4 @@
-import EyeFilterMenu from "EyeFilterMenu";
+import { EyeFilterMenu } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
 import TxHistory from "TxHistory";

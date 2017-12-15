@@ -1,5 +1,5 @@
 import Header from "../DefaultHeader";
-import CreateWalletForm from "CreateWalletForm";
+import CreateWalletForm from "./CreateWalletForm";
 import { SlateGrayButton, TextToggle } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import "style/GetStarted.less";

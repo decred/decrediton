@@ -1,5 +1,5 @@
 import Select from "react-select";
-import { SEED_LENGTH, SEED_WORDS } from "../../../wallet/seed";
+import { SEED_LENGTH, SEED_WORDS } from "wallet/seed";
 import { defineMessages, injectIntl } from "react-intl";
 
 const SEED_WORD_OPTIONS = SEED_WORDS.map(name => ({ name }));

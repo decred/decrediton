@@ -1,6 +1,6 @@
 import ContinueWalletCreation from "./ContinueWalletCreation";
 import CreateWallet from "./CreateWallet";
-import createWalletConnector from "../../connectors/createWallet";
+import { createWallet } from "connectors";
 
 @autobind
 class CreateWalletForm extends React.Component {
@@ -108,4 +108,4 @@ class CreateWalletForm extends React.Component {
   }
 }
 
-export default createWalletConnector(CreateWalletForm);
+export default createWallet(CreateWalletForm);
