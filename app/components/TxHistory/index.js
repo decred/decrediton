@@ -1,11 +1,11 @@
-import TxHistoryRow from "TxHistoryRow";
+import TxHistoryRow from "./TxHistoryRow";
 
 const TxHistory = ({ transactions=[] }) => (
-  <div>
+  <Aux>
     {transactions.map(tx => (
       <TxHistoryRow {...{ key: tx.txHash, tx }} />
     ))}
-  </div>
+  </Aux>
 );
 
 export default TxHistory;

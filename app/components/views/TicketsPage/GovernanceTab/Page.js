@@ -1,5 +1,5 @@
-import AgendaCard from "AgendaCard";
-import AgendaOverview from "AgendaOverview";
+import AgendaCard from "./AgendaCard";
+import AgendaOverview from "./AgendaOverview";
 import { StakePoolSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import "style/StakePool.less";

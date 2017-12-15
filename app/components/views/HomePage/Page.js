@@ -2,7 +2,8 @@
 import { rescan, home } from "connectors";
 import { DecredLoading } from "indicators";
 import { PassphraseModalButton } from "buttons";
-import { Balance, TabbedHeader, TxHistory }from "shared";
+import { Balance, TabbedHeader } from "shared";
+import TxHistory from "TxHistory";
 import { FormattedMessage as T } from "react-intl";
 import "style/Fonts.less";
 import "style/HomePage.less";
