@@ -68,9 +68,11 @@ const AccountsList = ({
           <div className="account-row-details-bottom-spec">
             <div className="account-row-details-bottom-spec-name"><T id="accounts.keys" m="Keys" /></div>
             <div className="account-row-details-bottom-spec-value">
-              <T id="accounts.keys.external" m="{keys} external" values={{ keys: account.externalKeys }} />
-              <T id="accounts.keys.internal" m="{keys} internal" values={{ keys: account.internalKeys }} />
-              <T id="accounts.keys.imported" m="{keys} imported" values={{ keys: account.importedKeys }} />
+              <T id="accounts.keys.counts" m="{external} external, {internal} internal, {imported} imported"
+                values={{
+                  external: account.externalKeys,
+                  internal: account.internalKeys,
+                  imported: account.importedKeys }} />
             </div>
           </div>
         </div>
