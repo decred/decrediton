@@ -129,7 +129,7 @@ const TicketAutoBuyerForm = ({
             </div></div>
               <div className="stakepool-purchase-ticket-num-input">
                 <div className="stakepool-input-form-purchase-ticket">
-                  {/* <FeeInput
+                  <FeeInput
                     placeholder={formatMessage(messages.maxFee)}
                     value={maxFee}
                     onChange={e => onChangeMaxFee(e.target.value)}
@@ -137,7 +137,7 @@ const TicketAutoBuyerForm = ({
                     invalidMessage={<T id="autobuyer.invalidMaxFee" m="*Invalid max fee (0 - 0.1 DCR/KB)" />}
                     showErrors
                     required
-                  /> */}
+                  />
                 </div>
               </div>
             </div>
