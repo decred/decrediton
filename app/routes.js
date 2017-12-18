@@ -10,6 +10,7 @@ import TransactionPage from "./components/views/TransactionPage";
 import SettingsPage from "./components/views/SettingsPage";
 import SignTab from "./components/views/SecurityPage/SignMessage";
 import VerifyTab from "./components/views/SecurityPage/VerifyMessage";
+import ValidateTab from "./components/views/SecurityPage/ValidateAddress";
 import PurchaseTab from "./components/views/TicketsPage/PurchaseTab";
 import MyTicketsTab from "./components/views/TicketsPage/MyTicketsTab";
 import MyTicketsOverview from "./components/views/TicketsPage/MyTicketsTab/TicketsOverview";
@@ -51,6 +52,7 @@ export default (
       <IndexRedirect to="sign"/>
       <Route path="sign"                        component={SignTab}/>
       <Route path="verify"                      component={VerifyTab}/>
+      <Route path="validate"                    component={ValidateTab}/>
     </Route>
     <Route   path="settings"                    component={SettingsPage}      desc/>
     <Route   path="help"                        component={TabbedPage}        tabDesc>
