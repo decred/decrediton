@@ -11,6 +11,14 @@ import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
 
 @autobind
 class History extends React.Component {
+
+  constructor(props) {
+    super(props);
+    const selectedTxTypeKey = this.selectedTxTypeFromFilter(this.props.transactionsFilter);
+    const selectedSortOrderKey = this.props.transactionsFilter.listDirection;
+    this.state = {selectedTxTypeKey, selectedSortOrderKey};
+  }
+
   render() {
     return  !this.props.walletService ? <ErrorScreen /> : (
       <HistoryPage
@@ -69,10 +77,22 @@ class History extends React.Component {
 
   onChangeSelectedType(type) {
     this.onChangeFilter(type.value);
+    this.setState({selectedTxTypeKey: type.key});
   }
 
   onChangeSortType(type) {
     this.onChangeFilter({listDirection: type.value});
+    this.setState({selectedSortOrderKey: type.value});
+  }
+
+  selectedTxTypeFromFilter(filter) {
+    if (filter.types.length === 0) return "all";
+    const types = this.getTxTypes();
+    types.shift(); //drop "all" which doesn't have value.types
+    return types.reduce((a, v) =>
+      (v.value.types[0] === filter.types[0] && v.value.direction === filter.direction)
+        ? v.key : a, null);
+
   }
 }
 
