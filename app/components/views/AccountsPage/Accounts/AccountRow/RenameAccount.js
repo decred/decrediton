@@ -30,6 +30,7 @@ const RenameAccount = ({
         <div className="account-row-details-bottom-spec-value">
           <div className="account-input-form">
             <TextInput
+              autoFocus={true}
               key={"rename" + account.accountNumber}
               type="text"
               className="address-content-nest-address-hash-to"

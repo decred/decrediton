@@ -59,13 +59,13 @@ const PurchaseTicketsAdvanced = ({
             :</div>
           <div className="stakepool-purchase-ticket-thirds-input">
             <div className="stakepool-input-form-purchase-ticket">
-            <Field
+            {/* <Field
               name="ticketFee"
               component="input"
               type="text"
               placeholder={formatMessage(messages.ticketFeePlaceholder)}
               value={ticketFee}
-            />
+            /> */}
               {/* <FeeInput {...{...props}}
                 name={"ticketFee"}
                 placeholder={formatMessage(messages.ticketFeePlaceholder)}
@@ -157,4 +157,4 @@ const PurchaseTicketsAdvanced = ({
       </form>
     </Aux>);
 
-export default reduxForm({form: "purchaseTicketAdvanced" })(PurchaseTicketsAdvanced);
+export default PurchaseTicketsAdvanced;

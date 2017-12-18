@@ -16,6 +16,7 @@ const Modal =({
           <T id="passphraseModal.privatePassphrase" m="Private Passphrase" />
           :</div>
         <PasswordInput
+          autoFocus
           id="passphrase"
           className="passphrase-modal-field"
           placeholder=""
