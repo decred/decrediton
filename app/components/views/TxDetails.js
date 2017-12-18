@@ -66,7 +66,7 @@ const TxDetails = ({ routes, router,
                    }) => {
   const isConfirmed = !!txTimestamp;
   const icon = headerIcons[txType || txDirection];
-  const subtitle = isConfirmed && <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsToDate(txTimestamp) }}/>;
+  const subtitle = isConfirmed ? <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsToDate(txTimestamp) }}/> : <T id="txDetails.unConfirmed" m="Unconfirmed"/>;
   const goBack = () => router.goBack();
   const openTxUrl = () => shell.openExternal(txUrl);
   const openBlockUrl = () => shell.openExternal(txBlockUrl);
