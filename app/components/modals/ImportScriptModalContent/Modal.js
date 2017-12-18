@@ -17,7 +17,7 @@ const Modal = ({
         <T id="importScriptModal.redeemScript" m="Redeem Script" />
         :</div>
       <TextInput
-        autoFocus={true}
+        autoFocus
         id="script"
         className="import-script-modal-field"
         type="text"

@@ -21,7 +21,7 @@ const Modal = ({
       <T id="changePassModal.oldPassphrase" m="Old Private Passphrase" />:
     </div>
     <PasswordInput
-      autoFocus={true}
+      autoFocus
       id="oldPassphrase"
       className="change-passphrase-modal-field"
       placeholder=""

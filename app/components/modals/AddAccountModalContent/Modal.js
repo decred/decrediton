@@ -17,7 +17,7 @@ const Modal = ({
         <T id="addAccountModal.newAccountName" m="New Account Name" />
         :</div>
       <TextInput
-        autoFocus={true}
+        autoFocus
         id="name"
         className="import-script-modal-field"
         type="text"
