@@ -34,6 +34,7 @@ const SendOutputRow = ({
       <div className="send-address">
         <div className="send-input-form">
           <AddressInput
+            autoFocus={index == 0}
             showErrors={true}
             invalid={!!addressError}
             invalidMessage={addressError}

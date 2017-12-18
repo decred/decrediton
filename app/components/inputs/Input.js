@@ -1,74 +1,91 @@
 import { FormattedMessage as T } from "react-intl";
 import "style/Input.less";
 
-const Input = ({
-  showErrors,
-  invalidMessage,
-  requiredMessage,
-  required,
-  invalid,
-  value,
-  placeholder,
-  onChange,
-  disabled,
-  readOnly,
-  className,
-  unit,
-  hidden,
-  type,
-  onFocus,
-  onBlur
-}) => {
-  let inputUnitDiv = null;
-  const onInputFocus = (e) => {
-    inputUnitDiv.classList.add("active");
+class Input extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = this.getInitialState();
+  }
+
+  getInitialState() {
+    return {
+      inputUnitDiv: null,
+      divClassName: "input-and-unit " + (this.props.className || "") + (this.props.disabled ? " disabled " : "")
+    };
+  }
+  componentDidMount() {
+    if (this.props.autoFocus) {
+      this.input.focus();
+    }
+  }
+  onInputFocus = (e) => {
+    const { onFocus } = this.props;
+    const { inputUnitDiv } = this.state;
+    var updatedInputUnitDiv = inputUnitDiv;
+    this.setState({inputUnitDiv: updatedInputUnitDiv.classList.add("active")});
     onFocus && onFocus(e);
   };
-  const onInputBlur = (e) => {
-    inputUnitDiv.classList.remove("active");
+  onInputBlur = (e) => {
+    const { onBlur } = this.props;
+    const { inputUnitDiv } = this.state;
+    var updatedInputUnitDiv = inputUnitDiv;
+    this.setState({inputUnitDiv: updatedInputUnitDiv.classList.remove("active")});
     onBlur && onBlur(e);
   };
 
-  const divClassName =
-    "input-and-unit "
-    + (className || "")
-    + (disabled ? " disabled " : "");
-
-  return (
-    hidden ? null :
-    <Aux>
-      <div className={divClassName} ref={div => { inputUnitDiv = div; }}>
-        <input
-          type={type||"text"}
-          className="input"
-          disabled={disabled ? disabled : null}
-          readOnly={readOnly ? readOnly : null}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          onFocus={onInputFocus}
-          onBlur={onInputBlur}
-        />
-        {unit ? <div className="unit-area">{unit}</div> : null}
-      </div>
-      {showErrors ? (
-        <div className="input-errors-area">
-          {invalid && value ? (
-            <div className="input-error">
-              {invalidMessage ? invalidMessage :
-                <T id="input.invalidInput" m="This field is wrong" />}
-            </div>
-          ) : null}
-          {required && !value ? (
-            <div className="input-error">
-            {requiredMessage ? requiredMessage :
-                <T id="input.requiredInput" m="This field is required" />}
-            </div>
-          ) : null}
+  render() {
+    const {
+      showErrors,
+      invalidMessage,
+      requiredMessage,
+      required,
+      invalid,
+      value,
+      placeholder,
+      onChange,
+      disabled,
+      readOnly,
+      unit,
+      hidden,
+      type,
+    } = this.props;
+    return (
+      hidden ? null :
+      <Aux>
+        <div className={this.state.divClassName} ref={div => { this.state.inputUnitDiv = div; }}>
+          <input
+            ref={input => { this.input = input; }}
+            type={type||"text"}
+            className="input"
+            disabled={disabled ? disabled : null}
+            readOnly={readOnly ? readOnly : null}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            onFocus={this.onInputFocus}
+            onBlur={this.onInputBlur}
+          />
+          {unit ? <div className="unit-area">{unit}</div> : null}
         </div>
-      ) : null}
-    </Aux>
-  );
-};
+        {showErrors ? (
+          <div className="input-errors-area">
+            {invalid && value ? (
+              <div className="input-error">
+                {invalidMessage ? invalidMessage :
+                  <T id="input.invalidInput" m="This field is wrong" />}
+              </div>
+            ) : null}
+            {required && !value ? (
+              <div className="input-error">
+              {requiredMessage ? requiredMessage :
+                  <T id="input.requiredInput" m="This field is required" />}
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+      </Aux>
+    );
+  }
+}
 
 export default Input;
