@@ -1,10 +1,9 @@
-import React, { Component } from "react";
 import {
   FetchBlockHeadersFormHeader as FetchBlockHeadersHeader,
   FetchBlockHeadersFormBody
 } from "./Form";
 
-class FetchBlockHeadersBody extends Component {
+class FetchBlockHeadersBody extends React.Component {
 
   constructor(props)  {
     super(props);

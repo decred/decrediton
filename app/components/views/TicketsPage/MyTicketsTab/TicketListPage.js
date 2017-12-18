@@ -1,15 +1,13 @@
-import React, {Component} from "react";
-import { autobind } from "core-decorators";
-import ticketsList from "connectors/ticketsList";
+import { ticketsList } from "connectors";
 import TicketsCardList from "./TicketsCardList";
 import TicketInfoCard from "./TicketInfoCard";
 import { FormattedMessage as T } from "react-intl";
 import Paginator from "Paginator";
-import SlateGrayButton from "SlateGrayButton";
+import { SlateGrayButton } from "buttons";
 import "style/MyTickets.less";
 
 @autobind
-class TicketListPage extends Component{/*  */
+class TicketListPage extends React.Component{
 
   constructor(props) {
     super(props);

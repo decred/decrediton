@@ -1,5 +1,5 @@
 import VotingPrefsPage from "./Page";
-import votingPrefs from "connectors/votingPrefs";
+import { votingPrefs } from "connectors";
 import { find, compose, eq, get, substruct } from "fp";
 
 @autobind

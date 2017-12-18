@@ -2,7 +2,7 @@ import { FormattedMessage as T, defineMessages } from "react-intl";
 import { Field, reduxForm } from "redux-form";
 import InputField from "Form/InputField";
 import ErrorField from "Form/ErrorField";
-import InfoModalButton from "InfoModalButton";
+import { InfoModalButton } from "buttons";
 import { VerifyMessageInfoModalContent } from "modals";
 import { validate } from "./validator";
 

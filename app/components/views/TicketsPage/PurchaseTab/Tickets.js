@@ -1,6 +1,6 @@
-import PurchaseTickets from "PurchaseTickets";
-import TicketAutoBuyer from "TicketAutoBuyer";
-import StakeInfo from "StakeInfo";
+import PurchaseTickets from "./PurchaseTickets";
+import TicketAutoBuyer from "./TicketAutoBuyer";
+import StakeInfo from "./StakeInfo";
 import "style/StakePool.less";
 
 const Tickets = ({

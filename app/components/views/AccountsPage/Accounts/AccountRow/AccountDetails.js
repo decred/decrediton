@@ -1,6 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import Balance from "Balance";
-import { Tooltip } from "shared";
+import { Balance, Tooltip } from "shared";
 
 const AccountsList = ({
   account,

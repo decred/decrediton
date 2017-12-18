@@ -1,6 +1,5 @@
-import PropTypes from "prop-types";
 import { FormattedMessage as T } from "react-intl";
-import SettingsInput from "inputs/SettingsInput";
+import { SettingsInput } from "inputs";
 
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,

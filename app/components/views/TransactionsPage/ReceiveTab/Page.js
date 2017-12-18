@@ -1,6 +1,6 @@
 import { ReceiveAccountsSelect } from "inputs";
 import { CopyToClipboard } from "shared";
-import KeyBlueButton from "KeyBlueButton";
+import { KeyBlueButton } from "buttons";
 import QRCode from "./QRCode";
 import { FormattedMessage as T } from "react-intl";
 import "style/ReceivePage.less";

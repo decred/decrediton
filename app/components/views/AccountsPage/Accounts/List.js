@@ -2,8 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { TabbedHeader } from "shared";
 import AccountRow from "./AccountRow";
 import { DecredLoading } from "indicators";
-import InfoModalButton from "InfoModalButton";
-import PassphraseModalButton from "PassphraseModalButton";
+import { InfoModalButton, PassphraseModalButton } from "buttons";
 import { BalanceOverviewModalContent, AddAccountModalContent } from "modals";
 
 const AccountsList = ({

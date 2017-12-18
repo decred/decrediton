@@ -1,5 +1,5 @@
 import { service, settings } from "connectors";
-import ErrorScreen from "../../ErrorScreen";
+import ErrorScreen from "ErrorScreen";
 import SettingsPage from "./Page";
 
 @autobind

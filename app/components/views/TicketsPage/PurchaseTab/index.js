@@ -1,6 +1,6 @@
 import { substruct, compose, eq, get } from "fp";
 import { service, ticketsPage } from "connectors";
-import ErrorScreen from "components/ErrorScreen";
+import ErrorScreen from "ErrorScreen";
 import PurchasePage from "./Page";
 import { FormattedMessage as T } from "react-intl";
 

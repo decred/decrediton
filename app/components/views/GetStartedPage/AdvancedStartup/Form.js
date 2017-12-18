@@ -1,5 +1,5 @@
 import Header from "Header";
-import KeyBlueButton from "KeyBlueButton";
+import { KeyBlueButton } from "buttons";
 import RemoteDaemonForm from "./RemoteDaemonForm";
 import AppDataForm from "./AppDataForm";
 import { FormattedMessage as T, injectIntl } from "react-intl";

@@ -1,12 +1,10 @@
 import { AccountsSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
-import { Tooltip } from "shared";
-import Balance from "Balance";
-import PassphraseModalButton from "PassphraseModalButton";
+import { Balance, Tooltip, TransitionMotionWrapper } from "shared";
+import { PassphraseModalButton } from "buttons";
 import OutputAccountRow from "./OutputAccountRow";
 import "style/SendPage.less";
 import "style/MiscComponents.less";
-import TransitionMotionWrapper from "TransitionMotionWrapper";
 
 const wrapperComponent = props => <div className="output-row" { ...props } />;
 
