@@ -4,8 +4,7 @@ import { substruct, compose, eq, get } from "fp";
 import { spring } from "react-motion";
 import PurchaseTicketsForm from "./Form";
 import purchaseTickets from "connectors/purchaseTickets";
-import PurchaseTicketsAdvanced from "PurchaseTickets/PurchaseTicketsAdvanced";
-import PurchaseTicketsQuickBar from "PurchaseTickets/PurchaseTicketsQuickBar";
+import {PurchaseTicketsAdvanced, PurchaseTicketsQuickBar} from "PurchaseTickets";
 import { injectIntl } from "react-intl";
 
 const MAX_POSSIBLE_FEE_INPUT = 0.1;
@@ -39,7 +38,7 @@ class PurchaseTickets extends React.Component {
       }}/>,
       key: "output_0",
       style: {
-        height: spring(80, {stiffness: 60, damping: 15}),
+        height: spring(80, {stiffness: 120, damping: 15}),
       }
     }];
   }
@@ -76,7 +75,7 @@ class PurchaseTickets extends React.Component {
       />,
       key: "output_0",
       style: {
-        height: spring(500, {stiffness: 60, damping: 15}),
+        height: spring(260, {stiffness: 120, damping: 15}),
       }
     }];
   }

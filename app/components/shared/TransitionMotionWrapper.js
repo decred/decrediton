@@ -13,7 +13,7 @@ const TransitionMotionWrapper = ({
     const childProps = { ...{ key }, style: props.mapStyles(style) };
     return props.wrapperComponent ?
       h(props.wrapperComponent, childProps, data) :
-      k(data, childProps);
+      h("div", childProps, k(data));
   };
   const children = children => h("div", { className: props.className }, children.map(child));
   return h(TransitionMotion, tmProps, children);
