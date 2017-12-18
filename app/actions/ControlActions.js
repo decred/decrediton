@@ -647,6 +647,7 @@ export const VALIDATEADDRESS_FAILED = "VALIDATEADDRESS_FAILED";
 export const VALIDATEADDRESS_SUCCESS = "VALIDATEADDRESS_SUCCESS";
 
 export const validateAddress = address => async (dispatch, getState) => {
+  console.log(typeof(address));
   const { network } = getState().grpc;
   const validationErr = isValidAddress(address, network);
   if (validationErr) { return { isValid: false, error: validationErr, getIsValid () { false; } }; }

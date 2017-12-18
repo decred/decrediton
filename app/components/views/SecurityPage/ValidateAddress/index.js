@@ -10,14 +10,14 @@ class ValidateAddress extends React.Component {
   }
 
   render() {
-    const { validateAddressError, validateAddressResponse } = this.props;
+    const { validateAddressError, validateAddressSuccess } = this.props;
 
     let result = null;
-    if (validateAddressResponse) {
-      const isValid = validateAddressResponse.getIsValid();
+    if (validateAddressSuccess) {
+      const isValid = validateAddressSuccess.getIsValid();
       let isValidDisplay = null;
       if (isValid) {
-        const isMine = validateAddressResponse.getIsMine();
+        const isMine = validateAddressSuccess.getIsMine();
         if (isMine) {
           isValidDisplay = <T id="securitycenter.validate.result.owned" m="Owned address!" />;
         } else {
@@ -45,14 +45,14 @@ class ValidateAddress extends React.Component {
   }
 
   onSubmit(props) {
-    this.props.validateAddressAttempt(props);
+    this.props.validateAddress(props);
   }
 }
 
 ValidateAddress.propTypes = {
   intl: PropTypes.object.isRequired,
   validateAddressError: PropTypes.string,
-  validateAddressResponse: PropTypes.object,
+  validateAddressSuccess: PropTypes.object,
 };
 
 export default validateAddressPage(injectIntl(ValidateAddress));

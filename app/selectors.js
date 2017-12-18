@@ -511,6 +511,12 @@ export const verifyMessageSuccess = compose(
   r => r ? r.toObject() : null, verifyMessageResponse
 );
 
+export const validateAddressError = get(["control", "validateAddressError"]);
+export const validateAddressResponse = get(["control", "validateAddressResponse"]);
+export const validateAddressSuccess = compose(
+  r => r ? r.toObject() : null, validateAddressResponse
+);
+
 const getStakeInfoResponse = get(["grpc", "getStakeInfoResponse"]);
 
 export const ticketPoolSize = compose(r => r ? r.getPoolSize() : 0, getStakeInfoResponse);
