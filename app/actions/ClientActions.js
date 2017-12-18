@@ -178,7 +178,22 @@ export const GETSTAKEINFO_SUCCESS = "GETSTAKEINFO_SUCCESS";
 export const getStakeInfoAttempt = () => (dispatch, getState) => {
   dispatch({ type: GETSTAKEINFO_ATTEMPT });
   wallet.getStakeInfo(sel.walletService(getState()))
-    .then(resp => dispatch({ getStakeInfoResponse: resp, type: GETSTAKEINFO_SUCCESS }))
+    .then(resp => {
+      let { getStakeInfoResponse } = getState().grpc;
+      dispatch({ getStakeInfoResponse: resp, type: GETSTAKEINFO_SUCCESS });
+
+      const checkedFields = ["getExpired", "getLive", "getMissed", "getOwnMempoolTix",
+        "getRevoked", "getVoted"];
+      const reloadTickets = getStakeInfoResponse
+        ? checkedFields.reduce((a, v) => a||getStakeInfoResponse[v]() !== resp[v](), false)
+        : false;
+
+      if (reloadTickets) {
+        // TODO: once we switch to fully streamed getTickets(), just invalidate
+        // the current ticket list.
+        setTimeout( () => {dispatch(getTicketsInfoAttempt());}, 1000);
+      }
+    })
     .catch(error => dispatch({ error, type: GETSTAKEINFO_FAILED }));
 };
 
@@ -247,18 +262,12 @@ export const GETTICKETS_FAILED = "GETTICKETS_FAILED";
 export const GETTICKETS_COMPLETE = "GETTICKETS_COMPLETE";
 
 export const getTicketsInfoAttempt = () => (dispatch, getState) => {
-  const { grpc: { getAccountsResponse, getTicketsRequestAttempt } } = getState();
-  let startRequestHeight, endRequestHeight = 0;
+  const { grpc: { getTicketsRequestAttempt } } = getState();
   if (getTicketsRequestAttempt) return;
-  // Check to make sure getAccountsResponse (which has current block height) is available
-  if (getAccountsResponse !== null) {
-    endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
-    startRequestHeight = 0;
-  } else {
-    // Wait a little then re-dispatch this call since we have no starting height yet
-    setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 1000);
-    return;
-  }
+
+  // using 0..-1 requests all+unmined tickets
+  let startRequestHeight = 0;
+  let endRequestHeight = -1;
 
   dispatch({ type: GETTICKETS_ATTEMPT });
   wallet.getTickets(sel.walletService(getState()), startRequestHeight, endRequestHeight)

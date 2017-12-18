@@ -228,7 +228,6 @@ export default function grpc(state = {}, action) {
   case GETTICKETS_ATTEMPT:
     return {
       ...state,
-      tickets: Array(),
       getTicketsRequestAttempt: true,
     };
   case GETTICKETS_FAILED:
