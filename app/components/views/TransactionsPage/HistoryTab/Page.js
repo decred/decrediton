@@ -10,6 +10,8 @@ const Page = ({
                 sortTypes,
                 txTypes,
                 transactions,
+                selectedSortOrderKey,
+                selectedTxTypeKey,
                 noMoreTransactions,
                 onChangeSelectedType,
                 onChangeSortType,
@@ -34,6 +36,7 @@ const Page = ({
                 labelKey="label"
                 keyField="value"
                 options={sortTypes}
+                selected={selectedSortOrderKey}
                 onChange={onChangeSortType}
                 className="sort-by"
               />
@@ -43,6 +46,7 @@ const Page = ({
                 labelKey="label"
                 keyField="key"
                 options={txTypes}
+                selected={selectedTxTypeKey}
                 onChange={onChangeSelectedType}
               />
             </Tooltip>
