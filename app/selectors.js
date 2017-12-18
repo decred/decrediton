@@ -342,9 +342,10 @@ const ticketNormalizer = createSelector(
     };
   }
 );
-const ticketsNormalizer = createSelector([ticketNormalizer], map);
+const ticketSorter = (a, b) => (b.leaveTimestamp||b.enterTimestamp) - (a.leaveTimestamp||a.enterTimestamp);
 const allTickets = createSelector(
-  [ticketsNormalizer, get(["grpc", "tickets"])], apply
+  [ticketNormalizer, get(["grpc", "tickets"])],
+  (normalizer, tickets) => tickets.map(normalizer).sort(ticketSorter)
 );
 export const ticketsPerStatus = createSelector(
   [allTickets],
