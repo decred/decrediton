@@ -3,7 +3,7 @@ import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { RescanProgress } from "indicators";
 import MenuLinks from "./MenuLinks";
 import Logo from "./Logo";
-import Balance from "Balance";
+import { Balance } from "shared";
 import { RescanButton } from "buttons";
 import "style/Fonts.less";
 import "style/SideBar.less";

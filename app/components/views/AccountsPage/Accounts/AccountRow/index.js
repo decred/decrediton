@@ -1,6 +1,3 @@
-// @flow
-import React, { Component } from "react";
-import { autobind } from "core-decorators";
 import Row from "./Row";
 import { spring } from "react-motion";
 import AccountDetails from "./AccountDetails";
@@ -8,7 +5,7 @@ import RenameAccount from "./RenameAccount";
 import { injectIntl } from "react-intl";
 
 @autobind
-class AccountRow extends Component {
+class AccountRow extends React.Component {
   constructor(props) {
     super(props);
 

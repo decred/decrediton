@@ -1,4 +1,4 @@
-import ErrorScreen from "../../../ErrorScreen";
+import ErrorScreen from "ErrorScreen";
 import ReceivePage from "./Page";
 import { service, receive } from "connectors";
 

@@ -1,6 +1,5 @@
 import Header from "./DefaultHeader";
-import ShowError from "ShowError";
-import KeyBlueButton from "KeyBlueButton";
+import { KeyBlueButton, ShowError } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import "style/GetStarted.less";
 

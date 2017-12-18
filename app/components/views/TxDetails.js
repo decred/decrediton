@@ -1,14 +1,11 @@
-// @flow
-import Balance from "../Balance";
-import { TabbedHeader, CopyToClipboard } from "shared";
+import { Balance, TabbedHeader, CopyToClipboard } from "shared";
 import { shell } from "electron";
 import { transactionDetails } from "connectors";
-import SlateGrayButton from "../SlateGrayButton";
-import "style/TxDetails.less";
-import { tsToDate, addSpacingAroundText } from "helpers";
+import { SlateGrayButton } from "buttons";
+import { addSpacingAroundText, tsToDate, reverseHash } from "helpers";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { reverseHash } from "helpers/byteActions";
 import { DecodedTransaction }  from "middleware/walletrpc/api_pb";
+import "style/TxDetails.less";
 import "style/Fonts.less";
 
 const messages = defineMessages({

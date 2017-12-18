@@ -1,4 +1,3 @@
-import React from "react";
 import TicketCard from "./TicketCard";
 import { FormattedMessage as T } from "react-intl";
 import { statusMultipleTxt } from "./messages";

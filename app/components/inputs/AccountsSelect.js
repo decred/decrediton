@@ -1,11 +1,7 @@
-import { Component } from "react";
-import { autobind } from "core-decorators";
 import Select from "react-select";
-import { PropTypes } from "prop-types";
-import accountsSelect from "connectors/accountsSelect";
+import { accountsSelect } from "connectors";
 import { injectIntl, defineMessages, intlShape } from "react-intl";
-import Balance from "Balance";
-import { LinkToAccounts } from "shared";
+import { Balance, LinkToAccounts } from "shared";
 
 const messages = defineMessages({
   placeholder: {
@@ -15,7 +11,7 @@ const messages = defineMessages({
 });
 
 @autobind
-class AccountsSelect extends Component {
+class AccountsSelect extends React.Component {
 
   static propTypes = {
     accountsType: PropTypes.oneOf(["spending", "visible"]),

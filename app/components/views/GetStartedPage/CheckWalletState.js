@@ -1,5 +1,5 @@
 import Header from "./DefaultHeader";
-import ShowError from "ShowError";
+import { ShowError } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import "style/GetStarted.less";
 

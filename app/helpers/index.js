@@ -1,6 +1,7 @@
 import { createElement as h } from "react";
 export { tsToDate } from "./dateFormat";
 export { addSpacingAroundText, restrictToStdDecimalNumber } from "./strings";
+export { reverseHash } from "./byteActions";
 export * from "./addresses";
 
 // kidCheck takes a component and returns a component that only renders if it has children

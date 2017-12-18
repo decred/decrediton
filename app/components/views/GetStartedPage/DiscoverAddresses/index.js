@@ -1,12 +1,10 @@
-import React, { Component } from "react";
-import { autobind } from "core-decorators";
 import {
   DiscoverAddressesFormHeader as DiscoverAddressesHeader,
   DiscoverAddressesFormBody
 } from "./Form";
 
 @autobind
-class DiscoverAddressesBody extends Component {
+class DiscoverAddressesBody extends React.Component {
   constructor(props)  {
     super(props);
     this.state = this.getInitialState();

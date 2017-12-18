@@ -1,4 +1,4 @@
-import ErrorScreen from "../../ErrorScreen";
+import ErrorScreen from "ErrorScreen";
 import HomePage from "./Page";
 import { service, home } from "connectors";
 import {substruct} from "fp";

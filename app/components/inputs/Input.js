@@ -17,7 +17,8 @@ const Input = ({
   hidden,
   type,
   onFocus,
-  onBlur
+  onBlur,
+  textInput
 }) => {
   let inputUnitDiv = null;
   const onInputFocus = (e) => {
@@ -48,6 +49,7 @@ const Input = ({
           onChange={onChange}
           onFocus={onInputFocus}
           onBlur={onInputBlur}
+          ref={(input) => textInput = input}
         />
         {unit ? <div className="unit-area">{unit}</div> : null}
       </div>

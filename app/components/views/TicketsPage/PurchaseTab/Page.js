@@ -1,5 +1,5 @@
 import { StakeyBounce } from "indicators";
-import StakePools from "StakePools";
+import StakePools from "./StakePools";
 import Tickets from "./Tickets";
 import "style/StakePool.less";
 

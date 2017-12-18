@@ -10,5 +10,6 @@ export { default as NumTicketsInput } from "./NumTicketsInput";
 export { default as PasswordInput } from "./PasswordInput";
 export { default as PercentInput } from "./PercentInput";
 export { default as ReceiveAccountsSelect } from "./ReceiveAccountsSelect";
+export { default as SettingsInput } from "./SettingsInput";
 export { default as StakePoolSelect } from "./StakePoolSelect";
 export { default as TextInput } from "./TextInput";

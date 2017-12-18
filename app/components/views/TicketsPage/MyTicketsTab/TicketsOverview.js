@@ -1,7 +1,6 @@
-import React from "react";
 import TicketsCardList from "./TicketsCardList";
 import TicketOverviewCard from "./TicketOverviewCard";
-import ticketsOverview from "connectors/ticketsOverview";
+import { ticketsOverview } from "connectors";
 
 const TicketsOverview = ({ ticketsPerStatus, showTicketList }) => {
   const cardStatus = ["revoked", "voted", "expired", "missed", "unmined",
