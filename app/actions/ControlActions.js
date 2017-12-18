@@ -642,15 +642,16 @@ export function constructTransactionAttempt(account, confirmations, outputs, all
   };
 }
 
+export const VALIDATEADDRESS_ATTEMPT = "VALIDATEADDRESS_ATTEMPT";
 export const VALIDATEADDRESS_FAILED = "VALIDATEADDRESS_FAILED";
+export const VALIDATEADDRESS_SUCCESS = "VALIDATEADDRESS_SUCCESS";
+
 export const validateAddress = address => async (dispatch, getState) => {
-  try {
-    const { network } = getState().grpc;
-    const validationErr = isValidAddress(address, network);
-    if (validationErr) { return { isValid: false, error: validationErr, getIsValid () { false; } }; }
-    return await wallet.validateAddress(sel.walletService(getState()), address);
-  } catch (error) {
-    dispatch({address, error, type: VALIDATEADDRESS_FAILED});
-    throw error;
-  }
+  const { network } = getState().grpc;
+  const validationErr = isValidAddress(address, network);
+  if (validationErr) { return { isValid: false, error: validationErr, getIsValid () { false; } }; }
+  dispatch({ type: VALIDATEADDRESS_ATTEMPT });
+  wallet.validateAddress(sel.walletService(getState()), address)
+    .then(response => { dispatch({ response, type: VALIDATEADDRESS_SUCCESS });})
+    .catch(error => dispatch({address, error, type: VALIDATEADDRESS_FAILED}));
 };
