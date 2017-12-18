@@ -1,10 +1,9 @@
 import { PurchaseTicketsInfoModalContent, ImportScriptModalContent } from "modals";
 import { TicketsCogs, InfoModalButton, PassphraseModalButton } from "buttons";
-import { FeeInput, PercentInput, BlocksInput, AddressInput, AccountsSelect, StakePoolSelect, NumTicketsInput } from "inputs";
-import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
-import { Tooltip } from "shared";
+import { AccountsSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T } from "react-intl";
-import TransitionMotionWrapper from "TransitionMotionWrapper";
+import { Tooltip } from "shared";
+import {TransitionMotionWrapper} from "shared";
 
 import "style/StakePool.less";
 

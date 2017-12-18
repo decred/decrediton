@@ -4,12 +4,9 @@ import { substruct, compose, eq, get } from "fp";
 import { spring } from "react-motion";
 import PurchaseTicketsForm from "./Form";
 import purchaseTickets from "connectors/purchaseTickets";
-import PurchaseTicketsAdvanced from "./PurchaseTicketsAdvanced";
-import PurchaseTicketsQuickBar from "./PurchaseTicketsQuickBar";
+import PurchaseTicketsAdvanced from "PurchaseTickets/PurchaseTicketsAdvanced";
+import PurchaseTicketsQuickBar from "PurchaseTickets/PurchaseTicketsQuickBar";
 import { injectIntl } from "react-intl";
-import { substruct, compose, eq, get } from "fp";
-import PurchaseTicketsForm from "./Form";
-import purchaseTickets from "connectors/purchaseTickets";
 
 const MAX_POSSIBLE_FEE_INPUT = 0.1;
 
