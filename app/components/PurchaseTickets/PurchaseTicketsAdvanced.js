@@ -32,10 +32,8 @@ const PurchaseTicketsAdvanced = ({
   onChangeTxFee,
   onChangeExpiry,
   formatMessage,
-  handleSubmit
 }) => (
     <Aux>
-      <form onSubmit={handleSubmit}>
       <div className="stakepool-purchase-ticket-row">
         <div className="stakepool-purchase-ticket-label">
           <T id="purchaseTickets.stakePoolLabel" m="Stake Pool" />:
@@ -146,7 +144,6 @@ const PurchaseTicketsAdvanced = ({
           </div>
         </div>
       </div>
-      </form>
     </Aux>);
 
 export default PurchaseTicketsAdvanced;
