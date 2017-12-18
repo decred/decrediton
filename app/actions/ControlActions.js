@@ -178,9 +178,8 @@ export function importScriptAttempt(passphrase, script, rescan, scanFrom, voting
     walletService.importScript(request,
       function(error, importScriptResponse) {
         if (error) {
-          if (!votingAddress && !cb) {
-            dispatch({ error, type: IMPORTSCRIPT_FAILED });
-          } else {
+          dispatch({ error, type: IMPORTSCRIPT_FAILED });
+          if (votingAddress || cb) {
             if (String(error).indexOf("master private key") !== -1) {
               dispatch(() => cb(error));
             } else {
