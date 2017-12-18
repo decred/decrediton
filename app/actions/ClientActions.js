@@ -262,18 +262,12 @@ export const GETTICKETS_FAILED = "GETTICKETS_FAILED";
 export const GETTICKETS_COMPLETE = "GETTICKETS_COMPLETE";
 
 export const getTicketsInfoAttempt = () => (dispatch, getState) => {
-  const { grpc: { getAccountsResponse, getTicketsRequestAttempt } } = getState();
-  let startRequestHeight, endRequestHeight = 0;
+  const { grpc: { getTicketsRequestAttempt } } = getState();
   if (getTicketsRequestAttempt) return;
-  // Check to make sure getAccountsResponse (which has current block height) is available
-  if (getAccountsResponse !== null) {
-    endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
-    startRequestHeight = -1;
-  } else {
-    // Wait a little then re-dispatch this call since we have no starting height yet
-    setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 1000);
-    return;
-  }
+
+  // using 0..-1 requests all+unmined tickets
+  let startRequestHeight = 0;
+  let endRequestHeight = -1;
 
   dispatch({ type: GETTICKETS_ATTEMPT });
   wallet.getTickets(sel.walletService(getState()), startRequestHeight, endRequestHeight)
