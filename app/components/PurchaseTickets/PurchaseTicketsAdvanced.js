@@ -1,6 +1,5 @@
 import { FeeInput, PercentInput, BlocksInput, AddressInput, StakePoolSelect } from "inputs";
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import {reduxForm, Field} from "redux-form";
 
 const messages = defineMessages({
   txFeePlaceholder: {
@@ -59,14 +58,7 @@ const PurchaseTicketsAdvanced = ({
             :</div>
           <div className="stakepool-purchase-ticket-thirds-input">
             <div className="stakepool-input-form-purchase-ticket">
-            {/* <Field
-              name="ticketFee"
-              component="input"
-              type="text"
-              placeholder={formatMessage(messages.ticketFeePlaceholder)}
-              value={ticketFee}
-            /> */}
-              {/* <FeeInput {...{...props}}
+              <FeeInput {...{...props}}
                 name={"ticketFee"}
                 placeholder={formatMessage(messages.ticketFeePlaceholder)}
                 value={ticketFee}
@@ -75,7 +67,7 @@ const PurchaseTicketsAdvanced = ({
                 invalid={ticketFeeError}
                 invalidMessage={<T id="purchaseTickets.errors.invalidTicketFee" m="*Invalid ticket fee (0 - 0.1 DCR/KB)" />}
                 showErrors
-              /> */}
+              />
             </div>
           </div>
         </div>
@@ -84,7 +76,7 @@ const PurchaseTicketsAdvanced = ({
             <T id="purchaseTickets.txFee" m="Tx Fee" />:</div>
           <div className="stakepool-purchase-ticket-thirds-input">
             <div className="stakepool-input-form-purchase-ticket">
-              {/* <FeeInput
+              <FeeInput
                 name={"txFee"}
                 placeholder={formatMessage(messages.txFeePlaceholder)}
                 value={txFee}
@@ -93,7 +85,7 @@ const PurchaseTicketsAdvanced = ({
                 invalid={txFeeError}
                 invalidMessage={<T id="purchaseTickets.errors.invalidTxFee" m="*Invalid tx fee (0 - 0.1 DCR/KB)" />}
                 showErrors
-              /> */}
+              />
             </div>
           </div>
         </div>

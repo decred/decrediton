@@ -25,8 +25,6 @@ const PurchaseTicketsForm = ({
   account
 }) => {
 
-  const wrapperComponent = props => <div className="account-wrapper" { ...props } />;
-
   return (
     <Aux>
       <div className="stakepool-voting-title-area">
@@ -63,9 +61,7 @@ const PurchaseTicketsForm = ({
           </div>
         </div>
         <TransitionMotionWrapper {...{
-          styles: !isShowingAdvanced ? getQuickBarComponent : getAdvancedComponent,
-          wrapperComponent,
-        }}
+          styles: !isShowingAdvanced ? getQuickBarComponent : getAdvancedComponent }}
         />
       </div>
       <div className="stakepool-purchase-ticket-buttons-area">
