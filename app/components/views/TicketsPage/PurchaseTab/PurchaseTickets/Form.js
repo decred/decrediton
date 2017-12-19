@@ -22,7 +22,9 @@ const PurchaseTicketsForm = ({
   onImportScript,
   onRevokeTickets,
   onToggleShowAdvanced,
-  account
+  account,
+  willEnter,
+  willLeave,
 }) => {
 
   return (
@@ -39,7 +41,7 @@ const PurchaseTicketsForm = ({
           <TicketsCogs opened={!isShowingAdvanced} onClick={onToggleShowAdvanced} />
         </div>
       </div>
-      <div className={isShowingAdvanced ? "stakepool-flex-height-shown" : "stakepool-flex-height-hidden"}>
+      <div className="stakepool-purchase-ticket-row-wrapper">
         <div className="stakepool-purchase-ticket-row">
           <div className="stakepool-purchase-ticket-row-account-select">
             <div className="stakepool-purchase-ticket-account-select-label"><T id="purchaseTickets.account" m="Account" />:</div>
@@ -61,7 +63,10 @@ const PurchaseTicketsForm = ({
           </div>
         </div>
         <TransitionMotionWrapper {...{
-          styles: !isShowingAdvanced ? getQuickBarComponent : getAdvancedComponent }}
+          styles: !isShowingAdvanced ? getQuickBarComponent : getAdvancedComponent,
+          willEnter: !isShowingAdvanced ? () => willEnter(270) : () => willEnter(80),
+          willLeave
+        }}
         />
       </div>
       <div className="stakepool-purchase-ticket-buttons-area">

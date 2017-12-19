@@ -38,7 +38,8 @@ class PurchaseTickets extends React.Component {
       }}/>,
       key: "output_0",
       style: {
-        height: spring(80, {stiffness: 120, damping: 15}),
+        height: spring(92),
+        opacity: 1,
       }
     }];
   }
@@ -73,11 +74,26 @@ class PurchaseTickets extends React.Component {
         formatMessage,
       }}
       />,
-      key: "output_0",
+      key: "output_1",
       style: {
-        height: spring(270, {stiffness: 210, damping: 20}),
+        height: spring(270, {stiffness: 170, damping: 17}),
+        opacity: spring(1, {stiffness: 120, damping: 17}),
       }
     }];
+  }
+
+  willEnter(height) {
+    return {
+      height: height,
+      opacity: 0,
+    };
+  }
+
+  willLeave() {
+    return {
+      height: 0,
+      opacity: 0,
+    };
   }
 
   render() {
@@ -95,7 +111,9 @@ class PurchaseTickets extends React.Component {
             onChangeAccount: null,
             onPurchaseTickets: null,
             getQuickBarComponent: null,
-            getAdvancedComponent: null
+            getAdvancedComponent: null,
+            willEnter: null,
+            willLeave: null,
           }, this)
         }}
       />
