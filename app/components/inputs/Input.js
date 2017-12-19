@@ -48,6 +48,7 @@ class Input extends React.Component{
       unit,
       hidden,
       type,
+      onKeyDown,
     } = this.props;
     return (
       hidden ? null :
@@ -64,6 +65,7 @@ class Input extends React.Component{
             onChange={onChange}
             onFocus={this.onInputFocus}
             onBlur={this.onInputBlur}
+            onKeyDown={onKeyDown}
           />
           {unit ? <div className="unit-area">{unit}</div> : null}
         </div>
