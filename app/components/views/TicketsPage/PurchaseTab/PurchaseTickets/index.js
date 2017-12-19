@@ -1,6 +1,12 @@
+import React from "react";
+import { autobind } from "core-decorators";
 import { substruct, compose, eq, get } from "fp";
+import { spring } from "react-motion";
 import PurchaseTicketsForm from "./Form";
 import purchaseTickets from "connectors/purchaseTickets";
+import PurchaseTicketsAdvanced from "./PurchaseTicketsAdvanced";
+import PurchaseTicketsQuickBar from "./PurchaseTicketsQuickBar";
+import { injectIntl } from "react-intl";
 
 const MAX_POSSIBLE_FEE_INPUT = 0.1;
 
@@ -21,6 +27,76 @@ class PurchaseTickets extends React.Component {
     };
   }
 
+  getQuickBarComponent () {
+    const { getStakePool } = this;
+    const { ticketFee, txFee, expiry } = this.state;
+    return [{
+      data: <PurchaseTicketsQuickBar {...{
+        stakePool: getStakePool(),
+        ticketFee,
+        txFee,
+        expiry,
+      }}/>,
+      key: "output_0",
+      style: {
+        height: spring(92),
+        opacity: 1,
+      }
+    }];
+  }
+
+  getAdvancedComponent () {
+    const v = e => e.target.value;
+    const changeTicketFee = e => this.onChangeTicketFee(v(e));
+    const changeTxFee = e => this.onChangeTxFee(v(e));
+    const changeExpiry = e => this.onChangeExpiry(v(e));
+    const { configuredStakePools,
+      onShowStakePoolConfig,
+      onChangeStakePool,
+      intl: { formatMessage }
+    } = this.props;
+    const { ticketFee, txFee, expiry,
+      ticketFeeError, txFeeError, expiryError } = this.state;
+    return [{
+      data: <PurchaseTicketsAdvanced {...{
+        configuredStakePools,
+        stakePool: this.getStakePool(),
+        ticketFee,
+        txFee,
+        expiry,
+        ticketFeeError,
+        txFeeError,
+        expiryError,
+        onShowStakePoolConfig,
+        onChangeStakePool,
+        onChangeTicketFee: changeTicketFee,
+        onChangeTxFee: changeTxFee,
+        onChangeExpiry: changeExpiry,
+        formatMessage,
+      }}
+      />,
+      key: "output_1",
+      style: {
+        height: spring(270, {stiffness: 170, damping: 17}),
+        opacity: spring(1, {stiffness: 120, damping: 17}),
+      }
+    }];
+  }
+
+  willEnter(height) {
+    return {
+      height: height,
+      opacity: 0,
+    };
+  }
+
+  willLeave() {
+    return {
+      height: 0,
+      opacity: 0,
+    };
+  }
+
   render() {
     return (
       <PurchaseTicketsForm
@@ -28,20 +104,17 @@ class PurchaseTickets extends React.Component {
           ...this.props,
           ...this.state,
           canAffordTickets: this.getCanAffordTickets(),
-          stakePool: this.getStakePool(),
           account: this.getAccount(),
           ...substruct({
-            onShowAdvanced: null,
-            onHideAdvanced: null,
             onToggleShowAdvanced: null,
             onIncrementNumTickets: null,
             onDecrementNumTickets: null,
-            onChangeStakePool: null,
             onChangeAccount: null,
-            onChangeTicketFee: null,
-            onChangeTxFee: null,
-            onChangeExpiry: null,
-            onPurchaseTickets: null
+            onPurchaseTickets: null,
+            getQuickBarComponent: null,
+            getAdvancedComponent: null,
+            willEnter: null,
+            willLeave: null,
           }, this)
         }}
       />
@@ -152,4 +225,4 @@ class PurchaseTickets extends React.Component {
   }
 }
 
-export default purchaseTickets(PurchaseTickets);
+export default injectIntl(purchaseTickets(PurchaseTickets));
