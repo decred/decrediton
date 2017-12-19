@@ -1,7 +1,6 @@
 // @flow
 import { rescan, home } from "connectors";
 import { DecredLoading } from "indicators";
-import { PassphraseModalButton } from "buttons";
 import { Balance, TabbedHeader } from "shared";
 import TxHistory from "TxHistory";
 import { FormattedMessage as T } from "react-intl";
@@ -11,11 +10,9 @@ import "style/HomePage.less";
 const HomePage = ({
   routes,
   spendableTotalBalance,
-  hasTicketsToRevoke,
   transactions,
   getTransactionsRequestAttempt,
   getAccountsResponse,
-  onRevokeTickets
 }) => {
   return (
     <Aux>
@@ -26,17 +23,6 @@ const HomePage = ({
       </TabbedHeader>
       { getTransactionsRequestAttempt ? <div className="page-content"><DecredLoading /></div> :
       <div className="page-content">
-        { hasTicketsToRevoke &&
-        <div className="tickets-to-revoke-warning">
-          <T id="home.revokeTicketMessage" m="You have outstanding missed or expired tickets, please revoke them to unlock your funds" />
-          <PassphraseModalButton
-              modalTitle={<T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />}
-              className="stakepool-content-revoke-button"
-              onSubmit={onRevokeTickets}
-          >
-            <T id="purchaseTickets.revokeBtn" m="Revoke" />
-          </PassphraseModalButton>
-        </div> }
         <div className="home-content-title">
           <div className="home-content-title-text">
             <T id="home.recentTransactionsTitle" m="Recent Transactions" />
