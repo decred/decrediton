@@ -35,7 +35,7 @@ class SeedEntry extends React.Component {
         onPaste={this.props.onPaste}
       >
         <Select.Async
-          autofocus
+          autoFocus
           clearable={false}
           placeholder={formatMessage(messages.enterSeedPlaceholder)}
           multi={true}
