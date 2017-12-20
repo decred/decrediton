@@ -54,7 +54,7 @@ const TicketInfoCard = ({ ticket, onClick, expanded }) => {
         <T
           id="ticket.timestamp"
           m="{timestamp, date, medium} {timestamp, time, medium}"
-          values={{timestamp: tsToDate(ticket.leaveTimestamp || ticket.enterTimestamp)}} />
+          values={{timestamp: tsToDate(ticket.enterTimestamp)}} />
       </Tooltip>
     </div>
     <ExpandedInfo {...{ticket}} />

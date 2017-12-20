@@ -41,10 +41,7 @@ export default (
     <Route   path="tickets"                     component={TabbedPage}        desc ticketprice>
       <IndexRedirect to="purchase"/>
       <Route path="purchase"                    component={PurchaseTab}/>
-      <Route path="mytickets"                   component={MyTicketsTab}>
-        <IndexRoute                             component={MyTicketsOverview}/>
-        <Route path=":status"                   component={MyTicketsList}/>
-      </Route>
+      <Route path="mytickets"                   component={MyTicketsTab}/>
       <Route path="governance"                  component={GovernanceTab}/>
       <Route path="statistics"                  component={StatisticsTab}/>
     </Route>

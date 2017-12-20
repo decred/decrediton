@@ -3,7 +3,7 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import { isValidAddress } from "helpers";
 import { getAccountsAttempt, getStakeInfoAttempt, getMostRecentTransactions,
-  getTicketsInfoAttempt } from "./ClientActions";
+  getTickets } from "./ClientActions";
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   ConstructTransactionRequest, SignTransactionRequest,
@@ -82,7 +82,7 @@ export function rescanAttempt(beginHeight) {
       dispatch({ type: RESCAN_COMPLETE });
       setTimeout( () => {dispatch(getAccountsAttempt(true));}, 1000);
       setTimeout( () => {dispatch(getMostRecentTransactions());}, 1000);
-      setTimeout( () => {dispatch(getTicketsInfoAttempt());}, 1000);
+      setTimeout( () => {dispatch(getTickets());}, 1000);
     });
     rescanCall.on("error", function(status) {
       console.error("Rescan error", status);
@@ -328,13 +328,13 @@ export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requi
     request.setTxFee(txFee*1e8);
     request.setTicketFee(ticketFee*1e8);
     dispatch({ type: PURCHASETICKETS_ATTEMPT });
-    dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0, stakepool.TicketAddress, (error) => {
+    dispatch(purchaseTicketsAction(request));
+    /*dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0, stakepool.TicketAddress, (error) => {
       if (error) {
         dispatch({ error, type: PURCHASETICKETS_FAILED });
       } else {
-        dispatch(purchaseTicketsAction(request));
       }
-    }));
+    }));*/
   };
 }
 

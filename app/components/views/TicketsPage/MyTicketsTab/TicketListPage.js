@@ -1,54 +1,33 @@
 import { ticketsList } from "connectors";
 import TicketsCardList from "./TicketsCardList";
-import TicketInfoCard from "./TicketInfoCard";
 import { FormattedMessage as T } from "react-intl";
-import Paginator from "Paginator";
-import { SlateGrayButton } from "buttons";
+import InfiniteScroll from "react-infinite-scroller";
+import { LoadingMoreTicketsIndicator, NoMoreTicketsIndicator } from "indicators";
 import "style/MyTickets.less";
 
 @autobind
-class TicketListPage extends React.Component{
+class TicketListPage extends React.Component {
 
   constructor(props) {
     super(props);
-    const pagination = this.calcPagination(props.tickets);
-    this.state = { currentPage: 0, expandedTicket: null, ...pagination };
-    this.requestTicketsRawTx();
+    this.state = { expandedTicket: null };
+    //this.requestTicketsRawTx();
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState(this.calcPagination(nextProps.tickets));
+    //this.setState(this.calcPagination(nextProps.tickets));
   }
-
-  calcPagination(tickets) {
-    const ticketsPerPage = 6;
-    const totalPages = tickets.length > 0 ? Math.ceil(tickets.length / ticketsPerPage) : 0;
-
-    return { ticketsPerPage, totalPages };
-  }
-
   onInfoCardClick(ticket) {
     if (ticket === this.state.expandedTicket) {
-      this.setState({expandedTicket: null});
+      this.setState({ expandedTicket: null });
     } else {
-      this.setState({expandedTicket: ticket});
+      this.setState({ expandedTicket: ticket });
     }
   }
 
-  onPageChanged(pageNumber) {
-    this.setState({currentPage: pageNumber}, this.requestTicketsRawTx);
-  }
-
-  getVisibleTickets() {
-    const { currentPage, ticketsPerPage } = this.state;
-    const startIndex = currentPage * ticketsPerPage;
-    const endIndex = startIndex + ticketsPerPage;
-    return this.props.tickets.slice(startIndex, endIndex);
-  }
-
   requestTicketsRawTx() {
-    const visibleTickets = this.getVisibleTickets();
-    const toDecode = visibleTickets.reduce((a, t) => {
+    const { tickets } = this.props;
+    const toDecode = tickets.reduce((a, t) => {
       if (!t.decodedTicketTx) {
         a.push(t.ticketRawTx);
         if (t.spenderHash) {
@@ -60,30 +39,34 @@ class TicketListPage extends React.Component{
     this.props.decodeRawTransactions(toDecode);
   }
 
-  render() {
-    const { currentPage, totalPages, expandedTicket } = this.state;
-    const { router } = this.props;
+  onLoadMoreTickets() {
+    console.log("do load more tickets please");
+    this.props.getTickets && this.props.getTickets();
+  }
 
-    const visibleTickets = this.getVisibleTickets();
-    const visibleCards = visibleTickets.map(ticket => {
-      const key = ticket.hash;
-      const expanded = ticket === expandedTicket;
-      return <TicketInfoCard {...{key, ticket, expanded}} onClick={this.onInfoCardClick} />;
-    });
+  render() {
+    const { expandedTicket } = this.state;
+    const { tickets, noMoreTickets } = this.props;
+    const { onLoadMoreTickets } = this;
+    console.log("re-rendering ticketListPage");
 
     return (
-      <Aux>
-          {(visibleCards.length > 0
-            ? <Aux>
-                <TicketsCardList>{visibleCards}</TicketsCardList>
-                <Paginator {...{totalPages, currentPage, onPageChanged: this.onPageChanged}} />
-              </Aux>
-            : <T id="myTickets.noTicketsWithStatus" m="No tickets found" />
-          )}
-          <SlateGrayButton key="back" className="ticket-list-back-btn" onClick={() => router.goBack()}>
-            <T id="ticketList.backBtn" m="Back" />
-          </SlateGrayButton>
-      </Aux>
+      <InfiniteScroll
+        hasMore={!noMoreTickets}
+        loadMore={onLoadMoreTickets}
+        initialLoad={false}
+        useWindow={false}
+        threshold={180}
+      >
+        <div className="tab-card">
+            {tickets.length > 0
+              ? <TicketsCardList tickets={tickets} expandedTicket={expandedTicket} />
+              : null}
+            {!noMoreTickets
+              ? <LoadingMoreTicketsIndicator />
+              : <NoMoreTicketsIndicator /> }
+        </div>
+      </InfiniteScroll>
     );
   }
 }

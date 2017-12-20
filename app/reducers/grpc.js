@@ -239,9 +239,14 @@ export default function grpc(state = {}, action) {
       getTicketsRequestAttempt: false,
     };
   case GETTICKETS_COMPLETE:
+    var tickets = [...action.unminedTickets, ...action.minedTickets];
     return {
       ...state,
-      tickets: action.tickets,
+      tickets: tickets,
+      unminedTickets: action.unminedTickets,
+      minedTickets: action.minedTickets,
+      noMoreTIckets: action.noMoreTIckets,
+      lastTicket: action.lastTicket,
       getTicketsRequestError: "",
       getTicketsRequestAttempt: false,
     };

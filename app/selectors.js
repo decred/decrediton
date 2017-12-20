@@ -2,9 +2,10 @@ import {
   compose, reduce, filter, get, not, or, and, eq, find, bool, map, apply,
   createSelectorEager as createSelector
 } from "./fp";
+// import { createSelector as createSelectorLazy } from "reselect";
 import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
-import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
+import { decodeVoteScript } from "./helpers/tickets";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
@@ -262,6 +263,7 @@ const ticketNormalizer = createSelector(
   [decodedTransactions, network],
   (decodedTransactions, network) => {
     return ticket => {
+      console.log("normalizing ticket");
       const hasSpender = ticket.spender && ticket.spender.getHash();
       const isVote = ticket.status === "voted";
       const ticketTx = ticket.ticket;
@@ -350,25 +352,14 @@ const ticketNormalizer = createSelector(
     };
   }
 );
-const ticketSorter = (a, b) => (b.leaveTimestamp||b.enterTimestamp) - (a.leaveTimestamp||a.enterTimestamp);
-const allTickets = createSelector(
+export const noMoreTickets = get(["grpc", "noMoreTickets"]);
+export const ticketFilter = get(["grpc", "ticketFilter"]);
+export const tickets = createSelector(
   [ticketNormalizer, get(["grpc", "tickets"])],
-  (normalizer, tickets) => tickets.map(normalizer).sort(ticketSorter)
-);
-export const ticketsPerStatus = createSelector(
-  [allTickets],
-  tickets => tickets.reduce(
-    (perStatus, ticket) => {
-      perStatus[ticket.status].push(ticket);
-      return perStatus;
-    },
-    Array.from(TicketTypes.values()).reduce((a, v) => (a[v] = [], a), {}),
-  )
-);
-
-export const viewedTicketListing = createSelector(
-  [ticketsPerStatus, (state, { params: { status }}) => status],
-  (tickets, status) => tickets[status]
+  (normalizer, tickets) => {
+    console.log("Recalculating tickets selector");
+    return tickets.map(normalizer);
+  }
 );
 
 const rescanResponse = get(["control", "rescanResponse"]);

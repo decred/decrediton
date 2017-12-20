@@ -170,6 +170,14 @@ var initialState = {
     getTicketsError: null,
     getTicketsRequestAttempt: false,
     tickets: Array(),
+    minedTickets: Array(),
+    unminedTickets: Array(),
+    noMoreTickets: false,
+    ticketsFilter: {
+      listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
+      types: [], // desired transaction types (code). All if blank.
+    },
+    lastTicket: null, //last ticket obtained
 
     // Agenda/VoteChoices
     getAgendasResponse: null,
