@@ -80,13 +80,6 @@ class TicketAutoBuyer extends React.Component {
           ...this.props,
           ...this.state,
           ...substruct({
-            onToggleTicketAutoBuyer: null,
-            onChangeBalanceToMaintain: null,
-            onChangeMaxFee: null,
-            onChangeMaxPriceAbsolute: null,
-            onChangeMaxPriceRelative: null,
-            onChangeMaxPerBlock: null,
-            onUpdateTicketAutoBuyerConfig: null,
             onToggleShowDetails: null,
             onStartAutoBuyer: null,
             getNullStyles: null,
