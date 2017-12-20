@@ -1,6 +1,8 @@
 import ticketAutoBuyer from "connectors/ticketAutoBuyer";
 import { substruct, compose, eq, get } from "fp";
 import { injectIntl } from "react-intl";
+import { spring } from "react-motion";
+import Details from "./Details";
 import TicketAutoBuyerForm from "./Form";
 
 @autobind
@@ -23,6 +25,52 @@ class TicketAutoBuyer extends React.Component {
     };
   }
 
+  getDetailsComponent () {
+    const v = e => e.target.value;
+    const changeBalanceToMaintain = e => this.onChangeBalanceToMaintain(v(e));
+    const changeMaxFee = e => this.onChangeMaxFee(v(e));
+    const changeMaxPriceAbsolute = e => this.onChangeMaxPriceAbsolute(v(e));
+    const changeMaxPriceRelative = e => this.onChangeMaxPriceRelative(v(e));
+    const changeMaxPerBlock = e => this.onChangeMaxPerBlock(v(e));
+
+    const { isTicketAutoBuyerConfigDirty,
+      getTicketBuyerConfigResponse,
+      intl : { formatMessage }
+    } = this.props;
+    const { onUpdateTicketAutoBuyerConfig } = this;
+    return [{
+      data: <Details {...{
+        ...this.state,
+        isTicketAutoBuyerConfigDirty,
+        getTicketBuyerConfigResponse,
+        formatMessage,
+        onChangeBalanceToMaintain: changeBalanceToMaintain,
+        onChangeMaxFee: changeMaxFee,
+        onChangeMaxPriceAbsolute: changeMaxPriceAbsolute,
+        onChangeMaxPriceRelative: changeMaxPriceRelative,
+        onChangeMaxPerBlock: changeMaxPerBlock,
+        onUpdateTicketAutoBuyerConfig,
+      }}
+      />,
+      key: "output_0",
+      style: {
+        height: spring(150, {stiffness: 170, damping: 15}),
+        opacity: spring(1, {stiffness: 100, damping: 20}),
+      }
+    }];
+  }
+
+  getNullStyles() {
+    return [{
+      data: <div></div>,
+      key: "output_0",
+      style: {
+        height: spring(0, {stiffness: 100, damping: 14}),
+        opacity: spring(0, {stiffness: 100, damping: 20}),
+      }
+    }];
+  }
+
   render() {
     return (
       <TicketAutoBuyerForm
@@ -40,7 +88,9 @@ class TicketAutoBuyer extends React.Component {
             onChangeMaxPerBlock: null,
             onUpdateTicketAutoBuyerConfig: null,
             onToggleShowDetails: null,
-            onStartAutoBuyer: null
+            onStartAutoBuyer: null,
+            getNullStyles: null,
+            getDetailsComponent: null,
           }, this)
         }}
       />

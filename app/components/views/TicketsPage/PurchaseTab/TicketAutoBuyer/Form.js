@@ -1,8 +1,7 @@
 import { AutoBuyerSwitch, InfoModalButton, PassphraseModalSwitch, TicketsCogs } from "buttons";
 import { TicketAutoBuyerInfoModalContent } from "modals";
-import { Tooltip } from "shared";
+import { Tooltip, TransitionMotionWrapper } from "shared";
 import { FormattedMessage as T } from "react-intl";
-import Details from "./Details";
 import "style/StakePool.less";
 
 const TicketAutoBuyerForm = ({
@@ -12,26 +11,12 @@ const TicketAutoBuyerForm = ({
   maxPriceAbsolute,
   maxPriceRelative,
   maxPerBlock,
-
   onStartAutoBuyer,
   onDisableTicketAutoBuyer,
   onToggleShowDetails,
   isTicketAutoBuyerEnabled,
-
-  isTicketAutoBuyerConfigDirty,
-  getTicketBuyerConfigResponse,
-  formatMessage,
-  maxFeeError,
-  balanceToMaintainError,
-  maxPriceAbsoluteError,
-  maxPriceRelativeError,
-  onChangeBalanceToMaintain,
-  onChangeMaxFee,
-  onChangeMaxPriceAbsolute,
-  onChangeMaxPriceRelative,
-  onChangeMaxPerBlock,
-  onUpdateTicketAutoBuyerConfig,
-  canNotEnableAutobuyer,
+  getNullStyles,
+  getDetailsComponent
 }) => (
     <Aux>
       <div className="stakepool-voting-title-area">
@@ -76,31 +61,12 @@ const TicketAutoBuyerForm = ({
             <TicketsCogs opened={isHidingDetails} onClick={onToggleShowDetails} />
           </div>
         </div>
-        {
-          !isHidingDetails ? <Details {...{
-            isTicketAutoBuyerConfigDirty,
-            getTicketBuyerConfigResponse,
-            formatMessage,
-            maxFeeError,
-            balanceToMaintainError,
-            maxPriceAbsoluteError,
-            maxPriceRelativeError,
-            onChangeBalanceToMaintain,
-            onChangeMaxFee,
-            onChangeMaxPriceAbsolute,
-            onChangeMaxPriceRelative,
-            onChangeMaxPerBlock,
-            onUpdateTicketAutoBuyerConfig,
-            canNotEnableAutobuyer,
-            isHidingDetails,
-            balanceToMaintain,
-            maxFee,
-            maxPriceAbsolute,
-            maxPriceRelative,
-            maxPerBlock
+        <TransitionMotionWrapper
+          {
+          ...{
+            styles: isHidingDetails ? getNullStyles() : getDetailsComponent(),
           }}
-          /> : null
-        }
+        />
       </div>
     </Aux>
   );

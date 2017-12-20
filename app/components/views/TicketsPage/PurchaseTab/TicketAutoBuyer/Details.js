@@ -62,7 +62,7 @@ const Details = ({
                 <DcrInput
                   placeholder={formatMessage(messages.balanceToMaintain)}
                   value={balanceToMaintain}
-                  onChange={e => onChangeBalanceToMaintain(e.target.value)}
+                  onChange={onChangeBalanceToMaintain}
                   invalid={balanceToMaintainError}
                   invalidMessage={<T id="autobuyer.balanceToMaintainError"
                     m="Your balance to mantain is invalid" />}
@@ -81,7 +81,7 @@ const Details = ({
                 <FeeInput
                   placeholder={formatMessage(messages.maxFee)}
                   value={maxFee}
-                  onChange={e => onChangeMaxFee(e.target.value)}
+                  onChange={onChangeMaxFee}
                   invalid={maxFeeError}
                   invalidMessage={<T id="autobuyer.invalidMaxFee" m="*Invalid max fee (0 - 0.1 DCR/KB)" />}
                   showErrors
@@ -101,7 +101,7 @@ const Details = ({
                 <DcrInput
                   placeholder={formatMessage(messages.maxPriceAbsolute)}
                   value={maxPriceAbsolute}
-                  onChange={e => onChangeMaxPriceAbsolute(e.target.value)}
+                  onChange={onChangeMaxPriceAbsolute}
                   invalid={maxPriceAbsoluteError}
                   showErrors
                   required
@@ -118,7 +118,7 @@ const Details = ({
               <PercentInput
                 placeholder={formatMessage(messages.maxPriceRelative)}
                 value={maxPriceRelative}
-                onChange={e => onChangeMaxPriceRelative(e.target.value)}
+                onChange={onChangeMaxPriceRelative}
                 invalid={maxPriceRelativeError}
                 showErrors
                 required
@@ -137,7 +137,7 @@ const Details = ({
                 <BlocksInput
                   placeholder={formatMessage(messages.maxPerBlock)}
                   value={maxPerBlock}
-                  onChange={e => onChangeMaxPerBlock(e.target.value)}
+                  onChange={onChangeMaxPerBlock}
                   showErrors
                   required
                 />
