@@ -12,6 +12,18 @@ class TicketAutoBuyer extends React.Component {
     this.state = this.getInitialState();
   }
 
+  componentDidUpdate() {
+    const {isHidingDetails} = this.state;
+    if(!isHidingDetails) {
+      this.scrollToBottom();
+    }
+  }
+
+  scrollToBottom () {
+    const content = document.querySelector(".tab-content");
+    content.scrollTop = content.offsetHeight;
+  }
+
   getInitialState() {
     return {
       ...this.getCurrentSettings(),
