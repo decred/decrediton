@@ -1,6 +1,8 @@
+import { AutoBuyerSwitch, InfoModalButton, PassphraseModalSwitch, TicketsCogs } from "buttons";
+import { TicketAutoBuyerInfoModalContent } from "modals";
+import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import Details from "./Details";
-import QuickBar from "./QuickBar";
 import "style/StakePool.less";
 
 const TicketAutoBuyerForm = ({
@@ -15,7 +17,7 @@ const TicketAutoBuyerForm = ({
   onDisableTicketAutoBuyer,
   onToggleShowDetails,
   isTicketAutoBuyerEnabled,
-  
+
   isTicketAutoBuyerConfigDirty,
   getTicketBuyerConfigResponse,
   formatMessage,
@@ -36,44 +38,69 @@ const TicketAutoBuyerForm = ({
         <div className="stakepool-voting-title-area-name">
           <T id="autobuyer.title" m="Automatic Purchase" /></div>
       </div>
-      <div className={isHidingDetails ? "stakepool-flex-height-auto-buyer-hidden" : "stakepool-flex-height-auto-buyer-shown"}>
-        <QuickBar {...{
-          isHidingDetails,
-          onStartAutoBuyer,
-          onDisableTicketAutoBuyer,
-          onToggleShowDetails,
-          isTicketAutoBuyerEnabled,
-          balanceToMaintain,
-          maxFee,
-          maxPriceAbsolute,
-          maxPriceRelative,
-          maxPerBlock
-        }}
-        
-        />
-        <Details {...{
-          isTicketAutoBuyerConfigDirty,
-          getTicketBuyerConfigResponse,
-          formatMessage,
-          maxFeeError,
-          balanceToMaintainError,
-          maxPriceAbsoluteError,
-          maxPriceRelativeError,
-          onChangeBalanceToMaintain,
-          onChangeMaxFee,
-          onChangeMaxPriceAbsolute,
-          onChangeMaxPriceRelative,
-          onChangeMaxPerBlock,
-          onUpdateTicketAutoBuyerConfig,
-          canNotEnableAutobuyer,
-          isHidingDetails,
-          balanceToMaintain,
-          maxFee,
-          maxPriceAbsolute,
-          maxPriceRelative,
-          maxPerBlock
-        }}
-        />
+      <div className="stakepool-flex-height-auto-buyer-wrapper">
+        <div className="stakepool-auto-buyer-row">
+          {isTicketAutoBuyerEnabled ?
+            <AutoBuyerSwitch enabled onClick={onDisableTicketAutoBuyer} /> :
+            <PassphraseModalSwitch
+              modalTitle={<T id="tickets.startAutoBuyerConfirmation" m="Start Ticket Buyer Confirmation" />}
+              onSubmit={onStartAutoBuyer}
+            />
+          }
+          <div className="stakepool-auto-buyer-quick-bar-row">
+            {isHidingDetails ? (
+              <div>
+                <Tooltip text={<T id="autobuyer.balanceToMaintain" m="Balance to Maintain" />}>
+                  <div className="stakepool-balance-to-maintain-icon">{balanceToMaintain}</div>
+                </Tooltip>
+                <Tooltip text={<T id="autobuyer.maxFee" m="Max Fee" />}>
+                  <div className="stakepool-max-fee-icon">{maxFee} DCR</div>
+                </Tooltip>
+                <Tooltip text={<T id="autobuyer.maxPriceAbsolute" m="Max Price Absolute" />}>
+                  <div className="stakepool-max-price-absolute-icon">{maxPriceAbsolute} DCR</div>
+                </Tooltip>
+                <Tooltip text={<T id="autobuyer.maxPriceRelative" m="Max Price Relative" />}>
+                  <div className="stakepool-max-price-relative-icon">{maxPriceRelative}%</div>
+                </Tooltip>
+                <Tooltip text={<T id="autobuyer.maxPerBlock" m="Max Per Block" />}>
+                  <div className="stakepool-max-per-block-icon">{maxPerBlock}</div>
+                </Tooltip>
+              </div>
+            ) : null}
+          </div>
+          <div className="stakepool-purchase-ticket-input-buttons">
+            <InfoModalButton
+              modalTitle={<h1><T id="accounts.automaticPurchaseInfo" m="Automatic Purchase Information" /></h1>}
+              modalContent={<TicketAutoBuyerInfoModalContent />}
+            />
+            <TicketsCogs opened={isHidingDetails} onClick={onToggleShowDetails} />
+          </div>
+        </div>
+        {
+          !isHidingDetails ? <Details {...{
+            isTicketAutoBuyerConfigDirty,
+            getTicketBuyerConfigResponse,
+            formatMessage,
+            maxFeeError,
+            balanceToMaintainError,
+            maxPriceAbsoluteError,
+            maxPriceRelativeError,
+            onChangeBalanceToMaintain,
+            onChangeMaxFee,
+            onChangeMaxPriceAbsolute,
+            onChangeMaxPriceRelative,
+            onChangeMaxPerBlock,
+            onUpdateTicketAutoBuyerConfig,
+            canNotEnableAutobuyer,
+            isHidingDetails,
+            balanceToMaintain,
+            maxFee,
+            maxPriceAbsolute,
+            maxPriceRelative,
+            maxPerBlock
+          }}
+          /> : null
+        }
       </div>
     </Aux>
   );

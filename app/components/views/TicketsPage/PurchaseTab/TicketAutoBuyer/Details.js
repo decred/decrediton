@@ -40,15 +40,14 @@ const Details = ({
   onChangeMaxPerBlock,
   onUpdateTicketAutoBuyerConfig,
   canNotEnableAutobuyer,
-  isHidingDetails,
   balanceToMaintain,
   maxFee,
   maxPriceAbsolute,
   maxPriceRelative,
   maxPerBlock
 }) => (
-    <div className={isHidingDetails ? "stakepool-flex-height-auto-buyer-hidden" : "stakepool-flex-height-auto-buyer-shown"}>
-      <div hidden={isHidingDetails ? true : false} className="stakepool-auto-buyer-advanced-area">
+    <Aux>
+      <div className="stakepool-auto-buyer-advanced-area">
         {canNotEnableAutobuyer ?
           <div className="orange-warning">
             <T id="autobuyer.canNotEnableAutobuyer" m="*Please fix fields with errors" />
@@ -156,7 +155,7 @@ const Details = ({
           </KeyBlueButton>
         </div>
       </div>
-    </div>
+    </Aux>
   );
 
 export default Details;
