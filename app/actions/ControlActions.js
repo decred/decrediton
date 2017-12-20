@@ -646,7 +646,7 @@ export const VALIDATEADDRESS_ATTEMPT = "VALIDATEADDRESS_ATTEMPT";
 export const VALIDATEADDRESS_FAILED = "VALIDATEADDRESS_FAILED";
 export const VALIDATEADDRESS_SUCCESS = "VALIDATEADDRESS_SUCCESS";
 
-export const validateAddress = address => async (dispatch, getState) => {  
+export const validateAddress = address => async (dispatch, getState) => {
   try {
     const { network } = getState().grpc;
     const validationErr = isValidAddress(address, network);
