@@ -41,6 +41,7 @@ class Paginator extends React.Component {
       : LargePaginator;
 
     return (
+      this.props.totalPages > 1 &&
       <Component
         {...{
           ...this.props,
