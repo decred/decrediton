@@ -14,10 +14,10 @@ class ValidateAddress extends React.Component {
 
     let result = null;
     if (validateAddressSuccess) {
-      const isValid = validateAddressSuccess.getIsValid();
+      const isValid = validateAddressSuccess.isValid;
       let isValidDisplay = null;
       if (isValid) {
-        const isMine = validateAddressSuccess.getIsMine();
+        const isMine = validateAddressSuccess.isMine;
         if (isMine) {
           isValidDisplay = <T id="securitycenter.validate.result.owned" m="Owned address!" />;
         } else {
@@ -45,7 +45,7 @@ class ValidateAddress extends React.Component {
   }
 
   onSubmit(props) {
-    this.props.validateAddress(props);
+    this.props.validateWalletAddress(props);
   }
 }
 

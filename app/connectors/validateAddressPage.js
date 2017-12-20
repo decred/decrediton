@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import * as sel from "../selectors";
-import { validateAddress } from "actions/ControlActions";
+import { validateWalletAddress } from "actions/ControlActions";
 import { selectorMap } from "fp";
 
 const mapStateToProps = selectorMap({
@@ -8,4 +8,4 @@ const mapStateToProps = selectorMap({
   validateAddressSuccess: sel.validateAddressSuccess,
 });
 
-export default connect(mapStateToProps, { validateAddress });
+export default connect(mapStateToProps, { validateWalletAddress });
