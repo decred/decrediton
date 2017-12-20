@@ -2,7 +2,7 @@ import {
   compose, reduce, filter, get, not, or, and, eq, find, bool, map, apply,
   createSelectorEager as createSelector
 } from "./fp";
-// import { createSelector as createSelectorLazy } from "reselect";
+import { createSelector as createSelectorLazy } from "reselect";
 import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
 import { decodeVoteScript } from "./helpers/tickets";
@@ -259,11 +259,12 @@ export const viewedDecodedTransaction = createSelector(
   (transactions, txHash, decodedTransactions) => decodedTransactions[txHash]
 );
 
-const ticketNormalizer = createSelector(
+const ticketNormalizer = createSelectorLazy(
   [decodedTransactions, network],
   (decodedTransactions, network) => {
     return ticket => {
       console.log("normalizing ticket");
+
       const hasSpender = ticket.spender && ticket.spender.getHash();
       const isVote = ticket.status === "voted";
       const ticketTx = ticket.ticket;
@@ -354,13 +355,17 @@ const ticketNormalizer = createSelector(
 );
 export const noMoreTickets = get(["grpc", "noMoreTickets"]);
 export const ticketFilter = get(["grpc", "ticketFilter"]);
-export const tickets = createSelector(
-  [ticketNormalizer, get(["grpc", "tickets"])],
-  (normalizer, tickets) => {
-    console.log("Recalculating tickets selector");
-    return tickets.map(normalizer);
-  }
+export const ticketsNormalizer = createSelectorLazy([ticketNormalizer], map);
+export const tickets = createSelectorLazy(
+  [ticketsNormalizer, get(["grpc", "tickets"])], apply
 );
+// export const tickets = createSelectorLazy(
+//   [ticketNormalizer, get(["grpc", "tickets"])],
+//   (normalizer, tickets) => {
+//     console.log("Recalculating tickets selector");
+//     return tickets.map(normalizer);
+//   }
+// );
 
 const rescanResponse = get(["control", "rescanResponse"]);
 export const rescanRequest = get(["control", "rescanRequest"]);

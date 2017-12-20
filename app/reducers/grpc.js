@@ -245,7 +245,7 @@ export default function grpc(state = {}, action) {
       tickets: tickets,
       unminedTickets: action.unminedTickets,
       minedTickets: action.minedTickets,
-      noMoreTIckets: action.noMoreTIckets,
+      noMoreTickets: action.noMoreTickets,
       lastTicket: action.lastTicket,
       getTicketsRequestError: "",
       getTicketsRequestAttempt: false,

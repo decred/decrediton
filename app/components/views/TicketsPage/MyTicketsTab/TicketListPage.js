@@ -14,9 +14,9 @@ class TicketListPage extends React.Component {
     //this.requestTicketsRawTx();
   }
 
-  componentWillReceiveProps(nextProps) {
-    //this.setState(this.calcPagination(nextProps.tickets));
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   //this.setState(this.calcPagination(nextProps.tickets));
+  // }
   onInfoCardClick(ticket) {
     if (ticket === this.state.expandedTicket) {
       this.setState({ expandedTicket: null });
@@ -41,7 +41,7 @@ class TicketListPage extends React.Component {
 
   onLoadMoreTickets() {
     console.log("do load more tickets please");
-    this.props.getTickets && this.props.getTickets();
+    setTimeout(() => this.props.getTickets && this.props.getTickets(), 10);
   }
 
   render() {
