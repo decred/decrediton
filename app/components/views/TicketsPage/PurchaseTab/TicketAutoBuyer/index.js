@@ -12,6 +12,20 @@ class TicketAutoBuyer extends React.Component {
     this.state = this.getInitialState();
   }
 
+  getInitialState() {
+    return {
+      ...this.getCurrentSettings(),
+      isHidingDetails: true,
+      isScrollingDown: false,
+      canNotEnableAutobuyer: false,
+      balanceToMaintainError: false,
+      maxFeeError: false,
+      maxPriceAbsoluteError: false,
+      maxPriceRelativeError: false,
+      maxPerBlockError: false
+    };
+  }
+
   componentDidUpdate() {
     const {isHidingDetails} = this.state;
     if(!isHidingDetails) {
@@ -20,7 +34,13 @@ class TicketAutoBuyer extends React.Component {
   }
 
   scrollTo(element, to, duration) {
-    if (duration <= 0) return;
+    const {isScrollingDown} = this.state;
+    if (!isScrollingDown)
+      return;
+    if (duration <= 0) {
+      this.setState({ isScrollingDown: false });
+      return;
+    }
     const difference = to - element.scrollTop;
     const perTick = difference / duration * 10;
 
@@ -35,19 +55,6 @@ class TicketAutoBuyer extends React.Component {
   scrollToBottom () {
     const content = document.querySelector(".tab-content");
     this.scrollTo(content, content.scrollHeight, 300);
-  }
-
-  getInitialState() {
-    return {
-      ...this.getCurrentSettings(),
-      isHidingDetails: true,
-      canNotEnableAutobuyer: false,
-      balanceToMaintainError: false,
-      maxFeeError: false,
-      maxPriceAbsoluteError: false,
-      maxPriceRelativeError: false,
-      maxPerBlockError: false
-    };
   }
 
   getDetailsComponent () {
@@ -147,7 +154,7 @@ class TicketAutoBuyer extends React.Component {
   }
 
   onShowDetails() {
-    this.setState({ isHidingDetails: false });
+    this.setState({ isHidingDetails: false, isScrollingDown: true });
   }
 
   onHideDetails() {
