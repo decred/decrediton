@@ -259,7 +259,7 @@ export const viewedDecodedTransaction = createSelector(
   (transactions, txHash, decodedTransactions) => decodedTransactions[txHash]
 );
 
-const ticketNormalizer = createSelectorLazy(
+export const ticketNormalizer = createSelectorLazy(
   [decodedTransactions, network],
   (decodedTransactions, network) => {
     return ticket => {

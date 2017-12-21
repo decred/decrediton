@@ -8,23 +8,6 @@ import "style/MyTickets.less";
 @autobind
 class TicketListPage extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = { expandedTicket: null };
-    //this.requestTicketsRawTx();
-  }
-
-  // componentWillReceiveProps(nextProps) {
-  //   //this.setState(this.calcPagination(nextProps.tickets));
-  // }
-  onInfoCardClick(ticket) {
-    if (ticket === this.state.expandedTicket) {
-      this.setState({ expandedTicket: null });
-    } else {
-      this.setState({ expandedTicket: ticket });
-    }
-  }
-
   requestTicketsRawTx() {
     const { tickets } = this.props;
     const toDecode = tickets.reduce((a, t) => {
@@ -45,7 +28,6 @@ class TicketListPage extends React.Component {
   }
 
   render() {
-    const { expandedTicket } = this.state;
     const { tickets, noMoreTickets } = this.props;
     const { onLoadMoreTickets } = this;
     console.log("re-rendering ticketListPage");
@@ -60,7 +42,7 @@ class TicketListPage extends React.Component {
       >
         <div className="tab-card">
             {tickets.length > 0
-              ? <TicketsCardList tickets={tickets} expandedTicket={expandedTicket} />
+              ? <TicketsCardList tickets={tickets} />
               : null}
             {!noMoreTickets
               ? <LoadingMoreTicketsIndicator />

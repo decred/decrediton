@@ -386,7 +386,9 @@ export const getTickets = () => async (dispatch, getState) => {
     }
   }
 
-  minedTickets = [...minedTickets, ...filtered];
+  const normalized = sel.ticketsNormalizer(getState())(filtered);
+
+  minedTickets = [...minedTickets, ...normalized];
 
   dispatch({ unminedTickets, minedTickets,
     noMoreTickets, lastTicket, type: GETTICKETS_COMPLETE});
