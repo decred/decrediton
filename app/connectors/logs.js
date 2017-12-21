@@ -1,12 +1,12 @@
 // @flow
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as ca from "../actions/DaemonActions";
+import * as da from "../actions/DaemonActions";
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getDcrdLogs: ca.getDcrdLogs,
-  getDcrwalletLogs: ca.getDcrwalletLogs,
-  getDecreditonLogs: ca.getDecreditonLogs,
+  getDcrdLogs: da.getDcrdLogs,
+  getDcrwalletLogs: da.getDcrwalletLogs,
+  getDecreditonLogs: da.getDecreditonLogs,
 }, dispatch);
 
 export default connect(mapDispatchToProps);

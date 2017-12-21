@@ -1,5 +1,5 @@
 import Logs from "./Page";
-import { getLogFile } from "helpers";
+import {getDcrdLogs, getDcrwalletLogs, getDecreditonLogs} from "wallet";
 
 @autobind
 class LogsTab extends React.Component {
@@ -23,7 +23,6 @@ class LogsTab extends React.Component {
     const {
       dcrdLogs, dcrwalletLogs, decreditonLogs
     } = this.state;
-    console.log(typeof(showDcrdLogs));
     return (
       <Logs
         {...{
@@ -43,8 +42,11 @@ class LogsTab extends React.Component {
   }
 
   showDecreditonLogs() {
-    var logs = this.props.getDecreditonLogs();
-    this.setState({decreditonLogs: logs});
+    getDecreditonLogs()
+    .then(logs => {
+      this.setState({decreditonLogs: logs});
+    })
+    .catch(err => console.error(err));
   }
 
   hideDecreditonLogs() {
@@ -52,8 +54,11 @@ class LogsTab extends React.Component {
   }
 
   showDcrdLogs() {
-    var logs = this.props.getDcrdLogs();
-    this.setState({decreditonLogs: logs});
+    getDcrdLogs()
+    .then(logs => {
+      this.setState({dcrdLogs: logs});
+    })
+    .catch(err => console.error(err));
   }
 
   hideDcrdLogs() {
@@ -61,8 +66,11 @@ class LogsTab extends React.Component {
   }
 
   showDcrwalletLogs() {
-    var logs = this.props.getDcrwalletLogs();
-    this.setState({decreditonLogs: logs});
+    getDcrwalletLogs()
+    .then(logs => {
+      this.setState({dcrwalletLogs: logs});
+    })
+    .catch(err => console.error(err));
   }
 
   hideDcrwalletLogs() {

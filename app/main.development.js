@@ -340,16 +340,19 @@ ipcMain.on("main-log", (event, ...args) => {
   logger.log(...args);
 });
 
-ipcMain.on("get-dcrd-logs", () => {
-  return "daemon logs!";
+ipcMain.on("get-dcrd-logs", (event) => {
+  logger.log("info", "getting-dcrd-logs");
+  event.returnValue = "daemon logs!";
 });
 
-ipcMain.on("get-dcrwallet-logs", () => {
-  return "dcrwallet logs!";
+ipcMain.on("get-dcrwallet-logs", (event) => {
+  logger.log("info", "getting-dcrwallet-logs");
+  event.returnValue = "dcrwallet logs!";
 });
 
-ipcMain.on("get-decrediton-logs", () => {
-  return "decrediton logs!";
+ipcMain.on("get-decrediton-logs", (event) => {
+  logger.log("info", "getting-decrediton-logs");
+  event.returnValue = "decrediton logs!";
 });
 
 const launchDCRD = (appdata) => {
