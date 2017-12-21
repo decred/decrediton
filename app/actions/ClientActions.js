@@ -5,7 +5,7 @@ import eq from "lodash/fp/eq";
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, stopAutoBuyerAttempt } from "./ControlActions";
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
-import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
+import { getDecodeMessageServiceAttempt, decodeRawTransactions } from "./DecodeMessageActions";
 import { showSidebarMenu } from "./SidebarActions";
 import { push as pushHistory } from "react-router-redux";
 import { getCfg } from "../config.js";
@@ -355,7 +355,8 @@ export const getTickets = () => async (dispatch, getState) => {
   // have been mined
   tickets = await wallet.getTickets(walletService, -1, -1, 0);
   console.log("from unmined: ", tickets);
-  let unminedTickets = filterTickets(tickets, ticketsFilter);
+  const unminedFiltered = filterTickets(tickets, ticketsFilter);
+  const unminedTickets = sel.ticketsNormalizer(getState())(unminedFiltered);
 
   // now, request a batch of mined transactions until `maximumTransactionCount`
   // transactions have been obtained (after filtering)
@@ -392,6 +393,23 @@ export const getTickets = () => async (dispatch, getState) => {
 
   dispatch({ unminedTickets, minedTickets,
     noMoreTickets, lastTicket, type: GETTICKETS_COMPLETE});
+};
+
+export const RAWTICKETTRANSACTIONS_DECODED = "RAWTICKETTRANSACTIONS_DECODED";
+export const decodeRawTicketTransactions = (ticket) => (dispatch, getState) => {
+  const toDecode = [];
+  if (!ticket.decodedTicketTx) {
+    toDecode.push(ticket.ticketRawTx);
+    if (ticket.spenderHash) {
+      toDecode.push(ticket.spenderRawTx);
+    }
+  }
+  if (!toDecode.length) return;
+
+  dispatch(decodeRawTransactions(toDecode)).then(() => {
+    const newTicket = sel.ticketNormalizer(getState())(ticket.originalTicket);
+    dispatch({ticket, newTicket, type: RAWTICKETTRANSACTIONS_DECODED});
+  });
 };
 
 export const CLEAR_TICKETS = "CLEAR_TICKETS";

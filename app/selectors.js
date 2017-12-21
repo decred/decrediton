@@ -349,6 +349,7 @@ export const ticketNormalizer = createSelectorLazy(
         status: ticket.status,
         ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),
         spenderRawTx: hasSpender ? Buffer.from(spenderTx.getTransaction()).toString("hex") : null,
+        originalTicket: ticket,
       };
     };
   }

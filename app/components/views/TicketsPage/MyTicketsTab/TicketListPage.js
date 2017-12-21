@@ -8,27 +8,13 @@ import "style/MyTickets.less";
 @autobind
 class TicketListPage extends React.Component {
 
-  requestTicketsRawTx() {
-    const { tickets } = this.props;
-    const toDecode = tickets.reduce((a, t) => {
-      if (!t.decodedTicketTx) {
-        a.push(t.ticketRawTx);
-        if (t.spenderHash) {
-          a.push(t.spenderRawTx);
-        }
-      }
-      return a;
-    }, []);
-    this.props.decodeRawTransactions(toDecode);
-  }
-
   onLoadMoreTickets() {
     console.log("do load more tickets please");
     setTimeout(() => this.props.getTickets && this.props.getTickets(), 10);
   }
 
   render() {
-    const { tickets, noMoreTickets } = this.props;
+    const { tickets, noMoreTickets, decodeRawTicketTransactions } = this.props;
     const { onLoadMoreTickets } = this;
     console.log("re-rendering ticketListPage");
 
@@ -42,7 +28,7 @@ class TicketListPage extends React.Component {
       >
         <div className="tab-card">
             {tickets.length > 0
-              ? <TicketsCardList tickets={tickets} />
+              ? <TicketsCardList {...{tickets, decodeRawTicketTransactions}} />
               : null}
             {!noMoreTickets
               ? <LoadingMoreTicketsIndicator />

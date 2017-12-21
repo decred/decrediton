@@ -11,7 +11,7 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  decodeRawTransactions: dma.decodeRawTransactions,
+  decodeRawTicketTransactions: ca.decodeRawTicketTransactions,
   getTickets: ca.getTickets,
 }, dispatch);
 

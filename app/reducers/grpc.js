@@ -12,7 +12,7 @@ import {
   NEW_TRANSACTIONS_RECEIVED, CHANGE_TRANSACTIONS_FILTER,
   CLEAR_MOSTRECENTTRANSACTIONS,
   UPDATETIMESINCEBLOCK,
-  GETTICKETS_ATTEMPT, GETTICKETS_FAILED, GETTICKETS_COMPLETE,
+  GETTICKETS_ATTEMPT, GETTICKETS_FAILED, GETTICKETS_COMPLETE, RAWTICKETTRANSACTIONS_DECODED,
   GETAGENDASERVICE_ATTEMPT, GETAGENDASERVICE_FAILED, GETAGENDASERVICE_SUCCESS,
   GETMESSAGEVERIFICATIONSERVICE_ATTEMPT, GETMESSAGEVERIFICATIONSERVICE_FAILED, GETMESSAGEVERIFICATIONSERVICE_SUCCESS,
   GETVOTINGSERVICE_ATTEMPT, GETVOTINGSERVICE_FAILED, GETVOTINGSERVICE_SUCCESS,
@@ -249,6 +249,15 @@ export default function grpc(state = {}, action) {
       lastTicket: action.lastTicket,
       getTicketsRequestError: "",
       getTicketsRequestAttempt: false,
+    };
+  case RAWTICKETTRANSACTIONS_DECODED:
+    var idxOldTicket = state.tickets.indexOf(action.ticket);
+    if (idxOldTicket < 0) return state;
+    var newTickets = state.tickets.slice();
+    newTickets.splice(idxOldTicket, 1, action.newTicket);
+    return {
+      ...state,
+      tickets: newTickets
     };
   case GETTRANSACTIONS_ATTEMPT:
     return {

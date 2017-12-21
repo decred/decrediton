@@ -4,8 +4,9 @@ import { Balance, Tooltip } from "shared";
 import { tsToDate } from "helpers/dateFormat";
 import { FormattedMessage as T } from "react-intl";
 import { statusTxt } from "./messages";
+import { decodeRawTicketTransactions } from "../../../../actions/ClientActions";
 
-//const TicketInfoCard = ({ ticket, onClick, expanded }) => {
+@autobind
 class TicketInfoCard extends React.Component {
 
   shouldComponentUpdate(nextProps) {
@@ -14,7 +15,7 @@ class TicketInfoCard extends React.Component {
   }
 
   render() {
-    const { ticket, onClick, expanded } = this.props;
+    const { ticket, onClick, expanded, decodeRawTicketTransactions } = this.props;
     console.log("rendering ticketInfoCard");
 
     const className = "ticket-info-card" + (expanded ? " is-expanded" : "");
@@ -48,9 +49,15 @@ class TicketInfoCard extends React.Component {
         values={{days, status: statusTxt[ticket.status]}} />;
     }
 
+    // will only listen for mouseMove if we need to decode the ticket to
+    // show further info.
+    const onMouseEnter = !ticket.decodedTicketTx
+      ? () => decodeRawTicketTransactions(ticket) : undefined;
+
     return (<TicketCard
       {...{ className, status: ticket.status }}
       onClick={() => onClick(ticket)}
+      onMouseEnter={onMouseEnter}
     >
       <div className="ticket-info-expanded-indicator"></div>
       <div className="ticket-info-price"><Balance amount={ticket.ticketPrice} /></div>
