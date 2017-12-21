@@ -43,8 +43,8 @@ class LogsTab extends React.Component {
   }
 
   showDecreditonLogs() {
-    const { decreditonLogPath } = this.props;
-    this.setState({decreditonLogs: getLogFile("/home/user/.config/decrediton/decrediton.log")});
+    var logs = this.props.getDecreditonLogs();
+    this.setState({decreditonLogs: logs});
   }
 
   hideDecreditonLogs() {
@@ -52,8 +52,8 @@ class LogsTab extends React.Component {
   }
 
   showDcrdLogs() {
-    const { dcrdLogPath } = this.props;
-    this.setState({decreditonLogs: getLogFile("/home/user/.dcrd/logs/testnet2/dcrd.log")});
+    var logs = this.props.getDcrdLogs();
+    this.setState({decreditonLogs: logs});
   }
 
   hideDcrdLogs() {
@@ -61,8 +61,8 @@ class LogsTab extends React.Component {
   }
 
   showDcrwalletLogs() {
-    const { dcrwalletLogPath } = this.props;
-    this.setState({decreditonLogs: getLogFile("/home/user/.config/decrediton/logs/testnet2/dcrwallet.log")});
+    var logs = this.props.getDcrwalletLogs();
+    this.setState({decreditonLogs: logs});
   }
 
   hideDcrwalletLogs() {

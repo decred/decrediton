@@ -340,6 +340,18 @@ ipcMain.on("main-log", (event, ...args) => {
   logger.log(...args);
 });
 
+ipcMain.on("get-dcrd-logs", () => {
+  return "daemon logs!";
+});
+
+ipcMain.on("get-dcrwallet-logs", () => {
+  return "dcrwallet logs!";
+});
+
+ipcMain.on("get-decrediton-logs", () => {
+  return "decrediton logs!";
+});
+
 const launchDCRD = (appdata) => {
   var spawn = require("child_process").spawn;
   let args = [];
