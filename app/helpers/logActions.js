@@ -1,15 +1,27 @@
+import fs from "fs";
+import path from "path";
+import os from "os";
+import { getCfg } from "../config";
+
 // getLogFile attempts to read the logfile at the given path
-export function getLogFile(logPath) {
-  var reader = new FileReader();
-  reader.onload = function(event) {
-    var contents = event.target.result;
-    console.log("File contents: " + contents);
-  };
+export function getDcrwalletLogs() {
+  var logPath = "";
+  var cfg = getCfg();
 
-  reader.onerror = function(event) {
-    console.error("File could not be read! Code " + event.target.error.code);
-  };
+  if (os.platform() == "win32") {
+    logPath = path.join(os.homedir(), "AppData", "Local", "Decrediton", "logs", "testnet2", "dcrwallet.log");
+  } else if (os.platform() == "darwin") {
+    logPath = path.join(os.homedir(), "Library", "Application Support",
+            "decrediton", "logs",  "testnet2", "dcrwallet.log");
+  } else {
+    logPath = path.join(os.homedir(), ".config", "decrediton", "logs",  "testnet2", "dcrwallet.log");
+  }
 
-  reader.readAsText(logPath);
-  return logPath;
+  var logs;
+  try {
+    logs = fs.readFileSync(logPath, "utf8");
+  } catch(err) {
+    throw err;
+  }
+  return logs;
 }

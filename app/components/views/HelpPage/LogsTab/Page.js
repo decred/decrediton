@@ -35,7 +35,7 @@ const Logs = ({
             Hide Dcrwallet Logs
           </div>
           <div className="log-area-logs">
-            {dcrwalletLogs}
+            <textarea rows="50" cols="140" value={dcrwalletLogs} disabled />
           </div>
         </div>
       }

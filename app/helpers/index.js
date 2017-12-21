@@ -26,4 +26,4 @@ export const getTabs = routes => routes[1].childRoutes && routes[1].childRoutes.
 export const getTab = routes => routes[2] && routes[2].path;
 export const getPage = routes => (routes[1] && routes[1].path) || "root";
 
-export { getLogFile } from "./logActions";
+export { getDcrwalletLogs } from "./logActions";

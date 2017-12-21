@@ -8,6 +8,7 @@ import parseArgs from "minimist";
 import stringArgv from "string-argv";
 import { appLocaleFromElectronLocale, default as locales} from "./i18n/locales";
 import { createLogger } from "./logging";
+import { getDcrwalletLogs } from "./helpers";
 
 let menu;
 let template;
@@ -347,7 +348,7 @@ ipcMain.on("get-dcrd-logs", (event) => {
 
 ipcMain.on("get-dcrwallet-logs", (event) => {
   logger.log("info", "getting-dcrwallet-logs");
-  event.returnValue = "dcrwallet logs!";
+  event.returnValue = getDcrwalletLogs();
 });
 
 ipcMain.on("get-decrediton-logs", (event) => {

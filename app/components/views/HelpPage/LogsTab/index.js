@@ -68,7 +68,10 @@ class LogsTab extends React.Component {
   showDcrwalletLogs() {
     getDcrwalletLogs()
     .then(logs => {
-      this.setState({dcrwalletLogs: logs});
+      console.log("herere");
+      console.log(typeof(logs));
+      var dcrwalletLogs = Buffer.from(logs).toString("utf8");
+      this.setState({dcrwalletLogs});
     })
     .catch(err => console.error(err));
   }
