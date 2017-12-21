@@ -19,9 +19,22 @@ class TicketAutoBuyer extends React.Component {
     }
   }
 
+  scrollTo(element, to, duration) {
+    if (duration <= 0) return;
+    const difference = to - element.scrollTop;
+    const perTick = difference / duration * 10;
+
+    let intervelId = setTimeout(() => {
+      element.scrollTop = element.scrollTop + perTick;
+      this.scrollTo(element, to, duration - 10);
+      clearTimeout(intervelId);
+      intervelId = null;
+    }, 10);
+  }
+
   scrollToBottom () {
     const content = document.querySelector(".tab-content");
-    content.scrollTop = content.offsetHeight;
+    this.scrollTo(content, content.scrollHeight, 300);
   }
 
   getInitialState() {
