@@ -33,7 +33,11 @@ export default defineMessages({
   "settings.description":                     { id: "settings.description",                  defaultMessage: "Changing network settings requires a restart" },
 
   "help.title":                               { id: "help.title",                            defaultMessage: "Help" },
-  "help.description":                         { id: "help.description",                      defaultMessage: "If you have any difficulty with decrediton, please use the following links to help find a solution." },
+  "help.tab.links":                           { id: "help.tab.links",                        defaultMessage: "Links" },
+  "help.description.links":                   { id: "help.description.links",                defaultMessage: "If you have any difficulty with decrediton, please use the following links to help find a solution." },
+  "help.tab.logs":                            { id: "help.tab.logs",                         defaultMessage: "View Logs" },
+  "help.description.logs":                    { id: "help.description.logs",                 defaultMessage: "Please find your current logs below to look for any issue or error you are having." },
+
 
   "error.title":                              { id: "error.title",                           defaultMessage: "An error has occured" },
   "walletError.title":                        { id: "walletError.title",                     defaultMessage: "An error has occured" },
