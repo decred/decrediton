@@ -356,9 +356,10 @@ const ticketNormalizer = createSelectorLazy(
 export const noMoreTickets = get(["grpc", "noMoreTickets"]);
 export const ticketFilter = get(["grpc", "ticketFilter"]);
 export const ticketsNormalizer = createSelectorLazy([ticketNormalizer], map);
-export const tickets = createSelectorLazy(
-  [ticketsNormalizer, get(["grpc", "tickets"])], apply
-);
+// export const tickets = createSelectorLazy(
+//   [ticketsNormalizer, get(["grpc", "tickets"])], apply
+// );
+export const tickets = get(["grpc", "tickets"]);
 // export const tickets = createSelectorLazy(
 //   [ticketNormalizer, get(["grpc", "tickets"])],
 //   (normalizer, tickets) => {
