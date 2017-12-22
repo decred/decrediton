@@ -1,16 +1,17 @@
-import TicketsCardList from "./TicketsCardList";
-import TicketOverviewCard from "./TicketOverviewCard";
-import { ticketsOverview } from "connectors";
+//FIXME: not being used right now
+// import TicketsCardList from "./TicketsCardList";
+// import TicketOverviewCard from "./TicketOverviewCard";
+// import { ticketsOverview } from "connectors";
 
-const TicketsOverview = ({ ticketsPerStatus, showTicketList }) => {
-  const cardStatus = ["revoked", "voted", "expired", "missed", "unmined",
-    "immature", "live"];
+// const TicketsOverview = ({ ticketsPerStatus, showTicketList }) => {
+//   const cardStatus = ["revoked", "voted", "expired", "missed", "unmined",
+//     "immature", "live"];
 
-  const cards = cardStatus.map(v =>
-    <TicketOverviewCard key={v} status={v} tickets={ticketsPerStatus[v]} onClick={() => showTicketList(v)} />
-  );
+//   const cards = cardStatus.map(v =>
+//     <TicketOverviewCard key={v} status={v} tickets={ticketsPerStatus[v]} onClick={() => showTicketList(v)} />
+//   );
 
-  return (<TicketsCardList>{cards}</TicketsCardList>);
-};
+//   return (<TicketsCardList>{cards}</TicketsCardList>);
+// };
 
-export default ticketsOverview(TicketsOverview);
+// export default ticketsOverview(TicketsOverview);

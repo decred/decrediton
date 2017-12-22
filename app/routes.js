@@ -13,8 +13,6 @@ import VerifyTab from "./components/views/SecurityPage/VerifyMessage";
 import ValidateTab from "./components/views/SecurityPage/ValidateAddress";
 import PurchaseTab from "./components/views/TicketsPage/PurchaseTab";
 import MyTicketsTab from "./components/views/TicketsPage/MyTicketsTab";
-import MyTicketsOverview from "./components/views/TicketsPage/MyTicketsTab/TicketsOverview";
-import MyTicketsList from "./components/views/TicketsPage/MyTicketsTab/TicketListPage";
 import GovernanceTab from "./components/views/TicketsPage/GovernanceTab";
 import StatisticsTab from "./components/views/TicketsPage/StatisticsTab";
 import GetStartedPage from "./components/views/GetStartedPage";

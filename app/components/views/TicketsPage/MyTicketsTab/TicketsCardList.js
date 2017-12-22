@@ -34,7 +34,7 @@ class TicketsCardList extends React.Component {
       })}
     </div>);
   }
-};
+}
 
 export default TicketsCardList;
 

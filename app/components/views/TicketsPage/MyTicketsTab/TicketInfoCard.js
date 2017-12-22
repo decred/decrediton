@@ -4,7 +4,6 @@ import { Balance, Tooltip } from "shared";
 import { tsToDate } from "helpers/dateFormat";
 import { FormattedMessage as T } from "react-intl";
 import { statusTxt } from "./messages";
-import { decodeRawTicketTransactions } from "../../../../actions/ClientActions";
 
 @autobind
 class TicketInfoCard extends React.Component {
