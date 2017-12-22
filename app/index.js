@@ -175,7 +175,7 @@ var initialState = {
     noMoreTickets: false,
     ticketsFilter: {
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
-      types: [], // desired transaction types (code). All if blank.
+      status: [], // desired ticket status (code). All if blank.
     },
     lastTicket: null, //last ticket obtained
 

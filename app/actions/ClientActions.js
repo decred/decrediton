@@ -329,7 +329,7 @@ export const getTicketsInfoAttempt = () => (dispatch, getState) => {
 
 function filterTickets(tickets, filter) {
   return tickets
-    .filter(v => filter.types.length ? filter.types.indexOf(v.type) > -1 : true );
+    .filter(v => filter.status.length ? filter.status.indexOf(v.status) > -1 : true );
 }
 
 export const getTickets = () => async (dispatch, getState) => {
@@ -417,6 +417,14 @@ export const reloadTIckets = () => dispatch => {
   dispatch({type: CLEAR_TICKETS});
   dispatch(getTickets());
 };
+
+export const CHANGE_TICKETS_FILTER = "CHANGE_TICKETS_FILTER";
+export function changeTicketsFilter(newFilter) {
+  return (dispatch) => {
+    dispatch({ticketsFilter: newFilter, type: CHANGE_TICKETS_FILTER});
+    dispatch(getTickets());
+  };
+}
 
 export const GETTRANSACTIONS_ATTEMPT = "GETTRANSACTIONS_ATTEMPT";
 export const GETTRANSACTIONS_FAILED = "GETTRANSACTIONS_FAILED";
