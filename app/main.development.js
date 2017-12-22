@@ -8,7 +8,7 @@ import parseArgs from "minimist";
 import stringArgv from "string-argv";
 import { appLocaleFromElectronLocale, default as locales} from "./i18n/locales";
 import { createLogger } from "./logging";
-import { getDcrwalletLogs } from "./helpers";
+import { Buffer } from "buffer";
 
 let menu;
 let template;
@@ -19,6 +19,9 @@ let debug = false;
 let dcrdPID;
 let dcrwPID;
 let currentBlockCount;
+
+let dcrdLogs = null;
+let dcrwalletLogs = null;
 
 // Not going to make incorrect options fatal since running in dev mode has
 // all sorts of things on the cmd line that we don't care about.  If we want
@@ -68,15 +71,6 @@ var opts = {
 
 var argv = parseArgs(process.argv.slice(1), opts);
 debug = argv.debug || process.env.NODE_ENV === "development";
-// Output for child processes.
-var stdout = "ignore";
-if (debug) {
-  stdout = "pipe";
-}
-var stderr = "ignore";
-if (debug) {
-  stderr = "pipe";
-}
 
 if (argv.help) {
   showUsage();
@@ -343,12 +337,12 @@ ipcMain.on("main-log", (event, ...args) => {
 
 ipcMain.on("get-dcrd-logs", (event) => {
   logger.log("info", "getting-dcrd-logs");
-  event.returnValue = "daemon logs!";
+  event.returnValue = dcrdLogs;
 });
 
 ipcMain.on("get-dcrwallet-logs", (event) => {
   logger.log("info", "getting-dcrwallet-logs");
-  event.returnValue = getDcrwalletLogs();
+  event.returnValue = dcrwalletLogs;
 });
 
 ipcMain.on("get-decrediton-logs", (event) => {
@@ -392,7 +386,7 @@ const launchDCRD = (appdata) => {
 
   var dcrd = spawn(dcrdExe, args, {
     detached: os.platform() == "win32",
-    stdio: ["ignore", stdout, stderr]
+    stdio: ["ignore", "pipe", "pipe"]
   });
 
   dcrd.on("error", function (err) {
@@ -413,15 +407,23 @@ const launchDCRD = (appdata) => {
     }
   });
 
-  if (debug) {
-    dcrd.stdout.on("data", (data) => {
-      process.stdout.write(`${data}`);
-    });
+  dcrd.stdout.on("data", (data) => {
+    if (dcrdLogs) {
+      dcrdLogs = Buffer.concat([dcrdLogs, Buffer.from(data)]);
+    } else {
+      dcrdLogs = Buffer.from(data);
+    }
+    if (debug) process.stdout.write(`${data}`);
+  });
 
-    dcrd.stderr.on("data", (data) => {
-      process.stderr.write(`${data}`);
-    });
-  }
+  dcrd.stderr.on("data", (data) => {
+    if (dcrdLogs) {
+      dcrdLogs = Buffer.concat([dcrdLogs, Buffer.from(data)]);
+    } else {
+      dcrdLogs = Buffer.from(data);
+    }
+    if (debug) process.stdout.write(`${data}`);
+  });
 
   dcrdPID = dcrd.pid;
   logger.log("info", "dcrd started with pid:" + dcrdPID);
@@ -476,7 +478,7 @@ const launchDCRWallet = () => {
 
   var dcrwallet = spawn(dcrwExe, args, {
     detached: os.platform() == "win32",
-    stdio: ["ignore", stdout, stderr, "ignore"]
+    stdio: ["ignore", "pipe", "pipe", "ignore"]
   });
 
   dcrwallet.on("error", function (err) {
@@ -497,15 +499,23 @@ const launchDCRWallet = () => {
     }
   });
 
-  if (debug) {
-    dcrwallet.stdout.on("data", (data) => {
-      process.stdout.write(`${data}`);
-    });
+  dcrwallet.stdout.on("data", (data) => {
+    if (dcrwalletLogs) {
+      dcrwalletLogs = Buffer.concat([dcrwalletLogs, Buffer.from(data)]);
+    } else {
+      dcrwalletLogs = Buffer.from(data);
+    }
+    if (debug) process.stdout.write(`${data}`);
+  });
 
-    dcrwallet.stderr.on("data", (data) => {
-      process.stderr.write(`${data}`);
-    });
-  }
+  dcrwallet.stderr.on("data", (data) => {
+    if (dcrwalletLogs) {
+      dcrwalletLogs = Buffer.concat([dcrwalletLogs, Buffer.from(data)]);
+    } else {
+      dcrwalletLogs = Buffer.from(data);
+    }
+    if (debug) process.stderr.write(`${data}`);
+  });
 
   dcrwPID = dcrwallet.pid;
   logger.log("info", "dcrwallet started with pid:" + dcrwPID);

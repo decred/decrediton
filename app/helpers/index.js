@@ -25,5 +25,3 @@ export const showCheck = C => {
 export const getTabs = routes => routes[1].childRoutes && routes[1].childRoutes.map( route => route.path );
 export const getTab = routes => routes[2] && routes[2].path;
 export const getPage = routes => (routes[1] && routes[1].path) || "root";
-
-export { getDcrwalletLogs } from "./logActions";
