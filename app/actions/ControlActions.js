@@ -650,20 +650,18 @@ export const validateAddress = address => async (dispatch, getState) => {
   try {
     const { network } = getState().grpc;
     const validationErr = isValidAddress(address, network);
-    if (validationErr) { return { isValid: false, error: validationErr, getIsValid () { false; } }; }
-    return await wallet.validateAddress(sel.walletService(getState()), address);
+    if (validationErr) {
+      return { isValid: false, error: validationErr, getIsValid () { false; } };
+    }
+    dispatch({ type: VALIDATEADDRESS_ATTEMPT });
+    wallet.validateAddress(sel.walletService(getState()), address)
+      .then(response => {
+        dispatch({ response, type: VALIDATEADDRESS_SUCCESS });
+        return { isValid: response.isValid, error: null, getIsValid () { response.isValid; } };
+      })
+      .catch(error => dispatch({address, error, type: VALIDATEADDRESS_FAILED}));
   } catch (error) {
     dispatch({address, error, type: VALIDATEADDRESS_FAILED});
     throw error;
   }
-};
-
-export const validateWalletAddress = address => async (dispatch, getState) => {
-  const { network } = getState().grpc;
-  const validationErr = isValidAddress(address.address, network);
-  if (validationErr) { return { isValid: false, error: validationErr, getIsValid () { false; } }; }
-  dispatch({ type: VALIDATEADDRESS_ATTEMPT });
-  wallet.validateAddress(sel.walletService(getState()), address.address)
-    .then(response => { dispatch({ response, type: VALIDATEADDRESS_SUCCESS });})
-    .catch(error => dispatch({address, error, type: VALIDATEADDRESS_FAILED}));
 };

@@ -45,7 +45,8 @@ class ValidateAddress extends React.Component {
   }
 
   onSubmit(props) {
-    this.props.validateWalletAddress(props);
+    console.log(props);
+    this.props.validateAddress(props.address);
   }
 }
 
