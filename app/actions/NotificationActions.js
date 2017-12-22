@@ -1,7 +1,7 @@
 // @flow
 import * as wallet from "wallet";
 import { getStakeInfoAttempt, getTicketPriceAttempt, updateAccount } from "./ClientActions";
-import { newTransactionsReceived } from "./ClientActions";
+import { newTransactionsReceived, getTickets } from "./ClientActions";
 import { TransactionNotificationsRequest, AccountNotificationsRequest } from "middleware/walletrpc/api_pb";
 
 export const TRANSACTIONNTFNS_START = "TRANSACTIONNTFNS_START";
@@ -32,7 +32,9 @@ function transactionNtfnsData(response) {
       }, []);
 
       const newlyUnmined = unminedTxList.map((t, i) => wallet.formatUnminedTransaction(t, i));
+
       dispatch(newTransactionsReceived(newlyMined, newlyUnmined));
+      dispatch(getTickets); // to update unmined status of tickets
     } else if (unminedTxList.length > 0) {
       const newlyUnmined = unminedTxList.map((t, i) => wallet.formatUnminedTransaction(t, i));
       dispatch(newTransactionsReceived([], newlyUnmined));

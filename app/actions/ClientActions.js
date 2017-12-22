@@ -211,14 +211,12 @@ export const getStakeInfoAttempt = () => (dispatch, getState) => {
 
       const checkedFields = ["getExpired", "getLive", "getMissed", "getOwnMempoolTix",
         "getRevoked", "getVoted"];
-      const reloadTickets = getStakeInfoResponse
+      const doReloadTickets = getStakeInfoResponse
         ? checkedFields.reduce((a, v) => a||getStakeInfoResponse[v]() !== resp[v](), false)
         : false;
 
-      if (reloadTickets) {
-        // TODO: once we switch to fully streamed getTickets(), just invalidate
-        // the current ticket list.
-        //setTimeout( () => {dispatch(getTicketsInfoAttempt());}, 1000);
+      if (doReloadTickets) {
+        setTimeout( () => {dispatch(reloadTickets());}, 1000);
       }
     })
     .catch(error => dispatch({ error, type: GETSTAKEINFO_FAILED }));
@@ -313,20 +311,6 @@ export const GETTICKETS_ATTEMPT = "GETTICKETS_ATTEMPT";
 export const GETTICKETS_FAILED = "GETTICKETS_FAILED";
 export const GETTICKETS_COMPLETE = "GETTICKETS_COMPLETE";
 
-export const getTicketsInfoAttempt = () => (dispatch, getState) => {
-  // const { grpc: { getTicketsRequestAttempt } } = getState();
-  // if (getTicketsRequestAttempt) return;
-
-  // // using 0..-1 requests all+unmined tickets
-  // let startRequestHeight = 0;
-  // let endRequestHeight = -1;
-
-  // dispatch({ type: GETTICKETS_ATTEMPT });
-  // wallet.getTickets(sel.walletService(getState()), startRequestHeight, endRequestHeight)
-  //   .then(tickets => setTimeout(() => dispatch({ tickets, type: GETTICKETS_COMPLETE }), 1000))
-  //   .catch(error => console.error(error + " Please try again"));
-};
-
 function filterTickets(tickets, filter) {
   return tickets
     .filter(v => filter.status.length ? filter.status.indexOf(v.status) > -1 : true );
@@ -413,7 +397,7 @@ export const decodeRawTicketTransactions = (ticket) => (dispatch, getState) => {
 };
 
 export const CLEAR_TICKETS = "CLEAR_TICKETS";
-export const reloadTIckets = () => dispatch => {
+export const reloadTickets = () => dispatch => {
   dispatch({type: CLEAR_TICKETS});
   dispatch(getTickets());
 };
