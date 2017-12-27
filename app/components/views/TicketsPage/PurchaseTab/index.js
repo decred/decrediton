@@ -20,6 +20,13 @@ class Purchase extends React.Component {
       isShowingImportScript: false,
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.defaultStakePool && nextProps.defaultStakePool) {
+      this.setState({stakePool: nextProps.defaultStakePool});
+    }
+  }
+
   render() {
     return (!this.props.walletService || !this.props.ticketBuyerService) ? <ErrorScreen /> : (
       <PurchasePage
