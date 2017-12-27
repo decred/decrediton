@@ -152,10 +152,10 @@ export const IMPORTSCRIPT_ATTEMPT = "IMPORTSCRIPT_ATTEMPT";
 export const IMPORTSCRIPT_FAILED = "IMPORTSCRIPT_FAILED";
 export const IMPORTSCRIPT_SUCCESS = "IMPORTSCRIPT_SUCCESS";
 
-function importScriptSuccess(importScriptResponse, votingAddress, cb) {
+function importScriptSuccess(importScriptResponse, votingAddress, cb, willRescan) {
   var message = "Script successfully imported, rescanning now";
   return (dispatch) => {
-    dispatch({ importScriptSuccess: message, importScriptResponse: importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
+    dispatch({ importScriptSuccess: message, importScriptResponse, willRescan, type: IMPORTSCRIPT_SUCCESS });
     if (votingAddress) {
       if (importScriptResponse.getP2shAddress() == votingAddress) {
         dispatch(() => cb());
@@ -193,7 +193,7 @@ export function importScriptAttempt(passphrase, script, rescan, scanFrom, voting
           if (rescan) {
             dispatch(rescanAttempt(0));
           }
-          dispatch(importScriptSuccess(importScriptResponse, votingAddress, cb));
+          dispatch(importScriptSuccess(importScriptResponse, votingAddress, cb, rescan));
           if (!votingAddress && !cb) {
             setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
           }
