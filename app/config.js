@@ -2,8 +2,8 @@ import fs from "fs";
 import path from "path";
 import os from "os";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
-import * as Store from "electron-store";
-import * as ini from "ini";
+import Store from "electron-store";
+import ini from "ini";
 
 export function getCfg() {
   const config = new Store();
