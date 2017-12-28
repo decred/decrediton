@@ -45,6 +45,23 @@ const GeneralSettings = ({
             options={locales}
           />
         </div>
+
+        <div className="settings-row">
+          <div className="settings-label">
+            <T id="settings.advancedDaemon.label" m="Advanced Daemon Startup" />
+          </div>
+          <SettingsInput
+            className="settings-input"
+            value={tempSettings.daemonStartAdvanced ? "true" : "false"}
+            onChange={(opt) => onChangeTempSettings({daemonStartAdvanced: opt.value})}
+            valueKey="key"
+            labelKey="description"
+            options={[
+              {key: "true", value: true, description: <T id="settings.advancedDaemon.true" m="Enabled" />},
+              {key: "false", value: false, description: <T id="settings.advancedDaemon.false" m="Disabled" />},
+            ]}
+          />
+        </div>
     </div>
   </div>
 );

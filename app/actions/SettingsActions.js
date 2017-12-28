@@ -9,6 +9,7 @@ export const saveSettings = (settings) => {
   cfg.set("currency_display", settings.currencyDisplay);
   cfg.set("network", settings.network);
   cfg.set("locale", settings.locale);
+  cfg.set("daemon_start_advanced", settings.daemonStartAdvanced);
   return {
     settings,
     type: SETTINGS_SAVE

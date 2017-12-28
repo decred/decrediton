@@ -52,11 +52,13 @@ var initialState = {
       currencyDisplay: cfg.get("currency_display"),
       network: cfg.get("network"),
       locale: cfg.get("locale"),
+      daemonStartAdvanced: cfg.get("daemon_start_advanced"),
     },
     tempSettings: {
       currencyDisplay: cfg.get("currency_display"),
       network: cfg.get("network"),
       locale: cfg.get("locale"),
+      daemonStartAdvanced: cfg.get("daemon_start_advanced"),
     },
     settingsChanged: false,
   },
