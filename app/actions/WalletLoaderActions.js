@@ -3,6 +3,7 @@ import {
   getLoader, startRpc, getWalletExists, createWallet, openWallet, closeWallet, discoverAddresses,
   subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo
 } from "wallet";
+import * as wallet from "wallet";
 import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { getCfg, getCfgPath, getDcrdCert,RPCDaemonPort, RPCDaemonHost } from "config";
@@ -277,7 +278,9 @@ export function determineNeededBlocks() {
     const explorerInfoURL = `https://${network}.decred.org/api/status`;
     axios.get(explorerInfoURL, {timeout: 5000})
     .then(function (response) {
-      dispatch({ neededBlocks: response.data.info.blocks, type: NEEDED_BLOCKS_DETERMINED});
+      const neededBlocks = response.data.info.blocks;
+      wallet.log("info", `Determined needed block height as ${neededBlocks}`);
+      dispatch({ neededBlocks, type: NEEDED_BLOCKS_DETERMINED});
     })
     .catch(function (error) {
       console.log("Unable to obtain latest block number.", error);
