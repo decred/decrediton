@@ -2,16 +2,15 @@ import fs from "fs";
 import path from "path";
 import os from "os";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
-var ini = require("ini");
+import * as Store from "electron-store";
+import * as ini from "ini";
 
 export function getCfg() {
-  const Store = require("electron-store");
   const config = new Store();
   return (config);
 }
 
 export function initCfg() {
-  const Store = require("electron-store");
   const config = new Store();
   // If value is missing (or no config file) write the defaults.
   if (!config.has("network")) {
