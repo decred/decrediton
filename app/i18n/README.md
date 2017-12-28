@@ -16,7 +16,7 @@ import { FormattedMessage as T } from "react-intl";
 
 ...
 
-<T id="send.title" m="Send Funds" /></div>
+<T id="send.title" m="Send Funds" />
 ...
 
 ```
