@@ -89,10 +89,22 @@
   float: left;
   color: #e7eaed;
   font-size: 19px;
-  text-align: right;
   letter-spacing: -0.1px;
   height: 41px;
   line-height: 41px;
+}
+
+.create-wallet-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.seed-type-label {
+  color: #e7eaed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .create-wallet-field {
@@ -133,9 +145,12 @@
   -moz-appearance: none !important;
   position: relative;
   width: 100%;
-  height: 200px;
-  min-height: 44px;
-  border-bottom: 1px solid @input-color;
+
+  .words-input {
+    height: 200px;
+    min-height: 44px;
+    border-bottom: 1px solid @input-color;
+  }
 
   .Select-control {
     border: 0px;
