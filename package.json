@@ -23,6 +23,7 @@
     "package-linux": "npm run build && build --linux",
     "package-mac": "npm run build && build --mac",
     "package-all": "npm run build && build -mwl",
+    "package-dev-linux": "npm run build && build --linux tar.gz",
     "cleanup": "mop -v",
     "flow": "flow",
     "i18n-prepare-untranslated": "node ./scripts/prepareUntranslated.js && ./node_modules/.bin/rip json2pot 'app/i18n/extracted/**/*.json' -c id -o app/i18n/pot/decrediton.pot",
