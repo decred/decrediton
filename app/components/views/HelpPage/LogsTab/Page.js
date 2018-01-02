@@ -30,7 +30,7 @@ const Logs = ({
         </div>:
         <div className="log-area-expanded">
           <div className="log-area-expanded-hide"  onClick={hideDcrwalletLogs}>
-            <T id="help.logs.show.dcrwallet" m="Hide dcrwallet logs" />
+            <T id="help.logs.hide.dcrwallet" m="Hide dcrwallet logs" />
           </div>
           <div className="log-area-logs">
             <textarea rows="30" cols="95" value={dcrwalletLogs} disabled />
