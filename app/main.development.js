@@ -28,9 +28,12 @@ function unknownFn(arg) {
 }
 
 function getExecutablePath(name) {
-  let binPath = process.env.NODE_ENV === "development"
-    ? path.join(__dirname, "..", "bin")
-    : path.join(process.resourcesPath, "bin");
+  let customBinPath = argv.customBinPath;
+
+  let binPath = customBinPath ? customBinPath :
+    process.env.NODE_ENV === "development"
+      ? path.join(__dirname, "..", "bin")
+      : path.join(process.resourcesPath, "bin");
   let execName = os.platform() !== "win32" ? name : name + ".exe";
 
   return path.join(binPath, execName);
@@ -49,13 +52,14 @@ Options
   --testnet          Connect to testnet
   --mainnet          Connect to mainnet
   --extrawalletargs  Pass extra arguments to dcrwallet
+  --customBinPath    Custom path for dcrd/dcrwallet/dcrctl binaries
 `);
 }
 
 // Allowed cmd line options are defined here.
 var opts = {
   boolean: ["debug", "testnet", "mainnet", "help", "version"],
-  string: ["extrawalletargs"],
+  string: ["extrawalletargs", "customBinPath"],
   default: { debug: false },
   alias: { d: "debug" },
   unknown: unknownFn
@@ -394,7 +398,7 @@ const launchDCRD = (appdata) => {
     }
   }
 
-  logger.log("info", `Starting dcrd with ${args}`);
+  logger.log("info", `Starting ${dcrdExe} with ${args}`);
 
   var dcrd = spawn(dcrdExe, args, {
     detached: os.platform() == "win32",
@@ -478,7 +482,7 @@ const launchDCRWallet = () => {
     args = concat(args, stringArgv(argv.extrawalletargs));
   }
 
-  logger.log("info", `Starting dcrwallet with ${args}`);
+  logger.log("info", `Starting ${dcrwExe} with ${args}`);
 
   var dcrwallet = spawn(dcrwExe, args, {
     detached: os.platform() == "win32",
