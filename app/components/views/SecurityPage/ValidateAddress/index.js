@@ -7,14 +7,33 @@ import "style/SecurityCenterMessagePage.less";
 class ValidateAddress extends React.Component {
   constructor(props) {
     super(props);
+    this.state = this.getInitialState();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.validateAddressSuccess != nextProps.validateAddressSuccess) {
+      this.setState({validateAddressSuccess: nextProps.validateAddressSuccess});
+    }
+    if (this.props.validateAddressError!= nextProps.validateAddressError) {
+      this.setState({validateAddressError: nextProps.validateAddressError});
+    }
+  }
+
+  getInitialState() {
+    return {
+      validateAddressSuccess: null,
+      validateAddressError: null,
+    };
   }
 
   componentWillUnmount() {
-    this.props.validateAddressCleanStore();
+    console.log(this.state);
+    this.setState(this.getInitialState());
+    console.log(this.state);
   }
 
   render() {
-    const { validateAddressError, validateAddressSuccess } = this.props;
+    const { validateAddressError, validateAddressSuccess } = this.state;
 
     let result = null;
     if (validateAddressSuccess) {
