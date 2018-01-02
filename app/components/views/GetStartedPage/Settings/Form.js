@@ -14,7 +14,7 @@ export default ({
   onSaveSettings,
   onHideSettings
 }) => (
-  <div className="get-started-content-new-seed">
+  <div className="get-started-content-new-seed get-started-settings">
       <GeneralSettings {...{tempSettings, networks, currencies, locales,
         onChangeTempSettings}} />
 
