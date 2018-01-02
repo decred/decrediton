@@ -239,8 +239,15 @@ export const transactionsFilter = get(["grpc", "transactionsFilter"]);
 export const transactions = createSelector(
   [transactionsNormalizer, get(["grpc", "transactions"])], apply
 );
+export const homeHistoryTransactions = createSelector(
+  [transactionsNormalizer, get(["grpc", "recentTransactions"])], apply
+);
+export const viewableTransactions = createSelector(
+  [transactions, homeHistoryTransactions],
+  (transactions, homeHistoryTransactions) => [...transactions, ...homeHistoryTransactions]
+);
 export const viewedTransaction = createSelector(
-  [transactions, (state, { params: { txHash }}) => txHash],
+  [viewableTransactions, (state, { params: { txHash }}) => txHash],
   (transactions, txHash) => find({ txHash }, transactions)
 );
 export const decodedTransactions = get(["grpc", "decodedTransactions"]);
@@ -385,10 +392,6 @@ export const rescanCurrentBlock = compose(
 export const rescanPercentFinished = createSelector(
   [rescanCurrentBlock, rescanEndBlock],
   (current, end) => ((current / end) * 100).toFixed(2)
-);
-
-export const homeHistoryTransactions = createSelector(
-  [transactionsNormalizer, get(["grpc", "recentTransactions"])], apply
 );
 
 export const visibleAccounts = createSelector(
