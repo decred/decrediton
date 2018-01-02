@@ -20,8 +20,10 @@ let dcrdPID;
 let dcrwPID;
 let currentBlockCount;
 
-let dcrdLogs = null;
-let dcrwalletLogs = null;
+let dcrdLogs = Buffer.from("");
+let dcrwalletLogs = Buffer.from("");
+
+let MAX_LOG_LENGTH = 50000;
 
 // Not going to make incorrect options fatal since running in dev mode has
 // all sorts of things on the cmd line that we don't care about.  If we want
@@ -336,17 +338,14 @@ ipcMain.on("main-log", (event, ...args) => {
 });
 
 ipcMain.on("get-dcrd-logs", (event) => {
-  logger.log("info", "getting-dcrd-logs");
   event.returnValue = dcrdLogs;
 });
 
 ipcMain.on("get-dcrwallet-logs", (event) => {
-  logger.log("info", "getting-dcrwallet-logs");
   event.returnValue = dcrwalletLogs;
 });
 
 ipcMain.on("get-decrediton-logs", (event) => {
-  logger.log("info", "getting-decrediton-logs");
   event.returnValue = "decrediton logs!";
 });
 
@@ -408,20 +407,19 @@ const launchDCRD = (appdata) => {
   });
 
   dcrd.stdout.on("data", (data) => {
-    if (dcrdLogs) {
-      dcrdLogs = Buffer.concat([dcrdLogs, Buffer.from(data)]);
-    } else {
-      dcrdLogs = Buffer.from(data);
+    while (dcrdLogs.length + Buffer.from(data).length > MAX_LOG_LENGTH) {
+      dcrdLogs = dcrdLogs.slice(dcrdLogs.indexOf(dcrdLogs.slice(dcrdLogs.length-1, dcrdLogs.length),1)+1);
     }
+    dcrdLogs = Buffer.concat([dcrdLogs, Buffer.from(data)]);
+    logger.log("info", dcrdLogs.length);
     if (debug) process.stdout.write(`${data}`);
   });
 
   dcrd.stderr.on("data", (data) => {
-    if (dcrdLogs) {
-      dcrdLogs = Buffer.concat([dcrdLogs, Buffer.from(data)]);
-    } else {
-      dcrdLogs = Buffer.from(data);
+    while (dcrdLogs.length + Buffer.from(data).length > MAX_LOG_LENGTH) {
+      dcrdLogs = dcrdLogs.slice(dcrdLogs.indexOf(dcrdLogs.slice(dcrdLogs.length-1, dcrdLogs.length),1)+1);
     }
+    dcrdLogs = Buffer.concat([dcrdLogs, Buffer.from(data)]);
     if (debug) process.stdout.write(`${data}`);
   });
 
@@ -500,20 +498,18 @@ const launchDCRWallet = () => {
   });
 
   dcrwallet.stdout.on("data", (data) => {
-    if (dcrwalletLogs) {
-      dcrwalletLogs = Buffer.concat([dcrwalletLogs, Buffer.from(data)]);
-    } else {
-      dcrwalletLogs = Buffer.from(data);
+    while (dcrwalletLogs.length + Buffer.from(data).length > MAX_LOG_LENGTH) {
+      dcrwalletLogs = dcrwalletLogs.slice(dcrwalletLogs.indexOf(dcrwalletLogs.slice(dcrwalletLogs.length-1, dcrwalletLogs.length),1)+1);
     }
+    dcrwalletLogs = Buffer.concat([dcrwalletLogs, Buffer.from(data)]);
     if (debug) process.stdout.write(`${data}`);
   });
 
   dcrwallet.stderr.on("data", (data) => {
-    if (dcrwalletLogs) {
-      dcrwalletLogs = Buffer.concat([dcrwalletLogs, Buffer.from(data)]);
-    } else {
-      dcrwalletLogs = Buffer.from(data);
+    while (dcrwalletLogs.length + Buffer.from(data).length > MAX_LOG_LENGTH) {
+      dcrwalletLogs = dcrwalletLogs.slice(dcrwalletLogs.indexOf(dcrwalletLogs.slice(dcrwalletLogs.length-1, dcrwalletLogs.length),1)+1);
     }
+    dcrwalletLogs = Buffer.concat([dcrwalletLogs, Buffer.from(data)]);
     if (debug) process.stderr.write(`${data}`);
   });
 

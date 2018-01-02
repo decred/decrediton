@@ -44,7 +44,7 @@ class LogsTab extends React.Component {
   showDecreditonLogs() {
     getDecreditonLogs()
     .then(logs => {
-      this.setState({decreditonLogs: logs});
+      this.setState({decreditonLogs: Buffer.from(logs).toString("utf8")});
     })
     .catch(err => console.error(err));
   }
