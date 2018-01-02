@@ -9,6 +9,10 @@ class ValidateAddress extends React.Component {
     super(props);
   }
 
+  componentWillUnmount() {
+    this.props.validateAddressCleanStore();
+  }
+
   render() {
     const { validateAddressError, validateAddressSuccess } = this.props;
 

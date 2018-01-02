@@ -18,7 +18,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   STOPAUTOBUYER_ATTEMPT, STOPAUTOBUYER_FAILED, STOPAUTOBUYER_SUCCESS,
   CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS,
   SETBALANCETOMAINTAIN, SETMAXFEE, SETMAXPRICEABSOLUTE, SETMAXPRICERELATIVE, SETMAXPERBLOCK,
-  VALIDATEADDRESS_ATTEMPT, VALIDATEADDRESS_SUCCESS, VALIDATEADDRESS_FAILED
+  VALIDATEADDRESS_ATTEMPT, VALIDATEADDRESS_SUCCESS, VALIDATEADDRESS_FAILED, VALIDATEADDRESS_CLEANSTORE
  } from "../actions/ControlActions";
 
 export default function control(state = {}, action) {
@@ -382,6 +382,11 @@ export default function control(state = {}, action) {
       validateAddressRequestAttempt: false,
       validateAddressResponse: null,
       validateAddressError: action.error,
+    };
+  case VALIDATEADDRESS_CLEANSTORE:
+    return {...state,
+      validateAddressResponse: null,
+      validateAddressError: null,
     };
   default:
     return state;

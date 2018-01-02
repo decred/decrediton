@@ -645,6 +645,7 @@ export function constructTransactionAttempt(account, confirmations, outputs, all
 export const VALIDATEADDRESS_ATTEMPT = "VALIDATEADDRESS_ATTEMPT";
 export const VALIDATEADDRESS_FAILED = "VALIDATEADDRESS_FAILED";
 export const VALIDATEADDRESS_SUCCESS = "VALIDATEADDRESS_SUCCESS";
+export const VALIDATEADDRESS_CLEANSTORE ="VALIDATEADDRESS_CLEANSTORE";
 
 export const validateAddress = address => async (dispatch, getState) => {
   try {
@@ -664,4 +665,8 @@ export const validateAddress = address => async (dispatch, getState) => {
     dispatch({address, error, type: VALIDATEADDRESS_FAILED});
     throw error;
   }
+};
+
+export const validateAddressCleanStore = () => async (dispatch) => {
+  dispatch({type: VALIDATEADDRESS_CLEANSTORE});
 };
