@@ -5,9 +5,9 @@ import path from "path";
 import fs from "fs";
 import os from "os";
 import parseArgs from "minimist";
-import winston from "winston";
 import stringArgv from "string-argv";
 import { appLocaleFromElectronLocale, default as locales} from "./i18n/locales";
+import { createLogger } from "./logging";
 
 let menu;
 let template;
@@ -111,37 +111,7 @@ if (err !== null) {
 }
 var cfg = initCfg();
 
-var logger = new (winston.Logger)({
-  transports: [
-    new (winston.transports.File)({
-      json: false,
-      filename: path.join(app.getPath("userData"), "decrediton.log"),
-      timestamp: function () {
-        // Format the timestamp in local time like the dcrd and dcrwallet logs.
-        let pad = (s, n) => {
-          n = n || 2;
-          s = Array(n).join("0") + s;
-          return s.substring(s.length - n);
-        };
-
-        let date = new Date();
-        let y = date.getFullYear();
-        let mo = pad(date.getMonth() + 1);
-        let d = pad(date.getDate());
-        let h = pad(date.getHours());
-        let mi = pad(date.getMinutes());
-        let s = pad(date.getSeconds());
-        let ms = pad(date.getMilliseconds(), 3);
-        return `${y}-${mo}-${d} ${h}:${mi}:${s}.${ms}`;
-      }
-    })
-  ]
-});
-
-if (debug) {
-  logger.add(winston.transports.Console, { colorize: "all" });
-}
-
+const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
 
 var createDcrdConf, createDcrwalletConf, createDcrctlConf = false;
@@ -364,6 +334,10 @@ ipcMain.on("app-reload-ui", () => {
 
 ipcMain.on("grpc-versions-determined", (event, versions) => {
   grpcVersions = { ...grpcVersions, ...versions };
+});
+
+ipcMain.on("main-log", (event, ...args) => {
+  logger.log(...args);
 });
 
 const launchDCRD = (appdata) => {
