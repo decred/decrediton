@@ -411,7 +411,6 @@ const launchDCRD = (appdata) => {
       dcrdLogs = dcrdLogs.slice(dcrdLogs.indexOf(dcrdLogs.slice(dcrdLogs.length-1, dcrdLogs.length),1)+1);
     }
     dcrdLogs = Buffer.concat([dcrdLogs, Buffer.from(data)]);
-    logger.log("info", dcrdLogs.length);
     if (debug) process.stdout.write(`${data}`);
   });
 

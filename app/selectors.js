@@ -22,6 +22,7 @@ export const isPrepared = and(
   getDaemonSynced,
   getWalletReady,
 );
+export const getCredentials = get(["daemon", "credentials"]);
 
 const START_STEP_OPEN = 2;
 const START_STEP_RPC1 = 3;

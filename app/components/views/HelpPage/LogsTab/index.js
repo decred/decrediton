@@ -1,5 +1,6 @@
 import Logs from "./Page";
 import {getDcrdLogs, getDcrwalletLogs, getDecreditonLogs} from "wallet";
+import {logging} from "connectors";
 
 @autobind
 class LogsTab extends React.Component {
@@ -9,10 +10,15 @@ class LogsTab extends React.Component {
   }
 
   getInitialState() {
+    let remoteDcrd = false;
+    if (this.props.getCredentials && this.props.getCredentials.rpc_host) {
+      remoteDcrd = true;
+    }
     return {
       dcrdLogs: null,
       dcrwalletLogs: null,
       decreditonLogs: null,
+      remoteDcrd: remoteDcrd,
     };
   }
 
@@ -21,7 +27,7 @@ class LogsTab extends React.Component {
       hideDecreditonLogs, hideDcrdLogs, hideDcrwalletLogs
     } = this;
     const {
-      dcrdLogs, dcrwalletLogs, decreditonLogs
+      dcrdLogs, dcrwalletLogs, decreditonLogs, remoteDcrd
     } = this.state;
     return (
       <Logs
@@ -36,7 +42,8 @@ class LogsTab extends React.Component {
           hideDcrwalletLogs,
           dcrdLogs,
           dcrwalletLogs,
-          decreditonLogs }}
+          decreditonLogs,
+          remoteDcrd }}
       />
     );
   }
@@ -78,4 +85,4 @@ class LogsTab extends React.Component {
   }
 }
 
-export default LogsTab;
+export default logging(LogsTab);
