@@ -21,6 +21,7 @@ class PassphraseModalContent extends React.Component {
   render() {
     const { passPhrase, hasAttemptedSubmit } = this.state;
     const { setPassPhrase, onSubmit } = this;
+    const { onCancelModal } = this.props;
 
     return (
       <Modal
@@ -28,7 +29,8 @@ class PassphraseModalContent extends React.Component {
           passPhrase,
           hasAttemptedSubmit,
           setPassPhrase,
-          onSubmit
+          onSubmit,
+          onCancelModal
         }}
       />
     );

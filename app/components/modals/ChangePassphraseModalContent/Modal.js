@@ -1,6 +1,6 @@
-import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { PasswordInput } from "inputs";
+import { ButtonsToolbar } from "../PassphraseModal";
 import "style/ChangePassphraseModal.less";
 
 const Modal = ({
@@ -13,7 +13,8 @@ const Modal = ({
   updateOldPrivatePassphrase,
   updatePrivatePassphrase,
   updateConfirmPrivatePassphrase,
-  onSubmit
+  onSubmit,
+  onCancelModal
 }) => (
 <Aux>
   <div className="change-passphrase-modal-field-ct">
@@ -59,11 +60,9 @@ const Modal = ({
     />
     <div className="change-passphrase-modal-error">{confirmPrivPassError}</div>
   </div>
-  <div className="change-passphrase-modal-toolbar">
-    <KeyBlueButton className="change-passphrase-modal-save-button" onClick={onSubmit}>
-      <T id="changePassModal.update" m="Update" />
-    </KeyBlueButton>
-  </div>
+  <ButtonsToolbar
+    {...{onSubmit, onCancelModal}}
+    submitLabel={<T id="changePassModal.update" m="Update" />} />
 </Aux>
 );
 

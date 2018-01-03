@@ -30,6 +30,7 @@ class ImportScriptModalContent extends React.Component {
       setPassPhrase,
       onSubmit
     } = this;
+    const { onCancelModal } = this.props;
 
     return (
       <Modal
@@ -39,7 +40,8 @@ class ImportScriptModalContent extends React.Component {
           hasFailedAttempt,
           setScript,
           setPassPhrase,
-          onSubmit
+          onSubmit,
+          onCancelModal
         }}
       />
     );

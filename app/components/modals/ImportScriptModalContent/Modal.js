@@ -1,6 +1,6 @@
-import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { TextInput, PasswordInput } from "inputs";
+import { ButtonsToolbar } from "../PassphraseModal";
 import "style/Modals.less";
 
 const Modal = ({
@@ -9,7 +9,8 @@ const Modal = ({
   hasFailedAttempt,
   setScript,
   setPassPhrase,
-  onSubmit
+  onSubmit,
+  onCancelModal,
 }) => (
   <Aux>
     <div className="import-script-modal-field-ct">
@@ -51,11 +52,9 @@ const Modal = ({
         ? <T id="importScriptModal.errors.noPassphrase" m="*Please enter your private passphrase" />
         : null}</div>
     </div>
-    <div className="import-script-modal-toolbar">
-      <KeyBlueButton style={{float: "left"}} onClick={onSubmit}>
-        <T id="importScriptModal.importBtn" m="Import" />
-      </KeyBlueButton>
-    </div>
+    <ButtonsToolbar
+      {...{onSubmit, onCancelModal}}
+      submitLabel={<T id="importScriptModal.importBtn" m="Import" />} />
   </Aux>
 );
 

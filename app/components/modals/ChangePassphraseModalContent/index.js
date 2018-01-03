@@ -31,8 +31,9 @@ class ChangePassphraseModalContent extends React.Component {
       updateOldPrivatePassphrase,
       updatePrivatePassphrase,
       updateConfirmPrivatePassphrase,
-      onSubmit,
+      onSubmit
     } = this;
+    const { onCancelModal } = this.props;
 
     return (
       <Modal
@@ -46,7 +47,8 @@ class ChangePassphraseModalContent extends React.Component {
           updateOldPrivatePassphrase,
           updatePrivatePassphrase,
           updateConfirmPrivatePassphrase,
-          onSubmit
+          onSubmit,
+          onCancelModal
         }}
       />
     );

@@ -1,6 +1,4 @@
 import Modal from "../Modal";
-import { SlateGrayButton } from "buttons";
-import { FormattedMessage as T } from "react-intl";
 import PassphraseModalContent from "../PassphraseModalContent";
 
 const propTypes = {
@@ -21,11 +19,8 @@ const PassphraseModal = ({title, description, Content, show, onCancelModal, onSu
       </div>
     </div>
     <div className="passphrase-modal-content">
-      {!Content ? <PassphraseModalContent {...{onSubmit}}/> : <Content {...{onSubmit}} />}
+      {!Content ? <PassphraseModalContent {...{onSubmit, onCancelModal}}/> : <Content {...{onSubmit, onCancelModal}} />}
     </div>
-    <SlateGrayButton className="passphrase-modal-close-button" onClick={onCancelModal}>
-      <T id="passphraseModal.btnCancel" m="Cancel" />
-    </SlateGrayButton>
   </Modal>
 );
 
