@@ -652,6 +652,7 @@ export const validateAddress = address => async (dispatch, getState) => {
     const { network } = getState().grpc;
     const validationErr = isValidAddress(address, network);
     if (validationErr) {
+      dispatch({type: VALIDATEADDRESS_FAILED});
       return { isValid: false, error: validationErr, getIsValid () { false; } };
     }
     dispatch({ type: VALIDATEADDRESS_ATTEMPT });
@@ -661,12 +662,12 @@ export const validateAddress = address => async (dispatch, getState) => {
         return { isValid: response.isValid, error: null, getIsValid () { response.isValid; } };
       })
       .catch(error => {
-        dispatch({address, error, type: VALIDATEADDRESS_FAILED});
+        dispatch({type: VALIDATEADDRESS_FAILED});
         return { isValid: false, error, getIsValid () { false; }};
       });
   } catch (error) {
-    dispatch({address, error, type: VALIDATEADDRESS_FAILED});
-    throw error;
+    dispatch({type: VALIDATEADDRESS_FAILED});
+    return { isValid: false, error, getIsValid () { false; } };
   }
 };
 

@@ -26,14 +26,6 @@ class ValidateAddress extends React.Component {
     const { address, error } = this.state;
     const { onAddressChange, onAddressBlur } = this;
 
-    let invalidAddress = ( error &&
-      <div className="message-nest">
-        <div className="message-content invalid">
-          <T id="securitycenter.validate.result.invalid" m="Invalid address!" />
-          {error}
-        </div>
-      </div>);
-
     let result = null;
     if (validateAddressSuccess) {
       const isValid = validateAddressSuccess.isValid;
@@ -45,18 +37,27 @@ class ValidateAddress extends React.Component {
         } else {
           isValidDisplay = <T id="securitycenter.validate.result.notOwned" m="Not owned address!" />;
         }
-        result = (
-          <div className="message-nest">
-            <div className="message-content valid">
-              {isValidDisplay}
-            </div>
-          </div>
-        );
       } else {
-        result = invalidAddress;
+        isValidDisplay = <T id="securitycenter.validate.result.invalid" m="Invalid address!" />;
       }
-    } else {
-      result = invalidAddress;
+
+      result = (
+        <div className="message-nest">
+          <div className={`message-content ${isValid ? "valid" : "invalid"}`}>
+            {isValidDisplay}
+          </div>
+        </div>
+      );
+    } else if (error) {
+      result = (
+        <div className="message-nest">
+          <div className="message-content invalid">
+            <T id="securitycenter.validate.result.invalid" m="Invalid address!" />
+            {error}
+          </div>
+        </div>
+      );
+
     }
 
     return (
@@ -68,24 +69,20 @@ class ValidateAddress extends React.Component {
 
   onAddressChange(address) {
     if (address == "") {
-      this.setState({address: "", error: <T id="securitycenter.validate.form.error" m="Please enter an address"/>});
+      this.setState({address, error: null});
       return;
     }
-    console.log("validate address:", address);
     this.props.validateAddress(address)
       .then(resp => {
-        if (!resp.getIsValid()) {
-          console.log("here", resp);
+        if (resp && !resp.getIsValid()) {
           this.setState({address, error: resp.error});
-        }
-        else {
-          console.log("there", resp);
+        } else {
           this.setState({address, error: null});
         }
       })
       .catch(error => {
-        console.log("erere");
-        this.setState({address, error});
+        console.error(error);
+        this.setState({address, error: "Unexpected error occurred, please try again."});
       });
   }
 }

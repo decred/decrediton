@@ -149,7 +149,8 @@ class Send extends React.Component {
   }
 
   onClearTransaction() {
-    this.setState(this.getInitialState(), this.props.onClearTransaction);
+    this.setState(this.getInitialState());
+    this.props.onClearTransaction();
   }
   onShowSendAll() {
     const { account, outputs } = this.state;

@@ -376,19 +376,16 @@ export default function control(state = {}, action) {
   case VALIDATEADDRESS_SUCCESS:
     return {...state,
       validateAddressRequestAttempt: false,
-      validateAddressResponse: action.response,
-      validateAddressError: null,
+      validateAddressResponse: action.response
     };
   case VALIDATEADDRESS_FAILED:
     return {...state,
       validateAddressRequestAttempt: false,
-      validateAddressResponse: null,
-      validateAddressError: action.error,
+      validateAddressResponse: null
     };
   case VALIDATEADDRESS_CLEANSTORE:
     return {...state,
-      validateAddressResponse: null,
-      validateAddressError: null,
+      validateAddressResponse: null
     };
   default:
     return state;

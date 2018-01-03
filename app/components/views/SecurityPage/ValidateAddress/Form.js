@@ -4,7 +4,7 @@ import { TextInput } from "inputs";
 const messages = defineMessages({
   addressFieldPlaceholder: {
     id: "securitycenter.validate.form.field.address.placeholder",
-    defaultMessage: "Enter your address",
+    defaultMessage: "Enter an address to validate",
   },
 });
 
@@ -16,9 +16,6 @@ const ValidateAddressForm = ({
 }) => (
     <Aux>
       <div className="validate-address-form-area">
-        <div className="validate-address-form-label">
-          <T id="securitycenter.validate.form.field.address.label" m="Address" />
-        </div>
         <div className="validate-address-form-address">
           <TextInput
             value={address}
