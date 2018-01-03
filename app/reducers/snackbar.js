@@ -168,7 +168,7 @@ export default function snackbar(state = {}, action) {
   case REVOKETICKETS_SUCCESS:
   case IMPORTSCRIPT_SUCCESS:
     // willRescan will be false when importing just prior to a ticket purchase
-    if (!action.willRescan) break;
+    if (action.willRescan === false) break;
   case STOPAUTOBUYER_SUCCESS:
   case STARTAUTOBUYER_SUCCESS:
   case UPDATESTAKEPOOLCONFIG_SUCCESS:

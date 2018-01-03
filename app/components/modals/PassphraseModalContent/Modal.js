@@ -22,6 +22,7 @@ const Modal =({
           placeholder=""
           value={passPhrase}
           onChange={(e) => setPassPhrase(e.target.value)}
+          onKeyDownSubmit={onSubmit}
         />
       </div>
       <div className="passphrase-modal-error-ct">
