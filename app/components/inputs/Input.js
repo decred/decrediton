@@ -35,7 +35,7 @@ class Input extends React.Component{
   onKeyDown = (e) => {
     const { onKeyDownSubmit, onKeyDown } = this.props;
     (e.keyCode === 13) && onKeyDownSubmit && onKeyDownSubmit(e);
-    onKeyDown && onKeyDown(e);
+    onKeyDown && !e.defaultPrevented && onKeyDown(e);
   }
 
   render() {
