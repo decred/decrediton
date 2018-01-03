@@ -1,4 +1,4 @@
-import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
+import { injectIntl, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
 
 const messages = defineMessages({

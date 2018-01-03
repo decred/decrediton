@@ -52,8 +52,12 @@ class ValidateAddress extends React.Component {
       result = (
         <div className="message-nest">
           <div className="message-content invalid">
-            <T id="securitycenter.validate.result.invalid" m="Invalid address!" />
-            {error}
+            <div className="message-content-invalid-message">
+              <T id="securitycenter.validate.result.invalid" m="Invalid address!" />
+            </div>
+            <div className="message-content-invalid-message-error">
+              {error}
+            </div>
           </div>
         </div>
       );
