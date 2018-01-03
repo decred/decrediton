@@ -23,7 +23,7 @@ let currentBlockCount;
 let dcrdLogs = Buffer.from("");
 let dcrwalletLogs = Buffer.from("");
 
-let MAX_LOG_LENGTH = 50000;
+let MAX_LOG_LENGTH = 1000;
 
 // Not going to make incorrect options fatal since running in dev mode has
 // all sorts of things on the cmd line that we don't care about.  If we want
@@ -350,11 +350,12 @@ ipcMain.on("get-decrediton-logs", (event) => {
 });
 
 const AddToLog = (destIO, destLogBuffer, data) => {
-  while (destLogBuffer.length + Buffer.from(data).length > MAX_LOG_LENGTH) {
-    destLogBuffer = destLogBuffer.slice(destLogBuffer.indexOf(destLogBuffer.slice(destLogBuffer.length-1, destLogBuffer.length),1)+1);
+  var dataBuffer = Buffer.from(data);
+  if (destLogBuffer.length + dataBuffer.length > MAX_LOG_LENGTH) {
+    destLogBuffer = destLogBuffer.slice(destLogBuffer.indexOf(os.EOL,dataBuffer.length)+1);
   }
   debug && destIO.write(data);
-  return Buffer.concat([destLogBuffer, Buffer.from(data)]);
+  return Buffer.concat([destLogBuffer, dataBuffer]);
 };
 
 const launchDCRD = (appdata) => {
