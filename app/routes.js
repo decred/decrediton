@@ -19,7 +19,8 @@ import StatisticsTab from "./components/views/TicketsPage/StatisticsTab";
 import GetStartedPage from "./components/views/GetStartedPage";
 import AccountsPage from "./components/views/AccountsPage";
 import WalletError from "./components/views/WalletError";
-import Help from "./components/views/Help";
+import LinksTab from "./components/views/HelpPage/LinksTab";
+import LogsTab from "./components/views/HelpPage/LogsTab";
 import ErrorScreen from "./components/ErrorScreen";
 import InvalidRPCVersion from "./components/views/InvalidRPCVersion";
 import ShutdownAppPage from "./components/views/ShutdownAppPage";
@@ -52,7 +53,11 @@ export default (
       <Route path="verify"                      component={VerifyTab}/>
     </Route>
     <Route   path="settings"                    component={SettingsPage}      desc/>
-    <Route   path="help"                        component={Help}              desc/>
+    <Route   path="help"                        component={TabbedPage}        tabDesc>
+      <IndexRedirect to="links"/>
+      <Route path="links"                       component={LinksTab}/>
+      <Route path="logs"                        component={LogsTab}/>
+    </Route>
     <Route   path="walletError"                 component={WalletError}       noIcon/>
     <Route   path="error"                       component={ErrorScreen}       noIcon/>
     <Route   path="invalidRPCVersion"           component={InvalidRPCVersion} noIcon/>

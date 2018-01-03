@@ -25,3 +25,24 @@ export const startWallet = () => Promise
 export const getBlockCount = (rpcCreds, appData) => Promise
   .resolve(ipcRenderer
     .sendSync("check-daemon", rpcCreds, appData));
+
+export const getDcrdLogs = () => Promise
+  .resolve(ipcRenderer.sendSync("get-dcrd-logs"))
+  .then(logs => {
+    if (logs) return logs;
+    throw "Error getting dcrd logs";
+  });
+
+export const getDcrwalletLogs = () => Promise
+  .resolve(ipcRenderer.sendSync("get-dcrwallet-logs"))
+  .then(logs => {
+    if (logs) return logs;
+    throw "Error getting dcrwallet logs";
+  });
+
+export const getDecreditonLogs = () => Promise
+    .resolve(ipcRenderer.sendSync("get-decrediton-logs"))
+    .then(logs => {
+      if (logs) return logs;
+      throw "Error getting decrediton logs";
+    });

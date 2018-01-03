@@ -1,13 +1,12 @@
 import { FormattedMessage as T } from "react-intl";
-import { TabbedHeader, Tooltip } from "shared";
+import { Tooltip } from "shared";
 import { HelpLink, HelpLinkInfoModal } from "buttons";
 import { ConstitutionModalContent } from "modals";
 import "style/Help.less";
 
-const Help = ({ routes }) => (
+const Links = () => (
   <Aux>
-    <TabbedHeader {... { routes }}/>
-    <div className="page-content">
+    <div className="tab-card">
       <div className={"help-icon-row"}>
         <HelpLink className={"help-github-icon"} href="https://github.com/decred/decrediton"><T id="help.github" m="Github" /></HelpLink>
         <HelpLink className={"help-docs-icon"} href="https://docs.decred.org/"><T id="help.documentation" m="Documentation" /></HelpLink>
@@ -29,4 +28,4 @@ const Help = ({ routes }) => (
   </Aux>
 );
 
-export default Help;
+export default Links;

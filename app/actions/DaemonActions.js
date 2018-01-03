@@ -104,3 +104,36 @@ export const syncDaemon = () =>
     };
     updateBlockCount();
   };
+
+export const getDcrdLogs = () => {
+  wallet.getDcrdLogs()
+  .then(logs => {
+    return(logs);
+  }).catch(
+    err=>{
+      console.log(err);
+      return (null, err);
+    });
+};
+
+export const getDcrwalletLogs = () => {
+  wallet.getDcrwalletLogs()
+  .then(logs => {
+    return(logs);
+  }).catch(
+    err=>{
+      console.log(err);
+      return (null, err);
+    });
+};
+
+export const getDecreditonLogs = () => {
+  wallet.getDecreditonLogs()
+  .then(logs => {
+    return(logs);
+  }).catch(
+    err=>{
+      console.log(err);
+      return (null, err);
+    });
+};
