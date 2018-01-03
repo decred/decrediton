@@ -32,6 +32,11 @@ class Input extends React.Component{
     this.setState({inputUnitDiv: updatedInputUnitDiv.classList.remove("active")});
     onBlur && onBlur(e);
   };
+  onKeyDown = (e) => {
+    const { onKeyDownSubmit, onKeyDown } = this.props;
+    (e.keyCode === 13) && onKeyDownSubmit && onKeyDownSubmit(e);
+    onKeyDown && onKeyDown(e);
+  }
 
   render() {
     const {
@@ -48,7 +53,6 @@ class Input extends React.Component{
       unit,
       hidden,
       type,
-      onKeyDown,
     } = this.props;
     return (
       hidden ? null :
@@ -65,7 +69,7 @@ class Input extends React.Component{
             onChange={onChange}
             onFocus={this.onInputFocus}
             onBlur={this.onInputBlur}
-            onKeyDown={onKeyDown}
+            onKeyDown={this.onKeyDown}
           />
           {unit ? <div className="unit-area">{unit}</div> : null}
         </div>

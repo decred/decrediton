@@ -27,6 +27,7 @@ const Modal = ({
       placeholder=""
       defaultValue={oldPrivPass}
       onChange={(e) => updateOldPrivatePassphrase(e.target.value)}
+      onKeyDownSubmit={onSubmit}
     />
     <div className="change-passphrase-modal-error">{oldPrivPassError}</div>
   </div>
@@ -40,6 +41,7 @@ const Modal = ({
       placeholder=""
       defaultValue={privpass}
       onChange={(e) => updatePrivatePassphrase(e.target.value)}
+      onKeyDownSubmit={onSubmit}
     />
     <div className="change-passphrase-modal-error">{privPassError}</div>
   </div>
@@ -53,6 +55,7 @@ const Modal = ({
       placeholder=""
       defaultValue={confirmPrivPass}
       onChange={(e) => updateConfirmPrivatePassphrase(e.target.value)}
+      onKeyDownSubmit={onSubmit}
     />
     <div className="change-passphrase-modal-error">{confirmPrivPassError}</div>
   </div>
