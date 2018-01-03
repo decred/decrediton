@@ -234,14 +234,15 @@ class Send extends React.Component {
         }, this.onAttemptConstructTransaction);
       };
 
-      var resp = this.props.validateAddress(destination);
-      if (resp) {
-        destinationInvalid = !resp.getIsValid();
-        updateDestinationState();
-      } else {
-        destinationInvalid = false;
-        updateDestinationState();
-      }
+      this.props.validateAddress(destination)
+        .then( resp => {
+          destinationInvalid = !resp.getIsValid();
+          updateDestinationState();
+        })
+        .catch( () => {
+          destinationInvalid = false;
+          updateDestinationState();
+        });
     };
   }
 

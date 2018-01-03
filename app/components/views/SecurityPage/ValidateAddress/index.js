@@ -1,4 +1,4 @@
-import { FormattedMessage as T, injectIntl } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import ValidateAddressForm from "./Form";
 import { validateAddressPage } from "connectors";
 import "style/SecurityCenterMessagePage.less";
@@ -10,30 +10,29 @@ class ValidateAddress extends React.Component {
     this.state = this.getInitialState();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.validateAddressSuccess != nextProps.validateAddressSuccess) {
-      this.setState({validateAddressSuccess: nextProps.validateAddressSuccess});
-    }
-    if (this.props.validateAddressError!= nextProps.validateAddressError) {
-      this.setState({validateAddressError: nextProps.validateAddressError});
-    }
-  }
-
   getInitialState() {
-    return {
-      validateAddressSuccess: null,
-      validateAddressError: null,
-    };
+    return ({
+      address: "",
+      error: null,
+    });
   }
 
   componentWillUnmount() {
-    console.log(this.state);
-    this.setState(this.getInitialState());
-    console.log(this.state);
+    this.props.validateAddressCleanStore();
   }
 
   render() {
-    const { validateAddressError, validateAddressSuccess } = this.state;
+    const { validateAddressSuccess } = this.props;
+    const { address, error } = this.state;
+    const { onAddressChange, onAddressBlur } = this;
+
+    let invalidAddress = ( error &&
+      <div className="message-nest">
+        <div className="message-content invalid">
+          <T id="securitycenter.validate.result.invalid" m="Invalid address!" />
+          {error}
+        </div>
+      </div>);
 
     let result = null;
     if (validateAddressSuccess) {
@@ -46,37 +45,49 @@ class ValidateAddress extends React.Component {
         } else {
           isValidDisplay = <T id="securitycenter.validate.result.notOwned" m="Not owned address!" />;
         }
-      } else {
-        isValidDisplay = <T id="securitycenter.validate.result.invalid" m="Invalid address!" />;
-      }
-
-      result = (
-        <div className="message-nest">
-          <div className={`message-content ${isValid ? "valid" : "invalid"}`}>
-            {isValidDisplay}
+        result = (
+          <div className="message-nest">
+            <div className="message-content valid">
+              {isValidDisplay}
+            </div>
           </div>
-        </div>
-      );
+        );
+      } else {
+        result = invalidAddress;
+      }
+    } else {
+      result = invalidAddress;
     }
 
     return (
       <div className="tab-card message message-verify">
-        <ValidateAddressForm onSubmit={this.onSubmit} rpcError={validateAddressError} formatMessage={this.props.intl.formatMessage} />
-        {result}
+        <ValidateAddressForm {...{onAddressChange, onAddressBlur, address, result}}/>
       </div>
     );
   }
 
-  onSubmit(props) {
-    console.log(props);
-    this.props.validateAddress(props.address);
+  onAddressChange(address) {
+    if (address == "") {
+      this.setState({address: "", error: <T id="securitycenter.validate.form.error" m="Please enter an address"/>});
+      return;
+    }
+    console.log("validate address:", address);
+    this.props.validateAddress(address)
+      .then(resp => {
+        if (!resp.getIsValid()) {
+          console.log("here", resp);
+          this.setState({address, error: resp.error});
+        }
+        else {
+          console.log("there", resp);
+          this.setState({address, error: null});
+        }
+      })
+      .catch(error => {
+        console.log("erere");
+        this.setState({address, error});
+      });
   }
 }
 
-ValidateAddress.propTypes = {
-  intl: PropTypes.object.isRequired,
-  validateAddressError: PropTypes.string,
-  validateAddressSuccess: PropTypes.object,
-};
-
-export default validateAddressPage(injectIntl(ValidateAddress));
+export default validateAddressPage(ValidateAddress);

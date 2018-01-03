@@ -660,7 +660,10 @@ export const validateAddress = address => async (dispatch, getState) => {
         dispatch({ response, type: VALIDATEADDRESS_SUCCESS });
         return { isValid: response.isValid, error: null, getIsValid () { response.isValid; } };
       })
-      .catch(error => dispatch({address, error, type: VALIDATEADDRESS_FAILED}));
+      .catch(error => {
+        dispatch({address, error, type: VALIDATEADDRESS_FAILED});
+        return { isValid: false, error, getIsValid () { false; }};
+      });
   } catch (error) {
     dispatch({address, error, type: VALIDATEADDRESS_FAILED});
     throw error;

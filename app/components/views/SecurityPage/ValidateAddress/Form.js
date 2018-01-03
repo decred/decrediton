@@ -1,61 +1,40 @@
-import { FormattedMessage as T, defineMessages } from "react-intl";
-import { Field, reduxForm } from "redux-form";
-import InputField from "Form/InputField";
-import ErrorField from "Form/ErrorField";
-import { validate } from "./validator";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
+import { TextInput } from "inputs";
 
 const messages = defineMessages({
-  addressFieldLabel: {
-    id: "securitycenter.validate.form.field.address.label",
-    defaultMessage: "Address",
-  },
   addressFieldPlaceholder: {
     id: "securitycenter.validate.form.field.address.placeholder",
     defaultMessage: "Enter your address",
   },
 });
 
-const ValidateAddressForm = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError, formatMessage }) => {
-  if (rpcError) {
-    error = (
-      <div className="error">{rpcError}</div>
-    );
-  }
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="message-content-nest">
-        <Field
-          classname="address"
-          label={formatMessage(messages.addressFieldLabel)}
-          name="address"
-          component={InputField}
-          type="text"
-          placeholder={formatMessage(messages.addressFieldPlaceholder)}
-        />
-        <Field
-          name="global"
-          component={ErrorField}
-        />
+const ValidateAddressForm = ({
+  onAddressChange,
+  result,
+  address,
+  intl
+}) => (
+    <Aux>
+      <div className="validate-address-form-area">
+        <div className="validate-address-form-label">
+          <T id="securitycenter.validate.form.field.address.label" m="Address" />
+        </div>
+        <div className="validate-address-form-address">
+          <TextInput
+            value={address}
+            placeholder={intl.formatMessage(messages.addressFieldPlaceholder)}
+            onChange={(e) => onAddressChange(e.target.value)}
+          />
+        </div>
       </div>
-      {error && <div className="error">{error}</div>}
-      <div className="message-toolbar">
-        <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
-          <T id="securitycenter.validate.form.submit" m="Validate" />
-        </button>
+      <div className="validate-address-response-area">
+        {result &&
+          <div className="validate-address-response-area-result">
+            {result}
+          </div>
+        }
       </div>
-    </form>
+    </Aux>
   );
-};
 
-ValidateAddressForm.propTypes = {
-  formatMessage: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  pristine: PropTypes.bool.isRequired,
-  submitting: PropTypes.bool.isRequired,
-  error: PropTypes.string,
-  rpcError: PropTypes.string,
-};
-
-export default reduxForm({ form: "message/validate", validate })(ValidateAddressForm);
+export default injectIntl(ValidateAddressForm);

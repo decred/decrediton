@@ -185,6 +185,8 @@ export default function control(state = {}, action) {
   case CLEARTX:
     return {...state,
       constructTxResponse: null,
+      validateAddressResponse: null,
+      validateAddressError: null,
     };
   case SIGNTX_ATTEMPT:
     return {...state,
