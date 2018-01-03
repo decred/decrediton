@@ -23,7 +23,7 @@ let currentBlockCount;
 let dcrdLogs = Buffer.from("");
 let dcrwalletLogs = Buffer.from("");
 
-let MAX_LOG_LENGTH = 1000;
+let MAX_LOG_LENGTH = 50000;
 
 // Not going to make incorrect options fatal since running in dev mode has
 // all sorts of things on the cmd line that we don't care about.  If we want
