@@ -349,6 +349,14 @@ ipcMain.on("get-decrediton-logs", (event) => {
   event.returnValue = "decrediton logs!";
 });
 
+const AddToLog = (destIO, destLogBuffer, data) => {
+  while (destLogBuffer.length + Buffer.from(data).length > MAX_LOG_LENGTH) {
+    destLogBuffer = destLogBuffer.slice(destLogBuffer.indexOf(destLogBuffer.slice(destLogBuffer.length-1, destLogBuffer.length),1)+1);
+  }
+  debug && destIO.write(data);
+  return Buffer.concat([destLogBuffer, Buffer.from(data)]);
+};
+
 const launchDCRD = (appdata) => {
   var spawn = require("child_process").spawn;
   let args = [];
@@ -406,21 +414,8 @@ const launchDCRD = (appdata) => {
     }
   });
 
-  dcrd.stdout.on("data", (data) => {
-    while (dcrdLogs.length + Buffer.from(data).length > MAX_LOG_LENGTH) {
-      dcrdLogs = dcrdLogs.slice(dcrdLogs.indexOf(dcrdLogs.slice(dcrdLogs.length-1, dcrdLogs.length),1)+1);
-    }
-    dcrdLogs = Buffer.concat([dcrdLogs, Buffer.from(data)]);
-    if (debug) process.stdout.write(`${data}`);
-  });
-
-  dcrd.stderr.on("data", (data) => {
-    while (dcrdLogs.length + Buffer.from(data).length > MAX_LOG_LENGTH) {
-      dcrdLogs = dcrdLogs.slice(dcrdLogs.indexOf(dcrdLogs.slice(dcrdLogs.length-1, dcrdLogs.length),1)+1);
-    }
-    dcrdLogs = Buffer.concat([dcrdLogs, Buffer.from(data)]);
-    if (debug) process.stdout.write(`${data}`);
-  });
+  dcrd.stdout.on("data", (data) => dcrdLogs = AddToLog(process.stdout, dcrdLogs, data));
+  dcrd.stderr.on("data", (data) => dcrdLogs = AddToLog(process.stderr, dcrdLogs, data));
 
   dcrdPID = dcrd.pid;
   logger.log("info", "dcrd started with pid:" + dcrdPID);
@@ -496,21 +491,8 @@ const launchDCRWallet = () => {
     }
   });
 
-  dcrwallet.stdout.on("data", (data) => {
-    while (dcrwalletLogs.length + Buffer.from(data).length > MAX_LOG_LENGTH) {
-      dcrwalletLogs = dcrwalletLogs.slice(dcrwalletLogs.indexOf(dcrwalletLogs.slice(dcrwalletLogs.length-1, dcrwalletLogs.length),1)+1);
-    }
-    dcrwalletLogs = Buffer.concat([dcrwalletLogs, Buffer.from(data)]);
-    if (debug) process.stdout.write(`${data}`);
-  });
-
-  dcrwallet.stderr.on("data", (data) => {
-    while (dcrwalletLogs.length + Buffer.from(data).length > MAX_LOG_LENGTH) {
-      dcrwalletLogs = dcrwalletLogs.slice(dcrwalletLogs.indexOf(dcrwalletLogs.slice(dcrwalletLogs.length-1, dcrwalletLogs.length),1)+1);
-    }
-    dcrwalletLogs = Buffer.concat([dcrwalletLogs, Buffer.from(data)]);
-    if (debug) process.stderr.write(`${data}`);
-  });
+  dcrwallet.stdout.on("data", (data) => dcrwalletLogs = AddToLog(process.stdout, dcrwalletLogs, data));
+  dcrwallet.stderr.on("data", (data) => dcrwalletLogs = AddToLog(process.stderr, dcrwalletLogs, data));
 
   dcrwPID = dcrwallet.pid;
   logger.log("info", "dcrwallet started with pid:" + dcrwPID);
