@@ -75,9 +75,8 @@ const PurchaseTicketsForm = ({
           className="stakepool-content-purchase-button"
           disabled={!canAffordTickets}
           onSubmit={onPurchaseTickets}
-        >
-          <T id="purchaseTickets.purchaseBtn" m="Purchase" />
-        </PassphraseModalButton>
+          buttonLabel={<T id="purchaseTickets.purchaseBtn" m="Purchase" />}
+        />
         {!canAffordTickets &&
           <div className="stakepool-purchase-error">
             <T id="purchaseTickets.errors.insufficientBalance" m="Insufficient spendable account balance to purchase tickets." />
@@ -90,18 +89,16 @@ const PurchaseTicketsForm = ({
             className="stakepool-content-purchase-button"
             disabled={rescanRequest}
             onSubmit={onImportScript}
-          >
-            <T id="purchaseTickets.importScriptBtn" m="Import Script" />
-          </PassphraseModalButton>
+            buttonLabel={<T id="purchaseTickets.importScriptBtn" m="Import Script" />}
+          />
         </Tooltip>
         {hasTicketsToRevoke &&
           <PassphraseModalButton
             modalTitle={<T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />}
             className="stakepool-content-revoke-button"
             onSubmit={onRevokeTickets}
-          >
-            <T id="purchaseTickets.revokeBtn" m="Revoke" />
-          </PassphraseModalButton>
+            buttonLabel={<T id="purchaseTickets.revokeBtn" m="Revoke" />}
+          />
         }
       </div>
     </Aux>);

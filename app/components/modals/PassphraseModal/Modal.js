@@ -10,16 +10,16 @@ const propTypes = {
 };
 
 const StandardPassphraseModal = (props) => {
-  const { show, title, description, children } = props;
+  const { show, modalTitle, modalDescription, children } = props;
 
   return (
     <Modal className="passphrase-modal" {...{show}}>
       <div className="passphrase-modal-header">
         <div className="passphrase-modal-header-title">
-          {title}
+          {modalTitle}
         </div>
         <div className="passphrase-modal-header-description">
-          {description}
+          {modalDescription}
         </div>
       </div>
       <div className="passphrase-modal-content">

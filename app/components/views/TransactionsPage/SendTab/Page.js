@@ -74,9 +74,8 @@ const SendPage = ({
                 className="content-send"
                 onSubmit={onAttemptSignTransaction}
                 loading={isSendingTransaction}
-            >
-              <T id="send.sendBtn" m="Send" />
-            </PassphraseModalButton>
+                buttonLabel={<T id="send.sendBtn" m="Send" />}
+            />
             <div className="estimation-area-send">
               <div className="total-amount-send">
                 <div className="total-amount-send-text">

@@ -20,9 +20,8 @@ const Links = () => (
         <HelpLinkInfoModal className={"help-constitution-icon"}
           modalTitle={<h1><T id="help.constitution.modal.title" m="Decred Constitution" /></h1>}
           modalContent={<ConstitutionModalContent />}
-        >
-          <T id="help.constitution" m="Constitution" />
-        </HelpLinkInfoModal>
+          buttonLabel={<T id="help.constitution" m="Constitution" />}
+        />
       </div>
     </div>
   </Aux>

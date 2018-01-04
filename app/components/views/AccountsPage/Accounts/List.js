@@ -24,9 +24,8 @@ const AccountsList = ({
         modalContent={AddAccountModalContent}
         className="content-send"
         onSubmit={onGetNextAccountAttempt}
-      >
-        <T id="accounts.addNewButton" m="Add New" />
-      </PassphraseModalButton>
+        buttonLabel={<T id="accounts.addNewButton" m="Add New" />}
+      />
     </TabbedHeader>
     <div className="tabbed-page">
       <div className="tab-content">
