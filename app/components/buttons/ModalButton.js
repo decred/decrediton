@@ -1,3 +1,7 @@
+
+const defaultButton = ({onClick, enabled, buttonLabel, className}) =>
+  (<button onClick={onClick} enabled={enabled} className={className}>{buttonLabel}</button>);
+
 @autobind
 class ModalButton extends React.Component {
 
@@ -22,7 +26,7 @@ class ModalButton extends React.Component {
 
   render() {
     const { buttonLabel, modalComponent } = this.props;
-    const ButtonComponent = this.props.buttonComponent || (props => <button {...props}>{buttonLabel}</button>);
+    const ButtonComponent = this.props.buttonComponent || defaultButton;
     const { show } = this.state;
     const { onSubmit } = this;
     const Modal = modalComponent;

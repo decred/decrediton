@@ -3,7 +3,7 @@ import ButtonsToolbar from "./ButtonsToolbar";
 import PassphraseInputRow from "./PassphraseInputRow";
 
 const propTypes = {
-  title: PropTypes.object.isRequired,
+  modalTitle: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
   onCancelModal: PropTypes.func.isRequired,
   description: PropTypes.object

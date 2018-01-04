@@ -4,10 +4,10 @@ import { FormattedMessage as T } from "react-intl";
 import PropTypes from "prop-types";
 
 const propTypes = {
-  title: PropTypes.object.isRequired,
+  modalTitle: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
-  children: PropTypes.object.isRequired,
-  onHideModal: PropTypes.func.isRequired
+  modalContent: PropTypes.object.isRequired,
+  onCancelModal: PropTypes.func.isRequired
 };
 
 const InfoModal = ({modalTitle, modalContent, show, onCancelModal}) => (
