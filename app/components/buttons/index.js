@@ -15,7 +15,7 @@ export { ModalButton, AutoBuyerSwitch, KeyBlueButton };
 /***************************************************
  * Custom Modal Buttons
  ***************************************************/
-import { InfoModal, PassphraseModal, ChangePassphraseModalContent } from "modals";
+import { InfoModal, PassphraseModal, ChangePassphraseModal } from "modals";
 
 // mbb = ModalButtonBuilder (func to build a functional ModalButton component
 // with extra fixed props)
@@ -34,6 +34,6 @@ const helpLinkButton = ({className, onClick, buttonLabel}) =>
 
 export const HelpLinkInfoModal = mbb("help-icon", InfoModal, helpLinkButton);
 export const InfoModalButton = mbb("purchase-tickets-info-button", InfoModal);
-export const ChangePassphraseButton = mbb("change-password-default-icon", ChangePassphraseModalContent);
+export const ChangePassphraseButton = mbb("change-password-default-icon", ChangePassphraseModal);
 export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
 export const PassphraseModalSwitch = mbb(null, PassphraseModal, AutoBuyerSwitch);

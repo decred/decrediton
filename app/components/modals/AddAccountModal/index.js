@@ -1,7 +1,7 @@
 import Modal from "./Modal";
 
 @autobind
-class AddAccountModalContent extends React.Component {
+class AddAccountModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -70,4 +70,4 @@ class AddAccountModalContent extends React.Component {
   }
 }
 
-export default AddAccountModalContent;
+export default AddAccountModal;

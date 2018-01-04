@@ -1,4 +1,4 @@
-import { PurchaseTicketsInfoModalContent, ImportScriptModalContent } from "modals";
+import { PurchaseTicketsInfoModalContent, ImportScriptModal } from "modals";
 import { TicketsCogs, InfoModalButton, PassphraseModalButton } from "buttons";
 import { AccountsSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T } from "react-intl";
@@ -85,7 +85,7 @@ const PurchaseTicketsForm = ({
           text={<T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan." />}>
           <PassphraseModalButton
             modalTitle={<T id="tickets.importScriptConfirmation" m="Import Script Confirmation" />}
-            modalComponent={ImportScriptModalContent}
+            modalComponent={ImportScriptModal}
             className="stakepool-content-purchase-button"
             disabled={rescanRequest}
             onSubmit={onImportScript}

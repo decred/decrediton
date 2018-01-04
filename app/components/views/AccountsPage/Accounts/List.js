@@ -3,7 +3,7 @@ import { TabbedHeader } from "shared";
 import AccountRow from "./AccountRow";
 import { DecredLoading } from "indicators";
 import { InfoModalButton, PassphraseModalButton } from "buttons";
-import { BalanceOverviewModalContent, AddAccountModalContent } from "modals";
+import { BalanceOverviewModalContent, AddAccountModal } from "modals";
 
 const AccountsList = ({
   routes,
@@ -21,7 +21,7 @@ const AccountsList = ({
     <TabbedHeader {...{ routes }}>
       <PassphraseModalButton
         modalTitle={<T id="accounts.newAccountConfirmations" m="Create new account" />}
-        modalComponent={AddAccountModalContent}
+        modalComponent={AddAccountModal}
         className="content-send"
         onSubmit={onGetNextAccountAttempt}
         buttonLabel={<T id="accounts.addNewButton" m="Add New" />}

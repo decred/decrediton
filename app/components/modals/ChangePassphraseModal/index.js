@@ -1,7 +1,7 @@
 import Modal from "./Modal";
 
 @autobind
-class ChangePassphraseModalContent extends React.Component {
+class ChangePassphraseModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -78,4 +78,4 @@ class ChangePassphraseModalContent extends React.Component {
   }
 }
 
-export default ChangePassphraseModalContent;
+export default ChangePassphraseModal;

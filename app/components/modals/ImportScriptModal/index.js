@@ -1,7 +1,7 @@
 import Modal from "./Modal";
 
 @autobind
-class ImportScriptModalContent extends React.Component {
+class ImportScriptModal extends React.Component {
 
   constructor(props) {
     super(props);
@@ -71,4 +71,4 @@ class ImportScriptModalContent extends React.Component {
   }
 }
 
-export default ImportScriptModalContent;
+export default ImportScriptModal;
