@@ -510,6 +510,12 @@ export const verifyMessageResponse = get(["grpc", "getVerifyMessageResponse"]);
 export const verifyMessageSuccess = compose(
   r => r ? r.toObject() : null, verifyMessageResponse
 );
+export const validateAddressRequestAttempt = get(["control", "validateAddressRequestAttempt"]);
+export const validateAddressError = get(["control", "validateAddressError"]);
+export const validateAddressResponse = get(["control", "validateAddressResponse"]);
+export const validateAddressSuccess = compose(
+  r => r ? r.toObject() : null, validateAddressResponse
+);
 
 const getStakeInfoResponse = get(["grpc", "getStakeInfoResponse"]);
 

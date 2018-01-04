@@ -28,6 +28,7 @@ export default defineMessages({
   "security.description":                     { id: "security.description",                  defaultMessage: "Various tools that help in different aspects of crypto currency security will be located here." },
   "security.tab.sign":                        { id: "security.tab.sign",                     defaultMessage: "Sign Message" },
   "security.tab.verify":                      { id: "security.tab.verify",                   defaultMessage: "Verify Message" },
+  "security.tab.validate":                    { id: "security.tab.validate",                 defaultMessage: "Validate Address" },
 
   "settings.title":                           { id: "settings.title",                        defaultMessage: "Settings" },
   "settings.description":                     { id: "settings.description",                  defaultMessage: "Changing network settings requires a restart" },

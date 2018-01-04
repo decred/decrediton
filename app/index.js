@@ -339,6 +339,10 @@ var initialState = {
     // ConstructTransaction
     constructTxRequestAttempt: false,
     constructTxResponse: null,
+    // ValidateAddress
+    validateAddressRequestAttempt: false,
+    validateAddressResponse: null,
+    validateAddressError: null,
   },
   snackbar: {
     messages: Array()
