@@ -7,54 +7,49 @@ class ChangePassphraseModalContent extends React.Component {
     this.state = this.getInitialState();
   }
 
+  onCancelModal() {
+    this.resetState();
+    this.props.onCancelModal && this.props.onCancelModal();
+  }
+
+  resetState() {
+    this.setState(this.getInitialState());
+  }
+
   getInitialState() {
     return {
-      privpass: null,
-      oldPrivPass: null,
-      confirmPrivPass: null,
-      privPassError: null,
-      oldPrivPassError: null,
-      confirmPrivPassError: null
+      privPass: "",
+      confirmPrivPass: "",
+      confirmPrivPassError: false,
+      hasFailedAttempt: false
     };
   }
 
   validationFailed() {
-    if (!this.state.privpass) {
-      this.setState({ privPassError: "*Please enter your private passphrase" });
-    } else if (this.state.privpass !== this.state.confirmPrivpass) {
-      this.setState({ confirmPrivPassError: "*Confirm does not match" });
-    }
+    const privPassError = !this.state.privPass;
+    const hasFailedAttempt = true;
+    const confirmPrivPassError = this.state.privPass !== this.state.confirmPrivPass;
+    this.setState({privPassError, hasFailedAttempt, confirmPrivPassError});
   }
 
   isValid() {
     return (
-      !!this.state.privpass &&
-      this.state.privpass === this.state.confirmPrivpass
+      !!this.state.privPass &&
+      this.state.privPass === this.state.confirmPrivPass
     );
   }
 
   onSubmit(passPhrase) {
-    this.props.onSubmit(passPhrase, this.state.privpass, true);
+    this.props.onSubmit(passPhrase, this.state.privPass, true);
+    this.resetState();
   }
 
-  updatePrivatePassphrase(privpass) {
-    if (privpass !== "") {
-      this.setState({ privpass: privpass, privPassError: null });
-    } else {
-      this.setState({ privpass: null, privPassError: "*Please enter your private passphrase" });
-    }
+  updatePrivatePassphrase(privPass) {
+    this.setState({ privPass });
   }
 
-  updateConfirmPrivatePassphrase(privpass) {
-    if (privpass != "") {
-      if (this.state.privpass === privpass) {
-        this.setState({ confirmPrivpass: privpass, confirmPrivPassError: null });
-      } else {
-        this.setState({ confirmPrivPassError: "*Confirm does not match" });
-      }
-    } else {
-      this.setState({ confirmPrivpass: null });
-    }
+  updateConfirmPrivatePassphrase(confirmPrivPass) {
+    this.setState({ confirmPrivPass, confirmPrivPassError: false });
   }
 
   render() {
@@ -62,6 +57,7 @@ class ChangePassphraseModalContent extends React.Component {
       updatePrivatePassphrase,
       updateConfirmPrivatePassphrase,
       onSubmit,
+      onCancelModal,
       isValid,
       validationFailed
     } = this;
@@ -73,6 +69,7 @@ class ChangePassphraseModalContent extends React.Component {
           updatePrivatePassphrase,
           updateConfirmPrivatePassphrase,
           onSubmit,
+          onCancelModal,
           isValid,
           validationFailed
         }}

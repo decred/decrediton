@@ -29,7 +29,10 @@ const mbb = (className, modalComponent, buttonComponent) => p =>
     }}
   />;
 
-export const HelpLinkInfoModal = mbb("help-icon", InfoModal);
+const helpLinkButton = ({className, onClick, buttonLabel}) =>
+  <div className={className} onClick={onClick}>{buttonLabel}</div>;
+
+export const HelpLinkInfoModal = mbb("help-icon", InfoModal, helpLinkButton);
 export const InfoModalButton = mbb("purchase-tickets-info-button", InfoModal);
 export const ChangePassphraseButton = mbb("change-password-default-icon", ChangePassphraseModalContent);
 export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);

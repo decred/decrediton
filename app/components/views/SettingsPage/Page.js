@@ -32,7 +32,6 @@ const SettingsPage = ({
                 <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
                 <ChangePassphraseButton
                   modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
-                  modalContent={ChangePassphraseModalContent}
                   onSubmit={onAttemptChangePassphrase} />
               </div>
             </div>

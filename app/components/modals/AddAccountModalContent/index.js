@@ -11,6 +11,15 @@ class AddAccountModalContent extends React.Component {
     this.state = this.getInitialState();
   }
 
+  onCancelModal() {
+    this.resetState();
+    this.props.onCancelModal && this.props.onCancelModal();
+  }
+
+  resetState() {
+    this.setState(this.getInitialState());
+  }
+
   validationFailed() {
     this.setState({hasFailedAttempt: true});
   }
@@ -29,6 +38,7 @@ class AddAccountModalContent extends React.Component {
   onSubmit(passPhrase) {
     const { name } = this.state;
     this.props.onSubmit(passPhrase, name);
+    this.resetState();
   }
 
   isValid() {
@@ -40,6 +50,7 @@ class AddAccountModalContent extends React.Component {
     const {
       setName,
       onSubmit,
+      onCancelModal,
       isValid,
       validationFailed
     } = this;
@@ -50,6 +61,7 @@ class AddAccountModalContent extends React.Component {
         {...{
           setName,
           onSubmit,
+          onCancelModal,
           isValid,
           validationFailed
         }}

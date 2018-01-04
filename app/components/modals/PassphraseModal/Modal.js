@@ -10,7 +10,21 @@ const propTypes = {
 };
 
 const StandardPassphraseModal = (props) => {
-  const { show, modalTitle, modalDescription, children } = props;
+  const {
+    show,
+    modalTitle,
+    modalDescription,
+    children,
+    prependPassphraseRow
+  } = props;
+
+  const inputRow =
+    <PassphraseInputRow
+      {...{
+        ...props,
+        autoFocusPassword: prependPassphraseRow || !children
+      }}
+    />;
 
   return (
     <Modal className="passphrase-modal" {...{show}}>
@@ -23,8 +37,9 @@ const StandardPassphraseModal = (props) => {
         </div>
       </div>
       <div className="passphrase-modal-content">
+        {prependPassphraseRow ? inputRow : null}
         {children}
-        <PassphraseInputRow {...props} />
+        {prependPassphraseRow ? null : inputRow}
         <ButtonsToolbar {...props} />
       </div>
     </Modal>

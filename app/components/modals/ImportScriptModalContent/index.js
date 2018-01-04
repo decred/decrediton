@@ -12,6 +12,15 @@ class ImportScriptModalContent extends React.Component {
     this.state = this.getInitialState();
   }
 
+  onCancelModal() {
+    this.resetState();
+    this.props.onCancelModal && this.props.onCancelModal();
+  }
+
+  resetState() {
+    this.setState(this.getInitialState());
+  }
+
   validationFailed() {
     this.setState({hasFailedAttempt: true});
   }
@@ -30,6 +39,7 @@ class ImportScriptModalContent extends React.Component {
   onSubmit(passPhrase) {
     const { script } = this.state;
     this.props.onSubmit(passPhrase, script);
+    this.resetState();
   }
 
   isValid() {
@@ -41,6 +51,7 @@ class ImportScriptModalContent extends React.Component {
     const {
       setScript,
       onSubmit,
+      onCancelModal,
       isValid,
       validationFailed
     } = this;
@@ -51,6 +62,7 @@ class ImportScriptModalContent extends React.Component {
         {...{
           setScript,
           onSubmit,
+          onCancelModal,
           isValid,
           validationFailed
         }}

@@ -11,17 +11,20 @@ class PassphraseModal extends React.Component {
     this.state = this.getInitialState();
   }
 
-  getInitialState() {
-    const parentState = this.props.getInitialState ? this.props.getInitialState() : {};
-    return {
-      passPhrase: "",
-      hasFailedAttempt: false,
-      ...parentState
-    };
+  onCancelModal() {
+    this.resetState();
+    this.props.onCancelModal && this.props.onCancelModal();
   }
 
   resetState() {
     this.setState(this.getInitialState());
+  }
+
+  getInitialState() {
+    return {
+      passPhrase: "",
+      hasFailedAttempt: false
+    };
   }
 
   setPassPhrase(passPhrase) {
@@ -43,10 +46,11 @@ class PassphraseModal extends React.Component {
     }
 
     this.props.onSubmit(passPhrase);
+    this.resetState();
   }
 
   render() {
-    const { setPassPhrase, onSubmit } = this;
+    const { setPassPhrase, onSubmit, onCancelModal } = this;
 
     return (
       <Modal
@@ -54,7 +58,8 @@ class PassphraseModal extends React.Component {
           ...this.props,
           ...this.state,
           setPassPhrase,
-          onSubmit
+          onSubmit,
+          onCancelModal
         }}
       />
     );
