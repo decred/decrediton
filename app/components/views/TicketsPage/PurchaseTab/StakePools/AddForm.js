@@ -83,9 +83,8 @@ const StakePoolsAddForm = ({
           disabled={!apiKey}
           className="stakepool-content-send"
           onSubmit={onSetStakePoolInfo}
-        >
-          <T id="stake.addPool.addBtn" m="Add" />
-        </PassphraseModalButton>
+          buttonLabel={<T id="stake.addPool.addBtn" m="Add" />}
+        />
         {configuredStakePools.length ? (
           <SlateGrayButton
             className="stakepool-hide-config"

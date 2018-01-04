@@ -4,24 +4,24 @@ import { FormattedMessage as T } from "react-intl";
 import PropTypes from "prop-types";
 
 const propTypes = {
-  title: PropTypes.object.isRequired,
+  modalTitle: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
-  children: PropTypes.object.isRequired,
-  onHideModal: PropTypes.func.isRequired
+  modalContent: PropTypes.object.isRequired,
+  onCancelModal: PropTypes.func.isRequired
 };
 
-const InfoModal = ({title, children, show, onHideModal}) => (
+const InfoModal = ({modalTitle, modalContent, show, onCancelModal}) => (
   <Modal className="info-modal" {...{show}}>
      <div className="info-modal-header">
        <div className="info-modal-header-title">
-         {title}
+         {modalTitle}
        </div>
-       <SlateGrayButton className="info-modal-close-button" onClick={onHideModal}>
+       <SlateGrayButton className="info-modal-close-button" onClick={onCancelModal}>
          <T id="infoModal.btnClose" m="Close" />
        </SlateGrayButton>
      </div>
      <div className="info-modal-content">
-       {children}
+       {modalContent}
      </div>
   </Modal>
 );

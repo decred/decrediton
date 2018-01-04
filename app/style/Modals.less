@@ -49,9 +49,13 @@
   margin-bottom: 1em;
 }
 
+.info-modal-header-title > h1 {
+  margin-top: 0;
+}
+
 .app-modal.passphrase-modal {
-  left: 20%;
-  right: 20%;
+  left: 10%;
+  right: 10%;
   top: 20%;
   z-index: 200;
   border-radius: 5px;
@@ -62,10 +66,22 @@
   text-align: left;
 }
 
-.passphrase-modal-close-button {
-  position: absolute;
-  right: 2em;
-  bottom: 2em;
+@media screen and (min-width: 768px) {
+  .app-modal.passphrase-modal {
+    left: 20%;
+    right: 20%;
+  }
+}
+
+@media screen and (max-height: 420px) {
+  .app-modal.passphrase-modal {
+    top: 10%;
+    max-height: 60%;
+  }
+}
+
+.passphrase-modal-toolbar > .passphrase-modal-close-button {
+  float: right;
 }
 
 .passphrase-modal-header {
@@ -82,76 +98,25 @@
   font-size: 15px;
 }
 
-.passphrase-modal-field-ct {
-  margin: 10px 10px 3px 0;
-  position: relative;
-  z-index: 0;
+.passphrase-modal-field {
+  display: flex;
+  min-height: 4em;
+  margin-top: 0.5em;
 }
 
-.passphrase-modal-field-ct::after {
-  .clearfloat-mixin;
-}
-
-.passphrase-modal-label {
-  padding-right: 10px;
-  float: left;
-  color: #0c1e3e;
+.passphrase-modal-field-label {
   font-size: 19px;
-  height: 100%;
-  width: 200px;
-  padding-top: 5px;
   text-align: right;
-  text-transform: capitalize;
+  width: 12em;
+  margin-right: 0.5em;
 }
 
-.passphrase-modal-error-ct::after {
-  .clearfloat-mixin;
-}
-
-.passphrase-modal-error {
-  min-height: 20px;
-  color: @error-text-color;
-  font-size: 10px;
+.passphrase-modal-field-value {
+  flex-grow: 1;
+  padding-top: 4px;
 }
 
 .passphrase-modal-toolbar {
-  margin-top: 20px;
-  height: 44px;
-}
-
-.import-script-modal-field-ct {
-  margin: 10px 10px 3px 0;
-  position: relative;
-  z-index: 0;
-}
-
-.import-script-modal-field-ct::after {
-  .clearfloat-mixin;
-}
-
-.import-script-modal-label {
-  padding-right: 10px;
-  float: left;
-  color: #0c1e3e;
-  font-size: 19px;
-  height: 100%;
-  width: 200px;
-  padding-top: 5px;
-  text-align: right;
-  text-transform: capitalize;
-}
-
-.import-script-modal-error-ct::after {
-  .clearfloat-mixin;
-}
-
-.import-script-modal-error {
-  min-height: 20px;
-  color: @error-text-color;
-  font-size: 10px;
-}
-
-.import-script-modal-toolbar {
   margin-top: 20px;
   height: 44px;
 }

@@ -1,4 +1,4 @@
-import { PurchaseTicketsInfoModalContent, ImportScriptModalContent } from "modals";
+import { PurchaseTicketsInfoModalContent, ImportScriptModal } from "modals";
 import { TicketsCogs, InfoModalButton, PassphraseModalButton } from "buttons";
 import { AccountsSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T } from "react-intl";
@@ -75,9 +75,8 @@ const PurchaseTicketsForm = ({
           className="stakepool-content-purchase-button"
           disabled={!canAffordTickets}
           onSubmit={onPurchaseTickets}
-        >
-          <T id="purchaseTickets.purchaseBtn" m="Purchase" />
-        </PassphraseModalButton>
+          buttonLabel={<T id="purchaseTickets.purchaseBtn" m="Purchase" />}
+        />
         {!canAffordTickets &&
           <div className="stakepool-purchase-error">
             <T id="purchaseTickets.errors.insufficientBalance" m="Insufficient spendable account balance to purchase tickets." />
@@ -86,22 +85,20 @@ const PurchaseTicketsForm = ({
           text={<T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan." />}>
           <PassphraseModalButton
             modalTitle={<T id="tickets.importScriptConfirmation" m="Import Script Confirmation" />}
-            modalContent={ImportScriptModalContent}
+            modalComponent={ImportScriptModal}
             className="stakepool-content-purchase-button"
             disabled={rescanRequest}
             onSubmit={onImportScript}
-          >
-            <T id="purchaseTickets.importScriptBtn" m="Import Script" />
-          </PassphraseModalButton>
+            buttonLabel={<T id="purchaseTickets.importScriptBtn" m="Import Script" />}
+          />
         </Tooltip>
         {hasTicketsToRevoke &&
           <PassphraseModalButton
             modalTitle={<T id="tickets.revokeConfirmations" m="Revoke Tickets Confirmation" />}
             className="stakepool-content-revoke-button"
             onSubmit={onRevokeTickets}
-          >
-            <T id="purchaseTickets.revokeBtn" m="Revoke" />
-          </PassphraseModalButton>
+            buttonLabel={<T id="purchaseTickets.revokeBtn" m="Revoke" />}
+          />
         }
       </div>
     </Aux>);

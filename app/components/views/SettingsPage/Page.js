@@ -1,7 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { TabbedHeader } from "shared";
 import { ChangePassphraseButton, KeyBlueButton } from "buttons";
-import { ChangePassphraseModalContent } from "modals";
 import GeneralSettings from "./GeneralSettings";
 import "style/StakePool.less";
 import "style/Settings.less";
@@ -32,7 +31,6 @@ const SettingsPage = ({
                 <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
                 <ChangePassphraseButton
                   modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
-                  modalContent={ChangePassphraseModalContent}
                   onSubmit={onAttemptChangePassphrase} />
               </div>
             </div>

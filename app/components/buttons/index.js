@@ -1,15 +1,39 @@
-export { default as AutoBuyerSwitch } from "./AutoBuyerSwitch";
-export { default as ChangePassphraseButton } from "./ChangePassphraseButton";
 export { default as EyeFilterMenu } from "./EyeFilterMenu";
 export { default as HelpLink } from "./HelpLink";
-export { default as HelpLinkInfoModal } from "./HelpLinkInfoModal";
-export { default as InfoModalButton } from "./InfoModalButton";
-export { default as KeyBlueButton } from "./KeyBlueButton";
 export { default as SlateGrayButton } from "./SlateGrayButton";
-export { default as PassphraseModalButton } from "./PassphraseModalButton";
-export { default as PassphraseModalSwitch } from "./PassphraseModalSwitch";
 export { default as RescanButton } from "./RescanButton";
 export { default as RescanCancelButton } from "./RescanCancelButton";
 export { default as TextToggle } from "./TextToggle";
 export { default as TicketsCogs } from "./TicketsCogs";
 export { default as TransactionLink } from "./TransactionLink";
+
+import ModalButton from "./ModalButton";
+import KeyBlueButton from "./KeyBlueButton";
+import AutoBuyerSwitch from "./AutoBuyerSwitch";
+export { ModalButton, AutoBuyerSwitch, KeyBlueButton };
+
+/***************************************************
+ * Custom Modal Buttons
+ ***************************************************/
+import { InfoModal, PassphraseModal, ChangePassphraseModal } from "modals";
+
+// mbb = ModalButtonBuilder (func to build a functional ModalButton component
+// with extra fixed props)
+const mbb = (className, modalComponent, buttonComponent) => p =>
+  <ModalButton
+    {...{
+      ...p,
+      buttonComponent,
+      modalComponent: p.modalComponent || modalComponent,
+      className: [className||"",p.className||""].join(" "),
+    }}
+  />;
+
+const helpLinkButton = ({className, onClick, buttonLabel}) =>
+  <div className={className} onClick={onClick}>{buttonLabel}</div>;
+
+export const HelpLinkInfoModal = mbb("help-icon", InfoModal, helpLinkButton);
+export const InfoModalButton = mbb("purchase-tickets-info-button", InfoModal);
+export const ChangePassphraseButton = mbb("change-password-default-icon", ChangePassphraseModal);
+export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
+export const PassphraseModalSwitch = mbb(null, PassphraseModal, AutoBuyerSwitch);
