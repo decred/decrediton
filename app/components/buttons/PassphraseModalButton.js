@@ -27,13 +27,14 @@ class PassphraseModalButton extends React.Component {
     const { modalTitle, modalDescription, modalContent, className, children, disabled, loading  } = this.props;
     const { show } = this.state;
     const { onSubmit } = this;
+    const Content = modalContent || PassphraseModal;
 
     return <Aux>
       <KeyBlueButton disabled={disabled} className={className} onClick={this.showModal} loading={loading}>
         {children}
       </KeyBlueButton>
 
-      <PassphraseModal {...{show, title: modalTitle, Content: modalContent, description: modalDescription, onSubmit, onCancelModal: this.hideModal}}/>
+      <Content {...{show, title: modalTitle, description: modalDescription, onSubmit, onCancelModal: this.hideModal}} />
     </Aux>;
   }
 }

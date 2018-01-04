@@ -11,63 +11,50 @@ class AddAccountModalContent extends React.Component {
     this.state = this.getInitialState();
   }
 
+  validationFailed() {
+    this.setState({hasFailedAttempt: true});
+  }
+
   getInitialState() {
     return {
       name: "",
-      passPhrase: "",
       hasFailedAttempt: false
     };
-  }
-
-  render() {
-    const {
-      passPhrase,
-      name,
-      hasFailedAttempt
-    } = this.state;
-    const {
-      setName,
-      setPassPhrase,
-      onSubmit
-    } = this;
-    const { onCancelModal } = this.props;
-
-    return (
-      <Modal
-        {...{
-          passPhrase,
-          name,
-          hasFailedAttempt,
-          setName,
-          setPassPhrase,
-          onSubmit,
-          onCancelModal
-        }}
-      />
-    );
-  }
-
-  resetState() {
-    this.setState(this.getInitialState());
-  }
-
-  setPassPhrase(passPhrase) {
-    this.setState({ passPhrase });
   }
 
   setName(name) {
     this.setState({ name });
   }
 
-  onSubmit() {
-    const { passPhrase, name } = this.state;
-
-    if (!passPhrase || !name) {
-      return this.setState({ hasFailedAttempt: true });
-    }
-
+  onSubmit(passPhrase) {
+    const { name } = this.state;
     this.props.onSubmit(passPhrase, name);
-    this.resetState();
+  }
+
+  isValid() {
+    const { name } = this.state;
+    return !!name;
+  }
+
+  render() {
+    const {
+      setName,
+      onSubmit,
+      isValid,
+      validationFailed
+    } = this;
+
+    return (
+      <Modal
+        {...{...this.props, ...this.state}}
+        {...{
+          setName,
+          onSubmit,
+          isValid,
+          validationFailed
+        }}
+      />
+    );
   }
 }
 

@@ -11,4 +11,4 @@ export { default as AddAccountModalContent } from "./AddAccountModalContent";
 export { default as ChangePassphraseModalContent } from "./ChangePassphraseModalContent";
 
 export { default as InfoModal } from "./InfoModal/Modal";
-export { default as PassphraseModal } from "./PassphraseModal/Modal";
+export { default as PassphraseModal } from "./PassphraseModal/PassphraseModal";

@@ -1,5 +1,6 @@
 import Modal from "../Modal";
-import PassphraseModalContent from "../PassphraseModalContent";
+import ButtonsToolbar from "./ButtonsToolbar";
+import PassphraseInputRow from "./PassphraseInputRow";
 
 const propTypes = {
   title: PropTypes.object.isRequired,
@@ -8,22 +9,28 @@ const propTypes = {
   description: PropTypes.object
 };
 
-const PassphraseModal = ({title, description, Content, show, onCancelModal, onSubmit}) => (
-  <Modal className="passphrase-modal" {...{show}}>
-    <div className="passphrase-modal-header">
-      <div className="passphrase-modal-header-title">
-        {title}
-      </div>
-      <div className="passphrase-modal-header-description">
-        {description}
-      </div>
-    </div>
-    <div className="passphrase-modal-content">
-      {!Content ? <PassphraseModalContent {...{onSubmit, onCancelModal}}/> : <Content {...{onSubmit, onCancelModal}} />}
-    </div>
-  </Modal>
-);
+const StandardPassphraseModal = (props) => {
+  const { show, title, description, children } = props;
 
-PassphraseModal.propTypes = propTypes;
+  return (
+    <Modal className="passphrase-modal" {...{show}}>
+      <div className="passphrase-modal-header">
+        <div className="passphrase-modal-header-title">
+          {title}
+        </div>
+        <div className="passphrase-modal-header-description">
+          {description}
+        </div>
+      </div>
+      <div className="passphrase-modal-content">
+        {children}
+        <PassphraseInputRow {...props} />
+        <ButtonsToolbar {...props} />
+      </div>
+    </Modal>
+  );
+};
 
-export default PassphraseModal;
+StandardPassphraseModal.propTypes = propTypes;
+
+export default StandardPassphraseModal;

@@ -26,11 +26,12 @@ class ChangePassphraseButton extends React.Component {
     const { modalTitle, modalDescription, modalContent } = this.props;
     const { show } = this.state;
     const { onSubmit } = this;
+    const Content = modalContent || PassphraseModal;
 
     return <Aux>
-        <button className="change-password-default-icon" onClick={this.showModal} />
+      <button className="change-password-default-icon" onClick={this.showModal} />
 
-        <PassphraseModal {...{show, title: modalTitle, Content: modalContent, description: modalDescription, onSubmit, onCancelModal: this.hideModal}}/>
+      <Content {...{show, title: modalTitle, description: modalDescription, onSubmit, onCancelModal: this.hideModal}} />
       </Aux>;
   }
 }

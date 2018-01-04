@@ -1,18 +1,15 @@
 import { FormattedMessage as T } from "react-intl";
-import { TextInput, PasswordInput } from "inputs";
-import { ButtonsToolbar } from "../PassphraseModal";
+import { TextInput } from "inputs";
+import { PassphraseModal } from "../PassphraseModal";
 import "style/Modals.less";
 
 const Modal = ({
   script,
-  passPhrase,
   hasFailedAttempt,
   setScript,
-  setPassPhrase,
-  onSubmit,
-  onCancelModal,
+  ...props
 }) => (
-  <Aux>
+  <PassphraseModal {...props} >
     <div className="import-script-modal-field-ct">
       <div className="import-script-modal-label">
         <T id="importScriptModal.redeemScript" m="Redeem Script" />
@@ -33,29 +30,7 @@ const Modal = ({
         ? <T id="importScriptModal.errors.noScript" m="*Please enter your script" />
         : null}</div>
     </div>
-    <div className="import-script-modal-field-ct">
-      <div className="import-script-modal-label">
-        <T id="importScriptModal.privatePassphrase" m="Private Passphrase" />
-         :</div>
-      <PasswordInput
-        id="passphrase"
-        className="import-script-modal-field"
-        placeholder=""
-        value={passPhrase}
-        onChange={(e) => setPassPhrase(e.target.value)}
-        onKeyDownSubmit={onSubmit}
-      />
-    </div>
-    <div className="import-script-modal-error-ct">
-      <div className="import-script-modal-label"></div>
-      <div className="import-script-modal-error">{(hasFailedAttempt && !passPhrase)
-        ? <T id="importScriptModal.errors.noPassphrase" m="*Please enter your private passphrase" />
-        : null}</div>
-    </div>
-    <ButtonsToolbar
-      {...{onSubmit, onCancelModal}}
-      submitLabel={<T id="importScriptModal.importBtn" m="Import" />} />
-  </Aux>
+  </PassphraseModal>
 );
 
 export default Modal;

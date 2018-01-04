@@ -18,64 +18,23 @@ class ChangePassphraseModalContent extends React.Component {
     };
   }
 
-  render() {
-    const {
-      privpass,
-      oldPrivPass,
-      confirmPrivPass,
-      privPassError,
-      oldPrivPassError,
-      confirmPrivPassError
-    } = this.state;
-    const {
-      updateOldPrivatePassphrase,
-      updatePrivatePassphrase,
-      updateConfirmPrivatePassphrase,
-      onSubmit
-    } = this;
-    const { onCancelModal } = this.props;
+  validationFailed() {
+    if (!this.state.privpass) {
+      this.setState({ privPassError: "*Please enter your private passphrase" });
+    } else if (this.state.privpass !== this.state.confirmPrivpass) {
+      this.setState({ confirmPrivPassError: "*Confirm does not match" });
+    }
+  }
 
+  isValid() {
     return (
-      <Modal
-        {...{
-          privpass,
-          oldPrivPass,
-          confirmPrivPass,
-          privPassError,
-          oldPrivPassError,
-          confirmPrivPassError,
-          updateOldPrivatePassphrase,
-          updatePrivatePassphrase,
-          updateConfirmPrivatePassphrase,
-          onSubmit,
-          onCancelModal
-        }}
-      />
+      !!this.state.privpass &&
+      this.state.privpass === this.state.confirmPrivpass
     );
   }
 
-  resetState() {
-    this.state = this.getInitialState(); // clear password data from memory
-  }
-
-  onSubmit() {
-    if (this.state.privpass === null || this.state.privPassError !== null) {
-      this.setState({ privPassError: "*Please enter your private passphrase" });
-      return;
-    }
-
-    if (this.state.oldPrivpass === null || this.state.oldPrivPassError !== null) {
-      this.setState({ oldPrivPassError: "*Please enter your old private passphrase" });
-      return;
-    }
-
-    if (this.state.privpass !== this.state.confirmPrivpass || this.state.confirmPrivPassError !== null) {
-      this.setState({ confirmPrivPassError: "*Confirm does not match" });
-      return;
-    }
-
-    this.props.onSubmit(this.state.oldPrivpass, this.state.privpass, true);
-    this.resetState();
+  onSubmit(passPhrase) {
+    this.props.onSubmit(passPhrase, this.state.privpass, true);
   }
 
   updatePrivatePassphrase(privpass) {
@@ -83,14 +42,6 @@ class ChangePassphraseModalContent extends React.Component {
       this.setState({ privpass: privpass, privPassError: null });
     } else {
       this.setState({ privpass: null, privPassError: "*Please enter your private passphrase" });
-    }
-  }
-
-  updateOldPrivatePassphrase(privpass) {
-    if (privpass !== "") {
-      this.setState({ oldPrivpass: privpass, oldPrivPassError: null });
-    } else {
-      this.setState({ oldPrivpass: null, oldPrivPassError: "*Please enter your old private passphrase" });
     }
   }
 
@@ -104,6 +55,29 @@ class ChangePassphraseModalContent extends React.Component {
     } else {
       this.setState({ confirmPrivpass: null });
     }
+  }
+
+  render() {
+    const {
+      updatePrivatePassphrase,
+      updateConfirmPrivatePassphrase,
+      onSubmit,
+      isValid,
+      validationFailed
+    } = this;
+
+    return (
+      <Modal
+        {...{...this.props, ...this.state}}
+        {...{
+          updatePrivatePassphrase,
+          updateConfirmPrivatePassphrase,
+          onSubmit,
+          isValid,
+          validationFailed
+        }}
+      />
+    );
   }
 }
 
