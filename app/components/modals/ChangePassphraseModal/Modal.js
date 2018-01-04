@@ -30,7 +30,6 @@ const Modal = ({
         placeholder=""
         value={privPass}
         onChange={(e) => updatePrivatePassphrase(e.target.value)}
-        onKeyDownSubmit={onSubmit}
       />
     </PassphraseModalField>
 
@@ -45,7 +44,6 @@ const Modal = ({
         placeholder=""
         value={confirmPrivPass}
         onChange={(e) => updateConfirmPrivatePassphrase(e.target.value)}
-        onKeyDownSubmit={onSubmit}
       />
     </PassphraseModalField>
   </PassphraseModal>
