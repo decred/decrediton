@@ -12,6 +12,7 @@ const Page = ({
                 transactions,
                 selectedSortOrderKey,
                 selectedTxTypeKey,
+                loadMoreThreshold,
                 noMoreTransactions,
                 onChangeSelectedType,
                 onChangeSortType,
@@ -20,9 +21,9 @@ const Page = ({
   <InfiniteScroll
     hasMore={!noMoreTransactions}
     loadMore={onLoadMoreTransactions}
-    initialLoad={false}
+    initialLoad={loadMoreThreshold > 90}
     useWindow={false}
-    threshold={90}
+    threshold={loadMoreThreshold}
   >
     <div className="tab-card">
       <div className="history-content-title">
