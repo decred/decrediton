@@ -1,10 +1,7 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { Field, reduxForm } from "redux-form";
-import InputField from "Form/InputField";
-import ErrorField from "Form/ErrorField";
+import { TextInput } from "inputs";
 import { InfoModalButton } from "buttons";
 import { VerifyMessageInfoModalContent } from "modals";
-import { validate } from "./validator";
 
 const messages = defineMessages({
   addressFieldLabel: {
@@ -33,7 +30,7 @@ const messages = defineMessages({
   },
 });
 
-const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error, rpcError, formatMessage }) => {
+const VerifyMessageForm = ({ onSubmit, error, rpcError, formatMessage }) => {
   if (rpcError) {
     error = (
       <div className="error">{rpcError}</div>
@@ -41,7 +38,7 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <Aux>
       <div className="message-content-nest">
         <div className="button-right">
           <InfoModalButton
@@ -49,52 +46,39 @@ const VerifyMessageForm = ({ handleSubmit, onSubmit, pristine, submitting, error
             modalContent={<VerifyMessageInfoModalContent />}
           />
         </div>
-        <Field
+        <TextInput
           classname="address"
           label={formatMessage(messages.addressFieldLabel)}
           name="address"
-          component={InputField}
-          type="text"
           placeholder={formatMessage(messages.addressFieldPlaceholder)}
         />
-        <Field
+        <TextInput
           classname="address"
           label={formatMessage(messages.signatureFieldLabel)}
           name="signature"
-          component={InputField}
-          type="text"
           placeholder={formatMessage(messages.signatureFieldPlaceholder)}
         />
-        <Field
+        <TextInput
           classname="message"
           label={formatMessage(messages.messageFieldLabel)}
           name="message"
-          component={InputField}
           placeholder={formatMessage(messages.messageFieldPlaceholder)}
-        />
-        <Field
-          name="global"
-          component={ErrorField}
         />
       </div>
       {error && <div className="error">{error}</div>}
       <div className="message-toolbar">
-        <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
+        <KeyBlueButton onClick={onSubmit}>
           <T id="securitycenter.verify.form.submit" m="Verify" />
-        </button>
+        </KeyBlueButton>
       </div>
-    </form>
+    </Aux>
   );
 };
 
 VerifyMessageForm.propTypes = {
   formatMessage: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  pristine: PropTypes.bool.isRequired,
-  submitting: PropTypes.bool.isRequired,
   error: PropTypes.string,
-  rpcError: PropTypes.string,
 };
 
-export default reduxForm({ form: "message/verify", validate })(VerifyMessageForm);
+export default VerifyMessageForm;

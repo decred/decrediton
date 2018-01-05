@@ -61,6 +61,18 @@ class VerifyMessage extends React.Component {
   onSubmit(props) {
     this.props.verifyMessageAttempt(props);
   }
+
+  onChangeAddress(address) {
+
+  }
+
+  onChangeMessage(message) {
+
+  }
+
+  onChangeSignature(signature) {
+
+  }
 }
 
 VerifyMessage.propTypes = {

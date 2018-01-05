@@ -14,6 +14,10 @@ class SignMessage extends React.Component {
   getInitialState() {
     return {
       isShowingSignMessageInfo: false,
+      address: "",
+      addressError: null,
+      message: "",
+      messageError: null,
     };
   }
 
@@ -28,7 +32,9 @@ class SignMessage extends React.Component {
   }
 
   render() {
-    const { signMessageError, signMessageSuccess } = this.props;
+    const { signMessageError, signMessageSuccess, intl } = this.props;
+    const { onChangeAddress, onChangeMessage, onSubmit } = this;
+    const { address, addressError, message, messageError } = this.state;
     let result = null;
     if (signMessageSuccess) {
       result = (
@@ -45,13 +51,25 @@ class SignMessage extends React.Component {
 
     return (
       <div className="tab-card message message-sign">
-        <SignMessageForm onSubmit={this.onSubmit} rpcError={signMessageError} formatMessage={this.props.intl.formatMessage} />
+        <SignMessageForm {...{onSubmit, onChangeAddress, onChangeMessage, address, addressError, message, messageError, rpcError: signMessageError, formatMessage: intl.formatMessage} }/>
         {result}
       </div>
     );
   }
 
+  onChangeAddress(address){
+    if (address == "") this.setState({address: "", addressError: "Please enter an address"});
+    else this.setState({address, addressError: null});
+  }
+
+  onChangeMessage(message){
+    if (message == "") this.setState({message: "", messageError: "Please enter a message"});
+    else this.setState({message, messageError: null});
+  }
+
   onSubmit(props) {
+    const { addressError, messageError } = this.state;
+    if (addressError || messageError) return;
     this.props.signMessageAttempt(props);
   }
 }

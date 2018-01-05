@@ -33,15 +33,9 @@ const messages = defineMessages({
   },
 });
 
-const SignMessageForm = ({ handleSubmit, onSubmit, pristine, error, submitting, rpcError, formatMessage }) => {
-  if (rpcError) {
-    error = (
-      <div className="error">{rpcError}</div>
-    );
-  }
-
+const SignMessageForm = ({ handleSubmit, onSubmit, error, formatMessage }) => {
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <Aux onSubmit={handleSubmit(onSubmit)}>
       <div className="message-content-nest">
         <div className="button-right">
           <InfoModalButton
@@ -49,49 +43,31 @@ const SignMessageForm = ({ handleSubmit, onSubmit, pristine, error, submitting, 
             modalContent={<SignMessageInfoModalContent />}
           />
         </div>
-        <Field
+        <TextInput
           label={formatMessage(messages.addressFieldLabel)}
           name="address"
-          component={InputField}
-          type="text"
           placeholder={formatMessage(messages.addressFieldPlaceholder)}
         />
-        <Field
+        <TextInput
           label={formatMessage(messages.messageFieldLabel)}
           name="message"
-          component={InputField}
           placeholder={formatMessage(messages.messageFieldPlaceholder)}
-        />
-        <Field
-          label={formatMessage(messages.passphraseFieldLabel)}
-          name="passphrase"
-          component={InputField}
-          type="password"
-          placeholder={formatMessage(messages.passphraseFieldPlaceholder)}
-        />
-        <Field
-          name="global"
-          component={ErrorField}
         />
       </div>
       {error && <div className="error">{error}</div>}
       <div className="message-toolbar">
-        <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
+        <button className="key-blue-button" onClick>
           <T id="securitycenter.sign.form.submit" m="Sign" />
         </button>
       </div>
-    </form>
+    </Aux>
   );
 };
 
 SignMessageForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  pristine: PropTypes.bool.isRequired,
-  submitting: PropTypes.bool.isRequired,
   formatMessage: PropTypes.func.isRequired,
   error: PropTypes.string,
-  rpcError: PropTypes.string,
 };
 
-export default reduxForm({ form: "message/sign", validate })(SignMessageForm);
+export default SignMessageForm;
