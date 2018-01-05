@@ -20,11 +20,16 @@ class History extends React.Component {
   }
 
   render() {
+    // empirically defined to load 1 page of transactions in default height
+    // and an additional page when window.innerHeight > default
+    const loadMoreThreshold = 90 + Math.max(0, this.props.window.innerHeight - 765);
+
     return  !this.props.walletService ? <ErrorScreen /> : (
       <HistoryPage
         {...{
           ...this.props,
           ...this.state,
+          loadMoreThreshold,
           txTypes: this.getTxTypes(),
           sortTypes: this.getSortTypes(),
           transactions: this.getTransactions(),
