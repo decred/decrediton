@@ -324,10 +324,12 @@ export function updateStakePoolConfig(config, foundStakePoolConfigs) {
 
   if (foundStakePoolConfigs !== null) {
     let newStakePoolConfigs = foundStakePoolConfigs.map(s => {
-      return currentConfigsByHost[s.Host]
-          ? { ...currentConfigsByHost[s.Host], ...s }
-          : s;
+      const current = currentConfigsByHost[s.Host];
+      delete currentConfigsByHost[s.Host];
+      return current ? { ...current, ...s } : s;
     });
+    Object.keys(currentConfigsByHost)
+      .forEach(v => newStakePoolConfigs.push(currentConfigsByHost[v]));
     config.set("stakepools", newStakePoolConfigs);
   }
 }
