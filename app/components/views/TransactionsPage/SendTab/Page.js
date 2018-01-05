@@ -61,7 +61,7 @@ const SendPage = ({
                 !isSendSelf
                   ? <TransitionMotionWrapper {...{ styles: getStyles(), willLeave, willEnter, wrapperComponent }} />
                   : <OutputAccountRow
-                    {...{ index: 0, ...props, ...outputs[0], isSendAll, totalSpent }}
+                    {...{ index: 0, ...props, ...outputs[0].data, isSendAll, totalSpent }}
                     amountError={getAmountError(0)} />
               }
             </div>
