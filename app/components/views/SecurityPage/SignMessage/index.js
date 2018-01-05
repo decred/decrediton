@@ -67,10 +67,10 @@ class SignMessage extends React.Component {
     else this.setState({message, messageError: null});
   }
 
-  onSubmit(props) {
-    const { addressError, messageError } = this.state;
+  onSubmit(passphrase) {
+    const { address, addressError, message, messageError } = this.state;
     if (addressError || messageError) return;
-    this.props.signMessageAttempt(props);
+    this.props.signMessageAttempt(address, message, passphrase);
   }
 }
 

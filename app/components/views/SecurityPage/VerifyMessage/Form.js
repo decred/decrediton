@@ -30,13 +30,8 @@ const messages = defineMessages({
   },
 });
 
-const VerifyMessageForm = ({ onSubmit, error, rpcError, formatMessage }) => {
-  if (rpcError) {
-    error = (
-      <div className="error">{rpcError}</div>
-    );
-  }
-
+const VerifyMessageForm = ({
+  onSubmit, onChangeAddress, onChangeMessage, onChangeSignature, address, message, signature, addressError, messageError, signatureError, formatMessage }) => {
   return (
     <Aux>
       <div className="message-content-nest">
@@ -47,25 +42,33 @@ const VerifyMessageForm = ({ onSubmit, error, rpcError, formatMessage }) => {
           />
         </div>
         <TextInput
-          classname="address"
           label={formatMessage(messages.addressFieldLabel)}
-          name="address"
+          value={address}
+          onChange={onChangeAddress}
           placeholder={formatMessage(messages.addressFieldPlaceholder)}
         />
+        <div className="message-error">
+          {addressError && <span className="error">{addressError}</span>}
+        </div>
         <TextInput
-          classname="address"
           label={formatMessage(messages.signatureFieldLabel)}
-          name="signature"
+          value={signature}
+          onChange={onChangeSignature}
           placeholder={formatMessage(messages.signatureFieldPlaceholder)}
         />
+        <div className="message-error">
+          {messageError && <span className="error">{messageError}</span>}
+        </div>
         <TextInput
-          classname="message"
           label={formatMessage(messages.messageFieldLabel)}
-          name="message"
+          value={message}
+          onChange={onChangeMessage}
           placeholder={formatMessage(messages.messageFieldPlaceholder)}
         />
+        <div className="message-error">
+          {signatureError && <span className="error">{signatureError}</span>}
+        </div>
       </div>
-      {error && <div className="error">{error}</div>}
       <div className="message-toolbar">
         <KeyBlueButton onClick={onSubmit}>
           <T id="securitycenter.verify.form.submit" m="Verify" />

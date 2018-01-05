@@ -26,7 +26,8 @@ class VerifyMessage extends React.Component {
 
   render() {
     const { verifyMessageError, verifyMessageSuccess, messageVerificationService } = this.props;
-
+    const { address, message, signature, addressError, messageError, signatureError } = this.props;
+    const { onChangeAddress, onChangeMessage, onChangeSignature, onSubmit } = this;
     if (!messageVerificationService) {
       return <div><T id="securitycenter.loading" m="Loading..." /></div>;
     }
@@ -52,26 +53,32 @@ class VerifyMessage extends React.Component {
 
     return (
       <div className="tab-card message message-verify">
-        <VerifyMessageForm onSubmit={this.onSubmit} rpcError={verifyMessageError} formatMessage={this.props.intl.formatMessage} />
+        <VerifyMessageForm {...{onSubmit, address, message, signature, addressError, messageError, signatureError, onChangeAddress, onChangeMessage, onChangeSignature, formatMessage:this.props.intl.formatMessage}} />
         {result}
       </div>
     );
   }
 
-  onSubmit(props) {
-    this.props.verifyMessageAttempt(props);
+
+  onSubmit() {
+    const { address, addressError, message, messageError, signature, signatureError } = this.state;
+    if (addressError || messageError || signatureError) return;
+    this.props.verifyMessageAttempt(address, message, signature);
   }
 
   onChangeAddress(address) {
-
+    if (address == "") this.setState({address: "", addressError: "Please enter an address"});
+    else this.setState({address, addressError: null});
   }
 
-  onChangeMessage(message) {
-
+  onChangeMessage(message){
+    if (message == "") this.setState({message: "", messageError: "Please enter a message"});
+    else this.setState({message, messageError: null});
   }
 
   onChangeSignature(signature) {
-
+    if (signature == "") this.setState({signature: "", signatureError: "Please enter a signature"});
+    else this.setState({signature, signatureError: null});
   }
 }
 

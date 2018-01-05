@@ -33,9 +33,18 @@ const messages = defineMessages({
   },
 });
 
-const SignMessageForm = ({ handleSubmit, onSubmit, error, formatMessage }) => {
+const SignMessageForm = ({
+  onSubmit,
+  onChangeAddress,
+  onChangeMessage,
+  address,
+  message,
+  addressError,
+  messageError,
+   formatMessage
+   }) => {
   return (
-    <Aux onSubmit={handleSubmit(onSubmit)}>
+    <Aux>
       <div className="message-content-nest">
         <div className="button-right">
           <InfoModalButton
@@ -45,18 +54,25 @@ const SignMessageForm = ({ handleSubmit, onSubmit, error, formatMessage }) => {
         </div>
         <TextInput
           label={formatMessage(messages.addressFieldLabel)}
-          name="address"
+          value={address}
+          onChange={onChangeAddress}
           placeholder={formatMessage(messages.addressFieldPlaceholder)}
         />
+        <div className="message-error">
+          {addressError && <span className="error">{addressError}</span>}
+        </div>
         <TextInput
           label={formatMessage(messages.messageFieldLabel)}
-          name="message"
+          value={message}
+          onChange={onChangeMessage}
           placeholder={formatMessage(messages.messageFieldPlaceholder)}
         />
+        <div className="message-error">
+          {messageError && <span className="error">{messageError}</span>}
+        </div>
       </div>
-      {error && <div className="error">{error}</div>}
       <div className="message-toolbar">
-        <button className="key-blue-button" onClick>
+        <button className="key-blue-button" onClick={onSubmit}>
           <T id="securitycenter.sign.form.submit" m="Sign" />
         </button>
       </div>
