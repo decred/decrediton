@@ -10,6 +10,9 @@ const getRemaining = (seedWords, seedType) =>
   (seedType === "words" ? SEED_LENGTH.WORDS - (seedWords.length ? seedWords.split(" ") : []).length
   : seedWords.length);
 
+const shoudShowNonSupportSeedSize = (seedWords, seedType) =>
+  seedType === "hex" && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;
+
 class ConfirmSeedForm extends React.Component{
   constructor(props){
     super(props);
@@ -28,6 +31,25 @@ class ConfirmSeedForm extends React.Component{
 
   handleToggle = (side) => {
     this.setState({ seedType: side === "left" ? "words" : "hex"});
+  }
+
+  mountSeedErrors = () => {
+    const errors = [];
+    if(this.props.seedError) {
+      errors.push(
+        <div key={this.props.seedError}>
+          {this.props.seedError}
+        </div>
+      );
+    }
+    if(shoudShowNonSupportSeedSize(this.props.seedWords, this.state.seedType)) {
+      errors.push(
+        <div key='confirmSeed.errors.hexNot32Bytes'>
+          <T id="confirmSeed.errors.hexNot32Bytes" m="Error: seed is not 32 bytes, such comes from a non-supported software and may have unintended consequences." />
+        </div>
+      );
+    }
+    return errors;
   }
 
   render(){
@@ -84,7 +106,9 @@ class ConfirmSeedForm extends React.Component{
           </div>
           <div className="input-form-error">
             {seedError
-              ? seedError
+              ? <div>
+                  {this.mountSeedErrors()}
+                </div>
               : isMatch || isEmpty
                 ? null
                 : <T id="confirmSeed.errors.seedsDontMatch" m="*Seeds do not match" /> }
