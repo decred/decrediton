@@ -53,9 +53,10 @@ class ConfirmSeedForm extends React.Component{
   }
 
   render(){
-    const { isMatch, seedError, isEmpty, seedWords, setSeedWords, createWalletExisting } = this.props;
+    const { isMatch, isEmpty, setSeedWords, seedWords, createWalletExisting } = this.props;
     const { seedType } = this.state;
     const remaining = getRemaining(seedWords, seedType);
+    const errors = this.mountSeedErrors();
     return (
       <div className="confirm-seed">
         <div className="create-wallet-header">
@@ -105,9 +106,9 @@ class ConfirmSeedForm extends React.Component{
             }
           </div>
           <div className="input-form-error">
-            {seedError
+            {errors.length
               ? <div>
-                  {this.mountSeedErrors()}
+                  {errors}
                 </div>
               : isMatch || isEmpty
                 ? null
