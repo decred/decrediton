@@ -13,12 +13,15 @@ const messages = defineMessages({
   }
 });
 
+
 @autobind
 class SeedEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
     this.getSeedWords = this.getSeedWords.bind(this);
+    this.isHexValid = this.isHexValid.bind(this);
+    this.lengthInterval = this.lengthInterval.bind(this);
   }
 
   getInitialState () {
@@ -75,12 +78,13 @@ class SeedEntry extends React.Component {
 
   onChange (val) {
     const parsedSeed = Array.isArray(val) ? val.map(({ name }) => name).join(" ") : val.target.value;
+    const hexValid = this.isHexValid(parsedSeed);
+    const wordsValid = this.props.seedType === "words" && this.lengthInterval(parsedSeed);
     this.setState({
-      currentHex: this.props.seedType  === "hex" ? parsedSeed : this.state.currentHex,
-      currentWords: this.props.seedType === "words" ? parsedSeed : this.state.currentWords,
+      currentHex: hexValid ? parsedSeed : this.state.currentHex,
+      currentWords: wordsValid ? parsedSeed : this.state.currentWords,
     });
-    this.props.onChange(parsedSeed);
-
+    (hexValid || wordsValid) && this.props.onChange(parsedSeed);
   }
 
   getSeedWords (input, callback) {
@@ -91,6 +95,16 @@ class SeedEntry extends React.Component {
       options: options.slice(0, SEED_LENGTH.WORDS),
       complete: this.state.currentWords.length >= SEED_LENGTH.WORDS,
     });
+  }
+
+  isHexValid(seed) {
+    return this.props.seedType === "hex"
+      && /^[0-9a-fA-F]*$/.test(seed) && this.lengthInterval(seed);
+  }
+
+  lengthInterval(seed) {
+    return this.props.seedType === "hex" ? seed.length <= SEED_LENGTH.HEX_MAX :
+    (seed.length ? seed.split(" ") : []).length <= SEED_LENGTH.WORDS;
   }
 
   selectKeyDown (e) {

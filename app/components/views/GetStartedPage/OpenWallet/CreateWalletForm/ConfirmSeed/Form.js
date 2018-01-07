@@ -50,8 +50,13 @@ class ConfirmSeedForm extends React.Component{
                 <T id="confirmSeed.wordsRemaining" m="{remaining, plural, one {one word remaining} other {# words remaining} }"
                   values={{remaining: remaining}} />
                 :
-                <T id="confirmSeed.hexSymbolsRemaining" m="{remaining, plural, one {one hex symbol: your key must have at least 32 symbols and 128 max} other {# hex symbols: your key must have at least 32 symbols and 128 max } }"
-                  values={{remaining: remaining}} />
+                <T id="confirmSeed.hexSymbolsRemaining"
+                  m="{remaining, plural, one {one hex symbol: your key must have at least {hexMin} symbols and {hexMax} max} other {# hex symbols: your key must have at least {hexMin} symbols and {hexMax} max } }"
+                  values={{
+                    remaining: remaining,
+                    hexMax: SEED_LENGTH.HEX_MAX,
+                    hexMin: SEED_LENGTH.HEX_MIN,
+                  }} />
               }
             </div>
           </div>
