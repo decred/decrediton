@@ -10,6 +10,10 @@ const messages = defineMessages({
   enterSeedPlaceholder: {
     id: "createWallet.enterSeed.placeholder",
     defaultMessage: "Enter your seed..."
+  },
+  enterHexSeedPlaceholder: {
+    id: "createWallet.enterHexSeed.placeholder",
+    defaultMessage: "Enter the hex representation of your seed..."
   }
 });
 
@@ -48,7 +52,7 @@ class SeedEntry extends React.Component {
           value={this.state.currentHex}
           onPaste={this.props.onPaste}
           name='hexInput'
-          placeholder={formatMessage(messages.enterSeedPlaceholder)}
+          placeholder={formatMessage(messages.enterHexSeedPlaceholder)}
         />
       );
     }
