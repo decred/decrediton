@@ -51,7 +51,7 @@ class ConfirmSeedForm extends React.Component{
                   values={{remaining: remaining}} />
                 :
                 <T id="confirmSeed.hexSymbolsRemaining"
-                  m="{remaining, plural, one {one hex symbol: your key must have at least {hexMin} symbols and {hexMax} max} other {# hex symbols: your key must have at least {hexMin} symbols and {hexMax} max } }"
+                  m="{remaining, plural, one {one hex symbol: your key must have between {hexMin} and {hexMax} symbols} other {# hex symbols: your key must have between {hexMin} and {hexMax} symbols} }"
                   values={{
                     remaining: remaining,
                     hexMax: SEED_LENGTH.HEX_MAX,
@@ -66,6 +66,7 @@ class ConfirmSeedForm extends React.Component{
               activeButton={"left"}
               leftText={"words"}
               rightText={"hex"}
+              type={"small"}
               toggleAction={this.handleToggle}
             />
           </div>
