@@ -8,7 +8,7 @@ class ConfirmSeed extends React.Component {
   }
 
   getInitialState() {
-    return { seedWords: "", seedError: null };
+    return { seedWords: [], seedError: null };
   }
 
   componentWillUnmount() {
@@ -32,11 +32,11 @@ class ConfirmSeed extends React.Component {
       this.props.onChange(null);
     };
     this.setState({ seedWords }, () => {
-      const mnemonic = this.state.seedWords;
+      const mnemonic = this.getSeedWordsStr();
       if (this.props.mnemonic && this.isMatch()) {
         this.props
           .decode(mnemonic)
-          .then((response) => this.props.onChange(response.getDecodedSeed()))
+          .then(response => this.props.onChange(response.getDecodedSeed()))
           .then(() => this.setState({ seedError: null }))
           .catch(onError);
       } else {
@@ -52,9 +52,14 @@ class ConfirmSeed extends React.Component {
     });
   }
 
+  getSeedWordsStr() {
+    const { seedWords } = this.state;
+    return Array.isArray(seedWords) ? seedWords.map(({ name }) => name).join(" ") : seedWords;
+  }
+
   isMatch() {
     const mnemonic = this.state.mnemonic || this.props.mnemonic;
-    return !!(mnemonic && (this.state.seedWords === mnemonic));
+    return !!(mnemonic && (this.getSeedWordsStr() === mnemonic));
   }
 }
 
