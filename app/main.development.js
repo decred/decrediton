@@ -110,9 +110,13 @@ var cfg = initCfg();
 
 const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
-logger.log("info", "Chrome version: " + process.versions.chrome);
-logger.log("info", "Electron version: " + process.versions.chrome);
-logger.log("info", "Decrediton version: " + app.getVersion());
+logger.log("info", "Versions: Decrediton: %s, Electron: %s, Chrome: %s",
+  app.getVersion(), process.versions.electron, process.versions.chrome);
+
+process.on("uncaughtException", err => {
+  logger.log("error", "UNCAUGHT EXCEPTION", err);
+  throw err;
+});
 
 var createDcrdConf, createDcrwalletConf, createDcrctlConf = false;
 if (!fs.existsSync(dcrdCfg())) {
