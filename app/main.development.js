@@ -110,6 +110,9 @@ var cfg = initCfg();
 
 const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
+logger.log("info", "Chrome version: " + process.versions.chrome);
+logger.log("info", "Electron version: " + process.versions.chrome);
+logger.log("info", "Decrediton version: " + app.getVersion());
 
 var createDcrdConf, createDcrwalletConf, createDcrctlConf = false;
 if (!fs.existsSync(dcrdCfg())) {
