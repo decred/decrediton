@@ -68,7 +68,16 @@ class VerifyMessage extends React.Component {
 
   onChangeAddress(address) {
     if (address == "") this.setState({address: "", addressError: "Please enter an address"});
-    else this.setState({address, addressError: null});
+    else {
+      this.props.validateAddress(address)
+        .then( resp => {
+          this.setState({address, addressError: resp.getIsValid() ? "" : "Please enter a valid address"});
+        })
+        .catch( (error) => {
+          console.log(error);
+          this.setState({address, addressError: "Error: Address validation failed, please try again."});
+        });
+    }
   }
 
   onChangeMessage(message){

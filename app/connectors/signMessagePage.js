@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import * as sel from "../selectors";
-import { signMessageAttempt, signMessageCleanStore } from "../actions/ControlActions";
+import { signMessageAttempt, validateAddress, signMessageCleanStore } from "../actions/ControlActions";
 import { selectorMap } from "../fp";
 
 const mapStateToProps = selectorMap({
@@ -9,4 +9,4 @@ const mapStateToProps = selectorMap({
   walletService: sel.walletService,
 });
 
-export default connect(mapStateToProps, { signMessageAttempt, signMessageCleanStore });
+export default connect(mapStateToProps, { signMessageAttempt, validateAddress, signMessageCleanStore });
