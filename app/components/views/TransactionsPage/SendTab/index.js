@@ -138,7 +138,6 @@ class Send extends React.Component {
     this.setState({ account }, this.onAttemptConstructTransaction);
   }
 
-
   onAttemptSignTransaction(privpass) {
     const { unsignedTransaction, onAttemptSignTransaction,
       getNextAddressAttempt, nextAddressAccount } = this.props;
@@ -248,15 +247,23 @@ class Send extends React.Component {
   }
 
   getOnChangeOutputAmount(key) {
-    return amountStr => this.setState({
-      outputs: this.state.outputs.map(o => (o.key === `output_${key}`) ? {
-        ...o,
-        data:{
-          ...o.data,
-          amountStr: restrictToStdDecimalNumber(amountStr)
-        },
-      } : o)
-    }, this.onAttemptConstructTransaction);
+    return amountStr => {
+      let reconstruct = false;
+      let newAmount = restrictToStdDecimalNumber(amountStr);
+      return this.setState({
+        outputs: this.state.outputs.map(o => {
+          if (o.key !== `output_${key}`) return o;
+          reconstruct = parseFloat(newAmount) !== parseFloat(o.data.amountStr);
+          return {
+            ...o,
+            data:{
+              ...o.data,
+              amountStr: newAmount
+            },
+          };
+        })
+      }, () => reconstruct && this.onAttemptConstructTransaction());
+    };
   }
 
   getIsInvalid() {
