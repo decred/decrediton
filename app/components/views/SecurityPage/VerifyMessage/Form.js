@@ -1,6 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
-import { InfoModalButton } from "buttons";
+import { InfoModalButton, KeyBlueButton } from "buttons";
 import { VerifyMessageInfoModalContent } from "modals";
 
 const messages = defineMessages({
@@ -44,7 +44,7 @@ const VerifyMessageForm = ({
         <TextInput
           label={formatMessage(messages.addressFieldLabel)}
           value={address}
-          onChange={onChangeAddress}
+          onChange={e => onChangeAddress(e.target.value)}
           placeholder={formatMessage(messages.addressFieldPlaceholder)}
         />
         <div className="message-error">
@@ -53,7 +53,7 @@ const VerifyMessageForm = ({
         <TextInput
           label={formatMessage(messages.signatureFieldLabel)}
           value={signature}
-          onChange={onChangeSignature}
+          onChange={e => onChangeSignature(e.target.value)}
           placeholder={formatMessage(messages.signatureFieldPlaceholder)}
         />
         <div className="message-error">
@@ -62,7 +62,7 @@ const VerifyMessageForm = ({
         <TextInput
           label={formatMessage(messages.messageFieldLabel)}
           value={message}
-          onChange={onChangeMessage}
+          onChange={e => onChangeMessage(e.target.value)}
           placeholder={formatMessage(messages.messageFieldPlaceholder)}
         />
         <div className="message-error">

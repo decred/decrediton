@@ -1,10 +1,7 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { Field, reduxForm } from "redux-form";
-import InputField from "Form/InputField";
-import ErrorField from "Form/ErrorField";
-import { InfoModalButton } from "buttons";
+import { InfoModalButton, PassphraseModalButton } from "buttons";
+import { TextInput } from "inputs";
 import { SignMessageInfoModalContent } from "modals";
-import { validate } from "./validator";
 
 const messages = defineMessages({
   addressFieldLabel: {
@@ -55,7 +52,7 @@ const SignMessageForm = ({
         <TextInput
           label={formatMessage(messages.addressFieldLabel)}
           value={address}
-          onChange={onChangeAddress}
+          onChange={(e) => onChangeAddress(e.target.value)}
           placeholder={formatMessage(messages.addressFieldPlaceholder)}
         />
         <div className="message-error">
@@ -64,7 +61,7 @@ const SignMessageForm = ({
         <TextInput
           label={formatMessage(messages.messageFieldLabel)}
           value={message}
-          onChange={onChangeMessage}
+          onChange={(e) => onChangeMessage(e.target.value)}
           placeholder={formatMessage(messages.messageFieldPlaceholder)}
         />
         <div className="message-error">
@@ -72,9 +69,13 @@ const SignMessageForm = ({
         </div>
       </div>
       <div className="message-toolbar">
-        <button className="key-blue-button" onClick={onSubmit}>
-          <T id="securitycenter.sign.form.submit" m="Sign" />
-        </button>
+        <PassphraseModalButton
+          modalTitle={<T id="tickets.purchaseConfirmation" m="Sign Message" />}
+          className="stakepool-content-purchase-button"
+          disabled={address == "" || message == "" || addressError || messageError}
+          onSubmit={onSubmit}
+          buttonLabel={<T id="purchaseTickets.purchaseBtn" m="Sign" />}
+        />
       </div>
     </Aux>
   );

@@ -7,12 +7,15 @@ export const SIGNMESSAGE_FAILED = "SIGNMESSAGE_FAILED";
 export const SIGNMESSAGE_SUCCESS = "SIGNMESSAGE_SUCCESS";
 export const SIGNMESSAGE_CLEANSTORE = "SIGNMESSAGE_CLEANSTORE";
 
-export const signMessageAttempt = ({ address, message, passphrase }) => (dispatch, getState) => {
-  dispatch({ type: SIGNMESSAGE_ATTEMPT });
-  signMessage(sel.walletService(getState()), address, message, passphrase)
-    .then(getSignMessageResponse =>
-      dispatch({ getSignMessageResponse, type: SIGNMESSAGE_SUCCESS }))
-    .catch(error => dispatch({ error, type: SIGNMESSAGE_FAILED }));
-};
+export function signMessageAttempt(address, message, passphrase ) {
+  return (dispatch, getState) => {
+    console.log(address, message, passphrase);
+    dispatch({ type: SIGNMESSAGE_ATTEMPT });
+    signMessage(sel.walletService(getState()), address, message, passphrase)
+      .then(getSignMessageResponse =>
+        dispatch({ getSignMessageResponse, type: SIGNMESSAGE_SUCCESS }))
+      .catch(error => dispatch({ error, type: SIGNMESSAGE_FAILED }));
+  };
+}
 
 export const signMessageCleanStore = () => ({ type: SIGNMESSAGE_CLEANSTORE });
