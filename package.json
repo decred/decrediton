@@ -210,7 +210,6 @@
     "react-select": "1.0.0-rc.10",
     "react-timeout": "^1.0.1",
     "redux": "^3.6.0",
-    "redux-form": "^7.0.4",
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.1",
     "source-map-support": "^0.4.6",
