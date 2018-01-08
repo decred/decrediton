@@ -19,7 +19,8 @@ import {
 } from "../actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
-  SETSTAKEPOOLVOTECHOICES_SUCCESS, SETSTAKEPOOLVOTECHOICES_FAILED
+  SETSTAKEPOOLVOTECHOICES_SUCCESS, SETSTAKEPOOLVOTECHOICES_FAILED,
+  REMOVESTAKEPOOLCONFIG
 } from "../actions/StakePoolActions";
 import {
   NEW_TRANSACTIONS_RECEIVED
@@ -135,6 +136,10 @@ const messages = defineMessages({
   DECODERAWTXS_FAILED: {
     id: "decodeRawTx.errors.decodeFailed",
     defaultMessage: "{originalError}"
+  },
+  REMOVESTAKEPOOLCONFIG: {
+    id: "stakepools.removedStakePoolConfig",
+    defaultMessage: "Successfully removed StakePool config"
   }
 });
 
@@ -172,6 +177,7 @@ export default function snackbar(state = {}, action) {
   case STARTAUTOBUYER_SUCCESS:
   case UPDATESTAKEPOOLCONFIG_SUCCESS:
   case SETSTAKEPOOLVOTECHOICES_SUCCESS:
+  case REMOVESTAKEPOOLCONFIG:
     type = "Success";
     message = messages[action.type] || messages.defaultSuccessMessage;
     break;

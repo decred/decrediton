@@ -7,7 +7,7 @@ class VotingPrefs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      stakePool: props.defaultStakePool,
+      stakePool: props.stakePool,
       selectedAgenda: null,
       isShowingDetails: false
     };

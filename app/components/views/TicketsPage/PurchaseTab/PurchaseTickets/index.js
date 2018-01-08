@@ -149,12 +149,6 @@ class PurchaseTickets extends React.Component {
     this.state.isShowingAdvanced ? this.onHideAdvanced() : this.onShowAdvanced();
   }
 
-  onChangeStakePool(stakePool) {
-    const { onChangeStakePool } = this.props;
-    this.setState({ stakePool });
-    onChangeStakePool && onChangeStakePool(stakePool);
-  }
-
   onChangeAccount(account) {
     const { onChangeAccount } = this.props;
     this.setState({ account });

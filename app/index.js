@@ -22,10 +22,12 @@ var foundStakePoolConfig = false;
 var currentStakePoolConfig = cfg.get("stakepools");
 var network = cfg.get("network");
 var hiddenAccounts = cfg.get("hiddenaccounts");
+var firstConfiguredStakePool = null;
 if (currentStakePoolConfig !== undefined) {
   for (var i = 0; i < currentStakePoolConfig.length; i++) {
     if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
       foundStakePoolConfig = true;
+      firstConfiguredStakePool = currentStakePoolConfig[i];
       break;
     }
   }
@@ -68,6 +70,7 @@ var initialState = {
     currentStakePoolConfigError: null,
     currentStakePoolConfigSuccessMessage: "",
     activeStakePoolConfig: foundStakePoolConfig,
+    selectedStakePool: firstConfiguredStakePool,
   },
   daemon: {
     daemonStarted: false,

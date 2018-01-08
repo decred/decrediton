@@ -1,8 +1,9 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { selectorMap } from "../fp";
-import * as sel from "../selectors";
-import * as ca from "../actions/ControlActions";
+import { selectorMap } from "fp";
+import * as sel from "selectors";
+import * as ca from "actions/ControlActions";
+import * as spa from "actions/StakePoolActions";
 
 const mapStateToProps = selectorMap({
   spendingAccounts: sel.spendingAccounts,
@@ -10,6 +11,7 @@ const mapStateToProps = selectorMap({
   unconfiguredStakePools: sel.unconfiguredStakePools,
   defaultSpendingAccount: sel.defaultSpendingAccount,
   defaultStakePool: sel.defaultStakePool,
+  stakePool: sel.selectedStakePool,
   ticketPrice: sel.ticketPrice,
   currentStakePoolConfigError: sel.currentStakePoolConfigError,
   currentStakePoolConfigSuccessMessage: sel.currentStakePoolConfigSuccessMessage,
@@ -35,7 +37,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onClearRevokeTicketsError: ca.clearRevokeTicketsError,
   onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
   onClearImportScriptError: ca.clearImportScriptError,
-  onClearImportScriptSuccess: ca.clearImportScriptSuccess
+  onClearImportScriptSuccess: ca.clearImportScriptSuccess,
+  onChangeStakePool: spa.changeSelectedStakePool,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

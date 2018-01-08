@@ -24,8 +24,9 @@ const updateSavedConfig = (newPoolInfo, poolHost, apiKey, accountNum) =>
         : config);
     if (!stakePoolConfigs.find((conf, idx) => conf !== currentStakePoolConfig[idx])) return;
     getCfg().set("stakepools", stakePoolConfigs);
+    let selectedStakePool = stakePoolConfigs.filter(p => p.Host === poolHost)[0] || null;
     dispatch({
-      successMessage: `You have successfully configured ${poolHost}`,
+      selectedStakePool,
       currentStakePoolConfig: stakePoolConfigs,
       type: UPDATESTAKEPOOLCONFIG_SUCCESS
     });
@@ -102,7 +103,7 @@ export const SETSTAKEPOOLVOTECHOICES_ATTEMPT = "SETSTAKEPOOLVOTECHOICES_ATTEMPT"
 export const SETSTAKEPOOLVOTECHOICES_FAILED = "SETSTAKEPOOLVOTECHOICES_FAILED";
 export const SETSTAKEPOOLVOTECHOICES_SUCCESS = "SETSTAKEPOOLVOTECHOICES_SUCCESS";
 
-const updateStakePoolVoteChoicesConfig = (stakePool, voteChoices) => (dispatch) => {
+const updateStakePoolVoteChoicesConfig = (stakePool, voteChoices) => (dispatch, getState) => {
   const config = getCfg();
   const voteChoicesConfig = voteChoices.getChoicesList().map(choice => ({
     agendaId: choice.getAgendaId(),
@@ -113,10 +114,11 @@ const updateStakePoolVoteChoicesConfig = (stakePool, voteChoices) => (dispatch) 
       ? ({ ...config, VoteBits: voteChoices.getVotebits(), VoteChoices: voteChoicesConfig })
       : config
   );
+  const selectedStakePool = sel.selectedStakePool(getState());
 
   config.set("stakepools", stakePoolConfigs);
   dispatch({
-    successMessage: "You have successfully updated your vote choices.",
+    selectedStakePool,
     currentStakePoolConfig: stakePoolConfigs,
     type: UPDATESTAKEPOOLCONFIG_SUCCESS
   });
@@ -146,3 +148,35 @@ export const discoverAvailableStakepools = () => (dispatch) =>
         dispatch({ type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, currentStakePoolConfig: config.get("stakepools")});
       } // TODO: add error notification after global snackbar is merged
     });
+
+export const CHANGESELECTEDSTAKEPOOL = "CHANGESELECTEDSTAKEPOOL";
+export const changeSelectedStakePool = (selectedStakePool) => (dispatch) =>
+  dispatch({selectedStakePool, type: CHANGESELECTEDSTAKEPOOL});
+
+export const REMOVESTAKEPOOLCONFIG = "REMOVESTAKEPOOLCONFIG";
+export const removeStakePoolConfig = (host) => (dispatch, getState) => {
+  let config = getCfg();
+  let existingPools = config.get("stakepools");
+  let pool = existingPools.filter(p => p.Host === host)[0];
+  if (!pool) { return; }
+
+  // Instead of simply deleting from exstingPools we blank all non-default
+  // fields so the stakepool can be reconfigured without needing to re-fetch
+  // the stakepool list from the remote api.
+
+  const propsToMaintain = ["Host", "Network", "APIVersionsSupported"];
+  let newPool = {};
+  propsToMaintain.forEach(p => newPool[p] = pool[p]); // **not** a deep copy
+  let newPools = existingPools.map(p => p.Host === host ? newPool : p);
+  config.set("stakepools", newPools);
+
+  let selectedStakePool = sel.selectedStakePool(getState());
+  if (selectedStakePool && selectedStakePool.Host === host) {
+    selectedStakePool = newPools.filter(p => p.ApiKey)[0] || null;
+  }
+
+  dispatch({
+    selectedStakePool,
+    currentStakePoolConfig: newPools,
+    type: REMOVESTAKEPOOLCONFIG});
+};

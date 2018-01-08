@@ -45,7 +45,8 @@ class StakePools extends React.Component {
             onSetStakePoolInfo: null,
             onChangeSelectedUnconfigured: null,
             onCancelPassphraseRequest: null,
-            onCancelAddStakePool: null
+            onCancelAddStakePool: null,
+            onRemoveStakePool: null
           }, this),
         }}
       />
@@ -98,6 +99,11 @@ class StakePools extends React.Component {
     const { apiKey } = this.state;
     const onSetInfo = this.props.onSetStakePoolInfo;
     apiKey ? (onSetInfo && onSetInfo(privpass, this.getSelectedUnconfigured().Host, apiKey, 0)) : null;
+  }
+
+  onRemoveStakePool(host) {
+    const { onRemoveStakePool } = this.props;
+    onRemoveStakePool && onRemoveStakePool(host);
   }
 }
 
