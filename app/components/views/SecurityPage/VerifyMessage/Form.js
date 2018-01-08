@@ -10,7 +10,7 @@ const messages = defineMessages({
   },
   addressFieldPlaceholder: {
     id: "securitycenter.verify.form.field.address.placeholder",
-    defaultMessage: "Enter your address",
+    defaultMessage: "Enter an address",
   },
   messageFieldLabel: {
     id: "securitycenter.verify.form.field.message.label",

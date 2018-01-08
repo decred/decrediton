@@ -10,7 +10,7 @@ const messages = defineMessages({
   },
   addressFieldPlaceholder: {
     id: "securitycenter.sign.form.field.address.placeholder",
-    defaultMessage: "Enter your address",
+    defaultMessage: "Enter an address",
   },
   messageFieldLabel: {
     id: "securitycenter.sign.form.field.message.label",
@@ -19,15 +19,7 @@ const messages = defineMessages({
   messageFieldPlaceholder: {
     id: "securitycenter.sign.form.field.message.placeholder",
     defaultMessage: "Enter your message",
-  },
-  passphraseFieldLabel: {
-    id: "securitycenter.sign.form.field.passphrase.label",
-    defaultMessage: "Passphrase",
-  },
-  passphraseFieldPlaceholder: {
-    id: "securitycenter.sign.form.field.passphrase.placeholder",
-    defaultMessage: "Enter your passphrase",
-  },
+  }
 });
 
 const SignMessageForm = ({
@@ -70,11 +62,11 @@ const SignMessageForm = ({
       </div>
       <div className="message-toolbar">
         <PassphraseModalButton
-          modalTitle={<T id="tickets.purchaseConfirmation" m="Sign Message" />}
+          modalTitle={<T id="securitycenter.signMessageModal" m="Sign Message" />}
           className="stakepool-content-purchase-button"
           disabled={address == "" || message == "" || addressError || messageError}
           onSubmit={onSubmit}
-          buttonLabel={<T id="purchaseTickets.purchaseBtn" m="Sign" />}
+          buttonLabel={<T id="securitycenter.signMessageBtn" m="Sign" />}
         />
       </div>
     </Aux>

@@ -32,7 +32,7 @@ class SignMessage extends React.Component {
   }
 
   render() {
-    const { signMessageError, signMessageSuccess, intl } = this.props;
+    const { signMessageSuccess, intl } = this.props;
     const { onChangeAddress, onChangeMessage, onSubmit } = this;
     const { address, addressError, message, messageError } = this.state;
     let result = null;
@@ -51,7 +51,7 @@ class SignMessage extends React.Component {
 
     return (
       <div className="tab-card message message-sign">
-        <SignMessageForm {...{onSubmit, onChangeAddress, onChangeMessage, address, addressError, message, messageError, rpcError: signMessageError, formatMessage: intl.formatMessage} }/>
+        <SignMessageForm {...{onSubmit, onChangeAddress, onChangeMessage, address, addressError, message, messageError, formatMessage: intl.formatMessage} }/>
         {result}
       </div>
     );
@@ -78,7 +78,6 @@ SignMessage.propTypes = {
   intl: PropTypes.object.isRequired,
   walletService: PropTypes.object,
   signMessageCleanStore: PropTypes.func.isRequired,
-  signMessageError: PropTypes.string,
   signMessageSuccess: PropTypes.shape({
     signature: PropTypes.string,
   }),

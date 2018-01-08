@@ -25,7 +25,7 @@ class VerifyMessage extends React.Component {
   }
 
   render() {
-    const { verifyMessageError, verifyMessageSuccess, messageVerificationService } = this.props;
+    const { verifyMessageSuccess, messageVerificationService } = this.props;
     const { address, message, signature, addressError, messageError, signatureError } = this.props;
     const { onChangeAddress, onChangeMessage, onChangeSignature, onSubmit } = this;
     if (!messageVerificationService) {
