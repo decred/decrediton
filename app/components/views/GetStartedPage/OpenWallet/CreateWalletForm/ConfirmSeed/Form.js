@@ -7,8 +7,7 @@ import { SeedInfoModalContent } from "modals";
 import { SEED_LENGTH } from "wallet/seed";
 
 const getRemaining = (seedWords, seedType) =>
-  (seedType === "words" ? SEED_LENGTH.WORDS - (seedWords.length ? seedWords.split(" ") : []).length
-  : seedWords.length);
+  (seedType === "words" ? SEED_LENGTH.WORDS - seedWords.length : seedWords.length);
 
 const shoudShowNonSupportSeedSize = (seedWords, seedType) =>
   seedType === "hex" && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;

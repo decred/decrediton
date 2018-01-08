@@ -31,7 +31,7 @@ class SeedEntry extends React.Component {
   getInitialState () {
     return {
       currentHex: "",
-      currentWords: "",
+      currentWords: Array(),
     };
   }
 
@@ -69,7 +69,7 @@ class SeedEntry extends React.Component {
           placeholder={formatMessage(messages.enterSeedPlaceholder)}
           multi={true}
           filterOptions={false}
-          value={this.state.currentWords.length ? this.state.currentWords.split(" ") : []}
+          value={this.state.currentWords}
           onChange={this.onChange}
           valueKey="name"
           labelKey="name"
@@ -81,14 +81,20 @@ class SeedEntry extends React.Component {
   }
 
   onChange (val) {
-    const parsedSeed = Array.isArray(val) ? val.map(({ name }) => name).join(" ") : val.target.value;
-    const hexValid = this.isHexValid(parsedSeed);
-    const wordsValid = this.props.seedType === "words" && this.lengthInterval(parsedSeed);
-    this.setState({
-      currentHex: hexValid ? parsedSeed : this.state.currentHex,
-      currentWords: wordsValid ? parsedSeed : this.state.currentWords,
-    });
-    (hexValid || wordsValid) && this.props.onChange(parsedSeed);
+    const { seedType } = this.props;
+    if(seedType === "hex") {
+      if (!this.isHexValid(val.target.value)) return;
+      this.setState({
+        currentHex: val.target.value,
+      });
+      this.props.onChange(val.target.value);
+    } else {
+      if (!this.lengthInterval(val)) return;
+      this.setState({
+        currentWords: val
+      });
+      this.props.onChange(val);
+    }
   }
 
   getSeedWords (input, callback) {
@@ -102,13 +108,11 @@ class SeedEntry extends React.Component {
   }
 
   isHexValid(seed) {
-    return this.props.seedType === "hex"
-      && /^[0-9a-fA-F]*$/.test(seed) && this.lengthInterval(seed);
+    return /^[0-9a-fA-F]*$/.test(seed) && this.lengthInterval(seed);
   }
 
   lengthInterval(seed) {
-    return this.props.seedType === "hex" ? seed.length <= SEED_LENGTH.HEX_MAX :
-    (seed.length ? seed.split(" ") : []).length <= SEED_LENGTH.WORDS;
+    return this.props.seedType === "hex" ? seed.length <= SEED_LENGTH.HEX_MAX : seed.length <= SEED_LENGTH.WORDS;
   }
 
   selectKeyDown (e) {
@@ -122,7 +126,7 @@ class SeedEntry extends React.Component {
   handleKeyDown (e) {
     switch(e.keyCode) {
     case 9:   // TAB
-      if(this.state.value.length < SEED_LENGTH.WORDS) {
+      if(this.props.seedType === "words" && this.state.currentWords.length < SEED_LENGTH.WORDS) {
         e.preventDefault();
       }
       break;
