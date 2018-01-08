@@ -1,6 +1,6 @@
 import {
     UPDATESTAKEPOOLCONFIG_ATTEMPT, UPDATESTAKEPOOLCONFIG_FAILED, UPDATESTAKEPOOLCONFIG_SUCCESS,
-    DISCOVERAVAILABLESTAKEPOOLS_SUCCESS
+    DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, CHANGESELECTEDSTAKEPOOL,
 } from "../actions/StakePoolActions";
 import { CLEARSTAKEPOOLCONFIG } from "../actions/WalletLoaderActions";
 
@@ -30,6 +30,10 @@ export default function stakepool(state = {}, action) {
     };
   case DISCOVERAVAILABLESTAKEPOOLS_SUCCESS:
     return {...state, currentStakePoolConfig: action.currentStakePoolConfig };
+  case CHANGESELECTEDSTAKEPOOL:
+    return {...state,
+      selectedStakePool: action.selectedStakePool
+    };
   default:
     return state;
   }

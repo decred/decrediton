@@ -146,3 +146,7 @@ export const discoverAvailableStakepools = () => (dispatch) =>
         dispatch({ type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, currentStakePoolConfig: config.get("stakepools")});
       } // TODO: add error notification after global snackbar is merged
     });
+
+export const CHANGESELECTEDSTAKEPOOL = "CHANGESELECTEDSTAKEPOOL";
+export const changeSelectedStakePool = (selectedStakePool) => (dispatch) =>
+  dispatch({selectedStakePool, type: CHANGESELECTEDSTAKEPOOL});

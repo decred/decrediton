@@ -14,16 +14,16 @@ class Purchase extends React.Component {
   getInitialState() {
     return {
       account: this.props.defaultSpendingAccount,
-      stakePool: this.props.defaultStakePool,
-      isShowingStakePools: !this.props.defaultStakePool,
+      stakePool: this.props.stakePool,
+      isShowingStakePools: !this.props.stakePool,
       isShowingVotingPrefs: false,
       isShowingImportScript: false,
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.defaultStakePool && nextProps.defaultStakePool) {
-      this.setState({stakePool: nextProps.defaultStakePool});
+    if (!this.props.stakePool && nextProps.stakePool) {
+      this.setState({stakePool: nextProps.stakePool});
     }
   }
 

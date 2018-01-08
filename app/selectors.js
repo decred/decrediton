@@ -606,6 +606,7 @@ export const unconfiguredStakePools = createSelector(
 );
 
 export const defaultStakePool = compose(get(0), configuredStakePools);
+export const selectedStakePool = get(["stakepool", "selectedStakePool"]);
 
 const currentStakePoolConfigRequest = get(["stakepool", "currentStakePoolConfigRequest"]);
 

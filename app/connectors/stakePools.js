@@ -8,6 +8,7 @@ const mapStateToProps = selectorMap({
   configuredStakePools: sel.configuredStakePools,
   unconfiguredStakePools: sel.unconfiguredStakePools,
   defaultStakePool: sel.defaultStakePool,
+  stakePool: sel.selectedStakePool,
   rescanRequest: sel.rescanRequest
 });
 
