@@ -14,6 +14,7 @@ const mapStateToProps = selectorMap({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onSetStakePoolInfo: spa.setStakePoolInformation,
+  onRemoveStakePool: spa.removeStakePoolConfig,
   discoverAvailableStakepools: spa.discoverAvailableStakepools
 }, dispatch);
 

@@ -3,7 +3,7 @@ import { bindActionCreators } from "redux";
 import { selectorMap } from "fp";
 import * as sel from "selectors";
 import * as ca from "actions/ClientActions";
-import * as sta from "actions/StakePoolActions";
+import * as spa from "actions/StakePoolActions";
 
 const mapStateToProps = selectorMap({
   configuredStakePools: sel.configuredStakePools,
@@ -14,7 +14,7 @@ const mapStateToProps = selectorMap({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onUpdateVotePreference: ca.setVoteChoicesAttempt,
-  onChangeStakePool: sta.changeSelectedStakePool,
+  onChangeStakePool: spa.changeSelectedStakePool,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

@@ -10,12 +10,14 @@ export { default as TransactionLink } from "./TransactionLink";
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
 import AutoBuyerSwitch from "./AutoBuyerSwitch";
-export { ModalButton, AutoBuyerSwitch, KeyBlueButton };
+import DangerButton from "./DangerButton";
+export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton };
 
 /***************************************************
  * Custom Modal Buttons
  ***************************************************/
-import { InfoModal, PassphraseModal, ChangePassphraseModal } from "modals";
+import { InfoModal, PassphraseModal, ChangePassphraseModal,
+  ConfirmModal } from "modals";
 
 // mbb = ModalButtonBuilder (func to build a functional ModalButton component
 // with extra fixed props)
@@ -37,3 +39,4 @@ export const InfoModalButton = mbb("purchase-tickets-info-button", InfoModal);
 export const ChangePassphraseButton = mbb("change-password-default-icon", ChangePassphraseModal);
 export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
 export const PassphraseModalSwitch = mbb(null, PassphraseModal, AutoBuyerSwitch);
+export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);

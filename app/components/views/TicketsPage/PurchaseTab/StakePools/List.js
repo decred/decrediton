@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { KeyBlueButton, SlateGrayButton }from "buttons";
+import { KeyBlueButton, SlateGrayButton, RemoveStakePoolButton }from "buttons";
 import "style/Layout.less";
 import "style/StakePool.less";
 
@@ -8,7 +8,8 @@ const StakePoolsList = ({
   unconfiguredStakePools,
   onShowAddStakePool,
   onHideStakePoolConfig,
-  rescanRequest
+  onRemoveStakePool,
+  rescanRequest,
 }) => (
   <div className="tab-card">
     <div className="stakepool-flex-height">
@@ -32,9 +33,22 @@ const StakePoolsList = ({
               <div className="stakepool-content-nest-prefix-settings"><T id="stakepools.list.form.field.script" m="Script:" /></div>
               <textarea disabled value={Script} className="stakepool-content-nest-content-settings"/>
             </div>
-            <div className="stakepool-content-nest-settings-bottom">
+            <div className="stakepool-content-nest-settings">
               <div className="stakepool-content-nest-prefix-settings"><T id="stakepools.list.form.field.poolfees" m="Pool Fees:" /></div>
               <div className="stakepool-content-nest-content-settings">{PoolFees}</div>
+            </div>
+            <div className="stakepool-content-nest-settings-bottom">
+              <div className="stakepool-content-nest-prefix-settings"></div>
+              <div className="stakepool-content-nest-content-settings">
+                <RemoveStakePoolButton
+                  modalTitle={<T id="stakepools.list.removeConfirmTitle" m="Remove StakePool" />}
+                  buttonLabel={<T id="stakepools.list.btnRemove" m="Remove"/>}
+                  modalContent={
+                    <T id="stakepools.list.confirmRemove" m="Do you confirm removal of stakepool {stakepool}?"
+                      values={{stakepool: (<span className="mono">{Host}</span>)}}/>}
+                  onSubmit={() => onRemoveStakePool(Host)}
+                />
+              </div>
             </div>
           </div>
         ))}
