@@ -52,6 +52,7 @@ class CreateWalletForm extends React.Component {
           {...{
             mnemonic: createWalletExisting ? null : mnemonic,
             setSeed,
+            createWalletExisting,
             setPassPhrase,
             onCreateWallet,
             decode,

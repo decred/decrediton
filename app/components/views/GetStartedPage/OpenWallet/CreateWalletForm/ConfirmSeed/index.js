@@ -1,5 +1,4 @@
 import ConfirmSeedForm from "./Form";
-import { SEED_LENGTH } from "wallet/seed";
 
 @autobind
 class ConfirmSeed extends React.Component {
@@ -9,7 +8,7 @@ class ConfirmSeed extends React.Component {
   }
 
   getInitialState() {
-    return { seedWords: [], seedError: null };
+    return { seedWords: "", seedError: null };
   }
 
   componentWillUnmount() {
@@ -18,16 +17,13 @@ class ConfirmSeed extends React.Component {
 
   render() {
     const { setSeedWords } = this;
-    const remainingSeedWords = this.getRemainingSeedWords();
     const isMatch = this.isMatch();
+    const { seedWords } = this.state;
     const isEmpty = this.state.seedWords.length <= 1; // Weird errors with one word, better to count as empty
     const seedError = isEmpty ? null : this.state.seedError;
     return (
-      <ConfirmSeedForm {...{ remainingSeedWords, setSeedWords, isMatch, seedError, isEmpty }} />
+      <ConfirmSeedForm {...{ seedWords, setSeedWords, isMatch, seedError, isEmpty, createWalletExisting: this.props.createWalletExisting }} />
     );
-  }
-  getRemainingSeedWords() {
-    return SEED_LENGTH - this.state.seedWords.length;
   }
 
   setSeedWords(seedWords) {
@@ -35,14 +31,12 @@ class ConfirmSeed extends React.Component {
       this.setState({ mnemonic: "", seedError: seedError+"" });
       this.props.onChange(null);
     };
-
     this.setState({ seedWords }, () => {
-      const mnemonic = this.getSeedWordsStr();
-
+      const mnemonic = this.state.seedWords;
       if (this.props.mnemonic && this.isMatch()) {
         this.props
           .decode(mnemonic)
-          .then(response => this.props.onChange(response.getDecodedSeed()))
+          .then((response) => this.props.onChange(response.getDecodedSeed()))
           .then(() => this.setState({ seedError: null }))
           .catch(onError);
       } else {
@@ -58,13 +52,9 @@ class ConfirmSeed extends React.Component {
     });
   }
 
-  getSeedWordsStr() {
-    return this.state.seedWords.map(({ name }) => name).join(" ");
-  }
-
   isMatch() {
     const mnemonic = this.state.mnemonic || this.props.mnemonic;
-    return !!(mnemonic && (this.getSeedWordsStr() === mnemonic));
+    return !!(mnemonic && (this.state.seedWords === mnemonic));
   }
 }
 

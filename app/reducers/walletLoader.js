@@ -50,6 +50,7 @@ export default function walletLoader(state = {}, action) {
   case CREATEWALLET_NEWSEED_CONFIRM_INPUT:
     return {...state,
       createWalletInputRequest: true,
+      createWalletExisting: false,
       confirmNewSeed: true,
     };
   case  CREATEWALLET_NEWSEED_BACK_INPUT:
