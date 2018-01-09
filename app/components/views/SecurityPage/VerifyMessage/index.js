@@ -13,6 +13,12 @@ class VerifyMessage extends React.Component {
   getInitialState() {
     return {
       isShowingVerifyMessageInfo: false,
+      address: "",
+      addressError: null,
+      message: "",
+      messageError: null,
+      signature: "",
+      signatureError: null,
     };
   }
 
@@ -25,12 +31,9 @@ class VerifyMessage extends React.Component {
   }
 
   render() {
-    const { verifyMessageSuccess, messageVerificationService } = this.props;
-    const { address, message, signature, addressError, messageError, signatureError } = this.props;
+    const { verifyMessageSuccess, isVerifyingMessage, intl } = this.props;
+    const { address, message, signature, addressError, messageError, signatureError } = this.state;
     const { onChangeAddress, onChangeMessage, onChangeSignature, onSubmit } = this;
-    if (!messageVerificationService) {
-      return <div><T id="securitycenter.loading" m="Loading..." /></div>;
-    }
 
     let result = null;
     if (verifyMessageSuccess) {
@@ -53,7 +56,7 @@ class VerifyMessage extends React.Component {
 
     return (
       <div className="tab-card message message-verify">
-        <VerifyMessageForm {...{onSubmit, address, message, signature, addressError, messageError, signatureError, onChangeAddress, onChangeMessage, onChangeSignature, formatMessage:this.props.intl.formatMessage}} />
+        <VerifyMessageForm {...{onSubmit, address, message, signature, addressError, messageError, signatureError, onChangeAddress, onChangeMessage, onChangeSignature, formatMessage: intl.formatMessage, isVerifyingMessage}} />
         {result}
       </div>
     );

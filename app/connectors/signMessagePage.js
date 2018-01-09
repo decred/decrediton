@@ -6,6 +6,7 @@ import { selectorMap } from "../fp";
 const mapStateToProps = selectorMap({
   signMessageError: sel.signMessageError,
   signMessageSuccess: sel.signMessageSuccess,
+  isSigningMessage: sel.isSigningMessage,
   walletService: sel.walletService,
 });
 

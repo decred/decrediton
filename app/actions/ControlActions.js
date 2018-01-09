@@ -696,8 +696,10 @@ export function verifyMessageAttempt(address, message, signature) {
   return (dispatch, getState) => {
     dispatch({ type: VERIFYMESSAGE_ATTEMPT });
     wallet.verifyMessage(sel.messageVerificationService(getState()), address, message, signature)
-      .then(getVerifyMessageResponse =>
-        dispatch({ getVerifyMessageResponse, type: VERIFYMESSAGE_SUCCESS }))
+      .then(getVerifyMessageResponse => {
+        console.log(getVerifyMessageResponse.getValid());
+        dispatch({ getVerifyMessageResponse, type: VERIFYMESSAGE_SUCCESS });
+      })
       .catch(error => dispatch({ error, type: VERIFYMESSAGE_FAILED }));
   };
 }

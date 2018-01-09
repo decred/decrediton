@@ -30,8 +30,9 @@ const SignMessageForm = ({
   message,
   addressError,
   messageError,
-   formatMessage
-   }) => {
+  isSigningMessage,
+  formatMessage
+}) => {
   return (
     <Aux>
       <div className="message-content-nest">
@@ -66,6 +67,7 @@ const SignMessageForm = ({
           className="stakepool-content-purchase-button"
           disabled={address == "" || message == "" || addressError || messageError}
           onSubmit={onSubmit}
+          loading={isSigningMessage}
           buttonLabel={<T id="securitycenter.signMessageBtn" m="Sign" />}
         />
       </div>

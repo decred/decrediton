@@ -31,7 +31,19 @@ const messages = defineMessages({
 });
 
 const VerifyMessageForm = ({
-  onSubmit, onChangeAddress, onChangeMessage, onChangeSignature, address, message, signature, addressError, messageError, signatureError, formatMessage }) => {
+  onSubmit,
+  onChangeAddress,
+  onChangeMessage,
+  onChangeSignature,
+  address,
+  message,
+  signature,
+  addressError,
+  messageError,
+  signatureError,
+  isVerifyingMessage,
+  formatMessage
+}) => {
   return (
     <Aux>
       <div className="message-content-nest">
@@ -70,7 +82,7 @@ const VerifyMessageForm = ({
         </div>
       </div>
       <div className="message-toolbar">
-        <KeyBlueButton onClick={onSubmit}>
+        <KeyBlueButton disabled={address == "" || message == "" || signature == "" || addressError || messageError || signatureError} onClick={onSubmit} loading={isVerifyingMessage}>
           <T id="securitycenter.verify.form.submit" m="Verify" />
         </KeyBlueButton>
       </div>
