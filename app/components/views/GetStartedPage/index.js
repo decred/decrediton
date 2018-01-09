@@ -8,6 +8,7 @@ import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
 import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
 import { AdvancedStartupHeader, AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
 import { SettingsBody, SettingsHeader } from "./Settings";
+import { LogsBody, LogsHeader } from "./Logs";
 import { walletStartup } from "connectors";
 import { getAppdataPath, getRemoteCredentials } from "config.js";
 
@@ -16,7 +17,7 @@ class GetStartedPage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { showSettings: false };
+    this.state = { showSettings: false, showLogs: false };
     props.determineNeededBlocks();
   }
 
@@ -48,6 +49,14 @@ class GetStartedPage extends React.Component {
     this.setState({ showSettings: false });
   }
 
+  onShowLogs() {
+    this.setState({ showLogs: true });
+  }
+
+  onHideLogs() {
+    this.setState({ showLogs: false });
+  }
+
   render() {
     const {
       startStepIndex,
@@ -60,12 +69,15 @@ class GetStartedPage extends React.Component {
 
     const {
       showSettings,
+      showLogs,
       ...state
     } = this.state;
 
     const {
       onShowSettings,
-      onHideSettings
+      onHideSettings,
+      onShowLogs,
+      onHideLogs
     } = this;
 
     let Header, Body;
@@ -73,6 +85,9 @@ class GetStartedPage extends React.Component {
     if (showSettings) {
       Header = SettingsHeader;
       Body = SettingsBody;
+    } else if (showLogs) {
+      Header = LogsHeader;
+      Body = LogsBody;
     } else if (isPrepared) {
       switch (startStepIndex || 0) {
       case 0:
@@ -119,8 +134,11 @@ class GetStartedPage extends React.Component {
         ...props,
         ...state,
         showSettings,
+        showLogs,
         onShowSettings,
-        onHideSettings}} />;
+        onHideSettings,
+        onShowLogs,
+        onHideLogs}} />;
   }
 }
 
