@@ -5,13 +5,13 @@ import grpc from "grpc";
 import { getCert } from "../../config.js";
 var services = require("../walletrpc/api_grpc_pb.js");
 
-export function getWalletService(address, port, cb) {
+const getServiceClient = (clientClass) => (address, port, cb) => {
   var cert = getCert();
   if (cert == "") {
     return cb(null, "Unable to load dcrwallet certificate.  dcrwallet not running?");
   }
   var creds = grpc.credentials.createSsl(cert);
-  var client = new services.WalletServiceClient(address + ":" + port, creds);
+  var client = new clientClass(address + ":" + port, creds);
 
   var deadline = new Date();
   var deadlineInSeconds = 30;
@@ -23,157 +23,18 @@ export function getWalletService(address, port, cb) {
       return cb(client);
     }
   });
-}
+};
 
-export function getTicketBuyerService(address, port, cb) {
-  var cert = getCert();
-  if (cert == "") {
-    return cb(null, "Unable to load dcrwallet certificate.  dcrwallet not running?");
-  }
-  var creds = grpc.credentials.createSsl(cert);
-  var client = new services.TicketBuyerServiceClient(address + ":" + port, creds);
+export const getWalletService = getServiceClient(services.WalletServiceClient);
+export const getTicketBuyerService = getServiceClient(services.TicketBuyerServiceClient);
+export const loader = getServiceClient(services.WalletLoaderServiceClient);
+export const seeder = getServiceClient(services.SeedServiceClient);
+export const getVersionService = getServiceClient(services.VersionServiceClient);
+export const getVotingService = getServiceClient(services.VotingServiceClient);
+export const getAgendaService = getServiceClient(services.AgendaServiceClient);
+export const getMessageVerificationService = getServiceClient(services.MessageVerificationServiceClient);
+export const getDecodeMessageService = getServiceClient(services.DecodeMessageServiceClient);
 
-  var deadline = new Date();
-  var deadlineInSeconds = 30;
-  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
-  grpc.waitForClientReady(client, deadline, function(err) {
-    if (err) {
-      return cb(null, err);
-    } else {
-      return cb(client);
-    }
-  });
-}
-
-export function loader(request, cb) {
-  var cert = getCert();
-  var creds = grpc.credentials.createSsl(cert);
-  var loader = new services.WalletLoaderServiceClient(request.address + ":" + request.port, creds);
-
-  var deadline = new Date();
-  var deadlineInSeconds = 30;
-  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
-  grpc.waitForClientReady(loader, deadline, function(err) {
-    if (err) {
-      return cb(null, err);
-    } else {
-      return cb(loader);
-    }
-  });
-}
-
-export function seeder(request, cb) {
-  var cert = getCert();
-  var creds = grpc.credentials.createSsl(cert);
-  var seeder = new services.SeedServiceClient(request.address + ":" + request.port, creds);
-
-  var deadline = new Date();
-  var deadlineInSeconds = 30;
-  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
-  grpc.waitForClientReady(seeder, deadline, function(err) {
-    if (err) {
-      return cb(null, err);
-    } else {
-      return cb(seeder);
-    }
-  });
-}
-
-export function getVersionService(address, port, cb) {
-  var cert = getCert();
-  if (cert == "") {
-    return cb(null, "Unable to load dcrwallet certificate.  dcrwallet not running?");
-  }
-  var creds = grpc.credentials.createSsl(cert);
-  var version = new services.VersionServiceClient(address + ":" + port, creds);
-
-  var deadline = new Date();
-  var deadlineInSeconds = 30;
-  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
-  grpc.waitForClientReady(version, deadline, function(err) {
-    if (err) {
-      return cb(null, err);
-    } else {
-      return cb(version);
-    }
-  });
-}
-export function getVotingService(address, port, cb) {
-  var cert = getCert();
-  if (cert == "") {
-    return cb(null, "Unable to load dcrwallet certificate.  dcrwallet not running?");
-  }
-  var creds = grpc.credentials.createSsl(cert);
-  var votingService = new services.VotingServiceClient(address + ":" + port, creds);
-
-  var deadline = new Date();
-  var deadlineInSeconds = 30;
-  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
-  grpc.waitForClientReady(votingService, deadline, function(err) {
-    if (err) {
-      return cb(null, err);
-    } else {
-      return cb(votingService);
-    }
-  });
-}
-export function getAgendaService(address, port, cb) {
-  var cert = getCert();
-  if (cert == "") {
-    return cb(null, "Unable to load dcrwallet certificate.  dcrwallet not running?");
-  }
-  var creds = grpc.credentials.createSsl(cert);
-  var agendaService = new services.AgendaServiceClient(address + ":" + port, creds);
-
-  var deadline = new Date();
-  var deadlineInSeconds = 30;
-  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
-  grpc.waitForClientReady(agendaService, deadline, function(err) {
-    if (err) {
-      return cb(null, err);
-    } else {
-      return cb(agendaService);
-    }
-  });
-}
-export function getMessageVerificationService(address, port, cb) {
-  var cert = getCert();
-  if (cert == "") {
-    return cb(null, "Unable to load dcrwallet certificate.  dcrwallet not running?");
-  }
-  var creds = grpc.credentials.createSsl(cert);
-  var messageVerificationService = new services.MessageVerificationServiceClient(address + ":" + port, creds);
-
-  var deadline = new Date();
-  var deadlineInSeconds = 30;
-  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
-  grpc.waitForClientReady(messageVerificationService, deadline, function(err) {
-    if (err) {
-      return cb(null, err);
-    } else {
-      return cb(messageVerificationService);
-    }
-  });
-}
-export function getDecodeMessageService(address, port, cb) {
-  var cert = getCert();
-  if (cert == "") {
-    return cb(null, "Unable to load dcrwallet certificate.  dcrwallet not running?");
-  }
-  var creds = grpc.credentials.createSsl(cert);
-  var decodeMessageService = new services.DecodeMessageServiceClient(address + ":" + port, creds);
-
-  var deadline = new Date();
-  var deadlineInSeconds = 30;
-  deadline.setSeconds(deadline.getSeconds()+deadlineInSeconds);
-  grpc.waitForClientReady(decodeMessageService, deadline, function(err) {
-    if (err) {
-      return cb(null, err);
-    } else {
-      return cb(decodeMessageService);
-    }
-  });
-}
 export function transactionNtfs(client, request, cb) {
     // Register Notification Streams from Wallet
   var transactionNtfns = client.transactionNotifications(request);

@@ -20,7 +20,8 @@ export const getSeedService = createSelector(
   (address, port) =>
     (new Promise((resolve, reject) =>
       seederFactory(
-        { address, port },
+        address,
+        port,
         (response, err) => err ? reject(err) : resolve(response)
       )
     )).then(seeder => ({

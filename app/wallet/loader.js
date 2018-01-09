@@ -6,7 +6,7 @@ import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
 
 export const getLoader = ({ address, port }) =>
   new Promise((resolve, reject) =>
-    rpcLoader({ address, port }, (loader, error) =>
+    rpcLoader(address, port, (loader, error) =>
       error ? reject(error) : resolve(loader)));
 
 export const startRpc = (loader, daemonhost, rpcport, rpcuser, rpcpass, cert) =>
@@ -65,4 +65,3 @@ export const fetchHeaders = (loader) =>
   new Promise((resolve, reject) =>
     loader.fetchHeaders(new FetchHeadersRequest(), (error, response) =>
       error ? reject(error) : resolve(response)));
-
