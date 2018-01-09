@@ -118,6 +118,11 @@ export const spendableTotalBalance = createSelector(
   )
 );
 
+export const lockedBalance = createSelector(
+  [balances],
+  reduce((atoms, { lockedByTickets }) => atoms + lockedByTickets, 0)
+);
+
 export const networks = () => [{name: "testnet"}, {name: "mainnet"}];
 export const network = get(["grpc", "network"]);
 export const isTestNet = compose(eq("testnet"), network);

@@ -30,7 +30,7 @@ const HomePage = ({
   );
 };
 
-export default home(rescan(HomePage));
+export default rescan(HomePage);
 
 /*
   This is the transaction search button that needs to get implemented

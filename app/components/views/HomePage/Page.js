@@ -14,7 +14,6 @@ const HomePage = ({
   transactions,
   getTransactionsRequestAttempt,
   getAccountsResponse,
-  ...props
 }) => {
   return (
     <div className="overview-wrapper">
