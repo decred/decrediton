@@ -10,31 +10,20 @@ import "style/HomePage.less";
 const HomePage = ({
   routes,
   spendableTotalBalance,
+  totalBalance,
   transactions,
   getTransactionsRequestAttempt,
   getAccountsResponse,
+  ...props
 }) => {
   return (
-    <Aux>
-      <TabbedHeader {...{ routes }}>
-        <div className="overview-balance">
-          <Balance amount={spendableTotalBalance} large/>
-        </div>
-      </TabbedHeader>
-      { getTransactionsRequestAttempt ? <div className="page-content"><DecredLoading /></div> :
-      <div className="page-content">
-        <div className="home-content-title">
-          <div className="home-content-title-text">
-            <T id="home.recentTransactionsTitle" m="Recent Transactions" />
-          </div>
-        </div>
-        <div className="home-content-nest">
-          { transactions.length > 0 ?
-          <TxHistory {...{ getAccountsResponse, transactions }} /> :
-          <p><T id="home.noTransactions" m="No transactions" /></p> }
-        </div>
-      </div> }
-    </Aux>
+    <div className="overview-wrapper">
+      <div className="overview-header-wrapper">
+        <Balance className="overview-balance" amount={totalBalance} />
+      </div>
+      <div className="recent-transactions"></div>
+      <div className="ticket-activity"></div>
+    </div>
   );
 };
 
