@@ -19,7 +19,11 @@ const HomePage = ({
   return (
     <div className="overview-wrapper">
       <div className="overview-header-wrapper">
-        <Balance className="overview-balance" amount={totalBalance} />
+        <Balance
+          classNameWrapper="overview-balance"
+          classNameUnit="overview-balance-unit"
+          amount={totalBalance} {...{}} />
+        <div className="overview-balance-label">Current Total Balance</div>
       </div>
       <div className="recent-transactions"></div>
       <div className="ticket-activity"></div>
