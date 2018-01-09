@@ -656,15 +656,9 @@ export const validateAddress = address => async (dispatch, getState) => {
       return { isValid: false, error: validationErr, getIsValid () { false; } };
     }
     dispatch({ type: VALIDATEADDRESS_ATTEMPT });
-    wallet.validateAddress(sel.walletService(getState()), address)
-      .then(response => {
-        dispatch({ response, type: VALIDATEADDRESS_SUCCESS });
-        return { isValid: response.isValid, error: null, getIsValid () { response.isValid; } };
-      })
-      .catch(error => {
-        dispatch({type: VALIDATEADDRESS_FAILED});
-        return { isValid: false, error, getIsValid () { false; }};
-      });
+    let response = await wallet.validateAddress(sel.walletService(getState()), address);
+    dispatch({ response, type: VALIDATEADDRESS_SUCCESS });
+    return { isValid: response.isValid, error: null, getIsValid () { response.isValid; } };
   } catch (error) {
     dispatch({type: VALIDATEADDRESS_FAILED});
     return { isValid: false, error, getIsValid () { false; } };

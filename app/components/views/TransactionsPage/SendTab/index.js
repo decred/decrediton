@@ -237,6 +237,7 @@ class Send extends React.Component {
 
       this.props.validateAddress(destination)
         .then( resp => {
+          console.log(resp);
           destinationInvalid = !resp.getIsValid();
           updateDestinationState();
         })
