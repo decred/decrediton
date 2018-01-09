@@ -3,6 +3,7 @@ import { rescan, home } from "connectors";
 import { Balance } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import RecentTransactions from "./RecentTransactions";
+import TicketActivity from "./TicketActivity";
 import "style/Fonts.less";
 import "style/HomePage.less";
 
@@ -22,13 +23,17 @@ const HomePage = ({
           classNameWrapper="overview-balance"
           classNameUnit="overview-balance-unit"
           amount={totalBalance} />
-        <div className="overview-balance-label">Current Total Balance</div>
+        <div className="overview-balance-label">
+          <T id="home.currentTotalBalanceLabel" m="Current Total Balance" />
+        </div>
       </div>
       <div className="overview-transactions-ticket-wrapper">
         <div className="recent-transactions">
           <RecentTransactions {...{routes, spendableTotalBalance, transactions, getTransactionsRequestAttempt, getAccountsResponse}}/>
         </div>
-        <div className="ticket-activity"></div>
+        <div className="ticket-activity">
+          <TicketActivity {...{routes, spendableTotalBalance, transactions, getTransactionsRequestAttempt, getAccountsResponse}}/>
+        </div>
       </div>
     </div>
   );
