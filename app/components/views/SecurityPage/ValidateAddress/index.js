@@ -78,11 +78,11 @@ class ValidateAddress extends React.Component {
     }
     this.props.validateAddress(address)
       .then(resp => {
-        this.setState({address, addressError: !resp.getIsValid() ? "Please enter a valid address" : null});
+        this.setState({address, error: !resp.getIsValid() ? "Please enter a valid address" : null});
       })
       .catch(error => {
         console.error(error);
-        this.setState({address, addressError: "Error: Address validation failed, please try again."});
+        this.setState({address, error: "Error: Address validation failed, please try again."});
       });
   }
 }
