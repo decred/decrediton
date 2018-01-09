@@ -15,7 +15,7 @@ const ValidateAddressForm = ({
   intl
 }) => (
     <Aux>
-      <div className="validate-address-form-area">
+      <div className="security-center-form">
         <div className="validate-address-form-address">
           <TextInput
             value={address}

@@ -4,20 +4,12 @@ import { TextInput } from "inputs";
 import { SignMessageInfoModalContent } from "modals";
 
 const messages = defineMessages({
-  addressFieldLabel: {
-    id: "securitycenter.sign.form.field.address.label",
-    defaultMessage: "Address",
-  },
   addressFieldPlaceholder: {
-    id: "securitycenter.sign.form.field.address.placeholder",
+    id: "securitycenter.form.field.address.placeholder",
     defaultMessage: "Enter an address",
   },
-  messageFieldLabel: {
-    id: "securitycenter.sign.form.field.message.label",
-    defaultMessage: "Message",
-  },
   messageFieldPlaceholder: {
-    id: "securitycenter.sign.form.field.message.placeholder",
+    id: "securitycenter.form.field.message.placeholder",
     defaultMessage: "Enter your message",
   }
 });
@@ -34,31 +26,41 @@ const SignMessageForm = ({
   formatMessage
 }) => {
   return (
-    <Aux>
-      <div className="message-content-nest">
-        <div className="button-right">
-          <InfoModalButton
-            modalTitle={<h1><T id="securitycenter.signInfo" m="Sign Message Information"/></h1>}
-            modalContent={<SignMessageInfoModalContent />}
+    <div className="security-center-form">
+      <div className="button-right">
+        <InfoModalButton
+          modalTitle={<h1><T id="securitycenter.signInfo" m="Sign Message Information"/></h1>}
+          modalContent={<SignMessageInfoModalContent />}
+        />
+      </div>
+      <div className="security-center-form-row">
+        <div className="security-center-form-row-label">
+          <T id="securitycenter.form.field.address.label" m="Address"/>:
+        </div>
+        <div className="security-center-form-row-field">
+          <TextInput
+            value={address}
+            onChange={(e) => onChangeAddress(e.target.value)}
+            placeholder={formatMessage(messages.addressFieldPlaceholder)}
           />
+          <div className="message-error">
+            {addressError && <span className="error">*{addressError}</span>}
+          </div>
         </div>
-        <TextInput
-          label={formatMessage(messages.addressFieldLabel)}
-          value={address}
-          onChange={(e) => onChangeAddress(e.target.value)}
-          placeholder={formatMessage(messages.addressFieldPlaceholder)}
-        />
-        <div className="message-error">
-          {addressError && <span className="error">{addressError}</span>}
+      </div>
+      <div className="security-center-form-row">
+        <div className="security-center-form-row-label">
+          <T id="securitycenter.form.field.message.label" m="Message"/>:
         </div>
-        <TextInput
-          label={formatMessage(messages.messageFieldLabel)}
-          value={message}
-          onChange={(e) => onChangeMessage(e.target.value)}
-          placeholder={formatMessage(messages.messageFieldPlaceholder)}
-        />
-        <div className="message-error">
-          {messageError && <span className="error">{messageError}</span>}
+        <div className="security-center-form-row-field">
+          <TextInput
+            value={message}
+            onChange={(e) => onChangeMessage(e.target.value)}
+            placeholder={formatMessage(messages.messageFieldPlaceholder)}
+          />
+          <div className="message-error">
+            {messageError && <span className="error">*{messageError}</span>}
+          </div>
         </div>
       </div>
       <div className="message-toolbar">
@@ -71,7 +73,7 @@ const SignMessageForm = ({
           buttonLabel={<T id="securitycenter.signMessageBtn" m="Sign" />}
         />
       </div>
-    </Aux>
+    </div>
   );
 };
 
