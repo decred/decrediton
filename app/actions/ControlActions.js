@@ -676,7 +676,6 @@ export const SIGNMESSAGE_CLEANSTORE = "SIGNMESSAGE_CLEANSTORE";
 
 export function signMessageAttempt(address, message, passphrase ) {
   return (dispatch, getState) => {
-    console.log(address, message, passphrase);
     dispatch({ type: SIGNMESSAGE_ATTEMPT });
     wallet.signMessage(sel.walletService(getState()), address, message, passphrase)
       .then(getSignMessageResponse =>
