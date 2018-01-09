@@ -16,9 +16,7 @@ const HomePage = ({
       {getTransactionsRequestAttempt ? <DecredLoading /> :
         <Aux>
           <div className="home-content-title">
-            <div className="home-content-title-text">
-              <T id="home.recentTransactionsTitle" m="Recent Transactions" />
-            </div>
+            <T id="home.recentTransactionsTitle" m="Recent Transactions" />
           </div>
           <div className="home-content-nest">
             {transactions.length > 0 ?
