@@ -1,9 +1,8 @@
 // @flow
 import { rescan, home } from "connectors";
-import { DecredLoading } from "indicators";
-import { Balance, TabbedHeader } from "shared";
-import TxHistory from "TxHistory";
+import { Balance } from "shared";
 import { FormattedMessage as T } from "react-intl";
+import RecentTransactions from "./RecentTransactions";
 import "style/Fonts.less";
 import "style/HomePage.less";
 
@@ -22,11 +21,15 @@ const HomePage = ({
         <Balance
           classNameWrapper="overview-balance"
           classNameUnit="overview-balance-unit"
-          amount={totalBalance} {...{}} />
+          amount={totalBalance} />
         <div className="overview-balance-label">Current Total Balance</div>
       </div>
-      <div className="recent-transactions"></div>
-      <div className="ticket-activity"></div>
+      <div className="overview-transactions-ticket-wrapper">
+        <div className="recent-transactions">
+          <RecentTransactions {...{routes, spendableTotalBalance, transactions, getTransactionsRequestAttempt, getAccountsResponse}}/>
+        </div>
+        <div className="ticket-activity"></div>
+      </div>
     </div>
   );
 };
