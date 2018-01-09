@@ -61,17 +61,11 @@ class SignMessage extends React.Component {
     if (address == "") this.setState({address: "", addressError: "Please enter an address"});
     else {
       this.props.validateAddress(address)
-        .then( (resp, error) => {
-          console.log(resp);
-          if (error) {
-            this.setState({address, addressError: "Address validation failed, error: " + error});
-          } else {
-            this.setState({address, addressError: !resp.getIsValid() ? "Please enter a valid address" : ""});
-
-          }
+        .then(resp => {
+          this.setState({address, addressError: !resp.getIsValid() ? "Please enter a valid address" : null});
         })
-        .catch(  (error) => {
-          console.log(error);
+        .catch(error => {
+          console.error(error);
           this.setState({address, addressError: "Error: Address validation failed, please try again."});
         });
     }
