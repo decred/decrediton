@@ -86,7 +86,7 @@ const VerifyMessageForm = ({
         </div>
       </div>
       <div className="message-toolbar">
-        <KeyBlueButton disabled={address == "" || message == "" || signature == "" || addressError || messageError || signatureError} onClick={onSubmit} loading={isVerifyingMessage}>
+        <KeyBlueButton disabled={isVerifyingMessage || address == "" || message == "" || signature == "" || addressError || messageError || signatureError} onClick={onSubmit} loading={isVerifyingMessage}>
           <T id="securitycenter.verify.form.submit" m="Verify" />
         </KeyBlueButton>
       </div>
