@@ -8,6 +8,7 @@ const Logs = ({
   dcrdLogs,
   dcrwalletLogs,
   remoteDcrd,
+  walletReady,
   }
 ) => (
   <Aux>
@@ -27,7 +28,7 @@ const Logs = ({
           </div> :
           <div/>
       }
-      {!dcrwalletLogs ?
+      {!walletReady ? null : !dcrwalletLogs ?
         <div className="log-area-hidden" onClick={showDcrwalletLogs}>
           <T id="help.logs.show.dcrwallet" m="Show dcrwallet logs" />
         </div>:

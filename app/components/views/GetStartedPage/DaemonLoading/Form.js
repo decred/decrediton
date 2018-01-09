@@ -27,14 +27,22 @@ const DaemonLoadingFormBody = ({
     getNeededBlocks,
     showLongWaitMessage,
     finishDateEstimation,
-    onShowSettings
+    onShowSettings,
+    onShowLogs,
   }) => (
     <div className="get-started-content-new-seed">
     {getDaemonStarted ? getCurrentBlockCount == null ?
       showLongWaitMessage ?
-      <div className="get-started-fetch-headers-message">
-        <T id="getStarted.chainLoading" m="The Decred chain is currently loading and may take a few minutes." />
-      </div> :
+      <Aux>
+        <div className="get-started-fetch-headers-message">
+          <T id="getStarted.chainLoading" m="The Decred chain is currently loading and may take a few minutes." />
+        </div>
+        <div className="get-started-bottom-buttons">
+          <SlateGrayButton onClick={onShowLogs}>
+            <T id="getStarted.btnLogs" m="Logs" />
+          </SlateGrayButton>
+        </div>
+      </Aux> :
       <div></div> :
       <Aux>
         <div className="get-started-content-instructions">
@@ -66,6 +74,9 @@ const DaemonLoadingFormBody = ({
         <div className="get-started-bottom-buttons">
           <SlateGrayButton onClick={onShowSettings}>
             <T id="getStarted.btnSettings" m="Application Settings" />
+          </SlateGrayButton>
+          <SlateGrayButton onClick={onShowLogs}>
+            <T id="getStarted.btnLogs" m="Logs" />
           </SlateGrayButton>
         </div>
       </Aux> :
