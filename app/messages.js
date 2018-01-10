@@ -1,7 +1,7 @@
 import { defineMessages } from "react-intl";
 
 export default defineMessages({
-  "home.title":                               { id: "home.title",                            defaultMessage: "Available Balance" },
+  "home.title":                               { id: "home.title",                            defaultMessage: "home" },
   "home.tab.balance":                         { id: "home.tab.balance",                      defaultMessage: "Balance" },
   "home.tab.tickets":                         { id: "home.tab.tickets",                      defaultMessage: "Ticket" },
   "home.tab.transactions":                    { id: "home.tab.transactions",                 defaultMessage: "Transactions" },

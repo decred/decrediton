@@ -7,7 +7,7 @@ const mapStyles = styles => ({ left: styles.left + "%" });
 const enterLeft = { atEnter: { left: -100 }, atActive: { left: 0 }, atLeave: { left: 100 }, mapStyles };
 const enterRight = { atEnter: { left: 100 }, atActive: { left: 0 }, atLeave: { left: -100 }, mapStyles };
 
-const wrapperComponent = props => <div className="" { ...props } />;
+const wrapperComponent = props => <div className="component-tab-content" { ...props } />;
 
 class TabbedPage extends React.Component{
   constructor(props) { super(props); }

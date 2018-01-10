@@ -33,11 +33,11 @@ export default (
   <Route     path="/"                           component={App}>
     <IndexRoute                                 component={GetStartedPage}/>
     <Route   path="transactions/history/:txHash" component={TransactionPage}  desc/>
-    <Route   path="home"                        component={HomePage}    noHeader className="overview-header">
+    <Route   path="home"                        component={HomePage}    noHeader className="overview-header" balance>
       <IndexRedirect to="balance"/>
-      <Route path="balance"                     component={BalanceTab}           testNet/>
+      <Route path="balance"                     component={BalanceTab}       balance    testNet/>
       <Route path="tickets"                     component={TicketsTab}/>
-      <Route path="transactions"                component={TransactionsTab}        balance/>
+      <Route path="transactions"                component={TransactionsTab}/>
     </Route>
     <Route   path="accounts"                    component={AccountsPage}      desc/>
     <Route   path="transactions"                component={TabbedPage}        tabDesc>
