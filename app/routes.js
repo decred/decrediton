@@ -3,6 +3,9 @@ import { Route, IndexRoute, IndexRedirect } from "react-router";
 import { TabbedPage } from "shared";
 import App from "./containers/App";
 import HomePage from "./components/views/HomePage";
+import BalanceTab from "./components/views/HomePage/Balance";
+import TicketsTab from "./components/views/HomePage/Tickets";
+import TransactionsTab from "./components/views/HomePage/Transactions";
 import SendTab from "./components/views/TransactionsPage/SendTab";
 import ReceiveTab from "./components/views/TransactionsPage/ReceiveTab";
 import HistoryTab from "./components/views/TransactionsPage/HistoryTab";
@@ -30,11 +33,11 @@ export default (
   <Route     path="/"                           component={App}>
     <IndexRoute                                 component={GetStartedPage}/>
     <Route   path="transactions/history/:txHash" component={TransactionPage}  desc/>
-    <Route   path="home"                        component={TabbedPage}    >
+    <Route   path="home"                        component={HomePage}    noHeader className="overview-header">
       <IndexRedirect to="balance"/>
-      <Route path="balance"                     component={HomePage}           testNet/>
-      <Route path="tickets"                     component={ReceiveTab}/>
-      <Route path="transactions"                component={HistoryTab}        balance/>
+      <Route path="balance"                     component={BalanceTab}           testNet/>
+      <Route path="tickets"                     component={TicketsTab}/>
+      <Route path="transactions"                component={TransactionsTab}        balance/>
     </Route>
     <Route   path="accounts"                    component={AccountsPage}      desc/>
     <Route   path="transactions"                component={TabbedPage}        tabDesc>

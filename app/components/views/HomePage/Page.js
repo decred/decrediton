@@ -6,6 +6,8 @@ import RecentTransactions from "./RecentTransactions";
 import TicketActivity from "./TicketActivity";
 import "style/Fonts.less";
 import "style/HomePage.less";
+import {TabbedComponent} from "shared";
+import BalanceTab from "./Balance";
 
 const HomePage = ({
   routes,
@@ -15,36 +17,14 @@ const HomePage = ({
   transactions,
   getTransactionsRequestAttempt,
   getAccountsResponse,
+  children,
 }) => {
   return (
     <div className="overview-wrapper">
-      <div className="overview-header-wrapper">
-        <Balance
-          classNameWrapper="overview-balance"
-          classNameUnit="overview-balance-unit"
-          amount={totalBalance} />
-        <div className="overview-balance-label">
-          <T id="home.currentTotalBalanceLabel" m="Current Total Balance" />
-        </div>
-        <div className="overview-spendable-locked-wrapper">
-          <div className="overview-spendable-locked">
-            <Balance
-              classNameWrapper="overview-balance-spendable-locked"
-              classNameUnit="overview-balance-spendable-locked-unit"
-              amount={spendableTotalBalance} />
-            <div className="overview-balance-spendable-locked-label">
-              <T id="home.currentTotalSpendableBalanceLabel" m="Available" />
-            </div>
-            <Balance
-              classNameWrapper="overview-balance-spendable-locked"
-              classNameUnit="overview-balance-spendable-locked-unit"
-              amount={lockedTotalBalance} />
-            <div className="overview-balance-spendable-locked-label">
-              <T id="home.currentTotalLockedBalanceLabel" m="Locked" />
-            </div>
-          </div>
-        </div>
-      </div>
+      <TabbedComponent {...{routes}}>
+        {children}
+      </TabbedComponent>
+      {console.log(routes)}
       <div className="overview-transactions-ticket-wrapper">
         <div className="recent-transactions">
           <RecentTransactions {...{ routes, spendableTotalBalance, transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
