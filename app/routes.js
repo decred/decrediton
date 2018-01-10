@@ -30,7 +30,12 @@ export default (
   <Route     path="/"                           component={App}>
     <IndexRoute                                 component={GetStartedPage}/>
     <Route   path="transactions/history/:txHash" component={TransactionPage}  desc/>
-    <Route   path="home"                        component={HomePage}          noIcon/>
+    <Route   path="home"                        component={TabbedPage}    >
+      <IndexRedirect to="balance"/>
+      <Route path="balance"                     component={HomePage}           testNet/>
+      <Route path="tickets"                     component={ReceiveTab}/>
+      <Route path="transactions"                component={HistoryTab}        balance/>
+    </Route>
     <Route   path="accounts"                    component={AccountsPage}      desc/>
     <Route   path="transactions"                component={TabbedPage}        tabDesc>
       <IndexRedirect to="send"/>
