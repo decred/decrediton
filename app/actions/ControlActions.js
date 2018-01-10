@@ -653,24 +653,53 @@ export const validateAddress = address => async (dispatch, getState) => {
     const validationErr = isValidAddress(address, network);
     if (validationErr) {
       dispatch({type: VALIDATEADDRESS_FAILED});
-      return { isValid: false, error: validationErr, getIsValid () { false; } };
+      return { isValid: false, error: validationErr, getIsValid () { return false; } };
     }
     dispatch({ type: VALIDATEADDRESS_ATTEMPT });
-    wallet.validateAddress(sel.walletService(getState()), address)
-      .then(response => {
-        dispatch({ response, type: VALIDATEADDRESS_SUCCESS });
-        return { isValid: response.isValid, error: null, getIsValid () { response.isValid; } };
-      })
-      .catch(error => {
-        dispatch({type: VALIDATEADDRESS_FAILED});
-        return { isValid: false, error, getIsValid () { false; }};
-      });
+    let response = await wallet.validateAddress(sel.walletService(getState()), address);
+    dispatch({ response, type: VALIDATEADDRESS_SUCCESS });
+    return { isValid: response.getIsValid(), error: null, getIsValid () { return response.getIsValid(); } };
   } catch (error) {
     dispatch({type: VALIDATEADDRESS_FAILED});
-    return { isValid: false, error, getIsValid () { false; } };
+    return { isValid: false, error, getIsValid () { return false; } };
   }
 };
 
 export const validateAddressCleanStore = () => async (dispatch) => {
   dispatch({type: VALIDATEADDRESS_CLEANSTORE});
 };
+
+export const SIGNMESSAGE_ATTEMPT = "SIGNMESSAGE_ATTEMPT";
+export const SIGNMESSAGE_FAILED = "SIGNMESSAGE_FAILED";
+export const SIGNMESSAGE_SUCCESS = "SIGNMESSAGE_SUCCESS";
+export const SIGNMESSAGE_CLEANSTORE = "SIGNMESSAGE_CLEANSTORE";
+
+export function signMessageAttempt(address, message, passphrase ) {
+  return (dispatch, getState) => {
+    dispatch({ type: SIGNMESSAGE_ATTEMPT });
+    wallet.signMessage(sel.walletService(getState()), address, message, passphrase)
+      .then(getSignMessageResponse =>
+        dispatch({ getSignMessageResponse, type: SIGNMESSAGE_SUCCESS }))
+      .catch(error => dispatch({ error, type: SIGNMESSAGE_FAILED }));
+  };
+}
+
+export const signMessageCleanStore = () => ({ type: SIGNMESSAGE_CLEANSTORE });
+
+export const VERIFYMESSAGE_ATTEMPT = "VERIFYMESSAGE_ATTEMPT";
+export const VERIFYMESSAGE_FAILED = "VERIFYMESSAGE_FAILED";
+export const VERIFYMESSAGE_SUCCESS = "VERIFYMESSAGE_SUCCESS";
+export const VERIFYMESSAGE_CLEANSTORE = "VERIFYMESSAGE_CLEANSTORE";
+
+export function verifyMessageAttempt(address, message, signature) {
+  return (dispatch, getState) => {
+    dispatch({ type: VERIFYMESSAGE_ATTEMPT });
+    wallet.verifyMessage(sel.messageVerificationService(getState()), address, message, signature)
+      .then(getVerifyMessageResponse => {
+        dispatch({ getVerifyMessageResponse, type: VERIFYMESSAGE_SUCCESS });
+      })
+      .catch(error => dispatch({ error, type: VERIFYMESSAGE_FAILED }));
+  };
+}
+
+export const verifyMessageCleanStore = () => ({ type: VERIFYMESSAGE_CLEANSTORE });

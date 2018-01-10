@@ -13,6 +13,12 @@ class VerifyMessage extends React.Component {
   getInitialState() {
     return {
       isShowingVerifyMessageInfo: false,
+      address: "",
+      addressError: null,
+      message: "",
+      messageError: null,
+      signature: "",
+      signatureError: null,
     };
   }
 
@@ -25,11 +31,9 @@ class VerifyMessage extends React.Component {
   }
 
   render() {
-    const { verifyMessageError, verifyMessageSuccess, messageVerificationService } = this.props;
-
-    if (!messageVerificationService) {
-      return <div><T id="securitycenter.loading" m="Loading..." /></div>;
-    }
+    const { verifyMessageSuccess, isVerifyingMessage, intl } = this.props;
+    const { address, message, signature, addressError, messageError, signatureError } = this.state;
+    const { onChangeAddress, onChangeMessage, onChangeSignature, onSubmit } = this;
 
     let result = null;
     if (verifyMessageSuccess) {
@@ -52,14 +56,41 @@ class VerifyMessage extends React.Component {
 
     return (
       <div className="tab-card message message-verify">
-        <VerifyMessageForm onSubmit={this.onSubmit} rpcError={verifyMessageError} formatMessage={this.props.intl.formatMessage} />
+        <VerifyMessageForm {...{onSubmit, address, message, signature, addressError, messageError, signatureError, onChangeAddress, onChangeMessage, onChangeSignature, formatMessage: intl.formatMessage, isVerifyingMessage}} />
         {result}
       </div>
     );
   }
 
-  onSubmit(props) {
-    this.props.verifyMessageAttempt(props);
+
+  onSubmit() {
+    const { address, addressError, message, messageError, signature, signatureError } = this.state;
+    if (addressError || messageError || signatureError) return;
+    this.props.verifyMessageAttempt(address, message, signature);
+  }
+
+  onChangeAddress(address) {
+    if (address == "") this.setState({address: "", addressError: "Please enter an address"});
+    else {
+      this.props.validateAddress(address)
+        .then( resp => {
+          this.setState({address, addressError: resp.getIsValid() ? "" : "Please enter a valid address"});
+        })
+        .catch( (error) => {
+          console.log(error);
+          this.setState({address, addressError: "Error: Address validation failed, please try again."});
+        });
+    }
+  }
+
+  onChangeMessage(message){
+    if (message == "") this.setState({message: "", messageError: "Please enter a message"});
+    else this.setState({message, messageError: null});
+  }
+
+  onChangeSignature(signature) {
+    if (signature == "") this.setState({signature: "", signatureError: "Please enter a signature"});
+    else this.setState({signature, signatureError: null});
   }
 }
 

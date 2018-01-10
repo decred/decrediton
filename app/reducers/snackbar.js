@@ -15,7 +15,8 @@ import {
   IMPORTSCRIPT_SUCCESS, IMPORTSCRIPT_FAILED,
   RENAMEACCOUNT_SUCCESS, RENAMEACCOUNT_FAILED,
   GETNEXTACCOUNT_SUCCESS, GETNEXTACCOUNT_FAILED,
-  CHANGEPASSPHRASE_SUCCESS, CHANGEPASSPHRASE_FAILED
+  CHANGEPASSPHRASE_SUCCESS, CHANGEPASSPHRASE_FAILED,
+  SIGNMESSAGE_FAILED, VERIFYMESSAGE_FAILED,
 } from "../actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
@@ -140,6 +141,14 @@ const messages = defineMessages({
   REMOVESTAKEPOOLCONFIG: {
     id: "stakepools.removedStakePoolConfig",
     defaultMessage: "Successfully removed StakePool config"
+  },
+  SIGNMESSAGE_FAILED: {
+    id: "security.sign.failed",
+    defaultMessage: "{originalError}"
+  },
+  VERIFYMESSAGE_FAILED: {
+    id: "security.verify.failed",
+    defaultMessage: "{originalError}"
   }
 });
 
@@ -197,6 +206,8 @@ export default function snackbar(state = {}, action) {
   case UPDATESTAKEPOOLCONFIG_FAILED:
   case SETSTAKEPOOLVOTECHOICES_FAILED:
   case DECODERAWTXS_FAILED:
+  case SIGNMESSAGE_FAILED:
+  case VERIFYMESSAGE_FAILED:
     type = "Error";
     message = messages[action.type] || messages.defaultErrorMessage;
     values = { originalError: String(action.error) };

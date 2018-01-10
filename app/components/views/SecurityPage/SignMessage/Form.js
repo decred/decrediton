@@ -1,97 +1,86 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { Field, reduxForm } from "redux-form";
-import InputField from "Form/InputField";
-import ErrorField from "Form/ErrorField";
-import { InfoModalButton } from "buttons";
+import { InfoModalButton, PassphraseModalButton } from "buttons";
+import { TextInput } from "inputs";
 import { SignMessageInfoModalContent } from "modals";
-import { validate } from "./validator";
 
 const messages = defineMessages({
-  addressFieldLabel: {
-    id: "securitycenter.sign.form.field.address.label",
-    defaultMessage: "Address",
-  },
   addressFieldPlaceholder: {
-    id: "securitycenter.sign.form.field.address.placeholder",
-    defaultMessage: "Enter your address",
-  },
-  messageFieldLabel: {
-    id: "securitycenter.sign.form.field.message.label",
-    defaultMessage: "Message",
+    id: "securitycenter.form.field.address.placeholder",
+    defaultMessage: "Enter an address",
   },
   messageFieldPlaceholder: {
-    id: "securitycenter.sign.form.field.message.placeholder",
+    id: "securitycenter.form.field.message.placeholder",
     defaultMessage: "Enter your message",
-  },
-  passphraseFieldLabel: {
-    id: "securitycenter.sign.form.field.passphrase.label",
-    defaultMessage: "Passphrase",
-  },
-  passphraseFieldPlaceholder: {
-    id: "securitycenter.sign.form.field.passphrase.placeholder",
-    defaultMessage: "Enter your passphrase",
-  },
+  }
 });
 
-const SignMessageForm = ({ handleSubmit, onSubmit, pristine, error, submitting, rpcError, formatMessage }) => {
-  if (rpcError) {
-    error = (
-      <div className="error">{rpcError}</div>
-    );
-  }
-
+const SignMessageForm = ({
+  onSubmit,
+  onChangeAddress,
+  onChangeMessage,
+  address,
+  message,
+  addressError,
+  messageError,
+  isSigningMessage,
+  formatMessage
+}) => {
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="message-content-nest">
-        <div className="button-right">
-          <InfoModalButton
-            modalTitle={<h1><T id="securitycenter.signInfo" m="Sign Message Information"/></h1>}
-            modalContent={<SignMessageInfoModalContent />}
-          />
+    <div className="security-center-form">
+      <div className="button-right">
+        <InfoModalButton
+          modalTitle={<h1><T id="securitycenter.signInfo" m="Sign Message Information"/></h1>}
+          modalContent={<SignMessageInfoModalContent />}
+        />
+      </div>
+      <div className="security-center-form-row">
+        <div className="security-center-form-row-label">
+          <T id="securitycenter.form.field.address.label" m="Address"/>:
         </div>
-        <Field
-          label={formatMessage(messages.addressFieldLabel)}
-          name="address"
-          component={InputField}
-          type="text"
-          placeholder={formatMessage(messages.addressFieldPlaceholder)}
-        />
-        <Field
-          label={formatMessage(messages.messageFieldLabel)}
-          name="message"
-          component={InputField}
-          placeholder={formatMessage(messages.messageFieldPlaceholder)}
-        />
-        <Field
-          label={formatMessage(messages.passphraseFieldLabel)}
-          name="passphrase"
-          component={InputField}
-          type="password"
-          placeholder={formatMessage(messages.passphraseFieldPlaceholder)}
-        />
-        <Field
-          name="global"
-          component={ErrorField}
-        />
+        <div className="security-center-form-row-field">
+          <TextInput
+            value={address}
+            onChange={(e) => onChangeAddress(e.target.value)}
+            placeholder={formatMessage(messages.addressFieldPlaceholder)}
+          />
+          <div className="message-error">
+            {addressError && <span className="error">*{addressError}</span>}
+          </div>
+        </div>
       </div>
-      {error && <div className="error">{error}</div>}
+      <div className="security-center-form-row">
+        <div className="security-center-form-row-label">
+          <T id="securitycenter.form.field.message.label" m="Message"/>:
+        </div>
+        <div className="security-center-form-row-field">
+          <TextInput
+            value={message}
+            onChange={(e) => onChangeMessage(e.target.value)}
+            placeholder={formatMessage(messages.messageFieldPlaceholder)}
+          />
+          <div className="message-error">
+            {messageError && <span className="error">*{messageError}</span>}
+          </div>
+        </div>
+      </div>
       <div className="message-toolbar">
-        <button className="key-blue-button" type="submit" disabled={pristine || submitting}>
-          <T id="securitycenter.sign.form.submit" m="Sign" />
-        </button>
+        <PassphraseModalButton
+          modalTitle={<T id="securitycenter.signMessageModal" m="Sign Message" />}
+          className="stakepool-content-purchase-button"
+          disabled={isSigningMessage || address == "" || message == "" || addressError || messageError}
+          onSubmit={onSubmit}
+          loading={isSigningMessage}
+          buttonLabel={<T id="securitycenter.signMessageBtn" m="Sign" />}
+        />
       </div>
-    </form>
+    </div>
   );
 };
 
 SignMessageForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  pristine: PropTypes.bool.isRequired,
-  submitting: PropTypes.bool.isRequired,
   formatMessage: PropTypes.func.isRequired,
   error: PropTypes.string,
-  rpcError: PropTypes.string,
 };
 
-export default reduxForm({ form: "message/sign", validate })(SignMessageForm);
+export default SignMessageForm;

@@ -14,6 +14,10 @@ class SignMessage extends React.Component {
   getInitialState() {
     return {
       isShowingSignMessageInfo: false,
+      address: "",
+      addressError: null,
+      message: "",
+      messageError: null,
     };
   }
 
@@ -28,7 +32,9 @@ class SignMessage extends React.Component {
   }
 
   render() {
-    const { signMessageError, signMessageSuccess } = this.props;
+    const { signMessageSuccess, isSigningMessage, intl } = this.props;
+    const { onChangeAddress, onChangeMessage, onSubmit } = this;
+    const { address, addressError, message, messageError } = this.state;
     let result = null;
     if (signMessageSuccess) {
       result = (
@@ -45,14 +51,35 @@ class SignMessage extends React.Component {
 
     return (
       <div className="tab-card message message-sign">
-        <SignMessageForm onSubmit={this.onSubmit} rpcError={signMessageError} formatMessage={this.props.intl.formatMessage} />
+        <SignMessageForm {...{onSubmit, onChangeAddress, onChangeMessage, address, addressError, message, messageError, formatMessage: intl.formatMessage, isSigningMessage} }/>
         {result}
       </div>
     );
   }
 
-  onSubmit(props) {
-    this.props.signMessageAttempt(props);
+  onChangeAddress(address){
+    if (address == "") this.setState({address: "", addressError: "Please enter an address"});
+    else {
+      this.props.validateAddress(address)
+        .then(resp => {
+          this.setState({address, addressError: !resp.getIsValid() ? "Please enter a valid address" : null});
+        })
+        .catch(error => {
+          console.error(error);
+          this.setState({address, addressError: "Error: Address validation failed, please try again."});
+        });
+    }
+  }
+
+  onChangeMessage(message){
+    if (message == "") this.setState({message: "", messageError: "Please enter a message"});
+    else this.setState({message, messageError: null});
+  }
+
+  onSubmit(passphrase) {
+    const { address, addressError, message, messageError } = this.state;
+    if (addressError || messageError) return;
+    this.props.signMessageAttempt(address, message, passphrase);
   }
 }
 
@@ -60,7 +87,6 @@ SignMessage.propTypes = {
   intl: PropTypes.object.isRequired,
   walletService: PropTypes.object,
   signMessageCleanStore: PropTypes.func.isRequired,
-  signMessageError: PropTypes.string,
   signMessageSuccess: PropTypes.shape({
     signature: PropTypes.string,
   }),
