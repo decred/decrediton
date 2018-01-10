@@ -17,7 +17,7 @@ export default () => (
       </span>
       <span className="info-modal-row">
         <span className="info-modal-row-label highlight-blue"><T id="ticketAutoBuyer.info.maxPriceRelative.header" m="Max Price Relative" /></span>
-        <span className="info-modal-row-text"><T id="ticketAutoBuyer.info.maxPriceRelative.message" m="Tickets are entered into the mempool in order of their fee per kilobyte. This sets the maximum fee you are willing to pay." /></span>
+        <span className="info-modal-row-text"><T id="ticketAutoBuyer.info.maxPriceRelative.message" m="This number sets the max price to purchase tickets based on the observed average price multiplied by this number.  e.g. If the average price is 100, and this was set to 1.25, then the max price to purchase tickets would be 125 DCR. " /></span>
       </span>
       <span className="info-modal-row">
         <span className="info-modal-row-label highlight-blue"><T id="ticketAutoBuyer.info.maxPerBlock.header" m="Max Per Block" /></span>
