@@ -573,6 +573,7 @@ app.on("ready", async () => {
     // Write application config files.
     await writeCfgs(createDcrdConf, createDcrwalletConf, createDcrctlConf);
   }
+  windowOpts.title = "Decrediton - " + app.getVersion();
 
   mainWindow = new BrowserWindow(windowOpts);
   mainWindow.loadURL(`file://${__dirname}/${windowOpts.page}`);
