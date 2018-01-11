@@ -598,19 +598,40 @@ app.on("ready", async () => {
     return;
   }
 
-  if (process.env.NODE_ENV === "development") {
-    mainWindow.openDevTools();
-    mainWindow.webContents.on("context-menu", (e, props) => {
-      const { x, y } = props;
-
-      Menu.buildFromTemplate([{
+  if (process.env.NODE_ENV === "development") mainWindow.openDevTools();
+  
+  mainWindow.webContents.on("context-menu", (e, props) => {
+    const { selectionText, isEditable, x, y } = props;
+    let inspectElement;
+    if (process.env.NODE_ENV === "development") {
+      inspectElement = {
         label: "Inspect element",
-        click() {
-          mainWindow.inspectElement(x, y);
-        }
-      }]).popup(mainWindow);
-    });
-  }
+        click: () => mainWindow.inspectElement(x, y)
+      };
+    }
+    if (isEditable) {
+      Menu.buildFromTemplate([
+        {role: "cut"},
+        {role: "copy"},
+        {role: "paste"},
+        {type: "separator"},
+        {role: "selectall"},
+        inspectElement
+      ]).popup(mainWindow);
+    } else if (selectionText && selectionText.trim() !== "") {
+      Menu.buildFromTemplate([
+        {role: "copy"},
+        {type: "separator"},
+        {role: "selectall"},
+        inspectElement
+      ]).popup(mainWindow);
+    } else {
+      Menu.buildFromTemplate([
+        inspectElement
+      ]).popup(mainWindow);
+    }
+  });
+
 
   if (!primaryInstance) return;
 
