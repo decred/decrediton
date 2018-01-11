@@ -10,8 +10,12 @@ export default function notifications(state = {}, action) {
   case TRANSACTIONNTFNS_START:
     return {...state,
       transactionNtfnsAttempt: true,
+      transactionNtfns: action.transactionNtfns,
     };
   case TRANSACTIONNTFNS_FAILED:
+    return {...state,
+      transactionNtfns: null,
+    };
   case TRANSACTIONNTFNS_DATA:
     return {...state,
       transactionNtfnsResponse: action.response,
@@ -36,6 +40,9 @@ export default function notifications(state = {}, action) {
       unmined: action.unmined,
     };
   case TRANSACTIONNTFNS_END:
+    return {...state,
+      transactionNtfns: null,
+    };
   case ACCOUNTNTFNS_START:
     return {...state,
       accountNtfnsAttempt: true,

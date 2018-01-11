@@ -1,4 +1,5 @@
-import {versionCheckAction} from "./WalletLoaderActions";
+import { versionCheckAction } from "./WalletLoaderActions";
+import { stopNotifcations } from "./NotificationActions";
 import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { ipcRenderer } from "electron";
@@ -46,10 +47,11 @@ export const setCredentialsAppdataError = () => (dispatch) => {
 };
 
 export const shutdownApp = () => (dispatch) => {
+  dispatch({type: SHUTDOWN_REQUESTED});
+  dispatch(stopNotifcations());
   ipcRenderer.on("daemon-stopped", () => {
     dispatch({type: DAEMONSTOPPED});
   });
-  dispatch({type: SHUTDOWN_REQUESTED});
   dispatch(hideSidebarMenu());
   dispatch(pushHistory("/shutdown"));
 };
