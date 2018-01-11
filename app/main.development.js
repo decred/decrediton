@@ -602,33 +602,35 @@ app.on("ready", async () => {
 
   mainWindow.webContents.on("context-menu", (e, props) => {
     const { selectionText, isEditable, x, y } = props;
-    let inspectElement;
+    let inputMenu = [
+      {role: "cut"},
+      {role: "copy"},
+      {role: "paste"},
+      {type: "separator"},
+      {role: "selectall"}
+    ];
+    let selectionMenu = [
+      {role: "copy"},
+      {type: "separator"},
+      {role: "selectall"}
+    ];
     if (process.env.NODE_ENV === "development") {
-      inspectElement = {
+      let inspectElement = {
         label: "Inspect element",
         click: () => mainWindow.inspectElement(x, y)
       };
+      inputMenu.push(inspectElement);
+      selectionMenu.push(inspectElement);
     }
     if (isEditable) {
-      Menu.buildFromTemplate([
-        {role: "cut"},
-        {role: "copy"},
-        {role: "paste"},
-        {type: "separator"},
-        {role: "selectall"},
-        inspectElement
-      ]).popup(mainWindow);
+      Menu.buildFromTemplate(inputMenu).popup(mainWindow);
     } else if (selectionText && selectionText.trim() !== "") {
-      Menu.buildFromTemplate([
-        {role: "copy"},
-        {type: "separator"},
-        {role: "selectall"},
-        inspectElement
-      ]).popup(mainWindow);
-    } else {
-      Menu.buildFromTemplate([
-        inspectElement
-      ]).popup(mainWindow);
+      Menu.buildFromTemplate(selectionMenu).popup(mainWindow);
+    } else if (process.env.NODE_ENV === "development") {
+      Menu.buildFromTemplate([{
+        label: "Inspect element",
+        click: () => mainWindow.inspectElement(x, y)
+      }]).popup(mainWindow);
     }
   });
 
