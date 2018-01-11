@@ -1,4 +1,5 @@
 import Promise from "promise";
+import { withLog } from "./app";
 import { loader as rpcLoader } from "middleware/grpc/client";
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
@@ -24,26 +25,26 @@ export const getWalletExists = (loader) =>
     loader.walletExists(new WalletExistsRequest(), (error, response) =>
       error ? reject(error) : resolve(response)));
 
-export const createWallet = (loader, pubPass, privPass, seed) =>
+export const createWallet = withLog("Create Wallet", (loader, pubPass, privPass, seed) =>
   new Promise((resolve, reject) => {
     const request = new CreateWalletRequest();
     request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
     request.setSeed(seed);
     loader.createWallet(request, error => error ? reject(error) : resolve());
-  });
+  }));
 
-export const openWallet = (loader, pubPass) =>
+export const openWallet = withLog("Open Wallet", (loader, pubPass) =>
   new Promise((resolve, reject) => {
     const request = new OpenWalletRequest();
     request.setPublicPassphrase(new Uint8Array(Buffer.from(pubPass)));
     loader.openWallet(request, error => error ? reject(error) : resolve());
-  });
+  }));
 
 export const closeWallet = (loader) =>
   new Promise((resolve, reject) =>
     loader.closeWallet(new CloseWalletRequest(), error => error ? reject(error) : resolve()));
 
-export const discoverAddresses = (loader, shouldDiscoverAccounts, privPass) =>
+export const discoverAddresses = withLog("Discover Addresses", (loader, shouldDiscoverAccounts, privPass) =>
   new Promise((resolve, reject) => {
     const request = new DiscoverAddressesRequest();
     request.setDiscoverAccounts(!!shouldDiscoverAccounts);
@@ -51,17 +52,17 @@ export const discoverAddresses = (loader, shouldDiscoverAccounts, privPass) =>
       request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
     }
     loader.discoverAddresses(request, error => error ? reject(error) : resolve());
-  });
+  }));
 
-export const subscribeToBlockNotifications = (loader) =>
+export const subscribeToBlockNotifications = withLog("Subscribe Block Notification", (loader) =>
   new Promise((resolve, reject) =>
     loader.subscribeToBlockNotifications(
       new SubscribeToBlockNotificationsRequest(),
       error => error ? reject(error) : resolve()
     )
-  );
+  ));
 
-export const fetchHeaders = (loader) =>
+export const fetchHeaders = withLog("Fetching Headers", (loader) =>
   new Promise((resolve, reject) =>
     loader.fetchHeaders(new FetchHeadersRequest(), (error, response) =>
-      error ? reject(error) : resolve(response)));
+      error ? reject(error) : resolve(response))));
