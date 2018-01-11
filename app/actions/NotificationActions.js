@@ -74,7 +74,7 @@ export const transactionNtfnsStart = () => (dispatch, getState) => {
   const { walletService } = getState().grpc;
   let transactionNtfns = walletService.transactionNotifications(request);
   dispatch({ transactionNtfns, type: TRANSACTIONNTFNS_START });
-  transactionNtfns.on("data", data => {console.log(data); transactionNtfnsData(data);});
+  transactionNtfns.on("data", data => dispatch(transactionNtfnsData(data)));
   transactionNtfns.on("end", () => {
     console.log("Transaction notifications done");
     dispatch({ type: TRANSACTIONNTFNS_END });
