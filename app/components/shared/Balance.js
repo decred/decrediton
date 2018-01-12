@@ -38,3 +38,5 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large, flat, t
 };
 
 export default balance(Balance);
+
+// export default balance(() => <span className="mono">vvv</span>);

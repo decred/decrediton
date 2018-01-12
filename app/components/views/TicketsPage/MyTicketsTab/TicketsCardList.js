@@ -1,5 +1,5 @@
 import TicketInfoCard from "./TicketInfoCard";
-
+import VisibilitySensor from "react-visibility-sensor";
 @autobind
 class TicketsCardList extends React.Component {
 
@@ -26,13 +26,20 @@ class TicketsCardList extends React.Component {
     const onClick = this.onInfoCardClick;
 
     console.log("Re-rendering ticket card list");
-    return (<div className="tickets-list">
+    const res = (<div className="tickets-list">
       {tickets.map(ticket => {
         const key = ticket.hash;
         const expanded = ticket === expandedTicket;
         return <TicketInfoCard {...{ key, ticket, expanded, onClick, decodeRawTicketTransactions }}  />;
+        // return (
+        //   <VisibilitySensor partialVisibility={true} key={key} scrollCheck={true}>
+        //     {({isVisible}) => !isVisible ? <div className="ticket-card">not visible</div>
+        //       : <TicketInfoCard {...{ ticket, expanded, onClick, decodeRawTicketTransactions }}  />}
+        //   </VisibilitySensor>);
       })}
     </div>);
+    console.log("Finished re-rendering ticket card list");
+    return res;
   }
 }
 

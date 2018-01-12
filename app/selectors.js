@@ -124,7 +124,14 @@ export const network = get(["grpc", "network"]);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 export const currencies = () => [{name: "DCR"}, {name: "atoms"}];
-export const currencyDisplay = get(["settings", "currentSettings", "currencyDisplay"]);
+//export const currencyDisplay = get(["settings", "currentSettings", "currencyDisplay"]);
+export const currencyDisplay = createSelectorLazy(
+  [get(["settings", "currentSettings", "currencyDisplay"])],
+  (currencyDisplay) => {
+    console.log("recalc selector");
+    return currencyDisplay;
+  }
+);
 export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
 export const currentLocaleName = get(["settings", "currentSettings", "locale"]);
 
