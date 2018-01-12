@@ -19,7 +19,7 @@ export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
 function getWalletServiceSuccess(walletService) {
   return (dispatch, getState) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
-    setTimeout(() => { dispatch(getAccountsAttempt()); }, 10);
+    setTimeout(() => { dispatch(getAccountsAttempt(true)); }, 10);
     setTimeout(() => { dispatch(getMostRecentTransactions()); }, 20);
     setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 20);
     setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
@@ -71,13 +71,58 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
     .catch(error => dispatch({ error, type: GETTICKETBUYERSERVICE_FAILED }));
 };
 
+
+export const GETACCOUNTSBALANCES_ATTEMPT = "GETACCOUNTSBALANCES_ATTEMPT";
+export const GETACCOUNTSBALANCES_SUCCESS = "GETACCOUNTSBALANCES_SUCCESS";
+export const GETACCOUNTSBALANCES_FAIL = "GETACCOUNTSBALANCES_FAIL";
+
+const getAccountsBalances = (accounts) => (dispatch, getState) => {
+  var balances = new Map();
+  const { grpc: { network, hiddenAccounts } } = getState();
+
+  accounts.forEach(account => {
+    let hidden = false;
+    let HDPath = "";
+    if (hiddenAccounts.find(eq(account.getAccountNumber()))) hidden = true;
+    if (network == "mainnet") {
+      HDPath = "m / 44' / 20' / " + account.getAccountNumber() + "'";
+    } else if (network == "testnet") {
+      HDPath = "m / 44' / 11' / " + account.getAccountNumber() + "'";
+    }
+    wallet.getBalance(sel.walletService(getState()), account.getAccountNumber(), 0)
+      .then(resp => {
+        const accountEntry = {
+          accountNumber: account.getAccountNumber(),
+          accountName: account.getAccountName(),
+          externalKeys: account.getExternalKeyCount(),
+          internalKeys: account.getInternalKeyCount(),
+          importedKeys: account.getImportedKeyCount(),
+          hidden,
+          HDPath,
+          total: resp.getTotal(),
+          spendable: resp.getSpendable(),
+          immatureReward: resp.getImmatureReward(),
+          immatureStakeGeneration: resp.getImmatureStakeGeneration(),
+          lockedByTickets: resp.getLockedByTickets(),
+          votingAuthority: resp.getVotingAuthority(),
+        };
+        balances.push(accountEntry);
+      })
+      .catch(error => {
+        dispatch({ error, type: GETBALANCE_FAILED });
+        return;
+      });
+  });
+  console.log(balances);
+  dispatch({balances, type: GETBALANCE_SUCCESS });
+};
+
 export const GETBALANCE_ATTEMPT = "GETBALANCE_ATTEMPT";
 export const GETBALANCE_FAILED = "GETBALANCE_FAILED";
 export const GETBALANCE_SUCCESS = "GETBALANCE_SUCCESS";
 
-const getBalanceSuccess = (account, getBalanceResponse) => (dispatch, getState) => {
+const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (dispatch, getState) => {
   const { grpc: { balances, network, hiddenAccounts } } = getState();
-  const accountNumber = account.getAccountNumber();
   let found = false;
   let hidden = false;
   let HDPath = "";
@@ -85,23 +130,23 @@ const getBalanceSuccess = (account, getBalanceResponse) => (dispatch, getState) 
   if (hiddenAccounts.find(eq(accountNumber))) hidden = true;
 
   if (network == "mainnet") {
-    HDPath = "m / 44' / 20' / " + account.getAccountNumber() + "'";
+    HDPath = "m / 44' / 20' / " + accountNumber + "'";
   } else if (network == "testnet") {
-    HDPath = "m / 44' / 11' / " + account.getAccountNumber() + "'";
+    HDPath = "m / 44' / 11' / " + accountNumber + "'";
   }
 
   const updatedBalance = {
     hidden, accountNumber, HDPath,
-    accountName: account.getAccountName(),
+    //accountName: account.getAccountName(),
     total: getBalanceResponse.getTotal(),
     spendable: getBalanceResponse.getSpendable(),
     immatureReward: getBalanceResponse.getImmatureReward(),
     immatureStakeGeneration: getBalanceResponse.getImmatureStakeGeneration(),
     lockedByTickets: getBalanceResponse.getLockedByTickets(),
     votingAuthority: getBalanceResponse.getVotingAuthority(),
-    externalKeys: account.getExternalKeyCount(),
-    internalKeys: account.getInternalKeyCount(),
-    importedKeys: account.getImportedKeyCount()
+    //externalKeys: account.getExternalKeyCount(),
+    //internalKeys: account.getInternalKeyCount(),
+    //importedKeys: account.getImportedKeyCount()
   };
 
   const updatedBalances = balances.map(balance =>
@@ -111,9 +156,9 @@ const getBalanceSuccess = (account, getBalanceResponse) => (dispatch, getState) 
   dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS });
 };
 
-export const getBalanceAttempt = (account, requiredConfs) => (dispatch, getState) =>
-  wallet.getBalance(sel.walletService(getState()), account.getAccountNumber(), requiredConfs)
-    .then(resp => dispatch(getBalanceSuccess(account, resp)))
+export const getBalanceUpdateAttempt = (accountNumber, requiredConfs) => (dispatch, getState) =>
+  wallet.getBalance(sel.walletService(getState()), accountNumber, requiredConfs)
+    .then(resp => dispatch(getBalanceUpdateSuccess(accountNumber, resp)))
     .catch(error => dispatch({ error, type: GETBALANCE_FAILED }));
 
 export const GETACCOUNTNUMBER_ATTEMPT = "GETACCOUNTNUMBER_ATTEMPT";
@@ -213,12 +258,12 @@ export const GETACCOUNTS_ATTEMPT = "GETACCOUNTS_ATTEMPT";
 export const GETACCOUNTS_FAILED = "GETACCOUNTS_FAILED";
 export const GETACCOUNTS_SUCCESS = "GETACCOUNTS_SUCCESS";
 
-export const getAccountsAttempt = () => (dispatch, getState) => {
+export const getAccountsAttempt = (startup) => (dispatch, getState) => {
   dispatch({ type: GETACCOUNTS_ATTEMPT });
   wallet.getAccounts(sel.walletService(getState()))
     .then(response => {
-      response.getAccountsList().forEach(account => dispatch(getBalanceAttempt(account, 0)));
-      dispatch({ response, type: GETACCOUNTS_SUCCESS });
+      if (startup) dispatch(getAccountsBalances(response.getAccountsList()));
+      dispatch({ accounts: response.getAccountsList(), response, type: GETACCOUNTS_SUCCESS });
     })
     .catch(error => dispatch({ error, type: GETACCOUNTS_FAILED }));
 };
