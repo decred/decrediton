@@ -14,7 +14,6 @@ import "./style/ReactSelectGlobal.less";
 var cfg = getCfg();
 
 var grpcport = "";
-var neededBlocks = 0;
 var foundStakePoolConfig = false;
 var currentStakePoolConfig = cfg.get("stakepools");
 var network = cfg.get("network");
@@ -182,7 +181,7 @@ var initialState = {
   },
   walletLoader: {
     rpcRetryAttempts: 0,
-    neededBlocks: neededBlocks,
+    neededBlocks: 0,
     curBlocks: 0,
     stepIndex: 0,
     // Loader
