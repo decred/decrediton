@@ -38,7 +38,7 @@ function transactionNtfnsData(response) {
           dispatch({response: response, type: TRANSACTIONNTFNS_DATA });
           setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
           setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
-          setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
+          //setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
           setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
 
           const newlyMined = attachedBlocks.reduce((l, b) => {

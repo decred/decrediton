@@ -77,7 +77,7 @@ export const GETACCOUNTSBALANCES_SUCCESS = "GETACCOUNTSBALANCES_SUCCESS";
 export const GETACCOUNTSBALANCES_FAIL = "GETACCOUNTSBALANCES_FAIL";
 
 const getAccountsBalances = (accounts) => (dispatch, getState) => {
-  var balances = new Map();
+  var balances = new Array();
   const { grpc: { network, hiddenAccounts } } = getState();
 
   accounts.forEach(account => {
@@ -113,7 +113,6 @@ const getAccountsBalances = (accounts) => (dispatch, getState) => {
         return;
       });
   });
-  console.log(balances);
   dispatch({balances, type: GETBALANCE_SUCCESS });
 };
 
@@ -122,37 +121,26 @@ export const GETBALANCE_FAILED = "GETBALANCE_FAILED";
 export const GETBALANCE_SUCCESS = "GETBALANCE_SUCCESS";
 
 const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (dispatch, getState) => {
-  const { grpc: { balances, network, hiddenAccounts } } = getState();
-  let found = false;
-  let hidden = false;
-  let HDPath = "";
+  const { grpc: { balances } } = getState();
+  let updatedBalance;
+  console.log(accountNumber);
+  balances.some(balance => {
+    if (balance.accountNumber == accountNumber) {
+      updatedBalance = balance;
+      return balance.accountNumber == accountNumber;
+    }
+  });
 
-  if (hiddenAccounts.find(eq(accountNumber))) hidden = true;
-
-  if (network == "mainnet") {
-    HDPath = "m / 44' / 20' / " + accountNumber + "'";
-  } else if (network == "testnet") {
-    HDPath = "m / 44' / 11' / " + accountNumber + "'";
-  }
-
-  const updatedBalance = {
-    hidden, accountNumber, HDPath,
-    //accountName: account.getAccountName(),
-    total: getBalanceResponse.getTotal(),
-    spendable: getBalanceResponse.getSpendable(),
-    immatureReward: getBalanceResponse.getImmatureReward(),
-    immatureStakeGeneration: getBalanceResponse.getImmatureStakeGeneration(),
-    lockedByTickets: getBalanceResponse.getLockedByTickets(),
-    votingAuthority: getBalanceResponse.getVotingAuthority(),
-    //externalKeys: account.getExternalKeyCount(),
-    //internalKeys: account.getInternalKeyCount(),
-    //importedKeys: account.getImportedKeyCount()
-  };
+  updatedBalance.total = getBalanceResponse.getTotal();
+  updatedBalance.spendable = getBalanceResponse.getSpendable();
+  updatedBalance.immatureReward = getBalanceResponse.getImmatureReward();
+  updatedBalance.immatureStakeGeneration = getBalanceResponse.getImmatureStakeGeneration();
+  updatedBalance.lockedByTickets = getBalanceResponse.getLockedByTickets();
+  updatedBalance.votingAuthority = getBalanceResponse.getVotingAuthority();
 
   const updatedBalances = balances.map(balance =>
-    (balance.accountNumber === accountNumber) ? found = true && updatedBalance : balance);
+    (balance.accountNumber === accountNumber) ? updatedBalance : balance);
 
-  if (updatedBalances.length == 0 || !found) updatedBalances.push(updatedBalance);
   dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS });
 };
 
@@ -411,6 +399,17 @@ export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
 // been received from the wallet (through a notification).
 export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
+  var accountsToUpdate = new Map();
+  newlyMinedTransactions.forEach(tx => {
+    tx.tx.getCreditsList().forEach(credit => accountsToUpdate[credit.getAccount()] = true);
+    tx.tx.getDebitsList().forEach(debit => accountsToUpdate[debit.getPreviousAccount()] = true);
+  });
+  newlyUnminedTransactions.forEach(tx => {
+    tx.tx.getCreditsList().forEach(credit => accountsToUpdate[credit.getAccount()] = true);
+    tx.tx.getDebitsList().forEach(debit => accountsToUpdate[debit.getPreviousAccount()] = true);
+  });
+  console.log(accountsToUpdate);
+  accountsToUpdate.forEach((v, k) => v && dispatch(getBalanceUpdateAttempt(k)));
 
   let { unminedTransactions, minedTransactions, recentTransactions } = getState().grpc;
   const { transactionsFilter, recentTransactionCount } = getState().grpc;
