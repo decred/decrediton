@@ -15,9 +15,6 @@ var cfg = getCfg();
 
 var grpcport = "";
 var neededBlocks = 0;
-var today = new Date();
-var startDate = new Date();
-var totalDays = 0.0;
 var foundStakePoolConfig = false;
 var currentStakePoolConfig = cfg.get("stakepools");
 var network = cfg.get("network");
@@ -33,20 +30,6 @@ if (currentStakePoolConfig !== undefined) {
   }
 }
 
-var blocksPerDay = 0;
-if (network == "testnet") {
-  grpcport = cfg.get("wallet_port_testnet");
-  startDate = new Date("03/15/2017");
-  totalDays = (today.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24;
-  blocksPerDay = 720;
-  neededBlocks = Math.round(totalDays * blocksPerDay * (0.95));
-} else {
-  startDate = new Date("02/08/2016");
-  totalDays = (today.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24;
-  blocksPerDay = 288;
-  neededBlocks = Math.round(totalDays * blocksPerDay * (0.95));
-  grpcport = cfg.get("wallet_port");
-}
 
 var initialState = {
   settings: {
