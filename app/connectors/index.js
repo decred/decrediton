@@ -8,7 +8,6 @@ export { default as historyPage } from "./historyPage";
 export { default as home } from "./home";
 export { default as invalidRPCVersion } from "./invalidRPCVersion";
 export { default as logging } from "./logging";
-export { default as messageBanner } from "./messageBanner";
 export { default as purchaseTickets } from "./purchaseTickets";
 export { default as receive } from "./receive";
 export { default as receiveAccountsSelect } from "./receiveAccountsSelect";

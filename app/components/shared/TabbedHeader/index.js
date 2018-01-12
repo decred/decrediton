@@ -1,7 +1,6 @@
 import { injectIntl, intlShape } from "react-intl";
 import { getPage, getTabs, getTab } from "helpers";
 import { tabbedHeader } from "connectors";
-import MessageBanner from "./MessageBanner";
 import { Balance } from "shared";
 import Description from "./Description";
 import messages from "messages";
@@ -22,7 +21,6 @@ const TabbedHeader = ({ intl, children, routes, totalBalance, ticketPrice, isTes
   return (
     <div className="header">
       <div className="tabbedheader-top">
-        <MessageBanner/>
       </div>
 
       { !noIcon &&

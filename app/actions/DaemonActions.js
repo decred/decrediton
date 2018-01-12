@@ -70,6 +70,7 @@ export const startWallet = () => (dispatch) => {
   });
 };
 
+export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
@@ -82,6 +83,7 @@ export const syncDaemon = () =>
         .then(updateCurrentBlockCount => {
           if (updateCurrentBlockCount >= neededBlocks) {
             dispatch({type: DAEMONSYNCED});
+            dispatch({currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK});
             setMustOpenForm(false);
             dispatch(startWallet());
             return;

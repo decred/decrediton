@@ -244,16 +244,8 @@ var initialState = {
     fetchHeadersError: null,
   },
   notifications: {
-    synced: true,
-    currentHeight: 0,
-    syncedToTimestamp: null,
-    blocksPerDay: blocksPerDay,
-    transactionNtfnsRequestAttempt: false,
-    transactionNtfnsResponse: null,
-
-    unmined: Array(),
-    newUnminedMessage: null,
-
+    transactionNtfns: null,
+    transactionNtfnsError: null,
     accountNtfnsRequestAttempt: false,
     accountNtfnsResponse: null,
   },

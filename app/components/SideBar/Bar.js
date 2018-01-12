@@ -11,7 +11,6 @@ import "style/SideBar.less";
 const Bar = ({
   isTestNet,
   balances,
-  synced,
   currentHeight,
   lastBlockDate,
   lastBlockIsRecent,
@@ -57,9 +56,7 @@ const Bar = ({
               <RescanButton {...{rescanRequest, rescanAttempt}} />
             </div>
             <a className="sidebar-menu-bottom-latest-block-name">
-              { synced ?
-                <T id="sidebar.latestBlock" m="Latest Block" /> :
-                <T id="sidebar.syncedToBlock" m="Synced to block" /> }
+              <T id="sidebar.latestBlock" m="Latest Block" />
               <span className="sidebar-menu-bottom-latest-block-number"> {currentHeight}</span>
             </a>
             <div className="sidebar-menu-bottom-latest-block-time">
