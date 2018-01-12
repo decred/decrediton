@@ -1,5 +1,5 @@
 import { ipcRenderer } from "electron";
-import { isObject, isString, isNumber, isNullOrUndefined, isUndefined, isNull } from "util";
+import { isObject, isString, isNumber, isUndefined, isNull } from "util";
 import { isFunction } from "util";
 
 export const onAppReloadRequested = cb => ipcRenderer.on("app-reload-requested", cb);
@@ -7,6 +7,8 @@ export const onAppReloadRequested = cb => ipcRenderer.on("app-reload-requested",
 export const log = (level, ...args) => {
   ipcRenderer.send("main-log", ...[level, ...args]);
 };
+
+export const logOptionNoArgs = (opts) => ({...opts, noArguments: true});
 
 // Formats a dynamic list of log arguments
 const formatLogArgs = (msg, args) => {
@@ -31,7 +33,7 @@ const formatLogArgs = (msg, args) => {
 
 // Higher Order Function that wraps the promise-generating function f with log
 // calls. Calling f() **must** return a promise.
-export const withLog = (msg, f, opts={}) => (...args) => {
+export const withLog = (f, msg, opts={}) => (...args) => {
 
   if (opts.noArguments) {
     log("info", msg);
@@ -61,5 +63,5 @@ export const withLog = (msg, f, opts={}) => (...args) => {
   });
 };
 
-export const withLogNoArgs = (msg, f, opts={}) =>
-  withLog(msg, f, {...opts, noArguments: true});
+export const withLogNoArgs = (f, msg, opts={}) =>
+  withLog(f, msg, logOptionNoArgs(opts));
