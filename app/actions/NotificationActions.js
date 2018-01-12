@@ -20,8 +20,8 @@ function transactionNtfnsData(response) {
       var currentBlockTimestamp = attachedBlocks[attachedBlocks.length-1].getTimestamp();
       var currentBlockHeight = attachedBlocks[attachedBlocks.length-1].getHeight();
       dispatch({currentBlockHeight, currentBlockTimestamp, type: NEWBLOCKCONNECTED });
-      dispatch(getStakeInfoAttempt());
-      dispatch(getTicketPriceAttempt());
+      setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
+      setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
 
       const newlyMined = attachedBlocks.reduce((l, b) => {
         b.getTransactionsList().forEach((t, i) => {
