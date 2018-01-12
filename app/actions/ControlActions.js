@@ -57,7 +57,6 @@ export function renameAccountAttempt(accountNumber, newName) {
           } else {
             var successMsg = "You have successfully updated the account name.";
             setTimeout( () => dispatch({ renameAccountSuccess: successMsg, renameAccountResponse: renameAccountResponse, type: RENAMEACCOUNT_SUCCESS }), 1000);
-            dispatch(getAccountsAttempt());
           }
         });
   };
@@ -81,7 +80,7 @@ export function rescanAttempt(beginHeight) {
     });
     rescanCall.on("end", function() {
       dispatch({ type: RESCAN_COMPLETE });
-      setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
+      setTimeout( () => {dispatch(getAccountsAttempt(true));}, 1000);
       setTimeout( () => {dispatch(getMostRecentTransactions());}, 1000);
       setTimeout( () => {dispatch(getTicketsInfoAttempt());}, 1000);
     });
@@ -117,7 +116,6 @@ export function getNextAccountAttempt(passphrase, accountName) {
         } else {
           var success = "Account - " + accountName + " - has been successfully created.";
           setTimeout( () => dispatch({getNextAccountResponse: getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS, successMessage: success }), 1000);
-          dispatch(getAccountsAttempt());
         }
       });
   };
@@ -300,7 +298,6 @@ export function publishTransactionAttempt(tx) {
           dispatch({ error, type: PUBLISHTX_FAILED });
         } else {
           dispatch({ publishTransactionResponse: Buffer.from(publishTransactionResponse.getTransactionHash()), type: PUBLISHTX_SUCCESS });
-          setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
         }
       });
   };
@@ -350,7 +347,6 @@ function purchaseTicketsAction(request) {
           dispatch({ error, type: PURCHASETICKETS_FAILED });
         } else {
           dispatch({ purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
-          setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
           setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 4000);
         }
       });

@@ -123,7 +123,6 @@ export const GETBALANCE_SUCCESS = "GETBALANCE_SUCCESS";
 const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (dispatch, getState) => {
   const { grpc: { balances } } = getState();
   let updatedBalance;
-  console.log(accountNumber);
   balances.some(balance => {
     if (balance.accountNumber == accountNumber) {
       updatedBalance = balance;
@@ -257,10 +256,35 @@ export const getAccountsAttempt = (startup) => (dispatch, getState) => {
 };
 
 export const UPDATEHIDDENACCOUNTS = "UPDATEHIDDENACCOUNTS";
+export const UPDATEACCOUNT_SUCCESS = "UPDATEACCOUNT_SUCCESS";
+
+export function updateAccount(account) {
+  return (dispatch, getState) => {
+    const { grpc: { balances } } = getState();
+    let updatedBalance;
+    balances.some(balance => {
+      if (balance.accountNumber == account.accountNumber) {
+        updatedBalance = balance;
+        return balance.accountNumber == account.accountNumber;
+      }
+    });
+
+    if (account.hidden) updatedBalance.hidden = account.hidden;
+    if (account.accountName) updatedBalance.accountName = account.accountName;
+    if (account.externalKeys) updatedBalance.externalKeys = account.externalKeys;
+    if (account.internalKeys) updatedBalance.internalKeys = account.internalKeys;
+    if (account.importedKeys) updatedBalance.importedKeys = account.importedKeys;
+
+    const updatedBalances = balances.map(balance =>
+      (balance.accountNumber === account.accountNumber) ? updatedBalance : balance);
+
+    dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS });
+  };
+}
 
 export function hideAccount(accountNumber) {
   return (dispatch, getState) => {
-    const {hiddenAccounts} = getState().grpc;
+    const { grpc: { hiddenAccounts } } = getState();
     var updatedHiddenAccounts;
     if (hiddenAccounts.length == 0) {
       updatedHiddenAccounts = Array();
@@ -271,13 +295,13 @@ export function hideAccount(accountNumber) {
     var cfg = getCfg();
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
-    dispatch(getAccountsAttempt());
+    dispatch(updateAccount({accountNumber, hidden: true}));
   };
 }
 
 export function showAccount(accountNumber) {
   return (dispatch, getState) => {
-    const {hiddenAccounts} = getState().grpc;
+    const { grpc: { hiddenAccounts } } = getState();
     var updatedHiddenAccounts = Array();
     for (var i = 0; i < hiddenAccounts.length; i++) {
       if (hiddenAccounts[i] !== accountNumber) {
@@ -287,7 +311,7 @@ export function showAccount(accountNumber) {
     var cfg = getCfg();
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
-    dispatch(getAccountsAttempt());
+    dispatch(updateAccount({accountNumber, hidden: false}));
   };
 }
 

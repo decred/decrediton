@@ -1,7 +1,7 @@
 // @flow
 import * as wallet from "wallet";
-import { getAccountsAttempt, getStakeInfoAttempt,
-  getTicketPriceAttempt, getNetworkAttempt } from "./ClientActions";
+import { getStakeInfoAttempt,
+  getTicketPriceAttempt, getNetworkAttempt, updateAccount } from "./ClientActions";
 import { UPDATETIMESINCEBLOCK, newTransactionsReceived } from "./ClientActions";
 import { TransactionNotificationsRequest, AccountNotificationsRequest } from "middleware/walletrpc/api_pb";
 
@@ -38,7 +38,6 @@ function transactionNtfnsData(response) {
           dispatch({response: response, type: TRANSACTIONNTFNS_DATA });
           setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
           setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
-          //setTimeout( () => {dispatch(getAccountsAttempt());}, 1000);
           setTimeout( () => {dispatch(getNetworkAttempt());}, 1000);
 
           const newlyMined = attachedBlocks.reduce((l, b) => {
@@ -93,7 +92,10 @@ export const accountNtfnsStart = () => (dispatch, getState) => {
   const { walletService } = getState().grpc;
   let accountNtfns = walletService.accountNotifications(request);
   dispatch({ accountNtfns, type: ACCOUNTNTFNS_START });
-  accountNtfns.on("data", data => console.log(data));
+  accountNtfns.on("data", data => {
+    let account = {accountNumber: data.getAccountNumber(), accountName: data.getAccountName(), externalKeys: data.getExternalKeyCount(), internalKeys: data.getInternalKeyCount(), importedKeys: data.getImportedKeyCount()};
+    dispatch(updateAccount(account));
+  });
   accountNtfns.on("end", () => {
     console.log("Account notifications done");
     dispatch({ type: ACCOUNTNTFNS_END });
