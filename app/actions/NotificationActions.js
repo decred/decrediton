@@ -3,8 +3,7 @@ import * as wallet from "wallet";
 import { getAccountsAttempt, getStakeInfoAttempt,
   getTicketPriceAttempt, getNetworkAttempt } from "./ClientActions";
 import { UPDATETIMESINCEBLOCK, newTransactionsReceived } from "./ClientActions";
-import { TransactionNotificationsRequest } from "middleware/walletrpc/api_pb";
-import { transactionNtfs } from "middleware/grpc/client";
+import { TransactionNotificationsRequest, AccountNotificationsRequest } from "middleware/walletrpc/api_pb";
 
 export const TRANSACTIONNTFNS_START = "TRANSACTIONNTFNS_START";
 export const TRANSACTIONNTFNS_FAILED = "TRANSACTIONNTFNS_FAILED";
@@ -72,17 +71,44 @@ function transactionNtfnsData(response) {
 
 export const transactionNtfnsStart = () => (dispatch, getState) => {
   var request = new TransactionNotificationsRequest();
-  dispatch({ type: TRANSACTIONNTFNS_START });
   const { walletService } = getState().grpc;
-  transactionNtfs(walletService, request,
-    function(data) {
-      dispatch(transactionNtfnsData(data));
-    }
-  );
+  let transactionNtfns = walletService.transactionNotifications(request);
+  dispatch({ transactionNtfns, type: TRANSACTIONNTFNS_START });
+  transactionNtfns.on("data", data => dispatch(transactionNtfnsData(data)));
+  transactionNtfns.on("end", () => {
+    console.log("Transaction notifications done");
+    dispatch({ type: TRANSACTIONNTFNS_END });
+  });
+  transactionNtfns.on("error", error => {
+    if (!String(error).includes("Cancelled")) console.error("Transactions ntfns error received:", error);
+    dispatch({ type: TRANSACTIONNTFNS_END });
+  });
 };
 
-export const transactionNtfnsEnd = () => (dispatch) =>
-  dispatch({ request: {}, type: TRANSACTIONNTFNS_END });
+export const ACCOUNTNTFNS_START = "ACCOUNTNTFNS_START";
+export const ACCOUNTNTFNS_END = "ACCOUNTNTFNS_END";
+
+export const accountNtfnsStart = () => (dispatch, getState) => {
+  var request = new AccountNotificationsRequest();
+  const { walletService } = getState().grpc;
+  let accountNtfns = walletService.accountNotifications(request);
+  dispatch({ accountNtfns, type: ACCOUNTNTFNS_START });
+  accountNtfns.on("data", data => console.log(data));
+  accountNtfns.on("end", () => {
+    console.log("Account notifications done");
+    dispatch({ type: ACCOUNTNTFNS_END });
+  });
+  accountNtfns.on("error", error => {
+    if (!String(error).includes("Cancelled")) console.error("Account ntfns error received:", error);
+    dispatch({ type: ACCOUNTNTFNS_END });
+  });
+};
+
+export const stopNotifcations = () => (dispatch, getState) => {
+  const { transactionNtfns, accountNtfns } = getState().notifications;
+  if (transactionNtfns) transactionNtfns.cancel();
+  if (accountNtfns) accountNtfns.cancel();
+};
 
 export const CLEARUNMINEDMESSAGE = "CLEARUNMINEDMESSAGE";
 export const clearNewUnminedMessage = () => ({ type: CLEARUNMINEDMESSAGE });

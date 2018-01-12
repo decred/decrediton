@@ -3,7 +3,7 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, stopAutoBuyerAttempt } from "./ControlActions";
-import { transactionNtfnsStart } from "./NotificationActions";
+import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { showSidebarMenu } from "./SidebarActions";
@@ -29,6 +29,7 @@ function getWalletServiceSuccess(walletService) {
     setTimeout(() => { dispatch(getPingAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNetworkAttempt()); }, 1000);
     setTimeout(() => { dispatch(transactionNtfnsStart()); }, 1000);
+    setTimeout(() => { dispatch(accountNtfnsStart()); }, 1000);
     setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
     setTimeout(() => { dispatch(getDecodeMessageServiceAttempt()); }, 1000);
     // Check here to see if wallet was just created from an existing
