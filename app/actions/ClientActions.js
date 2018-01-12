@@ -129,7 +129,6 @@ const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (dispatch
       return balance.accountNumber == accountNumber;
     }
   });
-
   updatedBalance.total = getBalanceResponse.getTotal();
   updatedBalance.spendable = getBalanceResponse.getSpendable();
   updatedBalance.immatureReward = getBalanceResponse.getImmatureReward();
@@ -137,6 +136,7 @@ const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (dispatch
   updatedBalance.lockedByTickets = getBalanceResponse.getLockedByTickets();
   updatedBalance.votingAuthority = getBalanceResponse.getVotingAuthority();
 
+  console.log("get balance update", accountNumber, updatedBalance);
   const updatedBalances = balances.map(balance =>
     (balance.accountNumber === accountNumber) ? updatedBalance : balance);
 
@@ -423,17 +423,16 @@ export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
 // been received from the wallet (through a notification).
 export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
-  var accountsToUpdate = new Map();
+  var accountsToUpdate = new Array();
   newlyMinedTransactions.forEach(tx => {
-    tx.tx.getCreditsList().forEach(credit => accountsToUpdate[credit.getAccount()] = true);
-    tx.tx.getDebitsList().forEach(debit => accountsToUpdate[debit.getPreviousAccount()] = true);
+    tx.tx.getCreditsList().forEach(credit => accountsToUpdate.find(eq(credit.getAccount())) ? true : accountsToUpdate.push(credit.getAccount()));
+    tx.tx.getDebitsList().forEach(debit => accountsToUpdate.find(eq(debit.getPreviousAccount())) ? true : accountsToUpdate.push(debit.getPreviousAccount()));
   });
   newlyUnminedTransactions.forEach(tx => {
-    tx.tx.getCreditsList().forEach(credit => accountsToUpdate[credit.getAccount()] = true);
-    tx.tx.getDebitsList().forEach(debit => accountsToUpdate[debit.getPreviousAccount()] = true);
+    tx.tx.getCreditsList().forEach(credit => accountsToUpdate.find(eq(credit.getAccount())) ? true : accountsToUpdate.push(credit.getAccount()));
+    tx.tx.getDebitsList().forEach(debit => accountsToUpdate.find(eq(debit.getPreviousAccount())) ? true : accountsToUpdate.push(debit.getPreviousAccount()));
   });
-  console.log(accountsToUpdate);
-  accountsToUpdate.forEach((v, k) => v && dispatch(getBalanceUpdateAttempt(k)));
+  accountsToUpdate.forEach(v => dispatch(getBalanceUpdateAttempt(v, 0)));
 
   let { unminedTransactions, minedTransactions, recentTransactions } = getState().grpc;
   const { transactionsFilter, recentTransactionCount } = getState().grpc;
