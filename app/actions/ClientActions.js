@@ -419,19 +419,21 @@ export const getTransactions = () => async (dispatch, getState) => {
 
 export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
 
+function checkAccountsToUpdate(txs, accountsToUpdate) {
+  txs.forEach(tx => {
+    tx.tx.getCreditsList().forEach(credit => {if (accountsToUpdate.find(eq(credit.getAccount()))) accountsToUpdate.push(credit.getAccount());});
+    tx.tx.getDebitsList().forEach(debit => {if (!accountsToUpdate.find(eq(debit.getPreviousAccount()))) accountsToUpdate.push(debit.getPreviousAccount());});
+  });
+  return accountsToUpdate;
+}
 // newTransactionsReceived should be called when a new set of transactions has
 // been received from the wallet (through a notification).
 export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
+
   var accountsToUpdate = new Array();
-  newlyMinedTransactions.forEach(tx => {
-    tx.tx.getCreditsList().forEach(credit => accountsToUpdate.find(eq(credit.getAccount())) ? true : accountsToUpdate.push(credit.getAccount()));
-    tx.tx.getDebitsList().forEach(debit => accountsToUpdate.find(eq(debit.getPreviousAccount())) ? true : accountsToUpdate.push(debit.getPreviousAccount()));
-  });
-  newlyUnminedTransactions.forEach(tx => {
-    tx.tx.getCreditsList().forEach(credit => accountsToUpdate.find(eq(credit.getAccount())) ? true : accountsToUpdate.push(credit.getAccount()));
-    tx.tx.getDebitsList().forEach(debit => accountsToUpdate.find(eq(debit.getPreviousAccount())) ? true : accountsToUpdate.push(debit.getPreviousAccount()));
-  });
+  accountsToUpdate = checkAccountsToUpdate(newlyMinedTransactions, accountsToUpdate);
+  accountsToUpdate = checkAccountsToUpdate(newlyUnminedTransactions, accountsToUpdate);
   accountsToUpdate.forEach(v => dispatch(getBalanceUpdateAttempt(v, 0)));
 
   let { unminedTransactions, minedTransactions, recentTransactions } = getState().grpc;
