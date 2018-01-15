@@ -22,7 +22,7 @@ const HomePage = ({
 }) => {
   return (
     <div className="overview-wrapper">
-      <TabbedComponent differentHeader={HomeHeader} {...{routes}}>
+      <TabbedComponent differentHeader={HomeHeader} {...{routes, lockedTotalBalance, totalBalance, spendableTotalBalance}}>
         {children}
       </TabbedComponent>
       <div className="overview-transactions-ticket-wrapper">

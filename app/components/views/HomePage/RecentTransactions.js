@@ -1,5 +1,5 @@
 // @flow
-import { rescan, home } from "connectors";
+import { rescan } from "connectors";
 import { DecredLoading } from "indicators";
 import TxHistory from "TxHistory";
 import { FormattedMessage as T } from "react-intl";

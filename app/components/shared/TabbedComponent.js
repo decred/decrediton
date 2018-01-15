@@ -1,4 +1,4 @@
-import { createElement as h } from "react";
+import { createElement as h, cloneElement as k } from "react";
 import { RouteTransition, TabbedHeader } from "shared";
 import { getTabs, getTab } from "helpers";
 import theme from "theme";
@@ -26,12 +26,12 @@ class TabbedPage extends React.Component{
     const pathname = getTab(routes);
     const effect = !prevTab ? enterLeft : tabs.indexOf(prevTab) > tabs.indexOf(pathname) ? enterLeft : enterRight;
     const wrapperComponent = this.props.wrapperComponent ? this.props.wrapperComponent : wrapperComponentDefault;
-    const header = this.props.differentHeader ? h(this.props.differentHeader, {routes}) : h(TabbedHeader, {routes});
+    const header = this.props.differentHeader ? h(this.props.differentHeader, {routes, ...this.props}) : h(TabbedHeader, {routes});
     return (
       <Aux>
         {header}
         <RouteTransition className={className} opts={ theme("springs.tab") } {...{ wrapperComponent, pathname, ...effect }}>
-          { children }
+          { k(children, {...this.props}) }
         </RouteTransition>
       </Aux>
     );
