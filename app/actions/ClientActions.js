@@ -19,7 +19,7 @@ export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
 function getWalletServiceSuccess(walletService) {
   return (dispatch, getState) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
-    setTimeout(() => { dispatch(getAccountsAttempt()); }, 10);
+    setTimeout(() => { dispatch(getAccountsAttempt(true)); }, 10);
     setTimeout(() => { dispatch(getMostRecentTransactions()); }, 20);
     setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 20);
     setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
@@ -71,49 +71,75 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
     .catch(error => dispatch({ error, type: GETTICKETBUYERSERVICE_FAILED }));
 };
 
+const getAccountsBalances = (accounts) => (dispatch, getState) => {
+  var balances = new Array();
+  const { grpc: { network, hiddenAccounts } } = getState();
+
+  accounts.forEach(account => {
+    let hidden = false;
+    let HDPath = "";
+    if (hiddenAccounts.find(eq(account.getAccountNumber()))) hidden = true;
+    if (network == "mainnet") {
+      HDPath = "m / 44' / 20' / " + account.getAccountNumber() + "'";
+    } else if (network == "testnet") {
+      HDPath = "m / 44' / 11' / " + account.getAccountNumber() + "'";
+    }
+    wallet.getBalance(sel.walletService(getState()), account.getAccountNumber(), 0)
+      .then(resp => {
+        const accountEntry = {
+          accountNumber: account.getAccountNumber(),
+          accountName: account.getAccountName(),
+          externalKeys: account.getExternalKeyCount(),
+          internalKeys: account.getInternalKeyCount(),
+          importedKeys: account.getImportedKeyCount(),
+          hidden,
+          HDPath,
+          total: resp.getTotal(),
+          spendable: resp.getSpendable(),
+          immatureReward: resp.getImmatureReward(),
+          immatureStakeGeneration: resp.getImmatureStakeGeneration(),
+          lockedByTickets: resp.getLockedByTickets(),
+          votingAuthority: resp.getVotingAuthority(),
+        };
+        balances.push(accountEntry);
+      })
+      .catch(error => {
+        dispatch({ error, type: GETBALANCE_FAILED });
+        return;
+      });
+  });
+  dispatch({balances, type: GETBALANCE_SUCCESS });
+};
+
 export const GETBALANCE_ATTEMPT = "GETBALANCE_ATTEMPT";
 export const GETBALANCE_FAILED = "GETBALANCE_FAILED";
 export const GETBALANCE_SUCCESS = "GETBALANCE_SUCCESS";
 
-const getBalanceSuccess = (account, getBalanceResponse) => (dispatch, getState) => {
-  const { grpc: { balances, network, hiddenAccounts } } = getState();
-  const accountNumber = account.getAccountNumber();
-  let found = false;
-  let hidden = false;
-  let HDPath = "";
-
-  if (hiddenAccounts.find(eq(accountNumber))) hidden = true;
-
-  if (network == "mainnet") {
-    HDPath = "m / 44' / 20' / " + account.getAccountNumber() + "'";
-  } else if (network == "testnet") {
-    HDPath = "m / 44' / 11' / " + account.getAccountNumber() + "'";
-  }
-
-  const updatedBalance = {
-    hidden, accountNumber, HDPath,
-    accountName: account.getAccountName(),
-    total: getBalanceResponse.getTotal(),
-    spendable: getBalanceResponse.getSpendable(),
-    immatureReward: getBalanceResponse.getImmatureReward(),
-    immatureStakeGeneration: getBalanceResponse.getImmatureStakeGeneration(),
-    lockedByTickets: getBalanceResponse.getLockedByTickets(),
-    votingAuthority: getBalanceResponse.getVotingAuthority(),
-    externalKeys: account.getExternalKeyCount(),
-    internalKeys: account.getInternalKeyCount(),
-    importedKeys: account.getImportedKeyCount()
-  };
+const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (dispatch, getState) => {
+  const { grpc: { balances } } = getState();
+  let updatedBalance;
+  balances.some(balance => {
+    if (balance.accountNumber == accountNumber) {
+      updatedBalance = balance;
+      return balance.accountNumber == accountNumber;
+    }
+  });
+  updatedBalance.total = getBalanceResponse.getTotal();
+  updatedBalance.spendable = getBalanceResponse.getSpendable();
+  updatedBalance.immatureReward = getBalanceResponse.getImmatureReward();
+  updatedBalance.immatureStakeGeneration = getBalanceResponse.getImmatureStakeGeneration();
+  updatedBalance.lockedByTickets = getBalanceResponse.getLockedByTickets();
+  updatedBalance.votingAuthority = getBalanceResponse.getVotingAuthority();
 
   const updatedBalances = balances.map(balance =>
-    (balance.accountNumber === accountNumber) ? found = true && updatedBalance : balance);
+    (balance.accountNumber === accountNumber) ? updatedBalance : balance);
 
-  if (updatedBalances.length == 0 || !found) updatedBalances.push(updatedBalance);
   dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS });
 };
 
-export const getBalanceAttempt = (account, requiredConfs) => (dispatch, getState) =>
-  wallet.getBalance(sel.walletService(getState()), account.getAccountNumber(), requiredConfs)
-    .then(resp => dispatch(getBalanceSuccess(account, resp)))
+export const getBalanceUpdateAttempt = (accountNumber, requiredConfs) => (dispatch, getState) =>
+  wallet.getBalance(sel.walletService(getState()), accountNumber, requiredConfs)
+    .then(resp => dispatch(getBalanceUpdateSuccess(accountNumber, resp)))
     .catch(error => dispatch({ error, type: GETBALANCE_FAILED }));
 
 export const GETACCOUNTNUMBER_ATTEMPT = "GETACCOUNTNUMBER_ATTEMPT";
@@ -213,21 +239,46 @@ export const GETACCOUNTS_ATTEMPT = "GETACCOUNTS_ATTEMPT";
 export const GETACCOUNTS_FAILED = "GETACCOUNTS_FAILED";
 export const GETACCOUNTS_SUCCESS = "GETACCOUNTS_SUCCESS";
 
-export const getAccountsAttempt = () => (dispatch, getState) => {
+export const getAccountsAttempt = (startup) => (dispatch, getState) => {
   dispatch({ type: GETACCOUNTS_ATTEMPT });
   wallet.getAccounts(sel.walletService(getState()))
     .then(response => {
-      response.getAccountsList().forEach(account => dispatch(getBalanceAttempt(account, 0)));
-      dispatch({ response, type: GETACCOUNTS_SUCCESS });
+      if (startup) dispatch(getAccountsBalances(response.getAccountsList()));
+      dispatch({ accounts: response.getAccountsList(), response, type: GETACCOUNTS_SUCCESS });
     })
     .catch(error => dispatch({ error, type: GETACCOUNTS_FAILED }));
 };
 
 export const UPDATEHIDDENACCOUNTS = "UPDATEHIDDENACCOUNTS";
+export const UPDATEACCOUNT_SUCCESS = "UPDATEACCOUNT_SUCCESS";
+
+export function updateAccount(account) {
+  return (dispatch, getState) => {
+    const { grpc: { balances } } = getState();
+    let updatedBalance;
+    balances.some(balance => {
+      if (balance.accountNumber == account.accountNumber) {
+        updatedBalance = balance;
+        return balance.accountNumber == account.accountNumber;
+      }
+    });
+
+    if (account.hidden) updatedBalance.hidden = account.hidden;
+    if (account.accountName) updatedBalance.accountName = account.accountName;
+    if (account.externalKeys) updatedBalance.externalKeys = account.externalKeys;
+    if (account.internalKeys) updatedBalance.internalKeys = account.internalKeys;
+    if (account.importedKeys) updatedBalance.importedKeys = account.importedKeys;
+
+    const updatedBalances = balances.map(balance =>
+      (balance.accountNumber === account.accountNumber) ? updatedBalance : balance);
+
+    dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS });
+  };
+}
 
 export function hideAccount(accountNumber) {
   return (dispatch, getState) => {
-    const {hiddenAccounts} = getState().grpc;
+    const { grpc: { hiddenAccounts } } = getState();
     var updatedHiddenAccounts;
     if (hiddenAccounts.length == 0) {
       updatedHiddenAccounts = Array();
@@ -238,13 +289,13 @@ export function hideAccount(accountNumber) {
     var cfg = getCfg();
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
-    dispatch(getAccountsAttempt());
+    dispatch(updateAccount({accountNumber, hidden: true}));
   };
 }
 
 export function showAccount(accountNumber) {
   return (dispatch, getState) => {
-    const {hiddenAccounts} = getState().grpc;
+    const { grpc: { hiddenAccounts } } = getState();
     var updatedHiddenAccounts = Array();
     for (var i = 0; i < hiddenAccounts.length; i++) {
       if (hiddenAccounts[i] !== accountNumber) {
@@ -254,7 +305,7 @@ export function showAccount(accountNumber) {
     var cfg = getCfg();
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
-    dispatch(getAccountsAttempt());
+    dispatch(updateAccount({accountNumber, hidden: false}));
   };
 }
 
@@ -362,10 +413,22 @@ export const getTransactions = () => async (dispatch, getState) => {
 
 export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
 
+function checkAccountsToUpdate(txs, accountsToUpdate) {
+  txs.forEach(tx => {
+    tx.tx.getCreditsList().forEach(credit => {if (!accountsToUpdate.find(eq(credit.getAccount()))) accountsToUpdate.push(credit.getAccount());});
+    tx.tx.getDebitsList().forEach(debit => {if (!accountsToUpdate.find(eq(debit.getPreviousAccount()))) accountsToUpdate.push(debit.getPreviousAccount());});
+  });
+  return accountsToUpdate;
+}
 // newTransactionsReceived should be called when a new set of transactions has
 // been received from the wallet (through a notification).
 export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
+
+  var accountsToUpdate = new Array();
+  accountsToUpdate = checkAccountsToUpdate(newlyMinedTransactions, accountsToUpdate);
+  accountsToUpdate = checkAccountsToUpdate(newlyUnminedTransactions, accountsToUpdate);
+  accountsToUpdate.forEach(v => dispatch(getBalanceUpdateAttempt(v, 0)));
 
   let { unminedTransactions, minedTransactions, recentTransactions } = getState().grpc;
   const { transactionsFilter, recentTransactionCount } = getState().grpc;
