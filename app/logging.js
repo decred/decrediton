@@ -67,6 +67,7 @@ export function createLogger(debug) {
     logger.add(winston.transports.Console, {
       timestamp: logTimestamp,
       formatter: logFormatterColorized,
+      level: "debug",
     });
   }
 

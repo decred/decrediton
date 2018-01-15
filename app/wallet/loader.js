@@ -1,4 +1,5 @@
 import Promise from "promise";
+import { withLog as log, logOptionNoArgs } from "./app";
 import { loader as rpcLoader } from "middleware/grpc/client";
 import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
@@ -24,26 +25,27 @@ export const getWalletExists = (loader) =>
     loader.walletExists(new WalletExistsRequest(), (error, response) =>
       error ? reject(error) : resolve(response)));
 
-export const createWallet = (loader, pubPass, privPass, seed) =>
+export const createWallet = log((loader, pubPass, privPass, seed) =>
   new Promise((resolve, reject) => {
     const request = new CreateWalletRequest();
     request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
     request.setSeed(seed);
     loader.createWallet(request, error => error ? reject(error) : resolve());
-  });
+  }), "Create Wallet", logOptionNoArgs());
 
-export const openWallet = (loader, pubPass) =>
+export const openWallet = log((loader, pubPass) =>
   new Promise((resolve, reject) => {
     const request = new OpenWalletRequest();
     request.setPublicPassphrase(new Uint8Array(Buffer.from(pubPass)));
     loader.openWallet(request, error => error ? reject(error) : resolve());
-  });
+  }), "Open Wallet", logOptionNoArgs());
 
-export const closeWallet = (loader) =>
+export const closeWallet = log((loader) =>
   new Promise((resolve, reject) =>
-    loader.closeWallet(new CloseWalletRequest(), error => error ? reject(error) : resolve()));
+    loader.closeWallet(new CloseWalletRequest(), error => error ? reject(error) : resolve())),
+  "Close Wallet");
 
-export const discoverAddresses = (loader, shouldDiscoverAccounts, privPass) =>
+export const discoverAddresses = log((loader, shouldDiscoverAccounts, privPass) =>
   new Promise((resolve, reject) => {
     const request = new DiscoverAddressesRequest();
     request.setDiscoverAccounts(!!shouldDiscoverAccounts);
@@ -51,17 +53,17 @@ export const discoverAddresses = (loader, shouldDiscoverAccounts, privPass) =>
       request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
     }
     loader.discoverAddresses(request, error => error ? reject(error) : resolve());
-  });
+  }), "Discover Addresses", logOptionNoArgs());
 
-export const subscribeToBlockNotifications = (loader) =>
+export const subscribeToBlockNotifications = log((loader) =>
   new Promise((resolve, reject) =>
     loader.subscribeToBlockNotifications(
       new SubscribeToBlockNotificationsRequest(),
       error => error ? reject(error) : resolve()
     )
-  );
+  ), "Subscribe Block Notification");
 
-export const fetchHeaders = (loader) =>
+export const fetchHeaders = log((loader) =>
   new Promise((resolve, reject) =>
     loader.fetchHeaders(new FetchHeadersRequest(), (error, response) =>
-      error ? reject(error) : resolve(response)));
+      error ? reject(error) : resolve(response))), "Fetch Headers");

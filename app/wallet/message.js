@@ -1,7 +1,8 @@
 import Promise from "promise";
 import { SignMessageRequest, VerifyMessageRequest }  from "middleware/walletrpc/api_pb";
+import { withLogNoArgs as log } from "./app";
 
-export const signMessage = (walletService, address, message, passphrase) => {
+export const signMessage = log((walletService, address, message, passphrase) => {
   const request = new SignMessageRequest();
   request.setAddress(address);
   request.setMessage(message);
@@ -9,13 +10,13 @@ export const signMessage = (walletService, address, message, passphrase) => {
   return new Promise((resolve, reject) => walletService.signMessage(
     request, (error, response) => error ? reject(error) : resolve(response)
   ));
-};
+}, "Sign Message");
 
-export const verifyMessage = (verificationService, address, message, signature) => {
+export const verifyMessage = log((verificationService, address, message, signature) => {
   const request = new VerifyMessageRequest();
   request.setAddress(address);
   request.setMessage(message);
   request.setSignature(signature);
   return new Promise((resolve, reject) => verificationService
     .verifyMessage(request, (error, response) => error ? reject(error) : resolve(response)));
-};
+}, "Verify Message");
