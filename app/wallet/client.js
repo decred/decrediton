@@ -5,6 +5,7 @@ import {
   BalanceRequest, TicketPriceRequest, StakeInfoRequest,
   AgendasRequest, VoteChoicesRequest, SetVoteChoicesRequest, GetTicketsRequest,
 } from "middleware/walletrpc/api_pb";
+import { withLog as log } from "./app";
 
 const promisifyReq = (fnName, Req) => (service, ...args) => new Promise((ok, fail) =>
   service[fnName](new Req(), ...args, (err, res) => err ? fail(err) : ok(res)));
@@ -45,11 +46,13 @@ export const getTickets = (walletService, startHeight, endHeight) => new Promise
   getTx.on("error", fail);
 });
 
-export const setAgendaVote = (votingService, agendaId, choiceId) => new Promise((ok, fail) => {
-  const request = new SetVoteChoicesRequest();
-  const choice = new SetVoteChoicesRequest.Choice();
-  choice.setChoiceId(choiceId);
-  choice.setAgendaId(agendaId);
-  request.addChoices(choice);
-  votingService.setVoteChoices(request, (err, res) => err ? fail(err) : ok(res));
-});
+export const setAgendaVote = log((votingService, agendaId, choiceId) =>
+  new Promise((ok, fail) => {
+    const request = new SetVoteChoicesRequest();
+    const choice = new SetVoteChoicesRequest.Choice();
+    choice.setChoiceId(choiceId);
+    choice.setAgendaId(agendaId);
+    request.addChoices(choice);
+    votingService.setVoteChoices(request, (err, res) => err ? fail(err) : ok(res));
+  }),
+  "Set Agenda Vote");

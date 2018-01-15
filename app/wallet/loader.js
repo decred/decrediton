@@ -38,11 +38,12 @@ export const openWallet = log((loader, pubPass) =>
     const request = new OpenWalletRequest();
     request.setPublicPassphrase(new Uint8Array(Buffer.from(pubPass)));
     loader.openWallet(request, error => error ? reject(error) : resolve());
-  }), "Open Wallet");
+  }), "Open Wallet", logOptionNoArgs());
 
-export const closeWallet = (loader) =>
+export const closeWallet = log((loader) =>
   new Promise((resolve, reject) =>
-    loader.closeWallet(new CloseWalletRequest(), error => error ? reject(error) : resolve()));
+    loader.closeWallet(new CloseWalletRequest(), error => error ? reject(error) : resolve())),
+  "Close Wallet");
 
 export const discoverAddresses = log((loader, shouldDiscoverAccounts, privPass) =>
   new Promise((resolve, reject) => {
