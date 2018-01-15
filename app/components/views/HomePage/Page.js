@@ -1,13 +1,10 @@
 // @flow
 import { rescan, home } from "connectors";
-import { Balance } from "shared";
-import { FormattedMessage as T } from "react-intl";
 import RecentTransactions from "./RecentTransactions";
 import TicketActivity from "./TicketActivity";
 import "style/Fonts.less";
 import "style/HomePage.less";
 import {TabbedComponent} from "shared";
-import BalanceTab from "./Balance";
 import HomeHeader from "./HomeHeader";
 
 const HomePage = ({

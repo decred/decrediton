@@ -1,13 +1,7 @@
-import { Balance } from "shared";
-import { FormattedMessage as T } from "react-intl";
 import "style/Fonts.less";
 import "style/HomePage.less";
 
-const HomePage = ({
-  spendableTotalBalance,
-  lockedTotalBalance,
-  totalBalance,
-}) => {
+const HomePage = () => {
   return (
     <div className="overview-header-wrapper">
       <p>Ticket page</p>
