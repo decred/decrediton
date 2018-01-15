@@ -373,14 +373,10 @@ export const viewedTicketListing = createSelector(
 
 const rescanResponse = get(["control", "rescanResponse"]);
 export const rescanRequest = get(["control", "rescanRequest"]);
-export const synced = get(["notifications", "synced"]);
 export const getTransactionsRequestAttempt = get(["grpc", "getTransactionsRequestAttempt"]);
 export const notifiedBlockHeight = get(["notifications", "currentHeight"]);
 
-export const currentBlockHeight = createSelector(
-  [synced, getAccountsResponse, notifiedBlockHeight],
-  (synced, req, notifHeight) => ((synced && req) ? req.getCurrentBlockHeight() : notifHeight)
-);
+export const currentBlockHeight = get(["grpc", "currentBlockHeight"]);
 
 export const rescanEndBlock = currentBlockHeight;
 export const rescanStartBlock = compose(
@@ -535,13 +531,10 @@ export const immatureTicketsCount = compose(r => r ? r.getImmature() : 0, getSta
 export const expiredTicketsCount = compose(r => r ? r.getExpired() : 0, getStakeInfoResponse);
 export const liveTicketsCount = compose(r => r ? r.getLive() : 0, getStakeInfoResponse);
 export const totalSubsidy = compose(r => r ? r.getTotalSubsidy() : 0, getStakeInfoResponse);
-export const hasTicketsToRevoke = and(
-  synced,
-  compose(
+export const hasTicketsToRevoke = compose(
     r => r ? r.getRevoked() !== r.getExpired() + r.getMissed() : 0,
     getStakeInfoResponse
-  )
-);
+  );
 
 export const ticketBuyerService = get(["grpc", "ticketBuyerService"]);
 const startAutoBuyerResponse = get(["control", "startAutoBuyerResponse"]);
@@ -624,13 +617,7 @@ export const newUnminedMessage = get(["notifications", "newUnminedMessage"]);
 
 export const createWalletExisting = get(["walletLoader", "createWalletExisting"]);
 
-export const lastBlockTimestamp = createSelector(
-  [ synced,
-    get(["grpc", "recentBlockTimestamp"]),
-    get(["notifications", "syncedToTimestamp"])
-  ],
-  (synced, recent, old) => synced ? recent : old
-);
+export const lastBlockTimestamp = get(["grpc", "recentBlockTimestamp"]);
 
 export const getNextAccountSuccess = get(["control", "getNextAccountSuccess"]);
 export const getNextAccountError = get(["control", "getNextAccountError"]);

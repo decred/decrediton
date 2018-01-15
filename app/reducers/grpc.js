@@ -21,6 +21,8 @@ import {
   SETVOTECHOICES_ATTEMPT, SETVOTECHOICES_FAILED, SETVOTECHOICES_SUCCESS,
   UPDATEHIDDENACCOUNTS,
 } from "../actions/ClientActions";
+import { STARTUPBLOCK } from "../actions/DaemonActions";
+import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
 import {
   GETDECODEMESSAGESERVICE_ATTEMPT, GETDECODEMESSAGESERVICE_FAILED, GETDECODEMESSAGESERVICE_SUCCESS,
   DECODERAWTXS_SUCCESS
@@ -296,6 +298,17 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       recentBlockTimestamp: action.recentBlockTimestamp,
+    };
+  case STARTUPBLOCK:
+    return {
+      ...state,
+      currentBlockHeight: action.currentBlockHeight,
+    };
+  case NEWBLOCKCONNECTED:
+    return {
+      ...state,
+      recentBlockTimestamp: action.currentBlockTimestamp,
+      currentBlockHeight: action.currentBlockHeight,
     };
   case GETAGENDASERVICE_ATTEMPT:
     return {

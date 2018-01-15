@@ -7,7 +7,6 @@ import * as ca from "../actions/ClientActions";
 const mapStateToProps = selectorMap({
   isTestNet: sel.isTestNet,
   balances: sel.balances,
-  synced: sel.synced,
   currentBlockHeight: sel.currentBlockHeight,
   lastBlockTimestamp: sel.lastBlockTimestamp,
   totalBalance: sel.totalBalance,
