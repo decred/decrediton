@@ -29,6 +29,11 @@ if (currentStakePoolConfig !== undefined) {
   }
 }
 
+if (network == "testnet") {
+  grpcport = cfg.get("wallet_port_testnet");
+} else {
+  grpcport = cfg.get("wallet_port");
+}
 
 var initialState = {
   settings: {
