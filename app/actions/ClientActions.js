@@ -439,19 +439,24 @@ function checkForStakeTransactions(txs) {
 export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
 
-  var accountsToUpdate = new Array();
-  accountsToUpdate = checkAccountsToUpdate(newlyMinedTransactions, accountsToUpdate);
-  accountsToUpdate = checkAccountsToUpdate(newlyUnminedTransactions, accountsToUpdate);
-  accountsToUpdate.forEach(v => dispatch(getBalanceUpdateAttempt(v, 0)));
-
-  if (checkForStakeTransactions(newlyUnminedTransactions) || checkForStakeTransactions(newlyMinedTransactions)) dispatch(getStakeInfoAttempt());
-
   let { unminedTransactions, minedTransactions, recentTransactions } = getState().grpc;
   const { transactionsFilter, recentTransactionCount } = getState().grpc;
 
   // aux maps of [txhash] => tx (used to ensure no duplicate txs)
   const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
   const newlyUnminedMap = newlyUnminedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
+
+  const minedMap = minedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
+  const unminedMap = unminedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
+
+  const unminedDupeCheck =  newlyUnminedTransactions.filter(tx => !minedMap[tx.hash] && !unminedMap[tx.hash]);
+
+  var accountsToUpdate = new Array();
+  accountsToUpdate = checkAccountsToUpdate(unminedDupeCheck, accountsToUpdate);
+  accountsToUpdate = checkAccountsToUpdate(newlyMinedTransactions, accountsToUpdate);
+  accountsToUpdate.forEach(v => dispatch(getBalanceUpdateAttempt(v, 0)));
+  console.log(accountsToUpdate);
+  if (checkForStakeTransactions(unminedDupeCheck) || checkForStakeTransactions(newlyMinedTransactions)) dispatch(getStakeInfoAttempt());
 
   unminedTransactions = filterTransactions([
     ...newlyUnminedTransactions,
