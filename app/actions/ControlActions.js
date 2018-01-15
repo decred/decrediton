@@ -328,13 +328,13 @@ export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requi
     request.setTxFee(txFee*1e8);
     request.setTicketFee(ticketFee*1e8);
     dispatch({ type: PURCHASETICKETS_ATTEMPT });
-    dispatch(purchaseTicketsAction(request));
-    /*dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0, stakepool.TicketAddress, (error) => {
+    dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0, stakepool.TicketAddress, (error) => {
       if (error) {
         dispatch({ error, type: PURCHASETICKETS_FAILED });
       } else {
+        dispatch(purchaseTicketsAction(request));
       }
-    }));*/
+    }));
   };
 }
 

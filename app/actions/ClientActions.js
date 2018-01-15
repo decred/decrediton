@@ -354,8 +354,6 @@ export const getTickets = () => async (dispatch, getState) => {
       endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
     }
 
-    //console.log("requesting tickets", startRequestHeight, endRequestHeight);
-
     try {
       tickets = await wallet.getTickets(walletService,
         startRequestHeight, endRequestHeight, pageCount);
