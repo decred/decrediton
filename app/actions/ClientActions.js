@@ -11,6 +11,8 @@ import { push as pushHistory } from "react-router-redux";
 import { getCfg } from "../config.js";
 import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";
+import { TransactionDetails } from "middleware/walletrpc/api_pb";
+
 
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
@@ -419,6 +421,18 @@ function checkAccountsToUpdate(txs, accountsToUpdate) {
     tx.tx.getDebitsList().forEach(debit => {if (!accountsToUpdate.find(eq(debit.getPreviousAccount()))) accountsToUpdate.push(debit.getPreviousAccount());});
   });
   return accountsToUpdate;
+}
+
+function checkForStakeTransactions(txs) {
+  var stakeTxsFound = false;
+  txs.forEach(tx => {
+    if (tx.type == TransactionDetails.TransactionType.VOTE ||
+      tx.type == TransactionDetails.TransactionType.TICKET_PURCHASE ||
+      tx.type == TransactionDetails.TransactionType.REVOCATION) {
+      stakeTxsFound = true;
+    }
+  });
+  return stakeTxsFound;
 }
 // newTransactionsReceived should be called when a new set of transactions has
 // been received from the wallet (through a notification).

@@ -1,6 +1,6 @@
 // @flow
 import * as wallet from "wallet";
-import { getStakeInfoAttempt, getTicketPriceAttempt, updateAccount } from "./ClientActions";
+import { getTicketPriceAttempt, updateAccount } from "./ClientActions";
 import { newTransactionsReceived } from "./ClientActions";
 import { TransactionNotificationsRequest, AccountNotificationsRequest } from "middleware/walletrpc/api_pb";
 
@@ -20,7 +20,6 @@ function transactionNtfnsData(response) {
       var currentBlockTimestamp = attachedBlocks[attachedBlocks.length-1].getTimestamp();
       var currentBlockHeight = attachedBlocks[attachedBlocks.length-1].getHeight();
       dispatch({currentBlockHeight, currentBlockTimestamp, type: NEWBLOCKCONNECTED });
-      setTimeout( () => {dispatch(getStakeInfoAttempt());}, 1000);
       setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
 
       const newlyMined = attachedBlocks.reduce((l, b) => {
