@@ -221,8 +221,6 @@ export default function snackbar(state = {}, action) {
     break;
   }
 
-  console.log("finishing snackbar reducer");
-
   if (message && type) {
     const newMessage = {type, message, values};
     return {...state, messages: [...state.messages, newMessage]};

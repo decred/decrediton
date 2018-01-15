@@ -89,13 +89,6 @@ export const OPENWALLET_SUCCESS = "OPENWALLET_SUCCESS";
 export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState) => {
   dispatch({ type: OPENWALLET_ATTEMPT });
 
-  var oldLog = console.log;
-  console.log = (...args) => {
-    const date = new Date();
-    const s = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + "." +
-      date.getMilliseconds() + " ";
-    oldLog(s, ...args);
-  };
   return openWallet(getState().walletLoader.loader, pubPass)
     .then(() => {
       dispatch({ type: OPENWALLET_SUCCESS });

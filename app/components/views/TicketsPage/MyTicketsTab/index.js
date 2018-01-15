@@ -14,7 +14,6 @@ class MyTickets extends React.Component {
   }
 
   onLoadMoreTickets() {
-    console.log("do load more tickets please");
     setTimeout(() => this.props.getTickets && this.props.getTickets(), 10);
   }
 

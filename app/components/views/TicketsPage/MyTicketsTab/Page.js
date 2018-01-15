@@ -17,9 +17,7 @@ class TicketListPage extends React.Component {
       sortTypes, ticketTypes
      } = this.props;
 
-    console.log("re-rendering ticketListPage");
-
-    const res = (
+    return (
         <InfiniteScroll
           hasMore={!noMoreTickets}
           loadMore={onLoadMoreTickets}
@@ -59,9 +57,6 @@ class TicketListPage extends React.Component {
           </div>
         </InfiniteScroll>
     );
-
-    console.log("Finished rendering ticket list page");
-    return res;
   }
 }
 

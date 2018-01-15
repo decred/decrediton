@@ -1,17 +1,12 @@
-import TicketInfoCard from "./TicketInfoCard";
-import VisibilitySensor from "react-visibility-sensor";
+import TicketCard from "./TicketCard";
 @autobind
 class TicketsCardList extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = { expandedTicket: null };
-    //this.requestTicketsRawTx();
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   //this.setState(this.calcPagination(nextProps.tickets));
-  // }
   onInfoCardClick(ticket) {
     if (ticket === this.state.expandedTicket) {
       this.setState({ expandedTicket: null });
@@ -25,24 +20,15 @@ class TicketsCardList extends React.Component {
     const { expandedTicket } = this.state;
     const onClick = this.onInfoCardClick;
 
-    console.log("Re-rendering ticket card list");
     const res = (<div className="tickets-list">
       {tickets.map(ticket => {
         const key = ticket.hash;
         const expanded = ticket === expandedTicket;
-        return <TicketInfoCard {...{ key, ticket, expanded, onClick, decodeRawTicketTransactions }}  />;
-        // return (
-        //   <VisibilitySensor partialVisibility={true} key={key} scrollCheck={true}>
-        //     {({isVisible}) => !isVisible ? <div className="ticket-card">not visible</div>
-        //       : <TicketInfoCard {...{ ticket, expanded, onClick, decodeRawTicketTransactions }}  />}
-        //   </VisibilitySensor>);
+        return <TicketCard {...{ key, ticket, expanded, onClick, decodeRawTicketTransactions }}  />;
       })}
     </div>);
-    console.log("Finished re-rendering ticket card list");
     return res;
   }
 }
 
 export default TicketsCardList;
-
-//onClick={this.onInfoCardClick}

@@ -32,7 +32,6 @@ import { SIGNMESSAGE_ATTEMPT, SIGNMESSAGE_SUCCESS, SIGNMESSAGE_FAILED, SIGNMESSA
 import { VERIFYMESSAGE_ATTEMPT, VERIFYMESSAGE_SUCCESS, VERIFYMESSAGE_FAILED, VERIFYMESSAGE_CLEANSTORE } from "../actions/ControlActions";
 
 export default function grpc(state = {}, action) {
-  console.log("start grpc reducer");
   switch (action.type) {
   case GETWALLETSERVICE_ATTEMPT:
     return {

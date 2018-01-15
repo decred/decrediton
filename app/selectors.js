@@ -2,7 +2,6 @@ import {
   compose, reduce, filter, get, not, or, and, eq, find, bool, map, apply,
   createSelectorEager as createSelector
 } from "./fp";
-import { createSelector as createSelectorLazy } from "reselect";
 import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
 import { decodeVoteScript } from "./helpers/tickets";
@@ -124,14 +123,7 @@ export const network = get(["grpc", "network"]);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 export const currencies = () => [{name: "DCR"}, {name: "atoms"}];
-//export const currencyDisplay = get(["settings", "currentSettings", "currencyDisplay"]);
-export const currencyDisplay = createSelectorLazy(
-  [get(["settings", "currentSettings", "currencyDisplay"])],
-  (currencyDisplay) => {
-    console.log("recalc selector");
-    return currencyDisplay;
-  }
-);
+export const currencyDisplay = get(["settings", "currentSettings", "currencyDisplay"]);
 export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
 export const currentLocaleName = get(["settings", "currentSettings", "locale"]);
 
@@ -266,12 +258,10 @@ export const viewedDecodedTransaction = createSelector(
   (transactions, txHash, decodedTransactions) => decodedTransactions[txHash]
 );
 
-export const ticketNormalizer = createSelectorLazy(
+export const ticketNormalizer = createSelector(
   [decodedTransactions, network],
   (decodedTransactions, network) => {
     return ticket => {
-      console.log("normalizing ticket");
-
       const hasSpender = ticket.spender && ticket.spender.getHash();
       const isVote = ticket.status === "voted";
       const ticketTx = ticket.ticket;
@@ -363,18 +353,8 @@ export const ticketNormalizer = createSelectorLazy(
 );
 export const noMoreTickets = get(["grpc", "noMoreTickets"]);
 export const ticketsFilter = get(["grpc", "ticketsFilter"]);
-export const ticketsNormalizer = createSelectorLazy([ticketNormalizer], map);
-// export const tickets = createSelectorLazy(
-//   [ticketsNormalizer, get(["grpc", "tickets"])], apply
-// );
+export const ticketsNormalizer = createSelector([ticketNormalizer], map);
 export const tickets = get(["grpc", "tickets"]);
-// export const tickets = createSelectorLazy(
-//   [ticketNormalizer, get(["grpc", "tickets"])],
-//   (normalizer, tickets) => {
-//     console.log("Recalculating tickets selector");
-//     return tickets.map(normalizer);
-//   }
-// );
 
 const rescanResponse = get(["control", "rescanResponse"]);
 export const rescanRequest = get(["control", "rescanRequest"]);

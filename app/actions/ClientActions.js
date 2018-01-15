@@ -338,7 +338,6 @@ export const getTickets = () => async (dispatch, getState) => {
   // always request unmined tickets as new ones may be available or some may
   // have been mined
   tickets = await wallet.getTickets(walletService, -1, -1, 0);
-  console.log("from unmined: ", tickets);
   const unminedFiltered = filterTickets(tickets, ticketsFilter);
   const unminedTickets = sel.ticketsNormalizer(getState())(unminedFiltered);
 
