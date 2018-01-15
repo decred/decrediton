@@ -209,6 +209,7 @@
     "react-router-redux": "^4.0.8",
     "react-select": "1.0.0-rc.10",
     "react-timeout": "^1.0.1",
+    "react-visibility-sensor": "^3.11.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "reselect": "^3.0.1",

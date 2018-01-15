@@ -4,7 +4,7 @@ import {
 } from "./fp";
 import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
-import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
+import { decodeVoteScript } from "./helpers/tickets";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
@@ -258,7 +258,7 @@ export const viewedDecodedTransaction = createSelector(
   (transactions, txHash, decodedTransactions) => decodedTransactions[txHash]
 );
 
-const ticketNormalizer = createSelector(
+export const ticketNormalizer = createSelector(
   [decodedTransactions, network],
   (decodedTransactions, network) => {
     return ticket => {
@@ -346,30 +346,15 @@ const ticketNormalizer = createSelector(
         status: ticket.status,
         ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),
         spenderRawTx: hasSpender ? Buffer.from(spenderTx.getTransaction()).toString("hex") : null,
+        originalTicket: ticket,
       };
     };
   }
 );
-const ticketSorter = (a, b) => (b.leaveTimestamp||b.enterTimestamp) - (a.leaveTimestamp||a.enterTimestamp);
-const allTickets = createSelector(
-  [ticketNormalizer, get(["grpc", "tickets"])],
-  (normalizer, tickets) => tickets.map(normalizer).sort(ticketSorter)
-);
-export const ticketsPerStatus = createSelector(
-  [allTickets],
-  tickets => tickets.reduce(
-    (perStatus, ticket) => {
-      perStatus[ticket.status].push(ticket);
-      return perStatus;
-    },
-    Array.from(TicketTypes.values()).reduce((a, v) => (a[v] = [], a), {}),
-  )
-);
-
-export const viewedTicketListing = createSelector(
-  [ticketsPerStatus, (state, { params: { status }}) => status],
-  (tickets, status) => tickets[status]
-);
+export const noMoreTickets = get(["grpc", "noMoreTickets"]);
+export const ticketsFilter = get(["grpc", "ticketsFilter"]);
+export const ticketsNormalizer = createSelector([ticketNormalizer], map);
+export const tickets = get(["grpc", "tickets"]);
 
 const rescanResponse = get(["control", "rescanResponse"]);
 export const rescanRequest = get(["control", "rescanRequest"]);

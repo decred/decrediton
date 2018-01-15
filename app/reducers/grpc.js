@@ -13,6 +13,7 @@ import {
   CLEAR_MOSTRECENTTRANSACTIONS,
   UPDATETIMESINCEBLOCK,
   GETTICKETS_ATTEMPT, GETTICKETS_FAILED, GETTICKETS_COMPLETE,
+  RAWTICKETTRANSACTIONS_DECODED, CHANGE_TICKETS_FILTER,
   GETAGENDASERVICE_ATTEMPT, GETAGENDASERVICE_FAILED, GETAGENDASERVICE_SUCCESS,
   GETMESSAGEVERIFICATIONSERVICE_ATTEMPT, GETMESSAGEVERIFICATIONSERVICE_FAILED, GETMESSAGEVERIFICATIONSERVICE_SUCCESS,
   GETVOTINGSERVICE_ATTEMPT, GETVOTINGSERVICE_FAILED, GETVOTINGSERVICE_SUCCESS,
@@ -239,9 +240,35 @@ export default function grpc(state = {}, action) {
       getTicketsRequestAttempt: false,
     };
   case GETTICKETS_COMPLETE:
+    var tickets = [...action.unminedTickets, ...action.minedTickets];
     return {
       ...state,
-      tickets: action.tickets,
+      tickets: tickets,
+      unminedTickets: action.unminedTickets,
+      minedTickets: action.minedTickets,
+      noMoreTickets: action.noMoreTickets,
+      lastTicket: action.lastTicket,
+      getTicketsRequestError: "",
+      getTicketsRequestAttempt: false,
+    };
+  case RAWTICKETTRANSACTIONS_DECODED:
+    var idxOldTicket = state.tickets.indexOf(action.ticket);
+    if (idxOldTicket < 0) return state;
+    var newTickets = state.tickets.slice();
+    newTickets.splice(idxOldTicket, 1, action.newTicket);
+    return {
+      ...state,
+      tickets: newTickets
+    };
+  case CHANGE_TICKETS_FILTER:
+    return {
+      ...state,
+      ticketsFilter: action.ticketsFilter,
+      tickets: [],
+      unminedTickets: [],
+      minedTickets: [],
+      noMoreTickets: false,
+      lastTicket: null,
       getTicketsRequestError: "",
       getTicketsRequestAttempt: false,
     };

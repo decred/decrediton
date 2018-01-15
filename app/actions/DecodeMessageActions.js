@@ -21,7 +21,7 @@ export const DECODERAWTXS_FAILED = "DECODERAWTXS_FAILED";
 // decodeRawTransaction requests decodification of a list of hex transactions.
 // Dispatches the event when all transactions have been decoded. Better
 // performance than to use a sequence of decodeRawTransaction
-export const decodeRawTransactions = (hexTxs) => (dispatch, getState) => {
+export const decodeRawTransactions = (hexTxs) => async (dispatch, getState) => {
   const { grpc: { decodeMessageService } } = getState();
 
   const resolved = resps => {
@@ -34,7 +34,7 @@ export const decodeRawTransactions = (hexTxs) => (dispatch, getState) => {
     dispatch({transactions, type: DECODERAWTXS_SUCCESS});
   };
 
-  Promise
+  return Promise
     .all(hexTxs.map(hex => decodeTransaction(decodeMessageService, hex)))
     .then(resolved)
     .catch(error => dispatch({error, type: DECODERAWTXS_FAILED}));

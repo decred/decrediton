@@ -88,6 +88,7 @@ export const OPENWALLET_SUCCESS = "OPENWALLET_SUCCESS";
 
 export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState) => {
   dispatch({ type: OPENWALLET_ATTEMPT });
+
   return openWallet(getState().walletLoader.loader, pubPass)
     .then(() => {
       dispatch({ type: OPENWALLET_SUCCESS });
