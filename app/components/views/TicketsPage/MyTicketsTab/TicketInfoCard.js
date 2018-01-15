@@ -5,7 +5,7 @@ import { FormattedMessage as T } from "react-intl";
 import { statusTxt } from "./messages";
 
 @autobind
-class TicketCard extends React.Component {
+class TicketInfoCard extends React.Component {
 
   constructor(props) {
     super(props);
@@ -124,4 +124,4 @@ class TicketCard extends React.Component {
   }
 }
 
-export default TicketCard;
+export default TicketInfoCard;

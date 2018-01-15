@@ -27,7 +27,7 @@ class TicketListPage extends React.Component {
         >
           <div className="tab-card">
             <div className="tickets-buttons-area">
-              <Tooltip tipWidth={ 300 } text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
+              <Tooltip tipWidth={ 300 } text={<T id="tickets.sortby.tooltip" m="Sort By" />}>
                 <EyeFilterMenu
                   labelKey="label"
                   keyField="value"
@@ -37,7 +37,7 @@ class TicketListPage extends React.Component {
                   className="sort-by"
                 />
               </Tooltip>
-              <Tooltip tipWidth={ 300 } text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
+              <Tooltip tipWidth={ 300 } text={<T id="tickets.tickettypes.tooltip" m="Ticket Status" />}>
                 <EyeFilterMenu
                   labelKey="label"
                   keyField="key"
