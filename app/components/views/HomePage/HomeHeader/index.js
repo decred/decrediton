@@ -1,20 +1,20 @@
-import { injectIntl, intlShape } from "react-intl";
+import { injectIntl, intlShape, FormattedMessage as T } from "react-intl";
 import { getPage, getTabs, getTab } from "helpers";
 import { tabbedHeader } from "connectors";
 // import MessageBanner from "./MessageBanner";
-// import { Balance } from "shared";
+import { Balance } from "shared";
 // import Description from "./Description";
 // import messages from "messages";
 import Tabs from "./Tabs";
 import "style/Header.less";
 
 const TabbedHeader = ({ intl, routes, totalBalance, ticketPrice }) => {
-  const { noIcon, ticketprice, noHeader, className} = routes[1];
+  const { noIcon, ticketprice, noHeader, className } = routes[1];
   const page = getPage(routes);
   const tabs = getTabs(routes);
 
   return (
-    <div className={[noHeader ? "" : "header", className].join(" ")}>
+    <div className="overview-header">
       {/* <div className="tabbedheader-top">
         <MessageBanner/>
       </div>
@@ -35,7 +35,16 @@ const TabbedHeader = ({ intl, routes, totalBalance, ticketPrice }) => {
         { children }
       </div> */}
 
-      { tabs && <Tabs className="home-tab" {...{ routes }}/> }
+      <Tabs className="home-tab" {...{ routes }} />
+        <div className="overview-balance-wrapper">
+          <Balance
+            classNameWrapper="overview-balance"
+            classNameUnit="overview-balance-unit"
+            amount={totalBalance} />
+          <div className="overview-balance-label">
+            <T id="home.currentTotalBalanceLabel" m="Current Total Balance" />
+          </div>
+        </div>
     </div>
   );
 };
