@@ -444,6 +444,8 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   accountsToUpdate = checkAccountsToUpdate(newlyUnminedTransactions, accountsToUpdate);
   accountsToUpdate.forEach(v => dispatch(getBalanceUpdateAttempt(v, 0)));
 
+  if (checkForStakeTransactions(newlyUnminedTransactions) || checkForStakeTransactions(newlyMinedTransactions)) dispatch(getStakeInfoAttempt());
+
   let { unminedTransactions, minedTransactions, recentTransactions } = getState().grpc;
   const { transactionsFilter, recentTransactionCount } = getState().grpc;
 
