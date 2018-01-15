@@ -8,7 +8,7 @@ const HomePage = ({
   lockedTotalBalance,
 }) => {
   return (
-    <div className="overview-header-wrapper">
+    <div className="overview-content-wrapper">
       <div className="overview-spendable-locked-wrapper">
         <div className="overview-spendable-locked">
           <Balance

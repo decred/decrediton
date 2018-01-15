@@ -3,7 +3,7 @@ import "style/HomePage.less";
 
 const HomePage = () => {
   return (
-    <div className="overview-header-wrapper">
+    <div className="overview-content-wrapper">
       <p>Transactions page</p>
     </div>
   );
