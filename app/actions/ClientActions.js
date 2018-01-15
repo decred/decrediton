@@ -71,11 +71,6 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
     .catch(error => dispatch({ error, type: GETTICKETBUYERSERVICE_FAILED }));
 };
 
-
-export const GETACCOUNTSBALANCES_ATTEMPT = "GETACCOUNTSBALANCES_ATTEMPT";
-export const GETACCOUNTSBALANCES_SUCCESS = "GETACCOUNTSBALANCES_SUCCESS";
-export const GETACCOUNTSBALANCES_FAIL = "GETACCOUNTSBALANCES_FAIL";
-
 const getAccountsBalances = (accounts) => (dispatch, getState) => {
   var balances = new Array();
   const { grpc: { network, hiddenAccounts } } = getState();
@@ -136,7 +131,6 @@ const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (dispatch
   updatedBalance.lockedByTickets = getBalanceResponse.getLockedByTickets();
   updatedBalance.votingAuthority = getBalanceResponse.getVotingAuthority();
 
-  console.log("get balance update", accountNumber, updatedBalance);
   const updatedBalances = balances.map(balance =>
     (balance.accountNumber === accountNumber) ? updatedBalance : balance);
 
@@ -421,7 +415,7 @@ export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
 
 function checkAccountsToUpdate(txs, accountsToUpdate) {
   txs.forEach(tx => {
-    tx.tx.getCreditsList().forEach(credit => {if (accountsToUpdate.find(eq(credit.getAccount()))) accountsToUpdate.push(credit.getAccount());});
+    tx.tx.getCreditsList().forEach(credit => {if (!accountsToUpdate.find(eq(credit.getAccount()))) accountsToUpdate.push(credit.getAccount());});
     tx.tx.getDebitsList().forEach(debit => {if (!accountsToUpdate.find(eq(debit.getPreviousAccount()))) accountsToUpdate.push(debit.getPreviousAccount());});
   });
   return accountsToUpdate;
