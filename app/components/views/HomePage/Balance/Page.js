@@ -6,17 +6,9 @@ import "style/HomePage.less";
 const HomePage = ({
   spendableTotalBalance,
   lockedTotalBalance,
-  totalBalance,
 }) => {
   return (
     <div className="overview-header-wrapper">
-      <Balance
-        classNameWrapper="overview-balance"
-        classNameUnit="overview-balance-unit"
-        amount={totalBalance} />
-      <div className="overview-balance-label">
-        <T id="home.currentTotalBalanceLabel" m="Current Total Balance" />
-      </div>
       <div className="overview-spendable-locked-wrapper">
         <div className="overview-spendable-locked">
           <Balance

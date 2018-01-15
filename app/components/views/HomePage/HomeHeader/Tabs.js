@@ -52,7 +52,7 @@ class Tabs extends React.Component {
           );
         })}
         <Motion style={{ left: spring(caretLeft, theme("springs.tab")), width: spring(caretWidth, theme("springs.tab")) }}>
-          { style => <div className="tabbedheader-active-tab-caret" style={ style }/> }
+          { style => <div style={ style }/> }
         </Motion>
       </div>
     );

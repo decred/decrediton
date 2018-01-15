@@ -25,7 +25,6 @@ const HomePage = ({
       <TabbedComponent differentHeader={HomeHeader} {...{routes}}>
         {children}
       </TabbedComponent>
-      {console.log(routes)}
       <div className="overview-transactions-ticket-wrapper">
         <div className="recent-transactions">
           <RecentTransactions {...{ routes, spendableTotalBalance, transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
