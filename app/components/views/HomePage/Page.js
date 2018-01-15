@@ -8,6 +8,7 @@ import "style/Fonts.less";
 import "style/HomePage.less";
 import {TabbedComponent} from "shared";
 import BalanceTab from "./Balance";
+import HomeHeader from "./HomeHeader";
 
 const HomePage = ({
   routes,
@@ -21,7 +22,7 @@ const HomePage = ({
 }) => {
   return (
     <div className="overview-wrapper">
-      <TabbedComponent {...{routes}}>
+      <TabbedComponent differentHeader={HomeHeader} {...{routes}}>
         {children}
       </TabbedComponent>
       {console.log(routes)}

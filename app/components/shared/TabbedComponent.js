@@ -1,3 +1,4 @@
+import { createElement as h } from "react";
 import { RouteTransition, TabbedHeader } from "shared";
 import { getTabs, getTab } from "helpers";
 import theme from "theme";
@@ -7,7 +8,7 @@ const mapStyles = styles => ({ left: styles.left + "%" });
 const enterLeft = { atEnter: { left: -100 }, atActive: { left: 0 }, atLeave: { left: 100 }, mapStyles };
 const enterRight = { atEnter: { left: 100 }, atActive: { left: 0 }, atLeave: { left: -100 }, mapStyles };
 
-const wrapperComponentTemp = props => <div className="component-tab-content" { ...props } />;
+const wrapperComponentDefault = props => <div className="component-tab-content" { ...props } />;
 
 class TabbedPage extends React.Component{
   constructor(props) { super(props); }
@@ -24,10 +25,11 @@ class TabbedPage extends React.Component{
     const tabs = getTabs(routes);
     const pathname = getTab(routes);
     const effect = !prevTab ? enterLeft : tabs.indexOf(prevTab) > tabs.indexOf(pathname) ? enterLeft : enterRight;
-    const wrapperComponent = this.props.wrapperComponent ? this.props.wrapperComponent : wrapperComponentTemp;
+    const wrapperComponent = this.props.wrapperComponent ? this.props.wrapperComponent : wrapperComponentDefault;
+    const header = this.props.differentHeader ? h(this.props.differentHeader, {routes}) : h(TabbedHeader, {routes});
     return (
       <Aux>
-        <TabbedHeader {...{ routes }}/>
+        {header}
         <RouteTransition className={className} opts={ theme("springs.tab") } {...{ wrapperComponent, pathname, ...effect }}>
           { children }
         </RouteTransition>
@@ -40,7 +42,6 @@ TabbedPage.propTypes = {
   children: PropTypes.object.isRequired,
   routes: PropTypes.array.isRequired,
   className: PropTypes.string,
-  wrapperComponent: PropTypes.function
 };
 
 export default TabbedPage;

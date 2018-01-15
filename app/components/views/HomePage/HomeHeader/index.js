@@ -1,26 +1,22 @@
 import { injectIntl, intlShape } from "react-intl";
 import { getPage, getTabs, getTab } from "helpers";
 import { tabbedHeader } from "connectors";
-import { Balance } from "shared";
-import Description from "./Description";
-import messages from "messages";
+// import MessageBanner from "./MessageBanner";
+// import { Balance } from "shared";
+// import Description from "./Description";
+// import messages from "messages";
 import Tabs from "./Tabs";
 import "style/Header.less";
 
-const TabbedHeader = ({ intl, children, routes, totalBalance, ticketPrice, isTestNet, icon, title, subtitle }) => {
-  const { tabDesc, desc, noIcon, ticketprice, noHeader, className} = routes[1];
-  const { balance, testNet } = routes[2] || {};
+const TabbedHeader = ({ intl, routes, totalBalance, ticketPrice }) => {
+  const { noIcon, ticketprice, noHeader, className} = routes[1];
   const page = getPage(routes);
   const tabs = getTabs(routes);
-  const titleText = [page, "title"].join(".");
-  let description = [page, "description"].join(".");
-  if (tabDesc) description = [description, getTab(routes)].join(".");
-  if (testNet) description = [description, isTestNet ? "testnet" : "mainnet"].join(".");
-  description = (desc || tabDesc) && typeof subtitle === "undefined" && intl.formatMessage(messages[description]);
 
   return (
     <div className={[noHeader ? "" : "header", className].join(" ")}>
-      <div className="tabbedheader-top">
+      {/* <div className="tabbedheader-top">
+        <MessageBanner/>
       </div>
 
       { !noIcon &&
@@ -37,9 +33,9 @@ const TabbedHeader = ({ intl, children, routes, totalBalance, ticketPrice, isTes
         { balance ? <div className="small-balance"><Balance flat amount={ totalBalance }/></div> :
         ticketprice && <div className="small-balance"><Balance flat amount={ ticketPrice }/></div> }
         { children }
-      </div>
+      </div> */}
 
-      { tabs && <Tabs className="tabbedheader-tabs" {...{ routes }}/> }
+      { tabs && <Tabs className="home-tab" {...{ routes }}/> }
     </div>
   );
 };
