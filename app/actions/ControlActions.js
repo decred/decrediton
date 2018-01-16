@@ -347,7 +347,6 @@ function purchaseTicketsAction(request) {
           dispatch({ error, type: PURCHASETICKETS_FAILED });
         } else {
           dispatch({ purchaseTicketsResponse: purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
-          setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 4000);
         }
       });
   };
@@ -368,7 +367,6 @@ export function revokeTicketsAttempt(passphrase) {
         if (error) {
           dispatch({ error, type: REVOKETICKETS_FAILED });
         } else {
-          setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 4000);
           dispatch({ revokeTicketsResponse: revokeTicketsResponse, type: REVOKETICKETS_SUCCESS });
         }
       });

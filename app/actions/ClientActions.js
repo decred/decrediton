@@ -11,6 +11,8 @@ import { push as pushHistory } from "react-router-redux";
 import { getCfg } from "../config.js";
 import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";
+import { TransactionDetails } from "middleware/walletrpc/api_pb";
+
 
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
@@ -420,15 +422,22 @@ function checkAccountsToUpdate(txs, accountsToUpdate) {
   });
   return accountsToUpdate;
 }
+
+function checkForStakeTransactions(txs) {
+  var stakeTxsFound = false;
+  txs.forEach(tx => {
+    if (tx.type == TransactionDetails.TransactionType.VOTE ||
+      tx.type == TransactionDetails.TransactionType.TICKET_PURCHASE ||
+      tx.type == TransactionDetails.TransactionType.REVOCATION) {
+      stakeTxsFound = true;
+    }
+  });
+  return stakeTxsFound;
+}
 // newTransactionsReceived should be called when a new set of transactions has
 // been received from the wallet (through a notification).
 export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
-
-  var accountsToUpdate = new Array();
-  accountsToUpdate = checkAccountsToUpdate(newlyMinedTransactions, accountsToUpdate);
-  accountsToUpdate = checkAccountsToUpdate(newlyUnminedTransactions, accountsToUpdate);
-  accountsToUpdate.forEach(v => dispatch(getBalanceUpdateAttempt(v, 0)));
 
   let { unminedTransactions, minedTransactions, recentTransactions } = getState().grpc;
   const { transactionsFilter, recentTransactionCount } = getState().grpc;
@@ -436,6 +445,19 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   // aux maps of [txhash] => tx (used to ensure no duplicate txs)
   const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
   const newlyUnminedMap = newlyUnminedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
+
+  const minedMap = minedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
+  const unminedMap = unminedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
+
+  const unminedDupeCheck =  newlyUnminedTransactions.filter(tx => !minedMap[tx.hash] && !unminedMap[tx.hash]);
+
+  var accountsToUpdate = new Array();
+  accountsToUpdate = checkAccountsToUpdate(unminedDupeCheck, accountsToUpdate);
+  accountsToUpdate = checkAccountsToUpdate(newlyMinedTransactions, accountsToUpdate);
+  accountsToUpdate = Array.from(new Set(accountsToUpdate));
+  accountsToUpdate.forEach(v => dispatch(getBalanceUpdateAttempt(v, 0)));
+
+  if (checkForStakeTransactions(unminedDupeCheck) || checkForStakeTransactions(newlyMinedTransactions)) dispatch(getStakeInfoAttempt());
 
   unminedTransactions = filterTransactions([
     ...newlyUnminedTransactions,
