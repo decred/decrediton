@@ -46,6 +46,9 @@ export function initCfg() {
   if (!config.has("daemon_start_advanced")) {
     config.set("daemon_start_advanced", false);
   }
+  if (!config.has("wallet_start_advanced")) {
+    config.set("wallet_start_advanced", false);
+  }
   if (!config.has("wallet_skip_start")) {
     config.set("wallet_skip_start", false);
   }

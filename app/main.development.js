@@ -1,5 +1,5 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
-import { concat, isString } from "lodash";
+import { concat, isString, eq } from "lodash";
 import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, RPCDaemonHost, RPCDaemonPort, RPCWalletPort, GRPCWalletPort, setMustOpenForm } from "./config.js";
 import path from "path";
 import fs from "fs";
@@ -107,6 +107,13 @@ if (err !== null) {
   app.quit();
 }
 var cfg = initCfg();
+
+let availableWallets = [];
+fs.readdirSync(path.join(app.getPath("userData"), "wallets")).forEach(file => {
+  fs.readdirSync(path.join(app.getPath("userData"), "wallets", file)).forEach(net => {
+    if (net == cfg.get("network")) availableWallets.push(file);
+  });
+});
 
 const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
@@ -227,6 +234,10 @@ const installExtensions = async () => {
 
 const { ipcMain } = require("electron");
 
+ipcMain.on("get-available-wallets", (event) => {
+  event.returnValue = availableWallets;
+});
+
 ipcMain.on("start-daemon", (event, appData) => {
   if (dcrdPID && !daemonIsAdvanced) {
     logger.log("info", "Skipping restart of daemon as it is already running");
@@ -262,7 +273,7 @@ ipcMain.on("start-wallet", (event) => {
     return;
   }
   try {
-    dcrwPID = launchDCRWallet();
+    dcrwPID = launchDCRWallet(event.selectedWallet);
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }

@@ -15,6 +15,7 @@ export const DAEMONSYNCING_START = "DAEMONSYNCING_START";
 export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
+export const AVAILABLE_WALLETS = "AVAILABLE_WALLETS";
 export const SHUTDOWN_REQUESTED = "SHUTDOWN_REQUESTED";
 export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 
@@ -58,6 +59,17 @@ export const shutdownApp = () => (dispatch) => {
 
 export const cleanShutdown = () => () => wallet.cleanShutdown();
 
+export const getAvailableWallets = () => (dispatch) => {
+  wallet.getAvailableWallets()
+  .then(availableWallets => {
+    dispatch({availableWallets, type: AVAILABLE_WALLETS});
+    console.log(availableWallets);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+};
+
 export const startWallet = () => (dispatch) => {
   wallet.startWallet()
   .then(pid => {
@@ -85,7 +97,7 @@ export const syncDaemon = () =>
             dispatch({type: DAEMONSYNCED});
             dispatch({currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK});
             setMustOpenForm(false);
-            dispatch(startWallet());
+            dispatch(getAvailableWallets());
             return;
           } else if (updateCurrentBlockCount !== 0) {
             const blocksLeft = neededBlocks - updateCurrentBlockCount;

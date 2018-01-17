@@ -16,9 +16,9 @@ export const cleanShutdown = log(() => Promise
     if (!stopped) throw "Error shutting down app";
   }), "Clean Shutdown");
 
-export const startWallet = log(() => Promise
+export const startWallet = log((selectedWallet) => Promise
   .resolve(ipcRenderer
-    .sendSync("start-wallet"))
+    .sendSync("start-wallet"), selectedWallet)
   .then(pid => {
     if (pid) return pid;
     throw "Error starting wallet";
@@ -49,3 +49,10 @@ export const getDecreditonLogs = log(() => Promise
       if (logs) return logs;
       throw "Error getting decrediton logs";
     }), "Get Decrediton Logs", logOptionNoResponseData());
+
+export const getAvailableWallets = log(() => Promise
+    .resolve(ipcRenderer.sendSync("get-available-wallets"))
+    .then(availableWallets => {
+      if (availableWallets) return availableWallets;
+      throw "Error getting avaiable wallets logs";
+    }), "Get Available Wallets", logOptionNoResponseData());
