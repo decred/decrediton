@@ -80,6 +80,7 @@ export function rescanAttempt(beginHeight) {
     });
     rescanCall.on("end", function() {
       dispatch({ type: RESCAN_COMPLETE });
+      setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
       setTimeout( () => {dispatch(getAccountsAttempt(true));}, 1000);
       setTimeout( () => {dispatch(getMostRecentTransactions());}, 1000);
       setTimeout( () => {dispatch(getTicketsInfoAttempt());}, 1000);

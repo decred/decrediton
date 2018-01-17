@@ -21,12 +21,8 @@ export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
 function getWalletServiceSuccess(walletService) {
   return (dispatch, getState) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
-    setTimeout(() => { dispatch(getAccountsAttempt(true)); }, 10);
-    setTimeout(() => { dispatch(getMostRecentTransactions()); }, 20);
-    setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 20);
     setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNextAddressAttempt(0)); }, 1000);
-    setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
     setTimeout(() => { dispatch(getTicketPriceAttempt()); }, 1000);
     setTimeout(() => { dispatch(getPingAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNetworkAttempt()); }, 1000);
@@ -42,8 +38,12 @@ function getWalletServiceSuccess(walletService) {
     if (walletCreateExisting) {
       setTimeout(() => { dispatch(rescanAttempt(0)); }, 1000);
     } else if (walletCreateResponse == null && fetchHeadersResponse != null && fetchHeadersResponse.getFirstNewBlockHeight() !== 0) {
-
       setTimeout(() => { dispatch(rescanAttempt(fetchHeadersResponse.getFirstNewBlockHeight())); }, 1000);
+    } else {
+      setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
+      setTimeout(() => { dispatch(getAccountsAttempt(true)); }, 1000);
+      setTimeout(() => { dispatch(getMostRecentTransactions()); }, 1000);
+      setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 1000);
     }
     setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);
     setTimeout(() => { dispatch(showSidebarMenu()); }, 1000);
