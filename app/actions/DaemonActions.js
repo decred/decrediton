@@ -81,7 +81,7 @@ export const syncDaemon = () =>
       return wallet
         .getBlockCount(credentials, appData)
         .then(updateCurrentBlockCount => {
-          if (neededBlocks > 0 && updateCurrentBlockCount >= neededBlocks) {
+          if ((neededBlocks == 0 && updateCurrentBlockCount > 0) || updateCurrentBlockCount >= neededBlocks) {
             dispatch({type: DAEMONSYNCED});
             dispatch({currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK});
             setMustOpenForm(false);
