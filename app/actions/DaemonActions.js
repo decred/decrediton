@@ -82,7 +82,6 @@ export const syncDaemon = () =>
         .getBlockCount(credentials, appData)
         .then(updateCurrentBlockCount => {
           if ((neededBlocks == 0 && updateCurrentBlockCount > 0) || (neededBlocks != 0 && updateCurrentBlockCount >= neededBlocks)) {
-            console.log(updateCurrentBlockCount);
             dispatch({type: DAEMONSYNCED});
             dispatch({currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK});
             setMustOpenForm(false);
