@@ -108,11 +108,11 @@ if (err !== null) {
 }
 var cfg = initCfg();
 
+// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
 let availableWallets = [];
-fs.readdirSync(path.join(app.getPath("userData"), "wallets")).forEach(file => {
-  fs.readdirSync(path.join(app.getPath("userData"), "wallets", file)).forEach(net => {
-    if (net == cfg.get("network")) availableWallets.push(file);
-  });
+availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallets")).find(file => {
+  var checkForWalletDbs = fs.readdirSync(path.join(app.getPath("userData"), "wallets", file, cfg.get("network"))).find(fileName => {return fileName == "wallet.db";});
+  return checkForWalletDbs;
 });
 
 const logger = createLogger(debug);
