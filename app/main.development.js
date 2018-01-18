@@ -1,5 +1,5 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
-import { concat, isString, eq } from "lodash";
+import { concat, isString } from "lodash";
 import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, RPCDaemonHost, RPCDaemonPort, RPCWalletPort, GRPCWalletPort, setMustOpenForm } from "./config.js";
 import path from "path";
 import fs from "fs";
@@ -109,12 +109,12 @@ if (err !== null) {
 var cfg = initCfg();
 
 // Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
-let availableWallets = [];
-availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallets")).find(file => {
+let availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallets")).find(file => {
   var checkForWalletDbs = fs.readdirSync(path.join(app.getPath("userData"), "wallets", file, cfg.get("network"))).find(fileName => {return fileName == "wallet.db";});
   return checkForWalletDbs;
 });
 
+let availableWalletAppDataDir = path.join(app.getPath("userData"), "wallets", availableWallets[0]);
 const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
 logger.log("info", "Versions: Decrediton: %s, Electron: %s, Chrome: %s",
@@ -126,18 +126,7 @@ process.on("uncaughtException", err => {
 });
 
 var createDcrdConf, createDcrwalletConf, createDcrctlConf = false;
-if (!fs.existsSync(dcrdCfg())) {
-  createDcrdConf = true;
-  logger.log("info", "The dcrd config file does not exists, creating");
-}
-if (!fs.existsSync(dcrwCfg())) {
-  createDcrwalletConf = true;
-  logger.log("info", "The dcrwallet config file does not exists, creating");
-}
-if (!fs.existsSync(dcrctlCfg())) {
-  createDcrctlConf = true;
-  logger.log("info", "The dcrctl config file does not exists, creating");
-}
+initialConfigGeneration();
 
 // Check if network was set on command line (but only allow one!).
 if (argv.testnet && argv.mainnet) {
@@ -389,8 +378,6 @@ const launchDCRD = (appdata) => {
     args.push("--testnet");
   }
 
-  args.push("--rpclisten=" + RPCDaemonHost() + ":" + RPCDaemonPort());
-
   var dcrdExe = getExecutablePath("dcrd");
   if (!fs.existsSync(dcrdExe)) {
     logger.log("error", "The dcrd file does not exists");
@@ -445,17 +432,11 @@ const launchDCRD = (appdata) => {
 
 const launchDCRWallet = () => {
   var spawn = require("child_process").spawn;
-  var args = ["--configfile=" + dcrwCfg()];
+  var args = ["--configfile=" + dcrwCfg(availableWalletAppDataDir)];
 
   if (cfg.get("network") === "testnet") {
     args.push("--testnet");
   }
-  if (cfg.get("enableticketbuyer") === "1") {
-    args.push("--enableticketbuyer");
-  }
-  args.push("--rpcconnect=" + RPCDaemonHost() + ":" + RPCDaemonPort());
-  args.push("--rpclisten=" + cfg.get("wallet_rpc_host") + ":" + RPCWalletPort());
-  args.push("--grpclisten=" + cfg.get("wallet_rpc_host") + ":" + GRPCWalletPort());
 
   args.push("--ticketbuyer.balancetomaintainabsolute=" + cfg.get("balancetomaintain"));
   args.push("--ticketbuyer.maxfee=" + cfg.get("maxfee"));
