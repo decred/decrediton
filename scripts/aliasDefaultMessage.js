@@ -10,10 +10,10 @@
  *
  */
 const COMPONENT_NAMES = [
-    'FormattedMessage',
+    "FormattedMessage",
 ];
 
-const DESCRIPTOR_PROPS = new Set(['m']);
+const DESCRIPTOR_PROPS = new Set(["m"]);
 
 function aliasDefaultMessagePlugin({types: t}) {
 
@@ -26,7 +26,7 @@ function aliasDefaultMessagePlugin({types: t}) {
     }
 
     function getModuleSourceName(opts) {
-        return opts.moduleSourceName || 'react-intl';
+        return opts.moduleSourceName || "react-intl";
     }
 
     function evaluatePath(path) {
@@ -36,7 +36,7 @@ function aliasDefaultMessagePlugin({types: t}) {
         }
 
         throw path.buildCodeFrameError(
-            '[React Intl] Messages must be statically evaluate-able for extraction.'
+            "[React Intl] Messages must be statically evaluate-able for extraction."
         );
     }
 
@@ -65,16 +65,16 @@ function aliasDefaultMessagePlugin({types: t}) {
             JSXOpeningElement(path, state) {
                 const {file, opts} = state;
                 const moduleSourceName = getModuleSourceName(opts);
-                const name = path.get('name');
+                const name = path.get("name");
 
                 if (referencesImport(name, moduleSourceName, COMPONENT_NAMES)) {
-                    const attributes = path.get('attributes')
+                    const attributes = path.get("attributes")
                         .filter((attr) => attr.isJSXAttribute());
 
                     let descriptor = createMessageDescriptor(
                         attributes.map((attr) => [
-                            attr.get('name'),
-                            attr.get('value'),
+                            attr.get("name"),
+                            attr.get("value"),
                         ])
                     );
 
@@ -85,7 +85,7 @@ function aliasDefaultMessagePlugin({types: t}) {
 
             }
         }
-    }
+    };
 }
 
 module.exports = aliasDefaultMessagePlugin;
