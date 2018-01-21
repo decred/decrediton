@@ -49,7 +49,7 @@ function aliasDefaultMessagePlugin({types: t}) {
   }
 
   function createMessageDescriptor(propPaths) {
-    return propPaths.reduce((hash, [keyPath, valuePath]) => {
+    return propPaths.reduce((hash, [keyPath]) => {
       const key = getMessageDescriptorKey(keyPath);
 
       if (DESCRIPTOR_PROPS.has(key)) {
@@ -63,7 +63,7 @@ function aliasDefaultMessagePlugin({types: t}) {
   return {
     visitor: {
       JSXOpeningElement(path, state) {
-        const {file, opts} = state;
+        const {opts} = state;
         const moduleSourceName = getModuleSourceName(opts);
         const name = path.get("name");
 
