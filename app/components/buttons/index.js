@@ -35,7 +35,7 @@ const helpLinkButton = ({className, onClick, buttonLabel}) =>
   <div className={className} onClick={onClick}>{buttonLabel}</div>;
 
 export const HelpLinkInfoModal = mbb("help-icon", InfoModal, helpLinkButton);
-export const InfoModalButton = mbb("purchase-tickets-info-button", InfoModal);
+export const InfoModalButton = mbb("info-modal-button", InfoModal);
 export const ChangePassphraseButton = mbb("change-password-default-icon", ChangePassphraseModal);
 export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
 export const PassphraseModalSwitch = mbb(null, PassphraseModal, AutoBuyerSwitch);
