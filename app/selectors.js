@@ -145,13 +145,13 @@ const getTxTypeStr = type => (TRANSACTION_TYPES)[type];
 export const txURLBuilder= createSelector(
   [network],
   (network) =>
-    (txHash) => `https://${network}.decred.org/tx/${txHash}`
+    (txHash) => `https://${network !== "testnet" ? "explorer" : network}.dcrdata.org/${network == "testnet" ? "explorer/" : ""}tx/${txHash}`
 );
 
 export const blockURLBuilder= createSelector(
   [network],
   (network) =>
-    (txHash) => `https://${network}.decred.org/block/${txHash}`
+    (txHash) => `https://${network !== "testnet" ? "explorer" : network}.dcrdata.org/${network == "testnet" ? "explorer/" : ""}block/${txHash}`
 );
 
 const transactionNormalizer = createSelector(
