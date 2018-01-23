@@ -1,6 +1,6 @@
 import Header from "../DefaultHeader";
 import LinearProgress from "material-ui/LinearProgress";
-import { FormattedMessage as T, FormattedRelative } from "react-intl";
+import { FormattedMessage as T } from "react-intl";
 import { SlateGrayButton } from "buttons";
 import "style/GetStarted.less";
 
