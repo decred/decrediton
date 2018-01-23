@@ -10,82 +10,82 @@
  *
  */
 const COMPONENT_NAMES = [
-    'FormattedMessage',
+  "FormattedMessage",
 ];
 
-const DESCRIPTOR_PROPS = new Set(['m']);
+const DESCRIPTOR_PROPS = new Set(["m"]);
 
 function aliasDefaultMessagePlugin({types: t}) {
 
-    function referencesImport(path, mod, importedNames) {
-        if (!(path.isIdentifier() || path.isJSXIdentifier())) {
-            return false;
-        }
-
-        return importedNames.some((name) => path.referencesImport(mod, name));
+  function referencesImport(path, mod, importedNames) {
+    if (!(path.isIdentifier() || path.isJSXIdentifier())) {
+      return false;
     }
 
-    function getModuleSourceName(opts) {
-        return opts.moduleSourceName || 'react-intl';
+    return importedNames.some((name) => path.referencesImport(mod, name));
+  }
+
+  function getModuleSourceName(opts) {
+    return opts.moduleSourceName || "react-intl";
+  }
+
+  function evaluatePath(path) {
+    const evaluated = path.evaluate();
+    if (evaluated.confident) {
+      return evaluated.value;
     }
 
-    function evaluatePath(path) {
-        const evaluated = path.evaluate();
-        if (evaluated.confident) {
-            return evaluated.value;
-        }
-
-        throw path.buildCodeFrameError(
-            '[React Intl] Messages must be statically evaluate-able for extraction.'
+    throw path.buildCodeFrameError(
+            "[React Intl] Messages must be statically evaluate-able for extraction."
         );
+  }
+
+  function getMessageDescriptorKey(path) {
+    if (path.isIdentifier() || path.isJSXIdentifier()) {
+      return path.node.name;
     }
 
-    function getMessageDescriptorKey(path) {
-        if (path.isIdentifier() || path.isJSXIdentifier()) {
-            return path.node.name;
-        }
+    return evaluatePath(path);
+  }
 
-        return evaluatePath(path);
-    }
+  function createMessageDescriptor(propPaths) {
+    return propPaths.reduce((hash, [keyPath]) => {
+      const key = getMessageDescriptorKey(keyPath);
 
-    function createMessageDescriptor(propPaths) {
-        return propPaths.reduce((hash, [keyPath, valuePath]) => {
-            const key = getMessageDescriptorKey(keyPath);
+      if (DESCRIPTOR_PROPS.has(key)) {
+        hash[key] = keyPath;
+      }
 
-            if (DESCRIPTOR_PROPS.has(key)) {
-                hash[key] = keyPath;
-            }
+      return hash;
+    }, {});
+  }
 
-            return hash;
-        }, {});
-    }
+  return {
+    visitor: {
+      JSXOpeningElement(path, state) {
+        const {opts} = state;
+        const moduleSourceName = getModuleSourceName(opts);
+        const name = path.get("name");
 
-    return {
-        visitor: {
-            JSXOpeningElement(path, state) {
-                const {file, opts} = state;
-                const moduleSourceName = getModuleSourceName(opts);
-                const name = path.get('name');
-
-                if (referencesImport(name, moduleSourceName, COMPONENT_NAMES)) {
-                    const attributes = path.get('attributes')
+        if (referencesImport(name, moduleSourceName, COMPONENT_NAMES)) {
+          const attributes = path.get("attributes")
                         .filter((attr) => attr.isJSXAttribute());
 
-                    let descriptor = createMessageDescriptor(
+          let descriptor = createMessageDescriptor(
                         attributes.map((attr) => [
-                            attr.get('name'),
-                            attr.get('value'),
+                          attr.get("name"),
+                          attr.get("value"),
                         ])
                     );
 
-                    if (descriptor.m) {
-                        descriptor.m.replaceWith(t.JSXIdentifier("defaultMessage"));
-                    }
-                }
-
-            }
+          if (descriptor.m) {
+            descriptor.m.replaceWith(t.JSXIdentifier("defaultMessage"));
+          }
         }
+
+      }
     }
+  };
 }
 
 module.exports = aliasDefaultMessagePlugin;
