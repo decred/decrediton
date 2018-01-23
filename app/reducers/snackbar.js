@@ -24,7 +24,8 @@ import {
   REMOVESTAKEPOOLCONFIG
 } from "../actions/StakePoolActions";
 import {
-  NEW_TRANSACTIONS_RECEIVED
+  NEW_TRANSACTIONS_RECEIVED,
+  GETSTARTUPWALLETINFO_FAILED
 } from "../actions/ClientActions";
 import { SNACKBAR_DISMISS_MESSAGES } from "../actions/SnackbarActions";
 
@@ -208,6 +209,7 @@ export default function snackbar(state = {}, action) {
   case DECODERAWTXS_FAILED:
   case SIGNMESSAGE_FAILED:
   case VERIFYMESSAGE_FAILED:
+  case GETSTARTUPWALLETINFO_FAILED:
     type = "Error";
     message = messages[action.type] || messages.defaultErrorMessage;
     values = { originalError: String(action.error) };

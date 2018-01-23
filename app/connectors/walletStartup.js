@@ -23,6 +23,9 @@ const mapStateToProps = selectorMap({
   isAdvancedDaemon: sel.isAdvancedDaemon,
   openForm: sel.openForm,
   remoteAppdataError: sel.getRemoteAppdataError,
+  rescanEndBlock: sel.rescanEndBlock,
+  rescanStartBlock: sel.rescanStartBlock,
+  rescanCurrentBlock: sel.rescanCurrentBlock,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

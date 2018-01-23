@@ -2,8 +2,7 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import { isValidAddress } from "helpers";
-import { getAccountsAttempt, getStakeInfoAttempt, getMostRecentTransactions,
-  getTicketsInfoAttempt } from "./ClientActions";
+import { getStartupWalletInfo, getStakeInfoAttempt } from "./ClientActions";
 import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   NextAccountRequest, NextAddressRequest, ImportPrivateKeyRequest, ImportScriptRequest,
   ConstructTransactionRequest, SignTransactionRequest,
@@ -72,22 +71,23 @@ export function rescanAttempt(beginHeight) {
   var request = new RescanRequest();
   request.setBeginHeight(beginHeight);
   return (dispatch, getState) => {
-    dispatch({ request: request, type: RESCAN_ATTEMPT });
-    const { walletService } = getState().grpc;
-    var rescanCall = walletService.rescan(request);
-    rescanCall.on("data", function(response) {
-      dispatch({ rescanCall: rescanCall, rescanResponse: response, type: RESCAN_PROGRESS });
+    return new Promise((resolve, reject) => {
+      dispatch({ request: request, type: RESCAN_ATTEMPT });
+      const { walletService } = getState().grpc;
+      var rescanCall = walletService.rescan(request);
+      rescanCall.on("data", function(response) {
+        dispatch({ rescanCall: rescanCall, rescanResponse: response, type: RESCAN_PROGRESS });
+      });
+      rescanCall.on("end", function() {
+        dispatch({ type: RESCAN_COMPLETE });
+        dispatch(getStartupWalletInfo()).then(resolve);
+      });
+      rescanCall.on("error", function(status) {
+        console.error("Rescan error", status);
+        reject(status);
+      });
     });
-    rescanCall.on("end", function() {
-      dispatch({ type: RESCAN_COMPLETE });
-      setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
-      setTimeout( () => {dispatch(getAccountsAttempt(true));}, 1000);
-      setTimeout( () => {dispatch(getMostRecentTransactions());}, 1000);
-      setTimeout( () => {dispatch(getTicketsInfoAttempt());}, 1000);
-    });
-    rescanCall.on("error", function(status) {
-      console.error("Rescan error", status);
-    });
+
   };
 }
 
