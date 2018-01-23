@@ -8,6 +8,7 @@ import {
   GetTransactionsRequest,
   TransactionDetails,
 } from "middleware/walletrpc/api_pb";
+import { withLog as log, withLogNoData, logOptionNoResponseData } from "./index";
 
 const promisify = fn => (...args) => new Promise((ok, fail) => fn(...args,
   (res, err) => err ? fail(err) : ok(res)));
@@ -19,7 +20,7 @@ export const getAgendaService = promisify(client.getAgendaService);
 export const getMessageVerificationService = promisify(client.getMessageVerificationService);
 export const getDecodeService = promisify(client.getDecodeMessageService);
 
-export const getNextAddress = (walletService, accountNum) =>
+export const getNextAddress = log((walletService, accountNum) =>
   new Promise((resolve, reject) => {
     const request = new NextAddressRequest();
     request.setAccount(accountNum);
@@ -29,16 +30,16 @@ export const getNextAddress = (walletService, accountNum) =>
   })
   .then(response => ({
     publicKey: response.getPublicKey()
-  }));
+  })), "Get Next Address", logOptionNoResponseData());
 
-export const validateAddress = (walletService, address) =>
+export const validateAddress = withLogNoData((walletService, address) =>
   new Promise((resolve, reject) => {
     const request = new ValidateAddressRequest();
     request.setAddress(address);
     walletService.validateAddress(request, (error, response) => error ? reject(error) : resolve(response));
-  });
+  }), "Validate Address");
 
-export const decodeTransaction = (decodeMessageService, hexTx) =>
+export const decodeTransaction = withLogNoData((decodeMessageService, hexTx) =>
   new Promise((resolve, reject) => {
     var request = new DecodeRawTransactionRequest();
     var buff = new Uint8Array(Buffer.from(hexTx, "hex"));
@@ -50,7 +51,7 @@ export const decodeTransaction = (decodeMessageService, hexTx) =>
         resolve(tx);
       }
     });
-  });
+  }), "Decode Transaction");
 
 // UNMINED_BLOCK_TEMPLATE is a helper const that defines what an unmined block
 // looks like (null timestamp, height == -1, etc).
@@ -115,7 +116,7 @@ export function formatUnminedTransaction(transaction, index) {
   return formatTransaction(UNMINED_BLOCK_TEMPLATE, transaction, index);
 }
 
-export const getTransactions = (walletService, startBlockHeight,
+export const getTransactions = withLogNoData((walletService, startBlockHeight,
   endBlockHeight, targetTransactionCount) =>
   new Promise((resolve, reject) => {
     var request = new GetTransactionsRequest();
@@ -149,4 +150,4 @@ export const getTransactions = (walletService, startBlockHeight,
     getTx.on("error", (err) => {
       reject(err);
     });
-  });
+  }), "Get Transactions");
