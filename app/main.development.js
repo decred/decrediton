@@ -1,8 +1,8 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, RPCDaemonHost, RPCDaemonPort, RPCWalletPort, GRPCWalletPort, setMustOpenForm } from "./config.js";
+import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, setMustOpenForm } from "./config.js";
 import path from "path";
-import fs from "fs";
+import fs from "fs-extra";
 import os from "os";
 import parseArgs from "minimist";
 import stringArgv from "string-argv";
@@ -98,6 +98,39 @@ if (process.env.NODE_ENV === "development") {
 // Always use reasonable path for save data.
 app.setPath("userData", appDataDirectory());
 
+
+// Check that wallets directory has been created, if not, make it.
+console.log("Checking wallets directory exists");
+let walletsDirectory = path.join(app.getPath("userData"),"wallets");
+fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
+
+// Check if default-wallet directory has been created, if not, make it.
+console.log("Checking default-wallet directory exists");
+let defaultWalletDirectory = path.join(walletsDirectory, "default-wallet");
+let createNewDefault = false;
+if (!fs.pathExistsSync(defaultWalletDirectory)){
+  fs.mkdirsSync(defaultWalletDirectory);
+  createNewDefault = true;
+}
+
+if (createNewDefault) {
+  console.log("Copying wallet.db and config.json");
+  // check for existing mainnet/testnet directories
+  if (fs.pathExistsSync(path.join(app.getPath("userData"), "mainnet"))) {
+    console.log("Copying mainnet wallet.db");
+    fs.mkdirsSync(path.join(defaultWalletDirectory, "mainnet"));
+    fs.copySync(path.join(app.getPath("userData"), "mainnet"), path.join(defaultWalletDirectory, "mainnet"));
+  }
+  if (fs.pathExistsSync(path.join(app.getPath("userData"), "testnet2"))) {
+    console.log("Copying testnet wallet.db");
+    fs.mkdirsSync(path.join(defaultWalletDirectory, "testnet2"));
+    fs.copySync(path.join(app.getPath("userData"), "testnet2"), path.join(defaultWalletDirectory, "testnet2"));
+  }
+  if (fs.pathExistsSync(path.join(app.getPath("userData"), "config.json"))) {
+    console.log("Copying config.json");
+    fs.copySync(path.join(app.getPath("userData"), "config.json"), path.join(defaultWalletDirectory, "config.json"));
+  }
+}
 // Verify that config.json is valid JSON before fetching it, because
 // it will silently fail when fetching.
 let err = validateCfgFile();
@@ -107,14 +140,23 @@ if (err !== null) {
   app.quit();
 }
 var cfg = initCfg();
-
+/*
 // Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
 let availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallets")).find(file => {
   var checkForWalletDbs = fs.readdirSync(path.join(app.getPath("userData"), "wallets", file, cfg.get("network"))).find(fileName => {return fileName == "wallet.db";});
   return checkForWalletDbs;
 });
+let availableWalletAppDataDir = path.join(app.getPath("userData"), "wallets/default-wallet");
+let availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallets")).find(file => {
+  var checkForWalletDbs = fs.readdirSync(path.join(app.getPath("userData"), "wallets", file, cfg.get("network"))).find(fileName => {return fileName == "wallet.db";});
+  return checkForWalletDbs;
+});
+/*
+if (availableWallets.length > 0) {
+  availableWalletAppDataDir = path.join(app.getPath("userData"), "wallets", availableWallets[0]);
+}
+*/
 
-let availableWalletAppDataDir = path.join(app.getPath("userData"), "wallets", availableWallets[0]);
 const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
 logger.log("info", "Versions: Decrediton: %s, Electron: %s, Chrome: %s",
@@ -124,9 +166,6 @@ process.on("uncaughtException", err => {
   logger.log("error", "UNCAUGHT EXCEPTION", err);
   throw err;
 });
-
-var createDcrdConf, createDcrwalletConf, createDcrctlConf = false;
-initialConfigGeneration();
 
 // Check if network was set on command line (but only allow one!).
 if (argv.testnet && argv.mainnet) {
