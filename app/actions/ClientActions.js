@@ -63,6 +63,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
       try {
         await dispatch(getAccountsAttempt(true));
         await dispatch(getMostRecentTransactions());
+        dispatch(findImmatureTransactions());
         dispatch({type: GETSTARTUPWALLETINFO_SUCCESS});
         resolve();
       } catch (error) {
@@ -71,6 +72,64 @@ export const getStartupWalletInfo = () => (dispatch) => {
       }
     }, 1000);
   });
+};
+
+export const MATURINGHEIGHTS_CHANGED = "MATURINGHEIGHTS_CHANGED";
+export const MATURINGHEIGHTS_ADDED = "MATURINGHEIGHTS_ADDED";
+
+// Given a list of transactions, returns the maturing heights of all
+// stake txs in the list.
+function transactionsMaturingHeights(txs, chainParams) {
+  let res = [];
+  txs.forEach(tx => {
+    switch (tx.type) {
+    case TransactionDetails.TransactionType.TICKET_PURCHASE:
+      res.push(tx.height + chainParams.TicketExpiry);
+      res.push(tx.height + chainParams.SStxChangeMaturity);
+      res.push(tx.height + chainParams.TicketMaturity); // FIXME: remove as it doesn't change balances
+      break;
+
+    case TransactionDetails.TransactionType.VOTE:
+    case TransactionDetails.TransactionType.REVOCATION:
+      res.push(tx.height + chainParams.CoinbaseMaturity);
+      break;
+    }
+  });
+
+  return res;
+}
+
+export const findImmatureTransactions = () => async (dispatch, getState) => {
+  const { currentBlockHeight, walletService } = getState().grpc;
+  const chainParams = sel.chainParams(getState());
+  console.log(chainParams);
+
+  const pageSize = 30;
+  const checkHeightDeltas = [
+    chainParams.TicketExpiry,
+    chainParams.TicketMaturity,
+    chainParams.CoinbaseMaturity,
+    chainParams.SStxChangeMaturity
+  ];
+  const immatureHeight = currentBlockHeight - Math.max(...checkHeightDeltas);
+
+  let txs = await walletGetTransactions(walletService, immatureHeight,
+    currentBlockHeight, pageSize);
+
+  let checkHeights = [];
+  const addCheckHeight = (h) => (h > currentBlockHeight && checkHeights.indexOf(h) === -1)
+    ? checkHeights.push(h) : null;
+
+  while (txs.mined.length > 0) {
+    let lastTx = txs.mined[txs.mined.length-1];
+    transactionsMaturingHeights(txs.mined, chainParams).forEach(addCheckHeight);
+    txs = await walletGetTransactions(walletService, lastTx.height+1,
+      currentBlockHeight+1, pageSize);
+  }
+  checkHeights.sort();
+  console.log("maturing heights", checkHeights);
+
+  dispatch({maturingBlockHeights: checkHeights, type: MATURINGHEIGHTS_CHANGED});
 };
 
 export const getWalletServiceAttempt = () => (dispatch, getState) => {
@@ -94,6 +153,12 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
       setTimeout(() => { dispatch(stopAutoBuyerAttempt()); }, 10);
     })
     .catch(error => dispatch({ error, type: GETTICKETBUYERSERVICE_FAILED }));
+};
+
+export const getAllAccountsBalances = () => (dispatch, getState) => {
+  const { getAccountsResponse } = getState().grpc;
+  const accounts = getAccountsResponse.getAccountsList();
+  accounts.forEach(a => dispatch(updateAccount(a)));
 };
 
 const getAccountsBalances = (accounts) => (dispatch, getState) => {
@@ -432,9 +497,10 @@ export const getTransactions = () => async (dispatch, getState) => {
   }
 
   minedTransactions = [...minedTransactions, ...filtered];
-
-  dispatch({ unminedTransactions, minedTransactions,
-    noMoreTransactions, lastTransaction, type: GETTRANSACTIONS_COMPLETE});
+  const stateChange = { unminedTransactions, minedTransactions,
+    noMoreTransactions, lastTransaction, type: GETTRANSACTIONS_COMPLETE};
+  dispatch(stateChange);
+  return stateChange;
 };
 
 export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
@@ -465,6 +531,7 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
 
   let { unminedTransactions, minedTransactions, recentTransactions } = getState().grpc;
   const { transactionsFilter, recentTransactionCount } = getState().grpc;
+  const chainParams = sel.chainParams(getState());
 
   // aux maps of [txhash] => tx (used to ensure no duplicate txs)
   const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
@@ -493,6 +560,16 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     ...newlyMinedTransactions,
     ...recentTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
   ].slice(0, recentTransactionCount);
+
+  console.log(newlyMinedTransactions);
+  const { maturingBlockHeights } = getState().grpc;
+  const newMaturingHeights = [...maturingBlockHeights];
+  const addToNewMaturingHeights = (h) => newMaturingHeights.indexOf(h) === -1 ?
+    newMaturingHeights.push(h) : null;
+  transactionsMaturingHeights(newlyMinedTransactions, chainParams).forEach(addToNewMaturingHeights);
+  newMaturingHeights.sort();
+  console.log("new maturing block heights", newMaturingHeights);
+  dispatch({maturingBlockHeights: newMaturingHeights, type: MATURINGHEIGHTS_CHANGED});
 
   // TODO: filter newlyMinedTransactions against minedTransactions if this
   // starts generating a duplicated key error

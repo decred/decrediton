@@ -19,7 +19,7 @@ import {
   GETAGENDAS_ATTEMPT, GETAGENDAS_FAILED, GETAGENDAS_SUCCESS,
   GETVOTECHOICES_ATTEMPT, GETVOTECHOICES_FAILED, GETVOTECHOICES_SUCCESS,
   SETVOTECHOICES_ATTEMPT, SETVOTECHOICES_FAILED, SETVOTECHOICES_SUCCESS,
-  UPDATEHIDDENACCOUNTS,
+  UPDATEHIDDENACCOUNTS, MATURINGHEIGHTS_CHANGED,
 } from "../actions/ClientActions";
 import { STARTUPBLOCK } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
@@ -305,10 +305,13 @@ export default function grpc(state = {}, action) {
       currentBlockHeight: action.currentBlockHeight,
     };
   case NEWBLOCKCONNECTED:
+    var newMaturingBlockHeights = [...state.maturingBlockHeights]
+      .filter(h => h > action.currentBlockHeight);
     return {
       ...state,
       recentBlockTimestamp: action.currentBlockTimestamp,
       currentBlockHeight: action.currentBlockHeight,
+      maturingBlockHeights: newMaturingBlockHeights,
     };
   case GETAGENDASERVICE_ATTEMPT:
     return {
@@ -478,6 +481,11 @@ export default function grpc(state = {}, action) {
         ...state.decodedTransactions,
         ...action.transactions
       }
+    };
+  case MATURINGHEIGHTS_CHANGED:
+    return {
+      ...state,
+      maturingBlockHeights: action.maturingBlockHeights,
     };
   default:
     return state;

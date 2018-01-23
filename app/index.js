@@ -183,6 +183,9 @@ var initialState = {
     // map from (reversed) transaction hash to fully decoded transaction
     decodedTransactions: {},
 
+    // list of block heights where balance update should occur due to maturing
+    // tickets/votes/
+    maturingBlockHeights: [],
   },
   walletLoader: {
     rpcRetryAttempts: 0,
