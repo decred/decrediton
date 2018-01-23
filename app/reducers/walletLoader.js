@@ -10,7 +10,14 @@ import {
   FETCHHEADERS_ATTEMPT, FETCHHEADERS_FAILED, FETCHHEADERS_PROGRESS, FETCHHEADERS_SUCCESS,
   CREATEWALLET_EXISTINGSEED_INPUT, CREATEWALLET_NEWSEED_INPUT, CREATEWALLET_NEWSEED_CONFIRM_INPUT, CREATEWALLET_NEWSEED_BACK_INPUT,
   UPDATEDISCOVERACCOUNTS, NEEDED_BLOCKS_DETERMINED
-} from "../actions/WalletLoaderActions";
+} from "actions/WalletLoaderActions";
+import {
+  GETSTARTUPWALLETINFO_ATTEMPT
+} from "actions/ClientActions";
+import {
+  RESCAN_ATTEMPT
+} from "actions/ControlActions";
+
 export default function walletLoader(state = {}, action) {
   switch (action.type) {
   case LOADER_ATTEMPT:
@@ -195,7 +202,14 @@ export default function walletLoader(state = {}, action) {
       fetchHeadersError: null,
       fetchHeadersRequestAttempt: false,
       fetchHeadersResponse: action.response,
-      stepIndex: 7,
+    };
+  case RESCAN_ATTEMPT:
+    return {...state,
+      stepIndex: 7
+    };
+  case GETSTARTUPWALLETINFO_ATTEMPT:
+    return {...state,
+      stepIndex: 8
     };
   case SUBSCRIBEBLOCKNTFNS_ATTEMPT:
     return {...state,

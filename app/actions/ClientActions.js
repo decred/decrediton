@@ -13,7 +13,6 @@ import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 
-
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
 export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
@@ -30,25 +29,49 @@ function getWalletServiceSuccess(walletService) {
     setTimeout(() => { dispatch(accountNtfnsStart()); }, 1000);
     setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
     setTimeout(() => { dispatch(getDecodeMessageServiceAttempt()); }, 1000);
+
+    var goHomeCb = () => {
+      setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);
+      setTimeout(() => { dispatch(showSidebarMenu()); }, 1000);
+    };
+
     // Check here to see if wallet was just created from an existing
     // seed.  If it was created from a newly generated seed there is no
     // expectation of address use so rescan can be skipped.
     const { walletCreateExisting, walletCreateResponse } = getState().walletLoader;
     const { fetchHeadersResponse } = getState().walletLoader;
     if (walletCreateExisting) {
-      setTimeout(() => { dispatch(rescanAttempt(0)); }, 1000);
+      setTimeout(() => { dispatch(rescanAttempt(0)).then(goHomeCb); }, 1000);
     } else if (walletCreateResponse == null && fetchHeadersResponse != null && fetchHeadersResponse.getFirstNewBlockHeight() !== 0) {
-      setTimeout(() => { dispatch(rescanAttempt(fetchHeadersResponse.getFirstNewBlockHeight())); }, 1000);
+      setTimeout(() => { dispatch(rescanAttempt(fetchHeadersResponse.getFirstNewBlockHeight())).then(goHomeCb); }, 1000);
     } else {
-      setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
-      setTimeout(() => { dispatch(getAccountsAttempt(true)); }, 1000);
-      setTimeout(() => { dispatch(getMostRecentTransactions()); }, 1000);
-      setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 1000);
+      dispatch(getStartupWalletInfo()).then(goHomeCb);
     }
-    setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);
-    setTimeout(() => { dispatch(showSidebarMenu()); }, 1000);
   };
 }
+
+export const GETSTARTUPWALLETINFO_ATTEMPT = "GETSTARTUPWALLETINFO_ATTEMPT";
+export const GETSTARTUPWALLETINFO_SUCCESS = "GETSTARTUPWALLETINFO_SUCCESS";
+export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
+
+export const getStartupWalletInfo = () => (dispatch) => {
+  dispatch({type: GETSTARTUPWALLETINFO_ATTEMPT});
+  setTimeout( () => { dispatch(getStakeInfoAttempt()); }, 1000);
+  setTimeout( () => { dispatch(getTicketsInfoAttempt()); }, 1000);
+  return new Promise((resolve, reject) => {
+    setTimeout( async () => {
+      try {
+        await dispatch(getAccountsAttempt(true));
+        await dispatch(getMostRecentTransactions());
+        dispatch({type: GETSTARTUPWALLETINFO_SUCCESS});
+        resolve();
+      } catch (error) {
+        dispatch({error, type: GETSTARTUPWALLETINFO_FAILED});
+        reject(error);
+      }
+    }, 1000);
+  });
+};
 
 export const getWalletServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
@@ -241,14 +264,15 @@ export const GETACCOUNTS_ATTEMPT = "GETACCOUNTS_ATTEMPT";
 export const GETACCOUNTS_FAILED = "GETACCOUNTS_FAILED";
 export const GETACCOUNTS_SUCCESS = "GETACCOUNTS_SUCCESS";
 
-export const getAccountsAttempt = (startup) => (dispatch, getState) => {
+export const getAccountsAttempt = (startup) => async (dispatch, getState) => {
   dispatch({ type: GETACCOUNTS_ATTEMPT });
-  wallet.getAccounts(sel.walletService(getState()))
-    .then(response => {
-      if (startup) dispatch(getAccountsBalances(response.getAccountsList()));
-      dispatch({ accounts: response.getAccountsList(), response, type: GETACCOUNTS_SUCCESS });
-    })
-    .catch(error => dispatch({ error, type: GETACCOUNTS_FAILED }));
+  try {
+    const response = await wallet.getAccounts(sel.walletService(getState()));
+    if (startup) dispatch(getAccountsBalances(response.getAccountsList()));
+    dispatch({ accounts: response.getAccountsList(), response, type: GETACCOUNTS_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: GETACCOUNTS_FAILED });
+  }
 };
 
 export const UPDATEHIDDENACCOUNTS = "UPDATEHIDDENACCOUNTS";
@@ -496,14 +520,14 @@ export const getMostRecentTransactions = () => dispatch => {
     direction: null,
   };
   dispatch({type: CLEAR_MOSTRECENTTRANSACTIONS});
-  dispatch(changeTransactionsFilter(defaultFilter));
+  return dispatch(changeTransactionsFilter(defaultFilter));
 };
 
 export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
 export function changeTransactionsFilter(newFilter) {
   return (dispatch) => {
     dispatch({transactionsFilter: newFilter, type: CHANGE_TRANSACTIONS_FILTER});
-    dispatch(getTransactions());
+    return dispatch(getTransactions());
   };
 }
 

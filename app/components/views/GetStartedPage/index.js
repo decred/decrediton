@@ -9,6 +9,7 @@ import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
 import { AdvancedStartupHeader, AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
 import { SettingsBody, SettingsHeader } from "./Settings";
 import { LogsBody, LogsHeader } from "./Logs";
+import { RescanWalletHeader, RescanWalletBody } from "./RescanWallet/index";
 import { walletStartup } from "connectors";
 import { getAppdataPath, getRemoteCredentials } from "config.js";
 
@@ -111,6 +112,10 @@ class GetStartedPage extends React.Component {
       case 6:
         Header = FetchBlockHeadersHeader;
         Body = FetchBlockHeadersBody;
+        break;
+      case 7:
+        Header = RescanWalletHeader;
+        Body = RescanWalletBody;
         break;
       default:
         Header = FinalStartUpHeader;

@@ -23,8 +23,8 @@ export const startWallet = () => Promise
   });
 
 export const getBlockCount = (rpcCreds, appData) => Promise
-  .resolve(ipcRenderer
-    .sendSync("check-daemon", rpcCreds, appData));
+  .resolve(ipcRenderer.sendSync("check-daemon", rpcCreds, appData))
+  .then(block => parseInt(block.trim()));
 
 export const getDcrdLogs = () => Promise
   .resolve(ipcRenderer.sendSync("get-dcrd-logs"))
