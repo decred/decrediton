@@ -80,18 +80,27 @@ export const MATURINGHEIGHTS_ADDED = "MATURINGHEIGHTS_ADDED";
 // Given a list of transactions, returns the maturing heights of all
 // stake txs in the list.
 function transactionsMaturingHeights(txs, chainParams) {
-  let res = [];
+  let res = {};
+  const addToRes = (height, found) => {
+    const accounts = res[height] || [];
+    found.forEach(a => accounts.indexOf(a) === -1 ? accounts.push(a) : null);
+    res[height] = accounts;
+  };
+
   txs.forEach(tx => {
+    let accountsToUpdate = [];
     switch (tx.type) {
     case TransactionDetails.TransactionType.TICKET_PURCHASE:
-      res.push(tx.height + chainParams.TicketExpiry);
-      res.push(tx.height + chainParams.SStxChangeMaturity);
-      res.push(tx.height + chainParams.TicketMaturity); // FIXME: remove as it doesn't change balances
+      checkAccountsToUpdate([tx], accountsToUpdate);
+      addToRes(tx.height + chainParams.TicketExpiry, accountsToUpdate);
+      addToRes(tx.height + chainParams.SStxChangeMaturity, accountsToUpdate);
+      addToRes(tx.height + chainParams.TicketMaturity, accountsToUpdate); // FIXME: remove as it doesn't change balances
       break;
 
     case TransactionDetails.TransactionType.VOTE:
     case TransactionDetails.TransactionType.REVOCATION:
-      res.push(tx.height + chainParams.CoinbaseMaturity);
+      checkAccountsToUpdate([tx], accountsToUpdate);
+      addToRes(tx.height + chainParams.CoinbaseMaturity, accountsToUpdate);
       break;
     }
   });
@@ -116,17 +125,23 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
   let txs = await walletGetTransactions(walletService, immatureHeight,
     currentBlockHeight, pageSize);
 
-  let checkHeights = [];
-  const addCheckHeight = (h) => (h > currentBlockHeight && checkHeights.indexOf(h) === -1)
-    ? checkHeights.push(h) : null;
+  let checkHeights = {};
+  // const mergeCheckHeights = (h) => (h > currentBlockHeight && checkHeights.indexOf(h) === -1)
+  //   ? checkHeights.push(h) : null;
+  const mergeCheckHeights = (hs) => Object.keys(hs).forEach(h => {
+    if (h < currentBlockHeight) return;
+    const accounts = checkHeights[h] || [];
+    hs[h].forEach(a => accounts.indexOf(a) === -1 ? accounts.push(a) : null);
+    checkHeights[h] = accounts;
+  });
 
   while (txs.mined.length > 0) {
     let lastTx = txs.mined[txs.mined.length-1];
-    transactionsMaturingHeights(txs.mined, chainParams).forEach(addCheckHeight);
+    mergeCheckHeights(transactionsMaturingHeights(txs.mined, chainParams));
     txs = await walletGetTransactions(walletService, lastTx.height+1,
       currentBlockHeight+1, pageSize);
   }
-  checkHeights.sort();
+
   console.log("maturing heights", checkHeights);
 
   dispatch({maturingBlockHeights: checkHeights, type: MATURINGHEIGHTS_CHANGED});
@@ -155,10 +170,14 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
     .catch(error => dispatch({ error, type: GETTICKETBUYERSERVICE_FAILED }));
 };
 
-export const getAllAccountsBalances = () => (dispatch, getState) => {
+export const getAccountNumbersBalances = (accountNumbers) => (dispatch, getState) => {
   const { getAccountsResponse } = getState().grpc;
   const accounts = getAccountsResponse.getAccountsList();
-  accounts.forEach(a => dispatch(updateAccount(a)));
+  const byAccountNumber = accounts.reduce((l, a) => {
+    l[a.getAccountNumber()] = a;
+    return l;
+  }, {});
+  accountNumbers.forEach(a => dispatch(updateAccount(byAccountNumber[a])));
 };
 
 const getAccountsBalances = (accounts) => (dispatch, getState) => {
@@ -507,8 +526,8 @@ export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
 
 function checkAccountsToUpdate(txs, accountsToUpdate) {
   txs.forEach(tx => {
-    tx.tx.getCreditsList().forEach(credit => {if (!accountsToUpdate.find(eq(credit.getAccount()))) accountsToUpdate.push(credit.getAccount());});
-    tx.tx.getDebitsList().forEach(debit => {if (!accountsToUpdate.find(eq(debit.getPreviousAccount()))) accountsToUpdate.push(debit.getPreviousAccount());});
+    tx.tx.getCreditsList().forEach(credit => {if (accountsToUpdate.find(eq(credit.getAccount())) === undefined) accountsToUpdate.push(credit.getAccount());});
+    tx.tx.getDebitsList().forEach(debit => {if (accountsToUpdate.find(eq(debit.getPreviousAccount())) === undefined) accountsToUpdate.push(debit.getPreviousAccount());});
   });
   return accountsToUpdate;
 }
@@ -561,13 +580,15 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     ...recentTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
   ].slice(0, recentTransactionCount);
 
-  console.log(newlyMinedTransactions);
   const { maturingBlockHeights } = getState().grpc;
-  const newMaturingHeights = [...maturingBlockHeights];
-  const addToNewMaturingHeights = (h) => newMaturingHeights.indexOf(h) === -1 ?
-    newMaturingHeights.push(h) : null;
-  transactionsMaturingHeights(newlyMinedTransactions, chainParams).forEach(addToNewMaturingHeights);
-  newMaturingHeights.sort();
+  const newMaturingHeights = {...maturingBlockHeights};
+  const mergeNewMaturingHeights = (hs) => Object.keys(hs).forEach(h => {
+    const accounts = newMaturingHeights[h] || [];
+    hs[h].forEach(a => accounts.indexOf(a) === -1 ? accounts.push(a) : null);
+    newMaturingHeights[h] = accounts;
+  });
+
+  mergeNewMaturingHeights(transactionsMaturingHeights(newlyMinedTransactions, chainParams));
   console.log("new maturing block heights", newMaturingHeights);
   dispatch({maturingBlockHeights: newMaturingHeights, type: MATURINGHEIGHTS_CHANGED});
 

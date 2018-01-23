@@ -1,6 +1,6 @@
 // @flow
 import * as wallet from "wallet";
-import { getTicketPriceAttempt, updateAccount, getAllAccountsBalances, MATURINGHEIGHTS_CHANGED } from "./ClientActions";
+import { getTicketPriceAttempt, updateAccount, getAccountNumbersBalances } from "./ClientActions";
 import { newTransactionsReceived } from "./ClientActions";
 import { TransactionNotificationsRequest, AccountNotificationsRequest } from "middleware/walletrpc/api_pb";
 
@@ -23,11 +23,14 @@ function transactionNtfnsData(response) {
       dispatch({currentBlockHeight, currentBlockTimestamp, type: NEWBLOCKCONNECTED });
       setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
 
-      const maturedHeights = maturingBlockHeights.filter(h => h <= currentBlockHeight);
-      console.log("testing on new block", maturedHeights, maturingBlockHeights, currentBlockHeight);
+      const maturedHeights = Object.keys(maturingBlockHeights).filter(h => h <= currentBlockHeight);
       if (maturedHeights.length > 0) {
-        console.log("matured");
-        dispatch(getAllAccountsBalances());
+        const accountNumbers = maturedHeights.reduce((l, h) => {
+          maturingBlockHeights[h].forEach(an => l.indexOf(an) === -1 ? l.push(an) : null);
+          return l;
+        }, []);
+        console.log("gonna update accounts", accountNumbers);
+        dispatch(getAccountNumbersBalances(accountNumbers));
       }
 
       const newlyMined = attachedBlocks.reduce((l, b) => {

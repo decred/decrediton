@@ -305,8 +305,11 @@ export default function grpc(state = {}, action) {
       currentBlockHeight: action.currentBlockHeight,
     };
   case NEWBLOCKCONNECTED:
-    var newMaturingBlockHeights = [...state.maturingBlockHeights]
-      .filter(h => h > action.currentBlockHeight);
+    var newMaturingBlockHeights = Object.keys(state.maturingBlockHeights)
+      .reduce((o, h) => {
+        h > action.currentBlockHeight ? o[h] = state.maturingBlockHeights[h] : null;
+        return o;
+      }, {});
     return {
       ...state,
       recentBlockTimestamp: action.currentBlockTimestamp,
