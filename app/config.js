@@ -5,8 +5,13 @@ import { stakePoolInfo } from "./middleware/stakepoolapi";
 import Store from "electron-store";
 import ini from "ini";
 
-export function getCfg() {
+export function getGlobalCfg() {
   const config = new Store();
+  return (config);
+}
+
+export function getWalletCfg(walletPath){
+  const config = new Store(getWalletCfgPath(walletPath));
   return (config);
 }
 
@@ -67,7 +72,7 @@ export function initWalletCfg(walletPath) {
   return (config);
 }
 
-export function initDecreditonCfg() {
+export function initGlobalCfg() {
   const config = new Store();
   // If value is missing (or no config file) write the defaults.
   if (!config.has("network")) {
@@ -82,7 +87,7 @@ export function initDecreditonCfg() {
   return(config);
 }
 
-export function getDecreditonCfgPath() {
+export function getGlobalCfgPath() {
   return path.resolve(appDataDirectory(), "config.json");
 }
 
@@ -90,10 +95,10 @@ export function getWalletCfgPath(wallet) {
   return path.resolve(path.join(appDataDirectory(), "wallets", wallet), "config.json");
 }
 
-export function validateCfgFile() {
+export function validateGlobalCfgFile() {
   var fileContents;
   try {
-    fileContents = fs.readFileSync(getDecreditonCfgPath(), "utf8");
+    fileContents = fs.readFileSync(getGlobalCfgPath(), "utf8");
   }
   catch(err) {
     return null;
@@ -156,10 +161,6 @@ export function getDcrdCert(dcrdCertPath) {
     if(fs.existsSync(dcrdCertPath))
       return fs.readFileSync(dcrdCertPath);
 
-  var cfg = getCfg();
-  if (cfg.get("daemon_cert_path") != "") {
-    return(cfg.get("daemon_cert_path"));
-  }
   var certPath = "";
   if (os.platform() == "win32") {
     certPath = path.join(os.homedir(), "AppData", "Local", "Dcrd", "rpc.cert");
@@ -172,16 +173,6 @@ export function getDcrdCert(dcrdCertPath) {
 
   var cert = fs.readFileSync(certPath);
   return(cert);
-}
-
-export function dcrdCfg() {
-  var cfgLoc = appDataDirectory();
-  return path.join(cfgLoc, "dcrd.conf");
-}
-
-export function dcrctlCfg() {
-  var cfgLoc = appDataDirectory();
-  return path.join(cfgLoc, "dcrctl.conf");
 }
 
 export function updateStakePoolConfig(config, foundStakePoolConfigs) {
@@ -206,13 +197,11 @@ export function updateStakePoolConfig(config, foundStakePoolConfigs) {
   }
 }
 
-export function getAppdataPath() {
-  const config = getCfg();
+export function getAppdataPath(config) {
   return config.get("appdata_path");
 }
 
-export function setAppdataPath(appdataPath) {
-  const config = getCfg();
+export function setAppdataPath(config, appdataPath) {
   const credentialKeys = {
     rpc_user : "",
     rpc_password : "",
@@ -224,54 +213,45 @@ export function setAppdataPath(appdataPath) {
   return config.set("appdata_path",appdataPath);
 }
 
-export function getRemoteCredentials() {
-  const config = getCfg();
+export function getRemoteCredentials(config) {
   return config.get("remote_credentials");
 }
 
-export function setRemoteCredentials(key, value) {
-  const config = getCfg();
+export function setRemoteCredentials(config, key, value) {
   config.set("appdata_path","");
   let credentials = config.get("remote_credentials");
   credentials[key] = value;
   return config.set("remote_credentials",credentials);
 }
 
-export function getMustOpenForm() {
-  const config = getCfg();
+export function getMustOpenForm(config) {
   return config.get("must_open_form");
 }
 
-export function setMustOpenForm(openForm) {
-  const config = getCfg();
+export function setMustOpenForm(config, openForm) {
   return config.set("must_open_form", openForm);
 }
-export function initialConfigGeneration() {
-  if (!fs.existsSync(dcrdCfg())) {
-    var dcrdConf = {
-      "Application Options":
-      {
-        rpcuser: "USER",
-        rpcpass: "PASSWORD",
-      }
-    };
-    logger.log("info", "The dcrd config file does not exists, creating");
-    fs.writeFileSync(dcrdCfg(), ini.stringify(dcrdConf));
-  }
-  if (!fs.existsSync(dcrctlCfg())) {
-    var dcrctlConf = {
-      "Application Options":
-      {
-        rpcuser: "USER",
-        rpcpass: "PASSWORD",
-      }
-    };
-    logger.log("info", "The dcrctl config file does not exists, creating");
-    fs.writeFileSync(dcrctlCfg(), ini.stringify(dcrctlConf));
-  }
-}
 
-export function newWalletConfig(walletName) {
+export function newWalletConfigCreation(walletPath) {
+  // TODO: set random user/password
+  var dcrdConf = {
+    "Application Options":
+    {
+      rpcuser: "USER",
+      rpcpass: "PASSWORD",
+      rpclisten: "127.0.0.1:9109"
+    }
+  };
+  fs.writeFileSync(dcrdCfg(walletPath), ini.stringify(dcrdConf));
+  var dcrctlConf = {
+    "Application Options":
+    {
+      rpcuser: "USER",
+      rpcpass: "PASSWORD",
+      rpcconnect: "127.0.0.1:9109"
+    }
+  };
+  fs.writeFileSync(dcrctlCfg(walletPath), ini.stringify(dcrctlConf));
   var dcrwConf = {
     "Application Options":
     {
@@ -280,7 +260,19 @@ export function newWalletConfig(walletName) {
       tlscurve: "P-256",
       noinitialload: "1",
       onetimetlskey: "1",
+      rpcconnect: "127.0.0.1:9109"
     },
   };
-  fs.writeFileSync(dcrwCfg(), ini.stringify(dcrwConf));
+  fs.writeFileSync(dcrwalletCfg(walletPath), ini.stringify(dcrwConf));
+}
+export function dcrctlCfg(walletPath) {
+  return path.resolve(walletPath, "dcrctl.conf");
+}
+
+export function dcrdCfg(walletPath) {
+  return path.resolve(walletPath, "dcrd.conf");
+}
+
+export function dcrwalletCfg(walletPath) {
+  return path.resolve(walletPath, "dcrwallet.conf");
 }

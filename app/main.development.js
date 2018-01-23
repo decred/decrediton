@@ -1,6 +1,7 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, setMustOpenForm } from "./config.js";
+import { initGlobalCfg, appDataDirectory, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
+import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg} from "./config.js";
 import path from "path";
 import fs from "fs-extra";
 import os from "os";
@@ -133,13 +134,13 @@ if (createNewDefault) {
 }
 // Verify that config.json is valid JSON before fetching it, because
 // it will silently fail when fetching.
-let err = validateCfgFile();
+let err = validateGlobalCfgFile();
 if (err !== null) {
-  let errMessage = "There was an error while trying to load the config file, the format is invalid.\n\nFile: " + getCfgPath() + "\nError: " + err;
+  let errMessage = "There was an error while trying to load the config file, the format is invalid.\n\nFile: " + path.resolve(appDataDirectory(), "config.json") + "\nError: " + err;
   dialog.showErrorBox("Config File Error", errMessage);
   app.quit();
 }
-var cfg = initCfg();
+var globalCfg = initGlobalCfg();
 /*
 // Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
 let availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallets")).find(file => {
@@ -156,7 +157,7 @@ if (availableWallets.length > 0) {
   availableWalletAppDataDir = path.join(app.getPath("userData"), "wallets", availableWallets[0]);
 }
 */
-
+let availableWallets = [];
 const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
 logger.log("info", "Versions: Decrediton: %s, Electron: %s, Chrome: %s",
@@ -173,22 +174,9 @@ if (argv.testnet && argv.mainnet) {
   app.quit();
 }
 
-if (argv.testnet) {
-  cfg.set("network", "testnet");
-  logger.log("info", "Running on testnet.");
-}
-
-if (argv.mainnet) {
-  cfg.set("network", "mainnet");
-  logger.log("info", "Running on mainnet.");
-}
-
-let daemonIsAdvanced = cfg.get("daemon_start_advanced");
+let daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
 
 function closeDCRW() {
-  if (cfg.get("wallet_skip_start")) {
-    return;
-  }
   if (require("is-running")(dcrwPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
     process.kill(dcrwPID, "SIGINT");
@@ -196,9 +184,6 @@ function closeDCRW() {
 }
 
 function closeDCRD() {
-  if (cfg.get("daemon_skip_start")) {
-    return;
-  }
   if (require("is-running")(dcrdPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrdPID);
     process.kill(dcrdPID, "SIGINT");
@@ -227,7 +212,7 @@ function cleanShutdown() {
   let shutdownTimer = setInterval(function(){
     const stillRunning = (require("is-running")(dcrdPID) && os.platform() != "win32");
 
-    if (cfg.get("daemon_skip_start") || !stillRunning) {
+    if (!stillRunning) {
       logger.log("info", "Final shutdown pause. Quitting app.");
       clearInterval(shutdownTimer);
       if (mainWindow) {
@@ -266,7 +251,7 @@ ipcMain.on("get-available-wallets", (event) => {
   event.returnValue = availableWallets;
 });
 
-ipcMain.on("start-daemon", (event, appData) => {
+ipcMain.on("start-daemon", (event, appData, testnet) => {
   if (dcrdPID && !daemonIsAdvanced) {
     logger.log("info", "Skipping restart of daemon as it is already running");
     event.returnValue = dcrdPID;
@@ -281,40 +266,32 @@ ipcMain.on("start-daemon", (event, appData) => {
     return;
   }
   try {
-    dcrdPID = launchDCRD(appData);
+    dcrdPID = launchDCRD(appData, testnet);
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
   event.returnValue = dcrdPID;
 });
 
-ipcMain.on("start-wallet", (event) => {
-  if (cfg.get("wallet_skip_start")) {
-    logger.log("info", "skipping start of dcrwallet as requested on config");
-    dcrwPID = -1;
-    event.returnValue = dcrwPID;
-    return;
-  }
+ipcMain.on("start-wallet", (event, selectedWallet) => {
   if (dcrwPID) {
     logger.log("info", "dcrwallet already started " + dcrwPID);
     event.returnValue = dcrwPID;
     return;
   }
   try {
-    dcrwPID = launchDCRWallet(event.selectedWallet);
+    dcrwPID = launchDCRWallet(selectedWallet);
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }
   event.returnValue = dcrwPID;
 });
 
-ipcMain.on("check-daemon", (event, rpcCreds, appData) => {
+ipcMain.on("check-daemon", (event, walletPath, rpcCreds, appData, testnet) => {
   let args = ["getblockcount"];
   let host, port;
   if (!rpcCreds && !appData){
-    host = RPCDaemonHost();
-    port = RPCDaemonPort();
-    args.push(`--configfile=${dcrctlCfg()}`);
+    args.push(`--configfile=${dcrctlCfg(walletPath)}`);
   } else if (rpcCreds) {
     if (rpcCreds.rpc_user) {
       args.push(`--rpcuser=${rpcCreds.rpc_user}`);
@@ -334,18 +311,15 @@ ipcMain.on("check-daemon", (event, rpcCreds, appData) => {
   } else if (appData) {
     const rpccert = `${appData}/rpc.cert`;
     args.push(`--rpccert=${rpccert}`);
-    args.push(`--configfile=${dcrctlCfg()}`);
-    host = RPCDaemonHost();
-    port = RPCDaemonPort();
+    args.push(`--configfile=${dcrctlCfg(walletPath)}`);
   }
 
-  var spawn = require("child_process").spawn;
 
-  if (cfg.get("network") === "testnet") {
+  if (testnet) {
     args.push("--testnet");
   }
   args.push("--rpcserver=" + host + ":" + port);
-  args.push("--walletrpcserver=" + cfg.get("wallet_rpc_host") + ":" + RPCWalletPort());
+
 
   var dcrctlExe = getExecutablePath("dcrctl");
   if (!fs.existsSync(dcrctlExe)) {
@@ -354,6 +328,7 @@ ipcMain.on("check-daemon", (event, rpcCreds, appData) => {
 
   logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
 
+  var spawn = require("child_process").spawn;
   var dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: ["ignore", "pipe", "pipe", "pipe"] });
 
   dcrctl.stdout.on("data", (data) => {
@@ -404,16 +379,16 @@ const AddToLog = (destIO, destLogBuffer, data) => {
   return Buffer.concat([destLogBuffer, dataBuffer]);
 };
 
-const launchDCRD = (appdata) => {
+const launchDCRD = (walletPath, appdata, testnet) => {
   var spawn = require("child_process").spawn;
   let args = [];
   if(appdata){
-    args = [`--appdata=${appdata}`,`--configfile=${dcrdCfg()}`];
+    args = [`--appdata=${appdata}`];
   } else {
-    args = [`--configfile=${dcrdCfg()}`];
+    args = [`--configfile=${dcrdCfg(walletPath)}`];
   }
 
-  if (cfg.get("network") === "testnet") {
+  if (testnet) {
     args.push("--testnet");
   }
 
@@ -469,14 +444,14 @@ const launchDCRD = (appdata) => {
   return dcrdPID;
 };
 
-const launchDCRWallet = () => {
+const launchDCRWallet = (walletPath, testnet) => {
   var spawn = require("child_process").spawn;
-  var args = ["--configfile=" + dcrwCfg(availableWalletAppDataDir)];
+  var args = ["--configfile=" + dcrwalletCfg(walletPath)];
 
-  if (cfg.get("network") === "testnet") {
+  if (testnet) {
     args.push("--testnet");
   }
-
+  const cfg = getWalletCfg(walletPath);
   args.push("--ticketbuyer.balancetomaintainabsolute=" + cfg.get("balancetomaintain"));
   args.push("--ticketbuyer.maxfee=" + cfg.get("maxfee"));
   args.push("--ticketbuyer.maxpricerelative=" + cfg.get("maxpricerelative"));
@@ -593,12 +568,13 @@ app.on("ready", async () => {
 
   // when installing (on first run) locale will be empty. Determine the user's
   // OS locale and set that as decrediton's locale.
-  let cfgLocale = cfg.get("locale", "");
+  let cfgLocale = "";
+  //let cfgLocale = cfg.get("locale", "");
   let locale = locales.find(value => value.key === cfgLocale);
   if (!locale) {
     let newCfgLocale = appLocaleFromElectronLocale(app.getLocale());
     logger.log("error", `Locale ${cfgLocale} not found. Switching to locale ${newCfgLocale}.`);
-    cfg.set("locale", newCfgLocale);
+    //cfg.set("locale", newCfgLocale);
     locale = locales.find(value => value.key === newCfgLocale);
   }
 
@@ -608,8 +584,6 @@ app.on("ready", async () => {
       resizable: false, page: "staticPages/secondInstance.html"};
   } else {
     await installExtensions();
-    // Write application config files.
-    await writeCfgs(createDcrdConf, createDcrwalletConf, createDcrctlConf);
   }
   windowOpts.title = "Decrediton - " + app.getVersion();
 
