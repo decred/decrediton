@@ -51,9 +51,6 @@ export function initWalletCfg(walletPath) {
   if (!config.has("discoveraccounts")) {
     config.set("discoveraccounts",true);
   }
-  if (!config.has("locale")) {
-    config.set("locale","");
-  }
   if (!config.has("remote_credentials")) {
     const credentialKeys = {
       rpc_user : "",
@@ -83,6 +80,9 @@ export function initGlobalCfg() {
   }
   if (!config.has("must_open_form")) {
     config.set("must_open_form",true);
+  }
+  if (!config.has("locale")) {
+    config.set("locale","");
   }
   return(config);
 }
@@ -137,6 +137,10 @@ export function getDcrdPath() {
   } else {
     return path.join(os.homedir(),".dcrd");
   }
+}
+
+export function getWalletPath(walletPath) {
+  return path.join(appDataDirectory(), "wallets", walletPath);  
 }
 
 export function getWalletCert(certPath) {
