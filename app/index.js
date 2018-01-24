@@ -14,7 +14,6 @@ import "./style/ReactSelectGlobal.less";
 var walletCfg = getWalletCfg("default-wallet");
 var globalCfg = getGlobalCfg();
 
-var grpcport = "";
 var foundStakePoolConfig = false;
 var currentStakePoolConfig = walletCfg.get("stakepools");
 var network = walletCfg.get("network");
@@ -28,12 +27,6 @@ if (currentStakePoolConfig !== undefined) {
       break;
     }
   }
-}
-
-if (network == "testnet") {
-  grpcport = 19121;
-} else {
-  grpcport = 9121;
 }
 
 var initialState = {
@@ -93,7 +86,7 @@ var initialState = {
   grpc: {
     // WalletService
     address: "127.0.0.1",
-    port: grpcport,
+    port: "9121",
     walletService: null,
     network: network,
     requiredStakepoolAPIVersion: 2,

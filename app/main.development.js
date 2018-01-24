@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initGlobalCfg, getGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
+import { initGlobalCfg, getGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm, getWalletPath } from "./config.js";
 import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg, newWalletConfigCreation} from "./config.js";
 import path from "path";
 import fs from "fs-extra";
@@ -284,7 +284,7 @@ ipcMain.on("start-wallet", (event) => {
     return;
   }
   try {
-    dcrwPID = launchDCRWallet("default-wallet");
+    dcrwPID = launchDCRWallet(getWalletPath("default-wallet"));
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }

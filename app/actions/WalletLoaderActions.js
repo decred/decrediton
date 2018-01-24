@@ -6,7 +6,7 @@ import {
 import * as wallet from "wallet";
 import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
-import { getCfg, getCfgPath, getDcrdCert,RPCDaemonPort, RPCDaemonHost } from "config";
+import { getWalletCfg, getCfgPath, getDcrdCert } from "config";
 import axios from "axios";
 
 const MAX_RPC_RETRIES = 5;
@@ -69,7 +69,7 @@ export const createWalletRequest = (pubPass, privPass, seed, existing) =>
     dispatch({ existing: existing, type: CREATEWALLET_ATTEMPT });
     return createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
       .then(() => {
-        const config = getCfg();
+        const config = getWalletCfg();
         config.delete("discoveraccounts");
         dispatch({response: {}, type: CREATEWALLET_SUCCESS });
         dispatch(clearStakePoolConfigNewWallet());
@@ -128,7 +128,7 @@ export const STARTRPC_RETRY = "STARTRPC_RETRY";
 export const startRpcRequestFunc = (isRetry) =>
 (dispatch, getState) => {
   const {daemon: { credentials, appData} }= getState();
-  const cfg = getCfg();
+  const cfg = getWalletCfg();
   let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
   if(credentials) {
@@ -141,13 +141,13 @@ export const startRpcRequestFunc = (isRetry) =>
     rpcuser = cfg.get("rpc_user");
     rpcpass = cfg.get("rpc_pass");
     rpccertPath = `${appData}/rpc.cert`;
-    daemonhost = RPCDaemonHost();
-    rpcport = RPCDaemonPort();
+    daemonhost = "127.0.0.1";
+    rpcport = "9109";
   } else {
     rpcuser = cfg.get("rpc_user");
     rpcpass = cfg.get("rpc_pass");
-    daemonhost = RPCDaemonHost();
-    rpcport = RPCDaemonPort();
+    daemonhost = "127.0.0.1";
+    rpcport = "9109";
   }
 
   const loader = getState().walletLoader.loader;
@@ -195,7 +195,7 @@ export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
       const { subscribeBlockNtfnsResponse } = getState().walletLoader;
 
       if (!discoverAccountsComplete) {
-        const config = getCfg();
+        const config = getWalletCfg();
         config.delete("discoveraccounts");
         config.set("discoveraccounts", true);
         dispatch({complete: true, type: UPDATEDISCOVERACCOUNTS});
@@ -257,13 +257,13 @@ export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
 
 export function clearStakePoolConfigNewWallet() {
   return (dispatch) => {
-    let config = getCfg();
+    let config = getWalletCfg();
     config.delete("stakepools");
 
     getStakePoolInfo()
       .then(foundStakePoolConfigs => {
         if (foundStakePoolConfigs) {
-          let config = getCfg();
+          let config = getWalletCfg();
           config.set("stakepools", foundStakePoolConfigs);
           dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
         }
