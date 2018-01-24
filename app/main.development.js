@@ -1,7 +1,7 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
 import { initGlobalCfg, getGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
-import { dcrctlCfg, dcrdCfg, dcrwalletCfg, getWalletPath, initWalletCfg, getWalletCfg} from "./config.js";
+import { dcrctlCfg, dcrdCfg, dcrwalletCfg, getWalletPath, initWalletCfg, getWalletCfg, newWalletConfigCreation} from "./config.js";
 import path from "path";
 import fs from "fs-extra";
 import os from "os";
@@ -116,6 +116,7 @@ if (!fs.pathExistsSync(defaultWalletDirectory)){
 }
 
 if (createNewDefault) {
+  newWalletConfigCreation(defaultWalletDirectory)
   console.log("Copying wallet.db and config.json");
   // check for existing mainnet/testnet directories
   if (fs.pathExistsSync(path.join(app.getPath("userData"), "mainnet"))) {
