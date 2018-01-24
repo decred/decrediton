@@ -5,7 +5,7 @@ import {
   BalanceRequest, TicketPriceRequest, StakeInfoRequest,
   AgendasRequest, VoteChoicesRequest, SetVoteChoicesRequest, GetTicketsRequest,
 } from "middleware/walletrpc/api_pb";
-import { withLog as log, logOptionNoResponseData, withLogNoData } from "./app";
+import { withLog as log, logOptionNoResponseData, withLogNoData, withLogNoResponseData } from "./app";
 
 const promisifyReq = (fnName, Req) => log((service, ...args) => new Promise((ok, fail) =>
   service[fnName](new Req(), ...args, (err, res) => err ? fail(err) : ok(res))), fnName);
@@ -21,7 +21,7 @@ export const getAgendas = promisifyReq("agendas", AgendasRequest);
 export const getVoteChoices = promisifyReq("voteChoices", VoteChoicesRequest);
 export const doPing = promisifyReq("ping", PingRequest);
 
-export const getBalance = withLogNoData((walletService, accountNum, requiredConfs) => new Promise((ok, fail) => {
+export const getBalance = withLogNoResponseData((walletService, accountNum, requiredConfs) => new Promise((ok, fail) => {
   const request = new BalanceRequest();
   request.setAccountNumber(accountNum);
   request.setRequiredConfirmations(requiredConfs);
