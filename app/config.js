@@ -140,11 +140,12 @@ export function getDcrdPath() {
 }
 
 export function getWalletPath(walletPath) {
-  return path.join(appDataDirectory(), "wallets", walletPath);  
+  return path.join(appDataDirectory(), "wallets", walletPath);
 }
 
 export function getWalletCert(certPath) {
   var cert;
+  certPath = path.resolve(certPath, "rpc.cert");
   try {
     cert = fs.readFileSync(certPath);
   } catch (err) {

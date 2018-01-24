@@ -452,9 +452,8 @@ const launchDCRWallet = (walletPath, testnet) => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile=" + dcrwalletCfg(walletPath)];
 
-  if (testnet) {
-    args.push("--testnet");
-  }
+  args.push("--testnet");
+
   const cfg = getWalletCfg(walletPath);
   args.push("--ticketbuyer.balancetomaintainabsolute=" + cfg.get("balancetomaintain"));
   args.push("--ticketbuyer.maxfee=" + cfg.get("maxfee"));

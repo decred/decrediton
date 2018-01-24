@@ -18,7 +18,7 @@ export const cleanShutdown = log(() => Promise
 
 export const startWallet = log(() => Promise
   .resolve(ipcRenderer
-    .sendSync("start-wallet"), "default-wallet")
+    .sendSync("start-wallet"), "default-wallet", true)
   .then(pid => {
     if (pid) return pid;
     throw "Error starting wallet";
