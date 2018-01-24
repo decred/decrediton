@@ -3,7 +3,7 @@ import Promise from "promise";
 import {
   getPurchaseInfo, setStakePoolAddress, setVoteChoices, getNextAddress, getStakePoolInfo
 } from "wallet";
-import { getCfg, updateStakePoolConfig } from "../config.js";
+import { getWalletCfg, updateStakePoolConfig } from "../config.js";
 import { importScriptAttempt } from "./ControlActions";
 import * as sel from "../selectors";
 
@@ -23,7 +23,7 @@ const updateSavedConfig = (newPoolInfo, poolHost, apiKey, accountNum) =>
             : config
         : config);
     if (!stakePoolConfigs.find((conf, idx) => conf !== currentStakePoolConfig[idx])) return;
-    getCfg().set("stakepools", stakePoolConfigs);
+    getWalletCfg("default-wallet").set("stakepools", stakePoolConfigs);
     let selectedStakePool = stakePoolConfigs.filter(p => p.Host === poolHost)[0] || null;
     dispatch({
       selectedStakePool,
@@ -104,7 +104,7 @@ export const SETSTAKEPOOLVOTECHOICES_FAILED = "SETSTAKEPOOLVOTECHOICES_FAILED";
 export const SETSTAKEPOOLVOTECHOICES_SUCCESS = "SETSTAKEPOOLVOTECHOICES_SUCCESS";
 
 const updateStakePoolVoteChoicesConfig = (stakePool, voteChoices) => (dispatch, getState) => {
-  const config = getCfg();
+  const config = getWalletCfg("default-wallet");
   const voteChoicesConfig = voteChoices.getChoicesList().map(choice => ({
     agendaId: choice.getAgendaId(),
     choiceId: choice.getChoiceId()
@@ -143,7 +143,7 @@ export const discoverAvailableStakepools = () => (dispatch) =>
   getStakePoolInfo()
     .then((foundStakepoolConfigs) => {
       if (foundStakepoolConfigs) {
-        let config = getCfg();
+        let config = getWalletCfg("default-wallet");
         updateStakePoolConfig(config, foundStakepoolConfigs);
         dispatch({ type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, currentStakePoolConfig: config.get("stakepools")});
       } // TODO: add error notification after global snackbar is merged
@@ -155,7 +155,7 @@ export const changeSelectedStakePool = (selectedStakePool) => (dispatch) =>
 
 export const REMOVESTAKEPOOLCONFIG = "REMOVESTAKEPOOLCONFIG";
 export const removeStakePoolConfig = (host) => (dispatch, getState) => {
-  let config = getCfg();
+  let config = getWalletCfg("default-wallet");
   let existingPools = config.get("stakepools");
   let pool = existingPools.filter(p => p.Host === host)[0];
   if (!pool) { return; }

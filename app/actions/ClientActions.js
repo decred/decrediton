@@ -8,7 +8,7 @@ import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./S
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { showSidebarMenu } from "./SidebarActions";
 import { push as pushHistory } from "react-router-redux";
-import { getCfg } from "../config.js";
+import { getWalletCfg } from "../config.js";
 import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
@@ -394,7 +394,7 @@ export function hideAccount(accountNumber) {
       updatedHiddenAccounts = hiddenAccounts;
     }
     updatedHiddenAccounts.push(accountNumber);
-    var cfg = getCfg();
+    var cfg = getWalletCfg("default-wallet");
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
     dispatch(updateAccount({accountNumber, hidden: true}));
@@ -410,7 +410,7 @@ export function showAccount(accountNumber) {
         updatedHiddenAccounts.push(hiddenAccounts[i]);
       }
     }
-    var cfg = getCfg();
+    var cfg = getWalletCfg("default-wallet");
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
     dispatch(updateAccount({accountNumber, hidden: false}));

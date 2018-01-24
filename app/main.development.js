@@ -1,7 +1,7 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
 import { initGlobalCfg, getGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
-import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg} from "./config.js";
+import { dcrctlCfg, dcrdCfg, dcrwalletCfg, getWalletPath, initWalletCfg, getWalletCfg} from "./config.js";
 import path from "path";
 import fs from "fs-extra";
 import os from "os";
@@ -111,6 +111,7 @@ let defaultWalletDirectory = path.join(walletsDirectory, "default-wallet");
 let createNewDefault = false;
 if (!fs.pathExistsSync(defaultWalletDirectory)){
   fs.mkdirsSync(defaultWalletDirectory);
+  initWalletCfg(defaultWalletDirectory);
   createNewDefault = true;
 }
 
@@ -153,6 +154,7 @@ let availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallet
   return checkForWalletDbs;
 });
 */
+
 let availableWallets = [];
 let availableWalletAppDataDir = getWalletPath("default-wallet");
 if (availableWallets.length > 0) {
@@ -281,7 +283,7 @@ ipcMain.on("start-wallet", (event, selectedWallet) => {
     return;
   }
   try {
-    dcrwPID = launchDCRWallet(selectedWallet);
+    dcrwPID = launchDCRWallet("default-wallet");
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }
