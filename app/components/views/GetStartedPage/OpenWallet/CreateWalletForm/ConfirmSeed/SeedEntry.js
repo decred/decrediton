@@ -17,7 +17,6 @@ const messages = defineMessages({
   }
 });
 
-
 @autobind
 class SeedEntry extends React.Component {
   constructor(props) {
@@ -31,14 +30,12 @@ class SeedEntry extends React.Component {
   getInitialState () {
     return {
       currentHex: "",
-      currentWords: Array(),
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.seedType != this.props.seedType) {
-      this.props.onChange(nextProps.seedType === "words"
-        ? this.state.currentWords : this.state.currentHex);
+      this.onChange(this.props.seedType === "words" ? [] : {target:{value:""}} );
     }
   }
 
@@ -69,7 +66,7 @@ class SeedEntry extends React.Component {
           placeholder={formatMessage(messages.enterSeedPlaceholder)}
           multi={true}
           filterOptions={false}
-          value={this.state.currentWords}
+          value={this.props.seedWords}
           onChange={this.onChange}
           valueKey="name"
           labelKey="name"
@@ -90,9 +87,6 @@ class SeedEntry extends React.Component {
       this.props.onChange(val.target.value);
     } else {
       if (!this.lengthInterval(val)) return;
-      this.setState({
-        currentWords: val
-      });
       this.props.onChange(val);
     }
   }
@@ -103,7 +97,7 @@ class SeedEntry extends React.Component {
       .filter(i => i.name.toLowerCase().substr(0, input.length) === input);
     callback(null, {
       options: options.slice(0, SEED_LENGTH.WORDS),
-      complete: this.state.currentWords.length >= SEED_LENGTH.WORDS,
+      complete: this.props.seedWords.length >= SEED_LENGTH.WORDS,
     });
   }
 
@@ -126,7 +120,7 @@ class SeedEntry extends React.Component {
   handleKeyDown (e) {
     switch(e.keyCode) {
     case 9:   // TAB
-      if(this.props.seedType === "words" && this.state.currentWords.length < SEED_LENGTH.WORDS) {
+      if(this.props.seedType === "words" && this.props.seedWords.length < SEED_LENGTH.WORDS) {
         e.preventDefault();
       }
       break;
@@ -139,6 +133,7 @@ class SeedEntry extends React.Component {
 
 SeedEntry.prototypes = {
   seedType: PropTypes.string,
+  seedWords: PropTypes.array.isRequired,
 };
 
 SeedEntry.defaultProps = {

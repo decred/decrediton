@@ -7,3 +7,4 @@ export { default as TabbedHeader } from "./TabbedHeader";
 export { default as TabbedPage } from "./TabbedPage";
 export { default as Tooltip } from "./Tooltip";
 export { default as TransitionMotionWrapper } from "./TransitionMotionWrapper";
+export { default as ExternalLink } from "./ExternalLink";
