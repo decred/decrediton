@@ -97,6 +97,7 @@ export const syncDaemon = () =>
             dispatch({type: DAEMONSYNCED});
             dispatch({currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK});
             setMustOpenForm(false);
+            dispatch(startWallet());
             return;
           } else if (updateCurrentBlockCount !== 0) {
             const blocksLeft = neededBlocks - updateCurrentBlockCount;

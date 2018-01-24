@@ -1,7 +1,7 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
 import { initGlobalCfg, getGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
-import { dcrctlCfg, dcrdCfg, dcrwalletCfg, getWalletPath, initWalletCfg, getWalletCfg, newWalletConfigCreation} from "./config.js";
+import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg, newWalletConfigCreation} from "./config.js";
 import path from "path";
 import fs from "fs-extra";
 import os from "os";
@@ -116,7 +116,7 @@ if (!fs.pathExistsSync(defaultWalletDirectory)){
 }
 
 if (createNewDefault) {
-  newWalletConfigCreation(defaultWalletDirectory)
+  newWalletConfigCreation(defaultWalletDirectory);
   console.log("Copying wallet.db and config.json");
   // check for existing mainnet/testnet directories
   if (fs.pathExistsSync(path.join(app.getPath("userData"), "mainnet"))) {
@@ -154,13 +154,13 @@ let availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallet
   var checkForWalletDbs = fs.readdirSync(path.join(app.getPath("userData"), "wallets", file, cfg.get("network"))).find(fileName => {return fileName == "wallet.db";});
   return checkForWalletDbs;
 });
-*/
 
 let availableWallets = [];
 let availableWalletAppDataDir = getWalletPath("default-wallet");
 if (availableWallets.length > 0) {
   availableWalletAppDataDir = path.join(app.getPath("userData"), "wallets", availableWallets[0]);
 }
+*/
 
 const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
@@ -250,11 +250,11 @@ const installExtensions = async () => {
 };
 
 const { ipcMain } = require("electron");
-
+/*
 ipcMain.on("get-available-wallets", (event) => {
   event.returnValue = availableWallets;
 });
-
+*/
 ipcMain.on("start-daemon", (event, appData, testnet) => {
   if (dcrdPID && !daemonIsAdvanced) {
     logger.log("info", "Skipping restart of daemon as it is already running");
@@ -277,7 +277,7 @@ ipcMain.on("start-daemon", (event, appData, testnet) => {
   event.returnValue = dcrdPID;
 });
 
-ipcMain.on("start-wallet", (event, selectedWallet) => {
+ipcMain.on("start-wallet", (event) => {
   if (dcrwPID) {
     logger.log("info", "dcrwallet already started " + dcrwPID);
     event.returnValue = dcrwPID;
