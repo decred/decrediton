@@ -1,5 +1,6 @@
 import Promise from "promise";
 import { ipcRenderer } from "electron";
+import { isString } from "util";
 
 export const startDaemon = (appData) => Promise
   .resolve(ipcRenderer.sendSync("start-daemon", appData))
@@ -24,7 +25,7 @@ export const startWallet = () => Promise
 
 export const getBlockCount = (rpcCreds, appData) => Promise
   .resolve(ipcRenderer.sendSync("check-daemon", rpcCreds, appData))
-  .then(block => parseInt(block.trim()));
+  .then(block => isString(block) ? parseInt(block.trim()) : block);
 
 export const getDcrdLogs = () => Promise
   .resolve(ipcRenderer.sendSync("get-dcrd-logs"))
