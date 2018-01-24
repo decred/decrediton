@@ -255,7 +255,7 @@ ipcMain.on("get-available-wallets", (event) => {
   event.returnValue = availableWallets;
 });
 */
-ipcMain.on("start-daemon", (event, appData, testnet) => {
+ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
   if (dcrdPID && !daemonIsAdvanced) {
     logger.log("info", "Skipping restart of daemon as it is already running");
     event.returnValue = dcrdPID;
@@ -270,21 +270,21 @@ ipcMain.on("start-daemon", (event, appData, testnet) => {
     return;
   }
   try {
-    dcrdPID = launchDCRD(appData, testnet);
+    dcrdPID = launchDCRD(walletPath, appData, testnet);
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
   event.returnValue = dcrdPID;
 });
 
-ipcMain.on("start-wallet", (event) => {
+ipcMain.on("start-wallet", (event, wallet, testnet) => {
   if (dcrwPID) {
     logger.log("info", "dcrwallet already started " + dcrwPID);
     event.returnValue = dcrwPID;
     return;
   }
   try {
-    dcrwPID = launchDCRWallet(getWalletPath("default-wallet"));
+    dcrwPID = launchDCRWallet(getWalletPath(wallet), testnet);
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }
@@ -312,18 +312,17 @@ ipcMain.on("check-daemon", (event, walletPath, rpcCreds, appData, testnet) => {
     if (rpcCreds.rpc_port) {
       port = rpcCreds.rpc_port;
     }
+    args.push("--rpcserver=" + host + ":" + port);
   } else if (appData) {
     const rpccert = `${appData}/rpc.cert`;
     args.push(`--rpccert=${rpccert}`);
     args.push(`--configfile=${dcrctlCfg(walletPath)}`);
   }
 
-
+  console.log("dcrctl", testnet);
   if (testnet) {
     args.push("--testnet");
   }
-  args.push("--rpcserver=" + host + ":" + port);
-
 
   var dcrctlExe = getExecutablePath("dcrctl");
   if (!fs.existsSync(dcrctlExe)) {
@@ -391,7 +390,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
   } else {
     args = [`--configfile=${dcrdCfg(walletPath)}`];
   }
-
+  console.log("dcrd", testnet);
   if (testnet) {
     args.push("--testnet");
   }
@@ -452,7 +451,10 @@ const launchDCRWallet = (walletPath, testnet) => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile=" + dcrwalletCfg(walletPath)];
 
-  args.push("--testnet");
+  console.log("dcrwallet", testnet);
+  if (testnet) {
+    args.push("--testnet");
+  }
 
   const cfg = getWalletCfg(walletPath);
   args.push("--ticketbuyer.balancetomaintainabsolute=" + cfg.get("balancetomaintain"));

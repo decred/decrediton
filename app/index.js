@@ -16,7 +16,7 @@ var globalCfg = getGlobalCfg();
 
 var foundStakePoolConfig = false;
 var currentStakePoolConfig = walletCfg.get("stakepools");
-var network = walletCfg.get("network");
+var network = globalCfg.get("network");
 var hiddenAccounts = walletCfg.get("hiddenaccounts");
 var firstConfiguredStakePool = null;
 if (currentStakePoolConfig !== undefined) {

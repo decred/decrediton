@@ -3,8 +3,8 @@ import { ipcRenderer } from "electron";
 import { isString } from "util";
 import { withLog as log, logOptionNoResponseData } from "./app";
 
-export const startDaemon = log((appData) => Promise
-  .resolve(ipcRenderer.sendSync("start-daemon", appData))
+export const startDaemon = log((walletPath, appData, testnet) => Promise
+  .resolve(ipcRenderer.sendSync("start-daemon", walletPath, appData, testnet))
   .then(pid => {
     if (pid) return pid;
     throw "Error starting daemon";
@@ -16,16 +16,15 @@ export const cleanShutdown = log(() => Promise
     if (!stopped) throw "Error shutting down app";
   }), "Clean Shutdown");
 
-export const startWallet = log(() => Promise
-  .resolve(ipcRenderer
-    .sendSync("start-wallet"), "default-wallet", true)
+export const startWallet = log((testnet) => Promise
+  .resolve(ipcRenderer.sendSync("start-wallet", "default-wallet", testnet))
   .then(pid => {
     if (pid) return pid;
     throw "Error starting wallet";
   }), "Start Wallet");
 
-export const getBlockCount = log((rpcCreds, appData) => Promise
-  .resolve(ipcRenderer.sendSync("check-daemon", "default-wallet", rpcCreds, appData))
+export const getBlockCount = log((walletPath, rpcCreds, appData, testnet) => Promise
+  .resolve(ipcRenderer.sendSync("check-daemon", walletPath, rpcCreds, appData, testnet))
   .then(block => isString(block) ? parseInt(block.trim()) : block)
   , "Get Block Count");
 

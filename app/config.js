@@ -17,9 +17,6 @@ export function getWalletCfg(walletPath){
 
 export function initWalletCfg(walletPath) {
   const config = new Store(getWalletCfgPath(walletPath));
-  if (!config.has("network")) {
-    config.set("network", "mainnet");
-  }
   if (!config.has("wallet_start_advanced")) {
     config.set("wallet_start_advanced", false);
   }
@@ -259,7 +256,7 @@ export function newWalletConfigCreation(walletPath) {
     {
       rpcuser: "USER",
       rpcpass: "PASSWORD",
-      rpcconnect: "127.0.0.1:9109"
+      rpcserver: "127.0.0.1:9109"
     }
   };
   fs.writeFileSync(dcrctlCfg(walletPath), ini.stringify(dcrctlConf));

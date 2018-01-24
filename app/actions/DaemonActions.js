@@ -22,19 +22,19 @@ export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
   const { daemonStarted } = getState().daemon;
   if (daemonStarted) return;
-
+  const { grpc: { network }} = getState();
   if (rpcCreds) {
     dispatch({type: DAEMONSTARTED_REMOTE, credentials: rpcCreds, pid: -1});
     dispatch(syncDaemon());
   } else if (appData) {
-    wallet.startDaemon(appData)
+    wallet.startDaemon("default-wallet", appData, network == "testnet")
     .then(pid => {
       dispatch({type: DAEMONSTARTED_APPDATA, appData: appData, pid});
       dispatch(syncDaemon(null, appData));
     })
     .catch((err) => dispatch({err, type: DAEMONSTARTED_ERROR}));
   } else {
-    wallet.startDaemon()
+    wallet.startDaemon("default-wallet", null, network == "testnet")
     .then(pid => {
       dispatch({type: DAEMONSTARTED, pid});
       dispatch(syncDaemon());
@@ -70,8 +70,9 @@ export const getAvailableWallets = () => (dispatch) => {
   });
 };
 
-export const startWallet = () => (dispatch) => {
-  wallet.startWallet()
+export const startWallet = () => (dispatch, getState) => {
+  const { grpc: { network }} = getState();
+  wallet.startWallet(network == "testnet")
   .then(pid => {
     dispatch({type: WALLETREADY, pid});
     setTimeout(()=>dispatch(versionCheckAction()), 1000);
@@ -87,11 +88,13 @@ export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks }} = getState();
+      const { grpc: { network }} = getState();
       const { daemon: { daemonSynced, timeStart, blockStart, credentials, appData} } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
+      console.log(network);
       return wallet
-        .getBlockCount(credentials, appData)
+        .getBlockCount("default-wallet", credentials, appData, network == "testnet")
         .then(updateCurrentBlockCount => {
           if ((neededBlocks == 0 && updateCurrentBlockCount > 0) || (neededBlocks != 0 && updateCurrentBlockCount >= neededBlocks)) {
             dispatch({type: DAEMONSYNCED});
