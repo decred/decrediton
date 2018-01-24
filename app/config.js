@@ -201,11 +201,13 @@ export function updateStakePoolConfig(config, foundStakePoolConfigs) {
   }
 }
 
-export function getAppdataPath(config) {
+export function getAppdataPath() {
+  const config = getWalletCfg("default-wallet");
   return config.get("appdata_path");
 }
 
-export function setAppdataPath(config, appdataPath) {
+export function setAppdataPath(appdataPath) {
+  const config = getWalletCfg("default-wallet");
   const credentialKeys = {
     rpc_user : "",
     rpc_password : "",
@@ -217,22 +219,26 @@ export function setAppdataPath(config, appdataPath) {
   return config.set("appdata_path",appdataPath);
 }
 
-export function getRemoteCredentials(config) {
+export function getRemoteCredentials() {
+  const config = getWalletCfg("default-wallet");
   return config.get("remote_credentials");
 }
 
-export function setRemoteCredentials(config, key, value) {
+export function setRemoteCredentials(key, value) {
+  const config = getWalletCfg("default-wallet");
   config.set("appdata_path","");
   let credentials = config.get("remote_credentials");
   credentials[key] = value;
   return config.set("remote_credentials",credentials);
 }
 
-export function getMustOpenForm(config) {
+export function getMustOpenForm() {
+  const config = getWalletCfg("default-wallet");
   return config.get("must_open_form");
 }
 
-export function setMustOpenForm(config, openForm) {
+export function setMustOpenForm(openForm) {
+  const config = getWalletCfg("default-wallet");
   return config.set("must_open_form", openForm);
 }
 
@@ -264,7 +270,9 @@ export function newWalletConfigCreation(walletPath) {
       tlscurve: "P-256",
       noinitialload: "1",
       onetimetlskey: "1",
-      rpcconnect: "127.0.0.1:9109"
+      rpcconnect: "127.0.0.1:9109",
+      rpclisten: "127.0.0.1:9110",
+      grpclisten: "127.0.0.1:9121"
     },
   };
   fs.writeFileSync(dcrwalletCfg(walletPath), ini.stringify(dcrwConf));

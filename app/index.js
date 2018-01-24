@@ -39,14 +39,14 @@ if (network == "testnet") {
 var initialState = {
   settings: {
     currentSettings: {
-      currencyDisplay: getWalletCfg.get("currency_display"),
-      network: getWalletCfg.get("network"),
+      currencyDisplay: walletCfg.get("currency_display"),
+      network: walletCfg.get("network"),
       locale: globalCfg.get("locale"),
       daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
     },
     tempSettings: {
-      currencyDisplay: getWalletCfg.get("currency_display"),
-      network: getWalletCfg.get("network"),
+      currencyDisplay: walletCfg.get("currency_display"),
+      network: walletCfg.get("network"),
       locale: globalCfg.get("locale"),
       daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
     },
