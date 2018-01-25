@@ -11,12 +11,12 @@ export function getGlobalCfg() {
 }
 
 export function getWalletCfg(walletPath){
-  const config = new Store(getWalletCfgPath(walletPath));
+  const config = new Store({cwd: getWalletCfgPath(walletPath)});
   return (config);
 }
 
 export function initWalletCfg(walletPath) {
-  const config = new Store(getWalletCfgPath(walletPath));
+  const config = new Store({cwd: getWalletCfgPath(walletPath)});
   if (!config.has("wallet_start_advanced")) {
     config.set("wallet_start_advanced", false);
   }
@@ -89,7 +89,7 @@ export function getGlobalCfgPath() {
 }
 
 export function getWalletCfgPath(wallet) {
-  return path.resolve(path.join(appDataDirectory(), "wallets", wallet), "config.json");
+  return path.resolve(path.join(appDataDirectory(), "wallets", wallet));
 }
 
 export function validateGlobalCfgFile() {
@@ -276,13 +276,13 @@ export function newWalletConfigCreation(walletPath) {
   fs.writeFileSync(dcrwalletCfg(walletPath), ini.stringify(dcrwConf));
 }
 export function dcrctlCfg(walletPath) {
-  return path.resolve(walletPath, "dcrctl.conf");
+  return path.resolve(getWalletPath(walletPath), "dcrctl.conf");
 }
 
 export function dcrdCfg(walletPath) {
-  return path.resolve(walletPath, "dcrd.conf");
+  return path.resolve(getWalletPath(walletPath), "dcrd.conf");
 }
 
 export function dcrwalletCfg(walletPath) {
-  return path.resolve(walletPath, "dcrwallet.conf");
+  return path.resolve(getWalletPath(walletPath), "dcrwallet.conf");
 }

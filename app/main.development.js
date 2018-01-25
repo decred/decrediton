@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initGlobalCfg, getGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm, getWalletPath } from "./config.js";
+import { initGlobalCfg, getGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
 import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg, newWalletConfigCreation} from "./config.js";
 import path from "path";
 import fs from "fs-extra";
@@ -284,7 +284,7 @@ ipcMain.on("start-wallet", (event, wallet, testnet) => {
     return;
   }
   try {
-    dcrwPID = launchDCRWallet(getWalletPath(wallet), testnet);
+    dcrwPID = launchDCRWallet(wallet, testnet);
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }
@@ -457,6 +457,7 @@ const launchDCRWallet = (walletPath, testnet) => {
   }
 
   const cfg = getWalletCfg(walletPath);
+
   args.push("--ticketbuyer.balancetomaintainabsolute=" + cfg.get("balancetomaintain"));
   args.push("--ticketbuyer.maxfee=" + cfg.get("maxfee"));
   args.push("--ticketbuyer.maxpricerelative=" + cfg.get("maxpricerelative"));
