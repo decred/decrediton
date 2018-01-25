@@ -153,8 +153,6 @@ export const startRpcRequestFunc = (isRetry) =>
   const loader = getState().walletLoader.loader;
 
   const cert = getDcrdCert(rpccertPath);
-  console.log(rpcuser, rpccertPath, rpcpass, daemonhost, rpcport);
-  console.log(cert);
   if (!isRetry) dispatch({type: STARTRPC_ATTEMPT});
   return startRpc(loader, daemonhost, rpcport, rpcuser, rpcpass, cert)
     .then(() => {

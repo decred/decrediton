@@ -101,35 +101,34 @@ app.setPath("userData", appDataDirectory());
 
 
 // Check that wallets directory has been created, if not, make it.
-console.log("Checking wallets directory exists");
 let walletsDirectory = path.join(app.getPath("userData"),"wallets");
 fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
 
 // Check if default-wallet directory has been created, if not, make it.
-console.log("Checking default-wallet directory exists");
 let defaultWalletDirectory = path.join(walletsDirectory, "default-wallet");
 if (!fs.pathExistsSync(defaultWalletDirectory)){
   fs.mkdirsSync(defaultWalletDirectory);
-  initWalletCfg("default-wallet");
 
+  // create new configs for default wallet
+  initWalletCfg("default-wallet");
   newWalletConfigCreation("default-wallet");
-  console.log("Copying wallet.db and config.json");
+
   // check for existing mainnet/testnet directories
   if (fs.pathExistsSync(path.join(app.getPath("userData"), "mainnet"))) {
-    console.log("Copying mainnet wallet.db");
     fs.mkdirsSync(path.join(defaultWalletDirectory, "mainnet"));
     fs.copySync(path.join(app.getPath("userData"), "mainnet"), path.join(defaultWalletDirectory, "mainnet"));
   }
   if (fs.pathExistsSync(path.join(app.getPath("userData"), "testnet2"))) {
-    console.log("Copying testnet wallet.db");
     fs.mkdirsSync(path.join(defaultWalletDirectory, "testnet2"));
     fs.copySync(path.join(app.getPath("userData"), "testnet2"), path.join(defaultWalletDirectory, "testnet2"));
   }
+
+  // copy over existing config.json if it exists
   if (fs.pathExistsSync(path.join(app.getPath("userData"), "config.json"))) {
-    console.log("Copying config.json");
     fs.copySync(path.join(app.getPath("userData"), "config.json"), path.join(defaultWalletDirectory, "config.json"));
   }
 }
+
 // Verify that config.json is valid JSON before fetching it, because
 // it will silently fail when fetching.
 let err = validateGlobalCfgFile();
@@ -139,6 +138,8 @@ if (err !== null) {
   app.quit();
 }
 var globalCfg = initGlobalCfg();
+
+
 /*
 // Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
 let availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallets")).find(file => {
@@ -315,7 +316,6 @@ ipcMain.on("check-daemon", (event, walletPath, rpcCreds, appData, testnet) => {
     args.push(`--configfile=${dcrctlCfg(walletPath)}`);
   }
 
-  console.log("dcrctl", testnet);
   if (testnet) {
     args.push("--testnet");
   }
@@ -386,7 +386,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
   } else {
     args = [`--configfile=${dcrdCfg(walletPath)}`];
   }
-  console.log("dcrd", testnet);
+
   if (testnet) {
     args.push("--testnet");
   }
@@ -447,7 +447,6 @@ const launchDCRWallet = (walletPath, testnet) => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile=" + dcrwalletCfg(walletPath)];
 
-  console.log("dcrwallet", testnet);
   if (testnet) {
     args.push("--testnet");
   }

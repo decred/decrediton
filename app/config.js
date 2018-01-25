@@ -111,7 +111,7 @@ export function validateGlobalCfgFile() {
     JSON.parse(fileContents);
   }
   catch(err) {
-    console.log(err);
+    console.error(err);
     return err;
   }
 

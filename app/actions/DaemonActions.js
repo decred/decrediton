@@ -63,7 +63,6 @@ export const getAvailableWallets = () => (dispatch) => {
   wallet.getAvailableWallets()
   .then(availableWallets => {
     dispatch({availableWallets, type: AVAILABLE_WALLETS});
-    console.log(availableWallets);
   })
   .catch((err) => {
     console.log(err);
@@ -92,7 +91,6 @@ export const syncDaemon = () =>
       const { daemon: { daemonSynced, timeStart, blockStart, credentials, appData} } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
-      console.log(network);
       return wallet
         .getBlockCount("default-wallet", credentials, appData, network == "testnet")
         .then(updateCurrentBlockCount => {
