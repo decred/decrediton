@@ -311,6 +311,9 @@ export const PURCHASETICKETS_SUCCESS = "PURCHASETICKETS_SUCCESS";
 export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requiredConf,
   numTickets, expiry, ticketFee, txFee, stakepool) {
   return (dispatch, getState) => {
+    wallet.log("info", "Purchasing tickets", accountNum, spendLimit, requiredConf,
+      numTickets, expiry, ticketFee, txFee, stakepool.TicketAddress,
+      stakepool.PoolAddress, stakepool.PoolFees);
     const {getAccountsResponse} = getState().grpc;
     var request = new PurchaseTicketsRequest();
     request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));

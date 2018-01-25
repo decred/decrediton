@@ -5,12 +5,12 @@ import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
   SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from "middleware/walletrpc/api_pb";
 
-export const getLoader = ({ address, port }) =>
+export const getLoader = log(({ address, port }) =>
   new Promise((resolve, reject) =>
     rpcLoader(address, port, (loader, error) =>
-      error ? reject(error) : resolve(loader)));
+      error ? reject(error) : resolve(loader))), "Get Loader");
 
-export const startRpc = (loader, daemonhost, rpcport, rpcuser, rpcpass, cert) =>
+export const startRpc = log((loader, daemonhost, rpcport, rpcuser, rpcpass, cert) =>
   new Promise((resolve, reject) => {
     const request = new StartConsensusRpcRequest();
     request.setNetworkAddress(daemonhost + ":" + rpcport);
@@ -18,12 +18,12 @@ export const startRpc = (loader, daemonhost, rpcport, rpcuser, rpcpass, cert) =>
     request.setPassword(new Uint8Array(Buffer.from(rpcpass)));
     request.setCertificate(new Uint8Array(cert));
     loader.startConsensusRpc(request, error => error ? reject(error) : resolve());
-  });
+  }), "Start RPC", logOptionNoArgs());
 
-export const getWalletExists = (loader) =>
+export const getWalletExists = log((loader) =>
   new Promise((resolve, reject) =>
     loader.walletExists(new WalletExistsRequest(), (error, response) =>
-      error ? reject(error) : resolve(response)));
+      error ? reject(error) : resolve(response))), "Get Wallet Exists");
 
 export const createWallet = log((loader, pubPass, privPass, seed) =>
   new Promise((resolve, reject) => {

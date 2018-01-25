@@ -9,6 +9,7 @@ export const log = (level, ...args) => {
 };
 
 export const logOptionNoArgs = (opts) => ({...opts, noArguments: true});
+export const logOptionNoResponseData = (opts) => ({...opts, noResponseData: true});
 
 // Formats a dynamic list of log arguments
 const formatLogArgs = (msg, args) => {
@@ -48,8 +49,12 @@ export const withLog = (f, msg, opts={}) => (...args) => {
         if (res.length === 1 && res[0] === undefined) {
           log("debug", "%s returned without data", msg);
         } else {
-          const { logMsg, logArgs } = formatLogArgs(`${msg} returned `, res);
-          log("debug", logMsg, ...logArgs);
+          if (opts.noResponseData) {
+            log("debug", `${msg} returned [response data omitted]`);
+          } else {
+            const { logMsg, logArgs } = formatLogArgs(`${msg} returned `, res);
+            log("debug", logMsg, ...logArgs);
+          }
         }
 
         resolve(...res);
@@ -65,3 +70,9 @@ export const withLog = (f, msg, opts={}) => (...args) => {
 
 export const withLogNoArgs = (f, msg, opts={}) =>
   withLog(f, msg, logOptionNoArgs(opts));
+
+export const withLogNoResponseData = (f, msg, opts={}) =>
+  withLog(f, msg, logOptionNoResponseData(opts));
+
+export const withLogNoData = (f, msg, opts={}) =>
+  withLog(f, msg, logOptionNoArgs(logOptionNoResponseData(opts)));

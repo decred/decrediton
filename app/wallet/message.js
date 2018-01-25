@@ -1,6 +1,6 @@
 import Promise from "promise";
 import { SignMessageRequest, VerifyMessageRequest }  from "middleware/walletrpc/api_pb";
-import { withLogNoArgs as log } from "./app";
+import { withLogNoData as log } from "./app";
 
 export const signMessage = log((walletService, address, message, passphrase) => {
   const request = new SignMessageRequest();
