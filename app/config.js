@@ -171,6 +171,12 @@ export function readDcrdConfig(configPath) {
     let newCfg = {};
     newCfg.rpc_host = "127.0.0.1";
     newCfg.rpc_port = "9109";
+    for (let [key, value] of Object.entries(readCfg)) {
+      console.log(key + ':' + value);
+      for (let [key2, value2] of Object.entries(value)) {
+        console.log(key2 + ':' + value2);
+      }
+    }
     if (Object.values(readCfg)[0]["rpcuser"]) newCfg.rpc_user = Object.values(readCfg)[0]["rpcuser"];
     if (Object.values(readCfg)[0]["rpcpass"]) newCfg.rpc_password = Object.values(readCfg)[0]["rpcpass"];
     if (Object.values(readCfg)[0]["rpclisten"]) {
