@@ -269,7 +269,6 @@ export function newWalletConfigCreation(walletPath) {
       noinitialload: "1",
       onetimetlskey: "1",
       rpcconnect: "127.0.0.1:9109",
-      rpclisten: "127.0.0.1:9110",
       grpclisten: "127.0.0.1:9121",
       appdata: walletPath,
     },
