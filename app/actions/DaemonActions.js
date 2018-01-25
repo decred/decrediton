@@ -28,15 +28,15 @@ export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
     dispatch(syncDaemon());
   } else if (appData) {
     wallet.startDaemon("default-wallet", appData, network == "testnet")
-    .then(pid => {
-      dispatch({type: DAEMONSTARTED_APPDATA, appData: appData, pid});
+    .then(rpcCreds => {
+      dispatch({type: DAEMONSTARTED_APPDATA, appData: appData, credentials: rpcCreds});
       dispatch(syncDaemon(null, appData));
     })
     .catch((err) => dispatch({err, type: DAEMONSTARTED_ERROR}));
   } else {
     wallet.startDaemon("default-wallet", null, network == "testnet")
-    .then(pid => {
-      dispatch({type: DAEMONSTARTED, pid});
+    .then(rpcCreds => {
+      dispatch({type: DAEMONSTARTED, credentials: rpcCreds});
       dispatch(syncDaemon());
     })
     .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));

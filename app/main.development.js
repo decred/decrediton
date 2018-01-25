@@ -1,7 +1,7 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
 import { initGlobalCfg, getGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
-import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg, newWalletConfigCreation} from "./config.js";
+import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, getWalletPath} from "./config.js";
 import path from "path";
 import fs from "fs-extra";
 import os from "os";
@@ -255,7 +255,6 @@ ipcMain.on("get-available-wallets", (event) => {
 ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
   if (dcrdPID && !daemonIsAdvanced) {
     logger.log("info", "Skipping restart of daemon as it is already running");
-    event.returnValue = dcrdPID;
     return;
   }
   if(appData){
@@ -263,7 +262,6 @@ ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
   }
   if (dcrdPID) {
     logger.log("info", "dcrd already started " + dcrdPID);
-    event.returnValue = dcrdPID;
     return;
   }
   try {
@@ -381,12 +379,18 @@ const AddToLog = (destIO, destLogBuffer, data) => {
 const launchDCRD = (walletPath, appdata, testnet) => {
   var spawn = require("child_process").spawn;
   let args = [];
+  let dcrdConfig = {};
   if(appdata){
     args = [`--appdata=${appdata}`];
+    dcrdConfig = readDcrdConfig(appdata);
+    console.log(appdata);
+    dcrdConfig.rpc_cert = path.resolve(appdata, "rpc.cert");
   } else {
-    args = [`--configfile=${dcrdCfg(walletPath)}`];
+    args = [`--configfile=${dcrdCfg(getWalletPath(walletPath))}`];
+    dcrdConfig = readDcrdConfig(getWalletPath(walletPath));
+    dcrdConfig.rpc_cert = path.resolve(getDcrdPath(), "rpc.cert");
   }
-
+  console.log(dcrdConfig);
   if (testnet) {
     args.push("--testnet");
   }
@@ -440,7 +444,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
   logger.log("info", "dcrd started with pid:" + dcrdPID);
 
   dcrd.unref();
-  return dcrdPID;
+  return dcrdConfig;
 };
 
 const launchDCRWallet = (walletPath, testnet) => {

@@ -164,6 +164,29 @@ export function getWalletCert(certPath) {
   return(cert);
 }
 
+export function readDcrdConfig(configPath) {
+  try {
+    if (!fs.existsSync(dcrdCfg(configPath))) return;
+    const readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(configPath))).toString());
+    let newCfg = {};
+    newCfg.rpc_host = "127.0.0.1";
+    newCfg.rpc_port = "9109";
+    if (Object.values(readCfg)[0]["rpcuser"]) newCfg.rpc_user = Object.values(readCfg)[0]["rpcuser"];
+    if (Object.values(readCfg)[0]["rpcpass"]) newCfg.rpc_password = Object.values(readCfg)[0]["rpcpass"];
+    if (Object.values(readCfg)[0]["rpclisten"]) {
+      const splitListen = Object.values(readCfg)[0]["rpclisten"].split(":");
+      if (splitListen.length >= 2) {
+        newCfg.rpc_host = splitListen[0];
+        newCfg.rpc_port = splitListen[1];
+      }
+    }
+
+    return newCfg;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export function getDcrdCert(dcrdCertPath) {
   if(dcrdCertPath)
     if(fs.existsSync(dcrdCertPath))
@@ -256,7 +279,7 @@ export function newWalletConfigCreation(walletPath) {
       rpclisten: "127.0.0.1:9109"
     }
   };
-  fs.writeFileSync(dcrdCfg(walletPath), ini.stringify(dcrdConf));
+  fs.writeFileSync(dcrdCfg(getWalletPath(walletPath)), ini.stringify(dcrdConf));
   var dcrctlConf = {
     "Application Options":
     {
@@ -265,7 +288,7 @@ export function newWalletConfigCreation(walletPath) {
       rpcserver: "127.0.0.1:9109"
     }
   };
-  fs.writeFileSync(dcrctlCfg(walletPath), ini.stringify(dcrctlConf));
+  fs.writeFileSync(dcrctlCfg(getWalletPath(walletPath)), ini.stringify(dcrctlConf));
   var dcrwConf = {
     "Application Options":
     {
@@ -279,16 +302,16 @@ export function newWalletConfigCreation(walletPath) {
       appdata: getWalletPath(walletPath),
     },
   };
-  fs.writeFileSync(dcrwalletCfg(walletPath), ini.stringify(dcrwConf));
+  fs.writeFileSync(dcrwalletCfg(getWalletPath(walletPath)), ini.stringify(dcrwConf));
 }
-export function dcrctlCfg(walletPath) {
-  return path.resolve(getWalletPath(walletPath), "dcrctl.conf");
-}
-
-export function dcrdCfg(walletPath) {
-  return path.resolve(getWalletPath(walletPath), "dcrd.conf");
+export function dcrctlCfg(configPath) {
+  return path.resolve(configPath, "dcrctl.conf");
 }
 
-export function dcrwalletCfg(walletPath) {
-  return path.resolve(getWalletPath(walletPath), "dcrwallet.conf");
+export function dcrdCfg(configPath) {
+  return path.resolve(configPath, "dcrd.conf");
+}
+
+export function dcrwalletCfg(configPath) {
+  return path.resolve(configPath, "dcrwallet.conf");
 }
