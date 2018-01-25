@@ -108,15 +108,11 @@ fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
 // Check if default-wallet directory has been created, if not, make it.
 console.log("Checking default-wallet directory exists");
 let defaultWalletDirectory = path.join(walletsDirectory, "default-wallet");
-let createNewDefault = false;
 if (!fs.pathExistsSync(defaultWalletDirectory)){
   fs.mkdirsSync(defaultWalletDirectory);
-  initWalletCfg(defaultWalletDirectory);
-  createNewDefault = true;
-}
+  initWalletCfg("default-wallet");
 
-if (createNewDefault) {
-  newWalletConfigCreation(defaultWalletDirectory);
+  newWalletConfigCreation("default-wallet");
   console.log("Copying wallet.db and config.json");
   // check for existing mainnet/testnet directories
   if (fs.pathExistsSync(path.join(app.getPath("userData"), "mainnet"))) {

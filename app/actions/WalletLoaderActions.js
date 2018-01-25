@@ -6,7 +6,7 @@ import {
 import * as wallet from "wallet";
 import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
-import { getWalletCfg, getCfgPath, getDcrdCert } from "config";
+import { getWalletCfg, getWalletCfgPath, getDcrdCert } from "config";
 import axios from "axios";
 
 const MAX_RPC_RETRIES = 5;
@@ -153,7 +153,8 @@ export const startRpcRequestFunc = (isRetry) =>
   const loader = getState().walletLoader.loader;
 
   const cert = getDcrdCert(rpccertPath);
-
+  console.log(rpcuser, rpccertPath, rpcpass, daemonhost, rpcport);
+  console.log(cert);
   if (!isRetry) dispatch({type: STARTRPC_ATTEMPT});
   return startRpc(loader, daemonhost, rpcport, rpcuser, rpcpass, cert)
     .then(() => {
@@ -171,7 +172,7 @@ export const startRpcRequestFunc = (isRetry) =>
           setTimeout(() => dispatch(startRpcRequestFunc(isRetry)), RPC_RETRY_DELAY);
         } else {
           dispatch({
-            error: `${error}.  You may need to edit ${getCfgPath()} and try again`,
+            error: `${error}.  You may need to edit ${getWalletCfgPath("default-wallet")} and try again`,
             type: STARTRPC_FAILED
           });
         }

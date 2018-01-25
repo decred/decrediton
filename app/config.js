@@ -17,6 +17,12 @@ export function getWalletCfg(walletPath){
 
 export function initWalletCfg(walletPath) {
   const config = new Store({cwd: getWalletCfgPath(walletPath)});
+  if (!config.has("rpc_user")) {
+    config.set("USER", false);
+  }
+  if (!config.has("rpc_pass")) {
+    config.set("PASSWORD", false);
+  }
   if (!config.has("wallet_start_advanced")) {
     config.set("wallet_start_advanced", false);
   }
@@ -270,7 +276,7 @@ export function newWalletConfigCreation(walletPath) {
       onetimetlskey: "1",
       rpcconnect: "127.0.0.1:9109",
       grpclisten: "127.0.0.1:9121",
-      appdata: walletPath,
+      appdata: getWalletPath(walletPath),
     },
   };
   fs.writeFileSync(dcrwalletCfg(walletPath), ini.stringify(dcrwConf));
