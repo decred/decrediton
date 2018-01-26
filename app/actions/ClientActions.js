@@ -12,6 +12,7 @@ import { getCfg } from "../config.js";
 import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
+import { clipboard } from "electron";
 
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
@@ -631,3 +632,11 @@ export const listenForAppReloadRequest = cb => () => onAppReloadRequested(cb);
 
 export const showTicketList = status => dispatch =>
   dispatch(pushHistory("/tickets/mytickets/" + status));
+
+
+export const SEEDCOPIEDTOCLIPBOARD = "SEEDCOPIEDTOCLIPBOARD";
+export const copySeedToClipboard = (mnemonic) => (dispatch) => {
+  clipboard.clear();
+  clipboard.writeText(mnemonic);
+  dispatch({type: SEEDCOPIEDTOCLIPBOARD});
+};

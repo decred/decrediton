@@ -25,7 +25,8 @@ import {
 } from "../actions/StakePoolActions";
 import {
   NEW_TRANSACTIONS_RECEIVED,
-  GETSTARTUPWALLETINFO_FAILED
+  GETSTARTUPWALLETINFO_FAILED,
+  SEEDCOPIEDTOCLIPBOARD,
 } from "../actions/ClientActions";
 import { SNACKBAR_DISMISS_MESSAGES } from "../actions/SnackbarActions";
 
@@ -150,6 +151,10 @@ const messages = defineMessages({
   VERIFYMESSAGE_FAILED: {
     id: "security.verify.failed",
     defaultMessage: "{originalError}"
+  },
+  SEEDCOPIEDTOCLIPBOARD: {
+    id: "createWallet.seedCopiedToClipboard",
+    defaultMessage: "Seed copied to clipboard!"
   }
 });
 
@@ -188,6 +193,7 @@ export default function snackbar(state = {}, action) {
   case UPDATESTAKEPOOLCONFIG_SUCCESS:
   case SETSTAKEPOOLVOTECHOICES_SUCCESS:
   case REMOVESTAKEPOOLCONFIG:
+  case SEEDCOPIEDTOCLIPBOARD:
     type = "Success";
     message = messages[action.type] || messages.defaultSuccessMessage;
     break;

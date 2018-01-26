@@ -81,7 +81,8 @@
   background-color: #0025cc;
 }
 
-.key-blue-button-disabled, .key-blue-button[disabled] {
+.key-blue-button-disabled, .key-blue-button[disabled],
+  .danger-button-disabled, .danger-button[disabled] {
   cursor: default;
   display: inline-block;
   padding: 16px;
@@ -359,4 +360,10 @@
 
 .transaction-link:hover {
   color: @link-hover-color;
+}
+
+[data-pseudo-content]::before,
+[data-pseudo-content--before]::before,
+[data-pseudo-content--after]::after {
+  content: attr(data-pseudo-content);
 }

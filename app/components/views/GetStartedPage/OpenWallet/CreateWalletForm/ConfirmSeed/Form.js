@@ -4,7 +4,7 @@ import { FormattedMessage as T } from "react-intl";
 import "style/CreateWalletForm.less";
 import { InfoModalButton } from "buttons";
 import { SeedInfoModalContent } from "modals";
-import { SEED_LENGTH } from "wallet/seed";
+import { SEED_LENGTH, SEED_WORDS } from "wallet/seed";
 
 const getRemaining = (seedWords, seedType) =>
   (seedType === "words" ? SEED_LENGTH.WORDS - seedWords.length : seedWords.length);
@@ -22,7 +22,20 @@ class ConfirmSeedForm extends React.Component{
   }
 
   handleOnPaste = (e) => {
+    const { createWalletExisting } = this.props;
+
     e.preventDefault();
+    if (createWalletExisting) {
+      const lowercaseSeedWords = SEED_WORDS.map(w => w.toLowerCase());
+      const clipboardData = e.clipboardData.getData("text");
+      const words = clipboardData
+        .split(/\b/)
+        .filter(w => /^[\w]+$/.test(w))
+        .filter(w => lowercaseSeedWords.indexOf(w.toLowerCase()) > -1)
+        .map(w => ({name: w}));
+      this.props.setSeedWords(words);
+    }
+
     this.setState({
       showPasteWarning : true
     });
@@ -97,10 +110,17 @@ class ConfirmSeedForm extends React.Component{
         <div className="create-wallet-field">
           <div className="input-form">
             {!this.state.showPasteWarning ? null : <div className="orange-warning">
-              <T id="confirmSeed.errors.noPaste" m="*You should not paste your Seeds. Please type it" />
+              { this.props.createWalletExisting
+                ? <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
+                : <T id="confirmSeed.errors.noPaste" m="*You should not paste your Seeds. Please type it" />}
             </div>}
             <form className="input-form-confirm-seed">
-              <SeedEntry label="Seed Entry" seedType={seedType} onChange={setSeedWords} onPaste={this.handleOnPaste} />
+              <SeedEntry
+                label="Seed Entry"
+                seedType={seedType}
+                onChange={setSeedWords}
+                onPaste={this.handleOnPaste}
+                seedWords={seedWords}/>
             </form>
             }
           </div>

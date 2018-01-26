@@ -14,7 +14,8 @@ class CreateWalletForm extends React.Component {
       mnemonic: "",
       seed: "",
       passPhrase: "",
-      decode: null
+      decode: null,
+      showCopySeedConfirm: false,
     };
   }
 
@@ -32,6 +33,20 @@ class CreateWalletForm extends React.Component {
     this.resetState();
   }
 
+  handleCopySeed() {
+    this.setState({showCopySeedConfirm: true});
+  }
+
+  onSubmitCopySeedConfirm() {
+    const { mnemonic } = this.state;
+    this.setState({showCopySeedConfirm: false});
+    this.props.copySeedToClipboard(mnemonic);
+  }
+
+  onCancelCopySeedConfirm() {
+    this.setState({showCopySeedConfirm: false});
+  }
+
   render() {
     const {
       confirmNewSeed,
@@ -41,9 +56,12 @@ class CreateWalletForm extends React.Component {
     const {
       setSeed,
       setPassPhrase,
-      onCreateWallet
+      onCreateWallet,
+      handleCopySeed,
+      onSubmitCopySeedConfirm,
+      onCancelCopySeedConfirm,
     } = this;
-    const { mnemonic, decode } = this.state;
+    const { mnemonic, decode, showCopySeedConfirm } = this.state;
     const isValid = this.isValid();
 
     return (confirmNewSeed || createWalletExisting)
@@ -63,7 +81,11 @@ class CreateWalletForm extends React.Component {
         <CreateWallet
           {...{
             mnemonic,
-            createWalletConfirmNewSeed
+            createWalletConfirmNewSeed,
+            handleCopySeed,
+            showCopySeedConfirm,
+            onSubmitCopySeedConfirm,
+            onCancelCopySeedConfirm,
           }}
         />
       );
