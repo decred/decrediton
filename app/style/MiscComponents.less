@@ -361,3 +361,9 @@
 .transaction-link:hover {
   color: @link-hover-color;
 }
+
+[data-pseudo-content]::before,
+[data-pseudo-content--before]::before,
+[data-pseudo-content--after]::after {
+  content: attr(data-pseudo-content);
+}

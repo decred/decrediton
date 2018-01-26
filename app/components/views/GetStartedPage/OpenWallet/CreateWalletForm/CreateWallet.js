@@ -1,6 +1,7 @@
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { SeedCopyConfirmModal } from "modals";
+import { UnselectableText } from "shared";
 import "style/CreateWalletForm.less";
 
 const CreateWallet = ({
@@ -42,7 +43,10 @@ const CreateWallet = ({
           />
         </div>
       </div>
-      <div className="seed" onCopy={handleCopySeed}>{mnemonic}</div>
+      <div className="seed">
+        <UnselectableText>{mnemonic}</UnselectableText>
+        <a className="copy-to-clipboard-icon" onClick={handleCopySeed}></a>
+      </div>
       <KeyBlueButton className="wallet-key-blue-button" onClick={createWalletConfirmNewSeed}>
         <T id="createWallet.continueBtn" m="Continue" />
       </KeyBlueButton>
