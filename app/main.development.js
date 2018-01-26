@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initGlobalCfg, getGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
+import { initGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
 import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, getWalletPath} from "./config.js";
 import path from "path";
 import fs from "fs-extra";
@@ -576,12 +576,12 @@ app.on("ready", async () => {
 
   // when installing (on first run) locale will be empty. Determine the user's
   // OS locale and set that as decrediton's locale.
-  let cfgLocale = getGlobalCfg().get("locale", "");
+  let cfgLocale = globalCfg.get("locale", "");
   let locale = locales.find(value => value.key === cfgLocale);
   if (!locale) {
     let newCfgLocale = appLocaleFromElectronLocale(app.getLocale());
     logger.log("error", `Locale ${cfgLocale} not found. Switching to locale ${newCfgLocale}.`);
-    getGlobalCfg().set("locale", newCfgLocale);
+    globalCfg.set("locale", newCfgLocale);
     locale = locales.find(value => value.key === newCfgLocale);
   }
 
