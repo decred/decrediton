@@ -16,15 +16,15 @@ export const cleanShutdown = log(() => Promise
     if (!stopped) throw "Error shutting down app";
   }), "Clean Shutdown");
 
-export const startWallet = log((testnet) => Promise
-  .resolve(ipcRenderer.sendSync("start-wallet", "default-wallet", testnet))
+export const startWallet = log((walletPath, testnet) => Promise
+  .resolve(ipcRenderer.sendSync("start-wallet", walletPath, testnet))
   .then(pid => {
     if (pid) return pid;
     throw "Error starting wallet";
   }), "Start Wallet");
 
-export const getBlockCount = log((walletPath, rpcCreds, appData, testnet) => Promise
-  .resolve(ipcRenderer.sendSync("check-daemon", walletPath, rpcCreds, appData, testnet))
+export const getBlockCount = log((walletPath, rpcCreds, testnet) => Promise
+  .resolve(ipcRenderer.sendSync("check-daemon", walletPath, rpcCreds, testnet))
   .then(block => isString(block) ? parseInt(block.trim()) : block)
   , "Get Block Count");
 

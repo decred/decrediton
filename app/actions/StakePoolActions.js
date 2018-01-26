@@ -23,7 +23,8 @@ const updateSavedConfig = (newPoolInfo, poolHost, apiKey, accountNum) =>
             : config
         : config);
     if (!stakePoolConfigs.find((conf, idx) => conf !== currentStakePoolConfig[idx])) return;
-    getWalletCfg("default-wallet").set("stakepools", stakePoolConfigs);
+    const walletCfg = getWalletCfg("default-wallet");
+    walletCfg.set("stakepools", stakePoolConfigs);
     let selectedStakePool = stakePoolConfigs.filter(p => p.Host === poolHost)[0] || null;
     dispatch({
       selectedStakePool,

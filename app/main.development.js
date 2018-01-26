@@ -272,14 +272,14 @@ ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
   event.returnValue = dcrdPID;
 });
 
-ipcMain.on("start-wallet", (event, wallet, testnet) => {
+ipcMain.on("start-wallet", (event, walletPath, testnet) => {
   if (dcrwPID) {
     logger.log("info", "dcrwallet already started " + dcrwPID);
     event.returnValue = dcrwPID;
     return;
   }
   try {
-    dcrwPID = launchDCRWallet(wallet, testnet);
+    dcrwPID = launchDCRWallet(walletPath, testnet);
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }

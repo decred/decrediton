@@ -5,10 +5,11 @@ export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
 export const SETTINGS_UNCHANGED = "SETTINGS_UNCHANGED";
 
 export const saveSettings = (settings) => {
-  getWalletCfg().set("currency_display", settings.currencyDisplay);
-  getWalletCfg().set("network", settings.network);
-  getGlobalCfg().set("locale", settings.locale);
-  getGlobalCfg().set("daemon_start_advanced", settings.daemonStartAdvanced);
+  const config = getGlobalCfg();
+  config.set("currency_display", settings.currencyDisplay);
+  config.set("network", settings.network);
+  config.set("locale", settings.locale);
+  config.set("daemon_start_advanced", settings.daemonStartAdvanced);
   return {
     settings,
     type: SETTINGS_SAVE
@@ -36,7 +37,8 @@ export function updateStateSettingsChanged(settings) {
 export const updateStateVoteSettingsChanged = (settings) => (dispatch, getState) => {
   const { settings: { tempSettings, currentSettings }} = getState();
   if (settings.enableTicketBuyer !== tempSettings.enableTicketBuyer) {
-    getWalletCfg().set("enableticketbuyer", settings.enableTicketBuyer);
+    const config = getWalletCfg("default-wallet");
+    config.set("enableticketbuyer", settings.enableTicketBuyer);
     dispatch({ tempSettings: settings, type: SETTINGS_CHANGED});
   } else {
     dispatch({ tempSettings: currentSettings, type: SETTINGS_UNCHANGED});

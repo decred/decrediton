@@ -71,7 +71,7 @@ export const getAvailableWallets = () => (dispatch) => {
 
 export const startWallet = () => (dispatch, getState) => {
   const { grpc: { network }} = getState();
-  wallet.startWallet(network == "testnet")
+  wallet.startWallet("default-wallet", network == "testnet")
   .then(pid => {
     dispatch({type: WALLETREADY, pid});
     setTimeout(()=>dispatch(versionCheckAction()), 1000);
