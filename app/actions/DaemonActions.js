@@ -88,11 +88,11 @@ export const syncDaemon = () =>
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks }} = getState();
       const { grpc: { network }} = getState();
-      const { daemon: { daemonSynced, timeStart, blockStart, credentials, appData} } = getState();
+      const { daemon: { daemonSynced, timeStart, blockStart, credentials} } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
       return wallet
-        .getBlockCount("default-wallet", credentials, appData, network == "testnet")
+        .getBlockCount("default-wallet", credentials, network == "testnet")
         .then(updateCurrentBlockCount => {
           if ((neededBlocks == 0 && updateCurrentBlockCount > 0) || (neededBlocks != 0 && updateCurrentBlockCount >= neededBlocks)) {
             dispatch({type: DAEMONSYNCED});

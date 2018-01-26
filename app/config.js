@@ -164,29 +164,57 @@ export function getWalletCert(certPath) {
   return(cert);
 }
 
-export function readDcrdConfig(configPath) {
+export function readDcrdConfig(configPath, testnet) {
   try {
     if (!fs.existsSync(dcrdCfg(configPath))) return;
     const readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(configPath))).toString());
     let newCfg = {};
     newCfg.rpc_host = "127.0.0.1";
-    newCfg.rpc_port = "9109";
+    if (testnet) {
+      newCfg.rpc_port = "19109";
+    } else {
+      newCfg.rpc_port = "9109";
+    }
+    let userFound, passFound = false;
+    // Look through all top level config entries
     for (let [key, value] of Object.entries(readCfg)) {
-      console.log(key + ':' + value);
-      for (let [key2, value2] of Object.entries(value)) {
-        console.log(key2 + ':' + value2);
+      if (key == "rpcuser") {
+        newCfg.rpc_user = value;
+        userFound = true;
+      }
+      if (key == "rpcpass") {
+        newCfg.rpc_password = value;
+        passFound = true;
+      }
+      if (key == "rpclisten") {
+        const splitListen = value.split(":");
+        if (splitListen.length >= 2) {
+          newCfg.rpc_host = splitListen[0];
+          newCfg.rpc_port = splitListen[1];
+        }
+      }
+      if (!userFound && !passFound) {
+        // If user and pass aren't found on the top level, look through all
+        // next level config entries
+        for (let [key2, value2] of Object.entries(value)) {
+          if (key2 == "rpcuser") {
+            newCfg.rpc_user = value2;
+            userFound = true;
+          }
+          if (key2 == "rpcpass") {
+            newCfg.rpc_password = value2;
+            passFound = true;
+          }
+          if (key2 == "rpclisten") {
+            const splitListen = value2.split(":");
+            if (splitListen.length >= 2) {
+              newCfg.rpc_host = splitListen[0];
+              newCfg.rpc_port = splitListen[1];
+            }
+          }
+        }
       }
     }
-    if (Object.values(readCfg)[0]["rpcuser"]) newCfg.rpc_user = Object.values(readCfg)[0]["rpcuser"];
-    if (Object.values(readCfg)[0]["rpcpass"]) newCfg.rpc_password = Object.values(readCfg)[0]["rpcpass"];
-    if (Object.values(readCfg)[0]["rpclisten"]) {
-      const splitListen = Object.values(readCfg)[0]["rpclisten"].split(":");
-      if (splitListen.length >= 2) {
-        newCfg.rpc_host = splitListen[0];
-        newCfg.rpc_port = splitListen[1];
-      }
-    }
-
     return newCfg;
   } catch (err) {
     console.error(err);

@@ -286,11 +286,11 @@ ipcMain.on("start-wallet", (event, wallet, testnet) => {
   event.returnValue = dcrwPID;
 });
 
-ipcMain.on("check-daemon", (event, walletPath, rpcCreds, appData, testnet) => {
+ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
   let args = ["getblockcount"];
   let host, port;
-  if (!rpcCreds && !appData){
-    args.push(`--configfile=${dcrctlCfg(walletPath)}`);
+  if (!rpcCreds){
+    args.push(`--configfile=${dcrctlCfg(getWalletPath(walletPath))}`);
   } else if (rpcCreds) {
     if (rpcCreds.rpc_user) {
       args.push(`--rpcuser=${rpcCreds.rpc_user}`);
@@ -308,10 +308,6 @@ ipcMain.on("check-daemon", (event, walletPath, rpcCreds, appData, testnet) => {
       port = rpcCreds.rpc_port;
     }
     args.push("--rpcserver=" + host + ":" + port);
-  } else if (appData) {
-    const rpccert = `${appData}/rpc.cert`;
-    args.push(`--rpccert=${rpccert}`);
-    args.push(`--configfile=${dcrctlCfg(walletPath)}`);
   }
 
   if (testnet) {
@@ -382,15 +378,22 @@ const launchDCRD = (walletPath, appdata, testnet) => {
   let dcrdConfig = {};
   if(appdata){
     args = [`--appdata=${appdata}`];
-    dcrdConfig = readDcrdConfig(appdata);
-    console.log(appdata);
+    dcrdConfig = readDcrdConfig(appdata, testnet);
     dcrdConfig.rpc_cert = path.resolve(appdata, "rpc.cert");
   } else {
     args = [`--configfile=${dcrdCfg(getWalletPath(walletPath))}`];
-    dcrdConfig = readDcrdConfig(getWalletPath(walletPath));
+    dcrdConfig = readDcrdConfig(getWalletPath(walletPath), testnet);
     dcrdConfig.rpc_cert = path.resolve(getDcrdPath(), "rpc.cert");
   }
-  console.log(dcrdConfig);
+
+  // Check to make sure that the rpcuser and rpcpass were set in the config
+  if (!dcrdConfig.rpc_user || !dcrdConfig.rpc_password) {
+    const errorMessage =  "No " + `${!dcrdConfig.rpc_user ? "rpcuser " : "" }` + `${!dcrdConfig.rpc_user && !dcrdConfig.rpc_password ? "and " : "" }` + `${!dcrdConfig.rpc_password ? "rpcpass " : "" }` + "set in " + `${appdata ? appdata : getWalletPath(walletPath)}` + "/dcrd.conf.  Please set them and restart.";
+    logger.log("error", errorMessage);
+    mainWindow.webContents.executeJavaScript("alert(\"" + `${errorMessage}` + "\");");
+    mainWindow.webContents.executeJavaScript("window.close();");
+  }
+
   if (testnet) {
     args.push("--testnet");
   }
@@ -449,7 +452,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
 
 const launchDCRWallet = (walletPath, testnet) => {
   var spawn = require("child_process").spawn;
-  var args = ["--configfile=" + dcrwalletCfg(walletPath)];
+  var args = ["--configfile=" + dcrwalletCfg(getWalletPath(walletPath))];
 
   if (testnet) {
     args.push("--testnet");
