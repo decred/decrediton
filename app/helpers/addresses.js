@@ -1,5 +1,5 @@
 import createBlakeHash from "blake-hash";
-var bs58checkBase = require("bs58check/base"); 
+var bs58checkBase = require("bs58check/base");
 
 export const ERR_INVALID_ADDR_EMPTY = "ERR_INVALID_ADDR_EMPTY";
 export const ERR_INVALID_ADDR_TOOSHORT = "ERR_INVALID_ADDR_TOOSHORT";
@@ -8,7 +8,7 @@ export const ERR_INVALID_ADDR_NETWORKPREFIX = "ERR_INVALID_ADDR_NETWORKPREFIX";
 export const ERR_INVALID_ADDR_CHECKSUM = "ERR_INVALID_ADDR_CHECKSUM";
 
 // isValidAddress performs a simple set of validations for a given address in
-// the given network (either testnet or mainnet). 
+// the given network (either testnet or mainnet).
 //
 // Returns an error identifier or null if the address is valid.
 //
