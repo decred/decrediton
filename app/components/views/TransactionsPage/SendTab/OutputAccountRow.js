@@ -1,4 +1,3 @@
-import { compose } from "fp";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { DcrInput, ReceiveAccountsSelect } from "inputs";
 import "style/SendPage.less";
@@ -12,12 +11,11 @@ const messages = defineMessages({
 
 const SendOutputAccountRow = ({
   index,
-  amountStr,
+  amount,
   amountError,
   getOnChangeOutputAmount,
   isSendAll,
   totalSpent,
-  unitDivisor,
   intl,
 }) => (
   <div className="send-row">
@@ -38,17 +36,17 @@ const SendOutputAccountRow = ({
             hidden={!isSendAll}
             className="send-address-input-amount"
             disabled={true}
-            value={totalSpent !== null ? totalSpent / unitDivisor : ""}
+            amount={totalSpent}
           />
           <DcrInput
             showErrors={true}
             invalid={!!amountError}
             invalidMessage={amountError}
             hidden={isSendAll}
-            value={amountStr}
+            amount={amount}
             className="send-address-input-amount"
             placeholder={intl.formatMessage(messages.amountPlaceholder)}
-            onChange={compose(getOnChangeOutputAmount(index), e => e.target.value)}
+            onChangeAmount={getOnChangeOutputAmount(index)}
           />
         </div>
       </div>
