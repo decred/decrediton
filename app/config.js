@@ -11,6 +11,7 @@ export function getGlobalCfg() {
 }
 
 export function getWalletCfg(testnet, walletPath){
+  console.log(testnet, walletPath);
   const config = new Store({cwd: getWalletCfgPath(testnet, walletPath)});
   return (config);
 }
@@ -262,13 +263,13 @@ export function updateStakePoolConfig(config, foundStakePoolConfigs) {
   }
 }
 
-export function getAppdataPath() {
-  const config = getWalletCfg("default-wallet");
+export function getAppdataPath(testnet) {
+  const config = getWalletCfg(testnet, "default-wallet");
   return config.get("appdata_path");
 }
 
-export function setAppdataPath(appdataPath) {
-  const config = getWalletCfg("default-wallet");
+export function setAppdataPath(testnet, appdataPath) {
+  const config = getWalletCfg(testnet, "default-wallet");
   const credentialKeys = {
     rpc_user : "",
     rpc_password : "",
@@ -280,26 +281,26 @@ export function setAppdataPath(appdataPath) {
   return config.set("appdata_path",appdataPath);
 }
 
-export function getRemoteCredentials() {
-  const config = getWalletCfg("default-wallet");
+export function getRemoteCredentials(testnet) {
+  const config = getWalletCfg(testnet, "default-wallet");
   return config.get("remote_credentials");
 }
 
-export function setRemoteCredentials(key, value) {
-  const config = getWalletCfg("default-wallet");
+export function setRemoteCredentials(testnet, key, value) {
+  const config = getWalletCfg(testnet, "default-wallet");
   config.set("appdata_path","");
   let credentials = config.get("remote_credentials");
   credentials[key] = value;
   return config.set("remote_credentials",credentials);
 }
 
-export function getMustOpenForm() {
-  const config = getWalletCfg("default-wallet");
+export function getMustOpenForm(testnet) {
+  const config = getWalletCfg(testnet, "default-wallet");
   return config.get("must_open_form");
 }
 
-export function setMustOpenForm(openForm) {
-  const config = getWalletCfg("default-wallet");
+export function setMustOpenForm(testnet, openForm) {
+  const config = getWalletCfg(testnet, "default-wallet");
   return config.set("must_open_form", openForm);
 }
 

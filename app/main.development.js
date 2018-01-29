@@ -411,10 +411,6 @@ const launchDCRD = (walletPath, appdata, testnet) => {
     mainWindow.webContents.executeJavaScript("window.close();");
   }
 
-  if (testnet) {
-    args.push("--testnet");
-  }
-
   var dcrdExe = getExecutablePath("dcrd");
   if (!fs.existsSync(dcrdExe)) {
     logger.log("error", "The dcrd file does not exists");
@@ -471,7 +467,7 @@ const launchDCRWallet = (walletPath, testnet) => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath))];
 
-  const cfg = getWalletCfg(walletPath);
+  const cfg = getWalletCfg(testnet, walletPath);
 
   args.push("--ticketbuyer.balancetomaintainabsolute=" + cfg.get("balancetomaintain"));
   args.push("--ticketbuyer.maxfee=" + cfg.get("maxfee"));

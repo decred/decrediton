@@ -3,7 +3,7 @@ import { stopNotifcations } from "./NotificationActions";
 import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { ipcRenderer } from "electron";
-import {setMustOpenForm} from "config";
+import { setMustOpenForm } from "config";
 import { hideSidebarMenu } from "./SidebarActions";
 
 export const DAEMONSTARTED = "DAEMONSTARTED";
@@ -97,7 +97,7 @@ export const syncDaemon = () =>
           if ((neededBlocks == 0 && updateCurrentBlockCount > 0) || (neededBlocks != 0 && updateCurrentBlockCount >= neededBlocks)) {
             dispatch({type: DAEMONSYNCED});
             dispatch({currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK});
-            setMustOpenForm(false);
+            setMustOpenForm(network == "testnet", false);
             dispatch(startWallet());
             return;
           } else if (updateCurrentBlockCount !== 0) {

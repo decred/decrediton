@@ -11,12 +11,13 @@ import "./style/main.less";
 import "./style/Global.less";
 import "./style/ReactSelectGlobal.less";
 
-var walletCfg = getWalletCfg("default-wallet");
 var globalCfg = getGlobalCfg();
+var network = globalCfg.get("network");
+
+var walletCfg = getWalletCfg(network == "testnet", "default-wallet");
 
 var foundStakePoolConfig = false;
 var currentStakePoolConfig = walletCfg.get("stakepools");
-var network = globalCfg.get("network");
 var hiddenAccounts = walletCfg.get("hiddenaccounts");
 var firstConfiguredStakePool = null;
 if (currentStakePoolConfig !== undefined) {
