@@ -57,9 +57,15 @@ class DcrInput extends React.Component {
     const { unitDivisor, currencyDisplay } = this.props;
     const { value } = this.state;
     const { onChange } = this;
+    const maxFracDigits = Math.log10(unitDivisor);
 
     return unitDivisor !== 1
-    ? <FloatInput {...this.props} unit={currencyDisplay} value={value} onChange={onChange} />
+    ? <FloatInput
+        {...this.props}
+        unit={currencyDisplay}
+        value={value}
+        onChange={onChange} maxFracDigits={maxFracDigits}
+      />
     : <NumericInput {...this.props} unit={currencyDisplay} onChange={onChange} />;
   }
 }

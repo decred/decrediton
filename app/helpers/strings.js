@@ -1,3 +1,5 @@
+import { isString } from "util";
+
 // @flow
 
 // This function adds spaces around text to fix an issue with double-clicking to select it
@@ -36,4 +38,20 @@ export function restrictToStdDecimalNumber(s) {
 // supply (up to 21e14) but may not be arbitrarily applicable.
 export function strToDcrAtoms(s, unitDivisor) {
   return Math.trunc(parseFloat(s) * unitDivisor + 0.5);
+}
+
+// Restricts the given stdDecimalString (ie, a string projected by
+// restrictToStdDecimalNumber) to the given amount of fractional digits (ie,
+// digits after the decimal point).
+//
+// This function does **not** pad the string if less than maxFracDigits are
+// present.
+export function limitFractionalDigits(s, maxFracDigits) {
+  if (!isString(s)) return s;
+
+  const match = s.match(/(\d+)\.(\d*)/);
+  if (!match) return s;
+  if (!maxFracDigits) return s[1]; // no fractional digits, return just the int part
+  if (match[2].length <= maxFracDigits) return s;
+  return match[1] + "." + match[2].substr(0, maxFracDigits);
 }
