@@ -19,8 +19,9 @@ export const LOADER_ATTEMPT = "LOADER_ATTEMPT";
 export const LOADER_FAILED = "LOADER_FAILED";
 export const LOADER_SUCCESS = "LOADER_SUCCESS";
 
-export const loaderRequest = ( address, port) => (dispatch) => {
-  const request = { address, port };
+export const loaderRequest = () => (dispatch, getState) => {
+  const { grpc: { network, address, port } } = getState();
+  const request = { network, address, port };
   dispatch({ request, type: LOADER_ATTEMPT });
   return getLoader(request)
     .then(loader => {
@@ -127,8 +128,9 @@ export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
 export const startRpcRequestFunc = (isRetry) =>
 (dispatch, getState) => {
+  const {grpc: { network } }= getState();
   const {daemon: { credentials, appData} }= getState();
-  const cfg = getWalletCfg("default-wallet");
+  const cfg = getWalletCfg(network == "testnet", "default-wallet");
   let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
   if(credentials) {

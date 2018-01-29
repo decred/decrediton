@@ -10,8 +10,8 @@ export const GETVERSIONSERVICE_SUCCESS = "GETVERSIONSERVICE_SUCCESS";
 
 export const getVersionServiceAttempt = () => (dispatch, getState) => {
   dispatch({ type: GETVERSIONSERVICE_ATTEMPT });
-  const { grpc: { address, port } } = getState();
-  return getVersionService(address, port)
+  const { grpc: { network, address, port } } = getState();
+  return getVersionService(network, address, port)
     .then(versionService => {
       dispatch({ versionService, type: GETVERSIONSERVICE_SUCCESS });
       dispatch(getWalletRPCVersionAttempt());

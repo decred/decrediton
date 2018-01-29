@@ -11,7 +11,6 @@ export function getGlobalCfg() {
 }
 
 export function getWalletCfg(testnet, walletPath){
-  console.log(testnet, walletPath);
   const config = new Store({cwd: getWalletCfgPath(testnet, walletPath)});
   return (config);
 }

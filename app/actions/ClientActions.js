@@ -146,9 +146,9 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
 };
 
 export const getWalletServiceAttempt = () => (dispatch, getState) => {
-  const { grpc: { address, port } } = getState();
+  const { grpc: { network, address, port } } = getState();
   dispatch({ type: GETWALLETSERVICE_ATTEMPT });
-  wallet.getWalletService(address, port)
+  wallet.getWalletService(network, address, port)
     .then(walletService => dispatch(getWalletServiceSuccess(walletService)))
     .catch(error => dispatch({ error, type: GETWALLETSERVICE_FAILED }));
 };
@@ -158,9 +158,9 @@ export const GETTICKETBUYERSERVICE_FAILED = "GETTICKETBUYERSERVICE_FAILED";
 export const GETTICKETBUYERSERVICE_SUCCESS = "GETTICKETBUYERSERVICE_SUCCESS";
 
 export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
-  const { grpc: { address, port } } = getState();
+  const { grpc: { network, address, port } } = getState();
   dispatch({ type: GETTICKETBUYERSERVICE_ATTEMPT });
-  wallet.getTicketBuyerService(address, port)
+  wallet.getTicketBuyerService(network, address, port)
     .then(ticketBuyerService => {
       dispatch({ ticketBuyerService, type: GETTICKETBUYERSERVICE_SUCCESS });
       setTimeout(() => { dispatch(stopAutoBuyerAttempt()); }, 10);
@@ -648,9 +648,9 @@ export const GETAGENDASERVICE_FAILED = "GETAGENDASERVICE_FAILED";
 export const GETAGENDASERVICE_SUCCESS = "GETAGENDASERVICE_SUCCESS";
 
 export const getAgendaServiceAttempt = () => (dispatch, getState) => {
-  const { grpc: { address, port } } = getState();
+  const { grpc: { network, address, port } } = getState();
   dispatch({ type: GETAGENDASERVICE_ATTEMPT });
-  wallet.getAgendaService(address, port)
+  wallet.getAgendaService(network, address, port)
     .then(agendaService => {
       dispatch({ agendaService, type: GETAGENDASERVICE_SUCCESS });
       setTimeout(() => { dispatch(getAgendasAttempt()); }, 10);
@@ -663,9 +663,9 @@ export const GETVOTINGSERVICE_FAILED = "GETVOTINGSERVICE_FAILED";
 export const GETVOTINGSERVICE_SUCCESS = "GETVOTINGSERVICE_SUCCESS";
 
 export const getVotingServiceAttempt = () => (dispatch, getState) => {
-  const { grpc: { address, port } } = getState();
+  const { grpc: { network, address, port } } = getState();
   dispatch({ type: GETVOTINGSERVICE_ATTEMPT });
-  wallet.getVotingService(address, port)
+  wallet.getVotingService(network, address, port)
     .then(votingService => dispatch({ votingService, type: GETVOTINGSERVICE_SUCCESS }))
     .catch(error => dispatch({ error, type: GETVOTINGSERVICE_FAILED }));
 };
@@ -714,9 +714,9 @@ export const GETMESSAGEVERIFICATIONSERVICE_FAILED = "GETMESSAGEVERIFICATIONSERVI
 export const GETMESSAGEVERIFICATIONSERVICE_SUCCESS = "GETMESSAGEVERIFICATIONSERVICE_SUCCESS";
 
 export const getMessageVerificationServiceAttempt = () => (dispatch, getState) => {
-  const { grpc: { address, port } } = getState();
+  const { grpc: { network, address, port } } = getState();
   dispatch({ type: GETMESSAGEVERIFICATIONSERVICE_ATTEMPT });
-  wallet.getMessageVerificationService(address, port)
+  wallet.getMessageVerificationService(network, address, port)
     .then(messageVerificationService =>
       dispatch({ messageVerificationService, type: GETMESSAGEVERIFICATIONSERVICE_SUCCESS }))
     .catch(error => dispatch({ error, type: GETMESSAGEVERIFICATIONSERVICE_FAILED }));

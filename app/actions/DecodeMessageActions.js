@@ -7,9 +7,9 @@ export const GETDECODEMESSAGESERVICE_FAILED = "GETDECODEMESSAGESERVICE_FAILED";
 export const GETDECODEMESSAGESERVICE_SUCCESS = "GETDECODEMESSAGESERVICE_SUCCESS";
 
 export const getDecodeMessageServiceAttempt = () => (dispatch, getState) => {
-  const { grpc: { address, port } } = getState();
+  const { grpc: { network, address, port } } = getState();
   dispatch({ type: GETDECODEMESSAGESERVICE_ATTEMPT });
-  return getDecodeService(address, port)
+  return getDecodeService(network, address, port)
     .then(decodeMessageService =>
       dispatch({ decodeMessageService, type: GETDECODEMESSAGESERVICE_SUCCESS }))
     .catch(error => dispatch({ error, type: GETDECODEMESSAGESERVICE_FAILED }));

@@ -5,8 +5,9 @@ import grpc from "grpc";
 import { getWalletCert, getWalletPath } from "../../config.js";
 var services = require("../walletrpc/api_grpc_pb.js");
 
-const getServiceClient = (clientClass) => (address, port, cb) => {
-  var cert = getWalletCert(getWalletPath("default-wallet"));
+const getServiceClient = (clientClass) => (testnet, address, port, cb) => {
+  console.log("getservice", testnet, address, port);
+  var cert = getWalletCert(getWalletPath(testnet, "default-wallet"));
   if (cert == "") {
     return cb(null, "Unable to load dcrwallet certificate.  dcrwallet not running?");
   }
