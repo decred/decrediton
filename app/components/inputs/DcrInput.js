@@ -1,5 +1,5 @@
 import FloatInput from "./FloatInput";
-import NumericInput from "./NumericInput";
+import IntegerInput from "./IntegerInput";
 import { strToDcrAtoms } from "helpers/strings";
 import balanceConnector from "connectors/balance";
 
@@ -59,14 +59,14 @@ class DcrInput extends React.Component {
     const { onChange } = this;
     const maxFracDigits = Math.log10(unitDivisor);
 
-    return unitDivisor !== 1
-    ? <FloatInput
+    const Comp = unitDivisor !== 1 ? FloatInput : IntegerInput;
+    return <Comp
         {...this.props}
         unit={currencyDisplay}
         value={value}
-        onChange={onChange} maxFracDigits={maxFracDigits}
-      />
-    : <NumericInput {...this.props} unit={currencyDisplay} onChange={onChange} />;
+        onChange={onChange}
+        maxFracDigits={maxFracDigits}
+      />;
   }
 }
 
