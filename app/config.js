@@ -293,13 +293,8 @@ export function setRemoteCredentials(testnet, key, value) {
   return config.set("remote_credentials",credentials);
 }
 
-export function getMustOpenForm(testnet) {
-  const config = getWalletCfg(testnet, "default-wallet");
-  return config.get("must_open_form");
-}
-
-export function setMustOpenForm(testnet, openForm) {
-  const config = getWalletCfg(testnet, "default-wallet");
+export function setMustOpenForm(openForm) {
+  const config = getGlobalCfg();
   return config.set("must_open_form", openForm);
 }
 

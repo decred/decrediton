@@ -97,7 +97,7 @@ export const syncDaemon = () =>
           if ((neededBlocks == 0 && updateCurrentBlockCount > 0) || (neededBlocks != 0 && updateCurrentBlockCount >= neededBlocks)) {
             dispatch({type: DAEMONSYNCED});
             dispatch({currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK});
-            setMustOpenForm(network == "testnet", false);
+            setMustOpenForm(false);
             dispatch(startWallet());
             return;
           } else if (updateCurrentBlockCount !== 0) {
