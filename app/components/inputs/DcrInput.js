@@ -4,6 +4,19 @@ import { strToDcrAtoms } from "helpers/strings";
 import balanceConnector from "connectors/balance";
 
 /**
+ * FixedDcrInput is a simple numeric input that is assumed to **always** hold
+ * a floating point number representing a DCR amount (ie, an amount that
+ * will be mutiplied by 1e8 to get to the actual atoms value).
+ *
+ * This is **not** affected by the global currencyDisplay state.
+ *
+ * Whenever possible, use the DcrInput component, as it is more flexible and
+ * already manages the underlying input value in atoms.
+ */
+export const FixedDcrInput = ({...props, currencyDisplay}) =>
+  <FloatInput {...{...props, unit: currencyDisplay, maxFracDigits: 8}} />;
+
+/**
  * DcrInput provides a way to receive decred amount inputs. Instead of the usual
  * value/onChange pair, it uses amount/onChangeAmount to track values in decred
  * atoms, correctly accounting for the currently used currencyDisplay, floating
