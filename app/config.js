@@ -10,13 +10,13 @@ export function getGlobalCfg() {
   return (config);
 }
 
-export function getWalletCfg(walletPath){
-  const config = new Store({cwd: getWalletCfgPath(walletPath)});
+export function getWalletCfg(testnet, walletPath){
+  const config = new Store({cwd: getWalletCfgPath(testnet, walletPath)});
   return (config);
 }
 
-export function initWalletCfg(walletPath) {
-  const config = new Store({cwd: getWalletCfgPath(walletPath)});
+export function initWalletCfg(testnet, walletPath) {
+  const config = new Store({cwd: getWalletCfgPath(testnet, walletPath)});
   if (!config.has("rpc_user")) {
     config.set("USER", false);
   }
@@ -94,8 +94,8 @@ export function getGlobalCfgPath() {
   return path.resolve(appDataDirectory(), "config.json");
 }
 
-export function getWalletCfgPath(wallet) {
-  return path.resolve(path.join(appDataDirectory(), "wallets", wallet));
+export function getWalletCfgPath(testnet, wallet) {
+  return path.resolve(path.join(appDataDirectory(), "wallets", testnet ? "testnet" : "mainnet", wallet));
 }
 
 export function validateGlobalCfgFile() {
@@ -142,8 +142,8 @@ export function getDcrdPath() {
   }
 }
 
-export function getWalletPath(walletPath) {
-  return path.join(appDataDirectory(), "wallets", walletPath);
+export function getWalletPath(testnet, walletPath) {
+  return path.join(appDataDirectory(), "wallets", testnet ? "testnet" : "mainnet", walletPath);
 }
 
 export function getWalletCert(certPath) {
@@ -303,26 +303,28 @@ export function setMustOpenForm(openForm) {
   return config.set("must_open_form", openForm);
 }
 
-export function newWalletConfigCreation(walletPath) {
+export function newWalletConfigCreation(testnet, walletPath) {
   // TODO: set random user/password
   var dcrdConf = {
     "Application Options":
     {
       rpcuser: "USER",
       rpcpass: "PASSWORD",
-      rpclisten: "127.0.0.1:9109"
+      rpclisten: "127.0.0.1:9109",
+      testnet: testnet ? "1" : "0"
     }
   };
-  fs.writeFileSync(dcrdCfg(getWalletPath(walletPath)), ini.stringify(dcrdConf));
+  fs.writeFileSync(dcrdCfg(getWalletPath(testnet, walletPath)), ini.stringify(dcrdConf));
   var dcrctlConf = {
     "Application Options":
     {
       rpcuser: "USER",
       rpcpass: "PASSWORD",
-      rpcserver: "127.0.0.1:9109"
+      rpcserver: "127.0.0.1:9109",
+      testnet: testnet ? "1" : "0"
     }
   };
-  fs.writeFileSync(dcrctlCfg(getWalletPath(walletPath)), ini.stringify(dcrctlConf));
+  fs.writeFileSync(dcrctlCfg(getWalletPath(testnet, walletPath)), ini.stringify(dcrctlConf));
   var dcrwConf = {
     "Application Options":
     {
@@ -333,10 +335,11 @@ export function newWalletConfigCreation(walletPath) {
       onetimetlskey: "1",
       rpcconnect: "127.0.0.1:9109",
       grpclisten: "127.0.0.1:9121",
-      appdata: getWalletPath(walletPath),
+      appdata: getWalletPath(testnet, walletPath),
+      testnet: testnet ? "1" : "0"
     },
   };
-  fs.writeFileSync(dcrwalletCfg(getWalletPath(walletPath)), ini.stringify(dcrwConf));
+  fs.writeFileSync(dcrwalletCfg(getWalletPath(testnet, walletPath)), ini.stringify(dcrwConf));
 }
 export function dcrctlCfg(configPath) {
   return path.resolve(configPath, "dcrctl.conf");

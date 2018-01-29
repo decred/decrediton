@@ -103,29 +103,46 @@ app.setPath("userData", appDataDirectory());
 // Check that wallets directory has been created, if not, make it.
 let walletsDirectory = path.join(app.getPath("userData"),"wallets");
 fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
+fs.pathExistsSync(path.join(walletsDirectory, "mainnet")) || fs.mkdirsSync(path.join(walletsDirectory, "mainnet"));
+fs.pathExistsSync(path.join(walletsDirectory, "testnet")) || fs.mkdirsSync(path.join(walletsDirectory, "testnet"));
 
-// Check if default-wallet directory has been created, if not, make it.
-let defaultWalletDirectory = path.join(walletsDirectory, "default-wallet");
-if (!fs.pathExistsSync(defaultWalletDirectory)){
-  fs.mkdirsSync(defaultWalletDirectory);
+let defaultMainnetWalletDirectory = path.join(walletsDirectory, "mainnet", "default-wallet");
+if (!fs.pathExistsSync(defaultMainnetWalletDirectory)){
+  fs.mkdirsSync(defaultMainnetWalletDirectory);
 
-  // create new configs for default wallet
-  initWalletCfg("default-wallet");
-  newWalletConfigCreation("default-wallet");
+  // check for existing mainnet directories
+  if (fs.pathExistsSync(path.join(app.getPath("userData"), "mainnet", "wallet.db"))) {
+    // create new configs for default mainnet wallet
+    initWalletCfg(false, "default-wallet");
+    newWalletConfigCreation(false, "default-wallet");
 
-  // check for existing mainnet/testnet directories
-  if (fs.pathExistsSync(path.join(app.getPath("userData"), "mainnet"))) {
-    fs.mkdirsSync(path.join(defaultWalletDirectory, "mainnet"));
-    fs.copySync(path.join(app.getPath("userData"), "mainnet"), path.join(defaultWalletDirectory, "mainnet"));
-  }
-  if (fs.pathExistsSync(path.join(app.getPath("userData"), "testnet2"))) {
-    fs.mkdirsSync(path.join(defaultWalletDirectory, "testnet2"));
-    fs.copySync(path.join(app.getPath("userData"), "testnet2"), path.join(defaultWalletDirectory, "testnet2"));
+    fs.mkdirsSync(path.join(defaultMainnetWalletDirectory, "mainnet"));
+    fs.copySync(path.join(app.getPath("userData"), "mainnet"), path.join(defaultMainnetWalletDirectory, "mainnet"));
   }
 
   // copy over existing config.json if it exists
   if (fs.pathExistsSync(path.join(app.getPath("userData"), "config.json"))) {
-    fs.copySync(path.join(app.getPath("userData"), "config.json"), path.join(defaultWalletDirectory, "config.json"));
+    fs.copySync(path.join(app.getPath("userData"), "config.json"), path.join(defaultMainnetWalletDirectory, "config.json"));
+  }
+}
+
+let defaultTestnetWalletDirectory = path.join(walletsDirectory, "testnet", "default-wallet");
+if (!fs.pathExistsSync(defaultTestnetWalletDirectory)){
+  fs.mkdirsSync(defaultTestnetWalletDirectory);
+  // check for existing testnet2 directories
+  if (fs.pathExistsSync(path.join(app.getPath("userData"), "testnet2", "wallet.db"))) {
+
+    // create new configs for default testnet wallet
+    initWalletCfg(true, "default-wallet");
+    newWalletConfigCreation(true, "default-wallet");
+
+    fs.mkdirsSync(path.join(defaultTestnetWalletDirectory, "testnet2"));
+    fs.copySync(path.join(app.getPath("userData"), "testnet2"), path.join(defaultTestnetWalletDirectory, "testnet2"));
+  }
+
+  // copy over existing config.json if it exists
+  if (fs.pathExistsSync(path.join(app.getPath("userData"), "config.json"))) {
+    fs.copySync(path.join(app.getPath("userData"), "config.json"), path.join(defaultTestnetWalletDirectory, "config.json"));
   }
 }
 
@@ -290,7 +307,7 @@ ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
   let args = ["getblockcount"];
   let host, port;
   if (!rpcCreds){
-    args.push(`--configfile=${dcrctlCfg(getWalletPath(walletPath))}`);
+    args.push(`--configfile=${dcrctlCfg(getWalletPath(testnet, walletPath))}`);
   } else if (rpcCreds) {
     if (rpcCreds.rpc_user) {
       args.push(`--rpcuser=${rpcCreds.rpc_user}`);
@@ -381,14 +398,14 @@ const launchDCRD = (walletPath, appdata, testnet) => {
     dcrdConfig = readDcrdConfig(appdata, testnet);
     dcrdConfig.rpc_cert = path.resolve(appdata, "rpc.cert");
   } else {
-    args = [`--configfile=${dcrdCfg(getWalletPath(walletPath))}`];
-    dcrdConfig = readDcrdConfig(getWalletPath(walletPath), testnet);
+    args = [`--configfile=${dcrdCfg(getWalletPath(testnet, walletPath))}`];
+    dcrdConfig = readDcrdConfig(getWalletPath(testnet, walletPath), testnet);
     dcrdConfig.rpc_cert = path.resolve(getDcrdPath(), "rpc.cert");
   }
 
   // Check to make sure that the rpcuser and rpcpass were set in the config
   if (!dcrdConfig.rpc_user || !dcrdConfig.rpc_password) {
-    const errorMessage =  "No " + `${!dcrdConfig.rpc_user ? "rpcuser " : "" }` + `${!dcrdConfig.rpc_user && !dcrdConfig.rpc_password ? "and " : "" }` + `${!dcrdConfig.rpc_password ? "rpcpass " : "" }` + "set in " + `${appdata ? appdata : getWalletPath(walletPath)}` + "/dcrd.conf.  Please set them and restart.";
+    const errorMessage =  "No " + `${!dcrdConfig.rpc_user ? "rpcuser " : "" }` + `${!dcrdConfig.rpc_user && !dcrdConfig.rpc_password ? "and " : "" }` + `${!dcrdConfig.rpc_password ? "rpcpass " : "" }` + "set in " + `${appdata ? appdata : getWalletPath(testnet, walletPath)}` + "/dcrd.conf.  Please set them and restart.";
     logger.log("error", errorMessage);
     mainWindow.webContents.executeJavaScript("alert(\"" + `${errorMessage}` + "\");");
     mainWindow.webContents.executeJavaScript("window.close();");
@@ -452,11 +469,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
 
 const launchDCRWallet = (walletPath, testnet) => {
   var spawn = require("child_process").spawn;
-  var args = ["--configfile=" + dcrwalletCfg(getWalletPath(walletPath))];
-
-  if (testnet) {
-    args.push("--testnet");
-  }
+  var args = ["--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath))];
 
   const cfg = getWalletCfg(walletPath);
 
