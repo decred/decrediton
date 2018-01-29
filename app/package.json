@@ -11,6 +11,8 @@
   },
   "license": "ISC",
   "dependencies": {
+    "blake-hash": "^1.1.0",
+    "bs58check": "^2.1.1",
     "electron-store": "1.2.0",
     "grpc": "1.8.0",
     "minimist": "^1.2.0"
