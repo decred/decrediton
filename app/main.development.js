@@ -19,6 +19,7 @@ let grpcVersions = {requiredVersion: null, walletVersion: null};
 let debug = false;
 let dcrdPID;
 let dcrwPID;
+let dcrdConfig = {};
 let currentBlockCount;
 
 let dcrdLogs = Buffer.from("");
@@ -270,18 +271,19 @@ ipcMain.on("get-available-wallets", (event) => {
 });
 */
 ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
-  if (dcrdPID && !daemonIsAdvanced) {
+  if (dcrdPID && dcrdConfig && !daemonIsAdvanced) {
     logger.log("info", "Skipping restart of daemon as it is already running");
+    event.returnValue = dcrdConfig;
     return;
   }
   if(appData){
     logger.log("info", "launching dcrd with different appdata directory");
   }
-  if (dcrdPID) {
+  if (dcrdPID && dcrdConfig) {
     logger.log("info", "dcrd already started " + dcrdPID);
+    event.returnValue = dcrdConfig;
     return;
   }
-  let dcrdConfig;
   try {
     dcrdConfig = launchDCRD(walletPath, appData, testnet);
     dcrdPID = dcrdConfig.pid;
@@ -394,20 +396,20 @@ const AddToLog = (destIO, destLogBuffer, data) => {
 const launchDCRD = (walletPath, appdata, testnet) => {
   var spawn = require("child_process").spawn;
   let args = [];
-  let dcrdConfig = {};
+  let newConfig = {};
   if(appdata){
     args = [`--appdata=${appdata}`];
-    dcrdConfig = readDcrdConfig(appdata, testnet);
-    dcrdConfig.rpc_cert = path.resolve(appdata, "rpc.cert");
+    newConfig = readDcrdConfig(appdata, testnet);
+    newConfig.rpc_cert = path.resolve(appdata, "rpc.cert");
   } else {
     args = [`--configfile=${dcrdCfg(getWalletPath(testnet, walletPath))}`];
-    dcrdConfig = readDcrdConfig(getWalletPath(testnet, walletPath), testnet);
-    dcrdConfig.rpc_cert = path.resolve(getDcrdPath(), "rpc.cert");
+    newConfig = readDcrdConfig(getWalletPath(testnet, walletPath), testnet);
+    newConfig.rpc_cert = path.resolve(getDcrdPath(), "rpc.cert");
   }
 
   // Check to make sure that the rpcuser and rpcpass were set in the config
-  if (!dcrdConfig.rpc_user || !dcrdConfig.rpc_password) {
-    const errorMessage =  "No " + `${!dcrdConfig.rpc_user ? "rpcuser " : "" }` + `${!dcrdConfig.rpc_user && !dcrdConfig.rpc_password ? "and " : "" }` + `${!dcrdConfig.rpc_password ? "rpcpass " : "" }` + "set in " + `${appdata ? appdata : getWalletPath(testnet, walletPath)}` + "/dcrd.conf.  Please set them and restart.";
+  if (!newConfig.rpc_user || !newConfig.rpc_password) {
+    const errorMessage =  "No " + `${!newConfig.rpc_user ? "rpcuser " : "" }` + `${!newConfig.rpc_user && !newConfig.rpc_password ? "and " : "" }` + `${!newConfig.rpc_password ? "rpcpass " : "" }` + "set in " + `${appdata ? appdata : getWalletPath(testnet, walletPath)}` + "/dcrd.conf.  Please set them and restart.";
     logger.log("error", errorMessage);
     mainWindow.webContents.executeJavaScript("alert(\"" + `${errorMessage}` + "\");");
     mainWindow.webContents.executeJavaScript("window.close();");
@@ -458,11 +460,11 @@ const launchDCRD = (walletPath, appdata, testnet) => {
   dcrd.stdout.on("data", (data) => dcrdLogs = AddToLog(process.stdout, dcrdLogs, data));
   dcrd.stderr.on("data", (data) => dcrdLogs = AddToLog(process.stderr, dcrdLogs, data));
 
-  dcrdConfig.pid = dcrd.pid;
-  logger.log("info", "dcrd started with pid:" + dcrdPID);
+  newConfig.pid = dcrd.pid;
+  logger.log("info", "dcrd started with pid:" + newConfig.pid);
 
   dcrd.unref();
-  return dcrdConfig;
+  return newConfig;
 };
 
 const launchDCRWallet = (walletPath, testnet) => {

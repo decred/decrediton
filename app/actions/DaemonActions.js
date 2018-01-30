@@ -70,7 +70,6 @@ export const getAvailableWallets = () => (dispatch) => {
 };
 
 export const startWallet = () => (dispatch, getState) => {
-  console.log(isTestNet(getState()));
   wallet.startWallet("default-wallet", isTestNet(getState()))
   .then(pid => {
     dispatch({type: WALLETREADY, pid});
