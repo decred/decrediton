@@ -12,7 +12,7 @@ export const GETVERSIONSERVICE_SUCCESS = "GETVERSIONSERVICE_SUCCESS";
 export const getVersionServiceAttempt = () => (dispatch, getState) => {
   dispatch({ type: GETVERSIONSERVICE_ATTEMPT });
   const { grpc: { address, port } } = getState();
-  return getVersionService(isTestNet, address, port)
+  return getVersionService(isTestNet(), address, port)
     .then(versionService => {
       dispatch({ versionService, type: GETVERSIONSERVICE_SUCCESS });
       dispatch(getWalletRPCVersionAttempt());
