@@ -401,6 +401,9 @@ const launchDCRD = (walletPath, appdata, testnet) => {
     args = [`--appdata=${appdata}`];
     newConfig = readDcrdConfig(appdata, testnet);
     newConfig.rpc_cert = path.resolve(appdata, "rpc.cert");
+    if (testnet) {
+      args.push("--testnet");
+    }
   } else {
     args = [`--configfile=${dcrdCfg(getWalletPath(testnet, walletPath))}`];
     newConfig = readDcrdConfig(getWalletPath(testnet, walletPath), testnet);
