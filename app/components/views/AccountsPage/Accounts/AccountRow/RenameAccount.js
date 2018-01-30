@@ -12,6 +12,7 @@ const messages = defineMessages({
 const RenameAccount = ({
   account,
   updateRenameAccountName,
+  renameAccountName,
   renameAccount,
   hideRenameAccount,
   intl,
@@ -36,7 +37,8 @@ const RenameAccount = ({
               className="address-content-nest-address-hash-to"
               placeholder={intl.formatMessage(messages.newNamePlaceholder)}
               maxLength="50"
-              onBlur={(e) => updateRenameAccountName(e.target.value)}
+              value={renameAccountName}
+              onChange={(e) => updateRenameAccountName(e.target.value)}
             />
           </div>
         </div>
