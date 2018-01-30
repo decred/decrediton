@@ -3,6 +3,7 @@ import { loaderRequest } from "./WalletLoaderActions";
 import { getVersionService, getVersionResponse } from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { ipcRenderer } from "electron";
+import { isTestNet } from "selectors";
 
 export const GETVERSIONSERVICE_ATTEMPT = "GETVERSIONSERVICE_ATTEMPT";
 export const GETVERSIONSERVICE_FAILED = "GETVERSIONSERVICE_FAILED";
@@ -10,8 +11,8 @@ export const GETVERSIONSERVICE_SUCCESS = "GETVERSIONSERVICE_SUCCESS";
 
 export const getVersionServiceAttempt = () => (dispatch, getState) => {
   dispatch({ type: GETVERSIONSERVICE_ATTEMPT });
-  const { grpc: { network, address, port } } = getState();
-  return getVersionService(network, address, port)
+  const { grpc: { address, port } } = getState();
+  return getVersionService(isTestNet, address, port)
     .then(versionService => {
       dispatch({ versionService, type: GETVERSIONSERVICE_SUCCESS });
       dispatch(getWalletRPCVersionAttempt());

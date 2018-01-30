@@ -5,6 +5,7 @@ import { push as pushHistory } from "react-router-redux";
 import { ipcRenderer } from "electron";
 import { setMustOpenForm } from "config";
 import { hideSidebarMenu } from "./SidebarActions";
+import { isTestNet } from "selectors";
 
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
@@ -22,19 +23,18 @@ export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
   const { daemonStarted } = getState().daemon;
   if (daemonStarted) return;
-  const { grpc: { network }} = getState();
   if (rpcCreds) {
     dispatch({type: DAEMONSTARTED_REMOTE, credentials: rpcCreds, pid: -1});
     dispatch(syncDaemon());
   } else if (appData) {
-    wallet.startDaemon("default-wallet", appData, network == "testnet")
+    wallet.startDaemon("default-wallet", appData, isTestNet())
     .then(rpcCreds => {
       dispatch({type: DAEMONSTARTED_APPDATA, appData: appData, credentials: rpcCreds});
       dispatch(syncDaemon(null, appData));
     })
     .catch((err) => dispatch({err, type: DAEMONSTARTED_ERROR}));
   } else {
-    wallet.startDaemon("default-wallet", null, network == "testnet")
+    wallet.startDaemon("default-wallet", null, isTestNet())
     .then(rpcCreds => {
       dispatch({type: DAEMONSTARTED, credentials: rpcCreds});
       dispatch(syncDaemon());
@@ -69,9 +69,9 @@ export const getAvailableWallets = () => (dispatch) => {
   });
 };
 
-export const startWallet = () => (dispatch, getState) => {
-  const { grpc: { network }} = getState();
-  wallet.startWallet("default-wallet", network == "testnet")
+export const startWallet = () => (dispatch) => {
+  console.log(isTestNet());
+  wallet.startWallet("default-wallet", isTestNet())
   .then(pid => {
     dispatch({type: WALLETREADY, pid});
     setTimeout(()=>dispatch(versionCheckAction()), 1000);
@@ -87,12 +87,11 @@ export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks }} = getState();
-      const { grpc: { network }} = getState();
       const { daemon: { daemonSynced, timeStart, blockStart, credentials} } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
       return wallet
-        .getBlockCount("default-wallet", credentials, network == "testnet")
+        .getBlockCount("default-wallet", credentials, isTestNet())
         .then(updateCurrentBlockCount => {
           if ((neededBlocks == 0 && updateCurrentBlockCount > 0) || (neededBlocks != 0 && updateCurrentBlockCount >= neededBlocks)) {
             dispatch({type: DAEMONSYNCED});

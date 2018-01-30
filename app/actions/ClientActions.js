@@ -146,9 +146,9 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
 };
 
 export const getWalletServiceAttempt = () => (dispatch, getState) => {
-  const { grpc: { network, address, port } } = getState();
+  const { grpc: { address, port } } = getState();
   dispatch({ type: GETWALLETSERVICE_ATTEMPT });
-  wallet.getWalletService(network, address, port)
+  wallet.getWalletService(sel.isTestNet, address, port)
     .then(walletService => dispatch(getWalletServiceSuccess(walletService)))
     .catch(error => dispatch({ error, type: GETWALLETSERVICE_FAILED }));
 };
@@ -158,9 +158,9 @@ export const GETTICKETBUYERSERVICE_FAILED = "GETTICKETBUYERSERVICE_FAILED";
 export const GETTICKETBUYERSERVICE_SUCCESS = "GETTICKETBUYERSERVICE_SUCCESS";
 
 export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
-  const { grpc: { network, address, port } } = getState();
+  const { grpc: { address, port } } = getState();
   dispatch({ type: GETTICKETBUYERSERVICE_ATTEMPT });
-  wallet.getTicketBuyerService(network, address, port)
+  wallet.getTicketBuyerService(sel.isTestNet, address, port)
     .then(ticketBuyerService => {
       dispatch({ ticketBuyerService, type: GETTICKETBUYERSERVICE_SUCCESS });
       setTimeout(() => { dispatch(stopAutoBuyerAttempt()); }, 10);
@@ -180,15 +180,15 @@ export const getAccountNumbersBalances = (accountNumbers) => (dispatch, getState
 
 const getAccountsBalances = (accounts) => (dispatch, getState) => {
   var balances = new Array();
-  const { grpc: { network, hiddenAccounts } } = getState();
+  const { grpc: { hiddenAccounts } } = getState();
 
   accounts.forEach(account => {
     let hidden = false;
     let HDPath = "";
     if (hiddenAccounts.find(eq(account.getAccountNumber()))) hidden = true;
-    if (network == "mainnet") {
+    if (sel.isMainNet) {
       HDPath = "m / 44' / 20' / " + account.getAccountNumber() + "'";
-    } else if (network == "testnet") {
+    } else if (sel.isTestNet) {
       HDPath = "m / 44' / 11' / " + account.getAccountNumber() + "'";
     }
     wallet.getBalance(sel.walletService(getState()), account.getAccountNumber(), 0)
@@ -648,9 +648,9 @@ export const GETAGENDASERVICE_FAILED = "GETAGENDASERVICE_FAILED";
 export const GETAGENDASERVICE_SUCCESS = "GETAGENDASERVICE_SUCCESS";
 
 export const getAgendaServiceAttempt = () => (dispatch, getState) => {
-  const { grpc: { network, address, port } } = getState();
+  const { grpc: { address, port } } = getState();
   dispatch({ type: GETAGENDASERVICE_ATTEMPT });
-  wallet.getAgendaService(network, address, port)
+  wallet.getAgendaService(sel.isTestNet, address, port)
     .then(agendaService => {
       dispatch({ agendaService, type: GETAGENDASERVICE_SUCCESS });
       setTimeout(() => { dispatch(getAgendasAttempt()); }, 10);
@@ -663,9 +663,9 @@ export const GETVOTINGSERVICE_FAILED = "GETVOTINGSERVICE_FAILED";
 export const GETVOTINGSERVICE_SUCCESS = "GETVOTINGSERVICE_SUCCESS";
 
 export const getVotingServiceAttempt = () => (dispatch, getState) => {
-  const { grpc: { network, address, port } } = getState();
+  const { grpc: { address, port } } = getState();
   dispatch({ type: GETVOTINGSERVICE_ATTEMPT });
-  wallet.getVotingService(network, address, port)
+  wallet.getVotingService(sel.isTestNet, address, port)
     .then(votingService => dispatch({ votingService, type: GETVOTINGSERVICE_SUCCESS }))
     .catch(error => dispatch({ error, type: GETVOTINGSERVICE_FAILED }));
 };
@@ -714,9 +714,9 @@ export const GETMESSAGEVERIFICATIONSERVICE_FAILED = "GETMESSAGEVERIFICATIONSERVI
 export const GETMESSAGEVERIFICATIONSERVICE_SUCCESS = "GETMESSAGEVERIFICATIONSERVICE_SUCCESS";
 
 export const getMessageVerificationServiceAttempt = () => (dispatch, getState) => {
-  const { grpc: { network, address, port } } = getState();
+  const { grpc: { address, port } } = getState();
   dispatch({ type: GETMESSAGEVERIFICATIONSERVICE_ATTEMPT });
-  wallet.getMessageVerificationService(network, address, port)
+  wallet.getMessageVerificationService(sel.isTestNet, address, port)
     .then(messageVerificationService =>
       dispatch({ messageVerificationService, type: GETMESSAGEVERIFICATIONSERVICE_SUCCESS }))
     .catch(error => dispatch({ error, type: GETMESSAGEVERIFICATIONSERVICE_FAILED }));

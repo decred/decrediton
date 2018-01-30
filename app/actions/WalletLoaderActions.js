@@ -7,6 +7,7 @@ import * as wallet from "wallet";
 import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { getWalletCfg, getWalletCfgPath, getDcrdCert } from "config";
+import { isTestNet } from "selectors";
 import axios from "axios";
 
 const MAX_RPC_RETRIES = 5;
@@ -20,8 +21,8 @@ export const LOADER_FAILED = "LOADER_FAILED";
 export const LOADER_SUCCESS = "LOADER_SUCCESS";
 
 export const loaderRequest = () => (dispatch, getState) => {
-  const { grpc: { network, address, port } } = getState();
-  const request = { network, address, port };
+  const { grpc: { address, port } } = getState();
+  const request = { isTestNet, address, port };
   dispatch({ request, type: LOADER_ATTEMPT });
   return getLoader(request)
     .then(loader => {
@@ -70,7 +71,7 @@ export const createWalletRequest = (pubPass, privPass, seed, existing) =>
     dispatch({ existing: existing, type: CREATEWALLET_ATTEMPT });
     return createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
       .then(() => {
-        const config = getWalletCfg(getState().grpc.network == "testnet", "default-wallet");
+        const config = getWalletCfg(isTestNet, "default-wallet");
         config.delete("discoveraccounts");
         dispatch({response: {}, type: CREATEWALLET_SUCCESS });
         dispatch(clearStakePoolConfigNewWallet());
@@ -128,9 +129,8 @@ export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
 export const startRpcRequestFunc = (isRetry) =>
 (dispatch, getState) => {
-  const {grpc: { network } }= getState();
   const {daemon: { credentials, appData} }= getState();
-  const cfg = getWalletCfg(network == "testnet", "default-wallet");
+  const cfg = getWalletCfg(isTestNet, "default-wallet");
   let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
   if(credentials) {
@@ -172,7 +172,7 @@ export const startRpcRequestFunc = (isRetry) =>
           setTimeout(() => dispatch(startRpcRequestFunc(isRetry)), RPC_RETRY_DELAY);
         } else {
           dispatch({
-            error: `${error}.  You may need to edit ${getWalletCfgPath(network == "testnet", "default-wallet")} and try again`,
+            error: `${error}.  You may need to edit ${getWalletCfgPath(isTestNet, "default-wallet")} and try again`,
             type: STARTRPC_FAILED
           });
         }
@@ -190,14 +190,13 @@ export const DISCOVERADDRESS_SUCCESS = "DISCOVERADDRESS_SUCCESS";
 
 export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
   const { walletLoader: {loader, discoverAccountsComplete }} = getState();
-  const { grpc: { network }} = getState();
   dispatch({ type: DISCOVERADDRESS_ATTEMPT });
   discoverAddresses(loader, !discoverAccountsComplete, privPass)
     .then(() => {
       const { subscribeBlockNtfnsResponse } = getState().walletLoader;
 
       if (!discoverAccountsComplete) {
-        const config = getWalletCfg(network == "testnet", "default-wallet");
+        const config = getWalletCfg(isTestNet, "default-wallet");
         config.delete("discoveraccounts");
         config.set("discoveraccounts", true);
         dispatch({complete: true, type: UPDATEDISCOVERACCOUNTS});
@@ -258,15 +257,15 @@ export const UPDATEDISCOVERACCOUNTS = "UPDATEDISCOVERACCOUNTS";
 export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
 
 export function clearStakePoolConfigNewWallet() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
 
-    let config = getWalletCfg(getState().grpc.network == "testnet", "default-wallet");
+    let config = getWalletCfg(isTestNet, "default-wallet");
     config.delete("stakepools");
 
     getStakePoolInfo()
       .then(foundStakePoolConfigs => {
         if (foundStakePoolConfigs) {
-          let config = getWalletCfg(getState().grpc.network == "testnet", "default-wallet");
+          let config = getWalletCfg(isTestNet, "default-wallet");
           config.set("stakepools", foundStakePoolConfigs);
           dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
         }
