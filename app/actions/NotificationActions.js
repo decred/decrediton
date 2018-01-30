@@ -29,7 +29,6 @@ function transactionNtfnsData(response) {
           maturingBlockHeights[h].forEach(an => l.indexOf(an) === -1 ? l.push(an) : null);
           return l;
         }, []);
-        console.log("gonna update accounts", accountNumbers);
         dispatch(getAccountNumbersBalances(accountNumbers));
       }
 

@@ -111,7 +111,6 @@ function transactionsMaturingHeights(txs, chainParams) {
 export const findImmatureTransactions = () => async (dispatch, getState) => {
   const { currentBlockHeight, walletService } = getState().grpc;
   const chainParams = sel.chainParams(getState());
-  console.log(chainParams);
 
   const pageSize = 30;
   const checkHeightDeltas = [
@@ -141,8 +140,6 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
     txs = await walletGetTransactions(walletService, lastTx.height+1,
       currentBlockHeight+1, pageSize);
   }
-
-  console.log("maturing heights", checkHeights);
 
   dispatch({maturingBlockHeights: checkHeights, type: MATURINGHEIGHTS_CHANGED});
 };
@@ -589,7 +586,6 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   });
 
   mergeNewMaturingHeights(transactionsMaturingHeights(newlyMinedTransactions, chainParams));
-  console.log("new maturing block heights", newMaturingHeights);
   dispatch({maturingBlockHeights: newMaturingHeights, type: MATURINGHEIGHTS_CHANGED});
 
   // TODO: filter newlyMinedTransactions against minedTransactions if this
