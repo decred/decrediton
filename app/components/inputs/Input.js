@@ -1,5 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import "style/Input.less";
+import { isNullOrUndefined } from "util";
 
 class Input extends React.Component{
   constructor(props) {
@@ -65,7 +66,7 @@ class Input extends React.Component{
             disabled={disabled ? disabled : null}
             readOnly={readOnly ? readOnly : null}
             placeholder={placeholder}
-            value={value}
+            value={isNullOrUndefined(value) ? "" : value}
             onChange={onChange}
             onFocus={this.onInputFocus}
             onBlur={this.onInputBlur}

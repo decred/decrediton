@@ -18,7 +18,7 @@ const SendOutputRow = ({
   index,
   outputs,
   destination,
-  amountStr,
+  amount,
   addressError,
   amountError,
   onAddOutput,
@@ -26,6 +26,7 @@ const SendOutputRow = ({
   getOnChangeOutputDestination,
   getOnChangeOutputAmount,
   isSendAll,
+  totalSpent,
   intl
 }) => (
   <div className="send-row">
@@ -62,17 +63,17 @@ const SendOutputRow = ({
             hidden={!isSendAll}
             className="send-address-input-amount"
             disabled={true}
-            value={amountStr}
+            amount={totalSpent}
           />
           <DcrInput
             showErrors={true}
             invalid={!!amountError}
             invalidMessage={amountError}
             hidden={isSendAll}
-            value={amountStr}
+            amount={amount}
             className="send-address-input-amount"
             placeholder={intl.formatMessage(messages.amountPlaceholder)}
-            onChange={compose(getOnChangeOutputAmount(index), e => e.target.value)}
+            onChangeAmount={getOnChangeOutputAmount(index)}
           />
         </div>
       </div>
