@@ -27,14 +27,14 @@ export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
     dispatch({type: DAEMONSTARTED_REMOTE, credentials: rpcCreds, pid: -1});
     dispatch(syncDaemon());
   } else if (appData) {
-    wallet.startDaemon("default-wallet", appData, isTestNet())
+    wallet.startDaemon("default-wallet", appData, isTestNet(getState()))
     .then(rpcCreds => {
       dispatch({type: DAEMONSTARTED_APPDATA, appData: appData, credentials: rpcCreds});
       dispatch(syncDaemon(null, appData));
     })
     .catch((err) => dispatch({err, type: DAEMONSTARTED_ERROR}));
   } else {
-    wallet.startDaemon("default-wallet", null, isTestNet())
+    wallet.startDaemon("default-wallet", null, isTestNet(getState()))
     .then(rpcCreds => {
       dispatch({type: DAEMONSTARTED, credentials: rpcCreds});
       dispatch(syncDaemon());
@@ -69,9 +69,9 @@ export const getAvailableWallets = () => (dispatch) => {
   });
 };
 
-export const startWallet = () => (dispatch) => {
-  console.log(isTestNet());
-  wallet.startWallet("default-wallet", isTestNet())
+export const startWallet = () => (dispatch, getState) => {
+  console.log(isTestNet(getState()));
+  wallet.startWallet("default-wallet", isTestNet(getState()))
   .then(pid => {
     dispatch({type: WALLETREADY, pid});
     setTimeout(()=>dispatch(versionCheckAction()), 1000);
@@ -91,7 +91,7 @@ export const syncDaemon = () =>
       // check to see if user skipped;
       if (daemonSynced) return;
       return wallet
-        .getBlockCount("default-wallet", credentials, isTestNet())
+        .getBlockCount("default-wallet", credentials, isTestNet(getState()))
         .then(updateCurrentBlockCount => {
           if ((neededBlocks == 0 && updateCurrentBlockCount > 0) || (neededBlocks != 0 && updateCurrentBlockCount >= neededBlocks)) {
             dispatch({type: DAEMONSYNCED});
