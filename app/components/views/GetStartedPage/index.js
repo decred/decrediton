@@ -28,17 +28,17 @@ class GetStartedPage extends React.Component {
       return;
     }
 
-    const {rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port} = getRemoteCredentials(this.props.network == "testnet");
+    const {rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port} = getRemoteCredentials(this.props.isTestNet);
     const hasAllCredentials = rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
-    const hasAppData = getAppdataPath(this.props.network == "testnet").length > 0;
+    const hasAppData = getAppdataPath(this.props.isTestNet) && getAppdataPath(this.props.isTestNet).length > 0;
 
     if(hasAllCredentials && hasAppData)
       this.props.setCredentialsAppdataError();
 
     if (!this.props.openForm && hasAppData) {
-      this.props.onStartDaemon(null, getAppdataPath(this.props.network == "testnet"));
+      this.props.onStartDaemon(null, getAppdataPath(this.props.isTestNet));
     } else if (!this.props.openForm && hasAllCredentials) {
-      this.props.onStartDaemon(getRemoteCredentials(this.props.network == "testnet"));
+      this.props.onStartDaemon(getRemoteCredentials(this.props.isTestNet));
     }
   }
 

@@ -17,12 +17,6 @@ export function getWalletCfg(testnet, walletPath){
 
 export function initWalletCfg(testnet, walletPath) {
   const config = new Store({cwd: getWalletCfgPath(testnet, walletPath)});
-  if (!config.has("rpc_user")) {
-    config.set("USER", false);
-  }
-  if (!config.has("rpc_pass")) {
-    config.set("PASSWORD", false);
-  }
   if (!config.has("wallet_start_advanced")) {
     config.set("wallet_start_advanced", false);
   }
@@ -63,6 +57,9 @@ export function initWalletCfg(testnet, walletPath) {
       rpc_port : "",
     };
     config.set("remote_credentials",credentialKeys);
+  }
+  if (!config.has("appdata_path")) {
+    config.set("appdata_path","");
   }
   stakePoolInfo(function(foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
