@@ -1,17 +1,99 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
+.overview-wrapper {
+  background: #f3f6f6;
+  height: 100%;
+}
+
+.overview-content-wrapper {
+  height: 194px;
+  background: #fff;
+  padding: 56px 0px 0px 72px;
+}
+
+.overview-header {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  background: #fff;
+  height: 95px;
+  padding: 56px 0px 0px 72px;
+}
+
+.overview-balance-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-right: 30%;
+}
+
 .overview-balance {
-  align-self: flex-end;
-  margin-bottom: -8px;
-  font-size: 53px;
+  font-size: 42px;
+  color: #0c1e3e;
+  font-family: Inconsolata;
+}
+
+.overview-balance-label {
+  margin-top: 15px;
+  line-height: 0px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 11px;
+  color: #596d81;
+}
+
+.overview-balance-unit {
+  font-size: 17px;
+  color: #0c1e3e;
+}
+
+.overview-spendable-locked-wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.overview-spendable-locked {
+  margin-bottom: 40px;
+}
+
+.overview-balance-spendable-locked {
+  font-size: 17px;
+  color: #0c1e3e;
+  font-family: Inconsolata;
   line-height: 1;
+}
+
+.overview-balance-spendable-locked-unit {
+  font-size: 11px;
+  color: #0c1e3e;
+  font-family: Inconsolata;
+  line-height: 1;
+}
+
+.overview-balance-spendable-locked-label {
+  font-size: 11px;
+  color: #596d81;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.overview-transactions-ticket-wrapper {
+  display: flex;
+  flex-direction: row;
+  padding: 56px 32px;
+  position: absolute;
+  top: 376px;
+  height: 200px;
+}
+
+.recent-transactions {
+  margin-right: 40px;
 }
 
 .home-content-title {
   border-bottom: 1px solid transparent;
   color: #596d81;
-  font-size: 27px;
+  font-size: 16px;
+  font-family: 'Source Sans Pro', sans-serif;
+  margin: 0px 0px 8px 16px;
 }
 
 .home-content-nest {
