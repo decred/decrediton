@@ -29,9 +29,3 @@ const HomePage = ({
 };
 
 export default rescan(HomePage);
-
-/*
-  This is the transaction search button that needs to get implemented
-  <div style={HomeStyles.contentTitleButtonSearch}></div>
-
-*/

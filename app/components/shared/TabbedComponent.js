@@ -26,7 +26,7 @@ class TabbedPage extends React.Component{
     const pathname = getTab(routes);
     const effect = !prevTab ? enterLeft : tabs.indexOf(prevTab) > tabs.indexOf(pathname) ? enterLeft : enterRight;
     const wrapperComponent = this.props.wrapperComponent ? this.props.wrapperComponent : wrapperComponentDefault;
-    const header = this.props.differentHeader ? h(this.props.differentHeader, {routes, ...this.props}) : h(TabbedHeader, {routes});
+    const header = this.props.header ? h(this.props.header, {routes, ...this.props}) : h(TabbedHeader, {routes});
     return (
       <Aux>
         {header}

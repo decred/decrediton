@@ -19,7 +19,7 @@ const HomePage = ({
 }) => {
   return (
     <div className="overview-wrapper">
-      <TabbedComponent differentHeader={HomeHeader} {...{routes, lockedTotalBalance, totalBalance, spendableTotalBalance}}>
+      <TabbedComponent header={HomeHeader} {...{routes, lockedTotalBalance, totalBalance, spendableTotalBalance}}>
         {children}
       </TabbedComponent>
       <div className="overview-transactions-ticket-wrapper">
@@ -35,9 +35,3 @@ const HomePage = ({
 };
 
 export default home(rescan(HomePage));
-
-/*
-  This is the transaction search button that needs to get implemented
-  <div style={HomeStyles.contentTitleButtonSearch}></div>
-
-*/
