@@ -110,12 +110,12 @@ let defaultMainnetWalletDirectory = path.join(walletsDirectory, "mainnet", "defa
 if (!fs.pathExistsSync(defaultMainnetWalletDirectory)){
   fs.mkdirsSync(defaultMainnetWalletDirectory);
 
+  // create new configs for default mainnet wallet
+  initWalletCfg(false, "default-wallet");
+  newWalletConfigCreation(false, "default-wallet");
+
   // check for existing mainnet directories
   if (fs.pathExistsSync(path.join(app.getPath("userData"), "mainnet", "wallet.db"))) {
-    // create new configs for default mainnet wallet
-    initWalletCfg(false, "default-wallet");
-    newWalletConfigCreation(false, "default-wallet");
-
     fs.mkdirsSync(path.join(defaultMainnetWalletDirectory, "mainnet"));
     fs.copySync(path.join(app.getPath("userData"), "mainnet"), path.join(defaultMainnetWalletDirectory, "mainnet"));
   }
@@ -129,13 +129,13 @@ if (!fs.pathExistsSync(defaultMainnetWalletDirectory)){
 let defaultTestnetWalletDirectory = path.join(walletsDirectory, "testnet", "default-wallet");
 if (!fs.pathExistsSync(defaultTestnetWalletDirectory)){
   fs.mkdirsSync(defaultTestnetWalletDirectory);
+
+  // create new configs for default testnet wallet
+  initWalletCfg(true, "default-wallet");
+  newWalletConfigCreation(true, "default-wallet");
+
   // check for existing testnet2 directories
   if (fs.pathExistsSync(path.join(app.getPath("userData"), "testnet2", "wallet.db"))) {
-
-    // create new configs for default testnet wallet
-    initWalletCfg(true, "default-wallet");
-    newWalletConfigCreation(true, "default-wallet");
-
     fs.mkdirsSync(path.join(defaultTestnetWalletDirectory, "testnet2"));
     fs.copySync(path.join(app.getPath("userData"), "testnet2"), path.join(defaultTestnetWalletDirectory, "testnet2"));
   }
@@ -283,7 +283,8 @@ ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
   }
   let dcrdConfig;
   try {
-    dcrdConfig, dcrdPID = launchDCRD(walletPath, appData, testnet);
+    dcrdConfig = launchDCRD(walletPath, appData, testnet);
+    dcrdPID = dcrdConfig.pid;
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
@@ -457,11 +458,11 @@ const launchDCRD = (walletPath, appdata, testnet) => {
   dcrd.stdout.on("data", (data) => dcrdLogs = AddToLog(process.stdout, dcrdLogs, data));
   dcrd.stderr.on("data", (data) => dcrdLogs = AddToLog(process.stderr, dcrdLogs, data));
 
-  dcrdPID = dcrd.pid;
+  dcrdConfig.pid = dcrd.pid;
   logger.log("info", "dcrd started with pid:" + dcrdPID);
 
   dcrd.unref();
-  return (dcrdConfig, dcrdPID);
+  return dcrdConfig;
 };
 
 const launchDCRWallet = (walletPath, testnet) => {
