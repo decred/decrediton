@@ -70,7 +70,7 @@ export const createWalletRequest = (pubPass, privPass, seed, existing) =>
     dispatch({ existing: existing, type: CREATEWALLET_ATTEMPT });
     return createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
       .then(() => {
-        const config = getWalletCfg("default-wallet");
+        const config = getWalletCfg(getState().grpc.network == "testnet", "default-wallet");
         config.delete("discoveraccounts");
         dispatch({response: {}, type: CREATEWALLET_SUCCESS });
         dispatch(clearStakePoolConfigNewWallet());
@@ -172,7 +172,7 @@ export const startRpcRequestFunc = (isRetry) =>
           setTimeout(() => dispatch(startRpcRequestFunc(isRetry)), RPC_RETRY_DELAY);
         } else {
           dispatch({
-            error: `${error}.  You may need to edit ${getWalletCfgPath("default-wallet")} and try again`,
+            error: `${error}.  You may need to edit ${getWalletCfgPath(network == "testnet", "default-wallet")} and try again`,
             type: STARTRPC_FAILED
           });
         }
@@ -189,14 +189,15 @@ export const DISCOVERADDRESS_FAILED = "DISCOVERADDRESS_FAILED";
 export const DISCOVERADDRESS_SUCCESS = "DISCOVERADDRESS_SUCCESS";
 
 export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
-  const { loader, discoverAccountsComplete } = getState().walletLoader;
+  const { walletLoader: {loader, discoverAccountsComplete }} = getState();
+  const { grpc: { network }} = getState();
   dispatch({ type: DISCOVERADDRESS_ATTEMPT });
   discoverAddresses(loader, !discoverAccountsComplete, privPass)
     .then(() => {
       const { subscribeBlockNtfnsResponse } = getState().walletLoader;
 
       if (!discoverAccountsComplete) {
-        const config = getWalletCfg("default-wallet");
+        const config = getWalletCfg(network == "testnet", "default-wallet");
         config.delete("discoveraccounts");
         config.set("discoveraccounts", true);
         dispatch({complete: true, type: UPDATEDISCOVERACCOUNTS});
@@ -257,14 +258,15 @@ export const UPDATEDISCOVERACCOUNTS = "UPDATEDISCOVERACCOUNTS";
 export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
 
 export function clearStakePoolConfigNewWallet() {
-  return (dispatch) => {
-    let config = getWalletCfg("default-wallet");
+  return (dispatch, getState) => {
+
+    let config = getWalletCfg(getState().grpc.network == "testnet", "default-wallet");
     config.delete("stakepools");
 
     getStakePoolInfo()
       .then(foundStakePoolConfigs => {
         if (foundStakePoolConfigs) {
-          let config = getWalletCfg("default-wallet");
+          let config = getWalletCfg(getState().grpc.network == "testnet", "default-wallet");
           config.set("stakepools", foundStakePoolConfigs);
           dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
         }

@@ -281,12 +281,13 @@ ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
     logger.log("info", "dcrd already started " + dcrdPID);
     return;
   }
+  let dcrdConfig;
   try {
-    dcrdPID = launchDCRD(walletPath, appData, testnet);
+    dcrdConfig, dcrdPID = launchDCRD(walletPath, appData, testnet);
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
-  event.returnValue = dcrdPID;
+  event.returnValue = dcrdConfig;
 });
 
 ipcMain.on("start-wallet", (event, walletPath, testnet) => {
@@ -460,7 +461,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
   logger.log("info", "dcrd started with pid:" + dcrdPID);
 
   dcrd.unref();
-  return dcrdConfig;
+  return (dcrdConfig, dcrdPID);
 };
 
 const launchDCRWallet = (walletPath, testnet) => {
