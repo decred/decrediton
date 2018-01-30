@@ -61,6 +61,14 @@ class DcrInput extends React.Component {
 
   onChange(e) {
     const value = e.target.value;
+    if (value) {
+      // pre-validate if <= max supply
+      const { unitDivisor } = this.props;
+      const amount = strToDcrAtoms(value, unitDivisor);
+      // TODO: move to a global constant
+      if (amount > 21e14) return;
+    }
+
     if (value !== this.state.value) {
       this.setState({value}, () => this.changeAmount(value));
     }
