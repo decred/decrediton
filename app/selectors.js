@@ -4,6 +4,7 @@ import {
 } from "./fp";
 import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
+import { MainNetParams, TestNetParams } from "wallet/constants";
 import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
@@ -116,6 +117,11 @@ export const spendableTotalBalance = createSelector(
       (accountName === "imported") ? total : total + spendable,
     0
   )
+);
+
+export const lockedBalance = createSelector(
+  [balances],
+  reduce((atoms, { lockedByTickets }) => atoms + lockedByTickets, 0)
 );
 
 export const networks = () => [{name: "testnet"}, {name: "mainnet"}];
@@ -636,3 +642,5 @@ export const mainWindow = () => window;
 
 export const shutdownRequested = get(["daemon", "shutdownRequested"]);
 export const daemonStopped = get(["daemon", "daemonStopped"]);
+
+export const chainParams = compose(isTestNet => isTestNet ? TestNetParams : MainNetParams, isTestNet);

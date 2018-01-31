@@ -1,47 +1,37 @@
 // @flow
 import { rescan, home } from "connectors";
-import { DecredLoading } from "indicators";
-import { Balance, TabbedHeader } from "shared";
-import TxHistory from "TxHistory";
-import { FormattedMessage as T } from "react-intl";
+import RecentTransactions from "./RecentTransactions";
+import TicketActivity from "./TicketActivity";
 import "style/Fonts.less";
 import "style/HomePage.less";
+import {TabbedComponent} from "shared";
+import HomeHeader from "./HomeHeader";
 
 const HomePage = ({
   routes,
   spendableTotalBalance,
+  lockedTotalBalance,
+  totalBalance,
   transactions,
   getTransactionsRequestAttempt,
   getAccountsResponse,
+  children,
 }) => {
   return (
-    <Aux>
-      <TabbedHeader {...{ routes }}>
-        <div className="overview-balance">
-          <Balance amount={spendableTotalBalance} large/>
+    <div className="overview-wrapper">
+      <TabbedComponent header={HomeHeader} {...{routes, lockedTotalBalance, totalBalance, spendableTotalBalance}}>
+        {children}
+      </TabbedComponent>
+      <div className="overview-transactions-ticket-wrapper">
+        <div className="recent-transactions">
+          <RecentTransactions {...{ routes, spendableTotalBalance, transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
         </div>
-      </TabbedHeader>
-      { getTransactionsRequestAttempt ? <div className="page-content"><DecredLoading /></div> :
-      <div className="page-content">
-        <div className="home-content-title">
-          <div className="home-content-title-text">
-            <T id="home.recentTransactionsTitle" m="Recent Transactions" />
-          </div>
+        <div className="ticket-activity">
+          <TicketActivity {...{ routes, spendableTotalBalance, transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
         </div>
-        <div className="home-content-nest">
-          { transactions.length > 0 ?
-          <TxHistory {...{ getAccountsResponse, transactions }} /> :
-          <p><T id="home.noTransactions" m="No transactions" /></p> }
-        </div>
-      </div> }
-    </Aux>
+      </div>
+    </div>
   );
 };
 
 export default home(rescan(HomePage));
-
-/*
-  This is the transaction search button that needs to get implemented
-  <div style={HomeStyles.contentTitleButtonSearch}></div>
-
-*/

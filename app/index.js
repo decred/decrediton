@@ -183,6 +183,10 @@ var initialState = {
     // map from (reversed) transaction hash to fully decoded transaction
     decodedTransactions: {},
 
+    // Map that stores the accounts that should be updated at future block
+    // heights, due to maturing stake transactions. Keys are the heights,
+    // values are arrays of account numbers.
+    maturingBlockHeights: {},
   },
   walletLoader: {
     rpcRetryAttempts: 0,

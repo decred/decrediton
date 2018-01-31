@@ -130,11 +130,11 @@ class PurchaseTickets extends React.Component {
 
   getAccount() {
     const account = this.props.onChangeAccount ? this.props.account : this.state.account;
-    return this.props.spendingAccounts.find(compose(eq(account.value), get("value")));
+    return account && this.props.spendingAccounts.find(compose(eq(account.value), get("value")));
   }
 
   getCanAffordTickets() {
-    return this.getAccount().spendable > (this.props.ticketPrice * this.state.numTicketsToBuy);
+    return this.getAccount() && this.getAccount().spendable > (this.props.ticketPrice * this.state.numTicketsToBuy);
   }
 
   onHideAdvanced() {

@@ -8,7 +8,7 @@ import Tabs from "./Tabs";
 import "style/Header.less";
 
 const TabbedHeader = ({ intl, children, routes, totalBalance, ticketPrice, isTestNet, icon, title, subtitle }) => {
-  const { tabDesc, desc, noIcon, ticketprice } = routes[1];
+  const { tabDesc, desc, noIcon, ticketprice, noHeader, className} = routes[1];
   const { balance, testNet } = routes[2] || {};
   const page = getPage(routes);
   const tabs = getTabs(routes);
@@ -19,7 +19,7 @@ const TabbedHeader = ({ intl, children, routes, totalBalance, ticketPrice, isTes
   description = (desc || tabDesc) && typeof subtitle === "undefined" && intl.formatMessage(messages[description]);
 
   return (
-    <div className="header">
+    <div className={[noHeader ? "" : "header", className].join(" ")}>
       <div className="tabbedheader-top">
       </div>
 
@@ -39,7 +39,7 @@ const TabbedHeader = ({ intl, children, routes, totalBalance, ticketPrice, isTes
         { children }
       </div>
 
-      { tabs && <Tabs {...{ routes }}/> }
+      { tabs && <Tabs className="tabbedheader-tabs" {...{ routes }}/> }
     </div>
   );
 };

@@ -2,12 +2,11 @@ import { compose, not, eq, get } from "fp";
 import { service, settings, send } from "connectors";
 import SendPage from "./Page";
 import ErrorScreen from "ErrorScreen";
-import { restrictToStdDecimalNumber } from "helpers/strings";
 import { FormattedMessage as T } from "react-intl";
 import { spring, presets } from "react-motion";
 import OutputRow from "./OutputRow";
 
-const BASE_OUTPUT = { destination: "", amountStr: "" };
+const BASE_OUTPUT = { destination: "", amount: null };
 
 @autobind
 class Send extends React.Component {
@@ -99,7 +98,8 @@ class Send extends React.Component {
   }
 
   getStyles() {
-    const { outputs, isSendAll, totalSpent } = this.state;
+    const { outputs, isSendAll } = this.state;
+    const { totalSpent } = this.props;
     return outputs.map((output, index) => {
       return {
         data: <OutputRow
@@ -153,13 +153,12 @@ class Send extends React.Component {
   }
   onShowSendAll() {
     const { account, outputs } = this.state;
-    const {unitDivisor} = this.props;
-    const newOutputs = [{...outputs[0], data:{...outputs[0].data, amountStr: (account.spendable) / unitDivisor}}];
+    const newOutputs = [{...outputs[0], data:{...outputs[0].data, amount: account.spendable}}];
     this.setState({ isSendAll: true, outputs: newOutputs }, this.onAttemptConstructTransaction);
   }
   onHideSendAll() {
     const { outputs } = this.state;
-    const newOutputs = [{...outputs[0], data:{ ...outputs[0].data, amountStr: ""}}];
+    const newOutputs = [{...outputs[0], data:{ ...outputs[0].data, amount: null}}];
     this.setState({ isSendAll: false, outputs: newOutputs}, this.onAttemptConstructTransaction);
   }
   onShowConfirm() {
@@ -168,7 +167,7 @@ class Send extends React.Component {
   }
   onShowSendSelf() {
     const { outputs } = this.state;
-    let newOutputs = [{...outputs[0], data:{destination: this.props.nextAddress, amountStr: ""}}];
+    let newOutputs = [{...outputs[0], data:{destination: this.props.nextAddress, amount: null}}];
     this.setState({ isSendSelf: true, outputs:newOutputs }, this.onAttemptConstructTransaction);
   }
   onShowSendOthers() {
@@ -178,7 +177,7 @@ class Send extends React.Component {
   }
 
   onAttemptConstructTransaction() {
-    const { onAttemptConstructTransaction, unitDivisor } = this.props;
+    const { onAttemptConstructTransaction } = this.props;
     const confirmations = 0;
     if (this.getHasEmptyFields()) return;
     this.setState({ hastAttemptedConstruct: true });
@@ -188,14 +187,9 @@ class Send extends React.Component {
       onAttemptConstructTransaction && onAttemptConstructTransaction(
         this.state.account.value,
         confirmations,
-        this.state.outputs.map(({ data }) => {
-          const { amountStr, destination } = data;
-          return {
-            destination,
-            amount: parseFloat(amountStr) * unitDivisor
-          };
-        }
-      )
+        this.state.outputs.map(({ data }) =>
+          ({amount: data.amount, destination: data.destination })
+        )
       );
     } else {
       onAttemptConstructTransaction && onAttemptConstructTransaction(
@@ -247,18 +241,17 @@ class Send extends React.Component {
   }
 
   getOnChangeOutputAmount(key) {
-    return amountStr => {
+    return newAmount => {
       let reconstruct = false;
-      let newAmount = restrictToStdDecimalNumber(amountStr);
       return this.setState({
         outputs: this.state.outputs.map(o => {
           if (o.key !== `output_${key}`) return o;
-          reconstruct = parseFloat(newAmount) !== parseFloat(o.data.amountStr);
+          reconstruct = newAmount !== o.data.amount;
           return {
             ...o,
             data:{
               ...o.data,
-              amountStr: newAmount
+              amount: newAmount
             },
           };
         })
@@ -274,8 +267,8 @@ class Send extends React.Component {
 
   getHasEmptyFields() {
     return !!this.state.outputs.find(({ data }) => {
-      const { destination, amountStr } = data;
-      return !destination || (!amountStr && !this.state.isSendAll);
+      const { destination, amount } = data;
+      return !destination || (!amount && !this.state.isSendAll);
     });
   }
 
@@ -300,8 +293,7 @@ class Send extends React.Component {
 
   getAmountError(key) {
     const { outputs, isSendAll} = this.state;
-    const { amountStr } = outputs[key].data;
-    const amount = parseFloat(amountStr);
+    const { amount } = outputs[key].data;
     if (isNaN(amount) && !isSendAll) return <T id="send.errors.invalidAmount" m="*Please enter a valid amount" /> ;
     if (amount <= 0 && !isSendAll) return <T id="send.errors.negativeAmount" m="*Please enter a valid amount (> 0)" />;
   }
