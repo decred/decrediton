@@ -53,7 +53,12 @@ const Row = ({
           <div className="account-row-top-account-funds">
             <Balance amount={account.total} />
             <div className="account-row-top-last-tx"></div>
-            <div className="account-row-top-spendable"><T id="accounts.row.spendable" m="Spendable" /> <Balance amount={account.spendable} /></div>
+            <div className="account-row-top-spendable">
+              <div className="account-row-top-spendable-label">
+                <T id="accounts.row.spendable" m="Spendable" />
+              </div>
+              <Balance amount={account.spendable} />
+            </div>
           </div>
         </div>
       </div>
