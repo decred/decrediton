@@ -69,7 +69,7 @@ class GetStartedPage extends React.Component {
     } = this;
 
     let Header, Body;
-
+    console.log(getWalletReady, startStepIndex, isPrepared);
     if (showSettings) {
       Header = SettingsHeader;
       Body = SettingsBody;
@@ -87,6 +87,17 @@ class GetStartedPage extends React.Component {
         Header = OpenWalletHeader;
         Body = OpenWalletBody;
         break;
+      default:
+        if (isAdvancedDaemon && openForm && !remoteAppdataError) {
+          Header = AdvancedStartupHeader;
+          Body = AdvancedStartupBody;
+        } else if (remoteAppdataError) {
+          Header = AdvancedStartupHeader;
+          Body = RemoteAppdataError;
+        } else {
+          Header = DaemonLoadingHeader;
+          Body = DaemonLoadingBody;
+        }
       }
     } else if (isPrepared) {
       switch (startStepIndex || 0) {

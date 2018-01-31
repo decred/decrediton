@@ -21,7 +21,6 @@ export const getWalletReady = get(["daemon", "walletReady"]);
 export const isPrepared = and(
   getDaemonStarted,
   getDaemonSynced,
-  getWalletReady,
 );
 export const getCredentials = get(["daemon", "credentials"]);
 

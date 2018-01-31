@@ -1,4 +1,4 @@
-import { versionCheckAction } from "./WalletLoaderActions";
+import { versionCheckAction, startRpcRequestFunc } from "./WalletLoaderActions";
 import { stopNotifcations } from "./NotificationActions";
 import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
@@ -119,7 +119,8 @@ export const syncDaemon = () =>
             dispatch({type: DAEMONSYNCED});
             dispatch({currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK});
             setMustOpenForm(false);
-            dispatch(startWallet());
+            //dispatch(start());
+            dispatch(startRpcRequestFunc());
             return;
           } else if (updateCurrentBlockCount !== 0) {
             const blocksLeft = neededBlocks - updateCurrentBlockCount;
