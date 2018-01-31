@@ -82,13 +82,12 @@ export const startWallet = () => (dispatch, getState) => {
   });
 };
 
-export const prepStartDaemon = (dispatch, getState) => {
-  const { daemone: { isAdvancedDaemon } } = getState();
-  //if (!isAdvancedDaemon) {
-  dispatch(startDaemon());
-  //  return;
- // }
-/*
+export const prepStartDaemon = () => (dispatch, getState) => {
+  const { daemon: { daemonAdvanced, openForm } } = getState();
+  if (!daemonAdvanced) {
+    dispatch(startDaemon());
+    return;
+  }
   const {rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port} = getRemoteCredentials(isTestNet(getState()));
   const hasAllCredentials = rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
   const hasAppData = getAppdataPath(isTestNet(getState())) && getAppdataPath(isTestNet(getState())).length > 0;
@@ -96,12 +95,11 @@ export const prepStartDaemon = (dispatch, getState) => {
   if(hasAllCredentials && hasAppData)
     this.props.setCredentialsAppdataError();
 
-  if (!this.props.openForm && hasAppData) {
+  if (!openForm && hasAppData) {
     dispatch(startDaemon(null, getAppdataPath(isTestNet(getState()))));
-  } else if (!this.props.openForm && hasAllCredentials) {
+  } else if (!openForm && hasAllCredentials) {
     dispatch(startDaemon(getRemoteCredentials(isTestNet(getState()))));
   }
-  */
 };
 
 export const STARTUPBLOCK = "STARTUPBLOCK";
@@ -119,7 +117,6 @@ export const syncDaemon = () =>
             dispatch({type: DAEMONSYNCED});
             dispatch({currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK});
             setMustOpenForm(false);
-            //dispatch(start());
             dispatch(startRpcRequestFunc());
             return;
           } else if (updateCurrentBlockCount !== 0) {

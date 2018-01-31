@@ -67,16 +67,14 @@ class GetStartedPage extends React.Component {
       onShowLogs,
       onHideLogs
     } = this;
-
     let Header, Body;
-    console.log(getWalletReady, startStepIndex, isPrepared);
     if (showSettings) {
       Header = SettingsHeader;
       Body = SettingsBody;
     } else if (showLogs) {
       Header = LogsHeader;
       Body = LogsBody;
-    } else if (getWalletReady) {
+    } else if (getWalletReady && !isPrepared) {
       switch (startStepIndex || 0) {
       case 0:
       case 1:
@@ -123,16 +121,8 @@ class GetStartedPage extends React.Component {
         Body = FinalStartUpBody;
       }
     } else {
-      if (isAdvancedDaemon && openForm && !remoteAppdataError) {
-        Header = AdvancedStartupHeader;
-        Body = AdvancedStartupBody;
-      } else if (remoteAppdataError) {
-        Header = AdvancedStartupHeader;
-        Body = RemoteAppdataError;
-      } else {
-        Header = DaemonLoadingHeader;
-        Body = DaemonLoadingBody;
-      }
+      Header = DaemonLoadingHeader;
+      Body = DaemonLoadingBody;
     }
 
     return <Page Header={Header} Body={Body}
