@@ -36,7 +36,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onOpenWallet: wla.openWalletAttempt,
   onRetryStartRPC: wla.startRpcRequestFunc,
   doVersionCheck: wla.versionCheckAction,
-  onStartDaemon: da.startDaemon,
+  onStartWallet: da.startWallet,
   determineNeededBlocks: wla.determineNeededBlocks,
   setCredentialsAppdataError: da.setCredentialsAppdataError
 }, dispatch);

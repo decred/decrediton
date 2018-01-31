@@ -6,6 +6,7 @@ import { ipcRenderer } from "electron";
 import { setMustOpenForm } from "config";
 import { hideSidebarMenu } from "./SidebarActions";
 import { isTestNet } from "selectors";
+import { getAppdataPath, getRemoteCredentials } from "config.js";
 
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
@@ -79,6 +80,28 @@ export const startWallet = () => (dispatch, getState) => {
     console.log(err);
     dispatch({type: DAEMONSTARTED_ERROR});
   });
+};
+
+export const prepStartDaemon = (dispatch, getState) => {
+  const { daemone: { isAdvancedDaemon } } = getState();
+  //if (!isAdvancedDaemon) {
+  dispatch(startDaemon());
+  //  return;
+ // }
+/*
+  const {rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port} = getRemoteCredentials(isTestNet(getState()));
+  const hasAllCredentials = rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
+  const hasAppData = getAppdataPath(isTestNet(getState())) && getAppdataPath(isTestNet(getState())).length > 0;
+
+  if(hasAllCredentials && hasAppData)
+    this.props.setCredentialsAppdataError();
+
+  if (!this.props.openForm && hasAppData) {
+    dispatch(startDaemon(null, getAppdataPath(isTestNet(getState()))));
+  } else if (!this.props.openForm && hasAllCredentials) {
+    dispatch(startDaemon(getRemoteCredentials(isTestNet(getState()))));
+  }
+  */
 };
 
 export const STARTUPBLOCK = "STARTUPBLOCK";

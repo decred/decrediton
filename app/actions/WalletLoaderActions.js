@@ -5,6 +5,7 @@ import {
 } from "wallet";
 import * as wallet from "wallet";
 import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from "./ClientActions";
+import { startDaemon } from "./DaemonActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { getWalletCfg, getWalletCfgPath, getDcrdCert } from "config";
 import { isTestNet } from "selectors";
@@ -77,7 +78,8 @@ export const createWalletRequest = (pubPass, privPass, seed, existing) =>
         dispatch(clearStakePoolConfigNewWallet());
         dispatch({complete: !existing, type: UPDATEDISCOVERACCOUNTS});
         config.set("discoveraccounts", !existing);
-        dispatch(startRpcRequestFunc());
+        //dispatch(startRpcRequestFunc());
+        dispatch(startDaemon());
       })
       .catch(error => dispatch({ error, type: CREATEWALLET_FAILED }));
   };
@@ -93,12 +95,14 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState)
   return openWallet(getState().walletLoader.loader, pubPass)
     .then(() => {
       dispatch({ type: OPENWALLET_SUCCESS });
-      dispatch(startRpcRequestFunc(false));
+      dispatch(startDaemon());
+      //dispatch(startRpcRequestFunc(false));
     })
     .catch(error => {
       if (error.message.includes("wallet already loaded")) {
         dispatch({response: {}, type: OPENWALLET_SUCCESS});
-        dispatch(startRpcRequestFunc(false));
+        dispatch(startDaemon());
+        //dispatch(startRpcRequestFunc(false));
       } else if (error.message.includes("invalid passphrase") && error.message.includes("public key")) {
         if (retryAttempt) {
           dispatch({ error, type: OPENWALLET_FAILED_INPUT });
