@@ -8,7 +8,7 @@ import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./S
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { showSidebarMenu } from "./SidebarActions";
 import { push as pushHistory } from "react-router-redux";
-import { getCfg } from "../config.js";
+import { getWalletCfg } from "../config.js";
 import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
@@ -148,7 +148,7 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
 export const getWalletServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
   dispatch({ type: GETWALLETSERVICE_ATTEMPT });
-  wallet.getWalletService(address, port)
+  wallet.getWalletService(sel.isTestNet(getState()), address, port)
     .then(walletService => dispatch(getWalletServiceSuccess(walletService)))
     .catch(error => dispatch({ error, type: GETWALLETSERVICE_FAILED }));
 };
@@ -160,7 +160,7 @@ export const GETTICKETBUYERSERVICE_SUCCESS = "GETTICKETBUYERSERVICE_SUCCESS";
 export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
   dispatch({ type: GETTICKETBUYERSERVICE_ATTEMPT });
-  wallet.getTicketBuyerService(address, port)
+  wallet.getTicketBuyerService(sel.isTestNet(getState()), address, port)
     .then(ticketBuyerService => {
       dispatch({ ticketBuyerService, type: GETTICKETBUYERSERVICE_SUCCESS });
       setTimeout(() => { dispatch(stopAutoBuyerAttempt()); }, 10);
@@ -180,15 +180,15 @@ export const getAccountNumbersBalances = (accountNumbers) => (dispatch, getState
 
 const getAccountsBalances = (accounts) => (dispatch, getState) => {
   var balances = new Array();
-  const { grpc: { network, hiddenAccounts } } = getState();
+  const { grpc: { hiddenAccounts } } = getState();
 
   accounts.forEach(account => {
     let hidden = false;
     let HDPath = "";
     if (hiddenAccounts.find(eq(account.getAccountNumber()))) hidden = true;
-    if (network == "mainnet") {
+    if (sel.isMainNet()) {
       HDPath = "m / 44' / 20' / " + account.getAccountNumber() + "'";
-    } else if (network == "testnet") {
+    } else if (sel.isTestNet(getState())) {
       HDPath = "m / 44' / 11' / " + account.getAccountNumber() + "'";
     }
     wallet.getBalance(sel.walletService(getState()), account.getAccountNumber(), 0)
@@ -394,7 +394,7 @@ export function hideAccount(accountNumber) {
       updatedHiddenAccounts = hiddenAccounts;
     }
     updatedHiddenAccounts.push(accountNumber);
-    var cfg = getCfg();
+    var cfg = getWalletCfg(sel.isTestNet(getState()), "default-wallet");
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
     dispatch(updateAccount({accountNumber, hidden: true}));
@@ -410,7 +410,7 @@ export function showAccount(accountNumber) {
         updatedHiddenAccounts.push(hiddenAccounts[i]);
       }
     }
-    var cfg = getCfg();
+    var cfg = getWalletCfg(sel.isTestNet(getState()), "default-wallet");
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
     dispatch(updateAccount({accountNumber, hidden: false}));
@@ -650,7 +650,7 @@ export const GETAGENDASERVICE_SUCCESS = "GETAGENDASERVICE_SUCCESS";
 export const getAgendaServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
   dispatch({ type: GETAGENDASERVICE_ATTEMPT });
-  wallet.getAgendaService(address, port)
+  wallet.getAgendaService(sel.isTestNet(getState()), address, port)
     .then(agendaService => {
       dispatch({ agendaService, type: GETAGENDASERVICE_SUCCESS });
       setTimeout(() => { dispatch(getAgendasAttempt()); }, 10);
@@ -665,7 +665,7 @@ export const GETVOTINGSERVICE_SUCCESS = "GETVOTINGSERVICE_SUCCESS";
 export const getVotingServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
   dispatch({ type: GETVOTINGSERVICE_ATTEMPT });
-  wallet.getVotingService(address, port)
+  wallet.getVotingService(sel.isTestNet(getState()), address, port)
     .then(votingService => dispatch({ votingService, type: GETVOTINGSERVICE_SUCCESS }))
     .catch(error => dispatch({ error, type: GETVOTINGSERVICE_FAILED }));
 };
@@ -716,7 +716,7 @@ export const GETMESSAGEVERIFICATIONSERVICE_SUCCESS = "GETMESSAGEVERIFICATIONSERV
 export const getMessageVerificationServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
   dispatch({ type: GETMESSAGEVERIFICATIONSERVICE_ATTEMPT });
-  wallet.getMessageVerificationService(address, port)
+  wallet.getMessageVerificationService(sel.isTestNet(getState()), address, port)
     .then(messageVerificationService =>
       dispatch({ messageVerificationService, type: GETMESSAGEVERIFICATIONSERVICE_SUCCESS }))
     .catch(error => dispatch({ error, type: GETMESSAGEVERIFICATIONSERVICE_FAILED }));

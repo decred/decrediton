@@ -2,11 +2,11 @@ process.env["GRPC_SSL_CIPHER_SUITES"] = "HIGH+ECDSA";
 
 import grpc from "grpc";
 
-import { getCert } from "../../config.js";
+import { getWalletCert, getWalletPath } from "../../config.js";
 var services = require("../walletrpc/api_grpc_pb.js");
 
-const getServiceClient = (clientClass) => (address, port, cb) => {
-  var cert = getCert();
+const getServiceClient = (clientClass) => (isTestNet, address, port, cb) => {
+  var cert = getWalletCert(getWalletPath(isTestNet, "default-wallet"));
   if (cert == "") {
     return cb(null, "Unable to load dcrwallet certificate.  dcrwallet not running?");
   }

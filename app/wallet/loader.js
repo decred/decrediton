@@ -5,9 +5,9 @@ import { WalletExistsRequest, CreateWalletRequest, OpenWalletRequest,
   CloseWalletRequest, StartConsensusRpcRequest, DiscoverAddressesRequest,
   SubscribeToBlockNotificationsRequest, FetchHeadersRequest } from "middleware/walletrpc/api_pb";
 
-export const getLoader = log(({ address, port }) =>
+export const getLoader = log(({ isTestNet, address, port }) =>
   new Promise((resolve, reject) =>
-    rpcLoader(address, port, (loader, error) =>
+    rpcLoader(isTestNet, address, port, (loader, error) =>
       error ? reject(error) : resolve(loader))), "Get Loader");
 
 export const startRpc = log((loader, daemonhost, rpcport, rpcuser, rpcpass, cert) =>

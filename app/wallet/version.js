@@ -3,9 +3,9 @@ import { getVersionService as getService } from "../middleware/grpc/client";
 const messages = require("../middleware/walletrpc/api_pb");
 import { withLog as log } from "./index";
 
-export const getVersionService = log((address, port) =>
+export const getVersionService = log((network, address, port) =>
   new Promise((resolve, reject) =>
-    getService(address, port, (versionService, error) =>
+    getService(network, address, port, (versionService, error) =>
       error ? reject(error) : resolve(versionService))), "Get Version Service");
 
 export const getVersionResponse = log((versionService) =>

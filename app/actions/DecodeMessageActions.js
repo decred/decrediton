@@ -1,6 +1,7 @@
 import { decodeTransaction, getDecodeService } from "wallet";
 import { reverseHash } from "helpers/byteActions";
 import Promise from "promise";
+import { isTestNet } from "selectors";
 
 export const GETDECODEMESSAGESERVICE_ATTEMPT = "GETDECODEMESSAGESERVICE_ATTEMPT";
 export const GETDECODEMESSAGESERVICE_FAILED = "GETDECODEMESSAGESERVICE_FAILED";
@@ -9,7 +10,7 @@ export const GETDECODEMESSAGESERVICE_SUCCESS = "GETDECODEMESSAGESERVICE_SUCCESS"
 export const getDecodeMessageServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
   dispatch({ type: GETDECODEMESSAGESERVICE_ATTEMPT });
-  return getDecodeService(address, port)
+  return getDecodeService(isTestNet(getState()), address, port)
     .then(decodeMessageService =>
       dispatch({ decodeMessageService, type: GETDECODEMESSAGESERVICE_SUCCESS }))
     .catch(error => dispatch({ error, type: GETDECODEMESSAGESERVICE_FAILED }));

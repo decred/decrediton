@@ -1,8 +1,9 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initCfg, appDataDirectory, validateCfgFile, getCfgPath, dcrdCfg, dcrwCfg, dcrctlCfg, writeCfgs, getDcrdPath, RPCDaemonHost, RPCDaemonPort, RPCWalletPort, GRPCWalletPort, setMustOpenForm } from "./config.js";
+import { initGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
+import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, getWalletPath} from "./config.js";
 import path from "path";
-import fs from "fs";
+import fs from "fs-extra";
 import os from "os";
 import parseArgs from "minimist";
 import stringArgv from "string-argv";
@@ -18,6 +19,7 @@ let grpcVersions = {requiredVersion: null, walletVersion: null};
 let debug = false;
 let dcrdPID;
 let dcrwPID;
+let dcrdConfig = {};
 let currentBlockCount;
 
 let dcrdLogs = Buffer.from("");
@@ -98,15 +100,84 @@ if (process.env.NODE_ENV === "development") {
 // Always use reasonable path for save data.
 app.setPath("userData", appDataDirectory());
 
+
+// Check that wallets directory has been created, if not, make it.
+let walletsDirectory = path.join(app.getPath("userData"),"wallets");
+fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
+fs.pathExistsSync(path.join(walletsDirectory, "mainnet")) || fs.mkdirsSync(path.join(walletsDirectory, "mainnet"));
+fs.pathExistsSync(path.join(walletsDirectory, "testnet")) || fs.mkdirsSync(path.join(walletsDirectory, "testnet"));
+
+let defaultMainnetWalletDirectory = path.join(walletsDirectory, "mainnet", "default-wallet");
+if (!fs.pathExistsSync(defaultMainnetWalletDirectory)){
+  fs.mkdirsSync(defaultMainnetWalletDirectory);
+
+  // check for existing mainnet directories
+  if (fs.pathExistsSync(path.join(app.getPath("userData"), "mainnet", "wallet.db"))) {
+    fs.mkdirsSync(path.join(defaultMainnetWalletDirectory, "mainnet"));
+    fs.copySync(path.join(app.getPath("userData"), "mainnet"), path.join(defaultMainnetWalletDirectory, "mainnet"));
+  }
+
+  // copy over existing config.json if it exists
+  if (fs.pathExistsSync(path.join(app.getPath("userData"), "config.json"))) {
+    fs.copySync(path.join(app.getPath("userData"), "config.json"), path.join(defaultMainnetWalletDirectory, "config.json"));
+  }
+
+  // create new configs for default mainnet wallet
+  initWalletCfg(false, "default-wallet");
+  newWalletConfigCreation(false, "default-wallet");
+
+}
+
+let defaultTestnetWalletDirectory = path.join(walletsDirectory, "testnet", "default-wallet");
+if (!fs.pathExistsSync(defaultTestnetWalletDirectory)){
+  fs.mkdirsSync(defaultTestnetWalletDirectory);
+
+  // check for existing testnet2 directories
+  if (fs.pathExistsSync(path.join(app.getPath("userData"), "testnet2", "wallet.db"))) {
+    fs.mkdirsSync(path.join(defaultTestnetWalletDirectory, "testnet2"));
+    fs.copySync(path.join(app.getPath("userData"), "testnet2"), path.join(defaultTestnetWalletDirectory, "testnet2"));
+  }
+
+  // copy over existing config.json if it exists
+  if (fs.pathExistsSync(path.join(app.getPath("userData"), "config.json"))) {
+    fs.copySync(path.join(app.getPath("userData"), "config.json"), path.join(defaultTestnetWalletDirectory, "config.json"));
+  }
+
+  // create new configs for default testnet wallet
+  initWalletCfg(true, "default-wallet");
+  newWalletConfigCreation(true, "default-wallet");
+
+}
+
 // Verify that config.json is valid JSON before fetching it, because
 // it will silently fail when fetching.
-let err = validateCfgFile();
+let err = validateGlobalCfgFile();
 if (err !== null) {
-  let errMessage = "There was an error while trying to load the config file, the format is invalid.\n\nFile: " + getCfgPath() + "\nError: " + err;
+  let errMessage = "There was an error while trying to load the config file, the format is invalid.\n\nFile: " + path.resolve(appDataDirectory(), "config.json") + "\nError: " + err;
   dialog.showErrorBox("Config File Error", errMessage);
   app.quit();
 }
-var cfg = initCfg();
+var globalCfg = initGlobalCfg();
+
+
+/*
+// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
+let availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallets")).find(file => {
+  var checkForWalletDbs = fs.readdirSync(path.join(app.getPath("userData"), "wallets", file, cfg.get("network"))).find(fileName => {return fileName == "wallet.db";});
+  return checkForWalletDbs;
+});
+let availableWalletAppDataDir = path.join(app.getPath("userData"), "wallets/default-wallet");
+let availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallets")).find(file => {
+  var checkForWalletDbs = fs.readdirSync(path.join(app.getPath("userData"), "wallets", file, cfg.get("network"))).find(fileName => {return fileName == "wallet.db";});
+  return checkForWalletDbs;
+});
+
+let availableWallets = [];
+let availableWalletAppDataDir = getWalletPath("default-wallet");
+if (availableWallets.length > 0) {
+  availableWalletAppDataDir = path.join(app.getPath("userData"), "wallets", availableWallets[0]);
+}
+*/
 
 const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
@@ -118,42 +189,15 @@ process.on("uncaughtException", err => {
   throw err;
 });
 
-var createDcrdConf, createDcrwalletConf, createDcrctlConf = false;
-if (!fs.existsSync(dcrdCfg())) {
-  createDcrdConf = true;
-  logger.log("info", "The dcrd config file does not exists, creating");
-}
-if (!fs.existsSync(dcrwCfg())) {
-  createDcrwalletConf = true;
-  logger.log("info", "The dcrwallet config file does not exists, creating");
-}
-if (!fs.existsSync(dcrctlCfg())) {
-  createDcrctlConf = true;
-  logger.log("info", "The dcrctl config file does not exists, creating");
-}
-
 // Check if network was set on command line (but only allow one!).
 if (argv.testnet && argv.mainnet) {
   logger.log("Cannot use both --testnet and --mainnet.");
   app.quit();
 }
 
-if (argv.testnet) {
-  cfg.set("network", "testnet");
-  logger.log("info", "Running on testnet.");
-}
-
-if (argv.mainnet) {
-  cfg.set("network", "mainnet");
-  logger.log("info", "Running on mainnet.");
-}
-
-let daemonIsAdvanced = cfg.get("daemon_start_advanced");
+let daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
 
 function closeDCRW() {
-  if (cfg.get("wallet_skip_start")) {
-    return;
-  }
   if (require("is-running")(dcrwPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
     process.kill(dcrwPID, "SIGINT");
@@ -161,9 +205,6 @@ function closeDCRW() {
 }
 
 function closeDCRD() {
-  if (cfg.get("daemon_skip_start")) {
-    return;
-  }
   if (require("is-running")(dcrdPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrdPID);
     process.kill(dcrdPID, "SIGINT");
@@ -192,7 +233,7 @@ function cleanShutdown() {
   let shutdownTimer = setInterval(function(){
     const stillRunning = (require("is-running")(dcrdPID) && os.platform() != "win32");
 
-    if (cfg.get("daemon_skip_start") || !stillRunning) {
+    if (!stillRunning) {
       logger.log("info", "Final shutdown pause. Quitting app.");
       clearInterval(shutdownTimer);
       if (mainWindow) {
@@ -226,56 +267,53 @@ const installExtensions = async () => {
 };
 
 const { ipcMain } = require("electron");
-
-ipcMain.on("start-daemon", (event, appData) => {
-  if (dcrdPID && !daemonIsAdvanced) {
+/*
+ipcMain.on("get-available-wallets", (event) => {
+  event.returnValue = availableWallets;
+});
+*/
+ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
+  if (dcrdPID && dcrdConfig && !daemonIsAdvanced) {
     logger.log("info", "Skipping restart of daemon as it is already running");
-    event.returnValue = dcrdPID;
+    event.returnValue = dcrdConfig;
     return;
   }
   if(appData){
     logger.log("info", "launching dcrd with different appdata directory");
   }
-  if (dcrdPID) {
+  if (dcrdPID && dcrdConfig) {
     logger.log("info", "dcrd already started " + dcrdPID);
-    event.returnValue = dcrdPID;
+    event.returnValue = dcrdConfig;
     return;
   }
   try {
-    dcrdPID = launchDCRD(appData);
+    dcrdConfig = launchDCRD(walletPath, appData, testnet);
+    dcrdPID = dcrdConfig.pid;
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
-  event.returnValue = dcrdPID;
+  event.returnValue = dcrdConfig;
 });
 
-ipcMain.on("start-wallet", (event) => {
-  if (cfg.get("wallet_skip_start")) {
-    logger.log("info", "skipping start of dcrwallet as requested on config");
-    dcrwPID = -1;
-    event.returnValue = dcrwPID;
-    return;
-  }
+ipcMain.on("start-wallet", (event, walletPath, testnet) => {
   if (dcrwPID) {
     logger.log("info", "dcrwallet already started " + dcrwPID);
     event.returnValue = dcrwPID;
     return;
   }
   try {
-    dcrwPID = launchDCRWallet();
+    dcrwPID = launchDCRWallet(walletPath, testnet);
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }
   event.returnValue = dcrwPID;
 });
 
-ipcMain.on("check-daemon", (event, rpcCreds, appData) => {
+ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
   let args = ["getblockcount"];
   let host, port;
-  if (!rpcCreds && !appData){
-    host = RPCDaemonHost();
-    port = RPCDaemonPort();
-    args.push(`--configfile=${dcrctlCfg()}`);
+  if (!rpcCreds){
+    args.push(`--configfile=${dcrctlCfg(getWalletPath(testnet, walletPath))}`);
   } else if (rpcCreds) {
     if (rpcCreds.rpc_user) {
       args.push(`--rpcuser=${rpcCreds.rpc_user}`);
@@ -292,21 +330,12 @@ ipcMain.on("check-daemon", (event, rpcCreds, appData) => {
     if (rpcCreds.rpc_port) {
       port = rpcCreds.rpc_port;
     }
-  } else if (appData) {
-    const rpccert = `${appData}/rpc.cert`;
-    args.push(`--rpccert=${rpccert}`);
-    args.push(`--configfile=${dcrctlCfg()}`);
-    host = RPCDaemonHost();
-    port = RPCDaemonPort();
+    args.push("--rpcserver=" + host + ":" + port);
   }
 
-  var spawn = require("child_process").spawn;
-
-  if (cfg.get("network") === "testnet") {
+  if (testnet) {
     args.push("--testnet");
   }
-  args.push("--rpcserver=" + host + ":" + port);
-  args.push("--walletrpcserver=" + cfg.get("wallet_rpc_host") + ":" + RPCWalletPort());
 
   var dcrctlExe = getExecutablePath("dcrctl");
   if (!fs.existsSync(dcrctlExe)) {
@@ -315,6 +344,7 @@ ipcMain.on("check-daemon", (event, rpcCreds, appData) => {
 
   logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
 
+  var spawn = require("child_process").spawn;
   var dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: ["ignore", "pipe", "pipe", "pipe"] });
 
   dcrctl.stdout.on("data", (data) => {
@@ -365,20 +395,30 @@ const AddToLog = (destIO, destLogBuffer, data) => {
   return Buffer.concat([destLogBuffer, dataBuffer]);
 };
 
-const launchDCRD = (appdata) => {
+const launchDCRD = (walletPath, appdata, testnet) => {
   var spawn = require("child_process").spawn;
   let args = [];
+  let newConfig = {};
   if(appdata){
-    args = [`--appdata=${appdata}`,`--configfile=${dcrdCfg()}`];
+    args = [`--appdata=${appdata}`];
+    newConfig = readDcrdConfig(appdata, testnet);
+    newConfig.rpc_cert = path.resolve(appdata, "rpc.cert");
+    if (testnet) {
+      args.push("--testnet");
+    }
   } else {
-    args = [`--configfile=${dcrdCfg()}`];
+    args = [`--configfile=${dcrdCfg(getWalletPath(testnet, walletPath))}`];
+    newConfig = readDcrdConfig(getWalletPath(testnet, walletPath), testnet);
+    newConfig.rpc_cert = path.resolve(getDcrdPath(), "rpc.cert");
   }
 
-  if (cfg.get("network") === "testnet") {
-    args.push("--testnet");
+  // Check to make sure that the rpcuser and rpcpass were set in the config
+  if (!newConfig.rpc_user || !newConfig.rpc_password) {
+    const errorMessage =  "No " + `${!newConfig.rpc_user ? "rpcuser " : "" }` + `${!newConfig.rpc_user && !newConfig.rpc_password ? "and " : "" }` + `${!newConfig.rpc_password ? "rpcpass " : "" }` + "set in " + `${appdata ? appdata : getWalletPath(testnet, walletPath)}` + "/dcrd.conf.  Please set them and restart.";
+    logger.log("error", errorMessage);
+    mainWindow.webContents.executeJavaScript("alert(\"" + `${errorMessage}` + "\");");
+    mainWindow.webContents.executeJavaScript("window.close();");
   }
-
-  args.push("--rpclisten=" + RPCDaemonHost() + ":" + RPCDaemonPort());
 
   var dcrdExe = getExecutablePath("dcrd");
   if (!fs.existsSync(dcrdExe)) {
@@ -425,26 +465,18 @@ const launchDCRD = (appdata) => {
   dcrd.stdout.on("data", (data) => dcrdLogs = AddToLog(process.stdout, dcrdLogs, data));
   dcrd.stderr.on("data", (data) => dcrdLogs = AddToLog(process.stderr, dcrdLogs, data));
 
-  dcrdPID = dcrd.pid;
-  logger.log("info", "dcrd started with pid:" + dcrdPID);
+  newConfig.pid = dcrd.pid;
+  logger.log("info", "dcrd started with pid:" + newConfig.pid);
 
   dcrd.unref();
-  return dcrdPID;
+  return newConfig;
 };
 
-const launchDCRWallet = () => {
+const launchDCRWallet = (walletPath, testnet) => {
   var spawn = require("child_process").spawn;
-  var args = ["--configfile=" + dcrwCfg()];
+  var args = ["--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath))];
 
-  if (cfg.get("network") === "testnet") {
-    args.push("--testnet");
-  }
-  if (cfg.get("enableticketbuyer") === "1") {
-    args.push("--enableticketbuyer");
-  }
-  args.push("--rpcconnect=" + RPCDaemonHost() + ":" + RPCDaemonPort());
-  args.push("--rpclisten=" + cfg.get("wallet_rpc_host") + ":" + RPCWalletPort());
-  args.push("--grpclisten=" + cfg.get("wallet_rpc_host") + ":" + GRPCWalletPort());
+  const cfg = getWalletCfg(testnet, walletPath);
 
   args.push("--ticketbuyer.balancetomaintainabsolute=" + cfg.get("balancetomaintain"));
   args.push("--ticketbuyer.maxfee=" + cfg.get("maxfee"));
@@ -562,12 +594,12 @@ app.on("ready", async () => {
 
   // when installing (on first run) locale will be empty. Determine the user's
   // OS locale and set that as decrediton's locale.
-  let cfgLocale = cfg.get("locale", "");
+  let cfgLocale = globalCfg.get("locale", "");
   let locale = locales.find(value => value.key === cfgLocale);
   if (!locale) {
     let newCfgLocale = appLocaleFromElectronLocale(app.getLocale());
     logger.log("error", `Locale ${cfgLocale} not found. Switching to locale ${newCfgLocale}.`);
-    cfg.set("locale", newCfgLocale);
+    globalCfg.set("locale", newCfgLocale);
     locale = locales.find(value => value.key === newCfgLocale);
   }
 
@@ -577,8 +609,6 @@ app.on("ready", async () => {
       resizable: false, page: "staticPages/secondInstance.html"};
   } else {
     await installExtensions();
-    // Write application config files.
-    await writeCfgs(createDcrdConf, createDcrwalletConf, createDcrctlConf);
   }
   windowOpts.title = "Decrediton - " + app.getVersion();
 
