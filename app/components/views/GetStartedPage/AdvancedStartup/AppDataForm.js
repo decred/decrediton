@@ -1,5 +1,5 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { TextInput } from "inputs";
+import { FileInput } from "inputs";
 import { KeyBlueButton } from "buttons";
 import "style/LoginForm.less";
 
@@ -24,12 +24,12 @@ const AppDataForm = ({
           <T id="login.form.appdata.label" m="Daemon Data Directory"/>:
         </div>
         <div className="advanced-daemon-input">
-          <TextInput
+          <FileInput
             type="text"
             showErrors
             required
             value={appData}
-            onChange={(e) => setAppData(e.target.value)}
+            onChange={(value) => setAppData(value)}
             placeholder={intl.formatMessage(messages.appdataFieldPlaceholder)}
           />
         </div>
