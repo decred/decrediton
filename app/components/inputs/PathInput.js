@@ -1,11 +1,9 @@
-const electron = require('electron')
-const dialog = electron.remote.dialog
-const mainWindow = electron.remote.getCurrentWindow()
+const electron = require("electron");
+const dialog = electron.remote.dialog;
+const mainWindow = electron.remote.getCurrentWindow();
 const ipc = electron.ipcRenderer;
 
 import { PathButton } from "../buttons";
-import TextInput from "./TextInput";
-import { FormattedMessage as T } from "react-intl";
 
 class PathInput extends React.Component {
   constructor(props) {
@@ -16,7 +14,7 @@ class PathInput extends React.Component {
 
   componentDidMount() {
     const self = this;
-    ipc.on('path', function (event, data) {
+    ipc.on("path", function (event, data) {
       self.setState({ path: data });
       self.props.onChange(data);
     });
@@ -24,13 +22,13 @@ class PathInput extends React.Component {
 
   selectDirectory() {
     dialog.showOpenDialog(mainWindow, {
-      properties: [this.props.type === "directory" ? 'openDirectory' : 'openFile']
-    }, this.directorySelectorCallback)
+      properties: [this.props.type === "directory" ? "openDirectory" : "openFile"]
+    }, this.directorySelectorCallback);
   }
 
   directorySelectorCallback(filenames) {
     if (filenames && filenames.length > 0) {
-      mainWindow.webContents.send('path', filenames[0]);
+      mainWindow.webContents.send("path", filenames[0]);
     }
   }
 
