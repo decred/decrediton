@@ -1,8 +1,7 @@
 import * as wallet from "wallet";
-import * as sel from "selectors";
-import { compose } from "fp";
+// import * as sel from "selectors";
 import fs from "fs";
-import { isString, isNumber, isNullOrUndefined, isUndefined } from "util";
+import { isNumber, isNullOrUndefined, isUndefined } from "util";
 import { tsToDate } from "helpers";
 
 export const exportStatToCSV = (opts) => (dispatch) => {
@@ -11,7 +10,7 @@ export const exportStatToCSV = (opts) => (dispatch) => {
   dispatch(exportStatToCSVFile({...opts, csvFilename}));
 };
 
-export const exportStatToCSVFile = (opts) => (dispatch, getState) => {
+export const exportStatToCSVFile = (opts) => (dispatch) => {
   const { calcFunction, csvFilename } = opts;
 
   var fd;
