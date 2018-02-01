@@ -117,41 +117,59 @@ export function formatUnminedTransaction(transaction, index) {
   return formatTransaction(UNMINED_BLOCK_TEMPLATE, transaction, index);
 }
 
-export const getTransactions = withLogNoData((walletService, startBlockHeight,
-  endBlockHeight, targetTransactionCount) =>
+export const streamGetTransactions = withLogNoData((walletService, startBlockHeight,
+  endBlockHeight, targetTransactionCount, dataCb) =>
   new Promise((resolve, reject) => {
     var request = new GetTransactionsRequest();
     request.setStartingBlockHeight(startBlockHeight);
     request.setEndingBlockHeight(endBlockHeight);
     request.setTargetTransactionCount(targetTransactionCount);
 
-    var foundMined = [];
-    var foundUnmined = [];
-
     let getTx = walletService.getTransactions(request);
     getTx.on("data", (response) => {
+      var foundMined = [];
+      var foundUnmined = [];
+
       let minedBlock = response.getMinedTransactions();
       if (minedBlock) {
-        minedBlock
+        foundMined = minedBlock
           .getTransactionsList()
-          .map((v, i) => formatTransaction(minedBlock, v, i))
-          .forEach(v => { foundMined.push(v); });
+          .map((v, i) => formatTransaction(minedBlock, v, i));
       }
 
       let unmined = response.getUnminedTransactionsList();
       if (unmined) {
-        unmined
-          .map((v, i) => formatUnminedTransaction(v, i))
-          .forEach(v => foundUnmined.push(v));
+        foundUnmined = unmined
+          .map((v, i) => formatUnminedTransaction(v, i));
       }
+
+      dataCb(foundMined, foundUnmined);
     });
     getTx.on("end", () => {
-      resolve({mined: foundMined, unmined: foundUnmined});
+      resolve();
     });
     getTx.on("error", (err) => {
       reject(err);
     });
   }), "Get Transactions");
+
+export const getTransactions = (walletService, startBlockHeight,
+  endBlockHeight, targetTransactionCount) =>
+  new Promise((resolve, reject) => {
+
+    var mined = [];
+    var unmined = [];
+
+    const dataCb = (foundMined, foundUnmined) => {
+      mined  = mined.concat(foundMined);
+      unmined = unmined.concat(foundUnmined);
+    };
+
+    streamGetTransactions(walletService, startBlockHeight,
+      endBlockHeight, targetTransactionCount, dataCb)
+      .then(() => resolve({mined, unmined}))
+      .catch(reject);
+  });
 
 export const publishUnminedTransactions = log((walletService) => new Promise((resolve, reject) => {
   const req = new PublishUnminedTransactionsRequest();

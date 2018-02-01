@@ -170,7 +170,7 @@ export const blockURLBuilder= createSelector(
     (txHash) => `https://${network !== "testnet" ? "explorer" : network}.dcrdata.org/${network == "testnet" ? "explorer/" : ""}block/${txHash}`
 );
 
-const transactionNormalizer = createSelector(
+export const transactionNormalizer = createSelector(
   [accounts, txURLBuilder, blockURLBuilder],
   (accounts, txURLBuilder, blockURLBuilder) => {
     const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
