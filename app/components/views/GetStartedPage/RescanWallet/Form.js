@@ -20,7 +20,9 @@ const RescanWalletFormBody = ({
     rescanEndBlock,
     rescanStartBlock,
     rescanCurrentBlock,
+    showLongWaitMessage
   }) => (
+    showLongWaitMessage &&
     <div className="get-started-content-new-seed">
       <div className="get-started-content-instructions">
         <LinearProgress
