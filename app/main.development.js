@@ -111,10 +111,6 @@ let defaultMainnetWalletDirectory = path.join(walletsDirectory, "mainnet", "defa
 if (!fs.pathExistsSync(defaultMainnetWalletDirectory)){
   fs.mkdirsSync(defaultMainnetWalletDirectory);
 
-  // create new configs for default mainnet wallet
-  initWalletCfg(false, "default-wallet");
-  newWalletConfigCreation(false, "default-wallet");
-
   // check for existing mainnet directories
   if (fs.pathExistsSync(path.join(app.getPath("userData"), "mainnet", "wallet.db"))) {
     fs.mkdirsSync(path.join(defaultMainnetWalletDirectory, "mainnet"));
@@ -125,15 +121,16 @@ if (!fs.pathExistsSync(defaultMainnetWalletDirectory)){
   if (fs.pathExistsSync(path.join(app.getPath("userData"), "config.json"))) {
     fs.copySync(path.join(app.getPath("userData"), "config.json"), path.join(defaultMainnetWalletDirectory, "config.json"));
   }
+
+  // create new configs for default mainnet wallet
+  initWalletCfg(false, "default-wallet");
+  newWalletConfigCreation(false, "default-wallet");
+
 }
 
 let defaultTestnetWalletDirectory = path.join(walletsDirectory, "testnet", "default-wallet");
 if (!fs.pathExistsSync(defaultTestnetWalletDirectory)){
   fs.mkdirsSync(defaultTestnetWalletDirectory);
-
-  // create new configs for default testnet wallet
-  initWalletCfg(true, "default-wallet");
-  newWalletConfigCreation(true, "default-wallet");
 
   // check for existing testnet2 directories
   if (fs.pathExistsSync(path.join(app.getPath("userData"), "testnet2", "wallet.db"))) {
@@ -145,6 +142,11 @@ if (!fs.pathExistsSync(defaultTestnetWalletDirectory)){
   if (fs.pathExistsSync(path.join(app.getPath("userData"), "config.json"))) {
     fs.copySync(path.join(app.getPath("userData"), "config.json"), path.join(defaultTestnetWalletDirectory, "config.json"));
   }
+  
+  // create new configs for default testnet wallet
+  initWalletCfg(true, "default-wallet");
+  newWalletConfigCreation(true, "default-wallet");
+
 }
 
 // Verify that config.json is valid JSON before fetching it, because
