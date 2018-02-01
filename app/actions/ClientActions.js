@@ -394,7 +394,7 @@ export function hideAccount(accountNumber) {
       updatedHiddenAccounts = hiddenAccounts;
     }
     updatedHiddenAccounts.push(accountNumber);
-    var cfg = getWalletCfg("default-wallet");
+    var cfg = getWalletCfg(sel.isTestNet(getState()), "default-wallet");
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
     dispatch(updateAccount({accountNumber, hidden: true}));
@@ -410,7 +410,7 @@ export function showAccount(accountNumber) {
         updatedHiddenAccounts.push(hiddenAccounts[i]);
       }
     }
-    var cfg = getWalletCfg("default-wallet");
+    var cfg = getWalletCfg(sel.isTestNet(getState()), "default-wallet");
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
     dispatch(updateAccount({accountNumber, hidden: false}));

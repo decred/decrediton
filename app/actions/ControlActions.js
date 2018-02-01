@@ -407,8 +407,8 @@ export const SETMAXPERBLOCK = "SETMAXPERBLOCK";
 
 export function setTicketBuyerConfigAttempt(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
   stakePool, maxPerBlock) {
-  var cfg = getWalletCfg("default-wallet");
   return (dispatch, getState) => {
+    var cfg = getWalletCfg(sel.isTestNet(getState()), "default-wallet");
     dispatch({ type: SETTICKETBUYERCONFIG_ATTEMPT });
     const { ticketBuyerService } = getState().grpc;
     const { getTicketBuyerConfigResponse } = getState().control;
