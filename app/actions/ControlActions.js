@@ -12,7 +12,7 @@ import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   SetMaxPriceRelativeRequest, SetVotingAddressRequest, SetPoolAddressRequest, SetPoolFeesRequest,
   SetMaxPerBlockRequest,
   } from "../middleware/walletrpc/api_pb";
-import { getCfg } from "../config.js";
+import { getWalletCfg } from "../config.js";
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";
@@ -407,8 +407,8 @@ export const SETMAXPERBLOCK = "SETMAXPERBLOCK";
 
 export function setTicketBuyerConfigAttempt(account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative,
   stakePool, maxPerBlock) {
-  var cfg = getCfg();
   return (dispatch, getState) => {
+    var cfg = getWalletCfg(sel.isTestNet(getState()), "default-wallet");
     dispatch({ type: SETTICKETBUYERCONFIG_ATTEMPT });
     const { ticketBuyerService } = getState().grpc;
     const { getTicketBuyerConfigResponse } = getState().control;

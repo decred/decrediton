@@ -14,12 +14,14 @@ export const SEED_LENGTH = {
 
 export const getSeedService = createSelector(
   [
+    ({ grpc: { network } }) => network,
     ({ grpc: { address } }) => address,
     ({ grpc: { port } }) => port
   ],
-  (address, port) =>
+  (network, address, port) =>
     (new Promise((resolve, reject) =>
       seederFactory(
+        network == "testnet",
         address,
         port,
         (response, err) => err ? reject(err) : resolve(response)

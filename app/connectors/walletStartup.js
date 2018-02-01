@@ -19,6 +19,7 @@ const mapStateToProps = selectorMap({
   getWalletReady: sel.getWalletReady,
   getEstimatedTimeLeft: sel.getEstimatedTimeLeft,
   isPrepared: sel.isPrepared,
+  isTestNet: sel.isTestNet,
   network: sel.network,
   isAdvancedDaemon: sel.isAdvancedDaemon,
   openForm: sel.openForm,
