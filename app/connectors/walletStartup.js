@@ -11,7 +11,6 @@ const mapStateToProps = selectorMap({
   startupError: sel.startupError,
   confirmNewSeed: sel.confirmNewSeed,
   hasExistingWallet: sel.hasExistingWallet,
-  isProcessing: sel.isStartupProcessing,
   getDaemonStarted: sel.getDaemonStarted,
   getDaemonSynced: sel.getDaemonSynced,
   getCurrentBlockCount: sel.getCurrentBlockCount,

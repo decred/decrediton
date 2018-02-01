@@ -78,16 +78,7 @@ export const isInputRequest = or(
   openWalletInputRequest,
   createWalletInputRequest,
   discoverAddressInputRequest,
-);
-export const isStartupProcessing = and(
-  not(isAdvancedDaemon),
-  or(
-    not(isPrepared),
-    and(
-      not(isInputRequest),
-      not(startupError)
-    )
-  )
+  and(openForm, isAdvancedDaemon)
 );
 
 export const balances = or(get(["grpc", "balances"]), () => []);
