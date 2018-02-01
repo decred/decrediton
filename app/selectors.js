@@ -73,12 +73,14 @@ export const startupError = or(
 const openWalletInputRequest = get(["walletLoader", "openWalletInputRequest"]);
 const createWalletInputRequest = get(["walletLoader", "createWalletInputRequest"]);
 const discoverAddressInputRequest = get(["walletLoader", "discoverAddressInputRequest"]);
+const advancedDaemonInputRequest = get(["walletLoader", "advancedDaemonInputRequest"]);
+const openWalletRequestAttempt = get(["walletLoader", "walletOpenRequestAttempt"]);
 
 export const isInputRequest = or(
-  openWalletInputRequest,
+  and(openWalletInputRequest, not(openWalletRequestAttempt)),
   createWalletInputRequest,
   discoverAddressInputRequest,
-  and(openForm, isAdvancedDaemon)
+  and(openForm, isAdvancedDaemon, advancedDaemonInputRequest)
 );
 
 export const balances = or(get(["grpc", "balances"]), () => []);
