@@ -142,7 +142,7 @@ if (!fs.pathExistsSync(defaultTestnetWalletDirectory)){
   if (fs.pathExistsSync(path.join(app.getPath("userData"), "config.json"))) {
     fs.copySync(path.join(app.getPath("userData"), "config.json"), path.join(defaultTestnetWalletDirectory, "config.json"));
   }
-  
+
   // create new configs for default testnet wallet
   initWalletCfg(true, "default-wallet");
   newWalletConfigCreation(true, "default-wallet");
