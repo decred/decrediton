@@ -1,5 +1,5 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { TextInput, PasswordInput } from "inputs";
+import { TextInput, PasswordInput, PathInput } from "inputs";
 import { KeyBlueButton } from "buttons";
 import "style/LoginForm.less";
 
@@ -77,14 +77,12 @@ const RemoteDaemonForm = ({
           <T id="advanced.remote.rpccert" m="RPC Cert Path"/>:
         </div>
         <div className="advanced-daemon-input">
-        <TextInput
-          type="text"
-          required
-          value={rpc_cert}
-          onChange={(e) => setRpcCert(e.target.value)}
-          placeholder={intl.formatMessage(messages.certFieldPlaceholder)}
-          showErrors
-        />
+        <PathInput
+            type="file"
+            value={rpc_cert}
+            onChange={(value) => setRpcCert(value)}
+            placeholder={intl.formatMessage(messages.certFieldPlaceholder)}
+          />
         </div>
       </div>
       <div className="advanced-daemon-row">

@@ -1,7 +1,7 @@
 export { default as EyeFilterMenu } from "./EyeFilterMenu";
 export { default as HelpLink } from "./HelpLink";
 export { default as SlateGrayButton } from "./SlateGrayButton";
-export { default as DirectoryButton } from "./DirectoryButton";
+export { default as PathButton } from "./PathButton";
 export { default as RescanButton } from "./RescanButton";
 export { default as RescanCancelButton } from "./RescanCancelButton";
 export { default as TextToggle } from "./TextToggle";

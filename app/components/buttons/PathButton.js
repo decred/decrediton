@@ -1,16 +1,17 @@
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
 
-const dataDirMessage = "Select a data directory";
+const dataDirMessage = "Select a path";
 
-const DirectoryButton = ({ disabled, onClick }) => (
+const PathButton = ({ disabled, onClick }) => (
+
   <Tooltip text={<T id="startup.dataDir.tip" m={dataDirMessage} />}>
     <div
-      className={"directory-button"}
+      className={"path-button"}
       {...{ disabled, onClick }}
     />
   </Tooltip>
 );
 
-export default DirectoryButton;
+export default PathButton;
 
