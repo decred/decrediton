@@ -7,8 +7,8 @@ const BalanceChart = ({ data }) => (
         <CartesianGrid strokeDasharray="7 7" />
         <Tooltip />
         <Legend />
-        <Bar dataKey="spendable" stackId="a" fill="#0c1e3e" radius={[10, 10, 10, 10]} />
-        <Bar dataKey="locked" stackId="a" fill="#2971ff" radius={[10, 10, 10, 10]} />
+        <Bar dataKey="locked" stackId="a" fill="#0c1e3e" radius={[0, 0, 10, 10]} />
+        <Bar dataKey="available" stackId="a" fill="#2971ff" radius={[10, 10, 0, 0]} />
     </BarChart>
 );
 

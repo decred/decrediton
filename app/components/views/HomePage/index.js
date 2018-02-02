@@ -84,7 +84,7 @@ class Home extends React.Component{
       newData = {
         name: date,
         locked: values.lockedTotal,
-        spendable: values.spendableTotal
+        available: values.spendableTotal
       };
       data.push(newData);
     }

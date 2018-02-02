@@ -251,14 +251,16 @@ export const spendableAndLockedByDay = createSelector(
     for(let i=0; i<transactions.length; i++) {
       let transaction = transactions[i];
       var a = new Date(transaction.txTimestamp * 1000);
-      var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
       var year = a.getFullYear();
-      var month = months[a.getMonth()];
+      var month = a.getMonth();
       var date = a.getDate();
       var time = year + "/" + month + "/" + date;
 
       if(transaction.txType === "Ticket") {
-        lockedTotal += transaction.txAmount;
+        transaction.txOutputs.forEach((t)=>{
+          if(t.accountName === "imported")
+            lockedTotal += t.amount;
+        });
       } else if (transaction.txType === "Vote") {
         transaction.txInputs.forEach((t)=>{
           if(t.accountName === "imported")
