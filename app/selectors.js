@@ -247,6 +247,7 @@ export const totalLockedByDay = createSelector(
   (transactions) => {
     let valuesByDate = {};
     let spendableTotal = 0;
+    let lockedTotal = 0;
     for(let i=0; i<transactions.length; i++) {
       let transaction = transactions[i];
       var a = new Date(transaction.txTimestamp * 1000);
@@ -256,19 +257,31 @@ export const totalLockedByDay = createSelector(
       var date = a.getDate();
       var time = year + "/" + month + "/" + date;
 
-      if(transaction.txDirection === "in") {
+      if(transaction.txType === "Ticket") {
+        lockedTotal += transaction.txAmount;
+      } else if (transaction.txType === "Vote") {
+        transaction.txInputs.forEach((t)=>{
+          if(t.accountName === "imported")
+            spendableTotal += t.amount;
+        });
         spendableTotal += transaction.txAmount;
-      } else if (transaction.txDirection === "out") {
-        spendableTotal -= transaction.txAmount;
+      } else {
+        if(transaction.txDirection === "in") {
+          spendableTotal += transaction.txAmount;
+        } else if (transaction.txDirection === "out") {
+          spendableTotal -= transaction.txAmount;
+        }
       }
 
       if(valuesByDate[time]) {
         valuesByDate[time][a] = transaction;
         valuesByDate[time].spendableTotal = spendableTotal;
+        valuesByDate[time].lockedTotal = lockedTotal;
       } else {
         valuesByDate[time] = {
           spendableTotal,
           [a]: transaction,
+          lockedTotal,
         };
       }
     }
