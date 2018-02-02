@@ -6,6 +6,7 @@ import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
 import { MainNetParams, TestNetParams } from "wallet/constants";
 import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
+import { tsToYYYYMMDD } from "helpers/dateFormat";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
@@ -250,11 +251,7 @@ export const spendableAndLockedByDay = createSelector(
     let lockedTotal = 0;
     for(let i=0; i<transactions.length; i++) {
       let transaction = transactions[i];
-      var a = new Date(transaction.txTimestamp * 1000);
-      var year = a.getFullYear();
-      var month = a.getMonth();
-      var date = a.getDate();
-      var time = year + "/" + month + "/" + date;
+      const time = tsToYYYYMMDD(transaction.txTimestamp);
 
       if(transaction.txType === "Ticket") {
         transaction.txOutputs.forEach((t)=>{
@@ -276,17 +273,16 @@ export const spendableAndLockedByDay = createSelector(
       }
 
       if(valuesByDate[time]) {
-        valuesByDate[time][a] = transaction;
         valuesByDate[time].spendableTotal = spendableTotal;
         valuesByDate[time].lockedTotal = lockedTotal;
       } else {
         valuesByDate[time] = {
           spendableTotal,
-          [a]: transaction,
           lockedTotal,
         };
       }
     }
+    console.log(valuesByDate)
     return valuesByDate;
   }
 );

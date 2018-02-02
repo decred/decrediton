@@ -78,7 +78,7 @@ class Home extends React.Component{
     const keys = Object.keys(spendableAndLockedByDay);
     let data = [];
     let newData = {};
-    for(let i=0;i < keys.length; i++){
+    for(let i= keys.length - 1;i>=0; i--){
       const date = keys[i];
       const values = spendableAndLockedByDay[date];
       newData = {
