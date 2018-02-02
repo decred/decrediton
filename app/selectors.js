@@ -242,7 +242,7 @@ export const homeHistoryTransactions = createSelector(
   [transactionsNormalizer, get(["grpc", "recentTransactions"])], apply
 );
 
-export const totalLockedByDay = createSelector(
+export const spendableAndLockedByDay = createSelector(
   [transactions],
   (transactions) => {
     let valuesByDate = {};

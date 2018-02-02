@@ -16,10 +16,11 @@ const HomePage = ({
   getTransactionsRequestAttempt,
   getAccountsResponse,
   children,
+  balanceChartData,
 }) => {
   return (
     <div className="overview-wrapper">
-      <TabbedComponent header={HomeHeader} {...{routes, lockedTotalBalance, totalBalance, spendableTotalBalance}}>
+      <TabbedComponent header={HomeHeader} {...{routes, lockedTotalBalance, totalBalance, spendableTotalBalance, balanceChartData}}>
         {children}
       </TabbedComponent>
       <div className="overview-transactions-ticket-wrapper">

@@ -15,7 +15,7 @@ const mapStateToProps = selectorMap({
   hasTicketsToRevoke: sel.hasTicketsToRevoke,
   totalBalance: sel.totalBalance,
   lockedTotalBalance: sel.lockedBalance,
-  totalLockedByDay: sel.totalLockedByDay,
+  spendableAndLockedByDay: sel.spendableAndLockedByDay,
   noMoreTransactions: sel.noMoreTransactions,
 });
 
