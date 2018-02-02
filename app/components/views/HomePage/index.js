@@ -20,24 +20,12 @@ class Home extends React.Component{
     };
   }
 
-  componentDidMount() {
-    if(!this.props.noMoreTransactions) {
-      this.props.getTransactions();
-    }
-  }
-
-  componentWillReceiveProps() {
-    if(!this.props.noMoreTransactions) {
-      this.props.getTransactions();
-    }
-  }
-
   render() {
     return this.props.walletService ? <HomePage
     {...{
       ...this.props,
       ...this.state,
-      balanceChartData: this.formatBalanceData(this.props.spendableAndLockedByDay),
+      balanceChartData: this.props.spendableAndLockedBalance,
       ...substruct({
         onShowRevokeTicket: null,
         onRequestPassphrase: null,
@@ -74,22 +62,6 @@ class Home extends React.Component{
     });
   }
 
-  formatBalanceData(spendableAndLockedByDay){
-    const keys = Object.keys(spendableAndLockedByDay);
-    let data = [];
-    let newData = {};
-    for(let i=0;i< keys.length; i++){
-      const date = keys[i];
-      const values = spendableAndLockedByDay[date];
-      newData = {
-        name: date,
-        locked: values.lockedTotal/100000000,
-        available: values.spendableTotal/100000000
-      };
-      data.push(newData);
-    }
-    return data;
-  }
 
 }
 

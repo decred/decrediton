@@ -243,45 +243,25 @@ export const homeHistoryTransactions = createSelector(
   [transactionsNormalizer, get(["grpc", "recentTransactions"])], apply
 );
 
-export const spendableAndLockedByDay = createSelector(
+export const spendableAndLockedBalance = createSelector(
   [transactions],
-  (transactions) => {
-    let valuesByDate = {};
-    let spendableTotal = 0;
-    let lockedTotal = 0;
-    for(let i=transactions.length-1; i>=0; i--) {
-      let transaction = transactions[i];
-      const time = tsToYYYYMMDD(transaction.txTimestamp);
-
-      if(transaction.txType === "Ticket") {
-        transaction.txOutputs.forEach(t => {
-          if(t.accountName === "imported") {
-            lockedTotal += t.amount;
-            spendableTotal -= t.amount;
-          }
-        });
-      } else if (transaction.txType === "Vote") {
-        transaction.txInputs.forEach(t => {
-          if(t.accountName === "imported"){
-            lockedTotal -= t.amount;
-            spendableTotal += t.amount;
-          }
-        });
-        spendableTotal += transaction.txAmount;
-      } else {
-        if(transaction.txDirection === "in") {
-          spendableTotal += transaction.txAmount;
-        } else if (transaction.txDirection === "out") {
-          spendableTotal -= transaction.txAmount;
-        }
-      }
-
-      valuesByDate[time] = {
-        spendableTotal,
-        lockedTotal,
-      };
-    }
-    return valuesByDate;
+  () => {
+    return [
+      { name: "23.10", available: 4000, locked: 2400},
+      { name: "24.10", available: 3000, locked: 1398},
+      { name: "25.10", available: 2000, locked: 7004},
+      { name: "26.10", available: 2780, locked: 3908},
+      { name: "27.10", available: 1890, locked: 4800},
+      { name: "28.10", available: 2390, locked: 3800},
+      { name: "29.10", available: 3490, locked: 4300},
+      { name: "30.10", available: 3490, locked: 4300},
+      { name: "01.11", available: 3490, locked: 4300},
+      { name: "02.11", available: 3490, locked: 4300},
+      { name: "03.11", available: 3490, locked: 4300},
+      { name: "04.11", available: 3490, locked: 4300},
+      { name: "05.11", available: 3490, locked: 4300},
+      { name: "06.11", available: 3490, locked: 4300},
+    ];
   }
 );
 
