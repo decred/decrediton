@@ -274,15 +274,10 @@ export const spendableAndLockedByDay = createSelector(
         }
       }
 
-      if(valuesByDate[time]) {
-        valuesByDate[time].spendableTotal = spendableTotal;
-        valuesByDate[time].lockedTotal = lockedTotal;
-      } else {
-        valuesByDate[time] = {
-          spendableTotal,
-          lockedTotal,
-        };
-      }
+      valuesByDate[time] = {
+        spendableTotal,
+        lockedTotal,
+      };
     }
     return valuesByDate;
   }
