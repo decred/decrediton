@@ -1,4 +1,4 @@
-import { versionCheckAction } from "./WalletLoaderActions";
+import { versionCheckAction, startRpcRequestFunc } from "./WalletLoaderActions";
 import { stopNotifcations } from "./NotificationActions";
 import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
@@ -6,6 +6,7 @@ import { ipcRenderer } from "electron";
 import { setMustOpenForm } from "config";
 import { hideSidebarMenu } from "./SidebarActions";
 import { isTestNet } from "selectors";
+import { getAppdataPath, getRemoteCredentials } from "config.js";
 
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
@@ -81,6 +82,26 @@ export const startWallet = () => (dispatch, getState) => {
   });
 };
 
+export const prepStartDaemon = () => (dispatch, getState) => {
+  const { daemon: { daemonAdvanced, openForm } } = getState();
+  if (!daemonAdvanced) {
+    dispatch(startDaemon());
+    return;
+  }
+  const {rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port} = getRemoteCredentials(isTestNet(getState()));
+  const hasAllCredentials = rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
+  const hasAppData = getAppdataPath(isTestNet(getState())) && getAppdataPath(isTestNet(getState())).length > 0;
+
+  if(hasAllCredentials && hasAppData)
+    this.props.setCredentialsAppdataError();
+
+  if (!openForm && hasAppData) {
+    dispatch(startDaemon(null, getAppdataPath(isTestNet(getState()))));
+  } else if (!openForm && hasAllCredentials) {
+    dispatch(startDaemon(getRemoteCredentials(isTestNet(getState()))));
+  }
+};
+
 export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
   (dispatch, getState) => {
@@ -96,7 +117,7 @@ export const syncDaemon = () =>
             dispatch({type: DAEMONSYNCED});
             dispatch({currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK});
             setMustOpenForm(false);
-            dispatch(startWallet());
+            dispatch(startRpcRequestFunc());
             return;
           } else if (updateCurrentBlockCount !== 0) {
             const blocksLeft = neededBlocks - updateCurrentBlockCount;

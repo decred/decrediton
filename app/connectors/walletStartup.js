@@ -11,7 +11,6 @@ const mapStateToProps = selectorMap({
   startupError: sel.startupError,
   confirmNewSeed: sel.confirmNewSeed,
   hasExistingWallet: sel.hasExistingWallet,
-  isProcessing: sel.isStartupProcessing,
   getDaemonStarted: sel.getDaemonStarted,
   getDaemonSynced: sel.getDaemonSynced,
   getCurrentBlockCount: sel.getCurrentBlockCount,
@@ -37,6 +36,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onRetryStartRPC: wla.startRpcRequestFunc,
   doVersionCheck: wla.versionCheckAction,
   onStartDaemon: da.startDaemon,
+  onStartWallet: da.startWallet,
   determineNeededBlocks: wla.determineNeededBlocks,
   setCredentialsAppdataError: da.setCredentialsAppdataError
 }, dispatch);

@@ -11,7 +11,6 @@ import { SettingsBody, SettingsHeader } from "./Settings";
 import { LogsBody, LogsHeader } from "./Logs";
 import { RescanWalletHeader, RescanWalletBody } from "./RescanWallet/index";
 import { walletStartup } from "connectors";
-import { getAppdataPath, getRemoteCredentials } from "config.js";
 
 @autobind
 class GetStartedPage extends React.Component {
@@ -23,22 +22,9 @@ class GetStartedPage extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.isAdvancedDaemon) {
-      this.props.onStartDaemon();
+    if (!this.props.getWalletReady) {
+      this.props.onStartWallet();
       return;
-    }
-
-    const {rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port} = getRemoteCredentials(this.props.isTestNet);
-    const hasAllCredentials = rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
-    const hasAppData = getAppdataPath(this.props.isTestNet) && getAppdataPath(this.props.isTestNet).length > 0;
-
-    if(hasAllCredentials && hasAppData)
-      this.props.setCredentialsAppdataError();
-
-    if (!this.props.openForm && hasAppData) {
-      this.props.onStartDaemon(null, getAppdataPath(this.props.isTestNet));
-    } else if (!this.props.openForm && hasAllCredentials) {
-      this.props.onStartDaemon(getRemoteCredentials(this.props.isTestNet));
     }
   }
 
@@ -64,6 +50,7 @@ class GetStartedPage extends React.Component {
       isPrepared,
       isAdvancedDaemon,
       openForm,
+      getWalletReady,
       remoteAppdataError,
       ...props
     } = this.props;
@@ -80,16 +67,14 @@ class GetStartedPage extends React.Component {
       onShowLogs,
       onHideLogs
     } = this;
-
     let Header, Body;
-
     if (showSettings) {
       Header = SettingsHeader;
       Body = SettingsBody;
     } else if (showLogs) {
       Header = LogsHeader;
       Body = LogsBody;
-    } else if (isPrepared) {
+    } else if (getWalletReady && !isPrepared) {
       switch (startStepIndex || 0) {
       case 0:
       case 1:
@@ -100,6 +85,20 @@ class GetStartedPage extends React.Component {
         Header = OpenWalletHeader;
         Body = OpenWalletBody;
         break;
+      default:
+        if (isAdvancedDaemon && openForm && !remoteAppdataError) {
+          Header = AdvancedStartupHeader;
+          Body = AdvancedStartupBody;
+        } else if (remoteAppdataError) {
+          Header = AdvancedStartupHeader;
+          Body = RemoteAppdataError;
+        } else {
+          Header = DaemonLoadingHeader;
+          Body = DaemonLoadingBody;
+        }
+      }
+    } else if (isPrepared) {
+      switch (startStepIndex || 0) {
       case 3:
       case 4:
         Header = StartRPCHeader;
@@ -122,16 +121,8 @@ class GetStartedPage extends React.Component {
         Body = FinalStartUpBody;
       }
     } else {
-      if (isAdvancedDaemon && openForm && !remoteAppdataError) {
-        Header = AdvancedStartupHeader;
-        Body = AdvancedStartupBody;
-      } else if (remoteAppdataError) {
-        Header = AdvancedStartupHeader;
-        Body = RemoteAppdataError;
-      } else {
-        Header = DaemonLoadingHeader;
-        Body = DaemonLoadingBody;
-      }
+      Header = DaemonLoadingHeader;
+      Body = DaemonLoadingBody;
     }
 
     return <Page Header={Header} Body={Body}
