@@ -29,16 +29,15 @@ const HomePage = ({
           </div>
         </div>
       </div>
-      <div>
-        <BarChart width={400} height={244} data={balanceChartData}
-          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+      <div className="overview-chart-wrapper">
+        <BarChart width={400} height={244} data={balanceChartData}>
           <XAxis dataKey="name" />
           <YAxis />
           <CartesianGrid strokeDasharray="7 7" />
           <Tooltip />
           <Legend />
-          <Bar dataKey="spendable" stackId="a" fill="#0c1e3e" />
-          <Bar dataKey="locked" stackId="a" fill="#2971ff" />
+          <Bar dataKey="spendable" stackId="a" fill="#0c1e3e" radius={[10, 10, 10, 10]}/>
+          <Bar dataKey="locked" stackId="a" fill="#2971ff" radius={[10, 10, 10, 10]} />
         </BarChart>
       </div>
     </div>
