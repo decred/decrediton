@@ -83,8 +83,8 @@ class Home extends React.Component{
       const values = spendableAndLockedByDay[date];
       newData = {
         name: date,
-        locked: values.lockedTotal,
-        available: values.spendableTotal
+        locked: values.lockedTotal/100000000,
+        available: values.spendableTotal/100000000
       };
       data.push(newData);
     }
