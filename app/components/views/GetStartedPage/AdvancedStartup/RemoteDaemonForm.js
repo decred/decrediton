@@ -1,5 +1,5 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { TextInput, PasswordInput, PathInput } from "inputs";
+import { TextInput, PasswordInput, PathBrowseInput } from "inputs";
 import { KeyBlueButton } from "buttons";
 import "style/LoginForm.less";
 
@@ -44,7 +44,7 @@ const RemoteDaemonForm = ({
     <Aux>
       <div className="advanced-daemon-row">
         <div className="advanced-daemon-label">
-          <T id="advanced.remote.rpcuser" m="RPC User"/>:
+          <T id="advanced.remote.rpcuser" m="RPC User" />:
         </div>
         <div className="advanced-daemon-input">
           <TextInput
@@ -59,7 +59,7 @@ const RemoteDaemonForm = ({
       </div>
       <div className="advanced-daemon-row">
         <div className="advanced-daemon-label">
-          <T id="advanced.remote.rpcpass" m="RPC Password"/>:
+          <T id="advanced.remote.rpcpass" m="RPC Password" />:
         </div>
         <div className="advanced-daemon-input">
           <PasswordInput
@@ -74,10 +74,10 @@ const RemoteDaemonForm = ({
       </div>
       <div className="advanced-daemon-row">
         <div className="advanced-daemon-label">
-          <T id="advanced.remote.rpccert" m="RPC Cert Path"/>:
+          <T id="advanced.remote.rpccert" m="RPC Cert Path" />:
         </div>
         <div className="advanced-daemon-input">
-        <PathInput
+          <PathBrowseInput
             type="file"
             value={rpc_cert}
             onChange={(value) => setRpcCert(value)}
@@ -87,32 +87,32 @@ const RemoteDaemonForm = ({
       </div>
       <div className="advanced-daemon-row">
         <div className="advanced-daemon-label">
-          <T id="advanced.remote.rpchost" m="RPC Host"/>:
+          <T id="advanced.remote.rpchost" m="RPC Host" />:
         </div>
         <div className="advanced-daemon-input">
-        <TextInput
-          type="text"
-          required
-          value={rpc_host}
-          onChange={(e) => setRpcHost(e.target.value)}
-          placeholder={intl.formatMessage(messages.hostFieldPlaceholder)}
-          showErrors
-        />
+          <TextInput
+            type="text"
+            required
+            value={rpc_host}
+            onChange={(e) => setRpcHost(e.target.value)}
+            placeholder={intl.formatMessage(messages.hostFieldPlaceholder)}
+            showErrors
+          />
         </div>
       </div>
       <div className="advanced-daemon-row">
         <div className="advanced-daemon-label">
-          <T id="advanced.remote.rpcport" m="RPC Port"/>:
+          <T id="advanced.remote.rpcport" m="RPC Port" />:
         </div>
         <div className="advanced-daemon-input">
-        <TextInput
-          type="text"
-          required
-          value={rpc_port}
-          onChange={(e) => setRpcPort(e.target.value)}
-          placeholder={intl.formatMessage(messages.portFieldPlaceholder)}
-          showErrors
-        />
+          <TextInput
+            type="text"
+            required
+            value={rpc_port}
+            onChange={(e) => setRpcPort(e.target.value)}
+            placeholder={intl.formatMessage(messages.portFieldPlaceholder)}
+            showErrors
+          />
         </div>
       </div>
       <div className="advanced-daemon-row">

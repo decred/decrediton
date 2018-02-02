@@ -1,5 +1,5 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { PathInput } from "inputs";
+import { PathBrowseInput } from "inputs";
 import { KeyBlueButton } from "buttons";
 import "style/LoginForm.less";
 
@@ -24,7 +24,7 @@ const AppDataForm = ({
           <T id="login.form.appdata.label" m="Daemon Data Directory" />:
         </div>
         <div className="advanced-daemon-input">
-          <PathInput
+          <PathBrowseInput
             type="directory"
             value={appData}
             onChange={(value) => setAppData(value)}

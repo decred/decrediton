@@ -1,11 +1,9 @@
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
 
-const dataDirMessage = "Select a path";
-
 const PathButton = ({ disabled, onClick }) => (
 
-  <Tooltip text={<T id="startup.dataDir.tip" m={dataDirMessage} />}>
+  <Tooltip text={<T id="startup.dataDir.tip" m={"Select a path"} />}>
     <div
       className={"path-button"}
       {...{ disabled, onClick }}
