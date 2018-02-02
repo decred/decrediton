@@ -37,8 +37,8 @@ const HomePage = ({
           <CartesianGrid strokeDasharray="7 7" />
           <Tooltip />
           <Legend />
-          <Bar dataKey="locked" stackId="a" fill="#8884d8" />
-          <Bar dataKey="spendable" stackId="a" fill="#82ca9d" />
+          <Bar dataKey="spendable" stackId="a" fill="#0c1e3e" />
+          <Bar dataKey="locked" stackId="a" fill="#2971ff" />
         </BarChart>
       </div>
     </div>
