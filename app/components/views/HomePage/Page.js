@@ -1,5 +1,5 @@
 // @flow
-import { rescan, home } from "connectors";
+import { rescan } from "connectors";
 import RecentTransactions from "./RecentTransactions";
 import TicketActivity from "./TicketActivity";
 import "style/Fonts.less";
@@ -34,4 +34,4 @@ const HomePage = ({
   );
 };
 
-export default home(rescan(HomePage));
+export default rescan(HomePage);

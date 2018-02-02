@@ -241,6 +241,18 @@ export const transactions = createSelector(
 export const homeHistoryTransactions = createSelector(
   [transactionsNormalizer, get(["grpc", "recentTransactions"])], apply
 );
+
+export const totalLockedByDay = createSelector(
+  [transactions],
+  (transactions) => map(
+    transaction => {
+      // const date = new Date(transaction.txTimestamp*1000)
+      return transaction;
+    },
+    transactions
+  )
+);
+
 export const viewableTransactions = createSelector(
   [transactions, homeHistoryTransactions],
   (transactions, homeHistoryTransactions) => [...transactions, ...homeHistoryTransactions]

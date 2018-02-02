@@ -20,7 +20,20 @@ class Home extends React.Component{
     };
   }
 
+  componentDidMount() {
+    if(!this.props.noMoreTransactions) {
+      this.props.getTransactions();
+    }
+  }
+
+  componentWillReceiveProps() {
+    if(!this.props.noMoreTransactions) {
+      this.props.getTransactions();
+    }
+  }
+
   render() {
+    console.log(this.props.totalLockedByDay)
     return this.props.walletService ? <HomePage
     {...{
       ...this.props,
