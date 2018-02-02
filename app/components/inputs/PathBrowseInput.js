@@ -24,11 +24,11 @@ class PathBrowseInput extends React.Component {
       self.props.onChange(data);
     };
 
-    ipc.on("path", pathListener);
+    ipc.on(this.props.id, pathListener);
   }
 
   componentWillUnmount() {
-    ipc.removeListener("path", pathListener);
+    ipc.removeListener(this.props.id, pathListener);
   }
 
   selectDirectory() {
@@ -39,7 +39,7 @@ class PathBrowseInput extends React.Component {
 
   directorySelectorCallback(filenames) {
     if (filenames && filenames.length > 0) {
-      mainWindow.webContents.send("path", filenames[0]);
+      mainWindow.webContents.send(this.props.id, filenames[0]);
     }
   }
 
