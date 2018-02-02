@@ -255,14 +255,16 @@ export const spendableAndLockedByDay = createSelector(
 
       if(transaction.txType === "Ticket") {
         transaction.txOutputs.forEach(t => {
-          if(t.accountName === "imported")
+          if(t.accountName === "imported") {
             lockedTotal += t.amount;
+            spendableTotal -= t.amount;
+          }
         });
       } else if (transaction.txType === "Vote") {
         transaction.txInputs.forEach(t => {
           if(t.accountName === "imported"){
-            spendableTotal += t.amount;
             lockedTotal -= t.amount;
+            spendableTotal += t.amount;
           }
         });
         spendableTotal += transaction.txAmount;
