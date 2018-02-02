@@ -1,7 +1,7 @@
 import { Balance } from "shared";
 import { FormattedMessage as T } from "react-intl";
+import {BalanceChart} from "charts";
 import "style/Fonts.less";
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend} from "recharts";
 import "style/HomePage.less";
 
 const HomePage = ({
@@ -30,15 +30,7 @@ const HomePage = ({
         </div>
       </div>
       <div className="overview-chart-wrapper">
-        <BarChart width={400} height={244} data={balanceChartData}>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <CartesianGrid strokeDasharray="7 7" />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="spendable" stackId="a" fill="#0c1e3e" radius={[10, 10, 10, 10]}/>
-          <Bar dataKey="locked" stackId="a" fill="#2971ff" radius={[10, 10, 10, 10]} />
-        </BarChart>
+        <BalanceChart data={balanceChartData}/>
       </div>
     </div>
   );
