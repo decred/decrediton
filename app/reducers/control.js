@@ -22,6 +22,10 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
 } from "../actions/ControlActions";
 import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 
+import {
+  EXPORT_STARTED, EXPORT_COMPLETED, EXPORT_ERROR
+} from "actions/StatisticsActions";
+
 export default function control(state = {}, action) {
   switch (action.type) {
   case GETNEXTADDRESS_ATTEMPT:
@@ -395,6 +399,18 @@ export default function control(state = {}, action) {
       maxPriceAbsolute: action.maxPriceAbsolute,
       maxPriceRelative: action.maxPriceRelative,
       maxPerBlock: action.maxPriceRelative,
+    };
+  case EXPORT_STARTED:
+    return {...state,
+      exportingData: true
+    };
+  case EXPORT_COMPLETED:
+    return {...state,
+      exportingData: false
+    };
+  case EXPORT_ERROR:
+    return {...state,
+      exportingData: false
     };
   default:
     return state;

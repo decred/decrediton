@@ -4,6 +4,10 @@ import fs from "fs";
 import { isNumber, isNullOrUndefined, isUndefined } from "util";
 import { tsToDate } from "helpers";
 
+export const EXPORT_STARTED = "EXPORT_STARTED";
+export const EXPORT_COMPLETED = "EXPORT_COMPLETED";
+export const EXPORT_ERROR = "EXPORT_ERROR";
+
 export const exportStatToCSV = (opts) => (dispatch) => {
   // TODO: get from dialog
   const csvFilename = "test.csv";
@@ -29,7 +33,7 @@ export const exportStatToCSVFile = (opts) => (dispatch) => {
 
   // called once at the start of the stats calc function
   const startFunction = (opts) => {
-    console.log("starting", opts);
+    dispatch({type: EXPORT_STARTED});
     allSeries = opts.series;
     const seriesNames = allSeries.map(s => s.name);
     const headerLine = csvLine(["time", ...seriesNames]);
@@ -49,14 +53,24 @@ export const exportStatToCSVFile = (opts) => (dispatch) => {
     fs.writeSync(fd, ln);
   };
 
-  // called once at the end
-  const endFunction = () => {
-    console.log("ending");
-    fs.closeSync(fd);
-    fd = null;
+  const errorFunction = (error) => {
+    dispatch({error, type: EXPORT_ERROR});
+    if (fd) {
+      fs.closeSync(fd);
+      fd = null;
+    }
   };
 
-  dispatch(calcFunction({opts, startFunction, progressFunction, endFunction}));
+  // called once at the end
+  const endFunction = () => {
+    dispatch({filename: csvFilename, type: EXPORT_COMPLETED});
+    if (fd) {
+      fs.closeSync(fd);
+      fd = null;
+    }
+  };
+
+  dispatch(calcFunction({opts, startFunction, progressFunction, endFunction, errorFunction}));
 
   // if (fd !== null) {
   //   fs.closeSync(fd);
@@ -64,7 +78,7 @@ export const exportStatToCSVFile = (opts) => (dispatch) => {
 };
 
 export const transactionStats = (opts) => (dispatch, getState) => {
-  const { progressFunction, startFunction, endFunction } = opts;
+  const { progressFunction, startFunction, endFunction, errorFunction } = opts;
 
   const { currentBlockHeight, walletService } = getState().grpc;
 
@@ -101,5 +115,6 @@ export const transactionStats = (opts) => (dispatch, getState) => {
   };
 
   wallet.streamGetTransactions(walletService, 0, currentBlockHeight, 0, txDataCb)
-    .then(endFunction);
+    .then(endFunction)
+    .catch(errorFunction);
 };

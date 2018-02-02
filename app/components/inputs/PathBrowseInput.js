@@ -62,5 +62,4 @@ class PathBrowseInput extends React.Component {
   }
 }
 
-
 export default PathBrowseInput;

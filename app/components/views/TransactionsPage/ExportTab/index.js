@@ -1,22 +1,46 @@
 import exportPage from "connectors/exportPage";
 import { transactionStats } from "actions/StatisticsActions";
+import Page from "./Page";
+import messages from "./messages";
 
+const AvailableExports = [
+  { ...messages.transactions,
+    key: "transactions",
+    calcFunction: transactionStats,
+  }
+];
 @autobind
 class ExportTab extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      selectedExport: AvailableExports[0]
+    };
   }
 
-  export() {
+  onChangeSelectedExport(selectedExport) {
+    this.setState({selectedExport});
+  }
+
+  exportCSV() {
+    const { selectedExport } = this.state;
     const opts = {
-      calcFunction: transactionStats,
+      calcFunction: selectedExport.calcFunction,
     };
     this.props.exportStatToCSV(opts);
   }
 
   render() {
-    return <div><button onClick={this.export}>export</button></div>;
+    const { exportCSV, onChangeSelectedExport } = this;
+
+    return (<Page
+      {...this.props}
+      {...this.state}
+      availableExports={AvailableExports}
+      exportCSV={exportCSV}
+      onChangeSelectedExport={onChangeSelectedExport}
+    />);
   }
 }
 
