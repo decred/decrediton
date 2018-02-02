@@ -249,19 +249,21 @@ export const spendableAndLockedByDay = createSelector(
     let valuesByDate = {};
     let spendableTotal = 0;
     let lockedTotal = 0;
-    for(let i=0; i<transactions.length; i++) {
+    for(let i=transactions.length-1; i>=0; i--) {
       let transaction = transactions[i];
       const time = tsToYYYYMMDD(transaction.txTimestamp);
 
       if(transaction.txType === "Ticket") {
-        transaction.txOutputs.forEach((t)=>{
+        transaction.txOutputs.forEach(t => {
           if(t.accountName === "imported")
             lockedTotal += t.amount;
         });
       } else if (transaction.txType === "Vote") {
-        transaction.txInputs.forEach((t)=>{
-          if(t.accountName === "imported")
+        transaction.txInputs.forEach(t => {
+          if(t.accountName === "imported"){
             spendableTotal += t.amount;
+            lockedTotal -= t.amount;
+          }
         });
         spendableTotal += transaction.txAmount;
       } else {
@@ -282,7 +284,6 @@ export const spendableAndLockedByDay = createSelector(
         };
       }
     }
-    console.log(valuesByDate)
     return valuesByDate;
   }
 );
