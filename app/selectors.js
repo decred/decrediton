@@ -244,13 +244,36 @@ export const homeHistoryTransactions = createSelector(
 
 export const totalLockedByDay = createSelector(
   [transactions],
-  (transactions) => map(
-    transaction => {
-      // const date = new Date(transaction.txTimestamp*1000)
-      return transaction;
-    },
-    transactions
-  )
+  (transactions) => {
+    let valuesByDate = {};
+    let spendableTotal = 0;
+    for(let i=0; i<transactions.length; i++) {
+      let transaction = transactions[i];
+      var a = new Date(transaction.txTimestamp * 1000);
+      var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      var year = a.getFullYear();
+      var month = months[a.getMonth()];
+      var date = a.getDate();
+      var time = year + "/" + month + "/" + date;
+
+      if(transaction.txDirection === "in") {
+        spendableTotal += transaction.txAmount;
+      } else if (transaction.txDirection === "out") {
+        spendableTotal -= transaction.txAmount;
+      }
+
+      if(valuesByDate[time]) {
+        valuesByDate[time][a] = transaction;
+        valuesByDate[time].spendableTotal = spendableTotal;
+      } else {
+        valuesByDate[time] = {
+          spendableTotal,
+          [a]: transaction,
+        };
+      }
+    }
+    return valuesByDate;
+  }
 );
 
 export const viewableTransactions = createSelector(
