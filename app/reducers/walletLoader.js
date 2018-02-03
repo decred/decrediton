@@ -91,6 +91,7 @@ export default function walletLoader(state = {}, action) {
       walletCreateError: null,
       walletCreateRequestAttempt: false,
       walletCreateResponse: action.response,
+      advancedDaemonInputRequest: true,
       stepIndex: 3,
     };
   case OPENWALLET_INPUT:
@@ -118,6 +119,7 @@ export default function walletLoader(state = {}, action) {
       walletOpenError: null,
       walletOpenRequestAttempt: false,
       walletOpenResponse: action.response,
+      advancedDaemonInputRequest: true,
       stepIndex: 3,
     };
   case CLOSEWALLET_ATTEMPT:
