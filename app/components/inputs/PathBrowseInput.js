@@ -7,6 +7,7 @@ import PathInput from "./PathInput";
 import { PathButton } from "../buttons";
 
 let pathListener;
+let key;
 
 @autobind
 class PathBrowseInput extends React.Component {
@@ -14,6 +15,7 @@ class PathBrowseInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = { path: "" };
+    key = Math.random().toString(36).substring(2, 15);
   }
 
   componentDidMount() {
@@ -24,11 +26,11 @@ class PathBrowseInput extends React.Component {
       self.props.onChange(data);
     };
 
-    ipc.on(this.props.id, pathListener);
+    ipc.on(key, pathListener);
   }
 
   componentWillUnmount() {
-    ipc.removeListener(this.props.id, pathListener);
+    ipc.removeListener(key, pathListener);
   }
 
   selectDirectory() {
@@ -39,8 +41,13 @@ class PathBrowseInput extends React.Component {
 
   directorySelectorCallback(filenames) {
     if (filenames && filenames.length > 0) {
-      mainWindow.webContents.send(this.props.id, filenames[0]);
+      mainWindow.webContents.send(key, filenames[0]);
     }
+  }
+
+  onChange(e) {
+    this.props.onChange(e.target.value);
+    this.setState({ path: e.target.value });
   }
 
   render() {
@@ -48,10 +55,7 @@ class PathBrowseInput extends React.Component {
       <div className={"path-input-and-button"}>
         <PathInput
           value={this.props.value}
-          onChange={(e) => {
-            this.props.onChange(e.target.value);
-            this.setState({ path: e.target.value });
-          }}
+          onChange={this.onChange}
           placeholder={this.props.placeholder}
         />
         <PathButton onClick={this.selectDirectory} />

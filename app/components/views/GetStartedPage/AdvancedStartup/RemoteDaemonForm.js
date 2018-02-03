@@ -78,7 +78,6 @@ const RemoteDaemonForm = ({
         </div>
         <div className="advanced-daemon-input">
           <PathBrowseInput
-            id="rpcCert"
             type="file"
             value={rpc_cert}
             onChange={(value) => setRpcCert(value)}

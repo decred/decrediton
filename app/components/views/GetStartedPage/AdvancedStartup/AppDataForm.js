@@ -25,7 +25,6 @@ const AppDataForm = ({
         </div>
         <div className="advanced-daemon-input">
           <PathBrowseInput
-            id="appData"
             type="directory"
             value={appData}
             onChange={(value) => setAppData(value)}
