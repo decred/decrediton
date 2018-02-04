@@ -14,24 +14,24 @@ const ValidateAddressForm = ({
   address,
   intl
 }) => (
-    <Aux>
-      <div className="security-center-form">
-        <div className="validate-address-form-address">
-          <TextInput
-            value={address}
-            placeholder={intl.formatMessage(messages.addressFieldPlaceholder)}
-            onChange={(e) => onAddressChange(e.target.value)}
-          />
-        </div>
+  <Aux>
+    <div className="security-center-form">
+      <div className="validate-address-form-address">
+        <TextInput
+          value={address}
+          placeholder={intl.formatMessage(messages.addressFieldPlaceholder)}
+          onChange={(e) => onAddressChange(e.target.value)}
+        />
       </div>
-      <div className="validate-address-response-area">
-        {result &&
+    </div>
+    <div className="validate-address-response-area">
+      {result &&
           <div className="validate-address-response-area-result">
             {result}
           </div>
-        }
-      </div>
-    </Aux>
-  );
+      }
+    </div>
+  </Aux>
+);
 
 export default injectIntl(ValidateAddressForm);

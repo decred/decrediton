@@ -6,6 +6,6 @@ var pipe = addon.createPipe("out");
 console.log(pipe.readEnd, pipe.writeEnd);
 
 childProcess.spawn("dcrd", ["--testnet", util.format("--piperx=%d", pipe.readEnd)],
-    { "detached": true, "shell": true });
+  { "detached": true, "shell": true });
 
 setTimeout(function () { process.exit(0); }, 10000);

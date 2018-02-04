@@ -39,12 +39,12 @@ export function setStakePoolAddress(apiUrl, apiToken, pKAddress, cb) {
       UserPubKeyAddr: pKAddress,
     }),
     config)
-  .then(function(response) {
-    cb(response);
-  })
-  .catch(function(error) {
-    cb(null, error);
-  });
+    .then(function(response) {
+      cb(response);
+    })
+    .catch(function(error) {
+      cb(null, error);
+    });
 }
 
 export function setVoteChoices(apiUrl, apiToken, voteChoices, cb) {
@@ -59,12 +59,12 @@ export function setVoteChoices(apiUrl, apiToken, voteChoices, cb) {
       VoteBits: voteChoices.toString(),
     }),
     config)
-  .then(function(response) {
-    cb(response);
-  })
-  .catch(function(error) {
-    cb(null, error);
-  });
+    .then(function(response) {
+      cb(response);
+    })
+    .catch(function(error) {
+      cb(null, error);
+    });
 }
 
 export function getPurchaseInfo(apiUrl, apiToken, cb) {
@@ -75,10 +75,10 @@ export function getPurchaseInfo(apiUrl, apiToken, cb) {
   };
   var url = apiUrl+"/api/v1/getpurchaseinfo";
   axios.get(url, config)
-  .then(function(response) {
-    cb(response, null, apiUrl);
-  })
-  .catch(function(error) {
-    cb(null, error, apiUrl);
-  });
+    .then(function(response) {
+      cb(response, null, apiUrl);
+    })
+    .catch(function(error) {
+      cb(null, error, apiUrl);
+    });
 }

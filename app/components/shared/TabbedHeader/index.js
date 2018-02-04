@@ -35,7 +35,7 @@ const TabbedHeader = ({ intl, children, routes, totalBalance, ticketPrice, isTes
       <div className="tabbedheader-content">
         <Description>{ subtitle || description }</Description>
         { balance ? <div className="small-balance"><Balance flat amount={ totalBalance }/></div> :
-        ticketprice && <div className="small-balance"><Balance flat amount={ ticketPrice }/></div> }
+          ticketprice && <div className="small-balance"><Balance flat amount={ ticketPrice }/></div> }
         { children }
       </div>
 

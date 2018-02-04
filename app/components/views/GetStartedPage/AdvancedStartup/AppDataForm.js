@@ -15,7 +15,7 @@ const AppDataForm = ({
   setAppData,
   appData,
   intl
-  }) => {
+}) => {
 
   return (
     <Aux>

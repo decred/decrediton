@@ -18,7 +18,7 @@ class SmallPaginator extends React.Component {
             isCurrent={this.props.currentPage === i}
             onClick={this.props.gotoPage}
             value={i}/>
-          ))}
+        ))}
       </div>
     );
   }

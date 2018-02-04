@@ -48,12 +48,12 @@ const VotingPrefsPage = ({
               selectedChoice={getAgendaSelectedChoice(agenda)}
               onClick={() => onShowAgenda(agenda)}
             />
-          )
+        )
         : (
-        <div className="stakepool-no-agendas-message">
-          <T id="votingPreferences.noAgenda" m="There are currently no agendas for voting." />
-        </div>
-      )}
+          <div className="stakepool-no-agendas-message">
+            <T id="votingPreferences.noAgenda" m="There are currently no agendas for voting." />
+          </div>
+        )}
     </div>
   </div>
 );

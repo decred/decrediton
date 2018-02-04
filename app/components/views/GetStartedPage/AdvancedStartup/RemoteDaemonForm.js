@@ -39,7 +39,7 @@ const RemoteDaemonForm = ({
   rpc_host,
   rpc_port,
   intl
-  }) => {
+}) => {
   return (
     <Aux>
       <div className="advanced-daemon-row">
@@ -77,14 +77,14 @@ const RemoteDaemonForm = ({
           <T id="advanced.remote.rpccert" m="RPC Cert Path"/>:
         </div>
         <div className="advanced-daemon-input">
-        <TextInput
-          type="text"
-          required
-          value={rpc_cert}
-          onChange={(e) => setRpcCert(e.target.value)}
-          placeholder={intl.formatMessage(messages.certFieldPlaceholder)}
-          showErrors
-        />
+          <TextInput
+            type="text"
+            required
+            value={rpc_cert}
+            onChange={(e) => setRpcCert(e.target.value)}
+            placeholder={intl.formatMessage(messages.certFieldPlaceholder)}
+            showErrors
+          />
         </div>
       </div>
       <div className="advanced-daemon-row">
@@ -92,14 +92,14 @@ const RemoteDaemonForm = ({
           <T id="advanced.remote.rpchost" m="RPC Host"/>:
         </div>
         <div className="advanced-daemon-input">
-        <TextInput
-          type="text"
-          required
-          value={rpc_host}
-          onChange={(e) => setRpcHost(e.target.value)}
-          placeholder={intl.formatMessage(messages.hostFieldPlaceholder)}
-          showErrors
-        />
+          <TextInput
+            type="text"
+            required
+            value={rpc_host}
+            onChange={(e) => setRpcHost(e.target.value)}
+            placeholder={intl.formatMessage(messages.hostFieldPlaceholder)}
+            showErrors
+          />
         </div>
       </div>
       <div className="advanced-daemon-row">
@@ -107,14 +107,14 @@ const RemoteDaemonForm = ({
           <T id="advanced.remote.rpcport" m="RPC Port"/>:
         </div>
         <div className="advanced-daemon-input">
-        <TextInput
-          type="text"
-          required
-          value={rpc_port}
-          onChange={(e) => setRpcPort(e.target.value)}
-          placeholder={intl.formatMessage(messages.portFieldPlaceholder)}
-          showErrors
-        />
+          <TextInput
+            type="text"
+            required
+            value={rpc_port}
+            onChange={(e) => setRpcPort(e.target.value)}
+            placeholder={intl.formatMessage(messages.portFieldPlaceholder)}
+            showErrors
+          />
         </div>
       </div>
       <div className="advanced-daemon-row">

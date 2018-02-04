@@ -73,16 +73,16 @@ class TicketListPage extends React.Component{
 
     return (
       <Aux>
-          {(visibleCards.length > 0
-            ? <Aux>
-                <TicketsCardList>{visibleCards}</TicketsCardList>
-                <Paginator {...{totalPages, currentPage, onPageChanged: this.onPageChanged}} />
-              </Aux>
-            : <T id="myTickets.noTicketsWithStatus" m="No tickets found" />
-          )}
-          <SlateGrayButton key="back" className="ticket-list-back-btn" onClick={() => router.goBack()}>
-            <T id="ticketList.backBtn" m="Back" />
-          </SlateGrayButton>
+        {(visibleCards.length > 0
+          ? <Aux>
+            <TicketsCardList>{visibleCards}</TicketsCardList>
+            <Paginator {...{totalPages, currentPage, onPageChanged: this.onPageChanged}} />
+          </Aux>
+          : <T id="myTickets.noTicketsWithStatus" m="No tickets found" />
+        )}
+        <SlateGrayButton key="back" className="ticket-list-back-btn" onClick={() => router.goBack()}>
+          <T id="ticketList.backBtn" m="Back" />
+        </SlateGrayButton>
       </Aux>
     );
   }
