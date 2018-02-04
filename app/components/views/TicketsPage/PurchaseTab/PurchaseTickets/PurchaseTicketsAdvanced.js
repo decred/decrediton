@@ -17,7 +17,6 @@ const messages = defineMessages({
 });
 
 const PurchaseTicketsAdvanced = ({
-  ...props,
   configuredStakePools,
   stakePool,
   ticketFee,
@@ -32,6 +31,7 @@ const PurchaseTicketsAdvanced = ({
   onChangeTxFee,
   onChangeExpiry,
   formatMessage,
+  ...props,
 }) => (
     <Aux>
       <div className="stakepool-purchase-ticket-row">
