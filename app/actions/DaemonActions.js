@@ -29,18 +29,18 @@ export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
     dispatch(syncDaemon());
   } else if (appData) {
     wallet.startDaemon("default-wallet", appData, isTestNet(getState()))
-    .then(rpcCreds => {
-      dispatch({type: DAEMONSTARTED_APPDATA, appData: appData, credentials: rpcCreds});
-      dispatch(syncDaemon(null, appData));
-    })
-    .catch((err) => dispatch({err, type: DAEMONSTARTED_ERROR}));
+      .then(rpcCreds => {
+        dispatch({type: DAEMONSTARTED_APPDATA, appData: appData, credentials: rpcCreds});
+        dispatch(syncDaemon(null, appData));
+      })
+      .catch((err) => dispatch({err, type: DAEMONSTARTED_ERROR}));
   } else {
     wallet.startDaemon("default-wallet", null, isTestNet(getState()))
-    .then(rpcCreds => {
-      dispatch({type: DAEMONSTARTED, credentials: rpcCreds});
-      dispatch(syncDaemon());
-    })
-    .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));
+      .then(rpcCreds => {
+        dispatch({type: DAEMONSTARTED, credentials: rpcCreds});
+        dispatch(syncDaemon());
+      })
+      .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));
   }
 };
 
@@ -62,24 +62,24 @@ export const cleanShutdown = () => () => wallet.cleanShutdown();
 
 export const getAvailableWallets = () => (dispatch) => {
   wallet.getAvailableWallets()
-  .then(availableWallets => {
-    dispatch({availableWallets, type: AVAILABLE_WALLETS});
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .then(availableWallets => {
+      dispatch({availableWallets, type: AVAILABLE_WALLETS});
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export const startWallet = () => (dispatch, getState) => {
   wallet.startWallet("default-wallet", isTestNet(getState()))
-  .then(pid => {
-    dispatch({type: WALLETREADY, pid});
-    setTimeout(()=>dispatch(versionCheckAction()), 1000);
-  })
-  .catch((err) => {
-    console.log(err);
-    dispatch({type: DAEMONSTARTED_ERROR});
-  });
+    .then(pid => {
+      dispatch({type: WALLETREADY, pid});
+      setTimeout(()=>dispatch(versionCheckAction()), 1000);
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({type: DAEMONSTARTED_ERROR});
+    });
 };
 
 export const prepStartDaemon = () => (dispatch, getState) => {
@@ -143,33 +143,33 @@ export const syncDaemon = () =>
 
 export const getDcrdLogs = () => {
   wallet.getDcrdLogs()
-  .then(logs => {
-    return(logs);
-  }).catch(
-    err=>{
-      console.log(err);
-      return (null, err);
-    });
+    .then(logs => {
+      return(logs);
+    }).catch(
+      err=>{
+        console.log(err);
+        return (null, err);
+      });
 };
 
 export const getDcrwalletLogs = () => {
   wallet.getDcrwalletLogs()
-  .then(logs => {
-    return(logs);
-  }).catch(
-    err=>{
-      console.log(err);
-      return (null, err);
-    });
+    .then(logs => {
+      return(logs);
+    }).catch(
+      err=>{
+        console.log(err);
+        return (null, err);
+      });
 };
 
 export const getDecreditonLogs = () => {
   wallet.getDecreditonLogs()
-  .then(logs => {
-    return(logs);
-  }).catch(
-    err=>{
-      console.log(err);
-      return (null, err);
-    });
+    .then(logs => {
+      return(logs);
+    }).catch(
+      err=>{
+        console.log(err);
+        return (null, err);
+      });
 };

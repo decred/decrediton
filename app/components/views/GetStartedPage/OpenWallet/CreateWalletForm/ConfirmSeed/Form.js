@@ -127,8 +127,8 @@ class ConfirmSeedForm extends React.Component{
           <div className="input-form-error">
             {errors.length
               ? <div>
-                  {errors}
-                </div>
+                {errors}
+              </div>
               : isMatch || isEmpty
                 ? null
                 : <T id="confirmSeed.errors.seedsDontMatch" m="*Seeds do not match" /> }

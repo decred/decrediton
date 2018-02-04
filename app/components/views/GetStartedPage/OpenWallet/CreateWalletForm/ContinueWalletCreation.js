@@ -16,7 +16,7 @@ const ContinueWalletCreation = ({
     <ConfirmSeed {...props} onChange={setSeed} createWalletExisting={createWalletExisting} />
     <CreatePassPhrase passPhraseLabel={
       <T id="createWallet.encryptWallet" m="Create wallet private passphrase" />}
-      onChange={setPassPhrase} onSubmit={onCreateWallet} />
+    onChange={setPassPhrase} onSubmit={onCreateWallet} />
 
     <div className="create-wallet-button-container">
       <div className="create-wallet-label"></div>

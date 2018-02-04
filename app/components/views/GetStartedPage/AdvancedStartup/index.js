@@ -6,10 +6,10 @@ import { setAppdataPath, getAppdataPath, getRemoteCredentials, setRemoteCredenti
 class AdvancedStartupHeader extends React.Component {
   render() {
     return (<AdvancedHeader
-        {...{
-          ...this.props
-        }}
-      />);
+      {...{
+        ...this.props
+      }}
+    />);
   }
 
 }
@@ -54,21 +54,21 @@ class AdvancedStartupBody extends React.Component {
     } = this;
     return (
       <AdvancedBody
-      {...{
-        ...this.props,
-        ...this.state,
-        onSubmitAppData,
-        onSubmitRemoteForm,
-        skipAdvancedDaemon,
-        onShowRemote,
-        onShowAppData,
-        setRpcUser,
-        setRpcPass,
-        setRpcCert,
-        setRpcHost,
-        setRpcPort,
-        setAppData,
-      }}
+        {...{
+          ...this.props,
+          ...this.state,
+          onSubmitAppData,
+          onSubmitRemoteForm,
+          skipAdvancedDaemon,
+          onShowRemote,
+          onShowAppData,
+          setRpcUser,
+          setRpcPass,
+          setRpcCert,
+          setRpcHost,
+          setRpcPort,
+          setAppData,
+        }}
       />
     );
   }

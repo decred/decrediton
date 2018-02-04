@@ -53,45 +53,45 @@ const StakePoolsAddForm = ({
               - Each stakepool account you create can only be associated with 1 wallet.  If you have previously created this stakepool account with a different wallet (different seed), then you must create a new account.
               - If you had previously used a 'voting account', for your ticket purchases, please go to the Accounts page and create a new account.  This may now allow you to successfully import your script for your stakepool.
               `}
-              values={{
-                stakePoolLink: <a className="stakepool-link" onClick={function(x){shell.openExternal(x);}.bind(null, selectedUnconfigured.label)}>{selectedUnconfigured.label}</a>,
-                noticeSpan: <span className="stakepool-highligh-text-orange">
-                  <T id="stake.addPool.notice" m="Notice!" />
-                </span>
-              }}/>
-            </span>
+            values={{
+              stakePoolLink: <a className="stakepool-link" onClick={function(x){shell.openExternal(x);}.bind(null, selectedUnconfigured.label)}>{selectedUnconfigured.label}</a>,
+              noticeSpan: <span className="stakepool-highligh-text-orange">
+                <T id="stake.addPool.notice" m="Notice!" />
+              </span>
+            }}/>
+          </span>
+        </div>
+        <div className="stakepool-content-nest-to-address">
+          <div className="stakepool-content-nest-api-key">
+            <div className="stakepool-input-form">
+              <TextInput
+                type="text"
+                className="stakepool-content-nest-address-amount-sum"
+                placeholder={intl.formatMessage(messages.apiKeyPlaceholder)}
+                value={apiKey}
+                onChange={e => onChangeApiKey(e.target.value)}
+              />
+            </div>
           </div>
-          <div className="stakepool-content-nest-to-address">
-            <div className="stakepool-content-nest-api-key">
-              <div className="stakepool-input-form">
-                <TextInput
-                  type="text"
-                  className="stakepool-content-nest-address-amount-sum"
-                  placeholder={intl.formatMessage(messages.apiKeyPlaceholder)}
-                  value={apiKey}
-                  onChange={e => onChangeApiKey(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="stakepool-api-key-error">
-              {apiKey ? null : <T id="stake.addPool.errors.noApiKey" m="*Please enter your API key" /> }
-            </div>
+          <div className="stakepool-api-key-error">
+            {apiKey ? null : <T id="stake.addPool.errors.noApiKey" m="*Please enter your API key" /> }
           </div>
         </div>
-        <PassphraseModalButton
-          modalTitle={<T id="stake.addPoolConfirmation" m="Stakepool Confirmation" />}
-          disabled={!apiKey}
-          className="stakepool-content-send"
-          onSubmit={onSetStakePoolInfo}
-          buttonLabel={<T id="stake.addPool.addBtn" m="Add" />}
-        />
-        {configuredStakePools.length ? (
-          <SlateGrayButton
-            className="stakepool-hide-config"
-            onClick={onCancelAddStakePool}
-          ><T id="stake.addPool.cancelBtn" m="Cancel" /></SlateGrayButton>
-        ) : null}
       </div>
+      <PassphraseModalButton
+        modalTitle={<T id="stake.addPoolConfirmation" m="Stakepool Confirmation" />}
+        disabled={!apiKey}
+        className="stakepool-content-send"
+        onSubmit={onSetStakePoolInfo}
+        buttonLabel={<T id="stake.addPool.addBtn" m="Add" />}
+      />
+      {configuredStakePools.length ? (
+        <SlateGrayButton
+          className="stakepool-hide-config"
+          onClick={onCancelAddStakePool}
+        ><T id="stake.addPool.cancelBtn" m="Cancel" /></SlateGrayButton>
+      ) : null}
+    </div>
   </Aux>
 );
 

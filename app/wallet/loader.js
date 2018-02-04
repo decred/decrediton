@@ -43,7 +43,7 @@ export const openWallet = log((loader, pubPass) =>
 export const closeWallet = log((loader) =>
   new Promise((resolve, reject) =>
     loader.closeWallet(new CloseWalletRequest(), error => error ? reject(error) : resolve())),
-  "Close Wallet");
+"Close Wallet");
 
 export const discoverAddresses = log((loader, shouldDiscoverAccounts, privPass) =>
   new Promise((resolve, reject) => {

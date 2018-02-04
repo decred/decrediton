@@ -11,7 +11,7 @@ import { ChangePassphraseRequest, RenameAccountRequest,  RescanRequest,
   SetAccountRequest, SetBalanceToMaintainRequest, SetMaxFeeRequest, SetMaxPriceAbsoluteRequest,
   SetMaxPriceRelativeRequest, SetVotingAddressRequest, SetPoolAddressRequest, SetPoolFeesRequest,
   SetMaxPerBlockRequest,
-  } from "../middleware/walletrpc/api_pb";
+} from "../middleware/walletrpc/api_pb";
 import { getWalletCfg } from "../config.js";
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
@@ -27,14 +27,14 @@ export function getNextAddressAttempt(accountNum) {
     dispatch({ type: GETNEXTADDRESS_ATTEMPT });
     const { walletService } = getState().grpc;
     walletService.nextAddress(request,
-        function(error, getNextAddressResponse) {
-          if (error) {
-            dispatch({ error, type: GETNEXTADDRESS_FAILED });
-          } else {
-            getNextAddressResponse.accountNumber = accountNum;
-            dispatch({ getNextAddressResponse: getNextAddressResponse, type: GETNEXTADDRESS_SUCCESS });
-          }
-        });
+      function(error, getNextAddressResponse) {
+        if (error) {
+          dispatch({ error, type: GETNEXTADDRESS_FAILED });
+        } else {
+          getNextAddressResponse.accountNumber = accountNum;
+          dispatch({ getNextAddressResponse: getNextAddressResponse, type: GETNEXTADDRESS_SUCCESS });
+        }
+      });
   };
 }
 
@@ -50,14 +50,14 @@ export function renameAccountAttempt(accountNumber, newName) {
     dispatch({ type: RENAMEACCOUNT_ATTEMPT });
     const { walletService } = getState().grpc;
     walletService.renameAccount(request,
-        function(error, renameAccountResponse) {
-          if (error) {
-            dispatch({ error, type: RENAMEACCOUNT_FAILED });
-          } else {
-            var successMsg = "You have successfully updated the account name.";
-            setTimeout( () => dispatch({ renameAccountSuccess: successMsg, renameAccountResponse: renameAccountResponse, type: RENAMEACCOUNT_SUCCESS }), 1000);
-          }
-        });
+      function(error, renameAccountResponse) {
+        if (error) {
+          dispatch({ error, type: RENAMEACCOUNT_FAILED });
+        } else {
+          var successMsg = "You have successfully updated the account name.";
+          setTimeout( () => dispatch({ renameAccountSuccess: successMsg, renameAccountResponse: renameAccountResponse, type: RENAMEACCOUNT_SUCCESS }), 1000);
+        }
+      });
   };
 }
 
@@ -224,13 +224,13 @@ export function changePassphraseAttempt(oldPass, newPass, priv) {
     dispatch({ type: CHANGEPASSPHRASE_ATTEMPT });
     const { walletService } = getState().grpc;
     walletService.changePassphrase(request,
-        function(error, changePassphraseResponse) {
-          if (error) {
-            dispatch({ error, type: CHANGEPASSPHRASE_FAILED });
-          } else {
-            dispatch({ changePassphraseResponse: changePassphraseResponse, type: CHANGEPASSPHRASE_SUCCESS });
-          }
-        });
+      function(error, changePassphraseResponse) {
+        if (error) {
+          dispatch({ error, type: CHANGEPASSPHRASE_FAILED });
+        } else {
+          dispatch({ changePassphraseResponse: changePassphraseResponse, type: CHANGEPASSPHRASE_SUCCESS });
+        }
+      });
   };
 }
 
@@ -523,7 +523,7 @@ export const STARTAUTOBUYER_FAILED = "STARTAUTOBUYER_FAILED";
 export const STARTAUTOBUYER_SUCCESS = "STARTAUTOBUYER_SUCCESS";
 
 export function startAutoBuyerAttempt(passphrase, accountNum, balanceToMaintain,
-maxFeePerKb, maxPriceRelative, maxPriceAbsolute, maxPerBlock, stakepool) {
+  maxFeePerKb, maxPriceRelative, maxPriceAbsolute, maxPerBlock, stakepool) {
   var request = new StartAutoBuyerRequest();
   request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
   request.setAccount(accountNum);

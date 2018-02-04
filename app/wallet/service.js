@@ -28,9 +28,9 @@ export const getNextAddress = log((walletService, accountNum) =>
     walletService
       .nextAddress(request, (error, response) => error ? reject(error) : resolve(response));
   })
-  .then(response => ({
-    publicKey: response.getPublicKey()
-  })), "Get Next Address", logOptionNoResponseData());
+    .then(response => ({
+      publicKey: response.getPublicKey()
+    })), "Get Next Address", logOptionNoResponseData());
 
 export const validateAddress = withLogNoData((walletService, address) =>
   new Promise((resolve, reject) => {

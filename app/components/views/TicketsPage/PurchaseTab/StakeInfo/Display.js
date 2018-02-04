@@ -14,24 +14,24 @@ const StakeInfoDisplay = ({
   onShowStakeInfo,
   onHideStakeInfo
 }) => (
-    <Aux>
-      <StakeInfoRow
-        {...{
-          isShowingDetails,
-          ownMempoolTicketsCount,
-          immatureTicketsCount,
-          liveTicketsCount,
-          onShowStakeInfo,
-          onHideStakeInfo
-        }}
-      />
-      <TransitionMotionWrapper
-        {
-        ...{
-          styles: !isShowingDetails ? getNullStyles() : getStakeInfoDetailsComponent(),
-          wrapperComponent,
-        }}
-      />
-    </Aux>);
+  <Aux>
+    <StakeInfoRow
+      {...{
+        isShowingDetails,
+        ownMempoolTicketsCount,
+        immatureTicketsCount,
+        liveTicketsCount,
+        onShowStakeInfo,
+        onHideStakeInfo
+      }}
+    />
+    <TransitionMotionWrapper
+      {
+      ...{
+        styles: !isShowingDetails ? getNullStyles() : getStakeInfoDetailsComponent(),
+        wrapperComponent,
+      }}
+    />
+  </Aux>);
 
 export default StakeInfoDisplay;

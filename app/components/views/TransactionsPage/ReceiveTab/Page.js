@@ -7,9 +7,9 @@ import "style/ReceivePage.less";
 import "style/MiscComponents.less";
 
 const ReceivePage = ({
-                       nextAddress,
-                       onRequestAddress,
-                     }) => (
+  nextAddress,
+  onRequestAddress,
+}) => (
   <div className="tab-card">
     <div className="receive-content-nest">
       <div className="receive-content-nest-for-address">

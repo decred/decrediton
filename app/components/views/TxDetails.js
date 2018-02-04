@@ -45,25 +45,25 @@ function mapNonWalletInput(input) {
 }
 
 const TxDetails = ({ routes, router,
-                     decodedTransaction,
-                     tx: {
-                       txHash,
-                       txUrl,
-                       txHeight,
-                       txType,
-                       txInputs,
-                       txOutputs,
-                       txBlockHash,
-                       txBlockUrl,
-                       txAmount,
-                       txFee,
-                       txDirection,
-                       txTimestamp,
-                       rawTx
-                     },
-                     currentBlockHeight,
-                     intl
-                   }) => {
+  decodedTransaction,
+  tx: {
+    txHash,
+    txUrl,
+    txHeight,
+    txType,
+    txInputs,
+    txOutputs,
+    txBlockHash,
+    txBlockUrl,
+    txAmount,
+    txFee,
+    txDirection,
+    txTimestamp,
+    rawTx
+  },
+  currentBlockHeight,
+  intl
+}) => {
   const isConfirmed = !!txTimestamp;
   const icon = headerIcons[txType || txDirection];
   const subtitle = isConfirmed ? <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsToDate(txTimestamp) }}/> : <T id="txDetails.unConfirmed" m="Unconfirmed"/>;
@@ -150,31 +150,31 @@ const TxDetails = ({ routes, router,
 
             {hasNonWalletIO
               ? <Aux>
-              <div className="txdetails-overview">
-                <div className="txdetails-input-area">
-                  <div className="txdetails-overview-title-consumed">
-                    <T id="txDetails.nonWalletInputs" m="Non Wallet Inputs" />
-                  </div>
-                  {nonWalletInputs.map(({ address, amount }, idx) => (
-                    <div key={idx} className="txdetails-row">
-                      <div className="txdetails-address">{addSpacingAroundText(address)}</div>
-                      <div className="txdetails-amount"><Balance amount={amount} /></div>
+                <div className="txdetails-overview">
+                  <div className="txdetails-input-area">
+                    <div className="txdetails-overview-title-consumed">
+                      <T id="txDetails.nonWalletInputs" m="Non Wallet Inputs" />
                     </div>
-                  ))}
-                </div>
-                <div className="txdetails-output-area">
-                  <div className="txdetails-overview-title-created">
-                    <T id="txDetails.nonWalletOutputs" m="Non Wallet Outputs" />
+                    {nonWalletInputs.map(({ address, amount }, idx) => (
+                      <div key={idx} className="txdetails-row">
+                        <div className="txdetails-address">{addSpacingAroundText(address)}</div>
+                        <div className="txdetails-amount"><Balance amount={amount} /></div>
+                      </div>
+                    ))}
                   </div>
-                  {nonWalletOutputs.map(({ address, amount }, idx) => (
-                    <div key={idx} className="txdetails-row">
-                      <div className="txdetails-address">{addSpacingAroundText(address)}</div>
-                      <div className="txdetails-amount">{amount}</div>
+                  <div className="txdetails-output-area">
+                    <div className="txdetails-overview-title-created">
+                      <T id="txDetails.nonWalletOutputs" m="Non Wallet Outputs" />
                     </div>
-                  ))}
+                    {nonWalletOutputs.map(({ address, amount }, idx) => (
+                      <div key={idx} className="txdetails-row">
+                        <div className="txdetails-address">{addSpacingAroundText(address)}</div>
+                        <div className="txdetails-amount">{amount}</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </Aux> : null}
+              </Aux> : null}
 
             {txDirection !== "in" && txType !== "Vote" &&
             <Aux>
@@ -196,7 +196,7 @@ const TxDetails = ({ routes, router,
             }
             <div className="txdetails-name"><T id="txDetails.rawTransactionLabel" m="Raw Transaction" />:</div>
             <div className="txdetails-value"><div className="txdetails-value-rawtx">{rawTx}</div><CopyToClipboard textToCopy={rawTx} className="receive-content-nest-copy-to-clipboard-icon" /></div>
-            </div>
+          </div>
         </div>
       </div>
     </Aux>

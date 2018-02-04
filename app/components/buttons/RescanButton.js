@@ -15,5 +15,5 @@ export default ({ rescanRequest, rescanAttempt }) => (
       disabled={!!rescanRequest}
       className={"rescan-button" + (rescanRequest ? " spin" : "")}
       onClick={() => rescanAttempt(0)} />
-    </Tooltip>
+  </Tooltip>
 );
