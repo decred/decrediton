@@ -6,8 +6,8 @@ const ipc = electron.ipcRenderer;
 import PathInput from "./PathInput";
 import { PathButton } from "../buttons";
 
-let pathListener;
-let key;
+var pathListener;
+var key;
 
 @autobind
 class PathBrowseInput extends React.Component {
