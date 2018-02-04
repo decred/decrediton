@@ -82,12 +82,12 @@ class DcrInput extends React.Component {
 
     const Comp = unitDivisor !== 1 ? FloatInput : IntegerInput;
     return <Comp
-        {...this.props}
-        unit={currencyDisplay}
-        value={value}
-        onChange={onChange}
-        maxFracDigits={maxFracDigits}
-      />;
+      {...this.props}
+      unit={currencyDisplay}
+      value={value}
+      onChange={onChange}
+      maxFracDigits={maxFracDigits}
+    />;
   }
 }
 
