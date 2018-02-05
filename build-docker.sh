@@ -9,7 +9,7 @@ set -ex
 BUILD_OS=${1:-linux}
 BUILD_ARCH=${2:-amd64}
 
-DCRD_RELEASE=v1.1.0
+DCRD_RELEASE=v1.1.2
 
 DOCKER_IMAGE_TAG=decrediton-builder
 
@@ -42,12 +42,12 @@ docker run --rm -it -v $DIST_DIR:/release -v $(pwd):/src decred/$DOCKER_IMAGE_TA
   mkdir decrediton && \
   rsync -ra --filter=':- .gitignore'  /src/ decrediton/ && \
   cd decrediton && \
-  npm install && \
-  npm run lint && \
-  npm run test && \
+  yarn && \
+  yarn lint && \
+  yarn test && \
   mkdir -p bin && \
   curl -L ${DCRD_RELEASE_URL} | tar zxvf - --strip-components=1 -C ./bin/ && \
-  npm run package-$BUILD_TARGET && \
+  yarn package-$BUILD_TARGET && \
   rsync -r ./release/ /release/"
 
 echo "------------------------------------------"
