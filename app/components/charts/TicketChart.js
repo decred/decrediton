@@ -5,7 +5,7 @@ import ChartTooltip from "./ChartTooltip";
 const BalanceChart = ({ data, currencyDisplay }) => (
     <BarChart width={400} height={244} data={data}>
         <XAxis dataKey="name" />
-        <YAxis />
+        <YAxis orientation="right"/>
         <Tooltip content={<ChartTooltip />} />
         <Legend />
         <Bar barSize={8} dataKey="imature" stackId="a" fill="#69d5f7" radius={[0, 0, 10, 10]} unit={currencyDisplay} />

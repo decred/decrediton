@@ -6,7 +6,7 @@ const BalanceChart = ({ data, currencyDisplay }) => (
   <BarChart stackOffset="sign" width={400} height={244} data={data}
     margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
     <XAxis dataKey="name" />
-    <YAxis />
+    <YAxis orientation="right" />
     <Tooltip content={<ChartTooltip />} />
     <Legend />
     <ReferenceLine y={0} stroke='#000' />
