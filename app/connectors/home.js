@@ -17,7 +17,12 @@ const mapStateToProps = selectorMap({
   spendableAndLockedBalance: sel.spendableAndLockedBalance,
   balanceSent: sel.balanceSent,
   balanceReceived: sel.balanceReceived,
-  sentAndReceivedTransactions: sel.sentAndReceivedTransactions
+  sentAndReceivedTransactions: sel.sentAndReceivedTransactions,
+  totalValueOfLiveTickets: sel.totalValueOfLiveTickets,
+  earnedStakingReward: sel.earnedStakingReward,
+  liveTicketsCount: sel.liveTicketsCount,
+  votedTicketsCount: sel.votedTicketsCount,
+  ticketDataChart: sel.ticketDataChart
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
