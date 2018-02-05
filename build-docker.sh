@@ -18,6 +18,9 @@ DIST_DIR=$(pwd)/dist
 DCRD_RELEASE_FILE=decred-$BUILD_OS-$BUILD_ARCH-$DCRD_RELEASE.tar.gz
 DCRD_RELEASE_URL=https://github.com/decred/decred-binaries/releases/download/${DCRD_RELEASE}/${DCRD_RELEASE_FILE}
 
+YARN_INSTALL_URL=https://yarnpkg.com/install.sh
+YARN_VERSION=1.3.2
+
 # this will be passed on to `npm package-*`
 BUILD_TARGET=$BUILD_OS
 if [ "$BUILD_OS" == "darwin" ]; then
@@ -39,6 +42,8 @@ docker pull decred/$DOCKER_IMAGE_TAG
 
 docker run --rm -it -v $DIST_DIR:/release -v $(pwd):/src decred/$DOCKER_IMAGE_TAG /bin/bash -c "\
   . \$HOME/.nvm/nvm.sh && \
+  curl -o- -L $YARN_INSTALL_URL | bash -s -- --version $YARN_VERSION && \
+  export PATH=\$HOME/.yarn/bin:\$PATH && \
   mkdir decrediton && \
   rsync -ra --filter=':- .gitignore'  /src/ decrediton/ && \
   cd decrediton && \
