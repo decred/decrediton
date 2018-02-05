@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { selectorMap } from "../fp";
+import { selectorMap } from "fp";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 
@@ -12,17 +12,6 @@ const mapStateToProps = selectorMap({
   revokeTicketsError: sel.revokeTicketsError,
   revokeTicketsSuccess: sel.revokeTicketsSuccess,
   hasTicketsToRevoke: sel.hasTicketsToRevoke,
-  totalBalance: sel.totalBalance,
-  lockedTotalBalance: sel.lockedBalance,
-  spendableAndLockedBalance: sel.spendableAndLockedBalance,
-  balanceSent: sel.balanceSent,
-  balanceReceived: sel.balanceReceived,
-  sentAndReceivedTransactions: sel.sentAndReceivedTransactions,
-  totalValueOfLiveTickets: sel.totalValueOfLiveTickets,
-  earnedStakingReward: sel.earnedStakingReward,
-  liveTicketsCount: sel.liveTicketsCount,
-  votedTicketsCount: sel.votedTicketsCount,
-  ticketDataChart: sel.ticketDataChart
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
