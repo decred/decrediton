@@ -248,19 +248,19 @@ export const spendableAndLockedBalance = createSelector(
   () => {
     return [
       { name: "23.10", available: 4000, locked: 2400, unit: "DCR", legendName: "23.10.2017"},
-      { name: "24.10", available: 3000, locked: 1398, unit: "DCR", legendName: "23.10.2017"},
-      { name: "25.10", available: 2000, locked: 7004, unit: "DCR", legendName: "23.10.2017"},
-      { name: "26.10", available: 2780, locked: 3908, unit: "DCR", legendName: "23.10.2017"},
-      { name: "27.10", available: 1890, locked: 4800, unit: "DCR", legendName: "23.10.2017"},
-      { name: "28.10", available: 2390, locked: 3800, unit: "DCR", legendName: "23.10.2017"},
-      { name: "29.10", available: 3490, locked: 4300, unit: "DCR", legendName: "23.10.2017"},
-      { name: "30.10", available: 3490, locked: 4300, unit: "DCR", legendName: "23.10.2017"},
-      { name: "01.11", available: 3490, locked: 4300, unit: "DCR", legendName: "23.10.2017"},
-      { name: "02.11", available: 3490, locked: 4300, unit: "DCR", legendName: "23.10.2017"},
-      { name: "03.11", available: 3490, locked: 4300, unit: "DCR", legendName: "23.10.2017"},
-      { name: "04.11", available: 3490, locked: 4300, unit: "DCR", legendName: "23.10.2017"},
-      { name: "05.11", available: 3490, locked: 4300, unit: "DCR", legendName: "23.10.2017"},
-      { name: "06.11", available: 3490, locked: 4300, unit: "DCR", legendName: "23.10.2017"},
+      { name: "24.10", available: 3000, locked: 1398, unit: "DCR", legendName: "24.10.2017"},
+      { name: "25.10", available: 2000, locked: 7004, unit: "DCR", legendName: "25.10.2017"},
+      { name: "26.10", available: 2780, locked: 3908, unit: "DCR", legendName: "26.10.2017"},
+      { name: "27.10", available: 1890, locked: 4800, unit: "DCR", legendName: "27.10.2017"},
+      { name: "28.10", available: 2390, locked: 3800, unit: "DCR", legendName: "28.10.2017"},
+      { name: "29.10", available: 3490, locked: 4300, unit: "DCR", legendName: "29.10.2017"},
+      { name: "30.10", available: 3490, locked: 4300, unit: "DCR", legendName: "30.10.2017"},
+      { name: "01.11", available: 3490, locked: 4300, unit: "DCR", legendName: "01.11.2017"},
+      { name: "02.11", available: 3490, locked: 4300, unit: "DCR", legendName: "02.11.2017"},
+      { name: "03.11", available: 3490, locked: 4300, unit: "DCR", legendName: "03.11.2017"},
+      { name: "04.11", available: 3490, locked: 4300, unit: "DCR", legendName: "04.11.2017"},
+      { name: "05.11", available: 3490, locked: 4300, unit: "DCR", legendName: "05.11.2017"},
+      { name: "06.11", available: 3490, locked: 4300, unit: "DCR", legendName: "06.11.2017"},
     ];
   }
 );
