@@ -6,31 +6,29 @@ const ipc = electron.ipcRenderer;
 import PathInput from "./PathInput";
 import { PathButton } from "../buttons";
 
-var pathListener;
-var key;
-
 @autobind
 class PathBrowseInput extends React.Component {
+
+  key = Math.random().toString(36).substring(2, 15);
 
   constructor(props) {
     super(props);
     this.state = { path: "" };
-    key = Math.random().toString(36).substring(2, 15);
   }
 
   componentDidMount() {
 
     let self = this;
-    pathListener = function (event, data) {
+    let pathListener = function (event, data) {
       self.setState({ path: data });
       self.props.onChange(data);
     };
 
-    ipc.on(key, pathListener);
+    ipc.on(this.key, pathListener);
   }
 
   componentWillUnmount() {
-    ipc.removeListener(key, pathListener);
+    ipc.removeAllListeners(this.key);
   }
 
   selectDirectory() {
@@ -41,7 +39,7 @@ class PathBrowseInput extends React.Component {
 
   directorySelectorCallback(filenames) {
     if (filenames && filenames.length > 0) {
-      mainWindow.webContents.send(key, filenames[0]);
+      mainWindow.webContents.send(this.key, filenames[0]);
     }
   }
 
