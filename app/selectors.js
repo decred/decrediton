@@ -6,7 +6,6 @@ import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
 import { MainNetParams, TestNetParams } from "wallet/constants";
 import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
-import { tsToYYYYMMDD } from "helpers/dateFormat";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
