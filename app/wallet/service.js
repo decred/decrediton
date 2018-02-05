@@ -62,13 +62,19 @@ export const UNMINED_BLOCK_TEMPLATE = {
   getHash() { return null; }
 };
 
+export const TRANSACTION_TYPE_REGULAR = "Regular";
+export const TRANSACTION_TYPE_TICKET_PURCHASE = "Ticket";
+export const TRANSACTION_TYPE_VOTE = "Vote";
+export const TRANSACTION_TYPE_REVOCATION = "Revocation";
+export const TRANSACTION_TYPE_COINBASE = "Coinbase";
+
 // Map from numerical into string transaction type
 export const TRANSACTION_TYPES = {
-  [TransactionDetails.TransactionType.REGULAR]: "Regular",
-  [TransactionDetails.TransactionType.TICKET_PURCHASE]: "Ticket",
-  [TransactionDetails.TransactionType.VOTE]: "Vote",
-  [TransactionDetails.TransactionType.REVOCATION]: "Revocation",
-  [TransactionDetails.TransactionType.COINBASE]: "Coinbase"
+  [TransactionDetails.TransactionType.REGULAR]: TRANSACTION_TYPE_REGULAR,
+  [TransactionDetails.TransactionType.TICKET_PURCHASE]: TRANSACTION_TYPE_REGULAR,
+  [TransactionDetails.TransactionType.VOTE]: TRANSACTION_TYPE_REGULAR,
+  [TransactionDetails.TransactionType.REVOCATION]: TRANSACTION_TYPE_REGULAR,
+  [TransactionDetails.TransactionType.COINBASE]: TRANSACTION_TYPE_REGULAR
 };
 
 export const TRANSACTION_DIR_SENT = "sent";
@@ -106,6 +112,7 @@ export function formatTransaction(block, transaction, index) {
     hash: transaction.getHash(),
     txHash: reverseHash(Buffer.from(transaction.getHash()).toString("hex")),
     tx: transaction,
+    txType: TRANSACTION_TYPES[type],
     type,
     direction,
     amount,

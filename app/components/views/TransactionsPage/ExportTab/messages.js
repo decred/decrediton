@@ -14,5 +14,14 @@ export default {
       {name: "credits", description: <T id="export.transactions.fields.credits" m="Sum of credits (transaction outputs) of the wallet included in this transaction." />},
       {name: "debits", description: <T id="export.transactions.fields.debits" m="Sum of debits (transaction inputs) of the wallet included in this transaction." />},
     ]
+  },
+  balances: {
+    name: <T id="export.balances.name" m="Balances" />,
+    description: <T id="export.balances.descr" m="Export the different types of balances calculated in time as transactions from the wallet are mined." />,
+    fields: [
+      {name: "time", description: <T id="export.balances.fields.time" m="Date/time that the balance changed" />},
+      {name: "spendable", description: <T id="export.balances.fields.spendable" m="Available balance for spending in regular transactions." />},
+      {name: "locked", description: <T id="export.balances.fields.locked" m="Balance locked in immature votes/revocations and live tickets." />},
+    ]
   }
 };

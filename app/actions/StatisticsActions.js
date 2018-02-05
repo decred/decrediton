@@ -4,6 +4,8 @@ import fs from "fs";
 import { isNumber, isNullOrUndefined, isUndefined } from "util";
 import { tsToDate } from "helpers";
 
+const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
+
 export const EXPORT_STARTED = "EXPORT_STARTED";
 export const EXPORT_COMPLETED = "EXPORT_COMPLETED";
 export const EXPORT_ERROR = "EXPORT_ERROR";
@@ -100,7 +102,7 @@ export const transactionStats = (opts) => (dispatch, getState) => {
     // console.log(tx);
     return {
       hash: tx.txHash,
-      type: wallet.TRANSACTION_TYPES[tx.type],
+      type: tx.txType,
       direction: tx.direction,
       fee: scaleAmount(tx.fee),
       amount: scaleAmount(tx.amount),
@@ -112,6 +114,51 @@ export const transactionStats = (opts) => (dispatch, getState) => {
   const txDataCb = (mined) => {
     //console.log(mined);
     mined.forEach(tx => progressFunction(tsToDate(tx.timestamp), formatTx(tx)));
+  };
+
+  wallet.streamGetTransactions(walletService, 0, currentBlockHeight, 0, txDataCb)
+    .then(endFunction)
+    .catch(errorFunction);
+};
+
+export const balancesStats = (opts) => (dispatch, getState) => {
+  const { progressFunction, startFunction, endFunction, errorFunction } = opts;
+
+  const { currentBlockHeight, walletService } = getState().grpc;
+
+  startFunction({
+    series: [
+      {name: "spendable", type: VALUE_TYPE_ATOMAMOUNT},
+      {name: "locked", type: VALUE_TYPE_ATOMAMOUNT},
+    ],
+  });
+
+  // closure that calcs how much each tx affects each balance type
+  const txBalancesDelta = (tx) => {
+    switch (tx.txType) {
+    case wallet.TRANSACTION_TYPE_TICKET:
+      return {spendable: -tx.amount, locked: +tx.amount};
+    case wallet.TRANSACTION_TYPE_VOTE:
+    case wallet.TRANSACTION_TYPE_REVOCATION:
+      return {spendable: +tx.amount, locked: -tx.amount};
+    case wallet.TRANSACTION_TYPE_COINBASE:
+    case wallet.TRANSACTION_TYPE_REGULAR:
+      return {spendable: +tx.amount, locked: 0};
+    default: throw new Exception("Unknown tx type");
+    }
+  };
+
+  let currentBalance = {spendable: 0, locked: 0};
+
+  const txDataCb = (mined) => {
+    currentBalance = mined.reduce((current, tx) => {
+      const delta = txBalancesDelta(tx);
+      return {
+        spendable: current.spendable + delta.spendable,
+        locked: current.locked + delta.locked
+      };
+    }, currentBalance);
+    progressFunction(tsToDate(mined[0].timestamp), currentBalance);
   };
 
   wallet.streamGetTransactions(walletService, 0, currentBlockHeight, 0, txDataCb)
