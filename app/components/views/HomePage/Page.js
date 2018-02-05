@@ -10,18 +10,15 @@ import HomeHeader from "./HomeHeader";
 const HomePage = ({
   routes,
   spendableTotalBalance,
-  lockedTotalBalance,
-  totalBalance,
   transactions,
   getTransactionsRequestAttempt,
   getAccountsResponse,
   children,
-  balanceChartData,
   ...props,
 }) => {
   return (
     <div className="overview-wrapper">
-      <TabbedComponent header={HomeHeader} {...{routes, lockedTotalBalance, totalBalance, spendableTotalBalance, balanceChartData, ...props}}>
+      <TabbedComponent header={HomeHeader} {...{routes, ...props}}>
         {children}
       </TabbedComponent>
       <div className="overview-transactions-ticket-wrapper">
