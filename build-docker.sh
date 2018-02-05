@@ -42,6 +42,7 @@ docker pull decred/$DOCKER_IMAGE_TAG
 
 docker run --rm -it -v $DIST_DIR:/release -v $(pwd):/src decred/$DOCKER_IMAGE_TAG /bin/bash -c "\
   . \$HOME/.nvm/nvm.sh && \
+  nvm install v8.7.0 && \
   curl -o- -L $YARN_INSTALL_URL | bash -s -- --version $YARN_VERSION && \
   export PATH=\$HOME/.yarn/bin:\$PATH && \
   mkdir decrediton && \
