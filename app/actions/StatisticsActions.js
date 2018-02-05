@@ -1,5 +1,5 @@
 import * as wallet from "wallet";
-// import * as sel from "selectors";
+import * as sel from "selectors";
 import fs from "fs";
 import { isNumber, isNullOrUndefined, isUndefined } from "util";
 import { tsToDate } from "helpers";
@@ -16,16 +16,17 @@ export const exportStatToCSV = (opts) => (dispatch) => {
   dispatch(exportStatToCSVFile({...opts, csvFilename}));
 };
 
-export const exportStatToCSVFile = (opts) => (dispatch) => {
+export const exportStatToCSVFile = (opts) => (dispatch, getState) => {
   const { calcFunction, csvFilename } = opts;
 
   var fd;
   var allSeries;
 
   // constants (may be overriden/parametrized in the future)
+  const unitDivisor = sel.unitDivisor(getState());
   const vsep = ","; // value separator
   const ln = "\n";  // line separator
-  const precision = 8; // maximum decimal precision
+  const precision = Math.ceil(Math.log10(unitDivisor)); // maximum decimal precision
 
   // formatting functions
   const quote = (v) => "\"" + v.replace("\"", "\\\"") + "\"";
@@ -33,10 +34,18 @@ export const exportStatToCSVFile = (opts) => (dispatch) => {
   const csvValue = (v) => isNullOrUndefined(v) ? "" : isNumber(v) ? v.toFixed(precision) : quote(v);
   const csvLine = (values) => values.map(csvValue).join(vsep);
 
+  const seriesValueFormatFunc = (series) => {
+    if (series["type"] === VALUE_TYPE_ATOMAMOUNT) {
+      return v => v / unitDivisor;
+    } else {
+      return v => v;
+    }
+  };
+
   // called once at the start of the stats calc function
   const startFunction = (opts) => {
     dispatch({type: EXPORT_STARTED});
-    allSeries = opts.series;
+    allSeries = opts.series.map(s => ({...s, valueFormatFunc: seriesValueFormatFunc(s)}));
     const seriesNames = allSeries.map(s => s.name);
     const headerLine = csvLine(["time", ...seriesNames]);
 
@@ -48,7 +57,9 @@ export const exportStatToCSVFile = (opts) => (dispatch) => {
   // called once for each data line
   const progressFunction = (time, series) => {
     // console.log("Progress", time, series);
-    const values = allSeries.map(s => !isUndefined(series[s.name]) ? series[s.name] : null);
+    const values = allSeries.map(s => !isUndefined(series[s.name])
+      ? s.valueFormatFunc(series[s.name])
+      : null);
     values.unshift(formatTime(time));
     const line = csvLine(values);
     fs.writeSync(fd, line);
@@ -89,14 +100,12 @@ export const transactionStats = (opts) => (dispatch, getState) => {
       {name: "hash"},
       {name: "type"},
       {name: "direction"},
-      {name: "fee"},
-      {name: "amount"},
-      {name: "credits"},
-      {name: "debits"},
+      {name: "fee", type: VALUE_TYPE_ATOMAMOUNT},
+      {name: "amount", type: VALUE_TYPE_ATOMAMOUNT},
+      {name: "credits", type: VALUE_TYPE_ATOMAMOUNT},
+      {name: "debits", type: VALUE_TYPE_ATOMAMOUNT},
     ],
   });
-
-  const scaleAmount = amount => amount / 1e8;
 
   const formatTx = (tx) => {
     // console.log(tx);
@@ -104,10 +113,10 @@ export const transactionStats = (opts) => (dispatch, getState) => {
       hash: tx.txHash,
       type: tx.txType,
       direction: tx.direction,
-      fee: scaleAmount(tx.fee),
-      amount: scaleAmount(tx.amount),
-      credits: scaleAmount(tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0)),
-      debits: scaleAmount(tx.tx.getDebitsList().reduce((s, d) => s + d.getPreviousAmount(), 0)),
+      fee: tx.fee,
+      amount: tx.amount,
+      credits: tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0),
+      debits: tx.tx.getDebitsList().reduce((s, d) => s + d.getPreviousAmount(), 0),
     };
   };
 
