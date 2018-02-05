@@ -1,5 +1,5 @@
 import { createElement as h } from "react";
-export { tsToDate } from "./dateFormat";
+export * from "./dateFormat";
 export { addSpacingAroundText, restrictToStdDecimalNumber } from "./strings";
 export { reverseHash } from "./byteActions";
 export * from "./addresses";

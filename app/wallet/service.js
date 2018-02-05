@@ -71,10 +71,10 @@ export const TRANSACTION_TYPE_COINBASE = "Coinbase";
 // Map from numerical into string transaction type
 export const TRANSACTION_TYPES = {
   [TransactionDetails.TransactionType.REGULAR]: TRANSACTION_TYPE_REGULAR,
-  [TransactionDetails.TransactionType.TICKET_PURCHASE]: TRANSACTION_TYPE_REGULAR,
-  [TransactionDetails.TransactionType.VOTE]: TRANSACTION_TYPE_REGULAR,
-  [TransactionDetails.TransactionType.REVOCATION]: TRANSACTION_TYPE_REGULAR,
-  [TransactionDetails.TransactionType.COINBASE]: TRANSACTION_TYPE_REGULAR
+  [TransactionDetails.TransactionType.TICKET_PURCHASE]: TRANSACTION_TYPE_TICKET_PURCHASE,
+  [TransactionDetails.TransactionType.VOTE]: TRANSACTION_TYPE_VOTE,
+  [TransactionDetails.TransactionType.REVOCATION]: TRANSACTION_TYPE_REVOCATION,
+  [TransactionDetails.TransactionType.COINBASE]: TRANSACTION_TYPE_COINBASE
 };
 
 export const TRANSACTION_DIR_SENT = "sent";
@@ -113,6 +113,8 @@ export function formatTransaction(block, transaction, index) {
     txHash: reverseHash(Buffer.from(transaction.getHash()).toString("hex")),
     tx: transaction,
     txType: TRANSACTION_TYPES[type],
+    debitsAmount: inputAmounts,
+    creditsAmount: outputAmounts,
     type,
     direction,
     amount,

@@ -1,5 +1,5 @@
 import exportPage from "connectors/exportPage";
-import { transactionStats, balancesStats } from "actions/StatisticsActions";
+import { transactionStats, dailyBalancesStats } from "actions/StatisticsActions";
 import Page from "./Page";
 import messages from "./messages";
 
@@ -10,7 +10,7 @@ const AvailableExports = [
   },
   { ...messages.balances,
     key: "balances",
-    calcFunction: balancesStats,
+    calcFunction: dailyBalancesStats,
   }
 ];
 @autobind

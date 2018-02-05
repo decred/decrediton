@@ -16,12 +16,13 @@ export default {
     ]
   },
   balances: {
-    name: <T id="export.balances.name" m="Balances" />,
-    description: <T id="export.balances.descr" m="Export the different types of balances calculated in time as transactions from the wallet are mined." />,
+    name: <T id="export.balances.name" m="Daily Balances" />,
+    description: <T id="export.balances.descr" m="Export the different types of balances, with a daily aggregation." />,
     fields: [
       {name: "time", description: <T id="export.balances.fields.time" m="Date/time that the balance changed" />},
       {name: "spendable", description: <T id="export.balances.fields.spendable" m="Available balance for spending in regular transactions." />},
-      {name: "locked", description: <T id="export.balances.fields.locked" m="Balance locked in immature votes/revocations and live tickets." />},
+      {name: "locked", description: <T id="export.balances.fields.locked" m="Balance locked in immature and live tickets." />},
+      {name: "total", description: <T id="export.balances.fields.total" m="Total available balance." />},
     ]
   }
 };

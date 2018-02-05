@@ -2,7 +2,7 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import fs from "fs";
 import { isNumber, isNullOrUndefined, isUndefined } from "util";
-import { tsToDate } from "helpers";
+import { tsToDate, endOfDay } from "helpers";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
 
@@ -139,38 +139,75 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     series: [
       {name: "spendable", type: VALUE_TYPE_ATOMAMOUNT},
       {name: "locked", type: VALUE_TYPE_ATOMAMOUNT},
+      {name: "total", type: VALUE_TYPE_ATOMAMOUNT},
     ],
   });
 
   // closure that calcs how much each tx affects each balance type
   const txBalancesDelta = (tx) => {
+    // tx.amount is negative in sends/tickets/transfers already
     switch (tx.txType) {
-    case wallet.TRANSACTION_TYPE_TICKET:
-      return {spendable: -tx.amount, locked: +tx.amount};
+    case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
+      var commitAmount = tx.tx.getCreditsList().reduce((s, c) => s + c.getInternal() ? 0 : c.getAmount(), 0);
+      return {spendable: tx.amount - commitAmount, locked: commitAmount};
     case wallet.TRANSACTION_TYPE_VOTE:
     case wallet.TRANSACTION_TYPE_REVOCATION:
-      return {spendable: +tx.amount, locked: -tx.amount};
+      // FIXME: this is going to break the calc if/when we have split tickets, since
+      // then the commitment amount on TICKET_PURCHASE will be !== than the ticketPrice
+      var ticketPrice = tx.tx.getDebitsList().reduce((s, c) => s + c.getPreviousAmount(), 0);
+      return {spendable: tx.amount + ticketPrice, locked: -ticketPrice};
     case wallet.TRANSACTION_TYPE_COINBASE:
     case wallet.TRANSACTION_TYPE_REGULAR:
       return {spendable: +tx.amount, locked: 0};
-    default: throw new Exception("Unknown tx type");
+    default: throw "Unknown tx type: " + tx.txType;
     }
   };
 
-  let currentBalance = {spendable: 0, locked: 0};
+  let currentBalance = {spendable: 0, locked: 0, total: 0};
 
   const txDataCb = (mined) => {
-    currentBalance = mined.reduce((current, tx) => {
+    mined.forEach(tx => {
       const delta = txBalancesDelta(tx);
-      return {
-        spendable: current.spendable + delta.spendable,
-        locked: current.locked + delta.locked
+      currentBalance = {
+        spendable: currentBalance.spendable + delta.spendable,
+        locked: currentBalance.locked + delta.locked
       };
-    }, currentBalance);
-    progressFunction(tsToDate(mined[0].timestamp), currentBalance);
+      currentBalance.total = currentBalance.spendable + currentBalance.locked;
+      progressFunction(tsToDate(mined[0].timestamp), currentBalance);
+    });
   };
 
   wallet.streamGetTransactions(walletService, 0, currentBlockHeight, 0, txDataCb)
     .then(endFunction)
     .catch(errorFunction);
+};
+
+export const dailyBalancesStats = (opts) => {
+  const { progressFunction, endFunction } = opts;
+
+  let lastDate = null;
+  let balance = {spendable: 0, locked: 0, total: 0};
+
+  const differentDays = (d1, d2) =>
+    (d1.getYear() !== d2.getYear()) ||
+    (d1.getMonth() !== d2.getMonth()) ||
+    (d1.getDate() !== d2.getDate());
+
+  const aggProgressFunction = (time, series) => {
+    if (!lastDate) {
+      lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
+    } else if (differentDays(time, lastDate)) {
+      progressFunction(endOfDay(lastDate), balance);
+      lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
+    }
+    balance = {...series};
+  };
+
+  const aggEndFunction = () => {
+    progressFunction(endOfDay(lastDate), balance);
+    endFunction();
+  };
+
+  return balancesStats({...opts, progressFunction: aggProgressFunction,
+    endFunction: aggEndFunction});
 };
