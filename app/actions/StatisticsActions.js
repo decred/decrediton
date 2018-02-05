@@ -6,6 +6,44 @@ import { tsToDate, endOfDay } from "helpers";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
 
+const GETSTARTUPSTATS_ATTEMPT = "GETSTARTUPSTATS_ATTEMPT";
+const GETSTARTUPSTATS_SUCCESS = "GETSTARTUPSTATS_SUCCESS";
+const GETSTARTUPSTATS_FAILED = "GETSTARTUPSTATS_FAILED";
+
+// Calculates all startup statistics
+export const getStartupStats = () => (dispatch) => {
+
+  const startupStats = [
+    {calcFunction: dailyBalancesStats},
+  ];
+
+  dispatch({type: GETSTARTUPSTATS_ATTEMPT});
+  Promise.all(startupStats.map(s => dispatch(generateStat(s))))
+    .then(([dailyBalances]) => {
+      console.log("got startup series", dailyBalances);
+      dispatch({dailyBalances, type: GETSTARTUPSTATS_SUCCESS});
+    })
+    .catch(error => dispatch({error, type: GETSTARTUPSTATS_FAILED}));
+};
+
+// generateStat starts generating the statistic as defined on the opts. It
+// returns a promise that gets resolved with all the data in-memory after the
+// stat has been completely calculated.
+export const generateStat = (opts) => (dispatch) => new Promise((resolve, reject) => {
+
+  const { calcFunction } = opts;
+
+  const stat = { series: null, data: [], };
+  const startFunction = ({series}) => stat.series = series;
+  const endFunction = () => resolve(stat);
+  const errorFunction = error => reject(error);
+  const progressFunction = (time, series) => {
+    stat.data.push({time, series});
+  };
+
+  dispatch(calcFunction({opts, startFunction, progressFunction, endFunction, errorFunction}));
+});
+
 export const EXPORT_STARTED = "EXPORT_STARTED";
 export const EXPORT_COMPLETED = "EXPORT_COMPLETED";
 export const EXPORT_ERROR = "EXPORT_ERROR";
@@ -163,14 +201,15 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     }
   };
 
-  let currentBalance = {spendable: 0, locked: 0, total: 0};
+  let currentBalance = {spendable: 0, locked: 0, total: 0, tx: null};
 
   const txDataCb = (mined) => {
     mined.forEach(tx => {
       const delta = txBalancesDelta(tx);
       currentBalance = {
         spendable: currentBalance.spendable + delta.spendable,
-        locked: currentBalance.locked + delta.locked
+        locked: currentBalance.locked + delta.locked,
+        tx: tx,
       };
       currentBalance.total = currentBalance.spendable + currentBalance.locked;
       progressFunction(tsToDate(mined[0].timestamp), currentBalance);
@@ -183,24 +222,38 @@ export const balancesStats = (opts) => (dispatch, getState) => {
 };
 
 export const dailyBalancesStats = (opts) => {
-  const { progressFunction, endFunction } = opts;
+  const { progressFunction, endFunction, startFunction } = opts;
 
   let lastDate = null;
-  let balance = {spendable: 0, locked: 0, total: 0};
+  let balance = {spendable: 0, locked: 0, total: 0, sent: 0, received: 0};
 
   const differentDays = (d1, d2) =>
     (d1.getYear() !== d2.getYear()) ||
     (d1.getMonth() !== d2.getMonth()) ||
     (d1.getDate() !== d2.getDate());
 
+  const aggStartFunction = (opts) => {
+    opts.series = [...opts.series,
+      {name: "sent", type: VALUE_TYPE_ATOMAMOUNT},
+      {name: "received", type: VALUE_TYPE_ATOMAMOUNT},
+    ];
+    startFunction(opts);
+  };
+
   const aggProgressFunction = (time, series) => {
     if (!lastDate) {
       lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
     } else if (differentDays(time, lastDate)) {
       progressFunction(endOfDay(lastDate), balance);
+      balance = {...balance, sent: 0, received: 0};
       lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
     }
-    balance = {...series};
+    const { tx } = series;
+    balance = {
+      ...series,
+      sent: balance.sent + (tx.amount < 0 ? -tx.amount : 0),
+      received: balance.received + (tx.amount > 0 ? tx.amount : 0),
+    };
   };
 
   const aggEndFunction = () => {
@@ -209,5 +262,5 @@ export const dailyBalancesStats = (opts) => {
   };
 
   return balancesStats({...opts, progressFunction: aggProgressFunction,
-    endFunction: aggEndFunction});
+    endFunction: aggEndFunction, startFunction: aggStartFunction});
 };
