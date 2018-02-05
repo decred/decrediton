@@ -17,10 +17,11 @@ const HomePage = ({
   getAccountsResponse,
   children,
   balanceChartData,
+  ...props,
 }) => {
   return (
     <div className="overview-wrapper">
-      <TabbedComponent header={HomeHeader} {...{routes, lockedTotalBalance, totalBalance, spendableTotalBalance, balanceChartData}}>
+      <TabbedComponent header={HomeHeader} {...{routes, lockedTotalBalance, totalBalance, spendableTotalBalance, balanceChartData, ...props}}>
         {children}
       </TabbedComponent>
       <div className="overview-transactions-ticket-wrapper">
