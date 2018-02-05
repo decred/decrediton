@@ -43,7 +43,7 @@ const HomePage = ({
           </div>
         </div>
       </div>
-      <div className="overview-chart-wrapper">
+      <div className="overview-ticket-chart-wrapper">
         <TicketChart data={ticketDataChart}/>
       </div>
     </div>
