@@ -9,24 +9,23 @@ import HomeHeader from "./HomeHeader";
 
 const HomePage = ({
   routes,
-  spendableTotalBalance,
+  totalBalance,
   transactions,
   getTransactionsRequestAttempt,
   getAccountsResponse,
   children,
-  ...props,
 }) => {
   return (
     <div className="overview-wrapper">
-      <TabbedComponent header={HomeHeader} {...{routes, ...props}}>
+      <TabbedComponent header={HomeHeader} {...{routes, totalBalance}}>
         {children}
       </TabbedComponent>
       <div className="overview-transactions-ticket-wrapper">
         <div className="recent-transactions">
-          <RecentTransactions {...{ routes, spendableTotalBalance, transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
+          <RecentTransactions {...{ routes, transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
         </div>
         <div className="ticket-activity">
-          <TicketActivity {...{ routes, spendableTotalBalance, transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
+          <TicketActivity {...{ routes, transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
         </div>
       </div>
     </div>

@@ -25,7 +25,6 @@ class Home extends React.Component{
     {...{
       ...this.props,
       ...this.state,
-      balanceChartData: this.props.spendableAndLockedBalance,
       ...substruct({
         onShowRevokeTicket: null,
         onRequestPassphrase: null,
@@ -61,7 +60,6 @@ class Home extends React.Component{
       passphraseCallback: null
     });
   }
-
 
 }
 

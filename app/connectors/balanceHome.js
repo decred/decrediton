@@ -3,8 +3,8 @@ import { selectorMap } from "fp";
 import * as sel from "selectors";
 
 const mapStateToProps = selectorMap({
-  totalBalance: sel.totalBalance,
   lockedTotalBalance: sel.lockedBalance,
+  spendableTotalBalance: sel.spendableTotalBalance,
   spendableAndLockedBalance: sel.spendableAndLockedBalance,
 });
 
