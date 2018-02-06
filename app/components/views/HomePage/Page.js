@@ -1,5 +1,5 @@
 // @flow
-import { rescan, home } from "connectors";
+import { rescan } from "connectors";
 import RecentTransactions from "./RecentTransactions";
 import TicketActivity from "./TicketActivity";
 import "style/Fonts.less";
@@ -9,8 +9,6 @@ import HomeHeader from "./HomeHeader";
 
 const HomePage = ({
   routes,
-  spendableTotalBalance,
-  lockedTotalBalance,
   totalBalance,
   transactions,
   getTransactionsRequestAttempt,
@@ -19,19 +17,19 @@ const HomePage = ({
 }) => {
   return (
     <div className="overview-wrapper">
-      <TabbedComponent header={HomeHeader} {...{routes, lockedTotalBalance, totalBalance, spendableTotalBalance}}>
+      <TabbedComponent header={HomeHeader} {...{routes, totalBalance}}>
         {children}
       </TabbedComponent>
       <div className="overview-transactions-ticket-wrapper">
         <div className="recent-transactions">
-          <RecentTransactions {...{ routes, spendableTotalBalance, transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
+          <RecentTransactions {...{ routes, transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
         </div>
         <div className="ticket-activity">
-          <TicketActivity {...{ routes, spendableTotalBalance, transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
+          <TicketActivity {...{ routes, transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
         </div>
       </div>
     </div>
   );
 };
 
-export default home(rescan(HomePage));
+export default rescan(HomePage);

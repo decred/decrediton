@@ -1,11 +1,14 @@
 import { Balance } from "shared";
 import { FormattedMessage as T } from "react-intl";
+import {BalanceChart} from "charts";
+import {balanceHome} from "connectors";
 import "style/Fonts.less";
 import "style/HomePage.less";
 
 const HomePage = ({
   spendableTotalBalance,
   lockedTotalBalance,
+  spendableAndLockedBalance
 }) => {
   return (
     <div className="overview-content-wrapper">
@@ -27,11 +30,14 @@ const HomePage = ({
           </div>
         </div>
       </div>
+      <div className="overview-chart-wrapper">
+        <BalanceChart data={spendableAndLockedBalance}/>
+      </div>
     </div>
   );
 };
 
-export default HomePage;
+export default balanceHome(HomePage);
 
 /*
   This is the transaction search button that needs to get implemented
