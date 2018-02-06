@@ -12,8 +12,6 @@ export const AdvancedHeader = () => (
 );
 
 const AdvancedBodyBase = ({
-  ...props,
-  ...state,
   onShowRemote,
   onShowAppData,
   sideActive,
@@ -32,7 +30,8 @@ const AdvancedBodyBase = ({
   rpchost,
   rpcport,
   appData,
-  intl
+  intl,
+  ...props,
  }) => {
   return (
     <div className="advanced-page">
@@ -50,7 +49,6 @@ const AdvancedBodyBase = ({
           {sideActive ?
             <RemoteDaemonForm {...{
               ...props,
-              ...state,
               onSubmitRemoteForm,
               setRpcUser,
               setRpcPass,
@@ -67,7 +65,6 @@ const AdvancedBodyBase = ({
             /> :
             <AppDataForm {...{
               ...props,
-              ...state,
               onSubmitAppDataForm,
               setAppData,
               appData,
