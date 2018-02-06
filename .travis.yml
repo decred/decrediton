@@ -16,4 +16,4 @@ install:
 script:
   - yarn lint
   - yarn test
-  - yarn package-linux
+  - yarn package-dev-linux
