@@ -1,7 +1,7 @@
 import { AccountsSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip, TransitionMotionWrapper } from "shared";
-import { PassphraseModalButton } from "buttons";
+import { PassphraseModalButton, KeyBlueButton } from "buttons";
 import OutputAccountRow from "./OutputAccountRow";
 import "style/SendPage.less";
 import "style/MiscComponents.less";
@@ -28,6 +28,8 @@ const SendPage = ({
   getStyles,
   willLeave,
   willEnter,
+  hasUnminedTransactions,
+  onRebroadcastUnmined,
   ...props
                   }) => (
     <Aux>
@@ -76,6 +78,13 @@ const SendPage = ({
                 loading={isSendingTransaction}
                 buttonLabel={<T id="send.sendBtn" m="Send" />}
             />
+            <Aux show={hasUnminedTransactions}>
+              <Tooltip md text={<T id="send.rebroadcastTooltip" m="Rebroadcasting transactions may help in situations when a transaction has been sent to a node that had poor connectivity to the general Decred network."/>}>
+                <KeyBlueButton onClick={onRebroadcastUnmined}>
+                  <T id="send.rebroadcastUnmined" m="Rebroadcast"/>
+                </KeyBlueButton>
+              </Tooltip>
+            </Aux>
             <div className="estimation-area-send">
               <div className="total-amount-send">
                 <div className="total-amount-send-text">

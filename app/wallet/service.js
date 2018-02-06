@@ -7,6 +7,7 @@ import {
   ValidateAddressRequest,
   GetTransactionsRequest,
   TransactionDetails,
+  PublishUnminedTransactionsRequest,
 } from "middleware/walletrpc/api_pb";
 import { withLog as log, withLogNoData, logOptionNoResponseData } from "./index";
 
@@ -151,3 +152,8 @@ export const getTransactions = withLogNoData((walletService, startBlockHeight,
       reject(err);
     });
   }), "Get Transactions");
+
+export const publishUnminedTransactions = log((walletService) => new Promise((resolve, reject) => {
+  const req = new PublishUnminedTransactionsRequest();
+  walletService.publishUnminedTransactions(req, (err) => err ? reject(err) : resolve());
+}), "Publish Unmined Transactions");

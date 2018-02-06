@@ -1,6 +1,6 @@
 import "style/Tooltip.less";
 
-const Tooltip = ({ text, warning, disabled, className, children }) => {
+const Tooltip = ({ text, warning, disabled, className, children, md }) => {
   let tooltip = null;
 
   const onMouseMove = ({clientX, clientY}) => {
@@ -12,7 +12,8 @@ const Tooltip = ({ text, warning, disabled, className, children }) => {
       clientY + 10 + "px" : window.innerHeight - 5 - tooltip.clientHeight + "px";
   };
 
-  const container = ["tooltipContainer", className].join(" ");
+  const widthClass = md ? "tooltip-width-md" : "";
+  const container = ["tooltipContainer", className, widthClass].join(" ");
   const tip = ["tip", warning ? "warning" : null].join(" ");
   const Wrapper = className ? "div" : Aux;
 
