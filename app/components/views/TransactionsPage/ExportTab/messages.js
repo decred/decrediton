@@ -23,6 +23,8 @@ export default {
       {name: "spendable", description: <T id="export.balances.fields.spendable" m="Available balance for spending in regular transactions." />},
       {name: "locked", description: <T id="export.balances.fields.locked" m="Balance locked in immature and live tickets." />},
       {name: "total", description: <T id="export.balances.fields.total" m="Total available balance." />},
+      {name: "sent", description: <T id="export.balances.fields.sent" m="Total amount sent to addresses not on the wallet." />},
+      {name: "received", description: <T id="export.balances.fields.received" m="Total amount received from addresses not on the wallet." />},
     ]
   }
 };
