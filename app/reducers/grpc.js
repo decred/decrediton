@@ -21,7 +21,7 @@ import {
   SETVOTECHOICES_ATTEMPT, SETVOTECHOICES_FAILED, SETVOTECHOICES_SUCCESS,
   UPDATEHIDDENACCOUNTS, MATURINGHEIGHTS_CHANGED,
 } from "../actions/ClientActions";
-import { STARTUPBLOCK } from "../actions/DaemonActions";
+import { STARTUPBLOCK, WALLETREADY } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
 import {
   GETDECODEMESSAGESERVICE_ATTEMPT, GETDECODEMESSAGESERVICE_FAILED, GETDECODEMESSAGESERVICE_SUCCESS,
@@ -489,6 +489,11 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       maturingBlockHeights: action.maturingBlockHeights,
+    };
+  case WALLETREADY:
+    return {
+      ...state,
+      port: action.port
     };
   default:
     return state;

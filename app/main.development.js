@@ -100,7 +100,6 @@ if (process.env.NODE_ENV === "development") {
 // Always use reasonable path for save data.
 app.setPath("userData", appDataDirectory());
 
-
 // Check that wallets directory has been created, if not, make it.
 let walletsDirectory = path.join(app.getPath("userData"),"wallets");
 fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
@@ -158,7 +157,6 @@ if (err !== null) {
   app.quit();
 }
 var globalCfg = initGlobalCfg();
-
 
 const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
@@ -411,6 +409,25 @@ const AddToLog = (destIO, destLogBuffer, data) => {
   return Buffer.concat([destLogBuffer, dataBuffer]);
 };
 
+// DecodeDaemonIPCData decodes messages from an IPC message received from dcrd/
+// dcrwallet using their internal IPC protocol.
+// NOTE: very simple impl for the moment, will break if messages get split
+// between data calls.
+const DecodeDaemonIPCData = (data, cb) => {
+  let i = 0;
+  while (i < data.length) {
+    if (data[i++] !== 0x01) throw "Wrong protocol version when decoding IPC data";
+    const mtypelen = data[i++];
+    const mtype = data.slice(i, i+mtypelen).toString("utf-8");
+    i += mtypelen;
+    const psize = data.readUInt32LE(i);
+    i += 4;
+    const payload = data.slice(i, i+psize);
+    i += psize;
+    cb(mtype, payload);
+  }
+};
+
 const launchDCRD = (walletPath, appdata, testnet) => {
   var spawn = require("child_process").spawn;
   let args = [];
@@ -499,6 +516,8 @@ const launchDCRWallet = (walletPath, testnet) => {
   args.push("--ticketbuyer.maxpricerelative=" + cfg.get("maxpricerelative"));
   args.push("--ticketbuyer.maxpriceabsolute=" + cfg.get("maxpriceabsolute"));
   args.push("--ticketbuyer.maxperblock=" + cfg.get("maxperblock"));
+  args.push("--rpclistenerevents");
+  args.push("--pipetx=4");
 
   var dcrwExe = getExecutablePath("dcrwallet");
   if (!fs.existsSync(dcrwExe)) {
@@ -526,8 +545,17 @@ const launchDCRWallet = (walletPath, testnet) => {
 
   var dcrwallet = spawn(dcrwExe, args, {
     detached: os.platform() == "win32",
-    stdio: ["ignore", "pipe", "pipe", "ignore"]
+    stdio: ["ignore", "pipe", "pipe", "ignore", "pipe"]
   });
+
+  dcrwallet.stdio[4].on("data", (data) => DecodeDaemonIPCData(data, (mtype, payload) => {
+    if (mtype === "grpclistener") {
+      const intf = payload.toString("utf-8");
+      const port = intf.slice(intf.indexOf(":")+1);
+      logger.log("info", "wallet grpc running on port", port);
+      mainWindow.webContents.send("dcrwallet-port", port);
+    }
+  }));
 
   dcrwallet.on("error", function (err) {
     logger.log("error", "Error running dcrwallet.  Check logs and restart! " + err);
@@ -686,7 +714,6 @@ app.on("ready", async () => {
       }]).popup(mainWindow);
     }
   });
-
 
   if (!primaryInstance) return;
 
