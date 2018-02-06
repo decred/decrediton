@@ -1,19 +1,19 @@
 sudo: required
 
-before_install: # if "install" is overridden
-  # Repo for Yarn
-  - sudo apt-key adv --fetch-keys http://dl.yarnpkg.com/debian/pubkey.gpg
-  - echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-  - sudo apt-get update -qq
-  - sudo apt-get install -y -qq yarn=1.3.2-1
-  
+language: node_js
+node_js:
+- "8"
+
 cache:
   yarn: true
+  directories:
+    - node_modules
+    - "app/node_modules"
 
-services:
-  - docker
-
-install: true
+install:
+  - yarn
 
 script:
-- ./build-docker.sh
+  - yarn lint
+  - yarn test
+  - yarn package-linux
