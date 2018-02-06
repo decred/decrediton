@@ -57,40 +57,40 @@ class Input extends React.Component{
     } = this.props;
     return (
       hidden ? null :
-      <Aux>
-        <div className={this.state.divClassName} ref={div => { this.state.inputUnitDiv = div; }}>
-          <input
-            ref={input => { this.input = input; }}
-            type={type||"text"}
-            className="input"
-            disabled={disabled ? disabled : null}
-            readOnly={readOnly ? readOnly : null}
-            placeholder={placeholder}
-            value={isNullOrUndefined(value) ? "" : value}
-            onChange={onChange}
-            onFocus={this.onInputFocus}
-            onBlur={this.onInputBlur}
-            onKeyDown={this.onKeyDown}
-          />
-          {unit ? <div className="unit-area">{unit}</div> : null}
-        </div>
-        {showErrors ? (
-          <div className="input-errors-area">
-            {invalid && value ? (
-              <div className="input-error">
-                {invalidMessage ? invalidMessage :
-                  <T id="input.invalidInput" m="This field is wrong" />}
-              </div>
-            ) : null}
-            {required && !value ? (
-              <div className="input-error">
-              {requiredMessage ? requiredMessage :
-                  <T id="input.requiredInput" m="This field is required" />}
-              </div>
-            ) : null}
+        <Aux>
+          <div className={this.state.divClassName} ref={div => { this.state.inputUnitDiv = div; }}>
+            <input
+              ref={input => { this.input = input; }}
+              type={type||"text"}
+              className="input"
+              disabled={disabled ? disabled : null}
+              readOnly={readOnly ? readOnly : null}
+              placeholder={placeholder}
+              value={isNullOrUndefined(value) ? "" : value}
+              onChange={onChange}
+              onFocus={this.onInputFocus}
+              onBlur={this.onInputBlur}
+              onKeyDown={this.onKeyDown}
+            />
+            {unit ? <div className="unit-area">{unit}</div> : null}
           </div>
-        ) : null}
-      </Aux>
+          {showErrors ? (
+            <div className="input-errors-area">
+              {invalid && value ? (
+                <div className="input-error">
+                  {invalidMessage ? invalidMessage :
+                    <T id="input.invalidInput" m="This field is wrong" />}
+                </div>
+              ) : null}
+              {required && !value ? (
+                <div className="input-error">
+                  {requiredMessage ? requiredMessage :
+                    <T id="input.requiredInput" m="This field is required" />}
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+        </Aux>
     );
   }
 }

@@ -11,11 +11,10 @@ module.exports = {
   "parser": "babel-eslint",
   "extends": "eslint:recommended",
   "rules": {
-    "indent-legacy": [
+    "indent": [
       "error",
       2
     ],
-    "indent": ["off"],
     "no-useless-escape": ["off"],
     "linebreak-style": [
       "error",

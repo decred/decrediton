@@ -15,12 +15,12 @@ const RouteTransition = props => {
   const base = { data: props.children, key: props.pathname };
   const defaultStyles =
     !props.runOnMount ? null :
-    !props.children ? [] :
-    [{...base, style: props.atEnter }];
+      !props.children ? [] :
+        [{...base, style: props.atEnter }];
 
   const styles =
     !props.children ? [] :
-    [{...base, style: ensureSpring(props.atActive, props.opts) }];
+      [{...base, style: ensureSpring(props.atActive, props.opts) }];
 
   const willEnter = () => props.atEnter;
   const willLeave = () => ensureSpring(props.atLeave, props.opts);
