@@ -320,12 +320,9 @@ export function newWalletConfigCreation(testnet, walletPath) {
   var dcrwConf = {
     "Application Options":
     {
-      username: "USER",
-      password: "PASSWORD",
       tlscurve: "P-256",
       noinitialload: "1",
       onetimetlskey: "1",
-      rpcconnect: "127.0.0.1:9109",
       grpclisten: "127.0.0.1:9121",
       appdata: getWalletPath(testnet, walletPath),
       testnet: testnet ? "1" : "0"
