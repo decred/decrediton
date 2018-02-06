@@ -239,6 +239,47 @@
   opacity: 0.7;
 }
 
+.path-input-and-button {
+  display: flex;
+  flex: 1;
+}
+
+.path-button {
+  width: 16px;
+  height: 16px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-image: @search-icon;
+  background-size: 16px 16px;
+  display: flex;
+  flex: auto;
+}
+
+.path-button:hover {
+  opacity: 0.7;
+}
+
+.path-input {
+  border-style: none;
+  cursor: text;
+  background: transparent;
+  outline: none;
+  align-items: center;
+  border-bottom: 1px @stroke-color-default solid;
+  font-family: @font-family-regular;
+  font-size: 13px;
+  color: white;
+  padding: 3px 4px 1px 10px;
+  display: flex;
+  flex: auto;
+  flex-grow: 1;
+}
+
+.path-input:hover {
+  opacity: 0.7;
+}
+
 .ticket-cogs-opened,
 .ticket-cogs-closed {
   display: inline-block;

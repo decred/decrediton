@@ -1,5 +1,5 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { TextInput } from "inputs";
+import { PathBrowseInput } from "inputs";
 import { KeyBlueButton } from "buttons";
 import "style/LoginForm.less";
 
@@ -21,15 +21,13 @@ const AppDataForm = ({
     <Aux>
       <div className="advanced-daemon-row">
         <div className="advanced-daemon-label">
-          <T id="login.form.appdata.label" m="Daemon Data Directory"/>:
+          <T id="login.form.appdata.label" m="Daemon Data Directory" />:
         </div>
         <div className="advanced-daemon-input">
-          <TextInput
-            type="text"
-            showErrors
-            required
+          <PathBrowseInput
+            type="directory"
             value={appData}
-            onChange={(e) => setAppData(e.target.value)}
+            onChange={(value) => setAppData(value)}
             placeholder={intl.formatMessage(messages.appdataFieldPlaceholder)}
           />
         </div>

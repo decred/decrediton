@@ -13,5 +13,7 @@ export { default as ReceiveAccountsSelect } from "./ReceiveAccountsSelect";
 export { default as SettingsInput } from "./SettingsInput";
 export { default as StakePoolSelect } from "./StakePoolSelect";
 export { default as TextInput } from "./TextInput";
+export { default as PathInput } from "./PathInput";
+export { default as PathBrowseInput } from "./PathBrowseInput";
 export { default as PassphraseModalField } from "./PassphraseModalField";
 export { FixedDcrInput } from "./DcrInput";

@@ -1,6 +1,7 @@
 export { default as EyeFilterMenu } from "./EyeFilterMenu";
 export { default as HelpLink } from "./HelpLink";
 export { default as SlateGrayButton } from "./SlateGrayButton";
+export { default as PathButton } from "./PathButton";
 export { default as RescanButton } from "./RescanButton";
 export { default as RescanCancelButton } from "./RescanCancelButton";
 export { default as TextToggle } from "./TextToggle";
@@ -16,8 +17,10 @@ export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton };
 /***************************************************
  * Custom Modal Buttons
  ***************************************************/
-import { InfoModal, PassphraseModal, ChangePassphraseModal,
-  ConfirmModal } from "modals";
+import {
+  InfoModal, PassphraseModal, ChangePassphraseModal,
+  ConfirmModal
+} from "modals";
 
 // mbb = ModalButtonBuilder (func to build a functional ModalButton component
 // with extra fixed props)
@@ -27,11 +30,11 @@ const mbb = (className, modalComponent, buttonComponent) => p =>
       ...p,
       buttonComponent,
       modalComponent: p.modalComponent || modalComponent,
-      className: [className||"",p.className||""].join(" "),
+      className: [className || "", p.className || ""].join(" "),
     }}
   />;
 
-const helpLinkButton = ({className, onClick, buttonLabel}) =>
+const helpLinkButton = ({ className, onClick, buttonLabel }) =>
   <div className={className} onClick={onClick}>{buttonLabel}</div>;
 
 export const HelpLinkInfoModal = mbb("help-icon", InfoModal, helpLinkButton);
