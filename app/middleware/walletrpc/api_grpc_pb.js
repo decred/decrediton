@@ -664,6 +664,28 @@ function deserialize_walletrpc_PublishTransactionResponse(buffer_arg) {
   return api_pb.PublishTransactionResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_PublishUnminedTransactionsRequest(arg) {
+  if (!(arg instanceof api_pb.PublishUnminedTransactionsRequest)) {
+    throw new Error('Expected argument of type walletrpc.PublishUnminedTransactionsRequest');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_PublishUnminedTransactionsRequest(buffer_arg) {
+  return api_pb.PublishUnminedTransactionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_PublishUnminedTransactionsResponse(arg) {
+  if (!(arg instanceof api_pb.PublishUnminedTransactionsResponse)) {
+    throw new Error('Expected argument of type walletrpc.PublishUnminedTransactionsResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_PublishUnminedTransactionsResponse(buffer_arg) {
+  return api_pb.PublishUnminedTransactionsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_PurchaseTicketsRequest(arg) {
   if (!(arg instanceof api_pb.PurchaseTicketsRequest)) {
     throw new Error('Expected argument of type walletrpc.PurchaseTicketsRequest');
@@ -1607,6 +1629,17 @@ var WalletServiceService = exports.WalletServiceService = {
     requestDeserialize: deserialize_walletrpc_PublishTransactionRequest,
     responseSerialize: serialize_walletrpc_PublishTransactionResponse,
     responseDeserialize: deserialize_walletrpc_PublishTransactionResponse,
+  },
+  publishUnminedTransactions: {
+    path: '/walletrpc.WalletService/PublishUnminedTransactions',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.PublishUnminedTransactionsRequest,
+    responseType: api_pb.PublishUnminedTransactionsResponse,
+    requestSerialize: serialize_walletrpc_PublishUnminedTransactionsRequest,
+    requestDeserialize: deserialize_walletrpc_PublishUnminedTransactionsRequest,
+    responseSerialize: serialize_walletrpc_PublishUnminedTransactionsResponse,
+    responseDeserialize: deserialize_walletrpc_PublishUnminedTransactionsResponse,
   },
   purchaseTickets: {
     path: '/walletrpc.WalletService/PurchaseTickets',

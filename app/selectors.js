@@ -235,6 +235,7 @@ const transactionNormalizer = createSelector(
 export const noMoreTransactions = get(["grpc", "noMoreTransactions"]);
 export const transactionsNormalizer = createSelector([transactionNormalizer], map);
 export const transactionsFilter = get(["grpc", "transactionsFilter"]);
+export const hasUnminedTransactions = compose(l => l && l.length > 0, get(["grpc", "unminedTransactions"]));
 export const transactions = createSelector(
   [transactionsNormalizer, get(["grpc", "transactions"])], apply
 );

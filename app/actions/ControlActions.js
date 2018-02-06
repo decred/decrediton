@@ -701,3 +701,15 @@ export function verifyMessageAttempt(address, message, signature) {
 }
 
 export const verifyMessageCleanStore = () => ({ type: VERIFYMESSAGE_CLEANSTORE });
+
+export const PUBLISHUNMINEDTRANSACTIONS_ATTEMPT = "PUBLISHUNMINEDTRANSACTIONS_ATTEMPT";
+export const PUBLISHUNMINEDTRANSACTIONS_SUCCESS = "PUBLISHUNMINEDTRANSACTIONS_SUCCESS";
+export const PUBLISHUNMINEDTRANSACTIONS_FAILED = "PUBLISHUNMINEDTRANSACTIONS_FAILED";
+
+export const publishUnminedTransactionsAttempt = () => (dispatch, getState) => {
+  dispatch({type: PUBLISHUNMINEDTRANSACTIONS_ATTEMPT});
+
+  wallet.publishUnminedTransactions(sel.walletService(getState()))
+    .then(() => dispatch({type: PUBLISHUNMINEDTRANSACTIONS_SUCCESS}))
+    .catch(error => dispatch({error, type: PUBLISHUNMINEDTRANSACTIONS_FAILED}));
+};

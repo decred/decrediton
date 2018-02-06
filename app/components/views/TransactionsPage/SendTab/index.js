@@ -52,6 +52,7 @@ class Send extends React.Component {
       onShowSendOthers,
       onAttemptConstructTransaction,
       onAddOutput,
+      onRebroadcastUnmined,
       getOnRemoveOutput,
       getOnChangeOutputDestination,
       getOnChangeOutputAmount,
@@ -79,6 +80,7 @@ class Send extends React.Component {
           onShowSendOthers,
           onAttemptConstructTransaction,
           onAddOutput,
+          onRebroadcastUnmined,
           getOnRemoveOutput,
           getOnChangeOutputDestination,
           getOnChangeOutputAmount,
@@ -204,6 +206,11 @@ class Send extends React.Component {
   onAddOutput() {
     const { outputs } = this.state;
     this.setState({ outputs: [...outputs, { key: "output_"+outputs.length, data: {...BASE_OUTPUT} }] });
+  }
+
+  onRebroadcastUnmined() {
+    const { publishUnminedTransactions } = this.props;
+    publishUnminedTransactions && publishUnminedTransactions();
   }
 
   getOnRemoveOutput(key) {
