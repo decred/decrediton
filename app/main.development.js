@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
+import { initGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm, clearPreviousWallet} from "./config.js";
 import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, getWalletPath} from "./config.js";
 import path from "path";
 import fs from "fs-extra";
@@ -159,25 +159,22 @@ if (err !== null) {
 }
 var globalCfg = initGlobalCfg();
 
-
-/*
 // Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
-let availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallets")).find(file => {
-  var checkForWalletDbs = fs.readdirSync(path.join(app.getPath("userData"), "wallets", file, cfg.get("network"))).find(fileName => {return fileName == "wallet.db";});
-  return checkForWalletDbs;
-});
-let availableWalletAppDataDir = path.join(app.getPath("userData"), "wallets/default-wallet");
-let availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallets")).find(file => {
-  var checkForWalletDbs = fs.readdirSync(path.join(app.getPath("userData"), "wallets", file, cfg.get("network"))).find(fileName => {return fileName == "wallet.db";});
-  return checkForWalletDbs;
-});
+var availableWallets = [];
+var mainnetWalletDirectories = fs.readdirSync(path.join(walletsDirectory, "mainnet"));
 
-let availableWallets = [];
-let availableWalletAppDataDir = getWalletPath("default-wallet");
-if (availableWallets.length > 0) {
-  availableWalletAppDataDir = path.join(app.getPath("userData"), "wallets", availableWallets[0]);
+for (var i in mainnetWalletDirectories) {
+  if (fs.pathExistsSync(path.join(walletsDirectory, "mainnet", mainnetWalletDirectories[i].toString(), "mainnet", "wallet.db"))) {
+    availableWallets.push({network: "mainnet", wallet: mainnetWalletDirectories[i] });
+  }
 }
-*/
+var testnetWalletDirectories = fs.readdirSync(path.join(walletsDirectory, "testnet"));
+
+for (var j in testnetWalletDirectories) {
+  if (fs.pathExistsSync(path.join(walletsDirectory, "testnet", testnetWalletDirectories[j].toString(), "testnet2", "wallet.db"))) {
+    availableWallets.push({network: "testnet", wallet: testnetWalletDirectories[j] });
+  }
+}
 
 const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
@@ -267,11 +264,11 @@ const installExtensions = async () => {
 };
 
 const { ipcMain } = require("electron");
-/*
+
 ipcMain.on("get-available-wallets", (event) => {
   event.returnValue = availableWallets;
 });
-*/
+
 ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
   if (dcrdPID && dcrdConfig && !daemonIsAdvanced) {
     logger.log("info", "Skipping restart of daemon as it is already running");
@@ -295,6 +292,18 @@ ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
   event.returnValue = dcrdConfig;
 });
 
+ipcMain.on("create-wallet", (event, walletPath, testnet) => {
+  let newWalletDirectory = path.join(walletsDirectory, testnet ? "testnet" : "mainnet", walletPath);
+  if (!fs.pathExistsSync(newWalletDirectory)){
+    fs.mkdirsSync(newWalletDirectory);
+
+    // create new configs for new wallet
+    initWalletCfg(testnet, walletPath);
+    newWalletConfigCreation(testnet, walletPath);
+  }
+  event.returnValue = true;
+});
+
 ipcMain.on("start-wallet", (event, walletPath, testnet) => {
   if (dcrwPID) {
     logger.log("info", "dcrwallet already started " + dcrwPID);
@@ -306,7 +315,7 @@ ipcMain.on("start-wallet", (event, walletPath, testnet) => {
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }
-  event.returnValue = dcrwPID;
+  event.returnValue = getWalletCfg(testnet, walletPath);
 });
 
 ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
@@ -860,5 +869,6 @@ app.on("before-quit", (event) => {
   event.preventDefault();
   cleanShutdown();
   setMustOpenForm(true);
+  clearPreviousWallet();
   app.exit(0);
 });

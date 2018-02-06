@@ -20,6 +20,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   SETBALANCETOMAINTAIN, SETMAXFEE, SETMAXPRICEABSOLUTE, SETMAXPRICERELATIVE, SETMAXPERBLOCK,
   VALIDATEADDRESS_ATTEMPT, VALIDATEADDRESS_SUCCESS, VALIDATEADDRESS_FAILED, VALIDATEADDRESS_CLEANSTORE
 } from "../actions/ControlActions";
+import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
 
 export default function control(state = {}, action) {
   switch (action.type) {
@@ -386,6 +387,14 @@ export default function control(state = {}, action) {
   case VALIDATEADDRESS_CLEANSTORE:
     return {...state,
       validateAddressResponse: null
+    };
+  case WALLET_AUTOBUYER_SETTINGS:
+    return {...state,
+      balanceToMaintain: action.balanceToMaintain,
+      maxFee: action.maxFee,
+      maxPriceAbsolute: action.maxPriceAbsolute,
+      maxPriceRelative: action.maxPriceRelative,
+      maxPerBlock: action.maxPriceRelative,
     };
   default:
     return state;

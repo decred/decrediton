@@ -16,4 +16,5 @@ export { default as TextInput } from "./TextInput";
 export { default as PathInput } from "./PathInput";
 export { default as PathBrowseInput } from "./PathBrowseInput";
 export { default as PassphraseModalField } from "./PassphraseModalField";
+export { default as WalletSelect } from "./WalletSelect";
 export { FixedDcrInput } from "./DcrInput";

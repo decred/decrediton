@@ -17,6 +17,7 @@ import {
 import {
   RESCAN_ATTEMPT
 } from "actions/ControlActions";
+import { WALLET_LOADER_SETTINGS } from "actions/DaemonActions";
 
 export default function walletLoader(state = {}, action) {
   switch (action.type) {
@@ -237,6 +238,10 @@ export default function walletLoader(state = {}, action) {
   case NEEDED_BLOCKS_DETERMINED:
     return {...state,
       neededBlocks: action.neededBlocks
+    };
+  case WALLET_LOADER_SETTINGS:
+    return {...state,
+      discoverAccountsComplete: action.discoverAccountsComplete,
     };
   default:
     return state;

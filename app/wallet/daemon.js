@@ -16,6 +16,13 @@ export const cleanShutdown = log(() => Promise
     if (!stopped) throw "Error shutting down app";
   }), "Clean Shutdown");
 
+export const createNewWallet = log((walletPath, testnet) => Promise
+  .resolve(ipcRenderer.sendSync("create-wallet", walletPath, testnet))
+  .then(pid => {
+    if (pid) return pid;
+    throw "Error creating wallet";
+  }), "Create Wallet");
+
 export const startWallet = log((walletPath, testnet) => Promise
   .resolve(ipcRenderer.sendSync("start-wallet", walletPath, testnet))
   .then(pid => {

@@ -70,17 +70,35 @@ export const startupError = or(
   fetchHeadersError
 );
 
+const availableWallets = get(["daemon", "availableWallets"]);
+
+export const availableWalletsSelect = createSelector(
+  [availableWallets],
+  (wallets) => map(
+    wallet => ({
+      label: wallet.wallet + " (" +  wallet.network + ")",
+      value: wallet,
+      network: wallet.network,
+    }),
+    wallets
+  )
+);
+export const previousWallet = get(["daemon", "previousWallet"]);
+export const getWalletName = get(["daemon", "walletName"]);
+
 const openWalletInputRequest = get(["walletLoader", "openWalletInputRequest"]);
 const createWalletInputRequest = get(["walletLoader", "createWalletInputRequest"]);
 const discoverAddressInputRequest = get(["walletLoader", "discoverAddressInputRequest"]);
 const advancedDaemonInputRequest = get(["walletLoader", "advancedDaemonInputRequest"]);
 const openWalletRequestAttempt = get(["walletLoader", "walletOpenRequestAttempt"]);
+const selectCreateWalletInputRequest = get(["daemon", "selectCreateWalletInputRequest"]);
 
 export const isInputRequest = or(
   and(openWalletInputRequest, not(openWalletRequestAttempt)),
   createWalletInputRequest,
   discoverAddressInputRequest,
-  and(openForm, isAdvancedDaemon, advancedDaemonInputRequest)
+  and(openForm, isAdvancedDaemon, advancedDaemonInputRequest),
+  selectCreateWalletInputRequest
 );
 
 export const balances = or(get(["grpc", "balances"]), () => []);
@@ -117,7 +135,7 @@ export const lockedBalance = createSelector(
 );
 
 export const networks = () => [{name: "testnet"}, {name: "mainnet"}];
-export const network = get(["grpc", "network"]);
+export const network = get(["daemon", "network"]);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 export const currencies = () => [{name: "DCR"}, {name: "atoms"}];
@@ -711,7 +729,7 @@ export const lastBlockTimestamp = get(["grpc", "recentBlockTimestamp"]);
 export const getNextAccountSuccess = get(["control", "getNextAccountSuccess"]);
 export const getNextAccountError = get(["control", "getNextAccountError"]);
 export const getNextAccountRequestAttempt = get(["control", "getNextAccountRequestAttempt"]);
-export const hiddenAccounts = get(["grpc", "hiddenAccounts"]);
+export const hiddenAccounts = get(["daemon", "hiddenAccounts"]);
 export const renameAccountError = get(["control", "renameAccountError"]);
 export const renameAccountSuccess = get(["control", "renameAccountSuccess"]);
 export const renameAccountRequestAttempt = get(["control", "renameAccountRequestAttempt"]);

@@ -11,8 +11,9 @@ export { default as TransactionLink } from "./TransactionLink";
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
 import AutoBuyerSwitch from "./AutoBuyerSwitch";
+import NetworkSwitch from "./NetworkSwitch";
 import DangerButton from "./DangerButton";
-export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton };
+export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton, NetworkSwitch };
 
 /***************************************************
  * Custom Modal Buttons

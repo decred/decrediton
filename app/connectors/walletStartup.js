@@ -26,6 +26,9 @@ const mapStateToProps = selectorMap({
   rescanEndBlock: sel.rescanEndBlock,
   rescanStartBlock: sel.rescanStartBlock,
   rescanCurrentBlock: sel.rescanCurrentBlock,
+  availableWallets: sel.availableWalletsSelect,
+  walletName: sel.getWalletName,
+  previousWallet: sel.previousWallet,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -37,8 +40,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   doVersionCheck: wla.versionCheckAction,
   onStartDaemon: da.startDaemon,
   onStartWallet: da.startWallet,
-  determineNeededBlocks: wla.determineNeededBlocks,
-  setCredentialsAppdataError: da.setCredentialsAppdataError
+  onCreateWallet: da.createWallet,
+  setCredentialsAppdataError: da.setCredentialsAppdataError,
+  onGetAvailableWallets: da.getAvailableWallets
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);
