@@ -1,9 +1,19 @@
 sudo: required
 
-services:
-  - docker
+language: node_js
+node_js:
+- "8"
 
-install: true
+cache:
+  yarn: true
+  directories:
+    - node_modules
+    - "app/node_modules"
+
+install:
+  - yarn
 
 script:
-- ./build-docker.sh
+  - yarn lint
+  - yarn test
+  - yarn package-linux
