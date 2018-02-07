@@ -5,6 +5,20 @@ const ipc = electron.ipcRenderer;
 
 import PathInput from "./PathInput";
 import { PathButton } from "../buttons";
+import { isArray } from "util";
+import { defineMessages, injectIntl } from "react-intl";
+
+// Import this and pass one of the objects as a member of the filter prop
+// of PathBrowseInput
+export const FileBrowserFilters = {
+  csv: {key: "csv", extensions: ["csv"]},
+  all: {key: "all", extensions: ["*"]}
+};
+
+const FileBrowserFilterNames = defineMessages({
+  csv: {id: "fileBrowserTypes.csv.name", defaultMessage: "CSV Files"},
+  all: {id: "fileBrowserTypes.all.name", defaultMessage: "All Files"},
+});
 
 @autobind
 class PathBrowseInput extends React.Component {
@@ -20,8 +34,9 @@ class PathBrowseInput extends React.Component {
 
     let self = this;
     let pathListener = function (event, data) {
-      self.setState({ path: data });
-      self.props.onChange(data);
+      let path = isArray(data) ? data[0] : data;
+      self.setState({ path });
+      self.props.onChange(path);
     };
 
     ipc.on(this.key, pathListener);
@@ -32,14 +47,22 @@ class PathBrowseInput extends React.Component {
   }
 
   selectDirectory() {
-    dialog.showOpenDialog(mainWindow, {
-      properties: [this.props.type === "directory" ? "openDirectory" : "openFile"]
-    }, this.directorySelectorCallback);
+    const intl = this.props.intl;
+    const filters = (this.props.filters || []).map(f => {
+      return {...f, name: intl.formatMessage(FileBrowserFilterNames[f.key])};
+    });
+
+    const f = this.props.save ? dialog.showSaveDialog : dialog.showOpenDialog;
+    const opts = {
+      properties: [this.props.type === "directory" ? "openDirectory" : "openFile"],
+      filters: filters,
+    };
+    f(mainWindow, opts, this.directorySelectorCallback);
   }
 
   directorySelectorCallback(filenames) {
     if (filenames && filenames.length > 0) {
-      mainWindow.webContents.send(this.key, filenames[0]);
+      mainWindow.webContents.send(this.key, filenames);
     }
   }
 
@@ -62,4 +85,4 @@ class PathBrowseInput extends React.Component {
   }
 }
 
-export default PathBrowseInput;
+export default injectIntl(PathBrowseInput);

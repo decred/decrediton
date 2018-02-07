@@ -20,7 +20,6 @@ export const getStartupStats = () => (dispatch) => {
   dispatch({type: GETSTARTUPSTATS_ATTEMPT});
   Promise.all(startupStats.map(s => dispatch(generateStat(s))))
     .then(([dailyBalances]) => {
-      console.log("got startup series", dailyBalances);
       dispatch({dailyBalances, type: GETSTARTUPSTATS_SUCCESS});
     })
     .catch(error => dispatch({error, type: GETSTARTUPSTATS_FAILED}));
@@ -48,13 +47,7 @@ export const EXPORT_STARTED = "EXPORT_STARTED";
 export const EXPORT_COMPLETED = "EXPORT_COMPLETED";
 export const EXPORT_ERROR = "EXPORT_ERROR";
 
-export const exportStatToCSV = (opts) => (dispatch) => {
-  // TODO: get from dialog
-  const csvFilename = "test.csv";
-  dispatch(exportStatToCSVFile({...opts, csvFilename}));
-};
-
-export const exportStatToCSVFile = (opts) => (dispatch, getState) => {
+export const exportStatToCSV = (opts) => (dispatch, getState) => {
   const { calcFunction, csvFilename } = opts;
 
   var fd;

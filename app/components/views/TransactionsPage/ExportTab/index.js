@@ -19,7 +19,8 @@ class ExportTab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedExport: AvailableExports[0]
+      selectedExport: AvailableExports[0],
+      destinationFile: "",
     };
   }
 
@@ -28,15 +29,20 @@ class ExportTab extends React.Component {
   }
 
   exportCSV() {
-    const { selectedExport } = this.state;
+    const { selectedExport, destinationFile } = this.state;
     const opts = {
       calcFunction: selectedExport.calcFunction,
+      csvFilename: destinationFile,
     };
     this.props.exportStatToCSV(opts);
   }
 
+  setDestinationFile(destinationFile) {
+    this.setState({destinationFile});
+  }
+
   render() {
-    const { exportCSV, onChangeSelectedExport } = this;
+    const { exportCSV, onChangeSelectedExport, setDestinationFile } = this;
 
     return (<Page
       {...this.props}
@@ -44,6 +50,7 @@ class ExportTab extends React.Component {
       availableExports={AvailableExports}
       exportCSV={exportCSV}
       onChangeSelectedExport={onChangeSelectedExport}
+      setDestinationFile={setDestinationFile}
     />);
   }
 }

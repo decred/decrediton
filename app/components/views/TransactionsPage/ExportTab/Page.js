@@ -1,7 +1,7 @@
 import Select from "react-select";
 import { FormattedMessage as T } from "react-intl";
 import { KeyBlueButton } from "buttons";
-import { InlineField, TextInput } from "inputs";
+import { InlineField, PathBrowseInput, FileBrowserFilters } from "inputs";
 import "style/ExportPage.less";
 
 const FieldDescription = ({name, description}) => (
@@ -17,7 +17,9 @@ const ExportPage =
     exportCSV,
     availableExports,
     onChangeSelectedExport,
-    selectedExport
+    selectedExport,
+    destinationFile,
+    setDestinationFile,
   }) => (
     <div className="tab-card export-tab">
       <div className="export-selection">
@@ -34,7 +36,13 @@ const ExportPage =
         </InlineField>
 
         <InlineField label={<T id="export.destination" m="Destination" />}>
-          <TextInput value={"test.csv"} readOnly/>
+          <PathBrowseInput
+            save
+            type="file"
+            value={destinationFile}
+            filters={[FileBrowserFilters.csv, FileBrowserFilters.all]}
+            onChange={(value) => setDestinationFile(value)}
+          />
         </InlineField>
       </div>
 
@@ -44,7 +52,7 @@ const ExportPage =
         {selectedExport.fields.map(p => <FieldDescription key={p.name} {...p} />)}
       </ul>
 
-      <KeyBlueButton onClick={exportCSV} disabled={exportingData} loading={exportingData}>
+      <KeyBlueButton onClick={exportCSV} disabled={exportingData || !destinationFile} loading={exportingData}>
         <T id="export.btnExport" m="Export" />
       </KeyBlueButton>
     </div>
