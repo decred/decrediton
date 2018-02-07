@@ -144,6 +144,8 @@ var initialState = {
     recentTransactionCount: 8,
     recentTransactions: Array(),
 
+    recentTickets: Array(),
+
     // GetTransactions
     minedTransactions: Array(),
     unminedTransactions: Array(),

@@ -1,26 +1,29 @@
 // @flow
 import { rescan, home } from "connectors";
 import { DecredLoading } from "indicators";
+import TxHistory from "TxHistory";
 import { FormattedMessage as T } from "react-intl";
 import "style/Fonts.less";
 import "style/HomePage.less";
 
-const HomePage = ({
-  getTransactionsRequestAttempt,
+const RecentTickets = ({
+  tickets,
+  getTicketsRequestAttempt,
+  getAccountsResponse,
 }) => {
   return (
-    <Aux>
-      {getTransactionsRequestAttempt ? <DecredLoading /> :
-        <Aux>
-          <div className="home-content-title">
-            <T id="home.ticketActivityTitle" m="Ticket Activity" />
-          </div>
-          <div className="home-content-nest">
-            <p><T id="home.noTransactions" m="No available" /></p>
-          </div>
-        </Aux>}
-    </Aux>
+    getTicketsRequestAttempt ? <DecredLoading /> :
+      <Aux>
+        <div className="home-content-title">
+          <T id="home.ticketActivityTitle" m="Recent Tickets" />
+        </div>
+        <div className="home-content-nest">
+          {tickets.length > 0 ?
+          <TxHistory limit={5} {...{ getAccountsResponse, tickets }} /> :
+          <p><T id="home.noTickets" m="No tickets" /></p>}
+        </div>
+      </Aux>
   );
 };
 
-export default home(rescan(HomePage));
+export default home(rescan(RecentTickets));

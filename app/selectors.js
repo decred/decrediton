@@ -242,6 +242,9 @@ export const transactions = createSelector(
 export const homeHistoryTransactions = createSelector(
   [transactionsNormalizer, get(["grpc", "recentTransactions"])], apply
 );
+export const homeHistoryTickets = createSelector(
+  [ticketNormalizer, get(["grpc", "tickets"])], apply
+);
 
 //fake data for balance chart
 export const spendableAndLockedBalance = createSelector(
@@ -440,7 +443,7 @@ const ticketNormalizer = createSelector(
   }
 );
 const ticketSorter = (a, b) => (b.leaveTimestamp||b.enterTimestamp) - (a.leaveTimestamp||a.enterTimestamp);
-const allTickets = createSelector(
+export const allTickets = createSelector(
   [ticketNormalizer, get(["grpc", "tickets"])],
   (normalizer, tickets) => tickets.map(normalizer).sort(ticketSorter)
 );
@@ -463,6 +466,7 @@ export const viewedTicketListing = createSelector(
 const rescanResponse = get(["control", "rescanResponse"]);
 export const rescanRequest = get(["control", "rescanRequest"]);
 export const getTransactionsRequestAttempt = get(["grpc", "getTransactionsRequestAttempt"]);
+export const getTicketsRequestAttempt = get(["grpc", "getTicketsRequestAttempt"]);
 export const notifiedBlockHeight = get(["notifications", "currentHeight"]);
 
 export const currentBlockHeight = get(["grpc", "currentBlockHeight"]);

@@ -6,7 +6,7 @@ import { FormattedMessage as T } from "react-intl";
 import "style/Fonts.less";
 import "style/HomePage.less";
 
-const HomePage = ({
+const RecentTransactions = ({
   transactions,
   getTransactionsRequestAttempt,
   getAccountsResponse,
@@ -28,4 +28,4 @@ const HomePage = ({
   );
 };
 
-export default rescan(HomePage);
+export default rescan(RecentTransactions);
