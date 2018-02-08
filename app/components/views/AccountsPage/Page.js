@@ -7,7 +7,7 @@ const Page = ({
   walletService
 }) => (
   !walletService ? <ErrorScreen/> :
-  <Accounts {...{ routes }} />
+    <Accounts {...{ routes }} />
 );
 
 export default Page;

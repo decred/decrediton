@@ -25,7 +25,7 @@ const SendOutputAccountRow = ({
         <ReceiveAccountsSelect
           getAddressForSelected={true}
           showAccountsButton={false}
-          />
+        />
       </div>
 
       <div className="send-amount">

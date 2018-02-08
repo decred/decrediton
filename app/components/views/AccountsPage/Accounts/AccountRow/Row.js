@@ -19,64 +19,64 @@ const Row = ({
   getNullStyles,
   getDefaultStyles,
 }) => (
+  <div
+    className={
+      isShowingAccountDetails
+        ? isShowingRenameAccount
+          ? "account-row-rename"
+          : "account-row-long"
+        : "account-row-short"
+    }
+  >
     <div
       className={
         isShowingAccountDetails
-          ? isShowingRenameAccount
-            ? "account-row-rename"
-            : "account-row-long"
-          : "account-row-short"
+          ? "account-row-details-top"
+          : hidden
+            ? "account-row-hidden"
+            : "account-row"
+      }
+      key={"top" + account.accountNumber}
+      onClick={
+        isShowingAccountDetails
+          ? hideAccountDetails
+          : () => showAccountDetails(account.accountNumber)
       }
     >
-      <div
-        className={
-          isShowingAccountDetails
-            ? "account-row-details-top"
-            : hidden
-              ? "account-row-hidden"
-              : "account-row"
-        }
-        key={"top" + account.accountNumber}
-        onClick={
-          isShowingAccountDetails
-            ? hideAccountDetails
-            : () => showAccountDetails(account.accountNumber)
-        }
-      >
-        <div className="account-row-top-top">
-          <div className="account-row-wallet-icon" />
-          <div className="account-row-top-account-name">{account.accountName}{
-            hidden
-              ? <span> (hidden)</span>
-              : <span></span>
-          }</div>
-          <div className="account-row-top-account-funds">
-            <Balance amount={account.total} />
-            <div className="account-row-top-last-tx"></div>
-            <div className="account-row-top-spendable">
-              <div className="account-row-top-spendable-label">
-                <T id="accounts.row.spendable" m="Spendable" />
-              </div>
-              <Balance amount={account.spendable} />
+      <div className="account-row-top-top">
+        <div className="account-row-wallet-icon" />
+        <div className="account-row-top-account-name">{account.accountName}{
+          hidden
+            ? <span> (hidden)</span>
+            : <span></span>
+        }</div>
+        <div className="account-row-top-account-funds">
+          <Balance amount={account.total} />
+          <div className="account-row-top-last-tx"></div>
+          <div className="account-row-top-spendable">
+            <div className="account-row-top-spendable-label">
+              <T id="accounts.row.spendable" m="Spendable" />
             </div>
+            <Balance amount={account.spendable} />
           </div>
         </div>
       </div>
-      {
-        <TransitionMotionWrapper
-          {
-            ...{
-              styles: !isShowingAccountDetails ?
-                getNullStyles() :
-                  isShowingRenameAccount ? getRenameAccountStyles() :
-                    getAccountDetailsStyles(),
-              defaultStyles: getDefaultStyles(),
-              wrapperComponent,
-              willEnter,
-              willLeave }}
-          />
-      }
     </div>
-  );
+    {
+      <TransitionMotionWrapper
+        {
+        ...{
+          styles: !isShowingAccountDetails ?
+            getNullStyles() :
+            isShowingRenameAccount ? getRenameAccountStyles() :
+              getAccountDetailsStyles(),
+          defaultStyles: getDefaultStyles(),
+          wrapperComponent,
+          willEnter,
+          willLeave }}
+      />
+    }
+  </div>
+);
 
 export default Row;

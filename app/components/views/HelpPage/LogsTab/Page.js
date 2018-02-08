@@ -9,7 +9,7 @@ const Logs = ({
   dcrwalletLogs,
   remoteDcrd,
   walletReady,
-  }
+}
 ) => (
   <Aux>
     <div className="tab-card">
@@ -26,7 +26,7 @@ const Logs = ({
               <textarea rows="30" cols="95" value={dcrdLogs} disabled />
             </div>
           </div> :
-          <div/>
+        <div/>
       }
       {!walletReady ? null : !dcrwalletLogs ?
         <div className="log-area-hidden" onClick={showDcrwalletLogs}>

@@ -28,7 +28,7 @@ const ExpandedInfo = ({ ticket }) => (
             <VoteChoice {...{ agendaId, key: agendaId, choice: ticket.voteChoices[agendaId] }} />
           )) }
         </span>
-        </div>)
+      </div>)
       : null }
 
   </div>

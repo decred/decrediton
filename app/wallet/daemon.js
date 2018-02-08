@@ -43,15 +43,15 @@ export const getDcrwalletLogs = log(() => Promise
   }), "Get Dcrwallet Logs", logOptionNoResponseData());
 
 export const getDecreditonLogs = log(() => Promise
-    .resolve(ipcRenderer.sendSync("get-decrediton-logs"))
-    .then(logs => {
-      if (logs) return logs;
-      throw "Error getting decrediton logs";
-    }), "Get Decrediton Logs", logOptionNoResponseData());
+  .resolve(ipcRenderer.sendSync("get-decrediton-logs"))
+  .then(logs => {
+    if (logs) return logs;
+    throw "Error getting decrediton logs";
+  }), "Get Decrediton Logs", logOptionNoResponseData());
 
 export const getAvailableWallets = log(() => Promise
-    .resolve(ipcRenderer.sendSync("get-available-wallets"))
-    .then(availableWallets => {
-      if (availableWallets) return availableWallets;
-      throw "Error getting avaiable wallets logs";
-    }), "Get Available Wallets", logOptionNoResponseData());
+  .resolve(ipcRenderer.sendSync("get-available-wallets"))
+  .then(availableWallets => {
+    if (availableWallets) return availableWallets;
+    throw "Error getting avaiable wallets logs";
+  }), "Get Available Wallets", logOptionNoResponseData());

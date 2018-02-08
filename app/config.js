@@ -228,7 +228,7 @@ export function getDcrdCert(dcrdCertPath) {
     certPath = path.join(os.homedir(), "AppData", "Local", "Dcrd", "rpc.cert");
   } else if (os.platform() == "darwin") {
     certPath = path.join(os.homedir(), "Library", "Application Support",
-            "Dcrd", "rpc.cert");
+      "Dcrd", "rpc.cert");
   } else {
     certPath = path.join(os.homedir(), ".dcrd", "rpc.cert");
   }

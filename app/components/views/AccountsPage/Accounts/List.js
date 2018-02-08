@@ -29,29 +29,29 @@ const AccountsList = ({
     </TabbedHeader>
     <div className="tabbed-page">
       <div className="tab-content">
-      { isLoading ? <DecredLoading/> :
-        <div className="tab-card">
-          <div className="account-content-title-buttons-area">
-            <InfoModalButton
-              modalTitle={<h1><T id="accounts.balanceInfo" m="Balance Information" /></h1>}
-              modalContent={<BalanceOverviewModalContent />}
-            />
-          </div>
-          <div className="account-content-nest">
-            {accounts.map(account => (
-              <AccountRow
-                key={account.accountName}
-                account={account}
-                accountNumDetailsShown={accountNumDetailsShown}
-                renameAccount={onRenameAccount}
-                hideAccount={onHideAccount}
-                showAccount={onShowAccount}
-                showAccountDetails={onShowAccountDetails}
-                hideAccountDetails={onHideAccountDetails}
+        { isLoading ? <DecredLoading/> :
+          <div className="tab-card">
+            <div className="account-content-title-buttons-area">
+              <InfoModalButton
+                modalTitle={<h1><T id="accounts.balanceInfo" m="Balance Information" /></h1>}
+                modalContent={<BalanceOverviewModalContent />}
               />
-            ))}
-          </div>
-        </div> }
+            </div>
+            <div className="account-content-nest">
+              {accounts.map(account => (
+                <AccountRow
+                  key={account.accountName}
+                  account={account}
+                  accountNumDetailsShown={accountNumDetailsShown}
+                  renameAccount={onRenameAccount}
+                  hideAccount={onHideAccount}
+                  showAccount={onShowAccount}
+                  showAccountDetails={onShowAccountDetails}
+                  hideAccountDetails={onHideAccountDetails}
+                />
+              ))}
+            </div>
+          </div> }
       </div>
     </div>
   </Aux>
