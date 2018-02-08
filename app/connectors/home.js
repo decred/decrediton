@@ -3,6 +3,7 @@ import { bindActionCreators } from "redux";
 import { selectorMap } from "fp";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
+import * as clientActions from "actions/ClientActions";
 
 const mapStateToProps = selectorMap({
   getTransactionsRequestAttempt: sel.getTransactionsRequestAttempt,
@@ -12,13 +13,15 @@ const mapStateToProps = selectorMap({
   revokeTicketsError: sel.revokeTicketsError,
   revokeTicketsSuccess: sel.revokeTicketsSuccess,
   hasTicketsToRevoke: sel.hasTicketsToRevoke,
-  totalBalance: sel.totalBalance
+  totalBalance: sel.totalBalance,
+  noMoreTransactions: sel.noMoreTransactions,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onRevokeTickets: ca.revokeTicketsAttempt,
   onClearRevokeTicketsError: ca.clearRevokeTicketsError,
   onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
+  getTransactions: clientActions.getTransactions,
 }, dispatch);
 
 export default connect(mapStateToProps,mapDispatchToProps);

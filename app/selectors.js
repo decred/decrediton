@@ -240,7 +240,12 @@ export const transactions = createSelector(
   [transactionsNormalizer, get(["grpc", "transactions"])], apply
 );
 export const homeHistoryTransactions = createSelector(
-  [transactionsNormalizer, get(["grpc", "recentTransactions"])], apply
+  [transactions],
+  (transactions) => {
+    return transactions.filter(t => {
+      return t.txType !== "Ticket" && t.txType !== "Vote";
+    });
+  }
 );
 
 //fake data for balance chart
