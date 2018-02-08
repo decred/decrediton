@@ -1,5 +1,5 @@
 // @flow
-import { rescan } from "connectors";
+import { home } from "connectors";
 import { DecredLoading } from "indicators";
 import TxHistory from "TxHistory";
 import { FormattedMessage as T } from "react-intl";
@@ -26,4 +26,4 @@ const RecentTransactions = ({
   );
 };
 
-export default rescan(RecentTransactions);
+export default home(RecentTransactions);
