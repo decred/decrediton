@@ -516,8 +516,6 @@ const launchDCRWallet = (walletPath, testnet) => {
   args.push("--ticketbuyer.maxpricerelative=" + cfg.get("maxpricerelative"));
   args.push("--ticketbuyer.maxpriceabsolute=" + cfg.get("maxpriceabsolute"));
   args.push("--ticketbuyer.maxperblock=" + cfg.get("maxperblock"));
-  args.push("--rpclistenerevents");
-  args.push("--pipetx=4");
 
   var dcrwExe = getExecutablePath("dcrwallet");
   if (!fs.existsSync(dcrwExe)) {
@@ -534,6 +532,9 @@ const launchDCRWallet = (walletPath, testnet) => {
     } catch (e) {
       logger.log("error", "can't find proper module to launch dcrwallet: " + e);
     }
+  } else {
+    args.push("--rpclistenerevents");
+    args.push("--pipetx=4");
   }
 
   // Add any extra args if defined.
@@ -548,12 +549,20 @@ const launchDCRWallet = (walletPath, testnet) => {
     stdio: ["ignore", "pipe", "pipe", "ignore", "pipe"]
   });
 
+  const notifyGrpcPort = (port) => {
+    logger.log("info", "wallet grpc running on port", port);
+    mainWindow.webContents.send("dcrwallet-port", port);
+  };
+
   dcrwallet.stdio[4].on("data", (data) => DecodeDaemonIPCData(data, (mtype, payload) => {
     if (mtype === "grpclistener") {
       const intf = payload.toString("utf-8");
-      const port = intf.slice(intf.indexOf(":")+1);
-      logger.log("info", "wallet grpc running on port", port);
-      mainWindow.webContents.send("dcrwallet-port", port);
+      const matches = intf.match(/^.+:(\d+)$/);
+      if (matches) {
+        notifyGrpcPort(matches[1]);
+      } else {
+        logger.log("error", "GRPC port not found on IPC channel to dcrwallet: " + intf);
+      }
     }
   }));
 
@@ -575,7 +584,25 @@ const launchDCRWallet = (walletPath, testnet) => {
     }
   });
 
-  dcrwallet.stdout.on("data", (data) => dcrwalletLogs = AddToLog(process.stdout, dcrwalletLogs, data));
+  const addStdoutToLogListener = (data) => dcrwalletLogs = AddToLog(process.stdout, dcrwalletLogs, data);
+
+  // waitForGrpcPortListener is added as a stdout on("data") listener only on
+  // win32 because so far that's the only way we found to get back the grpc port
+  // on that platform. For linux/macOS users, the --pipetx argument is used to
+  // provide a pipe back to decrediton, which reads the grpc port in a secure and
+  // reliable way.
+  const waitForGrpcPortListener = (data) => {
+    const matches = /DCRW: gRPC server listening on [^ ]+:(\d+)/.exec(data);
+    if (matches) {
+      notifyGrpcPort(matches[1]);
+      // swap the listener since we don't need to keep looking for the port
+      dcrwallet.stdout.removeListener("data", waitForGrpcPortListener);
+      dcrwallet.stdout.on("data", addStdoutToLogListener);
+    }
+    dcrwalletLogs = AddToLog(process.stdout, dcrwalletLogs, data);
+  };
+
+  dcrwallet.stdout.on("data", os.platform() == "win32" ? waitForGrpcPortListener : addStdoutToLogListener);
   dcrwallet.stderr.on("data", (data) => dcrwalletLogs = AddToLog(process.stderr, dcrwalletLogs, data));
 
   dcrwPID = dcrwallet.pid;
