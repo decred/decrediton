@@ -8,21 +8,21 @@ import "style/HomePage.less";
 
 const RecentTickets = ({
   tickets,
-  getTicketsRequestAttempt,
+  getTransactionsRequestAttempt,
   getAccountsResponse,
 }) => {
   return (
-    getTicketsRequestAttempt ? <DecredLoading /> :
-      <Aux>
-        <div className="home-content-title">
-          <T id="home.ticketActivityTitle" m="Recent Tickets" />
-        </div>
-        <div className="home-content-nest">
-          {tickets.length > 0 ?
-          <TxHistory limit={5} {...{ getAccountsResponse, tickets }} /> :
-          <p><T id="home.noTickets" m="No tickets" /></p>}
-        </div>
-      </Aux>
+      getTransactionsRequestAttempt ? <DecredLoading /> :
+        <Aux>
+          <div className="home-content-title">
+            <T id="home.ticketActivityTitle" m="Recent Tickets" />
+          </div>
+          <div className="home-content-nest">
+            {tickets.length > 0 ?
+            <TxHistory limit={5} {...{ getAccountsResponse, transactions: tickets }} /> :
+            <p><T id="home.noTickets" m="No tickets" /></p>}
+          </div>
+        </Aux>
   );
 };
 

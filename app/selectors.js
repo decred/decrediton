@@ -239,11 +239,17 @@ export const hasUnminedTransactions = compose(l => l && l.length > 0, get(["grpc
 export const transactions = createSelector(
   [transactionsNormalizer, get(["grpc", "transactions"])], apply
 );
+
 export const homeHistoryTransactions = createSelector(
-  [transactionsNormalizer, get(["grpc", "recentTransactions"])], apply
+  [transactions],
+  (transactions) =>
+    transactions.map(tx => {if (!tx.txType || tx.txType == "Regular") return tx; }).filter(tx => tx !== undefined)
 );
+
 export const homeHistoryTickets = createSelector(
-  [ticketNormalizer, get(["grpc", "tickets"])], apply
+  [transactions],
+  (transactions) =>
+    transactions.map(tx => {if (tx.txType && tx.txType !== "Regular") return tx; }).filter(tx => tx !== undefined)
 );
 
 //fake data for balance chart
@@ -443,7 +449,8 @@ const ticketNormalizer = createSelector(
   }
 );
 const ticketSorter = (a, b) => (b.leaveTimestamp||b.enterTimestamp) - (a.leaveTimestamp||a.enterTimestamp);
-export const allTickets = createSelector(
+
+const allTickets = createSelector(
   [ticketNormalizer, get(["grpc", "tickets"])],
   (normalizer, tickets) => tickets.map(normalizer).sort(ticketSorter)
 );
