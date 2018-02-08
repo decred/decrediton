@@ -1,7 +1,7 @@
 // @flow
 import { rescan } from "connectors";
 import { DecredLoading } from "indicators";
-import TxHistory from "TxHistory";
+import TxHistory from "./TxHistory";
 import { FormattedMessage as T } from "react-intl";
 import "style/Fonts.less";
 import "style/HomePage.less";
