@@ -19,6 +19,7 @@ let grpcVersions = {requiredVersion: null, walletVersion: null};
 let debug = false;
 let dcrdPID;
 let dcrwPID;
+let dcrwPort;
 let dcrdConfig = {};
 let currentBlockCount;
 
@@ -312,6 +313,7 @@ ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
 ipcMain.on("start-wallet", (event, walletPath, testnet) => {
   if (dcrwPID) {
     logger.log("info", "dcrwallet already started " + dcrwPID);
+    mainWindow.webContents.send("dcrwallet-port", dcrwPort);
     event.returnValue = dcrwPID;
     return;
   }
@@ -550,6 +552,7 @@ const launchDCRWallet = (walletPath, testnet) => {
   });
 
   const notifyGrpcPort = (port) => {
+    dcrwPort = port;
     logger.log("info", "wallet grpc running on port", port);
     mainWindow.webContents.send("dcrwallet-port", port);
   };
