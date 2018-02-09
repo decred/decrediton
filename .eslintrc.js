@@ -15,7 +15,6 @@ module.exports = {
       "error",
       2
     ],
-    "no-useless-escape": ["off"],
     "linebreak-style": [
       "error",
       "unix"

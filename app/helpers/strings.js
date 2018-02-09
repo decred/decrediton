@@ -16,7 +16,7 @@ export function restrictToStdDecimalNumber(s) {
   return s
     .replace(/,/g, ".")                       // comma to period
     .replace(/[^\d.]/g, "")                   // remove non-numbers
-    .replace(/\.[\.]+/g, ".")                 // remove repetitive periods
+    .replace(/\.[.]+/g, ".")                  // remove repetitive periods
     .replace(/^\.(.*)$/, "0.$1")              // prepend 0 when starting with period
     .replace(/^([\d]*)(\.?[\d]*).*/, "$1$2"); // use only the first run of numbers
 }
