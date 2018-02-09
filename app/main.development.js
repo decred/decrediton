@@ -159,22 +159,6 @@ if (err !== null) {
 }
 var globalCfg = initGlobalCfg();
 
-// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
-var availableWallets = [];
-var mainnetWalletDirectories = fs.readdirSync(path.join(walletsDirectory, "mainnet"));
-
-for (var i in mainnetWalletDirectories) {
-  if (fs.pathExistsSync(path.join(walletsDirectory, "mainnet", mainnetWalletDirectories[i].toString(), "mainnet", "wallet.db"))) {
-    availableWallets.push({network: "mainnet", wallet: mainnetWalletDirectories[i] });
-  }
-}
-var testnetWalletDirectories = fs.readdirSync(path.join(walletsDirectory, "testnet"));
-
-for (var j in testnetWalletDirectories) {
-  if (fs.pathExistsSync(path.join(walletsDirectory, "testnet", testnetWalletDirectories[j].toString(), "testnet2", "wallet.db"))) {
-    availableWallets.push({network: "testnet", wallet: testnetWalletDirectories[j] });
-  }
-}
 
 const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
@@ -265,7 +249,22 @@ const installExtensions = async () => {
 
 const { ipcMain } = require("electron");
 
-ipcMain.on("get-available-wallets", (event) => {
+ipcMain.on("get-available-wallets", (event) => {// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
+  var availableWallets = [];
+  var mainnetWalletDirectories = fs.readdirSync(path.join(walletsDirectory, "mainnet"));
+
+  for (var i in mainnetWalletDirectories) {
+    if (fs.pathExistsSync(path.join(walletsDirectory, "mainnet", mainnetWalletDirectories[i].toString(), "mainnet", "wallet.db"))) {
+      availableWallets.push({network: "mainnet", wallet: mainnetWalletDirectories[i] });
+    }
+  }
+  var testnetWalletDirectories = fs.readdirSync(path.join(walletsDirectory, "testnet"));
+
+  for (var j in testnetWalletDirectories) {
+    if (fs.pathExistsSync(path.join(walletsDirectory, "testnet", testnetWalletDirectories[j].toString(), "testnet2", "wallet.db"))) {
+      availableWallets.push({network: "testnet", wallet: testnetWalletDirectories[j] });
+    }
+  }
   event.returnValue = availableWallets;
 });
 
@@ -300,6 +299,14 @@ ipcMain.on("create-wallet", (event, walletPath, testnet) => {
     // create new configs for new wallet
     initWalletCfg(testnet, walletPath);
     newWalletConfigCreation(testnet, walletPath);
+  }
+  event.returnValue = true;
+});
+
+ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
+  let removeWalletDirectory = path.join(walletsDirectory, testnet ? "testnet" : "mainnet", walletPath);
+  if (fs.pathExistsSync(removeWalletDirectory)){
+    fs.removeSync(removeWalletDirectory);
   }
   event.returnValue = true;
 });

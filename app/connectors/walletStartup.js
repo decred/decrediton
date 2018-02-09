@@ -41,6 +41,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onStartDaemon: da.startDaemon,
   onStartWallet: da.startWallet,
   onCreateWallet: da.createWallet,
+  onRemoveWallet: da.removeWallet,
   setCredentialsAppdataError: da.setCredentialsAppdataError,
   onGetAvailableWallets: da.getAvailableWallets
 }, dispatch);

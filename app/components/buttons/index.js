@@ -44,3 +44,4 @@ export const ChangePassphraseButton = mbb("change-password-default-icon", Change
 export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
 export const PassphraseModalSwitch = mbb(null, PassphraseModal, AutoBuyerSwitch);
 export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
+export const RemoveWalletButton = mbb(null, ConfirmModal, DangerButton);
