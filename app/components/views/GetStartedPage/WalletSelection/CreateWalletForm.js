@@ -45,7 +45,7 @@ const CreateWalletForm = ({
       </div>
       <div className="advanced-daemon-row">
         <KeyBlueButton onClick={createWallet}>
-          <T id="login.form.connect.button" m="Connect to Remote" />
+          <T id="wallet.create.button" m="Create new wallet" />
         </KeyBlueButton>
       </div>
     </Aux>
