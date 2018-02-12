@@ -7,8 +7,10 @@ import {
   DAEMONSYNCED,
   DAEMONSTOPPED,
   WALLETREADY,
+  WALLETCREATED,
   SHUTDOWN_REQUESTED,
-  SET_CREDENTIALS_APPDATA_ERROR
+  SET_CREDENTIALS_APPDATA_ERROR,
+  AVAILABLE_WALLETS
 } from "../actions/DaemonActions";
 
 export default function version(state = {}, action) {
@@ -52,7 +54,15 @@ export default function version(state = {}, action) {
     };
   case WALLETREADY:
     return {...state,
+      selectCreateWalletInputRequest: false,
       walletReady: true,
+      walletName: action.walletName,
+      network: action.network,
+      hiddenAccounts: action.hiddenAccounts,
+    };
+  case WALLETCREATED:
+    return {...state,
+      selectCreateWalletInputRequest: false,
     };
   case SHUTDOWN_REQUESTED:
     return {...state,
@@ -66,6 +76,10 @@ export default function version(state = {}, action) {
   case SET_CREDENTIALS_APPDATA_ERROR:
     return {...state,
       remoteAppdataError: true,
+    };
+  case AVAILABLE_WALLETS:
+    return {...state,
+      availableWallets: action.availableWallets
     };
   default:
     return state;

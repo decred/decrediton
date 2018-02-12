@@ -23,7 +23,8 @@ export const LOADER_SUCCESS = "LOADER_SUCCESS";
 
 export const loaderRequest = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
-  const request = { isTestNet: isTestNet(getState()), address, port };
+  const { daemon: { walletName }} = getState();
+  const request = { isTestNet: isTestNet(getState()), walletName, address, port };
   dispatch({ request, type: LOADER_ATTEMPT });
   return getLoader(request)
     .then(loader => {
@@ -72,7 +73,8 @@ export const createWalletRequest = (pubPass, privPass, seed, existing) =>
     dispatch({ existing: existing, type: CREATEWALLET_ATTEMPT });
     return createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
       .then(() => {
-        const config = getWalletCfg(isTestNet(getState()), "default-wallet");
+        const { daemon: { walletName }} = getState();
+        const config = getWalletCfg(isTestNet(getState()), walletName);
         config.delete("discoveraccounts");
         dispatch({response: {}, type: CREATEWALLET_SUCCESS });
         dispatch(clearStakePoolConfigNewWallet());
@@ -130,8 +132,8 @@ export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
 export const startRpcRequestFunc = (isRetry) =>
   (dispatch, getState) => {
-    const {daemon: { credentials, appData} }= getState();
-    const cfg = getWalletCfg(isTestNet(getState()), "default-wallet");
+    const {daemon: { credentials, appData, walletName} }= getState();
+    const cfg = getWalletCfg(isTestNet(getState()), walletName);
     let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
     if(credentials) {
@@ -173,7 +175,7 @@ export const startRpcRequestFunc = (isRetry) =>
             setTimeout(() => dispatch(startRpcRequestFunc(isRetry)), RPC_RETRY_DELAY);
           } else {
             dispatch({
-              error: `${error}.  You may need to edit ${getWalletCfgPath(isTestNet(getState()), "default-wallet")} and try again`,
+              error: `${error}.  You may need to edit ${getWalletCfgPath(isTestNet(getState()), walletName)} and try again`,
               type: STARTRPC_FAILED
             });
           }
@@ -191,13 +193,14 @@ export const DISCOVERADDRESS_SUCCESS = "DISCOVERADDRESS_SUCCESS";
 
 export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
   const { walletLoader: {loader, discoverAccountsComplete }} = getState();
+  const { daemon: { walletName }} = getState();
   dispatch({ type: DISCOVERADDRESS_ATTEMPT });
   discoverAddresses(loader, !discoverAccountsComplete, privPass)
     .then(() => {
       const { subscribeBlockNtfnsResponse } = getState().walletLoader;
 
       if (!discoverAccountsComplete) {
-        const config = getWalletCfg(isTestNet(getState()), "default-wallet");
+        const config = getWalletCfg(isTestNet(getState()), walletName);
         config.delete("discoveraccounts");
         config.set("discoveraccounts", true);
         dispatch({complete: true, type: UPDATEDISCOVERACCOUNTS});
@@ -259,14 +262,14 @@ export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
 
 export function clearStakePoolConfigNewWallet() {
   return (dispatch, getState) => {
-
-    let config = getWalletCfg(isTestNet(getState()), "default-wallet");
+    const { daemon: { walletName }} = getState();
+    let config = getWalletCfg(isTestNet(getState()), walletName);
     config.delete("stakepools");
 
     getStakePoolInfo()
       .then(foundStakePoolConfigs => {
         if (foundStakePoolConfigs) {
-          let config = getWalletCfg(isTestNet(getState()), "default-wallet");
+          let config = getWalletCfg(isTestNet(getState()), walletName);
           config.set("stakepools", foundStakePoolConfigs);
           dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
         }
@@ -277,7 +280,7 @@ export function clearStakePoolConfigNewWallet() {
 export const NEEDED_BLOCKS_DETERMINED = "NEEDED_BLOCKS_DETERMINED";
 export function determineNeededBlocks() {
   return (dispatch, getState) => {
-    const network = getState().grpc.network;
+    const network = getState().daemon.network;
     const explorerInfoURL = `https://${network}.decred.org/api/status`;
     axios.get(explorerInfoURL, {timeout: 5000})
       .then(function (response) {

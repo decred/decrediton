@@ -1,4 +1,5 @@
 import { SETTINGS_SAVE, SETTINGS_CHANGED, SETTINGS_UNCHANGED } from "../actions/SettingsActions";
+import { WALLET_SETTINGS } from "actions/DaemonActions";
 
 export default function settings(state = {}, action) {
   switch (action.type) {
@@ -17,6 +18,15 @@ export default function settings(state = {}, action) {
     return {...state,
       tempSettings: action.tempSettings,
       settingsChanged: false,
+    };
+  case WALLET_SETTINGS:
+    var currentSettings = state.currentSettings;
+    var tempSettings = state.tempSettings;
+    currentSettings.currencyDisplay = action.currencyDisplay;
+    tempSettings.currencyDisplay = action.currencyDisplay;
+    return {...state,
+      currentSettings: currentSettings,
+      tempSettings: tempSettings
     };
   default:
     return state;

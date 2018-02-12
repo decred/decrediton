@@ -1,19 +1,17 @@
 // @flow
-import { getWalletCfg, getGlobalCfg } from "../config.js";
+import { getWalletCfg } from "../config.js";
+import { isTestNet } from "selectors";
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
 export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
 export const SETTINGS_UNCHANGED = "SETTINGS_UNCHANGED";
 
-export const saveSettings = (settings) => {
-  const config = getGlobalCfg();
+export const saveSettings = (settings) => (dispatch, getState) => {
+  const { daemon: { walletName }} = getState();
+  const config = getWalletCfg(isTestNet(getState()), walletName);
   config.set("currency_display", settings.currencyDisplay);
-  config.set("network", settings.network);
   config.set("locale", settings.locale);
   config.set("daemon_start_advanced", settings.daemonStartAdvanced);
-  return {
-    settings,
-    type: SETTINGS_SAVE
-  };
+  dispatch({settings, type: SETTINGS_SAVE});
 };
 
 export function updateStateSettingsChanged(settings) {
@@ -36,8 +34,9 @@ export function updateStateSettingsChanged(settings) {
 
 export const updateStateVoteSettingsChanged = (settings) => (dispatch, getState) => {
   const { settings: { tempSettings, currentSettings }} = getState();
+  const { daemon: { walletName }} = getState();
   if (settings.enableTicketBuyer !== tempSettings.enableTicketBuyer) {
-    const config = getWalletCfg("default-wallet");
+    const config = getWalletCfg(isTestNet(getState()), walletName);
     config.set("enableticketbuyer", settings.enableTicketBuyer);
     dispatch({ tempSettings: settings, type: SETTINGS_CHANGED});
   } else {

@@ -71,10 +71,6 @@ export function initWalletCfg(testnet, walletPath) {
 
 export function initGlobalCfg() {
   const config = new Store();
-  // If value is missing (or no config file) write the defaults.
-  if (!config.has("network")) {
-    config.set("network", "mainnet");
-  }
   if (!config.has("daemon_start_advanced")) {
     config.set("daemon_start_advanced", false);
   }
@@ -259,13 +255,13 @@ export function updateStakePoolConfig(config, foundStakePoolConfigs) {
   }
 }
 
-export function getAppdataPath(testnet) {
-  const config = getWalletCfg(testnet, "default-wallet");
+export function getAppdataPath(testnet, walletPath) {
+  const config = getWalletCfg(testnet, walletPath);
   return config.get("appdata_path");
 }
 
-export function setAppdataPath(testnet, appdataPath) {
-  const config = getWalletCfg(testnet, "default-wallet");
+export function setAppdataPath(testnet, appdataPath, walletPath) {
+  const config = getWalletCfg(testnet, walletPath);
   const credentialKeys = {
     rpc_user : "",
     rpc_password : "",
@@ -277,13 +273,13 @@ export function setAppdataPath(testnet, appdataPath) {
   return config.set("appdata_path",appdataPath);
 }
 
-export function getRemoteCredentials(testnet) {
-  const config = getWalletCfg(testnet, "default-wallet");
+export function getRemoteCredentials(testnet, walletPath) {
+  const config = getWalletCfg(testnet, walletPath);
   return config.get("remote_credentials");
 }
 
-export function setRemoteCredentials(testnet, key, value) {
-  const config = getWalletCfg(testnet, "default-wallet");
+export function setRemoteCredentials(testnet, walletPath, key, value) {
+  const config = getWalletCfg(testnet, walletPath);
   config.set("appdata_path","");
   let credentials = config.get("remote_credentials");
   credentials[key] = value;
@@ -293,6 +289,11 @@ export function setRemoteCredentials(testnet, key, value) {
 export function setMustOpenForm(openForm) {
   const config = getGlobalCfg();
   return config.set("must_open_form", openForm);
+}
+
+export function clearPreviousWallet() {
+  const config = getGlobalCfg();
+  return config.set("previouswallet", null);
 }
 
 export function newWalletConfigCreation(testnet, walletPath) {

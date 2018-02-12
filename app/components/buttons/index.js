@@ -11,8 +11,9 @@ export { default as TransactionLink } from "./TransactionLink";
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
 import AutoBuyerSwitch from "./AutoBuyerSwitch";
+import NetworkSwitch from "./NetworkSwitch";
 import DangerButton from "./DangerButton";
-export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton };
+export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton, NetworkSwitch };
 
 /***************************************************
  * Custom Modal Buttons
@@ -43,3 +44,4 @@ export const ChangePassphraseButton = mbb("change-password-default-icon", Change
 export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
 export const PassphraseModalSwitch = mbb(null, PassphraseModal, AutoBuyerSwitch);
 export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
+export const RemoveWalletButton = mbb(null, ConfirmModal, DangerButton);

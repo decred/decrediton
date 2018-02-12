@@ -1,4 +1,5 @@
 import Page from "./Page";
+import { WalletSelectionHeader, WalletSelectionBody } from "./WalletSelection";
 import { CheckWalletStateHeader, CheckWalletStateBody } from "./CheckWalletState";
 import { OpenWalletHeader, OpenWalletBody } from "./OpenWallet";
 import { StartRPCHeader, StartRPCBody } from "./StartRPC";
@@ -18,13 +19,13 @@ class GetStartedPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { showSettings: false, showLogs: false };
-    props.determineNeededBlocks();
   }
 
   componentDidMount() {
-    if (!this.props.getWalletReady) {
-      this.props.onStartWallet();
-      return;
+    if (!this.props.getWalletReady && !this.props.previousWallet) {
+      this.props.onGetAvailableWallets();
+    } else if (this.props.previousWallet) {
+      this.props.onStartWallet(this.props.previousWallet);
     }
   }
 
@@ -67,6 +68,7 @@ class GetStartedPage extends React.Component {
       onShowLogs,
       onHideLogs
     } = this;
+
     let Header, Body;
     if (showSettings) {
       Header = SettingsHeader;
@@ -97,6 +99,9 @@ class GetStartedPage extends React.Component {
           Body = DaemonLoadingBody;
         }
       }
+    } else if (!getWalletReady) {
+      Header = WalletSelectionHeader;
+      Body = WalletSelectionBody;
     } else if (isPrepared) {
       switch (startStepIndex || 0) {
       case 3:
