@@ -257,8 +257,21 @@ export const hasUnminedTransactions = compose(l => l && l.length > 0, get(["grpc
 export const transactions = createSelector(
   [transactionsNormalizer, get(["grpc", "transactions"])], apply
 );
-export const homeHistoryTransactions = createSelector(
+
+const recentTransactions = createSelector(
   [transactionsNormalizer, get(["grpc", "recentTransactions"])], apply
+);
+
+export const homeHistoryTransactions = createSelector(
+  [recentTransactions],
+  (recentTransactions) =>
+    recentTransactions.map(tx => {if (!tx.txType || tx.txType == "Regular" || tx.txType == "Coinbase") return tx; }).filter(tx => tx !== undefined)
+);
+
+export const homeHistoryTickets = createSelector(
+  [recentTransactions],
+  (recentTransactions) =>
+    recentTransactions.map(tx => {if (tx.txType && tx.txType !== "Regular" && tx.txType !== "Coinbase") return tx; }).filter(tx => tx !== undefined)
 );
 
 //fake data for balance chart
@@ -458,6 +471,7 @@ const ticketNormalizer = createSelector(
   }
 );
 const ticketSorter = (a, b) => (b.leaveTimestamp||b.enterTimestamp) - (a.leaveTimestamp||a.enterTimestamp);
+
 const allTickets = createSelector(
   [ticketNormalizer, get(["grpc", "tickets"])],
   (normalizer, tickets) => tickets.map(normalizer).sort(ticketSorter)
@@ -481,6 +495,7 @@ export const viewedTicketListing = createSelector(
 const rescanResponse = get(["control", "rescanResponse"]);
 export const rescanRequest = get(["control", "rescanRequest"]);
 export const getTransactionsRequestAttempt = get(["grpc", "getTransactionsRequestAttempt"]);
+export const getTicketsRequestAttempt = get(["grpc", "getTicketsRequestAttempt"]);
 export const notifiedBlockHeight = get(["notifications", "currentHeight"]);
 
 export const currentBlockHeight = get(["grpc", "currentBlockHeight"]);
