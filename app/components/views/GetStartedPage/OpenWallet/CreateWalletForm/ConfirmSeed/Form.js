@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import "style/CreateWalletForm.less";
 import { InfoModalButton } from "buttons";
-import { TextInput } from "inputs";
+import SingleSeedWordEntry from "./SingleSeedWordEntry";
 import { SeedInfoModalContent } from "modals";
 
 class ConfirmSeedForm extends React.Component{
@@ -32,6 +32,7 @@ class ConfirmSeedForm extends React.Component{
   }
 
   render(){
+    console.log("rerender", this.props.seedWords);
     const { seedWords, onChangeSeedWord } = this.props;
     return (
       <div className="confirm-seed">
@@ -52,7 +53,16 @@ class ConfirmSeedForm extends React.Component{
               <T id="confirmSeed.errors.noPaste" m="*You should not paste your Seeds. Please type it" />}
             </div>}
             {seedWords.map((seedWord) => {
-              return <TextInput disabled={seedWord.show} onChange={(e) => onChangeSeedWord(seedWord,e.target.value)} value={seedWord.word} key={seedWord.index} />;
+              const className = "confirm-seed-word " + (!seedWord.show ? seedWord.match ? "match" : "no-match" : "");
+              return (
+                <SingleSeedWordEntry
+                  className={className}
+                  disabled={seedWord.show}
+                  onChange={onChangeSeedWord}
+                  seedWord={seedWord}
+                  value={{name: seedWord.word}}
+                  key={seedWord.index}
+                />);
             })}
           </div>
         </div>

@@ -17,7 +17,7 @@ class ConfirmSeed extends React.Component {
         word: hideWord > randomThreshold ? splitMnemonic[i] : "",
         show: hideWord > randomThreshold,
         index: i,
-        matches:  hideWord > randomThreshold
+        match:  hideWord > randomThreshold
       });
     }
     return {
@@ -46,11 +46,10 @@ class ConfirmSeed extends React.Component {
     const { mnemonic } = this.props;
     console.log(splitMnemoic[seedWord.index] == update);
     var updatedSeedWords = seedWords;
-    updatedSeedWords[seedWord.index] = {word: update, show: seedWord.show, index: seedWord.index, matches: splitMnemoic[seedWord.index] == update };
+    updatedSeedWords[seedWord.index] = {word: update, show: seedWord.show, index: seedWord.index, match: splitMnemoic[seedWord.index] == update };
     this.setState(seedWords: updatedSeedWords);
 
     const seedWordStr = seedWords.map(seedWord => seedWord.word).join(" ");
-    console.log(seedWordStr, seedWordStr == mnemonic);
     if (seedWordStr == mnemonic) {
       this.props
         .decode(mnemonic)
