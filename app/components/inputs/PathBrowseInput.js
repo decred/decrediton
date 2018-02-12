@@ -66,9 +66,9 @@ class PathBrowseInput extends React.Component {
     }
   }
 
-  onChange(e) {
-    this.props.onChange(e.target.value);
-    this.setState({ path: e.target.value });
+  onChange(path) {
+    this.props.onChange(path);
+    this.setState({ path });
   }
 
   render() {
