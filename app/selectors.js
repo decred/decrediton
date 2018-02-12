@@ -241,7 +241,7 @@ export const transactions = createSelector(
 );
 
 const recentTransactions = createSelector(
-  [transactionNormalizer, get(["grpc", "recentTransactions"])], apply
+  [transactionsNormalizer, get(["grpc", "recentTransactions"])], apply
 );
 
 export const homeHistoryTransactions = createSelector(
