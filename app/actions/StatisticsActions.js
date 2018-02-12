@@ -170,6 +170,7 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     series: [
       {name: "spendable", type: VALUE_TYPE_ATOMAMOUNT},
       {name: "locked", type: VALUE_TYPE_ATOMAMOUNT},
+      {name: "lockedNonWallet", type: VALUE_TYPE_ATOMAMOUNT},
       {name: "total", type: VALUE_TYPE_ATOMAMOUNT},
     ],
   });
@@ -182,9 +183,13 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     switch (tx.txType) {
     case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
       var change = tx.tx.getCreditsList().reduce((s, c) => s + c.getInternal() ? c.getAmount() : 0, 0);
-      var commitAmount = tx.tx.getDebitsList().reduce((s, d) => s + d.getPreviousAmount(), 0) - change;
-      liveTickets[tx.txHash] = {tx, commitAmount};
-      return {spendable: -commitAmount, locked: commitAmount, tx};
+      var isWallet = tx.tx.getCreditsList().length > 0;
+      var commitAmount = tx.tx.getDebitsList().reduce((s, d) => s + d.getPreviousAmount(), 0)
+        - change - (isWallet ? tx.tx.getFee() : 0);
+      var spentAmount = commitAmount + (isWallet ? tx.fee : 0);
+      liveTickets[tx.txHash] = {tx, commitAmount, isWallet};
+      return {spendable: -spentAmount, locked: isWallet ? commitAmount : 0,
+        lockedNonWallet: isWallet ? 0 : commitAmount, tx};
     case wallet.TRANSACTION_TYPE_VOTE:
     case wallet.TRANSACTION_TYPE_REVOCATION:
       var decodedSpender = await wallet.decodeTransaction(decodeMessageService, tx.tx.getTransaction());
@@ -193,15 +198,18 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       var ticket = liveTickets[ticketHash];
       if (!ticket) throw "Previous live ticket not found: " + ticketHash;
       var returnAmount = tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0);
-      return {spendable: +returnAmount, locked: -ticket.commitAmount, tx};
+      var wasWallet = ticket.isWallet;
+      return {spendable: +returnAmount, locked: wasWallet ? -ticket.commitAmount : 0,
+        lockedNonWallet: wasWallet ? 0 : -ticket.commitAmount, tx};
     case wallet.TRANSACTION_TYPE_COINBASE:
     case wallet.TRANSACTION_TYPE_REGULAR:
-      return {spendable: +tx.amount, locked: 0, tx};
+      return {spendable: +tx.amount, locked: 0, lockedNonWallet: 0, tx};
     default: throw "Unknown tx type: " + tx.txType;
     }
   };
 
-  let currentBalance = {spendable: 0, locked: 0, total: 0, tx: null};
+  let currentBalance = {spendable: 0, locked: 0, lockedNonWallet: 0,
+    total: 0, tx: null};
 
   const txDataCb = async ({mined}) => {
     for (let i = 0; i < mined.length; i++) {
@@ -210,6 +218,7 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       currentBalance = {
         spendable: currentBalance.spendable + delta.spendable,
         locked: currentBalance.locked + delta.locked,
+        lockedNonWallet: currentBalance.lockedNonWallet + delta.lockedNonWallet,
         tx: delta.tx,
       };
       currentBalance.total = currentBalance.spendable + currentBalance.locked;

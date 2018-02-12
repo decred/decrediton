@@ -22,6 +22,7 @@ export default {
       {name: "time", description: <T id="export.dailyBalances.fields.time" m="Date of the balance. The time part is always fixed as the last second of the day (to represent the balance at the end of that day)." />},
       {name: "spendable", description: <T id="export.dailyBalances.fields.spendable" m="Available balance for spending in regular transactions." />},
       {name: "locked", description: <T id="export.dailyBalances.fields.locked" m="Balance locked in immature and live tickets." />},
+      {name: "lockedNonWallet", description: <T id="export.dailyBalances.fields.lockedNonWallet" m="Balance locked in immature and live tickets not controlled by the wallet." />},
       {name: "total", description: <T id="export.dailyBalances.fields.total" m="Total available balance." />},
       {name: "sent", description: <T id="export.dailyBalances.fields.sent" m="Total amount sent to addresses not on the wallet." />},
       {name: "received", description: <T id="export.dailyBalances.fields.received" m="Total amount received from addresses not on the wallet." />},
@@ -34,6 +35,7 @@ export default {
       {name: "time", description: <T id="export.balances.fields.time" m="Date/time that the balance changed" />},
       {name: "spendable", description: <T id="export.balances.fields.spendable" m="Available balance for spending in regular transactions." />},
       {name: "locked", description: <T id="export.balances.fields.locked" m="Balance locked in immature and live tickets." />},
+      {name: "lockedNonWallet", description: <T id="export.balances.fields.lockedNonWallet" m="Balance locked in immature and live tickets not controlled by the wallet." />},
       {name: "total", description: <T id="export.balances.fields.total" m="Total available balance." />},
     ]
   },
