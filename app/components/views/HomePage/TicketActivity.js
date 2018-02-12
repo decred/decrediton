@@ -12,17 +12,17 @@ const RecentTickets = ({
   getAccountsResponse,
 }) => {
   return (
-      getTransactionsRequestAttempt ? <DecredLoading /> :
-        <Aux>
-          <div className="home-content-title">
-            <T id="home.ticketActivityTitle" m="Recent Tickets" />
-          </div>
-          <div className="home-content-nest">
-            {tickets.length > 0 ?
+    getTransactionsRequestAttempt ? <DecredLoading /> :
+      <Aux>
+        <div className="home-content-title">
+          <T id="home.ticketActivityTitle" m="Recent Tickets" />
+        </div>
+        <div className="home-content-nest">
+          {tickets.length > 0 ?
             <TxHistory limit={5} {...{ getAccountsResponse, transactions: tickets }} /> :
             <p><T id="home.noTickets" m="No tickets" /></p>}
-          </div>
-        </Aux>
+        </div>
+      </Aux>
   );
 };
 
