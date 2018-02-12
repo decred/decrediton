@@ -1,7 +1,7 @@
-import ConfirmSeedForm from "./Form";
+import ExistingSeedForm from "./Form";
 
 @autobind
-class ConfirmSeed extends React.Component {
+class ExistingSeed extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -22,7 +22,7 @@ class ConfirmSeed extends React.Component {
     const isEmpty = this.state.seedWords.length <= 1; // Weird errors with one word, better to count as empty
     const seedError = isEmpty ? null : this.state.seedError;
     return (
-      <ConfirmSeedForm {...{ seedWords, setSeedWords, isMatch, seedError, isEmpty }} />
+      <ExistingSeedForm {...{ seedWords, setSeedWords, isMatch, seedError, isEmpty }} />
     );
   }
 
@@ -63,4 +63,4 @@ class ConfirmSeed extends React.Component {
   }
 }
 
-export default ConfirmSeed;
+export default ExistingSeed;

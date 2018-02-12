@@ -1,4 +1,5 @@
 import SeedEntry from "./SeedEntry";
+import { TextToggle } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import "style/CreateWalletForm.less";
 import { InfoModalButton } from "buttons";
@@ -11,7 +12,7 @@ const getRemaining = (seedWords, seedType) =>
 const shoudShowNonSupportSeedSize = (seedWords, seedType) =>
   seedType === "hex" && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;
 
-class ConfirmSeedForm extends React.Component{
+class ExistingSeedForm extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -22,6 +23,15 @@ class ConfirmSeedForm extends React.Component{
 
   handleOnPaste = (e) => {
     e.preventDefault();
+    const lowercaseSeedWords = SEED_WORDS.map(w => w.toLowerCase());
+    const clipboardData = e.clipboardData.getData("text");
+    const words = clipboardData
+      .split(/\b/)
+      .filter(w => /^[\w]+$/.test(w))
+      .filter(w => lowercaseSeedWords.indexOf(w.toLowerCase()) > -1)
+      .map(w => ({name: w}));
+    this.props.setSeedWords(words);
+
     this.setState({
       showPasteWarning : true
     });
@@ -81,11 +91,21 @@ class ConfirmSeedForm extends React.Component{
               }
             </div>
           </div>
+          <div className="seed-type-label">
+            <T id="seedType.label" m="Seed type" />
+            <TextToggle
+              activeButton={"left"}
+              leftText={"words"}
+              rightText={"hex"}
+              type={"small"}
+              toggleAction={this.handleToggle}
+            />
+          </div>
         </div>
         <div className="create-wallet-field">
           <div className="input-form">
             {!this.state.showPasteWarning ? null : <div className="orange-warning">
-              <T id="confirmSeed.errors.noPaste" m="*You should not paste your Seeds. Please type it" />}
+              <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
             </div>}
             <form className="input-form-confirm-seed">
               <SeedEntry
@@ -112,4 +132,4 @@ class ConfirmSeedForm extends React.Component{
   }
 }
 
-export default ConfirmSeedForm;
+export default ExistingSeedForm;
