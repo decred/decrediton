@@ -251,9 +251,9 @@ export const homeHistoryTransactions = createSelector(
 );
 
 export const homeHistoryTickets = createSelector(
-  [transactions],
-  (transactions) =>
-    transactions.map(tx => {if (tx.txType && tx.txType !== "Regular" && tx.txType !== "Coinbase") return tx; }).filter(tx => tx !== undefined)
+  [recentTransactions],
+  (recentTransactions) =>
+    recentTransactions.map(tx => {if (tx.txType && tx.txType !== "Regular" && tx.txType !== "Coinbase") return tx; }).filter(tx => tx !== undefined)
 );
 
 //fake data for balance chart
