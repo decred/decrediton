@@ -66,7 +66,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(getAccountsAttempt(true));
         await dispatch(getMostRecentTransactions());
         dispatch(findImmatureTransactions());
-        dispatch(getStartupStats());
+        //dispatch(getStartupStats());
         dispatch({type: GETSTARTUPWALLETINFO_SUCCESS});
         resolve();
       } catch (error) {

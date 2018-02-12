@@ -15,16 +15,26 @@ export default {
       {name: "debits", description: <T id="export.transactions.fields.debits" m="Sum of debits (transaction inputs) of the wallet included in this transaction." />},
     ]
   },
+  dailyBalances: {
+    name: <T id="export.dailyBalances.name" m="Daily Balances" />,
+    description: <T id="export.dailyBalances.descr" m="Export the different types of balances, with a daily aggregation." />,
+    fields: [
+      {name: "time", description: <T id="export.dailyBalances.fields.time" m="Date of the balance. The time part is always fixed as the last second of the day (to represent the balance at the end of that day)." />},
+      {name: "spendable", description: <T id="export.dailyBalances.fields.spendable" m="Available balance for spending in regular transactions." />},
+      {name: "locked", description: <T id="export.dailyBalances.fields.locked" m="Balance locked in immature and live tickets." />},
+      {name: "total", description: <T id="export.dailyBalances.fields.total" m="Total available balance." />},
+      {name: "sent", description: <T id="export.dailyBalances.fields.sent" m="Total amount sent to addresses not on the wallet." />},
+      {name: "received", description: <T id="export.dailyBalances.fields.received" m="Total amount received from addresses not on the wallet." />},
+    ]
+  },
   balances: {
-    name: <T id="export.balances.name" m="Daily Balances" />,
-    description: <T id="export.balances.descr" m="Export the different types of balances, with a daily aggregation." />,
+    name: <T id="export.balances.name" m="Balances" />,
+    description: <T id="export.balances.descr" m="Export the different types of balances after each event that changes it." />,
     fields: [
       {name: "time", description: <T id="export.balances.fields.time" m="Date/time that the balance changed" />},
       {name: "spendable", description: <T id="export.balances.fields.spendable" m="Available balance for spending in regular transactions." />},
       {name: "locked", description: <T id="export.balances.fields.locked" m="Balance locked in immature and live tickets." />},
       {name: "total", description: <T id="export.balances.fields.total" m="Total available balance." />},
-      {name: "sent", description: <T id="export.balances.fields.sent" m="Total amount sent to addresses not on the wallet." />},
-      {name: "received", description: <T id="export.balances.fields.received" m="Total amount received from addresses not on the wallet." />},
     ]
-  }
+  },
 };

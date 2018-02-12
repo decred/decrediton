@@ -40,10 +40,11 @@ export const validateAddress = withLogNoData((walletService, address) =>
     walletService.validateAddress(request, (error, response) => error ? reject(error) : resolve(response));
   }), "Validate Address");
 
-export const decodeTransaction = withLogNoData((decodeMessageService, hexTx) =>
+export const decodeTransaction = withLogNoData((decodeMessageService, rawTx) =>
   new Promise((resolve, reject) => {
     var request = new DecodeRawTransactionRequest();
-    var buff = new Uint8Array(Buffer.from(hexTx, "hex"));
+    var buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
+    var buff = new Uint8Array(buffer);
     request.setSerializedTransaction(buff);
     decodeMessageService.decodeRawTransaction(request, (error, tx) => {
       if (error) {

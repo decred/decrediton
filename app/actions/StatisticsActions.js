@@ -2,7 +2,7 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import fs from "fs";
 import { isNumber, isNullOrUndefined, isUndefined } from "util";
-import { tsToDate, endOfDay } from "helpers";
+import { tsToDate, endOfDay, reverseRawHash } from "helpers";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
 
@@ -164,7 +164,7 @@ export const transactionStats = (opts) => (dispatch, getState) => {
 export const balancesStats = (opts) => (dispatch, getState) => {
   const { progressFunction, startFunction, endFunction, errorFunction } = opts;
 
-  const { currentBlockHeight, walletService } = getState().grpc;
+  const { currentBlockHeight, walletService, decodeMessageService } = getState().grpc;
 
   startFunction({
     series: [
@@ -174,43 +174,52 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     ],
   });
 
+  let liveTickets = {};
+
   // closure that calcs how much each tx affects each balance type
-  const txBalancesDelta = (tx) => {
+  const txBalancesDelta = async (tx) => {
     // tx.amount is negative in sends/tickets/transfers already
     switch (tx.txType) {
     case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
-      var commitAmount = tx.tx.getCreditsList().reduce((s, c) => s + c.getInternal() ? 0 : c.getAmount(), 0);
-      return {spendable: tx.amount - commitAmount, locked: commitAmount};
+      var change = tx.tx.getCreditsList().reduce((s, c) => s + c.getInternal() ? c.getAmount() : 0, 0);
+      var commitAmount = tx.tx.getDebitsList().reduce((s, d) => s + d.getPreviousAmount(), 0) - change;
+      liveTickets[tx.txHash] = {tx, commitAmount};
+      return {spendable: -commitAmount, locked: commitAmount, tx};
     case wallet.TRANSACTION_TYPE_VOTE:
     case wallet.TRANSACTION_TYPE_REVOCATION:
-      // FIXME: this is going to break the calc if/when we have split tickets, since
-      // then the commitment amount on TICKET_PURCHASE will be !== than the ticketPrice
-      var ticketPrice = tx.tx.getDebitsList().reduce((s, c) => s + c.getPreviousAmount(), 0);
-      return {spendable: tx.amount + ticketPrice, locked: -ticketPrice};
+      var decodedSpender = await wallet.decodeTransaction(decodeMessageService, tx.tx.getTransaction());
+      var spenderInputs = decodedSpender.getTransaction().getInputsList();
+      var ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].getPreviousTransactionHash());
+      var ticket = liveTickets[ticketHash];
+      if (!ticket) throw "Previous live ticket not found: " + ticketHash;
+      var returnAmount = tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0);
+      return {spendable: +returnAmount, locked: -ticket.commitAmount, tx};
     case wallet.TRANSACTION_TYPE_COINBASE:
     case wallet.TRANSACTION_TYPE_REGULAR:
-      return {spendable: +tx.amount, locked: 0};
+      return {spendable: +tx.amount, locked: 0, tx};
     default: throw "Unknown tx type: " + tx.txType;
     }
   };
 
   let currentBalance = {spendable: 0, locked: 0, total: 0, tx: null};
 
-  const txDataCb = (mined) => {
-    mined.forEach(tx => {
-      const delta = txBalancesDelta(tx);
+  const txDataCb = async ({mined}) => {
+    for (let i = 0; i < mined.length; i++) {
+      const tx = mined[i];
+      const delta = await txBalancesDelta(tx);
       currentBalance = {
         spendable: currentBalance.spendable + delta.spendable,
         locked: currentBalance.locked + delta.locked,
-        tx: tx,
+        tx: delta.tx,
       };
       currentBalance.total = currentBalance.spendable + currentBalance.locked;
-      progressFunction(tsToDate(mined[0].timestamp), currentBalance);
-    });
+      progressFunction(tsToDate(tx.timestamp), currentBalance);
+    }
+    endFunction();
   };
 
-  wallet.streamGetTransactions(walletService, 0, currentBlockHeight, 0, txDataCb)
-    .then(endFunction)
+  wallet.getTransactions(walletService, 0, currentBlockHeight)
+    .then(txDataCb)
     .catch(errorFunction);
 };
 
