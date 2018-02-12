@@ -32,7 +32,7 @@ const WalletSelectionBodyBase = ({
           </div>
         </div>
         <div className="advanced-page-form">
-          {sideActive ? <CreateWalletForm {...{ ...props, intl }} />:<SelectAvailableWalletsForm {...{ ...props, intl }} />}
+          {sideActive ? <CreateWalletForm {...{ ...props, intl }} />:<SelectAvailableWalletsForm {...{ ...props, intl, availableWallets }} />}
         </div>
       </div> :
       <div className="advanced-page">
