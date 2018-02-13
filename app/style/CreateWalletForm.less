@@ -186,20 +186,23 @@
 
 .confirm-seed-word {
   float: left;
-  margin: 10px;
+  margin: 5px;
   width: 100px;
-  padding-left: 10px;
-  padding-right: 10px;
-  text-justify: center;
+  .Select-control {
+    padding-left: 2px;
+    border-radius: 5px;
+    border: 2px solid #000;
+    background-color: #fff;
+  }
 }
 
 .confirm-seed-word.match {
-  margin-left: 9px;
-  margin-right: 9px;
-  border: 1px solid #2ed8a3
+  .Select-control {
+    border: 2px solid #2ed8a3;
+  }
 }
 .confirm-seed-word.no-match {
-  margin-left: 9px;
-  margin-right: 9px;
-  border: 1px solid red
+  .Select-control {
+    border: 2px solid red
+  }
 }

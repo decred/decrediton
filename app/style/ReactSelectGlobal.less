@@ -23,10 +23,12 @@
 
 .Select.is-disabled > .Select-control {
   background-color: @disabled-background-color;
+  color: @disabled-color;
 }
 
 .Select.is-disabled > .Select-control:hover {
   box-shadow: none;
+  color: @disabled-color;
 }
 
 .Select.is-disabled .Select-arrow-zone {
@@ -39,7 +41,6 @@
   border: 0px;
   border-radius: 0px;
   background-color: inherit;
-  border-bottom: 1px solid @stroke-color-default;
   box-shadow: none;
   color: @input-color-default;
   cursor: default;
@@ -54,21 +55,21 @@
 }
 
 .Select-control:hover:not(:disabled) {
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
-  color: @input-color-hovered;
-  border-bottom: 1px solid @stroke-color-hovered;
+  //box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  //color: @input-color-hovered;
+  //border-bottom: 1px solid @stroke-color-hovered;
 }
 
 .is-open .Select-control .Select-input:focus {
   outline: none;
   color: @input-color-focused;
-  border-bottom: 1px solid @stroke-color-focused;
+  //border-bottom: 1px solid @stroke-color-focused;
 }
 
 .is-searchable.is-open > .Select-control {
   cursor: text;
   color: @input-color-focused;
-  border-bottom: 1px solid @stroke-color-hovered;
+  //border-bottom: 1px solid @stroke-color-hovered;
 }
 
 .is-open {
@@ -203,13 +204,13 @@
   position: relative;
   text-align: center;
   vertical-align: middle;
-  width: 10px;
+  width: 0px;
 }
 
 .Select-arrow {
-  border-color: @stroke-color-default transparent transparent;
-  border-style: solid;
-  border-width: 5px 5px 2.5px;
+  //border-color: @stroke-color-default transparent transparent;
+  //border-style: solid;
+  //border-width: 5px 5px 2.5px;
   display: inline-block;
   height: 0;
   width: 0;
@@ -472,8 +473,6 @@
 }
 
 .inverted-colors {
-  .Select-control,
-  .Select-control:hover:not(:disabled),
   .is-open .Select-control .Select-input:focus,
   .is-searchable.is-open > .Select-control {
     color: #fff;

@@ -10,7 +10,7 @@ class SingleSeedWordEntry extends React.Component {
     this.getSeedWords = this.getSeedWords.bind(this);
   }
   render () {
-    console.log(this.props.value);
+    const value = {name: this.props.value.name};
     return (
       <div
         className={this.props.className}
@@ -25,7 +25,7 @@ class SingleSeedWordEntry extends React.Component {
           clearable={false}
           multi={false}
           filterOptions={false}
-          selectValue={this.props.value}
+          value={value}
           onChange={(value) => this.props.onChange(this.props.seedWord, value)}
           valueKey="name"
           labelKey="name"

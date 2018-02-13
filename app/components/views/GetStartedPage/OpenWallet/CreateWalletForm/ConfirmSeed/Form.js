@@ -33,7 +33,7 @@ class ConfirmSeedForm extends React.Component{
 
   render(){
     console.log("rerender", this.props.seedWords);
-    const { seedWords, onChangeSeedWord } = this.props;
+    const { seedWords, seedError, onChangeSeedWord } = this.props;
     return (
       <div className="confirm-seed">
         <div className="create-wallet-header">
@@ -49,9 +49,9 @@ class ConfirmSeedForm extends React.Component{
         </div>
         <div className="create-wallet-field">
           <div className="input-form">
-            {!this.state.showPasteWarning ? null : <div className="orange-warning">
-              <T id="confirmSeed.errors.noPaste" m="*You should not paste your Seeds. Please type it" />}
-            </div>}
+            <div className="input-form-error">
+              {seedError && seedError}
+            </div>
             {seedWords.map((seedWord) => {
               const className = "confirm-seed-word " + (!seedWord.show ? seedWord.match ? "match" : "no-match" : "");
               return (

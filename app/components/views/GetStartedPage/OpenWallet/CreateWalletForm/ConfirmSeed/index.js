@@ -22,7 +22,7 @@ class ConfirmSeed extends React.Component {
     }
     return {
       seedWords: seedWords,
-      seedError: null,
+      seedError: "*Please confirm the missing words",
       splitMnemoic: splitMnemonic,
     };
   }
@@ -44,18 +44,20 @@ class ConfirmSeed extends React.Component {
   onChangeSeedWord(seedWord, update) {
     const { seedWords, splitMnemoic } = this.state;
     const { mnemonic } = this.props;
-    console.log(splitMnemoic[seedWord.index] == update);
     var updatedSeedWords = seedWords;
     updatedSeedWords[seedWord.index] = {word: update, show: seedWord.show, index: seedWord.index, match: splitMnemoic[seedWord.index] == update };
-    this.setState(seedWords: updatedSeedWords);
+    this.setState({seedWords: updatedSeedWords});
 
     const seedWordStr = seedWords.map(seedWord => seedWord.word).join(" ");
     if (seedWordStr == mnemonic) {
+      this.setState({seedWordsError: null});
       this.props
         .decode(mnemonic)
         .then(response => this.props.onChange(response.getDecodedSeed()))
         .then(() => this.setState({ seedError: null }))
         .catch(e => console.log(e));
+    } else {
+      this.setState({seedError: "*Please confirm the missing words"});
     }
   }
 }
