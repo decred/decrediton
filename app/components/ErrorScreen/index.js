@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { TabbedHeader } from "shared";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const ErrorScreen = ({ routes }) => (
   <Aux>

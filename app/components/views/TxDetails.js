@@ -44,7 +44,7 @@ function mapNonWalletInput(input) {
   return {address, amount};
 }
 
-const TxDetails = ({ routes, router,
+const TxDetails = ({ routes,
   decodedTransaction,
   tx: {
     txHash,
@@ -62,12 +62,13 @@ const TxDetails = ({ routes, router,
     rawTx
   },
   currentBlockHeight,
-  intl
+  intl,
+  goBackHistory
 }) => {
   const isConfirmed = !!txTimestamp;
   const icon = headerIcons[txType || txDirection];
   const subtitle = isConfirmed ? <T id="txDetails.timestamp" m="{timestamp, date, medium} {timestamp, time, medium}" values={{ timestamp: tsToDate(txTimestamp) }}/> : <T id="txDetails.unConfirmed" m="Unconfirmed"/>;
-  const goBack = () => router.goBack();
+  const goBack = () => goBackHistory();
   const openTxUrl = () => shell.openExternal(txUrl);
   const openBlockUrl = () => shell.openExternal(txBlockUrl);
   const title = txType ? intl.formatMessage(messages[txType]) :

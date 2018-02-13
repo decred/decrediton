@@ -1,6 +1,6 @@
 import { injectIntl } from "react-intl";
 import { spring, Motion } from "react-motion";
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 import { getPage } from "helpers";
 import MenuLink from "./MenuLink";
 import messages from "messages";
@@ -23,10 +23,10 @@ class MenuLinks extends React.Component {
   state = { top: 0 };
 
   componentWillReceiveProps(nextProps) {
-    const activeLink = getPage(nextProps.routes);
-    const basePage = activeLink.split("/")[0];
-    const newTop = this._nodes.get(basePage).offsetTop;
-    this.setState({ top: spring(newTop, theme("springs.sideBar")) });
+    // const activeLink = getPage(nextProps.routes);
+    // const basePage = activeLink.split("/")[0];
+    // const newTop = this._nodes.get(basePage).offsetTop;
+    // this.setState({ top: spring(newTop, theme("springs.sideBar")) });
   }
 
   render () {

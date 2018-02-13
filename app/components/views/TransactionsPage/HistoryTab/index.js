@@ -8,6 +8,12 @@ import { FormattedMessage as T } from "react-intl";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERED
 } from "wallet/service";
+import { DescriptionHeader } from "layout";
+
+export const HistoryTabHeader = () =>
+  <DescriptionHeader
+    description={<T id="transactions.description.history" m="Total Balance" />}
+  />;
 
 @autobind
 class History extends React.Component {

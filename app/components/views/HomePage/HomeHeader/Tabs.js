@@ -1,5 +1,5 @@
 import { spring, Motion } from "react-motion";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { injectIntl, intlShape } from "react-intl";
 import { getTabs, getTab, getPage } from "helpers";
 import messages from "messages";
@@ -34,9 +34,9 @@ class Tabs extends React.Component {
   }
 
   render () {
-    const { intl, routes, className } = this.props;
-    const tabs = getTabs(routes);
-    const page = getPage(routes);
+    const { intl, /*routes,*/ className } = this.props;
+    // const tabs = getTabs(routes);
+    // const page = getPage(routes);
     const { caretLeft, caretWidth } = this.state;
     return (
       <div className={className}>
@@ -60,7 +60,7 @@ class Tabs extends React.Component {
 }
 
 Tabs.propTypes = {
-  routes: PropTypes.array.isRequired,
+  // routes: PropTypes.array.isRequired,
   intl: intlShape
 };
 

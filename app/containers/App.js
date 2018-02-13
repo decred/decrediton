@@ -9,6 +9,7 @@ import { RouteTransition } from "shared";
 import { getPage } from "helpers";
 import theme from "theme";
 import "style/Layout.less";
+import Routes from "../routes";
 
 const fade = { atEnter: { opacity: 0 }, atActive: { opacity: 1 }, atLeave: { opacity: 0 }};
 
@@ -17,7 +18,7 @@ const wrapperComponent = props => <div className="page-view" { ...props } />;
 @autobind
 class App extends React.Component {
   static propTypes = {
-    children: PropTypes.element.isRequired,
+    // children: PropTypes.element.isRequired,
     locale: PropTypes.object.isRequired,
     window: PropTypes.object.isRequired,
     shutdownApp: PropTypes.func.isRequired,
@@ -60,8 +61,9 @@ class App extends React.Component {
   }
 
   render() {
-    const { locale, routes, children } = this.props;
-    const pathname = getPage(routes);
+    const { locale } = this.props;
+    // const { locale, routes, children } = this.props;
+    // const pathname = getPage(routes);
     return (
       <MuiThemeProvider muiTheme={MUItheme}>
         <IntlProvider
@@ -73,9 +75,13 @@ class App extends React.Component {
           <div className="page-body">
             <SideBar />
             <Snackbar />
-            <RouteTransition className="page-container" opts={ theme("springs.page") } {...{ wrapperComponent, pathname, ...fade }}>
+            <div className="page-view">
+              <Routes />
+            </div>
+            {/* <div>On App</div> */}
+            {/* <RouteTransition className="page-container" opts={ theme("springs.page") } {...{ wrapperComponent, pathname, ...fade }}>
               { children }
-            </RouteTransition>
+            </RouteTransition> */}
           </div>
         </IntlProvider>
       </MuiThemeProvider>

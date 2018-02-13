@@ -7,7 +7,7 @@ import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions"
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { showSidebarMenu, showSidebar } from "./SidebarActions";
-import { push as pushHistory } from "react-router-redux";
+import { push as pushHistory, goBack } from "react-router-redux";
 import { getWalletCfg } from "../config.js";
 import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";
@@ -782,6 +782,8 @@ export const listenForAppReloadRequest = cb => () => onAppReloadRequested(cb);
 
 export const showTicketList = status => dispatch =>
   dispatch(pushHistory("/tickets/mytickets/" + status));
+
+export const goBackHistory = () => dispatch => dispatch(goBack());
 
 export const SEEDCOPIEDTOCLIPBOARD = "SEEDCOPIEDTOCLIPBOARD";
 export const copySeedToClipboard = (mnemonic) => (dispatch) => {

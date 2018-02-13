@@ -361,13 +361,13 @@ export const viewableTransactions = createSelector(
   (transactions, homeHistoryTransactions) => [...transactions, ...homeHistoryTransactions]
 );
 export const viewedTransaction = createSelector(
-  [viewableTransactions, (state, { params: { txHash }}) => txHash],
+  [viewableTransactions, (state, { match: { params: { txHash }}}) => txHash],
   (transactions, txHash) => find({ txHash }, transactions)
 );
 export const decodedTransactions = get(["grpc", "decodedTransactions"]);
 
 export const viewedDecodedTransaction = createSelector(
-  [transactions, (state, { params: { txHash }}) => txHash, decodedTransactions],
+  [transactions, (state, { match: { params: { txHash }}}) => txHash, decodedTransactions],
   (transactions, txHash, decodedTransactions) => decodedTransactions[txHash]
 );
 
@@ -481,9 +481,13 @@ export const ticketsPerStatus = createSelector(
 );
 
 export const viewedTicketListing = createSelector(
-  [ticketsPerStatus, (state, { params: { status }}) => status],
+  [ticketsPerStatus, (state, { match: { params: { status }}}) => status],
   (tickets, status) => tickets[status]
 );
+// export const viewedTicketListing = createSelector(
+//   [ticketsPerStatus, (state, something) => { console.log(something); return "voted"; }],
+//   (tickets, status) => tickets[status]
+// );
 
 const rescanResponse = get(["control", "rescanResponse"]);
 export const rescanRequest = get(["control", "rescanRequest"]);

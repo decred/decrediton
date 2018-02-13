@@ -1,9 +1,15 @@
 import Logs from "./Page";
-import {getDcrdLogs, getDcrwalletLogs, getDecreditonLogs} from "wallet";
-import {logging} from "connectors";
+import { getDcrdLogs, getDcrwalletLogs, getDecreditonLogs } from "wallet";
+import { logging } from "connectors";
+import { DescriptionHeader } from "layout";
+import { FormattedMessage as T } from "react-intl";
 
+export const LogsTabHeader = () =>
+  <DescriptionHeader
+    description={<T id="help.description.logs" m="Please find your current logs below to look for any issue or error you are having." />}
+  />;
 @autobind
-class LogsTab extends React.Component {
+class LogsTabBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -85,4 +91,4 @@ class LogsTab extends React.Component {
   }
 }
 
-export default logging(LogsTab);
+export const LogsTab = logging(LogsTabBody);

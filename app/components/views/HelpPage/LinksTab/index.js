@@ -2,9 +2,15 @@ import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
 import { HelpLink, HelpLinkInfoModal } from "buttons";
 import { ConstitutionModalContent } from "modals";
+import { DescriptionHeader } from "layout";
 import "style/Help.less";
 
-const Links = () => (
+export const LinksTabHeader = () =>
+  <DescriptionHeader
+    description={<T id="help.description.links" m="If you have any difficulty with decrediton, please use the following links to help find a solution." />}
+  />;
+
+export const LinksTab = () => (
   <Aux>
     <div className="tab-card">
       <div className={"help-icon-row"}>
@@ -26,5 +32,3 @@ const Links = () => (
     </div>
   </Aux>
 );
-
-export default Links;

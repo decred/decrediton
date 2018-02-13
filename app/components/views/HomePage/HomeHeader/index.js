@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance } from "shared";
-import Tabs from "./Tabs";
+// import Tabs from "./Tabs";
 import "style/Header.less";
 
 const TabbedHeader = ({ routes, totalBalance }) => (
@@ -14,12 +14,12 @@ const TabbedHeader = ({ routes, totalBalance }) => (
         <T id="home.currentTotalBalanceLabel" m="Current Total Balance" />
       </div>
     </div>
-    <Tabs className="home-tab" {...{ routes }} />
+    {/* <Tabs className="home-tab" {...{ routes }} /> */}
   </div>
 );
 
 TabbedHeader.propTypes = {
-  routes: PropTypes.array,
+  // routes: PropTypes.array,
   isTestNet: PropTypes.bool,
 };
 

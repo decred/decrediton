@@ -20,7 +20,7 @@ const TxRow = ({ tx }, { router }) => {
       {...{
         ...tx,
         pending: !tx.txTimestamp,
-        onClick: () => router.push(`/transactions/history/${tx.txHash}`)
+        onClick: () => router.history.push(`/transactions/history/${tx.txHash}`)
       }}
     />
   ) : null;

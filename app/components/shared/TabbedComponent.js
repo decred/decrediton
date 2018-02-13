@@ -10,7 +10,7 @@ const enterRight = { atEnter: { left: 100 }, atActive: { left: 0 }, atLeave: { l
 
 const wrapperComponentDefault = props => <div className="component-tab-content" { ...props } />;
 
-class TabbedPage extends React.Component{
+class OldTabbedPage extends React.Component{
   constructor(props) { super(props); }
   state = { prevTab: null };
 
@@ -38,10 +38,29 @@ class TabbedPage extends React.Component{
   }
 }
 
-TabbedPage.propTypes = {
+OldTabbedPage.propTypes = {
   children: PropTypes.object.isRequired,
   routes: PropTypes.array.isRequired,
   className: PropTypes.string,
 };
+
+class TabbedPage extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render () {
+    const { children } = this.props;
+    const header = <div>tabbed header</div>;
+
+    return (
+      <Aux>
+        {header}
+        {children}
+      </Aux>
+    );
+  }
+}
 
 export default TabbedPage;

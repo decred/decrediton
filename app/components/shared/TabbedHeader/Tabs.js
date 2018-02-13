@@ -1,5 +1,5 @@
 import { spring, Motion } from "react-motion";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { injectIntl, intlShape } from "react-intl";
 import { getTabs, getTab, getPage } from "helpers";
 import messages from "messages";

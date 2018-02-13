@@ -7,7 +7,7 @@ import messages from "messages";
 import Tabs from "./Tabs";
 import "style/Header.less";
 
-const TabbedHeader = ({ intl, children, routes, totalBalance, ticketPrice, isTestNet, icon, title, subtitle }) => {
+const OldTabbedHeader = ({ intl, children, routes, totalBalance, ticketPrice, isTestNet, icon, title, subtitle }) => {
   const { tabDesc, desc, noIcon, ticketprice, noHeader, className} = routes[1];
   const { balance, testNet } = routes[2] || {};
   const page = getPage(routes);
@@ -44,10 +44,24 @@ const TabbedHeader = ({ intl, children, routes, totalBalance, ticketPrice, isTes
   );
 };
 
-TabbedHeader.propTypes = {
+OldTabbedHeader.propTypes = {
   intl: intlShape,
   routes: PropTypes.array,
   isTestNet: PropTypes.bool,
+};
+
+const TabbedHeader = ({children}) => {
+  return (
+    <div className={"header"}>
+      <div className="tabbedheader-title">
+      </div>
+
+      <div className="tabbedheader-content">
+        <Description>the description</Description>
+        {children}
+      </div>
+    </div>
+  );
 };
 
 export default injectIntl(tabbedHeader(TabbedHeader));

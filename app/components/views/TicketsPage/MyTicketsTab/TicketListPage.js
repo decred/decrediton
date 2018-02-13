@@ -4,6 +4,7 @@ import TicketInfoCard from "./TicketInfoCard";
 import { FormattedMessage as T } from "react-intl";
 import Paginator from "Paginator";
 import { SlateGrayButton } from "buttons";
+import { goBack } from "react-router-redux";
 import "style/MyTickets.less";
 
 @autobind
@@ -60,9 +61,12 @@ class TicketListPage extends React.Component{
     this.props.decodeRawTransactions(toDecode);
   }
 
+  goBack() {
+    this.props.goBackHistory();
+  }
+
   render() {
     const { currentPage, totalPages, expandedTicket } = this.state;
-    const { router } = this.props;
 
     const visibleTickets = this.getVisibleTickets();
     const visibleCards = visibleTickets.map(ticket => {
@@ -80,7 +84,7 @@ class TicketListPage extends React.Component{
           </Aux>
           : <T id="myTickets.noTicketsWithStatus" m="No tickets found" />
         )}
-        <SlateGrayButton key="back" className="ticket-list-back-btn" onClick={() => router.goBack()}>
+        <SlateGrayButton key="back" className="ticket-list-back-btn" onClick={this.goBack}>
           <T id="ticketList.backBtn" m="Back" />
         </SlateGrayButton>
       </Aux>
