@@ -30,12 +30,18 @@ export const removeWallet = log((walletPath, testnet) => Promise
     throw "Error creating wallet";
   }), "Remove Wallet");
 
-export const startWallet = log((walletPath, testnet) => Promise
-  .resolve(ipcRenderer.sendSync("start-wallet", walletPath, testnet))
-  .then(pid => {
-    if (pid) return pid;
-    throw "Error starting wallet";
-  }), "Start Wallet");
+export const startWallet = log((walletPath, testnet) => new Promise((resolve, reject) => {
+  let pid, port;
+
+  // resolveCheck must be done both on the dcrwallet-port event and on the
+  // return of the sendSync call because we can't be certain which will happen first
+  const resolveCheck = () => pid && port ? resolve({pid, port}) : null;
+
+  ipcRenderer.once("dcrwallet-port", (e, p) => { port = p; resolveCheck(); });
+  pid = ipcRenderer.sendSync("start-wallet", walletPath, testnet);
+  if (!pid) reject("Error starting wallet");
+  resolveCheck();
+}), "Start Wallet");
 
 export const getBlockCount = log((walletPath, rpcCreds, testnet) => Promise
   .resolve(ipcRenderer.sendSync("check-daemon", walletPath, rpcCreds, testnet))

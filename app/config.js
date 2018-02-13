@@ -324,7 +324,7 @@ export function newWalletConfigCreation(testnet, walletPath) {
       tlscurve: "P-256",
       noinitialload: "1",
       onetimetlskey: "1",
-      grpclisten: "127.0.0.1:9121",
+      grpclisten: "127.0.0.1:0",
       appdata: getWalletPath(testnet, walletPath),
       testnet: testnet ? "1" : "0",
       nolegacyrpc: "1",
