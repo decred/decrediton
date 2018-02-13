@@ -11,7 +11,7 @@ const StakePoolsList = ({
   onRemoveStakePool,
   rescanRequest,
 }) => (
-  <div className="tab-card">
+  <div className="">
     <div className="stakepool-flex-height">
       <div className="stakepool-content-nest-from-address">
         <div className="stakepool-content-nest-prefix-configured"><T id="stakepools.list.title" m="Configured stake pools:" /></div>

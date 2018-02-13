@@ -50,7 +50,7 @@ class SignMessage extends React.Component {
     }
 
     return (
-      <div className="tab-card message message-sign">
+      <div className="message message-sign">
         <SignMessageForm {...{onSubmit, onChangeAddress, onChangeMessage, address, addressError, message, messageError, formatMessage: intl.formatMessage, isSigningMessage} }/>
         {result}
       </div>

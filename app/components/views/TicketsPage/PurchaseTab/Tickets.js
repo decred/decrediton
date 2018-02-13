@@ -7,7 +7,7 @@ const Tickets = ({
   ...props
 }) => (
   <Aux>
-    <div className="tab-card">
+    <div className="">
       <StakeInfo />
       <PurchaseTickets {...{ ...props }} />
       <div className="stakepool-area-spacing"></div>

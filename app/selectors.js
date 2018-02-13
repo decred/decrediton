@@ -759,3 +759,5 @@ export const daemonStopped = get(["daemon", "daemonStopped"]);
 export const chainParams = compose(isTestNet => isTestNet ? TestNetParams : MainNetParams, isTestNet);
 
 export const exportingData = get(["control", "exportingData"]);
+
+export const location = get(["routing", "location"]);

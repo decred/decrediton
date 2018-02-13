@@ -1,7 +1,12 @@
-import { Switch, Route, NavLink as Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { isArray } from "util";
+import Tabs from "./Tabs";
 
 export const TabbedPageTab = ({children}) => children;
+TabbedPageTab.propTypes = {
+  path: PropTypes.string.isRequired,
+  link: PropTypes.node.isRequired,
+};
 
 export default ({children, header}) => {
   if (!isArray(children)) children = [children];
@@ -13,25 +18,19 @@ export default ({children, header}) => {
     <Route key={c.props.path} path={c.props.path} component={c.props.header} />
   );
 
-  const tabLinks = tabs.map(c =>
-    <Link key={c.props.path} to={c.props.path}>{c.props.link}</Link>
-  );
-
   const tabBodies = tabs.map(c =>
     <Route key={c.props.path} path={c.props.path} component={c.props.component} />
   );
 
   return (
-    <div>
-      <div className="header">
+    <div className="tabbed-page">
+      <div className="tabbed-page-header">
         {header}
-
         <Switch>{headers}</Switch>
-
-        <div>{tabLinks}</div>
+        <Tabs tabs={tabs} />
       </div>
 
-      <div className="body">
+      <div className="tabbed-page-body">
         <Switch>
           {tabBodies}
           {nonTabs}

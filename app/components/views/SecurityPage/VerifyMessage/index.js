@@ -55,13 +55,12 @@ class VerifyMessage extends React.Component {
     }
 
     return (
-      <div className="tab-card message message-verify">
+      <div className="message message-verify">
         <VerifyMessageForm {...{onSubmit, address, message, signature, addressError, messageError, signatureError, onChangeAddress, onChangeMessage, onChangeSignature, formatMessage: intl.formatMessage, isVerifyingMessage}} />
         {result}
       </div>
     );
   }
-
 
   onSubmit() {
     const { address, addressError, message, messageError, signature, signatureError } = this.state;

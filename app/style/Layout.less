@@ -66,13 +66,91 @@
   background-color: #0c1e3e;
 }
 
-.tabbed-page {
+.tabbed-page,
+.standalone-page {
+}
+
+.tabbed-page-header,
+.standalone-page-header {
+  background-color: #fff;
+  padding: 53px 60px 0px 100px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  height: 120px;
+}
+
+.tabbed-page-body,
+.standalone-page-body {
+  overflow-y: scroll;
+  position: absolute;
+  right: 0px;
+  top: 173px;
+  bottom: 0px;
+  left: 0px;
+  padding: 60px 60px 30px 60px;
   background-color: #f3f6f6;
-  position: relative;
-  height: calc(100% - 160px);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+}
+
+.tabbed-page-header > .title-header-title,
+.standalone-page-header > .title-header-title {
+  margin-bottom: 14px;
+  color: #596d81;
+  font-size: 27px
+}
+
+.tabbed-page-header > .title-header-icon,
+.standalone-page-header > .title-header-icon {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+}
+
+.tabbed-page-header > .description-header,
+.standalone-page-header > .description-header {
+  white-space: pre-wrap;
+  color: #48566e;
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.description-header > .description-header-action-button {
+  float: right;
+}
+
+.tabbed-page-header > .tabs {
+  position: absolute;
+  bottom: 0px;
+}
+
+.tabbed-page-header > .tabs > .tab {
+  text-align: center;
+  vertical-align: middle;
+  line-height: 35px;
+}
+
+.tabbed-page-header > .tabs > .tab > a {
+  margin: 0px 11px 0px 11px;
+  color: @input-color-disabled;
+  text-decoration: none;
+}
+
+.tabbed-page-header > .tabs > .tab > a:hover,
+.tabbed-page-header > .tabs > .tab > a.active {
+  color: @input-color-hovered;
+}
+
+.tabbed-page-header > .tabs > .tabs-caret > {
+  position: absolute;
+  bottom: 0px;
+  height: 5px;
+}
+
+.tabbed-page-header > .tabs > .tabs-caret > .active {
+  background-color: #2ed8a3;
+  position: absolute;
+  height: 5px;
 }
 
 .tab-content {

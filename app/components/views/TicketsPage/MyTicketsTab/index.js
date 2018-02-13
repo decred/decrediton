@@ -3,7 +3,7 @@ import TicketsOverview from "./TicketsOverview";
 import TicketsList from "./TicketListPage";
 
 const MyTickets = () => (
-  <div className="tab-card">
+  <div className="">
     <Switch>
       <Route path="/tickets/mytickets" exact component={TicketsOverview} />
       <Route path="/tickets/mytickets/:status" component={TicketsList} />

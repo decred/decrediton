@@ -37,3 +37,4 @@ export { default as walletStartup } from "./walletStartup";
 export { default as balanceHome } from "./balanceHome";
 export { default as ticketHome } from "./ticketHome";
 export { default as transactionsHome } from "./transactionsHome";
+export { default as routing } from "./routing";
