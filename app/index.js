@@ -5,54 +5,33 @@ import { Router, createMemoryHistory } from "react-router";
 import { syncHistoryWithStore } from "react-router-redux";
 import routes from "./routes";
 import configureStore from "./store/configureStore";
-import { getGlobalCfg, getWalletCfg } from "./config.js";
+import { getGlobalCfg } from "./config.js";
 import locales from "./i18n/locales";
 import "./style/main.less";
 import "./style/Global.less";
 import "./style/ReactSelectGlobal.less";
 
 var globalCfg = getGlobalCfg();
-var network = globalCfg.get("network");
-
-var walletCfg = getWalletCfg(network == "testnet", "default-wallet");
-
-var foundStakePoolConfig = false;
-var currentStakePoolConfig = walletCfg.get("stakepools");
-var hiddenAccounts = walletCfg.get("hiddenaccounts");
-var firstConfiguredStakePool = null;
-if (currentStakePoolConfig !== undefined) {
-  for (var i = 0; i < currentStakePoolConfig.length; i++) {
-    if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
-      foundStakePoolConfig = true;
-      firstConfiguredStakePool = currentStakePoolConfig[i];
-      break;
-    }
-  }
-}
 
 var initialState = {
   settings: {
     currentSettings: {
-      currencyDisplay: walletCfg.get("currency_display"),
-      network: walletCfg.get("network"),
       locale: globalCfg.get("locale"),
       daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
     },
     tempSettings: {
-      currencyDisplay: walletCfg.get("currency_display"),
-      network: walletCfg.get("network"),
       locale: globalCfg.get("locale"),
       daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
     },
     settingsChanged: false,
   },
   stakepool: {
-    currentStakePoolConfig: currentStakePoolConfig,
+    currentStakePoolConfig: null,
     currentStakePoolConfigRequest: false,
     currentStakePoolConfigError: null,
     currentStakePoolConfigSuccessMessage: "",
-    activeStakePoolConfig: foundStakePoolConfig,
-    selectedStakePool: firstConfiguredStakePool,
+    activeStakePoolConfig: false,
+    selectedStakePool: null,
   },
   daemon: {
     daemonStarted: false,
@@ -68,7 +47,9 @@ var initialState = {
     appData: null,
     shutdownRequested: false,
     openForm: globalCfg.get("must_open_form"),
-    remoteAppdataError: false
+    remoteAppdataError: false,
+    previousWallet: globalCfg.get("previouswallet"),
+    selectCreateWalletInputRequest: globalCfg.get("previouswallet") ? false : true
   },
   version: {
     // RequiredVersion
@@ -89,7 +70,6 @@ var initialState = {
     address: "127.0.0.1",
     port: "9121",
     walletService: null,
-    network: network,
     requiredStakepoolAPIVersion: 2,
     recentBlockTimestamp: null,
 
@@ -135,7 +115,7 @@ var initialState = {
     getVerifyMessageRequestAttempt: false,
     getVerifyMessageResponse: null,
     // Accounts
-    hiddenAccounts: hiddenAccounts,
+    hiddenAccounts: null,
     getAccountsError: null,
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
@@ -219,7 +199,6 @@ var initialState = {
     discoverAddressRequestAttempt: false,
     discoverAddressResponse: null,
     discoverAddressError: null,
-    discoverAccountsComplete: walletCfg.get("discoveraccounts"),
     // SubscribeBlockNtfns
     subscribeBlockNtfnsRequestAttempt: false,
     subscribeBlockNtfnsResponse: null,
@@ -298,11 +277,11 @@ var initialState = {
     // TicketBuyerService
     ticketBuyerService: null,
     // TicketBuyerConfig
-    balanceToMaintain: walletCfg.get("balancetomaintain"),
-    maxFee: walletCfg.get("maxfee"),
-    maxPriceAbsolute: walletCfg.get("maxpriceabsolute"),
-    maxPriceRelative: walletCfg.get("maxpricerelative"),
-    maxPerBlock: walletCfg.get("maxperblock"),
+    balanceToMaintain: null,
+    maxFee: null,
+    maxPriceAbsolute: null,
+    maxPriceRelative: null,
+    maxPerBlock: null,
     getTicketBuyerConfigRequestAttempt: false,
     getTicketBuyerConfigResponse: null,
     getTicketBuyerConfigSuccess: null,

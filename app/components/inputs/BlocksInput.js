@@ -8,6 +8,6 @@ const BlocksInput = ({...props}) =>
       ...props,
       unit: (<T id="blocksInput.blocks" m="blocks" />)
     }
-  } />;
+    } />;
 
 export default BlocksInput;

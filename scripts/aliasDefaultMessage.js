@@ -36,8 +36,8 @@ function aliasDefaultMessagePlugin({types: t}) {
     }
 
     throw path.buildCodeFrameError(
-            "[React Intl] Messages must be statically evaluate-able for extraction."
-        );
+      "[React Intl] Messages must be statically evaluate-able for extraction."
+    );
   }
 
   function getMessageDescriptorKey(path) {
@@ -69,14 +69,14 @@ function aliasDefaultMessagePlugin({types: t}) {
 
         if (referencesImport(name, moduleSourceName, COMPONENT_NAMES)) {
           const attributes = path.get("attributes")
-                        .filter((attr) => attr.isJSXAttribute());
+            .filter((attr) => attr.isJSXAttribute());
 
           let descriptor = createMessageDescriptor(
-                        attributes.map((attr) => [
-                          attr.get("name"),
-                          attr.get("value"),
-                        ])
-                    );
+            attributes.map((attr) => [
+              attr.get("name"),
+              attr.get("value"),
+            ])
+          );
 
           if (descriptor.m) {
             descriptor.m.replaceWith(t.JSXIdentifier("defaultMessage"));

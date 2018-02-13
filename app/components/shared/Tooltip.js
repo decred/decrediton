@@ -1,18 +1,19 @@
 import "style/Tooltip.less";
 
-const Tooltip = ({ text, warning, disabled, className, children }) => {
+const Tooltip = ({ text, warning, disabled, className, children, md }) => {
   let tooltip = null;
 
   const onMouseMove = ({clientX, clientY}) => {
     tooltip.style.left =
       clientX + tooltip.clientWidth + 10 < window.innerWidth ?
-      clientX + 10 + "px" : window.innerWidth - 5 - tooltip.clientWidth + "px";
+        clientX + 10 + "px" : window.innerWidth - 5 - tooltip.clientWidth + "px";
     tooltip.style.top =
       clientY + tooltip.clientHeight + 10 < window.innerHeight ?
-      clientY + 10 + "px" : window.innerHeight - 5 - tooltip.clientHeight + "px";
+        clientY + 10 + "px" : window.innerHeight - 5 - tooltip.clientHeight + "px";
   };
 
-  const container = ["tooltipContainer", className].join(" ");
+  const widthClass = md ? "tooltip-width-md" : "";
+  const container = ["tooltipContainer", className, widthClass].join(" ");
   const tip = ["tip", warning ? "warning" : null].join(" ");
   const Wrapper = className ? "div" : Aux;
 

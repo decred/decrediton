@@ -25,7 +25,7 @@ class StakeInfo extends React.Component {
       expiredTicketsCount,
       totalSubsidy,
       liveTicketsCount,
-     } = this.props;
+    } = this.props;
     const { onHideStakeInfo, onShowStakeInfo } = this;
     const { isShowingDetails } = this.state;
     return [{
@@ -70,7 +70,7 @@ class StakeInfo extends React.Component {
       ownMempoolTicketsCount,
       immatureTicketsCount,
       liveTicketsCount,
-     } = this.props;
+    } = this.props;
     return (
       <StakeInfoDisplay
         {...{

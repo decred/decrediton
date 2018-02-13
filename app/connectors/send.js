@@ -15,7 +15,8 @@ const mapStateToProps = selectorMap({
   isConstructingTransaction: sel.isConstructingTransaction,
   nextAddress: sel.nextAddress,
   nextAddressAccount: sel.nextAddressAccount,
-  unitDivisor: sel.unitDivisor
+  unitDivisor: sel.unitDivisor,
+  hasUnminedTransactions: sel.hasUnminedTransactions
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -23,7 +24,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onAttemptSignTransaction: ca.signTransactionAttempt,
   onClearTransaction: ca.clearTransaction,
   getNextAddressAttempt: ca.getNextAddressAttempt,
-  validateAddress: ca.validateAddress
+  validateAddress: ca.validateAddress,
+  publishUnminedTransactions: ca.publishUnminedTransactionsAttempt
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

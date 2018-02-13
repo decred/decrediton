@@ -17,6 +17,7 @@ import {
   GETNEXTACCOUNT_SUCCESS, GETNEXTACCOUNT_FAILED,
   CHANGEPASSPHRASE_SUCCESS, CHANGEPASSPHRASE_FAILED,
   SIGNMESSAGE_FAILED, VERIFYMESSAGE_FAILED,
+  PUBLISHUNMINEDTRANSACTIONS_SUCCESS, PUBLISHUNMINEDTRANSACTIONS_FAILED,
 } from "../actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
@@ -155,6 +156,10 @@ const messages = defineMessages({
   SEEDCOPIEDTOCLIPBOARD: {
     id: "createWallet.seedCopiedToClipboard",
     defaultMessage: "Seed copied to clipboard!"
+  },
+  PUBLISHUNMINEDTRANSACTIONS_SUCCESS: {
+    id: "send.publishUnminedTransactions.success",
+    defaultMessage: "Republished unmined transactions to the decred network."
   }
 });
 
@@ -194,6 +199,7 @@ export default function snackbar(state = {}, action) {
   case SETSTAKEPOOLVOTECHOICES_SUCCESS:
   case REMOVESTAKEPOOLCONFIG:
   case SEEDCOPIEDTOCLIPBOARD:
+  case PUBLISHUNMINEDTRANSACTIONS_SUCCESS:
     type = "Success";
     message = messages[action.type] || messages.defaultSuccessMessage;
     break;
@@ -216,6 +222,7 @@ export default function snackbar(state = {}, action) {
   case SIGNMESSAGE_FAILED:
   case VERIFYMESSAGE_FAILED:
   case GETSTARTUPWALLETINFO_FAILED:
+  case PUBLISHUNMINEDTRANSACTIONS_FAILED:
     type = "Error";
     message = messages[action.type] || messages.defaultErrorMessage;
     values = { originalError: String(action.error) };

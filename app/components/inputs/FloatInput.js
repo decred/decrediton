@@ -1,7 +1,7 @@
 import NumericInput from "./NumericInput";
 import { restrictToStdDecimalNumber, limitFractionalDigits } from "helpers/strings";
 
-const FloatInput = ({...props, maxFracDigits}) => {
+const FloatInput = ({maxFracDigits, ...props}) => {
 
   var value = props.value;
 

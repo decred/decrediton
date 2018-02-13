@@ -39,7 +39,7 @@ const RemoteDaemonForm = ({
   rpc_host,
   rpc_port,
   intl
-  }) => {
+}) => {
   return (
     <Aux>
       <div className="advanced-daemon-row">

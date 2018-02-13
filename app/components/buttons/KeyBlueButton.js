@@ -5,7 +5,7 @@ import "style/MiscComponents.less";
 class KeyBlueButton extends React.Component {
   render() {
     let className = !this.props.disabled ? "key-blue-button"
-                                         : "key-blue-button-disabled";
+      : "key-blue-button-disabled";
     let style = {};
     Object.assign(style, this.props.style);
     if(!this.props.disabled && this.props.block) {
@@ -18,12 +18,12 @@ class KeyBlueButton extends React.Component {
 
     return (
       <div
-          className={className}
-          style={style}
-          type={this.props.type}
-          disabled={this.props.disabled}
-          onClick = {this.onClick}
-          hidden={this.props.hidden}>
+        className={className}
+        style={style}
+        type={this.props.type}
+        disabled={this.props.disabled}
+        onClick = {this.onClick}
+        hidden={this.props.hidden}>
         {this.props.loading ? <SimpleLoading {...{disabled: this.props.disabled}}/> : this.props.children}
       </div>
     );

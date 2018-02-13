@@ -11,7 +11,7 @@ const promisifyReq = (fnName, Req) => log((service, ...args) => new Promise((ok,
   service[fnName](new Req(), ...args, (err, res) => err ? fail(err) : ok(res))), fnName);
 
 const promisifyReqLogNoData = (fnName, Req) => withLogNoData((service, ...args) => new Promise((ok, fail) =>
-service[fnName](new Req(), ...args, (err, res) => err ? fail(err) : ok(res))), fnName);
+  service[fnName](new Req(), ...args, (err, res) => err ? fail(err) : ok(res))), fnName);
 
 export const getNetwork = promisifyReq("network", NetworkRequest);
 export const getStakeInfo = promisifyReqLogNoData("stakeInfo", StakeInfoRequest);
@@ -58,4 +58,4 @@ export const setAgendaVote = log((votingService, agendaId, choiceId) =>
     request.addChoices(choice);
     votingService.setVoteChoices(request, (err, res) => err ? fail(err) : ok(res));
   }),
-  "Set Agenda Vote");
+"Set Agenda Vote");

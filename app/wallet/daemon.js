@@ -16,6 +16,20 @@ export const cleanShutdown = log(() => Promise
     if (!stopped) throw "Error shutting down app";
   }), "Clean Shutdown");
 
+export const createNewWallet = log((walletPath, testnet) => Promise
+  .resolve(ipcRenderer.sendSync("create-wallet", walletPath, testnet))
+  .then(pid => {
+    if (pid) return pid;
+    throw "Error creating wallet";
+  }), "Create Wallet");
+
+export const removeWallet = log((walletPath, testnet) => Promise
+  .resolve(ipcRenderer.sendSync("remove-wallet", walletPath, testnet))
+  .then(pid => {
+    if (pid) return pid;
+    throw "Error creating wallet";
+  }), "Remove Wallet");
+
 export const startWallet = log((walletPath, testnet) => Promise
   .resolve(ipcRenderer.sendSync("start-wallet", walletPath, testnet))
   .then(pid => {
@@ -43,15 +57,15 @@ export const getDcrwalletLogs = log(() => Promise
   }), "Get Dcrwallet Logs", logOptionNoResponseData());
 
 export const getDecreditonLogs = log(() => Promise
-    .resolve(ipcRenderer.sendSync("get-decrediton-logs"))
-    .then(logs => {
-      if (logs) return logs;
-      throw "Error getting decrediton logs";
-    }), "Get Decrediton Logs", logOptionNoResponseData());
+  .resolve(ipcRenderer.sendSync("get-decrediton-logs"))
+  .then(logs => {
+    if (logs) return logs;
+    throw "Error getting decrediton logs";
+  }), "Get Decrediton Logs", logOptionNoResponseData());
 
 export const getAvailableWallets = log(() => Promise
-    .resolve(ipcRenderer.sendSync("get-available-wallets"))
-    .then(availableWallets => {
-      if (availableWallets) return availableWallets;
-      throw "Error getting avaiable wallets logs";
-    }), "Get Available Wallets", logOptionNoResponseData());
+  .resolve(ipcRenderer.sendSync("get-available-wallets"))
+  .then(availableWallets => {
+    if (availableWallets) return availableWallets;
+    throw "Error getting avaiable wallets logs";
+  }), "Get Available Wallets", logOptionNoResponseData());

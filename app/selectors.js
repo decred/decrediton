@@ -70,17 +70,35 @@ export const startupError = or(
   fetchHeadersError
 );
 
+const availableWallets = get(["daemon", "availableWallets"]);
+
+export const availableWalletsSelect = createSelector(
+  [availableWallets],
+  (wallets) => map(
+    wallet => ({
+      label: wallet.wallet + " (" +  wallet.network + ")",
+      value: wallet,
+      network: wallet.network,
+    }),
+    wallets
+  )
+);
+export const previousWallet = get(["daemon", "previousWallet"]);
+export const getWalletName = get(["daemon", "walletName"]);
+
 const openWalletInputRequest = get(["walletLoader", "openWalletInputRequest"]);
 const createWalletInputRequest = get(["walletLoader", "createWalletInputRequest"]);
 const discoverAddressInputRequest = get(["walletLoader", "discoverAddressInputRequest"]);
 const advancedDaemonInputRequest = get(["walletLoader", "advancedDaemonInputRequest"]);
 const openWalletRequestAttempt = get(["walletLoader", "walletOpenRequestAttempt"]);
+const selectCreateWalletInputRequest = get(["daemon", "selectCreateWalletInputRequest"]);
 
 export const isInputRequest = or(
   and(openWalletInputRequest, not(openWalletRequestAttempt)),
   createWalletInputRequest,
   discoverAddressInputRequest,
-  and(openForm, isAdvancedDaemon, advancedDaemonInputRequest)
+  and(openForm, isAdvancedDaemon, advancedDaemonInputRequest),
+  selectCreateWalletInputRequest
 );
 
 export const balances = or(get(["grpc", "balances"]), () => []);
@@ -117,7 +135,7 @@ export const lockedBalance = createSelector(
 );
 
 export const networks = () => [{name: "testnet"}, {name: "mainnet"}];
-export const network = get(["grpc", "network"]);
+export const network = get(["daemon", "network"]);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 export const currencies = () => [{name: "DCR"}, {name: "atoms"}];
@@ -235,12 +253,116 @@ const transactionNormalizer = createSelector(
 export const noMoreTransactions = get(["grpc", "noMoreTransactions"]);
 export const transactionsNormalizer = createSelector([transactionNormalizer], map);
 export const transactionsFilter = get(["grpc", "transactionsFilter"]);
+export const hasUnminedTransactions = compose(l => l && l.length > 0, get(["grpc", "unminedTransactions"]));
 export const transactions = createSelector(
   [transactionsNormalizer, get(["grpc", "transactions"])], apply
 );
-export const homeHistoryTransactions = createSelector(
+
+const recentTransactions = createSelector(
   [transactionsNormalizer, get(["grpc", "recentTransactions"])], apply
 );
+
+export const homeHistoryTransactions = createSelector(
+  [recentTransactions],
+  (recentTransactions) =>
+    recentTransactions.map(tx => {if (!tx.txType || tx.txType == "Regular" || tx.txType == "Coinbase") return tx; }).filter(tx => tx !== undefined)
+);
+
+export const homeHistoryTickets = createSelector(
+  [recentTransactions],
+  (recentTransactions) =>
+    recentTransactions.map(tx => {if (tx.txType && tx.txType !== "Regular" && tx.txType !== "Coinbase") return tx; }).filter(tx => tx !== undefined)
+);
+
+//fake data for balance chart
+export const spendableAndLockedBalance = createSelector(
+  [transactions],
+  () => {
+    return [
+      { name: "23.10", available: 4000, locked: 2400, legendName: "23.10.2017"},
+      { name: "24.10", available: 3000, locked: 1398, legendName: "24.10.2017"},
+      { name: "25.10", available: 2000, locked: 7004, legendName: "25.10.2017"},
+      { name: "26.10", available: 2780, locked: 3908, legendName: "26.10.2017"},
+      { name: "27.10", available: 1890, locked: 4800, legendName: "27.10.2017"},
+      { name: "28.10", available: 2390, locked: 3800, legendName: "28.10.2017"},
+      { name: "29.10", available: 3490, locked: 4300, legendName: "29.10.2017"},
+      { name: "30.10", available: 3490, locked: 4300, legendName: "30.10.2017"},
+      { name: "01.11", available: 3490, locked: 4300, legendName: "01.11.2017"},
+      { name: "02.11", available: 3490, locked: 4300, legendName: "02.11.2017"},
+      { name: "03.11", available: 3490, locked: 4300, legendName: "03.11.2017"},
+      { name: "04.11", available: 3490, locked: 4300, legendName: "04.11.2017"},
+      { name: "05.11", available: 3490, locked: 4300, legendName: "05.11.2017"},
+      { name: "06.11", available: 3490, locked: 4300, legendName: "06.11.2017"},
+    ];
+  }
+);
+
+//fake data for transactions tab on overview Page
+export const balanceSent = createSelector(
+  [],
+  () => 65554789521
+);
+
+export const balanceReceived = createSelector(
+  [],
+  () => 86454789521
+);
+
+export const sentAndReceivedTransactions = createSelector(
+  [transactions],
+  () => {
+    return [
+      { name: "23.10", sent: -4000, received: 2400, legendName: "23.10.2017"},
+      { name: "24.10", sent: -3000, received: 1398, legendName: "24.10.2017"},
+      { name: "25.10", sent: -2000, received: 7004, legendName: "25.10.2017"},
+      { name: "26.10", sent: -2780, received: 3908, legendName: "26.10.2017"},
+      { name: "27.10", sent: -1890, received: 4800, legendName: "27.10.2017"},
+      { name: "28.10", sent: -2390, received: 3800, legendName: "28.10.2017"},
+      { name: "29.10", sent: -3490, received: 4300, legendName: "29.10.2017"},
+      { name: "30.10", sent: -3490, received: 4300, legendName: "30.10.2017"},
+      { name: "01.11", sent: -3490, received: 4300, legendName: "01.11.2017"},
+      { name: "02.11", sent: -3490, received: 4300, legendName: "02.11.2017"},
+      { name: "03.11", sent: -3490, received: 4300, legendName: "03.11.2017"},
+      { name: "04.11", sent: -3490, received: 4300, legendName: "04.11.2017"},
+      { name: "05.11", sent: -3490, received: 4300, legendName: "05.11.2017"},
+      { name: "06.11", sent: -3490, received: 4300, legendName: "06.11.2017"},
+    ];
+  }
+);
+
+//fake data for ticket tab on overview Page
+export const totalValueOfLiveTickets = createSelector(
+  [],
+  () => 237031094298
+);
+
+export const earnedStakingReward = createSelector(
+  [],
+  () => 6525094298
+);
+
+export const ticketDataChart = createSelector(
+  [transactions],
+  () => {
+    return [
+      { name: "23.10", immature: 4000, live: 2400, voted: 4000, legendName: "23.10.2017"},
+      { name: "24.10", immature: 3000, live: 1398, voted: 4000, legendName: "24.10.2017"},
+      { name: "25.10", immature: 2000, live: 7004, voted: 4000, legendName: "25.10.2017"},
+      { name: "26.10", immature: 2780, live: 3908, voted: 4000, legendName: "26.10.2017"},
+      { name: "27.10", immature: 1890, live: 4800, voted: 4000, legendName: "27.10.2017"},
+      { name: "28.10", immature: 2390, live: 3800, voted: 4000, legendName: "28.10.2017"},
+      { name: "29.10", immature: 3490, live: 4300, voted: 4000, legendName: "29.10.2017"},
+      { name: "30.10", immature: 3490, live: 4300, voted: 4000, legendName: "30.10.2017"},
+      { name: "01.11", immature: 3490, live: 4300, voted: 4000, legendName: "01.11.2017"},
+      { name: "02.11", immature: 3490, live: 4300, voted: 4000, legendName: "02.11.2017"},
+      { name: "03.11", immature: 3490, live: 4300, voted: 4000, legendName: "03.11.2017"},
+      { name: "04.11", immature: 3490, live: 4300, voted: 4000, legendName: "04.11.2017"},
+      { name: "05.11", immature: 3490, live: 4300, voted: 4000, legendName: "05.11.2017"},
+      { name: "06.11", immature: 3490, live: 4300, voted: 4000, legendName: "06.11.2017"},
+    ];
+  }
+);
+
 export const viewableTransactions = createSelector(
   [transactions, homeHistoryTransactions],
   (transactions, homeHistoryTransactions) => [...transactions, ...homeHistoryTransactions]
@@ -349,6 +471,7 @@ const ticketNormalizer = createSelector(
   }
 );
 const ticketSorter = (a, b) => (b.leaveTimestamp||b.enterTimestamp) - (a.leaveTimestamp||a.enterTimestamp);
+
 const allTickets = createSelector(
   [ticketNormalizer, get(["grpc", "tickets"])],
   (normalizer, tickets) => tickets.map(normalizer).sort(ticketSorter)
@@ -372,6 +495,7 @@ export const viewedTicketListing = createSelector(
 const rescanResponse = get(["control", "rescanResponse"]);
 export const rescanRequest = get(["control", "rescanRequest"]);
 export const getTransactionsRequestAttempt = get(["grpc", "getTransactionsRequestAttempt"]);
+export const getTicketsRequestAttempt = get(["grpc", "getTicketsRequestAttempt"]);
 export const notifiedBlockHeight = get(["notifications", "currentHeight"]);
 
 export const currentBlockHeight = get(["grpc", "currentBlockHeight"]);
@@ -530,9 +654,9 @@ export const expiredTicketsCount = compose(r => r ? r.getExpired() : 0, getStake
 export const liveTicketsCount = compose(r => r ? r.getLive() : 0, getStakeInfoResponse);
 export const totalSubsidy = compose(r => r ? r.getTotalSubsidy() : 0, getStakeInfoResponse);
 export const hasTicketsToRevoke = compose(
-    r => r ? r.getRevoked() !== r.getExpired() + r.getMissed() : 0,
-    getStakeInfoResponse
-  );
+  r => r ? r.getRevoked() !== r.getExpired() + r.getMissed() : 0,
+  getStakeInfoResponse
+);
 
 export const ticketBuyerService = get(["grpc", "ticketBuyerService"]);
 const startAutoBuyerResponse = get(["control", "startAutoBuyerResponse"]);
@@ -620,7 +744,7 @@ export const lastBlockTimestamp = get(["grpc", "recentBlockTimestamp"]);
 export const getNextAccountSuccess = get(["control", "getNextAccountSuccess"]);
 export const getNextAccountError = get(["control", "getNextAccountError"]);
 export const getNextAccountRequestAttempt = get(["control", "getNextAccountRequestAttempt"]);
-export const hiddenAccounts = get(["grpc", "hiddenAccounts"]);
+export const hiddenAccounts = get(["daemon", "hiddenAccounts"]);
 export const renameAccountError = get(["control", "renameAccountError"]);
 export const renameAccountSuccess = get(["control", "renameAccountSuccess"]);
 export const renameAccountRequestAttempt = get(["control", "renameAccountRequestAttempt"]);

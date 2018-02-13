@@ -13,7 +13,7 @@ import balanceConnector from "connectors/balance";
  * Whenever possible, use the DcrInput component, as it is more flexible and
  * already manages the underlying input value in atoms.
  */
-export const FixedDcrInput = ({...props, currencyDisplay}) =>
+export const FixedDcrInput = ({currencyDisplay, ...props}) =>
   <FloatInput {...{...props, unit: currencyDisplay, maxFracDigits: 8}} />;
 
 /**
@@ -82,12 +82,12 @@ class DcrInput extends React.Component {
 
     const Comp = unitDivisor !== 1 ? FloatInput : IntegerInput;
     return <Comp
-        {...this.props}
-        unit={currencyDisplay}
-        value={value}
-        onChange={onChange}
-        maxFracDigits={maxFracDigits}
-      />;
+      {...this.props}
+      unit={currencyDisplay}
+      value={value}
+      onChange={onChange}
+      maxFracDigits={maxFracDigits}
+    />;
   }
 }
 

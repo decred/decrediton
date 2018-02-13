@@ -52,6 +52,7 @@ class Send extends React.Component {
       onShowSendOthers,
       onAttemptConstructTransaction,
       onAddOutput,
+      onRebroadcastUnmined,
       getOnRemoveOutput,
       getOnChangeOutputDestination,
       getOnChangeOutputAmount,
@@ -79,6 +80,7 @@ class Send extends React.Component {
           onShowSendOthers,
           onAttemptConstructTransaction,
           onAddOutput,
+          onRebroadcastUnmined,
           getOnRemoveOutput,
           getOnChangeOutputDestination,
           getOnChangeOutputAmount,
@@ -103,14 +105,14 @@ class Send extends React.Component {
     return outputs.map((output, index) => {
       return {
         data: <OutputRow
-            {...{ index, outputs, ...this.props, ...output.data, isSendAll, totalSpent }}
-            addressError={this.getAddressError(index)}
-            amountError={this.getAmountError(index)}
-            getOnChangeOutputDestination={this.getOnChangeOutputDestination}
-            getOnChangeOutputAmount={this.getOnChangeOutputAmount}
-            onAddOutput={this.onAddOutput}
-            getOnRemoveOutput={this.getOnRemoveOutput(index)}
-          />,
+          {...{ index, outputs, ...this.props, ...output.data, isSendAll, totalSpent }}
+          addressError={this.getAddressError(index)}
+          amountError={this.getAmountError(index)}
+          getOnChangeOutputDestination={this.getOnChangeOutputDestination}
+          getOnChangeOutputAmount={this.getOnChangeOutputAmount}
+          onAddOutput={this.onAddOutput}
+          getOnRemoveOutput={this.getOnRemoveOutput(index)}
+        />,
         key: "output_" + index,
         style: {
           height: spring(60, presets.gentle),
@@ -204,6 +206,11 @@ class Send extends React.Component {
   onAddOutput() {
     const { outputs } = this.state;
     this.setState({ outputs: [...outputs, { key: "output_"+outputs.length, data: {...BASE_OUTPUT} }] });
+  }
+
+  onRebroadcastUnmined() {
+    const { publishUnminedTransactions } = this.props;
+    publishUnminedTransactions && publishUnminedTransactions();
   }
 
   getOnRemoveOutput(key) {

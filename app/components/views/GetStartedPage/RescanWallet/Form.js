@@ -16,13 +16,13 @@ const RescanWalletFormHeader = ({
 );
 
 const RescanWalletFormBody = ({
-    onShowLogs,
-    rescanEndBlock,
-    rescanStartBlock,
-    rescanCurrentBlock,
-    showLongWaitMessage
-  }) => (
-    showLongWaitMessage &&
+  onShowLogs,
+  rescanEndBlock,
+  rescanStartBlock,
+  rescanCurrentBlock,
+  showLongWaitMessage
+}) => (
+  showLongWaitMessage &&
     <div className="get-started-content-new-seed">
       <div className="get-started-content-instructions">
         <LinearProgress
@@ -42,7 +42,7 @@ const RescanWalletFormBody = ({
                 : rescanStartBlock,
               rescanEndBlock: rescanEndBlock
             }}
-            />
+          />
         </p>
       </div>
 
@@ -52,6 +52,6 @@ const RescanWalletFormBody = ({
         </SlateGrayButton>
       </div>
     </div>
-  );
+);
 
 export { RescanWalletFormHeader, RescanWalletFormBody };

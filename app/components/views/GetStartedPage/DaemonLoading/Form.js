@@ -22,28 +22,28 @@ const DaemonLoadingFormHeader = ({
 );
 
 const DaemonLoadingFormBody = ({
-    getCurrentBlockCount,
-    getDaemonStarted,
-    getNeededBlocks,
-    showLongWaitMessage,
-    finishDateEstimation,
-    onShowSettings,
-    onShowLogs,
-  }) => (
-    <div className="get-started-content-new-seed">
+  getCurrentBlockCount,
+  getDaemonStarted,
+  getNeededBlocks,
+  showLongWaitMessage,
+  finishDateEstimation,
+  onShowSettings,
+  onShowLogs,
+}) => (
+  <div className="get-started-content-new-seed">
     {getDaemonStarted ? getCurrentBlockCount == null ?
       showLongWaitMessage ?
-      <Aux>
-        <div className="get-started-fetch-headers-message">
-          <T id="getStarted.chainLoading" m="The Decred chain is currently loading and may take a few minutes." />
-        </div>
-        <div className="get-started-bottom-buttons">
-          <SlateGrayButton onClick={onShowLogs}>
-            <T id="getStarted.btnLogs" m="Logs" />
-          </SlateGrayButton>
-        </div>
-      </Aux> :
-      <div></div> :
+        <Aux>
+          <div className="get-started-fetch-headers-message">
+            <T id="getStarted.chainLoading" m="The Decred chain is currently loading and may take a few minutes." />
+          </div>
+          <div className="get-started-bottom-buttons">
+            <SlateGrayButton onClick={onShowLogs}>
+              <T id="getStarted.btnLogs" m="Logs" />
+            </SlateGrayButton>
+          </div>
+        </Aux> :
+        <div></div> :
       <Aux>
         <div className="get-started-content-instructions">
           <div className="get-started-content-instructions-blockchain-syncing">
@@ -68,7 +68,7 @@ const DaemonLoadingFormBody = ({
                 currentBlockCount: getCurrentBlockCount,
                 neededBlocks: getNeededBlocks
               }}
-              />
+            />
           </p>
         </div>
         <div className="get-started-bottom-buttons">
@@ -81,7 +81,7 @@ const DaemonLoadingFormBody = ({
         </div>
       </Aux> :
       <div></div> }
-    </div>
-  );
+  </div>
+);
 
 export { DaemonLoadingFormHeader, DaemonLoadingFormBody };
