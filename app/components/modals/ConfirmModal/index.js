@@ -1,5 +1,5 @@
 import Modal from "../Modal";
-import { SlateGrayButton, KeyBlueButton } from "buttons";
+import { InvisibleButton, KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 
 const propTypes = {
@@ -25,9 +25,9 @@ const ConfirmModal = ({modalTitle, modalContent, show, onCancelModal, onSubmit,
       <KeyBlueButton className="confirm-modal-confirm-button" onClick={onSubmit}>
         {confirmLabel || <T id="infoModal.btnConfirm" m="Confirm" />}
       </KeyBlueButton>
-      <SlateGrayButton className="confirm-modal-close-button" onClick={onCancelModal}>
+      <InvisibleButton className="confirm-modal-close-button" onClick={onCancelModal}>
         <T id="confirmModal.btnCancel" m="Cancel" />
-      </SlateGrayButton>
+      </InvisibleButton>
     </div>
   </Modal>
 );

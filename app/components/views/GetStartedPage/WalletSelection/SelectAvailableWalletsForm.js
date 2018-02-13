@@ -29,11 +29,11 @@ const SelectAvailableWalletsForm = ({
           <T id="wallet.form.start.btn" m="Start selected wallet"/>
         </KeyBlueButton>
         <RemoveWalletButton
-          modalTitle={<T id="stakepools.list.removeConfirmTitle" m="Remove Wallet" />}
+          modalTitle={<T id="stakepools.list.removeConfirmTitle" m="Remove {wallet}"
+            values={{wallet: (<span className="mono">{selectedWallet && selectedWallet.label}</span>)}}/>}
           buttonLabel={<T id="stakepools.list.btnRemove" m="Remove"/>}
           modalContent={
-            <T id="stakepools.list.confirmRemove" m="Do you confirm removal of wallet {wallet}?"
-              values={{wallet: (<span className="mono">{selectedWallet && selectedWallet.label}</span>)}}/>}
+            <T id="stakepools.list.confirmRemove" m="Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding."/>}
           onSubmit={() => onRemoveWallet(selectedWallet)}/>
       </div>
     </Aux>
