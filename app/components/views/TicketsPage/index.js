@@ -1,4 +1,3 @@
-import { Redirect } from "react-router-dom";
 import { TabbedPage, TabbedPageTab as Tab, TitleHeader, DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
 import { default as PurchaseTab } from "./PurchaseTab";
@@ -23,6 +22,5 @@ export default () => (
     <Tab path="/tickets/mytickets" component={MyTicketsTab} header={TabHeader} link={<T id="tickets.tab.mytickets" m="My Tickets"/>}/>
     <Tab path="/tickets/governance" component={GovernanceTab} header={TabHeader} link={<T id="tickets.tab.governance" m="Governance"/>}/>
     <Tab path="/tickets/statistics" component={StatisticsTab} header={TabHeader} link={<T id="tickets.tab.statistics" m="Statistics"/>}/>
-    <Redirect from="/tickets" exact to="/tickets/purchase" />
   </TabbedPage>
 );
