@@ -158,6 +158,54 @@
   text-align: left;
 }
 
+.app-modal.confirm-seed-copy-modal {
+  left: 10%;
+  right: 10%;
+  top: 20%;
+  box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 2em;
+  color: rgba(12, 30, 62, 1);
+  line-height: normal;
+  text-align: left;
+}
+
+@media screen and (min-width: 768px) {
+  .app-modal.confirm-seed-copy-modal {
+    left: 20%;
+    right: 20%;
+  }
+}
+
+@media screen and (max-height: 420px) {
+  .app-modal.confirm-seed-copy-modal {
+    top: 10%;
+    max-height: 60%;
+  }
+}
+
+.confirm-seed-copy-modal-toolbar {
+  margin-top: 2em;
+}
+
+.confirm-seed-copy-modal-toolbar > .confirm-modal-confirm-button {
+  float: left;
+}
+.confirm-seed-copy-modal-toolbar > .confirm-modal-close-button {
+  float: right;
+}
+
+.confirm-seed-copy-modal-header {
+  margin-bottom: 1em;
+}
+
+.confirm-seed-copy-modal-header-title {
+  font-weight: 400;
+  font-size: 27px;
+  text-transform: capitalize;
+}
+
 .app-modal.confirm-modal {
   left: 446px;
   width: 289px;

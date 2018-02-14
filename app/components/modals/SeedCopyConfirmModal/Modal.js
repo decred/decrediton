@@ -13,9 +13,9 @@ const propTypes = {
 
 const Modal = ({show, onCancelModal, onSubmit, copyConfirmationPhrase,
   typedConfirmationPhrase, onTypedConfirmationPhraseChanged}) => (
-  <DefaultModal className="confirm-modal" {...{ show }}>
-    <div className="confirm-modal-header">
-      <div className="confirm-modal-header-title">
+  <DefaultModal className="confirm-seed-copy-modal" {...{ show }}>
+    <div className="confirm-seed-copy-modal-header">
+      <div className="confirm-seed-copy-modal-header-title">
         <T id="seedCopyConfirmModal.title" m="Seed Clipboard Copy Warning" />
       </div>
     </div>
@@ -40,7 +40,7 @@ const Modal = ({show, onCancelModal, onSubmit, copyConfirmationPhrase,
         value={typedConfirmationPhrase}
         onChange={(e) => onTypedConfirmationPhraseChanged(e.target.value)}/>
     </div>
-    <div className="confirm-modal-toolbar">
+    <div className="confirm-seed-copy-modal-toolbar">
       <DangerButton className="confirm-modal-confirm-button" onClick={onSubmit} disabled={typedConfirmationPhrase.toLowerCase() !== copyConfirmationPhrase.toLowerCase()}>
         <T id="seedCopyConfirm.btnConfirm" m="Confirm Seed Copy" />
       </DangerButton>
