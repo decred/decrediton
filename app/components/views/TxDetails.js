@@ -45,7 +45,7 @@ function mapNonWalletInput(input) {
   return {address, amount};
 }
 
-const TxDetails = ({ routes,
+const TxDetails = ({
   decodedTransaction,
   tx: {
     txHash,
