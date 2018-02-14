@@ -10,3 +10,5 @@ export { default as Tooltip } from "./Tooltip";
 export { default as TransitionMotionWrapper } from "./TransitionMotionWrapper";
 export { default as ExternalLink } from "./ExternalLink";
 export { default as UnselectableText } from "./UnselectableText";
+export { default as RoutedTabsHeader } from "./RoutedTabsHeader";
+export * from "./RoutedTabsHeader";
