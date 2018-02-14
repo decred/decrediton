@@ -88,6 +88,13 @@ export function formatTransaction(block, transaction, index) {
   const type = transaction.getTransactionType();
   let direction = "";
 
+
+  let debitAddresses = [];
+  transaction.getDebitsList().forEach((debit) => debitAddresses.push(debit.getPreviousAccount()));
+
+  let creditAddresses = [];
+  transaction.getCreditsList().forEach((credit) => creditAddresses.push(credit.getAddress()));
+
   if (type === TransactionDetails.TransactionType.REGULAR) {
     if (amount > 0) {
       direction = TRANSACTION_DIR_RECEIVED;
@@ -109,7 +116,9 @@ export function formatTransaction(block, transaction, index) {
     type,
     direction,
     amount,
-    fee
+    fee,
+    debitAddresses,
+    creditAddresses
   };
 }
 
@@ -146,7 +155,7 @@ export const getTransactions = withLogNoData((walletService, startBlockHeight,
       }
     });
     getTx.on("end", () => {
-      resolve({mined: foundMined, unmined: foundUnmined});
+      resolve({ mined: foundMined, unmined: foundUnmined });
     });
     getTx.on("error", (err) => {
       reject(err);

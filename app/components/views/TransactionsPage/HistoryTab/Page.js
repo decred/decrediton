@@ -1,6 +1,7 @@
 import { EyeFilterMenu } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
+import { TextInput } from "../../../inputs";
 import TxHistory from "TxHistory";
 import { LoadingMoreTransactionsIndicator, NoMoreTransactionsIndicator } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
@@ -12,10 +13,12 @@ const Page = ({
   transactions,
   selectedSortOrderKey,
   selectedTxTypeKey,
+  searchText,
   loadMoreThreshold,
   noMoreTransactions,
   onChangeSelectedType,
   onChangeSortType,
+  onChangeSearchText,
   onLoadMoreTransactions,
 }) => (
   <InfiniteScroll
@@ -32,7 +35,13 @@ const Page = ({
         </div>
         <div className="history-select-tx-types-area">
           <div className="history-select-tx-types">
-            <Tooltip tipWidth={ 300 } text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
+            <TextInput
+              type="text"
+              placeholder={"Filter by Address"}
+              value={searchText}
+              onChange={(e) => onChangeSearchText(e.target.value)}
+            />
+            <Tooltip tipWidth={300} text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
               <EyeFilterMenu
                 labelKey="label"
                 keyField="value"
@@ -42,7 +51,7 @@ const Page = ({
                 className="sort-by"
               />
             </Tooltip>
-            <Tooltip tipWidth={ 300 } text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
+            <Tooltip tipWidth={300} text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
               <EyeFilterMenu
                 labelKey="label"
                 keyField="key"
@@ -63,7 +72,7 @@ const Page = ({
       </div>
       {!noMoreTransactions
         ? <LoadingMoreTransactionsIndicator />
-        : <NoMoreTransactionsIndicator /> }
+        : <NoMoreTransactionsIndicator />}
     </div>
   </InfiniteScroll>
 );

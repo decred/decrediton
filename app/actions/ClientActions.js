@@ -56,19 +56,19 @@ export const GETSTARTUPWALLETINFO_SUCCESS = "GETSTARTUPWALLETINFO_SUCCESS";
 export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
 
 export const getStartupWalletInfo = () => (dispatch) => {
-  dispatch({type: GETSTARTUPWALLETINFO_ATTEMPT});
-  setTimeout( () => { dispatch(getStakeInfoAttempt()); }, 1000);
-  setTimeout( () => { dispatch(getTicketsInfoAttempt()); }, 1000);
+  dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
+  setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
+  setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 1000);
   return new Promise((resolve, reject) => {
-    setTimeout( async () => {
+    setTimeout(async () => {
       try {
         await dispatch(getAccountsAttempt(true));
         await dispatch(getMostRecentTransactions());
         dispatch(findImmatureTransactions());
-        dispatch({type: GETSTARTUPWALLETINFO_SUCCESS});
+        dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
       } catch (error) {
-        dispatch({error, type: GETSTARTUPWALLETINFO_FAILED});
+        dispatch({ error, type: GETSTARTUPWALLETINFO_FAILED });
         reject(error);
       }
     }, 1000);
@@ -136,13 +136,13 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
   });
 
   while (txs.mined.length > 0) {
-    let lastTx = txs.mined[txs.mined.length-1];
+    let lastTx = txs.mined[txs.mined.length - 1];
     mergeCheckHeights(transactionsMaturingHeights(txs.mined, chainParams));
-    txs = await walletGetTransactions(walletService, lastTx.height+1,
-      currentBlockHeight+1, pageSize);
+    txs = await walletGetTransactions(walletService, lastTx.height + 1,
+      currentBlockHeight + 1, pageSize);
   }
 
-  dispatch({maturingBlockHeights: checkHeights, type: MATURINGHEIGHTS_CHANGED});
+  dispatch({ maturingBlockHeights: checkHeights, type: MATURINGHEIGHTS_CHANGED });
 };
 
 export const getWalletServiceAttempt = () => (dispatch, getState) => {
@@ -217,7 +217,7 @@ const getAccountsBalances = (accounts) => (dispatch, getState) => {
         return;
       });
   });
-  dispatch({balances, type: GETBALANCE_SUCCESS });
+  dispatch({ balances, type: GETBALANCE_SUCCESS });
 };
 
 export const GETBALANCE_ATTEMPT = "GETBALANCE_ATTEMPT";
@@ -243,7 +243,7 @@ const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (dispatch
   const updatedBalances = balances.map(balance =>
     (balance.accountNumber === accountNumber) ? updatedBalance : balance);
 
-  dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS });
+  dispatch({ balances: updatedBalances, type: GETBALANCE_SUCCESS });
 };
 
 export const getBalanceUpdateAttempt = (accountNumber, requiredConfs) => (dispatch, getState) =>
@@ -322,13 +322,13 @@ export const getStakeInfoAttempt = () => (dispatch, getState) => {
       const checkedFields = ["getExpired", "getLive", "getMissed", "getOwnMempoolTix",
         "getRevoked", "getVoted"];
       const reloadTickets = getStakeInfoResponse
-        ? checkedFields.reduce((a, v) => a||getStakeInfoResponse[v]() !== resp[v](), false)
+        ? checkedFields.reduce((a, v) => a || getStakeInfoResponse[v]() !== resp[v](), false)
         : false;
 
       if (reloadTickets) {
         // TODO: once we switch to fully streamed getTickets(), just invalidate
         // the current ticket list.
-        setTimeout( () => {dispatch(getTicketsInfoAttempt());}, 1000);
+        setTimeout(() => { dispatch(getTicketsInfoAttempt()); }, 1000);
       }
     })
     .catch(error => dispatch({ error, type: GETSTAKEINFO_FAILED }));
@@ -383,7 +383,7 @@ export function updateAccount(account) {
     const updatedBalances = balances.map(balance =>
       (balance.accountNumber === account.accountNumber) ? updatedBalance : balance);
 
-    dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS });
+    dispatch({ balances: updatedBalances, type: GETBALANCE_SUCCESS });
   };
 }
 
@@ -399,8 +399,8 @@ export function hideAccount(accountNumber) {
     updatedHiddenAccounts.push(accountNumber);
     var cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
-    dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
-    dispatch(updateAccount({accountNumber, hidden: true}));
+    dispatch({ hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS });
+    dispatch(updateAccount({ accountNumber, hidden: true }));
   };
 }
 
@@ -415,8 +415,8 @@ export function showAccount(accountNumber) {
     }
     var cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
-    dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
-    dispatch(updateAccount({accountNumber, hidden: false}));
+    dispatch({ hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS });
+    dispatch(updateAccount({ accountNumber, hidden: false }));
   };
 }
 
@@ -452,8 +452,9 @@ export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
 // If empty, all transactions are accepted.
 function filterTransactions(transactions, filter) {
   return transactions
-    .filter(v => filter.types.length ? filter.types.indexOf(v.type) > -1 : true )
-    .filter(v => filter.direction ? filter.direction === v.direction : true);
+    .filter(v => filter.types.length ? filter.types.indexOf(v.type) > -1 : true)
+    .filter(v => filter.direction ? filter.direction === v.direction : true)
+    .filter(v => filter.search ? v.creditAddresses.find(address => address.length > 1 && address.toLowerCase().indexOf(filter.search.toLowerCase()) !== -1) != undefined : true);
 }
 
 // getTransactions loads a list of transactions from the wallet, given the
@@ -495,11 +496,11 @@ export const getTransactions = () => async (dispatch, getState) => {
   while (!noMoreTransactions && (filtered.length < maximumTransactionCount)) {
     let startRequestHeight, endRequestHeight;
 
-    if ( transactionsFilter.listDirection === "desc" ) {
-      startRequestHeight = lastTransaction ? lastTransaction.height -1 : getAccountsResponse.getCurrentBlockHeight();
+    if (transactionsFilter.listDirection === "desc") {
+      startRequestHeight = lastTransaction ? lastTransaction.height - 1 : getAccountsResponse.getCurrentBlockHeight();
       endRequestHeight = 1;
     } else {
-      startRequestHeight = lastTransaction ? lastTransaction.height +1 : 1;
+      startRequestHeight = lastTransaction ? lastTransaction.height + 1 : 1;
       endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
     }
 
@@ -507,18 +508,20 @@ export const getTransactions = () => async (dispatch, getState) => {
       let { mined } = await walletGetTransactions(walletService,
         startRequestHeight, endRequestHeight, pageCount);
       noMoreTransactions = mined.length === 0;
-      lastTransaction = mined.length ? mined[mined.length -1] : lastTransaction;
+      lastTransaction = mined.length ? mined[mined.length - 1] : lastTransaction;
       filterTransactions(mined, transactionsFilter)
         .forEach(v => filtered.push(v));
     } catch (error) {
-      dispatch({ type: GETTRANSACTIONS_FAILED, error});
+      dispatch({ type: GETTRANSACTIONS_FAILED, error });
       return;
     }
   }
 
   minedTransactions = [...minedTransactions, ...filtered];
-  const stateChange = { unminedTransactions, minedTransactions,
-    noMoreTransactions, lastTransaction, type: GETTRANSACTIONS_COMPLETE};
+  const stateChange = {
+    unminedTransactions, minedTransactions,
+    noMoreTransactions, lastTransaction, type: GETTRANSACTIONS_COMPLETE
+  };
   dispatch(stateChange);
   return stateChange;
 };
@@ -527,8 +530,8 @@ export const NEW_TRANSACTIONS_RECEIVED = "NEW_TRANSACTIONS_RECEIVED";
 
 function checkAccountsToUpdate(txs, accountsToUpdate) {
   txs.forEach(tx => {
-    tx.tx.getCreditsList().forEach(credit => {if (accountsToUpdate.find(eq(credit.getAccount())) === undefined) accountsToUpdate.push(credit.getAccount());});
-    tx.tx.getDebitsList().forEach(debit => {if (accountsToUpdate.find(eq(debit.getPreviousAccount())) === undefined) accountsToUpdate.push(debit.getPreviousAccount());});
+    tx.tx.getCreditsList().forEach(credit => { if (accountsToUpdate.find(eq(credit.getAccount())) === undefined) accountsToUpdate.push(credit.getAccount()); });
+    tx.tx.getDebitsList().forEach(debit => { if (accountsToUpdate.find(eq(debit.getPreviousAccount())) === undefined) accountsToUpdate.push(debit.getPreviousAccount()); });
   });
   return accountsToUpdate;
 }
@@ -554,13 +557,13 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   const chainParams = sel.chainParams(getState());
 
   // aux maps of [txhash] => tx (used to ensure no duplicate txs)
-  const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
-  const newlyUnminedMap = newlyUnminedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
+  const newlyMinedMap = newlyMinedTransactions.reduce((m, v) => { m[v.hash] = v; return m; }, {});
+  const newlyUnminedMap = newlyUnminedTransactions.reduce((m, v) => { m[v.hash] = v; return m; }, {});
 
-  const minedMap = minedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
-  const unminedMap = unminedTransactions.reduce((m, v) => {m[v.hash] = v; return m;}, {});
+  const minedMap = minedTransactions.reduce((m, v) => { m[v.hash] = v; return m; }, {});
+  const unminedMap = unminedTransactions.reduce((m, v) => { m[v.hash] = v; return m; }, {});
 
-  const unminedDupeCheck =  newlyUnminedTransactions.filter(tx => !minedMap[tx.hash] && !unminedMap[tx.hash]);
+  const unminedDupeCheck = newlyUnminedTransactions.filter(tx => !minedMap[tx.hash] && !unminedMap[tx.hash]);
 
   var accountsToUpdate = new Array();
   accountsToUpdate = checkAccountsToUpdate(unminedDupeCheck, accountsToUpdate);
@@ -582,7 +585,7 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   ].slice(0, recentTransactionCount);
 
   const { maturingBlockHeights } = getState().grpc;
-  const newMaturingHeights = {...maturingBlockHeights};
+  const newMaturingHeights = { ...maturingBlockHeights };
   const mergeNewMaturingHeights = (hs) => Object.keys(hs).forEach(h => {
     const accounts = newMaturingHeights[h] || [];
     hs[h].forEach(a => accounts.indexOf(a) === -1 ? accounts.push(a) : null);
@@ -590,7 +593,7 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   });
 
   mergeNewMaturingHeights(transactionsMaturingHeights(newlyMinedTransactions, chainParams));
-  dispatch({maturingBlockHeights: newMaturingHeights, type: MATURINGHEIGHTS_CHANGED});
+  dispatch({ maturingBlockHeights: newMaturingHeights, type: MATURINGHEIGHTS_CHANGED });
 
   // TODO: filter newlyMinedTransactions against minedTransactions if this
   // starts generating a duplicated key error
@@ -602,8 +605,10 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   }
   minedTransactions = filterTransactions(minedTransactions, transactionsFilter);
 
-  dispatch({unminedTransactions, minedTransactions, newlyUnminedTransactions,
-    newlyMinedTransactions, recentTransactions, type: NEW_TRANSACTIONS_RECEIVED});
+  dispatch({
+    unminedTransactions, minedTransactions, newlyUnminedTransactions,
+    newlyMinedTransactions, recentTransactions, type: NEW_TRANSACTIONS_RECEIVED
+  });
 };
 
 export const CLEAR_MOSTRECENTTRANSACTIONS = "CLEAR_MOSTRECENTTRANSACTIONS";
@@ -613,18 +618,19 @@ export const CLEAR_MOSTRECENTTRANSACTIONS = "CLEAR_MOSTRECENTTRANSACTIONS";
 // list of recent transactions.
 export const getMostRecentTransactions = () => dispatch => {
   const defaultFilter = {
+    search: null,
     listDirection: "desc",
     types: [],
     direction: null,
   };
-  dispatch({type: CLEAR_MOSTRECENTTRANSACTIONS});
+  dispatch({ type: CLEAR_MOSTRECENTTRANSACTIONS });
   return dispatch(changeTransactionsFilter(defaultFilter));
 };
 
 export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
 export function changeTransactionsFilter(newFilter) {
   return (dispatch) => {
-    dispatch({transactionsFilter: newFilter, type: CHANGE_TRANSACTIONS_FILTER});
+    dispatch({ transactionsFilter: newFilter, type: CHANGE_TRANSACTIONS_FILTER });
     return dispatch(getTransactions());
   };
 }
@@ -640,7 +646,8 @@ export function updateBlockTimeSince() {
       if (recentBlockTimestamp != lastBlockTimestamp) {
         dispatch({
           recentBlockTimestamp: lastBlockTimestamp,
-          type: UPDATETIMESINCEBLOCK });
+          type: UPDATETIMESINCEBLOCK
+        });
       }
     }
   };
@@ -652,7 +659,7 @@ export const GETAGENDASERVICE_SUCCESS = "GETAGENDASERVICE_SUCCESS";
 
 export const getAgendaServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
-  const { daemon: { walletName }} = getState();
+  const { daemon: { walletName } } = getState();
   dispatch({ type: GETAGENDASERVICE_ATTEMPT });
   wallet.getAgendaService(sel.isTestNet(getState()), walletName, address, port)
     .then(agendaService => {
@@ -668,7 +675,7 @@ export const GETVOTINGSERVICE_SUCCESS = "GETVOTINGSERVICE_SUCCESS";
 
 export const getVotingServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
-  const { daemon: { walletName }} = getState();
+  const { daemon: { walletName } } = getState();
   dispatch({ type: GETVOTINGSERVICE_ATTEMPT });
   wallet.getVotingService(sel.isTestNet(getState()), walletName, address, port)
     .then(votingService => dispatch({ votingService, type: GETVOTINGSERVICE_SUCCESS }))
@@ -720,7 +727,7 @@ export const GETMESSAGEVERIFICATIONSERVICE_SUCCESS = "GETMESSAGEVERIFICATIONSERV
 
 export const getMessageVerificationServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
-  const { daemon: { walletName }} = getState();
+  const { daemon: { walletName } } = getState();
   dispatch({ type: GETMESSAGEVERIFICATIONSERVICE_ATTEMPT });
   wallet.getMessageVerificationService(sel.isTestNet(getState()), walletName, address, port)
     .then(messageVerificationService =>
@@ -738,5 +745,5 @@ export const SEEDCOPIEDTOCLIPBOARD = "SEEDCOPIEDTOCLIPBOARD";
 export const copySeedToClipboard = (mnemonic) => (dispatch) => {
   clipboard.clear();
   clipboard.writeText(mnemonic);
-  dispatch({type: SEEDCOPIEDTOCLIPBOARD});
+  dispatch({ type: SEEDCOPIEDTOCLIPBOARD });
 };
