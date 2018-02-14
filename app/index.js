@@ -5,7 +5,6 @@ import { ConnectedRouter } from "react-router-redux";
 import { Switch, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { App } from "containers";
-// import routes from "./routes";
 import configureStore from "./store/configureStore";
 import { getGlobalCfg } from "./config.js";
 import locales from "./i18n/locales";
@@ -323,11 +322,8 @@ var initialState = {
 const history = createMemoryHistory();
 const store = configureStore(initialState, history);
 
-const Test = () => <div>Hehehe zua :P</div>;
-
 render(
   <Provider store={store}>
-    {/* <Router history={syncedHistory} routes={routes} /> */}
     <ConnectedRouter history={history}>
       <Switch>
         <Route path="/" component={App} />

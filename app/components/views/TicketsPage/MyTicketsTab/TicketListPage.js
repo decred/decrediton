@@ -4,7 +4,6 @@ import TicketInfoCard from "./TicketInfoCard";
 import { FormattedMessage as T } from "react-intl";
 import Paginator from "Paginator";
 import { SlateGrayButton } from "buttons";
-import { goBack } from "react-router-redux";
 import "style/MyTickets.less";
 
 @autobind

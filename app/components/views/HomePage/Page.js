@@ -12,7 +12,6 @@ import "style/Fonts.less";
 import "style/HomePage.less";
 
 const HomePage = ({
-  routes,
   totalBalance,
   tickets,
   transactions,
@@ -49,11 +48,11 @@ const HomePage = ({
 
       <div className="overview-transactions-ticket-wrapper">
         <div className={tickets.length > 0 ? "recent-transactions" : "recent-transactions-full"}>
-          <RecentTransactions {...{ routes, transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
+          <RecentTransactions {...{ transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
         </div>
         {tickets.length > 0 &&
           <div className="recent-transactions">
-            <TicketActivity {...{ routes, tickets, getTransactionsRequestAttempt, getAccountsResponse }} />
+            <TicketActivity {...{ tickets, getTransactionsRequestAttempt, getAccountsResponse }} />
           </div>
         }
       </div>

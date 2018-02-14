@@ -3,7 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import { invalidRPCVersion } from "connectors";
 import { StandalonePageBody } from "layout";
 
-const InvalidRPCVersion = ({ requiredWalletRPCVersion, walletRPCVersion, routes }) => (
+const InvalidRPCVersion = ({ requiredWalletRPCVersion, walletRPCVersion }) => (
   <StandalonePageBody>
     <div className="invalid-rpc-info">
       <T
