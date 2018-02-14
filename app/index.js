@@ -34,6 +34,7 @@ var initialState = {
     selectedStakePool: null,
   },
   daemon: {
+    tutorial: true,
     daemonStarted: false,
     daemonSynced: false,
     daemonStopped: false,
@@ -308,7 +309,7 @@ var initialState = {
     messages: Array()
   },
   sidebar: {
-    showingSidebar: true,
+    showingSidebar: false,
     showingSidebarMenu: false,
   },
   locales: locales

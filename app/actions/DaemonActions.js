@@ -4,9 +4,10 @@ import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { ipcRenderer } from "electron";
 import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg } from "config";
-import { hideSidebarMenu } from "./SidebarActions";
+import { hideSidebarMenu, showSidebar } from "./SidebarActions";
 import { isTestNet } from "selectors";
 
+export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
 export const DAEMONSTARTED_REMOTE = "DAEMONSTARTED_REMOTE";
@@ -26,6 +27,12 @@ export const WALLET_AUTOBUYER_SETTINGS = "WALLET_AUTOBUYER_SETTINGS";
 export const WALLET_STAKEPOOL_SETTINGS = "WALLET_STAKEPOOL_SETTINGS";
 export const WALLET_SETTINGS = "WALLET_SETTINGS";
 export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
+
+export const finishTutorial = () => (dispatch) => {
+  console.log("hererere");
+  dispatch(showSidebar());
+  dispatch({type: FINISH_TUTORIAL});
+};
 
 export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
   const { daemonStarted, walletName } = getState().daemon;

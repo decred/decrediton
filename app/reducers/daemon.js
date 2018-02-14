@@ -1,4 +1,5 @@
 import {
+  FINISH_TUTORIAL,
   DAEMONSTARTED,
   DAEMONSTARTED_REMOTE,
   DAEMONSTARTED_APPDATA,
@@ -15,6 +16,10 @@ import {
 
 export default function version(state = {}, action) {
   switch (action.type) {
+  case FINISH_TUTORIAL:
+    return {...state,
+      showTutorial: false,
+    };
   case DAEMONSTARTED:
     return {...state,
       daemonStarted: true,

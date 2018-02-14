@@ -6,6 +6,7 @@ import * as wla from "../actions/WalletLoaderActions";
 import * as da from "../actions/DaemonActions";
 
 const mapStateToProps = selectorMap({
+  showTutorial: sel.showTutorial,
   startStepIndex: sel.startStepIndex,
   isInputRequest: sel.isInputRequest,
   startupError: sel.startupError,
@@ -32,6 +33,7 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  finishTutorial: da.finishTutorial,
   onReturnToNewSeed: wla.createWalletGoBackNewSeed,
   onSetCreateWalletFromExisting: wla.createWalletExistingToggle,
   onDiscoverAddresses: wla.discoverAddressAttempt,
