@@ -11,7 +11,7 @@ class ShutdownAppPage extends React.Component{
 
   render() {
     return (
-      <div className="page-view inverted-colors get-started-view">
+      <div className="shutdown-page inverted-colors">
         <Header
           getStarted
           headerTitleOverview={<T id="shutdown.header.title" m="Shutting down Decrediton" />}

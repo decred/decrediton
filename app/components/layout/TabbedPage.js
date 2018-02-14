@@ -1,4 +1,4 @@
-import { Switch, Route, matchPath, Redirect } from "react-router-dom";
+import { Switch, Route, matchPath } from "react-router-dom";
 import { isArray } from "util";
 import { RoutedTabsHeader, RoutedTab } from "shared";
 import { routing } from "connectors";
@@ -15,10 +15,6 @@ TabbedPageTab.propTypes = {
 function getTabs(children) {
   if (!isArray(children)) children = [children];
   return children.filter(c => c.type === TabbedPageTab).map((c, i) => ({index: i, tab: c}));
-}
-
-function translate(left) {
-  return {transform: "translate(" + left + "px)"};
 }
 
 @autobind
@@ -103,7 +99,7 @@ class TabbedPage extends React.Component {
           >
             {interpolatedStyles => <Aux>
               {interpolatedStyles.map(s =>
-                <div className="tab-content" style={translate(s.style.left)} key={s.key}>
+                <div className="tab-content" style={{left: s.style.left, right: -s.style.left}} key={s.key}>
                   {s.data.element}
                 </div>
               )}

@@ -21,7 +21,6 @@ export { default as signMessagePage } from "./signMessagePage";
 export { default as snackbar } from "./snackbar";
 export { default as stakeInfo } from "./stakeInfo";
 export { default as stakePools } from "./stakePools";
-export { default as tabbedHeader } from "./tabbedHeader";
 export { default as ticketAutoBuyer } from "./ticketAutoBuyer";
 export { default as ticketsList } from "./ticketsList";
 export { default as ticketsOverview } from "./ticketsOverview";

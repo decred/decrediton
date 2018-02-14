@@ -1,11 +1,9 @@
 // @flow
 import { FormattedMessage as T } from "react-intl";
 import { invalidRPCVersion } from "connectors";
-import { TabbedHeader } from "shared";
 
 const InvalidRPCVersion = ({ requiredWalletRPCVersion, walletRPCVersion, routes }) => (
   <div className="page-view">
-    <TabbedHeader {...{ routes }}/>
     <div className="page-content">
       <div className="invalid-rpc-info">
         <T

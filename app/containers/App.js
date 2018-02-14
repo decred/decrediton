@@ -3,7 +3,7 @@ import { IntlProvider } from "react-intl";
 import MUItheme from "materialUITheme";
 import { defaultFormats } from "i18n/locales";
 import app from "connectors/app";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
 import GetStartedContainer from "./GetStarted";
 import WalletContainer from "./Wallet";
@@ -68,9 +68,9 @@ class App extends React.Component {
           defaultFormats={defaultFormats}
           key={locale.key}>
           <Aux>
+            <Switch><Redirect from="/" exact to="/getStarted" /></Switch>
             <Snackbar/>
             <AnimatedSwitch {...topLevelAnimation} className="top-level-container">
-              <Redirect from="/"         exact to="/getStarted" />
               <Route path="/getStarted"  component={GetStartedContainer} />
               <Route path="/"            component={WalletContainer} />
             </AnimatedSwitch>

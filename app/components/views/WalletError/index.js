@@ -1,4 +1,3 @@
-import { TabbedHeader } from "shared";
 import { walletError } from "connectors";
 
 const styles = {
@@ -15,9 +14,8 @@ const styles = {
   },
 };
 
-const WalletError = ({ getNetworkError, routes }) => (
+const WalletError = ({ getNetworkError }) => (
   <div style={styles.view}>
-    <TabbedHeader {...{ routes }}/>
     <div style={styles.content}>
       { getNetworkError ?
         <p>{getNetworkError} Please verify that your dcrd is configured correctly and restart.</p> :
