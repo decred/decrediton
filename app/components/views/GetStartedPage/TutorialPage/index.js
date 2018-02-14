@@ -15,7 +15,7 @@ class Tutorial extends React.Component{
 
   render() {
     const { tutorialStep } = this.state;
-    const { onNextTutorialStep, onPrevTutorialStep } = this;
+    const { onNextTutorialStep, onPrevTutorialStep, onGoToStep } = this;
     const { finishTutorial } = this.props;
     return (
       <TutorialPage
@@ -23,9 +23,14 @@ class Tutorial extends React.Component{
           tutorialStep,
           onNextTutorialStep,
           onPrevTutorialStep,
+          onGoToStep,
           finishTutorial
         }
         }/>);
+  }
+
+  onGoToStep(step) {
+    this.setState({tutorialStep: step});
   }
 
   onNextTutorialStep() {
