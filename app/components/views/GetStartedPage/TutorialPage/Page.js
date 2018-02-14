@@ -1,7 +1,61 @@
 import { KeyBlueButton } from "buttons";
 import "style/Tutorial.less";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 
-const TutorialPage = ({tutorialStep, onNextTutorialStep, onGoToStep, finishTutorial}) => {
+const messages = defineMessages({
+  step0Title: {
+    id: "tutorial.step.0.title",
+    defaultMessage: "What is the Decred Blockchain?",
+    description: "string"
+  },
+  step0Text: {
+    id: "tutorial.step.0.text",
+    defaultMessage: "Step 0 text",
+    description: "string"
+  },
+  step1Title: {
+    id: "tutorial.step.1.title",
+    defaultMessage: "What is a Wallet?",
+    description: "string"
+  },
+  step1Text: {
+    id: "tutorial.step.1.text",
+    defaultMessage: "Step 1 text",
+    description: "string"
+  },
+  step2Title: {
+    id: "tutorial.step.2.title",
+    defaultMessage: "Key to Your Wallet",
+    description: "string"
+  },
+  step2Text: {
+    id: "tutorial.step.2.text",
+    defaultMessage: "Step 2 text",
+    description: "string"
+  },
+  step3Title: {
+    id: "tutorial.step.3.title",
+    defaultMessage: "Staking and Governance",
+    description: "string"
+  },
+  step3Text: {
+    id: "tutorial.step.3.text",
+    defaultMessage: "Step 3 text",
+    description: "string"
+  },
+  step4Title: {
+    id: "tutorial.step.4.title",
+    defaultMessage: "Safety Tips",
+    description: "string"
+  },
+  step4Text: {
+    id: "tutorial.step.4.text",
+    defaultMessage: "Step 4 text",
+    description: "string"
+  },
+});
+
+const TutorialPage = ({intl, tutorialStep, onNextTutorialStep, onGoToStep, finishTutorial}) => {
   return (
     <div className="tutorial">
       <div className="tutorial-side">
@@ -10,14 +64,26 @@ const TutorialPage = ({tutorialStep, onNextTutorialStep, onGoToStep, finishTutor
       </div>
       <div className="tutorial-main">
         <div className="tutorial-main-header">
-          Tutorial Step: <span>{tutorialStep}</span>
+          {{
+            0: intl.formatMessage(messages.step0Title),
+            1: intl.formatMessage(messages.step1Title),
+            2: intl.formatMessage(messages.step2Title),
+            3: intl.formatMessage(messages.step3Title),
+            4: intl.formatMessage(messages.step4Title),
+          }[tutorialStep]}
         </div>
         <div className="tutorial-main-text">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id augue dui. Cras in dui libero. Etiam eget nulla vel magna ullamcorper scelerisque in vitae ipsum. Curabitur at bibendum arcu, ac mollis ante. Integer ullamcorper porta faucibus. Aenean id ante id augue pharetra porta. Nulla eu leo eget velit molestie lacinia. Sed ultricies libero a arcu mattis, quis rutrum eros hendrerit. Integer eget risus in ex auctor dapibus. Phasellus efficitur semper nisi, non pharetra leo placerat vel.
+          {{
+            0: intl.formatMessage(messages.step0Text),
+            1: intl.formatMessage(messages.step1Text),
+            2: intl.formatMessage(messages.step2Text),
+            3: intl.formatMessage(messages.step3Text),
+            4: intl.formatMessage(messages.step4Text),
+          }[tutorialStep]}
         </div>
         <div className="tutorial-main-toolbar">
           <KeyBlueButton className="next-button" onClick={tutorialStep < 4 ? onNextTutorialStep : finishTutorial} >
-            Next
+            <T id="tutorial.nextBtn" m={"Next"}/>
           </KeyBlueButton>
           <div className="tutorial-main-toolbar-step-indicators">
             <div className={tutorialStep == 0 ? "current" : tutorialStep > 0 ? "checked" : ""} onClick={tutorialStep !== 0 ? ()=>onGoToStep(0) : null}></div>
@@ -28,7 +94,7 @@ const TutorialPage = ({tutorialStep, onNextTutorialStep, onGoToStep, finishTutor
           </div>
           {tutorialStep < 4 &&
             <KeyBlueButton className="skip-button" onClick={finishTutorial}>
-              Skip
+              <T id="tutorial.skipBtn" m={"Skip"}/>
             </KeyBlueButton>
           }
         </div>
@@ -36,4 +102,4 @@ const TutorialPage = ({tutorialStep, onNextTutorialStep, onGoToStep, finishTutor
     </div>
   );
 };
-export default TutorialPage;
+export default injectIntl(TutorialPage);
