@@ -75,10 +75,6 @@ class TabbedPage extends React.Component {
   }
 
   render() {
-    if (!this.state.matchedTab) {
-      return <Redirect to={this._tabs[0].tab.props.path} />;
-    }
-
     let {children, header} = this.props;
     if (!isArray(children)) children = [children];
 

@@ -3,17 +3,14 @@ import { IntlProvider } from "react-intl";
 import MUItheme from "materialUITheme";
 import { defaultFormats } from "i18n/locales";
 import app from "connectors/app";
-import SideBar from "components/SideBar";
+import { Redirect, Route } from "react-router-dom";
+import { AnimatedSwitch } from "react-router-transition";
+import GetStartedContainer from "./GetStarted";
+import WalletContainer from "./Wallet";
 import Snackbar from "components/Snackbar";
-import { RouteTransition } from "shared";
-import { getPage } from "helpers";
-import theme from "theme";
 import "style/Layout.less";
-import Routes from "../routes";
 
-const fade = { atEnter: { opacity: 0 }, atActive: { opacity: 1 }, atLeave: { opacity: 0 }};
-
-const wrapperComponent = props => <div className="page-view" { ...props } />;
+const topLevelAnimation = {atEnter: {opacity: 0}, atLeave: {opacity: 0}, atActive: {opacity: 1}};
 
 @autobind
 class App extends React.Component {
@@ -62,8 +59,6 @@ class App extends React.Component {
 
   render() {
     const { locale } = this.props;
-    // const { locale, routes, children } = this.props;
-    // const pathname = getPage(routes);
     return (
       <MuiThemeProvider muiTheme={MUItheme}>
         <IntlProvider
@@ -72,17 +67,14 @@ class App extends React.Component {
           formats={locale.formats}
           defaultFormats={defaultFormats}
           key={locale.key}>
-          <div className="page-body">
-            <SideBar />
-            <Snackbar />
-            <div className="page-view">
-              <Routes />
-            </div>
-            {/* <div>On App</div> */}
-            {/* <RouteTransition className="page-container" opts={ theme("springs.page") } {...{ wrapperComponent, pathname, ...fade }}>
-              { children }
-            </RouteTransition> */}
-          </div>
+          <Aux>
+            <Snackbar/>
+            <AnimatedSwitch {...topLevelAnimation} className="top-level-container">
+              <Redirect from="/"         exact to="/getStarted" />
+              <Route path="/getStarted"  component={GetStartedContainer} />
+              <Route path="/"            component={WalletContainer} />
+            </AnimatedSwitch>
+          </Aux>
         </IntlProvider>
       </MuiThemeProvider>
     );
