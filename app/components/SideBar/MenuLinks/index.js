@@ -1,8 +1,8 @@
 import MenuLink from "./MenuLink";
 import { routing } from "connectors";
 import { FormattedMessage as T } from "react-intl";
-// import { spring, Motion } from "react-motion";
-// import theme from "theme";
+import { spring, Motion } from "react-motion";
+import theme from "theme";
 
 const linkList = [
   {path: "/home",           link: <T id="sidebar.link.home" m="Overview" /> },
@@ -47,42 +47,22 @@ class MenuLinks extends React.Component {
     const tabForRoute = this._nodes.get(path);
     if (!tabForRoute) return null;
     const newTop = tabForRoute.offsetTop;
-    return { top: newTop };
+    return { top: spring(newTop, theme("springs.sideBar")) };
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   // const activeLink = getPage(nextProps.routes);
-  //   // const basePage = activeLink.split("/")[0];
-  //   // const newTop = this._nodes.get(basePage).offsetTop;
-  //   // this.setState({ top: spring(newTop, theme("springs.sideBar")) });
-  // }
-
   render () {
-    const caretStyle = {top: this.state.top};
     return (
       <Aux>
         { linkList.map(({path, link}) =>
           <MenuLink to={ path } linkRef={ ref => this._nodes.set(path, ref) } key={ path }>
             {link}
           </MenuLink> )}
-        <div className="menu-caret" style={caretStyle} />
+        <Motion style={ {top: this.state.top} }>
+          { style => <div className="menu-caret" {...{ style }}/> }
+        </Motion>
       </Aux>
     );
   }
-
-  // render2 () {
-  //   return (
-  //     <Aux>
-  //       { linkList.map(({path, link}) =>
-  //         <MenuLink to={ path } linkRef={ ref => this._nodes.set(path, ref) } key={ path }>
-  //           {link}
-  //         </MenuLink> )}
-  //       <Motion style={ this.state }>
-  //         { style => <div className="menu-caret" {...{ style }}/> }
-  //       </Motion>
-  //     </Aux>
-  //   );
-  // }
 }
 
 export default routing(MenuLinks);

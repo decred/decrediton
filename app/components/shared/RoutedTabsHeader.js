@@ -1,9 +1,7 @@
 import { routing } from "connectors";
 import { NavLink as Link } from "react-router-dom";
-// import { spring, Motion } from "react-motion";
-// import { getTabs, getTab, getPage } from "helpers";
-// import messages from "messages";
-// import theme from "theme";
+import { spring, Motion } from "react-motion";
+import theme from "theme";
 
 export const RoutedTab = (path, link) => ({path, link});
 
@@ -57,42 +55,19 @@ class RoutedTabsHeader extends React.Component {
     );
 
     const caretStyle = {
-      left: this.state.caretLeft,
-      width: this.state.caretWidth,
+      left: spring(this.state.caretLeft, theme("springs.tab")),
+      width: spring(this.state.caretWidth, theme("springs.tab")),
     };
 
     return (
       <div className="tabs">
         {tabLinks}
-        <div className="tabs-caret"><div className="active" style={caretStyle}></div></div>
+        <Motion style={caretStyle}>
+          { style => <div className="tabs-caret"><div className="active" style={style}></div></div> }
+        </Motion>
       </div>
     );
   }
-
-  // render2 () {
-  //   const { intl, routes, className } = this.props;
-  //   const tabs = getTabs(routes);
-  //   const page = getPage(routes);
-  //   const { caretLeft, caretWidth } = this.state;
-  //   return (
-  //     <div className={className}>
-  //       { tabs.map((tab) => {
-  //         const title = [page, "tab", tab].join(".");
-  //         const route = ["", page, tab].join("/");
-  //         return (
-  //           <div className="tabbedheader-ref" ref={ ref => this._nodes.set(tab, ref) } key={ tab }>
-  //             <Link to={ route } className="tabbedheader-tab" activeClassName="tabbedheader-tab-active">
-  //               { intl.formatMessage(messages[title]) }
-  //             </Link>
-  //           </div>
-  //         );
-  //       })}
-  //       <Motion style={{ left: spring(caretLeft, theme("springs.tab")), width: spring(caretWidth, theme("springs.tab")) }}>
-  //         { style => <div className="tabbedheader-active-tab-caret" style={ style }/> }
-  //       </Motion>
-  //     </div>
-  //   );
-  // }
 }
 
 RoutedTabsHeader.propTypes = {

@@ -1,6 +1,6 @@
 import { Switch, Route } from "react-router-dom";
 import { isArray } from "util";
-import Tabs from "./Tabs";
+import { RoutedTabsHeader, RoutedTab } from "shared";
 
 export const TabbedPageTab = ({children}) => children;
 TabbedPageTab.propTypes = {
@@ -13,6 +13,8 @@ export default ({children, header}) => {
 
   const tabs = children.filter(c => c.type === TabbedPageTab);
   const nonTabs = children.filter(c => c.type !== TabbedPageTab);
+
+  const tabHeaders = tabs.map(c => (RoutedTab(c.props.path, c.props.link)));
 
   const headers = tabs.map(c =>
     <Route key={c.props.path} path={c.props.path} component={c.props.header} />
@@ -27,7 +29,7 @@ export default ({children, header}) => {
       <div className="tabbed-page-header">
         {header}
         <Switch>{headers}</Switch>
-        <Tabs tabs={tabs} />
+        <RoutedTabsHeader tabs={tabHeaders} />
       </div>
 
       <div className="tabbed-page-body">
