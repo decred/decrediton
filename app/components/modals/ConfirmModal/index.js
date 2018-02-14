@@ -1,5 +1,5 @@
 import Modal from "../Modal";
-import { InvisibleButton, KeyBlueButton } from "buttons";
+import { InvisibleButton, KeyBlueButton, DangerButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 
 const propTypes = {
@@ -11,7 +11,7 @@ const propTypes = {
 };
 
 const ConfirmModal = ({modalTitle, modalContent, show, onCancelModal, onSubmit,
-  confirmLabel}) => (
+  confirmLabel, danger}) => (
   <Modal className="confirm-modal" {...{ show }}>
     <div className="confirm-modal-header">
       <div className="confirm-modal-header-title">
@@ -22,9 +22,14 @@ const ConfirmModal = ({modalTitle, modalContent, show, onCancelModal, onSubmit,
       {modalContent}
     </div>
     <div className="confirm-modal-toolbar">
-      <KeyBlueButton className="confirm-modal-confirm-button" onClick={onSubmit}>
-        {confirmLabel || <T id="infoModal.btnConfirm" m="Confirm" />}
-      </KeyBlueButton>
+      { danger ?
+        <DangerButton className="confirm-modal-confirm-button" onClick={onSubmit}>
+          {confirmLabel || <T id="infoModal.btnConfirm" m="Confirm" />}
+        </DangerButton> :
+        <KeyBlueButton className="confirm-modal-confirm-button" onClick={onSubmit}>
+          {confirmLabel || <T id="infoModal.btnConfirm" m="Confirm" />}
+        </KeyBlueButton>
+      }
       <InvisibleButton className="confirm-modal-close-button" onClick={onCancelModal}>
         <T id="confirmModal.btnCancel" m="Cancel" />
       </InvisibleButton>

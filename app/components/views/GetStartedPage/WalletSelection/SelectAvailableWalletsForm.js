@@ -34,7 +34,8 @@ const SelectAvailableWalletsForm = ({
           buttonLabel={<T id="stakepools.list.btnRemove" m="Remove"/>}
           modalContent={
             <T id="stakepools.list.confirmRemove" m="Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding."/>}
-          onSubmit={() => onRemoveWallet(selectedWallet)}/>
+          onSubmit={() => onRemoveWallet(selectedWallet)}
+          danger/>
       </div>
     </Aux>
   );
