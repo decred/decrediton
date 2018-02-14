@@ -30,7 +30,7 @@ class Tutorial extends React.Component{
 
   onNextTutorialStep() {
     const { tutorialStep } = this.state;
-    if (tutorialStep + 1 <= 5) {
+    if (tutorialStep + 1 <= 4) {
       this.setState({tutorialStep: tutorialStep + 1});
     }
   }
