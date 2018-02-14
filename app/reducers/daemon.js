@@ -18,7 +18,7 @@ export default function version(state = {}, action) {
   switch (action.type) {
   case FINISH_TUTORIAL:
     return {...state,
-      showTutorial: false,
+      tutorial: false,
     };
   case DAEMONSTARTED:
     return {...state,

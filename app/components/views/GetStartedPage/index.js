@@ -49,6 +49,7 @@ class GetStartedPage extends React.Component {
   render() {
     const {
       showTutorial,
+      finishTutorial,
       startStepIndex,
       isPrepared,
       isAdvancedDaemon,
@@ -73,7 +74,7 @@ class GetStartedPage extends React.Component {
 
     let Header, Body;
     if (showTutorial) {
-      return <TutorialPage />;
+      return <TutorialPage {...{finishTutorial}}/>;
     } else if (showSettings) {
       Header = SettingsHeader;
       Body = SettingsBody;

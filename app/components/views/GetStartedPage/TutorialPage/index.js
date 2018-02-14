@@ -15,7 +15,7 @@ class Tutorial extends React.Component{
 
   render() {
     const { tutorialStep } = this.state;
-    const { onNextTutorialStep, onPrevTutorialStep} = this;
+    const { onNextTutorialStep, onPrevTutorialStep } = this;
     const { finishTutorial } = this.props;
     return (
       <TutorialPage
