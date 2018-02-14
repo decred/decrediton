@@ -35,12 +35,14 @@ const Page = ({
         </div>
         <div className="history-select-tx-types-area">
           <div className="history-select-tx-types">
-            <TextInput
-              type="text"
-              placeholder={"Filter by Address"}
-              value={searchText}
-              onChange={(e) => onChangeSearchText(e.target.value)}
-            />
+            <div className="history-search-tx">
+              <TextInput
+                type="text"
+                placeholder={"Filter by Address"}
+                value={searchText}
+                onChange={(e) => onChangeSearchText(e.target.value)}
+              />
+            </div>
             <Tooltip tipWidth={300} text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
               <EyeFilterMenu
                 labelKey="label"
