@@ -1,0 +1,150 @@
+@import (reference) "./main.less";
+@import (reference) "./Icons.less";
+
+.tutorial {
+  display: flex;
+  height: 100%;
+  width: 1180px;
+}
+
+.tutorial-side.step-0 {
+  height: 100%;
+  background-color: rgba(72, 86, 110, 1);
+}
+
+.tutorial-side.step-1 {
+  height: 100%;
+  background-color: rgba(72, 86, 110, 0.9);
+}
+
+.tutorial-side.step-2 {
+  height: 100%;
+  background-color: rgba(72, 86, 110, 0.8);
+}
+
+.tutorial-side.step-3 {
+  height: 100%;
+  background-color: rgba(72, 86, 110, 0.7);
+}
+
+.tutorial-side.step-4 {
+  height: 100%;
+  background-color: rgba(72, 86, 110, 0.6);
+}
+
+.tutorial-side-image {
+  margin: 212px 56px 0px 56px;
+  height: 342px;
+  width: 255px;
+  background-position: 50% 0px;
+  background-repeat: no-repeat;
+}
+
+.tutorial-side-image.step-0 {
+  margin: 212px 56px 0px 56px;
+  background-image: @onboarding-blockchain;
+}
+
+.tutorial-side-image.step-1 {
+  margin: 232px 62px 0px 62px;
+  height: 302px;
+  width: 243px;
+  background-image: @onboarding-wallet;
+}
+
+.tutorial-side-image.step-2 {
+  margin: 287px 57px 0px 60px;
+  height: 192px;
+  width: 250px;
+  background-image: @onboarding-seed;
+}
+
+.tutorial-side-image.step-3 {
+  margin: 160px 72px 0px 65px;
+  height: 504px;
+  width: 230px;
+  background-image: @onboarding-stakingandgov;
+}
+
+.tutorial-side-image.step-4 {
+  margin: 217px 84px 0px 83px;
+  height: 336px;
+  width: 200px;
+  background-image: @onboarding-safetytips;
+}
+
+.tutorial-main {
+  padding-top: 174px;
+  padding-left: 64px;
+}
+
+.tutorial-main-header {
+  height: 44px;
+  color: #0c1e3e;
+  font-size: 35px;
+  padding-bottom: 30px;
+}
+
+.tutorial-main-text {
+  height: 308px;
+  color: #48566e;
+  font-size: 13px;
+  padding-bottom: 50px;
+
+  .column {
+    height: 100%;
+    width: 248px;
+    float: left;
+    margin-right: 36px;
+  }
+
+  .bold {
+    font-weight: 600;
+  }
+}
+
+.tutorial-main-toolbar {
+  display: flex;
+
+  .next-button {
+    margin-right: 52px;
+    margin-top: 5px;
+    height: 4px;
+    padding-top: 10px;
+  }
+
+  .skip-button {
+    margin-left: 52px;
+    margin-top: 5px;
+    height: 4px;
+    padding-top: 10px;
+  }
+}
+
+.tutorial-main-toolbar-step-indicators {
+  display: flex;
+
+  .current {
+    margin: 10px;
+    height: 16px;
+    width: 16px;
+    border: 2px solid #d1d5db;
+    border-radius: 10px;
+  }
+
+  .checked {
+    margin: 16px;
+    height: 10px;
+    width: 10px;
+    background-color: #000;
+    border-radius: 10px;
+  }
+
+  .unchecked {
+    margin: 16px;
+    height: 10px;
+    width: 10px;
+    background-color: #d1d5db;
+    border-radius: 10px;
+  }
+}

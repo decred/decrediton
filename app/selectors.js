@@ -30,6 +30,7 @@ const START_STEP_RPC2 = 4;
 const START_STEP_DISCOVER = 5;
 const START_STEP_FETCH = 6;
 
+export const showTutorial = get(["daemon", "tutorial"]);
 export const versionInvalid = get(["version", "versionInvalid"]);
 export const requiredWalletRPCVersion = get(["version", "requiredVersion"]);
 export const walletRPCVersion = createSelector(
