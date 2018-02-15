@@ -118,7 +118,7 @@ const messages = defineMessages({
   step4TextBoldp1: {
     id: "tutorial.step.4.text.bold.p1",
     defaultMessage: "Only You are responsible for your security.",
-  },  
+  },
   step4Textp2: {
     id: "tutorial.step.4.text.p2",
     defaultMessage: "Always keep your seed key and password safe. If you lose your seed key or password, nobody else can recover it.",
