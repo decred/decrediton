@@ -144,7 +144,7 @@ const messages = defineMessages({
 const TutorialPage = ({intl, tutorialStep, onNextTutorialStep, onGoToStep, finishTutorial}) => {
   return (
     <div className="tutorial">
-      <div className="tutorial-side">
+      <div className={"tutorial-side step-" + tutorialStep}>
         <div className={"tutorial-side-image step-" + tutorialStep}>
         </div>
       </div>
