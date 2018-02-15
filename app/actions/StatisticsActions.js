@@ -87,7 +87,6 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
 
   // called once for each data line
   const progressFunction = (time, series) => {
-    // console.log("Progress", time, series);
     const values = allSeries.map(s => !isUndefined(series[s.name])
       ? s.valueFormatFunc(series[s.name])
       : null);
@@ -115,10 +114,6 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
   };
 
   dispatch(calcFunction({opts, startFunction, progressFunction, endFunction, errorFunction}));
-
-  // if (fd !== null) {
-  //   fs.closeSync(fd);
-  // }
 };
 
 export const transactionStats = (opts) => (dispatch, getState) => {
@@ -139,7 +134,6 @@ export const transactionStats = (opts) => (dispatch, getState) => {
   });
 
   const formatTx = (tx) => {
-    // console.log(tx);
     return {
       hash: tx.txHash,
       type: tx.txType,
@@ -152,7 +146,6 @@ export const transactionStats = (opts) => (dispatch, getState) => {
   };
 
   const txDataCb = (mined) => {
-    //console.log(mined);
     mined.forEach(tx => progressFunction(tsToDate(tx.timestamp), formatTx(tx)));
   };
 
