@@ -1,4 +1,4 @@
-import { KeyBlueButton } from "buttons";
+import { KeyBlueButton, InvisibleButton } from "buttons";
 import "style/Tutorial.less";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 
@@ -227,9 +227,9 @@ const TutorialPage = ({intl, tutorialStep, onNextTutorialStep, onGoToStep, finis
             <div className={tutorialStep == 4 ? "current" : tutorialStep > 4 ? "checked" : tutorialStep < 4 ? "unchecked" : ""} onClick={tutorialStep !== 4 ? ()=>onGoToStep(4) : null}></div>
           </div>
           {tutorialStep < 4 &&
-            <KeyBlueButton className="skip-button" onClick={finishTutorial}>
+            <InvisibleButton className="skip-button" onClick={finishTutorial}>
               <T id="tutorial.skipBtn" m={"Skip"}/>
-            </KeyBlueButton>
+            </InvisibleButton>
           }
         </div>
       </div>
