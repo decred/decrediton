@@ -115,9 +115,29 @@ const messages = defineMessages({
     id: "tutorial.step.4.title",
     defaultMessage: "Safety Tips",
   },
-  step4Text: {
-    id: "tutorial.step.4.text",
-    defaultMessage: "Step 4 text",
+  step4TextBoldp1: {
+    id: "tutorial.step.4.text.bold.p1",
+    defaultMessage: "Only You are responsible for your security.",
+  },  
+  step4Textp2: {
+    id: "tutorial.step.4.text.p2",
+    defaultMessage: "Always keep your seed key and password safe. If you lose your seed key or password, nobody else can recover it.",
+  },
+  step4Textp3: {
+    id: "tutorial.step.4.text.p3",
+    defaultMessage: "Make a backup of your seed key and password. Do not store it on your computer, instead write it down or print it out on a piece of paper or save it to a USB drive.",
+  },
+  step4Textp4: {
+    id: "tutorial.step.4.text.p4",
+    defaultMessage: "Do not store your seed key in a cloud storage or a password service. If your account gets compromised, so may your funds.",
+  },
+  step4Textp5: {
+    id: "tutorial.step.4.text.p5",
+    defaultMessage: "Do not enter your seed key to any phising website. Nobody can reverse, cancel or refund transactions if your wallet has been compromised.",
+  },
+  step4Textp6: {
+    id: "tutorial.step.4.text.p6",
+    defaultMessage: "When something doesn’t seem right or you don’t understand it  ask questions and do research. Avoid making a decision based on fear.",
   },
 });
 
@@ -183,12 +203,14 @@ const TutorialPage = ({intl, tutorialStep, onNextTutorialStep, onGoToStep, finis
             4:
               <Aux>
                 <div className="column">
-                  <p><span className="bold">{intl.formatMessage(messages.step0TextBoldp1)} </span>{intl.formatMessage(messages.step0Textp1)}</p>
-                  <p>{intl.formatMessage(messages.step0Textp2)}</p>
+                  <p><span className="bold">{intl.formatMessage(messages.step4TextBoldp1)} </span></p>
+                  <p>{intl.formatMessage(messages.step4Textp2)}</p>
+                  <p>{intl.formatMessage(messages.step4Textp3)}</p>
+                  <p>{intl.formatMessage(messages.step4Textp4)}</p>
                 </div>
                 <div className="column">
-                  <p>{intl.formatMessage(messages.step0Textp3)}</p>
-                  <p>{intl.formatMessage(messages.step0Textp4)}</p>
+                  <p>{intl.formatMessage(messages.step4Textp5)}</p>
+                  <p><span className="bold">{intl.formatMessage(messages.step4Textp6)}</span></p>
                 </div>
               </Aux>
           }[tutorialStep]}
