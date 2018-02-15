@@ -16,9 +16,11 @@ export default defineMessages({
   "transactions.description.send.mainnet":    { id: "transactions.description.send.mainnet", defaultMessage: "Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters\n(e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)." },
   "transactions.description.receive":         { id: "transactions.description.receive",      defaultMessage: "Each time you request a payment, create a new address to protect your privacy." },
   "transactions.description.history":         { id: "transactions.description.history",      defaultMessage: "Total Balance:" },
+  "transactions.description.export":          { id: "transactions.description.export",       defaultMessage: "Export Data" },
   "transactions.tab.send":                    { id: "transactions.tab.send",                 defaultMessage: "Send" },
   "transactions.tab.receive":                 { id: "transactions.tab.receive",              defaultMessage: "Receive" },
   "transactions.tab.history":                 { id: "transactions.tab.history",              defaultMessage: "History" },
+  "transactions.tab.export":                  { id: "transactions.tab.export",               defaultMessage: "Export" },
 
   "tickets.title":                            { id: "tickets.title",                         defaultMessage: "Tickets" },
   "tickets.description":                      { id: "tickets.description",                   defaultMessage: "Current Price:" },
@@ -41,7 +43,6 @@ export default defineMessages({
   "help.description.links":                   { id: "help.description.links",                defaultMessage: "If you have any difficulty with decrediton, please use the following links to help find a solution." },
   "help.tab.logs":                            { id: "help.tab.logs",                         defaultMessage: "View Logs" },
   "help.description.logs":                    { id: "help.description.logs",                 defaultMessage: "Please find your current logs below to look for any issue or error you are having." },
-
 
   "error.title":                              { id: "error.title",                           defaultMessage: "An error has occured" },
   "walletError.title":                        { id: "walletError.title",                     defaultMessage: "An error has occured" },

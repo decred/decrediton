@@ -13,6 +13,7 @@ import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
+// import { getStartupStats } from "./StatisticsActions";
 
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
@@ -65,6 +66,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(getAccountsAttempt(true));
         await dispatch(getMostRecentTransactions());
         dispatch(findImmatureTransactions());
+        //dispatch(getStartupStats());
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
       } catch (error) {
@@ -739,7 +741,6 @@ export const listenForAppReloadRequest = cb => () => onAppReloadRequested(cb);
 
 export const showTicketList = status => dispatch =>
   dispatch(pushHistory("/tickets/mytickets/" + status));
-
 
 export const SEEDCOPIEDTOCLIPBOARD = "SEEDCOPIEDTOCLIPBOARD";
 export const copySeedToClipboard = (mnemonic) => (dispatch) => {

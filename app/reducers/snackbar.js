@@ -30,6 +30,10 @@ import {
   SEEDCOPIEDTOCLIPBOARD,
 } from "../actions/ClientActions";
 import { SNACKBAR_DISMISS_MESSAGES } from "../actions/SnackbarActions";
+import {
+  EXPORT_ERROR,
+  EXPORT_COMPLETED
+} from "actions/StatisticsActions";
 
 const messages = defineMessages({
   defaultSuccessMessage: {
@@ -160,7 +164,11 @@ const messages = defineMessages({
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS: {
     id: "send.publishUnminedTransactions.success",
     defaultMessage: "Republished unmined transactions to the decred network."
-  }
+  },
+  EXPORT_COMPLETED: {
+    id: "export.completed",
+    defaultMessage: "Export of file '{filename}' completed!"
+  },
 });
 
 export default function snackbar(state = {}, action) {
@@ -186,6 +194,8 @@ export default function snackbar(state = {}, action) {
   // all simple success notifications. Just add the type below and the message
   // on the messages variable above if you need a simple message, without extra
   // data.
+  case EXPORT_COMPLETED:
+    values = {filename: action.filename};
   case RENAMEACCOUNT_SUCCESS:
   case GETNEXTACCOUNT_SUCCESS:
   case CHANGEPASSPHRASE_SUCCESS:
@@ -223,6 +233,7 @@ export default function snackbar(state = {}, action) {
   case VERIFYMESSAGE_FAILED:
   case GETSTARTUPWALLETINFO_FAILED:
   case PUBLISHUNMINEDTRANSACTIONS_FAILED:
+  case EXPORT_ERROR:
     type = "Error";
     message = messages[action.type] || messages.defaultErrorMessage;
     values = { originalError: String(action.error) };

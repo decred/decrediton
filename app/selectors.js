@@ -30,6 +30,7 @@ const START_STEP_RPC2 = 4;
 const START_STEP_DISCOVER = 5;
 const START_STEP_FETCH = 6;
 
+export const showTutorial = get(["daemon", "tutorial"]);
 export const versionInvalid = get(["version", "versionInvalid"]);
 export const requiredWalletRPCVersion = get(["version", "requiredVersion"]);
 export const walletRPCVersion = createSelector(
@@ -170,7 +171,7 @@ export const blockURLBuilder= createSelector(
     (txHash) => `https://${network !== "testnet" ? "explorer" : network}.dcrdata.org/${network == "testnet" ? "explorer/" : ""}block/${txHash}`
 );
 
-const transactionNormalizer = createSelector(
+export const transactionNormalizer = createSelector(
   [accounts, txURLBuilder, blockURLBuilder],
   (accounts, txURLBuilder, blockURLBuilder) => {
     const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
@@ -760,3 +761,5 @@ export const shutdownRequested = get(["daemon", "shutdownRequested"]);
 export const daemonStopped = get(["daemon", "daemonStopped"]);
 
 export const chainParams = compose(isTestNet => isTestNet ? TestNetParams : MainNetParams, isTestNet);
+
+export const exportingData = get(["control", "exportingData"]);
