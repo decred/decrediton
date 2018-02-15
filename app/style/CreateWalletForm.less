@@ -106,7 +106,6 @@
 .create-wallet-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 16px;
 }
 
 .seed-type-label {
@@ -182,4 +181,29 @@
 
 .passphrase-info-modal {
   height: 202px;
+}
+
+.confirm-seed-word {
+  float: left;
+  margin: 5px;
+  width: 100px;
+
+  .Select-control {
+    padding-left: 2px;
+    border-radius: 5px;
+    border: 2px solid #000;
+    background-color: #fff;
+  }
+}
+
+.confirm-seed-word.match {
+  .Select-control {
+    border: 2px solid #2ed8a3;
+  }
+}
+
+.confirm-seed-word.no-match {
+  .Select-control {
+    border: 2px solid red;
+  }
 }

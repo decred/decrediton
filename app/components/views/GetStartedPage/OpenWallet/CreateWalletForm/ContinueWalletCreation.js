@@ -1,3 +1,4 @@
+import ExistingSeed from "./ExistingSeed";
 import ConfirmSeed from "./ConfirmSeed";
 import CreatePassPhrase from "./CreatePassPhrase";
 import { FormattedMessage as T } from "react-intl";
@@ -13,7 +14,9 @@ const ContinueWalletCreation = ({
   ...props
 }) => (
   <div className="page-content new-seed">
-    <ConfirmSeed {...props} onChange={setSeed} createWalletExisting={createWalletExisting} />
+    {createWalletExisting ?
+      <ExistingSeed {...props} onChange={setSeed} /> :
+      <ConfirmSeed  {...props} onChange={setSeed} /> }
     <CreatePassPhrase passPhraseLabel={
       <T id="createWallet.encryptWallet" m="Create wallet private passphrase" />}
     onChange={setPassPhrase} onSubmit={onCreateWallet} />
