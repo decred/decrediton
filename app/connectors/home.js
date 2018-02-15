@@ -7,9 +7,11 @@ import * as clientActions from "actions/ClientActions";
 
 const mapStateToProps = selectorMap({
   getTransactionsRequestAttempt: sel.getTransactionsRequestAttempt,
+  getTicketsRequestAttempt: sel.getTicketsRequestAttempt,
   getAccountsResponse: sel.getAccountsResponse,
   spendableTotalBalance: sel.spendableTotalBalance,
   transactions: sel.homeHistoryTransactions,
+  tickets: sel.homeHistoryTickets,
   revokeTicketsError: sel.revokeTicketsError,
   revokeTicketsSuccess: sel.revokeTicketsSuccess,
   hasTicketsToRevoke: sel.hasTicketsToRevoke,

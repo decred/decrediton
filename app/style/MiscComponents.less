@@ -123,6 +123,26 @@
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.22);
 }
 
+.invisible-button {
+  cursor: pointer;
+  display: inline-block;
+  padding: 17px 18px 18px;
+  border-radius: 5px;
+  color: #8997a5;
+  background-color: inherit;
+  font-size: 13px;
+  line-height: 9px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
+}
+
+.invisible-button:hover {
+  color: #596d81;
+}
+
 .danger-button {
   cursor: pointer;
   display: inline-block;
@@ -269,11 +289,14 @@
   border-bottom: 1px @stroke-color-default solid;
   font-family: @font-family-regular;
   font-size: 13px;
-  color: white;
   padding: 3px 4px 1px 10px;
   display: flex;
   flex: auto;
   flex-grow: 1;
+}
+
+.inverted-colors .path-input {
+  color: #fff;
 }
 
 .path-input:hover {
@@ -344,6 +367,7 @@
   background-color: transparent;
   background-image: @menu-rescan-icon;
   background-size: 16px 16px;
+  cursor: pointer;
 }
 
 .rescan-button:hover {
@@ -375,6 +399,7 @@
   background-color: transparent;
   background-image: @menu-cancel-rescan-icon;
   background-size: 16px 16px;
+  cursor: pointer;
 }
 
 .rescan-cancel-button:hover {
@@ -407,4 +432,14 @@
 [data-pseudo-content--before]::before,
 [data-pseudo-content--after]::after {
   content: attr(data-pseudo-content);
+}
+
+.inline-field {
+  display: flex;
+  margin-bottom: 1.5em;
+}
+
+.inline-field-field {
+  flex-grow: 1;
+  padding-left: 0.5em;
 }

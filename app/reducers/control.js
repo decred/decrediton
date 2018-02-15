@@ -19,7 +19,12 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS,
   SETBALANCETOMAINTAIN, SETMAXFEE, SETMAXPRICEABSOLUTE, SETMAXPRICERELATIVE, SETMAXPERBLOCK,
   VALIDATEADDRESS_ATTEMPT, VALIDATEADDRESS_SUCCESS, VALIDATEADDRESS_FAILED, VALIDATEADDRESS_CLEANSTORE
- } from "../actions/ControlActions";
+} from "../actions/ControlActions";
+import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
+
+import {
+  EXPORT_STARTED, EXPORT_COMPLETED, EXPORT_ERROR
+} from "actions/StatisticsActions";
 
 export default function control(state = {}, action) {
   switch (action.type) {
@@ -386,6 +391,26 @@ export default function control(state = {}, action) {
   case VALIDATEADDRESS_CLEANSTORE:
     return {...state,
       validateAddressResponse: null
+    };
+  case WALLET_AUTOBUYER_SETTINGS:
+    return {...state,
+      balanceToMaintain: action.balanceToMaintain,
+      maxFee: action.maxFee,
+      maxPriceAbsolute: action.maxPriceAbsolute,
+      maxPriceRelative: action.maxPriceRelative,
+      maxPerBlock: action.maxPriceRelative,
+    };
+  case EXPORT_STARTED:
+    return {...state,
+      exportingData: true
+    };
+  case EXPORT_COMPLETED:
+    return {...state,
+      exportingData: false
+    };
+  case EXPORT_ERROR:
+    return {...state,
+      exportingData: false
     };
   default:
     return state;

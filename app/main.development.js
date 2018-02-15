@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
+import { initGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm, clearPreviousWallet} from "./config.js";
 import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, getWalletPath} from "./config.js";
 import path from "path";
 import fs from "fs-extra";
@@ -19,6 +19,7 @@ let grpcVersions = {requiredVersion: null, walletVersion: null};
 let debug = false;
 let dcrdPID;
 let dcrwPID;
+let dcrwPort;
 let dcrdConfig = {};
 let currentBlockCount;
 
@@ -100,7 +101,6 @@ if (process.env.NODE_ENV === "development") {
 // Always use reasonable path for save data.
 app.setPath("userData", appDataDirectory());
 
-
 // Check that wallets directory has been created, if not, make it.
 let walletsDirectory = path.join(app.getPath("userData"),"wallets");
 fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
@@ -158,26 +158,6 @@ if (err !== null) {
   app.quit();
 }
 var globalCfg = initGlobalCfg();
-
-
-/*
-// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
-let availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallets")).find(file => {
-  var checkForWalletDbs = fs.readdirSync(path.join(app.getPath("userData"), "wallets", file, cfg.get("network"))).find(fileName => {return fileName == "wallet.db";});
-  return checkForWalletDbs;
-});
-let availableWalletAppDataDir = path.join(app.getPath("userData"), "wallets/default-wallet");
-let availableWallets = fs.readdirSync(path.join(app.getPath("userData"), "wallets")).find(file => {
-  var checkForWalletDbs = fs.readdirSync(path.join(app.getPath("userData"), "wallets", file, cfg.get("network"))).find(fileName => {return fileName == "wallet.db";});
-  return checkForWalletDbs;
-});
-
-let availableWallets = [];
-let availableWalletAppDataDir = getWalletPath("default-wallet");
-if (availableWallets.length > 0) {
-  availableWalletAppDataDir = path.join(app.getPath("userData"), "wallets", availableWallets[0]);
-}
-*/
 
 const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
@@ -267,11 +247,26 @@ const installExtensions = async () => {
 };
 
 const { ipcMain } = require("electron");
-/*
-ipcMain.on("get-available-wallets", (event) => {
+
+ipcMain.on("get-available-wallets", (event) => {// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
+  var availableWallets = [];
+  var mainnetWalletDirectories = fs.readdirSync(path.join(walletsDirectory, "mainnet"));
+
+  for (var i in mainnetWalletDirectories) {
+    if (fs.pathExistsSync(path.join(walletsDirectory, "mainnet", mainnetWalletDirectories[i].toString(), "mainnet", "wallet.db"))) {
+      availableWallets.push({network: "mainnet", wallet: mainnetWalletDirectories[i] });
+    }
+  }
+  var testnetWalletDirectories = fs.readdirSync(path.join(walletsDirectory, "testnet"));
+
+  for (var j in testnetWalletDirectories) {
+    if (fs.pathExistsSync(path.join(walletsDirectory, "testnet", testnetWalletDirectories[j].toString(), "testnet2", "wallet.db"))) {
+      availableWallets.push({network: "testnet", wallet: testnetWalletDirectories[j] });
+    }
+  }
   event.returnValue = availableWallets;
 });
-*/
+
 ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
   if (dcrdPID && dcrdConfig && !daemonIsAdvanced) {
     logger.log("info", "Skipping restart of daemon as it is already running");
@@ -295,9 +290,30 @@ ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
   event.returnValue = dcrdConfig;
 });
 
+ipcMain.on("create-wallet", (event, walletPath, testnet) => {
+  let newWalletDirectory = path.join(walletsDirectory, testnet ? "testnet" : "mainnet", walletPath);
+  if (!fs.pathExistsSync(newWalletDirectory)){
+    fs.mkdirsSync(newWalletDirectory);
+
+    // create new configs for new wallet
+    initWalletCfg(testnet, walletPath);
+    newWalletConfigCreation(testnet, walletPath);
+  }
+  event.returnValue = true;
+});
+
+ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
+  let removeWalletDirectory = path.join(walletsDirectory, testnet ? "testnet" : "mainnet", walletPath);
+  if (fs.pathExistsSync(removeWalletDirectory)){
+    fs.removeSync(removeWalletDirectory);
+  }
+  event.returnValue = true;
+});
+
 ipcMain.on("start-wallet", (event, walletPath, testnet) => {
   if (dcrwPID) {
     logger.log("info", "dcrwallet already started " + dcrwPID);
+    mainWindow.webContents.send("dcrwallet-port", dcrwPort);
     event.returnValue = dcrwPID;
     return;
   }
@@ -306,7 +322,7 @@ ipcMain.on("start-wallet", (event, walletPath, testnet) => {
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }
-  event.returnValue = dcrwPID;
+  event.returnValue = getWalletCfg(testnet, walletPath);
 });
 
 ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
@@ -393,6 +409,25 @@ const AddToLog = (destIO, destLogBuffer, data) => {
   }
   debug && destIO.write(data);
   return Buffer.concat([destLogBuffer, dataBuffer]);
+};
+
+// DecodeDaemonIPCData decodes messages from an IPC message received from dcrd/
+// dcrwallet using their internal IPC protocol.
+// NOTE: very simple impl for the moment, will break if messages get split
+// between data calls.
+const DecodeDaemonIPCData = (data, cb) => {
+  let i = 0;
+  while (i < data.length) {
+    if (data[i++] !== 0x01) throw "Wrong protocol version when decoding IPC data";
+    const mtypelen = data[i++];
+    const mtype = data.slice(i, i+mtypelen).toString("utf-8");
+    i += mtypelen;
+    const psize = data.readUInt32LE(i);
+    i += 4;
+    const payload = data.slice(i, i+psize);
+    i += psize;
+    cb(mtype, payload);
+  }
 };
 
 const launchDCRD = (walletPath, appdata, testnet) => {
@@ -499,6 +534,9 @@ const launchDCRWallet = (walletPath, testnet) => {
     } catch (e) {
       logger.log("error", "can't find proper module to launch dcrwallet: " + e);
     }
+  } else {
+    args.push("--rpclistenerevents");
+    args.push("--pipetx=4");
   }
 
   // Add any extra args if defined.
@@ -510,8 +548,26 @@ const launchDCRWallet = (walletPath, testnet) => {
 
   var dcrwallet = spawn(dcrwExe, args, {
     detached: os.platform() == "win32",
-    stdio: ["ignore", "pipe", "pipe", "ignore"]
+    stdio: ["ignore", "pipe", "pipe", "ignore", "pipe"]
   });
+
+  const notifyGrpcPort = (port) => {
+    dcrwPort = port;
+    logger.log("info", "wallet grpc running on port", port);
+    mainWindow.webContents.send("dcrwallet-port", port);
+  };
+
+  dcrwallet.stdio[4].on("data", (data) => DecodeDaemonIPCData(data, (mtype, payload) => {
+    if (mtype === "grpclistener") {
+      const intf = payload.toString("utf-8");
+      const matches = intf.match(/^.+:(\d+)$/);
+      if (matches) {
+        notifyGrpcPort(matches[1]);
+      } else {
+        logger.log("error", "GRPC port not found on IPC channel to dcrwallet: " + intf);
+      }
+    }
+  }));
 
   dcrwallet.on("error", function (err) {
     logger.log("error", "Error running dcrwallet.  Check logs and restart! " + err);
@@ -531,7 +587,25 @@ const launchDCRWallet = (walletPath, testnet) => {
     }
   });
 
-  dcrwallet.stdout.on("data", (data) => dcrwalletLogs = AddToLog(process.stdout, dcrwalletLogs, data));
+  const addStdoutToLogListener = (data) => dcrwalletLogs = AddToLog(process.stdout, dcrwalletLogs, data);
+
+  // waitForGrpcPortListener is added as a stdout on("data") listener only on
+  // win32 because so far that's the only way we found to get back the grpc port
+  // on that platform. For linux/macOS users, the --pipetx argument is used to
+  // provide a pipe back to decrediton, which reads the grpc port in a secure and
+  // reliable way.
+  const waitForGrpcPortListener = (data) => {
+    const matches = /DCRW: gRPC server listening on [^ ]+:(\d+)/.exec(data);
+    if (matches) {
+      notifyGrpcPort(matches[1]);
+      // swap the listener since we don't need to keep looking for the port
+      dcrwallet.stdout.removeListener("data", waitForGrpcPortListener);
+      dcrwallet.stdout.on("data", addStdoutToLogListener);
+    }
+    dcrwalletLogs = AddToLog(process.stdout, dcrwalletLogs, data);
+  };
+
+  dcrwallet.stdout.on("data", os.platform() == "win32" ? waitForGrpcPortListener : addStdoutToLogListener);
   dcrwallet.stderr.on("data", (data) => dcrwalletLogs = AddToLog(process.stderr, dcrwalletLogs, data));
 
   dcrwPID = dcrwallet.pid;
@@ -670,7 +744,6 @@ app.on("ready", async () => {
       }]).popup(mainWindow);
     }
   });
-
 
   if (!primaryInstance) return;
 
@@ -860,5 +933,6 @@ app.on("before-quit", (event) => {
   event.preventDefault();
   cleanShutdown();
   setMustOpenForm(true);
+  clearPreviousWallet();
   app.exit(0);
 });

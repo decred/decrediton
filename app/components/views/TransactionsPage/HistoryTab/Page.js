@@ -7,17 +7,17 @@ import InfiniteScroll from "react-infinite-scroller";
 import "style/HistoryPage.less";
 
 const Page = ({
-                sortTypes,
-                txTypes,
-                transactions,
-                selectedSortOrderKey,
-                selectedTxTypeKey,
-                loadMoreThreshold,
-                noMoreTransactions,
-                onChangeSelectedType,
-                onChangeSortType,
-                onLoadMoreTransactions,
-              }) => (
+  sortTypes,
+  txTypes,
+  transactions,
+  selectedSortOrderKey,
+  selectedTxTypeKey,
+  loadMoreThreshold,
+  noMoreTransactions,
+  onChangeSelectedType,
+  onChangeSortType,
+  onLoadMoreTransactions,
+}) => (
   <InfiniteScroll
     hasMore={!noMoreTransactions}
     loadMore={onLoadMoreTransactions}
@@ -62,8 +62,8 @@ const Page = ({
         ) : null}
       </div>
       {!noMoreTransactions
-      ? <LoadingMoreTransactionsIndicator />
-      : <NoMoreTransactionsIndicator /> }
+        ? <LoadingMoreTransactionsIndicator />
+        : <NoMoreTransactionsIndicator /> }
     </div>
   </InfiniteScroll>
 );

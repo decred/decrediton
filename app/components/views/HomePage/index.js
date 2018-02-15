@@ -42,15 +42,15 @@ class Home extends React.Component{
 
   render() {
     return this.props.walletService ? <HomePage
-    {...{
-      ...this.props,
-      ...this.state,
-      ...substruct({
-        onShowRevokeTicket: null,
-        onRequestPassphrase: null,
-        onCancelPassphraseRequest: null,
-      }, this)
-    }} /> : <ErrorScreen />;
+      {...{
+        ...this.props,
+        ...this.state,
+        ...substruct({
+          onShowRevokeTicket: null,
+          onRequestPassphrase: null,
+          onCancelPassphraseRequest: null,
+        }, this)
+      }} /> : <ErrorScreen />;
   }
 
   onRevokeTickets(privpass) {

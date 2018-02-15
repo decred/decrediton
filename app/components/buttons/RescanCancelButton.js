@@ -9,5 +9,5 @@ export default ({ rescanRequest, rescanCancel }) => (
       disabled={!rescanRequest}
       className={"rescan-cancel-button"}
       onClick={() => rescanCancel()} />
-    </Tooltip>
+  </Tooltip>
 );

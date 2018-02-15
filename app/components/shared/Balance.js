@@ -3,8 +3,8 @@ import { FormattedNumber } from "react-intl";
 import { balance } from "connectors";
 
 export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
-   flat, title, noSmallAmount, negative, classNameWrapper, classNameUnit
-  }) => {
+  flat, title, noSmallAmount, negative, classNameWrapper, classNameUnit
+}) => {
   const secondary = large ? "balance-tiny" : flat ? "balance-base" : title ? "balance-title" : "balance-small";
   if (currencyDisplay === "DCR") {
     var totalDcr = 0;

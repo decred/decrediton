@@ -37,9 +37,9 @@ const CreateWallet = ({
 
             {warningNotice} Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else.
             `}
-            values={{
-              warningNotice: <span className="orange-warning"><T id="createWallet.warningNotice" m="Warning"/></span>
-            }}
+          values={{
+            warningNotice: <span className="orange-warning"><T id="createWallet.warningNotice" m="Warning"/></span>
+          }}
           />
         </div>
       </div>

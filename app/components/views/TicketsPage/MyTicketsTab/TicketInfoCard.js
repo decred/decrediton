@@ -46,8 +46,8 @@ const TicketInfoCard = ({ ticket, onClick, expanded }) => {
     <div className="ticket-info-price"><Balance amount={ticket.ticketPrice} /></div>
     {returnTipText
       ? <Tooltip tipWidth={ 300 } text={returnTipText} className="tooltip-pre-line">
-          <div className="ticket-reward"><Balance amount={ticket.ticketReward} noSmallAmount /></div>
-        </Tooltip>
+        <div className="ticket-reward"><Balance amount={ticket.ticketReward} noSmallAmount /></div>
+      </Tooltip>
       : null }
     <div className="ticket-timestamp">
       <Tooltip tipWidth={200} text={timeToLeaveTipText} disabled={!timeToLeaveTipText}>

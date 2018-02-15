@@ -35,10 +35,10 @@ class Paginator extends React.Component {
 
   render() {
     const Component = this.props.totalPages < 10
-    ? SmallPaginator
-    : this.props.totalPages == 11
-      ? MediumPaginator
-      : LargePaginator;
+      ? SmallPaginator
+      : this.props.totalPages == 11
+        ? MediumPaginator
+        : LargePaginator;
 
     return (
       this.props.totalPages > 1 &&

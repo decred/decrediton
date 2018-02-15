@@ -1,9 +1,10 @@
 import {
-    UPDATESTAKEPOOLCONFIG_ATTEMPT, UPDATESTAKEPOOLCONFIG_FAILED, UPDATESTAKEPOOLCONFIG_SUCCESS,
-    DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, CHANGESELECTEDSTAKEPOOL,
-    REMOVESTAKEPOOLCONFIG,
+  UPDATESTAKEPOOLCONFIG_ATTEMPT, UPDATESTAKEPOOLCONFIG_FAILED, UPDATESTAKEPOOLCONFIG_SUCCESS,
+  DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, CHANGESELECTEDSTAKEPOOL,
+  REMOVESTAKEPOOLCONFIG,
 } from "../actions/StakePoolActions";
 import { CLEARSTAKEPOOLCONFIG } from "../actions/WalletLoaderActions";
+import { WALLET_STAKEPOOL_SETTINGS } from "actions/DaemonActions";
 
 export default function stakepool(state = {}, action) {
   switch (action.type) {
@@ -41,6 +42,12 @@ export default function stakepool(state = {}, action) {
       currentStakePoolConfig: action.currentStakePoolConfig,
       selectedStakePool: action.selectedStakePool,
       activeStakePoolConfig: !!action.selectedStakePool,
+    };
+  case WALLET_STAKEPOOL_SETTINGS:
+    return {...state,
+      activeStakePoolConfig: action.activeStakePoolConfig,
+      selectedStakePool: action.selectedStakePool,
+      currentStakePoolConfig: action.currentStakePoolConfig,
     };
   default:
     return state;

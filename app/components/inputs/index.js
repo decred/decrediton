@@ -15,5 +15,8 @@ export { default as StakePoolSelect } from "./StakePoolSelect";
 export { default as TextInput } from "./TextInput";
 export { default as PathInput } from "./PathInput";
 export { default as PathBrowseInput } from "./PathBrowseInput";
+export * from "./PathBrowseInput";
 export { default as PassphraseModalField } from "./PassphraseModalField";
+export { default as WalletSelect } from "./WalletSelect";
+export { default as InlineField } from "./InlineField";
 export { FixedDcrInput } from "./DcrInput";

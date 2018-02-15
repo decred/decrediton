@@ -23,7 +23,8 @@ const updateSavedConfig = (newPoolInfo, poolHost, apiKey, accountNum) =>
             : config
         : config);
     if (!stakePoolConfigs.find((conf, idx) => conf !== currentStakePoolConfig[idx])) return;
-    const walletCfg = getWalletCfg(sel.isTestNet(getState()), "default-wallet");
+    const { daemon: { walletName }} = getState();
+    const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
     walletCfg.set("stakepools", stakePoolConfigs);
     let selectedStakePool = stakePoolConfigs.filter(p => p.Host === poolHost)[0] || null;
     dispatch({
@@ -105,7 +106,8 @@ export const SETSTAKEPOOLVOTECHOICES_FAILED = "SETSTAKEPOOLVOTECHOICES_FAILED";
 export const SETSTAKEPOOLVOTECHOICES_SUCCESS = "SETSTAKEPOOLVOTECHOICES_SUCCESS";
 
 const updateStakePoolVoteChoicesConfig = (stakePool, voteChoices) => (dispatch, getState) => {
-  const config = getWalletCfg(sel.isTestNet(getState()), "default-wallet");
+  const { daemon: { walletName }} = getState();
+  const config = getWalletCfg(sel.isTestNet(getState()), walletName);
   const voteChoicesConfig = voteChoices.getChoicesList().map(choice => ({
     agendaId: choice.getAgendaId(),
     choiceId: choice.getChoiceId()
@@ -144,7 +146,8 @@ export const discoverAvailableStakepools = () => (dispatch, getState) =>
   getStakePoolInfo()
     .then((foundStakepoolConfigs) => {
       if (foundStakepoolConfigs) {
-        let config = getWalletCfg(sel.isTestNet(getState()), "default-wallet");
+        const { daemon: { walletName }} = getState();
+        let config = getWalletCfg(sel.isTestNet(getState()), walletName);
         updateStakePoolConfig(config, foundStakepoolConfigs);
         dispatch({ type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, currentStakePoolConfig: config.get("stakepools")});
       } // TODO: add error notification after global snackbar is merged
@@ -156,7 +159,8 @@ export const changeSelectedStakePool = (selectedStakePool) => (dispatch) =>
 
 export const REMOVESTAKEPOOLCONFIG = "REMOVESTAKEPOOLCONFIG";
 export const removeStakePoolConfig = (host) => (dispatch, getState) => {
-  let config = getWalletCfg(sel.isTestNet(getState()), "default-wallet");
+  const { daemon: { walletName }} = getState();
+  let config = getWalletCfg(sel.isTestNet(getState()), walletName);
   let existingPools = config.get("stakepools");
   let pool = existingPools.filter(p => p.Host === host)[0];
   if (!pool) { return; }

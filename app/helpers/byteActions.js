@@ -6,3 +6,8 @@ export function reverseHash(s) {
   var s2 = a.join("");
   return s2;
 }
+
+// reverseRawHash reverses a hash encoded as Uint8Array (instead of as string)
+export function reverseRawHash(arr) {
+  return reverseHash(Buffer.from(arr).toString("hex"));
+}

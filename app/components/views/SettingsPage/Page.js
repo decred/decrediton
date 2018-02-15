@@ -6,16 +6,16 @@ import "style/StakePool.less";
 import "style/Settings.less";
 
 const SettingsPage = ({
-                        areSettingsDirty,
-                        tempSettings,
-                        networks,
-                        currencies,
-                        locales,
-                        onChangeTempSettings,
-                        onSaveSettings,
-                        onAttemptChangePassphrase,
-                        routes,
-                      }) => (
+  areSettingsDirty,
+  tempSettings,
+  networks,
+  currencies,
+  locales,
+  onChangeTempSettings,
+  onSaveSettings,
+  onAttemptChangePassphrase,
+  routes,
+}) => (
   <Aux>
     <TabbedHeader {...{ routes }}/>
     <div className="tabbed-page">

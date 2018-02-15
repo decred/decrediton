@@ -30,6 +30,7 @@ const START_STEP_RPC2 = 4;
 const START_STEP_DISCOVER = 5;
 const START_STEP_FETCH = 6;
 
+export const showTutorial = get(["daemon", "tutorial"]);
 export const versionInvalid = get(["version", "versionInvalid"]);
 export const requiredWalletRPCVersion = get(["version", "requiredVersion"]);
 export const walletRPCVersion = createSelector(
@@ -70,17 +71,35 @@ export const startupError = or(
   fetchHeadersError
 );
 
+const availableWallets = get(["daemon", "availableWallets"]);
+
+export const availableWalletsSelect = createSelector(
+  [availableWallets],
+  (wallets) => map(
+    wallet => ({
+      label: wallet.wallet + " (" +  wallet.network + ")",
+      value: wallet,
+      network: wallet.network,
+    }),
+    wallets
+  )
+);
+export const previousWallet = get(["daemon", "previousWallet"]);
+export const getWalletName = get(["daemon", "walletName"]);
+
 const openWalletInputRequest = get(["walletLoader", "openWalletInputRequest"]);
 const createWalletInputRequest = get(["walletLoader", "createWalletInputRequest"]);
 const discoverAddressInputRequest = get(["walletLoader", "discoverAddressInputRequest"]);
 const advancedDaemonInputRequest = get(["walletLoader", "advancedDaemonInputRequest"]);
 const openWalletRequestAttempt = get(["walletLoader", "walletOpenRequestAttempt"]);
+const selectCreateWalletInputRequest = get(["daemon", "selectCreateWalletInputRequest"]);
 
 export const isInputRequest = or(
   and(openWalletInputRequest, not(openWalletRequestAttempt)),
   createWalletInputRequest,
   discoverAddressInputRequest,
-  and(openForm, isAdvancedDaemon, advancedDaemonInputRequest)
+  and(openForm, isAdvancedDaemon, advancedDaemonInputRequest),
+  selectCreateWalletInputRequest
 );
 
 export const balances = or(get(["grpc", "balances"]), () => []);
@@ -117,7 +136,7 @@ export const lockedBalance = createSelector(
 );
 
 export const networks = () => [{name: "testnet"}, {name: "mainnet"}];
-export const network = get(["grpc", "network"]);
+export const network = get(["daemon", "network"]);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 export const currencies = () => [{name: "DCR"}, {name: "atoms"}];
@@ -152,7 +171,7 @@ export const blockURLBuilder= createSelector(
     (txHash) => `https://${network !== "testnet" ? "explorer" : network}.dcrdata.org/${network == "testnet" ? "explorer/" : ""}block/${txHash}`
 );
 
-const transactionNormalizer = createSelector(
+export const transactionNormalizer = createSelector(
   [accounts, txURLBuilder, blockURLBuilder],
   (accounts, txURLBuilder, blockURLBuilder) => {
     const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
@@ -239,13 +258,21 @@ export const hasUnminedTransactions = compose(l => l && l.length > 0, get(["grpc
 export const transactions = createSelector(
   [transactionsNormalizer, get(["grpc", "transactions"])], apply
 );
+
+const recentTransactions = createSelector(
+  [transactionsNormalizer, get(["grpc", "recentTransactions"])], apply
+);
+
 export const homeHistoryTransactions = createSelector(
-  [transactions],
-  (transactions) => {
-    return transactions.filter(t => {
-      return t.txType !== "Ticket" && t.txType !== "Vote";
-    });
-  }
+  [recentTransactions],
+  (recentTransactions) =>
+    recentTransactions.map(tx => {if (!tx.txType || tx.txType == "Regular" || tx.txType == "Coinbase") return tx; }).filter(tx => tx !== undefined)
+);
+
+export const homeHistoryTickets = createSelector(
+  [recentTransactions],
+  (recentTransactions) =>
+    recentTransactions.map(tx => {if (tx.txType && tx.txType !== "Regular" && tx.txType !== "Coinbase") return tx; }).filter(tx => tx !== undefined)
 );
 
 //fake data for balance chart
@@ -445,6 +472,7 @@ const ticketNormalizer = createSelector(
   }
 );
 const ticketSorter = (a, b) => (b.leaveTimestamp||b.enterTimestamp) - (a.leaveTimestamp||a.enterTimestamp);
+
 const allTickets = createSelector(
   [ticketNormalizer, get(["grpc", "tickets"])],
   (normalizer, tickets) => tickets.map(normalizer).sort(ticketSorter)
@@ -468,6 +496,7 @@ export const viewedTicketListing = createSelector(
 const rescanResponse = get(["control", "rescanResponse"]);
 export const rescanRequest = get(["control", "rescanRequest"]);
 export const getTransactionsRequestAttempt = get(["grpc", "getTransactionsRequestAttempt"]);
+export const getTicketsRequestAttempt = get(["grpc", "getTicketsRequestAttempt"]);
 export const notifiedBlockHeight = get(["notifications", "currentHeight"]);
 
 export const currentBlockHeight = get(["grpc", "currentBlockHeight"]);
@@ -626,9 +655,9 @@ export const expiredTicketsCount = compose(r => r ? r.getExpired() : 0, getStake
 export const liveTicketsCount = compose(r => r ? r.getLive() : 0, getStakeInfoResponse);
 export const totalSubsidy = compose(r => r ? r.getTotalSubsidy() : 0, getStakeInfoResponse);
 export const hasTicketsToRevoke = compose(
-    r => r ? r.getRevoked() !== r.getExpired() + r.getMissed() : 0,
-    getStakeInfoResponse
-  );
+  r => r ? r.getRevoked() !== r.getExpired() + r.getMissed() : 0,
+  getStakeInfoResponse
+);
 
 export const ticketBuyerService = get(["grpc", "ticketBuyerService"]);
 const startAutoBuyerResponse = get(["control", "startAutoBuyerResponse"]);
@@ -716,7 +745,7 @@ export const lastBlockTimestamp = get(["grpc", "recentBlockTimestamp"]);
 export const getNextAccountSuccess = get(["control", "getNextAccountSuccess"]);
 export const getNextAccountError = get(["control", "getNextAccountError"]);
 export const getNextAccountRequestAttempt = get(["control", "getNextAccountRequestAttempt"]);
-export const hiddenAccounts = get(["grpc", "hiddenAccounts"]);
+export const hiddenAccounts = get(["daemon", "hiddenAccounts"]);
 export const renameAccountError = get(["control", "renameAccountError"]);
 export const renameAccountSuccess = get(["control", "renameAccountSuccess"]);
 export const renameAccountRequestAttempt = get(["control", "renameAccountRequestAttempt"]);
@@ -732,3 +761,5 @@ export const shutdownRequested = get(["daemon", "shutdownRequested"]);
 export const daemonStopped = get(["daemon", "daemonStopped"]);
 
 export const chainParams = compose(isTestNet => isTestNet ? TestNetParams : MainNetParams, isTestNet);
+
+export const exportingData = get(["control", "exportingData"]);

@@ -29,9 +29,9 @@ export const getNextAddress = log((walletService, accountNum) =>
     walletService
       .nextAddress(request, (error, response) => error ? reject(error) : resolve(response));
   })
-  .then(response => ({
-    publicKey: response.getPublicKey()
-  })), "Get Next Address", logOptionNoResponseData());
+    .then(response => ({
+      publicKey: response.getPublicKey()
+    })), "Get Next Address", logOptionNoResponseData());
 
 export const validateAddress = withLogNoData((walletService, address) =>
   new Promise((resolve, reject) => {
@@ -40,10 +40,11 @@ export const validateAddress = withLogNoData((walletService, address) =>
     walletService.validateAddress(request, (error, response) => error ? reject(error) : resolve(response));
   }), "Validate Address");
 
-export const decodeTransaction = withLogNoData((decodeMessageService, hexTx) =>
+export const decodeTransaction = withLogNoData((decodeMessageService, rawTx) =>
   new Promise((resolve, reject) => {
     var request = new DecodeRawTransactionRequest();
-    var buff = new Uint8Array(Buffer.from(hexTx, "hex"));
+    var buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
+    var buff = new Uint8Array(buffer);
     request.setSerializedTransaction(buff);
     decodeMessageService.decodeRawTransaction(request, (error, tx) => {
       if (error) {
@@ -62,13 +63,19 @@ export const UNMINED_BLOCK_TEMPLATE = {
   getHash() { return null; }
 };
 
+export const TRANSACTION_TYPE_REGULAR = "Regular";
+export const TRANSACTION_TYPE_TICKET_PURCHASE = "Ticket";
+export const TRANSACTION_TYPE_VOTE = "Vote";
+export const TRANSACTION_TYPE_REVOCATION = "Revocation";
+export const TRANSACTION_TYPE_COINBASE = "Coinbase";
+
 // Map from numerical into string transaction type
 export const TRANSACTION_TYPES = {
-  [TransactionDetails.TransactionType.REGULAR]: "Regular",
-  [TransactionDetails.TransactionType.TICKET_PURCHASE]: "Ticket",
-  [TransactionDetails.TransactionType.VOTE]: "Vote",
-  [TransactionDetails.TransactionType.REVOCATION]: "Revocation",
-  [TransactionDetails.TransactionType.COINBASE]: "Coinbase"
+  [TransactionDetails.TransactionType.REGULAR]: TRANSACTION_TYPE_REGULAR,
+  [TransactionDetails.TransactionType.TICKET_PURCHASE]: TRANSACTION_TYPE_TICKET_PURCHASE,
+  [TransactionDetails.TransactionType.VOTE]: TRANSACTION_TYPE_VOTE,
+  [TransactionDetails.TransactionType.REVOCATION]: TRANSACTION_TYPE_REVOCATION,
+  [TransactionDetails.TransactionType.COINBASE]: TRANSACTION_TYPE_COINBASE
 };
 
 export const TRANSACTION_DIR_SENT = "sent";
@@ -106,6 +113,9 @@ export function formatTransaction(block, transaction, index) {
     hash: transaction.getHash(),
     txHash: reverseHash(Buffer.from(transaction.getHash()).toString("hex")),
     tx: transaction,
+    txType: TRANSACTION_TYPES[type],
+    debitsAmount: inputAmounts,
+    creditsAmount: outputAmounts,
     type,
     direction,
     amount,
@@ -117,41 +127,59 @@ export function formatUnminedTransaction(transaction, index) {
   return formatTransaction(UNMINED_BLOCK_TEMPLATE, transaction, index);
 }
 
-export const getTransactions = withLogNoData((walletService, startBlockHeight,
-  endBlockHeight, targetTransactionCount) =>
+export const streamGetTransactions = withLogNoData((walletService, startBlockHeight,
+  endBlockHeight, targetTransactionCount, dataCb) =>
   new Promise((resolve, reject) => {
     var request = new GetTransactionsRequest();
     request.setStartingBlockHeight(startBlockHeight);
     request.setEndingBlockHeight(endBlockHeight);
     request.setTargetTransactionCount(targetTransactionCount);
 
-    var foundMined = [];
-    var foundUnmined = [];
-
     let getTx = walletService.getTransactions(request);
     getTx.on("data", (response) => {
+      var foundMined = [];
+      var foundUnmined = [];
+
       let minedBlock = response.getMinedTransactions();
       if (minedBlock) {
-        minedBlock
+        foundMined = minedBlock
           .getTransactionsList()
-          .map((v, i) => formatTransaction(minedBlock, v, i))
-          .forEach(v => { foundMined.push(v); });
+          .map((v, i) => formatTransaction(minedBlock, v, i));
       }
 
       let unmined = response.getUnminedTransactionsList();
       if (unmined) {
-        unmined
-          .map((v, i) => formatUnminedTransaction(v, i))
-          .forEach(v => foundUnmined.push(v));
+        foundUnmined = unmined
+          .map((v, i) => formatUnminedTransaction(v, i));
       }
+
+      dataCb(foundMined, foundUnmined);
     });
     getTx.on("end", () => {
-      resolve({mined: foundMined, unmined: foundUnmined});
+      resolve();
     });
     getTx.on("error", (err) => {
       reject(err);
     });
   }), "Get Transactions");
+
+export const getTransactions = (walletService, startBlockHeight,
+  endBlockHeight, targetTransactionCount) =>
+  new Promise((resolve, reject) => {
+
+    var mined = [];
+    var unmined = [];
+
+    const dataCb = (foundMined, foundUnmined) => {
+      mined  = mined.concat(foundMined);
+      unmined = unmined.concat(foundUnmined);
+    };
+
+    streamGetTransactions(walletService, startBlockHeight,
+      endBlockHeight, targetTransactionCount, dataCb)
+      .then(() => resolve({mined, unmined}))
+      .catch(reject);
+  });
 
 export const publishUnminedTransactions = log((walletService) => new Promise((resolve, reject) => {
   const req = new PublishUnminedTransactionsRequest();
