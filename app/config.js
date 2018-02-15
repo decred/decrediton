@@ -127,9 +127,9 @@ export function appDataDirectory() {
 
 export function getDcrdPath() {
   if (os.platform() == "win32") {
-    return path.join(os.homedir(), "AppData", "Local", "Dcrd");
+    return path.join(os.homedir(), "AppData", "Local", "Hxd");
   } else if (process.platform === "darwin") {
-    return path.join(os.homedir(), "Library","Application Support","dcrd");
+    return path.join(os.homedir(), "Library","Application Support","Hxd");
   } else {
     return path.join(os.homedir(),".dcrd");
   }
@@ -164,7 +164,7 @@ export function readDcrdConfig(configPath, testnet) {
     let newCfg = {};
     newCfg.rpc_host = "127.0.0.1";
     if (testnet) {
-      newCfg.rpc_port = "19109";
+      newCfg.rpc_port = "12008";
     } else {
       newCfg.rpc_port = "9109";
     }
@@ -303,7 +303,7 @@ export function newWalletConfigCreation(testnet, walletPath) {
     {
       rpcuser: "USER",
       rpcpass: "PASSWORD",
-      rpclisten: "127.0.0.1:9109",
+      rpclisten: "127.0.0.1:9678",
       testnet: testnet ? "1" : "0"
     }
   };
@@ -313,7 +313,7 @@ export function newWalletConfigCreation(testnet, walletPath) {
     {
       rpcuser: "USER",
       rpcpass: "PASSWORD",
-      rpcserver: "127.0.0.1:9109",
+      rpcserver: "127.0.0.1:9678",
       testnet: testnet ? "1" : "0"
     }
   };

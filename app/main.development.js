@@ -353,7 +353,7 @@ ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
     args.push("--testnet");
   }
 
-  var dcrctlExe = getExecutablePath("dcrctl");
+  var dcrctlExe = getExecutablePath("hxctl");
   if (!fs.existsSync(dcrctlExe)) {
     logger.log("error", "The dcrctl file does not exists");
   }
@@ -455,7 +455,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
     mainWindow.webContents.executeJavaScript("window.close();");
   }
 
-  var dcrdExe = getExecutablePath("dcrd");
+  var dcrdExe = getExecutablePath("hxd");
   if (!fs.existsSync(dcrdExe)) {
     logger.log("error", "The dcrd file does not exists");
     return;
@@ -510,7 +510,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
 const launchDCRWallet = (walletPath, testnet) => {
   var spawn = require("child_process").spawn;
   var args = ["--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath))];
-
+  logger.log("info", args);
   const cfg = getWalletCfg(testnet, walletPath);
 
   args.push("--ticketbuyer.balancetomaintainabsolute=" + cfg.get("balancetomaintain"));
@@ -519,7 +519,7 @@ const launchDCRWallet = (walletPath, testnet) => {
   args.push("--ticketbuyer.maxpriceabsolute=" + cfg.get("maxpriceabsolute"));
   args.push("--ticketbuyer.maxperblock=" + cfg.get("maxperblock"));
 
-  var dcrwExe = getExecutablePath("dcrwallet");
+  var dcrwExe = getExecutablePath("hxwallet");
   if (!fs.existsSync(dcrwExe)) {
     logger.log("error", "The dcrwallet file does not exists");
     return;
@@ -625,7 +625,7 @@ const readExesVersion = () => {
   };
 
   for (let exe of exes) {
-    let exePath = getExecutablePath("dcrd");
+    let exePath = getExecutablePath("hxd");
     if (!fs.existsSync(exePath)) {
       logger.log("error", "The dcrd file does not exists");
     }

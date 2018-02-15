@@ -68,7 +68,7 @@ var initialState = {
   grpc: {
     // WalletService
     address: "127.0.0.1",
-    port: "9121",
+    port: "12010",
     walletService: null,
     requiredStakepoolAPIVersion: 2,
     recentBlockTimestamp: null,
