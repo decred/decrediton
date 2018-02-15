@@ -1,5 +1,7 @@
 import { TabbedPage, TabbedPageTab as Tab, TitleHeader, DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
+import { purchaseTickets } from "connectors";
+import { Balance } from "shared";
 import { default as PurchaseTab } from "./PurchaseTab";
 import { default as GovernanceTab } from "./GovernanceTab";
 import { default as StatisticsTab } from "./StatisticsTab";
@@ -11,10 +13,14 @@ const PageHeader = () =>
     title={<T id="tickets.title" m="Tickets" />}
   />;
 
-const TabHeader = () =>
+const TabHeader = purchaseTickets(({ticketPrice}) =>
   <DescriptionHeader
-    description={<T id="security.description" m="Various tools that help in different aspects of crypto currency security will be located here." />}
-  />;
+    description={
+      <T id="tickets.description" m="Current Price: {ticketPrice}"
+        values={{ticketPrice: <Balance amount={ticketPrice} classNameWrapper="header-small-balance"/>}} />
+    }
+  />
+);
 
 export default () => (
   <TabbedPage header={<PageHeader />} >

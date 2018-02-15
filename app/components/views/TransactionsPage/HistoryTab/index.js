@@ -9,11 +9,15 @@ import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERED
 } from "wallet/service";
 import { DescriptionHeader } from "layout";
+import { Balance } from "shared";
 
-export const HistoryTabHeader = () =>
+export const HistoryTabHeader = historyPage(({totalBalance}) =>
   <DescriptionHeader
-    description={<T id="transactions.description.history" m="Total Balance" />}
-  />;
+    description={<T id="transactions.description.history" m="Total Balance: {totalBalance}"
+      values={{totalBalance: <Balance amount={totalBalance} classNameWrapper="header-small-balance"/>}} />
+    }
+  />
+);
 
 @autobind
 class History extends React.Component {
