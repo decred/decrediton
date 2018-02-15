@@ -171,7 +171,7 @@ export const blockURLBuilder= createSelector(
     (txHash) => `https://${network !== "testnet" ? "explorer" : network}.dcrdata.org/${network == "testnet" ? "explorer/" : ""}block/${txHash}`
 );
 
-const transactionNormalizer = createSelector(
+export const transactionNormalizer = createSelector(
   [accounts, txURLBuilder, blockURLBuilder],
   (accounts, txURLBuilder, blockURLBuilder) => {
     const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
@@ -761,3 +761,5 @@ export const shutdownRequested = get(["daemon", "shutdownRequested"]);
 export const daemonStopped = get(["daemon", "daemonStopped"]);
 
 export const chainParams = compose(isTestNet => isTestNet ? TestNetParams : MainNetParams, isTestNet);
+
+export const exportingData = get(["control", "exportingData"]);

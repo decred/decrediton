@@ -304,6 +304,8 @@ var initialState = {
     validateAddressRequestAttempt: false,
     validateAddressResponse: null,
     validateAddressError: null,
+
+    exportingData: false,
   },
   snackbar: {
     messages: Array()

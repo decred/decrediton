@@ -9,6 +9,7 @@ import TransactionsTab from "./components/views/HomePage/Transactions";
 import SendTab from "./components/views/TransactionsPage/SendTab";
 import ReceiveTab from "./components/views/TransactionsPage/ReceiveTab";
 import HistoryTab from "./components/views/TransactionsPage/HistoryTab";
+import ExportTab from "./components/views/TransactionsPage/ExportTab";
 import TransactionPage from "./components/views/TransactionPage";
 import SettingsPage from "./components/views/SettingsPage";
 import SignTab from "./components/views/SecurityPage/SignMessage";
@@ -45,6 +46,7 @@ export default (
       <Route path="send"                        component={SendTab}           testNet/>
       <Route path="receive"                     component={ReceiveTab}/>
       <Route path="history"                     component={HistoryTab}        balance/>
+      <Route path="export"                      component={ExportTab}/>
     </Route>
     <Route   path="tickets"                     component={TabbedPage}        desc ticketprice>
       <IndexRedirect to="purchase"/>

@@ -289,11 +289,14 @@
   border-bottom: 1px @stroke-color-default solid;
   font-family: @font-family-regular;
   font-size: 13px;
-  color: white;
   padding: 3px 4px 1px 10px;
   display: flex;
   flex: auto;
   flex-grow: 1;
+}
+
+.inverted-colors .path-input {
+  color: #fff;
 }
 
 .path-input:hover {
@@ -429,4 +432,14 @@
 [data-pseudo-content--before]::before,
 [data-pseudo-content--after]::after {
   content: attr(data-pseudo-content);
+}
+
+.inline-field {
+  display: flex;
+  margin-bottom: 1.5em;
+}
+
+.inline-field-field {
+  flex-grow: 1;
+  padding-left: 0.5em;
 }
