@@ -177,13 +177,25 @@ export const balancesStats = (opts) => (dispatch, getState) => {
 
   let liveTickets = {};
 
-  // closure that calcs how much each tx affects each balance type
+  // changes in an sstx are the even-numbered, > 0 txouts
+  const isTicketChange = (c) => (c.getIndex() > 0) && (c.getIndex() % 2) === 0;
+
+  // a ticket "belongs" to the wallet when the wallet has the private key
+  // that can be used to vote/revoke the ticket (ie: if the wallet considers the
+  // txout with index === 0 a credit).
+  const isWalletTicket = (tx) => (tx.getCreditsList().length > 0) && (tx.getCreditsList()[0].getIndex() === 0);
+
+  // closure that calcs how much each tx affects each balance type.
+  // Ticket and vote/revoke delta calculation assumes *a lot* about how tickets
+  // are encoded (1st txout === ticket, odds are commitments, etc). If consensus
+  // rules change the "shape" of a ticket tx in the future, this will need to be
+  // heavily revised.
   const txBalancesDelta = async (tx) => {
     // tx.amount is negative in sends/tickets/transfers already
     switch (tx.txType) {
     case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
-      var change = tx.tx.getCreditsList().reduce((s, c) => s + c.getInternal() ? c.getAmount() : 0, 0);
-      var isWallet = tx.tx.getCreditsList().length > 0;
+      var change = tx.tx.getCreditsList().reduce((s, c) => s + isTicketChange(c) ? c.getAmount() : 0, 0);
+      var isWallet = isWalletTicket(tx.tx);
       var commitAmount = tx.tx.getDebitsList().reduce((s, d) => s + d.getPreviousAmount(), 0)
         - change - (isWallet ? tx.tx.getFee() : 0);
       var spentAmount = commitAmount + (isWallet ? tx.fee : 0);
