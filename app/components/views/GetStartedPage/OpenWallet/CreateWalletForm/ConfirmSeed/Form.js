@@ -32,7 +32,6 @@ class ConfirmSeedForm extends React.Component{
   }
 
   render(){
-    console.log("rerender", this.props.seedWords);
     const { seedWords, seedError, onChangeSeedWord } = this.props;
     return (
       <div className="confirm-seed">
