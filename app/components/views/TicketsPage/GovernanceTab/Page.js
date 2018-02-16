@@ -15,7 +15,7 @@ const VotingPrefsPage = ({
   onCloseAgenda,
   onUpdateVotePreference
 }) => (
-  <div className="">
+  <Aux>
     <div className="stakepool-voting-title-area">
       <div className="stakepool-voting-title-area-name">
         <T id="votingPreferences.title" m="Voting Preferences" />
@@ -55,7 +55,7 @@ const VotingPrefsPage = ({
           </div>
         )}
     </div>
-  </div>
+  </Aux>
 );
 
 export default VotingPrefsPage;

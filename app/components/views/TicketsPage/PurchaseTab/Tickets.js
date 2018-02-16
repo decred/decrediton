@@ -7,12 +7,10 @@ const Tickets = ({
   ...props
 }) => (
   <Aux>
-    <div className="">
-      <StakeInfo />
-      <PurchaseTickets {...{ ...props }} />
-      <div className="stakepool-area-spacing"></div>
-      <TicketAutoBuyer {...{ ...props }} />
-    </div>
+    <StakeInfo />
+    <PurchaseTickets {...{ ...props }} />
+    <div className="stakepool-area-spacing"></div>
+    <TicketAutoBuyer {...{ ...props }} />
   </Aux>
 );
 

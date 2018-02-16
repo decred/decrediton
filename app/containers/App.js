@@ -15,7 +15,6 @@ const topLevelAnimation = {atEnter: {opacity: 0}, atLeave: {opacity: 0}, atActiv
 @autobind
 class App extends React.Component {
   static propTypes = {
-    // children: PropTypes.element.isRequired,
     locale: PropTypes.object.isRequired,
     window: PropTypes.object.isRequired,
     shutdownApp: PropTypes.func.isRequired,
