@@ -85,7 +85,7 @@ export const MATURINGHEIGHTS_ADDED = "MATURINGHEIGHTS_ADDED";
 function transactionsMaturingHeights(txs, chainParams) {
   let res = {};
   const addToRes = (height, found) => {
-    const accounts = res[height] || [ ];
+    const accounts = res[height] || [];
     found.forEach(a => accounts.indexOf(a) === -1 ? accounts.push(a) : null);
     res[height] = accounts;
   };
@@ -219,7 +219,7 @@ const getAccountsBalances = (accounts) => (dispatch, getState) => {
         return;
       });
   });
-  dispatch({balances, type: GETBALANCE_SUCCESS});
+  dispatch({balances, type: GETBALANCE_SUCCESS });
 };
 
 export const GETBALANCE_ATTEMPT = "GETBALANCE_ATTEMPT";
@@ -245,7 +245,7 @@ const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (dispatch
   const updatedBalances = balances.map(balance =>
     (balance.accountNumber === accountNumber) ? updatedBalance : balance);
 
-  dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS});
+  dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS });
 };
 
 export const getBalanceUpdateAttempt = (accountNumber, requiredConfs) => (dispatch, getState) =>
@@ -330,7 +330,7 @@ export const getStakeInfoAttempt = () => (dispatch, getState) => {
       if (reloadTickets) {
         // TODO: once we switch to fully streamed getTickets(), just invalidate
         // the current ticket list.
-        setTimeout(() => {dispatch(getTicketsInfoAttempt());}, 1000);
+        setTimeout( () => {dispatch(getTicketsInfoAttempt());}, 1000);
       }
     })
     .catch(error => dispatch({ error, type: GETSTAKEINFO_FAILED }));
@@ -385,7 +385,7 @@ export function updateAccount(account) {
     const updatedBalances = balances.map(balance =>
       (balance.accountNumber === account.accountNumber) ? updatedBalance : balance);
 
-    dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS});
+    dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS });
   };
 }
 
@@ -672,7 +672,7 @@ export const GETVOTINGSERVICE_SUCCESS = "GETVOTINGSERVICE_SUCCESS";
 
 export const getVotingServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
-  const { daemon: { walletName } } = getState();
+  const { daemon: { walletName }} = getState();
   dispatch({ type: GETVOTINGSERVICE_ATTEMPT });
   wallet.getVotingService(sel.isTestNet(getState()), walletName, address, port)
     .then(votingService => dispatch({ votingService, type: GETVOTINGSERVICE_SUCCESS }))
