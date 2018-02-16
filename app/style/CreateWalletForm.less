@@ -183,27 +183,77 @@
   height: 202px;
 }
 
+.inverted-colors {
+  .confirm-seed-word .Select-control,
+  .confirm-seed-word .Select-control:hover:not(:disabled) {
+    color: #0c1e3e;
+  }
+  .confirm-seed-word .is-disabled .Select-control:hover {
+    color: #8997a5;
+    border: 2px solid #000;
+  }
+}
 .confirm-seed-word {
   float: left;
   margin: 5px;
   width: 100px;
 
+  .Select-arrow-zone {
+    width: 0px;
+  }
+  
+  .Select-arrow {
+    border: none;
+    display: inherit;
+    height: 0;
+    width: 0;
+    position: relative;
+    transition: inherit;
+    height: 0;
+    width: 0;
+  }
+  
+  .Select-control:hover:not(:disabled) {
+    color: inherit;
+    border: inherit;
+  }
+    
+  .Select-control:hover:not(:disabled) .Select-arrow {
+    border-top-color: inherit;
+  }
+  
+  .is-open .Select-arrow,
+  .is-open .Select-control:hover:not(:disabled) .Select-arrow,
+  .Select-arrow-zone:hover > .Select-arrow {
+    border-top-color: inherit;
+  }
+  
   .Select-control {
     padding-left: 2px;
     border-radius: 5px;
     border: 2px solid #000;
     background-color: #fff;
   }
+
 }
 
 .confirm-seed-word.match {
   .Select-control {
     border: 2px solid #2ed8a3;
   }
+  .Select-control:hover {
+    border: 2px solid #2ed8a3;
+  }
 }
 
 .confirm-seed-word.no-match {
   .Select-control {
+    color: #0c1e3e;
+    border: 2px solid red;
+  }
+  .Select-control:hover {
+    color: #0c1e3e;
     border: 2px solid red;
   }
 }
+
