@@ -264,9 +264,9 @@ const recentTransactions = createSelector(
 );
 
 export const homeHistoryTransactions = createSelector(
-  [recentTransactions],
-  (recentTransactions) =>
-    recentTransactions.map(tx => {if (!tx.txType || tx.txType == "Regular" || tx.txType == "Coinbase") return tx; }).filter(tx => tx !== undefined)
+  [transactions],
+  (transactions) =>
+    transactions.map(tx => {if (!tx.txType || tx.txType == "Regular" || tx.txType == "Coinbase") return tx; }).filter(tx => tx !== undefined)
 );
 
 export const homeHistoryTickets = createSelector(

@@ -5,8 +5,7 @@ import {yAxisStyle, xAxisStyle, homeChartSize} from "./Styles";
 import "style/Chart.less";
 
 const BalanceChart = ({ data, currencyDisplay }) => (
-  <BarChart stackOffset="sign" width={homeChartSize.width} height={homeChartSize.height} data={data}
-    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+  <BarChart stackOffset="sign" width={homeChartSize.width} height={homeChartSize.height} data={data}>
     <XAxis dataKey="name" style={xAxisStyle} />
     <YAxis orientation="right" style={yAxisStyle}/>
     <Tooltip content={<ChartTooltip />} />

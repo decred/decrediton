@@ -14,3 +14,7 @@ export const homeChartSize = {
   width: 400,
   height: 244
 };
+
+export const padding= {
+  bottom: 16
+};
