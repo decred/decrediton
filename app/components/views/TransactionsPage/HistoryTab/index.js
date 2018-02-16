@@ -61,8 +61,8 @@ class History extends React.Component {
 
   getSortTypes() {
     return [
-      { value: "desc", label: (<T id="transaction.sortby.newest" m="Newest"/>)},
-      { value: "asc", label: (<T id="transaction.sortby.oldest" m="Oldest"/>)}
+      {value: "desc", label: (<T id="transaction.sortby.newest" m="Newest"/>)},
+      {value: "asc", label: (<T id="transaction.sortby.oldest" m="Oldest"/>)}
     ];
   }
 
