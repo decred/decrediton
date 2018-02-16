@@ -13,7 +13,12 @@ const RegularTxRow = ({ txAmount, txDescription, negativeAmount, ...props }) => 
 );
 
 export const RegularTxRowOfClass = (className, negativeAmount) => {
-  const Comp = ({ ...p }) => h(RegularTxRow, { className, negativeAmount, ...p });
+  const Comp = ({ ...p }) => {
+    if(p.pending) {
+      className += " Pending";
+    }
+    return h(RegularTxRow, { className, negativeAmount, ...p });
+  };
   Comp.displayName = `RegularTxRowOfClass: ${className}`;
   return Comp;
 };

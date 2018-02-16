@@ -119,6 +119,55 @@
   margin-right: 40px;
 }
 
+.tx-history-overview-row {
+  padding: 14px 40px 18px 20px;
+  border-bottom: 1px solid #e7eaed;
+  background-color: #fff;
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
+  background-position: right 20px center;
+  background-size: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  line-height: 12px;
+}
+
+.tx-history-overview-row.Pending {
+  padding: 0 !important;
+}
+
+.Pending {
+  .transaction-info-overview {
+    padding: 14px 40px 18px 20px;
+  }
+}
+
+.tx-history-overview-row .icon {
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.tx-history-overview-row.Send .icon {
+  background-image: @minus-small-icon;
+}
+
+.tx-history-overview-row.Receive .icon {
+  background-image: @plus-small-icon;
+}
+
+.tx-history-overview-row.Transfer .icon {
+  background-image: @wallet-gray-icon;
+}
+
+.pending-overview-details {
+  background: #f6f7f8;
+  padding: 16px;
+  cursor: pointer;
+}
+
 .home-content-title {
   border-bottom: 1px solid transparent;
   color: #596d81;
