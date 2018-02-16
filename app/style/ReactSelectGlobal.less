@@ -41,6 +41,7 @@
   border: 0px;
   border-radius: 0px;
   background-color: inherit;
+  border-bottom: 1px solid @stroke-color-default;
   box-shadow: none;
   color: @input-color-default;
   cursor: default;
@@ -196,10 +197,13 @@
   position: relative;
   text-align: center;
   vertical-align: middle;
-  width: 0px;
+  width: 10px;
 }
 
 .Select-arrow {
+  border-color: @stroke-color-default transparent transparent;
+  border-style: solid;
+  border-width: 5px 5px 2.5px;
   display: inline-block;
   height: 0;
   width: 0;
@@ -207,6 +211,12 @@
   transition: all @input-transition-time @input-timing-function;
 }
 
+.Select-control:hover:not(:disabled) {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  color: @input-color-hovered;
+  border-bottom: 1px solid @stroke-color-hovered;
+}
+  
 .Select-control:hover:not(:disabled) .Select-arrow {
   border-top-color: @stroke-color-hovered;
 }
@@ -450,6 +460,8 @@
 }
 
 .inverted-colors {
+  .Select-control,
+  .Select-control:hover:not(:disabled),
   .is-open .Select-control .Select-input:focus,
   .is-searchable.is-open > .Select-control {
     color: #fff;
