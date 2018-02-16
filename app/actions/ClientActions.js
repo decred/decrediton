@@ -564,7 +564,7 @@ function checkForStakeTransactions(txs) {
 export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
 
-  let { unminedTransactions, minedTransactions, recentTransactions, recentRegularTransactions, recentStakeTransactions } = getState().grpc;
+  let { unminedTransactions, minedTransactions, recentRegularTransactions, recentStakeTransactions } = getState().grpc;
   const { transactionsFilter, recentTransactionCount } = getState().grpc;
   const chainParams = sel.chainParams(getState());
 
@@ -637,7 +637,7 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   minedTransactions = filterTransactions(minedTransactions, transactionsFilter);
 
   dispatch({unminedTransactions, minedTransactions, newlyUnminedTransactions,
-    newlyMinedTransactions, recentTransactions, recentRegularTransactions, recentStakeTransactions, type: NEW_TRANSACTIONS_RECEIVED});
+    newlyMinedTransactions, recentRegularTransactions, recentStakeTransactions, type: NEW_TRANSACTIONS_RECEIVED});
 };
 
 export const CLEAR_MOSTRECENTTRANSACTIONS = "CLEAR_MOSTRECENTTRANSACTIONS";

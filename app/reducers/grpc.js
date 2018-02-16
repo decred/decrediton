@@ -267,9 +267,6 @@ export default function grpc(state = {}, action) {
       lastTransaction: action.lastTransaction,
       getTransactionsRequestError: "",
       getTransactionsRequestAttempt: false,
-      recentTransactions: state.recentTransactions.length
-        ? state.recentTransactions
-        : transactions.slice(0, state.recentTransactionCount),
       recentRegularTransactions: action.recentRegularTransactions
         ? action.recentRegularTransactions
         : state.recentRegularTransactions,
@@ -283,7 +280,6 @@ export default function grpc(state = {}, action) {
       minedTransactions: action.minedTransactions,
       unminedTransactions: action.unminedTransactions,
       transactions: [...action.unminedTransactions, ...action.minedTransactions],
-      recentTransactions: action.recentTransactions,
       recentRegularTransactions: action.recentRegularTransactions,
       recentStakeTransactions: action.recentStakeTransactions,
     };
