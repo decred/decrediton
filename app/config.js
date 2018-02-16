@@ -117,11 +117,11 @@ export function validateGlobalCfgFile() {
 // electron in production mode.
 export function appDataDirectory() {
   if (os.platform() == "win32") {
-    return path.join(os.homedir(), "AppData", "Local", "Decrediton");
+    return path.join(os.homedir(), "AppData", "Local", "hxify");
   } else if (process.platform === "darwin") {
-    return path.join(os.homedir(), "Library","Application Support","decrediton");
+    return path.join(os.homedir(), "Library","Application Support","hxify");
   } else {
-    return path.join(os.homedir(),".config","decrediton");
+    return path.join(os.homedir(),".config","hxify");
   }
 }
 
