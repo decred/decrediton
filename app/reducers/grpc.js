@@ -269,7 +269,13 @@ export default function grpc(state = {}, action) {
       getTransactionsRequestAttempt: false,
       recentTransactions: state.recentTransactions.length
         ? state.recentTransactions
-        : transactions.slice(0, state.recentTransactionCount)
+        : transactions.slice(0, state.recentTransactionCount),
+      recentRegularTransactions: action.recentRegularTransactions
+        ? action.recentRegularTransactions
+        : state.recentRegularTransactions,
+      recentStakeTransactions: action.recentStakeTransactions
+        ? action.recentStakeTransactions
+        : state.recentStakeTransactions
     };
   case NEW_TRANSACTIONS_RECEIVED:
     return {

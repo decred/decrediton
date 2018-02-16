@@ -263,16 +263,20 @@ const recentTransactions = createSelector(
   [transactionsNormalizer, get(["grpc", "recentTransactions"])], apply
 );
 
+const recentStakeTransactions = createSelector(
+  [transactionsNormalizer, get(["grpc", "recentStakeTransactions"])], apply
+);
+
 export const homeHistoryTransactions = createSelector(
-  [transactions],
-  (transactions) =>
-    transactions.map(tx => {if (!tx.txType || tx.txType == "Regular" || tx.txType == "Coinbase") return tx; }).filter(tx => tx !== undefined)
+  [recentTransactions],
+  (txs) =>
+    txs.map(tx => {if (!tx.txType || tx.txType == "Regular" || tx.txType == "Coinbase") return tx; }).filter(tx => tx !== undefined)
 );
 
 export const homeHistoryTickets = createSelector(
-  [recentTransactions],
-  (recentTransactions) =>
-    recentTransactions.map(tx => {if (tx.txType && tx.txType !== "Regular" && tx.txType !== "Coinbase") return tx; }).filter(tx => tx !== undefined)
+  [recentStakeTransactions],
+  (txs) =>
+    txs.map(tx => {if (tx.txType && tx.txType !== "Regular" && tx.txType !== "Coinbase") return tx; }).filter(tx => tx !== undefined)
 );
 
 //fake data for balance chart

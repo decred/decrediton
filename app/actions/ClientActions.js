@@ -65,6 +65,8 @@ export const getStartupWalletInfo = () => (dispatch) => {
     setTimeout( async () => {
       try {
         await dispatch(getAccountsAttempt(true));
+        await dispatch(getMostRecentRegularTransactions());
+        await dispatch(getMostRecentStakeTransactions());
         await dispatch(getMostRecentTransactions());
         dispatch(findImmatureTransactions());
         //dispatch(getStartupStats());
@@ -521,8 +523,16 @@ export const getTransactions = () => async (dispatch, getState) => {
   }
 
   minedTransactions = [...minedTransactions, ...filtered];
+
+  var recentRegularTransactions, recentStakeTransactions;
+  if (transactionsFilter.types.indexOf(TransactionDetails.TransactionType.REGULAR) > -1) {
+    recentRegularTransactions = [...unminedTransactions, ...minedTransactions];
+  } else if (transactionsFilter.types.indexOf(TransactionDetails.TransactionType.VOTE) > -1) {
+    recentStakeTransactions = [...unminedTransactions, ...minedTransactions];
+  }
+
   const stateChange = { unminedTransactions, minedTransactions,
-    noMoreTransactions, lastTransaction, type: GETTRANSACTIONS_COMPLETE};
+    noMoreTransactions, lastTransaction, recentStakeTransactions, recentRegularTransactions, type: GETTRANSACTIONS_COMPLETE};
   dispatch(stateChange);
   return stateChange;
 };
@@ -612,9 +622,29 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
 
 export const CLEAR_MOSTRECENTTRANSACTIONS = "CLEAR_MOSTRECENTTRANSACTIONS";
 
-// getMostRecentTransactions clears the transaction filter and refetches
+// getMostRecentRegularTransactions clears the transaction filter and refetches
 // the first page of transactions. This is used to get and store the initial
 // list of recent transactions.
+export const getMostRecentRegularTransactions = () => dispatch => {
+  const defaultFilter = {
+    listDirection: "desc",
+    types: [TransactionDetails.TransactionType.REGULAR],
+    direction: null,
+  };
+  dispatch({type: CLEAR_MOSTRECENTTRANSACTIONS});
+  return dispatch(changeTransactionsFilter(defaultFilter));
+};
+
+export const getMostRecentStakeTransactions = () => dispatch => {
+  const defaultFilter = {
+    listDirection: "desc",
+    types: [TransactionDetails.TransactionType.TICKET_PURCHASE, TransactionDetails.TransactionType.VOTE, TransactionDetails.TransactionType.REVOCATION],
+    direction: null,
+  };
+  dispatch({type: CLEAR_MOSTRECENTTRANSACTIONS});
+  return dispatch(changeTransactionsFilter(defaultFilter));
+};
+
 export const getMostRecentTransactions = () => dispatch => {
   const defaultFilter = {
     search: null,

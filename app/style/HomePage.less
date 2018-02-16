@@ -113,10 +113,12 @@
   position: absolute;
   top: 295px;
   height: 200px;
+  width: 100%;
 }
 
 .recent-transactions {
-  margin-right: 40px;
+  width: 45%;
+  margin-right: 32px;
 }
 
 .tx-history-overview-row {
@@ -169,6 +171,18 @@
 
 .tx-history-overview-row.Transfer .icon {
   background-image: @wallet-gray-icon;
+}
+
+.tx-history-overview-row.Vote .icon {
+  background-image: @ticket-voted-icon;
+}
+
+.tx-history-overview-row.Ticket .icon {
+  background-image: @ticket-small-icon;
+}
+
+.tx-history-overview-row.Revoke .icon {
+  background-image: @ticket-revoked-icon;
 }
 
 .pending-overview-details {
