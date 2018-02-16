@@ -8,7 +8,23 @@ class ConfirmSeed extends React.Component {
   }
 
   getInitialState() {
-    return { seedWords: [], seedError: null };
+    var seedWords = [];
+    var randomThreshold = 0.3;
+    var splitMnemonic = this.props.mnemonic.split(" ");
+    for (var i = 0; i < splitMnemonic.length; i++) {
+      var hideWord = Math.random();
+      seedWords.push({
+        word: hideWord > randomThreshold ? splitMnemonic[i] : "",
+        show: hideWord > randomThreshold,
+        index: i,
+        match:  hideWord > randomThreshold
+      });
+    }
+    return {
+      seedWords: seedWords,
+      seedError: "*Please confirm the missing words",
+      splitMnemoic: splitMnemonic,
+    };
   }
 
   componentWillUnmount() {
@@ -16,50 +32,33 @@ class ConfirmSeed extends React.Component {
   }
 
   render() {
-    const { setSeedWords } = this;
-    const isMatch = this.isMatch();
+    const { onChangeSeedWord } = this;
     const { seedWords } = this.state;
     const isEmpty = this.state.seedWords.length <= 1; // Weird errors with one word, better to count as empty
     const seedError = isEmpty ? null : this.state.seedError;
     return (
-      <ConfirmSeedForm {...{ seedWords, setSeedWords, isMatch, seedError, isEmpty, createWalletExisting: this.props.createWalletExisting }} />
+      <ConfirmSeedForm {...{ seedWords, seedError, isEmpty, onChangeSeedWord }} />
     );
   }
 
-  setSeedWords(seedWords) {
-    const onError = (seedError) => {
-      this.setState({ mnemonic: "", seedError: seedError+"" });
-      this.props.onChange(null);
-    };
-    this.setState({ seedWords }, () => {
-      const mnemonic = this.getSeedWordsStr();
-      if (this.props.mnemonic && this.isMatch()) {
-        this.props
-          .decode(mnemonic)
-          .then(response => this.props.onChange(response.getDecodedSeed()))
-          .then(() => this.setState({ seedError: null }))
-          .catch(onError);
-      } else {
-        this.props.onChange(null);
-        this.props
-          .decode(mnemonic)
-          .then(response => {
-            this.setState({ mnemonic, seedError: null });
-            this.props.onChange(response.getDecodedSeed());
-          })
-          .catch(onError);
-      }
-    });
-  }
+  onChangeSeedWord(seedWord, update) {
+    const { seedWords, splitMnemoic } = this.state;
+    const { mnemonic } = this.props;
+    var updatedSeedWords = seedWords;
+    updatedSeedWords[seedWord.index] = {word: update, show: seedWord.show, index: seedWord.index, match: splitMnemoic[seedWord.index] == update };
+    this.setState({seedWords: updatedSeedWords});
 
-  getSeedWordsStr() {
-    const { seedWords } = this.state;
-    return Array.isArray(seedWords) ? seedWords.map(({ name }) => name).join(" ") : seedWords;
-  }
-
-  isMatch() {
-    const mnemonic = this.state.mnemonic || this.props.mnemonic;
-    return !!(mnemonic && (this.getSeedWordsStr() === mnemonic));
+    const seedWordStr = seedWords.map(seedWord => seedWord.word).join(" ");
+    if (seedWordStr == mnemonic) {
+      this.setState({seedWordsError: null});
+      this.props
+        .decode(mnemonic)
+        .then(response => this.props.onChange(response.getDecodedSeed()))
+        .then(() => this.setState({ seedError: null }))
+        .catch(e => console.log(e));
+    } else {
+      this.setState({seedError: "*Please confirm the missing words"});
+    }
   }
 }
 
