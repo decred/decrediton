@@ -1,13 +1,19 @@
 import { FormattedMessage as T } from "react-intl";
+import { tsToDate } from "helpers/dateFormat";
 import "style/TxHistory.less";
 
-const Status = ({ txAccountName, pending }) => (
+const Status = ({ pending, txTimestamp }) => (
   <Aux>
-    <div className="transaction-status">
-      <span className="transaction-account-name">{txAccountName}</span>
-      {pending ? <span className="indicator pending"><T id="transaction.indicatorPending" m="Pending" /></span> : null}
+    <div className="transaction-time-date-spacer">
+      <T id="transaction.timestamp"
+        m="{timestamp, date, medium} {timestamp, time, medium}"
+        values={{ timestamp: tsToDate(txTimestamp) }} />
     </div>
-    {pending ? <div className="transaction-time-date-spacer" /> : null}
+    {pending ? (
+      <div className="pending-details">
+        ...
+      </div>
+    ) : null}
   </Aux>
 );
 

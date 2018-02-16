@@ -4,7 +4,7 @@ import { createElement as h } from "react";
 
 const RegularTxRow = ({ txAmount, txDescription, negativeAmount, ...props }) => (
   <Row {...props}>
-    <div className="transaction-info">
+    <div className="transaction-info-overview">
       <span className="icon" />
       <span className="transaction-amount-number"><Balance amount={txAmount} negative={negativeAmount} /></span>
       <div className="transaction-amount-hash">{(txDescription.addressStr || []).join(", ")}</div>
