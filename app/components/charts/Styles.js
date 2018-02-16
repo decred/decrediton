@@ -11,8 +11,8 @@ export const xAxisStyle = {
 };
 
 export const homeChartSize = {
-  width: 400,
-  height: 244
+  width: 550,
+  height: 250
 };
 
 export const padding= {
