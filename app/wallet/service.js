@@ -180,13 +180,13 @@ export const getTransactions = (walletService, startBlockHeight,
     var unmined = [];
 
     const dataCb = (foundMined, foundUnmined) => {
-      mined = mined.concat(foundMined);
+      mined  = mined.concat(foundMined);
       unmined = unmined.concat(foundUnmined);
     };
 
     streamGetTransactions(walletService, startBlockHeight,
       endBlockHeight, targetTransactionCount, dataCb)
-      .then(() => resolve({ mined, unmined }))
+      .then(() => resolve({mined, unmined}))
       .catch(reject);
   });
 

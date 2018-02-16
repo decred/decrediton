@@ -53,7 +53,7 @@ const Page = ({
                 className="sort-by"
               />
             </Tooltip>
-            <Tooltip tipWidth={300} text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
+            <Tooltip tipWidth={ 300 } text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>
               <EyeFilterMenu
                 labelKey="label"
                 keyField="key"
@@ -74,7 +74,7 @@ const Page = ({
       </div>
       {!noMoreTransactions
         ? <LoadingMoreTransactionsIndicator />
-        : <NoMoreTransactionsIndicator />}
+        : <NoMoreTransactionsIndicator /> }
     </div>
   </InfiniteScroll>
 );
