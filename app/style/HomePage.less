@@ -7,22 +7,22 @@
 }
 
 .overview-content-wrapper {
-  height: 194px;
+  height: 220px;
   background: #fff;
-  padding: 56px 0px 0px 72px;
+  padding-left: 56px;
   display: flex;
 }
 
 .overview-chart-wrapper {
   position: relative;
-  top: -115px;
-  left: 300px;
+  top: -20px;
+  left: 180px;
 }
 
 .overview-ticket-chart-wrapper {
   position: relative;
-  top: -115px;
-  left: 180px;
+  top: -20px;
+  left: 70px;
 }
 
 .overview-header {
@@ -30,7 +30,7 @@
   flex-direction: row;
   position: relative;
   background: #fff;
-  height: 95px;
+  height: 50px;
   padding: 56px 0px 0px 72px;
 }
 
@@ -89,6 +89,10 @@
   line-height: 1;
 }
 
+.transaction-info-overview {
+  width: 250px;
+}
+
 .overview-balance-spendable-locked-unit {
   font-size: 11px;
   color: #0c1e3e;
@@ -107,12 +111,70 @@
   flex-direction: row;
   padding: 56px 32px;
   position: absolute;
-  top: 376px;
+  top: 295px;
   height: 200px;
 }
 
 .recent-transactions {
   margin-right: 40px;
+}
+
+.tx-history-overview-row {
+  padding: 14px 40px 20px 20px;
+  border-bottom: 1px solid #e7eaed;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
+  background-image: @arrow-right-gray-icon;
+  background-position: right 20px center;
+  background-size: 5px 10px;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: space-between;
+  line-height: 12px;
+}
+
+.tx-history-overview-row:hover {
+  background-color: rgba(212, 240, 253, 0.5);
+  background-image: @arrow-right-blue-icon;
+  background-size: 5px;
+}
+
+.tx-history-overview-row.Pending {
+  padding: 0 !important;
+}
+
+.Pending {
+  .transaction-info-overview {
+    padding: 14px 40px 18px 20px;
+  }
+}
+
+.tx-history-overview-row .icon {
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.tx-history-overview-row.Send .icon {
+  background-image: @minus-small-icon;
+}
+
+.tx-history-overview-row.Receive .icon {
+  background-image: @plus-small-icon;
+}
+
+.tx-history-overview-row.Transfer .icon {
+  background-image: @wallet-gray-icon;
+}
+
+.pending-overview-details {
+  background: #f6f7f8;
+  padding: 16px;
+  cursor: pointer;
 }
 
 .home-content-title {
