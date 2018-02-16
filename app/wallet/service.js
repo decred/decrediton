@@ -96,8 +96,8 @@ export function formatTransaction(block, transaction, index) {
   let direction = "";
 
 
-  let debitAddresses = [];
-  transaction.getDebitsList().forEach((debit) => debitAddresses.push(debit.getPreviousAccount()));
+  let debitAccounts = [];
+  transaction.getDebitsList().forEach((debit) => debitAccounts.push(debit.getPreviousAccount()));
 
   let creditAddresses = [];
   transaction.getCreditsList().forEach((credit) => creditAddresses.push(credit.getAddress()));
@@ -127,7 +127,7 @@ export function formatTransaction(block, transaction, index) {
     direction,
     amount,
     fee,
-    debitAddresses,
+    debitAccounts,
     creditAddresses
   };
 }
