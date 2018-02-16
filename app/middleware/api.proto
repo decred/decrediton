@@ -556,6 +556,7 @@ message CreateWalletResponse {}
 
 message OpenWalletRequest {
 	bytes public_passphrase = 1;
+    bytes private_passphrase = 2;
 }
 message OpenWalletResponse {}
 
