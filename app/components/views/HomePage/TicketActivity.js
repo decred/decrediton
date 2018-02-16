@@ -13,7 +13,6 @@ const RecentTickets = ({
 }) => {
   return (
     getTransactionsRequestAttempt ? <DecredLoading /> :
-      tickets.length > 0 &&
       <Aux>
         <div className="home-content-title">
           <T id="home.ticketActivityTitle" m="Recent Staking Activity" />
