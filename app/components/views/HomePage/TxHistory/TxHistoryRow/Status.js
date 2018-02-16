@@ -9,7 +9,7 @@ const Status = ({ pending, txTimestamp, onClick }) => (
         <T id="transaction.timestamp"
           m="{timestamp, date, medium} {timestamp, time, medium}"
           values={{ timestamp: tsToDate(txTimestamp) }} />
-    </div>) : (
+      </div>) : (
       <div className="pending-overview-details" {...{ onClick }}>
         ...
       </div>
