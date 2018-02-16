@@ -640,8 +640,6 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     newlyMinedTransactions, recentRegularTransactions, recentStakeTransactions, type: NEW_TRANSACTIONS_RECEIVED});
 };
 
-export const CLEAR_MOSTRECENTTRANSACTIONS = "CLEAR_MOSTRECENTTRANSACTIONS";
-
 // getMostRecentRegularTransactions clears the transaction filter and refetches
 // the first page of transactions. This is used to get and store the initial
 // list of recent transactions.
@@ -651,7 +649,6 @@ export const getMostRecentRegularTransactions = () => dispatch => {
     types: [TransactionDetails.TransactionType.REGULAR],
     direction: null,
   };
-  dispatch({type: CLEAR_MOSTRECENTTRANSACTIONS});
   return dispatch(changeTransactionsFilter(defaultFilter));
 };
 
@@ -661,7 +658,6 @@ export const getMostRecentStakeTransactions = () => dispatch => {
     types: [TransactionDetails.TransactionType.TICKET_PURCHASE, TransactionDetails.TransactionType.VOTE, TransactionDetails.TransactionType.REVOCATION],
     direction: null,
   };
-  dispatch({type: CLEAR_MOSTRECENTTRANSACTIONS});
   return dispatch(changeTransactionsFilter(defaultFilter));
 };
 
@@ -672,7 +668,6 @@ export const getMostRecentTransactions = () => dispatch => {
     types: [],
     direction: null,
   };
-  dispatch({type: CLEAR_MOSTRECENTTRANSACTIONS});
   return dispatch(changeTransactionsFilter(defaultFilter));
 };
 
