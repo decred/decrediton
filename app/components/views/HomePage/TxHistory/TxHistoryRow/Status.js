@@ -1,26 +1,29 @@
-import { FormattedDate, FormattedMessage } from "react-intl";
+import { FormattedDate, FormattedTime, FormattedMessage as T } from "react-intl";
 import "style/TxHistory.less";
 import { tsToDate } from "helpers/dateFormat";
+import { Tooltip } from "shared";
 
 const Status = ({ pending, txTimestamp }) => (
   <Aux>
     {!pending ? (
       <div className="transaction-time-date-spacer">
-        <FormattedMessage
+        <T
           id="myId"
-          defaultMessage="{day} {month} {year} {hour}:{minute}"
+          defaultMessage="{day} {month} {year} {time}"
           values={{
             day: <FormattedDate value={tsToDate(txTimestamp)} day="2-digit"/>,
             month: <FormattedDate value={tsToDate(txTimestamp)} month="short"/>,
             year: <FormattedDate value={tsToDate(txTimestamp)} year="numeric"/>,
-            hour: <FormattedDate value={tsToDate(txTimestamp)} hour="2-digit" hour12={false}/>,
-            minute: <FormattedDate value={tsToDate(txTimestamp)} minute="2-digit"/>
+            time: <FormattedTime value={tsToDate(txTimestamp)} hour12={false}/>,
           }}
         />
       </div>) : (
-      <div className="pending-overview-details">
+      <Tooltip text={<T id="txHistory.Pending" m="Pending"/>}>
+        <div className="pending-overview-details">
           ...
-      </div>
+        </div>
+      </Tooltip>
+
     )}
   </Aux>
 );

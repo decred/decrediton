@@ -474,8 +474,8 @@ function filterTransactions(transactions, filter) {
 // `grpc.noMoreTransactions` is set to true.
 export const getTransactions = () => async (dispatch, getState) => {
   const { getAccountsResponse, getTransactionsRequestAttempt,
-    transactionsFilter, walletService, maximumTransactionCount } = getState().grpc;
-  let { noMoreTransactions, lastTransaction, minedTransactions } = getState().grpc;
+    transactionsFilter, walletService, maximumTransactionCount, recentTransactionCount} = getState().grpc;
+  let { noMoreTransactions, lastTransaction, minedTransactions, recentRegularTransactions, recentStakeTransactions } = getState().grpc;
   if (getTransactionsRequestAttempt || noMoreTransactions) return;
 
   // Check to make sure getAccountsResponse (which has current block height) is available
@@ -524,15 +524,16 @@ export const getTransactions = () => async (dispatch, getState) => {
 
   minedTransactions = [...minedTransactions, ...filtered];
 
-  var recentRegularTransactions, recentStakeTransactions;
   if (transactionsFilter.types.indexOf(TransactionDetails.TransactionType.REGULAR) > -1) {
     recentRegularTransactions = [...unminedTransactions, ...minedTransactions];
+    recentRegularTransactions = recentRegularTransactions.slice(0, recentTransactionCount);
   } else if (transactionsFilter.types.indexOf(TransactionDetails.TransactionType.VOTE) > -1) {
     recentStakeTransactions = [...unminedTransactions, ...minedTransactions];
+    recentStakeTransactions = recentStakeTransactions.slice(0, recentTransactionCount);
   }
 
   const stateChange = { unminedTransactions, minedTransactions,
-    noMoreTransactions, lastTransaction, recentStakeTransactions, recentRegularTransactions, type: GETTRANSACTIONS_COMPLETE};
+    noMoreTransactions, lastTransaction, recentRegularTransactions, recentStakeTransactions, type: GETTRANSACTIONS_COMPLETE};
   dispatch(stateChange);
   return stateChange;
 };
@@ -563,7 +564,7 @@ function checkForStakeTransactions(txs) {
 export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
 
-  let { unminedTransactions, minedTransactions, recentTransactions } = getState().grpc;
+  let { unminedTransactions, minedTransactions, recentTransactions, recentRegularTransactions, recentStakeTransactions } = getState().grpc;
   const { transactionsFilter, recentTransactionCount } = getState().grpc;
   const chainParams = sel.chainParams(getState());
 
@@ -589,11 +590,30 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     ...unminedTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
   ], transactionsFilter);
 
-  recentTransactions = [
+
+  const regularTransactionFilter = {
+    listDirection: "desc",
+    types: [TransactionDetails.TransactionType.REGULAR],
+    direction: null,
+  };
+
+  recentRegularTransactions = filterTransactions([
     ...newlyUnminedTransactions,
     ...newlyMinedTransactions,
-    ...recentTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
-  ].slice(0, recentTransactionCount);
+    ...recentRegularTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
+  ], regularTransactionFilter).slice(0, recentTransactionCount);
+
+  const stakeTransactionFilter = {
+    listDirection: "desc",
+    types: [TransactionDetails.TransactionType.TICKET_PURCHASE, TransactionDetails.TransactionType.VOTE, TransactionDetails.TransactionType.REVOCATION],
+    direction: null,
+  };
+
+  recentStakeTransactions = filterTransactions([
+    ...newlyUnminedTransactions,
+    ...newlyMinedTransactions,
+    ...recentStakeTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
+  ], stakeTransactionFilter).slice(0, recentTransactionCount);
 
   const { maturingBlockHeights } = getState().grpc;
   const newMaturingHeights = {...maturingBlockHeights};
@@ -617,7 +637,7 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   minedTransactions = filterTransactions(minedTransactions, transactionsFilter);
 
   dispatch({unminedTransactions, minedTransactions, newlyUnminedTransactions,
-    newlyMinedTransactions, recentTransactions, type: NEW_TRANSACTIONS_RECEIVED});
+    newlyMinedTransactions, recentTransactions, recentRegularTransactions, recentStakeTransactions, type: NEW_TRANSACTIONS_RECEIVED});
 };
 
 export const CLEAR_MOSTRECENTTRANSACTIONS = "CLEAR_MOSTRECENTTRANSACTIONS";

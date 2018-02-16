@@ -8,17 +8,22 @@ const messageByType = { // TODO: use constants instead of string
   "Vote": <T id="transaction.type.vote" m="Vote" />,
 };
 
-const StakeTxRow = ({ txType, ...props }) => (
-  <Row {...{ className: txType, ...props}}>
+const StakeTxRow = ({ ...props }) => (
+  <Row {...props}>
     <div className="transaction-info-overview">
       <span className="icon" />
-      <span className="transaction-stake-type">{messageByType[txType] || "(unknown type)"}</span>
+      <span className="transaction-stake-type">{messageByType[props.className.split(" ")[0]] || "(unknown type)"}</span>
     </div>
   </Row>
 );
 
-export const StakeTxRowOfType = (txType) => {
-  const Comp = ({ ...p }) => h(StakeTxRow, { txType, ...p });
-  Comp.displayName = `StakeTxRowOfClass: ${txType}`;
+export const StakeTxRowOfType = (className) => {
+  const Comp = ({ ...p }) => {
+    if(p.pending) {
+      className += " Pending";
+    }
+    return h(StakeTxRow, { className, ...p });
+  };
+  Comp.displayName = `StakeTxRowOfClass: ${className}`;
   return Comp;
 };

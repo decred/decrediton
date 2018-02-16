@@ -284,6 +284,8 @@ export default function grpc(state = {}, action) {
       unminedTransactions: action.unminedTransactions,
       transactions: [...action.unminedTransactions, ...action.minedTransactions],
       recentTransactions: action.recentTransactions,
+      recentRegularTransactions: action.recentRegularTransactions,
+      recentStakeTransactions: action.recentStakeTransactions,
     };
   case CHANGE_TRANSACTIONS_FILTER:
     return {

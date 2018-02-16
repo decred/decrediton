@@ -259,8 +259,8 @@ export const transactions = createSelector(
   [transactionsNormalizer, get(["grpc", "transactions"])], apply
 );
 
-const recentTransactions = createSelector(
-  [transactionsNormalizer, get(["grpc", "recentTransactions"])], apply
+const recentRegularTransactions = createSelector(
+  [transactionsNormalizer, get(["grpc", "recentRegularTransactions"])], apply
 );
 
 const recentStakeTransactions = createSelector(
@@ -268,7 +268,7 @@ const recentStakeTransactions = createSelector(
 );
 
 export const homeHistoryTransactions = createSelector(
-  [recentTransactions],
+  [recentRegularTransactions],
   (txs) =>
     txs.map(tx => {if (!tx.txType || tx.txType == "Regular" || tx.txType == "Coinbase") return tx; }).filter(tx => tx !== undefined)
 );
