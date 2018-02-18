@@ -48,7 +48,7 @@ const DaemonLoadingFormBody = ({
         <div className="get-started-content-instructions">
           <div className="get-started-content-instructions-blockchain-syncing">
             <div className="get-started-instructions-txt">
-              <T id="getStarted.chainLoadingDelayReminder" m="If you are starting decrediton for the first time, this may take a while." />
+              <T id="getStarted.chainLoadingDelayReminder" m="If you are starting Hxify for the first time, this may take a while." />
             </div>
           </div>
           <LinearProgress

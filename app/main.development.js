@@ -161,7 +161,7 @@ var globalCfg = initGlobalCfg();
 
 const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
-logger.log("info", "Versions: Decrediton: %s, Electron: %s, Chrome: %s",
+logger.log("info", "Versions: Hxify: %s, Electron: %s, Chrome: %s",
   app.getVersion(), process.versions.electron, process.versions.chrome);
 
 process.on("uncaughtException", err => {
@@ -208,7 +208,7 @@ function cleanShutdown() {
   // Sent shutdown message again as we have seen it missed in the past if they
   // are still running.
   setTimeout(function () { closeClis(); }, cliShutDownPause * 1000);
-  logger.log("info", "Closing decrediton.");
+  logger.log("info", "Closing Hxify.");
 
   let shutdownTimer = setInterval(function(){
     const stillRunning = (require("is-running")(dcrdPID) && os.platform() != "win32");
@@ -312,7 +312,7 @@ ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
 
 ipcMain.on("start-wallet", (event, walletPath, testnet) => {
   if (dcrwPID) {
-    logger.log("info", "dcrwallet already started " + dcrwPID);
+    logger.log("info", "hxwallet already started " + dcrwPID);
     mainWindow.webContents.send("dcrwallet-port", dcrwPort);
     event.returnValue = dcrwPID;
     return;
@@ -355,7 +355,7 @@ ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
 
   var dcrctlExe = getExecutablePath("hxctl");
   if (!fs.existsSync(dcrctlExe)) {
-    logger.log("error", "The dcrctl file does not exists");
+    logger.log("error", "The hxctl file does not exists");
   }
 
   logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
@@ -399,7 +399,7 @@ ipcMain.on("get-dcrwallet-logs", (event) => {
 });
 
 ipcMain.on("get-decrediton-logs", (event) => {
-  event.returnValue = "decrediton logs!";
+  event.returnValue = "Hxify logs!";
 });
 
 const AddToLog = (destIO, destLogBuffer, data) => {
@@ -457,7 +457,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
 
   var dcrdExe = getExecutablePath("hxd");
   if (!fs.existsSync(dcrdExe)) {
-    logger.log("error", "The dcrd file does not exists");
+    logger.log("error", "The hxd file does not exists");
     return;
   }
 
@@ -481,7 +481,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
 
   dcrd.on("error", function (err) {
     logger.log("error", "Error running dcrd.  Check logs and restart! " + err);
-    mainWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart! " + err + "\");");
+    mainWindow.webContents.executeJavaScript("alert(\"Error running hxd.  Check logs and restart! " + err + "\");");
     mainWindow.webContents.executeJavaScript("window.close();");
   });
 
@@ -489,8 +489,8 @@ const launchDCRD = (walletPath, appdata, testnet) => {
     if (daemonIsAdvanced)
       return;
     if (code !== 0) {
-      logger.log("error", "dcrd closed due to an error.  Check dcrd logs and contact support if the issue persists.");
-      mainWindow.webContents.executeJavaScript("alert(\"dcrd closed due to an error.  Check dcrd logs and contact support if the issue persists.\");");
+      logger.log("error", "dcrd closed due to an error.  Check hxd logs and contact support if the issue persists.");
+      mainWindow.webContents.executeJavaScript("alert(\"hxd closed due to an error.  Check hxd logs and contact support if the issue persists.\");");
       mainWindow.webContents.executeJavaScript("window.close();");
     } else {
       logger.log("info", `dcrd exited with code ${code}`);
@@ -501,7 +501,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
   dcrd.stderr.on("data", (data) => dcrdLogs = AddToLog(process.stderr, dcrdLogs, data));
 
   newConfig.pid = dcrd.pid;
-  logger.log("info", "dcrd started with pid:" + newConfig.pid);
+  logger.log("info", "hxd started with pid:" + newConfig.pid);
 
   dcrd.unref();
   return newConfig;
@@ -521,7 +521,7 @@ const launchDCRWallet = (walletPath, testnet) => {
 
   var dcrwExe = getExecutablePath("hxwallet");
   if (!fs.existsSync(dcrwExe)) {
-    logger.log("error", "The dcrwallet file does not exists");
+    logger.log("error", "The hxwallet file does not exists");
     return;
   }
 
@@ -532,7 +532,7 @@ const launchDCRWallet = (walletPath, testnet) => {
       var pipe = win32ipc.createPipe("out");
       args.push(util.format("--piperx=%d", pipe.readEnd));
     } catch (e) {
-      logger.log("error", "can't find proper module to launch dcrwallet: " + e);
+      logger.log("error", "can't find proper module to launch hxwallet: " + e);
     }
   } else {
     args.push("--rpclistenerevents");
@@ -564,14 +564,14 @@ const launchDCRWallet = (walletPath, testnet) => {
       if (matches) {
         notifyGrpcPort(matches[1]);
       } else {
-        logger.log("error", "GRPC port not found on IPC channel to dcrwallet: " + intf);
+        logger.log("error", "GRPC port not found on IPC channel to hxwallet: " + intf);
       }
     }
   }));
 
   dcrwallet.on("error", function (err) {
-    logger.log("error", "Error running dcrwallet.  Check logs and restart! " + err);
-    mainWindow.webContents.executeJavaScript("alert(\"Error running dcrwallet.  Check logs and restart! " + err + "\");");
+    logger.log("error", "Error running hxwallet.  Check logs and restart! " + err);
+    mainWindow.webContents.executeJavaScript("alert(\"Error running hxwallet.  Check logs and restart! " + err + "\");");
     mainWindow.webContents.executeJavaScript("window.close();");
   });
 
@@ -579,11 +579,11 @@ const launchDCRWallet = (walletPath, testnet) => {
     if(daemonIsAdvanced)
       return;
     if (code !== 0) {
-      logger.log("error", "dcrwallet closed due to an error.  Check dcrwallet logs and contact support if the issue persists.");
-      mainWindow.webContents.executeJavaScript("alert(\"dcrwallet closed due to an error.  Check dcrwallet logs and contact support if the issue persists.\");");
+      logger.log("error", "hxwallet closed due to an error.  Check hxwallet logs and contact support if the issue persists.");
+      mainWindow.webContents.executeJavaScript("alert(\"hxwallet closed due to an error.  Check hxwallet logs and contact support if the issue persists.\");");
       mainWindow.webContents.executeJavaScript("window.close();");
     } else {
-      logger.log("info", `dcrwallet exited with code ${code}`);
+      logger.log("info", `hxwallet exited with code ${code}`);
     }
   });
 
@@ -609,7 +609,7 @@ const launchDCRWallet = (walletPath, testnet) => {
   dcrwallet.stderr.on("data", (data) => dcrwalletLogs = AddToLog(process.stderr, dcrwalletLogs, data));
 
   dcrwPID = dcrwallet.pid;
-  logger.log("info", "dcrwallet started with pid:" + dcrwPID);
+  logger.log("info", "hxwallet started with pid:" + dcrwPID);
 
   dcrwallet.unref();
   return dcrwPID;
@@ -618,16 +618,16 @@ const launchDCRWallet = (walletPath, testnet) => {
 const readExesVersion = () => {
   let spawn = require("child_process").spawnSync;
   let args = ["--version"];
-  let exes = ["dcrd", "dcrwallet", "dcrctl"];
+  let exes = ["hxd", "hxwallet", "hxctl"];
   let versions = {
     grpc: grpcVersions,
-    decrediton: app.getVersion()
+    hxify: app.getVersion()
   };
 
   for (let exe of exes) {
     let exePath = getExecutablePath("hxd");
     if (!fs.existsSync(exePath)) {
-      logger.log("error", "The dcrd file does not exists");
+      logger.log("error", "The hxd file does not exists");
     }
 
     let proc = spawn(exePath, args, { encoding: "utf8" });
@@ -661,7 +661,7 @@ let primaryInstance = !app.makeSingleInstance(function () {
 });
 
 if (!primaryInstance) {
-  logger.log("error", "Another instance of decrediton is already running");
+  logger.log("error", "Another instance of hxify is already running");
 }
 
 app.on("ready", async () => {
@@ -684,7 +684,7 @@ app.on("ready", async () => {
   } else {
     await installExtensions();
   }
-  windowOpts.title = "Decrediton - " + app.getVersion();
+  windowOpts.title = "Hxify - " + app.getVersion();
 
   mainWindow = new BrowserWindow(windowOpts);
   mainWindow.loadURL(`file://${__dirname}/${windowOpts.page}`);

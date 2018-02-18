@@ -226,11 +226,11 @@ msgstr "Sobre"
 
 #. [appMenu.aboutDecrediton]
 #. defaultMessage is:
-#. About Decrediton
+#. About Hxify
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.aboutDecrediton"
-msgid "About Decrediton"
-msgstr "Sobre Decrediton"
+msgid "About Hxify"
+msgstr "Sobre Hxify"
 
 #. [tickets.info.account.header]
 #. defaultMessage is:
@@ -855,11 +855,11 @@ msgstr "Constituição Decred"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.decrediton"
 msgid "Decrediton"
-msgstr "Decrediton"
+msgstr "Hxify"
 
 #. [tickets.info.txFee.message]
 #. defaultMessage is:
-#. Decrediton uses a "split" transaction to avoid blocking your balance,
+#. Hxify uses a "split" transaction to avoid blocking your balance,
 #. spliting the exact amount needed for the ticket from the balance in your
 #. wallet. The "split" transaction needs to be confirmed at least once before
 #. you can reuse your balance. This can block your whole balance for several
@@ -870,7 +870,7 @@ msgstr "Decrediton"
 #: app/i18n/extracted/app/components/modals/PurchaseTicketsInfoModalContent.json
 msgctxt "tickets.info.txFee.message"
 msgid ""
-"Decrediton uses a \"split\" transaction to avoid blocking your balance, "
+"Hxify uses a \"split\" transaction to avoid blocking your balance, "
 "spliting the exact amount needed for the ticket from the balance in your "
 "wallet. The \"split\" transaction needs to be confirmed at least once before"
 " you can reuse your balance. This can block your whole balance for several "
@@ -879,7 +879,7 @@ msgid ""
 "several hours. This can be left at 0.01. It does not affect your chances of "
 "buying tickets or voting with them."
 msgstr ""
-"Decrediton usa uma transação \"split\" para evitar bloquear o seu saldo, "
+"Hxify usa uma transação \"split\" para evitar bloquear o seu saldo, "
 "dividindo o valor exato necessário para a compra do ticket do saldo da sua "
 "carteira. Essa transação \"split\" precisa ser confirmada pelo menos uma vez"
 " para que você possa reutilizar o seu saldo. Isso pode bloquear o seu saldo "

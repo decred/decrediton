@@ -29,7 +29,7 @@ export default () => (
       </span>
       <span className="info-modal-row">
         <span className="info-modal-row-label highlight-blue"><T id="tickets.info.txFee.header" m="Tx fee (Hx/kB)" /></span>
-        <span className="info-modal-row-text"> <T id="tickets.info.txFee.message" m="Decrediton uses a &quot;split&quot; transaction to avoid blocking your balance, spliting the exact amount needed for the ticket from the balance in your wallet. The &quot;split&quot; transaction needs to be confirmed at least once before you can reuse your balance. This can block your whole balance for several minutes while this confirmation occurs. Without the split, you would have to wait for the confirmation of the ticket transaction, which could take several hours. This can be left at 0.01. It does not affect your chances of buying tickets or voting with them." /></span>
+        <span className="info-modal-row-text"> <T id="tickets.info.txFee.message" m="Hxify uses a &quot;split&quot; transaction to avoid blocking your balance, spliting the exact amount needed for the ticket from the balance in your wallet. The &quot;split&quot; transaction needs to be confirmed at least once before you can reuse your balance. This can block your whole balance for several minutes while this confirmation occurs. Without the split, you would have to wait for the confirmation of the ticket transaction, which could take several hours. This can be left at 0.01. It does not affect your chances of buying tickets or voting with them." /></span>
       </span>
       <span className="info-modal-row">
         <span className="info-modal-row-label highlight-blue"><T id="tickets.info.votingAddress.header" m="Voting address" /></span>

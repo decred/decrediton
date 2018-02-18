@@ -53,21 +53,21 @@ export const getDcrdLogs = log(() => Promise
   .then(logs => {
     if (logs) return logs;
     throw "Error getting Hxd logs";
-  }), "Get Dcrd Logs", logOptionNoResponseData());
+}), "Get Hxd Logs", logOptionNoResponseData());
 
 export const getDcrwalletLogs = log(() => Promise
   .resolve(ipcRenderer.sendSync("get-dcrwallet-logs"))
   .then(logs => {
     if (logs) return logs;
     throw "Error getting Hxwallet logs";
-  }), "Get Dcrwallet Logs", logOptionNoResponseData());
+}), "Get Hxwallet Logs", logOptionNoResponseData());
 
 export const getDecreditonLogs = log(() => Promise
   .resolve(ipcRenderer.sendSync("get-decrediton-logs"))
   .then(logs => {
     if (logs) return logs;
     throw "Error getting Hxify logs";
-  }), "Get Decrediton Logs", logOptionNoResponseData());
+}), "Get Hxify Logs", logOptionNoResponseData());
 
 export const getAvailableWallets = log(() => Promise
   .resolve(ipcRenderer.sendSync("get-available-wallets"))

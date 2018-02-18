@@ -14,7 +14,7 @@ class ShutdownAppPage extends React.Component{
       <div className="page-view inverted-colors">
         <Header
           getStarted
-          headerTitleOverview={<T id="shutdown.header.title" m="Shutting down Decrediton" />}
+          headerTitleOverview={<T id="shutdown.header.title" m="Shutting down Hxify" />}
           headerMetaOverview={<T id="shutdown.header.meta" m="Shutting down daemons and wallet" />} />
         />
         <div className="page-content-fixed">

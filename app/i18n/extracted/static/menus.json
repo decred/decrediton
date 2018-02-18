@@ -97,11 +97,11 @@
   },
   {
     "id": "appMenu.decrediton",
-    "defaultMessage": "Decrediton"
+    "defaultMessage": "Hxify"
   },
   {
     "id": "appMenu.aboutDecrediton",
-    "defaultMessage": "About Decrediton"
+    "defaultMessage": "About Hxify"
   },
   {
     "id": "appMenu.services",
@@ -109,7 +109,7 @@
   },
   {
     "id": "appMenu.hideDecrediton",
-    "defaultMessage": "Hide Decrediton"
+    "defaultMessage": "Hide Hxify"
   },
   {
     "id": "appMenu.hideOthers",

@@ -37,7 +37,7 @@ const DiscoverAddressesFormBodyBase = ({
         <T id="getStarted.discoverAccountsInfo" m={`
           Enter the passphrase you just created to scan the blockchain for additional accounts you may have previously created with your wallet.
 
-          Your account names aren't stored on the blockchain, so you will have to rename them after setting up Decrediton.
+          Your account names aren't stored on the blockchain, so you will have to rename them after setting up Hxify.
         `}/>
       </div>
       <div className="get-started-content-new-seed-create-button">
