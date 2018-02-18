@@ -39,7 +39,7 @@ export function initWalletCfg(testnet, walletPath) {
     config.set("maxperblock","5");
   }
   if (!config.has("currency_display")) {
-    config.set("currency_display","DCR");
+    config.set("currency_display","Hx");
   }
   if (!config.has("hiddenaccounts")) {
     var hiddenAccounts = Array();
