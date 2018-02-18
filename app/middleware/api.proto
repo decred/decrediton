@@ -842,4 +842,5 @@ message ValidateAddressResponse {
 	ScriptType script_type = 8;
 	bytes pay_to_addr_script = 9;
 	uint32 sigs_required = 10;
+    bool is_compressed = 11;
 }

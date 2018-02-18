@@ -27013,7 +27013,8 @@ proto.walletrpc.ValidateAddressResponse.toObject = function(includeInstance, msg
     pkScriptAddrsList: jspb.Message.getRepeatedField(msg, 7),
     scriptType: jspb.Message.getFieldWithDefault(msg, 8, 0),
     payToAddrScript: msg.getPayToAddrScript_asB64(),
-    sigsRequired: jspb.Message.getFieldWithDefault(msg, 10, 0)
+    sigsRequired: jspb.Message.getFieldWithDefault(msg, 10, 0),
+    isCompressed: jspb.Message.getFieldWithDefault(msg, 11, false)
   };
 
   if (includeInstance) {
@@ -27089,6 +27090,10 @@ proto.walletrpc.ValidateAddressResponse.deserializeBinaryFromReader = function(m
     case 10:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setSigsRequired(value);
+      break;
+    case 11:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsCompressed(value);
       break;
     default:
       reader.skipField();
@@ -27186,6 +27191,13 @@ proto.walletrpc.ValidateAddressResponse.serializeBinaryToWriter = function(messa
   if (f !== 0) {
     writer.writeUint32(
       10,
+      f
+    );
+  }
+  f = message.getIsCompressed();
+  if (f) {
+    writer.writeBool(
+      11,
       f
     );
   }
@@ -27425,6 +27437,23 @@ proto.walletrpc.ValidateAddressResponse.prototype.getSigsRequired = function() {
 /** @param {number} value */
 proto.walletrpc.ValidateAddressResponse.prototype.setSigsRequired = function(value) {
   jspb.Message.setField(this, 10, value);
+};
+
+
+/**
+ * optional bool is_compressed = 11;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.walletrpc.ValidateAddressResponse.prototype.getIsCompressed = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 11, false));
+};
+
+
+/** @param {boolean} value */
+proto.walletrpc.ValidateAddressResponse.prototype.setIsCompressed = function(value) {
+  jspb.Message.setField(this, 11, value);
 };
 
 
