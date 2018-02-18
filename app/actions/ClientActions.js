@@ -6,7 +6,7 @@ import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, sto
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
-import { showSidebarMenu } from "./SidebarActions";
+import { showSidebarMenu, showSidebar } from "./SidebarActions";
 import { push as pushHistory } from "react-router-redux";
 import { getWalletCfg } from "../config.js";
 import { onAppReloadRequested } from "wallet";
@@ -34,6 +34,7 @@ function getWalletServiceSuccess(walletService) {
 
     var goHomeCb = () => {
       setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);
+      setTimeout(() => { dispatch(showSidebar()); }, 1000);
       setTimeout(() => { dispatch(showSidebarMenu()); }, 1000);
     };
 
