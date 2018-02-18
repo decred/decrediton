@@ -131,7 +131,7 @@ export function getDcrdPath() {
   } else if (process.platform === "darwin") {
     return path.join(os.homedir(), "Library","Application Support","Hxd");
   } else {
-    return path.join(os.homedir(),".dcrd");
+    return path.join(os.homedir(),".hxd");
   }
 }
 
@@ -221,12 +221,12 @@ export function getDcrdCert(dcrdCertPath) {
 
   var certPath = "";
   if (os.platform() == "win32") {
-    certPath = path.join(os.homedir(), "AppData", "Local", "Dcrd", "rpc.cert");
+    certPath = path.join(os.homedir(), "AppData", "Local", "Hxd", "rpc.cert");
   } else if (os.platform() == "darwin") {
     certPath = path.join(os.homedir(), "Library", "Application Support",
-      "Dcrd", "rpc.cert");
+      "Hxd", "rpc.cert");
   } else {
-    certPath = path.join(os.homedir(), ".dcrd", "rpc.cert");
+    certPath = path.join(os.homedir(), ".hxd", "rpc.cert");
   }
 
   var cert = fs.readFileSync(certPath);
