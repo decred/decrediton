@@ -2,13 +2,13 @@
 @import (reference) "./Icons.less";
 
 .overview-wrapper {
-  background: #f3f6f6;
+  background: @darkGrey;
   height: 100%;
 }
 
 .overview-content-wrapper {
   height: 194px;
-  background: #fff;
+  background: @darkGrey;
   padding: 56px 0px 0px 72px;
   display: flex;
 }
@@ -29,7 +29,7 @@
   display: flex;
   flex-direction: row;
   position: relative;
-  background: #fff;
+  background: @darkGrey;
   height: 95px;
   padding: 56px 0px 0px 72px;
 }
@@ -42,21 +42,21 @@
 
 .overview-balance {
   font-size: 42px;
-  color: #0c1e3e;
+  color: @white;
   font-family: Inconsolata;
 }
 
 .overview-balance-label {
   margin-top: 15px;
   line-height: 0px;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-size: 11px;
-  color: #596d81;
+  color: @grey;
 }
 
 .overview-balance-unit {
   font-size: 17px;
-  color: #0c1e3e;
+  color: @grey;
 }
 
 .overview-spendable-locked-wrapper {
@@ -84,22 +84,22 @@
 
 .overview-balance-spendable-locked {
   font-size: 17px;
-  color: #0c1e3e;
+  color: @white;
   font-family: Inconsolata;
   line-height: 1;
 }
 
 .overview-balance-spendable-locked-unit {
   font-size: 11px;
-  color: #0c1e3e;
+  color: @grey;
   font-family: Inconsolata;
   line-height: 1;
 }
 
 .overview-balance-spendable-locked-label {
   font-size: 11px;
-  color: #596d81;
-  font-family: 'Source Sans Pro', sans-serif;
+  color: @grey;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
 .overview-transactions-ticket-wrapper {
@@ -117,9 +117,9 @@
 
 .home-content-title {
   border-bottom: 1px solid transparent;
-  color: #596d81;
+  color: @white;
   font-size: 16px;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   margin: 0px 0px 8px 16px;
 }
 
@@ -155,7 +155,7 @@
 }
 
 .home-content-title-text-active {
-  color: #2971ff;
+  color: @white;
 }
 
 .home-content-title-active {

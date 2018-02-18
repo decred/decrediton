@@ -8,9 +8,9 @@ const BalanceChart = ({ data, currencyDisplay }) => (
     <YAxis orientation="right"/>
     <Tooltip content={<ChartTooltip />} />
     <Legend />
-    <Bar barSize={8} dataKey="immature" stackId="a" fill="#69d5f7" radius={[0, 0, 10, 10]} unit={currencyDisplay} />
-    <Bar barSize={8} dataKey="live" stackId="a" fill="#2971ff" radius={[10, 10, 10, 10]} unit={currencyDisplay} />
-    <Bar barSize={8} dataKey="voted" stackId="a" fill="#2ed7a2" radius={[10, 10, 0, 0]} unit={currencyDisplay} />
+    <Bar barSize={8} dataKey="immature" stackId="a" fill="#8539dd" radius={[0, 0, 10, 10]} unit={currencyDisplay} />
+    <Bar barSize={8} dataKey="live" stackId="a" fill="#f60fff" radius={[10, 10, 10, 10]} unit={currencyDisplay} />
+    <Bar barSize={8} dataKey="voted" stackId="a" fill="#68d7ff" radius={[10, 10, 0, 0]} unit={currencyDisplay} />
   </BarChart>
 );
 

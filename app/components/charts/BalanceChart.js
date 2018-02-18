@@ -8,8 +8,8 @@ const BalanceChart = ({ data, currencyDisplay }) => (
     <YAxis orientation="right" />
     <Tooltip content={<ChartTooltip />} />
     <Legend />
-    <Bar barSize={8} dataKey="locked" stackId="a" fill="#0c1e3e" radius={[0, 0, 10, 10]} unit={currencyDisplay} />
-    <Bar barSize={8} dataKey="available" stackId="a" fill="#2971ff" radius={[10, 10, 0, 0]} unit={currencyDisplay} />
+    <Bar barSize={8} dataKey="locked" stackId="a" fill="#f60fff" radius={[0, 0, 10, 10]} unit={currencyDisplay} />
+    <Bar barSize={8} dataKey="available" stackId="a" fill="#8539dd" radius={[10, 10, 0, 0]} unit={currencyDisplay} />
   </BarChart>
 );
 

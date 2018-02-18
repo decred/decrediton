@@ -19,21 +19,21 @@
 }
 
 .indicator.pending {
-  border-color: #2971ff;
+  border-color: @blue;
   background-image: @indicator-pending-icon;
-  color: #2971ff;
+  color: @blue;
 }
 
 .indicator.confirmed {
-  border-color: #2ed8a3;
+  border-color: @green;
   background-image: @indicator-confirmed-icon;
-  color: #2ed8a3;
+  color: @green;
 }
 
 .tx-history-row {
   padding: 14px 40px 10px 20px;
-  border-bottom: 1px solid #e7eaed;
-  background-color: #fff;
+  border-bottom: 1px solid @darkGrey;
+  background-color: @darkGrey;
   cursor: pointer;
   transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
   background-image: @arrow-right-gray-icon;
@@ -95,7 +95,7 @@
 }
 
 .transaction-time-date {
-  color: #0c1e3e;
+  color: @white;
   font-size: 13px;
   text-align: right;
   flex-grow: 1;
@@ -137,7 +137,7 @@
 
 .transaction-amount-hash {
   font-family: Inconsolata, monospace;
-  color: #c4cbd2;
+  color: @grey;
   font-size: 11px;
   line-height: 11px;
   overflow: hidden;

@@ -10,8 +10,8 @@ const BalanceChart = ({ data, currencyDisplay }) => (
     <Tooltip content={<ChartTooltip />} />
     <Legend />
     <ReferenceLine y={0} stroke='#000' />
-    <Bar dataKey="sent" stackId="a" fill="#fd704a" barSize={8} radius={[10, 10, 10, 10]} unit={currencyDisplay} />
-    <Bar dataKey="received" stackId="a" fill="#41bf53" barSize={8} radius={[10, 10, 10, 10]} unit={currencyDisplay} />
+    <Bar dataKey="sent" stackId="a" fill="#f60fff" barSize={8} radius={[10, 10, 10, 10]} unit={currencyDisplay} />
+    <Bar dataKey="received" stackId="a" fill="#8539dd" barSize={8} radius={[10, 10, 10, 10]} unit={currencyDisplay} />
   </BarChart>
 );
 
