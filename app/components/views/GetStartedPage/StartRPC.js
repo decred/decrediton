@@ -15,7 +15,7 @@ export const StartRPCBody = ({
 }) => (
   startupError &&
     <div className="get-started-content-new-seed page-content">
-      <ShowError className="get-started-error" error="Connection to dcrd failed, please try and reconnect." />
+      <ShowError className="get-started-error" error="Connection to Hxd failed, please try and reconnect." />
       <KeyBlueButton className="get-started-rpc-retry-button" onClick={onRetryStartRPC}>
         <T id="getStarted.retryBtn" m="Retry" />
       </KeyBlueButton>

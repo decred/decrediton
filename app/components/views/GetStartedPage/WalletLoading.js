@@ -4,7 +4,7 @@ import "style/GetStarted.less";
 
 const DaemonLoading = () => (
   <div className="get-started-view">
-    <Header getStarted headerTitleOverview={<T id="getStarted.startingDaemonsOverview" m="Starting DCRD..." />} />
+    <Header getStarted headerTitleOverview={<T id="getStarted.startingDaemonsOverview" m="Starting Hxd..." />} />
     <div className="get-started-content">
       <div className="get-started-content-title">
         <div className="get-started-content-title-text">

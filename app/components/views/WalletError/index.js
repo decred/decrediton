@@ -20,7 +20,7 @@ const WalletError = ({ getNetworkError, routes }) => (
     <TabbedHeader {...{ routes }}/>
     <div style={styles.content}>
       { getNetworkError ?
-        <p>{getNetworkError} Please verify that your dcrd is configured correctly and restart.</p> :
+        <p>{getNetworkError} Please verify that your Hxd is configured correctly and restart.</p> :
         <p> We have detected that your wallet has disconnected.
           Please reload Decrediton to fix this problem. </p>
       }

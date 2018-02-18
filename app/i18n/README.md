@@ -130,9 +130,9 @@ import { tsToDate } from "../../helpers/dateFormat";
 
 **:exclamation: Note**: Due to how react-intl works, the date and time is only translated if the format string is translated (i.e. it can't rely on the `defaultMessage` string). So the translation must be filled, even if using the exact same date and time formats.
 
-### DCR Amount
+### Hx Amount
 
-To display an amount of DCR, use the `Balance` component:
+To display an amount of Hx, use the `Balance` component:
 
 ```javascript
 import Balance from "../../Balance";

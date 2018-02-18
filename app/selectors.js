@@ -138,9 +138,9 @@ export const networks = () => [{name: "testnet"}, {name: "mainnet"}];
 export const network = get(["daemon", "network"]);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
-export const currencies = () => [{name: "DCR"}, {name: "atoms"}];
+export const currencies = () => [{name: "Hx"}, {name: "atoms"}];
 export const currencyDisplay = get(["settings", "currentSettings", "currencyDisplay"]);
-export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
+export const unitDivisor = compose(disp => disp.toLowerCase() === "hx" ? 100000000 : 1, currencyDisplay);
 export const currentLocaleName = get(["settings", "currentSettings", "locale"]);
 
 export const sortedLocales = createSelector(

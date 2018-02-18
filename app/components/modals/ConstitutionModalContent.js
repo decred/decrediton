@@ -166,7 +166,7 @@ export default () => (
       <li>All proposals, both submitted and accepted, shall be made public one week
   after a proposal has been selected. Once the selection occurs, the associated
   RFP shall be removed. Contracted parties shall be paid exclusively in
-      {" "}<em>decred</em> (&ldquo;DCR&rdquo;) at the current effective DCR/USD rate at
+      {" "}<em>decred</em> (&ldquo;Hx&rdquo;) at the current effective Hx/USD rate at
     the time of payment, unless specifically noted otherwise.</li>
       <li>In the future, the development organization may need to change from DHG to
   another entity that serves an identical function. If and when this occurs, DHG

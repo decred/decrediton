@@ -37,13 +37,13 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => {
       let walletVersion = getWalletRPCVersionResponse.getVersionString();
       ipcRenderer.send("grpc-versions-determined", { requiredVersion, walletVersion });
       if (!walletVersion) {
-        versionErr = "Unable to obtain Dcrwallet API version";
+        versionErr = "Unable to obtain Hxwallet API version";
       } else {
         if (!semverCompatible(requiredVersion, walletVersion)) {
-          versionErr = "API versions not compatible..  Decrediton requires "
+          versionErr = "API versions not compatible..  Hxify requires "
             + requiredVersion + " but wallet " + walletVersion
             + " does not satisfy the requirement. Please check your"
-            + " installation, Decrediton and Dcrwallet versions should match.";
+            + " installation, Hxify and Hxwallet versions should match.";
         }
       }
       if (versionErr) {

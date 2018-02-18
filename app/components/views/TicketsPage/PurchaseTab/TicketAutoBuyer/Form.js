@@ -39,10 +39,10 @@ const TicketAutoBuyerForm = ({
                 <div className="stakepool-balance-to-maintain-icon">{balanceToMaintain}</div>
               </Tooltip>
               <Tooltip text={<T id="autobuyer.maxFee" m="Max Fee" />}>
-                <div className="stakepool-max-fee-icon">{maxFee} DCR</div>
+                <div className="stakepool-max-fee-icon">{maxFee} Hx</div>
               </Tooltip>
               <Tooltip text={<T id="autobuyer.maxPriceAbsolute" m="Max Price Absolute" />}>
-                <div className="stakepool-max-price-absolute-icon">{maxPriceAbsolute} DCR</div>
+                <div className="stakepool-max-price-absolute-icon">{maxPriceAbsolute} Hx</div>
               </Tooltip>
               <Tooltip text={<T id="autobuyer.maxPriceRelative" m="Max Price Relative" />}>
                 <div className="stakepool-max-price-relative-icon">{maxPriceRelative}%</div>

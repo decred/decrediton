@@ -23,14 +23,14 @@ test("atoms display", () => {
   expect(spy.calledOnce).toEqual(true);
 });
 
-test("DCR display", () => {
+test("Hx display", () => {
   const spy = sinon.spy();
   // Render a checkbox with label in the document
   const balance = shallow(
-    <Balance currencyDisplay="DCR" amount={420000001} onClick={spy} />
+    <Balance currencyDisplay="Hx" amount={420000001} onClick={spy} />
   );
 
-  expect(balance.find(".balance-base").text()).toEqual("4.20000001 DCR");
+  expect(balance.find(".balance-base").text()).toEqual("4.20000001 Hx");
 
   balance.find(".balance-base").simulate("click");
 

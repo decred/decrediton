@@ -46,25 +46,25 @@ msgstr ""
 #: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
 #. [autobuyer.invalidMaxFee]
 #. defaultMessage is:
-#. *Invalid max fee (0 - 0.1 DCR/KB)
+#. *Invalid max fee (0 - 0.1 Hx/KB)
 msgctxt "autobuyer.invalidMaxFee"
-msgid "*Invalid max fee (0 - 0.1 DCR/KB)"
+msgid "*Invalid max fee (0 - 0.1 Hx/KB)"
 msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 #. [purchaseTickets.errors.invalidTicketFee]
 #. defaultMessage is:
-#. *Invalid ticket fee (0 - 0.1 DCR/KB)
+#. *Invalid ticket fee (0 - 0.1 Hx/KB)
 msgctxt "purchaseTickets.errors.invalidTicketFee"
-msgid "*Invalid ticket fee (0 - 0.1 DCR/KB)"
+msgid "*Invalid ticket fee (0 - 0.1 Hx/KB)"
 msgstr ""
 
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 #. [purchaseTickets.errors.invalidTxFee]
 #. defaultMessage is:
-#. *Invalid tx fee (0 - 0.1 DCR/KB)
+#. *Invalid tx fee (0 - 0.1 Hx/KB)
 msgctxt "purchaseTickets.errors.invalidTxFee"
-msgid "*Invalid tx fee (0 - 0.1 DCR/KB)"
+msgid "*Invalid tx fee (0 - 0.1 Hx/KB)"
 msgstr ""
 
 #: app/i18n/extracted/app/components/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
@@ -278,10 +278,10 @@ msgstr ""
 #: app/i18n/extracted/app/messages.json
 #. [accounts.description]
 #. defaultMessage is:
-#. Accounts allow you to keep separate records of your DCR funds.
-#. Transferring DCR across accounts will create a transaction on the blockchain.
+#. Accounts allow you to keep separate records of your Hx funds.
+#. Transferring Hx across accounts will create a transaction on the blockchain.
 msgctxt "accounts.description"
-msgid "Accounts allow you to keep separate records of your DCR funds.\nTransferring DCR across accounts will create a transaction on the blockchain."
+msgid "Accounts allow you to keep separate records of your Hx funds.\nTransferring Hx across accounts will create a transaction on the blockchain."
 msgstr ""
 
 #: app/i18n/extracted/app/components/modals/AddAccountModalContent/Modal.json
@@ -940,7 +940,7 @@ msgstr ""
 #. [getStarted.discoverAccountsInfo]
 #. defaultMessage is:
 #. Enter the passphrase you just created to scan the blockchain for additional accounts you may have previously created with your wallet.
-#. 
+#.
 #.           Your account names aren't stored on the blockchain, so you will have to rename them after setting up Decrediton.
 msgctxt "getStarted.discoverAccountsInfo"
 msgid "Enter the passphrase you just created to scan the blockchain for additional accounts you may have previously created with your wallet.\n\n          Your account names aren't stored on the blockchain, so you will have to rename them after setting up Decrediton."
@@ -1406,9 +1406,9 @@ msgstr ""
 #. [sidebar.rescanBtn.tip]
 #. defaultMessage is:
 #. Initiate a transaction rescan.
-#. 
+#.
 #. Rescanning may help resolve some balance errors.
-#. 
+#.
 #. Note: This scans the entire blockchain for transactions,
 #. but does not re-download it.
 msgctxt "sidebar.rescanBtn.tip"
@@ -1876,12 +1876,12 @@ msgstr ""
 #. [stake.addPool.info]
 #. defaultMessage is:
 #. Please select your desired stakepool from the above dropdown and follow these instructions:
-#. 
+#.
 #.               1) Create an account or login to your existing account at {stakePoolLink}.
 #.               2) Once logged in, select the 'Settings' tab.
 #.               3) Copy and paste your Api Key into the field below (typically starts with 'eyJhb...').
 #.               4) Click Add and enter your private passphrase.
-#. 
+#.
 #.               {noticeSpan} If you receive an error about the script not being redeemable when attempting to add your stakepool, you can try the following:
 #.               - Each stakepool account you create can only be associated with 1 wallet.  If you have previously created this stakepool account with a different wallet (different seed), then you must create a new account.
 #.               - If you had previously used a 'voting account', for your ticket purchases, please go to the Accounts page and create a new account.  This may now allow you to successfully import your script for your stakepool.
@@ -2580,9 +2580,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/SignMessageInfoModalContent.json
 #. [sign.info.message]
 #. defaultMessage is:
-#. Signing a message with an address' private key allows you to prove that you are the owner of a given address to a possible counterparty.  For instance, let's say you sent 100 DCR to a merchant and you have yet to receive your merchandise.  You contact the merchant and explain the situation, but need a way to prove you are, in fact, the owner of the address that the funds were sent from.  To do this you can generate a signature based on a message only known to you and your counterparty and the private key associated with the address.  Upon receipt, the counterparty may use the Verify Message form to ensure the signature is VALID.
+#. Signing a message with an address' private key allows you to prove that you are the owner of a given address to a possible counterparty.  For instance, let's say you sent 100 Hx to a merchant and you have yet to receive your merchandise.  You contact the merchant and explain the situation, but need a way to prove you are, in fact, the owner of the address that the funds were sent from.  To do this you can generate a signature based on a message only known to you and your counterparty and the private key associated with the address.  Upon receipt, the counterparty may use the Verify Message form to ensure the signature is VALID.
 msgctxt "sign.info.message"
-msgid "Signing a message with an address' private key allows you to prove that you are the owner of a given address to a possible counterparty.  For instance, let's say you sent 100 DCR to a merchant and you have yet to receive your merchandise.  You contact the merchant and explain the situation, but need a way to prove you are, in fact, the owner of the address that the funds were sent from.  To do this you can generate a signature based on a message only known to you and your counterparty and the private key associated with the address.  Upon receipt, the counterparty may use the Verify Message form to ensure the signature is VALID."
+msgid "Signing a message with an address' private key allows you to prove that you are the owner of a given address to a possible counterparty.  For instance, let's say you sent 100 Hx to a merchant and you have yet to receive your merchandise.  You contact the merchant and explain the situation, but need a way to prove you are, in fact, the owner of the address that the funds were sent from.  To do this you can generate a signature based on a message only known to you and your counterparty and the private key associated with the address.  Upon receipt, the counterparty may use the Verify Message form to ensure the signature is VALID."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/Form.json
@@ -2782,12 +2782,12 @@ msgstr ""
 #. [invalidRPCVersion.info]
 #. defaultMessage is:
 #. The API of the currently running wallet ({walletRPCVersion}) is not compatible with Decrediton (required version {requiredWalletRPCVersion}).
-#. 
-#.           Please update the daemon (dcrd) and wallet (dcrwallet) to the latest version, then try again.
-#. 
+#.
+#.           Please update the daemon (Hxd) and wallet (Hxwallet) to the latest version, then try again.
+#.
 #.           See the "Help ⮕ About" menu for the current version of the executables.
 msgctxt "invalidRPCVersion.info"
-msgid "The API of the currently running wallet ({walletRPCVersion}) is not compatible with Decrediton (required version {requiredWalletRPCVersion}).\n\n          Please update the daemon (dcrd) and wallet (dcrwallet) to the latest version, then try again.\n\n          See the \"Help ⮕ About\" menu for the current version of the executables."
+msgid "The API of the currently running wallet ({walletRPCVersion}) is not compatible with Decrediton (required version {requiredWalletRPCVersion}).\n\n          Please update the daemon (Hxd) and wallet (Hxwallet) to the latest version, then try again.\n\n          See the \"Help ⮕ About\" menu for the current version of the executables."
 msgstr ""
 
 #: app/i18n/extracted/app/components/modals/PurchaseTicketsInfoModalContent.json
@@ -3077,9 +3077,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/PurchaseTicketsInfoModalContent.json
 #. [tickets.info.ticketFee.header]
 #. defaultMessage is:
-#. Ticket fee (DCR/kB)
+#. Ticket fee (Hx/kB)
 msgctxt "tickets.info.ticketFee.header"
-msgid "Ticket fee (DCR/kB)"
+msgid "Ticket fee (Hx/kB)"
 msgstr ""
 
 #: app/i18n/extracted/app/components/modals/PurchaseTicketsInfoModalContent.json
@@ -3154,7 +3154,7 @@ msgstr ""
 #. [createWallet.lossInfo]
 #. defaultMessage is:
 #. To help avoid permanent loss of your wallet, the seed must be backed up before continuing.
-#. 
+#.
 #.           {warningNotice} Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else.
 msgctxt "createWallet.lossInfo"
 msgid "To help avoid permanent loss of your wallet, the seed must be backed up before continuing.\n\n          {warningNotice} Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else."
@@ -3339,9 +3339,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/PurchaseTicketsInfoModalContent.json
 #. [tickets.info.txFee.header]
 #. defaultMessage is:
-#. Tx fee (DCR/kB)
+#. Tx fee (Hx/kB)
 msgctxt "tickets.info.txFee.header"
-msgid "Tx fee (DCR/kB)"
+msgid "Tx fee (Hx/kB)"
 msgstr ""
 
 #: app/i18n/extracted/app/components/StakePools/List.json

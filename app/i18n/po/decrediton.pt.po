@@ -50,27 +50,27 @@ msgstr "* Todos os campos são obrigatórios"
 
 #. [autobuyer.invalidMaxFee]
 #. defaultMessage is:
-#. *Invalid max fee (0 - 0.1 DCR/KB)
+#. *Invalid max fee (0 - 0.1 Hx/KB)
 #: app/i18n/extracted/app/components/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.invalidMaxFee"
-msgid "*Invalid max fee (0 - 0.1 DCR/KB)"
-msgstr "* Taxa máxima inválida (0-0.1 DCR/KB)"
+msgid "*Invalid max fee (0 - 0.1 Hx/KB)"
+msgstr "* Taxa máxima inválida (0-0.1 Hx/KB)"
 
 #. [purchaseTickets.errors.invalidTicketFee]
 #. defaultMessage is:
-#. *Invalid ticket fee (0 - 0.1 DCR/KB)
+#. *Invalid ticket fee (0 - 0.1 Hx/KB)
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.errors.invalidTicketFee"
-msgid "*Invalid ticket fee (0 - 0.1 DCR/KB)"
-msgstr "* Taxa de ticket inválida (0-0.1 DCR/KB)"
+msgid "*Invalid ticket fee (0 - 0.1 Hx/KB)"
+msgstr "* Taxa de ticket inválida (0-0.1 Hx/KB)"
 
 #. [purchaseTickets.errors.invalidTxFee]
 #. defaultMessage is:
-#. *Invalid tx fee (0 - 0.1 DCR/KB)
+#. *Invalid tx fee (0 - 0.1 Hx/KB)
 #: app/i18n/extracted/app/components/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.errors.invalidTxFee"
-msgid "*Invalid tx fee (0 - 0.1 DCR/KB)"
-msgstr "* Taxa de transação inválida (0 - 0.1 DCR/KB)"
+msgid "*Invalid tx fee (0 - 0.1 Hx/KB)"
+msgstr "* Taxa de transação inválida (0 - 0.1 Hx/KB)"
 
 #. [createWallet.passphraseInput.errors.noMatch]
 #. defaultMessage is:
@@ -282,17 +282,17 @@ msgstr "Contas"
 
 #. [accounts.description]
 #. defaultMessage is:
-#. Accounts allow you to keep separate records of your DCR funds.
-#. Transferring DCR across accounts will create a transaction on the
+#. Accounts allow you to keep separate records of your Hx funds.
+#. Transferring Hx across accounts will create a transaction on the
 #. blockchain.
 #: app/i18n/extracted/app/messages.json
 msgctxt "accounts.description"
 msgid ""
-"Accounts allow you to keep separate records of your DCR funds.\n"
-"Transferring DCR across accounts will create a transaction on the blockchain."
+"Accounts allow you to keep separate records of your Hx funds.\n"
+"Transferring Hx across accounts will create a transaction on the blockchain."
 msgstr ""
-"Contas permitem que você mantenha registros separados dos seus fundos DCR.\n"
-"Transferir DCR entre contas irá criar uma transação na blockchain."
+"Contas permitem que você mantenha registros separados dos seus fundos Hx.\n"
+"Transferir Hx entre contas irá criar uma transação na blockchain."
 
 #. [addAccountModal.addBtn]
 #. defaultMessage is:
@@ -2762,7 +2762,7 @@ msgstr "Assinatura"
 #. defaultMessage is:
 #. Signing a message with an address' private key allows you to prove that you
 #. are the owner of a given address to a possible counterparty.  For instance,
-#. let's say you sent 100 DCR to a merchant and you have yet to receive your
+#. let's say you sent 100 Hx to a merchant and you have yet to receive your
 #. merchandise.  You contact the merchant and explain the situation, but need
 #. a way to prove you are, in fact, the owner of the address that the funds
 #. were sent from.  To do this you can generate a signature based on a message
@@ -2774,7 +2774,7 @@ msgctxt "sign.info.message"
 msgid ""
 "Signing a message with an address' private key allows you to prove that you "
 "are the owner of a given address to a possible counterparty.  For instance, "
-"let's say you sent 100 DCR to a merchant and you have yet to receive your "
+"let's say you sent 100 Hx to a merchant and you have yet to receive your "
 "merchandise.  You contact the merchant and explain the situation, but need a"
 " way to prove you are, in fact, the owner of the address that the funds were"
 " sent from.  To do this you can generate a signature based on a message only"
@@ -2784,7 +2784,7 @@ msgid ""
 msgstr ""
 "Assinar uma mensagem com a chave privada de um endereço permite que você "
 "prove que você é o dono de um endereço para uma possível contraparte. Por "
-"exemplo, digamos que você envie 100 DCR para um vendedor e você não recebeu "
+"exemplo, digamos que você envie 100 Hx para um vendedor e você não recebeu "
 "sua mercadoria. Você contacta o vendedor para explicar a situação mas "
 "precisa prova que você, de fator, é o dono do endereço de onde os fundos "
 "foram enviados. Para fazer isso, você pode gerar uma assinatura baseada em "
@@ -2994,7 +2994,7 @@ msgstr ""
 #. defaultMessage is:
 #. The API of the currently running wallet ({walletRPCVersion}) is not
 #. compatible with Decrediton (required version {requiredWalletRPCVersion}).
-#.           Please update the daemon (dcrd) and wallet (dcrwallet) to the
+#.           Please update the daemon (Hxd) and wallet (Hxwallet) to the
 #. latest version, then try again.
 #.           See the "Help ⮕ About" menu for the current version of the
 #. executables.
@@ -3003,13 +3003,13 @@ msgctxt "invalidRPCVersion.info"
 msgid ""
 "The API of the currently running wallet ({walletRPCVersion}) is not compatible with Decrediton (required version {requiredWalletRPCVersion}).\n"
 "\n"
-"          Please update the daemon (dcrd) and wallet (dcrwallet) to the latest version, then try again.\n"
+"          Please update the daemon (Hxd) and wallet (Hxwallet) to the latest version, then try again.\n"
 "\n"
 "          See the \"Help ⮕ About\" menu for the current version of the executables."
 msgstr ""
 "A API da carteira em execução ({walletRPCVersion}) não é compatível com o Decrediton (versão requerida {requiredWalletRPCVersion}).\n"
 "\n"
-"          Por favor atualize o daemon (dcrd) e a carteira (dcrwallet) para suas versões mais recentes, e então tente novamente.\n"
+"          Por favor atualize o daemon (Hxd) e a carteira (Hxwallet) para suas versões mais recentes, e então tente novamente.\n"
 "\n"
 "          Acesse o menu \"Ajuda ⮕ Sobre\" para .ver a versão atual dos executáveis."
 
@@ -3377,11 +3377,11 @@ msgstr "O Ticket Buyer está parado."
 
 #. [tickets.info.ticketFee.header]
 #. defaultMessage is:
-#. Ticket fee (DCR/kB)
+#. Ticket fee (Hx/kB)
 #: app/i18n/extracted/app/components/modals/PurchaseTicketsInfoModalContent.json
 msgctxt "tickets.info.ticketFee.header"
-msgid "Ticket fee (DCR/kB)"
-msgstr "Taxa de Ticket (DCR/kB)"
+msgid "Ticket fee (Hx/kB)"
+msgstr "Taxa de Ticket (Hx/kB)"
 
 #. [tickets.info.ticketPrice.header]
 #. defaultMessage is:
@@ -3665,11 +3665,11 @@ msgstr "Taxa de transação"
 
 #. [tickets.info.txFee.header]
 #. defaultMessage is:
-#. Tx fee (DCR/kB)
+#. Tx fee (Hx/kB)
 #: app/i18n/extracted/app/components/modals/PurchaseTicketsInfoModalContent.json
 msgctxt "tickets.info.txFee.header"
-msgid "Tx fee (DCR/kB)"
-msgstr "Taxa de Transação (DCR/kB)"
+msgid "Tx fee (Hx/kB)"
+msgstr "Taxa de Transação (Hx/kB)"
 
 #. [stakepools.list.form.field.url]
 #. defaultMessage is:

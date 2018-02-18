@@ -7,7 +7,7 @@ export default defineMessages({
   "home.tab.transactions":                    { id: "home.tab.transactions",                 defaultMessage: "Transactions" },
 
   "accounts.title":                           { id: "accounts.title",                        defaultMessage: "Accounts" },
-  "accounts.description":                     { id: "accounts.description",                  defaultMessage: "Accounts allow you to keep separate records of your DCR funds.\nTransferring DCR across accounts will create a transaction on the blockchain." },
+  "accounts.description":                     { id: "accounts.description",                  defaultMessage: "Accounts allow you to keep separate records of your Hx funds.\nTransferring Hx across accounts will create a transaction on the blockchain." },
 
   "transaction.description":                  { id: "transaction.description",               defaultMessage: "Date and time will appear as soon as we get a confirmation." },
 
