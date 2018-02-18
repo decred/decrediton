@@ -6,7 +6,7 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
   flat, title, noSmallAmount, negative, classNameWrapper, classNameUnit
 }) => {
   const secondary = large ? "balance-tiny" : flat ? "balance-base" : title ? "balance-title" : "balance-small";
-  if (currencyDisplay === "DCR") {
+  if (currencyDisplay.toLowerCase() === "hx") {
     var totalDcr = 0;
     if (typeof amount !== "undefined" && amount !== 0) { totalDcr = parseInt(amount) / 100000000; }
     const split = totalDcr.toFixed(8).toString().split(".");
