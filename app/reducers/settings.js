@@ -1,8 +1,8 @@
 import { SETTINGS_SAVE, SETTINGS_CHANGED, SETTINGS_UNCHANGED } from "../actions/SettingsActions";
-import { WALLET_SETTINGS, SELECT_LANGUAGES } from "actions/DaemonActions";
+import { WALLET_SETTINGS, SELECT_LANGUAGE } from "actions/DaemonActions";
 export default function settings(state = {}, action) {
   switch (action.type) {
-  case SELECT_LANGUAGES:
+  case SELECT_LANGUAGE:
     var currentSettings = state.currentSettings;
     currentSettings.locale = action.language;
     return {...state,
