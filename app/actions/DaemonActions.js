@@ -32,7 +32,7 @@ export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
 export const selectLanguage = (selectedLanguage) => (dispatch) => {
   const config = getGlobalCfg();
   config.set("locale", selectedLanguage.language);
-  dispatch({language: selectedLanguage.language, type: SELECT_LANGUAGE});
+  dispatch({ language: selectedLanguage.language, type: SELECT_LANGUAGE });
 };
 
 export const finishTutorial = () => (dispatch) => {

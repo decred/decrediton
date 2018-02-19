@@ -28,7 +28,7 @@ class LanguageSelect extends React.Component{
         }/>);
   }
   onChangeSelectedLang(newLang) {
-    this.setState({selectedLang: newLang});
+    this.setState({ selectedLang: newLang });
   }
   onSelectLang() {
     this.props.onSelectLanguage(this.state.selectedLang);

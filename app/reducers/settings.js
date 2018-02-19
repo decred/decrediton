@@ -5,7 +5,7 @@ export default function settings(state = {}, action) {
   case SELECT_LANGUAGE:
     var currentSettings = state.currentSettings;
     currentSettings.locale = action.language;
-    return {...state,
+    return { ...state,
       currentSettings: currentSettings,
       tempSettings: currentSettings,
     };

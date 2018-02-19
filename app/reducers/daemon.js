@@ -18,7 +18,7 @@ import {
 export default function version(state = {}, action) {
   switch (action.type) {
   case SELECT_LANGUAGE:
-    return {...state,
+    return { ...state,
       locale: action.language,
     };
   case FINISH_TUTORIAL:

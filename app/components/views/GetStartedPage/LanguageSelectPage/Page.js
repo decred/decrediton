@@ -3,7 +3,7 @@ import "style/LanguageSelect.less";
 import { SettingsInput } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 
-const LanguageSelectPage = ({availableLanguages, selectedLang, onChangeSelectedLang, onSelectLang}) => {
+const LanguageSelectPage = ({ availableLanguages, selectedLang, onChangeSelectedLang, onSelectLang }) => {
   return (
     <div className="language-select">
       <div className="logo">
