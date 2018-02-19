@@ -4,7 +4,7 @@ import { KeyBlueButton } from "buttons";
 import { InlineField, PathBrowseInput, FileBrowserFilters } from "inputs";
 import "style/ExportPage.less";
 
-const FieldDescription = ({name, description}) => (
+const FieldDescription = ({ name, description }) => (
   <li>
     <span className="export-info-field-name">{name}:</span>
     {description}
@@ -40,7 +40,7 @@ const ExportPage =
             save
             type="file"
             value={destinationFile}
-            filters={[FileBrowserFilters.csv, FileBrowserFilters.all]}
+            filters={[ FileBrowserFilters.csv, FileBrowserFilters.all ]}
             onChange={(value) => setDestinationFile(value)}
           />
         </InlineField>

@@ -13,7 +13,7 @@ const TicketOverviewCard = ({ status, tickets , onClick }) => (
       <T
         id="myTickets.statusCount"
         m="{count, plural, one {# ticket} other {# tickets} }"
-        values={{count: tickets.length}}
+        values={{ count: tickets.length }}
       />
     </div>
   </TicketCard>

@@ -29,7 +29,7 @@ class ExistingSeedForm extends React.Component{
       .split(/\b/)
       .filter(w => /^[\w]+$/.test(w))
       .filter(w => lowercaseSeedWords.indexOf(w.toLowerCase()) > -1)
-      .map(w => ({name: w}));
+      .map(w => ({ name: w }));
     this.props.setSeedWords(words);
 
     this.setState({
@@ -38,7 +38,7 @@ class ExistingSeedForm extends React.Component{
   }
 
   handleToggle = (side) => {
-    this.setState({ seedType: side === "left" ? "words" : "hex"});
+    this.setState({ seedType: side === "left" ? "words" : "hex" });
   }
 
   mountSeedErrors = () => {
@@ -79,7 +79,7 @@ class ExistingSeedForm extends React.Component{
             <div className="confirm-seed-label-remaining-words">
               {seedType === "words" ?
                 <T id="confirmSeed.wordsRemaining" m="{remaining, plural, one {one word remaining} other {# words remaining} }"
-                  values={{remaining: remaining}} />
+                  values={{ remaining: remaining }} />
                 :
                 <T id="confirmSeed.hexSymbolsRemaining"
                   m="{remaining, plural, one {one hex symbol: your key must have between {hexMin} and {hexMax} symbols} other {# hex symbols: your key must have between {hexMin} and {hexMax} symbols} }"

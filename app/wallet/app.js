@@ -5,11 +5,11 @@ import { isFunction } from "util";
 export const onAppReloadRequested = cb => ipcRenderer.on("app-reload-requested", cb);
 
 export const log = (level, ...args) => {
-  ipcRenderer.send("main-log", ...[level, ...args]);
+  ipcRenderer.send("main-log", ...[ level, ...args ]);
 };
 
-export const logOptionNoArgs = (opts) => ({...opts, noArguments: true});
-export const logOptionNoResponseData = (opts) => ({...opts, noResponseData: true});
+export const logOptionNoArgs = (opts) => ({ ...opts, noArguments: true });
+export const logOptionNoResponseData = (opts) => ({ ...opts, noResponseData: true });
 
 // Formats a dynamic list of log arguments
 const formatLogArgs = (msg, args) => {
@@ -27,7 +27,7 @@ const formatLogArgs = (msg, args) => {
   };
 
   let logMsg = args.reduce((a) => a + "%s ", "%s ");
-  let logArgs = [msg, ...args.map(formatArg)];
+  let logArgs = [ msg, ...args.map(formatArg) ];
 
   return { logMsg, logArgs };
 };
@@ -60,7 +60,7 @@ export const withLog = (f, msg, opts={}) => (...args) => {
         resolve(...res);
       })
       .catch(err => {
-        const { logMsg, logArgs } = formatLogArgs(`${msg} errored `, [err]);
+        const { logMsg, logArgs } = formatLogArgs(`${msg} errored `, [ err ]);
         log("error", logMsg, ...logArgs);
 
         reject(err);

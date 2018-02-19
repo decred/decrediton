@@ -256,7 +256,7 @@ export default function grpc(state = {}, action) {
       getTransactionsRequestAttempt: false,
     };
   case GETTRANSACTIONS_COMPLETE:
-    var transactions = [...action.unminedTransactions, ...action.minedTransactions];
+    var transactions = [ ...action.unminedTransactions, ...action.minedTransactions ];
     return {
       ...state,
       minedTransactions: action.minedTransactions,
@@ -278,7 +278,7 @@ export default function grpc(state = {}, action) {
       ...state,
       minedTransactions: action.minedTransactions,
       unminedTransactions: action.unminedTransactions,
-      transactions: [...action.unminedTransactions, ...action.minedTransactions],
+      transactions: [ ...action.unminedTransactions, ...action.minedTransactions ],
       recentRegularTransactions: action.recentRegularTransactions,
       recentStakeTransactions: action.recentStakeTransactions,
     };

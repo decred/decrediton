@@ -6,7 +6,7 @@ const Transaction = ({ walletService, viewedTransaction, viewedDecodedTransactio
   decodeRawTransactions }) => {
 
   if (!viewedDecodedTransaction) {
-    decodeRawTransactions([viewedTransaction.rawTx]);
+    decodeRawTransactions([ viewedTransaction.rawTx ]);
   }
 
   return !walletService

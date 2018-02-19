@@ -9,7 +9,7 @@ export const GETDECODEMESSAGESERVICE_SUCCESS = "GETDECODEMESSAGESERVICE_SUCCESS"
 
 export const getDecodeMessageServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
-  const { daemon: { walletName }} = getState();
+  const { daemon: { walletName } } = getState();
   dispatch({ type: GETDECODEMESSAGESERVICE_ATTEMPT });
   return getDecodeService(isTestNet(getState()), walletName, address, port)
     .then(decodeMessageService =>
@@ -30,17 +30,17 @@ export const decodeRawTransactions = (hexTxs) => (dispatch, getState) => {
     const transactions = resps.reduce((map, resp) => {
       const decodedTransaction = resp.getTransaction();
       const hash = reverseHash(Buffer.from(decodedTransaction.getTransactionHash()).toString("hex"));
-      map[hash] = {hash: hash, transaction: decodedTransaction};
+      map[hash] = { hash: hash, transaction: decodedTransaction };
       return map;
     }, {});
-    dispatch({transactions, type: DECODERAWTXS_SUCCESS});
+    dispatch({ transactions, type: DECODERAWTXS_SUCCESS });
   };
 
   Promise
     .all(hexTxs.map(hex => decodeTransaction(decodeMessageService, hex)))
     .then(resolved)
-    .catch(error => dispatch({error, type: DECODERAWTXS_FAILED}));
+    .catch(error => dispatch({ error, type: DECODERAWTXS_FAILED }));
 };
 
 // decodeRawTransaction requests decodification of a raw, hex-encoded transaction.
-export const decodeRawTransaction = (hexTx) => decodeRawTransactions([hexTx]);
+export const decodeRawTransaction = (hexTx) => decodeRawTransactions([ hexTx ]);

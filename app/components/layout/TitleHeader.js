@@ -1,4 +1,4 @@
-const TitleHeader = ({title, iconClassName}) => (
+const TitleHeader = ({ title, iconClassName }) => (
   <Aux>
     <div className="title-header-title">
       {title}

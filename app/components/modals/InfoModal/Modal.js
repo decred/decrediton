@@ -10,8 +10,8 @@ const propTypes = {
   onCancelModal: PropTypes.func.isRequired
 };
 
-const InfoModal = ({modalTitle, modalContent, show, onCancelModal}) => (
-  <Modal className="info-modal" {...{show}}>
+const InfoModal = ({ modalTitle, modalContent, show, onCancelModal }) => (
+  <Modal className="info-modal" {...{ show }}>
     <div className="info-modal-header">
       <div className="info-modal-header-title">
         {modalTitle}

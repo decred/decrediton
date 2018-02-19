@@ -1,7 +1,7 @@
 import { Balance } from "shared";
 import { FormattedMessage as T } from "react-intl";
-import {TransactionChart} from "charts";
-import {transactionsHome} from "connectors";
+import { TransactionChart } from "charts";
+import { transactionsHome } from "connectors";
 import "style/Fonts.less";
 import "style/HomePage.less";
 

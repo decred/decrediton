@@ -186,7 +186,7 @@ export const getTransactions = (walletService, startBlockHeight,
 
     streamGetTransactions(walletService, startBlockHeight,
       endBlockHeight, targetTransactionCount, dataCb)
-      .then(() => resolve({mined, unmined}))
+      .then(() => resolve({ mined, unmined }))
       .catch(reject);
   });
 

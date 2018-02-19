@@ -1,7 +1,7 @@
 import ErrorScreen from "ErrorScreen";
 import HomePage from "./Page";
 import { service, home } from "connectors";
-import {substruct} from "fp";
+import { substruct } from "fp";
 
 const TRANSACTIONS_LENGTH_AT_HOME = 5;
 
@@ -13,7 +13,7 @@ class Home extends React.Component{
   }
 
   componentDidMount() {
-    const {transactions, noMoreTransactions} = this.props;
+    const { transactions, noMoreTransactions } = this.props;
     if(noMoreTransactions)
       return;
     if(transactions.length < TRANSACTIONS_LENGTH_AT_HOME) {
@@ -22,7 +22,7 @@ class Home extends React.Component{
   }
 
   componentWillReceiveProps(nextProps) {
-    const {transactions, noMoreTransactions} = nextProps;
+    const { transactions, noMoreTransactions } = nextProps;
     if(noMoreTransactions)
       return;
     if(transactions.length < TRANSACTIONS_LENGTH_AT_HOME) {

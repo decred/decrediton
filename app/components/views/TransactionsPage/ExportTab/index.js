@@ -36,7 +36,7 @@ class ExportTab extends React.Component {
   }
 
   onChangeSelectedExport(selectedExport) {
-    this.setState({selectedExport});
+    this.setState({ selectedExport });
   }
 
   exportCSV() {
@@ -49,7 +49,7 @@ class ExportTab extends React.Component {
   }
 
   setDestinationFile(destinationFile) {
-    this.setState({destinationFile});
+    this.setState({ destinationFile });
   }
 
   render() {

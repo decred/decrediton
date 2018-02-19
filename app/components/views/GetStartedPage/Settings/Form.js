@@ -15,8 +15,8 @@ export default ({
   onHideSettings
 }) => (
   <div className="get-started-content-new-seed get-started-settings">
-    <GeneralSettings {...{tempSettings, networks, currencies, locales,
-      onChangeTempSettings}} />
+    <GeneralSettings {...{ tempSettings, networks, currencies, locales,
+      onChangeTempSettings }} />
 
     <div className="get-started-bottom-buttons">
       <SlateGrayButton onClick={onHideSettings}>

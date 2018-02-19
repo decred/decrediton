@@ -8,7 +8,7 @@ const Modal = ({
   setName,
   ...props
 }) => (
-  <PassphraseModal {...{...props}} >
+  <PassphraseModal {...{ ...props }} >
     <PassphraseModalField
       label={<T id="addAccountModal.newAccountName" m="New Account Name" />}
     >

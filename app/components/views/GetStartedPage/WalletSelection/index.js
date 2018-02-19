@@ -94,8 +94,8 @@ class WalletSelectionBody extends React.Component {
     this.props.onCreateWallet({
       label: newWalletName + " (" + newWalletNetwork + ")",
       network: newWalletNetwork,
-      value: {wallet: newWalletName, network: newWalletNetwork
-      }});
+      value: { wallet: newWalletName, network: newWalletNetwork
+      } });
   }
   startWallet() {
     this.props.onStartWallet(this.state.selectedWallet);
@@ -106,4 +106,4 @@ class WalletSelectionBody extends React.Component {
 
 }
 
-export { WalletSelectionHeader, WalletSelectionBody};
+export { WalletSelectionHeader, WalletSelectionBody };

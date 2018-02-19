@@ -23,7 +23,7 @@ const updateSavedConfig = (newPoolInfo, poolHost, apiKey, accountNum) =>
             : config
         : config);
     if (!stakePoolConfigs.find((conf, idx) => conf !== currentStakePoolConfig[idx])) return;
-    const { daemon: { walletName }} = getState();
+    const { daemon: { walletName } } = getState();
     const walletCfg = getWalletCfg(sel.isTestNet(getState()), walletName);
     walletCfg.set("stakepools", stakePoolConfigs);
     let selectedStakePool = stakePoolConfigs.filter(p => p.Host === poolHost)[0] || null;
@@ -61,7 +61,7 @@ export const updateStakepoolPurchaseInformation = () => (dispatch, getState) =>
   Promise.all(sel.configuredStakePools(getState()).map(
     ({ Host, ApiKey }) =>
       getPurchaseInfo(Host, ApiKey)
-        .then(({ response: { data: { status, data }}, poolHost }) =>
+        .then(({ response: { data: { status, data } }, poolHost }) =>
           (status === "success")
             ? dispatch(updateSavedConfig(data, poolHost))
             : null)
@@ -106,7 +106,7 @@ export const SETSTAKEPOOLVOTECHOICES_FAILED = "SETSTAKEPOOLVOTECHOICES_FAILED";
 export const SETSTAKEPOOLVOTECHOICES_SUCCESS = "SETSTAKEPOOLVOTECHOICES_SUCCESS";
 
 const updateStakePoolVoteChoicesConfig = (stakePool, voteChoices) => (dispatch, getState) => {
-  const { daemon: { walletName }} = getState();
+  const { daemon: { walletName } } = getState();
   const config = getWalletCfg(sel.isTestNet(getState()), walletName);
   const voteChoicesConfig = voteChoices.getChoicesList().map(choice => ({
     agendaId: choice.getAgendaId(),
@@ -146,20 +146,20 @@ export const discoverAvailableStakepools = () => (dispatch, getState) =>
   getStakePoolInfo()
     .then((foundStakepoolConfigs) => {
       if (foundStakepoolConfigs) {
-        const { daemon: { walletName }} = getState();
+        const { daemon: { walletName } } = getState();
         let config = getWalletCfg(sel.isTestNet(getState()), walletName);
         updateStakePoolConfig(config, foundStakepoolConfigs);
-        dispatch({ type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, currentStakePoolConfig: config.get("stakepools")});
+        dispatch({ type: DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, currentStakePoolConfig: config.get("stakepools") });
       } // TODO: add error notification after global snackbar is merged
     });
 
 export const CHANGESELECTEDSTAKEPOOL = "CHANGESELECTEDSTAKEPOOL";
 export const changeSelectedStakePool = (selectedStakePool) => (dispatch) =>
-  dispatch({selectedStakePool, type: CHANGESELECTEDSTAKEPOOL});
+  dispatch({ selectedStakePool, type: CHANGESELECTEDSTAKEPOOL });
 
 export const REMOVESTAKEPOOLCONFIG = "REMOVESTAKEPOOLCONFIG";
 export const removeStakePoolConfig = (host) => (dispatch, getState) => {
-  const { daemon: { walletName }} = getState();
+  const { daemon: { walletName } } = getState();
   let config = getWalletCfg(sel.isTestNet(getState()), walletName);
   let existingPools = config.get("stakepools");
   let pool = existingPools.filter(p => p.Host === host)[0];
@@ -169,7 +169,7 @@ export const removeStakePoolConfig = (host) => (dispatch, getState) => {
   // fields so the stakepool can be reconfigured without needing to re-fetch
   // the stakepool list from the remote api.
 
-  const propsToMaintain = ["Host", "Network", "APIVersionsSupported"];
+  const propsToMaintain = [ "Host", "Network", "APIVersionsSupported" ];
   let newPool = {};
   propsToMaintain.forEach(p => newPool[p] = pool[p]); // **not** a deep copy
   let newPools = existingPools.map(p => p.Host === host ? newPool : p);
@@ -183,5 +183,5 @@ export const removeStakePoolConfig = (host) => (dispatch, getState) => {
   dispatch({
     selectedStakePool,
     currentStakePoolConfig: newPools,
-    type: REMOVESTAKEPOOLCONFIG});
+    type: REMOVESTAKEPOOLCONFIG });
 };

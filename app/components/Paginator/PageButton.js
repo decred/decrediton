@@ -1,7 +1,7 @@
 import FlatButton from "material-ui/FlatButton";
 
 const propTypes = {
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  value: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ]).isRequired,
   disabled: PropTypes.bool,
   isCurrent: PropTypes.bool,
   onClick: PropTypes.func.isRequired
@@ -14,7 +14,7 @@ class PageButton extends React.Component {
   }
 
   render() {
-    const {value, isCurrent, disabled} = this.props;
+    const { value, isCurrent, disabled } = this.props;
     return (
       <FlatButton
         className="paginator-page-button"
@@ -22,7 +22,7 @@ class PageButton extends React.Component {
         disabled={disabled}
         label={isFinite(value) ? value+1 : value}
         onClick={this.onClick}
-        style={{minWidth: null, height: null, buttonHeight: null, padding: null}}
+        style={{ minWidth: null, height: null, buttonHeight: null, padding: null }}
         hoverColor={"#e9f8ff"}
       />
     );

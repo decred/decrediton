@@ -1,4 +1,4 @@
-const DescriptionHeader = ({description, actionButton}) =>
+const DescriptionHeader = ({ description, actionButton }) =>
   <div className="description-header">
     <div className="description-header-action-button">
       {actionButton}

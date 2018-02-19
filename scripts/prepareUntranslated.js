@@ -12,5 +12,5 @@ manageTranslations({
   // dev lang is used during development to test translated strings (can
   // be freely modified)
   // all other production languages are translated at transifex
-  languages: ["dev"],
+  languages: [ "dev" ],
 });

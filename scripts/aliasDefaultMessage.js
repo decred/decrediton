@@ -13,9 +13,9 @@ const COMPONENT_NAMES = [
   "FormattedMessage",
 ];
 
-const DESCRIPTOR_PROPS = new Set(["m"]);
+const DESCRIPTOR_PROPS = new Set([ "m" ]);
 
-function aliasDefaultMessagePlugin({types: t}) {
+function aliasDefaultMessagePlugin({ types: t }) {
 
   function referencesImport(path, mod, importedNames) {
     if (!(path.isIdentifier() || path.isJSXIdentifier())) {
@@ -49,7 +49,7 @@ function aliasDefaultMessagePlugin({types: t}) {
   }
 
   function createMessageDescriptor(propPaths) {
-    return propPaths.reduce((hash, [keyPath]) => {
+    return propPaths.reduce((hash, [ keyPath ]) => {
       const key = getMessageDescriptorKey(keyPath);
 
       if (DESCRIPTOR_PROPS.has(key)) {
@@ -63,7 +63,7 @@ function aliasDefaultMessagePlugin({types: t}) {
   return {
     visitor: {
       JSXOpeningElement(path, state) {
-        const {opts} = state;
+        const { opts } = state;
         const moduleSourceName = getModuleSourceName(opts);
         const name = path.get("name");
 

@@ -3,7 +3,7 @@ import { TicketsCogs, InfoModalButton, PassphraseModalButton } from "buttons";
 import { AccountsSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
-import {TransitionMotionWrapper} from "shared";
+import { TransitionMotionWrapper } from "shared";
 
 import "style/StakePool.less";
 

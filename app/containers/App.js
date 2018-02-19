@@ -10,7 +10,7 @@ import WalletContainer from "./Wallet";
 import Snackbar from "components/Snackbar";
 import "style/Layout.less";
 
-const topLevelAnimation = {atEnter: {opacity: 0}, atLeave: {opacity: 0}, atActive: {opacity: 1}};
+const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
 @autobind
 class App extends React.Component {

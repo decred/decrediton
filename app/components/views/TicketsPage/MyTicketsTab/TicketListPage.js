@@ -29,14 +29,14 @@ class TicketListPage extends React.Component{
 
   onInfoCardClick(ticket) {
     if (ticket === this.state.expandedTicket) {
-      this.setState({expandedTicket: null});
+      this.setState({ expandedTicket: null });
     } else {
-      this.setState({expandedTicket: ticket});
+      this.setState({ expandedTicket: ticket });
     }
   }
 
   onPageChanged(pageNumber) {
-    this.setState({currentPage: pageNumber}, this.requestTicketsRawTx);
+    this.setState({ currentPage: pageNumber }, this.requestTicketsRawTx);
   }
 
   getVisibleTickets() {
@@ -71,7 +71,7 @@ class TicketListPage extends React.Component{
     const visibleCards = visibleTickets.map(ticket => {
       const key = ticket.hash;
       const expanded = ticket === expandedTicket;
-      return <TicketInfoCard {...{key, ticket, expanded}} onClick={this.onInfoCardClick} />;
+      return <TicketInfoCard {...{ key, ticket, expanded }} onClick={this.onInfoCardClick} />;
     });
 
     return (
@@ -79,7 +79,7 @@ class TicketListPage extends React.Component{
         {(visibleCards.length > 0
           ? <Aux>
             <TicketsCardList>{visibleCards}</TicketsCardList>
-            <Paginator {...{totalPages, currentPage, onPageChanged: this.onPageChanged}} />
+            <Paginator {...{ totalPages, currentPage, onPageChanged: this.onPageChanged }} />
           </Aux>
           : <T id="myTickets.noTicketsWithStatus" m="No tickets found" />
         )}

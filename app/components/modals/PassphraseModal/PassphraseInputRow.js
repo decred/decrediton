@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { PasswordInput, PassphraseModalField } from "inputs";
 
-export default ({passPhrase, onSubmit, hasFailedAttempt, setPassPhrase, autoFocusPassword}) =>
+export default ({ passPhrase, onSubmit, hasFailedAttempt, setPassPhrase, autoFocusPassword }) =>
   <PassphraseModalField
     label={<T id="passphraseModal.privatePassphrase" m="Private Passphrase" />}
   >

@@ -22,7 +22,7 @@ export const createSelectorEager = (keyFns, resultFn) =>
 // Given a hash of keys to functions, creates a selector that returns a map of function results
 export const selectorMap = (fns) => createSelectorEager(
   Object.keys(fns).map(key => fns[key]),
-  (...args) => Object.keys(fns).reduce((res, key, idx) => ({...res, [key]: args[idx] }), {})
+  (...args) => Object.keys(fns).reduce((res, key, idx) => ({ ...res, [key]: args[idx] }), {})
 );
 
 export const substruct = (structure, obj) => Object.keys(structure)

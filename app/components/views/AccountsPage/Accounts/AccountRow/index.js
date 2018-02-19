@@ -20,54 +20,54 @@ class AccountRow extends React.Component {
 
   updateRenameAccountName(accountName) {
     if (accountName !== "") {
-      this.setState({renameAccountName: accountName, renameAccountNameError: null});
+      this.setState({ renameAccountName: accountName, renameAccountNameError: null });
     }
   }
 
   renameAccount() {
     var checkErrors = false;
     if (this.state.renameAccountName == "") {
-      this.setState({renameAccountNameError: "*You must enter an account name"});
+      this.setState({ renameAccountNameError: "*You must enter an account name" });
       checkErrors = true;
     }
     if (checkErrors) {
       return;
     }
     this.props.renameAccount(this.state.renameAccountNumber, this.state.renameAccountName);
-    this.setState({renameAccountName: null, isShowingRenameAccount: false});
+    this.setState({ renameAccountName: null, isShowingRenameAccount: false });
   }
 
   showRenameAccount() {
-    this.setState({isShowingRenameAccount: true});
+    this.setState({ isShowingRenameAccount: true });
   }
 
   hideRenameAccount() {
-    this.setState({isShowingRenameAccount: false});
+    this.setState({ isShowingRenameAccount: false });
   }
 
   showAccount() {
     this.props.showAccount(this.props.account.accountNumber);
-    this.setState({hidden: false});
+    this.setState({ hidden: false });
   }
 
   hideAccount() {
     this.props.hideAccount(this.props.account.accountNumber);
-    this.setState({hidden: true});
+    this.setState({ hidden: true });
   }
 
   getDefaultStyles() {
-    return [{ key: "output_0",style: {height: 0, opacity: 0}}];
+    return [ { key: "output_0",style: { height: 0, opacity: 0 } } ];
   }
 
   getNullStyles () {
-    return [{
+    return [ {
       data: <div />,
       key: "output_0",
       style: {
-        height: spring(0, {stiffness: 90, damping: 16}),
-        opacity: spring(0, {stiffness: 30, damping: 15}),
+        height: spring(0, { stiffness: 90, damping: 16 }),
+        opacity: spring(0, { stiffness: 30, damping: 15 }),
       }
-    }];
+    } ];
   }
 
   getRenameAccountStyles () {
@@ -78,7 +78,7 @@ class AccountRow extends React.Component {
       hideRenameAccount,
     } = this;
     const { renameAccountNameError, renameAccountName } = this.state;
-    return [{
+    return [ {
       data: <RenameAccount
         {...{
           account,
@@ -92,10 +92,10 @@ class AccountRow extends React.Component {
       />,
       key: "output_0",
       style: {
-        height: spring(140, {stiffness: 110, damping: 14}),
-        opacity: spring(1, {stiffness: 65, damping: 35}),
+        height: spring(140, { stiffness: 110, damping: 14 }),
+        opacity: spring(1, { stiffness: 65, damping: 35 }),
       }
-    }];
+    } ];
   }
 
   getAccountDetailsStyles() {
@@ -106,7 +106,7 @@ class AccountRow extends React.Component {
       hideAccount,
     } = this;
     const { hidden } = this.state;
-    return [{
+    return [ {
       data: <AccountDetails
         {...{
           account,
@@ -118,10 +118,10 @@ class AccountRow extends React.Component {
       />,
       key: "output_0",
       style: {
-        height: spring(280, {stiffness: 110, damping: 14}),
-        opacity: spring(1, {stiffness: 65, damping: 35}),
+        height: spring(280, { stiffness: 110, damping: 14 }),
+        opacity: spring(1, { stiffness: 65, damping: 35 }),
       }
-    }];
+    } ];
   }
 
   render() {

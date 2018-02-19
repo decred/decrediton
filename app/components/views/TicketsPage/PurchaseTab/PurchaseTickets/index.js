@@ -30,7 +30,7 @@ class PurchaseTickets extends React.Component {
   getQuickBarComponent () {
     const { getStakePool } = this;
     const { ticketFee, txFee, expiry } = this.state;
-    return [{
+    return [ {
       data: <PurchaseTicketsQuickBar {...{
         stakePool: getStakePool(),
         ticketFee,
@@ -42,7 +42,7 @@ class PurchaseTickets extends React.Component {
         height: spring(92),
         opacity: 1,
       }
-    }];
+    } ];
   }
 
   getAdvancedComponent () {
@@ -57,7 +57,7 @@ class PurchaseTickets extends React.Component {
     } = this.props;
     const { ticketFee, txFee, expiry,
       ticketFeeError, txFeeError, expiryError } = this.state;
-    return [{
+    return [ {
       data: <PurchaseTicketsAdvanced {...{
         configuredStakePools,
         stakePool: this.getStakePool(),
@@ -77,10 +77,10 @@ class PurchaseTickets extends React.Component {
       />,
       key: "output_1",
       style: {
-        height: spring(270, {stiffness: 170, damping: 17}),
-        opacity: spring(1, {stiffness: 120, damping: 17}),
+        height: spring(270, { stiffness: 170, damping: 17 }),
+        opacity: spring(1, { stiffness: 120, damping: 17 }),
       }
-    }];
+    } ];
   }
 
   willEnter(height) {

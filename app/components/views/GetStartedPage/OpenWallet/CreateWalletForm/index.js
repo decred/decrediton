@@ -34,17 +34,17 @@ class CreateWalletForm extends React.Component {
   }
 
   handleCopySeed() {
-    this.setState({showCopySeedConfirm: true});
+    this.setState({ showCopySeedConfirm: true });
   }
 
   onSubmitCopySeedConfirm() {
     const { mnemonic } = this.state;
-    this.setState({showCopySeedConfirm: false});
+    this.setState({ showCopySeedConfirm: false });
     this.props.copySeedToClipboard(mnemonic);
   }
 
   onCancelCopySeedConfirm() {
-    this.setState({showCopySeedConfirm: false});
+    this.setState({ showCopySeedConfirm: false });
   }
 
   render() {

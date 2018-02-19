@@ -24,8 +24,8 @@ const SettingsPage = ({
 }) => (
   <StandalonePage header={<SettingsPageHeader />}>
     <div className="settings-wrapper">
-      <GeneralSettings {...{tempSettings, networks, currencies, locales,
-        onChangeTempSettings}} />
+      <GeneralSettings {...{ tempSettings, networks, currencies, locales,
+        onChangeTempSettings }} />
 
       <div className="settings-security">
         <div className="settings-column-title"><T id="settings.security.title" m="Security" /></div>

@@ -10,11 +10,11 @@ class SingleSeedWordEntry extends React.Component {
     this.getSeedWords = this.getSeedWords.bind(this);
   }
   render () {
-    const value = {name: this.props.value.name};
+    const value = { name: this.props.value.name };
     return (
       <div
         className={this.props.className}
-        style={{fontFamily: "Inconsolata,monospace"}}
+        style={{ fontFamily: "Inconsolata,monospace" }}
         onKeyDown={this.handleKeyDown}
         onPaste={this.props.onPaste}
       >

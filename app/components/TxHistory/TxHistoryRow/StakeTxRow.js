@@ -9,7 +9,7 @@ const messageByType = { // TODO: use constants instead of string
 };
 
 const StakeTxRow = ({ txType, ...props }) => (
-  <Row {...{ className: txType, ...props}}>
+  <Row {...{ className: txType, ...props }}>
     <div className="transaction-info">
       <span className="icon" />
       <span className="transaction-stake-type">{messageByType[txType] || "(unknown type)"}</span>

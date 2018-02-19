@@ -14,7 +14,7 @@ import TransactionPage from "components/views/TransactionPage";
 import TicketsPage from "components/views/TicketsPage";
 import SideBar from "components/SideBar";
 
-const pageAnimation = {atEnter: {opacity: 0}, atLeave: {opacity: 0}, atActive: {opacity: 1}};
+const pageAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
 export default () =>
   <div className="page-body">

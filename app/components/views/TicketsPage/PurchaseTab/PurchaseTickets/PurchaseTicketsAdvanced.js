@@ -56,7 +56,7 @@ const PurchaseTicketsAdvanced = ({
             :</div>
         <div className="stakepool-purchase-ticket-thirds-input">
           <div className="stakepool-input-form-purchase-ticket">
-            <FeeInput {...{...props}}
+            <FeeInput {...{ ...props }}
               name={"ticketFee"}
               placeholder={formatMessage(messages.ticketFeePlaceholder)}
               value={ticketFee}

@@ -11,8 +11,8 @@ const propTypes = {
   copyConfirmationPhrase: PropTypes.string.isRequired,
 };
 
-const Modal = ({show, onCancelModal, onSubmit, copyConfirmationPhrase,
-  typedConfirmationPhrase, onTypedConfirmationPhraseChanged}) => (
+const Modal = ({ show, onCancelModal, onSubmit, copyConfirmationPhrase,
+  typedConfirmationPhrase, onTypedConfirmationPhraseChanged }) => (
   <DefaultModal className="confirm-seed-copy-modal" {...{ show }}>
     <div className="confirm-seed-copy-modal-header">
       <div className="confirm-seed-copy-modal-header-title">

@@ -26,7 +26,7 @@ const StakeInfoDisplay = ({
     <div className="stakepool-stake-info-show-advanced-area">
       <TicketsCogs
         opened={!isShowingDetails}
-        style={{paddingTop: "2px"}}
+        style={{ paddingTop: "2px" }}
         onClick={isShowingDetails ? onHideStakeInfo : onShowStakeInfo}
       />
     </div>

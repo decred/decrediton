@@ -6,15 +6,15 @@ import { TransitionMotion, spring } from "react-motion";
 import theme from "theme";
 import { createElement } from "react";
 
-export const TabbedPageTab = ({children}) => children;
+export const TabbedPageTab = ({ children }) => children;
 TabbedPageTab.propTypes = {
   path: PropTypes.string.isRequired,
   link: PropTypes.node.isRequired,
 };
 
 function getTabs(children) {
-  if (!isArray(children)) children = [children];
-  return children.filter(c => c.type === TabbedPageTab).map((c, i) => ({index: i, tab: c}));
+  if (!isArray(children)) children = [ children ];
+  return children.filter(c => c.type === TabbedPageTab).map((c, i) => ({ index: i, tab: c }));
 }
 
 @autobind
@@ -25,7 +25,7 @@ class TabbedPage extends React.Component {
     this._tabs = getTabs(props.children);
     const matchedTab = this.matchedTab(props.location);
     const styles = this.getStyles(matchedTab);
-    this.state = {matchedTab, dir: "l2r", styles};
+    this.state = { matchedTab, dir: "l2r", styles };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -39,12 +39,12 @@ class TabbedPage extends React.Component {
         this.state.matchedTab && matchedTab && this.state.matchedTab.index > matchedTab.index
           ? "r2l" : "l2r";
       const styles = this.getStyles(matchedTab);
-      this.setState({matchedTab, dir, styles});
+      this.setState({ matchedTab, dir, styles });
     }
   }
 
   matchedTab(location) {
-    return this._tabs.find(t => !!matchPath(location.pathname, {path: t.tab.props.path}));
+    return this._tabs.find(t => !!matchPath(location.pathname, { path: t.tab.props.path }));
   }
 
   getStyles(matchedTab) {
@@ -53,26 +53,26 @@ class TabbedPage extends React.Component {
     }
 
     const element = createElement(matchedTab.tab.props.component, matchedTab.tab.props, null);
-    return [{
+    return [ {
       key: matchedTab.tab.props.path,
-      data: {matchedTab, element},
-      style: {left: spring(0, theme("springs.tab"))}
-    }];
+      data: { matchedTab, element },
+      style: { left: spring(0, theme("springs.tab")) }
+    } ];
   }
 
   willLeave() {
     const pos = this.state.dir === "l2r" ? -1000 : +1000;
-    return {left: spring(pos, spring(theme("springs.tab")))};
+    return { left: spring(pos, spring(theme("springs.tab"))) };
   }
 
   willEnter() {
     const pos = this.state.dir === "l2r" ? +1000 : -1000;
-    return {left: pos};
+    return { left: pos };
   }
 
   render() {
-    let {children, header} = this.props;
-    if (!isArray(children)) children = [children];
+    let { children, header } = this.props;
+    if (!isArray(children)) children = [ children ];
 
     const tabs = children.filter(c => c.type === TabbedPageTab);
     const nonTabs = children.filter(c => c.type !== TabbedPageTab);
@@ -99,7 +99,7 @@ class TabbedPage extends React.Component {
           >
             {interpolatedStyles => <Aux>
               {interpolatedStyles.map(s =>
-                <div className="tab-content" style={{left: s.style.left, right: -s.style.left}} key={s.key}>
+                <div className="tab-content" style={{ left: s.style.left, right: -s.style.left }} key={s.key}>
                   {s.data.element}
                 </div>
               )}

@@ -13,11 +13,11 @@ const PageHeader = () =>
     title={<T id="tickets.title" m="Tickets" />}
   />;
 
-const TabHeader = purchaseTickets(({ticketPrice}) =>
+const TabHeader = purchaseTickets(({ ticketPrice }) =>
   <DescriptionHeader
     description={
       <T id="tickets.description" m="Current Price: {ticketPrice}"
-        values={{ticketPrice: <Balance amount={ticketPrice} classNameWrapper="header-small-balance"/>}} />
+        values={{ ticketPrice: <Balance amount={ticketPrice} classNameWrapper="header-small-balance"/> }} />
     }
   />
 );

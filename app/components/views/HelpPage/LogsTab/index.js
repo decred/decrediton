@@ -29,7 +29,7 @@ class LogsTabBody extends React.Component {
   }
 
   render() {
-    const {showDecreditonLogs, showDcrdLogs, showDcrwalletLogs,
+    const { showDecreditonLogs, showDcrdLogs, showDcrwalletLogs,
       hideDecreditonLogs, hideDcrdLogs, hideDcrwalletLogs
     } = this;
     const {
@@ -57,37 +57,37 @@ class LogsTabBody extends React.Component {
   showDecreditonLogs() {
     getDecreditonLogs()
       .then(logs => {
-        this.setState({decreditonLogs: Buffer.from(logs).toString("utf8")});
+        this.setState({ decreditonLogs: Buffer.from(logs).toString("utf8") });
       })
       .catch(err => console.error(err));
   }
 
   hideDecreditonLogs() {
-    this.setState({decreditonLogs: null});
+    this.setState({ decreditonLogs: null });
   }
 
   showDcrdLogs() {
     getDcrdLogs()
       .then(logs => {
-        this.setState({dcrdLogs: Buffer.from(logs).toString("utf8")});
+        this.setState({ dcrdLogs: Buffer.from(logs).toString("utf8") });
       })
       .catch(err => console.error(err));
   }
 
   hideDcrdLogs() {
-    this.setState({dcrdLogs: null});
+    this.setState({ dcrdLogs: null });
   }
 
   showDcrwalletLogs() {
     getDcrwalletLogs()
       .then(logs => {
-        this.setState({dcrwalletLogs: Buffer.from(logs).toString("utf8")});
+        this.setState({ dcrwalletLogs: Buffer.from(logs).toString("utf8") });
       })
       .catch(err => console.error(err));
   }
 
   hideDcrwalletLogs() {
-    this.setState({dcrwalletLogs: null});
+    this.setState({ dcrwalletLogs: null });
   }
 }
 
