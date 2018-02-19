@@ -30,41 +30,41 @@ export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
 
 export const finishTutorial = () => (dispatch) => {
   dispatch(showSidebar());
-  dispatch({type: FINISH_TUTORIAL});
+  dispatch({ type: FINISH_TUTORIAL });
 };
 
 export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
   const { daemonStarted, walletName } = getState().daemon;
   if (daemonStarted) return;
   if (rpcCreds) {
-    dispatch({type: DAEMONSTARTED_REMOTE, credentials: rpcCreds, pid: -1});
+    dispatch({ type: DAEMONSTARTED_REMOTE, credentials: rpcCreds, pid: -1 });
     dispatch(syncDaemon());
   } else if (appData) {
     wallet.startDaemon(walletName, appData, isTestNet(getState()))
       .then(rpcCreds => {
-        dispatch({type: DAEMONSTARTED_APPDATA, appData: appData, credentials: rpcCreds});
+        dispatch({ type: DAEMONSTARTED_APPDATA, appData: appData, credentials: rpcCreds });
         dispatch(syncDaemon(null, appData));
       })
-      .catch((err) => dispatch({err, type: DAEMONSTARTED_ERROR}));
+      .catch((err) => dispatch({ err, type: DAEMONSTARTED_ERROR }));
   } else {
     wallet.startDaemon(walletName, null, isTestNet(getState()))
       .then(rpcCreds => {
-        dispatch({type: DAEMONSTARTED, credentials: rpcCreds});
+        dispatch({ type: DAEMONSTARTED, credentials: rpcCreds });
         dispatch(syncDaemon());
       })
-      .catch(() => dispatch({type: DAEMONSTARTED_ERROR}));
+      .catch(() => dispatch({ type: DAEMONSTARTED_ERROR }));
   }
 };
 
 export const setCredentialsAppdataError = () => (dispatch) => {
-  dispatch({type: SET_CREDENTIALS_APPDATA_ERROR});
+  dispatch({ type: SET_CREDENTIALS_APPDATA_ERROR });
 };
 
 export const shutdownApp = () => (dispatch) => {
-  dispatch({type: SHUTDOWN_REQUESTED});
+  dispatch({ type: SHUTDOWN_REQUESTED });
   dispatch(stopNotifcations());
   ipcRenderer.on("daemon-stopped", () => {
-    dispatch({type: DAEMONSTOPPED});
+    dispatch({ type: DAEMONSTOPPED });
   });
   dispatch(hideSidebarMenu());
   dispatch(pushHistory("/shutdown"));
@@ -75,7 +75,7 @@ export const cleanShutdown = () => () => wallet.cleanShutdown();
 export const getAvailableWallets = () => (dispatch) => {
   wallet.getAvailableWallets()
     .then(availableWallets => {
-      dispatch({availableWallets, type: AVAILABLE_WALLETS});
+      dispatch({ availableWallets, type: AVAILABLE_WALLETS });
     })
     .catch((err) => {
       console.log(err);
@@ -85,30 +85,30 @@ export const getAvailableWallets = () => (dispatch) => {
 export const removeWallet = (selectedWallet) => (dispatch) => {
   wallet.removeWallet(selectedWallet.value.wallet, selectedWallet.network == "testnet")
     .then(() => {
-      dispatch({type: WALLETREMOVED});
+      dispatch({ type: WALLETREMOVED });
       dispatch(getAvailableWallets());
     })
     .catch((err) => {
       console.log(err);
-      dispatch({type: DAEMONSTARTED_ERROR});
+      dispatch({ type: DAEMONSTARTED_ERROR });
     });
 };
 
 export const createWallet = (selectedWallet) => (dispatch) => {
   wallet.createNewWallet(selectedWallet.value.wallet, selectedWallet.network == "testnet")
     .then(() => {
-      dispatch({type: WALLETCREATED});
+      dispatch({ type: WALLETCREATED });
       dispatch(startWallet(selectedWallet));
     })
     .catch((err) => {
       console.log(err);
-      dispatch({type: DAEMONSTARTED_ERROR});
+      dispatch({ type: DAEMONSTARTED_ERROR });
     });
 };
 
 export const startWallet = (selectedWallet) => (dispatch) => {
   wallet.startWallet(selectedWallet.value.wallet, selectedWallet.network == "testnet")
-    .then(({port}) => {
+    .then(({ port }) => {
       const walletCfg = getWalletCfg(selectedWallet.network == "testnet", selectedWallet.value.wallet);
       const globalCfg = getGlobalCfg();
       globalCfg.set("previouswallet", selectedWallet);
@@ -135,17 +135,17 @@ export const startWallet = (selectedWallet) => (dispatch) => {
       var discoverAccountsComplete = walletCfg.get("discoveraccounts");
       var activeStakePoolConfig = foundStakePoolConfig;
       var selectedStakePool = firstConfiguredStakePool;
-      dispatch({type: WALLETREADY, walletName: selectedWallet.value.wallet, network: selectedWallet.network, hiddenAccounts, port});
-      dispatch({type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative, maxPerBlock});
-      dispatch({type: WALLET_SETTINGS, currencyDisplay});
-      dispatch({type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig});
-      dispatch({type: WALLET_LOADER_SETTINGS, discoverAccountsComplete});
+      dispatch({ type: WALLETREADY, walletName: selectedWallet.value.wallet, network: selectedWallet.network, hiddenAccounts, port });
+      dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative, maxPerBlock });
+      dispatch({ type: WALLET_SETTINGS, currencyDisplay });
+      dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig });
+      dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
       setTimeout(()=>dispatch(versionCheckAction()), 2000);
       setTimeout(()=>dispatch(determineNeededBlocks()), 2000);
     })
     .catch((err) => {
       console.log(err);
-      dispatch({type: DAEMONSTARTED_ERROR});
+      dispatch({ type: DAEMONSTARTED_ERROR });
     });
 };
 
@@ -155,7 +155,7 @@ export const prepStartDaemon = () => (dispatch, getState) => {
     dispatch(startDaemon());
     return;
   }
-  const {rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port} = getRemoteCredentials(isTestNet(getState()), walletName);
+  const { rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials(isTestNet(getState()), walletName);
   const hasAllCredentials = rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
   const hasAppData = getAppdataPath(isTestNet(getState()), walletName) && getAppdataPath(isTestNet(getState()), walletName).length > 0;
 
@@ -173,7 +173,7 @@ export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
-      const { walletLoader: { neededBlocks }} = getState();
+      const { walletLoader: { neededBlocks } } = getState();
       const { daemon: { daemonSynced, timeStart, blockStart, credentials, walletName } } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
@@ -181,8 +181,8 @@ export const syncDaemon = () =>
         .getBlockCount(walletName, credentials, isTestNet(getState()))
         .then(updateCurrentBlockCount => {
           if ((neededBlocks == 0 && updateCurrentBlockCount > 0) || (neededBlocks != 0 && updateCurrentBlockCount >= neededBlocks)) {
-            dispatch({type: DAEMONSYNCED});
-            dispatch({currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK});
+            dispatch({ type: DAEMONSYNCED });
+            dispatch({ currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK });
             setMustOpenForm(false);
             dispatch(startRpcRequestFunc());
             return;
@@ -196,10 +196,10 @@ export const syncDaemon = () =>
               dispatch({
                 currentBlockCount: parseInt(updateCurrentBlockCount),
                 timeLeftEstimate: secondsLeft,
-                type: DAEMONSYNCING_PROGRESS});
+                type: DAEMONSYNCING_PROGRESS });
             } else if (updateCurrentBlockCount !== 0) {
               const time = new Date();
-              dispatch({currentBlockCount: parseInt(updateCurrentBlockCount), timeStart: time, blockStart: parseInt(updateCurrentBlockCount), type: DAEMONSYNCING_START});
+              dispatch({ currentBlockCount: parseInt(updateCurrentBlockCount), timeStart: time, blockStart: parseInt(updateCurrentBlockCount), type: DAEMONSYNCING_START });
             }
           }
           setTimeout(updateBlockCount, 1000);

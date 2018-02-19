@@ -16,7 +16,7 @@ class MediumPaginator extends React.Component {
     return (
       <div className="paginator">
         <ActionButton direction="previous" onClick={this.props.gotoNextPage} />
-        {[...Array(this.props.totalPages)].map( (x, i) => (
+        {[ ...Array(this.props.totalPages) ].map( (x, i) => (
           <PageButton
             key={i}
             isCurrent={this.props.currentPage === i}

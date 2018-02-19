@@ -1,6 +1,6 @@
 import StandalonePageBody from "./StandalonePageBody";
 
-export default ({header, children}) =>
+export default ({ header, children }) =>
   <div className="standalone-page">
     {header}
 

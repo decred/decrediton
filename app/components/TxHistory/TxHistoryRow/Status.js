@@ -18,7 +18,7 @@ const Status = ({ txAccountName, pending, txTimestamp }) => (
       <div className="transaction-time-date">
         <T id="transaction.timestamp"
           m="{timestamp, date, medium} {timestamp, time, medium}"
-          values={{timestamp: tsToDate(txTimestamp)}}/>
+          values={{ timestamp: tsToDate(txTimestamp) }}/>
       </div>
     )}
   </Aux>

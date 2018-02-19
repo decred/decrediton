@@ -1,6 +1,6 @@
-import {AdvancedHeader, AdvancedBody} from "./Form";
+import { AdvancedHeader, AdvancedBody } from "./Form";
 import Error from "./Error";
-import { setAppdataPath, getAppdataPath, getRemoteCredentials, setRemoteCredentials} from "config.js";
+import { setAppdataPath, getAppdataPath, getRemoteCredentials, setRemoteCredentials } from "config.js";
 
 @autobind
 class AdvancedStartupHeader extends React.Component {
@@ -22,7 +22,7 @@ class AdvancedStartupBody extends React.Component {
   }
 
   getInitialState() {
-    const {rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port} = getRemoteCredentials(this.props.network == "testnet", this.props.walletName);
+    const { rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials(this.props.network == "testnet", this.props.walletName);
     return {
       sideActive: false,
       rpc_user: rpc_user,
@@ -110,7 +110,7 @@ class AdvancedStartupBody extends React.Component {
   onSubmitRemoteForm() {
     if (!this.isRemoteValid()) return;
     const { rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port } = this.state;
-    let args = {rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port};
+    let args = { rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port };
     this.props.onStartDaemon(args);
   }
 

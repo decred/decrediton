@@ -10,7 +10,7 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
     var totalDcr = 0;
     if (typeof amount !== "undefined" && amount !== 0) { totalDcr = parseInt(amount) / 100000000; }
     const split = totalDcr.toFixed(8).toString().split(".");
-    const head = [split[0], split[1].slice(0,2)].join(".");
+    const head = [ split[0], split[1].slice(0,2) ].join(".");
     const tail = split[1].slice(2).replace(/0{1,3}$/, "");
     const negativeZero = (parseFloat(head) === 0) && (amount < 0);
     return (
@@ -20,10 +20,10 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
             {negativeZero ? "-" : ""}
             <FormattedNumber value={ head } maximumFractionDigits={ 2 } minimumFractionDigits={ 2 }/>
           </span>
-          { !noSmallAmount && <span className={[secondary, classNameUnit, bold ? "bold" : null].join(" ") }>
+          { !noSmallAmount && <span className={[ secondary, classNameUnit, bold ? "bold" : null ].join(" ") }>
             { tail + " " }
           </span> }
-          <span className={ [secondary,classNameUnit].join(" ") }>
+          <span className={ [ secondary,classNameUnit ].join(" ") }>
             DCR
           </span>
         </span>
@@ -33,10 +33,10 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
     return (
       <div className={classNameWrapper}>
         <span className="mono" {...{ onClick }}>
-          <span className={[secondary, bold ? "bold" : null].join(" ") }>
+          <span className={[ secondary, bold ? "bold" : null ].join(" ") }>
             { amount + " " }
           </span>
-          <span className={ [secondary, classNameUnit].join(" ") }>
+          <span className={ [ secondary, classNameUnit ].join(" ") }>
             atoms
           </span>
         </span>

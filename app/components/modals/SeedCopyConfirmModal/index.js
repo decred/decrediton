@@ -20,17 +20,17 @@ class SeedCopyConfirmModal extends React.Component {
   }
 
   onTypedConfirmationPhraseChanged(typedConfirmationPhrase) {
-    this.setState({typedConfirmationPhrase});
+    this.setState({ typedConfirmationPhrase });
   }
 
   onSubmit() {
     this.props.onSubmit();
-    this.setState({typedConfirmationPhrase: ""});
+    this.setState({ typedConfirmationPhrase: "" });
   }
 
   onCancelModal() {
     this.props.onCancelModal();
-    this.setState({typedConfirmationPhrase: ""});
+    this.setState({ typedConfirmationPhrase: "" });
   }
 
   render() {

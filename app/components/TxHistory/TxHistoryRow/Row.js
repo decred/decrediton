@@ -7,7 +7,7 @@ const Row = ({ txAccountName, pending, txTimestamp, onClick, className, children
   const StatusComponent = overview ? StatusSmall : Status;
 
   return (
-    <div className={[rowClsname, className].join(" ")} {...{ onClick }}>
+    <div className={[ rowClsname, className ].join(" ")} {...{ onClick }}>
       {children}
       <StatusComponent {...{ txAccountName, pending, txTimestamp, overview }} />
     </div>

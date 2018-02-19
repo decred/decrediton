@@ -1,5 +1,5 @@
 
-const PathInput = ({onChange, value, placeholder}) =>
+const PathInput = ({ onChange, value, placeholder }) =>
   <input
     type="text"
     className="path-input"

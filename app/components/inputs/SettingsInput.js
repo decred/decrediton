@@ -45,7 +45,7 @@ class SettingsInput extends React.Component {
   }
 
   onChangeSelect(value){
-    this.setState({value: value});
+    this.setState({ value: value });
     this.props.onChange(value);
   }
 

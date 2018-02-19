@@ -13,7 +13,7 @@ const StakePoolSelect = ({
   labelKey="label",
   multi=false,
   clearable=false,
-  style={zIndex:"9"},
+  style={ zIndex:"9" },
   intl,
   ...props
 }) => (

@@ -74,7 +74,7 @@ class GetStartedPage extends React.Component {
 
     let Header, Body;
     if (showTutorial) {
-      return <TutorialPage {...{finishTutorial}}/>;
+      return <TutorialPage {...{ finishTutorial }}/>;
     } else if (showSettings) {
       Header = SettingsHeader;
       Body = SettingsBody;
@@ -144,7 +144,7 @@ class GetStartedPage extends React.Component {
         onShowSettings,
         onHideSettings,
         onShowLogs,
-        onHideLogs}} />;
+        onHideLogs }} />;
   }
 }
 

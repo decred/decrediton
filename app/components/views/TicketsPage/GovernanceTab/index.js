@@ -46,8 +46,8 @@ class VotingPrefs extends React.Component {
   }
 
   getAgendaSelectedChoice(agenda) {
-    return get(["choiceId"], find(
-      compose(eq(agenda.getId()), get(["agendaId"])),
+    return get([ "choiceId" ], find(
+      compose(eq(agenda.getId()), get([ "agendaId" ])),
       get("VoteChoices", this.getStakePool()) || []
     )) || "abstain";
   }

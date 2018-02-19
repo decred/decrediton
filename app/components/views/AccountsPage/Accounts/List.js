@@ -5,7 +5,7 @@ import { DecredLoading } from "indicators";
 import { InfoModalButton, PassphraseModalButton } from "buttons";
 import { BalanceOverviewModalContent, AddAccountModal } from "modals";
 
-const AccountsListHeader = ({onGetNextAccountAttempt}) =>
+const AccountsListHeader = ({ onGetNextAccountAttempt }) =>
   <StandaloneHeader
     title={<T id="accounts.title" m="Accounts" />}
     description={<T id="accounts.description" m={"Accounts allow you to keep separate records of your DCR funds.\nTransferring DCR across accounts will create a transaction on the blockchain."}/>}
@@ -30,7 +30,7 @@ const AccountsList = ({
   onHideAccountDetails,
   accountNumDetailsShown,
 }) => (
-  <StandalonePage header={<AccountsListHeader {...{onGetNextAccountAttempt}} />}>
+  <StandalonePage header={<AccountsListHeader {...{ onGetNextAccountAttempt }} />}>
     { isLoading ? <DecredLoading/> :
       <Aux>
         <div className="account-content-title-buttons-area">

@@ -1,13 +1,13 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm, clearPreviousWallet} from "./config.js";
-import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, getWalletPath} from "./config.js";
+import { initGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm, clearPreviousWallet } from "./config.js";
+import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, getWalletPath } from "./config.js";
 import path from "path";
 import fs from "fs-extra";
 import os from "os";
 import parseArgs from "minimist";
 import stringArgv from "string-argv";
-import { appLocaleFromElectronLocale, default as locales} from "./i18n/locales";
+import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger } from "./logging";
 import { Buffer } from "buffer";
 
@@ -15,7 +15,7 @@ let menu;
 let template;
 let mainWindow = null;
 let versionWin = null;
-let grpcVersions = {requiredVersion: null, walletVersion: null};
+let grpcVersions = { requiredVersion: null, walletVersion: null };
 let debug = false;
 let dcrdPID;
 let dcrwPID;
@@ -67,8 +67,8 @@ Options
 
 // Allowed cmd line options are defined here.
 var opts = {
-  boolean: ["debug", "testnet", "mainnet", "help", "version"],
-  string: ["extrawalletargs", "customBinPath"],
+  boolean: [ "debug", "testnet", "mainnet", "help", "version" ],
+  string: [ "extrawalletargs", "customBinPath" ],
   default: { debug: false },
   alias: { d: "debug" },
   unknown: unknownFn
@@ -254,14 +254,14 @@ ipcMain.on("get-available-wallets", (event) => {// Attempt to find all currently
 
   for (var i in mainnetWalletDirectories) {
     if (fs.pathExistsSync(path.join(walletsDirectory, "mainnet", mainnetWalletDirectories[i].toString(), "mainnet", "wallet.db"))) {
-      availableWallets.push({network: "mainnet", wallet: mainnetWalletDirectories[i] });
+      availableWallets.push({ network: "mainnet", wallet: mainnetWalletDirectories[i] });
     }
   }
   var testnetWalletDirectories = fs.readdirSync(path.join(walletsDirectory, "testnet"));
 
   for (var j in testnetWalletDirectories) {
     if (fs.pathExistsSync(path.join(walletsDirectory, "testnet", testnetWalletDirectories[j].toString(), "testnet2", "wallet.db"))) {
-      availableWallets.push({network: "testnet", wallet: testnetWalletDirectories[j] });
+      availableWallets.push({ network: "testnet", wallet: testnetWalletDirectories[j] });
     }
   }
   event.returnValue = availableWallets;
@@ -326,7 +326,7 @@ ipcMain.on("start-wallet", (event, walletPath, testnet) => {
 });
 
 ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
-  let args = ["getblockcount"];
+  let args = [ "getblockcount" ];
   let host, port;
   if (!rpcCreds){
     args.push(`--configfile=${dcrctlCfg(getWalletPath(testnet, walletPath))}`);
@@ -361,7 +361,7 @@ ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
   logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
 
   var spawn = require("child_process").spawn;
-  var dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: ["ignore", "pipe", "pipe", "pipe"] });
+  var dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
 
   dcrctl.stdout.on("data", (data) => {
     currentBlockCount = data.toString();
@@ -408,7 +408,7 @@ const AddToLog = (destIO, destLogBuffer, data) => {
     destLogBuffer = destLogBuffer.slice(destLogBuffer.indexOf(os.EOL,dataBuffer.length)+1);
   }
   debug && destIO.write(data);
-  return Buffer.concat([destLogBuffer, dataBuffer]);
+  return Buffer.concat([ destLogBuffer, dataBuffer ]);
 };
 
 // DecodeDaemonIPCData decodes messages from an IPC message received from dcrd/
@@ -435,14 +435,14 @@ const launchDCRD = (walletPath, appdata, testnet) => {
   let args = [];
   let newConfig = {};
   if(appdata){
-    args = [`--appdata=${appdata}`];
+    args = [ `--appdata=${appdata}` ];
     newConfig = readDcrdConfig(appdata, testnet);
     newConfig.rpc_cert = path.resolve(appdata, "rpc.cert");
     if (testnet) {
       args.push("--testnet");
     }
   } else {
-    args = [`--configfile=${dcrdCfg(getWalletPath(testnet, walletPath))}`];
+    args = [ `--configfile=${dcrdCfg(getWalletPath(testnet, walletPath))}` ];
     newConfig = readDcrdConfig(getWalletPath(testnet, walletPath), testnet);
     newConfig.rpc_cert = path.resolve(getDcrdPath(), "rpc.cert");
   }
@@ -476,7 +476,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
 
   var dcrd = spawn(dcrdExe, args, {
     detached: os.platform() == "win32",
-    stdio: ["ignore", "pipe", "pipe"]
+    stdio: [ "ignore", "pipe", "pipe" ]
   });
 
   dcrd.on("error", function (err) {
@@ -509,7 +509,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
 
 const launchDCRWallet = (walletPath, testnet) => {
   var spawn = require("child_process").spawn;
-  var args = ["--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath))];
+  var args = [ "--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath)) ];
 
   const cfg = getWalletCfg(testnet, walletPath);
 
@@ -548,7 +548,7 @@ const launchDCRWallet = (walletPath, testnet) => {
 
   var dcrwallet = spawn(dcrwExe, args, {
     detached: os.platform() == "win32",
-    stdio: ["ignore", "pipe", "pipe", "ignore", "pipe"]
+    stdio: [ "ignore", "pipe", "pipe", "ignore", "pipe" ]
   });
 
   const notifyGrpcPort = (port) => {
@@ -617,8 +617,8 @@ const launchDCRWallet = (walletPath, testnet) => {
 
 const readExesVersion = () => {
   let spawn = require("child_process").spawnSync;
-  let args = ["--version"];
-  let exes = ["dcrd", "dcrwallet", "dcrctl"];
+  let args = [ "--version" ];
+  let exes = [ "dcrd", "dcrwallet", "dcrctl" ];
   let versions = {
     grpc: grpcVersions,
     decrediton: app.getVersion()
@@ -677,10 +677,10 @@ app.on("ready", async () => {
     locale = locales.find(value => value.key === newCfgLocale);
   }
 
-  let windowOpts = {show: false, width: 1178, height: 790, page: "app.html"};
+  let windowOpts = { show: false, width: 1178, height: 790, page: "app.html" };
   if (!primaryInstance) {
-    windowOpts = {show: true, width: 575, height: 275, autoHideMenuBar: true,
-      resizable: false, page: "staticPages/secondInstance.html"};
+    windowOpts = { show: true, width: 575, height: 275, autoHideMenuBar: true,
+      resizable: false, page: "staticPages/secondInstance.html" };
   } else {
     await installExtensions();
   }
@@ -714,16 +714,16 @@ app.on("ready", async () => {
   mainWindow.webContents.on("context-menu", (e, props) => {
     const { selectionText, isEditable, x, y } = props;
     let inputMenu = [
-      {role: "cut"},
-      {role: "copy"},
-      {role: "paste"},
-      {type: "separator"},
-      {role: "selectall"}
+      { role: "cut" },
+      { role: "copy" },
+      { role: "paste" },
+      { type: "separator" },
+      { role: "selectall" }
     ];
     let selectionMenu = [
-      {role: "copy"},
-      {type: "separator"},
-      {role: "selectall"}
+      { role: "copy" },
+      { type: "separator" },
+      { role: "selectall" }
     ];
     if (process.env.NODE_ENV === "development") {
       let inspectElement = {
@@ -738,19 +738,19 @@ app.on("ready", async () => {
     } else if (selectionText && selectionText.trim() !== "") {
       Menu.buildFromTemplate(selectionMenu).popup(mainWindow);
     } else if (process.env.NODE_ENV === "development") {
-      Menu.buildFromTemplate([{
+      Menu.buildFromTemplate([ {
         label: "Inspect element",
         click: () => mainWindow.inspectElement(x, y)
-      }]).popup(mainWindow);
+      } ]).popup(mainWindow);
     }
   });
 
   if (!primaryInstance) return;
 
   if (process.platform === "darwin") {
-    template = [{
+    template = [ {
       label: locale.messages["appMenu.decrediton"],
-      submenu: [{
+      submenu: [ {
         label: locale.messages["appMenu.aboutDecrediton"],
         selector: "orderFrontStandardAboutPanel:"
       }, {
@@ -779,10 +779,10 @@ app.on("ready", async () => {
         click() {
           cleanShutdown();
         }
-      }]
+      } ]
     }, {
       label: locale.messages["appMenu.edit"],
-      submenu: [{
+      submenu: [ {
         label: locale.messages["appMenu.undo"],
         accelerator: "Command+Z",
         selector: "undo:"
@@ -808,19 +808,19 @@ app.on("ready", async () => {
         label: locale.messages["appMenu.selectAll"],
         accelerator: "Command+A",
         selector: "selectAll:"
-      }]
+      } ]
     }, {
       label: locale.messages["appMenu.view"],
-      submenu: [{
+      submenu: [ {
         label: "Toggle Full Screen",
         accelerator: "Ctrl+Command+F",
         click() {
           mainWindow.setFullScreen(!mainWindow.isFullScreen());
         }
-      }]
+      } ]
     }, {
       label: locale.messages["appMenu.window"],
-      submenu: [{
+      submenu: [ {
         label: locale.messages["appMenu.minimize"],
         accelerator: "Command+M",
         selector: "performMiniaturize:"
@@ -833,21 +833,21 @@ app.on("ready", async () => {
       }, {
         label: locale.messages["appMenu.bringAllFront"],
         selector: "arrangeInFront:"
-      }]
-    }];
+      } ]
+    } ];
   } else {
-    template = [{
+    template = [ {
       label: locale.messages["appMenu.file"],
-      submenu: [{
+      submenu: [ {
         label: "&Close",
         accelerator: "Ctrl+W",
         click() {
           mainWindow.close();
         }
-      }]
+      } ]
     }, {
       label: locale.messages["appMenu.view"],
-      submenu: [{
+      submenu: [ {
         label: locale.messages["appMenu.toggleFullScreen"],
         accelerator: "F11",
         click() {
@@ -859,13 +859,13 @@ app.on("ready", async () => {
         click() {
           mainWindow.webContents.send("app-reload-requested", mainWindow);
         },
-      }]
-    }];
+      } ]
+    } ];
   }
   template.push(
     {
       label: locale.messages["appMenu.advanced"],
-      submenu: [{
+      submenu: [ {
         label: locale.messages["appMenu.developerTools"],
         accelerator: "Alt+Ctrl+I",
         click() {
@@ -881,10 +881,10 @@ app.on("ready", async () => {
         click() {
           shell.openItem(path.join(getDcrdPath(), "logs"));
         }
-      }]
+      } ]
     }, {
       label: locale.messages["appMenu.help"],
-      submenu: [{
+      submenu: [ {
         label: locale.messages["appMenu.learnMore"],
         click() {
           shell.openExternal("https://decred.org");
@@ -922,7 +922,7 @@ app.on("ready", async () => {
             });
           }
         }
-      }]
+      } ]
     });
   menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);

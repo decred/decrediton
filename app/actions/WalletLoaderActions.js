@@ -23,7 +23,7 @@ export const LOADER_SUCCESS = "LOADER_SUCCESS";
 
 export const loaderRequest = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
-  const { daemon: { walletName }} = getState();
+  const { daemon: { walletName } } = getState();
   const request = { isTestNet: isTestNet(getState()), walletName, address, port };
   dispatch({ request, type: LOADER_ATTEMPT });
   return getLoader(request)
@@ -42,7 +42,7 @@ export const walletExistRequest = () =>
   (dispatch, getState) =>
     getWalletExists(getState().walletLoader.loader)
       .then(response => {
-        dispatch({response: response, type: WALLETEXIST_SUCCESS });
+        dispatch({ response: response, type: WALLETEXIST_SUCCESS });
         if (response.getExists()) {
           dispatch(openWalletAttempt("public", false));
         }
@@ -73,12 +73,12 @@ export const createWalletRequest = (pubPass, privPass, seed, existing) =>
     dispatch({ existing: existing, type: CREATEWALLET_ATTEMPT });
     return createWallet(getState().walletLoader.loader, pubPass, privPass, seed)
       .then(() => {
-        const { daemon: { walletName }} = getState();
+        const { daemon: { walletName } } = getState();
         const config = getWalletCfg(isTestNet(getState()), walletName);
         config.delete("discoveraccounts");
-        dispatch({response: {}, type: CREATEWALLET_SUCCESS });
+        dispatch({ response: {}, type: CREATEWALLET_SUCCESS });
         dispatch(clearStakePoolConfigNewWallet());
-        dispatch({complete: !existing, type: UPDATEDISCOVERACCOUNTS});
+        dispatch({ complete: !existing, type: UPDATEDISCOVERACCOUNTS });
         config.set("discoveraccounts", !existing);
         dispatch(prepStartDaemon());
       })
@@ -100,7 +100,7 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState)
     })
     .catch(error => {
       if (error.message.includes("wallet already loaded")) {
-        dispatch({response: {}, type: OPENWALLET_SUCCESS});
+        dispatch({ response: {}, type: OPENWALLET_SUCCESS });
         dispatch(prepStartDaemon());
       } else if (error.message.includes("invalid passphrase") && error.message.includes("public key")) {
         if (retryAttempt) {
@@ -132,7 +132,7 @@ export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
 export const startRpcRequestFunc = (isRetry) =>
   (dispatch, getState) => {
-    const {daemon: { credentials, appData, walletName} }= getState();
+    const { daemon: { credentials, appData, walletName } }= getState();
     const cfg = getWalletCfg(isTestNet(getState()), walletName);
     let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
@@ -158,15 +158,15 @@ export const startRpcRequestFunc = (isRetry) =>
     const loader = getState().walletLoader.loader;
 
     const cert = getDcrdCert(rpccertPath);
-    if (!isRetry) dispatch({type: STARTRPC_ATTEMPT});
+    if (!isRetry) dispatch({ type: STARTRPC_ATTEMPT });
     return startRpc(loader, daemonhost, rpcport, rpcuser, rpcpass, cert)
       .then(() => {
-        dispatch({ type: STARTRPC_SUCCESS});
+        dispatch({ type: STARTRPC_SUCCESS });
         dispatch(subscribeBlockAttempt());
       })
       .catch(error => {
         if (error.message.includes("RPC client already created")) {
-          dispatch({ type: STARTRPC_SUCCESS});
+          dispatch({ type: STARTRPC_SUCCESS });
           dispatch(subscribeBlockAttempt());
         } else if (isRetry) {
           const { rpcRetryAttempts } = getState().walletLoader;
@@ -192,8 +192,8 @@ export const DISCOVERADDRESS_FAILED = "DISCOVERADDRESS_FAILED";
 export const DISCOVERADDRESS_SUCCESS = "DISCOVERADDRESS_SUCCESS";
 
 export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
-  const { walletLoader: {loader, discoverAccountsComplete }} = getState();
-  const { daemon: { walletName }} = getState();
+  const { walletLoader: { loader, discoverAccountsComplete } } = getState();
+  const { daemon: { walletName } } = getState();
   dispatch({ type: DISCOVERADDRESS_ATTEMPT });
   discoverAddresses(loader, !discoverAccountsComplete, privPass)
     .then(() => {
@@ -203,10 +203,10 @@ export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
         const config = getWalletCfg(isTestNet(getState()), walletName);
         config.delete("discoveraccounts");
         config.set("discoveraccounts", true);
-        dispatch({complete: true, type: UPDATEDISCOVERACCOUNTS});
+        dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
       }
 
-      dispatch({response: {}, type: DISCOVERADDRESS_SUCCESS});
+      dispatch({ response: {}, type: DISCOVERADDRESS_SUCCESS });
       if (subscribeBlockNtfnsResponse !== null) dispatch(fetchHeadersAttempt());
     })
     .catch(error => {
@@ -225,15 +225,15 @@ export const SUBSCRIBEBLOCKNTFNS_SUCCESS = "SUBSCRIBEBLOCKNTFNS_SUCCESS";
 const subscribeBlockAttempt = () => (dispatch, getState) => {
   const { loader, discoverAccountsComplete } = getState().walletLoader;
 
-  dispatch({request: {}, type: SUBSCRIBEBLOCKNTFNS_ATTEMPT});
+  dispatch({ request: {}, type: SUBSCRIBEBLOCKNTFNS_ATTEMPT });
   return subscribeToBlockNotifications(loader)
     .then(() => {
-      dispatch({response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS});
+      dispatch({ response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS });
       if (discoverAccountsComplete) {
         dispatch(discoverAddressAttempt());
       } else {
         // This is dispatched to indicate we should wait for user input to discover addresses.
-        dispatch({response: {}, type: DISCOVERADDRESS_INPUT});
+        dispatch({ response: {}, type: DISCOVERADDRESS_INPUT });
       }
     })
     .catch(error => dispatch({ error, type: SUBSCRIBEBLOCKNTFNS_FAILED }));
@@ -245,10 +245,10 @@ export const FETCHHEADERS_SUCCESS = "FETCHHEADERS_SUCCESS";
 export const FETCHHEADERS_PROGRESS = "FETCHHEADERS_PROGRESS";
 
 export const fetchHeadersAttempt = () => (dispatch, getState) => {
-  dispatch({request: {}, type: FETCHHEADERS_ATTEMPT});
+  dispatch({ request: {}, type: FETCHHEADERS_ATTEMPT });
   return fetchHeaders(getState().walletLoader.loader)
     .then(response => {
-      dispatch({response, type: FETCHHEADERS_SUCCESS});
+      dispatch({ response, type: FETCHHEADERS_SUCCESS });
       dispatch(getWalletServiceAttempt());
       dispatch(getTicketBuyerServiceAttempt());
       dispatch(getVotingServiceAttempt());
@@ -262,7 +262,7 @@ export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
 
 export function clearStakePoolConfigNewWallet() {
   return (dispatch, getState) => {
-    const { daemon: { walletName }} = getState();
+    const { daemon: { walletName } } = getState();
     let config = getWalletCfg(isTestNet(getState()), walletName);
     config.delete("stakepools");
 
@@ -271,7 +271,7 @@ export function clearStakePoolConfigNewWallet() {
         if (foundStakePoolConfigs) {
           let config = getWalletCfg(isTestNet(getState()), walletName);
           config.set("stakepools", foundStakePoolConfigs);
-          dispatch({currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG});
+          dispatch({ currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG });
         }
       });
   };
@@ -282,11 +282,11 @@ export function determineNeededBlocks() {
   return (dispatch, getState) => {
     const network = getState().daemon.network;
     const explorerInfoURL = `https://${network}.decred.org/api/status`;
-    axios.get(explorerInfoURL, {timeout: 5000})
+    axios.get(explorerInfoURL, { timeout: 5000 })
       .then(function (response) {
         const neededBlocks = response.data.info.blocks;
         wallet.log("info", `Determined needed block height as ${neededBlocks}`);
-        dispatch({ neededBlocks, type: NEEDED_BLOCKS_DETERMINED});
+        dispatch({ neededBlocks, type: NEEDED_BLOCKS_DETERMINED });
       })
       .catch(function (error) {
         console.log("Unable to obtain latest block number.", error);

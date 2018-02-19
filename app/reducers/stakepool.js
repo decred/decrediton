@@ -9,17 +9,17 @@ import { WALLET_STAKEPOOL_SETTINGS } from "actions/DaemonActions";
 export default function stakepool(state = {}, action) {
   switch (action.type) {
   case UPDATESTAKEPOOLCONFIG_ATTEMPT:
-    return {...state,
+    return { ...state,
       currentStakePoolConfigRequest: true,
       currentStakePoolConfigError: null,
     };
   case UPDATESTAKEPOOLCONFIG_FAILED:
-    return {...state,
+    return { ...state,
       currentStakePoolConfigRequest: false,
       currentStakePoolConfigError: String(action.error),
     };
   case UPDATESTAKEPOOLCONFIG_SUCCESS:
-    return {...state,
+    return { ...state,
       currentStakePoolConfigError: null,
       currentStakePoolConfigRequest: false,
       currentStakePoolConfig: action.currentStakePoolConfig,
@@ -27,24 +27,24 @@ export default function stakepool(state = {}, action) {
       selectedStakePool: action.selectedStakePool,
     };
   case CLEARSTAKEPOOLCONFIG:
-    return {...state,
+    return { ...state,
       activeStakePoolConfig: false,
       currentStakePoolConfig: action.currentStakePoolConfig,
     };
   case DISCOVERAVAILABLESTAKEPOOLS_SUCCESS:
-    return {...state, currentStakePoolConfig: action.currentStakePoolConfig };
+    return { ...state, currentStakePoolConfig: action.currentStakePoolConfig };
   case CHANGESELECTEDSTAKEPOOL:
-    return {...state,
+    return { ...state,
       selectedStakePool: action.selectedStakePool
     };
   case REMOVESTAKEPOOLCONFIG:
-    return {...state,
+    return { ...state,
       currentStakePoolConfig: action.currentStakePoolConfig,
       selectedStakePool: action.selectedStakePool,
       activeStakePoolConfig: !!action.selectedStakePool,
     };
   case WALLET_STAKEPOOL_SETTINGS:
-    return {...state,
+    return { ...state,
       activeStakePoolConfig: action.activeStakePoolConfig,
       selectedStakePool: action.selectedStakePool,
       currentStakePoolConfig: action.currentStakePoolConfig,

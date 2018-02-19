@@ -59,7 +59,7 @@ class ConfirmSeedForm extends React.Component{
                   disabled={seedWord.show}
                   onChange={onChangeSeedWord}
                   seedWord={seedWord}
-                  value={{name: seedWord.word}}
+                  value={{ name: seedWord.word }}
                   key={seedWord.index}
                 />);
             })}

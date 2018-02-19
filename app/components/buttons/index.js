@@ -32,7 +32,7 @@ const mbb = (className, modalComponent, buttonComponent) => p =>
       ...p,
       buttonComponent,
       modalComponent: p.modalComponent || modalComponent,
-      className: [className || "", p.className || ""].join(" "),
+      className: [ className || "", p.className || "" ].join(" "),
     }}
   />;
 

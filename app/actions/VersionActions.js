@@ -12,7 +12,7 @@ export const GETVERSIONSERVICE_SUCCESS = "GETVERSIONSERVICE_SUCCESS";
 export const getVersionServiceAttempt = () => (dispatch, getState) => {
   dispatch({ type: GETVERSIONSERVICE_ATTEMPT });
   const { grpc: { address, port } } = getState();
-  const { daemon: { walletName }} = getState();
+  const { daemon: { walletName } } = getState();
   return getVersionService(isTestNet(getState()), walletName, address, port)
     .then(versionService => {
       dispatch({ versionService, type: GETVERSIONSERVICE_SUCCESS });
@@ -32,7 +32,7 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => {
   return getVersionResponse(versionService)
     .then(getWalletRPCVersionResponse => {
       dispatch({ getWalletRPCVersionResponse, type: WALLETRPCVERSION_SUCCESS });
-      const { version: { requiredVersion }} = getState();
+      const { version: { requiredVersion } } = getState();
       let versionErr = null;
       let walletVersion = getWalletRPCVersionResponse.getVersionString();
       ipcRenderer.send("grpc-versions-determined", { requiredVersion, walletVersion });
@@ -47,7 +47,7 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => {
         }
       }
       if (versionErr) {
-        dispatch({error: versionErr, type: VERSION_NOT_VALID});
+        dispatch({ error: versionErr, type: VERSION_NOT_VALID });
         dispatch(pushHistory("/invalidRPCVersion"));
       } else {
         const { address, port } = getState().grpc;

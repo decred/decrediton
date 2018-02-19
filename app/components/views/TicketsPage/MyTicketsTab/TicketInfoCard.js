@@ -9,7 +9,7 @@ const TicketInfoCard = ({ ticket, onClick, expanded }) => {
 
   const className = "ticket-info-card" + (expanded ? " is-expanded" : "");
   let returnTipText;
-  if (["voted", "revoked"].indexOf(ticket.status) > -1 ) {
+  if ([ "voted", "revoked" ].indexOf(ticket.status) > -1 ) {
     const rewardLabel = ticket.ticketReward > 0
       ? <T id="ticket.rewardLabel" m="Ticket Reward" />
       : <T id="ticket.lossLabel" m="Ticket Loss" />;
@@ -35,7 +35,7 @@ const TicketInfoCard = ({ ticket, onClick, expanded }) => {
     const days = Math.ceil((ticket.leaveTimestamp - ticket.enterTimestamp) / (24 * 60 * 60));
     timeToLeaveTipText = <T id="ticket.daysToLeave"
       m="~ {days, plural, one {# day} other {# days}} from buying until {status}"
-      values={{days, status: statusTxt[ticket.status]}} />;
+      values={{ days, status: statusTxt[ticket.status] }} />;
   }
 
   return (<TicketCard
@@ -54,10 +54,10 @@ const TicketInfoCard = ({ ticket, onClick, expanded }) => {
         <T
           id="ticket.timestamp"
           m="{timestamp, date, medium} {timestamp, time, medium}"
-          values={{timestamp: tsToDate(ticket.leaveTimestamp || ticket.enterTimestamp)}} />
+          values={{ timestamp: tsToDate(ticket.leaveTimestamp || ticket.enterTimestamp) }} />
       </Tooltip>
     </div>
-    <ExpandedInfo {...{ticket}} />
+    <ExpandedInfo {...{ ticket }} />
   </TicketCard>);
 };
 

@@ -10,7 +10,7 @@ const ChartLegend = (props) => {
       {
         payload.map((entry, index) => (
           <div key={`item-${index}`} className="tooltip-line">
-            <div className="circle-tooltip" style={{background:entry.fill}}></div>
+            <div className="circle-tooltip" style={{ background:entry.fill }}></div>
             <div>{`${entry.dataKey}: ${entry.value} ${entry.unit}`}</div>
           </div>
         ))

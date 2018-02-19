@@ -39,7 +39,7 @@ class SideBar extends React.Component {
         updateRecentTimer = this.props.setTimeout(this.updateRecentBlockTime, 60000 - timeFromLastBlock);
       }
     }
-    return {lastBlockDate, lastBlockIsRecent, updateRecentTimer};
+    return { lastBlockDate, lastBlockIsRecent, updateRecentTimer };
   }
 
   updateRecentBlockTime() {

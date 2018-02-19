@@ -18,7 +18,7 @@ const StakePoolsList = ({
       </div>
       <div id="dynamicInput">
         {configuredStakePools.map(({
-          value: { Host, TicketAddress, PoolFees, Script }}
+          value: { Host, TicketAddress, PoolFees, Script } }
         ) => (
           <div key={Host} className="stakepool-content-nest-stake-pool">
             <div className="stakepool-content-nest-settings">
@@ -45,7 +45,7 @@ const StakePoolsList = ({
                   buttonLabel={<T id="stakepools.list.btnRemove" m="Remove"/>}
                   modalContent={
                     <T id="stakepools.list.confirmRemove" m="Do you confirm removal of stakepool {stakepool}?"
-                      values={{stakepool: (<span className="mono">{Host}</span>)}}/>}
+                      values={{ stakepool: (<span className="mono">{Host}</span>) }}/>}
                   onSubmit={() => onRemoveStakePool(Host)}
                 />
               </div>

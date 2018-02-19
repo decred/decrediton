@@ -195,7 +195,7 @@ export default function snackbar(state = {}, action) {
   // on the messages variable above if you need a simple message, without extra
   // data.
   case EXPORT_COMPLETED:
-    values = {filename: action.filename};
+    values = { filename: action.filename };
   case RENAMEACCOUNT_SUCCESS:
   case GETNEXTACCOUNT_SUCCESS:
   case CHANGEPASSPHRASE_SUCCESS:
@@ -248,9 +248,9 @@ export default function snackbar(state = {}, action) {
   }
 
   if (message && type) {
-    const newMessage = {type, message, values};
-    return {...state, messages: [...state.messages, newMessage]};
+    const newMessage = { type, message, values };
+    return { ...state, messages: [ ...state.messages, newMessage ] };
   }
 
-  return {...state};
+  return { ...state };
 }

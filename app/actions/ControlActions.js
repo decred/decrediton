@@ -95,7 +95,7 @@ export function rescanCancel() {
   return (dispatch, getState) => {
     const { rescanCall } = getState().control;
     rescanCall.cancel();
-    dispatch({type: RESCAN_CANCEL});
+    dispatch({ type: RESCAN_CANCEL });
   };
 }
 
@@ -116,7 +116,7 @@ export function getNextAccountAttempt(passphrase, accountName) {
           dispatch({ error, type: GETNEXTACCOUNT_FAILED });
         } else {
           var success = "Account - " + accountName + " - has been successfully created.";
-          setTimeout( () => dispatch({getNextAccountResponse: getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS, successMessage: success }), 1000);
+          setTimeout( () => dispatch({ getNextAccountResponse: getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS, successMessage: success }), 1000);
         }
       });
   };
@@ -248,7 +248,7 @@ export function loadActiveDataFiltersAttempt() {
         if (error) {
           dispatch({ error, type: LOADACTIVEDATAFILTERS_FAILED });
         } else {
-          dispatch({response: response, type: LOADACTIVEDATAFILTERS_SUCCESS });
+          dispatch({ response: response, type: LOADACTIVEDATAFILTERS_SUCCESS });
         }
       });
   };
@@ -276,7 +276,7 @@ export function signTransactionAttempt(passphrase, rawTx) {
         if (error) {
           dispatch({ error, type: SIGNTX_FAILED });
         } else {
-          dispatch({signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS });
+          dispatch({ signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS });
           dispatch(publishTransactionAttempt(signTransactionResponse.getTransaction()));
         }
       });
@@ -314,7 +314,7 @@ export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requi
     wallet.log("info", "Purchasing tickets", accountNum, spendLimit, requiredConf,
       numTickets, expiry, ticketFee, txFee, stakepool.TicketAddress,
       stakepool.PoolAddress, stakepool.PoolFees);
-    const {getAccountsResponse} = getState().grpc;
+    const { getAccountsResponse } = getState().grpc;
     var request = new PurchaseTicketsRequest();
     request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     request.setAccount(accountNum);
@@ -431,7 +431,7 @@ export function setTicketBuyerConfigAttempt(account, balanceToMaintain, maxFee, 
           hitError += error + ". ";
         } else {
           cfg.set("balancetomaintain", balanceToMaintain);
-          dispatch({balanceToMaintain: balanceToMaintain, type: SETBALANCETOMAINTAIN});
+          dispatch({ balanceToMaintain: balanceToMaintain, type: SETBALANCETOMAINTAIN });
         }
       });
     }
@@ -443,7 +443,7 @@ export function setTicketBuyerConfigAttempt(account, balanceToMaintain, maxFee, 
           hitError += error + ". ";
         } else {
           cfg.set("maxfee", maxFee);
-          dispatch({maxFee: maxFee, type: SETMAXFEE});
+          dispatch({ maxFee: maxFee, type: SETMAXFEE });
         }
       });
     }
@@ -455,7 +455,7 @@ export function setTicketBuyerConfigAttempt(account, balanceToMaintain, maxFee, 
           hitError += error + ". ";
         } else {
           cfg.set("maxpriceabsolute",maxPriceAbsolute);
-          dispatch({maxPriceAbsolute: maxPriceAbsolute, type: SETMAXPRICEABSOLUTE});
+          dispatch({ maxPriceAbsolute: maxPriceAbsolute, type: SETMAXPRICEABSOLUTE });
         }
       });
     }
@@ -467,7 +467,7 @@ export function setTicketBuyerConfigAttempt(account, balanceToMaintain, maxFee, 
           hitError += error + ". ";
         } else {
           cfg.set("maxpricerelative",maxPriceRelative);
-          dispatch({maxPriceRelative: maxPriceRelative, type: SETMAXPRICERELATIVE});
+          dispatch({ maxPriceRelative: maxPriceRelative, type: SETMAXPRICERELATIVE });
         }
       });
     }
@@ -506,7 +506,7 @@ export function setTicketBuyerConfigAttempt(account, balanceToMaintain, maxFee, 
           hitError += error + ". ";
         } else {
           cfg.set("maxperblock",maxPerBlock);
-          dispatch({maxPerBlock: maxPerBlock, type: SETMAXPERBLOCK});
+          dispatch({ maxPerBlock: maxPerBlock, type: SETMAXPERBLOCK });
         }
       });
     }
@@ -635,7 +635,7 @@ export function constructTransactionAttempt(account, confirmations, outputs, all
           } else {
             constructTxResponse.totalAmount = constructTxResponse.getTotalOutputAmount();
           }
-          dispatch({constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
+          dispatch({ constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
         }
       });
   };
@@ -651,7 +651,7 @@ export const validateAddress = address => async (dispatch, getState) => {
     const { network } = getState().daemon;
     const validationErr = isValidAddress(address, network);
     if (validationErr) {
-      dispatch({type: VALIDATEADDRESS_FAILED});
+      dispatch({ type: VALIDATEADDRESS_FAILED });
       return { isValid: false, error: validationErr, getIsValid () { return false; } };
     }
     dispatch({ type: VALIDATEADDRESS_ATTEMPT });
@@ -659,13 +659,13 @@ export const validateAddress = address => async (dispatch, getState) => {
     dispatch({ response, type: VALIDATEADDRESS_SUCCESS });
     return { isValid: response.getIsValid(), error: null, getIsValid () { return response.getIsValid(); } };
   } catch (error) {
-    dispatch({type: VALIDATEADDRESS_FAILED});
+    dispatch({ type: VALIDATEADDRESS_FAILED });
     return { isValid: false, error, getIsValid () { return false; } };
   }
 };
 
 export const validateAddressCleanStore = () => async (dispatch) => {
-  dispatch({type: VALIDATEADDRESS_CLEANSTORE});
+  dispatch({ type: VALIDATEADDRESS_CLEANSTORE });
 };
 
 export const SIGNMESSAGE_ATTEMPT = "SIGNMESSAGE_ATTEMPT";
@@ -708,9 +708,9 @@ export const PUBLISHUNMINEDTRANSACTIONS_SUCCESS = "PUBLISHUNMINEDTRANSACTIONS_SU
 export const PUBLISHUNMINEDTRANSACTIONS_FAILED = "PUBLISHUNMINEDTRANSACTIONS_FAILED";
 
 export const publishUnminedTransactionsAttempt = () => (dispatch, getState) => {
-  dispatch({type: PUBLISHUNMINEDTRANSACTIONS_ATTEMPT});
+  dispatch({ type: PUBLISHUNMINEDTRANSACTIONS_ATTEMPT });
 
   wallet.publishUnminedTransactions(sel.walletService(getState()))
-    .then(() => dispatch({type: PUBLISHUNMINEDTRANSACTIONS_SUCCESS}))
-    .catch(error => dispatch({error, type: PUBLISHUNMINEDTRANSACTIONS_FAILED}));
+    .then(() => dispatch({ type: PUBLISHUNMINEDTRANSACTIONS_SUCCESS }))
+    .catch(error => dispatch({ error, type: PUBLISHUNMINEDTRANSACTIONS_FAILED }));
 };

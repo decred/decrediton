@@ -11,12 +11,12 @@ export function getGlobalCfg() {
 }
 
 export function getWalletCfg(testnet, walletPath){
-  const config = new Store({cwd: getWalletCfgPath(testnet, walletPath)});
+  const config = new Store({ cwd: getWalletCfgPath(testnet, walletPath) });
   return (config);
 }
 
 export function initWalletCfg(testnet, walletPath) {
-  const config = new Store({cwd: getWalletCfgPath(testnet, walletPath)});
+  const config = new Store({ cwd: getWalletCfgPath(testnet, walletPath) });
   if (!config.has("wallet_start_advanced")) {
     config.set("wallet_start_advanced", false);
   }
@@ -170,7 +170,7 @@ export function readDcrdConfig(configPath, testnet) {
     }
     let userFound, passFound = false;
     // Look through all top level config entries
-    for (let [key, value] of Object.entries(readCfg)) {
+    for (let [ key, value ] of Object.entries(readCfg)) {
       if (key == "rpcuser") {
         newCfg.rpc_user = value;
         userFound = true;
@@ -189,7 +189,7 @@ export function readDcrdConfig(configPath, testnet) {
       if (!userFound && !passFound) {
         // If user and pass aren't found on the top level, look through all
         // next level config entries
-        for (let [key2, value2] of Object.entries(value)) {
+        for (let [ key2, value2 ] of Object.entries(value)) {
           if (key2 == "rpcuser") {
             newCfg.rpc_user = value2;
             userFound = true;

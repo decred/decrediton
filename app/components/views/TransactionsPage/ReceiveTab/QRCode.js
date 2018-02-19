@@ -6,8 +6,8 @@ class QRCode extends React.Component {
     addr: PropTypes.string.isRequired
   };
   render() {
-    const qr_img = qr.imageSync("decred:"+this.props.addr, {type: "svg"});
-    return (<div className="receive-content-nest-qrimage" dangerouslySetInnerHTML={{__html:qr_img}}></div>);
+    const qr_img = qr.imageSync("decred:"+this.props.addr, { type: "svg" });
+    return (<div className="receive-content-nest-qrimage" dangerouslySetInnerHTML={{ __html:qr_img }}></div>);
   }
 }
 

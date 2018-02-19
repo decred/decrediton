@@ -29,59 +29,59 @@ import {
 export default function control(state = {}, action) {
   switch (action.type) {
   case GETNEXTADDRESS_ATTEMPT:
-    return {...state,
+    return { ...state,
       getNextAddressError: null,
       getNextAddressRequestAttempt: true,
     };
   case GETNEXTADDRESS_FAILED:
-    return {...state,
+    return { ...state,
       getNextAddressError: String(action.error),
       getNextAddressRequestAttempt: false,
     };
   case GETNEXTADDRESS_SUCCESS:
-    return {...state,
+    return { ...state,
       getNextAddressError: "",
       getNextAddressRequestAttempt: false,
       getNextAddressResponse: action.getNextAddressResponse,
     };
   case RENAMEACCOUNT_ATTEMPT:
-    return {...state,
+    return { ...state,
       renameAccountError: null,
       renameAccountRequestAttempt: true,
     };
   case RENAMEACCOUNT_FAILED:
-    return {...state,
+    return { ...state,
       renameAccountError: String(action.error),
       renameAccountRequestAttempt: false,
     };
   case RENAMEACCOUNT_SUCCESS:
-    return {...state,
+    return { ...state,
       renameAccountError: null,
       renameAccountRequestAttempt: false,
       renameAccountResponse: action.renameAccountResponse,
       renameAccountSuccess: action.renameAccountSuccess,
     };
   case RESCAN_ATTEMPT:
-    return {...state,
+    return { ...state,
       rescanCall: null,
       rescanError: null,
       rescanRequest: action.request,
       rescanRequestAttempt: true,
     };
   case RESCAN_FAILED:
-    return {...state,
+    return { ...state,
       rescanCall: null,
       rescanError: String(action.error),
       rescanRequestAttempt: false,
     };
   case RESCAN_PROGRESS:
-    return {...state,
+    return { ...state,
       rescanCall: action.rescanCall,
       rescanResponse: action.rescanResponse,
     };
   case RESCAN_CANCEL:
   case RESCAN_COMPLETE:
-    return {...state,
+    return { ...state,
       rescanCall: null,
       rescanError: "",
       rescanRequest: null,
@@ -89,169 +89,169 @@ export default function control(state = {}, action) {
       rescanResponse: null,
     };
   case GETNEXTACCOUNT_ATTEMPT:
-    return {...state,
+    return { ...state,
       getNextAccountError: null,
       getNextAccountRequestAttempt: true,
     };
   case GETNEXTACCOUNT_FAILED:
-    return {...state,
+    return { ...state,
       getNextAccountError: String(action.error),
       getNextAccountRequestAttempt: false,
     };
   case GETNEXTACCOUNT_SUCCESS:
-    return {...state,
+    return { ...state,
       getNextAccountError: null,
       getNextAccountRequestAttempt: false,
       getNextAccountResponse: action.getNextAccountResponse,
       getNextAccountSuccess: action.successMessage,
     };
   case IMPORTPRIVKEY_ATTEMPT:
-    return {...state,
+    return { ...state,
       importPrivateKeyError: null,
       importPrivateKeyRequestAttempt: true,
     };
   case IMPORTPRIVKEY_FAILED:
-    return {...state,
+    return { ...state,
       importPrivateKeyError: String(action.error),
       importPrivateKeyRequestAttempt: false,
     };
   case IMPORTPRIVKEY_SUCCESS:
-    return {...state,
+    return { ...state,
       importPrivateKeyError: "",
       importPrivateKeyRequestAttempt: false,
       importPrivateKeyResponse: action.importPrivateKeyResponse,
     };
   case IMPORTSCRIPT_ATTEMPT:
-    return {...state,
+    return { ...state,
       importScriptError: null,
       importScriptRequestAttempt: true,
     };
   case IMPORTSCRIPT_FAILED:
-    return {...state,
+    return { ...state,
       importScriptError: String(action.error),
       importScriptRequestAttempt: false,
       purchaseTicketsRequestAttempt: false,
     };
   case IMPORTSCRIPT_SUCCESS:
-    return {...state,
+    return { ...state,
       importScriptError: null,
       importScriptRequestAttempt: false,
       importScriptResponse: action.importScriptResponse,
     };
   case CHANGEPASSPHRASE_ATTEMPT:
-    return {...state,
+    return { ...state,
       changePassphraseError: null,
       changePassphraseRequestAttempt: true,
     };
   case CHANGEPASSPHRASE_FAILED:
-    return {...state,
+    return { ...state,
       changePassphraseError: String(action.error),
       changePassphraseRequestAttempt: false,
     };
   case CHANGEPASSPHRASE_SUCCESS:
-    return {...state,
+    return { ...state,
       changePassphraseError: null,
       changePassphraseRequestAttempt: false,
       changePassphraseResponse: action.changePassphraseResponse,
       changePassphraseSuccess: "Your private passphrase was successfully updated.",
     };
   case LOADACTIVEDATAFILTERS_ATTEMPT:
-    return {...state,
+    return { ...state,
       loadActiveDataFiltersError: null,
       loadActiveDataFiltersRequestAttempt: true,
     };
   case LOADACTIVEDATAFILTERS_FAILED:
-    return {...state,
+    return { ...state,
       loadActiveDataFiltersError: String(action.error),
       loadActiveDataFiltersRequestAttempt: false,
     };
   case LOADACTIVEDATAFILTERS_SUCCESS:
-    return {...state,
+    return { ...state,
       loadActiveDataFiltersError: null,
       loadActiveDataFiltersRequestAttempt: false,
       loadActiveDataFiltersResponse: action.response,
     };
   case FUNDTX_ATTEMPT:
-    return {...state,
+    return { ...state,
       fundTransactionError: null,
       fundTransactionRequestAttempt: true,
     };
   case FUNDTX_FAILED:
-    return {...state,
+    return { ...state,
       fundTransactionError: String(action.error),
       fundTransactionRequestAttempt: false,
     };
   case FUNDTX_SUCCESS:
-    return {...state,
+    return { ...state,
       fundTransactionError: null,
       fundTransactionRequestAttempt: false,
       fundTransactionResponse: action.fundTransactionResponse,
     };
   case CLEARTX:
-    return {...state,
+    return { ...state,
       constructTxResponse: null,
       validateAddressResponse: null,
       validateAddressError: null,
     };
   case SIGNTX_ATTEMPT:
-    return {...state,
+    return { ...state,
       signTransactionRequestAttempt: true,
       signTransactionResponse: null
     };
   case SIGNTX_FAILED:
-    return {...state,
+    return { ...state,
       signTransactionRequestAttempt: false,
       signTransactionResponse: null,
     };
   case SIGNTX_SUCCESS:
-    return {...state,
+    return { ...state,
       signTransactionRequestAttempt: false,
       signTransactionResponse: action.signTransactionResponse,
     };
   case PUBLISHTX_ATTEMPT:
-    return {...state,
+    return { ...state,
       publishTransactionRequestAttempt: true,
     };
   case PUBLISHTX_FAILED:
-    return {...state,
+    return { ...state,
       publishTransactionRequestAttempt: false,
     };
   case PUBLISHTX_SUCCESS:
-    return {...state,
+    return { ...state,
       publishTransactionRequestAttempt: false,
       publishTransactionResponse: action.publishTransactionResponse,
       constructTxResponse: null,
       signTxResponse: null,
     };
   case PURCHASETICKETS_ATTEMPT:
-    return {...state,
+    return { ...state,
       purchaseTicketsError: null,
       purchaseTicketsRequestAttempt: true,
     };
   case PURCHASETICKETS_FAILED:
-    return {...state,
+    return { ...state,
       purchaseTicketsError: String(action.error),
       purchaseTicketsRequestAttempt: false,
       importScriptRequestAttempt: false,
     };
   case PURCHASETICKETS_SUCCESS:
-    return {...state,
+    return { ...state,
       purchaseTicketsError: null,
       purchaseTicketsRequestAttempt: false,
       purchaseTicketsResponse: action.purchaseTicketsResponse,
     };
   case REVOKETICKETS_ATTEMPT:
-    return {...state,
+    return { ...state,
       revokeTicketsError: null,
       revokeTicketsRequestAttempt: true,
     };
   case REVOKETICKETS_FAILED:
-    return {...state,
+    return { ...state,
       revokeTicketsError: String(action.error),
       revokeTicketsRequestAttempt: false,
     };
   case REVOKETICKETS_SUCCESS:
-    return {...state,
+    return { ...state,
       revokeTicketsError: null,
       revokeTicketsRequestAttempt: false,
       revokeTicketsResponse: action.revokeTicketsResponse,
@@ -319,17 +319,17 @@ export default function control(state = {}, action) {
       maxPerBlock: action.maxPerBlock,
     };
   case STARTAUTOBUYER_ATTEMPT:
-    return {...state,
+    return { ...state,
       startAutoBuyerError: null,
       startAutoBuyerRequestAttempt: true,
     };
   case STARTAUTOBUYER_FAILED:
-    return {...state,
+    return { ...state,
       startAutoBuyerError: String(action.error),
       startAutoBuyerRequestAttempt: false,
     };
   case STARTAUTOBUYER_SUCCESS:
-    return {...state,
+    return { ...state,
       startAutoBuyerError: null,
       startAutoBuyerRequestAttempt: false,
       startAutoBuyerResponse: action.startAutoBuyerResponse,
@@ -341,17 +341,17 @@ export default function control(state = {}, action) {
       maxPerBlock: action.maxPerBlock,
     };
   case STOPAUTOBUYER_ATTEMPT:
-    return {...state,
+    return { ...state,
       stopAutoBuyerError: null,
       stopAutoBuyerRequestAttempt: true,
     };
   case STOPAUTOBUYER_FAILED:
-    return {...state,
+    return { ...state,
       //stopAutoBuyerError: String(action.error),
       stopAutoBuyerRequestAttempt: false,
     };
   case STOPAUTOBUYER_SUCCESS:
-    return {...state,
+    return { ...state,
       stopAutoBuyerError: null,
       stopAutoBuyerSuccess: action.success,
       stopAutoBuyerRequestAttempt: false,
@@ -360,40 +360,40 @@ export default function control(state = {}, action) {
       startAutoBuyerResponse: null,
     };
   case CONSTRUCTTX_ATTEMPT:
-    return {...state,
+    return { ...state,
       constructTxRequestAttempt: true,
     };
   case CONSTRUCTTX_FAILED:
-    return {...state,
+    return { ...state,
       constructTxRequestAttempt: false,
       constructTxResponse: null,
     };
   case CONSTRUCTTX_SUCCESS:
-    return {...state,
+    return { ...state,
       constructTxRequestAttempt: false,
       constructTxResponse: action.constructTxResponse,
     };
   case VALIDATEADDRESS_ATTEMPT:
-    return {...state,
+    return { ...state,
       validateAddressRequestAttempt: true,
       validateAddressResponse: null,
     };
   case VALIDATEADDRESS_SUCCESS:
-    return {...state,
+    return { ...state,
       validateAddressRequestAttempt: false,
       validateAddressResponse: action.response
     };
   case VALIDATEADDRESS_FAILED:
-    return {...state,
+    return { ...state,
       validateAddressRequestAttempt: false,
       validateAddressResponse: null
     };
   case VALIDATEADDRESS_CLEANSTORE:
-    return {...state,
+    return { ...state,
       validateAddressResponse: null
     };
   case WALLET_AUTOBUYER_SETTINGS:
-    return {...state,
+    return { ...state,
       balanceToMaintain: action.balanceToMaintain,
       maxFee: action.maxFee,
       maxPriceAbsolute: action.maxPriceAbsolute,
@@ -401,15 +401,15 @@ export default function control(state = {}, action) {
       maxPerBlock: action.maxPriceRelative,
     };
   case EXPORT_STARTED:
-    return {...state,
+    return { ...state,
       exportingData: true
     };
   case EXPORT_COMPLETED:
-    return {...state,
+    return { ...state,
       exportingData: false
     };
   case EXPORT_ERROR:
-    return {...state,
+    return { ...state,
       exportingData: false
     };
   default:

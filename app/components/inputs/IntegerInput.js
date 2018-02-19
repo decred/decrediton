@@ -1,6 +1,6 @@
 import NumericInput from "./NumericInput";
 
-const IntegerInput = ({...props}) => {
+const IntegerInput = ({ ...props }) => {
 
   var value = props.value;
 

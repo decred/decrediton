@@ -14,15 +14,15 @@ const GETSTARTUPSTATS_FAILED = "GETSTARTUPSTATS_FAILED";
 export const getStartupStats = () => (dispatch) => {
 
   const startupStats = [
-    {calcFunction: dailyBalancesStats},
+    { calcFunction: dailyBalancesStats },
   ];
 
-  dispatch({type: GETSTARTUPSTATS_ATTEMPT});
+  dispatch({ type: GETSTARTUPSTATS_ATTEMPT });
   Promise.all(startupStats.map(s => dispatch(generateStat(s))))
-    .then(([dailyBalances]) => {
-      dispatch({dailyBalances, type: GETSTARTUPSTATS_SUCCESS});
+    .then(([ dailyBalances ]) => {
+      dispatch({ dailyBalances, type: GETSTARTUPSTATS_SUCCESS });
     })
-    .catch(error => dispatch({error, type: GETSTARTUPSTATS_FAILED}));
+    .catch(error => dispatch({ error, type: GETSTARTUPSTATS_FAILED }));
 };
 
 // generateStat starts generating the statistic as defined on the opts. It
@@ -33,14 +33,14 @@ export const generateStat = (opts) => (dispatch) => new Promise((resolve, reject
   const { calcFunction } = opts;
 
   const stat = { series: null, data: [], };
-  const startFunction = ({series}) => stat.series = series;
+  const startFunction = ({ series }) => stat.series = series;
   const endFunction = () => resolve(stat);
   const errorFunction = error => reject(error);
   const progressFunction = (time, series) => {
-    stat.data.push({time, series});
+    stat.data.push({ time, series });
   };
 
-  dispatch(calcFunction({opts, startFunction, progressFunction, endFunction, errorFunction}));
+  dispatch(calcFunction({ opts, startFunction, progressFunction, endFunction, errorFunction }));
 });
 
 export const EXPORT_STARTED = "EXPORT_STARTED";
@@ -75,10 +75,10 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
 
   // called once at the start of the stats calc function
   const startFunction = (opts) => {
-    dispatch({type: EXPORT_STARTED});
-    allSeries = opts.series.map(s => ({...s, valueFormatFunc: seriesValueFormatFunc(s)}));
+    dispatch({ type: EXPORT_STARTED });
+    allSeries = opts.series.map(s => ({ ...s, valueFormatFunc: seriesValueFormatFunc(s) }));
     const seriesNames = allSeries.map(s => s.name);
-    const headerLine = csvLine(["time", ...seriesNames]);
+    const headerLine = csvLine([ "time", ...seriesNames ]);
 
     fd = fs.openSync(csvFilename, "w", 0o600);
     fs.writeSync(fd, headerLine);
@@ -97,7 +97,7 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
   };
 
   const errorFunction = (error) => {
-    dispatch({error, type: EXPORT_ERROR});
+    dispatch({ error, type: EXPORT_ERROR });
     if (fd) {
       fs.closeSync(fd);
       fd = null;
@@ -106,14 +106,14 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
 
   // called once at the end
   const endFunction = () => {
-    dispatch({filename: csvFilename, type: EXPORT_COMPLETED});
+    dispatch({ filename: csvFilename, type: EXPORT_COMPLETED });
     if (fd) {
       fs.closeSync(fd);
       fd = null;
     }
   };
 
-  dispatch(calcFunction({opts, startFunction, progressFunction, endFunction, errorFunction}));
+  dispatch(calcFunction({ opts, startFunction, progressFunction, endFunction, errorFunction }));
 };
 
 export const transactionStats = (opts) => (dispatch, getState) => {
@@ -123,13 +123,13 @@ export const transactionStats = (opts) => (dispatch, getState) => {
 
   startFunction({
     series: [
-      {name: "hash"},
-      {name: "type"},
-      {name: "direction"},
-      {name: "fee", type: VALUE_TYPE_ATOMAMOUNT},
-      {name: "amount", type: VALUE_TYPE_ATOMAMOUNT},
-      {name: "credits", type: VALUE_TYPE_ATOMAMOUNT},
-      {name: "debits", type: VALUE_TYPE_ATOMAMOUNT},
+      { name: "hash" },
+      { name: "type" },
+      { name: "direction" },
+      { name: "fee", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "amount", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "credits", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "debits", type: VALUE_TYPE_ATOMAMOUNT },
     ],
   });
 
@@ -161,10 +161,10 @@ export const balancesStats = (opts) => (dispatch, getState) => {
 
   startFunction({
     series: [
-      {name: "spendable", type: VALUE_TYPE_ATOMAMOUNT},
-      {name: "locked", type: VALUE_TYPE_ATOMAMOUNT},
-      {name: "lockedNonWallet", type: VALUE_TYPE_ATOMAMOUNT},
-      {name: "total", type: VALUE_TYPE_ATOMAMOUNT},
+      { name: "spendable", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "locked", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "lockedNonWallet", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "total", type: VALUE_TYPE_ATOMAMOUNT },
     ],
   });
 
@@ -192,9 +192,9 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       var commitAmount = tx.tx.getDebitsList().reduce((s, d) => s + d.getPreviousAmount(), 0)
         - change - (isWallet ? tx.tx.getFee() : 0);
       var spentAmount = commitAmount + (isWallet ? tx.fee : 0);
-      liveTickets[tx.txHash] = {tx, commitAmount, isWallet};
-      return {spendable: -spentAmount, locked: isWallet ? commitAmount : 0,
-        lockedNonWallet: isWallet ? 0 : commitAmount, tx};
+      liveTickets[tx.txHash] = { tx, commitAmount, isWallet };
+      return { spendable: -spentAmount, locked: isWallet ? commitAmount : 0,
+        lockedNonWallet: isWallet ? 0 : commitAmount, tx };
     case wallet.TRANSACTION_TYPE_VOTE:
     case wallet.TRANSACTION_TYPE_REVOCATION:
       var decodedSpender = await wallet.decodeTransaction(decodeMessageService, tx.tx.getTransaction());
@@ -204,19 +204,19 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       if (!ticket) throw "Previous live ticket not found: " + ticketHash;
       var returnAmount = tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0);
       var wasWallet = ticket.isWallet;
-      return {spendable: +returnAmount, locked: wasWallet ? -ticket.commitAmount : 0,
-        lockedNonWallet: wasWallet ? 0 : -ticket.commitAmount, tx};
+      return { spendable: +returnAmount, locked: wasWallet ? -ticket.commitAmount : 0,
+        lockedNonWallet: wasWallet ? 0 : -ticket.commitAmount, tx };
     case wallet.TRANSACTION_TYPE_COINBASE:
     case wallet.TRANSACTION_TYPE_REGULAR:
-      return {spendable: +tx.amount, locked: 0, lockedNonWallet: 0, tx};
+      return { spendable: +tx.amount, locked: 0, lockedNonWallet: 0, tx };
     default: throw "Unknown tx type: " + tx.txType;
     }
   };
 
-  let currentBalance = {spendable: 0, locked: 0, lockedNonWallet: 0,
-    total: 0, tx: null};
+  let currentBalance = { spendable: 0, locked: 0, lockedNonWallet: 0,
+    total: 0, tx: null };
 
-  const txDataCb = async ({mined}) => {
+  const txDataCb = async ({ mined }) => {
     for (let i = 0; i < mined.length; i++) {
       const tx = mined[i];
       const delta = await txBalancesDelta(tx);
@@ -241,7 +241,7 @@ export const dailyBalancesStats = (opts) => {
   const { progressFunction, endFunction, startFunction } = opts;
 
   let lastDate = null;
-  let balance = {spendable: 0, locked: 0, total: 0, sent: 0, received: 0};
+  let balance = { spendable: 0, locked: 0, total: 0, sent: 0, received: 0 };
 
   const differentDays = (d1, d2) =>
     (d1.getYear() !== d2.getYear()) ||
@@ -249,9 +249,9 @@ export const dailyBalancesStats = (opts) => {
     (d1.getDate() !== d2.getDate());
 
   const aggStartFunction = (opts) => {
-    opts.series = [...opts.series,
-      {name: "sent", type: VALUE_TYPE_ATOMAMOUNT},
-      {name: "received", type: VALUE_TYPE_ATOMAMOUNT},
+    opts.series = [ ...opts.series,
+      { name: "sent", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "received", type: VALUE_TYPE_ATOMAMOUNT },
     ];
     startFunction(opts);
   };
@@ -261,7 +261,7 @@ export const dailyBalancesStats = (opts) => {
       lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
     } else if (differentDays(time, lastDate)) {
       progressFunction(endOfDay(lastDate), balance);
-      balance = {...balance, sent: 0, received: 0};
+      balance = { ...balance, sent: 0, received: 0 };
       lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
     }
     const { tx } = series;
@@ -277,6 +277,6 @@ export const dailyBalancesStats = (opts) => {
     endFunction();
   };
 
-  return balancesStats({...opts, progressFunction: aggProgressFunction,
-    endFunction: aggEndFunction, startFunction: aggStartFunction});
+  return balancesStats({ ...opts, progressFunction: aggProgressFunction,
+    endFunction: aggEndFunction, startFunction: aggStartFunction });
 };

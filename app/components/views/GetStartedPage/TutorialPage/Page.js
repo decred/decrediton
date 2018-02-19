@@ -141,7 +141,7 @@ const messages = defineMessages({
   },
 });
 
-const TutorialPage = ({intl, tutorialStep, onNextTutorialStep, onGoToStep, finishTutorial}) => {
+const TutorialPage = ({ intl, tutorialStep, onNextTutorialStep, onGoToStep, finishTutorial }) => {
   return (
     <div className="tutorial">
       <div className={"tutorial-side step-" + tutorialStep}>

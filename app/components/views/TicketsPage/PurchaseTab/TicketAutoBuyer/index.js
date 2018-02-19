@@ -27,14 +27,14 @@ class TicketAutoBuyer extends React.Component {
   }
 
   componentDidUpdate() {
-    const {isHidingDetails} = this.state;
+    const { isHidingDetails } = this.state;
     if(!isHidingDetails) {
       this.scrollToBottom();
     }
   }
 
   scrollTo(element, to, duration) {
-    const {isScrollingDown} = this.state;
+    const { isScrollingDown } = this.state;
     if (!isScrollingDown)
       return;
     if (duration <= 0) {
@@ -70,7 +70,7 @@ class TicketAutoBuyer extends React.Component {
       intl : { formatMessage }
     } = this.props;
     const { onUpdateTicketAutoBuyerConfig } = this;
-    return [{
+    return [ {
       data: <Details {...{
         ...this.state,
         isTicketAutoBuyerConfigDirty,
@@ -86,21 +86,21 @@ class TicketAutoBuyer extends React.Component {
       />,
       key: "output_0",
       style: {
-        height: spring(300, {stiffness: 170, damping: 15}),
-        opacity: spring(1, {stiffness: 100, damping: 20}),
+        height: spring(300, { stiffness: 170, damping: 15 }),
+        opacity: spring(1, { stiffness: 100, damping: 20 }),
       }
-    }];
+    } ];
   }
 
   getNullStyles() {
-    return [{
+    return [ {
       data: <div></div>,
       key: "output_0",
       style: {
-        height: spring(0, {stiffness: 100, damping: 14}),
-        opacity: spring(0, {stiffness: 100, damping: 20}),
+        height: spring(0, { stiffness: 100, damping: 14 }),
+        opacity: spring(0, { stiffness: 100, damping: 20 }),
       }
-    }];
+    } ];
   }
 
   render() {

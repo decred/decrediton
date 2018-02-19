@@ -31,7 +31,7 @@ function mapNonWalletOutput(output) {
     ? "[null data]"
     : <Balance amount={output.getValue()} />;
 
-  return {address, amount};
+  return { address, amount };
 }
 
 function mapNonWalletInput(input) {
@@ -42,7 +42,7 @@ function mapNonWalletInput(input) {
 
   const amount = input.getAmountIn();
 
-  return {address, amount};
+  return { address, amount };
 }
 
 const TxDetails = ({
@@ -122,7 +122,7 @@ const TxDetails = ({
           <span className="txdetails-value-text">
             <T id="transaction.confirmationHeight"
               m="{confirmations, plural, =0 {pending} one {# confirmation} other {# confirmations}}"
-              values={{confirmations: (isConfirmed ? currentBlockHeight - txHeight : 0)}} />
+              values={{ confirmations: (isConfirmed ? currentBlockHeight - txHeight : 0) }} />
           </span>
         </div>
         <div className="txdetails-overview">

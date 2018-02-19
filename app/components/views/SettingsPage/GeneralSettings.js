@@ -27,7 +27,7 @@ const GeneralSettings = ({
         <SettingsInput
           className="settings-input"
           value={tempSettings.currencyDisplay}
-          onChange={(newCurrency) => onChangeTempSettings({currencyDisplay: newCurrency.name})}
+          onChange={(newCurrency) => onChangeTempSettings({ currencyDisplay: newCurrency.name })}
           valueKey="name" labelKey="name"
           options={currencies}
         />
@@ -40,7 +40,7 @@ const GeneralSettings = ({
         <SettingsInput
           className="settings-input"
           value={tempSettings.locale}
-          onChange={(newLocale) => onChangeTempSettings({locale: newLocale.key})}
+          onChange={(newLocale) => onChangeTempSettings({ locale: newLocale.key })}
           valueKey="key" labelKey="description"
           options={locales}
         />
@@ -53,12 +53,12 @@ const GeneralSettings = ({
         <SettingsInput
           className="settings-input"
           value={tempSettings.daemonStartAdvanced ? "true" : "false"}
-          onChange={(opt) => onChangeTempSettings({daemonStartAdvanced: opt.value})}
+          onChange={(opt) => onChangeTempSettings({ daemonStartAdvanced: opt.value })}
           valueKey="key"
           labelKey="description"
           options={[
-            {key: "true", value: true, description: <T id="settings.advancedDaemon.true" m="Enabled" />},
-            {key: "false", value: false, description: <T id="settings.advancedDaemon.false" m="Disabled" />},
+            { key: "true", value: true, description: <T id="settings.advancedDaemon.true" m="Enabled" /> },
+            { key: "false", value: false, description: <T id="settings.advancedDaemon.false" m="Disabled" /> },
           ]}
         />
       </div>

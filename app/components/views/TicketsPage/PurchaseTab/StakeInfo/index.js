@@ -28,7 +28,7 @@ class StakeInfo extends React.Component {
     } = this.props;
     const { onHideStakeInfo, onShowStakeInfo } = this;
     const { isShowingDetails } = this.state;
-    return [{
+    return [ {
       data: <StakeInfoDetails
         {...{
           isShowingDetails,
@@ -48,21 +48,21 @@ class StakeInfo extends React.Component {
       />,
       key: "output_0",
       style: {
-        height: spring(150, {stiffness: 170, damping: 15}),
-        opacity: spring(1, {stiffness: 100, damping: 20}),
+        height: spring(150, { stiffness: 170, damping: 15 }),
+        opacity: spring(1, { stiffness: 100, damping: 20 }),
       }
-    }];
+    } ];
   }
 
   getNullStyles() {
-    return [{
+    return [ {
       data: null,
       key: "output_0",
       style: {
-        height: spring(0, {stiffness: 100, damping: 14}),
-        opacity: spring(0, {stiffness: 100, damping: 20}),
+        height: spring(0, { stiffness: 100, damping: 14 }),
+        opacity: spring(0, { stiffness: 100, damping: 20 }),
       }
-    }];
+    } ];
   }
 
   render() {

@@ -24,7 +24,7 @@ class KeyBlueButton extends React.Component {
         disabled={this.props.disabled}
         onClick = {this.onClick}
         hidden={this.props.hidden}>
-        {this.props.loading ? <SimpleLoading {...{disabled: this.props.disabled}}/> : this.props.children}
+        {this.props.loading ? <SimpleLoading {...{ disabled: this.props.disabled }}/> : this.props.children}
       </div>
     );
   }

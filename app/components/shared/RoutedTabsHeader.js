@@ -3,7 +3,7 @@ import { NavLink as Link } from "react-router-dom";
 import { spring, Motion } from "react-motion";
 import theme from "theme";
 
-export const RoutedTab = (path, link) => ({path, link});
+export const RoutedTab = (path, link) => ({ path, link });
 
 @autobind
 class RoutedTabsHeader extends React.Component {
@@ -31,7 +31,7 @@ class RoutedTabsHeader extends React.Component {
     const { location } = this.props;
     const selectedTab = location.pathname;
     const caretPosition = this.neededCaretPosition(selectedTab);
-    if (caretPosition) this.setState({...caretPosition, selectedTab});
+    if (caretPosition) this.setState({ ...caretPosition, selectedTab });
   }
 
   neededCaretPosition(path) {
@@ -40,7 +40,7 @@ class RoutedTabsHeader extends React.Component {
     const tabRect = tabForRoute.getBoundingClientRect();
     const caretLeft = tabForRoute.offsetLeft;
     const caretWidth = tabRect.width;
-    return {caretLeft, caretWidth};
+    return { caretLeft, caretWidth };
   }
 
   render() {

@@ -51,29 +51,29 @@ class SignMessage extends React.Component {
 
     return (
       <div className="message message-sign">
-        <SignMessageForm {...{onSubmit, onChangeAddress, onChangeMessage, address, addressError, message, messageError, formatMessage: intl.formatMessage, isSigningMessage} }/>
+        <SignMessageForm {...{ onSubmit, onChangeAddress, onChangeMessage, address, addressError, message, messageError, formatMessage: intl.formatMessage, isSigningMessage } }/>
         {result}
       </div>
     );
   }
 
   onChangeAddress(address){
-    if (address == "") this.setState({address: "", addressError: "Please enter an address"});
+    if (address == "") this.setState({ address: "", addressError: "Please enter an address" });
     else {
       this.props.validateAddress(address)
         .then(resp => {
-          this.setState({address, addressError: !resp.getIsValid() ? "Please enter a valid address" : null});
+          this.setState({ address, addressError: !resp.getIsValid() ? "Please enter a valid address" : null });
         })
         .catch(error => {
           console.error(error);
-          this.setState({address, addressError: "Error: Address validation failed, please try again."});
+          this.setState({ address, addressError: "Error: Address validation failed, please try again." });
         });
     }
   }
 
   onChangeMessage(message){
-    if (message == "") this.setState({message: "", messageError: "Please enter a message"});
-    else this.setState({message, messageError: null});
+    if (message == "") this.setState({ message: "", messageError: "Please enter a message" });
+    else this.setState({ message, messageError: null });
   }
 
   onSubmit(passphrase) {

@@ -3,7 +3,7 @@ const TicketCard = ({ status, children, onClick, className }) => {
     (className ? " " + className : "");
 
   return (
-    <div {...{onClick}} className={thisClsName}>
+    <div {...{ onClick }} className={thisClsName}>
       {children}
     </div>
   );
