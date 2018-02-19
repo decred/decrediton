@@ -90,7 +90,7 @@
 }
 
 .transaction-info-overview {
-  width: 250px;
+  flex-grow: 9;
 }
 
 .overview-balance-spendable-locked-unit {
@@ -113,10 +113,16 @@
   position: absolute;
   top: 295px;
   height: 200px;
+  width: 100%;
+}
+
+.recent-transactions-full {
+  width: 92%;
 }
 
 .recent-transactions {
-  margin-right: 40px;
+  width: 45%;
+  margin-right: 32px;
 }
 
 .tx-history-overview-row {
@@ -171,9 +177,21 @@
   background-image: @wallet-gray-icon;
 }
 
+.tx-history-overview-row.Vote .icon {
+  background-image: @ticket-voted-icon;
+}
+
+.tx-history-overview-row.Ticket .icon {
+  background-image: @ticket-small-icon;
+}
+
+.tx-history-overview-row.Revocation .icon {
+  background-image: @ticket-revoked-icon;
+}
+
 .pending-overview-details {
   background: #f6f7f8;
-  padding: 16px;
+  padding: 19px;
   cursor: pointer;
 }
 

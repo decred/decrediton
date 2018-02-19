@@ -1,7 +1,7 @@
 // @flow
 import { home } from "connectors";
 import { DecredLoading } from "indicators";
-import TxHistory from "TxHistory";
+import TxHistory from "./TxHistory";
 import { FormattedMessage as T } from "react-intl";
 import "style/Fonts.less";
 import "style/HomePage.less";
@@ -15,12 +15,10 @@ const RecentTickets = ({
     getTransactionsRequestAttempt ? <DecredLoading /> :
       <Aux>
         <div className="home-content-title">
-          <T id="home.ticketActivityTitle" m="Recent Tickets" />
+          <T id="home.ticketActivityTitle" m="Recent Staking Activity" />
         </div>
         <div className="home-content-nest">
-          {tickets.length > 0 ?
-            <TxHistory limit={5} {...{ getAccountsResponse, transactions: tickets }} /> :
-            <p><T id="home.noTickets" m="No tickets" /></p>}
+          <TxHistory limit={6} {...{ getAccountsResponse, transactions: tickets }} />
         </div>
       </Aux>
   );
