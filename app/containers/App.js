@@ -67,7 +67,7 @@ class App extends React.Component {
           defaultFormats={defaultFormats}
           key={locale.key}>
           <Aux>
-            <Switch><Redirect from="/" exact to="/getStarted/initial" /></Switch>
+            <Switch><Redirect from="/" exact to="/getStarted" /></Switch>
             <Snackbar/>
             <AnimatedSwitch {...topLevelAnimation} className="top-level-container">
               <Route path="/getStarted"  component={GetStartedContainer} />

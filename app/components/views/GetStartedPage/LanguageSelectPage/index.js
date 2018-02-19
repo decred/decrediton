@@ -1,4 +1,5 @@
 import LanguageSelectPage from "./Page";
+import { walletStartup } from "connectors";
 
 @autobind
 class LanguageSelect extends React.Component{
@@ -36,4 +37,4 @@ class LanguageSelect extends React.Component{
 
 }
 
-export default LanguageSelect;
+export default walletStartup(LanguageSelect);

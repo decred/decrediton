@@ -35,6 +35,9 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  onShowTutorial: da.showTutorial,
+  onShowLanguage: da.showLanguage,
+  onShowGetStarted: da.showGetStarted,
   onSelectLanguage: da.selectLanguage,
   finishTutorial: da.finishTutorial,
   onReturnToNewSeed: wla.createWalletGoBackNewSeed,

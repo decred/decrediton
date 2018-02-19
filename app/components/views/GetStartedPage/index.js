@@ -1,6 +1,4 @@
 import Page from "./Page";
-import LanguageSelectPage from "./LanguageSelectPage";
-import TutorialPage from "./TutorialPage";
 import { WalletSelectionHeader, WalletSelectionBody } from "./WalletSelection";
 import { CheckWalletStateHeader, CheckWalletStateBody } from "./CheckWalletState";
 import { OpenWalletHeader, OpenWalletBody } from "./OpenWallet";
@@ -49,16 +47,12 @@ class GetStartedPage extends React.Component {
 
   render() {
     const {
-      showTutorial,
-      finishTutorial,
       startStepIndex,
       isPrepared,
       isAdvancedDaemon,
       openForm,
       getWalletReady,
       remoteAppdataError,
-      locale,
-      availableLanguages,
       ...props
     } = this.props;
 

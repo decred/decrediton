@@ -29,10 +29,23 @@ export const WALLET_STAKEPOOL_SETTINGS = "WALLET_STAKEPOOL_SETTINGS";
 export const WALLET_SETTINGS = "WALLET_SETTINGS";
 export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
 
+export const showLanguage = () => (dispatch) => {
+  dispatch(pushHistory("/getstarted/language"));
+};
+
+export const showTutorial = () => (dispatch) => {
+  dispatch(pushHistory("/getstarted/tutorial"));
+};
+
+export const showGetStarted = () => (dispatch) => {
+  dispatch(pushHistory("/getstarted/initial"));
+};
+
 export const selectLanguage = (selectedLanguage) => (dispatch) => {
   const config = getGlobalCfg();
   config.set("locale", selectedLanguage.language);
   dispatch({ language: selectedLanguage.language, type: SELECT_LANGUAGE });
+  dispatch(pushHistory("/getstarted"));
 };
 
 export const finishTutorial = () => (dispatch) => {
@@ -40,6 +53,7 @@ export const finishTutorial = () => (dispatch) => {
   config.set("show_tutorial", false);
   dispatch(showSidebar());
   dispatch({ type: FINISH_TUTORIAL });
+  dispatch(pushHistory("/getstarted"));
 };
 
 export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
