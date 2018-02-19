@@ -95,6 +95,13 @@ export function formatTransaction(block, transaction, index) {
   const type = transaction.getTransactionType();
   let direction = "";
 
+
+  let debitAccounts = [];
+  transaction.getDebitsList().forEach((debit) => debitAccounts.push(debit.getPreviousAccount()));
+
+  let creditAddresses = [];
+  transaction.getCreditsList().forEach((credit) => creditAddresses.push(credit.getAddress()));
+
   if (type === TransactionDetails.TransactionType.REGULAR) {
     if (amount > 0) {
       direction = TRANSACTION_DIR_RECEIVED;
@@ -119,7 +126,9 @@ export function formatTransaction(block, transaction, index) {
     type,
     direction,
     amount,
-    fee
+    fee,
+    debitAccounts,
+    creditAddresses
   };
 }
 

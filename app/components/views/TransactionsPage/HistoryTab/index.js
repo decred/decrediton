@@ -16,7 +16,8 @@ class History extends React.Component {
     super(props);
     const selectedTxTypeKey = this.selectedTxTypeFromFilter(this.props.transactionsFilter);
     const selectedSortOrderKey = this.props.transactionsFilter.listDirection;
-    this.state = {selectedTxTypeKey, selectedSortOrderKey};
+    const searchText = this.props.transactionsFilter.search;
+    this.state = { selectedTxTypeKey, selectedSortOrderKey, searchText };
   }
 
   render() {
@@ -36,6 +37,7 @@ class History extends React.Component {
           ...substruct({
             onChangeSelectedType: null,
             onChangeSortType: null,
+            onChangeSearchText: null,
             onLoadMoreTransactions: null
           }, this)
         }}
@@ -88,6 +90,11 @@ class History extends React.Component {
   onChangeSortType(type) {
     this.onChangeFilter({listDirection: type.value});
     this.setState({selectedSortOrderKey: type.value});
+  }
+
+  onChangeSearchText(searchText) {
+    this.onChangeFilter({ search: searchText });
+    this.setState({ searchText });
   }
 
   selectedTxTypeFromFilter(filter) {
