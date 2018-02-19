@@ -357,8 +357,8 @@ export const ticketDataChart = createSelector(
 );
 
 export const viewableTransactions = createSelector(
-  [transactions, homeHistoryTransactions],
-  (transactions, homeHistoryTransactions) => [...transactions, ...homeHistoryTransactions]
+  [transactions, homeHistoryTransactions, homeHistoryTickets],
+  (transactions, homeTransactions, homeHistoryTickets) => [...transactions, ...homeTransactions, ...homeHistoryTickets]
 );
 export const viewedTransaction = createSelector(
   [viewableTransactions, (state, { params: { txHash }}) => txHash],
