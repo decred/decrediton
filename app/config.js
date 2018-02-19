@@ -80,6 +80,9 @@ export function initGlobalCfg() {
   if (!config.has("locale")) {
     config.set("locale","");
   }
+  if (!config.has("show_tutorial")) {
+    config.set("show_tutorial","true");
+  }
   return(config);
 }
 

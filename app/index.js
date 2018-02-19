@@ -35,7 +35,7 @@ var initialState = {
     selectedStakePool: null,
   },
   daemon: {
-    tutorial: true,
+    tutorial: globalCfg.get("show_tutorial"),
     daemonStarted: false,
     daemonSynced: false,
     daemonStopped: false,
@@ -313,7 +313,7 @@ var initialState = {
     messages: Array()
   },
   sidebar: {
-    showingSidebar: false,
+    showingSidebar: !globalCfg.get("show_tutorial"),
     showingSidebarMenu: false,
   },
   locales: locales

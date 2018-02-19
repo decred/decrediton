@@ -29,6 +29,8 @@ export const WALLET_SETTINGS = "WALLET_SETTINGS";
 export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
 
 export const finishTutorial = () => (dispatch) => {
+  const config = getGlobalCfg();
+  config.set("show_tutorial", false);
   dispatch(showSidebar());
   dispatch({ type: FINISH_TUTORIAL });
 };
