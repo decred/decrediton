@@ -1,4 +1,5 @@
 import Page from "./Page";
+import LanguageSelectPage from "./LanguageSelectPage";
 import TutorialPage from "./TutorialPage";
 import { WalletSelectionHeader, WalletSelectionBody } from "./WalletSelection";
 import { CheckWalletStateHeader, CheckWalletStateBody } from "./CheckWalletState";
@@ -56,6 +57,8 @@ class GetStartedPage extends React.Component {
       openForm,
       getWalletReady,
       remoteAppdataError,
+      locale,
+      availableLanguages,
       ...props
     } = this.props;
 
@@ -73,9 +76,7 @@ class GetStartedPage extends React.Component {
     } = this;
 
     let Header, Body;
-    if (showTutorial) {
-      return <TutorialPage {...{ finishTutorial }}/>;
-    } else if (showSettings) {
+    if (showSettings) {
       Header = SettingsHeader;
       Body = SettingsBody;
     } else if (showLogs) {
