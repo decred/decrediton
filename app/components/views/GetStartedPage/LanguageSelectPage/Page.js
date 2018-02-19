@@ -5,26 +5,30 @@ import { FormattedMessage as T } from "react-intl";
 
 const LanguageSelectPage = ({ availableLanguages, selectedLang, onChangeSelectedLang, onSelectLang }) => {
   return (
-    <div className="language-select">
-      <div className="logo">
+    <Aux>
+      <div className="getstarted-logo">
       </div>
-      <div className="language-select-title">
-        <T id="selectLang.title" m={"Welcome to Decrediton Wallet"}/>
+      <div className="getstarted-new">
+        <div className="language-select-title">
+          <T id="selectLang.title" m={"Welcome to Decrediton Wallet"}/>
+        </div>
+        <div className="language-select-title-sub">
+          <T id="selectLang.titleSub" m={"Choose your language"}/>
+        </div>
+        <div className="language-select-toolbar">
+          <SettingsInput
+            className="language-select-input"
+            value={selectedLang}
+            onChange={onChangeSelectedLang}
+            valueKey="key" labelKey="description"
+            options={availableLanguages}
+          />
+          <KeyBlueButton className="language-select-button" onClick={onSelectLang} >
+            <T id="selectLang.continueBtn" m={"Continue"}/>
+          </KeyBlueButton>
+        </div>
       </div>
-      <div className="language-select-title-sub">
-        <T id="selectLang.titleSub" m={"Choose your language"}/>
-      </div>
-      <SettingsInput
-        className="settings-input"
-        value={selectedLang}
-        onChange={onChangeSelectedLang}
-        valueKey="key" labelKey="description"
-        options={availableLanguages}
-      />
-      <KeyBlueButton className="select-language-button" onClick={onSelectLang} >
-        <T id="selectLang.continueBtn" m={"Continue"}/>
-      </KeyBlueButton>
-    </div>
+    </Aux>
   );
 };
 export default LanguageSelectPage;
