@@ -11,7 +11,7 @@ const TxRowByType = { // TODO: use constants instead of string
   "transfer": regular("Transfer", true)
 };
 
-const TxRow = ({ tx }, { router }) => {
+const TxRow = ({ tx, overview }, { router }) => {
   const rowType = tx.txType || tx.txDirection;
   const Component = TxRowByType[rowType];
 
@@ -19,6 +19,7 @@ const TxRow = ({ tx }, { router }) => {
     <Component
       {...{
         ...tx,
+        overview,
         pending: !tx.txTimestamp,
         onClick: () => router.history.push(`/transactions/history/${tx.txHash}`)
       }}

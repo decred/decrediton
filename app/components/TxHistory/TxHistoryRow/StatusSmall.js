@@ -3,7 +3,7 @@ import "style/TxHistory.less";
 import { tsToDate } from "helpers/dateFormat";
 import { Tooltip } from "shared";
 
-const Status = ({ pending, txTimestamp }) => (
+const StatusSmall = ({ pending, txTimestamp }) => (
   <Aux>
     {!pending ? (
       <div className="transaction-time-date-spacer">
@@ -28,4 +28,4 @@ const Status = ({ pending, txTimestamp }) => (
   </Aux>
 );
 
-export default Status;
+export default StatusSmall;

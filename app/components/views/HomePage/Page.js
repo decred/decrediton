@@ -19,8 +19,7 @@ const HomePage = ({
   getAccountsResponse,
 }) => {
   return (
-    <div className="overview-wrapper">
-
+    <Aux>
       <div className="overview-header">
         <div className="overview-balance-wrapper">
           <Balance
@@ -56,7 +55,7 @@ const HomePage = ({
           </div>
         }
       </div>
-    </div>
+    </Aux>
   );
 };
 
