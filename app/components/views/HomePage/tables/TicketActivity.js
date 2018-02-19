@@ -1,7 +1,7 @@
 // @flow
 import { home } from "connectors";
 import { DecredLoading } from "indicators";
-import TxHistory from "./TxHistory";
+import TxHistory from "TxHistory";
 import { FormattedMessage as T } from "react-intl";
 import "style/Fonts.less";
 import "style/HomePage.less";
@@ -18,7 +18,7 @@ const RecentTickets = ({
           <T id="home.ticketActivityTitle" m="Recent Staking Activity" />
         </div>
         <div className="home-content-nest">
-          <TxHistory limit={6} {...{ getAccountsResponse, transactions: tickets }} />
+          <TxHistory overview limit={6} {...{ getAccountsResponse, transactions: tickets }} />
         </div>
       </Aux>
   );

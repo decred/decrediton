@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { NavLink as Link } from "react-router-dom";
 
 const MenuLink = ({ linkRef, ...props }) => (
   <div ref={ linkRef }>

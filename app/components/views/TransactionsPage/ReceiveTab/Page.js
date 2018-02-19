@@ -10,7 +10,7 @@ const ReceivePage = ({
   nextAddress,
   onRequestAddress,
 }) => (
-  <div className="tab-card">
+  <Aux>
     <div className="receive-content-nest">
       <div className="receive-content-nest-for-address">
         <div className="receive-content-nest-prefix">
@@ -35,7 +35,7 @@ const ReceivePage = ({
         <T id="receive.newAddressBtn" m="Generate new address" />
       </KeyBlueButton>
     </div>
-  </div>
+  </Aux>
 );
 
 export default ReceivePage;

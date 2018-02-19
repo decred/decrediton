@@ -5,8 +5,16 @@ import ErrorScreen from "ErrorScreen";
 import { FormattedMessage as T } from "react-intl";
 import { spring, presets } from "react-motion";
 import OutputRow from "./OutputRow";
+import { DescriptionHeader } from "layout";
 
 const BASE_OUTPUT = { destination: "", amount: null };
+
+export const SendTabHeader = service(({isTestNet}) =>
+  <DescriptionHeader
+    description={isTestNet
+      ? <T id="transactions.description.send.testnet" m={"Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters\n(e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."} />
+      : <T id="transactions.description.send.mainnet" m={"Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters\n(e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."} />}
+  />);
 
 @autobind
 class Send extends React.Component {

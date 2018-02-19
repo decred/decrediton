@@ -1,9 +1,10 @@
 // @flow
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { Router, createMemoryHistory } from "react-router";
-import { syncHistoryWithStore } from "react-router-redux";
-import routes from "./routes";
+import { ConnectedRouter } from "react-router-redux";
+import { Switch, Route } from "react-router-dom";
+import { createMemoryHistory } from "history";
+import { App } from "containers";
 import configureStore from "./store/configureStore";
 import { getGlobalCfg } from "./config.js";
 import locales from "./i18n/locales";
@@ -320,11 +321,14 @@ var initialState = {
 
 const history = createMemoryHistory();
 const store = configureStore(initialState, history);
-const syncedHistory = syncHistoryWithStore(history, store);
 
 render(
   <Provider store={store}>
-    <Router history={syncedHistory} routes={routes} />
+    <ConnectedRouter history={history}>
+      <Switch>
+        <Route path="/" component={App} />
+      </Switch>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById("root")
 );

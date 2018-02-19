@@ -65,7 +65,7 @@ class ValidateAddress extends React.Component {
     }
 
     return (
-      <div className="tab-card message message-verify">
+      <div className="message message-verify">
         <ValidateAddressForm {...{onAddressChange, onAddressBlur, address, result}}/>
       </div>
     );

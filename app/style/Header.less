@@ -1,8 +1,8 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.small-balance {
-  align-self: flex-start;
+.header-small-balance {
+  display: inline;
   font-size: 13px;
   font-weight: 600;
   line-height: 20px;
@@ -10,8 +10,7 @@
   color: #0c1e3e;
   background-color: #d4f0fd;
   margin-left: 5px;
-  margin-right: auto;
-  margin-top: -4px;
+  margin-right: 5px;
   border-radius: 5px;
 }
 
@@ -42,26 +41,8 @@
   font-family: Inconsolata, monospace;
 }
 
-.header {
-  position: relative;
-  margin-right: 60px;
-  margin-left: 100px;
-  margin-top: 53px;
-  padding-bottom: 30px;
-  background-color: #fff;
-  height: 77px;
-}
-
 .header-top {
   text-align: center;
-}
-
-.tabbedheader-top {
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  margin-top: -44px;
-  width: 100%;
 }
 
 .header-title-overview {
@@ -74,67 +55,6 @@
   height: 54px;
   padding-top: 5px;
   font-size: 53px;
-}
-
-.tabbedheader-title {
-  margin-bottom: 14px;
-  color: #596d81;
-  font-size: 27px;
-}
-
-.tabbedheader-icon {
-  position: absolute;
-  top: -4px;
-  left: -40px;
-}
-
-.tabbedheader-content {
-  height: 43px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.tabbedheader-description {
-  align-self: flex-start;
-  margin-top: -3px;
-  white-space: pre-wrap;
-  color: #48566e;
-  font-size: 13px;
-  line-height: 17px;
-}
-
-.tabbedheader-ref {
-  box-sizing: border-box;
-  display: inline-block;
-  margin-left: 4px;
-  margin-bottom: 2px;
-}
-
-.tabbedheader-tab {
-  vertical-align: middle;
-  text-align: center;
-  margin: 0px 11px 3px 11px;
-  text-decoration: none;
-  color: #9ca8b5;
-  transition: color 0.13s ease-in-out;
-}
-
-.tabbedheader-tab:hover,
-.tabbedheader-tab-active {
-  color: #0c1e3e;
-}
-
-.tabbedheader-tabs {
-  position: absolute;
-  bottom: 0;
-}
-
-.tabbedheader-active-tab-caret {
-  height: 5px;
-  width: 15px;
-  background-color: #2ed8a3;
-  position: relative;
 }
 
 .header-icon-mixin {
