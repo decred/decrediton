@@ -98,6 +98,7 @@ The first time you run with testnet, you may get a "Failed to connect wallet by 
 ```bash
 "network": "testnet",
 ```
+test change
 
 ### Windows
 
