@@ -3,8 +3,6 @@ import HomePage from "./Page";
 import { service, home } from "connectors";
 import { substruct } from "fp";
 
-const TRANSACTIONS_LENGTH_AT_HOME = 5;
-
 @autobind
 class Home extends React.Component{
   constructor(props) {
@@ -13,21 +11,7 @@ class Home extends React.Component{
   }
 
   componentDidMount() {
-    const { transactions, noMoreTransactions } = this.props;
-    if(noMoreTransactions)
-      return;
-    if(transactions.length < TRANSACTIONS_LENGTH_AT_HOME) {
-      this.props.getTransactions();
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { transactions, noMoreTransactions } = nextProps;
-    if(noMoreTransactions)
-      return;
-    if(transactions.length < TRANSACTIONS_LENGTH_AT_HOME) {
-      this.props.getTransactions();
-    }
+    console.log(this.props) 
   }
 
   getInitialState() {

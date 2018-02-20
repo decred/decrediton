@@ -477,6 +477,16 @@ const allTickets = createSelector(
   [ ticketNormalizer, get([ "grpc", "tickets" ]) ],
   (normalizer, tickets) => tickets.map(normalizer).sort(ticketSorter)
 );
+
+export const homeTickets = createSelector(
+  [ homeHistoryTickets, allTickets ],
+  ( homeTickets, tickets ) => {
+    return homeTickets.map( (ticket,index) => {
+      return tickets[index];
+    });
+  }
+);
+
 export const ticketsPerStatus = createSelector(
   [ allTickets ],
   tickets => tickets.reduce(
