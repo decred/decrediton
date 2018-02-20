@@ -15,3 +15,12 @@ export function endOfDay(dt) {
   res.setSeconds(-1);
   return res;
 }
+
+// calculate the difference between two timestamps and return an int
+// represent number of days
+export function diffBetweenTwoTs(date1, date2) {
+  const oneDay = 24*60*60*1000;
+  const firstDate = tsToDate(date1);
+  const secondDate = tsToDate(date2);
+  return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+}
