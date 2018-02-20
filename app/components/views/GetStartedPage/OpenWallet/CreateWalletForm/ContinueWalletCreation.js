@@ -13,7 +13,7 @@ const ContinueWalletCreation = ({
   createWalletExisting,
   ...props
 }) => (
-  <div className="page-content new-seed">
+  <div className="getstarted content">
     {createWalletExisting ?
       <ExistingSeed {...props} onChange={setSeed} /> :
       <ConfirmSeed  {...props} onChange={setSeed} /> }

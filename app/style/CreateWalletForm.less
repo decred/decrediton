@@ -96,7 +96,7 @@
 
 .create-wallet-label {
   float: left;
-  color: #e7eaed;
+  color: #48566e;
   font-size: 19px;
   letter-spacing: -0.1px;
   height: 41px;
@@ -183,19 +183,7 @@
   height: 202px;
 }
 
-.inverted-colors {
-  .confirm-seed-word .Select-control,
-  .confirm-seed-word .Select-control:hover:not(:disabled) {
-    color: #0c1e3e;
-  }
-
-  .confirm-seed-word .is-disabled .Select-control:hover {
-    color: #8997a5;
-    border: 2px solid #000;
-  }
-}
-
-.confirm-seed-word {
+.seedArea {
   float: left;
   margin: 5px;
   width: 100px;
@@ -230,31 +218,37 @@
 
   .Select-control {
     padding-left: 2px;
-    border-radius: 5px;
-    border: 2px solid #000;
+    border-radius: 3px;
+    border: 1px solid #d1d5db;
     background-color: #fff;
+    color: #48566e;
+  }
+
+  .Select-control:hover,
+  .Select-control:focus {
+    border: 1px solid #959dac;
   }
 }
 
-.confirm-seed-word.match {
+.seedWord.match {
   .Select-control {
-    border: 2px solid #2ed8a3;
+    border: 1px solid #2ed8a3;
   }
 
   .Select-control:hover {
-    border: 2px solid #2ed8a3;
+    border: 1px solid #2ed8a3;
   }
 }
 
-.confirm-seed-word.no-match {
+.seedWord.no-match {
   .Select-control {
     color: #0c1e3e;
-    border: 2px solid red;
+    border: 1px solid red;
   }
 
   .Select-control:hover {
     color: #0c1e3e;
-    border: 2px solid red;
+    border: 1px solid red;
   }
 }
 

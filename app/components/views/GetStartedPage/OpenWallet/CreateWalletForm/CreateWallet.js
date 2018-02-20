@@ -48,9 +48,9 @@ const CreateWallet = ({
         </div>
       </div>
       <div className="seedArea">
-        {mnemonic.split(" ").map(word => {
+        {mnemonic.split(" ").map((word, i) => {
           return (
-            <div className="seedWord">
+            <div key={i} className="seedWord">
               {word}
             </div>
           );

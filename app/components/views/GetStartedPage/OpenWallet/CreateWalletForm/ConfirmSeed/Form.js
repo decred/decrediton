@@ -47,13 +47,14 @@ class ConfirmSeedForm extends React.Component{
           </div>
         </div>
         <div className="create-wallet-field">
-          <div className="input-form">
+          <div className="seedArea">
             <div className="input-form-error">
               {seedError && seedError}
             </div>
             {seedWords.map((seedWord) => {
-              const className = "confirm-seed-word " + (!seedWord.show ? seedWord.match ? "match" : "no-match" : "");
-              return (
+              const className = "seedWord " + (!seedWord.show ? seedWord.match ? "match" : "no-match" : "");
+              return ( seedWord.show ?
+                <div key={seedWord.index} className="seedWord">{seedWord.word}</div> :
                 <SingleSeedWordEntry
                   className={className}
                   disabled={seedWord.show}
