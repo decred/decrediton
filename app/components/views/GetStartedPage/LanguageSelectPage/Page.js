@@ -5,7 +5,7 @@ import { FormattedMessage as T } from "react-intl";
 
 const LanguageSelectPage = ({ availableLanguages, selectedLang, onChangeSelectedLang, onSelectLang }) => {
   return (
-    <Aux>
+    <div className="page-body getstarted">
       <div className="getstarted-logo">
       </div>
       <div className="getstarted-new">
@@ -28,7 +28,7 @@ const LanguageSelectPage = ({ availableLanguages, selectedLang, onChangeSelected
           </KeyBlueButton>
         </div>
       </div>
-    </Aux>
+    </div>
   );
 };
 export default LanguageSelectPage;
