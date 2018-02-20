@@ -1,6 +1,6 @@
 import { KeyBlueButton } from "buttons";
 import "style/LanguageSelect.less";
-import { SettingsInput } from "inputs";
+import { LanguageSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
 
 const LanguageSelectPage = ({ availableLanguages, selectedLang, onChangeSelectedLang, onSelectLang }) => {
@@ -16,7 +16,7 @@ const LanguageSelectPage = ({ availableLanguages, selectedLang, onChangeSelected
           <T id="selectLang.titleSub" m={"Choose your language"}/>
         </div>
         <div className="language-select-toolbar">
-          <SettingsInput
+          <LanguageSelect
             className="language-select-input"
             value={selectedLang}
             onChange={onChangeSelectedLang}

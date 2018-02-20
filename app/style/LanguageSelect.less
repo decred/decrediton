@@ -35,10 +35,11 @@
   height: 29px;
   display: flex;
 
-  .language-select-input {
-    width: 130px;
-    padding-right: 10px;
+  .language-label {
+    margin-top: 5px;
+  }
 
+  .language-select-input {
     .Select-control {
       border: 1px solid #e7eaed;
       border-radius: 5px;
@@ -50,20 +51,45 @@
     .Select-control:hover {
       border: 1px solid #959dac;
     }
-
-    /*
-    .Select-value-label {
-      background-image: @flag-en;
-      background-repeat: no-repeat;
-      background-size: 20px;
-      width: 20px;
-      margin-left: 10px;
-    }
-    */
   }
 
   .language-select-button {
     padding: 10px 16px 10px 16px;
+  }
+}
+
+.language-select-input {
+  width: 200px;
+  margin-right: 0.5em;
+}
+
+.language-label {
+  display: flex;
+
+  .flag {
+    flex-grow: 2;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    margin-top: 2px;
+  }
+
+  .flag.en {
+    background-image: @flag-en;
+  }
+
+  .flag.pt-BR {
+    background-image: @flag-ptbr;
+  }
+
+  .name {
+    flex-grow: 4;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
 
