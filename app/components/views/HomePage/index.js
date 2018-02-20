@@ -10,10 +10,6 @@ class Home extends React.Component{
     this.state = this.getInitialState();
   }
 
-  componentDidMount() {
-    console.log(this.props) 
-  }
-
   getInitialState() {
     return {
       onCancelPassphraseRequest: null,

@@ -3,7 +3,7 @@ import "style/TxHistory.less";
 import { tsToDate } from "helpers/dateFormat";
 import { Tooltip } from "shared";
 
-const StatusSmall = ({ pending, txTimestamp }) => (
+const StatusSmall = ({ pending, txTimestamp, daysToVote }) => (
   <Aux>
     {!pending ? (
       <div className="transaction-time-date-spacer">
@@ -17,6 +17,7 @@ const StatusSmall = ({ pending, txTimestamp }) => (
             time: <FormattedTime value={tsToDate(txTimestamp)} hour12={false}/>,
           }}
         />
+        {!isNaN(daysToVote) && <div>{daysToVote}</div>}
       </div>) : (
       <Tooltip text={<T id="txHistory.Pending" m="Pending"/>}>
         <div className="pending-overview-details">

@@ -1,7 +1,7 @@
 import Row from "./Row";
 import { createElement as h } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { diffBetweenTwoTs } from "helpers/dateFormat";
+import { Balance } from "shared";
 
 const messageByType = { // TODO: use constants instead of string
   "Ticket": <T id="transaction.type.ticket" m="Ticket" />,
@@ -10,18 +10,20 @@ const messageByType = { // TODO: use constants instead of string
 };
 
 const StakeTxRow = ({ txType, ...props }) => {
-  const { overview, ticketPrice, ticketReward, enterTimestamp, leaveTimestamp } = props;
-  const daysToVote = diffBetweenTwoTs(leaveTimestamp, enterTimestamp);
+  const { overview, ticketPrice, ticketReward } = props;
 
   return overview ?
     (
       <Row {...{ className: txType, ...props }}>
-        <div className="transaction-info">
-          <span>{ticketPrice}</span>
-          <span>{ticketReward}</span>
-          <span>{daysToVote}</span>
-          <span className="icon" />
-          <span className="transaction-stake-type">{messageByType[txType] || "(unknown type)"}</span>
+        <div className="transaction-info transaction-stake-info-overview">
+          <div><span className="icon" /></div>
+          <div>
+            <span className="transaction-stake-type">{messageByType[txType] || "(unknown type)"}</span>
+            <div className="transaction-info-price-reward">
+              <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice}/>
+              <Balance classNameWrapper="stake-transaction-ticket-reward" amount={ticketReward}/>
+            </div>
+          </div>
         </div>
       </Row>
     ) : (
