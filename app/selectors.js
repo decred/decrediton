@@ -360,14 +360,6 @@ export const ticketDataChart = createSelector(
   }
 );
 
-export const viewableTransactions = createSelector(
-  [ transactions, homeHistoryTransactions, homeHistoryTickets ],
-  (transactions, homeTransactions, homeHistoryTickets) => [ ...transactions, ...homeTransactions, ...homeHistoryTickets ]
-);
-export const viewedTransaction = createSelector(
-  [ viewableTransactions, (state, { match: { params: { txHash } } }) => txHash ],
-  (transactions, txHash) => find({ txHash }, transactions)
-);
 export const decodedTransactions = get([ "grpc", "decodedTransactions" ]);
 
 export const viewedDecodedTransaction = createSelector(
@@ -492,6 +484,15 @@ export const homeHistoryTickets = createSelector(
       return ticket;
     });
   }
+);
+
+export const viewableTransactions = createSelector(
+  [ transactions, homeHistoryTransactions, homeHistoryTickets ],
+  (transactions, homeTransactions, homeHistoryTickets) => [ ...transactions, ...homeTransactions, ...homeHistoryTickets ]
+);
+export const viewedTransaction = createSelector(
+  [ viewableTransactions, (state, { match: { params: { txHash } } }) => txHash ],
+  (transactions, txHash) => find({ txHash }, transactions)
 );
 
 export const ticketsPerStatus = createSelector(
