@@ -1,7 +1,7 @@
 import Page from "./Page";
 import { WalletSelectionHeader, WalletSelectionBody } from "./WalletSelection";
 import { CheckWalletStateHeader, CheckWalletStateBody } from "./CheckWalletState";
-import { OpenWalletHeader, OpenWalletBody } from "./OpenWallet";
+import OpenWallet from "./OpenWallet";
 import { StartRPCHeader, StartRPCBody } from "./StartRPC";
 import { DiscoverAddressesHeader, DiscoverAddressesBody } from "./DiscoverAddresses";
 import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHeaders";
@@ -84,9 +84,7 @@ class GetStartedPage extends React.Component {
         Body = CheckWalletStateBody;
         break;
       case 2:
-        Header = OpenWalletHeader;
-        Body = OpenWalletBody;
-        break;
+        return <OpenWallet {...props} />;
       default:
         if (isAdvancedDaemon && openForm && !remoteAppdataError) {
           Header = AdvancedStartupHeader;

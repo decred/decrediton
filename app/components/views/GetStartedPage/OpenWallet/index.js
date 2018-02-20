@@ -1,39 +1,8 @@
-import { OpenWalletDecryptFormHeader, OpenWalletDecryptFormBody } from "./DecryptForm";
-import { OpenWalletCreateFormHeader, OpenWalletCreateFormBody } from "./CreateForm";
+import { OpenWalletDecryptFormBody } from "./DecryptForm";
+import { OpenWalletCreateFormBody } from "./CreateForm";
 
 @autobind
-class OpenWalletHeader extends React.Component {
-  render() {
-    const { hasExistingWallet } = this.props;
-    const { onToggleNewExisting } = this;
-
-    return hasExistingWallet ? (
-      <OpenWalletDecryptFormHeader
-        {...{
-          ...this.props
-        }}
-      />
-    ) : (
-      <OpenWalletCreateFormHeader
-        {...{
-          ...this.props,
-          onToggleNewExisting
-        }}
-      />
-    );
-  }
-
-  onToggleNewExisting(side) {
-    if (side == "right") {
-      this.props.onSetCreateWalletFromExisting(true);
-    } else if (side == "left") {
-      this.props.onSetCreateWalletFromExisting(false);
-    }
-  }
-}
-
-@autobind
-class OpenWalletBody extends React.Component {
+class OpenWallet extends React.Component {
   constructor(props)  {
     super(props);
     this.state = this.getInitialState();
@@ -58,24 +27,26 @@ class OpenWalletBody extends React.Component {
       onOpenWallet
     } = this;
 
-    return hasExistingWallet ? (
-      <OpenWalletDecryptFormBody
-        {...{
-          ...this.props,
-          publicPassPhrase,
-          hasAttemptedOpen,
-          onSetPublicPassPhrase,
-          onOpenWallet,
-          onKeyDown
-        }}
-      />
-    ) : (
-      <OpenWalletCreateFormBody
-        {...{
-          ...this.props
-        }}
-      />
-    );
+    return (
+      <div className="page-body getstarted">
+        {hasExistingWallet ?
+          <OpenWalletDecryptFormBody
+            {...{
+              ...this.props,
+              publicPassPhrase,
+              hasAttemptedOpen,
+              onSetPublicPassPhrase,
+              onOpenWallet,
+              onKeyDown
+            }}
+          /> :
+          <OpenWalletCreateFormBody
+            {...{
+              ...this.props
+            }}
+          />
+        }
+      </div>);
   }
 
   resetState() {
@@ -104,4 +75,4 @@ class OpenWalletBody extends React.Component {
 
 }
 
-export { OpenWalletHeader, OpenWalletBody };
+export default OpenWallet;
