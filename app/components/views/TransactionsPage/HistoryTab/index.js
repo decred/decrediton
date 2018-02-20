@@ -107,11 +107,6 @@ class History extends React.Component {
     this.setState({ searchText });
   }
 
-  onChangeSearchText(searchText) {
-    this.onChangeFilter({ search: searchText });
-    this.setState({ searchText });
-  }
-
   selectedTxTypeFromFilter(filter) {
     if (filter.types.length === 0) return "all";
     const types = this.getTxTypes();
