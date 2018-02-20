@@ -1,7 +1,7 @@
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { SeedCopyConfirmModal } from "modals";
-import { UnselectableText } from "shared";
+import { Tooltip } from "shared";
 import "style/CreateWalletForm.less";
 
 const CreateWallet = ({
@@ -47,13 +47,23 @@ const CreateWallet = ({
           </p>
         </div>
       </div>
-      <div className="seed">
-        <UnselectableText>{mnemonic}</UnselectableText>
-        <a className="copy-to-clipboard-icon" onClick={handleCopySeed}></a>
+      <div className="seedArea">
+        {mnemonic.split(" ").map(word => {
+          return (
+            <div className="seedWord">
+              {word}
+            </div>
+          );
+        })}
+        <div className="copy">
+          <Tooltip text={ <T id="createWallet.copy" m="Copy Seed" /> }><a className="copy-to-clipboard-icon" onClick={handleCopySeed}/></Tooltip>
+        </div>
       </div>
-      <KeyBlueButton className="wallet-key-blue-button" onClick={createWalletConfirmNewSeed}>
-        <T id="createWallet.continueBtn" m="Continue" />
-      </KeyBlueButton>
+      <div className="toolbar">
+        <KeyBlueButton className="wallet-key-blue-button" onClick={createWalletConfirmNewSeed}>
+          <T id="createWallet.continueBtn" m="Continue" />
+        </KeyBlueButton>
+      </div>
     </div>
     <SeedCopyConfirmModal
       show={showCopySeedConfirm}
