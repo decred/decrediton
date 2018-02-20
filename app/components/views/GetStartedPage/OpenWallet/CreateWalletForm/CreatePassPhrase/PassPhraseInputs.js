@@ -11,13 +11,13 @@ const messages = defineMessages({
   },
   verifyPassphrasePlaceholder: {
     id: "createWallet.verifyPassphrasePlaceholder",
-    defaultMessage: "Confirm Private Passphrase"
+    defaultMessage: "Confirm"
   }
 });
 
 const PassPhraseInputs = ({
-  passPhraseLabel = <T id="createWallet.passhraseInput.label" m="Create wallet private passphrase" />,
-  passPhraseVerificationLabel = <T id="createWallet.passphraseInput.verifyLabel" m="Confirm private passphrase" />,
+  passPhraseLabel = <T id="createWallet.passhraseInput.label" m="Private passphrase" />,
+  passPhraseVerificationLabel = <T id="createWallet.passphraseInput.verifyLabel" m="Confirm" />,
   blankPassPhraseError = <T id="createWallet.passphraseInput.errors.noPassPhrase" m="*Please enter your private passphrase" />,
   passPhraseVerificationError = <T id="createWallet.passphraseInput.errors.noMatch" m="*Passwords do not match" />,
   passPhrase,
@@ -30,12 +30,13 @@ const PassPhraseInputs = ({
   onKeyDown
 }) => (
   <Aux>
-    <div className="content-new-seed-priv-pass">
-      <div className="create-wallet-label">{passPhraseLabel}:
-      <InfoModalButton
-        modalTitle={<h1><T id="confirmSeed.passphraseInformation" m="Private passphrase information" /></h1>}
-        modalContent={<PassphraseInfoModalContent />}
-      />
+    <div className="confirm-seed-row passphrase">
+      <div className="confirm-seed-label-text">
+        <InfoModalButton
+          modalTitle={<h1><T id="confirmSeed.passphraseInformation" m="Private passphrase information" /></h1>}
+          modalContent={<PassphraseInfoModalContent />}
+        />
+        {passPhraseLabel}
       </div>
       <div className="create-wallet-field">
         <div className="input-form">
@@ -52,8 +53,8 @@ const PassPhraseInputs = ({
         {isBlank ? <div className="input-form-error">{blankPassPhraseError}</div> : null}
       </div>
     </div>
-    <div className="content-new-seed-priv-pass">
-      <div className="create-wallet-label">{passPhraseVerificationLabel}:</div>
+    <div className="confirm-seed-row passphrase">
+      <div className="confirm-seed-label-text">{passPhraseVerificationLabel}</div>
       <div className="create-wallet-field">
         <div className="input-form">
           <form className="input-form">

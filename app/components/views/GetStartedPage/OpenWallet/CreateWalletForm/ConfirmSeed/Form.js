@@ -34,23 +34,19 @@ class ConfirmSeedForm extends React.Component{
   render(){
     const { seedWords, seedError, onChangeSeedWord } = this.props;
     return (
-      <div className="confirm-seed">
-        <div className="create-wallet-header">
-          <div className="create-wallet-label">
-            <div className="confirm-seed-label-text">
-              <T id="confirmSeed.label" m="Confirm Seed" />:
-              <InfoModalButton
-                modalTitle={<h1><T id="confirmSeed.seedInformation" m="Seed information" /></h1>    }
-                modalContent={<SeedInfoModalContent />}
-              />
-            </div>
-          </div>
+      <Aux>
+        <div className="content-title">
+          <T id="createWallet.title" m={"Create a new wallet"}/>
         </div>
-        <div className="create-wallet-field">
+        <div className="confirm-seed-row seed">
+          <div className="confirm-seed-label-text seed">
+            <InfoModalButton
+              modalTitle={<h1><T id="confirmSeed.seedInformation" m="Seed information" /></h1>    }
+              modalContent={<SeedInfoModalContent />}
+            />
+            <T id="confirmSeed.label" m="Confirm Seed" />
+          </div>
           <div className="seedArea">
-            <div className="input-form-error">
-              {seedError && seedError}
-            </div>
             {seedWords.map((seedWord) => {
               const className = "seedWord " + (!seedWord.show ? seedWord.match ? "match" : "no-match" : "");
               return ( seedWord.show ?
@@ -64,9 +60,12 @@ class ConfirmSeedForm extends React.Component{
                   key={seedWord.index}
                 />);
             })}
+            <div className="input-form-error">
+              {seedError && seedError}
+            </div>
           </div>
         </div>
-      </div>
+      </Aux>
     );
   }
 }
