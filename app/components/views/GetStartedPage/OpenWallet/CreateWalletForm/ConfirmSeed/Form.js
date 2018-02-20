@@ -4,70 +4,37 @@ import { InfoModalButton } from "buttons";
 import SingleSeedWordEntry from "./SingleSeedWordEntry";
 import { SeedInfoModalContent } from "modals";
 
-class ConfirmSeedForm extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {
-
-    };
-  }
-
-  handleOnPaste = (e) => {
-    e.preventDefault();
-    this.setState({
-      showPasteWarning : true
-    });
-  }
-
-  mountSeedErrors = () => {
-    const errors = [];
-    if(this.props.seedError) {
-      errors.push(
-        <div key={this.props.seedError}>
-          {this.props.seedError}
+export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) =>
+  (
+    <Aux>
+      <div className="content-title">
+        <T id="createWallet.title" m={"Create a new wallet"}/>
+      </div>
+      <div className="confirm-seed-row seed">
+        <div className="confirm-seed-label-text seed">
+          <InfoModalButton
+            modalTitle={<h1><T id="confirmSeed.seedInformation" m="Seed information" /></h1>    }
+            modalContent={<SeedInfoModalContent />}
+          />
+          <T id="confirmSeed.label" m="Confirm Seed" />
         </div>
-      );
-    }
-    return errors;
-  }
-
-  render(){
-    const { seedWords, seedError, onChangeSeedWord } = this.props;
-    return (
-      <Aux>
-        <div className="content-title">
-          <T id="createWallet.title" m={"Create a new wallet"}/>
+        <div className="seedArea">
+          {seedWords.map((seedWord) => {
+            const className = "seedWord " + (!seedWord.show ? seedWord.match ? "match" : "no-match" : "");
+            return ( seedWord.show ?
+              <div key={seedWord.index} className="seedWord">{seedWord.word}</div> :
+              <SingleSeedWordEntry
+                className={className}
+                disabled={seedWord.show}
+                onChange={onChangeSeedWord}
+                seedWord={seedWord}
+                value={{ name: seedWord.word }}
+                key={seedWord.index}
+              />);
+          })}
         </div>
-        <div className="confirm-seed-row seed">
-          <div className="confirm-seed-label-text seed">
-            <InfoModalButton
-              modalTitle={<h1><T id="confirmSeed.seedInformation" m="Seed information" /></h1>    }
-              modalContent={<SeedInfoModalContent />}
-            />
-            <T id="confirmSeed.label" m="Confirm Seed" />
-          </div>
-          <div className="seedArea">
-            {seedWords.map((seedWord) => {
-              const className = "seedWord " + (!seedWord.show ? seedWord.match ? "match" : "no-match" : "");
-              return ( seedWord.show ?
-                <div key={seedWord.index} className="seedWord">{seedWord.word}</div> :
-                <SingleSeedWordEntry
-                  className={className}
-                  disabled={seedWord.show}
-                  onChange={onChangeSeedWord}
-                  seedWord={seedWord}
-                  value={{ name: seedWord.word }}
-                  key={seedWord.index}
-                />);
-            })}
-            <div className="input-form-error">
-              {seedError && seedError}
-            </div>
-          </div>
-        </div>
-      </Aux>
-    );
-  }
-}
+      </div>
+    </Aux>
+  );
 
 export default ConfirmSeedForm;

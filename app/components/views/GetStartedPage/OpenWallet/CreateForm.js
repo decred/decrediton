@@ -42,9 +42,10 @@ const OpenWalletCreateFormHeader = ({
 );
 
 const OpenWalletCreateFormBody = ({
-  isInputRequest
+  isInputRequest,
+  onReturnToNewSeed
 }) => (
-  isInputRequest ? <CreateWalletForm /> : null
+  isInputRequest ? <CreateWalletForm {...{ onReturnToNewSeed } }/> : null
 );
 
 export { OpenWalletCreateFormHeader, OpenWalletCreateFormBody };

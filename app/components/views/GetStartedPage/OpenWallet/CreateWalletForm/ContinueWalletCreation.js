@@ -2,7 +2,7 @@ import ExistingSeed from "./ExistingSeed";
 import ConfirmSeed from "./ConfirmSeed";
 import CreatePassPhrase from "./CreatePassPhrase";
 import { FormattedMessage as T } from "react-intl";
-import { KeyBlueButton } from "buttons";
+import { KeyBlueButton, InvisibleButton } from "buttons";
 import "style/CreateWalletForm.less";
 
 const ContinueWalletCreation = ({
@@ -11,6 +11,7 @@ const ContinueWalletCreation = ({
   setPassPhrase,
   onCreateWallet,
   createWalletExisting,
+  onReturnToNewSeed,
   ...props
 }) => (
   <div className="getstarted content">
@@ -29,6 +30,10 @@ const ContinueWalletCreation = ({
         >
           <T id="createWallet.createWalletBtn" m="Create Wallet" />
         </KeyBlueButton>
+        <InvisibleButton
+          className="go-back-button"
+          onClick={onReturnToNewSeed}
+        ><T id="getStarted.backBtn" m="Cancel" /> </InvisibleButton>
       </div>
     </div>
   </div>

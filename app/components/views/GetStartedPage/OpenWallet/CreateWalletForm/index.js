@@ -46,12 +46,12 @@ class CreateWalletForm extends React.Component {
   onCancelCopySeedConfirm() {
     this.setState({ showCopySeedConfirm: false });
   }
-
   render() {
     const {
       confirmNewSeed,
       createWalletExisting,
-      createWalletConfirmNewSeed
+      createWalletConfirmNewSeed,
+      onReturnToNewSeed
     } = this.props;
     const {
       setSeed,
@@ -74,7 +74,9 @@ class CreateWalletForm extends React.Component {
             setPassPhrase,
             onCreateWallet,
             decode,
-            isValid
+            isValid,
+            onReturnToNewSeed
+
           }}
         />
       ) : (
