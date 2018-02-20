@@ -27,7 +27,7 @@ const StandardPassphraseModal = (props) => {
     />;
 
   return (
-    <Modal className="passphrase-modal" {...{show}}>
+    <Modal className="passphrase-modal" {...{ show }}>
       <div className="passphrase-modal-header">
         <div className="passphrase-modal-header-title">
           {modalTitle}

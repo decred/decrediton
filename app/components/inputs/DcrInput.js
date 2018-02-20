@@ -13,8 +13,8 @@ import balanceConnector from "connectors/balance";
  * Whenever possible, use the DcrInput component, as it is more flexible and
  * already manages the underlying input value in atoms.
  */
-export const FixedDcrInput = ({currencyDisplay, ...props}) =>
-  <FloatInput {...{...props, unit: currencyDisplay, maxFracDigits: 8}} />;
+export const FixedDcrInput = ({ currencyDisplay, ...props }) =>
+  <FloatInput {...{ ...props, unit: currencyDisplay, maxFracDigits: 8 }} />;
 
 /**
  * DcrInput provides a way to receive decred amount inputs. Instead of the usual
@@ -31,7 +31,7 @@ class DcrInput extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {value: this.amountToDisplayStr(props.amount)};
+    this.state = { value: this.amountToDisplayStr(props.amount) };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,7 +41,7 @@ class DcrInput extends React.Component {
     }
 
     if (nextProps.amount !== this.props.amount) {
-      this.setState({value: this.amountToDisplayStr(nextProps.amount)});
+      this.setState({ value: this.amountToDisplayStr(nextProps.amount) });
     }
   }
 
@@ -70,7 +70,7 @@ class DcrInput extends React.Component {
     }
 
     if (value !== this.state.value) {
-      this.setState({value}, () => this.changeAmount(value));
+      this.setState({ value }, () => this.changeAmount(value));
     }
   }
 

@@ -20,7 +20,7 @@ function transactionNtfnsData(response) {
       var currentBlockTimestamp = attachedBlocks[attachedBlocks.length-1].getTimestamp();
       var currentBlockHeight = attachedBlocks[attachedBlocks.length-1].getHeight();
       const { maturingBlockHeights } = getState().grpc;
-      dispatch({currentBlockHeight, currentBlockTimestamp, type: NEWBLOCKCONNECTED });
+      dispatch({ currentBlockHeight, currentBlockTimestamp, type: NEWBLOCKCONNECTED });
       setTimeout( () => {dispatch(getTicketPriceAttempt());}, 1000);
 
       const maturedHeights = Object.keys(maturingBlockHeights).filter(h => h <= currentBlockHeight);
@@ -74,7 +74,7 @@ export const accountNtfnsStart = () => (dispatch, getState) => {
   let accountNtfns = walletService.accountNotifications(request);
   dispatch({ accountNtfns, type: ACCOUNTNTFNS_START });
   accountNtfns.on("data", data => {
-    let account = {accountNumber: data.getAccountNumber(), accountName: data.getAccountName(), externalKeys: data.getExternalKeyCount(), internalKeys: data.getInternalKeyCount(), importedKeys: data.getImportedKeyCount()};
+    let account = { accountNumber: data.getAccountNumber(), accountName: data.getAccountName(), externalKeys: data.getExternalKeyCount(), internalKeys: data.getInternalKeyCount(), importedKeys: data.getImportedKeyCount() };
     dispatch(updateAccount(account));
   });
   accountNtfns.on("end", () => {

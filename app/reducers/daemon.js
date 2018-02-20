@@ -17,25 +17,25 @@ import {
 export default function version(state = {}, action) {
   switch (action.type) {
   case FINISH_TUTORIAL:
-    return {...state,
+    return { ...state,
       tutorial: false,
     };
   case DAEMONSTARTED:
-    return {...state,
+    return { ...state,
       daemonStarted: true,
       daemonAdvanced: false,
       daemonStopped: false,
       credentials: action.credentials,
     };
   case DAEMONSTARTED_REMOTE:
-    return {...state,
+    return { ...state,
       daemonStarted: true,
       daemonAdvanced: false,
       daemonStopped: false,
       credentials: action.credentials,
     };
   case DAEMONSTARTED_APPDATA:
-    return {...state,
+    return { ...state,
       daemonStarted: true,
       daemonAdvanced: false,
       daemonStopped: false,
@@ -43,22 +43,22 @@ export default function version(state = {}, action) {
       credentials: action.credentials,
     };
   case DAEMONSYNCING_START:
-    return {...state,
+    return { ...state,
       currentBlockCount: action.currentBlockCount,
       timeStart: action.timeStart,
       blockStart: action.blockStart,
     };
   case DAEMONSYNCING_PROGRESS:
-    return {...state,
+    return { ...state,
       currentBlockCount: action.currentBlockCount,
       timeLeftEstimate: action.timeLeftEstimate,
     };
   case DAEMONSYNCED:
-    return {...state,
+    return { ...state,
       daemonSynced: true,
     };
   case WALLETREADY:
-    return {...state,
+    return { ...state,
       selectCreateWalletInputRequest: false,
       walletReady: true,
       walletName: action.walletName,
@@ -66,24 +66,24 @@ export default function version(state = {}, action) {
       hiddenAccounts: action.hiddenAccounts,
     };
   case WALLETCREATED:
-    return {...state,
+    return { ...state,
       selectCreateWalletInputRequest: false,
     };
   case SHUTDOWN_REQUESTED:
-    return {...state,
+    return { ...state,
       shutdownRequested: true,
     };
   case DAEMONSTOPPED:
-    return {...state,
+    return { ...state,
       daemonStarted: false,
       daemonStopped: true,
     };
   case SET_CREDENTIALS_APPDATA_ERROR:
-    return {...state,
+    return { ...state,
       remoteAppdataError: true,
     };
   case AVAILABLE_WALLETS:
-    return {...state,
+    return { ...state,
       availableWallets: action.availableWallets
     };
   default:

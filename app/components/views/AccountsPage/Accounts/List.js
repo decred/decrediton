@@ -1,12 +1,25 @@
 import { FormattedMessage as T } from "react-intl";
-import { TabbedHeader } from "shared";
+import { StandalonePage, StandaloneHeader } from "layout";
 import AccountRow from "./AccountRow";
 import { DecredLoading } from "indicators";
 import { InfoModalButton, PassphraseModalButton } from "buttons";
 import { BalanceOverviewModalContent, AddAccountModal } from "modals";
 
+const AccountsListHeader = ({ onGetNextAccountAttempt }) =>
+  <StandaloneHeader
+    title={<T id="accounts.title" m="Accounts" />}
+    description={<T id="accounts.description" m={"Accounts allow you to keep separate records of your DCR funds.\nTransferring DCR across accounts will create a transaction on the blockchain."}/>}
+    iconClass="accounts"
+    actionButton={
+      <PassphraseModalButton
+        modalTitle={<T id="accounts.newAccountConfirmations" m="Create new account" />}
+        modalComponent={AddAccountModal}
+        onSubmit={onGetNextAccountAttempt}
+        buttonLabel={<T id="accounts.addNewButton" m="Add New" />}
+      />}
+  />;
+
 const AccountsList = ({
-  routes,
   accounts,
   isLoading,
   onGetNextAccountAttempt,
@@ -17,44 +30,31 @@ const AccountsList = ({
   onHideAccountDetails,
   accountNumDetailsShown,
 }) => (
-  <Aux>
-    <TabbedHeader {...{ routes }}>
-      <PassphraseModalButton
-        modalTitle={<T id="accounts.newAccountConfirmations" m="Create new account" />}
-        modalComponent={AddAccountModal}
-        className="content-send"
-        onSubmit={onGetNextAccountAttempt}
-        buttonLabel={<T id="accounts.addNewButton" m="Add New" />}
-      />
-    </TabbedHeader>
-    <div className="tabbed-page">
-      <div className="tab-content">
-        { isLoading ? <DecredLoading/> :
-          <div className="tab-card">
-            <div className="account-content-title-buttons-area">
-              <InfoModalButton
-                modalTitle={<h1><T id="accounts.balanceInfo" m="Balance Information" /></h1>}
-                modalContent={<BalanceOverviewModalContent />}
-              />
-            </div>
-            <div className="account-content-nest">
-              {accounts.map(account => (
-                <AccountRow
-                  key={account.accountName}
-                  account={account}
-                  accountNumDetailsShown={accountNumDetailsShown}
-                  renameAccount={onRenameAccount}
-                  hideAccount={onHideAccount}
-                  showAccount={onShowAccount}
-                  showAccountDetails={onShowAccountDetails}
-                  hideAccountDetails={onHideAccountDetails}
-                />
-              ))}
-            </div>
-          </div> }
-      </div>
-    </div>
-  </Aux>
+  <StandalonePage header={<AccountsListHeader {...{ onGetNextAccountAttempt }} />}>
+    { isLoading ? <DecredLoading/> :
+      <Aux>
+        <div className="account-content-title-buttons-area">
+          <InfoModalButton
+            modalTitle={<h1><T id="accounts.balanceInfo" m="Balance Information" /></h1>}
+            modalContent={<BalanceOverviewModalContent />}
+          />
+        </div>
+        <div className="account-content-nest">
+          {accounts.map(account => (
+            <AccountRow
+              key={account.accountName}
+              account={account}
+              accountNumDetailsShown={accountNumDetailsShown}
+              renameAccount={onRenameAccount}
+              hideAccount={onHideAccount}
+              showAccount={onShowAccount}
+              showAccountDetails={onShowAccountDetails}
+              hideAccountDetails={onHideAccountDetails}
+            />
+          ))}
+        </div>
+      </Aux> }
+  </StandalonePage>
 );
 
 AccountsList.propTypes = {

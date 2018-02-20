@@ -4,7 +4,7 @@ import "style/Layout.less";
 
 const Page = ({ Header, Body, ...props }) => {
   return (
-    <div className="page-view inverted-colors">
+    <div className="page-view inverted-colors get-started-view">
       <Header {...props} />
       <div className="page-content-fixed">
         <DecredLoading

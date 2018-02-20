@@ -46,10 +46,10 @@ class CreatePassPhrase extends React.Component {
     );
   }
   showPassphraseInformation() {
-    this.setState({isShowingPassphraseInformation: true});
+    this.setState({ isShowingPassphraseInformation: true });
   }
   hidePassphraseInformation() {
-    this.setState({isShowingPassphraseInformation: false});
+    this.setState({ isShowingPassphraseInformation: false });
   }
   isMatching() {
     return this.state.passPhrase === this.state.passPhraseVerification;

@@ -10,8 +10,8 @@ const propTypes = {
   onSubmit: PropTypes.func.isRequired
 };
 
-const ConfirmModal = ({modalTitle, modalContent, show, onCancelModal, onSubmit,
-  confirmLabel, danger}) => (
+const ConfirmModal = ({ modalTitle, modalContent, show, onCancelModal, onSubmit,
+  confirmLabel, danger }) => (
   <Modal className="confirm-modal" {...{ show }}>
     <div className="confirm-modal-header">
       <div className="confirm-modal-header-title">

@@ -30,20 +30,20 @@ class Tutorial extends React.Component{
   }
 
   onGoToStep(step) {
-    this.setState({tutorialStep: step});
+    this.setState({ tutorialStep: step });
   }
 
   onNextTutorialStep() {
     const { tutorialStep } = this.state;
     if (tutorialStep + 1 <= 4) {
-      this.setState({tutorialStep: tutorialStep + 1});
+      this.setState({ tutorialStep: tutorialStep + 1 });
     }
   }
 
   onPrevTutorialStep() {
     const { tutorialStep } = this.state;
     if (tutorialStep - 1 >= 0) {
-      this.setState({tutorialStep: tutorialStep - 1});
+      this.setState({ tutorialStep: tutorialStep - 1 });
     }
   }
 

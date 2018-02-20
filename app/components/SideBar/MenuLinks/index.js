@@ -1,42 +1,63 @@
-import { injectIntl } from "react-intl";
-import { spring, Motion } from "react-motion";
-import { withRouter } from "react-router";
-import { getPage } from "helpers";
 import MenuLink from "./MenuLink";
-import messages from "messages";
+import { routing } from "connectors";
+import { FormattedMessage as T } from "react-intl";
+import { spring, Motion } from "react-motion";
 import theme from "theme";
 
 const linkList = [
-  "home",
-  "accounts",
-  "transactions",
-  "tickets",
-  "security",
-  "settings",
-  "help"
+  { path: "/home/balance",       link: <T id="sidebar.link.home" m="Overview" /> },
+  { path: "/accounts",           link: <T id="sidebar.link.accounts" m="Accounts" /> },
+  { path: "/transactions/send",  link: <T id="sidebar.link.transactions" m="Transactions" /> },
+  { path: "/tickets/purchase",   link: <T id="sidebar.link.tickets" m="Tickets" /> },
+  { path: "/security/sign",      link: <T id="sidebar.link.security" m="Security" /> },
+  { path: "/settings",           link: <T id="sidebar.link.settings" m="Settings" /> },
+  { path: "/help/links",         link: <T id="sidebar.link.help" m="Help" /> }
 ];
 
 @autobind
 class MenuLinks extends React.Component {
-  constructor (props) { super(props); }
-  _nodes = new Map();
-  state = { top: 0 };
 
-  componentWillReceiveProps(nextProps) {
-    const activeLink = getPage(nextProps.routes);
-    const basePage = activeLink.split("/")[0];
-    const newTop = this._nodes.get(basePage).offsetTop;
-    this.setState({ top: spring(newTop, theme("springs.sideBar")) });
+  _nodes = new Map();
+  state = { top: 0, selectedTab: null };
+
+  constructor (props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    this.updateCaretPosition();
+  }
+
+  componentDidUpdate() {
+    const { location } = this.props;
+    const selectedTab = location.pathname;
+    if (this.state.selectedTab != selectedTab) {
+      this.updateCaretPosition();
+    }
+  }
+
+  updateCaretPosition() {
+    const { location } = this.props;
+    const selectedTab = location.pathname;
+    const caretPosition = this.neededCaretPosition(selectedTab);
+    if (caretPosition) this.setState({ ...caretPosition, selectedTab });
+  }
+
+  neededCaretPosition(path) {
+    const tabForRoute = this._nodes.get(path);
+    if (!tabForRoute) return null;
+    const newTop = tabForRoute.offsetTop;
+    return { top: spring(newTop, theme("springs.sideBar")) };
   }
 
   render () {
     return (
       <Aux>
-        { linkList.map(link =>
-          <MenuLink to={ "/" + link } linkRef={ ref => this._nodes.set(link, ref) } key={ link }>
-            { this.props.intl.formatMessage(messages["menu." + link]) }
+        { linkList.map(({ path, link }) =>
+          <MenuLink to={ path } linkRef={ ref => this._nodes.set(path, ref) } key={ path }>
+            {link}
           </MenuLink> )}
-        <Motion style={ this.state }>
+        <Motion style={ { top: this.state.top } }>
           { style => <div className="menu-caret" {...{ style }}/> }
         </Motion>
       </Aux>
@@ -44,4 +65,4 @@ class MenuLinks extends React.Component {
   }
 }
 
-export default withRouter(injectIntl(MenuLinks));
+export default routing(MenuLinks);

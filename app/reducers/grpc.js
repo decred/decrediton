@@ -10,7 +10,6 @@ import {
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
   GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED,  GETTRANSACTIONS_COMPLETE,
   NEW_TRANSACTIONS_RECEIVED, CHANGE_TRANSACTIONS_FILTER,
-  CLEAR_MOSTRECENTTRANSACTIONS,
   UPDATETIMESINCEBLOCK,
   GETTICKETS_ATTEMPT, GETTICKETS_FAILED, GETTICKETS_COMPLETE,
   GETAGENDASERVICE_ATTEMPT, GETAGENDASERVICE_FAILED, GETAGENDASERVICE_SUCCESS,
@@ -257,7 +256,7 @@ export default function grpc(state = {}, action) {
       getTransactionsRequestAttempt: false,
     };
   case GETTRANSACTIONS_COMPLETE:
-    var transactions = [...action.unminedTransactions, ...action.minedTransactions];
+    var transactions = [ ...action.unminedTransactions, ...action.minedTransactions ];
     return {
       ...state,
       minedTransactions: action.minedTransactions,
@@ -267,17 +266,21 @@ export default function grpc(state = {}, action) {
       lastTransaction: action.lastTransaction,
       getTransactionsRequestError: "",
       getTransactionsRequestAttempt: false,
-      recentTransactions: state.recentTransactions.length
-        ? state.recentTransactions
-        : transactions.slice(0, state.recentTransactionCount)
+      recentRegularTransactions: action.recentRegularTransactions
+        ? action.recentRegularTransactions
+        : state.recentRegularTransactions,
+      recentStakeTransactions: action.recentStakeTransactions
+        ? action.recentStakeTransactions
+        : state.recentStakeTransactions
     };
   case NEW_TRANSACTIONS_RECEIVED:
     return {
       ...state,
       minedTransactions: action.minedTransactions,
       unminedTransactions: action.unminedTransactions,
-      transactions: [...action.unminedTransactions, ...action.minedTransactions],
-      recentTransactions: action.recentTransactions,
+      transactions: [ ...action.unminedTransactions, ...action.minedTransactions ],
+      recentRegularTransactions: action.recentRegularTransactions,
+      recentStakeTransactions: action.recentStakeTransactions,
     };
   case CHANGE_TRANSACTIONS_FILTER:
     return {
@@ -288,11 +291,6 @@ export default function grpc(state = {}, action) {
       transactions: [],
       lastTransaction: null,
       noMoreTransactions: false
-    };
-  case CLEAR_MOSTRECENTTRANSACTIONS:
-    return {
-      ...state,
-      recentTransactions: [],
     };
   case UPDATETIMESINCEBLOCK:
     return {

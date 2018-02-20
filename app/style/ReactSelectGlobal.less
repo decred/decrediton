@@ -23,10 +23,12 @@
 
 .Select.is-disabled > .Select-control {
   background-color: @disabled-background-color;
+  color: @disabled-color;
 }
 
 .Select.is-disabled > .Select-control:hover {
   box-shadow: none;
+  color: @disabled-color;
 }
 
 .Select.is-disabled .Select-arrow-zone {
@@ -53,22 +55,14 @@
   transition: all @input-transition-time @input-timing-function;
 }
 
-.Select-control:hover:not(:disabled) {
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
-  color: @input-color-hovered;
-  border-bottom: 1px solid @stroke-color-hovered;
-}
-
 .is-open .Select-control .Select-input:focus {
   outline: none;
   color: @input-color-focused;
-  border-bottom: 1px solid @stroke-color-focused;
 }
 
 .is-searchable.is-open > .Select-control {
   cursor: text;
   color: @input-color-focused;
-  border-bottom: 1px solid @stroke-color-hovered;
 }
 
 .is-open {
@@ -217,6 +211,12 @@
   transition: all @input-transition-time @input-timing-function;
 }
 
+.Select-control:hover:not(:disabled) {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  color: @input-color-hovered;
+  border-bottom: 1px solid @stroke-color-hovered;
+}
+
 .Select-control:hover:not(:disabled) .Select-arrow {
   border-top-color: @stroke-color-hovered;
 }
@@ -299,20 +299,8 @@
   border-bottom-left-radius: 4px;
 }
 
-.Select-option.is-selected {
-  //background-color: #f5faff;
-
-  /* Fallback color for IE 8 */
-  //background-color: rgba(0, 126, 255, 0.04);
-  //color: #333;
-}
-
 .Select-option.is-focused {
   background-color: @background-hovered;
-
-  /* Fallback color for IE 8 */
-  //background-color: rgba(0, 126, 255, 0.08);
-  //color: #333;
 }
 
 .Select-option.is-disabled {

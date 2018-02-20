@@ -6,8 +6,8 @@ import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, sto
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
-import { showSidebarMenu } from "./SidebarActions";
-import { push as pushHistory } from "react-router-redux";
+import { showSidebarMenu, showSidebar } from "./SidebarActions";
+import { push as pushHistory, goBack } from "react-router-redux";
 import { getWalletCfg } from "../config.js";
 import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";
@@ -34,6 +34,7 @@ function getWalletServiceSuccess(walletService) {
 
     var goHomeCb = () => {
       setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);
+      setTimeout(() => { dispatch(showSidebar()); }, 1000);
       setTimeout(() => { dispatch(showSidebarMenu()); }, 1000);
     };
 
@@ -57,20 +58,22 @@ export const GETSTARTUPWALLETINFO_SUCCESS = "GETSTARTUPWALLETINFO_SUCCESS";
 export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
 
 export const getStartupWalletInfo = () => (dispatch) => {
-  dispatch({type: GETSTARTUPWALLETINFO_ATTEMPT});
+  dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
   setTimeout( () => { dispatch(getStakeInfoAttempt()); }, 1000);
   setTimeout( () => { dispatch(getTicketsInfoAttempt()); }, 1000);
   return new Promise((resolve, reject) => {
     setTimeout( async () => {
       try {
         await dispatch(getAccountsAttempt(true));
+        await dispatch(getMostRecentRegularTransactions());
+        await dispatch(getMostRecentStakeTransactions());
         await dispatch(getMostRecentTransactions());
         dispatch(findImmatureTransactions());
         //dispatch(getStartupStats());
-        dispatch({type: GETSTARTUPWALLETINFO_SUCCESS});
+        dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
       } catch (error) {
-        dispatch({error, type: GETSTARTUPWALLETINFO_FAILED});
+        dispatch({ error, type: GETSTARTUPWALLETINFO_FAILED });
         reject(error);
       }
     }, 1000);
@@ -94,7 +97,7 @@ function transactionsMaturingHeights(txs, chainParams) {
     let accountsToUpdate = [];
     switch (tx.type) {
     case TransactionDetails.TransactionType.TICKET_PURCHASE:
-      checkAccountsToUpdate([tx], accountsToUpdate);
+      checkAccountsToUpdate([ tx ], accountsToUpdate);
       addToRes(tx.height + chainParams.TicketExpiry, accountsToUpdate);
       addToRes(tx.height + chainParams.SStxChangeMaturity, accountsToUpdate);
       addToRes(tx.height + chainParams.TicketMaturity, accountsToUpdate); // FIXME: remove as it doesn't change balances
@@ -102,7 +105,7 @@ function transactionsMaturingHeights(txs, chainParams) {
 
     case TransactionDetails.TransactionType.VOTE:
     case TransactionDetails.TransactionType.REVOCATION:
-      checkAccountsToUpdate([tx], accountsToUpdate);
+      checkAccountsToUpdate([ tx ], accountsToUpdate);
       addToRes(tx.height + chainParams.CoinbaseMaturity, accountsToUpdate);
       break;
     }
@@ -144,7 +147,7 @@ export const findImmatureTransactions = () => async (dispatch, getState) => {
       currentBlockHeight+1, pageSize);
   }
 
-  dispatch({maturingBlockHeights: checkHeights, type: MATURINGHEIGHTS_CHANGED});
+  dispatch({ maturingBlockHeights: checkHeights, type: MATURINGHEIGHTS_CHANGED });
 };
 
 export const getWalletServiceAttempt = () => (dispatch, getState) => {
@@ -219,7 +222,7 @@ const getAccountsBalances = (accounts) => (dispatch, getState) => {
         return;
       });
   });
-  dispatch({balances, type: GETBALANCE_SUCCESS });
+  dispatch({ balances, type: GETBALANCE_SUCCESS });
 };
 
 export const GETBALANCE_ATTEMPT = "GETBALANCE_ATTEMPT";
@@ -245,7 +248,7 @@ const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (dispatch
   const updatedBalances = balances.map(balance =>
     (balance.accountNumber === accountNumber) ? updatedBalance : balance);
 
-  dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS });
+  dispatch({ balances: updatedBalances, type: GETBALANCE_SUCCESS });
 };
 
 export const getBalanceUpdateAttempt = (accountNumber, requiredConfs) => (dispatch, getState) =>
@@ -321,8 +324,8 @@ export const getStakeInfoAttempt = () => (dispatch, getState) => {
       let { getStakeInfoResponse } = getState().grpc;
       dispatch({ getStakeInfoResponse: resp, type: GETSTAKEINFO_SUCCESS });
 
-      const checkedFields = ["getExpired", "getLive", "getMissed", "getOwnMempoolTix",
-        "getRevoked", "getVoted"];
+      const checkedFields = [ "getExpired", "getLive", "getMissed", "getOwnMempoolTix",
+        "getRevoked", "getVoted" ];
       const reloadTickets = getStakeInfoResponse
         ? checkedFields.reduce((a, v) => a||getStakeInfoResponse[v]() !== resp[v](), false)
         : false;
@@ -385,7 +388,7 @@ export function updateAccount(account) {
     const updatedBalances = balances.map(balance =>
       (balance.accountNumber === account.accountNumber) ? updatedBalance : balance);
 
-    dispatch({balances: updatedBalances, type: GETBALANCE_SUCCESS });
+    dispatch({ balances: updatedBalances, type: GETBALANCE_SUCCESS });
   };
 }
 
@@ -401,8 +404,8 @@ export function hideAccount(accountNumber) {
     updatedHiddenAccounts.push(accountNumber);
     var cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
-    dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
-    dispatch(updateAccount({accountNumber, hidden: true}));
+    dispatch({ hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS });
+    dispatch(updateAccount({ accountNumber, hidden: true }));
   };
 }
 
@@ -417,8 +420,8 @@ export function showAccount(accountNumber) {
     }
     var cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
-    dispatch({hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS});
-    dispatch(updateAccount({accountNumber, hidden: false}));
+    dispatch({ hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS });
+    dispatch(updateAccount({ accountNumber, hidden: false }));
   };
 }
 
@@ -471,8 +474,8 @@ function filterTransactions(transactions, filter) {
 // `grpc.noMoreTransactions` is set to true.
 export const getTransactions = () => async (dispatch, getState) => {
   const { getAccountsResponse, getTransactionsRequestAttempt,
-    transactionsFilter, walletService, maximumTransactionCount } = getState().grpc;
-  let { noMoreTransactions, lastTransaction, minedTransactions } = getState().grpc;
+    transactionsFilter, walletService, maximumTransactionCount, recentTransactionCount } = getState().grpc;
+  let { noMoreTransactions, lastTransaction, minedTransactions, recentRegularTransactions, recentStakeTransactions } = getState().grpc;
   if (getTransactionsRequestAttempt || noMoreTransactions) return;
 
   // Check to make sure getAccountsResponse (which has current block height) is available
@@ -514,14 +517,23 @@ export const getTransactions = () => async (dispatch, getState) => {
       filterTransactions(mined, transactionsFilter)
         .forEach(v => filtered.push(v));
     } catch (error) {
-      dispatch({ type: GETTRANSACTIONS_FAILED, error});
+      dispatch({ type: GETTRANSACTIONS_FAILED, error });
       return;
     }
   }
 
-  minedTransactions = [...minedTransactions, ...filtered];
+  minedTransactions = [ ...minedTransactions, ...filtered ];
+
+  if (transactionsFilter.types.indexOf(TransactionDetails.TransactionType.REGULAR) > -1) {
+    recentRegularTransactions = [ ...unminedTransactions, ...minedTransactions ];
+    recentRegularTransactions = recentRegularTransactions.slice(0, recentTransactionCount);
+  } else if (transactionsFilter.types.indexOf(TransactionDetails.TransactionType.VOTE) > -1) {
+    recentStakeTransactions = [ ...unminedTransactions, ...minedTransactions ];
+    recentStakeTransactions = recentStakeTransactions.slice(0, recentTransactionCount);
+  }
+
   const stateChange = { unminedTransactions, minedTransactions,
-    noMoreTransactions, lastTransaction, type: GETTRANSACTIONS_COMPLETE};
+    noMoreTransactions, lastTransaction, recentRegularTransactions, recentStakeTransactions, type: GETTRANSACTIONS_COMPLETE };
   dispatch(stateChange);
   return stateChange;
 };
@@ -552,7 +564,7 @@ function checkForStakeTransactions(txs) {
 export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTransactions) => (dispatch, getState) => {
   if (!newlyMinedTransactions.length && !newlyUnminedTransactions.length) return;
 
-  let { unminedTransactions, minedTransactions, recentTransactions } = getState().grpc;
+  let { unminedTransactions, minedTransactions, recentRegularTransactions, recentStakeTransactions } = getState().grpc;
   const { transactionsFilter, recentTransactionCount } = getState().grpc;
   const chainParams = sel.chainParams(getState());
 
@@ -578,14 +590,33 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     ...unminedTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
   ], transactionsFilter);
 
-  recentTransactions = [
+
+  const regularTransactionFilter = {
+    listDirection: "desc",
+    types: [ TransactionDetails.TransactionType.REGULAR ],
+    direction: null,
+  };
+
+  recentRegularTransactions = filterTransactions([
     ...newlyUnminedTransactions,
     ...newlyMinedTransactions,
-    ...recentTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
-  ].slice(0, recentTransactionCount);
+    ...recentRegularTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
+  ], regularTransactionFilter).slice(0, recentTransactionCount);
+
+  const stakeTransactionFilter = {
+    listDirection: "desc",
+    types: [ TransactionDetails.TransactionType.TICKET_PURCHASE, TransactionDetails.TransactionType.VOTE, TransactionDetails.TransactionType.REVOCATION ],
+    direction: null,
+  };
+
+  recentStakeTransactions = filterTransactions([
+    ...newlyUnminedTransactions,
+    ...newlyMinedTransactions,
+    ...recentStakeTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
+  ], stakeTransactionFilter).slice(0, recentTransactionCount);
 
   const { maturingBlockHeights } = getState().grpc;
-  const newMaturingHeights = {...maturingBlockHeights};
+  const newMaturingHeights = { ...maturingBlockHeights };
   const mergeNewMaturingHeights = (hs) => Object.keys(hs).forEach(h => {
     const accounts = newMaturingHeights[h] || [];
     hs[h].forEach(a => accounts.indexOf(a) === -1 ? accounts.push(a) : null);
@@ -593,27 +624,43 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   });
 
   mergeNewMaturingHeights(transactionsMaturingHeights(newlyMinedTransactions, chainParams));
-  dispatch({maturingBlockHeights: newMaturingHeights, type: MATURINGHEIGHTS_CHANGED});
+  dispatch({ maturingBlockHeights: newMaturingHeights, type: MATURINGHEIGHTS_CHANGED });
 
   // TODO: filter newlyMinedTransactions against minedTransactions if this
   // starts generating a duplicated key error
 
   if (transactionsFilter.listDirection === "desc") {
-    minedTransactions = [...newlyMinedTransactions, ...minedTransactions];
+    minedTransactions = [ ...newlyMinedTransactions, ...minedTransactions ];
   } else {
-    minedTransactions = [...minedTransactions, ...newlyMinedTransactions];
+    minedTransactions = [ ...minedTransactions, ...newlyMinedTransactions ];
   }
   minedTransactions = filterTransactions(minedTransactions, transactionsFilter);
 
-  dispatch({unminedTransactions, minedTransactions, newlyUnminedTransactions,
-    newlyMinedTransactions, recentTransactions, type: NEW_TRANSACTIONS_RECEIVED});
+  dispatch({ unminedTransactions, minedTransactions, newlyUnminedTransactions,
+    newlyMinedTransactions, recentRegularTransactions, recentStakeTransactions, type: NEW_TRANSACTIONS_RECEIVED });
 };
 
-export const CLEAR_MOSTRECENTTRANSACTIONS = "CLEAR_MOSTRECENTTRANSACTIONS";
-
-// getMostRecentTransactions clears the transaction filter and refetches
+// getMostRecentRegularTransactions clears the transaction filter and refetches
 // the first page of transactions. This is used to get and store the initial
 // list of recent transactions.
+export const getMostRecentRegularTransactions = () => dispatch => {
+  const defaultFilter = {
+    listDirection: "desc",
+    types: [ TransactionDetails.TransactionType.REGULAR ],
+    direction: null,
+  };
+  return dispatch(changeTransactionsFilter(defaultFilter));
+};
+
+export const getMostRecentStakeTransactions = () => dispatch => {
+  const defaultFilter = {
+    listDirection: "desc",
+    types: [ TransactionDetails.TransactionType.TICKET_PURCHASE, TransactionDetails.TransactionType.VOTE, TransactionDetails.TransactionType.REVOCATION ],
+    direction: null,
+  };
+  return dispatch(changeTransactionsFilter(defaultFilter));
+};
+
 export const getMostRecentTransactions = () => dispatch => {
   const defaultFilter = {
     search: null,
@@ -621,14 +668,13 @@ export const getMostRecentTransactions = () => dispatch => {
     types: [],
     direction: null,
   };
-  dispatch({type: CLEAR_MOSTRECENTTRANSACTIONS});
   return dispatch(changeTransactionsFilter(defaultFilter));
 };
 
 export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
 export function changeTransactionsFilter(newFilter) {
   return (dispatch) => {
-    dispatch({transactionsFilter: newFilter, type: CHANGE_TRANSACTIONS_FILTER});
+    dispatch({ transactionsFilter: newFilter, type: CHANGE_TRANSACTIONS_FILTER });
     return dispatch(getTransactions());
   };
 }
@@ -656,7 +702,7 @@ export const GETAGENDASERVICE_SUCCESS = "GETAGENDASERVICE_SUCCESS";
 
 export const getAgendaServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
-  const { daemon: { walletName }} = getState();
+  const { daemon: { walletName } } = getState();
   dispatch({ type: GETAGENDASERVICE_ATTEMPT });
   wallet.getAgendaService(sel.isTestNet(getState()), walletName, address, port)
     .then(agendaService => {
@@ -672,7 +718,7 @@ export const GETVOTINGSERVICE_SUCCESS = "GETVOTINGSERVICE_SUCCESS";
 
 export const getVotingServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
-  const { daemon: { walletName }} = getState();
+  const { daemon: { walletName } } = getState();
   dispatch({ type: GETVOTINGSERVICE_ATTEMPT });
   wallet.getVotingService(sel.isTestNet(getState()), walletName, address, port)
     .then(votingService => dispatch({ votingService, type: GETVOTINGSERVICE_SUCCESS }))
@@ -724,7 +770,7 @@ export const GETMESSAGEVERIFICATIONSERVICE_SUCCESS = "GETMESSAGEVERIFICATIONSERV
 
 export const getMessageVerificationServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
-  const { daemon: { walletName }} = getState();
+  const { daemon: { walletName } } = getState();
   dispatch({ type: GETMESSAGEVERIFICATIONSERVICE_ATTEMPT });
   wallet.getMessageVerificationService(sel.isTestNet(getState()), walletName, address, port)
     .then(messageVerificationService =>
@@ -737,9 +783,11 @@ export const listenForAppReloadRequest = cb => () => onAppReloadRequested(cb);
 export const showTicketList = status => dispatch =>
   dispatch(pushHistory("/tickets/mytickets/" + status));
 
+export const goBackHistory = () => dispatch => dispatch(goBack());
+
 export const SEEDCOPIEDTOCLIPBOARD = "SEEDCOPIEDTOCLIPBOARD";
 export const copySeedToClipboard = (mnemonic) => (dispatch) => {
   clipboard.clear();
   clipboard.writeText(mnemonic);
-  dispatch({type: SEEDCOPIEDTOCLIPBOARD});
+  dispatch({ type: SEEDCOPIEDTOCLIPBOARD });
 };

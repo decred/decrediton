@@ -12,7 +12,7 @@ class SmallPaginator extends React.Component {
   render() {
     return (
       <div className="paginator">
-        {[...Array(this.props.totalPages)].map( (x, i) => (
+        {[ ...Array(this.props.totalPages) ].map( (x, i) => (
           <PageButton
             key={i}
             isCurrent={this.props.currentPage === i}

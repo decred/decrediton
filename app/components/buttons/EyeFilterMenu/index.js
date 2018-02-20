@@ -41,16 +41,16 @@ class EyeFilterMenu extends React.Component {
           <IconButton
             className="eye-filter-menu-button"
             iconClassName="eye-filter-menu-button-icon"
-            style={{padding: null, height: null, width: null}}/> }
-        anchorOrigin={{horizontal: "right", vertical: "bottom"}}
-        targetOrigin={{horizontal: "right", vertical: "top"}}
+            style={{ padding: null, height: null, width: null }}/> }
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        targetOrigin={{ horizontal: "right", vertical: "top" }}
       >
         {options.map(opt => (
           <MenuItem
             className={"context-menu-item " + (selected === opt[keyField] ? "selected" : "")}
             key={opt[keyField]}
             value={opt}
-            style={{fontSize: null, lineHeight: null, minHeight: null, padding: null}}
+            style={{ fontSize: null, lineHeight: null, minHeight: null, padding: null }}
             primaryText={opt[labelKey]} />
         ))}
       </IconMenu>

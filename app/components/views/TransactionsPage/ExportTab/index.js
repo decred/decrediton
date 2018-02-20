@@ -2,6 +2,13 @@ import exportPage from "connectors/exportPage";
 import { transactionStats, dailyBalancesStats, balancesStats } from "actions/StatisticsActions";
 import Page from "./Page";
 import messages from "./messages";
+import { DescriptionHeader } from "layout";
+import { FormattedMessage as T } from "react-intl";
+
+export const ExportTabHeader = () =>
+  <DescriptionHeader
+    description={<T id="transactions.description.export" m="Export different types of statistics from your wallet." />}
+  />;
 
 const AvailableExports = [
   { ...messages.transactions,
@@ -29,7 +36,7 @@ class ExportTab extends React.Component {
   }
 
   onChangeSelectedExport(selectedExport) {
-    this.setState({selectedExport});
+    this.setState({ selectedExport });
   }
 
   exportCSV() {
@@ -42,7 +49,7 @@ class ExportTab extends React.Component {
   }
 
   setDestinationFile(destinationFile) {
-    this.setState({destinationFile});
+    this.setState({ destinationFile });
   }
 
   render() {

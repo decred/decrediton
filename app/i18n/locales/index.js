@@ -39,7 +39,7 @@ const dev = {
   formats: defaultFormats
 };
 
-const locales = [en, pt_BR];
+const locales = [ en, pt_BR ];
 
 if (process.env.NODE_ENV === "development") {
   locales.push(dev);

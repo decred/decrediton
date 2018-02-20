@@ -19,9 +19,3 @@ export const showCheck = C => {
   Comp.displayName = `ShowChecked: ${ C.displayName || C.name || C }`;
   return Comp;
 };
-
-// our tabbed pages and headers rely on knowing which page and tab they're on and what others are available.
-// This centralizes the logic for how those are resolved in case this changes when we upgrade to react router 4
-export const getTabs = routes => routes[1].childRoutes && routes[1].childRoutes.map( route => route.path );
-export const getTab = routes => routes[2] && routes[2].path;
-export const getPage = routes => (routes[1] && routes[1].path) || "root";

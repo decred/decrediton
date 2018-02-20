@@ -11,7 +11,7 @@ function stakepPoolInfoResponseToConfig(response) {
     let { APIEnabled, URL, Network, APIVersionsSupported } = response.data[name];
     return !APIEnabled
       ? null
-      : {Host: URL, Network, APIVersionsSupported};
+      : { Host: URL, Network, APIVersionsSupported };
   }).filter(v => v);
 }
 

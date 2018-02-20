@@ -35,7 +35,7 @@ class SeedEntry extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.seedType != this.props.seedType) {
-      this.onChange(this.props.seedType === "words" ? [] : {target:{value:""}} );
+      this.onChange(this.props.seedType === "words" ? [] : { target:{ value:"" } } );
     }
   }
 
@@ -56,7 +56,7 @@ class SeedEntry extends React.Component {
     return (
       <div
         className="section words-input"
-        style={{fontFamily: "Inconsolata,monospace"}}
+        style={{ fontFamily: "Inconsolata,monospace" }}
         onKeyDown={this.handleKeyDown}
         onPaste={this.props.onPaste}
       >

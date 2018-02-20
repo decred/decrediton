@@ -11,6 +11,14 @@ module.exports = {
   "parser": "babel-eslint",
   "extends": "eslint:recommended",
   "rules": {
+    "object-curly-spacing": [
+      "error", 
+      "always"
+    ],
+    "array-bracket-spacing": [
+      "error", 
+      "always"
+    ],
     "indent": [
       "error",
       2

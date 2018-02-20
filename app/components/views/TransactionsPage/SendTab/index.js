@@ -5,8 +5,16 @@ import ErrorScreen from "ErrorScreen";
 import { FormattedMessage as T } from "react-intl";
 import { spring, presets } from "react-motion";
 import OutputRow from "./OutputRow";
+import { DescriptionHeader } from "layout";
 
 const BASE_OUTPUT = { destination: "", amount: null };
+
+export const SendTabHeader = service(({ isTestNet }) =>
+  <DescriptionHeader
+    description={isTestNet
+      ? <T id="transactions.description.send.testnet" m={"Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters\n(e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."} />
+      : <T id="transactions.description.send.mainnet" m={"Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters\n(e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."} />}
+  />);
 
 @autobind
 class Send extends React.Component {
@@ -22,7 +30,7 @@ class Send extends React.Component {
       isSendSelf: false,
       hastAttemptedConstruct: false,
       account: this.props.defaultSpendingAccount,
-      outputs: [{ key: "output_0", data:{...BASE_OUTPUT} }],
+      outputs: [ { key: "output_0", data:{ ...BASE_OUTPUT } } ],
       outputAccount: this.props.defaultSpendingAccount,
     };
   }
@@ -31,8 +39,8 @@ class Send extends React.Component {
     const { nextAddress } = this.props;
     const { isSendSelf, outputs } = this.state;
     if (isSendSelf && (nextAddress != nextProps.nextAddress)) {
-      let newOutputs = outputs.map(o => ({...o, data:{...o.data, destination: nextProps.nextAddress}}));
-      this.setState({outputs: newOutputs}, this.onAttemptConstructTransaction);
+      let newOutputs = outputs.map(o => ({ ...o, data:{ ...o.data, destination: nextProps.nextAddress } }));
+      this.setState({ outputs: newOutputs }, this.onAttemptConstructTransaction);
     }
   }
 
@@ -96,7 +104,7 @@ class Send extends React.Component {
   }
 
   getDefaultStyles() {
-    return this.state.outputs.map(output => ({...output, style: {height: 0, opacity: 1}}));
+    return this.state.outputs.map(output => ({ ...output, style: { height: 0, opacity: 1 } }));
   }
 
   getStyles() {
@@ -132,7 +140,7 @@ class Send extends React.Component {
   willLeave() {
     return {
       height: spring(0),
-      opacity: spring(0, {stiffness: 210, damping: 20}),
+      opacity: spring(0, { stiffness: 210, damping: 20 }),
     };
   }
 
@@ -155,13 +163,13 @@ class Send extends React.Component {
   }
   onShowSendAll() {
     const { account, outputs } = this.state;
-    const newOutputs = [{...outputs[0], data:{...outputs[0].data, amount: account.spendable}}];
+    const newOutputs = [ { ...outputs[0], data:{ ...outputs[0].data, amount: account.spendable } } ];
     this.setState({ isSendAll: true, outputs: newOutputs }, this.onAttemptConstructTransaction);
   }
   onHideSendAll() {
     const { outputs } = this.state;
-    const newOutputs = [{...outputs[0], data:{ ...outputs[0].data, amount: null}}];
-    this.setState({ isSendAll: false, outputs: newOutputs}, this.onAttemptConstructTransaction);
+    const newOutputs = [ { ...outputs[0], data:{ ...outputs[0].data, amount: null } } ];
+    this.setState({ isSendAll: false, outputs: newOutputs }, this.onAttemptConstructTransaction);
   }
   onShowConfirm() {
     if (!this.getIsValid()) return;
@@ -169,12 +177,12 @@ class Send extends React.Component {
   }
   onShowSendSelf() {
     const { outputs } = this.state;
-    let newOutputs = [{...outputs[0], data:{destination: this.props.nextAddress, amount: null}}];
+    let newOutputs = [ { ...outputs[0], data:{ destination: this.props.nextAddress, amount: null } } ];
     this.setState({ isSendSelf: true, outputs:newOutputs }, this.onAttemptConstructTransaction);
   }
   onShowSendOthers() {
     const { outputs } = this.state;
-    let newOutputs = [{...outputs[0], data:{...BASE_OUTPUT} }];
+    let newOutputs = [ { ...outputs[0], data:{ ...BASE_OUTPUT } } ];
     this.setState({ isSendSelf: false, outputs: newOutputs }, this.onAttemptConstructTransaction);
   }
 
@@ -190,7 +198,7 @@ class Send extends React.Component {
         this.state.account.value,
         confirmations,
         this.state.outputs.map(({ data }) =>
-          ({amount: data.amount, destination: data.destination })
+          ({ amount: data.amount, destination: data.destination })
         )
       );
     } else {
@@ -205,7 +213,7 @@ class Send extends React.Component {
 
   onAddOutput() {
     const { outputs } = this.state;
-    this.setState({ outputs: [...outputs, { key: "output_"+outputs.length, data: {...BASE_OUTPUT} }] });
+    this.setState({ outputs: [ ...outputs, { key: "output_"+outputs.length, data: { ...BASE_OUTPUT } } ] });
   }
 
   onRebroadcastUnmined() {
@@ -299,7 +307,7 @@ class Send extends React.Component {
   }
 
   getAmountError(key) {
-    const { outputs, isSendAll} = this.state;
+    const { outputs, isSendAll } = this.state;
     const { amount } = outputs[key].data;
     if (isNaN(amount) && !isSendAll) return <T id="send.errors.invalidAmount" m="*Please enter a valid amount" /> ;
     if (amount <= 0 && !isSendAll) return <T id="send.errors.negativeAmount" m="*Please enter a valid amount (> 0)" />;

@@ -6,8 +6,8 @@ import { FormattedMessage as T } from "react-intl";
 import "style/Fonts.less";
 import "style/HomePage.less";
 
-const RecentTransactions = ({
-  transactions,
+const RecentTickets = ({
+  tickets,
   getTransactionsRequestAttempt,
   getAccountsResponse,
 }) => {
@@ -15,15 +15,13 @@ const RecentTransactions = ({
     getTransactionsRequestAttempt ? <DecredLoading /> :
       <Aux>
         <div className="home-content-title">
-          <T id="home.recentTransactionsTitle" m="Recent Transactions" />
+          <T id="home.ticketActivityTitle" m="Recent Staking Activity" />
         </div>
         <div className="home-content-nest">
-          {transactions.length > 0 ?
-            <TxHistory limit={5} {...{ getAccountsResponse, transactions }} /> :
-            <p><T id="home.noTransactions" m="No transactions" /></p>}
+          <TxHistory overview limit={6} {...{ getAccountsResponse, transactions: tickets }} />
         </div>
       </Aux>
   );
 };
 
-export default home(RecentTransactions);
+export default home(RecentTickets);

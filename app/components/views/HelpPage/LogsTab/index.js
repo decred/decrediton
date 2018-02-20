@@ -1,9 +1,15 @@
 import Logs from "./Page";
-import {getDcrdLogs, getDcrwalletLogs, getDecreditonLogs} from "wallet";
-import {logging} from "connectors";
+import { getDcrdLogs, getDcrwalletLogs, getDecreditonLogs } from "wallet";
+import { logging } from "connectors";
+import { DescriptionHeader } from "layout";
+import { FormattedMessage as T } from "react-intl";
 
+export const LogsTabHeader = () =>
+  <DescriptionHeader
+    description={<T id="help.description.logs" m="Please find your current logs below to look for any issue or error you are having." />}
+  />;
 @autobind
-class LogsTab extends React.Component {
+class LogsTabBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -23,7 +29,7 @@ class LogsTab extends React.Component {
   }
 
   render() {
-    const {showDecreditonLogs, showDcrdLogs, showDcrwalletLogs,
+    const { showDecreditonLogs, showDcrdLogs, showDcrwalletLogs,
       hideDecreditonLogs, hideDcrdLogs, hideDcrwalletLogs
     } = this;
     const {
@@ -51,38 +57,38 @@ class LogsTab extends React.Component {
   showDecreditonLogs() {
     getDecreditonLogs()
       .then(logs => {
-        this.setState({decreditonLogs: Buffer.from(logs).toString("utf8")});
+        this.setState({ decreditonLogs: Buffer.from(logs).toString("utf8") });
       })
       .catch(err => console.error(err));
   }
 
   hideDecreditonLogs() {
-    this.setState({decreditonLogs: null});
+    this.setState({ decreditonLogs: null });
   }
 
   showDcrdLogs() {
     getDcrdLogs()
       .then(logs => {
-        this.setState({dcrdLogs: Buffer.from(logs).toString("utf8")});
+        this.setState({ dcrdLogs: Buffer.from(logs).toString("utf8") });
       })
       .catch(err => console.error(err));
   }
 
   hideDcrdLogs() {
-    this.setState({dcrdLogs: null});
+    this.setState({ dcrdLogs: null });
   }
 
   showDcrwalletLogs() {
     getDcrwalletLogs()
       .then(logs => {
-        this.setState({dcrwalletLogs: Buffer.from(logs).toString("utf8")});
+        this.setState({ dcrwalletLogs: Buffer.from(logs).toString("utf8") });
       })
       .catch(err => console.error(err));
   }
 
   hideDcrwalletLogs() {
-    this.setState({dcrwalletLogs: null});
+    this.setState({ dcrwalletLogs: null });
   }
 }
 
-export default logging(LogsTab);
+export const LogsTab = logging(LogsTabBody);

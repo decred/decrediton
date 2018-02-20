@@ -8,16 +8,13 @@
   overflow-x: hidden;
 }
 
-.page-container {
-  width: calc(100% - @sidebar-width);
-  height: 100%;
-  position: relative;
-}
-
 .page-view {
   height: 100%;
-  width: 100%;
+  width: calc(100% - @sidebar-width);
   position: absolute;
+  right: 0px;
+  background-color: #f3f6f6;
+  overflow-x: hidden;
 }
 
 // Base definition for the "page client area" (area where main content is
@@ -65,21 +62,96 @@
   background-color: #0c1e3e;
 }
 
-.tabbed-page {
-  background-color: #f3f6f6;
-  position: relative;
-  height: calc(100% - 160px);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+.tabbed-page-header,
+.standalone-page-header {
+  background-color: #fff;
+  padding: 53px 60px 0px 100px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  height: 120px;
 }
 
-.tab-content {
+.tabbed-page-body {
+  overflow: hidden;
   position: absolute;
-  width: 100%;
-  height: 100%;
-  flex: 1;
+  right: 0px;
+  top: 173px;
+  bottom: 0px;
+  left: 0px;
+  background-color: #f3f6f6;
+}
+
+.standalone-page-body {
+  overflow-x: hidden;
   overflow-y: scroll;
+  position: absolute;
+  right: 0px;
+  top: 173px;
+  bottom: 0px;
+  left: 0px;
+  padding: 60px 60px 30px 60px;
+  background-color: #f3f6f6;
+}
+
+.tabbed-page-header > .title-header-title,
+.standalone-page-header > .title-header-title {
+  margin-bottom: 14px;
+  color: #596d81;
+  font-size: 27px;
+}
+
+.tabbed-page-header > .title-header-icon,
+.standalone-page-header > .title-header-icon {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+}
+
+.tabbed-page-header > .description-header,
+.standalone-page-header > .description-header {
+  white-space: pre-wrap;
+  color: #48566e;
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.description-header > .description-header-action-button {
+  float: right;
+}
+
+.tabbed-page-header > .tabs {
+  position: absolute;
+  bottom: 0px;
+}
+
+.tabbed-page-header > .tabs > .tab {
+  line-height: 35px;
+}
+
+.tabbed-page-header > .tabs > .tabs-caret > {
+  position: absolute;
+  bottom: 0px;
+  height: 5px;
+}
+
+.tabbed-page-header > .tabs > .tabs-caret > .active {
+  background-color: #2ed8a3;
+  position: absolute;
+  height: 5px;
+}
+
+.tabbed-page .tab-content {
+  position: absolute;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  padding: 60px 60px 30px 60px;
+  background-color: #f3f6f6;
 }
 
 .component-tab-content {
@@ -87,15 +159,22 @@
   width: 100%;
 }
 
-.tab-card {
-  margin: 60px 60px 30px 60px;
-}
-
-.tab-card-blur {
-  filter: blur(6px);
-}
-
 .invalid-rpc-info {
   white-space: pre-line;
   margin-bottom: 1em;
+}
+
+.top-level-container,
+.top-level-container > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.shutdown-page {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }

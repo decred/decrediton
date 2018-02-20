@@ -55,13 +55,12 @@ class VerifyMessage extends React.Component {
     }
 
     return (
-      <div className="tab-card message message-verify">
-        <VerifyMessageForm {...{onSubmit, address, message, signature, addressError, messageError, signatureError, onChangeAddress, onChangeMessage, onChangeSignature, formatMessage: intl.formatMessage, isVerifyingMessage}} />
+      <div className="message message-verify">
+        <VerifyMessageForm {...{ onSubmit, address, message, signature, addressError, messageError, signatureError, onChangeAddress, onChangeMessage, onChangeSignature, formatMessage: intl.formatMessage, isVerifyingMessage }} />
         {result}
       </div>
     );
   }
-
 
   onSubmit() {
     const { address, addressError, message, messageError, signature, signatureError } = this.state;
@@ -70,27 +69,27 @@ class VerifyMessage extends React.Component {
   }
 
   onChangeAddress(address) {
-    if (address == "") this.setState({address: "", addressError: "Please enter an address"});
+    if (address == "") this.setState({ address: "", addressError: "Please enter an address" });
     else {
       this.props.validateAddress(address)
         .then( resp => {
-          this.setState({address, addressError: resp.getIsValid() ? "" : "Please enter a valid address"});
+          this.setState({ address, addressError: resp.getIsValid() ? "" : "Please enter a valid address" });
         })
         .catch( (error) => {
           console.log(error);
-          this.setState({address, addressError: "Error: Address validation failed, please try again."});
+          this.setState({ address, addressError: "Error: Address validation failed, please try again." });
         });
     }
   }
 
   onChangeMessage(message){
-    if (message == "") this.setState({message: "", messageError: "Please enter a message"});
-    else this.setState({message, messageError: null});
+    if (message == "") this.setState({ message: "", messageError: "Please enter a message" });
+    else this.setState({ message, messageError: null });
   }
 
   onChangeSignature(signature) {
-    if (signature == "") this.setState({signature: "", signatureError: "Please enter a signature"});
-    else this.setState({signature, signatureError: null});
+    if (signature == "") this.setState({ signature: "", signatureError: "Please enter a signature" });
+    else this.setState({ signature, signatureError: null });
   }
 }
 
