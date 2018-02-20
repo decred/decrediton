@@ -16,8 +16,6 @@ const mapStateToProps = selectorMap({
   revokeTicketsSuccess: sel.revokeTicketsSuccess,
   hasTicketsToRevoke: sel.hasTicketsToRevoke,
   totalBalance: sel.totalBalance,
-  decodedTransactions: sel.decodedTransactions,
-  homeTickets: sel.homeTickets
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

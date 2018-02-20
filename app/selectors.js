@@ -271,10 +271,6 @@ export const homeHistoryTransactions = createSelector(
   [ transactionsNormalizer, get([ "grpc", "recentRegularTransactions" ]) ], apply
 );
 
-export const homeHistoryTickets = createSelector(
-  [ transactionsNormalizer, get([ "grpc", "recentStakeTransactions" ]) ], apply
-);
-
 //fake data for balance chart
 export const spendableAndLockedBalance = createSelector(
   [ transactions ],
@@ -478,11 +474,22 @@ const allTickets = createSelector(
   (normalizer, tickets) => tickets.map(normalizer).sort(ticketSorter)
 );
 
-export const homeTickets = createSelector(
-  [ homeHistoryTickets, allTickets ],
-  ( homeTickets, tickets ) => {
-    return homeTickets.map( (ticket,index) => {
-      return tickets[index];
+const recentStakeTransactions = createSelector(
+  [ transactionsNormalizer, get([ "grpc", "recentStakeTransactions" ]) ], apply
+);
+
+export const homeHistoryTickets = createSelector(
+  [ recentStakeTransactions, allTickets ],
+  ( homeTickets, allTickets ) => {
+    return homeTickets.map( (ticket, index) => {
+      const ticketDecoded = allTickets[index];
+      ticket.ticketPrice = ticketDecoded.ticketPrice;
+      ticket.status = ticketDecoded.status;
+      ticket.enterTimestamp = ticketDecoded.enterTimestamp;
+      ticket.leaveTimestamp = ticketDecoded.leaveTimestamp;
+      ticket.ticketReward = ticketDecoded.ticketReward;
+
+      return ticket;
     });
   }
 );
