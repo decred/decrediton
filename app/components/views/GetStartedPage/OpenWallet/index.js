@@ -20,7 +20,6 @@ class OpenWallet extends React.Component {
   }
 
   render() {
-    console.log(this.props.existingOrNew);
     const { publicPassPhrase, hasAttemptedOpen, onKeyDown } = this.state;
     const { hasExistingWallet } = this.props;
     const {
