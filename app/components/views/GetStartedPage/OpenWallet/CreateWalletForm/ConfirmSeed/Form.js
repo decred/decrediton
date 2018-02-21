@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import "style/CreateWalletForm.less";
 import { InfoModalButton } from "buttons";
-import SingleSeedWordEntry from "./SingleSeedWordEntry";
+import SingleSeedWordEntry from "../SingleSeedWordEntry";
 import { SeedInfoModalContent } from "modals";
 
 export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) =>

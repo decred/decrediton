@@ -1,4 +1,4 @@
-import SingleSeedWordEntry from "./SingleSeedWordEntry";
+import SingleSeedWordEntry from "../SingleSeedWordEntry";
 import { TextToggle } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import "style/CreateWalletForm.less";
@@ -6,8 +6,10 @@ import { InfoModalButton } from "buttons";
 import { SeedInfoModalContent } from "modals";
 import { SEED_LENGTH, SEED_WORDS } from "wallet/seed";
 
-const getRemaining = (seedWords, seedType) =>
-  (seedType === "words" ? SEED_LENGTH.WORDS - seedWords.length : seedWords.length);
+const getRemaining = (seedWords, seedType) => {
+  const populatedWords = seedWords.filter(word => word.word != "");
+  return (seedType === "words" ? SEED_LENGTH.WORDS - populatedWords.length : seedWords.length);
+};
 
 const shoudShowNonSupportSeedSize = (seedWords, seedType) =>
   seedType === "hex" && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;
@@ -108,9 +110,8 @@ class ExistingSeedForm extends React.Component{
               <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
             </div>}
             {seedWords.map((seedWord) => {
-              const className = "seedWord restore";
-              return ( seedWord.word ?
-                <div key={seedWord.index} className="seedWord populated">{seedWord.word}</div> :
+              const className = seedWord.word ? "seedWord populated" : "seedWord restore";
+              return (
                 <SingleSeedWordEntry
                   className={className}
                   onChange={onChangeSeedWord}
