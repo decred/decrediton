@@ -3,14 +3,7 @@ import SeedHexEntry from "./SeedHexEntry";
 import { TextToggle } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import "style/CreateWalletForm.less";
-import { InfoModalButton } from "buttons";
-import { SeedInfoModalContent } from "modals";
 import { SEED_LENGTH, SEED_WORDS } from "wallet/seed";
-
-const getRemaining = (seedWords, seedType) => {
-  const populatedWords = seedWords.filter(word => word.word != "");
-  return (seedType === "words" ? SEED_LENGTH.WORDS - populatedWords.length : seedWords.length);
-};
 
 const shoudShowNonSupportSeedSize = (seedWords, seedType) =>
   seedType === "hex" && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;
@@ -41,6 +34,7 @@ class ExistingSeedForm extends React.Component{
   }
 
   handleToggle = (side) => {
+    this.props.resetSeedWords();
     this.setState({ seedType: side === "left" ? "words" : "hex" });
   }
 
@@ -64,48 +58,27 @@ class ExistingSeedForm extends React.Component{
   }
 
   render(){
-    const { isMatch, isEmpty, onChangeSeedWord, seedWords } = this.props;
+    const { isMatch, isEmpty, onChangeSeedWord, seedWords, setSeedWords,  } = this.props;
     const { seedType } = this.state;
-    const remaining = getRemaining(seedWords, seedType);
     const errors = this.mountSeedErrors();
     return (
       <Aux>
         <div className="content-title">
           <T id="createWallet.restore.title" m={"Restore existing wallet"}/>
         </div>
+        <div className="seed-type-label">
+          <TextToggle
+            activeButton={"left"}
+            leftText={"words"}
+            rightText={"hex"}
+            toggleAction={this.handleToggle}
+          />
+        </div>
         <div className="confirm-seed-row seed">
           <div className="confirm-seed-label-text seed">
-            <InfoModalButton
-              modalTitle={<h1><T id="confirmSeed.seedInformation" m="Seed information" /></h1>    }
-              modalContent={<SeedInfoModalContent />}
-            />
             <T id="confirmSeed.label" m="Confirm Seed" />
           </div>
-          <div className="confirm-seed-label-remaining-words">
-            {seedType === "words" ?
-              <T id="confirmSeed.wordsRemaining" m="{remaining, plural, one {one word remaining} other {# words remaining} }"
-                values={{ remaining: remaining }} />
-              :
-              <T id="confirmSeed.hexSymbolsRemaining"
-                m="{remaining, plural, one {one hex symbol: your key must have between {hexMin} and {hexMax} symbols} other {# hex symbols: your key must have between {hexMin} and {hexMax} symbols} }"
-                values={{
-                  remaining: remaining,
-                  hexMax: SEED_LENGTH.HEX_MAX,
-                  hexMin: SEED_LENGTH.HEX_MIN,
-                }} />
-            }
-          </div>
-          <div className="seed-type-label">
-            <T id="seedType.label" m="Seed type" />
-            <TextToggle
-              activeButton={"left"}
-              leftText={"words"}
-              rightText={"hex"}
-              type={"small"}
-              toggleAction={this.handleToggle}
-            />
-          </div>
-          {seedType == "words" ?
+          {seedType == "words" && Array.isArray(seedWords) ?
             <div className="seedArea">
               {!this.state.showPasteWarning ? null : <div className="orange-warning">
                 <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
@@ -125,7 +98,7 @@ class ExistingSeedForm extends React.Component{
             </div> :
             <div className="seedArea hex">
               <SeedHexEntry
-                onChange={onChangeSeedWord}
+                onChange={setSeedWords}
               />
             </div>}
           <div className="input-form-error">

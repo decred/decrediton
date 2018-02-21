@@ -23,14 +23,18 @@ class ExistingSeed extends React.Component {
   }
 
   render() {
-    const { onChangeSeedWord, setSeedWords } = this;
+    const { onChangeSeedWord, setSeedWords, resetSeedWords } = this;
     const isMatch = this.isMatch();
     const { seedWords } = this.state;
     const isEmpty = this.state.seedWords.length <= 1; // Weird errors with one word, better to count as empty
     const seedError = isEmpty ? null : this.state.seedError;
     return (
-      <ExistingSeedForm {...{ seedWords, setSeedWords, onChangeSeedWord, isMatch, seedError, isEmpty }} />
+      <ExistingSeedForm {...{ seedWords, setSeedWords, onChangeSeedWord, resetSeedWords, isMatch, seedError, isEmpty }} />
     );
+  }
+
+  resetSeedWords() {
+    this.setState(this.getInitialState());
   }
 
   setSeedWords(seedWords) {

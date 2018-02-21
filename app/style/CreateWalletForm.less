@@ -104,10 +104,44 @@
 }
 
 .seed-type-label {
-  color: #e7eaed;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: fixed;
+  left: 793px;
+
+  .text-toggle {
+    height: 29px;
+
+    .text-toggle-button-left {
+      color: #959dac;
+      background-color: #f7f8f9;
+      border: 1px solid #e7eaed;
+      border-radius: 3px 0px 0px 3px;
+      min-width: 0px;
+      padding: 6px 20px 6px 20px;
+    }
+
+    .text-toggle-button-right {
+      color: #959dac;
+      background-color: #f7f8f9;
+      border: 1px solid #e7eaed;
+      border-radius: 0px 3px 3px 0px;
+      min-width: 0px;
+      padding: 6px 20px 6px 20px;
+    }
+
+    .text-toggle-button-left.text-toggle-button-active {
+      color: #0c1e3e;
+      background-color: #fff;
+      border: 1px solid #e7eaed;
+      font-weight: 400;
+    }
+
+    .text-toggle-button-right.text-toggle-button-active {
+      color: #0c1e3e;
+      background-color: #fff;
+      border: 1px solid #e7eaed;
+      font-weight: 400;
+    }
+  }
 }
 
 .create-wallet-field {

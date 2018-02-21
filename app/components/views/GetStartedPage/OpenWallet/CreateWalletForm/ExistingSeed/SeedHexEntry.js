@@ -33,7 +33,6 @@ class SeedHexEntry extends React.Component {
       <Input
         onChange={this.onChange}
         value={this.state.currentHex}
-        onPaste={this.props.onPaste}
         name='hexInput'
         placeholder={formatMessage(messages.enterHexSeedPlaceholder)}
       />
