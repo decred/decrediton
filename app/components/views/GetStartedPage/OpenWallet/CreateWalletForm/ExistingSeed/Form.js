@@ -1,4 +1,4 @@
-import SeedEntry from "./SeedEntry";
+import SingleSeedWordEntry from "./SingleSeedWordEntry";
 import { TextToggle } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import "style/CreateWalletForm.less";
@@ -29,7 +29,7 @@ class ExistingSeedForm extends React.Component{
       .split(/\b/)
       .filter(w => /^[\w]+$/.test(w))
       .filter(w => lowercaseSeedWords.indexOf(w.toLowerCase()) > -1)
-      .map(w => ({ name: w }));
+      .map((w, i) => ({ index: i, word: w }));
     this.props.setSeedWords(words);
 
     this.setState({
@@ -61,7 +61,7 @@ class ExistingSeedForm extends React.Component{
   }
 
   render(){
-    const { isMatch, isEmpty, setSeedWords, seedWords } = this.props;
+    const { isMatch, isEmpty, onChangeSeedWord, seedWords } = this.props;
     const { seedType } = this.state;
     const remaining = getRemaining(seedWords, seedType);
     const errors = this.mountSeedErrors();
@@ -103,19 +103,23 @@ class ExistingSeedForm extends React.Component{
           </div>
         </div>
         <div className="create-wallet-field">
-          <div className="input-form">
+          <div className="seedArea">
             {!this.state.showPasteWarning ? null : <div className="orange-warning">
               <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
             </div>}
-            <form className="input-form-confirm-seed">
-              <SeedEntry
-                label="Seed Entry"
-                seedType={seedType}
-                onChange={setSeedWords}
-                onPaste={this.handleOnPaste}
-                seedWords={seedWords}/>
-            </form>
-            }
+            {seedWords.map((seedWord) => {
+              const className = "seedWord restore";
+              return ( seedWord.word ?
+                <div key={seedWord.index} className="seedWord populated">{seedWord.word}</div> :
+                <SingleSeedWordEntry
+                  className={className}
+                  onChange={onChangeSeedWord}
+                  onPaste={this.handleOnPaste}
+                  seedWord={seedWord}
+                  value={{ name: seedWord.word }}
+                  key={seedWord.index}
+                />);
+            })}
           </div>
           <div className="input-form-error">
             {errors.length

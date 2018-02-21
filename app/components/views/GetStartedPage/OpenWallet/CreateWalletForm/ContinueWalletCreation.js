@@ -12,6 +12,7 @@ const ContinueWalletCreation = ({
   onCreateWallet,
   createWalletExisting,
   onReturnToNewSeed,
+  onReturnToExistingOrNewScreen,
   ...props
 }) => (
   <div className="getstarted content">
@@ -32,7 +33,7 @@ const ContinueWalletCreation = ({
         </KeyBlueButton>
         <InvisibleButton
           className="go-back-button"
-          onClick={onReturnToNewSeed}
+          onClick={createWalletExisting ? onReturnToExistingOrNewScreen : onReturnToNewSeed}
         ><T id="getStarted.backBtn" m="Cancel" /> </InvisibleButton>
       </div>
     </div>

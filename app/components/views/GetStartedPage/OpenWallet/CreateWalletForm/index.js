@@ -76,7 +76,8 @@ class CreateWalletForm extends React.Component {
             onCreateWallet,
             decode,
             isValid,
-            onReturnToNewSeed
+            onReturnToNewSeed,
+            onReturnToExistingOrNewScreen
 
           }}
         />
