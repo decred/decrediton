@@ -1,4 +1,5 @@
 import {
+  SELECT_LANGUAGE,
   FINISH_TUTORIAL,
   DAEMONSTARTED,
   DAEMONSTARTED_REMOTE,
@@ -16,6 +17,11 @@ import {
 
 export default function version(state = {}, action) {
   switch (action.type) {
+  case SELECT_LANGUAGE:
+    return { ...state,
+      locale: action.language,
+      setLanguage: false,
+    };
   case FINISH_TUTORIAL:
     return { ...state,
       tutorial: false,

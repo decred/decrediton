@@ -1,5 +1,4 @@
 import Page from "./Page";
-import TutorialPage from "./TutorialPage";
 import { WalletSelectionHeader, WalletSelectionBody } from "./WalletSelection";
 import { CheckWalletStateHeader, CheckWalletStateBody } from "./CheckWalletState";
 import { OpenWalletHeader, OpenWalletBody } from "./OpenWallet";
@@ -48,8 +47,6 @@ class GetStartedPage extends React.Component {
 
   render() {
     const {
-      showTutorial,
-      finishTutorial,
       startStepIndex,
       isPrepared,
       isAdvancedDaemon,
@@ -73,9 +70,7 @@ class GetStartedPage extends React.Component {
     } = this;
 
     let Header, Body;
-    if (showTutorial) {
-      return <TutorialPage {...{ finishTutorial }}/>;
-    } else if (showSettings) {
+    if (showSettings) {
       Header = SettingsHeader;
       Body = SettingsBody;
     } else if (showLogs) {

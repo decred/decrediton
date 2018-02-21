@@ -1,5 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
-import { SettingsInput } from "inputs";
+import { SettingsInput, LanguageSelect } from "inputs";
+import "style/LanguageSelect.less";
 
 const propTypes = {
   tempSettings: PropTypes.object.isRequired,
@@ -37,8 +38,8 @@ const GeneralSettings = ({
         <div className="settings-label">
           <T id="settings.locale" m="Locale" />
         </div>
-        <SettingsInput
-          className="settings-input"
+        <LanguageSelect
+          className="language-select-input"
           value={tempSettings.locale}
           onChange={(newLocale) => onChangeTempSettings({ locale: newLocale.key })}
           valueKey="key" labelKey="description"

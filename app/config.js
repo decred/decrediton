@@ -80,6 +80,12 @@ export function initGlobalCfg() {
   if (!config.has("locale")) {
     config.set("locale","");
   }
+  if (!config.has("set_language")) {
+    config.set("set_language","true");
+  }
+  if (!config.has("show_tutorial")) {
+    config.set("show_tutorial","true");
+  }
   return(config);
 }
 

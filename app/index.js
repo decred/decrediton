@@ -13,15 +13,16 @@ import "./style/Global.less";
 import "./style/ReactSelectGlobal.less";
 
 var globalCfg = getGlobalCfg();
+const locale = globalCfg.get("locale");
 
 var initialState = {
   settings: {
     currentSettings: {
-      locale: globalCfg.get("locale"),
+      locale: locale,
       daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
     },
     tempSettings: {
-      locale: globalCfg.get("locale"),
+      locale: locale,
       daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
     },
     settingsChanged: false,
@@ -35,7 +36,9 @@ var initialState = {
     selectedStakePool: null,
   },
   daemon: {
-    tutorial: true,
+    locale: locale,
+    tutorial: globalCfg.get("show_tutorial"),
+    setLanguage: globalCfg.get("set_language"),
     daemonStarted: false,
     daemonSynced: false,
     daemonStopped: false,
@@ -313,7 +316,7 @@ var initialState = {
     messages: Array()
   },
   sidebar: {
-    showingSidebar: false,
+    showingSidebar: !globalCfg.get("show_tutorial"),
     showingSidebarMenu: false,
   },
   locales: locales

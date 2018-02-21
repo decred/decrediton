@@ -7,6 +7,7 @@ import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, ge
 import { hideSidebarMenu, showSidebar } from "./SidebarActions";
 import { isTestNet } from "selectors";
 
+export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
 export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
@@ -28,9 +29,32 @@ export const WALLET_STAKEPOOL_SETTINGS = "WALLET_STAKEPOOL_SETTINGS";
 export const WALLET_SETTINGS = "WALLET_SETTINGS";
 export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
 
+export const showLanguage = () => (dispatch) => {
+  dispatch(pushHistory("/getstarted/language"));
+};
+
+export const showTutorial = () => (dispatch) => {
+  dispatch(pushHistory("/getstarted/tutorial"));
+};
+
+export const showGetStarted = () => (dispatch) => {
+  dispatch(pushHistory("/getstarted/initial"));
+};
+
+export const selectLanguage = (selectedLanguage) => (dispatch) => {
+  const config = getGlobalCfg();
+  config.set("locale", selectedLanguage.language);
+  config.set("set_language", false);
+  dispatch({ language: selectedLanguage.language, type: SELECT_LANGUAGE });
+  dispatch(pushHistory("/getstarted"));
+};
+
 export const finishTutorial = () => (dispatch) => {
+  const config = getGlobalCfg();
+  config.set("show_tutorial", false);
   dispatch(showSidebar());
   dispatch({ type: FINISH_TUTORIAL });
+  dispatch(pushHistory("/getstarted"));
 };
 
 export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {

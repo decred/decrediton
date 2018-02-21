@@ -1,10 +1,13 @@
 import GetStartedPage from "components/views/GetStartedPage";
-import SideBar from "components/SideBar";
+import GetStartedPosition from "components/views/GetStartedPosition";
+import LanguageSelectPage from "components/views/GetStartedPage/LanguageSelectPage";
+import TutorialPage from "components/views/GetStartedPage/TutorialPage";
+import { Route, Switch } from "react-router-dom";
 
 export default () =>
-  <div className="page-body">
-    {/* TODO: on the new layout, the sidebar is not used during the getstarted stage */}
-    {/* This could have a switch to select the several getstarted pages  */}
-    <SideBar/>
-    <GetStartedPage />
-  </div>;
+  <Switch>
+    <Route path="/getstarted/language"  component={LanguageSelectPage} />
+    <Route path="/getstarted/tutorial"  component={TutorialPage} />
+    <Route path="/getstarted/initial"   component={GetStartedPage} />
+    <Route path="/getstarted"           component={GetStartedPosition} />
+  </Switch>;

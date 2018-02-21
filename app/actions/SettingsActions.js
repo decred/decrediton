@@ -1,5 +1,5 @@
 // @flow
-import { getWalletCfg } from "../config.js";
+import { getWalletCfg, getGlobalCfg } from "../config.js";
 import { isTestNet } from "selectors";
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
 export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
@@ -7,10 +7,14 @@ export const SETTINGS_UNCHANGED = "SETTINGS_UNCHANGED";
 
 export const saveSettings = (settings) => (dispatch, getState) => {
   const { daemon: { walletName } } = getState();
-  const config = getWalletCfg(isTestNet(getState()), walletName);
-  config.set("currency_display", settings.currencyDisplay);
+
+  const config = getGlobalCfg();
   config.set("locale", settings.locale);
   config.set("daemon_start_advanced", settings.daemonStartAdvanced);
+
+  const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
+  walletConfig.set("currency_display", settings.currencyDisplay);
+
   dispatch({ settings, type: SETTINGS_SAVE });
 };
 
