@@ -2,7 +2,7 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import fs from "fs";
 import { isNumber, isNullOrUndefined, isUndefined } from "util";
-import { tsToDate, endOfDay, reverseRawHash } from "helpers";
+import { tsToDate, endOfDay, reverseRawHash, formatLocalISODate } from "helpers";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
 
@@ -20,6 +20,7 @@ export const getStartupStats = () => (dispatch) => {
   dispatch({ type: GETSTARTUPSTATS_ATTEMPT });
   return Promise.all(startupStats.map(s => dispatch(generateStat(s))))
     .then(([ dailyBalances ]) => {
+
       // the `dailyBalances` returns only days when there was a change in
       // some of the balances, so we need to fill the gaps of days without
       // changes with the previous balance, taking care to set sent/received
@@ -32,12 +33,18 @@ export const getStartupStats = () => (dispatch) => {
 
       let idx = 0;
       for (let i = 0; i < 15; i++) {
-        while (idx < dailyBalances.length && dailyBalances[idx].time < date) idx++;
+        while (idx < dailyBalances.length-1 && dailyBalances[idx+1].time <= date) idx++;
         if (dailyBalances[idx].time.getTime() === date.getTime()) {
           lastBalances.push(dailyBalances[idx]);
+        } else if (dailyBalances[idx].time.getTime() > date.getTime()) {
+          // newish wallet without balance
+          lastBalances.push({ series: { locked: 0, lockedNonWallet: 0, available: 0,
+            total: 0, sent: 0, received: 0, voted: 0, revoked: 0, ticket: 0 },
+          time: new Date(date) });
         } else {
-          lastBalances.push({ series: { ...dailyBalances[idx].series, sent: 0, received: 0 },
-            time: new Date(date) });
+          lastBalances.push({ series: { ...dailyBalances[idx].series, sent: 0,
+            received: 0, voted: 0, revoked: 0, ticket: 0 },
+          time: new Date(date) });
         }
         date.setDate(date.getDate()+1);
       }
@@ -82,7 +89,7 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
 
   // formatting functions
   const quote = (v) => "\"" + v.replace("\"", "\\\"") + "\"";
-  const formatTime = t => t.toISOString();
+  const formatTime = formatLocalISODate;
   const csvValue = (v) => isNullOrUndefined(v) ? "" : isNumber(v) ? v.toFixed(precision) : quote(v);
   const csvLine = (values) => values.map(csvValue).join(vsep);
 
@@ -215,9 +222,11 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       var spentAmount = commitAmount + (isWallet ? tx.fee : 0);
       liveTickets[tx.txHash] = { tx, commitAmount, isWallet };
       return { spendable: -spentAmount, locked: isWallet ? commitAmount : 0,
-        lockedNonWallet: isWallet ? 0 : commitAmount, tx };
+        lockedNonWallet: isWallet ? 0 : commitAmount, voted: 0, revoked: 0,
+        sent: 0, received: 0, ticket: commitAmount, tx };
     case wallet.TRANSACTION_TYPE_VOTE:
     case wallet.TRANSACTION_TYPE_REVOCATION:
+      var isVote = tx.txType === wallet.TRANSACTION_TYPE_VOTE;
       var decodedSpender = await wallet.decodeTransaction(decodeMessageService, tx.tx.getTransaction());
       var spenderInputs = decodedSpender.getTransaction().getInputsList();
       var ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].getPreviousTransactionHash());
@@ -226,16 +235,20 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       var returnAmount = tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0);
       var wasWallet = ticket.isWallet;
       return { spendable: +returnAmount, locked: wasWallet ? -ticket.commitAmount : 0,
-        lockedNonWallet: wasWallet ? 0 : -ticket.commitAmount, tx };
+        lockedNonWallet: wasWallet ? 0 : -ticket.commitAmount,
+        voted: isVote ? returnAmount : 0, revoked: !isVote ? returnAmount : 0,
+        sent: 0, received: 0, ticket: 0, tx };
     case wallet.TRANSACTION_TYPE_COINBASE:
     case wallet.TRANSACTION_TYPE_REGULAR:
-      return { spendable: +tx.amount, locked: 0, lockedNonWallet: 0, tx };
+      return { spendable: +tx.amount, locked: 0, lockedNonWallet: 0, voted: 0,
+        revoked: 0, sent: tx.amount < 0 ? -tx.amount : 0,
+        received: tx.amount > 0 ? tx.amount : 0, ticket: 0, tx };
     default: throw "Unknown tx type: " + tx.txType;
     }
   };
 
   let currentBalance = { spendable: 0, locked: 0, lockedNonWallet: 0,
-    total: 0, tx: null };
+    total: 0, delta: null };
 
   const txDataCb = async ({ mined }) => {
     for (let i = 0; i < mined.length; i++) {
@@ -245,7 +258,7 @@ export const balancesStats = (opts) => (dispatch, getState) => {
         spendable: currentBalance.spendable + delta.spendable,
         locked: currentBalance.locked + delta.locked,
         lockedNonWallet: currentBalance.lockedNonWallet + delta.lockedNonWallet,
-        tx: delta.tx,
+        delta,
       };
       currentBalance.total = currentBalance.spendable + currentBalance.locked;
       progressFunction(tsToDate(tx.timestamp), currentBalance);
@@ -262,7 +275,8 @@ export const dailyBalancesStats = (opts) => {
   const { progressFunction, endFunction, startFunction } = opts;
 
   let lastDate = null;
-  let balance = { spendable: 0, locked: 0, total: 0, sent: 0, received: 0 };
+  let balance = { spendable: 0, locked: 0, total: 0, sent: 0, received: 0,
+    voted: 0, revoked: 0, ticket: 0 };
 
   const differentDays = (d1, d2) =>
     (d1.getYear() !== d2.getYear()) ||
@@ -273,6 +287,9 @@ export const dailyBalancesStats = (opts) => {
     opts.series = [ ...opts.series,
       { name: "sent", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "received", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "voted", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "revoked", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "ticket", type: VALUE_TYPE_ATOMAMOUNT },
     ];
     startFunction(opts);
   };
@@ -282,14 +299,17 @@ export const dailyBalancesStats = (opts) => {
       lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
     } else if (differentDays(time, lastDate)) {
       progressFunction(endOfDay(lastDate), balance);
-      balance = { ...balance, sent: 0, received: 0 };
+      balance = { ...balance, sent: 0, received: 0, voted: 0, revoked: 0, ticket: 0 };
       lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
     }
-    const { tx } = series;
+    const { delta } = series;
     balance = {
       ...series,
-      sent: balance.sent + (tx.amount < 0 ? -tx.amount : 0),
-      received: balance.received + (tx.amount > 0 ? tx.amount : 0),
+      sent: balance.sent + delta.sent,
+      received: balance.received + delta.received,
+      voted: balance.voted + delta.voted,
+      revoked: balance.revoked + delta.revoked,
+      ticket: balance.ticket + delta.ticket,
     };
   };
 

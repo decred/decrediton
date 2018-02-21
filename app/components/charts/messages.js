@@ -27,5 +27,17 @@ export default defineMessages({
   receivedKey: {
     id: "charts.keys.received",
     defaultMessage: "Received"
+  },
+  votedKey: {
+    id: "charts.keys.voted",
+    defaultMessage: "Votes"
+  },
+  ticketKey: {
+    id: "charts.keys.ticket",
+    defaultMessage: "Ticket Purchases"
+  },
+  revokedKey: {
+    id: "charts.keys.revoked",
+    defaultMessage: "Revocations"
   }
 });

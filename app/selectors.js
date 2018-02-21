@@ -316,26 +316,14 @@ export const earnedStakingReward = createSelector(
 );
 
 export const ticketDataChart = createSelector(
-  [ transactions ],
-  () => {
-    return [
-      { name: "23.10", immature: 4000, live: 2400, voted: 4000, legendName: "23.10.2017" },
-      { name: "24.10", immature: 3000, live: 1398, voted: 4000, legendName: "24.10.2017" },
-      { name: "25.10", immature: 2000, live: 7004, voted: 4000, legendName: "25.10.2017" },
-      { name: "26.10", immature: 2780, live: 3908, voted: 4000, legendName: "26.10.2017" },
-      { name: "27.10", immature: 1890, live: 4800, voted: 4000, legendName: "27.10.2017" },
-      { name: "28.10", immature: 2390, live: 3800, voted: 4000, legendName: "28.10.2017" },
-      { name: "29.10", immature: 3490, live: 4300, voted: 4000, legendName: "29.10.2017" },
-      { name: "30.10", immature: 3490, live: 4300, voted: 4000, legendName: "30.10.2017" },
-      { name: "01.11", immature: 3490, live: 4300, voted: 4000, legendName: "01.11.2017" },
-      { name: "02.11", immature: 3490, live: 4300, voted: 4000, legendName: "02.11.2017" },
-      { name: "03.11", immature: 3490, live: 4300, voted: 4000, legendName: "03.11.2017" },
-      { name: "04.11", immature: 3490, live: 4300, voted: 4000, legendName: "04.11.2017" },
-      { name: "05.11", immature: 3490, live: 4300, voted: 4000, legendName: "05.11.2017" },
-      { name: "06.11", immature: 3490, live: 4300, voted: 4000, legendName: "06.11.2017" },
-    ];
-  }
-);
+  [ dailyBalancesStats, unitDivisor ],
+  ( stats, unitDivisor ) => stats.map(s => ({
+    time: s.time,
+    voted: s.series.voted / unitDivisor,
+    revoked: s.series.revoked / unitDivisor,
+    ticket: s.series.ticket / unitDivisor,
+    locked: (s.series.locked + s.series.lockedNonWallet - s.series.ticket) / unitDivisor,
+  })));
 
 export const viewableTransactions = createSelector(
   [ transactions, homeHistoryTransactions, homeHistoryTickets ],
