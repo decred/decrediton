@@ -51,7 +51,8 @@ class CreateWalletForm extends React.Component {
       confirmNewSeed,
       createWalletExisting,
       createWalletConfirmNewSeed,
-      onReturnToNewSeed
+      onReturnToNewSeed,
+      onReturnToExistingOrNewScreen
     } = this.props;
     const {
       setSeed,
@@ -88,6 +89,7 @@ class CreateWalletForm extends React.Component {
             showCopySeedConfirm,
             onSubmitCopySeedConfirm,
             onCancelCopySeedConfirm,
+            onReturnToExistingOrNewScreen
           }}
         />
       );

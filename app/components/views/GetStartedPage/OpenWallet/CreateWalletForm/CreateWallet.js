@@ -10,10 +10,12 @@ const CreateWallet = ({
   handleCopySeed,
   showCopySeedConfirm,
   onCancelCopySeedConfirm,
-  onSubmitCopySeedConfirm
+  onSubmitCopySeedConfirm,
+  onReturnToExistingOrNewScreen
 }) => (
   <Aux>
     <div className="getstarted content">
+      <Tooltip text={ <T id="createWallet.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onReturnToExistingOrNewScreen}/></Tooltip>
       <div className="content-title">
         <T id="createWallet.title" m={"Create a new wallet"}/>
       </div>
