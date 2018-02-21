@@ -320,6 +320,9 @@ var initialState = {
     showingSidebar: !globalCfg.get("show_tutorial"),
     showingSidebarMenu: false,
   },
+  statistics: {
+    dailyBalances: Array(),
+  },
   locales: locales
 };
 

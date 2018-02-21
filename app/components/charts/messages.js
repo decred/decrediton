@@ -1,0 +1,31 @@
+import { defineMessages } from "react-intl";
+
+export default defineMessages({
+  dayMonthDisplay: {
+    id: "charts.dayMonthDisplay",
+    defaultMessage: "{value, date, day-short-month}"
+  },
+  fullDayDisplay: {
+    id: "charts.fullDayDisplay",
+    defaultMessage: "{value, date}"
+  },
+
+  // below are the keys to series/fields in the charts (used to translate
+  // each series)
+  lockedKey: {
+    id: "charts.keys.locked",
+    defaultMessage: "Locked",
+  },
+  availableKey: {
+    id: "charts.keys.available",
+    defaultMessage: "Available"
+  },
+  sentKey: {
+    id: "charts.keys.sent",
+    defaultMessage: "Sent"
+  },
+  receivedKey: {
+    id: "charts.keys.received",
+    defaultMessage: "Received"
+  }
+});

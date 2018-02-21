@@ -13,7 +13,7 @@ import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
-// import { getStartupStats } from "./StatisticsActions";
+import { getStartupStats } from "./StatisticsActions";
 
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
@@ -68,8 +68,8 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(getMostRecentRegularTransactions());
         await dispatch(getMostRecentStakeTransactions());
         await dispatch(getMostRecentTransactions());
+        await dispatch(getStartupStats());
         dispatch(findImmatureTransactions());
-        //dispatch(getStartupStats());
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
       } catch (error) {
@@ -589,7 +589,6 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     ...newlyUnminedTransactions,
     ...unminedTransactions.filter(tx => !newlyMinedMap[tx.hash] && !newlyUnminedMap[tx.hash])
   ], transactionsFilter);
-
 
   const regularTransactionFilter = {
     listDirection: "desc",

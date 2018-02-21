@@ -10,6 +10,12 @@ export const defaultFormats = {
       style: "percent",
       minimumFractionDigits: 4
     }
+  },
+  date: {
+    "day-short-month": {
+      day: "numeric",
+      month: "short"
+    }
   }
 };
 

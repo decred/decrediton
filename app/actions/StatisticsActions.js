@@ -6,9 +6,9 @@ import { tsToDate, endOfDay, reverseRawHash } from "helpers";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
 
-const GETSTARTUPSTATS_ATTEMPT = "GETSTARTUPSTATS_ATTEMPT";
-const GETSTARTUPSTATS_SUCCESS = "GETSTARTUPSTATS_SUCCESS";
-const GETSTARTUPSTATS_FAILED = "GETSTARTUPSTATS_FAILED";
+export const GETSTARTUPSTATS_ATTEMPT = "GETSTARTUPSTATS_ATTEMPT";
+export const GETSTARTUPSTATS_SUCCESS = "GETSTARTUPSTATS_SUCCESS";
+export const GETSTARTUPSTATS_FAILED = "GETSTARTUPSTATS_FAILED";
 
 // Calculates all startup statistics
 export const getStartupStats = () => (dispatch) => {
@@ -18,9 +18,24 @@ export const getStartupStats = () => (dispatch) => {
   ];
 
   dispatch({ type: GETSTARTUPSTATS_ATTEMPT });
-  Promise.all(startupStats.map(s => dispatch(generateStat(s))))
+  return Promise.all(startupStats.map(s => dispatch(generateStat(s))))
     .then(([ dailyBalances ]) => {
-      dispatch({ dailyBalances, type: GETSTARTUPSTATS_SUCCESS });
+      const date = new Date();
+      const lastBalances = [];
+      let balanceIdx = dailyBalances.data.length-1;
+      for (let i = 0; i < 15; i++) {
+        if (balanceIdx >= 0) {
+          lastBalances.push({ ...dailyBalances.data[balanceIdx], time: new Date(date) });
+          date.setDate(date.getDate()-1);
+          if (dailyBalances.data[balanceIdx].time > date) {
+            balanceIdx--;
+          }
+        }
+      }
+      lastBalances.reverse();
+
+      //dailyBalances = dailyBalances.data.slice(-15);
+      dispatch({ dailyBalances: lastBalances, type: GETSTARTUPSTATS_SUCCESS });
     })
     .catch(error => dispatch({ error, type: GETSTARTUPSTATS_FAILED }));
 };
