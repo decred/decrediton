@@ -10,7 +10,7 @@ class LanguageSelect extends React.Component{
 
   getInitialState() {
     return {
-      selectedLang: this.props.availableLanguages[0]
+      selectedLang: this.props.defaultLocale
     };
   }
 

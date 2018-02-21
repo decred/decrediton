@@ -6,6 +6,7 @@ import * as wla from "../actions/WalletLoaderActions";
 import * as da from "../actions/DaemonActions";
 
 const mapStateToProps = selectorMap({
+  setLanguage: sel.setLanguage,
   showTutorial: sel.showTutorial,
   startStepIndex: sel.startStepIndex,
   isInputRequest: sel.isInputRequest,
@@ -31,7 +32,8 @@ const mapStateToProps = selectorMap({
   walletName: sel.getWalletName,
   previousWallet: sel.previousWallet,
   availableLanguages: sel.sortedLocales,
-  locale: sel.currentLocaleName
+  locale: sel.currentLocaleName,
+  defaultLocale: sel.defaultLocaleName,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

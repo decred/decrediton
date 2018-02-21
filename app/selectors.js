@@ -2,6 +2,7 @@ import {
   compose, reduce, filter, get, not, or, and, eq, find, bool, map, apply,
   createSelectorEager as createSelector
 } from "./fp";
+import { appLocaleFromElectronLocale } from "./i18n/locales";
 import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
 import { MainNetParams, TestNetParams } from "wallet/constants";
@@ -30,6 +31,7 @@ const START_STEP_RPC2 = 4;
 const START_STEP_DISCOVER = 5;
 const START_STEP_FETCH = 6;
 
+export const setLanguage = get([ "daemon", "setLanguage" ]);
 export const showTutorial = get([ "daemon", "tutorial" ]);
 export const versionInvalid = get([ "version", "versionInvalid" ]);
 export const requiredWalletRPCVersion = get([ "version", "requiredVersion" ]);
@@ -143,6 +145,11 @@ export const currencies = () => [ { name: "DCR" }, { name: "atoms" } ];
 export const currencyDisplay = get([ "settings", "currentSettings", "currencyDisplay" ]);
 export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
 export const currentLocaleName = get([ "settings", "currentSettings", "locale" ]);
+export const defaultLocaleName = createSelector(
+  [ currentLocaleName ],
+  (currentLocaleName) => {
+    return appLocaleFromElectronLocale(currentLocaleName);
+  });
 
 export const sortedLocales = createSelector(
   [ get([ "locales" ]) ],

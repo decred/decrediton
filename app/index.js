@@ -38,6 +38,7 @@ var initialState = {
   daemon: {
     locale: locale,
     tutorial: globalCfg.get("show_tutorial"),
+    setLanguage: globalCfg.get("set_language"),
     daemonStarted: false,
     daemonSynced: false,
     daemonStopped: false,

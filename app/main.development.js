@@ -673,7 +673,7 @@ app.on("ready", async () => {
   if (!locale) {
     let newCfgLocale = appLocaleFromElectronLocale(app.getLocale());
     logger.log("error", `Locale ${cfgLocale} not found. Switching to locale ${newCfgLocale}.`);
-    // globalCfg.set("locale", newCfgLocale);
+    globalCfg.set("locale", newCfgLocale);
     locale = locales.find(value => value.key === newCfgLocale);
   }
 

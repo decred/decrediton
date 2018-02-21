@@ -20,6 +20,7 @@ export default function version(state = {}, action) {
   case SELECT_LANGUAGE:
     return { ...state,
       locale: action.language,
+      setLanguage: false,
     };
   case FINISH_TUTORIAL:
     return { ...state,

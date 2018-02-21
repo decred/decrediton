@@ -44,6 +44,7 @@ export const showGetStarted = () => (dispatch) => {
 export const selectLanguage = (selectedLanguage) => (dispatch) => {
   const config = getGlobalCfg();
   config.set("locale", selectedLanguage.language);
+  config.set("set_language", false);
   dispatch({ language: selectedLanguage.language, type: SELECT_LANGUAGE });
   dispatch(pushHistory("/getstarted"));
 };
