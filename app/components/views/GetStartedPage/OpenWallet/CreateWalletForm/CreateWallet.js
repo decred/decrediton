@@ -43,7 +43,7 @@ const CreateWallet = ({
             <T id="createWallet.lossInfo2" m={`{warningNotice}  Failure to keep this seed private can result in the theft of your entire wallet. Under no circumstances should this seed ever be revealed to someone else.
               `}
             values={{
-              warningNotice: <span className="orange-warning"><T id="createWallet.warningNotice" m="Warning:"/></span>
+              warningNotice: <span className="orange"><T id="createWallet.warningNotice" m="Warning:"/></span>
             }}
             />
           </p>

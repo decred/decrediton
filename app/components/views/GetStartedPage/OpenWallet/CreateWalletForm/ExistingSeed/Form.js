@@ -58,7 +58,7 @@ class ExistingSeedForm extends React.Component{
   }
 
   render(){
-    const { isMatch, isEmpty, onChangeSeedWord, seedWords, setSeedWords,  } = this.props;
+    const { onChangeSeedWord, seedWords, setSeedWords,  } = this.props;
     const { seedType } = this.state;
     const errors = this.mountSeedErrors();
     return (
@@ -102,13 +102,7 @@ class ExistingSeedForm extends React.Component{
               />
             </div>}
           <div className="input-form-error">
-            {errors.length
-              ? <div>
-                {errors}
-              </div>
-              : isMatch || isEmpty
-                ? null
-                : <T id="confirmSeed.errors.seedsDontMatch" m="*Seeds do not match" /> }
+            {errors.length > 0 && <div>{errors}</div>}
           </div>
         </div>
       </Aux>
