@@ -84,7 +84,7 @@ class ExistingSeedForm extends React.Component{
                 <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
               </div>}
               {seedWords.map((seedWord) => {
-                const className = seedWord.word ? "seedWord populated" : "seedWord restore";
+                const className = seedWord.word ? seedWord.error ? "seedWord error" : "seedWord populated" : "seedWord restore";
                 return (
                   <SingleSeedWordEntry
                     className={className}

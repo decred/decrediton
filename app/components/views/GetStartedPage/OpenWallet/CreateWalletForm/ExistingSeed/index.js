@@ -13,6 +13,7 @@ class ExistingSeed extends React.Component {
       seedWords.push({
         word: "",
         index: i,
+        error: false,
       });
     }
     return { seedWords: seedWords, seedError: null };
@@ -41,6 +42,17 @@ class ExistingSeed extends React.Component {
     const onError = (seedError) => {
       this.setState({ mnemonic: "", seedError: seedError+"" });
       this.props.onChange(null);
+
+      const seedErrorStr = seedError + "";
+      const position = "position";
+      const positionLoc = seedErrorStr.indexOf(position);
+      if (positionLoc > 0) {
+        const { seedWords } = this.state;
+        var updatedSeedWords = seedWords;
+        const locatedErrPosition = seedErrorStr.slice(positionLoc+position.length+1, positionLoc+position.length+1+3).split(",")[0];
+        updatedSeedWords[locatedErrPosition] = { word: updatedSeedWords[locatedErrPosition].word, index: updatedSeedWords[locatedErrPosition].index, error: true };
+        this.setState({ seedWords: updatedSeedWords });
+      }
     };
     this.setState({ seedWords }, () => {
       const mnemonic = this.getSeedWordsStr();
@@ -66,11 +78,20 @@ class ExistingSeed extends React.Component {
   onChangeSeedWord(seedWord, update) {
     const { seedWords } = this.state;
     var updatedSeedWords = seedWords;
-    updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index };
+    updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: false };
 
     const onError = (seedError) => {
       this.setState({ mnemonic: "", seedError: seedError+"" });
       this.props.onChange(null);
+
+      const seedErrorStr = seedError + "";
+      const position = "position";
+      const positionLoc = seedErrorStr.indexOf(position);
+      if (positionLoc > 0) {
+        const locatedErrPosition = seedErrorStr.slice(positionLoc+position.length+1, positionLoc+position.length+1+3).split(",")[0];
+        updatedSeedWords[locatedErrPosition] = { word: update, index: seedWord.index, error: true };
+        this.setState({ seedWords: updatedSeedWords });
+      }
     };
     this.setState({ seedWords: updatedSeedWords }, () => {
       const mnemonic = this.getSeedWordsStr();
