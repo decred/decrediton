@@ -13,5 +13,6 @@ export function endOfDay(dt) {
   res.setMinutes(0);
   res.setHours(0);
   res.setSeconds(-1);
+  res.setDate(res.getDate()+1);
   return res;
 }

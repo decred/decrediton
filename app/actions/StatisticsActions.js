@@ -20,21 +20,27 @@ export const getStartupStats = () => (dispatch) => {
   dispatch({ type: GETSTARTUPSTATS_ATTEMPT });
   return Promise.all(startupStats.map(s => dispatch(generateStat(s))))
     .then(([ dailyBalances ]) => {
-      const date = new Date();
+      // the `dailyBalances` returns only days when there was a change in
+      // some of the balances, so we need to fill the gaps of days without
+      // changes with the previous balance, taking care to set sent/received
+      // balances to 0
+      dailyBalances = dailyBalances.data.slice(-15);
       const lastBalances = [];
-      let balanceIdx = dailyBalances.data.length-1;
-      for (let i = 0; i < 15; i++) {
-        if (balanceIdx >= 0) {
-          lastBalances.push({ ...dailyBalances.data[balanceIdx], time: new Date(date) });
-          date.setDate(date.getDate()-1);
-          if (dailyBalances.data[balanceIdx].time > date) {
-            balanceIdx--;
-          }
-        }
-      }
-      lastBalances.reverse();
 
-      //dailyBalances = dailyBalances.data.slice(-15);
+      const date = endOfDay(new Date());
+      date.setDate(date.getDate()-15);
+
+      let idx = 0;
+      for (let i = 0; i < 15; i++) {
+        while (idx < dailyBalances.length && dailyBalances[idx].time < date) idx++;
+        if (dailyBalances[idx].time.getTime() === date.getTime()) {
+          lastBalances.push(dailyBalances[idx]);
+        } else {
+          lastBalances.push({ series: { ...dailyBalances[idx].series, sent: 0, received: 0 },
+            time: new Date(date) });
+        }
+        date.setDate(date.getDate()+1);
+      }
       dispatch({ dailyBalances: lastBalances, type: GETSTARTUPSTATS_SUCCESS });
     })
     .catch(error => dispatch({ error, type: GETSTARTUPSTATS_FAILED }));
