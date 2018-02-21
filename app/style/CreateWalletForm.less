@@ -1,4 +1,5 @@
 @import (reference) "./main.less";
+@import (reference) "./Icons.less";
 
 .new-seed {
   background-color: #0c1e3e;
@@ -249,4 +250,44 @@
     color: #0c1e3e;
     border: 1px solid red;
   }
+}
+
+.createwallet-button-area {
+  margin-left: 22px;
+  margin-top: 189px;
+  width: 380px;
+}
+
+.createwallet-button {
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  height: 161px;
+  width: 168px;
+  margin-right: 20px;
+  float: left;
+  background-position: 53px 32px;
+  background-repeat: no-repeat;
+  background-size: 62px 62px;
+}
+
+.createwallet-button.new {
+  background-image: @createnewwallet;
+}
+
+.createwallet-button.restore {
+  background-image: @restorewallet;
+}
+
+.createwallet-button:hover,
+.createwallet-button:focus, {
+  border-color: #2970ff;
+}
+
+.createwallet-button-label {
+  margin-top: 121px;
+  text-align: center;
+  font-size: 15px;
+  color: #48566e;
+  line-height: 19px;
 }

@@ -1,9 +1,7 @@
-import Header from "../DefaultHeader";
 import CreateWalletForm from "./CreateWalletForm";
-import { SlateGrayButton, TextToggle } from "buttons";
-import { FormattedMessage as T } from "react-intl";
+import ExistingOrNewScreen from "./ExistingOrNewScreen";
 import "style/GetStarted.less";
-
+/*
 const OpenWalletCreateFormHeader = ({
   startupError,
   isInputRequest,
@@ -40,12 +38,16 @@ const OpenWalletCreateFormHeader = ({
     )}
   />
 );
-
-const OpenWalletCreateFormBody = ({
-  isInputRequest,
-  onReturnToNewSeed
+*/
+const OpenWalletCreateForm = ({
+  existingOrNew,
+  onReturnToNewSeed,
+  onReturnToExistingOrNewScreen,
+  onSetCreateWalletFromExisting
 }) => (
-  isInputRequest ? <CreateWalletForm {...{ onReturnToNewSeed } }/> : null
+  existingOrNew ?
+    <ExistingOrNewScreen {...{ onSetCreateWalletFromExisting }} /> :
+    <CreateWalletForm {...{ onReturnToNewSeed, onReturnToExistingOrNewScreen } }/>
 );
 
-export { OpenWalletCreateFormHeader, OpenWalletCreateFormBody };
+export default OpenWalletCreateForm;

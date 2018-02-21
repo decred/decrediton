@@ -9,6 +9,7 @@ import {
   SUBSCRIBEBLOCKNTFNS_ATTEMPT, SUBSCRIBEBLOCKNTFNS_FAILED, SUBSCRIBEBLOCKNTFNS_SUCCESS,
   FETCHHEADERS_ATTEMPT, FETCHHEADERS_FAILED, FETCHHEADERS_PROGRESS, FETCHHEADERS_SUCCESS,
   CREATEWALLET_EXISTINGSEED_INPUT, CREATEWALLET_NEWSEED_INPUT, CREATEWALLET_NEWSEED_CONFIRM_INPUT, CREATEWALLET_NEWSEED_BACK_INPUT,
+  CREATEWALLET_GOBACK_EXISITNG_OR_NEW,
   UPDATEDISCOVERACCOUNTS, NEEDED_BLOCKS_DETERMINED
 } from "actions/WalletLoaderActions";
 import {
@@ -55,6 +56,11 @@ export default function walletLoader(state = {}, action) {
       walletExistResponse: action.response,
       stepIndex: 2,
     };
+  case CREATEWALLET_GOBACK_EXISITNG_OR_NEW:
+    return { ...state,
+      confirmNewSeed: false,
+      existingOrNew: true,
+    };
   case CREATEWALLET_NEWSEED_CONFIRM_INPUT:
     return { ...state,
       createWalletInputRequest: true,
@@ -70,11 +76,13 @@ export default function walletLoader(state = {}, action) {
     return { ...state,
       createWalletInputRequest: true,
       createWalletExisting: true,
+      existingOrNew: false,
     };
   case CREATEWALLET_NEWSEED_INPUT:
     return { ...state,
       createWalletInputRequest: true,
       createWalletExisting: false,
+      existingOrNew: false,
     };
   case CREATEWALLET_ATTEMPT:
     return { ...state,

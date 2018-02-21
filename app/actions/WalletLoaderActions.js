@@ -46,19 +46,18 @@ export const walletExistRequest = () =>
         if (response.getExists()) {
           dispatch(openWalletAttempt("public", false));
         }
-        else {
-          dispatch({ type: CREATEWALLET_NEWSEED_INPUT });
-        }
       })
       .catch(error => dispatch({ error, type: WALLETEXIST_FAILED }));
 
 export const CREATEWALLET_NEWSEED_CONFIRM_INPUT = "CREATEWALLET_NEWSEED_CONFIRM_INPUT";
 export const CREATEWALLET_NEWSEED_BACK_INPUT = "CREATEWALLET_NEWSEED_BACK_INPUT";
 export const CREATEWALLET_EXISTINGSEED_INPUT = "CREATEWALLET_EXISTINGSEED_INPUT";
+export const CREATEWALLET_GOBACK_EXISITNG_OR_NEW = "CREATEWALLET_GOBACK_EXISITNG_OR_NEW";
 export const CREATEWALLET_NEWSEED_INPUT = "CREATEWALLET_NEWSEED_INPUT";
 
 export const createWalletConfirmNewSeed = () => ({ type: CREATEWALLET_NEWSEED_CONFIRM_INPUT });
 export const createWalletGoBackNewSeed = () => ({ type: CREATEWALLET_NEWSEED_BACK_INPUT });
+export const createWalletGoBackExistingOrNew = () => ({ type: CREATEWALLET_GOBACK_EXISITNG_OR_NEW });
 export const createWalletExistingToggle = (existing) => (dispatch) =>
   existing
     ? dispatch({ type: CREATEWALLET_EXISTINGSEED_INPUT })
