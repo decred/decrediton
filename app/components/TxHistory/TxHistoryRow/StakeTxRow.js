@@ -7,6 +7,15 @@ const messageByType = { // TODO: use constants instead of string
   "Ticket": <T id="transaction.type.ticket" m="Ticket" />,
   "Revocation": <T id="transaction.type.revoke" m="Revoke" />,
   "Vote": <T id="transaction.type.vote" m="Vote" />,
+  "ticket": <T id="transaction.type.ticket" m="Ticket" />,
+  "revocation": <T id="transaction.type.revoke" m="Revoke" />,
+  "voted": <T id="transaction.type.voted" m="Voted" />,
+  "unmined": <T id="transaction.type.unmined" m="Unmined" />,
+  "immature": <T id="transaction.type.immature" m="Immature" />,
+  "missed": <T id="transaction.type.missed" m="Missed" />,
+  "expired": <T id="transaction.type.expired" m="Expired" />,
+  "revoked": <T id="transaction.type.revoked" m="Revoked" />,
+  "live": <T id="transaction.type.live" m="Live" />,
 };
 
 const StakeTxRow = ({ txType, ...props }) => {
