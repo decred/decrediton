@@ -18,16 +18,16 @@ const messageByType = { // TODO: use constants instead of string
   "live": <T id="transaction.type.live" m="Live" />,
 };
 
-const StakeTxRow = ({ txType, ...props }) => {
+const StakeTxRow = ({ status, txType, ...props }) => {
   const { overview, ticketPrice, ticketReward } = props;
 
   return overview ?
     (
-      <Row {...{ className: txType, ...props }}>
+      <Row {...{ className: status, ...props }}>
         <div className="transaction-info transaction-stake-info-overview">
           <div><span className="icon" /></div>
           <div>
-            <span className="transaction-stake-type-overview">{messageByType[txType] || "(unknown type)"}</span>
+            <span className="transaction-stake-type-overview">{messageByType[status] || "(unknown type)"}</span>
             <div className="transaction-info-price-reward">
               <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice}/>
               <span className="transaction-info-overview-reward-icon"/>

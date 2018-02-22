@@ -17,7 +17,7 @@ const StatusSmall = ({ pending, txTimestamp, daysToVote }) => (
             time: <FormattedTime value={tsToDate(txTimestamp)} hour12={false}/>,
           }}
         />
-        {!isNaN(daysToVote) && (
+        {daysToVote !== null && !isNaN(daysToVote) && (
           <div className="transaction-info-overview-days-to-vote">
             <div className="transaction-info-overview-lock-icon"></div>
             <span className="transaction-info-overview-days-to-vote-number">{daysToVote}</span>

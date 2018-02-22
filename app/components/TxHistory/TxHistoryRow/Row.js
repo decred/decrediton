@@ -8,7 +8,9 @@ const Row = ({
 }) => {
   const rowClsname = "tx-history-row";
   const StatusComponent = overview ? StatusSmall : Status;
-  const daysToVote = diffBetweenTwoTs(leaveTimestamp, enterTimestamp);
+
+  // ticket can have leaveTimestamp equals null, which is not voted yet
+  const daysToVote = leaveTimestamp ? diffBetweenTwoTs(leaveTimestamp, enterTimestamp) : null;
 
   return (
     <div className={[ rowClsname, className ].join(" ")} {...{ onClick }}>
