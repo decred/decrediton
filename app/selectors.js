@@ -282,7 +282,8 @@ export const spendableAndLockedBalance = createSelector(
   ( stats, unitDivisor ) => stats.map(s => ({
     time: s.time,
     available: s.series.spendable / unitDivisor,
-    locked: (s.series.locked + s.series.lockedNonWallet) / unitDivisor
+    locked: (s.series.locked + s.series.lockedNonWallet) / unitDivisor,
+    immature: (s.series.immature + s.series.immatureNonWallet) / unitDivisor,
   })));
 
 //fake data for transactions tab on overview Page
@@ -322,7 +323,8 @@ export const ticketDataChart = createSelector(
     voted: s.series.voted / unitDivisor,
     revoked: s.series.revoked / unitDivisor,
     ticket: s.series.ticket / unitDivisor,
-    locked: (s.series.locked + s.series.lockedNonWallet - s.series.ticket) / unitDivisor,
+    locked: (s.series.locked + s.series.lockedNonWallet) / unitDivisor,
+    immature: (s.series.immature + s.series.immatureNonWallet) / unitDivisor,
   })));
 
 export const viewableTransactions = createSelector(

@@ -38,7 +38,7 @@ export function formatLocalISODate(d) {
   let tzOffsetMinutes = Math.trunc(tzOffset % 60);
 
   return format("%s-%s-%sT%s:%s:%s.%s%s%s%s",
-    d.getFullYear(), pad(d.getMonth(), 2), pad(d.getDate(), 2),
+    d.getFullYear(), pad(d.getMonth()+1, 2), pad(d.getDate(), 2),
     pad(d.getHours(), 2), pad(d.getMinutes(), 2),
     pad(d.getSeconds(), 2), pad(d.getMilliseconds(), 3),
     tzOffsetSign, pad(tzOffsetHours, 2), pad(tzOffsetMinutes, 2));

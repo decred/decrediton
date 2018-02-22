@@ -39,5 +39,9 @@ export default defineMessages({
   revokedKey: {
     id: "charts.keys.revoked",
     defaultMessage: "Revocations"
+  },
+  immatureKey: {
+    id: "charts.keys.immature",
+    defaultMessage: "Immature"
   }
 });

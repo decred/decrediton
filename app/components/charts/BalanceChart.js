@@ -8,12 +8,14 @@ const BalanceChart = ({ data, intl }) => {
 
   const availableKey = intl.formatMessage(messages.availableKey);
   const lockedKey = intl.formatMessage(messages.lockedKey);
+  const immatureKey = intl.formatMessage(messages.immatureKey);
 
   const displayData = data.map(s => ({
     name: intl.formatMessage(messages.dayMonthDisplay, { value: s.time }),
     legendName: intl.formatMessage(messages.fullDayDisplay, { value: s.time }),
     [availableKey]: s.available,
-    [lockedKey]: s.locked
+    [lockedKey]: s.locked,
+    [immatureKey]: s.immature,
   }));
 
   return (
@@ -22,6 +24,7 @@ const BalanceChart = ({ data, intl }) => {
       <YAxis orientation="right" style={xAxisStyle} padding={padding} />
       <Tooltip content={<ChartTooltip />} />
       <Bar barSize={8} dataKey={lockedKey} stackId="a" fill="#0c1e3e" radius={[ 0, 0, 10, 10 ]} margin={100} />
+      <Bar barSize={8} dataKey={immatureKey} stackId="a" fill="#69d5f7" radius={[ 10, 10, 0, 0 ]} />
       <Bar barSize={8} dataKey={availableKey} stackId="a" fill="#2971ff" radius={[ 10, 10, 0, 0 ]} />
     </BarChart>
   );
