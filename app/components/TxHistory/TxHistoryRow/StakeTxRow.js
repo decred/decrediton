@@ -18,6 +18,8 @@ const messageByType = { // TODO: use constants instead of string
   "live": <T id="transaction.type.live" m="Live" />,
 };
 
+// ToDo Add status to transactions selector, so we can use status instead of txType
+// to show on transactions history page
 const StakeTxRow = ({ status, txType, ...props }) => {
   const { overview, ticketPrice, ticketReward } = props;
 
