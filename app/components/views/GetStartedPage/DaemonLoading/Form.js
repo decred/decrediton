@@ -1,4 +1,4 @@
-import LinearProgress from "shared/LinearProgress";
+import LinearProgress from "indicators/LinearProgress";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { SlateGrayButton, InvisibleButton } from "buttons";
 import "style/GetStarted.less";
@@ -48,8 +48,8 @@ export default ({
             <LinearProgress
               mode="determinate"
               min={0}
-              max={getNeededBlocks}
-              value={getCurrentBlockCount}
+              max={100}
+              value={50}
             />
             <div className="loader-bar-estimation">
               <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
