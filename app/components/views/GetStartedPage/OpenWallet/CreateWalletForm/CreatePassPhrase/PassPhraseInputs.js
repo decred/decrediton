@@ -31,7 +31,7 @@ const PassPhraseInputs = ({
 }) => (
   <Aux>
     <div className="confirm-seed-row passphrase">
-      <div className="confirm-seed-label-text">
+      <div className="confirm-seed-label-text passphrase">
         <InfoModalButton
           modalTitle={<h1><T id="confirmSeed.passphraseInformation" m="Private passphrase information" /></h1>}
           modalContent={<PassphraseInfoModalContent />}
@@ -54,7 +54,7 @@ const PassPhraseInputs = ({
       </div>
     </div>
     <div className="confirm-seed-row passphrase">
-      <div className="confirm-seed-label-text">{passPhraseVerificationLabel}</div>
+      <div className="confirm-seed-label-text passphrase">{passPhraseVerificationLabel}</div>
       <div className="create-wallet-field">
         <div className="input-form">
           <form className="input-form">
