@@ -3,7 +3,7 @@ import { WalletSelectionHeader, WalletSelectionBody } from "./WalletSelection";
 import { CheckWalletStateHeader, CheckWalletStateBody } from "./CheckWalletState";
 import OpenWallet from "./OpenWallet";
 import DaemonLoading from "./DaemonLoading";
-import { LogsHeader, LogsBody } from "./Logs";
+import { LogsBody } from "./Logs";
 import Settings from "./Settings";
 import { StartRPCHeader, StartRPCBody } from "./StartRPC";
 import { DiscoverAddressesHeader, DiscoverAddressesBody } from "./DiscoverAddresses";
@@ -73,8 +73,7 @@ class GetStartedPage extends React.Component {
     if (showSettings) {
       return <Settings {...{ onHideSettings, ...props }} />;
     } else if (showLogs) {
-      Header = LogsHeader;
-      Body = LogsBody;
+      return <LogsBody {...{ onHideLogs, ...props }} />;
     } else if (getWalletReady && !isPrepared) {
       switch (startStepIndex || 0) {
       case 0:
