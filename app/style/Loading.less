@@ -61,7 +61,7 @@
   height: 41px;
   width: 41px;
   border-radius: 3px;
-  opacity: 0.08;
+  opacity: 0;
   background-color: #fff;
   animation: slide 3s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite;
 }
@@ -91,7 +91,15 @@
 }
 
 @keyframes slide {
-  100% { left: 59px; }
+  0% { opacity: 0.01; }
+
+  50% { opacity: 0.08; }
+
+  75% { opacity: 0.08; }
+
+  100% {
+    left: 59px;
+  }
 }
 
 .linear-progress-text {
