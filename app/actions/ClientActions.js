@@ -637,6 +637,10 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
 
   dispatch({ unminedTransactions, minedTransactions, newlyUnminedTransactions,
     newlyMinedTransactions, recentRegularTransactions, recentStakeTransactions, type: NEW_TRANSACTIONS_RECEIVED });
+
+  if (newlyMinedTransactions.length > 0) {
+    dispatch(getStartupStats());
+  }
 };
 
 // getMostRecentRegularTransactions clears the transaction filter and refetches

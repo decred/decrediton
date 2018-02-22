@@ -288,13 +288,13 @@ export const spendableAndLockedBalance = createSelector(
 
 //fake data for transactions tab on overview Page
 export const balanceSent = createSelector(
-  [],
-  () => 65554789521
+  [ dailyBalancesStats ],
+  (balances) => balances.reduce((s, b) => s + b.series.sent, 0)
 );
 
 export const balanceReceived = createSelector(
-  [],
-  () => 86454789521
+  [ dailyBalancesStats ],
+  (balances) => balances.reduce((s, b) => s + b.series.received, 0)
 );
 
 export const sentAndReceivedTransactions = createSelector(
@@ -307,13 +307,12 @@ export const sentAndReceivedTransactions = createSelector(
 
 //fake data for ticket tab on overview Page
 export const totalValueOfLiveTickets = createSelector(
-  [],
-  () => 237031094298
-);
-
-export const earnedStakingReward = createSelector(
-  [],
-  () => 6525094298
+  [ dailyBalancesStats ],
+  (balances) => {
+    if (!balances) return 0;
+    const lastBalance = balances[balances.length-1];
+    return lastBalance.series.locked + lastBalance.series.lockedNonWallet;
+  }
 );
 
 export const ticketDataChart = createSelector(

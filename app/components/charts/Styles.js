@@ -18,3 +18,6 @@ export const homeChartSize = {
 export const padding= {
   bottom: 16
 };
+
+export const radiusTop = [ 10, 10, 0, 0 ];
+export const radiusMiddle = [ 0, 0, 0, 0 ];

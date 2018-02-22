@@ -1,7 +1,8 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
 import messages from "./messages";
 import { injectIntl } from "react-intl";
-import { yAxisStyle, xAxisStyle, homeChartSize, padding } from "./Styles";
+import { yAxisStyle, xAxisStyle, homeChartSize, padding, radiusMiddle,
+  radiusTop } from "./Styles";
 import ChartTooltip from "./ChartTooltip";
 
 const BalanceChart = ({ data, intl }) => {
@@ -27,11 +28,11 @@ const BalanceChart = ({ data, intl }) => {
       <XAxis dataKey="name" style={yAxisStyle} />
       <YAxis orientation="right" style={xAxisStyle} padding={padding} />
       <Tooltip content={<ChartTooltip />} />
-      <Bar barSize={8} dataKey={lockedKey} stackId="a" fill="#2971ff" radius={[ 10, 10, 10, 10 ]} />
-      <Bar barSize={8} dataKey={immatureKey} stackId="a" fill="#9ee702" radius={[ 10, 10, 0, 0 ]} />
-      <Bar barSize={8} dataKey={ticketKey} stackId="a" fill="#69d5f7" radius={[ 0, 0, 10, 10 ]} />
-      <Bar barSize={8} dataKey={votedKey} stackId="a" fill="#2ed7a2" radius={[ 10, 10, 0, 0 ]} />
-      <Bar barSize={8} dataKey={revokedKey} stackId="a" fill="#8e1702" radius={[ 10, 10, 0, 0 ]} />
+      <Bar barSize={8} dataKey={lockedKey} stackId="a" fill="#2971ff" radius={radiusMiddle} />
+      <Bar barSize={8} dataKey={immatureKey} stackId="a" fill="#9ee702" radius={radiusMiddle} />
+      <Bar barSize={8} dataKey={ticketKey} stackId="a" fill="#69d5f7" radius={radiusMiddle} />
+      <Bar barSize={8} dataKey={votedKey} stackId="a" fill="#2ed7a2" radius={radiusMiddle} />
+      <Bar barSize={8} dataKey={revokedKey} stackId="a" fill="#8e1702" radius={radiusTop} />
     </BarChart>
   );
 };

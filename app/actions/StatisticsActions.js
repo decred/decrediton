@@ -29,7 +29,7 @@ export const getStartupStats = () => (dispatch) => {
       const lastBalances = [];
 
       const date = endOfDay(new Date());
-      date.setDate(date.getDate()-15);
+      date.setDate(date.getDate()-14);
 
       let idx = 0;
       for (let i = 0; i < 15; i++) {
