@@ -30,6 +30,25 @@
   color: #2ed8a3;
 }
 
+.pending-overview-details {
+  background: #f3f6f6;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.tx-history-row-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.is-overview-pending {
+  display: flex;
+  flex-direction: row !important;
+}
+
 .tx-history-row {
   padding: 14px 40px 18px 20px;
   border-bottom: 1px solid #e7eaed;
@@ -41,6 +60,7 @@
   background-size: 5px 10px;
   background-repeat: no-repeat;
   display: flex;
+  flex-basis: 80%;
   justify-content: space-between;
   line-height: 12px;
   height: 32px;

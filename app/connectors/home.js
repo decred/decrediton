@@ -3,7 +3,6 @@ import { bindActionCreators } from "redux";
 import { selectorMap } from "fp";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
-import * as dma from "actions/DecodeMessageActions";
 
 const mapStateToProps = selectorMap({
   getTransactionsRequestAttempt: sel.getTransactionsRequestAttempt,
@@ -22,7 +21,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onRevokeTickets: ca.revokeTicketsAttempt,
   onClearRevokeTicketsError: ca.clearRevokeTicketsError,
   onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
-  decodeRawTransactions: dma.decodeRawTransactions
 }, dispatch);
 
 export default connect(mapStateToProps,mapDispatchToProps);
