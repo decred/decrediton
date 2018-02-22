@@ -1,2 +1,3 @@
-export { default as LogsHeader } from "./Header";
-export { default as LogsBody } from "./Form";
+import LogsForm from "./Form";
+const Logs = LogsForm;
+export default Logs;
