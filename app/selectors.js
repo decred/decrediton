@@ -45,6 +45,7 @@ export const getWalletRPCVersionError = get([ "version", "getWalletRPCVersionErr
 export const getLoaderError = get([ "version", "getLoaderError" ]);
 export const hasExistingWallet = compose(r => !!(r && r.getExists()), walletExistResponse);
 export const confirmNewSeed = get([ "walletLoader", "confirmNewSeed" ]);
+export const existingOrNew = get([ "walletLoader", "existingOrNew" ]);
 export const versionInvalidError = createSelector(
   [ versionInvalid, get([ "version", "versionInvalidError" ]) ],
   (invalid, error) => invalid ? error || "Unknown Error" : null

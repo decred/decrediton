@@ -14,7 +14,6 @@ class SingleSeedWordEntry extends React.Component {
     return (
       <div
         className={this.props.className}
-        style={{ fontFamily: "Inconsolata,monospace" }}
         onKeyDown={this.handleKeyDown}
         onPaste={this.props.onPaste}
       >

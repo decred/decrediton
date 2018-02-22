@@ -2,7 +2,7 @@ import ExistingSeed from "./ExistingSeed";
 import ConfirmSeed from "./ConfirmSeed";
 import CreatePassPhrase from "./CreatePassPhrase";
 import { FormattedMessage as T } from "react-intl";
-import { KeyBlueButton } from "buttons";
+import { KeyBlueButton, InvisibleButton } from "buttons";
 import "style/CreateWalletForm.less";
 
 const ContinueWalletCreation = ({
@@ -11,15 +11,15 @@ const ContinueWalletCreation = ({
   setPassPhrase,
   onCreateWallet,
   createWalletExisting,
+  onReturnToNewSeed,
+  onReturnToExistingOrNewScreen,
   ...props
 }) => (
-  <div className="page-content new-seed">
+  <div className="getstarted content">
     {createWalletExisting ?
       <ExistingSeed {...props} onChange={setSeed} /> :
       <ConfirmSeed  {...props} onChange={setSeed} /> }
-    <CreatePassPhrase passPhraseLabel={
-      <T id="createWallet.encryptWallet" m="Create wallet private passphrase" />}
-    onChange={setPassPhrase} onSubmit={onCreateWallet} />
+    <CreatePassPhrase onChange={setPassPhrase} onSubmit={onCreateWallet} />
 
     <div className="create-wallet-button-container">
       <div className="create-wallet-label"></div>
@@ -31,6 +31,10 @@ const ContinueWalletCreation = ({
         >
           <T id="createWallet.createWalletBtn" m="Create Wallet" />
         </KeyBlueButton>
+        <InvisibleButton
+          className="go-back-button"
+          onClick={createWalletExisting ? onReturnToExistingOrNewScreen : onReturnToNewSeed}
+        ><T id="getStarted.backBtn" m="Cancel" /> </InvisibleButton>
       </div>
     </div>
   </div>

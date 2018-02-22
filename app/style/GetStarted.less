@@ -1,5 +1,6 @@
 @import (reference) "./main.less";
 @import (reference) "./Layout.less";
+@import (reference) "./Icons.less";
 
 .get-started-content-instructions {
   color: #e7eaed;
@@ -109,7 +110,6 @@
   padding-top: 13px;
   padding-right: 20px;
   padding-left: 20px;
-  float: left;
 }
 
 .get-started-priv-pass-error {
@@ -313,4 +313,121 @@
 
 .get-started-logs {
   color: #eee;
+}
+
+.page-body.getstarted {
+  padding: 40px;
+  display: block;
+  background-color: #f7f8f9;
+  background-repeat: no-repeat;
+  background-image: @logo-launcher;
+  background-size: 173px;
+  background-position: 40px 40px;
+  z-index: 3;
+  height: 100%;
+}
+
+.getstarted.content {
+  margin-top: 55px;
+  margin-left: 280px;
+  color: #48566e;
+
+  .content-title {
+    font-size: 27px;
+    margin-bottom: 20px;
+    float: left;
+    width: 100%;
+  }
+
+  .content-text {
+    font-size: 13px;
+    height: 250px;
+
+    .bold {
+      font-weight: 600;
+    }
+
+    .column {
+      float: left;
+      width: 300px;
+      margin-right: 32px;
+    }
+  }
+
+  .seedArea {
+    float: left;
+    width: 600px;
+  }
+
+  .seedWord {
+    width: 100px;
+    height: 23px;
+    background-color: #48566e;
+    border-radius: 3px;
+    color: #fff;
+    margin: 5px;
+    float: left;
+    text-align: center;
+  }
+
+  .seedWord.error {
+    background-color: transparent;
+
+    .Select-control {
+      border: 1px solid #fd714b;
+      color: #48566e;
+    }
+
+    .Select-control:hover,
+    .Select-control:focus {
+      border: 1px solid #fd714b;
+    }
+  }
+
+  .seedWord.populated {
+    background-color: transparent;
+
+    .Select-control {
+      border: 1px solid #48566e;
+      color: #48566e;
+    }
+
+    .Select-control:hover,
+    .Select-control:focus {
+      border: 1px solid #959dac;
+    }
+  }
+
+  .seedWord.restore, {
+    background-color: transparent;
+
+    .Select-control {
+      border: 1px solid #d1d5db;
+      color: #48566e;
+    }
+
+    .Select-control:hover,
+    .Select-control:focus {
+      color: #0c1e3e;
+      border: 1px solid #959dac;
+    }
+  }
+
+  .toolbar {
+    width: 100%;
+    float: left;
+  }
+
+  .wallet-key-blue-button {
+    float: left;
+    box-shadow: 0px 5px 13px rgba(0, 0, 0, 0.21);
+  }
+
+  .wallet-key-blue-button:hover {
+    box-shadow: none;
+  }
+
+  .copy {
+    margin-top: 90px;
+  }
 }
