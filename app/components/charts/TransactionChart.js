@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ReferenceLine } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
 import messages from "./messages";
 import { injectIntl } from "react-intl";
 import ChartTooltip from "./ChartTooltip";
