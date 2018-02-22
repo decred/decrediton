@@ -1,6 +1,6 @@
-import LinearProgress from "material-ui/LinearProgress";
+import LinearProgress from "shared/LinearProgress";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
-import { SlateGrayButton } from "buttons";
+import { SlateGrayButton, InvisibleButton } from "buttons";
 import "style/GetStarted.less";
 
 export default ({
@@ -13,7 +13,7 @@ export default ({
   onShowLogs,
 }) => (
   <div className="page-body getstarted">
-    <div className="getstarted content">
+    <div className="getstarted loader">
       {getDaemonStarted ? getCurrentBlockCount == null ?
         showLongWaitMessage ?
           <Aux>
@@ -28,39 +28,33 @@ export default ({
           </Aux> :
           <div></div> :
         <Aux>
-          <div className="get-started-content-instructions">
-            <div className="get-started-content-instructions-blockchain-syncing">
-              <div className="get-started-instructions-txt">
-                <T id="getStarted.chainLoadingDelayReminder" m="If you are starting decrediton for the first time, this may take a while." />
-              </div>
+          <div className="content-title">
+            <div className="loader-settings-logs">
+              <InvisibleButton onClick={onShowSettings}>
+                <T id="getStarted.btnSettings" m="Settings" />
+              </InvisibleButton>
+              <InvisibleButton onClick={onShowLogs}>
+                <T id="getStarted.btnLogs" m="Logs" />
+              </InvisibleButton>
             </div>
+            <T id="loader.title" m={"Welcome to Decrediton Wallet"}/>
+          </div>
+          <div className="loader-buttons">
+            <SlateGrayButton onClick={onShowLogs}>
+              <T id="getStarted.learnBasics" m="Learn the Basics" />
+            </SlateGrayButton>
+          </div>
+          <div className="loader-bar">
             <LinearProgress
               mode="determinate"
               min={0}
               max={getNeededBlocks}
               value={getCurrentBlockCount}
             />
-            <p>
-              <T
-                id="getStarted.chainLoading.syncEstimation"
-                m="Estimated ending {timeEstimation} ({currentBlockCount} / {neededBlocks})"
-                values={{
-                  timeEstimation: (finishDateEstimation !== null
-                    ? <FormattedRelative value={finishDateEstimation}/>
-                    : "---"),
-                  currentBlockCount: getCurrentBlockCount,
-                  neededBlocks: getNeededBlocks
-                }}
-              />
-            </p>
-          </div>
-          <div className="get-started-bottom-buttons">
-            <SlateGrayButton onClick={onShowSettings}>
-              <T id="getStarted.btnSettings" m="Application Settings" />
-            </SlateGrayButton>
-            <SlateGrayButton onClick={onShowLogs}>
-              <T id="getStarted.btnLogs" m="Logs" />
-            </SlateGrayButton>
+            <div className="loader-bar-estimation">
+              <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
+              <span className="bold"> <FormattedRelative value={finishDateEstimation}/> ({getCurrentBlockCount} / {getNeededBlocks}) </span>
+            </div>
           </div>
         </Aux> :
         <div></div> }
