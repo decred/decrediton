@@ -43,6 +43,7 @@
   display: flex;
   justify-content: space-between;
   line-height: 12px;
+  height: 32px;
 }
 
 .tx-history-row:hover {
@@ -152,6 +153,7 @@
   color: #c4cbd2;
   font-size: 12px;
   line-height: 11px;
+  margin-right: 22px;
 }
 
 .stake-transaction-ticket-reward {
@@ -159,6 +161,15 @@
   color: #c4cbd2;
   font-size: 12px;
   line-height: 11px;
+  margin-left: 4px;
+}
+
+.transaction-stake-type-overview {
+  font-family: Inconsolata, monospace;
+  color: #596d81;
+  font-size: 15px;
+  line-height: 11px;
+  font-weight: bold;
 }
 
 .transaction-stake-info-overview {
@@ -169,4 +180,34 @@
 .transaction-info-price-reward {
   display: flex;
   flex-direction: row;
+  padding-top: 8px;
+}
+
+.transaction-info-overview-reward-icon {
+  background-image: @ticket-reward-icon;
+  background-repeat: no-repeat;
+  width: 12px;
+}
+
+.transaction-info-overview-lock-icon {
+  background-image: @time-lock-icon;
+  background-repeat: no-repeat;
+  height: 12px;
+  width: 12px;
+  margin-right: 4px;
+}
+
+.transaction-info-overview-days-to-vote {
+  display: flex;
+  margin-top: 8px;
+  margin-left: 12px;
+  font-family: Inconsolata, monospace;
+  color: #c4cbd2;
+  font-size: 12px;
+  line-height: 11px;
+  margin-left: 4px;
+}
+
+.transaction-info-overview-days-to-vote-number {
+  margin-right: 4px;
 }

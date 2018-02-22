@@ -18,9 +18,10 @@ const StakeTxRow = ({ txType, ...props }) => {
         <div className="transaction-info transaction-stake-info-overview">
           <div><span className="icon" /></div>
           <div>
-            <span className="transaction-stake-type">{messageByType[txType] || "(unknown type)"}</span>
+            <span className="transaction-stake-type-overview">{messageByType[txType] || "(unknown type)"}</span>
             <div className="transaction-info-price-reward">
               <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice}/>
+              <span className="transaction-info-overview-reward-icon"/>
               <Balance classNameWrapper="stake-transaction-ticket-reward" amount={ticketReward}/>
             </div>
           </div>
