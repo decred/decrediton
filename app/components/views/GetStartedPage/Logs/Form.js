@@ -1,15 +1,15 @@
 import { LogsTab } from "views/HelpPage/LogsTab";
 import { Tooltip } from "shared";
-import { FormattedMessage as T, FormattedRelative } from "react-intl";
-import { LinearProgressSmall } from "indicators";
+import { FormattedMessage as T } from "react-intl";
+import { LoaderBarBottom } from "indicators";
 import { InvisibleButton } from "buttons";
 
 export default ({
   onHideLogs,
+  onShowSettings,
   getCurrentBlockCount,
   getNeededBlocks,
-  onShowSettings,
-  finishDateEstimation
+  getEstimatedTimeLeft
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader logs">
@@ -26,17 +26,7 @@ export default ({
         <T id="getStarted.logsTitle" m="Logs" />
       </div>
       <LogsTab />
-      <div className="loader-bar-bottom">
-        <div className="loader-bar-estimation">
-          <span className="normal"><T id="getStarted.chainLoading.syncEstimation.small" m="Loading Decred blockchain, estimated time left"/></span>
-          <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({getCurrentBlockCount} / {getNeededBlocks})</span>
-        </div>
-        <LinearProgressSmall
-          min={0}
-          max={getNeededBlocks}
-          value={getCurrentBlockCount}
-        />
-      </div>
+      <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft }}  />
     </div>
   </div>
 );
