@@ -1,6 +1,6 @@
 import "style/Loading.less";
 
-const LinearProgress = ({ barText, value, min, max }) =>
+const LinearProgressFull = ({ barText, value, min, max }) =>
   <div className="linear-progress">
     <div className="linear-progress-bar" style={{ width: `${(value/max-min)*100}` + "%" }}>
       <div className="linear-progress-box one"  style={{ left: `${(value/max-min)*877+10}` + "px" }}/>
@@ -15,4 +15,4 @@ const LinearProgress = ({ barText, value, min, max }) =>
     </div>
   </div>;
 
-export default LinearProgress;
+export default LinearProgressFull;
