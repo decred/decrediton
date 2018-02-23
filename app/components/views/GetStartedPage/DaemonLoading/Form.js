@@ -11,6 +11,7 @@ export default ({
   finishDateEstimation,
   onShowSettings,
   onShowLogs,
+  onShowTutorial,
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
@@ -40,7 +41,7 @@ export default ({
             <T id="loader.title" m={"Welcome to Decrediton Wallet"}/>
           </div>
           <div className="loader-buttons">
-            <SlateGrayButton onClick={onShowLogs}>
+            <SlateGrayButton onClick={onShowTutorial}>
               <T id="getStarted.learnBasics" m="Learn the Basics" />
             </SlateGrayButton>
           </div>
