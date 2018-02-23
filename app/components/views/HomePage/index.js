@@ -3,6 +3,8 @@ import HomePage from "./Page";
 import { service, home } from "connectors";
 import { substruct } from "fp";
 
+const ROWS_NUMBER_ON_TABLE = 5;
+
 @autobind
 class Home extends React.Component{
   constructor(props) {
@@ -25,6 +27,7 @@ class Home extends React.Component{
       {...{
         ...this.props,
         ...this.state,
+        rowNumber: ROWS_NUMBER_ON_TABLE,
         ...substruct({
           onShowRevokeTicket: null,
           onRequestPassphrase: null,
