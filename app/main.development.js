@@ -22,6 +22,7 @@ let dcrwPID;
 let dcrwPort;
 let dcrdConfig = {};
 let currentBlockCount;
+let primaryInstance;
 
 let dcrdLogs = Buffer.from("");
 let dcrwalletLogs = Buffer.from("");
@@ -278,6 +279,14 @@ ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
   }
   if (dcrdPID && dcrdConfig) {
     logger.log("info", "dcrd already started " + dcrdPID);
+    event.returnValue = dcrdConfig;
+    return;
+  }
+  if (!daemonIsAdvanced && !primaryInstance) {
+    logger.log("info", "Running on secondary instance. Assuming dcrd is already running.");
+    dcrdConfig = readDcrdConfig(getWalletPath(testnet, walletPath), testnet);
+    dcrdConfig.rpc_cert = path.resolve(getDcrdPath(), "rpc.cert");
+    dcrdConfig.pid = -1;
     event.returnValue = dcrdConfig;
     return;
   }
@@ -653,16 +662,7 @@ const readExesVersion = () => {
   return versions;
 };
 
-let primaryInstance = !app.makeSingleInstance(function () {
-  if (mainWindow) {
-    if (mainWindow.isMinimized()) mainWindow.restore();
-    mainWindow.focus();
-  }
-});
-
-if (!primaryInstance) {
-  logger.log("error", "Another instance of decrediton is already running");
-}
+primaryInstance = !app.makeSingleInstance(() => true);
 
 app.on("ready", async () => {
 
@@ -678,12 +678,7 @@ app.on("ready", async () => {
   }
 
   let windowOpts = { show: false, width: 1178, height: 790, page: "app.html" };
-  if (!primaryInstance) {
-    windowOpts = { show: true, width: 575, height: 275, autoHideMenuBar: true,
-      resizable: false, page: "staticPages/secondInstance.html" };
-  } else {
-    await installExtensions();
-  }
+  await installExtensions();
   windowOpts.title = "Decrediton - " + app.getVersion();
 
   mainWindow = new BrowserWindow(windowOpts);
@@ -698,16 +693,7 @@ app.on("ready", async () => {
     if (versionWin !== null) {
       versionWin.close();
     }
-    if (!primaryInstance) {
-      app.quit();
-      setTimeout(() => { app.quit(); }, 2000);
-    }
   });
-
-  if (!primaryInstance) {
-    logger.log("error", "stopping ready");
-    return;
-  }
 
   if (process.env.NODE_ENV === "development") mainWindow.openDevTools();
 
@@ -744,8 +730,6 @@ app.on("ready", async () => {
       } ]).popup(mainWindow);
     }
   });
-
-  if (!primaryInstance) return;
 
   if (process.platform === "darwin") {
     template = [ {
