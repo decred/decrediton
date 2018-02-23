@@ -47,8 +47,8 @@ export default ({
           <div className="loader-bar">
             <LinearProgressFull
               min={0}
-              max={100}
-              value={50}
+              max={getNeededBlocks}
+              value={getCurrentBlockCount}
             />
             <div className="loader-bar-estimation">
               <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
