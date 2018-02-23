@@ -73,7 +73,7 @@ class GetStartedPage extends React.Component {
     if (showSettings) {
       return <Settings {...{ onHideSettings, ...props }} />;
     } else if (showLogs) {
-      return <Logs {...{ onHideLogs, ...props }} />;
+      return <Logs {...{ onShowSettings, onHideLogs, ...props }} />;
     } else if (getWalletReady && !isPrepared) {
       switch (startStepIndex || 0) {
       case 0:
