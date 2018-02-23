@@ -485,5 +485,9 @@
   "verify.info.message": "vai verificar ainda.",
   "votingPreferences.noAgenda": "Sem agendas para votação.",
   "votingPreferences.title": "Preferências de voto",
-  "walletError.title": "Um erro aconteceu"
+  "walletError.title": "Um erro aconteceu",
+  "charts.dayMonthDisplay": "{value, date, day-short-month}",
+  "charts.fullDayDisplay": "{value, date}",
+  "charts.keys.locked": "Trancado",
+  "charts.keys.available": "Disponível"
 }

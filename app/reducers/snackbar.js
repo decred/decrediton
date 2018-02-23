@@ -32,7 +32,8 @@ import {
 import { SNACKBAR_DISMISS_MESSAGES } from "../actions/SnackbarActions";
 import {
   EXPORT_ERROR,
-  EXPORT_COMPLETED
+  EXPORT_COMPLETED,
+  GETSTARTUPSTATS_FAILED
 } from "actions/StatisticsActions";
 
 const messages = defineMessages({
@@ -234,6 +235,7 @@ export default function snackbar(state = {}, action) {
   case GETSTARTUPWALLETINFO_FAILED:
   case PUBLISHUNMINEDTRANSACTIONS_FAILED:
   case EXPORT_ERROR:
+  case GETSTARTUPSTATS_FAILED:
     type = "Error";
     message = messages[action.type] || messages.defaultErrorMessage;
     values = { originalError: String(action.error) };
