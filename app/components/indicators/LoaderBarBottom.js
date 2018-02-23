@@ -21,7 +21,6 @@ class LoaderBarBottom extends React.Component {
 
   render() {
     const { getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft } = this.props;
-    console.log(getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft);
     let finishDateEstimation = null;
     if (getEstimatedTimeLeft !== null) {
       finishDateEstimation = new Date();

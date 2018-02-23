@@ -30,7 +30,7 @@ class GetStartedPage extends React.Component {
   }
 
   onShowSettings() {
-    this.setState({ showSettings: true });
+    this.setState({ showSettings: true, showLogs: false  });
   }
 
   onHideSettings() {
@@ -38,7 +38,7 @@ class GetStartedPage extends React.Component {
   }
 
   onShowLogs() {
-    this.setState({ showLogs: true });
+    this.setState({ showLogs: true, showSettings: false });
   }
 
   onHideLogs() {
@@ -71,7 +71,7 @@ class GetStartedPage extends React.Component {
 
     let Header, Body;
     if (showSettings) {
-      return <Settings {...{ onHideSettings, ...props }} />;
+      return <Settings {...{ onShowLogs, onHideSettings, ...props }} />;
     } else if (showLogs) {
       return <Logs {...{ onShowSettings, onHideLogs, ...props }} />;
     } else if (getWalletReady && !isPrepared) {
