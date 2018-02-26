@@ -28,7 +28,6 @@ class WalletSelectionBody extends React.Component {
   }
 
   render() {
-    console.log("hafsdf");
     const {
       onChangeAvailableWallets,
       startWallet,

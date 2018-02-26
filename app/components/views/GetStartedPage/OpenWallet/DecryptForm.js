@@ -1,4 +1,3 @@
-import Header from "../DefaultHeader";
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
@@ -10,21 +9,6 @@ const messages = defineMessages({
     defaultMessage: "Public Passphrase"
   }
 });
-
-const OpenWalletDecryptFormHeader = ({
-  startupError
-}) => (
-  <Header
-    headerMetaOverview={(
-      <div className="get-started-subheader">
-        <T id="getStarted.header.openingWallet.meta" m="Opening wallet" />
-      </div>
-    )}
-    headerTop={startupError
-      ? <div key="walletOpenError" className="get-started-view-notification-error">{startupError}</div>
-      : <div key="walletOpenError" ></div>}
-  />
-);
 
 const OpenWalletDecryptFormBodyBase = ({
   isInputRequest,
@@ -76,4 +60,4 @@ const OpenWalletDecryptFormBodyBase = ({
 );
 const OpenWalletDecryptFormBody = injectIntl(OpenWalletDecryptFormBodyBase);
 
-export { OpenWalletDecryptFormHeader, OpenWalletDecryptFormBody };
+export { OpenWalletDecryptFormBody };

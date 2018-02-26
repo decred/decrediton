@@ -3,7 +3,6 @@ import DaemonLoading from "./DaemonLoading";
 import Logs from "./Logs";
 import Settings from "./Settings";
 import { WalletSelectionBody } from "./WalletSelection";
-import { CheckWalletStateBody } from "./CheckWalletState";
 import { StartRPCBody } from "./StartRPC";
 import { DiscoverAddressesBody } from "./DiscoverAddresses";
 import { FetchBlockHeadersBody } from "./FetchBlockHeaders";
@@ -52,6 +51,7 @@ class GetStartedPage extends React.Component {
       openForm,
       getWalletReady,
       remoteAppdataError,
+      startupError,
       ...props
     } = this.props;
 
@@ -77,8 +77,8 @@ class GetStartedPage extends React.Component {
       switch (startStepIndex || 0) {
       case 0:
       case 1:
-        text = <T id="getStarted.header.checkingWalletState.meta" m="Checking wallet state" />;
-        Form = CheckWalletStateBody;
+        text = startupError ? startupError :
+          <T id="getStarted.header.checkingWalletState.meta" m="Checking wallet state" />;
         break;
       case 2:
         return <OpenWallet {...props} />;
@@ -92,7 +92,6 @@ class GetStartedPage extends React.Component {
         }
       }
     } else if (!getWalletReady) {
-      console.log("herer");
       text = <T id="getStarted.walletSelect.title" m="Select the Wallet to Load" />;
       Form = WalletSelectionBody;
     } else if (isPrepared) {
@@ -123,6 +122,7 @@ class GetStartedPage extends React.Component {
       ...props,
       ...state,
       text,
+      startupError,
       showSettings,
       showLogs,
       onShowSettings,
