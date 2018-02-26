@@ -83,11 +83,10 @@ class GetStartedPage extends React.Component {
       case 2:
         return <OpenWallet {...props} />;
       default:
+        text = <T id="getStarted.advanced.title" m="Advanced Daemon Set Up" />;
         if (isAdvancedDaemon && openForm && !remoteAppdataError) {
-          text = <T id="getStarted.advanced.title" m="Advanced Start Up" />;
           Form = AdvancedStartupBody;
         } else if (remoteAppdataError) {
-          text = <T id="getStarted.advanced.title" m="Advanced Start Up" />;
           Form = RemoteAppdataError;
         }
       }
@@ -98,7 +97,7 @@ class GetStartedPage extends React.Component {
       switch (startStepIndex || 0) {
       case 3:
       case 4:
-        text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
+        text = <T id="getStarted.header.startrpc.meta" m="Establishing RPC connection" />;
         Form = StartRPCBody;
         break;
       case 5:

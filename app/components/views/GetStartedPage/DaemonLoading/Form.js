@@ -44,15 +44,15 @@ export default ({
             max={getNeededBlocks}
             value={getCurrentBlockCount}
           />
-          { getCurrentBlockCount &&
-            <div className="loader-bar-estimation">
-              <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
-              <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({getCurrentBlockCount} / {getNeededBlocks})</span>
-            </div>
-          }
+          <div className="loader-bar-estimation">
+            <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
+            <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({getCurrentBlockCount} / {getNeededBlocks})</span>
+          </div>
         </div>
-        <DecredLoading hidden={props.startupError || props.isInputRequest || props.showSettings || props.showLogs} />
-        <Form {...props}/>
+        <div className="loader-bar-icon">
+          <DecredLoading hidden={startupError || props.isInputRequest} />
+        </div>
+        { Form && <Form {...{ ...props, startupError }}/> }
       </Aux>
     </div>
   </div>
