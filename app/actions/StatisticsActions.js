@@ -293,7 +293,10 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       var spenderInputs = decodedSpender.getTransaction().getInputsList();
       var ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].getPreviousTransactionHash());
       var ticket = liveTickets[ticketHash];
-      if (!ticket) throw "Previous live ticket not found: " + ticketHash;
+      if (!ticket) {
+        console.log("live tickets", liveTickets);
+        throw "Previous live ticket not found: " + ticketHash;
+      }
       var returnAmount = tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0);
       var wasWallet = ticket.isWallet;
       return { spendable: +returnAmount, locked: wasWallet ? -ticket.commitAmount : 0,

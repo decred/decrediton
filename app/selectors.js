@@ -312,6 +312,7 @@ export const totalValueOfLiveTickets = createSelector(
   (balances) => {
     if (!balances) return 0;
     const lastBalance = balances[balances.length-1];
+    if (!lastBalance) return 0;
     return lastBalance.series.locked + lastBalance.series.lockedNonWallet;
   }
 );
