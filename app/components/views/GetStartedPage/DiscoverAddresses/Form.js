@@ -1,4 +1,3 @@
-import Header from "../DefaultHeader";
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
@@ -10,17 +9,6 @@ const messages = defineMessages({
     defaultMessage: "Private Passphrase"
   }
 });
-
-const DiscoverAddressesFormHeader = ({
-  startupError
-}) => (
-  <Header
-    headerMetaOverview={<T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />}
-    headerTop={startupError
-      ? <div key="pubError" className="get-started-view-notification-error">{startupError}</div>
-      : <div key="pubError" ></div>}
-  />
-);
 
 const DiscoverAddressesFormBodyBase = ({
   passPhrase,
@@ -77,4 +65,4 @@ const DiscoverAddressesFormBodyBase = ({
 );
 const DiscoverAddressesFormBody = injectIntl(DiscoverAddressesFormBodyBase);
 
-export { DiscoverAddressesFormHeader, DiscoverAddressesFormBody };
+export { DiscoverAddressesFormBody };

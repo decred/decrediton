@@ -1,9 +1,11 @@
-import { LinearProgressFull } from "indicators";
+import { LinearProgressFull, DecredLoading } from "indicators";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { SlateGrayButton, InvisibleButton } from "buttons";
 import "style/GetStarted.less";
 
 export default ({
+  Form,
+  text,
   getCurrentBlockCount,
   getDaemonStarted,
   getNeededBlocks,
@@ -12,6 +14,7 @@ export default ({
   onShowSettings,
   onShowLogs,
   onShowTutorial,
+  ...props,
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
@@ -47,6 +50,7 @@ export default ({
           </div>
           <div className="loader-bar">
             <LinearProgressFull
+              barText={text}
               min={0}
               max={getNeededBlocks}
               value={getCurrentBlockCount}
@@ -56,6 +60,11 @@ export default ({
               <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({getCurrentBlockCount} / {getNeededBlocks})</span>
             </div>
           </div>
+          <DecredLoading
+            hidden={props.startupError || props.isInputRequest || props.showSettings || props.showLogs}
+            className="get-started-loading"
+          />
+          <Form {...props}/>
         </Aux> :
         <div></div> }
     </div>
