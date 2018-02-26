@@ -2,7 +2,7 @@ import OpenWallet from "./OpenWallet";
 import DaemonLoading from "./DaemonLoading";
 import Logs from "./Logs";
 import Settings from "./Settings";
-import { WalletSelectionHeader, WalletSelectionBody } from "./WalletSelection";
+import { WalletSelectionBody } from "./WalletSelection";
 import { CheckWalletStateBody } from "./CheckWalletState";
 import { StartRPCBody } from "./StartRPC";
 import { DiscoverAddressesBody } from "./DiscoverAddresses";
@@ -10,6 +10,7 @@ import { FetchBlockHeadersBody } from "./FetchBlockHeaders";
 import { AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
 import { RescanWalletBody } from "./RescanWallet/index";
 import { walletStartup } from "connectors";
+import { FormattedMessage as T } from "react-intl";
 
 @autobind
 class GetStartedPage extends React.Component {
@@ -91,7 +92,8 @@ class GetStartedPage extends React.Component {
         }
       }
     } else if (!getWalletReady) {
-      text = WalletSelectionHeader;
+      console.log("herer");
+      text = <T id="getStarted.walletSelect.title" m="Select the Wallet to Load" />;
       Form = WalletSelectionBody;
     } else if (isPrepared) {
       switch (startStepIndex || 0) {
@@ -113,15 +115,14 @@ class GetStartedPage extends React.Component {
         Form = RescanWalletBody;
         break;
       default:
-        Form = <T id="getStarted.header.finalizingSetup.meta" m="Finalizing setup" />;
+        text = <T id="getStarted.header.finalizingSetup.meta" m="Finalizing setup" />;
       }
     }
 
-    return <DaemonLoading {...{
+    return <DaemonLoading Form={Form} {...{
       ...props,
       ...state,
       text,
-      Form,
       showSettings,
       showLogs,
       onShowSettings,

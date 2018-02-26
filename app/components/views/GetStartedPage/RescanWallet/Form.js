@@ -10,25 +10,23 @@ const RescanWalletFormBody = ({
 }) => (
   showLongWaitMessage &&
     <Aux>
-      <div className="get-started-content-instructions">
-        <LinearProgress
-          mode="determinate"
-          min={rescanStartBlock}
-          max={rescanEndBlock}
-          value={rescanCurrentBlock}
-        />
+      <LinearProgress
+        mode="determinate"
+        min={rescanStartBlock}
+        max={rescanEndBlock}
+        value={rescanCurrentBlock}
+      />
 
-        <T
-          id="getStarted.walletRescan.progress"
-          m="Rescan Progress ({rescanCurrentBlock} / {rescanEndBlock})"
-          values={{
-            rescanCurrentBlock: rescanCurrentBlock > rescanStartBlock
-              ? rescanCurrentBlock
-              : rescanStartBlock,
-            rescanEndBlock: rescanEndBlock
-          }}
-        />
-      </div>
+      <T
+        id="getStarted.walletRescan.progress"
+        m="Rescan Progress ({rescanCurrentBlock} / {rescanEndBlock})"
+        values={{
+          rescanCurrentBlock: rescanCurrentBlock > rescanStartBlock
+            ? rescanCurrentBlock
+            : rescanStartBlock,
+          rescanEndBlock: rescanEndBlock
+        }}
+      />
     </Aux>
 );
 

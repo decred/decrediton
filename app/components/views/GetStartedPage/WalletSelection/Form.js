@@ -1,14 +1,7 @@
-import Header from "Header";
 import CreateWalletForm from "./CreateWalletForm";
 import SelectAvailableWalletsForm from "./SelectAvailableWalletsForm";
 import { FormattedMessage as T, injectIntl } from "react-intl";
 import "style/LoginForm.less";
-
-export const WalletSelectionFormHeader = () => (
-  <Header getStarted
-    headerTitleOverview={<T id="getStarted.walletSelect.title" m="Select the Wallet to Load" />}
-    headerMetaOverview={<T id="getStarted.walletSelect.meta" m="Please select which wallet you would like to load for usage." />} />
-);
 
 const WalletSelectionBodyBase = ({
   availableWallets,

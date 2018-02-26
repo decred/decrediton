@@ -20,7 +20,7 @@ const DiscoverAddressesFormBodyBase = ({
   onKeyDown
 }) => (
   isInputRequest ? (
-    <div className="get-started-content-new-seed page-content">
+    <Aux>
       <div className="get-started-content-instructions">
         <T id="getStarted.discoverAccountsInfo" m={`
           Enter the passphrase you just created to scan the blockchain for additional accounts you may have previously created with your wallet.
@@ -60,7 +60,7 @@ const DiscoverAddressesFormBodyBase = ({
           </div>
         </div>
       </div>
-    </div>
+    </Aux>
   ) : null
 );
 const DiscoverAddressesFormBody = injectIntl(DiscoverAddressesFormBodyBase);

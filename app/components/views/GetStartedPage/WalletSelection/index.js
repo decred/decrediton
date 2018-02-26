@@ -1,5 +1,4 @@
 import {
-  WalletSelectionFormHeader as WalletSelectionHeader,
   WalletSelectionFormBody
 } from "./Form";
 
@@ -29,6 +28,7 @@ class WalletSelectionBody extends React.Component {
   }
 
   render() {
+    console.log("hafsdf");
     const {
       onChangeAvailableWallets,
       startWallet,
@@ -106,4 +106,4 @@ class WalletSelectionBody extends React.Component {
 
 }
 
-export { WalletSelectionHeader, WalletSelectionBody };
+export { WalletSelectionBody };
