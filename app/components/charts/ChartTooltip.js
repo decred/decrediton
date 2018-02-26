@@ -4,7 +4,11 @@ import "style/Chart.less";
 
 const ChartLegend = (props) => {
   const { payload } = props;
-  const rowLegend = payload[0] && payload[0].payload.legendName;
+  if (!payload || payload.length === 0 || !payload[0] || !payload[0].payload || !payload[0].payload.legendName) {
+    return null;
+  }
+
+  const rowLegend = payload[0].payload.legendName;
 
   return (
     <div className="chart-tooltip">

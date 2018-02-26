@@ -8,7 +8,7 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
   const secondary = large ? "balance-tiny" : flat ? "balance-base" : title ? "balance-title" : "balance-small";
   if (currencyDisplay === "DCR") {
     var totalDcr = 0;
-    if (typeof amount !== "undefined" && amount !== 0) {
+    if (typeof amount !== "undefined" && amount !== 0 && !isNaN(amount)) {
       totalDcr = preScaled ? parseFloat(amount) : parseInt(amount) / 100000000;
     }
     const split = totalDcr.toFixed(8).toString().split(".");
