@@ -24,11 +24,13 @@ class OpenWallet extends React.Component {
       onSetPublicPassPhrase,
       onOpenWallet
     } = this;
-
+    const { isInputRequest } = this.props;
+    console.log(isInputRequest);
     return (
       <OpenWalletDecryptFormBody
         {...{
           ...this.props,
+          isInputRequest,
           publicPassPhrase,
           hasAttemptedOpen,
           onSetPublicPassPhrase,

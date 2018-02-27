@@ -85,7 +85,7 @@ class GetStartedPage extends React.Component {
       case 2:
         if (hasExistingWallet) {
           text = <T id="getStarted.decrypt.info" m="This wallet is encrypted, please enter the public passphrase to decrypt it." />;
-          Form = <OpenWallet {...props} />;
+          Form = OpenWallet;
         } else {
           return <CreateWallet {...props} />;
         }
