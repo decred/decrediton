@@ -1,4 +1,5 @@
 import OpenWallet from "./OpenWallet";
+import CreateWallet from "./CreateWallet";
 import DaemonLoading from "./DaemonLoading";
 import Logs from "./Logs";
 import Settings from "./Settings";
@@ -52,6 +53,7 @@ class GetStartedPage extends React.Component {
       getWalletReady,
       remoteAppdataError,
       startupError,
+      hasExistingWallet,
       ...props
     } = this.props;
 
@@ -81,7 +83,13 @@ class GetStartedPage extends React.Component {
           <T id="getStarted.header.checkingWalletState.meta" m="Checking wallet state" />;
         break;
       case 2:
-        return <OpenWallet {...props} />;
+        if (hasExistingWallet) {
+          text = <T id="getStarted.decrypt.info" m="This wallet is encrypted, please enter the public passphrase to decrypt it." />;
+          Form = <OpenWallet {...props} />;
+        } else {
+          return <CreateWallet {...props} />;
+        }
+        break;
       default:
         text = <T id="getStarted.advanced.title" m="Advanced Daemon Set Up" />;
         if (isAdvancedDaemon && openForm && !remoteAppdataError) {
@@ -117,17 +125,19 @@ class GetStartedPage extends React.Component {
       }
     }
 
-    return <DaemonLoading Form={Form} {...{
-      ...props,
-      ...state,
-      text,
-      startupError,
-      showSettings,
-      showLogs,
-      onShowSettings,
-      onHideSettings,
-      onShowLogs,
-      onHideLogs }} />;
+    return <DaemonLoading Form={Form}
+      {...{
+        ...props,
+        ...state,
+        text,
+        startupError,
+        showSettings,
+        showLogs,
+        onShowSettings,
+        onHideSettings,
+        onShowLogs,
+        onHideLogs
+      }} />;
   }
 }
 

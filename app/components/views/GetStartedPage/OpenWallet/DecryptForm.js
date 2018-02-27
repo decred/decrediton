@@ -19,11 +19,11 @@ const OpenWalletDecryptFormBodyBase = ({
   onOpenWallet,
   onKeyDown
 }) => (
-  isInputRequest ? (
-    <div className="get-started-view">
-      <div className="get-started-form-ct">
+  isInputRequest &&
+    <Aux>
+      <div className="getstarted-form-ct">
         <div className="get-started-content-instructions">
-          <T id="getStarted.decrypt.info" m="This wallet is encrypted, please enter the public passphrase to decrypt it." />
+
         </div>
         <div className="get-started-field-ct">
           <div className="get-started-label">
@@ -55,9 +55,8 @@ const OpenWalletDecryptFormBodyBase = ({
           </div>
         </div>
       </div>
-    </div>
-  ) : null
+    </Aux>
 );
 const OpenWalletDecryptFormBody = injectIntl(OpenWalletDecryptFormBodyBase);
 
-export { OpenWalletDecryptFormBody };
+export default OpenWalletDecryptFormBody;

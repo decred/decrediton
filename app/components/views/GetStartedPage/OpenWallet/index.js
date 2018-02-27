@@ -1,5 +1,4 @@
-import { OpenWalletDecryptFormBody } from "./DecryptForm";
-import OpenWalletCreateForm from "./CreateForm";
+import OpenWalletDecryptFormBody from "./DecryptForm";
 
 @autobind
 class OpenWallet extends React.Component {
@@ -21,40 +20,23 @@ class OpenWallet extends React.Component {
 
   render() {
     const { publicPassPhrase, hasAttemptedOpen, onKeyDown } = this.state;
-    const { hasExistingWallet } = this.props;
     const {
       onSetPublicPassPhrase,
       onOpenWallet
     } = this;
 
     return (
-      <div className="page-body getstarted">
-        {hasExistingWallet ?
-          <OpenWalletDecryptFormBody
-            {...{
-              ...this.props,
-              publicPassPhrase,
-              hasAttemptedOpen,
-              onSetPublicPassPhrase,
-              onOpenWallet,
-              onKeyDown
-            }}
-          /> :
-          <OpenWalletCreateForm
-            {...{
-              ...this.props
-            }}
-          />
-        }
-      </div>);
-  }
-
-  onToggleNewExisting(side) {
-    if (side == "right") {
-      this.props.onSetCreateWalletFromExisting(true);
-    } else if (side == "left") {
-      this.props.onSetCreateWalletFromExisting(false);
-    }
+      <OpenWalletDecryptFormBody
+        {...{
+          ...this.props,
+          publicPassPhrase,
+          hasAttemptedOpen,
+          onSetPublicPassPhrase,
+          onOpenWallet,
+          onKeyDown
+        }}
+      />
+    );
   }
 
   resetState() {
@@ -75,7 +57,7 @@ class OpenWallet extends React.Component {
   }
 
   onKeyDown(e) {
-    if(e.keyCode == 13) {     // Enter key
+    if(e.keyCode == 13) {
       e.preventDefault();
       this.onOpenWallet();
     }

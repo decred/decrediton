@@ -2,7 +2,7 @@ import CreateWalletForm from "./CreateWalletForm";
 import ExistingOrNewScreen from "./ExistingOrNewScreen";
 import "style/GetStarted.less";
 
-const OpenWalletCreateForm = ({
+const CreateForm = ({
   existingOrNew,
   onReturnToNewSeed,
   onReturnToExistingOrNewScreen,
@@ -13,4 +13,4 @@ const OpenWalletCreateForm = ({
     <CreateWalletForm {...{ onReturnToNewSeed, onReturnToExistingOrNewScreen } }/>
 );
 
-export default OpenWalletCreateForm;
+export default CreateForm;
