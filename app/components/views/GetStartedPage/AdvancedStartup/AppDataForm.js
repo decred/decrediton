@@ -1,6 +1,5 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { PathBrowseInput } from "inputs";
-import { KeyBlueButton } from "buttons";
 import "style/LoginForm.less";
 
 const messages = defineMessages({
@@ -11,7 +10,6 @@ const messages = defineMessages({
 });
 
 const AppDataForm = ({
-  onSubmitAppData,
   setAppData,
   appData,
   intl
@@ -31,11 +29,6 @@ const AppDataForm = ({
             placeholder={intl.formatMessage(messages.appdataFieldPlaceholder)}
           />
         </div>
-      </div>
-      <div className="advanced-daemon-row">
-        <KeyBlueButton onClick={onSubmitAppData}>
-          <T id="login.form.appdata.button" m="Start AppData Daemon" />
-        </KeyBlueButton>
       </div>
     </Aux>
   );

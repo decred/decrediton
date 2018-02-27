@@ -13,41 +13,33 @@ const messages = defineMessages({
 const OpenWalletDecryptFormBodyBase = ({
   isInputRequest,
   publicPassPhrase,
-  hasAttemptedOpen,
   intl,
   onSetPublicPassPhrase,
   onOpenWallet,
   onKeyDown
 }) => (
   isInputRequest &&
-    <Aux>
-      <div className="get-started-field-ct">
-        <div className="get-started-label">
-          <T id="getStarted.decrypt.label" m="Decrypt Wallet" />
-        </div>
-        <div className="get-started-field">
-          <PasswordInput
-            autoFocus
-            className="get-started-input-private-password"
-            placeholder={intl.formatMessage(messages.publicPassphrasePlaceholder)}
-            value={publicPassPhrase}
-            onChange={(e) => onSetPublicPassPhrase(e.target.value)}
-            onKeyDown={onKeyDown}/>
-        </div>
-        {(hasAttemptedOpen && !publicPassPhrase) ? (
-          <div className="get-started-priv-pass-error">
-            <T id="getStarted.decrypt.errors.noPublicPassphrase" m="*Please enter your public passphrase" />
-          </div>
-        ) : null}
+  <div className="advanced-page-form">
+    <div className="advanced-daemon-row">
+      <div className="advanced-daemon-label">
+        <T id="getStarted.decrypt.label" m="Decrypt Wallet" />
       </div>
-      <div className="get-started-field-ct">
-        <div className="get-started-field">
-          <KeyBlueButton onClick={onOpenWallet}>
-            <T id="getStarted.decrypt.openWalletBtn" m="Open Wallet" />
-          </KeyBlueButton>
-        </div>
+      <div className="advanced-daemon-input">
+        <PasswordInput
+          autoFocus
+          className="get-started-input-private-password"
+          placeholder={intl.formatMessage(messages.publicPassphrasePlaceholder)}
+          value={publicPassPhrase}
+          onChange={(e) => onSetPublicPassPhrase(e.target.value)}
+          onKeyDown={onKeyDown}/>
       </div>
-    </Aux>
+    </div>
+    <div className="loader-bar-buttons">
+      <KeyBlueButton onClick={onOpenWallet}>
+        <T id="advancedStartup.skip" m="Open Wallet"/>
+      </KeyBlueButton>
+    </div>
+  </div>
 );
 
 export default injectIntl(OpenWalletDecryptFormBodyBase);

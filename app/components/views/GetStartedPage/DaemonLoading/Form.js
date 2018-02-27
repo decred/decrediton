@@ -8,6 +8,7 @@ export default ({
   text,
   getCurrentBlockCount,
   getDaemonStarted,
+  getDaemonSynced,
   getNeededBlocks,
   finishDateEstimation,
   onShowSettings,
@@ -38,16 +39,19 @@ export default ({
         <div className="loader-bar">
           <LinearProgressFull
             error={startupError}
+            full={getDaemonSynced}
             disabled={!getDaemonStarted || getCurrentBlockCount == null}
             barText={text}
             min={0}
             max={getNeededBlocks}
             value={getCurrentBlockCount}
           />
-          <div className="loader-bar-estimation">
-            <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
-            <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({getCurrentBlockCount} / {getNeededBlocks})</span>
-          </div>
+          {!getDaemonStarted || getCurrentBlockCount == null || getDaemonSynced ? <div></div> :
+            <div className="loader-bar-estimation">
+              <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
+              <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({getCurrentBlockCount} / {getNeededBlocks})</span>
+            </div>
+          }
         </div>
         <div className="loader-bar-icon">
           <DecredLoading hidden={startupError || props.isInputRequest} />
