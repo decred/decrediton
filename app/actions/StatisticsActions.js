@@ -307,7 +307,7 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     case wallet.TRANSACTION_TYPE_COINBASE:
     case wallet.TRANSACTION_TYPE_REGULAR:
       return { spendable: +tx.amount, locked: 0, lockedNonWallet: 0, voted: 0,
-        revoked: 0, sent: tx.amount < 0 ? -tx.amount : 0,
+        revoked: 0, sent: tx.amount < 0 ? tx.amount : 0,
         received: tx.amount > 0 ? tx.amount : 0, ticket: 0, immature: 0,
         immatureNonWallet: 0, timestamp: tx.timestamp, tx };
     default: throw "Unknown tx type: " + tx.txType;
