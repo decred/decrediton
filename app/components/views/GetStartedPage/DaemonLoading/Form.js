@@ -39,7 +39,7 @@ export default ({
         <div className="loader-bar">
           <LinearProgressFull
             error={startupError}
-            full={getDaemonSynced}
+            getDaemonSynced={getDaemonSynced}
             disabled={!getDaemonStarted || getCurrentBlockCount == null}
             barText={text}
             min={0}
