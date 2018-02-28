@@ -8,10 +8,14 @@ export const StartRPCBody = ({
   onRetryStartRPC
 }) => (
   startupError &&
-    <Aux>
+  <div className="advanced-page-form">
+    <div className="advanced-daemon-row">
       <ShowError className="get-started-error" error="Connection to dcrd failed, please try and reconnect." />
+    </div>
+    <div className="loader-bar-buttons">
       <KeyBlueButton className="get-started-rpc-retry-button" onClick={onRetryStartRPC}>
         <T id="getStarted.retryBtn" m="Retry" />
       </KeyBlueButton>
-    </Aux>
+    </div>
+  </div>
 );
