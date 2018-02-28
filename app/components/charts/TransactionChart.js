@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, ReferenceLine, Tooltip } from "recharts";
 import messages from "./messages";
 import { injectIntl } from "react-intl";
 import ChartTooltip from "./ChartTooltip";
@@ -21,6 +21,7 @@ const BalanceChart = ({ data, intl }) => {
       <XAxis dataKey="name" style={xAxisStyle} />
       <YAxis orientation="right" style={yAxisStyle} padding={padding}/>
       <Tooltip content={<ChartTooltip />} />
+      <ReferenceLine y={0} />
       <Bar dataKey={sentKey} stackId="a" fill="#fd704a" barSize={8} radius={radiusFull} />
       <Bar dataKey={receivedKey} stackId="a" fill="#41bf53" barSize={8} radius={radiusFull} />
     </BarChart>
