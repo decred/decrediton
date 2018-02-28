@@ -1,6 +1,7 @@
 import CreateWalletForm from "./CreateWalletForm";
 import SelectAvailableWalletsForm from "./SelectAvailableWalletsForm";
 import { FormattedMessage as T, injectIntl } from "react-intl";
+import { KeyBlueButton, RemoveWalletButton } from "buttons";
 import "style/LoginForm.less";
 
 const WalletSelectionBodyBase = ({
@@ -8,6 +9,10 @@ const WalletSelectionBodyBase = ({
   sideActive,
   onShowCreateWallet,
   onShowSelectWallet,
+  createWallet,
+  startWallet,
+  onRemoveWallet,
+  selectedWallet,
   intl,
   ...props,
 }) => {
@@ -25,12 +30,37 @@ const WalletSelectionBodyBase = ({
           </div>
         </div>
         <div className="advanced-page-form">
-          {sideActive ? <CreateWalletForm {...{ ...props, intl }} />:<SelectAvailableWalletsForm {...{ ...props, intl, availableWallets }} />}
+          {sideActive ? <CreateWalletForm {...{ ...props, intl }} />:<SelectAvailableWalletsForm {...{ ...props, intl, selectedWallet, availableWallets }} />}
+        </div>
+        <div className="loader-bar-buttons">
+          {sideActive ?
+            <KeyBlueButton onClick={createWallet}>
+              <T id="wallet.create.button" m="Create new wallet" />
+            </KeyBlueButton> :
+            <Aux>
+              <KeyBlueButton onClick={startWallet}>
+                <T id="wallet.form.start.btn" m="Start selected wallet"/>
+              </KeyBlueButton>
+              <RemoveWalletButton
+                modalTitle={<T id="stakepools.list.removeConfirmTitle" m="Remove {wallet}"
+                  values={{ wallet: (<span className="mono">{selectedWallet && selectedWallet.label}</span>) }}/>}
+                buttonLabel={<T id="stakepools.list.btnRemove" m="Remove"/>}
+                modalContent={
+                  <T id="stakepools.list.confirmRemove" m="Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding."/>}
+                onSubmit={() => onRemoveWallet(selectedWallet)}
+                danger/>
+            </Aux>
+          }
         </div>
       </div> :
       <div className="advanced-page">
         <div className="advanced-page-form">
           <CreateWalletForm {...{ ...props, intl }} />
+        </div>
+        <div className="loader-bar-buttons">
+          <KeyBlueButton onClick={createWallet}>
+            <T id="wallet.create.button" m="Create new wallet" />
+          </KeyBlueButton>
         </div>
       </div>
   );

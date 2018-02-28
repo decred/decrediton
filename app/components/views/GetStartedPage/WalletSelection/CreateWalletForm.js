@@ -1,6 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
-import { KeyBlueButton, NetworkSwitch } from "buttons";
+import { NetworkSwitch } from "buttons";
 import "style/LoginForm.less";
 
 const messages = defineMessages({
@@ -11,7 +11,6 @@ const messages = defineMessages({
 });
 
 const CreateWalletForm = ({
-  createWallet,
   newWalletName,
   newWalletNetwork,
   onChangeCreateWalletName,
@@ -42,11 +41,6 @@ const CreateWalletForm = ({
         <div className="advanced-daemon-input">
           <NetworkSwitch enabled={newWalletNetwork !== "mainnet"} onClick={onChangeCreateWalletNetwork} />
         </div>
-      </div>
-      <div className="advanced-daemon-row">
-        <KeyBlueButton onClick={createWallet}>
-          <T id="wallet.create.button" m="Create new wallet" />
-        </KeyBlueButton>
       </div>
     </Aux>
   );
