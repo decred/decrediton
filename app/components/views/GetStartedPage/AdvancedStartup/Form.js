@@ -38,7 +38,7 @@ const AdvancedBodyBase = ({
           </div>
         </div>
       </div>
-      <div className="advanced-page-form">
+      <div className="advanced-page-form toggle">
         {sideActive ?
           <RemoteDaemonForm {...{
             ...props,
@@ -62,19 +62,19 @@ const AdvancedBodyBase = ({
             intl
           }} />
         }
-      </div>
-      <div className="loader-bar-buttons">
-        <InvisibleButton onClick={skipAdvancedDaemon}>
-          <T id="advancedStartup.skip" m="Skip"/>
-        </InvisibleButton>
-        { sideActive ?
-          <KeyBlueButton onClick={onSubmitRemoteForm}>
-            <T id="login.form.connect.button" m="Use Remote Daemon" />
-          </KeyBlueButton> :
-          <KeyBlueButton onClick={onSubmitAppDataForm}>
-            <T id="login.form.appdata.button" m="Start AppData Daemon" />
-          </KeyBlueButton>
-        }
+        <div className="loader-bar-buttons">
+          <InvisibleButton onClick={skipAdvancedDaemon}>
+            <T id="advancedStartup.skip" m="Skip"/>
+          </InvisibleButton>
+          { sideActive ?
+            <KeyBlueButton onClick={onSubmitRemoteForm}>
+              <T id="login.form.connect.button" m="Use Remote Daemon" />
+            </KeyBlueButton> :
+            <KeyBlueButton onClick={onSubmitAppDataForm}>
+              <T id="login.form.appdata.button" m="Start AppData Daemon" />
+            </KeyBlueButton>
+          }
+        </div>
       </div>
     </Aux>
   );

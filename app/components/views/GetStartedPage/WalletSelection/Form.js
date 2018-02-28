@@ -18,7 +18,7 @@ const WalletSelectionBodyBase = ({
 }) => {
   return (
     availableWallets && availableWallets.length > 0 ?
-      <div className="advanced-page">
+      <Aux>
         <div className="advanced-page-toggle">
           <div className="text-toggle">
             <div className={"text-toggle-button-left " + (!sideActive && "text-toggle-button-active")} onClick={sideActive ? onShowCreateWallet : null}>
@@ -29,34 +29,32 @@ const WalletSelectionBodyBase = ({
             </div>
           </div>
         </div>
-        <div className="advanced-page-form">
+        <div className="advanced-page-form toggle">
           {sideActive ? <CreateWalletForm {...{ ...props, intl }} />:<SelectAvailableWalletsForm {...{ ...props, intl, selectedWallet, availableWallets }} />}
+          <div className="loader-bar-buttons">
+            {sideActive ?
+              <KeyBlueButton onClick={createWallet}>
+                <T id="wallet.create.button" m="Create new wallet" />
+              </KeyBlueButton> :
+              <Aux>
+                <KeyBlueButton onClick={startWallet}>
+                  <T id="wallet.form.start.btn" m="Start selected wallet"/>
+                </KeyBlueButton>
+                <RemoveWalletButton
+                  modalTitle={<T id="stakepools.list.removeConfirmTitle" m="Remove {wallet}"
+                    values={{ wallet: (<span className="mono">{selectedWallet && selectedWallet.label}</span>) }}/>}
+                  buttonLabel={<T id="stakepools.list.btnRemove" m="Remove"/>}
+                  modalContent={
+                    <T id="stakepools.list.confirmRemove" m="Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding."/>}
+                  onSubmit={() => onRemoveWallet(selectedWallet)}
+                  danger/>
+              </Aux>
+            }
+          </div>
         </div>
-        <div className="loader-bar-buttons">
-          {sideActive ?
-            <KeyBlueButton onClick={createWallet}>
-              <T id="wallet.create.button" m="Create new wallet" />
-            </KeyBlueButton> :
-            <Aux>
-              <KeyBlueButton onClick={startWallet}>
-                <T id="wallet.form.start.btn" m="Start selected wallet"/>
-              </KeyBlueButton>
-              <RemoveWalletButton
-                modalTitle={<T id="stakepools.list.removeConfirmTitle" m="Remove {wallet}"
-                  values={{ wallet: (<span className="mono">{selectedWallet && selectedWallet.label}</span>) }}/>}
-                buttonLabel={<T id="stakepools.list.btnRemove" m="Remove"/>}
-                modalContent={
-                  <T id="stakepools.list.confirmRemove" m="Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding."/>}
-                onSubmit={() => onRemoveWallet(selectedWallet)}
-                danger/>
-            </Aux>
-          }
-        </div>
-      </div> :
-      <div className="advanced-page">
-        <div className="advanced-page-form">
-          <CreateWalletForm {...{ ...props, intl }} />
-        </div>
+      </Aux> :
+      <div className="advanced-page-form">
+        <CreateWalletForm {...{ ...props, intl }} />
         <div className="loader-bar-buttons">
           <KeyBlueButton onClick={createWallet}>
             <T id="wallet.create.button" m="Create new wallet" />
