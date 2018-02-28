@@ -25,7 +25,6 @@ class OpenWallet extends React.Component {
       onOpenWallet
     } = this;
     const { isInputRequest } = this.props;
-    console.log(isInputRequest);
     return (
       <OpenWalletDecryptFormBody
         {...{
