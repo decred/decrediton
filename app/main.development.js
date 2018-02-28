@@ -201,33 +201,35 @@ function closeClis() {
     closeDCRW();
 }
 
-function cleanShutdown() {
+async function cleanShutdown() {
   // Attempt a clean shutdown.
-  const cliShutDownPause = 2; // in seconds.
-  const shutDownPause = 3; // in seconds.
-  closeClis();
-  // Sent shutdown message again as we have seen it missed in the past if they
-  // are still running.
-  setTimeout(function () { closeClis(); }, cliShutDownPause * 1000);
-  logger.log("info", "Closing decrediton.");
+  return new Promise(resolve => {
+    const cliShutDownPause = 2; // in seconds.
+    const shutDownPause = 3; // in seconds.
+    closeClis();
+    // Sent shutdown message again as we have seen it missed in the past if they
+    // are still running.
+    setTimeout(function () { closeClis(); }, cliShutDownPause * 1000);
+    logger.log("info", "Closing decrediton.");
 
-  let shutdownTimer = setInterval(function(){
-    const stillRunning = (require("is-running")(dcrdPID) && os.platform() != "win32");
+    let shutdownTimer = setInterval(function(){
+      const stillRunning = (require("is-running")(dcrdPID) && os.platform() != "win32");
 
-    if (!stillRunning) {
-      logger.log("info", "Final shutdown pause. Quitting app.");
-      clearInterval(shutdownTimer);
-      if (mainWindow) {
-        mainWindow.webContents.send("daemon-stopped");
-        setTimeout(() => {mainWindow.close(); app.quit();}, 1000);
-      } else {
-        app.quit();
+      if (!stillRunning) {
+        logger.log("info", "Final shutdown pause. Quitting app.");
+        clearInterval(shutdownTimer);
+        if (mainWindow) {
+          mainWindow.webContents.send("daemon-stopped");
+          setTimeout(() => {mainWindow.close(); app.quit();}, 1000);
+        } else {
+          app.quit();
+        }
+        resolve(true);
       }
-      return;
-    }
-    logger.log("info", "Daemon still running in final shutdown pause. Waiting.");
+      logger.log("info", "Daemon still running in final shutdown pause. Waiting.");
 
-  }, shutDownPause*1000);
+    }, shutDownPause*1000);
+  });
 }
 
 const installExtensions = async () => {
@@ -383,8 +385,8 @@ ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
   });
 });
 
-ipcMain.on("clean-shutdown", () => {
-  cleanShutdown();
+ipcMain.on("clean-shutdown", async function(event){
+  event.returnValue = await cleanShutdown();
 });
 
 ipcMain.on("app-reload-ui", () => {

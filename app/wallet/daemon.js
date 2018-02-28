@@ -11,7 +11,7 @@ export const startDaemon = log((walletPath, appData, testnet) => Promise
   }), "Start Daemon");
 
 export const cleanShutdown = log(() => Promise
-  .resolve(ipcRenderer.send("clean-shutdown"))
+  .resolve(ipcRenderer.sendSync("clean-shutdown"))
   .then(stopped => {
     if (!stopped) throw "Error shutting down app";
   }), "Clean Shutdown");
