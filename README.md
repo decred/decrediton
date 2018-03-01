@@ -93,27 +93,31 @@ yarn dev
 ```
 
 ## Setting up your development environment
+The following steps will help you configure your decrediton development environment and reduce future startup times.
 
-### Testnet
-When you run ```yarn dev``` in the previous section, you will be developing on the ```testnet```. The first time you run, you may get a "Failed to connect wallet by deadline error".  If so, make sure you change your config.json:
-```bash
-"network": "testnet",
-```
+### Wallet
+When you launch decrediton, you will be prompted to select a wallet to use. Select your wallet or create a new one using the in-app wizard. Be sure to save your seed and make your password memorable.
+
+### Decred Node
+It will be helpful to you to run the Decred node in a separate process and simply attach to it between decrediton restarts. In order to see the advanced daemon configuration options you open your ```config.json``` and set the ```daemon_start_advanced``` flag to ```true``` as follows:
+
+```"daemon_start_advanced": true,```
+
 Note: Your config.json file is located in the following directory(s)
 
 Windows - ```~/.config/decrediton/config.json``` 
 
 OSX - ```$HOME/Library/Application\ Support/decrediton/config.json```
 
-### Wallet
-When you launch decrediton, you will be prompted to select a wallet to use. Select your wallet or create a new one using the in-app wizard. Be sure to save your seed and make your password memorable.
+Linux - ```~/.decrediton/config.json```
 
-### Decred Node
-It will be helpful to you to run the Decred node in a separate process and simply attach to it between decrediton restarts. Run the following to start the Decred daemon in a standalone terminal window:
+Run the following to start the Decred daemon in a standalone terminal window:
 
 Windows - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=$HOME/.dcrd/rpc.cert``` 
 
 OSX - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=$HOME/Library/Application\ Support/Dcrd/rpc.cert```
+
+Linux - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=~/.dcrd/rpc.cert```
 
 You can connect to this daemon in ```Advanced Startup => Different Local Daemon Location``` and input the parameters requested. Note that all the parameters needed are present in the command you used to start the node for your respective system.
 
