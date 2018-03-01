@@ -43,3 +43,12 @@ export function formatLocalISODate(d) {
     pad(d.getSeconds(), 2), pad(d.getMilliseconds(), 3),
     tzOffsetSign, pad(tzOffsetHours, 2), pad(tzOffsetMinutes, 2));
 }
+
+// calculate the difference between two timestamps and return an int
+// represent number of days
+export function diffBetweenTwoTs(date1, date2) {
+  const oneDay = 24*60*60*1000;
+  const firstDate = tsToDate(date1);
+  const secondDate = tsToDate(date2);
+  return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+}

@@ -30,6 +30,25 @@
   color: #2ed8a3;
 }
 
+.pending-overview-details {
+  background: #f3f6f6;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.tx-history-row-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.is-overview-pending {
+  display: flex;
+  flex-direction: row !important;
+}
+
 .tx-history-row {
   padding: 14px 40px 18px 20px;
   border-bottom: 1px solid #e7eaed;
@@ -41,8 +60,10 @@
   background-size: 5px 10px;
   background-repeat: no-repeat;
   display: flex;
+  flex-basis: 80%;
   justify-content: space-between;
   line-height: 12px;
+  height: 32px;
 }
 
 .tx-history-row:hover {
@@ -82,6 +103,34 @@
 
 .tx-history-row.Revocation .icon {
   background-image: @ticket-revoked-icon;
+}
+
+.tx-history-row.ticket .icon {
+  background-image: @ticket-small-icon;
+}
+
+.tx-history-row.live .icon {
+  background-image: @ticket-live-icon;
+}
+
+.tx-history-row.voted .icon {
+  background-image: @ticket-voted-icon;
+}
+
+.tx-history-row.immature .icon {
+  background-image: @ticket-immature-icon;
+}
+
+.tx-history-row.missed .icon {
+  background-image: @ticket-missed-icon;
+}
+
+.tx-history-row.expired .icon {
+  background-image: @ticket-expired-icon;
+}
+
+.tx-history-row.unmined .icon {
+  background-image: @ticket-unmined-icon;
 }
 
 .transaction-info {
@@ -145,4 +194,69 @@
   position: absolute;
   max-width: 20%;
   margin: 4px 0px 0px 36px;
+}
+
+.stake-transaction-ticket-price {
+  font-family: Inconsolata, monospace;
+  color: #c4cbd2;
+  font-size: 12px;
+  line-height: 11px;
+  margin-right: 22px;
+}
+
+.stake-transaction-ticket-reward {
+  font-family: Inconsolata, monospace;
+  color: #c4cbd2;
+  font-size: 12px;
+  line-height: 11px;
+  margin-left: 15px;
+}
+
+.transaction-stake-type-overview {
+  font-family: Inconsolata, monospace;
+  color: #596d81;
+  font-size: 15px;
+  line-height: 11px;
+  font-weight: bold;
+}
+
+.transaction-stake-info-overview {
+  display: flex;
+  flex-direction: row;
+}
+
+.transaction-info-price-reward {
+  display: flex;
+  flex-direction: row;
+  padding-top: 8px;
+}
+
+.transaction-info-overview-reward-icon {
+  background-image: @ticket-reward-icon;
+  background-repeat: no-repeat;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+}
+
+.transaction-info-overview-lock-icon {
+  background-image: @time-lock-icon;
+  background-repeat: no-repeat;
+  height: 12px;
+  width: 12px;
+  position: absolute;
+}
+
+.transaction-info-overview-days-to-vote {
+  display: flex;
+  margin-top: 8px;
+  font-family: Inconsolata, monospace;
+  color: #c4cbd2;
+  font-size: 12px;
+  line-height: 11px;
+}
+
+.transaction-info-overview-days-to-vote-number {
+  margin-right: 4px;
+  margin-left: 15px;
 }

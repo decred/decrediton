@@ -17,6 +17,7 @@ const HomePage = ({
   transactions,
   getTransactionsRequestAttempt,
   getAccountsResponse,
+  rowNumber
 }) => {
   return (
     <Aux>
@@ -47,11 +48,11 @@ const HomePage = ({
 
       <div className="overview-transactions-ticket-wrapper">
         <div className={tickets.length > 0 ? "recent-transactions" : "recent-transactions-full"}>
-          <RecentTransactions {...{ transactions, getTransactionsRequestAttempt, getAccountsResponse }} />
+          <RecentTransactions {...{ transactions, getTransactionsRequestAttempt, getAccountsResponse, rowNumber }} />
         </div>
         {tickets.length > 0 &&
           <div className="recent-transactions">
-            <TicketActivity {...{ tickets, getTransactionsRequestAttempt, getAccountsResponse }} />
+            <TicketActivity {...{ tickets, getTransactionsRequestAttempt, getAccountsResponse, rowNumber }} />
           </div>
         }
       </div>
