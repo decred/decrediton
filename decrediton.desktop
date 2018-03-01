@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Decrediton
+Comment=Decrediton the Decred wallet
+Exec=decrediton %U
+Terminal=false
+Type=Application
+Icon=decred
+MimeType=x-scheme-handler/decred;
+Categories=Office;Finance;
