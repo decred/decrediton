@@ -386,7 +386,8 @@ ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
 });
 
 ipcMain.on("clean-shutdown", async function(event){
-  event.returnValue = await cleanShutdown();
+  const stopped = await cleanShutdown();
+  event.sender.send("clean-shutdown-finished", stopped);
 });
 
 ipcMain.on("app-reload-ui", () => {
