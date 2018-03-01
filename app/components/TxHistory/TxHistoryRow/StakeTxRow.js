@@ -1,7 +1,7 @@
 import Row from "./Row";
 import { createElement as h } from "react";
 import { FormattedMessage as T } from "react-intl";
-import { Balance } from "shared";
+import { Balance, Tooltip } from "shared";
 
 const messageByType = { // TODO: use constants instead of string
   "Ticket": <T id="transaction.type.ticket" m="Ticket" />,
@@ -23,6 +23,22 @@ const messageByType = { // TODO: use constants instead of string
 const StakeTxRow = ({ status, txType, ...props }) => {
   const { overview, ticketPrice, ticketReward } = props;
 
+  const rewardLabel = <T id="ticket.rewardLabel" m="Ticket Reward" />;
+  const ticketRewardMessage = <T id="ticket.rewardMesage"
+    m={"{rewardLabel}: {reward}"}
+    values={{
+      rewardLabel: rewardLabel,
+      reward: <Balance amount={ticketReward || 0} />,
+    }} />;
+
+  const ticketPriceLabel = <T id="ticket.priceLabel" m="Ticket Price" />;
+  const ticketPriceMessage = <T id="ticket.priceMessage"
+    m={"{ticketPriceLabel}: {ticketPrice}"}
+    values={{
+      ticketPriceLabel: ticketPriceLabel,
+      ticketPrice: <Balance amount={ticketPrice || 0} />,
+    }} />;
+
   return overview ?
     (
       <Row {...{ className: status, ...props }}>
@@ -31,9 +47,13 @@ const StakeTxRow = ({ status, txType, ...props }) => {
           <div>
             <span className="transaction-stake-type-overview">{messageByType[status] || "(unknown type)"}</span>
             <div className="transaction-info-price-reward">
-              <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice}/>
-              <span className="transaction-info-overview-reward-icon"/>
-              <Balance classNameWrapper="stake-transaction-ticket-reward" amount={ticketReward}/>
+              <Tooltip text={ticketPriceMessage}>
+                <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice} />
+              </Tooltip>
+              <Tooltip text={ticketRewardMessage}>
+                <span className="transaction-info-overview-reward-icon"/>
+                <Balance classNameWrapper="stake-transaction-ticket-reward" amount={ticketReward} noSmallAmount />
+              </Tooltip>
             </div>
           </div>
         </div>
