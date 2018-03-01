@@ -2,6 +2,7 @@ import {
   compose, reduce, filter, get, not, or, and, eq, find, bool, map, apply,
   createSelectorEager as createSelector
 } from "./fp";
+import { appLocaleFromElectronLocale } from "./i18n/locales";
 import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
 import { MainNetParams, TestNetParams } from "wallet/constants";
@@ -30,6 +31,7 @@ const START_STEP_RPC2 = 4;
 const START_STEP_DISCOVER = 5;
 const START_STEP_FETCH = 6;
 
+export const setLanguage = get([ "daemon", "setLanguage" ]);
 export const showTutorial = get([ "daemon", "tutorial" ]);
 export const versionInvalid = get([ "version", "versionInvalid" ]);
 export const requiredWalletRPCVersion = get([ "version", "requiredVersion" ]);
@@ -43,6 +45,7 @@ export const getWalletRPCVersionError = get([ "version", "getWalletRPCVersionErr
 export const getLoaderError = get([ "version", "getLoaderError" ]);
 export const hasExistingWallet = compose(r => !!(r && r.getExists()), walletExistResponse);
 export const confirmNewSeed = get([ "walletLoader", "confirmNewSeed" ]);
+export const existingOrNew = get([ "walletLoader", "existingOrNew" ]);
 export const versionInvalidError = createSelector(
   [ versionInvalid, get([ "version", "versionInvalidError" ]) ],
   (invalid, error) => invalid ? error || "Unknown Error" : null
@@ -143,6 +146,11 @@ export const currencies = () => [ { name: "DCR" }, { name: "atoms" } ];
 export const currencyDisplay = get([ "settings", "currentSettings", "currencyDisplay" ]);
 export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
 export const currentLocaleName = get([ "settings", "currentSettings", "locale" ]);
+export const defaultLocaleName = createSelector(
+  [ currentLocaleName ],
+  (currentLocaleName) => {
+    return appLocaleFromElectronLocale(currentLocaleName);
+  });
 
 export const sortedLocales = createSelector(
   [ get([ "locales" ]) ],
@@ -263,107 +271,59 @@ export const homeHistoryTransactions = createSelector(
   [ transactionsNormalizer, get([ "grpc", "recentRegularTransactions" ]) ], apply
 );
 
-export const homeHistoryTickets = createSelector(
-  [ transactionsNormalizer, get([ "grpc", "recentStakeTransactions" ]) ], apply
-);
+const dailyBalancesStats = get([ "statistics", "dailyBalances" ]);
 
 //fake data for balance chart
 export const spendableAndLockedBalance = createSelector(
-  [ transactions ],
-  () => {
-    return [
-      { name: "23.10", available: 4000, locked: 2400, legendName: "23.10.2017" },
-      { name: "24.10", available: 3000, locked: 1398, legendName: "24.10.2017" },
-      { name: "25.10", available: 2000, locked: 7004, legendName: "25.10.2017" },
-      { name: "26.10", available: 2780, locked: 3908, legendName: "26.10.2017" },
-      { name: "27.10", available: 1890, locked: 4800, legendName: "27.10.2017" },
-      { name: "28.10", available: 2390, locked: 3800, legendName: "28.10.2017" },
-      { name: "29.10", available: 3490, locked: 4300, legendName: "29.10.2017" },
-      { name: "30.10", available: 3490, locked: 4300, legendName: "30.10.2017" },
-      { name: "01.11", available: 3490, locked: 4300, legendName: "01.11.2017" },
-      { name: "02.11", available: 3490, locked: 4300, legendName: "02.11.2017" },
-      { name: "03.11", available: 3490, locked: 4300, legendName: "03.11.2017" },
-      { name: "04.11", available: 3490, locked: 4300, legendName: "04.11.2017" },
-      { name: "05.11", available: 3490, locked: 4300, legendName: "05.11.2017" },
-      { name: "06.11", available: 3490, locked: 4300, legendName: "06.11.2017" },
-    ];
-  }
-);
+  [ dailyBalancesStats, unitDivisor ],
+  ( stats, unitDivisor ) => stats.map(s => ({
+    time: s.time,
+    available: s.series.spendable / unitDivisor,
+    locked: (s.series.locked + s.series.lockedNonWallet) / unitDivisor,
+    immature: (s.series.immature + s.series.immatureNonWallet) / unitDivisor,
+  })));
 
 //fake data for transactions tab on overview Page
 export const balanceSent = createSelector(
-  [],
-  () => 65554789521
+  [ dailyBalancesStats ],
+  (balances) => balances.reduce((s, b) => s + b.series.sent, 0)
 );
 
 export const balanceReceived = createSelector(
-  [],
-  () => 86454789521
+  [ dailyBalancesStats ],
+  (balances) => balances.reduce((s, b) => s + b.series.received, 0)
 );
 
 export const sentAndReceivedTransactions = createSelector(
-  [ transactions ],
-  () => {
-    return [
-      { name: "23.10", sent: -4000, received: 2400, legendName: "23.10.2017" },
-      { name: "24.10", sent: -3000, received: 1398, legendName: "24.10.2017" },
-      { name: "25.10", sent: -2000, received: 7004, legendName: "25.10.2017" },
-      { name: "26.10", sent: -2780, received: 3908, legendName: "26.10.2017" },
-      { name: "27.10", sent: -1890, received: 4800, legendName: "27.10.2017" },
-      { name: "28.10", sent: -2390, received: 3800, legendName: "28.10.2017" },
-      { name: "29.10", sent: -3490, received: 4300, legendName: "29.10.2017" },
-      { name: "30.10", sent: -3490, received: 4300, legendName: "30.10.2017" },
-      { name: "01.11", sent: -3490, received: 4300, legendName: "01.11.2017" },
-      { name: "02.11", sent: -3490, received: 4300, legendName: "02.11.2017" },
-      { name: "03.11", sent: -3490, received: 4300, legendName: "03.11.2017" },
-      { name: "04.11", sent: -3490, received: 4300, legendName: "04.11.2017" },
-      { name: "05.11", sent: -3490, received: 4300, legendName: "05.11.2017" },
-      { name: "06.11", sent: -3490, received: 4300, legendName: "06.11.2017" },
-    ];
-  }
-);
+  [ dailyBalancesStats, unitDivisor ],
+  ( stats, unitDivisor ) => stats.map(s => ({
+    time: s.time,
+    sent: s.series.sent / unitDivisor,
+    received: s.series.received / unitDivisor
+  })));
 
 //fake data for ticket tab on overview Page
 export const totalValueOfLiveTickets = createSelector(
-  [],
-  () => 237031094298
-);
-
-export const earnedStakingReward = createSelector(
-  [],
-  () => 6525094298
-);
-
-export const ticketDataChart = createSelector(
-  [ transactions ],
-  () => {
-    return [
-      { name: "23.10", immature: 4000, live: 2400, voted: 4000, legendName: "23.10.2017" },
-      { name: "24.10", immature: 3000, live: 1398, voted: 4000, legendName: "24.10.2017" },
-      { name: "25.10", immature: 2000, live: 7004, voted: 4000, legendName: "25.10.2017" },
-      { name: "26.10", immature: 2780, live: 3908, voted: 4000, legendName: "26.10.2017" },
-      { name: "27.10", immature: 1890, live: 4800, voted: 4000, legendName: "27.10.2017" },
-      { name: "28.10", immature: 2390, live: 3800, voted: 4000, legendName: "28.10.2017" },
-      { name: "29.10", immature: 3490, live: 4300, voted: 4000, legendName: "29.10.2017" },
-      { name: "30.10", immature: 3490, live: 4300, voted: 4000, legendName: "30.10.2017" },
-      { name: "01.11", immature: 3490, live: 4300, voted: 4000, legendName: "01.11.2017" },
-      { name: "02.11", immature: 3490, live: 4300, voted: 4000, legendName: "02.11.2017" },
-      { name: "03.11", immature: 3490, live: 4300, voted: 4000, legendName: "03.11.2017" },
-      { name: "04.11", immature: 3490, live: 4300, voted: 4000, legendName: "04.11.2017" },
-      { name: "05.11", immature: 3490, live: 4300, voted: 4000, legendName: "05.11.2017" },
-      { name: "06.11", immature: 3490, live: 4300, voted: 4000, legendName: "06.11.2017" },
-    ];
+  [ dailyBalancesStats ],
+  (balances) => {
+    if (!balances) return 0;
+    const lastBalance = balances[balances.length-1];
+    if (!lastBalance) return 0;
+    return lastBalance.series.locked + lastBalance.series.lockedNonWallet;
   }
 );
 
-export const viewableTransactions = createSelector(
-  [ transactions, homeHistoryTransactions, homeHistoryTickets ],
-  (transactions, homeTransactions, homeHistoryTickets) => [ ...transactions, ...homeTransactions, ...homeHistoryTickets ]
-);
-export const viewedTransaction = createSelector(
-  [ viewableTransactions, (state, { match: { params: { txHash } } }) => txHash ],
-  (transactions, txHash) => find({ txHash }, transactions)
-);
+export const ticketDataChart = createSelector(
+  [ dailyBalancesStats, unitDivisor ],
+  ( stats, unitDivisor ) => stats.map(s => ({
+    time: s.time,
+    voted: s.series.voted / unitDivisor,
+    revoked: s.series.revoked / unitDivisor,
+    ticket: s.series.ticket / unitDivisor,
+    locked: (s.series.locked + s.series.lockedNonWallet) / unitDivisor,
+    immature: (s.series.immature + s.series.immatureNonWallet) / unitDivisor,
+  })));
+
 export const decodedTransactions = get([ "grpc", "decodedTransactions" ]);
 
 export const viewedDecodedTransaction = createSelector(
@@ -469,6 +429,36 @@ const allTickets = createSelector(
   [ ticketNormalizer, get([ "grpc", "tickets" ]) ],
   (normalizer, tickets) => tickets.map(normalizer).sort(ticketSorter)
 );
+
+const recentStakeTransactions = createSelector(
+  [ transactionsNormalizer, get([ "grpc", "recentStakeTransactions" ]) ], apply
+);
+
+export const homeHistoryTickets = createSelector(
+  [ recentStakeTransactions, allTickets ],
+  ( homeTickets, allTickets ) => {
+    return homeTickets.map( (ticket, index) => {
+      const ticketDecoded = allTickets[index];
+      ticket.ticketPrice = ticketDecoded.ticketPrice;
+      ticket.status = ticketDecoded.status;
+      ticket.enterTimestamp = ticketDecoded.enterTimestamp;
+      ticket.leaveTimestamp = ticketDecoded.leaveTimestamp;
+      ticket.ticketReward = ticketDecoded.ticketReward;
+
+      return ticket;
+    });
+  }
+);
+
+export const viewableTransactions = createSelector(
+  [ transactions, homeHistoryTransactions, homeHistoryTickets ],
+  (transactions, homeTransactions, homeHistoryTickets) => [ ...transactions, ...homeTransactions, ...homeHistoryTickets ]
+);
+export const viewedTransaction = createSelector(
+  [ viewableTransactions, (state, { match: { params: { txHash } } }) => txHash ],
+  (transactions, txHash) => find({ txHash }, transactions)
+);
+
 export const ticketsPerStatus = createSelector(
   [ allTickets ],
   tickets => tickets.reduce(

@@ -1,11 +1,8 @@
+import DaemonLoadingForm from "./Form";
 import ReactTimeout from "react-timeout";
-import {
-  DaemonLoadingFormHeader as DaemonLoadingHeader,
-  DaemonLoadingFormBody
-} from "./Form";
 
 @autobind
-class DaemonLoadingBodyBase extends React.Component {
+class DaemonLoading extends React.Component {
   constructor(props)  {
     super(props);
     this.state = this.getInitialState();
@@ -44,7 +41,7 @@ class DaemonLoadingBodyBase extends React.Component {
       finishDateEstimation.setSeconds(finishDateEstimation.getSeconds() + secondsLeft);
     }
     return (
-      <DaemonLoadingFormBody
+      <DaemonLoadingForm
         {...{
           ...this.props,
           showLongWaitMessage,
@@ -54,6 +51,5 @@ class DaemonLoadingBodyBase extends React.Component {
     );
   }
 }
-const DaemonLoadingBody = ReactTimeout(DaemonLoadingBodyBase);
 
-export { DaemonLoadingHeader, DaemonLoadingBody };
+export default ReactTimeout(DaemonLoading);

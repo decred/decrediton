@@ -1,8 +1,14 @@
+import { Balance } from "shared";
+import { FormattedMessage as T } from "react-intl";
 import "style/Chart.less";
 
 const ChartLegend = (props) => {
   const { payload } = props;
-  const rowLegend = payload[0] && payload[0].payload.legendName;
+  if (!payload || payload.length === 0 || !payload[0] || !payload[0].payload || !payload[0].payload.legendName) {
+    return null;
+  }
+
+  const rowLegend = payload[0].payload.legendName;
 
   return (
     <div className="chart-tooltip">
@@ -11,13 +17,20 @@ const ChartLegend = (props) => {
         payload.map((entry, index) => (
           <div key={`item-${index}`} className="tooltip-line">
             <div className="circle-tooltip" style={{ background:entry.fill }}></div>
-            <div>{`${entry.dataKey}: ${entry.value} ${entry.unit}`}</div>
+            <T
+              id="charts.tooltip.value"
+              m="{key}: {value}"
+              values={{
+                key: entry.dataKey,
+                value: <Balance preScaled amount={entry.value} classNameWrapper="chart-tooltip-value" />
+              }}
+            />
+            {/* <div>{`${entry.dataKey}: ${entry.value} ${entry.unit}`}</div> */}
           </div>
         ))
       }
     </div>
   );
 };
-
 
 export default ChartLegend;

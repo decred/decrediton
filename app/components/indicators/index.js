@@ -5,4 +5,7 @@ export { default as NoMoreTransactionsIndicator } from "./NoMoreTransactions";
 export { default as DecredLoading } from "./DecredLoading";
 export { default as SimpleLoading } from "./SimpleLoading";
 export { default as RescanProgress } from "./RescanProgress";
+export { default as LinearProgressFull } from "./LinearProgressFull";
+export { default as LinearProgressSmall } from "./LinearProgressSmall";
+export { default as LoaderBarBottom } from "./LoaderBarBottom";
 

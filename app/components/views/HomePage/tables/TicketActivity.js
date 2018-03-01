@@ -10,6 +10,7 @@ const RecentTickets = ({
   tickets,
   getTransactionsRequestAttempt,
   getAccountsResponse,
+  rowNumber,
 }) => {
   return (
     getTransactionsRequestAttempt ? <DecredLoading /> :
@@ -18,7 +19,7 @@ const RecentTickets = ({
           <T id="home.ticketActivityTitle" m="Recent Staking Activity" />
         </div>
         <div className="home-content-nest">
-          <TxHistory overview limit={6} {...{ getAccountsResponse, transactions: tickets }} />
+          <TxHistory overview limit={rowNumber} {...{ getAccountsResponse, transactions: tickets }} />
         </div>
       </Aux>
   );

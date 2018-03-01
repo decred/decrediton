@@ -1,4 +1,5 @@
 // @flow
+window.eval = () => { throw new Error("Do not import things that use eval()"); };
 import { render } from "react-dom";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "react-router-redux";
@@ -13,15 +14,16 @@ import "./style/Global.less";
 import "./style/ReactSelectGlobal.less";
 
 var globalCfg = getGlobalCfg();
+const locale = globalCfg.get("locale");
 
 var initialState = {
   settings: {
     currentSettings: {
-      locale: globalCfg.get("locale"),
+      locale: locale,
       daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
     },
     tempSettings: {
-      locale: globalCfg.get("locale"),
+      locale: locale,
       daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
     },
     settingsChanged: false,
@@ -35,7 +37,9 @@ var initialState = {
     selectedStakePool: null,
   },
   daemon: {
-    tutorial: true,
+    locale: locale,
+    tutorial: globalCfg.get("show_tutorial"),
+    setLanguage: globalCfg.get("set_language"),
     daemonStarted: false,
     daemonSynced: false,
     daemonStopped: false,
@@ -167,6 +171,7 @@ var initialState = {
     maturingBlockHeights: {},
   },
   walletLoader: {
+    existingOrNew: true,
     rpcRetryAttempts: 0,
     neededBlocks: 0,
     curBlocks: 0,
@@ -313,8 +318,11 @@ var initialState = {
     messages: Array()
   },
   sidebar: {
-    showingSidebar: false,
+    showingSidebar: !globalCfg.get("show_tutorial"),
     showingSidebarMenu: false,
+  },
+  statistics: {
+    dailyBalances: Array(),
   },
   locales: locales
 };

@@ -5,7 +5,7 @@ import * as sel from "selectors";
 const mapStateToProps = selectorMap({
   sentAndReceivedTransactions: sel.sentAndReceivedTransactions,
   totalValueOfLiveTickets: sel.totalValueOfLiveTickets,
-  earnedStakingReward: sel.earnedStakingReward,
+  earnedStakingReward: sel.totalSubsidy,
   liveTicketsCount: sel.liveTicketsCount,
   votedTicketsCount: sel.votedTicketsCount,
   ticketDataChart: sel.ticketDataChart

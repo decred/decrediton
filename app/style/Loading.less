@@ -47,3 +47,83 @@
   background-size: 120px;
   background-repeat: no-repeat;
 }
+
+.linear-progress {
+  height: 55px;
+  width: 100%;
+  border-radius: 8px;
+  background-color: #d1d5db;
+}
+
+.linear-progress.small {
+  height: 5px;
+  width: 100%;
+  float: left;
+}
+
+.linear-progress-box {
+  position: absolute;
+  margin-top: 7px;
+  height: 41px;
+  width: 41px;
+  border-radius: 3px;
+  opacity: 0;
+  background-color: #fff;
+  animation: slide 3s cubic-bezier(0.46, 0.03, 0.52, 0.96) infinite;
+}
+
+.linear-progress-box.one {
+  animation-delay: 0s;
+}
+
+.linear-progress-box.two {
+  animation-delay: 0.5s;
+}
+
+.linear-progress-box.three {
+  animation-delay: 1s;
+}
+
+.linear-progress-box.four {
+  animation-delay: 1.5s;
+}
+
+.linear-progress-box.five {
+  animation-delay: 2s;
+}
+
+.linear-progress-box.six {
+  animation-delay: 2.5s;
+}
+
+@keyframes slide {
+  0% { opacity: 0.01; }
+
+  25% { opacity: 0.08; }
+
+  75% { opacity: 0.08; }
+
+  100% {
+    left: 59px;
+  }
+}
+
+.linear-progress-text {
+  position: absolute;
+  color: #fff;
+  font-size: 11px;
+  padding-left: 46px;
+  padding-top: 19px;
+  font-family: @font-family-monospaced;
+}
+
+.linear-progress-bar {
+  background: linear-gradient(270deg, rgb(110, 211, 243), rgb(41, 112, 255));
+  border-radius: 8px;
+  height: 100%;
+  box-shadow: 0px 5px 13px rgba(41, 112, 255, 0.21);
+}
+
+.linear-progress-bar.error {
+  background-color: #fd714b;
+}

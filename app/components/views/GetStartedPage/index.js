@@ -1,16 +1,15 @@
 import Page from "./Page";
-import TutorialPage from "./TutorialPage";
 import { WalletSelectionHeader, WalletSelectionBody } from "./WalletSelection";
 import { CheckWalletStateHeader, CheckWalletStateBody } from "./CheckWalletState";
-import { OpenWalletHeader, OpenWalletBody } from "./OpenWallet";
+import OpenWallet from "./OpenWallet";
+import DaemonLoading from "./DaemonLoading";
+import Logs from "./Logs";
+import Settings from "./Settings";
 import { StartRPCHeader, StartRPCBody } from "./StartRPC";
 import { DiscoverAddressesHeader, DiscoverAddressesBody } from "./DiscoverAddresses";
 import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHeaders";
 import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
-import { DaemonLoadingHeader, DaemonLoadingBody } from "./DaemonLoading";
 import { AdvancedStartupHeader, AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
-import { SettingsBody, SettingsHeader } from "./Settings";
-import { LogsBody, LogsHeader } from "./Logs";
 import { RescanWalletHeader, RescanWalletBody } from "./RescanWallet/index";
 import { walletStartup } from "connectors";
 
@@ -31,7 +30,7 @@ class GetStartedPage extends React.Component {
   }
 
   onShowSettings() {
-    this.setState({ showSettings: true });
+    this.setState({ showSettings: true, showLogs: false  });
   }
 
   onHideSettings() {
@@ -39,7 +38,7 @@ class GetStartedPage extends React.Component {
   }
 
   onShowLogs() {
-    this.setState({ showLogs: true });
+    this.setState({ showLogs: true, showSettings: false });
   }
 
   onHideLogs() {
@@ -48,8 +47,6 @@ class GetStartedPage extends React.Component {
 
   render() {
     const {
-      showTutorial,
-      finishTutorial,
       startStepIndex,
       isPrepared,
       isAdvancedDaemon,
@@ -73,14 +70,10 @@ class GetStartedPage extends React.Component {
     } = this;
 
     let Header, Body;
-    if (showTutorial) {
-      return <TutorialPage {...{ finishTutorial }}/>;
-    } else if (showSettings) {
-      Header = SettingsHeader;
-      Body = SettingsBody;
+    if (showSettings) {
+      return <Settings {...{ onShowLogs, onHideSettings, ...props }} />;
     } else if (showLogs) {
-      Header = LogsHeader;
-      Body = LogsBody;
+      return <Logs {...{ onShowSettings, onHideLogs, ...props }} />;
     } else if (getWalletReady && !isPrepared) {
       switch (startStepIndex || 0) {
       case 0:
@@ -89,9 +82,7 @@ class GetStartedPage extends React.Component {
         Body = CheckWalletStateBody;
         break;
       case 2:
-        Header = OpenWalletHeader;
-        Body = OpenWalletBody;
-        break;
+        return <OpenWallet {...props} />;
       default:
         if (isAdvancedDaemon && openForm && !remoteAppdataError) {
           Header = AdvancedStartupHeader;
@@ -100,8 +91,7 @@ class GetStartedPage extends React.Component {
           Header = AdvancedStartupHeader;
           Body = RemoteAppdataError;
         } else {
-          Header = DaemonLoadingHeader;
-          Body = DaemonLoadingBody;
+          return <DaemonLoading {...{ onShowSettings, onShowLogs, ...props }} />;
         }
       }
     } else if (!getWalletReady) {
@@ -131,8 +121,7 @@ class GetStartedPage extends React.Component {
         Body = FinalStartUpBody;
       }
     } else {
-      Header = DaemonLoadingHeader;
-      Body = DaemonLoadingBody;
+      return <DaemonLoading {...props} />;
     }
 
     return <Page Header={Header} Body={Body}
