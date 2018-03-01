@@ -305,7 +305,6 @@
 
   .wallet-icon {
     margin-left: 54px;
-    margin-top: 28px;
     height: 62px;
     width: 62px;
     background-repeat: no-repeat;
@@ -323,6 +322,8 @@
   }
 
   .wallet-icon.createnew {
+    background-size: 58px 58px;
+    background-position: 0px 5px;
     background-image: @createnewwallet;
   }
 
@@ -390,12 +391,48 @@
   color: #fff;
 }
 
+.display-wallet-network {
+  min-height: 20px;
+  text-align: center;
+  text-transform: capitalize;
+  margin-top: 20px;
+}
+
 .display-wallet-name {
   text-align: center;
-  margin-top: 121px;
+  margin-top: 80px;
 }
 
 .display-wallet-name.selected {
   font-size: 11px;
-  margin-top: 89px;
+  margin-top: 56px;
+}
+
+.text-toggle.network {
+  font-family: @font-family-monospaced;
+  font-size: 11px;
+  float: left;
+
+  .text-toggle-button-left,
+  .text-toggle-button-right {
+    opacity: 0.34;
+    min-width: 0px;
+    padding: 9px 25px;
+    color: rgba(72, 86, 110, 1);
+    background-color: transparent;
+    border: 1px solid rgba(72, 86, 110, 0.21);
+    transition: all 100ms @easeInOutQuart;
+  }
+
+  .text-toggle-button-active {
+    opacity: 1;
+    padding: 9px 13px 9px 36px;
+    border: 1px solid #2970ff;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    background-position: 10px 10px;
+    background-image: @launcher-wallet-activate-hover;
+    color: #2970ff;
+  }
 }

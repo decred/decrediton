@@ -25,6 +25,9 @@ const WalletSelectionBodyBase = ({
               const selected = wallet.value.wallet == selectedWallet.value.wallet;
               return (
                 <div className={selected ? "display-wallet selected" : "display-wallet"} key={wallet.value.wallet} onClick={() => onChangeAvailableWallets(wallet)}>
+                  <div className={selected ? "display-wallet-network selected" : "display-wallet-network"}>
+                    {wallet.network}
+                  </div>
                   <div className={selected ? "wallet-icon selected" : "wallet-icon wallet"}/>
                   <div className={selected ? "display-wallet-name selected" : "display-wallet-name"}>
                     {wallet.value.wallet}
@@ -46,6 +49,7 @@ const WalletSelectionBodyBase = ({
             })}
             {availableWallets.length < 3 &&
               <div className="display-wallet new" onClick={showCreateWalletForm}>
+                <div className="display-wallet-network" />
                 <div className="wallet-icon createnew" />
                 <div className="display-wallet-name">
                   <T id="getStarted.newSeedTab" m="Create a New Wallet"/>

@@ -59,6 +59,7 @@ class WalletSelectionBody extends React.Component {
           selectedWallet,
           newWalletName,
           newWalletNetwork,
+          networkSelected: newWalletNetwork == "mainnet",
           ...this.props,
           ...this.state,
         }}
