@@ -331,13 +331,51 @@
   }
 }
 
+.display-wallet-buttons {
+  text-align: center;
+}
+
+.display-wallet-button {
+  margin: 5px;
+  height: 30px;
+  width: 30px;
+  padding: 0px;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position: 5px 5px;
+  box-shadow: 0px 3px 8px rgba(72, 86, 110, 0.34);
+}
+
+.display-wallet-button:hover {
+  box-shadow: 0px 1px 3px rgba(72, 86, 110, 0.34);
+}
+
+.display-wallet-button.start {
+  background-image: @launcher-wallet-activate;
+}
+
+.display-wallet-button.start:hover {
+  background-color: rgb(41, 112, 255);
+  background-image: @launcher-wallet-activate-hover;
+}
+
+.display-wallet-button.remove {
+  background-color: black;
+  background-image: @launcher-wallet-delete;
+}
+
+.display-wallet-button.remove:hover {
+  background-color: black;
+  background-image: @launcher-wallet-delete-hover;
+}
+
 .display-wallet:hover {
   border: 1px solid #2970ff;
   color: #fff;
 }
 
 .display-wallet.selected {
-  background: linear-gradient(225deg, rgb(110, 211, 243), rgb(41, 112, 255));
+  background: linear-gradient(45deg, rgb(41, 112, 255), rgb(110, 211, 243));
   box-shadow: 0px 5px 21px rgba(72, 86, 110, 0.34);
   border: 1px solid #2970ff;
   color: #fff;
@@ -346,4 +384,9 @@
 .display-wallet-name {
   text-align: center;
   margin-top: 121px;
+}
+
+.display-wallet-name.selected {
+  font-size: 11px;
+  margin-top: 89px;
 }
