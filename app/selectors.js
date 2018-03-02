@@ -94,11 +94,10 @@ const openWalletInputRequest = get([ "walletLoader", "openWalletInputRequest" ])
 const createWalletInputRequest = get([ "walletLoader", "createWalletInputRequest" ]);
 const discoverAddressInputRequest = get([ "walletLoader", "discoverAddressInputRequest" ]);
 const advancedDaemonInputRequest = get([ "walletLoader", "advancedDaemonInputRequest" ]);
-const openWalletRequestAttempt = get([ "walletLoader", "walletOpenRequestAttempt" ]);
 const selectCreateWalletInputRequest = get([ "daemon", "selectCreateWalletInputRequest" ]);
 
 export const isInputRequest = or(
-  and(openWalletInputRequest, not(openWalletRequestAttempt)),
+  openWalletInputRequest,
   createWalletInputRequest,
   discoverAddressInputRequest,
   and(openForm, isAdvancedDaemon, advancedDaemonInputRequest),

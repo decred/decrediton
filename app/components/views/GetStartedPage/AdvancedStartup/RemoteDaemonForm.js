@@ -1,6 +1,5 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput, PasswordInput, PathBrowseInput } from "inputs";
-import { KeyBlueButton } from "buttons";
 import "style/LoginForm.less";
 
 const messages = defineMessages({
@@ -27,7 +26,6 @@ const messages = defineMessages({
 });
 
 const RemoteDaemonForm = ({
-  onSubmitRemoteForm,
   setRpcUser,
   setRpcPass,
   setRpcCert,
@@ -114,11 +112,6 @@ const RemoteDaemonForm = ({
             showErrors
           />
         </div>
-      </div>
-      <div className="advanced-daemon-row">
-        <KeyBlueButton onClick={onSubmitRemoteForm}>
-          <T id="login.form.connect.button" m="Connect to Remote" />
-        </KeyBlueButton>
       </div>
     </Aux>
   );

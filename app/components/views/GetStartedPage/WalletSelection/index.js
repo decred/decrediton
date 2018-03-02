@@ -1,5 +1,4 @@
 import {
-  WalletSelectionFormHeader as WalletSelectionHeader,
   WalletSelectionFormBody
 } from "./Form";
 
@@ -106,4 +105,4 @@ class WalletSelectionBody extends React.Component {
 
 }
 
-export { WalletSelectionHeader, WalletSelectionBody };
+export { WalletSelectionBody };

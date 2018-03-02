@@ -2,276 +2,13 @@
 @import (reference) "./Layout.less";
 @import (reference) "./Icons.less";
 
-.get-started-content-instructions {
-  color: #e7eaed;
-  font-size: 18px;
-  padding: 0em 2em 0em 2em;
-  white-space: pre-line;
-}
-
-.get-started-instructions-txt {
-  .inline-block-mixin;
-
-  width: 75%;
-}
-
-.get-started-content-instructions-blockchain-syncing {
-  margin-bottom: 1em;
-}
-
-.get-started-button-skip-sync {
-  float: right;
-  margin: -1em 0em 1em 0em;
-}
-
-.get-started-create-wallet-header {
-  position: relative;
-  height: 100%;
-}
-
-.get-started-button-toolbar {
-  font-family: Source Sans Pro, sans-serif;
-  position: absolute;
-  right: 50px;
-  bottom: 20px;
-}
-
-.get-started-button-toolbar::after {
-  .clearfloat-mixin;
-}
-
-.get-started-view {
-  width: 100%;
-}
-
-.get-started-error {
-  margin-bottom: 20px;
-  font-size: 18px;
-}
-
-.get-started-loading {
-  text-align: center;
-}
-
-.get-started-content-title {
-  display: block;
-  height: 44px;
-  margin-right: auto;
-  margin-bottom: 10px;
-  margin-left: auto;
-  border-bottom: 1px solid transparent;
-  color: #596d81;
-  font-size: 27px;
-}
-
-.get-started-form-ct {
-  margin: 50px 80px 0 80px;
-}
-
-.get-started-field-ct {
-  height: 80px;
-  float: left;
-}
-
-.get-started-label {
-  width: 187px;
-  margin-right: 20px;
-  float: left;
-  color: #e7eaed;
-  font-size: 19px;
-  text-align: right;
-  letter-spacing: -0.1px;
-  padding-top: 23px;
-}
-
-.get-started-field {
-  margin-bottom: 5px;
-  width: 300px;
-  padding-top: 11px;
-  float: left;
-  clear: right;
-}
-
-.get-started-fetch-headers-message {
-  font-size: 25px;
-  color: #c4cbd2;
-  text-align: center;
-}
-
-.get-started-content-nest {
-  padding-top: 1px;
-}
-
-.get-started-content-title-text {
-  display: inline-block;
-  overflow: hidden;
-  width: 600px;
-  height: 100%;
-  padding-top: 13px;
-  padding-right: 20px;
-  padding-left: 20px;
-}
-
-.get-started-priv-pass-error {
-  width: 290px;
-  padding-left: 214px;
-  height: 100%;
-  text-align: left;
-  color: @error-text-color;
-  padding-top: 17px;
-}
-
-.get-started-content-title-button-search-transition1 {
-  width: 60px;
-  height: 100%;
-  cursor: pointer;
-}
-
-.get-started-content-title-text-active {
-  color: #2971ff;
-}
-
-.get-started-content-title-active {
-  border-bottom: 1px solid #2971ff;
-}
-
-.get-started-rpc-retry-message {
-  color: #c4cbd2;
-  float: left;
-  width: 525px;
-  padding-top: 20px;
-  font-size: 25px;
-}
-
-.get-started-rpc-retry-button {
-  width: 100px;
-  margin-top: 10px;
-}
-
-.get-started-header-meta-currency {
-  font-size: 23px;
-}
-
-.get-started-view-button-go-back {
-  margin-right: 80px;
-}
-
-.get-started-view-button-key-blue-wallet-new-seed {
-  float: left;
-}
-
-.get-started-content-new-seed {
-  background-color: #0c1e3e;
-}
-
-.get-started-content-new-seed-priv-pass {
-  padding-top: 10px;
-  height: 80px;
-}
-
-.get-started-content-confirm-wallet-create-input-left {
-  width: 187px;
-  margin-right: 20px;
-  float: left;
-  color: #e7eaed;
-  font-size: 19px;
-  text-align: right;
-  letter-spacing: -0.1px;
-}
-
-.get-started-content-confirm-wallet-create-input-left-padding {
-  width: 187px;
-  margin-right: 20px;
-  float: left;
-  color: #e7eaed;
-  font-size: 19px;
-  text-align: right;
-  letter-spacing: -0.1px;
-  padding-top: 23px;
-}
-
-.get-started-content-confirm-wallet-create-input-right {
-  width: 540px;
-  float: left;
-  clear: right;
-}
-
-.get-started-content-confirm-wallet-create-input-right-padding {
-  margin-bottom: 5px;
-  width: 300px;
-  padding-top: 11px;
-  float: left;
-  clear: right;
-}
-
-.get-started-input-private-password {
-  width: 100%;
-  min-height: 44px;
-}
-
-.get-started-input-form {
-  position: relative;
-  width: 100%;
-  height: auto;
-  min-height: 44px;
-}
-
-.get-started-input-form-error {
-  color: @error-text-color;
-}
-
-.get-started-content-new-seed-create-button {
-  height: 100%;
-  float: left;
-}
-
-.get-started-linear-loading {
-  background-color: white;
-}
-
-.get-started-view-notification-error {
-  margin-top: 20px;
-  display: inline-block;
-  margin-right: auto;
-  margin-left: auto;
-  padding: 7px 20px;
-  border-radius: 5px;
-  background-color: #fd714b;
-  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
-  color: #fff;
-  font-size: 13px;
-  text-align: center;
-}
-
-.get-started-view-notification-success {
-  margin-top: 20px;
-  display: inline-block;
-  margin-right: auto;
-  margin-left: auto;
-  padding: 7px 20px;
-  border-radius: 5px;
-  background-color: #41bf53;
-  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
-  color: #fff;
-  font-size: 13px;
-  text-align: center;
-  text-decoration: none;
-}
-
-.advanced-page {
-  padding: 54px 60px 0px 80px;
-}
-
 .advanced-page-form {
   width: 100%;
   float: left;
-  padding: 1em;
-  position: relative;
-  top: 20px;
-  padding-top: 40px;
-  margin-bottom: 40px;
-  border: 1px #e7eaed solid;
-  border-radius: 5px;
+}
+
+.advanced-page-form.toggle {
+  padding-top: 25px;
 }
 
 .advanced-daemon-network {
@@ -280,39 +17,22 @@
 }
 
 .advanced-daemon-row {
-  color: #fff;
   float: left;
-  width: 100%;
-  height: 50px;
+  width: 75%;
+  height: 44px;
+  padding-top: 10px;
 }
 
 .advanced-daemon-label {
   float: left;
-  width: 25%;
+  width: 150px;
   text-align: right;
 }
 
 .advanced-daemon-input {
   padding-left: 20px;
   float: left;
-  width: 70%;
-}
-
-.get-started-settings .settings-general {
-  padding: 2em;
-}
-
-.get-started-bottom-buttons {
-  margin-top: 2em;
-  padding: 2em;
-
-  > div {
-    margin-right: 1em;
-  }
-}
-
-.get-started-logs {
-  color: #eee;
+  width: 295px;
 }
 
 .page-body.getstarted {
@@ -356,14 +76,29 @@
 }
 
 .getstarted.loader {
-  margin-top: 178px;
+  margin-top: 138px;
   margin-left: 60px;
+
+  .tutorial-button {
+    background-color: #48566e;
+  }
+
+  .tutorial-button:hover {
+    background-color: rgba(72, 86, 110, 0.7);
+  }
 
   .content-title {
     font-size: 27px;
     margin-bottom: 13px;
     float: left;
     width: 100%;
+  }
+
+  .loader-bar-buttons {
+    position: fixed;
+    right: 41px;
+    top: 415px;
+    user-select: none;
   }
 
   .loader-settings-logs {
@@ -383,6 +118,15 @@
     float: left;
     width: 100%;
     margin-bottom: 20px;
+  }
+
+  .loader-bar-icon .new-logo-animation {
+    position: absolute;
+    right: 50px;
+    top: 165px;
+    height: 50px;
+    width: 50px;
+    background-size: 50px;
   }
 
   .loader-bar-estimation {

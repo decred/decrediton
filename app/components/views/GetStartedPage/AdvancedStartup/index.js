@@ -24,7 +24,7 @@ class AdvancedStartupBody extends React.Component {
   getInitialState() {
     const { rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials(this.props.network == "testnet", this.props.walletName);
     return {
-      sideActive: false,
+      sideActive: true,
       rpc_user: rpc_user,
       rpc_password: rpc_password,
       rpc_cert: rpc_cert,

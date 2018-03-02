@@ -1,15 +1,8 @@
-import Header from "Header";
-import { KeyBlueButton } from "buttons";
+import { KeyBlueButton, InvisibleButton } from "buttons";
 import RemoteDaemonForm from "./RemoteDaemonForm";
 import AppDataForm from "./AppDataForm";
 import { FormattedMessage as T, injectIntl } from "react-intl";
 import "style/LoginForm.less";
-
-export const AdvancedHeader = () => (
-  <Header getStarted
-    headerTitleOverview={<T id="getStarted.advanced.title" m="Advanced Start Up" />}
-    headerMetaOverview={<T id="getStarted.advanced.meta" m="Please complete one of the following forms to start Decrediton according to your local setup." />} />
-);
 
 const AdvancedBodyBase = ({
   onShowRemote,
@@ -34,22 +27,21 @@ const AdvancedBodyBase = ({
   ...props,
 }) => {
   return (
-    <div className="advanced-page">
+    <Aux>
       <div className="advanced-page-toggle">
         <div className="text-toggle">
-          <div className={"text-toggle-button-left " + (!sideActive && "text-toggle-button-active")} onClick={sideActive ? onShowRemote : null}>
-            <T id="advancedDaemon.toggle.remote" m="Remote Daemon" />
+          <div className={"text-toggle-button-left " + (sideActive && "text-toggle-button-active")} onClick={!sideActive ? onShowAppData : null}>
+            <T id="advancedDaemon.toggle.appdata" m="Remote Daemon" />
           </div>
-          <div className={"text-toggle-button-right " + (sideActive && "text-toggle-button-active")} onClick={!sideActive ? onShowAppData : null}>
-            <T id="advancedDaemon.toggle.appdata" m="Different Local Daemon Location" />
+          <div className={"text-toggle-button-right " + (!sideActive && "text-toggle-button-active")} onClick={sideActive ? onShowRemote : null}>
+            <T id="advancedDaemon.toggle.remote" m="Different Local Daemon Location" />
           </div>
         </div>
       </div>
-      <div className="advanced-page-form">
+      <div className="advanced-page-form toggle">
         {sideActive ?
           <RemoteDaemonForm {...{
             ...props,
-            onSubmitRemoteForm,
             setRpcUser,
             setRpcPass,
             setRpcCert,
@@ -65,17 +57,26 @@ const AdvancedBodyBase = ({
           /> :
           <AppDataForm {...{
             ...props,
-            onSubmitAppDataForm,
             setAppData,
             appData,
             intl
           }} />
         }
+        <div className="loader-bar-buttons">
+          <InvisibleButton onClick={skipAdvancedDaemon}>
+            <T id="advancedStartup.skip" m="Skip"/>
+          </InvisibleButton>
+          { sideActive ?
+            <KeyBlueButton onClick={onSubmitRemoteForm}>
+              <T id="login.form.connect.button" m="Use Remote Daemon" />
+            </KeyBlueButton> :
+            <KeyBlueButton onClick={onSubmitAppDataForm}>
+              <T id="login.form.appdata.button" m="Start AppData Daemon" />
+            </KeyBlueButton>
+          }
+        </div>
       </div>
-      <KeyBlueButton onClick={skipAdvancedDaemon}>
-        <T id="advancedStartup.skip" m="Skip Advanced Daemon Connection"/>
-      </KeyBlueButton>
-    </div>
+    </Aux>
   );
 };
 

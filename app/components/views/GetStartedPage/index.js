@@ -1,17 +1,16 @@
-import Page from "./Page";
-import { WalletSelectionHeader, WalletSelectionBody } from "./WalletSelection";
-import { CheckWalletStateHeader, CheckWalletStateBody } from "./CheckWalletState";
 import OpenWallet from "./OpenWallet";
+import CreateWallet from "./CreateWallet";
 import DaemonLoading from "./DaemonLoading";
 import Logs from "./Logs";
 import Settings from "./Settings";
-import { StartRPCHeader, StartRPCBody } from "./StartRPC";
-import { DiscoverAddressesHeader, DiscoverAddressesBody } from "./DiscoverAddresses";
-import { FetchBlockHeadersHeader, FetchBlockHeadersBody } from "./FetchBlockHeaders";
-import { FinalStartUpHeader, FinalStartUpBody } from "./FinalStartUp";
-import { AdvancedStartupHeader, AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
-import { RescanWalletHeader, RescanWalletBody } from "./RescanWallet/index";
+import { WalletSelectionBody } from "./WalletSelection";
+import { StartRPCBody } from "./StartRPC";
+import { DiscoverAddressesBody } from "./DiscoverAddresses";
+import { FetchBlockHeadersBody } from "./FetchBlockHeaders";
+import { AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
+import { RescanWalletBody } from "./RescanWallet/index";
 import { walletStartup } from "connectors";
+import { FormattedMessage as T } from "react-intl";
 
 @autobind
 class GetStartedPage extends React.Component {
@@ -53,6 +52,8 @@ class GetStartedPage extends React.Component {
       openForm,
       getWalletReady,
       remoteAppdataError,
+      startupError,
+      hasExistingWallet,
       ...props
     } = this.props;
 
@@ -69,7 +70,7 @@ class GetStartedPage extends React.Component {
       onHideLogs
     } = this;
 
-    let Header, Body;
+    let text, Form;
     if (showSettings) {
       return <Settings {...{ onShowLogs, onHideSettings, ...props }} />;
     } else if (showLogs) {
@@ -78,62 +79,65 @@ class GetStartedPage extends React.Component {
       switch (startStepIndex || 0) {
       case 0:
       case 1:
-        Header = CheckWalletStateHeader;
-        Body = CheckWalletStateBody;
+        text = startupError ? startupError :
+          <T id="getStarted.header.checkingWalletState.meta" m="Checking wallet state" />;
         break;
       case 2:
-        return <OpenWallet {...props} />;
-      default:
-        if (isAdvancedDaemon && openForm && !remoteAppdataError) {
-          Header = AdvancedStartupHeader;
-          Body = AdvancedStartupBody;
-        } else if (remoteAppdataError) {
-          Header = AdvancedStartupHeader;
-          Body = RemoteAppdataError;
+        if (hasExistingWallet) {
+          text = <T id="getStarted.decrypt.info" m="This wallet is encrypted, please enter the public passphrase to decrypt it." />;
+          Form = OpenWallet;
         } else {
-          return <DaemonLoading {...{ onShowSettings, onShowLogs, ...props }} />;
+          return <CreateWallet {...props} />;
+        }
+        break;
+      default:
+        text = <T id="getStarted.advanced.title" m="Advanced Daemon Set Up" />;
+        if (isAdvancedDaemon && openForm && !remoteAppdataError) {
+          Form = AdvancedStartupBody;
+        } else if (remoteAppdataError) {
+          Form = RemoteAppdataError;
         }
       }
     } else if (!getWalletReady) {
-      Header = WalletSelectionHeader;
-      Body = WalletSelectionBody;
+      text = <T id="getStarted.walletSelect.title" m="Select the Wallet to Load" />;
+      Form = WalletSelectionBody;
     } else if (isPrepared) {
       switch (startStepIndex || 0) {
       case 3:
       case 4:
-        Header = StartRPCHeader;
-        Body = StartRPCBody;
+        text = <T id="getStarted.header.startrpc.meta" m="Establishing RPC connection" />;
+        Form = StartRPCBody;
         break;
       case 5:
-        Header = DiscoverAddressesHeader;
-        Body = DiscoverAddressesBody;
+        text = <T id="getStarted.header.discoveringAddresses.meta" m="Discovering addresses" />;
+        Form = DiscoverAddressesBody;
         break;
       case 6:
-        Header = FetchBlockHeadersHeader;
-        Body = FetchBlockHeadersBody;
+        text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
+        Form = FetchBlockHeadersBody;
         break;
       case 7:
-        Header = RescanWalletHeader;
-        Body = RescanWalletBody;
+        text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
+        Form = RescanWalletBody;
         break;
       default:
-        Header = FinalStartUpHeader;
-        Body = FinalStartUpBody;
+        text = <T id="getStarted.header.finalizingSetup.meta" m="Finalizing setup" />;
       }
-    } else {
-      return <DaemonLoading {...props} />;
     }
 
-    return <Page Header={Header} Body={Body}
+    return <DaemonLoading Form={Form}
       {...{
         ...props,
         ...state,
+        text,
+        startupError,
         showSettings,
         showLogs,
         onShowSettings,
         onHideSettings,
         onShowLogs,
-        onHideLogs }} />;
+        onHideLogs
+      }} />;
   }
 }
 
