@@ -10,11 +10,16 @@ export const startDaemon = log((walletPath, appData, testnet) => Promise
     throw "Error starting daemon";
   }), "Start Daemon");
 
-export const cleanShutdown = log(() => Promise
-  .resolve(ipcRenderer.send("clean-shutdown"))
-  .then(stopped => {
-    if (!stopped) throw "Error shutting down app";
-  }), "Clean Shutdown");
+export const cleanShutdown = log(() => {
+  return new Promise(resolve => {
+    ipcRenderer.send("clean-shutdown");
+    ipcRenderer.on("clean-shutdown-finished", (event, stopped) => {
+      if(!stopped)
+        throw "Error shutting down app";
+      resolve(stopped);
+    });
+  });
+});
 
 export const createNewWallet = log((walletPath, testnet) => Promise
   .resolve(ipcRenderer.sendSync("create-wallet", walletPath, testnet))
