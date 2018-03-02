@@ -1,4 +1,3 @@
-import { LogsTab } from "views/HelpPage/LogsTab";
 import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { LoaderBarBottom } from "indicators";
@@ -73,37 +72,37 @@ export default ({
             adding more languages on every new release.
           </p>
             Things to expect in the next release:
-            <ul>
-              <li>New overview page design</li>
-              <li>Rich historical Statistics/Graphs</li>
-              <li>New staking account user experience</li>
-              <li>Advanced wallet settings</li>
-              <li>More languages translated</li>
-            </ul>
-            Bug fixes
-            <ul>
-              <li>Fix issue on Windows caused by using "Aux" as a filename. Aux is a restricted
-                filename with Windows and a simple filename change fixed it.</li>
+          <ul>
+            <li>New overview page design</li>
+            <li>Rich historical Statistics/Graphs</li>
+            <li>New staking account user experience</li>
+            <li>Advanced wallet settings</li>
+            <li>More languages translated</li>
+          </ul>
+          Bug fixes
+          <ul>
+            <li>Fix issue on Windows caused by using "Aux" as a filename. Aux is a restricted
+              filename with Windows and a simple filename change fixed it.</li>
 
-              <li>Fix shutdown issue with macOS. When cmd-Q or quitting Decrediton from the
+            <li>Fix shutdown issue with macOS. When cmd-Q or quitting Decrediton from the
               dock caused dcrd and dcrwallet to not be shutdown in the background. By
               adding a final closeClis() in app.on("before-quit",...) it ensures that
               everything is closed on any shutdown.</li>
 
-              <li>Removed Skip Sync button due to the new slip44 change in dcrwallet. With the
+            <li>Removed Skip Sync button due to the new slip44 change in dcrwallet. With the
               new coin type change, dcrwallet needs to check if there has been any address
               usage up to that point in the chain for a given wallet.</li>
 
-              <li>Shorten account names in various areas to avoid obnoxious overflow.</li>
+            <li>Shorten account names in various areas to avoid obnoxious overflow.</li>
 
-              <li>Fix issue that was occuring when clearing out stakepool configurations. This
+            <li>Fix issue that was occuring when clearing out stakepool configurations. This
               would cause users to possibly have incorrect stakepool setups.</li>
 
-              <li>Change functionality of the space key during seed entry. Previously, when the
+            <li>Change functionality of the space key during seed entry. Previously, when the
               user would enter the space key they would end up not "selecting" a word and
               then just type the whole seed. Now the space "selects" the word just as
               pressing tab does.</li>
-            </ul>
+          </ul>
         </div>
         <div className="release-notes-image" />
       </div>

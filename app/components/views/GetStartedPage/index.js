@@ -18,7 +18,7 @@ class GetStartedPage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { showSettings: false, showLogs: false, showReleaseNotes: true };
+    this.state = { showSettings: false, showLogs: false, showReleaseNotes: false };
   }
 
   componentDidMount() {
