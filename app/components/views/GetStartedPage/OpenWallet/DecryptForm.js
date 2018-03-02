@@ -12,6 +12,7 @@ const messages = defineMessages({
 
 const OpenWalletDecryptFormBodyBase = ({
   isInputRequest,
+  isOpeningWallet,
   publicPassPhrase,
   intl,
   onSetPublicPassPhrase,
@@ -38,7 +39,10 @@ const OpenWalletDecryptFormBodyBase = ({
       </div>
     </div>
     <div className="loader-bar-buttons">
-      <KeyBlueButton onClick={onOpenWallet}>
+      <KeyBlueButton
+        onClick={onOpenWallet}
+        disabled={publicPassPhrase == "" || isOpeningWallet}
+        loading={isOpeningWallet}>
         <T id="advancedStartup.skip" m="Open Wallet"/>
       </KeyBlueButton>
     </div>

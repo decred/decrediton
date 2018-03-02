@@ -14,22 +14,24 @@ class OpenWallet extends React.Component {
   getInitialState() {
     return {
       publicPassPhrase: "",
-      hasAttemptedOpen: false
     };
   }
 
   render() {
-    const { publicPassPhrase, hasAttemptedOpen, onKeyDown } = this.state;
+    const { publicPassPhrase, onKeyDown } = this.state;
     const {
       onSetPublicPassPhrase,
-      onOpenWallet
+      onOpenWallet,
     } = this;
+    const { isInputRequest, isOpeningWallet } = this.props;
     return (
       <OpenWalletDecryptFormBody
         {...{
           ...this.props,
+
+          isInputRequest,
+          isOpeningWallet,
           publicPassPhrase,
-          hasAttemptedOpen,
           onSetPublicPassPhrase,
           onOpenWallet,
           onKeyDown
@@ -47,8 +49,8 @@ class OpenWallet extends React.Component {
   }
 
   onOpenWallet() {
-    if (!this.state.publicPassPhrase) {
-      return this.setState({ hasAttemptedOpen: true });
+    if (this.state.publicPassPhrase == "") {
+      return;
     }
 
     this.props.onOpenWallet(this.state.publicPassPhrase, true);
