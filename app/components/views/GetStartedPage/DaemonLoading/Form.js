@@ -6,6 +6,8 @@ import "style/GetStarted.less";
 export default ({
   Form,
   text,
+  barText,
+  isInputRequest,
   getCurrentBlockCount,
   getDaemonStarted,
   getDaemonSynced,
@@ -41,7 +43,7 @@ export default ({
             error={startupError}
             getDaemonSynced={getDaemonSynced}
             disabled={!getDaemonStarted || getCurrentBlockCount == null}
-            barText={text}
+            barText={barText}
             min={0}
             max={getNeededBlocks}
             value={getCurrentBlockCount}
@@ -54,9 +56,19 @@ export default ({
           }
         </div>
         <div className="loader-bar-icon">
-          <DecredLoading hidden={startupError || props.isInputRequest} />
+          {text && !startupError &&
+            <div className="loader-bar-icon-text">
+              {text}...
+            </div>
+          }
+          {startupError &&
+            <div className="loader-bar-icon-text error">
+              {startupError}
+            </div>
+          }
+          <DecredLoading hidden={startupError || isInputRequest} />
         </div>
-        { Form && <Form {...{ ...props, startupError }}/> }
+        { Form && <Form {...{ ...props, isInputRequest, startupError }}/> }
       </Aux>
     </div>
   </div>

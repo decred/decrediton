@@ -21,6 +21,9 @@ const OpenWalletDecryptFormBodyBase = ({
   isInputRequest &&
   <div className="advanced-page-form">
     <div className="advanced-daemon-row">
+      <T id="getStarted.decrypt.info" m="This wallet is encrypted, please enter the public passphrase to decrypt it." />
+    </div>
+    <div className="advanced-daemon-row">
       <div className="advanced-daemon-label">
         <T id="getStarted.decrypt.label" m="Decrypt Wallet" />
       </div>

@@ -1,10 +1,10 @@
 import "style/Loading.less";
+import { FormattedMessage as T } from "react-intl";
 
 @autobind
 class LinearProgressFull extends React.Component {
-
   render() {
-    const { barText, value, min, max, error, disabled, getDaemonSynced } = this.props;
+    const { value, min, max, error, disabled, getDaemonSynced } = this.props;
     const perComplete = value/max-min;
     const leftStartingPoint = perComplete*95 + "%";
     return (
@@ -24,7 +24,10 @@ class LinearProgressFull extends React.Component {
           </div>
         }
         <div className={(getDaemonSynced || !disabled) ? "linear-progress-text loading" : "linear-progress-text"}>
-          {barText}
+          {disabled && !getDaemonSynced ?
+            <T id="loaderBar.Waiting" m="Waiting for daemon connection..." /> :
+            getDaemonSynced ? <T id="loaderBar.Loaded" m="Blockchain loaded" /> :
+              <T id="loaderBar.Loading" m="Blockchain syncing" />}
         </div>
       </div>
     );
