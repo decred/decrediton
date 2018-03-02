@@ -7,6 +7,7 @@ import "style/CreateWalletForm.less";
 
 const ContinueWalletCreation = ({
   isValid,
+  isCreatingWallet,
   setSeed,
   setPassPhrase,
   onCreateWallet,
@@ -27,6 +28,7 @@ const ContinueWalletCreation = ({
         <KeyBlueButton
           className="wallet-key-blue-button"
           disabled={!isValid}
+          loading={isCreatingWallet}
           onClick={onCreateWallet}
         >
           <T id="createWallet.createWalletBtn" m="Create Wallet" />

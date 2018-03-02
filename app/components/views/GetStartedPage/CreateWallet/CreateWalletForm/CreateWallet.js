@@ -11,7 +11,9 @@ const CreateWallet = ({
   showCopySeedConfirm,
   onCancelCopySeedConfirm,
   onSubmitCopySeedConfirm,
-  onReturnToExistingOrNewScreen
+  onReturnToExistingOrNewScreen,
+  isValid,
+  isCreatingWallet,
 }) => (
   <Aux>
     <div className="getstarted content">
@@ -62,7 +64,11 @@ const CreateWallet = ({
         </div>
       </div>
       <div className="toolbar">
-        <KeyBlueButton className="wallet-key-blue-button" onClick={createWalletConfirmNewSeed}>
+        <KeyBlueButton
+          className="wallet-key-blue-button"
+          disabled={!isValid}
+          loading={isCreatingWallet}
+          onClick={createWalletConfirmNewSeed}>
           <T id="createWallet.continueBtn" m="Continue" />
         </KeyBlueButton>
       </div>

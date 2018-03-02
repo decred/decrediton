@@ -724,6 +724,8 @@ export const isImportingScript = bool(importScriptRequestAttempt);
 export const newUnminedMessage = get([ "notifications", "newUnminedMessage" ]);
 
 export const createWalletExisting = get([ "walletLoader", "createWalletExisting" ]);
+export const isCreatingWallet = get([ "walletLoader", "walletCreateRequestAttempt" ]);
+export const isOpeningWallet = get([ "walletLoader", "walletOpenRequestAttempt" ]);
 
 export const lastBlockTimestamp = get([ "grpc", "recentBlockTimestamp" ]);
 
