@@ -24,7 +24,7 @@ const WalletSelectionBodyBase = ({
             {availableWallets.map(wallet => {
               const selected = wallet.value.wallet == selectedWallet.value.wallet;
               return (
-                <div className={selected ? "display-wallet selected" : "display-wallet"} key={wallet.value.wallet} onClick={() => onChangeAvailableWallets(wallet)}>
+                <div className={selected ? "display-wallet selected" : "display-wallet"} key={wallet.label} onClick={() => onChangeAvailableWallets(wallet)}>
                   <div className={selected ? "display-wallet-network selected" : "display-wallet-network"}>
                     {wallet.network}
                   </div>
