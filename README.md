@@ -105,15 +105,15 @@ It will be helpful to you to run the Decred node in a separate process and simpl
 
 Note: Your config.json file is located in the following directory(s)
 
-Windows - ```~/.config/decrediton/config.json``` 
+Windows - ```C:\Users\<your-username>\AppData\Local\Decrediton\config.json``` 
 
-OSX - ```$HOME/Library/Application\ Support/decrediton/config.json```
+OSX - ```$HOME/Library/Application\ Support/Decrediton/config.json```
 
-Linux - ```~/.decrediton/config.json```
+Linux - ```~/.config/decrediton/config.json```
 
 Run the following to start the Decred daemon in a standalone terminal window:
 
-Windows - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=$HOME/.dcrd/rpc.cert``` 
+Windows - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=C:\Users\<username>\AppData\Local\Dcrd\rpc.cert``` 
 
 OSX - ```dcrd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=$HOME/Library/Application\ Support/Dcrd/rpc.cert```
 
