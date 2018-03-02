@@ -3,6 +3,7 @@ import CreateWallet from "./CreateWallet";
 import DaemonLoading from "./DaemonLoading";
 import Logs from "./Logs";
 import Settings from "./Settings";
+import ReleaseNotes from "./ReleaseNotes";
 import { WalletSelectionBody } from "./WalletSelection";
 import { StartRPCBody } from "./StartRPC";
 import { DiscoverAddressesBody } from "./DiscoverAddresses";
@@ -17,7 +18,7 @@ class GetStartedPage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { showSettings: false, showLogs: false };
+    this.state = { showSettings: false, showLogs: false, showReleaseNotes: true };
   }
 
   componentDidMount() {
@@ -28,8 +29,16 @@ class GetStartedPage extends React.Component {
     }
   }
 
+  onShowReleaseNotes() {
+    this.setState({ showSettings: false, showLogs: false, showReleaseNotes: true });
+  }
+
+  onHideReleaseNotes() {
+    this.setState({ showReleaseNotes: false });
+  }
+
   onShowSettings() {
-    this.setState({ showSettings: true, showLogs: false  });
+    this.setState({ showSettings: true, showLogs: false, showReleaseNotes: false   });
   }
 
   onHideSettings() {
@@ -37,7 +46,7 @@ class GetStartedPage extends React.Component {
   }
 
   onShowLogs() {
-    this.setState({ showLogs: true, showSettings: false });
+    this.setState({ showLogs: true, showSettings: false, showReleaseNotes: false  });
   }
 
   onHideLogs() {
@@ -60,10 +69,13 @@ class GetStartedPage extends React.Component {
     const {
       showSettings,
       showLogs,
+      showReleaseNotes,
       ...state
     } = this.state;
 
     const {
+      onShowReleaseNotes,
+      onHideReleaseNotes,
       onShowSettings,
       onHideSettings,
       onShowLogs,
@@ -75,6 +87,8 @@ class GetStartedPage extends React.Component {
       return <Settings {...{ onShowLogs, onHideSettings, ...props }} />;
     } else if (showLogs) {
       return <Logs {...{ onShowSettings, onHideLogs, ...props }} />;
+    } else if (showReleaseNotes) {
+      return <ReleaseNotes {...{ onShowSettings, onShowLogs, onHideReleaseNotes, ...props }} />;
     } else if (getWalletReady && !isPrepared) {
       switch (startStepIndex || 0) {
       case 0:
@@ -133,6 +147,8 @@ class GetStartedPage extends React.Component {
         startupError,
         showSettings,
         showLogs,
+        onShowReleaseNotes,
+        onHideReleaseNotes,
         onShowSettings,
         onHideSettings,
         onShowLogs,
