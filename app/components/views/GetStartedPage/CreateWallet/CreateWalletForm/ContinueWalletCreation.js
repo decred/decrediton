@@ -27,7 +27,7 @@ const ContinueWalletCreation = ({
       <div className="create-wallet-field">
         <KeyBlueButton
           className="wallet-key-blue-button"
-          disabled={!isValid}
+          disabled={!isValid || isCreatingWallet}
           loading={isCreatingWallet}
           onClick={onCreateWallet}
         >

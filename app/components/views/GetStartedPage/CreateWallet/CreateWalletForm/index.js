@@ -78,7 +78,8 @@ class CreateWalletForm extends React.Component {
             decode,
             isValid,
             onReturnToNewSeed,
-            onReturnToExistingOrNewScreen
+            onReturnToExistingOrNewScreen,
+            isCreatingWallet
 
           }}
         />
@@ -93,7 +94,6 @@ class CreateWalletForm extends React.Component {
             onSubmitCopySeedConfirm,
             onCancelCopySeedConfirm,
             onReturnToExistingOrNewScreen,
-            isCreatingWallet,
           }}
         />
       );
