@@ -14,6 +14,9 @@ import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, MAX_LOG_LENGTH, BOTH_CONNECTIO
 import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg } from "./main_dev/paths";
 import { dcrwalletCfg, getWalletPath, getExecutablePath, getWalletsDirectoryPath, getDefaultWalletDirectory } from "./main_dev/paths";
 
+// setPath as decrediton
+app.setPath("userData", appDataDirectory());
+
 let menu;
 let template;
 let mainWindow = null;
@@ -37,17 +40,15 @@ const daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
 const walletsDirectory = getWalletsDirectoryPath();
 const defaultTestnetWalletDirectory = getDefaultWalletDirectory(true);
 const defaultMainnetWalletDirectory = getDefaultWalletDirectory(false);
-console.log(defaultTestnetWalletDirectory)
-console.log('*********************************')
 const mainnetWalletPath = getWalletPath(false);
 const testnetWalletPath = getWalletPath(true);
+const argv = parseArgs(process.argv.slice(1), OPTIONS);
+
+debug = argv.debug || process.env.NODE_ENV === "development";
 
 function showUsage() {
   console.log(USAGE_MESSAGE);
 }
-
-let argv = parseArgs(process.argv.slice(1), OPTIONS);
-debug = argv.debug || process.env.NODE_ENV === "development";
 
 if (argv.help) {
   showUsage();
@@ -75,9 +76,6 @@ if (process.env.NODE_ENV === "development") {
   const p = path.join(__dirname, '..', 'app', 'node_modules'); // eslint-disable-line
   require('module').globalPaths.push(p); // eslint-disable-line
 }
-
-// Always use reasonable path for save data.
-app.setPath("userData", appDataDirectory());
 
 // Check that wallets directory has been created, if not, make it.
 fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
