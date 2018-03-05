@@ -22,7 +22,7 @@ const WalletSelectionBodyBase = ({
         <div className="advanced-page-form">
           <div className="advanced-daemon-row">
             {availableWallets.map(wallet => {
-              const selected = wallet.value.wallet == selectedWallet.value.wallet;
+              const selected = wallet.value.wallet == selectedWallet.value.wallet && wallet.network == selectedWallet.network;
               return (
                 <div className={selected ? "display-wallet selected" : "display-wallet"} key={wallet.label} onClick={() => onChangeAvailableWallets(wallet)}>
                   <div className={selected ? "display-wallet-network selected" : "display-wallet-network"}>
