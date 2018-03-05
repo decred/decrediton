@@ -1,5 +1,6 @@
 import path from "path";
 import os from "os";
+import { app } from "electron";
 
 // In all the functions below the Windows path is constructed based on
 // os.homedir() rather than using process.env.LOCALAPPDATA because in my tests
@@ -19,8 +20,12 @@ export function getGlobalCfgPath() {
   return path.resolve(appDataDirectory(), "config.json");
 }
 
-export function getWalletPath(testnet, walletPath) {
+export function getWalletPath(testnet, walletPath = "") {
   return path.join(appDataDirectory(), "wallets", testnet ? "testnet" : "mainnet", walletPath);
+}
+
+export function getWalletsDirectoryPath() {
+  return path.join(app.getPath("userData"),"wallets");
 }
 
 export function dcrctlCfg(configPath) {
@@ -43,4 +48,18 @@ export function getDcrdPath() {
   } else {
     return path.join(os.homedir(),".dcrd");
   }
+}
+
+export function getExecutablePath(name, customBinPath) {
+  let binPath = customBinPath ? customBinPath :
+    process.env.NODE_ENV === "development"
+      ? path.join(__dirname, "..", "bin")
+      : path.join(process.resourcesPath, "bin");
+  let execName = os.platform() !== "win32" ? name : name + ".exe";
+
+  return path.join(binPath, execName);
+}
+
+export function getDefaultWalletDirectory(testnet) {
+  return path.join(getWalletsDirectoryPath(), testnet ? "testnet" : "mainnet", "default-wallet");
 }

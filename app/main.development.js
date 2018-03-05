@@ -10,8 +10,9 @@ import stringArgv from "string-argv";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger } from "./main_dev/logging";
 import { Buffer } from "buffer";
-import { OPTIONS, USAGE } from "./main_dev/constants";
-import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, dcrwalletCfg, getWalletPath } from "./main_dev/paths";
+import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, MAX_LOG_LENGTH, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
+import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg } from "./main_dev/paths";
+import { dcrwalletCfg, getWalletPath, getExecutablePath, getWalletsDirectoryPath, getDefaultWalletDirectory } from "./main_dev/paths";
 
 let menu;
 let template;
@@ -27,25 +28,22 @@ let dcrdConfig = {};
 let currentBlockCount;
 let primaryInstance;
 
+const logger = createLogger(debug);
 let dcrdLogs = Buffer.from("");
 let dcrwalletLogs = Buffer.from("");
 
-let MAX_LOG_LENGTH = 50000;
-
-function getExecutablePath(name) {
-  let customBinPath = argv.customBinPath;
-
-  let binPath = customBinPath ? customBinPath :
-    process.env.NODE_ENV === "development"
-      ? path.join(__dirname, "..", "bin")
-      : path.join(process.resourcesPath, "bin");
-  let execName = os.platform() !== "win32" ? name : name + ".exe";
-
-  return path.join(binPath, execName);
-}
+const globalCfg = initGlobalCfg();
+const daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
+const walletsDirectory = getWalletsDirectoryPath();
+const defaultTestnetWalletDirectory = getDefaultWalletDirectory(true);
+const defaultMainnetWalletDirectory = getDefaultWalletDirectory(false);
+console.log(defaultTestnetWalletDirectory)
+console.log('*********************************')
+const mainnetWalletPath = getWalletPath(false);
+const testnetWalletPath = getWalletPath(true);
 
 function showUsage() {
-  console.log(USAGE);
+  console.log(USAGE_MESSAGE);
 }
 
 let argv = parseArgs(process.argv.slice(1), OPTIONS);
@@ -57,13 +55,13 @@ if (argv.help) {
 }
 
 if (argv.version) {
-  console.log(`${app.getName()} version ${app.getVersion()}`);
+  console.log(VERSION_MESSAGE);
   app.exit(0);
 }
 
 // Check if network was set on command line (but only allow one!).
 if (argv.testnet && argv.mainnet) {
-  logger.log("Cannot use both --testnet and --mainnet.");
+  logger.log(BOTH_CONNECTION_ERR_MESSAGE);
   app.quit();
 }
 
@@ -82,17 +80,15 @@ if (process.env.NODE_ENV === "development") {
 app.setPath("userData", appDataDirectory());
 
 // Check that wallets directory has been created, if not, make it.
-let walletsDirectory = path.join(app.getPath("userData"),"wallets");
 fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
-fs.pathExistsSync(path.join(walletsDirectory, "mainnet")) || fs.mkdirsSync(path.join(walletsDirectory, "mainnet"));
-fs.pathExistsSync(path.join(walletsDirectory, "testnet")) || fs.mkdirsSync(path.join(walletsDirectory, "testnet"));
+fs.pathExistsSync(mainnetWalletPath) || fs.mkdirsSync(mainnetWalletPath);
+fs.pathExistsSync(testnetWalletPath) || fs.mkdirsSync(testnetWalletPath);
 
-let defaultMainnetWalletDirectory = path.join(walletsDirectory, "mainnet", "default-wallet");
 if (!fs.pathExistsSync(defaultMainnetWalletDirectory)){
   fs.mkdirsSync(defaultMainnetWalletDirectory);
 
   // check for existing mainnet directories
-  if (fs.pathExistsSync(path.join(app.getPath("userData"), "mainnet", "wallet.db"))) {
+  if ( fs.pathExistsSync(getWalletPath(false, "wallet.db")) ) {
     fs.mkdirsSync(path.join(defaultMainnetWalletDirectory, "mainnet"));
     fs.copySync(path.join(app.getPath("userData"), "mainnet"), path.join(defaultMainnetWalletDirectory, "mainnet"));
   }
@@ -108,7 +104,6 @@ if (!fs.pathExistsSync(defaultMainnetWalletDirectory)){
 
 }
 
-let defaultTestnetWalletDirectory = path.join(walletsDirectory, "testnet", "default-wallet");
 if (!fs.pathExistsSync(defaultTestnetWalletDirectory)){
   fs.mkdirsSync(defaultTestnetWalletDirectory);
 
@@ -137,9 +132,7 @@ if (err !== null) {
   dialog.showErrorBox("Config File Error", errMessage);
   app.quit();
 }
-var globalCfg = initGlobalCfg();
 
-const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
 logger.log("info", "Versions: Decrediton: %s, Electron: %s, Chrome: %s",
   app.getVersion(), process.versions.electron, process.versions.chrome);
@@ -148,8 +141,6 @@ process.on("uncaughtException", err => {
   logger.log("error", "UNCAUGHT EXCEPTION", err);
   throw err;
 });
-
-let daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
 
 function closeDCRW() {
   if (require("is-running")(dcrwPID) && os.platform() != "win32") {
@@ -337,7 +328,7 @@ ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
     args.push("--testnet");
   }
 
-  var dcrctlExe = getExecutablePath("dcrctl");
+  var dcrctlExe = getExecutablePath("dcrctl", argv.customBinPath);
   if (!fs.existsSync(dcrctlExe)) {
     logger.log("error", "The dcrctl file does not exists");
   }
@@ -449,7 +440,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
     mainWindow.webContents.executeJavaScript("window.close();");
   }
 
-  var dcrdExe = getExecutablePath("dcrd");
+  var dcrdExe = getExecutablePath("dcrd", argv.customBinPath);
   if (!fs.existsSync(dcrdExe)) {
     logger.log("error", "The dcrd file does not exists");
     return;
@@ -513,7 +504,7 @@ const launchDCRWallet = (walletPath, testnet) => {
   args.push("--ticketbuyer.maxpriceabsolute=" + cfg.get("maxpriceabsolute"));
   args.push("--ticketbuyer.maxperblock=" + cfg.get("maxperblock"));
 
-  var dcrwExe = getExecutablePath("dcrwallet");
+  var dcrwExe = getExecutablePath("dcrwallet", argv.customBinPath);
   if (!fs.existsSync(dcrwExe)) {
     logger.log("error", "The dcrwallet file does not exists");
     return;
@@ -619,7 +610,7 @@ const readExesVersion = () => {
   };
 
   for (let exe of exes) {
-    let exePath = getExecutablePath("dcrd");
+    let exePath = getExecutablePath("dcrd", argv.customBinPath);
     if (!fs.existsSync(exePath)) {
       logger.log("error", "The dcrd file does not exists");
     }

@@ -17,7 +17,13 @@ export const OPTIONS = {
   unknown: unknownFn
 };
 
-export const USAGE = `${app.getName()} version ${app.getVersion()}
+export const MAX_LOG_LENGTH = 50000;
+
+export const VERSION_MESSAGE = `${app.getName()} version ${app.getVersion()}`;
+
+export const BOTH_CONNECTION_ERR_MESSAGE = "Cannot use both --testnet and --mainnet.";
+
+export const USAGE_MESSAGE = `${app.getName()} version ${app.getVersion()}
 Usage
   $ ${app.getName()} [--help] [--version] [--debug] [--testnet|--mainnet]
                [--extrawalletargs=...]
