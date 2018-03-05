@@ -16,6 +16,7 @@ export default ({
   onShowSettings,
   onShowLogs,
   onShowTutorial,
+  onShowReleaseNotes,
   startupError,
   ...props,
 }) => (
@@ -37,6 +38,7 @@ export default ({
           <SlateGrayButton className="tutorial-button" onClick={onShowTutorial}>
             <T id="getStarted.learnBasics" m="Learn the Basics" />
           </SlateGrayButton>
+          <span onClick={onShowReleaseNotes} className="whatsnew"><T id="getStarted.whatsNew" m="What's New in {version}" values={{ version: ("v1.1.2") }}/></span>
         </div>
         <div className="loader-bar">
           <LinearProgressFull
