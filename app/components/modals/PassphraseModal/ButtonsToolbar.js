@@ -1,5 +1,4 @@
-import { KeyBlueButton } from "buttons";
-import { SlateGrayButton } from "buttons";
+import { KeyBlueButton, InvisibleButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 
 const PassphraseModalButtonsToolbar = ({ onSubmit, onCancelModal, submitLabel }) =>
@@ -7,9 +6,9 @@ const PassphraseModalButtonsToolbar = ({ onSubmit, onCancelModal, submitLabel })
     <KeyBlueButton className="passphrase-modal-save-button" onClick={onSubmit}>
       {submitLabel ? submitLabel : <T id="passphraseModal.confirm" m="confirm" />}
     </KeyBlueButton>
-    <SlateGrayButton className="passphrase-modal-close-button" onClick={onCancelModal}>
+    <InvisibleButton className="passphrase-modal-close-button" onClick={onCancelModal}>
       <T id="passphraseModal.btnCancel" m="Cancel" />
-    </SlateGrayButton>
+    </InvisibleButton>
   </div>;
 
 export default PassphraseModalButtonsToolbar;
