@@ -48,6 +48,14 @@ export const startWallet = log((walletPath, testnet) => new Promise((resolve, re
   resolveCheck();
 }), "Start Wallet");
 
+export const setPreviousWallet = log((cfg) => Promise
+  .resolve(ipcRenderer.sendSync("set-previous-wallet", cfg))
+  , "Set Previous Wallet");
+
+export const getPreviousWallet = log(() => Promise
+  .resolve(ipcRenderer.sendSync("get-previous-wallet"))
+  , "Get Previous Wallet");
+
 export const getBlockCount = log((walletPath, rpcCreds, testnet) => Promise
   .resolve(ipcRenderer.sendSync("check-daemon", walletPath, rpcCreds, testnet))
   .then(block => isString(block) ? parseInt(block.trim()) : block)

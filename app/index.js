@@ -54,8 +54,8 @@ var initialState = {
     shutdownRequested: false,
     openForm: globalCfg.get("must_open_form"),
     remoteAppdataError: false,
-    previousWallet: globalCfg.get("previouswallet"),
-    selectCreateWalletInputRequest: globalCfg.get("previouswallet") ? false : true
+    previousWallet: null,
+    selectCreateWalletInputRequest: true
   },
   version: {
     // RequiredVersion

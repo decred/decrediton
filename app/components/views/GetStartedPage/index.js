@@ -22,11 +22,10 @@ class GetStartedPage extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.props.getWalletReady && !this.props.previousWallet) {
-      this.props.onGetAvailableWallets();
-    } else if (this.props.previousWallet) {
-      this.props.onStartWallet(this.props.previousWallet);
-    }
+    this.props.onGetAvailableWallets()
+      .then(({ previousWallet }) => {
+        previousWallet && this.props.onStartWallet(previousWallet);
+      });
   }
 
   onShowReleaseNotes() {

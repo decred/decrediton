@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm, clearPreviousWallet } from "./config.js";
+import { initGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
 import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, getWalletPath } from "./config.js";
 import path from "path";
 import fs from "fs-extra";
@@ -20,6 +20,7 @@ let debug = false;
 let dcrdPID;
 let dcrwPID;
 let dcrwPort;
+let previousWallet = null;
 let dcrdConfig = {};
 let currentBlockCount;
 let primaryInstance;
@@ -412,6 +413,15 @@ ipcMain.on("get-dcrwallet-logs", (event) => {
 
 ipcMain.on("get-decrediton-logs", (event) => {
   event.returnValue = "decrediton logs!";
+});
+
+ipcMain.on("get-previous-wallet", (event) => {
+  event.returnValue = previousWallet;
+});
+
+ipcMain.on("set-previous-wallet", (event, cfg) => {
+  previousWallet = cfg;
+  event.returnValue = true;
 });
 
 const AddToLog = (destIO, destLogBuffer, data) => {
@@ -920,6 +930,5 @@ app.on("before-quit", (event) => {
   event.preventDefault();
   cleanShutdown();
   setMustOpenForm(true);
-  clearPreviousWallet();
   app.exit(0);
 });

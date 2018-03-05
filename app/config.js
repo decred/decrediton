@@ -297,11 +297,6 @@ export function setMustOpenForm(openForm) {
   return config.set("must_open_form", openForm);
 }
 
-export function clearPreviousWallet() {
-  const config = getGlobalCfg();
-  return config.set("previouswallet", null);
-}
-
 export function newWalletConfigCreation(testnet, walletPath) {
   // TODO: set random user/password
   var dcrdConf = {
