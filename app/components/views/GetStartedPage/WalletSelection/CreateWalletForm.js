@@ -1,6 +1,5 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
-import { NetworkSwitch } from "buttons";
 import "style/LoginForm.less";
 
 const messages = defineMessages({
@@ -11,8 +10,8 @@ const messages = defineMessages({
 });
 
 const CreateWalletForm = ({
+  networkSelected,
   newWalletName,
-  newWalletNetwork,
   onChangeCreateWalletName,
   onChangeCreateWalletNetwork,
   intl
@@ -21,7 +20,7 @@ const CreateWalletForm = ({
     <Aux>
       <div className="advanced-daemon-row">
         <div className="advanced-daemon-label">
-          <T id="advanced.remote.rpcuser" m="New Wallet Name" />:
+          <T id="advanced.remote.rpcuser" m="New Wallet Name" />
         </div>
         <div className="advanced-daemon-input">
           <TextInput
@@ -36,10 +35,17 @@ const CreateWalletForm = ({
       </div>
       <div className="advanced-daemon-row">
         <div className="advanced-daemon-label">
-          <span className="advanced-daemon-network">{newWalletNetwork}</span>
+          <T id="advanced.toggle.network" m="Network" />
         </div>
         <div className="advanced-daemon-input">
-          <NetworkSwitch enabled={newWalletNetwork !== "mainnet"} onClick={onChangeCreateWalletNetwork} />
+          <div className="text-toggle network">
+            <div className={"text-toggle-button-left " + (networkSelected && "text-toggle-button-active")} onClick={!networkSelected ? onChangeCreateWalletNetwork : null}>
+              <T id="advancedDaemon.toggle.mainnet" m="Mainnet" />
+            </div>
+            <div className={"text-toggle-button-right " + (!networkSelected && "text-toggle-button-active")} onClick={networkSelected ? onChangeCreateWalletNetwork : null}>
+              <T id="advancedDaemon.toggle.testnet" m="Testnet" />
+            </div>
+          </div>
         </div>
       </div>
     </Aux>

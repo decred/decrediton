@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="14890.127 249.127 16 16">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #2970ff;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Symbol_49_2" data-name="Symbol 49 – 2" transform="translate(14559)">
+    <path id="XMLID_3_" class="cls-1" d="M8,0a8,8,0,1,0,8,8A8,8,0,0,0,8,0ZM7.512,1.764h1V8h-1Zm4.376,10.124A5.5,5.5,0,1,1,4.112,4.112l.708.708a4.5,4.5,0,1,0,6.36,0l.708-.708A5.5,5.5,0,0,1,11.888,11.888Z" transform="translate(331.127 249.127)"/>
+    <path id="XMLID_2_" class="cls-2" d="M71.18,103.508a4.5,4.5,0,1,1-6.36,0l-.708-.708a5.5,5.5,0,1,0,7.776,0Z" transform="translate(271.127 150.439)"/>
+    <rect id="XMLID_1_" class="cls-2" width="1" height="6.24" transform="translate(338.639 250.891)"/>
+  </g>
+</svg>

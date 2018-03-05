@@ -11,9 +11,9 @@ class WalletSelectionBody extends React.Component {
 
   getInitialState() {
     return {
+      createWalletForm: false,
       newWalletName: "",
       newWalletNetwork: "mainnet",
-      sideActive: false,
       selectedWallet: this.props.availableWallets ? this.props.availableWallets[0] : null
     };
   }
@@ -32,42 +32,46 @@ class WalletSelectionBody extends React.Component {
       onChangeAvailableWallets,
       startWallet,
       createWallet,
-      onShowCreateWallet,
-      onShowSelectWallet,
       onChangeCreateWalletName,
-      onChangeCreateWalletNetwork
+      onChangeCreateWalletNetwork,
+      showCreateWalletForm,
+      hideCreateWalletForm
     } = this;
     const {
       selectedWallet,
       sideActive,
       newWalletName,
       newWalletNetwork,
+      createWalletForm,
     } = this.state;
     return (
       <WalletSelectionFormBody
         {...{
           sideActive,
-          onShowCreateWallet,
-          onShowSelectWallet,
           onChangeAvailableWallets,
           onChangeCreateWalletName,
           onChangeCreateWalletNetwork,
           startWallet,
           createWallet,
+          createWalletForm,
+          showCreateWalletForm,
+          hideCreateWalletForm,
           selectedWallet,
           newWalletName,
           newWalletNetwork,
+          networkSelected: newWalletNetwork == "mainnet",
           ...this.props,
           ...this.state,
         }}
       />
     );
   }
-  onShowCreateWallet() {
-    this.setState({ sideActive: false });
+
+  showCreateWalletForm() {
+    this.setState({ createWalletForm: true });
   }
-  onShowSelectWallet() {
-    this.setState({ sideActive: true });
+  hideCreateWalletForm() {
+    this.setState({ createWalletForm: false });
   }
   onChangeAvailableWallets(selectedWallet) {
     this.setState({ selectedWallet });
