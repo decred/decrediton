@@ -4,7 +4,8 @@ import "style/MiscComponents.less";
 @autobind
 class KeyBlueButton extends React.Component {
   render() {
-    let className = !this.props.disabled ? "key-blue-button"
+    let className = "button ";
+    className += !this.props.disabled ? "key-blue-button"
       : "key-blue-button-disabled";
     let style = {};
     Object.assign(style, this.props.style);
