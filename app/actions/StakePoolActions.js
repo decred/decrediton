@@ -3,7 +3,7 @@ import Promise from "promise";
 import {
   getPurchaseInfo, setStakePoolAddress, setVoteChoices, getNextAddress, getStakePoolInfo
 } from "wallet";
-import { getWalletCfg, updateStakePoolConfig } from "../config.js";
+import { getWalletCfg, updateStakePoolConfig } from "config";
 import { importScriptAttempt } from "./ControlActions";
 import * as sel from "../selectors";
 

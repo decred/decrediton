@@ -1,15 +1,17 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
-import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, getWalletPath } from "./config.js";
+import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
+import { initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig } from "./config";
 import path from "path";
 import fs from "fs-extra";
 import os from "os";
 import parseArgs from "minimist";
 import stringArgv from "string-argv";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
-import { createLogger } from "./logging";
+import { createLogger } from "./main_dev/logging";
 import { Buffer } from "buffer";
+import { OPTIONS, USAGE } from "./main_dev/constants";
+import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, dcrwalletCfg, getWalletPath } from "./main_dev/paths";
 
 let menu;
 let template;
@@ -30,14 +32,6 @@ let dcrwalletLogs = Buffer.from("");
 
 let MAX_LOG_LENGTH = 50000;
 
-// Not going to make incorrect options fatal since running in dev mode has
-// all sorts of things on the cmd line that we don't care about.  If we want
-// to make this fatal, it must be for production mode only.
-function unknownFn(arg) {
-  console.log("%s is not a valid option!", arg);
-  return;
-}
-
 function getExecutablePath(name) {
   let customBinPath = argv.customBinPath;
 
@@ -51,32 +45,10 @@ function getExecutablePath(name) {
 }
 
 function showUsage() {
-  console.log(`${app.getName()} version ${app.getVersion()}
-Usage
-  $ ${app.getName()} [--help] [--version] [--debug] [--testnet|--mainnet]
-               [--extrawalletargs=...]
-
-Options
-  --help             Show help and exit
-  --version          Show version and exit
-  --debug  -d        Debug daemon/wallet messages
-  --testnet          Connect to testnet
-  --mainnet          Connect to mainnet
-  --extrawalletargs  Pass extra arguments to dcrwallet
-  --customBinPath    Custom path for dcrd/dcrwallet/dcrctl binaries
-`);
+  console.log(USAGE);
 }
 
-// Allowed cmd line options are defined here.
-var opts = {
-  boolean: [ "debug", "testnet", "mainnet", "help", "version" ],
-  string: [ "extrawalletargs", "customBinPath" ],
-  default: { debug: false },
-  alias: { d: "debug" },
-  unknown: unknownFn
-};
-
-var argv = parseArgs(process.argv.slice(1), opts);
+let argv = parseArgs(process.argv.slice(1), OPTIONS);
 debug = argv.debug || process.env.NODE_ENV === "development";
 
 if (argv.help) {
@@ -87,6 +59,12 @@ if (argv.help) {
 if (argv.version) {
   console.log(`${app.getName()} version ${app.getVersion()}`);
   app.exit(0);
+}
+
+// Check if network was set on command line (but only allow one!).
+if (argv.testnet && argv.mainnet) {
+  logger.log("Cannot use both --testnet and --mainnet.");
+  app.quit();
 }
 
 if (process.env.NODE_ENV === "production") {
@@ -170,12 +148,6 @@ process.on("uncaughtException", err => {
   logger.log("error", "UNCAUGHT EXCEPTION", err);
   throw err;
 });
-
-// Check if network was set on command line (but only allow one!).
-if (argv.testnet && argv.mainnet) {
-  logger.log("Cannot use both --testnet and --mainnet.");
-  app.quit();
-}
 
 let daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
 
