@@ -1,5 +1,5 @@
 import DefaultModal from "../Modal";
-import { SlateGrayButton, DangerButton } from "buttons";
+import { InvisibleButton, DangerButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { TextInput } from "inputs";
 import { ExternalLink } from "shared";
@@ -44,9 +44,9 @@ const Modal = ({ show, onCancelModal, onSubmit, copyConfirmationPhrase,
       <DangerButton className="confirm-modal-confirm-button" onClick={onSubmit} disabled={typedConfirmationPhrase.toLowerCase() !== copyConfirmationPhrase.toLowerCase()}>
         <T id="seedCopyConfirm.btnConfirm" m="Confirm Seed Copy" />
       </DangerButton>
-      <SlateGrayButton className="confirm-modal-close-button" onClick={onCancelModal}>
+      <InvisibleButton className="confirm-modal-close-button" onClick={onCancelModal}>
         <T id="seedCopyConfirm.btnCancel" m="Cancel" />
-      </SlateGrayButton>
+      </InvisibleButton>
     </div>
   </DefaultModal>
 );
