@@ -106,11 +106,13 @@ export default function walletLoader(state = {}, action) {
   case OPENWALLET_INPUT:
     return { ...state,
       openWalletInputRequest: true,
+      walletOpenRequestAttempt: false,
     };
   case OPENWALLET_FAILED_INPUT:
     return { ...state,
       walletOpenError: String(action.error),
       openWalletInputRequest: true,
+      walletOpenRequestAttempt: false,
     };
   case OPENWALLET_ATTEMPT:
     return { ...state,
