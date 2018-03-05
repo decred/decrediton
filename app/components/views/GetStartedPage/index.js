@@ -84,14 +84,12 @@ class GetStartedPage extends React.Component {
         break;
       case 2:
         if (hasExistingWallet) {
-          text = <T id="getStarted.decrypt.info" m="This wallet is encrypted, please enter the public passphrase to decrypt it." />;
           Form = OpenWallet;
         } else {
           return <CreateWallet {...props} />;
         }
         break;
       default:
-        text = <T id="getStarted.advanced.title" m="Advanced Daemon Set Up" />;
         if (isAdvancedDaemon && openForm && !remoteAppdataError) {
           Form = AdvancedStartupBody;
         } else if (remoteAppdataError) {
@@ -99,7 +97,6 @@ class GetStartedPage extends React.Component {
         }
       }
     } else if (!getWalletReady) {
-      text = <T id="getStarted.walletSelect.title" m="Select the Wallet to Load" />;
       Form = WalletSelectionBody;
     } else if (isPrepared) {
       switch (startStepIndex || 0) {
