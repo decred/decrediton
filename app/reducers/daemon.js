@@ -90,7 +90,9 @@ export default function version(state = {}, action) {
     };
   case AVAILABLE_WALLETS:
     return { ...state,
-      availableWallets: action.availableWallets
+      availableWallets: action.availableWallets,
+      previousWallet: action.previousWallet,
+      selectCreateWalletInputRequest: !action.previousWallet,
     };
   default:
     return state;

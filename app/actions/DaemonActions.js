@@ -96,14 +96,11 @@ export const shutdownApp = () => (dispatch) => {
 
 export const cleanShutdown = () => () => wallet.cleanShutdown();
 
-export const getAvailableWallets = () => (dispatch) => {
-  wallet.getAvailableWallets()
-    .then(availableWallets => {
-      dispatch({ availableWallets, type: AVAILABLE_WALLETS });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+export const getAvailableWallets = () => async (dispatch) => {
+  const availableWallets = await wallet.getAvailableWallets();
+  const previousWallet = await wallet.getPreviousWallet();
+  dispatch({ availableWallets, previousWallet, type: AVAILABLE_WALLETS });
+  return { availableWallets, previousWallet };
 };
 
 export const removeWallet = (selectedWallet) => (dispatch) => {
@@ -134,8 +131,7 @@ export const startWallet = (selectedWallet) => (dispatch) => {
   wallet.startWallet(selectedWallet.value.wallet, selectedWallet.network == "testnet")
     .then(({ port }) => {
       const walletCfg = getWalletCfg(selectedWallet.network == "testnet", selectedWallet.value.wallet);
-      const globalCfg = getGlobalCfg();
-      globalCfg.set("previouswallet", selectedWallet);
+      wallet.setPreviousWallet(selectedWallet);
 
       var currentStakePoolConfig = walletCfg.get("stakepools");
       var foundStakePoolConfig = false;
