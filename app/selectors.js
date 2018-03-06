@@ -357,14 +357,12 @@ const ticketNormalizer = createSelector(
       const spenderTxFee = hasSpender ? spenderTx.getFee() : 0;
 
       // ticket change is anything returned to the wallet on ticket purchase.
-      // double check after changes in splitFee flag (dcrwallet #933)
-      const ticketChange = decodedTicketTx
-        ? decodedTicketTx.transaction.getOutputsList().slice(1).reduce((a, v) => a+v.getValue(), 0)
-        : ticketTx.getCreditsList().slice(1).reduce((a, v) => a+v.getAmount(), 0);
+      const isTicketChange = (c) => (c.getIndex() > 0) && (c.getIndex() % 2) === 0;
+      const ticketChange = ticketTx.getCreditsList().reduce((s, c) => s + isTicketChange(c) ? c.getAmount() : 0, 0);
 
       // ticket investment is the full amount paid by the wallet on the ticket purchase
       const ticketInvestment = ticketTx.getDebitsList().reduce((a, v) => a+v.getPreviousAmount(), 0)
-        - ticketChange + ticketTxFee;
+        - ticketChange;
 
       let ticketReward, ticketROI, ticketReturnAmount;
       if (hasSpender) {
