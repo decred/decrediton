@@ -80,6 +80,7 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
 
   var fd;
   var allSeries;
+  var seriesOpts;
 
   // constants (may be overriden/parametrized in the future)
   const unitDivisor = sel.unitDivisor(getState());
@@ -105,6 +106,7 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
   const startFunction = (opts) => {
     dispatch({ type: EXPORT_STARTED });
     allSeries = opts.series.map(s => ({ ...s, valueFormatFunc: seriesValueFormatFunc(s) }));
+    seriesOpts = opts;
     const seriesNames = allSeries.map(s => s.name);
     const headerLine = csvLine([ "time", ...seriesNames ]);
 
@@ -118,7 +120,8 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
     const values = allSeries.map(s => !isUndefined(series[s.name])
       ? s.valueFormatFunc(series[s.name])
       : null);
-    values.unshift(formatTime(time));
+
+    !seriesOpts.noTimestamp && values.unshift(formatTime(time));
     const line = csvLine(values);
     fs.writeSync(fd, line);
     fs.writeSync(fd, ln);
@@ -419,4 +422,41 @@ export const dailyBalancesStats = (opts) => {
 
   return balancesStats({ ...opts, progressFunction: aggProgressFunction,
     endFunction: aggEndFunction, startFunction: aggStartFunction });
+};
+
+export const voteTimeStats = (opts) => (dispatch, getState) => {
+
+  const chainParams = sel.chainParams(getState());
+  const { progressFunction, endFunction, startFunction, errorFunction } = opts;
+  const { currentBlockHeight, walletService, } = getState().grpc;
+
+  const blocksPerDay = (60 * 60 * 24) / chainParams.TargetTimePerBlock;
+  const expirationDays = Math.ceil((chainParams.TicketExpiry + chainParams.TicketMaturity) / blocksPerDay);
+  const dayBuckets = Array(expirationDays+1).fill(0);
+
+  startFunction({
+    series: [
+      { name: "daysToVote" },
+      { name: "count" },
+    ],
+    noTimestamp: true
+  });
+
+  const txDataCb = (tickets) => {
+    tickets.forEach(t => {
+      if (t.status !== "voted") return;
+      const daysToVote = Math.ceil((t.spender.getTimestamp() - t.ticket.getTimestamp()) / (24 * 60 * 60));
+      dayBuckets[daysToVote] += 1;
+    });
+
+    dayBuckets.forEach((count, daysToVote) => {
+      progressFunction(null, { daysToVote, count });
+    });
+
+    endFunction();
+  };
+
+  wallet.getTickets(walletService, 0, currentBlockHeight)
+    .then(txDataCb)
+    .catch(errorFunction);
 };

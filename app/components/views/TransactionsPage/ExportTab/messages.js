@@ -39,4 +39,12 @@ export default {
       { name: "total", description: <T id="export.balances.fields.total" m="Total available balance." /> },
     ]
   },
+  voteTime: {
+    name: <T id="export.votetime.name" m="Vote Time" />,
+    description: <T id="export.votetime.descr" m="Export a time-to-vote histogram in days (how many days from ticket purchase until the ticket was selected for voting)." />,
+    fields: [
+      { name: "daysToVote", description: <T id="export.votettime.fields.daysToVote" m="Day bucket" /> },
+      { name: "count", description: <T id="export.votetime.fields.count" m="How many tickets voted in this day bucket" /> },
+    ]
+  }
 };
