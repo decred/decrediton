@@ -63,3 +63,11 @@ export function getExecutablePath(name, customBinPath) {
 export function getDefaultWalletDirectory(testnet) {
   return path.join(getWalletsDirectoryPath(), testnet ? "testnet" : "mainnet", "default-wallet");
 }
+
+export function getDefaultWalletNameDirectory(testnet, walletPath = "") {
+  return path.join(getDefaultWalletDirectory(testnet), testnet ? "testnet2" : "mainnet", walletPath);
+}
+
+export function getDecreditonWalletDBPath(testnet) {
+  return path.join(app.getPath("userData"), testnet ? "testnet2" : "mainnet", "wallet.db");
+}

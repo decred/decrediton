@@ -11,8 +11,9 @@ import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales"
 import { createLogger } from "./main_dev/logging";
 import { Buffer } from "buffer";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, MAX_LOG_LENGTH, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
-import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg } from "./main_dev/paths";
+import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDefaultWalletNameDirectory } from "./main_dev/paths";
 import { dcrwalletCfg, getWalletPath, getExecutablePath, getWalletsDirectoryPath, getDefaultWalletDirectory } from "./main_dev/paths";
+import { getGlobalCfgPath, getDecreditonWalletDBPath } from "./main_dev/paths";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -86,14 +87,14 @@ if (!fs.pathExistsSync(defaultMainnetWalletDirectory)){
   fs.mkdirsSync(defaultMainnetWalletDirectory);
 
   // check for existing mainnet directories
-  if ( fs.pathExistsSync(getWalletPath(false, "wallet.db")) ) {
-    fs.mkdirsSync(path.join(defaultMainnetWalletDirectory, "mainnet"));
-    fs.copySync(path.join(app.getPath("userData"), "mainnet"), path.join(defaultMainnetWalletDirectory, "mainnet"));
+  if ( fs.pathExistsSync(getDecreditonWalletDBPath(false)) ) {
+    fs.mkdirsSync(getDefaultWalletNameDirectory(false));
+    fs.copySync(getDecreditonWalletDBPath(false), getDefaultWalletNameDirectory(false));
   }
 
   // copy over existing config.json if it exists
-  if (fs.pathExistsSync(path.join(app.getPath("userData"), "config.json"))) {
-    fs.copySync(path.join(app.getPath("userData"), "config.json"), path.join(defaultMainnetWalletDirectory, "config.json"));
+  if (fs.pathExistsSync(getGlobalCfgPath())) {
+    fs.copySync(getGlobalCfgPath(), getDefaultWalletNameDirectory(false, "config.json"));
   }
 
   // create new configs for default mainnet wallet
@@ -106,14 +107,14 @@ if (!fs.pathExistsSync(defaultTestnetWalletDirectory)){
   fs.mkdirsSync(defaultTestnetWalletDirectory);
 
   // check for existing testnet2 directories
-  if (fs.pathExistsSync(path.join(app.getPath("userData"), "testnet2", "wallet.db"))) {
-    fs.mkdirsSync(path.join(defaultTestnetWalletDirectory, "testnet2"));
-    fs.copySync(path.join(app.getPath("userData"), "testnet2"), path.join(defaultTestnetWalletDirectory, "testnet2"));
+  if (fs.pathExistsSync(getDecreditonWalletDBPath(true))) {
+    fs.mkdirsSync(getDefaultWalletNameDirectory(true));
+    fs.copySync(getDecreditonWalletDBPath(true), getDefaultWalletNameDirectory(true));
   }
 
   // copy over existing config.json if it exists
-  if (fs.pathExistsSync(path.join(app.getPath("userData"), "config.json"))) {
-    fs.copySync(path.join(app.getPath("userData"), "config.json"), path.join(defaultTestnetWalletDirectory, "config.json"));
+  if (fs.pathExistsSync(getGlobalCfgPath())) {
+    fs.copySync(getGlobalCfgPath(), getDefaultWalletNameDirectory(true, "config.json"));
   }
 
   // create new configs for default testnet wallet
