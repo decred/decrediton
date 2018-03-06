@@ -1,7 +1,7 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
 import { injectIntl } from "react-intl";
 import messages from "./messages";
-import { yAxisStyle, xAxisStyle, homeChartSize, padding, radiusFull } from "./Styles";
+import { yAxisStyle, xAxisStyle, myTicketsChartSize, padding, radiusFull } from "./Styles";
 import { isArray } from "util";
 import { FormattedMessage as T } from "react-intl";
 
@@ -37,7 +37,7 @@ const VoteTimeChart = ({ data, intl }) => {
   }));
 
   return (
-    <BarChart stackOffset="sign" width={homeChartSize.width} height={homeChartSize.height} data={displayData}>
+    <BarChart stackOffset="sign" width={myTicketsChartSize.width} height={myTicketsChartSize.height} data={displayData}>
       <XAxis dataKey="name" style={yAxisStyle} />
       <YAxis orientation="right" style={xAxisStyle} padding={padding} />
       <Tooltip content={<ChartTooltip />} />

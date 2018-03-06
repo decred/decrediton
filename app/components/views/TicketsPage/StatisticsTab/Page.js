@@ -14,11 +14,13 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats }) => (
 
     {getMyTicketsStatsRequest ? <LoadingStatsIndicator /> : null}
 
-    <Switch>
-      <Route path="/tickets/statistics/voteTime" component={VoteTimeChartPage} />
-      <Route path="/tickets/statistics/roi" component={NotYet} />
-      {hasStats ? <Redirect from="/tickets/statistics" exact to="/tickets/statistics/voteTime" /> : null}
-    </Switch>
+    <div className="my-tickets-charts">
+      <Switch>
+        <Route path="/tickets/statistics/voteTime" component={VoteTimeChartPage} />
+        <Route path="/tickets/statistics/roi" component={NotYet} />
+        {hasStats ? <Redirect from="/tickets/statistics" exact to="/tickets/statistics/voteTime" /> : null}
+      </Switch>
+    </div>
 
   </Aux>
 );
