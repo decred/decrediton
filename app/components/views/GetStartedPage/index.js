@@ -26,6 +26,8 @@ class GetStartedPage extends React.Component {
       .then(({ previousWallet }) => {
         previousWallet && this.props.onStartWallet(previousWallet);
       });
+    this.props.determineNeededBlocks();
+    setTimeout(()=>this.props.prepStartDaemon(), 1000);
   }
 
   onShowReleaseNotes() {

@@ -13,7 +13,6 @@ class WalletSelectionBody extends React.Component {
     return {
       createWalletForm: false,
       newWalletName: "",
-      newWalletNetwork: "mainnet",
       selectedWallet: this.props.availableWallets ? this.props.availableWallets[0] : null
     };
   }
@@ -33,7 +32,6 @@ class WalletSelectionBody extends React.Component {
       startWallet,
       createWallet,
       onChangeCreateWalletName,
-      onChangeCreateWalletNetwork,
       showCreateWalletForm,
       hideCreateWalletForm
     } = this;
@@ -50,7 +48,6 @@ class WalletSelectionBody extends React.Component {
           sideActive,
           onChangeAvailableWallets,
           onChangeCreateWalletName,
-          onChangeCreateWalletNetwork,
           startWallet,
           createWallet,
           createWalletForm,

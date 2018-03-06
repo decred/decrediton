@@ -1,4 +1,4 @@
-import { versionCheckAction, startRpcRequestFunc, determineNeededBlocks } from "./WalletLoaderActions";
+import { versionCheckAction } from "./WalletLoaderActions";
 import { stopNotifcations } from "./NotificationActions";
 import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
@@ -164,7 +164,6 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
       dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig });
       dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
       setTimeout(()=>dispatch(versionCheckAction()), 2000);
-      setTimeout(()=>dispatch(determineNeededBlocks()), 2000);
     })
     .catch((err) => {
       console.log(err);
@@ -181,6 +180,7 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   const { rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials(isTestNet(getState()), walletName);
   const hasAllCredentials = rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
   const hasAppData = getAppdataPath(isTestNet(getState()), walletName) && getAppdataPath(isTestNet(getState()), walletName).length > 0;
+
 
   if(hasAllCredentials && hasAppData)
     this.props.setCredentialsAppdataError();
@@ -207,7 +207,6 @@ export const syncDaemon = () =>
             dispatch({ type: DAEMONSYNCED });
             dispatch({ currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK });
             setMustOpenForm(false);
-            dispatch(startRpcRequestFunc());
             return;
           } else if (updateCurrentBlockCount !== 0) {
             const blocksLeft = neededBlocks - updateCurrentBlockCount;

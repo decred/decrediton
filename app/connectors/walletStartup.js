@@ -39,6 +39,8 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  determineNeededBlocks: wla.determineNeededBlocks,
+  prepStartDaemon: da.prepStartDaemon,
   onShowTutorial: da.showTutorial,
   onShowLanguage: da.showLanguage,
   onShowGetStarted: da.showGetStarted,

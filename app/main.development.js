@@ -245,14 +245,14 @@ ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
   }
   if (!daemonIsAdvanced && !primaryInstance) {
     logger.log("info", "Running on secondary instance. Assuming dcrd is already running.");
-    dcrdConfig = readDcrdConfig(getWalletPath(testnet, walletPath), testnet);
+    dcrdConfig = readDcrdConfig(getDcrdPath(), testnet);
     dcrdConfig.rpc_cert = getDcrdRpcCert();
     dcrdConfig.pid = -1;
     event.returnValue = dcrdConfig;
     return;
   }
   try {
-    dcrdConfig = launchDCRD(walletPath, appData, testnet);
+    dcrdConfig = launchDCRD(getDcrdPath(), appData, testnet);
     dcrdPID = dcrdConfig.pid;
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
@@ -299,7 +299,7 @@ ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
   let args = [ "getblockcount" ];
   let host, port;
   if (!rpcCreds){
-    args.push(`--configfile=${dcrctlCfg(getWalletPath(testnet, walletPath))}`);
+    args.push(`--configfile=${dcrctlCfg(appDataDirectory())}`);
   } else if (rpcCreds) {
     if (rpcCreds.rpc_user) {
       args.push(`--rpcuser=${rpcCreds.rpc_user}`);
@@ -410,7 +410,7 @@ const DecodeDaemonIPCData = (data, cb) => {
   }
 };
 
-const launchDCRD = (walletPath, appdata, testnet) => {
+const launchDCRD = (daemonPath, appdata, testnet) => {
   var spawn = require("child_process").spawn;
   let args = [];
   let newConfig = {};
@@ -422,14 +422,14 @@ const launchDCRD = (walletPath, appdata, testnet) => {
       args.push("--testnet");
     }
   } else {
-    args = [ `--configfile=${dcrdCfg(getWalletPath(testnet, walletPath))}` ];
-    newConfig = readDcrdConfig(getWalletPath(testnet, walletPath), testnet);
+    args = [ `--configfile=${dcrdCfg(daemonPath)}` ];
+    newConfig = readDcrdConfig(daemonPath, testnet);
     newConfig.rpc_cert = getDcrdRpcCert();
   }
 
   // Check to make sure that the rpcuser and rpcpass were set in the config
   if (!newConfig.rpc_user || !newConfig.rpc_password) {
-    const errorMessage =  "No " + `${!newConfig.rpc_user ? "rpcuser " : "" }` + `${!newConfig.rpc_user && !newConfig.rpc_password ? "and " : "" }` + `${!newConfig.rpc_password ? "rpcpass " : "" }` + "set in " + `${appdata ? appdata : getWalletPath(testnet, walletPath)}` + "/dcrd.conf.  Please set them and restart.";
+    const errorMessage =  "No " + `${!newConfig.rpc_user ? "rpcuser " : "" }` + `${!newConfig.rpc_user && !newConfig.rpc_password ? "and " : "" }` + `${!newConfig.rpc_password ? "rpcpass " : "" }` + "set in " + `${appdata ? appdata : getDcrdPath()}` + "/dcrd.conf.  Please set them and restart.";
     logger.log("error", errorMessage);
     mainWindow.webContents.executeJavaScript("alert(\"" + `${errorMessage}` + "\");");
     mainWindow.webContents.executeJavaScript("window.close();");
