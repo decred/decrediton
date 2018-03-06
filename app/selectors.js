@@ -272,7 +272,6 @@ export const homeHistoryTransactions = createSelector(
 
 const dailyBalancesStats = get([ "statistics", "dailyBalances" ]);
 
-//fake data for balance chart
 export const spendableAndLockedBalance = createSelector(
   [ dailyBalancesStats, unitDivisor ],
   ( stats, unitDivisor ) => stats.map(s => ({
@@ -282,7 +281,6 @@ export const spendableAndLockedBalance = createSelector(
     immature: (s.series.immature + s.series.immatureNonWallet) / unitDivisor,
   })));
 
-//fake data for transactions tab on overview Page
 export const balanceSent = createSelector(
   [ dailyBalancesStats ],
   (balances) => balances.reduce((s, b) => s + b.series.sent, 0)
@@ -768,3 +766,6 @@ export const chainParams = compose(isTestNet => isTestNet ? TestNetParams : Main
 export const exportingData = get([ "control", "exportingData" ]);
 
 export const location = get([ "routing", "location" ]);
+
+export const voteTimeStats = get([ "statistics", "voteTime" ]);
+export const getMyTicketsStatsRequest = get([ "statistics", "getMyTicketsStatsRequest" ]);

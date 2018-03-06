@@ -323,6 +323,8 @@ var initialState = {
   },
   statistics: {
     dailyBalances: Array(),
+    voteTime: null,
+    getMyTicketsStatsRequest: false,
   },
   locales: locales
 };

@@ -43,5 +43,13 @@ export default defineMessages({
   immatureKey: {
     id: "charts.keys.immature",
     defaultMessage: "Immature"
+  },
+  ticketCountByDay: {
+    id: "charts.keys.ticketCountByDay",
+    defaultMessage: "Tickets"
+  },
+  day: {
+    id: "charts.keys.day",
+    defaultMessage: "Days"
   }
 });

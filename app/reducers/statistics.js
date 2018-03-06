@@ -1,6 +1,7 @@
 
 import {
-  GETSTARTUPSTATS_SUCCESS
+  GETSTARTUPSTATS_SUCCESS,
+  GETMYTICKETSSTATS_ATTEMPT, GETMYTICKETSSTATS_SUCCESS, GETMYTICKETSSTATS_FAILED
 } from "actions/StatisticsActions";
 
 export default function statistics(state = {}, action) {
@@ -9,6 +10,22 @@ export default function statistics(state = {}, action) {
     return {
       ...state,
       dailyBalances: action.dailyBalances
+    };
+  case GETMYTICKETSSTATS_ATTEMPT:
+    return {
+      ...state,
+      getMyTicketsStatsRequest: true,
+    };
+  case GETMYTICKETSSTATS_SUCCESS:
+    return {
+      ...state,
+      getMyTicketsStatsRequest: false,
+      voteTime: action.voteTime,
+    };
+  case GETMYTICKETSSTATS_FAILED:
+    return {
+      ...state,
+      getMyTicketsStatsRequest: false,
     };
   default:
     return state;

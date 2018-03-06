@@ -54,6 +54,23 @@ export const getStartupStats = () => (dispatch) => {
     .catch(error => dispatch({ error, type: GETSTARTUPSTATS_FAILED }));
 };
 
+export const GETMYTICKETSSTATS_ATTEMPT = "GETMYTICKETSSTATS_ATTEMPT";
+export const GETMYTICKETSSTATS_SUCCESS = "GETMYTICKETSSTATS_SUCCESS";
+export const GETMYTICKETSSTATS_FAILED = "GETMYTICKETSSTATS_FAILED";
+
+export const getMyTicketsStats = () => (dispatch) => {
+  const startupStats = [
+    { calcFunction: voteTimeStats },
+  ];
+
+  dispatch({ type: GETMYTICKETSSTATS_ATTEMPT });
+  return Promise.all(startupStats.map(s => dispatch(generateStat(s))))
+    .then(([ voteTime ]) => {
+      dispatch({ voteTime, type: GETMYTICKETSSTATS_SUCCESS });
+    })
+    .catch(error => dispatch({ error, type: GETMYTICKETSSTATS_FAILED }));
+};
+
 // generateStat starts generating the statistic as defined on the opts. It
 // returns a promise that gets resolved with all the data in-memory after the
 // stat has been completely calculated.
@@ -451,7 +468,7 @@ export const voteTimeStats = (opts) => (dispatch, getState) => {
   const txDataCb = (tickets) => {
     tickets.forEach(t => {
       if (t.status !== "voted") return;
-      const daysToVote = Math.ceil((t.spender.getTimestamp() - t.ticket.getTimestamp()) / (24 * 60 * 60));
+      const daysToVote = Math.floor((t.spender.getTimestamp() - t.ticket.getTimestamp()) / (24 * 60 * 60));
       dayBuckets[daysToVote] += 1;
     });
 
