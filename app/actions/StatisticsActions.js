@@ -203,6 +203,7 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       { name: "total", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "stakeRewards", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "stakeFees", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "totalStake", type: VALUE_TYPE_ATOMAMOUNT },
     ],
   });
 
@@ -266,7 +267,7 @@ export const balancesStats = (opts) => (dispatch, getState) => {
           revoked: 0, sent: 0, received: 0, ticket: 0,
           locked: isWallet ? commitAmount : 0,
           lockedNonWallet: isWallet ? 0 : commitAmount,
-          stakeRewards: 0, stakeFees: 0,
+          stakeRewards: 0, stakeFees: 0, totalStake: 0,
           timestamp, tx });
       });
     }
@@ -292,7 +293,7 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       return { spendable: -spentAmount, immature: isWallet ? commitAmount : 0,
         immatureNonWallet: isWallet ? 0 : commitAmount, voted: 0, revoked: 0,
         sent: 0, received: 0, ticket: commitAmount, locked: 0, lockedNonWallet: 0,
-        stakeRewards: 0, stakeFees: purchaseFees,
+        stakeRewards: 0, stakeFees: purchaseFees, totalStake: commitAmount,
         timestamp: tx.timestamp, tx };
     case wallet.TRANSACTION_TYPE_VOTE:
     case wallet.TRANSACTION_TYPE_REVOCATION:
@@ -312,13 +313,13 @@ export const balancesStats = (opts) => (dispatch, getState) => {
         voted: isVote ? returnAmount : 0, revoked: !isVote ? returnAmount : 0,
         sent: 0, received: 0, ticket: 0, immature: 0, immatureNonWallet: 0,
         stakeFees: isVote ? 0 : -stakeResult, stakeRewards: isVote ? stakeResult : 0,
-        timestamp: tx.timestamp, tx };
+        totalStake: 0, timestamp: tx.timestamp, tx };
     case wallet.TRANSACTION_TYPE_COINBASE:
     case wallet.TRANSACTION_TYPE_REGULAR:
       return { spendable: +tx.amount, locked: 0, lockedNonWallet: 0, voted: 0,
         revoked: 0, sent: tx.amount < 0 ? tx.amount : 0,
         received: tx.amount > 0 ? tx.amount : 0, ticket: 0, immature: 0,
-        stakeFees: 0, stakeRewards: 0,
+        stakeFees: 0, stakeRewards: 0, totalStake: 0,
         immatureNonWallet: 0, timestamp: tx.timestamp, tx };
     default: throw "Unknown tx type: " + tx.txType;
     }
@@ -326,7 +327,8 @@ export const balancesStats = (opts) => (dispatch, getState) => {
 
   // running balance totals
   let currentBalance = { spendable: 0, immature: 0, immatureNonWallet: 0,
-    locked: 0, lockedNonWallet: 0, total: 0, stakeRewards: 0, stakeFees: 0, delta: null };
+    locked: 0, lockedNonWallet: 0, total: 0, stakeRewards: 0, stakeFees: 0,
+    totalStake: 0, delta: null };
 
   // account for this delta in the balances and call the progress function
   let addDelta = (delta) => {
@@ -338,6 +340,7 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       lockedNonWallet: currentBalance.lockedNonWallet + delta.lockedNonWallet,
       stakeRewards: currentBalance.stakeRewards + delta.stakeRewards,
       stakeFees: currentBalance.stakeFees + delta.stakeFees,
+      totalStake: currentBalance.totalStake + delta.totalStake,
       delta,
     };
     currentBalance.total = currentBalance.spendable + currentBalance.locked;

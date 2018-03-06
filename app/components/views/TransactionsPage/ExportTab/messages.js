@@ -37,6 +37,9 @@ export default {
       { name: "locked", description: <T id="export.balances.fields.locked" m="Balance locked in immature and live tickets." /> },
       { name: "lockedNonWallet", description: <T id="export.balances.fields.lockedNonWallet" m="Balance locked in immature and live tickets not controlled by the wallet." /> },
       { name: "total", description: <T id="export.balances.fields.total" m="Total available balance." /> },
+      { name: "stakeRewards", description: <T id="export.balances.fields.stakeRewards" m="Total stake rewards received." /> },
+      { name: "stakeFees", description: <T id="export.balances.fields.stakeFees" m="Total stake fees paid." /> },
+      { name: "totalStake", description: <T id="export.balances.fields.totalStake" m="Total amount of DCR used on staking." /> },
     ]
   },
   voteTime: {
