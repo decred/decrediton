@@ -1,4 +1,4 @@
-import { versionCheckAction } from "./WalletLoaderActions";
+import { versionCheckAction, startRpcRequestFunc } from "./WalletLoaderActions";
 import { stopNotifcations } from "./NotificationActions";
 import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
@@ -197,7 +197,7 @@ export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks } } = getState();
-      const { daemon: { daemonSynced, timeStart, blockStart, credentials, walletName } } = getState();
+      const { daemon: { daemonSynced, timeStart, blockStart, credentials, walletName, walletReady } } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
       return wallet
@@ -207,6 +207,9 @@ export const syncDaemon = () =>
             dispatch({ type: DAEMONSYNCED });
             dispatch({ currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK });
             setMustOpenForm(false);
+            if (walletReady) {
+              dispatch(startRpcRequestFunc());
+            }
             return;
           } else if (updateCurrentBlockCount !== 0) {
             const blocksLeft = neededBlocks - updateCurrentBlockCount;
