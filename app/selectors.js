@@ -330,7 +330,7 @@ export const viewedDecodedTransaction = createSelector(
   (transactions, txHash, decodedTransactions) => decodedTransactions[txHash]
 );
 
-const ticketNormalizer = createSelector(
+export const ticketNormalizer = createSelector(
   [ decodedTransactions, network ],
   (decodedTransactions, network) => {
     return ticket => {

@@ -5,6 +5,7 @@ import { isNumber, isNullOrUndefined, isUndefined } from "util";
 import { tsToDate, endOfDay, reverseRawHash, formatLocalISODate } from "helpers";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
+const VALUE_TYPE_DATETIME = "VALUE_TYPE_DATETIME";
 
 export const GETSTARTUPSTATS_ATTEMPT = "GETSTARTUPSTATS_ATTEMPT";
 export const GETSTARTUPSTATS_SUCCESS = "GETSTARTUPSTATS_SUCCESS";
@@ -90,13 +91,15 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
 
   // formatting functions
   const quote = (v) => "\"" + v.replace("\"", "\\\"") + "\"";
-  const formatTime = formatLocalISODate;
+  const formatTime = v => v ? formatLocalISODate(v) : "";
   const csvValue = (v) => isNullOrUndefined(v) ? "" : isNumber(v) ? v.toFixed(precision) : quote(v);
   const csvLine = (values) => values.map(csvValue).join(vsep);
 
   const seriesValueFormatFunc = (series) => {
     if (series["type"] === VALUE_TYPE_ATOMAMOUNT) {
       return v => v / unitDivisor;
+    } else if (series["type"] === VALUE_TYPE_DATETIME) {
+      return formatTime;
     } else {
       return v => v;
     }
@@ -454,6 +457,46 @@ export const voteTimeStats = (opts) => (dispatch, getState) => {
 
     dayBuckets.forEach((count, daysToVote) => {
       progressFunction(null, { daysToVote, count });
+    });
+
+    endFunction();
+  };
+
+  wallet.getTickets(walletService, 0, currentBlockHeight)
+    .then(txDataCb)
+    .catch(errorFunction);
+};
+
+export const ticketStats = (opts) => (dispatch, getState) => {
+
+  const { progressFunction, endFunction, startFunction, errorFunction } = opts;
+  const { currentBlockHeight, walletService, } = getState().grpc;
+
+  startFunction({
+    series: [
+      { name: "spenderTimestamp", type: VALUE_TYPE_DATETIME },
+      { name: "status" },
+      { name: "ticketHash" },
+      { name: "spenderHash" },
+      { name: "sentAmount", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "returnedAmount", type: VALUE_TYPE_ATOMAMOUNT },
+    ],
+  });
+
+  const normalizeTicket = sel.ticketNormalizer(getState());
+  const txDataCb = (tickets) => {
+    tickets.forEach(t => {
+
+      const ticket = normalizeTicket(t);
+      progressFunction(tsToDate(ticket.enterTimestamp), {
+        spenderTimestamp: ticket.leaveTimestamp ? tsToDate(ticket.leaveTimestamp) : null,
+        status: ticket.status,
+        ticketHash: ticket.hash,
+        spenderHash: ticket.spenderHash,
+        sentAmount: ticket.ticketInvestment,
+        returnedAmount: ticket.ticketReturnAmount,
+      });
+
     });
 
     endFunction();
