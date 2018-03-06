@@ -208,20 +208,22 @@ const installExtensions = async () => {
 
 const { ipcMain } = require("electron");
 
-ipcMain.on("get-available-wallets", (event) => {// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
+ipcMain.on("get-available-wallets", (event, network) => {// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
   var availableWallets = [];
-  var mainnetWalletDirectories = fs.readdirSync(getWalletPath(false));
 
-  for (var i in mainnetWalletDirectories) {
-    if (fs.pathExistsSync(getWalletDBPathFromWallets(false, mainnetWalletDirectories[i].toString()))) {
-      availableWallets.push({ network: "mainnet", wallet: mainnetWalletDirectories[i] });
+  if (network == "mainnet") {
+    var mainnetWalletDirectories = fs.readdirSync(getWalletPath(false));
+    for (var i in mainnetWalletDirectories) {
+      if (fs.pathExistsSync(getWalletDBPathFromWallets(false, mainnetWalletDirectories[i].toString()))) {
+        availableWallets.push({ network: "mainnet", wallet: mainnetWalletDirectories[i] });
+      }
     }
-  }
-  var testnetWalletDirectories = fs.readdirSync(getWalletPath(true));
-
-  for (var j in testnetWalletDirectories) {
-    if (fs.pathExistsSync(getWalletDBPathFromWallets(true, testnetWalletDirectories[j].toString()))) {
-      availableWallets.push({ network: "testnet", wallet: testnetWalletDirectories[j] });
+  } else {
+    var testnetWalletDirectories = fs.readdirSync(getWalletPath(true));
+    for (var j in testnetWalletDirectories) {
+      if (fs.pathExistsSync(getWalletDBPathFromWallets(true, testnetWalletDirectories[j].toString()))) {
+        availableWallets.push({ network: "testnet", wallet: testnetWalletDirectories[j] });
+      }
     }
   }
   event.returnValue = availableWallets;

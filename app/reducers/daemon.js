@@ -68,7 +68,6 @@ export default function version(state = {}, action) {
       selectCreateWalletInputRequest: false,
       walletReady: true,
       walletName: action.walletName,
-      network: action.network,
       hiddenAccounts: action.hiddenAccounts,
     };
   case WALLETCREATED:
