@@ -22,12 +22,19 @@ class GetStartedPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.onGetAvailableWallets()
-      .then(({ previousWallet }) => {
-        previousWallet && this.props.onStartWallet(previousWallet);
-      });
-    this.props.determineNeededBlocks();
-    setTimeout(()=>this.props.prepStartDaemon(), 1000);
+    const { getWalletReady, getDaemonStarted, getNeededBlocks, onGetAvailableWallets, onStartWallet, prepStartDaemon, determineNeededBlocks } = this.props;
+    if (!getWalletReady) {
+      onGetAvailableWallets()
+        .then(({ previousWallet }) => {
+          previousWallet && onStartWallet(previousWallet);
+        });
+    }
+    if (!getNeededBlocks) {
+      determineNeededBlocks();
+    }
+    if (!getDaemonStarted) {
+      setTimeout(()=>prepStartDaemon(), 1000);
+    }
   }
 
   onShowReleaseNotes() {
