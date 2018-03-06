@@ -7,7 +7,8 @@ import * as wallet from "wallet";
 import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from "./ClientActions";
 import { prepStartDaemon } from "./DaemonActions";
 import { getVersionServiceAttempt } from "./VersionActions";
-import { getWalletCfg, getWalletCfgPath, getDcrdCert } from "config";
+import { getWalletCfg, getDcrdCert } from "config";
+import { getWalletPath } from "main_dev/paths";
 import { isTestNet } from "selectors";
 import axios from "axios";
 
@@ -174,7 +175,7 @@ export const startRpcRequestFunc = (isRetry) =>
             setTimeout(() => dispatch(startRpcRequestFunc(isRetry)), RPC_RETRY_DELAY);
           } else {
             dispatch({
-              error: `${error}.  You may need to edit ${getWalletCfgPath(isTestNet(getState()), walletName)} and try again`,
+              error: `${error}.  You may need to edit ${getWalletPath(isTestNet(getState()), walletName)} and try again`,
               type: STARTRPC_FAILED
             });
           }

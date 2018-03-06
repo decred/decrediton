@@ -25,7 +25,19 @@ export function getWalletPath(testnet, walletPath = "") {
 }
 
 export function getWalletsDirectoryPath() {
-  return path.join(app.getPath("userData"),"wallets");
+  return path.join(appDataDirectory(),"wallets");
+}
+
+export function getDefaultWalletDirectory(testnet) {
+  return path.join(getWalletsDirectoryPath(), testnet ? "testnet" : "mainnet", "default-wallet");
+}
+
+export function getDefaultWalletNameDirectory(testnet, walletPath = "") {
+  return path.join(getDefaultWalletDirectory(testnet), testnet ? "testnet2" : "mainnet", walletPath);
+}
+
+export function getDecreditonWalletDBPath(testnet) {
+  return path.join(app.getPath("userData"), testnet ? "testnet2" : "mainnet", "wallet.db");
 }
 
 export function dcrctlCfg(configPath) {
@@ -60,14 +72,3 @@ export function getExecutablePath(name, customBinPath) {
   return path.join(binPath, execName);
 }
 
-export function getDefaultWalletDirectory(testnet) {
-  return path.join(getWalletsDirectoryPath(), testnet ? "testnet" : "mainnet", "default-wallet");
-}
-
-export function getDefaultWalletNameDirectory(testnet, walletPath = "") {
-  return path.join(getDefaultWalletDirectory(testnet), testnet ? "testnet2" : "mainnet", walletPath);
-}
-
-export function getDecreditonWalletDBPath(testnet) {
-  return path.join(app.getPath("userData"), testnet ? "testnet2" : "mainnet", "wallet.db");
-}

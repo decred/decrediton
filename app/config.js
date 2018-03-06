@@ -4,24 +4,20 @@ import path from "path";
 import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
-import { getGlobalCfgPath, dcrdCfg, getWalletPath, dcrctlCfg, dcrwalletCfg, appDataDirectory } from "./main_dev/paths";
+import { getGlobalCfgPath, dcrdCfg, getWalletPath, dcrctlCfg, dcrwalletCfg } from "./main_dev/paths";
 
 export function getGlobalCfg() {
   const config = new Store();
   return (config);
 }
 
-export function getWalletCfgPath(testnet, wallet) {
-  return path.resolve(path.join(appDataDirectory(), "wallets", testnet ? "testnet" : "mainnet", wallet));
-}
-
 export function getWalletCfg(testnet, walletPath){
-  const config = new Store({ cwd: getWalletCfgPath(testnet, walletPath) });
+  const config = new Store({ cwd: getWalletPath(testnet, walletPath) });
   return (config);
 }
 
 export function initWalletCfg(testnet, walletPath) {
-  const config = new Store({ cwd: getWalletCfgPath(testnet, walletPath) });
+  const config = new Store({ cwd: getWalletPath(testnet, walletPath) });
   if (!config.has("wallet_start_advanced")) {
     config.set("wallet_start_advanced", false);
   }
