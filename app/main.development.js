@@ -418,15 +418,14 @@ const launchDCRD = (daemonPath, appdata, testnet) => {
     args = [ `--appdata=${appdata}` ];
     newConfig = readDcrdConfig(appdata, testnet);
     newConfig.rpc_cert = getDcrdRpcCert(appdata);
-    if (testnet) {
-      args.push("--testnet");
-    }
   } else {
     args = [ `--configfile=${dcrdCfg(daemonPath)}` ];
     newConfig = readDcrdConfig(daemonPath, testnet);
     newConfig.rpc_cert = getDcrdRpcCert();
   }
-
+  if (testnet) {
+    args.push("--testnet");
+  }
   // Check to make sure that the rpcuser and rpcpass were set in the config
   if (!newConfig.rpc_user || !newConfig.rpc_password) {
     const errorMessage =  "No " + `${!newConfig.rpc_user ? "rpcuser " : "" }` + `${!newConfig.rpc_user && !newConfig.rpc_password ? "and " : "" }` + `${!newConfig.rpc_password ? "rpcpass " : "" }` + "set in " + `${appdata ? appdata : getDcrdPath()}` + "/dcrd.conf.  Please set them and restart.";
