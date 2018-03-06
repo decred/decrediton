@@ -53,7 +53,7 @@ export function getDcrdPath() {
 export function getExecutablePath(name, customBinPath) {
   let binPath = customBinPath ? customBinPath :
     process.env.NODE_ENV === "development"
-      ? path.join(__dirname, "..", "bin")
+      ? path.join(__dirname, "..", "..", "bin")
       : path.join(process.resourcesPath, "bin");
   let execName = os.platform() !== "win32" ? name : name + ".exe";
 
