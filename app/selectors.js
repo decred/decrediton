@@ -433,19 +433,37 @@ const recentStakeTransactions = createSelector(
   [ transactionsNormalizer, get([ "grpc", "recentStakeTransactions" ]) ], apply
 );
 
-export const homeHistoryTickets = createSelector(
-  [ recentStakeTransactions, allTickets ],
-  ( homeTickets, allTickets ) => {
-    return homeTickets.map( (ticket, index) => {
-      const ticketDecoded = allTickets[index];
-      ticket.ticketPrice = ticketDecoded.ticketPrice;
-      ticket.status = ticketDecoded.status;
-      ticket.enterTimestamp = ticketDecoded.enterTimestamp;
-      ticket.leaveTimestamp = ticketDecoded.leaveTimestamp;
-      ticket.ticketReward = ticketDecoded.ticketReward;
+// aux map from ticket/spender hash => ticket info
+const txHashToTicket = createSelector(
+  [ allTickets ],
+  reduce((m, t) => {
+    m[t.hash] = t;
+    m[t.spenderHash] = t;
+    return m;
+  }, {})
+);
 
-      return ticket;
-    });
+export const homeHistoryTickets = createSelector(
+  [ recentStakeTransactions, txHashToTicket ],
+  ( recentStakeTransactions, txHashToTicket ) => {
+    return recentStakeTransactions.map( tx => {
+      const ticketDecoded = txHashToTicket[tx.txHash];
+      if (!ticketDecoded) {
+        // ordinarily, this shouldn't happen as we should have all tickets purchases
+        // and spends (votes/revocations) stored in the allTickets/txHashToTicket
+        // selectors. I'm getting some errors here on some wallets while testing
+        // split tickets and non-standard voting layouts, so I'm leaving this and
+        // the filter for the moment.
+        return null;
+      }
+      tx.ticketPrice = ticketDecoded.ticketPrice;
+      tx.status = tx.txType;
+      tx.enterTimestamp = ticketDecoded.enterTimestamp;
+      tx.leaveTimestamp = ticketDecoded.leaveTimestamp;
+      tx.ticketReward = ticketDecoded.ticketReward;
+
+      return tx;
+    }).filter(v => !!v);
   }
 );
 
