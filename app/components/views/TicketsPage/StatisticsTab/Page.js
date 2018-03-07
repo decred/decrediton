@@ -2,17 +2,22 @@ import { NavLink as Link, Switch, Route, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
 import VoteTimeChartPage from "./charts/VoteTime";
 import StakeROIChartPage from "./charts/StakeROI";
+import { DecredLoading } from "indicators";
 
-const LoadingStatsIndicator = () => <div>Loading Stats...</div>;
+const ChartLink = ({ to, icon, children }) =>
+  <Link to={to} activeClassName="my-tickets-active-chart-link">
+    <span className={[ "icon", icon ].join(" ")}></span>
+    <div>{children}</div>
+  </Link>;
 
 const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats }) => (
   <Aux>
-    <div className="tickets-stats-links">
-      <Link to="/tickets/statistics/voteTime"><T id="mytickets.stats.voteTime" m="Vote Time" /></Link>
-      <Link to="/tickets/statistics/roi"><T id="mytickets.stats.roi" m="ROI" /></Link>
+    <div className="my-tickets-stats-links">
+      <ChartLink to="/tickets/statistics/voteTime" icon="vote-time"><T id="mytickets.stats.voteTime" m="Vote Time" /></ChartLink>
+      <ChartLink to="/tickets/statistics/roi" icon="roi"><T id="mytickets.stats.roi" m="ROI" /></ChartLink>
     </div>
 
-    {getMyTicketsStatsRequest ? <LoadingStatsIndicator /> : null}
+    {getMyTicketsStatsRequest ? <DecredLoading /> : null}
 
     <div className="my-tickets-charts">
       <Switch>

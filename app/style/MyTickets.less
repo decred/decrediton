@@ -151,3 +151,45 @@
   background: #fff;
   padding: 35px 0px 20px 40px;
 }
+
+.my-tickets-stats-links {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.my-tickets-stats-links a {
+  margin: 0px 10px 0px 10px;
+  display: inline-block;
+  width: 92px;
+  text-align: center;
+  text-decoration: none;
+  color: @stroke-color-default;
+}
+
+.my-tickets-stats-links a:hover {
+  color: @stroke-color-hovered;
+}
+
+.my-tickets-stats-links a.my-tickets-active-chart-link {
+  color: @stroke-color-hovered;
+}
+
+.my-tickets-stats-links a .icon {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background-size: 26px;
+  background-repeat: no-repeat;
+  background-position: 3px 3px;
+  border-radius: 4px;
+}
+
+.my-tickets-stats-links a .icon.vote-time {
+  background-color: #96ebd1;
+  background-image: @vote-time-stats-icon;
+}
+
+.my-tickets-stats-links a .icon.roi {
+  background-color: #699bff;
+  background-image: @vote-time-stats-icon;
+}
