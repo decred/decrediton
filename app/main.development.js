@@ -632,6 +632,10 @@ const readExesVersion = () => {
 };
 
 primaryInstance = !app.makeSingleInstance(() => true);
+const stopSecondInstance = !primaryInstance && !daemonIsAdvanced;
+if (stopSecondInstance) {
+  logger.log("error", "Preventing second instance from running.");
+}
 
 app.on("ready", async () => {
 
@@ -647,7 +651,12 @@ app.on("ready", async () => {
   }
 
   let windowOpts = { show: false, width: 1178, height: 790, page: "app.html" };
-  await installExtensions();
+  if (stopSecondInstance) {
+    windowOpts = { show: true, width: 575, height: 275, autoHideMenuBar: true,
+      resizable: false, page: "staticPages/secondInstance.html" };
+  } else {
+    await installExtensions();
+  }
   windowOpts.title = "Decrediton - " + app.getVersion();
 
   mainWindow = new BrowserWindow(windowOpts);
@@ -662,9 +671,14 @@ app.on("ready", async () => {
     if (versionWin !== null) {
       versionWin.close();
     }
+    if (stopSecondInstance) {
+      app.quit();
+      setTimeout(() => { app.quit(); }, 2000);
+    }
   });
 
   if (process.env.NODE_ENV === "development") mainWindow.openDevTools();
+  if (stopSecondInstance) return;
 
   mainWindow.webContents.on("context-menu", (e, props) => {
     const { selectionText, isEditable, x, y } = props;
