@@ -270,9 +270,8 @@ export const homeHistoryTransactions = createSelector(
   [ transactionsNormalizer, get([ "grpc", "recentRegularTransactions" ]) ], apply
 );
 
-const dailyBalancesStats = get([ "statistics", "dailyBalances" ]);
+export const dailyBalancesStats = get([ "statistics", "dailyBalances" ]);
 
-//fake data for balance chart
 export const spendableAndLockedBalance = createSelector(
   [ dailyBalancesStats, unitDivisor ],
   ( stats, unitDivisor ) => stats.map(s => ({
@@ -282,7 +281,6 @@ export const spendableAndLockedBalance = createSelector(
     immature: (s.series.immature + s.series.immatureNonWallet) / unitDivisor,
   })));
 
-//fake data for transactions tab on overview Page
 export const balanceSent = createSelector(
   [ dailyBalancesStats ],
   (balances) => balances.reduce((s, b) => s + b.series.sent, 0)
@@ -330,7 +328,7 @@ export const viewedDecodedTransaction = createSelector(
   (transactions, txHash, decodedTransactions) => decodedTransactions[txHash]
 );
 
-const ticketNormalizer = createSelector(
+export const ticketNormalizer = createSelector(
   [ decodedTransactions, network ],
   (decodedTransactions, network) => {
     return ticket => {
@@ -357,14 +355,12 @@ const ticketNormalizer = createSelector(
       const spenderTxFee = hasSpender ? spenderTx.getFee() : 0;
 
       // ticket change is anything returned to the wallet on ticket purchase.
-      // double check after changes in splitFee flag (dcrwallet #933)
-      const ticketChange = decodedTicketTx
-        ? decodedTicketTx.transaction.getOutputsList().slice(1).reduce((a, v) => a+v.getValue(), 0)
-        : ticketTx.getCreditsList().slice(1).reduce((a, v) => a+v.getAmount(), 0);
+      const isTicketChange = (c) => (c.getIndex() > 0) && (c.getIndex() % 2) === 0;
+      const ticketChange = ticketTx.getCreditsList().reduce((s, c) => s + isTicketChange(c) ? c.getAmount() : 0, 0);
 
       // ticket investment is the full amount paid by the wallet on the ticket purchase
       const ticketInvestment = ticketTx.getDebitsList().reduce((a, v) => a+v.getPreviousAmount(), 0)
-        - ticketChange + ticketTxFee;
+        - ticketChange;
 
       let ticketReward, ticketROI, ticketReturnAmount;
       if (hasSpender) {
@@ -770,3 +766,43 @@ export const chainParams = compose(isTestNet => isTestNet ? TestNetParams : Main
 export const exportingData = get([ "control", "exportingData" ]);
 
 export const location = get([ "routing", "location" ]);
+
+export const voteTimeStats = get([ "statistics", "voteTime" ]);
+export const medianVoteTime = createSelector(
+  [ voteTimeStats ],
+  (voteTimeStats) => {
+    if (!voteTimeStats || !voteTimeStats.data.length) return 0;
+    const ticketCount = voteTimeStats.data.reduce((s, v) => s + v.series.count, 0);
+    const ticketLimit = ticketCount * 0.5;
+    let sum = 0;
+    for (let i = 0; i < voteTimeStats.data.length; i++) {
+      sum += voteTimeStats.data[i].series.count;
+      if (sum >= ticketLimit) return i;
+    }
+  }
+);
+export const ninetyFifthPercentileVoteTime = createSelector(
+  [ voteTimeStats ],
+  (voteTimeStats) => {
+    if (!voteTimeStats || !voteTimeStats.data.length) return 0;
+    const ticketCount = voteTimeStats.data.reduce((s, v) => s + v.series.count, 0);
+    const ticketLimit = ticketCount * 0.95;
+    let sum = 0;
+    for (let i = 0; i < voteTimeStats.data.length; i++) {
+      sum += voteTimeStats.data[i].series.count;
+      if (sum >= ticketLimit) return i;
+    }
+  }
+);
+export const getMyTicketsStatsRequest = get([ "statistics", "getMyTicketsStatsRequest" ]);
+
+export const stakeROIStats = createSelector(
+  [ dailyBalancesStats, unitDivisor ],
+  ( stats, unitDivisor ) => stats.map(s => ({
+    time: s.time,
+    stakeRewards: s.series.stakeRewards / unitDivisor,
+    stakeFees: s.series.stakeFees / unitDivisor,
+    totalStake: s.series.totalStake / unitDivisor,
+    stakeRewardROI: (s.series.stakeRewards / s.series.totalStake),
+    stakeFeesROI: (s.series.stakeFees / s.series.totalStake),
+  })));

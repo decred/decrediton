@@ -1,5 +1,8 @@
 import exportPage from "connectors/exportPage";
-import { transactionStats, dailyBalancesStats, balancesStats } from "actions/StatisticsActions";
+import {
+  transactionStats, dailyBalancesStats, balancesStats, voteTimeStats,
+  ticketStats,
+} from "actions/StatisticsActions";
 import Page from "./Page";
 import messages from "./messages";
 import { DescriptionHeader } from "layout";
@@ -22,6 +25,14 @@ const AvailableExports = [
   { ...messages.balances,
     key: "balances",
     calcFunction: balancesStats,
+  },
+  { ...messages.voteTime,
+    key: "votetime",
+    calcFunction: voteTimeStats,
+  },
+  { ...messages.tickets,
+    key: "tickets",
+    calcFunction: ticketStats,
   }
 ];
 @autobind

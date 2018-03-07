@@ -43,5 +43,25 @@ export default defineMessages({
   immatureKey: {
     id: "charts.keys.immature",
     defaultMessage: "Immature"
+  },
+  ticketCountByDay: {
+    id: "charts.keys.ticketCountByDay",
+    defaultMessage: "Tickets"
+  },
+  day: {
+    id: "charts.keys.day",
+    defaultMessage: "Days"
+  },
+  totalStake: {
+    id: "charts.keys.totalStake",
+    defaultMessage: "Total Stake"
+  },
+  stakeRewards: {
+    id: "charts.keys.stakeRewards",
+    defaultMessage: "Stake Rewards"
+  },
+  stakeFees: {
+    id: "charts.keys.stakeFees",
+    defaultMessage: "Stake Fees"
   }
 });

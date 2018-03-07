@@ -37,6 +37,29 @@ export default {
       { name: "locked", description: <T id="export.balances.fields.locked" m="Balance locked in immature and live tickets." /> },
       { name: "lockedNonWallet", description: <T id="export.balances.fields.lockedNonWallet" m="Balance locked in immature and live tickets not controlled by the wallet." /> },
       { name: "total", description: <T id="export.balances.fields.total" m="Total available balance." /> },
+      { name: "stakeRewards", description: <T id="export.balances.fields.stakeRewards" m="Total stake rewards received." /> },
+      { name: "stakeFees", description: <T id="export.balances.fields.stakeFees" m="Total stake fees paid." /> },
+      { name: "totalStake", description: <T id="export.balances.fields.totalStake" m="Total amount of DCR used on staking." /> },
     ]
   },
+  voteTime: {
+    name: <T id="export.votetime.name" m="Vote Time" />,
+    description: <T id="export.votetime.descr" m="Export a time-to-vote histogram in days (how many days from ticket purchase until the ticket was selected for voting)." />,
+    fields: [
+      { name: "daysToVote", description: <T id="export.votettime.fields.daysToVote" m="Day bucket" /> },
+      { name: "count", description: <T id="export.votetime.fields.count" m="How many tickets voted in this day bucket" /> },
+    ]
+  },
+  tickets: {
+    name: <T id="export.tickets.name" m="Tickets" />,
+    description: <T id="export.tickets.descr" m="Export ticket and vote information." />,
+    fields: [
+      { name: "spenderTimestamp", description: <T id="export.tickets.fields.spenderTimestamp" m="Date/Time of vote/revocation." /> },
+      { name: "status", description: <T id="export.tickets.fields.status" m="Latest status for the ticket (live, voted, missed, revoked)." /> },
+      { name: "ticketHash", description: <T id="export.tickets.fields.ticketStatus" m="Txid of the ticket transaction." /> },
+      { name: "spenderHash", description: <T id="export.tickets.fields.spenderHash" m="Txid of the spender (vote/revocation) transaction." /> },
+      { name: "sentAmount", description: <T id="export.tickets.fields.sentAmount" m="Amount sent by the wallet into the ticket transaction." /> },
+      { name: "returnedAmount", description: <T id="export.tickets.fields.returnedAmount" m="Amount returned to the wallet by the spender (vote/revocation) transaction." /> },
+    ]
+  }
 };

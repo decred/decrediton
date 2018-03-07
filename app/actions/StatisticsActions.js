@@ -5,6 +5,7 @@ import { isNumber, isNullOrUndefined, isUndefined } from "util";
 import { tsToDate, endOfDay, reverseRawHash, formatLocalISODate } from "helpers";
 
 const VALUE_TYPE_ATOMAMOUNT = "VALUE_TYPE_ATOMAMOUNT";
+const VALUE_TYPE_DATETIME = "VALUE_TYPE_DATETIME";
 
 export const GETSTARTUPSTATS_ATTEMPT = "GETSTARTUPSTATS_ATTEMPT";
 export const GETSTARTUPSTATS_SUCCESS = "GETSTARTUPSTATS_SUCCESS";
@@ -53,6 +54,23 @@ export const getStartupStats = () => (dispatch) => {
     .catch(error => dispatch({ error, type: GETSTARTUPSTATS_FAILED }));
 };
 
+export const GETMYTICKETSSTATS_ATTEMPT = "GETMYTICKETSSTATS_ATTEMPT";
+export const GETMYTICKETSSTATS_SUCCESS = "GETMYTICKETSSTATS_SUCCESS";
+export const GETMYTICKETSSTATS_FAILED = "GETMYTICKETSSTATS_FAILED";
+
+export const getMyTicketsStats = () => (dispatch) => {
+  const startupStats = [
+    { calcFunction: voteTimeStats },
+  ];
+
+  dispatch({ type: GETMYTICKETSSTATS_ATTEMPT });
+  return Promise.all(startupStats.map(s => dispatch(generateStat(s))))
+    .then(([ voteTime ]) => {
+      dispatch({ voteTime, type: GETMYTICKETSSTATS_SUCCESS });
+    })
+    .catch(error => dispatch({ error, type: GETMYTICKETSSTATS_FAILED }));
+};
+
 // generateStat starts generating the statistic as defined on the opts. It
 // returns a promise that gets resolved with all the data in-memory after the
 // stat has been completely calculated.
@@ -80,6 +98,7 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
 
   var fd;
   var allSeries;
+  var seriesOpts;
 
   // constants (may be overriden/parametrized in the future)
   const unitDivisor = sel.unitDivisor(getState());
@@ -89,13 +108,15 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
 
   // formatting functions
   const quote = (v) => "\"" + v.replace("\"", "\\\"") + "\"";
-  const formatTime = formatLocalISODate;
+  const formatTime = v => v ? formatLocalISODate(v) : "";
   const csvValue = (v) => isNullOrUndefined(v) ? "" : isNumber(v) ? v.toFixed(precision) : quote(v);
   const csvLine = (values) => values.map(csvValue).join(vsep);
 
   const seriesValueFormatFunc = (series) => {
     if (series["type"] === VALUE_TYPE_ATOMAMOUNT) {
       return v => v / unitDivisor;
+    } else if (series["type"] === VALUE_TYPE_DATETIME) {
+      return formatTime;
     } else {
       return v => v;
     }
@@ -105,6 +126,7 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
   const startFunction = (opts) => {
     dispatch({ type: EXPORT_STARTED });
     allSeries = opts.series.map(s => ({ ...s, valueFormatFunc: seriesValueFormatFunc(s) }));
+    seriesOpts = opts;
     const seriesNames = allSeries.map(s => s.name);
     const headerLine = csvLine([ "time", ...seriesNames ]);
 
@@ -118,7 +140,8 @@ export const exportStatToCSV = (opts) => (dispatch, getState) => {
     const values = allSeries.map(s => !isUndefined(series[s.name])
       ? s.valueFormatFunc(series[s.name])
       : null);
-    values.unshift(formatTime(time));
+
+    !seriesOpts.noTimestamp && values.unshift(formatTime(time));
     const line = csvLine(values);
     fs.writeSync(fd, line);
     fs.writeSync(fd, ln);
@@ -198,6 +221,9 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       { name: "immatureNonWallet", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "lockedNonWallet", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "total", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "stakeRewards", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "stakeFees", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "totalStake", type: VALUE_TYPE_ATOMAMOUNT },
     ],
   });
 
@@ -261,6 +287,7 @@ export const balancesStats = (opts) => (dispatch, getState) => {
           revoked: 0, sent: 0, received: 0, ticket: 0,
           locked: isWallet ? commitAmount : 0,
           lockedNonWallet: isWallet ? 0 : commitAmount,
+          stakeRewards: 0, stakeFees: 0, totalStake: 0,
           timestamp, tx });
       });
     }
@@ -278,13 +305,15 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     case wallet.TRANSACTION_TYPE_TICKET_PURCHASE:
       var change = tx.tx.getCreditsList().reduce((s, c) => s + isTicketChange(c) ? c.getAmount() : 0, 0);
       var isWallet = isWalletTicket(tx.tx);
-      var commitAmount = tx.tx.getDebitsList().reduce((s, d) => s + d.getPreviousAmount(), 0)
-        - change - (isWallet ? tx.tx.getFee() : 0);
+      var debitsSum = tx.tx.getDebitsList().reduce((s, d) => s + d.getPreviousAmount(), 0);
+      var commitAmount = debitsSum - change - (isWallet ? tx.tx.getFee() : 0);
       var spentAmount = commitAmount + (isWallet ? tx.fee : 0);
       recordTicket(tx, commitAmount, isWallet);
+      var purchaseFees = debitsSum - commitAmount;
       return { spendable: -spentAmount, immature: isWallet ? commitAmount : 0,
         immatureNonWallet: isWallet ? 0 : commitAmount, voted: 0, revoked: 0,
         sent: 0, received: 0, ticket: commitAmount, locked: 0, lockedNonWallet: 0,
+        stakeRewards: 0, stakeFees: purchaseFees, totalStake: spentAmount,
         timestamp: tx.timestamp, tx };
     case wallet.TRANSACTION_TYPE_VOTE:
     case wallet.TRANSACTION_TYPE_REVOCATION:
@@ -294,21 +323,23 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       var ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].getPreviousTransactionHash());
       var ticket = liveTickets[ticketHash];
       if (!ticket) {
-        console.log("live tickets", liveTickets);
         throw "Previous live ticket not found: " + ticketHash;
       }
       var returnAmount = tx.tx.getCreditsList().reduce((s, c) => s + c.getAmount(), 0);
       var wasWallet = ticket.isWallet;
+      var stakeResult = returnAmount - ticket.commitAmount;
       return { spendable: +returnAmount, locked: wasWallet ? -ticket.commitAmount : 0,
         lockedNonWallet: wasWallet ? 0 : -ticket.commitAmount,
         voted: isVote ? returnAmount : 0, revoked: !isVote ? returnAmount : 0,
         sent: 0, received: 0, ticket: 0, immature: 0, immatureNonWallet: 0,
-        timestamp: tx.timestamp, tx };
+        stakeFees: isVote ? 0 : -stakeResult, stakeRewards: isVote ? stakeResult : 0,
+        totalStake: 0, timestamp: tx.timestamp, tx };
     case wallet.TRANSACTION_TYPE_COINBASE:
     case wallet.TRANSACTION_TYPE_REGULAR:
       return { spendable: +tx.amount, locked: 0, lockedNonWallet: 0, voted: 0,
         revoked: 0, sent: tx.amount < 0 ? tx.amount : 0,
         received: tx.amount > 0 ? tx.amount : 0, ticket: 0, immature: 0,
+        stakeFees: 0, stakeRewards: 0, totalStake: 0,
         immatureNonWallet: 0, timestamp: tx.timestamp, tx };
     default: throw "Unknown tx type: " + tx.txType;
     }
@@ -316,7 +347,8 @@ export const balancesStats = (opts) => (dispatch, getState) => {
 
   // running balance totals
   let currentBalance = { spendable: 0, immature: 0, immatureNonWallet: 0,
-    locked: 0, lockedNonWallet: 0, total: 0, delta: null };
+    locked: 0, lockedNonWallet: 0, total: 0, stakeRewards: 0, stakeFees: 0,
+    totalStake: 0, delta: null };
 
   // account for this delta in the balances and call the progress function
   let addDelta = (delta) => {
@@ -326,6 +358,9 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       immatureNonWallet: currentBalance.immatureNonWallet + delta.immatureNonWallet,
       locked: currentBalance.locked + delta.locked,
       lockedNonWallet: currentBalance.lockedNonWallet + delta.lockedNonWallet,
+      stakeRewards: currentBalance.stakeRewards + delta.stakeRewards,
+      stakeFees: currentBalance.stakeFees + delta.stakeFees,
+      totalStake: currentBalance.totalStake + delta.totalStake,
       delta,
     };
     currentBalance.total = currentBalance.spendable + currentBalance.locked;
@@ -380,6 +415,9 @@ export const dailyBalancesStats = (opts) => {
       { name: "voted", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "revoked", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "ticket", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "stakeRewards", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "stakeFees", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "totalStake", type: VALUE_TYPE_ATOMAMOUNT },
     ];
     startFunction(opts);
   };
@@ -410,4 +448,81 @@ export const dailyBalancesStats = (opts) => {
 
   return balancesStats({ ...opts, progressFunction: aggProgressFunction,
     endFunction: aggEndFunction, startFunction: aggStartFunction });
+};
+
+export const voteTimeStats = (opts) => (dispatch, getState) => {
+
+  const chainParams = sel.chainParams(getState());
+  const { progressFunction, endFunction, startFunction, errorFunction } = opts;
+  const { currentBlockHeight, walletService, } = getState().grpc;
+
+  const blocksPerDay = (60 * 60 * 24) / chainParams.TargetTimePerBlock;
+  const expirationDays = Math.ceil((chainParams.TicketExpiry + chainParams.TicketMaturity) / blocksPerDay);
+  const dayBuckets = Array(expirationDays+1).fill(0);
+
+  startFunction({
+    series: [
+      { name: "daysToVote" },
+      { name: "count" },
+    ],
+    noTimestamp: true
+  });
+
+  const txDataCb = (tickets) => {
+    tickets.forEach(t => {
+      if (t.status !== "voted") return;
+      const daysToVote = Math.floor((t.spender.getTimestamp() - t.ticket.getTimestamp()) / (24 * 60 * 60));
+      dayBuckets[daysToVote] += 1;
+    });
+
+    dayBuckets.forEach((count, daysToVote) => {
+      progressFunction(null, { daysToVote, count });
+    });
+
+    endFunction();
+  };
+
+  wallet.getTickets(walletService, 0, currentBlockHeight)
+    .then(txDataCb)
+    .catch(errorFunction);
+};
+
+export const ticketStats = (opts) => (dispatch, getState) => {
+
+  const { progressFunction, endFunction, startFunction, errorFunction } = opts;
+  const { currentBlockHeight, walletService, } = getState().grpc;
+
+  startFunction({
+    series: [
+      { name: "spenderTimestamp", type: VALUE_TYPE_DATETIME },
+      { name: "status" },
+      { name: "ticketHash" },
+      { name: "spenderHash" },
+      { name: "sentAmount", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "returnedAmount", type: VALUE_TYPE_ATOMAMOUNT },
+    ],
+  });
+
+  const normalizeTicket = sel.ticketNormalizer(getState());
+  const txDataCb = (tickets) => {
+    tickets.forEach(t => {
+
+      const ticket = normalizeTicket(t);
+      progressFunction(tsToDate(ticket.enterTimestamp), {
+        spenderTimestamp: ticket.leaveTimestamp ? tsToDate(ticket.leaveTimestamp) : null,
+        status: ticket.status,
+        ticketHash: ticket.hash,
+        spenderHash: ticket.spenderHash,
+        sentAmount: ticket.ticketInvestment,
+        returnedAmount: ticket.ticketReturnAmount,
+      });
+
+    });
+
+    endFunction();
+  };
+
+  wallet.getTickets(walletService, 0, currentBlockHeight)
+    .then(txDataCb)
+    .catch(errorFunction);
 };
