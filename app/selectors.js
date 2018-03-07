@@ -270,7 +270,7 @@ export const homeHistoryTransactions = createSelector(
   [ transactionsNormalizer, get([ "grpc", "recentRegularTransactions" ]) ], apply
 );
 
-const dailyBalancesStats = get([ "statistics", "dailyBalances" ]);
+export const dailyBalancesStats = get([ "statistics", "dailyBalances" ]);
 
 export const spendableAndLockedBalance = createSelector(
   [ dailyBalancesStats, unitDivisor ],
@@ -768,6 +768,32 @@ export const exportingData = get([ "control", "exportingData" ]);
 export const location = get([ "routing", "location" ]);
 
 export const voteTimeStats = get([ "statistics", "voteTime" ]);
+export const medianVoteTime = createSelector(
+  [ voteTimeStats ],
+  (voteTimeStats) => {
+    if (!voteTimeStats || !voteTimeStats.data.length) return 0;
+    const ticketCount = voteTimeStats.data.reduce((s, v) => s + v.series.count, 0);
+    const ticketLimit = ticketCount * 0.5;
+    let sum = 0;
+    for (let i = 0; i < voteTimeStats.data.length; i++) {
+      sum += voteTimeStats.data[i].series.count;
+      if (sum >= ticketLimit) return i;
+    }
+  }
+);
+export const ninetyFifthPercentileVoteTime = createSelector(
+  [ voteTimeStats ],
+  (voteTimeStats) => {
+    if (!voteTimeStats || !voteTimeStats.data.length) return 0;
+    const ticketCount = voteTimeStats.data.reduce((s, v) => s + v.series.count, 0);
+    const ticketLimit = ticketCount * 0.95;
+    let sum = 0;
+    for (let i = 0; i < voteTimeStats.data.length; i++) {
+      sum += voteTimeStats.data[i].series.count;
+      if (sum >= ticketLimit) return i;
+    }
+  }
+);
 export const getMyTicketsStatsRequest = get([ "statistics", "getMyTicketsStatsRequest" ]);
 
 export const stakeROIStats = createSelector(
@@ -777,4 +803,6 @@ export const stakeROIStats = createSelector(
     stakeRewards: s.series.stakeRewards / unitDivisor,
     stakeFees: s.series.stakeFees / unitDivisor,
     totalStake: s.series.totalStake / unitDivisor,
+    stakeRewardROI: (s.series.stakeRewards / s.series.totalStake),
+    stakeFeesROI: (s.series.stakeFees / s.series.totalStake),
   })));

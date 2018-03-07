@@ -313,7 +313,7 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       return { spendable: -spentAmount, immature: isWallet ? commitAmount : 0,
         immatureNonWallet: isWallet ? 0 : commitAmount, voted: 0, revoked: 0,
         sent: 0, received: 0, ticket: commitAmount, locked: 0, lockedNonWallet: 0,
-        stakeRewards: 0, stakeFees: purchaseFees, totalStake: commitAmount,
+        stakeRewards: 0, stakeFees: purchaseFees, totalStake: spentAmount,
         timestamp: tx.timestamp, tx };
     case wallet.TRANSACTION_TYPE_VOTE:
     case wallet.TRANSACTION_TYPE_REVOCATION:
