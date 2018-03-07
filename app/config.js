@@ -1,10 +1,8 @@
 import fs from "fs";
-import os from "os";
-import path from "path";
 import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
-import { getGlobalCfgPath, dcrdCfg, getWalletPath, dcrctlCfg, dcrwalletCfg } from "./main_dev/paths";
+import { getGlobalCfgPath, dcrdCfg, getWalletPath, dcrctlCfg, dcrwalletCfg, getDcrdRpcCert } from "./main_dev/paths";
 
 export function getGlobalCfg() {
   const config = new Store();
@@ -112,7 +110,7 @@ export function validateGlobalCfgFile() {
 
 export function getWalletCert(certPath) {
   var cert;
-  certPath = path.resolve(certPath, "rpc.cert");
+  certPath = getDcrdRpcCert(certPath);
   try {
     cert = fs.readFileSync(certPath);
   } catch (err) {
@@ -190,15 +188,7 @@ export function getDcrdCert(dcrdCertPath) {
     if(fs.existsSync(dcrdCertPath))
       return fs.readFileSync(dcrdCertPath);
 
-  var certPath = "";
-  if (os.platform() == "win32") {
-    certPath = path.join(os.homedir(), "AppData", "Local", "Dcrd", "rpc.cert");
-  } else if (os.platform() == "darwin") {
-    certPath = path.join(os.homedir(), "Library", "Application Support",
-      "Dcrd", "rpc.cert");
-  } else {
-    certPath = path.join(os.homedir(), ".dcrd", "rpc.cert");
-  }
+  var certPath = getDcrdRpcCert();
 
   var cert = fs.readFileSync(certPath);
   return(cert);

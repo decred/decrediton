@@ -31,7 +31,6 @@ let dcrdConfig = {};
 let currentBlockCount;
 let primaryInstance;
 
-const logger = createLogger(debug);
 let dcrdLogs = Buffer.from("");
 let dcrwalletLogs = Buffer.from("");
 
@@ -43,8 +42,9 @@ const defaultMainnetWalletDirectory = getDefaultWalletDirectory(false);
 const mainnetWalletPath = getWalletPath(false);
 const testnetWalletPath = getWalletPath(true);
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
-
 debug = argv.debug || process.env.NODE_ENV === "development";
+
+const logger = createLogger(debug);
 
 function showUsage() {
   console.log(USAGE_MESSAGE);
