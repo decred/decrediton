@@ -17,12 +17,24 @@ import { getGlobalCfgPath, getDecreditonWalletDBPath, getWalletDBPathFromWallets
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
 
+const argv = parseArgs(process.argv.slice(1), OPTIONS);
+let debug = argv.debug || process.env.NODE_ENV === "development";
+const logger = createLogger(debug);
+
+// Verify that config.json is valid JSON before fetching it, because
+// it will silently fail when fetching.
+let err = validateGlobalCfgFile();
+if (err !== null) {
+  let errMessage = "There was an error while trying to load the config file, the format is invalid.\n\nFile: " + getGlobalCfgPath() + "\nError: " + err;
+  dialog.showErrorBox("Config File Error", errMessage);
+  app.quit();
+}
+
 let menu;
 let template;
 let mainWindow = null;
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
-let debug = false;
 let dcrdPID;
 let dcrwPID;
 let dcrwPort;
@@ -41,17 +53,9 @@ const defaultTestnetWalletDirectory = getDefaultWalletDirectory(true);
 const defaultMainnetWalletDirectory = getDefaultWalletDirectory(false);
 const mainnetWalletPath = getWalletPath(false);
 const testnetWalletPath = getWalletPath(true);
-const argv = parseArgs(process.argv.slice(1), OPTIONS);
-debug = argv.debug || process.env.NODE_ENV === "development";
-
-const logger = createLogger(debug);
-
-function showUsage() {
-  console.log(USAGE_MESSAGE);
-}
 
 if (argv.help) {
-  showUsage();
+  console.log(USAGE_MESSAGE);
   app.exit(0);
 }
 
@@ -120,15 +124,6 @@ if (!fs.pathExistsSync(defaultTestnetWalletDirectory)){
   initWalletCfg(true, "default-wallet");
   newWalletConfigCreation(true, "default-wallet");
 
-}
-
-// Verify that config.json is valid JSON before fetching it, because
-// it will silently fail when fetching.
-let err = validateGlobalCfgFile();
-if (err !== null) {
-  let errMessage = "There was an error while trying to load the config file, the format is invalid.\n\nFile: " + getGlobalCfgPath() + "\nError: " + err;
-  dialog.showErrorBox("Config File Error", errMessage);
-  app.quit();
 }
 
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
