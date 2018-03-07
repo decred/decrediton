@@ -32,6 +32,11 @@ export function getDefaultWalletDirectory(testnet) {
   return path.join(getWalletsDirectoryPath(), testnet ? "testnet" : "mainnet", "default-wallet");
 }
 
+export function getWalletDBFromWalletDirectories(testnet, walletPath, walletDB) {
+  return path.join(getWalletsDirectoryPath(), testnet ? "testnet" : "mainnet"
+    ,walletPath, testnet ? "testnet2" : "mainnet", walletDB ? "wallet.db" : null);
+}
+
 export function getDefaultWalletNameDirectory(testnet, walletPath = "") {
   return path.join(getDefaultWalletDirectory(testnet), testnet ? "testnet2" : "mainnet", walletPath);
 }
@@ -62,6 +67,10 @@ export function getDcrdPath() {
   }
 }
 
+export function getDcrdRpcCert (appDataPath) {
+  return path.resolve(appDataPath ? appDataPath : getDcrdPath(), "rpc.cert");
+}
+
 export function getExecutablePath(name, customBinPath) {
   let binPath = customBinPath ? customBinPath :
     process.env.NODE_ENV === "development"
@@ -72,3 +81,6 @@ export function getExecutablePath(name, customBinPath) {
   return path.join(binPath, execName);
 }
 
+export function getDirectoryLogs(dir) {
+  return path.join(dir, "logs");
+}

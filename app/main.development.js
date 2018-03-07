@@ -2,7 +2,6 @@ import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
 import { initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig } from "./config";
-import path from "path";
 import fs from "fs-extra";
 import os from "os";
 import parseArgs from "minimist";
@@ -13,7 +12,7 @@ import { Buffer } from "buffer";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, MAX_LOG_LENGTH, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
 import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDefaultWalletNameDirectory } from "./main_dev/paths";
 import { dcrwalletCfg, getWalletPath, getExecutablePath, getWalletsDirectoryPath, getDefaultWalletDirectory } from "./main_dev/paths";
-import { getGlobalCfgPath, getDecreditonWalletDBPath } from "./main_dev/paths";
+import { getGlobalCfgPath, getDecreditonWalletDBPath, getWalletDBFromWalletDirectories, getDcrdRpcCert, getDirectoryLogs } from "./main_dev/paths";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -127,7 +126,7 @@ if (!fs.pathExistsSync(defaultTestnetWalletDirectory)){
 // it will silently fail when fetching.
 let err = validateGlobalCfgFile();
 if (err !== null) {
-  let errMessage = "There was an error while trying to load the config file, the format is invalid.\n\nFile: " + path.resolve(appDataDirectory(), "config.json") + "\nError: " + err;
+  let errMessage = "There was an error while trying to load the config file, the format is invalid.\n\nFile: " + getGlobalCfgPath() + "\nError: " + err;
   dialog.showErrorBox("Config File Error", errMessage);
   app.quit();
 }
@@ -216,17 +215,17 @@ const { ipcMain } = require("electron");
 
 ipcMain.on("get-available-wallets", (event) => {// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
   var availableWallets = [];
-  var mainnetWalletDirectories = fs.readdirSync(path.join(walletsDirectory, "mainnet"));
+  var mainnetWalletDirectories = fs.readdirSync(getWalletPath(false));
 
   for (var i in mainnetWalletDirectories) {
-    if (fs.pathExistsSync(path.join(walletsDirectory, "mainnet", mainnetWalletDirectories[i].toString(), "mainnet", "wallet.db"))) {
+    if (fs.pathExistsSync(getWalletDBFromWalletDirectories(false, mainnetWalletDirectories[i].toString(), true))) {
       availableWallets.push({ network: "mainnet", wallet: mainnetWalletDirectories[i] });
     }
   }
-  var testnetWalletDirectories = fs.readdirSync(path.join(walletsDirectory, "testnet"));
+  var testnetWalletDirectories = fs.readdirSync(getWalletPath(true));
 
   for (var j in testnetWalletDirectories) {
-    if (fs.pathExistsSync(path.join(walletsDirectory, "testnet", testnetWalletDirectories[j].toString(), "testnet2", "wallet.db"))) {
+    if (fs.pathExistsSync(getWalletDBFromWalletDirectories(true, testnetWalletDirectories[j].toString(), true))) {
       availableWallets.push({ network: "testnet", wallet: testnetWalletDirectories[j] });
     }
   }
@@ -250,7 +249,7 @@ ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
   if (!daemonIsAdvanced && !primaryInstance) {
     logger.log("info", "Running on secondary instance. Assuming dcrd is already running.");
     dcrdConfig = readDcrdConfig(getWalletPath(testnet, walletPath), testnet);
-    dcrdConfig.rpc_cert = path.resolve(getDcrdPath(), "rpc.cert");
+    dcrdConfig.rpc_cert = getDcrdRpcCert();
     dcrdConfig.pid = -1;
     event.returnValue = dcrdConfig;
     return;
@@ -265,7 +264,7 @@ ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
 });
 
 ipcMain.on("create-wallet", (event, walletPath, testnet) => {
-  let newWalletDirectory = path.join(walletsDirectory, testnet ? "testnet" : "mainnet", walletPath);
+  let newWalletDirectory = getWalletPath(testnet, walletPath);
   if (!fs.pathExistsSync(newWalletDirectory)){
     fs.mkdirsSync(newWalletDirectory);
 
@@ -277,7 +276,7 @@ ipcMain.on("create-wallet", (event, walletPath, testnet) => {
 });
 
 ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
-  let removeWalletDirectory = path.join(walletsDirectory, testnet ? "testnet" : "mainnet", walletPath);
+  let removeWalletDirectory = getWalletPath(testnet, walletPath);
   if (fs.pathExistsSync(removeWalletDirectory)){
     fs.removeSync(removeWalletDirectory);
   }
@@ -421,14 +420,15 @@ const launchDCRD = (walletPath, appdata, testnet) => {
   if(appdata){
     args = [ `--appdata=${appdata}` ];
     newConfig = readDcrdConfig(appdata, testnet);
-    newConfig.rpc_cert = path.resolve(appdata, "rpc.cert");
+    newConfig.rpc_cert = getDcrdRpcCert(appdata);
+    console.log(newConfig.rpc_cert)
     if (testnet) {
       args.push("--testnet");
     }
   } else {
     args = [ `--configfile=${dcrdCfg(getWalletPath(testnet, walletPath))}` ];
     newConfig = readDcrdConfig(getWalletPath(testnet, walletPath), testnet);
-    newConfig.rpc_cert = path.resolve(getDcrdPath(), "rpc.cert");
+    newConfig.rpc_cert = getDcrdRpcCert();
   }
 
   // Check to make sure that the rpcuser and rpcpass were set in the config
@@ -833,12 +833,12 @@ app.on("ready", async () => {
       }, {
         label: locale.messages["appMenu.showWalletLog"],
         click() {
-          shell.openItem(path.join(appDataDirectory(), "logs"));
+          shell.openItem(getDirectoryLogs(appDataDirectory()));
         }
       }, {
         label: locale.messages["appMenu.showDaemonLog"],
         click() {
-          shell.openItem(path.join(getDcrdPath(), "logs"));
+          shell.openItem(getDirectoryLogs(getDcrdPath()));
         }
       } ]
     }, {
