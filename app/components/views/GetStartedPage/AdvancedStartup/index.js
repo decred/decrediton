@@ -46,7 +46,7 @@ class AdvancedStartupBody extends React.Component {
       setRpcHost,
       setRpcPort,
       setAppData,
-      onSubmitAppData,
+      onSubmitAppDataForm,
       onSubmitRemoteForm,
       skipAdvancedDaemon,
       onShowRemote,
@@ -57,7 +57,7 @@ class AdvancedStartupBody extends React.Component {
         {...{
           ...this.props,
           ...this.state,
-          onSubmitAppData,
+          onSubmitAppDataForm,
           onSubmitRemoteForm,
           skipAdvancedDaemon,
           onShowRemote,
@@ -114,7 +114,7 @@ class AdvancedStartupBody extends React.Component {
     this.props.onStartDaemon(args);
   }
 
-  onSubmitAppData() {
+  onSubmitAppDataForm() {
     if (!this.isAppDataValid()) return;
     this.props.onStartDaemon(null, this.state.appData);
   }

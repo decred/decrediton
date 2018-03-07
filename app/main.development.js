@@ -1,22 +1,40 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
-import { initGlobalCfg, appDataDirectory, getDcrdPath, validateGlobalCfgFile, setMustOpenForm } from "./config.js";
-import { dcrctlCfg, dcrdCfg, dcrwalletCfg, initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, getWalletPath } from "./config.js";
-import path from "path";
+import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
+import { initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig } from "./config";
 import fs from "fs-extra";
 import os from "os";
 import parseArgs from "minimist";
 import stringArgv from "string-argv";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
-import { createLogger } from "./logging";
+import { createLogger } from "./main_dev/logging";
 import { Buffer } from "buffer";
+import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, MAX_LOG_LENGTH, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
+import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDefaultWalletFilesPath } from "./main_dev/paths";
+import { dcrwalletCfg, getWalletPath, getExecutablePath, getWalletsDirectoryPath, getDefaultWalletDirectory } from "./main_dev/paths";
+import { getGlobalCfgPath, getDecreditonWalletDBPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs } from "./main_dev/paths";
+
+// setPath as decrediton
+app.setPath("userData", appDataDirectory());
+
+const argv = parseArgs(process.argv.slice(1), OPTIONS);
+let debug = argv.debug || process.env.NODE_ENV === "development";
+const logger = createLogger(debug);
+
+// Verify that config.json is valid JSON before fetching it, because
+// it will silently fail when fetching.
+let err = validateGlobalCfgFile();
+if (err !== null) {
+  let errMessage = "There was an error while trying to load the config file, the format is invalid.\n\nFile: " + getGlobalCfgPath() + "\nError: " + err;
+  dialog.showErrorBox("Config File Error", errMessage);
+  app.quit();
+}
 
 let menu;
 let template;
 let mainWindow = null;
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
-let debug = false;
 let dcrdPID;
 let dcrwPID;
 let dcrwPort;
@@ -28,65 +46,28 @@ let primaryInstance;
 let dcrdLogs = Buffer.from("");
 let dcrwalletLogs = Buffer.from("");
 
-let MAX_LOG_LENGTH = 50000;
-
-// Not going to make incorrect options fatal since running in dev mode has
-// all sorts of things on the cmd line that we don't care about.  If we want
-// to make this fatal, it must be for production mode only.
-function unknownFn(arg) {
-  console.log("%s is not a valid option!", arg);
-  return;
-}
-
-function getExecutablePath(name) {
-  let customBinPath = argv.customBinPath;
-
-  let binPath = customBinPath ? customBinPath :
-    process.env.NODE_ENV === "development"
-      ? path.join(__dirname, "..", "bin")
-      : path.join(process.resourcesPath, "bin");
-  let execName = os.platform() !== "win32" ? name : name + ".exe";
-
-  return path.join(binPath, execName);
-}
-
-function showUsage() {
-  console.log(`${app.getName()} version ${app.getVersion()}
-Usage
-  $ ${app.getName()} [--help] [--version] [--debug] [--testnet|--mainnet]
-               [--extrawalletargs=...]
-
-Options
-  --help             Show help and exit
-  --version          Show version and exit
-  --debug  -d        Debug daemon/wallet messages
-  --testnet          Connect to testnet
-  --mainnet          Connect to mainnet
-  --extrawalletargs  Pass extra arguments to dcrwallet
-  --customBinPath    Custom path for dcrd/dcrwallet/dcrctl binaries
-`);
-}
-
-// Allowed cmd line options are defined here.
-var opts = {
-  boolean: [ "debug", "testnet", "mainnet", "help", "version" ],
-  string: [ "extrawalletargs", "customBinPath" ],
-  default: { debug: false },
-  alias: { d: "debug" },
-  unknown: unknownFn
-};
-
-var argv = parseArgs(process.argv.slice(1), opts);
-debug = argv.debug || process.env.NODE_ENV === "development";
+const globalCfg = initGlobalCfg();
+const daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
+const walletsDirectory = getWalletsDirectoryPath();
+const defaultTestnetWalletDirectory = getDefaultWalletDirectory(true);
+const defaultMainnetWalletDirectory = getDefaultWalletDirectory(false);
+const mainnetWalletPath = getWalletPath(false);
+const testnetWalletPath = getWalletPath(true);
 
 if (argv.help) {
-  showUsage();
+  console.log(USAGE_MESSAGE);
   app.exit(0);
 }
 
 if (argv.version) {
-  console.log(`${app.getName()} version ${app.getVersion()}`);
+  console.log(VERSION_MESSAGE);
   app.exit(0);
+}
+
+// Check if network was set on command line (but only allow one!).
+if (argv.testnet && argv.mainnet) {
+  logger.log(BOTH_CONNECTION_ERR_MESSAGE);
+  app.quit();
 }
 
 if (process.env.NODE_ENV === "production") {
@@ -100,28 +81,23 @@ if (process.env.NODE_ENV === "development") {
   require('module').globalPaths.push(p); // eslint-disable-line
 }
 
-// Always use reasonable path for save data.
-app.setPath("userData", appDataDirectory());
-
 // Check that wallets directory has been created, if not, make it.
-let walletsDirectory = path.join(app.getPath("userData"),"wallets");
 fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
-fs.pathExistsSync(path.join(walletsDirectory, "mainnet")) || fs.mkdirsSync(path.join(walletsDirectory, "mainnet"));
-fs.pathExistsSync(path.join(walletsDirectory, "testnet")) || fs.mkdirsSync(path.join(walletsDirectory, "testnet"));
+fs.pathExistsSync(mainnetWalletPath) || fs.mkdirsSync(mainnetWalletPath);
+fs.pathExistsSync(testnetWalletPath) || fs.mkdirsSync(testnetWalletPath);
 
-let defaultMainnetWalletDirectory = path.join(walletsDirectory, "mainnet", "default-wallet");
 if (!fs.pathExistsSync(defaultMainnetWalletDirectory)){
   fs.mkdirsSync(defaultMainnetWalletDirectory);
 
   // check for existing mainnet directories
-  if (fs.pathExistsSync(path.join(app.getPath("userData"), "mainnet", "wallet.db"))) {
-    fs.mkdirsSync(path.join(defaultMainnetWalletDirectory, "mainnet"));
-    fs.copySync(path.join(app.getPath("userData"), "mainnet"), path.join(defaultMainnetWalletDirectory, "mainnet"));
+  if ( fs.pathExistsSync(getDecreditonWalletDBPath(false)) ) {
+    fs.mkdirsSync(getDefaultWalletDirectory(false, false));
+    fs.copySync(getDecreditonWalletDBPath(false), getDefaultWalletDirectory(false, false));
   }
 
   // copy over existing config.json if it exists
-  if (fs.pathExistsSync(path.join(app.getPath("userData"), "config.json"))) {
-    fs.copySync(path.join(app.getPath("userData"), "config.json"), path.join(defaultMainnetWalletDirectory, "config.json"));
+  if (fs.pathExistsSync(getGlobalCfgPath())) {
+    fs.copySync(getGlobalCfgPath(), getDefaultWalletFilesPath(false, "config.json"));
   }
 
   // create new configs for default mainnet wallet
@@ -130,19 +106,18 @@ if (!fs.pathExistsSync(defaultMainnetWalletDirectory)){
 
 }
 
-let defaultTestnetWalletDirectory = path.join(walletsDirectory, "testnet", "default-wallet");
 if (!fs.pathExistsSync(defaultTestnetWalletDirectory)){
   fs.mkdirsSync(defaultTestnetWalletDirectory);
 
   // check for existing testnet2 directories
-  if (fs.pathExistsSync(path.join(app.getPath("userData"), "testnet2", "wallet.db"))) {
-    fs.mkdirsSync(path.join(defaultTestnetWalletDirectory, "testnet2"));
-    fs.copySync(path.join(app.getPath("userData"), "testnet2"), path.join(defaultTestnetWalletDirectory, "testnet2"));
+  if (fs.pathExistsSync(getDecreditonWalletDBPath(true))) {
+    fs.mkdirsSync(getDefaultWalletDirectory(true, true));
+    fs.copySync(getDecreditonWalletDBPath(true), getDefaultWalletDirectory(true, true));
   }
 
   // copy over existing config.json if it exists
-  if (fs.pathExistsSync(path.join(app.getPath("userData"), "config.json"))) {
-    fs.copySync(path.join(app.getPath("userData"), "config.json"), path.join(defaultTestnetWalletDirectory, "config.json"));
+  if (fs.pathExistsSync(getGlobalCfgPath())) {
+    fs.copySync(getGlobalCfgPath(), getDefaultWalletFilesPath(true, "config.json"));
   }
 
   // create new configs for default testnet wallet
@@ -151,17 +126,6 @@ if (!fs.pathExistsSync(defaultTestnetWalletDirectory)){
 
 }
 
-// Verify that config.json is valid JSON before fetching it, because
-// it will silently fail when fetching.
-let err = validateGlobalCfgFile();
-if (err !== null) {
-  let errMessage = "There was an error while trying to load the config file, the format is invalid.\n\nFile: " + path.resolve(appDataDirectory(), "config.json") + "\nError: " + err;
-  dialog.showErrorBox("Config File Error", errMessage);
-  app.quit();
-}
-var globalCfg = initGlobalCfg();
-
-const logger = createLogger(debug);
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
 logger.log("info", "Versions: Decrediton: %s, Electron: %s, Chrome: %s",
   app.getVersion(), process.versions.electron, process.versions.chrome);
@@ -170,14 +134,6 @@ process.on("uncaughtException", err => {
   logger.log("error", "UNCAUGHT EXCEPTION", err);
   throw err;
 });
-
-// Check if network was set on command line (but only allow one!).
-if (argv.testnet && argv.mainnet) {
-  logger.log("Cannot use both --testnet and --mainnet.");
-  app.quit();
-}
-
-let daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
 
 function closeDCRW() {
   if (require("is-running")(dcrwPID) && os.platform() != "win32") {
@@ -254,17 +210,17 @@ const { ipcMain } = require("electron");
 
 ipcMain.on("get-available-wallets", (event) => {// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
   var availableWallets = [];
-  var mainnetWalletDirectories = fs.readdirSync(path.join(walletsDirectory, "mainnet"));
+  var mainnetWalletDirectories = fs.readdirSync(getWalletPath(false));
 
   for (var i in mainnetWalletDirectories) {
-    if (fs.pathExistsSync(path.join(walletsDirectory, "mainnet", mainnetWalletDirectories[i].toString(), "mainnet", "wallet.db"))) {
+    if (fs.pathExistsSync(getWalletDBPathFromWallets(false, mainnetWalletDirectories[i].toString()))) {
       availableWallets.push({ network: "mainnet", wallet: mainnetWalletDirectories[i] });
     }
   }
-  var testnetWalletDirectories = fs.readdirSync(path.join(walletsDirectory, "testnet"));
+  var testnetWalletDirectories = fs.readdirSync(getWalletPath(true));
 
   for (var j in testnetWalletDirectories) {
-    if (fs.pathExistsSync(path.join(walletsDirectory, "testnet", testnetWalletDirectories[j].toString(), "testnet2", "wallet.db"))) {
+    if (fs.pathExistsSync(getWalletDBPathFromWallets(true, testnetWalletDirectories[j].toString()))) {
       availableWallets.push({ network: "testnet", wallet: testnetWalletDirectories[j] });
     }
   }
@@ -288,7 +244,7 @@ ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
   if (!daemonIsAdvanced && !primaryInstance) {
     logger.log("info", "Running on secondary instance. Assuming dcrd is already running.");
     dcrdConfig = readDcrdConfig(getWalletPath(testnet, walletPath), testnet);
-    dcrdConfig.rpc_cert = path.resolve(getDcrdPath(), "rpc.cert");
+    dcrdConfig.rpc_cert = getDcrdRpcCert();
     dcrdConfig.pid = -1;
     event.returnValue = dcrdConfig;
     return;
@@ -303,7 +259,7 @@ ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
 });
 
 ipcMain.on("create-wallet", (event, walletPath, testnet) => {
-  let newWalletDirectory = path.join(walletsDirectory, testnet ? "testnet" : "mainnet", walletPath);
+  let newWalletDirectory = getWalletPath(testnet, walletPath);
   if (!fs.pathExistsSync(newWalletDirectory)){
     fs.mkdirsSync(newWalletDirectory);
 
@@ -315,7 +271,7 @@ ipcMain.on("create-wallet", (event, walletPath, testnet) => {
 });
 
 ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
-  let removeWalletDirectory = path.join(walletsDirectory, testnet ? "testnet" : "mainnet", walletPath);
+  let removeWalletDirectory = getWalletPath(testnet, walletPath);
   if (fs.pathExistsSync(removeWalletDirectory)){
     fs.removeSync(removeWalletDirectory);
   }
@@ -365,7 +321,7 @@ ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
     args.push("--testnet");
   }
 
-  var dcrctlExe = getExecutablePath("dcrctl");
+  var dcrctlExe = getExecutablePath("dcrctl", argv.customBinPath);
   if (!fs.existsSync(dcrctlExe)) {
     logger.log("error", "The dcrctl file does not exists");
   }
@@ -459,14 +415,14 @@ const launchDCRD = (walletPath, appdata, testnet) => {
   if(appdata){
     args = [ `--appdata=${appdata}` ];
     newConfig = readDcrdConfig(appdata, testnet);
-    newConfig.rpc_cert = path.resolve(appdata, "rpc.cert");
+    newConfig.rpc_cert = getDcrdRpcCert(appdata);
     if (testnet) {
       args.push("--testnet");
     }
   } else {
     args = [ `--configfile=${dcrdCfg(getWalletPath(testnet, walletPath))}` ];
     newConfig = readDcrdConfig(getWalletPath(testnet, walletPath), testnet);
-    newConfig.rpc_cert = path.resolve(getDcrdPath(), "rpc.cert");
+    newConfig.rpc_cert = getDcrdRpcCert();
   }
 
   // Check to make sure that the rpcuser and rpcpass were set in the config
@@ -477,7 +433,7 @@ const launchDCRD = (walletPath, appdata, testnet) => {
     mainWindow.webContents.executeJavaScript("window.close();");
   }
 
-  var dcrdExe = getExecutablePath("dcrd");
+  var dcrdExe = getExecutablePath("dcrd", argv.customBinPath);
   if (!fs.existsSync(dcrdExe)) {
     logger.log("error", "The dcrd file does not exists");
     return;
@@ -541,7 +497,7 @@ const launchDCRWallet = (walletPath, testnet) => {
   args.push("--ticketbuyer.maxpriceabsolute=" + cfg.get("maxpriceabsolute"));
   args.push("--ticketbuyer.maxperblock=" + cfg.get("maxperblock"));
 
-  var dcrwExe = getExecutablePath("dcrwallet");
+  var dcrwExe = getExecutablePath("dcrwallet", argv.customBinPath);
   if (!fs.existsSync(dcrwExe)) {
     logger.log("error", "The dcrwallet file does not exists");
     return;
@@ -647,7 +603,7 @@ const readExesVersion = () => {
   };
 
   for (let exe of exes) {
-    let exePath = getExecutablePath("dcrd");
+    let exePath = getExecutablePath("dcrd", argv.customBinPath);
     if (!fs.existsSync(exePath)) {
       logger.log("error", "The dcrd file does not exists");
     }
@@ -871,12 +827,12 @@ app.on("ready", async () => {
       }, {
         label: locale.messages["appMenu.showWalletLog"],
         click() {
-          shell.openItem(path.join(appDataDirectory(), "logs"));
+          shell.openItem(getDirectoryLogs(appDataDirectory()));
         }
       }, {
         label: locale.messages["appMenu.showDaemonLog"],
         click() {
-          shell.openItem(path.join(getDcrdPath(), "logs"));
+          shell.openItem(getDirectoryLogs(getDcrdPath()));
         }
       } ]
     }, {

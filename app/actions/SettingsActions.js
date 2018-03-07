@@ -1,5 +1,5 @@
 // @flow
-import { getWalletCfg, getGlobalCfg } from "../config.js";
+import { getWalletCfg, getGlobalCfg } from "config";
 import { isTestNet } from "selectors";
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
 export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
