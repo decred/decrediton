@@ -10,9 +10,9 @@ import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales"
 import { createLogger } from "./main_dev/logging";
 import { Buffer } from "buffer";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, MAX_LOG_LENGTH, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
-import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDefaultWalletNameDirectory } from "./main_dev/paths";
+import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDefaultWalletFilesPath } from "./main_dev/paths";
 import { dcrwalletCfg, getWalletPath, getExecutablePath, getWalletsDirectoryPath, getDefaultWalletDirectory } from "./main_dev/paths";
-import { getGlobalCfgPath, getDecreditonWalletDBPath, getWalletDBFromWalletDirectories, getDcrdRpcCert, getDirectoryLogs } from "./main_dev/paths";
+import { getGlobalCfgPath, getDecreditonWalletDBPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs } from "./main_dev/paths";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -87,13 +87,13 @@ if (!fs.pathExistsSync(defaultMainnetWalletDirectory)){
 
   // check for existing mainnet directories
   if ( fs.pathExistsSync(getDecreditonWalletDBPath(false)) ) {
-    fs.mkdirsSync(getDefaultWalletNameDirectory(false));
-    fs.copySync(getDecreditonWalletDBPath(false), getDefaultWalletNameDirectory(false));
+    fs.mkdirsSync(getDefaultWalletDirectory(false, false));
+    fs.copySync(getDecreditonWalletDBPath(false), getDefaultWalletDirectory(false, false));
   }
 
   // copy over existing config.json if it exists
   if (fs.pathExistsSync(getGlobalCfgPath())) {
-    fs.copySync(getGlobalCfgPath(), getDefaultWalletNameDirectory(false, "config.json"));
+    fs.copySync(getGlobalCfgPath(), getDefaultWalletFilesPath(false, "config.json"));
   }
 
   // create new configs for default mainnet wallet
@@ -107,13 +107,13 @@ if (!fs.pathExistsSync(defaultTestnetWalletDirectory)){
 
   // check for existing testnet2 directories
   if (fs.pathExistsSync(getDecreditonWalletDBPath(true))) {
-    fs.mkdirsSync(getDefaultWalletNameDirectory(true));
-    fs.copySync(getDecreditonWalletDBPath(true), getDefaultWalletNameDirectory(true));
+    fs.mkdirsSync(getDefaultWalletDirectory(true, true));
+    fs.copySync(getDecreditonWalletDBPath(true), getDefaultWalletDirectory(true, true));
   }
 
   // copy over existing config.json if it exists
   if (fs.pathExistsSync(getGlobalCfgPath())) {
-    fs.copySync(getGlobalCfgPath(), getDefaultWalletNameDirectory(true, "config.json"));
+    fs.copySync(getGlobalCfgPath(), getDefaultWalletFilesPath(true, "config.json"));
   }
 
   // create new configs for default testnet wallet
@@ -218,14 +218,14 @@ ipcMain.on("get-available-wallets", (event) => {// Attempt to find all currently
   var mainnetWalletDirectories = fs.readdirSync(getWalletPath(false));
 
   for (var i in mainnetWalletDirectories) {
-    if (fs.pathExistsSync(getWalletDBFromWalletDirectories(false, mainnetWalletDirectories[i].toString(), true))) {
+    if (fs.pathExistsSync(getWalletDBPathFromWallets(false, mainnetWalletDirectories[i].toString()))) {
       availableWallets.push({ network: "mainnet", wallet: mainnetWalletDirectories[i] });
     }
   }
   var testnetWalletDirectories = fs.readdirSync(getWalletPath(true));
 
   for (var j in testnetWalletDirectories) {
-    if (fs.pathExistsSync(getWalletDBFromWalletDirectories(true, testnetWalletDirectories[j].toString(), true))) {
+    if (fs.pathExistsSync(getWalletDBPathFromWallets(true, testnetWalletDirectories[j].toString()))) {
       availableWallets.push({ network: "testnet", wallet: testnetWalletDirectories[j] });
     }
   }
@@ -421,7 +421,6 @@ const launchDCRD = (walletPath, appdata, testnet) => {
     args = [ `--appdata=${appdata}` ];
     newConfig = readDcrdConfig(appdata, testnet);
     newConfig.rpc_cert = getDcrdRpcCert(appdata);
-    console.log(newConfig.rpc_cert)
     if (testnet) {
       args.push("--testnet");
     }

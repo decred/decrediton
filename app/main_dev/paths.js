@@ -20,25 +20,28 @@ export function getGlobalCfgPath() {
   return path.resolve(appDataDirectory(), "config.json");
 }
 
-export function getWalletPath(testnet, walletPath = "") {
-  return path.join(appDataDirectory(), "wallets", testnet ? "testnet" : "mainnet", walletPath);
-}
-
 export function getWalletsDirectoryPath() {
-  return path.join(appDataDirectory(),"wallets");
+  return path.join(appDataDirectory(), "wallets");
 }
 
-export function getDefaultWalletDirectory(testnet) {
-  return path.join(getWalletsDirectoryPath(), testnet ? "testnet" : "mainnet", "default-wallet");
+export function getWalletPath(testnet, walletPath = "", testnet2) {
+  const testnetStr = testnet ? "testnet" : "mainnet";
+  const testnet2Str = testnet2 === false ? "testnet2" : testnet2 === true ? "mainnet" : "";
+  return path.join(getWalletsDirectoryPath(), testnetStr, walletPath, testnet2Str);
 }
 
-export function getWalletDBFromWalletDirectories(testnet, walletPath, walletDB) {
-  return path.join(getWalletsDirectoryPath(), testnet ? "testnet" : "mainnet"
-    ,walletPath, testnet ? "testnet2" : "mainnet", walletDB ? "wallet.db" : null);
+export function getDefaultWalletDirectory(testnet, testnet2) {
+  return getWalletPath(testnet, "default-wallet", testnet2);
 }
 
-export function getDefaultWalletNameDirectory(testnet, walletPath = "") {
-  return path.join(getDefaultWalletDirectory(testnet), testnet ? "testnet2" : "mainnet", walletPath);
+export function getDefaultWalletFilesPath(testnet, filePath = "") {
+  return path.join(getDefaultWalletDirectory(testnet), filePath);
+}
+
+export function getWalletDBPathFromWallets(testnet, walletPath) {
+  const network = testnet ? "testnet" : "mainnet";
+  const networkFolder = testnet ? "testnet2" : "mainnet";
+  return path.join(getWalletsDirectoryPath(), network, walletPath, networkFolder, "wallet.db");
 }
 
 export function getDecreditonWalletDBPath(testnet) {
