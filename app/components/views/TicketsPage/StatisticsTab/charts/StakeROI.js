@@ -29,6 +29,6 @@ const StakeROIChartPage = ({ stakeROIStats, dailyBalancesStats }) => {
       </div>
     </Aux>
   );
-}
+};
 
 export default myTicketsCharts(StakeROIChartPage);
