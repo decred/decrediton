@@ -51,5 +51,17 @@ export default defineMessages({
   day: {
     id: "charts.keys.day",
     defaultMessage: "Days"
+  },
+  totalStake: {
+    id: "charts.keys.totalStake",
+    defaultMessage: "Total Stake"
+  },
+  stakeRewards: {
+    id: "charts.keys.stakeRewards",
+    defaultMessage: "Stake Rewards"
+  },
+  stakeFees: {
+    id: "charts.keys.stakeFees",
+    defaultMessage: "Stake Fees"
   }
 });

@@ -7,6 +7,7 @@ import * as sta from "actions/StatisticsActions";
 const mapStateToProps = selectorMap({
   voteTimeStats: sel.voteTimeStats,
   getMyTicketsStatsRequest: sel.getMyTicketsStatsRequest,
+  stakeROIStats: sel.stakeROIStats,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

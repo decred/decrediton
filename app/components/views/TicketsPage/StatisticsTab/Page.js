@@ -1,8 +1,8 @@
 import { NavLink as Link, Switch, Route, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
 import VoteTimeChartPage from "./charts/VoteTime";
+import StakeROIChartPage from "./charts/StakeROI";
 
-const NotYet = () => <div>Not yet...</div>;
 const LoadingStatsIndicator = () => <div>Loading Stats...</div>;
 
 const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats }) => (
@@ -17,7 +17,7 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats }) => (
     <div className="my-tickets-charts">
       <Switch>
         <Route path="/tickets/statistics/voteTime" component={VoteTimeChartPage} />
-        <Route path="/tickets/statistics/roi" component={NotYet} />
+        <Route path="/tickets/statistics/roi" component={StakeROIChartPage} />
         {hasStats ? <Redirect from="/tickets/statistics" exact to="/tickets/statistics/voteTime" /> : null}
       </Switch>
     </div>

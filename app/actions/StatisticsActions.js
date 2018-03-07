@@ -415,6 +415,9 @@ export const dailyBalancesStats = (opts) => {
       { name: "voted", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "revoked", type: VALUE_TYPE_ATOMAMOUNT },
       { name: "ticket", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "stakeRewards", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "stakeFees", type: VALUE_TYPE_ATOMAMOUNT },
+      { name: "totalStake", type: VALUE_TYPE_ATOMAMOUNT },
     ];
     startFunction(opts);
   };

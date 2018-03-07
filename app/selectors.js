@@ -769,3 +769,12 @@ export const location = get([ "routing", "location" ]);
 
 export const voteTimeStats = get([ "statistics", "voteTime" ]);
 export const getMyTicketsStatsRequest = get([ "statistics", "getMyTicketsStatsRequest" ]);
+
+export const stakeROIStats = createSelector(
+  [ dailyBalancesStats, unitDivisor ],
+  ( stats, unitDivisor ) => stats.map(s => ({
+    time: s.time,
+    stakeRewards: s.series.stakeRewards / unitDivisor,
+    stakeFees: s.series.stakeFees / unitDivisor,
+    totalStake: s.series.totalStake / unitDivisor,
+  })));
