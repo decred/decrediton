@@ -56,7 +56,8 @@ class CreateWalletForm extends React.Component {
       isCreatingWallet,
       getCurrentBlockCount,
       getNeededBlocks,
-      getEstimatedTimeLeft
+      getEstimatedTimeLeft,
+      getDaemonSynced,
     } = this.props;
     const {
       setSeed,
@@ -85,8 +86,8 @@ class CreateWalletForm extends React.Component {
             isCreatingWallet,
             getCurrentBlockCount,
             getNeededBlocks,
-            getEstimatedTimeLeft
-
+            getEstimatedTimeLeft,
+            getDaemonSynced
           }}
         />
       ) : (
@@ -102,7 +103,8 @@ class CreateWalletForm extends React.Component {
             onReturnToExistingOrNewScreen,
             getCurrentBlockCount,
             getNeededBlocks,
-            getEstimatedTimeLeft
+            getEstimatedTimeLeft,
+            getDaemonSynced
           }}
         />
       );

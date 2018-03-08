@@ -18,6 +18,7 @@ const ContinueWalletCreation = ({
   getCurrentBlockCount,
   getNeededBlocks,
   getEstimatedTimeLeft,
+  getDaemonSynced,
   ...props
 }) => (
   <div className="getstarted content">
@@ -43,7 +44,7 @@ const ContinueWalletCreation = ({
         ><T id="getStarted.backBtn" m="Cancel" /> </InvisibleButton>
       </div>
     </div>
-    <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft }}  />
+    <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced }}  />
   </div>
 );
 

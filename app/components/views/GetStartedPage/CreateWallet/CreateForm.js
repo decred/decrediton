@@ -9,17 +9,20 @@ const CreateForm = ({
   onSetCreateWalletFromExisting,
   getCurrentBlockCount,
   getNeededBlocks,
-  getEstimatedTimeLeft
+  getEstimatedTimeLeft,
+  getDaemonSynced
 }) => (
   existingOrNew ?
     <ExistingOrNewScreen {...{ onSetCreateWalletFromExisting,
       getCurrentBlockCount,
       getNeededBlocks,
-      getEstimatedTimeLeft }} /> :
+      getEstimatedTimeLeft,
+      getDaemonSynced }} /> :
     <CreateWalletForm {...{ onReturnToNewSeed, onReturnToExistingOrNewScreen,
       getCurrentBlockCount,
       getNeededBlocks,
-      getEstimatedTimeLeft } }/>
+      getEstimatedTimeLeft,
+    } }/>
 );
 
 export default CreateForm;

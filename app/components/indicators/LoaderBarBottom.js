@@ -1,5 +1,6 @@
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { LinearProgressSmall } from "indicators";
+import { getDaemonSynced } from "../../selectors";
 
 @autobind
 class LoaderBarBottom extends React.Component {
@@ -20,13 +21,13 @@ class LoaderBarBottom extends React.Component {
   }
 
   render() {
-    const { getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft } = this.props;
+    const { getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced } = this.props;
     let finishDateEstimation = null;
     if (getEstimatedTimeLeft !== null) {
       finishDateEstimation = new Date();
       finishDateEstimation.setSeconds(finishDateEstimation.getSeconds() + getEstimatedTimeLeft);
     }
-    return ( getCurrentBlockCount &&
+    return ( getCurrentBlockCount && !getDaemonSynced &&
       <div className="loader-bar-bottom">
         <div className="loader-bar-estimation">
           <span className="normal"><T id="getStarted.chainLoading.syncEstimation.small" m="Loading Decred blockchain, estimated time left"/></span>

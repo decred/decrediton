@@ -15,7 +15,8 @@ const CreateWallet = ({
   onReturnToExistingOrNewScreen,
   getCurrentBlockCount,
   getNeededBlocks,
-  getEstimatedTimeLeft
+  getEstimatedTimeLeft,
+  getDaemonSynced,
 }) => (
   <Aux>
     <div className="getstarted content">
@@ -70,7 +71,7 @@ const CreateWallet = ({
           <T id="createWallet.continueBtn" m="Continue" />
         </KeyBlueButton>
       </div>
-      <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft }}  />
+      <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced }}  />
     </div>
     <SeedCopyConfirmModal
       show={showCopySeedConfirm}

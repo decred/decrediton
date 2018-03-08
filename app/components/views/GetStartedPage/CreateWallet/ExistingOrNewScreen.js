@@ -6,7 +6,8 @@ const ExistingOrNewScreen = ({
   onSetCreateWalletFromExisting,
   getCurrentBlockCount,
   getNeededBlocks,
-  getEstimatedTimeLeft
+  getEstimatedTimeLeft,
+  getDaemonSynced
 }) => (
   <div className="getstarted content">
     <div className="createwallet-button-area">
@@ -21,7 +22,7 @@ const ExistingOrNewScreen = ({
         </div>
       </div>
     </div>
-    <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft }}  />
+    <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced }}  />
   </div>
 );
 
