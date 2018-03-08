@@ -143,6 +143,7 @@ class GetStartedPage extends React.Component {
         ...props,
         ...state,
         text,
+        getWalletReady,
         startupError,
         showSettings,
         showLogs,
