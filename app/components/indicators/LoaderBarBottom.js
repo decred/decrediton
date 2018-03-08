@@ -1,6 +1,5 @@
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { LinearProgressSmall } from "indicators";
-import { getDaemonSynced } from "../../selectors";
 
 @autobind
 class LoaderBarBottom extends React.Component {
