@@ -2,7 +2,7 @@
 # Matheus Degiovani <mathdegiovani@gmail.com>, 2017
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2018-03-08T12:46:56.702Z\n"
+"POT-Creation-Date: 2018-03-08T13:14:22.729Z\n"
 "Last-Translator: Matheus Degiovani <mathdegiovani@gmail.com>, 2017\n"
 "Language-Team: Portuguese (https://www.transifex.com/decred/teams/79156/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -208,6 +208,19 @@ msgid ""
 msgstr ""
 ", o custo original do ticket é retornado ao usuário de forma segura, porém "
 "sem a recompensa."
+
+#. [mytickets.statistics.votetime.ninetyfifthpercentile]
+#. defaultMessage is:
+#. 95% of tickets voted {value, plural, =0 {in the same day} one {within one
+#. day } other {within # days}}
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
+msgctxt "mytickets.statistics.votetime.ninetyfifthpercentile"
+msgid ""
+"95% of tickets voted {value, plural, =0 {in the same day} one {within one "
+"day } other {within # days}}"
+msgstr ""
+"95% dos tickets votaram {value, plural, =0 {no mesmo dia} one {em um dia} "
+"other {em # dias}}"
 
 #. [sidebar.lastBlockIsRecent]
 #. defaultMessage is:
@@ -474,6 +487,25 @@ msgstr "Valor"
 msgctxt "send.amount"
 msgid "Amount"
 msgstr "Valor"
+
+#. [export.tickets.fields.returnedAmount]
+#. defaultMessage is:
+#. Amount returned to the wallet by the spender (vote/revocation) transaction.
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.tickets.fields.returnedAmount"
+msgid ""
+"Amount returned to the wallet by the spender (vote/revocation) transaction."
+msgstr ""
+"Valor retornado a carteira pela transação que gastou o ticket "
+"(voto/revogação)."
+
+#. [export.tickets.fields.sentAmount]
+#. defaultMessage is:
+#. Amount sent by the wallet into the ticket transaction.
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.tickets.fields.sentAmount"
+msgid "Amount sent by the wallet into the ticket transaction."
+msgstr "Valor enviado pela carteira para a transação de compra de ticket."
 
 #. [tickets.startAutoBuyerConfirmation.attention]
 #. defaultMessage is:
@@ -1083,6 +1115,14 @@ msgstr ""
 "Data do saldo. A parte da hora é sempre fixa como o último segundo do dia "
 "(para representar o saldo no fim daquele dia)."
 
+#. [export.tickets.fields.spenderTimestamp]
+#. defaultMessage is:
+#. Date/Time of vote/revocation.
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.tickets.fields.spenderTimestamp"
+msgid "Date/Time of vote/revocation."
+msgstr "Data/hora do voto/revogação."
+
 #. [export.transactions.fields.time]
 #. defaultMessage is:
 #. Date/time of the transaction
@@ -1098,6 +1138,22 @@ msgstr "Data/hora da transação"
 msgctxt "export.balances.fields.time"
 msgid "Date/time that the balance changed"
 msgstr "Data/hora que o saldo mudou"
+
+#. [export.votettime.fields.daysToVote]
+#. defaultMessage is:
+#. Day bucket
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.votettime.fields.daysToVote"
+msgid "Day bucket"
+msgstr "Dia"
+
+#. [charts.keys.day]
+#. defaultMessage is:
+#. Days
+#: app/i18n/extracted/app/components/charts/messages.json
+msgctxt "charts.keys.day"
+msgid "Days"
+msgstr "Dias"
 
 #. [help.constitution.modal.title]
 #. defaultMessage is:
@@ -1626,6 +1682,19 @@ msgctxt "export.select"
 msgid "Export Type"
 msgstr "Tipo de Exportação"
 
+#. [export.votetime.descr]
+#. defaultMessage is:
+#. Export a time-to-vote histogram in days (how many days from ticket purchase
+#. until the ticket was selected for voting).
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.votetime.descr"
+msgid ""
+"Export a time-to-vote histogram in days (how many days from ticket purchase "
+"until the ticket was selected for voting)."
+msgstr ""
+"Exportar um histograma de tempo-até-votar em dias (quantos dias da compra do"
+" ticket até que o ticket tenha sido selecionado para votar)."
+
 #. [transactions.description.export]
 #. defaultMessage is:
 #. Export different types of statistics from your wallet.
@@ -1658,6 +1727,14 @@ msgstr "Exportar os vários tipos de saldo após cada evento que o modifica."
 msgctxt "export.dailyBalances.descr"
 msgid "Export the different types of balances, with a daily aggregation."
 msgstr "Exportar os diferentes tipos de saldo, com agregação diária"
+
+#. [export.tickets.descr]
+#. defaultMessage is:
+#. Export ticket and vote information.
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.tickets.descr"
+msgid "Export ticket and vote information."
+msgstr "Exportar informações de ticket e votação."
 
 #. [export.infoFieldsHeader]
 #. defaultMessage is:
@@ -1904,6 +1981,14 @@ msgstr "Esconder Outros"
 msgctxt "transactions.tab.history"
 msgid "History"
 msgstr "Histórico"
+
+#. [export.votetime.fields.count]
+#. defaultMessage is:
+#. How many tickets voted in this day bucket
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.votetime.fields.count"
+msgid "How many tickets voted in this day bucket"
+msgstr "Quantos tickets votaram nesse intervalo de dias."
 
 #. [seedCopyConfirmModal.copyConfirmationPhrase]
 #. defaultMessage is:
@@ -2197,6 +2282,15 @@ msgctxt "sidebar.latestBlock"
 msgid "Latest Block"
 msgstr "Último Bloco"
 
+#. [export.tickets.fields.status]
+#. defaultMessage is:
+#. Latest status for the ticket (live, voted, missed, revoked).
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.tickets.fields.status"
+msgid "Latest status for the ticket (live, voted, missed, revoked)."
+msgstr ""
+"Última situação conhecida do ticket (vivo, votado, perdido, revogado)."
+
 #. [appMenu.learnMore]
 #. defaultMessage is:
 #. Learn More
@@ -2455,6 +2549,19 @@ msgctxt "autobuyer.maxPriceRelative"
 msgid "Max Price Relative"
 msgstr "Preço Máximo Relativo"
 
+#. [mytickets.statistics.votetime.median]
+#. defaultMessage is:
+#. Median vote time: {value, plural, =0 {in the same day} one {within one day
+#. } other {within # days}}
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
+msgctxt "mytickets.statistics.votetime.median"
+msgid ""
+"Median vote time: {value, plural, =0 {in the same day} one {within one day }"
+" other {within # days}}"
+msgstr ""
+"Tempo mediano de votação: {value, plural, =0 {no mesmo dia} one {em um dia} "
+"other {em # dias}}"
+
 #. [securitycenter.form.field.message.label]
 #. defaultMessage is:
 #. Message
@@ -2604,6 +2711,14 @@ msgstr ""
 msgctxt "myTickets.noTicketsWithStatus"
 msgid "No tickets found"
 msgstr "Nenhum ticket encontrado"
+
+#. [charts.voteTime.noVotesDay]
+#. defaultMessage is:
+#. No tickets voted in this range
+#: app/i18n/extracted/app/components/charts/VoteTimeChart.json
+msgctxt "charts.voteTime.noVotesDay"
+msgid "No tickets voted in this range"
+msgstr "Nenhum ticket votou nesse intervalo"
 
 #. [home.noTransactions]
 #. defaultMessage is:
@@ -3057,6 +3172,14 @@ msgstr "Comprar Tickets"
 msgctxt "appMenu.quit"
 msgid "Quit"
 msgstr "Sair"
+
+#. [mytickets.stats.roi]
+#. defaultMessage is:
+#. ROI
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/Page.json
+msgctxt "mytickets.stats.roi"
+msgid "ROI"
+msgstr "ROI"
 
 #. [advanced.remote.rpccert]
 #. defaultMessage is:
@@ -3864,6 +3987,14 @@ msgctxt "myTickets.spenderTx"
 msgid "Spender"
 msgstr "Gasto"
 
+#. [charts.keys.stakeFees]
+#. defaultMessage is:
+#. Stake Fees
+#: app/i18n/extracted/app/components/charts/messages.json
+msgctxt "charts.keys.stakeFees"
+msgid "Stake Fees"
+msgstr "Taxas de stake"
+
 #. [purchaseTickets.stakePoolLabel]
 #. defaultMessage is:
 #. Stake Pool
@@ -3879,6 +4010,14 @@ msgstr "Stake Pool"
 msgctxt "stake.addPoolTitle"
 msgid "Stake Pool"
 msgstr "Stake Pool"
+
+#. [charts.keys.stakeRewards]
+#. defaultMessage is:
+#. Stake Rewards
+#: app/i18n/extracted/app/components/charts/messages.json
+msgctxt "charts.keys.stakeRewards"
+msgid "Stake Rewards"
+msgstr "Recompensas de Stake"
 
 #. [tickets.info.poolPreference.header]
 #. defaultMessage is:
@@ -4513,6 +4652,14 @@ msgctxt "tickets.info.ticketPrice.header"
 msgid "Ticket price"
 msgstr "Preço do Ticket"
 
+#. [charts.keys.ticketCountByDay]
+#. defaultMessage is:
+#. Tickets
+#: app/i18n/extracted/app/components/charts/messages.json
+msgctxt "charts.keys.ticketCountByDay"
+msgid "Tickets"
+msgstr "Tickets"
+
 #. [sidebar.link.tickets]
 #. defaultMessage is:
 #. Tickets
@@ -4534,6 +4681,14 @@ msgstr "Tickets"
 #. Tickets
 #: app/i18n/extracted/app/components/views/TicketsPage/index.json
 msgctxt "tickets.title"
+msgid "Tickets"
+msgstr "Tickets"
+
+#. [export.tickets.name]
+#. defaultMessage is:
+#. Tickets
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.tickets.name"
 msgid "Tickets"
 msgstr "Tickets"
 
@@ -4647,6 +4802,38 @@ msgctxt "transactions.description.history"
 msgid "Total Balance: {totalBalance}"
 msgstr "Saldo Total: {totalBalance}"
 
+#. [mytickets.statistics.stakeroi.totalFees]
+#. defaultMessage is:
+#. Total Fees: {value}
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/StakeROI.json
+msgctxt "mytickets.statistics.stakeroi.totalFees"
+msgid "Total Fees: {value}"
+msgstr "Taxas Totais: {value}"
+
+#. [mytickets.statistics.stakeroi.totalReward]
+#. defaultMessage is:
+#. Total Reward: {value}
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/StakeROI.json
+msgctxt "mytickets.statistics.stakeroi.totalReward"
+msgid "Total Reward: {value}"
+msgstr "Recompensas Totais: {value}"
+
+#. [charts.keys.totalStake]
+#. defaultMessage is:
+#. Total Stake
+#: app/i18n/extracted/app/components/charts/messages.json
+msgctxt "charts.keys.totalStake"
+msgid "Total Stake"
+msgstr "Stake Total"
+
+#. [mytickets.statistics.stakeroi.totalStake]
+#. defaultMessage is:
+#. Total Stake: {value}
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/StakeROI.json
+msgctxt "mytickets.statistics.stakeroi.totalStake"
+msgid "Total Stake: {value}"
+msgstr "Stake Total: {value}"
+
 #. [stake.totalSubsidy]
 #. defaultMessage is:
 #. Total Subsidy
@@ -4662,6 +4849,14 @@ msgstr "Subsídio Total"
 msgctxt "home.totalValueOfLiveTickets"
 msgid "Total Value Of Live Tickets"
 msgstr "Valor total dos tickets vivos"
+
+#. [export.balances.fields.totalStake]
+#. defaultMessage is:
+#. Total amount of DCR used on staking.
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.balances.fields.totalStake"
+msgid "Total amount of DCR used on staking."
+msgstr "Valor total de DCR usado para staking."
 
 #. [export.dailyBalances.fields.received]
 #. defaultMessage is:
@@ -4702,6 +4897,22 @@ msgstr "Saldo total disponível."
 msgctxt "export.balances.fields.total"
 msgid "Total available balance."
 msgstr "Saldo total disponível."
+
+#. [export.balances.fields.stakeFees]
+#. defaultMessage is:
+#. Total stake fees paid.
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.balances.fields.stakeFees"
+msgid "Total stake fees paid."
+msgstr "Total de taxas de stake pagas."
+
+#. [export.balances.fields.stakeRewards]
+#. defaultMessage is:
+#. Total stake rewards received.
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.balances.fields.stakeRewards"
+msgid "Total stake rewards received."
+msgstr "Total de recompensas de stake recebidas."
 
 #. [myTickets.ticketTx]
 #. defaultMessage is:
@@ -4838,6 +5049,22 @@ msgstr "Taxa de transação"
 msgctxt "tickets.info.txFee.header"
 msgid "Tx fee (DCR/kB)"
 msgstr "Taxa de Transação (DCR/kB)"
+
+#. [export.tickets.fields.spenderHash]
+#. defaultMessage is:
+#. Txid of the spender (vote/revocation) transaction.
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.tickets.fields.spenderHash"
+msgid "Txid of the spender (vote/revocation) transaction."
+msgstr "Txid da transação que gastou o ticket (voto/revogação)."
+
+#. [export.tickets.fields.ticketStatus]
+#. defaultMessage is:
+#. Txid of the ticket transaction.
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.tickets.fields.ticketStatus"
+msgid "Txid of the ticket transaction."
+msgstr "Txi da transação do ticket"
 
 #. [stakepools.list.form.field.url]
 #. defaultMessage is:
@@ -4991,6 +5218,22 @@ msgstr "Voto"
 msgctxt "myTickets.voteChoices"
 msgid "Vote"
 msgstr "Voto"
+
+#. [mytickets.stats.voteTime]
+#. defaultMessage is:
+#. Vote Time
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/Page.json
+msgctxt "mytickets.stats.voteTime"
+msgid "Vote Time"
+msgstr "Tempo de Votação"
+
+#. [export.votetime.name]
+#. defaultMessage is:
+#. Vote Time
+#: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
+msgctxt "export.votetime.name"
+msgid "Vote Time"
+msgstr "Tempo de Votação"
 
 #. [transaction.type.voted]
 #. defaultMessage is:
@@ -5493,6 +5736,22 @@ msgstr ""
 "{confirmations, plural, =0 {pendente} one {# confirmação} other {# "
 "confirmações}}"
 
+#. [charts.voteTime.daysToVoteCount]
+#. defaultMessage is:
+#. {count, plural, =0 {zero tickets} one {# ticket} other {# tickets}} voted
+#. {days, plural, =0 {in the same day} one {within one day} other {within #
+#. days}} of purchase
+#: app/i18n/extracted/app/components/charts/VoteTimeChart.json
+msgctxt "charts.voteTime.daysToVoteCount"
+msgid ""
+"{count, plural, =0 {zero tickets} one {# ticket} other {# tickets}} voted "
+"{days, plural, =0 {in the same day} one {within one day} other {within # "
+"days}} of purchase"
+msgstr ""
+"{count, plural, =0 {zero tickets votaram} one {# ticket votou} other {# "
+"tickets voram}} {days, plural, =0 {no mesmo dia} one {em até um dia} other "
+"{em até # dias}} da compra"
+
 #. [myTickets.statusCount]
 #. defaultMessage is:
 #. {count, plural, one {# ticket} other {# tickets}}
@@ -5525,6 +5784,14 @@ msgstr "{day} {month} {year} {time}"
 msgctxt "accounts.keys.counts"
 msgid "{external} external, {internal} internal, {imported} imported"
 msgstr "{external} external, {internal} internal, {imported} imported"
+
+#. [charts.tooltip.value]
+#. defaultMessage is:
+#. {key}: {value, number, precise-percent}
+#: app/i18n/extracted/app/components/charts/StakeROIChart.json
+msgctxt "charts.tooltip.value"
+msgid "{key}: {value, number, precise-percent}"
+msgstr "{key}: {value, number, precise-percent}"
 
 #. [charts.tooltip.value]
 #. defaultMessage is:
