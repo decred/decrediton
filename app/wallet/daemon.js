@@ -82,8 +82,8 @@ export const getDecreditonLogs = log(() => Promise
     throw "Error getting decrediton logs";
   }), "Get Decrediton Logs", logOptionNoResponseData());
 
-export const getAvailableWallets = log(() => Promise
-  .resolve(ipcRenderer.sendSync("get-available-wallets"))
+export const getAvailableWallets = log((network) => Promise
+  .resolve(ipcRenderer.sendSync("get-available-wallets", network))
   .then(availableWallets => {
     if (availableWallets) return availableWallets;
     throw "Error getting avaiable wallets logs";

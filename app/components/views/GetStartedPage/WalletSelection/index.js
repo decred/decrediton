@@ -13,7 +13,6 @@ class WalletSelectionBody extends React.Component {
     return {
       createWalletForm: false,
       newWalletName: "",
-      newWalletNetwork: "mainnet",
       selectedWallet: this.props.availableWallets ? this.props.availableWallets[0] : null
     };
   }
@@ -33,7 +32,6 @@ class WalletSelectionBody extends React.Component {
       startWallet,
       createWallet,
       onChangeCreateWalletName,
-      onChangeCreateWalletNetwork,
       showCreateWalletForm,
       hideCreateWalletForm
     } = this;
@@ -50,7 +48,6 @@ class WalletSelectionBody extends React.Component {
           sideActive,
           onChangeAvailableWallets,
           onChangeCreateWalletName,
-          onChangeCreateWalletNetwork,
           startWallet,
           createWallet,
           createWalletForm,
@@ -79,26 +76,14 @@ class WalletSelectionBody extends React.Component {
   onChangeCreateWalletName(newWalletName) {
     this.setState({ newWalletName });
   }
-  onChangeCreateWalletNetwork() {
-    const { newWalletNetwork } = this.state;
-    var updatedNetwork = newWalletNetwork;
-    if (newWalletNetwork == "mainnet") {
-      updatedNetwork = "testnet";
-    } else if (newWalletNetwork == "testnet") {
-      updatedNetwork = "mainnet";
-    }
-    this.setState({ newWalletNetwork: updatedNetwork });
-  }
   createWallet() {
-    const { newWalletName, newWalletNetwork } = this.state;
-    if (newWalletName == "" || (newWalletNetwork !== "mainnet" && newWalletNetwork !== "testnet")) {
+    const { newWalletName } = this.state;
+    if (newWalletName == "" ) {
       return;
     }
     this.props.onCreateWallet({
-      label: newWalletName + " (" + newWalletNetwork + ")",
-      network: newWalletNetwork,
-      value: { wallet: newWalletName, network: newWalletNetwork
-      } });
+      label: newWalletName,
+      value: { wallet: newWalletName } });
   }
   startWallet() {
     this.props.onStartWallet(this.state.selectedWallet);

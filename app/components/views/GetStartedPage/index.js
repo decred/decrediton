@@ -22,10 +22,19 @@ class GetStartedPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.onGetAvailableWallets()
-      .then(({ previousWallet }) => {
-        previousWallet && this.props.onStartWallet(previousWallet);
-      });
+    const { getWalletReady, getDaemonStarted, getNeededBlocks, onGetAvailableWallets, onStartWallet, prepStartDaemon, determineNeededBlocks } = this.props;
+    if (!getWalletReady) {
+      onGetAvailableWallets()
+        .then(({ previousWallet }) => {
+          previousWallet && onStartWallet(previousWallet);
+        });
+    }
+    if (!getNeededBlocks) {
+      determineNeededBlocks();
+    }
+    if (!getDaemonStarted) {
+      setTimeout(()=>prepStartDaemon(), 1000);
+    }
   }
 
   onShowReleaseNotes() {
@@ -88,9 +97,14 @@ class GetStartedPage extends React.Component {
       return <Logs {...{ onShowSettings, onHideLogs, ...props }} />;
     } else if (showReleaseNotes) {
       return <ReleaseNotes {...{ onShowSettings, onShowLogs, onHideReleaseNotes, ...props }} />;
-    } else if (getWalletReady && !isPrepared) {
+    } else if (isAdvancedDaemon && openForm && !remoteAppdataError && !isPrepared && getWalletReady) {
+      Form = AdvancedStartupBody;
+    } else if (remoteAppdataError && !isPrepared && getWalletReady) {
+      Form = RemoteAppdataError;
+    } else if (!getWalletReady) {
+      Form = WalletSelectionBody;
+    } else {
       switch (startStepIndex || 0) {
-      case 0:
       case 1:
         text = startupError ? startupError :
           <T id="getStarted.header.checkingWalletState.meta" m="Checking wallet state" />;
@@ -102,17 +116,6 @@ class GetStartedPage extends React.Component {
           return <CreateWallet {...props} />;
         }
         break;
-      default:
-        if (isAdvancedDaemon && openForm && !remoteAppdataError) {
-          Form = AdvancedStartupBody;
-        } else if (remoteAppdataError) {
-          Form = RemoteAppdataError;
-        }
-      }
-    } else if (!getWalletReady) {
-      Form = WalletSelectionBody;
-    } else if (isPrepared) {
-      switch (startStepIndex || 0) {
       case 3:
       case 4:
         text = <T id="getStarted.header.startrpc.meta" m="Establishing RPC connection" />;
@@ -140,6 +143,7 @@ class GetStartedPage extends React.Component {
         ...props,
         ...state,
         text,
+        getWalletReady,
         startupError,
         showSettings,
         showLogs,

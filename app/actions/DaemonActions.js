@@ -1,4 +1,4 @@
-import { versionCheckAction, startRpcRequestFunc, determineNeededBlocks } from "./WalletLoaderActions";
+import { versionCheckAction, startRpcRequestFunc } from "./WalletLoaderActions";
 import { stopNotifcations } from "./NotificationActions";
 import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
@@ -96,8 +96,9 @@ export const shutdownApp = () => (dispatch) => {
 
 export const cleanShutdown = () => () => wallet.cleanShutdown();
 
-export const getAvailableWallets = () => async (dispatch) => {
-  const availableWallets = await wallet.getAvailableWallets();
+export const getAvailableWallets = () => async (dispatch, getState) => {
+  const { network } = getState().daemon;
+  const availableWallets = await wallet.getAvailableWallets(network);
   const previousWallet = await wallet.getPreviousWallet();
   dispatch({ availableWallets, previousWallet, type: AVAILABLE_WALLETS });
   return { availableWallets, previousWallet };
@@ -115,8 +116,9 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
     });
 };
 
-export const createWallet = (selectedWallet) => (dispatch) => {
-  wallet.createNewWallet(selectedWallet.value.wallet, selectedWallet.network == "testnet")
+export const createWallet = (selectedWallet) => (dispatch, getState) => {
+  const { network } = getState().daemon;
+  wallet.createNewWallet(selectedWallet.value.wallet, network == "testnet")
     .then(() => {
       dispatch({ type: WALLETCREATED });
       dispatch(startWallet(selectedWallet));
@@ -127,10 +129,11 @@ export const createWallet = (selectedWallet) => (dispatch) => {
     });
 };
 
-export const startWallet = (selectedWallet) => (dispatch) => {
-  wallet.startWallet(selectedWallet.value.wallet, selectedWallet.network == "testnet")
+export const startWallet = (selectedWallet) => (dispatch, getState) => {
+  const { network } = getState().daemon;
+  wallet.startWallet(selectedWallet.value.wallet, network == "testnet")
     .then(({ port }) => {
-      const walletCfg = getWalletCfg(selectedWallet.network == "testnet", selectedWallet.value.wallet);
+      const walletCfg = getWalletCfg(network == "testnet", selectedWallet.value.wallet);
       wallet.setPreviousWallet(selectedWallet);
 
       var currentStakePoolConfig = walletCfg.get("stakepools");
@@ -138,7 +141,7 @@ export const startWallet = (selectedWallet) => (dispatch) => {
       var firstConfiguredStakePool = null;
       if (currentStakePoolConfig !== undefined) {
         for (var i = 0; i < currentStakePoolConfig.length; i++) {
-          if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == selectedWallet.network) {
+          if (currentStakePoolConfig[i].ApiKey && currentStakePoolConfig[i].Network == network) {
             foundStakePoolConfig = true;
             firstConfiguredStakePool = currentStakePoolConfig[i];
             break;
@@ -155,13 +158,12 @@ export const startWallet = (selectedWallet) => (dispatch) => {
       var discoverAccountsComplete = walletCfg.get("discoveraccounts");
       var activeStakePoolConfig = foundStakePoolConfig;
       var selectedStakePool = firstConfiguredStakePool;
-      dispatch({ type: WALLETREADY, walletName: selectedWallet.value.wallet, network: selectedWallet.network, hiddenAccounts, port });
+      dispatch({ type: WALLETREADY, walletName: selectedWallet.value.wallet, network: network, hiddenAccounts, port });
       dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative, maxPerBlock });
       dispatch({ type: WALLET_SETTINGS, currencyDisplay });
       dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig });
       dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
       setTimeout(()=>dispatch(versionCheckAction()), 2000);
-      setTimeout(()=>dispatch(determineNeededBlocks()), 2000);
     })
     .catch((err) => {
       console.log(err);
@@ -175,9 +177,13 @@ export const prepStartDaemon = () => (dispatch, getState) => {
     dispatch(startDaemon());
     return;
   }
+  if (!walletName) {
+    return;
+  }
   const { rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials(isTestNet(getState()), walletName);
-  const hasAllCredentials = rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
+  const hasAllCredentials = rpc_password && rpc_user && rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
   const hasAppData = getAppdataPath(isTestNet(getState()), walletName) && getAppdataPath(isTestNet(getState()), walletName).length > 0;
+
 
   if(hasAllCredentials && hasAppData)
     this.props.setCredentialsAppdataError();
@@ -193,7 +199,7 @@ export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
-      const { walletLoader: { neededBlocks } } = getState();
+      const { walletLoader: { neededBlocks, stepIndex } } = getState();
       const { daemon: { daemonSynced, timeStart, blockStart, credentials, walletName } } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
@@ -204,7 +210,10 @@ export const syncDaemon = () =>
             dispatch({ type: DAEMONSYNCED });
             dispatch({ currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK });
             setMustOpenForm(false);
-            dispatch(startRpcRequestFunc());
+            // stepIndex 3 means either successfully opened or created.
+            if (stepIndex == 3) {
+              dispatch(startRpcRequestFunc());
+            }
             return;
           } else if (updateCurrentBlockCount !== 0) {
             const blocksLeft = neededBlocks - updateCurrentBlockCount;

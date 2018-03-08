@@ -1,8 +1,13 @@
 import { FormattedMessage as T } from "react-intl";
+import { LoaderBarBottom } from "indicators";
 import "style/CreateWalletForm.less";
 
 const ExistingOrNewScreen = ({
-  onSetCreateWalletFromExisting
+  onSetCreateWalletFromExisting,
+  getCurrentBlockCount,
+  getNeededBlocks,
+  getEstimatedTimeLeft,
+  getDaemonSynced
 }) => (
   <div className="getstarted content">
     <div className="createwallet-button-area">
@@ -17,6 +22,7 @@ const ExistingOrNewScreen = ({
         </div>
       </div>
     </div>
+    <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced }}  />
   </div>
 );
 

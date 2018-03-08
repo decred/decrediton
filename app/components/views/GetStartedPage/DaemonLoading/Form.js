@@ -9,6 +9,7 @@ export default ({
   barText,
   isInputRequest,
   getCurrentBlockCount,
+  getWalletReady,
   getDaemonStarted,
   getDaemonSynced,
   getNeededBlocks,
@@ -24,6 +25,7 @@ export default ({
     <div className="getstarted loader">
       <Aux>
         <div className="content-title">
+          {getWalletReady &&
           <div className="loader-settings-logs">
             <InvisibleButton onClick={onShowSettings}>
               <T id="getStarted.btnSettings" m="Settings" />
@@ -32,6 +34,7 @@ export default ({
               <T id="getStarted.btnLogs" m="Logs" />
             </InvisibleButton>
           </div>
+          }
           <T id="loader.title" m={"Welcome to Decrediton Wallet"}/>
         </div>
         <div className="loader-buttons">

@@ -2,6 +2,7 @@ import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { SeedCopyConfirmModal } from "modals";
 import { Tooltip } from "shared";
+import { LoaderBarBottom } from "indicators";
 import "style/CreateWalletForm.less";
 
 const CreateWallet = ({
@@ -11,7 +12,11 @@ const CreateWallet = ({
   showCopySeedConfirm,
   onCancelCopySeedConfirm,
   onSubmitCopySeedConfirm,
-  onReturnToExistingOrNewScreen
+  onReturnToExistingOrNewScreen,
+  getCurrentBlockCount,
+  getNeededBlocks,
+  getEstimatedTimeLeft,
+  getDaemonSynced,
 }) => (
   <Aux>
     <div className="getstarted content">
@@ -66,6 +71,7 @@ const CreateWallet = ({
           <T id="createWallet.continueBtn" m="Continue" />
         </KeyBlueButton>
       </div>
+      <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced }}  />
     </div>
     <SeedCopyConfirmModal
       show={showCopySeedConfirm}

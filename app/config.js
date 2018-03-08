@@ -79,6 +79,9 @@ export function initGlobalCfg() {
   if (!config.has("locale")) {
     config.set("locale","");
   }
+  if (!config.has("network")) {
+    config.set("network","mainnet");
+  }
   if (!config.has("set_language")) {
     config.set("set_language","true");
   }
