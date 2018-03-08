@@ -29,7 +29,7 @@ export function getWalletsDirectoryPathNetwork(testnet) {
 
 export function getWalletPath(testnet, walletPath = "", testnet2) {
   const testnetStr = testnet ? "testnet" : "mainnet";
-  const testnet2Str = testnet2 === true ? "testnet2" : "mainnet";
+  const testnet2Str = testnet2 === true ? "testnet2" : testnet2 === false ? "mainnet" : "";
   return path.join(getWalletsDirectoryPath(), testnetStr, walletPath, testnet2Str);
 }
 
