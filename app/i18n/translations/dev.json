@@ -153,6 +153,8 @@
   "createWallet.title": "Criar wallet",
   "createWallet.verifyPassphrasePlaceholder": "Repetir senha",
   "createWallet.warningNotice": "CUIDADO",
+  "createwallet.walletname.label": "New Wallet Name",
+  "createwallet.walletname.placehlder": "Enter your wallet name here",
   "creteWallet.writeSeedReminder": "Escreva a semente em um lugar seguro.",
   "decodeRawTx.errors.decodeFailed": "{originalError}",
   "errors.general": "Erro desconhecido. Volte.",
@@ -270,7 +272,6 @@
   "login.form.rpcport.placeholder.": "Entre com a porta rpc",
   "login.form.rpcuser.placeholder": "Entre com o user rpc",
   "logs.goBack": "Voltar",
-  "myId": "{day} {month} {year} {time} ",
   "myTickets.noTicketsWithStatus": "Nenhum ticket encontrado",
   "myTickets.spenderTx": "Gastador",
   "myTickets.statusCount": "{count, plural, one {# tickez} other {# ticketzzz}}",
@@ -613,8 +614,11 @@
   "txDetails.walletInputs": "Entradas da Carteira",
   "txDetails.walletOutputs": "Saídas da Carteira",
   "txHistory.Pending": "Pendente",
+  "txHistory.statusSmall.date": "{day} {month} {year} {time}",
   "verify.info.message": "vai verificar ainda.",
   "votingPreferences.noAgenda": "Sem agendas para votação.",
   "votingPreferences.title": "Preferências de voto",
-  "wallet.create.button": "Criar nova carteira"
+  "wallet.create.button": "Criar nova carteira",
+  "walletselection.removeConfirmModal.content": "Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding.",
+  "walletselection.removeConfirmModal.title": "Remove {wallet}"
 }

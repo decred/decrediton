@@ -4,7 +4,7 @@ import "style/LoginForm.less";
 
 const messages = defineMessages({
   messageWalletNamePlaceholder: {
-    id: "login.form.rpcuser.placeholder",
+    id: "createwallet.walletname.placehlder",
     defaultMessage: "Enter your wallet name here",
   },
 });
@@ -20,7 +20,7 @@ const CreateWalletForm = ({
     <Aux>
       <div className="advanced-daemon-row">
         <div className="advanced-daemon-label">
-          <T id="advanced.remote.rpcuser" m="New Wallet Name" />
+          <T id="createwallet.walletname.label" m="New Wallet Name" />
         </div>
         <div className="advanced-daemon-input">
           <TextInput

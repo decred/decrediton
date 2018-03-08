@@ -37,10 +37,10 @@ const WalletSelectionBodyBase = ({
                       <KeyBlueButton className="display-wallet-button start" onClick={startWallet} />
                       <RemoveWalletButton
                         className="display-wallet-button remove"
-                        modalTitle={<T id="stakepools.list.removeConfirmTitle" m="Remove {wallet}"
+                        modalTitle={<T id="walletselection.removeConfirmModal.title" m="Remove {wallet}"
                           values={{ wallet: (<span className="mono">{selectedWallet && selectedWallet.label}</span>) }}/>}
                         modalContent={
-                          <T id="stakepools.list.confirmRemove" m="Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding."/>}
+                          <T id="walletselection.removeConfirmModal.content" m="Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding."/>}
                         onSubmit={() => onRemoveWallet(wallet)} />
                     </div>
                   }
