@@ -1,6 +1,5 @@
 import path from "path";
 import os from "os";
-import { app } from "electron";
 
 // In all the functions below the Windows path is constructed based on
 // os.homedir() rather than using process.env.LOCALAPPDATA because in my tests
@@ -24,9 +23,13 @@ export function getWalletsDirectoryPath() {
   return path.join(appDataDirectory(), "wallets");
 }
 
+export function getWalletsDirectoryPathNetwork(testnet) {
+  return path.join(appDataDirectory(), "wallets", testnet ? "testnet" : "mainnet");
+}
+
 export function getWalletPath(testnet, walletPath = "", testnet2) {
   const testnetStr = testnet ? "testnet" : "mainnet";
-  const testnet2Str = testnet2 === false ? "testnet2" : testnet2 === true ? "mainnet" : "";
+  const testnet2Str = testnet2 === true ? "testnet2" : testnet2 === false ? "mainnet" : "";
   return path.join(getWalletsDirectoryPath(), testnetStr, walletPath, testnet2Str);
 }
 
@@ -45,7 +48,7 @@ export function getWalletDBPathFromWallets(testnet, walletPath) {
 }
 
 export function getDecreditonWalletDBPath(testnet) {
-  return path.join(app.getPath("userData"), testnet ? "testnet2" : "mainnet", "wallet.db");
+  return path.join(appDataDirectory(), testnet ? "testnet2" : "mainnet", "wallet.db");
 }
 
 export function dcrctlCfg(configPath) {
