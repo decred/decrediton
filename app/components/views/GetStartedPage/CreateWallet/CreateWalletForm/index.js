@@ -54,6 +54,9 @@ class CreateWalletForm extends React.Component {
       onReturnToNewSeed,
       onReturnToExistingOrNewScreen,
       isCreatingWallet,
+      getCurrentBlockCount,
+      getNeededBlocks,
+      getEstimatedTimeLeft
     } = this.props;
     const {
       setSeed,
@@ -79,7 +82,10 @@ class CreateWalletForm extends React.Component {
             isValid,
             onReturnToNewSeed,
             onReturnToExistingOrNewScreen,
-            isCreatingWallet
+            isCreatingWallet,
+            getCurrentBlockCount,
+            getNeededBlocks,
+            getEstimatedTimeLeft
 
           }}
         />
@@ -94,6 +100,9 @@ class CreateWalletForm extends React.Component {
             onSubmitCopySeedConfirm,
             onCancelCopySeedConfirm,
             onReturnToExistingOrNewScreen,
+            getCurrentBlockCount,
+            getNeededBlocks,
+            getEstimatedTimeLeft
           }}
         />
       );

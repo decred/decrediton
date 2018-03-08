@@ -199,8 +199,8 @@ export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
-      const { walletLoader: { neededBlocks } } = getState();
-      const { daemon: { daemonSynced, timeStart, blockStart, credentials, walletName, walletReady } } = getState();
+      const { walletLoader: { neededBlocks, stepIndex } } = getState();
+      const { daemon: { daemonSynced, timeStart, blockStart, credentials, walletName } } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
       return wallet
@@ -210,7 +210,8 @@ export const syncDaemon = () =>
             dispatch({ type: DAEMONSYNCED });
             dispatch({ currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK });
             setMustOpenForm(false);
-            if (walletReady) {
+            // stepIndex 3 means either successfully opened or created.
+            if (stepIndex == 3) {
               dispatch(startRpcRequestFunc());
             }
             return;
