@@ -18,7 +18,7 @@ const StatusSmall = ({ pending, txTimestamp, daysToVote, onClick }) => {
       {!pending ? (
         <div className="transaction-time-date-spacer">
           <T
-            id="myId"
+            id="txHistory.statusSmall.date"
             defaultMessage="{day} {month} {year} {time}"
             values={{
               day: <FormattedDate value={tsToDate(txTimestamp)} day="2-digit" />,
