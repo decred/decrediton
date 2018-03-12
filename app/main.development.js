@@ -87,7 +87,7 @@ fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
 fs.pathExistsSync(mainnetWalletsPath) || fs.mkdirsSync(mainnetWalletsPath);
 fs.pathExistsSync(testnetWalletsPath) || fs.mkdirsSync(testnetWalletsPath);
 
-if (!fs.pathExistsSync(defaultMainnetWalletDirectory)){
+if (!fs.pathExistsSync(defaultMainnetWalletDirectory) && fs.pathExistsSync(getDecreditonWalletDBPath(false))) {
   fs.mkdirsSync(defaultMainnetWalletDirectory);
 
   // check for existing mainnet directories
@@ -106,7 +106,7 @@ if (!fs.pathExistsSync(defaultMainnetWalletDirectory)){
 
 }
 
-if (!fs.pathExistsSync(defaultTestnetWalletDirectory)){
+if (!fs.pathExistsSync(defaultTestnetWalletDirectory) && fs.pathExistsSync(getDecreditonWalletDBPath(true))) {
   fs.mkdirsSync(defaultTestnetWalletDirectory);
 
   // check for existing testnet2 directories
