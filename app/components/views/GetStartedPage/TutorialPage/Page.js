@@ -193,7 +193,7 @@ const TutorialPage = ({ intl, tutorialStep, onNextTutorialStep, onGoToStep, fini
               <Aux>
                 <div className="column">
                   <p><span className="bold">{intl.formatMessage(messages.step3Textp1)} </span>{intl.formatMessage(messages.step3TextLightp1)}</p>
-                  <p><span className="bold">{intl.formatMessage(messages.step3Textp2)} </span>{intl.formatMessage(messages.step3TextLightp2)} <span className="bold">{intl.formatMessage(messages.step3Textp22)} </span>{intl.formatMessage(messages.step3TextLightp22)} <span className="bold">{intl.formatMessage(messages.step3Textp23)}</span></p>
+                  <p><span className="bold">{intl.formatMessage(messages.step3Textp2)} </span>{intl.formatMessage(messages.step3TextLightp2)} <span className="bold">{intl.formatMessage(messages.step3Textp22)} </span>{intl.formatMessage(messages.step3TextLightp22)}<span className="bold">{intl.formatMessage(messages.step3Textp23)}</span></p>
                 </div>
                 <div className="column">
                   <p>{intl.formatMessage(messages.step3Textp3)}</p>
