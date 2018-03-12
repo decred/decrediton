@@ -39,6 +39,7 @@ export default function version(state = {}, action) {
       daemonAdvanced: false,
       daemonStopped: false,
       credentials: action.credentials,
+      daemonRemote: true,
     };
   case DAEMONSTARTED_APPDATA:
     return { ...state,

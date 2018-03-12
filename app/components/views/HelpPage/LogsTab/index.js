@@ -16,15 +16,10 @@ class LogsTabBody extends React.Component {
   }
 
   getInitialState() {
-    let remoteDcrd = false;
-    if (this.props.getCredentials && this.props.getCredentials.rpc_host) {
-      remoteDcrd = true;
-    }
     return {
       dcrdLogs: null,
       dcrwalletLogs: null,
       decreditonLogs: null,
-      remoteDcrd: remoteDcrd,
     };
   }
 
@@ -32,8 +27,9 @@ class LogsTabBody extends React.Component {
     const { showDecreditonLogs, showDcrdLogs, showDcrwalletLogs,
       hideDecreditonLogs, hideDcrdLogs, hideDcrwalletLogs
     } = this;
+    const { isDaemonRemote, isDaemonStarted } = this.props;
     const {
-      dcrdLogs, dcrwalletLogs, decreditonLogs, remoteDcrd
+      dcrdLogs, dcrwalletLogs, decreditonLogs
     } = this.state;
     return (
       <Logs
@@ -49,7 +45,9 @@ class LogsTabBody extends React.Component {
           dcrdLogs,
           dcrwalletLogs,
           decreditonLogs,
-          remoteDcrd }}
+          isDaemonRemote,
+          isDaemonStarted
+        }}
       />
     );
   }
