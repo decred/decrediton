@@ -37,6 +37,7 @@ var initialState = {
     selectedStakePool: null,
   },
   daemon: {
+    daemonRemote: false,
     network: globalCfg.get("network"),
     locale: locale,
     tutorial: globalCfg.get("show_tutorial"),
