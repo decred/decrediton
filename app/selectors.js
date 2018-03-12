@@ -84,6 +84,7 @@ export const availableWalletsSelect = createSelector(
       label: wallet.wallet + " (" +  wallet.network + ")",
       value: wallet,
       network: wallet.network,
+      finished: wallet.finished,
     }),
     wallets
   )
