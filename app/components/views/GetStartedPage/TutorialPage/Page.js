@@ -181,7 +181,7 @@ const TutorialPage = ({ intl, tutorialStep, onNextTutorialStep, onGoToStep, fini
             2:
               <Aux>
                 <div className="column">
-                  <p>{intl.formatMessage(messages.step2Textp1)}<span className="bold">{intl.formatMessage(messages.step2TextBoldp1)} </span>{intl.formatMessage(messages.step2Textp12)}</p>
+                  <p>{intl.formatMessage(messages.step2Textp1)} <span className="bold">{intl.formatMessage(messages.step2TextBoldp1)} </span>{intl.formatMessage(messages.step2Textp12)}</p>
                   <p>{intl.formatMessage(messages.step0Textp2)}</p>
                   <p>{intl.formatMessage(messages.step2Textp3)}</p>
                 </div>
