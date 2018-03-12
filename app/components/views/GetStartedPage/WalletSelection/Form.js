@@ -25,6 +25,9 @@ const WalletSelectionBodyBase = ({
               const selected = wallet.value.wallet == selectedWallet.value.wallet && wallet.network == selectedWallet.network;
               return (
                 <div className={selected ? "display-wallet selected" : "display-wallet"} key={wallet.label} onClick={() => onChangeAvailableWallets(wallet)}>
+                  <div className={selected ? "display-wallet-complete selected" : "display-wallet-complete"}>
+                    {!wallet.finished && "Setup incomplete"}
+                  </div>
                   <div className={selected ? "display-wallet-network selected" : "display-wallet-network"}>
                     {wallet.network}
                   </div>

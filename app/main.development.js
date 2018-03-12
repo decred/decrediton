@@ -214,14 +214,18 @@ ipcMain.on("get-available-wallets", (event, network) => {// Attempt to find all 
     var mainnetWalletDirectories = fs.readdirSync(getWalletPath(false));
     for (var i in mainnetWalletDirectories) {
       if (fs.pathExistsSync(getWalletDBPathFromWallets(false, mainnetWalletDirectories[i].toString()))) {
-        availableWallets.push({ network: "mainnet", wallet: mainnetWalletDirectories[i] });
+        availableWallets.push({ network: "mainnet", wallet: mainnetWalletDirectories[i], finished: true });
+      } else {
+        availableWallets.push({ network: "mainnet", wallet: mainnetWalletDirectories[i], finished: false });
       }
     }
   } else {
     var testnetWalletDirectories = fs.readdirSync(getWalletPath(true));
     for (var j in testnetWalletDirectories) {
       if (fs.pathExistsSync(getWalletDBPathFromWallets(true, testnetWalletDirectories[j].toString()))) {
-        availableWallets.push({ network: "testnet", wallet: testnetWalletDirectories[j] });
+        availableWallets.push({ network: "testnet", wallet: testnetWalletDirectories[j], finished: true });
+      } else {
+        availableWallets.push({ network: "testnet", wallet: testnetWalletDirectories[j], finished: false });
       }
     }
   }
