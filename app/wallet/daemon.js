@@ -56,10 +56,13 @@ export const getPreviousWallet = log(() => Promise
   .resolve(ipcRenderer.sendSync("get-previous-wallet"))
   , "Get Previous Wallet");
 
-export const getBlockCount = log((walletPath, rpcCreds, testnet) => Promise
-  .resolve(ipcRenderer.sendSync("check-daemon", walletPath, rpcCreds, testnet))
-  .then(block => isString(block) ? parseInt(block.trim()) : block)
-  , "Get Block Count");
+export const getBlockCount = log((walletPath, rpcCreds, testnet) => new Promise(resolve => {
+  ipcRenderer.once("check-daemon-response", (e, block) => {
+    const blockCount = isString(block) ? parseInt(block.trim()) : block;
+    resolve(blockCount);
+  });
+  ipcRenderer.send("check-daemon", walletPath, rpcCreds, testnet);
+}), "Get Block Count");
 
 export const getDcrdLogs = log(() => Promise
   .resolve(ipcRenderer.sendSync("get-dcrd-logs"))

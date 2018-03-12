@@ -335,11 +335,11 @@ ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
   dcrctl.stdout.on("data", (data) => {
     currentBlockCount = data.toString();
     logger.log("info", data.toString());
-    event.returnValue = currentBlockCount;
+    mainWindow.webContents.send("check-daemon-response", currentBlockCount);
   });
   dcrctl.stderr.on("data", (data) => {
     logger.log("error", data.toString());
-    event.returnValue = 0;
+    mainWindow.webContents.send("check-daemon-response", 0);
   });
 });
 
