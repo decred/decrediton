@@ -14,6 +14,7 @@ import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, MAX_LOG_LENGTH, BOTH_CONNECTIO
 import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDefaultWalletFilesPath } from "./main_dev/paths";
 import { dcrwalletCfg, getWalletPath, getExecutablePath, getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, getDefaultWalletDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, getDecreditonWalletDBPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs } from "./main_dev/paths";
+import { installSessionHandlers, allowExternalRequest } from "./main_dev/externalRequests";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -206,6 +207,15 @@ const installExtensions = async () => {
 };
 
 const { ipcMain } = require("electron");
+
+ipcMain.on("allow-external-request", (event, requestType) => {
+  try {
+    allowExternalRequest(requestType);
+    event.returnValue = { };
+  } catch (e) {
+    event.returnValue = { error: e };
+  }
+});
 
 ipcMain.on("get-available-wallets", (event, network) => {// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
   var availableWallets = [];
@@ -675,6 +685,7 @@ app.on("ready", async () => {
   windowOpts.title = "Decrediton - " + app.getVersion();
 
   mainWindow = new BrowserWindow(windowOpts);
+  installSessionHandlers(logger);
   mainWindow.loadURL(`file://${__dirname}/${windowOpts.page}`);
 
   mainWindow.webContents.on("did-finish-load", () => {

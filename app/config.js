@@ -91,6 +91,9 @@ export function initGlobalCfg() {
   if (!config.has("show_tutorial")) {
     config.set("show_tutorial","true");
   }
+  if (!config.has("allowed_external_requests")) {
+    config.set("allowed_external_requests", []);
+  }
   return(config);
 }
 
