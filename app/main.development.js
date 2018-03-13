@@ -15,6 +15,8 @@ import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDefaultWalletFile
 import { dcrwalletCfg, getWalletPath, getExecutablePath, getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, getDefaultWalletDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, getDecreditonWalletDBPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
+import { setupProxy } from "./main_dev/proxy";
+import { log } from "util";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -215,6 +217,10 @@ ipcMain.on("reload-allowed-external-request", (event) => {
 ipcMain.on("allow-stakepool-host", (event, host) => {
   allowStakepoolRequests(host);
   event.returnValue = true;
+});
+
+ipcMain.on("setup-proxy", () => {
+  setupProxy(logger);
 });
 
 ipcMain.on("get-available-wallets", (event, network) => {// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
@@ -681,6 +687,7 @@ app.on("ready", async () => {
       resizable: false, page: "staticPages/secondInstance.html" };
   } else {
     await installExtensions();
+    await setupProxy(logger);
   }
   windowOpts.title = "Decrediton - " + app.getVersion();
 

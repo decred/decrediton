@@ -1,5 +1,6 @@
 import GeneralSettings from "views/SettingsPage/GeneralSettings";
 import PrivacySettings from "views/SettingsPage/PrivacySettings";
+import ProxySettings from "views/SettingsPage/ProxySettings";
 import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { LoaderBarBottom } from "indicators";
@@ -35,7 +36,7 @@ export default ({
       <GeneralSettings {...{ tempSettings, networks, currencies, locales,
         onChangeTempSettings }} />
       <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
-
+      <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
       <KeyBlueButton
         disabled={!areSettingsDirty}
         size="large"

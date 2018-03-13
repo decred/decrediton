@@ -7,15 +7,22 @@ import * as wallet from "wallet";
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
 export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
 export const SETTINGS_UNCHANGED = "SETTINGS_UNCHANGED";
+import * as wallet from "wallet";
 
 export const saveSettings = (settings) => (dispatch, getState) => {
   const { daemon: { walletName } } = getState();
 
   const config = getGlobalCfg();
   const oldAllowedExternalRequests = config.get("allowed_external_requests");
+  const updatedProxy =
+    (config.get("proxy_type") !== settings.proxyType) ||
+    (config.get("proxy_location") !== settings.proxyLocation);
+
   config.set("locale", settings.locale);
   config.set("daemon_start_advanced", settings.daemonStartAdvanced);
   config.set("allowed_external_requests", settings.allowedExternalRequests);
+  config.set("proxy_type", settings.proxyType);
+  config.set("proxy_location", settings.proxyLocation);
 
   const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
   walletConfig.set("currency_display", settings.currencyDisplay);
@@ -26,6 +33,10 @@ export const saveSettings = (settings) => (dispatch, getState) => {
   }
 
   dispatch({ settings, type: SETTINGS_SAVE });
+
+  if (updatedProxy) {
+    wallet.setupProxy();
+  }
 };
 
 export function updateStateSettingsChanged(settings) {

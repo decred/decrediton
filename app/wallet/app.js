@@ -76,3 +76,7 @@ export const withLogNoResponseData = (f, msg, opts={}) =>
 
 export const withLogNoData = (f, msg, opts={}) =>
   withLog(f, msg, logOptionNoArgs(logOptionNoResponseData(opts)));
+
+export const setupProxy = () => {
+  ipcRenderer.send("setup-proxy");
+};
