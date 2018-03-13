@@ -43,6 +43,7 @@ var initialState = {
     network: globalCfg.get("network"),
     locale: locale,
     tutorial: globalCfg.get("show_tutorial"),
+    showPrivacy: globalCfg.get("show_privacy"),
     setLanguage: globalCfg.get("set_language"),
     daemonStarted: false,
     daemonSynced: false,

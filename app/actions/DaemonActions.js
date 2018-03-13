@@ -1,17 +1,19 @@
 import { versionCheckAction, startRpcRequestFunc } from "./WalletLoaderActions";
 import { stopNotifcations } from "./NotificationActions";
 import * as wallet from "wallet";
-import { push as pushHistory } from "react-router-redux";
+import { push as pushHistory, goBack } from "react-router-redux";
 import { ipcRenderer } from "electron";
 import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg } from "config";
 import { hideSidebarMenu, showSidebar } from "./SidebarActions";
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { semverCompatible } from "./VersionActions";
+import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
 export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
+export const FINISH_PRIVACY = "FINISH_PRIVACY";
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
 export const DAEMONSTARTED_REMOTE = "DAEMONSTARTED_REMOTE";
@@ -61,6 +63,24 @@ export const showGetStarted = () => (dispatch) => {
   dispatch(pushHistory("/getstarted/initial"));
 };
 
+export const showPrivacy = () => (dispatch) => {
+  dispatch(pushHistory("/getstarted/privacy"));
+};
+
+export const setupStandardPrivacy = () => (dispatch) => {
+  const config = getGlobalCfg();
+  config.set("allowed_external_requests", STANDARD_EXTERNAL_REQUESTS);
+  wallet.reloadAllowedExternalRequests();
+  dispatch(finishPrivacy());
+};
+
+export const setupDisabledPrivacy = () => (dispatch) => {
+  const config = getGlobalCfg();
+  config.set("allowed_external_requests", []);
+  wallet.reloadAllowedExternalRequests();
+  dispatch(finishPrivacy());
+};
+
 export const selectLanguage = (selectedLanguage) => (dispatch) => {
   const config = getGlobalCfg();
   config.set("locale", selectedLanguage.language);
@@ -75,6 +95,14 @@ export const finishTutorial = () => (dispatch) => {
   dispatch(showSidebar());
   dispatch({ type: FINISH_TUTORIAL });
   dispatch(pushHistory("/getstarted"));
+};
+
+export const finishPrivacy = () => (dispatch) => {
+  const config = getGlobalCfg();
+  config.set("show_privacy", false);
+  dispatch(showSidebar());
+  dispatch({ type: FINISH_PRIVACY });
+  dispatch(goBack());
 };
 
 export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
@@ -205,7 +233,6 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   const { rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials(isTestNet(getState()), walletName);
   const hasAllCredentials = rpc_password && rpc_user && rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
   const hasAppData = getAppdataPath(isTestNet(getState()), walletName) && getAppdataPath(isTestNet(getState()), walletName).length > 0;
-
 
   if(hasAllCredentials && hasAppData)
     this.props.setCredentialsAppdataError();

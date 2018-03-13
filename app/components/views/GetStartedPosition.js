@@ -9,6 +9,8 @@ class GetStartedPosition extends React.Component{
   componentWillMount() {
     if (this.props.setLanguage) {
       this.props.onShowLanguage();
+    } else if (this.props.showPrivacy) {
+      this.props.onShowPrivacy();
     } else if (this.props.showTutorial) {
       this.props.onShowTutorial();
     } else {

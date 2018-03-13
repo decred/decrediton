@@ -501,3 +501,50 @@
     color: #2970ff;
   }
 }
+
+.privacy-options {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 2em;
+}
+
+.privacy-option {
+  width: 200px;
+  padding: 1em;
+  border-radius: 5px;
+}
+
+.privacy-option:hover {
+  background-color: #fff;
+}
+
+.privacy-option-title {
+  font-size: 150%;
+  line-height: 25px;
+  text-align: center;
+  height: 2.5em;
+}
+
+.privacy-option-description {
+  text-align: justify;
+}
+
+.privacy-option-icon {
+  background-repeat: no-repeat;
+  background-size: 100px;
+  background-position: 50px;
+  width: 200px;
+  height: 100px;
+}
+
+.privacy-option-icon.standard {
+  background-image: @stakey-privacy-standard;
+}
+
+.privacy-option-icon.disabled {
+  background-image: @stakey-privacy-disabled;
+}
+
+.privacy-option-icon.custom {
+  background-image: @stakey-privacy-custom;
+}

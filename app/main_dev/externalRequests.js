@@ -12,6 +12,12 @@ import { getGlobalCfg } from "../config";
 export const EXTERNALREQUEST_NETWORK_STATUS = "EXTERNALREQUEST_NETWORK_STATUS";
 export const EXTERNALREQUEST_STAKEPOOL_LISTING = "EXTERNALREQUEST_STAKEPOOL_LISTING";
 
+// These are the requests allowed when the standard privacy mode is selected.
+export const STANDARD_EXTERNAL_REQUESTS = [
+  EXTERNALREQUEST_NETWORK_STATUS,
+  EXTERNALREQUEST_STAKEPOOL_LISTING,
+];
+
 let allowedURLs = [];
 let allowedExternalRequests = {};
 let logger;
@@ -40,10 +46,6 @@ export const installSessionHandlers = (mainLogger) => {
       callback({ cancel: false, requestHeaders: details.requestHeaders });
     }
   });
-
-  const globalCfg = getGlobalCfg();
-  const cfgAllowedRequests = globalCfg.get("allowed_external_requests", []);
-  cfgAllowedRequests.forEach(v => allowExternalRequest(v));
 };
 
 const addAllowedURL = (url) => {
@@ -79,4 +81,17 @@ export const allowStakepoolRequests = (stakePoolDomain) => {
   addAllowedURL(stakePoolDomain + "/api/v1/address");
   addAllowedURL(stakePoolDomain + "/api/v2/voting");
   addAllowedURL(stakePoolDomain + "/api/v1/getpurchaseinfo");
+};
+
+export const reloadAllowedExternalRequests = () => {
+  allowedExternalRequests = [];
+  allowedURLs = [];
+
+  if (process.env.NODE_ENV === "development") {
+    allowedURLs.push(/^http:\/\/localhost:3000/);
+  }
+
+  const globalCfg = getGlobalCfg();
+  const cfgAllowedRequests = globalCfg.get("allowed_external_requests", []);
+  cfgAllowedRequests.forEach(v => allowExternalRequest(v));
 };

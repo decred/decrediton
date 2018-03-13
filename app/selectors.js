@@ -36,6 +36,7 @@ const START_STEP_FETCH = 6;
 
 export const setLanguage = get([ "daemon", "setLanguage" ]);
 export const showTutorial = get([ "daemon", "tutorial" ]);
+export const showPrivacy = get([ "daemon", "showPrivacy" ]);
 export const versionInvalid = get([ "version", "versionInvalid" ]);
 export const requiredWalletRPCVersion = get([ "version", "requiredVersion" ]);
 export const walletRPCVersion = createSelector(
