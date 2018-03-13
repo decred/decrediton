@@ -16,7 +16,6 @@ import { dcrwalletCfg, getWalletPath, getExecutablePath, getWalletsDirectoryPath
 import { getGlobalCfgPath, getDecreditonWalletDBPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { log } from "util";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
