@@ -31,7 +31,7 @@ const PrivacySettings = ({
   };
 
   return (
-    <div className="settings-general">
+    <div className="settings-privacy">
       <div className="settings-column-title"><T id="settings.privacy.title" m="Privacy" /></div>
 
       <div className="settings-column-content">
