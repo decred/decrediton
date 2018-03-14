@@ -38,6 +38,7 @@ var initialState = {
     currentStakePoolConfigSuccessMessage: "",
     activeStakePoolConfig: false,
     selectedStakePool: null,
+    updatedStakePoolList: false,
   },
   daemon: {
     appVersion: pkg.version,

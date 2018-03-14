@@ -51,7 +51,7 @@ const setStakePoolAddressAction = (privpass, poolHost, apiKey, accountNum) =>
               dispatch({ error:"shouldn't be here set address:", type: UPDATESTAKEPOOLCONFIG_FAILED });
             }
           })
-          .catch(error => dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED }))
+          .catch(error => dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED }));
       })
       .catch(error => dispatch({
         error: `${error}. Error setting stakepool address, please try again later.`,

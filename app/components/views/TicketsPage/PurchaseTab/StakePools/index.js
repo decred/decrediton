@@ -15,7 +15,7 @@ class StakePools extends React.Component {
       apiKey: "",
       selectedUnconfigured: this.props.unconfiguredStakePools[0]
     };
-    if (this.getNoAvailableStakepools() && this.getStakepoolListingEnabled()) {
+    if (!props.updatedStakePoolList && this.getStakepoolListingEnabled()) {
       this.props.discoverAvailableStakepools();
     }
   }

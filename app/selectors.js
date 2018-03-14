@@ -621,6 +621,7 @@ export const tempSettings = get([ "settings", "tempSettings" ]);
 export const settingsChanged = get([ "settings", "settingsChanged" ]);
 export const changePassphraseError = get([ "control", "changePassphraseError" ]);
 export const changePassphraseSuccess = get([ "control", "changePassphraseSuccess" ]);
+export const updatedStakePoolList = get([ "stakepool", "updatedStakePoolList" ]);
 export const allowedExternalRequests = get([ "settings", "currentSettings", "allowedExternalRequests" ]);
 export const stakePoolListingEnabled = compose(
   l => l.indexOf(EXTERNALREQUEST_STAKEPOOL_LISTING) > -1,

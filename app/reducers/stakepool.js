@@ -32,7 +32,10 @@ export default function stakepool(state = {}, action) {
       currentStakePoolConfig: action.currentStakePoolConfig,
     };
   case DISCOVERAVAILABLESTAKEPOOLS_SUCCESS:
-    return { ...state, currentStakePoolConfig: action.currentStakePoolConfig };
+    return { ...state,
+      currentStakePoolConfig: action.currentStakePoolConfig,
+      updatedStakePoolList: true,
+    };
   case CHANGESELECTEDSTAKEPOOL:
     return { ...state,
       selectedStakePool: action.selectedStakePool
