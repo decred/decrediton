@@ -2,6 +2,7 @@ import { FormattedMessage as T } from "react-intl";
 import { StandaloneHeader, StandalonePage } from "layout";
 import { ChangePassphraseButton, KeyBlueButton } from "buttons";
 import GeneralSettings from "./GeneralSettings";
+import PrivacySettings from "./PrivacySettings";
 import "style/StakePool.less";
 import "style/Settings.less";
 
@@ -38,6 +39,8 @@ const SettingsPage = ({
           </div>
         </div>
       </div>
+
+      <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
     </div>
 
     <div className="settings-save-button">
