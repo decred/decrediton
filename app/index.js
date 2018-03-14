@@ -22,10 +22,12 @@ var initialState = {
     currentSettings: {
       locale: locale,
       daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
+      allowedExternalRequests: globalCfg.get("allowed_external_requests"),
     },
     tempSettings: {
       locale: locale,
       daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
+      allowedExternalRequests: globalCfg.get("allowed_external_requests"),
     },
     settingsChanged: false,
   },

@@ -9,6 +9,7 @@ import { isTestNet } from "selectors";
 import axios from "axios";
 import { semverCompatible } from "./VersionActions";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
+import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
@@ -67,17 +68,17 @@ export const showPrivacy = () => (dispatch) => {
   dispatch(pushHistory("/getstarted/privacy"));
 };
 
-export const setupStandardPrivacy = () => (dispatch) => {
-  const config = getGlobalCfg();
-  config.set("allowed_external_requests", STANDARD_EXTERNAL_REQUESTS);
-  wallet.reloadAllowedExternalRequests();
+export const setupStandardPrivacy = () => (dispatch, getState) => {
+  dispatch(updateStateSettingsChanged({ allowedExternalRequests: STANDARD_EXTERNAL_REQUESTS }));
+  const tempSettings = getState().settings.tempSettings;
+  dispatch(saveSettings(tempSettings));
   dispatch(finishPrivacy());
 };
 
-export const setupDisabledPrivacy = () => (dispatch) => {
-  const config = getGlobalCfg();
-  config.set("allowed_external_requests", []);
-  wallet.reloadAllowedExternalRequests();
+export const setupDisabledPrivacy = () => (dispatch, getState) => {
+  dispatch(updateStateSettingsChanged({ allowedExternalRequests: [] }));
+  const tempSettings = getState().settings.tempSettings;
+  dispatch(saveSettings(tempSettings));
   dispatch(finishPrivacy());
 };
 
