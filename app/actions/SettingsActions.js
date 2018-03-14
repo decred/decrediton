@@ -21,11 +21,11 @@ export const saveSettings = (settings) => (dispatch, getState) => {
   walletConfig.set("currency_display", settings.currencyDisplay);
   walletConfig.set("gaplimit", settings.gapLimit);
 
-  dispatch({ settings, type: SETTINGS_SAVE });
-
   if (!equalElements(oldAllowedExternalRequests, settings.allowedExternalRequests)) {
     wallet.reloadAllowedExternalRequests();
   }
+
+  dispatch({ settings, type: SETTINGS_SAVE });
 };
 
 export function updateStateSettingsChanged(settings) {

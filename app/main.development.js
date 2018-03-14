@@ -14,7 +14,7 @@ import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, MAX_LOG_LENGTH, BOTH_CONNECTIO
 import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDefaultWalletFilesPath } from "./main_dev/paths";
 import { dcrwalletCfg, getWalletPath, getExecutablePath, getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, getDefaultWalletDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, getDecreditonWalletDBPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs } from "./main_dev/paths";
-import { installSessionHandlers, reloadAllowedExternalRequests } from "./main_dev/externalRequests";
+import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -210,6 +210,10 @@ const { ipcMain } = require("electron");
 
 ipcMain.on("reload-allowed-external-request", (event) => {
   reloadAllowedExternalRequests();
+  event.returnValue = true;
+});
+ipcMain.on("allow-stakepool-host", (event, host) => {
+  allowStakepoolRequests(host);
   event.returnValue = true;
 });
 

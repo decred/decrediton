@@ -26,13 +26,11 @@ export const installSessionHandlers = (mainLogger) => {
   logger = mainLogger;
   logger.log("info", "Installing session intercept");
 
+  reloadAllowedExternalRequests();
+
   const filter = {
     urls: []
   };
-
-  if (process.env.NODE_ENV === "development") {
-    allowedURLs.push(/^http:\/\/localhost:3000/);
-  }
 
   // TODO: check if this filtering is working even when multiple windows are
   // created (relevent to multi-wallet usage)
@@ -62,7 +60,7 @@ export const allowExternalRequest = (externalReqType) => {
     addAllowedURL("https://decred.org/api/status");
     break;
   case EXTERNALREQUEST_STAKEPOOL_LISTING:
-    addAllowedURL("https://api.decred.org/?c=gsd");
+    addAllowedURL(/^https:\/\/api\.decred\.org\/\?c=gsd$/);
     break;
   default:
     logger.log("error", "Unknown external request type: " + externalReqType);
@@ -72,19 +70,17 @@ export const allowExternalRequest = (externalReqType) => {
   allowedExternalRequests[externalReqType] = true;
 };
 
-export const allowStakepoolRequests = (stakePoolDomain) => {
-  const reqType = "stakepool_" + stakePoolDomain;
+export const allowStakepoolRequests = (stakePoolHost) => {
+  const reqType = "stakepool_" + stakePoolHost;
   if (allowedExternalRequests[reqType]) return;
 
-  // TODO: check if it is a configured stakepool
-
-  addAllowedURL(stakePoolDomain + "/api/v1/address");
-  addAllowedURL(stakePoolDomain + "/api/v2/voting");
-  addAllowedURL(stakePoolDomain + "/api/v1/getpurchaseinfo");
+  addAllowedURL(stakePoolHost + "/api/v1/address");
+  addAllowedURL(stakePoolHost + "/api/v2/voting");
+  addAllowedURL(stakePoolHost + "/api/v1/getpurchaseinfo");
 };
 
 export const reloadAllowedExternalRequests = () => {
-  allowedExternalRequests = [];
+  allowedExternalRequests = {};
   allowedURLs = [];
 
   if (process.env.NODE_ENV === "development") {

@@ -6,6 +6,7 @@ import {
 import { getWalletCfg, updateStakePoolConfig } from "config";
 import { importScriptAttempt } from "./ControlActions";
 import * as sel from "../selectors";
+import * as wallet from "wallet";
 
 export const UPDATESTAKEPOOLCONFIG_ATTEMPT = "UPDATESTAKEPOOLCONFIG_ATTEMPT";
 export const UPDATESTAKEPOOLCONFIG_FAILED = "UPDATESTAKEPOOLCONFIG_FAILED";
@@ -38,7 +39,8 @@ const setStakePoolAddressAction = (privpass, poolHost, apiKey, accountNum) =>
   (dispatch, getState) => {
     const walletService = sel.walletService(getState());
     getNextAddress(walletService, accountNum)
-      .then(({ publicKey }) =>
+      .then(({ publicKey }) => {
+        wallet.allowStakePoolHost(poolHost);
         setStakePoolAddress(poolHost, apiKey, publicKey)
           .then(response => {
             if (response.data.status == "success") {
@@ -50,7 +52,7 @@ const setStakePoolAddressAction = (privpass, poolHost, apiKey, accountNum) =>
             }
           })
           .catch(error => dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED }))
-      )
+      })
       .catch(error => dispatch({
         error: `${error}. Error setting stakepool address, please try again later.`,
         type: UPDATESTAKEPOOLCONFIG_FAILED
@@ -59,7 +61,8 @@ const setStakePoolAddressAction = (privpass, poolHost, apiKey, accountNum) =>
 
 export const updateStakepoolPurchaseInformation = () => (dispatch, getState) =>
   Promise.all(sel.configuredStakePools(getState()).map(
-    ({ Host, ApiKey }) =>
+    ({ Host, ApiKey }) => {
+      wallet.allowStakePoolHost(Host);
       getPurchaseInfo(Host, ApiKey)
         .then(({ response: { data: { status, data } }, poolHost }) =>
           (status === "success")
@@ -68,11 +71,13 @@ export const updateStakepoolPurchaseInformation = () => (dispatch, getState) =>
         .catch(error => dispatch({
           error: `Unable to contact stakepool: ${error} please try again later`,
           type: UPDATESTAKEPOOLCONFIG_FAILED
-        }))
+        }));
+    }
   ));
 
 export const setStakePoolInformation = (privpass, poolHost, apiKey, accountNum, internal) =>
   (dispatch) => {
+    wallet.allowStakePoolHost(poolHost);
     if (!internal) dispatch({ type: UPDATESTAKEPOOLCONFIG_ATTEMPT });
     getPurchaseInfo(poolHost, apiKey)
       .then(({ response: { data: { message, status, data } }, poolHost }) => {
@@ -127,7 +132,8 @@ const updateStakePoolVoteChoicesConfig = (stakePool, voteChoices) => (dispatch, 
   });
 };
 
-export const setStakePoolVoteChoices = (stakePool, voteChoices) => (dispatch) =>
+export const setStakePoolVoteChoices = (stakePool, voteChoices) => (dispatch) => {
+  wallet.allowStakePoolHost(stakePool.Host);
   setVoteChoices(stakePool.Host, stakePool.ApiKey, voteChoices.getVotebits())
     .then(response => {
       if (response.data.status == "success") {
@@ -140,6 +146,7 @@ export const setStakePoolVoteChoices = (stakePool, voteChoices) => (dispatch) =>
       }
     })
     .catch(error => dispatch({ error, type: SETSTAKEPOOLVOTECHOICES_FAILED }));
+};
 
 export const DISCOVERAVAILABLESTAKEPOOLS_SUCCESS = "DISCOVERAVAILABLESTAKEPOOLS_SUCCESS";
 export const discoverAvailableStakepools = () => (dispatch, getState) =>

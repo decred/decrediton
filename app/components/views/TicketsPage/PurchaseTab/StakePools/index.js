@@ -3,8 +3,9 @@ import { FormattedMessage as T } from "react-intl";
 import { shell } from "electron";
 import StakePoolsList from "./List";
 import StakePoolsAddForm from "./AddForm";
-import stakePools from "connectors/stakePools";
-
+import { stakePools } from "connectors";
+import { EnableExternalRequestButton } from "buttons";
+import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
 @autobind
 class StakePools extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class StakePools extends React.Component {
       apiKey: "",
       selectedUnconfigured: this.props.unconfiguredStakePools[0]
     };
-    if (this.getNoAvailableStakepools()) {
+    if (this.getNoAvailableStakepools() && this.getStakepoolListingEnabled()) {
       this.props.discoverAvailableStakepools();
     }
   }
@@ -23,10 +24,20 @@ class StakePools extends React.Component {
     if (!this.state.selectedUnconfigured) {
       this.setState({ selectedUnconfigured: nextProps.unconfiguredStakePools[0] });
     }
+    if (!this.getStakepoolListingEnabled() && nextProps.stakePoolListingEnabled) {
+      this.props.discoverAvailableStakepools();
+    }
   }
 
   render() {
-    return this.getNoAvailableStakepools() ? (
+    return this.getNoAvailableStakepools() && !this.getStakepoolListingEnabled() ? (
+      <div>
+        <p><T id="stake.enableStakePoolListing.description" m="StakePool listing from external API endpoint is currently disabled. Please enable the access to this third party service or manually configure the stakepool." /></p>
+        <EnableExternalRequestButton requestType={EXTERNALREQUEST_STAKEPOOL_LISTING}>
+          <T id="stake.enableStakePoolListing.button" m="Enable StakePool Listing" />
+        </EnableExternalRequestButton>
+      </div>
+    ) : this.getNoAvailableStakepools() ? (
       <T
         id="stake.noAvailableStakepools"
         m="No stakepool found. Check your internet connection or {link} to see if the StakePool API is down."
@@ -104,6 +115,10 @@ class StakePools extends React.Component {
   onRemoveStakePool(host) {
     const { onRemoveStakePool } = this.props;
     onRemoveStakePool && onRemoveStakePool(host);
+  }
+
+  getStakepoolListingEnabled() {
+    return this.props.stakePoolListingEnabled;
   }
 }
 
