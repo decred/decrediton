@@ -7,6 +7,7 @@ import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, ge
 import { hideSidebarMenu, showSidebar } from "./SidebarActions";
 import { isTestNet } from "selectors";
 
+export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
 export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
 export const DAEMONSTARTED = "DAEMONSTARTED";
@@ -28,6 +29,15 @@ export const WALLET_AUTOBUYER_SETTINGS = "WALLET_AUTOBUYER_SETTINGS";
 export const WALLET_STAKEPOOL_SETTINGS = "WALLET_STAKEPOOL_SETTINGS";
 export const WALLET_SETTINGS = "WALLET_SETTINGS";
 export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
+
+export const checkDecreditonVersion = () => (dispatch) =>{
+  wallet.checkDecreditonVersion()
+    .then(response => {
+      console.log(response);
+      if (response)
+        dispatch({ type: DECREDITON_VERSION, msg: response });
+    });
+};
 
 export const showLanguage = () => (dispatch) => {
   dispatch(pushHistory("/getstarted/language"));
@@ -173,6 +183,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
 
 export const prepStartDaemon = () => (dispatch, getState) => {
   const { daemon: { daemonAdvanced, openForm, walletName } } = getState();
+  dispatch(checkDecreditonVersion());
   if (!daemonAdvanced) {
     dispatch(startDaemon());
     return;

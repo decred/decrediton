@@ -3,6 +3,10 @@ import { ipcRenderer } from "electron";
 import { isString } from "util";
 import { withLog as log, logOptionNoResponseData } from "./app";
 
+export const checkDecreditonVersion = log(() => Promise
+  .resolve(ipcRenderer.sendSync("check-version"))
+  , "Check Decrediton release version");
+
 export const startDaemon = log((walletPath, appData, testnet) => Promise
   .resolve(ipcRenderer.sendSync("start-daemon", walletPath, appData, testnet))
   .then(pid => {
