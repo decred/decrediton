@@ -6,6 +6,8 @@ import { ipcRenderer } from "electron";
 import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg } from "config";
 import { hideSidebarMenu, showSidebar } from "./SidebarActions";
 import { isTestNet } from "selectors";
+import axios from "axios";
+import { semverCompatible } from "./VersionActions";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
@@ -30,12 +32,20 @@ export const WALLET_STAKEPOOL_SETTINGS = "WALLET_STAKEPOOL_SETTINGS";
 export const WALLET_SETTINGS = "WALLET_SETTINGS";
 export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
 
-export const checkDecreditonVersion = () => (dispatch) =>{
-  wallet.checkDecreditonVersion()
-    .then(response => {
-      console.log(response);
-      if (response)
-        dispatch({ type: DECREDITON_VERSION, msg: response });
+export const checkDecreditonVersion = () => (dispatch, getState) =>{
+  const detectedVersion = getState().daemon.appVersion;
+  const releaseApiURL = "https://api.github.com/repos/decred/decrediton/releases";
+  axios.get(releaseApiURL, { timeout: 5000 })
+    .then(function (response) {
+      const currentVersion = response.data[0].tag_name.split("v")[1];
+      if (semverCompatible(currentVersion, detectedVersion)) {
+        wallet.log("info", "Decrediton version up to date.");
+      } else {
+        dispatch({ type: DECREDITON_VERSION, msg:  response.data[0].tag_name });
+      }
+    })
+    .catch(function (error) {
+      console.log("Unable to check latest decrediton release version.", error);
     });
 };
 

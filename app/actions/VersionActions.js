@@ -57,7 +57,7 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => {
     .catch(error => dispatch({ error, type: WALLETRPCVERSION_FAILED }));
 };
 
-function semverCompatible(req, act) {
+export function semverCompatible(req, act) {
   var required = req.split("."), actual = act.split(".");
 
   var version = {
