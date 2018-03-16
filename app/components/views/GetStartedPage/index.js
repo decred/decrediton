@@ -152,7 +152,7 @@ class GetStartedPage extends React.Component {
         onShowSettings,
         onHideSettings,
         onShowLogs,
-        onHideLogs,
+        onHideLogs
       }} />;
   }
 }
