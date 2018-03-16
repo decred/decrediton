@@ -3,6 +3,7 @@ import { bindActionCreators } from "redux";
 import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 import * as ca from "../actions/ClientActions";
+import * as sba from "../actions/SidebarActions";
 
 const mapStateToProps = selectorMap({
   isTestNet: sel.isTestNet,
@@ -17,8 +18,8 @@ const mapStateToProps = selectorMap({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   updateBlockTimeSince: ca.updateBlockTimeSince,
-  onExpandSideBar: ca.expandSideBar,
-  onReduceSideBar: ca.reduceSideBar,
+  onExpandSideBar: sba.expandSideBar,
+  onReduceSideBar: sba.reduceSideBar,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);
