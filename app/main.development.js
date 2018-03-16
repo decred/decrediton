@@ -14,7 +14,6 @@ import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, MAX_LOG_LENGTH, BOTH_CONNECTIO
 import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDefaultWalletFilesPath } from "./main_dev/paths";
 import { dcrwalletCfg, getWalletPath, getExecutablePath, getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, getDefaultWalletDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, getDecreditonWalletDBPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs } from "./main_dev/paths";
-import versionCheck from "github-version-checker";
 import pkg from "./package.json";
 
 // setPath as decrediton
@@ -210,6 +209,7 @@ const installExtensions = async () => {
 const { ipcMain } = require("electron");
 
 ipcMain.on("check-version", (event) => {
+  const versionCheck = require("github-version-checker");
   const options = {
     repo: "decred/decrediton",
     currentVersion: pkg.version,
@@ -219,6 +219,8 @@ ipcMain.on("check-version", (event) => {
     if (error) throw error;
     if (update) {
       event.returnValue = update.tag_name;
+    } else {
+      event.returnValue = null;
     }
   });
 });
