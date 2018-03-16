@@ -36,6 +36,7 @@ const mapStateToProps = selectorMap({
   availableLanguages: sel.sortedLocales,
   locale: sel.currentLocaleName,
   defaultLocale: sel.defaultLocaleName,
+  updateAvailable: sel.updateAvailable
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

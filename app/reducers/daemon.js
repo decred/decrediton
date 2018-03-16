@@ -20,7 +20,7 @@ export default function version(state = {}, action) {
   switch (action.type) {
   case DECREDITON_VERSION:
     return { ...state,
-      updateVersion: action.msg,
+      updateAvailable: action.msg,
     };
   case SELECT_LANGUAGE:
     return { ...state,

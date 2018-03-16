@@ -210,17 +210,15 @@ const installExtensions = async () => {
 const { ipcMain } = require("electron");
 
 ipcMain.on("check-version", (event) => {
-
-  // version check options (for details see below)
   const options = {
-    repo: "decred/decrediton", // will be expanded to https://api.github.com/repos/axelrindle/github-version-checker/releases
-    currentVersion: pkg.version, // your app's current version
-    includePreReleases: false // if you want to check pre-releases to
+    repo: "decred/decrediton",
+    currentVersion: pkg.version,
+    includePreReleases: false
   };
-  versionCheck(options, function (update, error) { // callback function
+  versionCheck(options, function (update, error) {
     if (error) throw error;
-    if (update) { // print some update info if an update is available
-      event.returnValue = "An update is available! Please download: " + update.tag_name + " at " + update.html_url;
+    if (update) {
+      event.returnValue = update.tag_name;
     }
   });
 });

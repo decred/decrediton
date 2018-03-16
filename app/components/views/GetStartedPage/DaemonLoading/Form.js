@@ -1,6 +1,8 @@
 import { LinearProgressFull, DecredLoading } from "indicators";
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { SlateGrayButton, InvisibleButton } from "buttons";
+import { Tooltip } from "shared";
+import { shell } from "electron";
 import "style/GetStarted.less";
 
 export default ({
@@ -19,22 +21,32 @@ export default ({
   onShowTutorial,
   onShowReleaseNotes,
   startupError,
+  updateAvailable,
   ...props,
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
       <Aux>
         <div className="content-title">
-          {getWalletReady &&
           <div className="loader-settings-logs">
-            <InvisibleButton onClick={onShowSettings}>
-              <T id="getStarted.btnSettings" m="Settings" />
-            </InvisibleButton>
-            <InvisibleButton onClick={onShowLogs}>
-              <T id="getStarted.btnLogs" m="Logs" />
-            </InvisibleButton>
+            {updateAvailable &&
+              <Tooltip text={<T id="getStarted.updateAvailableTooltip" m="New version {version} available" values={{ version: (updateAvailable) }}/>}>
+                <InvisibleButton className="update-available-button" onClick={() => shell.openExternal("https://decred.org/downloads")}>
+                  <T id="getStarted.updateAvailable" m="Update Available" />
+                </InvisibleButton>
+              </Tooltip>
+            }
+            {getWalletReady &&
+              <Aux>
+                <InvisibleButton onClick={onShowSettings}>
+                  <T id="getStarted.btnSettings" m="Settings" />
+                </InvisibleButton>
+                <InvisibleButton onClick={onShowLogs}>
+                  <T id="getStarted.btnLogs" m="Logs" />
+                </InvisibleButton>
+              </Aux>
+            }
           </div>
-          }
           <T id="loader.title" m={"Welcome to Decrediton Wallet"}/>
         </div>
         <div className="loader-buttons">

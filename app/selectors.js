@@ -9,7 +9,7 @@ import { MainNetParams, TestNetParams } from "wallet/constants";
 import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
-
+export const updateAvailable = get([ "daemon", "updateAvailable" ]);
 export const openForm = get([ "daemon", "openForm" ]);
 export const isDaemonRemote = get([ "daemon", "daemonRemote" ]);
 export const getDaemonStarted = get([ "daemon", "daemonStarted" ]);
