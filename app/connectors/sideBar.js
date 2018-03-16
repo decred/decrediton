@@ -12,10 +12,13 @@ const mapStateToProps = selectorMap({
   totalBalance: sel.totalBalance,
   showingSidebar: sel.showingSidebar,
   showingSidebarMenu: sel.showingSidebarMenu,
+  expandSideBar: sel.expandSideBar,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  updateBlockTimeSince: ca.updateBlockTimeSince
+  updateBlockTimeSince: ca.updateBlockTimeSince,
+  onExpandSideBar: ca.expandSideBar,
+  onReduceSideBar: ca.reduceSideBar,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

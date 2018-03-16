@@ -21,9 +21,12 @@ const Bar = ({
   rescanRequest,
   rescanAttempt,
   showingSidebarMenu,
+  expandSideBar,
+  onExpandSideBar,
+  onReduceSideBar,
 }) => (
-  <div className={"sidebar-menu " + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
-    <Logo {...{ isTestNet }}/>
+  <div className={(expandSideBar ? "sidebar-menu " : + "sidebar-menu-reduced ") + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
+    <Logo {...{ isTestNet }} onClick={expandSideBar ? onReduceSideBar : onExpandSideBar} />
     <Aux show={ showingSidebarMenu }>
       <div className="sidebar-main">
         <div className="sidebar-scroll">
