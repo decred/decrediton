@@ -13,7 +13,7 @@
   width: calc(100% - @sidebar-width);
   position: absolute;
   right: 0px;
-  background-color: #f3f6f6;
+  background-color: @background-container;
   overflow-x: hidden;
 }
 
@@ -22,7 +22,7 @@
 .page-content-mixin {
   position: relative;
   padding: 54px 60px 0px 80px;
-  background-color: #f3f6f6;
+  background-color: @background-container;
   overflow-y: scroll;
   height: calc(100% - 214px);
 }
@@ -48,14 +48,23 @@
 }
 
 .page-content::-webkit-scrollbar,
-.tab-content::-webkit-scrollbar {
+.tab-content.visible::-webkit-scrollbar {
   width: 5px;
   background-color: #e7eaed;
 }
 
+.tab-content::-webkit-scrollbar {
+  width: 5px;
+  background-color: transparent;
+}
+
 .page-content::-webkit-scrollbar-thumb,
-.tab-content::-webkit-scrollbar-thumb {
+.tab-content.visible::-webkit-scrollbar-thumb {
   background-color: #8797a5;
+}
+
+.tab-content::-webkit-scrollbar-thumb {
+  background-color: transparent;
 }
 
 .inverted-colors {
@@ -80,7 +89,7 @@
   top: 173px;
   bottom: 0px;
   left: 0px;
-  background-color: #f3f6f6;
+  background-color: @background-container;
 }
 
 .standalone-page-body {
@@ -92,7 +101,7 @@
   bottom: 0px;
   left: 0px;
   padding: 60px 60px 30px 60px;
-  background-color: #f3f6f6;
+  background-color: @background-container;
 }
 
 .tabbed-page-header > .title-header-title,
@@ -151,7 +160,7 @@
   bottom: 0px;
   left: 0px;
   padding: 60px 60px 30px 60px;
-  background-color: #f3f6f6;
+  background-color: @background-container;
 }
 
 .component-tab-content {
@@ -178,4 +187,13 @@
   right: 0;
   top: 0;
   bottom: 0;
+}
+
+.scrollbar-overlay {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  width: 20px;
+  background-color: @background-container;
 }

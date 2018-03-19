@@ -70,6 +70,20 @@ class TabbedPage extends React.Component {
     return { left: pos };
   }
 
+  scrollbarOverlayGetStyles(showScroll) {
+    if (!showScroll) return [];
+
+    return [ {
+      key: "scrollbar",
+      data: {},
+      style: { opacity: spring(1, theme("springs.tab")) }
+    } ];
+  }
+
+  scrollbarOverlayWillLeave() {
+    return { opacity: spring(0, theme("springs.tab")) };
+  }
+
   render() {
     let { children, header } = this.props;
     if (!isArray(children)) children = [ children ];
@@ -97,13 +111,33 @@ class TabbedPage extends React.Component {
             willLeave={this.willLeave}
             willEnter={this.willEnter}
           >
-            {interpolatedStyles => <Aux>
-              {interpolatedStyles.map(s =>
-                <div className="tab-content" style={{ left: s.style.left, right: -s.style.left }} key={s.key}>
-                  {s.data.element}
-                </div>
-              )}
-            </Aux>}
+            {interpolatedStyles => {
+              return (<Aux>
+                {interpolatedStyles.map(s => {
+                  return (
+                    <div
+                      className={[ "tab-content", Math.abs(s.style.left) < 0.1 ? "visible" : "" ].join(" ")}
+                      style={{ left: s.style.left, right: -s.style.left }}
+                      key={s.key}
+                    >
+                      {s.data.element}
+                    </div>
+                  );
+                })}
+                <TransitionMotion
+                  styles={this.scrollbarOverlayGetStyles(interpolatedStyles.length !== 1)}
+                  willLeave={this.scrollbarOverlayWillLeave}
+                >
+                  {sbStyle => {
+                    return <Aux>
+                      {sbStyle.map(s =>
+                        <div className="scrollbar-overlay" key={s.key} style={{ opacity: s.style.opacity }} />
+                      )}
+                    </Aux>;
+                  }}
+                </TransitionMotion>
+              </Aux>);
+            }}
           </TransitionMotion>
 
           {nonTabs}
