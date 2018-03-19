@@ -56,13 +56,13 @@ class TabbedPage extends React.Component {
     return [ {
       key: matchedTab.tab.props.path,
       data: { matchedTab, element },
-      style: { left: spring(0, theme("springs.tab")), sbarTop: spring(800, theme("springs.tab")) }
+      style: { left: spring(0, theme("springs.tab")) }
     } ];
   }
 
   willLeave() {
     const pos = this.state.dir === "l2r" ? -1000 : +1000;
-    return { left: spring(pos, spring(theme("springs.tab"))), sbarTop: spring(0, theme("springs.tab")) };
+    return { left: spring(pos, spring(theme("springs.tab"))) };
   }
 
   willEnter() {
