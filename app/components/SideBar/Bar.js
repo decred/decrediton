@@ -27,10 +27,11 @@ const Bar = ({
 }) => (
   <div className={(expandSideBar ? "sidebar-menu " : + "sidebar-menu-reduced ") + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
     <Logo {...{ isTestNet }} onClick={expandSideBar ? onReduceSideBar : onExpandSideBar} />
+    <span  onClick={expandSideBar ? onReduceSideBar : onExpandSideBar}>expand</span>
     <Aux show={ showingSidebarMenu }>
       <div className="sidebar-main">
         <div className="sidebar-scroll">
-          <MenuLinks/>
+          <MenuLinks {...{ expandSideBar }}/>
         </div>
         <div className="sidebar-menu-total-balance-extended" style={{ display: isShowingAccounts ? "flex" : "none" }}>
           <div className="sidebar-menu-total-balance-extended-bottom">
