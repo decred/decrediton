@@ -25,7 +25,9 @@ export default ({
         <Tooltip text={ <T id="logs.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onHideLogs}/></Tooltip>
         <T id="getStarted.logsTitle" m="Logs" />
       </div>
-      <LogsTab />
+      <div className="log-container">
+        <LogsTab />
+      </div>
       <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft }}  />
     </div>
   </div>
