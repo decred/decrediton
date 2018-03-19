@@ -5,11 +5,11 @@ import { spring, Motion } from "react-motion";
 import theme from "theme";
 
 const linkList = [
-  { path: "/home/balance",       link: <T id="sidebar.link.home" m="Overview" />,             icon:"home" },
+  { path: "/home/balance",       link: <T id="sidebar.link.home" m="Overview" />,             icon:"overview" },
   { path: "/accounts",           link: <T id="sidebar.link.accounts" m="Accounts" />,         icon:"accounts" },
   { path: "/transactions/send",  link: <T id="sidebar.link.transactions" m="Transactions" />, icon:"transactions" },
   { path: "/tickets/purchase",   link: <T id="sidebar.link.tickets" m="Tickets" /> ,          icon:"tickets" },
-  { path: "/security/sign",      link: <T id="sidebar.link.security" m="Security" />,         icon:"security" },
+  { path: "/security/sign",      link: <T id="activesidebar.link.security" m="Security" />,   icon:"securitycntr" },
   { path: "/settings",           link: <T id="sidebar.link.settings" m="Settings" />,         icon:"settings" },
   { path: "/help/links",         link: <T id="sidebar.link.help" m="Help" />,                 icon:"help" },
 ];
@@ -51,15 +51,12 @@ class MenuLinks extends React.Component {
   }
 
   render () {
-    const { expandSideBar } = this.props;
     return (
       <Aux>
         { linkList.map(({ path, link, icon }) =>
-          expandSideBar ?
-            <MenuLink to={ path } linkRef={ ref => this._nodes.set(path, ref) } key={ path }>
-              {link}
-            </MenuLink> :
-            <MenuLinkIcon icon={ icon } to={ path } linkRef={ ref => this._nodes.set(path, ref) } key={ path } />
+          <MenuLink icon={icon} to={ path } linkRef={ ref => this._nodes.set(path, ref) } key={ path }>
+            {link}
+          </MenuLink>
         )}
         <Motion style={ { top: this.state.top } }>
           { style => <div className="menu-caret" {...{ style }}/> }

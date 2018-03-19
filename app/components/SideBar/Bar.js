@@ -25,7 +25,7 @@ const Bar = ({
   onExpandSideBar,
   onReduceSideBar,
 }) => (
-  <div className={(expandSideBar ? "sidebar-menu " : + "sidebar-menu-reduced ") + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
+  <div className={(expandSideBar ? "sidebar-menu " : "sidebar-menu-reduced ") + (isTestNet ? "sidebar-testnet" : "sidebar-mainnet")}>
     <Logo {...{ isTestNet }} onClick={expandSideBar ? onReduceSideBar : onExpandSideBar} />
     <span  onClick={expandSideBar ? onReduceSideBar : onExpandSideBar}>expand</span>
     <Aux show={ showingSidebarMenu }>

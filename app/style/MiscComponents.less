@@ -231,123 +231,112 @@
   align-items: center;
   cursor: pointer;
   height: 52px;
-  padding-left: 40px;
-  color: #c4cbd2;
+  padding-left: 65px;
+  color: #8997a5;
   font-size: 18px;
   text-decoration: none;
   text-transform: capitalize;
   transition: color 0.13s ease-in-out;
+  background-position: 20px 50%;
+  background-size: 20px;
+  background-repeat: no-repeat;
 }
 
 .menu-link:hover,
 .menu-link-active {
-  color: #fff;
+  color: #152337;
 }
 
-.menu-link-active {
-  cursor: default;
-}
-
-.menu-link-icon {
-  height: 60px;
-  width: 60px;
-  background-position: 50% 50%;
-  background-size: 20px;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-
-.menu-link-icon.settings {
+.menu-link.settingsIcon {
   background-image: @menu-settings-default;
 }
 
-.menu-link-icon.active.settings {
+.menu-link-active.settingsIcon {
   background-image: @menu-settings-active;
   cursor: default;
 }
 
-.menu-link-icon.settings:hover {
+.menu-link.settingsIcon:hover {
   background-image: @menu-settings-hover;
 }
 
-.menu-link-icon.help {
+.menu-link.helpIcon {
   background-image: @menu-help-default;
 }
 
-.menu-link-icon.active.help {
+.menu-link-active.helpIcon {
   background-image: @menu-help-active;
   cursor: default;
 }
 
-.menu-link-icon.help:hover {
+.menu-link.helpIcon:hover {
   background-image: @menu-help-hover;
 }
 
-.menu-link-icon.tickets {
+.menu-link.ticketsIcon {
   background-image: @menu-tickets-default;
 }
 
-.menu-link-icon.active.tickets {
+.menu-link-active.ticketsIcon {
   background-image: @menu-tickets-active;
   cursor: default;
 }
 
-.menu-link-icon.tickets:hover {
+.menu-link.ticketsIcon:hover {
   background-image: @menu-tickets-hover;
 }
 
-.menu-link-icon.transactions {
+.menu-link.transactionsIcon {
   background-image: @menu-transactions-default;
 }
 
-.menu-link-icon.active.transactions {
+.menu-link-active.transactionsIcon {
   background-image: @menu-transactions-active;
   cursor: default;
 }
 
-.menu-link-icon.transactions:hover {
+.menu-link.transactionsIcon:hover {
   background-image: @menu-transactions-hover;
 }
 
-.menu-link-icon.accounts {
+.menu-link.accountsIcon {
   background-image: @menu-accounts-default;
 }
 
-.menu-link-icon.active.accounts {
+.menu-link-active.accountsIcon {
   background-image: @menu-accounts-active;
   cursor: default;
 }
 
-.menu-link-icon.accounts:hover {
+.menu-link.accountsIcon:hover {
   background-image: @menu-accounts-hover;
 }
 
-.menu-link-icon.securitycntr {
+.menu-link.securitycntrIcon {
   background-image: @menu-securitycntr-default;
 }
 
-.menu-link-icon.active.securitycntr {
+.menu-link-active.securitycntrIcon {
   background-image: @menu-securitycntr-active;
   cursor: default;
 }
 
-.menu-link-icon.securitycntr:hover {
+.menu-link.securitycntrIcon:hover {
   background-image: @menu-securitycntr-hover;
 }
 
-.menu-link-icon.overview {
+.menu-link.overviewIcon {
   background-image: @menu-overview-default;
 }
 
-.menu-link-icon.active.overview {
+.menu-link-active.overviewIcon {
   background-image: @menu-overview-active;
   cursor: default;
 }
 
-.menu-link-icon.overview:hover {
+.menu-link.overviewIcon:hover {
   background-image: @menu-overview-hover;
 }
-
 
 .menu-caret {
   position: absolute;
@@ -357,11 +346,11 @@
 }
 
 .sidebar-mainnet .menu-caret {
-  background-color: #09182d;
+  background-color: #fff;
 }
 
 .sidebar-testnet .menu-caret {
-  background-color: #8997a6;
+  background-color: #fff;
 }
 
 .info-modal-button {
