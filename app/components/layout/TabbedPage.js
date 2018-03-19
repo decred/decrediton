@@ -67,7 +67,7 @@ class TabbedPage extends React.Component {
 
   willEnter() {
     const pos = this.state.dir === "l2r" ? +1000 : -1000;
-    return { left: pos, sbarTop: 800 };
+    return { left: pos };
   }
 
   scrollbarOverlayGetStyles(showScroll) {
