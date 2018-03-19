@@ -6,9 +6,9 @@ import theme from "theme";
 
 const linkList = [
   { path: "/home/balance",       link: <T id="sidebar.link.home" m="Overview" />,             icon:"overview" },
-  { path: "/accounts",           link: <T id="sidebar.link.accounts" m="Accounts" />,         icon:"accounts" },
   { path: "/transactions/send",  link: <T id="sidebar.link.transactions" m="Transactions" />, icon:"transactions" },
   { path: "/tickets/purchase",   link: <T id="sidebar.link.tickets" m="Tickets" /> ,          icon:"tickets" },
+  { path: "/accounts",           link: <T id="sidebar.link.accounts" m="Accounts" />,         icon:"accounts" },
   { path: "/security/sign",      link: <T id="activesidebar.link.security" m="Security" />,   icon:"securitycntr" },
   { path: "/settings",           link: <T id="sidebar.link.settings" m="Settings" />,         icon:"settings" },
   { path: "/help/links",         link: <T id="sidebar.link.help" m="Help" />,                 icon:"help" },
