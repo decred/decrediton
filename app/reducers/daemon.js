@@ -12,11 +12,16 @@ import {
   WALLETCREATED,
   SHUTDOWN_REQUESTED,
   SET_CREDENTIALS_APPDATA_ERROR,
-  AVAILABLE_WALLETS
+  AVAILABLE_WALLETS,
+  DECREDITON_VERSION
 } from "../actions/DaemonActions";
 
 export default function version(state = {}, action) {
   switch (action.type) {
+  case DECREDITON_VERSION:
+    return { ...state,
+      updateAvailable: action.msg,
+    };
   case SELECT_LANGUAGE:
     return { ...state,
       locale: action.language,

@@ -12,6 +12,7 @@ import locales from "./i18n/locales";
 import "./style/main.less";
 import "./style/Global.less";
 import "./style/ReactSelectGlobal.less";
+import pkg from "./package.json";
 
 var globalCfg = getGlobalCfg();
 const locale = globalCfg.get("locale");
@@ -37,6 +38,7 @@ var initialState = {
     selectedStakePool: null,
   },
   daemon: {
+    appVersion: pkg.version,
     daemonRemote: false,
     network: globalCfg.get("network"),
     locale: locale,
