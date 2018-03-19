@@ -1,4 +1,5 @@
 @import (reference) "./main.less";
+@import (reference) "./Icons.less";
 
 .app-modal-overlay {
   position: fixed;
@@ -62,9 +63,9 @@
   border-radius: 5px;
   overflow-y: auto;
   padding: 2em;
-  color: rgba(12, 30, 62, 1);
   line-height: normal;
   text-align: left;
+  color: #48566e;
 }
 
 @media screen and (min-width: 768px) {
@@ -88,12 +89,17 @@
 
 .passphrase-modal-header {
   margin-bottom: 26px;
+  height: 40px;
+  background-image: @password;
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
 }
 
 .passphrase-modal-header-title {
-  font-weight: 600;
-  font-size: 19px;
+  margin-left: 50px;
+  font-size: 27px;
   text-transform: capitalize;
+  padding-top: 5px;
 }
 
 .passphrase-modal-header-description {
@@ -102,20 +108,17 @@
 
 .passphrase-modal-field {
   display: flex;
-  min-height: 4em;
-  margin-top: 0.5em;
 }
 
 .passphrase-modal-field-label {
-  font-size: 19px;
+  font-size: 13px;
   text-align: right;
   width: 12em;
   margin-right: 0.5em;
 }
 
 .passphrase-modal-field-value {
-  flex-grow: 1;
-  padding-top: 4px;
+  width: 300px;
 }
 
 .passphrase-modal-toolbar {
