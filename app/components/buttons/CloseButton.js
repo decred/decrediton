@@ -2,7 +2,7 @@ import { SimpleLoading } from "indicators";
 import "style/MiscComponents.less";
 
 @autobind
-class DangerButton extends React.Component {
+class CloseButton extends React.Component {
   render() {
     let className = "button ";
     className += !this.props.disabled ? "close-button"
@@ -37,4 +37,4 @@ class DangerButton extends React.Component {
   }
 }
 
-export default DangerButton;
+export default CloseButton;

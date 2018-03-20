@@ -1,4 +1,4 @@
-import { shell } from "electron";
+import { ExternalLink } from "shared";
 import { PassphraseModalButton, ScriptRedeemableButton, SlateGrayButton } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, StakePoolSelect } from "inputs";
@@ -8,7 +8,7 @@ import "style/StakePool.less";
 const messages = defineMessages({
   apiKeyPlaceholder: {
     id: "stake.apiKeyPlaceholder",
-    defaultMessage: "typically starts with ‘eyJhb…’"
+    defaultMessage: "Typically starts with ‘eyJhb…’"
   }
 });
 
@@ -65,7 +65,7 @@ const StakePoolsAddForm = ({
             "Create an account or login to your existing account at {stakePoolLink} Once logged in, select the ‘Settings’ tab, copy and paste your API KEY into the field."
           }
           values={{
-            stakePoolLink: <a className="stakepool-link" onClick={function(x){shell.openExternal(x);}.bind(null, selectedUnconfigured.label)}>{selectedUnconfigured.label}</a>
+            stakePoolLink: <ExternalLink href={selectedUnconfigured.label}/>
           }}/>
           <ScriptRedeemableButton
             modalTitle={<T id="stake.notRedeemed" m="Script not redeemable?" />}
