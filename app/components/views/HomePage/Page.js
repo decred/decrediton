@@ -47,14 +47,12 @@ const HomePage = ({
       </Switch>
 
       <div className="overview-transactions-ticket-wrapper">
-        <div className={tickets.length > 0 ? "recent-transactions" : "recent-transactions-full"}>
+        <div className={"recent-transactions"}>
           <RecentTransactions {...{ transactions, getTransactionsRequestAttempt, getAccountsResponse, rowNumber }} />
         </div>
-        {tickets.length > 0 &&
-          <div className="recent-transactions">
-            <TicketActivity {...{ tickets, getTransactionsRequestAttempt, getAccountsResponse, rowNumber }} />
-          </div>
-        }
+        <div className="recent-transactions">
+          <TicketActivity {...{ tickets, getTransactionsRequestAttempt, getAccountsResponse, rowNumber }} />
+        </div>
       </div>
     </Aux>
   );

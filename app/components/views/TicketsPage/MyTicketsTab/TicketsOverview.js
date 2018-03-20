@@ -1,8 +1,11 @@
 import TicketsCardList from "./TicketsCardList";
 import TicketOverviewCard from "./TicketOverviewCard";
 import { ticketsOverview } from "connectors";
+import { NoTickets } from "indicators";
 
-const TicketsOverview = ({ ticketsPerStatus, showTicketList }) => {
+const TicketsOverview = ({ ticketsPerStatus, showTicketList, allTickets }) => {
+  if (allTickets.length === 0) return <NoTickets />;
+
   const cardStatus = [ "revoked", "voted", "expired", "missed", "unmined",
     "immature", "live" ];
 
