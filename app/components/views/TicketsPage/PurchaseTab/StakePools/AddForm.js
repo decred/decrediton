@@ -8,7 +8,7 @@ import "style/StakePool.less";
 const messages = defineMessages({
   apiKeyPlaceholder: {
     id: "stake.apiKeyPlaceholder",
-    defaultMessage: "API Key"
+    defaultMessage: "typically starts with ‘eyJhb…’"
   }
 });
 
