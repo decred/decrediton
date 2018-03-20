@@ -11,12 +11,10 @@ class Modal extends React.Component {
   }
 
   componentWillMount() {
-    console.log("component will mount");
     this.props.modalShown();
   }
 
   componentWillUnmount() {
-    console.log("component will unount");
     this.props.modalHidden();
   }
 
