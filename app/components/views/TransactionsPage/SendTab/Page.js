@@ -70,7 +70,17 @@ const SendPage = ({
     <div className="send-button-area">
       <PassphraseModalButton
         modalTitle={<T id="send.sendConfirmations" m="Transaction Confirmation" />}
-        modalDescription={<div className="passphrase-modal-confirm-send"><T id="send.confirmAmountLabel" m="Please confirm your transaction for" />:  <div className="passphrase-modal-confirm-send-balance"><Balance amount={totalSpent} /></div></div>}
+        modalDescription={
+          <div className="passphrase-modal-confirm-send">
+            <div className="passphrase-modal-confirm-send-label">{outputs.length > 1 ? <T id="send.confirmAmountAddresses" m="Destination addresses" /> : <T id="send.confirmAmountAddress" m="Destination address" /> }:</div>
+            {outputs.map((output, index) => {
+              return (
+                <div className="passphrase-modal-confirm-send-address" key={"confirm-" + index}>{output.data.destination}</div>
+              );}
+            )}
+            <div className="passphrase-modal-confirm-send-label"><T id="send.confirmAmountLabelFor" m="Total Spent" />:</div>
+            <div className="passphrase-modal-confirm-send-balance"><Balance amount={totalSpent} /></div>
+          </div>}
         disabled={!isValid}
         className="content-send"
         onSubmit={onAttemptSignTransaction}
