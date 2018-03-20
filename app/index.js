@@ -317,6 +317,7 @@ var initialState = {
     validateAddressError: null,
 
     exportingData: false,
+    modalVisible: false,
   },
   snackbar: {
     messages: Array()
