@@ -7,7 +7,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.6);
   z-index: 100;
 }
 
@@ -88,11 +88,11 @@
 }
 
 .passphrase-modal-header {
-  margin-bottom: 26px;
-  height: 40px;
+  float: left;
   background-image: @password;
   background-size: 40px 40px;
   background-repeat: no-repeat;
+  margin-bottom: 10px;
 }
 
 .passphrase-modal-header-title {
@@ -102,8 +102,22 @@
   padding-top: 5px;
 }
 
+.passphrase-modal-content {
+  float: left;
+  width: 100%;
+}
+
 .passphrase-modal-header-description {
+  margin-top: 10px;
+  margin-left: 50px;
   font-size: 15px;
+  float: left;
+}
+
+.passphrase-modal-confirm-send-balance {
+  margin-left: 20px;
+  font-weight: 600px;
+  float: right;
 }
 
 .passphrase-modal-field {

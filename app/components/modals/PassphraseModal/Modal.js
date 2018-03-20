@@ -40,8 +40,8 @@ const StandardPassphraseModal = (props) => {
         {prependPassphraseRow ? inputRow : null}
         {children}
         {prependPassphraseRow ? null : inputRow}
-        <ButtonsToolbar {...props} />
       </div>
+      <ButtonsToolbar {...props} />
     </Modal>
   );
 };
