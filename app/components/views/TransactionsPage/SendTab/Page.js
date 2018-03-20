@@ -70,7 +70,7 @@ const SendPage = ({
     <div className="send-button-area">
       <PassphraseModalButton
         modalTitle={<T id="send.sendConfirmations" m="Transaction Confirmation" />}
-        modalDescription={<Aux><T id="send.confirmAmountLabel" m="Please confirm your transaction for" />:  <Balance amount={totalSpent} /></Aux>}
+        modalDescription={<div className="passphrase-modal-confirm-send"><T id="send.confirmAmountLabel" m="Please confirm your transaction for" />:  <div className="passphrase-modal-confirm-send-balance"><Balance amount={totalSpent} /></div></div>}
         disabled={!isValid}
         className="content-send"
         onSubmit={onAttemptSignTransaction}
