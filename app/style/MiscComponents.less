@@ -469,3 +469,21 @@
 .tabs > .tab > a.active {
   color: @input-color-hovered;
 }
+
+.no-transactions-indicator,
+.no-tickets-indicator {
+  text-align: center;
+  color: #617386;
+  height: 150px;
+  background-repeat: no-repeat;
+  background-size: 80px;
+  background-position: center 30px;
+}
+
+.no-transactions-indicator {
+  background-image: @no-tx-icon;
+}
+
+.no-tickets-indicator {
+  background-image: @no-tickets-icon;
+}

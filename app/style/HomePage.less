@@ -8,9 +8,6 @@
   background-color: #fff;
 }
 
-// .overview-balance-wrapper {
-// }
-
 .overview-balance {
   font-size: 42px;
   color: #0c1e3e;
@@ -40,29 +37,11 @@
   padding: 0px 0px 56px 56px;
 }
 
-// .overview-chart-wrapper {
-// }
-
-// .overview-ticket-chart-wrapper {
-// }
-
-// .overview-spendable-locked {
-// }
-
 .overview-transactions-ticket-wrapper {
   display: flex;
   justify-content: space-between;
   padding: 16px;
 }
-
-// .overview-ticket {
-// }
-
-// .overview-ticket-column {
-// }
-
-// .overview-ticket-column-right {
-// }
 
 .overview-balance-spendable-locked {
   font-size: 17px;
@@ -84,9 +63,6 @@
   font-family: 'Source Sans Pro', sans-serif;
 }
 
-// .recent-transactions-full {
-// }
-
 .recent-transactions {
   width: 48%;
 }
@@ -99,5 +75,36 @@
   margin: 0px 0px 8px 16px;
 }
 
-// .home-content-nest {
-// }
+.overview-no-transactions > a,
+.overview-no-tickets > a {
+  display: block;
+  background-color: #fff;
+  padding: 20px 20px 20px 48px;
+  background-repeat: no-repeat;
+  background-position: 16px 20px;
+  background-size: 20px;
+  text-decoration: none;
+  color: @input-color-default;
+  margin-bottom: 1px;
+  cursor: pointer;
+}
+
+.overview-no-transactions > a.receive {
+  background-image: @generate-addr-icon;
+}
+
+.overview-no-transactions > a.buy {
+  background-image: @buy-decred-icon;
+}
+
+.overview-no-tickets > a.purchaseTickets {
+  background-image: @dummy-icon;
+}
+
+.overview-no-tickets > a.whatIsStaking {
+  background-image: @what-is-staking-icon;
+}
+
+.overview-no-tickets > a.ticketLifeCycle {
+  background-image: @ticket-lifecycle-icon;
+}
