@@ -124,7 +124,7 @@
 }
 
 .tutorial-main-toolbar-step-indicators {
-  display: flex;
+  display: inline-flex;
 
   .current {
     margin: 12px;
@@ -154,11 +154,53 @@
 
 /** Wallet Tutorial Classes */
 .wallet-tutorial {
+  background-color: #fff;
+  padding: 60px;
+  color: #48566e;
+
+  .tutorial-title {
+    font-size: 27px;
+    margin-bottom: 10px;
+  }
+
+  .tutorial-subtitle {
+    font-size: 11px;
+    margin-bottom: 20px;
+  }
+
+  .tutorial-close-button {
+    height: 12px;
+    width: 12px;
+    background-repeat: no-repeat;
+    background-size: 12px;
+    background-image: @x-grey;
+    float: right;
+  }
+
+  .tutorial-standard-page {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .tutorial-text {
+    width: 40%;
+    margin-right: 30px;
+    white-space: pre-line;
+  }
+
+  .tutorial-image-and-indicator {
+    text-align: center;
+    height: 35vw;
+    width: 35vw;
+  }
+
   .tutorial-image {
     background-repeat: no-repeat;
     background-size: 100%;
-    width: 200px;
-    height: 200px;
+    background-position: center;
+    width: 100%;
+    height: 100%;
   }
 
   .tutorial-image-lifecycle-01 {
@@ -183,5 +225,9 @@
 
   .tutorial-image-lifecycle-06 {
     background-image: @lifecycle-06;
+  }
+
+  .tutorial-image-staking-01 {
+    background-image: @staking-01;
   }
 }

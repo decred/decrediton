@@ -1,4 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
+import { InvisibleButton } from "buttons";
 import { routing } from "connectors";
 
 @autobind
@@ -24,6 +25,12 @@ class PagedTutorial extends React.Component {
     }
   }
 
+  onGotoPage(pageIndex) {
+    if (pageIndex > -1 && pageIndex < this.props.pages.length) {
+      this.setState({ currentPageIndex: pageIndex });
+    }
+  }
+
   onGoBack() {
     this.props.goBackHistory();
   }
@@ -31,21 +38,22 @@ class PagedTutorial extends React.Component {
   render() {
     const { title } = this.props;
     const CurrentPage = this.getCurrentPageComponent();
-    const { onNextPage, onPreviousPage, onGoBack } = this;
+    const { onNextPage, onPreviousPage, onGoBack, onGotoPage } = this;
 
     return (
       <Aux>
+        <InvisibleButton className="tutorial-close-button" onClick={onGoBack} />
         <div className="tutorial-title">{title}</div>
         <div className="tutorial-subtitle">
           <T id="tutorial.subtitle" m="Tutorial" />
         </div>
-        <div className="tutorial-close-button" onClick={onGoBack}>X</div>
         <div className="tutorial-page">
           <CurrentPage
             {...this.props}
             {...this.state}
             onNextPage={onNextPage}
             onPreviousPage={onPreviousPage}
+            onGotoPage={onGotoPage}
           />
         </div>
       </Aux>
