@@ -5,13 +5,13 @@ import { spring, Motion } from "react-motion";
 import theme from "theme";
 
 const linkList = [
-  { path: "/home/balance",       link: <T id="sidebar.link.home" m="Overview" /> },
-  { path: "/accounts",           link: <T id="sidebar.link.accounts" m="Accounts" /> },
-  { path: "/transactions/send",  link: <T id="sidebar.link.transactions" m="Transactions" /> },
-  { path: "/tickets/purchase",   link: <T id="sidebar.link.tickets" m="Tickets" /> },
-  { path: "/security/sign",      link: <T id="sidebar.link.security" m="Security" /> },
-  { path: "/settings",           link: <T id="sidebar.link.settings" m="Settings" /> },
-  { path: "/help/links",         link: <T id="sidebar.link.help" m="Help" /> }
+  { path: "/home/balance",       link: <T id="sidebar.link.home" m="Overview" />,             icon:"overview" },
+  { path: "/transactions/send",  link: <T id="sidebar.link.transactions" m="Transactions" />, icon:"transactions" },
+  { path: "/tickets/purchase",   link: <T id="sidebar.link.tickets" m="Tickets" /> ,          icon:"tickets" },
+  { path: "/accounts",           link: <T id="sidebar.link.accounts" m="Accounts" />,         icon:"accounts" },
+  { path: "/security/sign",      link: <T id="activesidebar.link.security" m="Security" />,   icon:"securitycntr" },
+  { path: "/settings",           link: <T id="sidebar.link.settings" m="Settings" />,         icon:"settings" },
+  { path: "/help/links",         link: <T id="sidebar.link.help" m="Help" />,                 icon:"help" },
 ];
 
 @autobind
@@ -53,10 +53,11 @@ class MenuLinks extends React.Component {
   render () {
     return (
       <Aux>
-        { linkList.map(({ path, link }) =>
-          <MenuLink to={ path } linkRef={ ref => this._nodes.set(path, ref) } key={ path }>
+        { linkList.map(({ path, link, icon }) =>
+          <MenuLink icon={icon} to={ path } linkRef={ ref => this._nodes.set(path, ref) } key={ path }>
             {link}
-          </MenuLink> )}
+          </MenuLink>
+        )}
         <Motion style={ { top: this.state.top } }>
           { style => <div className="menu-caret" {...{ style }}/> }
         </Motion>

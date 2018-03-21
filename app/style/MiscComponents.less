@@ -231,21 +231,111 @@
   align-items: center;
   cursor: pointer;
   height: 52px;
-  padding-left: 40px;
-  color: #c4cbd2;
+  padding-left: 65px;
+  color: #8997a5;
   font-size: 18px;
   text-decoration: none;
   text-transform: capitalize;
   transition: color 0.13s ease-in-out;
+  background-position: 20px 50%;
+  background-size: 20px;
+  background-repeat: no-repeat;
 }
 
 .menu-link:hover,
 .menu-link-active {
-  color: #fff;
+  color: #152337;
 }
 
-.menu-link-active {
+.menu-link.settingsIcon {
+  background-image: @menu-settings-default;
+}
+
+.menu-link-active.settingsIcon {
+  background-image: @menu-settings-active;
   cursor: default;
+}
+
+.menu-link.settingsIcon:not(.menu-link-active):hover {
+  background-image: @menu-settings-hover;
+}
+
+.menu-link.helpIcon {
+  background-image: @menu-help-default;
+}
+
+.menu-link-active.helpIcon {
+  background-image: @menu-help-active;
+  cursor: default;
+}
+
+.menu-link.helpIcon:not(.menu-link-active):hover {
+  background-image: @menu-help-hover;
+}
+
+.menu-link.ticketsIcon {
+  background-image: @menu-tickets-default;
+}
+
+.menu-link-active.ticketsIcon {
+  background-image: @menu-tickets-active;
+  cursor: default;
+}
+
+.menu-link.ticketsIcon:not(.menu-link-active):hover {
+  background-image: @menu-tickets-hover;
+}
+
+.menu-link.transactionsIcon {
+  background-image: @menu-transactions-default;
+}
+
+.menu-link-active.transactionsIcon {
+  background-image: @menu-transactions-active;
+  cursor: default;
+}
+
+.menu-link.transactionsIcon:not(.menu-link-active):hover {
+  background-image: @menu-transactions-hover;
+}
+
+.menu-link.accountsIcon {
+  background-image: @menu-accounts-default;
+}
+
+.menu-link-active.accountsIcon {
+  background-image: @menu-accounts-active;
+  cursor: default;
+}
+
+.menu-link.accountsIcon:not(.menu-link-active):hover {
+  background-image: @menu-accounts-hover;
+}
+
+.menu-link.securitycntrIcon {
+  background-image: @menu-securitycntr-default;
+}
+
+.menu-link-active.securitycntrIcon {
+  background-image: @menu-securitycntr-active;
+  cursor: default;
+}
+
+.menu-link.securitycntrIcon:not(.menu-link-active):hover {
+  background-image: @menu-securitycntr-hover;
+}
+
+.menu-link.overviewIcon {
+  background-image: @menu-overview-default;
+}
+
+.menu-link-active.overviewIcon {
+  background-image: @menu-overview-active;
+  cursor: default;
+}
+
+.menu-link.overviewIcon:not(.menu-link-active):hover {
+  background-image: @menu-overview-hover;
 }
 
 .menu-caret {
@@ -256,11 +346,11 @@
 }
 
 .sidebar-mainnet .menu-caret {
-  background-color: #09182d;
+  background-color: #fff;
 }
 
 .sidebar-testnet .menu-caret {
-  background-color: #8997a6;
+  background-color: #fff;
 }
 
 .info-modal-button {
@@ -365,16 +455,16 @@
 }
 
 .rescan-progress-area {
-  color: #69d5f7;
+  color: #8997a5;
   font-size: 13px;
 }
 
 .rescan-progress-percent {
-  color: @accent-color;
+  color: #152337;
 }
 
 .rescan-progress-fraction {
-  color: @accent-color;
+  color: #152337;
   margin: 0px 4px 0px 4px;
 }
 
@@ -400,8 +490,9 @@
   cursor: pointer;
 }
 
-.rescan-button:hover {
+.rescan-button:not(.spin):hover {
   opacity: 0.7;
+  background-image: @menu-rescan-hover-icon;
 }
 
 @keyframes spin {

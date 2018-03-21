@@ -2,11 +2,36 @@
 @import (reference) "./Icons.less";
 
 .sidebar-mainnet {
-  background-color: #0c1e3e;
+  background-color: #f9fafa;
 }
 
 .sidebar-testnet {
-  background-color: #586d82;
+  background-color: #f9fafa;
+}
+
+.hamburger {
+  height: 20px;
+  width: 20px;
+  background-repeat: no-repeat;
+  background-image: @menu-hamburger;
+  cursor: pointer;
+}
+
+.hamburger:hover {
+  opacity: 0.7;
+}
+
+.sidebar-reduce-arrow {
+  margin-left: 240px;
+  height: 20px;
+  width: 20px;
+  background-repeat: no-repeat;
+  background-image: @menu-arrow;
+  cursor: pointer;
+}
+
+.sidebar-reduce-arrow:hover {
+  opacity: 0.7;
 }
 
 .sidebar-menu {
@@ -14,13 +39,22 @@
   display: flex;
   flex-direction: column;
   z-index: 99;
+  transition: width 100ms cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.sidebar-menu-reduced {
+  width: @sidebar-width-reduced;
+  display: flex;
+  flex-direction: column;
+  z-index: 99;
+  transition: width 100ms cubic-bezier(0.86, 0, 0.07, 1);
 }
 
 .sidebar-logo {
   position: relative;
   z-index: 3;
-  height: 32px;
-  padding: 40px 0px 32px 40px;
+  padding: 20px 18px 20px 18px;
+  border-bottom: 1px solid #eaecee;
 }
 
 .sidebar-main {
@@ -46,7 +80,7 @@
   width: 100%;
   flex-direction: column;
   justify-content: flex-end;
-  background-color: rgba(9, 24, 45, 0.8);
+  background-color: rgba(249, 250, 250, 0.895);
   transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1);
 }
 
@@ -62,7 +96,7 @@
 }
 
 .sidebar-menu-total-balance-extended-bottom-account-name {
-  color: #69d5f7;
+  color: #a7b3bd;
   font-size: 13px;
   overflow: hidden;
   white-space: nowrap;
@@ -71,7 +105,7 @@
 
 .sidebar-menu-total-balance-extended-bottom-account-number {
   font-family: Inconsolata, monospace;
-  color: #2ed8a3;
+  color: #152337;
   font-size: 15px;
 }
 
@@ -85,21 +119,21 @@
 .sidebar-menu-bottom-total-balance-short-separator {
   height: 7px;
   margin-bottom: 15px;
-  border-bottom: 1px solid #69d5f7;
-  background-image: @arrow-up-light-blue-icon;
+  border-bottom: 1px solid #152337;
+  background-image: @menu-arrow-up;
   background-position: 50% 0px;
   background-repeat: no-repeat;
 }
 
 .sidebar-menu-bottom-total-balance-short-name {
   float: left;
-  color: #69d5f7;
+  color: #8997a5;
   font-size: 13px;
   text-align: left;
   text-decoration: none;
   padding-left: 20px;
   margin-left: 4px;
-  background-image: @menu-wallet-icon;
+  background-image: @menu-accounts-active;
   background-repeat: no-repeat;
   background-size: 16px 16px;
 }
@@ -107,7 +141,7 @@
 .sidebar-menu-bottom-total-balance-short-value {
   float: right;
   font-family: Inconsolata, monospace;
-  color: #2ed8a3;
+  color: #152337;
   font-size: 13px;
   text-align: right;
 }
@@ -118,12 +152,12 @@
   padding-top: 14px;
   padding-right: 18px;
   padding-left: 20px;
-  background-color: #08172e;
+  background-color: #fff;
   font-size: 13px;
 }
 
 .sidebar-menu-bottom-latest-block-name {
-  color: #69d5f7;
+  color: #8997a5;
   font-size: 13px;
   line-height: 10px;
   text-align: left;
@@ -132,12 +166,12 @@
 
 .sidebar-menu-bottom-latest-block-number {
   font-family: Inconsolata, monospace;
-  color: #2ed8a3;
+  color: #424f67;
 }
 
 .sidebar-menu-bottom-latest-block-time {
   float: right;
-  color: #69d5f7;
+  color: #8997a5;
   font-size: 13px;
   text-align: right;
   text-decoration: none;

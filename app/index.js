@@ -325,6 +325,7 @@ var initialState = {
   sidebar: {
     showingSidebar: !globalCfg.get("show_tutorial"),
     showingSidebarMenu: false,
+    expandSideBar: true,
   },
   statistics: {
     dailyBalances: Array(),

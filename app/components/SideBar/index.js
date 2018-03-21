@@ -67,6 +67,9 @@ class SideBar extends React.Component {
           rescanRequest: this.props.rescanRequest,
           rescanAttempt: this.props.rescanAttempt,
           showingSidebarMenu: this.props.showingSidebarMenu,
+          expandSideBar: this.props.expandSideBar,
+          onExpandSideBar: this.props.onExpandSideBar,
+          onReduceSideBar: this.props.onReduceSideBar
         }}
       />
     );

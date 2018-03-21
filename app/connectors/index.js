@@ -33,6 +33,7 @@ export { default as verifyMessagePage } from "./verifyMessagePage";
 export { default as votingPrefs } from "./votingPrefs";
 export { default as walletError } from "./walletError";
 export { default as walletStartup } from "./walletStartup";
+export { default as walletContainer } from "./walletContainer";
 export { default as balanceHome } from "./balanceHome";
 export { default as ticketHome } from "./ticketHome";
 export { default as transactionsHome } from "./transactionsHome";

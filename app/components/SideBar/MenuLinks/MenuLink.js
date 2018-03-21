@@ -1,8 +1,8 @@
 import { NavLink as Link } from "react-router-dom";
 
-const MenuLink = ({ linkRef, ...props }) => (
+const MenuLink = ({ icon, linkRef, ...props }) => (
   <div ref={ linkRef }>
-    <Link className="menu-link" activeClassName="menu-link-active" { ...props } />
+    <Link className={"menu-link " +icon+"Icon"} activeClassName={"menu-link-active "+icon+"Icon"} { ...props } />
   </div>
 );
 
