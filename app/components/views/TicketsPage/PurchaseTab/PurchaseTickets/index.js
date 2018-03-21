@@ -8,7 +8,6 @@ import PurchaseTicketsAdvanced from "./PurchaseTicketsAdvanced";
 import PurchaseTicketsQuickBar from "./PurchaseTicketsQuickBar";
 import { injectIntl } from "react-intl";
 import { isNullOrUndefined } from "util";
-import { isEmptyOrSpaces } from "builder-util";
 
 const MAX_POSSIBLE_FEE_INPUT = 0.1;
 
@@ -213,7 +212,7 @@ class PurchaseTickets extends React.Component {
   }
 
   onChangeExpiry(expiry) {
-    const expiryError = (isNaN(expiry) || expiry < 0 || isNullOrUndefined(expiry) || isEmptyOrSpaces(expiry));
+    const expiryError = (isNaN(expiry) || expiry < 0 || isNullOrUndefined(expiry) || expiry === "");
     this.setState({
       expiry: expiry.replace(/[^\d.]/g, ""),
       expiryError: expiryError
