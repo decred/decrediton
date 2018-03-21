@@ -6,7 +6,6 @@ import AccountsPage from "components/views/AccountsPage";
 import WalletError from "components/views/WalletError";
 import ErrorScreen from "components/ErrorScreen";
 import InvalidRPCVersion from "components/views/InvalidRPCVersion";
-import ShutdownAppPage from "components/views/ShutdownAppPage";
 import HelpPage from "components/views/HelpPage";
 import SecurityPage from "components/views/SecurityPage";
 import TransactionsPage from "components/views/TransactionsPage";
@@ -32,7 +31,6 @@ class Wallet extends React.Component {
           <Route path="/walletError"                    component={WalletError} />
           <Route path="/error"                          component={ErrorScreen} />
           <Route path="/invalidRPCVersion"              component={InvalidRPCVersion} />
-          <Route path="/shutdown"                       component={ShutdownAppPage} />
           <Route path="/help"                           component={HelpPage} />
           <Route path="/security"                       component={SecurityPage} />
           <Route path="/transactions/history/:txHash"   component={TransactionPage} />
