@@ -2,7 +2,7 @@ import { TransitionMotionWrapper } from "shared";
 import StakeInfoRow from "./StakeInfoRow";
 import "style/StakePool.less";
 
-const wrapperComponent = props => <div className="account-wrapper" { ...props } />;
+const wrapperComponent = props => <div { ...props } />;
 
 const StakeInfoDisplay = ({
   getNullStyles,

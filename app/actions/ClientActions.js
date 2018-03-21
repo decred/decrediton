@@ -2,7 +2,8 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
-import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt, stopAutoBuyerAttempt } from "./ControlActions";
+import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt,
+  stopAutoBuyerAttempt, getTicketBuyerConfigAttempt } from "./ControlActions";
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
@@ -170,6 +171,7 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
   wallet.getTicketBuyerService(sel.isTestNet(getState()), walletName, address, port)
     .then(ticketBuyerService => {
       dispatch({ ticketBuyerService, type: GETTICKETBUYERSERVICE_SUCCESS });
+      setTimeout(() => { dispatch(getTicketBuyerConfigAttempt()); }, 10);
       setTimeout(() => { dispatch(stopAutoBuyerAttempt()); }, 10);
     })
     .catch(error => dispatch({ error, type: GETTICKETBUYERSERVICE_FAILED }));
