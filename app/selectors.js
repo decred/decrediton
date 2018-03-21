@@ -808,3 +808,5 @@ export const stakeROIStats = createSelector(
     stakeRewardROI: (s.series.stakeRewards / s.series.totalStake),
     stakeFeesROI: (s.series.stakeFees / s.series.totalStake),
   })));
+
+export const modalVisible = get([ "control", "modalVisible" ]);

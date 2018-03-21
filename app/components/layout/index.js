@@ -5,3 +5,4 @@ export { default as TitleHeader } from "./TitleHeader";
 export { default as DescriptionHeader } from "./DescriptionHeader";
 export { default as StandalonePageBody } from "./StandalonePageBody";
 export { default as StandalonePage } from "./StandalonePage";
+export { default as BlurableContainer } from "./BlurableContainer";

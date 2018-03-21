@@ -73,6 +73,7 @@ class App extends React.Component {
               <Route path="/getStarted"  component={GetStartedContainer} />
               <Route path="/"            component={WalletContainer} />
             </AnimatedSwitch>
+            <div id="modal-portal" />
           </Aux>
         </IntlProvider>
       </MuiThemeProvider>

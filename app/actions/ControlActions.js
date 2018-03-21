@@ -714,3 +714,8 @@ export const publishUnminedTransactionsAttempt = () => (dispatch, getState) => {
     .then(() => dispatch({ type: PUBLISHUNMINEDTRANSACTIONS_SUCCESS }))
     .catch(error => dispatch({ error, type: PUBLISHUNMINEDTRANSACTIONS_FAILED }));
 };
+
+export const MODAL_SHOWN = "MODAL_SHOWN";
+export const MODAL_HIDDEN = "MODAL_HIDDEN";
+export const modalShown = () => (dispatch) => dispatch({ type: MODAL_SHOWN });
+export const modalHidden = () => (dispatch) => dispatch({ type: MODAL_HIDDEN });

@@ -13,11 +13,12 @@ import TransactionsPage from "components/views/TransactionsPage";
 import TransactionPage from "components/views/TransactionPage";
 import TicketsPage from "components/views/TicketsPage";
 import SideBar from "components/SideBar";
+import { BlurableContainer } from "layout";
 
 const pageAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
 export default () =>
-  <div className="page-body">
+  <BlurableContainer className="page-body">
     <SideBar />
     <AnimatedSwitch {...pageAnimation} className="page-view">
       <Route path="/home"                           component={HomePage} />
@@ -33,4 +34,4 @@ export default () =>
       <Route path="/transactions"                   component={TransactionsPage} />
       <Route path="/tickets"                        component={TicketsPage} />
     </AnimatedSwitch>
-  </div>;
+  </BlurableContainer>;
