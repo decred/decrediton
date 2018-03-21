@@ -1,4 +1,3 @@
-import Header from "Header";
 import { FormattedMessage as T } from "react-intl";
 import { shutdownPage } from "connectors";
 import { DecredLoading } from "indicators";
@@ -11,15 +10,9 @@ class ShutdownAppPage extends React.Component{
 
   render() {
     return (
-      <div className="shutdown-page inverted-colors">
-        <Header
-          getStarted
-          headerTitleOverview={<T id="shutdown.header.title" m="Shutting down Decrediton" />}
-          headerMetaOverview={<T id="shutdown.header.meta" m="Shutting down daemons and wallet" />} />
-        />
-        <div className="page-content-fixed">
-          <DecredLoading  className="get-started-loading" />
-        </div>
+      <div className="page-body getstarted">
+        <DecredLoading  className="get-started-loading" />
+        <div className="shutdown-text"><T id="shutdown.header.title" m="Shutting down Decrediton" /></div>
       </div>
     );
   }
