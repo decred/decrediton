@@ -12,6 +12,7 @@ import SecurityPage from "components/views/SecurityPage";
 import TransactionsPage from "components/views/TransactionsPage";
 import TransactionPage from "components/views/TransactionPage";
 import TicketsPage from "components/views/TicketsPage";
+import TutorialsPage from "components/views/TutorialsPage";
 import SideBar from "components/SideBar";
 import { BlurableContainer } from "layout";
 import { walletContainer } from "connectors";
@@ -38,6 +39,7 @@ class Wallet extends React.Component {
           <Route path="/transactions/history/:txHash"   component={TransactionPage} />
           <Route path="/transactions"                   component={TransactionsPage} />
           <Route path="/tickets"                        component={TicketsPage} />
+          <Route path="/tutorial"                       component={TutorialsPage} />
         </AnimatedSwitch>
       </BlurableContainer>
     );

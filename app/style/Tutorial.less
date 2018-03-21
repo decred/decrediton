@@ -1,6 +1,7 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
+/** GetStarted tutorial classes **/
 .tutorial {
   display: flex;
   height: 100%;
@@ -148,5 +149,39 @@
     width: 10px;
     background-color: #d1d5db;
     border-radius: 10px;
+  }
+}
+
+/** Wallet Tutorial Classes */
+.wallet-tutorial {
+  .tutorial-image {
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 200px;
+    height: 200px;
+  }
+
+  .tutorial-image-lifecycle-01 {
+    background-image: @lifecycle-01;
+  }
+
+  .tutorial-image-lifecycle-02 {
+    background-image: @lifecycle-02;
+  }
+
+  .tutorial-image-lifecycle-03 {
+    background-image: @lifecycle-03;
+  }
+
+  .tutorial-image-lifecycle-04 {
+    background-image: @lifecycle-04;
+  }
+
+  .tutorial-image-lifecycle-05 {
+    background-image: @lifecycle-05;
+  }
+
+  .tutorial-image-lifecycle-06 {
+    background-image: @lifecycle-06;
   }
 }
