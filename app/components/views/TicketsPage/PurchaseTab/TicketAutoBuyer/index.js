@@ -64,12 +64,15 @@ class TicketAutoBuyer extends React.Component {
     const changeMaxPriceAbsolute = e => this.onChangeMaxPriceAbsolute(v(e));
     const changeMaxPriceRelative = e => this.onChangeMaxPriceRelative(v(e));
     const changeMaxPerBlock = e => this.onChangeMaxPerBlock(v(e));
+    const isTicketAutoBuyerConfigDirty = this.getIsDirty();
 
-    const { isTicketAutoBuyerConfigDirty,
+    const {
       getTicketBuyerConfigResponse,
       intl : { formatMessage }
     } = this.props;
+
     const { onUpdateTicketAutoBuyerConfig } = this;
+
     return [ {
       data: <Details {...{
         ...this.state,
@@ -170,7 +173,7 @@ class TicketAutoBuyer extends React.Component {
     ) || !balanceToMaintain;
 
     this.setState({
-      balanceToMaintain: balanceToMaintain.replace(/[^\d.]/g, ""),
+      balanceToMaintain: balanceToMaintain,
       balanceToMaintainError: balanceToMaintainError
     });
   }
@@ -178,7 +181,7 @@ class TicketAutoBuyer extends React.Component {
   onChangeMaxFee(maxFee) {
     const maxFeeError = (isNaN(maxFee) || maxFee <= 0 || maxFee >= 0.1) || !maxFee;
     this.setState({
-      maxFee: maxFee.replace(/[^\d.]/g, ""),
+      maxFee: maxFee,
       maxFeeError: maxFeeError
     });
   }
@@ -186,7 +189,7 @@ class TicketAutoBuyer extends React.Component {
   onChangeMaxPriceAbsolute(maxPriceAbsolute) {
     const maxPriceAbsoluteError = (isNaN(maxPriceAbsolute) || maxPriceAbsolute < 0) || !maxPriceAbsolute;
     this.setState({
-      maxPriceAbsolute: maxPriceAbsolute.replace(/[^\d.]/g, ""),
+      maxPriceAbsolute: maxPriceAbsolute,
       maxPriceAbsoluteError: maxPriceAbsoluteError
     });
   }
@@ -194,7 +197,7 @@ class TicketAutoBuyer extends React.Component {
   onChangeMaxPriceRelative(maxPriceRelative) {
     const maxPriceRelativeError = (isNaN(maxPriceRelative) || maxPriceRelative < 0) || !maxPriceRelative;
     this.setState({
-      maxPriceRelative: maxPriceRelative.replace(/[^\d.]/g, ""),
+      maxPriceRelative: maxPriceRelative,
       maxPriceRelativeError: maxPriceRelativeError
     });
   }
@@ -202,7 +205,7 @@ class TicketAutoBuyer extends React.Component {
   onChangeMaxPerBlock(maxPerBlock) {
     const maxPerBlockError = !maxPerBlock;
     this.setState({
-      maxPerBlock: maxPerBlock.replace(/[^\d.]/g, ""),
+      maxPerBlock: maxPerBlock,
       maxPerBlockError: maxPerBlockError
     });
   }

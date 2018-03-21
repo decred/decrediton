@@ -61,10 +61,6 @@ const PurchaseTicketsAdvanced = ({
               placeholder={formatMessage(messages.ticketFeePlaceholder)}
               value={ticketFee}
               onChange={onChangeTicketFee}
-              required
-              invalid={ticketFeeError}
-              invalidMessage={<T id="purchaseTickets.errors.invalidTicketFee" m="*Invalid ticket fee (0 - 0.1 DCR/KB)" />}
-              showErrors
             />
           </div>
         </div>
@@ -79,10 +75,6 @@ const PurchaseTicketsAdvanced = ({
               placeholder={formatMessage(messages.txFeePlaceholder)}
               value={txFee}
               onChange={onChangeTxFee}
-              required
-              invalid={txFeeError}
-              invalidMessage={<T id="purchaseTickets.errors.invalidTxFee" m="*Invalid tx fee (0 - 0.1 DCR/KB)" />}
-              showErrors
             />
           </div>
         </div>
@@ -96,9 +88,6 @@ const PurchaseTicketsAdvanced = ({
               placeholder={formatMessage(messages.expiryPlaceholder)}
               value={expiry}
               onChange={onChangeExpiry}
-              required
-              invalid={expiryError}
-              showErrors
             />
           </div>
         </div>
@@ -142,6 +131,16 @@ const PurchaseTicketsAdvanced = ({
             value={stakePool ? stakePool.value.PoolFees : null}
           />
         </div>
+      </div>
+    </div>
+    <div className="stakepool-purchase-ticket-row">
+      <div className="stakepool-purchase-advanced-error">
+        {!ticketFeeError ? null :
+          <T id="purchaseTickets.errors.invalidTicketFee" m="*Invalid ticket fee (0 - 0.1 DCR/KB)" />}
+        {!expiryError ? null :
+          <T id="purchaseTickets.errors.expiryRequred" m="Expiry is required" />}
+        {!txFeeError ? null :
+          <T id="purchaseTickets.errors.invalidTxFee" m="*Invalid tx fee (0 - 0.1 DCR/KB)" />}
       </div>
     </div>
   </Aux>);

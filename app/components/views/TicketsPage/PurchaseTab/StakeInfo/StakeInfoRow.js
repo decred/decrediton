@@ -1,5 +1,6 @@
-import { TicketsCogs } from "buttons";
+import { VerticalExpand } from "buttons";
 import { FormattedNumber, FormattedMessage as T } from "react-intl";
+import { Row, Column } from "./helpers";
 import "style/StakePool.less";
 
 const StakeInfoDisplay = ({
@@ -10,26 +11,23 @@ const StakeInfoDisplay = ({
   onShowStakeInfo,
   onHideStakeInfo
 }) => (
-  <div className="stakepool-stake-info-area-small">
-    <div className="stakepool-stake-info-row-small">
-      <div className="stakepool-stake-info-label"><T id="stake.ownMempoolTickets" m="Own Mempool Tickets" />:</div>
-      <div className="stakepool-stake-info-value"><FormattedNumber value={ownMempoolTicketsCount} /></div>
-    </div>
-    <div className="stakepool-stake-info-row-small">
-      <div className="stakepool-stake-info-label"><T id="stake.immatureTickets" m="Immature Tickets" />:</div>
-      <div className="stakepool-stake-info-value"><FormattedNumber value={immatureTicketsCount} /></div>
-    </div>
-    <div className="stakepool-stake-info-row-small">
-      <div className="stakepool-stake-info-label"><T id="stake.liveTickets" m="Live Tickets" />:</div>
-      <div className="stakepool-stake-info-value"><FormattedNumber value={liveTicketsCount} /></div>
-    </div>
+  <div className="stakepool-stake-info-area" onClick={isShowingDetails ? onHideStakeInfo : onShowStakeInfo}>
     <div className="stakepool-stake-info-show-advanced-area">
-      <TicketsCogs
-        opened={!isShowingDetails}
-        style={{ paddingTop: "2px" }}
-        onClick={isShowingDetails ? onHideStakeInfo : onShowStakeInfo}
+      <VerticalExpand
+        expanded={!!isShowingDetails}
       />
     </div>
+    <Row>
+      <Column
+        label={<T id="stake.ownMempoolTickets" m="Own Mempool Tickets" />}
+        value={<FormattedNumber value={ownMempoolTicketsCount} />} />
+      <Column
+        label={<T id="stake.immatureTickets" m="Immature Tickets" />}
+        value={<FormattedNumber value={immatureTicketsCount} />} />
+      <Column
+        label={<T id="stake.liveTickets" m="Live Tickets" />}
+        value={<FormattedNumber value={liveTicketsCount} />} />
+    </Row>
   </div>
 );
 

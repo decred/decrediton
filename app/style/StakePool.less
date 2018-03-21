@@ -66,43 +66,11 @@
   min-height: 1.5em;
 }
 
-// .stakepool-content-purchase-ticket-view {
-// }
-
-.stakepool-content-purchase-ticket-view-blur {
-  filter: blur(6px);
-  overflow: auto;
-}
-
-.stakepool-stake-info-area-small {
-  display: flex;
-  justify-content: flex-end;
-  padding: 1em;
-  transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
-  background-color: rgb(255, 255, 255);
-}
-
-.stakepool-stake-info-row-small {
-  .inline-block-mixin;
-
-  width: 28%;
-  display: flex;
-  justify-content: center;
-}
-
-.stakepool-stake-info-label {
-  margin-right: 5px;
-  font-size: 14px;
-}
-
-.stakepool-stake-info-value {
-  font-family: Inconsolata, monospace;
-}
-
 .stakepool-voting-title-area {
   margin: 1em 0em 1em 0em;
   color: #596d81;
   font-size: 20px;
+  min-height: 1em;
 }
 
 .stakepool-voting-title-area-name {
@@ -122,7 +90,6 @@
 }
 
 .stakepool-purchase-ticket-row-wrapper {
-  padding: 0.5em;
   margin-bottom: 1em;
   transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
   background: #fff;
@@ -137,27 +104,26 @@
 .stakepool-purchase-ticket-row {
   padding: 0.7em 0em 0.7em 0em;
   border-bottom: 1px #e7eaed solid;
-  background: #fff;
 }
 
 .stakepool-purchase-ticket-row-account-select {
   .inline-block-mixin;
 
-  width: 56%;
+  width: 53%;
   text-align: right;
 }
 
 .stakepool-purchase-ticket-account-select-label {
   .inline-block-mixin;
 
-  width: 20%;
   font-size: 16px;
+  padding-bottom: 3px;
 }
 
 .stakepool-purchase-ticket-input-select {
   .inline-block-mixin;
 
-  width: 60%;
+  width: 68%;
   font-size: 16px;
   text-align: left;
 }
@@ -172,8 +138,8 @@
   .inline-block-mixin;
 
   text-align: right;
-  width: 9em;
-  font-size: 16px;
+  width: 8em;
+  font-size: 14px;
   vertical-align: top;
 }
 
@@ -206,13 +172,13 @@
 .stakepool-purchase-ticket-row-thirds {
   .inline-block-mixin;
 
-  width: 28%;
+  width: 24%;
 }
 
 .stakepool-purchase-ticket-row-thirds-first {
   .inline-block-mixin;
 
-  width: 40%;
+  width: 36%;
 }
 
 .stakepool-purchase-ticket-address-input {
@@ -233,26 +199,14 @@
 
 .stakepool-purchase-ticket-quick-bar-row {
   padding: 1em;
-  background: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 50px;
 }
 
 .stakepool-auto-buyer-quick-bar-row {
   .inline-block-mixin;
 }
-
-.stakepool-quick-bar-row-label {
-  .inline-block-mixin;
-
-  height: 6em;
-  width: 5em;
-  float: left;
-  color: #0c1e3e;
-  font-size: 13px;
-  text-transform: capitalize;
-}
-
-// .stakepool-purchase-ticket-buttons-area {
-// }
 
 .stakepool-content-purchase-button {
   .inline-block-mixin;
@@ -273,9 +227,23 @@
 }
 
 .stakepool-content-import-script-button {
-  .inline-block-mixin;
+  background-repeat: no-repeat;
+  background-size: 25px;
+  background-position: center;
+  background-image: @importscript-icon;
+  margin-top: 8px;
+  width: 20px;
+  height: 25px;
+  padding: 0px;
+  display: block;
+}
 
-  float: right;
+.stakepool-content-import-script-button:hover {
+  opacity: 0.7;
+}
+
+.stakepool-content-import-script-button-tooltip-container {
+  display: block;
 }
 
 .stakepool-content-revoke-button {
@@ -409,34 +377,45 @@
 }
 
 .stakepool-stake-info-area {
-  background-color: rgb(255, 255, 255);
+  background-color: #fff;
 }
 
 .stakepool-stake-info-row {
-  border-bottom: 1px #e7eaed solid;
   padding: 0.5em;
   display: flex;
-  flex-direction: row;
-}
-
-.stakepool-stake-info-row-left {
-  margin-left: 100px;
-  display: flex;
-  width: 45%;
-}
-
-.stakepool-stake-info-row-right {
-  display: flex;
-  width: 45%;
-}
-
-.stakepool-stake-info-row-center {
-  margin: 0 auto;
-  width: 50%;
+  justify-content: space-between;
+  margin-right: 165px;
+  font-size: 14px;
 }
 
 .stakepool-stake-info-show-advanced-area {
-  margin-left: 100px;
+  float: right;
+  margin: 10px 10px 0px 0px;
+}
+
+.stakepool-stake-info-label {
+  margin-right: 5px;
+  width: 165px;
+  display: inline-block;
+  text-align: right;
+}
+
+.stakepool-stake-info-value {
+  font-family: Inconsolata, monospace;
+  width: 8px;
+  display: inline-block;
+}
+
+.stakepool-stake-info-row-last {
+  text-align: right;
+  margin-right: 50px;
+  height: 36px;
+  padding-top: 5px;
+
+  .stakepool-stake-info-value {
+    width: 130px;
+    text-align: left;
+  }
 }
 
 .stakepool-transition1 {
@@ -946,7 +925,8 @@ textarea.stakepool-content-nest-content-settings {
   background-size: 16px;
   background-repeat: no-repeat;
   padding-left: 25px;
-  margin-right: 2em;
+  margin-right: 4em;
+  margin-bottom: 5px;
   font-family: inconsolata, monospace;
   color: #0c1e3e;
   font-size: 11px;
@@ -1211,4 +1191,22 @@ textarea.stakepool-content-nest-content-settings {
   margin-bottom: 10px;
   float: left;
   width: 100%;
+}
+
+.stakepool-purchase-ticket-info {
+  background-color: #edeff1;
+}
+
+.stakepool-purchase-ticket-action-buttons {
+  float: right;
+  margin: 10px 15px;
+}
+
+.stakepool-purchase-advanced-error {
+  color: red;
+  padding-left: 10px;
+}
+
+.stakepool-content-update-autobuyer-area {
+  margin-top: 2em;
 }

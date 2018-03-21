@@ -1,4 +1,4 @@
-import { FeeInput, FixedDcrInput, PercentInput, BlocksInput } from "inputs";
+import { FeeInput, FixedDcrInput, PercentInput, IntegerInput } from "inputs";
 import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T, defineMessages } from "react-intl";
 
@@ -133,10 +133,11 @@ const Details = ({
         </div></div>
         <div className="stakepool-purchase-ticket-num-input">
           <div className="stakepool-input-form-purchase-ticket">
-            <BlocksInput
+            <IntegerInput
               placeholder={formatMessage(messages.maxPerBlock)}
               value={maxPerBlock}
               onChange={onChangeMaxPerBlock}
+              unit={<T id="autobuyer.maxPerBlock.units" m="tickets" />}
               showErrors
               required
             />
@@ -144,14 +145,16 @@ const Details = ({
         </div>
       </div>
     </div>
-    <div hidden={!getTicketBuyerConfigResponse}>
-      <KeyBlueButton
-        className="stakepool-content-purchase-button"
-        disabled={!isTicketAutoBuyerConfigDirty}
-        onClick={onUpdateTicketAutoBuyerConfig}
-      >
-        <T id="autobuyer.updateConfigBtn" m="Update Config" />
-      </KeyBlueButton>
+    <div className="stakepool-content-update-autobuyer-area">
+      {!getTicketBuyerConfigResponse ? null :
+        <KeyBlueButton
+          className="stakepool-content-purchase-button"
+          disabled={!isTicketAutoBuyerConfigDirty}
+          onClick={onUpdateTicketAutoBuyerConfig}
+        >
+          <T id="autobuyer.updateConfigBtn" m="Update Config" />
+        </KeyBlueButton>
+      }
     </div>
   </div>
 );

@@ -7,6 +7,7 @@ import purchaseTickets from "connectors/purchaseTickets";
 import PurchaseTicketsAdvanced from "./PurchaseTicketsAdvanced";
 import PurchaseTicketsQuickBar from "./PurchaseTicketsQuickBar";
 import { injectIntl } from "react-intl";
+import { isNullOrUndefined } from "util";
 
 const MAX_POSSIBLE_FEE_INPUT = 0.1;
 
@@ -39,7 +40,7 @@ class PurchaseTickets extends React.Component {
       }}/>,
       key: "output_0",
       style: {
-        height: spring(92),
+        height: spring(73),
         opacity: 1,
       }
     } ];
@@ -109,6 +110,7 @@ class PurchaseTickets extends React.Component {
             onToggleShowAdvanced: null,
             onIncrementNumTickets: null,
             onDecrementNumTickets: null,
+            onChangeNumTickets: null,
             onChangeAccount: null,
             onPurchaseTickets: null,
             getQuickBarComponent: null,
@@ -159,6 +161,10 @@ class PurchaseTickets extends React.Component {
     this.setState({ numTicketsToBuy: this.state.numTicketsToBuy + 1 });
   }
 
+  onChangeNumTickets(numTicketsToBuy) {
+    this.setState({ numTicketsToBuy });
+  }
+
   onDecrementNumTickets() {
     const { numTicketsToBuy } = this.state;
     this.setState({
@@ -206,7 +212,7 @@ class PurchaseTickets extends React.Component {
   }
 
   onChangeExpiry(expiry) {
-    const expiryError = (isNaN(expiry) || expiry < 0);
+    const expiryError = (isNaN(expiry) || expiry < 0 || isNullOrUndefined(expiry) || expiry === "");
     this.setState({
       expiry: expiry.replace(/[^\d.]/g, ""),
       expiryError: expiryError

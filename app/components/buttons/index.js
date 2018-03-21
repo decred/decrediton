@@ -1,13 +1,13 @@
 export { default as EyeFilterMenu } from "./EyeFilterMenu";
 export { default as HelpLink } from "./HelpLink";
 export { default as SlateGrayButton } from "./SlateGrayButton";
-export { default as InvisibleButton } from "./InvisibleButton";
 export { default as PathButton } from "./PathButton";
 export { default as RescanButton } from "./RescanButton";
 export { default as RescanCancelButton } from "./RescanCancelButton";
 export { default as TextToggle } from "./TextToggle";
 export { default as TicketsCogs } from "./TicketsCogs";
 export { default as TransactionLink } from "./TransactionLink";
+export { default as VerticalExpand } from "./VerticalExpand";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
@@ -15,7 +15,9 @@ import AutoBuyerSwitch from "./AutoBuyerSwitch";
 import NetworkSwitch from "./NetworkSwitch";
 import DangerButton from "./DangerButton";
 import CloseButton from "./CloseButton";
-export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton, NetworkSwitch, CloseButton };
+import InvisibleButton from "./InvisibleButton";
+export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton,
+  CloseButton, NetworkSwitch, InvisibleButton };
 
 /***************************************************
  * Custom Modal Buttons
@@ -43,6 +45,7 @@ const helpLinkButton = ({ className, onClick, buttonLabel }) =>
 export const HelpLinkInfoModal = mbb("help-icon", InfoModal, helpLinkButton);
 export const InfoModalButton = mbb("info-modal-button", InfoModal);
 export const ChangePassphraseButton = mbb("change-password-default-icon", ChangePassphraseModal);
+export const InvisiblePassphraseModalButton = mbb(null, PassphraseModal, InvisibleButton);
 export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
 export const PassphraseModalSwitch = mbb(null, PassphraseModal, AutoBuyerSwitch);
 export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
