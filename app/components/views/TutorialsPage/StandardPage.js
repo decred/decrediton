@@ -1,20 +1,26 @@
+import { FormattedMessage as T } from "react-intl";
 import { StepIndicator } from "indicators";
 
 export const StandardPage = ({ image, text, currentPageIndex, pageCount,
-  onNextPage, onPreviousPage, onGotoPage }) => (
+  onNextPage, onPreviousPage, onGotoPage, onFinish }) => (
 
   <div className="tutorial-standard-page">
     <div className="tutorial-text">{text}</div>
     <div className="tutorial-image-and-indicator">
       <div className={[ "tutorial-image", "tutorial-image-" + image ].join(" ")} />
       <div className={"tutorial-page-indicator"}>
-        <a onClick={onPreviousPage}>Previous</a>
-        <StepIndicator
-          currentPageIndex={currentPageIndex}
-          pageCount={pageCount}
-          onGotoPage={onGotoPage}
-        />
-        <a onClick={onNextPage}>Next</a>
+        {pageCount < 2 ? null : <a onClick={onPreviousPage}>Previous</a>  }
+        {pageCount < 2 ? null :
+          <StepIndicator
+            currentPageIndex={currentPageIndex}
+            pageCount={pageCount}
+            onGotoPage={onGotoPage}
+          />
+        }
+        {currentPageIndex === pageCount -1
+          ? <a onClick={onFinish}><T id="tutorial.standardPage.finish" m="Finish" /></a>
+          : <a onClick={onNextPage}><T id="tutorial.standardPage.nextPage" m="Next" /></a>
+        }
       </div>
     </div>
   </div>

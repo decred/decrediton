@@ -35,10 +35,14 @@ class PagedTutorial extends React.Component {
     this.props.goBackHistory();
   }
 
+  onFinish() {
+    this.onGoBack();
+  }
+
   render() {
     const { title } = this.props;
     const CurrentPage = this.getCurrentPageComponent();
-    const { onNextPage, onPreviousPage, onGoBack, onGotoPage } = this;
+    const { onNextPage, onPreviousPage, onGoBack, onGotoPage, onFinish } = this;
 
     return (
       <Aux>
@@ -54,6 +58,7 @@ class PagedTutorial extends React.Component {
             onNextPage={onNextPage}
             onPreviousPage={onPreviousPage}
             onGotoPage={onGotoPage}
+            onFinish={onFinish}
           />
         </div>
       </Aux>
