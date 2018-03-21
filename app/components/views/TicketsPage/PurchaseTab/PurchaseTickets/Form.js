@@ -68,8 +68,12 @@ const PurchaseTicketsForm = ({
           <div className="stakepool-purchase-ticket-action-buttons">
             <TicketsCogs opened={!isShowingAdvanced} onClick={onToggleShowAdvanced} />
 
-            <Tooltip className="stakepool-content-import-script-button-tooltip-container" warning disabled={!rescanRequest}
-              text={<T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan." />}>
+            <Tooltip className="stakepool-content-import-script-button-tooltip-container"
+              warning={!!rescanRequest}
+              text={!rescanRequest
+                ? <T id="purchaseTickets.import" m="Manually import a redeem script for tickets." />
+                : <T id="purchaseTickets.importDisabledRescan" m="Importing scripts is disabled during a rescan." />}
+            >
               <InvisiblePassphraseModalButton
                 className="stakepool-content-import-script-button"
                 modalTitle={<T id="tickets.importScriptConfirmation" m="Import Script Confirmation" />}
