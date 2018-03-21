@@ -14,14 +14,15 @@ import KeyBlueButton from "./KeyBlueButton";
 import AutoBuyerSwitch from "./AutoBuyerSwitch";
 import NetworkSwitch from "./NetworkSwitch";
 import DangerButton from "./DangerButton";
-export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton, NetworkSwitch };
+import CloseButton from "./CloseButton";
+export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton, NetworkSwitch, CloseButton };
 
 /***************************************************
  * Custom Modal Buttons
  ***************************************************/
 import {
   InfoModal, PassphraseModal, ChangePassphraseModal,
-  ConfirmModal
+  ConfirmModal, InfoConfirmModal
 } from "modals";
 
 // mbb = ModalButtonBuilder (func to build a functional ModalButton component
@@ -46,3 +47,4 @@ export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
 export const PassphraseModalSwitch = mbb(null, PassphraseModal, AutoBuyerSwitch);
 export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveWalletButton = mbb(null, ConfirmModal, DangerButton);
+export const ScriptRedeemableButton = mbb(null, InfoConfirmModal, helpLinkButton);
