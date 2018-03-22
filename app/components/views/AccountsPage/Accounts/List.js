@@ -9,7 +9,7 @@ const AccountsListHeader = ({ onGetNextAccountAttempt }) =>
   <StandaloneHeader
     title={<T id="accounts.title" m="Accounts" />}
     description={<T id="accounts.description" m={"Accounts allow you to keep separate records of your DCR funds.\nTransferring DCR across accounts will create a transaction on the blockchain."}/>}
-    iconClass="accounts"
+    iconClassName="accounts"
     actionButton={
       <PassphraseModalButton
         modalTitle={<T id="accounts.newAccountConfirmations" m="Create new account" />}
