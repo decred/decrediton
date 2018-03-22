@@ -1,10 +1,14 @@
 import StandalonePageBody from "./StandalonePageBody";
 
-export default ({ header, children }) =>
-  <div className="standalone-page">
-    {header}
+export default ({ header, children, className }) => {
+  const body = header
+    ? <StandalonePageBody>{children}</StandalonePageBody>
+    : children;
 
-    <StandalonePageBody>
-      {children}
-    </StandalonePageBody>
-  </div>;
+  return (
+    <div className={[ "standalone-page", className ? className : "" ].join(" ")} >
+      {header}
+      {body}
+    </div>
+  );
+};

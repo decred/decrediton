@@ -1,7 +1,13 @@
-import { Link } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
+import { DescriptionHeader } from "layout";
+import { Link } from "react-router-dom";
 
-export default () => (
+export const TutorialsTabHeader = () =>
+  <DescriptionHeader
+    description={<T id="help.description.tutorials" m="Learn about the various aspects of the Decred network." />}
+  />;
+
+export const TutorialsTab = () => (
   <div className="overview-no-tickets">
     <Link to="/mytickets/purchase" className="purchaseTickets">
       <T id="home.noTickets.purchase" m="Stake Your Idle DCR and Earn Rewards" /> →
