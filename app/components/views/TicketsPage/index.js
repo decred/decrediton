@@ -1,4 +1,5 @@
 import { TabbedPage, TabbedPageTab as Tab, TitleHeader, DescriptionHeader } from "layout";
+import { Switch, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
 import { purchaseTickets } from "connectors";
 import { Balance } from "shared";
@@ -24,6 +25,7 @@ const TabHeader = purchaseTickets(({ ticketPrice }) =>
 
 export default () => (
   <TabbedPage header={<PageHeader />} >
+    <Switch><Redirect from="/tickets" exact to="/tickets/purchase" /></Switch>
     <Tab path="/tickets/purchase" component={PurchaseTab} header={TabHeader} link={<T id="tickets.tab.purchase" m="Purchase"/>}/>
     <Tab path="/tickets/mytickets" component={MyTicketsTab} header={TabHeader} link={<T id="tickets.tab.mytickets" m="My Tickets"/>}/>
     <Tab path="/tickets/governance" component={GovernanceTab} header={TabHeader} link={<T id="tickets.tab.governance" m="Governance"/>}/>
