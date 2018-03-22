@@ -54,7 +54,7 @@ class TicketAutoBuyer extends React.Component {
 
   scrollToBottom () {
     const content = document.querySelector(".tab-content");
-    this.scrollTo(content, content.scrollHeight, 300);
+    this.scrollTo(content, content.scrollHeight, 150);
   }
 
   getDetailsComponent () {
@@ -89,7 +89,7 @@ class TicketAutoBuyer extends React.Component {
       />,
       key: "output_0",
       style: {
-        height: spring(300, { stiffness: 170, damping: 15 }),
+        height: spring(150, { stiffness: 170, damping: 15 }),
         opacity: spring(1, { stiffness: 100, damping: 20 }),
       }
     } ];
