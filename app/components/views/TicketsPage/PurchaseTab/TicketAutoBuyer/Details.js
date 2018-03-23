@@ -52,7 +52,7 @@ const Details = ({
         <T id="autobuyer.canNotEnableAutobuyer" m="*Please fix fields with errors" />
       </div> : null}
     <div className="stakepool-purchase-ticket-row">
-      <div className="stakepool-purchase-ticket-row-left">
+      <div className="stakepool-purchase-ticket-row-sides">
         <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-balance-to-maintain-icon">
           {<T id="autobuyer.balanceToMaintain" m="Balance to Maintain" />}:
         </div></div>
@@ -71,7 +71,7 @@ const Details = ({
           </div>
         </div>
       </div>
-      <div className="stakepool-purchase-ticket-row-right">
+      <div className="stakepool-purchase-ticket-row-sides">
         <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-fee-icon">
           {<T id="autobuyer.maxFee" m="Max Fee" />}:
         </div></div>
@@ -91,7 +91,7 @@ const Details = ({
       </div>
     </div>
     <div className="stakepool-purchase-ticket-row">
-      <div className="stakepool-purchase-ticket-row-left">
+      <div className="stakepool-purchase-ticket-row-sides">
         <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-price-absolute-icon">
           {<T id="autobuyer.maxPriceAbsolute" m="Max Price Absolute" />}:
         </div></div>
@@ -109,7 +109,7 @@ const Details = ({
         </div>
 
       </div>
-      <div className="stakepool-purchase-ticket-row-right">
+      <div className="stakepool-purchase-ticket-row-sides">
         <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-price-relative-icon">
           {<T id="autobuyer.maxPriceRelative" m="Max Price Relative" />}:
         </div></div>
@@ -127,7 +127,7 @@ const Details = ({
       </div>
     </div>
     <div className="stakepool-purchase-ticket-row">
-      <div className="stakepool-purchase-ticket-row-left">
+      <div className="stakepool-purchase-ticket-row-sides">
         <div className="stakepool-auto-buyer-icon-areas-expand"><div className="stakepool-max-per-block-icon">
           {<T id="autobuyer.maxPerBlock" m="Max Per Block" />}:
         </div></div>
