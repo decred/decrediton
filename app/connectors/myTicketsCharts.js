@@ -11,6 +11,7 @@ const mapStateToProps = selectorMap({
   dailyBalancesStats: sel.dailyBalancesStats,
   medianVoteTime: sel.medianVoteTime,
   ninetyFifthPercentileVoteTime: sel.ninetyFifthPercentileVoteTime,
+  allTickets: sel.allTickets,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
