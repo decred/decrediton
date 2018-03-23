@@ -14,19 +14,22 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets }) =>
   if (allTickets.length === 0) return <NoTickets />;
   return (
     <Aux>
-      <div className="my-tickets-stats-links">
-        <ChartLink to="/tickets/statistics/voteTime" icon="vote-time"><T id="mytickets.stats.voteTime" m="Vote Time" /></ChartLink>
-        <ChartLink to="/tickets/statistics/roi" icon="roi"><T id="mytickets.stats.roi" m="ROI" /></ChartLink>
-      </div>
-
-      {getMyTicketsStatsRequest ? <DecredLoading /> : null}
-
+      {hasStats ?
+        <div className="my-tickets-stats-links">
+          <ChartLink to="/tickets/statistics/voteTime" icon="vote-time"><T id="mytickets.stats.voteTime" m="Vote Time" /></ChartLink>
+          <ChartLink to="/tickets/statistics/roi" icon="roi"><T id="mytickets.stats.roi" m="ROI" /></ChartLink>
+        </div> :
+        <div className="my-tickets-stats-links-empty">
+        </div>
+      }
       <div className="my-tickets-charts">
-        <Switch>
-          <Route path="/tickets/statistics/voteTime" component={VoteTimeChartPage} />
-          <Route path="/tickets/statistics/roi" component={StakeROIChartPage} />
-          {hasStats ? <Redirect from="/tickets/statistics" exact to="/tickets/statistics/voteTime" /> : null}
-        </Switch>
+        {getMyTicketsStatsRequest ? <DecredLoading /> :
+          <Switch>
+            <Route path="/tickets/statistics/voteTime" component={VoteTimeChartPage} />
+            <Route path="/tickets/statistics/roi" component={StakeROIChartPage} />
+            {hasStats ? <Redirect from="/tickets/statistics" exact to="/tickets/statistics/voteTime" /> : null}
+          </Switch>
+        }
       </div>
     </Aux>);
 };

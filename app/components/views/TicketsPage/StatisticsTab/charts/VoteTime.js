@@ -9,15 +9,23 @@ const VoteTimeChartPage = ({ voteTimeStats, medianVoteTime, ninetyFifthPercentil
         <VoteTimeChart data={voteTimeStats}  />
       </div>
       <div className="my-tickets-stats-indicators">
-        <div>
-          <T id="mytickets.statistics.votetime.median"
-            m="Median vote time: {value, plural, =0 {in the same day} one { within one day } other {within # days} }"
-            values={{ value: medianVoteTime }} />
+        <div className="my-tickets-stats-indicators-row">
+          <div className="my-tickets-stats-indicators-label">
+            <T id="mytickets.statistics.votetime.median.label" m="Median vote time:" />
+          </div>
+          <div className="my-tickets-stats-indicators-value">
+            <T id="mytickets.statistics.votetime.median.value" m="{value, plural, =0 {in the same day} one { within one day } other {within # days} }"
+              values={{ value: medianVoteTime }} />
+          </div>
         </div>
-        <div>
-          <T id="mytickets.statistics.votetime.ninetyfifthpercentile"
-            m="95% of tickets voted {value, plural, =0 {in the same day} one { within one day } other {within # days} }"
-            values={{ value: ninetyFifthPercentileVoteTime }} />
+        <div className="my-tickets-stats-indicators-row">
+          <div className="my-tickets-stats-indicators-label">
+            <T id="mytickets.statistics.votetime.ninetyfifthpercentile.label" m="95% of tickets voted:" />
+          </div>
+          <div className="my-tickets-stats-indicators-value">
+            <T id="mytickets.statistics.votetime.ninetyfifthpercentile.value" m="{value, plural, =0 {in the same day} one { within one day } other {within # days} }"
+              values={{ value: ninetyFifthPercentileVoteTime }} />
+          </div>
         </div>
       </div>
     </Aux>

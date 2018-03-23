@@ -145,8 +145,13 @@
 
 .my-tickets-charts {
   background: #fff;
-  padding: 35px 0px 20px 40px;
-  display: flex;
+  padding: 35px 40px 20px 40px;
+  min-height: 230px;
+
+  .new-logo-animation {
+    margin-left: 42%;
+    margin-top: 40px;
+  }
 }
 
 .my-tickets-stats-links {
@@ -154,22 +159,31 @@
   margin-bottom: 20px;
 }
 
+.my-tickets-stats-links-empty {
+  width: 100%;
+  height: 87px;
+}
+
 .my-tickets-stats-links a {
   margin: 0px 10px 0px 10px;
+  padding: 5px;
   display: inline-block;
   vertical-align: top;
   width: 92px;
   text-align: center;
   text-decoration: none;
-  color: @stroke-color-default;
+  color: #48566e;
 }
 
 .my-tickets-stats-links a:hover {
-  color: @stroke-color-hovered;
+  font-weight: 600;
 }
 
 .my-tickets-stats-links a.my-tickets-active-chart-link {
-  color: @stroke-color-hovered;
+  border: 1px solid #48566e;
+  border-radius: 3px;
+  padding: 4px;
+  font-weight: 600;
 }
 
 .my-tickets-stats-links a .icon {
@@ -187,15 +201,49 @@
   background-image: @vote-time-stats-icon;
 }
 
+.my-tickets-stats-links a.my-tickets-active-chart-link > .icon.vote-time,
+.my-tickets-stats-links a:hover > .icon.vote-time {
+  background-color: #87d3bc;
+}
+
 .my-tickets-stats-links a .icon.roi {
   background-color: #699bff;
   background-image: @vote-time-stats-icon;
 }
 
+.my-tickets-stats-links a.my-tickets-active-chart-link > .icon.roi,
+.my-tickets-stats-links a:hover > .icon.roi {
+  background-color: #5e8be5;
+}
+
 .my-tickets-stats-chart {
-  flex-grow: 1;
+  float: left;
 }
 
 .my-tickets-stats-indicators {
-  width: 200px;
+  width: 37%;
+  float: left;
+  margin: 50px 0px 50px 0px;
+  border: 1px solid #48566e;
+  border-radius: 3px;
+  padding: 10px;
+  color: #48566e;
+}
+
+.my-tickets-stats-indicators-row {
+  float: left;
+  width: 100%;
+  margin-top: 5px;
+  display: flex;
+}
+
+.my-tickets-stats-indicators-label {
+  text-align: left;
+  flex-grow: 1;
+}
+
+.my-tickets-stats-indicators-value {
+  font-weight: 600;
+  text-align: right;
+  flex-grow: 2;
 }

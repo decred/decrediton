@@ -17,15 +17,30 @@ const StakeROIChartPage = ({ stakeROIStats, dailyBalancesStats }) => {
         <StakeROIChart data={stakeROIStats}  />
       </div>
       <div className="my-tickets-stats-indicators">
-        <T id="mytickets.statistics.stakeroi.totalStake"
-          m="Total Stake: {value}"
-          values={{ value: <Balance amount={totalStake} /> }} />
-        <T id="mytickets.statistics.stakeroi.totalReward"
-          m="Total Reward: {value}"
-          values={{ value: <Balance amount={totalReward} /> }} />
-        <T id="mytickets.statistics.stakeroi.totalFees"
-          m="Total Fees: {value}"
-          values={{ value: <Balance amount={totalFees} /> }} />
+        <div className="my-tickets-stats-indicators-row">
+          <div className="my-tickets-stats-indicators-label">
+            <T id="mytickets.statistics.stakeroi.totalStake" m="Total Stake:"/>
+          </div>
+          <div className="my-tickets-stats-indicators-value">
+            <Balance amount={totalStake} />
+          </div>
+        </div>
+        <div className="my-tickets-stats-indicators-row">
+          <div className="my-tickets-stats-indicators-label">
+            <T id="mytickets.statistics.stakeroi.totalReward" m="Total Reward:" />
+          </div>
+          <div className="my-tickets-stats-indicators-value">
+            <Balance amount={totalReward} />
+          </div>
+        </div>
+        <div className="my-tickets-stats-indicators-row">
+          <div className="my-tickets-stats-indicators-label">
+            <T id="mytickets.statistics.stakeroi.totalFees" m="Total Fees"/>
+          </div>
+          <div className="my-tickets-stats-indicators-value">
+            <Balance amount={totalFees} />
+          </div>
+        </div>
       </div>
     </Aux>
   );
