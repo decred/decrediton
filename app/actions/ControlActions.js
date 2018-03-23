@@ -83,8 +83,12 @@ export function rescanAttempt(beginHeight) {
         dispatch(getStartupWalletInfo()).then(resolve);
       });
       rescanCall.on("error", function(status) {
-        console.error("Rescan error", status);
-        reject(status);
+        status = status + "";
+        if (status.indexOf("Cancelled") < 0) {
+          console.error("Rescan error", status);
+          reject(status);
+          dispatch({ type: RESCAN_FAILED });
+        }
       });
     });
 
