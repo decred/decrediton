@@ -8,6 +8,7 @@ export { default as RescanProgress } from "./RescanProgress";
 export { default as LinearProgressFull } from "./LinearProgressFull";
 export { default as LinearProgressSmall } from "./LinearProgressSmall";
 export { default as LoaderBarBottom } from "./LoaderBarBottom";
+export { default as NoStats } from "./NoStats";
 export { default as NoTickets } from "./NoTickets";
 export { default as NoTransactions } from "./NoTransactions";
 export { default as StepIndicator } from "./StepIndicator";

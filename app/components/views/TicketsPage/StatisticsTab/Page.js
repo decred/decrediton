@@ -2,7 +2,7 @@ import { NavLink as Link, Switch, Route, Redirect } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
 import VoteTimeChartPage from "./charts/VoteTime";
 import StakeROIChartPage from "./charts/StakeROI";
-import { DecredLoading, NoTickets } from "indicators";
+import { DecredLoading, NoStats } from "indicators";
 
 const ChartLink = ({ to, icon, children }) =>
   <Link to={to} activeClassName="my-tickets-active-chart-link">
@@ -11,7 +11,7 @@ const ChartLink = ({ to, icon, children }) =>
   </Link>;
 
 const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets }) => {
-  if (allTickets.length === 0) return <NoTickets />;
+  if (allTickets.length === 0) return <NoStats />;
   return (
     <Aux>
       {hasStats ?
