@@ -16,7 +16,7 @@ export const homeChartSize = {
 };
 
 export const myTicketsChartSize = {
-  width: 500,
+  width: 400,
   height: 250,
 };
 
