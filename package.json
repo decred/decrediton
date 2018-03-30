@@ -171,6 +171,7 @@
     "minimist": "^1.2.0",
     "mocha": "^3.1.2",
     "node-loader": "^0.6.0",
+    "node-gyp": "^3.6.2",
     "react-intl-translations-manager": "^5.0.0",
     "redux-logger": "^2.7.4",
     "sinon": "^1.17.6",
@@ -220,7 +221,7 @@
     "winston": "^2.3.1"
   },
   "devEngines": {
-    "node": ">=8.11",
+    "node": ">=6.x",
     "npm": ">=3.x"
   }
 }
