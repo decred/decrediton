@@ -1,6 +1,7 @@
 import {
   GETACTIVEVOTE_ATTEMPT, GETACTIVEVOTE_FAILED, GETACTIVEVOTE_SUCCESS,
   GETVETTED_ATTEMPT, GETVETTED_FAILED, GETVETTED_SUCCESS,
+  GETPROPOSAL_ATTEMPT, GETPROPOSAL_FAILED, GETPROPOSAL_SUCCESS,
 } from "actions/GovernanceActions";
 
 export default function governance(state = {}, action) {
@@ -22,6 +23,15 @@ export default function governance(state = {}, action) {
     return { ...state,
       getVettedAttempt: false,
       vetted: action.proposals
+    };
+  case GETPROPOSAL_ATTEMPT:
+    return { ...state, getProposalAttempt: true };
+  case GETPROPOSAL_FAILED:
+    return { ...state, getProposalAttempt: false };
+  case GETPROPOSAL_SUCCESS:
+    return { ...state,
+      getProposalAttempt: false,
+      proposals: { ...state.proposals, [action.token]: action.proposal }
     };
   default:
     return state;

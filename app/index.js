@@ -354,18 +354,13 @@ var initialState = {
   },
   governance: {
     getActiveVoteAttempt: false,
-    activeVote: [
-      // { name: "proposal active 1", timestamp: 1522679432, token: "619609b0d5484d5c3852d3ee94948f99acf2f6a464716eb856df16205861f438" },
-      // { name: "proposal active 2", timestamp: 1522679432, token: "619609b0d5484d5c3852d3ee94948f99acf2f6a464716eb856df16205861f439" },
-      // { name: "proposal active 3", timestamp: 1522679432, token: "619609b0d5484d5c3852d3ee94948f99acf2f6a464716eb856df16205861f43a" },
-    ],
+    activeVote: [],
 
     getVettedAttempt: false,
-    vetted: [
-      // { name: "proposal vetted 1", timestamp: 1522679432, token: "619609b0d5484d5c3852d3ee94948f99acf2f6a464716eb856df16205861f43b" },
-      // { name: "proposal vetted 2", timestamp: 1522679432, token: "619609b0d5484d5c3852d3ee94948f99acf2f6a464716eb856df16205861f43c" },
-      // { name: "proposal vetted 3", timestamp: 1522679432, token: "619609b0d5484d5c3852d3ee94948f99acf2f6a464716eb856df16205861f43d" },
-    ],
+    vetted: [],
+
+    getProposalAttempt: false,
+    proposals: {}, // map from proposal token (id) to proposal details
   },
   locales: locales
 };

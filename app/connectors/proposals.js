@@ -10,11 +10,14 @@ const mapStateToProps = selectorMap({
   getVettedProposalsAttempt: sel.getVettedProposalsAttempt,
   vettedProposals: sel.vettedProposals,
   politeiaEnabled: sel.politeiaEnabled,
+  viewedProposalDetails: sel.viewedProposalDetails,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getActiveVoteProposals: ga.getActiveVoteProposals,
   getVettedProposals: ga.getVettedProposals,
+  getProposalDetails: ga.getProposalDetails,
+  viewProposalDetails: ga.viewProposalDetails,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

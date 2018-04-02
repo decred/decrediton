@@ -3,7 +3,7 @@ import { ExternalLink } from "shared";
 import { Switch, Route, NavLink } from "react-router-dom";
 import { ActiveVoteProposals, VettedProposals } from "./ProposalList";
 
-export default () => (
+const Page = () => (
   <Aux>
     <div className="proposals-community-descr">
       <h1><T id="proposals.community.title" m="Community Proposals"/></h1>
@@ -24,3 +24,5 @@ export default () => (
 
   </Aux>
 );
+
+export default Page;

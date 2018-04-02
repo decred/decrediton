@@ -1,5 +1,7 @@
 import { proposals } from "connectors";
+import { Route, Switch } from "react-router-dom";
 import Page from "./Page";
+import ProposalDetails from "./ProposalDetails";
 import PoliteiaDisabled from "./PoliteiaDisabled";
 
 @autobind
@@ -28,10 +30,10 @@ class Proposals extends React.Component {
     }
 
     return (
-      <Page
-        {...this.props}
-        {...this.state}
-      />
+      <Switch>
+        <Route path="/governance/proposals/details/:token" component={ProposalDetails}/>
+        <Route path="/governance/proposals" component={Page} />
+      </Switch>
     );
   }
 }

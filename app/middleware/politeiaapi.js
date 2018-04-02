@@ -10,3 +10,8 @@ export function getVetted(piURL) {
   const url = piURL + "/v1/proposals/vetted";
   return axios.get(url);
 }
+
+export function getProposal(piURL, token) {
+  const url = piURL + "/v1/proposals/" + token;
+  return axios.get(url);
+}

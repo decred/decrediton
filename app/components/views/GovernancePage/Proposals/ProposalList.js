@@ -1,9 +1,9 @@
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
-import { activeVoteProposals, vettedProposals } from "connectors";
+import { activeVoteProposals, vettedProposals, proposals } from "connectors";
 import { tsToDate } from "helpers";
 
-const ProposalListItem = ({ name, timestamp, token }) => (
-  <div className="proposal-list-item">
+const ProposalListItem = ({ name, timestamp, token, onClick }) => (
+  <div className="proposal-list-item" onClick={() => onClick(token)}>
     <div className="proposal-name">{ name }</div>
     <div className="proposal-token">{ token }</div>
     <div className="proposal-timestamp">
@@ -13,13 +13,13 @@ const ProposalListItem = ({ name, timestamp, token }) => (
   </div>
 );
 
-const ProposalList = ({ proposals }) => (
+const ProposalList = ({ proposals, viewProposalDetails }) => (
   <div className="proposal-list">
     {proposals.map(v => (
-      <ProposalListItem key={v.token} {...v} />
+      <ProposalListItem key={v.token} {...v} onClick={viewProposalDetails} />
     ))}
   </div>
 );
 
-export const ActiveVoteProposals = activeVoteProposals(ProposalList);
-export const VettedProposals = vettedProposals(ProposalList);
+export const ActiveVoteProposals = activeVoteProposals(proposals(ProposalList));
+export const VettedProposals = vettedProposals(proposals(ProposalList));
