@@ -50,3 +50,4 @@ export { default as newStakePool } from "./newStakePool";
 export { default as helpPage } from "./helpPage";
 export { default as activeVoteProposals } from "./activeVoteProposals";
 export { default as vettedProposals } from "./vettedProposals";
+export { default as proposals } from "./proposals";

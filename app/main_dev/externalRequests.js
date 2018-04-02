@@ -8,10 +8,12 @@
 import { session } from "electron";
 import { isRegExp } from "util";
 import { getGlobalCfg } from "../config";
+import { app } from "electron";
 
 export const EXTERNALREQUEST_NETWORK_STATUS = "EXTERNALREQUEST_NETWORK_STATUS";
 export const EXTERNALREQUEST_STAKEPOOL_LISTING = "EXTERNALREQUEST_STAKEPOOL_LISTING";
 export const EXTERNALREQUEST_UPDATE_CHECK = "EXTERNALREQUEST_UPDATE_CHECK";
+export const EXTERNALREQUEST_POLITEIA = "EXTERNALREQUEST_POLITEIA";
 
 // These are the requests allowed when the standard privacy mode is selected.
 export const STANDARD_EXTERNAL_REQUESTS = [
@@ -33,6 +35,19 @@ export const installSessionHandlers = (mainLogger) => {
   const filter = {
     urls: []
   };
+
+  // FIXME ***IMPORTANT***
+  // comment or remove this once politeia is online on testnet. This is used
+  // here because a local politeia install does not have an ssl certificate from
+  // a valid CA, so we need to enable insecure connections to it in order to test.
+  app.on("certificate-error", (event, webContents, url, error, certificate, callback) => {
+    if (url.match(/^https:\/\/localhost:4443\/v1\/.*$/)) {
+      event.preventDefault();
+      callback(true);
+    } else {
+      callback(false);
+    }
+  });
 
   // TODO: check if this filtering is working even when multiple windows are
   // created (relevent to multi-wallet usage)
@@ -66,6 +81,10 @@ export const allowExternalRequest = (externalReqType) => {
     break;
   case EXTERNALREQUEST_UPDATE_CHECK:
     addAllowedURL("https://api.github.com/repos/decred/decrediton/releases");
+    break;
+  case EXTERNALREQUEST_POLITEIA:
+    addAllowedURL("https://localhost:4443/v1"); // FIXME: change to testnet proposals once it is released
+    addAllowedURL("https://politeia.org/api"); // FIXME: change to mainnet proposals once it is released
     break;
   default:
     logger.log("error", "Unknown external request type: " + externalReqType);

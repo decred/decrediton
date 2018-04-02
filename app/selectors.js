@@ -7,7 +7,7 @@ import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
 import { MainNetParams, TestNetParams } from "wallet/constants";
 import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
-import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
@@ -893,12 +893,24 @@ export const stakeRewardsStats = createSelector(
 
 export const modalVisible = get([ "control", "modalVisible" ]);
 
-// Functionalities deactivated
 export const isSignVerifyMessageDisabled = or(isWatchingOnly, isWatchOnly);
 
 export const isCreateAccountDisabled = or(isWatchingOnly, isWatchOnly);
 
 export const isChangePassPhraseDisabled = or(isWatchingOnly, isWatchOnly);
 
-export const activeVoteProposals = get([ "governance", "proposals", "activeVote" ]);
-export const vettedProposals = get([ "governance", "proposals", "vetted" ]);
+export const politeiaURL = createSelector(
+  (isTestNet) => isTestNet
+    ? "https://localhost:4443" // FIXME: Testnet currently getting from politeiawww rather than politeiagui
+    : "https://politeia.org/api" // FIXME: mainnet URL to be defined
+);
+
+export const politeiaEnabled = compose(
+  l => l.indexOf(EXTERNALREQUEST_POLITEIA) > -1,
+  allowedExternalRequests
+);
+
+export const getActiveVoteProposalsAttempt = get([ "governance", "getActiveVoteAttempt" ]);
+export const activeVoteProposals = get([ "governance", "activeVote" ]);
+export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" ]);
+export const vettedProposals = get([ "governance", "vetted" ]);
