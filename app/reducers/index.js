@@ -13,6 +13,7 @@ import locales from "./locales";
 import sidebar from "./sidebar";
 import snackbar from "./snackbar";
 import statistics from "./statistics";
+import governance from "./governance";
 
 const rootReducer = combineReducers({
   grpc,
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   sidebar,
   snackbar,
   statistics,
+  governance,
 });
 
 export default rootReducer;

@@ -899,3 +899,6 @@ export const isSignVerifyMessageDisabled = or(isWatchingOnly, isWatchOnly);
 export const isCreateAccountDisabled = or(isWatchingOnly, isWatchOnly);
 
 export const isChangePassPhraseDisabled = or(isWatchingOnly, isWatchOnly);
+
+export const activeVoteProposals = get([ "governance", "proposals", "activeVote" ]);
+export const vettedProposals = get([ "governance", "proposals", "vetted" ]);
