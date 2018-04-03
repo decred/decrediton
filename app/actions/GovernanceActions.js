@@ -1,5 +1,6 @@
 import * as sel from "selectors";
 import * as pi from "middleware/politeiaapi";
+import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
 
 export const GETACTIVEVOTE_ATTEMPT = "GETACTIVEVOTE_ATTEMPT";
@@ -7,16 +8,24 @@ export const GETACTIVEVOTE_FAILED = "GETACTIVEVOTE_FAILED";
 export const GETACTIVEVOTE_SUCCESS = "GETACTIVEVOTE_SUCCESS";
 
 export const getActiveVoteProposals = () => (dispatch, getState) => {
+
+  const ticketHashesToByte = (hashes) => hashes.map(h => new Uint8Array(Buffer.from(h, "hex")));
+
   dispatch({ type: GETACTIVEVOTE_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
   pi.getActiveVotes(piURL)
-    .then((resp) => {
+    .then(async (resp) => {
       console.log("active votes", resp);
-      const proposals = resp.data.votes.map((vinfo => {
+      const { walletService } = getState().grpc;
+
+      const proposals = [];
+      for (let i = 0; i < resp.data.votes.length; i++) {
+        const vinfo = resp.data.votes[i];
         const p = vinfo.proposal;
-        return {
+        const proposal = {
           voting: true,
           hasElligibleTickets: false,
+          eligibleTickets: [],
           name: p.name,
           token: p.censorshiprecord.token,
           numComments: p.numcomments,
@@ -25,7 +34,14 @@ export const getActiveVoteProposals = () => (dispatch, getState) => {
           voteMask: vinfo.vote.mask,
           voteDetails: vinfo.votedetails,
         };
-      }));
+
+        const tickets = await wallet.committedTickets(walletService, ticketHashesToByte(vinfo.votedetails.eligibletickets))
+        console.log("got as eligible tickets", tickets.toObject());
+        proposal.hasElligibleTickets = tickets.length > 0;
+        proposal.eligibleTickets = tickets.getTicketaddressesList();
+
+        proposals.push(proposal);
+      }
       dispatch({ proposals, type: GETACTIVEVOTE_SUCCESS });
     })
     .catch((error) => dispatch({ error, type: GETACTIVEVOTE_FAILED }));
@@ -75,7 +91,7 @@ export const getProposalDetails = (token) => (dispatch, getState) => {
   const piURL = sel.politeiaURL(getState());
   pi.getProposal(piURL, token)
     .then((resp) => {
-      console.log("proposal", resp);
+      console.log("received proposal data", resp);
       const p = resp.data.proposal;
       const files = p.files.map(f => {
         return {

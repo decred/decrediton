@@ -1,6 +1,7 @@
 import Promise from "promise";
 import * as client from "middleware/grpc/client";
 import { reverseHash, strHashToRaw, rawHashToHex } from "../helpers/byteActions";
+import { CommittedTicketsRequest } from "middleware/walletrpc/api_pb";
 import { withLog as log, withLogNoData, logOptionNoResponseData } from "./index";
 import * as api from "middleware/walletrpc/api_pb";
 
@@ -241,3 +242,9 @@ export const publishUnminedTransactions = log((walletService) => new Promise((re
   const req = new api.PublishUnminedTransactionsRequest();
   walletService.publishUnminedTransactions(req, (err) => err ? reject(err) : resolve());
 }), "Publish Unmined Transactions");
+
+export const committedTickets = withLogNoData((walletService, ticketHashes) => new Promise((resolve, reject) => {
+  const req = new CommittedTicketsRequest();
+  req.setTicketsList(ticketHashes);
+  walletService.committedTickets(req, (err, tickets) => err ? reject(err) : resolve(tickets));
+}), "Commited Tickets");
