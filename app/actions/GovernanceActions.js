@@ -16,6 +16,7 @@ export const getActiveVoteProposals = () => (dispatch, getState) => {
         const p = vinfo.proposal;
         return {
           voting: true,
+          hasElligibleTickets: false,
           name: p.name,
           token: p.censorshiprecord.token,
           numComments: p.numcomments,
@@ -43,6 +44,7 @@ export const getVettedProposals = () => (dispatch, getState) => {
       const proposals = resp.data.proposals.map((p => {
         return {
           voting: false,
+          hasElligibleTickets: false,
           name: p.name,
           token: p.censorshiprecord.token,
           numComments: p.numcomments,

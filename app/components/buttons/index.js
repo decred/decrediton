@@ -11,6 +11,7 @@ export { default as VerticalExpand } from "./VerticalExpand";
 export { default as EnableExternalRequestButton } from "./EnableExternalRequestButton";
 export { default as SendTransactionButton } from "./SendTransactionButton";
 export { default as SignMessageButton } from "./SignMessageButton";
+export { default as GoBackIconButton } from "./GoBackIconButton";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";

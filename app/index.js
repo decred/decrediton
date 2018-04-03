@@ -360,6 +360,7 @@ var initialState = {
     vetted: [],
 
     getProposalAttempt: false,
+    getProposalError: null,
     proposals: {}, // map from proposal token (id) to proposal details
   },
   locales: locales

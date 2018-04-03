@@ -915,6 +915,12 @@ export const activeVoteProposals = get([ "governance", "activeVote" ]);
 export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" ]);
 export const vettedProposals = get([ "governance", "vetted" ]);
 
+export const hasTickets = createSelector(
+  [ allTickets ],
+  (tickets) => tickets.length > 0,
+);
+export const getProposalAttempt = get([ "governance", "getProposalAttempt" ]);
+export const getProposalError = get([ "governance", "getProposalError" ]);
 export const proposalDetails = get([ "governance", "proposals" ]);
 export const viewedProposalToken = (state, ctx) => ctx.match && ctx.match.params && ctx.match.params.token ? ctx.match.params.token : null;
 export const viewedProposalDetails = createSelector(

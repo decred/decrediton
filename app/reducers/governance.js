@@ -25,9 +25,9 @@ export default function governance(state = {}, action) {
       vetted: action.proposals
     };
   case GETPROPOSAL_ATTEMPT:
-    return { ...state, getProposalAttempt: true };
+    return { ...state, getProposalAttempt: true, getProposalError: null };
   case GETPROPOSAL_FAILED:
-    return { ...state, getProposalAttempt: false };
+    return { ...state, getProposalAttempt: false, getProposalError: state.error };
   case GETPROPOSAL_SUCCESS:
     return { ...state,
       getProposalAttempt: false,

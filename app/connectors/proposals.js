@@ -3,6 +3,7 @@ import { selectorMap } from "fp";
 import { bindActionCreators } from "redux";
 import * as sel from "selectors";
 import * as ga from "actions/GovernanceActions";
+import * as ca from "actions/ClientActions";
 
 const mapStateToProps = selectorMap({
   getActiveVoteProposalsAttempt: sel.getActiveVoteProposalsAttempt,
@@ -11,6 +12,9 @@ const mapStateToProps = selectorMap({
   vettedProposals: sel.vettedProposals,
   politeiaEnabled: sel.politeiaEnabled,
   viewedProposalDetails: sel.viewedProposalDetails,
+  getProposalAttempt: sel.getProposalAttempt,
+  getProposalError: sel.getProposalError,
+  hasTickets: sel.hasTickets,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -18,6 +22,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getVettedProposals: ga.getVettedProposals,
   getProposalDetails: ga.getProposalDetails,
   viewProposalDetails: ga.viewProposalDetails,
+  showPurchaseTicketsPage: ca.showPurchaseTicketsPage,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);
