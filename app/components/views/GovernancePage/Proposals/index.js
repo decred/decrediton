@@ -1,7 +1,7 @@
 import { proposals } from "connectors";
 import { Route, Switch } from "react-router-dom";
 import Page from "./Page";
-import ProposalDetails from "./ProposalDetails";
+import ProposalDetails from "./Details";
 import PoliteiaDisabled from "./PoliteiaDisabled";
 
 @autobind

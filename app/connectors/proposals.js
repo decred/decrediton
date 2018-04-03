@@ -23,6 +23,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getProposalDetails: ga.getProposalDetails,
   viewProposalDetails: ga.viewProposalDetails,
   showPurchaseTicketsPage: ca.showPurchaseTicketsPage,
+  updateVoteChoice: ga.updateVoteChoice,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

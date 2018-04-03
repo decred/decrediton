@@ -2,6 +2,7 @@ import * as sel from "selectors";
 import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
+import { hexReversedHashToArray, reverseRawHash } from "helpers";
 
 export const GETACTIVEVOTE_ATTEMPT = "GETACTIVEVOTE_ATTEMPT";
 export const GETACTIVEVOTE_FAILED = "GETACTIVEVOTE_FAILED";
@@ -9,7 +10,7 @@ export const GETACTIVEVOTE_SUCCESS = "GETACTIVEVOTE_SUCCESS";
 
 export const getActiveVoteProposals = () => (dispatch, getState) => {
 
-  const ticketHashesToByte = (hashes) => hashes.map(h => new Uint8Array(Buffer.from(h, "hex")));
+  const ticketHashesToByte = (hashes) => hashes.map(hexReversedHashToArray);
 
   dispatch({ type: GETACTIVEVOTE_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
@@ -35,10 +36,13 @@ export const getActiveVoteProposals = () => (dispatch, getState) => {
           voteDetails: vinfo.votedetails,
         };
 
-        const tickets = await wallet.committedTickets(walletService, ticketHashesToByte(vinfo.votedetails.eligibletickets))
-        console.log("got as eligible tickets", tickets.toObject());
+        const commitedTicketsResp = await wallet.committedTickets(walletService, ticketHashesToByte(vinfo.votedetails.eligibletickets));
+        const tickets = commitedTicketsResp.getTicketaddressesList();
         proposal.hasElligibleTickets = tickets.length > 0;
-        proposal.eligibleTickets = tickets.getTicketaddressesList();
+        proposal.eligibleTickets = tickets.map(t => ({
+          ticket: reverseRawHash(t.getTicket()),
+          address: t.getAddress(),
+        }));
 
         proposals.push(proposal);
       }
@@ -129,3 +133,26 @@ export const viewProposalDetails = (token) => (dispatch, getState) => {
   }
   dispatch(pushHistory("/governance/proposals/details/" + token));
 };
+
+export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) =>
+  (dispatch, getState) => {
+    const { walletService } = getState().grpc;
+
+    const voteChoice = proposal.voteOptions.find(o => o.id === newVoteChoiceID);
+    if (!voteChoice) throw "Unknown vote choice for proposal";
+
+    const messages = proposal.eligibleTickets.map(t => {
+      // msg here needs to follow the same syntax as what is defined on
+      // politeiavoter.
+      const msg = proposal.token + t.ticket + voteChoice.bits.toString(16);
+      return { address: t.address, message: msg };
+    });
+
+    wallet
+      .signMessages(walletService, passphrase, messages)
+      .then(resp => {
+        console.log("signMessages replied", resp.toObject());
+      })
+      .catch(error => console.log("signMessages errored", error));
+
+  };
