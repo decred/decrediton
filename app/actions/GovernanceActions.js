@@ -151,7 +151,23 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) =>
     wallet
       .signMessages(walletService, passphrase, messages)
       .then(resp => {
-        console.log("signMessages replied", resp.toObject());
+        const votes = [];
+        const sigs = resp.getRepliesList();
+        proposal.eligibleTickets.forEach((t, i) => {
+          const signature = sigs[i];
+          if (signature.getError() != "") {
+            console.log("Error signing message", signature.getError());
+            return;
+          }
+          const hexSig = Buffer.from(signature.getSignature()).toString("hex");
+
+          votes.push(pi.Vote(proposal.token, t.ticket, voteChoice.bits, hexSig));
+        });
+
+        console.log("casting votes", votes);
+
+        const piURL = sel.politeiaURL(getState());
+        pi.castVotes(piURL, votes);
       })
       .catch(error => console.log("signMessages errored", error));
 
