@@ -1,7 +1,7 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
-import { initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig } from "./config";
+import { initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, createTempDcrdConf } from "./config";
 import fs from "fs-extra";
 import os from "os";
 import path from "path";
@@ -232,7 +232,7 @@ ipcMain.on("get-available-wallets", (event, network) => {// Attempt to find all 
   event.returnValue = availableWallets;
 });
 
-ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
+ipcMain.on("start-daemon", (event, appData, testnet) => {
   if (dcrdPID && dcrdConfig && !daemonIsAdvanced) {
     logger.log("info", "Skipping restart of daemon as it is already running");
     event.returnValue = dcrdConfig;
@@ -248,14 +248,22 @@ ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
   }
   if (!daemonIsAdvanced && !primaryInstance) {
     logger.log("info", "Running on secondary instance. Assuming dcrd is already running.");
-    dcrdConfig = readDcrdConfig(getDcrdPath(), testnet);
+    let dcrdConfPath = getDcrdPath();
+    if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
+      dcrdConfPath = createTempDcrdConf();
+    }
+    dcrdConfig = readDcrdConfig(dcrdConfPath, testnet);
     dcrdConfig.rpc_cert = getDcrdRpcCert();
     dcrdConfig.pid = -1;
     event.returnValue = dcrdConfig;
     return;
   }
   try {
-    dcrdConfig = launchDCRD(getDcrdPath(), appData, testnet);
+    let dcrdConfPath = getDcrdPath();
+    if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
+      dcrdConfPath = createTempDcrdConf();
+    }
+    dcrdConfig = launchDCRD(dcrdConfPath, appData, testnet);
     dcrdPID = dcrdConfig.pid;
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
@@ -298,7 +306,7 @@ ipcMain.on("start-wallet", (event, walletPath, testnet) => {
   event.returnValue = getWalletCfg(testnet, walletPath);
 });
 
-ipcMain.on("check-daemon", (event, walletPath, rpcCreds, testnet) => {
+ipcMain.on("check-daemon", (event, rpcCreds, testnet) => {
   let args = [ "getblockcount" ];
   let host, port;
   if (!rpcCreds){

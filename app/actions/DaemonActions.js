@@ -78,20 +78,20 @@ export const finishTutorial = () => (dispatch) => {
 };
 
 export const startDaemon = (rpcCreds, appData) => (dispatch, getState) => {
-  const { daemonStarted, walletName } = getState().daemon;
+  const { daemonStarted } = getState().daemon;
   if (daemonStarted) return;
   if (rpcCreds) {
     dispatch({ type: DAEMONSTARTED_REMOTE, credentials: rpcCreds, pid: -1 });
     dispatch(syncDaemon());
   } else if (appData) {
-    wallet.startDaemon(walletName, appData, isTestNet(getState()))
+    wallet.startDaemon(appData, isTestNet(getState()))
       .then(rpcCreds => {
         dispatch({ type: DAEMONSTARTED_APPDATA, appData: appData, credentials: rpcCreds });
         dispatch(syncDaemon(null, appData));
       })
       .catch((err) => dispatch({ err, type: DAEMONSTARTED_ERROR }));
   } else {
-    wallet.startDaemon(walletName, null, isTestNet(getState()))
+    wallet.startDaemon(null, isTestNet(getState()))
       .then(rpcCreds => {
         dispatch({ type: DAEMONSTARTED, credentials: rpcCreds });
         dispatch(syncDaemon());
@@ -221,11 +221,11 @@ export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks, stepIndex } } = getState();
-      const { daemon: { daemonSynced, timeStart, blockStart, credentials, walletName } } = getState();
+      const { daemon: { daemonSynced, timeStart, blockStart, credentials } } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
       return wallet
-        .getBlockCount(walletName, credentials, isTestNet(getState()))
+        .getBlockCount(credentials, isTestNet(getState()))
         .then(updateCurrentBlockCount => {
           if ((neededBlocks == 0 && updateCurrentBlockCount > 0) || (neededBlocks != 0 && updateCurrentBlockCount >= neededBlocks)) {
             dispatch({ type: DAEMONSYNCED });

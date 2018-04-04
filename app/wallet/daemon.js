@@ -7,8 +7,8 @@ export const checkDecreditonVersion = log(() => Promise
   .resolve(ipcRenderer.sendSync("check-version"))
   , "Check Decrediton release version");
 
-export const startDaemon = log((walletPath, appData, testnet) => Promise
-  .resolve(ipcRenderer.sendSync("start-daemon", walletPath, appData, testnet))
+export const startDaemon = log((appData, testnet) => Promise
+  .resolve(ipcRenderer.sendSync("start-daemon", appData, testnet))
   .then(pid => {
     if (pid) return pid;
     throw "Error starting daemon";
@@ -60,12 +60,12 @@ export const getPreviousWallet = log(() => Promise
   .resolve(ipcRenderer.sendSync("get-previous-wallet"))
   , "Get Previous Wallet");
 
-export const getBlockCount = log((walletPath, rpcCreds, testnet) => new Promise(resolve => {
+export const getBlockCount = log((rpcCreds, testnet) => new Promise(resolve => {
   ipcRenderer.once("check-daemon-response", (e, block) => {
     const blockCount = isString(block) ? parseInt(block.trim()) : block;
     resolve(blockCount);
   });
-  ipcRenderer.send("check-daemon", walletPath, rpcCreds, testnet);
+  ipcRenderer.send("check-daemon", rpcCreds, testnet);
 }), "Get Block Count");
 
 export const getDcrdLogs = log(() => Promise

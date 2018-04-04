@@ -2,7 +2,7 @@ import fs from "fs";
 import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
-import { getGlobalCfgPath, dcrdCfg, getWalletPath, dcrctlCfg, dcrwalletCfg, getDcrdRpcCert } from "./main_dev/paths";
+import { appDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCfg, getDcrdRpcCert } from "./main_dev/paths";
 
 export function getGlobalCfg() {
   const config = new Store();
@@ -255,28 +255,36 @@ export function setMustOpenForm(openForm) {
   return config.set("must_open_form", openForm);
 }
 
+function makeRandomString(length) {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < length; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
+export function createTempDcrdConf() {
+  if (!fs.existsSync(dcrdCfg(appDataDirectory()))) {
+    var rpcUser = makeRandomString(10);
+    var rpcPass = makeRandomString(10);
+
+    var dcrdConf = {
+      "Application Options":
+      {
+        rpcuser: rpcUser,
+        rpcpass: rpcPass,
+        rpclisten: "127.0.0.1:9109"
+      }
+    };
+    fs.writeFileSync(dcrdCfg(appDataDirectory()), ini.stringify(dcrdConf));
+  }
+  return appDataDirectory();
+}
+
 export function newWalletConfigCreation(testnet, walletPath) {
   // TODO: set random user/password
-  var dcrdConf = {
-    "Application Options":
-    {
-      rpcuser: "USER",
-      rpcpass: "PASSWORD",
-      rpclisten: "127.0.0.1:9109",
-      testnet: testnet ? "1" : "0"
-    }
-  };
-  fs.writeFileSync(dcrdCfg(getWalletPath(testnet, walletPath)), ini.stringify(dcrdConf));
-  var dcrctlConf = {
-    "Application Options":
-    {
-      rpcuser: "USER",
-      rpcpass: "PASSWORD",
-      rpcserver: "127.0.0.1:9109",
-      testnet: testnet ? "1" : "0"
-    }
-  };
-  fs.writeFileSync(dcrctlCfg(getWalletPath(testnet, walletPath)), ini.stringify(dcrctlConf));
   var dcrwConf = {
     "Application Options":
     {
