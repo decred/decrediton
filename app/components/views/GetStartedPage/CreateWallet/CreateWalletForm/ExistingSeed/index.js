@@ -89,8 +89,21 @@ class ExistingSeed extends React.Component {
       const positionLoc = seedErrorStr.indexOf(position);
       if (positionLoc > 0) {
         const locatedErrPosition = seedErrorStr.slice(positionLoc+position.length+1, positionLoc+position.length+1+3).split(",")[0];
-        updatedSeedWords[locatedErrPosition] = { word: update, index: seedWord.index, error: true };
-        this.setState({ seedWords: updatedSeedWords });
+        if (locatedErrPosition == seedWord.index) {
+          updatedSeedWords[locatedErrPosition] = { word: update, index: seedWord.index, error: true };
+          this.setState({ seedWords: updatedSeedWords });
+        } else {
+          var empty = false;
+          for (var i = 0; i < locatedErrPosition; i++) {
+            if (updatedSeedWords[i].word == "") {
+              empty = true;
+            }
+          }
+          if (!empty) {
+            updatedSeedWords[locatedErrPosition] = { word: updatedSeedWords[locatedErrPosition].word, index: locatedErrPosition, error: true };
+            this.setState({ seedWords: updatedSeedWords });
+          }
+        }
       }
     };
     this.setState({ seedWords: updatedSeedWords }, () => {
