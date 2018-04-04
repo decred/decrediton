@@ -1,7 +1,7 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { concat, isString } from "lodash";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
-import { initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig } from "./config";
+import { initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, createTempDcrdConf } from "./config";
 import fs from "fs-extra";
 import os from "os";
 import path from "path";
@@ -255,7 +255,11 @@ ipcMain.on("start-daemon", (event, walletPath, appData, testnet) => {
     return;
   }
   try {
-    dcrdConfig = launchDCRD(getDcrdPath(), appData, testnet);
+    let dcrdConfPath = getDcrdPath();
+    if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
+      dcrdConfPath = createTempDcrdConf();
+    }
+    dcrdConfig = launchDCRD(dcrdConfPath, appData, testnet);
     dcrdPID = dcrdConfig.pid;
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
