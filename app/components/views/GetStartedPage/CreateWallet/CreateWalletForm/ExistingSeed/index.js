@@ -79,7 +79,7 @@ class ExistingSeed extends React.Component {
     const { seedWords } = this.state;
     var updatedSeedWords = seedWords;
     updatedSeedWords[seedWord.index] = { word: update, index: seedWord.index, error: false };
-    
+
     const onError = (seedError) => {
       this.setState({ mnemonic: "", seedError: seedError+"" });
       this.props.onChange(null);
