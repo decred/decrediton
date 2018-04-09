@@ -10,7 +10,6 @@ import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
 } from "wallet/service";
 import { DescriptionHeader } from "layout";
 import { Balance } from "shared";
-import { NoTransactions } from "indicators";
 
 export const HistoryTabHeader = historyPage(({ totalBalance }) =>
   <DescriptionHeader
@@ -32,10 +31,6 @@ class History extends React.Component {
   }
 
   render() {
-    if (this.props.noMoreTransactions && this.getTransactions().length === 0) {
-      return <NoTransactions />;
-    }
-
     // empirically defined to load 1 page of transactions in default height
     // and an additional page when window.innerHeight > default
     const loadMoreThreshold = 90 + Math.max(0, this.props.window.innerHeight - 765);

@@ -3,7 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import { Tooltip } from "shared";
 import { TextInput } from "../../../inputs";
 import TxHistory from "TxHistory";
-import { LoadingMoreTransactionsIndicator, NoMoreTransactionsIndicator } from "indicators";
+import { LoadingMoreTransactionsIndicator, NoMoreTransactionsIndicator, NoTransactions } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
 import "style/HistoryPage.less";
 
@@ -65,15 +65,16 @@ const Page = ({
       </div>
     </div>
     <div className="history-content-nest">
-      {transactions.length > 0 ? (
-        <TxHistory
-          transactions={transactions}
-        />
-      ) : null}
+      {transactions.length > 0
+        ? <TxHistory transactions={transactions} />
+        : null }
     </div>
     {!noMoreTransactions
       ? <LoadingMoreTransactionsIndicator />
-      : <NoMoreTransactionsIndicator /> }
+      : transactions.length > 0
+        ? <NoMoreTransactionsIndicator />
+        : <NoTransactions />
+    }
   </InfiniteScroll>
 );
 
