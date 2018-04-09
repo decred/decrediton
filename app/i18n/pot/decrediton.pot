@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2018-04-09T12:36:12.029Z\n"
+"POT-Creation-Date: 2018-04-09T12:48:36.766Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -199,52 +199,12 @@ msgctxt "stake.notRedeemed.content2"
 msgid "1. Each stakepool account you create can only be associated with 1 wallet. If you have previously created this stakepool account with a different wallet (different seed), then you must create a new account."
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/TutorialsPage/TicketLifecycle/index.json
-#. [tutorial.ticketLifecycle.page2]
-#. defaultMessage is:
-#. 1. When a Ticket is purchased, the total cost is it’s Ticket Fee + Ticket Price.
-#. 
-#.   2. Your ticket enters the mempool. This is where your ticket waits to be mined by PoW miners. Only 20 fresh tickets are mined into each block.
-msgctxt "tutorial.ticketLifecycle.page2"
-msgid "1. When a Ticket is purchased, the total cost is it’s Ticket Fee + Ticket Price.\n\n  2. Your ticket enters the mempool. This is where your ticket waits to be mined by PoW miners. Only 20 fresh tickets are mined into each block."
-msgstr ""
-
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/AddForm.json
 #. [stake.notRedeemed.content3]
 #. defaultMessage is:
 #. 2. If you had previously used a ‘voting account’, for your ticket purchases, please go to the Accounts page and create a new account. This may now allow you to successfully import your script for your stakepool.
 msgctxt "stake.notRedeemed.content3"
 msgid "2. If you had previously used a ‘voting account’, for your ticket purchases, please go to the Accounts page and create a new account. This may now allow you to successfully import your script for your stakepool."
-msgstr ""
-
-#: app/i18n/extracted/app/components/views/TutorialsPage/TicketLifecycle/index.json
-#. [tutorial.ticketLifecycle.page3]
-#. defaultMessage is:
-#. 2.A - If your ticket is mined into a block, it becomes an immature ticket. This state lasts for 256 blocks (about 20 hours). During this time the ticket cannot vote. At this point, the ticket fee is non-refundable.
-#. 
-#.   2.B - If your ticket is not mined, both the Ticket Price and Ticket Fee are returned to the purchasing account.
-msgctxt "tutorial.ticketLifecycle.page3"
-msgid "2.A - If your ticket is mined into a block, it becomes an immature ticket. This state lasts for 256 blocks (about 20 hours). During this time the ticket cannot vote. At this point, the ticket fee is non-refundable.\n\n  2.B - If your ticket is not mined, both the Ticket Price and Ticket Fee are returned to the purchasing account."
-msgstr ""
-
-#: app/i18n/extracted/app/components/views/TutorialsPage/TicketLifecycle/index.json
-#. [tutorial.ticketLifecycle.page4]
-#. defaultMessage is:
-#. 3. After your ticket matures (256 blocks), it enters the Ticket Pool and is eligible for voting. Average time for most tickets to vote is about 28 days. Any ticket has a 99.5% chance of voting within ~142 days. If, after this time, a ticket has not voted, it expires. You receive a refund on the original Ticket Price.
-msgctxt "tutorial.ticketLifecycle.page4"
-msgid "3. After your ticket matures (256 blocks), it enters the Ticket Pool and is eligible for voting. Average time for most tickets to vote is about 28 days. Any ticket has a 99.5% chance of voting within ~142 days. If, after this time, a ticket has not voted, it expires. You receive a refund on the original Ticket Price."
-msgstr ""
-
-#: app/i18n/extracted/app/components/views/TutorialsPage/TicketLifecycle/index.json
-#. [tutorial.ticketLifecycle.page5]
-#. defaultMessage is:
-#. 4. A ticket may miss its call to vote if the voting wallet does not respond or two valid blocks are found within close proximity of each other. If this happens, you receive a refund on the original Ticket Price.
-#. 
-#.   5. After a ticket has voted, missed, or expired, the funds (ticket price and subsidy if applicable, minus the fee) will enter immature status for another 256 blocks, after which they are released. If a ticket is missed or expired, a ticket revocation transaction is submitted by the wallet which then frees up the locked ticket price.
-#. 
-#.   NOTE: Revocations can only be submitted for a corresponding missed ticket. You cannot revoke a ticket until it is missed.
-msgctxt "tutorial.ticketLifecycle.page5"
-msgid "4. A ticket may miss its call to vote if the voting wallet does not respond or two valid blocks are found within close proximity of each other. If this happens, you receive a refund on the original Ticket Price.\n\n  5. After a ticket has voted, missed, or expired, the funds (ticket price and subsidy if applicable, minus the fee) will enter immature status for another 256 blocks, after which they are released. If a ticket is missed or expired, a ticket revocation transaction is submitted by the wallet which then frees up the locked ticket price.\n\n  NOTE: Revocations can only be submitted for a corresponding missed ticket. You cannot revoke a ticket until it is missed."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
@@ -1178,6 +1138,16 @@ msgstr ""
 #. Decred Constitution
 msgctxt "help.constitution.modal.title"
 msgid "Decred Constitution"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TutorialsPage/Staking/index.json
+#. [tutorial.staking.page1]
+#. defaultMessage is:
+#. Decred holders can participate in the Staking (Proof-of Stake) process by purchasing tickets. These tickets are used to vote on miners’ Proof-of-Work in order to validate changes to the Decred blockchain, or on governance proposals within the Politeia system.
+#. 
+#.   Staking to verify PoW is rewarding, as each cast vote receives part of the Decred Block Reward. Typically, five tickets are included in each block, meaning each ticket holder receives 6% of the total block reward.
+msgctxt "tutorial.staking.page1"
+msgid "Decred holders can participate in the Staking (Proof-of Stake) process by purchasing tickets. These tickets are used to vote on miners’ Proof-of-Work in order to validate changes to the Decred blockchain, or on governance proposals within the Politeia system.\n\n  Staking to verify PoW is rewarding, as each cast vote receives part of the Decred Block Reward. Typically, five tickets are included in each block, meaning each ticket holder receives 6% of the total block reward."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/TutorialPage/Page.json
@@ -3800,10 +3770,6 @@ msgstr ""
 #. [home.noTickets.purchase]
 #. defaultMessage is:
 #. Stake Your Idle DCR and Earn Rewards
-#: app/i18n/extracted/app/components/views/HomePage/tables/NoTicketsLinks.json
-#. [home.noTickets.purchase]
-#. defaultMessage is:
-#. Stake Your Idle DCR and Earn Rewards
 msgctxt "home.noTickets.purchase"
 msgid "Stake Your Idle DCR and Earn Rewards"
 msgstr ""
@@ -4107,18 +4073,6 @@ msgstr ""
 #. This field is wrong
 msgctxt "input.invalidInput"
 msgid "This field is wrong"
-msgstr ""
-
-#: app/i18n/extracted/app/components/views/TutorialsPage/Staking/index.json
-#. [tutorial.staking.page1]
-#. defaultMessage is:
-#. This is Stakey, our mascot!
-#. 
-#. He represents the best aspects of the Decred network and shows up on all staking-related activities.
-#. 
-#. Once you stake your coins, you have a say on the continued evolution of the Decred network. You become a stakeholder and can vote on agendas, participate on Politeia and help keep the PoW miners in check.
-msgctxt "tutorial.staking.page1"
-msgid "This is Stakey, our mascot!\n\nHe represents the best aspects of the Decred network and shows up on all staking-related activities.\n\nOnce you stake your coins, you have a say on the continued evolution of the Decred network. You become a stakeholder and can vote on agendas, participate on Politeia and help keep the PoW miners in check."
 msgstr ""
 
 #: app/i18n/extracted/app/components/modals/PurchaseTicketsInfoModalContent.json
@@ -4709,6 +4663,18 @@ msgctxt "help.tab.tutorials"
 msgid "Tutorials"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/TutorialsPage/TicketLifecycle/index.json
+#. [tutorial.ticketLifecycle.page3]
+#. defaultMessage is:
+#. Two things might happen next:
+#. 
+#.   A - Your ticket is mined into a block and it becomes an immature ticket. This state lasts for 256 blocks (about 20 hours). During this time, the ticket cannot vote and the ticket fee becomes non-refundable.
+#. 
+#.   B - If your ticket is not mined, it will stay in the mempool until the ticket price increases or the block height hits your ticket expiration date. At this point, both the Ticket Price and Ticket Fee are returned.
+msgctxt "tutorial.ticketLifecycle.page3"
+msgid "Two things might happen next:\n\n  A - Your ticket is mined into a block and it becomes an immature ticket. This state lasts for 256 blocks (about 20 hours). During this time, the ticket cannot vote and the ticket fee becomes non-refundable.\n\n  B - If your ticket is not mined, it will stay in the mempool until the ticket price increases or the block height hits your ticket expiration date. At this point, both the Ticket Price and Ticket Fee are returned."
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/PurchaseTicketsAdvanced.json
 #. [purchaseTickets.txFeePlaceholder]
 #. defaultMessage is:
@@ -5136,12 +5102,42 @@ msgctxt "getStarted.whatsNew"
 msgid "What's New in {version}"
 msgstr ""
 
+#: app/i18n/extracted/app/components/views/TutorialsPage/TicketLifecycle/index.json
+#. [tutorial.ticketLifecycle.page2]
+#. defaultMessage is:
+#. When a Ticket is purchased, the total cost is its Ticket Fee + Ticket Price. The price is dynamic in order to yield a ticket pool of approximately 40,960 tickets.
+#. 
+#.   Your ticket enters the mempool. Up to 20 tickets are mined into each block, prioritized by the ticket fee.
+msgctxt "tutorial.ticketLifecycle.page2"
+msgid "When a Ticket is purchased, the total cost is its Ticket Fee + Ticket Price. The price is dynamic in order to yield a ticket pool of approximately 40,960 tickets.\n\n  Your ticket enters the mempool. Up to 20 tickets are mined into each block, prioritized by the ticket fee."
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TutorialsPage/Staking/index.json
+#. [tutorial.staking.page2]
+#. defaultMessage is:
+#. When a ticket is purchased, the cost of the ticket is locked in your wallet until the ticket is used to vote, or is revoked. Tickets enter the mempool, then the ticketpool where they are drawn at random to vote. There is a 99.5% probability that a ticket will vote. The average ticket will vote in 28 days, but tickets still in the pool that have not been drawn after 142 days will be revoked. The DCR used to purchase the ticket is released from lockup when it votes or when the ticket is revoked.
+#. 
+#.   When a proposal is set for a vote in Politeia, a snapshot of the ticket pool will be taken at the time of voting. All tickets will have the right to vote on the proposal in an off chain process.
+#. 
+#.   As block validation is immutable, decisions made on all voted tickets can be publicly tracked. Active participation in staking helps secure Decred network’s, network, ensure quality Proof-of-Work, and determine the future direction of Decred.
+msgctxt "tutorial.staking.page2"
+msgid "When a ticket is purchased, the cost of the ticket is locked in your wallet until the ticket is used to vote, or is revoked. Tickets enter the mempool, then the ticketpool where they are drawn at random to vote. There is a 99.5% probability that a ticket will vote. The average ticket will vote in 28 days, but tickets still in the pool that have not been drawn after 142 days will be revoked. The DCR used to purchase the ticket is released from lockup when it votes or when the ticket is revoked.\n\n  When a proposal is set for a vote in Politeia, a snapshot of the ticket pool will be taken at the time of voting. All tickets will have the right to vote on the proposal in an off chain process.\n\n  As block validation is immutable, decisions made on all voted tickets can be publicly tracked. Active participation in staking helps secure Decred network’s, network, ensure quality Proof-of-Work, and determine the future direction of Decred."
+msgstr ""
+
 #: app/i18n/extracted/app/components/views/GetStartedPage/TutorialPage/Page.json
 #. [tutorial.step.4.text.p6]
 #. defaultMessage is:
 #. When something doesn’t seem right or you don’t understand it ask questions and do research. Avoid making a decision based on fear.
 msgctxt "tutorial.step.4.text.p6"
 msgid "When something doesn’t seem right or you don’t understand it ask questions and do research. Avoid making a decision based on fear."
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TutorialsPage/TicketLifecycle/index.json
+#. [tutorial.ticketLifecycle.page4]
+#. defaultMessage is:
+#. When your ticket matures (256 blocks), it enters the Ticket Pool and can be selected to vote. For each new block, five tickets are deterministically and pseudorandomly selected to vote on the newly mined block. The average ticket is selected to vote in approximately 28 days, and any ticket has a 99.5% chance of voting within ~142 days. If, after this time a ticket has not voted, it expires and the original Ticket Price is refunded.
+msgctxt "tutorial.ticketLifecycle.page4"
+msgid "When your ticket matures (256 blocks), it enters the Ticket Pool and can be selected to vote. For each new block, five tickets are deterministically and pseudorandomly selected to vote on the newly mined block. The average ticket is selected to vote in approximately 28 days, and any ticket has a 99.5% chance of voting within ~142 days. If, after this time a ticket has not voted, it expires and the original Ticket Price is refunded."
 msgstr ""
 
 #: app/i18n/extracted/static/menus.json
@@ -5174,6 +5170,26 @@ msgstr ""
 #. You have successfully updated your stakepool settings.
 msgctxt "tickets.updateStakePoolConfigHeader"
 msgid "You have successfully updated your stakepool settings."
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TutorialsPage/TicketLifecycle/index.json
+#. [tutorial.ticketLifecycle.page5]
+#. defaultMessage is:
+#. You must be connected to the network to cast a vote, which is why many people use stakepools. If your ticket is called and it misses the vote, you receive a refund on the original Ticket Price.
+#. 
+#.   After a ticket has voted, missed, or expired, the funds (ticket price minus the fee) will enter immature status for another 256 blocks, after which they are released from lockup in the wallet. If a ticket is missed or expired, a ticket revocation transaction is submitted by the wallet to free up the locked ticket price.
+#. 
+#.   NOTE: Revocations can only be submitted for a corresponding missed ticket. You cannot revoke a ticket until it is missed.
+msgctxt "tutorial.ticketLifecycle.page5"
+msgid "You must be connected to the network to cast a vote, which is why many people use stakepools. If your ticket is called and it misses the vote, you receive a refund on the original Ticket Price.\n\n  After a ticket has voted, missed, or expired, the funds (ticket price minus the fee) will enter immature status for another 256 blocks, after which they are released from lockup in the wallet. If a ticket is missed or expired, a ticket revocation transaction is submitted by the wallet to free up the locked ticket price.\n\n  NOTE: Revocations can only be submitted for a corresponding missed ticket. You cannot revoke a ticket until it is missed."
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TutorialsPage/TicketLifecycle/index.json
+#. [tutorial.ticketLifecycle.page6]
+#. defaultMessage is:
+#. You should now understand a bit better the lifecycle of a ticket, so start staking your Decred and participate on the community!
+msgctxt "tutorial.ticketLifecycle.page6"
+msgid "You should now understand a bit better the lifecycle of a ticket, so start staking your Decred and participate on the community!"
 msgstr ""
 
 #: app/i18n/extracted/app/reducers/snackbar.json
