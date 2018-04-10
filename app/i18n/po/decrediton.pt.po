@@ -268,8 +268,8 @@ msgid ""
 "A successful vote returns the stakeholder a part of the Block Reward plus "
 "the original cost of the ticket. In case of missing the vote"
 msgstr ""
-"Um voto bem sucedido returna ao stakeholder uma parte da Recompensa de Bloco"
-" mais o custo original do ticket. No caso de uma voto perdido"
+"Um voto bem sucedido retorna ao stakeholder uma parte da Recompensa de Bloco"
+" mais o custo original do ticket. No caso de um voto perdido"
 
 #. [stakepool.apikey]
 #. defaultMessage is:
@@ -363,7 +363,7 @@ msgstr "Adicionar nova"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/AddForm.json
 msgctxt "stakepool.addPoolTitle"
 msgid "Add a Stakepool"
-msgstr "Adicionar uma Stekpool"
+msgstr "Adicionar uma Stakepool"
 
 #. [stakepools.list.form.submit]
 #. defaultMessage is:
