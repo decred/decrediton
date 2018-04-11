@@ -475,13 +475,12 @@ function filterTransactions(transactions, filter) {
 // When no more transactions are available given the current filter,
 // `grpc.noMoreTransactions` is set to true.
 export const getTransactions = () => async (dispatch, getState) => {
-  const { getAccountsResponse, getTransactionsRequestAttempt,
+  const { currentBlockHeight, getTransactionsRequestAttempt,
     transactionsFilter, walletService, maximumTransactionCount, recentTransactionCount } = getState().grpc;
   let { noMoreTransactions, lastTransaction, minedTransactions, recentRegularTransactions, recentStakeTransactions } = getState().grpc;
   if (getTransactionsRequestAttempt || noMoreTransactions) return;
 
-  // Check to make sure getAccountsResponse (which has current block height) is available
-  if (getAccountsResponse === null) {
+  if (!currentBlockHeight) {
     // Wait a little then re-dispatch this call since we have no starting height yet
     setTimeout(() => { dispatch(getTransactions()); }, 1000);
     return;
@@ -504,11 +503,11 @@ export const getTransactions = () => async (dispatch, getState) => {
     let startRequestHeight, endRequestHeight;
 
     if ( transactionsFilter.listDirection === "desc" ) {
-      startRequestHeight = lastTransaction ? lastTransaction.height -1 : getAccountsResponse.getCurrentBlockHeight();
+      startRequestHeight = lastTransaction ? lastTransaction.height -1 : currentBlockHeight;
       endRequestHeight = 1;
     } else {
       startRequestHeight = lastTransaction ? lastTransaction.height +1 : 1;
-      endRequestHeight = getAccountsResponse.getCurrentBlockHeight();
+      endRequestHeight = currentBlockHeight;
     }
 
     try {

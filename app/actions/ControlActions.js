@@ -318,7 +318,7 @@ export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requi
     wallet.log("info", "Purchasing tickets", accountNum, spendLimit, requiredConf,
       numTickets, expiry, ticketFee, txFee, stakepool.TicketAddress,
       stakepool.PoolAddress, stakepool.PoolFees);
-    const { getAccountsResponse } = getState().grpc;
+    const { currentBlockHeight } = getState().grpc;
     var request = new PurchaseTicketsRequest();
     request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
     request.setAccount(accountNum);
@@ -329,7 +329,7 @@ export function purchaseTicketsAttempt(passphrase, accountNum, spendLimit, requi
     request.setPoolAddress(stakepool.PoolAddress);
     request.setPoolFees(stakepool.PoolFees);
     if (expiry !== 0) {
-      request.setExpiry(getAccountsResponse.getCurrentBlockHeight() + expiry);
+      request.setExpiry(currentBlockHeight + expiry);
     } else {
       request.setExpiry(expiry);
     }

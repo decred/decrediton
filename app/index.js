@@ -82,6 +82,7 @@ var initialState = {
     walletService: null,
     requiredStakepoolAPIVersion: 2,
     recentBlockTimestamp: null,
+    currentBlockHeight: 0,
 
     // ints for mainnet and testnet protocol hex
     // TestNet2 CurrencyNet = 0x48e7a065
