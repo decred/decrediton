@@ -9,7 +9,10 @@ export const StandardPage = ({ image, text, currentPageIndex, pageCount,
     <div className="tutorial-image-and-indicator">
       <div className={[ "tutorial-image", "tutorial-image-" + image ].join(" ")} />
       <div className={"tutorial-page-indicator"}>
-        {pageCount < 2 ? null : <a onClick={onPreviousPage}>Previous</a>  }
+        {pageCount < 2
+          ? null
+          : <a onClick={onPreviousPage}><T id="tutorial.standardPage.previousPage" m="Previous" /></a>
+        }
         {pageCount < 2 ? null :
           <StepIndicator
             currentPageIndex={currentPageIndex}

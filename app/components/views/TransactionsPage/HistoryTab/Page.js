@@ -1,11 +1,18 @@
 import { EyeFilterMenu } from "buttons";
-import { FormattedMessage as T } from "react-intl";
+import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { Tooltip } from "shared";
 import { TextInput } from "../../../inputs";
 import TxHistory from "TxHistory";
 import { LoadingMoreTransactionsIndicator, NoMoreTransactionsIndicator } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
 import "style/HistoryPage.less";
+
+const messages = defineMessages({
+  filterByAddrPlaceholder: {
+    id: "txhistory.filterByAddrPlaceholder",
+    defaultMessage: "Filter by Address"
+  },
+});
 
 const Page = ({
   sortTypes,
@@ -16,6 +23,7 @@ const Page = ({
   searchText,
   loadMoreThreshold,
   noMoreTransactions,
+  intl,
   onChangeSelectedType,
   onChangeSortType,
   onChangeSearchText,
@@ -37,7 +45,7 @@ const Page = ({
           <div className="history-search-tx">
             <TextInput
               type="text"
-              placeholder={"Filter by Address"}
+              placeholder={intl.formatMessage(messages.filterByAddrPlaceholder)}
               value={searchText}
               onChange={(e) => onChangeSearchText(e.target.value)}
             />
@@ -77,4 +85,4 @@ const Page = ({
   </InfiniteScroll>
 );
 
-export default Page;
+export default injectIntl(Page);
