@@ -13,6 +13,7 @@ const RecentTransactions = ({
   getTransactionsRequestAttempt,
   getAccountsResponse,
   rowNumber,
+  goToTransactionHistory
 }) => {
   const hasTxs = (transactions.length > 0) && (tickets.length > 0);
   return (
@@ -28,6 +29,9 @@ const RecentTransactions = ({
             <TxHistory overview limit={rowNumber} {...{ getAccountsResponse, transactions }} /> :
             <TxHistory limit={6} {...{ getAccountsResponse, transactions }} /> :
             <NoTransactionsLinks />}
+        </div>
+        <div className="home-content-link">
+          <a onClick={goToTransactionHistory}><T id="home.recentTransactionsHistory" m="Go to all transactions" /> ></a>
         </div>
       </Aux>
   );

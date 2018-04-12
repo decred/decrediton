@@ -30,7 +30,8 @@ class MenuLinks extends React.Component {
 
   componentDidUpdate() {
     const { location } = this.props;
-    const selectedTab = location.pathname;
+    const tabbedPageCheck = location.pathname.indexOf("/", 1);
+    const selectedTab = tabbedPageCheck > 0 ? location.pathname.substring(0, tabbedPageCheck) : location.pathname;
     if (this.state.selectedTab != selectedTab) {
       this.updateCaretPosition();
     }
@@ -38,7 +39,8 @@ class MenuLinks extends React.Component {
 
   updateCaretPosition() {
     const { location } = this.props;
-    const selectedTab = location.pathname;
+    const tabbedPageCheck = location.pathname.indexOf("/", 1);
+    const selectedTab = tabbedPageCheck > 0 ? location.pathname.substring(0, tabbedPageCheck) : location.pathname;
     const caretPosition = this.neededCaretPosition(selectedTab);
     if (caretPosition) this.setState({ ...caretPosition, selectedTab });
   }

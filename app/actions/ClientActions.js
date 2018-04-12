@@ -16,6 +16,14 @@ import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 
+export const goToTransactionHistory = () => (dispatch) => {
+  dispatch(pushHistory("/transactions/history"));
+};
+
+export const goToMyTickets = () => (dispatch) => {
+  dispatch(pushHistory("/tickets/mytickets"));
+};
+
 export const GETWALLETSERVICE_ATTEMPT = "GETWALLETSERVICE_ATTEMPT";
 export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
 export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
