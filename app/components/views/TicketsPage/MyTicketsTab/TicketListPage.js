@@ -70,7 +70,7 @@ class TicketListPage extends React.Component{
     const visibleTickets = this.getVisibleTickets();
     const visibleCards = visibleTickets.map(ticket => {
       const key = ticket.hash;
-      const expanded = ticket === expandedTicket;
+      const expanded = expandedTicket && ticket.hash === expandedTicket.hash;
       return <TicketInfoCard {...{ key, ticket, expanded }} onClick={this.onInfoCardClick} />;
     });
 
