@@ -12,6 +12,7 @@ const RecentTickets = ({
   getTransactionsRequestAttempt,
   getAccountsResponse,
   rowNumber,
+  goToMyTickets
 }) => {
   const hasTickets = tickets.length > 0;
   return (
@@ -26,6 +27,9 @@ const RecentTickets = ({
           {hasTickets
             ? <TxHistory overview limit={rowNumber} {...{ getAccountsResponse, transactions: tickets }} />
             : <NoTicketsLinks />}
+        </div>
+        <div className="home-content-link">
+          <a onClick={goToMyTickets}><T id="home.ticketActivityHistory" m="Go to all tickets" /></a>
         </div>
       </Aux>
   );
