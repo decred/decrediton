@@ -29,7 +29,7 @@ const RecentTickets = ({
             : <NoTicketsLinks />}
         </div>
         <div className="home-content-link">
-          <a onClick={goToMyTickets}><T id="home.ticketActivityHistory" m="Go to all tickets" /></a>
+          <a onClick={goToMyTickets}><T id="home.ticketActivityHistory" m="Go to all tickets" /> ></a>
         </div>
       </Aux>
   );

@@ -31,7 +31,7 @@ const RecentTransactions = ({
             <NoTransactionsLinks />}
         </div>
         <div className="home-content-link">
-          <a onClick={goToTransactionHistory}><T id="home.recentTransactionsHistory" m="Go to all transactions" /></a>
+          <a onClick={goToTransactionHistory}><T id="home.recentTransactionsHistory" m="Go to all transactions" /> ></a>
         </div>
       </Aux>
   );
