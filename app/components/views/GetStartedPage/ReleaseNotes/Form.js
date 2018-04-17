@@ -9,7 +9,8 @@ export default ({
   onShowLogs,
   getCurrentBlockCount,
   getNeededBlocks,
-  getEstimatedTimeLeft
+  getEstimatedTimeLeft,
+  appVersion
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader logs">
@@ -23,7 +24,7 @@ export default ({
           </InvisibleButton>
         </div>
         <Tooltip text={ <T id="logs.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onHideReleaseNotes}/></Tooltip>
-        <T id="getStarted.logsTitle" m="Decrediton v1.2.0 Released" />
+        <T id="getStarted.logsTitle" m="Decrediton v{version} Released" values={{ version: (appVersion) }}/>
       </div>
       <div className="release-notes">
         <div className="release-notes-text">
@@ -69,11 +70,6 @@ export default ({
           adding custom windows and window lengths for custom graphing and exporting
           options.
           </p>
-          Things to expect in the next release:
-          <ul>
-            <li></li>
-            <li></li>
-          </ul>
           New Features
           <ul>
             <li>Validate Addresses - a form to validate addresses has been added to the

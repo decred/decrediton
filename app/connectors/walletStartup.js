@@ -6,6 +6,7 @@ import * as wla from "../actions/WalletLoaderActions";
 import * as da from "../actions/DaemonActions";
 
 const mapStateToProps = selectorMap({
+  appVersion: sel.appVersion,
   setLanguage: sel.setLanguage,
   showTutorial: sel.showTutorial,
   startStepIndex: sel.startStepIndex,
