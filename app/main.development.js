@@ -298,6 +298,7 @@ ipcMain.on("start-wallet", (event, walletPath, testnet) => {
     event.returnValue = dcrwPID;
     return;
   }
+  initWalletCfg(testnet, walletPath);
   try {
     dcrwPID = launchDCRWallet(walletPath, testnet);
   } catch (e) {
