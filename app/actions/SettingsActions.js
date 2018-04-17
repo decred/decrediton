@@ -14,6 +14,7 @@ export const saveSettings = (settings) => (dispatch, getState) => {
 
   const walletConfig = getWalletCfg(isTestNet(getState()), walletName);
   walletConfig.set("currency_display", settings.currencyDisplay);
+  walletConfig.set("gaplimit", settings.gapLimit);
 
   dispatch({ settings, type: SETTINGS_SAVE });
 };

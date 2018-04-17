@@ -1,5 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
-import { SettingsInput, LanguageSelect } from "inputs";
+import { SettingsInput, LanguageSelect, NumericInput } from "inputs";
 import "style/LanguageSelect.less";
 
 const propTypes = {
@@ -61,6 +61,16 @@ const GeneralSettings = ({
             { key: "true", value: true, description: <T id="settings.advancedDaemon.true" m="Enabled" /> },
             { key: "false", value: false, description: <T id="settings.advancedDaemon.false" m="Disabled" /> },
           ]}
+        />
+      </div>
+      <div className="settings-row">
+        <div className="settings-label">
+          <T id="settings.gapLimit.label" m="Gap Limit" />
+        </div>
+        <NumericInput
+          className="settings-input"
+          value={tempSettings.gapLimit}
+          onChange={(e) => onChangeTempSettings({ gapLimit: e.target.value })}
         />
       </div>
     </div>

@@ -60,6 +60,9 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("appdata_path")) {
     config.set("appdata_path","");
   }
+  if (!config.has("gaplimit")) {
+    config.set("gaplimit","20");
+  }
   stakePoolInfo(function(foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
       updateStakePoolConfig(config, foundStakePoolConfigs);
