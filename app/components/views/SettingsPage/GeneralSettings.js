@@ -67,11 +67,12 @@ const GeneralSettings = ({
         <div className="settings-label">
           <T id="settings.gapLimit.label" m="Gap Limit" />
         </div>
-        <NumericInput
-          className="settings-input"
-          value={tempSettings.gapLimit}
-          onChange={(e) => onChangeTempSettings({ gapLimit: e.target.value })}
-        />
+        <div className="settings-input">
+          <NumericInput
+            value={tempSettings.gapLimit}
+            onChange={(e) => onChangeTempSettings({ gapLimit: e.target.value })}
+          />
+        </div>
       </div>
     </div>
   </div>
