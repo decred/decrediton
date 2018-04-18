@@ -9,7 +9,8 @@ export default ({
   onShowLogs,
   getCurrentBlockCount,
   getNeededBlocks,
-  getEstimatedTimeLeft
+  getEstimatedTimeLeft,
+  appVersion
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader logs">
@@ -23,85 +24,74 @@ export default ({
           </InvisibleButton>
         </div>
         <Tooltip text={ <T id="logs.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onHideReleaseNotes}/></Tooltip>
-        <T id="getStarted.logsTitle" m="Decrediton v1.1.2 Released" />
+        <T id="getStarted.logsTitle" m="Decrediton v{version} Released" values={{ version: (appVersion) }}/>
       </div>
       <div className="release-notes">
         <div className="release-notes-text">
           <p>
-            This release marks a major turning point in our overall look and feel of
-            Decrediton. We have introduced consistent header areas with a new subpage/tab
-            interface. React-motion has been added to give a better feel for transitions
-            from page to page and expanded area reveals. All information modals and
-            passphrase modals have been consolidated to have a consistent feel whenever they
-            are used.
+          This release of decrediton adds some major changes to the wallet startup,
+          overview page and adds the first round of statistics for better user
+          information.  Now that the overall look and feel designed by Eeter has been
+          impletmented we will be focusing on refinement and adding improved
+          responsiveness (eg dark mode, resolving to various media widths).
           </p>
           <p>
-            As part of the design overhaul, the Tickets page has begun its transformation
-            to provide a much better user experience. My Tickets subpage is the first step
-            into giving users a clearer picture into their current staking situation. In
-            the upcoming release, we will be adding extensive statistics and graphing to
-            further help visualize a given users' balance and staking history. Overall,
-            we aim to continue to add more tools that will help users' staking experience
-            be much more enjoyable and carefree.
+          Launcher has been redesigned to provide the user with a more intuitive startup
+          experience.  In normal working mode, the daemon (of the chosen network) will
+          begin to sync and become operational while the user completes wallet
+          creation/selection.  Then once both the wallet is ready and the daemon has
+          synced the wallet will fully load.
           </p>
           <p>
-            We have also added advanced daemon setup abilities for users that want to use
-            remote daemons or use a different location for their blockchain data. In the
-            next release, we plan on also adding the ability to handle advanced back-end
-            wallet setups: easily switch between different wallet files on the same machine,
-            connecting to a remote wallet and other possible situations. But these advanced
-            options will also be completely transparent for users that choose to run with
-            the default settings.
+          A tutorial, release notes, settings and logs have all been added to the
+          launcher for the user to utilize whilst they may be waiting for their daemon
+          to sync.  Hopefully this will allow the user to more seamlessly create wallets
+          with less confusion or require any additional support.
           </p>
           <p>
-            We have added a Security Center page that will be a catch-all place to
-            store tools that we feel have utility, but aren't needed for everyday normal
-            wallet operation. The first 2 tools that have been added are for Signing and
-            Verifying messages using addresses and private keys to prove ownership of a
-            given address. Here is a typical use case: User A wants to prove to User B
-            that they control a given address. With the Sign Message tool, User A enters
-            the address, a message and their wallet's private passphrase. The tool produces
-            a hash that was created based on that address' private key and the given
-            message. With the Verify Message tool, User B can use the address in question,
-            the hash and the message from User A to verify that it was signed using that
-            address' private key.
+          The wallet creation by seed has received a substantial update as well.  We now
+          allow the user to copy seeds (if they complete a warning screen) and also paste
+          seeds.  And for confirmation for new wallets only requires the user to complete
+          1/3 of the words to confirm storage of wallet's seed.
           </p>
           <p>
-            We are also happy to announce the introduction of internationalization.
-            Brazilian Portuguese has been added for the first pass and we will be slowly
-            adding more languages on every new release.
+          Overview has beed redesigned to give the user more information about their
+          wallet's current situation and to guide them where to find various features
+          of their wallet.  Basic graphs covering balances, tickets and transactions have
+          been added.  All recent transactions and recent ticket activity can be found
+          below the overview graphs.  We will be adding more features to the overview page
+          as we gauge user interest and feedback on existing additions.
           </p>
-            Things to expect in the next release:
+          <p>
+          Introductory data prepartion and statistics have been implemented for this
+          release.  For now we are providing a small window of lookback for transactions,
+          staking and other information.  The reduced window size is mostly an issue
+          with unsatisfactory performance.  When this performance improves, we will be
+          adding custom windows and window lengths for custom graphing and exporting
+          options.
+          </p>
+          New Features
           <ul>
-            <li>New overview page design</li>
-            <li>Rich historical Statistics/Graphs</li>
-            <li>New staking account user experience</li>
-            <li>Advanced wallet settings</li>
-            <li>More languages translated</li>
-          </ul>
-          Bug fixes
-          <ul>
-            <li>Fix issue on Windows caused by using "Aux" as a filename. Aux is a restricted
-              filename with Windows and a simple filename change fixed it.</li>
+            <li>Validate Addresses - a form to validate addresses has been added to the
+            Security Center.  This will allow users to test addresses to confirm address
+            ownership and/or validity.</li>
 
-            <li>Fix shutdown issue with macOS. When cmd-Q or quitting Decrediton from the
-              dock caused dcrd and dcrwallet to not be shutdown in the background. By
-              adding a final closeClis() in app.on("before-quit",...) it ensures that
-              everything is closed on any shutdown.</li>
+            <li>Filter by address - now transactions can be filtered by address in History.
+            When the user enters a string into the address filter form, it will show any
+            address that has an output with a matching address.</li>
 
-            <li>Removed Skip Sync button due to the new slip44 change in dcrwallet. With the
-              new coin type change, dcrwallet needs to check if there has been any address
-              usage up to that point in the chain for a given wallet.</li>
+            <li>Charts - we have decided to use [recharts](https://recharts.org) as our first
+            charting solution.  </li>
 
-            <li>Shorten account names in various areas to avoid obnoxious overflow.</li>
+            <li>Import wallet from hex seed - instead of entering in the 33 word
+            mnemonic, they are now able to use the hex representation of their seed.</li>
 
-            <li>Fix issue that was occuring when clearing out stakepool configurations. This
-              would cause users to possibly have incorrect stakepool setups.</li>
+            <li>Export data to CSV - we now all users to export various types of data to csv.
+            These options are found under the Transactions page.  </li>
 
-            <li>Change functionality of the space key during seed entry. Previously, when the
-              user would enter the space key they would end up not "selecting" a word and
-              then just type the whole seed. Now the space "selects" the word just as
-              pressing tab does.</li>
+            <li>Show logs - logs can now be found on the launcher and on the help page.
+            For now, we only show the logs of the current instance of wallet and daemon.
+            This is mostly due to performance with pulling in thousands of lines of text.</li>
           </ul>
         </div>
         <div className="release-notes-image" />
