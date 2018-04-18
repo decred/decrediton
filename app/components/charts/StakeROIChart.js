@@ -2,7 +2,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip } from "recharts";
 import { injectIntl } from "react-intl";
 import messages from "./messages";
 import { yAxisStyle, xAxisStyle, myTicketsChartSize, padding,
-  radiusMiddle, radiusTop } from "./Styles";
+  radiusBottom, radiusTop } from "./Styles";
 import { FormattedMessage as T } from "react-intl";
 
 const ChartTooltip = (props) => {
@@ -43,8 +43,8 @@ const VoteTimeChart = ({ data, intl }) => {
   const displayData = data.map(s => ({
     name: intl.formatMessage(messages.dayMonthDisplay, { value: s.time }),
     legendName: intl.formatMessage(messages.fullDayDisplay, { value: s.time }),
-    [stakeRewardsKey]: s.stakeRewardROI*100,
     [stakeFeesKey]: s.stakeFeesROI*100,
+    [stakeRewardsKey]: s.stakeRewardROI*100,
   }));
 
   return (
@@ -52,7 +52,7 @@ const VoteTimeChart = ({ data, intl }) => {
       <XAxis dataKey="name" style={yAxisStyle} />
       <YAxis orientation="right" style={xAxisStyle} padding={padding} />
       <Tooltip content={<ChartTooltip />} />
-      <Line barSize={8} dataKey={stakeRewardsKey} stackId="a" fill="#0c1e3e" radius={radiusMiddle} />
+      <Line barSize={8} dataKey={stakeRewardsKey} stackId="a" fill="#0c1e3e" radius={radiusBottom} />
       <Line barSize={8} dataKey={stakeFeesKey} stackId="a" fill="#69d5f7" radius={radiusTop} />
     </LineChart>
   );
