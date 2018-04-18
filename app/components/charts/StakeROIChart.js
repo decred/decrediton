@@ -52,8 +52,8 @@ const VoteTimeChart = ({ data, intl }) => {
       <XAxis dataKey="name" style={yAxisStyle} />
       <YAxis orientation="right" style={xAxisStyle} padding={padding} />
       <Tooltip content={<ChartTooltip />} />
-      <Line barSize={8} dataKey={stakeFeesKey} stackId="a" fill="#69d5f7" radius={radiusTop} />
       <Line barSize={8} dataKey={stakeRewardsKey} stackId="a" fill="#0c1e3e" radius={radiusBottom} />
+      <Line barSize={8} dataKey={stakeFeesKey} stackId="a" fill="#69d5f7" radius={radiusTop} />
     </LineChart>
   );
 };

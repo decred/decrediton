@@ -28,11 +28,11 @@ const BalanceChart = ({ data, intl }) => {
       <XAxis dataKey="name" style={yAxisStyle} />
       <YAxis orientation="right" style={xAxisStyle} padding={padding} />
       <Tooltip content={<ChartTooltip />} />
-      <Bar barSize={8} dataKey={votedKey} stackId="a" fill="#2ed7a2" radius={radiusTop} />
+      <Bar barSize={8} dataKey={lockedKey} stackId="a" fill="#2971ff" radius={radiusBottom} />
       <Bar barSize={8} dataKey={revokedKey} stackId="a" fill="#8e1702" radius={radiusMiddle} />
       <Bar barSize={8} dataKey={ticketKey} stackId="a" fill="#69d5f7" radius={radiusMiddle} />
       <Bar barSize={8} dataKey={immatureKey} stackId="a" fill="#9ee702" radius={radiusMiddle} />
-      <Bar barSize={8} dataKey={lockedKey} stackId="a" fill="#2971ff" radius={radiusBottom} />
+      <Bar barSize={8} dataKey={votedKey} stackId="a" fill="#2ed7a2" radius={radiusTop} />
     </BarChart>
   );
 };

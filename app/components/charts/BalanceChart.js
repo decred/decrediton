@@ -24,9 +24,9 @@ const BalanceChart = ({ data, intl }) => {
       <XAxis dataKey="name" style={yAxisStyle} />
       <YAxis orientation="right" style={xAxisStyle} padding={padding} />
       <Tooltip content={<ChartTooltip />} />
-      <Bar barSize={8} dataKey={lockedKey} stackId="a" fill="#0c1e3e" radius={radiusTop} />
-      <Bar barSize={8} dataKey={immatureKey} stackId="a" fill="#69d5f7" radius={radiusMiddle} />
       <Bar barSize={8} dataKey={availableKey} stackId="a" fill="#2971ff" radius={radiusBottom} />
+      <Bar barSize={8} dataKey={immatureKey} stackId="a" fill="#69d5f7" radius={radiusMiddle} />
+      <Bar barSize={8} dataKey={lockedKey} stackId="a" fill="#0c1e3e" radius={radiusTop} />
     </BarChart>
   );
 };
