@@ -504,6 +504,7 @@ const launchDCRWallet = (walletPath, testnet) => {
 
   const cfg = getWalletCfg(testnet, walletPath);
 
+  args.push("--ticketbuyer.nospreadticketpurchases");
   args.push("--ticketbuyer.balancetomaintainabsolute=" + cfg.get("balancetomaintain"));
   args.push("--ticketbuyer.maxfee=" + cfg.get("maxfee"));
   args.push("--ticketbuyer.maxpricerelative=" + cfg.get("maxpricerelative"));
