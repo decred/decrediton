@@ -130,6 +130,8 @@ import { tsToDate } from "../../helpers/dateFormat";
 
 **:exclamation: Note**: Due to how react-intl works, the date and time is only translated if the format string is translated (i.e. it can't rely on the `defaultMessage` string). So the translation must be filled, even if using the exact same date and time formats.
 
+**:exclamation: Note**: Also note that due to this quirk, locales that use the original english strings but a different date/time format need to get the translated strings as well. To provide a localization using the english strings, create a new locale using the `original.json` message file, which is also automatically maintained by the scripts.
+
 ### DCR Amount
 
 To display an amount of DCR, use the `Balance` component:
