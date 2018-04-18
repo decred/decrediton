@@ -14,7 +14,7 @@ export const startDaemon = log((appData, testnet) => Promise
     throw "Error starting daemon";
   }), "Start Daemon");
 
-export const cleanShutdown = log(() => {
+export const cleanShutdown = () => {
   return new Promise(resolve => {
     ipcRenderer.send("clean-shutdown");
     ipcRenderer.on("clean-shutdown-finished", (event, stopped) => {
@@ -23,7 +23,7 @@ export const cleanShutdown = log(() => {
       resolve(stopped);
     });
   });
-});
+};
 
 export const createNewWallet = log((walletPath, testnet) => Promise
   .resolve(ipcRenderer.sendSync("create-wallet", walletPath, testnet))
@@ -58,7 +58,7 @@ export const setPreviousWallet = log((cfg) => Promise
 
 export const getPreviousWallet = log(() => Promise
   .resolve(ipcRenderer.sendSync("get-previous-wallet"))
-  , "Get Previous Wallet");
+  , "Get Previous Wallet", logOptionNoResponseData());
 
 export const getBlockCount = log((rpcCreds, testnet) => new Promise(resolve => {
   ipcRenderer.once("check-daemon-response", (e, block) => {
