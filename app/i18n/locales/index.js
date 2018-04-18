@@ -27,6 +27,14 @@ const en = {
   formats: defaultFormats //dont customize for en language
 };
 
+const en_AU = {
+  key: "en-AU",
+  language: "en-AU",
+  description: "Australian English",
+  messages: require("../translations/original.json"),
+  formats: defaultFormats //dont customize for en language
+};
+
 const pt_BR = {
   key: "pt-BR",
   language: "pt-BR",
@@ -45,7 +53,7 @@ const dev = {
   formats: defaultFormats
 };
 
-const locales = [ en, pt_BR ];
+const locales = [ en, en_AU, pt_BR ];
 
 if (process.env.NODE_ENV === "development") {
   locales.push(dev);
@@ -65,6 +73,8 @@ export function appLocaleFromElectronLocale(electronLocale) {
   case "pt-PT":
     return "pt-BR";
 
+  case "en-AU":
+    return "en-AU";
   default: return "en";
   }
 }
