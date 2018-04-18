@@ -30,6 +30,8 @@ export default function settings(state = {}, action) {
     var tempSettings = state.tempSettings;
     currentSettings.currencyDisplay = action.currencyDisplay;
     tempSettings.currencyDisplay = action.currencyDisplay;
+    currentSettings.gapLimit = action.gapLimit;
+    tempSettings.gapLimit = action.gapLimit;
     return { ...state,
       currentSettings: currentSettings,
       tempSettings: tempSettings

@@ -168,6 +168,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
           }
         }
       }
+      var gapLimit = walletCfg.get("gaplimit");
       var hiddenAccounts = walletCfg.get("hiddenaccounts");
       var currencyDisplay = walletCfg.get("currency_display");
       var balanceToMaintain = walletCfg.get("balancetomaintain");
@@ -180,7 +181,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
       var selectedStakePool = firstConfiguredStakePool;
       dispatch({ type: WALLETREADY, walletName: selectedWallet.value.wallet, network: network, hiddenAccounts, port });
       dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative, maxPerBlock });
-      dispatch({ type: WALLET_SETTINGS, currencyDisplay });
+      dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
       dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig });
       dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
       setTimeout(()=>dispatch(versionCheckAction()), 2000);

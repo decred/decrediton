@@ -1,5 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
-import { SettingsInput, LanguageSelect } from "inputs";
+import { SettingsInput, LanguageSelect, NumericInput } from "inputs";
+import { InfoModalButton } from "buttons";
+import { GapLimitInfoModalContent } from "modals";
 import "style/LanguageSelect.less";
 
 const propTypes = {
@@ -62,6 +64,21 @@ const GeneralSettings = ({
             { key: "false", value: false, description: <T id="settings.advancedDaemon.false" m="Disabled" /> },
           ]}
         />
+      </div>
+      <div className="settings-row">
+        <div className="settings-label">
+          <InfoModalButton
+            modalTitle={<h1><T id="settings.gapLimit.information" m="Gap Limit information" /></h1>}
+            modalContent={<GapLimitInfoModalContent />}
+          />
+          <T id="settings.gapLimit.label" m="Gap Limit" />
+        </div>
+        <div className="settings-input">
+          <NumericInput
+            value={tempSettings.gapLimit}
+            onChange={(e) => onChangeTempSettings({ gapLimit: e.target.value })}
+          />
+        </div>
       </div>
     </div>
   </div>
