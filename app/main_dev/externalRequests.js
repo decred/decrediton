@@ -9,6 +9,7 @@ import { session } from "electron";
 import { isRegExp } from "util";
 import { getGlobalCfg } from "../config";
 import { app } from "electron";
+import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "../middleware/politeiaapi";
 
 export const EXTERNALREQUEST_NETWORK_STATUS = "EXTERNALREQUEST_NETWORK_STATUS";
 export const EXTERNALREQUEST_STAKEPOOL_LISTING = "EXTERNALREQUEST_STAKEPOOL_LISTING";
@@ -83,8 +84,8 @@ export const allowExternalRequest = (externalReqType) => {
     addAllowedURL("https://api.github.com/repos/decred/decrediton/releases");
     break;
   case EXTERNALREQUEST_POLITEIA:
-    addAllowedURL("https://localhost:4443/v1"); // FIXME: change to testnet proposals once it is released
-    addAllowedURL("https://politeia.org/api"); // FIXME: change to mainnet proposals once it is released
+    addAllowedURL(POLITEIA_URL_TESTNET);
+    addAllowedURL(POLITEIA_URL_MAINNET);
     break;
   default:
     logger.log("error", "Unknown external request type: " + externalReqType);

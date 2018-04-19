@@ -1,6 +1,9 @@
 // @flow
 import axios from "axios";
 
+export const POLITEIA_URL_TESTNET = "https://test-proposals.decred.org/api";
+export const POLITEIA_URL_MAINNET = "https://politeia.org/api"; // FIXME: set to production URL
+
 export function getActiveVotes(piURL) {
   const url = piURL + "/v1/proposals/activevote";
   return axios.get(url);
