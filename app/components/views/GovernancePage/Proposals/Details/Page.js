@@ -1,8 +1,9 @@
-import { GoBackIconButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
+import { GoBackIconButton } from "buttons";
 import {
   ProposalNotVoting, NoTicketsVotingInfo, OverviewField, OverviewVotingProgressInfo,
   NoElligibleTicketsVotingInfo, VotingChoicesInfo, UpdatingVoteChoice, TimeValue,
+  ChosenVoteOption
 } from "./helpers";
 
 export default ({ viewedProposalDetails,
@@ -11,8 +12,9 @@ export default ({ viewedProposalDetails,
 {
   console.log("viewing", viewedProposalDetails);
 
-  const { name, token, hasElligibleTickets, voting, voteOptions,
+  const { name, token, hasEligibleTickets, voting, voteOptions,
     voteCounts, creator, timestamp, voteDetails, currentVoteChoice } = viewedProposalDetails;
+  const eligibleTicketCount = viewedProposalDetails.eligibleTickets.length;
 
   console.log(voteDetails);
 
@@ -22,6 +24,16 @@ export default ({ viewedProposalDetails,
       text += f.payload + "\n\n";
     }
   });
+
+  let voteInfo = null;
+  if (updateVoteChoiceAttempt) voteInfo = <UpdatingVoteChoice />;
+  else if (!voting) voteInfo = <ProposalNotVoting />;
+  else if (!hasTickets) voteInfo = <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
+  else if (!hasEligibleTickets) voteInfo = <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
+  else if (currentVoteChoice !== "abstain") voteInfo = <ChosenVoteOption {...{ currentVoteChoice }} />;
+  else {
+    voteInfo = <VotingChoicesInfo {...{ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice, eligibleTicketCount }}  />;
+  }
 
   return (
     <Aux>
@@ -43,16 +55,7 @@ export default ({ viewedProposalDetails,
         </div>
         <div className="proposal-details-overview-voting">
           <GoBackIconButton />
-          { updateVoteChoiceAttempt
-            ? <UpdatingVoteChoice />
-            : !voting
-              ? <ProposalNotVoting />
-              : !hasTickets
-                ? <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />
-                : !hasElligibleTickets
-                  ? <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />
-                  : <VotingChoicesInfo {...{ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice, currentVoteChoice }}  />
-          }
+          {voteInfo}
         </div>
         { voting ? <OverviewVotingProgressInfo {...{ voteCounts }} /> : null }
       </div>

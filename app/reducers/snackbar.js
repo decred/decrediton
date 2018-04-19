@@ -42,6 +42,11 @@ import {
   GETWALLETSEEDSVC_FAILED
 } from "actions/WalletLoaderActions";
 
+import {
+  GETACTIVEVOTE_FAILED, GETVETTED_FAILED, GETPROPOSAL_FAILED,
+  UPDATEVOTECHOICE_FAILED
+} from "actions/GovernanceActions";
+
 const messages = defineMessages({
   defaultSuccessMessage: {
     id: "snackbar.defaults.success",
@@ -257,6 +262,10 @@ export default function snackbar(state = {}, action) {
   case GETSTARTUPSTATS_FAILED:
   case GETMYTICKETSSTATS_FAILED:
   case GETWALLETSEEDSVC_FAILED:
+  case GETACTIVEVOTE_FAILED:
+  case GETVETTED_FAILED:
+  case GETPROPOSAL_FAILED:
+  case UPDATEVOTECHOICE_FAILED:
     type = "Error";
     message = messages[action.type] || messages.defaultErrorMessage;
     values = { originalError: String(action.error) };

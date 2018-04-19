@@ -42,10 +42,23 @@ const CurrentVoteChoiceLabel = ({ currentVoteChoice }) => {
   );
 };
 
-export const VotingChoicesInfo = (props) => (
+export const ChosenVoteOption = ({ currentVoteChoice }) => (
   <Aux>
     <div className="proposal-details-voting-preference-title"><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
-    <div className="proposal-details-current-choice-box"><CurrentVoteChoiceLabel currentVoteChoice={props.currentVoteChoice} /></div>
+    <div className="proposal-details-current-choice-box"><CurrentVoteChoiceLabel currentVoteChoice={currentVoteChoice} /></div>
+  </Aux>
+);
+
+export const VotingChoicesInfo = (props) => (
+  <Aux>
+    <div className="proposal-details-voting-preference-title"><T id="proposalDetails.votingInfo.vote" m="Vote on this proposal" /></div>
+    <div className="proposal-details-voting-preference-ticket-count" >
+      <T
+        id="proposalDetails.votingInfo.eligibleCount"
+        m="You have {count, plural, one {one ticket} other {# tickets}} eligible for voting"
+        values={{ count: props.eligibleTicketCount }}
+      />
+    </div>
     <UpdateVoteChoiceModalButton {...props} />
   </Aux>
 );

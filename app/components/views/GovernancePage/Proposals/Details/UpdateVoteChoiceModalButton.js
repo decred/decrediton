@@ -20,6 +20,6 @@ export default ({ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVote
       </div>
     }
     onSubmit={onUpdateVoteChoice}
-    buttonLabel={<T id="proposals.updateVoteChoiceModal.btnLabel" m="Update" />}
+    buttonLabel={<T id="proposals.updateVoteChoiceModal.btnLabel" m="Vote" />}
   />
 );

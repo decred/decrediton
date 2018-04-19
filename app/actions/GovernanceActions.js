@@ -3,12 +3,39 @@ import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
-import { currentBlockHeight } from "../selectors";
 
 export const GETACTIVEVOTE_ATTEMPT = "GETACTIVEVOTE_ATTEMPT";
 export const GETACTIVEVOTE_FAILED = "GETACTIVEVOTE_FAILED";
 export const GETACTIVEVOTE_SUCCESS = "GETACTIVEVOTE_SUCCESS";
 
+// Aux function to fill the vote result information on a given proposal.
+const getProposalVoteResults = async (proposal, piURL) => {
+  proposal.voteCounts = { abstain: proposal.voteDetails.eligibleTickets.length };
+  proposal.currentVoteChoice = "abstain";
+
+  const voteBitToChoice = {}; // aux map from bit to vote choice id
+  proposal.voteOptions.forEach(opt => {
+    voteBitToChoice[opt.bits] = opt.id;
+    proposal.voteCounts[opt.id] = 0;
+  });
+
+  const myTickets = proposal.eligibleTickets.reduce( (m, t) => { m[t.ticket] = true; return m; }, {});
+
+  const voteResults = await pi.getVoteResults(piURL, proposal.token);
+  console.log("Got vote results", voteResults);
+
+  voteResults.data.castvotes.forEach(vote => {
+    const choiceID = voteBitToChoice[parseInt(vote.votebit)];
+    if (!choiceID) { throw "ERRRRR: choiceID not found on vote", vote; }
+    proposal.voteCounts.abstain -= 1;
+    proposal.voteCounts[choiceID] += 1;
+    if (myTickets[vote.ticket]) {
+      proposal.currentVoteChoice = choiceID;
+    }
+  });
+};
+
+// Lists the proposals up for voting on politeia
 export const getActiveVoteProposals = () => async (dispatch, getState) => {
 
   const ticketHashesToByte = (hashes) => hashes.map(hexReversedHashToArray);
@@ -24,7 +51,6 @@ export const getActiveVoteProposals = () => async (dispatch, getState) => {
     const currentHeight = sel.currentBlockHeight(getState());
     const currentTimestamp = new Date().getTime() / 1000;
     const blockTimestampFromNow = (block) => Math.trunc(currentTimestamp + ((block - currentHeight) * chainParams.TargetTimePerBlock));
-    console.log(currentHeight, blockTimestampFromNow(currentHeight+1));
 
     const proposals = [];
     for (let i = 0; i < resp.data.votes.length; i++) {
@@ -33,7 +59,7 @@ export const getActiveVoteProposals = () => async (dispatch, getState) => {
       const proposal = {
         creator: p.userid,
         voting: true,
-        hasElligibleTickets: false,
+        hasEligibleTickets: false,
         eligibleTickets: [],
         name: p.name,
         token: p.censorshiprecord.token,
@@ -42,6 +68,8 @@ export const getActiveVoteProposals = () => async (dispatch, getState) => {
         voteOptions: vinfo.vote.Options,
         voteMask: vinfo.vote.mask,
         voteDetails: {
+          eligibleTickets: vinfo.votedetails.eligibletickets,
+
           startBlockHeight: parseInt(vinfo.votedetails.startblockheight),
           endBlockHeight: parseInt(vinfo.votedetails.endheight),
 
@@ -49,37 +77,17 @@ export const getActiveVoteProposals = () => async (dispatch, getState) => {
           startTimestamp: blockTimestampFromNow(parseInt(vinfo.votedetails.startblockheight)),
           endTimestamp: blockTimestampFromNow(parseInt(vinfo.votedetails.endheight)),
         },
-        voteCounts: { abstain: vinfo.votedetails.eligibletickets.length },
-        currentVoteChoice: "abstain",
       };
-
-      const voteBitToChoice = {}; // aux map from bit to vote choice id
-      proposal.voteOptions.forEach(opt => {
-        voteBitToChoice[opt.bits] = opt.id;
-        proposal.voteCounts[opt.id] = 0;
-      });
 
       const commitedTicketsResp = await wallet.committedTickets(walletService, ticketHashesToByte(vinfo.votedetails.eligibletickets));
       const tickets = commitedTicketsResp.getTicketaddressesList();
-      proposal.hasElligibleTickets = tickets.length > 0;
+      proposal.hasEligibleTickets = tickets.length > 0;
       proposal.eligibleTickets = tickets.map(t => ({
         ticket: reverseRawHash(t.getTicket()),
         address: t.getAddress(),
       }));
 
-      const myTickets = proposal.eligibleTickets.reduce( (m, t) => { m[t.ticket] = true; return m; }, {});
-
-      const voteResults = await pi.getVoteResults(piURL, p.censorshiprecord.token);
-      console.log("Got vote results", voteResults);
-      voteResults.data.castvotes.forEach(vote => {
-        const choiceID = voteBitToChoice[parseInt(vote.votebit)];
-        if (!choiceID) { console.log("ERRRRR: choiceID not found on vote", vote); return; }
-        proposal.voteCounts.abstain -= 1;
-        proposal.voteCounts[choiceID] += 1;
-        if (myTickets[vote.ticket]) {
-          proposal.currentVoteChoice = choiceID;
-        }
-      });
+      await getProposalVoteResults(proposal, piURL);
 
       proposals.push(proposal);
     }
@@ -105,7 +113,7 @@ export const getVettedProposals = () => (dispatch, getState) => {
         return {
           creator: p.userid,
           voting: false,
-          hasElligibleTickets: false,
+          hasEligibleTickets: false,
           name: p.name,
           token: p.censorshiprecord.token,
           numComments: p.numcomments,
@@ -217,10 +225,20 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) =>
 
       const piURL = sel.politeiaURL(getState());
       const voted = await pi.castVotes(piURL, votes);
-
       console.log("voted", voted);
 
-      dispatch({ votes, type: UPDATEVOTECHOICE_SUCCESS });
+      // update the vote count for the proposal from pi, so we can see our
+      // vote counting towards the totals
+      const newProposal = { ...proposal };
+      await getProposalVoteResults(newProposal, piURL);
+
+      const existProposals = getState().governance.proposals;
+      const proposals = {
+        ...existProposals,
+        [proposal.token]: newProposal
+      };
+
+      dispatch({ votes, proposals, type: UPDATEVOTECHOICE_SUCCESS });
     } catch (error) {
       console.log("cast votes errored", error);
       dispatch({ error, type: UPDATEVOTECHOICE_FAILED });
