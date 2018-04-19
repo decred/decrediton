@@ -20,6 +20,7 @@ class ProposalDetails extends React.Component {
 
     this.props.updateVoteChoice(this.props.viewedProposalDetails,
       this.state.newVoteChoice, privatePassphrase);
+    this.setState( { newVoteChoice: null } );
   }
 
   render() {

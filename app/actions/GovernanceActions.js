@@ -3,52 +3,92 @@ import * as pi from "middleware/politeiaapi";
 import * as wallet from "wallet";
 import { push as pushHistory } from "react-router-redux";
 import { hexReversedHashToArray, reverseRawHash } from "helpers";
+import { currentBlockHeight } from "../selectors";
 
 export const GETACTIVEVOTE_ATTEMPT = "GETACTIVEVOTE_ATTEMPT";
 export const GETACTIVEVOTE_FAILED = "GETACTIVEVOTE_FAILED";
 export const GETACTIVEVOTE_SUCCESS = "GETACTIVEVOTE_SUCCESS";
 
-export const getActiveVoteProposals = () => (dispatch, getState) => {
+export const getActiveVoteProposals = () => async (dispatch, getState) => {
 
   const ticketHashesToByte = (hashes) => hashes.map(hexReversedHashToArray);
 
   dispatch({ type: GETACTIVEVOTE_ATTEMPT });
   const piURL = sel.politeiaURL(getState());
-  pi.getActiveVotes(piURL)
-    .then(async (resp) => {
-      console.log("active votes", resp);
-      const { walletService } = getState().grpc;
+  try {
+    const resp = await pi.getActiveVotes(piURL);
 
-      const proposals = [];
-      for (let i = 0; i < resp.data.votes.length; i++) {
-        const vinfo = resp.data.votes[i];
-        const p = vinfo.proposal;
-        const proposal = {
-          voting: true,
-          hasElligibleTickets: false,
-          eligibleTickets: [],
-          name: p.name,
-          token: p.censorshiprecord.token,
-          numComments: p.numcomments,
-          timestamp: p.timestamp,
-          voteOptions: vinfo.vote.Options,
-          voteMask: vinfo.vote.mask,
-          voteDetails: vinfo.votedetails,
-        };
+    console.log("active votes", resp);
+    const { walletService } = getState().grpc;
+    const chainParams = sel.chainParams(getState());
+    const currentHeight = sel.currentBlockHeight(getState());
+    const currentTimestamp = new Date().getTime() / 1000;
+    const blockTimestampFromNow = (block) => Math.trunc(currentTimestamp + ((block - currentHeight) * chainParams.TargetTimePerBlock));
+    console.log(currentHeight, blockTimestampFromNow(currentHeight+1));
 
-        const commitedTicketsResp = await wallet.committedTickets(walletService, ticketHashesToByte(vinfo.votedetails.eligibletickets));
-        const tickets = commitedTicketsResp.getTicketaddressesList();
-        proposal.hasElligibleTickets = tickets.length > 0;
-        proposal.eligibleTickets = tickets.map(t => ({
-          ticket: reverseRawHash(t.getTicket()),
-          address: t.getAddress(),
-        }));
+    const proposals = [];
+    for (let i = 0; i < resp.data.votes.length; i++) {
+      const vinfo = resp.data.votes[i];
+      const p = vinfo.proposal;
+      const proposal = {
+        creator: p.userid,
+        voting: true,
+        hasElligibleTickets: false,
+        eligibleTickets: [],
+        name: p.name,
+        token: p.censorshiprecord.token,
+        numComments: p.numcomments,
+        timestamp: p.timestamp,
+        voteOptions: vinfo.vote.Options,
+        voteMask: vinfo.vote.mask,
+        voteDetails: {
+          startBlockHeight: parseInt(vinfo.votedetails.startblockheight),
+          endBlockHeight: parseInt(vinfo.votedetails.endheight),
 
-        proposals.push(proposal);
-      }
-      dispatch({ proposals, type: GETACTIVEVOTE_SUCCESS });
-    })
-    .catch((error) => dispatch({ error, type: GETACTIVEVOTE_FAILED }));
+          // start/end timestamp are only estimations based on target block time
+          startTimestamp: blockTimestampFromNow(parseInt(vinfo.votedetails.startblockheight)),
+          endTimestamp: blockTimestampFromNow(parseInt(vinfo.votedetails.endheight)),
+        },
+        voteCounts: { abstain: vinfo.votedetails.eligibletickets.length },
+        currentVoteChoice: "abstain",
+      };
+
+      const voteBitToChoice = {}; // aux map from bit to vote choice id
+      proposal.voteOptions.forEach(opt => {
+        voteBitToChoice[opt.bits] = opt.id;
+        proposal.voteCounts[opt.id] = 0;
+      });
+
+      const commitedTicketsResp = await wallet.committedTickets(walletService, ticketHashesToByte(vinfo.votedetails.eligibletickets));
+      const tickets = commitedTicketsResp.getTicketaddressesList();
+      proposal.hasElligibleTickets = tickets.length > 0;
+      proposal.eligibleTickets = tickets.map(t => ({
+        ticket: reverseRawHash(t.getTicket()),
+        address: t.getAddress(),
+      }));
+
+      const myTickets = proposal.eligibleTickets.reduce( (m, t) => { m[t.ticket] = true; return m; }, {});
+
+      const voteResults = await pi.getVoteResults(piURL, p.censorshiprecord.token);
+      console.log("Got vote results", voteResults);
+      voteResults.data.castvotes.forEach(vote => {
+        const choiceID = voteBitToChoice[parseInt(vote.votebit)];
+        if (!choiceID) { console.log("ERRRRR: choiceID not found on vote", vote); return; }
+        proposal.voteCounts.abstain -= 1;
+        proposal.voteCounts[choiceID] += 1;
+        if (myTickets[vote.ticket]) {
+          proposal.currentVoteChoice = choiceID;
+        }
+      });
+
+      proposals.push(proposal);
+    }
+
+    proposals.sort((a, b) => a.timestamp - b.timestamp);
+    dispatch({ proposals, type: GETACTIVEVOTE_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: GETACTIVEVOTE_FAILED });
+  }
 };
 
 export const GETVETTED_ATTEMPT = "GETVETTED_ATTEMPT";
@@ -63,6 +103,7 @@ export const getVettedProposals = () => (dispatch, getState) => {
       console.log("vetted", resp);
       const proposals = resp.data.proposals.map((p => {
         return {
+          creator: p.userid,
           voting: false,
           hasElligibleTickets: false,
           name: p.name,
@@ -71,6 +112,7 @@ export const getVettedProposals = () => (dispatch, getState) => {
           timestamp: p.timestamp,
         };
       }));
+      proposals.sort((a, b) => a.timestamp - b.timestamp);
       dispatch({ proposals, type: GETVETTED_SUCCESS });
     })
     .catch((error) => dispatch({ error, type: GETVETTED_FAILED }));
@@ -114,6 +156,7 @@ export const getProposalDetails = (token) => (dispatch, getState) => {
 
       const proposal = {
         ...voteProposal,
+        creator: p.userid,
         token: token,
         name: p.name,
         numComments: p.numcomments,
@@ -134,12 +177,18 @@ export const viewProposalDetails = (token) => (dispatch, getState) => {
   dispatch(pushHistory("/governance/proposals/details/" + token));
 };
 
+export const UPDATEVOTECHOICE_ATTEMPT = "UPDATEVOTECHOICE_ATTEMPT";
+export const UPDATEVOTECHOICE_SUCCESS = "UPDATEVOTECHOICE_SUCCESS";
+export const UPDATEVOTECHOICE_FAILED = "UPDATEVOTECHOICE_FAILED";
+
 export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) =>
-  (dispatch, getState) => {
+  async (dispatch, getState) => {
     const { walletService } = getState().grpc;
 
     const voteChoice = proposal.voteOptions.find(o => o.id === newVoteChoiceID);
     if (!voteChoice) throw "Unknown vote choice for proposal";
+
+    dispatch({ type: UPDATEVOTECHOICE_ATTEMPT });
 
     const messages = proposal.eligibleTickets.map(t => {
       // msg here needs to follow the same syntax as what is defined on
@@ -148,27 +197,32 @@ export const updateVoteChoice = (proposal, newVoteChoiceID, passphrase) =>
       return { address: t.address, message: msg };
     });
 
-    wallet
-      .signMessages(walletService, passphrase, messages)
-      .then(resp => {
-        const votes = [];
-        const sigs = resp.getRepliesList();
-        proposal.eligibleTickets.forEach((t, i) => {
-          const signature = sigs[i];
-          if (signature.getError() != "") {
-            console.log("Error signing message", signature.getError());
-            return;
-          }
-          const hexSig = Buffer.from(signature.getSignature()).toString("hex");
+    try {
+      const signed = await wallet.signMessages(walletService, passphrase, messages);
 
-          votes.push(pi.Vote(proposal.token, t.ticket, voteChoice.bits, hexSig));
-        });
+      const votes = [];
+      const sigs = signed.getRepliesList();
+      proposal.eligibleTickets.forEach((t, i) => {
+        const signature = sigs[i];
+        if (signature.getError() != "") {
+          console.log("Error signing message", signature.getError());
+          return;
+        }
+        const hexSig = Buffer.from(signature.getSignature()).toString("hex");
 
-        console.log("casting votes", votes);
+        votes.push(pi.Vote(proposal.token, t.ticket, voteChoice.bits, hexSig));
+      });
 
-        const piURL = sel.politeiaURL(getState());
-        pi.castVotes(piURL, votes);
-      })
-      .catch(error => console.log("signMessages errored", error));
+      console.log("casting votes", votes);
 
+      const piURL = sel.politeiaURL(getState());
+      const voted = await pi.castVotes(piURL, votes);
+
+      console.log("voted", voted);
+
+      dispatch({ votes, type: UPDATEVOTECHOICE_SUCCESS });
+    } catch (error) {
+      console.log("cast votes errored", error);
+      dispatch({ error, type: UPDATEVOTECHOICE_FAILED });
+    }
   };

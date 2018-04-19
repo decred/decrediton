@@ -15,6 +15,7 @@ const mapStateToProps = selectorMap({
   getProposalAttempt: sel.getProposalAttempt,
   getProposalError: sel.getProposalError,
   hasTickets: sel.hasTickets,
+  updateVoteChoiceAttempt: sel.updateVoteChoiceAttempt,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

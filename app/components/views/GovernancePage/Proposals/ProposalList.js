@@ -1,6 +1,7 @@
 import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { activeVoteProposals, vettedProposals, proposals } from "connectors";
 import { tsToDate } from "helpers";
+import { StakeyBounce } from "indicators";
 
 const ProposalListItem = ({ name, timestamp, token, onClick }) => (
   <div className="proposal-list-item" onClick={() => onClick(token)}>
@@ -13,9 +14,9 @@ const ProposalListItem = ({ name, timestamp, token, onClick }) => (
   </div>
 );
 
-const ProposalList = ({ proposals, viewProposalDetails }) => (
+const ProposalList = ({ proposals, loading, viewProposalDetails }) => (
   <div className="proposal-list">
-    {proposals.map(v => (
+    {loading ? <StakeyBounce /> : proposals.map(v => (
       <ProposalListItem key={v.token} {...v} onClick={viewProposalDetails} />
     ))}
   </div>

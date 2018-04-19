@@ -910,6 +910,7 @@ export const politeiaEnabled = compose(
   allowedExternalRequests
 );
 
+export const updateVoteChoiceAttempt = get([ "governance", "updateVoteChoiceAttempt" ]);
 export const getActiveVoteProposalsAttempt = get([ "governance", "getActiveVoteAttempt" ]);
 export const activeVoteProposals = get([ "governance", "activeVote" ]);
 export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" ]);

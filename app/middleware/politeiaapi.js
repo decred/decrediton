@@ -29,3 +29,9 @@ export function castVotes(piURL, votes) {
   const url = piURL + "/v1/proposals/castvotes";
   return axios.post(url, { votes });
 }
+
+export function getVoteResults(piURL, token) {
+  const url = piURL + "/v1/proposals/voteresults";
+  const data = { vote: { token } };
+  return axios.post(url, data);
+}
