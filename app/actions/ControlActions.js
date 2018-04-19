@@ -2,9 +2,10 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import { isValidAddress } from "helpers";
-import { getAccountsAttempt, getTransactionInfoAttempt, getStartupWalletInfo, getStakeInfoAttempt } from "./ClientActions";
-import { getCfg, getWalletCfg } from "config";
-import { getCfg } from "../config.js";
+import { getAccountsAttempt, getStartupWalletInfo, getStakeInfoAttempt } from "./ClientActions";
+import { getWalletCfg } from "config";
+import { RescanRequest, ConstructTransactionRequest } from "../middleware/walletrpc/api_pb";
+
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";
@@ -114,7 +115,7 @@ export const IMPORTSCRIPT_SUCCESS = "IMPORTSCRIPT_SUCCESS";
 
 const importScriptSuccess = (importScriptResponse, votingAddress, cb, willRescan) => (dispatch) => {
   const importScriptSuccess = "Script successfully imported, rescanning now";
-  dispatch({ importScriptSuccess, importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
+  dispatch({ importScriptSuccess, importScriptResponse, willRescan, type: IMPORTSCRIPT_SUCCESS });
   if (votingAddress) {
     if (importScriptResponse.getP2shAddress() == votingAddress) {
       dispatch(() => cb());
@@ -181,7 +182,7 @@ export const signTransactionAttempt = (passphrase, rawTx) => (dispatch, getState
   dispatch({ type: SIGNTX_ATTEMPT });
   return wallet.signTransaction(sel.walletService(getState()), passphrase, rawTx)
     .then(signTransactionResponse => {
-      dispatch({signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS });
+      dispatch({ signTransactionResponse: signTransactionResponse, type: SIGNTX_SUCCESS });
       dispatch(publishTransactionAttempt(signTransactionResponse.getTransaction()));
     })
     .catch(error => dispatch({ error, type: SIGNTX_FAILED }));
@@ -318,7 +319,7 @@ export const setTicketBuyerConfigAttempt = (
       dispatch({
         success: "Ticket buyer settings have been successfully updated.",
         type: SETTICKETBUYERCONFIG_SUCCESS
-      })
+      });
       dispatch(getTicketBuyerConfigAttempt());
     })
     .catch(error => dispatch({ error, type: SETTICKETBUYERCONFIG_FAILED }));
