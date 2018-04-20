@@ -18,7 +18,7 @@ import {
   GETAGENDAS_ATTEMPT, GETAGENDAS_FAILED, GETAGENDAS_SUCCESS,
   GETVOTECHOICES_ATTEMPT, GETVOTECHOICES_FAILED, GETVOTECHOICES_SUCCESS,
   SETVOTECHOICES_ATTEMPT, SETVOTECHOICES_FAILED, SETVOTECHOICES_SUCCESS,
-  UPDATEHIDDENACCOUNTS, MATURINGHEIGHTS_CHANGED,
+  MATURINGHEIGHTS_CHANGED,
 } from "../actions/ClientActions";
 import { STARTUPBLOCK, WALLETREADY } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
@@ -220,11 +220,6 @@ export default function grpc(state = {}, action) {
       getAccountsError: "",
       getAccountsRequestAttempt: false,
       getAccountsResponse: action.response,
-    };
-  case UPDATEHIDDENACCOUNTS:
-    return {
-      ...state,
-      hiddenAccounts: action.hiddenAccounts,
     };
   case GETTICKETS_ATTEMPT:
     return {
