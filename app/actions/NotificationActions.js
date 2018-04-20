@@ -74,8 +74,9 @@ export const accountNtfnsStart = () => (dispatch, getState) => {
   let accountNtfns = walletService.accountNotifications(request);
   dispatch({ accountNtfns, type: ACCOUNTNTFNS_START });
   accountNtfns.on("data", data => {
+    const { daemon: { hiddenAccounts } } = getState();
     let account = {
-      hidden: false,
+      hidden: hiddenAccounts.indexOf(data.getAccountNumber()) > -1,
       accountNumber: data.getAccountNumber(),
       accountName: data.getAccountName(),
       externalKeys: data.getExternalKeyCount(),

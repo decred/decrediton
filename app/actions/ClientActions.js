@@ -397,7 +397,9 @@ export function hideAccount(accountNumber) {
   return (dispatch, getState) => {
     const { daemon: { walletName, hiddenAccounts } } = getState();
     var updatedHiddenAccounts = [ ...hiddenAccounts ];
-    updatedHiddenAccounts.push(accountNumber);
+    if (updatedHiddenAccounts.indexOf(accountNumber) === -1) {
+      updatedHiddenAccounts.push(accountNumber);
+    }
     var cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({ hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS });
