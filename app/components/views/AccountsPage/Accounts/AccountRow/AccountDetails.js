@@ -5,7 +5,7 @@ function isHidable(account) {
   return (
     account.accountName !== "imported" &&
     account.accountName !== "default" &&
-    account.total == 0
+    !account.total
   );
 }
 
@@ -59,7 +59,7 @@ const AccountsList = ({
             <T id="accounts.immatureRewards" m="Immature Rewards" />
           </div>
           <div className="account-row-details-bottom-spec-value"><Balance amount={account.immatureReward} /></div>
-        </div>hidden
+        </div>
         <div className="account-row-details-bottom-spec">
           <div className="account-row-details-bottom-spec-name">
             <T id="accounts.lockedByTickets" m="Locked By Tickets" />
