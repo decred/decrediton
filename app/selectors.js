@@ -773,6 +773,18 @@ export const exportingData = get([ "control", "exportingData" ]);
 export const location = get([ "routing", "location" ]);
 
 export const voteTimeStats = get([ "statistics", "voteTime" ]);
+export const averageVoteTime = createSelector(
+  [ voteTimeStats ],
+  (voteTimeStats) => {
+    if (!voteTimeStats || !voteTimeStats.data.length) return 0;
+    const ticketCount = voteTimeStats.data.reduce((s, v) => s + v.series.count, 0);
+    let sum = 0;
+    for (let i = 0; i < voteTimeStats.data.length; i++) {
+      sum += voteTimeStats.data[i].series.count * i;
+    }
+    return sum / ticketCount;
+  }
+);
 export const medianVoteTime = createSelector(
   [ voteTimeStats ],
   (voteTimeStats) => {
