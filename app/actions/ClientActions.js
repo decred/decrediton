@@ -381,22 +381,13 @@ export const UPDATEACCOUNT_SUCCESS = "UPDATEACCOUNT_SUCCESS";
 export function updateAccount(account) {
   return (dispatch, getState) => {
     const { grpc: { balances } } = getState();
-    let updatedBalance;
-    balances.some(balance => {
-      if (balance.accountNumber == account.accountNumber) {
-        updatedBalance = balance;
-        return balance.accountNumber == account.accountNumber;
-      }
-    });
-
-    if (account.hidden) updatedBalance.hidden = account.hidden;
-    if (account.accountName) updatedBalance.accountName = account.accountName;
-    if (account.externalKeys) updatedBalance.externalKeys = account.externalKeys;
-    if (account.internalKeys) updatedBalance.internalKeys = account.internalKeys;
-    if (account.importedKeys) updatedBalance.importedKeys = account.importedKeys;
-
-    const updatedBalances = balances.map(balance =>
-      (balance.accountNumber === account.accountNumber) ? updatedBalance : balance);
+    const existingAccount = balances.find(a => a.accountNumber === account.accountNumber);
+    const updatedAccount = { ...existingAccount, ...account };
+    const updatedBalances = balances.map(a =>
+      (a.accountNumber === account.accountNumber) ? updatedAccount : a);
+    if (!existingAccount) {
+      updatedBalances.push(updatedAccount);
+    }
 
     dispatch({ balances: updatedBalances, type: GETBALANCE_SUCCESS });
   };
@@ -405,13 +396,10 @@ export function updateAccount(account) {
 export function hideAccount(accountNumber) {
   return (dispatch, getState) => {
     const { daemon: { walletName, hiddenAccounts } } = getState();
-    var updatedHiddenAccounts;
-    if (hiddenAccounts.length == 0) {
-      updatedHiddenAccounts = Array();
-    } else {
-      updatedHiddenAccounts = hiddenAccounts;
+    var updatedHiddenAccounts = [ ...hiddenAccounts ];
+    if (updatedHiddenAccounts.indexOf(accountNumber) === -1) {
+      updatedHiddenAccounts.push(accountNumber);
     }
-    updatedHiddenAccounts.push(accountNumber);
     var cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
     cfg.set("hiddenaccounts", updatedHiddenAccounts);
     dispatch({ hiddenAccounts: updatedHiddenAccounts, type: UPDATEHIDDENACCOUNTS });

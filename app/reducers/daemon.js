@@ -15,6 +15,9 @@ import {
   AVAILABLE_WALLETS,
   DECREDITON_VERSION
 } from "../actions/DaemonActions";
+import {
+  UPDATEHIDDENACCOUNTS
+} from "../actions/ClientActions";
 
 export default function version(state = {}, action) {
   switch (action.type) {
@@ -98,6 +101,11 @@ export default function version(state = {}, action) {
       availableWallets: action.availableWallets,
       previousWallet: action.previousWallet,
       selectCreateWalletInputRequest: !action.previousWallet,
+    };
+  case UPDATEHIDDENACCOUNTS:
+    return {
+      ...state,
+      hiddenAccounts: action.hiddenAccounts,
     };
   default:
     return state;

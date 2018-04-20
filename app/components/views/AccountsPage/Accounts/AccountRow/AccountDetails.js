@@ -1,6 +1,32 @@
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip } from "shared";
 
+function isHidable(account) {
+  return (
+    account.accountName !== "imported" &&
+    account.accountName !== "default" &&
+    !account.total
+  );
+}
+
+const HideAccountBtn = ({ hideAccount }) => (
+  <Tooltip text={<T id="accounts.hide.tip" m="Hide" />}>
+    <div className="hide-account-button" onClick={hideAccount} />
+  </Tooltip>
+);
+
+const ShowAccountBtn = ({ showAccount }) => (
+  <Tooltip text={<T id="accounts.show.tip" m="Show" />}>
+    <div className="show-account-button" onClick={showAccount} />
+  </Tooltip>
+);
+
+const RenameAccountBtn = ({ showRenameAccount }) => (
+  <Tooltip text={<T id="accounts.rename.tip" m="Rename Account" />}>
+    <div className="rename-account-button" onClick={showRenameAccount} />
+  </Tooltip>
+);
+
 const AccountsList = ({
   account,
   showRenameAccount,
@@ -78,22 +104,9 @@ const AccountsList = ({
       </div>
     </div>
     <div className="account-actions">
-      {account.accountName !== "imported" ?
-        <Tooltip text={<T id="accounts.rename.tip" m="Rename Account" />}>
-          <div className="rename-account-button" onClick={showRenameAccount} />
-        </Tooltip> :
-        <div></div>
-      }
-      {account.accountName !== "imported" && account.accountName !== "default" && account.total == 0 && !hidden ?
-        <Tooltip text={<T id="accounts.show.tip" m="Show" />}>
-          <div className="hide-account-button" onClick={hideAccount} />
-        </Tooltip> :
-        account.accountName !== "imported" && account.accountName !== "default" && hidden ?
-          <Tooltip text={<T id="accounts.hide.tip" m="Hide" />}>
-            <div className="show-account-button" onClick={showAccount} />
-          </Tooltip> :
-          <div></div>
-      }
+      {account.accountName !== "imported" ? <RenameAccountBtn {...{ showRenameAccount }} /> : null }
+      {isHidable(account) && !hidden ? <HideAccountBtn {...{ hideAccount }} /> : null }
+      {hidden ? <ShowAccountBtn {...{ showAccount }} /> : null }
     </div>
   </div>
 );

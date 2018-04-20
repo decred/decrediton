@@ -59,7 +59,8 @@ var initialState = {
     openForm: globalCfg.get("must_open_form"),
     remoteAppdataError: false,
     previousWallet: null,
-    selectCreateWalletInputRequest: true
+    selectCreateWalletInputRequest: true,
+    hiddenAccounts: Array(),
   },
   version: {
     // RequiredVersion
@@ -126,7 +127,6 @@ var initialState = {
     getVerifyMessageRequestAttempt: false,
     getVerifyMessageResponse: null,
     // Accounts
-    hiddenAccounts: null,
     getAccountsError: null,
     getAccountsRequestAttempt: false,
     getAccountsResponse: null,
