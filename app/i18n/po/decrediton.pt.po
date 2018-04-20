@@ -2,7 +2,7 @@
 # Matheus Degiovani <mathdegiovani@gmail.com>, 2017
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2018-04-09T12:48:36.766Z\n"
+"POT-Creation-Date: 2018-04-20T12:56:54.141Z\n"
 "Last-Translator: Matheus Degiovani <mathdegiovani@gmail.com>, 2017\n"
 "Language-Team: Portuguese (https://www.transifex.com/decred/teams/79156/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -195,6 +195,19 @@ msgstr ""
 msgctxt "changePassModal.newPassphraseRequired"
 msgid "*Please type your new passphrase"
 msgstr "*Por favor digite a sua nova senha"
+
+#. [gapLimit.info.warning]
+#. defaultMessage is:
+#. *Warning* This gap limit setting should typically be left alone.  An
+#. increase to the gap limit could cause major performance degradation.
+#: app/i18n/extracted/app/components/modals/GapLimitInfoModalContent.json
+msgctxt "gapLimit.info.warning"
+msgid ""
+"*Warning* This gap limit setting should typically be left alone.  An "
+"increase to the gap limit could cause major performance degradation."
+msgstr ""
+"*Atenção* Esse limite de intervalo normalmente não deve ser alterado. "
+"Aumentar esse limite pode causar grande perda de desempenho."
 
 #. [tutorial.step.3.text.p23]
 #. defaultMessage is:
@@ -1344,11 +1357,11 @@ msgstr ""
 
 #. [getStarted.logsTitle]
 #. defaultMessage is:
-#. Decrediton v1.1.2 Released
+#. Decrediton v{version} Released
 #: app/i18n/extracted/app/components/views/GetStartedPage/ReleaseNotes/Form.json
 msgctxt "getStarted.logsTitle"
-msgid "Decrediton v1.1.2 Released"
-msgstr "Decrediton v1.1.2 Lançado"
+msgid "Decrediton v{version} Released"
+msgstr "Decrediton v{version} Liberado"
 
 #. [getStarted.decrypt.label]
 #. defaultMessage is:
@@ -1949,7 +1962,11 @@ msgstr "Finalizar"
 #. [agenda.card.finishedIndicator]
 #. defaultMessage is:
 #. Finished
+#. [agenda.card.finishedIndicator]
+#. defaultMessage is:
+#. Finished
 #: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaOverview/Overview.json
 msgctxt "agenda.card.finishedIndicator"
 msgid "Finished"
 msgstr "Finalizado"
@@ -2001,6 +2018,48 @@ msgstr ""
 "Fundos podem ser trancados por um tempo em retorno por tickets da rede. "
 "Tickets são escolhidos aleatoriamente para votar a validade dos blocos. Na "
 "média, um ticket é votado em 28 dias."
+
+#. [settings.gapLimit.label]
+#. defaultMessage is:
+#. Gap Limit
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
+msgctxt "settings.gapLimit.label"
+msgid "Gap Limit"
+msgstr "Limite de Intervalo"
+
+#. [settings.gapLimit.information]
+#. defaultMessage is:
+#. Gap Limit information
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
+msgctxt "settings.gapLimit.information"
+msgid "Gap Limit information"
+msgstr "Informação sobre o Limite de Intervalo"
+
+#. [gapLimit.info.first]
+#. defaultMessage is:
+#. Gap limit sets the amount of addresses that the wallet will generate and
+#. look ahead to determine usage.  By default, the gap limit is set to 20.
+#. This means 2 things.  1) When wallet first loads, it scans for address
+#. usage and expects the largest gap between addresses to be 20.  2) When
+#. providing user with newly generated addresses it will only give 20
+#. addresses then loop back, which ensures that gaps are no larger than 20.
+#: app/i18n/extracted/app/components/modals/GapLimitInfoModalContent.json
+msgctxt "gapLimit.info.first"
+msgid ""
+"Gap limit sets the amount of addresses that the wallet will generate and "
+"look ahead to determine usage.  By default, the gap limit is set to 20.  "
+"This means 2 things.  1) When wallet first loads, it scans for address usage"
+" and expects the largest gap between addresses to be 20.  2) When providing "
+"user with newly generated addresses it will only give 20 addresses then loop"
+" back, which ensures that gaps are no larger than 20."
+msgstr ""
+"O limite de intervalo (gap limit) indica a quantidade de endereços que a "
+"carteira irá gerar e observar para determinar seu uso. O padrão desse limite"
+" é 20. Isso significa duas coisas: 1) Quando a carteira é carregada pela "
+"primeira vez, ela procura por endereços utilizados e espera que o maior "
+"intervalo entre endereços usados seja 20. 2) Ao fornecer um endereço gerado "
+"ao usuário, a carteira irá exibir apenas 20 endereços e então voltará ao "
+"primeiro, o que garante que o limite nunca ultrapasse os 20."
 
 #. [settings.general.title]
 #. defaultMessage is:
@@ -2057,6 +2116,22 @@ msgstr "Voltar"
 msgctxt "logs.goBack"
 msgid "Go back"
 msgstr "Voltar"
+
+#. [home.ticketActivityHistory]
+#. defaultMessage is:
+#. Go to all tickets
+#: app/i18n/extracted/app/components/views/HomePage/tables/TicketActivity.json
+msgctxt "home.ticketActivityHistory"
+msgid "Go to all tickets"
+msgstr "Ver todos os tickets"
+
+#. [home.recentTransactionsHistory]
+#. defaultMessage is:
+#. Go to all transactions
+#: app/i18n/extracted/app/components/views/HomePage/tables/RecentTransactions.json
+msgctxt "home.recentTransactionsHistory"
+msgid "Go to all transactions"
+msgstr "Ver todas as transações"
 
 #. [tickets.tab.governance]
 #. defaultMessage is:
@@ -2315,22 +2390,6 @@ msgstr "Confirmação de Importação de Script"
 msgctxt "purchaseTickets.importDisabledRescan"
 msgid "Importing scripts is disabled during a rescan."
 msgstr "A importação de scripts fica desabilitada durante um rescan"
-
-#. [agenda.card.inProgressIndicator]
-#. defaultMessage is:
-#. In Progress
-#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaCard.json
-msgctxt "agenda.card.inProgressIndicator"
-msgid "In Progress"
-msgstr "Em progresso"
-
-#. [agenda.overview.inProgressIndicator]
-#. defaultMessage is:
-#. In Progress
-#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaOverview/Overview.json
-msgctxt "agenda.overview.inProgressIndicator"
-msgid "In Progress"
-msgstr "Em progresso"
 
 #. [tutorial.step.0.text.p4]
 #. defaultMessage is:
@@ -4163,14 +4222,6 @@ msgctxt "charts.keys.stakeRewards"
 msgid "Stake Rewards"
 msgstr "Recompensas de Stake"
 
-#. [home.noTickets.purchase]
-#. defaultMessage is:
-#. Stake Your Idle DCR and Earn Rewards
-#: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/index.json
-msgctxt "home.noTickets.purchase"
-msgid "Stake Your Idle DCR and Earn Rewards"
-msgstr "Realize stake de seus DCR parados e ganha recompensas"
-
 #. [tickets.info.poolPreference.header]
 #. defaultMessage is:
 #. Stake pool preference
@@ -4469,6 +4520,34 @@ msgctxt "votingPreferences.noAgenda"
 msgid "There are currently no agendas for voting."
 msgstr "Não existem agendas para votação"
 
+#. [gapLimit.info.second]
+#. defaultMessage is:
+#. There are really only 2 reasons that you should be changing this value.  1)
+#. If your wallet was created and used heavily prior to roughly v1.0, it may
+#. have large address gaps.  If you restore from seed and notice that you are
+#. missing funds, you may increase this to 100 (then 1000 if not fixed) then
+#. restart decrediton.  Once your balance is resolved you can revert back to
+#. 20.  2) If you would like to be able to generate more than 20 addresses at
+#. a time without wrapping around.
+#: app/i18n/extracted/app/components/modals/GapLimitInfoModalContent.json
+msgctxt "gapLimit.info.second"
+msgid ""
+"There are really only 2 reasons that you should be changing this value.  1) "
+"If your wallet was created and used heavily prior to roughly v1.0, it may "
+"have large address gaps.  If you restore from seed and notice that you are "
+"missing funds, you may increase this to 100 (then 1000 if not fixed) then "
+"restart decrediton.  Once your balance is resolved you can revert back to "
+"20.  2) If you would like to be able to generate more than 20 addresses at a"
+" time without wrapping around."
+msgstr ""
+"Só existem duas razões para você querer mudar esse valor: 1) Se a sua "
+"carteira foi criada e muito utilizada antes da versão 1.0 do software, ela "
+"pode ter intervalos grandes de endereços. Se você restaurar a partir da seed"
+" e notar que estão faltando fundos, você pode aumentar esse limite para 100 "
+"(ou para 1000 se isso não for suficiente) e então reiniciar o Decrediton. "
+"Após o seu saldo ficar correto, você pode reverter esse intervalo para 20. "
+"2) Se você quiser gerar mais de 20 endereços de uma só vez sem repetição."
+
 #. [balanceInfoModal.immatureRewards.text]
 #. defaultMessage is:
 #. These are regular coinbase rewards that are currently maturing (from PoW
@@ -4513,6 +4592,24 @@ msgstr ""
 msgctxt "receive.accountLabel"
 msgid "This address is for"
 msgstr "Conta de destino"
+
+#. [agenda.card.finishedTooltip]
+#. defaultMessage is:
+#. This agenda has finished voting and PASSED.  You may still toggle your vote
+#. choices, but they will no longer be tallied.
+#. [agenda.card.finishedTooltip]
+#. defaultMessage is:
+#. This agenda has finished voting and PASSED.  You may still toggle your vote
+#. choices, but they will no longer be tallied.
+#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaCard.json
+#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaOverview/Overview.json
+msgctxt "agenda.card.finishedTooltip"
+msgid ""
+"This agenda has finished voting and PASSED.  You may still toggle your vote "
+"choices, but they will no longer be tallied."
+msgstr ""
+"Essa agenda foi finalizada e APROVADA. Você pode mudar a sua opção de voto, "
+"mas eles não vão ser mais contabilizados."
 
 #. [balanceInfoModal.immatureStake.text]
 #. defaultMessage is:
@@ -5677,11 +5774,11 @@ msgstr "O que é a Blockchain Decred?"
 
 #. [getStarted.whatsNew]
 #. defaultMessage is:
-#. What's New in {version}
+#. What's New in v{version}
 #: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
 msgctxt "getStarted.whatsNew"
-msgid "What's New in {version}"
-msgstr "O que há de novo na versão {version}"
+msgid "What's New in v{version}"
+msgstr "O que há de novo na v{version}"
 
 #. [tutorial.ticketLifecycle.page2]
 #. defaultMessage is:
