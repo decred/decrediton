@@ -82,7 +82,10 @@ export function getExecutablePath(name, customBinPath) {
     process.env.NODE_ENV === "development"
       ? path.join(__dirname, "..", "..", "bin")
       : path.join(process.resourcesPath, "bin");
-  let execName = os.platform() !== "win32" ? name : name + ".exe";
+  let execName = os.platform() !== "win32" ? name :
+    os.arch() == "x64" ? name + "64.exe" :
+      os.arch() == "ia32" ? name + "32.exe" :
+        name + ".exe";
 
   return path.join(binPath, execName);
 }
