@@ -10,6 +10,7 @@ const mapStateToProps = selectorMap({
   stakeROIStats: sel.stakeROIStats,
   dailyBalancesStats: sel.dailyBalancesStats,
   medianVoteTime: sel.medianVoteTime,
+  averageVoteTime: sel.averageVoteTime,
   ninetyFifthPercentileVoteTime: sel.ninetyFifthPercentileVoteTime,
   allTickets: sel.allTickets,
 });
