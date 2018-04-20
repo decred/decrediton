@@ -65,7 +65,7 @@ const StakePoolsAddForm = ({
             "Create an account or login to your existing account at {stakePoolLink} Once logged in, select the ‘Settings’ tab, copy and paste your API KEY into the field."
           }
           values={{
-            stakePoolLink: <ExternalLink href={selectedUnconfigured.label}/>
+            stakePoolLink: <ExternalLink href={selectedUnconfigured.label}>{selectedUnconfigured.label}</ExternalLink>
           }}/>
           <ScriptRedeemableButton
             modalTitle={<T id="stake.notRedeemed" m="Script not redeemable?" />}
