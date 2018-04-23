@@ -429,23 +429,25 @@
   width: 85%;
 }
 
-.accounts-select-name {
-  .inline-block-mixin;
+.accounts-select-value {
+  display: flex;
+  justify-content: space-between;
+}
 
-  max-width: 8em;
+.accounts-select-name {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
 .accounts-select-spendable {
-  .inline-block-mixin;
-
   font-family: @font-family-monospaced;
-  float: right;
   min-width: 10em;
   text-align: right;
-  display: flex;
+}
+
+.accounts-select-spendable div {
+  display: inline-block;
 }
 
 .accounts-select-value .balance-small {
