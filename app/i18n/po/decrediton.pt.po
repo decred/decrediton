@@ -2,7 +2,7 @@
 # Matheus Degiovani <mathdegiovani@gmail.com>, 2017
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2018-04-20T12:56:54.141Z\n"
+"POT-Creation-Date: 2018-04-24T16:52:49.998Z\n"
 "Last-Translator: Matheus Degiovani <mathdegiovani@gmail.com>, 2017\n"
 "Language-Team: Portuguese (https://www.transifex.com/decred/teams/79156/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -612,6 +612,14 @@ msgstr "Saldo disponível para gastar em transações regulares"
 msgctxt "export.balances.fields.spendable"
 msgid "Available balance for spending in regular transactions."
 msgstr "Saldo disponível para gastar em transações regulares"
+
+#. [mytickets.statistics.votetime.average.label]
+#. defaultMessage is:
+#. Average vote time:
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
+msgctxt "mytickets.statistics.votetime.average.label"
+msgid "Average vote time:"
+msgstr "Tempo médio de votação"
 
 #. [ticketList.backBtn]
 #. defaultMessage is:
@@ -6452,6 +6460,18 @@ msgstr "{value, date, day-short-month}"
 msgctxt "charts.fullDayDisplay"
 msgid "{value, date}"
 msgstr "{value, date}"
+
+#. [mytickets.statistics.votetime.average.value]
+#. defaultMessage is:
+#. {value, plural, =0 {in the same day} one {within one day } other {within #
+#. days}}
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
+msgctxt "mytickets.statistics.votetime.average.value"
+msgid ""
+"{value, plural, =0 {in the same day} one {within one day } other {within # "
+"days}}"
+msgstr ""
+"{value, plural, =0 {no mesmo dia} one {em até um dia} other {em até # dias}}"
 
 #. [mytickets.statistics.votetime.median.value]
 #. defaultMessage is:

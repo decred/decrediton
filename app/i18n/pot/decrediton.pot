@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2018-04-20T12:56:54.141Z\n"
+"POT-Creation-Date: 2018-04-24T17:04:59.727Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -538,6 +538,14 @@ msgstr ""
 #. Available balance for spending in regular transactions.
 msgctxt "export.balances.fields.spendable"
 msgid "Available balance for spending in regular transactions."
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
+#. [mytickets.statistics.votetime.average.label]
+#. defaultMessage is:
+#. Average vote time:
+msgctxt "mytickets.statistics.votetime.average.label"
+msgid "Average vote time:"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketListPage.json
@@ -5726,6 +5734,14 @@ msgstr ""
 #. {value, date}
 msgctxt "charts.fullDayDisplay"
 msgid "{value, date}"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
+#. [mytickets.statistics.votetime.average.value]
+#. defaultMessage is:
+#. {value, plural, =0 {in the same day} one {within one day } other {within # days}}
+msgctxt "mytickets.statistics.votetime.average.value"
+msgid "{value, plural, =0 {in the same day} one {within one day } other {within # days}}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json

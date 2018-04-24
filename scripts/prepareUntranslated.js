@@ -27,8 +27,8 @@ manageTranslations({
   // strings but localized date/time/number/currency formats)
   languages: [ "original" ],
 
-  overrideCoreMethods: {
-    reportLanguage: () => {
+  overridePrinters: {
+    printLanguageReport: () => {
       console.log("Updated original strings file.");
     },
   }

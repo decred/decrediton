@@ -314,6 +314,8 @@
   "mytickets.statistics.stakeroi.totalFees": "Taxa total: {value}",
   "mytickets.statistics.stakeroi.totalReward": "Total recompensa: {value}",
   "mytickets.statistics.stakeroi.totalStake": "Totallll Stake: {value}",
+  "mytickets.statistics.votetime.average.label": "Tempo médio:",
+  "mytickets.statistics.votetime.average.value": "{value, plural, =0 {no mesmo dia} one {em um dia} other {em # dias}}",
   "mytickets.statistics.votetime.median.label": "Tempo mediano de voto:",
   "mytickets.statistics.votetime.median.value": "{value, plural, =0 {no mesmo dia} one {em uma dia } other {em # dias}}",
   "mytickets.statistics.votetime.ninetyfifthpercentile.label": "95% dos tickets votados:",
