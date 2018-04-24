@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2018-04-09T12:48:36.766Z\n"
+"POT-Creation-Date: 2018-04-24T17:04:59.727Z\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "MIME-Version: 1.0\n"
@@ -181,6 +181,14 @@ msgstr ""
 #. *Please type your new passphrase
 msgctxt "changePassModal.newPassphraseRequired"
 msgid "*Please type your new passphrase"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/GapLimitInfoModalContent.json
+#. [gapLimit.info.warning]
+#. defaultMessage is:
+#. *Warning* This gap limit setting should typically be left alone.  An increase to the gap limit could cause major performance degradation.
+msgctxt "gapLimit.info.warning"
+msgid "*Warning* This gap limit setting should typically be left alone.  An increase to the gap limit could cause major performance degradation."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/TutorialPage/Page.json
@@ -530,6 +538,14 @@ msgstr ""
 #. Available balance for spending in regular transactions.
 msgctxt "export.balances.fields.spendable"
 msgid "Available balance for spending in regular transactions."
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
+#. [mytickets.statistics.votetime.average.label]
+#. defaultMessage is:
+#. Average vote time:
+msgctxt "mytickets.statistics.votetime.average.label"
+msgid "Average vote time:"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/TicketListPage.json
@@ -1193,9 +1209,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/ReleaseNotes/Form.json
 #. [getStarted.logsTitle]
 #. defaultMessage is:
-#. Decrediton v1.1.2 Released
+#. Decrediton v{version} Released
 msgctxt "getStarted.logsTitle"
-msgid "Decrediton v1.1.2 Released"
+msgid "Decrediton v{version} Released"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/DecryptForm.json
@@ -1744,6 +1760,10 @@ msgstr ""
 #. [agenda.card.finishedIndicator]
 #. defaultMessage is:
 #. Finished
+#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaOverview/Overview.json
+#. [agenda.card.finishedIndicator]
+#. defaultMessage is:
+#. Finished
 msgctxt "agenda.card.finishedIndicator"
 msgid "Finished"
 msgstr ""
@@ -1786,6 +1806,30 @@ msgstr ""
 #. Funds can be time-locked in return for tickets on the network. Tickets are chosen at random to vote on the validity of blocks. By average a ticket gets voted in 28 days
 msgctxt "tutorial.step.3.text.p2"
 msgid "Funds can be time-locked in return for tickets on the network. Tickets are chosen at random to vote on the validity of blocks. By average a ticket gets voted in 28 days"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
+#. [settings.gapLimit.label]
+#. defaultMessage is:
+#. Gap Limit
+msgctxt "settings.gapLimit.label"
+msgid "Gap Limit"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
+#. [settings.gapLimit.information]
+#. defaultMessage is:
+#. Gap Limit information
+msgctxt "settings.gapLimit.information"
+msgid "Gap Limit information"
+msgstr ""
+
+#: app/i18n/extracted/app/components/modals/GapLimitInfoModalContent.json
+#. [gapLimit.info.first]
+#. defaultMessage is:
+#. Gap limit sets the amount of addresses that the wallet will generate and look ahead to determine usage.  By default, the gap limit is set to 20.  This means 2 things.  1) When wallet first loads, it scans for address usage and expects the largest gap between addresses to be 20.  2) When providing user with newly generated addresses it will only give 20 addresses then loop back, which ensures that gaps are no larger than 20.
+msgctxt "gapLimit.info.first"
+msgid "Gap limit sets the amount of addresses that the wallet will generate and look ahead to determine usage.  By default, the gap limit is set to 20.  This means 2 things.  1) When wallet first loads, it scans for address usage and expects the largest gap between addresses to be 20.  2) When providing user with newly generated addresses it will only give 20 addresses then loop back, which ensures that gaps are no larger than 20."
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
@@ -1842,6 +1886,22 @@ msgstr ""
 #. Go back
 msgctxt "logs.goBack"
 msgid "Go back"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/HomePage/tables/TicketActivity.json
+#. [home.ticketActivityHistory]
+#. defaultMessage is:
+#. Go to all tickets
+msgctxt "home.ticketActivityHistory"
+msgid "Go to all tickets"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/HomePage/tables/RecentTransactions.json
+#. [home.recentTransactionsHistory]
+#. defaultMessage is:
+#. Go to all transactions
+msgctxt "home.recentTransactionsHistory"
+msgid "Go to all transactions"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/index.json
@@ -2066,22 +2126,6 @@ msgstr ""
 #. Importing scripts is disabled during a rescan.
 msgctxt "purchaseTickets.importDisabledRescan"
 msgid "Importing scripts is disabled during a rescan."
-msgstr ""
-
-#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaCard.json
-#. [agenda.card.inProgressIndicator]
-#. defaultMessage is:
-#. In Progress
-msgctxt "agenda.card.inProgressIndicator"
-msgid "In Progress"
-msgstr ""
-
-#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaOverview/Overview.json
-#. [agenda.overview.inProgressIndicator]
-#. defaultMessage is:
-#. In Progress
-msgctxt "agenda.overview.inProgressIndicator"
-msgid "In Progress"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/GetStartedPage/TutorialPage/Page.json
@@ -3766,14 +3810,6 @@ msgctxt "charts.keys.stakeRewards"
 msgid "Stake Rewards"
 msgstr ""
 
-#: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/index.json
-#. [home.noTickets.purchase]
-#. defaultMessage is:
-#. Stake Your Idle DCR and Earn Rewards
-msgctxt "home.noTickets.purchase"
-msgid "Stake Your Idle DCR and Earn Rewards"
-msgstr ""
-
 #: app/i18n/extracted/app/components/modals/PurchaseTicketsInfoModalContent.json
 #. [tickets.info.poolPreference.header]
 #. defaultMessage is:
@@ -4019,6 +4055,14 @@ msgctxt "votingPreferences.noAgenda"
 msgid "There are currently no agendas for voting."
 msgstr ""
 
+#: app/i18n/extracted/app/components/modals/GapLimitInfoModalContent.json
+#. [gapLimit.info.second]
+#. defaultMessage is:
+#. There are really only 2 reasons that you should be changing this value.  1) If your wallet was created and used heavily prior to roughly v1.0, it may have large address gaps.  If you restore from seed and notice that you are missing funds, you may increase this to 100 (then 1000 if not fixed) then restart decrediton.  Once your balance is resolved you can revert back to 20.  2) If you would like to be able to generate more than 20 addresses at a time without wrapping around.
+msgctxt "gapLimit.info.second"
+msgid "There are really only 2 reasons that you should be changing this value.  1) If your wallet was created and used heavily prior to roughly v1.0, it may have large address gaps.  If you restore from seed and notice that you are missing funds, you may increase this to 100 (then 1000 if not fixed) then restart decrediton.  Once your balance is resolved you can revert back to 20.  2) If you would like to be able to generate more than 20 addresses at a time without wrapping around."
+msgstr ""
+
 #: app/i18n/extracted/app/components/modals/BalanceOverviewModalContent.json
 #. [balanceInfoModal.immatureRewards.text]
 #. defaultMessage is:
@@ -4041,6 +4085,18 @@ msgstr ""
 #. This address is for
 msgctxt "receive.accountLabel"
 msgid "This address is for"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaCard.json
+#. [agenda.card.finishedTooltip]
+#. defaultMessage is:
+#. This agenda has finished voting and PASSED.  You may still toggle your vote choices, but they will no longer be tallied.
+#: app/i18n/extracted/app/components/views/TicketsPage/GovernanceTab/AgendaOverview/Overview.json
+#. [agenda.card.finishedTooltip]
+#. defaultMessage is:
+#. This agenda has finished voting and PASSED.  You may still toggle your vote choices, but they will no longer be tallied.
+msgctxt "agenda.card.finishedTooltip"
+msgid "This agenda has finished voting and PASSED.  You may still toggle your vote choices, but they will no longer be tallied."
 msgstr ""
 
 #: app/i18n/extracted/app/components/modals/BalanceOverviewModalContent.json
@@ -5097,9 +5153,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
 #. [getStarted.whatsNew]
 #. defaultMessage is:
-#. What's New in {version}
+#. What's New in v{version}
 msgctxt "getStarted.whatsNew"
-msgid "What's New in {version}"
+msgid "What's New in v{version}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TutorialsPage/TicketLifecycle/index.json
@@ -5678,6 +5734,14 @@ msgstr ""
 #. {value, date}
 msgctxt "charts.fullDayDisplay"
 msgid "{value, date}"
+msgstr ""
+
+#: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
+#. [mytickets.statistics.votetime.average.value]
+#. defaultMessage is:
+#. {value, plural, =0 {in the same day} one {within one day } other {within # days}}
+msgctxt "mytickets.statistics.votetime.average.value"
+msgid "{value, plural, =0 {in the same day} one {within one day } other {within # days}}"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
