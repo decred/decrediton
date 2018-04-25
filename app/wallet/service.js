@@ -2,7 +2,7 @@ import Promise from "promise";
 import * as client from "middleware/grpc/client";
 import { reverseHash, strHashToRaw, rawHashToHex } from "../helpers/byteActions";
 import { Uint64LE } from "int64-buffer";
-import { CommittedTicketsRequest } from "middleware/walletrpc/api_pb";
+import { CommittedTicketsRequest, DecodeRawTransactionRequest } from "middleware/walletrpc/api_pb";
 import { withLog as log, withLogNoData, logOptionNoResponseData } from "./index";
 import * as api from "middleware/walletrpc/api_pb";
 
@@ -39,11 +39,26 @@ export const validateAddress = withLogNoData((walletService, address) =>
     walletService.validateAddress(request, (error, response) => error ? reject(error) : resolve(response));
   }), "Validate Address");
 
-export const decodeTransaction = withLogNoData((decodeMessageService, rawTx) =>
+export const decodeTransactionLocal = (decodeMessageService, rawTx) =>
   new Promise((resolve, reject) => {
     var buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
+    //var buff = new Uint8Array(buffer);
+    decodeRawTransaction(buffer, (error, tx) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(tx);
+      }
+    });
+  });
+
+export const decodeTransaction = withLogNoData((decodeMessageService, rawTx) =>
+  new Promise((resolve, reject) => {
+    var request = new DecodeRawTransactionRequest();
+    var buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
     var buff = new Uint8Array(buffer);
-    decodeRawTransaction(buff, (error, tx) => {
+    request.setSerializedTransaction(buff);
+    decodeMessageService.decodeRawTransaction(request, (error, tx) => {
       if (error) {
         reject(error);
       } else {
@@ -249,72 +264,11 @@ export const committedTickets = withLogNoData((walletService, ticketHashes) => n
 }), "Committed Tickets");
 
 const decodeRawTransaction = (rawTx, cb) => {
-  /*
-	message Input {
-		bytes previous_transaction_hash = 1;
-		uint32 previous_transaction_index = 2;
-		enum TreeType {
-			REGULAR = 0;
-			UNKNOWN = -1;
-			STAKE = 1;
-		}
-		TreeType tree = 3;
-		uint32 sequence = 4;
-		int64 amount_in = 5;
-		uint32 block_height = 6;
-		uint32 block_index = 7;
-		bytes signature_script = 8;
-		string signature_script_asm = 9;
-	}
-	message Output {
-		int64 value = 1;
-		uint32 index = 2;
-		int32 version = 3;
-		bytes script = 4;
-		string script_asm = 5;
-		int32 required_signatures = 6;
-		enum ScriptClass {
-			NON_STANDARD = 0;
-			PUB_KEY = 1;
-			PUB_KEY_HASH = 2;
-			SCRIPT_HASH = 3;
-			MULTI_SIG = 4;
-			NULL_DATA = 5;
-			STAKE_SUBMISSION = 6;
-			STAKE_GEN = 7;
-			STAKE_REVOCATION = 8;
-			STAKE_SUB_CHANGE = 9;
-			PUB_KEY_ALT = 10;
-			PUB_KEY_HASH_ALT = 11;
-		}
-		ScriptClass script_class = 7;
-		repeated string addresses = 8;
-		int64 commitment_amount = 9;
-	}
-	bytes transaction_hash = 1;
-	int32 version = 2;
-	uint32 lock_time = 3;
-	uint32 expiry = 4;
-	TransactionDetails.TransactionType transaction_type = 5;
-	repeated Input inputs = 6;
-	repeated Output outputs = 7;
-  const
-  var tx = {
-    inputs: [],
-    outputs: [],
-    txHash: "",
-    version: 0,
-    lockTime: 0,
-    expiry: 0,
-    transactionType: "vote",
-  };
-  */
   var position = 0;
 
-  var tx;
+  var tx = {};
   tx.version = rawTx.readUInt32LE(position);
   position += 4;
-
   var first = rawTx.readUInt8(position);
   position += 1;
   switch (first) {
@@ -329,9 +283,9 @@ const decodeRawTransaction = (rawTx, cb) => {
   default:
     tx.numInputs = first;
   }
-
+  tx.inputs = [];
   for (var i = 0; i < tx.numInputs; i++) {
-    var input;
+    var input = {};
     input.prevTxId = rawTx.slice(position, position+32);
     position += 32;
     input.outputIndex = rawTx.readUInt32LE(position);
@@ -358,8 +312,9 @@ const decodeRawTransaction = (rawTx, cb) => {
     tx.numOutputs = first;
   }
 
+  tx.outputs = [];
   for (var j = 0; j < tx.numOutputs; j++) {
-    var output;
+    var output = {};
     output.value = Uint64LE(rawTx.slice(position, position+8)).toNumber();
     position += 8;
     output.version = rawTx.readUInt16LE(position);
@@ -389,6 +344,5 @@ const decodeRawTransaction = (rawTx, cb) => {
   position += 4;
   tx.expiry = rawTx.readUInt32LE(position);
   position += 4;
-  console.log(tx);
   return cb(null, tx);
 };
