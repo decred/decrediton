@@ -2,7 +2,6 @@ import Promise from "promise";
 import * as client from "middleware/grpc/client";
 import { reverseHash, strHashToRaw, rawHashToHex } from "../helpers/byteActions";
 import { CommittedTicketsRequest } from "middleware/walletrpc/api_pb";
-import Parser from "binary-parser";
 import { withLog as log, withLogNoData, logOptionNoResponseData } from "./index";
 import * as api from "middleware/walletrpc/api_pb";
 
@@ -309,72 +308,56 @@ const decodeRawTransaction = (rawTx, cb) => {
     transactionType: "vote",
   };
   */
-  var txParser = new Parser()
-    .endianess("little")
-    .uint32("version")
-    .uint32("numInputs")
-    .array("inputs", {
-      type: inputParser,
-      length: "numInputs"
-    })
-    .uint32("numOutputs")
-    .array("outputs", {
-      type: outputParser,
-      length: "numOutputs"
-    })
-    .uint32("lockTime")
-    .uint32("expiry");
+  var position = 0;
 
-  var inputParser = new Parser()
-    .endianess("big")
-    .buffer(32, "prevTxId")
-    .uint32("outIndex")
-    .bit3("outputTree")
-    .bit13("sequence");
+  var tx;
+  tx.version = rawTx.readUInt32LE(position);
+  position += 4;
 
-  var outputParser = new Parser()
-    .endianess("big")
-    .uint32("bu")
-    .uint16("id")
-    .bit3("offset")
-    .bit13("fragOffset");
-
-  this.version = reader.readInt32LE();
-  var sizeTxIns = reader.readVarintNum();
-
-  // check for segwit
-  var hasWitnesses = false;
-  if (sizeTxIns === 0 && reader.buf[reader.pos] !== 0) {
-    reader.pos += 1;
-    hasWitnesses = true;
-    sizeTxIns = reader.readVarintNum();
+  var first = rawTx.readUInt8(position);
+  position += 1;
+  switch (first) {
+  case 0xFD:
+    tx.numInputs = rawTx.readUInt16LE(position);
+    position += 2;
+    break;
+  case 0xFE:
+    tx.numInputs = rawTx.readUInt32LE(position);
+    position += 4;
+    break;
+  default:
+    tx.numInputs = first;
   }
 
-  for (var i = 0; i < sizeTxIns; i++) {
-    var input = Input.fromBufferReader(reader);
-    this.inputs.push(input);
+  for (var i = 0; i < tx.numInputs; i++) {
+    var input = "";
+    tx.inputs.push(input);
   }
 
-  var sizeTxOuts = reader.readVarintNum();
-  for (var j = 0; j < sizeTxOuts; j++) {
-    this.outputs.push(Output.fromBufferReader(reader));
+  first = rawTx.readUInt8(position);
+  position += 1;
+  switch (first) {
+  case 0xFD:
+    tx.numOutputs = rawTx.readUInt16LE(position);
+    position += 2;
+    break;
+  case 0xFE:
+    tx.numOutputs = rawTx.readUInt32LE(position);
+    position += 4;
+    break;
+  default:
+    tx.numOutputs = first;
   }
 
-  if (hasWitnesses) {
-    for (var k = 0; k < sizeTxIns; k++) {
-      var itemCount = reader.readVarintNum();
-      var witnesses = [];
-      for (var l = 0; l < itemCount; l++) {
-        var size = reader.readVarintNum();
-        var item = reader.read(size);
-        witnesses.push(item);
-      }
-      this.inputs[k].setWitnesses(witnesses);
-    }
+  for (var j = 0; j < tx.numOutputs; j++) {
+    var output = "";
+    tx.outputs.push(output);
   }
 
-  this.nLockTime = reader.readUInt32LE();
-
-  var tx = txParser.parse(rawTx);
+  tx.lockTime = rawTx.readUInt32LE(position);
+  position += 4;
+  tx.expiry = rawTx.readUInt32LE(position);
+  position += 4;
+  console.log(tx);
   return cb(null, tx);
 };
