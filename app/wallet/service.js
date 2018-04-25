@@ -330,7 +330,15 @@ const decodeRawTransaction = (rawTx, cb) => {
   }
 
   for (var i = 0; i < tx.numInputs; i++) {
-    var input = "";
+    var input;
+    input.prevTxId = rawTx.slice(position, position+32);
+    position += 32;
+    input.outputIndex = rawTx.readUInt32LE(position);
+    position += 4;
+    input.outputTree = rawTx.readUInt8(position);
+    position += 1;
+    input.sequence = rawTx.readUInt32LE(position);
+    position += 4;
     tx.inputs.push(input);
   }
 
@@ -350,7 +358,7 @@ const decodeRawTransaction = (rawTx, cb) => {
   }
 
   for (var j = 0; j < tx.numOutputs; j++) {
-    var output = "";
+    var output;
     tx.outputs.push(output);
   }
 
