@@ -2,6 +2,7 @@ import Promise from "promise";
 import * as client from "middleware/grpc/client";
 import { reverseHash, strHashToRaw, rawHashToHex } from "../helpers/byteActions";
 import { CommittedTicketsRequest } from "middleware/walletrpc/api_pb";
+import Parser from "binary-parser";
 import { withLog as log, withLogNoData, logOptionNoResponseData } from "./index";
 import * as api from "middleware/walletrpc/api_pb";
 
@@ -40,11 +41,9 @@ export const validateAddress = withLogNoData((walletService, address) =>
 
 export const decodeTransaction = withLogNoData((decodeMessageService, rawTx) =>
   new Promise((resolve, reject) => {
-    var request = new api.DecodeRawTransactionRequest();
     var buffer = Buffer.isBuffer(rawTx) ? rawTx : Buffer.from(rawTx, "hex");
     var buff = new Uint8Array(buffer);
-    request.setSerializedTransaction(buff);
-    decodeMessageService.decodeRawTransaction(request, (error, tx) => {
+    decodeRawTransaction(buff, (error, tx) => {
       if (error) {
         reject(error);
       } else {
@@ -248,3 +247,134 @@ export const committedTickets = withLogNoData((walletService, ticketHashes) => n
   req.setTicketsList(ticketHashes);
   walletService.committedTickets(req, (err, tickets) => err ? reject(err) : resolve(tickets));
 }), "Committed Tickets");
+
+const decodeRawTransaction = (rawTx, cb) => {
+  /*
+	message Input {
+		bytes previous_transaction_hash = 1;
+		uint32 previous_transaction_index = 2;
+		enum TreeType {
+			REGULAR = 0;
+			UNKNOWN = -1;
+			STAKE = 1;
+		}
+		TreeType tree = 3;
+		uint32 sequence = 4;
+		int64 amount_in = 5;
+		uint32 block_height = 6;
+		uint32 block_index = 7;
+		bytes signature_script = 8;
+		string signature_script_asm = 9;
+	}
+	message Output {
+		int64 value = 1;
+		uint32 index = 2;
+		int32 version = 3;
+		bytes script = 4;
+		string script_asm = 5;
+		int32 required_signatures = 6;
+		enum ScriptClass {
+			NON_STANDARD = 0;
+			PUB_KEY = 1;
+			PUB_KEY_HASH = 2;
+			SCRIPT_HASH = 3;
+			MULTI_SIG = 4;
+			NULL_DATA = 5;
+			STAKE_SUBMISSION = 6;
+			STAKE_GEN = 7;
+			STAKE_REVOCATION = 8;
+			STAKE_SUB_CHANGE = 9;
+			PUB_KEY_ALT = 10;
+			PUB_KEY_HASH_ALT = 11;
+		}
+		ScriptClass script_class = 7;
+		repeated string addresses = 8;
+		int64 commitment_amount = 9;
+	}
+	bytes transaction_hash = 1;
+	int32 version = 2;
+	uint32 lock_time = 3;
+	uint32 expiry = 4;
+	TransactionDetails.TransactionType transaction_type = 5;
+	repeated Input inputs = 6;
+	repeated Output outputs = 7;
+  const
+  var tx = {
+    inputs: [],
+    outputs: [],
+    txHash: "",
+    version: 0,
+    lockTime: 0,
+    expiry: 0,
+    transactionType: "vote",
+  };
+  */
+  var txParser = new Parser()
+    .endianess("little")
+    .uint32("version")
+    .uint32("numInputs")
+    .array("inputs", {
+      type: inputParser,
+      length: "numInputs"
+    })
+    .uint32("numOutputs")
+    .array("outputs", {
+      type: outputParser,
+      length: "numOutputs"
+    })
+    .uint32("lockTime")
+    .uint32("expiry");
+
+  var inputParser = new Parser()
+    .endianess("big")
+    .buffer(32, "prevTxId")
+    .uint32("outIndex")
+    .bit3("outputTree")
+    .bit13("sequence");
+
+  var outputParser = new Parser()
+    .endianess("big")
+    .uint32("bu")
+    .uint16("id")
+    .bit3("offset")
+    .bit13("fragOffset");
+
+  this.version = reader.readInt32LE();
+  var sizeTxIns = reader.readVarintNum();
+
+  // check for segwit
+  var hasWitnesses = false;
+  if (sizeTxIns === 0 && reader.buf[reader.pos] !== 0) {
+    reader.pos += 1;
+    hasWitnesses = true;
+    sizeTxIns = reader.readVarintNum();
+  }
+
+  for (var i = 0; i < sizeTxIns; i++) {
+    var input = Input.fromBufferReader(reader);
+    this.inputs.push(input);
+  }
+
+  var sizeTxOuts = reader.readVarintNum();
+  for (var j = 0; j < sizeTxOuts; j++) {
+    this.outputs.push(Output.fromBufferReader(reader));
+  }
+
+  if (hasWitnesses) {
+    for (var k = 0; k < sizeTxIns; k++) {
+      var itemCount = reader.readVarintNum();
+      var witnesses = [];
+      for (var l = 0; l < itemCount; l++) {
+        var size = reader.readVarintNum();
+        var item = reader.read(size);
+        witnesses.push(item);
+      }
+      this.inputs[k].setWitnesses(witnesses);
+    }
+  }
+
+  this.nLockTime = reader.readUInt32LE();
+
+  var tx = txParser.parse(rawTx);
+  return cb(null, tx);
+};
