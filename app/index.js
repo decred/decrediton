@@ -22,10 +22,12 @@ var initialState = {
     currentSettings: {
       locale: locale,
       daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
+      allowedExternalRequests: globalCfg.get("allowed_external_requests"),
     },
     tempSettings: {
       locale: locale,
       daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
+      allowedExternalRequests: globalCfg.get("allowed_external_requests"),
     },
     settingsChanged: false,
   },
@@ -36,6 +38,7 @@ var initialState = {
     currentStakePoolConfigSuccessMessage: "",
     activeStakePoolConfig: false,
     selectedStakePool: null,
+    updatedStakePoolList: false,
   },
   daemon: {
     appVersion: pkg.version,
@@ -43,6 +46,7 @@ var initialState = {
     network: globalCfg.get("network"),
     locale: locale,
     tutorial: globalCfg.get("show_tutorial"),
+    showPrivacy: globalCfg.get("show_privacy"),
     setLanguage: globalCfg.get("set_language"),
     daemonStarted: false,
     daemonSynced: false,

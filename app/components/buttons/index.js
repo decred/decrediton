@@ -8,6 +8,7 @@ export { default as TextToggle } from "./TextToggle";
 export { default as TicketsCogs } from "./TicketsCogs";
 export { default as TransactionLink } from "./TransactionLink";
 export { default as VerticalExpand } from "./VerticalExpand";
+export { default as EnableExternalRequestButton } from "./EnableExternalRequestButton";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";

@@ -7,6 +7,7 @@ import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
 import { MainNetParams, TestNetParams } from "wallet/constants";
 import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
+import { EXTERNALREQUEST_STAKEPOOL_LISTING } from "main_dev/externalRequests";
 
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
@@ -36,6 +37,7 @@ const START_STEP_FETCH = 6;
 
 export const setLanguage = get([ "daemon", "setLanguage" ]);
 export const showTutorial = get([ "daemon", "tutorial" ]);
+export const showPrivacy = get([ "daemon", "showPrivacy" ]);
 export const versionInvalid = get([ "version", "versionInvalid" ]);
 export const requiredWalletRPCVersion = get([ "version", "requiredVersion" ]);
 export const walletRPCVersion = createSelector(
@@ -619,6 +621,12 @@ export const tempSettings = get([ "settings", "tempSettings" ]);
 export const settingsChanged = get([ "settings", "settingsChanged" ]);
 export const changePassphraseError = get([ "control", "changePassphraseError" ]);
 export const changePassphraseSuccess = get([ "control", "changePassphraseSuccess" ]);
+export const updatedStakePoolList = get([ "stakepool", "updatedStakePoolList" ]);
+export const allowedExternalRequests = get([ "settings", "currentSettings", "allowedExternalRequests" ]);
+export const stakePoolListingEnabled = compose(
+  l => l.indexOf(EXTERNALREQUEST_STAKEPOOL_LISTING) > -1,
+  allowedExternalRequests
+);
 
 export const isSigningMessage = get([ "grpc", "getSignMessageRequestAttempt" ]);
 export const signMessageError = get([ "grpc", "getSignMessageError" ]);

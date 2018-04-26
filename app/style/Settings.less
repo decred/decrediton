@@ -3,14 +3,25 @@
 
 .settings-wrapper {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   background: white;
   margin-bottom: 20px;
-  padding: 26px 0 26px 40px;
+  padding: 26px 26px 26px 40px;
+  justify-content: space-between;
+}
+
+.settings-wrapper .settings-general,
+.settings-wrapper .settings-privacy {
+  width: 360px;
 }
 
 .settings-security {
   padding-left: 50px;
+  margin-bottom: 20px;
+}
+
+.settings-wrapper .settings-general .settings-label {
+  width: 112px;
 }
 
 .settings-column-title {
@@ -30,6 +41,16 @@
 .settings-row {
   display: flex;
   justify-content: flex-end;
+}
+
+.settings-row-checklist {
+  flex-wrap: wrap;
+}
+
+.settings-checklist-description {
+  font-style: italic;
+  text-align: right;
+  margin: -16px 28px 10px 0px;
 }
 
 .settings-label {
