@@ -33,10 +33,13 @@ export default ({
         </div>
         <Tooltip text={ <T id="logs.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onHideSettings}/></Tooltip>
       </div>
-      <GeneralSettings {...{ tempSettings, networks, currencies, locales,
-        onChangeTempSettings }} />
-      <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
-      <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
+
+      <div className="get-started-settings">
+        <GeneralSettings {...{ tempSettings, networks, currencies, locales,
+          onChangeTempSettings }} />
+        <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
+        <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
+      </div>
       <KeyBlueButton
         disabled={!areSettingsDirty}
         size="large"

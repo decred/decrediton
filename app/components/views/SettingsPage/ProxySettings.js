@@ -16,7 +16,7 @@ const ProxySettings = ({
   tempSettings,
   onChangeTempSettings
 }) => (
-  <div className="settings-general">
+  <div className="settings-proxy">
     <div className="settings-column-title"><T id="settings.proxy.title" m="Proxy" /></div>
     <div className="settings-column-content">
 

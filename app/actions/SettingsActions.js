@@ -7,7 +7,6 @@ import * as wallet from "wallet";
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
 export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
 export const SETTINGS_UNCHANGED = "SETTINGS_UNCHANGED";
-import * as wallet from "wallet";
 
 export const saveSettings = (settings) => (dispatch, getState) => {
   const { daemon: { walletName } } = getState();
