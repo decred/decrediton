@@ -11,11 +11,13 @@ import { getGlobalCfg } from "../config";
 
 export const EXTERNALREQUEST_NETWORK_STATUS = "EXTERNALREQUEST_NETWORK_STATUS";
 export const EXTERNALREQUEST_STAKEPOOL_LISTING = "EXTERNALREQUEST_STAKEPOOL_LISTING";
+export const EXTERNALREQUEST_UPDATE_CHECK = "EXTERNALREQUEST_UPDATE_CHECK";
 
 // These are the requests allowed when the standard privacy mode is selected.
 export const STANDARD_EXTERNAL_REQUESTS = [
   EXTERNALREQUEST_NETWORK_STATUS,
   EXTERNALREQUEST_STAKEPOOL_LISTING,
+  EXTERNALREQUEST_UPDATE_CHECK,
 ];
 
 let allowedURLs = [];
@@ -62,9 +64,11 @@ export const allowExternalRequest = (externalReqType) => {
   case EXTERNALREQUEST_STAKEPOOL_LISTING:
     addAllowedURL(/^https:\/\/api\.decred\.org\/\?c=gsd$/);
     break;
+  case EXTERNALREQUEST_UPDATE_CHECK:
+    addAllowedURL("https://api.github.com/repos/decred/decrediton/releases");
+    break;
   default:
     logger.log("error", "Unknown external request type: " + externalReqType);
-    throw "Unknown external request type: " + externalReqType;
   }
 
   allowedExternalRequests[externalReqType] = true;

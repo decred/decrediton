@@ -1,6 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import {
-  EXTERNALREQUEST_NETWORK_STATUS, EXTERNALREQUEST_STAKEPOOL_LISTING
+  EXTERNALREQUEST_NETWORK_STATUS, EXTERNALREQUEST_STAKEPOOL_LISTING,
+  EXTERNALREQUEST_UPDATE_CHECK
 } from "main_dev/externalRequests";
 
 const AllowableRequestType = ({ label, description, checked, onChange }) => (
@@ -47,6 +48,13 @@ const PrivacySettings = ({
           description={<T id="settings.privacy.stakepoolListing.description" m="List of currently available stakepools from decred.org" />}
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_STAKEPOOL_LISTING) > -1}
           onChange={toggle(EXTERNALREQUEST_STAKEPOOL_LISTING)}
+        />
+
+        <AllowableRequestType
+          label={<T id="settings.privacy.updateCheck.label" m="Update Check" />}
+          description={<T id="settings.privacy.updateCheck.description" m="Get latest released version from github.org" />}
+          checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_UPDATE_CHECK) > -1}
+          onChange={toggle(EXTERNALREQUEST_UPDATE_CHECK)}
         />
       </div>
     </div>
