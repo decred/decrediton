@@ -86,7 +86,7 @@ export default ({
           }
           <DecredLoading hidden={startupError || isInputRequest} />
         </div>
-        { Form && <Form {...{ ...props, isInputRequest, startupError }}/> }
+        { Form && <Form {...{ ...props, isInputRequest, startupError, getCurrentBlockCount }}/> }
       </Aux>
     </div>
   </div>

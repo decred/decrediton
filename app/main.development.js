@@ -378,6 +378,20 @@ ipcMain.on("get-decrediton-logs", (event) => {
   event.returnValue = "decrediton logs!";
 });
 
+function lastLogLine(log) {
+  let lastLineIdx = log.lastIndexOf(os.EOL, log.length - os.EOL.length -1);
+  let lastLineBuff = log.slice(lastLineIdx).toString("utf-8");
+  return lastLineBuff.trim();
+}
+
+ipcMain.on("get-last-log-line-dcrd", event => {
+  event.returnValue = lastLogLine(dcrdLogs);
+});
+
+ipcMain.on("get-last-log-line-dcrwallet", event => {
+  event.returnValue = lastLogLine(dcrwalletLogs);
+});
+
 ipcMain.on("get-previous-wallet", (event) => {
   event.returnValue = previousWallet;
 });

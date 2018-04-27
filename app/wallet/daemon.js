@@ -95,3 +95,9 @@ export const getAvailableWallets = log((network) => Promise
     if (availableWallets) return availableWallets;
     throw "Error getting avaiable wallets logs";
   }), "Get Available Wallets", logOptionNoResponseData());
+
+export const getDcrdLastLogLine = () => Promise
+  .resolve(ipcRenderer.sendSync("get-last-log-line-dcrd"));
+
+export const getDcrwalletLastLogLine = () => Promise
+  .resolve(ipcRenderer.sendSync("get-last-log-line-dcrwallet"));
