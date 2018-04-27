@@ -185,14 +185,8 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
     .catch(error => dispatch({ error, type: GETTICKETBUYERSERVICE_FAILED }));
 };
 
-export const getAccountNumbersBalances = (accountNumbers) => (dispatch, getState) => {
-  const { getAccountsResponse } = getState().grpc;
-  const accounts = getAccountsResponse.getAccountsList();
-  const byAccountNumber = accounts.reduce((l, a) => {
-    l[a.getAccountNumber()] = a;
-    return l;
-  }, {});
-  accountNumbers.forEach(a => dispatch(updateAccount(byAccountNumber[a])));
+export const getAccountNumbersBalances = (accountNumbers) => (dispatch) => {
+  accountNumbers.forEach(a => dispatch(getBalanceUpdateAttempt(a, 0)));
 };
 
 const getAccountsBalances = (accounts) => (dispatch, getState) => {
@@ -239,26 +233,18 @@ export const GETBALANCE_ATTEMPT = "GETBALANCE_ATTEMPT";
 export const GETBALANCE_FAILED = "GETBALANCE_FAILED";
 export const GETBALANCE_SUCCESS = "GETBALANCE_SUCCESS";
 
-const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (dispatch, getState) => {
-  const { grpc: { balances } } = getState();
-  let updatedBalance;
-  balances.some(balance => {
-    if (balance.accountNumber == accountNumber) {
-      updatedBalance = balance;
-      return balance.accountNumber == accountNumber;
-    }
-  });
-  updatedBalance.total = getBalanceResponse.getTotal();
-  updatedBalance.spendable = getBalanceResponse.getSpendable();
-  updatedBalance.immatureReward = getBalanceResponse.getImmatureReward();
-  updatedBalance.immatureStakeGeneration = getBalanceResponse.getImmatureStakeGeneration();
-  updatedBalance.lockedByTickets = getBalanceResponse.getLockedByTickets();
-  updatedBalance.votingAuthority = getBalanceResponse.getVotingAuthority();
+const getBalanceUpdateSuccess = (accountNumber, getBalanceResponse) => (dispatch) => {
+  let updatedBalance = {
+    accountNumber,
+    total: getBalanceResponse.getTotal(),
+    spendable: getBalanceResponse.getSpendable(),
+    immatureReward: getBalanceResponse.getImmatureReward(),
+    immatureStakeGeneration: getBalanceResponse.getImmatureStakeGeneration(),
+    lockedByTickets: getBalanceResponse.getLockedByTickets(),
+    votingAuthority: getBalanceResponse.getVotingAuthority(),
+  };
 
-  const updatedBalances = balances.map(balance =>
-    (balance.accountNumber === accountNumber) ? updatedBalance : balance);
-
-  dispatch({ balances: updatedBalances, type: GETBALANCE_SUCCESS });
+  dispatch(updateAccount(updatedBalance));
 };
 
 export const getBalanceUpdateAttempt = (accountNumber, requiredConfs) => (dispatch, getState) =>
