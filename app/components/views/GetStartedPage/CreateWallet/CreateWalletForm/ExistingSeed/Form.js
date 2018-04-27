@@ -94,7 +94,7 @@ class ExistingSeedForm extends React.Component{
                 <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
               </div>}
               {this.state.showPasteError &&
-              <div className="red-error">
+              <div className="error">
                 <T id="confirmSeed.warnings.pasteExistingError" m="* Please paste a valid 33 word seed."/>
               </div>}
               {seedWords.map((seedWord) => {
