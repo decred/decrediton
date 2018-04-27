@@ -6,7 +6,7 @@ import ReactTimeout from "react-timeout";
 import "style/GetStarted.less";
 
 function parseLogLine(line) {
-  const res = /^[\d :\-\.]+ \[...\] (.+)$/.exec(line);
+  const res = /^[\d :\-.]+ \[...\] (.+)$/.exec(line);
   return res ? res[1] : "";
 }
 
