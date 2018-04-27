@@ -669,7 +669,7 @@ msgctxt "export.dailyBalances.fields.lockedNonWallet"
 msgid ""
 "Balance locked in immature and live tickets not controlled by the wallet."
 msgstr ""
-"Saldo trancado em tickets imaturos e vivos, não controlados pela carteira."
+"Saldo bloqueado em tickets imaturos e vivos, não controlados pela carteira."
 
 #. [export.balances.fields.lockedNonWallet]
 #. defaultMessage is:
@@ -679,7 +679,7 @@ msgctxt "export.balances.fields.lockedNonWallet"
 msgid ""
 "Balance locked in immature and live tickets not controlled by the wallet."
 msgstr ""
-"Saldo trancado em tickets imaturos e vivos não controlados pela carteira."
+"Saldo bloqueado em tickets imaturos e vivos não controlados pela carteira."
 
 #. [export.dailyBalances.fields.locked]
 #. defaultMessage is:
@@ -687,7 +687,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.dailyBalances.fields.locked"
 msgid "Balance locked in immature and live tickets."
-msgstr "Saldo trancado em tickets imaturos e vivos."
+msgstr "Saldo bloqueado em tickets imaturos e vivos."
 
 #. [export.balances.fields.locked]
 #. defaultMessage is:
@@ -695,7 +695,7 @@ msgstr "Saldo trancado em tickets imaturos e vivos."
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.balances.fields.locked"
 msgid "Balance locked in immature and live tickets."
-msgstr "Saldo trancado em tickets imaturos e vivos"
+msgstr "Saldo bloqueado em tickets imaturos e vivos"
 
 #. [ticketAutoBuyer.info.balanceToMaintain.header]
 #. defaultMessage is:
@@ -2023,7 +2023,7 @@ msgid ""
 "chosen at random to vote on the validity of blocks. By average a ticket gets"
 " voted in 28 days"
 msgstr ""
-"Fundos podem ser trancados por um tempo em retorno por tickets da rede. "
+"Fundos podem ser bloqueados por um tempo em retorno por tickets da rede. "
 "Tickets são escolhidos aleatoriamente para votar a validade dos blocos. Na "
 "média, um ticket é votado em 28 dias."
 
@@ -4683,8 +4683,8 @@ msgid ""
 "This is the balance that is currently locked by tickets for this account. "
 "Once the tickets are voted or revoked these funds will be unlocked."
 msgstr ""
-"Esse é o saldo trancado por tickets para essa conta. Uma vez que os tickets "
-"sejam votados ou revogados, esses fundos serão destrancados."
+"Esse é o saldo bloqueado por tickets para essa conta. Uma vez que os tickets "
+"sejam votados ou revogados, esses fundos serão desbloqueados."
 
 #. [balanceInfoModal.total.text]
 #. defaultMessage is:
@@ -4750,7 +4750,7 @@ msgctxt "getStarted.decrypt.info"
 msgid ""
 "This wallet is encrypted, please enter the public passphrase to decrypt it."
 msgstr ""
-"A carteira está criptografada. Digite a senha pública para descriptografa-"
+"A carteira está criptografada. Digite a senha pública para descriptografá-"
 "la."
 
 #. [notifications.type.ticket]
@@ -5831,7 +5831,7 @@ msgid ""
 "\n"
 "  As block validation is immutable, decisions made on all voted tickets can be publicly tracked. Active participation in staking helps secure Decred network’s, network, ensure quality Proof-of-Work, and determine the future direction of Decred."
 msgstr ""
-"Quando um ticket é comprado, o custo do ticket é trancado em sua carteira até que o ticket seja usado para votar ou até que ele seja revogado. Tickets entram na mempool e então passam para a ticketpool onde são sorteados para votar de forma aleatória. Existe uma probabilidade de 99.5% de que um ticket irá votar. O ticket médio irá votar em 28 dias, mas tickets que não tenham sido sorteados após 142 dias serão revogados. Os fundos DCR usados para comprar o ticket são liberados depois deste ter sido votado ou revogado.\n"
+"Quando um ticket é comprado, o custo do ticket é bloqueado em sua carteira até que o ticket seja usado para votar ou até que ele seja revogado. Tickets entram na mempool e então passam para a ticketpool onde são sorteados para votar de forma aleatória. Existe uma probabilidade de 99.5% de que um ticket irá votar. O ticket médio irá votar em 28 dias, mas tickets que não tenham sido sorteados após 142 dias serão revogados. Os fundos DCR usados para comprar o ticket são liberados depois deste ter sido votado ou revogado.\n"
 "\n"
 "Quando uma proposta é liberada para votação na Politeia, uma cópia da lista de tickets vivos é feita no momento do início da votação. Todos esses tickets terão direito a votar na proposta em um processo off-chain.\n"
 "\n"
@@ -5931,7 +5931,7 @@ msgid ""
 msgstr ""
 "Você deve estar conectado a rede para enviar um voto, razão pela qual muitas pessoas usam stakepools. Se o seu ticket for chamado para votar, você é restituído do preço do ticket (Ticket Price) original.\n"
 "\n"
-"Após um ticket ter votado, ser pedido ou expirar, os fundos (preço do ticket menos a taxa) ficaram em na situação de imaturos por outros 256 blocos, após o qual eles estarão liberados para uso pela carteira. Se o ticket é perdido ou expirado, uma transação de revogação é transmitida pela carteira para liberar o preço do ticket trancado.\n"
+"Após um ticket ter votado, ser pedido ou expirar, os fundos (preço do ticket menos a taxa) ficaram em na situação de imaturos por outros 256 blocos, após o qual eles estarão liberados para uso pela carteira. Se o ticket é perdido ou expirado, uma transação de revogação é transmitida pela carteira para liberar o preço do ticket bloqueado.\n"
 "\n"
 "NOTA: Revogações só podem ser enviadas para um ticket correspondente perdido. Você não pode revogar o ticket até que ele seja perdido."
 
