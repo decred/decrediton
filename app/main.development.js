@@ -218,27 +218,20 @@ ipcMain.on("allow-stakepool-host", (event, host) => {
 });
 
 ipcMain.on("get-available-wallets", (event, network) => {// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
-  var availableWallets = [];
+  const availableWallets = [];
+  const isTestNet = network !== "mainnet";
 
-  if (network == "mainnet") {
-    var mainnetWalletDirectories = fs.readdirSync(getWalletPath(false));
-    for (var i in mainnetWalletDirectories) {
-      if (fs.pathExistsSync(getWalletDBPathFromWallets(false, mainnetWalletDirectories[i].toString()))) {
-        availableWallets.push({ network: "mainnet", wallet: mainnetWalletDirectories[i], finished: true });
-      } else {
-        availableWallets.push({ network: "mainnet", wallet: mainnetWalletDirectories[i], finished: false });
-      }
-    }
-  } else {
-    var testnetWalletDirectories = fs.readdirSync(getWalletPath(true));
-    for (var j in testnetWalletDirectories) {
-      if (fs.pathExistsSync(getWalletDBPathFromWallets(true, testnetWalletDirectories[j].toString()))) {
-        availableWallets.push({ network: "testnet", wallet: testnetWalletDirectories[j], finished: true });
-      } else {
-        availableWallets.push({ network: "testnet", wallet: testnetWalletDirectories[j], finished: false });
-      }
-    }
-  }
+  const walletsBasePath = getWalletPath(isTestNet);
+  const walletDirs = fs.readdirSync(walletsBasePath);
+  walletDirs.forEach(wallet => {
+    const walletDirStat = fs.statSync(path.join(walletsBasePath, wallet));
+    if (!walletDirStat.isDirectory()) return;
+
+    const walletDbFilePath = getWalletDBPathFromWallets(isTestNet, wallet);
+    const finished = fs.pathExistsSync(walletDbFilePath);
+    availableWallets.push({ network, wallet, finished });
+  });
+
   event.returnValue = availableWallets;
 });
 
