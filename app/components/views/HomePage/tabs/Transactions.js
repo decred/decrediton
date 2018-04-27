@@ -19,14 +19,14 @@ const HomePage = ({
             classNameUnit="overview-balance-spendable-locked-unit"
             amount={balanceSent} />
           <div className="overview-balance-spendable-locked-label">
-            <T id="home.currentTotalSpendableBalanceLabel" m="Sent" />
+            <T id="home.sentBalanceLabel" m="Sent" />
           </div>
           <Balance
             classNameWrapper="overview-balance-spendable-locked"
             classNameUnit="overview-balance-spendable-locked-unit"
             amount={balanceReceived} />
           <div className="overview-balance-spendable-locked-label">
-            <T id="home.currentTotalLockedBalanceLabel" m="Received" />
+            <T id="home.receivedBalanceLabel" m="Received" />
           </div>
         </div>
       </div>
