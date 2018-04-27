@@ -103,3 +103,9 @@ export const reloadAllowedExternalRequests = log(() => Promise
 export const allowStakePoolHost = log(host => Promise
   .resolve(ipcRenderer.sendSync("allow-stakepool-host", host))
   , "Allow StakePool Host");
+
+export const getDcrdLastLogLine = () => Promise
+  .resolve(ipcRenderer.sendSync("get-last-log-line-dcrd"));
+
+export const getDcrwalletLastLogLine = () => Promise
+  .resolve(ipcRenderer.sendSync("get-last-log-line-dcrwallet"));
