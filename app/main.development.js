@@ -908,7 +908,7 @@ app.on("ready", async () => {
         label: locale.messages["appMenu.about"],
         click() {
           if (!versionWin) {
-            versionWin = new BrowserWindow({ width: 575, height: 275, show: false, autoHideMenuBar: true, resizable: false });
+            versionWin = new BrowserWindow({ width: 575, height: 325, show: false, autoHideMenuBar: true, resizable: false });
             versionWin.on("closed", () => {
               versionWin = null;
             });
