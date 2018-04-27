@@ -2617,7 +2617,7 @@ msgstr "Linguagem"
 #: app/i18n/extracted/app/components/charts/messages.json
 msgctxt "charts.keys.locked"
 msgid "Locked"
-msgstr "Trancado"
+msgstr "Bloqueado"
 
 #. [home.currentTotalLockedBalanceLabel]
 #. defaultMessage is:
@@ -2625,7 +2625,7 @@ msgstr "Trancado"
 #: app/i18n/extracted/app/components/views/HomePage/tabs/Balance.json
 msgctxt "home.currentTotalLockedBalanceLabel"
 msgid "Locked"
-msgstr "Trancado"
+msgstr "Bloqueado"
 
 #. [balanceInfoModal.locked.label]
 #. defaultMessage is:
@@ -2633,7 +2633,7 @@ msgstr "Trancado"
 #: app/i18n/extracted/app/components/modals/BalanceOverviewModalContent.json
 msgctxt "balanceInfoModal.locked.label"
 msgid "Locked By Tickets"
-msgstr "Trancado por Tickets"
+msgstr "Bloqueado por Tickets"
 
 #. [accounts.lockedByTickets]
 #. defaultMessage is:
@@ -3504,11 +3504,11 @@ msgctxt "charts.keys.received"
 msgid "Received"
 msgstr "Recebido"
 
-#. [home.currentTotalLockedBalanceLabel]
+#. [home.receivedBalanceLabel]
 #. defaultMessage is:
 #. Received
 #: app/i18n/extracted/app/components/views/HomePage/tabs/Transactions.json
-msgctxt "home.currentTotalLockedBalanceLabel"
+msgctxt "home.receivedBalanceLabel"
 msgid "Received"
 msgstr "Recebido"
 
@@ -3968,11 +3968,11 @@ msgctxt "charts.keys.sent"
 msgid "Sent"
 msgstr "Enviado"
 
-#. [home.currentTotalSpendableBalanceLabel]
+#. [home.sentBalanceLabel]
 #. defaultMessage is:
 #. Sent
 #: app/i18n/extracted/app/components/views/HomePage/tabs/Transactions.json
-msgctxt "home.currentTotalSpendableBalanceLabel"
+msgctxt "home.sentBalanceLabel"
 msgid "Sent"
 msgstr "Enviado"
 
