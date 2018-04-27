@@ -13,6 +13,7 @@ class ExistingSeedForm extends React.Component{
     super(props);
     this.state = {
       showPasteWarning : false,
+      showPasteError: false,
       seedType: "words",
     };
   }
@@ -26,11 +27,19 @@ class ExistingSeedForm extends React.Component{
       .filter(w => /^[\w]+$/.test(w))
       .filter(w => lowercaseSeedWords.indexOf(w.toLowerCase()) > -1)
       .map((w, i) => ({ index: i, word: w }));
-    this.props.setSeedWords(words);
+    if (words.length == 33) {
+      this.props.setSeedWords(words);
+      this.setState({
+        showPasteWarning : true,
+        showPasteError: false
+      });
+    } else {
+      this.setState({
+        showPasteWarning : false,
+        showPasteError : true
+      });
 
-    this.setState({
-      showPasteWarning : true
-    });
+    }
   }
 
   handleToggle = (side) => {
@@ -58,7 +67,7 @@ class ExistingSeedForm extends React.Component{
   }
 
   render(){
-    const { onChangeSeedWord, seedWords, setSeedWords,  } = this.props;
+    const { onChangeSeedWord, seedWords, setSeedWords } = this.props;
     const { seedType } = this.state;
     const errors = this.mountSeedErrors();
     return (
@@ -80,8 +89,13 @@ class ExistingSeedForm extends React.Component{
           </div>
           {seedType == "words" && Array.isArray(seedWords) ?
             <div className="seedArea">
-              {!this.state.showPasteWarning ? null : <div className="orange-warning">
+              {this.state.showPasteWarning &&
+              <div className="orange-warning">
                 <T id="confirmSeed.warnings.pasteExistingSeed" m="*Please make sure you also have a physical, written down copy of your seed." />
+              </div>}
+              {this.state.showPasteError &&
+              <div className="error">
+                <T id="confirmSeed.warnings.pasteExistingError" m="* Please paste a valid 33 word seed."/>
               </div>}
               {seedWords.map((seedWord) => {
                 const className = seedWord.word ? seedWord.error ? "seedWord error" : "seedWord populated" : "seedWord restore";
