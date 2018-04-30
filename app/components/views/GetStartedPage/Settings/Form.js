@@ -1,5 +1,6 @@
 import GeneralSettings from "views/SettingsPage/GeneralSettings";
 import PrivacySettings from "views/SettingsPage/PrivacySettings";
+import ProxySettings from "views/SettingsPage/ProxySettings";
 import { Tooltip } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import { LoaderBarBottom } from "indicators";
@@ -32,10 +33,13 @@ export default ({
         </div>
         <Tooltip text={ <T id="logs.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onHideSettings}/></Tooltip>
       </div>
-      <GeneralSettings {...{ tempSettings, networks, currencies, locales,
-        onChangeTempSettings }} />
-      <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
 
+      <div className="get-started-settings">
+        <GeneralSettings {...{ tempSettings, networks, currencies, locales,
+          onChangeTempSettings }} />
+        <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
+        <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
+      </div>
       <KeyBlueButton
         disabled={!areSettingsDirty}
         size="large"

@@ -97,6 +97,12 @@ export function initGlobalCfg() {
   if (!config.has("allowed_external_requests")) {
     config.set("allowed_external_requests", []);
   }
+  if (!config.has("proxy_type")) {
+    config.set("proxy_type", null);
+  }
+  if (!config.has("proxy_location")) {
+    config.set("proxy_location", null);
+  }
   return(config);
 }
 

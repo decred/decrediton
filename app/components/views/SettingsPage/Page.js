@@ -3,6 +3,7 @@ import { StandaloneHeader, StandalonePage } from "layout";
 import { ChangePassphraseButton, KeyBlueButton } from "buttons";
 import GeneralSettings from "./GeneralSettings";
 import PrivacySettings from "./PrivacySettings";
+import ProxySettings from "./ProxySettings";
 import "style/StakePool.less";
 import "style/Settings.less";
 
@@ -25,8 +26,12 @@ const SettingsPage = ({
 }) => (
   <StandalonePage header={<SettingsPageHeader />}>
     <div className="settings-wrapper">
-      <GeneralSettings {...{ tempSettings, networks, currencies, locales,
-        onChangeTempSettings }} />
+      <div>
+        <GeneralSettings {...{ tempSettings, networks, currencies, locales,
+          onChangeTempSettings }} />
+
+        <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
+      </div>
 
       <div className="settings-security">
         <div className="settings-column-title"><T id="settings.security.title" m="Security" /></div>
