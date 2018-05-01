@@ -298,26 +298,31 @@ export const setTicketBuyerConfigAttempt = (
         cfg.set("maxpriceabsolute",maxPriceAbsolute);
         dispatch({ maxPriceAbsolute, type: SETMAXPRICEABSOLUTE });
       }));
-  if (maxPriceRelative !== getTicketBuyerConfigResponse().getMaxPriceRelative())
+  if (parseFloat(maxPriceRelative) !== getTicketBuyerConfigResponse.getMaxPriceRelative()) {
     promises.push(wallet
       .setTicketBuyerMaxPriceRelative(ticketBuyerService, maxPriceRelative)
       .then(() => {
         cfg.set("maxpricerelative",maxPriceRelative);
         dispatch({ maxPriceRelative, type: SETMAXPRICERELATIVE });
       }));
+  }
+  if (parseInt(maxPerBlock) !== getTicketBuyerConfigResponse.getMaxPerBlock()) {
+    promises.push(wallet
+      .setTicketBuyerMaxPerBlock(ticketBuyerService, maxPerBlock)
+      .then(() => {
+        cfg.set("maxperblock", maxPerBlock);
+        dispatch({ maxPerBlock, type: SETMAXPERBLOCK });
+      }));
+  }
   if (stakePool.TicketAddress !== getTicketBuyerConfigResponse.getVotingAddress())
     promises.push(wallet.setTicketBuyerVotingAddress(ticketBuyerService, stakePool.TicketAddress));
   if (stakePool.PoolAddress !== getTicketBuyerConfigResponse.getPoolAddress())
     promises.push(wallet.setPoolAddress(ticketBuyerService, stakePool.PoolAddress));
   if (stakePool.PoolFees !== getTicketBuyerConfigResponse.getPoolFees())
     promises.push(wallet.setPoolFees(ticketBuyerService, stakePool.PoolFees));
-  if (maxPerBlock !== getTicketBuyerConfigResponse.getMaxPerBlock())
-    promises.push(wallet.setTicketBuyerMaxPerBlock(ticketBuyerService, maxPerBlock));
-
-  return promises
+  return Promise.all(promises)
     .then(() => {
       dispatch({
-        success: "Ticket buyer settings have been successfully updated.",
         type: SETTICKETBUYERCONFIG_SUCCESS
       });
       dispatch(getTicketBuyerConfigAttempt());
@@ -340,13 +345,12 @@ export const startAutoBuyerAttempt = (
   )
     .then(startAutoBuyerResponse => {
       dispatch({
-        success: "You successfully started the auto ticket buyer.",
         startAutoBuyerResponse,
         type: STARTAUTOBUYER_SUCCESS,
-        balanceToMaintain: balanceToMaintain*1e8,
+        balanceToMaintain: balanceToMaintain,
         maxFeePerKb: maxFeePerKb*1e8,
         maxPriceRelative: maxPriceRelative,
-        maxPriceAbsolute: maxPriceAbsolute*1e8,
+        maxPriceAbsolute: maxPriceAbsolute,
         maxPerBlock: maxPerBlock,
       });
       setTimeout(()=>dispatch(getTicketBuyerConfigAttempt(), 1000));
@@ -362,7 +366,6 @@ export const stopAutoBuyerAttempt = () => (dispatch, getState) => {
   dispatch({ type: STOPAUTOBUYER_ATTEMPT });
   return wallet.stopAutoBuyer(sel.ticketBuyerService(getState()))
     .then(stopAutoBuyerResponse => dispatch({
-      success: "You successfully stopped the auto ticket buyer.",
       stopAutoBuyerResponse, type: STOPAUTOBUYER_SUCCESS
     }))
     .catch(() => dispatch({ type: STOPAUTOBUYER_FAILED }));
