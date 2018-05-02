@@ -17,6 +17,9 @@ import {
   DECREDITON_VERSION
 } from "../actions/DaemonActions";
 import {
+  CREATEWALLET_GOBACK
+} from "../actions/WalletLoaderActions";
+import {
   UPDATEHIDDENACCOUNTS
 } from "../actions/ClientActions";
 
@@ -83,6 +86,12 @@ export default function version(state = {}, action) {
       walletReady: true,
       walletName: action.walletName,
       hiddenAccounts: action.hiddenAccounts,
+    };
+  case CREATEWALLET_GOBACK:
+    return { ...state,
+      walletReady: false,
+      walletName: "",
+      selectCreateWalletInputRequest: true,
     };
   case WALLETCREATED:
     return { ...state,

@@ -6,6 +6,7 @@ import {
 import * as wallet from "wallet";
 import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
+import { getAvailableWallets } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
 import { getWalletPath } from "main_dev/paths";
 import { isTestNet } from "selectors";
@@ -53,11 +54,25 @@ export const CREATEWALLET_NEWSEED_CONFIRM_INPUT = "CREATEWALLET_NEWSEED_CONFIRM_
 export const CREATEWALLET_NEWSEED_BACK_INPUT = "CREATEWALLET_NEWSEED_BACK_INPUT";
 export const CREATEWALLET_EXISTINGSEED_INPUT = "CREATEWALLET_EXISTINGSEED_INPUT";
 export const CREATEWALLET_GOBACK_EXISITNG_OR_NEW = "CREATEWALLET_GOBACK_EXISITNG_OR_NEW";
+export const CREATEWALLET_GOBACK = "CREATEWALLET_GOBACK";
 export const CREATEWALLET_NEWSEED_INPUT = "CREATEWALLET_NEWSEED_INPUT";
 
 export const createWalletConfirmNewSeed = () => ({ type: CREATEWALLET_NEWSEED_CONFIRM_INPUT });
 export const createWalletGoBackNewSeed = () => ({ type: CREATEWALLET_NEWSEED_BACK_INPUT });
 export const createWalletGoBackExistingOrNew = () => ({ type: CREATEWALLET_GOBACK_EXISITNG_OR_NEW });
+
+export const createWalletGoBackWalletSelection = () => (dispatch, getState) => {
+  const { daemon: { walletName, network } } = getState();
+  wallet.removeWallet(walletName, network == "testnet")
+    .then(() => {
+      dispatch({ type: CREATEWALLET_GOBACK });
+      dispatch(getAvailableWallets());
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({ type: CREATEWALLET_GOBACK });
+    });
+};
 export const createWalletExistingToggle = (existing) => (dispatch) =>
   existing
     ? dispatch({ type: CREATEWALLET_EXISTINGSEED_INPUT })

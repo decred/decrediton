@@ -54,6 +54,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setupStandardPrivacy: da.setupStandardPrivacy,
   setupDisabledPrivacy: da.setupDisabledPrivacy,
   onReturnToNewSeed: wla.createWalletGoBackNewSeed,
+  onReturnToWalletSelection: wla.createWalletGoBackWalletSelection,
   onReturnToExistingOrNewScreen: wla.createWalletGoBackExistingOrNew,
   onSetCreateWalletFromExisting: wla.createWalletExistingToggle,
   onDiscoverAddresses: wla.discoverAddressAttempt,
