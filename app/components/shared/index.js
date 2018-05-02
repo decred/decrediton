@@ -7,4 +7,5 @@ export { default as TransitionMotionWrapper } from "./TransitionMotionWrapper";
 export { default as ExternalLink } from "./ExternalLink";
 export { default as UnselectableText } from "./UnselectableText";
 export { default as RoutedTabsHeader } from "./RoutedTabsHeader";
+export { default as Documentation } from "./Documentation";
 export * from "./RoutedTabsHeader";
