@@ -34,8 +34,8 @@ const CreateWallet = ({
             </div>
           );
         })}
-        <div className="copy">
-          <Tooltip text={ <T id="createWallet.copy" m="Copy Seed" /> }><a className="copy-to-clipboard-icon" onClick={handleCopySeed}/></Tooltip>
+        <div className="copy" onClick={handleCopySeed}>
+          <T id="createWallet.copy" m="Copy seed words to clipboard" />
         </div>
       </div>
       <div className="toolbar">
