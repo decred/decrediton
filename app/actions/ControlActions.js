@@ -268,10 +268,10 @@ export const SETMAXPERBLOCK = "SETMAXPERBLOCK";
 export const setTicketBuyerConfigAttempt = (
   account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative, stakePool, maxPerBlock
 ) => (dispatch, getState) => {
-  const cfg = getWalletCfg();
-  const state = getState();
-  const ticketBuyerService = sel.ticketBuyerService(state);
-  const getTicketBuyerConfigResponse = sel.getTicketBuyerConfigResponse(state);
+  const { daemon: { walletName } } = getState();
+  const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
+  const ticketBuyerService = sel.ticketBuyerService(getState());
+  const getTicketBuyerConfigResponse = sel.getTicketBuyerConfigResponse(getState());
   const promises = [];
   dispatch({ type: SETTICKETBUYERCONFIG_ATTEMPT });
 
