@@ -146,8 +146,6 @@ export const launchDCRD = (logger, mainWindow, dcrdLogs, daemonIsAdvanced, daemo
 // NOTE: very simple impl for the moment, will break if messages get split
 // between data calls.
 const DecodeDaemonIPCData = (logger, data, cb) => {
-
-  logger.log("info", `AQUI \n\n\n\n`);
   let i = 0;
   while (i < data.length) {
     if (data[i++] !== 0x01) throw "Wrong protocol version when decoding IPC data";
@@ -210,15 +208,12 @@ export const launchDCRWallet = (mainWindow, dcrwalletLogs, daemonIsAdvanced, wal
   });
 
   const notifyGrpcPort = (port) => {
-    logger.log("info", `AQUI \n\n\n\n`);
-
     dcrwPort = port;
     logger.log("info", "wallet grpc running on port", port);
     mainWindow.webContents.send("dcrwallet-port", port);
   };
 
   dcrwallet.stdio[4].on("data", (data) => DecodeDaemonIPCData(logger, data, (mtype, payload) => {
-    logger.log("info", `AQUI \n\n\n\n`);
     if (mtype === "grpclistener") {
       const intf = payload.toString("utf-8");
       const matches = intf.match(/^.+:(\d+)$/);
@@ -248,7 +243,7 @@ export const launchDCRWallet = (mainWindow, dcrwalletLogs, daemonIsAdvanced, wal
     }
   });
 
-  const addStdoutToLogListener = (data) => dcrwalletLogs = AddToLog(process.stdout, dcrwalletLogs, data);
+  const addStdoutToLogListener = (data) => dcrwalletLogs = AddToLog(process.stdout, dcrwalletLogs, data, debug);
 
   // waitForGrpcPortListener is added as a stdout on("data") listener only on
   // win32 because so far that's the only way we found to get back the grpc port
@@ -263,7 +258,7 @@ export const launchDCRWallet = (mainWindow, dcrwalletLogs, daemonIsAdvanced, wal
       dcrwallet.stdout.removeListener("data", waitForGrpcPortListener);
       dcrwallet.stdout.on("data", addStdoutToLogListener);
     }
-    dcrwalletLogs = AddToLog(process.stdout, dcrwalletLogs, data);
+    dcrwalletLogs = AddToLog(process.stdout, dcrwalletLogs, data, debug);
   };
 
   dcrwallet.stdout.on("data", os.platform() == "win32" ? waitForGrpcPortListener : addStdoutToLogListener);

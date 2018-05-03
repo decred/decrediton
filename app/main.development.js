@@ -225,7 +225,6 @@ ipcMain.on("start-wallet", (event, walletPath, testnet) => {
     const pidAndPort = launchDCRWallet(mainWindow, dcrwalletLogs, daemonIsAdvanced, walletPath, testnet, logger);
     dcrwPID = pidAndPort.dcrwPID;
     dcrwPort = pidAndPort.dcrwPort;
-    logger.log("info", "this is PID: %s this is PORT: %s\n\n\n", dcrwPID, dcrwPort)
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }
