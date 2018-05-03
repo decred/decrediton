@@ -1,5 +1,6 @@
 import path from "path";
 import os from "os";
+import fs from "fs-extra";
 
 // In all the functions below the Windows path is constructed based on
 // os.homedir() rather than using process.env.LOCALAPPDATA because in my tests
@@ -92,4 +93,27 @@ export function getExecutablePath(name, customBinPath) {
 
 export function getDirectoryLogs(dir) {
   return path.join(dir, "logs");
+}
+
+export function checkAndInitWalletCfg (testnet) {
+  const walletDirectory = getDefaultWalletDirectory(testnet);
+
+  if (!fs.pathExistsSync(walletDirectory) && fs.pathExistsSync(getDecreditonWalletDBPath(testnet))) {
+    fs.mkdirsSync(walletDirectory);
+  
+    // check for existing mainnet directories
+    if ( fs.pathExistsSync(getDecreditonWalletDBPath(testnet)) ) {
+      fs.copySync(getDecreditonWalletDBPath(testnet), path.join(getDefaultWalletDirectory(testnet, testnet),"wallet.db"));
+    }
+  
+    // copy over existing config.json if it exists
+    if (fs.pathExistsSync(getGlobalCfgPath())) {
+      fs.copySync(getGlobalCfgPath(), getDefaultWalletFilesPath(testnet, "config.json"));
+    }
+  
+    // create new configs for default mainnet wallet
+    initWalletCfg(testnet, "default-wallet");
+    newWalletConfigCreation(testnet, "default-wallet");
+  
+  }
 }

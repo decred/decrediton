@@ -13,7 +13,7 @@ import { Buffer } from "buffer";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, MAX_LOG_LENGTH, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
 import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDefaultWalletFilesPath } from "./main_dev/paths";
 import { dcrwalletCfg, getWalletPath, getExecutablePath, getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, getDefaultWalletDirectory } from "./main_dev/paths";
-import { getGlobalCfgPath, getDecreditonWalletDBPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs } from "./main_dev/paths";
+import { getGlobalCfgPath, getDecreditonWalletDBPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 
@@ -52,8 +52,6 @@ let dcrwalletLogs = Buffer.from("");
 const globalCfg = initGlobalCfg();
 const daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
 const walletsDirectory = getWalletsDirectoryPath();
-const defaultTestnetWalletDirectory = getDefaultWalletDirectory(true);
-const defaultMainnetWalletDirectory = getDefaultWalletDirectory(false);
 const mainnetWalletsPath = getWalletsDirectoryPathNetwork(false);
 const testnetWalletsPath = getWalletsDirectoryPathNetwork(true);
 
@@ -89,43 +87,8 @@ fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
 fs.pathExistsSync(mainnetWalletsPath) || fs.mkdirsSync(mainnetWalletsPath);
 fs.pathExistsSync(testnetWalletsPath) || fs.mkdirsSync(testnetWalletsPath);
 
-if (!fs.pathExistsSync(defaultMainnetWalletDirectory) && fs.pathExistsSync(getDecreditonWalletDBPath(false))) {
-  fs.mkdirsSync(defaultMainnetWalletDirectory);
-
-  // check for existing mainnet directories
-  if ( fs.pathExistsSync(getDecreditonWalletDBPath(false)) ) {
-    fs.copySync(getDecreditonWalletDBPath(false), path.join(getDefaultWalletDirectory(false, false),"wallet.db"));
-  }
-
-  // copy over existing config.json if it exists
-  if (fs.pathExistsSync(getGlobalCfgPath())) {
-    fs.copySync(getGlobalCfgPath(), getDefaultWalletFilesPath(false, "config.json"));
-  }
-
-  // create new configs for default mainnet wallet
-  initWalletCfg(false, "default-wallet");
-  newWalletConfigCreation(false, "default-wallet");
-
-}
-
-if (!fs.pathExistsSync(defaultTestnetWalletDirectory) && fs.pathExistsSync(getDecreditonWalletDBPath(true))) {
-  fs.mkdirsSync(defaultTestnetWalletDirectory);
-
-  // check for existing testnet2 directories
-  if (fs.pathExistsSync(getDecreditonWalletDBPath(true))) {
-    fs.copySync(getDecreditonWalletDBPath(true), path.join(getDefaultWalletDirectory(true, true),"wallet.db"));
-  }
-
-  // copy over existing config.json if it exists
-  if (fs.pathExistsSync(getGlobalCfgPath())) {
-    fs.copySync(getGlobalCfgPath(), getDefaultWalletFilesPath(true, "config.json"));
-  }
-
-  // create new configs for default testnet wallet
-  initWalletCfg(true, "default-wallet");
-  newWalletConfigCreation(true, "default-wallet");
-
-}
+checkAndInitWalletCfg(true)
+checkAndInitWalletCfg(false)
 
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
 logger.log("info", "Versions: Decrediton: %s, Electron: %s, Chrome: %s",
