@@ -180,7 +180,7 @@ ipcMain.on("start-daemon", (event, appData, testnet) => {
     if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
       dcrdConfPath = createTempDcrdConf();
     }
-    dcrdConfig = launchDCRD(logger, mainWindow, dcrdLogs, daemonIsAdvanced, dcrdConfPath, appData, testnet);
+    dcrdConfig = launchDCRD(mainWindow, dcrdLogs, daemonIsAdvanced, dcrdConfPath, appData, testnet);
     dcrdPID = dcrdConfig.pid;
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
@@ -222,7 +222,7 @@ ipcMain.on("start-wallet", (event, walletPath, testnet) => {
   }
   initWalletCfg(testnet, walletPath);
   try {
-    const pidAndPort = launchDCRWallet(mainWindow, dcrwalletLogs, daemonIsAdvanced, walletPath, testnet, logger);
+    const pidAndPort = launchDCRWallet(mainWindow, dcrwalletLogs, daemonIsAdvanced, walletPath, testnet);
     dcrwPID = pidAndPort.dcrwPID;
     dcrwPort = pidAndPort.dcrwPort;
   } catch (e) {
@@ -281,7 +281,7 @@ ipcMain.on("check-daemon", (event, rpcCreds, testnet) => {
 });
 
 ipcMain.on("clean-shutdown", async function(event){
-  const stopped = await cleanShutdown(logger, mainWindow, app, dcrdPID, dcrwPID);
+  const stopped = await cleanShutdown(mainWindow, app, dcrdPID, dcrwPID);
   event.sender.send("clean-shutdown-finished", stopped);
 });
 
@@ -479,7 +479,7 @@ app.on("ready", async () => {
         label: locale.messages["appMenu.quit"],
         accelerator: "Command+Q",
         click() {
-          cleanShutdown(logger, mainWindow, app, dcrdPID, dcrwPID);
+          cleanShutdown(mainWindow, app, dcrdPID, dcrwPID);
         }
       } ]
     }, {
@@ -633,7 +633,7 @@ app.on("ready", async () => {
 app.on("before-quit", (event) => {
   logger.log("info","Caught before-quit. Set decredition as was closed");
   event.preventDefault();
-  cleanShutdown(logger, mainWindow, app, dcrdPID, dcrwPID);
+  cleanShutdown(mainWindow, app, dcrdPID, dcrwPID);
   setMustOpenForm(true);
   app.exit(0);
 });

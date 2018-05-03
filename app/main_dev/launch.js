@@ -34,7 +34,7 @@ function closeDCRD(dcrdPID) {
   }
 }
 
-export async function cleanShutdown(logger, mainWindow, app, dcrdPID, dcrwPID) {
+export async function cleanShutdown(mainWindow, app, dcrdPID, dcrwPID) {
   // Attempt a clean shutdown.
   return new Promise(resolve => {
     const cliShutDownPause = 2; // in seconds.
@@ -65,7 +65,7 @@ export async function cleanShutdown(logger, mainWindow, app, dcrdPID, dcrwPID) {
   });
 }
 
-export const launchDCRD = (logger, mainWindow, dcrdLogs, daemonIsAdvanced, daemonPath, appdata, testnet) => {
+export const launchDCRD = (mainWindow, dcrdLogs, daemonIsAdvanced, daemonPath, appdata, testnet) => {
   var spawn = require("child_process").spawn;
   let args = [];
   let newConfig = {};
@@ -160,7 +160,7 @@ const DecodeDaemonIPCData = (logger, data, cb) => {
   }
 };
 
-export const launchDCRWallet = (mainWindow, dcrwalletLogs, daemonIsAdvanced, walletPath, testnet, logger) => {
+export const launchDCRWallet = (mainWindow, dcrwalletLogs, daemonIsAdvanced, walletPath, testnet) => {
   var spawn = require("child_process").spawn;
   var args = [ "--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath)) ];
 
