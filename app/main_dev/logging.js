@@ -1,6 +1,8 @@
 import { app } from "electron";
 import winston from "winston";
 import path from "path";
+import { MAX_LOG_LENGTH } from "./constants";
+
 
 const pad = (s, n) => {
   n = n || 2;
@@ -72,4 +74,19 @@ export function createLogger(debug) {
   }
 
   return logger;
+}
+
+export const AddToLog = (destIO, destLogBuffer, data, debug) => {
+  var dataBuffer = Buffer.from(data);
+  if (destLogBuffer.length + dataBuffer.length > MAX_LOG_LENGTH) {
+    destLogBuffer = destLogBuffer.slice(destLogBuffer.indexOf(os.EOL,dataBuffer.length)+1);
+  }
+  debug && destIO.write(data);
+  return Buffer.concat([ destLogBuffer, dataBuffer ]);
+};
+
+export function lastLogLine(log) {
+  let lastLineIdx = log.lastIndexOf(os.EOL, log.length - os.EOL.length -1);
+  let lastLineBuff = log.slice(lastLineIdx).toString("utf-8");
+  return lastLineBuff.trim();
 }
