@@ -2,7 +2,7 @@ import { app } from "electron";
 import winston from "winston";
 import path from "path";
 import { MAX_LOG_LENGTH } from "./constants";
-
+import os from "os";
 
 const pad = (s, n) => {
   n = n || 2;

@@ -1,14 +1,15 @@
 
-import { dcrwalletCfg, getWalletPath, getExecutablePath } from "./paths"
-import { getWalletCfg } from "../config";
-import {AddToLog} from "./logging"
+import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdRpcCert } from "./paths"
+import { getWalletCfg, readDcrdConfig } from "../config";
+import { AddToLog, createLogger } from "./logging"
 import parseArgs from "minimist";
-import {OPTIONS} from "./constants"
+import { OPTIONS } from "./constants"
 import os from "os";
 import fs from "fs-extra";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
+const logger = createLogger(debug);
 
 function closeClis(dcrdPID, dcrwPID) {
   // shutdown daemon and wallet.
@@ -38,10 +39,10 @@ export async function cleanShutdown(logger, mainWindow, app, dcrdPID, dcrwPID) {
   return new Promise(resolve => {
     const cliShutDownPause = 2; // in seconds.
     const shutDownPause = 3; // in seconds.
-    closeClis();
+    closeClis(dcrdPID, dcrwPID);
     // Sent shutdown message again as we have seen it missed in the past if they
     // are still running.
-    setTimeout(function () { closeClis(); }, cliShutDownPause * 1000);
+    setTimeout(function () { closeClis(dcrdPID, dcrwPID); }, cliShutDownPause * 1000);
     logger.log("info", "Closing decrediton.");
 
     let shutdownTimer = setInterval(function () {
@@ -64,7 +65,7 @@ export async function cleanShutdown(logger, mainWindow, app, dcrdPID, dcrwPID) {
   });
 }
 
-export const launchDCRD = (daemonPath, appdata, testnet) => {
+export const launchDCRD = (logger, mainWindow, dcrdLogs, daemonIsAdvanced, daemonPath, appdata, testnet) => {
   var spawn = require("child_process").spawn;
   let args = [];
   let newConfig = {};

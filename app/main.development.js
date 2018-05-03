@@ -180,7 +180,7 @@ ipcMain.on("start-daemon", (event, appData, testnet) => {
     if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
       dcrdConfPath = createTempDcrdConf();
     }
-    dcrdConfig = launchDCRD(dcrdConfPath, appData, testnet);
+    dcrdConfig = launchDCRD(logger, mainWindow, dcrdLogs, daemonIsAdvanced, dcrdConfPath, appData, testnet);
     dcrdPID = dcrdConfig.pid;
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
