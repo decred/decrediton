@@ -1,6 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
 import { LoaderBarBottom } from "indicators";
-import { Tooltip } from "shared";
 import "style/CreateWalletForm.less";
 
 const ExistingOrNewScreen = ({
@@ -13,7 +12,9 @@ const ExistingOrNewScreen = ({
 }) => (
   <div className="getstarted content">
     <div className="createwallet-button-area">
-      <Tooltip text={ <T id="createWallet.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onReturnToWalletSelection}/></Tooltip>
+      <div className="create-wallet-go-back">
+        <div className="create-wallet-go-back-button" onClick={onReturnToWalletSelection}/>
+      </div>
       <div className="createwallet-button new" onClick={()=> onSetCreateWalletFromExisting(false)}>
         <div className="createwallet-button-label">
           <T id="getStarted.newSeedTab" m="Create a New Wallet"/>
