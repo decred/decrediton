@@ -63,15 +63,17 @@ export const createWalletGoBackExistingOrNew = () => ({ type: CREATEWALLET_GOBAC
 
 export const createWalletGoBackWalletSelection = () => (dispatch, getState) => {
   const { daemon: { walletName, network } } = getState();
-  wallet.removeWallet(walletName, network == "testnet")
-    .then(() => {
-      dispatch({ type: CREATEWALLET_GOBACK });
-      dispatch(getAvailableWallets());
-    })
-    .catch((err) => {
-      console.log(err);
-      dispatch({ type: CREATEWALLET_GOBACK });
-    });
+  wallet.stopWallet().then(() => {
+    wallet.removeWallet(walletName, network == "testnet")
+      .then(() => {
+        dispatch({ type: CREATEWALLET_GOBACK });
+        dispatch(getAvailableWallets());
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({ type: CREATEWALLET_GOBACK });
+      });
+  });
 };
 export const createWalletExistingToggle = (existing) => (dispatch) =>
   existing
