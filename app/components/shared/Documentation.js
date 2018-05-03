@@ -5,11 +5,11 @@ import Docs from "i18n/docs";
 
 const DocUnavailableMsg = ({ name }) => (
   <div className="doc-unavailable-alert">
-    <T id="docs.unavailable" m="Document '{name}' is currently unavailable in the current language. Request it in the community channels." values={{ name }} />
+    <T id="docs.unavailable" m="Document '{name}' is unavailable in the current language. Please request it in the community channels." values={{ name }} />
   </div>
 );
 
-const Documentation = ({ currentLocaleName, name }) => {
+const Documentation = ({ currentLocaleName, name, className }) => {
   const split = (currentLocaleName||"").split("-");
   const baseLang = split[0];
   let content;
@@ -23,7 +23,7 @@ const Documentation = ({ currentLocaleName, name }) => {
 
   return (
     <Aux>
-      <ReactMarkdown source={content} />
+      <ReactMarkdown source={content} className={className} />
       {unavailable}
     </Aux>
   );

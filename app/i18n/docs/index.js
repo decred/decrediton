@@ -1,6 +1,6 @@
 import * as en from "./en";
-import * as ptBR from "./pt-BR";
+import * as pt from "./pt";
 
-const Docs = { en, "pt-BR": ptBR };
+const Docs = { en, "pt": pt };
 
 export default Docs;
