@@ -1,11 +1,12 @@
 import { FormattedMessage as T } from "react-intl";
 import { StepIndicator } from "indicators";
+import { Documentation } from "shared";
 
-export const StandardPage = ({ image, text, currentPageIndex, pageCount,
+export const StandardPage = ({ image, docName, currentPageIndex, pageCount,
   onNextPage, onPreviousPage, onGotoPage, onFinish }) => (
 
   <div className="tutorial-standard-page">
-    <div className="tutorial-text">{text}</div>
+    <div className="tutorial-text"><Documentation name={docName} /></div>
     <div className="tutorial-image-and-indicator">
       <div className={[ "tutorial-image", "tutorial-image-" + image ].join(" ")} />
       <div className={"tutorial-page-indicator"}>
@@ -29,9 +30,9 @@ export const StandardPage = ({ image, text, currentPageIndex, pageCount,
   </div>
 );
 
-export const MakeStandardPage = (image, text) => (props) =>
+export const MakeStandardPage = (image, docName) => (props) =>
   <StandardPage
     {...props}
-    text={text}
+    docName={docName}
     image={image}
   />;
