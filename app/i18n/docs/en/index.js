@@ -5,9 +5,11 @@ export { default as PassphraseInfo } from "./InfoModals/Passphrase.md";
 export { default as SeedInfo } from "./InfoModals/Seed.md";
 export { default as PurchaseTicketsInfo } from "./InfoModals/PurchaseTickets.md";
 export { default as BalanceOverviewInfo } from "./InfoModals/BalanceOverview.md";
-export { default as TicketAutoBuyer } from "./InfoModals/TicketAutoBuyer.md";
+export { default as TicketAutoBuyerInfo } from "./InfoModals/TicketAutoBuyer.md";
+export { default as ScriptNotRedeemableInfo } from "./InfoModals/ScriptNotRedeemable.md";
 
 export { default as SeedCopyWarning } from "./Warnings/SeedCopy.md";
+export { default as WalletCreationWarning } from "./Warnings/WalletCreation.md";
 
 export { default as GetStartedTutorialPage00 } from "./GetStarted/TutorialPage00.md";
 export { default as GetStartedTutorialPage01 } from "./GetStarted/TutorialPage01.md";

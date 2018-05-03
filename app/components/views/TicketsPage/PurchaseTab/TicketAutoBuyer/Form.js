@@ -15,7 +15,7 @@ const TicketAutoBuyerForm = ({
   <Aux>
     <div className="stakepool-voting-title-area">
       <div className="stakepool-purchase-ticket-input-buttons">
-        <InfoDocModalButton document="TicketAutoBuyer" modalClassName="info-modal-fields" />
+        <InfoDocModalButton document="TicketAutoBuyerInfo" modalClassName="info-modal-fields" />
       </div>
     </div>
     <div className="stakepool-flex-height-auto-buyer-wrapper">

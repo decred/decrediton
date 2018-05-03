@@ -2,6 +2,7 @@ import { ExternalLink } from "shared";
 import { PassphraseModalButton, ScriptRedeemableButton, SlateGrayButton } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, StakePoolSelect } from "inputs";
+import { Documentation } from "shared";
 import "style/Layout.less";
 import "style/StakePool.less";
 
@@ -69,13 +70,7 @@ const StakePoolsAddForm = ({
           }}/>
           <ScriptRedeemableButton
             modalTitle={<T id="stake.notRedeemed" m="Script not redeemable?" />}
-            modalContent={
-              <Aux>
-                <span className="stakepool-add-not-redeemable-content"><T id="stake.notRedeemed.content1" m="If you receive an error about the script not being redeemable when attempting to add your stakepool, you can try the following:"/></span>
-                <span className="stakepool-add-not-redeemable-content"><T id="stake.notRedeemed.content2" m="1. Each stakepool account you create can only be associated with 1 wallet. If you have previously created this stakepool account with a different wallet (different seed), then you must create a new account. "/></span>
-                <span className="stakepool-add-not-redeemable-content"><T id="stake.notRedeemed.content3" m="2. If you had previously used a ‘voting account’, for your ticket purchases, please go to the Accounts page and create a new account. This may now allow you to successfully import your script for your stakepool."/></span>
-              </Aux>
-            }
+            modalContent={<Documentation name="ScriptNotRedeemableInfo" />}
             className="stakepool-add-not-redeemable"
             buttonLabel={<T id="stake.notRedeemed" m={"Script not redeemable?"} />}
           />
