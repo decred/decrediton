@@ -1,4 +1,13 @@
-export { default as SignMessage } from "./SignMessage.md";
+export { default as SignMessageInfo } from "./InfoModals/SignMessage.md";
+export { default as VerifyMessageInfo } from "./InfoModals/VerifyMessage.md";
+export { default as GapLimitInfo } from "./InfoModals/GapLimit.md";
+export { default as PassphraseInfo } from "./InfoModals/Passphrase.md";
+export { default as SeedInfo } from "./InfoModals/Seed.md";
+export { default as PurchaseTicketsInfo } from "./InfoModals/PurchaseTickets.md";
+export { default as BalanceOverviewInfo } from "./InfoModals/BalanceOverview.md";
+export { default as TicketAutoBuyer } from "./InfoModals/TicketAutoBuyer.md";
+
+export { default as SeedCopyWarning } from "./Warnings/SeedCopy.md";
 
 export { default as GetStartedTutorialPage00 } from "./GetStarted/TutorialPage00.md";
 export { default as GetStartedTutorialPage01 } from "./GetStarted/TutorialPage01.md";

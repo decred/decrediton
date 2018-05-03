@@ -1,7 +1,6 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { PasswordInput } from "inputs";
-import { InfoModalButton } from "buttons";
-import { PassphraseInfoModalContent } from "modals";
+import { InfoDocModalButton } from "buttons";
 import "style/CreateWalletForm.less";
 
 const messages = defineMessages({
@@ -32,10 +31,7 @@ const PassPhraseInputs = ({
   <Aux>
     <div className="confirm-seed-row passphrase">
       <div className="confirm-seed-label-text passphrase">
-        <InfoModalButton
-          modalTitle={<h1><T id="confirmSeed.passphraseInformation" m="Private passphrase information" /></h1>}
-          modalContent={<PassphraseInfoModalContent />}
-        />
+        <InfoDocModalButton document="PassphraseInfo" />
         {passPhraseLabel}
       </div>
       <div className="create-wallet-field">

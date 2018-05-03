@@ -1,5 +1,4 @@
-import { AutoBuyerSwitch, InfoModalButton, PassphraseModalSwitch, TicketsCogs } from "buttons";
-import { TicketAutoBuyerInfoModalContent } from "modals";
+import { AutoBuyerSwitch, InfoDocModalButton, PassphraseModalSwitch, TicketsCogs } from "buttons";
 import { TransitionMotionWrapper } from "shared";
 import { FormattedMessage as T } from "react-intl";
 import "style/StakePool.less";
@@ -16,10 +15,7 @@ const TicketAutoBuyerForm = ({
   <Aux>
     <div className="stakepool-voting-title-area">
       <div className="stakepool-purchase-ticket-input-buttons">
-        <InfoModalButton
-          modalTitle={<h1><T id="accounts.automaticPurchaseInfo" m="Automatic Purchase Information" /></h1>}
-          modalContent={<TicketAutoBuyerInfoModalContent />}
-        />
+        <InfoDocModalButton document="TicketAutoBuyer" modalClassName="info-modal-fields" />
       </div>
     </div>
     <div className="stakepool-flex-height-auto-buyer-wrapper">

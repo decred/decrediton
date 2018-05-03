@@ -1,5 +1,5 @@
-import { PurchaseTicketsInfoModalContent, ImportScriptModal } from "modals";
-import { TicketsCogs, InfoModalButton, PassphraseModalButton,
+import { ImportScriptModal } from "modals";
+import { TicketsCogs, InfoDocModalButton, PassphraseModalButton,
   InvisiblePassphraseModalButton } from "buttons";
 import { AccountsSelect, NumTicketsInput } from "inputs";
 import { FormattedMessage as T } from "react-intl";
@@ -36,10 +36,7 @@ const PurchaseTicketsForm = ({
           <T id="purchaseTickets.title" m="Purchase Tickets" />
         </div>
         <div className="stakepool-purchase-ticket-input-buttons">
-          <InfoModalButton
-            modalTitle={<h1><T id="purchaseInfoModal.title" m="Ticket Purchase Information" /></h1>}
-            modalContent={<PurchaseTicketsInfoModalContent />}
-          />
+          <InfoDocModalButton document="PurchaseTicketsInfo" modalClassName="info-modal-fields"/>
         </div>
       </div>
       <div className="stakepool-purchase-ticket-row-wrapper">

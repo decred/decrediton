@@ -1,7 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
-import { InfoModalButton, KeyBlueButton } from "buttons";
-import { VerifyMessageInfoModalContent } from "modals";
+import { InfoDocModalButton, KeyBlueButton } from "buttons";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
@@ -36,10 +35,7 @@ const VerifyMessageForm = ({
     <Aux>
       <div className="security-center-form">
         <div className="button-right">
-          <InfoModalButton
-            modalTitle={<h1><T id="securitycenter.verifyInfo" m="Verify Message Information"/></h1>}
-            modalContent={<VerifyMessageInfoModalContent />}
-          />
+          <InfoDocModalButton document="VerifyMessageInfo" />
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">

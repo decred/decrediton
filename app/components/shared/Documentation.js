@@ -1,7 +1,14 @@
-import ReactMarkdown from "react-markdown";
+import { default as ReactMarkdown, uriTransformer }  from "react-markdown";
 import { FormattedMessage as T } from "react-intl";
 import { locale } from "connectors";
 import Docs from "i18n/docs";
+import { shell } from "electron";
+
+// This changes absolute links (http://, https://, etc) to open as external links.
+const renderDocLink = ({ href, children }) => {
+  const uri = uriTransformer(href);
+  return <a onClick={() => shell.openExternal(uri)} href="#">{children}</a>;
+};
 
 const DocUnavailableMsg = ({ name }) => (
   <div className="doc-unavailable-alert">
@@ -23,7 +30,11 @@ const Documentation = ({ currentLocaleName, name, className }) => {
 
   return (
     <Aux>
-      <ReactMarkdown source={content} className={className} />
+      <ReactMarkdown
+        source={content}
+        className={className}
+        renderers={{ link: renderDocLink }}
+      />
       {unavailable}
     </Aux>
   );

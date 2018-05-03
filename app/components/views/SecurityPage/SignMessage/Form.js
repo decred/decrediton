@@ -1,7 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
-import { InfoModalButton, PassphraseModalButton } from "buttons";
+import { InfoDocModalButton, PassphraseModalButton } from "buttons";
 import { TextInput } from "inputs";
-import { SignMessageInfoModalContent } from "modals";
 
 const messages = defineMessages({
   addressFieldPlaceholder: {
@@ -29,10 +28,7 @@ const SignMessageForm = ({
     <Aux>
       <div className="security-center-form">
         <div className="button-right">
-          <InfoModalButton
-            modalTitle={<h1><T id="securitycenter.signInfo" m="Sign Message Information"/></h1>}
-            modalContent={<SignMessageInfoModalContent />}
-          />
+          <InfoDocModalButton document="SignMessageInfo" />
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">

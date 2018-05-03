@@ -1,4 +1,6 @@
-## Sign Message
+# Sign Message
+
+---
 
 Signing a message with an address' private key allows you to prove that you are the owner of a given address to a possible counterparty.
 

@@ -2,8 +2,8 @@ import { FormattedMessage as T } from "react-intl";
 import { StandalonePage, StandaloneHeader } from "layout";
 import AccountRow from "./AccountRow";
 import { DecredLoading } from "indicators";
-import { InfoModalButton, PassphraseModalButton } from "buttons";
-import { BalanceOverviewModalContent, AddAccountModal } from "modals";
+import { InfoDocModalButton, PassphraseModalButton } from "buttons";
+import { AddAccountModal } from "modals";
 
 const AccountsListHeader = ({ onGetNextAccountAttempt }) =>
   <StandaloneHeader
@@ -34,10 +34,7 @@ const AccountsList = ({
     { isLoading ? <DecredLoading/> :
       <Aux>
         <div className="account-content-title-buttons-area">
-          <InfoModalButton
-            modalTitle={<h1><T id="accounts.balanceInfo" m="Balance Information" /></h1>}
-            modalContent={<BalanceOverviewModalContent />}
-          />
+          <InfoDocModalButton document="BalanceOverviewInfo" modalClassName="info-modal-fields" />
         </div>
         <div className="account-content-nest">
           {accounts.map(account => (

@@ -25,7 +25,7 @@ export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton,
  ***************************************************/
 import {
   InfoModal, PassphraseModal, ChangePassphraseModal,
-  ConfirmModal, InfoConfirmModal
+  ConfirmModal, InfoConfirmModal, InfoDocumentModal,
 } from "modals";
 
 // mbb = ModalButtonBuilder (func to build a functional ModalButton component
@@ -45,6 +45,7 @@ const helpLinkButton = ({ className, onClick, buttonLabel }) =>
 
 export const HelpLinkInfoModal = mbb("help-icon", InfoModal, helpLinkButton);
 export const InfoModalButton = mbb("info-modal-button", InfoModal);
+export const InfoDocModalButton = mbb("info-modal-button", InfoDocumentModal);
 export const ChangePassphraseButton = mbb("change-password-default-icon", ChangePassphraseModal);
 export const InvisiblePassphraseModalButton = mbb(null, PassphraseModal, InvisibleButton);
 export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
