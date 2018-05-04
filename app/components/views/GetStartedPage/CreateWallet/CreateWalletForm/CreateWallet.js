@@ -1,4 +1,4 @@
-import { KeyBlueButton } from "buttons";
+import { KeyBlueButton, InvisibleButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { SeedCopyConfirmModal } from "modals";
 import { Tooltip } from "shared";
@@ -42,6 +42,11 @@ const CreateWallet = ({
         <KeyBlueButton className="wallet-key-blue-button" onClick={createWalletConfirmNewSeed}>
           <T id="createWallet.continueBtn" m="Continue" />
         </KeyBlueButton>
+        <InvisibleButton
+          className="go-back-button"
+          onClick={onReturnToExistingOrNewScreen}>
+          <T id="getStarted.backBtn" m="Cancel" />
+        </InvisibleButton>
       </div>
       <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft, getDaemonSynced }}  />
     </div>
