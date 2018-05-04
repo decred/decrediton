@@ -1,4 +1,4 @@
-import { versionCheckAction, startRpcRequestFunc } from "./WalletLoaderActions";
+import { versionCheckAction } from "./WalletLoaderActions";
 import { stopNotifcations } from "./NotificationActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "react-router-redux";
@@ -260,10 +260,6 @@ export const syncDaemon = () =>
             dispatch({ type: DAEMONSYNCED });
             dispatch({ currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK });
             setMustOpenForm(false);
-            // stepIndex 3 means either successfully opened or created.
-            if (stepIndex == 3) {
-              dispatch(startRpcRequestFunc());
-            }
             return;
           } else if (updateCurrentBlockCount !== 0) {
             const blocksLeft = neededBlocks - updateCurrentBlockCount;
