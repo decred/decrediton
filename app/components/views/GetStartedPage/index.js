@@ -37,6 +37,13 @@ class GetStartedPage extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { startStepIndex, getDaemonSynced, onRetryStartRPC } = this.props;
+    if (startStepIndex != nextProps.startStepIndex || getDaemonSynced != nextProps.getDaemonSynced ){
+      if (nextProps.startStepIndex == 3 && nextProps.getDaemonSynced)
+        onRetryStartRPC();
+    }
+  }
   onShowReleaseNotes() {
     this.setState({ showSettings: false, showLogs: false, showReleaseNotes: true });
   }
