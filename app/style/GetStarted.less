@@ -212,7 +212,6 @@
 
   .content-text {
     font-size: 13px;
-    height: 250px;
 
     .bold {
       font-weight: 600;
@@ -295,7 +294,24 @@
   }
 
   .copy {
-    margin-top: 90px;
+    float: left;
+    padding-top: 2px;
+    padding-left: 33px;
+    height: 21px;
+    color: #2970ff;
+    border: 1px solid #2970ff;
+    border-radius: 3px;
+    width: 177px;
+    margin: 4px;
+    font-size: 13px;
+    background-image: @copy-to-clipboard-icon;
+    background-position: 16px 3px;
+    background-size: 16px auto;
+    background-repeat: no-repeat;
+  }
+
+  .copy:hover {
+    opacity: 0.8;
   }
 
   .go-back-screen-button {
