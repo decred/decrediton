@@ -6,7 +6,7 @@ import {
 import * as wallet from "wallet";
 import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
-import { getAvailableWallets } from "./DaemonActions";
+import { getAvailableWallets, WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "config";
 import { getWalletPath } from "main_dev/paths";
 import { isTestNet } from "selectors";
@@ -70,8 +70,8 @@ export const createWalletGoBackWalletSelection = () => (dispatch, getState) => {
         dispatch(getAvailableWallets());
       })
       .catch((err) => {
-        console.log(err);
-        dispatch({ type: CREATEWALLET_GOBACK });
+        console.error(err);
+        dispatch({ error: err, type: WALLETREMOVED_FAILED });
       });
   });
 };
