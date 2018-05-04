@@ -249,7 +249,7 @@ export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
-      const { walletLoader: { neededBlocks, stepIndex } } = getState();
+      const { walletLoader: { neededBlocks } } = getState();
       const { daemon: { daemonSynced, timeStart, blockStart, credentials } } = getState();
       // check to see if user skipped;
       if (daemonSynced) return;
