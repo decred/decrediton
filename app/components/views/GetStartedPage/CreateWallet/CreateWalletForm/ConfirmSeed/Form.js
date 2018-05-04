@@ -1,8 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import "style/CreateWalletForm.less";
-import { InfoModalButton } from "buttons";
+import { InfoDocModalButton } from "buttons";
 import SingleSeedWordEntry from "../SingleSeedWordEntry";
-import { SeedInfoModalContent } from "modals";
 
 export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) =>
   (
@@ -12,10 +11,7 @@ export const ConfirmSeedForm = ({ seedWords, onChangeSeedWord }) =>
       </div>
       <div className="confirm-seed-row seed">
         <div className="confirm-seed-label-text seed">
-          <InfoModalButton
-            modalTitle={<h1><T id="confirmSeed.seedInformation" m="Seed information" /></h1>    }
-            modalContent={<SeedInfoModalContent />}
-          />
+          <InfoDocModalButton document="SeedInfo" />
           <T id="confirmSeed.label" m="Confirm Seed" />
         </div>
         <div className="seedArea">

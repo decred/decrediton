@@ -40,7 +40,13 @@ export default {
           basePath: path.resolve(__dirname, "bin")
         }
       }]
-    }
+    },
+    {
+      test: /\.(md)$/,
+      use: [{
+        loader: "raw-loader",
+      }]
+    },
     ]
   },
 

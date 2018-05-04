@@ -1,0 +1,5 @@
+Quando um ticket é comprado, o custo do ticket é trancado em sua carteira até que o ticket seja usado para votar ou até que ele seja revogado. Tickets entram na mempool e então passam para a ticketpool onde são sorteados para votar de forma aleatória. Existe uma probabilidade de 99.5% de que um ticket irá votar. O ticket médio irá votar em 28 dias, mas tickets que não tenham sido sorteados após 142 dias serão revogados. Os fundos DCR usados para comprar o ticket são liberados depois deste ter sido votado ou revogado.
+
+Quando uma proposta é liberada para votação na Politeia, uma cópia da lista de tickets vivos é feita no momento do início da votação. Todos esses tickets terão direito a votar na proposta em um processo off-chain.
+
+Como a validação de blocos é imutável, decisões feitas por todos os tickets que votaram são verificadas publicamente. Participação ativa no processo de staking ajuda a aumentar a segurança da rede da Decred, garante a qualidade da Proof-of-Work e determina a direção futura da Decred.
