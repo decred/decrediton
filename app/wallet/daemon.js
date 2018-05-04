@@ -39,6 +39,12 @@ export const removeWallet = log((walletPath, testnet) => Promise
     throw "Error creating wallet";
   }), "Remove Wallet");
 
+export const stopWallet = log(() => Promise
+  .resolve(ipcRenderer.sendSync("stop-wallet"))
+  .then(stopped => {
+    return stopped;
+  }), "Stop Wallet");
+
 export const startWallet = log((walletPath, testnet) => new Promise((resolve, reject) => {
   let pid, port;
 

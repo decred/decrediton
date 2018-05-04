@@ -36,6 +36,7 @@ import {
   GETSTARTUPSTATS_FAILED,
   GETMYTICKETSSTATS_FAILED,
 } from "actions/StatisticsActions";
+import { WALLETREMOVED_FAILED } from "actions/DaemonActions";
 
 const messages = defineMessages({
   defaultSuccessMessage: {
@@ -46,7 +47,10 @@ const messages = defineMessages({
     id: "snackbar.defaults.error",
     defaultMessage: "{originalError}"
   },
-
+  WALLETREMOVED_FAILED: {
+    id: "createwallet.errors.walletRemoveFailed",
+    defaultMessage: "{originalError}"
+  },
   PUBLISHTX_SUCCESS: {
     id: "send.publishedTxHeader",
     defaultMessage: "Published tx: {hash}"
@@ -218,6 +222,7 @@ export default function snackbar(state = {}, action) {
 
   // all simple error messages. Note that the action *must* have an action.error
   // attribute.
+  case WALLETREMOVED_FAILED:
   case RENAMEACCOUNT_FAILED:
   case GETNEXTACCOUNT_FAILED:
   case CHANGEPASSPHRASE_FAILED:

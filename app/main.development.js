@@ -140,6 +140,7 @@ function closeDCRW() {
   if (require("is-running")(dcrwPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
     process.kill(dcrwPID, "SIGINT");
+    dcrwPID = null;
   }
 }
 
@@ -296,6 +297,11 @@ ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
   if (fs.pathExistsSync(removeWalletDirectory)){
     fs.removeSync(removeWalletDirectory);
   }
+  event.returnValue = true;
+});
+
+ipcMain.on("stop-wallet", (event) => {
+  closeDCRW();
   event.returnValue = true;
 });
 

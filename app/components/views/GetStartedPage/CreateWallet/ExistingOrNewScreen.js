@@ -4,6 +4,7 @@ import "style/CreateWalletForm.less";
 
 const ExistingOrNewScreen = ({
   onSetCreateWalletFromExisting,
+  onReturnToWalletSelection,
   getCurrentBlockCount,
   getNeededBlocks,
   getEstimatedTimeLeft,
@@ -11,6 +12,9 @@ const ExistingOrNewScreen = ({
 }) => (
   <div className="getstarted content">
     <div className="createwallet-button-area">
+      <div className="create-wallet-go-back">
+        <div className="create-wallet-go-back-button" onClick={onReturnToWalletSelection}/>
+      </div>
       <div className="createwallet-button new" onClick={()=> onSetCreateWalletFromExisting(false)}>
         <div className="createwallet-button-label">
           <T id="getStarted.newSeedTab" m="Create a New Wallet"/>

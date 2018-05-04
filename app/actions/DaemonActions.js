@@ -25,6 +25,7 @@ export const DAEMONSYNCING_PROGRESS = "DAEMONSYNCING_PROGRESS";
 export const DAEMONSYNCED = "DAEMONSYNCED";
 export const WALLETREADY = "WALLETREADY";
 export const WALLETREMOVED = "WALLETREMOVED";
+export const WALLETREMOVED_FAILED= "WALLETREMOVED_FAILED";
 export const AVAILABLE_WALLETS = "AVAILABLE_WALLETS";
 export const SHUTDOWN_REQUESTED = "SHUTDOWN_REQUESTED";
 export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
@@ -160,8 +161,8 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
       dispatch(getAvailableWallets());
     })
     .catch((err) => {
-      console.log(err);
-      dispatch({ type: DAEMONSTARTED_ERROR });
+      console.error(err);
+      dispatch({ error: err, type: WALLETREMOVED_FAILED });
     });
 };
 
