@@ -1,11 +1,12 @@
-
-import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdRpcCert } from "./paths"
+import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdRpcCert } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "../config";
-import { AddToLog, createLogger, AddToDcrdLog, AddToDcrwalletLog } from "./logging"
+import { createLogger, AddToDcrdLog, AddToDcrwalletLog } from "./logging";
 import parseArgs from "minimist";
-import { OPTIONS } from "./constants"
+import { OPTIONS } from "./constants";
 import os from "os";
 import fs from "fs-extra";
+import stringArgv from "string-argv";
+import { concat, isString } from "lodash";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -20,12 +21,12 @@ function closeClis(dcrdPID, dcrwPID) {
     closeDCRW(dcrwPID);
 }
 
-function closeDCRW(dcrwPID) {
+export const closeDCRW = (dcrwPID) => {
   if (require("is-running")(dcrwPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
     process.kill(dcrwPID, "SIGINT");
   }
-}
+};
 
 function closeDCRD(dcrdPID) {
   if (require("is-running")(dcrdPID) && os.platform() != "win32") {
@@ -66,30 +67,23 @@ export async function cleanShutdown(mainWindow, app, dcrdPID, dcrwPID) {
 }
 
 export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, testnet) => {
-  var spawn = require("child_process").spawn;
+  const spawn = require("child_process").spawn;
   let args = [];
   let newConfig = {};
   if (appdata) {
-    args = [`--appdata=${appdata}`];
+    args = [ `--appdata=${appdata}` ];
     newConfig = readDcrdConfig(appdata, testnet);
     newConfig.rpc_cert = getDcrdRpcCert(appdata);
   } else {
-    args = [`--configfile=${dcrdCfg(daemonPath)}`];
+    args = [ `--configfile=${dcrdCfg(daemonPath)}` ];
     newConfig = readDcrdConfig(daemonPath, testnet);
     newConfig.rpc_cert = getDcrdRpcCert();
   }
   if (testnet) {
     args.push("--testnet");
   }
-  // Check to make sure that the rpcuser and rpcpass were set in the config
-  if (!newConfig.rpc_user || !newConfig.rpc_password) {
-    const errorMessage = "No " + `${!newConfig.rpc_user ? "rpcuser " : ""}` + `${!newConfig.rpc_user && !newConfig.rpc_password ? "and " : ""}` + `${!newConfig.rpc_password ? "rpcpass " : ""}` + "set in " + `${appdata ? appdata : getDcrdPath()}` + "/dcrd.conf.  Please set them and restart.";
-    logger.log("error", errorMessage);
-    mainWindow.webContents.executeJavaScript("alert(\"" + `${errorMessage}` + "\");");
-    mainWindow.webContents.executeJavaScript("window.close();");
-  }
 
-  var dcrdExe = getExecutablePath("dcrd", argv.customBinPath);
+  const dcrdExe = getExecutablePath("dcrd", argv.customBinPath);
   if (!fs.existsSync(dcrdExe)) {
     logger.log("error", "The dcrd file does not exists");
     return;
@@ -108,9 +102,9 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
 
   logger.log("info", `Starting ${dcrdExe} with ${args}`);
 
-  var dcrd = spawn(dcrdExe, args, {
+  const dcrd = spawn(dcrdExe, args, {
     detached: os.platform() == "win32",
-    stdio: ["ignore", "pipe", "pipe"]
+    stdio: [ "ignore", "pipe", "pipe" ]
   });
 
   dcrd.on("error", function (err) {
@@ -160,9 +154,9 @@ const DecodeDaemonIPCData = (logger, data, cb) => {
   }
 };
 
-export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testnet, destIO) => {
-  var spawn = require("child_process").spawn;
-  var args = [ "--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath)) ];
+export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testnet) => {
+  const spawn = require("child_process").spawn;
+  let args = [ "--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath)) ];
 
   let dcrwPID, dcrwPort;
   const cfg = getWalletCfg(testnet, walletPath);
@@ -175,7 +169,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   args.push("--ticketbuyer.maxperblock=" + cfg.get("maxperblock"));
   args.push("--addridxscanlen=" + cfg.get("gaplimit"));
 
-  var dcrwExe = getExecutablePath("dcrwallet", argv.customBinPath);
+  const dcrwExe = getExecutablePath("dcrwallet", argv.customBinPath);
   if (!fs.existsSync(dcrwExe)) {
     logger.log("error", "The dcrwallet file does not exists");
     return;
@@ -185,7 +179,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
     try {
       const util = require("util");
       const win32ipc = require("../../node_modules/win32ipc/build/Release/win32ipc.node");
-      var pipe = win32ipc.createPipe("out");
+      const pipe = win32ipc.createPipe("out");
       args.push(util.format("--piperx=%d", pipe.readEnd));
     } catch (e) {
       logger.log("error", "can't find proper module to launch dcrwallet: " + e);
@@ -202,7 +196,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
 
   logger.log("info", `Starting ${dcrwExe} with ${args}`);
 
-  var dcrwallet = spawn(dcrwExe, args, {
+  const dcrwallet = spawn(dcrwExe, args, {
     detached: os.platform() == "win32",
     stdio: [ "ignore", "pipe", "pipe", "ignore", "pipe" ]
   });
@@ -244,7 +238,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   });
 
   const addStdoutToLogListener = (data) => AddToDcrwalletLog(process.stdout, data, debug);
-  
+
   // waitForGrpcPortListener is added as a stdout on("data") listener only on
   // win32 because so far that's the only way we found to get back the grpc port
   // on that platform. For linux/macOS users, the --pipetx argument is used to
@@ -264,9 +258,9 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   dcrwallet.stdout.on("data", os.platform() == "win32" ? waitForGrpcPortListener : addStdoutToLogListener);
   dcrwallet.stderr.on("data", (data) => {
     AddToDcrwalletLog(process.stderr, data, debug);
-  })
+  });
 
-  dcrwPID = dcrwallet.pid
+  dcrwPID = dcrwallet.pid;
   logger.log("info", "dcrwallet started with pid:" + dcrwPID);
 
   dcrwallet.unref();

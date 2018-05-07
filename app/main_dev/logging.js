@@ -4,7 +4,6 @@ import path from "path";
 import { MAX_LOG_LENGTH } from "./constants";
 import os from "os";
 
-
 let dcrdLogs = Buffer.from("");
 let dcrwalletLogs = Buffer.from("");
 
@@ -90,16 +89,16 @@ const AddToLog = (destIO, destLogBuffer, data, debug) => {
 };
 
 export const AddToDcrdLog = (destIO, data, debug) => {
-  dcrdLogs = AddToLog(destIO, dcrdLogs, data, debug)
-}
+  dcrdLogs = AddToLog(destIO, dcrdLogs, data, debug);
+};
 
 export const AddToDcrwalletLog = (destIO, data, debug) => {
-  dcrwalletLogs = AddToLog(destIO, dcrwalletLogs, data, debug)
-}
+  dcrwalletLogs = AddToLog(destIO, dcrwalletLogs, data, debug);
+};
 
-export const GetDcrdLogs = () => dcrdLogs
+export const GetDcrdLogs = () => dcrdLogs;
 
-export const GetDcrwalletLogs = () => dcrwalletLogs
+export const GetDcrwalletLogs = () => dcrwalletLogs;
 
 export function lastLogLine(log) {
   let lastLineIdx = log.lastIndexOf(os.EOL, log.length - os.EOL.length -1);

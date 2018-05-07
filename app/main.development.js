@@ -1,21 +1,18 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
-import { concat, isString } from "lodash";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
 import { initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, createTempDcrdConf } from "./config";
 import fs from "fs-extra";
 import path from "path";
 import parseArgs from "minimist";
-import stringArgv from "string-argv";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
-import { Buffer } from "buffer";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
-import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDefaultWalletFilesPath } from "./main_dev/paths";
-import { dcrwalletCfg, getWalletPath, getExecutablePath, getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, getDefaultWalletDirectory } from "./main_dev/paths";
-import { getGlobalCfgPath, getDecreditonWalletDBPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs, checkAndInitWalletCfg } from "./main_dev/paths";
+import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg } from "./main_dev/paths";
+import { getWalletPath, getExecutablePath, getWalletsDirectoryPath, getWalletsDirectoryPathNetwork } from "./main_dev/paths";
+import { getGlobalCfgPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { cleanShutdown, launchDCRD, launchDCRWallet } from "./main_dev/launch"
+import { cleanShutdown, launchDCRD, launchDCRWallet, closeDCRW } from "./main_dev/launch";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -84,8 +81,8 @@ fs.pathExistsSync(walletsDirectory) || fs.mkdirsSync(walletsDirectory);
 fs.pathExistsSync(mainnetWalletsPath) || fs.mkdirsSync(mainnetWalletsPath);
 fs.pathExistsSync(testnetWalletsPath) || fs.mkdirsSync(testnetWalletsPath);
 
-checkAndInitWalletCfg(true)
-checkAndInitWalletCfg(false)
+checkAndInitWalletCfg(true);
+checkAndInitWalletCfg(false);
 
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
 logger.log("info", "Versions: Decrediton: %s, Electron: %s, Chrome: %s",
@@ -206,7 +203,7 @@ ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
 });
 
 ipcMain.on("stop-wallet", (event) => {
-  closeDCRW();
+  closeDCRW(dcrwPID);
   event.returnValue = true;
 });
 
@@ -299,7 +296,6 @@ ipcMain.on("get-dcrd-logs", (event) => {
 });
 
 ipcMain.on("get-dcrwallet-logs", (event) => {
-  logger.log("info", "DCRWALLETLOG:\n"+GetDcrwalletLogs() + "\n\n")
   event.returnValue = GetDcrwalletLogs();
 });
 
