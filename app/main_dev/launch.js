@@ -12,6 +12,8 @@ const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
 
+let dcrwPort;
+
 function closeClis(dcrdPID, dcrwPID) {
   // shutdown daemon and wallet.
   // Don't try to close if not running.
@@ -21,19 +23,19 @@ function closeClis(dcrdPID, dcrwPID) {
     closeDCRW(dcrwPID);
 }
 
-export const closeDCRW = (dcrwPID) => {
-  if (require("is-running")(dcrwPID) && os.platform() != "win32") {
-    logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
-    process.kill(dcrwPID, "SIGINT");
-  }
-};
-
 function closeDCRD(dcrdPID) {
   if (require("is-running")(dcrdPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrdPID);
     process.kill(dcrdPID, "SIGINT");
   }
 }
+
+export const closeDCRW = (dcrwPID) => {
+  if (require("is-running")(dcrwPID) && os.platform() != "win32") {
+    logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
+    process.kill(dcrwPID, "SIGINT");
+  }
+};
 
 export async function cleanShutdown(mainWindow, app, dcrdPID, dcrwPID) {
   // Attempt a clean shutdown.
@@ -158,7 +160,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   const spawn = require("child_process").spawn;
   let args = [ "--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath)) ];
 
-  let dcrwPID, dcrwPort;
+  let dcrwPID;
   const cfg = getWalletCfg(testnet, walletPath);
 
   args.push("--ticketbuyer.nospreadticketpurchases");
@@ -264,5 +266,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   logger.log("info", "dcrwallet started with pid:" + dcrwPID);
 
   dcrwallet.unref();
-  return { dcrwPID, dcrwPort };
+  return dcrwPID;
 };
+
+export const GetDcrwPort = () => dcrwPort

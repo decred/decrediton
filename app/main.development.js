@@ -12,7 +12,7 @@ import { getWalletPath, getExecutablePath, getWalletsDirectoryPath, getWalletsDi
 import { getGlobalCfgPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { cleanShutdown, launchDCRD, launchDCRWallet, closeDCRW } from "./main_dev/launch";
+import { cleanShutdown, launchDCRD, launchDCRWallet, closeDCRW, GetDcrwPort } from "./main_dev/launch";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -37,7 +37,6 @@ let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
 let dcrdPID;
 let dcrwPID;
-let dcrwPort;
 let previousWallet = null;
 let dcrdConfig = {};
 let currentBlockCount;
@@ -210,15 +209,13 @@ ipcMain.on("stop-wallet", (event) => {
 ipcMain.on("start-wallet", (event, walletPath, testnet) => {
   if (dcrwPID) {
     logger.log("info", "dcrwallet already started " + dcrwPID);
-    mainWindow.webContents.send("dcrwallet-port", dcrwPort);
+    mainWindow.webContents.send("dcrwallet-port", GetDcrwPort());
     event.returnValue = dcrwPID;
     return;
   }
   initWalletCfg(testnet, walletPath);
   try {
-    const pidAndPort = launchDCRWallet(mainWindow, daemonIsAdvanced, walletPath, testnet);
-    dcrwPID = pidAndPort.dcrwPID;
-    dcrwPort = pidAndPort.dcrwPort;
+    dcrwPID = launchDCRWallet(mainWindow, daemonIsAdvanced, walletPath, testnet);
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }
