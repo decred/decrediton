@@ -9,7 +9,7 @@ import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./S
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { showSidebarMenu, showSidebar } from "./SidebarActions";
 import { push as pushHistory, goBack } from "react-router-redux";
-import { getWalletCfg } from "config";
+import { getWalletCfg } from "../config";
 import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
