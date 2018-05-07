@@ -1,7 +1,7 @@
 
 import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdRpcCert } from "./paths"
 import { getWalletCfg, readDcrdConfig } from "../config";
-import { AddToLog, createLogger } from "./logging"
+import { AddToLog, createLogger, AddToDcrdLog, AddToDcrwalletLog } from "./logging"
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants"
 import os from "os";
@@ -65,7 +65,7 @@ export async function cleanShutdown(mainWindow, app, dcrdPID, dcrwPID) {
   });
 }
 
-export const launchDCRD = (mainWindow, dcrdLogs, daemonIsAdvanced, daemonPath, appdata, testnet) => {
+export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, testnet) => {
   var spawn = require("child_process").spawn;
   let args = [];
   let newConfig = {};
@@ -131,8 +131,8 @@ export const launchDCRD = (mainWindow, dcrdLogs, daemonIsAdvanced, daemonPath, a
     }
   });
 
-  dcrd.stdout.on("data", (data) => dcrdLogs = AddToLog(process.stdout, dcrdLogs, data, debug));
-  dcrd.stderr.on("data", (data) => dcrdLogs = AddToLog(process.stderr, dcrdLogs, data, debug));
+  dcrd.stdout.on("data", (data) => AddToDcrdLog(process.stdout, data, debug));
+  dcrd.stderr.on("data", (data) => AddToDcrdLog(process.stderr, data, debug));
 
   newConfig.pid = dcrd.pid;
   logger.log("info", "dcrd started with pid:" + newConfig.pid);
@@ -160,7 +160,7 @@ const DecodeDaemonIPCData = (logger, data, cb) => {
   }
 };
 
-export const launchDCRWallet = (mainWindow, dcrwalletLogs, daemonIsAdvanced, walletPath, testnet) => {
+export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testnet, destIO) => {
   var spawn = require("child_process").spawn;
   var args = [ "--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath)) ];
 
@@ -243,8 +243,8 @@ export const launchDCRWallet = (mainWindow, dcrwalletLogs, daemonIsAdvanced, wal
     }
   });
 
-  const addStdoutToLogListener = (data) => dcrwalletLogs = AddToLog(process.stdout, dcrwalletLogs, data, debug);
-
+  const addStdoutToLogListener = (data) => AddToDcrwalletLog(process.stdout, data, debug);
+  
   // waitForGrpcPortListener is added as a stdout on("data") listener only on
   // win32 because so far that's the only way we found to get back the grpc port
   // on that platform. For linux/macOS users, the --pipetx argument is used to
@@ -258,11 +258,13 @@ export const launchDCRWallet = (mainWindow, dcrwalletLogs, daemonIsAdvanced, wal
       dcrwallet.stdout.removeListener("data", waitForGrpcPortListener);
       dcrwallet.stdout.on("data", addStdoutToLogListener);
     }
-    dcrwalletLogs = AddToLog(process.stdout, dcrwalletLogs, data, debug);
+    AddToDcrwalletLog(process.stdout, data, debug);
   };
 
   dcrwallet.stdout.on("data", os.platform() == "win32" ? waitForGrpcPortListener : addStdoutToLogListener);
-  dcrwallet.stderr.on("data", (data) => dcrwalletLogs = AddToLog(process.stderr, dcrwalletLogs, data, debug));
+  dcrwallet.stderr.on("data", (data) => {
+    AddToDcrwalletLog(process.stderr, data, debug);
+  })
 
   dcrwPID = dcrwallet.pid
   logger.log("info", "dcrwallet started with pid:" + dcrwPID);

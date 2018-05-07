@@ -4,6 +4,10 @@ import path from "path";
 import { MAX_LOG_LENGTH } from "./constants";
 import os from "os";
 
+
+let dcrdLogs = Buffer.from("");
+let dcrwalletLogs = Buffer.from("");
+
 const pad = (s, n) => {
   n = n || 2;
   s = Array(n).join("0") + s;
@@ -76,7 +80,7 @@ export function createLogger(debug) {
   return logger;
 }
 
-export const AddToLog = (destIO, destLogBuffer, data, debug) => {
+const AddToLog = (destIO, destLogBuffer, data, debug) => {
   var dataBuffer = Buffer.from(data);
   if (destLogBuffer.length + dataBuffer.length > MAX_LOG_LENGTH) {
     destLogBuffer = destLogBuffer.slice(destLogBuffer.indexOf(os.EOL,dataBuffer.length)+1);
@@ -84,6 +88,18 @@ export const AddToLog = (destIO, destLogBuffer, data, debug) => {
   debug && destIO.write(data);
   return Buffer.concat([ destLogBuffer, dataBuffer ]);
 };
+
+export const AddToDcrdLog = (destIO, data, debug) => {
+  dcrdLogs = AddToLog(destIO, dcrdLogs, data, debug)
+}
+
+export const AddToDcrwalletLog = (destIO, data, debug) => {
+  dcrwalletLogs = AddToLog(destIO, dcrwalletLogs, data, debug)
+}
+
+export const GetDcrdLogs = () => dcrdLogs
+
+export const GetDcrwalletLogs = () => dcrwalletLogs
 
 export function lastLogLine(log) {
   let lastLineIdx = log.lastIndexOf(os.EOL, log.length - os.EOL.length -1);

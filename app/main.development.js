@@ -7,7 +7,7 @@ import path from "path";
 import parseArgs from "minimist";
 import stringArgv from "string-argv";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
-import { createLogger, AddToLog, lastLogLine } from "./main_dev/logging";
+import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
 import { Buffer } from "buffer";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
 import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDefaultWalletFilesPath } from "./main_dev/paths";
@@ -45,9 +45,6 @@ let previousWallet = null;
 let dcrdConfig = {};
 let currentBlockCount;
 let primaryInstance;
-
-let dcrdLogs = Buffer.from("");
-let dcrwalletLogs = Buffer.from("");
 
 const globalCfg = initGlobalCfg();
 const daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
@@ -180,7 +177,7 @@ ipcMain.on("start-daemon", (event, appData, testnet) => {
     if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
       dcrdConfPath = createTempDcrdConf();
     }
-    dcrdConfig = launchDCRD(mainWindow, dcrdLogs, daemonIsAdvanced, dcrdConfPath, appData, testnet);
+    dcrdConfig = launchDCRD(mainWindow, daemonIsAdvanced, dcrdConfPath, appData, testnet);
     dcrdPID = dcrdConfig.pid;
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
@@ -222,7 +219,7 @@ ipcMain.on("start-wallet", (event, walletPath, testnet) => {
   }
   initWalletCfg(testnet, walletPath);
   try {
-    const pidAndPort = launchDCRWallet(mainWindow, dcrwalletLogs, daemonIsAdvanced, walletPath, testnet);
+    const pidAndPort = launchDCRWallet(mainWindow, daemonIsAdvanced, walletPath, testnet);
     dcrwPID = pidAndPort.dcrwPID;
     dcrwPort = pidAndPort.dcrwPort;
   } catch (e) {
@@ -298,11 +295,12 @@ ipcMain.on("main-log", (event, ...args) => {
 });
 
 ipcMain.on("get-dcrd-logs", (event) => {
-  event.returnValue = dcrdLogs;
+  event.returnValue = GetDcrdLogs();
 });
 
 ipcMain.on("get-dcrwallet-logs", (event) => {
-  event.returnValue = dcrwalletLogs;
+  logger.log("info", "DCRWALLETLOG:\n"+GetDcrwalletLogs() + "\n\n")
+  event.returnValue = GetDcrwalletLogs();
 });
 
 ipcMain.on("get-decrediton-logs", (event) => {
@@ -310,11 +308,11 @@ ipcMain.on("get-decrediton-logs", (event) => {
 });
 
 ipcMain.on("get-last-log-line-dcrd", event => {
-  event.returnValue = lastLogLine(dcrdLogs);
+  event.returnValue = lastLogLine(GetDcrdLogs());
 });
 
 ipcMain.on("get-last-log-line-dcrwallet", event => {
-  event.returnValue = lastLogLine(dcrwalletLogs);
+  event.returnValue = lastLogLine(GetDcrwalletLogs());
 });
 
 ipcMain.on("get-previous-wallet", (event) => {
