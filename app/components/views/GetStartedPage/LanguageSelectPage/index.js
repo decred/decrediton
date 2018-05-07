@@ -9,9 +9,11 @@ class LanguageSelect extends React.Component{
   }
 
   getInitialState() {
-    return {
-      selectedLang: this.props.defaultLocale
-    };
+    let selectedLang =
+      this.props.availableLanguages.find(v => v.language === this.props.defaultLocale) ||
+      this.props.availableLanguages[0];
+
+    return { selectedLang };
   }
 
   render() {
