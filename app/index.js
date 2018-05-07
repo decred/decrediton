@@ -7,7 +7,7 @@ import { Switch, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { App } from "containers";
 import configureStore from "./store/configureStore";
-import { getGlobalCfg } from "config";
+import { getGlobalCfg } from "./config";
 import locales from "./i18n/locales";
 import "./style/main.less";
 import "./style/Global.less";

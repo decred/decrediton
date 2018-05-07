@@ -3,7 +3,7 @@ import { stopNotifcations } from "./NotificationActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { ipcRenderer } from "electron";
-import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg } from "config";
+import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg } from "../config";
 import { hideSidebarMenu, showSidebar } from "./SidebarActions";
 import { isTestNet } from "selectors";
 import axios from "axios";

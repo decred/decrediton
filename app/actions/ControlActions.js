@@ -3,7 +3,7 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import { isValidAddress } from "helpers";
 import { getAccountsAttempt, getStartupWalletInfo, getStakeInfoAttempt } from "./ClientActions";
-import { getWalletCfg } from "config";
+import { getWalletCfg } from "../config";
 import { RescanRequest, ConstructTransactionRequest } from "../middleware/walletrpc/api_pb";
 
 
