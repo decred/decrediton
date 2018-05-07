@@ -7,7 +7,7 @@ import parseArgs from "minimist";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
-import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg } from "./main_dev/paths";
+import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDcrwalletPath } from "./main_dev/paths";
 import { getWalletPath, getExecutablePath, getWalletsDirectoryPath, getWalletsDirectoryPathNetwork } from "./main_dev/paths";
 import { getGlobalCfgPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
@@ -567,7 +567,7 @@ app.on("ready", async () => {
       }, {
         label: locale.messages["appMenu.showWalletLog"],
         click() {
-          shell.openItem(getDirectoryLogs(appDataDirectory()));
+          shell.openItem(getDirectoryLogs(getDcrwalletPath()));
         }
       }, {
         label: locale.messages["appMenu.showDaemonLog"],

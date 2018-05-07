@@ -269,4 +269,4 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   return dcrwPID;
 };
 
-export const GetDcrwPort = () => dcrwPort
+export const GetDcrwPort = () => dcrwPort;

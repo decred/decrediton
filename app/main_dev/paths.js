@@ -75,6 +75,16 @@ export function getDcrdPath() {
   }
 }
 
+export function getDcrwalletPath() {
+  if (os.platform() == "win32") {
+    return path.join(os.homedir(), "AppData", "Local", "Dcrwallet");
+  } else if (process.platform === "darwin") {
+    return path.join(os.homedir(), "Library","Application Support","dcrwallet");
+  } else {
+    return path.join(os.homedir(),".dcrwallet");
+  }
+}
+
 export function getDcrdRpcCert (appDataPath) {
   return path.resolve(appDataPath ? appDataPath : getDcrdPath(), "rpc.cert");
 }
