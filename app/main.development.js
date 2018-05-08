@@ -12,7 +12,7 @@ import { getWalletPath, getExecutablePath, getWalletsDirectoryPath, getWalletsDi
 import { getGlobalCfgPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { cleanShutdown, launchDCRD, launchDCRWallet, closeDCRW, GetDcrwPort } from "./main_dev/launch";
+import { cleanShutdown, launchDCRD, launchDCRWallet, closeDCRW, GetDcrwPort, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon } from "./main_dev/ipc"
 
 // setPath as decrediton
@@ -36,8 +36,6 @@ let template;
 let mainWindow = null;
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
-let dcrdPID;
-let dcrwPID;
 let previousWallet = null;
 let dcrdConfig = {};
 let currentBlockCount;
@@ -130,7 +128,7 @@ ipcMain.on("get-available-wallets", (event, network) => {
 });
 
 ipcMain.on("start-daemon", (event, appData, testnet) => {
-  if (dcrdPID && dcrdConfig && !daemonIsAdvanced) {
+  if (GetDcrdPID() && dcrdConfig && !daemonIsAdvanced) {
     logger.log("info", "Skipping restart of daemon as it is already running");
     event.returnValue = dcrdConfig;
     return;
@@ -138,8 +136,8 @@ ipcMain.on("start-daemon", (event, appData, testnet) => {
   if(appData){
     logger.log("info", "launching dcrd with different appdata directory");
   }
-  if (dcrdPID && dcrdConfig) {
-    logger.log("info", "dcrd already started " + dcrdPID);
+  if (GetDcrdPID() && dcrdConfig) {
+    logger.log("info", "dcrd already started " + GetDcrdPID());
     event.returnValue = dcrdConfig;
     return;
   }
@@ -161,7 +159,6 @@ ipcMain.on("start-daemon", (event, appData, testnet) => {
       dcrdConfPath = createTempDcrdConf();
     }
     dcrdConfig = launchDCRD(mainWindow, daemonIsAdvanced, dcrdConfPath, appData, testnet);
-    dcrdPID = dcrdConfig.pid;
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
@@ -189,20 +186,20 @@ ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
 });
 
 ipcMain.on("stop-wallet", (event) => {
-  closeDCRW(dcrwPID);
+  closeDCRW(GetDcrwPID());
   event.returnValue = true;
 });
 
 ipcMain.on("start-wallet", (event, walletPath, testnet) => {
-  if (dcrwPID) {
-    logger.log("info", "dcrwallet already started " + dcrwPID);
+  if (GetDcrwPID()) {
+    logger.log("info", "dcrwallet already started " + GetDcrwPID());
     mainWindow.webContents.send("dcrwallet-port", GetDcrwPort());
-    event.returnValue = dcrwPID;
+    event.returnValue = GetDcrwPID();
     return;
   }
   initWalletCfg(testnet, walletPath);
   try {
-    dcrwPID = launchDCRWallet(mainWindow, daemonIsAdvanced, walletPath, testnet);
+    launchDCRWallet(mainWindow, daemonIsAdvanced, walletPath, testnet);
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }
@@ -259,7 +256,7 @@ ipcMain.on("check-daemon", (event, rpcCreds, testnet) => {
 });
 
 ipcMain.on("clean-shutdown", async function(event){
-  const stopped = await cleanShutdown(mainWindow, app, dcrdPID, dcrwPID);
+  const stopped = await cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
   event.sender.send("clean-shutdown-finished", stopped);
 });
 
@@ -288,6 +285,7 @@ ipcMain.on("get-decrediton-logs", (event) => {
 });
 
 ipcMain.on("get-last-log-line-dcrd", event => {
+  console.log(lastLogLine(GetDcrdLogs()) + '\n\n\n\n')
   event.returnValue = lastLogLine(GetDcrdLogs());
 });
 
@@ -457,7 +455,7 @@ app.on("ready", async () => {
         label: locale.messages["appMenu.quit"],
         accelerator: "Command+Q",
         click() {
-          cleanShutdown(mainWindow, app, dcrdPID, dcrwPID);
+          cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
         }
       } ]
     }, {
@@ -611,7 +609,7 @@ app.on("ready", async () => {
 app.on("before-quit", (event) => {
   logger.log("info","Caught before-quit. Set decredition as was closed");
   event.preventDefault();
-  cleanShutdown(mainWindow, app, dcrdPID, dcrwPID);
+  cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
   setMustOpenForm(true);
   app.exit(0);
 });
