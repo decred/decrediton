@@ -4,9 +4,8 @@ import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import { createLogger } from "./logging";
 import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, getDcrdRpcCert } from "./paths";
-import { launchDCRD } from "./launch";
 import { createTempDcrdConf, readDcrdConfig, initWalletCfg, newWalletConfigCreation } from "../config";
-import { GetDcrdPID } from "./launch"
+import { launchDCRD, GetDcrdPID, closeDCRW } from "./launch"
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -73,4 +72,21 @@ export const createWallet = (testnet, walletPath) => {
     logger.log("error", "error creating wallet: " + e);
     return false;
   }
+}
+
+export const removeWallet = (testnet, walletPath) => {
+  let removeWalletDirectory = getWalletPath(testnet, walletPath);
+  try {
+    if (fs.pathExistsSync(removeWalletDirectory)) {
+      fs.removeSync(removeWalletDirectory);
+    }
+    return true;
+  } catch (e) {
+    logger.log("error", "error creating wallet: " + e);
+    return false;
+  }
+}
+
+export const stopWallet = () => {
+  return closeDCRW(GetDcrwPID());
 }

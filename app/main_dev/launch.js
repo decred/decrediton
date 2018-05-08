@@ -34,9 +34,15 @@ function closeDCRD() {
 }
 
 export const closeDCRW = () => {
-  if (require("is-running")(dcrwPID) && os.platform() != "win32") {
-    logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
-    process.kill(dcrwPID, "SIGINT");
+  try {
+    if (require("is-running")(dcrwPID) && os.platform() != "win32") {
+      logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
+      process.kill(dcrwPID, "SIGINT");
+    }
+    return true;
+  } catch (e) {
+    logger.log("error", "error closing wallet: " + e);
+    return false;
   }
 };
 

@@ -12,8 +12,8 @@ import { getWalletPath, getExecutablePath, getWalletsDirectoryPath, getWalletsDi
 import { getGlobalCfgPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { cleanShutdown, launchDCRD, launchDCRWallet, closeDCRW, GetDcrwPort, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
-import { getAvailableWallets, startDaemon, createWallet } from "./main_dev/ipc"
+import { cleanShutdown, launchDCRD, launchDCRWallet, GetDcrwPort, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
+import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet } from "./main_dev/ipc"
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -135,16 +135,11 @@ ipcMain.on("create-wallet", (event, walletPath, testnet) => {
 });
 
 ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
-  let removeWalletDirectory = getWalletPath(testnet, walletPath);
-  if (fs.pathExistsSync(removeWalletDirectory)){
-    fs.removeSync(removeWalletDirectory);
-  }
-  event.returnValue = true;
+  event.returnValue = removeWallet(testnet, walletPath);
 });
 
 ipcMain.on("stop-wallet", (event) => {
-  closeDCRW(GetDcrwPID());
-  event.returnValue = true;
+  event.returnValue = stopWallet();
 });
 
 ipcMain.on("start-wallet", (event, walletPath, testnet) => {
