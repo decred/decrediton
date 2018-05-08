@@ -12,9 +12,8 @@ cache:
 
 install:
   - yarn
-  - travis_wait mvn install
 
 script:
   - yarn lint
   - yarn test
-  - yarn package-dev-linux
+  - travis_wait yarn package-dev-linux
