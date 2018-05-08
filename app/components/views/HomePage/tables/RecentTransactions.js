@@ -23,15 +23,17 @@ const RecentTransactions = ({
           {hasTxs
             ? <T id="home.recentTransactionsTitle" m="Recent Transactions" />
             : <T id="home.noTransactions.title" m="No transactions yet" /> }
+          {hasTxs &&
+            <div className="home-content-link">
+              <a onClick={goToTransactionHistory}><T id="home.recentTransactionsHistory" m="See all" /> &#8594;</a>
+            </div>
+          }
         </div>
         <div className="home-content-nest">
           {transactions.length > 0 ? tickets.length > 0 ?
             <TxHistory overview limit={rowNumber} {...{ getAccountsResponse, transactions }} /> :
             <TxHistory limit={6} {...{ getAccountsResponse, transactions }} /> :
             <NoTransactionsLinks />}
-        </div>
-        <div className="home-content-link">
-          <a onClick={goToTransactionHistory}><T id="home.recentTransactionsHistory" m="Go to all transactions" /> ></a>
         </div>
       </Aux>
   );
