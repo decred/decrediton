@@ -13,6 +13,7 @@ import { getGlobalCfgPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirect
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 import { cleanShutdown, launchDCRD, launchDCRWallet, closeDCRW, GetDcrwPort } from "./main_dev/launch";
+import { getAvailableWallets, startDaemon } from "./main_dev/ipc"
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -124,22 +125,8 @@ ipcMain.on("setup-proxy", () => {
   setupProxy(logger);
 });
 
-ipcMain.on("get-available-wallets", (event, network) => {// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
-  const availableWallets = [];
-  const isTestNet = network !== "mainnet";
-
-  const walletsBasePath = getWalletPath(isTestNet);
-  const walletDirs = fs.readdirSync(walletsBasePath);
-  walletDirs.forEach(wallet => {
-    const walletDirStat = fs.statSync(path.join(walletsBasePath, wallet));
-    if (!walletDirStat.isDirectory()) return;
-
-    const walletDbFilePath = getWalletDBPathFromWallets(isTestNet, wallet);
-    const finished = fs.pathExistsSync(walletDbFilePath);
-    availableWallets.push({ network, wallet, finished });
-  });
-
-  event.returnValue = availableWallets;
+ipcMain.on("get-available-wallets", (event, network) => {
+  event.returnValue = getAvailableWallets(network);
 });
 
 ipcMain.on("start-daemon", (event, appData, testnet) => {
