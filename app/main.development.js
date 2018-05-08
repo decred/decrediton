@@ -1,19 +1,16 @@
 import fs from "fs-extra";
-import path from "path";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
-import { initWalletCfg, getWalletCfg, newWalletConfigCreation, createTempDcrdConf } from "./config";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
-import { appDataDirectory, getDcrdPath, dcrdCfg, getDcrwalletPath } from "./main_dev/paths";
-import { getWalletPath, getWalletsDirectoryPath, getWalletsDirectoryPathNetwork } from "./main_dev/paths";
-import { getGlobalCfgPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs, checkAndInitWalletCfg } from "./main_dev/paths";
+import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
+import { getGlobalCfgPath, getDirectoryLogs, checkAndInitWalletCfg, getDcrdPath, getDcrwalletPath } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { readExesVersion, cleanShutdown, launchDCRD, launchDCRWallet, GetDcrwPort, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
-import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet, startWallet, checkDaemon } from "./main_dev/ipc"
+import { readExesVersion, cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
+import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet, startWallet, checkDaemon } from "./main_dev/ipc";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());

@@ -3,9 +3,9 @@ import path from "path";
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import { createLogger } from "./logging";
-import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, getDcrdRpcCert, dcrctlCfg, appDataDirectory, getExecutablePath } from "./paths";
-import { createTempDcrdConf, readDcrdConfig, initWalletCfg, newWalletConfigCreation } from "../config";
-import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRW } from "./launch"
+import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, dcrctlCfg, appDataDirectory, getExecutablePath } from "./paths";
+import { createTempDcrdConf, initWalletCfg, newWalletConfigCreation } from "../config";
+import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRW, GetDcrwPort } from "./launch";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -62,7 +62,7 @@ export const createWallet = (testnet, walletPath) => {
   try {
     if (!fs.pathExistsSync(newWalletDirectory)){
       fs.mkdirsSync(newWalletDirectory);
-  
+
       // create new configs for new wallet
       initWalletCfg(testnet, walletPath);
       newWalletConfigCreation(testnet, walletPath);
@@ -72,7 +72,7 @@ export const createWallet = (testnet, walletPath) => {
     logger.log("error", "error creating wallet: " + e);
     return false;
   }
-}
+};
 
 export const removeWallet = (testnet, walletPath) => {
   let removeWalletDirectory = getWalletPath(testnet, walletPath);
@@ -85,7 +85,7 @@ export const removeWallet = (testnet, walletPath) => {
     logger.log("error", "error creating wallet: " + e);
     return false;
   }
-}
+};
 
 export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath) => {
   if (GetDcrwPID()) {
@@ -100,11 +100,11 @@ export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath) =
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }
-}
+};
 
 export const stopWallet = () => {
   return closeDCRW(GetDcrwPID());
-}
+};
 
 export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
   let args = [ "getblockcount" ];
@@ -155,4 +155,4 @@ export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
     logger.log("error", data.toString());
     mainWindow.webContents.send("check-daemon-response", 0);
   });
-}
+};
