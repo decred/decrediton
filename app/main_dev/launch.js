@@ -283,3 +283,41 @@ export const GetDcrwPort = () => dcrwPort;
 export const GetDcrdPID = () => dcrdPID;
 
 export const GetDcrwPID = () => dcrwPID;
+
+export const readExesVersion = (app, grpcVersions) => {
+  let spawn = require("child_process").spawnSync;
+  let args = [ "--version" ];
+  let exes = [ "dcrd", "dcrwallet", "dcrctl" ];
+  let versions = {
+    grpc: grpcVersions,
+    decrediton: app.getVersion()
+  };
+
+  for (let exe of exes) {
+    let exePath = getExecutablePath("dcrd", argv.customBinPath);
+    if (!fs.existsSync(exePath)) {
+      logger.log("error", "The dcrd file does not exists");
+    }
+
+    let proc = spawn(exePath, args, { encoding: "utf8" });
+    if (proc.error) {
+      logger.log("error", `Error trying to read version of ${exe}: ${proc.error}`);
+      continue;
+    }
+
+    let versionLine = proc.stdout.toString();
+    if (!versionLine) {
+      logger.log("error", `Empty version line when reading version of ${exe}`);
+      continue;
+    }
+
+    let decodedLine = versionLine.match(/\w+ version ([^\s]+)/);
+    if (decodedLine !== null) {
+      versions[exe] = decodedLine[1];
+    } else {
+      logger.log("error", `Unable to decode version line ${versionLine}`);
+    }
+  }
+
+  return versions;
+};

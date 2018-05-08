@@ -3,7 +3,7 @@ import path from "path";
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import { createLogger } from "./logging";
-import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, getDcrdRpcCert } from "./paths";
+import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, getDcrdRpcCert, dcrctlCfg, appDataDirectory, getExecutablePath } from "./paths";
 import { createTempDcrdConf, readDcrdConfig, initWalletCfg, newWalletConfigCreation } from "../config";
 import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRW } from "./launch"
 
@@ -104,4 +104,55 @@ export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath) =
 
 export const stopWallet = () => {
   return closeDCRW(GetDcrwPID());
+}
+
+export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
+  let args = [ "getblockcount" ];
+  let host, port;
+  let currentBlockCount;
+
+  if (!rpcCreds){
+    args.push(`--configfile=${dcrctlCfg(appDataDirectory())}`);
+  } else if (rpcCreds) {
+    if (rpcCreds.rpc_user) {
+      args.push(`--rpcuser=${rpcCreds.rpc_user}`);
+    }
+    if (rpcCreds.rpc_password) {
+      args.push(`--rpcpass=${rpcCreds.rpc_password}`);
+    }
+    if (rpcCreds.rpc_cert) {
+      args.push(`--rpccert=${rpcCreds.rpc_cert}`);
+    }
+    if (rpcCreds.rpc_host) {
+      host = rpcCreds.rpc_host;
+    }
+    if (rpcCreds.rpc_port) {
+      port = rpcCreds.rpc_port;
+    }
+    args.push("--rpcserver=" + host + ":" + port);
+  }
+
+  if (testnet) {
+    args.push("--testnet");
+  }
+
+  const dcrctlExe = getExecutablePath("dcrctl", argv.customBinPath);
+  if (!fs.existsSync(dcrctlExe)) {
+    logger.log("error", "The dcrctl file does not exists");
+  }
+
+  logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
+
+  const spawn = require("child_process").spawn;
+  const dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
+
+  dcrctl.stdout.on("data", (data) => {
+    currentBlockCount = data.toString();
+    logger.log("info", data.toString());
+    mainWindow.webContents.send("check-daemon-response", currentBlockCount);
+  });
+  dcrctl.stderr.on("data", (data) => {
+    logger.log("error", data.toString());
+    mainWindow.webContents.send("check-daemon-response", 0);
+  });
 }

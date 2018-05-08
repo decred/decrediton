@@ -1,19 +1,19 @@
-import { app, BrowserWindow, Menu, shell, dialog } from "electron";
-import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
-import { initWalletCfg, getWalletCfg, newWalletConfigCreation, createTempDcrdConf } from "./config";
 import fs from "fs-extra";
 import path from "path";
 import parseArgs from "minimist";
+import { app, BrowserWindow, Menu, shell, dialog } from "electron";
+import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
+import { initWalletCfg, getWalletCfg, newWalletConfigCreation, createTempDcrdConf } from "./config";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
-import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDcrwalletPath } from "./main_dev/paths";
-import { getWalletPath, getExecutablePath, getWalletsDirectoryPath, getWalletsDirectoryPathNetwork } from "./main_dev/paths";
+import { appDataDirectory, getDcrdPath, dcrdCfg, getDcrwalletPath } from "./main_dev/paths";
+import { getWalletPath, getWalletsDirectoryPath, getWalletsDirectoryPathNetwork } from "./main_dev/paths";
 import { getGlobalCfgPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { cleanShutdown, launchDCRD, launchDCRWallet, GetDcrwPort, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
-import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet, startWallet } from "./main_dev/ipc"
+import { readExesVersion, cleanShutdown, launchDCRD, launchDCRWallet, GetDcrwPort, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
+import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet, startWallet, checkDaemon } from "./main_dev/ipc"
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -37,7 +37,6 @@ let mainWindow = null;
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
 let previousWallet = null;
-let currentBlockCount;
 let primaryInstance;
 
 const globalCfg = initGlobalCfg();
@@ -147,52 +146,7 @@ ipcMain.on("start-wallet", (event, walletPath, testnet) => {
 });
 
 ipcMain.on("check-daemon", (event, rpcCreds, testnet) => {
-  let args = [ "getblockcount" ];
-  let host, port;
-  if (!rpcCreds){
-    args.push(`--configfile=${dcrctlCfg(appDataDirectory())}`);
-  } else if (rpcCreds) {
-    if (rpcCreds.rpc_user) {
-      args.push(`--rpcuser=${rpcCreds.rpc_user}`);
-    }
-    if (rpcCreds.rpc_password) {
-      args.push(`--rpcpass=${rpcCreds.rpc_password}`);
-    }
-    if (rpcCreds.rpc_cert) {
-      args.push(`--rpccert=${rpcCreds.rpc_cert}`);
-    }
-    if (rpcCreds.rpc_host) {
-      host = rpcCreds.rpc_host;
-    }
-    if (rpcCreds.rpc_port) {
-      port = rpcCreds.rpc_port;
-    }
-    args.push("--rpcserver=" + host + ":" + port);
-  }
-
-  if (testnet) {
-    args.push("--testnet");
-  }
-
-  var dcrctlExe = getExecutablePath("dcrctl", argv.customBinPath);
-  if (!fs.existsSync(dcrctlExe)) {
-    logger.log("error", "The dcrctl file does not exists");
-  }
-
-  logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
-
-  var spawn = require("child_process").spawn;
-  var dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
-
-  dcrctl.stdout.on("data", (data) => {
-    currentBlockCount = data.toString();
-    logger.log("info", data.toString());
-    mainWindow.webContents.send("check-daemon-response", currentBlockCount);
-  });
-  dcrctl.stderr.on("data", (data) => {
-    logger.log("error", data.toString());
-    mainWindow.webContents.send("check-daemon-response", 0);
-  });
+  checkDaemon(mainWindow, rpcCreds, testnet);
 });
 
 ipcMain.on("clean-shutdown", async function(event){
@@ -240,44 +194,6 @@ ipcMain.on("set-previous-wallet", (event, cfg) => {
   previousWallet = cfg;
   event.returnValue = true;
 });
-
-const readExesVersion = () => {
-  let spawn = require("child_process").spawnSync;
-  let args = [ "--version" ];
-  let exes = [ "dcrd", "dcrwallet", "dcrctl" ];
-  let versions = {
-    grpc: grpcVersions,
-    decrediton: app.getVersion()
-  };
-
-  for (let exe of exes) {
-    let exePath = getExecutablePath("dcrd", argv.customBinPath);
-    if (!fs.existsSync(exePath)) {
-      logger.log("error", "The dcrd file does not exists");
-    }
-
-    let proc = spawn(exePath, args, { encoding: "utf8" });
-    if (proc.error) {
-      logger.log("error", `Error trying to read version of ${exe}: ${proc.error}`);
-      continue;
-    }
-
-    let versionLine = proc.stdout.toString();
-    if (!versionLine) {
-      logger.log("error", `Empty version line when reading version of ${exe}`);
-      continue;
-    }
-
-    let decodedLine = versionLine.match(/\w+ version ([^\s]+)/);
-    if (decodedLine !== null) {
-      versions[exe] = decodedLine[1];
-    } else {
-      logger.log("error", `Unable to decode version line ${versionLine}`);
-    }
-  }
-
-  return versions;
-};
 
 primaryInstance = !app.makeSingleInstance(() => true);
 const stopSecondInstance = !primaryInstance && !daemonIsAdvanced;
@@ -534,7 +450,7 @@ app.on("ready", async () => {
             versionWin.loadURL(`file://${__dirname}/staticPages/version.html`);
 
             versionWin.once("ready-to-show", () => {
-              versionWin.webContents.send("exes-versions", readExesVersion());
+              versionWin.webContents.send("exes-versions", readExesVersion(app, grpcVersions));
               versionWin.show();
             });
           }
