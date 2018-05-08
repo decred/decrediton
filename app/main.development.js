@@ -13,7 +13,7 @@ import { getGlobalCfgPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirect
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 import { cleanShutdown, launchDCRD, launchDCRWallet, GetDcrwPort, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
-import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet } from "./main_dev/ipc"
+import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet, startWallet } from "./main_dev/ipc"
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -143,19 +143,7 @@ ipcMain.on("stop-wallet", (event) => {
 });
 
 ipcMain.on("start-wallet", (event, walletPath, testnet) => {
-  if (GetDcrwPID()) {
-    logger.log("info", "dcrwallet already started " + GetDcrwPID());
-    mainWindow.webContents.send("dcrwallet-port", GetDcrwPort());
-    event.returnValue = GetDcrwPID();
-    return;
-  }
-  initWalletCfg(testnet, walletPath);
-  try {
-    launchDCRWallet(mainWindow, daemonIsAdvanced, walletPath, testnet);
-  } catch (e) {
-    logger.log("error", "error launching dcrwallet: " + e);
-  }
-  event.returnValue = getWalletCfg(testnet, walletPath);
+  event.returnValue = startWallet(mainWindow, daemonIsAdvanced, testnet, walletPath);
 });
 
 ipcMain.on("check-daemon", (event, rpcCreds, testnet) => {

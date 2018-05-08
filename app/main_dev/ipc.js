@@ -5,7 +5,7 @@ import { OPTIONS } from "./constants";
 import { createLogger } from "./logging";
 import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, getDcrdRpcCert } from "./paths";
 import { createTempDcrdConf, readDcrdConfig, initWalletCfg, newWalletConfigCreation } from "../config";
-import { launchDCRD, GetDcrdPID, closeDCRW } from "./launch"
+import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRW } from "./launch"
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -84,6 +84,21 @@ export const removeWallet = (testnet, walletPath) => {
   } catch (e) {
     logger.log("error", "error creating wallet: " + e);
     return false;
+  }
+}
+
+export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath) => {
+  if (GetDcrwPID()) {
+    logger.log("info", "dcrwallet already started " + GetDcrwPID());
+    mainWindow.webContents.send("dcrwallet-port", GetDcrwPort());
+    event.returnValue = GetDcrwPID();
+    return;
+  }
+  initWalletCfg(testnet, walletPath);
+  try {
+    return launchDCRWallet(mainWindow, daemonIsAdvanced, walletPath, testnet);
+  } catch (e) {
+    logger.log("error", "error launching dcrwallet: " + e);
   }
 }
 
