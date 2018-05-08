@@ -15,7 +15,7 @@ already be using at this time.
 
 Download the decrediton release for your operating system on [decred/decred-binaries](https://github.com/decred/decred-binaries/releases).
 
-On macOS, Ubuntu (14.04 and later), and recent Debians, there should be
+On macOS, Ubuntu (14.04 LTS kernel 3.16 and later), and recent Debians, there should be
 no additional dependencies needed.
 
 On Fedora or similar distros you may need to install the libXScrnSaver
