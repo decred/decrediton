@@ -2,7 +2,7 @@ sudo: required
 
 language: node_js
 node_js:
-- "8"
+- "10"
 
 cache:
   yarn: true
@@ -12,6 +12,7 @@ cache:
 
 install:
   - yarn
+  - travis_wait mvn install
 
 script:
   - yarn lint
