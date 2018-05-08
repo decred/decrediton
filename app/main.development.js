@@ -13,7 +13,7 @@ import { getGlobalCfgPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirect
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 import { cleanShutdown, launchDCRD, launchDCRWallet, closeDCRW, GetDcrwPort, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
-import { getAvailableWallets, startDaemon } from "./main_dev/ipc"
+import { getAvailableWallets, startDaemon, createWallet } from "./main_dev/ipc"
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -131,15 +131,7 @@ ipcMain.on("start-daemon", (event, appData, testnet) => {
 });
 
 ipcMain.on("create-wallet", (event, walletPath, testnet) => {
-  let newWalletDirectory = getWalletPath(testnet, walletPath);
-  if (!fs.pathExistsSync(newWalletDirectory)){
-    fs.mkdirsSync(newWalletDirectory);
-
-    // create new configs for new wallet
-    initWalletCfg(testnet, walletPath);
-    newWalletConfigCreation(testnet, walletPath);
-  }
-  event.returnValue = true;
+  event.returnValue = createWallet(testnet, walletPath);
 });
 
 ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
@@ -250,7 +242,6 @@ ipcMain.on("get-decrediton-logs", (event) => {
 });
 
 ipcMain.on("get-last-log-line-dcrd", event => {
-  console.log(lastLogLine(GetDcrdLogs()) + '\n\n\n\n')
   event.returnValue = lastLogLine(GetDcrdLogs());
 });
 

@@ -5,7 +5,7 @@ import { OPTIONS } from "./constants";
 import { createLogger } from "./logging";
 import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, getDcrdRpcCert } from "./paths";
 import { launchDCRD } from "./launch";
-import { createTempDcrdConf, readDcrdConfig } from "../config";
+import { createTempDcrdConf, readDcrdConfig, initWalletCfg, newWalletConfigCreation } from "../config";
 import { GetDcrdPID } from "./launch"
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
@@ -57,3 +57,20 @@ export const startDaemon = (mainWindow, daemonIsAdvanced, primaryInstance, appDa
     logger.log("error", "error launching dcrd: " + e);
   }
 };
+
+export const createWallet = (testnet, walletPath) => {
+  const newWalletDirectory = getWalletPath(testnet, walletPath);
+  try {
+    if (!fs.pathExistsSync(newWalletDirectory)){
+      fs.mkdirsSync(newWalletDirectory);
+  
+      // create new configs for new wallet
+      initWalletCfg(testnet, walletPath);
+      newWalletConfigCreation(testnet, walletPath);
+    }
+    return true;
+  } catch (e) {
+    logger.log("error", "error creating wallet: " + e);
+    return false;
+  }
+}
