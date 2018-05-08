@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
-import { initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, createTempDcrdConf } from "./config";
+import { initWalletCfg, getWalletCfg, newWalletConfigCreation, createTempDcrdConf } from "./config";
 import fs from "fs-extra";
 import path from "path";
 import parseArgs from "minimist";
@@ -37,7 +37,6 @@ let mainWindow = null;
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
 let previousWallet = null;
-let dcrdConfig = {};
 let currentBlockCount;
 let primaryInstance;
 
@@ -128,41 +127,7 @@ ipcMain.on("get-available-wallets", (event, network) => {
 });
 
 ipcMain.on("start-daemon", (event, appData, testnet) => {
-  if (GetDcrdPID() && dcrdConfig && !daemonIsAdvanced) {
-    logger.log("info", "Skipping restart of daemon as it is already running");
-    event.returnValue = dcrdConfig;
-    return;
-  }
-  if(appData){
-    logger.log("info", "launching dcrd with different appdata directory");
-  }
-  if (GetDcrdPID() && dcrdConfig) {
-    logger.log("info", "dcrd already started " + GetDcrdPID());
-    event.returnValue = dcrdConfig;
-    return;
-  }
-  if (!daemonIsAdvanced && !primaryInstance) {
-    logger.log("info", "Running on secondary instance. Assuming dcrd is already running.");
-    let dcrdConfPath = getDcrdPath();
-    if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
-      dcrdConfPath = createTempDcrdConf();
-    }
-    dcrdConfig = readDcrdConfig(dcrdConfPath, testnet);
-    dcrdConfig.rpc_cert = getDcrdRpcCert();
-    dcrdConfig.pid = -1;
-    event.returnValue = dcrdConfig;
-    return;
-  }
-  try {
-    let dcrdConfPath = getDcrdPath();
-    if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
-      dcrdConfPath = createTempDcrdConf();
-    }
-    dcrdConfig = launchDCRD(mainWindow, daemonIsAdvanced, dcrdConfPath, appData, testnet);
-  } catch (e) {
-    logger.log("error", "error launching dcrd: " + e);
-  }
-  event.returnValue = dcrdConfig;
+  event.returnValue = startDaemon(mainWindow, daemonIsAdvanced, primaryInstance, appData, testnet);
 });
 
 ipcMain.on("create-wallet", (event, walletPath, testnet) => {
