@@ -1,18 +1,14 @@
 import { app, shell, BrowserWindow } from "electron";
 import { appLocaleFromElectronLocale, default as locales } from "../i18n/locales";
 import { initGlobalCfg } from "../config";
-import parseArgs from "minimist";
 import { createLogger } from "./logging";
-import { OPTIONS } from "./constants";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID, readExesVersion } from "./launch";
 import { getDirectoryLogs, getDcrwalletPath, getDcrdPath } from "./paths";
 
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
 
-const argv = parseArgs(process.argv.slice(1), OPTIONS);
-const debug = argv.debug || process.env.NODE_ENV === "development";
-const logger = createLogger(debug);
+const logger = createLogger();
 
 const globalCfg = initGlobalCfg();
 
@@ -249,4 +245,3 @@ export const inputMenu = (isDevelopment, mainWindow, x, y) => isDevelopment ?
 
 export const selectionMenu = (isDevelopment, mainWindow, x, y) => isDevelopment ?
   [ ...selectionMenuRoles, inspectElement(mainWindow, x, y) ] : selectionMenuRoles;
-  

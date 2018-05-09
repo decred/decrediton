@@ -8,8 +8,7 @@ import { createTempDcrdConf, initWalletCfg, newWalletConfigCreation } from "../c
 import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRW, GetDcrwPort } from "./launch";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
-const debug = argv.debug || process.env.NODE_ENV === "development";
-const logger = createLogger(debug);
+const logger = createLogger();
 
 export const getAvailableWallets = (network) => {
   // Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
