@@ -10,7 +10,7 @@ import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRe
 import { setupProxy } from "./main_dev/proxy";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet, startWallet, checkDaemon } from "./main_dev/ipc";
-import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions } from "./main_dev/templates";
+import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -196,7 +196,6 @@ if (stopSecondInstance) {
 }
 
 app.on("ready", async () => {
-
   let windowOpts = { show: false, width: 1178, height: 790, page: "app.html" };
   if (stopSecondInstance) {
     windowOpts = { show: true, width: 575, height: 275, autoHideMenuBar: true,
@@ -231,30 +230,13 @@ app.on("ready", async () => {
 
   mainWindow.webContents.on("context-menu", (e, props) => {
     const { selectionText, isEditable, x, y } = props;
-    let inputMenu = [
-      { role: "cut" },
-      { role: "copy" },
-      { role: "paste" },
-      { type: "separator" },
-      { role: "selectall" }
-    ];
-    let selectionMenu = [
-      { role: "copy" },
-      { type: "separator" },
-      { role: "selectall" }
-    ];
-    if (process.env.NODE_ENV === "development") {
-      let inspectElement = {
-        label: "Inspect element",
-        click: () => mainWindow.inspectElement(x, y)
-      };
-      inputMenu.push(inspectElement);
-      selectionMenu.push(inspectElement);
-    }
+    const inptMenu = inputMenu(process.env.NODE_ENV === "development", mainWindow, x, y);
+    const slctionMenu = selectionMenu(process.env.NODE_ENV === "development", mainWindow, x, y);
+
     if (isEditable) {
-      Menu.buildFromTemplate(inputMenu).popup(mainWindow);
+      Menu.buildFromTemplate(inptMenu).popup(mainWindow);
     } else if (selectionText && selectionText.trim() !== "") {
-      Menu.buildFromTemplate(selectionMenu).popup(mainWindow);
+      Menu.buildFromTemplate(slctionMenu).popup(mainWindow);
     } else if (process.env.NODE_ENV === "development") {
       Menu.buildFromTemplate([ {
         label: "Inspect element",

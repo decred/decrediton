@@ -223,3 +223,29 @@ export const getVersionWin = () => versionWin;
 export const getGrpcVersions = () => grpcVersions;
 
 export const setGrpcVersions = (versions) => grpcVersions = versions;
+
+const inputMenuRoles = [
+  { role: "cut" },
+  { role: "copy" },
+  { role: "paste" },
+  { type: "separator" },
+  { role: "selectall" }
+];
+const selectionMenuRoles = [
+  { role: "copy" },
+  { type: "separator" },
+  { role: "selectall" }
+];
+
+const inspectElement = (mainWindow, x,y) => {
+  return {
+    label: "Inspect element",
+    click: () => mainWindow.inspectElement(x, y)
+  }
+};
+
+export const inputMenu = (isDevelopment, mainWindow, x, y) => isDevelopment ?
+  [...inputMenuRoles, inspectElement(mainWindow, x, y)] : inputMenuRoles;
+
+export const selectionMenu = (isDevelopment, mainWindow, x, y) => isDevelopment ?
+  [...selectionMenuRoles, inspectElement(mainWindow, x, y)] : selectionMenuRoles;
