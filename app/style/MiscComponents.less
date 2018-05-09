@@ -574,22 +574,28 @@
 }
 
 .tabs > .tab > a {
-  margin: 0px 8px 0px 0px;
+  margin: 0px 11px 0px 11px;
   color: #9ca8b5;
-  font-size: 11px;
   text-decoration: none;
-  padding: 5px 10px 5px 10px;
 }
 
-.tabs > .tab > a:hover {
+.tabs > .tab > a:hover,
+.tabs > .tab > a.active {
   color: @input-color-hovered;
 }
 
-.tabs > .tab > a.active {
-  color: #0c1e3e;
-  border: 1px solid #8997a6;
-  border-radius: 3px;
-  padding: 5px 9px 5px 9px;
+.overview-header {
+  .tabs > .tab > a {
+    margin: 0px 8px 0px 0px;
+    font-size: 11px;
+    padding: 5px 10px 5px 10px;
+  }
+
+  .tabs > .tab > a.active {
+    border: 1px solid #8997a6;
+    border-radius: 3px;
+    padding: 5px 9px 5px 9px;
+  }
 }
 
 .no-transactions-indicator,
