@@ -91,8 +91,7 @@ export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath) =
   if (GetDcrwPID()) {
     logger.log("info", "dcrwallet already started " + GetDcrwPID());
     mainWindow.webContents.send("dcrwallet-port", GetDcrwPort());
-    event.returnValue = GetDcrwPID();
-    return;
+    return GetDcrwPID();
   }
   initWalletCfg(testnet, walletPath);
   try {
