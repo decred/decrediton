@@ -4,8 +4,10 @@ import "style/Logs.less";
 const Logs = ({
   showDcrdLogs,
   showDcrwalletLogs,
-  hideDcrdLogs,
-  hideDcrwalletLogs,
+  onShowDcrdLogs,
+  onShowDcrwalletLogs,
+  onHideDcrdLogs,
+  onHideDcrwalletLogs,
   dcrdLogs,
   dcrwalletLogs,
   isDaemonRemote,
@@ -15,14 +17,14 @@ const Logs = ({
 ) => (
   <Aux>
     {!isDaemonRemote && isDaemonStarted ?
-      !dcrdLogs ?
+      !showDcrdLogs ?
         <div className="log-area hidden">
-          <div className="log-area-title hidden" onClick={showDcrdLogs}>
+          <div className="log-area-title hidden" onClick={onShowDcrdLogs}>
             <T id="help.logs.dcrd" m="dcrd" />
           </div>
         </div>:
         <div className="log-area expanded">
-          <div className="log-area-title expanded" onClick={hideDcrdLogs}>
+          <div className="log-area-title expanded" onClick={onHideDcrdLogs}>
             <T id="help.logs.dcrd" m="dcrd" />
           </div>
           <div className="log-area-logs">
@@ -31,14 +33,14 @@ const Logs = ({
         </div> :
       <div/>
     }
-    {!walletReady ? null : !dcrwalletLogs ?
+    {!walletReady ? null : !showDcrwalletLogs ?
       <div className="log-area hidden">
-        <div className="log-area-title hidden" onClick={showDcrwalletLogs}>
+        <div className="log-area-title hidden" onClick={onShowDcrwalletLogs}>
           <T id="help.logs.dcrwallet" m="dcrwallet" />
         </div>
       </div>:
       <div className="log-area expanded">
-        <div className="log-area-title expanded" onClick={hideDcrwalletLogs}>
+        <div className="log-area-title expanded" onClick={onHideDcrwalletLogs}>
           <T id="help.logs.dcrwallet" m="dcrwallet" />
         </div>
         <div className="log-area-logs">
