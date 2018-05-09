@@ -1,18 +1,16 @@
+import fs from "fs-extra";
+import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, shell, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
-import { initWalletCfg, getWalletCfg, newWalletConfigCreation, readDcrdConfig, createTempDcrdConf } from "./config";
-import fs from "fs-extra";
-import path from "path";
-import parseArgs from "minimist";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
-import { appDataDirectory, getDcrdPath, dcrctlCfg, dcrdCfg, getDcrwalletPath } from "./main_dev/paths";
-import { getWalletPath, getExecutablePath, getWalletsDirectoryPath, getWalletsDirectoryPathNetwork } from "./main_dev/paths";
-import { getGlobalCfgPath, getWalletDBPathFromWallets, getDcrdRpcCert, getDirectoryLogs, checkAndInitWalletCfg } from "./main_dev/paths";
+import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
+import { getGlobalCfgPath, getDirectoryLogs, checkAndInitWalletCfg, getDcrdPath, getDcrwalletPath } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { cleanShutdown, launchDCRD, launchDCRWallet, closeDCRW, GetDcrwPort } from "./main_dev/launch";
+import { readExesVersion, cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
+import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet, startWallet, checkDaemon } from "./main_dev/ipc";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -35,11 +33,7 @@ let template;
 let mainWindow = null;
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
-let dcrdPID;
-let dcrwPID;
 let previousWallet = null;
-let dcrdConfig = {};
-let currentBlockCount;
 let primaryInstance;
 
 const globalCfg = initGlobalCfg();
@@ -124,155 +118,36 @@ ipcMain.on("setup-proxy", () => {
   setupProxy(logger);
 });
 
-ipcMain.on("get-available-wallets", (event, network) => {// Attempt to find all currently available wallet.db's in the respective network direction in each wallets data dir
-  const availableWallets = [];
-  const isTestNet = network !== "mainnet";
-
-  const walletsBasePath = getWalletPath(isTestNet);
-  const walletDirs = fs.readdirSync(walletsBasePath);
-  walletDirs.forEach(wallet => {
-    const walletDirStat = fs.statSync(path.join(walletsBasePath, wallet));
-    if (!walletDirStat.isDirectory()) return;
-
-    const walletDbFilePath = getWalletDBPathFromWallets(isTestNet, wallet);
-    const finished = fs.pathExistsSync(walletDbFilePath);
-    availableWallets.push({ network, wallet, finished });
-  });
-
-  event.returnValue = availableWallets;
+ipcMain.on("get-available-wallets", (event, network) => {
+  event.returnValue = getAvailableWallets(network);
 });
 
 ipcMain.on("start-daemon", (event, appData, testnet) => {
-  if (dcrdPID && dcrdConfig && !daemonIsAdvanced) {
-    logger.log("info", "Skipping restart of daemon as it is already running");
-    event.returnValue = dcrdConfig;
-    return;
-  }
-  if(appData){
-    logger.log("info", "launching dcrd with different appdata directory");
-  }
-  if (dcrdPID && dcrdConfig) {
-    logger.log("info", "dcrd already started " + dcrdPID);
-    event.returnValue = dcrdConfig;
-    return;
-  }
-  if (!daemonIsAdvanced && !primaryInstance) {
-    logger.log("info", "Running on secondary instance. Assuming dcrd is already running.");
-    let dcrdConfPath = getDcrdPath();
-    if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
-      dcrdConfPath = createTempDcrdConf();
-    }
-    dcrdConfig = readDcrdConfig(dcrdConfPath, testnet);
-    dcrdConfig.rpc_cert = getDcrdRpcCert();
-    dcrdConfig.pid = -1;
-    event.returnValue = dcrdConfig;
-    return;
-  }
-  try {
-    let dcrdConfPath = getDcrdPath();
-    if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
-      dcrdConfPath = createTempDcrdConf();
-    }
-    dcrdConfig = launchDCRD(mainWindow, daemonIsAdvanced, dcrdConfPath, appData, testnet);
-    dcrdPID = dcrdConfig.pid;
-  } catch (e) {
-    logger.log("error", "error launching dcrd: " + e);
-  }
-  event.returnValue = dcrdConfig;
+  event.returnValue = startDaemon(mainWindow, daemonIsAdvanced, primaryInstance, appData, testnet);
 });
 
 ipcMain.on("create-wallet", (event, walletPath, testnet) => {
-  let newWalletDirectory = getWalletPath(testnet, walletPath);
-  if (!fs.pathExistsSync(newWalletDirectory)){
-    fs.mkdirsSync(newWalletDirectory);
-
-    // create new configs for new wallet
-    initWalletCfg(testnet, walletPath);
-    newWalletConfigCreation(testnet, walletPath);
-  }
-  event.returnValue = true;
+  event.returnValue = createWallet(testnet, walletPath);
 });
 
 ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
-  let removeWalletDirectory = getWalletPath(testnet, walletPath);
-  if (fs.pathExistsSync(removeWalletDirectory)){
-    fs.removeSync(removeWalletDirectory);
-  }
-  event.returnValue = true;
+  event.returnValue = removeWallet(testnet, walletPath);
 });
 
 ipcMain.on("stop-wallet", (event) => {
-  closeDCRW(dcrwPID);
-  event.returnValue = true;
+  event.returnValue = stopWallet();
 });
 
 ipcMain.on("start-wallet", (event, walletPath, testnet) => {
-  if (dcrwPID) {
-    logger.log("info", "dcrwallet already started " + dcrwPID);
-    mainWindow.webContents.send("dcrwallet-port", GetDcrwPort());
-    event.returnValue = dcrwPID;
-    return;
-  }
-  initWalletCfg(testnet, walletPath);
-  try {
-    dcrwPID = launchDCRWallet(mainWindow, daemonIsAdvanced, walletPath, testnet);
-  } catch (e) {
-    logger.log("error", "error launching dcrwallet: " + e);
-  }
-  event.returnValue = getWalletCfg(testnet, walletPath);
+  event.returnValue = startWallet(mainWindow, daemonIsAdvanced, testnet, walletPath);
 });
 
 ipcMain.on("check-daemon", (event, rpcCreds, testnet) => {
-  let args = [ "getblockcount" ];
-  let host, port;
-  if (!rpcCreds){
-    args.push(`--configfile=${dcrctlCfg(appDataDirectory())}`);
-  } else if (rpcCreds) {
-    if (rpcCreds.rpc_user) {
-      args.push(`--rpcuser=${rpcCreds.rpc_user}`);
-    }
-    if (rpcCreds.rpc_password) {
-      args.push(`--rpcpass=${rpcCreds.rpc_password}`);
-    }
-    if (rpcCreds.rpc_cert) {
-      args.push(`--rpccert=${rpcCreds.rpc_cert}`);
-    }
-    if (rpcCreds.rpc_host) {
-      host = rpcCreds.rpc_host;
-    }
-    if (rpcCreds.rpc_port) {
-      port = rpcCreds.rpc_port;
-    }
-    args.push("--rpcserver=" + host + ":" + port);
-  }
-
-  if (testnet) {
-    args.push("--testnet");
-  }
-
-  var dcrctlExe = getExecutablePath("dcrctl", argv.customBinPath);
-  if (!fs.existsSync(dcrctlExe)) {
-    logger.log("error", "The dcrctl file does not exists");
-  }
-
-  logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
-
-  var spawn = require("child_process").spawn;
-  var dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
-
-  dcrctl.stdout.on("data", (data) => {
-    currentBlockCount = data.toString();
-    logger.log("info", data.toString());
-    mainWindow.webContents.send("check-daemon-response", currentBlockCount);
-  });
-  dcrctl.stderr.on("data", (data) => {
-    logger.log("error", data.toString());
-    mainWindow.webContents.send("check-daemon-response", 0);
-  });
+  checkDaemon(mainWindow, rpcCreds, testnet);
 });
 
 ipcMain.on("clean-shutdown", async function(event){
-  const stopped = await cleanShutdown(mainWindow, app, dcrdPID, dcrwPID);
+  const stopped = await cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
   event.sender.send("clean-shutdown-finished", stopped);
 });
 
@@ -316,44 +191,6 @@ ipcMain.on("set-previous-wallet", (event, cfg) => {
   previousWallet = cfg;
   event.returnValue = true;
 });
-
-const readExesVersion = () => {
-  let spawn = require("child_process").spawnSync;
-  let args = [ "--version" ];
-  let exes = [ "dcrd", "dcrwallet", "dcrctl" ];
-  let versions = {
-    grpc: grpcVersions,
-    decrediton: app.getVersion()
-  };
-
-  for (let exe of exes) {
-    let exePath = getExecutablePath("dcrd", argv.customBinPath);
-    if (!fs.existsSync(exePath)) {
-      logger.log("error", "The dcrd file does not exists");
-    }
-
-    let proc = spawn(exePath, args, { encoding: "utf8" });
-    if (proc.error) {
-      logger.log("error", `Error trying to read version of ${exe}: ${proc.error}`);
-      continue;
-    }
-
-    let versionLine = proc.stdout.toString();
-    if (!versionLine) {
-      logger.log("error", `Empty version line when reading version of ${exe}`);
-      continue;
-    }
-
-    let decodedLine = versionLine.match(/\w+ version ([^\s]+)/);
-    if (decodedLine !== null) {
-      versions[exe] = decodedLine[1];
-    } else {
-      logger.log("error", `Unable to decode version line ${versionLine}`);
-    }
-  }
-
-  return versions;
-};
 
 primaryInstance = !app.makeSingleInstance(() => true);
 const stopSecondInstance = !primaryInstance && !daemonIsAdvanced;
@@ -470,7 +307,7 @@ app.on("ready", async () => {
         label: locale.messages["appMenu.quit"],
         accelerator: "Command+Q",
         click() {
-          cleanShutdown(mainWindow, app, dcrdPID, dcrwPID);
+          cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
         }
       } ]
     }, {
@@ -610,7 +447,7 @@ app.on("ready", async () => {
             versionWin.loadURL(`file://${__dirname}/staticPages/version.html`);
 
             versionWin.once("ready-to-show", () => {
-              versionWin.webContents.send("exes-versions", readExesVersion());
+              versionWin.webContents.send("exes-versions", readExesVersion(app, grpcVersions));
               versionWin.show();
             });
           }
@@ -624,7 +461,7 @@ app.on("ready", async () => {
 app.on("before-quit", (event) => {
   logger.log("info","Caught before-quit. Set decredition as was closed");
   event.preventDefault();
-  cleanShutdown(mainWindow, app, dcrdPID, dcrwPID);
+  cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
   setMustOpenForm(true);
   app.exit(0);
 });

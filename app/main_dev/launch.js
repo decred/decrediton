@@ -12,9 +12,12 @@ const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
 
+let dcrdPID;
+let dcrwPID;
+
 let dcrwPort;
 
-function closeClis(dcrdPID, dcrwPID) {
+function closeClis() {
   // shutdown daemon and wallet.
   // Don't try to close if not running.
   if(dcrdPID && dcrdPID !== -1)
@@ -23,29 +26,35 @@ function closeClis(dcrdPID, dcrwPID) {
     closeDCRW(dcrwPID);
 }
 
-function closeDCRD(dcrdPID) {
+function closeDCRD() {
   if (require("is-running")(dcrdPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrdPID);
     process.kill(dcrdPID, "SIGINT");
   }
 }
 
-export const closeDCRW = (dcrwPID) => {
-  if (require("is-running")(dcrwPID) && os.platform() != "win32") {
-    logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
-    process.kill(dcrwPID, "SIGINT");
+export const closeDCRW = () => {
+  try {
+    if (require("is-running")(dcrwPID) && os.platform() != "win32") {
+      logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
+      process.kill(dcrwPID, "SIGINT");
+    }
+    return true;
+  } catch (e) {
+    logger.log("error", "error closing wallet: " + e);
+    return false;
   }
 };
 
-export async function cleanShutdown(mainWindow, app, dcrdPID, dcrwPID) {
+export async function cleanShutdown(mainWindow, app) {
   // Attempt a clean shutdown.
   return new Promise(resolve => {
     const cliShutDownPause = 2; // in seconds.
     const shutDownPause = 3; // in seconds.
-    closeClis(dcrdPID, dcrwPID);
+    closeClis();
     // Sent shutdown message again as we have seen it missed in the past if they
     // are still running.
-    setTimeout(function () { closeClis(dcrdPID, dcrwPID); }, cliShutDownPause * 1000);
+    setTimeout(function () { closeClis(); }, cliShutDownPause * 1000);
     logger.log("info", "Closing decrediton.");
 
     let shutdownTimer = setInterval(function () {
@@ -131,6 +140,7 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
   dcrd.stderr.on("data", (data) => AddToDcrdLog(process.stderr, data, debug));
 
   newConfig.pid = dcrd.pid;
+  dcrdPID = dcrd.pid;
   logger.log("info", "dcrd started with pid:" + newConfig.pid);
 
   dcrd.unref();
@@ -160,7 +170,6 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   const spawn = require("child_process").spawn;
   let args = [ "--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath)) ];
 
-  let dcrwPID;
   const cfg = getWalletCfg(testnet, walletPath);
 
   args.push("--ticketbuyer.nospreadticketpurchases");
@@ -270,3 +279,45 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
 };
 
 export const GetDcrwPort = () => dcrwPort;
+
+export const GetDcrdPID = () => dcrdPID;
+
+export const GetDcrwPID = () => dcrwPID;
+
+export const readExesVersion = (app, grpcVersions) => {
+  let spawn = require("child_process").spawnSync;
+  let args = [ "--version" ];
+  let exes = [ "dcrd", "dcrwallet", "dcrctl" ];
+  let versions = {
+    grpc: grpcVersions,
+    decrediton: app.getVersion()
+  };
+
+  for (let exe of exes) {
+    let exePath = getExecutablePath("dcrd", argv.customBinPath);
+    if (!fs.existsSync(exePath)) {
+      logger.log("error", "The dcrd file does not exists");
+    }
+
+    let proc = spawn(exePath, args, { encoding: "utf8" });
+    if (proc.error) {
+      logger.log("error", `Error trying to read version of ${exe}: ${proc.error}`);
+      continue;
+    }
+
+    let versionLine = proc.stdout.toString();
+    if (!versionLine) {
+      logger.log("error", `Empty version line when reading version of ${exe}`);
+      continue;
+    }
+
+    let decodedLine = versionLine.match(/\w+ version ([^\s]+)/);
+    if (decodedLine !== null) {
+      versions[exe] = decodedLine[1];
+    } else {
+      logger.log("error", `Unable to decode version line ${versionLine}`);
+    }
+  }
+
+  return versions;
+};
