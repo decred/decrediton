@@ -241,11 +241,12 @@ const inspectElement = (mainWindow, x,y) => {
   return {
     label: "Inspect element",
     click: () => mainWindow.inspectElement(x, y)
-  }
+  };
 };
 
 export const inputMenu = (isDevelopment, mainWindow, x, y) => isDevelopment ?
-  [...inputMenuRoles, inspectElement(mainWindow, x, y)] : inputMenuRoles;
+  [ ...inputMenuRoles, inspectElement(mainWindow, x, y) ] : inputMenuRoles;
 
 export const selectionMenu = (isDevelopment, mainWindow, x, y) => isDevelopment ?
-  [...selectionMenuRoles, inspectElement(mainWindow, x, y)] : selectionMenuRoles;
+  [ ...selectionMenuRoles, inspectElement(mainWindow, x, y) ] : selectionMenuRoles;
+  
