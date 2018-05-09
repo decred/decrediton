@@ -1,16 +1,16 @@
 import fs from "fs-extra";
 import parseArgs from "minimist";
-import { app, BrowserWindow, Menu, shell, dialog } from "electron";
+import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
-import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
 import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
-import { getGlobalCfgPath, getDirectoryLogs, checkAndInitWalletCfg, getDcrdPath, getDcrwalletPath } from "./main_dev/paths";
+import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { readExesVersion, cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
+import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet, startWallet, checkDaemon } from "./main_dev/ipc";
+import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions } from "./main_dev/templates";
 
 // setPath as decrediton
 app.setPath("userData", appDataDirectory());
@@ -29,10 +29,7 @@ if (err !== null) {
 }
 
 let menu;
-let template;
 let mainWindow = null;
-let versionWin = null;
-let grpcVersions = { requiredVersion: null, walletVersion: null };
 let previousWallet = null;
 let primaryInstance;
 
@@ -156,7 +153,7 @@ ipcMain.on("app-reload-ui", () => {
 });
 
 ipcMain.on("grpc-versions-determined", (event, versions) => {
-  grpcVersions = { ...grpcVersions, ...versions };
+  setGrpcVersions({ ...getGrpcVersions(), ...versions });
 });
 
 ipcMain.on("main-log", (event, ...args) => {
@@ -200,17 +197,6 @@ if (stopSecondInstance) {
 
 app.on("ready", async () => {
 
-  // when installing (on first run) locale will be empty. Determine the user's
-  // OS locale and set that as decrediton's locale.
-  let cfgLocale = globalCfg.get("locale", "");
-  let locale = locales.find(value => value.key === cfgLocale);
-  if (!locale) {
-    let newCfgLocale = appLocaleFromElectronLocale(app.getLocale());
-    logger.log("error", `Locale ${cfgLocale} not found. Switching to locale ${newCfgLocale}.`);
-    globalCfg.set("locale", newCfgLocale);
-    locale = locales.find(value => value.key === newCfgLocale);
-  }
-
   let windowOpts = { show: false, width: 1178, height: 790, page: "app.html" };
   if (stopSecondInstance) {
     windowOpts = { show: true, width: 575, height: 275, autoHideMenuBar: true,
@@ -231,8 +217,8 @@ app.on("ready", async () => {
   });
   mainWindow.on("closed", () => {
     mainWindow = null;
-    if (versionWin !== null) {
-      versionWin.close();
+    if (getVersionWin() !== null) {
+      getVersionWin().close();
     }
     if (stopSecondInstance) {
       app.quit();
@@ -277,183 +263,8 @@ app.on("ready", async () => {
     }
   });
 
-  if (process.platform === "darwin") {
-    template = [ {
-      label: locale.messages["appMenu.decrediton"],
-      submenu: [ {
-        label: locale.messages["appMenu.aboutDecrediton"],
-        selector: "orderFrontStandardAboutPanel:"
-      }, {
-        type: "separator"
-      }, {
-        label: locale.messages["appMenu.services"],
-        submenu: []
-      }, {
-        type: "separator"
-      }, {
-        label: locale.messages["appMenu.hideDecrediton"],
-        accelerator: "Command+H",
-        selector: "hide:"
-      }, {
-        label: locale.messages["appMenu.hideOthers"],
-        accelerator: "Command+Shift+H",
-        selector: "hideOtherApplications:"
-      }, {
-        label: locale.messages["appMenu.showAll"],
-        selector: "unhideAllApplications:"
-      }, {
-        type: "separator"
-      }, {
-        label: locale.messages["appMenu.quit"],
-        accelerator: "Command+Q",
-        click() {
-          cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
-        }
-      } ]
-    }, {
-      label: locale.messages["appMenu.edit"],
-      submenu: [ {
-        label: locale.messages["appMenu.undo"],
-        accelerator: "Command+Z",
-        selector: "undo:"
-      }, {
-        label: locale.messages["appMenu.redo"],
-        accelerator: "Shift+Command+Z",
-        selector: "redo:"
-      }, {
-        type: "separator"
-      }, {
-        label: locale.messages["appMenu.cut"],
-        accelerator: "Command+X",
-        selector: "cut:"
-      }, {
-        label: locale.messages["appMenu.copy"],
-        accelerator: "Command+C",
-        selector: "copy:"
-      }, {
-        label: locale.messages["appMenu.paste"],
-        accelerator: "Command+V",
-        selector: "paste:"
-      }, {
-        label: locale.messages["appMenu.selectAll"],
-        accelerator: "Command+A",
-        selector: "selectAll:"
-      } ]
-    }, {
-      label: locale.messages["appMenu.view"],
-      submenu: [ {
-        label: "Toggle Full Screen",
-        accelerator: "Ctrl+Command+F",
-        click() {
-          mainWindow.setFullScreen(!mainWindow.isFullScreen());
-        }
-      } ]
-    }, {
-      label: locale.messages["appMenu.window"],
-      submenu: [ {
-        label: locale.messages["appMenu.minimize"],
-        accelerator: "Command+M",
-        selector: "performMiniaturize:"
-      }, {
-        label: locale.messages["appMenu.close"],
-        accelerator: "Command+W",
-        selector: "performClose:"
-      }, {
-        type: "separator"
-      }, {
-        label: locale.messages["appMenu.bringAllFront"],
-        selector: "arrangeInFront:"
-      } ]
-    } ];
-  } else {
-    template = [ {
-      label: locale.messages["appMenu.file"],
-      submenu: [ {
-        label: "&Close",
-        accelerator: "Ctrl+W",
-        click() {
-          mainWindow.close();
-        }
-      } ]
-    }, {
-      label: locale.messages["appMenu.view"],
-      submenu: [ {
-        label: locale.messages["appMenu.toggleFullScreen"],
-        accelerator: "F11",
-        click() {
-          mainWindow.setFullScreen(!mainWindow.isFullScreen());
-        },
-      }, {
-        label: locale.messages["appMenu.reloadUI"],
-        accelerator: "F5",
-        click() {
-          mainWindow.webContents.send("app-reload-requested", mainWindow);
-        },
-      } ]
-    } ];
-  }
-  template.push(
-    {
-      label: locale.messages["appMenu.advanced"],
-      submenu: [ {
-        label: locale.messages["appMenu.developerTools"],
-        accelerator: "Alt+Ctrl+I",
-        click() {
-          mainWindow.toggleDevTools();
-        }
-      }, {
-        label: locale.messages["appMenu.showWalletLog"],
-        click() {
-          shell.openItem(getDirectoryLogs(getDcrwalletPath()));
-        }
-      }, {
-        label: locale.messages["appMenu.showDaemonLog"],
-        click() {
-          shell.openItem(getDirectoryLogs(getDcrdPath()));
-        }
-      } ]
-    }, {
-      label: locale.messages["appMenu.help"],
-      submenu: [ {
-        label: locale.messages["appMenu.learnMore"],
-        click() {
-          shell.openExternal("https://decred.org");
-        }
-      }, {
-        label: locale.messages["appMenu.documentation"],
-        click() {
-          shell.openExternal("https://github.com/decred/decrediton");
-        }
-      }, {
-        label: locale.messages["appMenu.communityDiscussions"],
-        click() {
-          shell.openExternal("https://forum.decred.org");
-        }
-      }, {
-        label: locale.messages["appMenu.searchIssues"],
-        click() {
-          shell.openExternal("https://github.com/decred/decrediton/issues");
-        }
-      }, {
-        label: locale.messages["appMenu.about"],
-        click() {
-          if (!versionWin) {
-            versionWin = new BrowserWindow({ width: 575, height: 325, show: false, autoHideMenuBar: true, resizable: false });
-            versionWin.on("closed", () => {
-              versionWin = null;
-            });
+  const template = initTemplate(mainWindow);
 
-            // Load a remote URL
-            versionWin.loadURL(`file://${__dirname}/staticPages/version.html`);
-
-            versionWin.once("ready-to-show", () => {
-              versionWin.webContents.send("exes-versions", readExesVersion(app, grpcVersions));
-              versionWin.show();
-            });
-          }
-        }
-      } ]
-    });
   menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
 });
