@@ -1,6 +1,6 @@
 import { app, shell, BrowserWindow } from "electron";
 import { appLocaleFromElectronLocale, default as locales } from "../i18n/locales";
-import { initGlobalCfg } from "../config";
+import { getGlobalCfg } from "../config";
 import { createLogger } from "./logging";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID, readExesVersion } from "./launch";
 import { getDirectoryLogs, getDcrwalletPath, getDcrdPath } from "./paths";
@@ -9,8 +9,7 @@ let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
 
 const logger = createLogger();
-
-const globalCfg = initGlobalCfg();
+const globalCfg = getGlobalCfg();
 
 // when installing (on first run) locale will be empty. Determine the user's
 // OS locale and set that as decrediton's locale.
