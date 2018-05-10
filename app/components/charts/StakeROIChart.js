@@ -2,7 +2,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip } from "recharts";
 import { injectIntl } from "react-intl";
 import messages from "./messages";
 import { yAxisStyle, xAxisStyle, myTicketsChartSize, padding,
-  radiusBottom, radiusTop } from "./Styles";
+  radiusBottom, radiusTop, hoverFill } from "./Styles";
 import { FormattedMessage as T } from "react-intl";
 
 const ChartTooltip = (props) => {
@@ -49,9 +49,9 @@ const VoteTimeChart = ({ data, intl }) => {
 
   return (
     <LineChart stackOffset="sign" width={myTicketsChartSize.width} height={myTicketsChartSize.height} data={displayData}>
-      <XAxis dataKey="name" style={yAxisStyle} />
-      <YAxis orientation="right" style={xAxisStyle} padding={padding} />
-      <Tooltip content={<ChartTooltip />} />
+      <XAxis tickLine={false} dataKey="name" style={yAxisStyle} />
+      <YAxis tickLine={false} orientation="right" style={xAxisStyle} padding={padding} />
+      <Tooltip cursor={hoverFill} content={<ChartTooltip />} />
       <Line barSize={8} dataKey={stakeRewardsKey} stackId="a" fill="#0c1e3e" radius={radiusBottom} />
       <Line barSize={8} dataKey={stakeFeesKey} stackId="a" fill="#69d5f7" radius={radiusTop} />
     </LineChart>

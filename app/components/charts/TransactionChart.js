@@ -2,7 +2,7 @@ import { BarChart, Bar, XAxis, YAxis, ReferenceLine, Tooltip } from "recharts";
 import messages from "./messages";
 import { injectIntl } from "react-intl";
 import ChartTooltip from "./ChartTooltip";
-import { yAxisStyle, xAxisStyle, homeChartSize, radiusFull, padding } from "./Styles";
+import { yAxisStyle, xAxisStyle, homeChartSize, radiusFull, padding, hoverFill } from "./Styles";
 import "style/Chart.less";
 
 const BalanceChart = ({ data, intl }) => {
@@ -18,10 +18,10 @@ const BalanceChart = ({ data, intl }) => {
 
   return (
     <BarChart stackOffset="sign" width={homeChartSize.width} height={homeChartSize.height} data={displayData}>
-      <XAxis dataKey="name" style={xAxisStyle} />
-      <YAxis orientation="right" style={yAxisStyle} padding={padding}/>
-      <Tooltip content={<ChartTooltip />} />
-      <ReferenceLine y={0} />
+      <XAxis tickLine={false} dataKey="name" style={xAxisStyle}/>
+      <YAxis tickLine={false} orientation="right" style={yAxisStyle} padding={padding}/>
+      <Tooltip cursor={hoverFill} content={<ChartTooltip />} />
+      <ReferenceLine y={0} stroke="#f3f6f6" />
       <Bar dataKey={sentKey} stackId="a" fill="#fd704a" barSize={8} radius={radiusFull} />
       <Bar dataKey={receivedKey} stackId="a" fill="#41bf53" barSize={8} radius={radiusFull} />
     </BarChart>

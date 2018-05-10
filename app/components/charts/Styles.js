@@ -11,7 +11,7 @@ export const xAxisStyle = {
 };
 
 export const homeChartSize = {
-  width: 550,
+  width: 450,
   height: 250
 };
 
@@ -22,6 +22,10 @@ export const myTicketsChartSize = {
 
 export const padding= {
   bottom: 16
+};
+
+export const hoverFill = {
+  fill: "#e9f8fe"
 };
 
 export const radiusFull = [ 10, 10, 10, 10 ];
