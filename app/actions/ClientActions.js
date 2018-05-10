@@ -3,7 +3,7 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt,
-  stopAutoBuyerAttempt, getTicketBuyerConfigAttempt } from "./ControlActions";
+  stopAutoBuyerAttempt, getTicketBuyerConfigAttempt, publishUnminedTransactionsAttempt } from "./ControlActions";
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
@@ -40,6 +40,7 @@ function getWalletServiceSuccess(walletService) {
     setTimeout(() => { dispatch(accountNtfnsStart()); }, 1000);
     setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
     setTimeout(() => { dispatch(getDecodeMessageServiceAttempt()); }, 1000);
+    setTimeout(() => { dispatch(publishUnminedTransactionsAttempt()); }, 1000);
 
     var goHomeCb = () => {
       setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);
