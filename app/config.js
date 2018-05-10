@@ -7,8 +7,9 @@ import { appDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCf
 
 // setPath as decrediton
 // app is not set after building so we need that check
-if(app)
+if(app) {
   app.setPath("userData", appDataDirectory());
+}
 
 export function getGlobalCfg() {
   const config = new Store();
