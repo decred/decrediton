@@ -7,6 +7,8 @@ import os from "os";
 let dcrdLogs = Buffer.from("");
 let dcrwalletLogs = Buffer.from("");
 
+let logger;
+
 const pad = (s, n) => {
   n = n || 2;
   s = Array(n).join("0") + s;
@@ -57,7 +59,9 @@ const logFormatterColorized = (opts) => {
 // decrediton app data dir and sends to the console when debug == true.
 // This is meant to be called from the ipcMain thread.
 export function createLogger(debug) {
-  const logger = new (winston.Logger)({
+  if (logger)
+    return logger;
+  logger = new (winston.Logger)({
     transports: [
       new (winston.transports.File)({
         json: false,
