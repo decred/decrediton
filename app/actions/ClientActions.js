@@ -3,7 +3,7 @@ import * as wallet from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt,
-  stopAutoBuyerAttempt, getTicketBuyerConfigAttempt } from "./ControlActions";
+  stopAutoBuyerAttempt, getTicketBuyerConfigAttempt, publishUnminedTransactionsAttempt } from "./ControlActions";
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
 import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
@@ -77,6 +77,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(getMostRecentRegularTransactions());
         await dispatch(getMostRecentStakeTransactions());
         await dispatch(getMostRecentTransactions());
+        await dispatch(publishUnminedTransactionsAttempt());
         await dispatch(getStartupStats());
         dispatch(findImmatureTransactions());
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });

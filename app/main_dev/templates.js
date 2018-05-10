@@ -1,13 +1,9 @@
 import { app, shell, BrowserWindow } from "electron";
-import { getGlobalCfg } from "../config";
-import { createLogger } from "./logging";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID, readExesVersion } from "./launch";
 import { getDirectoryLogs, getDcrwalletPath, getDcrdPath } from "./paths";
 
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
-
-const logger = createLogger();
 
 const darwinTemplate = (mainWindow, locale) => [
   {
