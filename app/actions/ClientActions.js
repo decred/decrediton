@@ -40,7 +40,6 @@ function getWalletServiceSuccess(walletService) {
     setTimeout(() => { dispatch(accountNtfnsStart()); }, 1000);
     setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
     setTimeout(() => { dispatch(getDecodeMessageServiceAttempt()); }, 1000);
-    setTimeout(() => { dispatch(publishUnminedTransactionsAttempt()); }, 1000);
 
     var goHomeCb = () => {
       setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);
@@ -78,6 +77,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(getMostRecentRegularTransactions());
         await dispatch(getMostRecentStakeTransactions());
         await dispatch(getMostRecentTransactions());
+        await dispatch(publishUnminedTransactionsAttempt());
         await dispatch(getStartupStats());
         dispatch(findImmatureTransactions());
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });

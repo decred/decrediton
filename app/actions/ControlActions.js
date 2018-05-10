@@ -499,10 +499,12 @@ export const PUBLISHUNMINEDTRANSACTIONS_FAILED = "PUBLISHUNMINEDTRANSACTIONS_FAI
 
 export const publishUnminedTransactionsAttempt = () => (dispatch, getState) => {
   dispatch({ type: PUBLISHUNMINEDTRANSACTIONS_ATTEMPT });
-
-  wallet.publishUnminedTransactions(sel.walletService(getState()))
-    .then(() => dispatch({ type: PUBLISHUNMINEDTRANSACTIONS_SUCCESS }))
-    .catch(error => dispatch({ error, type: PUBLISHUNMINEDTRANSACTIONS_FAILED }));
+  const { grpc: { unminedTransactions } } = getState();
+  if (unminedTransactions && unminedTransactions.length > 0) {
+    wallet.publishUnminedTransactions(sel.walletService(getState()))
+      .then(() => dispatch({ type: PUBLISHUNMINEDTRANSACTIONS_SUCCESS }))
+      .catch(error => dispatch({ error, type: PUBLISHUNMINEDTRANSACTIONS_FAILED }));
+  }
 };
 
 export const MODAL_SHOWN = "MODAL_SHOWN";
