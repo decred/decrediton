@@ -104,8 +104,17 @@ export const GetDcrdLogs = () => dcrdLogs;
 
 export const GetDcrwalletLogs = () => dcrwalletLogs;
 
+const logError = "[ERR]";
+
 export function lastLogLine(log) {
   let lastLineIdx = log.lastIndexOf(os.EOL, log.length - os.EOL.length -1);
   let lastLineBuff = log.slice(lastLineIdx).toString("utf-8");
+  return lastLineBuff.trim();
+}
+
+export function lastErrorLine(log) {
+  let lastLineIdx = log.lastIndexOf(logError);
+  let endOfErrorLineIdx = log.indexOf(os.EOL, lastLineIdx);
+  let lastLineBuff = log.slice(lastLineIdx, endOfErrorLineIdx).toString("utf-8");
   return lastLineBuff.trim();
 }

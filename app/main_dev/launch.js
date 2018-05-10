@@ -1,6 +1,6 @@
 import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdRpcCert } from "./paths";
 import { getWalletCfg, readDcrdConfig } from "../config";
-import { createLogger, AddToDcrdLog, AddToDcrwalletLog } from "./logging";
+import { createLogger, AddToDcrdLog, AddToDcrwalletLog, GetDcrdLogs, GetDcrwalletLogs, lastErrorLine } from "./logging";
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import os from "os";
@@ -128,8 +128,9 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
     if (daemonIsAdvanced)
       return;
     if (code !== 0) {
-      logger.log("error", "dcrd closed due to an error.  Check dcrd logs and contact support if the issue persists.");
-      mainWindow.webContents.executeJavaScript("alert(\"dcrd closed due to an error.  Check dcrd logs and contact support if the issue persists.\");");
+      const lastDcrdErr = lastErrorLine(GetDcrdLogs());
+      logger.log("error", "dcrd closed due to an error: ", lastDcrdErr);
+      mainWindow.webContents.executeJavaScript("alert(\"dcrd closed due to an error: " + lastDcrdErr + "\");");
       mainWindow.webContents.executeJavaScript("window.close();");
     } else {
       logger.log("info", `dcrd exited with code ${code}`);
@@ -240,8 +241,9 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
     if (daemonIsAdvanced)
       return;
     if (code !== 0) {
-      logger.log("error", "dcrwallet closed due to an error.  Check dcrwallet logs and contact support if the issue persists.");
-      mainWindow.webContents.executeJavaScript("alert(\"dcrwallet closed due to an error.  Check dcrwallet logs and contact support if the issue persists.\");");
+      const lastDcrwalletErr = lastErrorLine(GetDcrwalletLogs());
+      logger.log("error", "dcrwallet closed due to an error: ", lastDcrwalletErr);
+      mainWindow.webContents.executeJavaScript("alert(\"dcrwallet closed due to an error: " + lastDcrwalletErr + "\");");
       mainWindow.webContents.executeJavaScript("window.close();");
     } else {
       logger.log("info", `dcrwallet exited with code ${code}`);
