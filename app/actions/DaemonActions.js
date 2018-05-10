@@ -30,6 +30,8 @@ export const AVAILABLE_WALLETS = "AVAILABLE_WALLETS";
 export const SHUTDOWN_REQUESTED = "SHUTDOWN_REQUESTED";
 export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 export const REGISTERFORERRORS = "REGISTERFORERRORS";
+export const FATAL_DAEMON_ERROR = "FATAL_DAEMON_ERROR";
+export const FATAL_WALLET_ERROR = "FATAL_WALLET_ERROR";
 export const WALLETCREATED = "WALLETCREATED";
 export const WALLET_AUTOBUYER_SETTINGS = "WALLET_AUTOBUYER_SETTINGS";
 export const WALLET_STAKEPOOL_SETTINGS = "WALLET_STAKEPOOL_SETTINGS";
@@ -135,11 +137,16 @@ export const setCredentialsAppdataError = () => (dispatch) => {
 };
 
 export const registerForErrors = () => (dispatch) => {
-  ipcRenderer.sendSync("register-for-errors");
-  ipcRenderer.on("error-received", (event, error) => {
-    console.log("got the error", error);
-  });
   dispatch({ type: REGISTERFORERRORS });
+  ipcRenderer.sendSync("register-for-errors");
+  ipcRenderer.on("error-received", (event, daemon, error) => {
+    if (daemon) {
+      dispatch({ error, type: FATAL_DAEMON_ERROR });
+    } else {
+      dispatch({ error, type: FATAL_WALLET_ERROR });
+    }
+    dispatch(pushHistory("/error"));
+  });
 };
 
 export const shutdownApp = () => (dispatch) => {

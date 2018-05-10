@@ -42,3 +42,4 @@ export { default as myTicketsCharts } from "./myTicketsCharts";
 export { default as modal } from "./modal";
 export { default as modalVisible } from "./modalVisible";
 export { default as locale } from "./locale";
+export { default as fatalErrorPage } from "./fatalErrorPage";

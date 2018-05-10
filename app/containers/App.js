@@ -8,9 +8,9 @@ import { AnimatedSwitch } from "react-router-transition";
 import GetStartedContainer from "./GetStarted";
 import WalletContainer from "./Wallet";
 import ShutdownAppPage from "components/views/ShutdownAppPage";
+import FatalErrorPage from "components/views/FatalErrorPage";
 import Snackbar from "components/Snackbar";
 import "style/Layout.less";
-
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
 @autobind
@@ -73,6 +73,7 @@ class App extends React.Component {
             <AnimatedSwitch {...topLevelAnimation} className="top-level-container">
               <Route path="/getStarted"  component={GetStartedContainer} />
               <Route path="/shutdown"    component={ShutdownAppPage} />
+              <Route path="/error"       component={FatalErrorPage} />
               <Route path="/"            component={WalletContainer} />
             </AnimatedSwitch>
             <div id="modal-portal" />
