@@ -1,5 +1,4 @@
 import { app, shell, BrowserWindow } from "electron";
-import { appLocaleFromElectronLocale, default as locales } from "../i18n/locales";
 import { getGlobalCfg } from "../config";
 import { createLogger } from "./logging";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID, readExesVersion } from "./launch";
@@ -9,20 +8,8 @@ let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
 
 const logger = createLogger();
-const globalCfg = getGlobalCfg();
 
-// when installing (on first run) locale will be empty. Determine the user's
-// OS locale and set that as decrediton's locale.
-const cfgLocale = globalCfg.get("locale", "");
-let locale = locales.find(value => value.key === cfgLocale);
-if (!locale) {
-  const newCfgLocale = appLocaleFromElectronLocale(app.getLocale());
-  logger.log("error", `Locale ${cfgLocale} not found. Switching to locale ${newCfgLocale}.`);
-  globalCfg.set("locale", newCfgLocale);
-  locale = locales.find(value => value.key === newCfgLocale);
-}
-
-const darwinTemplate = (mainWindow) => [
+const darwinTemplate = (mainWindow, locale) => [
   {
     label: locale.messages["appMenu.decrediton"],
     submenu: [ {
@@ -112,7 +99,7 @@ const darwinTemplate = (mainWindow) => [
   }
 ];
 
-const regularTemplate = (mainWindow) => [ {
+const regularTemplate = (mainWindow, locale) => [ {
   label: locale.messages["appMenu.file"],
   submenu: [ {
     label: "&Close",
@@ -138,7 +125,7 @@ const regularTemplate = (mainWindow) => [ {
   } ]
 } ];
 
-const defaultTemplate = (mainWindow) => [ {
+const defaultTemplate = (mainWindow, locale) => [ {
   label: locale.messages["appMenu.advanced"],
   submenu: [ {
     label: locale.messages["appMenu.developerTools"],
@@ -200,15 +187,15 @@ const defaultTemplate = (mainWindow) => [ {
   } ]
 } ];
 
-export const initTemplate = (mainWindow) => {
+export const initTemplate = (mainWindow, locale) => {
   let template;
 
   if (process.platform === "darwin") {
-    template = darwinTemplate(mainWindow);
+    template = darwinTemplate(mainWindow, locale);
   } else {
-    template = regularTemplate(mainWindow);
+    template = regularTemplate(mainWindow, locale);
   }
-  template.push(...defaultTemplate(mainWindow));
+  template.push(...defaultTemplate(mainWindow, locale));
 
   return template;
 };

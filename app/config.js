@@ -2,14 +2,7 @@ import fs from "fs";
 import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
-import { app } from "electron";
 import { appDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCfg, getDcrdRpcCert } from "./main_dev/paths";
-
-// setPath as decrediton
-// app is not set after building so we need that check
-if(app) {
-  app.setPath("userData", appDataDirectory());
-}
 
 export function getGlobalCfg() {
   const config = new Store();

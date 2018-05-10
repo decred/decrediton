@@ -2,6 +2,7 @@ import fs from "fs-extra";
 import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
+import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
 import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
@@ -11,6 +12,9 @@ import { setupProxy } from "./main_dev/proxy";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet, startWallet, checkDaemon } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
+
+// setPath as decrediton
+app.setPath("userData", appDataDirectory());
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
@@ -193,6 +197,17 @@ if (stopSecondInstance) {
 }
 
 app.on("ready", async () => {
+  // when installing (on first run) locale will be empty. Determine the user's
+  // OS locale and set that as decrediton's locale.
+  const cfgLocale = globalCfg.get("locale", "");
+  let locale = locales.find(value => value.key === cfgLocale);
+  if (!locale) {
+    const newCfgLocale = appLocaleFromElectronLocale(app.getLocale());
+    logger.log("error", `Locale ${cfgLocale} not found. Switching to locale ${newCfgLocale}.`);
+    globalCfg.set("locale", newCfgLocale);
+    locale = locales.find(value => value.key === newCfgLocale);
+  }
+
   let windowOpts = { show: false, width: 1178, height: 790, page: "app.html" };
   if (stopSecondInstance) {
     windowOpts = { show: true, width: 575, height: 275, autoHideMenuBar: true,
@@ -242,7 +257,7 @@ app.on("ready", async () => {
     }
   });
 
-  const template = initTemplate(mainWindow);
+  const template = initTemplate(mainWindow, locale);
 
   menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
