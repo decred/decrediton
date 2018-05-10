@@ -29,7 +29,7 @@ export const getAvailableWallets = (network) => {
   return availableWallets;
 };
 
-export const startDaemon = (mainWindow, daemonIsAdvanced, primaryInstance, appData, testnet) => {
+export const startDaemon = (mainWindow, daemonIsAdvanced, primaryInstance, appData, testnet, reactIPC) => {
   if (GetDcrdPID() && GetDcrdPID() !== -1) {
     logger.log("info", "Skipping restart of daemon as it is already running " + GetDcrdPID());
     return GetDcrdPID();
@@ -50,7 +50,7 @@ export const startDaemon = (mainWindow, daemonIsAdvanced, primaryInstance, appDa
     if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
       dcrdConfPath = createTempDcrdConf();
     }
-    return launchDCRD(mainWindow, daemonIsAdvanced, dcrdConfPath, appData, testnet);
+    return launchDCRD(mainWindow, daemonIsAdvanced, dcrdConfPath, appData, testnet, reactIPC);
   } catch (e) {
     logger.log("error", "error launching dcrd: " + e);
   }
@@ -86,7 +86,7 @@ export const removeWallet = (testnet, walletPath) => {
   }
 };
 
-export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath) => {
+export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath, reactIPC) => {
   if (GetDcrwPID()) {
     logger.log("info", "dcrwallet already started " + GetDcrwPID());
     mainWindow.webContents.send("dcrwallet-port", GetDcrwPort());
@@ -94,7 +94,7 @@ export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath) =
   }
   initWalletCfg(testnet, walletPath);
   try {
-    return launchDCRWallet(mainWindow, daemonIsAdvanced, walletPath, testnet);
+    return launchDCRWallet(mainWindow, daemonIsAdvanced, walletPath, testnet, reactIPC);
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
   }

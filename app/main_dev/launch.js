@@ -77,7 +77,7 @@ export async function cleanShutdown(mainWindow, app) {
   });
 }
 
-export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, testnet) => {
+export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, testnet, reactIPC) => {
   const spawn = require("child_process").spawn;
   let args = [];
   let newConfig = {};
@@ -130,8 +130,9 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
     if (code !== 0) {
       const lastDcrdErr = lastErrorLine(GetDcrdLogs());
       logger.log("error", "dcrd closed due to an error: ", lastDcrdErr);
-      mainWindow.webContents.executeJavaScript("alert(\"dcrd closed due to an error: " + lastDcrdErr + "\");");
-      mainWindow.webContents.executeJavaScript("window.close();");
+      reactIPC.send("error-received", lastDcrdErr);
+      //mainWindow.webContents.executeJavaScript("alert(\"dcrd closed due to an error: " + lastDcrdErr + "\");");
+      //mainWindow.webContents.executeJavaScript("window.close();");
     } else {
       logger.log("info", `dcrd exited with code ${code}`);
     }
@@ -167,7 +168,7 @@ const DecodeDaemonIPCData = (logger, data, cb) => {
   }
 };
 
-export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testnet) => {
+export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testnet, reactIPC) => {
   const spawn = require("child_process").spawn;
   let args = [ "--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath)) ];
 
@@ -243,8 +244,9 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
     if (code !== 0) {
       const lastDcrwalletErr = lastErrorLine(GetDcrwalletLogs());
       logger.log("error", "dcrwallet closed due to an error: ", lastDcrwalletErr);
-      mainWindow.webContents.executeJavaScript("alert(\"dcrwallet closed due to an error: " + lastDcrwalletErr + "\");");
-      mainWindow.webContents.executeJavaScript("window.close();");
+      reactIPC.sendSync("error-received", lastDcrwalletErr);
+      //mainWindow.webContents.executeJavaScript("alert(\"dcrwallet closed due to an error: " + lastDcrwalletErr + "\");");
+      //mainWindow.webContents.executeJavaScript("window.close();");
     } else {
       logger.log("info", `dcrwallet exited with code ${code}`);
     }
