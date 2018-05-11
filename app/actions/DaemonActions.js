@@ -267,9 +267,9 @@ export const syncDaemon = () =>
   (dispatch, getState) => {
     const updateBlockCount = () => {
       const { walletLoader: { neededBlocks } } = getState();
-      const { daemon: { daemonSynced, timeStart, blockStart, credentials } } = getState();
+      const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError } } = getState();
       // check to see if user skipped;
-      if (daemonSynced) return;
+      if (daemonSynced || daemonError) return;
       return wallet
         .getBlockCount(credentials, isTestNet(getState()))
         .then(updateCurrentBlockCount => {
