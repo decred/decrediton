@@ -163,8 +163,10 @@ export const deleteDaemonData = () => (dispatch, getState) => {
     .catch((err) => dispatch({ err, type: DELETE_DCRD_FAILED }));
 };
 
-
-export const shutdownApp = () => (dispatch) => {
+export const shutdownApp = () => (dispatch, getState) => {
+  const { daemon: { walletName } } = getState();
+  const cfg = getWalletCfg(isTestNet(getState()), walletName);
+  cfg.set("lastaccess", new Date());
   dispatch({ type: SHUTDOWN_REQUESTED });
   dispatch(stopNotifcations());
   ipcRenderer.on("daemon-stopped", () => {
