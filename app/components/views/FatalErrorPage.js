@@ -21,7 +21,12 @@ class FatalErrorPage extends React.Component {
           </div>
           <div className="fatal-error-title"><T id="fatal.suggestion.title" m="Suggested action to resolve error" />:</div>
           <div className="fatal-error-area">
-            <div className="fatal-error-suggestion"><T id="fatal.suggestion.value" m="This error typically means you have another instance of daemon running.  You should check your taskmanager or profiler to shutdown any still running daemon and then try again." /></div>
+            <div className="fatal-error-suggestion">
+              {daemonError.indexOf("resource temp") > 0 ?
+                <T id="fatal.suggestion.resources" m="This error typically means you have another instance of daemon running.  You should check your taskmanager or profiler to shutdown any still running daemon and then try again." /> :
+                <T id="fatal.suggestion.fallthrough" m="Please note the error above and go to the support channel on slack/matrix/rockchat for help resolving the issue." />
+              }
+            </div>
           </div>
           <div className="fatal-error-toolbar">
             <KeyBlueButton onClick={shutdownApp}>
