@@ -131,8 +131,6 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
       const lastDcrdErr = lastErrorLine(GetDcrdLogs());
       logger.log("error", "dcrd closed due to an error: ", lastDcrdErr);
       reactIPC.send("error-received", true, lastDcrdErr);
-      //mainWindow.webContents.executeJavaScript("alert(\"dcrd closed due to an error: " + lastDcrdErr + "\");");
-      //mainWindow.webContents.executeJavaScript("window.close();");
     } else {
       logger.log("info", `dcrd exited with code ${code}`);
     }
@@ -245,8 +243,6 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
       const lastDcrwalletErr = lastErrorLine(GetDcrwalletLogs());
       logger.log("error", "dcrwallet closed due to an error: ", lastDcrwalletErr);
       reactIPC.sendSync("error-received", false, lastDcrwalletErr);
-      //mainWindow.webContents.executeJavaScript("alert(\"dcrwallet closed due to an error: " + lastDcrwalletErr + "\");");
-      //mainWindow.webContents.executeJavaScript("window.close();");
     } else {
       logger.log("info", `dcrwallet exited with code ${code}`);
     }
