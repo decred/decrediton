@@ -166,7 +166,9 @@ export const deleteDaemonData = () => (dispatch, getState) => {
 export const shutdownApp = () => (dispatch, getState) => {
   const { daemon: { walletName } } = getState();
   const cfg = getWalletCfg(isTestNet(getState()), walletName);
-  cfg.set("lastaccess", new Date());
+  if (walletName) {
+    cfg.set("lastaccess", Date.now());
+  }
   dispatch({ type: SHUTDOWN_REQUESTED });
   dispatch(stopNotifcations());
   ipcRenderer.on("daemon-stopped", () => {

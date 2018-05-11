@@ -1,5 +1,5 @@
 import CreateWalletForm from "./CreateWalletForm";
-import { FormattedMessage as T, injectIntl } from "react-intl";
+import { FormattedMessage as T, injectIntl, FormattedRelative } from "react-intl";
 import { KeyBlueButton, RemoveWalletButton, InvisibleButton } from "buttons";
 import "style/LoginForm.less";
 
@@ -16,6 +16,7 @@ const WalletSelectionBodyBase = ({
   intl,
   ...props,
 }) => {
+  console.log(availableWallets);
   return (
     availableWallets && availableWallets.length > 0 && !createWalletForm ?
       <div className="advanced-page">
@@ -35,6 +36,12 @@ const WalletSelectionBodyBase = ({
                   <div className={selected ? "display-wallet-name selected" : "display-wallet-name"}>
                     {wallet.value.wallet}
                   </div>
+                  {selected && wallet.lastAccess ?
+                    <div className={"display-wallet-last-access selected"}>
+                      <T id="walletselection.lastAccess" m="Last accessed"/>: <FormattedRelative value={wallet.lastAccess} updateInterval={1*1000}/>
+                    </div> :
+                    <div/>
+                  }
                   {selected &&
                     <div className="display-wallet-buttons">
                       <KeyBlueButton className="display-wallet-button start" onClick={startWallet} />
