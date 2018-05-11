@@ -27,6 +27,7 @@ class App extends React.Component {
     super(props);
     const { window } = props;
     window.addEventListener("beforeunload", this.beforeWindowUnload);
+    window.addEventListener("click", this.onClick);
     this.refreshing = false;
 
     props.listenForAppReloadRequest(this.onReloadRequested);
@@ -49,6 +50,17 @@ class App extends React.Component {
 
     if (!shutdownRequested) {
       this.props.shutdownApp();
+    }
+  }
+
+  onClick(event) {
+    const target = event.target;
+    if (target.localName !== "a") return;
+    const href = target.attributes.href ? target.attributes.href.value : "";
+    if (href === "") {
+      event.stopPropagation();
+      event.preventDefault();
+      return false;
     }
   }
 
