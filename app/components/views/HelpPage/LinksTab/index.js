@@ -19,6 +19,7 @@ export const LinksTab = () => (
     <Tooltip text={ <T id="help.matrix.info" m="Use matrix.decred.org as your custom server URL." /> }><HelpLink className={"help-matrix-icon"} href="https://riot.im/app/#/login"><T id="help.matrix" m="Matrix Chat" /></HelpLink></Tooltip>
     <HelpLink className={"help-freenode-icon"} href="https://webchat.freenode.net/?channels=decred&uio=d4"><T id="help.freenode" m="Freenode" /></HelpLink>
     <HelpLink className={"help-forum-icon"} href="https://forum.decred.org"><T id="help.forum" m="Forum" /> </HelpLink>
+    <HelpLink className={"help-slack-icon"} href="https://slack.decred.org"><T id="help.slack" m="Slack" /></HelpLink>
     <HelpLinkInfoModal className={"help-constitution-icon"}
       modalTitle={<h1><T id="help.constitution.modal.title" m="Decred Constitution" /></h1>}
       modalContent={<ConstitutionModalContent />}
