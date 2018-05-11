@@ -3,8 +3,9 @@ import { GoBackIconButton } from "buttons";
 import {
   ProposalNotVoting, NoTicketsVotingInfo, OverviewField, OverviewVotingProgressInfo,
   NoElligibleTicketsVotingInfo, VotingChoicesInfo, UpdatingVoteChoice, TimeValue,
-  ChosenVoteOption
+  ChosenVoteOption, ProposalText
 } from "./helpers";
+import { politeiaMarkdownIndexMd } from "helpers";
 
 export default ({ viewedProposalDetails,
   showPurchaseTicketsPage, hasTickets, onVoteOptionSelected, onUpdateVoteChoice,
@@ -20,8 +21,8 @@ export default ({ viewedProposalDetails,
 
   let text = "";
   viewedProposalDetails.files.forEach(f => {
-    if (f.mime === "text/plain; charset=utf-8") {
-      text += f.payload + "\n\n";
+    if (f.name === "index.md") {
+      text = politeiaMarkdownIndexMd(f.payload);
     }
   });
 
@@ -60,7 +61,7 @@ export default ({ viewedProposalDetails,
         { voting ? <OverviewVotingProgressInfo {...{ voteCounts }} /> : null }
       </div>
       <div className="proposal-details-text">
-        {text}
+        <ProposalText text={text} />
       </div>
     </Aux>
   );

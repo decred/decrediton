@@ -1,6 +1,6 @@
 import { createElement as h } from "react";
 export * from "./dateFormat";
-export { addSpacingAroundText, restrictToStdDecimalNumber } from "./strings";
+export * from "./strings";
 export * from "./byteActions";
 export * from "./addresses";
 export * from "./arrays";

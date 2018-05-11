@@ -44,6 +44,7 @@ export const getActiveVoteProposals = () => async (dispatch, getState) => {
   const piURL = sel.politeiaURL(getState());
   try {
     const resp = await pi.getActiveVotes(piURL);
+    const votes = resp.data.votes || [];
 
     console.log("active votes", resp);
     const { walletService } = getState().grpc;
@@ -53,7 +54,7 @@ export const getActiveVoteProposals = () => async (dispatch, getState) => {
     const blockTimestampFromNow = (block) => Math.trunc(currentTimestamp + ((block - currentHeight) * chainParams.TargetTimePerBlock));
 
     const proposals = [];
-    for (let i = 0; i < resp.data.votes.length; i++) {
+    for (let i = 0; i < votes.length; i++) {
       const vinfo = resp.data.votes[i];
       const p = vinfo.proposal;
       const proposal = {
@@ -118,6 +119,7 @@ export const getVettedProposals = () => (dispatch, getState) => {
           token: p.censorshiprecord.token,
           numComments: p.numcomments,
           timestamp: p.timestamp,
+          elligibleTickets: [],
         };
       }));
       proposals.sort((a, b) => a.timestamp - b.timestamp);
@@ -163,6 +165,7 @@ export const getProposalDetails = (token) => (dispatch, getState) => {
       const voteProposal = activeVotes.find(v => v.token === token);
 
       const proposal = {
+        eligibleTickets: [],
         ...voteProposal,
         creator: p.userid,
         token: token,

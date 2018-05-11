@@ -3,6 +3,7 @@ import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { StakeyBounceXs, VotingProgress } from "indicators";
 import { tsToDate } from "helpers";
 import UpdateVoteChoiceModalButton from "./UpdateVoteChoiceModalButton";
+import { default as ReactMarkdown }  from "react-markdown";
 
 export const LoadingProposal = () => <div><T id="proposalDetails.loading" m="Loading Proposal Details" /></div>;
 
@@ -94,4 +95,34 @@ export const TimeValue = ({ timestamp }) => (
     <span className="time-value"><FormattedRelative  value={ tsToDate(timestamp) } /></span>
     (<T id="proposal.overview.fullTime" m="{timestamp, date, medium} {timestamp, time, short} UTC" values={{ timestamp: tsToDate(timestamp) }} />)
   </Aux>
+);
+
+// This changes links to never open. Debatable whether we want to
+// allow proposals to link somewhere directly from decrediton.
+const renderInternalProposalLink = ({ href, children }) => {
+  console.log("rendering internal link", href);
+  return <a onClick={() => {} } href="#">{children}</a>;
+};
+
+export const ProposalText = ({ text }) => (
+  <ReactMarkdown
+    source={text}
+
+    // NEVER set to false
+    escapeHtml={true}
+
+    // debatable whether we wanna allow the embedded html sections to be
+    // shown. Theoretically, escapeHtml=true should suffice, but playing it
+    // safe for the moment and also setting this as true.
+    skipHtml={true}
+
+    renderers={{
+      link: renderInternalProposalLink,
+      linkReference: renderInternalProposalLink,
+
+      // debatable whether we wanna allow inline image references in proposals
+      // in decrediton.
+      imageReference: () => {},
+    }}
+  />
 );

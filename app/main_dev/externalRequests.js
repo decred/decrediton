@@ -41,14 +41,16 @@ export const installSessionHandlers = (mainLogger) => {
   // comment or remove this once politeia is online on testnet. This is used
   // here because a local politeia install does not have an ssl certificate from
   // a valid CA, so we need to enable insecure connections to it in order to test.
-  app.on("certificate-error", (event, webContents, url, error, certificate, callback) => {
-    if (url.match(/^https:\/\/localhost:4443\/v1\/.*$/)) {
-      event.preventDefault();
-      callback(true);
-    } else {
-      callback(false);
-    }
-  });
+  if (process.env.NODE_ENV === "development") {
+    app.on("certificate-error", (event, webContents, url, error, certificate, callback) => {
+      if (url.match(/^https:\/\/localhost:4443\/v1\/.*$/)) {
+        event.preventDefault();
+        callback(true);
+      } else {
+        callback(false);
+      }
+    });
+  }
 
   // TODO: check if this filtering is working even when multiple windows are
   // created (relevent to multi-wallet usage)

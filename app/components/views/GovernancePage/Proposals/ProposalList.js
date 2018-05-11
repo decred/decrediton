@@ -2,7 +2,7 @@ import { FormattedMessage as T, FormattedRelative } from "react-intl";
 import { activeVoteProposals, vettedProposals, proposals } from "connectors";
 import { VotingProgress } from "indicators";
 import { tsToDate } from "helpers";
-import { StakeyBounce } from "indicators";
+import { StakeyBounce, NoProposals } from "indicators";
 
 const ProposalListItem = ({ name, timestamp, token, voting, voteCounts, onClick }) => (
   <div className="proposal-list-item" onClick={() => onClick(token)}>
@@ -22,13 +22,15 @@ const ProposalList = ({ proposals, loading, viewProposalDetails }) => (
   <Aux>
     { loading
       ? <StakeyBounce center />
-      : (
-        <div className="proposal-list">
-          {proposals.map(v => (
-            <ProposalListItem key={v.token} {...v} onClick={viewProposalDetails} />
-          ))}
-        </div>
-      )
+      : proposals && proposals.length
+        ? (
+          <div className="proposal-list">
+            {proposals.map(v => (
+              <ProposalListItem key={v.token} {...v} onClick={viewProposalDetails} />
+            ))}
+          </div>
+        )
+        : <NoProposals />
     }
   </Aux>
 );
