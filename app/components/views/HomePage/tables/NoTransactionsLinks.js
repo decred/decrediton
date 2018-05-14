@@ -7,7 +7,7 @@ export default () => (
     <Link to="/transactions/receive" className="receive">
       <T id="home.noTransactions.receiveLink" m="Generate a DCR Address for receiving funds" /> →
     </Link>
-    <ExternalLink href="https://docs.decred.org/getting-started/obtaining-dcr/" className="buy">
+    <ExternalLink href="https://decred.org/exchanges" className="buy">
       <T id="home.noTransactions.buyFromExchanges" m="Buy Decred from Exchanges" /> →
     </ExternalLink>
   </div>
