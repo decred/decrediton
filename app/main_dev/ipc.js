@@ -32,7 +32,7 @@ export const getAvailableWallets = (network) => {
 export const deleteDaemon = (appData, testnet) => {
   let removeDaemonDirectory = getDcrdPath();
   if (appData) removeDaemonDirectory = appData;
-  let removeDaemonDirectoryData = path.join(removeDaemonDirectory, "data", testnet ? "simnet" : "mainnet");
+  let removeDaemonDirectoryData = path.join(removeDaemonDirectory, "data", testnet ? "testnet2" : "mainnet");
   try {
     if (fs.pathExistsSync(removeDaemonDirectoryData)) {
       fs.removeSync(removeDaemonDirectoryData);
