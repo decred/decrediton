@@ -1,7 +1,6 @@
 import CreateWalletForm from "./CreateWalletForm";
 import { FormattedMessage as T, injectIntl, FormattedRelative } from "react-intl";
 import { KeyBlueButton, RemoveWalletButton, InvisibleButton } from "buttons";
-import "style/LoginForm.less";
 
 const WalletSelectionBodyBase = ({
   availableWallets,
@@ -13,6 +12,9 @@ const WalletSelectionBodyBase = ({
   onRemoveWallet,
   selectedWallet,
   onChangeAvailableWallets,
+  onEditWallets,
+  onCloseEditWallets,
+  editWallets,
   intl,
   ...props,
 }) => {
@@ -26,25 +28,8 @@ const WalletSelectionBodyBase = ({
               const selected = wallet.value.wallet == selectedWallet.value.wallet && wallet.network == selectedWallet.network;
               return (
                 <div className={selected ? "display-wallet selected" : "display-wallet"} key={wallet.label} onClick={() => onChangeAvailableWallets(wallet)}>
-                  <div className={selected ? "display-wallet-complete selected" : "display-wallet-complete"}>
-                    {!wallet.finished && "Setup incomplete"}
-                  </div>
-                  <div className={selected ? "display-wallet-network selected" : "display-wallet-network"}>
-                    {wallet.network}
-                  </div>
-                  <div className={selected ? "wallet-icon selected" : "wallet-icon wallet"}/>
-                  <div className={selected ? "display-wallet-name selected" : "display-wallet-name"}>
-                    {wallet.value.wallet}
-                  </div>
-                  {selected && wallet.lastAccess ?
-                    <div className={"display-wallet-last-access selected"}>
-                      <T id="walletselection.lastAccess" m="Last accessed"/>: <FormattedRelative value={wallet.lastAccess} updateInterval={1*1000}/>
-                    </div> :
-                    <div/>
-                  }
-                  {selected &&
+                  {editWallets &&
                     <div className="display-wallet-buttons">
-                      <KeyBlueButton className="display-wallet-button start" onClick={startWallet} />
                       <RemoveWalletButton
                         className="display-wallet-button remove"
                         modalTitle={<T id="walletselection.removeConfirmModal.title" m="Remove {wallet}"
@@ -52,11 +37,27 @@ const WalletSelectionBodyBase = ({
                         modalContent={
                           <T id="walletselection.removeConfirmModal.content" m="Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding."/>}
                         onSubmit={() => onRemoveWallet(wallet)} />
-                    </div>
+                    </div>}
+                  <div className={selected ? "wallet-icon selected" : "wallet-icon wallet"}/>
+                  <div className={selected ? "display-wallet-name selected" : "display-wallet-name"}>
+                    {wallet.value.wallet}
+                  </div>
+                  {wallet.lastAccess ?
+                    <div className={selected ? "display-wallet-last-access selected" : "display-wallet-last-access"}>
+                      <T id="walletselection.lastAccess" m="Last accessed"/>: <FormattedRelative value={wallet.lastAccess} updateInterval={1*1000}/>
+                    </div> :
+                    <div/>
                   }
+                  <div className={selected ? "display-wallet-complete selected" : "display-wallet-complete"}>
+                    {!wallet.finished && "Setup incomplete"}
+                  </div>
                 </div>
               );
             })}
+            {editWallets ?
+              <div className="edit-wallets-button close" onClick={onCloseEditWallets}/> :
+              <div className="edit-wallets-button" onClick={onEditWallets}/>
+            }
             {availableWallets.length < 3 &&
               <div className="display-wallet new" onClick={showCreateWalletForm}>
                 <div className="display-wallet-network" />

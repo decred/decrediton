@@ -11,6 +11,7 @@ class WalletSelectionBody extends React.Component {
 
   getInitialState() {
     return {
+      editWallets: false,
       createWalletForm: false,
       newWalletName: "",
       selectedWallet: this.props.availableWallets ? this.props.availableWallets[0] : null
@@ -33,7 +34,9 @@ class WalletSelectionBody extends React.Component {
       createWallet,
       onChangeCreateWalletName,
       showCreateWalletForm,
-      hideCreateWalletForm
+      hideCreateWalletForm,
+      onEditWallets,
+      onCloseEditWallets,
     } = this;
     const {
       selectedWallet,
@@ -41,6 +44,7 @@ class WalletSelectionBody extends React.Component {
       newWalletName,
       newWalletNetwork,
       createWalletForm,
+      editWallets,
     } = this.state;
     return (
       <WalletSelectionFormBody
@@ -56,6 +60,9 @@ class WalletSelectionBody extends React.Component {
           selectedWallet,
           newWalletName,
           newWalletNetwork,
+          onEditWallets,
+          onCloseEditWallets,
+          editWallets,
           networkSelected: newWalletNetwork == "mainnet",
           ...this.props,
           ...this.state,
@@ -63,7 +70,12 @@ class WalletSelectionBody extends React.Component {
       />
     );
   }
-
+  onEditWallets() {
+    this.setState({ editWallets: true });
+  }
+  onCloseEditWallets() {
+    this.setState({ editWallets: false });
+  }
   showCreateWalletForm() {
     this.setState({ createWalletForm: true });
   }
