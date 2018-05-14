@@ -36,7 +36,7 @@ class FatalErrorPage extends React.Component {
                   <RemoveDaemonButton
                     className="fatal-remove-button"
                     modalTitle={<T id="fatal.removeConfirmModal.title" m="Remove daemon data"/>}
-                    modalContent={<T id="fatal.removeConfirmModal.content" m="Warning this action is permanent! Please make sure you want to remove your blockchain data before proceeding."/>}
+                    modalContent={<T id="fatal.removeConfirmModal.content" m="Warning this action is permanent! Please make sure you want to remove your blockchain data before proceeding. Decrediton will automatically shutdown after deleting the folder. Please manually restart it afterwards."/>}
                     onSubmit={deleteDaemonData}
                     buttonLabel={ <T id="fatal.button.delete" m="Delete and Shutdown"/>}/>
                 </Aux> :
