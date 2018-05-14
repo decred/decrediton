@@ -29,6 +29,22 @@ export const getAvailableWallets = (network) => {
   return availableWallets;
 };
 
+export const deleteDaemon = (appData, testnet) => {
+  let removeDaemonDirectory = getDcrdPath();
+  if (appData) removeDaemonDirectory = appData;
+  let removeDaemonDirectoryData = path.join(removeDaemonDirectory, "data", testnet ? "testnet2" : "mainnet");
+  try {
+    if (fs.pathExistsSync(removeDaemonDirectoryData)) {
+      fs.removeSync(removeDaemonDirectoryData);
+      logger.log("info", "removing " + removeDaemonDirectoryData);
+    }
+    return true;
+  } catch (e) {
+    logger.log("error", "error deleting daemon data: " + e);
+    return false;
+  }
+};
+
 export const startDaemon = (mainWindow, daemonIsAdvanced, primaryInstance, appData, testnet, reactIPC) => {
   if (GetDcrdPID() && GetDcrdPID() !== -1) {
     logger.log("info", "Skipping restart of daemon as it is already running " + GetDcrdPID());
