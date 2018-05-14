@@ -18,6 +18,7 @@ export { default as settings } from "./settings";
 export { default as shutdownPage } from "./shutdownPage";
 export { default as sideBar } from "./sideBar";
 export { default as signMessagePage } from "./signMessagePage";
+export { default as spv } from "./spv";
 export { default as snackbar } from "./snackbar";
 export { default as stakeInfo } from "./stakeInfo";
 export { default as stakePools } from "./stakePools";
