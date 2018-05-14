@@ -52,4 +52,5 @@ export const PassphraseModalButton = mbb(null, PassphraseModal, KeyBlueButton);
 export const PassphraseModalSwitch = mbb(null, PassphraseModal, AutoBuyerSwitch);
 export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveWalletButton = mbb(null, ConfirmModal, DangerButton);
+export const RemoveDaemonButton = mbb(null, ConfirmModal, DangerButton);
 export const ScriptRedeemableButton = mbb(null, InfoConfirmModal, helpLinkButton);

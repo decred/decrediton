@@ -14,6 +14,9 @@ export const startDaemon = log((appData, testnet) => Promise
     throw "Error starting daemon";
   }), "Start Daemon");
 
+export const deleteDaemonData = log((appData, testnet) => Promise
+  .resolve(ipcRenderer.sendSync("delete-daemon", appData, testnet)), "Delete Daemon Data");
+
 export const cleanShutdown = () => {
   return new Promise(resolve => {
     ipcRenderer.send("clean-shutdown");

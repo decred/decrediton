@@ -10,7 +10,8 @@ const mapStateToProps = selectorMap({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  shutdownApp: da.shutdownApp
+  shutdownApp: da.shutdownApp,
+  deleteDaemonData: da.deleteDaemonData,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

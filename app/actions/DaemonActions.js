@@ -37,6 +37,9 @@ export const WALLET_AUTOBUYER_SETTINGS = "WALLET_AUTOBUYER_SETTINGS";
 export const WALLET_STAKEPOOL_SETTINGS = "WALLET_STAKEPOOL_SETTINGS";
 export const WALLET_SETTINGS = "WALLET_SETTINGS";
 export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
+export const DELETE_DCRD_ATTEMPT = "DELETE_DCRD_ATTEMPT";
+export const DELETE_DCRD_FAILED = "DELETE_DCRD_FAILED";
+export const DELETE_DCRD_SUCCESS = "DELETE_DCRD_SUCCESS";
 
 export const checkDecreditonVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
@@ -148,6 +151,18 @@ export const registerForErrors = () => (dispatch) => {
     dispatch(pushHistory("/error"));
   });
 };
+
+export const deleteDaemonData = () => (dispatch, getState) => {
+  const { appData } = getState().daemon;
+  dispatch({ type: DELETE_DCRD_ATTEMPT });
+  wallet.deleteDaemonData(appData, isTestNet(getState()))
+    .then(() => {
+      dispatch({ type: DELETE_DCRD_SUCCESS });
+      dispatch(shutdownApp());
+    })
+    .catch((err) => dispatch({ err, type: DELETE_DCRD_FAILED }));
+};
+
 
 export const shutdownApp = () => (dispatch) => {
   dispatch({ type: SHUTDOWN_REQUESTED });
