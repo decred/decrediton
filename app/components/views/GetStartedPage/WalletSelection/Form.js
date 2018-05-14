@@ -1,6 +1,7 @@
 import CreateWalletForm from "./CreateWalletForm";
 import { FormattedMessage as T, injectIntl, FormattedRelative } from "react-intl";
 import { KeyBlueButton, RemoveWalletButton, InvisibleButton } from "buttons";
+import { Tooltip } from "shared";
 
 const WalletSelectionBodyBase = ({
   availableWallets,
@@ -27,36 +28,42 @@ const WalletSelectionBodyBase = ({
             {availableWallets.map(wallet => {
               const selected = wallet.value.wallet == selectedWallet.value.wallet && wallet.network == selectedWallet.network;
               return (
-                <div className={selected ? "display-wallet selected" : "display-wallet"} key={wallet.label} onClick={() => onChangeAvailableWallets(wallet)}>
+                <div className={selected && !editWallets ? "display-wallet selected" : "display-wallet"} key={wallet.label} onClick={!editWallets ? () => onChangeAvailableWallets(wallet) : null}>
                   {editWallets &&
                     <div className="display-wallet-buttons">
-                      <RemoveWalletButton
-                        className="display-wallet-button remove"
-                        modalTitle={<T id="walletselection.removeConfirmModal.title" m="Remove {wallet}"
-                          values={{ wallet: (<span className="mono">{selectedWallet && selectedWallet.label}</span>) }}/>}
-                        modalContent={
-                          <T id="walletselection.removeConfirmModal.content" m="Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding."/>}
-                        onSubmit={() => onRemoveWallet(wallet)} />
+                      <Tooltip text={<T id="walletselection.removeWalletButton" m="Remove Wallet"/>}>
+                        <RemoveWalletButton
+                          className="display-wallet-button remove"
+                          modalTitle={<T id="walletselection.removeConfirmModal.title" m="Remove {wallet}"
+                            values={{ wallet: (<span className="mono">{selectedWallet && selectedWallet.label}</span>) }}/>}
+                          modalContent={
+                            <T id="walletselection.removeConfirmModal.content" m="Warning this action is permanent! Please make sure you have backed up your wallet's seed before proceeding."/>}
+                          onSubmit={() => onRemoveWallet(wallet)} />
+                      </Tooltip>
                     </div>}
-                  <div className={selected ? "wallet-icon selected" : "wallet-icon wallet"}/>
-                  <div className={selected ? "display-wallet-name selected" : "display-wallet-name"}>
+                  <div className={selected && !editWallets ? "wallet-icon selected" : "wallet-icon wallet"}/>
+                  <div className={selected && !editWallets ? "display-wallet-name selected" : "display-wallet-name"}>
                     {wallet.value.wallet}
                   </div>
                   {wallet.lastAccess ?
-                    <div className={selected ? "display-wallet-last-access selected" : "display-wallet-last-access"}>
+                    <div className={selected && !editWallets ? "display-wallet-last-access selected" : "display-wallet-last-access"}>
                       <T id="walletselection.lastAccess" m="Last accessed"/>: <FormattedRelative value={wallet.lastAccess} updateInterval={1*1000}/>
                     </div> :
                     <div/>
                   }
-                  <div className={selected ? "display-wallet-complete selected" : "display-wallet-complete"}>
+                  <div className={selected && !editWallets ? "display-wallet-complete selected" : "display-wallet-complete"}>
                     {!wallet.finished && "Setup incomplete"}
                   </div>
                 </div>
               );
             })}
             {editWallets ?
-              <div className="edit-wallets-button close" onClick={onCloseEditWallets}/> :
-              <div className="edit-wallets-button" onClick={onEditWallets}/>
+              <Tooltip text={<T id="walletselection.closeEditWallets" m="Close Edit"/>}>
+                <div className="edit-wallets-button close" onClick={onCloseEditWallets}/>
+              </Tooltip> :
+              <Tooltip text={<T id="walletselection.editWallets" m="Edit Wallets"/>}>
+                <div className="edit-wallets-button" onClick={onEditWallets}/>
+              </Tooltip>
             }
             {availableWallets.length < 3 &&
               <div className="display-wallet new" onClick={showCreateWalletForm}>
