@@ -59,7 +59,7 @@ export const allowExternalRequest = (externalReqType) => {
   switch (externalReqType) {
   case EXTERNALREQUEST_NETWORK_STATUS:
     addAllowedURL("https://testnet.decred.org/api/status");
-    addAllowedURL("https://decred.org/api/status");
+    addAllowedURL("https://mainnet.decred.org/api/status");
     break;
   case EXTERNALREQUEST_STAKEPOOL_LISTING:
     addAllowedURL(/^https:\/\/api\.decred\.org\/\?c=gsd$/);

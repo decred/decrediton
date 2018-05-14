@@ -13,9 +13,12 @@ import "./style/main.less";
 import "./style/Global.less";
 import "./style/ReactSelectGlobal.less";
 import pkg from "./package.json";
+import { log } from "./wallet";
 
 var globalCfg = getGlobalCfg();
 const locale = globalCfg.get("locale");
+
+log("info", "Starting main react app");
 
 var initialState = {
   settings: {

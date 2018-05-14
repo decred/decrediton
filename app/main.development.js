@@ -228,6 +228,7 @@ app.on("ready", async () => {
 
   mainWindow = new BrowserWindow(windowOpts);
   installSessionHandlers(logger);
+  if (debug) mainWindow.openDevTools();
   mainWindow.loadURL(`file://${__dirname}/${windowOpts.page}`);
 
   mainWindow.webContents.on("did-finish-load", () => {
@@ -245,7 +246,6 @@ app.on("ready", async () => {
     }
   });
 
-  if (process.env.NODE_ENV === "development") mainWindow.openDevTools();
   if (stopSecondInstance) return;
 
   mainWindow.webContents.on("context-menu", (e, props) => {

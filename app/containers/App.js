@@ -10,6 +10,7 @@ import WalletContainer from "./Wallet";
 import ShutdownAppPage from "components/views/ShutdownAppPage";
 import FatalErrorPage from "components/views/FatalErrorPage";
 import Snackbar from "components/Snackbar";
+import { log } from "wallet";
 import "style/Layout.less";
 const topLevelAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
@@ -37,6 +38,10 @@ class App extends React.Component {
     window.removeEventListener("beforeunload", this.beforeWindowUnload);
   }
 
+  componentDidMount() {
+    log("info", "Main app container mounted");
+  }
+
   beforeWindowUnload(event) {
     if (this.refreshing) {
       return;
@@ -49,6 +54,7 @@ class App extends React.Component {
     }
 
     if (!shutdownRequested) {
+      log("info", "Main app received shutdown request");
       this.props.shutdownApp();
     }
   }
@@ -65,6 +71,7 @@ class App extends React.Component {
   }
 
   onReloadRequested(event) {
+    log("info", "Main app received reload UI request");
     this.refreshing = true;
     event.sender.send("app-reload-ui");
   }
