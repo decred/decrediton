@@ -45,11 +45,13 @@ const WalletSelectionBodyBase = ({
                   <div className={selected && !editWallets ? "display-wallet-name selected" : "display-wallet-name"}>
                     {wallet.value.wallet}
                   </div>
-                  {wallet.lastAccess ?
-                    <div className={selected && !editWallets ? "display-wallet-last-access selected" : "display-wallet-last-access"}>
-                      <T id="walletselection.lastAccess" m="Last accessed"/>: <FormattedRelative value={wallet.lastAccess} updateInterval={1*1000}/>
-                    </div> :
-                    <div/>
+                  <div className={selected && !editWallets ? "display-wallet-last-access selected" : "display-wallet-last-access"}>
+                    {wallet.lastAccess && <Aux><T id="walletselection.lastAccess" m="Last accessed"/>: <FormattedRelative value={wallet.lastAccess} updateInterval={1*1000}/></Aux>}
+                  </div>
+                  {editWallets &&
+                    <div className={"display-wallet-cancel-changes"} onClick={onCloseEditWallets}>
+                      <T id="walletselection.canelChanges" m="Cancel Changes"/>
+                    </div>
                   }
                   <div className={selected && !editWallets ? "display-wallet-complete selected" : "display-wallet-complete"}>
                     {!wallet.finished && "Setup incomplete"}
@@ -66,13 +68,20 @@ const WalletSelectionBodyBase = ({
               </Tooltip>
             }
             {availableWallets.length < 3 &&
+            <Aux>
               <div className="display-wallet new" onClick={showCreateWalletForm}>
-                <div className="display-wallet-network" />
                 <div className="wallet-icon createnew" />
                 <div className="display-wallet-name">
                   <T id="getStarted.newSeedTab" m="Create a New Wallet"/>
                 </div>
               </div>
+              <div className="display-wallet new" onClick={showCreateWalletForm}>
+                <div className="wallet-icon restore" />
+                <div className="display-wallet-name">
+                  <T id="getStarted.restore" m="Restore Existing Wallet"/>
+                </div>
+              </div>
+            </Aux>
             }
           </div>
         </div>

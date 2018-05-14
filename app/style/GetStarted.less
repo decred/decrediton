@@ -367,6 +367,7 @@
 }
 
 .display-wallet {
+  color: transparent;
   margin: 5px;
   float: left;
   height: 161px;
@@ -402,17 +403,24 @@
   }
 
   .wallet-icon.restore {
+    background-size: 58px 58px;
+    background-position: 0px 5px;
     background-image: @restorewallet;
   }
+}
+
+.display-wallet:hover {
+  color: #fff;
 }
 
 .display-wallet.new {
   background: none;
   background-color: #fff;
-}
 
-.display-wallet.new:hover {
-  color: #48566e;
+  .display-wallet-name {
+    color: #4c5971;
+    margin-top: 121px;
+  }
 }
 
 .display-wallet-buttons {
@@ -470,9 +478,22 @@
 }
 
 .display-wallet-last-access {
+  height: 11px;
   color: #48566e;
   text-align: center;
   font-size: 11px;
+}
+
+.display-wallet-cancel-changes {
+  float: left;
+  margin-top: 7px;
+  margin-left: 39px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.display-wallet-cancel-changes:hover {
+  border-bottom: 1px solid #fff;
 }
 
 .display-wallet-last-access.selected {
