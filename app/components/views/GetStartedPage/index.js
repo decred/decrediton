@@ -104,9 +104,9 @@ class GetStartedPage extends React.Component {
       return <Logs {...{ onShowSettings, onHideLogs, ...props }} />;
     } else if (showReleaseNotes) {
       return <ReleaseNotes {...{ onShowSettings, onShowLogs, onHideReleaseNotes, ...props }} />;
-    } else if (isAdvancedDaemon && openForm && !remoteAppdataError && !isPrepared && getWalletReady) {
+    } else if (isAdvancedDaemon && openForm && !remoteAppdataError && !isPrepared && !getWalletReady) {
       Form = AdvancedStartupBody;
-    } else if (remoteAppdataError && !isPrepared && getWalletReady) {
+    } else if (remoteAppdataError && !isPrepared && !getWalletReady) {
       Form = RemoteAppdataError;
     } else if (!getWalletReady) {
       Form = WalletSelectionBody;

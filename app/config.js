@@ -47,16 +47,6 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("discoveraccounts")) {
     config.set("discoveraccounts",true);
   }
-  if (!config.has("remote_credentials")) {
-    const credentialKeys = {
-      rpc_user : "",
-      rpc_password : "",
-      rpc_cert : "",
-      rpc_host : "",
-      rpc_port : "",
-    };
-    config.set("remote_credentials",credentialKeys);
-  }
   if (!config.has("appdata_path")) {
     config.set("appdata_path","");
   }
@@ -102,6 +92,16 @@ export function initGlobalCfg() {
   }
   if (!config.has("proxy_location")) {
     config.set("proxy_location", null);
+  }
+  if (!config.has("remote_credentials")) {
+    const credentialKeys = {
+      rpc_user : "",
+      rpc_password : "",
+      rpc_cert : "",
+      rpc_host : "",
+      rpc_port : "",
+    };
+    config.set("remote_credentials",credentialKeys);
   }
   return(config);
 }
@@ -234,13 +234,13 @@ export function updateStakePoolConfig(config, foundStakePoolConfigs) {
   }
 }
 
-export function getAppdataPath(testnet, walletPath) {
-  const config = getWalletCfg(testnet, walletPath);
+export function getAppdataPath() {
+  const config = getGlobalCfg();
   return config.get("appdata_path");
 }
 
-export function setAppdataPath(testnet, appdataPath, walletPath) {
-  const config = getWalletCfg(testnet, walletPath);
+export function setAppdataPath(appdataPath) {
+  const config = getGlobalCfg();
   const credentialKeys = {
     rpc_user : "",
     rpc_password : "",
@@ -252,13 +252,13 @@ export function setAppdataPath(testnet, appdataPath, walletPath) {
   return config.set("appdata_path",appdataPath);
 }
 
-export function getRemoteCredentials(testnet, walletPath) {
-  const config = getWalletCfg(testnet, walletPath);
+export function getRemoteCredentials() {
+  const config = getGlobalCfg();
   return config.get("remote_credentials");
 }
 
-export function setRemoteCredentials(testnet, walletPath, key, value) {
-  const config = getWalletCfg(testnet, walletPath);
+export function setRemoteCredentials(key, value) {
+  const config = getGlobalCfg();
   config.set("appdata_path","");
   let credentials = config.get("remote_credentials");
   credentials[key] = value;

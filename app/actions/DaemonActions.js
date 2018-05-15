@@ -267,17 +267,17 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   if (!walletName) {
     return;
   }
-  const { rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials(isTestNet(getState()), walletName);
+  const { rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials();
   const hasAllCredentials = rpc_password && rpc_user && rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
-  const hasAppData = getAppdataPath(isTestNet(getState()), walletName) && getAppdataPath(isTestNet(getState()), walletName).length > 0;
+  const hasAppData = getAppdataPath() && getAppdataPath().length > 0;
 
   if(hasAllCredentials && hasAppData)
     this.props.setCredentialsAppdataError();
 
   if (!openForm && hasAppData) {
-    dispatch(startDaemon(null, getAppdataPath(isTestNet(getState()), walletName)));
+    dispatch(startDaemon(null, getAppdataPath()));
   } else if (!openForm && hasAllCredentials) {
-    dispatch(startDaemon(getRemoteCredentials(isTestNet(getState()), walletName)));
+    dispatch(startDaemon(getRemoteCredentials()));
   }
 };
 
