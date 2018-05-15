@@ -12,6 +12,7 @@ class WalletSelectionBody extends React.Component {
   getInitialState() {
     return {
       editWallets: false,
+      createNewWallet: true,
       createWalletForm: false,
       newWalletName: "",
       selectedWallet: this.props.availableWallets ? this.props.availableWallets[0] : null
@@ -81,11 +82,11 @@ class WalletSelectionBody extends React.Component {
   onCloseEditWallets() {
     this.setState({ editWallets: false });
   }
-  showCreateWalletForm() {
-    this.setState({ createWalletForm: true });
+  showCreateWalletForm(createNewWallet) {
+    this.setState({ createNewWallet, createWalletForm: true });
   }
-  hideCreateWalletForm() {
-    this.setState({ createWalletForm: false });
+  hideCreateWalletForm(createNewWallet) {
+    this.setState({ createNewWallet, createWalletForm: false });
   }
   onChangeAvailableWallets(selectedWallet) {
     this.setState({ selectedWallet });
@@ -94,13 +95,13 @@ class WalletSelectionBody extends React.Component {
     this.setState({ newWalletName });
   }
   createWallet() {
-    const { newWalletName } = this.state;
+    const { newWalletName, createNewWallet } = this.state;
     if (newWalletName == "" ) {
       return;
     }
-    this.props.onCreateWallet({
-      label: newWalletName,
-      value: { wallet: newWalletName } });
+    this.props.onCreateWallet(
+      createNewWallet,
+      { label: newWalletName, value: { wallet: newWalletName } });
   }
   startWallet() {
     this.props.onStartWallet(this.state.selectedWallet);

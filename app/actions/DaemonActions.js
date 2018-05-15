@@ -200,11 +200,11 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
     });
 };
 
-export const createWallet = (selectedWallet) => (dispatch, getState) => {
+export const createWallet = (createNewWallet, selectedWallet) => (dispatch, getState) => {
   const { network } = getState().daemon;
   wallet.createNewWallet(selectedWallet.value.wallet, network == "testnet")
     .then(() => {
-      dispatch({ type: WALLETCREATED });
+      dispatch({ createNewWallet, type: WALLETCREATED });
       dispatch(startWallet(selectedWallet));
     })
     .catch((err) => {

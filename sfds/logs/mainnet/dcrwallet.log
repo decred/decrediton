@@ -1,0 +1,3 @@
+2018-05-15 15:45:00.918 [WRN] DCRW: open sfds/dcrwallet.conf: no such file or directory
+2018-05-15 15:45:14.599 [INF] WLLT: Upgrading database from version 1 to 9
+2018-05-15 15:45:17.405 [INF] WLLT: Opened wallet

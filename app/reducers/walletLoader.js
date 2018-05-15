@@ -13,6 +13,10 @@ import {
   UPDATEDISCOVERACCOUNTS, NEEDED_BLOCKS_DETERMINED
 } from "actions/WalletLoaderActions";
 import {
+  WALLETCREATED
+} from "actions/DaemonActions";
+
+import {
   GETSTARTUPWALLETINFO_ATTEMPT
 } from "actions/ClientActions";
 import {
@@ -55,6 +59,10 @@ export default function walletLoader(state = {}, action) {
       walletExistRequestAttempt: false,
       walletExistResponse: action.response,
       stepIndex: 2,
+    };
+  case WALLETCREATED:
+    return { ...state,
+      createWalletExisting: action.createNewWallet,
     };
   case CREATEWALLET_GOBACK:
     return { ...state,

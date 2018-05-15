@@ -97,6 +97,7 @@ export default function version(state = {}, action) {
     };
   case WALLETCREATED:
     return { ...state,
+      createNewWallet: true,
       selectCreateWalletInputRequest: false,
     };
   case SHUTDOWN_REQUESTED:

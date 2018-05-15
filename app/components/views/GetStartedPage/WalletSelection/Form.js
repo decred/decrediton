@@ -79,13 +79,13 @@ const WalletSelectionBodyBase = ({
             }
             {availableWallets.length < 3 &&
             <Aux>
-              <div className="display-wallet new" onClick={showCreateWalletForm}>
+              <div className="display-wallet new" onClick={()=>showCreateWalletForm(false)}>
                 <div className="wallet-icon createnew" />
                 <div className="display-wallet-name">
                   <T id="getStarted.newSeedTab" m="Create a New Wallet"/>
                 </div>
               </div>
-              <div className="display-wallet new" onClick={showCreateWalletForm}>
+              <div className="display-wallet new" onClick={()=>showCreateWalletForm(true)}>
                 <div className="wallet-icon restore" />
                 <div className="display-wallet-name">
                   <T id="getStarted.restore" m="Restore Existing Wallet"/>
