@@ -55,9 +55,12 @@ const WalletSelectionBodyBase = ({
                     </div>
                   }
                   {!editWallets && getDaemonSynced && selected ?
-                    <div className={"display-wallet-launch"} onClick={startWallet}>
-                      <T id="walletselection.launchWallet" m="Launch Wallet "/><span className="launch-arrow-bounce">&#8594;</span>
-                    </div> :
+                    <Aux>
+                      <div className={"display-wallet-launch"} onClick={startWallet}>
+                        <T id="walletselection.launchWallet" m="Launch Wallet "/>
+                      </div>
+                      <span className="launch-arrow-bounce">&#8594;</span>
+                    </Aux> :
                     <div/>
                   }
                   <div className={selected && !editWallets ? "display-wallet-complete selected" : "display-wallet-complete"}>
