@@ -70,7 +70,7 @@ const WalletSelectionBodyBase = ({
               );
             })}
             {editWallets ?
-              <Tooltip text={<T id="walletselection.closeEditWallets" m="Close Edit"/>}>
+              <Tooltip text={<T id="walletselection.closeEditWallets" m="Close"/>}>
                 <div className="edit-wallets-button close" onClick={onCloseEditWallets}/>
               </Tooltip> :
               <Tooltip text={<T id="walletselection.editWallets" m="Edit Wallets"/>}>
