@@ -14,10 +14,12 @@ const CreateWallet = ({
   onCancelCopySeedConfirm,
   onSubmitCopySeedConfirm,
   onReturnToExistingOrNewScreen,
+  onReturnToWalletSelection,
   getCurrentBlockCount,
   getNeededBlocks,
   getEstimatedTimeLeft,
   getDaemonSynced,
+  createNewWallet
 }) => (
   <Aux>
     <div className="getstarted content">
@@ -44,7 +46,7 @@ const CreateWallet = ({
         </KeyBlueButton>
         <InvisibleButton
           className="go-back-button"
-          onClick={onReturnToExistingOrNewScreen}>
+          onClick={createNewWallet ? onReturnToWalletSelection : onReturnToExistingOrNewScreen}>
           <T id="getStarted.backBtn" m="Cancel" />
         </InvisibleButton>
       </div>

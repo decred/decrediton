@@ -21,7 +21,10 @@ const CreateForm = ({
       getNeededBlocks,
       getEstimatedTimeLeft,
       getDaemonSynced }} /> :
-    <CreateWalletForm {...{ onReturnToNewSeed, onReturnToExistingOrNewScreen,
+    <CreateWalletForm {...{
+      onReturnToNewSeed,
+      onReturnToExistingOrNewScreen,
+      onReturnToWalletSelection,
       getCurrentBlockCount,
       getNeededBlocks,
       getEstimatedTimeLeft,

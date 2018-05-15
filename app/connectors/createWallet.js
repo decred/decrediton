@@ -11,6 +11,7 @@ const mapStateToProps = selectorMap({
   createWalletExisting: sel.createWalletExisting,
   isCreatingWallet: sel.isCreatingWallet,
   confirmNewSeed: sel.confirmNewSeed,
+  createNewWallet: sel.createNewWallet,
   isTestNet: sel.isTestNet
 });
 

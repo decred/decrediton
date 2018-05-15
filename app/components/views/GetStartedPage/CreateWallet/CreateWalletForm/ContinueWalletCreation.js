@@ -14,11 +14,13 @@ const ContinueWalletCreation = ({
   onCreateWallet,
   createWalletExisting,
   onReturnToNewSeed,
+  onReturnToWalletSelection,
   onReturnToExistingOrNewScreen,
   getCurrentBlockCount,
   getNeededBlocks,
   getEstimatedTimeLeft,
   getDaemonSynced,
+  createNewWallet,
   ...props
 }) => (
   <div className="getstarted content">
@@ -40,7 +42,7 @@ const ContinueWalletCreation = ({
         </KeyBlueButton>
         <InvisibleButton
           className="go-back-button"
-          onClick={createWalletExisting ? onReturnToExistingOrNewScreen : onReturnToNewSeed}
+          onClick={createWalletExisting ? createNewWallet ? onReturnToWalletSelection : onReturnToExistingOrNewScreen : onReturnToNewSeed}
         ><T id="getStarted.backBtn" m="Cancel" /> </InvisibleButton>
       </div>
     </div>
