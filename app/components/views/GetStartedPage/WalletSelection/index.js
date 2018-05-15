@@ -28,6 +28,10 @@ class WalletSelectionBody extends React.Component {
   }
 
   render() {
+    console.log(this.props);
+    const {
+      getDaemonSynced
+    } = this.props;
     const {
       onChangeAvailableWallets,
       startWallet,
@@ -64,6 +68,7 @@ class WalletSelectionBody extends React.Component {
           onCloseEditWallets,
           editWallets,
           networkSelected: newWalletNetwork == "mainnet",
+          getDaemonSynced,
           ...this.props,
           ...this.state,
         }}

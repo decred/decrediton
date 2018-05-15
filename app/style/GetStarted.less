@@ -490,10 +490,34 @@
   margin-left: 39px;
   font-size: 14px;
   text-align: center;
+  cursor: pointer;
+  transition: all 131ms @easeInOutQuart;
 }
 
-.display-wallet-cancel-changes:hover {
+.display-wallet-launch {
+  color: #fff;
+  float: left;
+  margin-top: 7px;
+  margin-left: 39px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: color 131ms @easeInOutQuart;
+}
+
+.display-wallet-cancel-changes:hover,
+.display-wallet-launch:hover {
   border-bottom: 1px solid #fff;
+}
+
+@keyframes bounce {
+  0% { margin-left: 0px; }
+  50% { margin-left: 2px; }
+  100% { margin-left: 0px; }
+}
+
+.launch-arrow-bounce {
+  animation: bounce 1s @easeInOutQuart infinite;
 }
 
 .display-wallet-last-access.selected {

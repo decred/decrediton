@@ -9,6 +9,7 @@ const WalletSelectionBodyBase = ({
   showCreateWalletForm,
   hideCreateWalletForm,
   createWalletForm,
+  getDaemonSynced,
   startWallet,
   onRemoveWallet,
   selectedWallet,
@@ -19,7 +20,6 @@ const WalletSelectionBodyBase = ({
   intl,
   ...props,
 }) => {
-  console.log(availableWallets);
   return (
     availableWallets && availableWallets.length > 0 && !createWalletForm ?
       <div className="advanced-page">
@@ -27,6 +27,7 @@ const WalletSelectionBodyBase = ({
           <div className="advanced-daemon-row">
             {availableWallets.map(wallet => {
               const selected = wallet.value.wallet == selectedWallet.value.wallet && wallet.network == selectedWallet.network;
+              console.log(!editWallets, getDaemonSynced, selected);
               return (
                 <div className={selected && !editWallets ? "display-wallet selected" : "display-wallet"} key={wallet.label} onClick={!editWallets ? () => onChangeAvailableWallets(wallet) : null}>
                   {editWallets &&
@@ -52,6 +53,12 @@ const WalletSelectionBodyBase = ({
                     <div className={"display-wallet-cancel-changes"} onClick={onCloseEditWallets}>
                       <T id="walletselection.canelChanges" m="Cancel Changes"/>
                     </div>
+                  }
+                  {!editWallets && getDaemonSynced && selected ?
+                    <div className={"display-wallet-launch"} onClick={startWallet}>
+                      <T id="walletselection.launchWallet" m="Launch Wallet "/><span className="launch-arrow-bounce">&#8594;</span>
+                    </div> :
+                    <div/>
                   }
                   <div className={selected && !editWallets ? "display-wallet-complete selected" : "display-wallet-complete"}>
                     {!wallet.finished && "Setup incomplete"}
