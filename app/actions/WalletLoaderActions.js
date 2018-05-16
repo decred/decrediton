@@ -113,7 +113,7 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState)
       dispatch({ type: OPENWALLET_SUCCESS });
     })
     .catch(error => {
-      if (error.message.includes("wallet already loaded")) {
+      if (error.message.includes("wallet already")) {
         dispatch({ response: {}, type: OPENWALLET_SUCCESS });
       } else if (error.message.includes("invalid passphrase") && error.message.includes("public key")) {
         if (retryAttempt) {
