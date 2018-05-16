@@ -49,10 +49,6 @@
   flex-direction: row !important;
 }
 
-.is-row-pending {
-  width: 289px;
-}
-
 .tx-history-row {
   padding: 18px 15px 6px 16px;
   border-bottom: 1px solid #e7eaed;
@@ -62,6 +58,11 @@
   height: 29px;
   width: 323px;
 }
+
+.tx-history-row.is-row-pending {
+  width: 289px;
+}
+
 
 .tx-history-row:hover {
   background-color: rgba(212, 240, 253, 0.5);
@@ -198,16 +199,15 @@
   font-family: Inconsolata, monospace;
   color: #c4cbd2;
   font-size: 12px;
-  line-height: 11px;
   margin-left: 15px;
 }
 
 .transaction-stake-type-overview {
   font-family: Inconsolata, monospace;
-  color: #596d81;
+  color: #0c1e3e;
   font-size: 15px;
   line-height: 11px;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .transaction-stake-info-overview {
