@@ -49,6 +49,7 @@ class CreateWalletForm extends React.Component {
   render() {
     const {
       confirmNewSeed,
+      createNewWallet,
       createWalletExisting,
       createWalletConfirmNewSeed,
       onReturnToNewSeed,
@@ -78,6 +79,7 @@ class CreateWalletForm extends React.Component {
             mnemonic: createWalletExisting ? null : mnemonic,
             setSeed,
             createWalletExisting,
+            createNewWallet,
             setPassPhrase,
             onCreateWallet,
             decode,
@@ -95,6 +97,7 @@ class CreateWalletForm extends React.Component {
       ) : (
         <CreateWallet
           {...{
+            createNewWallet,
             mnemonic,
             isValid,
             createWalletConfirmNewSeed,

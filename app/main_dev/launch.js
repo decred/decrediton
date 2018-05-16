@@ -39,6 +39,7 @@ export const closeDCRW = () => {
       logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
       process.kill(dcrwPID, "SIGINT");
     }
+    dcrwPID = null;
     return true;
   } catch (e) {
     logger.log("error", "error closing wallet: " + e);

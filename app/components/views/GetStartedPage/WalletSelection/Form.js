@@ -27,7 +27,6 @@ const WalletSelectionBodyBase = ({
           <div className="advanced-daemon-row">
             {availableWallets.map(wallet => {
               const selected = wallet.value.wallet == selectedWallet.value.wallet && wallet.network == selectedWallet.network;
-              console.log(!editWallets, getDaemonSynced, selected);
               return (
                 <div className={selected && !editWallets ? "display-wallet selected" : "display-wallet"} key={wallet.label} onClick={!editWallets ? () => onChangeAvailableWallets(wallet) : null}>
                   {editWallets &&

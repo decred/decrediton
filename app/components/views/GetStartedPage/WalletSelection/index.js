@@ -29,7 +29,6 @@ class WalletSelectionBody extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const {
       getDaemonSynced
     } = this.props;
