@@ -379,7 +379,6 @@
 
   .wallet-icon {
     margin-left: 54px;
-    margin-top: 20px;
     height: 62px;
     width: 62px;
     background-repeat: no-repeat;
@@ -465,6 +464,8 @@
 }
 
 .display-wallet-complete {
+  color: #48566e;
+  margin-top: 5px;
   min-height: 20px;
   text-align: center;
   text-transform: capitalize;
@@ -474,7 +475,7 @@
 .display-wallet-name {
   color: #091440;
   text-align: center;
-  margin-top: 87px;
+  margin-top: 67px;
 }
 
 .display-wallet-last-access {
@@ -524,7 +525,8 @@
   animation: bounce 1s @easeInOutQuart infinite;
 }
 
-.display-wallet-last-access.selected {
+.display-wallet-last-access.selected,
+.display-wallet-complete.selected {
   color: #25549f;
 }
 

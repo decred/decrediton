@@ -41,6 +41,9 @@ const WalletSelectionBodyBase = ({
                           onSubmit={() => onRemoveWallet(wallet)} />
                       </Tooltip>
                     </div>}
+                  <div className={selected && !editWallets ? "display-wallet-complete selected" : "display-wallet-complete"}>
+                    {!wallet.finished && "Setup incomplete"}
+                  </div>
                   <div className={selected && !editWallets ? "wallet-icon selected" : "wallet-icon wallet"}/>
                   <div className={selected && !editWallets ? "display-wallet-name selected" : "display-wallet-name"}>
                     {wallet.value.wallet}
@@ -62,9 +65,6 @@ const WalletSelectionBodyBase = ({
                     </Aux> :
                     <div/>
                   }
-                  <div className={selected && !editWallets ? "display-wallet-complete selected" : "display-wallet-complete"}>
-                    {!wallet.finished && "Setup incomplete"}
-                  </div>
                 </div>
               );
             })}
