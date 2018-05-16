@@ -15,7 +15,7 @@ const Row = ({
 
   return (
     <div className={[ "tx-history-row-wrapper", overviewTxIsPending ? "is-overview-pending" : null ].join(" ")}>
-      <div className={[ rowClsname, className ].join(" ")} {...{ onClick }}>
+      <div className={[ rowClsname, className,overviewTxIsPending ? "is-row-pending" : null ].join(" ")} {...{ onClick }}>
         {children}
         {!overviewTxIsPending ?
           <StatusComponent {...{ txAccountName, pending, txTimestamp, overview, daysToVote }} /> : null}
