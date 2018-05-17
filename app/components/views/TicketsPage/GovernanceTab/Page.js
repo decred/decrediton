@@ -2,7 +2,6 @@ import AgendaCard from "./AgendaCard";
 import AgendaOverview from "./AgendaOverview";
 import { StakePoolSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
-import { spv } from "connectors";
 import { ShowWarning } from "shared";
 import "style/StakePool.less";
 
@@ -18,7 +17,6 @@ const VotingPrefsPage = ({
   onShowAgenda,
   onCloseAgenda,
   onUpdateVotePreference,
-  spvMode,
 }) => (
   <Aux>
     <div className="stakepool-voting-title-area">
@@ -44,7 +42,7 @@ const VotingPrefsPage = ({
           disabled={!stakePool || !stakePool.isVersionValid}
         />
       ) : null}
-      {(agendas.length > 0) && !spvMode ?
+      {(agendas.length > 0) ?
         agendas.map(agenda =>
           (!selectedAgenda || selectedAgenda.getId() !== agenda.getId()) &&
             <AgendaCard
@@ -54,7 +52,7 @@ const VotingPrefsPage = ({
               onClick={() => onShowAgenda(agenda)}
             />
         )
-        : spvMode ?  <ShowWarning warn={votingSpvWarn}/> : (
+        : (
           <div className="stakepool-no-agendas-message">
             <T id="votingPreferences.noAgenda" m="There are currently no agendas for voting." />
           </div>
@@ -63,4 +61,4 @@ const VotingPrefsPage = ({
   </Aux>
 );
 
-export default spv(VotingPrefsPage);
+export default VotingPrefsPage;
