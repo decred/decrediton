@@ -25,6 +25,7 @@ export const getEstimatedTimeLeft = get([ "daemon", "timeLeftEstimate" ]);
 export const getDaemonSynced = get([ "daemon", "daemonSynced" ]);
 export const isAdvancedDaemon = get([ "daemon", "daemonAdvanced" ]);
 export const getWalletReady = get([ "daemon", "walletReady" ]);
+export const createNewWallet = get([ "daemon", "createNewWallet" ]);
 export const isPrepared = and(
   getDaemonStarted,
   getDaemonSynced,
@@ -91,6 +92,7 @@ export const availableWalletsSelect = createSelector(
       value: wallet,
       network: wallet.network,
       finished: wallet.finished,
+      lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null,
     }),
     wallets
   )

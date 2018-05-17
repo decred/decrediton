@@ -163,8 +163,12 @@ export const deleteDaemonData = () => (dispatch, getState) => {
     .catch((err) => dispatch({ err, type: DELETE_DCRD_FAILED }));
 };
 
-
-export const shutdownApp = () => (dispatch) => {
+export const shutdownApp = () => (dispatch, getState) => {
+  const { daemon: { walletName } } = getState();
+  const cfg = getWalletCfg(isTestNet(getState()), walletName);
+  if (walletName) {
+    cfg.set("lastaccess", Date.now());
+  }
   dispatch({ type: SHUTDOWN_REQUESTED });
   dispatch(stopNotifcations());
   ipcRenderer.on("daemon-stopped", () => {
@@ -196,11 +200,11 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
     });
 };
 
-export const createWallet = (selectedWallet) => (dispatch, getState) => {
+export const createWallet = (createNewWallet, selectedWallet) => (dispatch, getState) => {
   const { network } = getState().daemon;
   wallet.createNewWallet(selectedWallet.value.wallet, network == "testnet")
     .then(() => {
-      dispatch({ type: WALLETCREATED });
+      dispatch({ createNewWallet, type: WALLETCREATED });
       dispatch(startWallet(selectedWallet));
     })
     .catch((err) => {
@@ -263,17 +267,17 @@ export const prepStartDaemon = () => (dispatch, getState) => {
   if (!walletName) {
     return;
   }
-  const { rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials(isTestNet(getState()), walletName);
+  const { rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials();
   const hasAllCredentials = rpc_password && rpc_user && rpc_password.length > 0 && rpc_user.length > 0 && rpc_cert.length > 0 && rpc_host.length > 0 && rpc_port.length > 0;
-  const hasAppData = getAppdataPath(isTestNet(getState()), walletName) && getAppdataPath(isTestNet(getState()), walletName).length > 0;
+  const hasAppData = getAppdataPath() && getAppdataPath().length > 0;
 
   if(hasAllCredentials && hasAppData)
     this.props.setCredentialsAppdataError();
 
   if (!openForm && hasAppData) {
-    dispatch(startDaemon(null, getAppdataPath(isTestNet(getState()), walletName)));
+    dispatch(startDaemon(null, getAppdataPath()));
   } else if (!openForm && hasAllCredentials) {
-    dispatch(startDaemon(getRemoteCredentials(isTestNet(getState()), walletName)));
+    dispatch(startDaemon(getRemoteCredentials()));
   }
 };
 

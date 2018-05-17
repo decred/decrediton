@@ -4,7 +4,7 @@ import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import { createLogger } from "./logging";
 import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, dcrctlCfg, appDataDirectory, getExecutablePath } from "./paths";
-import { createTempDcrdConf, initWalletCfg, newWalletConfigCreation } from "../config";
+import { createTempDcrdConf, initWalletCfg, newWalletConfigCreation, getWalletCfg } from "../config";
 import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRW, GetDcrwPort } from "./launch";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
@@ -21,9 +21,11 @@ export const getAvailableWallets = (network) => {
     const walletDirStat = fs.statSync(path.join(walletsBasePath, wallet));
     if (!walletDirStat.isDirectory()) return;
 
+    const cfg = getWalletCfg(isTestNet, wallet);
+    const lastAccess = cfg.get("lastaccess");
     const walletDbFilePath = getWalletDBPathFromWallets(isTestNet, wallet);
     const finished = fs.pathExistsSync(walletDbFilePath);
-    availableWallets.push({ network, wallet, finished });
+    availableWallets.push({ network, wallet, finished, lastAccess });
   });
 
   return availableWallets;

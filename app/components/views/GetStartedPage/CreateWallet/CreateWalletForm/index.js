@@ -49,9 +49,11 @@ class CreateWalletForm extends React.Component {
   render() {
     const {
       confirmNewSeed,
+      createNewWallet,
       createWalletExisting,
       createWalletConfirmNewSeed,
       onReturnToNewSeed,
+      onReturnToWalletSelection,
       onReturnToExistingOrNewScreen,
       isCreatingWallet,
       getCurrentBlockCount,
@@ -77,11 +79,13 @@ class CreateWalletForm extends React.Component {
             mnemonic: createWalletExisting ? null : mnemonic,
             setSeed,
             createWalletExisting,
+            createNewWallet,
             setPassPhrase,
             onCreateWallet,
             decode,
             isValid,
             onReturnToNewSeed,
+            onReturnToWalletSelection,
             onReturnToExistingOrNewScreen,
             isCreatingWallet,
             getCurrentBlockCount,
@@ -93,6 +97,7 @@ class CreateWalletForm extends React.Component {
       ) : (
         <CreateWallet
           {...{
+            createNewWallet,
             mnemonic,
             isValid,
             createWalletConfirmNewSeed,
@@ -100,6 +105,7 @@ class CreateWalletForm extends React.Component {
             showCopySeedConfirm,
             onSubmitCopySeedConfirm,
             onCancelCopySeedConfirm,
+            onReturnToWalletSelection,
             onReturnToExistingOrNewScreen,
             getCurrentBlockCount,
             getNeededBlocks,

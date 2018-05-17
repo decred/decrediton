@@ -93,10 +93,12 @@ export default function version(state = {}, action) {
     return { ...state,
       walletReady: false,
       walletName: "",
+      createNewWallet: false,
       selectCreateWalletInputRequest: true,
     };
   case WALLETCREATED:
     return { ...state,
+      createNewWallet: true,
       selectCreateWalletInputRequest: false,
     };
   case SHUTDOWN_REQUESTED:

@@ -22,7 +22,7 @@ class AdvancedStartupBody extends React.Component {
   }
 
   getInitialState() {
-    const { rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials(this.props.network == "testnet", this.props.walletName);
+    const { rpc_password, rpc_user, rpc_cert, rpc_host, rpc_port } = getRemoteCredentials();
     return {
       sideActive: true,
       rpc_user: rpc_user,
@@ -30,7 +30,7 @@ class AdvancedStartupBody extends React.Component {
       rpc_cert: rpc_cert,
       rpc_host: rpc_host,
       rpc_port: rpc_port,
-      appData: getAppdataPath(this.props.network == "testnet", this.props.walletName),
+      appData: getAppdataPath(),
     };
   }
 
@@ -78,32 +78,32 @@ class AdvancedStartupBody extends React.Component {
   }
 
   setRpcUser(rpc_user) {
-    setRemoteCredentials(this.props.network == "testnet", this.props.walletName, "rpc_user", rpc_user);
+    setRemoteCredentials("rpc_user", rpc_user);
     this.setState({ rpc_user });
   }
 
   setRpcPass(rpc_password) {
-    setRemoteCredentials(this.props.network == "testnet", this.props.walletName, "rpc_password", rpc_password);
+    setRemoteCredentials("rpc_password", rpc_password);
     this.setState({ rpc_password });
   }
 
   setRpcHost(rpc_host) {
-    setRemoteCredentials(this.props.network == "testnet", this.props.walletName, "rpc_host", rpc_host);
+    setRemoteCredentials("rpc_host", rpc_host);
     this.setState({ rpc_host });
   }
 
   setRpcPort(rpc_port) {
-    setRemoteCredentials(this.props.network == "testnet", this.props.walletName, "rpc_port", rpc_port);
+    setRemoteCredentials("rpc_port", rpc_port);
     this.setState({ rpc_port });
   }
 
   setRpcCert(rpc_cert) {
-    setRemoteCredentials(this.props.network == "testnet", this.props.walletName, "rpc_cert", rpc_cert);
+    setRemoteCredentials("rpc_cert", rpc_cert);
     this.setState({ rpc_cert });
   }
 
   setAppData(appData) {
-    setAppdataPath(this.props.network == "testnet", appData, this.props.walletName);
+    setAppdataPath(appData);
     this.setState({ appData });
   }
 

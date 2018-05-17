@@ -11,6 +11,8 @@ class WalletSelectionBody extends React.Component {
 
   getInitialState() {
     return {
+      editWallets: false,
+      createNewWallet: true,
       createWalletForm: false,
       newWalletName: "",
       selectedWallet: this.props.availableWallets ? this.props.availableWallets[0] : null
@@ -28,12 +30,17 @@ class WalletSelectionBody extends React.Component {
 
   render() {
     const {
+      getDaemonSynced
+    } = this.props;
+    const {
       onChangeAvailableWallets,
       startWallet,
       createWallet,
       onChangeCreateWalletName,
       showCreateWalletForm,
-      hideCreateWalletForm
+      hideCreateWalletForm,
+      onEditWallets,
+      onCloseEditWallets,
     } = this;
     const {
       selectedWallet,
@@ -41,6 +48,7 @@ class WalletSelectionBody extends React.Component {
       newWalletName,
       newWalletNetwork,
       createWalletForm,
+      editWallets,
     } = this.state;
     return (
       <WalletSelectionFormBody
@@ -56,19 +64,28 @@ class WalletSelectionBody extends React.Component {
           selectedWallet,
           newWalletName,
           newWalletNetwork,
+          onEditWallets,
+          onCloseEditWallets,
+          editWallets,
           networkSelected: newWalletNetwork == "mainnet",
+          getDaemonSynced,
           ...this.props,
           ...this.state,
         }}
       />
     );
   }
-
-  showCreateWalletForm() {
-    this.setState({ createWalletForm: true });
+  onEditWallets() {
+    this.setState({ editWallets: true });
   }
-  hideCreateWalletForm() {
-    this.setState({ createWalletForm: false });
+  onCloseEditWallets() {
+    this.setState({ editWallets: false });
+  }
+  showCreateWalletForm(createNewWallet) {
+    this.setState({ createNewWallet, createWalletForm: true });
+  }
+  hideCreateWalletForm(createNewWallet) {
+    this.setState({ createNewWallet, createWalletForm: false });
   }
   onChangeAvailableWallets(selectedWallet) {
     this.setState({ selectedWallet });
@@ -77,13 +94,13 @@ class WalletSelectionBody extends React.Component {
     this.setState({ newWalletName });
   }
   createWallet() {
-    const { newWalletName } = this.state;
+    const { newWalletName, createNewWallet } = this.state;
     if (newWalletName == "" ) {
       return;
     }
-    this.props.onCreateWallet({
-      label: newWalletName,
-      value: { wallet: newWalletName } });
+    this.props.onCreateWallet(
+      createNewWallet,
+      { label: newWalletName, value: { wallet: newWalletName } });
   }
   startWallet() {
     this.props.onStartWallet(this.state.selectedWallet);

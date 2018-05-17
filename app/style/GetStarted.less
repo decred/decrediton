@@ -367,6 +367,7 @@
 }
 
 .display-wallet {
+  color: transparent;
   margin: 5px;
   float: left;
   height: 161px;
@@ -395,37 +396,49 @@
   }
 
   .wallet-icon.createnew {
+    margin-top: 25px;
     background-size: 58px 58px;
     background-position: 0px 5px;
     background-image: @createnewwallet;
   }
 
   .wallet-icon.restore {
+    margin-top: 25px;
+    background-size: 58px 58px;
+    background-position: 0px 5px;
     background-image: @restorewallet;
   }
+}
+
+.display-wallet:hover {
+  color: #fff;
 }
 
 .display-wallet.new {
   background: none;
   background-color: #fff;
-}
 
-.display-wallet.new:hover {
-  color: #48566e;
+  .display-wallet-name {
+    color: #4c5971;
+    margin-top: 121px;
+  }
 }
 
 .display-wallet-buttons {
   text-align: center;
+  margin-top: 5px;
+  margin-right: 10px;
+  float: right;
 }
 
 .display-wallet-button {
-  margin: 5px;
-  height: 30px;
-  width: 30px;
-  padding: 0px;
+  height: 20px;
+  width: 20px;
+  border-radius: 3px;
+  padding: 0;
   background-repeat: no-repeat;
-  background-size: 20px;
-  background-position: 5px 5px;
+  background-size: 14px;
+  background-position: 50% 50%;
   box-shadow: 0px 3px 8px rgba(72, 86, 110, 0.34);
 }
 
@@ -433,58 +446,113 @@
   box-shadow: 0px 1px 3px rgba(72, 86, 110, 0.34);
 }
 
-.display-wallet-button.start {
-  background-image: @launcher-wallet-activate;
-}
-
-.display-wallet-button.start:hover {
-  background-color: rgb(41, 112, 255);
-  background-image: @launcher-wallet-activate-hover;
-}
-
 .display-wallet-button.remove {
-  background-color: black;
+  background-color: #48566e;
   background-image: @launcher-wallet-delete;
 }
 
 .display-wallet-button.remove:hover {
-  background-color: black;
   background-image: @launcher-wallet-delete-hover;
 }
 
-.display-wallet:hover {
-  border: 1px solid #2970ff;
-  color: #fff;
+.display-wallet:hover:not(.selected) {
+  border: 1px solid #959dac;
 }
 
 .display-wallet.selected {
   background: linear-gradient(45deg, rgb(41, 112, 255), rgb(110, 211, 243));
   box-shadow: 0px 5px 21px rgba(72, 86, 110, 0.34);
   border: 1px solid #2970ff;
-  color: #fff;
 }
 
 .display-wallet-complete {
+  color: #48566e;
+  margin-top: 5px;
   min-height: 20px;
   text-align: center;
   text-transform: capitalize;
   font-size: 12px;
 }
 
-.display-wallet-network {
-  min-height: 20px;
-  text-align: center;
-  text-transform: capitalize;
-}
-
 .display-wallet-name {
+  color: #091440;
   text-align: center;
-  margin-top: 80px;
+  margin-top: 67px;
 }
 
-.display-wallet-name.selected {
+.display-wallet-last-access {
+  height: 11px;
+  color: #48566e;
+  text-align: center;
   font-size: 11px;
-  margin-top: 56px;
+}
+
+.display-wallet-cancel-changes {
+  float: left;
+  margin-top: 7px;
+  margin-left: 39px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 131ms @easeInOutQuart;
+}
+
+.display-wallet-launch {
+  color: #fff;
+  float: left;
+  margin-top: 7px;
+  margin-left: 39px;
+  margin-right: 3px;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: color 131ms @easeInOutQuart;
+}
+
+.display-wallet-cancel-changes:hover,
+.display-wallet-launch:hover {
+  border-bottom: 1px solid #fff;
+}
+
+@keyframes bounce {
+  0% { margin-left: 0px; }
+  50% { margin-left: 2px; }
+  100% { margin-left: 0px; }
+}
+
+.launch-arrow-bounce {
+  color: #fff;
+  float: left;
+  margin-top: 6px;
+  animation: bounce 1s @easeInOutQuart infinite;
+}
+
+.display-wallet-last-access.selected,
+.display-wallet-complete.selected {
+  color: #25549f;
+}
+
+.edit-wallets-button {
+  margin: 5px;
+  float: left;
+  height: 36px;
+  width: 36px;
+  border-radius: 5px;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  background-position: 50% 50%;
+  background-image: @launcher-edit-wallets;
+}
+
+.edit-wallets-button:hover {
+  background-image: @launcher-edit-wallets-hover;
+}
+
+.edit-wallets-button.close {
+  background-color: #959dac;
+  background-size: 12px 12px;
+  background-image: @x-white;
 }
 
 .text-toggle.network {
