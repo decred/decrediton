@@ -39,6 +39,10 @@ const StakeTxRow = ({ status, txType, ...props }) => {
       ticketPriceLabel: ticketPriceLabel,
       ticketPrice: <Balance amount={ticketPrice || 0} />,
     }} />;
+
+  // ticket can have leaveTimestamp equals null, which is not voted yet
+  const daysToVote = leaveTimestamp ? diffBetweenTwoTs(leaveTimestamp, enterTimestamp) : null;
+
   const daysToVoteLabel = <T id="ticket.daysToVoteLabel" m="Ticket Days To Vote" />;
   const daysToVoteMessage = <T id="ticket.daysToVoteMessage"
     m={"{daysToVoteLabel}: {daysToVote}"}
@@ -46,9 +50,6 @@ const StakeTxRow = ({ status, txType, ...props }) => {
       daysToVoteLabel: daysToVoteLabel,
       daysToVote: daysToVote || 0,
     }} />;
-
-  // ticket can have leaveTimestamp equals null, which is not voted yet
-  const daysToVote = leaveTimestamp ? diffBetweenTwoTs(leaveTimestamp, enterTimestamp) : null;
 
   return overview ?
     (
