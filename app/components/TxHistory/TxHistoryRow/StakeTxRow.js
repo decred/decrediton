@@ -5,11 +5,11 @@ import { Balance, Tooltip } from "shared";
 import { diffBetweenTwoTs } from "helpers/dateFormat";
 
 const messageByType = { // TODO: use constants instead of string
-  "Ticket": <T id="transaction.type.ticket" m="Ticket" />,
-  "Revocation": <T id="transaction.type.revoke" m="Revoke" />,
-  "Vote": <T id="transaction.type.vote" m="Vote" />,
-  "ticket": <T id="transaction.type.ticket" m="Ticket" />,
-  "revocation": <T id="transaction.type.revoke" m="Revoke" />,
+  "Ticket": <T id="transaction.type.ticket" m="Purchased" />,
+  "Revocation": <T id="transaction.type.revoke" m="Revoked" />,
+  "Vote": <T id="transaction.type.vote" m="Voted" />,
+  "ticket": <T id="transaction.type.ticket" m="Purchased" />,
+  "revocation": <T id="transaction.type.revoke" m="Revoked" />,
   "voted": <T id="transaction.type.voted" m="Voted" />,
   "unmined": <T id="transaction.type.unmined" m="Unmined" />,
   "immature": <T id="transaction.type.immature" m="Immature" />,
