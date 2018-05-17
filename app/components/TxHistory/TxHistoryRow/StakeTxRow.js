@@ -2,6 +2,7 @@ import Row from "./Row";
 import { createElement as h } from "react";
 import { FormattedMessage as T } from "react-intl";
 import { Balance, Tooltip } from "shared";
+import { diffBetweenTwoTs } from "helpers/dateFormat";
 
 const messageByType = { // TODO: use constants instead of string
   "Ticket": <T id="transaction.type.ticket" m="Ticket" />,
@@ -21,7 +22,7 @@ const messageByType = { // TODO: use constants instead of string
 // ToDo Add status to transactions selector, so we can use status instead of txType
 // to show on transactions history page
 const StakeTxRow = ({ status, txType, ...props }) => {
-  const { overview, ticketPrice, ticketReward } = props;
+  const { overview, ticketPrice, ticketReward, leaveTimestamp, enterTimestamp } = props;
 
   const rewardLabel = <T id="ticket.rewardLabel" m="Ticket Reward" />;
   const ticketRewardMessage = <T id="ticket.rewardMesage"
@@ -38,23 +39,38 @@ const StakeTxRow = ({ status, txType, ...props }) => {
       ticketPriceLabel: ticketPriceLabel,
       ticketPrice: <Balance amount={ticketPrice || 0} />,
     }} />;
+  const daysToVoteLabel = <T id="ticket.daysToVoteLabel" m="Ticket Days To Vote" />;
+  const daysToVoteMessage = <T id="ticket.daysToVoteMessage"
+    m={"{daysToVoteLabel}: {daysToVote}"}
+    values={{
+      daysToVoteLabel: daysToVoteLabel,
+      daysToVote: daysToVote || 0,
+    }} />;
+
+  // ticket can have leaveTimestamp equals null, which is not voted yet
+  const daysToVote = leaveTimestamp ? diffBetweenTwoTs(leaveTimestamp, enterTimestamp) : null;
 
   return overview ?
     (
       <Row {...{ className: status, ...props }}>
         <div className="transaction-info transaction-stake-info-overview">
-          <div><span className="icon" /></div>
-          <div>
-            <span className="transaction-stake-type-overview">{messageByType[status] || "(unknown type)"}</span>
-            <div className="transaction-info-price-reward">
-              <Tooltip text={ticketPriceMessage}>
-                <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice} />
+          <span className="icon" />
+          <span className="transaction-stake-type-overview">{messageByType[status] || "(unknown type)"}</span>
+          <div className="transaction-info-price-reward">
+            <Tooltip text={ticketPriceMessage}>
+              <Balance classNameWrapper="stake-transaction-ticket-price" amount={ticketPrice} />
+            </Tooltip>
+            <Tooltip text={ticketRewardMessage}>
+              <Balance classNameWrapper="stake-transaction-ticket-reward" amount={ticketReward} noSmallAmount />
+            </Tooltip>
+            {daysToVote !== null && !isNaN(daysToVote) && (
+              <Tooltip text={daysToVoteMessage}>
+                <div className="transaction-info-overview-days-to-vote">
+                  <span className="transaction-info-overview-days-to-vote-number">{daysToVote}</span>
+                  <T id="statusSmall.daysToVote" m="days" />
+                </div>
               </Tooltip>
-              <Tooltip text={ticketRewardMessage}>
-                <span className="transaction-info-overview-reward-icon"/>
-                <Balance classNameWrapper="stake-transaction-ticket-reward" amount={ticketReward} noSmallAmount />
-              </Tooltip>
-            </div>
+            )}
           </div>
         </div>
       </Row>
