@@ -67,6 +67,7 @@ export default function walletLoader(state = {}, action) {
   case CREATEWALLET_GOBACK:
     return { ...state,
       stepIndex: 1,
+      existingOrNew: true,
     };
   case CREATEWALLET_GOBACK_EXISITNG_OR_NEW:
     return { ...state,

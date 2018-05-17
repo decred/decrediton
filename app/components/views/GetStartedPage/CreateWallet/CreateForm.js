@@ -3,6 +3,7 @@ import ExistingOrNewScreen from "./ExistingOrNewScreen";
 import "style/GetStarted.less";
 
 const CreateForm = ({
+  availableWallets,
   existingOrNew,
   createNewWallet,
   onReturnToNewSeed,
@@ -14,7 +15,7 @@ const CreateForm = ({
   getEstimatedTimeLeft,
   getDaemonSynced
 }) => (
-  existingOrNew && !createNewWallet ?
+  (availableWallets.length == 0 && existingOrNew) || !createNewWallet ?
     <ExistingOrNewScreen {...{ onSetCreateWalletFromExisting,
       onReturnToWalletSelection,
       getCurrentBlockCount,
