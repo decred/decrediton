@@ -813,6 +813,21 @@ export const daemonStopped = get([ "daemon", "daemonStopped" ]);
 
 export const chainParams = compose(isTestNet => isTestNet ? TestNetParams : MainNetParams, isTestNet);
 
+export const blocksPassedOnTicketInterval = createSelector(
+  [chainParams, currentBlockHeight],
+  (chainParams, currentBlockHeight) => {
+    if(!chainParams || !currentBlockHeight) return 0;
+    const {WorkDiffWindowSize} = chainParams;
+    return currentBlockHeight % WorkDiffWindowSize;
+  }
+);
+
+export const blocksNumberToNextTicket = createSelector(
+  [blocksPassedOnTicketInterval, chainParams],
+  (chainParams, currentBlockHeight) =>
+    chainParams.WorkDiffWindowSize - blocksPassedOnTicketInterval
+);
+
 export const exportingData = get([ "control", "exportingData" ]);
 
 export const location = get([ "routing", "location" ]);

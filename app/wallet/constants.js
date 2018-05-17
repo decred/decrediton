@@ -12,6 +12,8 @@ export const TestNetParams = {
   // types for the moment.
   LegacyHDCoinType: 11,
   HDCoinType: 1,
+
+  WorkDiffWindowSize: 144,
 };
 
 export const MainNetParams = {
@@ -26,4 +28,6 @@ export const MainNetParams = {
   // types for the moment.
   LegacyHDCoinType: 20,
   HDCoinType: 42,
+
+  WorkDiffWindowSize: 144,
 };
