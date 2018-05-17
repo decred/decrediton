@@ -2,10 +2,7 @@ import AgendaCard from "./AgendaCard";
 import AgendaOverview from "./AgendaOverview";
 import { StakePoolSelect } from "inputs";
 import { FormattedMessage as T } from "react-intl";
-import { ShowWarning } from "shared";
 import "style/StakePool.less";
-
-const votingSpvWarn = <T id="spv.voting.warn" m="Voting is Not available in spv mode" />
 
 const VotingPrefsPage = ({
   agendas,
