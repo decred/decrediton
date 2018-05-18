@@ -41,9 +41,19 @@ class SettingsInput extends React.Component {
           valueRenderer={this.valueRenderer}
           optionRenderer={this.valueRenderer}
           onChange={this.onChangeSelect}
+          onInputKeyDown={this.selectKeyDown}
         />
       </div>
     );
+  }
+
+  selectKeyDown (e) {
+    switch(e.keyCode) {
+    case 8:
+    case 46:
+      e.preventDefault();
+      break;
+    }
   }
 
   valueRenderer(option) {
