@@ -20,13 +20,17 @@ class ExistingSeedForm extends React.Component{
 
   handleOnPaste = (e) => {
     e.preventDefault();
-    const lowercaseSeedWords = SEED_WORDS.map(w => w.toLowerCase());
     const clipboardData = e.clipboardData.getData("text");
-    const words = clipboardData
-      .split(/\b/)
+    this.pasteFromClipboard(clipboardData);
+  }
+
+  pasteFromClipboard = (wordsFromClipboard) => {
+    const lowercaseSeedWords = SEED_WORDS.map(w => w.toLowerCase());
+    const words = wordsFromClipboard.split(/\b/)
       .filter(w => /^[\w]+$/.test(w))
       .filter(w => lowercaseSeedWords.indexOf(w.toLowerCase()) > -1)
       .map((w, i) => ({ index: i, word: w }));
+
     if (words.length == 33) {
       this.props.setSeedWords(words);
       this.setState({
@@ -38,7 +42,6 @@ class ExistingSeedForm extends React.Component{
         showPasteWarning : false,
         showPasteError : true
       });
-
     }
   }
 
@@ -107,6 +110,7 @@ class ExistingSeedForm extends React.Component{
                     seedWord={seedWord}
                     value={{ name: seedWord.word }}
                     key={seedWord.index}
+                    onPasteFromClipboard={this.pasteFromClipboard}
                   />);
               })}
             </div> :

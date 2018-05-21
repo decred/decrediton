@@ -1,5 +1,6 @@
 import Select from "react-select";
 import { SEED_WORDS } from "wallet/seed";
+import { clipboard } from "electron";
 
 const SEED_WORD_OPTIONS = SEED_WORDS.map(name => ({ name }));
 
@@ -8,6 +9,12 @@ class SingleSeedWordEntry extends React.Component {
   constructor(props) {
     super(props);
     this.getSeedWords = this.getSeedWords.bind(this);
+    document.onmousedown = (e) => {
+      e.preventDefault();
+      if (e.which === 2) {
+        this.props.onPasteFromClipboard(clipboard.readText());
+      }
+    }
   }
   render () {
     const value = { name: this.props.value.name };
