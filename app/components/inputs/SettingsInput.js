@@ -39,9 +39,19 @@ class SettingsInput extends React.Component {
           labelKey={labelKey}
           options={options}
           onChange={this.onChangeSelect}
+          onInputKeyDown={this.selectKeyDown}
         />
       </div>
     );
+  }
+
+  selectKeyDown (e) {
+    switch(e.keyCode) {
+    case 8:
+    case 46:
+      e.preventDefault();
+      break;
+    }
   }
 
   onChangeSelect(value){
