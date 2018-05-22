@@ -209,7 +209,7 @@ export default function walletLoader(state = {}, action) {
       discoverAddressError: null,
       discoverAddressRequestAttempt: false,
       discoverAddressResponse: true,
-      stepIndex: 6,
+      stepIndex: action.complete ? 7 : 6, // 6 = stakepool selection, 7 = fetch headers
     };
   case FETCHHEADERS_ATTEMPT:
     return { ...state,

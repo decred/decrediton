@@ -213,17 +213,18 @@ export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
   dispatch({ type: DISCOVERADDRESS_ATTEMPT });
   discoverAddresses(loader, !discoverAccountsComplete, privPass)
     .then(() => {
-      //const { subscribeBlockNtfnsResponse } = getState().walletLoader;
 
       if (!discoverAccountsComplete) {
         const config = getWalletCfg(isTestNet(getState()), walletName);
         config.delete("discoveraccounts");
         config.set("discoveraccounts", true);
         dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
+      } else {
+        const { subscribeBlockNtfnsResponse } = getState().walletLoader;
+        if (subscribeBlockNtfnsResponse !== null) dispatch(fetchHeadersAttempt());
       }
 
-      dispatch({ response: {}, type: DISCOVERADDRESS_SUCCESS });
-      //if (subscribeBlockNtfnsResponse !== null) dispatch(fetchHeadersAttempt());
+      dispatch({ response: {}, complete: discoverAccountsComplete, type: DISCOVERADDRESS_SUCCESS });
     })
     .catch(error => {
       if (error.message.includes("invalid passphrase") && error.message.includes("private key")) {
