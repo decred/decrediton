@@ -57,10 +57,20 @@ class AccountsSelect extends React.Component {
           optionRenderer={this.valueRenderer}
           onChange={this.onChangeAccount}
           className="accounts-select"
+          onInputKeyDown={this.selectKeyDown}
         />
         { showAccountsButton && <LinkToAccounts /> }
       </div>
     );
+  }
+
+  selectKeyDown (e) {
+    switch(e.keyCode) {
+    case 8:
+    case 46:
+      e.preventDefault();
+      break;
+    }
   }
 
   valueRenderer(option) {

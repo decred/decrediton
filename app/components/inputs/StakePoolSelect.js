@@ -8,6 +8,15 @@ const messages = defineMessages({
   }
 });
 
+function selectKeyDown(e) {
+  switch(e.keyCode) {
+  case 8:
+  case 46:
+    e.preventDefault();
+    break;
+  }
+}
+
 const StakePoolSelect = ({
   valueKey="value",
   labelKey="label",
@@ -25,6 +34,7 @@ const StakePoolSelect = ({
       multi,
       clearable,
       style,
+      onInputKeyDown: selectKeyDown,
       ...props
     }}
   />
