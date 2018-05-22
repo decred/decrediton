@@ -1,31 +1,69 @@
-import { Tooltip } from "shared";
-import { LoaderBarBottom } from "indicators";
-import { InvisibleButton } from "buttons";
+import { KeyBlueButton, InvisibleButton } from "buttons";
+import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
+import { TextInput, StakePoolSelect } from "inputs";
+import { Documentation } from "shared";
 
-export default ({
-  onHideReleaseNotes,
-  onShowSettings,
-  onShowLogs,
-  getCurrentBlockCount,
-  getNeededBlocks,
-  getEstimatedTimeLeft,
-  appVersion
+const messages = defineMessages({
+  apiKeyPlaceholder: {
+    id: "getStartedStake.apiKeyPlaceholder",
+    defaultMessage: "Typically starts with ‘eyJhb…’"
+  }
+});
+
+const Form = ({
+  selectedUnconfigured,
+  unconfiguredStakePools,
+  intl,
+  apiKey,
+  onChangeSelectedUnconfigured,
+  onChangeApiKey,
 }) => (
-  <div className="page-body getstarted">
-    <div className="getstarted loader logs">
-      <div className="content-title">
-        <div className="loader-settings-logs">
-          <InvisibleButton onClick={onShowSettings}>
-            <T id="getStarted.btnSettings" m="Settings" />
-          </InvisibleButton>
-          <InvisibleButton onClick={onShowLogs}>
-            <T id="getStarted.btnLogs" m="Logs" />
+  <Aux>
+    <div className="advanced-page-form">
+      <div className="advanced-daemon-row">
+        <div className="stakepool-add-area-left">
+          <div className="stakepool-field">
+            <div className="stakepool-field-label">
+              <T id="stakepool.label" m="Stakepool" />:
+            </div>
+            <div className="stakepool-field-value">
+              <StakePoolSelect
+                options={unconfiguredStakePools}
+                value={selectedUnconfigured}
+                onChange={onChangeSelectedUnconfigured}
+              />
+            </div>
+          </div>
+          <div className="stakepool-field">
+            <div className="stakepool-field-label">
+              <T id="stakepool.apikey" m="API Key" />:
+            </div>
+            <div className="stakepool-field-value">
+              <TextInput
+                type="text"
+                className="stakepool-add-apikey"
+                placeholder={intl.formatMessage(messages.apiKeyPlaceholder)}
+                value={apiKey}
+                onChange={e => onChangeApiKey(e.target.value)}
+              />
+            </div>
+            <div className="stakepool-field-value-error">
+              {apiKey ? null : <T id="stake.addPool.errors.noApiKey" m="*Please enter your API key" /> }
+            </div>
+          </div>
+          <KeyBlueButton onClick={() => {}}>
+            <T id="getStarted.stakePools.addBtn" m="Add" />
+          </KeyBlueButton>
+          <InvisibleButton onClick={() => {}}>
+            <T id="getStarted.stakePools.continueBtn" m="Continue" />
           </InvisibleButton>
         </div>
-        <Tooltip text={ <T id="logs.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onHideReleaseNotes}/></Tooltip>
-        <T id="getStarted.logsTitle" m="Decrediton v{version} Released" values={{ version: (appVersion) }}/>
       </div>
-      <LoaderBarBottom  {...{ getCurrentBlockCount, getNeededBlocks, getEstimatedTimeLeft }}  />
+      <div className="stakepool-add-area-right">
+        <T id="getStarted.stakePools.info" m="Add your existing stakepools APIs here. You can always add them later if you want." />
+      </div>
     </div>
-  </div>
+  </Aux>
 );
+
+export default injectIntl(Form);

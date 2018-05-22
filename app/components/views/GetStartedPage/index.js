@@ -19,7 +19,8 @@ class GetStartedPage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { showSettings: false, showLogs: false, showReleaseNotes: false };
+    this.state = { showSettings: false, showLogs: false, showReleaseNotes: false,
+      walletPrivatePassphrase: "" };
   }
 
   componentDidMount() {
@@ -45,6 +46,11 @@ class GetStartedPage extends React.Component {
         onRetryStartRPC();
     }
   }
+
+  componentWillUnmount() {
+    this.setState({ walletPrivatePassphrase: "" });
+  }
+
   onShowReleaseNotes() {
     this.setState({ showSettings: false, showLogs: false, showReleaseNotes: true });
   }
@@ -67,6 +73,10 @@ class GetStartedPage extends React.Component {
 
   onHideLogs() {
     this.setState({ showLogs: false });
+  }
+
+  onSetWalletPrivatePassphrase(walletPrivatePassphrase) {
+    this.setState({ walletPrivatePassphrase });
   }
 
   render() {
@@ -95,7 +105,8 @@ class GetStartedPage extends React.Component {
       onShowSettings,
       onHideSettings,
       onShowLogs,
-      onHideLogs
+      onHideLogs,
+      onSetWalletPrivatePassphrase
     } = this;
 
     let text, Form;
@@ -121,7 +132,7 @@ class GetStartedPage extends React.Component {
         if (hasExistingWallet) {
           Form = OpenWallet;
         } else {
-          return <CreateWallet {...props} />;
+          return <CreateWallet {...{ ...props, onSetWalletPrivatePassphrase }} />;
         }
         break;
       case 3:
@@ -164,7 +175,8 @@ class GetStartedPage extends React.Component {
         onShowSettings,
         onHideSettings,
         onShowLogs,
-        onHideLogs
+        onHideLogs,
+        onSetWalletPrivatePassphrase
       }} />;
   }
 }

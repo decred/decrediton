@@ -14,6 +14,14 @@ class DiscoverAddressesBody extends React.Component {
     this.resetState();
   }
 
+  componentDidMount() {
+    if (this.props.walletPrivatePassphrase) {
+      console.log("has private passphrase");
+      // this.state.passPhrase = props.walletPrivatePassphrase;
+      this.props.onDiscoverAddresses(this.props.walletPrivatePassphrase);
+    }
+  }
+
   getInitialState() {
     return {
       passPhrase: "",
@@ -48,11 +56,16 @@ class DiscoverAddressesBody extends React.Component {
   }
 
   onDiscoverAddresses() {
-    if (!this.state.passPhrase) {
+    const { passPhrase } = this.state;
+
+    if (!passPhrase) {
       return this.setState({ hasAttemptedDiscover: true });
     }
 
-    this.props.onDiscoverAddresses(this.state.passPhrase);
+    const { onDiscoverAddresses, onSetWalletPrivatePassphrase } = this.props;
+
+    onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(passPhrase);
+    onDiscoverAddresses(passPhrase);
     this.resetState();
   }
 

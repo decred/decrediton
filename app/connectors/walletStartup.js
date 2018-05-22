@@ -12,6 +12,7 @@ const mapStateToProps = selectorMap({
   showPrivacy: sel.showPrivacy,
   startStepIndex: sel.startStepIndex,
   isInputRequest: sel.isInputRequest,
+  isDiscoverAddressAttempt: sel.isDiscoverAddressAttempt,
   startupError: sel.startupError,
   confirmNewSeed: sel.confirmNewSeed,
   existingOrNew: sel.existingOrNew,

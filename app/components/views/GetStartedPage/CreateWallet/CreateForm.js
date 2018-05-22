@@ -10,10 +10,11 @@ const CreateForm = ({
   onReturnToWalletSelection,
   onReturnToExistingOrNewScreen,
   onSetCreateWalletFromExisting,
+  onSetWalletPrivatePassphrase,
   getCurrentBlockCount,
   getNeededBlocks,
   getEstimatedTimeLeft,
-  getDaemonSynced
+  getDaemonSynced,
 }) => (
   (availableWallets.length == 0 && existingOrNew) || !createNewWallet ?
     <ExistingOrNewScreen {...{ onSetCreateWalletFromExisting,
@@ -21,7 +22,8 @@ const CreateForm = ({
       getCurrentBlockCount,
       getNeededBlocks,
       getEstimatedTimeLeft,
-      getDaemonSynced }} /> :
+      getDaemonSynced,
+      onSetWalletPrivatePassphrase }} /> :
     <CreateWalletForm {...{
       onReturnToNewSeed,
       onReturnToExistingOrNewScreen,
@@ -29,6 +31,7 @@ const CreateForm = ({
       getCurrentBlockCount,
       getNeededBlocks,
       getEstimatedTimeLeft,
+      onSetWalletPrivatePassphrase
     } }/>
 );
 

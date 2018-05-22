@@ -12,13 +12,13 @@ const messages = defineMessages({
 
 const DiscoverAddressesFormBodyBase = ({
   passPhrase,
-  isInputRequest,
+  isDiscoverAddressAttempt,
   intl,
   onSetPassPhrase,
   onDiscoverAddresses,
   onKeyDown
 }) => (
-  isInputRequest ? (
+  !isDiscoverAddressAttempt ? (
     <Aux>
       <div className="advanced-page-form">
         <div className="advanced-daemon-row">
