@@ -37,11 +37,13 @@ class ExistingSeedForm extends React.Component{
         showPasteWarning : true,
         showPasteError: false
       });
+      return true;
     } else {
       this.setState({
         showPasteWarning : false,
         showPasteError : true
       });
+      return false;
     }
   }
 

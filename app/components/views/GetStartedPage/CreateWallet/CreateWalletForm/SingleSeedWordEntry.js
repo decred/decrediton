@@ -10,12 +10,22 @@ class SingleSeedWordEntry extends React.Component {
     super(props);
     this.getSeedWords = this.getSeedWords.bind(this);
     document.onmousedown = (e) => {
-      e.preventDefault();
       if (e.which === 2) {
-        this.props.onPasteFromClipboard(clipboard.readText());
+        e.preventDefault();
+
+        const isPasted = this.props.onPasteFromClipboard(clipboard.readText());
+
+        // missing with the select options from react-select
+        if(isPasted) {
+          const select = document.querySelector(".Select-menu-outer");
+          if(select) {
+            select.style.display = "none";
+          }
+        }
       }
-    }
+    };
   }
+
   render () {
     const value = { name: this.props.value.name };
     return (
