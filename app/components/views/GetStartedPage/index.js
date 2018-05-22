@@ -10,6 +10,7 @@ import { DiscoverAddressesBody } from "./DiscoverAddresses";
 import { FetchBlockHeadersBody } from "./FetchBlockHeaders";
 import { AdvancedStartupBody, RemoteAppdataError } from "./AdvancedStartup";
 import { RescanWalletBody } from "./RescanWallet/index";
+import StakePoolsBody from "./StakePools";
 import { walletStartup } from "connectors";
 import { FormattedMessage as T } from "react-intl";
 
@@ -133,10 +134,14 @@ class GetStartedPage extends React.Component {
         Form = DiscoverAddressesBody;
         break;
       case 6:
+        text = <T id="getStarted.header.stakePools.meta" m="Import StakePools" />;
+        Form = StakePoolsBody;
+        break;
+      case 7:
         text = <T id="getStarted.header.fetchingBlockHeaders.meta" m="Fetching block headers" />;
         Form = FetchBlockHeadersBody;
         break;
-      case 7:
+      case 8:
         text = <T id="getStarted.header.rescanWallet.meta" m="Scanning blocks for transactions" />;
         Form = RescanWalletBody;
         break;

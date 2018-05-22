@@ -231,11 +231,11 @@ export default function walletLoader(state = {}, action) {
     };
   case RESCAN_ATTEMPT:
     return { ...state,
-      stepIndex: 7
+      stepIndex: 8
     };
   case GETSTARTUPWALLETINFO_ATTEMPT:
     return { ...state,
-      stepIndex: 8
+      stepIndex: 9
     };
   case SUBSCRIBEBLOCKNTFNS_ATTEMPT:
     return { ...state,

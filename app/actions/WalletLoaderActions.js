@@ -210,7 +210,7 @@ export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
   dispatch({ type: DISCOVERADDRESS_ATTEMPT });
   discoverAddresses(loader, !discoverAccountsComplete, privPass)
     .then(() => {
-      const { subscribeBlockNtfnsResponse } = getState().walletLoader;
+      //const { subscribeBlockNtfnsResponse } = getState().walletLoader;
 
       if (!discoverAccountsComplete) {
         const config = getWalletCfg(isTestNet(getState()), walletName);
@@ -220,7 +220,7 @@ export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
       }
 
       dispatch({ response: {}, type: DISCOVERADDRESS_SUCCESS });
-      if (subscribeBlockNtfnsResponse !== null) dispatch(fetchHeadersAttempt());
+      //if (subscribeBlockNtfnsResponse !== null) dispatch(fetchHeadersAttempt());
     })
     .catch(error => {
       if (error.message.includes("invalid passphrase") && error.message.includes("private key")) {
