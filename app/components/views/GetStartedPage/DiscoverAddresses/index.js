@@ -16,8 +16,6 @@ class DiscoverAddressesBody extends React.Component {
 
   componentDidMount() {
     if (this.props.walletPrivatePassphrase) {
-      console.log("has private passphrase");
-      // this.state.passPhrase = props.walletPrivatePassphrase;
       this.props.onDiscoverAddresses(this.props.walletPrivatePassphrase);
     }
   }

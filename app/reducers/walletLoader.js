@@ -214,6 +214,7 @@ export default function walletLoader(state = {}, action) {
   case FETCHHEADERS_ATTEMPT:
     return { ...state,
       fetchHeadersRequestAttempt: true,
+      stepIndex: 7,
     };
   case FETCHHEADERS_FAILED:
     return { ...state,

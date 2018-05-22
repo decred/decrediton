@@ -1,7 +1,6 @@
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { FormattedMessage as T, defineMessages, injectIntl } from "react-intl";
-import { TextInput, StakePoolSelect } from "inputs";
-import { Documentation } from "shared";
+import { TextInput, StakePoolSelect, PasswordInput } from "inputs";
 
 const messages = defineMessages({
   apiKeyPlaceholder: {
@@ -15,8 +14,14 @@ const Form = ({
   unconfiguredStakePools,
   intl,
   apiKey,
+  isSavingStakePoolConfig,
+  walletPrivatePassphrase,
+  passPhrase,
   onChangeSelectedUnconfigured,
   onChangeApiKey,
+  onSetStakePoolInfo,
+  onChangePassPhrase,
+  onContinueCreation,
 }) => (
   <Aux>
     <div className="advanced-page-form">
@@ -51,10 +56,22 @@ const Form = ({
               {apiKey ? null : <T id="stake.addPool.errors.noApiKey" m="*Please enter your API key" /> }
             </div>
           </div>
-          <KeyBlueButton onClick={() => {}}>
+          { walletPrivatePassphrase ? null :
+            <div className="stakepool-field">
+              <div className="stakepool-field-label">
+                <T id="stakepool.passPhrase" m="Private Passphrase" />:
+              </div>
+              <div className="stakepool-field-value">
+                <PasswordInput
+                  value={passPhrase}
+                  onChange={e => onChangePassPhrase(e.target.value)}
+                />
+              </div>
+            </div> }
+          <KeyBlueButton onClick={onSetStakePoolInfo} loading={isSavingStakePoolConfig} disabled={isSavingStakePoolConfig}>
             <T id="getStarted.stakePools.addBtn" m="Add" />
           </KeyBlueButton>
-          <InvisibleButton onClick={() => {}}>
+          <InvisibleButton onClick={onContinueCreation}>
             <T id="getStarted.stakePools.continueBtn" m="Continue" />
           </InvisibleButton>
         </div>

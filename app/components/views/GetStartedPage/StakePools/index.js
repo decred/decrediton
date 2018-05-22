@@ -11,7 +11,8 @@ class StakePoolsBody extends React.Component {
     this.state = {
       isAdding: false,
       apiKey: "",
-      selectedUnconfigured: this.props.unconfiguredStakePools[0]
+      selectedUnconfigured: this.props.unconfiguredStakePools[0],
+      passPhrase: "",
     };
     if (!props.updatedStakePoolList && this.getStakepoolListingEnabled()) {
       this.props.discoverAvailableStakepools();
@@ -41,10 +42,39 @@ class StakePoolsBody extends React.Component {
     this.setState({ apiKey });
   }
 
-  onSetStakePoolInfo(privpass) {
-    const { apiKey } = this.state;
-    const onSetInfo = this.props.onSetStakePoolInfo;
-    apiKey ? (onSetInfo && onSetInfo(privpass, this.getSelectedUnconfigured().Host, apiKey, 0)) : null;
+  onChangePassPhrase(passPhrase) {
+    this.setState({ passPhrase });
+  }
+
+  onContinueCreation() {
+    if (this.state.passPhrase) {
+      const { onSetWalletPrivatePassphrase } = this.props;
+      onSetWalletPrivatePassphrase && onSetWalletPrivatePassphrase(this.state.passPhrase);
+    }
+    this.props.onFetchHeaders();
+  }
+
+  onSetStakePoolInfo() {
+    const { apiKey, passPhrase } = this.state;
+    if (!apiKey) {
+      return;
+    }
+
+    const pool = this.getSelectedUnconfigured();
+    if (!pool) {
+      return;
+    }
+
+    // walletPrivatePassphrase is filled when this page is loaded immediately
+    // after creating/importing a wallet. On reloads, it will be empty, so we
+    // provide a local option for inputing (passPhrase state var).
+    const { walletPrivatePassphrase } = this.props;
+    const { onSetStakePoolInfo } = this.props;
+    const host = pool.Host;
+    const privPass = passPhrase ? passPhrase : walletPrivatePassphrase;
+
+    onSetStakePoolInfo(privPass, host, apiKey, 0, false, true);
+    this.setState({ apiKey: "" });
   }
 
   render() {
@@ -70,6 +100,8 @@ class StakePoolsBody extends React.Component {
             onSaveStakePool: null,
             onSetStakePoolInfo: null,
             onChangeSelectedUnconfigured: null,
+            onChangePassPhrase: null,
+            onContinueCreation: null,
           }, this),
         }}
       />
