@@ -4,7 +4,7 @@ import {
   subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo
 } from "wallet";
 import * as wallet from "wallet";
-import { getWalletServiceAttempt, getTicketBuyerServiceAttempt, getAgendaServiceAttempt, getVotingServiceAttempt } from "./ClientActions";
+import { getWalletServiceAttempt, startWalletServices } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { getAvailableWallets, WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getDcrdCert } from "../config";
@@ -94,6 +94,7 @@ export const createWalletRequest = (pubPass, privPass, seed, existing) =>
         config.delete("discoveraccounts");
         dispatch({ response: {}, type: CREATEWALLET_SUCCESS });
         dispatch(clearStakePoolConfigNewWallet());
+        dispatch(getWalletServiceAttempt());
         dispatch({ complete: !existing, type: UPDATEDISCOVERACCOUNTS });
         config.set("discoveraccounts", !existing);
       })
@@ -110,10 +111,12 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState)
   dispatch({ type: OPENWALLET_ATTEMPT });
   return openWallet(getState().walletLoader.loader, pubPass)
     .then(() => {
+      dispatch(getWalletServiceAttempt());
       dispatch({ type: OPENWALLET_SUCCESS });
     })
     .catch(error => {
       if (error.message.includes("wallet already")) {
+        dispatch(getWalletServiceAttempt());
         dispatch({ response: {}, type: OPENWALLET_SUCCESS });
       } else if (error.message.includes("invalid passphrase") && error.message.includes("public key")) {
         if (retryAttempt) {
@@ -210,17 +213,18 @@ export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
   dispatch({ type: DISCOVERADDRESS_ATTEMPT });
   discoverAddresses(loader, !discoverAccountsComplete, privPass)
     .then(() => {
-      const { subscribeBlockNtfnsResponse } = getState().walletLoader;
 
       if (!discoverAccountsComplete) {
         const config = getWalletCfg(isTestNet(getState()), walletName);
         config.delete("discoveraccounts");
         config.set("discoveraccounts", true);
         dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
+      } else {
+        const { subscribeBlockNtfnsResponse } = getState().walletLoader;
+        if (subscribeBlockNtfnsResponse !== null) dispatch(fetchHeadersAttempt());
       }
 
-      dispatch({ response: {}, type: DISCOVERADDRESS_SUCCESS });
-      if (subscribeBlockNtfnsResponse !== null) dispatch(fetchHeadersAttempt());
+      dispatch({ response: {}, complete: discoverAccountsComplete, type: DISCOVERADDRESS_SUCCESS });
     })
     .catch(error => {
       if (error.message.includes("invalid passphrase") && error.message.includes("private key")) {
@@ -262,10 +266,7 @@ export const fetchHeadersAttempt = () => (dispatch, getState) => {
   return fetchHeaders(getState().walletLoader.loader)
     .then(response => {
       dispatch({ response, type: FETCHHEADERS_SUCCESS });
-      dispatch(getWalletServiceAttempt());
-      dispatch(getTicketBuyerServiceAttempt());
-      dispatch(getVotingServiceAttempt());
-      dispatch(getAgendaServiceAttempt());
+      dispatch(startWalletServices());
     })
     .catch(error => dispatch({ error, type: FETCHHEADERS_FAILED }));
 };

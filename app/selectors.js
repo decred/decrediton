@@ -114,6 +114,8 @@ export const isInputRequest = or(
   selectCreateWalletInputRequest
 );
 
+export const isDiscoverAddressAttempt = get([ "walletLoader", "discoverAddressRequestAttempt" ]);
+
 export const balances = or(get([ "grpc", "balances" ]), () => []);
 export const walletService = get([ "grpc", "walletService" ]);
 export const agendaService = get([ "grpc", "agendaService" ]);

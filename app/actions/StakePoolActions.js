@@ -75,7 +75,7 @@ export const updateStakepoolPurchaseInformation = () => (dispatch, getState) =>
     }
   ));
 
-export const setStakePoolInformation = (privpass, poolHost, apiKey, accountNum, internal) =>
+export const setStakePoolInformation = (privpass, poolHost, apiKey, accountNum, internal, creatingWallet) =>
   (dispatch) => {
     wallet.allowStakePoolHost(poolHost);
     if (!internal) dispatch({ type: UPDATESTAKEPOOLCONFIG_ATTEMPT });
@@ -84,7 +84,7 @@ export const setStakePoolInformation = (privpass, poolHost, apiKey, accountNum, 
         if (status === "success") {
           dispatch(
             importScriptAttempt(
-              privpass, data.Script, true, 0, data.TicketAddress,
+              privpass, data.Script, !creatingWallet, 0, data.TicketAddress,
               (error) => error
                 ? dispatch({ error, type: UPDATESTAKEPOOLCONFIG_FAILED })
                 : dispatch(updateSavedConfig(data, poolHost, apiKey, accountNum))

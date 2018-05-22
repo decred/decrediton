@@ -29,8 +29,13 @@ export const GETWALLETSERVICE_FAILED = "GETWALLETSERVICE_FAILED";
 export const GETWALLETSERVICE_SUCCESS = "GETWALLETSERVICE_SUCCESS";
 
 function getWalletServiceSuccess(walletService) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ walletService, type: GETWALLETSERVICE_SUCCESS });
+  };
+}
+
+export function startWalletServices() {
+  return (dispatch, getState) => {
     setTimeout(() => { dispatch(loadActiveDataFiltersAttempt()); }, 1000);
     setTimeout(() => { dispatch(getNextAddressAttempt(0)); }, 1000);
     setTimeout(() => { dispatch(getTicketPriceAttempt()); }, 1000);
@@ -40,6 +45,9 @@ function getWalletServiceSuccess(walletService) {
     setTimeout(() => { dispatch(accountNtfnsStart()); }, 1000);
     setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
     setTimeout(() => { dispatch(getDecodeMessageServiceAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getTicketBuyerServiceAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getVotingServiceAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getAgendaServiceAttempt()); }, 1000);
 
     var goHomeCb = () => {
       setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);

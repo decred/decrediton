@@ -191,6 +191,7 @@ export default function walletLoader(state = {}, action) {
     return { ...state,
       discoverAddressInputRequest: true,
       discoverAddressError: String(action.error),
+      discoverAddressRequestAttempt: false,
     };
   case DISCOVERADDRESS_ATTEMPT:
     return { ...state,
@@ -208,11 +209,12 @@ export default function walletLoader(state = {}, action) {
       discoverAddressError: null,
       discoverAddressRequestAttempt: false,
       discoverAddressResponse: true,
-      stepIndex: 6,
+      stepIndex: action.complete ? 7 : 6, // 6 = stakepool selection, 7 = fetch headers
     };
   case FETCHHEADERS_ATTEMPT:
     return { ...state,
       fetchHeadersRequestAttempt: true,
+      stepIndex: 7,
     };
   case FETCHHEADERS_FAILED:
     return { ...state,
@@ -231,11 +233,11 @@ export default function walletLoader(state = {}, action) {
     };
   case RESCAN_ATTEMPT:
     return { ...state,
-      stepIndex: 7
+      stepIndex: 8
     };
   case GETSTARTUPWALLETINFO_ATTEMPT:
     return { ...state,
-      stepIndex: 8
+      stepIndex: 9
     };
   case SUBSCRIBEBLOCKNTFNS_ATTEMPT:
     return { ...state,
