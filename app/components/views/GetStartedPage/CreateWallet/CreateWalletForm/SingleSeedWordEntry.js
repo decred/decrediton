@@ -1,5 +1,6 @@
 import Select from "react-select";
 import { SEED_WORDS } from "wallet/seed";
+import { clipboard } from "electron";
 
 const SEED_WORD_OPTIONS = SEED_WORDS.map(name => ({ name }));
 
@@ -8,7 +9,23 @@ class SingleSeedWordEntry extends React.Component {
   constructor(props) {
     super(props);
     this.getSeedWords = this.getSeedWords.bind(this);
+    document.onmousedown = (e) => {
+      if (e.which === 2) {
+        e.preventDefault();
+
+        const isPasted = this.props.onPasteFromClipboard(clipboard.readText());
+
+        // missing with the select options from react-select
+        if(isPasted) {
+          const select = document.querySelector(".Select-menu-outer");
+          if(select) {
+            select.style.display = "none";
+          }
+        }
+      }
+    };
   }
+
   render () {
     const value = { name: this.props.value.name };
     return (
