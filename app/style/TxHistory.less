@@ -31,17 +31,17 @@
 }
 
 .pending-overview-details {
-  background-color: @background-container;
-  width: 100%;
+  background-color: rgba(12, 30, 62, 0.0296);
+  width: 32px;
   height: 100%;
-  padding: 10px;
-  margin: 10px;
   cursor: pointer;
+  text-align: center;
+  padding-top: 12px;
 }
 
 .tx-history-row-wrapper {
-  display: flex;
-  flex-direction: column;
+  float: left;
+  width: 100%;
 }
 
 .is-overview-pending {
@@ -50,35 +50,31 @@
 }
 
 .tx-history-row {
-  padding: 14px 40px 18px 20px;
+  padding: 18px 15px 6px 16px;
   border-bottom: 1px solid #e7eaed;
   background-color: #fff;
   cursor: pointer;
   transition: all 100ms cubic-bezier(0.86, 0, 0.07, 1) 0s;
-  background-image: @arrow-right-gray-icon;
-  background-position: right 20px center;
-  background-size: 5px 10px;
-  background-repeat: no-repeat;
-  display: flex;
-  flex-basis: 80%;
-  justify-content: space-between;
-  line-height: 12px;
-  height: 32px;
+  height: 29px;
+  width: 323px;
+}
+
+.tx-history-row.is-row-pending {
+  width: 289px;
 }
 
 .tx-history-row:hover {
   background-color: rgba(212, 240, 253, 0.5);
-  background-image: @arrow-right-blue-icon;
-  background-size: 5px;
 }
 
 .tx-history-row .icon {
-  width: 16px;
-  height: 16px;
+  float: left;
+  width: 20px;
+  height: 20px;
   background-repeat: no-repeat;
-  background-size: 16px 16px;
+  background-size: 20px 20px;
   display: inline-block;
-  margin-right: 20px;
+  margin-right: 12px;
 }
 
 .tx-history-row.Send .icon {
@@ -133,12 +129,7 @@
   background-image: @ticket-unmined-icon;
 }
 
-.transaction-info {
-  flex-grow: 2;
-}
-
 .transaction-status {
-  flex-grow: 1;
   padding: 1px 0px 0px 0px;
   text-align: right;
 }
@@ -147,13 +138,13 @@
   color: #0c1e3e;
   font-size: 13px;
   text-align: right;
-  flex-grow: 1;
   width: 20%;
   padding: 5px 0px 0px 0px;
 }
 
 .transaction-time-date-spacer {
-  flex-grow: 1;
+  float: right;
+  font-size: 11px;
 }
 
 .transaction-account-name {
@@ -167,13 +158,12 @@
 }
 
 .transaction-amount-number {
+  float: left;
   font-size: 18px;
-  // line-height: 16px;
-  font-weight: 700;
+  font-weight: 600;
   min-width: 120px;
   display: inline-block;
   vertical-align: top;
-  padding: 3px 0px 0px 0px;
 }
 
 .transaction-stake-type {
@@ -192,71 +182,93 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   position: absolute;
-  max-width: 20%;
-  margin: 4px 0px 0px 36px;
+  max-width: 200px;
+  margin: 22px 0px 0px 32px;
 }
 
 .stake-transaction-ticket-price {
-  font-family: Inconsolata, monospace;
-  color: #c4cbd2;
-  font-size: 12px;
-  line-height: 11px;
-  margin-right: 22px;
-}
-
-.stake-transaction-ticket-reward {
-  font-family: Inconsolata, monospace;
-  color: #c4cbd2;
-  font-size: 12px;
-  line-height: 11px;
-  margin-left: 15px;
+  margin-right: 20px;
 }
 
 .transaction-stake-type-overview {
+  float: left;
   font-family: Inconsolata, monospace;
-  color: #596d81;
+  color: #0c1e3e;
   font-size: 15px;
-  line-height: 11px;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .transaction-stake-info-overview {
-  display: flex;
-  flex-direction: row;
+  float: left;
 }
 
 .transaction-info-price-reward {
-  display: flex;
-  flex-direction: row;
-  padding-top: 8px;
-}
-
-.transaction-info-overview-reward-icon {
-  background-image: @ticket-reward-icon;
-  background-repeat: no-repeat;
-  width: 12px;
-  height: 12px;
   position: absolute;
-}
-
-.transaction-info-overview-lock-icon {
-  background-image: @time-lock-icon;
-  background-repeat: no-repeat;
-  height: 12px;
-  width: 12px;
-  position: absolute;
-}
-
-.transaction-info-overview-days-to-vote {
-  display: flex;
-  margin-top: 8px;
   font-family: Inconsolata, monospace;
   color: #c4cbd2;
   font-size: 12px;
-  line-height: 11px;
+  margin-top: 16px;
+  margin-left: 32px;
+  width: 290px;
+}
+
+.stake-transaction-ticket-reward {
+  background-image: @ticket-reward-icon;
+  background-repeat: no-repeat;
+  background-size: 12px 12px;
+  background-position: 0px 4px;
+  padding-left: 15px;
+}
+
+.transaction-info-overview-days-to-vote {
+  background-image: @time-lock-icon;
+  background-repeat: no-repeat;
+  background-size: 12px 12px;
+  background-position: 0px 4px;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .transaction-info-overview-days-to-vote-number {
   margin-right: 4px;
   margin-left: 15px;
+}
+
+.history-content-nest {
+  .tx-history-row-wrapper {
+    display: flex;
+    flex-direction: column;
+    float: none;
+  }
+
+  .tx-history-row {
+    display: flex;
+    flex-basis: 80%;
+    justify-content: space-between;
+    line-height: 12px;
+    height: 32px;
+    width: 100%;
+  }
+
+  .transaction-info {
+    flex-grow: 2;
+  }
+
+  .transaction-time.date-spacer {
+    flex-grow: 1;
+  }
+
+  .transaction-amount-number {
+    padding: 3px 0px 0px 0px;
+    float: none;
+  }
+
+  .transaction-amount-hash {
+    margin: 5px 0px 0px 32px;
+  }
+
+  .transaction-time-date-spacer {
+    width: 20%;
+  }
 }
