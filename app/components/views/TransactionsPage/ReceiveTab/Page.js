@@ -11,6 +11,7 @@ const ReceivePage = ({
   onRequestAddress,
 }) => (
   <Aux>
+    <div className="tabbed-page-subtitle"><T id="receive.subtitle" m="Receive DCR"/></div>
     <div className="receive-content-nest">
       <div className="receive-content-nest-for-address">
         <div className="receive-content-nest-prefix">

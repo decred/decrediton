@@ -22,6 +22,7 @@ const ExportPage =
     setDestinationFile,
   }) => (
     <div className="tab-card export-tab">
+      <div className="tabbed-page-subtitle"><T id="export.subtitle" m="Export Transactions"/></div>
       <div className="export-selection">
         <InlineField label={<T id="export.select" m="Export Type" />}>
           <Select
