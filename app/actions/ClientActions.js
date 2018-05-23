@@ -9,7 +9,7 @@ import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./S
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { showSidebarMenu, showSidebar } from "./SidebarActions";
 import { push as pushHistory, goBack } from "react-router-redux";
-import { getWalletCfg } from "../config";
+import { getWalletCfg, getGlobalCfg } from "../config";
 import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
@@ -173,7 +173,17 @@ export const getWalletServiceAttempt = () => (dispatch, getState) => {
   const { daemon: { walletName } } = getState();
   dispatch({ type: GETWALLETSERVICE_ATTEMPT });
   wallet.getWalletService(sel.isTestNet(getState()), walletName, address, port)
-    .then(walletService => dispatch(getWalletServiceSuccess(walletService)))
+    .then(async walletService => {
+      dispatch(getWalletServiceSuccess(walletService));
+      const config = getGlobalCfg();
+      const lastBlockHeight = config.get("last_height");
+      const currentBlockHeight = sel.currentBlockHeight(getState());
+      
+      const transactionsSinceLastOppenned = await walletGetTransactions(walletService, lastBlockHeight, currentBlockHeight, 0)
+      console.log(transactionsSinceLastOppenned)
+      console.log("\n\n")
+      
+    })
     .catch(error => dispatch({ error, type: GETWALLETSERVICE_FAILED }));
 };
 
