@@ -76,12 +76,13 @@ class TicketListPage extends React.Component{
 
     return (
       <Aux>
-        {(visibleCards.length > 0
-          ? <Aux>
+        {(visibleCards.length > 0 ?
+          <Aux>
+            <div className="tabbed-page-subtitle"><T id="myTickets.subtitle" m="My Tickets"/></div>
             <TicketsCardList>{visibleCards}</TicketsCardList>
             <Paginator {...{ totalPages, currentPage, onPageChanged: this.onPageChanged }} />
-          </Aux>
-          : <T id="myTickets.noTicketsWithStatus" m="No tickets found" />
+          </Aux> :
+          <T id="myTickets.noTicketsWithStatus" m="No tickets found" />
         )}
         <SlateGrayButton key="back" className="ticket-list-back-btn" onClick={this.goBack}>
           <T id="ticketList.backBtn" m="Back" />

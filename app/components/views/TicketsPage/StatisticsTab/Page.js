@@ -14,6 +14,7 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets }) =>
   if (allTickets.length === 0) return <NoStats />;
   return (
     <Aux>
+      <div className="tabbed-page-subtitle"><T id="statistics.subtitle" m="Statistics"/></div>
       {hasStats ?
         <div className="my-tickets-stats-links">
           <ChartLink to="/tickets/statistics/voteTime" icon="vote-time"><T id="mytickets.stats.voteTime" m="Vote Time" /></ChartLink>
