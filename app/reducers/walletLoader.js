@@ -68,11 +68,13 @@ export default function walletLoader(state = {}, action) {
     return { ...state,
       stepIndex: 1,
       existingOrNew: true,
+      createNewWallet: false,
     };
   case CREATEWALLET_GOBACK_EXISITNG_OR_NEW:
     return { ...state,
       confirmNewSeed: false,
       existingOrNew: true,
+      createNewWallet: false,
     };
   case CREATEWALLET_NEWSEED_CONFIRM_INPUT:
     return { ...state,
@@ -90,12 +92,16 @@ export default function walletLoader(state = {}, action) {
       createWalletInputRequest: true,
       createWalletExisting: true,
       existingOrNew: false,
+      createNewWallet: true,
+      stepIndex: 2,
     };
   case CREATEWALLET_NEWSEED_INPUT:
     return { ...state,
       createWalletInputRequest: true,
       createWalletExisting: false,
       existingOrNew: false,
+      createNewWallet: true,
+      stepIndex: 2,
     };
   case CREATEWALLET_ATTEMPT:
     return { ...state,
