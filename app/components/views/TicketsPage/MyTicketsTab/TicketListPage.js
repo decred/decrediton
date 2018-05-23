@@ -78,7 +78,6 @@ class TicketListPage extends React.Component{
       <Aux>
         {(visibleCards.length > 0 ?
           <Aux>
-            <div className="tabbed-page-subtitle"><T id="myTickets.subtitle" m="My Tickets"/></div>
             <TicketsCardList>{visibleCards}</TicketsCardList>
             <Paginator {...{ totalPages, currentPage, onPageChanged: this.onPageChanged }} />
           </Aux> :
