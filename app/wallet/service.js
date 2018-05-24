@@ -1,6 +1,6 @@
 import Promise from "promise";
 import * as client from "middleware/grpc/client";
-import { reverseHash } from "../helpers/byteActions";
+import { reverseHash, strHashToRaw, reverseRawHash } from "../helpers/byteActions";
 import { withLog as log, withLogNoData, logOptionNoResponseData } from "./index";
 import * as api from "middleware/walletrpc/api_pb";
 
@@ -90,7 +90,6 @@ export function formatTransaction(block, transaction, index) {
   const fee = transaction.getFee();
   const type = transaction.getTransactionType();
   let direction = "";
-
 
   let debitAccounts = [];
   transaction.getDebitsList().forEach((debit) => debitAccounts.push(debit.getPreviousAccount()));
@@ -184,6 +183,28 @@ export const getTransactions = (walletService, startBlockHeight,
       endBlockHeight, targetTransactionCount, dataCb)
       .then(() => resolve({ mined, unmined }))
       .catch(reject);
+  });
+
+export const getTransaction = (walletService, txHash) =>
+  new Promise((resolve, reject) => {
+    var request = new api.GetTransactionRequest();
+    request.setTransactionHash(strHashToRaw(txHash));
+    walletService.getTransaction(request, (err, resp) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      // wallet.GetTransaction doesn't return block height/timestamp information
+      const block = {
+        getHash: resp.getBlockHash,
+        getHeight: () => -1,
+        getTimestamp: () => -1,
+      };
+      const index = -1; // wallet.GetTransaction doesn't return the index
+      const tx = formatTransaction(block, resp.getTransaction(), index);
+      resolve(tx);
+    });
   });
 
 export const publishUnminedTransactions = log((walletService) => new Promise((resolve, reject) => {

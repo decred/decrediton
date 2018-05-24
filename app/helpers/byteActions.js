@@ -11,3 +11,8 @@ export function reverseHash(s) {
 export function reverseRawHash(arr) {
   return reverseHash(Buffer.from(arr).toString("hex"));
 }
+
+// strHashToRaw converts a (reversed) string hash into an Uint8Array.
+export function strHashToRaw(hash) {
+  return new Uint8Array(Buffer.from(hash, "hex").reverse());
+}
