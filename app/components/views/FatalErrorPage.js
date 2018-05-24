@@ -3,7 +3,7 @@ import { fatalErrorPage } from "connectors";
 import { KeyBlueButton, RemoveDaemonButton } from "buttons";
 import "style/Layout.less";
 
-const resourcesUnavailableError = "resources temp";
+const resourcesUnavailableError = "resource temporarily unavailable";
 
 const corruptedError = "corrupted";
 
