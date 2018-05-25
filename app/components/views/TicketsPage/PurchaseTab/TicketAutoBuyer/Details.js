@@ -1,34 +1,10 @@
 import { FeeInput, FixedDcrInput, PercentInput, IntegerInput } from "inputs";
 import { KeyBlueButton } from "buttons";
-import { FormattedMessage as T, defineMessages } from "react-intl";
-
-const messages = defineMessages({
-  balanceToMaintain: {
-    id: "autobuyer.balanceToMaintain",
-    defaultMessage: "Balance to Maintain",
-  },
-  maxFee: {
-    id: "autobuyer.maxFee",
-    defaultMessage: "Max Fee",
-  },
-  maxPriceAbsolute: {
-    id: "autobuyer.maxPriceAbsolute",
-    defaultMessage: "Max Price Absolute",
-  },
-  maxPriceRelative: {
-    id: "autobuyer.maxPriceRelative",
-    defaultMessage: "Max Price Relative",
-  },
-  maxPerBlock: {
-    id: "autobuyer.maxPerBlock",
-    defaultMessage: "Max Per Block",
-  },
-});
+import { FormattedMessage as T } from "react-intl";
 
 const Details = ({
   isTicketAutoBuyerConfigDirty,
   getTicketBuyerConfigResponse,
-  formatMessage,
   maxFeeError,
   balanceToMaintainError,
   maxPriceAbsoluteError,
@@ -59,7 +35,6 @@ const Details = ({
         <div className="stakepool-purchase-ticket-num-input">
           <div className="stakepool-input-form-purchase-ticket">
             <FixedDcrInput
-              placeholder={formatMessage(messages.balanceToMaintain)}
               value={balanceToMaintain}
               onChange={onChangeBalanceToMaintain}
               invalid={balanceToMaintainError}
@@ -78,7 +53,6 @@ const Details = ({
         <div className="stakepool-purchase-ticket-num-input">
           <div className="stakepool-input-form-purchase-ticket">
             <FeeInput
-              placeholder={formatMessage(messages.maxFee)}
               value={maxFee}
               onChange={onChangeMaxFee}
               invalid={maxFeeError}
@@ -98,7 +72,6 @@ const Details = ({
         <div className="stakepool-purchase-ticket-num-input">
           <div className="stakepool-input-form-purchase-ticket">
             <FixedDcrInput
-              placeholder={formatMessage(messages.maxPriceAbsolute)}
               value={maxPriceAbsolute}
               onChange={onChangeMaxPriceAbsolute}
               invalid={maxPriceAbsoluteError}
@@ -115,7 +88,6 @@ const Details = ({
         </div></div>
         <div className="stakepool-purchase-ticket-num-input">
           <PercentInput
-            placeholder={formatMessage(messages.maxPriceRelative)}
             value={maxPriceRelative}
             onChange={onChangeMaxPriceRelative}
             invalid={maxPriceRelativeError}
@@ -134,7 +106,6 @@ const Details = ({
         <div className="stakepool-purchase-ticket-num-input">
           <div className="stakepool-input-form-purchase-ticket">
             <IntegerInput
-              placeholder={formatMessage(messages.maxPerBlock)}
               value={maxPerBlock}
               onChange={onChangeMaxPerBlock}
               unit={<T id="autobuyer.maxPerBlock.units" m="tickets" />}
