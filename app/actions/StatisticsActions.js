@@ -12,15 +12,13 @@ export const GETSTARTUPSTATS_SUCCESS = "GETSTARTUPSTATS_SUCCESS";
 export const GETSTARTUPSTATS_FAILED = "GETSTARTUPSTATS_FAILED";
 
 // Calculates all startup statistics
-export const getStartupStats = () => (dispatch, getState) => {
+export const getStartupStats = () => (dispatch) => {
 
-  const { currentBlockHeight } = getState().grpc;
-  const chainParams = sel.chainParams(getState());
-  const blocksPerDay = (24*60*60) / chainParams.TargetTimePerBlock;
-  const endBlockHeight = currentBlockHeight - blocksPerDay * 16;
+  const endDate = new Date();
+  endDate.setDate(endDate.getDate()-16);
 
   const startupStats = [
-    { calcFunction: dailyBalancesStats, backwards: true, endBlockHeight },
+    { calcFunction: dailyBalancesStats, backwards: true, endDate },
   ];
 
   dispatch({ type: GETSTARTUPSTATS_ATTEMPT });
@@ -212,13 +210,13 @@ export const transactionStats = (opts) => (dispatch, getState) => {
     .catch(errorFunction);
 };
 
-export const balancesStats = (opts) => (dispatch, getState) => {
+export const balancesStats = (opts) => async (dispatch, getState) => {
   const { progressFunction, startFunction, endFunction, errorFunction } = opts;
 
   const { currentBlockHeight, walletService, decodeMessageService,
     recentBlockTimestamp, balances } = getState().grpc;
 
-  const backwards = true; //opts.backwards;
+  const backwards = opts.backwards;
 
   const chainParams = sel.chainParams(getState());
 
@@ -469,8 +467,6 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     const maturedDeltas = findMaturingDeltas(lastTxHeight+1, currentBlockHeight,
       lastTxTimestamp, recentBlockTimestamp || Date.now());
     maturedDeltas.forEach(addDelta);
-
-    endFunction();
   };
 
   // Closure to process transactions backwards. This is slightly tricky as
@@ -484,8 +480,6 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     let lastTxHeight = currentBlockHeight;
     let lastTxTimestamp = now.getTime() / 1000;
     const maturityBlocks = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
-
-    // progressFunction(now, currentBalance);
 
     for (let i = 0; i < mined.length; i++) {
       const tx = mined[i];
@@ -509,15 +503,57 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       lastTxHeight = tx.height;
       lastTxTimestamp = delta.timestamp;
     }
-    endFunction();
   };
 
-  const startBlock = backwards ? currentBlockHeight : opts.endBlockHeight||0;
-  const endBlock = backwards ? opts.endBlockHeight||1 : currentBlockHeight;
+  let startBlock = backwards ? currentBlockHeight : 1;
+  let endBlock = backwards ? 1 : currentBlockHeight;
+  const callback = backwards ? txDataCbBackwards : txDataCb;
+  const pageSize = 20;
+  const pageDir = backwards ? -1 : +1;
+  const endDate = opts.endDate;
+  const maxMaturity = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
+  let currentDate = new Date();
+  let currentBlock = startBlock;
+  let continueGetting = true;
+  const toProcess = [];
 
-  wallet.getTransactions(walletService, startBlock, endBlock)
-    .then(backwards ? txDataCbBackwards : txDataCb)
-    .catch(errorFunction);
+  try {
+    // now, grab transactions in batches of (roughly) `pageSize`
+    // transactions, so that if we can stop in the middle of the process
+    // (say, because we're interested in only the first 10 days worth of
+    // balances)
+    while (continueGetting) {
+      const { mined } = await wallet.getTransactions(walletService, currentBlock,
+        endBlock, pageSize);
+      if (mined.length > 0) {
+        const lastTx = mined[mined.length-1];
+        currentBlock = lastTx.height + pageDir;
+        currentDate = tsToDate(lastTx.timestamp);
+        toProcess.push(...mined);
+      }
+      continueGetting =
+        (mined.length > 0) &&
+        (currentBlock > 0) &&
+        (currentBlock < currentBlockHeight) &&
+        ((!endDate) || (endDate && !backwards && currentDate < endDate) || (endDate && backwards && currentDate > endDate)) ;
+    }
+
+    // grab all txs that are ticket/coinbase maturity blocks from the last tx
+    // so that we can account for tickets and votes maturing
+    endBlock = currentBlock + maxMaturity * pageDir;
+    if ((currentBlock > 0) && (currentBlock < currentBlockHeight)) {
+      const { mined } = await wallet.getTransactions(walletService, currentBlock,
+        endBlock, 0);
+      if (mined && mined.length > 0) {
+        toProcess.push(...mined);
+      }
+    }
+
+    await callback({ mined: toProcess });
+    endFunction();
+  } catch (err) {
+    errorFunction(err);
+  }
 };
 
 export const dailyBalancesStats = (opts) => {
@@ -553,14 +589,12 @@ export const dailyBalancesStats = (opts) => {
   const aggProgressFunction = (time, series) => {
     if (differentDays(time, lastDate)) {
       if (lastDate) {
-        console.log("progress ", endOfDay(lastDate), balance);
         progressFunction(endOfDay(lastDate), balance);
       }
       const { delta } = series;
       balance = { ...series, sent: delta.sent, received: delta.received,
         voted: delta.voted, revoked: delta.revoked, ticket: delta.ticket };
       lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
-      console.log("diff days", time, series);
     } else {
       const { delta } = series;
       const balanceSeries = backwards ? balance : series;
@@ -572,13 +606,11 @@ export const dailyBalancesStats = (opts) => {
         revoked: balance.revoked + delta.revoked,
         ticket: balance.ticket + delta.ticket,
       };
-      console.log("else     ", time, series);
     }
   };
 
   const aggEndFunction = () => {
     progressFunction(endOfDay(lastDate), balance);
-    console.log("progress ", endOfDay(lastDate), balance);
     endFunction();
   };
 
