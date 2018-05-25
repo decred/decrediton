@@ -5,10 +5,12 @@ import { FormattedMessage as T } from "react-intl";
 const VoteTimeChartPage = ({ voteTimeStats, averageVoteTime, medianVoteTime, ninetyFifthPercentileVoteTime }) => {
   return (
     <Aux>
-      <div className="my-tickets-stats-chart">
-        <VoteTimeChart data={voteTimeStats}  />
-      </div>
       <div className="my-tickets-stats-indicators">
+        <div className="my-tickets-stats-indicators-row">
+          <span className="my-tickets-stats-indicators-title">
+            <T id="mytickets.statistics.votetime.title" m="Vote Time" />
+          </span>
+        </div>
         <div className="my-tickets-stats-indicators-row">
           <div className="my-tickets-stats-indicators-label">
             <T id="mytickets.statistics.votetime.average.label" m="Average vote time:" />
@@ -38,6 +40,9 @@ const VoteTimeChartPage = ({ voteTimeStats, averageVoteTime, medianVoteTime, nin
               values={{ value: ninetyFifthPercentileVoteTime }} />
           </div>
         </div>
+      </div>
+      <div className="my-tickets-stats-chart">
+        <VoteTimeChart data={voteTimeStats}  />
       </div>
     </Aux>
   );
