@@ -422,6 +422,7 @@ export const balancesStats = (opts) => async (dispatch, getState) => {
     currentBalance = balances.reduce((cb, acct) => {
       cb.spendable += acct.spendable;
       cb.immature += acct.immatureStakeGeneration + acct.immatureReward;
+      cb.locked += acct.lockedByTickets;
       return cb;
     }, currentBalance);
   }
