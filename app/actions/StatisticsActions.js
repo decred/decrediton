@@ -408,9 +408,8 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     }
 
     if (backwards) {
-      const fields = [ "spendable", "locked", "lockedNonWallet", "voted",
-        "revoked", "sent", "received", "stakeFees", "stakeRewards",
-        "totalStake", "immature", "immatureNonWallet", "ticket" ];
+      const fields = [ "spendable", "locked", "lockedNonWallet", "stakeFees",
+        "stakeRewards", "totalStake", "immature", "immatureNonWallet" ];
       fields.forEach(f => delta[f] = -delta[f]);
     }
 
@@ -431,7 +430,7 @@ export const balancesStats = (opts) => (dispatch, getState) => {
 
   // account for this delta in the balances and call the progress function
   let addDelta = (delta) => {
-    backwards && progressFunction(tsToDate(delta.timestamp), currentBalance);
+    backwards && progressFunction(tsToDate(delta.timestamp), { ...currentBalance, delta });
 
     currentBalance = {
       spendable: currentBalance.spendable + delta.spendable,
@@ -531,6 +530,8 @@ export const dailyBalancesStats = (opts) => {
   const backwards = opts.backwards;
 
   const differentDays = (d1, d2) =>
+    (!d1) ||
+    (!d2) ||
     (d1.getYear() !== d2.getYear()) ||
     (d1.getMonth() !== d2.getMonth()) ||
     (d1.getDate() !== d2.getDate());
@@ -550,13 +551,16 @@ export const dailyBalancesStats = (opts) => {
   };
 
   const aggProgressFunction = (time, series) => {
-    if (!lastDate) {
+    if (differentDays(time, lastDate)) {
+      if (lastDate) {
+        console.log("progress ", endOfDay(lastDate), balance);
+        progressFunction(endOfDay(lastDate), balance);
+      }
+      const { delta } = series;
+      balance = { ...series, sent: delta.sent, received: delta.received,
+        voted: delta.voted, revoked: delta.revoked, ticket: delta.ticket };
       lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
-      balance = { ...series, sent: 0, received: 0, voted: 0, revoked: 0, ticket: 0 };
-    } else if (differentDays(time, lastDate)) {
-      progressFunction(endOfDay(lastDate), balance);
-      balance = { ...series, sent: 0, received: 0, voted: 0, revoked: 0, ticket: 0 };
-      lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
+      console.log("diff days", time, series);
     } else {
       const { delta } = series;
       const balanceSeries = backwards ? balance : series;
@@ -568,11 +572,13 @@ export const dailyBalancesStats = (opts) => {
         revoked: balance.revoked + delta.revoked,
         ticket: balance.ticket + delta.ticket,
       };
+      console.log("else     ", time, series);
     }
   };
 
   const aggEndFunction = () => {
     progressFunction(endOfDay(lastDate), balance);
+    console.log("progress ", endOfDay(lastDate), balance);
     endFunction();
   };
 
