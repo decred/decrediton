@@ -32,6 +32,7 @@ class AddAccountModal extends React.Component {
   }
 
   setName(name) {
+    if (name == "") this.setState({ hasFailedAttempt: true });
     this.setState({ name });
   }
 

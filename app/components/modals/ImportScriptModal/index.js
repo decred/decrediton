@@ -33,6 +33,7 @@ class ImportScriptModal extends React.Component {
   }
 
   setScript(script) {
+    if (script == "") this.setState({ hasFailedAttempt: true });
     this.setState({ script });
   }
 
