@@ -12,10 +12,15 @@ export const GETSTARTUPSTATS_SUCCESS = "GETSTARTUPSTATS_SUCCESS";
 export const GETSTARTUPSTATS_FAILED = "GETSTARTUPSTATS_FAILED";
 
 // Calculates all startup statistics
-export const getStartupStats = () => (dispatch) => {
+export const getStartupStats = () => (dispatch, getState) => {
+
+  const { currentBlockHeight } = getState().grpc;
+  const chainParams = sel.chainParams(getState());
+  const blocksPerDay = (24*60*60) / chainParams.TargetTimePerBlock;
+  const endBlockHeight = currentBlockHeight - blocksPerDay * 16;
 
   const startupStats = [
-    { calcFunction: dailyBalancesStats, backwards: true  },
+    { calcFunction: dailyBalancesStats, backwards: true, endBlockHeight },
   ];
 
   dispatch({ type: GETSTARTUPSTATS_ATTEMPT });
@@ -27,6 +32,7 @@ export const getStartupStats = () => (dispatch) => {
       // changes with the previous balance, taking care to set sent/received
       // balances to 0
       dailyBalances = dailyBalances.data.slice(0, 15).reverse();
+      //dailyBalances = dailyBalances.data.slice(-15);
       console.log(dailyBalances);
       const lastBalances = [];
 
@@ -207,13 +213,12 @@ export const transactionStats = (opts) => (dispatch, getState) => {
 };
 
 export const balancesStats = (opts) => (dispatch, getState) => {
-  console.log(opts);
   const { progressFunction, startFunction, endFunction, errorFunction } = opts;
 
   const { currentBlockHeight, walletService, decodeMessageService,
     recentBlockTimestamp, balances } = getState().grpc;
 
-  const backwards = true ; // opts.backwards;
+  const backwards = true; //opts.backwards;
 
   const chainParams = sel.chainParams(getState());
 
@@ -413,6 +418,8 @@ export const balancesStats = (opts) => (dispatch, getState) => {
 
   // account for this delta in the balances and call the progress function
   let addDelta = (delta) => {
+    backwards && progressFunction(tsToDate(delta.timestamp), currentBalance);
+
     currentBalance = {
       spendable: currentBalance.spendable + delta.spendable,
       immature: currentBalance.immature + delta.immature,
@@ -426,7 +433,8 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     };
     currentBalance.total = currentBalance.spendable + currentBalance.locked +
       currentBalance.immature;
-    progressFunction(tsToDate(delta.timestamp), currentBalance);
+
+    !backwards && progressFunction(tsToDate(delta.timestamp), currentBalance);
   };
 
   let lastTxHeight = 0;
@@ -465,7 +473,7 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     let lastTxTimestamp = now.getTime() / 1000;
     const maturityBlocks = Math.max(chainParams.CoinbaseMaturity, chainParams.TicketMaturity);
 
-    progressFunction(now, currentBalance);
+    // progressFunction(now, currentBalance);
 
     for (let i = 0; i < mined.length; i++) {
       const tx = mined[i];
@@ -475,7 +483,9 @@ export const balancesStats = (opts) => (dispatch, getState) => {
       while ((j < mined.length) && (mined[j].height >= tx.height - maturityBlocks)) {
         // this tx might influence the balance of tx[i]. So calculate its delta,
         // which will fill `maturingTxs` as needed
-        toAddDeltas[j] = await(txBalancesDelta(mined[j]));
+        if (!toAddDeltas[j]) {
+          toAddDeltas[j] = await(txBalancesDelta(mined[j]));
+        }
         j++;
       }
 
@@ -483,6 +493,7 @@ export const balancesStats = (opts) => (dispatch, getState) => {
         tx.timestamp, lastTxTimestamp);
       maturedDeltas.forEach(addDelta);
       addDelta(delta);
+      console.log("xxx", tsToDate(delta.timestamp), delta);
 
       lastTxHeight = tx.height;
       lastTxTimestamp = delta.timestamp;
@@ -490,8 +501,9 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     endFunction();
   };
 
-  const startBlock = backwards ? currentBlockHeight : 0;
-  const endBlock = backwards ? 1 : currentBlockHeight;
+  const startBlock = backwards ? currentBlockHeight : opts.endBlockHeight||0;
+  const endBlock = backwards ? opts.endBlockHeight||1 : currentBlockHeight;
+
   wallet.getTransactions(walletService, startBlock, endBlock)
     .then(backwards ? txDataCbBackwards : txDataCb)
     .catch(errorFunction);
@@ -503,6 +515,8 @@ export const dailyBalancesStats = (opts) => {
   let lastDate = null;
   let balance = { spendable: 0, locked: 0, total: 0, sent: 0, received: 0,
     voted: 0, revoked: 0, ticket: 0 };
+
+  const backwards = opts.backwards;
 
   const differentDays = (d1, d2) =>
     (d1.getYear() !== d2.getYear()) ||
@@ -526,20 +540,27 @@ export const dailyBalancesStats = (opts) => {
   const aggProgressFunction = (time, series) => {
     if (!lastDate) {
       lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
+      balance = { ...series, sent: 0, received: 0, voted: 0, revoked: 0, ticket: 0 };
+      console.log("!lastDate", lastDate, balance);
     } else if (differentDays(time, lastDate)) {
+      console.log("progress", lastDate, balance);
       progressFunction(endOfDay(lastDate), balance);
-      balance = { ...balance, sent: 0, received: 0, voted: 0, revoked: 0, ticket: 0 };
+      balance = { ...series, sent: 0, received: 0, voted: 0, revoked: 0, ticket: 0 };
       lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
+      console.log("switched to", lastDate, balance);
+    } else {
+      const { delta } = series;
+      const balanceSeries = backwards ? balance : series;
+      balance = {
+        ...balanceSeries,
+        sent: balance.sent + delta.sent,
+        received: balance.received + delta.received,
+        voted: balance.voted + delta.voted,
+        revoked: balance.revoked + delta.revoked,
+        ticket: balance.ticket + delta.ticket,
+      };
+      console.log("else", lastDate, balance);
     }
-    const { delta } = series;
-    balance = {
-      ...series,
-      sent: balance.sent + delta.sent,
-      received: balance.received + delta.received,
-      voted: balance.voted + delta.voted,
-      revoked: balance.revoked + delta.revoked,
-      ticket: balance.ticket + delta.ticket,
-    };
   };
 
   const aggEndFunction = () => {
