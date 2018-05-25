@@ -34,6 +34,7 @@ const SendPage = ({
   ...props
 }) => (
   <Aux>
+    <div className="tabbed-page-subtitle"><T id="send.subtitle" m="Send DCR"/></div>
     <div className="send-flex-height">
       <div className="send-select-account-area">
         <div className="send-label"><T id="send.from" m="From" />:</div>

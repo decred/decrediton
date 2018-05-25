@@ -16,6 +16,7 @@ const Logs = ({
 }
 ) => (
   <Aux>
+    <div className="tabbed-page-subtitle"><T id="logs.subtitle" m="System Logs"/></div>
     {!isDaemonRemote && isDaemonStarted ?
       !showDcrdLogs ?
         <div className="log-area hidden">

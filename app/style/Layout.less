@@ -84,7 +84,7 @@
 .tabbed-page-header,
 .standalone-page-header {
   background-color: #fff;
-  padding: 53px 60px 0px 100px;
+  padding: 42px 60px 0px 63px;
   position: absolute;
   top: 0px;
   right: 0px;
@@ -116,33 +116,47 @@
 
 .tabbed-page-header > .title-header-title,
 .standalone-page-header > .title-header-title {
-  margin-bottom: 14px;
+  margin-bottom: 3px;
   color: #596d81;
   font-size: 27px;
+  line-height: 34px;
+  float: left;
 }
 
 .tabbed-page-header > .title-header-icon,
 .standalone-page-header > .title-header-icon {
-  position: absolute;
-  top: 50px;
-  left: 50px;
+  float: left;
+  margin-right: 10px;
+  margin-top: 1px;
 }
 
 .tabbed-page-header > .description-header,
 .standalone-page-header > .description-header {
   white-space: pre-wrap;
-  color: #48566e;
+  color: #0c1e3e;
   font-size: 13px;
-  line-height: 17px;
+  float: left;
+  width: 100%;
+  margin-left: 42px;
+}
+
+.tabbed-page-header > .tabs > .tab {
+  margin-right: 55px;
 }
 
 .description-header > .description-header-action-button {
-  float: right;
+  position: absolute;
+  right: 80px;
+}
+
+.description-header > .description-header-action-button > .button {
+  min-width: 76px;
 }
 
 .tabbed-page-header > .tabs {
   position: absolute;
   bottom: 0px;
+  left: 100px;
 }
 
 .tabbed-page-header > .tabs > .tab {
@@ -169,8 +183,16 @@
   top: 0px;
   bottom: 0px;
   left: 0px;
-  padding: 60px 60px 30px 60px;
+  padding: 38px 80px 30px 63px;
   background-color: @background-container;
+}
+
+.tabbed-page-subtitle {
+  color: #596d81;
+  font-size: 20px;
+  line-height: 25px;
+  margin-bottom: 17px;
+  margin-left: 42px;
 }
 
 .component-tab-content {
