@@ -15,7 +15,7 @@ export const GETSTARTUPSTATS_FAILED = "GETSTARTUPSTATS_FAILED";
 export const getStartupStats = () => (dispatch) => {
 
   const startupStats = [
-    { calcFunction: dailyBalancesStats },
+    { calcFunction: dailyBalancesStats, backwards: true  },
   ];
 
   dispatch({ type: GETSTARTUPSTATS_ATTEMPT });
@@ -26,7 +26,8 @@ export const getStartupStats = () => (dispatch) => {
       // some of the balances, so we need to fill the gaps of days without
       // changes with the previous balance, taking care to set sent/received
       // balances to 0
-      dailyBalances = dailyBalances.data.slice(-15);
+      dailyBalances = dailyBalances.data.slice(0, 15).reverse();
+      console.log(dailyBalances);
       const lastBalances = [];
 
       const date = endOfDay(new Date());
@@ -86,7 +87,7 @@ export const generateStat = (opts) => (dispatch) => new Promise((resolve, reject
     stat.data.push({ time, series });
   };
 
-  dispatch(calcFunction({ opts, startFunction, progressFunction, endFunction, errorFunction }));
+  dispatch(calcFunction({ ...opts, startFunction, progressFunction, endFunction, errorFunction }));
 });
 
 export const EXPORT_STARTED = "EXPORT_STARTED";
@@ -206,12 +207,13 @@ export const transactionStats = (opts) => (dispatch, getState) => {
 };
 
 export const balancesStats = (opts) => (dispatch, getState) => {
+  console.log(opts);
   const { progressFunction, startFunction, endFunction, errorFunction } = opts;
 
   const { currentBlockHeight, walletService, decodeMessageService,
     recentBlockTimestamp, balances } = getState().grpc;
 
-  const backwards = !!opts.backwards;
+  const backwards = true ; // opts.backwards;
 
   const chainParams = sel.chainParams(getState());
 
@@ -390,7 +392,7 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     if (backwards) {
       const fields = [ "spendable", "locked", "lockedNonWallet", "voted",
         "revoked", "sent", "received", "stakeFees", "stakeRewards",
-        "totalStake", "immatureNonWallet" ];
+        "totalStake", "immature", "immatureNonWallet", "ticket" ];
       fields.forEach(f => delta[f] = -delta[f]);
     }
 
