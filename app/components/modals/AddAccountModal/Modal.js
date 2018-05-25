@@ -15,7 +15,6 @@ const Modal = ({
       <TextInput
         autoFocus
         required
-        requiredMessage={<T id="addAccountModal.errors.noAccountName" m="*Please enter your new account name" />}
         showErrors={hasFailedAttempt}
         id="name"
         type="text"
