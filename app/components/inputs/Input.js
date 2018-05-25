@@ -58,7 +58,7 @@ class Input extends React.Component{
     return (
       hidden ? null :
         <Aux>
-          <div className={this.state.divClassName} ref={div => { this.state.inputUnitDiv = div; }}>
+          <div className={invalid && value || required && !value ? this.state.divClassName + " error" : this.state.divClassName} ref={div => { this.state.inputUnitDiv = div; }}>
             <input
               ref={input => { this.input = input; }}
               type={type||"text"}
