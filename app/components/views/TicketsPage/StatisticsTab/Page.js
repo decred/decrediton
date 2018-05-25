@@ -3,26 +3,25 @@ import { FormattedMessage as T } from "react-intl";
 import VoteTimeChartPage from "./charts/VoteTime";
 import StakeROIChartPage from "./charts/StakeROI";
 import { DecredLoading, NoStats } from "indicators";
-
-const ChartLink = ({ to, icon, children }) =>
-  <Link to={to} activeClassName="my-tickets-active-chart-link">
-    <span className={[ "icon", icon ].join(" ")}></span>
-    <div>{children}</div>
-  </Link>;
+import { Tooltip } from "shared";
 
 const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets }) => {
   if (allTickets.length === 0) return <NoStats />;
   return (
     <Aux>
-      <div className="tabbed-page-subtitle"><T id="statistics.subtitle" m="Statistics"/></div>
-      {hasStats ?
-        <div className="my-tickets-stats-links">
-          <ChartLink to="/tickets/statistics/voteTime" icon="vote-time"><T id="mytickets.stats.voteTime" m="Vote Time" /></ChartLink>
-          <ChartLink to="/tickets/statistics/roi" icon="roi"><T id="mytickets.stats.roi" m="ROI" /></ChartLink>
-        </div> :
-        <div className="my-tickets-stats-links-empty">
-        </div>
-      }
+      <div className="tabbed-page-subtitle"><T id="statistics.subtitle" m="Statistics"/>
+        {hasStats ?
+          <div className="my-tickets-stats-links">
+            <Tooltip text={<T id="mytickets.statistics.votetime.title" m="Vote Time" />}>
+              <Link to="/tickets/statistics/voteTime" activeClassName="my-tickets-active-chart-link vote-time" className="vote-time"/>
+            </Tooltip>
+            <Tooltip text={<T id="mytickets.statistics.roi.title" m="ROI" />}>
+              <Link to="/tickets/statistics/roi" activeClassName="my-tickets-active-chart-link roi" className="roi"/>
+            </Tooltip>
+          </div> :
+          <div />
+        }
+      </div>
       <div className="my-tickets-charts">
         {getMyTicketsStatsRequest ? <DecredLoading /> :
           <Switch>
