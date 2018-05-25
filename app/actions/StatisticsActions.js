@@ -282,38 +282,51 @@ export const balancesStats = (opts) => (dispatch, getState) => {
     let res = [];
     for (let h = start; test(h); h += inc) {
       if (!maturingTxs[h]) continue;
-      maturingTxs[h].forEach(({ tx, amount, isWallet, isTicket }) => {
-        let timestamp;
-        if (fromHeight === toHeight) {
-          // fromHeigh === toHeight === h, so toTimestamp is already the block
-          // maturation timestamp
-          timestamp = toTimestamp;
-        } else if (largeStakeTimeDiff) {
-          // this way of estimating the timestamp is better when the differences
-          // between fromHeight/toHeight are bigger than the maturity period, so
-          // we don't have information more accurate than TargetTimePerBlock
-          timestamp = fromTimestamp + (h - fromHeight) * chainParams.TargetTimePerBlock;
-        } else {
-          // the next transactions all happen after after toTimestamp, so the
-          // stake amount *definitely* matured on a block between these times.
-          // Since we don't have a good index of blockHeight => timestamp to use,
-          // estimate the maturation timestamp by linearly interpolating the
-          // times as if the blocks between fromHeight...toHeight were mined in
-          // regular intervals
-          timestamp = fromTimestamp + ((h - fromHeight) * blockInterval);
-        }
 
-        res.push({
-          spendable: !isTicket ? amount*inc : 0, // isTicket == false means vote, revoke, coinbase
-          immature: isWallet ? -amount*inc : 0,
-          immatureNonWallet: isWallet ? 0 : -amount*inc,
-          locked: isWallet && isTicket ? amount*inc : 0,
-          lockedNonWallet: !isWallet && isTicket ? amount*inc : 0,
-          voted: 0, revoked: 0, sent: 0, received: 0, ticket: 0,
-          stakeRewards: 0, stakeFees: 0, totalStake: 0,
-          timestamp, tx });
+      let timestamp;
+      if (fromHeight === toHeight) {
+        // fromHeigh === toHeight === h, so toTimestamp is already the block
+        // maturation timestamp
+        timestamp = toTimestamp;
+      } else if (largeStakeTimeDiff) {
+        // this way of estimating the timestamp is better when the differences
+        // between fromHeight/toHeight are bigger than the maturity period, so
+        // we don't have information more accurate than TargetTimePerBlock
+        timestamp = fromTimestamp + (h - fromHeight) * chainParams.TargetTimePerBlock;
+      } else {
+        // the next transactions all happen after after toTimestamp, so the
+        // stake amount *definitely* matured on a block between these times.
+        // Since we don't have a good index of blockHeight => timestamp to use,
+        // estimate the maturation timestamp by linearly interpolating the
+        // times as if the blocks between fromHeight...toHeight were mined in
+        // regular intervals
+        timestamp = fromTimestamp + ((h - fromHeight) * blockInterval);
+      }
+
+      const maturedThisHeight = {
+        spendable: 0, immature: 0, immatureNonWallet: 0, locked: 0,
+        lockedNonWallet: 0,
+        voted: 0, revoked: 0, sent: 0, received: 0, ticket: 0,
+        stakeRewards: 0, stakeFees: 0, totalStake: 0,
+        timestamp: timestamp, tx: null
+      };
+
+      maturingTxs[h].forEach(({ tx, amount, isWallet, isTicket }) => {
+        // res.push({
+        maturedThisHeight.spendable += !isTicket ? amount*inc : 0; // isTicket == false means vote, revoke, coinbase
+        maturedThisHeight.immature += isWallet ? -amount*inc : 0;
+        maturedThisHeight.immatureNonWallet +=  isWallet ? 0 : -amount*inc;
+        maturedThisHeight.locked += isWallet && isTicket ? amount*inc : 0;
+        maturedThisHeight.lockedNonWallet += !isWallet && isTicket ? amount*inc : 0;
+        maturedThisHeight.tx = tx;
+        // voted: 0, revoked: 0, sent: 0, received: 0, ticket: 0,
+        // stakeRewards: 0, stakeFees: 0, totalStake: 0,
+        // timestamp, tx });
       });
+
+      res.push(maturedThisHeight);
     }
+
     return res;
   };
 
@@ -489,11 +502,10 @@ export const balancesStats = (opts) => (dispatch, getState) => {
         j++;
       }
 
-      const maturedDeltas = findMaturingDeltas(tx.height, lastTxHeight,
+      const maturedDeltas = findMaturingDeltas(tx.height+1, lastTxHeight,
         tx.timestamp, lastTxTimestamp);
       maturedDeltas.forEach(addDelta);
       addDelta(delta);
-      console.log("xxx", tsToDate(delta.timestamp), delta);
 
       lastTxHeight = tx.height;
       lastTxTimestamp = delta.timestamp;
@@ -541,13 +553,10 @@ export const dailyBalancesStats = (opts) => {
     if (!lastDate) {
       lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
       balance = { ...series, sent: 0, received: 0, voted: 0, revoked: 0, ticket: 0 };
-      console.log("!lastDate", lastDate, balance);
     } else if (differentDays(time, lastDate)) {
-      console.log("progress", lastDate, balance);
       progressFunction(endOfDay(lastDate), balance);
       balance = { ...series, sent: 0, received: 0, voted: 0, revoked: 0, ticket: 0 };
       lastDate = new Date(time.getFullYear(), time.getMonth(), time.getDate());
-      console.log("switched to", lastDate, balance);
     } else {
       const { delta } = series;
       const balanceSeries = backwards ? balance : series;
@@ -559,7 +568,6 @@ export const dailyBalancesStats = (opts) => {
         revoked: balance.revoked + delta.revoked,
         ticket: balance.ticket + delta.ticket,
       };
-      console.log("else", lastDate, balance);
     }
   };
 
