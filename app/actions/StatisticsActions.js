@@ -30,8 +30,6 @@ export const getStartupStats = () => (dispatch) => {
       // changes with the previous balance, taking care to set sent/received
       // balances to 0
       dailyBalances = dailyBalances.data.slice(0, 15).reverse();
-      //dailyBalances = dailyBalances.data.slice(-15);
-      console.log(dailyBalances);
       const lastBalances = [];
 
       const date = endOfDay(new Date());
