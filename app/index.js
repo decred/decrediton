@@ -37,6 +37,7 @@ var initialState = {
       proxyLocation: globalCfg.get("proxy_location"),
     },
     settingsChanged: false,
+    uiAnimations: globalCfg.get("ui_animations"),
   },
   stakepool: {
     currentStakePoolConfig: null,

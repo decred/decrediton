@@ -1,5 +1,5 @@
 import MenuLink from "./MenuLink";
-import { routing } from "connectors";
+import { routing, theming } from "connectors";
 import { FormattedMessage as T } from "react-intl";
 import { spring, Motion } from "react-motion";
 import theme from "theme";
@@ -52,7 +52,21 @@ class MenuLinks extends React.Component {
     return { top: spring(newTop, theme("springs.sideBar")) };
   }
 
+  getAnimatedCaret() {
+    return (
+      <Motion style={ { top: this.state.top } }>
+        { style => <div className="menu-caret" {...{ style }}/> }
+      </Motion>
+    );
+  }
+
+  getStaticCaret() {
+    return <div className="menu-caret" style={ { top: this.state.top.val } } />;
+  }
+
   render () {
+    const caret = this.props.uiAnimations ? this.getAnimatedCaret : this.getStaticCaret();
+
     return (
       <Aux>
         { linkList.map(({ path, link, icon }) =>
@@ -60,12 +74,10 @@ class MenuLinks extends React.Component {
             {link}
           </MenuLink>
         )}
-        <Motion style={ { top: this.state.top } }>
-          { style => <div className="menu-caret" {...{ style }}/> }
-        </Motion>
+        {caret}
       </Aux>
     );
   }
 }
 
-export default routing(MenuLinks);
+export default routing(theming(MenuLinks));

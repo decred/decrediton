@@ -1,7 +1,7 @@
 import { Switch, Route, matchPath } from "react-router-dom";
 import { isArray } from "util";
 import { RoutedTabsHeader, RoutedTab } from "shared";
-import { routing } from "connectors";
+import { routing, theming } from "connectors";
 import { TransitionMotion, spring } from "react-motion";
 import theme from "theme";
 import { createElement } from "react";
@@ -84,6 +84,58 @@ class TabbedPage extends React.Component {
     return { opacity: spring(0, theme("springs.tab")) };
   }
 
+  // returns the state.styles in a static container, without animations.
+  staticStyles() {
+    return (
+      <Aux>
+        {this.state.styles.map(s =>
+          <div className="tab-content visible" key={s.key}>
+            {s.data.element}
+          </div>
+        )}
+      </Aux>
+    );
+  }
+
+  // returns the state.styles wrapped in a TransitionMotion, to show the animations
+  animatedStyles() {
+    return (
+      <TransitionMotion
+        styles={this.state.styles}
+        willLeave={this.willLeave}
+        willEnter={this.willEnter}
+      >
+        {interpolatedStyles => {
+          return (<Aux>
+            {interpolatedStyles.map(s => {
+              return (
+                <div
+                  className={[ "tab-content", Math.abs(s.style.left) < 0.1 ? "visible" : "" ].join(" ")}
+                  style={{ left: s.style.left, right: -s.style.left }}
+                  key={s.key}
+                >
+                  {s.data.element}
+                </div>
+              );
+            })}
+            <TransitionMotion
+              styles={this.scrollbarOverlayGetStyles(interpolatedStyles.length !== 1)}
+              willLeave={this.scrollbarOverlayWillLeave}
+            >
+              {sbStyle => {
+                return <Aux>
+                  {sbStyle.map(s =>
+                    <div className="scrollbar-overlay" key={s.key} style={{ opacity: s.style.opacity }} />
+                  )}
+                </Aux>;
+              }}
+            </TransitionMotion>
+          </Aux>);
+        }}
+      </TransitionMotion>
+    );
+  }
+
   render() {
     let { children, header } = this.props;
     if (!isArray(children)) children = [ children ];
@@ -97,6 +149,8 @@ class TabbedPage extends React.Component {
       <Route key={c.props.path} path={c.props.path} component={c.props.header} />
     );
 
+    const tabContents = this.props.uiAnimations ? this.animatedStyles() : this.staticStyles();
+
     return (
       <div className="tabbed-page">
         <div className="tabbed-page-header">
@@ -106,40 +160,7 @@ class TabbedPage extends React.Component {
         </div>
 
         <div className="tabbed-page-body">
-          <TransitionMotion
-            styles={this.state.styles}
-            willLeave={this.willLeave}
-            willEnter={this.willEnter}
-          >
-            {interpolatedStyles => {
-              return (<Aux>
-                {interpolatedStyles.map(s => {
-                  return (
-                    <div
-                      className={[ "tab-content", Math.abs(s.style.left) < 0.1 ? "visible" : "" ].join(" ")}
-                      style={{ left: s.style.left, right: -s.style.left }}
-                      key={s.key}
-                    >
-                      {s.data.element}
-                    </div>
-                  );
-                })}
-                <TransitionMotion
-                  styles={this.scrollbarOverlayGetStyles(interpolatedStyles.length !== 1)}
-                  willLeave={this.scrollbarOverlayWillLeave}
-                >
-                  {sbStyle => {
-                    return <Aux>
-                      {sbStyle.map(s =>
-                        <div className="scrollbar-overlay" key={s.key} style={{ opacity: s.style.opacity }} />
-                      )}
-                    </Aux>;
-                  }}
-                </TransitionMotion>
-              </Aux>);
-            }}
-          </TransitionMotion>
-
+          {tabContents}
           {nonTabs}
         </div>
       </div>
@@ -147,4 +168,4 @@ class TabbedPage extends React.Component {
   }
 }
 
-export default routing(TabbedPage);
+export default routing(theming(TabbedPage));

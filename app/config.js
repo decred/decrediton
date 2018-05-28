@@ -78,6 +78,9 @@ export function initGlobalCfg() {
   if (!config.has("set_language")) {
     config.set("set_language","true");
   }
+  if (!config.has("ui_animations")) {
+    config.set("ui_animations", true);
+  }
   if (!config.has("show_tutorial")) {
     config.set("show_tutorial","true");
   }

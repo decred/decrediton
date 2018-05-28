@@ -2,9 +2,10 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { IntlProvider } from "react-intl";
 import MUItheme from "materialUITheme";
 import { defaultFormats } from "i18n/locales";
-import app from "connectors/app";
+import { app, theming } from "connectors";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
+import { StaticSwitch } from "shared";
 import GetStartedContainer from "./GetStarted";
 import WalletContainer from "./Wallet";
 import ShutdownAppPage from "components/views/ShutdownAppPage";
@@ -78,6 +79,8 @@ class App extends React.Component {
 
   render() {
     const { locale } = this.props;
+    const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
+
     return (
       <MuiThemeProvider muiTheme={MUItheme}>
         <IntlProvider
@@ -89,12 +92,12 @@ class App extends React.Component {
           <Aux>
             <Switch><Redirect from="/" exact to="/getStarted" /></Switch>
             <Snackbar/>
-            <AnimatedSwitch {...topLevelAnimation} className="top-level-container">
+            <MainSwitch {...topLevelAnimation} className="top-level-container">
               <Route path="/getStarted"  component={GetStartedContainer} />
               <Route path="/shutdown"    component={ShutdownAppPage} />
               <Route path="/error"       component={FatalErrorPage} />
               <Route path="/"            component={WalletContainer} />
-            </AnimatedSwitch>
+            </MainSwitch>
             <div id="modal-portal" />
           </Aux>
         </IntlProvider>
@@ -103,4 +106,4 @@ class App extends React.Component {
   }
 }
 
-export default app(App);
+export default app(theming(App));
