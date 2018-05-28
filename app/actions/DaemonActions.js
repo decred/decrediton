@@ -3,7 +3,7 @@ import { stopNotifcations } from "./NotificationActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { ipcRenderer } from "electron";
-import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg } from "../config";
+import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, getGlobalCfg, setLastHeight } from "../config";
 import { hideSidebarMenu, showSidebar } from "./SidebarActions";
 import { isTestNet } from "selectors";
 import axios from "axios";
@@ -165,9 +165,14 @@ export const deleteDaemonData = () => (dispatch, getState) => {
 
 export const shutdownApp = () => (dispatch, getState) => {
   const { daemon: { walletName } } = getState();
+  const { currentBlockHeight } = getState().grpc;
   const cfg = getWalletCfg(isTestNet(getState()), walletName);
   if (walletName) {
     cfg.set("lastaccess", Date.now());
+  }
+  console.log(currentBlockHeight)
+  if(currentBlockHeight) {
+    setLastHeight(currentBlockHeight);
   }
   dispatch({ type: SHUTDOWN_REQUESTED });
   dispatch(stopNotifcations());
