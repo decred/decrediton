@@ -1,6 +1,6 @@
 import Promise from "promise";
 import * as client from "middleware/grpc/client";
-import { reverseHash, strHashToRaw, reverseRawHash } from "../helpers/byteActions";
+import { reverseHash, strHashToRaw } from "../helpers/byteActions";
 import { withLog as log, withLogNoData, logOptionNoResponseData } from "./index";
 import * as api from "middleware/walletrpc/api_pb";
 
