@@ -183,42 +183,41 @@ export const GETTRANSACTIONSSINCELASTOPPENED_FAILED = "GETTRANSACTIONSSINCELASTO
 export const GETTRANSACTIONSSINCELASTOPPENED_SUCCESS = "GETTRANSACTIONSSINCELASTOPPENED_SUCCESS";
 
 export const getTransactionsSinceLastOppened = () => async (dispatch, getState) => {
-  dispatch({type: GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT})
-  const transactionsSinceLastOpennedInfo = {
+  dispatch({ type: GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT });
+  const transactionsSinceLastOpenedInfo = {
     transactionsReceived: [],
     ticketsVoted:         [],
     ticketsRevoked:       [],
     totalReward:           0,
     totalDCR:              0,
-  }
+  };
   const config = getGlobalCfg();
   const lastBlockHeightSeen = config.get("last_height");
   const { currentBlockHeight, walletService } = getState().grpc;
-  
+
   try {
-    const { mined, unmined } = await walletGetTransactions(walletService, lastBlockHeightSeen, currentBlockHeight)
-    const transactions = [...mined, ...unmined];
+    const { mined, unmined } = await walletGetTransactions(walletService, lastBlockHeightSeen, currentBlockHeight);
+    const transactions = [ ...mined, ...unmined ];
 
     transactions.forEach( tx => {
       switch (tx.type) {
-        case TransactionDetails.TransactionType.REGULAR:
-          transactionsSinceLastOpennedInfo.totalDCR += tx.amount;
-          transactionsSinceLastOpennedInfo.transactionsReceived.push(tx);
-          break;
-        case TransactionDetails.TransactionType.VOTE:
-          transactionsSinceLastOpennedInfo.totalReward += tx.amount;
-          transactionsSinceLastOpennedInfo.ticketsVoted.push(tx);
-          break;
-        case TransactionDetails.TransactionType.REVOCATION:
-          transactionsSinceLastOpennedInfo.ticketsRevoked.push(tx);
-          break;
-        }
+      case TransactionDetails.TransactionType.REGULAR:
+        transactionsSinceLastOpenedInfo.totalDCR += tx.amount;
+        transactionsSinceLastOpenedInfo.transactionsReceived.push(tx);
+        break;
+      case TransactionDetails.TransactionType.VOTE:
+        transactionsSinceLastOpenedInfo.totalReward += tx.amount;
+        transactionsSinceLastOpenedInfo.ticketsVoted.push(tx);
+        break;
+      case TransactionDetails.TransactionType.REVOCATION:
+        transactionsSinceLastOpenedInfo.ticketsRevoked.push(tx);
+        break;
+      }
     });
-    dispatch({transactionsSinceLastOpenned: transactionsSinceLastOpennedInfo, type: GETTRANSACTIONSSINCELASTOPPENED_SUCCESS})
+    dispatch({ transactionsSinceLastOpened: transactionsSinceLastOpenedInfo, type: GETTRANSACTIONSSINCELASTOPPENED_SUCCESS });
   } catch (error) {
-    dispatch({error, type: GETTRANSACTIONSSINCELASTOPPENED_FAILED})
+    dispatch({ error, type: GETTRANSACTIONSSINCELASTOPPENED_FAILED });
   }
-  
 };
 
 export const GETTICKETBUYERSERVICE_ATTEMPT = "GETTICKETBUYERSERVICE_ATTEMPT";

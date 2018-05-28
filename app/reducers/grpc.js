@@ -89,7 +89,7 @@ export default function grpc(state = {}, action) {
       getTicketBuyerServiceRequestAttempt: false,
       ticketBuyerService: action.ticketBuyerService,
     };
-  case GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT: 
+  case GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT:
     return {
       ...state,
       getTransactionsSinceLastOpenedError: null,
@@ -99,14 +99,14 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       getTransactionsSinceLastOpenedAttempt: false,
-      transactionsSinceLastOpenned: action.transactionsSinceLastOpenned,
-    }
+      transactionsSinceLastOpened: action.transactionsSinceLastOpened,
+    };
   case GETTRANSACTIONSSINCELASTOPPENED_FAILED:
     return {
       ...state,
       getTransactionsSinceLastOpenedError: String(action.error),
       getTransactionsSinceLastOpenedAttempt: false,
-    }
+    };
   case GETBALANCE_ATTEMPT:
     return {
       ...state,

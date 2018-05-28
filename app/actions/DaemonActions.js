@@ -170,7 +170,6 @@ export const shutdownApp = () => (dispatch, getState) => {
   if (walletName) {
     cfg.set("lastaccess", Date.now());
   }
-  console.log(currentBlockHeight)
   if(currentBlockHeight) {
     setLastHeight(currentBlockHeight);
   }
