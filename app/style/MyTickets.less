@@ -146,7 +146,7 @@
 
 .my-tickets-charts {
   background: #fff;
-  padding: 35px 40px 20px 40px;
+  padding: 30px 0px 30px 0px;
   min-height: 230px;
 
   .new-logo-animation {
@@ -156,65 +156,48 @@
 }
 
 .my-tickets-stats-links {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.my-tickets-stats-links-empty {
-  width: 100%;
-  height: 87px;
+  float: right;
 }
 
 .my-tickets-stats-links a {
-  margin: 0px 10px 0px 10px;
-  padding: 5px;
-  display: inline-block;
-  vertical-align: top;
-  width: 92px;
-  text-align: center;
-  text-decoration: none;
-  color: #48566e;
+  float: left;
+  border-radius: 5px;
+  height: 30px;
+  width: 30px;
+  background-color: #f9fafa;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  background-position: 5px 5px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.16);
+  margin-left: 10px;
+  cursor: pointer;
 }
 
-.my-tickets-stats-links a:hover {
-  font-weight: 600;
+.my-tickets-stats-links a.vote-time {
+  background-image: @vote-time-stats-icon;
+}
+
+.my-tickets-stats-links a.my-tickets-active-chart-link.vote-time {
+  background-image: @vote-time-stats-active-icon;
+}
+
+.my-tickets-stats-links a.roi {
+  background-image: @roi-stats-icon;
+}
+
+.my-tickets-stats-links a.my-tickets-active-chart-link.roi {
+  background-image: @roi-stats-active-icon;
 }
 
 .my-tickets-stats-links a.my-tickets-active-chart-link {
-  border: 1px solid #48566e;
-  border-radius: 3px;
-  padding: 4px;
-  font-weight: 600;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.16);
+  background-color: #edeff1;
+  cursor: default;
 }
 
-.my-tickets-stats-links a .icon {
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  background-size: 26px;
-  background-repeat: no-repeat;
-  background-position: 3px 3px;
-  border-radius: 4px;
-}
-
-.my-tickets-stats-links a .icon.vote-time {
-  background-color: #96ebd1;
-  background-image: @vote-time-stats-icon;
-}
-
-.my-tickets-stats-links a.my-tickets-active-chart-link > .icon.vote-time,
-.my-tickets-stats-links a:hover > .icon.vote-time {
-  background-color: #87d3bc;
-}
-
-.my-tickets-stats-links a .icon.roi {
-  background-color: #699bff;
-  background-image: @vote-time-stats-icon;
-}
-
-.my-tickets-stats-links a.my-tickets-active-chart-link > .icon.roi,
-.my-tickets-stats-links a:hover > .icon.roi {
-  background-color: #5e8be5;
+.my-tickets-stats-links a:hover {
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.16);
+  background-color: #edeff1;
 }
 
 .my-tickets-stats-chart {
@@ -222,29 +205,34 @@
 }
 
 .my-tickets-stats-indicators {
-  width: 37%;
   float: left;
-  margin: 50px 0px 50px 0px;
-  border: 1px solid #48566e;
-  border-radius: 3px;
-  padding: 10px;
-  color: #48566e;
+  width: 250px;
+  margin: 0px 40px 0px 42px;
+  color: #0d1e3e;
 }
 
 .my-tickets-stats-indicators-row {
   float: left;
   width: 100%;
-  margin-top: 5px;
-  display: flex;
+  margin-bottom: 14px;
 }
 
 .my-tickets-stats-indicators-label {
   text-align: left;
-  flex-grow: 1;
+  float: left;
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.my-tickets-stats-indicators-title {
+  font-size: 19px;
+  line-height: 24px;
 }
 
 .my-tickets-stats-indicators-value {
   font-weight: 600;
+  font-size: 13px;
+  line-height: 19px;
+  float: right;
   text-align: right;
-  flex-grow: 2;
 }
