@@ -12,6 +12,7 @@ const messages = defineMessages({
 const CreateWalletForm = ({
   newWalletName,
   onChangeCreateWalletName,
+  hasFailedAttempt,
   intl
 }) => {
   return (
@@ -22,12 +23,11 @@ const CreateWalletForm = ({
         </div>
         <div className="advanced-daemon-input">
           <TextInput
-            type="text"
             required
             value={newWalletName}
             onChange={(e) => onChangeCreateWalletName(e.target.value)}
             placeholder={intl.formatMessage(messages.messageWalletNamePlaceholder)}
-            showErrors
+            showErrors={hasFailedAttempt}
           />
         </div>
       </div>
