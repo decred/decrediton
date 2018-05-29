@@ -16,8 +16,8 @@ const Title = ({ modalTitle }) => (
   </div>
 );
 
-const InfoModal = ({ modalTitle, modalContent, modalClassName, show, onCancelModal }) => (
-  <Modal className={"info-modal " + (modalClassName||"")} {...{ show }}>
+const InfoModal = ({ modalTitle, modalContent, modalClassName, show, onCancelModal, double }) => (
+  <Modal className={(double ? "info-modal double " : "info-modal ") + (modalClassName||"")} {...{ show }}>
     {modalTitle ? <Title {...{ modalTitle }} /> : null }
     <div className="info-modal-content">
       {modalContent}

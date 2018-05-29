@@ -34,7 +34,7 @@ const AccountsList = ({
     { isLoading ? <DecredLoading/> :
       <Aux>
         <div className="account-content-title-buttons-area">
-          <InfoDocModalButton document="BalanceOverviewInfo" modalClassName="info-modal-fields" />
+          <InfoDocModalButton document="BalanceOverviewInfo" modalClassName="info-modal-fields" double/>
         </div>
         <div className="account-content-nest">
           {accounts.map(account => (
