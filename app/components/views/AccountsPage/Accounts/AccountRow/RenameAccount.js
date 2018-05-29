@@ -28,22 +28,20 @@ const RenameAccount = ({
       <div className="account-row-details-bottom-rename-name">
         <T id="accounts.newName" m="New Account Name" />:
       </div>
-      <div className="account-row-details-bottom-spec-value">
-        <div className="account-input-form">
-          <TextInput
-            required
-            autoFocus={true}
-            key={"rename" + account.accountNumber}
-            placeholder={intl.formatMessage(messages.newNamePlaceholder)}
-            maxLength="50"
-            value={renameAccountName}
-            onChange={(e) => updateRenameAccountName(e.target.value)}
-            showErrors={hasFailedAttempt || (renameAccountName && renameAccountName.length > 50)}
-          />
-        </div>
+      <div className="account-row-details-bottom-rename-field">
+        <TextInput
+          required
+          autoFocus={true}
+          key={"rename" + account.accountNumber}
+          placeholder={intl.formatMessage(messages.newNamePlaceholder)}
+          maxLength="50"
+          value={renameAccountName}
+          onChange={(e) => updateRenameAccountName(e.target.value)}
+          showErrors={hasFailedAttempt || (renameAccountName && renameAccountName.length > 50)}
+        />
       </div>
     </div>
-    <div className="account-form-buttons">
+    <div className="account-rename-form-buttons">
       <KeyBlueButton
         className="content-confirm-new-account"
         onClick={renameAccount}>
