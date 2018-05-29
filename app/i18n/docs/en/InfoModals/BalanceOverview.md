@@ -1,7 +1,5 @@
 # Balance Information
 
----
-
 **Total** This is the total balance controlled by this account currently.
 
 **Spendable Balance** The spendable/accessible balance for the this account.

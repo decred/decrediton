@@ -1,7 +1,5 @@
 # Ticket Purchase Information
 
----
-
 **Account** This is the account that will purchase the tickets and receive the reward.
 
 **Number of tickets** The number of tickets to attempt to purchase.

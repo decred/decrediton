@@ -1,5 +1,5 @@
 import Modal from "../Modal";
-import { SlateGrayButton } from "buttons";
+import { KeyBlueButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import PropTypes from "prop-types";
 
@@ -19,12 +19,12 @@ const Title = ({ modalTitle }) => (
 const InfoModal = ({ modalTitle, modalContent, modalClassName, show, onCancelModal }) => (
   <Modal className={"info-modal " + (modalClassName||"")} {...{ show }}>
     {modalTitle ? <Title {...{ modalTitle }} /> : null }
-    <SlateGrayButton className="info-modal-close-button" onClick={onCancelModal}>
-      <T id="infoModal.btnClose" m="Close" />
-    </SlateGrayButton>
     <div className="info-modal-content">
       {modalContent}
     </div>
+    <KeyBlueButton className="info-modal-close-button" onClick={onCancelModal}>
+      <T id="infoModal.btnClose" m="Got it" />
+    </KeyBlueButton>
   </Modal>
 );
 
