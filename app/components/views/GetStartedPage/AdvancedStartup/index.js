@@ -30,6 +30,12 @@ class AdvancedStartupBody extends React.Component {
       rpc_cert: rpc_cert,
       rpc_host: rpc_host,
       rpc_port: rpc_port,
+      rpcUserHasFailedAttempt: false,
+      rpcPasswordHasFailedAttempt: false,
+      rpcHostHasFailedAttempt: false,
+      rpcPortHasFailedAttempt: false,
+      rpcCertHasFailedAttempt: false,
+      appDataHasFailedAttempt: false,
       appData: getAppdataPath(),
     };
   }
@@ -78,45 +84,71 @@ class AdvancedStartupBody extends React.Component {
   }
 
   setRpcUser(rpc_user) {
-    setRemoteCredentials("rpc_user", rpc_user);
+    if (rpc_user == "") {
+      this.setState({ rpcUserHasFailedAttempt: true });
+    }
     this.setState({ rpc_user });
   }
 
   setRpcPass(rpc_password) {
-    setRemoteCredentials("rpc_password", rpc_password);
+    if (rpc_password == "") {
+      this.setState({ rpcPasswordHasFailedAttempt: true });
+    }
     this.setState({ rpc_password });
   }
 
   setRpcHost(rpc_host) {
-    setRemoteCredentials("rpc_host", rpc_host);
+    if (rpc_host == "") {
+      this.setState({ rpcHostHasFailedAttempt: true });
+    }
     this.setState({ rpc_host });
   }
 
   setRpcPort(rpc_port) {
-    setRemoteCredentials("rpc_port", rpc_port);
+    if (rpc_port == "") {
+      this.setState({ rpcPortHasFailedAttempt: true });
+    }
     this.setState({ rpc_port });
   }
 
   setRpcCert(rpc_cert) {
-    setRemoteCredentials("rpc_cert", rpc_cert);
+    if (rpc_cert == "") {
+      this.setState({ rpcCertHasFailedAttempt: true });
+    }
     this.setState({ rpc_cert });
   }
 
   setAppData(appData) {
-    setAppdataPath(appData);
+    if (appData == "") {
+      this.setState({ appDataHasFailedAttempt: true });
+    }
     this.setState({ appData });
   }
 
   onSubmitRemoteForm() {
-    if (!this.isRemoteValid()) return;
+    if (!this.isRemoteValid()) {
+      this.setState({ rpcUserHasFailedAttempt: true, rpcPasswordHasFailedAttempt: true, rpcHostHasFailedAttempt: true, rpcPortHasFailedAttempt: true, rpcCertHasFailedAttempt: true });
+      return;
+    }
     const { rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port } = this.state;
+    setRemoteCredentials("rpc_user", rpc_user);
+    setRemoteCredentials("rpc_password", rpc_password);
+    setRemoteCredentials("rpc_host", rpc_host);
+    setRemoteCredentials("rpc_port", rpc_port);
+    setRemoteCredentials("rpc_cert", rpc_cert);
     let args = { rpc_user, rpc_password, rpc_cert, rpc_host, rpc_port };
     this.props.onStartDaemon(args);
   }
 
   onSubmitAppDataForm() {
-    if (!this.isAppDataValid()) return;
-    this.props.onStartDaemon(null, this.state.appData);
+    const { appData } = this.state;
+    if (!this.isAppDataValid()) {
+      this.setState({ appDataHasFailedAttempt: true });
+      return;
+    }
+    console.log(!this.isAppDataValid(), !!(appData), appData);
+    setAppdataPath(appData);
+    this.props.onStartDaemon(null, appData);
   }
 
   isRemoteValid() {

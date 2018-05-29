@@ -15,7 +15,8 @@ class WalletSelectionBody extends React.Component {
       createNewWallet: true,
       createWalletForm: false,
       newWalletName: "",
-      selectedWallet: this.props.availableWallets ? this.props.availableWallets[0] : null
+      selectedWallet: this.props.availableWallets ? this.props.availableWallets[0] : null,
+      hasFailedAttempt: false,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -49,6 +50,7 @@ class WalletSelectionBody extends React.Component {
       newWalletNetwork,
       createWalletForm,
       editWallets,
+      hasFailedAttempt
     } = this.state;
     return (
       <WalletSelectionFormBody
@@ -63,6 +65,7 @@ class WalletSelectionBody extends React.Component {
           hideCreateWalletForm,
           selectedWallet,
           newWalletName,
+          hasFailedAttempt,
           newWalletNetwork,
           onEditWallets,
           onCloseEditWallets,
@@ -85,17 +88,21 @@ class WalletSelectionBody extends React.Component {
     this.setState({ createNewWallet, createWalletForm: true });
   }
   hideCreateWalletForm(createNewWallet) {
-    this.setState({ createNewWallet, createWalletForm: false });
+    this.setState({ hasFailedAttempt: false, createNewWallet, createWalletForm: false });
   }
   onChangeAvailableWallets(selectedWallet) {
     this.setState({ selectedWallet });
   }
   onChangeCreateWalletName(newWalletName) {
+    if (newWalletName == "") {
+      this.setState({ hasFailedAttempt: true });
+    }
     this.setState({ newWalletName });
   }
   createWallet() {
     const { newWalletName, createNewWallet } = this.state;
     if (newWalletName == "" ) {
+      this.setState({ hasFailedAttempt: true });
       return;
     }
     this.props.onCreateWallet(

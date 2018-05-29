@@ -12,6 +12,7 @@ const messages = defineMessages({
 const AppDataForm = ({
   setAppData,
   appData,
+  appDataHasFailedAttempt,
   intl
 }) => {
 
@@ -23,10 +24,12 @@ const AppDataForm = ({
         </div>
         <div className="advanced-daemon-input">
           <PathBrowseInput
+            required
             type="directory"
             value={appData}
             onChange={(value) => setAppData(value)}
             placeholder={intl.formatMessage(messages.appdataFieldPlaceholder)}
+            showErrors={appDataHasFailedAttempt}
           />
         </div>
       </div>

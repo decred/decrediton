@@ -45,10 +45,12 @@ class ChangePassphraseModal extends React.Component {
   }
 
   updatePrivatePassphrase(privPass) {
+    if (privPass == "" ) this.setState({ hasFailedAttempt: true });
     this.setState({ privPass });
   }
 
   updateConfirmPrivatePassphrase(confirmPrivPass) {
+    if (confirmPrivPass == "" ) this.setState({ hasFailedAttempt: true });
     this.setState({ confirmPrivPass, confirmPrivPassError: false });
   }
 

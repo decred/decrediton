@@ -24,7 +24,6 @@ const Modal = ({
     >
       <PasswordInput
         required
-        requiredMessage={<T id="changePassModal.newPassphraseRequired" m="*Please type your new passphrase" />}
         showErrors={hasFailedAttempt}
         id="passphrase"
         placeholder=""
@@ -38,7 +37,7 @@ const Modal = ({
     >
       <PasswordInput
         invalid={!!confirmPrivPassError}
-        invalidMessage={<T id="changePassModal.confirmMismatch" m="*New passphrase and confirmation don't match" />}
+        invalidMessage={<T id="changePassModal.confirmMismatch" m="New passphrase and confirmation don't match" />}
         showErrors={hasFailedAttempt}
         id='confirmPassphrase'
         placeholder=""

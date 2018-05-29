@@ -303,14 +303,14 @@ class Send extends React.Component {
   getAddressError(key) {
     const { outputs } = this.state;
     const { destination, destinationInvalid } = outputs[key].data;
-    if (!destination || destinationInvalid) return <T id="send.errors.invalidAddress" m="*Please enter a valid address" />;
+    if (!destination || destinationInvalid) return <T id="send.errors.invalidAddress" m="Please enter a valid address" />;
   }
 
   getAmountError(key) {
     const { outputs, isSendAll } = this.state;
     const { amount } = outputs[key].data;
-    if (isNaN(amount) && !isSendAll) return <T id="send.errors.invalidAmount" m="*Please enter a valid amount" /> ;
-    if (amount <= 0 && !isSendAll) return <T id="send.errors.negativeAmount" m="*Please enter a valid amount (> 0)" />;
+    if (isNaN(amount) && !isSendAll) return <T id="send.errors.invalidAmount" m="Please enter a valid amount" /> ;
+    if (amount <= 0 && !isSendAll) return <T id="send.errors.negativeAmount" m="Please enter a valid amount (> 0)" />;
   }
 }
 

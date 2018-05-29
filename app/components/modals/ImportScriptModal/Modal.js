@@ -15,7 +15,6 @@ const Modal = ({
       <TextInput
         autoFocus
         required
-        requiredMessage={<T id="importScriptModal.errors.noScript" m="*Please enter your script" />}
         showErrors={hasFailedAttempt}
         id="script"
         type="text"

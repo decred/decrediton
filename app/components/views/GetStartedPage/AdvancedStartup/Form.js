@@ -22,6 +22,12 @@ const AdvancedBodyBase = ({
   rpccert,
   rpchost,
   rpcport,
+  rpcUserHasFailedAttempt,
+  rpcPasswordHasFailedAttempt,
+  rpcHostHasFailedAttempt,
+  rpcPortHasFailedAttempt,
+  rpcCertHasFailedAttempt,
+  appDataHasFailedAttempt,
   appData,
   intl,
   ...props,
@@ -52,6 +58,11 @@ const AdvancedBodyBase = ({
             rpccert,
             rpchost,
             rpcport,
+            rpcUserHasFailedAttempt,
+            rpcPasswordHasFailedAttempt,
+            rpcHostHasFailedAttempt,
+            rpcPortHasFailedAttempt,
+            rpcCertHasFailedAttempt,
             intl
           }}
           /> :
@@ -59,6 +70,7 @@ const AdvancedBodyBase = ({
             ...props,
             setAppData,
             appData,
+            appDataHasFailedAttempt,
             intl
           }} />
         }

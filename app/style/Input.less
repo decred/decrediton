@@ -1,4 +1,5 @@
 @import (reference) "./main.less";
+@import (reference) "./Icons.less";
 
 .input-and-unit {
   display: flex;
@@ -11,11 +12,19 @@
   padding: 3px 4px 1px 10px;
 }
 
+.input-and-unit.error {
+  border-bottom: 1px #fd704b solid;
+  background-size: 16px 16px;
+  background-position: 100% 3px;
+  background-repeat: no-repeat;
+  background-image: @warning-input;
+}
+
 .input-and-unit.numeric-input {
   font-family: @font-family-monospaced;
 }
 
-.input-and-unit:hover:not(.disabled):not(.active) {
+.input-and-unit:hover:not(.disabled):not(.active):not(.error) {
   color: @input-color-hovered;
   border-bottom: 1px @stroke-color-hovered solid;
 }
@@ -49,9 +58,10 @@
 .input-errors-area {
   text-align: left;
   color: @error-text-color;
-  font-size: 11px;
-  padding-top: 4px;
-  min-height: 2em;
+  font-size: 9px;
+  line-height: 11px;
+  padding-top: 3px;
+  margin-left: 10px;
 }
 
 .unit-area {

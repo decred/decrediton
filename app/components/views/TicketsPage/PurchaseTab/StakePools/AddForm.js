@@ -22,7 +22,8 @@ const StakePoolsAddForm = ({
   onChangeSelectedUnconfigured,
   onChangeApiKey,
   onSetStakePoolInfo,
-  onCancelAddStakePool
+  onCancelAddStakePool,
+  hasFailedAttempt
 }) => (
   <Aux>
     <div className="stakepool-add-title">
@@ -48,15 +49,13 @@ const StakePoolsAddForm = ({
           </div>
           <div className="stakepool-field-value">
             <TextInput
-              type="text"
+              required
+              showErrors={hasFailedAttempt}
               className="stakepool-add-apikey"
               placeholder={intl.formatMessage(messages.apiKeyPlaceholder)}
               value={apiKey}
               onChange={e => onChangeApiKey(e.target.value)}
             />
-          </div>
-          <div className="stakepool-field-value-error">
-            {apiKey ? null : <T id="stake.addPool.errors.noApiKey" m="*Please enter your API key" /> }
           </div>
         </div>
       </div>

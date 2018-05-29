@@ -8,7 +8,6 @@ export default ({ passPhrase, onSubmit, hasFailedAttempt, setPassPhrase, autoFoc
     <PasswordInput
       autoFocus={autoFocusPassword}
       required
-      requiredMessage={<T id="passphraseModal.errors.noPassphrase" m="*Please enter your private passphrase" />}
       id="passphrase"
       placeholder=""
       value={passPhrase}
