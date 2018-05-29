@@ -19,13 +19,13 @@ class Modal extends React.Component {
   }
 
   render() {
-    const { children, className } = this.props;
+    const { children, className, expandSideBar } = this.props;
     const domNode = document.getElementById("modal-portal");
 
     return ReactDOM.createPortal(
       <Aux>
-        <div className="app-modal-overlay"></div>
-        <div className={"app-modal " + (className||"")}>
+        <div className={expandSideBar ? "app-modal-overlay" : "app-modal-overlay-reduced-bar"}></div>
+        <div className={(expandSideBar ? "app-modal " : "app-modal-reduced-bar ") + (className||"")}>
           {children}
         </div>
       </Aux>

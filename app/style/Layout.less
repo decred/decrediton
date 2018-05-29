@@ -8,10 +8,6 @@
   overflow-x: hidden;
 }
 
-.page-body.blur {
-  filter: blur(5px);
-}
-
 .page-view {
   height: 100%;
   width: calc(100% - @sidebar-width);
@@ -28,6 +24,11 @@
   right: 0px;
   background-color: #f3f6f6;
   overflow-x: hidden;
+}
+
+.page-view.blur,
+.page-view-reduced-bar.blur {
+  filter: blur(5px);
 }
 
 // Base definition for the "page client area" (area where main content is
