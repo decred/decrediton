@@ -36,6 +36,11 @@ const RemoteDaemonForm = ({
   rpc_cert,
   rpc_host,
   rpc_port,
+  rpcUserHasFailedAttempt,
+  rpcPasswordHasFailedAttempt,
+  rpcHostHasFailedAttempt,
+  rpcPortHasFailedAttempt,
+  rpcCertHasFailedAttempt,
   intl
 }) => {
   return (
@@ -46,12 +51,11 @@ const RemoteDaemonForm = ({
         </div>
         <div className="advanced-daemon-input">
           <TextInput
-            type="text"
             required
             value={rpc_user}
             onChange={(e) => setRpcUser(e.target.value)}
             placeholder={intl.formatMessage(messages.messageLoginPlaceholder)}
-            showErrors
+            showErrors={rpcUserHasFailedAttempt}
           />
         </div>
       </div>
@@ -61,12 +65,11 @@ const RemoteDaemonForm = ({
         </div>
         <div className="advanced-daemon-input">
           <PasswordInput
-            type="password"
             required
             value={rpc_password}
             onChange={(e) => setRpcPass(e.target.value)}
             placeholder={intl.formatMessage(messages.passphraseFieldPlaceholder)}
-            showErrors
+            showErrors={rpcPasswordHasFailedAttempt}
           />
         </div>
       </div>
@@ -76,10 +79,12 @@ const RemoteDaemonForm = ({
         </div>
         <div className="advanced-daemon-input">
           <PathBrowseInput
+            required
             type="file"
             value={rpc_cert}
             onChange={(value) => setRpcCert(value)}
             placeholder={intl.formatMessage(messages.certFieldPlaceholder)}
+            showErrors={rpcCertHasFailedAttempt}
           />
         </div>
       </div>
@@ -89,12 +94,11 @@ const RemoteDaemonForm = ({
         </div>
         <div className="advanced-daemon-input">
           <TextInput
-            type="text"
             required
             value={rpc_host}
             onChange={(e) => setRpcHost(e.target.value)}
             placeholder={intl.formatMessage(messages.hostFieldPlaceholder)}
-            showErrors
+            showErrors={rpcHostHasFailedAttempt}
           />
         </div>
       </div>
@@ -104,12 +108,11 @@ const RemoteDaemonForm = ({
         </div>
         <div className="advanced-daemon-input">
           <TextInput
-            type="text"
             required
             value={rpc_port}
             onChange={(e) => setRpcPort(e.target.value)}
             placeholder={intl.formatMessage(messages.portFieldPlaceholder)}
-            showErrors
+            showErrors={rpcPortHasFailedAttempt}
           />
         </div>
       </div>
