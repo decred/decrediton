@@ -9,28 +9,33 @@ class AccountRow extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = this.getInitialState();
+  }
+
+  getInitialState() {
+    return {
       isShowingRenameAccount: false,
       renameAccountName: null,
-      renameAccountNameError: null,
       renameAccountNumber: this.props.account.accountNumber,
       hidden: this.props.account.hidden,
+      hasFailedAttempt: false,
     };
   }
 
+  componentWillUnmount() {
+    this.setState(this.getInitialState());
+  }
+  
   updateRenameAccountName(accountName) {
-    if (accountName !== "") {
-      this.setState({ renameAccountName: accountName, renameAccountNameError: null });
+    if (accountName == "") {
+      this.setState({ hasFailedAttempt: true });
     }
+    this.setState({ renameAccountName: accountName });
   }
 
   renameAccount() {
-    var checkErrors = false;
     if (this.state.renameAccountName == "") {
-      this.setState({ renameAccountNameError: "*You must enter an account name" });
-      checkErrors = true;
-    }
-    if (checkErrors) {
+      this.setState({ hasFailedAttempt: true });
       return;
     }
     this.props.renameAccount(this.state.renameAccountNumber, this.state.renameAccountName);
@@ -77,7 +82,7 @@ class AccountRow extends React.Component {
       renameAccount,
       hideRenameAccount,
     } = this;
-    const { renameAccountNameError, renameAccountName } = this.state;
+    const { hasFailedAttempt, renameAccountName } = this.state;
     return [ {
       data: <RenameAccount
         {...{
@@ -87,7 +92,7 @@ class AccountRow extends React.Component {
           renameAccount,
           hideRenameAccount,
           intl,
-          renameAccountNameError,
+          hasFailedAttempt,
         }}
       />,
       key: "output_0",

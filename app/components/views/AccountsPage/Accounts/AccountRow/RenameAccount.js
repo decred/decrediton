@@ -16,7 +16,7 @@ const RenameAccount = ({
   renameAccount,
   hideRenameAccount,
   intl,
-  renameAccountNameError,
+  hasFailedAttempt
 }) => (
   <div className="account-row-details-bottom" key={"details" + account.accountNumber}>
     <div className="account-row-details-bottom-title">
@@ -31,19 +31,16 @@ const RenameAccount = ({
       <div className="account-row-details-bottom-spec-value">
         <div className="account-input-form">
           <TextInput
+            required
             autoFocus={true}
             key={"rename" + account.accountNumber}
-            type="text"
-            className="address-content-nest-address-hash-to"
             placeholder={intl.formatMessage(messages.newNamePlaceholder)}
             maxLength="50"
             value={renameAccountName}
             onChange={(e) => updateRenameAccountName(e.target.value)}
+            showErrors={hasFailedAttempt || (renameAccountName && renameAccountName.length > 50)}
           />
         </div>
-      </div>
-      <div className="account-form-input-error">
-        {renameAccountNameError}
       </div>
     </div>
     <div className="account-form-buttons">
@@ -66,7 +63,6 @@ RenameAccount.propTypes = {
   updateRenameAccountName: PropTypes.func.isRequired,
   renameAccount: PropTypes.func.isRequired,
   hideRenameAccount: PropTypes.func.isRequired,
-  renameAccountNameError: PropTypes.string,
   intl: PropTypes.object.isRequired
 };
 
