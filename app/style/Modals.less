@@ -119,12 +119,22 @@
   box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
 }
 
+.info-modal-documentation {
+  column-count: 2;
+}
+
 .info-modal-content h1 {
   font-size: 27px;
   line-height: 34px;
   font-weight: 400;
   margin-top: 0;
   margin-bottom: 8px;
+  column-span: all;
+}
+
+.info-modal-content p {
+  margin: 0 0 2em 0;
+  break-inside: avoid-page;
 }
 
 @media screen and (max-height: 420px) {
