@@ -65,7 +65,7 @@ class MenuLinks extends React.Component {
   }
 
   render () {
-    const caret = this.props.uiAnimations ? this.getAnimatedCaret : this.getStaticCaret();
+    const caret = this.props.uiAnimations ? this.getAnimatedCaret() : this.getStaticCaret();
 
     return (
       <Aux>
