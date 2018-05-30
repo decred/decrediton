@@ -80,16 +80,20 @@
 
 .app-modal.info-modal.double,
 .app-modal-reduced-bar.info-modal.double,
-.app-modal-standalone.info-modal.double {
+.app-modal-standalone.info-modal.double,
+.app-modal.passphrase-modal,
+.app-modal-reduced-bar.passphrase-modal {
   width: 540px;
   margin-top: 172px;
 }
 
-.app-modal.info-modal.double {
+.app-modal.info-modal.double,
+.app-modal.passphrase-modal {
   margin-left: 134px;
 }
 
-.app-modal-reduced-bar.info-modal.double {
+.app-modal-reduced-bar.info-modal.double,
+.app-modal-reduced-bar.passphrase-modal {
   margin-left: 252px;
 }
 
@@ -104,12 +108,9 @@
   text-transform: none;
 }
 
-.app-modal.passphrase-modal {
-  left: 10%;
-  right: 10%;
-  top: 20%;
+.app-modal.passphrase-modal,
+.app-modal-reduced-bar.passphrase-modal {
   z-index: 200;
-  border-radius: 5px;
   overflow-y: auto;
   padding: 2em;
   line-height: normal;
@@ -126,15 +127,9 @@
   margin-bottom: 8px;
 }
 
-@media screen and (min-width: 768px) {
-  .app-modal.passphrase-modal {
-    left: 25%;
-    width: 500px;
-  }
-}
-
 @media screen and (max-height: 420px) {
-  .app-modal.passphrase-modal {
+  .app-modal.passphrase-modal,
+  .app-modal.reduced-bar.passphrase-modal {
     top: 10%;
     max-height: 60%;
   }
