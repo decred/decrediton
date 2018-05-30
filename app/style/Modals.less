@@ -1,28 +1,32 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
-.app-modal-overlay {
+.app-modal-overlay,
+.app-modal-overlay-reduced-bar,
+.app-modal-overlay-standalone {
   position: fixed;
-  left: 296px;
   right: 0;
   top: 0;
   bottom: 0;
   z-index: 100;
   background-color: rgba(0, 0, 0, 0.05);
+}
+
+.app-modal-overlay {
+  left: 296px;
 }
 
 .app-modal-overlay-reduced-bar {
-  position: fixed;
   left: 60px;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 100;
-  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.app-modal-overlay-standalone {
+  left: 0;
 }
 
 .app-modal,
-.app-modal-reduced-bar {
+.app-modal-reduced-bar,
+.app-modal-standalone {
   position: fixed;
   color: #48566e;
   background-color: #fff;
@@ -40,14 +44,18 @@
   left: 60px;
 }
 
+.app-modal-standalone {
+  left: 0;
+}
+
 .app-modal.info-modal,
-.app-modal-reduced-bar.info-modal {
+.app-modal-reduced-bar.info-modal,
+.app-modal-standalone.info-modal {
   max-height: 70%;
   z-index: 200;
   overflow-y: auto;
   text-align: left;
   width: 262px;
-  margin-left: 272px;
   margin-top: 156px;
   background-image: @tickets-info-icon;
   background-size: 32px 32px;
@@ -58,11 +66,35 @@
   line-height: 17px;
 }
 
+.app-modal.info-modal {
+  margin-left: 272px;
+}
+
+.app-modal-reduced-bar.info-modal {
+  margin-left: 390px;
+}
+
+.app-modal-standalone.info-modal {
+  margin-left: 420px;
+}
+
 .app-modal.info-modal.double,
-.app-modal-reduced-bar.info-modal.double {
+.app-modal-reduced-bar.info-modal.double,
+.app-modal-standalone.info-modal.double {
   width: 540px;
-  margin-left: 134px;
   margin-top: 172px;
+}
+
+.app-modal.info-modal.double {
+  margin-left: 134px;
+}
+
+.app-modal-reduced-bar.info-modal.double {
+  margin-left: 252px;
+}
+
+.app-modal-standalone.info-modal.double {
+  margin-left: 282px;
 }
 
 .info-modal-close-button {
