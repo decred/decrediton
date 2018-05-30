@@ -193,10 +193,11 @@ export const getTransactionsSinceLastOppened = () => async (dispatch, getState) 
   };
   const config = getGlobalCfg();
   const lastBlockHeightSeen = config.get("last_height");
-  const { currentBlockHeight, walletService } = getState().grpc;
+  const { currentBlockHeight, walletService, recentTxSinceLastOpenedCount } = getState().grpc;
 
   try {
-    const { mined, unmined } = await walletGetTransactions(walletService, lastBlockHeightSeen, currentBlockHeight);
+    const { mined, unmined } =
+      await walletGetTransactions(walletService, lastBlockHeightSeen, currentBlockHeight, recentTxSinceLastOpenedCount);
     const transactions = [ ...mined, ...unmined ];
 
     transactions.forEach( tx => {
