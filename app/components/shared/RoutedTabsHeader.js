@@ -1,4 +1,4 @@
-import { routing } from "connectors";
+import { routing, theming } from "connectors";
 import { NavLink as Link } from "react-router-dom";
 import { spring, Motion } from "react-motion";
 import theme from "theme";
@@ -43,6 +43,28 @@ class RoutedTabsHeader extends React.Component {
     return { caretLeft, caretWidth };
   }
 
+  getAnimatedCaret() {
+    const caretStyle = {
+      left: spring(this.state.caretLeft, theme("springs.tab")),
+      width: spring(this.state.caretWidth, theme("springs.tab")),
+    };
+
+    return (
+      <Motion style={caretStyle}>
+        { style => <div className="tabs-caret"><div className="active" style={style}></div></div> }
+      </Motion>
+    );
+  }
+
+  getStaticCaret() {
+    const style = {
+      left: this.state.caretLeft,
+      width: this.state.caretWidth,
+    };
+
+    return <div className="tabs-caret"><div className="active" style={style}></div></div>;
+  }
+
   render() {
     const { tabs } = this.props;
 
@@ -54,17 +76,12 @@ class RoutedTabsHeader extends React.Component {
       </span>
     );
 
-    const caretStyle = {
-      left: spring(this.state.caretLeft, theme("springs.tab")),
-      width: spring(this.state.caretWidth, theme("springs.tab")),
-    };
+    const caret = this.props.uiAnimations ? this.getAnimatedCaret() : this.getStaticCaret();
 
     return (
       <div className="tabs">
         {tabLinks}
-        <Motion style={caretStyle}>
-          { style => <div className="tabs-caret"><div className="active" style={style}></div></div> }
-        </Motion>
+        {caret}
       </div>
     );
   }
@@ -74,4 +91,4 @@ RoutedTabsHeader.propTypes = {
   tabs: PropTypes.array.isRequired,
 };
 
-export default routing(RoutedTabsHeader);
+export default routing(theming(RoutedTabsHeader));

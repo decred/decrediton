@@ -1,5 +1,6 @@
 import { Route } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
+import { StaticSwitch } from "shared";
 import HomePage from "components/views/HomePage";
 import SettingsPage from "components/views/SettingsPage";
 import AccountsPage from "components/views/AccountsPage";
@@ -14,7 +15,7 @@ import TicketsPage from "components/views/TicketsPage";
 import TutorialsPage from "components/views/TutorialsPage";
 import SideBar from "components/SideBar";
 import { BlurableContainer } from "layout";
-import { walletContainer } from "connectors";
+import { walletContainer, theming } from "connectors";
 
 const pageAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActive: { opacity: 1 } };
 
@@ -22,10 +23,12 @@ const pageAnimation = { atEnter: { opacity: 0 }, atLeave: { opacity: 0 }, atActi
 class Wallet extends React.Component {
   render() {
     const { expandSideBar } = this.props;
+    const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
+
     return (
       <BlurableContainer className="page-body">
         <SideBar />
-        <AnimatedSwitch {...pageAnimation} className={expandSideBar ? "page-view" : "page-view-reduced-bar"}>
+        <MainSwitch {...pageAnimation} className={expandSideBar ? "page-view" : "page-view-reduced-bar"}>
           <Route path="/home"                           component={HomePage} />
           <Route path="/accounts"                       component={AccountsPage} />
           <Route path="/settings"                       component={SettingsPage} />
@@ -38,10 +41,10 @@ class Wallet extends React.Component {
           <Route path="/transactions"                   component={TransactionsPage} />
           <Route path="/tickets"                        component={TicketsPage} />
           <Route path="/tutorial"                       component={TutorialsPage} />
-        </AnimatedSwitch>
+        </MainSwitch>
       </BlurableContainer>
     );
   }
 }
 
-export default walletContainer(Wallet);
+export default walletContainer(theming(Wallet));

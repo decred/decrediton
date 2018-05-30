@@ -623,6 +623,7 @@ export const isConstructingTransaction = bool(constructTxRequestAttempt);
 
 export const tempSettings = get([ "settings", "tempSettings" ]);
 export const settingsChanged = get([ "settings", "settingsChanged" ]);
+export const uiAnimations = get([ "settings", "uiAnimations" ]);
 export const changePassphraseError = get([ "control", "changePassphraseError" ]);
 export const changePassphraseSuccess = get([ "control", "changePassphraseSuccess" ]);
 export const updatedStakePoolList = get([ "stakepool", "updatedStakePoolList" ]);
