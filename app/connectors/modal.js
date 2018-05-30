@@ -6,6 +6,7 @@ import * as ca from "../actions/ControlActions";
 
 const mapStateToProps = selectorMap({
   expandSideBar: sel.expandSideBar,
+  showingSidebarMenu: sel.showingSidebarMenu,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
