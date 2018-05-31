@@ -45,14 +45,12 @@ const VerifyMessageForm = ({
             <TextInput
               required
               value={address}
+              invalid={addressError}
               invalidMessage={addressError}
               onChange={e => onChangeAddress(e.target.value)}
               placeholder={formatMessage(messages.addressFieldPlaceholder)}
               showErrors={addressError}
             />
-            <div className="message-error">
-              {addressError && <span className="error">{addressError}</span>}
-            </div>
           </div>
         </div>
         <div className="security-center-form-row">
@@ -69,9 +67,6 @@ const VerifyMessageForm = ({
               placeholder={formatMessage(messages.signatureFieldPlaceholder)}
               showErrors={signatureError}
             />
-            <div className="message-error">
-              {signatureError && <span className="error">{signatureError}</span>}
-            </div>
           </div>
         </div>
         <div className="security-center-form-row">
@@ -88,9 +83,6 @@ const VerifyMessageForm = ({
               placeholder={formatMessage(messages.messageFieldPlaceholder)}
               showErrors={messageError}
             />
-            <div className="message-error">
-              {messageError && <span className="error">{messageError}</span>}
-            </div>
           </div>
         </div>
       </div>

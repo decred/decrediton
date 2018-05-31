@@ -36,13 +36,14 @@ const SignMessageForm = ({
           </div>
           <div className="security-center-form-row-field">
             <TextInput
+              required
               value={address}
+              invalid={addressError}
+              invalidMessage={addressError}
               onChange={(e) => onChangeAddress(e.target.value)}
               placeholder={formatMessage(messages.addressFieldPlaceholder)}
+              showErrors={addressError}
             />
-            <div className="message-error">
-              {addressError && <span className="error">*{addressError}</span>}
-            </div>
           </div>
         </div>
         <div className="security-center-form-row">
@@ -51,13 +52,14 @@ const SignMessageForm = ({
           </div>
           <div className="security-center-form-row-field-message">
             <TextInput
+              required
               value={message}
+              invalid={messageError}
+              invalidMessage={messageError}
               onChange={(e) => onChangeMessage(e.target.value)}
               placeholder={formatMessage(messages.messageFieldPlaceholder)}
+              showErrors={messageError}
             />
-            <div className="message-error">
-              {messageError && <span className="error">*{messageError}</span>}
-            </div>
           </div>
         </div>
       </div>
