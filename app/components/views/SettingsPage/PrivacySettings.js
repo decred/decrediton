@@ -34,7 +34,6 @@ const PrivacySettings = ({
   return (
     <div className="settings-privacy">
       <div className="settings-column-title"><T id="settings.privacy.title" m="Privacy" /></div>
-
       <div className="settings-column-content">
         <AllowableRequestType
           label={<T id="settings.privacy.networkStatus.label" m="Network Information" />}
@@ -42,14 +41,12 @@ const PrivacySettings = ({
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_NETWORK_STATUS) > -1}
           onChange={toggle(EXTERNALREQUEST_NETWORK_STATUS)}
         />
-
         <AllowableRequestType
           label={<T id="settings.privacy.stakepoolListing.label" m="Stakepool Listing" />}
           description={<T id="settings.privacy.stakepoolListing.description" m="List of currently available stakepools from decred.org" />}
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_STAKEPOOL_LISTING) > -1}
           onChange={toggle(EXTERNALREQUEST_STAKEPOOL_LISTING)}
         />
-
         <AllowableRequestType
           label={<T id="settings.privacy.updateCheck.label" m="Update Check" />}
           description={<T id="settings.privacy.updateCheck.description" m="Get latest released version from github.org" />}
