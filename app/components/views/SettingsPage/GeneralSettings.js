@@ -66,7 +66,7 @@ const GeneralSettings = ({
       </div>
       <div className="settings-row">
         <div className="settings-label">
-          <InfoDocModalButton document="GapLimitInfo" />
+          <InfoDocModalButton document="GapLimitInfo" double/>
           <T id="settings.gapLimit.label" m="Gap Limit" />
         </div>
         <div className="settings-input">

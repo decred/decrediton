@@ -51,7 +51,7 @@
 .app-modal.info-modal,
 .app-modal-reduced-bar.info-modal,
 .app-modal-standalone.info-modal {
-  max-height: 70%;
+  max-height: 60%;
   z-index: 200;
   overflow-y: auto;
   text-align: left;
@@ -119,8 +119,9 @@
   box-shadow: 0 15px 34px 0 rgba(12, 30, 62, 0.34);
 }
 
-.info-modal-documentation {
+.double .info-modal-documentation:not(.constitution) {
   column-count: 2;
+  margin-bottom: 20px;
 }
 
 .info-modal-content h1 {

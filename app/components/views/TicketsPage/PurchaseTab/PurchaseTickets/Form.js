@@ -33,7 +33,7 @@ const PurchaseTicketsForm = ({
     <Aux>
       <div className="stakepool-voting-title-area">
         <div className="stakepool-purchase-ticket-input-buttons">
-          <InfoDocModalButton document="PurchaseTicketsInfo" modalClassName="info-modal-fields"/>
+          <InfoDocModalButton document="PurchaseTicketsInfo" modalClassName="info-modal-fields" double/>
         </div>
       </div>
       <div className="stakepool-purchase-ticket-row-wrapper">

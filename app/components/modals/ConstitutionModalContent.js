@@ -1,5 +1,5 @@
 export default () => (
-  <Aux>
+  <div className="constition">
     <p>
       <em>Decred</em>(/ˈdi:ˈkred/, /dɪˈkred/, dee-cred) is an open, progressive,
   and self-funding cryptocurrency with a system of community-based governance
@@ -174,5 +174,5 @@ export default () => (
   be directed to the new entity.</li>
     </ul>
 
-  </Aux>
+  </div>
 );
