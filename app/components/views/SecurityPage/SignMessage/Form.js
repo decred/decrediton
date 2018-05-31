@@ -32,7 +32,7 @@ const SignMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.form.field.address.label" m="Address"/>:
+            <T id="securitycenter.form.field.address.label" m="Address"/>
           </div>
           <div className="security-center-form-row-field">
             <TextInput
@@ -47,7 +47,7 @@ const SignMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.form.field.message.label" m="Message"/>:
+            <T id="securitycenter.form.field.message.label" m="Message"/>
           </div>
           <div className="security-center-form-row-field-message">
             <TextInput
@@ -67,7 +67,7 @@ const SignMessageForm = ({
         disabled={isSigningMessage || address == "" || message == "" || addressError || messageError}
         onSubmit={onSubmit}
         loading={isSigningMessage}
-        buttonLabel={<T id="securitycenter.signMessageBtn" m="Sign" />}
+        buttonLabel={<T id="securitycenter.signMessageBtn" m="Sign Message" />}
       />
     </Aux>
   );

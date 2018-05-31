@@ -39,7 +39,7 @@ const VerifyMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.form.field.address.label" m="Address"/>:
+            <T id="securitycenter.form.field.address.label" m="Address"/>
           </div>
           <div className="security-center-form-row-field">
             <TextInput
@@ -57,7 +57,7 @@ const VerifyMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.form.field.signature.label" m="Signature"/>:
+            <T id="securitycenter.form.field.signature.label" m="Signature"/>
           </div>
           <div className="security-center-form-row-field">
             <TextInput
@@ -76,7 +76,7 @@ const VerifyMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.form.field.message.label" m="Message"/>:
+            <T id="securitycenter.form.field.message.label" m="Message"/>
           </div>
           <div className="security-center-form-row-field-message">
             <TextInput
@@ -99,7 +99,7 @@ const VerifyMessageForm = ({
         disabled={isVerifyingMessage || address == "" || message == "" || signature == "" || addressError || messageError || signatureError}
         onClick={onSubmit}
         loading={isVerifyingMessage}>
-        <T id="securitycenter.verify.form.submit" m="Verify" />
+        <T id="securitycenter.verify.form.submit" m="Verify Message" />
       </KeyBlueButton>
     </Aux>
   );
