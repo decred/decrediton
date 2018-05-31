@@ -49,7 +49,7 @@ const SignMessageForm = ({
           <div className="security-center-form-row-label">
             <T id="securitycenter.form.field.message.label" m="Message"/>:
           </div>
-          <div className="security-center-form-row-field">
+          <div className="security-center-form-row-field-message">
             <TextInput
               value={message}
               onChange={(e) => onChangeMessage(e.target.value)}

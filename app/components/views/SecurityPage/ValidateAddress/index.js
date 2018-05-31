@@ -46,21 +46,25 @@ class ValidateAddress extends React.Component {
       }
 
       result = (
-        <div className="message-nest">
-          <div className={`message-content ${isValid ? "valid" : "invalid"}`}>
-            {isValidDisplay}
+        <div className="message">
+          <div className="message-nest">
+            <div className={`message-content ${isValid ? "valid" : "invalid"}`}>
+              {isValidDisplay}
+            </div>
           </div>
         </div>
       );
     } else if (error) {
       result = (
-        <div className="message-nest">
-          <div className="message-content invalid">
-            <div className="message-content-invalid-message">
-              <T id="securitycenter.validate.result.invalid" m="Invalid address!" />
-            </div>
-            <div className="message-content-invalid-message-error">
-              {error}
+        <div className="message">
+          <div className="message-nest">
+            <div className="message-content invalid">
+              <div className="message-content-invalid-message">
+                <T id="securitycenter.validate.result.invalid" m="Invalid address!" />
+              </div>
+              <div className="message-content-invalid-message-error">
+                {error}
+              </div>
             </div>
           </div>
         </div>
@@ -69,9 +73,7 @@ class ValidateAddress extends React.Component {
     }
 
     return (
-      <div className="message message-verify">
-        <ValidateAddressForm {...{ onAddressChange, onAddressBlur, address, result }}/>
-      </div>
+      <ValidateAddressForm {...{ onAddressChange, onAddressBlur, address, result }}/>
     );
   }
 

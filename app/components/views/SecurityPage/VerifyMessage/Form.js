@@ -43,27 +43,15 @@ const VerifyMessageForm = ({
           </div>
           <div className="security-center-form-row-field">
             <TextInput
+              required
               value={address}
+              invalidMessage={addressError}
               onChange={e => onChangeAddress(e.target.value)}
               placeholder={formatMessage(messages.addressFieldPlaceholder)}
+              showErrors={addressError}
             />
             <div className="message-error">
               {addressError && <span className="error">{addressError}</span>}
-            </div>
-          </div>
-        </div>
-        <div className="security-center-form-row">
-          <div className="security-center-form-row-label">
-            <T id="securitycenter.form.field.message.label" m="Message"/>:
-          </div>
-          <div className="security-center-form-row-field">
-            <TextInput
-              value={message}
-              onChange={e => onChangeMessage(e.target.value)}
-              placeholder={formatMessage(messages.messageFieldPlaceholder)}
-            />
-            <div className="message-error">
-              {messageError && <span className="error">{messageError}</span>}
             </div>
           </div>
         </div>
@@ -73,12 +61,35 @@ const VerifyMessageForm = ({
           </div>
           <div className="security-center-form-row-field">
             <TextInput
+              required
               value={signature}
+              invalid={signatureError}
+              invalidMessage={signatureError}
               onChange={e => onChangeSignature(e.target.value)}
               placeholder={formatMessage(messages.signatureFieldPlaceholder)}
+              showErrors={signatureError}
             />
             <div className="message-error">
               {signatureError && <span className="error">{signatureError}</span>}
+            </div>
+          </div>
+        </div>
+        <div className="security-center-form-row">
+          <div className="security-center-form-row-label">
+            <T id="securitycenter.form.field.message.label" m="Message"/>:
+          </div>
+          <div className="security-center-form-row-field-message">
+            <TextInput
+              required
+              value={message}
+              invalid={messageError}
+              invalidMessage={messageError}
+              onChange={e => onChangeMessage(e.target.value)}
+              placeholder={formatMessage(messages.messageFieldPlaceholder)}
+              showErrors={messageError}
+            />
+            <div className="message-error">
+              {messageError && <span className="error">{messageError}</span>}
             </div>
           </div>
         </div>
