@@ -44,12 +44,7 @@ class Snackbar extends React.Component {
     if (message !== this.state.message) {
       const state = this.state;
       this.setState({ ...state, message });
-      if (message) {
-        if (this.hideTimer) {
-          this.props.clearTimeout(this.hideTimer);
-        }
-        this.hideTimer = this.props.setTimeout(this.onDismissMessage, 4000);
-      }
+      message && this.enableHideTimer();
     }
   }
 
@@ -57,14 +52,23 @@ class Snackbar extends React.Component {
     return this.state.message !== nextState.message;
   }
 
-  onDismissMessage() {
-    const state = this.state;
-    this.setState({ ...state, message: null });
-    this.props.onDismissAllMessages();
+  enableHideTimer() {
+    this.clearHideTimer();
+    this.hideTimer = this.props.setTimeout(this.onDismissMessage, 4000);
+  }
+
+  clearHideTimer() {
     if (this.hideTimer) {
       this.props.clearTimeout(this.hideTimer);
       this.hideTimer = null;
     }
+  }
+
+  onDismissMessage() {
+    const state = this.state;
+    this.setState({ ...state, message: null });
+    this.props.onDismissAllMessages();
+    this.clearHideTimer();
   }
 
   onRequestClose(reason) {
@@ -76,7 +80,11 @@ class Snackbar extends React.Component {
   render() {
     const { message } = this.state;
     return (
-      <div className={snackbarClasses(message || "")} >
+      <div
+        className={snackbarClasses(message || "")}
+        onMouseEnter={this.clearHideTimer}
+        onMouseLeave={this.enableHideTimer}
+      >
         {message ? <Notification {...message} /> : ""}
       </div>
     );
