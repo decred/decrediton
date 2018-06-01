@@ -15,7 +15,8 @@ const StandardPassphraseModal = (props) => {
     show,
     modalDescription,
     children,
-    prependPassphraseRow
+    prependPassphraseRow,
+    onCancelModal,
   } = props;
 
   const inputRow =
@@ -27,7 +28,7 @@ const StandardPassphraseModal = (props) => {
     />;
 
   return (
-    <Modal className="passphrase-modal" {...{ show }}>
+    <Modal className="passphrase-modal" {...{ show, onCancelModal }}>
       <div className="passphrase-modal-header">
         <div className="passphrase-modal-header-title">
           <T id="passphraseModal.confirmationRequired" m="Confirmation Required" />
