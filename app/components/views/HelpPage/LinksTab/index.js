@@ -26,6 +26,7 @@ export const LinksTab = () => (
         modalTitle={<h1><T id="help.constitution.modal.title" m="Decred Constitution" /></h1>}
         modalContent={<ConstitutionModalContent />}
         buttonLabel={<T id="help.constitution" m="Constitution" />}
+        double
       />
     </div>
   </Aux>

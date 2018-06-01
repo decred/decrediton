@@ -1,7 +1,5 @@
 # Gap Limit
 
----
-
 **Warning** This gap limit setting should typically be left alone.  An increase to the gap limit could cause major performance degradation.
 
 Gap limit sets the amount of addresses that the wallet will generate and look ahead to determine usage.  By default, the gap limit is set to 20.  This means 2 things.

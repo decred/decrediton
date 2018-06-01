@@ -26,23 +26,25 @@ class Wallet extends React.Component {
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
-      <BlurableContainer className="page-body">
+      <div className="page-body">
         <SideBar />
-        <MainSwitch {...pageAnimation} className={expandSideBar ? "page-view" : "page-view-reduced-bar"}>
-          <Route path="/home"                           component={HomePage} />
-          <Route path="/accounts"                       component={AccountsPage} />
-          <Route path="/settings"                       component={SettingsPage} />
-          <Route path="/walletError"                    component={WalletError} />
-          <Route path="/error"                          component={ErrorScreen} />
-          <Route path="/invalidRPCVersion"              component={InvalidRPCVersion} />
-          <Route path="/help"                           component={HelpPage} />
-          <Route path="/security"                       component={SecurityPage} />
-          <Route path="/transactions/history/:txHash"   component={TransactionPage} />
-          <Route path="/transactions"                   component={TransactionsPage} />
-          <Route path="/tickets"                        component={TicketsPage} />
-          <Route path="/tutorial"                       component={TutorialsPage} />
-        </MainSwitch>
-      </BlurableContainer>
+        <BlurableContainer className={expandSideBar ? "page-view" : "page-view-reduced-bar"}>
+          <MainSwitch {...pageAnimation}>
+            <Route path="/home"                           component={HomePage} />
+            <Route path="/accounts"                       component={AccountsPage} />
+            <Route path="/settings"                       component={SettingsPage} />
+            <Route path="/walletError"                    component={WalletError} />
+            <Route path="/error"                          component={ErrorScreen} />
+            <Route path="/invalidRPCVersion"              component={InvalidRPCVersion} />
+            <Route path="/help"                           component={HelpPage} />
+            <Route path="/security"                       component={SecurityPage} />
+            <Route path="/transactions/history/:txHash"   component={TransactionPage} />
+            <Route path="/transactions"                   component={TransactionsPage} />
+            <Route path="/tickets"                        component={TicketsPage} />
+            <Route path="/tutorial"                       component={TutorialsPage} />
+          </MainSwitch>
+        </BlurableContainer>
+      </div>
     );
   }
 }

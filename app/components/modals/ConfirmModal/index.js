@@ -12,7 +12,7 @@ const propTypes = {
 
 const ConfirmModal = ({ modalTitle, modalContent, show, onCancelModal, onSubmit,
   confirmLabel, danger }) => (
-  <Modal className="confirm-modal" {...{ show }}>
+  <Modal className="confirm-modal" {...{ show, onCancelModal }}>
     <div className="confirm-modal-header">
       <div className="confirm-modal-header-title">
         {modalTitle}
