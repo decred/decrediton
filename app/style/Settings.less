@@ -120,10 +120,65 @@
   float: right;
 }
 
+.settings-update-passphrase-button span {
+  float: left;
+  margin-top: 1px;
+  font-size: 13px;
+  line-height: 17px;
+}
+
 .inverted-colors .settings-general {
   color: #fff;
 }
 
 .get-started-content-new-seed .settings-general {
   max-width: 400px;
+}
+
+.privacy-checkbox {
+  margin-top: 2px;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"]:disabled + label {
+  display: inline-block;
+  background-color: #e7eaed;
+  border: 1px solid #8997a5;
+  width: 12px;
+  height: 12px;
+}
+
+input[type="checkbox"]:checked:disabled + label {
+  display: inline-block;
+  border: 1px solid #8997a5;
+  background-color: #e7eaed;
+  background-image: @checkmarkGrey;
+  background-repeat: no-repeat;
+  background-size: 11px;
+  background-position: 0px;
+  width: 12px;
+  height: 12px;
+}
+
+input[type="checkbox"] + label {
+  display: inline-block;
+  border: 1px solid #8997a5;
+  background-color: none;
+  width: 12px;
+  height: 12px;
+}
+
+input[type="checkbox"]:checked + label {
+  display: inline-block;
+  border: 1px solid #2970ff;
+  background-color: none;
+  background-image: @checkmarkBlue;
+  background-repeat: no-repeat;
+  background-size: 11px;
+  background-position: 0px;
+  width: 12px;
+  height: 12px;
 }
