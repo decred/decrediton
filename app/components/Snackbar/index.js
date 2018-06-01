@@ -1,6 +1,9 @@
 // @flow
 import { snackbar } from "connectors";
+import ReactDOM from "react-dom";
 import ReactTimeout from "react-timeout";
+import EventListener from "react-event-listener";
+import ownerDocument from "dom-helpers/ownerDocument";
 import Notification from "./Notification";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERED
@@ -23,6 +26,13 @@ const snackbarClasses = ({ type }) => ({
   "Error": "snackbar snackbar-error",
   "Success": "snackbar snackbar-success",
 })[type] || "snackbar";
+
+const isDescendant = (el, target) => {
+  if (target !== null && target.parentNode) {
+    return el === target || isDescendant(el, target.parentNode);
+  }
+  return false;
+};
 
 @autobind
 class Snackbar extends React.Component {
@@ -64,6 +74,21 @@ class Snackbar extends React.Component {
     }
   }
 
+  windowClicked(event) {
+    if (!this.state.message) return;
+
+    const el = ReactDOM.findDOMNode(this);
+    const doc = ownerDocument(el);
+
+    if (
+      doc.documentElement &&
+      doc.documentElement.contains(event.target) &&
+      !isDescendant(el, event.target)
+    ) {
+      this.onDismissMessage();
+    }
+  }
+
   onDismissMessage() {
     const state = this.state;
     this.setState({ ...state, message: null });
@@ -71,22 +96,18 @@ class Snackbar extends React.Component {
     this.clearHideTimer();
   }
 
-  onRequestClose(reason) {
-    if (reason !== "clickaway") {
-      this.onDismissMessage();
-    }
-  }
-
   render() {
     const { message } = this.state;
     return (
-      <div
-        className={snackbarClasses(message || "")}
-        onMouseEnter={this.clearHideTimer}
-        onMouseLeave={this.enableHideTimer}
-      >
-        {message ? <Notification {...message} /> : ""}
-      </div>
+      <EventListener target="document" onMouseUp={this.windowClicked}>
+        <div
+          className={snackbarClasses(message || "")}
+          onMouseEnter={this.clearHideTimer}
+          onMouseLeave={this.enableHideTimer}
+        >
+          {message ? <Notification {...message} /> : ""}
+        </div>
+      </EventListener>
     );
   }
 }
