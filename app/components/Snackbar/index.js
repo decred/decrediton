@@ -1,10 +1,12 @@
 // @flow
-import { snackbar } from "connectors";
+import { snackbar, theming } from "connectors";
 import ReactDOM from "react-dom";
 import ReactTimeout from "react-timeout";
 import EventListener from "react-event-listener";
 import ownerDocument from "dom-helpers/ownerDocument";
 import Notification from "./Notification";
+import theme from "theme";
+import { spring, TransitionMotion } from "react-motion";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERED
 } from "wallet/service";
@@ -96,17 +98,58 @@ class Snackbar extends React.Component {
     this.clearHideTimer();
   }
 
-  render() {
+  getStaticNotification() {
     const { message } = this.state;
     return (
+      <div
+        className={snackbarClasses(message || "")}
+        onMouseEnter={this.clearHideTimer}
+        onMouseLeave={this.enableHideTimer}
+        style={{ bottom: "0px" }}
+      >
+        {message ? <Notification {...message} /> : ""}
+      </div>
+    );
+  }
+
+  notifWillEnter() {
+    return { bottom: -10 };
+  }
+
+  getAnimatedNotification() {
+    const { message } = this.state;
+
+    const styles = [ {
+      key: "ntf"+Math.random(),
+      data: message,
+      style: { bottom: spring(0, theme("springs.tab")) }
+    } ];
+
+    return (
+      <TransitionMotion styles={styles} willEnter={this.notifWillEnter}>
+        { is => !is[0].data
+          ? ""
+          : <div
+            className={snackbarClasses(message || "")}
+            onMouseEnter={this.clearHideTimer}
+            onMouseLeave={this.enableHideTimer}
+            style={is[0].style}
+          >
+            <Notification {...is[0].data} />
+          </div>
+        }
+      </TransitionMotion>
+    );
+  }
+
+  render() {
+    const notification = this.props.uiAnimations
+      ? this.getAnimatedNotification()
+      : this.getStaticNotification();
+
+    return (
       <EventListener target="document" onMouseUp={this.windowClicked}>
-        <div
-          className={snackbarClasses(message || "")}
-          onMouseEnter={this.clearHideTimer}
-          onMouseLeave={this.enableHideTimer}
-        >
-          {message ? <Notification {...message} /> : ""}
-        </div>
+        {notification}
       </EventListener>
     );
   }
@@ -114,4 +157,4 @@ class Snackbar extends React.Component {
 
 Snackbar.propTypes = propTypes;
 
-export default ReactTimeout(snackbar(Snackbar));
+export default ReactTimeout(snackbar(theming(Snackbar)));
