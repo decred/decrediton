@@ -32,32 +32,34 @@ const SignMessageForm = ({
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.form.field.address.label" m="Address"/>:
+            <T id="securitycenter.form.field.address.label" m="Address"/>
           </div>
           <div className="security-center-form-row-field">
             <TextInput
+              required
               value={address}
+              invalid={addressError}
+              invalidMessage={addressError}
               onChange={(e) => onChangeAddress(e.target.value)}
               placeholder={formatMessage(messages.addressFieldPlaceholder)}
+              showErrors={addressError}
             />
-            <div className="message-error">
-              {addressError && <span className="error">*{addressError}</span>}
-            </div>
           </div>
         </div>
         <div className="security-center-form-row">
           <div className="security-center-form-row-label">
-            <T id="securitycenter.form.field.message.label" m="Message"/>:
+            <T id="securitycenter.form.field.message.label" m="Message"/>
           </div>
-          <div className="security-center-form-row-field">
+          <div className="security-center-form-row-field-message">
             <TextInput
+              required
               value={message}
+              invalid={messageError}
+              invalidMessage={messageError}
               onChange={(e) => onChangeMessage(e.target.value)}
               placeholder={formatMessage(messages.messageFieldPlaceholder)}
+              showErrors={messageError}
             />
-            <div className="message-error">
-              {messageError && <span className="error">*{messageError}</span>}
-            </div>
           </div>
         </div>
       </div>
@@ -67,7 +69,7 @@ const SignMessageForm = ({
         disabled={isSigningMessage || address == "" || message == "" || addressError || messageError}
         onSubmit={onSubmit}
         loading={isSigningMessage}
-        buttonLabel={<T id="securitycenter.signMessageBtn" m="Sign" />}
+        buttonLabel={<T id="securitycenter.signMessageBtn" m="Sign Message" />}
       />
     </Aux>
   );

@@ -46,19 +46,21 @@ class VerifyMessage extends React.Component {
       }
 
       result = (
-        <div className="message-nest">
-          <div className={`message-content ${isValid ? "valid" : "invalid"}`}>
-            {isValidDisplay}
+        <div className="message">
+          <div className="message-nest">
+            <div className={`message-content ${isValid ? "valid" : "invalid"}`}>
+              {isValidDisplay}
+            </div>
           </div>
         </div>
       );
     }
 
     return (
-      <div className="message message-verify">
+      <Aux>
         <VerifyMessageForm {...{ onSubmit, address, message, signature, addressError, messageError, signatureError, onChangeAddress, onChangeMessage, onChangeSignature, formatMessage: intl.formatMessage, isVerifyingMessage }} />
         {result}
-      </div>
+      </Aux>
     );
   }
 

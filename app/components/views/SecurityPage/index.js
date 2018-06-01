@@ -1,26 +1,68 @@
-import { TabbedPage, TabbedPageTab as Tab, TitleHeader, DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
-import { Switch, Redirect } from "react-router-dom";
+import { StandalonePage, StandaloneHeader } from "layout";
 import { default as SignTab } from "./SignMessage";
 import { default as ValidateAddressTab } from "./ValidateAddress";
 import { default as VerifyMessageTab } from "./VerifyMessage";
 
-const PageHeader = () =>
-  <TitleHeader
+const SecurityHeader = () =>
+  <StandaloneHeader
     iconClassName="security"
     title={<T id="security.title" m="Security Center" />}
-  />;
-
-const TabHeader = () =>
-  <DescriptionHeader
     description={<T id="security.description" m="Various tools that help in different aspects of crypto currency security will be located here." />}
   />;
 
-export default () => (
-  <TabbedPage header={<PageHeader />} >
-    <Switch><Redirect from="/security" exact to="/security/sign" /></Switch>
-    <Tab path="/security/sign" component={SignTab} header={TabHeader} link={<T id="security.tab.sign" m="Sign Message"/>}/>
-    <Tab path="/security/verify" component={VerifyMessageTab} header={TabHeader} link={<T id="security.tab.verify" m="Verify Message"/>}/>
-    <Tab path="/security/validate" component={ValidateAddressTab} header={TabHeader} link={<T id="security.tab.validate" m="Validate Address"/>}/>
-  </TabbedPage>
-);
+@autobind
+class SecurityPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.getInitialState();
+  }
+
+  getInitialState() {
+    return {
+      sideActive: true
+    };
+  }
+
+  componentWillUnmount() {
+    this.resetState();
+  }
+
+  resetState() {
+    this.setState(this.getInitialState());
+  }
+
+  render() {
+    const { sideActive } = this.state;
+    const { onShowSign, onShowVerify } = this;
+    return (
+      <StandalonePage header={<SecurityHeader />}>
+        <div className="advanced-page-toggle security-page">
+          <div className="text-toggle">
+            <div className={"text-toggle-button-left " + (sideActive && "text-toggle-button-active")} onClick={!sideActive ? onShowVerify : null}>
+              <T id="security.signTitle" m="Sign Message" />
+            </div>
+            <div className={"text-toggle-button-right " + (!sideActive && "text-toggle-button-active")} onClick={sideActive ? onShowSign : null}>
+              <T id="security.verifyTitle" m="Verify Message" />
+            </div>
+          </div>
+        </div>
+        <div className="security-page-form">
+          {sideActive ?
+            <SignTab /> : <VerifyMessageTab />
+          }
+        </div>
+        <ValidateAddressTab />
+      </StandalonePage>
+    );
+  }
+
+  onShowSign() {
+    this.setState({ sideActive: false });
+  }
+  onShowVerify() {
+    this.setState({ sideActive: true });
+  }
+}
+
+export default SecurityPage;

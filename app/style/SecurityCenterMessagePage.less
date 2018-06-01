@@ -1,16 +1,31 @@
 @import (reference) "./main.less";
 @import (reference) "./Icons.less";
 
+.advanced-page-toggle.security-page {
+  float: none;
+  position: absolute;
+  margin-left: 20px;
+}
+
+.security-page-form {
+  float: left;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
 .button-right {
   position: absolute;
-  top: 80px;
-  right: 80px;
+  top: 45px;
+  right: 70px;
 }
 
 .security-center-form {
   background-color: #fff;
   margin-bottom: 20px;
-  padding: 26px 0 26px 40px;
+  padding: 46px 0 0 40px;
+  float: left;
+  width: 95%;
 }
 
 .security-center-form-row {
@@ -18,17 +33,61 @@
   width: 100%;
 }
 
-.security-center-form-row-label {
+.security-center-form-row-label,
+.validate-address-form-label {
   float: left;
   text-align: right;
-  padding-right: 5%;
-  width: 15%;
+  padding-right: 10px;
+  width: 86px;
   font-size: 20px;
+  line-height: 24px;
 }
 
 .security-center-form-row-field {
   float: left;
-  width: 65%;
+  width: 340px;
+  height: 36px;
+}
+
+.security-center-form-row-field-message {
+  float: left;
+  width: 540px;
+}
+
+.validate-address-form {
+  float: left;
+  width: 95%;
+  padding: 26px 0 26px 40px;
+  background-color: #fff;
+}
+
+.validate-address-form-address {
+  float: left;
+  width: 340px;
+}
+
+.validate-address-form-address-response {
+  float: right;
+  margin-right: 40px;
+  font-size: 11px;
+  line-height: 14px;
+  border-radius: 3px;
+  padding: 3px 10px;
+}
+
+.validate-address-form-address-response.invalid {
+  color: #ed6d47;
+  border: 1px solid #ed6d47;
+}
+
+.validate-address-form-address-response.owned {
+  color: #2970ff;
+  border: 1px solid #2970ff;
+}
+
+.validate-address-form-address-response.not-owned {
+  color: #41be53;
+  border: 1px solid #41be53;
 }
 
 .message {

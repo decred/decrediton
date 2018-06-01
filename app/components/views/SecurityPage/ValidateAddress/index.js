@@ -33,45 +33,33 @@ class ValidateAddress extends React.Component {
     let result = null;
     if (validateAddressSuccess) {
       const isValid = validateAddressSuccess.isValid;
+      const isMine = validateAddressSuccess.isMine;
       let isValidDisplay = null;
       if (isValid) {
-        const isMine = validateAddressSuccess.isMine;
         if (isMine) {
-          isValidDisplay = <T id="securitycenter.validate.result.owned" m="Owned address!" />;
+          isValidDisplay = <T id="securitycenter.validate.result.owned" m="Owned address" />;
         } else {
-          isValidDisplay = <T id="securitycenter.validate.result.notOwned" m="Not owned address!" />;
+          isValidDisplay = <T id="securitycenter.validate.result.notOwned" m="Address Valid, Not Owned" />;
         }
       } else {
-        isValidDisplay = <T id="securitycenter.validate.result.invalid" m="Invalid address!" />;
+        isValidDisplay = <T id="securitycenter.validate.result.invalid" m="Invalid address" />;
       }
 
       result = (
-        <div className="message-nest">
-          <div className={`message-content ${isValid ? "valid" : "invalid"}`}>
-            {isValidDisplay}
-          </div>
+        <div className={`validate-address-form-address-response ${isMine ? "owned" : "not-owned"} ${isValid ? "valid" : "invalid"}`}>
+          {isValidDisplay}
         </div>
       );
     } else if (error) {
       result = (
-        <div className="message-nest">
-          <div className="message-content invalid">
-            <div className="message-content-invalid-message">
-              <T id="securitycenter.validate.result.invalid" m="Invalid address!" />
-            </div>
-            <div className="message-content-invalid-message-error">
-              {error}
-            </div>
-          </div>
+        <div className={"validate-address-form-address-response invalid"}>
+          <T id="securitycenter.validate.result.invalid" m="Invalid address" />
         </div>
       );
-
     }
 
     return (
-      <div className="message message-verify">
-        <ValidateAddressForm {...{ onAddressChange, onAddressBlur, address, result }}/>
-      </div>
+      <ValidateAddressForm {...{ onAddressChange, onAddressBlur, address, result }}/>
     );
   }
 

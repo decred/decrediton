@@ -38,22 +38,24 @@ class SignMessage extends React.Component {
     let result = null;
     if (signMessageSuccess) {
       result = (
-        <div className="message-nest">
-          <div className="message-content">
-            <div>
-              {signMessageSuccess.signature}
+        <div className="message">
+          <div className="message-nest">
+            <div className="message-content">
+              <div>
+                {signMessageSuccess.signature}
+              </div>
+              <CopyToClipboard textToCopy={signMessageSuccess.signature} className="message-content-nest-copy-to-clipboard-icon" />
             </div>
-            <CopyToClipboard textToCopy={signMessageSuccess.signature} className="message-content-nest-copy-to-clipboard-icon" />
           </div>
         </div>
       );
     }
 
     return (
-      <div className="message message-sign">
+      <Aux>
         <SignMessageForm {...{ onSubmit, onChangeAddress, onChangeMessage, address, addressError, message, messageError, formatMessage: intl.formatMessage, isSigningMessage } }/>
         {result}
-      </div>
+      </Aux>
     );
   }
 
