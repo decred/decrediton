@@ -11,7 +11,7 @@ const AllowableRequestType = ({ id, label, description, checked, onChange }) => 
     </div>
     <div className="privacy-checkbox">
       <input id={id} type="checkbox" checked={checked} onChange={onChange}/>
-      <label for={id}></label>
+      <label htmlFor={id}></label>
     </div>
     <div className="settings-checklist-description">
       {description}
