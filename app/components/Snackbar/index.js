@@ -1,6 +1,6 @@
 // @flow
 import { snackbar } from "connectors";
-import MUISnackbar from "material-ui/Snackbar";
+import ReactTimeout from "react-timeout";
 import Notification from "./Notification";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERED
@@ -29,6 +29,7 @@ class Snackbar extends React.Component {
 
   constructor(props) {
     super(props);
+    this.hideTimer = null;
     this.state = {
       message: props.messages.length > 0
         ? props.messages[props.messages.length-1]
@@ -43,6 +44,12 @@ class Snackbar extends React.Component {
     if (message !== this.state.message) {
       const state = this.state;
       this.setState({ ...state, message });
+      if (message) {
+        if (this.hideTimer) {
+          this.props.clearTimeout(this.hideTimer);
+        }
+        this.hideTimer = this.props.setTimeout(this.onDismissMessage, 4000);
+      }
     }
   }
 
@@ -54,6 +61,10 @@ class Snackbar extends React.Component {
     const state = this.state;
     this.setState({ ...state, message: null });
     this.props.onDismissAllMessages();
+    if (this.hideTimer) {
+      this.props.clearTimeout(this.hideTimer);
+      this.hideTimer = null;
+    }
   }
 
   onRequestClose(reason) {
@@ -65,20 +76,13 @@ class Snackbar extends React.Component {
   render() {
     const { message } = this.state;
     return (
-      <MUISnackbar
-        className={snackbarClasses(message || "")}
-        open={!!message}
-        message={message ? <Notification {...message} /> : ""}
-        autoHideDuration={4000}
-        bodyStyle={{ backgroundColor: "inherited", fontFamily: null,
-          lineHeight: null, height: null }}
-        style={{ fontFamily: null, lineHeight: null }}
-        onRequestClose={this.onRequestClose}
-      />
+      <div className={snackbarClasses(message || "")} >
+        {message ? <Notification {...message} /> : ""}
+      </div>
     );
   }
 }
 
 Snackbar.propTypes = propTypes;
 
-export default snackbar(Snackbar);
+export default ReactTimeout(snackbar(Snackbar));
