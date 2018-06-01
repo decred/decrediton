@@ -27,8 +27,6 @@ class Modal extends React.Component {
     this.props.modalHidden();
   }
   mouseUp(event) {
-    console.log("mouse up");
-
     const el = document.getElementById("modal-portal");
     const doc = ownerDocument(el);
 
@@ -37,7 +35,6 @@ class Modal extends React.Component {
       doc.documentElement.contains(event.target) &&
       !isDescendant(el, event.target)
     ) {
-      console.log("gonna cancel due to click");
       this.props.onCancelModal && this.props.onCancelModal();
     }
   }
