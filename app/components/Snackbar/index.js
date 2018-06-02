@@ -69,7 +69,7 @@ class Snackbar extends React.Component {
         className={snackbarClasses(message || "")}
         open={!!message}
         message={message ? <Notification {...message} /> : ""}
-        autoHideDuration={4000}
+        autoHideDuration={10000}
         bodyStyle={{ backgroundColor: "inherited", fontFamily: null,
           lineHeight: null, height: null }}
         style={{ fontFamily: null, lineHeight: null }}
