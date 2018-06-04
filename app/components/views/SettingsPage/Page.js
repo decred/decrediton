@@ -26,26 +26,25 @@ const SettingsPage = ({
 }) => (
   <StandalonePage header={<SettingsPageHeader />}>
     <div className="settings-wrapper">
-      <div>
+      <div className="settings-columns">
         <GeneralSettings {...{ tempSettings, networks, currencies, locales,
           onChangeTempSettings }} />
-
         <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
       </div>
-
-      <div className="settings-security">
-        <div className="settings-column-title"><T id="settings.security.title" m="Security" /></div>
-        <div className="settings-action-buttons">
-          <div className="settings-update-passphrase-button">
-            <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
-            <ChangePassphraseButton
-              modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
-              onSubmit={onAttemptChangePassphrase} />
+      <div className="settings-columns">
+        <div className="settings-security">
+          <div className="settings-column-title"><T id="settings.security.title" m="Security" /></div>
+          <div className="settings-action-buttons">
+            <div className="settings-update-passphrase-button">
+              <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
+              <ChangePassphraseButton
+                modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
+                onSubmit={onAttemptChangePassphrase} />
+            </div>
           </div>
         </div>
+        <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
       </div>
-
-      <PrivacySettings {...{ tempSettings, onChangeTempSettings }} />
     </div>
 
     <div className="settings-save-button">

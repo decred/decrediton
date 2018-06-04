@@ -3,36 +3,38 @@
 
 .settings-wrapper {
   display: flex;
-  flex-flow: row wrap;
   background: white;
   margin-bottom: 20px;
   padding: 26px 26px 26px 40px;
   justify-content: space-between;
 }
 
-.settings-wrapper .settings-general,
-.settings-wrapper .settings-privacy {
-  width: 360px;
+.settings-columns {
+  flex: 50%;
 }
 
-.settings-security {
-  padding-left: 50px;
-  margin-bottom: 20px;
-}
-
-.settings-wrapper .settings-general .settings-label {
-  width: 112px;
-  padding-left: 46px;
+.settings-wrapper .settings-label {
+  width: 200px;
 }
 
 .settings-column-title {
   font-size: 19px;
   text-transform: capitalize;
-  margin-bottom: 32px;
+  margin-bottom: 14px;
+  line-height: 24px;
 }
 
-.settings-column-content {
-  margin-left: 60px;
+.settings-privacy,
+.settings-security {
+  width: 100%;
+  float: left;
+  margin-bottom: 20px;
+}
+
+.settings-privacy .settings-column-title,
+.settings-security .settings-column-title {
+  text-align: right;
+  margin-right: 145px;
 }
 
 .settings-restart {
@@ -52,6 +54,10 @@
   font-style: italic;
   text-align: right;
   margin: -16px 28px 10px 0px;
+  color: #8997a5;
+  font-size: 11px;
+  line-height: 15px;
+  width: 175px;
 }
 
 .settings-label {
@@ -114,10 +120,65 @@
   float: right;
 }
 
+.settings-update-passphrase-button span {
+  float: left;
+  margin-top: 1px;
+  font-size: 13px;
+  line-height: 17px;
+}
+
 .inverted-colors .settings-general {
   color: #fff;
 }
 
 .get-started-content-new-seed .settings-general {
   max-width: 400px;
+}
+
+.privacy-checkbox {
+  margin-top: 2px;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"]:disabled + label {
+  display: inline-block;
+  background-color: #e7eaed;
+  border: 1px solid #8997a5;
+  width: 12px;
+  height: 12px;
+}
+
+input[type="checkbox"]:checked:disabled + label {
+  display: inline-block;
+  border: 1px solid #8997a5;
+  background-color: #e7eaed;
+  background-image: @checkmarkGrey;
+  background-repeat: no-repeat;
+  background-size: 11px;
+  background-position: 0px;
+  width: 12px;
+  height: 12px;
+}
+
+input[type="checkbox"] + label {
+  display: inline-block;
+  border: 1px solid #8997a5;
+  background-color: none;
+  width: 12px;
+  height: 12px;
+}
+
+input[type="checkbox"]:checked + label {
+  display: inline-block;
+  border: 1px solid #2970ff;
+  background-color: none;
+  background-image: @checkmarkBlue;
+  background-repeat: no-repeat;
+  background-size: 11px;
+  background-position: 0px;
+  width: 12px;
+  height: 12px;
 }
