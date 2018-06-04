@@ -9,7 +9,7 @@ import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./S
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { showSidebarMenu, showSidebar } from "./SidebarActions";
 import { push as pushHistory, goBack } from "react-router-redux";
-import { getWalletCfg } from "../config";
+import { getWalletCfg, getGlobalCfg } from "../config";
 import { onAppReloadRequested } from "wallet";
 import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
@@ -83,6 +83,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
       try {
         await dispatch(getAccountsAttempt(true));
         await dispatch(getMostRecentRegularTransactions());
+        await dispatch(getTransactionsSinceLastOppened());
         await dispatch(getMostRecentStakeTransactions());
         await dispatch(getMostRecentTransactions());
         await dispatch(publishUnminedTransactionsAttempt());
@@ -175,6 +176,49 @@ export const getWalletServiceAttempt = () => (dispatch, getState) => {
   wallet.getWalletService(sel.isTestNet(getState()), walletName, address, port)
     .then(walletService => dispatch(getWalletServiceSuccess(walletService)))
     .catch(error => dispatch({ error, type: GETWALLETSERVICE_FAILED }));
+};
+
+export const GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT = "GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT";
+export const GETTRANSACTIONSSINCELASTOPPENED_FAILED = "GETTRANSACTIONSSINCELASTOPPENED_FAILED";
+export const GETTRANSACTIONSSINCELASTOPPENED_SUCCESS = "GETTRANSACTIONSSINCELASTOPPENED_SUCCESS";
+
+export const getTransactionsSinceLastOppened = () => async (dispatch, getState) => {
+  dispatch({ type: GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT });
+  const transactionsSinceLastOpenedInfo = {
+    transactionsReceived: [],
+    ticketsVoted:         [],
+    ticketsRevoked:       [],
+    totalReward:           0,
+    totalDCR:              0,
+  };
+  const config = getGlobalCfg();
+  const lastBlockHeightSeen = config.get("last_height");
+  const { currentBlockHeight, walletService, recentTxSinceLastOpenedCount } = getState().grpc;
+
+  try {
+    const { mined, unmined } =
+      await walletGetTransactions(walletService, lastBlockHeightSeen, currentBlockHeight, recentTxSinceLastOpenedCount);
+    const transactions = [ ...mined, ...unmined ];
+
+    transactions.forEach( tx => {
+      switch (tx.type) {
+      case TransactionDetails.TransactionType.REGULAR:
+        transactionsSinceLastOpenedInfo.totalDCR += tx.amount;
+        transactionsSinceLastOpenedInfo.transactionsReceived.push(tx);
+        break;
+      case TransactionDetails.TransactionType.VOTE:
+        transactionsSinceLastOpenedInfo.totalReward += tx.amount;
+        transactionsSinceLastOpenedInfo.ticketsVoted.push(tx);
+        break;
+      case TransactionDetails.TransactionType.REVOCATION:
+        transactionsSinceLastOpenedInfo.ticketsRevoked.push(tx);
+        break;
+      }
+    });
+    dispatch({ transactionsSinceLastOpened: transactionsSinceLastOpenedInfo, type: GETTRANSACTIONSSINCELASTOPPENED_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: GETTRANSACTIONSSINCELASTOPPENED_FAILED });
+  }
 };
 
 export const GETTICKETBUYERSERVICE_ATTEMPT = "GETTICKETBUYERSERVICE_ATTEMPT";

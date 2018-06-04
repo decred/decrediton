@@ -273,6 +273,11 @@ export function setMustOpenForm(openForm) {
   return config.set("must_open_form", openForm);
 }
 
+export function setLastHeight(height) {
+  const config = getGlobalCfg();
+  return config.set("last_height", height);
+}
+
 function makeRandomString(length) {
   var text = "";
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

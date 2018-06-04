@@ -282,6 +282,13 @@ export const homeHistoryTransactions = createSelector(
   [ transactionsNormalizer, get([ "grpc", "recentRegularTransactions" ]) ], apply
 );
 
+const txSinceLastOpened = get([ "grpc", "transactionsSinceLastOpened" ]);
+
+export const transactionsSinceLastOpened = createSelector(
+  [ txSinceLastOpened ],
+  (txSinceLastOpened) => txSinceLastOpened ? txSinceLastOpened : []
+);
+
 export const dailyBalancesStats = get([ "statistics", "dailyBalances" ]);
 
 export const spendableAndLockedBalance = createSelector(

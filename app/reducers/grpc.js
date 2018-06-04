@@ -18,7 +18,8 @@ import {
   GETAGENDAS_ATTEMPT, GETAGENDAS_FAILED, GETAGENDAS_SUCCESS,
   GETVOTECHOICES_ATTEMPT, GETVOTECHOICES_FAILED, GETVOTECHOICES_SUCCESS,
   SETVOTECHOICES_ATTEMPT, SETVOTECHOICES_FAILED, SETVOTECHOICES_SUCCESS,
-  MATURINGHEIGHTS_CHANGED,
+  MATURINGHEIGHTS_CHANGED, GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT, GETTRANSACTIONSSINCELASTOPPENED_FAILED,
+  GETTRANSACTIONSSINCELASTOPPENED_SUCCESS,
 } from "../actions/ClientActions";
 import { STARTUPBLOCK, WALLETREADY } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
@@ -87,6 +88,24 @@ export default function grpc(state = {}, action) {
       getTicketBuyerError: null,
       getTicketBuyerServiceRequestAttempt: false,
       ticketBuyerService: action.ticketBuyerService,
+    };
+  case GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT:
+    return {
+      ...state,
+      getTransactionsSinceLastOpenedError: null,
+      getTransactionsSinceLastOpenedAttempt: true,
+    };
+  case GETTRANSACTIONSSINCELASTOPPENED_SUCCESS:
+    return {
+      ...state,
+      getTransactionsSinceLastOpenedAttempt: false,
+      transactionsSinceLastOpened: action.transactionsSinceLastOpened,
+    };
+  case GETTRANSACTIONSSINCELASTOPPENED_FAILED:
+    return {
+      ...state,
+      getTransactionsSinceLastOpenedError: String(action.error),
+      getTransactionsSinceLastOpenedAttempt: false,
     };
   case GETBALANCE_ATTEMPT:
     return {
