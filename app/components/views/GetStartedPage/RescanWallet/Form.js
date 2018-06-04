@@ -1,4 +1,4 @@
-import LinearProgress from "material-ui/LinearProgress";
+import { LinearProgressSmall } from "indicators";
 import { FormattedMessage as T } from "react-intl";
 import "style/GetStarted.less";
 
@@ -10,8 +10,7 @@ const RescanWalletFormBody = ({
 }) => (
   showLongWaitMessage &&
     <Aux>
-      <LinearProgress
-        mode="determinate"
+      <LinearProgressSmall
         min={rescanStartBlock}
         max={rescanEndBlock}
         value={rescanCurrentBlock}

@@ -1,4 +1,4 @@
-import LinearProgress from "material-ui/LinearProgress";
+import { LinearProgressSmall } from "indicators";
 import { rescan } from "connectors";
 import { FormattedMessage as T } from "react-intl";
 import { RescanButton, RescanCancelButton } from "buttons";
@@ -13,12 +13,10 @@ const RescanProgress = ({
 }) => (
   <div className="rescan-progress-area" >
     <div className="rescan-progress-indicator">
-      <LinearProgress
-        mode="determinate"
+      <LinearProgressSmall
         min={0}
         max={1}
         value={rescanCurrentBlock/rescanEndBlock}
-        color="#2ed8a3"
       />
     </div>
     <div className="rescan-button-area">
