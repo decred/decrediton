@@ -80,7 +80,7 @@ export async function cleanShutdown(mainWindow, app) {
 
 export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, testnet, reactIPC) => {
   const spawn = require("child_process").spawn;
-  let args = ["--nolisten"];
+  let args = [ "--nolisten" ];
   let newConfig = {};
   if (appdata) {
     args.push(`--appdata=${appdata}`);
