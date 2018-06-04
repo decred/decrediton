@@ -4,6 +4,7 @@ export { addSpacingAroundText, restrictToStdDecimalNumber } from "./strings";
 export { reverseHash, reverseRawHash } from "./byteActions";
 export * from "./addresses";
 export * from "./arrays";
+export * from "./dom.js";
 
 // kidCheck takes a component and returns a component that only renders if it has children
 export const kidCheck = C => {
