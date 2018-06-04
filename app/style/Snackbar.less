@@ -2,10 +2,23 @@
 @import (reference) "./Icons.less";
 
 .snackbar {
-  left: 61% !important;
   background-color: rgba(12, 30, 62, 0.5);
   font-family: Source Sans Pro, sans-serif;
   margin-bottom: 0.5em;
+  position: fixed;
+  // bottom: 0px;
+  max-width: 568px;
+  z-index: 100;
+  left: 60%;
+  transform: translateX(-40%);
+  font-size: 14px;
+  color: #fff;
+  padding: 0px 24px;
+  transition: box-shadow 0.2s;
+}
+
+.snackbar:hover {
+  box-shadow: #ccc 0px 0px 24px 8px;
 }
 
 .snackbar.snackbar-warning,

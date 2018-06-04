@@ -1,7 +1,12 @@
 // @flow
-import { snackbar } from "connectors";
-import MUISnackbar from "material-ui/Snackbar";
+import { snackbar, theming } from "connectors";
+import ReactDOM from "react-dom";
+import ReactTimeout from "react-timeout";
+import EventListener from "react-event-listener";
+import ownerDocument from "dom-helpers/ownerDocument";
 import Notification from "./Notification";
+import theme from "theme";
+import { spring, TransitionMotion } from "react-motion";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERED
 } from "wallet/service";
@@ -24,11 +29,19 @@ const snackbarClasses = ({ type }) => ({
   "Success": "snackbar snackbar-success",
 })[type] || "snackbar";
 
+const isDescendant = (el, target) => {
+  if (target !== null && target.parentNode) {
+    return el === target || isDescendant(el, target.parentNode);
+  }
+  return false;
+};
+
 @autobind
 class Snackbar extends React.Component {
 
   constructor(props) {
     super(props);
+    this.hideTimer = null;
     this.state = {
       message: props.messages.length > 0
         ? props.messages[props.messages.length-1]
@@ -43,6 +56,7 @@ class Snackbar extends React.Component {
     if (message !== this.state.message) {
       const state = this.state;
       this.setState({ ...state, message });
+      message && this.enableHideTimer();
     }
   }
 
@@ -50,35 +64,97 @@ class Snackbar extends React.Component {
     return this.state.message !== nextState.message;
   }
 
-  onDismissMessage() {
-    const state = this.state;
-    this.setState({ ...state, message: null });
-    this.props.onDismissAllMessages();
+  enableHideTimer() {
+    this.clearHideTimer();
+    this.hideTimer = this.props.setTimeout(this.onDismissMessage, 4000);
   }
 
-  onRequestClose(reason) {
-    if (reason !== "clickaway") {
+  clearHideTimer() {
+    if (this.hideTimer) {
+      this.props.clearTimeout(this.hideTimer);
+      this.hideTimer = null;
+    }
+  }
+
+  windowClicked(event) {
+    if (!this.state.message) return;
+
+    const el = ReactDOM.findDOMNode(this);
+    const doc = ownerDocument(el);
+
+    if (
+      doc.documentElement &&
+      doc.documentElement.contains(event.target) &&
+      !isDescendant(el, event.target)
+    ) {
       this.onDismissMessage();
     }
   }
 
-  render() {
+  onDismissMessage() {
+    const state = this.state;
+    this.setState({ ...state, message: null });
+    this.props.onDismissAllMessages();
+    this.clearHideTimer();
+  }
+
+  getStaticNotification() {
     const { message } = this.state;
     return (
-      <MUISnackbar
+      <div
         className={snackbarClasses(message || "")}
-        open={!!message}
-        message={message ? <Notification {...message} /> : ""}
-        autoHideDuration={4000}
-        bodyStyle={{ backgroundColor: "inherited", fontFamily: null,
-          lineHeight: null, height: null }}
-        style={{ fontFamily: null, lineHeight: null }}
-        onRequestClose={this.onRequestClose}
-      />
+        onMouseEnter={this.clearHideTimer}
+        onMouseLeave={this.enableHideTimer}
+        style={{ bottom: "0px" }}
+      >
+        {message ? <Notification {...message} /> : ""}
+      </div>
+    );
+  }
+
+  notifWillEnter() {
+    return { bottom: -10 };
+  }
+
+  getAnimatedNotification() {
+    const { message } = this.state;
+
+    const styles = [ {
+      key: "ntf"+Math.random(),
+      data: message,
+      style: { bottom: spring(0, theme("springs.tab")) }
+    } ];
+
+    return (
+      <TransitionMotion styles={styles} willEnter={this.notifWillEnter}>
+        { is => !is[0].data
+          ? ""
+          : <div
+            className={snackbarClasses(message || "")}
+            onMouseEnter={this.clearHideTimer}
+            onMouseLeave={this.enableHideTimer}
+            style={is[0].style}
+          >
+            <Notification {...is[0].data} />
+          </div>
+        }
+      </TransitionMotion>
+    );
+  }
+
+  render() {
+    const notification = this.props.uiAnimations
+      ? this.getAnimatedNotification()
+      : this.getStaticNotification();
+
+    return (
+      <EventListener target="document" onMouseUp={this.windowClicked}>
+        {notification}
+      </EventListener>
     );
   }
 }
 
 Snackbar.propTypes = propTypes;
 
-export default snackbar(Snackbar);
+export default ReactTimeout(snackbar(theming(Snackbar)));
