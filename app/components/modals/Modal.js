@@ -1,16 +1,8 @@
-import { showCheck } from "helpers";
+import { showCheck, eventOutsideElement } from "helpers";
 import ReactDOM from "react-dom";
 import { modal } from "connectors";
 import EventListener from "react-event-listener";
-import ownerDocument from "dom-helpers/ownerDocument";
 import "style/Modals.less";
-
-const isDescendant = (el, target) => {
-  if (target !== null && target.parentNode) {
-    return el === target || isDescendant(el, target.parentNode);
-  }
-  return false;
-};
 
 @autobind
 class Modal extends React.Component {
@@ -28,13 +20,7 @@ class Modal extends React.Component {
   }
   mouseUp(event) {
     const el = document.getElementById("modal-portal");
-    const doc = ownerDocument(el);
-
-    if (
-      doc.documentElement &&
-      doc.documentElement.contains(event.target) &&
-      !isDescendant(el, event.target)
-    ) {
+    if (eventOutsideElement(el, event.target)) {
       this.props.onCancelModal && this.props.onCancelModal();
     }
   }

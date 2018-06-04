@@ -1,11 +1,10 @@
 // @flow
 import { snackbar, theming } from "connectors";
-import ReactDOM from "react-dom";
 import ReactTimeout from "react-timeout";
 import EventListener from "react-event-listener";
-import ownerDocument from "dom-helpers/ownerDocument";
 import Notification from "./Notification";
 import theme from "theme";
+import { eventOutsideComponent } from "helpers";
 import { spring, TransitionMotion } from "react-motion";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
   TRANSACTION_DIR_TRANSFERED
@@ -28,13 +27,6 @@ const snackbarClasses = ({ type }) => ({
   "Error": "snackbar snackbar-error",
   "Success": "snackbar snackbar-success",
 })[type] || "snackbar";
-
-const isDescendant = (el, target) => {
-  if (target !== null && target.parentNode) {
-    return el === target || isDescendant(el, target.parentNode);
-  }
-  return false;
-};
 
 @autobind
 class Snackbar extends React.Component {
@@ -78,15 +70,7 @@ class Snackbar extends React.Component {
 
   windowClicked(event) {
     if (!this.state.message) return;
-
-    const el = ReactDOM.findDOMNode(this);
-    const doc = ownerDocument(el);
-
-    if (
-      doc.documentElement &&
-      doc.documentElement.contains(event.target) &&
-      !isDescendant(el, event.target)
-    ) {
+    if (eventOutsideComponent(this, event.target)) {
       this.onDismissMessage();
     }
   }
