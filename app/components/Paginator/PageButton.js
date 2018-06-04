@@ -1,4 +1,4 @@
-import FlatButton from "material-ui/FlatButton";
+import { InvisibleButton } from "buttons";
 
 const propTypes = {
   value: PropTypes.oneOfType([ PropTypes.number, PropTypes.string ]).isRequired,
@@ -16,15 +16,13 @@ class PageButton extends React.Component {
   render() {
     const { value, isCurrent, disabled } = this.props;
     return (
-      <FlatButton
-        className="paginator-page-button"
-        primary={isCurrent}
+      <InvisibleButton
+        className={[ "paginator-page-button", isCurrent ? "active" : "" ].join(" ")}
         disabled={disabled}
-        label={isFinite(value) ? value+1 : value}
         onClick={this.onClick}
-        style={{ minWidth: null, height: null, buttonHeight: null, padding: null }}
-        hoverColor={"#e9f8ff"}
-      />
+      >
+        {isFinite(value) ? value+1 : value}
+      </InvisibleButton>
     );
   }
 }

@@ -1,4 +1,4 @@
-import FlatButton from "material-ui/FlatButton";
+import { InvisibleButton } from "buttons";
 
 const propTypes = {
   direction: PropTypes.oneOf([ "next", "previous" ]).isRequired,
@@ -23,14 +23,12 @@ class ActionButton extends React.Component {
     const { direction } = this.props;
 
     return (
-      <FlatButton
+      <InvisibleButton
         className={classNames[direction]}
-        style={{ fontSize: null, minWidth: null,
-          height: null, buttonHeight: null, margin: null, color: null }}
-        label={labels[direction]}
         onClick={this.onClick}
-        hoverColor={"#fff"}
-      />
+      >
+        {labels[direction]}
+      </InvisibleButton>
     );
   }
 }
