@@ -1,6 +1,4 @@
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { IntlProvider } from "react-intl";
-import MUItheme from "materialUITheme";
 import { defaultFormats } from "i18n/locales";
 import { app, theming } from "connectors";
 import { Redirect, Route, Switch } from "react-router-dom";
@@ -82,26 +80,24 @@ class App extends React.Component {
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
-      <MuiThemeProvider muiTheme={MUItheme}>
-        <IntlProvider
-          locale={locale.language}
-          messages={locale.messages}
-          formats={locale.formats}
-          defaultFormats={defaultFormats}
-          key={locale.key}>
-          <Aux>
-            <Switch><Redirect from="/" exact to="/getStarted" /></Switch>
-            <Snackbar/>
-            <MainSwitch {...topLevelAnimation} className="top-level-container">
-              <Route path="/getStarted"  component={GetStartedContainer} />
-              <Route path="/shutdown"    component={ShutdownAppPage} />
-              <Route path="/error"       component={FatalErrorPage} />
-              <Route path="/"            component={WalletContainer} />
-            </MainSwitch>
-            <div id="modal-portal" />
-          </Aux>
-        </IntlProvider>
-      </MuiThemeProvider>
+      <IntlProvider
+        locale={locale.language}
+        messages={locale.messages}
+        formats={locale.formats}
+        defaultFormats={defaultFormats}
+        key={locale.key}>
+        <Aux>
+          <Switch><Redirect from="/" exact to="/getStarted" /></Switch>
+          <Snackbar/>
+          <MainSwitch {...topLevelAnimation} className="top-level-container">
+            <Route path="/getStarted"  component={GetStartedContainer} />
+            <Route path="/shutdown"    component={ShutdownAppPage} />
+            <Route path="/error"       component={FatalErrorPage} />
+            <Route path="/"            component={WalletContainer} />
+          </MainSwitch>
+          <div id="modal-portal" />
+        </Aux>
+      </IntlProvider>
     );
   }
 }
