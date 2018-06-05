@@ -23,6 +23,7 @@ export default ({
   startupError,
   updateAvailable,
   appVersion,
+  isDaemonRemote,
   ...props,
 }) => (
   <div className="page-body getstarted">
@@ -37,16 +38,19 @@ export default ({
                 </InvisibleButton>
               </Tooltip>
             }
-            {getWalletReady &&
-              <Aux>
-                <InvisibleButton onClick={onShowSettings}>
-                  <T id="getStarted.btnSettings" m="Settings" />
-                </InvisibleButton>
+            <Aux>
+              {getWalletReady &&
+                  <InvisibleButton onClick={onShowSettings}>
+                    <T id="getStarted.btnSettings" m="Settings" />
+                  </InvisibleButton>
+              }
+              {(getDaemonStarted && !isDaemonRemote) || getWalletReady ?
                 <InvisibleButton onClick={onShowLogs}>
                   <T id="getStarted.btnLogs" m="Logs" />
-                </InvisibleButton>
-              </Aux>
-            }
+                </InvisibleButton> :
+                <div/>
+              }
+            </Aux>
           </div>
           <T id="loader.title" m={"Welcome to Decrediton Wallet"}/>
         </div>
