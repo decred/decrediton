@@ -113,7 +113,7 @@ class GetStartedPage extends React.Component {
     if (showSettings) {
       return <Settings {...{ onShowLogs, onHideSettings, ...props }} />;
     } else if (showLogs) {
-      return <Logs {...{ onShowSettings, onHideLogs, ...props }} />;
+      return <Logs {...{ onShowSettings, onHideLogs, getWalletReady, ...props }} />;
     } else if (showReleaseNotes) {
       return <ReleaseNotes {...{ onShowSettings, onShowLogs, onHideReleaseNotes, ...props }} />;
     } else if (isAdvancedDaemon && openForm && !remoteAppdataError && !isPrepared && !getWalletReady) {

@@ -27,6 +27,7 @@ const mapStateToProps = selectorMap({
   isTestNet: sel.isTestNet,
   network: sel.network,
   isAdvancedDaemon: sel.isAdvancedDaemon,
+  isDaemonRemote: sel.isDaemonRemote,
   openForm: sel.openForm,
   isOpeningWallet: sel.isOpeningWallet,
   remoteAppdataError: sel.getRemoteAppdataError,
