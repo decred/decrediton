@@ -42,7 +42,7 @@ const ContinueWalletCreation = ({
         </KeyBlueButton>
         <InvisibleButton
           className="go-back-button"
-          onClick={createWalletExisting ? createNewWallet ? onReturnToWalletSelection : onReturnToExistingOrNewScreen : onReturnToNewSeed}
+          onClick={createWalletExisting ? !createNewWallet ? onReturnToWalletSelection : onReturnToExistingOrNewScreen : onReturnToNewSeed}
         ><T id="getStarted.backBtn" m="Cancel" /> </InvisibleButton>
       </div>
     </div>

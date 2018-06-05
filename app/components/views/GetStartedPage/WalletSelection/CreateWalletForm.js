@@ -11,6 +11,7 @@ const messages = defineMessages({
 
 const CreateWalletForm = ({
   newWalletName,
+  createNewWallet,
   onChangeCreateWalletName,
   hasFailedAttempt,
   intl
@@ -19,7 +20,10 @@ const CreateWalletForm = ({
     <Aux>
       <div className="advanced-daemon-row">
         <div className="advanced-daemon-label">
-          <T id="createwallet.walletname.label" m="New Wallet Name" />
+          {!createNewWallet ?
+            <T id="createwallet.walletname.label" m="New Wallet Name" /> :
+            <T id="createwallet.walletname.restored.label" m="Restored Wallet Name" />
+          }
         </div>
         <div className="advanced-daemon-input">
           <TextInput
