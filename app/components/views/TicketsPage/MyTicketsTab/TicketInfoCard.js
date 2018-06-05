@@ -19,14 +19,14 @@ const TicketInfoCard = ({ ticket, onClick, expanded }) => {
       Transaction Fee: {txFee}
       Pool Fee: {poolFee}
       {rewardLabel}: {reward}
-      ROI: {roi, number, precise-percent}`}
+      StakeRewards: {stakerewards, number, precise-percent}`}
       values={{
         investment: <Balance amount={ticket.ticketInvestment || 0} />,
         txFee: <Balance amount={ticket.ticketTxFee || 0} />,
         poolFee: <Balance amount={ticket.ticketPoolFee || 0} />,
         rewardLabel: rewardLabel,
         reward: <Balance amount={ticket.ticketReward || 0} />,
-        roi: ticket.ticketROI
+        stakerewards: ticket.ticketStakeRewards
       }} />;
   }
 

@@ -146,7 +146,6 @@ class AdvancedStartupBody extends React.Component {
       this.setState({ appDataHasFailedAttempt: true });
       return;
     }
-    console.log(!this.isAppDataValid(), !!(appData), appData);
     setAppdataPath(appData);
     this.props.onStartDaemon(null, appData);
   }
