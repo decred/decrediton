@@ -19,6 +19,8 @@ const WalletSelectionBodyBase = ({
   onCloseEditWallets,
   editWallets,
   intl,
+  toggleWatchOnly,
+  isWatchOnly,
   ...props,
 }) => {
   return (
@@ -98,7 +100,7 @@ const WalletSelectionBodyBase = ({
       </div> :
       <div className="advanced-page">
         <div className="advanced-page-form">
-          <CreateWalletForm {...{ ...props, createNewWallet, intl }} />
+          <CreateWalletForm {...{ ...props, intl, createNewWallet, isWatchOnly, toggleWatchOnly }} />
           <div className="loader-bar-buttons">
             {availableWallets && availableWallets.length > 0 &&
               <InvisibleButton onClick={hideCreateWalletForm}>

@@ -1,5 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
+import { WatchOnlyWalletSwitch, EyeFilterMenu } from "buttons";
 import "style/LoginForm.less";
 
 const messages = defineMessages({
@@ -14,7 +15,10 @@ const CreateWalletForm = ({
   createNewWallet,
   onChangeCreateWalletName,
   hasFailedAttempt,
-  intl
+  intl,
+  isWatchOnly,
+  toggleWatchOnly,
+  ...props
 }) => {
   return (
     <Aux>
@@ -33,6 +37,11 @@ const CreateWalletForm = ({
             placeholder={intl.formatMessage(messages.messageWalletNamePlaceholder)}
             showErrors={hasFailedAttempt}
           />
+          <div className="wallet-switch-wrapper">
+            <WatchOnlyWalletSwitch className="wallet-switch" enabled={ isWatchOnly } onClick={ toggleWatchOnly } />
+            {isWatchOnly ? <T id="createwallet.walletOnly.label" m="Watch only wallet" /> :
+                <T id="createwallet.notWalletOnly.label" m="Not Watch only wallet" />}
+          </div>
         </div>
       </div>
     </Aux>

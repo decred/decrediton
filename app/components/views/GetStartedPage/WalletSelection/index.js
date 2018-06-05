@@ -17,6 +17,7 @@ class WalletSelectionBody extends React.Component {
       newWalletName: "",
       selectedWallet: this.props.availableWallets ? this.props.availableWallets[0] : null,
       hasFailedAttempt: false,
+      isWatchOnly: false,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -42,6 +43,7 @@ class WalletSelectionBody extends React.Component {
       hideCreateWalletForm,
       onEditWallets,
       onCloseEditWallets,
+      toggleWatchOnly,
     } = this;
     const {
       selectedWallet,
@@ -51,7 +53,8 @@ class WalletSelectionBody extends React.Component {
       createWalletForm,
       createNewWallet,
       editWallets,
-      hasFailedAttempt
+      hasFailedAttempt,
+      isWatchOnly,
     } = this.state;
     return (
       <WalletSelectionFormBody
@@ -74,6 +77,8 @@ class WalletSelectionBody extends React.Component {
           editWallets,
           networkSelected: newWalletNetwork == "mainnet",
           getDaemonSynced,
+          toggleWatchOnly,
+          isWatchOnly,
           ...this.props,
           ...this.state,
         }}
@@ -110,6 +115,10 @@ class WalletSelectionBody extends React.Component {
     this.props.onCreateWallet(
       createNewWallet,
       { label: newWalletName, value: { wallet: newWalletName } });
+  }
+  toggleWatchOnly() {
+    const { isWatchOnly } = this.state
+    this.setState({ isWatchOnly : !isWatchOnly })
   }
   startWallet() {
     this.props.onStartWallet(this.state.selectedWallet);
