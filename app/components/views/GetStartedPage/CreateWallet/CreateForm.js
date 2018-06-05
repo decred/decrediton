@@ -16,7 +16,7 @@ const CreateForm = ({
   getEstimatedTimeLeft,
   getDaemonSynced,
 }) => (
-  (availableWallets.length == 0 && existingOrNew) || !createNewWallet ?
+  (availableWallets.length == 0 && existingOrNew) || createNewWallet ?
     <ExistingOrNewScreen {...{ onSetCreateWalletFromExisting,
       onReturnToWalletSelection,
       getCurrentBlockCount,
