@@ -6,6 +6,7 @@ import { Tooltip } from "shared";
 const WalletSelectionBodyBase = ({
   availableWallets,
   createWallet,
+  createNewWallet,
   showCreateWalletForm,
   hideCreateWalletForm,
   createWalletForm,
@@ -97,7 +98,7 @@ const WalletSelectionBodyBase = ({
       </div> :
       <div className="advanced-page">
         <div className="advanced-page-form">
-          <CreateWalletForm {...{ ...props, intl }} />
+          <CreateWalletForm {...{ ...props, createNewWallet, intl }} />
           <div className="loader-bar-buttons">
             {availableWallets && availableWallets.length > 0 &&
               <InvisibleButton onClick={hideCreateWalletForm}>

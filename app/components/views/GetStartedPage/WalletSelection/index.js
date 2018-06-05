@@ -49,6 +49,7 @@ class WalletSelectionBody extends React.Component {
       newWalletName,
       newWalletNetwork,
       createWalletForm,
+      createNewWallet,
       editWallets,
       hasFailedAttempt
     } = this.state;
@@ -61,6 +62,7 @@ class WalletSelectionBody extends React.Component {
           startWallet,
           createWallet,
           createWalletForm,
+          createNewWallet,
           showCreateWalletForm,
           hideCreateWalletForm,
           selectedWallet,
