@@ -8,6 +8,10 @@ const messages = defineMessages({
     id: "createwallet.walletname.placehlder",
     defaultMessage: "Enter your wallet name here",
   },
+  messageWalletMasterPubKey: {
+    id: "createwallet.walletpubkey.placeholder",
+    defaultMessage: "Enter wallet master pub key here",
+  }
 });
 
 const CreateWalletForm = ({
@@ -17,7 +21,9 @@ const CreateWalletForm = ({
   hasFailedAttempt,
   intl,
   isWatchOnly,
+  walletMasterPubKey,
   toggleWatchOnly,
+  onChangeCreateWalletMasterPubKey,
   ...props
 }) => {
   return (
@@ -37,10 +43,21 @@ const CreateWalletForm = ({
             placeholder={intl.formatMessage(messages.messageWalletNamePlaceholder)}
             showErrors={hasFailedAttempt}
           />
-          <div className="wallet-switch-wrapper">
-            <WatchOnlyWalletSwitch className="wallet-switch" enabled={ isWatchOnly } onClick={ toggleWatchOnly } />
-            {isWatchOnly ? <T id="createwallet.walletOnly.label" m="Watch only wallet" /> :
-                <T id="createwallet.notWalletOnly.label" m="Not Watch only wallet" />}
+          <div>
+            <div className="wallet-switch-wrapper">
+              <WatchOnlyWalletSwitch className="wallet-switch" enabled={ isWatchOnly } onClick={ toggleWatchOnly } />
+              {isWatchOnly ? <T id="createwallet.walletOnly.label" m="Watch only wallet" /> :
+                  <T id="createwallet.notWalletOnly.label" m="Not Watch only wallet" />}
+            </div>
+            {isWatchOnly &&
+              (<TextInput
+                required
+                value={ walletMasterPubKey }
+                onChange={(e) => onChangeCreateWalletMasterPubKey(e.target.value)}
+                placeholder={intl.formatMessage(messages.messageWalletMasterPubKey)}
+                showErrors={hasFailedAttempt}
+              />
+            )}
           </div>
         </div>
       </div>
