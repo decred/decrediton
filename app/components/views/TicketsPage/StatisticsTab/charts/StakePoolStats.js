@@ -1,24 +1,29 @@
 import { MeteredChart } from "charts";
 import { myTicketsCharts }  from "connectors";
 import { FormattedMessage as T } from "react-intl";
+import { StakePoolSelect } from "inputs";
 
-class VoteTimeChartPage extends React.Component{
+@autobind
+class StakePoolStats extends React.Component{
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
   }
 
   getInitialState() {
-    return ({
-      selectedStakePool: null
-    });
+    return {
+      stakePool: this.props.allStakePoolInfo[0]
+    };
+  }
+
+  onChangeStakePoolStats(stakePool) {
+    this.setState({ stakePool });
   }
 
   render() {
-    const { stakePools } = this.props;
-    const { selectedStakePool } = this.state;
+    const { allStakePoolInfo } = this.props;
+    const { stakePool } = this.state;
     const { onChangeStakePoolStats } = this;
-
     return (
       <Aux>
         <div className="my-tickets-stats-indicators">
@@ -29,8 +34,14 @@ class VoteTimeChartPage extends React.Component{
           </div>
           <div className="my-tickets-stats-indicators-row">
             <div className="my-tickets-stats-indicators-label">
+              {allStakePoolInfo.length > 0 &&
               <div className="stakepool-unconfigured-select">
-              </div>
+                <StakePoolSelect
+                  options={allStakePoolInfo}
+                  value={stakePool}
+                  onChange={onChangeStakePoolStats}
+                />
+              </div>}
             </div>
           </div>
           <div className="my-tickets-stakepool-stats-row">
@@ -38,34 +49,25 @@ class VoteTimeChartPage extends React.Component{
               additive={true}
               blueValue={40960}
               blueLabel="All Network Tickets"
-              blackValue={6000}
+              blackValue={stakePool.Live}
               blackLabel="Stakepool Tickets"
             />
           </div>
           <div className="my-tickets-stakepool-stats-row">
             <MeteredChart
               additive={true}
-              blueValue={4000}
+              blueValue={stakePool.Voted}
               blueLabel="Voted Tickets"
-              blackValue={20}
+              blackValue={stakePool.Missed}
               blackLabel="Missed Tickets"
             />
           </div>
           <div className="my-tickets-stakepool-stats-row">
             <MeteredChart
               additive={true}
-              blueValue={519}
-              blueLabel="Revoked Tickets"
-              blackValue={323}
-              blackLabel="Expired Tickets"
-            />
-          </div>
-          <div className="my-tickets-stakepool-stats-row">
-            <MeteredChart
-              additive={true}
-              blueValue={102}
+              blueValue={stakePool.UserCountActive}
               blueLabel="Active Users"
-              blackValue={321}
+              blackValue={stakePool.UserCount}
               blackLabel="Total Users"
             />
           </div>
@@ -75,4 +77,4 @@ class VoteTimeChartPage extends React.Component{
   }
 }
 
-export default myTicketsCharts(VoteTimeChartPage);
+export default myTicketsCharts(StakePoolStats);

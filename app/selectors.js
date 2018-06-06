@@ -720,6 +720,21 @@ export const isTicketAutoBuyerEnabled = bool(startAutoBuyerResponse);
 
 export const currentStakePoolConfig = get([ "stakepool", "currentStakePoolConfig" ]);
 
+const allStakePoolStats = get([ "stakepool", "getStakePoolInfo" ]);
+
+export const allStakePoolStatsList = createSelector(
+  [ allStakePoolStats, requiredStakepoolAPIVersion ],
+  (pools, requiredVersion) => map(
+    pool => ({
+      ...pool,
+      label: pool.URL,
+      value: pool,
+      isVersionValid: pool.APIVersionsSupported[1] === requiredVersion
+    }),
+    pools
+  )
+);
+
 const allStakePools = createSelector(
   [ currentStakePoolConfig, requiredStakepoolAPIVersion ],
   (pools, requiredVersion) => map(

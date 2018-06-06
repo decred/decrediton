@@ -5,6 +5,7 @@ import * as sel from "selectors";
 import * as sta from "actions/StatisticsActions";
 
 const mapStateToProps = selectorMap({
+  allStakePoolInfo: sel.allStakePoolStatsList,
   voteTimeStats: sel.voteTimeStats,
   getMyTicketsStatsRequest: sel.getMyTicketsStatsRequest,
   stakeRewardsStats: sel.stakeRewardsStats,
