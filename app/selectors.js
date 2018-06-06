@@ -722,7 +722,7 @@ export const currentStakePoolConfig = get([ "stakepool", "currentStakePoolConfig
 
 const allStakePoolStats = get([ "stakepool", "getStakePoolInfo" ]);
 
-export const allStakePoolStatsList = createSelector(
+const allStakePoolStatsList = createSelector(
   [ allStakePoolStats, requiredStakepoolAPIVersion ],
   (pools, requiredVersion) => map(
     pool => ({
@@ -733,6 +733,10 @@ export const allStakePoolStatsList = createSelector(
     }),
     pools
   )
+);
+export const networkStakePoolStatsList = createSelector(
+  [ allStakePoolStatsList , network ],
+  (pools, network) => filter(compose(eq(network), get("Network")), pools)
 );
 
 const allStakePools = createSelector(
