@@ -33,7 +33,7 @@ export const createWallet = log((loader, pubPass, privPass, seed) =>
     loader.createWallet(request, error => error ? reject(error) : resolve());
   }), "Create Wallet", logOptionNoArgs());
 
-export const createWatchingOnlyWallet = log((loader, extendedPubKey, pubPass) =>
+export const createWatchingOnlyWallet = log((loader, extendedPubKey) =>
   new Promise((resolve, reject) => {
     const request = new CreateWatchingOnlyWalletRequest();
     request.setExtendedPubKey(extendedPubKey);

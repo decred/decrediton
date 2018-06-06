@@ -73,7 +73,7 @@ export default function walletLoader(state = {}, action) {
   case CREATEWATCHONLYWALLET_ATTEMPT:
     return { ...state,
       stepIndex: 1,
-    }
+    };
   case CREATEWALLET_GOBACK_EXISITNG_OR_NEW:
     return { ...state,
       confirmNewSeed: false,

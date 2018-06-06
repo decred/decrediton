@@ -84,6 +84,8 @@ class WalletSelectionBody extends React.Component {
           toggleWatchOnly,
           isWatchOnly,
           onChangeCreateWalletMasterPubKey,
+          walletMasterPubKey,
+          masterPubKeyError,
           ...this.props,
           ...this.state,
         }}
@@ -129,20 +131,20 @@ class WalletSelectionBody extends React.Component {
       { label: newWalletName, value: { wallet: newWalletName } });
   }
   toggleWatchOnly() {
-    const { isWatchOnly } = this.state
-    this.setState({ isWatchOnly : !isWatchOnly })
+    const { isWatchOnly } = this.state;
+    this.setState({ isWatchOnly : !isWatchOnly });
   }
   async onChangeCreateWalletMasterPubKey(walletMasterPubKey) {
     if (walletMasterPubKey === "") {
       this.setState({ hasFailedAttempt: true });
     }
-    const { isValid } = await this.props.validateMasterPubKey(walletMasterPubKey)
+    const { isValid } = await this.props.validateMasterPubKey(walletMasterPubKey);
     if (!isValid) {
-      this.setState({ masterPubKeyError: true })
+      this.setState({ masterPubKeyError: true });
     } else {
-      this.setState({ masterPubKeyError: false })
+      this.setState({ masterPubKeyError: false });
     }
-    this.setState({ walletMasterPubKey })
+    this.setState({ walletMasterPubKey });
   }
   startWallet() {
     this.props.onStartWallet(this.state.selectedWallet);

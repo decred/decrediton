@@ -457,7 +457,7 @@ export const validateAddress = address => async (dispatch, getState) => {
 export const VALIDATEMASTERPUBKEY_FAILED = "VALIDATEMASTERPUBKEY_FAILED";
 export const VALIDATEMASTERPUBKEY_SUCCESS = "VALIDATEMASTERPUBKEY_SUCCESS";
 
-export const validateMasterPubKey = masterPubKey => async (dispatch, getState) => {
+export const validateMasterPubKey = masterPubKey => async (dispatch) => {
   try {
     const validationErr = isValidMasterPubKey(masterPubKey);
     if (validationErr) {

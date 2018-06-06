@@ -661,8 +661,8 @@ export const validateAddressSuccess = compose(
   r => r ? r.toObject() : null, validateAddressResponse
 );
 
-export const isWatchOnly = get([ "control", "isWatchOnly"]);
-export const masterPubKey = get([ "control", "masterPubKey"]);
+export const isWatchOnly = get([ "control", "isWatchOnly" ]);
+export const masterPubKey = get([ "control", "masterPubKey" ]);
 
 const getStakeInfoResponse = get([ "grpc", "getStakeInfoResponse" ]);
 
