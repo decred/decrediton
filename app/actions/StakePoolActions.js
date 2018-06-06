@@ -1,12 +1,28 @@
 // @flow
 import Promise from "promise";
 import {
-  getPurchaseInfo, setStakePoolAddress, setVoteChoices, getNextAddress, getStakePoolInfo
+  getPurchaseInfo, setStakePoolAddress, setVoteChoices, getNextAddress, getStakePoolInfo, getAllStakePoolInfo,
 } from "wallet";
 import { getWalletCfg, updateStakePoolConfig } from "../config";
 import { importScriptAttempt } from "./ControlActions";
 import * as sel from "../selectors";
 import * as wallet from "wallet";
+
+export const GETSTAKEPOOLINFO_ATTEMPT = "GETSTAKEPOOLINFO_ATTEMPT";
+export const GETSTAKEPOOLINFO_FAILED = "GETSTAKEPOOLINFO_FAILED";
+export const GETSTAKEPOOLINFO_SUCCESS = "GETSTAKEPOOLINFO_SUCCESS";
+
+export const getStakepoolStats = () => (dispatch) => {
+  dispatch({ type: GETSTAKEPOOLINFO_ATTEMPT });
+  getAllStakePoolInfo()
+    .then((allStakePoolInfo) =>
+      dispatch({ type: GETSTAKEPOOLINFO_SUCCESS, allStakePoolInfo })
+      // TODO: add error notification after global snackbar is merged
+    )
+    .catch((error) => {
+      dispatch({ type: GETSTAKEPOOLINFO_FAILED, error });
+    });
+};
 
 export const UPDATESTAKEPOOLCONFIG_ATTEMPT = "UPDATESTAKEPOOLCONFIG_ATTEMPT";
 export const UPDATESTAKEPOOLCONFIG_FAILED = "UPDATESTAKEPOOLCONFIG_FAILED";

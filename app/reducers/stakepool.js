@@ -2,6 +2,7 @@ import {
   UPDATESTAKEPOOLCONFIG_ATTEMPT, UPDATESTAKEPOOLCONFIG_FAILED, UPDATESTAKEPOOLCONFIG_SUCCESS,
   DISCOVERAVAILABLESTAKEPOOLS_SUCCESS, CHANGESELECTEDSTAKEPOOL,
   REMOVESTAKEPOOLCONFIG,
+  GETSTAKEPOOLINFO_ATTEMPT, GETSTAKEPOOLINFO_FAILED, GETSTAKEPOOLINFO_SUCCESS
 } from "../actions/StakePoolActions";
 import { CLEARSTAKEPOOLCONFIG } from "../actions/WalletLoaderActions";
 import { WALLET_STAKEPOOL_SETTINGS } from "actions/DaemonActions";
@@ -51,6 +52,21 @@ export default function stakepool(state = {}, action) {
       activeStakePoolConfig: action.activeStakePoolConfig,
       selectedStakePool: action.selectedStakePool,
       currentStakePoolConfig: action.currentStakePoolConfig,
+    };
+  case GETSTAKEPOOLINFO_ATTEMPT:
+    return { ...state,
+      getStakePoolInfoAttempt: true,
+      getStakePoolInfoError: null,
+    };
+  case  GETSTAKEPOOLINFO_FAILED:
+    return { ...state,
+      getStakePoolInfoAttempt: false,
+      getStakePoolInfoError: action.error,
+    };
+  case GETSTAKEPOOLINFO_SUCCESS:
+    return { ...state,
+      getStakePoolInfoAttempt: false,
+      getStakePoolInfo: action.allStakePoolInfo,
     };
   default:
     return state;
