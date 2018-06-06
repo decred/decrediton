@@ -13,14 +13,14 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets }) =>
       <div className="tabbed-page-subtitle"><T id="statistics.subtitle" m="Statistics"/>
         {hasStats ?
           <div className="my-tickets-stats-links">
-            <Tooltip text={<T id="mytickets.statistics.votetime.title" m="Vote Time" />}>
-              <Link to="/tickets/statistics/voteTime" activeClassName="my-tickets-active-chart-link vote-time" className="vote-time"/>
+            <Tooltip text={<T id="mytickets.statistics.stakepoolstats.title" m="Stake Pool" />}>
+              <Link to="/tickets/statistics/stakepool" activeClassName="my-tickets-active-chart-link stakepool" className="stakepool"/>
             </Tooltip>
             <Tooltip text={<T id="mytickets.statistics.stakerewards.title" m="Stake Rewards" />}>
               <Link to="/tickets/statistics/stakerewards" activeClassName="my-tickets-active-chart-link stakerewards" className="stakerewards"/>
             </Tooltip>
-            <Tooltip text={<T id="mytickets.statistics.stakepoolstats.title" m="Stake Pool Stats" />}>
-              <Link to="/tickets/statistics/stakepool" activeClassName="my-tickets-active-chart-link stakerewards" className="stakerewards"/>
+            <Tooltip text={<T id="mytickets.statistics.votetime.title" m="Vote Time" />}>
+              <Link to="/tickets/statistics/voteTime" activeClassName="my-tickets-active-chart-link vote-time" className="vote-time"/>
             </Tooltip>
           </div> :
           <div />
@@ -32,7 +32,7 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets }) =>
             <Route path="/tickets/statistics/voteTime" component={VoteTimeChartPage} />
             <Route path="/tickets/statistics/stakerewards" component={StakeRewardsChartPage} />
             <Route path="/tickets/statistics/stakepool" component={StakePoolStats} />
-            {hasStats ? <Redirect from="/tickets/statistics" exact to="/tickets/statistics/voteTime" /> : null}
+            {hasStats ? <Redirect from="/tickets/statistics" exact to="/tickets/statistics/stakepool" /> : null}
           </Switch>
         }
       </div>
