@@ -12,7 +12,9 @@ const mapStateToProps = selectorMap({
   isCreatingWallet: sel.isCreatingWallet,
   confirmNewSeed: sel.confirmNewSeed,
   createNewWallet: sel.createNewWallet,
-  isTestNet: sel.isTestNet
+  isTestNet: sel.isTestNet,
+  isWatchOnly: sel.isWatchOnly,
+  masterPubKey: sel.masterPubKey,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

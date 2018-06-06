@@ -661,6 +661,9 @@ export const validateAddressSuccess = compose(
   r => r ? r.toObject() : null, validateAddressResponse
 );
 
+export const isWatchOnly = get([ "control", "isWatchOnly"]);
+export const masterPubKey = get([ "control", "masterPubKey"]);
+
 const getStakeInfoResponse = get([ "grpc", "getStakeInfoResponse" ]);
 
 export const ticketPoolSize = compose(r => r ? r.getPoolSize() : 0, getStakeInfoResponse);

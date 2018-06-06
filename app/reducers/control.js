@@ -395,10 +395,12 @@ export default function control(state = {}, action) {
     };
   case VALIDATEMASTERPUBKEY_SUCCESS:
     return { ...state,
-      validateMasterPubKeyResponse: action.response,
+      masterPubKey: action.masterPubKey,
+      isWatchOnly: action.isWatchOnly,
     };
   case VALIDATEMASTERPUBKEY_FAILED:
     return { ...state,
+      masterPubKey: null,
       validateMasterPubKeyResponse: null,
     };
   case WALLET_AUTOBUYER_SETTINGS:
