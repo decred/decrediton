@@ -833,9 +833,11 @@ export const ninetyFifthPercentileVoteTime = createSelector(
 );
 export const getMyTicketsStatsRequest = get([ "statistics", "getMyTicketsStatsRequest" ]);
 
+export const fullDailyBalancesStats = get([ "statistics", "fullDailyBalances" ]);
+
 export const stakeRewardsStats = createSelector(
-  [ dailyBalancesStats, unitDivisor ],
-  ( stats, unitDivisor ) => stats.map(s => ({
+  [ fullDailyBalancesStats, unitDivisor ],
+  ( stats, unitDivisor ) => stats.slice(-15).map(s => ({
     time: s.time,
     stakeRewards: s.series.stakeRewards / unitDivisor,
     stakeFees: s.series.stakeFees / unitDivisor,

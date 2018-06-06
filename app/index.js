@@ -345,6 +345,7 @@ var initialState = {
   },
   statistics: {
     dailyBalances: Array(),
+    fullDailyBalances: Array(),
     voteTime: null,
     getMyTicketsStatsRequest: false,
   },

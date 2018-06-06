@@ -64,12 +64,13 @@ export const GETMYTICKETSSTATS_FAILED = "GETMYTICKETSSTATS_FAILED";
 export const getMyTicketsStats = () => (dispatch) => {
   const startupStats = [
     { calcFunction: voteTimeStats },
+    { calcFunction: dailyBalancesStats },
   ];
 
   dispatch({ type: GETMYTICKETSSTATS_ATTEMPT });
   return Promise.all(startupStats.map(s => dispatch(generateStat(s))))
-    .then(([ voteTime ]) => {
-      dispatch({ voteTime, type: GETMYTICKETSSTATS_SUCCESS });
+    .then(([ voteTime, dailyBalances ]) => {
+      dispatch({ voteTime, dailyBalances, type: GETMYTICKETSSTATS_SUCCESS });
     })
     .catch(error => dispatch({ error, type: GETMYTICKETSSTATS_FAILED }));
 };
