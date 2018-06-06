@@ -1,7 +1,7 @@
 // @flow
 import {
   getLoader, startRpc, getWalletExists, createWallet, openWallet, closeWallet, discoverAddresses,
-  subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo
+  subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo, createWatchingOnlyWallet
 } from "wallet";
 import * as wallet from "wallet";
 import { getWalletServiceAttempt, startWalletServices } from "./ClientActions";
@@ -100,6 +100,24 @@ export const createWalletRequest = (pubPass, privPass, seed, existing) =>
       })
       .catch(error => dispatch({ error, type: CREATEWALLET_FAILED }));
   };
+
+export const CREATEWATCHONLYWALLET_ATTEMPT = "CREATEWATCHONLYWALLET_ATTEMPT";
+export const CREATEWATCHONLYWALLET_FAILED = "CREATEWATCHONLYWALLET_FAILED";
+export const CREATEWATCHONLYWALLET_SUCCESS = "CREATEWATCHONLYWALLET_SUCCESS";
+
+export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (dispatch, getState) => {
+  dispatch({type: CREATEWATCHONLYWALLET_ATTEMPT});
+  return createWatchingOnlyWallet(getState().walletLoader.loader, extendedPubKey, pubPass)
+    .then(() => {
+      const { daemon: { walletName } } = getState();
+        const config = getWalletCfg(isTestNet(getState()), walletName);
+        config.delete("discoveraccounts");
+        dispatch({ response: {}, type: CREATEWATCHONLYWALLET_SUCCESS });
+        dispatch(getWalletServiceAttempt());
+        dispatch(startRpcRequestFunc())
+    })
+    .catch(error => dispatch({error, type: CREATEWATCHONLYWALLET_FAILED }))
+}
 
 export const OPENWALLET_INPUT = "OPENWALLET_INPUT";
 export const OPENWALLET_FAILED_INPUT = "OPENWALLET_FAILED_INPUT";

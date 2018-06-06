@@ -22,6 +22,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   createWalletGoBackNewSeed: wla.createWalletGoBackNewSeed,
   createWalletRequest: wla.createWalletRequest,
   copySeedToClipboard: ca.copySeedToClipboard,
+  createWatchOnlyWalletRequest: wla.createWatchOnlyWalletRequest,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);
