@@ -370,7 +370,7 @@ export const ticketNormalizer = createSelector(
       // ticket tx fee is the fee for the transaction where the ticket was bought
       const ticketTxFee = ticketTx.getFee();
 
-      // revocations have a tx fee that influences the ROI calc
+      // revocations have a tx fee that influences the stake rewards calc
       const spenderTxFee = hasSpender ? spenderTx.getFee() : 0;
 
       // ticket change is anything returned to the wallet on ticket purchase.
@@ -381,7 +381,7 @@ export const ticketNormalizer = createSelector(
       const ticketInvestment = ticketTx.getDebitsList().reduce((a, v) => a+v.getPreviousAmount(), 0)
         - ticketChange;
 
-      let ticketReward, ticketROI, ticketReturnAmount;
+      let ticketReward, ticketStakeRewards, ticketReturnAmount;
       if (hasSpender) {
         // everything returned to the wallet after voting/revoking
         ticketReturnAmount = spenderTx.getCreditsList().reduce((a, v) => a+v.getAmount(), 0);
@@ -389,7 +389,7 @@ export const ticketNormalizer = createSelector(
         // this is liquid from applicable fees (i.e, what the wallet actually made)
         ticketReward = ticketReturnAmount - ticketInvestment;
 
-        ticketROI = ticketReward / ticketInvestment;
+        ticketStakeRewards = ticketReward / ticketInvestment;
       }
 
       let ticketPoolFee, voteChoices;
@@ -424,7 +424,7 @@ export const ticketNormalizer = createSelector(
         ticketInvestment,
         ticketTxFee,
         ticketPoolFee,
-        ticketROI,
+        ticketStakeRewards,
         ticketReturnAmount,
         voteChoices,
         spenderTxFee,
@@ -833,15 +833,15 @@ export const ninetyFifthPercentileVoteTime = createSelector(
 );
 export const getMyTicketsStatsRequest = get([ "statistics", "getMyTicketsStatsRequest" ]);
 
-export const stakeROIStats = createSelector(
+export const stakeRewardsStats = createSelector(
   [ dailyBalancesStats, unitDivisor ],
   ( stats, unitDivisor ) => stats.map(s => ({
     time: s.time,
     stakeRewards: s.series.stakeRewards / unitDivisor,
     stakeFees: s.series.stakeFees / unitDivisor,
     totalStake: s.series.totalStake / unitDivisor,
-    stakeRewardROI: (s.series.stakeRewards / s.series.totalStake),
-    stakeFeesROI: (s.series.stakeFees / s.series.totalStake),
+    stakeRewardPerc: (s.series.stakeRewards / s.series.totalStake),
+    stakeFeesPerc: (s.series.stakeFees / s.series.totalStake),
   })));
 
 export const modalVisible = get([ "control", "modalVisible" ]);

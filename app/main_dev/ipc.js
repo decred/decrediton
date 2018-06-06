@@ -3,8 +3,8 @@ import path from "path";
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import { createLogger } from "./logging";
-import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, dcrctlCfg, appDataDirectory, getExecutablePath } from "./paths";
-import { createTempDcrdConf, initWalletCfg, newWalletConfigCreation, getWalletCfg } from "../config";
+import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, dcrctlCfg, appDataDirectory, getExecutablePath, getDcrdRpcCert } from "./paths";
+import { createTempDcrdConf, initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "../config";
 import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRW, GetDcrwPort } from "./launch";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
@@ -50,7 +50,16 @@ export const deleteDaemon = (appData, testnet) => {
 export const startDaemon = (mainWindow, daemonIsAdvanced, primaryInstance, appData, testnet, reactIPC) => {
   if (GetDcrdPID() && GetDcrdPID() !== -1) {
     logger.log("info", "Skipping restart of daemon as it is already running " + GetDcrdPID());
-    return GetDcrdPID();
+    var newConfig = {};
+    if (appData) {
+      newConfig = readDcrdConfig(appData, testnet);
+      newConfig.rpc_cert = getDcrdRpcCert(appData);
+    } else {
+      newConfig = readDcrdConfig(getDcrdPath(), testnet);
+      newConfig.rpc_cert = getDcrdRpcCert();
+    }
+    newConfig.pid =  GetDcrdPID();
+    return newConfig;
   }
   if(appData){
     logger.log("info", "launching dcrd with different appdata directory");

@@ -7,7 +7,7 @@ import * as sta from "actions/StatisticsActions";
 const mapStateToProps = selectorMap({
   voteTimeStats: sel.voteTimeStats,
   getMyTicketsStatsRequest: sel.getMyTicketsStatsRequest,
-  stakeROIStats: sel.stakeROIStats,
+  stakeRewardsStats: sel.stakeRewardsStats,
   dailyBalancesStats: sel.dailyBalancesStats,
   medianVoteTime: sel.medianVoteTime,
   averageVoteTime: sel.averageVoteTime,
