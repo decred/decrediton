@@ -8,7 +8,7 @@ const mapStateToProps = selectorMap({
   voteTimeStats: sel.voteTimeStats,
   getMyTicketsStatsRequest: sel.getMyTicketsStatsRequest,
   stakeRewardsStats: sel.stakeRewardsStats,
-  dailyBalancesStats: sel.dailyBalancesStats,
+  dailyBalancesStats: sel.fullDailyBalancesStats,
   medianVoteTime: sel.medianVoteTime,
   averageVoteTime: sel.averageVoteTime,
   ninetyFifthPercentileVoteTime: sel.ninetyFifthPercentileVoteTime,

@@ -21,6 +21,7 @@ export default function statistics(state = {}, action) {
       ...state,
       getMyTicketsStatsRequest: false,
       voteTime: action.voteTime,
+      fullDailyBalances: action.dailyBalances.data,
     };
   case GETMYTICKETSSTATS_FAILED:
     return {
