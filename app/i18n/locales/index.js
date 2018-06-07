@@ -43,6 +43,14 @@ const pt_BR = {
   formats: defaultFormats
 };
 
+const zh_CN = {
+  key: "zh-CN",
+  language: "zh-CN",
+  description: "中文",
+  messages: require("../translations/zh.json"),
+  formats: defaultFormats
+};
+
 // pseudo-locale for i18n testing during development. Can be freely
 // modified.
 const dev = {
@@ -53,7 +61,7 @@ const dev = {
   formats: defaultFormats
 };
 
-const locales = [ en, en_AU, pt_BR ];
+const locales = [ en, en_AU, pt_BR, zh_CN ];
 
 if (process.env.NODE_ENV === "development") {
   locales.push(dev);
@@ -75,6 +83,8 @@ export function appLocaleFromElectronLocale(electronLocale) {
 
   case "en-AU":
     return "en-AU";
+  case "zh-CN":
+    return "zh-CN";
   default: return "en";
   }
 }
