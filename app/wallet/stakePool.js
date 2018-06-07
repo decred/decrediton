@@ -1,6 +1,6 @@
 import Promise from "promise";
 import * as api from "../middleware/stakepoolapi";
-import { withLog as log, logOptionNoArgs } from "./index";
+import { withLog as log, logOptionNoArgs, withLogNoData } from "./index";
 
 export const getPurchaseInfo = (poolHost, apiKey) =>
   new Promise((resolve, reject) =>
@@ -20,3 +20,7 @@ export const setVoteChoices = log((poolHost, apiKey, voteBits) =>
       poolHost, apiKey, voteBits,
       (response, error) => error ? reject(error) : resolve(response)
     )), "Set Vote Choices", logOptionNoArgs());
+
+export const getAllStakePoolStats = withLogNoData(() =>
+  new Promise((resolve, reject) =>
+    api.allStakePoolStats((response, error) => !response ? reject(error) : resolve(response))), "Get Stakepool Stats");

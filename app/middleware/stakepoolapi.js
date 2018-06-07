@@ -24,7 +24,28 @@ export function stakePoolInfo(cb) {
       console.log("Error contacting remote stakepools api.", error);
       cb(null, error);
     });
+}
 
+function parseStakePoolResults(response) {
+  var stakePoolNames = Object.keys(response.data);
+
+  return stakePoolNames.map(name => {
+    let { APIEnabled } = response.data[name];
+    return !APIEnabled
+      ? null
+      : response.data[name];
+  }).filter(v => v);
+}
+
+export function allStakePoolStats(cb) {
+  axios.get("https://api.decred.org/?c=gsd")
+    .then(function (response) {
+      cb(parseStakePoolResults(response));
+    })
+    .catch(function (error) {
+      console.log("Error contacting remote stakepools api.", error);
+      cb(null, error);
+    });
 }
 
 export function setStakePoolAddress(apiUrl, apiToken, pKAddress, cb) {

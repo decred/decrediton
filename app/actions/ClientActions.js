@@ -5,7 +5,7 @@ import eq from "lodash/fp/eq";
 import { getNextAddressAttempt, loadActiveDataFiltersAttempt, rescanAttempt,
   stopAutoBuyerAttempt, getTicketBuyerConfigAttempt, publishUnminedTransactionsAttempt } from "./ControlActions";
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
-import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices } from "./StakePoolActions";
+import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
 import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
 import { showSidebarMenu, showSidebar } from "./SidebarActions";
 import { push as pushHistory, goBack } from "react-router-redux";
@@ -48,6 +48,7 @@ export function startWalletServices() {
     setTimeout(() => { dispatch(getTicketBuyerServiceAttempt()); }, 1000);
     setTimeout(() => { dispatch(getVotingServiceAttempt()); }, 1000);
     setTimeout(() => { dispatch(getAgendaServiceAttempt()); }, 1000);
+    setTimeout(() => { dispatch(getStakepoolStats()); }, 1000);
 
     var goHomeCb = () => {
       setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);
