@@ -126,6 +126,8 @@ export const getNetworkResponse = get([ "grpc", "getNetworkResponse" ]);
 export const getNetworkError = get([ "grpc", "getNetworkError" ]);
 const accounts = createSelector([ getAccountsResponse ], r => r ? r.getAccountsList() : []);
 
+export const isWatchingOnly = get([ "walletLoader", "isWatchingOnly"])
+
 export const sortedAccounts = createSelector(
   [ balances ], balances => balances.slice().sort((a, b) => a.accountNumber - b.accountNumber)
 );

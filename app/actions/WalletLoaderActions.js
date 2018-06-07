@@ -128,9 +128,9 @@ export const OPENWALLET_SUCCESS = "OPENWALLET_SUCCESS";
 export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState) => {
   dispatch({ type: OPENWALLET_ATTEMPT });
   return openWallet(getState().walletLoader.loader, pubPass)
-    .then(() => {
+    .then((response) => {
       dispatch(getWalletServiceAttempt());
-      dispatch({ type: OPENWALLET_SUCCESS });
+      dispatch({ isWatchingOnly: response.getWatchingOnly(),  type: OPENWALLET_SUCCESS });
     })
     .catch(error => {
       if (error.message.includes("wallet already")) {

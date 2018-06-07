@@ -44,7 +44,7 @@ export const openWallet = log((loader, pubPass) =>
   new Promise((resolve, reject) => {
     const request = new OpenWalletRequest();
     request.setPublicPassphrase(new Uint8Array(Buffer.from(pubPass)));
-    loader.openWallet(request, error => error ? reject(error) : resolve());
+    loader.openWallet(request, (error, response) => error ? reject(error) : resolve(response));
   }), "Open Wallet", logOptionNoArgs());
 
 export const closeWallet = log((loader) =>

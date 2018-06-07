@@ -152,6 +152,7 @@ export default function walletLoader(state = {}, action) {
     return { ...state,
       walletOpenError: null,
       walletOpenRequestAttempt: false,
+      isWatchingOnly: action.isWatchingOnly,
       walletOpenResponse: action.response,
       advancedDaemonInputRequest: true,
       stepIndex: 3,
