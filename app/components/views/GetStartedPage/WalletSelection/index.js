@@ -121,7 +121,7 @@ class WalletSelectionBody extends React.Component {
       return;
     }
     if (isWatchOnly) {
-      if(masterPubKeyError || !walletMasterPubKey) {
+      if (masterPubKeyError || !walletMasterPubKey) {
         this.setState({ hasFailedAttempt: true });
         return;
       }
