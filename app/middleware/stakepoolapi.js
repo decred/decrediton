@@ -37,7 +37,7 @@ function parseStakePoolResults(response) {
   }).filter(v => v);
 }
 
-export function allStakePoolInfo(cb) {
+export function allStakePoolStats(cb) {
   axios.get("https://api.decred.org/?c=gsd")
     .then(function (response) {
       cb(parseStakePoolResults(response));

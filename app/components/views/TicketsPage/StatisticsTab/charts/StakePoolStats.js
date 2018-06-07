@@ -27,7 +27,7 @@ class StakePoolStats extends React.Component{
     const { onChangeStakePoolStats } = this;
     const ticketPercentage = stakePool ? stakePool.ProportionLive * 100 : 0;
     const votedPercentage = stakePool ? stakePool.ProportionMissed * 100 : 0;
-    console.log(allStakePoolInfo.length, stakePool.ProportionMissed, stakePool.ProportionLive);
+
     return (
       <Aux>
         <div className="my-tickets-stats-indicators">
