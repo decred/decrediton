@@ -23,4 +23,4 @@ export const setVoteChoices = log((poolHost, apiKey, voteBits) =>
 
 export const getAllStakePoolStats = withLogNoData(() =>
   new Promise((resolve, reject) =>
-    api.allStakePoolInfo((response, error) => !response ? reject(error) : resolve(response))), "Get Stakepool Stats");
+    api.allStakePoolStats((response, error) => !response ? reject(error) : resolve(response))), "Get Stakepool Stats");

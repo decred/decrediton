@@ -66,7 +66,7 @@ export default function stakepool(state = {}, action) {
   case GETSTAKEPOOLSTATS_SUCCESS:
     return { ...state,
       getStakePoolInfoAttempt: false,
-      getStakePoolInfo: action.allStakePoolInfo,
+      getStakePoolInfo: action.allStakePoolStats,
     };
   default:
     return state;

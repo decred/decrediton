@@ -15,8 +15,8 @@ export const GETSTAKEPOOLSTATS_SUCCESS = "GETSTAKEPOOLSTATS_SUCCESS";
 export const getStakepoolStats = () => (dispatch) => {
   dispatch({ type: GETSTAKEPOOLSTATS_ATTEMPT });
   getAllStakePoolStats()
-    .then((allStakePoolInfo) =>
-      dispatch({ type: GETSTAKEPOOLSTATS_SUCCESS, allStakePoolInfo })
+    .then((allStakePoolStats) =>
+      dispatch({ type: GETSTAKEPOOLSTATS_SUCCESS, allStakePoolStats })
       // TODO: add error notification after global snackbar is merged
     )
     .catch((error) => {
