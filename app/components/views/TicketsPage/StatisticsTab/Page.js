@@ -6,25 +6,28 @@ import StakePoolStats from "./charts/StakePoolStats";
 import { DecredLoading, NoStats } from "indicators";
 import { Tooltip } from "shared";
 
-const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets }) => {
-  if (allTickets.length === 0) return <NoStats />;
+const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets, allStakePoolInfo }) => {
+  if (allTickets.length === 0 && allStakePoolInfo.length === 0) return <NoStats />;
   return (
     <Aux>
       <div className="tabbed-page-subtitle"><T id="statistics.subtitle" m="Statistics"/>
-        {hasStats ?
-          <div className="my-tickets-stats-links">
+        <div className="my-tickets-stats-links">
+          { allStakePoolInfo.length > 0 &&
             <Tooltip text={<T id="mytickets.statistics.stakepoolstats.title" m="Stake Pool" />}>
               <Link to="/tickets/statistics/stakepool" activeClassName="my-tickets-active-chart-link stakepool" className="stakepool"/>
             </Tooltip>
-            <Tooltip text={<T id="mytickets.statistics.stakerewards.title" m="Stake Rewards" />}>
-              <Link to="/tickets/statistics/stakerewards" activeClassName="my-tickets-active-chart-link stakerewards" className="stakerewards"/>
-            </Tooltip>
-            <Tooltip text={<T id="mytickets.statistics.votetime.title" m="Vote Time" />}>
-              <Link to="/tickets/statistics/voteTime" activeClassName="my-tickets-active-chart-link vote-time" className="vote-time"/>
-            </Tooltip>
-          </div> :
-          <div />
-        }
+          }
+          { hasStats &&
+            <Aux>
+              <Tooltip text={<T id="mytickets.statistics.stakerewards.title" m="Stake Rewards" />}>
+                <Link to="/tickets/statistics/stakerewards" activeClassName="my-tickets-active-chart-link stakerewards" className="stakerewards"/>
+              </Tooltip>
+              <Tooltip text={<T id="mytickets.statistics.votetime.title" m="Vote Time" />}>
+                <Link to="/tickets/statistics/voteTime" activeClassName="my-tickets-active-chart-link vote-time" className="vote-time"/>
+              </Tooltip>
+            </Aux>
+          }
+        </div>
       </div>
       <div className="my-tickets-charts">
         {getMyTicketsStatsRequest ? <DecredLoading /> :
@@ -32,7 +35,7 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets }) =>
             <Route path="/tickets/statistics/voteTime" component={VoteTimeChartPage} />
             <Route path="/tickets/statistics/stakerewards" component={StakeRewardsChartPage} />
             <Route path="/tickets/statistics/stakepool" component={StakePoolStats} />
-            {hasStats ? <Redirect from="/tickets/statistics" exact to="/tickets/statistics/stakepool" /> : null}
+            {hasStats || allStakePoolInfo.length > 0 ? <Redirect from="/tickets/statistics" exact to={allStakePoolInfo.length > 0 ? "/tickets/statistics/stakepool" : hasStats ? "/tickets/statistics/stakerewards" : ""}/> : null}
           </Switch>
         }
       </div>

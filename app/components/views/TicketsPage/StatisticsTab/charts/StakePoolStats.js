@@ -25,8 +25,9 @@ class StakePoolStats extends React.Component{
     const { allStakePoolInfo, ticketPoolSize } = this.props;
     const { stakePool } = this.state;
     const { onChangeStakePoolStats } = this;
-    const ticketPercentage = stakePool.ProportionLive * 100;
-    const votedPercentage = stakePool.ProportionMissed * 100;
+    const ticketPercentage = stakePool ? stakePool.ProportionLive * 100 : 0;
+    const votedPercentage = stakePool ? stakePool.ProportionMissed * 100 : 0;
+    console.log(allStakePoolInfo.length, stakePool.ProportionMissed, stakePool.ProportionLive);
     return (
       <Aux>
         <div className="my-tickets-stats-indicators">
@@ -36,17 +37,16 @@ class StakePoolStats extends React.Component{
             </span>
           </div>
           <div className="my-tickets-stakepool-stats-selector-row">
-            {allStakePoolInfo.length > 0 &&
             <div className="stakepool-unconfigured-select">
               <StakePoolSelect
                 options={allStakePoolInfo}
                 value={stakePool}
                 onChange={onChangeStakePoolStats}
               />
-            </div>}
+            </div>
           </div>
           <div className="my-tickets-stakepool-stats-row">
-            <Tooltip text={<T id="mytickets.statistics.stakepool.ticketsTip" m="{percentage}% proportion of network tickets" values={{ percentage: ticketPercentage }} />}>
+            <Tooltip text={<T id="mytickets.statistics.stakepool.ticketsTip" m="{percentage}% proportion of network tickets" values={{ percentage: ticketPercentage.toFixed(1) }} />}>
               <MeteredChart
                 additive={true}
                 blueValue={ticketPoolSize}
@@ -57,7 +57,7 @@ class StakePoolStats extends React.Component{
             </Tooltip>
           </div>
           <div className="my-tickets-stakepool-stats-row">
-            <Tooltip text={<T id="mytickets.statistics.stakepool.votedTip" m="{percentage}% of tickets voted" values={{ percentage: votedPercentage }} />}>
+            <Tooltip text={<T id="mytickets.statistics.stakepool.votedTip" m="{percentage}% of tickets missed" values={{ percentage: votedPercentage.toFixed(1) }} />}>
               <MeteredChart
                 additive={true}
                 blueValue={stakePool.Voted}
