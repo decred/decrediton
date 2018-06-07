@@ -6,13 +6,13 @@ import StakePoolStats from "./charts/StakePoolStats";
 import { DecredLoading, NoStats } from "indicators";
 import { Tooltip } from "shared";
 
-const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets, allStakePoolInfo }) => {
-  if (allTickets.length === 0 && allStakePoolInfo.length === 0) return <NoStats />;
+const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets, allStakePoolStats }) => {
+  if (allTickets.length === 0 && allStakePoolStats.length === 0) return <NoStats />;
   return (
     <Aux>
       <div className="tabbed-page-subtitle"><T id="statistics.subtitle" m="Statistics"/>
         <div className="my-tickets-stats-links">
-          { allStakePoolInfo.length > 0 &&
+          { allStakePoolStats.length > 0 &&
             <Tooltip text={<T id="mytickets.statistics.stakepoolstats.title" m="Stake Pool" />}>
               <Link to="/tickets/statistics/stakepool" activeClassName="my-tickets-active-chart-link stakepool" className="stakepool"/>
             </Tooltip>
@@ -35,7 +35,7 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets, allS
             <Route path="/tickets/statistics/voteTime" component={VoteTimeChartPage} />
             <Route path="/tickets/statistics/stakerewards" component={StakeRewardsChartPage} />
             <Route path="/tickets/statistics/stakepool" component={StakePoolStats} />
-            {hasStats || allStakePoolInfo.length > 0 ? <Redirect from="/tickets/statistics" exact to={allStakePoolInfo.length > 0 ? "/tickets/statistics/stakepool" : hasStats ? "/tickets/statistics/stakerewards" : ""}/> : null}
+            {hasStats || allStakePoolStats.length > 0 ? <Redirect from="/tickets/statistics" exact to={allStakePoolStats.length > 0 ? "/tickets/statistics/stakepool" : hasStats ? "/tickets/statistics/stakerewards" : ""}/> : null}
           </Switch>
         }
       </div>

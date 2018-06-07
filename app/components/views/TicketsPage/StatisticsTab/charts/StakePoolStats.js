@@ -13,7 +13,7 @@ class StakePoolStats extends React.Component{
 
   getInitialState() {
     return {
-      stakePool: this.props.allStakePoolInfo[0]
+      stakePool: this.props.allStakePoolStats[0]
     };
   }
 
@@ -22,7 +22,7 @@ class StakePoolStats extends React.Component{
   }
 
   render() {
-    const { allStakePoolInfo, ticketPoolSize } = this.props;
+    const { allStakePoolStats, ticketPoolSize } = this.props;
     const { stakePool } = this.state;
     const { onChangeStakePoolStats } = this;
     const ticketPercentage = stakePool ? stakePool.ProportionLive * 100 : 0;
@@ -39,7 +39,7 @@ class StakePoolStats extends React.Component{
           <div className="my-tickets-stakepool-stats-selector-row">
             <div className="stakepool-unconfigured-select">
               <StakePoolSelect
-                options={allStakePoolInfo}
+                options={allStakePoolStats}
                 value={stakePool}
                 onChange={onChangeStakePoolStats}
               />
