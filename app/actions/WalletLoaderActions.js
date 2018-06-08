@@ -1,8 +1,7 @@
 // @flow
 import {
   getLoader, startRpc, getWalletExists, createWallet, openWallet, closeWallet, discoverAddresses,
-  subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo, createWatchingOnlyWallet,
-  setIsWatchingOnly, getIsWatchingOnly,
+  subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo,
 } from "wallet";
 import * as wallet from "wallet";
 import { getWalletServiceAttempt, startWalletServices } from "./ClientActions";
@@ -108,7 +107,7 @@ export const CREATEWATCHONLYWALLET_SUCCESS = "CREATEWATCHONLYWALLET_SUCCESS";
 
 export const createWatchOnlyWalletRequest = (extendedPubKey, pubPass ="") => (dispatch, getState) => {
   dispatch({ type: CREATEWATCHONLYWALLET_ATTEMPT });
-  return createWatchingOnlyWallet(getState().walletLoader.loader, extendedPubKey, pubPass)
+  return wallet.createWatchingOnlyWallet(getState().walletLoader.loader, extendedPubKey, pubPass)
     .then(() => {
       const { daemon: { walletName } } = getState();
       const config = getWalletCfg(isTestNet(getState()), walletName);
@@ -131,13 +130,13 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState)
   return openWallet(getState().walletLoader.loader, pubPass)
     .then((response) => {
       dispatch(getWalletServiceAttempt());
-      setIsWatchingOnly(response.getWatchingOnly())
+      wallet.setIsWatchingOnly(response.getWatchingOnly())
       dispatch({ isWatchingOnly: response.getWatchingOnly(),  type: OPENWALLET_SUCCESS });
     })
     .catch(async error => {
       if (error.message.includes("wallet already")) {
         dispatch(getWalletServiceAttempt());
-        const isWatchingOnly = await getIsWatchingOnly();
+        const isWatchingOnly = await wallet.getIsWatchingOnly();
         dispatch({ isWatchingOnly, type: OPENWALLET_SUCCESS });
       } else if (error.message.includes("invalid passphrase") && error.message.includes("public key")) {
         if (retryAttempt) {
