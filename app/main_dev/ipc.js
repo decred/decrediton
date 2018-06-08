@@ -185,6 +185,6 @@ export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
 
 export const setWatchingOnlyWallet = (isWatchingOnly) => {
   watchingOnlyWallet = isWatchingOnly;
-}
+};
 
 export const getWatchingOnlyWallet = () => watchingOnlyWallet;

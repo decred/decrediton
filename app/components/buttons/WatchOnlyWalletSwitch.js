@@ -1,4 +1,3 @@
-import EventListener from "react-event-listener";
 import { Tooltip } from "shared";
 import { InvisibleButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";

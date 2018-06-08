@@ -130,7 +130,7 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState)
   return openWallet(getState().walletLoader.loader, pubPass)
     .then((response) => {
       dispatch(getWalletServiceAttempt());
-      wallet.setIsWatchingOnly(response.getWatchingOnly())
+      wallet.setIsWatchingOnly(response.getWatchingOnly());
       dispatch({ isWatchingOnly: response.getWatchingOnly(),  type: OPENWALLET_SUCCESS });
     })
     .catch(async error => {

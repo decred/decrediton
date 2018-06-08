@@ -39,7 +39,7 @@ export const getIsWatchingOnly = log( () => Promise
   .resolve(ipcRenderer.sendSync("get-is-watching-only"))
   .then( isWatchingOnly => {
     return isWatchingOnly;
-  }), "Get Watching Only")
+  }), "Get Watching Only");
 
 export const createNewWallet = log((walletPath, testnet) => Promise
   .resolve(ipcRenderer.sendSync("create-wallet", walletPath, testnet))
