@@ -1,7 +1,8 @@
 // @flow
 import {
   getLoader, startRpc, getWalletExists, createWallet, openWallet, closeWallet, discoverAddresses,
-  subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo, createWatchingOnlyWallet
+  subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo, createWatchingOnlyWallet,
+  setIsWatchingOnly, getIsWatchingOnly,
 } from "wallet";
 import * as wallet from "wallet";
 import { getWalletServiceAttempt, startWalletServices } from "./ClientActions";
@@ -130,12 +131,14 @@ export const openWalletAttempt = (pubPass, retryAttempt) => (dispatch, getState)
   return openWallet(getState().walletLoader.loader, pubPass)
     .then((response) => {
       dispatch(getWalletServiceAttempt());
+      setIsWatchingOnly(response.getWatchingOnly())
       dispatch({ isWatchingOnly: response.getWatchingOnly(),  type: OPENWALLET_SUCCESS });
     })
-    .catch(error => {
+    .catch(async error => {
       if (error.message.includes("wallet already")) {
         dispatch(getWalletServiceAttempt());
-        dispatch({ response: {}, type: OPENWALLET_SUCCESS });
+        const isWatchingOnly = await getIsWatchingOnly();
+        dispatch({ isWatchingOnly, type: OPENWALLET_SUCCESS });
       } else if (error.message.includes("invalid passphrase") && error.message.includes("public key")) {
         if (retryAttempt) {
           dispatch({ error, type: OPENWALLET_FAILED_INPUT });

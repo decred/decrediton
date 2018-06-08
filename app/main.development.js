@@ -10,7 +10,7 @@ import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
-import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet, startWallet, checkDaemon, deleteDaemon } from "./main_dev/ipc";
+import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 
 // setPath as decrediton
@@ -201,6 +201,15 @@ ipcMain.on("get-previous-wallet", (event) => {
 ipcMain.on("set-previous-wallet", (event, cfg) => {
   previousWallet = cfg;
   event.returnValue = true;
+});
+
+ipcMain.on("set-is-watching-only", (event, isWatchingOnly) => {
+  setWatchingOnlyWallet(isWatchingOnly);
+  event.returnValue = true;
+});
+
+ipcMain.on("get-is-watching-only", (event) => {
+  event.returnValue = getWatchingOnlyWallet();
 });
 
 primaryInstance = !app.makeSingleInstance(() => true);

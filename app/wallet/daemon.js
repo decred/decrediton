@@ -28,6 +28,19 @@ export const cleanShutdown = () => {
   });
 };
 
+export const setIsWatchingOnly = log( isWatchingOnly => Promise
+  .resolve(ipcRenderer.sendSync("set-is-watching-only", isWatchingOnly))
+  .then( saved => {
+    if (saved) return saved;
+    throw "Error opening wallet";
+  }), "Set Watching Only");
+
+export const getIsWatchingOnly = log( () => Promise
+  .resolve(ipcRenderer.sendSync("get-is-watching-only"))
+  .then( isWatchingOnly => {
+    return isWatchingOnly;
+  }), "Get Watching Only")
+
 export const createNewWallet = log((walletPath, testnet) => Promise
   .resolve(ipcRenderer.sendSync("create-wallet", walletPath, testnet))
   .then(created => {
