@@ -22,8 +22,16 @@ export const defaultFormats = {
 const en = {
   key: "en",
   language: "en",
-  description: "English",
+  description: "English (US)",
   messages: staticDefaults, // uses defaultMessage for anything not on the staticDefaults
+  formats: defaultFormats //dont customize for en language
+};
+
+const en_GB = {
+  key: "en-GB",
+  language: "en-GB",
+  description: "English (UK)",
+  messages: require("../translations/original.json"),
   formats: defaultFormats //dont customize for en language
 };
 
@@ -53,7 +61,7 @@ const dev = {
   formats: defaultFormats
 };
 
-const locales = [ en, en_AU, pt_BR ];
+const locales = [ en, en_GB, en_AU, pt_BR ];
 
 if (process.env.NODE_ENV === "development") {
   locales.push(dev);
@@ -73,6 +81,8 @@ export function appLocaleFromElectronLocale(electronLocale) {
   case "pt-PT":
     return "pt-BR";
 
+  case "en-GB":
+    return "en-GB";
   case "en-AU":
     return "en-AU";
   default: return "en";
