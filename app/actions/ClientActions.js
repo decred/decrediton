@@ -540,6 +540,7 @@ export const getTransactions = () => async (dispatch, getState) => {
 
     if ( transactionsFilter.listDirection === "desc" ) {
       startRequestHeight = lastTransaction ? lastTransaction.height -1 : currentBlockHeight;
+      if (startRequestHeight < 1) break;
       endRequestHeight = 1;
     } else {
       startRequestHeight = lastTransaction ? lastTransaction.height +1 : 1;
